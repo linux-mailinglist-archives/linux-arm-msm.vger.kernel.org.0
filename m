@@ -1,325 +1,174 @@
-Return-Path: <linux-arm-msm+bounces-69793-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69794-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AAEAB2CA9A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 19:32:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83A19B2CABC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 19:37:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 974C2164794
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 17:32:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3EEB31BA5579
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 17:36:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7687A2E22BC;
-	Tue, 19 Aug 2025 17:32:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E075E30C348;
+	Tue, 19 Aug 2025 17:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dR8zlb3+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IDs+vgN4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4487C253934;
-	Tue, 19 Aug 2025 17:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20AB30BF6A;
+	Tue, 19 Aug 2025 17:35:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755624765; cv=none; b=Z+ieYk+uIZlQouKgfv64sUkHN48EeFoQSc7dvVVhD0BgX+wo/wlNaGpsyCeKFk2ANQqEO6krDCElC+vU8zL3txL/JU6STDkxAQA00i7Z8+sUllqcx1JL8Q1Kr8GVdqQb3YJ5EDoaxgmmtXFLfO1xfhdtBUFmdEPohJJXXXauGp8=
+	t=1755624932; cv=none; b=pQ8ix6g2A6++M5ekedhvLAPl3fYDTlbIvzdqZdkGDR4gv0qfHYxWcdxXEmMjtVyMP2rJns0p//+8xE+c4CyMgqx6pJpMcbwnHUYJZKQwr/QQBFgI3MHcxeRRm/Feq7pms8eQXOiq7eLtD1O+DdWoEsJkPKZ/MTuLZ9rR7t4Bc/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755624765; c=relaxed/simple;
-	bh=J6y6LuaznEwKZBwFRPm+m4Y8k2u/faVNHPijZP4is6g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FHCJQkR79BpQlOZSBfRteaZhX/jdbZFqmVG8i30p6IIAgBoD0iEbgW3VzEm7gzw9kPH5b28EVG/MoeW3gLwo5exg4JjSxojQRCbKQYVrgCPU2gn2xufgK2bCf4K7WSjxB9xn6T7pzyp4FzrQZ9jZcbWOTmb6q4iD50GzSkTTghg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dR8zlb3+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C576EC116B1;
-	Tue, 19 Aug 2025 17:32:43 +0000 (UTC)
+	s=arc-20240116; t=1755624932; c=relaxed/simple;
+	bh=NbJZ1PvyWaHWtXxZjX7+dIVe0weMcIVtJxAnEiw0eQs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=izKfH75lG9YqV07SpC10ZIBb7PT+ukfETbKeacM+aUe0kepH2GWSSvJUm3fY+RKPrmxhGW0C7MAinqxQoKi/berRgDaLnBvU3bMve4+c6EgyNYbXqAsL3E3iQm+FO25G9OV+u+T8XQIgyP1DePZ+j1na2fmN1MF5R2vcNTmYFhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IDs+vgN4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9141C19422;
+	Tue, 19 Aug 2025 17:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755624763;
-	bh=J6y6LuaznEwKZBwFRPm+m4Y8k2u/faVNHPijZP4is6g=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=dR8zlb3+YOIv0cuHGrDos071e5AJODOoPAJy/l7ZeqlUfVScMSh9LjxoYtVoAuDD0
-	 xBY2B1XXEdDyDa2AuQcHb6aqVPIoI5+YA+qqtl1L1nuwVko4zyDBhhUr6uYe3+XKQz
-	 KyLh0Dgo5bun2jnTfu2qwS6buxPNHounZ3WoPE6U6jET4rNaLZd5qKOIyKOTWxWL8K
-	 HGzcNzPbYOiTYXfyLQDngFLQn4yvzxj1q3ZD7l1gozmu3XJ8ZutFm6GWNW9rbX1Xaa
-	 t2ttS9bUXjnzFDU8VJS+6X4mwWFD+O8l8o8Dp+idkWxgqe6HPxFM0ORj/rSoRXy3jA
-	 z7vVVpXEQY4Kw==
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb7ace3baso952138166b.3;
-        Tue, 19 Aug 2025 10:32:43 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCV610F+V6IXuY1o4+brgxkEQtUSkUj3j6qZKa8aay2oOTQFrMb/fUZbt08uBoONl0fmUH8fUs+YbPSrzk7E@vger.kernel.org, AJvYcCWHEKW0jAu6+0vuLEg//E9knIh5NfoksU57fcsqS3LZeGYZbfvgjuTSRzzrjxPYyUEpvvcXF7ddYmN+D3Jw@vger.kernel.org, AJvYcCWS1jcNZycB5A+FCwz+ezHPMxDeHs/epEs6ZyAPeFHyyz8U6eiatiRT3+M6DFlYH5F+J9bi287uxaJgpgyIe3862q0=@vger.kernel.org, AJvYcCXSabcQ197wILkEJpD6PWodJCAw6NiyXRHko4cU7HuZ62dF0YfkwOKtmbLvPwhcCwiznYgqLejK67jmYnxeAQg7gg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx24AFS99VET8Azh98jNvvhgJ/beCQwUXATDp/JCzzZwGT11F6C
-	tmLFqa8xXkNNHSX1GmUIvegOrko1fqYraL9ETpMDSk0wNauDBWUiP5OZ1rTbgpK5rksvo26BOQB
-	CxIxxOtfrhqBV+ctAWMNhjz+6Kp6cUw==
-X-Google-Smtp-Source: AGHT+IEUi1cNispFJzaTig/zRP3yzP5O0TnRE9XfPCw/ckDcq03Jy+Mgc0TSd/4yPwlKVH5V12ZUjepBe+4MMFOi9Zs=
-X-Received: by 2002:a17:907:7f0d:b0:afd:d993:9f2b with SMTP id
- a640c23a62f3a-afddd2351camr276179566b.65.1755624762291; Tue, 19 Aug 2025
- 10:32:42 -0700 (PDT)
+	s=k20201202; t=1755624932;
+	bh=NbJZ1PvyWaHWtXxZjX7+dIVe0weMcIVtJxAnEiw0eQs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=IDs+vgN4izGEjgQOiuDeqdNaz2bBUAmFln7Tbw+xBg2qDicXWHOJbiXu3dgkTbYAk
+	 EKkJfLIAOPp37ocJb+TMccctAojEmd6DutTYkiY1K22Lij/MtEQlewNUxpHxj7Vq0z
+	 4uQepQeApIZ14GNThUn71aLsjNBBwyuAdhFGkL/qNjtSRzi/ItNC8g7AHYOvE3jB4q
+	 iB3LGdkHI7BRkrjS+OZrT0Ly1zbpDGWOYks0S7GrvY/z4bE6BkmwD/qVw2fSTHpxst
+	 XD85JBnRHerVgkJ46eIpEeBmY5NQFjFVuyss2LCb163kScM8xMjStVNyxpxFQGfTYr
+	 u/KQOEufMzVOw==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Alexey Klimov <alexey.klimov@linaro.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.16-5.15] ASoC: codecs: tx-macro: correct tx_macro_component_drv name
+Date: Tue, 19 Aug 2025 13:35:19 -0400
+Message-ID: <20250819173521.1079913-9-sashal@kernel.org>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250819173521.1079913-1-sashal@kernel.org>
+References: <20250819173521.1079913-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250813214808.895654-1-robh@kernel.org> <te2o47dxihjsckaigfdhbrbyqxaeqmchmtx5xbx5y2smu6yaja@t7uccvfsxmay>
-In-Reply-To: <te2o47dxihjsckaigfdhbrbyqxaeqmchmtx5xbx5y2smu6yaja@t7uccvfsxmay>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 19 Aug 2025 12:32:30 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqL41LWqXgwLg_wyjk_1m6PdYFp0n6kv_Grk5659F-va-g@mail.gmail.com>
-X-Gm-Features: Ac12FXxo6YLchimNgboodm-rodCkxohoNe_mlbRUV7_mnTRcH8K4JAg2Z9LphQQ
-Message-ID: <CAL_JsqL41LWqXgwLg_wyjk_1m6PdYFp0n6kv_Grk5659F-va-g@mail.gmail.com>
-Subject: Re: [PATCH v4] remoteproc: Use of_reserved_mem_region_* functions for "memory-region"
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Patrice Chotard <patrice.chotard@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan <peng.fan@nxp.com>, 
-	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.16.1
+Content-Transfer-Encoding: 8bit
 
-On Thu, Aug 14, 2025 at 1:52=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Wed, Aug 13, 2025 at 04:48:03PM -0500, Rob Herring (Arm) wrote:
-> > Use the newly added of_reserved_mem_region_to_resource() and
-> > of_reserved_mem_region_count() functions to handle "memory-region"
-> > properties.
-> >
-> > The error handling is a bit different in some cases. Often
-> > "memory-region" is optional, so failed lookup is not an error. But then
-> > an error in of_reserved_mem_lookup() is treated as an error. However,
-> > that distinction is not really important. Either the region is availabl=
-e
-> > and usable or it is not. So now, it is just
-> > of_reserved_mem_region_to_resource() which is checked for an error.
-> >
-> > Acked-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
-> > Tested-by: Peng Fan <peng.fan@nxp.com> # i.MX93-11x11-EVK for imx_rproc=
-.c
-> > Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
-> > ---
-> > v4:
-> >  - Rebase on v6.17-rc1. qcom_q6v5_pas.c conflicted needing s/adsp/pas/
-> >
-> > v3:
-> >  - Rebase on v6.16-rc1. Move TI K3 changes to new common file.
-> >  - Fix double increment of "i" in xlnx_r5
-> >
-> > v2:
-> >  - Use strstarts instead of strcmp for resource names as they include
-> >    the unit-address.
-> >  - Drop the unit-address from resource name for imx and st drivers
-> > ---
-> >  drivers/remoteproc/imx_dsp_rproc.c        | 45 ++++++--------
-> >  drivers/remoteproc/imx_rproc.c            | 68 ++++++++------------
-> >  drivers/remoteproc/qcom_q6v5_adsp.c       | 24 +++-----
-> >  drivers/remoteproc/qcom_q6v5_mss.c        | 60 ++++++------------
-> >  drivers/remoteproc/qcom_q6v5_pas.c        | 75 +++++++++--------------
-> >  drivers/remoteproc/qcom_q6v5_wcss.c       | 25 +++-----
-> >  drivers/remoteproc/qcom_wcnss.c           | 23 +++----
-> >  drivers/remoteproc/rcar_rproc.c           | 36 +++++------
-> >  drivers/remoteproc/st_remoteproc.c        | 41 ++++++-------
-> >  drivers/remoteproc/stm32_rproc.c          | 44 ++++++-------
-> >  drivers/remoteproc/ti_k3_common.c         | 28 ++++-----
-> >  drivers/remoteproc/ti_k3_dsp_remoteproc.c |  2 +-
-> >  drivers/remoteproc/ti_k3_r5_remoteproc.c  |  2 +-
-> >  drivers/remoteproc/xlnx_r5_remoteproc.c   | 51 ++++++---------
-> >  14 files changed, 204 insertions(+), 320 deletions(-)
-> >
-> > diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/q=
-com_q6v5_adsp.c
-> > index 94af77baa7a1..a5b7cbb8fe07 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_adsp.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-> > @@ -625,26 +625,20 @@ static int adsp_init_mmio(struct qcom_adsp *adsp,
-> >
-> >  static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
-> >  {
-> > -     struct reserved_mem *rmem =3D NULL;
-> > -     struct device_node *node;
-> > -
-> > -     node =3D of_parse_phandle(adsp->dev->of_node, "memory-region", 0)=
-;
-> > -     if (node)
-> > -             rmem =3D of_reserved_mem_lookup(node);
-> > -     of_node_put(node);
-> > +     int ret;
-> > +     struct resource res;
-> >
-> > -     if (!rmem) {
-> > +     ret =3D of_reserved_mem_region_to_resource(adsp->dev->of_node, 0,=
- &res);
-> > +     if (!ret) {
-> >               dev_err(adsp->dev, "unable to resolve memory-region\n");
-> > -             return -EINVAL;
-> > +             return ret;
->
-> This looks strange. Shouldn't it be `if (ret) {` ?
+From: Alexey Klimov <alexey.klimov@linaro.org>
 
-Indeed. I checked other spots for the same mistake and this is the only one=
-.
+[ Upstream commit 43e0da37d5cfb23eec6aeee9422f84d86621ce2b ]
 
->
-> >       }
-> >
-> > -     adsp->mem_phys =3D adsp->mem_reloc =3D rmem->base;
-> > -     adsp->mem_size =3D rmem->size;
-> > -     adsp->mem_region =3D devm_ioremap_wc(adsp->dev,
-> > -                             adsp->mem_phys, adsp->mem_size);
-> > +     adsp->mem_phys =3D adsp->mem_reloc =3D res.start;
-> > +     adsp->mem_size =3D resource_size(&res);
-> > +     adsp->mem_region =3D devm_ioremap_resource_wc(adsp->dev, &res);
-> >       if (!adsp->mem_region) {
-> > -             dev_err(adsp->dev, "unable to map memory region: %pa+%zx\=
-n",
-> > -                     &rmem->base, adsp->mem_size);
-> > +             dev_err(adsp->dev, "unable to map memory region: %pR\n", =
-&res);
-> >               return -EBUSY;
-> >       }
-> >
-> > diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qc=
-om_q6v5_mss.c
-> > index 0c0199fb0e68..0fea5f91dd1c 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_mss.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_mss.c
-> > @@ -1961,8 +1961,8 @@ static int q6v5_init_reset(struct q6v5 *qproc)
-> >  static int q6v5_alloc_memory_region(struct q6v5 *qproc)
-> >  {
-> >       struct device_node *child;
-> > -     struct reserved_mem *rmem;
-> > -     struct device_node *node;
-> > +     struct resource res;
-> > +     int ret;
-> >
-> >       /*
-> >        * In the absence of mba/mpss sub-child, extract the mba and mpss
-> > @@ -1970,71 +1970,49 @@ static int q6v5_alloc_memory_region(struct q6v5=
- *qproc)
-> >        */
-> >       child =3D of_get_child_by_name(qproc->dev->of_node, "mba");
-> >       if (!child) {
-> > -             node =3D of_parse_phandle(qproc->dev->of_node,
-> > -                                     "memory-region", 0);
-> > +             ret =3D of_reserved_mem_region_to_resource(qproc->dev->of=
-_node, 0, &res);
-> >       } else {
-> > -             node =3D of_parse_phandle(child, "memory-region", 0);
-> > +             ret =3D of_reserved_mem_region_to_resource(child, 0, &res=
-);
-> >               of_node_put(child);
-> >       }
-> >
-> > -     if (!node) {
-> > -             dev_err(qproc->dev, "no mba memory-region specified\n");
-> > -             return -EINVAL;
-> > -     }
-> > -
-> > -     rmem =3D of_reserved_mem_lookup(node);
-> > -     of_node_put(node);
-> > -     if (!rmem) {
-> > +     if (ret) {
-> >               dev_err(qproc->dev, "unable to resolve mba region\n");
-> > -             return -EINVAL;
-> > +             return ret;
-> >       }
-> >
-> > -     qproc->mba_phys =3D rmem->base;
-> > -     qproc->mba_size =3D rmem->size;
-> > +     qproc->mba_phys =3D res.start;
-> > +     qproc->mba_size =3D resource_size(&res);
-> >
-> >       if (!child) {
-> > -             node =3D of_parse_phandle(qproc->dev->of_node,
-> > -                                     "memory-region", 1);
-> > +             ret =3D of_reserved_mem_region_to_resource(qproc->dev->of=
-_node, 1, &res);
-> >       } else {
-> >               child =3D of_get_child_by_name(qproc->dev->of_node, "mpss=
-");
-> > -             node =3D of_parse_phandle(child, "memory-region", 0);
-> > +             ret =3D of_reserved_mem_region_to_resource(child, 0, &res=
-);
-> >               of_node_put(child);
-> >       }
-> >
-> > -     if (!node) {
-> > -             dev_err(qproc->dev, "no mpss memory-region specified\n");
-> > -             return -EINVAL;
-> > -     }
-> > -
-> > -     rmem =3D of_reserved_mem_lookup(node);
-> > -     of_node_put(node);
-> > -     if (!rmem) {
-> > +     if (ret) {
-> >               dev_err(qproc->dev, "unable to resolve mpss region\n");
-> > -             return -EINVAL;
-> > +             return ret;
-> >       }
-> >
-> > -     qproc->mpss_phys =3D qproc->mpss_reloc =3D rmem->base;
-> > -     qproc->mpss_size =3D rmem->size;
-> > +     qproc->mpss_phys =3D qproc->mpss_reloc =3D res.start;
-> > +     qproc->mpss_size =3D resource_size(&res);
-> >
-> >       if (!child) {
-> > -             node =3D of_parse_phandle(qproc->dev->of_node, "memory-re=
-gion", 2);
-> > +             ret =3D of_reserved_mem_region_to_resource(qproc->dev->of=
-_node, 2, &res);
-> >       } else {
-> >               child =3D of_get_child_by_name(qproc->dev->of_node, "meta=
-data");
-> > -             node =3D of_parse_phandle(child, "memory-region", 0);
-> > +             ret =3D of_reserved_mem_region_to_resource(child, 0, &res=
-);
-> >               of_node_put(child);
-> >       }
-> >
-> > -     if (!node)
-> > +     if (ret)
-> >               return 0;
->
-> Shouldn't we differentiate between an absent region (OK) and an error
-> during parse.
+We already have a component driver named "RX-MACRO", which is
+lpass-rx-macro.c. The tx macro component driver's name should
+be "TX-MACRO" accordingly. Fix it.
 
-IMO, no. The resource is either available to Linux or it isn't. The
-driver can decide whether it can continue out without or not. Anything
-more is just validation of the DT which the kernel does a terribly
-inconsistent job of and we have better tools for.
+Cc: Srinivas Kandagatla <srini@kernel.org>
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patch.msgid.link/20250806140030.691477-1-alexey.klimov@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-> > -     rmem =3D of_reserved_mem_lookup(node);
-> > -     if (!rmem) {
-> > -             dev_err(qproc->dev, "unable to resolve metadata region\n"=
-);
-> > -             return -EINVAL;
-> > -     }
-> > -
-> > -     qproc->mdata_phys =3D rmem->base;
-> > -     qproc->mdata_size =3D rmem->size;
-> > +     qproc->mdata_phys =3D res.start;
-> > +     qproc->mdata_size =3D resource_size(&res);
-> >
-> >       return 0;
-> >  }
-> > diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qc=
-om_q6v5_pas.c
-> > index 02e29171cbbe..b3f7209289a6 100644
-> > --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> > +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> > @@ -121,7 +121,7 @@ struct qcom_pas {
-> >
-> >  static void qcom_pas_segment_dump(struct rproc *rproc,
-> >                                 struct rproc_dump_segment *segment,
-> > -                               void *dest, size_t offset, size_t size)
-> > +                    void *dest, size_t offset, size_t size)
->
-> Irrelevant? (and two next chunks)
+LLM Generated explanations, may be completely bogus:
 
-Yes, not sure how those snuck in there.
+## Backport Status: **YES**
 
-Rob
+## Extensive Explanation:
+
+This commit should be backported to stable kernel trees for the
+following reasons:
+
+### 1. **Clear Bug Fix with User-Visible Impact**
+The commit fixes a copy-paste error where the TX macro codec driver
+incorrectly identified itself as "RX-MACRO" instead of "TX-MACRO". This
+bug has been present since the driver was initially introduced in commit
+c39667ddcfc5 ("ASoC: codecs: lpass-tx-macro: add support for lpass tx
+macro"). The incorrect component name causes:
+- **Debugfs confusion**: The component appears under
+  `/sys/kernel/debug/asoc/` with the wrong name "RX-MACRO", making it
+  indistinguishable from the actual RX macro driver
+- **Potential userspace issues**: Any userspace tools or scripts that
+  rely on component names for identification would be confused
+- **Developer confusion**: When debugging audio issues, having two
+  different components with the same name makes troubleshooting
+  difficult
+
+### 2. **Minimal and Contained Change**
+The fix is a simple one-line change that only modifies a string constant
+from "RX-MACRO" to "TX-MACRO" in the component driver structure. This is
+about as minimal as a fix can get:
+```c
+- .name = "RX-MACRO",
++ .name = "TX-MACRO",
+```
+
+### 3. **No Risk of Regression**
+- The change only affects the component's identification string
+- It doesn't modify any functional behavior, audio paths, or driver
+  logic
+- The correct name "TX-MACRO" is consistent with the driver's actual
+  purpose (TX = transmit path)
+- Other similar macro drivers (WSA-MACRO, VA-MACRO) already use their
+  correct respective names
+
+### 4. **Long-Standing Issue**
+This bug has existed since the driver was first merged, meaning all
+kernel versions with this driver have the incorrect name. Backporting
+ensures consistency across all maintained kernel versions.
+
+### 5. **Follows Stable Tree Rules**
+- **Important bug fix**: Yes - fixes component identification issue
+- **Minimal risk**: Yes - single string change with no functional impact
+- **Not a new feature**: Correct - purely a bug fix
+- **No architectural changes**: Correct - only changes a name string
+- **Clear and obvious fix**: Yes - the TX macro driver should be named
+  "TX-MACRO", not "RX-MACRO"
+
+### 6. **No Compatibility Concerns**
+While changing a component name could theoretically break userspace that
+depends on the incorrect name, this is unlikely because:
+- Having two components with identical names ("RX-MACRO") is already
+  broken behavior
+- Any userspace relying on this would already be confused between the
+  two components
+- The fix brings the driver in line with its intended design
+
+The commit message clearly indicates this is a straightforward naming
+correction, and the code change confirms it's a minimal, safe fix
+suitable for stable backporting.
+
+ sound/soc/codecs/lpass-tx-macro.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 27bae58f4072..fe000ff522d2 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -2230,7 +2230,7 @@ static int tx_macro_register_mclk_output(struct tx_macro *tx)
+ }
+ 
+ static const struct snd_soc_component_driver tx_macro_component_drv = {
+-	.name = "RX-MACRO",
++	.name = "TX-MACRO",
+ 	.probe = tx_macro_component_probe,
+ 	.controls = tx_macro_snd_controls,
+ 	.num_controls = ARRAY_SIZE(tx_macro_snd_controls),
+-- 
+2.50.1
+
 
