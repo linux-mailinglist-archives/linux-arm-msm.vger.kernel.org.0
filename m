@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-69765-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69766-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51B61B2C5BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 15:37:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42177B2C5C7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 15:39:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDFB61B6275B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 13:33:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98B571BA0ABC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 13:35:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80BC633EAE9;
-	Tue, 19 Aug 2025 13:32:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2D9A6335BA3;
+	Tue, 19 Aug 2025 13:34:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XXWYcuVe"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="e09qY7GF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3CB525524D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 13:32:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B609310645
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 13:34:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755610376; cv=none; b=UaJ0HWxDVItMsBn0ZasECypKfA/qTPlE2guLTL4jjMWB8j9o/Eht6fRhc143ehf6ivkfahiOZtiypZARGJUzgzD+VeY1w9KMugO9MwG/ac3D7aytwv7PRPhNM1XJ1Hb7If+HD0QyXPbhDEpfXkMf5NoJNqnJnI8bTt2uYhQDY7M=
+	t=1755610478; cv=none; b=hSIsNBrxa1cV7Sne0ykKkZIR/hn7IYbWliQ9n5OF4+yF7aNekBkjbA86v6AwuWmRVxo8U43VB8cO627E54hQIARSzXUjPeiuFCBTtrbsBPxfO5JDk+EC9H9So7EsfGf8C/QFCVObvXtyc72gdchn/tYZBICFKDqTpDBwDZeF0tU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755610376; c=relaxed/simple;
-	bh=pSC5IgqyzZtG96ClfbXrgt5sbg1AohobwZVoz25rj/M=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=bUwFdS9KpyS+lK1hFwJ1dMxW3VklaAUjqUJt/kkPYOeUoUD7dpz9USXzRdI8FmWj/iNHbq8L/zNAn/rdj/IHA/qIAkRqFlX2AlDrQVnBIhQ6IVU9nZl+ttK1C592O6QhjvVbYN9uHzXU84ufy6QjuOiOUA2OOGBOXciKLpW32JE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XXWYcuVe; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1755610478; c=relaxed/simple;
+	bh=wipzgxzu/rUCZ24ZntLQzz9oqTSOOsAe7X1A0+zrX08=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JpMzAoyPZLUXjVoPcqMMmzNQ5xPMIL4fKntAYnNcxH9hGBG3Jlvny7C3hxKfvtgaSvbGqF5tKLCuxlR6TdygTMA407byzL6/rzI9MbCvqztqX/3tlngCMDn0RskSI0RDtwEoez/Zk8M/2dTzQawj/LKqDBjNgOnE8Supt7qG6cY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=e09qY7GF; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3b9dc55d84bso3688402f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 06:32:54 -0700 (PDT)
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45a1b0becf5so29038735e9.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 06:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755610373; x=1756215173; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1755610475; x=1756215275; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=FygJPUitZkmXwlp1RpWscijGjGvi5AqEQa7JO2lBl9w=;
-        b=XXWYcuVeZdjKkQpbmgtiXlCYl2P3uKIwc5vk/Jo460Xd8ezzS8QFMCAjkC3CFcBkq5
-         VW4Ej+rGwFUzbGHTZiSEUcXRxH6+omwQMCHHQ8UZ8F212Fj5ItogE2fwUBn64JLw3rRc
-         8petYKOwLYhlUHEw/L0Z9ZkyRbzgU5K8/LHZhpS/DUO7f0Invi60piAGW9odGopSSq7g
-         GVkdZ0Lts9g0aYG0WPYT9hmGl3junTZPCBRSZM25yU8Fk94+YxU6IPQKdt+hzTCB0lnR
-         xGN35RYy8u9zLJ95wGvXczvsAiCr7Pkl5/T5dANheglI9ftTOEttnFCJRH/7s+WebjJ0
-         VqQg==
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a9ZFei03fy4ZPyixVVD0bhhT9fRXV0zABOzey2pvCiY=;
+        b=e09qY7GFqk2uaOkiQe3ID/b1q5kb8s1xn35ziiaUZ+1zHECeWonxQJoPp6Y9dSOglV
+         1oXZLKEbLZ+7dXCUFP9J7aXYENfzubh4muCxPj88BjjMLi/l6M4A3VNVxcHyFDcg3m/O
+         9oizJST5wMvxj/eGXMcvcNAdLmW6ahOs+asL2A5+gNUiBiTV92Y1mZG18G5Yml1CCW9j
+         YSpHjoL0w4c5uGtPtaDy5PwBKh0WeyuQkHwtTkayt3Mt9ohr5kQPI3VWrwpBNmOtHne6
+         z1nNYT/j92GR3VIvPBolgSgf3qy/sHn+9PEByLSN9w35yffeVqlGZAYlHTFZMhqAmCAj
+         juVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755610373; x=1756215173;
+        d=1e100.net; s=20230601; t=1755610475; x=1756215275;
         h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FygJPUitZkmXwlp1RpWscijGjGvi5AqEQa7JO2lBl9w=;
-        b=IHPclDlbeur/MPZ6rU0HmaIUGCt6qsboFhP6bZTG5cEPFiHEHGtxXBZFxWyG/U5blr
-         fIzztnlpytgTdMay3OGwg9KjtkpjxA7GNwu9F1rzaCSGM8f7/AP4DHwlHm6GzUv2KsF/
-         q6WOoY0RQQjC9e8w74sv6CZYkfbOKbkxLsSVtr3p0jW2NJlwVrnkrwW+zyCG5TXJYz/7
-         Pz/XjoUJsDXUNqgTo32mXX+cMgMZLrn2LGk3nuKoPS5MrLYF6fDc81m+bkseCJp2Tq7+
-         Fn4q83Wg/lJ2RUoflryqWon8uubvQxDCKC0y4IOW6XWIjyCQizOsZ/le29dFoTu4w585
-         wkBQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUD9reAsoFEAS5RDEb+Mt8aKHMK38UaR+Oy6RzupBM4qOBBTOX+UBTkTh0R1re1iXtr0r8ug/SM1snenEOE@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzwme3z9Rs4jz++HgPmUf65szZZpeSqAlM16l0/6DIzRN0pwjps
-	ZXs5+Trgx1OcurKdPakCUibDYZfcSL8xlTZkMSXlOivaYYDvjh2oHlju+qk0wVdUQy4=
-X-Gm-Gg: ASbGncsuQsjFgxkPlP4QH5OnWEMzb6m+bUQWl0Ky6xKfO0ZvkIdfpmkYFuY/Hp+T7gH
-	AshJn0AOqT8fNQ+vSCem8JF5BKHXx+AirYzpI5AAlGAKk9xr99rGlTnqL+kSQxSqWu6d9kk5Hpm
-	zavsFwmfTc5CzH5V7ZxF6I0zpPuWB2wZbA0j5cF+zfV0P4t/2saKVuza0/635F3v18XynCOxd/W
-	2UpRq01E5f3xEygnQYibGaVPdavegnS/JTzcIJ0eePKY/H+VimQwkpGZbGSubN1J5gvkbt84VjD
-	D+HsbqaK9l8BAJiUYoiJNOSKh4nfg2MeBNZvkY4pRctrC7O8VPJ0fRJF4jSklI8W5CGwX/pZztz
-	Rtay5v44RRdU/Ntucd8+qVkSRw+gB28JSHfJcS8rKoUzNG26VElLdOU0x+PnEv6U=
-X-Google-Smtp-Source: AGHT+IHE3eWuGDJbAuuWclWDGhvbLd8+Nrm3L1V5+JQsqdxDxBiVDMEcNaBhcDl9yr9xN8B6hHRBKQ==
-X-Received: by 2002:a05:6000:24c3:b0:3a4:d64a:3df6 with SMTP id ffacd0b85a97d-3c0ea3cf081mr2302142f8f.3.1755610373108;
-        Tue, 19 Aug 2025 06:32:53 -0700 (PDT)
+        bh=a9ZFei03fy4ZPyixVVD0bhhT9fRXV0zABOzey2pvCiY=;
+        b=qsal8YFO1r4+HhRAWy1CqUNugh0MjaUh+BaW61bAQ/qyX5cAX4u2gP2MaASqSi65Nr
+         HLz4+g5mxSlMIwYLtjJ3U5pxGvqc9Pt8TEEDlssKRA3GyH8CqLuPPEqmWqFbit0sdkIW
+         iJhYCvDBFZ1dKeKmWNUTpIvi/8dIN9HZshyjOZ51Wp+pEysUhkUbWysA7k5ZZwmJZe2T
+         oTnbCZqNK9fG7v1oLgVydcQRVgWwTyNo0wiQ7Lqwfp3jrGLabwu3PAURJwHJe/zA9eIA
+         TWSG9o2URy8W/zwe6SpfTzGL0HjlK3X6Six0OPQh0IGsyfc81JKy8+KogULJ+bCo5fHa
+         8DGQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXltA+YkE1aFLmRlrnHbNFygjOgzHEo9bwfXoiWDCPImqziFYIh+Bzw6kHRnYZfGr+56BQ7ZOwO/fOHaLaQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgLzEiNd9Hwb17/hn+GzKfr1HpGPFv/abHKGRtqK9yy9xKV5+b
+	o5r2omNchLBkiA4r2nFtXJDeJ6871Go/jYSKNgpwdQOlC9PL+5IE7QPZUvPxy8iC/+4Q3o1Czl9
+	OHXCetvY=
+X-Gm-Gg: ASbGncuEN6YF1tNZOvDfpu49TFbCkZoNHqp0TVfZlfXNeuU3bNqk6+eOEaBkU+NxF+/
+	6ZnroBh7+8zM+NZMl+53oqj8LmA9sAvu8DWcRRE6MoUYJjxtzDdkNonVV/jMjzCzuuPUEuXiK1e
+	liUxJNPJezc58RMpPMC6wDnA50f9W0iuWvG9ebPDzNo4JKpbZJXS/7Yj0X7cFkmp3ZYOw9FyTO+
+	uvTAOL2bxYoEHFhEQg4/BnA+QJFu3y3ZQvVkI7iHfxhlNcqeCTBoQfwF5wwkPE3ojhLut22JpFg
+	18+P0qFidbCfRADbiLE64ivnWiO469t3+QD2bMDrSe92AJqkpDErPv0Z5KA5mOba8ZAf+4p7nkC
+	CJzksg3HOXXz3qfY7RiSKJWrCCc8M9On5CSIonwkaUQg/Ww8dwLoJn4WklCiuK9w=
+X-Google-Smtp-Source: AGHT+IGA4uZOavHskRVazrBsrJEpwCCS9yNXa5Q7x4nDv12AaruKezbMFjMhYQNh3voiuKoxjMWquQ==
+X-Received: by 2002:a05:600c:46c6:b0:456:24aa:9586 with SMTP id 5b1f17b1804b1-45b43dfff1amr20520035e9.21.1755610474714;
+        Tue, 19 Aug 2025 06:34:34 -0700 (PDT)
 Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c077c5776fsm3708064f8f.61.2025.08.19.06.32.52
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b42a7756asm40936015e9.11.2025.08.19.06.34.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Aug 2025 06:32:52 -0700 (PDT)
-Message-ID: <bee2fce1-facb-44c2-8eed-2bb396f9c204@linaro.org>
-Date: Tue, 19 Aug 2025 14:32:51 +0100
+        Tue, 19 Aug 2025 06:34:34 -0700 (PDT)
+Message-ID: <552c0e8d-f3ae-4c2e-ac8d-f43cde5c5ccb@linaro.org>
+Date: Tue, 19 Aug 2025 14:34:33 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,56 +83,55 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] usb: typec: qcom-pmic-typec: use kcalloc() instead of
- kzalloc()
-To: Qianfeng Rong <rongqianfeng@vivo.com>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250819090125.540682-1-rongqianfeng@vivo.com>
+Subject: Re: [PATCH v2 04/24] media: iris: Fix port streaming handling
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Hans Verkuil
+ <hverkuil@xs4all.nl>, Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Vedang Nagar <quic_vnagar@quicinc.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Renjiang Han <quic_renjiang@quicinc.com>,
+ Wangao Wang <quic_wangaow@quicinc.com>
+References: <20250813-iris-video-encoder-v2-0-c725ff673078@quicinc.com>
+ <20250813-iris-video-encoder-v2-4-c725ff673078@quicinc.com>
+ <40673a17-a19c-4722-ae5b-272082af917b@linaro.org>
+ <8b9d5f6e-ee95-e4d1-3fac-fdcb277a7af3@quicinc.com>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250819090125.540682-1-rongqianfeng@vivo.com>
+In-Reply-To: <8b9d5f6e-ee95-e4d1-3fac-fdcb277a7af3@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 19/08/2025 10:01, Qianfeng Rong wrote:
-> Replace devm_kzalloc() with devm_kcalloc() in qcom_pmic_typec_pdphy_probe()
-> and qcom_pmic_typec_port_probe() for safer memory allocation with built-in
-> overflow protection.
+On 18/08/2025 10:45, Dikshita Agarwal wrote:
 > 
-> Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
-> ---
->   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c | 2 +-
->   drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c  | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> index 18303b34594b..c8b1463e6e8b 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_pdphy.c
-> @@ -567,7 +567,7 @@ int qcom_pmic_typec_pdphy_probe(struct platform_device *pdev,
->   	if (!res->nr_irqs || res->nr_irqs > PMIC_PDPHY_MAX_IRQS)
->   		return -EINVAL;
->   
-> -	irq_data = devm_kzalloc(dev, sizeof(*irq_data) * res->nr_irqs,
-> +	irq_data = devm_kcalloc(dev, res->nr_irqs, sizeof(*irq_data),
->   				GFP_KERNEL);
->   	if (!irq_data)
->   		return -ENOMEM;
-> diff --git a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-> index 4fc83dcfae64..8051eaa46991 100644
-> --- a/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-> +++ b/drivers/usb/typec/tcpm/qcom/qcom_pmic_typec_port.c
-> @@ -713,7 +713,7 @@ int qcom_pmic_typec_port_probe(struct platform_device *pdev,
->   	if (!res->nr_irqs || res->nr_irqs > PMIC_TYPEC_MAX_IRQS)
->   		return -EINVAL;
->   
-> -	irq_data = devm_kzalloc(dev, sizeof(*irq_data) * res->nr_irqs,
-> +	irq_data = devm_kcalloc(dev, res->nr_irqs, sizeof(*irq_data),
->   				GFP_KERNEL);
->   	if (!irq_data)
->   		return -ENOMEM;
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> On 8/16/2025 4:10 PM, Bryan O'Donoghue wrote:
+>> On 13/08/2025 10:37, Dikshita Agarwal wrote:
+>>> +    if (!ret)
+>>
+>> I think you should have a consistent error pattern
+>>
+>> if (ret)
+>>      goto error;
+>>
+> Its done to avoid duplication of code, otherwise it would look like
+> 
+> if (inst->state == IRIS_INST_STREAMING)
+> 	ret = iris_queue_internal_deferred_buffers(inst, BUF_DPB);
+> 	if (ret)
+> 		goto error;
+> 	
+> 	ret = iris_queue_deferred_buffers(inst, buf_type);
+> 	if (ret)
+> 		goto error;
+> 
+> and more duplication when encoder is added.
+
+Understood, IMO the pattern above is clearer and easier to read.
+
+Up to you if you want to change it though.
+
+---
+bod
 
