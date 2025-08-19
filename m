@@ -1,188 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-69689-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69690-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BDE2B2BC7A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 11:04:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5693AB2BC8D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 11:05:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id EB0B07A3C5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:02:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 59AF7683F40
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:04:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79DBF26E6EB;
-	Tue, 19 Aug 2025 09:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C59F31A042;
+	Tue, 19 Aug 2025 09:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aEgxQ2C6"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nb05A76Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE1523E34C;
-	Tue, 19 Aug 2025 09:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E4926C39B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 09:04:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755594236; cv=none; b=AWR8vg+VOJS8GU0zmLSsXuLAsnDyQ1zReK9x1I9hIrvbQgoJM3ipSTMUibWxEOwbbYf4dDmOcqAK/pOFe5pJNU8W9OuF3eWT2cqK+g6DkHA+8INZQa34f7Dmdz1GypECFgpcB/fnodTdJXxUt2OvH0MdojvChxFPrPTiIA4IuDQ=
+	t=1755594261; cv=none; b=C/w6y0HR4z7amCCUpH8Ifm8ZBNGPjzMheFSFM3vNFIQae2QW5MRgSRHRBgHj537hfBxs0oQnoCw2szHufnlt9W81cdE0p5rGsq8h/Q+WerWFNtb8Na4qDJ5xvvrPG+30RMaYxZXuvpC6dlDrXAmdxR+IpoFOlApkkZevqu2y9sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755594236; c=relaxed/simple;
-	bh=U81+p77c0JQOTqk7IOzyd3hR2gXqfCNzh6rYyurZ5Eg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G8Py3kOLecB0TUoYA4MhrtLgYGYmpIPb0UVQjxtH3OPL6UqRAmpfQQhEsqp1xzftzfbYLT0rxuJuIwsFQjtRm5WIzdMInkBwrVetMoy7DIb8+GB7VilFaVfjri9cbvmUjgr1LxZRgEL5lE46PHwTEr/QuQ5s6jAuvUtjH0Ggazs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aEgxQ2C6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314B1C113D0;
-	Tue, 19 Aug 2025 09:03:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755594235;
-	bh=U81+p77c0JQOTqk7IOzyd3hR2gXqfCNzh6rYyurZ5Eg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aEgxQ2C69qgc/E3qFBtTnEN5YhZhnpiBwiTtNRk3f7rG92qb2o4dGHM/zWPGz5sib
-	 qjOaifilW0lTtkcatgbMzeYCdiM3ORf3w62gUV7u/ou37VxECoP+mZ2M8Ww1BG5H+v
-	 VLwGwUzE6Xn1qp4MFbo9BhBzu23V94p8GqHdMo0BfieN/4lrU8zsDoOh/lii49ndxg
-	 t3h7P5PnNiew4XBQXz2qbKD6Ibq4ASeT0tdPcx31QNZBsQaKCBYfqRk2OkWO/Gv/Pk
-	 j6e4Jy6LP/lG2SMUcJK5L/2Nqmoi9sLBSiqG/nUXu8F7Ai1wrAVBHbIYRpfSLFJuUP
-	 L9W5Qw7/hz5eg==
-Date: Tue, 19 Aug 2025 11:03:52 +0200
-From: "mripard@kernel.org" <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: "liviu.dudau@arm.com" <liviu.dudau@arm.com>, 
-	"Kandpal, Suraj" <suraj.kandpal@intel.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
-	"kernel-list@raspberrypi.com" <kernel-list@raspberrypi.com>, "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>, 
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
-	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>, 
-	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, 
-	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>, 
-	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>, "Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>, 
-	"Murthy, Arun R" <arun.r.murthy@intel.com>, "Shankar, Uma" <uma.shankar@intel.com>, 
-	"Nikula, Jani" <jani.nikula@intel.com>, "harry.wentland@amd.com" <harry.wentland@amd.com>, 
-	"siqueira@igalia.com" <siqueira@igalia.com>, "alexander.deucher@amd.com" <alexander.deucher@amd.com>, 
-	"christian.koenig@amd.com" <christian.koenig@amd.com>, "airlied@gmail.com" <airlied@gmail.com>, 
-	"simona@ffwll.ch" <simona@ffwll.ch>, 
-	"maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>, "robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>, 
-	"abhinav.kumar@linux.dev" <abhinav.kumar@linux.dev>, "tzimmermann@suse.de" <tzimmermann@suse.de>, 
-	"jessica.zhang@oss.qualcomm.com" <jessica.zhang@oss.qualcomm.com>, "sean@poorly.run" <sean@poorly.run>, 
-	"marijn.suijten@somainline.org" <marijn.suijten@somainline.org>, "mcanal@igalia.com" <mcanal@igalia.com>, 
-	"dave.stevenson@raspberrypi.com" <dave.stevenson@raspberrypi.com>, 
-	"tomi.valkeinen+renesas@ideasonboard.com" <tomi.valkeinen+renesas@ideasonboard.com>, 
-	"kieran.bingham+renesas@ideasonboard.com" <kieran.bingham+renesas@ideasonboard.com>, "louis.chauvet@bootlin.com" <louis.chauvet@bootlin.com>
-Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
- structure
-Message-ID: <wr76vyag2osox2xf7ducnkiaanzk2k5ehd2ahnoyqdm5qiywlk@penf4v5bvg5z>
-References: <20250811092707.3986802-1-suraj.kandpal@intel.com>
- <20250811092707.3986802-2-suraj.kandpal@intel.com>
- <20250811094429.GE21313@pendragon.ideasonboard.com>
- <awtqznhquyn7etojonmjn7karznefsb7fdudawcjsj5g2bok3u@2iqcdviuiz2s>
- <20250811111546.GA30760@pendragon.ideasonboard.com>
- <2ah3pau7p7brgw7huoxznvej3djct76vgfwtc72n6uub7sjojd@zzaebjdcpdwf>
- <DM3PPF208195D8D0E55A761A3C16B87BAEEE32AA@DM3PPF208195D8D.namprd11.prod.outlook.com>
- <aJ4LQvqli36TlETu@e110455-lin.cambridge.arm.com>
- <hc6f6wgsnauh72cowocpm55tikejhiha5z4mgufeq7v6gb2qml@kmgfd26bigos>
+	s=arc-20240116; t=1755594261; c=relaxed/simple;
+	bh=Ur/EDwulXmk+KxS1Iyo/HiGIsV1LuoVRseDCDX7NNHk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Gd0HHRp7kQpI4wFmh3Brx5/BBGm87am9qR/uN7Y9fAR34oI6KUlxsqgvRPLNbnoJJa+Z+kEB9Zb/RQKoxdXPap5l5dKdTbVTnNHzkIr37D1jci221/CJkRqptHffR+7ISALg42OVIZdNdAJeI058oMMZE3Y8IK8ySM5xKJMaGag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nb05A76Y; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57J90Z1a029790
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 09:04:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PtQwBBE7A/L6DYrB3suka029FN2KX9K7yxrcnIgCQII=; b=nb05A76YpPiOGSz2
+	vwKgyfBmE6HTLMxdi6KMSAwl+lCIrsM15BUf4wC5FcFazt++cmigwggE66ZVHZ+Z
+	LII/VhS37canuQuPj57BEoCVcQtDCQRHJZa1bDvjE7RmxNwQuI0qOdLDNEouVx1W
+	RXipSQsgCZ2tXrvtKmTPYVnzEQY10R31absN9NHWNQ4LNLFpHAHGlrwczdPAbeZK
+	8CvgKPFlbbnMT31my/tqNor12JVqpfefFg4bdNMJ7bIVA2gjNFoaNn6ovC/0KrYy
+	e3hZjWpl7xsh7UcxJcedHUcNRbJkRpLhqe2wYrcCxtTZakAiMefhOTSv3tC8E9Lk
+	zG1gJw==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48jk5mftek-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 09:04:17 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2430c5d4d73so69192265ad.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 02:04:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755594257; x=1756199057;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PtQwBBE7A/L6DYrB3suka029FN2KX9K7yxrcnIgCQII=;
+        b=TF3Si601K87zG7ifZ/TcPfR4E1aBrKEWapekbb5U6CTYnrb1U7PfWCZOum0r3VXgeU
+         /QvD/P1OVmBXtNBe33UeMBS0siqx8eTh7fvNaUTKA5cmQXCpSEnPsG14Y7Gfwvg0zu9b
+         FUNLaJjNstfVsEHN/N2o7gOqzw5zz3C92zRjRXTfo3XTzzC5r4qSepGyzXz58H2W441Z
+         zwaberwqyR9BLAH9RaMPSi41INR18pAkpWgbUB1z6D1pAx8uhqGs79pgJh4nQ6stElRR
+         QTVLt8YtwcpIh1WDXg+uA1dJezNGLbke1r9bYyClUgExdzlA3FYTdU9ocC6+gRW15eW+
+         rVUA==
+X-Forwarded-Encrypted: i=1; AJvYcCXge4dDRM9KQB0mBMEwiM1XCSrEs9SYhPJO0LaPfiE1BoRs7UUszS5DWGu2Z5Q4Za/cTWwYRvlrmiTecBrh@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAXrcMUug8bF3a1OqCYbXfhOdii1am2RWIkH7ZvMso8kHnYZLX
+	JnLkC6XeEot/n1yxVdRBayPKGwK7gMV4y9s2Y91lg0kEzyrFu6LPrD/p7VrwXqZNBu0e2PdIYz9
+	HEcKvyc9oNk2iknBbNGQEn30H18+G7gG70sqHkpIKTShUJ4fET4QCwgzz3OyQpIKDQw9Z
+X-Gm-Gg: ASbGncttpohuIo9poR+9avwfL+1qJN4RsueqfmAjVwJTA8pJgn0F4gdu1X3o799Okbc
+	RemE11ThkoLKUzZ1uSbgqRffXZdk8TFz2Q+XOIGVukGnQ9VYScjITW05SXw+jRwBbxGznhoniMv
+	EoLNzOEWydBWXz7LMw7K7z+CqPrmQF0EtXsFrWMsYNvOgVgxsxJHmDjVxQPxcVcmuVhlBj0BqOB
+	uD8ra3L857wup3o2WOeOlvOZP3jATpAehGbiJkj555f7U4Uxri+mbkIzoKDw+L6bJEYnEXwx3Qn
+	ibzclCajLR9kNVHs2RYI1hs4bSJpTKFy1xhed1ZYcznAvlevQBi1NbDih/e9PICGBl2Uzm5teFK
+	crXt/WBLreyzk5crOx/Oa22FOEnJWZR20
+X-Received: by 2002:a17:903:1205:b0:231:d0da:5e1f with SMTP id d9443c01a7336-245e0f2775amr16133805ad.21.1755594256724;
+        Tue, 19 Aug 2025 02:04:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFkh7QwrfpTpI4CY81hIJagXgTCB6D+xkbxXMTtgq4VmPlFbLxOxb5dFrnqC4gKaobuk82+qA==
+X-Received: by 2002:a17:903:1205:b0:231:d0da:5e1f with SMTP id d9443c01a7336-245e0f2775amr16133355ad.21.1755594256080;
+        Tue, 19 Aug 2025 02:04:16 -0700 (PDT)
+Received: from [10.133.33.88] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2446d50f8d0sm102888145ad.100.2025.08.19.02.04.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 19 Aug 2025 02:04:15 -0700 (PDT)
+Message-ID: <1394aa43-3edc-4ed5-9662-43d98bf8d85f@oss.qualcomm.com>
+Date: Tue, 19 Aug 2025 17:04:07 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="skbefrsfocmocpeu"
-Content-Disposition: inline
-In-Reply-To: <hc6f6wgsnauh72cowocpm55tikejhiha5z4mgufeq7v6gb2qml@kmgfd26bigos>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/6] arm64: dts: qcom: qcs615: add ethernet node
+To: Krzysztof Kozlowski <krzk@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Andrew Lunn <andrew+netdev@lunn.ch>,
+        "David S. Miller"
+ <davem@davemloft.net>,
+        Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
+        Paolo Abeni <pabeni@redhat.com>,
+        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+Cc: netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, stable+noautosel@kernel.org,
+        Yijie Yang <quic_yijiyang@quicinc.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250819-qcs615_eth-v4-0-5050ed3402cb@oss.qualcomm.com>
+ <20250819-qcs615_eth-v4-3-5050ed3402cb@oss.qualcomm.com>
+ <c4cbd50e-82e3-410b-bec6-72b9db1bafca@kernel.org>
+ <157c048d-0efd-458c-8a3f-dfc30d07edf8@oss.qualcomm.com>
+ <0b53dc0b-a96f-49e1-a81e-3748fa908144@kernel.org>
+Content-Language: en-US
+From: Yijie Yang <yijie.yang@oss.qualcomm.com>
+In-Reply-To: <0b53dc0b-a96f-49e1-a81e-3748fa908144@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Sdn3duRu c=1 sm=1 tr=0 ts=68a43e11 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=WpKivvdH6quKUe0GCQ0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: xrwCaA0cNAMh-S35NMUXUs3Stq1LdGkE
+X-Proofpoint-GUID: xrwCaA0cNAMh-S35NMUXUs3Stq1LdGkE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE2MDA0MiBTYWx0ZWRfX75mZutLKOIXU
+ A+dVdvESHyMHJ3ANPlXMfBXUGDdJ6Wem48ndmvpCjSc0z0Loqh2u/b8NmF9K5YVl8Z9c2BcwAMB
+ MbwI8RdSMC4YmrXzUzdvS1rx+yxD7orvq5/axzdHQtoo7avKCobrsnUDFcQ8QquSjPrwjUFeyoC
+ tkLFUrdVUX6e4cFrIx4oVrK6DXyNFUc9/gRJ+iIFFLwxCkqM6wSpgB3a197CxKYSJsmLf8mlscO
+ FMH7r9ZJg4EdjyAF8kZbkKzfPAazWocWFeHsKxeODnntqmHwbGx3zPhFX/ldq15qOPdLssbCybM
+ EbfjWyU5jhwYdSEg0UMD7FMeKTjxFra4UyS6uHn0nhB5AaELu9UevavO4CtYjRtXxS3CfDDHvn/
+ A0X/ojql
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-19_01,2025-08-14_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 spamscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 phishscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508160042
 
 
---skbefrsfocmocpeu
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
- structure
-MIME-Version: 1.0
 
-Hi,
+On 2025-08-19 15:15, Krzysztof Kozlowski wrote:
+> On 19/08/2025 08:51, Yijie Yang wrote:
+>>
+>>
+>> On 2025-08-19 14:44, Krzysztof Kozlowski wrote:
+>>> On 19/08/2025 08:35, YijieYang wrote:
+>>>> From: Yijie Yang <quic_yijiyang@quicinc.com>
+>>>>
+>>>> Add an ethernet controller node for QCS615 SoC to enable ethernet
+>>>> functionality.
+>>>>
+>>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+>>>> ---
+>>>
+>>>
+>>> Why do you mix up DTS and net-next patches? This only makes difficult to
+>>> apply it, for no benefits.
+>>
+>> The DTS changes and driver code modifications work together to achieve a
+>> single purpose, so I included them in one patch series. Should I
+>> consider splitting them into two separate series?
+> Of course yes. You are just making difficult to apply this. Patches are
+> completely independent and even your internal guideline asks to NOT
+> combine independent patches.
 
-On Sat, Aug 16, 2025 at 01:20:53AM +0300, Dmitry Baryshkov wrote:
-> On Thu, Aug 14, 2025 at 05:13:54PM +0100, liviu.dudau@arm.com wrote:
-> > Hi,
-> >=20
-> > On Wed, Aug 13, 2025 at 10:04:22AM +0000, Kandpal, Suraj wrote:
-> > > > > > };
-> > > > >
-> > > > > I still don't like that. This really doesn't belong here. If anyt=
-hing,
-> > > > > the drm_connector for writeback belongs to drm_crtc.
-> > > >=20
-> > > > Why? We already have generic HDMI field inside drm_connector. I am =
-really
-> > > > hoping to be able to land DP parts next to it. In theory we can hav=
-e a DVI-
-> > > > specific entry there (e.g. with the subconnector type).
-> > > > The idea is not to limit how the drivers subclass those structures.
-> > > >=20
-> > > > I don't see a good case why WB should deviate from that design.
-> > > >=20
-> > > > > If the issue is that some drivers need a custom drm_connector
-> > > > > subclass, then I'd rather turn the connector field of
-> > > > > drm_writeback_connector into a pointer.
-> > > >=20
-> > > > Having a pointer requires additional ops in order to get drm_connec=
-tor from
-> > > > WB code and vice versa. Having drm_connector_wb inside drm_connector
-> > > > saves us from those ops (which don't manifest for any other kind of=
- structure).
-> > > > Nor will it take any more space since union will reuse space alread=
-y taken up by
-> > > > HDMI part.
-> > > >=20
-> > > > >
-> > >=20
-> > > Seems like this thread has died. We need to get a conclusion on the d=
-esign.
-> > > Laurent do you have any issue with the design given Dmitry's explanat=
-ion as to why this
-> > > Design is good for drm_writeback_connector.
-> >=20
-> > I'm with Laurent here. The idea for drm_connector (and a lot of drm str=
-uctures) are to
-> > be used as base "classes" for extended structures. I don't know why HDM=
-I connector ended
-> > up inside drm_connector as not all connectors have HDMI functionality, =
-but that's a cleanup
-> > for another day.
->=20
-> Maybe Maxime can better comment on it, but I think it was made exactly
-> for the purpose of not limiting the driver's design. For example, a lot
-> of drivers subclass drm_connector via drm_bridge_connector. If
-> struct drm_connector_hdmi was a wrapper around struct drm_connector,
-> then it would have been impossible to use HDMI helpers for bridge
-> drivers, while current design freely allows any driver to utilize
-> corresponding library code.
+The challenge with splitting this series lies in the fact that it 
+attempts to reverse the incorrect semantics of phy-mode in both the 
+driver code and the device tree. Selecting only part of the series would 
+break Ethernet functionality on both boards.
 
-That's exactly why we ended up like this. With that design, we wouldn't
-have been able to "inherit" two connector "classes": bridge_connector is
-one, intel_connector another one.
+As you can see, I’ve CC’d noautosel to prevent this issue. Given the 
+circumstances, I’m wondering if it would be acceptable to leave the 
+series as-is?
 
-See here for the rationale:
-https://lore.kernel.org/dri-devel/ZOTDKHxn2bOg+Xmg@phenom.ffwll.local/
+> 
+> Best regards,
+> Krzysztof
 
-I don't think the "but we'll bloat drm_connector" makes sense either.
-There's already a *lot* of things that aren't useful to every connector
-(fwnode, display_info, edid in general, scaling, vrr, etc.)
+-- 
+Best Regards,
+Yijie
 
-And it's not like we allocate more than a handful of them during a
-system's life.
-
-Maxime
-
---skbefrsfocmocpeu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaKQ99AAKCRAnX84Zoj2+
-dss/AYCDsxLbReOhvxm2/ItnX1NwLBeplh9X5QtqlMFGtACSlJY1IY0m/StI+3f5
-mo8yNFoBgN6HXqzLYYWhMVbxXRVEQKIXD0+CH717KpLuEe2LfvOxFR4OrVqtC0CA
-RG5v2F7KYw==
-=NIHR
------END PGP SIGNATURE-----
-
---skbefrsfocmocpeu--
 
