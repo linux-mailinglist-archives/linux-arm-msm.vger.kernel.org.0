@@ -1,78 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-69837-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69838-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEC03B2CF54
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 00:29:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 19358B2CFCA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 01:21:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7B87E1C28547
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 22:29:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 580B9189BA3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 23:18:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FC473054F2;
-	Tue, 19 Aug 2025 22:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9462425BEF1;
+	Tue, 19 Aug 2025 23:17:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="ifQcTk+q"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MhwcZ5QE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com [209.85.166.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08733054D6;
-	Tue, 19 Aug 2025 22:28:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E41D223DD1;
+	Tue, 19 Aug 2025 23:17:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755642531; cv=none; b=kYRPi+RIPkJMGpOCRcwn+UNj5S69oTLZLWv2ljJdmZ0PSAqcmyMRhbg9vBZRhHupe4GFduKUMM3JXlLVdz6hMxCZEkXD+mdhHDGsYsvuwXZOkmgCSCNGWsGfK7wlBDiO2p/+/TbsP3Cmz3s88gG5LOKSMsW71x2y9GzwpE+gmFU=
+	t=1755645462; cv=none; b=MnlQF8SoUJF5bHF8w9N6xwqRTn0cONjIEloGGTMSYNMOIgCdBTeFO0A8/UFu8FXG/noBw/sR+uanYAAoyleM7StvZuSQlVsgC9H//wvvqff4/1RiiA2ChPG1GRSendJo1hpPhicuBbl9yvsvCYXZwukRQH2gQJ/641k/o9UHmmg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755642531; c=relaxed/simple;
-	bh=SzvTPmMh4aFidcTrXHGlz2zz3mH+73BpfwSnuz3eAx0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g1wQ+qO4FGhO2/c16/NXyZCdXL1BaDopEhcxwErqtTuDQyKb660iCNmnnEVokvk8jyStBnnYs7baw8xX+L5Z1rXEvc2Lh+X0lcScJOPMBJsjHf/QcLwDR6eaxRQXdJRhtajL36JNoP0CF0vxeOv6rvFI7n5Y1N7NBoxch5byT3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=ifQcTk+q; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57JL0n4B019887;
-	Tue, 19 Aug 2025 22:28:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=F4g4hJVyCga
-	T0NWqd+mzu8w6ltV8Ntq8oT4T34bvpWI=; b=ifQcTk+qmSHYXCYoEV2hQMfZmjX
-	XThpSk4amvDUTK+lhn6dKpm/ISEqh04irZiwD/iN0hS7AHiiLDFQnQ4N+Q/lR4sR
-	QCPx665ojV2jWVLhcl/Xr8OG1xOVz50+bxkXKuNGCSvigiUBeIVHF7JVW7ydeJqo
-	6NhMxuWegeoee3Jy+DOG/et1UAvbG6p/glC8O6Y7i98k8iYanwU42qZnbhqneRgq
-	0YKAG6cbKlGu2lF04P8uaCnl7B+SABMrPEj064SZOVVtAmEluL/PzOH7i93bSwMq
-	thgoD83aZ6elwqy1/T/s3aRDmAtys6CvnZay++xHPNGHI5RKQTLDLVBYg8A==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n0tfg53x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Aug 2025 22:28:44 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57JMSca5008405;
-	Tue, 19 Aug 2025 22:28:41 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 48jk2krc32-1;
-	Tue, 19 Aug 2025 22:28:41 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57JMPC4I005595;
-	Tue, 19 Aug 2025 22:28:41 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTP id 57JMSfdk008442;
-	Tue, 19 Aug 2025 22:28:41 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id 4894C57363A; Wed, 20 Aug 2025 03:58:40 +0530 (+0530)
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-To: vkoul@kernel.org, kishon@kernel.org, mani@kernel.org,
-        dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org,
-        konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org, Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add regulator loads for SM8650 and SM8750
-Date: Wed, 20 Aug 2025 03:58:26 +0530
-Message-ID: <20250819222832.8471-3-quic_nitirawa@quicinc.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250819222832.8471-1-quic_nitirawa@quicinc.com>
-References: <20250819222832.8471-1-quic_nitirawa@quicinc.com>
+	s=arc-20240116; t=1755645462; c=relaxed/simple;
+	bh=1kQJXxi8uPSvC/wNAX8jDhENGrCc0tvny2BV5cFDOFc=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ATor40AqziJhKRTLOSAlNvLCSYvX1U8obupRbmLOYpcDNpwZ06aQerxsmzxXhumqVkTvajn8BtoX6KXAXGmwpk7ftRPYy4jPLCDLkZBhUeZNhpJ0krPPE2Aa23hs7KI5Q9xsjj3WxOpaq+k+LtmGZ38udosKJJrr+Mm/Afvzqrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MhwcZ5QE; arc=none smtp.client-ip=209.85.166.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-il1-f169.google.com with SMTP id e9e14a558f8ab-3e582bc3720so22050775ab.3;
+        Tue, 19 Aug 2025 16:17:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1755645459; x=1756250259; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zfg+/0iA7MeX1A93jxyLkNbqcGb7Dk0Q5+FiLHCKrdg=;
+        b=MhwcZ5QEtVp0bjzu5JBj118hgmKJlDFlBoDKSS/KHyyaU6DKz0c5XiGMmyUHfSHvVA
+         ifYlaQPlbELb1oIGhKRZywWpGAiIQqG+Z0z41GlD/pI+iyo2Vn1c0S1DfsTRH2xLEAU7
+         HMquMChE5hzZzAAl5kxGX9yg/9aUVngOSiAHM+dlt9hlXS4MpSQlTcaWNeiSZx4U9eJe
+         D8lvM630x+8yktrDLTh4GAVA+liVSLzRNNQb+ysTBrPt4SuryUNWYilHbufmbLr81nK+
+         r426Q6oeA9mK6lO07MoaCjjeL9CbkcQdz9cIs4F1pbBGGrD35dWr8+Ypobqb8j7qxmZ/
+         s0Ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755645459; x=1756250259;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Zfg+/0iA7MeX1A93jxyLkNbqcGb7Dk0Q5+FiLHCKrdg=;
+        b=V4PgDuFNioOfTqEZIlz6r76V5sz8iW+E5wRSrnwpv9x2ds5rGOXpOwvoifS+9WscOL
+         zM4Z/gyhytd45SSjC1kVa1b4xdGg/7Jh1nmWjkCQ+d0hOb8SXpLF/q9T1EXHvhXMhyGJ
+         5GzBFopaDr0qa2FMdvJ08fy5pvamzYRmFLV/fDYqE07pJ+Jf0nNGNgByswT3Pm84tbEO
+         plkzKdsJolxKWPutoq7AyYDsi/CBu8r/X9B9liD2rNVAXnIfdVZqDXGCL/Uacp7oHuoQ
+         FKqHA1hu9xoxXacc7aC73rFDU+cBGjGl3eCxSj7ZQb0fLWvcd1shsqlm/Mmi7QglbZrO
+         tgxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWUagHmSeX/q9AKXcyrTaDloTc4P/9pkhFsRxXn2M/SVwHxG25FyA/R49ulSYz/teNw1zirtO6OMU6+fQmR@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPhcmko4ol7j9ukrzfl+W9YRWuFDD9MIYEJmKa71KzkqiSOeqD
+	LIE1jxBG8h2gL+eh1Vy4smTGeea0YHqlIr7+DdIdn2GtDJqNoXckHs1BbT/B8Q==
+X-Gm-Gg: ASbGnctMR9HhzAjN93nmg5ipHSXqBObJvwSvJoQ5LwA/5jmv149REQKna2VYn1AvWdt
+	FDQGLQBuYrr3XuKkM7anDpteUAddtYCriawZ1VOs2UZpSn8i/MOe9l0LPYdEa84302pPssJ80kv
+	936s+u1O2gH7RR/raSk36ekTnhLPrLOpEvOYWSeNqPSkSpJb4hNAGsdK6B/tGQAd4hdlL+rZZyC
+	6DrTuAv7A2YcC7kySEXt1mmjR6OnG/HRNJ/MbHUDojGd4hywdRxvjnzP8k39PKOYVFBEOEkWPQG
+	Oh5b906TxvLWrSqtfeJdK18+7dyJ3f7k1tJdImOIx2Z6y9xUpZ9ZdZNbuXDLUXi4TMpi70G4O52
+	S1k509IIMnarlrBahs0ZcXz8dspNyziGwUakWgt+UDklm1b5kkdFXooKVSaE4dHu6cQ==
+X-Google-Smtp-Source: AGHT+IE26v7IsIWqO9h9jisXac4SVVQQIabrAjtx7a4C9+BQ7EZWbdBQ3yfPd/77Ao+xdaYOz2tglg==
+X-Received: by 2002:a05:6e02:1705:b0:3e6:7bb6:74f with SMTP id e9e14a558f8ab-3e67ca88024mr17929785ab.20.1755645459281;
+        Tue, 19 Aug 2025 16:17:39 -0700 (PDT)
+Received: from localhost.localdomain (pppoe-209-91-167-254.vianet.ca. [209.91.167.254])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3e57e67da67sm48388365ab.31.2025.08.19.16.17.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Aug 2025 16:17:38 -0700 (PDT)
+From: Trevor Woerner <twoerner@gmail.com>
+To: linux-kernel@vger.kernel.org,
+	Russell King <linux@armlinux.org.uk>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Takashi Iwai <tiwai@suse.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Andr=C3=A9=20Draszik?= <andre.draszik@linaro.org>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	linux-arm-kernel@lists.infradead.org (moderated list:ARM PORT),
+	linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT)
+Subject: [PATCH] ARM: defconfig: cleanup orphaned CONFIGs
+Date: Tue, 19 Aug 2025 19:16:30 -0400
+Message-ID: <20250819231652.15938-1-twoerner@gmail.com>
+X-Mailer: git-send-email 2.44.0.501.g19981daefd7c
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,99 +100,50 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=EuuLbScA c=1 sm=1 tr=0 ts=68a4fa9c cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=fbOlTRz00Y4wHkv9588A:9
- a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: ofIR_URkZXY7s_ouTiPJ7jO8N0ZfUCY2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDE5NiBTYWx0ZWRfXwYA3z8uybEZ9
- QRKm2lYmujWSiG1R4zGyKXMCYEawEx4eCJ0xpYRBO+5ygLfGWZP1shtAzG307OGUYZskr0uIBEZ
- dT0aSSXxbEwKlvCidvVPpSVpi7ty419TgR6zEND9VIl3no8qXFsHuLE4KjnniVAgOXrIIzYdJDR
- W2PDiHUEHVnEIO8zY3dISTZkma3htpdgnGvm3eAUc/IQvUOwokeLNZffhZsrUVsJLR0VEd8dJxu
- abiLY+UM6qWmgj9y4XKb/s7ZN5DSSQwm/u7lyuUXlyYqqXjMbQ090pQ2DInuZcLFCwsUJLTO01D
- E1vyPMAx62SaJWNvUKj+ZXzYF/1EzJFGrVaBDNEMlWlTU6iHZ99mQn6ORG2VLAFwx0fnyAkWn60
- 9UK2yBr4Gj3xVeQcg7TQF21zBAdAPw==
-X-Proofpoint-ORIG-GUID: ofIR_URkZXY7s_ouTiPJ7jO8N0ZfUCY2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-19_03,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 clxscore=1015 priorityscore=1501 spamscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508190196
 
-Add regulator load voting support for SM8650 and SM8750 platforms by
-introducing dedicated regulator bulk data arrays with their load
-values.
+Drop CONFIG_ARCH_MSM8X60 and CONFIG_ARCH_MSM8960 which were removed in
+commit 99497df59427 ("ARM: qcom: merge remaining subplatforms into sensible
+Kconfig entry").
 
-The load requirements are:
-- SM8650: vdda-phy (205mA), vdda-pll (17.5mA)
-- SM8750: vdda-phy (213mA), vdda-pll (18.3mA)
+Drop CONFIG_ARCH_MSM8916 and CONFIG_ARCH_MSM8974 which were removed in
+commit 85148df36835 ("ARM: qcom: drop most of 32-bit ARCH_QCOM subtypes").
 
-This ensures stable operation and proper power management for these
-platforms where regulators are shared between the QMP USB PHY and
-other IP blocks by setting appropriate regulator load currents during PHY
-operations.
-
-Configurations without specific load requirements will continue to work
-unchanged, as init_load_uA remains zero-initialized when .init_load_uA
-is not provided.
-
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+Signed-off-by: Trevor Woerner <twoerner@gmail.com>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ arch/arm/configs/multi_v7_defconfig | 4 ----
+ arch/arm/configs/qcom_defconfig     | 3 ---
+ 2 files changed, 7 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-index aaa88ca0ef07..1c3ce0fa6adf 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-@@ -1170,6 +1170,17 @@ static const struct regulator_bulk_data qmp_phy_vreg_l[] = {
- 	{ .supply = "vdda-pll" },
- };
-
-+/* Regulator bulk data with load values for specific configurations */
-+static const struct regulator_bulk_data sm8650_ufsphy_vreg_l[] = {
-+	{ .supply = "vdda-phy", .init_load_uA = 205000 },
-+	{ .supply = "vdda-pll", .init_load_uA = 17500 },
-+};
-+
-+static const struct regulator_bulk_data sm8750_ufsphy_vreg_l[] = {
-+	{ .supply = "vdda-phy", .init_load_uA = 213000 },
-+	{ .supply = "vdda-pll", .init_load_uA = 18300 },
-+};
-+
- static const struct qmp_ufs_offsets qmp_ufs_offsets = {
- 	.serdes		= 0,
- 	.pcs		= 0xc00,
-@@ -1638,8 +1649,8 @@ static const struct qmp_phy_cfg sm8650_ufsphy_cfg = {
- 		.max_gear	= UFS_HS_G5,
- 	},
-
--	.vreg_list		= qmp_phy_vreg_l,
--	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.vreg_list		= sm8650_ufsphy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(sm8650_ufsphy_vreg_l),
- 	.regs			= ufsphy_v6_regs_layout,
- };
-
-@@ -1676,8 +1687,8 @@ static const struct qmp_phy_cfg sm8750_ufsphy_cfg = {
- 		.max_gear	= UFS_HS_G5,
- 	},
-
--	.vreg_list		= qmp_phy_vreg_l,
--	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.vreg_list		= sm8750_ufsphy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(sm8750_ufsphy_vreg_l),
- 	.regs			= ufsphy_v6_regs_layout,
-
- };
---
-2.48.1
+diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
+index f2822eeefb95..151f50b3b2d6 100644
+--- a/arch/arm/configs/multi_v7_defconfig
++++ b/arch/arm/configs/multi_v7_defconfig
+@@ -87,10 +87,6 @@ CONFIG_SOC_AM33XX=y
+ CONFIG_SOC_AM43XX=y
+ CONFIG_SOC_DRA7XX=y
+ CONFIG_ARCH_QCOM=y
+-CONFIG_ARCH_MSM8X60=y
+-CONFIG_ARCH_MSM8916=y
+-CONFIG_ARCH_MSM8960=y
+-CONFIG_ARCH_MSM8974=y
+ CONFIG_ARCH_ROCKCHIP=y
+ CONFIG_ARCH_RENESAS=y
+ CONFIG_ARCH_INTEL_SOCFPGA=y
+diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
+index ec52ccece0ca..aa23a13274f9 100644
+--- a/arch/arm/configs/qcom_defconfig
++++ b/arch/arm/configs/qcom_defconfig
+@@ -10,9 +10,6 @@ CONFIG_EXPERT=y
+ CONFIG_KALLSYMS_ALL=y
+ CONFIG_PROFILING=y
+ CONFIG_ARCH_QCOM=y
+-CONFIG_ARCH_MSM8X60=y
+-CONFIG_ARCH_MSM8960=y
+-CONFIG_ARCH_MSM8974=y
+ CONFIG_ARCH_MDM9615=y
+ CONFIG_SMP=y
+ CONFIG_ARM_PSCI=y
+-- 
+2.44.0.501.g19981daefd7c
 
 
