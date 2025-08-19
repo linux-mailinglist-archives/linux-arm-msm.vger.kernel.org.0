@@ -1,252 +1,150 @@
-Return-Path: <linux-arm-msm+bounces-69673-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB2C7B2BA56
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:16:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A84E7B2BA6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 09:19:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AF1BA624869
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 07:16:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0F32B3B1D7A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 07:18:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D7AB30EF96;
-	Tue, 19 Aug 2025 07:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56BE92737E1;
+	Tue, 19 Aug 2025 07:15:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PSAMQ6ec"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lZ9vIspT"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B504728BABE;
-	Tue, 19 Aug 2025 07:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2943041C69;
+	Tue, 19 Aug 2025 07:15:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755587700; cv=none; b=pnpJChVY4UcYADd74vGyNxs7hjoNNLmebRzKahHW6NWjlknqPpHtKXQWpVcIfuY7mP+QeQzkEf8zZjO6NtzhSrWb49TpCl3SxSxhOEYGMMZP4TaLIpjzfMIOp+K3rv6ukU2fNJOTXuMXvq0tR4QNB/XcTnK1jvEMITze6qyxuw8=
+	t=1755587732; cv=none; b=NpBvyeS/AzW7o0zfTbf5pQDwBiX9gkZ0m2u1hI0zSiqdfdpqya7tdxTZNFurNNKwzXOVZcW2uW2yqSEZCaO5eHhgmtsOzDBbr+LuMi2AbvecVb1ZNPmCR8vblb39ajdWd3WBtxUT/75+CHoItWHWw5vzpjq8Edtq8QMZnF34NGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755587700; c=relaxed/simple;
-	bh=e65kK2Mx6r7hs6ejSCidYj+kXQWAB5h5EMfUJ0VzqkI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=RW6tSWl/31d5H5MR24WIMZNtsuV4I4Ovq9uGKierOMrLN5hEjm8JWaU2kkZwEKhpZcRg/JprmsaSapVXrj2E+2GspKDOYb7KCQcXtu/3UZDHzOPi/J2bh/sgbJeevw5LkjBsKW6hVcmYvByaVFWrAiQQb1xZGHPHFlMVrIyNcuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PSAMQ6ec; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1B628C2BC86;
-	Tue, 19 Aug 2025 07:15:00 +0000 (UTC)
+	s=arc-20240116; t=1755587732; c=relaxed/simple;
+	bh=qb7GANw4C+UqX66VZ3gAIhm5HBFFgi8fcfQ4qfzA5NE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=SVQcW6asP8QV29KAsdT8YgOOzf9ofJTtxm4GdkD16NYCcUVI/lco2IGZka/zjlSHY0jORygEXJNu+yAKVEeB/YxY3NxdHe7GUoYD77Mw3kzo2o7KTM778CSODSvgo8Z1GHA2G+99+btR3NYkD1LiNyQkXEw6idh8cEbkNTEtLfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lZ9vIspT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FF3C4CEF1;
+	Tue, 19 Aug 2025 07:15:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755587700;
-	bh=e65kK2Mx6r7hs6ejSCidYj+kXQWAB5h5EMfUJ0VzqkI=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=PSAMQ6ecg45WSeGfbMduaUkuD+hIFiqwPiZkOdo3s8I+zNZUzLs/QfPyyi5g2hbfj
-	 Gk/QpJr5LfMijH/DodGaEoT0RCiONxus8A4DPYo5UqpDmtaUfOhonJ6FwtPuCTcW4H
-	 R6wINyM7uurpSI7o7mTdasYHQWeAk/Zecz9q4vmtDSjGWipjrhr204boepJ6zM77QJ
-	 LBQeQn6StHgJW65L1qmALFdcG4gxqzBWefMlgJWDGI0xN6Kd10NZjVLSuM4ixf0jGf
-	 HO2hYp5S+9HAHSWkK/rEG6CHvjqmKsqfTfUQ21IIspPyqLp1saQ50prTRYOqpJStP9
-	 r9zgYvG5XuE8A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 1389ECA0EED;
-	Tue, 19 Aug 2025 07:15:00 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Tue, 19 Aug 2025 12:44:55 +0530
-Subject: [PATCH 6/6] PCI: qcom: Allow pwrctrl core to toggle PERST# for new
- DT binding
+	s=k20201202; t=1755587731;
+	bh=qb7GANw4C+UqX66VZ3gAIhm5HBFFgi8fcfQ4qfzA5NE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lZ9vIspT9pNYXBjzDYK9bP/2eE4wKSwOOLWQEV3jxjmKSoa/Nj+t1sdSUXm/SsXCu
+	 blgvNOc6cCXC7HhRR1t58wr+RDTwqJ3psEZZpEpyRt7os2JJlzy+tGKJHIC4w0s4vn
+	 dqtpgXbAZi7qbSWSespY9Zgmk8vtku7FYUOppovYhbGKXKQOST7oGrWH7pBo91Oqho
+	 0PZCOndnW5maYI0hDHrAVszs7TMJ3DFp2JBYN0cxPSIpd1Q4lC3Br4MGoi7TCKL8B0
+	 1JnmPrx9bQpjjwiZ5eDfvPRX4Pcx2J29Al2Y35bnL6AWgWoK/C4p6R8xuAiAl0hkca
+	 f8vofcr6rKoqw==
+Message-ID: <0b53dc0b-a96f-49e1-a81e-3748fa908144@kernel.org>
+Date: Tue, 19 Aug 2025 09:15:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/6] arm64: dts: qcom: qcs615: add ethernet node
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>, Vinod Koul <vkoul@kernel.org>,
+ Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
+ Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>
+Cc: netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, stable+noautosel@kernel.org,
+ Yijie Yang <quic_yijiyang@quicinc.com>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250819-qcs615_eth-v4-0-5050ed3402cb@oss.qualcomm.com>
+ <20250819-qcs615_eth-v4-3-5050ed3402cb@oss.qualcomm.com>
+ <c4cbd50e-82e3-410b-bec6-72b9db1bafca@kernel.org>
+ <157c048d-0efd-458c-8a3f-dfc30d07edf8@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <157c048d-0efd-458c-8a3f-dfc30d07edf8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250819-pci-pwrctrl-perst-v1-6-4b74978d2007@oss.qualcomm.com>
-References: <20250819-pci-pwrctrl-perst-v1-0-4b74978d2007@oss.qualcomm.com>
-In-Reply-To: <20250819-pci-pwrctrl-perst-v1-0-4b74978d2007@oss.qualcomm.com>
-To: Manivannan Sadhasivam <mani@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, Saravana Kannan <saravanak@google.com>
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
- Brian Norris <briannorris@chromium.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5088;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=JjlBWjx38dz2g5JlkdI4+4PuduQxkQpEG3znVmGrG2Y=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBopCRxDdWesNZA/yxN84cNf1qOXfKBORwCjOlct
- gQI/o+3K7CJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaKQkcQAKCRBVnxHm/pHO
- 9QTXB/90jcr2+9W9VPSUmZAkfoRdCixK6wAhuBmIuLVCG2afAJFoxmwpVPTxgCd0pjv7Nr2kDxZ
- tMbFPGRgyc42NKBVxyelgytlLzh9JgqJzRyy3pEv33CLb1h4Q8Px5Onbt8vj3GAVjHCb2r+DkcV
- BF84gbkwRwtmlHqiKEd9gZCpilIESTYOyaTNNxwTVzSu79jKm/ESPp2Npa1YtrNQUQyKH3hDEVl
- IqTXYYZMTXxWRG6OIjHvy26vWa7GPcINvMzeHvWSf5y2a2EyceQabRPu4asCw72X56ZbHPM1y1H
- 115eWkr454kW7fYuVJmDUh1ZijPu/2o7ERx40NrVzq5Wel0K
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On 19/08/2025 08:51, Yijie Yang wrote:
+> 
+> 
+> On 2025-08-19 14:44, Krzysztof Kozlowski wrote:
+>> On 19/08/2025 08:35, YijieYang wrote:
+>>> From: Yijie Yang <quic_yijiyang@quicinc.com>
+>>>
+>>> Add an ethernet controller node for QCS615 SoC to enable ethernet
+>>> functionality.
+>>>
+>>> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>> Signed-off-by: Yijie Yang <quic_yijiyang@quicinc.com>
+>>> ---
+>>
+>>
+>> Why do you mix up DTS and net-next patches? This only makes difficult to
+>> apply it, for no benefits.
+> 
+> The DTS changes and driver code modifications work together to achieve a 
+> single purpose, so I included them in one patch series. Should I 
+> consider splitting them into two separate series?
+Of course yes. You are just making difficult to apply this. Patches are
+completely independent and even your internal guideline asks to NOT
+combine independent patches.
 
-If the platform is using the new DT binding, let the pwrctrl core toggle
-PERST# for the device. This is achieved by populating the
-'pci_host_bridge::toggle_perst' callback with qcom_pcie_toggle_perst().
-
-qcom_pcie_toggle_perst() will find the PERST# GPIO descriptor associated
-with the supplied 'device_node' and toggle PERST#. If PERST# is not found
-in the supplied node, the function will look for PERST# in the parent node
-as a fallback. This is needed since PERST# won't be available in the
-endpoint node as per the DT binding.
-
-Note that the driver still asserts PERST# during the controller
-initialization as it is needed as per the hardware documentation. Apart
-from that, the driver wouldn't touch PERST# for the new binding.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 70 +++++++++++++++++++++++++++++-----
- 1 file changed, 61 insertions(+), 9 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 5d73c46095af3219687ff77e5922f08bb41e43a9..fd07cd493f9fb974acfc924778c7a5e980630ae6 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -294,12 +294,44 @@ struct qcom_pcie {
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
- 
--static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
-+static void qcom_toggle_perst_per_device(struct qcom_pcie *pcie,
-+					 struct device_node *np, int val)
-+{
-+	struct gpio_desc *perst;
-+	int bdf;
-+
-+	bdf = of_pci_get_bdf(np);
-+	if (bdf < 0)
-+		return;
-+
-+	perst = idr_find(&pcie->perst, bdf);
-+	if (perst)
-+		goto toggle_perst;
-+
-+	/*
-+	 * If PERST# is not available in the current node, try the parent. This
-+	 * fallback is needed if the current node belongs to an endpoint.
-+	 */
-+	bdf = of_pci_get_bdf(np->parent);
-+	if (bdf < 0)
-+		return;
-+
-+	perst = idr_find(&pcie->perst, bdf);
-+toggle_perst:
-+	/* gpiod* APIs handle NULL gpio_desc gracefully. So no need to check. */
-+	gpiod_set_value_cansleep(perst, val);
-+}
-+
-+static void qcom_perst_assert(struct qcom_pcie *pcie, struct device_node *np,
-+			      bool assert)
- {
- 	int val = assert ? 1 : 0;
- 	struct gpio_desc *perst;
- 	int bdf;
- 
-+	if (np)
-+		return qcom_toggle_perst_per_device(pcie, np, val);
-+
- 	if (idr_is_empty(&pcie->perst))
- 		gpiod_set_value_cansleep(pcie->reset, val);
- 
-@@ -307,22 +339,34 @@ static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
- 		gpiod_set_value_cansleep(perst, val);
- }
- 
--static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
-+static void qcom_ep_reset_assert(struct qcom_pcie *pcie, struct device_node *np)
- {
--	qcom_perst_assert(pcie, true);
-+	qcom_perst_assert(pcie, np, true);
- 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
- }
- 
--static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
-+static void qcom_ep_reset_deassert(struct qcom_pcie *pcie,
-+				   struct device_node *np)
- {
- 	struct dw_pcie_rp *pp = &pcie->pci->pp;
- 
- 	msleep(PCIE_T_PVPERL_MS);
--	qcom_perst_assert(pcie, false);
-+	qcom_perst_assert(pcie, np, false);
- 	if (!pp->use_linkup_irq)
- 		msleep(PCIE_RESET_CONFIG_WAIT_MS);
- }
- 
-+static void qcom_pcie_toggle_perst(struct pci_host_bridge *bridge,
-+				    struct device_node *np, bool assert)
-+{
-+	struct qcom_pcie *pcie = dev_get_drvdata(bridge->dev.parent);
-+
-+	if (assert)
-+		qcom_ep_reset_assert(pcie, np);
-+	else
-+		qcom_ep_reset_deassert(pcie, np);
-+}
-+
- static int qcom_pcie_start_link(struct dw_pcie *pci)
- {
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-@@ -1317,7 +1361,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 	int ret;
- 
--	qcom_ep_reset_assert(pcie);
-+	qcom_ep_reset_assert(pcie, NULL);
- 
- 	ret = pcie->cfg->ops->init(pcie);
- 	if (ret)
-@@ -1333,7 +1377,13 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_disable_phy;
- 	}
- 
--	qcom_ep_reset_deassert(pcie);
-+	/*
-+	 * Only deassert PERST# for all devices here if legacy binding is used.
-+	 * For the new binding, pwrctrl driver is expected to toggle PERST# for
-+	 * individual devices.
-+	 */
-+	if (idr_is_empty(&pcie->perst))
-+		qcom_ep_reset_deassert(pcie, NULL);
- 
- 	if (pcie->cfg->ops->config_sid) {
- 		ret = pcie->cfg->ops->config_sid(pcie);
-@@ -1341,10 +1391,12 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_assert_reset;
- 	}
- 
-+	pci->pp.bridge->toggle_perst = qcom_pcie_toggle_perst;
-+
- 	return 0;
- 
- err_assert_reset:
--	qcom_ep_reset_assert(pcie);
-+	qcom_ep_reset_assert(pcie, NULL);
- err_disable_phy:
- 	qcom_pcie_phy_power_off(pcie);
- err_deinit:
-@@ -1358,7 +1410,7 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
- 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 
--	qcom_ep_reset_assert(pcie);
-+	qcom_ep_reset_assert(pcie, NULL);
- 	qcom_pcie_phy_power_off(pcie);
- 	pcie->cfg->ops->deinit(pcie);
- }
-
--- 
-2.45.2
-
-
+Best regards,
+Krzysztof
 
