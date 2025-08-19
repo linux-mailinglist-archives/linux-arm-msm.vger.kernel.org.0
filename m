@@ -1,155 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-69649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AF36FB2B7BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 05:39:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B95A6B2B832
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 06:00:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5A9213B8D4F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 03:38:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC0525E892F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 19 Aug 2025 04:00:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10E8324E4AF;
-	Tue, 19 Aug 2025 03:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FBB425EF81;
+	Tue, 19 Aug 2025 03:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="LwFrj8ny"
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="Kutg5gnS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from TYDPR03CU002.outbound.protection.outlook.com (mail-japaneastazon11013000.outbound.protection.outlook.com [52.101.127.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 869551D88B4;
-	Tue, 19 Aug 2025 03:38:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755574688; cv=none; b=aOUrAPSLt1jX0LG03WO5hUr1SvR4EEqf4NkPujCfgCssn/v05NsgYBzoP4pP3DNNJlAHCB6dgTxCU8gRo87G7ey4jfNXjUZ2ogN91IhxSR3YMrzUhAKlwPX2G3CCmga7KNcwYFh7Lupl37I0X/U/DhsUFJvE+FihilNZ7s/KBY4=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755574688; c=relaxed/simple;
-	bh=FgKb3OsWtXPTfdRuS/8qmk5do1nvaI5xsBSzwUj2oBQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ANKkvDsnAs85fVqu2RvM6XfTP3qpO9eMeZzLBj4FJx4CuLqezFhWEG8tVgy+qY53kgR4Ais2Pd3kmW2DiwUYf4dQbK+nmDWNppLO9h96+DqMJdr34PV6A1QfxVQ7chtkOhFC9YAJMLXP7Yn4L6TUbrABB9MqClK9Y/3d2Fo3wzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=LwFrj8ny; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57J2XOg3025437;
-	Tue, 19 Aug 2025 03:38:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fIWKnzTpY0HBjNQvH30+ojgaXG40mR0nsxqhjgtdjA8=; b=LwFrj8ny2TdXPuh1
-	H+vcNgawSxI7VplOSzitdViIyZWv8jOeq6bcddzAIQNCPP4BCC01vsDzxW07lzmH
-	WWYOgqXM3whxoJEUGo05YvbTHB6L/TsTl40ddPjEzXfc5DgwwSvGc9/ErkuvzbkO
-	dEx4FaT9Q3BXTmUIx7oZk5mikpAE/RQdC8B4UAV3RwOeRdNFdjw1p6bJT0G99mX7
-	eZoSvA7OenzM3thTnJ+0y64roStm0UKw4FHzHx52hgfFHcCyGDBrCWCdf7rRzkIf
-	HkvVkcEi+Y5OsbBUEEKgzIIUO5jU7B1PCkHD7Dfc2hkRT5/Zyzv9c6IMP/g2IJIG
-	eySSVw==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48m71chrkf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Aug 2025 03:38:05 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57J3c5KT015088
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 19 Aug 2025 03:38:05 GMT
-Received: from [10.239.96.215] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 18 Aug
- 2025 20:38:03 -0700
-Message-ID: <11d06cd6-60d3-44fa-94d1-7917adaa0230@quicinc.com>
-Date: Tue, 19 Aug 2025 11:38:01 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E628A20B80D;
+	Tue, 19 Aug 2025 03:59:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.127.0
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755575992; cv=fail; b=jzs0RkLgfW5oiYTy15Z9v1ecaFjTpv/G1qTnju0U3vHcv6+NuRWbAwzNwNzHCfHzuUvRxdqUl4VRdzjDU6KDCT01LcXOV/gwTkOBc2Vz3/SjmZi73UJ1dRj9oSQa0lZuYodvO5zjbfULEtpKaVrLtAACXfn3xJ1wcfmd09mL4D4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755575992; c=relaxed/simple;
+	bh=qZo6TXD5Ot8mPGQOAStkCLkv5N64rvynA8vKKHgtEtA=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=UWdJQE4bxc9Rxtg2fysz1ueD3jcJT886m0NWqp1aXS3ky98pxVwpMKBRh2rNaIizj837u/KosxnpGAXGmONVbnWZuwkMb/b3taCPx7QuntfsUoEhrmj9sRbHWNxIlYOyJXRlTHWkkw4JpgSN69E18dOfIyuQvmXLZ/OL1NYPxHA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=Kutg5gnS; arc=fail smtp.client-ip=52.101.127.0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XCWwYOrPW2Xdf0tW0rAu0jZybHPVTTtMlgMZ+/gv36+2mLakev3RJ1ca1YvpqM6x6M5IXUcnQUvNJc1YnNHBJR0q02H/7AgupGzjNkPAmtsEU/4f7CVj7l19rziS8e2uo9Pk9yLazoMlaAMRC5bAqSkX5sVki1ys0C05jxUlCeQ4iqjHnjAVEfPYfDQLzJvU/BmxmAW1N6oM3ENgjRX/WpsiROM7Pg1iU3s8yjTTkcmuO8Yswf0pOWxXcLBVXVtoYiuGG6SG7g+s9vqogzFF/qrTRWsGjoEh9bT7AWtHAEWpeya+IMwRbjDFPmZ34xshYiuzMtVK7zSmhPAWh5W+iQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=5VVTIrMEziTapDz8Ix6tpyp7VLqsUTRQCvQlkHmtnBg=;
+ b=INkHVhUdJNw9LMyC66X0ryKRKiok6ojqhr+LqXIKcXxe5X/rXy0i7sDqe9syyEO3c9WG/Imaa8we47FYesWWTE9nUcUJTwV8hd6Xzqq4KDmKXRbZR8DtWAoBdBtc6woJjV8uUHiQkBLf0Xj9d330H3ZOqOqVUgms7ieN1EfxGBm/G9qw26ssntzj1J6rwBuxi7Ut7ugBRFZZi52mx2Q846kDu0rTddbC4ytScTtpQhyb8CmxtO8oSZ/73Jb8yxgzrr21pQyY9BmMzQpYbSBWp75ZQyRCbVfmWytuuuDF0K3cNGWvpLyNFeFTENg/jo+ytDRAKp+5sfHggt/6n+E2Ew==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=5VVTIrMEziTapDz8Ix6tpyp7VLqsUTRQCvQlkHmtnBg=;
+ b=Kutg5gnSfgzmEiflId745cqeoRH3mVEmrFrO417VQpkuNwfzbOi/kS/o6faTjP3muvMOJZv4IeEuSlxpupveCGDIB1skLeeBQRcxNYgmaXFcA+8zTnOwUeRbghoitvgFrlW9OpxjMvi5kSlQh80Xysj4dek2COFqkgk+WSdbOgDVNNThaLXC8rQNHG4ewN2yqW7o/jJYczPWJ91j4oTE1VJoPd9FZ4HQX28hiUCGQU0XYHJYbeCqGClwovW4h+1Z6pcpVQMdcqu1rF+4fcyzuLCGrUCDp1Q9hbvGPYw1LofEw1NxnpBha6qpZZ56ZMTcp+yg9TYOYXoaPmvpfLPGbQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from SI2PR06MB5140.apcprd06.prod.outlook.com (2603:1096:4:1af::9) by
+ KL1PR06MB5972.apcprd06.prod.outlook.com (2603:1096:820:d6::12) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9031.24; Tue, 19 Aug 2025 03:59:48 +0000
+Received: from SI2PR06MB5140.apcprd06.prod.outlook.com
+ ([fe80::468a:88be:bec:666]) by SI2PR06MB5140.apcprd06.prod.outlook.com
+ ([fe80::468a:88be:bec:666%5]) with mapi id 15.20.9031.023; Tue, 19 Aug 2025
+ 03:59:48 +0000
+From: Qianfeng Rong <rongqianfeng@vivo.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Qianfeng Rong <rongqianfeng@vivo.com>
+Subject: [PATCH] soc: qcom: use devm_kcalloc() for array space allocation
+Date: Tue, 19 Aug 2025 11:59:34 +0800
+Message-Id: <20250819035935.434121-1-rongqianfeng@vivo.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SG2PR02CA0119.apcprd02.prod.outlook.com
+ (2603:1096:4:92::35) To SI2PR06MB5140.apcprd06.prod.outlook.com
+ (2603:1096:4:1af::9)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] driver: bluetooth: hci_qca: fix host IBS state
- after SSR
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: <linux-bluetooth@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_bt@quicinc.com>
-References: <20250814124704.2531811-1-quic_shuaz@quicinc.com>
- <20250814124704.2531811-3-quic_shuaz@quicinc.com>
- <ndgufkvb7gkqeco45xlru2x5ai335s3vhx6wso7pksqcyfdjll@azfjjboa7bc4>
-Content-Language: en-US
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-In-Reply-To: <ndgufkvb7gkqeco45xlru2x5ai335s3vhx6wso7pksqcyfdjll@azfjjboa7bc4>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: iTOzWrOsStNpWMc5UJ-XajABnetDr_Uw
-X-Proofpoint-GUID: iTOzWrOsStNpWMc5UJ-XajABnetDr_Uw
-X-Authority-Analysis: v=2.4 cv=IvQecK/g c=1 sm=1 tr=0 ts=68a3f19d cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=gAjkoLQkR5Zn5Q47fV8A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE4MDE0NyBTYWx0ZWRfX5MScGlRP/hC/
- mXlGdhdE6AMiRafKLOzQSiZv/xyTsUKmoy6cpj6qXcGrho8RDnopsskx4QkdRoa5VupTOk/kwCs
- 3wJbGLnKlpdzHh+gyhflmg26WgiwU21fHngb0R71PtcMTUMT10ygXPvcF3av7JA02NdP88+C03p
- RJrTRdPKRSeEXxxxs0TqoP8QJtsyKTDZ+MyftvyWAtXNTuyxeAnBoMr85mPPiWKhRHy44sOv0RQ
- bcnJT8t/GuKqY+BmCQpnAG9LtBkLZLLlsS1ninvWjp0TxV9SGHNB/hQyFp5JQYrn6cCQa0Gl+qS
- Dbwv+DZowjbR4daD9nCXQpRw4UgxFSZvJuU5rkjWelf1M+RMzsI8MlbeiHhFj6+9C+mmCBNW945
- +N7/zb6O
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-19_01,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
- phishscore=0 bulkscore=0 spamscore=0 suspectscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508180147
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SI2PR06MB5140:EE_|KL1PR06MB5972:EE_
+X-MS-Office365-Filtering-Correlation-Id: 841806bc-943d-4203-9158-08ddded4d717
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|376014|52116014|366016|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?er2lCxQOuFmrvG4kQMoIi5SA4vbYsM4CABNFql1uJceauJ8xqaJcEXAde7ok?=
+ =?us-ascii?Q?iA599VOHiH4A5QOhL5Vbg2ahlyHv66VmHsYh308FJAKDsmELEABBlD2E9k9p?=
+ =?us-ascii?Q?DPANN0tbmqcjhJ85pfvbNnpX1PLPSU8QOjsCmT9YlQ9UIFdVsOCDOmw7RHpe?=
+ =?us-ascii?Q?SWh5TgR3FXvUQeetM2NfX6ybsIgRspBrLxZ9XZvTARhlf8JN0e0FxSNTlk5h?=
+ =?us-ascii?Q?zqVSQAJenwLxF3Q08wYiEJoRPokuMTZnp4haypEs26OYoNXcilgGutD+E5KA?=
+ =?us-ascii?Q?ngzSMf7SWWFRhBeIdirgs4GebYKVLU8CgJ8f0aUE/ziFTjto+92XBA0+EHzL?=
+ =?us-ascii?Q?gtTbOTZhQog9+0zuoxwM3VK0XnYpUWa9/7/3Xc96qK5ohy75xIhT2mF/KIqp?=
+ =?us-ascii?Q?LBYyLwfzplbEPR8sZOyFX/C3XQXrDFDjNb8ymv61It+ZIJtdQ8cX4oZ6taxB?=
+ =?us-ascii?Q?niruYDaG/tZDEaScMXVSIIvGTRqtyKBr/jU4JkhBLmp5c33JAC2GeeVWm13s?=
+ =?us-ascii?Q?FP9LhWBGNQyS1nSyD8Ioca0VoxihE/DYSZlGCiGQTtN2mZcWHd0CyZapMnAU?=
+ =?us-ascii?Q?F8oMk6Nzj45FyhZt7yJywpqcvFQpe5/InzjmzWHqOJp9QwYHntkG3y43pwYJ?=
+ =?us-ascii?Q?m84YuBpYa9NLtT0pknQSroktW56Q2C/e6zU1kmL8fle5MlDzWhif/7R9D8a7?=
+ =?us-ascii?Q?rthdjFMz5AErDtDZv6wfeZs8G0l14GS08Q2ntt89Hy9J6i+jOUe8DqoP6t/a?=
+ =?us-ascii?Q?fSRqpEHXRVO8HPGnRfW5jv48MwTyAj3+72PUi7tIypZIJiWepkim1msEF3NG?=
+ =?us-ascii?Q?ughCtv+2I/rQNN7CzI2u54gbXfXj5PcjZVrQG3R41lY2vxPTrlWSVi0+pC3N?=
+ =?us-ascii?Q?UixrSeKx4teCUdW9zU9owezasBxtbLQML45ZVAznqs+9UqoKeLRoneX18y7D?=
+ =?us-ascii?Q?RgHO1ulvLk+BwmaBLt8g4il6AshWZsXEqhM7pAsVH47BWLwdkUkrQm2YMqAI?=
+ =?us-ascii?Q?mMAIih2CVtIycEO+GGsKg3DlYzmrt+BPj58q74F8J7OEcANjk0gvEmXhLyu8?=
+ =?us-ascii?Q?EAPXUuOk9wNy+QM/oVKuZQed/xjmjRTiwVgYNQQ/YZMmE+X/NOwOkIIJ4QuN?=
+ =?us-ascii?Q?S3puguzeqxYg8e0JFL06lnwFGq/Xtr/hfuo/mAWVO3guEKsAkOA5+7kkE0KN?=
+ =?us-ascii?Q?OqS4pDQqEM/q2QAm9jWCoUHrw6I31GbmubJgfU7E+0WAX5pGjQp5EXGdo5dl?=
+ =?us-ascii?Q?PaTkgGXrN7W2D8zuFV6bQKhV7/dDoWWnZn0NPCPfhna+JLrD4DXQwRMaeYgM?=
+ =?us-ascii?Q?D+AJcXDbtPHZJxrJtNqVydPLJjF4aOLilhNcB6pfmpi3csIFI69VcGsHJTh+?=
+ =?us-ascii?Q?NHxCGLvy1VJBUbieRx6RiGfHrTOLYI3ku6pRtRKirVgevSbWLNPEHZx0QEMr?=
+ =?us-ascii?Q?9KxHntW9tVEbDgko8/az6Kh1IKTRJ0MkytkH2PHsuhpH4f+xqGzKq4fk8afd?=
+ =?us-ascii?Q?9Wk5RHvDG+TV2pw=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SI2PR06MB5140.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(52116014)(366016)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?NMdslnEd5JQDTPxOvf4bT1hKsQC58JTqBZu9yAB3p/WQPHpOX6eKFJcUXrEy?=
+ =?us-ascii?Q?5xd6wfVawRwxmdpA6buq2ibweJcmwMTs81A/ipuztNfyI26/4xSwkPKqtpBG?=
+ =?us-ascii?Q?fDXLfFZ18g+o935pjstk9WvLAl/h/hSUiZ4iPoxWSSODErgwJJ3MdOS4Y9Vq?=
+ =?us-ascii?Q?YbjumyHhJd0eIzGGkGBj40MDZ4SBwVvrHnk4ZfzP4yMm3fonaR/L83NZgIeB?=
+ =?us-ascii?Q?ByLjlzVIhDP/ACEuhkjwDevNGDiYkHzKt+Z1Qh5xyKuZYNAaFXanWtDQdm8F?=
+ =?us-ascii?Q?Hj6NFNZZ+L2MLhSVaB8JuoT9lvhiU5xp/2TJgsjqpdT9TzdbkS+Wikp1o+oB?=
+ =?us-ascii?Q?JiqpLAI61VeKrjR2MQhoD5slq6QwQxsRY4ioZTruZvKu8phImK0QK0xQxgOg?=
+ =?us-ascii?Q?n5sbnFO9+bfk/iT67oHym1X5G/kJSPDVArdnUMkSbHg58EaXdJF054q5o2iZ?=
+ =?us-ascii?Q?htnMYdVpkJZJrNizqLno3h3CVe92Au51X7JhVKL1vAR8DXeoIUy6hb/gCvp/?=
+ =?us-ascii?Q?oh4DOQFvHSmJ4REnkAdeh0iSJxb0ByFeX5PWka6eG4wBsBP2z6rLCr9SuVFw?=
+ =?us-ascii?Q?zPyb8kYSjkndoIuCqeYqf+0vOYaiHUVaGrfZF/kfQUWo/Gb0e2L5gvk7CBJJ?=
+ =?us-ascii?Q?la+a3agxOTRYFIjr8XUQU0PtGFOn2IjwMuwGoghb8TZdIVe2mokF8Fx3sc7b?=
+ =?us-ascii?Q?eNWXwe+2nVxVMG4GYbm5suVfhcMI04Q57b2XZus7MRYvOdWw6+Hxgqa0HU0V?=
+ =?us-ascii?Q?THlD1gpr9/F37X6BTmPt521utelWdUTb2Fk1fhyjSlJ4B2zpl7Ilj31QTl26?=
+ =?us-ascii?Q?0h4i9wBNqQgZo4GV38JoR1ruFo5747ti1065T2SRkJNdGc9XAw9Y4L6hRjL1?=
+ =?us-ascii?Q?Eweer3SakBgQCBfncAkUQ69LjB8udTsVWZNEo36k7W2LO7U/5wZGoUSFhSPk?=
+ =?us-ascii?Q?uwkFKfuHFABXT5TPQMKiPUQq16H7x5Y72ifPPfK39MUOsnvF27DrDfhpUkfR?=
+ =?us-ascii?Q?d3xW4IGhjokhvB0R+2jUAU7bJy5AzAp8FeY507QA+XAAwB37hxpXtOaf2NYW?=
+ =?us-ascii?Q?kCXV4ulmApUm2LqN17lWwIr67elqbYo/e9di/4pfYC1usyw4tYT6H1L6JdLm?=
+ =?us-ascii?Q?/uMdlwQfhzIqpbYNGiGYZBbc24Evkr8ASLodsnNA+v2Nrp5QUKQdT2kWuS1S?=
+ =?us-ascii?Q?aeMFxvFSp9CiUeMuHj36x0UZBCtNWZRFbWlM1MQs2F5Sj+s3eFzfwBVDpTXO?=
+ =?us-ascii?Q?eeShiGu+QwiLR5lUo1nybon2AH7Hljpn2jW8HiBIAP6jZnsHMCkgQHhpA9pi?=
+ =?us-ascii?Q?HOFCSE8CBztfoTTsJsleVti8en8qHN7I82WwsLHg9da+G9HLsq+TG4L4EG2i?=
+ =?us-ascii?Q?iFd8u/Tnq7v9YMQHGDaG1+hWq7U8uZAOicrpcesbJ5DIOWzRNmQEPudVEup5?=
+ =?us-ascii?Q?xdnUuEeC+l3Jj3rnNjfdOU0LcDs46IHa2Agtz/HL6nKezJkhvURhP/dWXm0r?=
+ =?us-ascii?Q?0KsoSOjMKo7qlRBb4cnRpmiayQPYuMfT1F4nuhhRHNqtfVYIW+vu0F9nLI9G?=
+ =?us-ascii?Q?YYAlkbFE9mwKdJJH9smy/4r4MQHYoDHRI4zGLwAX?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 841806bc-943d-4203-9158-08ddded4d717
+X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5140.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Aug 2025 03:59:48.1436
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: UcA5dKVTMdXKPao7ejQvFC10vks7oaoAScIjIotbxbdQ+tKcJgpjQ0LAnsWrUw+8n75DV1y4txG5A5LrOY1f3A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB5972
 
-Hi Dmitry 
+Replace calls of devm_kzalloc() with devm_kcalloc() in master_stats_probe()
+for safer memory allocation with built-in overflow protection.
 
-On 8/16/2025 5:50 AM, Dmitry Baryshkov wrote:
-> On Thu, Aug 14, 2025 at 08:47:02PM +0800, Shuai Zhang wrote:
->> After SSR, host will not download the firmware, causing
->> controller to remain in the IBS_WAKE state. Host needs
->> to synchronize with the controller to maintain proper operation.
-> 
-> It totally feels like all these patches fix the same issue and should be
-> squashed together. Please also add a sensible Fixes: tag. Possibly
-> add cc:stable too.
+Signed-off-by: Qianfeng Rong <rongqianfeng@vivo.com>
+---
+ drivers/soc/qcom/rpm_master_stats.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Although these issues are all related to SSR, the underlying causes of the
-errors are different. Would it be appropriate to merge them into one patch?
+diff --git a/drivers/soc/qcom/rpm_master_stats.c b/drivers/soc/qcom/rpm_master_stats.c
+index 49e4f9457279..c7788337e164 100644
+--- a/drivers/soc/qcom/rpm_master_stats.c
++++ b/drivers/soc/qcom/rpm_master_stats.c
+@@ -78,7 +78,7 @@ static int master_stats_probe(struct platform_device *pdev)
+ 	if (count < 0)
+ 		return count;
+ 
+-	data = devm_kzalloc(dev, count * sizeof(*data), GFP_KERNEL);
++	data = devm_kcalloc(dev, count, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
+ 
+-- 
+2.34.1
 
-> 
->>
->> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
->> ---
->>  drivers/bluetooth/hci_qca.c | 4 ++++
->>  1 file changed, 4 insertions(+)
->>
->> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
->> index 91009c6a7..d37cd2368 100644
->> --- a/drivers/bluetooth/hci_qca.c
->> +++ b/drivers/bluetooth/hci_qca.c
->> @@ -1660,10 +1660,14 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
->>  	 * QCA_IBS_DISABLED flags cannot be cleared, which leads to a reset
->>  	 * command timeout.
->>  	 * Add an msleep delay to ensure controller completes the SSR process.
->> +	 *
->> +	 * Host will not download the firmware after SSR, controller to remain
->> +	 * in the IBS_WAKE state, and the host needs to synchronize with it
->>  	 */
->>  	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
->>  		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
->>  		clear_bit(QCA_IBS_DISABLED, &qca->flags);
->> +		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
->>  		msleep(50);
->>  	}
->>  
->> -- 
->> 2.34.1
->>
-> 
-
-BR,
-Shuai
 
