@@ -1,115 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-69965-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69966-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A88FFB2DBAA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:49:43 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E0A0B2DBBF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:52:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 63636720D49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:49:42 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 64D0C4E5217
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:52:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A111713D512;
-	Wed, 20 Aug 2025 11:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10D2A2E62D1;
+	Wed, 20 Aug 2025 11:52:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XRFmaEMs"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NbFnfdJY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C572E2EED
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:49:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68952E5D39
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:52:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755690580; cv=none; b=miyu93WrYgbjTrvFpB1f2GkD4Xybiy0NSQsI7Kd337V+mdPYNllBXG/YUV4bKpx5/FAEf9c60k9ctLTxpZ3wTbDC0be6G+iCSbm/0Uw82eRLDbmdJDcGKVFnpSUacxF+/jbaKwLzDwJDAHZx5bHn+Jj5jAfXxwV4gnLpZxEWAqY=
+	t=1755690771; cv=none; b=U7IpwxHjeKBa4ZcWEnamPE6HVi8Y2rdrlp3DQu4/CiKeZI6+AM94BJ9vbqXhMdR63HTispuQEv6FNpFLcLRopwHgydMBOeofac7aphe7Ye5FyZZ8Ewq2Cc6lxvQ0gNvc3mSBlCxTLWlv9wGhWc3s4Aj9mf3MajbFrqmV6Oc511s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755690580; c=relaxed/simple;
-	bh=/W3GAMjxb6JXpBcaXEk9zeYaG0UOfu4lsuIRPhBJ840=;
+	s=arc-20240116; t=1755690771; c=relaxed/simple;
+	bh=+036hMkub/Af/78NBaftIgQF6n0LrLF1Du+6bYcKRAY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=vE47/bdUvWm2m7YteWLpOxIZlNEpWQmIG/gK8cYJbR5RWoidGXpvcPtCTRWaJ1GTO9fYr9fdrM9CkhxkOf/fsP4JKg06NSIDZo8hBLcFbUEJ4KqH2v1MdQ40njUegTnq1X+SbpwLUqlkwYFNYQyVcayl6E8dhiKz1vKn0FPUfUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XRFmaEMs; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=rGsMfo/BWkVFTjW/14VLRgf2MeoHy2tpAbFab6UjXq2bkcO/umdIg5eBqOd/Y4MtkeQHq+5yCw7JRPSt7PWCGWHEFG4GeAQk8poQfNxe6k5l8q81qExU1RygLTHNpOXLVEFh5dCLAs/eJiFygM9QmuXKWhv2uI4iMcznRCIoYq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NbFnfdJY; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KADVhT027085
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:49:38 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KAKAU7002014
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:52:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=eQi7QofWcWU158eHa77hdKaL
-	MtA3y2gGZ0Eyw0PH0w4=; b=XRFmaEMslRE5X4uO/ji+OsjfJYFnH5j7tKnrndUM
-	jgnyDrwLaMjFnRz/WJDihtq5/NFBqMRvz8soLQa6BPccpTKet3utuvHsCK7FFeTS
-	ihb7boZRAiH/eP4PIfDN9naahMao0qhYEch625dtktKtYZQ8OAT5PMV+NtFNM8jI
-	flLUW7OapLaVLcyKx+x+paCwMpfDfJxOZpycrTJrRQ2CGrCAwD0GbFwQs3jBGNQj
-	WnlJiGrLgfcTEmfBRYP79gjZeIAWkGBD7IzmZm5L4jJy22E8Zl29IBWUy3OHsitq
-	aqF4QhbAQJYqoXURUqSltZcDkjaiR6ediEVV8foif/wYKg==
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com [209.85.222.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52a9ktr-1
+	:references:subject:to; s=qcppdkim1; bh=1NU5anoXaPxzB4evmItsYtEq
+	4iSlXrdsVmJAEsKcsCQ=; b=NbFnfdJYQFNM8SCh4++tmwy0/BvWkAI43WOCQSSh
+	O3o7Qz9qkdEC99FA+82EDK98grL5bjNiakj1q0hgVSU/Urecc7h6AsF7YMslu1oC
+	z6OqTD4bHTKCcNaLzC2ILLWw3xqDowiDjKQFUstWZWaCvElKl2fd1Qllce0Wco6y
+	Iw+0ry2qPplv0VmFicL5XDUqV9HM9CmFG3R2PUPpHvkyvwmqiV48EvbJaLSJgYYr
+	XgJqfnyBSBLMTzp7k8DOzFM18HzywyAl7ZAhZwDA263cxgBoqeqWeJEBJbCs3q1I
+	qloXnMJOr66vMBVgyAkjxPjx9bnp5tg2oMVfNYwV2qzEzw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n528sjkr-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:49:38 +0000 (GMT)
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-7e870315c98so2881562785a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:49:38 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:52:47 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70ba7aa11c2so110229556d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:52:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755690577; x=1756295377;
+        d=1e100.net; s=20230601; t=1755690767; x=1756295567;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eQi7QofWcWU158eHa77hdKaLMtA3y2gGZ0Eyw0PH0w4=;
-        b=qULZ8ujKVatU52O9WzaAAuFGCaJ4eiKwyFjGKRm5nB0VSpsm3xgslxgc8oM6qtV51M
-         s7baCSoyvX3Sirtibb0Ab4RMud9Qu1CEpMmcfxedriANp1qJJ9KOsOg63BSdDeK5YhIg
-         KNvMxydg3HVY6ZChZvVRs2tcDd37XjAaUyl4BMznlkPlYFTex0dJ3Vejxif6JOPgOH4x
-         FegmV2C/sr9DdYjXQfEH9cQVNYLfmU7a8DMvU/SsQWh0swgX+1mmeRhqznA4VrbrwQMp
-         uvLKb6bLvULEw6g4Uch7dqzNWJyjLxIP7H1wHD8OTgS0FLMmcgeo9F/aEKel+OeBUzxd
-         uoPw==
-X-Forwarded-Encrypted: i=1; AJvYcCVoBm3XAQ9wjgDjL4b3n9OrLgXnbceols0epu5zPAJJox12KIVrcaWfRG/luSn3HAa+arhGNB+thYZvTtMN@vger.kernel.org
-X-Gm-Message-State: AOJu0YxeW0RjJj+8clSUPwylYeMZQwwL5PLg2PjryUGuFwAzRYmYDg82
-	MNv4L8sATN2Wm+E1EoYk0ttFHKOafU0WYiejgSygAp0jvrktuUmJMmf6x7KIkjzUSvr3qYBl86Y
-	z+Sp743fwnX6QNLa/MgPkaaDj+AI6Tln0z6Ds8tW/q4zdX2oZqaOBQDJhfxtzhF5rUJ7l
-X-Gm-Gg: ASbGncusiNMz10szkEy2HP25fODVJScuolHpxCQRlztzF6fQg9fj4Nt1SpxddClg5oz
-	7Ft35zOCj8SDsurIp6vTY37reONiji94co/9iZRMrJSFTYpkzRBC6+zh/brh7EDzCoZqH3mGBqE
-	9DruwUp38m49Vg/U8duGVHUUvK5FBp7CYybIbrfPLAhHuY8HnkiC3obmmA6atILMA8fAFmUxKvi
-	hCdeRvc3GADJZgiOaHbJdpRDkjdb26LSnRtuvQLEZ2rQ7ngf06J7EGTO8tTj/XA0SEx45tgRPo0
-	U0+WAzK2co24L7sFu9PVIuw89tjBsf3zKQUGA3kDTC9GR5Czaw2XZUXbD+GFnxqGY8RZXbWXhd/
-	10pw8Gm4EQH1JQTEqblmNhCAN+Q4PIp7x3TBLbphOKmyOs256Av6h
-X-Received: by 2002:a05:6214:20e3:b0:70d:6df4:1b03 with SMTP id 6a1803df08f44-70d77170c76mr19313336d6.65.1755690576854;
-        Wed, 20 Aug 2025 04:49:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmrvdHhyhkjHia2f4r6fnsTTnjiCF/kpkKVlmq6+LLt1eyY0mOs8rxItEF+MdJz7nJEs0lug==
-X-Received: by 2002:a05:6214:20e3:b0:70d:6df4:1b03 with SMTP id 6a1803df08f44-70d77170c76mr19312816d6.65.1755690576172;
-        Wed, 20 Aug 2025 04:49:36 -0700 (PDT)
+        bh=1NU5anoXaPxzB4evmItsYtEq4iSlXrdsVmJAEsKcsCQ=;
+        b=MtOa9FMqs4ogkkH51clLt+PyjwygpXfPq929e3WE03s/ojBCcorgeTpHXFv4Nv8+Yu
+         GbFHL8nrkIZR3kmACFu6AlNvuMP3CP+T0x6WhAxPjiBH72nBK3lXpK6ezIq8mPqTGLqM
+         ZGjPlFye1gGCKJDPc5A4xOqr4EUEmYLv2INSgxnyG+hbmuWGdDQCWIwAmtpwHEh1+vEh
+         yCE9ay0Z6zfsg6tOUPcH6tuc7mooyMFwmazNa8Wx+PO6c1Xz/pRzE8Q3ImzMRU2lEBTq
+         SM3kslIwi7RfQam2Q9mDoQyBPu6K09Zq2plgzpIKoecY2sDvHO8voBpKgPLskSxHoV9I
+         XWXg==
+X-Forwarded-Encrypted: i=1; AJvYcCUiCDMN1qlOKNflPJVlQB/fdQ9hqUu4CZqZ/ZtR17va+5zjgvlwhW7+v+1GZmJCY4UxwitOfFBXCMg2QfQ9@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYqpOOQkG79Ku80/WGQsDLEaGD0AAH//jK+IFwb5ylU6Ke65g8
+	NY7S5S55TXZF6sQ/t0NgYNyhWVw6CZ/sqWh5m66HJVQkBMY61FB8YXpzCn6NTusRRSCfh0WC/kS
+	mUmZoqnYDakYQ8B0wXZj8iB1e7M9wf0CETJItbw3aoJfkQg2nmy/znGCDrNzc66TWw2Zx
+X-Gm-Gg: ASbGncuVCHF09hlVwQdIbOBz+cK94ghEA9E6D4szArnjDjXI76iCZ+VkZ3N5MrTztki
+	YoIxv7OuQ36nMVO1I7s6mW9zclvLDV29UhNODW0MA+ryfAJR2wJF+cbDWvFoIl59zS/Bt/OmX1e
+	+DZps5J5kic9adrYsP3zszATdf40QBzasCWgPX7KRhss4fTodmVcSYxX3ANU+kzg1glRZCnDWvL
+	dro7cZN2fNYNN4F1zHD+KbaJ83pO0waecDJo7TiNZlVq/sppIQ2j+q6Q8VMFH+rKtVdx0go22C7
+	HerD6gt7q7w5vzyrBmetcmexOxi8meZt7oIItDfIivktvqn2s3bfkKdjTjsXCkcl4YKMWed3YHe
+	3XRJkZ0FIb335AZZdrtbNo480zV4p1AaAZQMS5171PXjRpLrojl5r
+X-Received: by 2002:ad4:574d:0:b0:707:3ad0:1f15 with SMTP id 6a1803df08f44-70d76fa2d8dmr29441566d6.18.1755690766818;
+        Wed, 20 Aug 2025 04:52:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEXhlwYJEE7/G3XlVPANthN7ixhS1XYB40WO19b3qrubjjpDOPnmRSenoHFW9qSHFfTgNHFoQ==
+X-Received: by 2002:ad4:574d:0:b0:707:3ad0:1f15 with SMTP id 6a1803df08f44-70d76fa2d8dmr29441236d6.18.1755690766314;
+        Wed, 20 Aug 2025 04:52:46 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3340a625af7sm27271481fa.60.2025.08.20.04.49.35
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef35f105sm2554042e87.50.2025.08.20.04.52.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 04:49:35 -0700 (PDT)
-Date: Wed, 20 Aug 2025 14:49:33 +0300
+        Wed, 20 Aug 2025 04:52:45 -0700 (PDT)
+Date: Wed, 20 Aug 2025 14:52:43 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, fange.zhang@oss.qualcomm.com,
-        yongxing.mou@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S. Miller" <davem@davemloft.net>, Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, quic_lliu6@quicinc.com
-Subject: Re: [PATCH v3 14/14] drm/msm/dp: Add support for lane mapping
- configuration
-Message-ID: <wwn24kjpwexl66hd3wufa53lkqojb2bkpdogtxwr3uqotjpf3u@hclfgsv64ajn>
-References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
- <20250820-add-displayport-support-for-qcs615-platform-v3-14-a43bd25ec39c@oss.qualcomm.com>
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Robert Marko <robimarko@gmail.com>,
+        Das Srinagesh <quic_gurus@quicinc.com>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@gmail.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, Lukasz Luba <lukasz.luba@arm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-crypto@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-mmc@vger.kernel.org
+Subject: Re: [PATCH v2 14/15] arm64: dts: qcom: Add initial Milos dtsi
+Message-ID: <2hv4yuc7rgtglihc2um2lr5ix4dfqxd4abb2bqb445zkhpjpsi@rozikfwrdtlk>
+References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
+ <20250713-sm7635-fp6-initial-v2-14-e8f9a789505b@fairphone.com>
+ <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
+ <DBE6TK1KDOTP.IIT72I1LUN5M@fairphone.com>
+ <DBE8G88CIQ53.2N51CABIBJOOO@fairphone.com>
+ <DBOC7QBND54K.1SI5V9C2Z76BY@fairphone.com>
+ <55420d89-fcd4-4cb5-a918-d8bbe2a03d19@oss.qualcomm.com>
+ <DC74DPI8WS81.17VCYVY34C2F9@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -118,58 +128,141 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250820-add-displayport-support-for-qcs615-platform-v3-14-a43bd25ec39c@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: M_nDtFcYjR6BRsdbAVb847124UGk31ku
-X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a5b652 cx=c_pps
- a=50t2pK5VMbmlHzFWWp8p/g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=mR71zFEkwuVZQDQknwQA:9 a=CjuIK1q_8ugA:10
- a=IoWCM6iH3mJn3m4BftBB:22
-X-Proofpoint-GUID: M_nDtFcYjR6BRsdbAVb847124UGk31ku
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX0jvw8cTupSR+
- sxgEbpOC+Ze5DIC1Rk3ddrlM9aOT4AP1iXdZMMzZAWCqt+Z3nIthnzQjhyjroikYsI7K5XrUxSz
- +Cndz59oJ3faIYuHKHvRqPa5lW9rE7PLVJ3zmV9fGys8hcKtm/BsP4f5KP0/wdx03gupr1vjeEA
- 0Wwu3i6cY9CjrYFJU5m0a+Ik6LbJ0yOEEjipQI+bEct7Ubw2O5PkyF2bc6wdgs379tfP647DM5m
- v204RvB+f+K/8EjVhk2blsIRL4pT3KMkQoRE5w1UbEEZGD98dYZvGLdjbGZCoLZxghFXeVY8HKl
- O9mcxys1RYuwmmB/3WNsh1qdD3Rlzzn0zcSYaAR5CozAjFribw5cwoM9dKuwniqLnQ8hDjtcC3e
- 9+HMB25md/wpHjdCYfrf21wIsNbNmw==
+In-Reply-To: <DC74DPI8WS81.17VCYVY34C2F9@fairphone.com>
+X-Authority-Analysis: v=2.4 cv=fpOFpF4f c=1 sm=1 tr=0 ts=68a5b70f cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=6H0WHjuAAAAA:8 a=XuIBa_usxpjq5QTMMVUA:9 a=CjuIK1q_8ugA:10
+ a=OIgjcC2v60KrkQgK7BGD:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-GUID: KA3Ot0KhLmEttfLapWG5Ldyyro2ox9w7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX1ajfjuh1PXr+
+ 2lwg2KzzIBihvd7P6lN8tBh8o8B7iqG8efPDKDfIsIqe7Ae4D1nj7+Bntq5t4lTur8OonqDBFTi
+ eYSq44xX+7zg54IrNe6dDK00UPlWZRk7/mocSisLU7b8TYLcfsiTUGJLEVItQYY+JakecR8klyD
+ ehP+wjhUaUIhSrO+hcLGFRyVAnF73GCH0+vuWQ0VOUbB6Ou0XqkVcmo6ByBhOnvT8QV6zK25IHO
+ xpog/sFaybk+wcaSYHESO5IPTET1K3yJZiDeZ8lOEbKiRJKR5tzgaIOf5eqx6dSOX2JtZCbwkUg
+ d6N0rnL1oPaStaEcYoaQ83CgzL7m9sNm6bytTmx5yA8c1jTSG5lb3ysZq7nHK5AOtgLVRcWUp05
+ C3Hl+fuSDVxEtpKd6H2TNokHaRCwKQ==
+X-Proofpoint-ORIG-GUID: KA3Ot0KhLmEttfLapWG5Ldyyro2ox9w7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-20_03,2025-08-20_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 spamscore=0
+ malwarescore=0 priorityscore=1501 spamscore=0 clxscore=1015 adultscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-On Wed, Aug 20, 2025 at 05:34:56PM +0800, Xiangxu Yin wrote:
-> Since max_dp_lanes and max_dp_link_rate are link-specific parameters,
-> move their parsing from dp_panel to dp_link for better separation
-> of concerns.
->
-> Add lane mapping configuration for the DisplayPort (DP) controller on
-> the QCS615 platform.
+On Wed, Aug 20, 2025 at 10:42:09AM +0200, Luca Weiss wrote:
+> Hi Konrad,
+> 
+> On Sat Aug 2, 2025 at 2:04 PM CEST, Konrad Dybcio wrote:
+> > On 7/29/25 8:49 AM, Luca Weiss wrote:
+> >> Hi Konrad,
+> >> 
+> >> On Thu Jul 17, 2025 at 11:46 AM CEST, Luca Weiss wrote:
+> >>> Hi Konrad,
+> >>>
+> >>> On Thu Jul 17, 2025 at 10:29 AM CEST, Luca Weiss wrote:
+> >>>> On Mon Jul 14, 2025 at 1:06 PM CEST, Konrad Dybcio wrote:
+> >>>>> On 7/13/25 10:05 AM, Luca Weiss wrote:
+> >>>>>> Add a devicetree description for the Milos SoC, which is for example
+> >>>>>> Snapdragon 7s Gen 3 (SM7635).
+> >>>>>>
+> >>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> >>>>>> ---
+> >>>>>
+> >>>>> [...]
+> >>>>>> +
+> >>>>>> +		spmi_bus: spmi@c400000 {
+> >>>>>> +			compatible = "qcom,spmi-pmic-arb";
+> >>>>>
+> >>>>> There's two bus instances on this platform, check out the x1e binding
+> >>>>
+> >>>> Will do
+> >>>
+> >>> One problem: If we make the labels spmi_bus0 and spmi_bus1 then we can't
+> >>> reuse the existing PMIC dtsi files since they all reference &spmi_bus.
+> >>>
+> >>> On FP6 everything's connected to PMIC_SPMI0_*, and PMIC_SPMI1_* is not
+> >>> connected to anything so just adding the label spmi_bus on spmi_bus0
+> >>> would be fine.
+> >>>
+> >>> Can I add this to the device dts? Not going to be pretty though...
+> >>>
+> >>> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+> >>> index d12eaa585b31..69605c9ed344 100644
+> >>> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+> >>> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+> >>> @@ -11,6 +11,9 @@
+> >>>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> >>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> >>>  #include "milos.dtsi"
+> >>> +
+> >>> +spmi_bus: &spmi_bus0 {};
+> >>> +
+> >>>  #include "pm7550.dtsi"
+> >>>  #include "pm8550vs.dtsi"
+> >>>  #include "pmiv0104.dtsi" /* PMIV0108 */
+> >>>
+> >>> Or I can add a second label for the spmi_bus0 as 'spmi_bus'. Not sure
+> >>> other designs than SM7635 recommend using spmi_bus1 for some stuff.
+> >>>
+> >>> But I guess longer term we'd need to figure out a solution to this, how
+> >>> to place a PMIC on a given SPMI bus, if reference designs start to
+> >>> recommend putting different PMIC on the separate busses.
+> >> 
+> >> Any feedback on this regarding the spmi_bus label?
+> >
+> > I had an offline chat with Bjorn and we only came up with janky
+> > solutions :)
+> >
+> > What you propose works well if the PMICs are all on bus0, which is
+> > not the case for the newest platforms. If some instances are on bus0
+> > and others are on bus1, things get ugly really quick and we're going
+> > to drown in #ifdefs.
+> >
+> >
+> > An alternative that I've seen downstream is to define PMIC nodes in
+> > the root of a dtsi file (not in the root of DT, i.e. NOT under / { })
+> > and do the following:
+> >
+> > &spmi_busN {
+> > 	#include "pmABCDX.dtsi"
+> > };
+> >
+> > Which is "okay", but has the visible downside of having to define the
+> > temp alarm thermal zone in each board's DT separately (and doing
+> > mid-file includes which is.. fine I guess, but also something we avoided
+> > upstream for the longest time)
+> >
+> >
+> > Both are less than ideal when it comes to altering the SID under
+> > "interrupts", fixing that would help immensely. We were hoping to
+> > leverage something like Johan's work on drivers/mfd/qcom-pm8008.c,
+> > but that seems like a longer term project.
+> >
+> > Please voice your opinions
+> 
+> Since nobody else jumped in, how can we continue?
+> 
+> One janky solution in my mind is somewhat similar to the PMxxxx_SID
+> defines, doing something like "#define PM7550_SPMI spmi_bus0" and then
+> using "&PM7550_SPMI {}" in the dtsi. I didn't try it so not sure that
+> actually works but something like this should I imagine.
+> 
+> But fortunately my Milos device doesn't have the problem that it
+> actually uses both SPMI busses for different PMICs, so similar to other
+> SoCs that already have two SPMI busses, I could somewhat ignore the
+> problem and let someone else figure out how to actually place PMICs on
+> spmi_bus0 and spmi_bus1 if they have such a hardware.
 
-Separate patch
+I'd say, ignore it for now.
 
 > 
-> QCS615 platform requires non-default logical-to-physical lane mapping
-> due to its unique hardware routing. Unlike the standard mapping sequence
-> <0 1 2 3>, QCS615 uses <3 2 0 1>, which necessitates explicit
-> configuration via the data-lanes property in the device tree. This
-> ensures correct signal routing between the DP controller and PHY.
+> Regards
+> Luca
 > 
-> The DP PHY supports polarity inversion (PN swap) but does not support
-> lane swapping. Therefore, lane mapping should be handled in the DP
-> controller domain using REG_DP_LOGICAL2PHYSICAL_LANE_MAPPING.
-> 
-> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_ctrl.c  | 10 ++---
->  drivers/gpu/drm/msm/dp/dp_link.c  | 71 +++++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_link.h  |  5 +++
->  drivers/gpu/drm/msm/dp/dp_panel.c | 78 +++++----------------------------------
->  drivers/gpu/drm/msm/dp/dp_panel.h |  3 --
->  5 files changed, 90 insertions(+), 77 deletions(-)
+> >
+> > Konrad
 > 
 
 -- 
