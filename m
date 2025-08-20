@@ -1,142 +1,84 @@
-Return-Path: <linux-arm-msm+bounces-70010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0F66B2E59B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 21:31:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 10542B2E6A4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 22:33:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7DF19AA2E4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 19:31:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F08CB1C269F7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 20:31:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74679283FF9;
-	Wed, 20 Aug 2025 19:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3E502D0C8C;
+	Wed, 20 Aug 2025 20:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGhHMttE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Su8TnsN2"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A602741C9;
-	Wed, 20 Aug 2025 19:31:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE6724A067;
+	Wed, 20 Aug 2025 20:31:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755718280; cv=none; b=PT5bviGdZdS7373Qd5ebgXc+9MBWsP2ZjC7cyPFEjLy0yYzfl6JtbFjawEbPjqirBK9+CLdKRdeK4ZUnYOsdiFb4/5evdELl3zTFj7/SGQ1arrzF97+LvGqgOJL89xP5u5jKFD1x3P8OP5saaUNCTciEDp3xxMYlFecEMhzcvsI=
+	t=1755721875; cv=none; b=MQZHish3jpWzVwC/yTHdc2KfD06TPIzWVkLrdwubsVQJxUuNmAk2vzxxMQStylYK8OEr+X/zPb8IkTrMOw9JsLrXh5Pe4E/sMK5NxsE5IF6kCssgNA9qHI01BWX3LKwCW/bdGLm2IlLHAuMJVt4pcBTM2vFD1W0zV2qCP5NPo4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755718280; c=relaxed/simple;
-	bh=JdMnN/QvHNdC14uZpSWSeOLbLF7avgHXV6bfeFE314E=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=d8AFtRJh0WCv9geguixlNJMeQE51X8LXqMywsTFDUvFqM7GjARCusGp0d7E1IiQzP7wlM0FTnwxgyDsxvYB+6X3IIzaVLaIq4wq9iOjUB5cm+gkQVRijugdT3cu/DpBzyhASixnm+At6gowx1s/6NwILUnykOlsCOBjjsAgosc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGhHMttE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28CBC116C6;
-	Wed, 20 Aug 2025 19:31:19 +0000 (UTC)
+	s=arc-20240116; t=1755721875; c=relaxed/simple;
+	bh=HV9ib1u6sZEDXsB56fnVQreiHI4JE8NcawRWEwj1EFo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tqvGPkcSxwLs6x8bOysu4QiQ/5Nu0bnk37TMzZ9B+b1CsoMxqQLKiLAt4zmq8k86FR+o8zOtoJD4hKEQOVFiGS2g9EqMtpkml+OVC+LmGbmZJprmOs7aIYZtSJR7UeHZU9kIjZRXHUFcM7aX7ejz//fXwEXh/yxcrQPOQMjPUJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Su8TnsN2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D65C113D0;
+	Wed, 20 Aug 2025 20:31:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755718279;
-	bh=JdMnN/QvHNdC14uZpSWSeOLbLF7avgHXV6bfeFE314E=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=RGhHMttEkXppx0xIcllcHsXLmLQQzOdjxYuV/xm82W+tSpLj5siXsGatCtlz88msg
-	 2kBwqKy5UBeiVfHuLZmptxFi73Zpxv/U9awFSIry45ieagzEsDibzMG1wAP3gxnkhW
-	 raADuSVol+35H9SGVkQgHnkq5ZvoxRqgzaJ5nqp8/IExM7a4xIdtlcK3QcBxNxqBtm
-	 KK/V1xpMYSVAS7R01YfN+CYcrvBHMjdmhrWPW+JZTdHhCYbshF/pY90CjAsTW4ka3t
-	 Rd/tFqZozHdiLnaXYd+is6lZXoeiYPHaynU5+quh2DQJRYYBKUUeAlmyR3mDi8VG5s
-	 b2OoQldEU+zEA==
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-619487c8865so2241265a12.1;
-        Wed, 20 Aug 2025 12:31:19 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCU56bj/Sd1e1zqvcCvKO7fdlt7hccKBIAbdmYstRaIqCEeqV3AIyjaLBQ2njCOIYDg8BLgtUdhvw6JbscNH@vger.kernel.org, AJvYcCWRROIguOUlE5hiwEKrba46Um+NfFc9XPA+g9IoseaUnwgdM4srD9JMY9wGS0q2Yuf1VmXAgiMcQxPC/UFv8jpEdWY=@vger.kernel.org, AJvYcCWzvXbxHm6aXTSVDDtPUTUJl5EIhTd6cREYzuqQ77qsTgC5yDl8tBlaDuquQ3FgUSPmIghsX08mppJ2V/Pf@vger.kernel.org, AJvYcCXrnUN+Ny8dI7Lah0xQ98ejhfON83JtzNhaMXl+bWEQ5HUj5i8v2WtMPmmvZswnqe/nO4/E8+0CmuRN1u2NtjMlYg==@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2QkFK6C+60XMnGhNe0haKQGoy3dr1EdI9I0hA4nWwHthjQK1J
-	tkhKGygXhSRxQZN7x/dnMM+/IxI5M3ykAu3vsHXQee5krTvfNG6CAhtPu2Wq7DoXt8ZGEJwDj8U
-	173tb3YKkBlZZ9BNGge+dxfAbHDIZ3g==
-X-Google-Smtp-Source: AGHT+IHMduLqupXwUu5+wGeCnTMcG3KEnZjSMqXY8A1R3KzTvJxS2yEXoVkoMeeJWEbKS/NfptZmMJOd2EyU0/q6v2E=
-X-Received: by 2002:a17:907:6e8b:b0:afc:aac3:6d2 with SMTP id
- a640c23a62f3a-afe02b475a2mr72725966b.2.1755718278469; Wed, 20 Aug 2025
- 12:31:18 -0700 (PDT)
+	s=k20201202; t=1755721875;
+	bh=HV9ib1u6sZEDXsB56fnVQreiHI4JE8NcawRWEwj1EFo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Su8TnsN25SdbgdvQYL7fbuLEdTEAPVTpUJm+Bc5b8d3o42rVEsOQJkp5hztZJ15BT
+	 I8kyKiqeAv97phHyee+ksUuftIS+n9BbcDTvNUMCI4zwW7JjwodYWJ33n58nIsa4p4
+	 B3jG/AOY3Z+uug2b8pL87dfY5Q2xmC+zgSIkLY9+tbynjCkNv9r1ZKaoKueeBeFDEZ
+	 WsA2eUIogV42Cq5z0jfmEf8VVphhdgrEVVHRzY06+08RIUY1i+bDprVPSt/rSan0Xl
+	 VvQCVXMPXfDWndA4IYvaiX/P9y2OJQ5+816Vdq5FNIfwy9gfgBkb6u4KaBBId3+/T8
+	 xSlg7sPW1qMLA==
+Date: Wed, 20 Aug 2025 15:31:14 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Cc: vladimir.zapolskiy@linaro.org, Konrad Dybcio <konradybcio@kernel.org>,
+	todor.too@gmail.com, linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, Robert Foss <rfoss@kernel.org>,
+	bryan.odonoghue@linaro.org, linux-i2c@vger.kernel.org,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>, linux-media@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: i2c: qcom-cci: Document sa8775p
+ compatible
+Message-ID: <175572187383.785125.6427441804080019104.robh@kernel.org>
+References: <20250815-rb8_camera-v2-0-6806242913ed@quicinc.com>
+ <20250815-rb8_camera-v2-1-6806242913ed@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250819213831.1368296-1-robh@kernel.org> <CAEnQRZDga2cX=YPY5Z9NDyro94bxFjK9k5Xm5Vt2vVzf4ysKyA@mail.gmail.com>
-In-Reply-To: <CAEnQRZDga2cX=YPY5Z9NDyro94bxFjK9k5Xm5Vt2vVzf4ysKyA@mail.gmail.com>
-From: Rob Herring <robh@kernel.org>
-Date: Wed, 20 Aug 2025 14:31:07 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJ1btLjZO_Z7H+qYZhWwTn0Wpq4Ji=deKdUxTwLHw-pTA@mail.gmail.com>
-X-Gm-Features: Ac12FXyzu14Kh1oSkN3MJaRVyez-SIK2NK1snFRbS1U4LOUdSfMmoXWd92DoGYw
-Message-ID: <CAL_JsqJ1btLjZO_Z7H+qYZhWwTn0Wpq4Ji=deKdUxTwLHw-pTA@mail.gmail.com>
-Subject: Re: [PATCH v5] remoteproc: Use of_reserved_mem_region_* functions for "memory-region"
-To: Daniel Baluta <daniel.baluta@gmail.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
-	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
-	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
-	Patrice Chotard <patrice.chotard@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
-	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
-	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan <peng.fan@nxp.com>, 
-	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	linux-stm32@st-md-mailman.stormreply.com, 
-	Iuliana Prodan <iuliana.prodan@nxp.com>, Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>, 
-	Aisheng Dong <aisheng.dong@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250815-rb8_camera-v2-1-6806242913ed@quicinc.com>
 
-On Wed, Aug 20, 2025 at 3:19=E2=80=AFAM Daniel Baluta <daniel.baluta@gmail.=
-com> wrote:
->
-> Hi Rob,
->
-> This patch will break IMX RPROC support.
-> <snip>
->
-> > --- a/drivers/remoteproc/imx_rproc.c
-> > +++ b/drivers/remoteproc/imx_rproc.c
->
-> <snip>
-> >  static int imx_rproc_parse_fw(struct rproc *rproc, const struct firmwa=
-re *fw)
-> <snip>
->
-> > -               priv->mem[b].cpu_addr =3D devm_ioremap_wc(&pdev->dev, r=
-es.start, resource_size(&res));
-> > +               priv->mem[b].cpu_addr =3D devm_ioremap_resource_wc(&pde=
-v->dev, &res);
->
-> devm_ioremap_resource_wc works only for IORESOURCE_MEM resources:
->
-> lib/devres.c:124
-> static void __iomem *
-> __devm_ioremap_resource(struct device *dev, const struct resource *res,
->
-> =C2=BB       if (!res || resource_type(res) !=3D IORESOURCE_MEM) {
-> =C2=BB       =C2=BB       ret =3D dev_err_probe(dev, -EINVAL, "invalid re=
-source
-> %pR\n", res);
-> =C2=BB       =C2=BB       return IOMEM_ERR_PTR(ret);
-> =C2=BB       }
->
-> while the devm_ioremap_wc doesn't care about this.
->
-> So we cannot use devm_ioremap_resource_wc here unless you add
-> IORESOURCE_MEM flags
-> to  of_reserved_mem_region_to_resource as discussed here:
->
-> https://lkml.org/lkml/2025/4/28/759
->
-> The same issue we are already experiencing with Sound Open Firmware
-> where the change was already merged
-> and we have a bug already reported.
->
-> How should we fix this:
->
-> 1) Add  res->flags =3D IORESOURCE_MEM; in  of_reserved_mem_region_to_reso=
-urce
 
-Sigh. I thought I rolled that change into it. I just sent a fix[1].
+On Fri, 15 Aug 2025 15:07:17 +0800, Wenmeng Liu wrote:
+> Add the sa8775p CCI device string compatible.
+> 
+> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Rob
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
-[1] https://lore.kernel.org/all/20250820192805.565568-1-robh@kernel.org/
 
