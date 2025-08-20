@@ -1,197 +1,262 @@
-Return-Path: <linux-arm-msm+bounces-69855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26BA9B2D287
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 05:19:44 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09BD7B2D291
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 05:26:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43B3E625B53
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 03:19:20 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3A9AB7A870A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 03:25:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9ACB6275AF5;
-	Wed, 20 Aug 2025 03:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3468258CF9;
+	Wed, 20 Aug 2025 03:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b6jzAC/o"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="WEVgsAbS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f68.google.com (mail-ej1-f68.google.com [209.85.218.68])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazon11010009.outbound.protection.outlook.com [52.101.69.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD112258ECA;
-	Wed, 20 Aug 2025 03:19:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.68
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755659945; cv=none; b=Y5Bm/5PdcZfyLcoBaIURYB/GCf37H7Mg5YJQ4L4kqtsfItDJr/RjTfVSdG7YcxX/sAiEAJNAKvtbbE0hybcS9I5GeWopkzuQ9iNtOd0cghPrKr4lrs63r9UCS2U2cCnjja4hU7mLN7ElCS4Mu2tdUCmYzJbkqSIM1hNghACqUOk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755659945; c=relaxed/simple;
-	bh=VxNrcNs0+HcvFMuKWSGBXGXSfd8y+whfhfnRdUacxr8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UB+38Bj8pvPAsUsS6i3UMOkPdz15syJV0Ixn9abCZKGZbdOp+56DYgA0gn7+6eSTGneNV6U16hqSQi0xZifEuUtrwWrvm8ktv+XxD3NfJPpupbN8FdAF5NM1F+TODQL6kkLahzWrYzu6E7M9dyrkLCczlb3DuyUErsDeSfuvo7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b6jzAC/o; arc=none smtp.client-ip=209.85.218.68
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f68.google.com with SMTP id a640c23a62f3a-afcb7ae31caso1081678366b.3;
-        Tue, 19 Aug 2025 20:19:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1755659942; x=1756264742; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=/vdg4dKKl5Y5qxmdvIci/v8EsYo7STve3t3ZtY/n9Z0=;
-        b=b6jzAC/opmUJPUfGAVuh6XzUJAPB7oZdCzXoUlPSIy3WaldeEwyosPA8HRkf5MhjPy
-         2zA2ThOFECkdqkIiJaafpjpC6uSFj8zID/JBz1lwPgrMLly07Q6rBX5Qxe2PZww+cR/S
-         l8iz9KW3rExt19lhxQcV52D9fx0jST1c8q3tg8XTR/nAuCXJ8x3PvQ9UfZ2yVUgR4dbp
-         bXvIQ6+/d1eGcQqltqApzlBUIDzyNzUuRW4UGI6TAGoH/jJ3uHap/8PtS3vhi8EV57ca
-         xGrEqu46A9X+lBruB0LpudcwrX76i2MKBinHvkVt69vB1OKfS/mS+C/uFd1cIcR6V2iG
-         +piA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755659942; x=1756264742;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/vdg4dKKl5Y5qxmdvIci/v8EsYo7STve3t3ZtY/n9Z0=;
-        b=iO41GXjJHLVLA1z897Jn3JAgQU5epAPz2Y0u/1sYOsqAtgmA3miCFM1M+c9XTPLbpk
-         khHK5G6PJQX7hKTogxjp80T4iXAOuNT+krxTiTgccI9BuF3FjiCvadEca+kbZzJ4Zs3z
-         /g8V35z4F9Q0+LWOU7ZU87UPQ3sQVXNsiOtpsEYptY0fob5cfFJU6FOeSE4zTJQZgPx8
-         dTxfX4/b3KggpisCNYcF4hIk92xZMgvBDQrHt3fIdNjCIDFE9wOBPiUwbgHRe0p5uf5y
-         /rAUK6b8EqXp2uq43F3+LEgsiXxwgdnuxiK+lJTNjKH4vOZqhl55TAjycXSpKd3tEvuO
-         sshQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV0g9dM055bnx4miV3vX2CYRgdDrfUtLGkHVCZ5vuKzu45ecLEzimY8V6UOmMG/BBDcyZkiYawIZesm@vger.kernel.org, AJvYcCWddljnhT/L32fSrJJy+oDBSD+YaJq5jEhdQwnwCb/3Q9jEK2YXDOeCJxYJ8ryaNxoE/1kky9NncPf9Qu4=@vger.kernel.org, AJvYcCXXqdjYbUiIO47CfRwss/LnzPQJHfFBVq3bwLQquy1FAESDkVjaABJzVCACOOzpNMbbetFGe4D0g75fheBO@vger.kernel.org, AJvYcCXapww5zxkXMyX7TzVlDUvAp62BSWQG3jvtCWSPzkuDcw2en2PSnkOkOhv9H220XpEPMEef9fjxseUrDJNvwQ==@vger.kernel.org, AJvYcCXdo5GeByoA61dZ3Ps64BI8An78zAB6auQhJF0n0EYoxLVpEkXIu0bNF8yvt7AcgNEYGZlQjr0n46JM@vger.kernel.org
-X-Gm-Message-State: AOJu0YxaSQld2T9/uVvT7e3qAvt68qr3tK1nFl14rwp7ewLEMVYumaYc
-	xlIjQhtpf96QSaBymm4a366TKXMAyZg6GvvziKvS6GsP8KNzlAxPlD6D
-X-Gm-Gg: ASbGncsm1WER2baOi+0hI8MND45eJC5lNVNcYeOQlk5aCFFAjmcZ7QDhCuCcNjQEeYT
-	237mjm1+bRr3v52wKJSAbPoD5FuCeqho0mlvzKTG19NRvvtTFiUWCZw4su/cig7Mv+LIaNxcOy1
-	xcF4i5HggcbzsE/lXcI3h8j4kwKi6KgyUhZmE1xG+rEMjvm9Kuvz7Sx2qpnUEtQZWIf7fhpCS6B
-	9/NhhJsl2RMsDjYwPQ4TeD/pgOF33hwLiuTWmS5ageW7FedOBrvKEu9BR93wciTQ+4tWjii359A
-	g7sDH415qwdYWOGlyRQj7KvB5jnMrK3l2+8sCLUlPCC3DaXwKBfbnvkAntOYc2+rvkl6YbC911U
-	VC9OzoYCdqoSnBxerihEMNeKTr/uoyU6wpVKarQACg/DGQpV+7HzMIPwlA9kiWP/bujd+nOXt/s
-	TMMP6rXpyXkYkSOyjrsEmyv7+4MCrLQlgPkA==
-X-Google-Smtp-Source: AGHT+IEIwwlIwoTIiNuhUQ07/bBrVkoWwe0s7LnQYSy2POy+c888AvHzKbMqqWN1VrmqgpQIHAF1pA==
-X-Received: by 2002:a17:906:6a1d:b0:af9:237c:bb35 with SMTP id a640c23a62f3a-afdf00e2e81mr95410766b.22.1755659941758;
-        Tue, 19 Aug 2025 20:19:01 -0700 (PDT)
-Received: from [26.26.26.1] (ec2-3-75-144-20.eu-central-1.compute.amazonaws.com. [3.75.144.20])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afded52ea4asm96482666b.101.2025.08.19.20.18.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Aug 2025 20:19:01 -0700 (PDT)
-Message-ID: <d6b852bc-328a-41af-b125-e250c72c0d22@gmail.com>
-Date: Wed, 20 Aug 2025 11:18:52 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5612264B0;
+	Wed, 20 Aug 2025 03:26:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.69.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755660408; cv=fail; b=uvazTbAjQHv4ht4iQeB42OdIcuQrR8HDsPMOueJgHOWncFV200qMxHqEkhL1x6rws7k+qZBQdGqCSIAYuk7bitxYmBDSRMhUWJpKfm1pOFRaeRWjLrj4F0hPuKJdVgNpmYfkkIk17hj8XO++J1K8qATkQXZkrqTOKxz5zzgZpd8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755660408; c=relaxed/simple;
+	bh=S8gEhCaSVM6ewMQzF/ggZITS5j9VW+PhY2+RLSdB0Gc=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=OHFPUF18Dlk6rLR2RraD1RImSLr5p2kWaifS4RW9u5zBKDTjjxYjjJF9+tMjQMiOTg97T4qD7tSAZASW0Ho60MG9ZBRUx0KgIwDDqv84d/EM+PuHNDecDFKM0QlFkS5qx94z87pAtluIsgn3lmpqQmNdKzTMqCoatyMVLB6y2tI=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=WEVgsAbS; arc=fail smtp.client-ip=52.101.69.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rSM6iPE15TsJAPpiP6pxd+pOPZeIDya8crWsKGN5LMEnrJhkFKJUStdFBZIrChNT1ISLCIcnyYKQ0/7/0HDGl1SHoIGqkvxtYQtrU1Ki7bB9oz0mcS+rfHHmSn8mD/SQPVS0t8E1QGJNaewgMz4iFPGgZtRabqxa4mp2SUXFH6U9tuMmaC4Z5GzI6bOYxgp60iUJsLL1Wop9kKwv/V+a/VWs/IC5g+HbUfxI2OtX/Zpu5IlO82kb9yCi6WQZiD/Wq9FbkPO/z+OJOUSe4PcLgv9vnFADLzFz4yjRNYlIb8DnWZeAxsYqU2883/znF1xYWRmOXEfpTQ14SCCQEpe/gw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=odRY6BcYZ+8QVhNaKNFyX2Y8DrKA/CHzt8DcPqI5UoM=;
+ b=ErNRavjxEhF8cCtPQy1elvsDrSYReH+FvKMqr1OOP5phvr2cYXfoHucRIQe6Wxg+TGwECZqvG4+pqo3FZknzVzKkz1mdI+Fga8pHB1hEAtVc70gzIP8QLwZlhZiwz3pIqtauTYMN8QQjWOlSSTrVKyF4RMKblV9HARjgAraLNtvtRRS3gsdYhPLt9biiIkooA23MXM7P+CQZWo97zUHikJrNawBZC2uDIW4DnsqLB6mnLih9X+Ub8Q8tSc26cdqjAn9tzXAReL6qMZd1NRxAUaHf0AU0gmSadZhLeWdYjEbCbWlTpH7nosW1w7IFK1XmXtg21kAoRrm1Qy7ZJSiMKA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=odRY6BcYZ+8QVhNaKNFyX2Y8DrKA/CHzt8DcPqI5UoM=;
+ b=WEVgsAbSFRV+cjPtNNRf8PuCDUF1L/CUuJ0d+dJWQjDCXzTuPYaQOgrwVkikMlFD1vzVvkxZaTD5RkF7MI2c921+T77tCUg18dXuPuvFmSDgpPyrqixrHIl417tQYN485/pAsTXJBmzYarLN+UkAYqOFXKLU3szzEUZKZFdtgGyKK7tZzgNzhI6usPN6L3lo7j7u6L3095mhrlhOpPsVp8cu/rUvqmHfOEs5D845VobD79L3K/GZAKThXbIB5C4pWC/rbSmmowL14VjrO9zghwobgpfX9REQxplb4CaqChIsT5jsbqg3TNyBUvx+28NgDcCVawWiFRp6sITp8K5DYw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com (2603:10a6:20b:113::22)
+ by PA1PR04MB11384.eurprd04.prod.outlook.com (2603:10a6:102:4f5::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.12; Wed, 20 Aug
+ 2025 03:26:44 +0000
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::d1ce:ea15:6648:6f90]) by AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::d1ce:ea15:6648:6f90%5]) with mapi id 15.20.9052.012; Wed, 20 Aug 2025
+ 03:26:43 +0000
+Message-ID: <185e3a1f-0d84-460f-a9b3-bc4bdc13e543@nxp.com>
+Date: Wed, 20 Aug 2025 11:28:14 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/7] drm/bridge: ite-it6232: declare supported infoframes
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Sandy Huang <hjc@rock-chips.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?=
+ <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>,
+ Chen-Yu Tsai <wens@csie.org>, Samuel Holland <samuel@sholland.org>,
+ Dave Stevenson <dave.stevenson@raspberrypi.com>,
+ =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20250816-drm-limit-infoframes-v1-0-6dc17d5f07e9@oss.qualcomm.com>
+ <20250816-drm-limit-infoframes-v1-3-6dc17d5f07e9@oss.qualcomm.com>
+ <9e77615a-9d5b-4971-b1db-74d6bed39533@nxp.com>
+ <24392da1-02f4-4d57-a145-6285d46d3bad@oss.qualcomm.com>
+From: Liu Ying <victor.liu@nxp.com>
+Content-Language: en-US
+In-Reply-To: <24392da1-02f4-4d57-a145-6285d46d3bad@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR01CA0197.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:189::8) To AM7PR04MB7046.eurprd04.prod.outlook.com
+ (2603:10a6:20b:113::22)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] pci: Suspend iommu function prior to resetting a
- device
-To: Nicolin Chen <nicolinc@nvidia.com>
-Cc: robin.murphy@arm.com, joro@8bytes.org, bhelgaas@google.com,
- jgg@nvidia.com, will@kernel.org, robin.clark@oss.qualcomm.com,
- yong.wu@mediatek.com, matthias.bgg@gmail.com,
- angelogioacchino.delregno@collabora.com, thierry.reding@gmail.com,
- vdumpa@nvidia.com, jonathanh@nvidia.com, rafael@kernel.org, lenb@kernel.org,
- kevin.tian@intel.com, yi.l.liu@intel.com, baolu.lu@linux.intel.com,
- linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-mediatek@lists.infradead.org, linux-tegra@vger.kernel.org,
- linux-acpi@vger.kernel.org, linux-pci@vger.kernel.org,
- patches@lists.linux.dev, pjaroszynski@nvidia.com, vsethi@nvidia.com,
- helgaas@kernel.org
-References: <cover.1754952762.git.nicolinc@nvidia.com>
- <3749cd6a1430ac36d1af1fadaa4d90ceffef9c62.1754952762.git.nicolinc@nvidia.com>
- <550635db-00ce-410e-add0-77c1a75adb11@gmail.com>
- <aKTzq6SLGB22Xq5b@Asurada-Nvidia>
-Content-Language: en-US
-From: Ethan Zhao <etzhao1900@gmail.com>
-In-Reply-To: <aKTzq6SLGB22Xq5b@Asurada-Nvidia>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM7PR04MB7046:EE_|PA1PR04MB11384:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8d67fbb1-cff5-46f2-d518-08dddf9962bd
+X-LD-Processed: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+ BCL:0;ARA:13230040|1800799024|366016|19092799006|7416014|376014|921020|7053199007;
+X-Microsoft-Antispam-Message-Info:
+ =?utf-8?B?TzlnR2ptVFlLR2tVc1VuYTd0OXkyb284dXlGZDVxbUlEWDFqemlJQnUrYWkw?=
+ =?utf-8?B?QjZmRHAxb3NiVklML01JZjBLVVBuQXNCWFI0bG5GZ1pXenpVWldWZFRmd3pR?=
+ =?utf-8?B?RS8weEp2VXpOUDNYci9YQ294QjNxZ0dxZFVlYUxKbktUeExrYVdPWThhV0xL?=
+ =?utf-8?B?Z3l1NnlJWVpWL2VSTXA3VHlXbHRsNVJhWjFTclFRdFBFYWJZNmxOaVZCUGJo?=
+ =?utf-8?B?dHVSaFBZNWlCQjdQTDZXWmdNWE9hajdDWE83ZDVHVGtxL1d1ZDZQYlZhaFA3?=
+ =?utf-8?B?M3Bkd2l3NkFIVUhSdEpYZDJ1NG9hQzFtTS9aNjlTbVBXblBHSERROUMxV0pz?=
+ =?utf-8?B?SlhCY0o2UnVKa0wrWUFBNFpZbVkzVzB5OVh6bS9DaWF4VG1WRW5rd1dRR09Q?=
+ =?utf-8?B?Qlp1RDVscENFRnVzT3dTVy9aellRcStvcjhpT1k1TVNUYkl5V2MybVZSeVk0?=
+ =?utf-8?B?VFVzdVZiaElXZE81bjRnYzZ3SlJxL29ncFZQM1Q3RlZXREl6akk4bTZiQ2Nh?=
+ =?utf-8?B?T1lvMWJjM1lVRFA2azBHVW5oTnQ4Vk1CdnkxcmgzaWVWMHZFcHNzYWY1Mk5D?=
+ =?utf-8?B?SW1TZFB4bEdYTlNzUmh1T2MxT1Q1SEI1cktWck5DZWEvNjJ2Z2Zwd3llZGxa?=
+ =?utf-8?B?Ym9OdWNIYWVkdmd1ZnhzWm5LRkhDYUVaRmc1TS9WaUFsb1FwRVhlV3hHTXFG?=
+ =?utf-8?B?QncyYnEyVFhVZEFmSk5qMmo3R0RoKzV3YjlvcnFJdEttZkdUaDkwYXhKQnRJ?=
+ =?utf-8?B?V3BBUk1Bb2crMkJBbzVQcWVsQ1ZyTE1LNHFMZmc1RDdzRXYwK0FsVUlQWXZT?=
+ =?utf-8?B?YTJVcmtVeXJ5Y3FOTUVBM1dyb3RKZkpKeEhFTTZKUFh1UnFPYnk4eUUwK1Iz?=
+ =?utf-8?B?REFMMWtaMDc1ZlZ4OVVJR3dkS3h1aGFoSmJ6OExKTjRrN0x3OWgvbmpyRUJY?=
+ =?utf-8?B?Sjg2Q210WEQ3UHVBR3E2c3V6ZFdQa0NCZUFFci8wL3lRTiswNDAwUGYyOVl2?=
+ =?utf-8?B?akU3Qnl4VHNuTXZUdUN2N1VEYjJiZnZTa01LSTlOMFRhU2QwcGZ5VlZYRXR4?=
+ =?utf-8?B?OWd3cTg5cHlkQWFIOVVYRHFMZklDYVk3OXlhb3owOUVYUnl6NWhDK0ZEZjVn?=
+ =?utf-8?B?YjF5d0J3Y0IwcUJEY3hNdHppbThVRGtkdUt6OUhKbldTNGFVSjgxN3RRNGZU?=
+ =?utf-8?B?dk1oMjZlTTlJdGRGTVJ1WktrcEJFWmN6emdJMDQ1TDlKNXZGeFovb3ZpUTBy?=
+ =?utf-8?B?SWQ4dTU5elNEd0Y0WlhMUFZZb0ZPK3VWNkZVdUVCc0RPRzdIOWtmV01SeHJ2?=
+ =?utf-8?B?bjNZNEp3NWt6R3NOQ2JvUzZjbEtGYmpJTUpwRVVsQVpCcW53Q3NaL29CaHlX?=
+ =?utf-8?B?eG1SRVlQeXlBZkcxSWV4aHJ6K0NvM3RIOHdrZnAvR200NFZzWXNrNURrWjdC?=
+ =?utf-8?B?RGFSR1JUNGJLdVpjdUJQOCtLWnZiTWE2Q3duM0FOcnkrZjVoOGZnSjBNc2t3?=
+ =?utf-8?B?WVkrbmN2TzZXQm1IaDh3SzFyUjU1Rm9DRGs4UjdyWUpKZXVJMDF1ZGdmQTZq?=
+ =?utf-8?B?eHUrNlVUZGlUUEtnK3V6VG42dEltMWU0ZGZHNHAwbUwvME5xWmhlRFRHTWpj?=
+ =?utf-8?B?WjlHVVBxOGpEakZJdWVsZGRUbmRQL1g5UVRUY3ROaHRGMXJtMVpyOGtxd3Mw?=
+ =?utf-8?B?bU8zR3VrU3VFbFhrYUNpYTgyeG9yWE9mZVBiZkdOdVBDdW51UldwaHg5cEly?=
+ =?utf-8?B?NHlLVHdkQXVlU0RJdjJvTld6N0RFZDJUREdlNEhMYmlxanhzUktUWnVmNTBu?=
+ =?utf-8?B?ZmkvaUg4Y21RZ1NyUkQvREdrTURZNjZVK3gyWC9vbWtueEdaMWhiQ1FFK2py?=
+ =?utf-8?B?OVZqdXpMVEU2eFNBekI2S2diTHV6cVUxUG1VeDNwaytSelJzRUU3emZBQ3RT?=
+ =?utf-8?B?RVRSbzVWMU1oY0E1SmhSUVM1eDUwdkxOcXZyTm5qOUxwOVdtOFFTQmIrQWc3?=
+ =?utf-8?B?NlNOemFWVjVnPT0=?=
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR04MB7046.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(19092799006)(7416014)(376014)(921020)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?utf-8?B?ZE9EUURGUFhCMnQ1cDdCR3hGTGRVU0N5YlZjNVY3Rkh3MHNDN1d0KzRWUFdv?=
+ =?utf-8?B?MzRhV3g2RVlrY3ZtdXVZaGd5bkVuc3o0Ykw1SWhYZFc0WWtPRUJOTEtjbUZX?=
+ =?utf-8?B?Z1E2M0Qwc1NQdXp2WVVub0pnMnIvdnhuakx3VStlemhiM1lOL3VQcy9vMEtW?=
+ =?utf-8?B?UmR3ZjArNjlueVVCbmRGRklBck0vZWVnYUt6bzR1ZDB5QTQ3SHlXdGg0dU5q?=
+ =?utf-8?B?Nmxrd3RWTkVkNWd3NFJ6VFlwVHFYK3ZNSXFET01mS0pMcTNxMDhTbnB2emZT?=
+ =?utf-8?B?WjdpTVU2blZ4cm9OMkVNNUhtREEvaXBWSUdnMHllSGdPUVBHQ01maW5UQ3BX?=
+ =?utf-8?B?RHNybEsybHRLeGI0clp3blV1NTd3M3gxQ3FaaGxONjlQVEFlcnFKckx6ZTZr?=
+ =?utf-8?B?UDEzU3ZhamgrQ0FyUzZpN2F6N0dNNnRGYm8rSHgzRitwYjUyb2g4K0gvWi9X?=
+ =?utf-8?B?NXBRMkZOeUIyZDdSTVY5eDBOTTNxenA0c0taUFhWNXBRMHpxQU5vRjB0d1Vy?=
+ =?utf-8?B?cUROM3RzZmI1RGpBVGpQelZZQ3lPTlFHTnQwdTVML21LN0FDdHROMWdQaUdN?=
+ =?utf-8?B?amZBbm8yTXF5WHc0b2tPYmVZRGhqSlh0bWRxOVkxSkR3d3NMMlpGY3hKZEdN?=
+ =?utf-8?B?aWpMVDAycmRtM0lqRWRrb0dGV05HVldkbG9uOUVTTTBFQkVkalk1cm1MTzJi?=
+ =?utf-8?B?RVBZQXk5czRHbUNYc052ejVtM2RsV0hYbEJkOFNtdHpZaUE4emQ1blNwSnMx?=
+ =?utf-8?B?OXlhWDdUMTVRUEpqVVNVUFNORDFoSXU4WWNmUGdqbEhFVlZadEtGelZEbm5w?=
+ =?utf-8?B?UisxbGs4dVpxQnkxdDdTOGhJMEZlMFRtTG5YTXpIUHQ0TG5aZEZxdDNHMW5q?=
+ =?utf-8?B?Y21XQnZTb1VQQUFyUXZyUG9tVDFqUGZFMFpqOVJyTlVLME5ESGN6RFhmWFlO?=
+ =?utf-8?B?ZWt0Y2JZOW1wZUNkZFlSQTlMaGxtQVRXK3kwTnZsV2hNc3FITUVlZzFZRjNF?=
+ =?utf-8?B?WUd6SitvOHNjTSt0VGJaaC9uS2YzMkZhQjFUT1RsbHJpZm5RYkEzeFdkelFH?=
+ =?utf-8?B?VXg3bEx4WXNoaHp6OTdGZFBqUmIvRVB3ZGMyeUFocG1lbjVWL0JuZGlNUGV0?=
+ =?utf-8?B?YXdHN3dsUU10cTgxYzlKNyt6R2lUMHJyMzN1SnNzeld0NDFzbCtMcFk0dE5k?=
+ =?utf-8?B?YTNrSVFNMXRPQWxlWVF3N01aUUIyRVcwakc0Y1ZjNjh5UHFZT1FjWGlDUUJy?=
+ =?utf-8?B?UGhEbnBKK1BFcGwxOWVZWW0rYkxTQUJ2ODJwcTI3NC8zSmo4ZGFDY2xqcEdB?=
+ =?utf-8?B?SEExdEpTVm5kRXF2VlEzanJGWGlqVitNWCt3cXluWEJlYXNsUEp2VWxEdDYz?=
+ =?utf-8?B?WCtRQnVXZm1LTVRYNUFnem5nU1BUZ0Rhc3hGUEpLb1dCTUZwbDB4QTJ0VkxC?=
+ =?utf-8?B?c1VVVGp0a1pBQlo0L2tubzV0MFJaa1UyMnlLTVFNdWtPUnR1b0llQU4xckVU?=
+ =?utf-8?B?YXE3SHoxNlprc2trdjNtK0phTnlhRFh2bmdZcnpwMU5wOGQrcGNxWmF2cU1P?=
+ =?utf-8?B?V21sdVdpU1Jjb3p2S1NDTHJZN0Vtb1RveEZxbUFCYUJlZW9CeVpyMDMvamYz?=
+ =?utf-8?B?RzBEaDk5VFZFa3ZVT0Z3dWRuRm1mejRuSEpNdjZoMG54SGdWMEFrQ3FDMkYx?=
+ =?utf-8?B?RW5ZWm03Y3p5WWxhY0dBdHdNVjNpR3JGcFVScjhpS3EwY1RnTUV3UlQwYXY3?=
+ =?utf-8?B?T0pzSGFVS01nMkFRNmF3SHAwQXRUS0gyN1ZsaGllRjU1dU5wZmJBOG9reHdp?=
+ =?utf-8?B?WkEwVXFXeWdmTktRUllCN1dUcFNnWlFFYjhpLzNSTjRsdmJtNWtkajZQcnpa?=
+ =?utf-8?B?by91M0xCbldWNkRDMThMejFwSEVxLzA1b2Naam9laHlXVXFBRUFtdGR6RFNV?=
+ =?utf-8?B?RmJVUVlYQ2JiV0xsQ00xNUJlclNPK0REQ2xQQ3JHdkpKd09sTnBFQlRUMSsx?=
+ =?utf-8?B?alN6MnI2ekpMMldpMzFWb3NFUTUzU2F1dCtzcHRqKy9wMVNyRmNScG1YR1o4?=
+ =?utf-8?B?YXAvRFJKdzlHM1JnUVM5Zk1FUmNaN040aFNTTHhwMjJkaENXeHZDZFU4QlRo?=
+ =?utf-8?Q?Ltt0GnM8CDIUPU3fdZIgRKfzc?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8d67fbb1-cff5-46f2-d518-08dddf9962bd
+X-MS-Exchange-CrossTenant-AuthSource: AM7PR04MB7046.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2025 03:26:43.8346
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qYBBkyvJ42WqfGFdFzXhdp+XKW0hdXFj+kQa5iP9VjXLiKAoDXuA7NLbaQ2t0LyzLMtsswtMBFSuY5hFmx3vqA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA1PR04MB11384
+
+On 08/19/2025, Dmitry Baryshkov wrote:
+> On 19/08/2025 12:49, Liu Ying wrote:
+>> Hi Dmitry,
+>>
+>> On 08/16/2025, Dmitry Baryshkov wrote:
+>>> Declare which infoframes are supported via the .hdmi_write_infoframe()
+>>> interface.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>> ---
+>>>   drivers/gpu/drm/bridge/ite-it6263.c | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>
+>> For subject, s/it6232/it6263.
+> 
+> Ack
+> 
+>>
+>>>
+>>> diff --git a/drivers/gpu/drm/bridge/ite-it6263.c b/drivers/gpu/drm/bridge/ite-it6263.c
+>>> index cf813672b4ffb8ab5c524c6414ee7b414cebc018..b1956891a8388401c13cd2fc5c78f0779063adf4 100644
+>>> --- a/drivers/gpu/drm/bridge/ite-it6263.c
+>>> +++ b/drivers/gpu/drm/bridge/ite-it6263.c
+>>> @@ -875,6 +875,7 @@ static int it6263_probe(struct i2c_client *client)
+>>>       it->bridge.type = DRM_MODE_CONNECTOR_HDMIA;
+>>>       it->bridge.vendor = "ITE";
+>>>       it->bridge.product = "IT6263";
+>>> +    it->bridge.supported_infoframes = DRM_CONNECTOR_INFOFRAME_AVI;
+>>
+>> With supported_infoframes set, the two lines setting vendor and product
+>> are dead code.  I think it's worth dropping them and updating kerneldoc
+>> for vendor and product members because they don't have to be required if
+>> DRM_BRIDGE_OP_HDMI is set.  But, this could be done with future patch(not
+>> in this patch series).
+> 
+> They are still required by the framework itself, see drmm_connector_hdmi_init().
+
+Yes.  But it's a bit too strict since SPD infoframe is optional according
+to CTA standard documentation.
+
+> 
+> BTW: I don't have ITE datasheet. Do you know if it really supports only the AVI frame?
+
+AFAICS, it seems that ITE6263 supports inforframes from 0x81 to 0x85, so
+including SPD inforframe.  Maybe, just keep those dead vendor&product
+settings for now and add SPD inforframe in future.
+
+> 
+> 
+>>
+>> Reviewed-by: Liu Ying <victor.liu@nxp.com>
+>>
+>>>         return devm_drm_bridge_add(dev, &it->bridge);
+>>>   }
+>>>
+>>
+>>
+> 
+> 
 
 
-
-On 8/20/2025 5:59 AM, Nicolin Chen wrote:
-> On Tue, Aug 19, 2025 at 10:12:41PM +0800, Ethan Zhao wrote:
->> On 8/12/2025 6:59 AM, Nicolin Chen wrote:
->>> @@ -4529,13 +4530,26 @@ EXPORT_SYMBOL(pci_wait_for_pending_transaction);
->>>     */
->>>    int pcie_flr(struct pci_dev *dev)
->>>    {
->>> +	int ret = 0;
->>> +
->>>    	if (!pci_wait_for_pending_transaction(dev))
->>>    		pci_err(dev, "timed out waiting for pending transaction; performing function level reset anyway\n");
->>> +	/*
->>> +	 * Per PCIe r6.3, sec 10.3.1 IMPLEMENTATION NOTE, software disables ATS
->>> +	 * before initiating a reset. Notify the iommu driver that enabled ATS.
->>> +	 * Have to call it after waiting for pending DMA transaction.
->>> +	 */
->>> +	ret = iommu_dev_reset_prepare(&dev->dev);
-> 
->> If we dont' consider the association between IOMMU and devices in FLR(),
->> it can be understood that more complex processing logic resides outside
->> this function. However, if the FLR() function already synchironizes and
->> handles the association with IOMMU like this (disabling ATS by attaching
->> device to blocking domain), then how would the following scenarios
->> behave ?
-> 
-> That's a good point. The iommu-level reset is per struct device.
-> So, basically it'll match with the FLR per pci_dev. Yet, the RID
-> isolation between siblings might be a concern:
-> 
->> 1. Reset one of PCIe alias devices.
-> 
-> IIRC, an alias device might have:
-> 
->   a) one pci_dev; multiple RIDs
-> 
->      In this case, neither FLR nor IOMMU isolates between RIDs.
->      So, both FLR and IOMMU blocking will reset all RIDs. There
->      should be no issue resulted from the IOMMU blocking.
-> 
->   b) multiple pci_devs; single RID
-> 
->      In this case, FLR only resets one device, while the IOMMU-
->      level reset will block the entire RID (i.e. all devices),
->      since they share the single translation tunnel. This could
->      break the siblings, if they aren't also being reset along.
-Yup, such alias devices might not have ATS cap. because of they
-are PCI devices or they share the RID(BDF), so checking ATS cap
-condition might be useful here to skip the prepare()/done() .>
->> 2. Reset PF when its VFs are actvie.
-> 
->   c) multiple pci_devs with their own RIDs
-> 
->      In this case, either FLR or IOMMU only resets the PF. That
->      being said, VFs might be affected since PF is resetting?
->      If there is an issue, I don't see it coming from the IOMMU-
->      level reset..
-Each of the PF and its VFs has it owns RID(BDF), but the VFs' life
-depends on the living of PF, resetting PF, means all its VFs are
-lost.
-
-There is no processing logic about PF and its VFs in FLR() yet.
-my understanding the upper layer callers should consider the
-complexity of such case.
-
-While we introducing the connection of IOMMU & device in FLR(),
-seems we brought some of the logic from the outside to the inside
-part.
-
-One method might we don't handle PF either by explicit checking its
-VF configuration existing to skip prepare()/done() ? till we have
-much clearer handling logic about it.
-
-Thanks,
-Ethan
-   > d
-> Thus, case b might be breaking. So, perhaps we should add a few
-> conditions when calling iommu_dev_reset_prepare/done():
->   + Make sure that the pci_dev has ATS capability
->   + Make sure no sibling pci_dev(s) sharing the same RID
->   + Any others?
-> 
-> Thanks
-> Nicolin
-
+-- 
+Regards,
+Liu Ying
 
