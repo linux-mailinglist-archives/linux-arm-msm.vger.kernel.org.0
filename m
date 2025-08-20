@@ -1,230 +1,296 @@
-Return-Path: <linux-arm-msm+bounces-69892-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FCC2B2D6EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 10:44:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 25D70B2D6F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 10:48:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF553188A657
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:42:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6541718897A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:47:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B23E327602C;
-	Wed, 20 Aug 2025 08:42:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 476732D97BB;
+	Wed, 20 Aug 2025 08:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Hisoo03y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="UO1Mh796"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9FC2D879F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 08:42:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9122D24AD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 08:46:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755679334; cv=none; b=o98K4hqM2RhNWqGtiX6eHWfVvAWSlYF4tmNkD5R3TuZQ7sMnQkt0/SYiiM8elGZcKoaugNIEoHoKt6JWEWUMZuXSFdrFrp5ytEZmx3NXTI1FSUpOz2I49f9o4SPQvqO7JwRsZOOMXNQFjTSSnaCznbx2UITiAI1DPcfoF7KAiVk=
+	t=1755679598; cv=none; b=Li7fo4QTcfeiRlEkMwTLHN5Ph6luiU2gWbenW5xBc7R35Gzd+zAHYhuYtUBuhQzhJxYdDebUSwqVTAD5gap/2yTeyoBitgZdgVICUeJSS1xiU3QqajtgnGWpPvA+pQTAxmL/n/DzXdH8QZ5XVe28ukWk2DnxiStrQPu3OyBAMUY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755679334; c=relaxed/simple;
-	bh=zMxp/Y9NCrKDYrER4UyjAnXSn/8lzKPXQ7dHBNQTR30=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=hKUJ8iI1IkbXJe3HTv8zunNrxyBRMWya7/hImtAGcx+q3WMFf+5PBG+Yi4cC+KMI6c9J57jo/C4GtbPmiCpbGB0k7idTAShKbgVRxgBRPE1E8Icg5M9KqBpbkuXs6vffLqrtMkNFPgciXSAcuO1w9zW+Ui6jiJwi7MHLWB4jBEI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Hisoo03y; arc=none smtp.client-ip=209.85.218.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-afcb73394b4so926483066b.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 01:42:12 -0700 (PDT)
+	s=arc-20240116; t=1755679598; c=relaxed/simple;
+	bh=suO3hfcniDB5uSnEPobTeKpDgdZMFT9bBbV1Qjkc+eQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tWGOEX5SIp1e75QIPofF2orwGoKZSZCsxvhA/c+Ht97SZx8JyorPNRHJ0igpaZ/B23/+h1wZuOgELbdwwVFHfgR4gdkg4JJmsoiiJJnjT9SbkSflof16hHRvyXE85HEDv5Wobz11/MWmRMrfmvtWQ58AuMTaB/6MeqWmO9drpNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=UO1Mh796; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45a1b05a49cso46304195e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 01:46:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1755679331; x=1756284131; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dETmxzysQAIIrfvzFS6NhiwZKV/rguUqMxZ2Lb2+BiA=;
-        b=Hisoo03y9XPP464yOPXxVjUqj3dwzI25SNF2mh3om6L87mrSL1I5xseXAIYxPdKBah
-         5RqXOfK2i5/qLPMiB3BIezAA8BW/FUitmmeBZP78Dg3zLQjnW2GR0pUgZxyLiLSK4ho5
-         KLWWPPZgeSLCeMf6xUAFwNxBx1V8PnUuBTBN4lYlDw9mkWmOiBlLczleThtGSBjWw34N
-         fkg2BAGdIr7YwKWut46Nc3C/lF1izmKhSjonPW7/CMlGok0JJs4zmNezrp82BIkgayOe
-         Fhva+a1ixV6qGtSHTwapA54vX9olPxwaqCYBLVTXwaHGYP09zOkRBg6etgFL1C5+SiuC
-         +WgQ==
+        d=linaro.org; s=google; t=1755679594; x=1756284394; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=y4AG+oO4F/Ul30Mp0ZZuJ5uNspts20DrHUTMHBfmexc=;
+        b=UO1Mh796fr9lHkvdKfYmEW+1c3NRTUh9hhF1Hbf8KOkSIUwDuDRr2hphttu+DszraG
+         wwzIO1zWVJKfvva4q6yw1MV97MQMW8EbdCou3iaVzXC94X18chFV4ewNIYbWtWQsKv8f
+         wN/lE61YUc3dz8pc3w/3bMcJo0KwdfGvdfeqSFW1heGEDdMPbwp+rv2/grkLFV3ibgxO
+         yxYtdwtJ+6Fl25GgJ0u83Dgu062ASXMVskcju0fmRy9uL3IpVBUAeq15R67Xbvl710Lr
+         Sfpfglal0mi5c8oJpavY6iHxKLK62GhL6wCVAU+yda5Qm7ahB5kWlT5ThfDIWq6P0Gvl
+         gc4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755679331; x=1756284131;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=dETmxzysQAIIrfvzFS6NhiwZKV/rguUqMxZ2Lb2+BiA=;
-        b=fAsUuZNsgynHrTfv/9y7ekcccM47U8I8k7SshawcG4b0WeN4l19kAMv2ZuUe6Kve5S
-         kB7iASGOYjQkoi4+uqb0skkQ05y7xEfNHhnJ2JdxxmvnzqNtidm2DCJ47aHCYhy8YV4q
-         P2Pv2jsgqefLUDkxl+QOe7W5eKGWB2xrPbPT34QhIrB3LNX3VMt9F3hu18c4qkHyhlRM
-         FA1c/KKbIZQtj4SODcYtKXBuFJ2ojwhjJbBu0HvxUiiT4dFBmVCRJ5P8H/TyBZv9hlg6
-         MejQLZdPqodNY8FXOviSL2f2Wg/a+w7caxtsbOxlOruWbYSkgLOPfvqJcB6Vwea0rUGc
-         25Dw==
-X-Forwarded-Encrypted: i=1; AJvYcCVUCrdBl+Sma9US63GjcdTg9RpK0etEaOZj63RIsCh1++iUSOkLPK8v5T6PcXXWwiijOrujuZpuub+mlXv5@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxw1OQDqaa+DAbo75qMgLci8ml6WnHE1YpOwOHmvTP3ulG1oYuE
-	ksK0YkQp98H8C2mvcCVTKS6j8hWFYHGKErcb0GBaiDaw4ueM0INV1SRZ9IAPfa39Vo0=
-X-Gm-Gg: ASbGncv9IR2xxQv/q/Q7rCKbPl39WgZRhKiFzrAouMEX3rGIBwgnmBtRJvLABFQKT0e
-	2j28DQBmXYhrH2c057aQcPbkpmS+ExivwvHzSCeNiu8QZjetagfhMza2pCcuWInhBTQ/2Rp4qWQ
-	3ZkQoyZmzmLHvvxZ+lJyOmhWO8DYmoSzjkqrfhvvKspMkPjfo+BUVNHkggJ9b3PIDdNFt1SgNw3
-	USgdLBHk9FEbbpwyPev3qm2O4ancmdiGeurgtBBBdPzYCYGmv11231k25279x+nVzqdIKX9bryg
-	4lF49nVRZB+tStSCfjXyBAHjxM5cU4zDlgW0iU2eMf07kzPw7ecNpxgkXTTH7KfBinkOPai6ZwI
-	+nEz3dTgoqk5sy4GnoPbYKrYpb/uMtXV1D9UADjANEaGXwdfVe0hI78qfkngjxPigKEY=
-X-Google-Smtp-Source: AGHT+IEac2OEaqE2OoGnweWa6iOptxoUoAiXM3h5Vw1WEpE7VDgBBgHTZqHGUTgnoBZuEdKM1TFNmg==
-X-Received: by 2002:a17:907:9715:b0:ae3:6f35:36fe with SMTP id a640c23a62f3a-afdf01e915cmr146724366b.47.1755679330638;
-        Wed, 20 Aug 2025 01:42:10 -0700 (PDT)
-Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afded478bf3sm138377366b.53.2025.08.20.01.42.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Aug 2025 01:42:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1755679594; x=1756284394;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=y4AG+oO4F/Ul30Mp0ZZuJ5uNspts20DrHUTMHBfmexc=;
+        b=LgDh3EduymWoie7Q/d6kdp28BXPQD9UUZLJQeY6HaQrUCf2MZTmJAPuGA5+2iDmrg6
+         WNbhRADkeDUJucaT0aUX77Q0ayRgxw7ReOESee1sq2p9R+oSGIUl1Xbnz1Z2m1RuF8n2
+         UtRah+Sg7aw218/N0dY/DYWrWbGuw14x8JEiAOQNc0rO+L18O4XJpUzzjZjinLPOb/xa
+         KoxWGhur453qs5pqCl5JxuKBUmcQvQLW+I/QDXDpLhFXrU1N1yy09mqLTEmkWSs7O56j
+         RRJoJ34rTj39fifIapMF8u1R7lAiU47vsfG3Tj0m61szlkk77oHi+B7899Y5RLMsOtXr
+         FVJQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4YLu4STxZb31PtEmRsVV6xv9CjTIzU4O3ZYXtPCMiMRC/YvogOA5nyubXi0w9OGM9bFrDTH4G/LcCvm4V@vger.kernel.org
+X-Gm-Message-State: AOJu0YyzDKYeLWZGdpj06eK/fjelDz8yT4762hUtfDxynAJnV4iB+bd3
+	OP7dLUBA1xGmsiJIMqF/euVtkzgXZCM/3eyPC7ejWaxAycKg3REuEcYyDfR6g+glsT0=
+X-Gm-Gg: ASbGncvCEKdIZidV0iIoh1zY7QElabRWeEjdHz4HXMfOc0LA8wPIA22hEZvCilzdrXy
+	VbKQudXg5daTVfaIjpzLN78+SmUQgK9kV0SlCTGJcO4Gf1sK5F2B54ffFTCheOSEHisKvYVjpmo
+	eGS0OgHnqVaP+pacwF8PXnq5OZ+o5DDXh/wQKMgNU1X+I7bSh8WAoMcF0bliSgpd5sKt/slI/GT
+	NMSSYWDj7QRhDlRMTDlvsdwj1a5XWPGQSyJaTauNOuP3JWitj5V5ziTp4km7SeRnhr30j7y43M4
+	oFdVxJN0gbbzrtOCDLsZ6Unor0ZAq2YVTZ+uEDfABQjDCXPm8+7eaCGgmj5unV0O6bDQKfcKkzJ
+	6SdrhLRv6T4Fk1vvY8tWbi+txJllNoK3wnjU=
+X-Google-Smtp-Source: AGHT+IFTiUzC8MVfqThCet8G8O0hQZ4w5t+sTa+meRVQrJvcqjhv55BgfhXIw/O1Al9qTLlBTTZ8Zg==
+X-Received: by 2002:a05:600c:4fcd:b0:458:add2:d4b4 with SMTP id 5b1f17b1804b1-45b479a3e26mr15612005e9.12.1755679593431;
+        Wed, 20 Aug 2025 01:46:33 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:ef30:8a2d:c0da:b2f2:1f41])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c0771c1aa3sm6541401f8f.32.2025.08.20.01.46.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 20 Aug 2025 01:46:33 -0700 (PDT)
+Date: Wed, 20 Aug 2025 10:46:31 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Vikash Garodia <quic_vgarodia@quicinc.com>,
+	Dikshita Agarwal <quic_dikshita@quicinc.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH v2 11/11] media: iris: Enable Secure PAS support with
+ IOMMU managed by Linux
+Message-ID: <aKWLZwYVPJBABhRI@linaro.org>
+References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
+ <20250819165447.4149674-12-mukesh.ojha@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 20 Aug 2025 10:42:09 +0200
-Message-Id: <DC74DPI8WS81.17VCYVY34C2F9@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
- <linux-mmc@vger.kernel.org>
-Subject: Re: [PATCH v2 14/15] arm64: dts: qcom: Add initial Milos dtsi
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Will Deacon"
- <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel"
- <joro@8bytes.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Rafael J.
- Wysocki" <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert Xu"
- <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
- "Vinod Koul" <vkoul@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Robert Marko"
- <robimarko@gmail.com>, "Das Srinagesh" <quic_gurus@quicinc.com>, "Thomas
- Gleixner" <tglx@linutronix.de>, "Jassi Brar" <jassisinghbrar@gmail.com>,
- "Amit Kucheria" <amitk@kernel.org>, "Thara Gopinath"
- <thara.gopinath@gmail.com>, "Daniel Lezcano" <daniel.lezcano@linaro.org>,
- "Zhang Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>,
- "Ulf Hansson" <ulf.hansson@linaro.org>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
- <20250713-sm7635-fp6-initial-v2-14-e8f9a789505b@fairphone.com>
- <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
- <DBE6TK1KDOTP.IIT72I1LUN5M@fairphone.com>
- <DBE8G88CIQ53.2N51CABIBJOOO@fairphone.com>
- <DBOC7QBND54K.1SI5V9C2Z76BY@fairphone.com>
- <55420d89-fcd4-4cb5-a918-d8bbe2a03d19@oss.qualcomm.com>
-In-Reply-To: <55420d89-fcd4-4cb5-a918-d8bbe2a03d19@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250819165447.4149674-12-mukesh.ojha@oss.qualcomm.com>
 
-Hi Konrad,
+On Tue, Aug 19, 2025 at 10:24:46PM +0530, Mukesh Ojha wrote:
+> Most Qualcomm platforms feature a proprietary hypervisor (such as Gunyah
+> or QHEE), which typically handles IOMMU configuration. This includes
+> mapping memory regions and device memory resources for remote processors
+> by intercepting qcom_scm_pas_auth_and_reset() calls. These mappings are
+> later removed during teardown. Additionally, SHM bridge setup is required
+> to enable memory protection for both remoteproc metadata and its memory
+> regions.
+> 
+> When the hypervisor is absent, the operating system must perform these
+> configurations instead.
+> 
+> Support for handling IOMMU and SHM setup in the absence of a hypervisor
+> is now in place. Extend the Iris driver to enable this functionality on
+> platforms where IOMMU is managed by Linux (i.e., non-Gunyah, non-QHEE).
+> 
+> Additionally, the Iris driver must map the firmware and its required
+> resources to the firmware SID, which is now specified via the device tree.
+> 
+> Co-developed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+>  drivers/media/platform/qcom/iris/iris_core.c  |   9 +-
+>  drivers/media/platform/qcom/iris/iris_core.h  |   6 +
+>  .../media/platform/qcom/iris/iris_firmware.c  | 156 ++++++++++++++++--
+>  .../media/platform/qcom/iris/iris_firmware.h  |   2 +
+>  4 files changed, 155 insertions(+), 18 deletions(-)
+> 
+> [...]
+> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
+> index f1b5cd56db32..e3f2fe5c9d7a 100644
+> --- a/drivers/media/platform/qcom/iris/iris_firmware.c
+> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+> @@ -3,10 +3,18 @@
+>   * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>   */
+>  
+> +#include <linux/device.h>
+>  #include <linux/firmware.h>
+> -#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/kernel.h>
+> +#include <linux/iommu.h>
+> +#include <linux/io.h>
+> +#include <linux/of.h>
+>  #include <linux/of_address.h>
+>  #include <linux/of_reserved_mem.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/of_device.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/sizes.h>
+>  #include <linux/soc/qcom/mdt_loader.h>
+>  
+>  #include "iris_core.h"
+> @@ -17,15 +25,14 @@
+>  static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+>  {
+>  	u32 pas_id = core->iris_platform_data->pas_id;
+> +	struct qcom_scm_pas_ctx *ctx;
+>  	const struct firmware *firmware = NULL;
+>  	struct device *dev = core->dev;
+> -	struct reserved_mem *rmem;
+> -	struct device_node *node;
+> -	phys_addr_t mem_phys;
+> -	size_t res_size;
+> -	ssize_t fw_size;
+> -	void *mem_virt;
+> -	int ret;
+> +	struct reserved_mem *rmem = NULL;
+> +	struct device_node *node = NULL;
+> +	ssize_t fw_size = 0;
+> +	void *mem_virt = NULL;
+> +	int ret = 0;
+>  
+>  	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
+>  		return -EINVAL;
+> @@ -39,36 +46,64 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+>  	if (!rmem)
+>  		return -EINVAL;
+>  
+> -	mem_phys = rmem->base;
+> -	res_size = rmem->size;
+> +	if (core->has_iommu)
+> +		dev = core->fw.dev;
+>  
+> +	ctx = qcom_scm_pas_ctx_init(dev, pas_id, rmem->base, rmem->size, false);
+> +	if (!ctx)
+> +		return -ENOMEM;
+> +
+> +	ctx->has_iommu = core->has_iommu;
+>  	ret = request_firmware(&firmware, fw_name, dev);
+>  	if (ret)
+>  		return ret;
+>  
+>  	fw_size = qcom_mdt_get_size(firmware);
+> -	if (fw_size < 0 || res_size < (size_t)fw_size) {
+> +	if (fw_size < 0 || rmem->size < (size_t)fw_size) {
+>  		ret = -EINVAL;
+>  		goto err_release_fw;
+>  	}
+>  
+> -	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
+> +	mem_virt = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+>  	if (!mem_virt) {
+>  		ret = -ENOMEM;
+>  		goto err_release_fw;
+>  	}
+>  
+> -	ret = qcom_mdt_load(dev, firmware, fw_name,
+> -			    pas_id, mem_virt, mem_phys, res_size, NULL);
+> +	ret = qcom_mdt_pas_load(ctx, firmware, fw_name, mem_virt, NULL);
+>  	if (ret)
+>  		goto err_mem_unmap;
+>  
+> -	ret = qcom_scm_pas_auth_and_reset(pas_id);
+> +	if (core->has_iommu) {
+> +		ret = iommu_map(core->fw.iommu_domain, 0, rmem->base, rmem->size,
+> +				IOMMU_READ | IOMMU_WRITE | IOMMU_PRIV, GFP_KERNEL);
 
-On Sat Aug 2, 2025 at 2:04 PM CEST, Konrad Dybcio wrote:
-> On 7/29/25 8:49 AM, Luca Weiss wrote:
->> Hi Konrad,
->>=20
->> On Thu Jul 17, 2025 at 11:46 AM CEST, Luca Weiss wrote:
->>> Hi Konrad,
->>>
->>> On Thu Jul 17, 2025 at 10:29 AM CEST, Luca Weiss wrote:
->>>> On Mon Jul 14, 2025 at 1:06 PM CEST, Konrad Dybcio wrote:
->>>>> On 7/13/25 10:05 AM, Luca Weiss wrote:
->>>>>> Add a devicetree description for the Milos SoC, which is for example
->>>>>> Snapdragon 7s Gen 3 (SM7635).
->>>>>>
->>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>>>> ---
->>>>>
->>>>> [...]
->>>>>> +
->>>>>> +		spmi_bus: spmi@c400000 {
->>>>>> +			compatible =3D "qcom,spmi-pmic-arb";
->>>>>
->>>>> There's two bus instances on this platform, check out the x1e binding
->>>>
->>>> Will do
->>>
->>> One problem: If we make the labels spmi_bus0 and spmi_bus1 then we can'=
-t
->>> reuse the existing PMIC dtsi files since they all reference &spmi_bus.
->>>
->>> On FP6 everything's connected to PMIC_SPMI0_*, and PMIC_SPMI1_* is not
->>> connected to anything so just adding the label spmi_bus on spmi_bus0
->>> would be fine.
->>>
->>> Can I add this to the device dts? Not going to be pretty though...
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/ar=
-m64/boot/dts/qcom/milos-fairphone-fp6.dts
->>> index d12eaa585b31..69605c9ed344 100644
->>> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->>> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->>> @@ -11,6 +11,9 @@
->>>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>>  #include "milos.dtsi"
->>> +
->>> +spmi_bus: &spmi_bus0 {};
->>> +
->>>  #include "pm7550.dtsi"
->>>  #include "pm8550vs.dtsi"
->>>  #include "pmiv0104.dtsi" /* PMIV0108 */
->>>
->>> Or I can add a second label for the spmi_bus0 as 'spmi_bus'. Not sure
->>> other designs than SM7635 recommend using spmi_bus1 for some stuff.
->>>
->>> But I guess longer term we'd need to figure out a solution to this, how
->>> to place a PMIC on a given SPMI bus, if reference designs start to
->>> recommend putting different PMIC on the separate busses.
->>=20
->> Any feedback on this regarding the spmi_bus label?
->
-> I had an offline chat with Bjorn and we only came up with janky
-> solutions :)
->
-> What you propose works well if the PMICs are all on bus0, which is
-> not the case for the newest platforms. If some instances are on bus0
-> and others are on bus1, things get ugly really quick and we're going
-> to drown in #ifdefs.
->
->
-> An alternative that I've seen downstream is to define PMIC nodes in
-> the root of a dtsi file (not in the root of DT, i.e. NOT under / { })
-> and do the following:
->
-> &spmi_busN {
-> 	#include "pmABCDX.dtsi"
-> };
->
-> Which is "okay", but has the visible downside of having to define the
-> temp alarm thermal zone in each board's DT separately (and doing
-> mid-file includes which is.. fine I guess, but also something we avoided
-> upstream for the longest time)
->
->
-> Both are less than ideal when it comes to altering the SID under
-> "interrupts", fixing that would help immensely. We were hoping to
-> leverage something like Johan's work on drivers/mfd/qcom-pm8008.c,
-> but that seems like a longer term project.
->
-> Please voice your opinions
+What is the use case for IOMMU_PRIV here? You don't have this flag for
+the qcom_q6v5_pas change.
 
-Since nobody else jumped in, how can we continue?
+> +		if (ret)
+> +			goto err_mem_unmap;
+> +
+> +		/*
+> +		 * Firmware has no support for resource table for now, so, lets
+> +		 * pass NULL and zero for input resource table and input resource
+> +		 * table respectively.
+> +		 */
+> +		ret = qcom_mdt_pas_map_devmem_rscs(ctx, core->fw.iommu_domain, NULL, 0);
+> +		if (ret)
+> +			goto err_unmap_carveout;
+> +	}
+> +
+> +	ret = qcom_scm_pas_prepare_and_auth_reset(ctx);
+>  	if (ret)
+> -		goto err_mem_unmap;
+> +		goto err_unmap_devmem_rscs;
+> +
+> +	core->fw.ctx = ctx;
+>  
+>  	return ret;
+>  
+> +err_unmap_devmem_rscs:
+> +	if (core->has_iommu)
+> +		qcom_mdt_pas_unmap_devmem_rscs(ctx, core->fw.iommu_domain);
+> +err_unmap_carveout:
+> +	if (core->has_iommu)
+> +		iommu_unmap(core->fw.iommu_domain, 0, rmem->size);
+>  err_mem_unmap:
+>  	memunmap(mem_virt);
+>  err_release_fw:
+> @@ -109,10 +144,97 @@ int iris_fw_load(struct iris_core *core)
+>  
+>  int iris_fw_unload(struct iris_core *core)
+>  {
+> -	return qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
+> +	struct qcom_scm_pas_ctx *ctx;
+> +	int ret;
+> +
+> +	ctx = core->fw.ctx;
+> +	ret = qcom_scm_pas_shutdown(ctx->peripheral);
+> +	if (core->has_iommu) {
+> +		iommu_unmap(core->fw.iommu_domain, 0, ctx->mem_size);
+> +		qcom_mdt_pas_unmap_devmem_rscs(ctx, core->fw.iommu_domain);
+> +	}
+> +
+> +	return ret;
+>  }
+>  
+>  int iris_set_hw_state(struct iris_core *core, bool resume)
+>  {
+>  	return qcom_scm_set_remote_state(resume, 0);
+>  }
+> +
+> +int iris_fw_init(struct iris_core *core)
+> +{
+> +	struct platform_device_info info;
+> +	struct iommu_domain *iommu_dom;
+> +	struct platform_device *pdev;
+> +	struct device_node *np;
+> +	int ret;
+> +
+> +	np = of_get_child_by_name(core->dev->of_node, "video-firmware");
+> +	if (!np)
+> +		return 0;
 
-One janky solution in my mind is somewhat similar to the PMxxxx_SID
-defines, doing something like "#define PM7550_SPMI spmi_bus0" and then
-using "&PM7550_SPMI {}" in the dtsi. I didn't try it so not sure that
-actually works but something like this should I imagine.
+You need a dt-bindings change for this as well. This is documented only
+for Venus.
 
-But fortunately my Milos device doesn't have the problem that it
-actually uses both SPMI busses for different PMICs, so similar to other
-SoCs that already have two SPMI busses, I could somewhat ignore the
-problem and let someone else figure out how to actually place PMICs on
-spmi_bus0 and spmi_bus1 if they have such a hardware.
-
-Regards
-Luca
-
->
-> Konrad
-
+Thanks,
+Stephan
 
