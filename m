@@ -1,381 +1,352 @@
-Return-Path: <linux-arm-msm+bounces-70008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93C53B2E4C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 20:17:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 90820B2E522
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 20:41:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3690A1BA8251
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 18:17:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB0A5188A65A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 18:42:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0847F274661;
-	Wed, 20 Aug 2025 18:17:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 196A7279DCB;
+	Wed, 20 Aug 2025 18:41:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kVwmuNsw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IRw0Y2Kq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A55B253B40
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 18:17:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4E92F4A;
+	Wed, 20 Aug 2025 18:41:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755713850; cv=none; b=MbpM0LHP/mb/BbLUeiA6UNHcEL+z1aeAkJBUZ6JHwCAAdBRlKAHPevJDpqe8W0ltVJ0JFam3eid9x9qispT6eidvi/LLMzjI4UHlrTPQLR8G4kz2yExKB0XS9qpEp4a7IU+PWIfXjGASeKLjQ+itX+xvPouL/LaRG6o8QLQTNSQ=
+	t=1755715300; cv=none; b=p8eWaOWGA/b5XzIfv1R3Ls08n2HydWDpFyB+tYfgBdd35w9mKDhRPdwEZWuO4T0AnJTQLoJro3jvD8z9hA6BbQHvwhlHk/wGKPoGQMKoIGN6L6tUGmRmb37asVy+JsgQmvjLGYpQgLOWMJqqs7uK/rUCmm/JJnrpQJpWoxm70Dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755713850; c=relaxed/simple;
-	bh=wIJ7lZ1d6yxKebG3gjmd5iF2qkByG75ZQtl0f9ycVVc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=i4/F1zBf7Pn4rISBp9U/D9we3xSsqiInppYL+SRErM+0gWUoFxUwI3TZqUpFDxh2kLXTO1VhLGvu6IWjncyDhnuJTcBgkvDeXd0+IkDdLt28W0yTF2H+v8xwR7S2fzIp37ONKz22oc7aKbZjJDDTaZC9GwnbmlvyPOfaGp0Y/NU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kVwmuNsw; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KI79gh025884
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 18:17:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	u9C4HcHZFJD3vmjoUygj7UtzPAmRgrML/pdAAaTHg3Q=; b=kVwmuNswf+oEjk7V
-	v8mDqF+5C2cFqzM2C3MSDZ+OQrUGXDFv+43oe/dQEMdXOgurMXe6VcS00cUXAybt
-	akbmXc94WNBDbR49dPAl9NKf0gn9FFoKlxdXLfEv1SmD/uKCFC2OJu4AMa9xT56g
-	up7J8m/km2BPvDhVPXd1cms1FgEyt17qRqlzUv7PfTGevMfTcs7YZarS2E/6zqeT
-	S4ITKxoUM9w5WZjaNyG6tXe2Bh8XZDZiHETRTAvzQzG05OECDB2xi4NRf23s4LQw
-	Fl+U9kZ29zfFq+YP3x7MKcD2ixA8MNSG+5ZY2tIje/eVX3jjGTEXFxOIk+CDwaCl
-	YPpIOQ==
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com [209.85.215.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52aary2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 18:17:26 +0000 (GMT)
-Received: by mail-pg1-f198.google.com with SMTP id 41be03b00d2f7-b47175d5a90so63358a12.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:17:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755713846; x=1756318646;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u9C4HcHZFJD3vmjoUygj7UtzPAmRgrML/pdAAaTHg3Q=;
-        b=VmZ0PFEb2NDfRD6nXMab7YDb5CLmV8pS5ihSERmtfWHttxAlP45ZAEG9jcRL+Yph3O
-         xXUUSMya3HY8dfKQSVeALOA+KUPxBvvSY9smi0SKJBr8LQPQEI/JBYmPWFiTJOy7W7e6
-         nW0LIf47wfs/J3Q8cRWUkhZHCiaHs5jhhGrPokS1joznRGBPlGHpeRmTbxkTsNTW3q09
-         knrTx3gn5KxzlUG7aJ11bn+BH6tCTVNsRiD//6KjBNJn19g2CeXamoFXG2+jgV0+s4Ti
-         tn+OuoVQv49DMBhp7Y5h5U7og5qrNFl5nqHkNd/5oS+rIEObKroLvha9gKs77q/DiywO
-         Tljg==
-X-Gm-Message-State: AOJu0YznFy4S3QGE9EsVwhVY5VoZ6WinAisVjn6b5am4VqQ5TJrfzfQN
-	CWwedQdKzcJbhANvD6whi5LjmiUHVs8cvMdk4YzTQEHhK4Jnfmv3y/Ugz+R7slCZ6NVdFPtRv7H
-	E41c22JUFPkDqJg2AGxSCXA6Ru5wuQqjSnC3DlFKcgucI2VlIbPERxiU9numFnBIrb+Fj
-X-Gm-Gg: ASbGncuAXZI6TD0V9jfVgLtV9xfOLcFzXoEwfLqUu1IjPy7xlDldmLrYEticujPPc9Z
-	/kM1bIS0NJcCo5jsJQeDe/FRkvb0LxXZ8HxniE/cuVmY41ZyUO0D8Qa94SrDs/rsw/gBfXsc12+
-	jOKlYzm4jkPTf2I5G1xJ7QVznacIQH1i1I2l693UQI9ap6AGCFlhkmrWjLq2/qDOorbk2gXpKcX
-	XWyn0GbHacC+iq8SFL6+kZYSjA9hVaCpk/o6o5rWSCTW6LZnDAF5cmSQWim+OUSglmuRAtQsAv/
-	OG6gxDehsgc2yNGn9koLXDxLs1Z2HmTj1bgx6kPDbELR25E5BDmvCuY7l63YdjcyDAZ9pHWD4+D
-	SSok8Ipymj0Nq7JaV850/RA==
-X-Received: by 2002:a05:6a20:939f:b0:240:356:f06e with SMTP id adf61e73a8af0-2431b548d5emr5936056637.0.1755713845993;
-        Wed, 20 Aug 2025 11:17:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7kNMYod7lUaGEFx3dQzs4iGueuU+k5ArmIHT2LqamjvyXxSYWC8c5WozSF+SqY3xVBlkjcQ==
-X-Received: by 2002:a05:6a20:939f:b0:240:356:f06e with SMTP id adf61e73a8af0-2431b548d5emr5936005637.0.1755713845242;
-        Wed, 20 Aug 2025 11:17:25 -0700 (PDT)
-Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4763fe7335sm2831365a12.14.2025.08.20.11.17.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 20 Aug 2025 11:17:24 -0700 (PDT)
-Message-ID: <4a5cab2f-1d04-4824-85b5-2f94725a0d32@oss.qualcomm.com>
-Date: Wed, 20 Aug 2025 11:17:21 -0700
+	s=arc-20240116; t=1755715300; c=relaxed/simple;
+	bh=M5XEnOFREG6GMi9TBf8OOHitW0MuoZ1UyjUQop82X9g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UGAzcW8LZ/t7KN2zUmLGpDDKUiCzvQp4rNLdsshrEPaSzn0/NZDpXJz1eyGTKCrm8lI0dD/+tg5fH2lywehra4592zKJfkASQiNYF+ZpiWmnmReNDNQIk2uF/mj+0XrKhoFp3b2h/JxZCbBmVZtCnT6o1AMyez3SZHbyBSxToS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IRw0Y2Kq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1A2C4CEE7;
+	Wed, 20 Aug 2025 18:41:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755715299;
+	bh=M5XEnOFREG6GMi9TBf8OOHitW0MuoZ1UyjUQop82X9g=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IRw0Y2KqhY/SDk6LaVeVThSNpmLyzDfFQs5bFtAVoFUqtP1ZFfOotLhbfO7Zp+hTs
+	 DLfqafLN2d7muUQ8yVUrXfsNf9/5PggxSi0DyRd2ivehu+Mu0uLQd5jLMkU/O6Lr4K
+	 rJxE0kXBkzWLCMUoj/oXA7ee3yAaIDG1LPq+siSbD6ks/R0XSvXostGjYxKWVcLGqt
+	 VtXRDdecITNNNM8TqV4Vz6WH0xhdCFMobtBq70ojgUTnfif0dn4eIZvoPjxgH6cl3l
+	 Sk4T0cItD60JQ+WEgP360a+AE2+OEzFxGTnrcvE7mdUDGAXIWOxMnILycRhVCzjyBW
+	 YfzzXASMN9dwQ==
+Date: Wed, 20 Aug 2025 19:41:28 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Linus Walleij <linus.walleij@linaro.org>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>, Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	NXP S32 Linux Team <s32@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Haojian Zhuang <haojian.zhuang@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org,
+	imx@lists.linux.dev, linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 00/15] pinctrl: introduce the concept of a GPIO pin
+ function category
+Message-ID: <534ad082-08fa-42c0-9c24-f0c11af7d5b2@sirena.org.uk>
+References: <20250815-pinctrl-gpio-pinfuncs-v5-0-955de9fd91db@linaro.org>
+ <CACRpkdaDGmdhaik+1saRv7Ts4myQ+tg1aQqGU3xQyT7ma8dJFw@mail.gmail.com>
+ <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
+ <CACRpkda4soRCLF5=W=6R4wnwT3pjk743j022XfJxjTTQzuarAA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 11/13] drm/msm/dpu: support SSPP assignment for
- quad-pipe case
-To: Jun Nie <jun.nie@linaro.org>, Rob Clark <robdclark@gmail.com>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jessica Zhang <quic_jesszhan@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250819-v6-16-rc2-quad-pipe-upstream-v15-0-2c7a85089db8@linaro.org>
- <20250819-v6-16-rc2-quad-pipe-upstream-v15-11-2c7a85089db8@linaro.org>
-Content-Language: en-US
-From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-In-Reply-To: <20250819-v6-16-rc2-quad-pipe-upstream-v15-11-2c7a85089db8@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: Y0fgRKGUM5k9kveFzRwC5Q-SXlGjoz_r
-X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a61137 cx=c_pps
- a=Qgeoaf8Lrialg5Z894R3/Q==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=sWKEhP36mHoA:10 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=6Bcxc3Uyk3af_q7fPysA:9 a=QEXdDO2ut3YA:10
- a=x9snwWr2DeNwDh03kgHS:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Y0fgRKGUM5k9kveFzRwC5Q-SXlGjoz_r
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX4DgIt7hTnSbr
- nvq1q7aizXBc+5En1imQwNwUIlAo+ccqZLBE7nRaRTwPjaTT5ZA3MyQWDzZN7GXxTQYJjPQWoNB
- NHPVVUaHWsS8VXkI2YmNW7IZWP3tk9+aLzXjK1uUYGZRsUU99Sar49c2QT71oWGLSWEJ6+Bdg9Q
- 7qkEKc2AvcP+8nG6DgTU+RTJoL0rbZKNU1ScVyycLJFg5w3QeFXXtUtKDaKo+7+d1xfgwqTv++F
- K02rTb/usNwAhz963XZ8VwAGjIL/6eKPnEp3Hxa8fVAroiAgTypxwOVX5AvvPC1eMVcmUKzzF8f
- famxq9RPKEx/TQGZTfH0+c4UdDTRdhtrfVBGLoK/PVKCwVmsuE6t2Cth5+zYokkNwLNqX5MpVSK
- 3j5CpsXr9z1DhK1/goYj2/c6ghRrhQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_04,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ykJoQEoXCL0DuqqK"
+Content-Disposition: inline
+In-Reply-To: <CACRpkda4soRCLF5=W=6R4wnwT3pjk743j022XfJxjTTQzuarAA@mail.gmail.com>
+X-Cookie: BARBARA STANWYCK makes me nervous!!
 
 
+--ykJoQEoXCL0DuqqK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 8/18/2025 6:31 PM, Jun Nie wrote:
-> Currently, SSPPs are assigned to a maximum of two pipes. However,
-> quad-pipe usage scenarios require four pipes and involve configuring
-> two stages. In quad-pipe case, the first two pipes share a set of
-> mixer configurations and enable multi-rect mode when certain
-> conditions are met. The same applies to the subsequent two pipes.
-> 
-> Assign SSPPs to the pipes in each stage using a unified method and
-> to loop the stages accordingly.
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+On Wed, Aug 20, 2025 at 09:12:49AM +0200, Linus Walleij wrote:
 
-Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> The qualcomm 32bit platforms fail in next anyway so I dropped the patches
+> for now.
 
-> ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 150 ++++++++++++++++++------------
->   1 file changed, 89 insertions(+), 61 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> index d3db843d324efcda5477a7eac73a8872a55e95e5..99c902dfa7e0256028d294113a3e9bad0e1a0069 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-> @@ -957,6 +957,23 @@ static int dpu_plane_is_multirect_parallel_capable(struct dpu_hw_sspp *sspp,
->   		dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth);
->   }
->   
-> +static bool dpu_plane_get_single_pipe_in_stage(struct dpu_plane_state *pstate,
-> +					       struct dpu_sw_pipe **single_pipe,
-> +					       struct dpu_sw_pipe_cfg **single_pipe_cfg,
-> +					       int stage_index)
-> +{
-> +	int pipe_idx;
-> +
-> +	pipe_idx = stage_index * PIPES_PER_STAGE;
-> +	if (drm_rect_width(&pstate->pipe_cfg[pipe_idx].src_rect) != 0 &&
-> +	    drm_rect_width(&pstate->pipe_cfg[pipe_idx + 1].src_rect) == 0) {
-> +		*single_pipe = &pstate->pipe[pipe_idx];
-> +		*single_pipe_cfg = &pstate->pipe_cfg[pipe_idx];
-> +		return true;
-> +	}
-> +
-> +	return false;
-> +}
->   
->   static int dpu_plane_atomic_check_sspp(struct drm_plane *plane,
->   				       struct drm_atomic_state *state,
-> @@ -1022,17 +1039,20 @@ static bool dpu_plane_try_multirect_parallel(struct dpu_sw_pipe *pipe, struct dp
->   static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
->   					  struct dpu_plane_state *prev_adjacent_pstate,
->   					  const struct msm_format *fmt,
-> -					  uint32_t max_linewidth)
-> +					  uint32_t max_linewidth, int stage_index)
->   {
-> -	struct dpu_sw_pipe *pipe = &pstate->pipe[0];
-> -	struct dpu_sw_pipe *r_pipe = &pstate->pipe[1];
-> -	struct dpu_sw_pipe_cfg *pipe_cfg = &pstate->pipe_cfg[0];
-> -	struct dpu_sw_pipe *prev_pipe = &prev_adjacent_pstate->pipe[0];
-> -	struct dpu_sw_pipe_cfg *prev_pipe_cfg = &prev_adjacent_pstate->pipe_cfg[0];
-> +	struct dpu_sw_pipe *pipe, *prev_pipe;
-> +	struct dpu_sw_pipe_cfg *pipe_cfg, *prev_pipe_cfg;
->   	const struct msm_format *prev_fmt = msm_framebuffer_format(prev_adjacent_pstate->base.fb);
->   	u16 max_tile_height = 1;
->   
-> -	if (prev_adjacent_pstate->pipe[1].sspp != NULL ||
-> +	if (!dpu_plane_get_single_pipe_in_stage(pstate, &pipe,
-> +						&pipe_cfg, stage_index))
-> +		return false;
-> +
-> +	if (!dpu_plane_get_single_pipe_in_stage(prev_adjacent_pstate,
-> +						&prev_pipe, &prev_pipe_cfg,
-> +						stage_index) ||
->   	    prev_pipe->multirect_mode != DPU_SSPP_MULTIRECT_NONE)
->   		return false;
->   
-> @@ -1047,11 +1067,6 @@ static int dpu_plane_try_multirect_shared(struct dpu_plane_state *pstate,
->   	if (MSM_FORMAT_IS_UBWC(prev_fmt))
->   		max_tile_height = max(max_tile_height, prev_fmt->tile_height);
->   
-> -	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
-> -	r_pipe->sspp = NULL;
-> -
->   	if (dpu_plane_is_parallel_capable(pipe_cfg, fmt, max_linewidth) &&
->   	    dpu_plane_is_parallel_capable(prev_pipe_cfg, prev_fmt, max_linewidth) &&
->   	    (pipe_cfg->dst_rect.x1 >= prev_pipe_cfg->dst_rect.x2 ||
-> @@ -1180,36 +1195,69 @@ static int dpu_plane_virtual_atomic_check(struct drm_plane *plane,
->   	return 0;
->   }
->   
-> +static int dpu_plane_assign_resource_in_stage(struct dpu_sw_pipe *pipe,
-> +					      struct dpu_sw_pipe_cfg *pipe_cfg,
-> +					      struct drm_plane_state *plane_state,
-> +					      struct dpu_global_state *global_state,
-> +					      struct drm_crtc *crtc,
-> +					      struct dpu_rm_sspp_requirements *reqs)
-> +{
-> +	struct drm_plane *plane = plane_state->plane;
-> +	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
-> +	struct dpu_sw_pipe *r_pipe = pipe + 1;
-> +	struct dpu_sw_pipe_cfg *r_pipe_cfg = pipe_cfg + 1;
-> +
-> +	if (drm_rect_width(&pipe_cfg->src_rect) == 0)
-> +		return 0;
-> +
-> +	pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, reqs);
-> +	if (!pipe->sspp)
-> +		return -ENODEV;
-> +	pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +	pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +
-> +	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0)
-> +		return 0;
-> +
-> +	if (dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> +					      pipe->sspp,
-> +					      msm_framebuffer_format(plane_state->fb),
-> +					      dpu_kms->catalog->caps->max_linewidth))
-> +		return 0;
-> +
-> +	r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, reqs);
-> +	if (!r_pipe->sspp)
-> +		return -ENODEV;
-> +	r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> +	r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +
-> +	return 0;
-> +}
-> +
->   static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->   					      struct dpu_global_state *global_state,
->   					      struct drm_atomic_state *state,
->   					      struct drm_plane_state *plane_state,
-> -					      struct drm_plane_state *prev_adjacent_plane_state)
-> +					      struct drm_plane_state **prev_adjacent_plane_state)
->   {
->   	const struct drm_crtc_state *crtc_state = NULL;
->   	struct drm_plane *plane = plane_state->plane;
->   	struct dpu_kms *dpu_kms = _dpu_plane_get_kms(plane);
->   	struct dpu_rm_sspp_requirements reqs;
-> -	struct dpu_plane_state *pstate, *prev_adjacent_pstate;
-> +	struct dpu_plane_state *pstate, *prev_adjacent_pstate[STAGES_PER_PLANE];
->   	struct dpu_sw_pipe *pipe;
-> -	struct dpu_sw_pipe *r_pipe;
->   	struct dpu_sw_pipe_cfg *pipe_cfg;
-> -	struct dpu_sw_pipe_cfg *r_pipe_cfg;
->   	const struct msm_format *fmt;
-> -	int i;
-> +	int i, ret;
->   
->   	if (plane_state->crtc)
->   		crtc_state = drm_atomic_get_new_crtc_state(state,
->   							   plane_state->crtc);
->   
->   	pstate = to_dpu_plane_state(plane_state);
-> -	prev_adjacent_pstate = prev_adjacent_plane_state ?
-> -		to_dpu_plane_state(prev_adjacent_plane_state) : NULL;
-> -
-> -	pipe = &pstate->pipe[0];
-> -	r_pipe = &pstate->pipe[1];
-> -	pipe_cfg = &pstate->pipe_cfg[0];
-> -	r_pipe_cfg = &pstate->pipe_cfg[1];
-> +	for (i = 0; i < STAGES_PER_PLANE; i++)
-> +		prev_adjacent_pstate[i] = prev_adjacent_plane_state[i] ?
-> +			to_dpu_plane_state(prev_adjacent_plane_state[i]) : NULL;
->   
->   	for (i = 0; i < PIPES_PER_PLANE; i++)
->   		pstate->pipe[i].sspp = NULL;
-> @@ -1224,42 +1272,24 @@ static int dpu_plane_virtual_assign_resources(struct drm_crtc *crtc,
->   
->   	reqs.rot90 = drm_rotation_90_or_270(plane_state->rotation);
->   
-> -	if (drm_rect_width(&r_pipe_cfg->src_rect) == 0) {
-> -		if (!prev_adjacent_pstate ||
-> -		    !dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate, fmt,
-> -						    dpu_kms->catalog->caps->max_linewidth)) {
-> -			pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -			if (!pipe->sspp)
-> -				return -ENODEV;
-> -
-> -			r_pipe->sspp = NULL;
-> +	for (i = 0; i < STAGES_PER_PLANE; i++) {
-> +		if (prev_adjacent_pstate[i] &&
-> +		    dpu_plane_try_multirect_shared(pstate, prev_adjacent_pstate[i], fmt,
-> +						   dpu_kms->catalog->caps->max_linewidth,
-> +						   i))
-> +			continue;
->   
-> -			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> +		if (dpu_plane_get_single_pipe_in_stage(pstate, &pipe, &pipe_cfg, i))
-> +			prev_adjacent_plane_state[i] = plane_state;
->   
-> -			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -		}
-> -	} else {
-> -		pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -		if (!pipe->sspp)
-> -			return -ENODEV;
-> -
-> -		if (!dpu_plane_try_multirect_parallel(pipe, pipe_cfg, r_pipe, r_pipe_cfg,
-> -						      pipe->sspp,
-> -						      msm_framebuffer_format(plane_state->fb),
-> -						      dpu_kms->catalog->caps->max_linewidth)) {
-> -			/* multirect is not possible, use two SSPP blocks */
-> -			r_pipe->sspp = dpu_rm_reserve_sspp(&dpu_kms->rm, global_state, crtc, &reqs);
-> -			if (!r_pipe->sspp)
-> -				return -ENODEV;
-> -
-> -			pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -
-> -			r_pipe->multirect_index = DPU_SSPP_RECT_SOLO;
-> -			r_pipe->multirect_mode = DPU_SSPP_MULTIRECT_NONE;
-> -		}
-> +		pipe = &pstate->pipe[i * PIPES_PER_STAGE];
-> +		pipe_cfg = &pstate->pipe_cfg[i * PIPES_PER_STAGE];
-> +		ret = dpu_plane_assign_resource_in_stage(pipe, pipe_cfg,
-> +							 plane_state,
-> +							 global_state,
-> +							 crtc, &reqs);
-> +		if (ret)
-> +			return ret;
->   	}
->   
->   	return dpu_plane_atomic_check_sspp(plane, state, crtc_state);
-> @@ -1272,7 +1302,7 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
->   			       unsigned int num_planes)
->   {
->   	unsigned int i;
-> -	struct drm_plane_state *prev_adjacent_plane_state = NULL;
-> +	struct drm_plane_state *prev_adjacent_plane_state[STAGES_PER_PLANE] = { NULL };
->   
->   	for (i = 0; i < num_planes; i++) {
->   		struct drm_plane_state *plane_state = states[i];
-> @@ -1286,8 +1316,6 @@ int dpu_assign_plane_resources(struct dpu_global_state *global_state,
->   							     prev_adjacent_plane_state);
->   		if (ret)
->   			break;
-> -
-> -		prev_adjacent_plane_state = plane_state;
->   	}
->   
->   	return 0;
-> 
+FWIW the i.MX8MP also seems to have been broken by this:
 
+# bad: [5303936d609e09665deda94eaedf26a0e5c3a087] Add linux-next specific f=
+iles for 20250820
+# good: [3233c80d0aae77da9bf9a69c06c5bc1778e45fd0] Merge branch 'for-linux-=
+next-fixes' of https://gitlab.freedesktop.org/drm/misc/kernel.git
+# good: [ec0be3cdf40b5302248f3fb27a911cc630e8b855] regulator: consumer.rst:=
+ document bulk operations
+# good: [27848c082ba0b22850fd9fb7b185c015423dcdc7] spi: s3c64xx: Remove the=
+ use of dev_err_probe()
+# good: [c1dd310f1d76b4b13f1854618087af2513140897] spi: SPISG: Use devm_kca=
+lloc() in aml_spisg_clk_init()
+# good: [da9881d00153cc6d3917f6b74144b1d41b58338c] ASoC: qcom: audioreach: =
+add support for SMECNS module
+# good: [cf65182247761f7993737b710afe8c781699356b] ASoC: codecs: wsa883x: H=
+andle shared reset GPIO for WSA883x speakers
+# good: [2a55135201d5e24b80b7624880ff42eafd8e320c] ASoC: Intel: avs: Stream=
+line register-component function names
+# good: [550bc517e59347b3b1af7d290eac4fb1411a3d4e] regulator: bd718x7: Use =
+kcalloc() instead of kzalloc()
+# good: [0056b410355713556d8a10306f82e55b28d33ba8] spi: offload trigger: ad=
+i-util-sigma-delta: clean up imports
+# good: [daf855f76a1210ceed9541f71ac5dd9be02018a6] ASoC: es8323: enable DAP=
+M power widgets for playback DAC
+# good: [90179609efa421b1ccc7d8eafbc078bafb25777c] spi: spl022: use min_t()=
+ to improve code
+# good: [258384d8ce365dddd6c5c15204de8ccd53a7ab0a] ASoC: es8323: enable DAP=
+M power widgets for playback DAC and output
+# good: [6d068f1ae2a2f713d7f21a9a602e65b3d6b6fc6d] regulator: rt5133: Fix s=
+pelling mistake "regualtor" -> "regulator"
+# good: [a46e95c81e3a28926ab1904d9f754fef8318074d] ASoC: wl1273: Remove
+# good: [48124569bbc6bfda1df3e9ee17b19d559f4b1aa3] spi: remove unneeded 'fa=
+st_io' parameter in regmap_config
+# good: [37533933bfe92cd5a99ef4743f31dac62ccc8de0] regulator: remove unneed=
+ed 'fast_io' parameter in regmap_config
+# good: [0e62438e476494a1891a8822b9785bc6e73e9c3f] ASoC: Intel: sst: Remove=
+ redundant semicolons
+# good: [5c36b86d2bf68fbcad16169983ef7ee8c537db59] regmap: Remove superfluo=
+us check for !config in __regmap_init()
+# good: [714165e1c4b0d5b8c6d095fe07f65e6e7047aaeb] regulator: rt5133: Add R=
+T5133 PMIC regulator Support
+# good: [9c45f95222beecd6a284fd1284d54dd7a772cf59] spi: spi-qpic-snand: han=
+dle 'use_ecc' parameter of qcom_spi_config_cw_read()
+# good: [bab4ab484a6ca170847da9bffe86f1fa90df4bbe] ASoC: dt-bindings: Conve=
+rt brcm,bcm2835-i2s to DT schema
+# good: [b832b19318534bb4f1673b24d78037fee339c679] spi: loopback-test: Don'=
+t use %pK through printk
+# good: [8c02c8353460f8630313aef6810f34e134a3c1ee] ASoC: dt-bindings: realt=
+ek,alc5623: convert to DT schema
+# good: [6b7e2aa50bdaf88cd4c2a5e2059a7bf32d85a8b1] spi: spi-qpic-snand: rem=
+ove 'clr*status' members of struct 'qpic_ecc'
+# good: [2291a2186305faaf8525d57849d8ba12ad63f5e7] MAINTAINERS: Add entry f=
+or FourSemi audio amplifiers
+# good: [a54ef14188519a0994d0264f701f5771815fa11e] regulator: dt-bindings: =
+Clean-up active-semi,act8945a duplication
+# good: [595b7f155b926460a00776cc581e4dcd01220006] ASoC: Intel: avs: Condit=
+ional-path support
+# good: [cf25eb8eae91bcae9b2065d84b0c0ba0f6d9dd34] ASoC: soc-component: unp=
+ack snd_soc_component_init_bias_level()
+# good: [3059067fd3378a5454e7928c08d20bf3ef186760] ASoC: cs48l32: Use PTR_E=
+RR_OR_ZERO() to simplify code
+# good: [a1d0b0ae65ae3f32597edfbb547f16c75601cd87] spi: spi-qpic-snand: avo=
+id double assignment in qcom_spi_probe()
+# good: [2d86d2585ab929a143d1e6f8963da1499e33bf13] ASoC: pxa: add GPIOLIB_L=
+EGACY dependency
+# good: [9a200cbdb54349909a42b45379e792e4b39dd223] rust: regulator: impleme=
+nt Send and Sync for Regulator<T>
+# good: [162e23657e5379f07c6404dbfbf4367cb438ea7d] regulator: pf0900: Add P=
+MIC PF0900 support
+# good: [886f42ce96e7ce80545704e7168a9c6b60cd6c03] regmap: mmio: Add missin=
+g MODULE_DESCRIPTION()
+git bisect start '5303936d609e09665deda94eaedf26a0e5c3a087' '3233c80d0aae77=
+da9bf9a69c06c5bc1778e45fd0' 'ec0be3cdf40b5302248f3fb27a911cc630e8b855' '278=
+48c082ba0b22850fd9fb7b185c015423dcdc7' 'c1dd310f1d76b4b13f1854618087af25131=
+40897' 'da9881d00153cc6d3917f6b74144b1d41b58338c' 'cf65182247761f7993737b71=
+0afe8c781699356b' '2a55135201d5e24b80b7624880ff42eafd8e320c' '550bc517e5934=
+7b3b1af7d290eac4fb1411a3d4e' '0056b410355713556d8a10306f82e55b28d33ba8' 'da=
+f855f76a1210ceed9541f71ac5dd9be02018a6' '90179609efa421b1ccc7d8eafbc078bafb=
+25777c' '258384d8ce365dddd6c5c15204de8ccd53a7ab0a' '6d068f1ae2a2f713d7f21a9=
+a602e65b3d6b6fc6d' 'a46e95c81e3a28926ab1904d9f754fef8318074d' '48124569bbc6=
+bfda1df3e9ee17b19d559f4b1aa3' '37533933bfe92cd5a99ef4743f31dac62ccc8de0' '0=
+e62438e476494a1891a8822b9785bc6e73e9c3f' '5c36b86d2bf68fbcad16169983ef7ee8c=
+537db59' '714165e1c4b0d5b8c6d095fe07f65e6e7047aaeb' '9c45f95222beecd6a284fd=
+1284d54dd7a772cf59' 'bab4ab484a6ca170847da9bffe86f1fa90df4bbe' 'b832b193185=
+34bb4f1673b24d78037fee339c679' '8c02c8353460f8630313aef6810f34e134a3c1ee' '=
+6b7e2aa50bdaf88cd4c2a5e2059a7bf32d85a8b1' '2291a2186305faaf8525d57849d8ba12=
+ad63f5e7' 'a54ef14188519a0994d0264f701f5771815fa11e' '595b7f155b926460a0077=
+6cc581e4dcd01220006' 'cf25eb8eae91bcae9b2065d84b0c0ba0f6d9dd34' '3059067fd3=
+378a5454e7928c08d20bf3ef186760' 'a1d0b0ae65ae3f32597edfbb547f16c75601cd87' =
+'2d86d2585ab929a143d1e6f8963da1499e33bf13' '9a200cbdb54349909a42b45379e792e=
+4b39dd223' '162e23657e5379f07c6404dbfbf4367cb438ea7d' '886f42ce96e7ce805457=
+04e7168a9c6b60cd6c03'
+# test job: [ec0be3cdf40b5302248f3fb27a911cc630e8b855] https://lava.sirena.=
+org.uk/scheduler/job/1694307
+# test job: [27848c082ba0b22850fd9fb7b185c015423dcdc7] https://lava.sirena.=
+org.uk/scheduler/job/1693517
+# test job: [c1dd310f1d76b4b13f1854618087af2513140897] https://lava.sirena.=
+org.uk/scheduler/job/1693018
+# test job: [da9881d00153cc6d3917f6b74144b1d41b58338c] https://lava.sirena.=
+org.uk/scheduler/job/1693440
+# test job: [cf65182247761f7993737b710afe8c781699356b] https://lava.sirena.=
+org.uk/scheduler/job/1687555
+# test job: [2a55135201d5e24b80b7624880ff42eafd8e320c] https://lava.sirena.=
+org.uk/scheduler/job/1685791
+# test job: [550bc517e59347b3b1af7d290eac4fb1411a3d4e] https://lava.sirena.=
+org.uk/scheduler/job/1685919
+# test job: [0056b410355713556d8a10306f82e55b28d33ba8] https://lava.sirena.=
+org.uk/scheduler/job/1685951
+# test job: [daf855f76a1210ceed9541f71ac5dd9be02018a6] https://lava.sirena.=
+org.uk/scheduler/job/1685448
+# test job: [90179609efa421b1ccc7d8eafbc078bafb25777c] https://lava.sirena.=
+org.uk/scheduler/job/1686039
+# test job: [258384d8ce365dddd6c5c15204de8ccd53a7ab0a] https://lava.sirena.=
+org.uk/scheduler/job/1673401
+# test job: [6d068f1ae2a2f713d7f21a9a602e65b3d6b6fc6d] https://lava.sirena.=
+org.uk/scheduler/job/1673160
+# test job: [a46e95c81e3a28926ab1904d9f754fef8318074d] https://lava.sirena.=
+org.uk/scheduler/job/1673778
+# test job: [48124569bbc6bfda1df3e9ee17b19d559f4b1aa3] https://lava.sirena.=
+org.uk/scheduler/job/1670205
+# test job: [37533933bfe92cd5a99ef4743f31dac62ccc8de0] https://lava.sirena.=
+org.uk/scheduler/job/1668953
+# test job: [0e62438e476494a1891a8822b9785bc6e73e9c3f] https://lava.sirena.=
+org.uk/scheduler/job/1669557
+# test job: [5c36b86d2bf68fbcad16169983ef7ee8c537db59] https://lava.sirena.=
+org.uk/scheduler/job/1667973
+# test job: [714165e1c4b0d5b8c6d095fe07f65e6e7047aaeb] https://lava.sirena.=
+org.uk/scheduler/job/1667708
+# test job: [9c45f95222beecd6a284fd1284d54dd7a772cf59] https://lava.sirena.=
+org.uk/scheduler/job/1667594
+# test job: [bab4ab484a6ca170847da9bffe86f1fa90df4bbe] https://lava.sirena.=
+org.uk/scheduler/job/1664700
+# test job: [b832b19318534bb4f1673b24d78037fee339c679] https://lava.sirena.=
+org.uk/scheduler/job/1659191
+# test job: [8c02c8353460f8630313aef6810f34e134a3c1ee] https://lava.sirena.=
+org.uk/scheduler/job/1659680
+# test job: [6b7e2aa50bdaf88cd4c2a5e2059a7bf32d85a8b1] https://lava.sirena.=
+org.uk/scheduler/job/1656553
+# test job: [2291a2186305faaf8525d57849d8ba12ad63f5e7] https://lava.sirena.=
+org.uk/scheduler/job/1655728
+# test job: [a54ef14188519a0994d0264f701f5771815fa11e] https://lava.sirena.=
+org.uk/scheduler/job/1656000
+# test job: [595b7f155b926460a00776cc581e4dcd01220006] https://lava.sirena.=
+org.uk/scheduler/job/1653539
+# test job: [cf25eb8eae91bcae9b2065d84b0c0ba0f6d9dd34] https://lava.sirena.=
+org.uk/scheduler/job/1654787
+# test job: [3059067fd3378a5454e7928c08d20bf3ef186760] https://lava.sirena.=
+org.uk/scheduler/job/1654021
+# test job: [a1d0b0ae65ae3f32597edfbb547f16c75601cd87] https://lava.sirena.=
+org.uk/scheduler/job/1654843
+# test job: [2d86d2585ab929a143d1e6f8963da1499e33bf13] https://lava.sirena.=
+org.uk/scheduler/job/1654129
+# test job: [9a200cbdb54349909a42b45379e792e4b39dd223] https://lava.sirena.=
+org.uk/scheduler/job/1654752
+# test job: [162e23657e5379f07c6404dbfbf4367cb438ea7d] https://lava.sirena.=
+org.uk/scheduler/job/1652983
+# test job: [886f42ce96e7ce80545704e7168a9c6b60cd6c03] https://lava.sirena.=
+org.uk/scheduler/job/1654290
+# test job: [5303936d609e09665deda94eaedf26a0e5c3a087] https://lava.sirena.=
+org.uk/scheduler/job/1697747
+# bad: [5303936d609e09665deda94eaedf26a0e5c3a087] Add linux-next specific f=
+iles for 20250820
+git bisect bad 5303936d609e09665deda94eaedf26a0e5c3a087
+# test job: [a04a7cfd17ecdf952dad025c42602e35f06cbe26] https://lava.sirena.=
+org.uk/scheduler/job/1697920
+# good: [a04a7cfd17ecdf952dad025c42602e35f06cbe26] Merge branch 'for-next' =
+of https://git.kernel.org/pub/scm/linux/kernel/git/rdma/rdma.git
+git bisect good a04a7cfd17ecdf952dad025c42602e35f06cbe26
+# test job: [9dee0ee90f388dcd58c3cde7a4ebf2f9e3754862] https://lava.sirena.=
+org.uk/scheduler/job/1697987
+# good: [9dee0ee90f388dcd58c3cde7a4ebf2f9e3754862] Merge branch 'drm-xe-nex=
+t' of https://gitlab.freedesktop.org/drm/xe/kernel.git
+git bisect good 9dee0ee90f388dcd58c3cde7a4ebf2f9e3754862
+# test job: [58e76aa12190454eb2edcb1cc651d77186e6a2be] https://lava.sirena.=
+org.uk/scheduler/job/1698079
+# good: [58e76aa12190454eb2edcb1cc651d77186e6a2be] Merge branch 'usb-next' =
+of https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git
+git bisect good 58e76aa12190454eb2edcb1cc651d77186e6a2be
+# test job: [1135450b9d5cef61b2b9e6127f1b9436fcc2f043] https://lava.sirena.=
+org.uk/scheduler/job/1698167
+# good: [1135450b9d5cef61b2b9e6127f1b9436fcc2f043] Merge branch 'for-next' =
+of https://git.kernel.org/pub/scm/linux/kernel/git/tj/cgroup.git
+git bisect good 1135450b9d5cef61b2b9e6127f1b9436fcc2f043
+# test job: [e8fa3be5815c2241a72d1875e0e34bebe83c296a] https://lava.sirena.=
+org.uk/scheduler/job/1698576
+# bad: [e8fa3be5815c2241a72d1875e0e34bebe83c296a] Merge branch 'for-next' o=
+f https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git
+git bisect bad e8fa3be5815c2241a72d1875e0e34bebe83c296a
+# test job: [c5998be4099bd35f2959e7a22072f33cc7791262] https://lava.sirena.=
+org.uk/scheduler/job/1699088
+# bad: [c5998be4099bd35f2959e7a22072f33cc7791262] Merge branch 'devel' into=
+ for-next
+git bisect bad c5998be4099bd35f2959e7a22072f33cc7791262
+# test job: [15e3363af00a9e5b4f5c10b17940733a8613ef57] https://lava.sirena.=
+org.uk/scheduler/job/1699178
+# good: [15e3363af00a9e5b4f5c10b17940733a8613ef57] dt-bindings: pinctrl: Do=
+cument Tegra186 pin controllers
+git bisect good 15e3363af00a9e5b4f5c10b17940733a8613ef57
+# test job: [1e42d3e06bef6548215c45288d12974bfa295ba0] https://lava.sirena.=
+org.uk/scheduler/job/1700639
+# bad: [1e42d3e06bef6548215c45288d12974bfa295ba0] pinctrl: imx: don't acces=
+s the pin function radix tree directly
+git bisect bad 1e42d3e06bef6548215c45288d12974bfa295ba0
+# test job: [fe2e8f17a56fe14915cd6b709e9f56a16029f104] https://lava.sirena.=
+org.uk/scheduler/job/1700756
+# good: [fe2e8f17a56fe14915cd6b709e9f56a16029f104] pinctrl: sx150x: Make th=
+e driver tristate
+git bisect good fe2e8f17a56fe14915cd6b709e9f56a16029f104
+# test job: [cb21815ebd17be84a93e49ce7e1641651424692b] https://lava.sirena.=
+org.uk/scheduler/job/1700885
+# good: [cb21815ebd17be84a93e49ce7e1641651424692b] pinctrl: airoha: replace=
+ struct function_desc with struct pinfunction
+git bisect good cb21815ebd17be84a93e49ce7e1641651424692b
+# test job: [3d2d080dc8bbe3ec23ee5b61aae81aaaf3009169] https://lava.sirena.=
+org.uk/scheduler/job/1701027
+# good: [3d2d080dc8bbe3ec23ee5b61aae81aaaf3009169] pinctrl: mediatek: moore=
+: replace struct function_desc with struct pinfunction
+git bisect good 3d2d080dc8bbe3ec23ee5b61aae81aaaf3009169
+# first bad commit: [1e42d3e06bef6548215c45288d12974bfa295ba0] pinctrl: imx=
+: don't access the pin function radix tree directly
+
+--ykJoQEoXCL0DuqqK
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEyBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmimFtcACgkQJNaLcl1U
+h9Baywf4p+dojeFAcsrzcBqcjenyfuNAG1DS6m2FKGOdly3A0D/5bu2sHfE3OLPO
+WnEv3kf/lxkHF8yH9pmPBiAojsJFymU0qPVZrzBMPuELDKK214f1tWFoevrj0AZg
+0UVVPxnPE1DOczyzUGSt7pOnNly/Bz5XzLbIL6DCxl87fUua76KdXFzqMJlFUMSy
+h3dLCNR9TJxm+sZ+4O5DuYyisMNQFHILWIp60ws5BbrseVcqhdc31basf8LJWpXC
+wC7izJI9bu+Lb0ObJZxUFB/9z22PUYa3XjMy5lmDlV5/eTDiwL/x1TqNGt4JquuO
+O8i4i1O03fUY1PGOa0AJ/NZIyRVV
+=IcT8
+-----END PGP SIGNATURE-----
+
+--ykJoQEoXCL0DuqqK--
 
