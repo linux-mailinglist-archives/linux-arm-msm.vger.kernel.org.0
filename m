@@ -1,378 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-69864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47FF5B2D2F4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 06:28:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66E8AB2D330
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 06:50:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C29561C28665
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 04:28:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 229C5686E9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 04:50:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14ECA245014;
-	Wed, 20 Aug 2025 04:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 006582343C0;
+	Wed, 20 Aug 2025 04:50:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MppeNeDm"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="QnmpgfHY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from DU2PR03CU002.outbound.protection.outlook.com (mail-northeuropeazon11011062.outbound.protection.outlook.com [52.101.65.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1783921B9E7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755664077; cv=none; b=nUsJ0hnbDJleDLQUMqgrvPkbZzZLGCTMcdN6Y7Bf6p2SSzZNSrSvu0t/76OJ2IxonBuP/BifGIFEOF9W+4zHgCAndNInBN5ZT+9d5qLHKUQEtCloGYb7/iu8qj9KN4wDSV2BNFhSGtz/jd140Sd1G+WeZk7F/91vAjAe+7S84a0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755664077; c=relaxed/simple;
-	bh=IGnA1FXv1f8tKEdqJvkn6S/E7oLAVWuQedEUjt4GafM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=MaCe8j3nsacMva1sP9fcjVgBOOQAiHN6y6/k7dKLSpgO8xlyMMcpL/AkeAevEBmjDYQgi8/HAD9+gie0i1wxEvOusUA+aKJJPbnin5VhGYfBwnU7m1bNEIWZWV2N/ImH4sp6uuwzwDs8EM9x+bah3I2hOSempo10XwKg7GTbnFM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MppeNeDm; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57K1oYt5019728
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:27:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	hAK0xru7GDJ8nMhMtlK0GPrXNKZ4lF18AzZoweZOXc8=; b=MppeNeDmQW3zgxHH
-	znkuQMlORXHaKNmWH7c1g3NaJ6BGvfqpa01qdsXLiwpBXrigzdaSXd0jvQCTp9iT
-	+PWJ7KW2/EFMU8UKKMLC+WrsRyBxar+0PTcdbfnIlNPPSnAVUuCToKanZSh6e1lF
-	pujYr99B6NDid+CSRpAuvM+8zvh7c2QPaRm1OjRUsmrNfY+DaXA5NQndbt9Rz6VU
-	QM7ZqrEwMOkAQ731Ix75CNABdpzWFM8va1/Lv2rxltSgstvmGWIQwg+oBlEbUh4N
-	pLaHfQg65QS8bOnt1w0y71+3GwG+CEp/Mdhfp5xOvEMKrC2gRIUOvGf9zwc3epol
-	9GgYiw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5290bxr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:27:54 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-76e2e60221fso13640090b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 21:27:54 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755664073; x=1756268873;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hAK0xru7GDJ8nMhMtlK0GPrXNKZ4lF18AzZoweZOXc8=;
-        b=o9n0esCbrUpX0Ft2pKoKdHvW4ZCcXvYNPMyjOYGvhTLLgONu9/cuS7+mnJEVvLvJb0
-         vMd6Ok10/PzpoJ9FoB+j9qpaF0zsL8/yYRVHNjx+AjfSKkhH3Je7phD4E9gZ3JnUPNzA
-         afv3dAbcZK3GuN6O2Gdnu5SLFk6ep2eNJVkF+SrNhTp+SX77U2+gHW+mlVfUmpAOIwfc
-         Kw81m+YBrbg9k3bhntS6jeTgTtdYGrjux5GlcsNn+mzwqSubutHW+KVR+acEBnjghkRr
-         HDqwX8DBx01fEobr0fCxFv+1PzEDwkc29OftRggCI5RLC+9jqiJZheWQuAy8umqTcQTb
-         bNOg==
-X-Forwarded-Encrypted: i=1; AJvYcCXHj17NHUNcwUcrobhj99cAKEqowP6bnEbGLdTrvffJBpTKrMxbq/vGybj5E8J+SJ9qFdxC9cYKdeh8sVgD@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyzc/VxMzroOSclrWQhQdEgKVK8RhW1kZzrTkr4pbiCwVlERYpy
-	Ujlg2NaLIMMQSzXJvC2nnIuLluMQpa+dTwGNDKujc4kYJtA647FGM2uMQnGPYhpD1+wN8RoGdH6
-	GuUgaqLczrra/4s2l2FpW5StdvRnJDUeMjq+hBA3cGFsWG1H8dgDyyjSFTXBttfkk7Ouw
-X-Gm-Gg: ASbGncur0wID1zx2DHkBJf33j2PogdGWAxyHAkQrXGl67aYAk1DjBLCdMo9bUSU27we
-	qXvWf034nB7TgrovvwefxKmrZJnJVBWoRDIrADHU1o/clskggEI09/ofZtBQQP8NrQn4qZolySt
-	nEFoN2mfO1V+FVh6cklWspHTBDEdvKrA4+KFs1zWePeHfLTZZaznW5Y600YIq1wMkvoOm4HACxo
-	l3bLtkIRWC8t3/d22b1wqzDgWgyYHNw3n/97WpE2ot/Mmac0RSpHwDSqmQKvd2RZZOToN8HKqXh
-	XDPZuhZfeytYNt8/AVcUL3SdkenbO1K/zqXh5wJlfGPOiBREXte6EhEiOofoa+L5/60G9AsV5Q=
-	=
-X-Received: by 2002:a05:6a00:3e11:b0:748:3385:a4a with SMTP id d2e1a72fcca58-76e8dd5c0f8mr1714833b3a.23.1755664073237;
-        Tue, 19 Aug 2025 21:27:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEcUojZeMUSbe1pEWZytu3vdN7AWQXRbXfhsjIC+2+iyfPG1ah4/TK6T5StHV+fx+cuygIhdQ==
-X-Received: by 2002:a05:6a00:3e11:b0:748:3385:a4a with SMTP id d2e1a72fcca58-76e8dd5c0f8mr1714803b3a.23.1755664072690;
-        Tue, 19 Aug 2025 21:27:52 -0700 (PDT)
-Received: from [10.218.42.132] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e7d13ac60sm4006778b3a.48.2025.08.19.21.27.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Aug 2025 21:27:52 -0700 (PDT)
-Message-ID: <54d71bb6-27bb-494f-8f63-710e0e4148e7@oss.qualcomm.com>
-Date: Wed, 20 Aug 2025 09:57:44 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8EAC2147F9;
+	Wed, 20 Aug 2025 04:50:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.65.62
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755665438; cv=fail; b=Gh/fzvo5tDpX55sIsArcPbEy1SbEKUdmhFP/FGXMA74IdIEGxiXsWG7/4OXSmIFzInZzfHqtrweI93LU7acGLULGslhJQ4EMPPDRPEcx+HCajVz2LRPa53PptOgZ36LOINClYjWiF74ErswTMSlbxDQXv+5m9uX2lul/UXxJYS4=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755665438; c=relaxed/simple;
+	bh=tpaEvAwEUGczoy5SNBZ+bP4yBNy/+7vYRVFp4sGzlIo=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=jEI+OsN24uQ0m7i0Vli7iVbbJScANbmd0m9dfLgGJsHL2QtqCOnb1sdVlYO0ygYPJj3lciF7AVBWv4/2tIGWmfmeTQlLdulRAkm1/bItvshqdrfLIjmuG5b+48wMJR+ua+vubRA4wCycuFCUerIkaIVdMqUDO7U0HbXd4uLP3vM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=QnmpgfHY; arc=fail smtp.client-ip=52.101.65.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=iiFREIB7m/5LCcZV1dOjln1VnSy8ixrjpLcUAqDFLi9LcAx12cK+ZaII3tufIyToohUcvCqKpSng0asSprTHYPY9m36Bj7JT0Vi05PbMrBD1/DLQTUA80cW5bLgGr7wT8iV+87DdpGsMa3ktGu8VvR2u9v6gbJl2jzDfab/jSOO74FnlWJUZgIPYULpcQ6uXjCjJgO3V+ADlNtxuJguveVnqnDP83YUBdH3qBcQALRnD62nZuBtxRbNB88dpukQu6835hG/U7KiI1X9BkL5L0bNa4MkSrLlyaUrEDdT374gUfxTOCglgGEQ6fjlLVL5cHUnwv5Lbye0eiK9d5Vf9Pw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oDTyzmKLRP19QSnyD3qgjdEt+ug9umXJbMbI2INBiL4=;
+ b=qvL1L59X0P5KMyCnSKtiRwL8w53/tUQ9ya+nuu5Eit14wXo5CD+sVSLZAWEgRWZZR0vg23lLMdh/rqrF3f5nX1xXVwn1q4yjhqvsoHYkLhJC/u358g0zjFXfNwQZn1wxmOUKYhDKAmV1aDdN+X0aM5A2fGopRTb2AbTi0Ua2GcBBNGyN7BdxB4JSDYbLj9GFBTs11XyD5NSMdK7sZMwI8K9AgdqB3Y6U+BlOGK8FYInJE1ixCwjEYwVk6nAu4Ssg5VWLxbbGjcwtZxwGC+aYxwz5cX/nv7VvMXN1AhbeIiWeMe4ifsCSILTdRy5/DHSy8nRYvRFdNVdAUeq2gqbpvA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oDTyzmKLRP19QSnyD3qgjdEt+ug9umXJbMbI2INBiL4=;
+ b=QnmpgfHYZIG3rCofyYIOIEShAweLEhXtZ/rQ2yJYNsqYl4jo+IVwkkVt4KitHYv8dbmC+Pa834lU98d+41jkkRlk/+NB7LO1d5QbjnsHf7HVp7ofl8FFWxe6AgiGInpX5jtTmiy0N8ioBajXNLfOB2ku729DXj+EwugCmKcXmI+kn7Pp7aowVsqCain+xHBXGzRZaHW8pIUDaLKyUWn4cq7VPDgwXFEDcYJ9N0bTKFMOgMWYklJ3Dg1/K2AxzwKXrP/iOpOghyS9scPdob7IL93Ch3xeDq0E+DkzxwWQDizp7GRWWw4CVGxq1Ib05NI/+p4bBsjiWOjw4SaiuPPeFQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com (2603:10a6:20b:113::22)
+ by PA4PR04MB7645.eurprd04.prod.outlook.com (2603:10a6:102:eb::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.14; Wed, 20 Aug
+ 2025 04:50:32 +0000
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::d1ce:ea15:6648:6f90]) by AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::d1ce:ea15:6648:6f90%5]) with mapi id 15.20.9052.012; Wed, 20 Aug 2025
+ 04:50:32 +0000
+Message-ID: <dc635aae-b8c1-419f-94d8-0cda95a7e980@nxp.com>
+Date: Wed, 20 Aug 2025 12:52:03 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/8] drm/connector: let drivers declare infoframes as
+ unsupported
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Sandy Huang <hjc@rock-chips.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?=
+ <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>,
+ Chen-Yu Tsai <wens@csie.org>, Samuel Holland <samuel@sholland.org>,
+ Dave Stevenson <dave.stevenson@raspberrypi.com>,
+ =?UTF-8?Q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>,
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+References: <20250819-drm-limit-infoframes-v2-0-7595dda24fbd@oss.qualcomm.com>
+ <20250819-drm-limit-infoframes-v2-1-7595dda24fbd@oss.qualcomm.com>
+From: Liu Ying <victor.liu@nxp.com>
+Content-Language: en-US
+In-Reply-To: <20250819-drm-limit-infoframes-v2-1-7595dda24fbd@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI1PR02CA0018.apcprd02.prod.outlook.com
+ (2603:1096:4:1f4::7) To AM7PR04MB7046.eurprd04.prod.outlook.com
+ (2603:10a6:20b:113::22)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] OPP: Add support to find OPP for a set of keys
-To: Viresh Kumar <viresh.kumar@linaro.org>
-Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-References: <20250819-opp_pcie-v3-0-f8bd7e05ce41@oss.qualcomm.com>
- <20250819-opp_pcie-v3-1-f8bd7e05ce41@oss.qualcomm.com>
- <20250819081859.kz7c27d6c77oy2gv@vireshk-i7>
-Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20250819081859.kz7c27d6c77oy2gv@vireshk-i7>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: a1Xe5ktn-wgV7CyJsCpzpYE7WUJAzXXJ
-X-Proofpoint-ORIG-GUID: a1Xe5ktn-wgV7CyJsCpzpYE7WUJAzXXJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfXw9xnzBbv9D06
- T7629Qtd5F1XxtnCG9oi2vzHwXkdTiFLLGIFerdREmo0sAtk8z/GHPBjlGYlHLnv9pHR3l/gyiR
- 3HZ4rtVuyVXWy+DNvqH+dULEJag9y3nWvOC7JuDRP5pgrbbEw2Cp8s460FCcsOVNqEBHy+i63lk
- zZXpCIGdYXJR4RReCjAysFJp1XtmMoO5bUVh56eZPPCmcJCpXGFoOTlUQfBPoVVgRIWsve+zPx4
- S4H8DyyqAbIPnWCt09VSwbb07TBwZCHsBaJXbsFgIEGTpMzBp3A58jLGHdfBbddwk18eYoTXGqj
- impIixtzHKDgbvveR1B8zaJoxpwzGOey/SZSMJNVTUNrfC6ZPjyqGuYMOOhe7S0989zIzEdBcAy
- izIp1E/16+q4KPteRhs4Wtqa1LNXJg==
-X-Authority-Analysis: v=2.4 cv=SPkblOvH c=1 sm=1 tr=0 ts=68a54eca cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=76l3OPsZB85xAofE:21 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=6WgZcX-rmC49gpfAgPcA:9 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_02,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
- impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM7PR04MB7046:EE_|PA4PR04MB7645:EE_
+X-MS-Office365-Filtering-Correlation-Id: 81fcfd95-8e40-4c7c-51ec-08dddfa517ff
+X-LD-Processed: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+ BCL:0;ARA:13230040|1800799024|366016|19092799006|7416014|376014|921020;
+X-Microsoft-Antispam-Message-Info:
+ =?utf-8?B?c1lJTm1lN3pjQmFaREhHKzhXYWZ0Tm1DdHNpaEhRbVNwdVVDcWluSXJDUHhw?=
+ =?utf-8?B?V0RaZitZbXhyRXduS2Ryc0VlNjRRM2RFZzV5T3hVcXNNZ0UvdUpYQVlFaWp1?=
+ =?utf-8?B?L3I1dnZTUHFRZzIzcGQ5U2hYR1NnekpCWURsNGtTVCtUZy9lNlYxd2loYWdF?=
+ =?utf-8?B?L2tPK0U2QWpqdzl5a2RJSG9yNFlDSytHaVBtVk5HSm5ldGpMMDlHN2lyVEw4?=
+ =?utf-8?B?S0NvaDlLL3VTMUEvTDFSSW1PbS9oUEFObERRd2VJZUZENkdZTVBXbDBXaTZt?=
+ =?utf-8?B?eXRndkhZNHNxd3dvL1dYay8vM2lSMENCejRBWlYrd3U3SHhxd0pJbjM0YW1r?=
+ =?utf-8?B?enBWRDh3bk53bDFaODhJWnpFM1BQbFlodENBSEdXaWVZZnFDS0t3bE5Odits?=
+ =?utf-8?B?K1c2UElDWkVPYXl0cGR6U3pmejB0VzNoSE53NUFBVXM0bVZVazlXc28yc3dN?=
+ =?utf-8?B?STZYMTdaSHZoQ2JpTWRadlpUK3JHTlppcGVWQWhIZk15SjkxZVFXL2dHa3Y2?=
+ =?utf-8?B?bExvaG91YUNkOUI0Vll6SHFMVTJmT0lkbVZRK2N6ZHFReURSRmEwaW9RNkli?=
+ =?utf-8?B?YVcvZjZMTTVWZXpMekpjTk94RG52clB3SzdwTDdxQ1ZobHpMSnE4emQ1RmJx?=
+ =?utf-8?B?VzRyeUVzeUN5SStPSTA0eG93aExnMW1WWng2UmdnMGRNY0JnYWluUkwwNStX?=
+ =?utf-8?B?T2RYVzhSbkxibStXL3lFME4yQ3pnU2dlZ2huRzQydUg3MFdDSHVaUi9uNkV4?=
+ =?utf-8?B?dkhVTEx0amFpaWdDcDd3UzNTUktmYnp0Wnc3TjRtVCt5UHhyQ2ZNQVAvTnFL?=
+ =?utf-8?B?cjduWDNiTTRkSlphNlUxaEVVV0pia2lWQzlxSkRwMk1Nc00zN1RGNG5YQTlM?=
+ =?utf-8?B?ZWQ2UFpFVnRvNUVDNWxibnF3aVVGMWQ1aUE5RTQyNmVmelhoczZKQkkxaDFI?=
+ =?utf-8?B?K3ZFS212NHBDMHcvMEpTbEhrK29icnRPOW9KOCtxZlNyK1hZNzVQSmlOWE5k?=
+ =?utf-8?B?K205VEhpUnhBSGEwMjllOXNXaitsYmtWQnZPSksrdERiL2VjNDBJaVdYTlZP?=
+ =?utf-8?B?c3VLbTh5RVpqUGdrYzg3Vk9VRUtjMFUxYS8rMnd0OUxWV0xkd0pGNG5qdDQx?=
+ =?utf-8?B?T1NHNGV3RE95Z3NyTXdoWWFMZU5hVVVXN0pER3pYbTdCaU5SdGJaeU4vM2l6?=
+ =?utf-8?B?OTRMeFgyalV2UFhlc2dOS1RVYTJFUW5LN1BmMG8zd0V3TkhpMzFaQjVBdnM1?=
+ =?utf-8?B?MEsrRVZPY2tBQnBKVHF4YktNdDcxclVvM1VKMkZxNmZSbTJSeGZlT0Q5YS9t?=
+ =?utf-8?B?d3RFRERrMzRib2xIWFlMU200VG9FdDBnQW0yNEo3N2pic3pOaE5BcVpvdHJQ?=
+ =?utf-8?B?WHpyOEFvQjd0YjFuWkhJSWVoMHBaK1p2VjhhYnczUFIzTWRwSyt5ZFdWU3da?=
+ =?utf-8?B?YVZTUHcydDVEQUVVeXdRN3pDRnRxNlNjanBpSUU3R2VJUFIwZ2JhRDQzUm1o?=
+ =?utf-8?B?aHpWclBDckdwTG0vMXdCNEVqU0luZlRnMm5VK1R5ZnpCbDNvYlFtZWtrdUxa?=
+ =?utf-8?B?VjJ5N1F1YnhqSVh4cVR2a24wN011TXZBandxc3BHWnZpTUFvcTNmUS8rTnUz?=
+ =?utf-8?B?NVAzUm9PQWF0dXRpbExodER6Q1A2M0Y4YlZpdHhTZ1poMnkvS3YxQ2RBS09K?=
+ =?utf-8?B?cVdtbjlnZEF4QndvNkVQSkxuUFFoWnRjZVVhMUtPa2lXenE2UG5CTmhTSnRZ?=
+ =?utf-8?B?MHR6V3EyM1oxcll5OVgvVnRhb3hLT0tYakdhcWt4amhZa3FxZnREQjBib2NG?=
+ =?utf-8?B?aXd5SFQrOWwrUUtYdHdHb1BvMzNTSjl0ZFNxd1RZcnV1cXhIWlFZYjcrRzJB?=
+ =?utf-8?B?MENGT21KL083ZDJad0ZxQytLRWZEaDVwOUNXdUxhWEdtWmJ5N0c3ZXJXVHNt?=
+ =?utf-8?B?dU5TS3RMbTQxOHVZc01YRStZQ2xleXVvU0JGVHdWUThxU3V3Q250dHRLVHhE?=
+ =?utf-8?B?QUhYaG5tdjZ3PT0=?=
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR04MB7046.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(19092799006)(7416014)(376014)(921020);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?utf-8?B?dGNvOERJMkNMakMrYkxoc3dNZ1pBVnY4MG0wZ0ppVVJxMzBBMzcrdklYSXJo?=
+ =?utf-8?B?M2NWVlhOQ01MZFhrb0h4NXhNY25Fc2VQMERNN0l1QlZZMWh6WUNyQkc4dzhQ?=
+ =?utf-8?B?NXNMbjErM1V1WmhzUUtodUQ5c3FMQTZMYVU2c0ljVTFnWU1ZNEVFdk5BTjd0?=
+ =?utf-8?B?d01wcFFvNElZWTgvdkd5Z09UVWFnWUo1a29meVJMS0F4dy8zTE11RzNPZkIz?=
+ =?utf-8?B?U1FlelVDR0RIQjNFZjYrVzhFQXNTanljVjVFOHQvbkFuWTE5MmhFUEthQVNV?=
+ =?utf-8?B?KzNZSnZHOG1nRDk4NEppWEpSTW1LcDNhcXk0Q2dyMUJnZlc3OFFhMm4xODZZ?=
+ =?utf-8?B?ZUJlUUQvNEluWlB4d0ZuN3gzUE5XY3ExQ1lMMzBSUm1mZElCUWl1dnpRTHMr?=
+ =?utf-8?B?a0U0K2Z0Q1lmN3l0Ync4b0dTenBBdXhIRnViYzdianFrNGc1Zmx4dFZ0d3lu?=
+ =?utf-8?B?aHEvUUxsb1BQSXNwL1BhSDV1bDJwT2J3U0liZUg1MGtiZnlRbVk1dmIyc3hl?=
+ =?utf-8?B?M3JzZXYyeXRqdEQ0K08xWGFHNkl5ZWcycmhNTmtYcUhIOGN0L2V2QkZ5Mllk?=
+ =?utf-8?B?REc3TlRBVDVPWGhud1JTNW9kYmtCKy9QNDNLZ1VDTDFnM1VnSnppSjJ1U0E4?=
+ =?utf-8?B?b1hDTlMyb1hOVHc0eVBZTlRsaHBuelNjb1lkK2NvZmtyMUtTdzFxbUN3RUtW?=
+ =?utf-8?B?RDZXOHcwbUkyUFducmlBa1ZCbWJTZStiT01aMzFsTnlINllTTk0wMWlGdWg0?=
+ =?utf-8?B?bHovRDYvSm10NCtXdUdhK0N4Y3NOekhYQlovbmpjWEo3dFpMM1p6elVNWHpO?=
+ =?utf-8?B?Z2c1L29tdXlWQXBjTmFPQ0duZUNzc0lDaGxac2t5S08vYjRjU2gwK0h3bUI0?=
+ =?utf-8?B?RWhxL1c5bEtxbWdaM2luZ2dEMElRV1lxRGxYbFZ6dUo5MEtxV2ZKTzhud2tM?=
+ =?utf-8?B?SWFmbFNvaG5TUERaUG9UMzhCTHJUNFM5ekV0Z3VBSXZ1dk1ZRXZyeWhnNTlB?=
+ =?utf-8?B?OS9EVHBxUEU5eG9BaHBLUi96dnVMZTlWM1duRVh5ZmpyUXBmOXFDbXVna2cx?=
+ =?utf-8?B?M21HL0xEK2EycTR1QWNrSG5wVlI4SnhFS1ZqMEtXSEl4dEZWSElucThpdjNo?=
+ =?utf-8?B?NVppdXU0cmZzNkpTWjRuWE5DSVdNUUpqUXl3L1lSVFp1RCtJWEZHbWZBZ0h0?=
+ =?utf-8?B?OE1ieUlaMG9VdVZmN0FXb2I5YVM5WkxNZndKSTQ3emJ2d0hkblpaMlNSd09P?=
+ =?utf-8?B?ZjYvQ0VaZU9wWHRYWEx0WkY4cmU4c2dLVkxBNXlNc29KeTVDRDB4bFlmc2V1?=
+ =?utf-8?B?QkJ0KzJXUjRLMVN4cnkyTk9zQ01uWjVmRUdSbll1cUJwc1lHUUtGN2REZld6?=
+ =?utf-8?B?dGkvemtYWXhyZzBVSkwrSzRtaXowRmUvY1l6ckUzTzRtdnpqWVJvRW0xOU15?=
+ =?utf-8?B?V0poUHZQY05STko3dGM2amtOT2FYbnFDUEVRa0NnZ0pXTTcrbU9zbDB5bWVR?=
+ =?utf-8?B?YWFFbTZmOTBlSHdRVmJQamV1Z09SVFRqcndDQkFIYlFlVHMyTENBcGhyU0dZ?=
+ =?utf-8?B?QWhZWDI0YmtIeU91UE9Hd1dkK0lqc1U2NFNoQ2VKK2hobkUrMXpxZWNSeWpV?=
+ =?utf-8?B?SHluMi85RDg3U1ZESzlhQmhqV1RmczRTdFdYak8yNWUvVERIYm9KMUc2T1Bq?=
+ =?utf-8?B?K3liRVhSWWk4ZHFCRU1oOVo3OTd6dWZBdU1IZTZ1S04yZmtobzljU2xCT1lU?=
+ =?utf-8?B?eGVjT0daMFBrTnFoMDBtRmpPZDFQZUxnZHU1d1o1RDU3aVcxMVUxSnd1dFJL?=
+ =?utf-8?B?eDd5cmU1RkhFZkxZN3dvQ2hwckJpRVl1MThIMUJuRVFpaTRoSmsrTEVkNGla?=
+ =?utf-8?B?QzZnV2tSYktnMW9xY3NzR3AwZHJWTlUrSklRbExPclVhUUtxZG9TMVEvR2hj?=
+ =?utf-8?B?VmV4OFZwVFhzck0zWVl1OHg0MGJ4a0ZrSlNkS0RxektmbUpkYm14ZlYrNE5V?=
+ =?utf-8?B?eTJqanRpUUtzdlNDbno3WGt3eTVyYnF0akd0ei9McHZvY1BhSE1xUWtiMm0r?=
+ =?utf-8?B?UWI4dXB3SWk5dVNFTVROQ2xSbWxSQyt2NG0wYzdIN1NBSWl4dTVFbDcwak15?=
+ =?utf-8?Q?cS5Yk+zstKgu9kVrjHCu36K3q?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 81fcfd95-8e40-4c7c-51ec-08dddfa517ff
+X-MS-Exchange-CrossTenant-AuthSource: AM7PR04MB7046.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Aug 2025 04:50:32.3776
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /LwD7nk6YiD2U1F15QSvlRRwQGhfbtcXaVDWtzy8J7Oxtk55iqZ54VZR7CaSU70LQh3VN6t5voR76A0BdD5f8g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR04MB7645
 
+On 08/19/2025, Dmitry Baryshkov wrote:
 
+[...]
 
-On 8/19/2025 1:48 PM, Viresh Kumar wrote:
-> On 19-08-25, 11:04, Krishna Chaitanya Chundru wrote:
->> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
->> index edbd60501cf00dfd1957f7d19b228d1c61bbbdcc..ce359a3d444b0b7099cdd2421ab1019963d05d9f 100644
->> --- a/drivers/opp/core.c
->> +++ b/drivers/opp/core.c
->> @@ -461,6 +461,15 @@ int dev_pm_opp_get_opp_count(struct device *dev)
->>   EXPORT_SYMBOL_GPL(dev_pm_opp_get_opp_count);
->>   
->>   /* Helpers to read keys */
->> +static unsigned long _read_opp_key(struct dev_pm_opp *opp, int index, struct dev_pm_opp_key *key)
-> 
-> Move this to the end of the list, after _read_bw() i.e.
-> 
-ack
->> +{
->> +	key->bandwidth = opp->bandwidth ? opp->bandwidth[index].peak : 0;
->> +	key->freq = opp->rates[index];
->> +	key->level = opp->level;
->> +
->> +	return true;
->> +}
->> +
->>   static unsigned long _read_freq(struct dev_pm_opp *opp, int index)
->>   {
->>   	return opp->rates[index];
->> @@ -488,6 +497,23 @@ static bool _compare_exact(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
->>   	return false;
->>   }
->>   
->> +static bool _compare_opp_key_exact(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
->> +				   struct dev_pm_opp_key opp_key, struct dev_pm_opp_key key)
->> +{
-> 
-> And this after _compare_floor().
-> 
-ack
->> +	bool level_match = (opp_key.level == OPP_LEVEL_UNSET ||
-> 
-> Why are we still checking this ? You removed this from freq check but
-> not level and bandwidth ?
-> 
-ok I will change for level and bw also similar to freq.
->> +			    key.level == OPP_LEVEL_UNSET || opp_key.level == key.level);
->> +	bool bw_match = (opp_key.bandwidth == 0 ||
->> +			 key.bandwidth == 0 || opp_key.bandwidth == key.bandwidth);
->> +	bool freq_match = (key.freq == 0 || opp_key.freq == key.freq);
->> +
->> +	if (freq_match && level_match && bw_match) {
->> +		*opp = temp_opp;
->> +		return true;
->> +	}
->> +
->> +	return false;
->> +}
->> +
->>   static bool _compare_ceil(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
->>   			  unsigned long opp_key, unsigned long key)
->>   {
->> @@ -541,6 +567,40 @@ static struct dev_pm_opp *_opp_table_find_key(struct opp_table *opp_table,
->>   	return opp;
->>   }
->>   
->> +static struct dev_pm_opp *_opp_table_find_opp_key(struct opp_table *opp_table,
->> +		struct dev_pm_opp_key *key, int index, bool available,
->> +		unsigned long (*read)(struct dev_pm_opp *opp, int index,
->> +				      struct dev_pm_opp_key *key),
->> +		bool (*compare)(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
->> +				struct dev_pm_opp_key opp_key, struct dev_pm_opp_key key),
->> +		bool (*assert)(struct opp_table *opp_table, unsigned int index))
->> +{
->> +	struct dev_pm_opp *temp_opp, *opp = ERR_PTR(-ERANGE);
->> +	struct dev_pm_opp_key temp_key;
->> +
->> +	/* Assert that the requirement is met */
->> +	if (assert && !assert(opp_table, index))
-> 
-> Just drop the `assert` check, it isn't optional. Make the same change
-> in _opp_table_find_key() too in a separate patch if you can.
-> 
-ack
->> +		return ERR_PTR(-EINVAL);
->> +
->> +	guard(mutex)(&opp_table->lock);
->> +
->> +	list_for_each_entry(temp_opp, &opp_table->opp_list, node) {
->> +		if (temp_opp->available == available) {
->> +			read(temp_opp, index, &temp_key);
->> +			if (compare(&opp, temp_opp, temp_key, *key))
-> 
-> Update *key and do dev_pm_opp_get() here itself. And same in
-> _opp_table_find_key().
-> 
-ack
->> +				break;
->> +		}
->> +	}
->> +
->> +	/* Increment the reference count of OPP */
->> +	if (!IS_ERR(opp)) {
->> +		*key = temp_key;
->> +		dev_pm_opp_get(opp);
->> +	}
->> +
->> +	return opp;
->> +}
->> +
->>   static struct dev_pm_opp *
->>   _find_key(struct device *dev, unsigned long *key, int index, bool available,
->>   	  unsigned long (*read)(struct dev_pm_opp *opp, int index),
->> @@ -632,6 +692,46 @@ struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
->>   }
->>   EXPORT_SYMBOL_GPL(dev_pm_opp_find_freq_exact);
->>   
->> +/**
->> + * dev_pm_opp_find_key_exact() - Search for an exact OPP key
->> + * @dev:                Device for which the OPP is being searched
->> + * @key:                OPP key to match
->> + * @available:          true/false - match for available OPP
->> + *
->> + * Return: Searches for an exact match the OPP key in the OPP table and returns
-> 
-> The `Return` section should only talk about the returned values. The
-> above line for example should be present as a standalone line before
-> the `Return` section.
-> 
-ack
->> + * pointer to the  matching opp if found, else returns ERR_PTR  in case of error
->> + * and should  be handled using IS_ERR. Error return values can be:
->> + * EINVAL:      for bad pointer
->> + * ERANGE:      no match found for search
->> + * ENODEV:      if device not found in list of registered devices
->> + *
->> + * Note: available is a modifier for the search. if available=true, then the
->> + * match is for exact matching key and is available in the stored OPP
->> + * table. if false, the match is for exact key which is not available.
->> + *
->> + * This provides a mechanism to enable an opp which is not available currently
->> + * or the opposite as well.
->> + *
->> + * The callers are required to call dev_pm_opp_put() for the returned OPP after
->> + * use.
-> 
-> There are various minor issues in the text here, like double spaces,
-> not starting with a capital letter after a full stop, etc. Also put
-> arguments in `` block, like `available`.
-> 
-ack
->> + */
->> +struct dev_pm_opp *dev_pm_opp_find_key_exact(struct device *dev,
->> +					     struct dev_pm_opp_key key,
->> +					     bool available)
->> +{
->> +	struct opp_table *opp_table __free(put_opp_table) = _find_opp_table(dev);
->> +
->> +	if (IS_ERR(opp_table)) {
->> +		dev_err(dev, "%s: OPP table not found (%ld)\n", __func__,
->> +			PTR_ERR(opp_table));
->> +		return ERR_CAST(opp_table);
->> +	}
->> +
->> +	return _opp_table_find_opp_key(opp_table, &key, 0, available, _read_opp_key,
->> +				       _compare_opp_key_exact, assert_single_clk);
-> 
-> Since the only user doesn't use `index` for now, I wonder if that
-> should be added at all in all these functions.
-> 
-ok I will remove it.
->> +}
->> +EXPORT_SYMBOL_GPL(dev_pm_opp_find_key_exact);
->> +
->>   /**
->>    * dev_pm_opp_find_freq_exact_indexed() - Search for an exact freq for the
->>    *					 clock corresponding to the index
->> diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
->> index cf477beae4bbede88223566df5f43d85adc5a816..53e02098129d215970d0854b1f8ffaf4499f2bd4 100644
->> --- a/include/linux/pm_opp.h
->> +++ b/include/linux/pm_opp.h
->> @@ -98,6 +98,18 @@ struct dev_pm_opp_data {
->>   	unsigned long u_volt;
->>   };
->>   
->> +/**
->> + * struct dev_pm_opp_key - Key used to identify OPP entries
->> + * @freq:       Frequency in Hz
->> + * @level:      Performance level associated with the OPP entry
->> + * @bandwidth:  Bandwidth associated with the OPP entry
-> 
-> Also mention the NOP value of all these keys, i.e. what the user must
-> fill them with if that key is not supposed to be matched.
-> 
-ack
->> + */
->> +struct dev_pm_opp_key {
->> +	unsigned long freq;
->> +	unsigned int level;
->> +	u32 bandwidth;
-> 
-> Maybe use `bw` here like in other APIs.
-> 
-ack.
+> @@ -930,23 +947,29 @@ static int write_device_infoframe(struct drm_connector *connector,
+>  				  union hdmi_infoframe *frame)
+>  {
+>  	const struct drm_connector_hdmi_funcs *funcs = connector->hdmi.funcs;
+> +	enum hdmi_infoframe_type type = frame->any.type;
+>  	struct drm_device *dev = connector->dev;
+>  	u8 buffer[HDMI_INFOFRAME_SIZE(MAX)];
+>  	int ret;
+>  	int len;
+>  
+> -	drm_dbg_kms(dev, "Writing infoframe type %x\n", frame->any.type);
+> +	drm_dbg_kms(dev, "Writing infoframe type %x\n", type);
+>  
+>  	if (!funcs || !funcs->write_infoframe) {
+>  		drm_dbg_kms(dev, "Function not implemented, bailing.\n");
+>  		return -EINVAL;
+>  	}
+>  
+> +	if (!drm_hdmi_connector_supports_infoframe(connector, type)) {
+> +		drm_dbg_kms(dev, "Infoframe %d not supported, bailing.\n", type);
 
-- Krishna Chaitanya.
->> +};
->> +
->>   #if defined(CONFIG_PM_OPP)
->>   
->>   struct opp_table *dev_pm_opp_get_opp_table(struct device *dev);
->> @@ -131,6 +143,10 @@ struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
->>   					      unsigned long freq,
->>   					      bool available);
->>   
->> +struct dev_pm_opp *dev_pm_opp_find_key_exact(struct device *dev,
->> +					     struct dev_pm_opp_key key,
->> +					     bool available);
->> +
->>   struct dev_pm_opp *
->>   dev_pm_opp_find_freq_exact_indexed(struct device *dev, unsigned long freq,
->>   				   u32 index, bool available);
->> @@ -289,6 +305,13 @@ static inline struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
->>   	return ERR_PTR(-EOPNOTSUPP);
->>   }
->>   
->> +static inline struct dev_pm_opp *dev_pm_opp_find_key_exact(struct device *dev,
->> +							   struct dev_pm_opp_key key,
->> +							   bool available)
->> +{
->> +	return ERR_PTR(-EOPNOTSUPP);
->> +}
->> +
->>   static inline struct dev_pm_opp *
->>   dev_pm_opp_find_freq_exact_indexed(struct device *dev, unsigned long freq,
->>   				   u32 index, bool available)
->>
->> -- 
->> 2.34.1
-> 
+This '%d' should also be replaced with '0x%02x'.
+
+> +		return 0;
+> +	}
+
+[...]
+
+-- 
+Regards,
+Liu Ying
 
