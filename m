@@ -1,417 +1,409 @@
-Return-Path: <linux-arm-msm+bounces-69954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C940DB2DB05
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:33:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C78B8B2DB1C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:35:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C86671C27F7D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:31:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 11F335C4CB2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1855A2E6103;
-	Wed, 20 Aug 2025 11:30:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8065322157E;
+	Wed, 20 Aug 2025 11:33:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QZOKlVAg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="De0r0LQu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0C82E54B8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:30:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B1F25742C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:33:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755689447; cv=none; b=kz+x6BlyAkVX/MmGvOr7V3IG1f6V5o6hROb3KrYet6IesoEEiHOJsp+k/Gcrj+RuMNBX2rgFHmaH7ypxDtGj2eBCCyGZChmvlB53j4QudNAQv8n15FqW/hqb9qRZ5F4CzuDNyoz0szbYDk3D5i9DoMZxX+oFT1bAqEysmmXn0C8=
+	t=1755689630; cv=none; b=fA5UQQQCVIk7qm4J4ImxdpGQG3gRce0kFyx1ONJfhmtgeDr/O4FqRrffKfVZRpjJO7AQ2Q93avNBAINNiORUeZ/NlaOPNmWu1MIqN50FwUt7QymISu5dFH8iNYyIYLMkEQLlAVyWB7FFZBfNTAYvqJkgZVjhjrVTjxAI4X3B9jE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755689447; c=relaxed/simple;
-	bh=PDXwq2L/igkEe7rEXP0JAqYjJGbRhMnDhaOHC1w+HI4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pXUGfRCFYgJIKjhz8NK1ltDuU/1OXc3exVvzMYR7PW7c6FXZRibrUIFpvKuSkmTUix3m2l3LA3Q3PNBWGtgg5fUdMNgJvxeEUfYUc2c4vDwysWyjfn43zaBR9J4gdgYsgqja9NlDNCV0x6Zyp748WzFsCStpl7reoksyP+QoXHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QZOKlVAg; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KAVVrs031108
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:30:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=11qOqJ2/zlZWWFKG2Qr7IfBn
-	gq7qq9U/nhTGIUfgWRE=; b=QZOKlVAg6zbinBbAlBM8YvB/mBK0kEER4HA8T0zi
-	kcPs7uh7dDG0NCTzR+7taMHZZFq7OjNkCgRllYTACEqW5igjJqGBcYEWHqMy1abv
-	TO91fM5R56+e5bCRMj9nm4HkY3FhDB1ohEVKvmypCbVm1hHTHfG9o/orQMdMwOzu
-	z4bDpNq2lbxApwB5xy/hvpXEMPd+T6UDxPwzMahAMh/MfN5s07zX/TIlGkbQH1cc
-	aSxTMk2GnNnASJBdpiK25MJRlB9C8VmHRLE5k8QWHBjSe5XHoWNK1p6ZlIgiybs6
-	Td3FGMpkq4WPBgsT7vWdbwBkoK8J1+pKAuT6fRV21Yf0bQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52dhg9b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:30:44 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-70d7c7e972eso6392626d6.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:30:44 -0700 (PDT)
+	s=arc-20240116; t=1755689630; c=relaxed/simple;
+	bh=vyISLxlxFshMv5vNX343+X6/oujfjSfnV6UlyxBdsZQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lppRSXDIuZjKoKppep7E6FN0aLfj/xxsnQqImMolcVRTnuyRKZYnK+y89WiDEf+VVXONS6uDPFwo6NgUvzObgY2QCAWXi5g4fp9Wg0WMTItNWfLwdvvVMgNZ1nDJ982BKX7gkNlWe9O1jBFLqqJtkr5a7aTbVMy60viEQWlAsSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=De0r0LQu; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45a1b04f8b5so33063975e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:33:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755689627; x=1756294427; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ugbrjfycGGYv9g6XZ7CvlqKYlU0TANKv6+n9B4FAsKw=;
+        b=De0r0LQuO8vC8TNZSez1EtxThEgWlvGB5KKCt1A6jBxpdKpb1nwYpG3imj0R7n0wiL
+         eetxnbEXsLDSEDgea2UcdDcejvwKyc216RWl3+6LpcDdeGr/9wSly6IUAmhUAbqQS3zr
+         TcEOmA67V8exwJRUtuKr+l/eoFoLe/LFDRbZVivxIE+wEF5a5F27RsNyTacJGRAo51sh
+         y8P3uAgIHMFpqEjMGiXcxxq6c1Y90caz3cL/9OMtUn77ZbSPjpC2ng1qGusFJA6AHAb7
+         jtwixrDicVOiGGPf0vCjALfWhJKF2ENUSyrZBhyiXRVZmIhVHDGe+5Ro5qtaSoefemu7
+         b2CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755689444; x=1756294244;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=11qOqJ2/zlZWWFKG2Qr7IfBngq7qq9U/nhTGIUfgWRE=;
-        b=kPF9teMCZVgBdKxE0pfFkbRNWflX5cY7EdKb2FeaTe+q19OyUM8ucpPik0utenuRI5
-         hjUNbteKJ+wkx+LfBZx2zR6zgceu10Si1wtPtd5oQRUEMyFasurgjNE/CPPejQdtBrXQ
-         Rm98zJe8ulh+Z8GtdCj0sprA6L4piU/R3CjXUJs74kgnJAMUb/ABnteofPZQAjOFWl3x
-         bmUnkrPcGQhEWBclG9N1hg8R0WnQ77PAjSf0pPo/3fAv5nduyDesVLYPB4gV3k01bXb9
-         YGFKAncnRWihsOYTwPlLHDrhlUilgI4EiUTRLiqzZfZWHM3ebpfdsiLt2If9xs2hNPEu
-         IqVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVGtHvn5XX8khv28DTJHwaAodNPbasF/lbw2576IeFVmiKqEo2FIJtseT5gswX1SSAZVyD4stLA+98GWLaQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3nmqY/m5Ikas2n7SZJZld1VZA0MmpP+LqTt3xS3RKcPJlaLzB
-	eiiNqbFtU1Onv4PgyvQaaK7fb71TW6Mtbm/LBW4iv7KzWj7gjedbsjtuvVZV7dXnmhSrZ3QK1Mp
-	VCw/NcFm+JZXHQ0NTxs/LQ/NapMber0qP7jxWIOfhhaDNLzTTe3W0F86MJShJ9SRnmOD3
-X-Gm-Gg: ASbGnctqE31+hOok9o3rfh5Sap6iEnHIRNDYoetUjYX7/Oy1EzUenE1NrcjZ2XwX61s
-	Ddxh+imwXKhu71GI2B2An6w26Q6E+z0q8sbEncdWsdgGCf7GIO+BF0CqFTX0OHG6u5ezl+RpZ9w
-	F52hbmRG7KYEWn40sPl9qSGwdrgWUd0D2RS6eeWseyVOgeD3kPzvZtUFIOwegsSboGWTlVWl22n
-	YG2r3oh1+XtomaHhG9U4b3ZqUMpxZQIGyKIcafX0Zp+EAiSic8LkiqHhvnYFA+jY+btXbVz5SU1
-	43KspRrThJQchM7Kj+ojNMAMUS+Nx1JAFfACIufkuWrknb/U5Q8l63VOT/QKfVQkAg1b3j5vRiG
-	1/9ok/L+3fAEWboeKn0Y2L37JwyEJTw77hdvqV8+9tXaDQEPfdWQK
-X-Received: by 2002:a05:6214:dc6:b0:707:77be:fc76 with SMTP id 6a1803df08f44-70d7714c5b0mr23381336d6.51.1755689443610;
-        Wed, 20 Aug 2025 04:30:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHCoIBzEYR/mDTVo8mBK1FNVcFSnDbMhTwv7zD/ZmeWi/75iYf9Zf+uZargQHtGNMC8Hn4UzA==
-X-Received: by 2002:a05:6214:dc6:b0:707:77be:fc76 with SMTP id 6a1803df08f44-70d7714c5b0mr23380446d6.51.1755689442859;
-        Wed, 20 Aug 2025 04:30:42 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef3f3e31sm2575508e87.119.2025.08.20.04.30.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 04:30:41 -0700 (PDT)
-Date: Wed, 20 Aug 2025 14:30:40 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, fange.zhang@oss.qualcomm.com,
-        yongxing.mou@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, quic_lliu6@quicinc.com
-Subject: Re: [PATCH v3 07/14] phy: qcom: qmp-usbc: Move reset and regulator
- config into PHY cfg
-Message-ID: <ofvzduf5xyip7w6yde2xwsrvv3tdh7ew3yyzeya2qzpqty3j7p@bnetyjowhdn5>
-References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
- <20250820-add-displayport-support-for-qcs615-platform-v3-7-a43bd25ec39c@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1755689627; x=1756294427;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ugbrjfycGGYv9g6XZ7CvlqKYlU0TANKv6+n9B4FAsKw=;
+        b=NLxEYXFhSLxdbr5hFIdof4bGZvPiSMwL9CWJgOMMq2Jfxlu0hYL+9nsV7+2u4R/W/f
+         jkYkMUV7LogcCkvo6w+iEtEW5SH6NFY4MsdVl7GnGBjXkd3XBsp0qdfWGqxMjSSF+h7W
+         tyRBt+vLdS+7gmkAgtpBbNCLrX2GblDp8vgCyxPnxZV18n+UXL/bAES9sugLsTYtZNIb
+         WN8bUyrau/VZxUKTO6Q39MYYmJyITRWoH4Y5jNs8ZSrv+GsC1if7cJEqYwPV5I++JV9Y
+         97Rg5jJK6t/i9zBKBRxHrGz35sdRboQffNtEf7hRQ4b9JqdBsMBxKQzhy9tUzx9w3ogF
+         l0yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXE+h/VzM3Vpe3lHm5LqbOpLIDUFdHiM44nkXc1LbwjJvJ+e4OQ55m7Gvx6an/eNSjtoJl4dg+znJIbaOik@vger.kernel.org
+X-Gm-Message-State: AOJu0YxMEDXuiUS8FJbp9UBQ3hexgIECC3MPOkv/yWhBiqMcVOhtUCpR
+	P86RE2jBVyY+2tnKiPQa6Tz5DLbxwPhDysSJzggaXMSrwmkCG0ldkjZ6BFATEK0ERbo=
+X-Gm-Gg: ASbGncu4p3WsTxLJhe0C1My2+/1pRPyPGxYy571VTFRm5HD9eh4Y8pFnTLvCCsTeMl/
+	MGq3SOT2gJlKt7Ii7puVZ6juzKufy1dOdJBNcrp48bg54KRuFdtDLoSb4f7Ub89ntE0HYj1oP/Q
+	ow7AUbX1iBjyKzvWyPnHa0GbssgZ3S1mQfSuGy0h8wUGcLIv9UZ2FNn6tEeZvlOKpqpTKTWtAtl
+	jcEu7wLHNIWySefmwF5mXD77yZdENddCO7HOHDKSEoxt1jFvlzEffQ0VxFGpN5ZfpHYDNpEGggK
+	Sg++CW6KTh4REflCMbC7WDbJR6FuMTPFManFV/rT6T3WG+9CwMmj1uCO2M8ENu31hMu6ujLo3rE
+	NC5ri1JfZYBpXvnYeJocMN3XlBXykAlMorI1Ry0bC7tn0TsWw7w42OcUJf2u/V1w=
+X-Google-Smtp-Source: AGHT+IH7iCukwoZsXoHCBFisFNz+2esQIDXoYVnh1NB1CjQ0M403MgCIFjPMkQoJ9ICZUuJA5NHDvA==
+X-Received: by 2002:a05:600c:8b17:b0:458:bfe1:4a8a with SMTP id 5b1f17b1804b1-45b479b73b8mr18896805e9.14.1755689626246;
+        Wed, 20 Aug 2025 04:33:46 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b47c526d9sm31877735e9.15.2025.08.20.04.33.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Aug 2025 04:33:45 -0700 (PDT)
+Message-ID: <667fd351-7ee5-4c42-81fe-60061118f37f@linaro.org>
+Date: Wed, 20 Aug 2025 12:33:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250820-add-displayport-support-for-qcs615-platform-v3-7-a43bd25ec39c@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfXypGbg1EJNCs8
- eFYj6uieJ3xfAQLRblJpCobMeJ6A5/vjFI5q6YuO1kzOvHtU8PK6IOjItBZc2lrOoRshPd+XLZe
- CBVfzAW3pGNR0J/GN79x8tku4+gX1/Sq9vKGANQIwY23slfECKjYkJVRWfjrz5Y3Na2eQTowTSU
- B0sM16O9+C9HRPovfRLvSw1kXdKr+2fsDYx6U2OpCHdD0F1U9bjK5TQW7yMk9KMs6uP3SlDfmIq
- euE5wD3+kit+9UKpFpmELOUtnd1Ejut3fr+p0L6dl0xTvbdkEnNYzW3Dcy2RNhLpJUAwulBwpXB
- w+c/CVNgn3N5CxXInZ5Xhx33IJOoSKpquhYFApv6Nk8e7Ev7LkMHPrZVIekXA34h/HQJ05gdjNH
- VRqy/3o9JkEhrKxH4EWEIsLpO389vQ==
-X-Proofpoint-ORIG-GUID: 9P-GckP1PqDyVYTNjBGpsQNroI-lK9U9
-X-Proofpoint-GUID: 9P-GckP1PqDyVYTNjBGpsQNroI-lK9U9
-X-Authority-Analysis: v=2.4 cv=SoXJKPO0 c=1 sm=1 tr=0 ts=68a5b1e4 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=Buvtj7qxYYKUlD_DlT0A:9 a=CjuIK1q_8ugA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_03,2025-08-20_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/11] media: iris: Enable Secure PAS support with
+ IOMMU managed by Linux
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org
+References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
+ <20250819165447.4149674-12-mukesh.ojha@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250819165447.4149674-12-mukesh.ojha@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 20, 2025 at 05:34:49PM +0800, Xiangxu Yin wrote:
-> Refactor reset and regulator configuration to be managed via qmp_phy_cfg
-> instead of hardcoded lists. This enables per-PHY customization and
-> simplifies initialization logic for USB-only and USB/DP switchable PHYs.
-
-Please split into two patches in order to simplify reviewing.
-
+On 19/08/2025 17:54, Mukesh Ojha wrote:
+> Most Qualcomm platforms feature a proprietary hypervisor (such as Gunyah
+> or QHEE), which typically handles IOMMU configuration. This includes
+> mapping memory regions and device memory resources for remote processors
+> by intercepting qcom_scm_pas_auth_and_reset() calls. These mappings are
+> later removed during teardown. Additionally, SHM bridge setup is required
+> to enable memory protection for both remoteproc metadata and its memory
+> regions.
 > 
-> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+> When the hypervisor is absent, the operating system must perform these
+> configurations instead.
+> 
+> Support for handling IOMMU and SHM setup in the absence of a hypervisor
+> is now in place. Extend the Iris driver to enable this functionality on
+> platforms where IOMMU is managed by Linux (i.e., non-Gunyah, non-QHEE).
+> 
+> Additionally, the Iris driver must map the firmware and its required
+> resources to the firmware SID, which is now specified via the device tree.
+> 
+> Co-developed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > ---
->  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 108 +++++++++++++++----------------
->  1 file changed, 53 insertions(+), 55 deletions(-)
+>   drivers/media/platform/qcom/iris/iris_core.c  |   9 +-
+>   drivers/media/platform/qcom/iris/iris_core.h  |   6 +
+>   .../media/platform/qcom/iris/iris_firmware.c  | 156 ++++++++++++++++--
+>   .../media/platform/qcom/iris/iris_firmware.h  |   2 +
+>   4 files changed, 155 insertions(+), 18 deletions(-)
 > 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-> index 61128d606238321d1b573655b3b987226aa2d594..4e797b7e65da0e3a827efa9a179f1c150c1b8b00 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
-> @@ -421,8 +421,9 @@ struct qmp_phy_cfg {
->  	int (*configure_dp_phy)(struct qmp_usbc *qmp);
->  	int (*calibrate_dp_phy)(struct qmp_usbc *qmp);
->  
-> -	/* regulators to be requested */
-> -	const char * const *vreg_list;
-> +	const char * const *reset_list;
-> +	int num_resets;
-> +	const struct regulator_bulk_data *vreg_list;
->  	int num_vregs;
->  
->  	/* array of registers with different offsets */
-> @@ -453,7 +454,6 @@ struct qmp_usbc {
->  	struct clk_hw dp_pixel_hw;
->  	struct clk_bulk_data *clks;
->  	int num_clks;
-> -	int num_resets;
->  	struct reset_control_bulk_data *resets;
->  	struct regulator_bulk_data *vregs;
->  
-> @@ -514,9 +514,18 @@ static const char * const usb3phy_reset_l[] = {
->  	"phy_phy", "phy",
->  };
->  
-> -/* list of regulators */
-> -static const char * const qmp_phy_vreg_l[] = {
-> -	"vdda-phy", "vdda-pll",
-> +static const char * const usb3dpphy_reset_l[] = {
-> +	"phy_phy", "dp_phy",
-> +};
-> +
-> +static const struct regulator_bulk_data qmp_phy_usb_vreg_l[] = {
-> +	{ .supply = "vdda-phy" },
-> +	{ .supply = "vdda-pll" },
-
-Please fill in the values for all platforms. It well might be that they
-all share the same current requirements.
-
-> +};
-> +
-> +static const struct regulator_bulk_data qmp_phy_usbdp_vreg_l[] = {
-> +	{ .supply = "vdda-phy", .init_load_uA = 21800 },
-> +	{ .supply = "vdda-phy", .init_load_uA = 36000 },
-
-Typo
-
->  };
->  
->  static const struct qmp_usbc_offsets qmp_usbc_offsets_v3_qcm2290 = {
-> @@ -569,8 +578,10 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
->  	.rx_tbl_num             = ARRAY_SIZE(msm8998_usb3_rx_tbl),
->  	.pcs_tbl                = msm8998_usb3_pcs_tbl,
->  	.pcs_tbl_num            = ARRAY_SIZE(msm8998_usb3_pcs_tbl),
-> -	.vreg_list              = qmp_phy_vreg_l,
-> -	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.reset_list		= usb3phy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
-> +	.vreg_list              = qmp_phy_usb_vreg_l,
-> +	.num_vregs              = ARRAY_SIZE(qmp_phy_usb_vreg_l),
->  	.regs                   = qmp_v3_usb3phy_regs_layout,
->  };
->  
-> @@ -586,8 +597,10 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
->  	.rx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_rx_tbl),
->  	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
-> -	.vreg_list		= qmp_phy_vreg_l,
-> -	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.reset_list		= usb3phy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
-> +	.vreg_list		= qmp_phy_usb_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_usb_vreg_l),
->  	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
->  };
->  
-> @@ -603,8 +616,10 @@ static const struct qmp_phy_cfg sdm660_usb3phy_cfg = {
->  	.rx_tbl_num		= ARRAY_SIZE(sdm660_usb3_rx_tbl),
->  	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
->  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
-> -	.vreg_list		= qmp_phy_vreg_l,
-> -	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-> +	.reset_list		= usb3phy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
-> +	.vreg_list		= qmp_phy_usb_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_usb_vreg_l),
->  	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
->  };
->  
-> @@ -637,6 +652,11 @@ static const struct qmp_phy_cfg qcs615_usb3dp_phy_cfg = {
->  
->  	.swing_tbl		= &qmp_dp_voltage_swing_hbr2_rbr,
->  	.pre_emphasis_tbl	= &qmp_dp_pre_emphasis_hbr2_rbr,
-> +
-> +	.reset_list		= usb3dpphy_reset_l,
-> +	.num_resets		= ARRAY_SIZE(usb3dpphy_reset_l),
-> +	.vreg_list		= qmp_phy_usbdp_vreg_l,
-> +	.num_vregs		= ARRAY_SIZE(qmp_phy_usbdp_vreg_l),
->  };
->  
->  static int qmp_usbc_com_init(struct phy *phy)
-> @@ -653,13 +673,13 @@ static int qmp_usbc_com_init(struct phy *phy)
->  		return ret;
->  	}
->  
-> -	ret = reset_control_bulk_assert(qmp->num_resets, qmp->resets);
-> +	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->  	if (ret) {
->  		dev_err(qmp->dev, "reset assert failed\n");
->  		goto err_disable_regulators;
->  	}
->  
-> -	ret = reset_control_bulk_deassert(qmp->num_resets, qmp->resets);
-> +	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
->  	if (ret) {
->  		dev_err(qmp->dev, "reset deassert failed\n");
->  		goto err_disable_regulators;
-> @@ -682,7 +702,7 @@ static int qmp_usbc_com_init(struct phy *phy)
->  	return 0;
->  
->  err_assert_reset:
-> -	reset_control_bulk_assert(qmp->num_resets, qmp->resets);
-> +	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->  err_disable_regulators:
->  	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
->  
-> @@ -694,7 +714,7 @@ static int qmp_usbc_com_exit(struct phy *phy)
->  	struct qmp_usbc *qmp = phy_get_drvdata(phy);
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
->  
-> -	reset_control_bulk_assert(qmp->num_resets, qmp->resets);
-> +	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
->  
->  	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
->  
-> @@ -921,42 +941,22 @@ static const struct dev_pm_ops qmp_usbc_pm_ops = {
->  			   qmp_usbc_runtime_resume, NULL)
->  };
->  
-> -static int qmp_usbc_vreg_init(struct qmp_usbc *qmp)
-> +static int qmp_usbc_reset_init(struct qmp_usbc *qmp)
->  {
->  	const struct qmp_phy_cfg *cfg = qmp->cfg;
-> -	struct device *dev = qmp->dev;
-> -	int num = cfg->num_vregs;
-> -	int i;
-> -
-> -	qmp->vregs = devm_kcalloc(dev, num, sizeof(*qmp->vregs), GFP_KERNEL);
-> -	if (!qmp->vregs)
-> -		return -ENOMEM;
-> -
-> -	for (i = 0; i < num; i++)
-> -		qmp->vregs[i].supply = cfg->vreg_list[i];
-> -
-> -	return devm_regulator_bulk_get(dev, num, qmp->vregs);
-> -}
-> -
-> -static int qmp_usbc_reset_init(struct qmp_usbc *qmp,
-> -			      const char *const *reset_list,
-> -			      int num_resets)
-> -{
->  	struct device *dev = qmp->dev;
->  	int i;
->  	int ret;
->  
-> -	qmp->resets = devm_kcalloc(dev, num_resets,
-> +	qmp->resets = devm_kcalloc(dev, cfg->num_resets,
->  				   sizeof(*qmp->resets), GFP_KERNEL);
->  	if (!qmp->resets)
->  		return -ENOMEM;
->  
-> -	for (i = 0; i < num_resets; i++)
-> -		qmp->resets[i].id = reset_list[i];
-> +	for (i = 0; i < cfg->num_resets; i++)
-> +		qmp->resets[i].id = cfg->reset_list[i];
->  
-> -	qmp->num_resets = num_resets;
-> -
-> -	ret = devm_reset_control_bulk_get_exclusive(dev, num_resets, qmp->resets);
-> +	ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_resets, qmp->resets);
->  	if (ret)
->  		return dev_err_probe(dev, ret, "failed to get resets\n");
->  
-> @@ -1146,11 +1146,6 @@ static int qmp_usbc_parse_usb_dt_legacy(struct qmp_usbc *qmp, struct device_node
->  
->  	qmp->num_clks = ret;
->  
-> -	ret = qmp_usbc_reset_init(qmp, usb3phy_legacy_reset_l,
-> -				 ARRAY_SIZE(usb3phy_legacy_reset_l));
-> -	if (ret)
-> -		return ret;
-> -
->  	return 0;
->  }
->  
-> @@ -1187,14 +1182,9 @@ static int qmp_usbc_parse_usb_dt(struct qmp_usbc *qmp)
->  	qmp->pipe_clk = devm_clk_get(dev, "pipe");
->  	if (IS_ERR(qmp->pipe_clk)) {
->  		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
-> -				     "failed to get pipe clock\n");
-> +					"failed to get pipe clock\n");
-
-unrelated
-
->  	}
->  
-> -	ret = qmp_usbc_reset_init(qmp, usb3phy_reset_l,
-> -				 ARRAY_SIZE(usb3phy_reset_l));
-> -	if (ret)
-> -		return ret;
-> -
->  	return 0;
->  }
->  
-> @@ -1228,6 +1218,7 @@ static int qmp_usbc_probe(struct platform_device *pdev)
->  	struct phy_provider *phy_provider;
->  	struct device_node *np;
->  	struct qmp_usbc *qmp;
-> +	const struct qmp_phy_cfg *cfg;
->  	int ret;
->  
->  	qmp = devm_kzalloc(dev, sizeof(*qmp), GFP_KERNEL);
-> @@ -1239,13 +1230,20 @@ static int qmp_usbc_probe(struct platform_device *pdev)
->  
->  	qmp->orientation = TYPEC_ORIENTATION_NORMAL;
->  
-> -	qmp->cfg = of_device_get_match_data(dev);
-> -	if (!qmp->cfg)
-> +	cfg = of_device_get_match_data(dev);
-> +	if (!cfg)
->  		return -EINVAL;
->  
-> +	qmp->cfg = cfg;
-
-Why? This doesn't seem related at all.
-
-> +
->  	mutex_init(&qmp->phy_mutex);
->  
-> -	ret = qmp_usbc_vreg_init(qmp);
-> +	ret = qmp_usbc_reset_init(qmp);
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+> index 0fa0a3b549a2..57417d4d7e05 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.c
+> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+> @@ -17,6 +17,7 @@ void iris_core_deinit(struct iris_core *core)
+>   	mutex_lock(&core->lock);
+>   	iris_fw_unload(core);
+>   	iris_vpu_power_off(core);
+> +	iris_fw_deinit(core);
+>   	iris_hfi_queues_deinit(core);
+>   	core->state = IRIS_CORE_DEINIT;
+>   	mutex_unlock(&core->lock);
+> @@ -65,10 +66,14 @@ int iris_core_init(struct iris_core *core)
+>   	if (ret)
+>   		goto error_queue_deinit;
+>   
+> -	ret = iris_fw_load(core);
+> +	ret = iris_fw_init(core);
+>   	if (ret)
+>   		goto error_power_off;
+>   
+> +	ret = iris_fw_load(core);
 > +	if (ret)
-> +		return ret;
+> +		goto error_firmware_deinit;
 > +
-> +	ret = devm_regulator_bulk_get_const(qmp->dev, cfg->num_vregs,
-> +					 cfg->vreg_list, &qmp->vregs);
->  	if (ret)
->  		return ret;
->  
-> 
-> -- 
-> 2.34.1
-> 
+>   	ret = iris_vpu_boot_firmware(core);
+>   	if (ret)
+>   		goto error_unload_fw;
+> @@ -83,6 +88,8 @@ int iris_core_init(struct iris_core *core)
+>   
+>   error_unload_fw:
+>   	iris_fw_unload(core);
+> +error_firmware_deinit:
+> +	iris_fw_deinit(core);
+>   error_power_off:
+>   	iris_vpu_power_off(core);
+>   error_queue_deinit:
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.h b/drivers/media/platform/qcom/iris/iris_core.h
+> index aeeac32a1f6d..57eeefb38f22 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.h
+> +++ b/drivers/media/platform/qcom/iris/iris_core.h
+> @@ -73,6 +73,12 @@ struct iris_core {
+>   	int					irq;
+>   	struct v4l2_device			v4l2_dev;
+>   	struct video_device			*vdev_dec;
+> +	bool					has_iommu;
+> +	struct video_firmware {
+> +		struct device *dev;
+> +		struct qcom_scm_pas_ctx *ctx;
+> +		struct iommu_domain *iommu_domain;
+> +	} fw;
+>   	const struct v4l2_file_operations	*iris_v4l2_file_ops;
+>   	const struct v4l2_ioctl_ops		*iris_v4l2_ioctl_ops;
+>   	const struct vb2_ops			*iris_vb2_ops;
+> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
+> index f1b5cd56db32..e3f2fe5c9d7a 100644
+> --- a/drivers/media/platform/qcom/iris/iris_firmware.c
+> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+> @@ -3,10 +3,18 @@
+>    * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
+>    */
+>   
+> +#include <linux/device.h>
+>   #include <linux/firmware.h>
+> -#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/kernel.h>
+> +#include <linux/iommu.h>
+> +#include <linux/io.h>
+> +#include <linux/of.h>
+>   #include <linux/of_address.h>
+>   #include <linux/of_reserved_mem.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/of_device.h>
+> +#include <linux/firmware/qcom/qcom_scm.h>
+> +#include <linux/sizes.h>
+>   #include <linux/soc/qcom/mdt_loader.h>
+>   
+>   #include "iris_core.h"
+> @@ -17,15 +25,14 @@
+>   static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+>   {
+>   	u32 pas_id = core->iris_platform_data->pas_id;
+> +	struct qcom_scm_pas_ctx *ctx;
+>   	const struct firmware *firmware = NULL;
+>   	struct device *dev = core->dev;
+> -	struct reserved_mem *rmem;
+> -	struct device_node *node;
+> -	phys_addr_t mem_phys;
+> -	size_t res_size;
+> -	ssize_t fw_size;
+> -	void *mem_virt;
+> -	int ret;
+> +	struct reserved_mem *rmem = NULL;
+> +	struct device_node *node = NULL;
+> +	ssize_t fw_size = 0;
+> +	void *mem_virt = NULL;
+> +	int ret = 0;
+>   
+>   	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
+>   		return -EINVAL;
+> @@ -39,36 +46,64 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
+>   	if (!rmem)
+>   		return -EINVAL;
+>   
+> -	mem_phys = rmem->base;
+> -	res_size = rmem->size;
+> +	if (core->has_iommu)
+> +		dev = core->fw.dev;
+>   
+> +	ctx = qcom_scm_pas_ctx_init(dev, pas_id, rmem->base, rmem->size, false);
+> +	if (!ctx)
+> +		return -ENOMEM;
+> +
+> +	ctx->has_iommu = core->has_iommu;
+>   	ret = request_firmware(&firmware, fw_name, dev);
+>   	if (ret)
+>   		return ret;
+>   
+>   	fw_size = qcom_mdt_get_size(firmware);
+> -	if (fw_size < 0 || res_size < (size_t)fw_size) {
+> +	if (fw_size < 0 || rmem->size < (size_t)fw_size) {
+>   		ret = -EINVAL;
+>   		goto err_release_fw;
+>   	}
+>   
+> -	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
+> +	mem_virt = memremap(rmem->base, rmem->size, MEMREMAP_WC);
+>   	if (!mem_virt) {
+>   		ret = -ENOMEM;
+>   		goto err_release_fw;
+>   	}
+>   
+> -	ret = qcom_mdt_load(dev, firmware, fw_name,
+> -			    pas_id, mem_virt, mem_phys, res_size, NULL);
+> +	ret = qcom_mdt_pas_load(ctx, firmware, fw_name, mem_virt, NULL);
+>   	if (ret)
+>   		goto err_mem_unmap;
+>   
+> -	ret = qcom_scm_pas_auth_and_reset(pas_id);
+> +	if (core->has_iommu) {
+> +		ret = iommu_map(core->fw.iommu_domain, 0, rmem->base, rmem->size,
+> +				IOMMU_READ | IOMMU_WRITE | IOMMU_PRIV, GFP_KERNEL);
+> +		if (ret)
+> +			goto err_mem_unmap;
+> +
+> +		/*
+> +		 * Firmware has no support for resource table for now, so, lets
+> +		 * pass NULL and zero for input resource table and input resource
+> +		 * table respectively.
+> +		 */
+> +		ret = qcom_mdt_pas_map_devmem_rscs(ctx, core->fw.iommu_domain, NULL, 0);
+> +		if (ret)
+> +			goto err_unmap_carveout;
+> +	}
+> +
+> +	ret = qcom_scm_pas_prepare_and_auth_reset(ctx);
+>   	if (ret)
+> -		goto err_mem_unmap;
+> +		goto err_unmap_devmem_rscs;
+> +
+> +	core->fw.ctx = ctx;
+>   
+>   	return ret;
+>   
+> +err_unmap_devmem_rscs:
+> +	if (core->has_iommu)
+> +		qcom_mdt_pas_unmap_devmem_rscs(ctx, core->fw.iommu_domain);
+> +err_unmap_carveout:
+> +	if (core->has_iommu)
+> +		iommu_unmap(core->fw.iommu_domain, 0, rmem->size);
+>   err_mem_unmap:
+>   	memunmap(mem_virt);
+>   err_release_fw:
+> @@ -109,10 +144,97 @@ int iris_fw_load(struct iris_core *core)
+>   
+>   int iris_fw_unload(struct iris_core *core)
+>   {
+> -	return qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
+> +	struct qcom_scm_pas_ctx *ctx;
+> +	int ret;
+> +
+> +	ctx = core->fw.ctx;
+> +	ret = qcom_scm_pas_shutdown(ctx->peripheral);
+> +	if (core->has_iommu) {
+> +		iommu_unmap(core->fw.iommu_domain, 0, ctx->mem_size);
+> +		qcom_mdt_pas_unmap_devmem_rscs(ctx, core->fw.iommu_domain);
+> +	}
+> +
+> +	return ret;
+>   }
+>   
+>   int iris_set_hw_state(struct iris_core *core, bool resume)
+>   {
+>   	return qcom_scm_set_remote_state(resume, 0);
+>   }
+> +
+> +int iris_fw_init(struct iris_core *core)
+> +{
+> +	struct platform_device_info info;
+> +	struct iommu_domain *iommu_dom;
+> +	struct platform_device *pdev;
+> +	struct device_node *np;
+> +	int ret;
+> +
+> +	np = of_get_child_by_name(core->dev->of_node, "video-firmware");
+> +	if (!np)
+> +		return 0;
+> +
+> +	core->has_iommu = true;
 
--- 
-With best wishes
-Dmitry
+You set has_iommu = true and then you check this flag throughout this 
+patch..
+
+
+> +	memset(&info, 0, sizeof(info));
+> +	info.fwnode = &np->fwnode;
+> +	info.parent = core->dev;
+> +	info.name = np->name;
+> +	info.dma_mask = DMA_BIT_MASK(32);
+> +
+> +	pdev = platform_device_register_full(&info);
+> +	if (IS_ERR(pdev)) {
+> +		of_node_put(np);
+> +		return PTR_ERR(pdev);
+> +	}
+> +
+> +	pdev->dev.of_node = np;
+> +
+> +	ret = of_dma_configure(&pdev->dev, np, true);
+> +	if (ret) {
+> +		dev_err(core->dev, "failed to allocate domain\n");
+> +		goto err_unregister;
+> +	}
+> +
+> +	core->fw.dev = &pdev->dev;
+> +
+> +	iommu_dom = iommu_get_domain_for_dev(core->fw.dev);
+> +	if (!iommu_dom) {
+> +		dev_err(core->fw.dev, "Failed to get iommu domain\n");
+> +		ret = -EINVAL;
+> +		goto err_iommu_free;
+> +	}
+> +
+> +	ret = iommu_attach_device(iommu_dom, core->fw.dev);
+> +	if (ret) {
+> +		dev_err(core->fw.dev, "could not attach device\n");
+> +		goto err_iommu_free;
+> +	}
+> +
+> +	core->fw.iommu_domain = iommu_dom;
+> +
+> +	of_node_put(np);
+> +
+> +	return 0;
+> +
+> +err_iommu_free:
+> +	iommu_domain_free(iommu_dom);
+> +err_unregister:
+> +	platform_device_unregister(pdev);
+> +	of_node_put(np);
+> +	return ret;
+> +}
+> +
+> +void iris_fw_deinit(struct iris_core *core)
+> +{
+> +	struct iommu_domain *iommu_dom;
+> +
+> +	if (!core->has_iommu)
+
+This is fixed in your code is it not ?
+
+You presumably are going to change this later otherwise suggest dropping
+
+---
+bod
 
