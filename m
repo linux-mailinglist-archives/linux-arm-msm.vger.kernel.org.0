@@ -1,63 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-69877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8B03B2D4BD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 09:20:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48E96B2D5AE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 10:09:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 049F63AC8BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 07:20:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DC9FA7281E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:09:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B3122D3EC2;
-	Wed, 20 Aug 2025 07:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ACDE02D8362;
+	Wed, 20 Aug 2025 08:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="hk3lms1V"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="Xixm2oi8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563C419258E;
-	Wed, 20 Aug 2025 07:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7AD1286D55;
+	Wed, 20 Aug 2025 08:09:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.156.1
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755674404; cv=none; b=CJidN8DI9rGKcJhtYJ5ruzkj76Z48YZXOATqEHNZcgW9dcxWum1S0K14pywkUeok9fJaQqCtNwVXJcDtRx7lL3IV1b03oDHjjqDZfgTg8O6R9EaymYTO7MDUTgBlXjN+NxpNniJVxkg0r5dJfsmt7EzPxd49PjpJVGJYVnZMXZM=
+	t=1755677383; cv=none; b=MDWIBRcBnKvMIaeyxCeCrQJLo1Z5///qwXekUjwNDvmmy6ELie0/6mtUGeZPvhlk3JSJpWPaPyCUGFZNFQ0kyel19nDPdr3wfg4LQWseC29k/3UctYYxywZeVIFCjx8rbQ/9Z3x0Zz5awskbjkiEc6D0JIdWECC6ioKz621xt2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755674404; c=relaxed/simple;
-	bh=32xCHnNnem5BD5OsWkgZ3cstrS/qgPJdiiZB3UXndjI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=JtVGyHg6Z//RgRJkGSst6fVGFabNdCnu01+EB9RGtbogEXjr+w6hePMY41g+kKQAcsrFCGNCb/HAD+kklzmbO1J2t59TwFmbLogzZ+gdaBKD9H5KQWiVB4DF8nM2pgQZ3oAaIFlkJOVUfYXPOzwpQg2vS+DORJr+XT3XqPxXDzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=hk3lms1V; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57K1pDoM011480;
-	Wed, 20 Aug 2025 07:19:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	R36951E5bXwxhf0whoyxbWPcOJ612cTFYjtpSUf4t3Q=; b=hk3lms1VmxrNJq9/
-	7QSU2TdAiMi5YgXCqw5vZ+Eb4QNV82/7VrX8iisMFqF+uNwa1wbmyyRLlBTKmkZO
-	SBuaDa6acypcLco42w51YgNZ+iieOgcYHmgeN21XldrfYNm3+rALvkX+yWiB5LP2
-	NAR52It6oSpQBxR8XGYS80f2fhDBBGkkyoe9KqfQIRg+qyGf2TVWCSgRYQI4HN9s
-	/topwR938pTElhfhZosB4mYiC0EM/4X16ziJGgM+9ZKg1kEZyKkYNQGUS2CmpkCk
-	54wyERcEYEwuFoZCVaCwUB+MiVkbWuHTU6Lf58xqPTvFg1+a3pKiML6QER+o+ng1
-	qbnwpA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52bgsg6-1
+	s=arc-20240116; t=1755677383; c=relaxed/simple;
+	bh=QtPa4Xm8uTmy+B5vWLRgRCy9n5XjZIkEIBssgZ3jQWw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ti1LuwTdLcGeG08oYP+3KhP6+E7oOPQEclQAfeFb7lqtuV/zGVXIgZgYsPt883eJ2b7N5VgZerJ+WOVMIwx5P8uU2Eya2VCrYwLFWEEBrTTMAu9xmp9n1WWeZLtl1LPalwXRjnNYZmSHYhG8bIVWtX+LzLs074wtY+8/sn8RcZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=Xixm2oi8; arc=none smtp.client-ip=148.163.156.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57JNmmLo017631;
+	Wed, 20 Aug 2025 08:09:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=XyEp7P
+	B6Crc5O/n3hDpRBdclhiXWepi7f2DlP7ISOnE=; b=Xixm2oi8D/e/+wAITPeDp3
+	TALHrRG4EBVti1e3wM1Z6LnCfvINBVfhRGmgOPkipNfgbFhBD0MWSeZRRuGZ/NN+
+	NKDq98HPciL4Zozeql4srzji2nvV3CzcZ3UlmCS5mUo4axD1CO9niYr/utY3r3nU
+	R/k9YIllh44h9uoNOFLeppTj5ZpJGLc7EDb+zLBQQ5R2NO8ZqfzYF65N+NeIflzl
+	gTcYt/B8t87ieiFU691ZjDHQqARPeaX+Fy6nA8Cm30nsgWe9R3Iis8b6CyGL5Xlw
+	ovWuvSCaaobgeWwxqiRAGHpZnDDJ13JX7jkAK7240Uso3SZWpw/1sppbNb+XqHPQ
+	==
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38vhrww-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Aug 2025 07:19:57 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57K7Jvnn008494
+	Wed, 20 Aug 2025 08:09:13 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57K89CuX005377;
+	Wed, 20 Aug 2025 08:09:12 GMT
+Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48n38vhrwp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Aug 2025 07:19:57 GMT
-Received: from [10.217.216.168] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Wed, 20 Aug
- 2025 00:19:51 -0700
-Message-ID: <a1252539-d35f-443b-9e0a-3316f9ff932a@quicinc.com>
-Date: Wed, 20 Aug 2025 12:49:48 +0530
+	Wed, 20 Aug 2025 08:09:12 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+	by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57K4xm2t015619;
+	Wed, 20 Aug 2025 08:09:11 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 48my422cjr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 20 Aug 2025 08:09:11 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com [10.20.54.106])
+	by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 57K899B961342160
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 20 Aug 2025 08:09:09 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A734720043;
+	Wed, 20 Aug 2025 08:09:09 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 407A620040;
+	Wed, 20 Aug 2025 08:09:08 +0000 (GMT)
+Received: from [9.111.5.117] (unknown [9.111.5.117])
+	by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 20 Aug 2025 08:09:08 +0000 (GMT)
+Message-ID: <295ae4dd-4734-42a0-be63-2d322f00c799@linux.ibm.com>
+Date: Wed, 20 Aug 2025 10:09:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,195 +84,209 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 4/4] arm64: dts: qcom: sm8550: Remove SDR104/SDR50
- broken capabilities
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        "Ulf
- Hansson" <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        "Bjorn
- Andersson" <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Adrian Hunter <adrian.hunter@intel.com>
-CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <quic_cang@quicinc.com>, <quic_nguyenb@quicinc.com>,
-        <quic_rampraka@quicinc.com>, <quic_pragalla@quicinc.com>,
-        <quic_sayalil@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <kernel@oss.qualcomm.com>
-References: <20250801084518.2259767-1-quic_sartgarg@quicinc.com>
- <20250801084518.2259767-5-quic_sartgarg@quicinc.com>
- <69f2807c-9a28-4b31-97cc-2756f0ab9fd4@kernel.org>
- <c7e36755-9255-4209-9d53-20077bd1d3ba@quicinc.com>
- <8b023e56-435b-43df-8b15-c562a494e06f@kernel.org>
- <ab5d3811-9fbf-4749-9463-4457fbf50023@quicinc.com>
- <4091c488-996c-4318-82ad-c054a9ef5a22@oss.qualcomm.com>
- <a93fb5bf-1fd5-4e00-8338-b8608a9ba8fa@kernel.org>
- <f2f13082-20d6-4f22-8dfb-f11b01cd6706@oss.qualcomm.com>
- <dda9a2ef-5b86-4883-8347-b5ccf25e8d5d@quicinc.com>
- <0257f893-fed8-4ee9-ad4e-cdcdad8b5c85@linaro.org>
+Subject: Re: [PATCH 18/19] perf: Introduce positive capability for raw events
+To: Robin Murphy <robin.murphy@arm.com>, peterz@infradead.org,
+        mingo@redhat.com, will@kernel.org, mark.rutland@arm.com,
+        acme@kernel.org, namhyung@kernel.org,
+        alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+        irogers@google.com, adrian.hunter@intel.com, kan.liang@linux.intel.com
+Cc: linux-perf-users@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+        linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+        sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
+        linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+        iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+        linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-riscv@lists.infradead.org
+References: <cover.1755096883.git.robin.murphy@arm.com>
+ <542787fd188ea15ef41c53d557989c962ed44771.1755096883.git.robin.murphy@arm.com>
+ <67a0d778-6e2c-4955-a7ce-56a10043ae8d@arm.com>
 Content-Language: en-US
-From: Sarthak Garg <quic_sartgarg@quicinc.com>
-In-Reply-To: <0257f893-fed8-4ee9-ad4e-cdcdad8b5c85@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Thomas Richter <tmricht@linux.ibm.com>
+Organization: IBM
+In-Reply-To: <67a0d778-6e2c-4955-a7ce-56a10043ae8d@arm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX/SSfp9ufxGMc
- S3WSNGZXCY//MHpOW8vXZfRcuPbh9Hn4Poh3uWWT2GDDiBuhr4BYUNItFTMBfDPilx17MDSayki
- m0OFYyHBsFnCVY0ptlWn/Lh7cddp1ebUHWNypyNm3x3+1C0YevD84+L9zKpgcSvgktAsvvbj6ni
- Xwl8gc9lIRT4UDo/Fp/7qsRuixBq/48NttlCHMUQ0Rubs/l/hIL8QLX49SAtn5m1Rt9Y46fjY5I
- qWL/UcZZXOuncwsmPE6JIaZdbtfFJ/ZA3y9pV185KqfJlR6PEDndsOvogoZ/GAvyq+mXnM7asrH
- 8GyO21Dfu5/pfoxypzVQd3rtKkpaiBcu3yuE6EE5T56Lq97ayYw9LHcYjnGlSRO6hyr7rsNoF9D
- Qfq6L1GU/A5I4BWeOtPN1sCpnM+dAw==
-X-Authority-Analysis: v=2.4 cv=cr3CU14i c=1 sm=1 tr=0 ts=68a5771d cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=6UoUdjYcmRBRTNJ1P8gA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: _pIDF-p2Y2SePbethL3iG5U3Dkskyj5X
-X-Proofpoint-ORIG-GUID: _pIDF-p2Y2SePbethL3iG5U3Dkskyj5X
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: rc1CmpHVUr4PjN6HeVNNaTAKVoWbVX32
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODE5MDIyMiBTYWx0ZWRfX4xTzLYCTQsxG
+ AGD1we0J4ezItB0ejTfm7DJNuDAARyH4VivdukTDV+G2c134zt0WbxSJSEE76uDxTym3DRzLeZX
+ mOf6bUkLRc8HI2z83HLeSrLnCDaUzt6ctsGigqq+Yny6dHl56O82/ysxGcmIZx9UyZO+hyMZvb/
+ ecuWa/hbBYOZ6yeacF65qy/00k1eAjO++Mj45cxXjqV85T1khiwKHAStutPkN05LIcWmzIOI2N6
+ JcZUW/XH3ZbwPgzY20enHnuM+rxpiC2AXWamVYRgBgnxytZoHYJTbh5BurqPVICmyND/IQHxcAh
+ w3J7un0oPnbnMNdQ3B2TA6VUHKYY82ln4UWEvFzI/Jn0XaQRTQr//JuEseTSCgQIqbo5FGoTW85
+ ypKOH5UDXA9ip20lItNjpe1wLNO1nQ==
+X-Proofpoint-GUID: GZ2wu60A03msHy_JXXsuf0f5WSTi9QT-
+X-Authority-Analysis: v=2.4 cv=KPwDzFFo c=1 sm=1 tr=0 ts=68a582a9 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=7CQSdrXTAAAA:8 a=gUTjnckvcJroK4elFEgA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a-qgeE7W1pNrGK8U0ZQC:22
+ a=DXsff8QfwkrTrK3sU8N1:22 a=Z5ABNNGmrOfJ6cZ5bIyy:22 a=bWyr8ysk75zN3GCy5bjg:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_03,2025-08-14_01,2025-03-28_01
+ definitions=2025-08-20_03,2025-08-20_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 lowpriorityscore=0 bulkscore=0 adultscore=0 phishscore=0
- malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0 priorityscore=1501
+ clxscore=1011 spamscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 suspectscore=0 phishscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508190222
 
-
-
-On 8/19/2025 7:00 PM, Neil Armstrong wrote:
-> On 14/08/2025 09:15, Sarthak Garg wrote:
+On 8/19/25 15:15, Robin Murphy wrote:
+> On 13/08/2025 6:01 pm, Robin Murphy wrote:
+>> Only a handful of CPU PMUs accept PERF_TYPE_{RAW,HARDWARE,HW_CACHE}
+>> events without registering themselves as PERF_TYPE_RAW in the first
+>> place. Add an explicit opt-in for these special cases, so that we can
+>> make life easier for every other driver (and probably also speed up the
+>> slow-path search) by having perf_try_init_event() do the basic type
+>> checking to cover the majority of cases.
 >>
+>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+>> ---
 >>
->> On 8/13/2025 5:37 PM, Konrad Dybcio wrote:
->>> On 8/13/25 1:56 PM, Krzysztof Kozlowski wrote:
->>>> On 13/08/2025 13:21, Konrad Dybcio wrote:
->>>>> On 8/13/25 1:08 PM, Sarthak Garg wrote:
->>>>>>
->>>>>>
->>>>>> On 8/5/2025 2:55 PM, Krzysztof Kozlowski wrote:
->>>>>>> On 05/08/2025 11:19, Sarthak Garg wrote:
->>>>>>>>
->>>>>>>>
->>>>>>>> On 8/1/2025 2:32 PM, Krzysztof Kozlowski wrote:
->>>>>>>>> On 01/08/2025 10:45, Sarthak Garg wrote:
->>>>>>>>>> The kernel now handles level shifter limitations affecting SD 
->>>>>>>>>> card
->>>>>>>>>> modes, making it unnecessary to explicitly disable SDR104 and 
->>>>>>>>>> SDR50
->>>>>>>>>> capabilities in the device tree.
->>>>>>>>>>
->>>>>>>>>> However, due to board-specific hardware constraints 
->>>>>>>>>> particularly related
->>>>>>>>>> to level shifter in this case the maximum frequency for SD 
->>>>>>>>>> High-Speed
->>>>>>>>>> (HS) mode must be limited to 37.5 MHz to ensure reliable 
->>>>>>>>>> operation of SD
->>>>>>>>>> card in HS mode. This is achieved using the 
->>>>>>>>>> max-sd-hs-frequency property
->>>>>>>>>> in the board DTS.
->>>>>>>>>>
->>>>>>>>>> Signed-off-by: Sarthak Garg <quic_sartgarg@quicinc.com>
->>>>>>>>>> ---
->>>>>>>>>>     
->>>>>>>>>> arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 1 +
->>>>>>>>>>     
->>>>>>>>>> arch/arm64/boot/dts/qcom/sm8550-mtp.dts                     | 1 +
->>>>>>>>>>     
->>>>>>>>>> arch/arm64/boot/dts/qcom/sm8550-sony-xperia-yodo-pdx234.dts | 1 +
->>>>>>>>>>     
->>>>>>>>>> arch/arm64/boot/dts/qcom/sm8550.dtsi                        | 
->>>>>>>>>> 3 ---
->>>>>>>>>>     4 files changed, 3 insertions(+), 3 deletions(-)
->>>>>>>>>>
->>>>>>>>>
->>>>>>>>> This will break MMC for all of the users and nothing in commit 
->>>>>>>>> msg or
->>>>>>>>> cover letter explains that or mentions merging strategy.
->>>>>>>>>
->>>>>>>>> Exactly this case is covered by your internal guideline, no? 
->>>>>>>>> Please read it.
->>>>>>>>>
->>>>>>>>> Best regards,
->>>>>>>>> Krzysztof
->>>>>>>>
->>>>>>>> Just to make sure I’m addressing the right concern — are you 
->>>>>>>> primarily
->>>>>>>> worried about the introduction of the max-sd-hs-frequency 
->>>>>>>> property in
->>>>>>>> the board DTS files, or about the removal of the sdhci-caps-mask
->>>>>>>> from the common sm8550.dtsi?
->>>>>>>
->>>>>>>
->>>>>>> Apply this patch and test MMC. Does it work? No. Was it working? 
->>>>>>> Yes.
->>>>>>>
->>>>>>>
->>>>>>> Best regards,
->>>>>>> Krzysztof
->>>>>>
->>>>>>
->>>>>> You're absolutely right to raise the concern about potential 
->>>>>> breakage.
->>>>>> After conducting additional testing across multiple boards, I’ve 
->>>>>> confirmed that the removal of SDR104/SDR50 broken capabilities 
->>>>>> does indeed affect V1 SM8550 devices.
->>>>>
->>>>> v1 is a prototype revision, please forget it exists, we most 
->>>>> definitely
->>>>> do not support it upstream
->>>>
->>>>
->>>> You should double check. SM8450 (not v1!) needed it, so either it was
->>>> copied to SM8550 (v2!) by mistake or was also needed.
->>>
->>> I believe that the speed capabilities are indeed restricted on 
->>> 8550-final
->>> and that's why this patchset exists in the first place
->>>
->>> Konrad
+>> A further possibility is to automatically add the cap to PERF_TYPE_RAW
+>> PMUs in perf_pmu_register() to have a single point-of-use condition; I'm
+>> undecided...
+>> ---
+>>   arch/s390/kernel/perf_cpum_cf.c    |  1 +
+>>   arch/s390/kernel/perf_pai_crypto.c |  2 +-
+>>   arch/s390/kernel/perf_pai_ext.c    |  2 +-
+>>   arch/x86/events/core.c             |  2 +-
+>>   drivers/perf/arm_pmu.c             |  1 +
+>>   include/linux/perf_event.h         |  1 +
+>>   kernel/events/core.c               | 15 +++++++++++++++
+>>   7 files changed, 21 insertions(+), 3 deletions(-)
 >>
->> Hi Krzysztof, Konrad,
->>
->> Konrad is right — this patch series addresses limitations seen on
->> SM8550-final silicon.
->>
->> SDR50 mode: The tuning support introduced in this series helps ensure
->> reliable operation.
->> SDR104 mode: limitations are resolved in SM8550 v2.
+>> diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
+>> index 1a94e0944bc5..782ab755ddd4 100644
+>> --- a/arch/s390/kernel/perf_cpum_cf.c
+>> +++ b/arch/s390/kernel/perf_cpum_cf.c
+>> @@ -1054,6 +1054,7 @@ static void cpumf_pmu_del(struct perf_event *event, int flags)
+>>   /* Performance monitoring unit for s390x */
+>>   static struct pmu cpumf_pmu = {
+>>       .task_ctx_nr  = perf_sw_context,
+>> +    .capabilities = PERF_PMU_CAP_RAW_EVENTS,
+>>       .pmu_enable   = cpumf_pmu_enable,
+>>       .pmu_disable  = cpumf_pmu_disable,
+>>       .event_init   = cpumf_pmu_event_init,
+>> diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
+>> index a64b6b056a21..b5b6d8b5d943 100644
+>> --- a/arch/s390/kernel/perf_pai_crypto.c
+>> +++ b/arch/s390/kernel/perf_pai_crypto.c
+>> @@ -569,7 +569,7 @@ static const struct attribute_group *paicrypt_attr_groups[] = {
+>>   /* Performance monitoring unit for mapped counters */
+>>   static struct pmu paicrypt = {
+>>       .task_ctx_nr  = perf_hw_context,
+>> -    .capabilities = PERF_PMU_CAP_SAMPLING,
+>> +    .capabilities = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
+>>       .event_init   = paicrypt_event_init,
+>>       .add          = paicrypt_add,
+>>       .del          = paicrypt_del,
+>> diff --git a/arch/s390/kernel/perf_pai_ext.c b/arch/s390/kernel/perf_pai_ext.c
+>> index 1261f80c6d52..bcd28c38da70 100644
+>> --- a/arch/s390/kernel/perf_pai_ext.c
+>> +++ b/arch/s390/kernel/perf_pai_ext.c
+>> @@ -595,7 +595,7 @@ static const struct attribute_group *paiext_attr_groups[] = {
+>>   /* Performance monitoring unit for mapped counters */
+>>   static struct pmu paiext = {
+>>       .task_ctx_nr  = perf_hw_context,
+>> -    .capabilities = PERF_PMU_CAP_SAMPLING,
+>> +    .capabilities = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
+>>       .event_init   = paiext_event_init,
+>>       .add          = paiext_add,
+>>       .del          = paiext_del,
+>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
+>> index 789dfca2fa67..764728bb80ae 100644
+>> --- a/arch/x86/events/core.c
+>> +++ b/arch/x86/events/core.c
+>> @@ -2697,7 +2697,7 @@ static bool x86_pmu_filter(struct pmu *pmu, int cpu)
+>>   }
+>>     static struct pmu pmu = {
+>> -    .capabilities        = PERF_PMU_CAP_SAMPLING,
+>> +    .capabilities        = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
+>>         .pmu_enable        = x86_pmu_enable,
+>>       .pmu_disable        = x86_pmu_disable,
+>> diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
+>> index 72d8f38d0aa5..bc772a3bf411 100644
+>> --- a/drivers/perf/arm_pmu.c
+>> +++ b/drivers/perf/arm_pmu.c
+>> @@ -877,6 +877,7 @@ struct arm_pmu *armpmu_alloc(void)
+>>            * specific PMU.
+>>            */
+>>           .capabilities    = PERF_PMU_CAP_SAMPLING |
+>> +                  PERF_PMU_CAP_RAW_EVENTS |
+>>                     PERF_PMU_CAP_EXTENDED_REGS |
+>>                     PERF_PMU_CAP_EXTENDED_HW_TYPE,
+>>       };
+>> diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
+>> index 183b7c48b329..c6ad036c0037 100644
+>> --- a/include/linux/perf_event.h
+>> +++ b/include/linux/perf_event.h
+>> @@ -305,6 +305,7 @@ struct perf_event_pmu_context;
+>>   #define PERF_PMU_CAP_EXTENDED_HW_TYPE    0x0100
+>>   #define PERF_PMU_CAP_AUX_PAUSE        0x0200
+>>   #define PERF_PMU_CAP_AUX_PREFER_LARGE    0x0400
+>> +#define PERF_PMU_CAP_RAW_EVENTS        0x0800
+>>     /**
+>>    * pmu::scope
+>> diff --git a/kernel/events/core.c b/kernel/events/core.c
+>> index 71b2a6730705..2ecee76d2ae2 100644
+>> --- a/kernel/events/core.c
+>> +++ b/kernel/events/core.c
+>> @@ -12556,11 +12556,26 @@ static inline bool has_extended_regs(struct perf_event *event)
+>>              (event->attr.sample_regs_intr & PERF_REG_EXTENDED_MASK);
+>>   }
+>>   +static bool is_raw_pmu(const struct pmu *pmu)
+>> +{
+>> +    return pmu->type == PERF_TYPE_RAW ||
+>> +           pmu->capabilities & PERF_PMU_CAP_RAW_EVENTS;
+>> +}
+>> +
+>>   static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
+>>   {
+>>       struct perf_event_context *ctx = NULL;
+>>       int ret;
+>>   +    /*
+>> +     * Before touching anything, we can safely skip:
+>> +     * - any event for a specific PMU which is not this one
+>> +     * - any common event if this PMU doesn't support them
+>> +     */
+>> +    if (event->attr.type != pmu->type &&
+>> +        (event->attr.type >= PERF_TYPE_MAX || is_raw_pmu(pmu)))
 > 
-> I guess the state is the same for SM8650, it also requires the 
-> max-sd-hs-frequency.
+> Ah, that should be "!is_raw_pmu(pmu)" there (although it's not entirely the cause of the LKP report on the final patch.)
 > 
-> I guess all boards with a level-shifter on board would need such 
-> limitation,
-> including most of the HDK boards (SM8450 included)
+> Thanks,
+> Robin.
 > 
-> Neil
->
+>> +        return -ENOENT;
+>> +
+>>       if (!try_module_get(pmu->module))
+>>           return -ENODEV;
+>>   
+> 
+> 
 
-Yes, that makes sense Neil — all boards with a level-shifter on board
-would likely need this limitation, including SM8450, SM8550, and SM8650.
+Hi Robin,
 
->>
->> But still to avoid regressions, *I’ll like to retain sdhci-caps-mask in
->> sm8550.dtsi for now and revisit its removal for future targets after
->> thorough validation and testing from the beginning.*
->>
->> Konrad suggested placing max-sd-hs-frequency in the SoC dtsi.
->> Krzysztof, could you please share your thoughts on this approach?
->>
->> Best regards,
->> Sarthak Garg
-> 
+what is the intention of that patch?
+Can you explain that a bit more.
+
+Thanks.
+
+-- 
+Thomas Richter, Dept 3303, IBM s390 Linux Development, Boeblingen, Germany
+--
+IBM Deutschland Research & Development GmbH
+
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+
+Geschäftsführung: David Faller
+
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht Stuttgart, HRB 243294
 
