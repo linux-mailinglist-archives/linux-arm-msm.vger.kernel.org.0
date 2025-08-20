@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-69866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1887B2D3D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:06:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C70AB2D3F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:17:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 493321BA6BDC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 06:06:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0E69A1C22797
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 06:17:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87ADF255F52;
-	Wed, 20 Aug 2025 06:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03D0F235C1E;
+	Wed, 20 Aug 2025 06:16:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pORbeOdj"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GG5buEa9"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 144062367B0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 06:06:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85FB619047F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 06:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755669983; cv=none; b=roqUBTz4kVDtae1IRk08c1k+CGAzZoTI2EikqCG0t4PmyuWpMR9D2pYShUHBWbsgCKADEnOq0GhUcvmCKY6irP2KfXCbzXkEDF1aQgpeL53AFOu1kL5Sk0DLHtUC6TyBs77zDnbaB9mwfCW6o50gSau62afpty3xK6aozBfKazU=
+	t=1755670618; cv=none; b=iuSpl5LYQ3erhiQUIGJSgM/L/8msHMgK6uD+++ZQQZxPkv7PQqXrXKbK5i2ub/P8ZFoTHRqN+BMMfqDTF6zEcM77VzlKnqx5cjbpZwPLqO+jcpxqa1ZnUdGdom+CWUE7M0M9iFSQ5i3PSNBLhpEs9o6rndiB+DIo/uVGW3DeDbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755669983; c=relaxed/simple;
-	bh=OAYi4ydQnL8gJ7D3NaAl3MOZsDT1GK3ec/6XjP4fSxg=;
+	s=arc-20240116; t=1755670618; c=relaxed/simple;
+	bh=BkNEtWfHC0W481jdirYIhyOmkfVe/vp4DlWZgEyrPcY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KRCuFJTNn/kRu3v7/QD4TTtIhwy4wQz9sv8fMMDZrUtKlpclCbO6s3HLrZjwwlansyRLtcMrGLdSF+V9mq5lPElqmFGHFEe+49aeJ5cVNdAtbhkdhrszgm/YS/JV7yaIZVdcsfQuZCDsquAiOomyUSpOpiGVrXPOlEidasPQAhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pORbeOdj; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=uhB3I1hX9hpb9x1vwH6oBG9AzchE081iOTZl3K1byXX7Q9/QXxm0tjoJ/9G4F6yJ48NExrD32YbFHgq2E5TDr9hajUFHoCQ+ljqhKtVPwWLhzHd5fXdagd/HXHt+qKe8Xjsi3jscybTEEsEs76p8BBGEhGLgmDojMFWc6wJOR8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GG5buEa9; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57K1p2BL027095
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 06:06:21 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57K1osqZ024847
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 06:16:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	59SyR1NERy3Y1jC5JNhL4yeE7jcVGgkH9O11kosKuSk=; b=pORbeOdjKuCWzxmP
-	Xj310mNvt6KzKO3evFW+U8qvLljVoOPgxbF5zC1UpP8TjN/0bRjQnc0kaIgcbl4O
-	YVltmMNJIdmUKGQ9IOve9iA4D5rCB7wyqa/R9q8RaYcJJ3qIKy+YdkwYoRF5xjE+
-	y2o1E8QbyXwb0sOid/GPtQd0aM5byxkH4DZLUKtxjiHRtQbenl3nU7OIA1vd1m7u
-	tRL0LjrKdt6WDSz+jZr9gJH9CqSxHM7h+JlXnsiuDjwjUSoAUo7X9iuq1VhJj+Ho
-	vPAGBvKwMHavRkBKyyqdRvIW+VEREZ4UX08uTs5Sphci2GpmB2Z3BfcLcf3JuEs2
-	CQ7HmA==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52a8k4u-1
+	zo+qBFSuOCOdT4196vaFitQ277UyoAlgWb0yHJHAlaY=; b=GG5buEa9LEnTmScR
+	pHefOJkgG5kNp36UZ+Bu4OR5AavLXm2tVsKFDlurPDgcHmpNNoJEgBiRu5T0exaE
+	TK8tc+EDTmo1O62xXCyeZ5cwzsrUVO8GI0RJ+GS1MIZgOYuv0WfvnfG+F42ctT7N
+	5OCNa9Vs/tkI588n7pD8jpAR+C9UaLhs9N6y4Aup5R9DidI7OuI3+t4GMFdUFay6
+	Ru1APe1uTqzv71Qj9G9lJgk00kvYA8gFRP8kOiGxeriwnkW/EQvESROxmf0Q58ke
+	AfhqOV+GY4aibLmLu3J3L1RwRZDEoJT6uEvdHo+EV8d+OHEnEbfx5UKaMPEU4UVh
+	Knqlgg==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5290m0g-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 06:06:21 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2445806dc88so153641415ad.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 23:06:21 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 06:16:56 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b471757d82fso4906404a12.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 19 Aug 2025 23:16:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755669980; x=1756274780;
+        d=1e100.net; s=20230601; t=1755670616; x=1756275416;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=59SyR1NERy3Y1jC5JNhL4yeE7jcVGgkH9O11kosKuSk=;
-        b=p2NCCrpUMhHvHfCnuz56IsU3tOjXz6JO5gn612q9Tryn+7OvU9vQip4qwmazji02n9
-         ocDYtVDXJ9/CCXVKppN8HwrAxRlG0r3iVHtc4nN8MpA/aR01pmKNgMD+dLMLEK7PXaeE
-         8MLHZ2cwodXQilNiz7n0Rg1YYXnJK401uQbvO7QsBunlq3X6Bs8pxvY+kPIiF3fevw3E
-         6QGKqMT+0D3ML3qn0avJn/3YculsbEjIMGCTJjy8JJZ67h80DpOELLmlK1XVPsO7qRkB
-         yOZCu31+c3Nc4vWKuwnTeEXUYoZTOdHL+cXu/H9RZCFgUGrwIcYA2w1r+Hd8MgG4XO/x
-         QmiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVxsznAgR2M3JQluFSvqWJH0lxwsoNNct4Fzbu0280FGt90IiREl1wQYDEyr3fd0jJDeprBqtYsRn2QqTwE@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQ8MIMsEtOcnOzOoSpWdprLrm36v67ZY6PMjmgLf3Dog10xDsj
-	V4KP0snx32jaBCVXAsZ12Zxr+9W59FhmugEYvWOxCaATDOSDUSPs7eMCHuL0PNeUtK/I69CSGCA
-	9rtB29HA7pgWzVjfvtZyRGzlY7X0A0QNxnipwS1VsLEbQFZ4fxTRK+Vt4P/XBZjBOiSbt
-X-Gm-Gg: ASbGnctu1GGB4mYhDA/YjogMe4tLqXKLpuVHkqAMYyONilj2mxT/cw6SpQFcfq4LEIu
-	AmTfgwIcd3awatfVGrM6GGRzCCxxvDgKnzW6KK5X5OBwrHmlrD+7eOKWZeVKj143sqAzuGD4XvM
-	JUBfZMCzftAloNWYifD8eP1DTubRCpX2UiuTB7kw3MSIXio2B9IAD2bPT6aKDF5eI523YpJ2Bah
-	x5sDjBWBXbri27UdW11ecQ1/sjpVyBjWskmiRsc/61a9UEFBPILAzg/wZBj3cIEqiXlVe4g09ME
-	OeE0ClXHntfwxAihMMJ/siIFOHF9NgstHzx4g0puGHdUnsDAiSEEjsMNG7hq92vN9mST/qpUSsN
-	cOdMO
-X-Received: by 2002:a17:902:ec88:b0:240:a430:91d with SMTP id d9443c01a7336-245ef0d5915mr18790005ad.10.1755669980384;
-        Tue, 19 Aug 2025 23:06:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYNnNUSwyVV4DO93t9r+GVSsYWrJggZoyswSr8zmZ7BeWtlIFh6WiE7AN8ne0wvDrWqtx+YQ==
-X-Received: by 2002:a17:902:ec88:b0:240:a430:91d with SMTP id d9443c01a7336-245ef0d5915mr18789745ad.10.1755669979933;
-        Tue, 19 Aug 2025 23:06:19 -0700 (PDT)
-Received: from [10.218.15.248] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed4ebc4esm15327645ad.115.2025.08.19.23.06.16
+        bh=zo+qBFSuOCOdT4196vaFitQ277UyoAlgWb0yHJHAlaY=;
+        b=o4tuyq8gg3xAjaivFyg19K1lDM2y4gxAAZLc29a757JMB2tAF897+vt5HfaDVjTWUH
+         byj2/ENuElT7wlc+RYZVJm80uYcy8rn1PcDXIp3CpHUynvcVzPd3WnuM/jbFDySFf74n
+         QY0BlDy6PpAk9PnywUkeTeVB6F+qTbE9iBu+PyhygQM/hSNx/pXxAG4MIUgn9Od/+731
+         HCAp/07LgxjgG5N7lG5SyJcs7MUGrGCo+6h7+NnYpz8DFsYAkVMgku188Wnrdar+2ZEN
+         XndnjCZOwVdYNKuUNvSqvC4FUFd6Ig++WJH3RIJi1ggE06GHQJmEQnPbsIpT9mumuDp/
+         ANEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUlCSTqNdhJO4WSJxcdiBaCLzuHKjVY6YJSODliv8bFnE7VQ3ZiZOWYfjjxgvqs/1pDrcHY0iJ+XR4SP2gj@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxooua790usMUD1zGdrZltMST+4tYhWeRp9l3BjVlg2+r75b9Gg
+	zUa6YpcdzPnrcuolCJyICTSwJHpY9H4qF894aIuDcrU9s03IC11bboKXcpCMnbfwSCu97pKnfUo
+	/l1G/LVGOuUAlldhXhP+KgoioNf7tbH4uIPJyrmRrAdOlbLRrySbXqk3g5ZMr3w5kK+te
+X-Gm-Gg: ASbGncvnTVoRjBF5It4op2Ssj70KeqWWFxNQSxHeOJUILpF4kMlwdG5z/5f6lAvHBpe
+	ZgwcNESuOfz+Ewt4Pk5I/C0MdHE67oMrwRg3g3cB1IGKeTspmqmID/ZVhRQBgWeSp/4sWWqgbT7
+	MeF7pPkwuk0GT2QAqCqqoxE71P7edKf20817o7S5DsVV8M1GpsuZzGz0DITgDyRCuC068ZrgMao
+	E9SmGPyzAs/Z2WReyh9GJhrdJEXC5jX7rRqjOP0AEKurSOo56Qz0ZdYjA7jCbyE2soRjnM0r2YK
+	ekKcE6v/Q7/AmJhBFlBGVToC5+XStNJcTB3UlbsrDGU415rgrlny25pdLCPX6UplZDhXUK/DhDN
+	WGw6SvMgJ3wvL77PpW8W8wTqQGMO/MP+u
+X-Received: by 2002:a05:6300:210d:b0:23f:f659:a0ef with SMTP id adf61e73a8af0-2431b884c06mr2689095637.25.1755670615713;
+        Tue, 19 Aug 2025 23:16:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGkuHrM5J+SA+TshY0ZVvPXqmiE0Q5IAuZ5MDZKibUhiwTCZup0o87PAGsuKT1kaJi+7h4VLw==
+X-Received: by 2002:a05:6300:210d:b0:23f:f659:a0ef with SMTP id adf61e73a8af0-2431b884c06mr2689069637.25.1755670615271;
+        Tue, 19 Aug 2025 23:16:55 -0700 (PDT)
+Received: from [10.133.33.73] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4763fbe626sm1356125a12.6.2025.08.19.23.16.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Aug 2025 23:06:19 -0700 (PDT)
-Message-ID: <73921d66-8258-4f82-95a8-f4e9fe8acc8e@oss.qualcomm.com>
-Date: Wed, 20 Aug 2025 11:36:15 +0530
+        Tue, 19 Aug 2025 23:16:54 -0700 (PDT)
+Message-ID: <45bad7a0-119a-4375-887d-28aed2b0ee20@oss.qualcomm.com>
+Date: Wed, 20 Aug 2025 14:16:49 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,76 +90,100 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] Add interconnect support for Glymur SoC
-To: Krzysztof Kozlowski <krzk@kernel.org>, Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: Mike Tipton <mike.tipton@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>
-References: <20250814-glymur-icc-v2-0-596cca6b6015@oss.qualcomm.com>
- <7806e54a-4355-4173-91f7-8da98cbfeef2@kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: arm: qcom: Add Coresight Interconnect
+ TNOC
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: James Clark <james.clark@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        linux-arm-kernel@lists.infradead.org,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Mike Leach <mike.leach@linaro.org>, coresight@lists.linaro.org,
+        kernel@oss.qualcomm.com
+References: <20250819-itnoc-v2-0-2d0e6be44e2f@oss.qualcomm.com>
+ <20250819-itnoc-v2-1-2d0e6be44e2f@oss.qualcomm.com>
+ <175560674472.26193.14154235220441518996.robh@kernel.org>
 Content-Language: en-US
-From: Raviteja Laggyshetty <raviteja.laggyshetty@oss.qualcomm.com>
-In-Reply-To: <7806e54a-4355-4173-91f7-8da98cbfeef2@kernel.org>
+From: yuanfang zhang <yuanfang.zhang@oss.qualcomm.com>
+In-Reply-To: <175560674472.26193.14154235220441518996.robh@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: TW2NWYBt4YgAMhilaymbJo4raObwnHx2
-X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a565dd cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=Q7FFX_n4-uy2H0W7qW8A:9
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-GUID: TW2NWYBt4YgAMhilaymbJo4raObwnHx2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX3G2IR294Z3JH
- TjoZrrsYs1MINCf7jSeHdlVLQh9dTCT1uXFH7bNtjbiKJEk6br0HmQ83pQ0dkX/Zbki09OT86G+
- YecaekJCxl61toNk/wT3gGL90u2+OdSIAEWiesfzCMDjnBdBBI3eazjo3XsA5STAbbdgdgRUTVl
- heOQu6Jj4VdN1Z1vUgd/Ef+Yf+hF4bOMgXCiq5dasUSsOBqxteAw2pvZCaV1M3f7wCTksIY+krZ
- y3O3sRoYswO6eTbdCbCnw1GsgUYzpkPa/WUL6wiVlzLuH9e2pwgXHACkZo7sP3AM5wzjtX/6LT8
- VKTLCPK/uCUS5EGLzZqIEnqUBl4i/KEfHEQzu89b4U5H3MeN2ith7wiie9EyVvhtR7ovIS0jCva
- i5H8UBY8xu+x9Z7O6Ld4NeXhCbuEVw==
+X-Authority-Analysis: v=2.4 cv=ZJKOWX7b c=1 sm=1 tr=0 ts=68a56858 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=voM4FWlXAAAA:8 a=EUspDBNiAAAA:8
+ a=SdGosrV6Qt3YffhYJa8A:9 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+ a=IC2XNlieTeVoXbcui8wp:22
+X-Proofpoint-ORIG-GUID: aSVLnswycPdw21Tvu_RJ2UUjJd7ChXAG
+X-Proofpoint-GUID: aSVLnswycPdw21Tvu_RJ2UUjJd7ChXAG
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX7EYY5a5q/FA7
+ X88YEI/cvpvSJYaJILjKoVId+0TlZqZGrpA6QxwDpZebU5faLtJy98LqvGuH5g4IWMQaY4xHBXx
+ XC8Z+hk0Zdv15fWBg34xoesSTjVDV4HUusm2xMvYWSZvIRV1Cctg8e9VjJXFH1chn7adkZ2bwPE
+ 6g/JODa5o+dJ3oDaNMA1qhaPusG40KSdxHGp08r3UF8ieHg9lEVqw8wKT4Hd7fm6fAfzDXpM6fv
+ +ENMfwtPzFzdYT/k09L2ALlenH67gaicOjje+mFODUUJLy8PlqhN7ADpytsX5zFiCsxKfJ5Ognf
+ ZwU7n8v2jdgR+9pjhPxOt29knoPyn1AylmnXEqp2rstApAUNUUou8X3EPJu2qK5s/u7mgWXx5N7
+ eHXKeRwM7+9tyL9lOBANuZxY/02c0w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-20_02,2025-08-14_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
- lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 spamscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 clxscore=1015 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
 
 
-On 8/19/2025 7:22 PM, Krzysztof Kozlowski wrote:
-> On 14/08/2025 16:54, Raviteja Laggyshetty wrote:
->> Add interconnect dt-bindings and driver support for
->> Qualcomm's next gen compute SoC - Glymur.
->> Device tree changes aren't part of this series and will be posted
->> separately after the official announcement of the Glymur SoC.
+On 8/19/2025 8:32 PM, Rob Herring (Arm) wrote:
+> 
+> On Tue, 19 Aug 2025 03:27:43 -0700, Yuanfang Zhang wrote:
+>> Add device tree binding for Qualcomm Coresight Interconnect Trace
+>> Network On Chip (ITNOC). This TNOC acts as a CoreSight
+>> graph link that forwards trace data from a subsystem to the
+>> Aggregator TNOC, without aggregation or ATID functionality.
+>>
+>> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+>> ---
+>>  .../bindings/arm/qcom,coresight-itnoc.yaml         | 96 ++++++++++++++++++++++
+>>  1 file changed, 96 insertions(+)
+>>
+> 
+> My bot found errors running 'make dt_binding_check' on your patch:
+> 
+> yamllint warnings/errors:
+> 
+> dtschema/dtc warnings/errors:
 > 
 > 
-> No dependencies explained, so how maintainers can understand that they
-> CANNOT apply this patch? :/
+> doc reference errors (make refcheckdocs):
 > 
-> Nice example of throwing the code over the wall, does not matter it does
-> not even pass standard checks...
+> See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250819-itnoc-v2-1-2d0e6be44e2f@oss.qualcomm.com
+> 
+> The base for the series is generally the latest rc1. A different dependency
+> should be noted in *this* patch.
+> 
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+> 
+> pip3 install dtschema --upgrade
+> 
+> Please check and re-submit after running the above command yourself. Note
+> that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+> your schema. However, it must be unset to test all examples with your schema.
 > 
 
-Sorry for the trouble, I have added dependencies using b4 prep
-edit-deps option and I tried pulling few older changes using 
-shazam command and found that it automatically pulls the dependencies
-from prerequisite-patch present in cover letter.
 
-I made sure that dt_binding_checks are passing with dependency picked
-into workspace. In future patches, I will make sure to explicitly point 
-out the dependency in the cover letter apart from adding it using b4 
-options.
-Sorry for breaking the dt checker.
+Below is my dtschema and yamllint version, They should already be the latest version.
+Name: dtschema
+Version: 2025.8
 
-Thanks,
-Raviteja
+Name: yamllint
+Version: 1.37.1
 
-> Best regards,
-> Krzysztof
+I ran below 'make dt_binding_check', don't get any error/warnings.
+make dt_binding_check DT_SCHEMA_FILES=Documentation/devicetree/bindings/arm/qcom,coresight-tnoc.yaml
+
 
 
