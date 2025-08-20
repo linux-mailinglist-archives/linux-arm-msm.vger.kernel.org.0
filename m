@@ -1,322 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-69980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E6C3B2DE00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 15:39:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09BFBB2DE66
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 15:53:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E60DF7A30CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:37:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0736A03B7D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:51:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9E82731B13C;
-	Wed, 20 Aug 2025 13:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1AE81A9FB1;
+	Wed, 20 Aug 2025 13:51:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="o+naG4JV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+WpkuV0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7922236FC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 13:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0A81D6DB6;
+	Wed, 20 Aug 2025 13:51:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755697160; cv=none; b=kcI/9HYvQO4g/dk3tehnaatOKfHtvgKMB460x6zXGHlEKb+LfDFuHG7KBxrmRPghOtMnhgyPXNGHslX07M398QTXOHa2vQg6TECtD/5T8Ii0lUSBpHVZyVYYlDnj8S3Nte/erHOcixViKGh/EpWbnY4EAs4uxIuU1ld2ueknc/g=
+	t=1755697868; cv=none; b=FPEEmYoKt+qyXstw0CMS1hHqTfDnyJ54O+zwU+GGSOiyw5ZJYf4PFUvDy4u26hjbHfOLG4PAxldbWEVT34MkDMC/finKkEPOFWmLtNOJGtsupKbnDXYFjysau3YcgauBlcmTFWXMU3w8YKMmfIZ7BppkP2ORAMDRxCvu0ut1tg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755697160; c=relaxed/simple;
-	bh=M3i6uVRggCi8xPqmo+LsulXVbLuHnrRWwTmZHmguz5Y=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=COd0YaVBibbfFhRnPOJPGaDINOtBa/7L6+1EjYIm6EDCbpf2xI7lj7d1MLJVHq3kL3deC7SNY82VRWZQ3dJd8MAyxmb3gLIHCCe3r0H3Wet1XIAUzh/EPX+i+TPN8qWR9PoITi7/KI2CPbS6NYI0r7u+wzMae0yYmXIM06q5tcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=o+naG4JV; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45a1b0b2d21so34031045e9.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 06:39:18 -0700 (PDT)
+	s=arc-20240116; t=1755697868; c=relaxed/simple;
+	bh=G8xbiCLYL1b0hOEgdR7yHBlSW7oty7trbVCD2tljr4U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P7B1dn2XL6Aveemdel9VvDmE1AVaXOhXLn3a8+CJpbEUpSZQ6P+oZUtdQksqSwOW83CnQzNR19SLyayhB2holjeVci+ndQGhv9cjW9AD+GpJmoLN9exWxEhAYr1cwhNz9lW9uMG+wZrsnJ4MZ5avNJmQzsa2L/oGz2dGGtr7Fh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W+WpkuV0; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-323267c2730so365034a91.1;
+        Wed, 20 Aug 2025 06:51:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755697157; x=1756301957; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=segv7OcEqGHmpPDWsxKxZ/1ElsEUtAJ0AJPdIZbwX7s=;
-        b=o+naG4JVXSgUFF74b6Bde+aDL2K040v45vxrUN5D7VblNfNZ79HLnOXI2MN/WCfdIA
-         Uz0OThHykYHLg7MqqqvgiAO0FXLnKkK2UiBxJ3qGJLzqDp0qu5kL8frJhPY//fnBzWoq
-         k/SDpqc2T45BIJ5dsJ2gtQIqhLxUBxJ4iPthGaxV3/uExpJEkUFooKKAIQOzqE6rK/G5
-         db4nqM2eVpfIxeWHapXCp4SE+cC8i/1MscKCIULwvWxqhwCnpPhYlnzShkdAzaMwxMn6
-         XgI5eup9UGTiQZ2fvN4aDuZj3rj2THYEq5KX30ziH/s7tKdxdQ6C2Z8OivYz1sf9b6Bm
-         9BWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755697157; x=1756301957;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1755697866; x=1756302666; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=segv7OcEqGHmpPDWsxKxZ/1ElsEUtAJ0AJPdIZbwX7s=;
-        b=YVaBjYG5v0L7EGX7SG8XQkpqA6nHYnTCSkFkOyzt2bOgaAPYpYGNxNEtuQA9GGPbY5
-         bM6sVGkvrB7VzDeVvDCYaMfODiEuGyozafHoGLqWCXC3B6awfKUlxayj32fp1G2cxHup
-         cQkaw1TTI2js62r7+ZYFGiugRBt6AuArU0WacbAgSlElVS7CaM+aJ0M3PR0NrBtINKXF
-         V8qKX3tiGKkdE7+6NQLppTVVvRsihxwmf9Njc/aJ++j88TO3CYN18eqvq5Tt2YE7dP8s
-         YZq7DrEPybMpNRgoSRMJZ/fLq+TlORtPaKWEFedzdkLfZ/jf3EeeGF1VSZ8Scdrnkqhv
-         9VEA==
-X-Forwarded-Encrypted: i=1; AJvYcCUHugQC+PHWIagLg3EoQsfxR+aizMv+JJy2Ebe/83lnLU9BRGDodPNFmB3H3I7vd3FBwwAUKoY5MNaEIRr4@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy04DGgrhbP8q9vKhgjzhWjXX9TuHoGtKP/qrJbI5kDLkKFjVTz
-	B8GAH+Hus+ay/3GWlRKWs72R+RCPT5GXt7j8HRJTkJAhYK5aPMvSzBGgv+6KUK7sEQM=
-X-Gm-Gg: ASbGncuNQbLkfAo6rWJfvfpDOAVI/OduO9PZrvaiPrcCLugPUW4LLhY0Ms8xMBWBZJZ
-	yoiqM0o4YKXKu2wklNqVa2kywXftRCa9yJf76xvqB4179N8Cur1wLSiCU/efCyNOJEbYpjakD7v
-	0Btl1j/69Bd6ZkM3N0EFOrO7w9GTyBj6WT/LJ4oBPbAODTND62We4YJuRjBAoPzmpcLPlApzq2U
-	nQiVZbiczjk0Fj+6pc4DfBFw3JGVeaIPAUHTbeatOYXd0F83L9crSJi6Td1OjSwh0u8Dyin9MwC
-	K0QTiNJQmQ04Fe2Buin6u8EffWcri8ojYOttC3g2MHXFx66QDPG6N/V/F31MOTw7+01rsRGOokr
-	usnuHSkuv/ueN1HfadGdRISP3cCPSkVqQHec=
-X-Google-Smtp-Source: AGHT+IET1hYOiPzdOS4fElfyldDhjsRo9Aa7YSrYd670tHhX8unbUDX2n3Pg/GTb2q9YAmWKlueOhw==
-X-Received: by 2002:a05:600c:4706:b0:440:6a79:6df0 with SMTP id 5b1f17b1804b1-45b479e2750mr20204605e9.22.1755697156732;
-        Wed, 20 Aug 2025 06:39:16 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:d9eb:6295:cf25:b839])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b47c31327sm33198815e9.8.2025.08.20.06.39.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 06:39:16 -0700 (PDT)
-Date: Wed, 20 Aug 2025 15:39:14 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 11/11] media: iris: Enable Secure PAS support with
- IOMMU managed by Linux
-Message-ID: <aKXQAoXZyR6SRPAA@linaro.org>
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-12-mukesh.ojha@oss.qualcomm.com>
- <aKWLZwYVPJBABhRI@linaro.org>
- <20250820115659.kkngraove46wemxv@hu-mojha-hyd.qualcomm.com>
+        bh=rlJXkRnyFfMw194yiBU6YgrZ0umSqMzMmufYJJtuLXM=;
+        b=W+WpkuV0uHg9sstR3/i2u/vBGkwHl0g0lFOkjBxvWPs+IgF5U6wzwwu1ziCOHsR8aI
+         N2TEPbqmmTxug36Mz8lb1hpUyt2tUNNrxwzrAzzhA2xzKBYIxitaR6S/2YC4OKJkTsIu
+         VyML//cPjgbXqvppIzjEnsKWoIjsINBdkPRlr360cUPheDsHhxw9MFbbwJU7dfhUDnm/
+         nBk6jg/6zqiiDDo5/NnT/+yZBs8q2pGQlGI028gbsxcxlCXEqIns8hK6+K2kwbyi8RAl
+         v6Htsu+rAhnyMzRmF5tZvsWalhwUOABEHtPxEzX3nEoU0fRVit3mLMira/uToozv5n0x
+         //Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755697866; x=1756302666;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rlJXkRnyFfMw194yiBU6YgrZ0umSqMzMmufYJJtuLXM=;
+        b=XqQyP1N6h3Wnmm0hmp1iNH/o6ciPz5/EzQfV66tJxYcGhtp715xXeRQxirAYipKfFv
+         4rWGCulkCSfCNUVE032Qfj5KzEG0xuFW5yVOynPabHqeM4XzY/Crjz6YLXV0en6Wu4GK
+         wuMHzX+HDAgqxV1wAtRbFOsqkAM16FCORyRI1xfooXaRfO8GnfG1ZnFDn5kzgm6xJ4jc
+         5142WzCOVOv0piMdFSi371lkY9PuTrHA3/lId9yizUR4dMlWePSyrlz5KR+T/BIZet/L
+         ZlvYv9T1yUEPKvEo/LdL5hKFzIL62F4d0MEc5kRiSdkBIWKeKH4De2UCvfbQeXR2n+lG
+         LlOw==
+X-Forwarded-Encrypted: i=1; AJvYcCUOq79obrpNB8Q/HwZtXQ3e9BQ3p1u3BuQq1UyVxDQTGu8G7EqhSWgTdnUyVRZ11EA/zIx7tSjk8juft+tc@vger.kernel.org, AJvYcCXWzr2bVALaHSLqtw3Qx+GJuz6Au8FyZCx+od4noa8UxAQu7+spstDLXkn7/kLaFkBq/TctqZtqa3leCYyR@vger.kernel.org
+X-Gm-Message-State: AOJu0YwU+krSepyV0SBYtE3HlPt6sBIubnIPKi8DS9ipG2WEMI/XhI2j
+	tMOs8AaTwfKwJIHB6RkwQUuo4QiHBOf3GeenIrBu8rg9kuAodA8QVeWRx48pLiG0yYCrr8k1kpJ
+	lhebBDtsN0BHm06IBrypPEf4mQipWfnM=
+X-Gm-Gg: ASbGncvzPKrHiYDa/qxnEgKqH85EnBxSDqAALov4OMj3mIEwyLbD7f8a96MpIToLdJN
+	arwSMwxk2pgZm7Z6dTxY1jjCGR7hTtgo5r26jagpWhBVBRU4tPevAxV8xqfIcPeuD8GAuUmclhW
+	7rtI/mSX6dCeZCUhJ4sKuGrnpB967IJewWUPVObycd3y6wTIkK8kXhFJtI70gXSGGHK/swuySk0
+	tagXjgckAu6y9QS2Q==
+X-Google-Smtp-Source: AGHT+IE6OAjXgpyJBTRniq4mnO0jJGbm2gGpXRPGqbR38KoHFeYRj9+xp9TQOqh/fCkb1imF5SbKiigJa79Ba97jDxw=
+X-Received: by 2002:a17:90b:4a06:b0:31e:ff94:3fae with SMTP id
+ 98e67ed59e1d1-324e13f22d6mr2185022a91.4.1755697865494; Wed, 20 Aug 2025
+ 06:51:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250820115659.kkngraove46wemxv@hu-mojha-hyd.qualcomm.com>
+References: <20250819232905.207547-1-robin.clark@oss.qualcomm.com> <20250819232905.207547-4-robin.clark@oss.qualcomm.com>
+In-Reply-To: <20250819232905.207547-4-robin.clark@oss.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Wed, 20 Aug 2025 09:50:54 -0400
+X-Gm-Features: Ac12FXzFiomJlv1YMbkQK_BbOjXnQl8FSkekKg4vURPNW6oUakhabbsZFd5--Vg
+Message-ID: <CACu1E7GgGZc7zF5YQxppMj=dG_emNhh1Ld7PbNT_oM_S436xQQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] drm/msm: Fix 32b size truncation
+To: Rob Clark <robin.clark@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org, 
+	freedreno@lists.freedesktop.org, Akhil P Oommen <akhilpo@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 20, 2025 at 05:26:59PM +0530, Mukesh Ojha wrote:
-> On Wed, Aug 20, 2025 at 10:46:31AM +0200, Stephan Gerhold wrote:
-> > On Tue, Aug 19, 2025 at 10:24:46PM +0530, Mukesh Ojha wrote:
-> > > Most Qualcomm platforms feature a proprietary hypervisor (such as Gunyah
-> > > or QHEE), which typically handles IOMMU configuration. This includes
-> > > mapping memory regions and device memory resources for remote processors
-> > > by intercepting qcom_scm_pas_auth_and_reset() calls. These mappings are
-> > > later removed during teardown. Additionally, SHM bridge setup is required
-> > > to enable memory protection for both remoteproc metadata and its memory
-> > > regions.
-> > > 
-> > > When the hypervisor is absent, the operating system must perform these
-> > > configurations instead.
-> > > 
-> > > Support for handling IOMMU and SHM setup in the absence of a hypervisor
-> > > is now in place. Extend the Iris driver to enable this functionality on
-> > > platforms where IOMMU is managed by Linux (i.e., non-Gunyah, non-QHEE).
-> > > 
-> > > Additionally, the Iris driver must map the firmware and its required
-> > > resources to the firmware SID, which is now specified via the device tree.
-> > > 
-> > > Co-developed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> > > Signed-off-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-> > > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> > > ---
-> > >  drivers/media/platform/qcom/iris/iris_core.c  |   9 +-
-> > >  drivers/media/platform/qcom/iris/iris_core.h  |   6 +
-> > >  .../media/platform/qcom/iris/iris_firmware.c  | 156 ++++++++++++++++--
-> > >  .../media/platform/qcom/iris/iris_firmware.h  |   2 +
-> > >  4 files changed, 155 insertions(+), 18 deletions(-)
-> > > 
-> > > [...]
-> > > diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > > index f1b5cd56db32..e3f2fe5c9d7a 100644
-> > > --- a/drivers/media/platform/qcom/iris/iris_firmware.c
-> > > +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
-> > > @@ -3,10 +3,18 @@
-> > >   * Copyright (c) 2022-2024 Qualcomm Innovation Center, Inc. All rights reserved.
-> > >   */
-> > >  
-> > > +#include <linux/device.h>
-> > >  #include <linux/firmware.h>
-> > > -#include <linux/firmware/qcom/qcom_scm.h>
-> > > +#include <linux/kernel.h>
-> > > +#include <linux/iommu.h>
-> > > +#include <linux/io.h>
-> > > +#include <linux/of.h>
-> > >  #include <linux/of_address.h>
-> > >  #include <linux/of_reserved_mem.h>
-> > > +#include <linux/platform_device.h>
-> > > +#include <linux/of_device.h>
-> > > +#include <linux/firmware/qcom/qcom_scm.h>
-> > > +#include <linux/sizes.h>
-> > >  #include <linux/soc/qcom/mdt_loader.h>
-> > >  
-> > >  #include "iris_core.h"
-> > > @@ -17,15 +25,14 @@
-> > >  static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> > >  {
-> > >  	u32 pas_id = core->iris_platform_data->pas_id;
-> > > +	struct qcom_scm_pas_ctx *ctx;
-> > >  	const struct firmware *firmware = NULL;
-> > >  	struct device *dev = core->dev;
-> > > -	struct reserved_mem *rmem;
-> > > -	struct device_node *node;
-> > > -	phys_addr_t mem_phys;
-> > > -	size_t res_size;
-> > > -	ssize_t fw_size;
-> > > -	void *mem_virt;
-> > > -	int ret;
-> > > +	struct reserved_mem *rmem = NULL;
-> > > +	struct device_node *node = NULL;
-> > > +	ssize_t fw_size = 0;
-> > > +	void *mem_virt = NULL;
-> > > +	int ret = 0;
-> > >  
-> > >  	if (strlen(fw_name) >= MAX_FIRMWARE_NAME_SIZE - 4)
-> > >  		return -EINVAL;
-> > > @@ -39,36 +46,64 @@ static int iris_load_fw_to_memory(struct iris_core *core, const char *fw_name)
-> > >  	if (!rmem)
-> > >  		return -EINVAL;
-> > >  
-> > > -	mem_phys = rmem->base;
-> > > -	res_size = rmem->size;
-> > > +	if (core->has_iommu)
-> > > +		dev = core->fw.dev;
-> > >  
-> > > +	ctx = qcom_scm_pas_ctx_init(dev, pas_id, rmem->base, rmem->size, false);
-> > > +	if (!ctx)
-> > > +		return -ENOMEM;
-> > > +
-> > > +	ctx->has_iommu = core->has_iommu;
-> > >  	ret = request_firmware(&firmware, fw_name, dev);
-> > >  	if (ret)
-> > >  		return ret;
-> > >  
-> > >  	fw_size = qcom_mdt_get_size(firmware);
-> > > -	if (fw_size < 0 || res_size < (size_t)fw_size) {
-> > > +	if (fw_size < 0 || rmem->size < (size_t)fw_size) {
-> > >  		ret = -EINVAL;
-> > >  		goto err_release_fw;
-> > >  	}
-> > >  
-> > > -	mem_virt = memremap(mem_phys, res_size, MEMREMAP_WC);
-> > > +	mem_virt = memremap(rmem->base, rmem->size, MEMREMAP_WC);
-> > >  	if (!mem_virt) {
-> > >  		ret = -ENOMEM;
-> > >  		goto err_release_fw;
-> > >  	}
-> > >  
-> > > -	ret = qcom_mdt_load(dev, firmware, fw_name,
-> > > -			    pas_id, mem_virt, mem_phys, res_size, NULL);
-> > > +	ret = qcom_mdt_pas_load(ctx, firmware, fw_name, mem_virt, NULL);
-> > >  	if (ret)
-> > >  		goto err_mem_unmap;
-> > >  
-> > > -	ret = qcom_scm_pas_auth_and_reset(pas_id);
-> > > +	if (core->has_iommu) {
-> > > +		ret = iommu_map(core->fw.iommu_domain, 0, rmem->base, rmem->size,
-> > > +				IOMMU_READ | IOMMU_WRITE | IOMMU_PRIV, GFP_KERNEL);
-> > 
-> > What is the use case for IOMMU_PRIV here? You don't have this flag for
-> > the qcom_q6v5_pas change.
-> 
-> This is there for historic regions, I may not have complete information about why
-> is it required but the reference is taken from venus support for chrome.
-> 
+On Tue, Aug 19, 2025 at 7:29=E2=80=AFPM Rob Clark <robin.clark@oss.qualcomm=
+.com> wrote:
+>
+> Somehow we never noticed this when arm64 became a thing, many years ago.
+>
+> Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/msm_gem.c | 17 ++++++++---------
+>  drivers/gpu/drm/msm/msm_gem.h |  6 +++---
+>  2 files changed, 11 insertions(+), 12 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.=
+c
+> index 958bac4e2768..9a935650e5e3 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.c
+> +++ b/drivers/gpu/drm/msm/msm_gem.c
+> @@ -1142,7 +1142,7 @@ static int msm_gem_object_mmap(struct drm_gem_objec=
+t *obj, struct vm_area_struct
+>
+>  /* convenience method to construct a GEM buffer object, and userspace ha=
+ndle */
+>  int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+> -               uint32_t size, uint32_t flags, uint32_t *handle,
+> +               size_t size, uint32_t flags, uint32_t *handle,
+>                 char *name)
+>  {
+>         struct drm_gem_object *obj;
+> @@ -1208,9 +1208,8 @@ static const struct drm_gem_object_funcs msm_gem_ob=
+ject_funcs =3D {
+>         .vm_ops =3D &vm_ops,
+>  };
+>
+> -static int msm_gem_new_impl(struct drm_device *dev,
+> -               uint32_t size, uint32_t flags,
+> -               struct drm_gem_object **obj)
+> +static int msm_gem_new_impl(struct drm_device *dev, uint32_t flags,
+> +                           struct drm_gem_object **obj)
+>  {
+>         struct msm_drm_private *priv =3D dev->dev_private;
+>         struct msm_gem_object *msm_obj;
+> @@ -1244,7 +1243,7 @@ static int msm_gem_new_impl(struct drm_device *dev,
+>         return 0;
+>  }
+>
+> -struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size=
+, uint32_t flags)
+> +struct drm_gem_object *msm_gem_new(struct drm_device *dev, size_t size, =
+uint32_t flags)
+>  {
+>         struct msm_drm_private *priv =3D dev->dev_private;
+>         struct msm_gem_object *msm_obj;
+> @@ -1259,7 +1258,7 @@ struct drm_gem_object *msm_gem_new(struct drm_devic=
+e *dev, uint32_t size, uint32
+>         if (size =3D=3D 0)
+>                 return ERR_PTR(-EINVAL);
+>
+> -       ret =3D msm_gem_new_impl(dev, size, flags, &obj);
+> +       ret =3D msm_gem_new_impl(dev, flags, &obj);
+>         if (ret)
+>                 return ERR_PTR(ret);
+>
+> @@ -1299,12 +1298,12 @@ struct drm_gem_object *msm_gem_import(struct drm_=
+device *dev,
+>         struct msm_drm_private *priv =3D dev->dev_private;
+>         struct msm_gem_object *msm_obj;
+>         struct drm_gem_object *obj;
+> -       uint32_t size;
+> +       size_t size;
+>         int ret, npages;
 
-Setting IOMMU_PRIV results in omitting the ARM_LPAE_PTE_AP_UNPRIV bit in
-the IOMMU page tables - have you checked if QHEE sets this? Ideally we
-want to do the same QHEE would normally do.
+npages should also be size_t.
 
-Also, please add a define for the 0 numbere here similar to
-
-#define VENUS_FW_START_ADDR		0x0
-
-It's quite hard to see that this is not an identity-mapping like for
-qcom_q6v5_pas.
-
->  
-> > > +		if (ret)
-> > > +			goto err_mem_unmap;
-> > > +
-> > > +		/*
-> > > +		 * Firmware has no support for resource table for now, so, lets
-> > > +		 * pass NULL and zero for input resource table and input resource
-> > > +		 * table respectively.
-> > > +		 */
-> > > +		ret = qcom_mdt_pas_map_devmem_rscs(ctx, core->fw.iommu_domain, NULL, 0);
-> > > +		if (ret)
-> > > +			goto err_unmap_carveout;
-> > > +	}
-> > > +
-> > > +	ret = qcom_scm_pas_prepare_and_auth_reset(ctx);
-> > >  	if (ret)
-> > > -		goto err_mem_unmap;
-> > > +		goto err_unmap_devmem_rscs;
-> > > +
-> > > +	core->fw.ctx = ctx;
-> > >  
-> > >  	return ret;
-> > >  
-> > > +err_unmap_devmem_rscs:
-> > > +	if (core->has_iommu)
-> > > +		qcom_mdt_pas_unmap_devmem_rscs(ctx, core->fw.iommu_domain);
-> > > +err_unmap_carveout:
-> > > +	if (core->has_iommu)
-> > > +		iommu_unmap(core->fw.iommu_domain, 0, rmem->size);
-> > >  err_mem_unmap:
-> > >  	memunmap(mem_virt);
-> > >  err_release_fw:
-> > > @@ -109,10 +144,97 @@ int iris_fw_load(struct iris_core *core)
-> > >  
-> > >  int iris_fw_unload(struct iris_core *core)
-> > >  {
-> > > -	return qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
-> > > +	struct qcom_scm_pas_ctx *ctx;
-> > > +	int ret;
-> > > +
-> > > +	ctx = core->fw.ctx;
-> > > +	ret = qcom_scm_pas_shutdown(ctx->peripheral);
-> > > +	if (core->has_iommu) {
-> > > +		iommu_unmap(core->fw.iommu_domain, 0, ctx->mem_size);
-> > > +		qcom_mdt_pas_unmap_devmem_rscs(ctx, core->fw.iommu_domain);
-> > > +	}
-> > > +
-> > > +	return ret;
-> > >  }
-> > >  
-> > >  int iris_set_hw_state(struct iris_core *core, bool resume)
-> > >  {
-> > >  	return qcom_scm_set_remote_state(resume, 0);
-> > >  }
-> > > +
-> > > +int iris_fw_init(struct iris_core *core)
-> > > +{
-> > > +	struct platform_device_info info;
-> > > +	struct iommu_domain *iommu_dom;
-> > > +	struct platform_device *pdev;
-> > > +	struct device_node *np;
-> > > +	int ret;
-> > > +
-> > > +	np = of_get_child_by_name(core->dev->of_node, "video-firmware");
-> > > +	if (!np)
-> > > +		return 0;
-> > 
-> > You need a dt-bindings change for this as well. This is documented only
-> > for Venus.
-> 
-> You are right, wanted to send device tree and binding support separately.
-> But if required, will add with the series in the next version.
-> 
-
-You can send device tree changes separately, but dt-binding changes
-always need to come before the driver changes.
-
-Thanks,
-Stephan
+>
+>         size =3D PAGE_ALIGN(dmabuf->size);
+>
+> -       ret =3D msm_gem_new_impl(dev, size, MSM_BO_WC, &obj);
+> +       ret =3D msm_gem_new_impl(dev, MSM_BO_WC, &obj);
+>         if (ret)
+>                 return ERR_PTR(ret);
+>
+> @@ -1347,7 +1346,7 @@ struct drm_gem_object *msm_gem_import(struct drm_de=
+vice *dev,
+>         return ERR_PTR(ret);
+>  }
+>
+> -void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t=
+ flags,
+> +void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t f=
+lags,
+>                          struct drm_gpuvm *vm, struct drm_gem_object **bo=
+,
+>                          uint64_t *iova)
+>  {
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.=
+h
+> index 751c3b4965bc..a4cf31853c50 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -297,10 +297,10 @@ bool msm_gem_active(struct drm_gem_object *obj);
+>  int msm_gem_cpu_prep(struct drm_gem_object *obj, uint32_t op, ktime_t *t=
+imeout);
+>  int msm_gem_cpu_fini(struct drm_gem_object *obj);
+>  int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
+> -               uint32_t size, uint32_t flags, uint32_t *handle, char *na=
+me);
+> +               size_t size, uint32_t flags, uint32_t *handle, char *name=
+);
+>  struct drm_gem_object *msm_gem_new(struct drm_device *dev,
+> -               uint32_t size, uint32_t flags);
+> -void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size, uint32_t=
+ flags,
+> +               size_t size, uint32_t flags);
+> +void *msm_gem_kernel_new(struct drm_device *dev, size_t size, uint32_t f=
+lags,
+>                          struct drm_gpuvm *vm, struct drm_gem_object **bo=
+,
+>                          uint64_t *iova);
+>  void msm_gem_kernel_put(struct drm_gem_object *bo, struct drm_gpuvm *vm)=
+;
+> --
+> 2.50.1
+>
 
