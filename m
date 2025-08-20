@@ -1,183 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-69941-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 655EAB2D95B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:55:36 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5BF3B2D96D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:58:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 019241C46F89
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 09:50:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3BD263B0F17
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 09:52:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 319E62DE718;
-	Wed, 20 Aug 2025 09:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64C75281369;
+	Wed, 20 Aug 2025 09:52:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vmtVp9kz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kzYC6Chp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C03AA2DAFC0
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 09:49:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2DAF27781D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 09:52:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755683371; cv=none; b=DkT41F9n+ZHTp4hxakSGeDx29Eh4ez4hLXQX2P6mAWvswhvx/+O2G3A1cyn1M3y17rh30j7Vgrtu665+9nsSFb8iezPrUaRuSkdpSZVsHeLQogxGOE7ttpgxlH8RYqHVdmmABu5Zt6095Fej/E+ctxDLPGLe2b+e9XBSmIoeYuM=
+	t=1755683572; cv=none; b=SBcsCy2mNVlbUro2nNxClCP11Ht+YkAgvOjsVII/Nrp0Fz2PYY8aTyeTHKPMF/VGZjk7BbXhvuHuuh/xB2SC1v2nyv0gUCmXFhJgE/e03YWACuvkXmMuayie/L7Oyi5DEjJBRtnRiwEwe7MKcP/62prvImzEn1AO/698uDsZy/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755683371; c=relaxed/simple;
-	bh=L1WblGj94ZaDL048pCEw1KwCIcqYN2hMDRmKDSs9uaA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JSgUmqoIhq/1ENNaJFDE8lmscwtGHI9Xv3Qrg8/Qq/Zqpv/b1Kt9lV40qxjE3BukfClsdQNh8mkFdb0zQedTiDvUpG7rCnQh5KcE+AVHXofNS1CsYpS1z3vWfRQ3c2ZmAZO2RPTEt+i5MoernbMeBhIY1vqJjS3KMn+w0WlqJCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vmtVp9kz; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b9a342e8ffso472015f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 02:49:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755683367; x=1756288167; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=RTn5jI7F0FHyPpe98WRNj88qeA6Ryn7e0IBMDqMkQDs=;
-        b=vmtVp9kz9XDtGzVMq7CVnCvoAWpV+XruOALc9KWvkrfcQWSuelpb90ib578kBXThRM
-         R9+ooNf9tTRErusN07nRJfANUyj0BA3fEaqKTKV3cUToaWRPnRMTrTHOagLKxUFjrZCg
-         vM+UPWThTvvzxFYNyNst3T+LFnOP/CRZvuIl0cIkVeGMDeNr3+KZKK0rX4hcSvUrXZxT
-         K3/+Eah3M+rnyeneEobVV7/nqLJwGzH68q5E0XLrqFtdTYBHglkHQJaYfe2wtaxWslFo
-         rshdBU4PWuU2bT2JW4w3F8Sj0jAUffETF4jQ4Q81jKX5jUMIn0sc8cC6837SWnKvJU8g
-         DeDA==
+	s=arc-20240116; t=1755683572; c=relaxed/simple;
+	bh=jZ9TWis3BAW9HI350d7ISwxJICRACxAhsV+LVsXnFrw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hxcjja6mbnHrha3F4YLHuf+WKmljdee9sIwvw12HyT17j0/JAeUNoaHwfEI2W7Lx2PBm4t3qYl/41cGCCoensoiOV63dypO0vH7ibcR3DansS4oZV15kySr7AI64yABxLOS145Dln355sjUcTRHvuz7szmLVunw9zDZbcpEUKWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kzYC6Chp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57K1om71006919
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 09:52:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=vS/mAyLr2b7OYnR7JU7D3yhv
+	4WGKliyobGTdxLp6JGk=; b=kzYC6ChphM9DjkW+m3Y2ie9m0ho+HuIohiI6AXbn
+	TevF+7Exk39Pz0riittMo0GLI+th9Te8QDV00MGqOyvKojU9uBUfe3/2I0Pvumb2
+	VHbU4TvkmmWpIXSinhNVwY2JTGbRI45gddHGk6QI+/kVPeg9+PJm2c9JGgUtSenj
+	RWvXOL6YBwLCbXPucUBE3uzsAYrJ0Db1Yb2s32sYJ5Q2ot0HE2TO3/joGXt251fg
+	+itwixEEZvS1drv/pkVVivZEwULllBWP2yUyXrBQxXCnkyS569qOvlgbvPVaRbU4
+	0q9Ln385/pTvBYksAd1HlNCUR7eaIC5gGG22ZdlZy4Mw7g==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52918ry-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 09:52:49 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-709e7485b3eso16569186d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 02:52:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755683367; x=1756288167;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=RTn5jI7F0FHyPpe98WRNj88qeA6Ryn7e0IBMDqMkQDs=;
-        b=prl11dHvqrB2Lg/RiQYEeP77QC9TC49E1jhjpSkQBEEhHoNFbUTzH2aezxmyB6kSpU
-         XWySElgc9VOKK0Z8zQgJvNc7MhfLvMKzfAd5wFlV55Oj6QpH2MLoRTj8+JZuFkOZtDWW
-         mxryRSfytcva+TDQ+xK7wPLyWn8ZxC4UrW4HnXLnGJ04aYGVZW/Jwmjw5NYzKh6AoHto
-         ruSa3yWt0TuFo1FrYqqEkHnJRfdQ/7qcoi6ozItBzNm4QNTtJfg1FW1BzgAylDb5iRAd
-         CSL5Oe6xxB57G4+rp1GZXrM6rCafreXVqYa5WJAhAVv+k9Gjc2bGDNurQ+ZpnLpRn9Ej
-         OpPw==
-X-Gm-Message-State: AOJu0YzwNx1S48gC3ZsszXJe8N6T0Zll8GYniEqc1uFtWznSRdA7t6hK
-	9WT1Qoog6Rvkv4fez3q3o8dyTG5LJyOzV9gPxtkAs1c1AX0FpY6un1AEOQDqxuEK3gE=
-X-Gm-Gg: ASbGncsuwsLPLIX/QZtSnFFSLfZ4aZrFILTDSSZdhj21qOpimHDKg0vD/IYgseve0Yx
-	oj/hq87t/edCrljbwVA9zcvQu3L46KX1jq8N9fRZvd8bevFdsRgVEhBNbnjl3BBoJ2vv9Pvh5j2
-	azuW1KZqcTigOnpaqZbIlyUURBkz/ZZiGeTHcPywpFGwl3XVj6MwMHbPKM4EHsY8kWWwPJjJqSC
-	QIE0tSw91nM0lK74g42XgosxmJG2srVyJRW7vMNcpQVItxDsSmG2/WKv+holXMXXavO2kywYiyb
-	66j/eKUM/6Me1WKy8OQ44VUSrZlHKykUerSH1NaFzgH7jkwPUEb41hNmr8oXjOcLRyo1ZHK0Ymh
-	DykL1E4QjD2HLOEv34sdBZ+fCY4PaPItt2387BtqyxVg=
-X-Google-Smtp-Source: AGHT+IFg5Ji4BYP9JKWjNupPFl93tYsMVzai0VfaG4aFr1zwAmtsu/Ny4WGlrKBByhP8RI6boi9rnQ==
-X-Received: by 2002:a5d:5d0d:0:b0:3c2:9d64:125f with SMTP id ffacd0b85a97d-3c31553b888mr2106541f8f.28.1755683367034;
-        Wed, 20 Aug 2025 02:49:27 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c0754f3b7esm6721228f8f.30.2025.08.20.02.49.26
+        d=1e100.net; s=20230601; t=1755683568; x=1756288368;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vS/mAyLr2b7OYnR7JU7D3yhv4WGKliyobGTdxLp6JGk=;
+        b=HfkBOv39cC4doHb6BMQ+HlBu6jO3FzdSL1cm/eQ4BnkQoYZ6E1+QNYA0R9KaZO6fdR
+         5/QiSm/ZXkDHVIKBy+1bSkBaKS1yJze1sYOIXdZDvOgF7D89u+Pk6tXZsL1IdFeDpXon
+         E5Ro0/v02F/KhOFd6CjV9lVfMKZvam9/t9B5cDTvnkbcWtqv3GTxDM9p6ug+M3C5iegi
+         9oF9uOFEpsYs+lAALLLdS3vOuOaouFR9RvQn44x24m/6KnKKS29PWl0mucbPHeipFT74
+         Xwl3fXnyjU3Z59XyI27MepnVrQAPC0pb3e2kT8Ga5rhrOlbpMfuvK2fmTNfDsXAkCrjW
+         4xbg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmkwIadgq081AkJUYLD9upYPtce2+Ute64oTBXWs3/d0Uz03FO4PGJFWq4OYrXgz/l9RcCRKtMXLbhH3+J@vger.kernel.org
+X-Gm-Message-State: AOJu0YxENyjcKXWMoRGm16C7I8n9QDyw7SfCTYO5QKNkjUKjYyquWqyA
+	SRihZAF2oXbp7WellZrpKQ7L2/G7tmL03dPq5ZaKuQgbXCPTDqJI/4dSQO9HTJ+tM0+hQTm+QJ8
+	yOmNhxUJJBAfwCNDIA7uRNuzvMZf30Ekjy2TxNNtofTPn7R9EZIgKH/nH40TQNMOX2LQK
+X-Gm-Gg: ASbGncsQaVLnUoMekvDhWnwr42rGTf5yanaTDwhfU1aggu02kfXk0B3i55KA6HtqX3J
+	+oxV9zwusPKO1fz73ZcH2R9wyjbEfAKOVzlcIGbeskZohD3bgFv4CZrHLt+ghTQZvpdeC94UTYU
+	CpXNnxgK7D9PEPaGuycTiePyzOjFIDp0buHUvsGjMhAhjFtBa6gQezcY+DCjfNMP7pzUZVuSU8Q
+	0t1BPyDQZfa550ZRE5rZ8A165lECXswiqVuysJr6pV7dmHwczkWgqEE1T8DLsK4ejtIBRzB/Ar6
+	uk/Uc6p/PplRQROiglRHxvfRK+sCwZpmTTqurgH47g9ORHRmLUnXYj8BdA4DfPz1KJEdXhhvvUz
+	PpuSI4G6nXR+q99P8olmSoIJwF3pvRDZB/5gvv6Y6WXtFa2zOUxD0
+X-Received: by 2002:ad4:4ea1:0:b0:70b:ca78:4f52 with SMTP id 6a1803df08f44-70c67846f04mr66771916d6.14.1755683568462;
+        Wed, 20 Aug 2025 02:52:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNbZVfxSxGCwPd3oehLj8RTp0Pg/kMsu5jl3xY9Xrr59eonPeKRysDyx2GcL/dNxiu6DA0/Q==
+X-Received: by 2002:ad4:4ea1:0:b0:70b:ca78:4f52 with SMTP id 6a1803df08f44-70c67846f04mr66771546d6.14.1755683567880;
+        Wed, 20 Aug 2025 02:52:47 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3340a48b46bsm24544711fa.36.2025.08.20.02.52.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 02:49:26 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 20 Aug 2025 11:49:23 +0200
-Subject: [PATCH 2/2] arm64: dts: qcom: sm8550: add PPI interrupt partitions
- for the ARM PMUs
+        Wed, 20 Aug 2025 02:52:46 -0700 (PDT)
+Date: Wed, 20 Aug 2025 12:52:44 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+        Liu Ying <victor.liu@nxp.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/8] drm/connector: let drivers declare infoframes as
+ unsupported
+Message-ID: <v7w7xkefm6ap7delx7wsvxmc76fwptqhe4ehokzfh4baueb7hr@acrx36exv42v>
+References: <20250819-drm-limit-infoframes-v2-0-7595dda24fbd@oss.qualcomm.com>
+ <20250819-drm-limit-infoframes-v2-1-7595dda24fbd@oss.qualcomm.com>
+ <20250820-artichoke-silkworm-of-election-521b5e@houat>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250820-topic-sm8550-upstream-pmu-ppi-4-cells-v1-2-a8915672e996@linaro.org>
-References: <20250820-topic-sm8550-upstream-pmu-ppi-4-cells-v1-0-a8915672e996@linaro.org>
-In-Reply-To: <20250820-topic-sm8550-upstream-pmu-ppi-4-cells-v1-0-a8915672e996@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2039;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=L1WblGj94ZaDL048pCEw1KwCIcqYN2hMDRmKDSs9uaA=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBopZokNOHPgcU0D7Yz5C5q4aRb7SJAE+S5eG8rUQcn
- yFsEMOGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKWaJAAKCRB33NvayMhJ0Xn6D/
- 91kZOwE5btJsTTYQ4qDmCrLyi1kNVTqNJplHa4kwdQ+0mme1jGwNhJ3tmlWOPETbitIjg7sfTBT0Mk
- FMnSVC6mAqrvQW7FYSFgCFOz0YOy+9yN12AvXSDQtlcMlVrRJX89k8NxsZyn7Wot2FWZKWUOwEq+eJ
- uy5SqMYua6gKu/52nahWBPteOZjUdElHblLlEkuvdmpE6lfGqdbpHf/ES3Ru+nODsw+KRPWTL3Dfp1
- 3WMj7t4cxejrYPI+d3Ht8Oku9+WEYPMwnv6hO3Z+sVMn4GmuUjxW7ixujELz3wFN6P1j/JDQVuggqe
- vTaDslrVHlJ/igHWs5kBx5k3W2aAz7RenYKgrGfXm9581dHbz5lBrDkBja2DfPlIroxrGv1iVT015L
- Y174UF3gVub7K7dLWLDNHL1p6xO5viw7U5UYmIv3Zm3uYwaA0+IUYd2Mu/rE4YY7rCxT06LVaPskSo
- bC93YpMlw1vHh/jOFVO6WZQPuPLjJT49nW0/2iUeetPeRkfg1ILVzIyTwnPzxDBhAiiq6dUS92g4qp
- wNq83YoI5q9poFePIQpgGMv+I/VNtmQ3U5BkH9YoWF/QfMkxYDG0VOe/QNG7J5KX6Rvajujm+lmZz9
- 1+zfsP/ZT9+SOzT942R7jhy6c1US7qWa3m+9dmIfPkth6nFFSZcK175wyhNw==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250820-artichoke-silkworm-of-election-521b5e@houat>
+X-Authority-Analysis: v=2.4 cv=Aui3HO9P c=1 sm=1 tr=0 ts=68a59af1 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=lQ937gVn5cPVmAjJ5oIA:9
+ a=CjuIK1q_8ugA:10 a=iYH6xdkBrDN1Jqds4HTS:22 a=HhbK4dLum7pmb74im6QT:22
+X-Proofpoint-ORIG-GUID: bCjM0NezxDDMPwLH9CPZ5N9VAui7xsnu
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfXzJ5j8+bQvmJH
+ JmIPzGlAhSI8VnXXfqb1J0cTqpPjSdsT2mKc7IlIILvFtMfkIp5C+6HshAY6BCxQ4e06PnKogAV
+ 6v+zbOKuGvZj3LfJvCJPfNbAC7CUsZav8WbJufadFAKGN3S/txtQS30RMHgIwC3VMzcWjlRo9Ao
+ X0LAhZipj6HnFqFyaCVkEgs4EX5MJ3/NMJyQany+4UK9S5V68DGIzU0j2k0moQzX9cTdgKTT2H6
+ sMLhhgnxfyAlwx6ZtFwttwZ/N7QuIInTa4lsz4etb9CWu/R8Wb/xVhB48IG9XsffK2gTTNWcTpU
+ Zuw7cPFsQMOeK0Xw3CGQkJE6vAqDq+q5yIq4lSt9VtHSWS/bBDLlbGb5mJ4Q8DV6NvhubMAz7cZ
+ BO1HwLRhixm1VJrGo8DCn6EAcdbNig==
+X-Proofpoint-GUID: bCjM0NezxDDMPwLH9CPZ5N9VAui7xsnu
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-20_03,2025-08-20_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
+ definitions=main-2508200013
 
-The PMUs shares the same per-cpu (PPI) interrupt, so declare the proper
-interrupt partition maps and use the 4th interrupt cell to pass the
-partition phandle for each ARM PMU node.
+On Wed, Aug 20, 2025 at 09:15:36AM +0200, Maxime Ripard wrote:
+> Hi,
+> 
+> On Tue, Aug 19, 2025 at 09:57:30PM +0300, Dmitry Baryshkov wrote:
+> > Currently DRM framework expects that the HDMI connector driver supports
+> > all infoframe types: it generates the data as required and calls into
+> > the driver to program all of them, letting the driver to soft-fail if
+> > the infoframe is unsupported. This has a major drawback on userspace
+> > API: the framework also registers debugfs files for all Infoframe types,
+> > possibly surprising the users when infoframe is visible in the debugfs
+> > file, but it is not visible on the wire.
+> > 
+> > Let drivers declare that they support only a subset of infoframes,
+> > creating a more consistent interface.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> 
+> I'm not really convinced. Infoframes aren't really something you should
+> ignore, AVI is effectively mandatory, HDMI kind of is too, AUDIO is if
+> audio support is enabled, DRM is mandatory if HDR is used.
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8550.dtsi | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+Nevertheless, sun4i, innohdmi, adv7511, it6263 and rk3066 drivers
+provide support only for the AVI infoframe.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-index 2ebe02e2ca8c03ac9b987af720c7ebe1cd63afec..1b7fbbdba2df986e1efca5dbfa36c01eb1be0836 100644
---- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-@@ -399,22 +399,22 @@ memory@a0000000 {
- 
- 	pmu-a510 {
- 		compatible = "arm,cortex-a510-pmu";
--		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW 0>;
-+		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW &ppi_cluster0>;
- 	};
- 
- 	pmu-a710 {
- 		compatible = "arm,cortex-a710-pmu";
--		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW 0>;
-+		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW &ppi_cluster1>;
- 	};
- 
- 	pmu-a715 {
- 		compatible = "arm,cortex-a715-pmu";
--		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW 0>;
-+		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW &ppi_cluster2>;
- 	};
- 
- 	pmu-x3 {
- 		compatible = "arm,cortex-x3-pmu";
--		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW 0>;
-+		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW &ppi_cluster3>;
- 	};
- 
- 	psci {
-@@ -5066,6 +5066,24 @@ intc: interrupt-controller@17100000 {
- 			#address-cells = <2>;
- 			#size-cells = <2>;
- 
-+			ppi-partitions {
-+				ppi_cluster0: interrupt-partition-0 {
-+					affinity = <&cpu0 &cpu1 &cpu2>;
-+				};
-+
-+				ppi_cluster1: interrupt-partition-1 {
-+					affinity = <&cpu3 &cpu4>;
-+				};
-+
-+				ppi_cluster2: interrupt-partition-2 {
-+					affinity = <&cpu5 &cpu6>;
-+				};
-+
-+				ppi_cluster3: interrupt-partition-3 {
-+					affinity = <&cpu7>;
-+				};
-+			};
-+
- 			gic_its: msi-controller@17140000 {
- 				compatible = "arm,gic-v3-its";
- 				reg = <0 0x17140000 0 0x20000>;
+Some of them can be extended to support other infoframe kinds (e.g.
+ADV7511 has two spare infoframes which can be used for HDMI and SPD).
+
+> SPD is indeed optional though.
+> 
+> So, it's really dynamic in essence, and not really something we should
+> expect drivers to ignore.
+> 
+> I do acknowledge that a lot of drivers just silently ignore the
+> infoframes they don't support at the moment, which isn't great either.
+> 
+> Maybe we should standardize and document what drivers should do when
+> they don't support a given infoframe type?
+
+The chips might be generating infoframes internally. This series was
+triggered by LT9611UXC, which does all HDMI work under the hood in the
+firmware. See [1]. The series I posted hooks HDMI audio directly into
+the bridge driver, but I'd really prefer to be able to use
+drm_atomic_helper_connector_hdmi_hotplug(), especially if I ever get to
+implementing CEC support for it.
+
+ADV7511 likewise generates audio infoframe without Linux
+help (audio-related fields are programmed, but it's not the
+infoframe itself).
+
+Maybe I should change documentation for this field as 'support sending
+infoframes generated by the Linux kernel'.
+
+> Something like return EOPNOTSUPP if you don't support it, and we warn in
+> the core if we get one for a mandatory infoframe?
+
+[1] https://lore.kernel.org/dri-devel/20250803-lt9611uxc-hdmi-v1-2-cb9ce1793acf@oss.qualcomm.com/
 
 -- 
-2.34.1
-
+With best wishes
+Dmitry
 
