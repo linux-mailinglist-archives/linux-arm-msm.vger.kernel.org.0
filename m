@@ -1,145 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-69879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69880-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76EB2B2D5D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 10:14:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF395B2D60A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 10:20:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 123545A5063
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:13:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 23C2C16F26F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:19:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C5EE2D94BB;
-	Wed, 20 Aug 2025 08:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8E423286D56;
+	Wed, 20 Aug 2025 08:19:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="TDttB39v"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g9Wh1RsO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BEA52D94B5
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 08:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0652C1E9B08;
+	Wed, 20 Aug 2025 08:18:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755677545; cv=none; b=jRI8Ij9MYCSbSsIgg4fWNRniFFwCx+JC03Rpai6e+bxyHJhsMuP2MRPzzax0h80FJIlV9O2suP76x3e6C0TRlhoe2ZqrjKtIaZtyxC3OhYJO9Zp0du5TylsJWVhVlZ5UfhfEbxrObeJpO/senz2wscGK+rfo9+wWD9IcgQctr0k=
+	t=1755677941; cv=none; b=X3Ra8AaiiG+42Ez309CwPPMixZENr0U/p8kJf73PONQ6qd/FBTsRaoOGjs5zoemZ6Qsu/VwU3nOKvWW81dQU39/uFagwAZWWp4bCmZvHWLIoQH5p/KcjaapC7QAz9ULXtdr83qTaG8XUuq908g7IOzqdsE09sy8ebYnnVLMu/YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755677545; c=relaxed/simple;
-	bh=haxIZUSQiCuxxydJqegXR7kmgNO/8Jz418zQVwNhZdQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u4fvSG/8jD2qbDE/UstFhIv+o4BDAKIMXEFLtzhGMYYdGaQsifq8OJv5bhIN4+u69inBr+6ZR0JlFSQ/mDMxCos0ThquMD+tEj8teIHOly04T/pLDBC0eMW4kVJHjJGySE764RTcOBme0QaxaZAFyn4trfeMOfuotxBQc1jVTdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=TDttB39v; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b9d41c1964so3958987f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 01:12:22 -0700 (PDT)
+	s=arc-20240116; t=1755677941; c=relaxed/simple;
+	bh=fK2DuSyV4LqHa2BTm2YQxEWab71xsSNOPn0cGrQrG24=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NhPcbvCyEkhOtdmuYmVn546nrNowRY5FUL/ObZgJSIVN/E+K63EsHx1PC4Nlmtu+n+BO58CDC47OmAR96BA/hSCTXDASpvz6d90QTwhpbwzq7PcHrvYGnDBLvsN50HfoIV8KW5dAkx49Vri8tSWU1SR+x7viMpswkm5ORUBGzf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g9Wh1RsO; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b47174beccfso5227711a12.2;
+        Wed, 20 Aug 2025 01:18:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755677541; x=1756282341; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=E5mzBsBALiqNSttAJPi9ae9mbcrxgDyj2N9OaXqec04=;
-        b=TDttB39vNVgcDXMCRMXQZAUW/dW3b/aSOKOuWiHfEP9caMeZMOHGWFBxYOV8VLkpql
-         3jzUn+17e4VwsDQ4cO3Upaemjb9dksdjVTDDBcwmok+Hs6aU1qmFfMDhmDXySqsdBj0A
-         v++5HywKPNDRMU6GUMaA41QFD2IFmSfdifuVhQG2tkbraEN+6B0V+qglulxa2oDh78/5
-         NRtl9Fk8hIidRXGADTiO6+a5sWfcDXvi/PvUZb9anF++AKsqmUx8o6BThyhCDrQzOj5Z
-         YB7vWN2W/DXiWClPPtMrOPZmqE24vik2J1fV74Q2taxaKAkcOlCkUYH+/g4HK1Ov1Eq+
-         coRQ==
+        d=gmail.com; s=20230601; t=1755677939; x=1756282739; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wUn65ndWyyECy779FroH88LwpGWaBPZvfehi8phsszk=;
+        b=g9Wh1RsOc9PkXPmu3u25+KzRfl5316bpZUP7ZvffoomCJmoPRXheapVeQBeKYGs7hZ
+         sdcpuryKn7nrUnsN/WaksGubt9BYWHgfVdjqaeVKetCX7BpLZDFDWah8ZzQDNvUzvHjz
+         W8k+1Gy/u9/dVC5sn1nc+QPwT56FZjpWh0I7BGP3JWAQeczOkLDLIB8w4V41F5+6EZvR
+         cleK2On5TPwmVImmeUss4YqLr/iWbPS3iNAorAUDYkOV0pXGJM8sW4CrCbfMfUF66I2j
+         PFgqZhP+zON0RiQXEpm18KxwPaZIMpAG0xGsr4Q/D8zLLbFeQFrkitckfOWcA72qj2kT
+         V+OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755677541; x=1756282341;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E5mzBsBALiqNSttAJPi9ae9mbcrxgDyj2N9OaXqec04=;
-        b=vrU2OeVkRVmB1mQTdGrbAX55KZcB6zEH7KV/q0j0QmvoYru7o4VdKG/Bl7O8ZGEuqH
-         EiKZMSIhsw/+J2ttCU1KeRCAs2teyBOC2apwAeHF0FYHz+zj1OlLNLHDq96Pul1EgW4k
-         3+BgVAnRpvXSb+2ltlFeXGF3Qz48cx9Qkwvt+Y/qUZZ1RMt5aV26hFN8FGohzwcPZbbI
-         GDqCkxd5yz0xuDEW7WcXc7blx5kQ6KyK7qOpUcU+WuC1IoG8sPGOxh+T6HnMTXN1FFhc
-         TjxvFpfy42zMKd/zeQvJv4B8vZDkIXDodArKmzpKwYzEQtU7KP+OMLJGFgwVozeXoB6I
-         JUUQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVoBCFU5+NpWNDpg7byZgjfPUUGgDnytytpR9x8Njk+kWcQvfHs0fz7vElo8ix/co8L5452jma1dit/7hWp@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy6s6R4RRJmZjKPFptV4SMYiQbybmBAVHzIiDk7Nq6XEHmlinmc
-	xa7vSeAZAUBgUU7cxgT8608qNJ5WKuWQYKN7Yj+wfRlhlT/vqfq/9TaYb+HqdnojqwY=
-X-Gm-Gg: ASbGnctkVDoFGi9KQpzU0tBUyP3P4Blozc+A75BVaNrYOoj9dYRybtLVNUnYwNfF2+I
-	zYYZ3Rq4WbVaepaQcZSVs+iFkfj7FBuBsx2pTKQqZFtbz0zzCl1TATiZx8lfomNtbx6o0uILmck
-	vNAgVfO74Iw8UD/QMcmwDji+MJWB/+uculFRXx8Q7GKmhSZbMHcNOOX+Uz4PAbojwULYhHdeXpj
-	cGz5tC3sBnUWQV2ZI4Hl5XNxHvPIkvU3yAVo3N+VZg8Dux1v73elQFS0SOkIQfGT7jqSaCC+M0p
-	VGtYqrCImL/yRAHYvYYcGs23vNhJ5nhheLzUfWHAJVju0LOaY4uZJx7jYm2BSCGEzp8HyM/cred
-	reBBzx6G9V0TUuTGEqXwfTw0ymnXERvJz8TU=
-X-Google-Smtp-Source: AGHT+IGuQH165HnaQTwksDDzZkNVZOjiFfhmMoSOhDlESgJ7dUKSOkqF1KC3ciNT1El2t1RjmBhg+A==
-X-Received: by 2002:a05:6000:2404:b0:3b9:1697:75f0 with SMTP id ffacd0b85a97d-3c32eccda13mr1347315f8f.56.1755677541336;
-        Wed, 20 Aug 2025 01:12:21 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:8a2d:c0da:b2f2:1f41])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c077c57aa0sm6687179f8f.66.2025.08.20.01.12.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 01:12:20 -0700 (PDT)
-Date: Wed, 20 Aug 2025 10:12:15 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 06/11] remoteproc: Move resource table data structure
- to its own header
-Message-ID: <aKWDXySSt57tXHVP@linaro.org>
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-7-mukesh.ojha@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1755677939; x=1756282739;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wUn65ndWyyECy779FroH88LwpGWaBPZvfehi8phsszk=;
+        b=ebYRjT1g7TMYQITbNEZ0iNyWtR/sypBltJPiSY5kLodoy/hBxpcF2Ry7jlYRyG+5Dm
+         zRTjiIFNu6mEcgGpKx5qESHVw7gASvGrBF8y7zkDNor4rFqyZMrMTdDVd55gkFAmOYby
+         yDI70yM8x/QMYh7weQTDCRxPmPBp4367zXtidjEKmfpPO6BlNoQIkUny7kJHvjM031uZ
+         tRm6dIlUuLGAkRuNiJtPpgbX1RoiIyNlm83UmN859i9NOSIU7AKbquDwpk3Z6XeKYpz+
+         WOmXWeLtE2zDr2ujSkcWrlbsisxRJyA3kZhiAPB8x3ejzypp+FCXDvJ7YatVzdwpM6ks
+         S1eQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUd72fmddij14aUsL51Awty35YJJnAAZnG83qb1x53iE72ZrnxNUKVvPyJ+gws7PKRiN+ofP4MCRUhE9Siq+Axr2fs=@vger.kernel.org, AJvYcCUdt1licW5rxdXyduoqJauj/e1oCiWQpvreOjV/+P6hgJVc8IahPJ4E1eKSZrgYTbZXn7Gmsw58zkNIw141@vger.kernel.org, AJvYcCWWVQlsxk1EYITlBVwVtgHk2LQUjaAKzEQ5tzw9dekU3e1ccGaryHEb4rISQEGVmg/LkmTYpDEgeXqrykLBhhDp4g==@vger.kernel.org, AJvYcCXV+oITgJ2BP0ZPjecT8eyE6LD2+1cNEw2/3Dn50FoghzreIiwJZrkwax48TxJeCbFr1QTJC2g8n2dPAhNB@vger.kernel.org
+X-Gm-Message-State: AOJu0YwM2yVrDP32tyMRBpRYBya4NXJbBUsQHTsyW3m1gAuLgAnp7InL
+	RaHGf0XFUuP0jjkL+ZpTk+aRcOtGjHD7zAuiBgUauAdzOMyBTqJJ0zmx5q275a9uyasnzQGwm6B
+	KxrP11E5QR2F7hPlQ/xP2MPtG91BOhbM=
+X-Gm-Gg: ASbGncsXa5l3WtXkFmLedLdyovP5Ke4UQCRV4lpYMkgwibkqN5QK2uMFrcOMOk9dVda
+	mfCqyxARY5XwpOxa8DDhNAUO9lYACVnHwB9ZFIHdzdRN9oV4PXeh2gJXUoCTgdmPMizLzMmRhF1
+	lVtRtLjJg4sGOf2VVnppVwY8HTAvXdvBzcectoB2a/lYH8nSWT//WpL5XQHTmJaPAyRDYtIFVm9
+	TOY
+X-Google-Smtp-Source: AGHT+IHyS319ZtbgIK5QZ2TPQXhA0Y58me3odjKXWmlmqSDihLpOV/ytvp3iwfpabPjgDac+00Icnjn6G+Cpo8Pj+bM=
+X-Received: by 2002:a17:903:18c:b0:240:96a:b81d with SMTP id
+ d9443c01a7336-245ef0bf2bcmr23609915ad.5.1755677939214; Wed, 20 Aug 2025
+ 01:18:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250819165447.4149674-7-mukesh.ojha@oss.qualcomm.com>
+References: <20250819213831.1368296-1-robh@kernel.org>
+In-Reply-To: <20250819213831.1368296-1-robh@kernel.org>
+From: Daniel Baluta <daniel.baluta@gmail.com>
+Date: Wed, 20 Aug 2025 11:21:09 +0300
+X-Gm-Features: Ac12FXwDgSq5YSRmZRgmCG7R1pa20x6uPGQw-yiLKpdR5FfgZLxMT4en9AePre4
+Message-ID: <CAEnQRZDga2cX=YPY5Z9NDyro94bxFjK9k5Xm5Vt2vVzf4ysKyA@mail.gmail.com>
+Subject: Re: [PATCH v5] remoteproc: Use of_reserved_mem_region_* functions for "memory-region"
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Mathieu Poirier <mathieu.poirier@linaro.org>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Magnus Damm <magnus.damm@gmail.com>, 
+	Patrice Chotard <patrice.chotard@foss.st.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, 
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>, Peng Fan <peng.fan@nxp.com>, 
+	linux-remoteproc@vger.kernel.org, imx@lists.linux.dev, 
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	linux-stm32@st-md-mailman.stormreply.com, 
+	Iuliana Prodan <iuliana.prodan@nxp.com>, Laurentiu Mihalcea <laurentiu.mihalcea@nxp.com>, 
+	Aisheng Dong <aisheng.dong@nxp.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 19, 2025 at 10:24:41PM +0530, Mukesh Ojha wrote:
-> The resource table data structure has traditionally been associated with
-> the remoteproc framework, where the resource table is included as a
-> section within the remote processor firmware binary. However, it is also
-> possible to obtain the resource table through other means—such as from a
-> reserved memory region populated by the boot firmware, statically
-> maintained driver data, or via a secure SMC call—when it is not embedded
-> in the firmware.
-> 
-> There are multiple Qualcomm remote processors (e.g., Venus, Iris, GPU,
-> etc.) in the upstream kernel that do not use the remoteproc framework to
-> manage their lifecycle for various reasons.
-> 
-> When Linux is running at EL2, similar to the Qualcomm PAS driver
-> (qcom_q6v5_pas.c), client drivers for subsystems like video and GPU may
-> also want to use the resource table SMC call to retrieve and map
-> resources before they are used by the remote processor.
-> 
+Hi Rob,
 
-All the examples you give here (Venus/Iris, GPU) have some sort of EL2
-support already for older platforms:
+This patch will break IMX RPROC support.
+<snip>
 
- - For GPU, we just skip loading the ZAP shader and access the protected
-   registers directly. I would expect the ZAP shader does effectively
-   the same, perhaps with some additional handling for secure mode. Is
-   this even a real remote processor that has a separate IOMMU domain?
+> --- a/drivers/remoteproc/imx_rproc.c
+> +++ b/drivers/remoteproc/imx_rproc.c
 
- - For Venus/Iris, there is code upstream similar to your PATCH 11/11
-   that maps the firmware with the IOMMU (but invokes reset directly
-   using the registers, without using PAS). There is no resource table
-   used for that either, so at least all Venus/Iris versions so far
-   apparently had no need for any mappings aside from the firmware
-   binary.
+<snip>
+>  static int imx_rproc_parse_fw(struct rproc *rproc, const struct firmware=
+ *fw)
+<snip>
 
-I understand that you want to continue using PAS for these, but I'm a
-bit confused what kind of mappings we would expect to have in the
-resource table for video and GPU. Could you give an example?
+> -               priv->mem[b].cpu_addr =3D devm_ioremap_wc(&pdev->dev, res=
+.start, resource_size(&res));
+> +               priv->mem[b].cpu_addr =3D devm_ioremap_resource_wc(&pdev-=
+>dev, &res);
 
-Thanks,
-Stephan
+devm_ioremap_resource_wc works only for IORESOURCE_MEM resources:
+
+lib/devres.c:124
+static void __iomem *
+__devm_ioremap_resource(struct device *dev, const struct resource *res,
+
+=C2=BB       if (!res || resource_type(res) !=3D IORESOURCE_MEM) {
+=C2=BB       =C2=BB       ret =3D dev_err_probe(dev, -EINVAL, "invalid reso=
+urce
+%pR\n", res);
+=C2=BB       =C2=BB       return IOMEM_ERR_PTR(ret);
+=C2=BB       }
+
+while the devm_ioremap_wc doesn't care about this.
+
+So we cannot use devm_ioremap_resource_wc here unless you add
+IORESOURCE_MEM flags
+to  of_reserved_mem_region_to_resource as discussed here:
+
+https://lkml.org/lkml/2025/4/28/759
+
+The same issue we are already experiencing with Sound Open Firmware
+where the change was already merged
+and we have a bug already reported.
+
+How should we fix this:
+
+1) Add  res->flags =3D IORESOURCE_MEM; in  of_reserved_mem_region_to_resour=
+ce
+
+OR
+
+2) Use devm_ioremap_wc instead of devm_ioremap_resource_wc.
+
+thanks,
+Daniel.
+
+
+
+Daniel.
 
