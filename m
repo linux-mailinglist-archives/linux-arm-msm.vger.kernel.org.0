@@ -1,64 +1,75 @@
-Return-Path: <linux-arm-msm+bounces-70011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10542B2E6A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 22:33:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B5C5B2E734
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 23:10:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F08CB1C269F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 20:31:41 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 380603AFC46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 21:08:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3E502D0C8C;
-	Wed, 20 Aug 2025 20:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A03E62E7646;
+	Wed, 20 Aug 2025 21:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Su8TnsN2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oihkB/d6"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE6724A067;
-	Wed, 20 Aug 2025 20:31:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755D425DB06;
+	Wed, 20 Aug 2025 21:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755721875; cv=none; b=MQZHish3jpWzVwC/yTHdc2KfD06TPIzWVkLrdwubsVQJxUuNmAk2vzxxMQStylYK8OEr+X/zPb8IkTrMOw9JsLrXh5Pe4E/sMK5NxsE5IF6kCssgNA9qHI01BWX3LKwCW/bdGLm2IlLHAuMJVt4pcBTM2vFD1W0zV2qCP5NPo4c=
+	t=1755724084; cv=none; b=MZ126m2B3jGpDLc0tsmNbJDOfWDrydfqU9qBJjU7+Iv6tCa7TbZ/GfElJ+jon9p5aSTSohC+HRiFgcyLP1StUjkbqPGbdy7CECQAGn4Yt/Ou+aIJz2FRAhWzeWjqW8fslRj1pdtv2SMCTRPJneQw5eD8LzRnRfeYR6C6283g0a8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755721875; c=relaxed/simple;
-	bh=HV9ib1u6sZEDXsB56fnVQreiHI4JE8NcawRWEwj1EFo=;
+	s=arc-20240116; t=1755724084; c=relaxed/simple;
+	bh=rkoobUseBl3ZPCzxbYJUmI8ZVFYkuSdLZI+boJGT8UU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tqvGPkcSxwLs6x8bOysu4QiQ/5Nu0bnk37TMzZ9B+b1CsoMxqQLKiLAt4zmq8k86FR+o8zOtoJD4hKEQOVFiGS2g9EqMtpkml+OVC+LmGbmZJprmOs7aIYZtSJR7UeHZU9kIjZRXHUFcM7aX7ejz//fXwEXh/yxcrQPOQMjPUJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Su8TnsN2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D65C113D0;
-	Wed, 20 Aug 2025 20:31:15 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=uZ3vkb8/F21W8uMJrikTFYuWh7ABgvYzw+mYJzNx9KLXs0iBOlFmetK2Pz3aQSkCA6Q0TXEiH5WFlyxX4RZWLiu56X4DC4IvMXo5zsjxGv0uYqlAbaxQQHi4H7BHET92mqFj4QjyDYupdrTlAj8fJiFXG1Cl1zQ0kZxAPrvHO9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oihkB/d6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D80C6C4CEE7;
+	Wed, 20 Aug 2025 21:08:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755721875;
-	bh=HV9ib1u6sZEDXsB56fnVQreiHI4JE8NcawRWEwj1EFo=;
+	s=k20201202; t=1755724084;
+	bh=rkoobUseBl3ZPCzxbYJUmI8ZVFYkuSdLZI+boJGT8UU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Su8TnsN25SdbgdvQYL7fbuLEdTEAPVTpUJm+Bc5b8d3o42rVEsOQJkp5hztZJ15BT
-	 I8kyKiqeAv97phHyee+ksUuftIS+n9BbcDTvNUMCI4zwW7JjwodYWJ33n58nIsa4p4
-	 B3jG/AOY3Z+uug2b8pL87dfY5Q2xmC+zgSIkLY9+tbynjCkNv9r1ZKaoKueeBeFDEZ
-	 WsA2eUIogV42Cq5z0jfmEf8VVphhdgrEVVHRzY06+08RIUY1i+bDprVPSt/rSan0Xl
-	 VvQCVXMPXfDWndA4IYvaiX/P9y2OJQ5+816Vdq5FNIfwy9gfgBkb6u4KaBBId3+/T8
-	 xSlg7sPW1qMLA==
-Date: Wed, 20 Aug 2025 15:31:14 -0500
+	b=oihkB/d6bpuibPKO7CVwMQ1R8sWllUitiVtdBsUS035RrAaBSORoBP936GmEIOsbu
+	 OjULfbVu+pQfvp8jTOoJyz0e6MVlvFM9oi6QWxgpuJQgtivFicURpKEfobLF0866nf
+	 qbhhahV5cBcAWDgxDq6/d/tMq50+hvWGhmleVCS+7nvUo0ye0IyNyQVIulpizy/mLO
+	 VqV7qeC0YV7tWXSDwSsP7Jin6VG+A++3DMHUBQl3UzhNhwcoLc2ETx3SgG+7ihvuCc
+	 wECvB67E1XPAUPi9vquTOpqkaDk6gSIg8erCwUnLSE0K8Rla8SQpyYWiKFqjWS6IJe
+	 XJxwBTnEKC6uA==
+Date: Wed, 20 Aug 2025 16:08:03 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>
-Cc: vladimir.zapolskiy@linaro.org, Konrad Dybcio <konradybcio@kernel.org>,
-	todor.too@gmail.com, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, Robert Foss <rfoss@kernel.org>,
-	bryan.odonoghue@linaro.org, linux-i2c@vger.kernel.org,
-	Andi Shyti <andi.shyti@kernel.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Conor Dooley <conor+dt@kernel.org>,
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Maxime Ripard <mripard@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	freedreno@lists.freedesktop.org,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Simona Vetter <simona@ffwll.ch>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Mahadevan <quic_mahap@quicinc.com>,
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>, linux-media@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: i2c: qcom-cci: Document sa8775p
- compatible
-Message-ID: <175572187383.785125.6427441804080019104.robh@kernel.org>
-References: <20250815-rb8_camera-v2-0-6806242913ed@quicinc.com>
- <20250815-rb8_camera-v2-1-6806242913ed@quicinc.com>
+	dri-devel@lists.freedesktop.org, David Airlie <airlied@gmail.com>
+Subject: Re: [PATCH v6 5/6] dt-bindings: display/msm: add stream pixel clock
+ bindings for MST
+Message-ID: <175572408273.1071685.13722769967964549822.robh@kernel.org>
+References: <20250815-dp_mst_bindings-v6-0-e715bbbb5386@oss.qualcomm.com>
+ <20250815-dp_mst_bindings-v6-5-e715bbbb5386@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,18 +78,34 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250815-rb8_camera-v2-1-6806242913ed@quicinc.com>
+In-Reply-To: <20250815-dp_mst_bindings-v6-5-e715bbbb5386@oss.qualcomm.com>
 
 
-On Fri, 15 Aug 2025 15:07:17 +0800, Wenmeng Liu wrote:
-> Add the sa8775p CCI device string compatible.
+On Fri, 15 Aug 2025 17:30:32 +0300, Dmitry Baryshkov wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@quicinc.com>
+> On a vast majority of Qualcomm chipsets DisplayPort controller can
+> support several MST streams (up to 4x). To support MST these chipsets
+> use up to 4 stream pixel clocks for the DisplayPort controller. Expand
+> corresponding clock bindings for these platforms and fix example
+> schema files to follow updated bindings.
+> 
+> Note: On chipsets that do support MST, the number of streams supported
+> can vary between controllers. For example, SA8775P supports 4 MST
+> streams on mdss_dp0 but only 2 streams on mdss_dp1.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/i2c/qcom,i2c-cci.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  .../bindings/display/msm/dp-controller.yaml        | 63 +++++++++++++++++++++-
+>  .../bindings/display/msm/qcom,sa8775p-mdss.yaml    | 20 +++++--
+>  .../bindings/display/msm/qcom,sar2130p-mdss.yaml   | 10 ++--
+>  .../bindings/display/msm/qcom,sm8750-mdss.yaml     | 10 ++--
+>  .../bindings/display/msm/qcom,x1e80100-mdss.yaml   | 10 ++--
+>  5 files changed, 99 insertions(+), 14 deletions(-)
 > 
 
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
 
 
