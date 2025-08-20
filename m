@@ -1,242 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-70001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70002-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 991C8B2E2EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 19:06:28 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C67DBB2E3D7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 19:29:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DEFA21891E56
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 17:06:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DCEE05E759E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 17:24:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A1E933437D;
-	Wed, 20 Aug 2025 17:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B843325783F;
+	Wed, 20 Aug 2025 17:19:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zraZ3qC+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QZGc/RFP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A344929E11A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F29B338F51
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:19:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755709583; cv=none; b=sodRga39httvOmaKcLKj6WpWdVcVo6lvzhZq71G9RmoL4r4g1kofa2Tn6zOQhIU8/8QOGC+MeeonQTNgfJhijDmwC4q84bWkvEX29sVUMda11vAb2ZuJQRtA827zCRSJTJ+F1wd8pjMt3xDMqjaNUd0KCAlftx/s0lR36yK3RdU=
+	t=1755710343; cv=none; b=iNWatbJA5ExEXA9bnlDWD/oXOp2hVT3e4WaBizjS/NxIwkHbHIvqady8O6lqfRLA65DtEFkX9QvBFiP/R42lgl+lbknZ4ufCX05geSKMb6e6bS6G/8ZnBPooAhTetai8EeSJBU/7HhB5XgYoOYuRYYsT+16E1nQx/yExOxNZ6xg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755709583; c=relaxed/simple;
-	bh=5iUUGbp0UEqA3sYC7B+A5Qe7tp8RdReahVomvnfNEyc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=OfTIlX1bLI5kzo5KPkVjRIXiInlQP04ojc7DbfujE3ODYefjMlA7P504WWdiJtrnMY0UsHBskyk4IANGbyBeNbeuinUrQ2+YOlpv1xuvWOkp2Gd3YKc/Qi7k2AkKhBVBCEIdKaVqI2GC43q+elBvsi+GSr+PijmJz8qpy+5XbtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zraZ3qC+; arc=none smtp.client-ip=209.85.221.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3b9edf0e4efso83781f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 10:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755709579; x=1756314379; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CTDrNslUzosAJ4OswUc9P9uVR9h2bZ9JPrOTDIuKEL8=;
-        b=zraZ3qC+eGZI2eHaK/secVvubFtkad2JIE3169iqXzuv5PN1ZiA1/rc4uVe4Otp5Kw
-         o4E2sJ4a9rGwnH3d0IHkVmDlArFP7AXBEsZ5NQ1l37+nyG5/jngyUQjozdQDEz6U0gM/
-         LYfxOWkuMuL6n3wJyN11MXjOtD2/pPtn3aegjrTOU+bbPUzm8t0J1QvJrcmmIHFx41Qs
-         2+wtUTUuM5oLLyl7rdAKCl4tr9eDqRDU1BP9tgzqDXCpPEr4RZj1j4gm9YIP6rnJL251
-         Py1ViMSY5stvDOItUXL/9a/J6tDeI7x+yOFo/QaolvuTXdKglY/EGmoxXF7ulObYZUN1
-         x9jw==
+	s=arc-20240116; t=1755710343; c=relaxed/simple;
+	bh=G6X07DMJoJGHfvSbycLea+tudvMXf5oz0RpWYgY0qMI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d+0N8mFbCLJYbUiq4D9EA/zQWejfgeUSnUTY/EwSqK/NGo/jNExraFM3pBKOaPqAC2QUoGPCID1LKScIDLJB+NA0GaRqvI3UbRRmFYcTYYKxq4rD0ymlDzK+uZHPiLFyQ4NMH4tHG5vvwiB9eSUMfuhCUeuaTssNiMW4gdIhbVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QZGc/RFP; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KGmhu8006363
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:18:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=D4c6VjJCxHwNMdHY8pDWjWO0
+	85ZA1m3/u33QomEdPGY=; b=QZGc/RFPA8AMae48g6OvIQGNkf3YiSAQVucXFO9f
+	qtb6l585YnHzzGlmjmWsDrhEn4ljF3RlTZMZwyDgvNxpaxLVFcZTfiJQqdMOeH9E
+	FLbM6mlrihlzrxjId669nd16XbZ/JXe2WZMfIoZdB8hMXUtKy9o6pMX3QK1djRnI
+	VWF3/Rgc8XR88Oa2wHM0cAbOKcf4q2GgmRbYrVNeadAytIG8kLefHEhOu69ks0j0
+	BfEcx8akS2rRni/0wFmPEbuQHp9JXEJP06aepQFrYYoJcto12jqPOGup+dXQmFEm
+	9MNZhdNAqpib46BnlhCMJJnT82u+/sN7ZeKtbxMS3HHCqg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n528tgkk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:18:55 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-70a88ddec70so1912646d6.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 10:18:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755709579; x=1756314379;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CTDrNslUzosAJ4OswUc9P9uVR9h2bZ9JPrOTDIuKEL8=;
-        b=HMaYF/XS0Y/yL3m7wWp3EykayyLpDUhwtrAWa799xfq6wOXyyzd9AqynD20JUjIQKo
-         r//5D6cLcTZf5zBP0vd1uUJHB0AAGfXtw7ygB+MyBelPu2gFjqSWCqsqV4RdoKqdr9XD
-         KQWWlrVmXbEGnhLgtYfiFQzoje8ZJeOY665PZzkalK3YNLs0OuJi50VjjrkZALC76QrG
-         pazG4EGV4yLmLLJ3Z6xi0Te49J3KOneMj1eTEf888rG/3YJycbR5PFabwWi6KWpf/N2h
-         BkJ1hfc9bzKMiSq1o4AC8DmDvhT31aAE8siURW0DgF+RN1nmkree+SvbVB+jln9V5MkM
-         QmCw==
-X-Forwarded-Encrypted: i=1; AJvYcCWUn4TQSCF4YMbeBF0vvgU6Ec4FhuqnJ7xtrQGH1Y6FNeK8Ng7YGgg7vumeARBmM5sk9/Vth6hkgsQN1cqx@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzz/p8pYlMqBYvCvSYJF3rIcAYA/6i7tnPsK9oUomWvtryp8s5m
-	5Mrm2V3c9N3HwCEnhO2ZAQwKRGk0fK7u8ZGMcsFzp2vwNbcB3wNns1NM20HqPFbFvzs=
-X-Gm-Gg: ASbGncukFs52um9BQw+L1XpP6jp+D6gi5af9F82lAozEXAeaHV/vjvItUiEbZU7k3Si
-	caTnareYJptz8Lfdpp46jUF33wXfMTZqFmXXx+Q+VV/mBx4TloSpC+mga09U65UueJ/GsYUCenu
-	YAI/FyM6AFzVBwYTRb5H99TpDJtzLriK/DGIRcsLHkuyZD0usLJldqXlgdIpcklzQ5Y3y4560zH
-	ac19QO1ZmyhfXNbiG8qt1RdtdBAm3I7mcv29RyiCdvXsrALW+SaO/ZC1NRzuvIC9ngx2miTEMgu
-	k70H9nklWGB1R70+OV7JuiWNZ1oCYf/yjP83l2jNGkEAWhAcPbLQuMsTVCzqRRDqVvjuHXbGDC4
-	Ii7jTgm1OBgv5C1MhmIHvxO+owVANMz5THreYj7Zolic=
-X-Google-Smtp-Source: AGHT+IFJwyODGkZR7lyWiHT3k8+qVTuyLmko5x5VPCzv77rUklSw+eaI+mTSJDBYV4fzQCGFCOfQuA==
-X-Received: by 2002:a05:6000:250d:b0:3b7:905e:2a32 with SMTP id ffacd0b85a97d-3c32c434671mr2808528f8f.12.1755709578915;
-        Wed, 20 Aug 2025 10:06:18 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c0748797acsm8085516f8f.10.2025.08.20.10.06.18
+        d=1e100.net; s=20230601; t=1755710334; x=1756315134;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D4c6VjJCxHwNMdHY8pDWjWO085ZA1m3/u33QomEdPGY=;
+        b=WQtWKhIcmJq5J/G8nvAq2LcxNoeSMj+qLxltLqu0yFOzgmJNHVl88RcDBqXBa5q4zp
+         Oi23B3KcPPvQef/6xhnzw/+WGrFiBNKu1tfUffouW6u+kag6qYZWPfqIiH4hzlRuvLZl
+         pyGvqta6DUPB5wxPuzaCRDok32hj2fLMtCZ+bjui6lpaK8i0MjQjxJ/BgBCjpAD1nNCd
+         FttGDrUb9tShVjI4Izo40J/RDjWyz1dcnWvNCZh7iJBZINcb8Xq8U7cItviDzAoCqGJG
+         YFOVf48eTvTZWkgrebxMp9H7iPo00rSfrSEByyEAcII7w1qOk7N1VzyWmHqOPqNDFOBm
+         Kk7Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWn72RcOZ4mHI7vD7txcP6rIr9Kc7r4z8EoOz2M+q6Abjhd9DCJe3mfQHqpVe5uuNtZxDxQhBdVV86/k5qW@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyj9usjjfXXprnPnU2fUlLmpERP0rQ3I1dJWxtIwkj+DUCGzkw0
+	VMXl7hVLkTFYhZ5BnycuMEaf4Yuo+GQ+zQXJvGNTJoJYXm4OTS8bn9QwVVOOB4ozVIshvdMnDoG
+	UxfC04Kdy07iDcz+v/TmBHFKtu6Qb//ctZr1ixaE2cl1GYICsRiNd+WPSCQze6Lu4EFSrI88rPI
+	TD
+X-Gm-Gg: ASbGncuv9VHuirGQhkj2ocihDMsLD9ogxl+mfPv1iO1H35tpxIqVeTg6L399btvdvip
+	oA890cHGLHavAyYw5f5cyaMojPb5n/ifUwEEI34ab31iQh5PRMXxLv/j0FPabxD1de+E5hRXqxj
+	hLF7zXj6jmGEqfBxHjpEeN3dZPeHxBzMa8FxS2il/a3gXpJLb/+iwK3cV8y7R/Q7cJ3cgwDfRxy
+	wW3rCg6g0sgg4pfk96wP6yyMNwE4u+rk5xWnz04qQ7pEGrBJrt1mZWutBCTvetp7B0IlWLg9wcK
+	HsypkkN2nD2DAjas1iFruvbN0KXS+H7IS/2hCVQshGPC8uJ2PzYugdvOxNLSppGVJsy1u1he/5W
+	uFX/nWlA4A1Luv0ukNDfsZXY3EKd9pvFGTVNBsCe5quUuuEqGxXHx
+X-Received: by 2002:a05:6214:21e8:b0:70b:af9c:d0ed with SMTP id 6a1803df08f44-70d770ec90cmr33161696d6.32.1755710334173;
+        Wed, 20 Aug 2025 10:18:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJMbKVOPkMoNV4lYsAx4gpHUcgozCfe+fx8N/3mB2f42zwfWVqWvV8n+duLWyQQLwTizWwFg==
+X-Received: by 2002:a05:6214:21e8:b0:70b:af9c:d0ed with SMTP id 6a1803df08f44-70d770ec90cmr33161366d6.32.1755710333680;
+        Wed, 20 Aug 2025 10:18:53 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef3f481esm2666722e87.126.2025.08.20.10.18.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 10:06:18 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Wed, 20 Aug 2025 19:06:16 +0200
-Subject: [PATCH] media: iris: fix module removal if firmware download
- failed
+        Wed, 20 Aug 2025 10:18:52 -0700 (PDT)
+Date: Wed, 20 Aug 2025 20:18:50 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Sibi Sankar <quic_sibis@quicinc.com>, Abel Vesa <abel.vesa@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v2 4/4] remoteproc: qcom_q6v5_pas: Drop redundant
+ assignment to ret
+Message-ID: <5eh6q3hry4zchaptogbxykiiuaul7dkrshzlmfay7w7tondues@irxamm7vt6en>
+References: <20250820-rproc-qcom-q6v5-fixes-v2-0-910b1a3aff71@linaro.org>
+ <20250820-rproc-qcom-q6v5-fixes-v2-4-910b1a3aff71@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250820-topic-sm8x50-iris-remove-fix-v1-1-07b23a0bd8fc@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAIcApmgC/x3MMQqAMAxA0atIZgO1YC1eRRykjZqhVhIRQXp3i
- +P7w39BSZgUxuYFoZuV81HRtQ2EfTk2Qo7VYI3tjbcGr3xyQE3+6Q2ysKJQyjfhyg8ObvXO2S6
- 6JUBdnEI1//tpLuUDFiEBUm4AAAA=
-X-Change-ID: 20250820-topic-sm8x50-iris-remove-fix-76f86621d6ac
-To: Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Dikshita Agarwal <quic_dikshita@quicinc.com>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4334;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=5iUUGbp0UEqA3sYC7B+A5Qe7tp8RdReahVomvnfNEyc=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBopgCJ91L7+RPvPhE4YwiK5+meNevOZjvfkx86kLqN
- f8vrL9SJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKYAiQAKCRB33NvayMhJ0a3MEA
- DQy4aIePCaQAZRp8hTs3iLR1/MZae95DXA53KZ8oEbr7izD6jrlq2v2J2I4D6sn79sniUmBlv7Zl03
- dlXnoBC0EXfXSSX91YW54v8/w/KberFcrk0fk2fv17rvN9a4TTYd+W94ddOK0iQStR2M370zVQ95Ch
- ID3iHoWzCgCbw9Opd0Ryk3/RZLGo5rAft1yIO9mnYFoyUhd7HwSKg3CZF6ZuIEdLbKz2Es9mqxS7WM
- JwbfhYM9LC8OacAr1xCh8ocQzpI6o0cn7xM+AA5fDnbnPsY/aPEJFAYEMfOkafi+wJaaOGZe7Qi3gs
- SVCpe3lIO5c+y6LmKtgrhc2T69emF8+eCRi7o+OzYwRrZkN0LLNu7Ac3pFX9be2NotODks4A0Dki9f
- gdDuDvfr4z8h+1ptiR7S2MC/Xa22ZtBJ+W7Z8Fm7/+P9UTz1bxJ+12t6NexXzXmNGIxujSyIakBzf1
- O0WWQVD3IKhN5Q2vp6YS4vVx/puD1gnS0mhPiDL/8E1CNRTLbXfm64awXOYtM3cQHtZ43hpyWaQrbr
- E8CzXSE6RT4CoTtqPo/wW8bk39MOcTK4rvQUOI3iVt1p5okWCpXeTyKe/sbG9jMIrsvr8St4veAL0E
- i5B/lGPkdyuzC9UhR4MvER4pHilGdyb6Gd6HQLmx3uVn4xw1egpiuKZS62Fw==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250820-rproc-qcom-q6v5-fixes-v2-4-910b1a3aff71@linaro.org>
+X-Authority-Analysis: v=2.4 cv=fpOFpF4f c=1 sm=1 tr=0 ts=68a6037f cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=gpV1-yxKdiVEvkH9OoIA:9
+ a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: glpWhH0FAqyUSrzhKBKOMmpQLsqx29sS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX5ylEo2l5cXip
+ aaMdfkDU5OO3jibes6exQ/u7jSjZr9EM8BpfnLW4VIGBWMhnmkNwwX0gtVA/7PLvh7aHzxFTqci
+ 5Bkt927x32AtA7zerUHLMdRr/33+AqG/dTIUgXGlBoaWuehYH7HVTP6BHEFNKE+GvAe9/IKpmL8
+ YFEFw1Ok3wixSgUek08Hb2zKEB+rzA7Ppxgtq0j4x0/Pyh0EffXLjZfpVIpPbS0rMLc/DZP9Qfb
+ IKQ2Z3Fsduo/GfvpGzYoT29PSV40mBbOaJx1KsNMsp9raThJ3fQTYKhxC5+leEZH8hf2hEYeZ+k
+ JHQhPSNqOiKQiYS/XHoJ7YAA0+4FDzc7Yq0CualHHLEwEw0ZLRFs3l3o1NDDt4AGxxksQoicBi8
+ Rr3E2XzRb5LSjwqdhvD3FgKhHQyKsg==
+X-Proofpoint-ORIG-GUID: glpWhH0FAqyUSrzhKBKOMmpQLsqx29sS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-20_04,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 priorityscore=1501 spamscore=0 clxscore=1015 adultscore=0
+ suspectscore=0 bulkscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-Fix remove if firmware failed to load:
-qcom-iris aa00000.video-codec: Direct firmware load for qcom/vpu/vpu33_p4.mbn failed with error -2
-qcom-iris aa00000.video-codec: firmware download failed
-qcom-iris aa00000.video-codec: core init failed
+On Wed, Aug 20, 2025 at 06:02:36PM +0200, Stephan Gerhold wrote:
+> We don't have a way to detect if the lite firmware is actually running yet,
+> so we should ignore the return status of qcom_scm_pas_shutdown() for now.
+> The assignment to "ret" is not used anywhere, so just drop it.
+> 
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+>  drivers/remoteproc/qcom_q6v5_pas.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
 
-then:
-$ echo aa00000.video-codec > /sys/bus/platform/drivers/qcom-iris/unbind
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Triggers:
-genpd genpd:1:aa00000.video-codec: Runtime PM usage count underflow!
-------------[ cut here ]------------
-video_cc_mvs0_clk already disabled
-WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#1: sh/542
-<snip>
-pc : clk_core_disable+0xa4/0xac
-lr : clk_core_disable+0xa4/0xac
-<snip>
-Call trace:
- clk_core_disable+0xa4/0xac (P)
- clk_disable+0x30/0x4c
- iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
- iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
- iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
- iris_vpu_power_off+0x34/0x84 [qcom_iris]
- iris_core_deinit+0x44/0xc8 [qcom_iris]
- iris_remove+0x20/0x48 [qcom_iris]
- platform_remove+0x20/0x30
- device_remove+0x4c/0x80
-<snip>
----[ end trace 0000000000000000 ]---
-------------[ cut here ]------------
-video_cc_mvs0_clk already unprepared
-WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#2: sh/542
-<snip>
-pc : clk_core_unprepare+0xf0/0x110
-lr : clk_core_unprepare+0xf0/0x110
-<snip>
-Call trace:
- clk_core_unprepare+0xf0/0x110 (P)
- clk_unprepare+0x2c/0x44
- iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
- iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
- iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
- iris_vpu_power_off+0x34/0x84 [qcom_iris]
- iris_core_deinit+0x44/0xc8 [qcom_iris]
- iris_remove+0x20/0x48 [qcom_iris]
- platform_remove+0x20/0x30
- device_remove+0x4c/0x80
-<snip>
----[ end trace 0000000000000000 ]---
-genpd genpd:0:aa00000.video-codec: Runtime PM usage count underflow!
-------------[ cut here ]------------
-gcc_video_axi0_clk already disabled
-WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#4: sh/542
-<snip>
-pc : clk_core_disable+0xa4/0xac
-lr : clk_core_disable+0xa4/0xac
-<snip>
-Call trace:
- clk_core_disable+0xa4/0xac (P)
- clk_disable+0x30/0x4c
- iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
- iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
- iris_vpu_power_off+0x48/0x84 [qcom_iris]
- iris_core_deinit+0x44/0xc8 [qcom_iris]
- iris_remove+0x20/0x48 [qcom_iris]
- platform_remove+0x20/0x30
- device_remove+0x4c/0x80
-<snip>
-------------[ cut here ]------------
-gcc_video_axi0_clk already unprepared
-WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#4: sh/542
-<snip>
-pc : clk_core_unprepare+0xf0/0x110
-lr : clk_core_unprepare+0xf0/0x110
-<snip>
-Call trace:
- clk_core_unprepare+0xf0/0x110 (P)
- clk_unprepare+0x2c/0x44
- iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
- iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
- iris_vpu_power_off+0x48/0x84 [qcom_iris]
- iris_core_deinit+0x44/0xc8 [qcom_iris]
- iris_remove+0x20/0x48 [qcom_iris]
- platform_remove+0x20/0x30
- device_remove+0x4c/0x80
-<snip>
----[ end trace 0000000000000000 ]---
 
-Skip deinit if initialization never succeeded.
-
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- drivers/media/platform/qcom/iris/iris_core.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
-index 0fa0a3b549a23877af57c9950a5892e821b9473a..8406c48d635b6eba0879396ce9f9ae2292743f09 100644
---- a/drivers/media/platform/qcom/iris/iris_core.c
-+++ b/drivers/media/platform/qcom/iris/iris_core.c
-@@ -15,10 +15,12 @@ void iris_core_deinit(struct iris_core *core)
- 	pm_runtime_resume_and_get(core->dev);
- 
- 	mutex_lock(&core->lock);
--	iris_fw_unload(core);
--	iris_vpu_power_off(core);
--	iris_hfi_queues_deinit(core);
--	core->state = IRIS_CORE_DEINIT;
-+	if (core->state != IRIS_CORE_DEINIT) {
-+		iris_fw_unload(core);
-+		iris_vpu_power_off(core);
-+		iris_hfi_queues_deinit(core);
-+		core->state = IRIS_CORE_DEINIT;
-+	}
- 	mutex_unlock(&core->lock);
- 
- 	pm_runtime_put_sync(core->dev);
-
----
-base-commit: 5303936d609e09665deda94eaedf26a0e5c3a087
-change-id: 20250820-topic-sm8x50-iris-remove-fix-76f86621d6ac
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
-
+With best wishes
+Dmitry
 
