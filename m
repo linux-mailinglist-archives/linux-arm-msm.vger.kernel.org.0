@@ -1,152 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-70004-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70005-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 170A6B2E3E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 19:31:10 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FF6AB2E484
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 19:58:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC06DA2197E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 17:26:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E063FA049C6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 17:57:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3537B3376A9;
-	Wed, 20 Aug 2025 17:21:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 479222749FE;
+	Wed, 20 Aug 2025 17:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DEGzZc3o"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="B/v0STli"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9883A335BDE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2E926D4FB
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755710461; cv=none; b=k58QL2hTi63tcVZgTLjUewQkHKKTvvTTiDCMqo159wczIYBOocUm4nsMHCzIZ3o4LkXvJ3RFARpOpwlub+RLCtKp6TA1E7tiWhIJTJ7b6whm5rKXlsdf3KMCvmAj4KlFgWnnw7KkErZ4WhaYA90U1DVn3J8siRYZV0XfbvYJm+k=
+	t=1755712596; cv=none; b=GGZWrUYv8ZGK8kQis3QHshIFQxSlSrs7UYpgbgPwHjlZMfZPMsDD/Po8Gh6LDGTMLEztdbk8bl3YW3YAnDUa0QXc6L3lkZaRFUa1x2H8J3nyHtkRbBuRfY83hCrGJkZ5gSy4l7/NwPRpnsZe0tfiEQ7RkHspCL20qOEHlcLdd8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755710461; c=relaxed/simple;
-	bh=NRHD/SaoUKlWxG5x9K1o/sFuQugTQx5lbwzhpuZgFko=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y3qcj9QhHrea11uFwCTkZ36cCEOaDmUoTZ4KTIlVaTRKvcFH1bI94t4nmBFupMBDxTCj+0x1HAu0GQ8cyKU9vkSXg+OCcDL36cCwU/7IdEwbrxTNXpywtjXsE9XCjSoai8ayffwt/Il4j7guTOVjF1Muy0fMCwHqo6NP1NEF0uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DEGzZc3o; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KABlTX028503
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:20:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=7BAeafa+hTBdTcNeLE5VaCsh
-	Bcl5DTEABVk9scTlNkQ=; b=DEGzZc3oiQjwyaP8JugAHAU8Ok9rmeh7iSPUi1f7
-	uuQWrBVeFjS6fMME7mCxyvZxXl9BZvUiMulfji/6sBAaqmRCH/WPVFlZjR4u45T3
-	1HOlBP1xIvyhwNjpDb+tIunimtAnJcvOPehbcH1QjRMrJ6fmyMB8BwWAFgVMLUBb
-	RoucNp7vLI/PFQheFxIAY8W1R0U0RhH9Dd195fsfs98IkBPmPcLn1zlw/nG2K07J
-	Meyo3uijjpvOu8qQnm9Ho2nkL3R87ZY4xu6YH/1+iKadh3VJUWLS4pG3/5qgqpmN
-	2NgMtvv0md46q0SOMgBTSmkQ8iTd86cBcMvujYfH773l1w==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52atf86-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 17:20:58 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-70d7c7e9709so4367346d6.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 10:20:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755710457; x=1756315257;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1755712596; c=relaxed/simple;
+	bh=QOcH2g5W2VgD9rWQLuw9eVTUp02n6Q21h3gU4HYGuQY=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=i2fObdp+XG4kwNcJgtAerJy05VMjTND2pFvOo6qxIoxnQwGdIZ4ex5dIxIkPTOC13bK/nn/Lh6Az+M/XyWHQwVUn+MIgQ9kZDgn9dQDZOdnkoaUdjd5gLv5grJA0iLGgIm9laecNpUNmM6ZcROBvqlHORZ7qmGpsaftLGqtcstY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=B/v0STli; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3bea24519c0so600599f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 10:56:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755712592; x=1756317392; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7BAeafa+hTBdTcNeLE5VaCshBcl5DTEABVk9scTlNkQ=;
-        b=MKSnvT8rL8pUoVcryOCfzGG+16eRtXQhkQWtFtb5yQnBd+sC4p+F1Pq+j3/orogZj8
-         2To/5PXMnmp6/CGzZUTJhhghYErn/Br6dKPw5pZsQREi+bmE8g6s0gymECs8CdX+yzUX
-         FwC0bGKEeriIdOXhIM3O3WzhX4fVoBDtYP1EPUoKSBhDHxUbRiv9uOHohnQNcfta7wBr
-         K8rqxfNFT3W0NAouktq/HZSKVdEaLNTSuOY+I9pZmXJ4w9K2Vw7IyD8G5KmGulpngHF0
-         mue3tsGTGmTvpa0GAT8rDNqjrAS0muYr1w+gJ3jQNDbS7hvSweqO5LovN/0PhA0Dcm65
-         FJhw==
-X-Forwarded-Encrypted: i=1; AJvYcCV6wVueXwFY7rk+YXjke3vFC3L/4Q5Uh70BOR+zDof5lgMLMSvGs6xNknVHxDPe8lkPi37GsPkLbQIfsHYQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywh/F0hxuksfrpiRDIX0Uz3MZcByOJ+y9QhgPWhRSprqXk1nNT6
-	4K1XEEvzCodbZDArcytozeecH70tujzCa4wSaLUCM1/iRE8fAr+VYN2EoZeb5MJjJ0uQYD9LlS6
-	RCuPD5Ng5Jfpfzoh7iIUCRfwiG/xoHCUAMcbVK3B+NgQooiUBlKhwfhnJeQ3Fnw0nQARU
-X-Gm-Gg: ASbGncuPxSbTqHYMJ7BrmX8u4Zzo76TqEj+Bn6TuOQASIhX7ZSpL7QBuXA/e8bMeRr6
-	PVV1tIPrChs6pxcCjTwP5hKeAzZC+xp81PFi8sUpcanj28CnDHlkuqEKGffYYob5wdLkp+iYJFp
-	BcnLOs7ED4ZrFIHGH6X7bWOn0x2HPUQgNFicKFoVC2vA/Q02EqOOZZ/BnyqB36d3pAws9jVEIDJ
-	bQOR48tzFPJSKAW6+gls4WnSRL21jQysqXyDPsh2xbkCK+Oi+eom3u0MstVyvQOEZhEVKaZnewp
-	582C8QfSLeSeWt79nNRcW/Z7IFCv4SzSgXo1pJKz6Bf5pZLputgiQSdflTOo/glfaCMyEq7N9SF
-	EFvqWOYW55SwvZ/bhdclkhX0/az45YV/F+XSEWVOVvCtH9YN4+HHY
-X-Received: by 2002:ad4:5bea:0:b0:70d:47a1:cae1 with SMTP id 6a1803df08f44-70d76fe9438mr40332796d6.23.1755710457167;
-        Wed, 20 Aug 2025 10:20:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3n6czrojJ1Kz94y4cHToXW3HPALrWfZWenYGCqB7SJfzmkaV8Sa3oCpRIK2udtGSo003JlA==
-X-Received: by 2002:ad4:5bea:0:b0:70d:47a1:cae1 with SMTP id 6a1803df08f44-70d76fe9438mr40332396d6.23.1755710456562;
-        Wed, 20 Aug 2025 10:20:56 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef369bd7sm2676457e87.68.2025.08.20.10.20.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 10:20:55 -0700 (PDT)
-Date: Wed, 20 Aug 2025 20:20:53 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Hans Verkuil <hverkuil@kernel.org>, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] media: venus: firmware: Use correct reset sequence for
- IRIS2
-Message-ID: <ddc557rrzuz54r5hlnblsopl2t4ca3wle3eaanbwa5yavgwtcp@mamxnhma5tw6>
-References: <20250820-venus-iris2-no-tz-v1-1-9ebcc343195a@linaro.org>
+        bh=gRaTNaGpOa5Z+hRu1yAnzsNeyy2LG4LK/xZpmXNSsoc=;
+        b=B/v0STliWwFwkeILjSqJBTwi1Nz89yvFPHBm4eS+eRnaokpNhOJJ1ZxBwA9BfDw1CM
+         GAPq4J6ls+UzCV1yCFIpvSsubXk5XMGBW8hle5Nudp3hH58dbilLkoJGAeQ4hYbrIgK5
+         GpN+2/atjzqAUdWGbf7YMFpMgnRObYnXyLfHzU98YC6YeLg9l8DIpLGTsejkmyss/ZOY
+         xzWlRwlwQ35AJMDUl1kZ9CsqjSn+YmVTWXDO8wzsmC3c2J1dcY3knCjmg15c489w4Muf
+         lxwTeugOzTi2JqVf8ecK2x4ddnNsTYlak82eLlYP+FHgp2kh+n1pMj5z5rnhdjQYV9iO
+         SJFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755712592; x=1756317392;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gRaTNaGpOa5Z+hRu1yAnzsNeyy2LG4LK/xZpmXNSsoc=;
+        b=foUO/BPYSEWB36wbo+Vw1zv59ZlUO0HgNEKud9XtLo3WK/H5YY1Tu5Su3nnz3GIabF
+         dbo9uuP9tp6gbWzxFF1UKEO30sBDCUKzuhfqBPHZWrltk/p38E5B3GzRJlZWwuYxFH8+
+         gkmGbOIE2OssLswLjFHhxeWWBAzL8eGUQ1xZMeuHc9hu1jJJ3zdJG0cy6snOn6v2U/wt
+         Wh0qphUkPBM0FZbFhXf+yoCPqM6JFx3O3bGeWuQhdTxOwN7IWrkOR9RL7ePexyxns6QO
+         2kyzoEla6I7v/jZQUUJUrIc8O/wqu5sRYWwJdu68i9RKEp74pc910TjISuxbA10zca7x
+         i65w==
+X-Forwarded-Encrypted: i=1; AJvYcCV0Jt69a6LUYjFkzAXHgbBGOAH6udGyN9xv5JNOa31feiSUx3AsADvSSlpLK+UWijABVqBk9sFcMA1N0Tmn@vger.kernel.org
+X-Gm-Message-State: AOJu0YyavPJDyEuN4QJma9Be2itgi5OLzpD1E/gdCfj8xzDzeKTuO9fG
+	Qu4pLaecj8op43MphQc4BrCe0nIlwHWzRBd4e8um2PuKydkuaWJJvOaFFHbVOJLn3ZM=
+X-Gm-Gg: ASbGncs1msH1LWBm/usg8fwCjFpQMKnEilCLaqbr6k1G+3yDQYOSHJXIjXf4DEe+M9n
+	rMPqdJOL4kz8npTAYh1DPBFSrAYB4Wm3R4cfNPjJhbJ3V4/4NjQMFHc6d7RCZwjMeSaT0VCDgQ5
+	antfShNdIkTt3a/+wrVyXQqiF/d3ywXmE7Ebpu6tWawDCZJT6Ud5QxObTQ7aQgXZ50skmGbwP9s
+	OfXE4/w03vsRPkeX4lxDgg5bYpvy5F4hZ2ONZOqzIHpSRQUX1CpY8aXABEeK+rxf/WmipW/CmS3
+	Xp31Ogdq23OeORxBa8FzUtVP+MSFH1xJXNSb+PhugBltwV3tOWpmmnBhdTc2tmqaQ+hru1SZKU8
+	qcFLAXwWvwe4VxTgwdrOZ4iSwy9Q=
+X-Google-Smtp-Source: AGHT+IEnJcBD8HXQkToDE4iC/mSJ7mzWcSv6cC9qg3LBD8IqH8NeDDcwZslRIYizdVu0Cq/R4HhLFA==
+X-Received: by 2002:a05:6000:25c2:b0:3c2:e033:3994 with SMTP id ffacd0b85a97d-3c45fe7ccd1mr371009f8f.26.1755712591851;
+        Wed, 20 Aug 2025 10:56:31 -0700 (PDT)
+Received: from localhost ([2a02:c7c:7259:a00:3a9b:1de2:5440:9326])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c07496f432sm8454409f8f.6.2025.08.20.10.56.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Aug 2025 10:56:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250820-venus-iris2-no-tz-v1-1-9ebcc343195a@linaro.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX57tIMMh5TPUa
- mEqhV2Drly8ucLBGSfzxy87E2seiMQiF8DhXl8Y5odPVfFKXP2eWr1F1W+3Tg15x8Q/FJ9D3ukm
- blD6LTH2DAlp9OqkbqTjD1DOR16Kb8zwHJIAO24Ugbhd9yqwfayUJ+vAyedDNUrdJtS6zcqhgdS
- 3zs487l0ufier4a3ALRzP+T9OlR87yjwtPHxqtlJ5QvBk6P3AnMAaSdxuSK+ykCEymJwgVGGHxa
- zF6X3ZoXOqab+D/JpvJIBLfvlcIpBv1E9U99LGaLgc1P9mq+b8HoKDUL4HJKTbAmIZo+RTxuaoM
- QlF/C7LPROIE1hPD0ftOSismhvRBjbRRvV34h7piyycrsU9ZBNEoaZN1BLnnQrP3XTf5pIoeHMs
- 4GqvcObI/IyRCrf+4gYgohas/1yJzw==
-X-Authority-Analysis: v=2.4 cv=TIIci1la c=1 sm=1 tr=0 ts=68a603fa cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=Zxh-gqEWaZ_blzi-cf4A:9
- a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: wWd5AbgNWKvq0xdvFZb0E0ObqIqUTfUD
-X-Proofpoint-GUID: wWd5AbgNWKvq0xdvFZb0E0ObqIqUTfUD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_04,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0
- bulkscore=0 impostorscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 20 Aug 2025 18:56:30 +0100
+Message-Id: <DC7G65CXCQRB.3NGHI539I09CP@linaro.org>
+Cc: "Vinod Koul" <vkoul@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>,
+ "Takashi Iwai" <tiwai@suse.com>, "Srinivas Kandagatla" <srini@kernel.org>,
+ "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>,
+ "Patrick Lai" <plai@qti.qualcomm.com>, "Annemarie Porter"
+ <annemari@quicinc.com>, <linux-sound@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, "Krzysztof
+ Kozlowski" <krzysztof.kozlowski@linaro.org>, <kernel@oss.qualcomm.com>,
+ "Ekansh Gupta" <ekansh.gupta@oss.qualcomm.com>, "Pierre-Louis Bossart"
+ <pierre-louis.bossart@linux.dev>
+Subject: Re: [PATCH RFC 2/2] ASoC: qcom: qdsp6/audioreach: add support for
+ offloading raw opus playback
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Srinivas Kandagatla" <srinivas.kandagatla@oss.qualcomm.com>
+X-Mailer: aerc 0.20.0
+References: <20250616-opus_codec_rfc_v1-v1-0-1f70b0a41a70@linaro.org>
+ <20250616-opus_codec_rfc_v1-v1-2-1f70b0a41a70@linaro.org>
+ <c4d934c1-0218-4147-882f-279795bcd1f4@oss.qualcomm.com>
+In-Reply-To: <c4d934c1-0218-4147-882f-279795bcd1f4@oss.qualcomm.com>
 
-On Wed, Aug 20, 2025 at 05:16:39PM +0200, Stephan Gerhold wrote:
-> When starting venus with the "no_tz" code path, IRIS2 needs the same
-> boot/reset sequence as IRIS2_1. This is because most of the registers were
-> moved to the "wrapper_tz_base", which is already defined for both IRIS2 and
-> IRIS2_1 inside core.c. Add IRIS2 to the checks inside firmware.c as well to
-> make sure that it uses the correct reset sequence.
-> 
-> Both IRIS and IRIS2_1 are HFI v6 variants, so the correct sequence was used
-> before commit c38610f8981e ("media: venus: firmware: Sanitize
-> per-VPU-version").
-> 
-> Fixes: c38610f8981e ("media: venus: firmware: Sanitize per-VPU-version")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
->  drivers/media/platform/qcom/venus/firmware.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
+On Wed Jun 18, 2025 at 1:34 PM BST, Srinivas Kandagatla wrote:
+>
+>
+> On 6/16/25 4:26 PM, Alexey Klimov wrote:
+>> Add support for OPUS module, OPUS format ID, media format payload struct
+>> and make it all recognizable by audioreach compress playback path.
+>>=20
+>> At this moment this only supports raw or plain OPUS packets not
+>> encapsulated in container (for instance OGG container). For this usecase
+>> each OPUS packet needs to be prepended with 4-bytes long length field
+>> which is expected to be done by userspace applications. This is
+>> Qualcomm DSP specific requirement.
+>> > This patch is based on earlier work done by
+>> Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+>
+> Thanks for picking this up Alexey,
+>
+> Same, co-dev by should be good attribute for such things.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Thanks. I'll update it for the next version.
 
+>> Cc: Annemarie Porter <annemari@quicinc.com>
+>> Cc: Srinivas Kandagatla <srini@kernel.org>
+>> Cc: Vinod Koul <vkoul@kernel.org>
+>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>> ---
+>>  sound/soc/qcom/qdsp6/audioreach.c | 33 ++++++++++++++++++++++++++++++++=
++
+>>  sound/soc/qcom/qdsp6/audioreach.h | 17 +++++++++++++++++
+>>  sound/soc/qcom/qdsp6/q6apm-dai.c  |  3 ++-
+>>  sound/soc/qcom/qdsp6/q6apm.c      |  3 +++
+>>  4 files changed, 55 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/au=
+dioreach.c
+>> index 4ebaaf736fb98a5a8a58d06416b3ace2504856e1..09e3a4da945d61b6915bf8b6=
+f382c25ae94c5888 100644
+>> --- a/sound/soc/qcom/qdsp6/audioreach.c
+>> +++ b/sound/soc/qcom/qdsp6/audioreach.c
+>> @@ -859,6 +859,7 @@ static int audioreach_set_compr_media_format(struct =
+media_format *media_fmt_hdr,
+>>  	struct payload_media_fmt_aac_t *aac_cfg;
+>>  	struct payload_media_fmt_pcm *mp3_cfg;
+>>  	struct payload_media_fmt_flac_t *flac_cfg;
+>> +	struct payload_media_fmt_opus_t *opus_cfg;
+>> =20
+>>  	switch (mcfg->fmt) {
+>>  	case SND_AUDIOCODEC_MP3:
+>> @@ -901,6 +902,38 @@ static int audioreach_set_compr_media_format(struct=
+ media_format *media_fmt_hdr,
+>>  		flac_cfg->min_frame_size =3D mcfg->codec.options.flac_d.min_frame_siz=
+e;
+>>  		flac_cfg->max_frame_size =3D mcfg->codec.options.flac_d.max_frame_siz=
+e;
+>>  		break;
+>> +	case SND_AUDIOCODEC_OPUS_RAW:
+>> +		media_fmt_hdr->data_format =3D DATA_FORMAT_RAW_COMPRESSED;
+>> +		media_fmt_hdr->fmt_id =3D MEDIA_FMT_ID_OPUS;
+>> +		media_fmt_hdr->payload_size =3D sizeof(struct payload_media_fmt_opus_=
+t);
+>
+> maybe sizeof(*opus_cfg)?
 
--- 
-With best wishes
-Dmitry
+Ack.
+
+Best regards,
+Alexey
 
