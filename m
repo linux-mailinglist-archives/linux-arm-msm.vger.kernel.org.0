@@ -1,197 +1,93 @@
-Return-Path: <linux-arm-msm+bounces-69996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69997-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B65E6B2E2B4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 18:55:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2445BB2E2CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 19:02:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 79DF11888A4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 16:54:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6C767B018F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 17:00:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B249334361;
-	Wed, 20 Aug 2025 16:53:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7801322740;
+	Wed, 20 Aug 2025 17:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BRQKINB6"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vG5wBt6E"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1314B326D4A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 16:53:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67B513777E;
+	Wed, 20 Aug 2025 17:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755708825; cv=none; b=S7lSGGFoj2bMr6kItrHQU47OGueHFAJYXIrKakvyQKGHAPnyld5lK9XyPKi2dkEfw6cAdJTikRaKbeTKKXKECy/1Rc435UhqW3jTGNNH8ClN14+gE5/wZPxec5NyspewPTyHcqUyIzH0vrK+jpPKuHcBBCtXejAIeV8GhHNhIiw=
+	t=1755709340; cv=none; b=Z2bFeRqkMzPHhpp7iFjRd4r4ZNuMBZVwGKjaGVaBHHNRLPnmqPfTNwjjuk2gNvY5wkfYid1+QTIBMQe1XNW4RBxf0TQYj8E4y9ctf9KHMDGgMCV1m/z3QXA6V+3Cfr/iWfl72Dicisfj+Y9nTxq8zdotOzkSM2+Rw4ln3/BPBoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755708825; c=relaxed/simple;
-	bh=YFh9tQlkjzT5yWM+TmV6WOeSwu9NitbNMXsAdBpXl6E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RpU3xQifIZ0GjFh1RbG5uJnC8xF5kDDCj59RSdYNDhyufDpJNy24R2327Cf4Apn6+SQnpb0MNKJSktUxS3heBRe84qMAj18fPbaKlrKnxfk71lAjufyKUZd0P2a61qoGgZuZoDWnQdqN6if6a0HvrAIol3r9KdVXzLm7E9ipMHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BRQKINB6; arc=none smtp.client-ip=209.85.221.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3b9dc5c8ee7so119369f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 09:53:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755708822; x=1756313622; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=WpCvOUEy9gt+e1INXVvX+QS4u6BMKssFhZFYzWXcaY4=;
-        b=BRQKINB6EYU/nvEofIbXMeVTiAR3hU2Qld1wLO1hHns/hq2ZrF8FDGoXgSg9j8HzDM
-         Kh8pmP8NT34Sa3k8O9iyOVN9RRwjwwNR4aJKt7aK/oqcwHNdMpDtC1KUzOJ73rjMnH1P
-         cvV5K2zdw6wOEsbnCPqlPm18N4S1mWvCEEn+lRbhM7YKS515xKmkrJrzry5KFGl3Af5X
-         T12UcOZi9pGCcIVx0DqeNc4yGkmu3hlDDrjNRCTb4qPKyMSZmpgDre6Oni8E4qXuVCYt
-         hazFXzj79iWiGI/lu46k7Cj++DZUsodiiramULzVjCCNP9ABzdGIfuh3OuJQMyPkEB4K
-         nq6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755708822; x=1756313622;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=WpCvOUEy9gt+e1INXVvX+QS4u6BMKssFhZFYzWXcaY4=;
-        b=xU4Q0v7GWVfJD4ytlD/ZqBZy3WawfD7mbcMJiNQr5dLBJKTToOQh9N9SZmeyT5+oE+
-         2Tyhs7LR16VxOIwgUSKGa2+UDUL7JEPhfvAc+KwVWSi4LYnZKF31qkmhG6Hv4DNyhiMv
-         DgXLYKN6BaCaoVsWEA8ARW088AQYR6uJDxHDWYpT6oyeyjfkU7iFg0+Cb9KDlOsS25cs
-         07NjC61lZFtlpG+xVJFkDRa7gp8L0cwFOYZfD9rB7Ed6ST/auGvxSlGl72HXwv8j7QZz
-         TtUWaXobIRRQMr/oxt2TobwZ4Etx1pvN9E+zmGytq1ewkkJjE2ZuIpbTwlVYKvPVKzTz
-         BPLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWswr4fwESFztilhLpm3qxfQ+uGIgvfkUNH4ndBOQH4XjJJWO7X4O8Is7bH3n897oP9Ov90vomE80kJaVwg@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYH8FlkvRiaZmki3j9wrwP6UI6jqGW+703sq08B4rSDKwTBBVL
-	OTmENQ9HG984Qu8YCU30dK9nhwrIo01UyWPL3xZ9xj4OW8/umFq1Vvr/OV2k0Zh/Hxk=
-X-Gm-Gg: ASbGncvBtCExlXaO9joo9TFsyFHNtRPffB5vF9XppBJ1IX3WrzqM8Fiasw47jWCdMgG
-	VSgWHdNTL3cwUnNeZz9tBMbkE9sW7aPa7tbjgy3xbYDJhrkxXjdK1FdwWb5UbQHlBVe6VPuv///
-	71qrgBCWEjCEjz7+5UAoMHQ6iVfsNrNne2oFcTqgwYnNmhrRBP3vHzl6GkVQe8miGXXgPmcvZ/R
-	TyKOz1NOAMldJDJ09LO8YIXiazwLyNZMESrXRTuPIdpdGIZhhPZXzEGHAVHu1uHpejCWjAsPI4R
-	P4CwpLS9GG06+xq++FtFQnI6pR5Iim7ifcynFc79kANuMnrFl0CSX/p7EU460UP9IDfb8feeEg6
-	ezpvWaZ/sU0F7jHcucWKM/xglN1McSlmuecE=
-X-Google-Smtp-Source: AGHT+IGB0p+aULag9mfdU8eRn3hjRaFkMxyv9kzuYWAqcbOyx1VfevBG2Noz2dFjBb5RNTesRx0DXg==
-X-Received: by 2002:a05:6000:4308:b0:3b7:994b:8438 with SMTP id ffacd0b85a97d-3c32e709bd2mr2518257f8f.46.1755708822180;
-        Wed, 20 Aug 2025 09:53:42 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:d9eb:6295:cf25:b839])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c077788b39sm8447524f8f.47.2025.08.20.09.53.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 09:53:41 -0700 (PDT)
-Date: Wed, 20 Aug 2025 18:53:36 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 06/11] remoteproc: Move resource table data structure
- to its own header
-Message-ID: <aKX9kO5eHUp40oRj@linaro.org>
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-7-mukesh.ojha@oss.qualcomm.com>
- <aKWDXySSt57tXHVP@linaro.org>
- <20250820151822.6cmowxfsheqxfrnb@hu-mojha-hyd.qualcomm.com>
- <20250820163250.hszey3i2gtd3o2i6@hu-mojha-hyd.qualcomm.com>
+	s=arc-20240116; t=1755709340; c=relaxed/simple;
+	bh=tNTj9tNEMOWtDcM1RzN6AMMbLh3U5S0eKicHECZ6bHY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=b2MHN3gX5pVqIfP5Nh1XZVlDpHZW06g6pNOnucKf/mFMD7RagT7Qa/4702Zk+6xqv3NpAw6l/dMM3zDR11lTzQ7G3w2HdlYJBWObDEXjisB7XvsMzccC//+ZaCX+5veUthDJ1uEjpH90vCWMu/PwJtW7UUBsJ8YG706sQlxRSCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vG5wBt6E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 784D1C4CEE7;
+	Wed, 20 Aug 2025 17:02:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755709340;
+	bh=tNTj9tNEMOWtDcM1RzN6AMMbLh3U5S0eKicHECZ6bHY=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=vG5wBt6EGRHnth+pzXz7cuVql9/xvF5h6qKMLT0c39Yyss10licpn2FXtasr1r55w
+	 nv39rhwK3Bg8R4YFYLUN42ZkBup894xfHZDUY0qNRIrlVhBoMkS9aZmRrkc8vjuIbr
+	 KPC3jv5wh+WQpJsXLxIRXH67MDcqDX26vbb2bNxEbRyJDPtxHwafTRDpe+bhWvMZt6
+	 LrG0xzZz93sFtkMQNzbeC/xWSUGXAWzzoXc+IYS16SCj0YCUP9SPqJNYWPoJEoz+m/
+	 KO4tHwqw4eJcW+zuZiXIU8yRuScDw6av5MU4vJwJ/zwItT1lyIMXR1MA/st9nklMiF
+	 QzwbMZtg2P+Gg==
+From: Vinod Koul <vkoul@kernel.org>
+To: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Manivannan Sadhasivam <mani@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com, 
+ quic_mrana@quicinc.com
+In-Reply-To: <20250809-pakala-v1-0-abf1c416dbaa@oss.qualcomm.com>
+References: <20250809-pakala-v1-0-abf1c416dbaa@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH 0/4] arm64: dts: qcom: Add PCIe Support for
+ sm8750
+Message-Id: <175570933399.66459.8492859060215712340.b4-ty@kernel.org>
+Date: Wed, 20 Aug 2025 22:32:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250820163250.hszey3i2gtd3o2i6@hu-mojha-hyd.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Wed, Aug 20, 2025 at 10:02:50PM +0530, Mukesh Ojha wrote:
-> On Wed, Aug 20, 2025 at 08:48:22PM +0530, Mukesh Ojha wrote:
-> > On Wed, Aug 20, 2025 at 10:12:15AM +0200, Stephan Gerhold wrote:
-> > > On Tue, Aug 19, 2025 at 10:24:41PM +0530, Mukesh Ojha wrote:
-> > > > The resource table data structure has traditionally been associated with
-> > > > the remoteproc framework, where the resource table is included as a
-> > > > section within the remote processor firmware binary. However, it is also
-> > > > possible to obtain the resource table through other means—such as from a
-> > > > reserved memory region populated by the boot firmware, statically
-> > > > maintained driver data, or via a secure SMC call—when it is not embedded
-> > > > in the firmware.
-> > > > 
-> > > > There are multiple Qualcomm remote processors (e.g., Venus, Iris, GPU,
-> > > > etc.) in the upstream kernel that do not use the remoteproc framework to
-> > > > manage their lifecycle for various reasons.
-> > > > 
-> > > > When Linux is running at EL2, similar to the Qualcomm PAS driver
-> > > > (qcom_q6v5_pas.c), client drivers for subsystems like video and GPU may
-> > > > also want to use the resource table SMC call to retrieve and map
-> > > > resources before they are used by the remote processor.
-> > > > 
-> > > 
-> > > All the examples you give here (Venus/Iris, GPU) have some sort of EL2
-> > > support already for older platforms:
-> > 
-> > Example was taken from perspective of remote processor life-cycle management.
-> > You are right they have worked before in non-secure way for Chrome.
-> > 
-> > > 
-> > >  - For GPU, we just skip loading the ZAP shader and access the protected
-> > >    registers directly. I would expect the ZAP shader does effectively
-> > >    the same, perhaps with some additional handling for secure mode. Is
-> > >    this even a real remote processor that has a separate IOMMU domain?
-> > > 
-> > 
-> > I don't think it is the case and think the same that they can skip
-> > loading and Hence, I have not yet added support for it.
-> > 
-> > Will check internally before doing anything on GPU.
-> > 
-> > >  - For Venus/Iris, there is code upstream similar to your PATCH 11/11
-> > >    that maps the firmware with the IOMMU (but invokes reset directly
-> > >    using the registers, without using PAS). There is no resource table
-> > >    used for that either, so at least all Venus/Iris versions so far
-> > >    apparently had no need for any mappings aside from the firmware
-> > >    binary.
-> > 
-> > You are absolutely right
-> > 
-> > > 
-> > > I understand that you want to continue using PAS for these, but I'm a
-> > > bit confused what kind of mappings we would expect to have in the
-> > > resource table for video and GPU. Could you give an example?
-> > 
-> > We have some debug hw tracing available for video for lemans, which is
-> > optional However, I believe infra is good to have incase we need some
-> > required resources to be map for Video to work for a SoC.
-> > 
-> > > 
-> > > Thanks,
-> > > Stephan
-> > 
-> > -- 
-> > -Mukesh Ojha
-> 
-> Since I am not subscribed to any of the mailing lists to which this
-> series was sent, I am not receiving emails from the list. As a result,
-> your recent messages did not reach my inbox. Additionally, it seems your
-> reply inadvertently removed me from the To-list.
+
+On Sat, 09 Aug 2025 15:29:15 +0530, Krishna Chaitanya Chundru wrote:
+> Describe PCIe controller and PHY. Also add required system resources like
+> regulators, clocks, interrupts and registers configuration for PCIe.
 > 
 > 
-> https://lore.kernel.org/lkml/aKXqSU-487b6Je2B@linaro.org/
-> 
-> https://lore.kernel.org/lkml/aKXQAoXZyR6SRPAA@linaro.org/
-> 
 
-Indeed, but I don't think this is my fault: You have a strange
-"Mail-Followup-To:" list in the email header of your reply [1] and my
-email client honors it when I press "group reply". Your email client or
-server seems to produce this header without including you in the follow
-up list, as if you don't want to receive any replies. :-)
+Applied, thanks!
 
-I fixed it up manually this time, but perhaps you should look into the
-source of this weird header in your replies, I'm probably not the only
-person using mutt and just hitting "group reply" all the time ...
+[1/4] dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the SM8750 QMP PCIe PHY Gen3 x2
+      commit: edafd4f3fd52a614c5cee2684559367eac2286dc
+[2/4] phy: qcom-qmp-pcie: add dual lane PHY support for SM8750
+      commit: 0f051749c804b5a4f485013c0e3c932e1dd9f70b
 
-Stephan
+Best regards,
+-- 
+~Vinod
 
-[1]: https://lore.kernel.org/linux-arm-msm/20250820163250.hszey3i2gtd3o2i6@hu-mojha-hyd.qualcomm.com/raw
+
 
