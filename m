@@ -1,95 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-69889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89434B2D6CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 10:39:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 584A8B2D6E6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 10:42:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B67F11672EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:37:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CC6354E2A10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:39:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F1432D94B7;
-	Wed, 20 Aug 2025 08:36:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4D692D879E;
+	Wed, 20 Aug 2025 08:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IzdfKpyE"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ofYFmVYq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DBB727147D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 08:36:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA30A2BE65C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 08:39:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755678979; cv=none; b=bc0VeImmUbQh4X647yXvGnQ2o8fBDfWSV0WzmrbUHN+cUa4GeC/OPUxFxKneqXtmI/oh35rtS/BqRnAXf9gDDVZiv32cSyE5/MDSekrcM/F0ahS3/h5Sg3Tdj8OjKuGuFNo8YaX9ySMS3HMRO6I0PGz0u+rSk9wf+/zye9Opb6w=
+	t=1755679190; cv=none; b=gOpGNCW44VPEJs8Kzev7pogrvuiHoUrz/5zDgNZuomQWZdXHQ7NczOgLQ1LmfL+GBJcu5w7qcOjet8O8kISZvUpVgniURjCbdBkOrAsVQyd+tA4GtlvcK5SXcktqqX5rCAEflrz6abIbFH5TydJKZi3p75SklXmN5f+nvEPi+sU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755678979; c=relaxed/simple;
-	bh=+qSVbXUS/clmIdfv3OXHciTtkLmQKmbi6XRnW5pvU3E=;
+	s=arc-20240116; t=1755679190; c=relaxed/simple;
+	bh=B5Odn0BpuqAx/zQPP5UfzrjrGTX8wxfSsyNahtVboZ4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m5L2J6MAWz+KqMGlkkDfJBmSgG5bfXJUyMtqPTyd4BqkQpJ9/53BRAtpO4heqat2ZFLvWVhq9nU3gS5wT/Q6McbFThbZ2a1APoLReydaa6/A3mUznC0OjdP+ZUgJnPa5ygtnapfZmOYwlJWrEqZGSEtnu5KsKQIVKOKmFMNtn2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IzdfKpyE; arc=none smtp.client-ip=209.85.221.46
+	 Content-Type:Content-Disposition:In-Reply-To; b=gmmv9CKCkWL5+r+6Td7c7GqeNgz/ICXGL9X68P1HucAugWZor3UFiMmt9iGry5ojlF/N77GOLAvpuugw++D/wyiigmzJcRRey4q6YeAxm2z+rg4P/CYceGAw7XoqEkkJZWjYZTtx9hlJqj4pzsTzzLdIDLZ6FgDVZNQA15yOxuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ofYFmVYq; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3b916fda762so301216f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 01:36:17 -0700 (PDT)
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3b9e4148134so3096936f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 01:39:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755678976; x=1756283776; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1755679187; x=1756283987; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=YAr6jehsKiHEOUhuldij9V65ueaJsFRa/9UyVncK9fg=;
-        b=IzdfKpyEBOYk1Vpro1pk4mjX1StKeqYl5RURFsPu+nyW2sHQWJxL3qgkOYv0PpIReh
-         0wRlgtqdasHieIBPCR7jNRIiHNyRFOzHYWYqEQ6NmDJ2pTCsb9AOZFTJrRfuj3ZGJdMq
-         Rjup9nZGwXhparjpCmTLce9nBm29YepRBN7nVDJlyODZUYeXNH5djPXfe18mEsBK065K
-         a1J8o88MI0iCX0HbRqBtzJc8ivwwVU2915u5ujE1jCtimjfxMptgc0DOlVyYay4ElDBK
-         IbffjBHoX89beIcOazhzcVma57/vuOjCqCsLyuvDvl6uDVfIn/cIB6di327gu/GaRy1g
-         WX/w==
+        bh=IfdcMs0PNyVozDxCFB7NWyoBaP2B6WgwAVLq6ldhhGE=;
+        b=ofYFmVYqIz7TnLyqS3oui/I6FgAZ3uQL8D60Gd5HHy8UsCMuC6fgQZKfdFGQipUPDL
+         RJ/L3lTuYfFEJ3oNwyW4bDZvzuuB/CJ2DsXizq8qb+V/UdNbBKrMzGF2CkvCN3am2NlZ
+         riHGA+mO2rGW/ZXpZC3Yrt7SaPQAZo+EKu0n74OTJkcdxDHSpOM9p60b+9q6lQnbwm1M
+         7Aj2mlJt69N9sdDqQRkKRoUgpIRkTWkDX3iqoZ6N/luck3SbwQ+O6DeuB6ll5hdBYpi9
+         qNKNRkqDty5aQHU82EtlJcJN5w+0RsZKOdBID7Ha/b1dBzomum4e+Y9tmR8SHGlNkpV7
+         6TTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755678976; x=1756283776;
+        d=1e100.net; s=20230601; t=1755679187; x=1756283987;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=YAr6jehsKiHEOUhuldij9V65ueaJsFRa/9UyVncK9fg=;
-        b=QRg+KZ3PBvDkOd+0wo40t4low18W8n9L+ztS8BOL/Vmsx3W77ZdwF1wthA0IcM3Rkr
-         iB7iPnu2z5ygRVXrfuFS9uhLOnRgBS+cqHEhdwFgIcp4CA4LQk3tilsattft5fwwp4iq
-         1lZBinsDZuNbST5yQFR8qmAMujIsdFwAm2LQxtWz8J1Q+sAZS+kdNXzku/gYLBKjj3kv
-         mvCl8U0zhnSYJ5q9UnIdsua7flF2krlSRURImOOAaQByDvzquKYdnT5dBhBqPs/2tCPm
-         l9Q9ww1y0Zf4XpXTSibWsLj7Iz6OYzbRwV7132ZsWhwtChlkuZoQzJiyqCGJi+/iUFRQ
-         vMow==
-X-Forwarded-Encrypted: i=1; AJvYcCVzKJ2IGxDXHbMUSVgKjufJQMFD9AD8ZwvOFULjXWoWrY2L4puWyZ1y/6N28qQ7oYHuWMEXUoO3yc127DQj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyhcII7rnvZRWpcpJtgrlzcxNLFws5n7QmEg+Aak+OSWueSu8g6
-	CTAAnnS8p4Ajv8vv3O7tALJJWEFtK/JxLR5AIgHOUBUfQKwJMBSnPdbQtjmYE0nxiHs=
-X-Gm-Gg: ASbGncuBc5B9JdsO7vV0Dt3kMX5Oe5VYpocKx30x8l1HuH8js7edAmsy9SHMP0jUXVG
-	hqOvHbx8RS7NtN3Y/A4wJyinTXFEmAVLn98KxMxr3rbXPGT8eVZtIRYQc5mh9U0cbz9GkIWqxZw
-	7t4FvbDb2FwzHkJFR5dKoJlAiIlihgmZDgPPVrwrGGLrPU9SIvklIxoF/sGU4U/d5YGtjjWsMjV
-	BUykE/Di2bzw+JUwnVwyEnmDA6MDJfyJf616CrVGd5cEGaPZ27TrumnIEIkscyu5EfiapvFHOti
-	HXETvQZDIfTm+CetHUPaWSxbPHUu/uyJo5LnEWC6X1ZsFGFseqtr5Z0qX6PNRaTXDllUm5gDraI
-	OnpbbeKOsgXDltsC2nzhM5UiVrHvpiTkoCJk=
-X-Google-Smtp-Source: AGHT+IGi+nraIikmoF7WftFp0em6MhyjlDmSPu86zOKlpKavPilVFf76gYO+pgNSjEXMVIEPdoHeBA==
-X-Received: by 2002:a05:6000:2c0d:b0:3b7:775d:e923 with SMTP id ffacd0b85a97d-3c12a803871mr4177431f8f.4.1755678975484;
-        Wed, 20 Aug 2025 01:36:15 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:ef30:8a2d:c0da:b2f2:1f41])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b4976bc73sm16131425e9.6.2025.08.20.01.36.14
+        bh=IfdcMs0PNyVozDxCFB7NWyoBaP2B6WgwAVLq6ldhhGE=;
+        b=Z7HJjyqJlb1X+CyBTca0oU3hIQRnAAyt6ndwOgrCfW5EGdqCqtOI1pyrxnwZN0xmBS
+         5jmyPqvH2ZR/LMdvjZkBehXh4IlLJ+XzzyrrXJOpRch0QK15pScQGJmlBgUE3JgXU4IH
+         sbaHYnUMDAr02yS0h4NvQSqtOk7RhQH6zuYxom2VlOk+oFoZTJmt+/4qsg1VpKI1wylg
+         MrqY0SauqHC/RN+Zur6RpjKVtyCsGh7UMbhwIRmXHXAfqmHIqzogi/+lqNT0BLUp5a8l
+         XPiqscDxf+BW6o8z1zYKdyireUanm+az6t6+PT7Z/FHjo4zIdfb7wQNqmiMuaXIGDeaD
+         0lEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXFecF4bp3EvzaETBwBFZ4fkW5T5FdIxUcuVqdbNsHF9DekFpDsr77DlPWpIADiI5Ju3CKZzvJ5I10X5WRY@vger.kernel.org
+X-Gm-Message-State: AOJu0YywGO47IVAD7bsjbtkedHFIjNQBI5z57PKmH1iRmgI+Hn/SmSSo
+	LO73U60NTM6T6ff5LzbBAGPoYkuH8z31fqb1KhWyzAvQpCjpHXcpz6h3B3u6nIdPedo=
+X-Gm-Gg: ASbGncvvHCgAJ2Tn3uJ5E40FxNuwdpg/1zoKhgREmealUv0ZvPIeRixgyBrIELVMgmT
+	2xT1fLTMaldHdehr73LgzJesunZFfbVbJeVmIuudDVyvSlUv6sF8jtgGMNHf18HyKWvYDizn7bX
+	JITCFftMWRRfWf13fRSEZWczL5zvGjibcX1tkmvG2oFvuE6YdTIGar01L5fmkmNV1RexCWF0S3i
+	V26HMcHTFjWmIKsK6U3C5Fd5vpdyQTTjZaL/lcoZMPoDTjW3FcYwi6/RBORU57nLzQgn5FX1CzP
+	6FaM7UX2NSrqPt1/Bs4DriYgMfN1h0kIwSvkbOEauxga5g9C9RBTR/q6dQmoTheVzx9Rxvq95B6
+	WeGnvteupVMDO8ij1gtY=
+X-Google-Smtp-Source: AGHT+IGJauwKyrl57epN9GYL9wKpPJYYPayxZn61Gui1IwqTxzG6ooIUmqPZFZG1hvz5cY1leyuB5g==
+X-Received: by 2002:a5d:5d0e:0:b0:3b9:1684:e07 with SMTP id ffacd0b85a97d-3c3303dbf5dmr1187908f8f.55.1755679187055;
+        Wed, 20 Aug 2025 01:39:47 -0700 (PDT)
+Received: from linaro.org ([82.79.186.23])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c077789106sm6850315f8f.51.2025.08.20.01.39.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 01:36:15 -0700 (PDT)
-Date: Wed, 20 Aug 2025 10:36:10 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+        Wed, 20 Aug 2025 01:39:46 -0700 (PDT)
+Date: Wed, 20 Aug 2025 11:39:44 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Taniya Das <taniya.das@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 09/11] remoteproc: pas: Extend parse_fw callback to
- parse resource table
-Message-ID: <aKWI-izL5BooL61p@linaro.org>
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-10-mukesh.ojha@oss.qualcomm.com>
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Ajit Pandey <quic_ajipan@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
+	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: Re: [PATCH v4 3/7] clk: qcom: Add TCSR clock driver for Glymur SoC
+Message-ID: <aKWJ0AG4r6owg-O3@linaro.org>
+References: <20250813-glymur-clock-controller-v4-v4-0-a408b390b22c@oss.qualcomm.com>
+ <20250813-glymur-clock-controller-v4-v4-3-a408b390b22c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,130 +99,16 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250819165447.4149674-10-mukesh.ojha@oss.qualcomm.com>
+In-Reply-To: <20250813-glymur-clock-controller-v4-v4-3-a408b390b22c@oss.qualcomm.com>
 
-On Tue, Aug 19, 2025 at 10:24:44PM +0530, Mukesh Ojha wrote:
-> Extend parse_fw callback to include SMC call to get resource
-> table from TrustZone to leverage resource table parse and
-> mapping and unmapping code reuse from the framework.
+On 25-08-13 13:25:19, Taniya Das wrote:
+> Add a clock driver for the TCSR clock controller found on Glymur SoC,
+> which provides refclks for PCIE, USB, and UFS subsystems.
 > 
-> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> ---
->  drivers/remoteproc/qcom_q6v5_pas.c  | 33 +++++++++++++++++++++++++++--
->  drivers/soc/qcom/mdt_loader.c       |  1 -
->  include/linux/soc/qcom/mdt_loader.h |  2 ++
->  3 files changed, 33 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index 09cada92dfd5..1e0f09bf1ef2 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -408,6 +408,35 @@ static void *qcom_pas_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *is
->  	return pas->mem_region + offset;
->  }
->  
-> +static int qcom_pas_parse_firmware(struct rproc *rproc, const struct firmware *fw)
-> +{
-> +	struct qcom_pas *pas = rproc->priv;
-> +	size_t output_rt_size = MAX_RSCTABLE_SIZE;
-> +	void *output_rt;
-> +	int ret;
-> +
-> +	ret = qcom_register_dump_segments(rproc, fw);
-> +	if (ret) {
-> +		dev_err(pas->dev, "Error in registering dump segments\n");
-> +		return ret;
-> +	}
-> +
-> +	if (!rproc->has_iommu)
-> +		return ret;
-> +
-> +	ret = qcom_scm_pas_get_rsc_table(pas->pas_id, NULL, 0, &output_rt, &output_rt_size);
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
 
-In PATCH 07/11 you have support for "static" resources that can be part
-of the firmware binary, but then you never make use of it. Like in the
-iris patch you just give in NULL, 0 for input_rt, even though,
-(presumably?) the remoteproc framework has support for parsing the
-resource table from the ELF firmware image.
+LGTM now.
 
-I would suggest adding a comment here justifying this and perhaps
-something to the commit message. I do see value in having the
-qcom_scm_pas_get_rsc_table() properly defined with input RT support, but
-it's not obvious from the description of your patches that this is
-effectively dead code right now(?).
-
-> +	if (ret) {
-> +		dev_err(pas->dev, "error %d getting resource_table\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	rproc->cached_table = output_rt;
-> +	rproc->table_ptr = rproc->cached_table;
-> +	rproc->table_sz = output_rt_size;
-> +
-> +	return ret;
-> +}
-> +
->  static unsigned long qcom_pas_panic(struct rproc *rproc)
->  {
->  	struct qcom_pas *pas = rproc->priv;
-> @@ -420,7 +449,7 @@ static const struct rproc_ops qcom_pas_ops = {
->  	.start = qcom_pas_start,
->  	.stop = qcom_pas_stop,
->  	.da_to_va = qcom_pas_da_to_va,
-> -	.parse_fw = qcom_register_dump_segments,
-> +	.parse_fw = qcom_pas_parse_firmware,
->  	.load = qcom_pas_load,
->  	.panic = qcom_pas_panic,
->  };
-> @@ -430,7 +459,7 @@ static const struct rproc_ops qcom_pas_minidump_ops = {
->  	.start = qcom_pas_start,
->  	.stop = qcom_pas_stop,
->  	.da_to_va = qcom_pas_da_to_va,
-> -	.parse_fw = qcom_register_dump_segments,
-> +	.parse_fw = qcom_pas_parse_firmware,
->  	.load = qcom_pas_load,
->  	.panic = qcom_pas_panic,
->  	.coredump = qcom_pas_minidump,
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> index ea7034c4b996..8456cca3f3e0 100644
-> --- a/drivers/soc/qcom/mdt_loader.c
-> +++ b/drivers/soc/qcom/mdt_loader.c
-> @@ -22,7 +22,6 @@
->  #include <linux/slab.h>
->  #include <linux/soc/qcom/mdt_loader.h>
->  
-> -#define MAX_RSCTABLE_SIZE	SZ_16K;
-
-I'm confused why there is a semicolon here suddenly. Did you edit this
-patch by hand?
-
-Applying: remoteproc: pas: Extend parse_fw callback to parse resource table
-Patch failed at 0009 remoteproc: pas: Extend parse_fw callback to parse resource table
-error: patch failed: drivers/soc/qcom/mdt_loader.c:22
-error: drivers/soc/qcom/mdt_loader.c: patch does not apply
-
->  #define RSC_TABLE_HASH_BITS	     5  // 32 buckets
->  
->  DEFINE_HASHTABLE(qcom_pas_rsc_table_map, RSC_TABLE_HASH_BITS);
-> diff --git a/include/linux/soc/qcom/mdt_loader.h b/include/linux/soc/qcom/mdt_loader.h
-> index 62f239f64dfb..92ad862e733e 100644
-> --- a/include/linux/soc/qcom/mdt_loader.h
-> +++ b/include/linux/soc/qcom/mdt_loader.h
-> @@ -8,6 +8,8 @@
->  #define QCOM_MDT_TYPE_HASH	(2 << 24)
->  #define QCOM_MDT_RELOCATABLE	BIT(27)
->  
-> +#define MAX_RSCTABLE_SIZE	SZ_16K
-> +
->  struct device;
->  struct firmware;
->  struct qcom_scm_pas_ctx;
-
-You added this define yourself in PATCH 08/11, so just add it in the
-right place directly. Make sure you scroll through your patch set before
-sending to make sure all changes are in the right commit. :-)
-
-Thanks,
-Stephan
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
 
