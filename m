@@ -1,154 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-69875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AEF0B2D496
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 09:13:46 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4698EB2D4A6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 09:15:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id ABEEE1C40883
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 07:13:56 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DE72E4E3CEF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 07:15:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15CFB2D29D1;
-	Wed, 20 Aug 2025 07:13:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 699E92D47E4;
+	Wed, 20 Aug 2025 07:15:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u+nFfGdZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sx8dB9Pe"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B3A2D47EC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 07:13:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39ADB2D375D;
+	Wed, 20 Aug 2025 07:15:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755673986; cv=none; b=PCMIx2KXt/lNLAp3K9o4Wh5nr5KyDpGE6VH9f69NF0rf701lDkLAyfHK7hVaNdexdhqMEAVQNhlX/mAyRqFzKll6fMOcjydDokWl1Q8ZBOzpzZFrKu7rlXMBNq4kfASWHvkmUmQz6U79r/pmp6V35PYd46MtWys7SW1PUHY8VFo=
+	t=1755674140; cv=none; b=DXdjywLA2IH5aXcM+urHk0TjbQ8Q2ZJWk6EZVyKavY2XhFlwPAYrLHIq6MJAqINDdS4Q3WXozv3LFgdPsBgW2KOFwZ+z14hgwOBqFbUP4hc+Na5VvhcqWivgnxSOZbqPRInYzqYx/+KEoB82eGtKpavsz+32ZU5A1PtKbIcvApw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755673986; c=relaxed/simple;
-	bh=c5+S/1Gf7ZsoEnmy+5rJrXdwibFww9JCyR0LQDM420Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=bussq9GBnoSBk959cuBNTbBybSy1HzYKVgYWAI6LTvK9zWwuov9ytZ7RTM2vZ80GN4/SdwucOiiqbS94Dou5YnYcr1F3zvCgNXFxQUx8u+IpazTKUMRcr3ZjLLW5rZf25iBOMmqYBIt0ZZq1GUjLFW8v1j3PsPWFaMKj9DVYwpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u+nFfGdZ; arc=none smtp.client-ip=209.85.208.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-333f92d60ddso43508961fa.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 00:13:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755673982; x=1756278782; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=S2fgjYTxYjXy8UMOqphDGxwyeF/52vWVWRMlWTcUmd0=;
-        b=u+nFfGdZWm2upyZ8H8Q/1YeiqrdWui+lZFdVlGkny+R3i65205+6S5Ibzk6sevqvgV
-         4rb8JHRMYClP/cJ23SQUKqMuTE29Uqb1DX8u21fcy4o4x6snD6BxvMzhrPIVGK2Lm+Nc
-         oXDYLXx+/51/qtJWoWAYJQCrNgWTHAB1PtK30KrDJzVxEQR7WZQQ/ydXZjYow5wdFRWp
-         mblnL7SnWhAFef3QbfiNmMhy0IEK1RwIbimvt3zNOyKoTyJdEeKH4EzOt7/YYLBa66U0
-         yqRbk7ufFn9mj2IrpOKCtgpBmd8+eF1uo1icxjl3Ft8G34HtRw1e2DLievg2aGr6EY6i
-         zhaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755673982; x=1756278782;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=S2fgjYTxYjXy8UMOqphDGxwyeF/52vWVWRMlWTcUmd0=;
-        b=pTQyhkeQNqqLznwA7K8I+p0h6VfxH+C/RRtBmLzzblI+dgYnDr0yzT290FjqChGXZo
-         RyNcARNEDgI2o18rfhh2TwNy17pLBbNo14uhCTZfQsP/69hiKjbadVWr96sV7taRnj9X
-         fTQPY9Pmy9MetXF30JCtlutkX6uFfVrMtuy4PQA+EUAJBp24dBD1cPv0H4AyglMn6wlU
-         c83/S0DUrMgwScDU/cyfpm4zd/9LZUg7/EvnoIB175y/xbatdgumpf199lIE45EvE27J
-         DNugsMqsCRPlyEVLVcEcw+P75Y1fDwkeMnZ4u9hZhxUfjlyJsSFVV3OiMLkbGcOQ2Ruv
-         SXAw==
-X-Forwarded-Encrypted: i=1; AJvYcCVMBW6zJ2nd8g6N5LIZ5fYJ7rCtQoOh27h1IGDWQ9bpOzEIsle5iQQTPwHt4l/c0pUyb0f99ee+6cg36u83@vger.kernel.org
-X-Gm-Message-State: AOJu0YyWhIolQdbG2IpZfNggM78a+6hwwNWxIuC7mbQIErKHPi6xPFG8
-	/jdzbUaH/qx0pEmN7qaMUNMGPvrhL7FUzOp/FqHCN/QiG3aJhOj9LOZQ/k4OhPydF91vFhfUM9o
-	e30VSrCkoXZ52QXpGVzs3N1TcVqzU4NpKaInAmleJQQ==
-X-Gm-Gg: ASbGncsc70Z75M7tujbaXqE9gRFSsBDdpgzWabQVF2gQj5XSJoR9NllamLEDZ12kDq6
-	ZUTbZM7f5LqIytbAjz4DMqPZmMxufe+pe7H2ozfUt62mgs6auTFGevkq9Pz98JymbGx87stFGeR
-	kir1lxEtLdovIYVYt93puWB7Ga8PmlXtnHLq0VJowQn629ijTETbT1wkSispEnknPl/bTczf6Om
-	MP7nc8JbOCS
-X-Google-Smtp-Source: AGHT+IF6EyOC5NaF9ylfzmvC/lF+XZ8ruNEnYsDF5O1GCCUBAqJgipnFljpMN/OqbECQRkpVCXWcXHbvMHeyWEs8R7M=
-X-Received: by 2002:a05:651c:41d4:b0:332:45e8:3aca with SMTP id
- 38308e7fff4ca-3353be058demr4837631fa.19.1755673981615; Wed, 20 Aug 2025
- 00:13:01 -0700 (PDT)
+	s=arc-20240116; t=1755674140; c=relaxed/simple;
+	bh=VUZK2MpAHgOKjVJ19+Bw5dSQafJ8hDSl6PCW3an6dGA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q2HOQ8UsvLbAdmDTIxzlwwESoTeKgFmqqQUbwisr/JqC7Z6I0FzM6jmInZ1PnortTKylEWnVAYyykmMWLhf0WkD3vZrlwFCd/IxlSk/GkqQAmnHU4XCalywCjws3oSVQAcXCiWsUgNYh4zeQCtz2rU8PP1X0sTL1KcQ4XWooK1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sx8dB9Pe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56AD9C4CEEB;
+	Wed, 20 Aug 2025 07:15:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755674139;
+	bh=VUZK2MpAHgOKjVJ19+Bw5dSQafJ8hDSl6PCW3an6dGA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sx8dB9PeWGSZSptzXrYkdKAPu+omWGi87iV7Xw1hJgw/Wq5qWmFmk8M0JSXuBU50P
+	 J7gY9snTH8/n7QZTUoeJCD2SySao8w30ErNueMapvrxBXavnb6r9uTnFkTgk/fzGob
+	 jzoq894mOGpg3VKGvLwR26HV4oxvOp9dm0FEr440za8iUcIS53GrDersOBPgHj9N3J
+	 s7UEYqcVLvDf5bVAvj8oUq1Sww8fhN+Szx2SaC+TBdqXzCtu6sygVFdGsyoPhu3qVm
+	 IhZB81QfYdtuNGdt+6l07jQBL0Pj3+BVEt7yhMmHrsf4e3cUirEcp/++PBl12RCSFc
+	 YuBfy7Vnl2Rzg==
+Date: Wed, 20 Aug 2025 09:15:36 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Sandy Huang <hjc@rock-chips.com>, 
+	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 1/8] drm/connector: let drivers declare infoframes as
+ unsupported
+Message-ID: <20250820-artichoke-silkworm-of-election-521b5e@houat>
+References: <20250819-drm-limit-infoframes-v2-0-7595dda24fbd@oss.qualcomm.com>
+ <20250819-drm-limit-infoframes-v2-1-7595dda24fbd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250815-pinctrl-gpio-pinfuncs-v5-0-955de9fd91db@linaro.org>
- <CACRpkdaDGmdhaik+1saRv7Ts4myQ+tg1aQqGU3xQyT7ma8dJFw@mail.gmail.com> <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
-In-Reply-To: <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 20 Aug 2025 09:12:49 +0200
-X-Gm-Features: Ac12FXx_mHZvAEY3OP5MA3Uo1ED7cgPY59m1esPAFUlhfqgk9BLjcKH2xKwqp3I
-Message-ID: <CACRpkda4soRCLF5=W=6R4wnwT3pjk743j022XfJxjTTQzuarAA@mail.gmail.com>
-Subject: Re: [PATCH v5 00/15] pinctrl: introduce the concept of a GPIO pin
- function category
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
-	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
-	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
-	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
-	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
-	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Chen-Yu Tsai <wenst@chromium.org>, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="ovoxo52sdrhbbtrx"
+Content-Disposition: inline
+In-Reply-To: <20250819-drm-limit-infoframes-v2-1-7595dda24fbd@oss.qualcomm.com>
+
+
+--ovoxo52sdrhbbtrx
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v2 1/8] drm/connector: let drivers declare infoframes as
+ unsupported
+MIME-Version: 1.0
 
-On Tue, Aug 19, 2025 at 8:31=E2=80=AFPM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
-> On Tue, Aug 19, 2025 at 4:02=E2=80=AFPM Linus Walleij <linus.walleij@lina=
-ro.org> wrote:
-> > On Fri, Aug 15, 2025 at 11:09=E2=80=AFAM Bartosz Golaszewski <brgl@bgde=
-v.pl> wrote:
+Hi,
 
-> > >       devres: provide devm_kmemdup_const()
-> > >       pinctrl: ingenic: use struct pinfunction instead of struct func=
-tion_desc
-> > >       pinctrl: airoha: replace struct function_desc with struct pinfu=
-nction
-> > >       pinctrl: mediatek: mt7988: use PINCTRL_PIN_FUNCTION()
-> > >       pinctrl: mediatek: moore: replace struct function_desc with str=
-uct pinfunction
-> > >       pinctrl: imx: don't access the pin function radix tree directly
-> > >       pinctrl: keembay: release allocated memory in detach path
-> > >       pinctrl: keembay: use a dedicated structure for the pinfunction=
- description
-> > >       pinctrl: constify pinmux_generic_get_function()
-> > >       pinctrl: make struct pinfunction a pointer in struct function_d=
-esc
-> > >       pinctrl: qcom: use generic pin function helpers
-> > >       pinctrl: allow to mark pin functions as requestable GPIOs
-> >
-> > I applied these 12 patches as a starter so they can
-> > stabilize in linux-next.
->
-> Hmm... I'm still sure that we don't need to have a separate flags
-> field, but since I am on vacation and will be able to look at this
-> closer next week, I can't look closer to it.
+On Tue, Aug 19, 2025 at 09:57:30PM +0300, Dmitry Baryshkov wrote:
+> Currently DRM framework expects that the HDMI connector driver supports
+> all infoframe types: it generates the data as required and calls into
+> the driver to program all of them, letting the driver to soft-fail if
+> the infoframe is unsupported. This has a major drawback on userspace
+> API: the framework also registers debugfs files for all Infoframe types,
+> possibly surprising the users when infoframe is visible in the debugfs
+> file, but it is not visible on the wire.
+>=20
+> Let drivers declare that they support only a subset of infoframes,
+> creating a more consistent interface.
+>=20
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-The qualcomm 32bit platforms fail in next anyway so I dropped the patches
-for now.
+I'm not really convinced. Infoframes aren't really something you should
+ignore, AVI is effectively mandatory, HDMI kind of is too, AUDIO is if
+audio support is enabled, DRM is mandatory if HDR is used.
 
-Both you and Bartosz are on vacation so let's let it rest for a week or two=
-.
+SPD is indeed optional though.
 
-Yours,
-Linus Walleij
+So, it's really dynamic in essence, and not really something we should
+expect drivers to ignore.
+
+I do acknowledge that a lot of drivers just silently ignore the
+infoframes they don't support at the moment, which isn't great either.
+
+Maybe we should standardize and document what drivers should do when
+they don't support a given infoframe type?
+
+Something like return EOPNOTSUPP if you don't support it, and we warn in
+the core if we get one for a mandatory infoframe?
+
+Maxime
+
+--ovoxo52sdrhbbtrx
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaKV2FAAKCRAnX84Zoj2+
+dqXvAX0bvYzEBhvkZZcbwX8EsIm26JAHz/mS0cz6qC9clfhYyvLbKY2RswgLRcH0
+zdXoEXIBf1jm8cvKLzdlBWGxds9iQj9mYUOq/VxFsp7UhMYL7asc5mdt46fMCoym
+hEIMma0gbA==
+=7QRV
+-----END PGP SIGNATURE-----
+
+--ovoxo52sdrhbbtrx--
 
