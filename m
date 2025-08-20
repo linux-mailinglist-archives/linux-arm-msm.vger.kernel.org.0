@@ -1,210 +1,167 @@
-Return-Path: <linux-arm-msm+bounces-69975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1323EB2DC7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 14:31:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id F1050B2DD04
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 14:51:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C04164E3A43
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 12:28:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9BE51BA7F1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 12:49:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8BAF308F30;
-	Wed, 20 Aug 2025 12:28:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE2192E11B6;
+	Wed, 20 Aug 2025 12:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q3gOilB5"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="FPzAp2rP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64033304BAB
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 12:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20AA02ED848
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 12:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755692899; cv=none; b=CtIDRzU4yFv3VrHiXxnYeyV0r8+0nbk1ltDNcuga8DoEBaZ4riK8jR09een8cz+maWaaAnFXiIjeSq5zMq1WsRIEkXQ113945vOUcCbC+ByXQtotOq17p2ZXcrkGKiV0ZlY0t7Bmi3ETsTav/bt5BFaMaJ7DetI9Gih9KhEFayU=
+	t=1755694126; cv=none; b=C8wG1wkTAK5xGAuoIX0ZvPSTnJ8T6o0IfGe1vGoBgzZgejmBsxCIy8YDZ3JwcvrRVWkjmEPMSKuyWNtoemLqPKBwedL1RnJjldEPrREtwY/nyJDm47XNIuUfYdzRLsurSAXG/fvUbjCsaVwWdXNg01iXM5BnjHqi57sCuQC++WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755692899; c=relaxed/simple;
-	bh=rJdlCHBrlZ/o45yDrigphA7AjLNPAeczhfu0gO1zE5Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qrtXCQpF1p5N6iBpvUMFHsOEYfsKHfAy9NcRArqwHdZixDnipe+VfX81G/1v9NkCpKjFylKLL6ALrGMBBm43sai7tfFJih+L7TcuqAcn+EGyQ75t9+uF/d7KdoQtB/iSQdeZ7jrG6HWxx2criY8kxquBj3WJoMdxazG0Bl7L390=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q3gOilB5; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57KA5KBA019735
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 12:28:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=Ce4VLkPKV5TZEb5EONN8uvbG
-	X/xFYWgwLomRh5TEyEA=; b=Q3gOilB5j6uFHYhlktP2wPWAng6fP1kJls6t4R3m
-	RWjdyegmyc4E7/0MKvD19u7Pmvv83XJeuCWVhYMolSeT3CGDGMYMMEN29cgjr4GN
-	MC6wnBWSB5fSkbyMWFVFiojfN8pINbaJpmB9GgEmAA0LMwSskT3RUF6saGFaZbcW
-	vQsRp46pvmiu4JQbmZOk8MXaS62uVbl2IMc5hsFynoDtMNUjxawpELmMTik0ow4I
-	yhf0QnOyM7DMk8Km9x4sNPozse6cwcXX2PsCDS/jV1FCwaYmld6DvpdPxRaeL2KE
-	2NGQ1B+VvAwbuwn3fIJqUCd2CUInTc+FNBmKdMb87tfG7w==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5291pa3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 12:28:17 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-76e2eb47455so13050829b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 05:28:17 -0700 (PDT)
+	s=arc-20240116; t=1755694126; c=relaxed/simple;
+	bh=v/R4TrCBrstwUYV7h3b2X+gvhFJUmV73UzhRK9sl0gY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=RlctaV1469zruyUsrP/zrtVe3ej9cF9mn/aQZozvaTqRl4apLLbRspOKOI6L9CXnajIcM6tHZT8Z3VD8LzUWu0t+9PtPv0/qYnSkZU6eENcMTR+kaJfjE4Mzd6t+DSKmbvVfaF8DwY2VlBFEU8brdxZzuOGZvAX1xldB6YhdI3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=FPzAp2rP; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-afcb74bef86so115543466b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 05:48:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755694123; x=1756298923; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OkT6TK/LZrlOvYEv9bhxocEXHgpzfm9Pge1oG8/jr9g=;
+        b=FPzAp2rP3koPCABTyvD9DlIfQenZet9tNfNdFvliU9VOFlFZVgjaxSKfPaAdu7zi5a
+         To4v855FbPuCjsMH3Qx5FkQ2/95qNCGLWxtcZeeifC1v4uBgkmxnBDjEogXcI0nTs0w5
+         fx4lYv7hPQAHoBOMY/tf9DLRX1zqA8dvmKPmuCbhFDCVwxbynAw3rZmFzk4HaNSMkJnP
+         OPimA93Ev/6dbaukbhPy+fllcMu28iSOHfhT7kus2aH74VIBXkp2A0mlWSnNATC/NV1/
+         lwSFy/jTJnDfl4AfUrqWd9HKo+qOSGIAAXJ99bJKxL5anlGYjB0B3xXEidEXxNjiySNt
+         qAgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755692896; x=1756297696;
-        h=in-reply-to:content-disposition:mime-version:references
-         :mail-followup-to:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ce4VLkPKV5TZEb5EONN8uvbGX/xFYWgwLomRh5TEyEA=;
-        b=LVpCXu6JJc06C66NUFquW/ZR3q4vUelAt8WYnBZCgVMcrazNz4qkIRkcArYhqun20t
-         INVGhAHUYZXksQUT5t2DK+KNkNpHnTVBaRXRlhN1Goo/E7Iu1T7rZiYxfcIFOjMO3ysh
-         3u3PgZw4x35/J9K+OwvLwRZx4kXKydwIj8kH7ajNPab5u1619kID1x204oNU0DfSwR2r
-         z8EQuqSwZGrw2BSa+Qx+WyY5hMrVDru4XYSjVEiEstjS3E/1ecV6l3dsUxe9Yebt+g5b
-         Bwstv9FT9Zah5CUiQISFB4Ir6vjdcwONn6GEVtyZBJo65BAA/9U9mgnVlT1UB6iWVgV6
-         p9jg==
-X-Forwarded-Encrypted: i=1; AJvYcCWwTiX0EkuRxQOaEK3H57BliA5aMK3kKPP/2gi/fNVRtqpWbF4RKxvfGMJpNPfMhVd/eqLcgTMk+c48xRTy@vger.kernel.org
-X-Gm-Message-State: AOJu0YxX8RPCqRVJnNyVpAAmGaeh0n4/2b5lmlNRbwlm7Ftxph6WWTpK
-	IhQrkRK1oiuf8YOR3RKWFwMyzXvTd8LsbRDCQBqR1+KDNhy9wiUKQtwutJm7QEIfqeV4nKlSeAC
-	aOmmz76vUF7XDOrERy+UA8hMsT8AoxN+47OuiYHjPbF8/UJiY0t0ZR/A5sP/PFHUnoTyVCfVgKg
-	yS
-X-Gm-Gg: ASbGncs/SJ1w8biEBiXxgxq9ABOrYMQXCCg4MuQwp8R0GsMY+336lwprDPEvY3Xy4CT
-	UaMDUgqVtbiH9TwT+x2nQXBEjywLsEoI1a/o0xYF+20XFiDkLRhZ/nhfRY1C5bBChOx3qNCk2UZ
-	VI1xlre1funDmaSWo3jpaBaKO/2APbDV862Xr8NrK2zrJ9Ek/gybobOoZ0cO50EgfZgAndnVm6p
-	m24t5Sfk+EYSUVKYTr/7WmdIEgu5i1e7hf1HzTuQLWpWe5BRZ2BM/Fk/K7kXwaIXCYIQqUhXJYP
-	qEbRa2srCxHFUxfGD6zNxNVxA0bwkDASbmOyhEtjDUsy7vxV5ok4VHivp+RkUC/acxI=
-X-Received: by 2002:a05:6a00:9a5:b0:736:2a73:6756 with SMTP id d2e1a72fcca58-76e8dd28c76mr4061010b3a.21.1755692896268;
-        Wed, 20 Aug 2025 05:28:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENuG0ujSyO2XRCgCMev8QpXq7lHdpgJcPk/1/3NKxVVqhxwvXVT5ke47GbaJlC5AglhLJvTQ==
-X-Received: by 2002:a05:6a00:9a5:b0:736:2a73:6756 with SMTP id d2e1a72fcca58-76e8dd28c76mr4060972b3a.21.1755692895833;
-        Wed, 20 Aug 2025 05:28:15 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e8ab7b100sm3007322b3a.40.2025.08.20.05.28.12
+        d=1e100.net; s=20230601; t=1755694123; x=1756298923;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OkT6TK/LZrlOvYEv9bhxocEXHgpzfm9Pge1oG8/jr9g=;
+        b=T6LnYgQcppFDgi/fSaIUeixRopuBrK7wS0JJp+wfdm1GAYHYb3aC8d58+6SCdjEVsn
+         HLPVnwwm4Bpz8D6JQkqA3P4047yohmdLles7sVAchMFM2TlPq/kybs3opLPVDtonv4oq
+         SnFof1C010EckhDYsGyXUG0lMByuZwqQjTmjx1xwRtSj+/LuXlUo+tfBRbysHKSJb4bm
+         blj9A1Sy8Moyg8UC1jTTbgAKzzIcO4wUTNCKsHizXKh38W1nNyGs+FSNeia3RbquBa1W
+         5pxtrjiXQVV2YiABh2nluOY5AbWwQvXIBWo2MXPXEDZaOH7Ytud7ayEy1yf4WdU+ZSlw
+         4Khg==
+X-Forwarded-Encrypted: i=1; AJvYcCWwllnrCEZPn0HvYXewpb9YY4C0EOOIw1UM845GXjRqKi3o7c3S8A/PB3wbasvtYrpij18iOfAxNnYyQgRr@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz1lTAQS/WU7PEkaiuR6MmLwnucrs9WShxK6FJKMpp7I+tcGOmH
+	+1fTKKP+oIBu/cV1arqG2nHIl1GKUquWkNiGWtDiY66JrkY79khwuUUPEhF2Ja1iNo66s4bEtfM
+	mySou
+X-Gm-Gg: ASbGnctZmxqu1h9MZPFuETCxp1w90AzcHjfsnUg7G4SWghtIO29Guog5DVE+4oJbKEK
+	IWko1Lk38/4/zz1OLRCaCn2DlitRrCb/2MprqVtne6W7k3l/qPtQ4g+o+iZicF/bMsa1d6D90dE
+	Pwk0+uNXLC8qx4a1x2JYUTeU5Zzm6p6YmgIEPoX0iqizjIVlSUtRspMZfOUfgqxKBa3WMq1c1ix
+	cWffB8jZZHM87yS+F9Q1ro0SCU/H9/5OUuCr+cx2852cNAkLDcdg8YI2EbnkW3l5SWFEyqUgBBw
+	tp2Dl1Ii1kmzlWOfQYDakLc7oQ3NHIou3ekx/4efGL3myrzvLWeENTcnzA4XsTOh0Bt+irfSi3j
+	/GEaSsZMlmWcTNu3yCKLKTwfGUC0c+5EbP2SLJNSrqd8F
+X-Google-Smtp-Source: AGHT+IHKzzrGEdiFYsueiKwx9BaC4fDCRH+9fw+xj4goJdji8m0G9uuzPSNtNUweFSOs0P0skvdibQ==
+X-Received: by 2002:a17:907:7e8b:b0:af9:3397:ee9d with SMTP id a640c23a62f3a-afdf00a8954mr117729666b.3.1755694123212;
+        Wed, 20 Aug 2025 05:48:43 -0700 (PDT)
+Received: from kuoka.. ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afded3020cbsm176871966b.31.2025.08.20.05.48.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 20 Aug 2025 05:28:15 -0700 (PDT)
-Date: Wed, 20 Aug 2025 17:58:09 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 01/11] firmware: qcom_scm: Introduce PAS context
- initialization helper
-Message-ID: <20250820122809.unhhusuqks3phtji@hu-mojha-hyd.qualcomm.com>
-Mail-Followup-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Vikash Garodia <quic_vgarodia@quicinc.com>,
-	Dikshita Agarwal <quic_dikshita@quicinc.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-2-mukesh.ojha@oss.qualcomm.com>
- <c000aaa8-209c-43d2-8f41-701cfdecbce2@linaro.org>
+        Wed, 20 Aug 2025 05:48:42 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH] clk: qcom: milos: Constify 'struct qcom_cc_desc'
+Date: Wed, 20 Aug 2025 14:48:22 +0200
+Message-ID: <20250820124821.149141-2-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c000aaa8-209c-43d2-8f41-701cfdecbce2@linaro.org>
-X-Proofpoint-GUID: EAtPYwxpMkYoEUDVhRb-AwJ-WUxXATfe
-X-Proofpoint-ORIG-GUID: EAtPYwxpMkYoEUDVhRb-AwJ-WUxXATfe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX942iMDbzwqrq
- /LKPU9CYjH2a/5nlz1QmqsxDl1GkR+AL2IYZTev3zloQrJkq2RSFOsPQRmFUatc4fBRuRDis7zd
- hUO6KAUhqEG1mcvz8bMH79tqBGgaklyBZ/70ecAvuOUhEKGK1Fijs1dcewc7CcZEMImDgY4p8WK
- RcllOsjTv8u8/u8A2T9ODaYUA/MvEjglwlA5760wYQNUMPfn6eAaLBerBCwspacIveFyboSX36O
- O0GAqUYxsU/a3hhQR+MSTMhVAr67i6uKfKcKwllhB9yp4gsbnPjqibYAOxNN5YMurma2sj70eec
- 6DM1nwzwxDFBimnGsNWmFhA5w4RUy/xqtW1CwnpSfxiHoIH1N4/v3o65zHSQ44YDkkuBLd3wI2F
- Xvm/FiOiz+BCGy9V8AZRkvYSv2r7MA==
-X-Authority-Analysis: v=2.4 cv=SPkblOvH c=1 sm=1 tr=0 ts=68a5bf61 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=s6mQ1NoBmtD1KJKpJbMA:9
- a=CjuIK1q_8ugA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_04,2025-08-20_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
- impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2261; i=krzysztof.kozlowski@linaro.org;
+ h=from:subject; bh=v/R4TrCBrstwUYV7h3b2X+gvhFJUmV73UzhRK9sl0gY=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBopcQV5wdJMvBk3Pq90PuYVZPxhRxJtpOTusSnG
+ rvp0AkCBrGJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaKXEFQAKCRDBN2bmhouD
+ 189LEACLV67Cz9njRk3BXJodF1sFdqMpzV3yMBrD5APiRGfDd5Iim+lO+9042OVAQEzX6gEpDto
+ j+mySuZTaLYVtvsqREB8UacL+tlR1I0pOEreP9WhFqkGyv9f2UrjygNkboeobuFmLPHEzHCJbTk
+ oP8Qj/M7RkjOJT8JCJtnQwqIlK83s4NzFfw1WyuEq5rpdq4bdZFBLQcFP0Qu1XOdLyLuZWjJlDS
+ 1F1Ds8EtMxApSsK8Mkw7fK7gstDVoC05LBeeA/e6guY2vVr5Se9xXe5eWdChqiwM3BqRjTaGo0V
+ y2QLt4Nw8ksmXb05LMIJRFUj0Vt2QmYPQ9bohGtEebTWWot8DeQKQpy4j6PDK1V5gYG8c29DlWE
+ u73Wi8YaadpnzK9zTWm2LzIvihAQv1Mi0lodu1cXYv0TdYUKNdzf0Qfy4KQ0YCkw2XmuY9kdCpA
+ UHXv/wcofTrqUBw/DowCwAnH31aG+v1NuQkHba8muy92gMfaS/CI0kk01E5p0Dr+33gxli3JGBT
+ VcbCL8kHet4fOR7sNhJ4wMhuv7nSN4ippJiqyk041EZHUVismnlFYfk1s5hoBhhymmvOaaYM46F
+ CECZzayLAaz701KBMnEq3FmHnTGvf8pISase5IOwtBjKD/bjMlyhhyr3Ws3qMKDlDSvTYpXYsQT q2isQaQm4Z/GKnA==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
 
-On Wed, Aug 20, 2025 at 12:40:51PM +0100, Bryan O'Donoghue wrote:
-> On 19/08/2025 17:54, Mukesh Ojha wrote:
-> > Currently, remoteproc and non-remoteproc subsystems use different
-> > variants of the MDT loader helper API, primarily due to the handling of
-> > the metadata context. Remoteproc subsystems retain this context until
-> > authentication and reset, while non-remoteproc subsystems (e.g., video,
-> > graphics) do not require it.
-> > 
-> > Unify the metadata loading process for both remoteproc and
-> > non-remoteproc subsystems by introducing a dedicated PAS context
-> > initialization function.
-> 
-> You've introduced what PAS is in the cover letter but you haven't done so in
-> the commit log where you use it.
-> 
-> "Peripheral Authentication Service (PAS)" should be defined in this patch
-> somewhere so we know what PAS means.
+'struct qcom_cc_desc' is passed to qcom_cc_map() and
+qcom_cc_really_probe() only as pointer to const, so make the memory
+const for safety.
 
-Ack.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> 
-> > 
-> > By introducing qcom_scm_pas_ctx_init(), we can standardize the API usage
-> > across subsystems and reduce the number of parameters passed to MDT
-> > loader functions, improving code clarity and maintainability.
-> > 
-> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> > ---
-> >   drivers/firmware/qcom/qcom_scm.c       | 26 ++++++++++++++++++++++++++
-> >   include/linux/firmware/qcom/qcom_scm.h | 11 +++++++++++
-> >   2 files changed, 37 insertions(+)
-> > 
-> > diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> > index 96d5cf40a74c..33187d4f4aef 100644
-> > --- a/drivers/firmware/qcom/qcom_scm.c
-> > +++ b/drivers/firmware/qcom/qcom_scm.c
-> > @@ -558,6 +558,32 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
-> >   		dev_err(__scm->dev, "failed to set download mode: %d\n", ret);
-> >   }
-> > +void *qcom_scm_pas_ctx_init(struct device *dev, u32 peripheral, phys_addr_t mem_phys,
-> > +			    size_t mem_size, bool save_mdt_ctx)
-> > +{
-> > +	struct qcom_scm_pas_ctx *ctx;
-> > +
-> > +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> > +	if (!ctx)
-> > +		return NULL;
-> > +
-> > +	ctx->dev = dev;
-> > +	ctx->peripheral = peripheral;
-> > +	ctx->mem_phys = mem_phys;
-> > +	ctx->mem_size = mem_size;
-> > +	ctx->save_mdt_ctx = save_mdt_ctx;
-> > +	ctx->metadata = NULL;
-> > +
-> > +	if (save_mdt_ctx) {
-> 
-> You could check metadata != NULL and drop the bool ctx->save_mdt_ctx
-> entirely.
+---
 
-Ack.
+My standard commit... I just keep repeating the same over and over
+again.
+---
+ drivers/clk/qcom/camcc-milos.c   | 2 +-
+ drivers/clk/qcom/dispcc-milos.c  | 2 +-
+ drivers/clk/qcom/videocc-milos.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-> 
-> ---
-> bod
-
+diff --git a/drivers/clk/qcom/camcc-milos.c b/drivers/clk/qcom/camcc-milos.c
+index 75bd939f7dd1..0077c9c9249f 100644
+--- a/drivers/clk/qcom/camcc-milos.c
++++ b/drivers/clk/qcom/camcc-milos.c
+@@ -2124,7 +2124,7 @@ static struct qcom_cc_driver_data cam_cc_milos_driver_data = {
+ 	.num_clk_cbcrs = ARRAY_SIZE(cam_cc_milos_critical_cbcrs),
+ };
+ 
+-static struct qcom_cc_desc cam_cc_milos_desc = {
++static const struct qcom_cc_desc cam_cc_milos_desc = {
+ 	.config = &cam_cc_milos_regmap_config,
+ 	.clks = cam_cc_milos_clocks,
+ 	.num_clks = ARRAY_SIZE(cam_cc_milos_clocks),
+diff --git a/drivers/clk/qcom/dispcc-milos.c b/drivers/clk/qcom/dispcc-milos.c
+index 602d3a498d33..95b6dd89d9ae 100644
+--- a/drivers/clk/qcom/dispcc-milos.c
++++ b/drivers/clk/qcom/dispcc-milos.c
+@@ -937,7 +937,7 @@ static struct qcom_cc_driver_data disp_cc_milos_driver_data = {
+ 	.clk_regs_configure = disp_cc_milos_clk_regs_configure,
+ };
+ 
+-static struct qcom_cc_desc disp_cc_milos_desc = {
++static const struct qcom_cc_desc disp_cc_milos_desc = {
+ 	.config = &disp_cc_milos_regmap_config,
+ 	.clks = disp_cc_milos_clocks,
+ 	.num_clks = ARRAY_SIZE(disp_cc_milos_clocks),
+diff --git a/drivers/clk/qcom/videocc-milos.c b/drivers/clk/qcom/videocc-milos.c
+index 998301e0ba88..acc9df295d4f 100644
+--- a/drivers/clk/qcom/videocc-milos.c
++++ b/drivers/clk/qcom/videocc-milos.c
+@@ -366,7 +366,7 @@ static struct qcom_cc_driver_data video_cc_milos_driver_data = {
+ 	.num_clk_cbcrs = ARRAY_SIZE(video_cc_milos_critical_cbcrs),
+ };
+ 
+-static struct qcom_cc_desc video_cc_milos_desc = {
++static const struct qcom_cc_desc video_cc_milos_desc = {
+ 	.config = &video_cc_milos_regmap_config,
+ 	.clks = video_cc_milos_clocks,
+ 	.num_clks = ARRAY_SIZE(video_cc_milos_clocks),
 -- 
--Mukesh Ojha
+2.48.1
+
 
