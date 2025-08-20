@@ -1,40 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-69958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD07AB2DB4C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:40:45 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91CBEB2DB51
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 13:41:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6BC817B09B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:39:46 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1CA407AB9B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 11:39:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9B212DFF19;
-	Wed, 20 Aug 2025 11:39:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F1CB2E543F;
+	Wed, 20 Aug 2025 11:40:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="vKA/DOwp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54AC1242D72;
-	Wed, 20 Aug 2025 11:39:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3582E2EF3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 11:40:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755689981; cv=none; b=qV2oEFHmjQ+yEAM5pSwkd+2Om+AS1HaDoUXFYv5qtzzICEYy9wreLp1z2JaoXkGaw6/rFoh3woZ93y+cGLaF9dupFnOwDJppZ/tilMqMGcvQGy1AhEJR41SabIVB1VNWq9ZcZNZbvsxxidvCu4nbKPRrOf7hpmR6EubtXK91hiE=
+	t=1755690056; cv=none; b=dfwjTj5rcJY0QjNFRIlqyRhDlVDBTfFjraNNQI9/HTvxjZBRLXRs13aDrajvbuDglp5lf4CxfC3sG5erCd1tjO68j8A2x4BnTcTvRemxrIlc55qoRMSQkc9wGCLXKEnt6jP4PDEczd2eGjApX1QM5XPHzUpd+7fOF5Bc6c1a6Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755689981; c=relaxed/simple;
-	bh=t2FS4x4WM9C4P1wTwEgmHoheakX0RBzLC1D6y+nGWHo=;
+	s=arc-20240116; t=1755690056; c=relaxed/simple;
+	bh=LZ9lNwKnI9igWjqDhty8BMFySOw2pytmhPSOrssKm1g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D+kylovgVl1rQbG86EBg/RHQUaoGchMd7cE3sQjaN23JvfDOReDNCwMG/dLEah1rVwiD6yDoHPr/9RvDLyYikHTWezOkfDlJZF7NVLzHNShzzFQM6C2FdvaCo5q2k7x+4LO4Qv5GPxXP94ESamXe3i2dGcEJYYvD8aaOO9/7Xo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 582231D31;
-	Wed, 20 Aug 2025 04:39:30 -0700 (PDT)
-Received: from [10.57.3.97] (unknown [10.57.3.97])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 5B3B33F58B;
-	Wed, 20 Aug 2025 04:39:32 -0700 (PDT)
-Message-ID: <145e1021-d2c3-4ff3-aabb-fb7416848a97@arm.com>
-Date: Wed, 20 Aug 2025 12:39:28 +0100
+	 In-Reply-To:Content-Type; b=myj5xCgy/HhL16PIwDRxk/h+UVMIA2tyyVD6SK/k+yk89pi0DienIsmcQMk8Ay0VSFqXSxVM76QRB/YiCf0ZYYqsKGbZK5lxpYdCWhcSnDArSWJz+C2gNroIelwJtVvWc/Jayo3DJ700DV2i1aS8DAAg1iu7aUQHUiALM9HNmnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=vKA/DOwp; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45a1ac7c066so5138865e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 04:40:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755690053; x=1756294853; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=fBsvg6YZ6d6Q45uqCriOUykxMP3lYx/MkdCJhYtl/R8=;
+        b=vKA/DOwp1ZX/NVOTc2ENaLymncOv4vBvB08b5qVq6mF0zHLc3HxOI54MIz5Oyp/i+5
+         8/NrMbB9hlkGOadiAbYLgIKaA17mgoRBlolxN1QpNW2QCoQR8grVS/TuH+2/rl8I53jP
+         eJkbUGBTwO6izB9QVLaAPwW3zEUsVCb7dV7Bvq9y8fdyAnii37CSP71IsyCqWontGjLh
+         u6DuOjV9HOVix5mxG+mpoB6AeCTq5+pBVcBXZQENo5XCsuHe/Rmg5mhl1Rv60cdNJuNs
+         M+QFIJsRWUfeDj4RUfC7JPdIe4B/F1ZW3Z/1gd9MhUKLWoHAdfOa+IniVKMD8rCUKyU3
+         RJlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755690053; x=1756294853;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=fBsvg6YZ6d6Q45uqCriOUykxMP3lYx/MkdCJhYtl/R8=;
+        b=S5gQoAQDnYME3uQET2q3sCR8GDAh3yruNxDF9oSnY+KNGPZNpLoCtuVDzxqnHdcm+e
+         i3Nl2eRe0owZPAemzz0yaEFT9LWP4hYIK5aKijW/Fnism32hBSdwkrGFmBoy9O3IGj96
+         vUiPWOMMb7+VzbdNbXsgj1CQyj38FkSR6GxMzq5NlrCoVbvBl/e7Z9B6E+cTQ8RtEcEx
+         /T2TIrH6hK19Rp94l4ziDd43u90qLo6qy6Mc2w4hV14ielprnZ9lBrqMaR/oa5HLIXsu
+         fy7NfneW2zxunbTXvP5ORxsLK9V/vbsRvlQtcWTMi4SGuN+Ci2SeZU9R0Fxg36h9XbrX
+         8Wyg==
+X-Forwarded-Encrypted: i=1; AJvYcCUEUcTpuE769OCza7Zig1gxtoSExeBRjErBGtAiEDZ7ZZ4TgiaaCfHAUffx0Bf1Awy3JF+TeHCKm7y/U5yD@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx61ryJoLXeHGxW2dnd0AtEqU8xmuMzyDxdTwvVE5GbGTZ5TGq/
+	HZK0gHJEwRF0FFPNJNWqIB+3Tl49k4ZvxfOZMjUbnvTUOtL2RniW6xAGfXjr/zCZgRg=
+X-Gm-Gg: ASbGncvpXRvjsr24uCQSjeTf40YLcxceJGMlP9/0i3eq+K+sAY7SsECrb5sVluq6VGh
+	2RnmfSadkZwOnyeERLKA1XDXxOXa3p2rkUvz72sLEdr42cl4Zg03Nz8oAwqc/J/D420My5fSKCM
+	Uh8FKGucREXvCWnmucNqAx4eAWcIxCoKt/PWRjICw3Ocwvn7E2U1mMajk/Xzr39H919yIwGiDOA
+	vmEcO/23Wiuloe2yrtnS7ksktTFSgx9Xl7JutzEoQNciI+OqqsGXp3a1jkrBlEDkENapm7TPSBf
+	TpPnc4RWp/xe7J0fez3B7oCA+I9a5o2ZiDMvfxBwrVPC+w3Rr1N4+oTUNcOCqs7VpncJ+UFuPT0
+	zQxZMK3/7WDplklVQPrIrH0NFcyc2dlIkRyjbeII5Q1OBzvFrgulucLsAkujk9ws=
+X-Google-Smtp-Source: AGHT+IHXEFwMDm2kihqAnYayZR6gT+vK15GNCQ1aLgzVsq2r159WZVA/FhKSfLtVw38Kifu9RBCDaw==
+X-Received: by 2002:a05:600c:c494:b0:459:e39e:e5a5 with SMTP id 5b1f17b1804b1-45b4743654emr22623065e9.5.1755690052559;
+        Wed, 20 Aug 2025 04:40:52 -0700 (PDT)
+Received: from [192.168.0.35] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b47cad57asm31636555e9.24.2025.08.20.04.40.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 20 Aug 2025 04:40:52 -0700 (PDT)
+Message-ID: <c000aaa8-209c-43d2-8f41-701cfdecbce2@linaro.org>
+Date: Wed, 20 Aug 2025 12:40:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,220 +82,83 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/19] perf: Introduce positive capability for raw events
-To: Thomas Richter <tmricht@linux.ibm.com>, peterz@infradead.org,
- mingo@redhat.com, will@kernel.org, mark.rutland@arm.com, acme@kernel.org,
- namhyung@kernel.org, alexander.shishkin@linux.intel.com, jolsa@kernel.org,
- irogers@google.com, adrian.hunter@intel.com, kan.liang@linux.intel.com
-Cc: linux-perf-users@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
- linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
- linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
- sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
- linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
- iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
- linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-riscv@lists.infradead.org
-References: <cover.1755096883.git.robin.murphy@arm.com>
- <542787fd188ea15ef41c53d557989c962ed44771.1755096883.git.robin.murphy@arm.com>
- <67a0d778-6e2c-4955-a7ce-56a10043ae8d@arm.com>
- <295ae4dd-4734-42a0-be63-2d322f00c799@linux.ibm.com>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <295ae4dd-4734-42a0-be63-2d322f00c799@linux.ibm.com>
+Subject: Re: [PATCH v2 01/11] firmware: qcom_scm: Introduce PAS context
+ initialization helper
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org
+References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
+ <20250819165447.4149674-2-mukesh.ojha@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250819165447.4149674-2-mukesh.ojha@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Thomas,
-
-On 2025-08-20 9:09 am, Thomas Richter wrote:
-> On 8/19/25 15:15, Robin Murphy wrote:
->> On 13/08/2025 6:01 pm, Robin Murphy wrote:
->>> Only a handful of CPU PMUs accept PERF_TYPE_{RAW,HARDWARE,HW_CACHE}
->>> events without registering themselves as PERF_TYPE_RAW in the first
->>> place. Add an explicit opt-in for these special cases, so that we can
->>> make life easier for every other driver (and probably also speed up the
->>> slow-path search) by having perf_try_init_event() do the basic type
->>> checking to cover the majority of cases.
->>>
->>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
->>> ---
->>>
->>> A further possibility is to automatically add the cap to PERF_TYPE_RAW
->>> PMUs in perf_pmu_register() to have a single point-of-use condition; I'm
->>> undecided...
->>> ---
->>>    arch/s390/kernel/perf_cpum_cf.c    |  1 +
->>>    arch/s390/kernel/perf_pai_crypto.c |  2 +-
->>>    arch/s390/kernel/perf_pai_ext.c    |  2 +-
->>>    arch/x86/events/core.c             |  2 +-
->>>    drivers/perf/arm_pmu.c             |  1 +
->>>    include/linux/perf_event.h         |  1 +
->>>    kernel/events/core.c               | 15 +++++++++++++++
->>>    7 files changed, 21 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
->>> index 1a94e0944bc5..782ab755ddd4 100644
->>> --- a/arch/s390/kernel/perf_cpum_cf.c
->>> +++ b/arch/s390/kernel/perf_cpum_cf.c
->>> @@ -1054,6 +1054,7 @@ static void cpumf_pmu_del(struct perf_event *event, int flags)
->>>    /* Performance monitoring unit for s390x */
->>>    static struct pmu cpumf_pmu = {
->>>        .task_ctx_nr  = perf_sw_context,
->>> +    .capabilities = PERF_PMU_CAP_RAW_EVENTS,
->>>        .pmu_enable   = cpumf_pmu_enable,
->>>        .pmu_disable  = cpumf_pmu_disable,
->>>        .event_init   = cpumf_pmu_event_init,
->>> diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
->>> index a64b6b056a21..b5b6d8b5d943 100644
->>> --- a/arch/s390/kernel/perf_pai_crypto.c
->>> +++ b/arch/s390/kernel/perf_pai_crypto.c
->>> @@ -569,7 +569,7 @@ static const struct attribute_group *paicrypt_attr_groups[] = {
->>>    /* Performance monitoring unit for mapped counters */
->>>    static struct pmu paicrypt = {
->>>        .task_ctx_nr  = perf_hw_context,
->>> -    .capabilities = PERF_PMU_CAP_SAMPLING,
->>> +    .capabilities = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
->>>        .event_init   = paicrypt_event_init,
->>>        .add          = paicrypt_add,
->>>        .del          = paicrypt_del,
->>> diff --git a/arch/s390/kernel/perf_pai_ext.c b/arch/s390/kernel/perf_pai_ext.c
->>> index 1261f80c6d52..bcd28c38da70 100644
->>> --- a/arch/s390/kernel/perf_pai_ext.c
->>> +++ b/arch/s390/kernel/perf_pai_ext.c
->>> @@ -595,7 +595,7 @@ static const struct attribute_group *paiext_attr_groups[] = {
->>>    /* Performance monitoring unit for mapped counters */
->>>    static struct pmu paiext = {
->>>        .task_ctx_nr  = perf_hw_context,
->>> -    .capabilities = PERF_PMU_CAP_SAMPLING,
->>> +    .capabilities = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
->>>        .event_init   = paiext_event_init,
->>>        .add          = paiext_add,
->>>        .del          = paiext_del,
->>> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
->>> index 789dfca2fa67..764728bb80ae 100644
->>> --- a/arch/x86/events/core.c
->>> +++ b/arch/x86/events/core.c
->>> @@ -2697,7 +2697,7 @@ static bool x86_pmu_filter(struct pmu *pmu, int cpu)
->>>    }
->>>      static struct pmu pmu = {
->>> -    .capabilities        = PERF_PMU_CAP_SAMPLING,
->>> +    .capabilities        = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
->>>          .pmu_enable        = x86_pmu_enable,
->>>        .pmu_disable        = x86_pmu_disable,
->>> diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
->>> index 72d8f38d0aa5..bc772a3bf411 100644
->>> --- a/drivers/perf/arm_pmu.c
->>> +++ b/drivers/perf/arm_pmu.c
->>> @@ -877,6 +877,7 @@ struct arm_pmu *armpmu_alloc(void)
->>>             * specific PMU.
->>>             */
->>>            .capabilities    = PERF_PMU_CAP_SAMPLING |
->>> +                  PERF_PMU_CAP_RAW_EVENTS |
->>>                      PERF_PMU_CAP_EXTENDED_REGS |
->>>                      PERF_PMU_CAP_EXTENDED_HW_TYPE,
->>>        };
->>> diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
->>> index 183b7c48b329..c6ad036c0037 100644
->>> --- a/include/linux/perf_event.h
->>> +++ b/include/linux/perf_event.h
->>> @@ -305,6 +305,7 @@ struct perf_event_pmu_context;
->>>    #define PERF_PMU_CAP_EXTENDED_HW_TYPE    0x0100
->>>    #define PERF_PMU_CAP_AUX_PAUSE        0x0200
->>>    #define PERF_PMU_CAP_AUX_PREFER_LARGE    0x0400
->>> +#define PERF_PMU_CAP_RAW_EVENTS        0x0800
->>>      /**
->>>     * pmu::scope
->>> diff --git a/kernel/events/core.c b/kernel/events/core.c
->>> index 71b2a6730705..2ecee76d2ae2 100644
->>> --- a/kernel/events/core.c
->>> +++ b/kernel/events/core.c
->>> @@ -12556,11 +12556,26 @@ static inline bool has_extended_regs(struct perf_event *event)
->>>               (event->attr.sample_regs_intr & PERF_REG_EXTENDED_MASK);
->>>    }
->>>    +static bool is_raw_pmu(const struct pmu *pmu)
->>> +{
->>> +    return pmu->type == PERF_TYPE_RAW ||
->>> +           pmu->capabilities & PERF_PMU_CAP_RAW_EVENTS;
->>> +}
->>> +
->>>    static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
->>>    {
->>>        struct perf_event_context *ctx = NULL;
->>>        int ret;
->>>    +    /*
->>> +     * Before touching anything, we can safely skip:
->>> +     * - any event for a specific PMU which is not this one
->>> +     * - any common event if this PMU doesn't support them
->>> +     */
->>> +    if (event->attr.type != pmu->type &&
->>> +        (event->attr.type >= PERF_TYPE_MAX || is_raw_pmu(pmu)))
->>
->> Ah, that should be "!is_raw_pmu(pmu)" there (although it's not entirely the cause of the LKP report on the final patch.)
->>
->> Thanks,
->> Robin.
->>
->>> +        return -ENOENT;
->>> +
->>>        if (!try_module_get(pmu->module))
->>>            return -ENODEV;
->>>    
->>
->>
+On 19/08/2025 17:54, Mukesh Ojha wrote:
+> Currently, remoteproc and non-remoteproc subsystems use different
+> variants of the MDT loader helper API, primarily due to the handling of
+> the metadata context. Remoteproc subsystems retain this context until
+> authentication and reset, while non-remoteproc subsystems (e.g., video,
+> graphics) do not require it.
 > 
-> Hi Robin,
+> Unify the metadata loading process for both remoteproc and
+> non-remoteproc subsystems by introducing a dedicated PAS context
+> initialization function.
+
+You've introduced what PAS is in the cover letter but you haven't done 
+so in the commit log where you use it.
+
+"Peripheral Authentication Service (PAS)" should be defined in this 
+patch somewhere so we know what PAS means.
+
 > 
-> what is the intention of that patch?
-> Can you explain that a bit more.
+> By introducing qcom_scm_pas_ctx_init(), we can standardize the API usage
+> across subsystems and reduce the number of parameters passed to MDT
+> loader functions, improving code clarity and maintainability.
+> 
+> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+> ---
+>   drivers/firmware/qcom/qcom_scm.c       | 26 ++++++++++++++++++++++++++
+>   include/linux/firmware/qcom/qcom_scm.h | 11 +++++++++++
+>   2 files changed, 37 insertions(+)
+> 
+> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+> index 96d5cf40a74c..33187d4f4aef 100644
+> --- a/drivers/firmware/qcom/qcom_scm.c
+> +++ b/drivers/firmware/qcom/qcom_scm.c
+> @@ -558,6 +558,32 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
+>   		dev_err(__scm->dev, "failed to set download mode: %d\n", ret);
+>   }
+>   
+> +void *qcom_scm_pas_ctx_init(struct device *dev, u32 peripheral, phys_addr_t mem_phys,
+> +			    size_t mem_size, bool save_mdt_ctx)
+> +{
+> +	struct qcom_scm_pas_ctx *ctx;
+> +
+> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
+> +	if (!ctx)
+> +		return NULL;
+> +
+> +	ctx->dev = dev;
+> +	ctx->peripheral = peripheral;
+> +	ctx->mem_phys = mem_phys;
+> +	ctx->mem_size = mem_size;
+> +	ctx->save_mdt_ctx = save_mdt_ctx;
+> +	ctx->metadata = NULL;
+> +
+> +	if (save_mdt_ctx) {
 
-The background here is that, in this context, we essentially have 3 
-distinct categories of PMU driver:
+You could check metadata != NULL and drop the bool ctx->save_mdt_ctx 
+entirely.
 
-- Older/simpler CPU PMUs which register as PERF_TYPE_RAW and accept 
-raw/hardware events
-- Newer/heterogeneous CPU PMUs which register as a dynamic type, and 
-accept both raw/hardware events and events of their own type
-- Other (mostly uncore) PMUs which only accept events of their own type
-
-These days that third one is by far the majority, so it seems 
-increasingly unreasonable and inefficient to always offer every kind of 
-event to every driver, and so force nearly all of them to have the same 
-boilerplate code to refuse events they don't want. The core code is 
-already in a position to be able to assume that a PERF_TYPE_RAW PMU 
-wants "raw" events and a typed PMU wants its own events, so the only 
-actual new thing we need is a way to discern the 5 drivers in the middle 
-category - where s390 dominates :) - from the rest in the third.
-
-The way the check itself ends up structured is that the only time we'll 
-now offer an event to a driver of a different type is if it's a "raw" 
-event and the driver has asked to be offered them (either by registering 
-as PERF_TYPE_RAW or with the new cap). Otherwise we can safely assume 
-that this PMU won't want this event, and so skip straight to trying the 
-next one. We can get away with the single PERF_TYPE_MAX check for all 
-"raw" events, since the drivers which do handle them already have to 
-consider the exact type to discern between RAW/HARDWARE/HW_CACHE, and 
-thus must reject SOFTWARE/TRACEPOINT/BREAKPOINT events anyway, but I 
-could of course make that more specific if people prefer. Conversely, 
-since the actual software/tracepoint/breakpoint PMUs won't pass the 
-is_raw_pmu() check either, and thus will only be given their own events, 
-I could remove the type checking from their event_init routines as well, 
-but I thought that might be perhaps a little too subtle as-is.
-
-BTW if the s390 drivers are intended to coexist then I'm not sure they 
-actually handle sharing PERF_TYPE_RAW events very well - what happens to 
-any particular event seems ultimately largely dependent on the order in 
-which the drivers happen to register - but that's a pre-existing issue 
-and this series shouldn't change anything in that respect. (As it 
-similarly shouldn't affect the trick of the first matching driver 
-rewriting the event type to "forward" it to another driver later in the 
-list.)
-
-Thanks,
-Robin.
+---
+bod
 
