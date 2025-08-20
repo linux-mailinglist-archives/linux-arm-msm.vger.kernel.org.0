@@ -1,198 +1,154 @@
-Return-Path: <linux-arm-msm+bounces-69874-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-69875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACB54B2D422
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 08:38:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AEF0B2D496
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 09:13:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 856D4175939
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 06:38:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id ABEEE1C40883
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 20 Aug 2025 07:13:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBAB322A817;
-	Wed, 20 Aug 2025 06:38:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15CFB2D29D1;
+	Wed, 20 Aug 2025 07:13:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jBQgBuxI"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u+nFfGdZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34D535336A;
-	Wed, 20 Aug 2025 06:38:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B3A2D47EC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 07:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755671890; cv=none; b=aTYOor9fQx747COYwJcAUGL26YkmYVVHvINCylmothkrL21jqP0NIvSb3adsMYlQ0hSgjs4joSBeboJsnfQl2WW3gazka6ldOMlieuACA/wKxCkKbuaDA2lGWUUglwZEt2ml2VaOYI78ZTB4Ak33IO5w5JmcoQUvwxwZzNkjU8Q=
+	t=1755673986; cv=none; b=PCMIx2KXt/lNLAp3K9o4Wh5nr5KyDpGE6VH9f69NF0rf701lDkLAyfHK7hVaNdexdhqMEAVQNhlX/mAyRqFzKll6fMOcjydDokWl1Q8ZBOzpzZFrKu7rlXMBNq4kfASWHvkmUmQz6U79r/pmp6V35PYd46MtWys7SW1PUHY8VFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755671890; c=relaxed/simple;
-	bh=+U6ld1iOfEhR8TxN/eQkKRpzew4eQlS5g+HYESpXTOk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=MNThriwsh5pQXvYuRhHyyUwUe3NTpaj93U40NlBbBZvuSibZcnL3i6TSk1sI6Wwr/ejo7j5VnZVvZxOFr7Fd6vOdlLS5eNpu6JrnE/JDtQUR5EEE5IQGNDyLZ9ryiVSKigvBeo79avJKUpc5MerknaVK8+4jNvY1iwbUlasjBkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jBQgBuxI; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57K1p3Pj021262;
-	Wed, 20 Aug 2025 06:38:04 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Jyu59zrtUvE/zad1Cgw8ZOa/vxAmIKD3+iAD66jXfY4=; b=jBQgBuxI5XCvYYds
-	QuOhroGBB7BlGgg9ixR88qt9reIfNI2pYVeIhu9UkV8jVKA45G75LvRhr9gvIJZo
-	NPvuVGvBA1kqamtmtgpRKLtXIhycZTqZmqrDpVdb1XLYKBLI12uLQOiLD4S/u7Vc
-	3FNONe7CyqdR/nuUhPvr8fUmhYjTC4x0juk0aoUEjxVsbLDpkDur5wPFsQOjALjk
-	tmAtpiLGkTuRMqelqoBEAZG/bOBZTmfY0rg5nfX2K4VivmoKDNaZw+8xJUVJkcOa
-	8WvzbRevhcXL35C85cQel7hTYpHACx95AinNh2jGvc+KVCcbzDUHC1GcnQfpo+Sz
-	MwIVMA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5290nfr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Aug 2025 06:38:04 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57K6c39F024136
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Aug 2025 06:38:03 GMT
-Received: from [10.216.14.39] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 19 Aug
- 2025 23:38:00 -0700
-Message-ID: <b453b8ff-a460-4ccd-9019-aed746a7d52d@quicinc.com>
-Date: Wed, 20 Aug 2025 12:07:57 +0530
+	s=arc-20240116; t=1755673986; c=relaxed/simple;
+	bh=c5+S/1Gf7ZsoEnmy+5rJrXdwibFww9JCyR0LQDM420Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bussq9GBnoSBk959cuBNTbBybSy1HzYKVgYWAI6LTvK9zWwuov9ytZ7RTM2vZ80GN4/SdwucOiiqbS94Dou5YnYcr1F3zvCgNXFxQUx8u+IpazTKUMRcr3ZjLLW5rZf25iBOMmqYBIt0ZZq1GUjLFW8v1j3PsPWFaMKj9DVYwpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u+nFfGdZ; arc=none smtp.client-ip=209.85.208.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lj1-f170.google.com with SMTP id 38308e7fff4ca-333f92d60ddso43508961fa.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 20 Aug 2025 00:13:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755673982; x=1756278782; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=S2fgjYTxYjXy8UMOqphDGxwyeF/52vWVWRMlWTcUmd0=;
+        b=u+nFfGdZWm2upyZ8H8Q/1YeiqrdWui+lZFdVlGkny+R3i65205+6S5Ibzk6sevqvgV
+         4rb8JHRMYClP/cJ23SQUKqMuTE29Uqb1DX8u21fcy4o4x6snD6BxvMzhrPIVGK2Lm+Nc
+         oXDYLXx+/51/qtJWoWAYJQCrNgWTHAB1PtK30KrDJzVxEQR7WZQQ/ydXZjYow5wdFRWp
+         mblnL7SnWhAFef3QbfiNmMhy0IEK1RwIbimvt3zNOyKoTyJdEeKH4EzOt7/YYLBa66U0
+         yqRbk7ufFn9mj2IrpOKCtgpBmd8+eF1uo1icxjl3Ft8G34HtRw1e2DLievg2aGr6EY6i
+         zhaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755673982; x=1756278782;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=S2fgjYTxYjXy8UMOqphDGxwyeF/52vWVWRMlWTcUmd0=;
+        b=pTQyhkeQNqqLznwA7K8I+p0h6VfxH+C/RRtBmLzzblI+dgYnDr0yzT290FjqChGXZo
+         RyNcARNEDgI2o18rfhh2TwNy17pLBbNo14uhCTZfQsP/69hiKjbadVWr96sV7taRnj9X
+         fTQPY9Pmy9MetXF30JCtlutkX6uFfVrMtuy4PQA+EUAJBp24dBD1cPv0H4AyglMn6wlU
+         c83/S0DUrMgwScDU/cyfpm4zd/9LZUg7/EvnoIB175y/xbatdgumpf199lIE45EvE27J
+         DNugsMqsCRPlyEVLVcEcw+P75Y1fDwkeMnZ4u9hZhxUfjlyJsSFVV3OiMLkbGcOQ2Ruv
+         SXAw==
+X-Forwarded-Encrypted: i=1; AJvYcCVMBW6zJ2nd8g6N5LIZ5fYJ7rCtQoOh27h1IGDWQ9bpOzEIsle5iQQTPwHt4l/c0pUyb0f99ee+6cg36u83@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWhIolQdbG2IpZfNggM78a+6hwwNWxIuC7mbQIErKHPi6xPFG8
+	/jdzbUaH/qx0pEmN7qaMUNMGPvrhL7FUzOp/FqHCN/QiG3aJhOj9LOZQ/k4OhPydF91vFhfUM9o
+	e30VSrCkoXZ52QXpGVzs3N1TcVqzU4NpKaInAmleJQQ==
+X-Gm-Gg: ASbGncsc70Z75M7tujbaXqE9gRFSsBDdpgzWabQVF2gQj5XSJoR9NllamLEDZ12kDq6
+	ZUTbZM7f5LqIytbAjz4DMqPZmMxufe+pe7H2ozfUt62mgs6auTFGevkq9Pz98JymbGx87stFGeR
+	kir1lxEtLdovIYVYt93puWB7Ga8PmlXtnHLq0VJowQn629ijTETbT1wkSispEnknPl/bTczf6Om
+	MP7nc8JbOCS
+X-Google-Smtp-Source: AGHT+IF6EyOC5NaF9ylfzmvC/lF+XZ8ruNEnYsDF5O1GCCUBAqJgipnFljpMN/OqbECQRkpVCXWcXHbvMHeyWEs8R7M=
+X-Received: by 2002:a05:651c:41d4:b0:332:45e8:3aca with SMTP id
+ 38308e7fff4ca-3353be058demr4837631fa.19.1755673981615; Wed, 20 Aug 2025
+ 00:13:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add regulator loads for SM8650
- and SM8750
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: <vkoul@kernel.org>, <kishon@kernel.org>, <mani@kernel.org>,
-        <andersson@kernel.org>, <konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-phy@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250819222832.8471-1-quic_nitirawa@quicinc.com>
- <20250819222832.8471-3-quic_nitirawa@quicinc.com>
- <ger4kizeltjwalfuwu4dpfjiskrv2okgo5c7d6n3pb24yaxgfo@nkcndblyx3il>
-Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <ger4kizeltjwalfuwu4dpfjiskrv2okgo5c7d6n3pb24yaxgfo@nkcndblyx3il>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: BQvDRfkUthZMWI5Gn7a_DJzQDd4m8iFZ
-X-Proofpoint-ORIG-GUID: BQvDRfkUthZMWI5Gn7a_DJzQDd4m8iFZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX/2to/qJcLkvr
- 6BEkScyV+2tK1n25Lf74iJWDNmFjNYJv9dyTwtCuUNIMCo2Ze9Q1CUIF6tK8+Ml5hYV7dtqdqGH
- 7WVUmQzJ3sZxj9jwZoSDpV0ssOS5q3WRiRZ0Wa9+a+0fs+wglIm+Qghem5gPuakmoYoP6MRSio9
- ggdXJ68P1zaoRW0fI1CW776wq/sclyasrJSdpSv4jYii3r8HCJXOB/T/pEy8fOUaj7Nkb1PlIS+
- 3kBeOtx733tNUsFWJeRuMdnZPlVFuuF3kzCXrjNT592V+5J7RyLwCvOqk02c0GHM3nObhxPXqSf
- YVNTulS0cc/TzXss1IpuRqeG2rMq2i0ddQJkZ2DcN9pMDtel9URH8ZgGfVlywf1/KYaHwbwMdgg
- VsFYt4x+P9G2IDGPh1AQgJVvqAB9yQ==
-X-Authority-Analysis: v=2.4 cv=SPkblOvH c=1 sm=1 tr=0 ts=68a56d4c cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=nb8l9q_sgcfmG5NmqRQA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-20_03,2025-08-14_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
- impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+References: <20250815-pinctrl-gpio-pinfuncs-v5-0-955de9fd91db@linaro.org>
+ <CACRpkdaDGmdhaik+1saRv7Ts4myQ+tg1aQqGU3xQyT7ma8dJFw@mail.gmail.com> <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
+In-Reply-To: <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Wed, 20 Aug 2025 09:12:49 +0200
+X-Gm-Features: Ac12FXx_mHZvAEY3OP5MA3Uo1ED7cgPY59m1esPAFUlhfqgk9BLjcKH2xKwqp3I
+Message-ID: <CACRpkda4soRCLF5=W=6R4wnwT3pjk743j022XfJxjTTQzuarAA@mail.gmail.com>
+Subject: Re: [PATCH v5 00/15] pinctrl: introduce the concept of a GPIO pin
+ function category
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Bartosz Golaszewski <brgl@bgdev.pl>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Chen-Yu Tsai <wenst@chromium.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Tue, Aug 19, 2025 at 8:31=E2=80=AFPM Andy Shevchenko
+<andy.shevchenko@gmail.com> wrote:
+> On Tue, Aug 19, 2025 at 4:02=E2=80=AFPM Linus Walleij <linus.walleij@lina=
+ro.org> wrote:
+> > On Fri, Aug 15, 2025 at 11:09=E2=80=AFAM Bartosz Golaszewski <brgl@bgde=
+v.pl> wrote:
 
+> > >       devres: provide devm_kmemdup_const()
+> > >       pinctrl: ingenic: use struct pinfunction instead of struct func=
+tion_desc
+> > >       pinctrl: airoha: replace struct function_desc with struct pinfu=
+nction
+> > >       pinctrl: mediatek: mt7988: use PINCTRL_PIN_FUNCTION()
+> > >       pinctrl: mediatek: moore: replace struct function_desc with str=
+uct pinfunction
+> > >       pinctrl: imx: don't access the pin function radix tree directly
+> > >       pinctrl: keembay: release allocated memory in detach path
+> > >       pinctrl: keembay: use a dedicated structure for the pinfunction=
+ description
+> > >       pinctrl: constify pinmux_generic_get_function()
+> > >       pinctrl: make struct pinfunction a pointer in struct function_d=
+esc
+> > >       pinctrl: qcom: use generic pin function helpers
+> > >       pinctrl: allow to mark pin functions as requestable GPIOs
+> >
+> > I applied these 12 patches as a starter so they can
+> > stabilize in linux-next.
+>
+> Hmm... I'm still sure that we don't need to have a separate flags
+> field, but since I am on vacation and will be able to look at this
+> closer next week, I can't look closer to it.
 
-On 8/20/2025 6:19 AM, Dmitry Baryshkov wrote:
-> On Wed, Aug 20, 2025 at 03:58:26AM +0530, Nitin Rawat wrote:
->> Add regulator load voting support for SM8650 and SM8750 platforms by
->> introducing dedicated regulator bulk data arrays with their load
->> values.
->>
->> The load requirements are:
->> - SM8650: vdda-phy (205mA), vdda-pll (17.5mA)
->> - SM8750: vdda-phy (213mA), vdda-pll (18.3mA)
->>
->> This ensures stable operation and proper power management for these
->> platforms where regulators are shared between the QMP USB PHY and
->> other IP blocks by setting appropriate regulator load currents during PHY
->> operations.
->>
->> Configurations without specific load requirements will continue to work
->> unchanged, as init_load_uA remains zero-initialized when .init_load_uA
->> is not provided.
-> 
-> Can we please get configuration for the rest of the platforms?
+The qualcomm 32bit platforms fail in next anyway so I dropped the patches
+for now.
 
-Hi Dmitry,
+Both you and Bartosz are on vacation so let's let it rest for a week or two=
+.
 
-If you're okay with it, can I merge the configuration for the remaining 
-platforms in the next patch series after I complete testing on all 
-remaining platforms.
-
-Regards,
-Nitin
-
-> 
->>
->> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 19 +++++++++++++++----
->>   1 file changed, 15 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> index aaa88ca0ef07..1c3ce0fa6adf 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
->> @@ -1170,6 +1170,17 @@ static const struct regulator_bulk_data qmp_phy_vreg_l[] = {
->>   	{ .supply = "vdda-pll" },
->>   };
->>
->> +/* Regulator bulk data with load values for specific configurations */
->> +static const struct regulator_bulk_data sm8650_ufsphy_vreg_l[] = {
->> +	{ .supply = "vdda-phy", .init_load_uA = 205000 },
->> +	{ .supply = "vdda-pll", .init_load_uA = 17500 },
->> +};
->> +
->> +static const struct regulator_bulk_data sm8750_ufsphy_vreg_l[] = {
->> +	{ .supply = "vdda-phy", .init_load_uA = 213000 },
->> +	{ .supply = "vdda-pll", .init_load_uA = 18300 },
->> +};
->> +
->>   static const struct qmp_ufs_offsets qmp_ufs_offsets = {
->>   	.serdes		= 0,
->>   	.pcs		= 0xc00,
->> @@ -1638,8 +1649,8 @@ static const struct qmp_phy_cfg sm8650_ufsphy_cfg = {
->>   		.max_gear	= UFS_HS_G5,
->>   	},
->>
->> -	.vreg_list		= qmp_phy_vreg_l,
->> -	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
->> +	.vreg_list		= sm8650_ufsphy_vreg_l,
->> +	.num_vregs		= ARRAY_SIZE(sm8650_ufsphy_vreg_l),
->>   	.regs			= ufsphy_v6_regs_layout,
->>   };
->>
->> @@ -1676,8 +1687,8 @@ static const struct qmp_phy_cfg sm8750_ufsphy_cfg = {
->>   		.max_gear	= UFS_HS_G5,
->>   	},
->>
->> -	.vreg_list		= qmp_phy_vreg_l,
->> -	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
->> +	.vreg_list		= sm8750_ufsphy_vreg_l,
->> +	.num_vregs		= ARRAY_SIZE(sm8750_ufsphy_vreg_l),
->>   	.regs			= ufsphy_v6_regs_layout,
->>
->>   };
->> --
->> 2.48.1
->>
-> 
-
+Yours,
+Linus Walleij
 
