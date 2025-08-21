@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-70202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D6B3B2FD9A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 17:01:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE86AB2FDE8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 17:12:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A9CB462712B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 14:50:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC04A3A9206
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 15:06:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E4A82E2DDE;
-	Thu, 21 Aug 2025 14:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 527E0267B90;
+	Thu, 21 Aug 2025 15:06:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sv0wCK/M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jkP+L5A4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC001FF1B4;
-	Thu, 21 Aug 2025 14:49:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B21D265606;
+	Thu, 21 Aug 2025 15:06:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755787785; cv=none; b=lzHqFT2Bamqa5LJKmLOTRWqIznIyH9xSQ9ZLsMar72UiCHn5dzms8LH+hFV4bZhjZ3Vsqnd1BNRIGQ9scHQDQYBrjKv8ztqUmUbFm/YLM+ThEX0E2HyxLltikZ7Yg+eTH8mve/Gn8TUJI6jEmJ8GH9vlZILur4XIVcU9Ke4vHFI=
+	t=1755788767; cv=none; b=S7hZmHHedSAi8OTvq1eemyodXNQE0r5F5aCv7zgw4T9AnTK6YeJB/ZZINZqKbguOZZrOJrhn9cQ+ZTVR/BufF1VZiPsgXFan4ZFXB5/c3ZETeHC7EtMiaEw7dwNw6/VBq1Qrcwt9B2jO6QMN0JSlnCloxK6NpZFdYHhhqOFGg9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755787785; c=relaxed/simple;
-	bh=4kHSoKbzH1VsNCZ4lhP60elvvkZwQ3ujTwXQge/bTxw=;
+	s=arc-20240116; t=1755788767; c=relaxed/simple;
+	bh=9c+DmefedBCjSps1/tVd1qVVcibiDPyr2DDXDxuPlSY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bw5xUYq59LFEaOtIDTAqk665wA8h6BkwB70hc4E4Qj/Z8Iv4ApjcVKhLxUsuTVlKXzxqeaYq4AgvW1WNgXG7ye8JppbNj/68mwK0eDNr+nEwbFIQqZGu3/aZidQz8Az/DMjf3dTn1REbWOSwdTSTvSuLX5WAhAvp+qgAWgr2so4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sv0wCK/M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF61BC4CEEB;
-	Thu, 21 Aug 2025 14:49:41 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=i0KJe3Izr9tFscQI4MfWowpraRGPHEEZYHOAfn3NkxlYr48BZAC7hE9dIn9TNqFTfidng5pDcLOc9tryUPPEVoUcg0gfF2QH3rt40ym4uf3d5GzRP6Nqi5JifX8VQ8lFQXKafuEe99gxeOyPo9kAbac0o4K29NuCHyiXS+6XBTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jkP+L5A4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DD6CC4CEEB;
+	Thu, 21 Aug 2025 15:06:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755787784;
-	bh=4kHSoKbzH1VsNCZ4lhP60elvvkZwQ3ujTwXQge/bTxw=;
+	s=k20201202; t=1755788764;
+	bh=9c+DmefedBCjSps1/tVd1qVVcibiDPyr2DDXDxuPlSY=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Sv0wCK/M6NZsk/XL8JPYa4DMdGP+mhSBHn7hkL+BxD4f/A4a3sYVHcmGnJ+4di3wV
-	 5H//DdWs7MPwYoYZy1qMB6AbI0T6scTkG8LCSwDXW3igDp7UEnql29vZwuf2+x4WLi
-	 peerGwzpC/glLK68QCqOChH2T4T3YAiW/zQGXwLXrwiahE9Wc/uYU8TlmLqTO2g8H6
-	 4z6ZK7nZoFlpVmpPgMvXqWmBdOtiSQAfwlMXckcgh2xYkOztSBn/eLgWhxAzI96sPO
-	 sMtDP8ccfmXUaFj5ZOCfMaj4Qr3zsH8Q22sJ+NSCGBJVUfzA7Lf5KP1C8bK52RkE6B
-	 EGeNrRyFGec2Q==
-Message-ID: <da22b26a-99da-4dae-9c46-2f871e45faa6@kernel.org>
-Date: Thu, 21 Aug 2025 16:49:39 +0200
+	b=jkP+L5A4ajl1eI9D8jrZEkScbDIVfmlZFgtnjDYeG5Jx30+moGq3efcCB5w/Lohsx
+	 s3Xji2vaMf14OPdkg5ATWWBUJKfrfCeOY4foWGk78wnmgHbLlr2NUMnxwXpzqZiKIs
+	 QGC1QWkBoEXEak3REj4vJMJKp4MHFbM1J9h204ZNuQsKxaO7A+hJ412sCITMe4FC1w
+	 ntUdBQE1NP4ZkDPlmr7Raxw66c+ox17FzzOGq33F2MQuJIjl/HN+ZNv2B/WeCXrgbh
+	 7cm6TaijwQGJ7Zb8Gmi1cq3yDqR4JZjURop7PwSoZbq4aBrRkQF4FOX/POqcQNUjQP
+	 sazLv0JqX2Alw==
+Message-ID: <4a60c3d3-11fb-40fb-8686-3d83539f250b@kernel.org>
+Date: Thu, 21 Aug 2025 17:05:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,21 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/11] remoteproc: pas: Extend parse_fw callback to
- parse resource table
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2 07/11] firmware: qcom_scm: Add
+ qcom_scm_pas_get_rsc_table() to get resource table
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
  Vikash Garodia <quic_vgarodia@quicinc.com>,
  Dikshita Agarwal <quic_dikshita@quicinc.com>,
  Mauro Carvalho Chehab <mchehab@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-kernel@vger.kernel.org,
  linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  linux-remoteproc@vger.kernel.org
 References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-10-mukesh.ojha@oss.qualcomm.com>
- <aKWI-izL5BooL61p@linaro.org>
+ <20250819165447.4149674-8-mukesh.ojha@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,36 +110,39 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aKWI-izL5BooL61p@linaro.org>
+In-Reply-To: <20250819165447.4149674-8-mukesh.ojha@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 20/08/2025 10:36, Stephan Gerhold wrote:
->>  #include <linux/slab.h>
->>  #include <linux/soc/qcom/mdt_loader.h>
->>  
->> -#define MAX_RSCTABLE_SIZE	SZ_16K;
+On 19/08/2025 18:54, Mukesh Ojha wrote:
+> Qualcomm remote processor may rely on both static and dynamic resources
+> for its functionality. Static resources typically refer to memory-mapped
+> addresses required by the subsystem and are often embedded within the
+> firmware binary and dynamic resources, such as shared memory in DDR
+> etc., are determined at runtime during the boot process.
 > 
-> I'm confused why there is a semicolon here suddenly. Did you edit this
-> patch by hand?
-> 
-> Applying: remoteproc: pas: Extend parse_fw callback to parse resource table
-> Patch failed at 0009 remoteproc: pas: Extend parse_fw callback to parse resource table
-> error: patch failed: drivers/soc/qcom/mdt_loader.c:22
-> error: drivers/soc/qcom/mdt_loader.c: patch does not apply
+> On Qualcomm Technologies devices, it's possible that static resources
 
+It is possible? Only possible?
 
-This is very, very odd process. Editing patches POST format-patch or
-post b4 (wut?) is a serious warning sign.
+> are not embedded in the firmware binary and instead are provided by
+> TrustZone However, dynamic resources are always expected to come from
 
-Few commit msgs also bring attention to possibility of AI, therefore
-please clarify:
+So dynamic are always in TZ?
 
-Did you use AI tools (qcom internal, external, any LLM/AI related tools)
-when writing that code, formatting it or creating this patchset?
+> TrustZone. This indicates that for Qualcomm devices, all resources
+> (static and dynamic) will be provided by TrustZone via the SMC call.
 
-This is very important, as it create might create legal risk and
-everyone should be aware of it.
+And now all of them are by TZ? Previously it was only possible?
+
+Srsly, what sort of AI hallucinated slop it is?
+
+I think this is pretty close to proof that your submission does not meet
+criteria of open source contribution.
+
+Did you run any of this through your legal process in Qualcomm?
+
+I don't trust any part of this code.
 
 Best regards,
 Krzysztof
