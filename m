@@ -1,313 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-70199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70197-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5259B2FC27
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 16:18:38 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4479CB2FC1D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 16:16:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6497B7A6AAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 14:17:03 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0AF697AF31E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 14:15:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 547FE24BD0C;
-	Thu, 21 Aug 2025 14:17:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C4A3239E8A;
+	Thu, 21 Aug 2025 14:16:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="h8QMSJJf"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="yb3WFA/4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141F9226CF1;
-	Thu, 21 Aug 2025 14:17:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C73B2264B7
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 14:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755785856; cv=none; b=emgnzSVumGH5Gn54uc87a1hZUqRsi72Ak28U9LfMc0ppCj0YOBb8bkCSvVfQ8sKqd7Fwt8sx3fm/LxKgjtn2d0PVDht3bE+9sp2UC3opV09lkD3Z+2MMJ5Oam8ddcmUT5MUorNw+JoNdrCo9LKikW5CB9zVvkBbpf2iufGXYr00=
+	t=1755785797; cv=none; b=VstFiUxI/D61+j1fmt+YUE3xA08BwGoYAmd2/yCY1DvYqw61pJOfdR9nY0oc5+qZa4CXuicd44tiKSyaxavddJY1BIySEDEAbR5dHPXoggb4UhSUpylhJBRLnU4A12w2vsni++uKAft2f054tONwiCuF6fK/rQcFEwcddvBivTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755785856; c=relaxed/simple;
-	bh=QHSCOBCyG6uVzMkRVubxnt1usgwKCDPODhIQG+PojSg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=dkBBjzN91qSXQoBNpdG6Nxj8i1EwiTMOWrViHgdXAdPcG/eQA4/q1ZxMaLWzI+C3viYPYY/mccgrwuK7XJTxhiytU2S3XaNL7uIcDcOlclVa3bh5LTgTd5qCidyR12M8tL2UNMtXwe+A9Yc3fwqxUdwyQ5711IKRzFMCdWSLbLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=h8QMSJJf; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9bCvH012935;
-	Thu, 21 Aug 2025 14:17:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xULNzH1IlTlmJ16rz4t/goKQpa8XqqBnbWcwiDJi3dg=; b=h8QMSJJf3yF9G4hH
-	afXvxZGieWPbWrS6kjNmcUtO+z8vUjowfHmRoRhD39cw9hF5QnXffUnKK3C+sLjj
-	0sd2ai4ZLLFQWv85QmAZbHFPeKXHfLNB0Sih0uapekr6Pcpjp3/a9e/I3B7wD3tU
-	YMpFI01wzJLXfwyavoBdZvZJ+9wpWlumY2DSIlubYmgbDrGntxwggoI9C0E9VZq5
-	3VPHLaSItjdTKa0Y53IBNs/uwS7eTl6tQGv7ciyh8P+kXAPCLFdbhJNQePMJGD3/
-	3eSzObXTriSKgwb7ZaqjnpRcpp6H3hmqPgAN3TRKTXuv4MQdL7ZDUxHvj8HSfPnE
-	E32fbg==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52dnkr7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 14:17:30 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57LEHTpm016455
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 14:17:29 GMT
-Received: from [10.216.44.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 21 Aug
- 2025 07:17:25 -0700
-Message-ID: <ec1b0c96-3069-5937-7bc4-cbce0a4c4ec2@quicinc.com>
-Date: Thu, 21 Aug 2025 19:45:59 +0530
+	s=arc-20240116; t=1755785797; c=relaxed/simple;
+	bh=u1EiMmNicg99wl+W+lAeeTFivMOYtOn+iSGBN8oKESA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OR3NQ+Z/WzzOWmLLGASGEPFiPhpEc2GDF1eg6bucv35udb+1Eh4futN3eVndKnrfkse+38F2wsTofOjWHdSYRiGJctOKl/a7z0u+jY4zCjRJuW6zipK2e/Ydt76GAKgIAVpePAIEaW0+HNtZ50JAnjuvH5CO2xQ2Q4yN2t4HuqM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=yb3WFA/4; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-afdefc9b005so17766566b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 07:16:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755785794; x=1756390594; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=kZ0k2vcyc2tLT7HH0rxJhVxlznqPDfjw9yG0PRazUvc=;
+        b=yb3WFA/4c54/hA2M9uX0H+hfil1+XLhSqJsnwTB+JI0M1llPuKTUQNRfKnlgbr5cw3
+         deSFlhBFEv5kCLzvhsWuKljkwJRulqLl3XAqbfV+LPnML6MSgR2m7Pt9xOpZTzOev3jP
+         7QPGF3EqAIoUFwZk+38pUwIC/0jkvOAEmr9oYCDuqNt7TvXK5PMVOsR/Bnry+8jdrb+4
+         X9uIHHFy/ZjPGQuXmfubP2OwAlGaSE8ndMabRfCLqkmWJBruvLb/cUdy5Axy2aM9jobf
+         z+bYnP2p2ulcedgHXlytp3S+xV1zID4ldNvT/BkWCXIFTE/buqMkw+TjwESal/CrdfsY
+         PvBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755785794; x=1756390594;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=kZ0k2vcyc2tLT7HH0rxJhVxlznqPDfjw9yG0PRazUvc=;
+        b=Bzmg0DziL/N7G8UMvJ6Ysk7Irgbh7EUHsinjdVB5zxDqu6prANy+RdbKU8knOFaTM2
+         JeqaHujotCLMGbwLaT0jPUp1ZHCscwHjQlT3Cr/9PyIXYZoGs+6XObqlMb9TEdzf1iMk
+         Mg4tOp4UdFxwK9h9IU256WMwTJPcpDCWwvZL+kPArdb0zXgR2CkTnMe9qdx+e+Y6pgtE
+         V4vSY0QUnmPVTdRj+3oip4a0t9BLCAcpD8PeAB0hNg1ZJwGS6DHHOWBb7rLLBBD0UIui
+         nJ76PRo9gK22TcZXdXAJEp4iTdeAmJUccFPBa1djcilryibggvFb3bKsABwe/ly6VpNc
+         5cfg==
+X-Forwarded-Encrypted: i=1; AJvYcCVNMJbydYQL5bBRaaJkJ54fa4jHs3q6/K9lSoGd1bslc7+0HM9F0WVDgjzXB1oPl/lx2C58wV6Fj0SBGhwK@vger.kernel.org
+X-Gm-Message-State: AOJu0YwU7VMtb1i22fzIp02nh6xqPT6zZrL62UyPAy4rd+wzzWSUi3Ti
+	8dWPJd2nX/TGDEQvrYMY0WNgb2p9xdwb8SJwdSIAqKINL0ywUU+zk1fLXTC26XxnUKQ=
+X-Gm-Gg: ASbGnctZRA1vHu1+/pkPLwOdu84cVPKh/icpGsb4MAR4PeWlDB6ISpnvu3SHQLY1jqC
+	l+t8mBuOy4vVNs3FPl0aArvDN3HDa+rhgjn+cQ+P8hYi8xd+JB9vAEg10scKznPC1w/OrIHtjyQ
+	jV7+B+KUjK0QKz+3St5HckHZoNKCpXDWQc84X6NIfGQUr2dNVh74kbSHEbML+9GR70yCLYVFgzP
+	f3RiqV8CfyzZShZDHoF05HE0KvhyPljQCc8ypAPlj4uFUKLZe0HyHM0USWo8AOFyxrEf8xarBtW
+	sm/xXx/Lkd1+pom/3mR129qKML4ZC4gaRxf1EE/UpyGzAwH9qZu/vuUvWWY5kAQrqx+TbQpUPwW
+	wlgRm8KFyv49H9NQOiJyQVcIUUROdmT9a9A==
+X-Google-Smtp-Source: AGHT+IFVNQKIQVJcNOtV/gNXbGu9QGhl6vmLnMf5ayeRRrfxNKefdvubwF7W3Cj4qGwRr/iI9eO8KA==
+X-Received: by 2002:a17:906:c149:b0:af9:3397:ee9d with SMTP id a640c23a62f3a-afe079d7a7cmr123591666b.3.1755785793589;
+        Thu, 21 Aug 2025 07:16:33 -0700 (PDT)
+Received: from kuoka.. ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afded4cc3c0sm395325566b.96.2025.08.21.07.16.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 07:16:32 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module
+Date: Thu, 21 Aug 2025 16:16:26 +0200
+Message-ID: <20250821141625.131990-3-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH V2 2/2] mmc: sdhci-msm: Rectify DLL programming sequence
- for SDCC
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sachin Gupta
-	<quic_sachgupt@quicinc.com>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        "Ulf
- Hansson" <ulf.hansson@linaro.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-mmc@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_cang@quicinc.com>,
-        <quic_nguyenb@quicinc.com>, <quic_bhaskarv@quicinc.com>,
-        <quic_mapa@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_sartgarg@quicinc.com>
-References: <otfof56qvqxyjaq6onor2f3egrt57h2xazncias72qnn4xjgz5@2aj2pyj5xmyl>
- <a885b32c-c59f-4fb6-b2cb-7955d2d3ae69@quicinc.com>
- <mpuyg4ndd7xvfpwd6oubn7zmzkuienyrig5pmkrd4badlpebvf@h6weyimpcfv2>
- <769268c2-9a7f-4b6e-aabd-a6cf5a744d5b@quicinc.com>
- <d5ykzwuk3wrwycol3wpeontfp5t7h7vfrfcxnmxei3qs74xsp7@ihtzne5wbytf>
- <81323b02-a7be-847a-b973-ca0cdb906558@quicinc.com>
- <p7o2ykmpghx5jqagpkhd2rfqgizcdagn366rltyn4gmbmnmpje@vcygaqcaowkn>
- <82d11cf6-bfed-9b73-c697-c692d1c7e02d@quicinc.com>
- <1f910d65-de34-424d-adf9-7669c22afeaa@oss.qualcomm.com>
- <bb85f33a-17e4-3c7f-57ce-c4d67b7d655b@quicinc.com>
- <jybd2m25jtg35yocf77e23ytbvrlt5d2f6jjscdyxilpk75tx3@na3u4h2vdweu>
-Content-Language: en-US
-From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-In-Reply-To: <jybd2m25jtg35yocf77e23ytbvrlt5d2f6jjscdyxilpk75tx3@na3u4h2vdweu>
-Content-Type: text/plain; charset="UTF-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2657; i=krzysztof.kozlowski@linaro.org;
+ h=from:subject; bh=u1EiMmNicg99wl+W+lAeeTFivMOYtOn+iSGBN8oKESA=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBopyo64EfF+ULupRyQL9/Y3l809bzF1ZqNuDj1l
+ UGrNR+laymJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaKcqOgAKCRDBN2bmhouD
+ 113ID/0biIgGnS7NEqLj/msZFRLfs4blEUj2NDA3aWzfESG91irl1s4/sE4jigJXbrkib6TeJow
+ n4i1O8nhStZvCA29j+zovGe0iIgwtZGUdS4tHjkFhczaJsKufJ3MYX0wk6XMauShk7oWAtL8Xd7
+ L2K7W1jKzu9TId0zelbHvjYXIpwTPYhFkkayH1nu/Gaqv7yBRdfSJAQIsIVuTgZ+uXud78b1Ji0
+ 0sJtM/Lxvu8PQdEnRY1uTOKKQt0YWDWWs5qy2/FdKm56nmLcZOSBvxn3GDVWx9uZ0hdnW+vXCC7
+ 03j3C9cSZlpBmVq8dlw4n8LzNJ3tQfmCHUTU9Dkg/EOZwDa2tw6itaKTaTikHcijdQF+fjUwGFr
+ QPe5VwPNMmRs2j3mlssi7d40BDBx+vO9ueKMTbM5yKBsxLbBAhEKNM9TKzVfl2O0lzcls7jbeRv
+ KA2Na+BNheuylYAINvHItwGTkPjCB1Ekv2c+iyiTQLD+VoviOuxD+UjtJYOrIjHCu1YtOBFywpi
+ elm2d3BRnbuPCXw1pig4II5ZjxvglPfIeQWll1XbB8x2TgbW7h9OAyed/EiF0+e5rOgNNVrYDSw
+ DXir+iAfkHC6pHT6q21geHq2m8c+ZT6Bx/tJnB0mBtOG3Phu+3BkzZtn/ZZLsldHvTwJ5+57De1 IZU3v9R2tPxkr3g==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX3N9UDoCp9hVY
- o+LlYKTxkfM7XR7JMBL3zKdiVNlQHjYjPKJrPHI9Prim9wnSlRyTDesf/MrnhQOkEq3YM24pjGw
- 78QBG/tz16YI2nnMLb93+VyhItCiXCuEta59WhRhNrY+OPtoF1qSBjr2kKCxi/ZlznqEBy7r9Cd
- /121c5ejwEzNFqgqpk6WcknPzOFbNQtKJEkHz3464ieGTT99gi7RxruYv52mvLe9YqVv2l+CEzR
- mxI1v3gs8c2PIZoKd8NloBOf99oC1TA/KBltt3k3NYmzDqxbFYTZ6ru4L/mwRWcHlSihS/NMxK5
- ZG7zKo8LBLr7lfYCgVLEFxqLhEmh1QiFbHXIugKLUMUjKX1G6vsRe/noGIigPut8V3YL0LtVQ7H
- 6oXQ730mhCXYNXj6O9DtRoPDPYzU1g==
-X-Proofpoint-ORIG-GUID: H60qP2Dvg91YFIUQ7nVQ-PO2pgixmsiF
-X-Proofpoint-GUID: H60qP2Dvg91YFIUQ7nVQ-PO2pgixmsiF
-X-Authority-Analysis: v=2.4 cv=SoXJKPO0 c=1 sm=1 tr=0 ts=68a72a7a cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=_6ZtYe9j2PC1TTnEqZoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-21_03,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-On 8/9/2025 3:10 PM, Dmitry Baryshkov wrote:
-> On Thu, Aug 07, 2025 at 01:28:28AM +0530, Ram Prakash Gupta wrote:
->> On 7/31/2025 7:49 PM, Dmitry Baryshkov wrote:
->>> On 31/07/2025 14:46, Ram Prakash Gupta wrote:
->>>> On 7/30/2025 11:26 PM, Dmitry Baryshkov wrote:
->>>>> On Wed, Jul 23, 2025 at 03:43:37PM +0530, Ram Prakash Gupta wrote:
->>>>>> On 1/22/2025 3:20 PM, Dmitry Baryshkov wrote:
->>>>>>> On Wed, Jan 22, 2025 at 02:57:59PM +0530, Sachin Gupta wrote:
->>>>>>>> On 1/7/2025 8:38 PM, Dmitry Baryshkov wrote:
->>>>>>>>> On Tue, Jan 07, 2025 at 11:13:32AM +0530, Sachin Gupta wrote:
->>>>>>>>>> On 12/27/2024 12:23 AM, Dmitry Baryshkov wrote:
->>>>>>>>>>> On Thu, Dec 26, 2024 at 11:22:40AM +0530, Sachin Gupta wrote:
->>>>>>>>>>>> On 12/19/2024 11:24 AM, Dmitry Baryshkov wrote:
->>>>>>>>>>>>> On Wed, Dec 18, 2024 at 02:40:57PM +0530, Sachin Gupta wrote:
->>>>>>>>>>>>>> +
->>>>>>>>>>>>>> +static unsigned int sdhci_msm_get_clk_rate(struct sdhci_host *host, u32 req_clk)
->>>>>>>>>>>>>> +{
->>>>>>>>>>>>>> +    struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
->>>>>>>>>>>>>> +    struct sdhci_msm_host *msm_host = sdhci_pltfm_priv(pltfm_host);
->>>>>>>>>>>>>> +    struct clk *core_clk = msm_host->bulk_clks[0].clk;
->>>>>>>>>>>>>> +    unsigned int sup_clk;
->>>>>>>>>>>>>> +
->>>>>>>>>>>>>> +    if (req_clk < sdhci_msm_get_min_clock(host))
->>>>>>>>>>>>>> +        return sdhci_msm_get_min_clock(host);
->>>>>>>>>>>>>> +
->>>>>>>>>>>>>> +    sup_clk = clk_round_rate(core_clk, clk_get_rate(core_clk));
->>>>>>>>>>>>>> +
->>>>>>>>>>>>>> +    if (host->clock != msm_host->clk_rate)
->>>>>>>>>>>>>> +        sup_clk = sup_clk / 2;
->>>>>>>>>>>>>> +
->>>>>>>>>>>>>> +    return sup_clk;
->>>>>>>>>>>>> Why?
->>>>>>>>>>>> Sorry, I did not understand your question. Can you please explain in detail.
->>>>>>>>>>> Please explain the maths. You get the rate from the clock, then you
->>>>>>>>>>> round it, but it is the rate that has just been returned, so there
->>>>>>>>>>> should be no need to round it. And after that there a division by two
->>>>>>>>>>> for some reason. So I've asked for an explanation for that code.
->>>>>>>>>>>
->>>>>>>>>> clk_round_rate is used in case of over clocking issue we can round it to the
->>>>>>>>>> usable frequency.
->>>>>>>>> If it is a frequency _returned_ by the clock driver, why do you need to
->>>>>>>>> round it? It sounds like that freq should be usable anyway.
->>>>>>>>>
->>>>>>>> I agree, rounding will be taken care by clock driver. Will remove in my next
->>>>>>>> patch.
->>>>>>>>
->>>>>>>>>> Divide by 2 is used as for HS400 the tuning happens in
->>>>>>>>>> HS200 mode only so to update the frequency to 192 Mhz.
->>>>>>>>> Again, is it really 192 MHz? Or 19.2 MHz?
->>>>>>>>> Also if it is for HS400, then shouldn't /2 be limited to that mode?
->>>>>>>>>
->>>>>>>> Yes, It is 192 MHz.
->>>>>>> Good, thanks for the confirmation.
->>>>>>>
->>>>>>>> As part of eMMC Init, driver will try to init with the best mode supported
->>>>>>>> by controller and device. In this case it is HS400 mode, But as part of
->>>>>>>> HS400 mode, we perform Tuning in HS200 mode only where we need to configure
->>>>>>>> half of the clock.
->>>>>>> This isn't an answer to the question. Let me rephrase it for you: if the
->>>>>>> /2 is only used for HS400, why should it be attempted in all other
->>>>>>> modes? Please limit the /2 just to HS400.
->>>>>> Hi Dmitry,
->>>>>>
->>>>>> like updated earlier by Sachin, HS400 tuning happens in HS200 mode, so if
->>>>>> we try to use "ios->timing == MMC_TIMING_MMC_HS400" that wont help, as at
->>>>>> this stage timing can be MMC_TIMING_MMC_HS200/MMC_TIMING_MMC_HS400 for
->>>>>> hs200 tuning and hs400 selection. In this case we must divide clk by 2
->>>>>> to get 192MHz and we find this as host->clock wont be equal to
->>>>>> msm_host->clk_rate.
->>>>> What are host->clock and msm_host->clk_rate at this point?
->>>>> What is the host->flags value? See sdhci_msm_hc_select_mode().
->>>> There are 2 paths which are traced to this function when card initializes
->>>> in HS400 mode, please consider below call stack in 2 paths
->>>>
->>>> sdhci_msm_configure_dll
->>>> sdhci_msm_dll_config
->>>> sdhci_msm_execute_tuning
->>>> mmc_execute_tuning
->>>> mmc_init_card
->>>> _mmc_resume
->>>> mmc_runtime_resume
->>>>
->>>> with values of host->clock as 200000000 & msm_host-clk_rate as 400000000
->>> Please check the rates explicitly in the code rather than just checking that they are not equal.
->> in function msm_get_clock_mult_for_bus_mode(), clk multiplier returns 2, with HS400
->> DDR52 and DDR50 modes which is called from sdhci_msm_set_clock() and
->> sdhci_msm_execute_tuning. And in sdhci_msm_execute_tuning(), we are calling
->> sdhci_msm_dll_config() when SDHCI_HS400_TUNING is set and this flag is cleared
->> immediately after return. And sdhci_msm_dll_config() is called after that.
->>
->> Now when the card is supporting HS400 mode, then from mmc_hs200_tuning(),
->> sdhci_prepare_hs400_tuning is getting called, and there SDHCI_HS400_TUNING
->> flag is set, and clock set is multiplying the clk rate by 2 in below call stack
->>
->> msm_set_clock_rate_for_bus_mode
->> sdhci_msm_execute_tuning
->> mmc_execute_tuning
->> mmc_init_card
->>
->> so this clk rate is doubling only with HS400 mode selection and while setting up
->> dll in HS400 dll configuration path sup_clk need to divide by 2 as msm_host->clk_rate
->> is twice the host->clock as mentioned above.
-> I don't see how it's relevant. I'm asking you to check for the rate
-> values explicitly in the driver code rather than just checking that
-> rateA != rateB. You might error out if rateA != rateB and they are not
-> 192 MHz / 384 MHz
+Speaker Protection is capability of ADSP to adjust the gain during
+playback to different speakers and their temperature.  This allows good
+playback without blowing the speakers up.
 
-ok I see, but I got one another alternate to this, I can try use similar checks used in
-function msm_get_clock_mult_for_bus_mode(), ios.timing == MMC_TIMING_MMC_HS400 
-host->flags & SDHCI_HS400_TUNING, but for this I ll have to move check
-host->flags &= ~SDHCI_HS400_TUNING in function sdhci_msm_execute_tuning () at the bottom
-of this function, this will make code more readable and consistent to checks at other
-places but I am testing it right now and will update.
+Implement parsing MODULE_ID_SPEAKER_PROTECTION from Audioreach topology
+and sending it as command to the ADSP.
 
-If this doesn't work then I ll explicitly use the rate value in check.
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ sound/soc/qcom/qdsp6/audioreach.c | 13 +++++++++++++
+ sound/soc/qcom/qdsp6/audioreach.h | 11 +++++++++++
+ 2 files changed, 24 insertions(+)
 
-Thanks,
-Ram
+diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
+index f4c53e84b4dc..b7f1fc835dc2 100644
+--- a/sound/soc/qcom/qdsp6/audioreach.c
++++ b/sound/soc/qcom/qdsp6/audioreach.c
+@@ -1250,6 +1250,15 @@ static int audioreach_gain_set(struct q6apm_graph *graph, struct audioreach_modu
+ 	return rc;
+ }
+ 
++static int audioreach_speaker_protection(struct q6apm_graph *graph,
++					 struct audioreach_module *module,
++					 uint32_t operation_mode)
++{
++	return audioreach_send_u32_param(graph, module, PARAM_ID_SP_OP_MODE,
++					 operation_mode);
++}
++
++
+ int audioreach_set_media_format(struct q6apm_graph *graph, struct audioreach_module *module,
+ 				struct audioreach_module_config *cfg)
+ {
+@@ -1299,6 +1308,10 @@ int audioreach_set_media_format(struct q6apm_graph *graph, struct audioreach_mod
+ 	case MODULE_ID_GAPLESS:
+ 		rc = audioreach_gapless_set_media_format(graph, module, cfg);
+ 		break;
++	case MODULE_ID_SPEAKER_PROTECTION:
++		rc = audioreach_speaker_protection(graph, module,
++						   PARAM_ID_SP_OP_MODE_CALIBRATION);
++		break;
+ 	default:
+ 		rc = 0;
+ 	}
+diff --git a/sound/soc/qcom/qdsp6/audioreach.h b/sound/soc/qcom/qdsp6/audioreach.h
+index 790fba96e34d..0ad566e45e09 100644
+--- a/sound/soc/qcom/qdsp6/audioreach.h
++++ b/sound/soc/qcom/qdsp6/audioreach.h
+@@ -31,6 +31,7 @@ struct q6apm_graph;
+ #define MODULE_ID_MP3_DECODE		0x0700103B
+ #define MODULE_ID_GAPLESS		0x0700104D
+ #define MODULE_ID_DISPLAY_PORT_SINK	0x07001069
++#define MODULE_ID_SPEAKER_PROTECTION	0x070010E2
+ 
+ #define APM_CMD_GET_SPF_STATE		0x01001021
+ #define APM_CMD_RSP_GET_SPF_STATE	0x02001007
+@@ -542,6 +543,16 @@ struct data_logging_config {
+ 	uint32_t mode;
+ } __packed;
+ 
++/* Speaker Protection */
++#define PARAM_ID_SP_OP_MODE			0x080011e9
++#define PARAM_ID_SP_OP_MODE_CALIBRATION		1
++#define PARAM_ID_SP_OP_MODE_FACTORY_TEST	2
++#define PARAM_ID_SP_OP_MODE_VALIDATION		3
++
++struct param_id_sp_op_mode {
++	uint32_t operation_mode;
++} __packed;
++
+ #define PARAM_ID_SAL_OUTPUT_CFG			0x08001016
+ struct param_id_sal_output_config {
+ 	uint32_t bits_per_sample;
+-- 
+2.48.1
 
->
->>
->>>> and host->flags as 0x90c6.
->>>>
->>>> and
->>>>
->>>> sdhci_msm_configure_dll
->>>> sdhci_msm_dll_config
->>>> sdhci_msm_set_uhs_signaling
->>>> sdhci_set_ios
->>>> mmc_set_clock
->>>> mmc_set_bus_speed
->>>> mmc_select_hs400
->>>> mmc_init_card
->>>> _mmc_resume
->>>> mmc_runtime_resume
->>>>
->>>> with values of host->clock as 200000000 & msm_host-clk_rate as 400000000
->>>> and host->flags as 0x90c6 which are same as 1st.
->>>>
->>>> Now if card is initialized in HS200 mode only below is the call stack
->>>>
->>>> sdhci_msm_configure_dll
->>>> sdhci_msm_dll_config
->>>> sdhci_msm_execute_tuning
->>>> mmc_execute_tuning
->>>> mmc_init_card
->>>> _mmc_resume
->>>> mmc_runtime_resume
->>>>
->>>> with values of host->clock as 200000000 & msm_host-clk_rate as 200000000
->>>> and host->flags as 0x90c6.
->>>>
->>>> now if you see the host->flags value, its same across the modes, and if
->>>> I am getting it right from the pointed out function
->>>> sdhci_msm_hc_select_mode(), your suggestion seems to be using the check
->>>> host->flags & SDHCI_HS400_TUNING which is bit[13], but in above dumped
->>>> host->flags SDHCI_HS400_TUNING bit is not set where we are using the /2.
->>>>
->>>> and the reason is, this bit is getting cleared in sdhci_msm_execute_tuning()
->>>> before sdhci_msm_dll_config() call.
->>>>
->>>> so this /2, is eventually called only for HS400 mode.
->>>>
->>>> Thanks,
->>>> Ram
->>>>
->>>>>> Now if we go for only HS200 mode supported card, there
->>>>>> the supported clock value would be 192Mhz itself and we need to pass
->>>>>> clk freq as 192MHz itself, hence division by 2 wont be needed, that is
->>>>>> achieved there as host->clock would be equal to msm_host->clk_rate. Hence
->>>>>> no other check is needed here.
->>>>> Please think about the cause, not about the symptom. Clocks being
->>>>> unequal is a result of some other checks being performed by the driver.
->>>>> Please use those checks too.
->>>>>
->>>>>> sorry for it took time to update as I was gathering all this data.
->>>>> 6 months? Well, that's a nice time to "gather all this data".
->>>> Took it up from sachin last month but still its a long gap.
->>>> Thanks for helping revive.
->>>>
->>>>>> since Sachin have already pushed patchset #3, and if this explanation
->>>>>> helps, let me know if we can continue on patchset #3.
->>>>>>
->>>>>> Thanks,
->>>>>> Ram
->>>>>>
->>>
 
