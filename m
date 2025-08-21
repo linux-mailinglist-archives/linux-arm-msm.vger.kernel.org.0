@@ -1,244 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-70114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B904CB2F457
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:45:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 85B78B2F45D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:45:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED366681E83
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 09:42:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5F1A1C83B1B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 09:45:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D7742ED868;
-	Thu, 21 Aug 2025 09:42:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 51E9C2EF66E;
+	Thu, 21 Aug 2025 09:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HVAe29ZC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OLN+NZp8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7392E29BDA0;
-	Thu, 21 Aug 2025 09:42:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0DA2EF657
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 09:44:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755769371; cv=none; b=sn0GoBWAMYVb1HX9BfxhRZwzsICS1cHdzTFX/n/IVmJ7RtnPWEvWryA42breFxR2ijKP1qJHYYsvA+otRMJw7HJOVvydFIeFlJrLepcbLwrS6wQ4DhxvpE2KDfi4Y5nnwQrMNlU1wdxDzigyUHUM9i39BjWz9YOa3fnPOLwFABE=
+	t=1755769494; cv=none; b=d6+iMF2M3qaFqYpmA9z7CflYiDiagQGwmR6agQBIbpn7vhcaPTYmmFNBssYaV9Alx2+oe17gblw3RgV3VGhDxgIHY9oT/lzezt5GGUcNhjY8iC8O0iOKw5MKxs24orcU/3h146azAw94Y0bzOPfV2EMQNY1uO5+wD4JRfzdL9Rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755769371; c=relaxed/simple;
-	bh=daHHXk6hGkf6STMZel23S0oS9VyuqpLyuFZi6TkLXIg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hx8CeviS4swOehxUXcWzlH6ALgtTQQd9gmHF2QKxywtj/SuumW09kvGol1PSUAQH5I914b4B1+1kzAYTQIamHRPUyRc4pGbxWhYddlXs/Io1/iQPcJu7HEWGVw87V1TcODdbZb6S9pQDxyr2Z/KeaFuull7y2JIPBmMz9s1Cntg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HVAe29ZC; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9bJM1013297;
-	Thu, 21 Aug 2025 09:42:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QxuQGDuMIJKU3/yfOdhqngcZERhDk4reACtx5u6/wi0=; b=HVAe29ZCL54LUJ4h
-	BCKOQUU9ZtC/9O56FVpEtI1AWr4uPiqc0ejzJgzrfF4IoAWXVc0N2qL1zKhPWbaG
-	H4WJunwr/kKN4+ZNMMrXuQN100rTFN1lsORxcwDs+R+8ZoozcRyc8FyK7LlRaxfq
-	T5LKDU8/B8LbOFatArLO4aTu29Yc92wkgqjBQoh8HqtJNVmLtnGN01u331yMaYKZ
-	9LCcFhqnd8fMfBoTDRZZz5wHtuicWDTGC5wEqrAgZYXSuN0goCcmdZFMR+OjOiap
-	+OHUZjSZfZQOxouRDiJ8sWEhX8+0bG9NpBB4ekZQKaEdGWhuJmozNzk56wukMNeR
-	YTWPWA==
-Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52dmvj9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 09:42:36 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57L9gZAL017835
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 09:42:35 GMT
-Received: from [10.50.10.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 21 Aug
- 2025 02:42:33 -0700
-Message-ID: <6c93b790-6d84-aec5-5b4d-2584d249f74e@quicinc.com>
-Date: Thu, 21 Aug 2025 15:12:29 +0530
+	s=arc-20240116; t=1755769494; c=relaxed/simple;
+	bh=QAfC8/GKZlOXKe0IiJ9ssRTYFtHubuURyiBbBpoQUlE=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=NOtU9cp3H6/mRlE4y4N+x0q84Tm9eYPUYxlsCF2keAHHhzj5fuYwCNJ5GWu0wP9MmJKvFg7VYO89Fe8Uyyz/y4hr4HS1CPJ0eTOfMfgzIh/DyNRYsZ6MBrn4GagSpHY4TCyl7mF7UbHwdIlQTfnngpNnk52vgMjdmhumLjJ4nfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OLN+NZp8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9b7Xs024178
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 09:44:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=QR5+6bjiJwUUppAX6bVNei
+	izyY9p2bkovmr5KiOMzjI=; b=OLN+NZp8h+L2NxVQWdIAzOLr3CzcNKJkAuN/aL
+	fKBu15qNauNOPeK1GisS8uI9hsqE8tjdG5aN+g3Sx0fKIZNbmRIynjNQNv1m3YjB
+	z0b3PvOKOtIg7zP4c1bbp2fdo/7EkF4t3AJJE2zLOQeiI2D60qsml/FnTe3KUleR
+	hJciazn16GQ0W1DgUqhOy1XApNQCwG3+sD7UOkJUhaAdZBFtiBbZ1LOSN/GN4+FX
+	D7/+NYdsaXZQM3O99rysNLqzWkUzr6/wfUt/yphVfEJTYSBCiB+tiXKIy+1WhgJh
+	XBoFHd8fAa+KbvjOHIV+uJJLBqh2Qvp5ZpxgvBNHXmDST7VQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52ad000-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 09:44:52 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-24456ebed7bso10887715ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 02:44:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755769491; x=1756374291;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QR5+6bjiJwUUppAX6bVNeiizyY9p2bkovmr5KiOMzjI=;
+        b=Wp4Z/cTEf5OgodnR771FqJIyyRuugIg0FpWRTeLIGvedr+R9c/02Lq2j9ap4VBN3EN
+         Yc0HOc8O9UrLoXqUiLkHbUMi/GuaawVSVPetpjWzAwTfMbgaHE/MSybgRmV0Y2+auaxA
+         krLnR//085LUmMccqa0uHSzVoJpeRawMRheXtxsmpEhTyPF2JZLd+zasLN8X0gB/D2hJ
+         GsjVwpP1fevq1I3vmY7amOoh6KTrcfwI+v6UoTZpnWF9VEAZjKln+2LEcpc0TdF4kt84
+         uMd3fEMNA/dEE2WJxtKUJu2a4Nomvb14rLqv7WRq6NCEFZU4YNTe1NtlbISOOzPkBzf/
+         g2DA==
+X-Gm-Message-State: AOJu0Yw5pHCxXJbNr1OECrrjFsdf4H/JS4XL5Q3WrjOAZ0HqE7c5OnA7
+	ckxZ2B6B6GWf7eO2q6rkx1128snXmz9F+EHIZBnFC8DW5CCJ3av9afgSxqMTD93BT+RuWs2tHIM
+	sZpJyX4kYAwDoEi6LGem9+4qxmomgMOZdVv61I11KsIfvjKLscBUyT3YYdfbKSuzAKJoA
+X-Gm-Gg: ASbGnctwfcK+KxCLLbQlziuZBF/0aBjUX89VDADxxp4c3gQOublBi4rbbsOnPOEmsHS
+	JerXDPxXJGaOdlMC6mCiqTkR1RMki4md6CNojv1xrwcyypDZ3B1effBRjbU4/pOhBD0ceO4X0IE
+	qWlv1hLVN/Pqu9GBY/gIeoRRY+FlwKuplokV5Ifap12BEeeTaldpHp2fxVvoAjWAK7PHgGRMxB1
+	7c6qjKEFifxYmwcLwhDhcfPJoJ+xxsiKTSC8SPlI7bl8jrhX9UjQTCXLDM83HXGcdzYGb5pIErc
+	glyBz1WhLXa1v+xo3ezD3fSvgmY0lhS3PRSI2Knyu4H8Fxi/4WHHWtqMgNrX/E9FIQMCGmLvL/c
+	pUP5eB7xpKtWbmCw=
+X-Received: by 2002:a17:903:1a68:b0:233:d3e7:6fd6 with SMTP id d9443c01a7336-2460248450emr21738015ad.19.1755769491096;
+        Thu, 21 Aug 2025 02:44:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHMszws1ocRhnckkCp/+DaksXRFNJDySLzb7VqhWeHwwuRPUApCU9iQxTyzeCjI5T8Y7UPNIg==
+X-Received: by 2002:a17:903:1a68:b0:233:d3e7:6fd6 with SMTP id d9443c01a7336-2460248450emr21737575ad.19.1755769490594;
+        Thu, 21 Aug 2025 02:44:50 -0700 (PDT)
+Received: from hu-wenbyao-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-324f23d853esm1426078a91.6.2025.08.21.02.44.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 02:44:50 -0700 (PDT)
+From: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+Subject: [PATCH v2 0/4] PCI: qcom: Add support for Glymur PCIe Gen5x4
+Date: Thu, 21 Aug 2025 02:44:27 -0700
+Message-Id: <20250821-glymur_pcie5-v2-0-cd516784ef20@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] media: iris: fix module removal if firmware download
- failed
-Content-Language: en-US
-To: Neil Armstrong <neil.armstrong@linaro.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>
-References: <20250820-topic-sm8x50-iris-remove-fix-v1-1-07b23a0bd8fc@linaro.org>
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <20250820-topic-sm8x50-iris-remove-fix-v1-1-07b23a0bd8fc@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfXymIFYtlw7Wlc
- +GQWnTbstkTSkNX4hbhRR/mRJLglZ5iuqHhXjQ+l34pQxZqEAsyNYfWDquLtxCYgueZEY59w/Tj
- pAjHH3yB6Xqnq0vhGV9VcCz+qcvEktBN13kq+M4ADUAXBIbozeaF9AEbz106YooaRRsmaB0hyTg
- wVa4/RKjVQxwodJ2EKIwWfcLuQhSk084sqfE89wOSXVfDyFZSt2FXmdspgYe+xBFydIK7Zq7yQo
- j5zq2bnh51AJuuX/G7wVGyXUYZn8ric0V3fHS2hFdjcncv7wgugQ8CW7yJ+8ELguEbdPxRrNhpf
- IuNDjZlC/v5Q68OD2E2Zq5jN1tFcpg4z/hFIrj+PiO6u17JxiC3WL9Kac5qI1yy1pTUJEY6n1xY
- auVlnzlMr4N1O1rlJXl4rnPwLjXiyQ==
-X-Proofpoint-ORIG-GUID: XF2zJmIe4FqVWKRRtjNIbo_1XtHV0-qI
-X-Proofpoint-GUID: XF2zJmIe4FqVWKRRtjNIbo_1XtHV0-qI
-X-Authority-Analysis: v=2.4 cv=SoXJKPO0 c=1 sm=1 tr=0 ts=68a6ea0c cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8
- a=MzbH1S0u4NuMHKOXcXYA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
- a=cPQSjfK2_nFv0Q5t_7PE:22
+X-B4-Tracking: v=1; b=H4sIAHvqpmgC/5XMywqDMBCF4VeRrBvJxWtXfY8ixYkTDdRLkyoV8
+ d0bpbu2CzcDZ+D7F+LQGnTkHCzE4mSc6Ts/xCkgqim7Gqmp/CaCiZhlPKP1fW5HexuUwZhWEKF
+ mUqCQkngyWNTmteeuhd+Ncc/eznt94tv3T2jilNE0B9SphDhR0aV3LnyM5V31bRv6s+U/Nv9hd
+ apLJjgHSPVRG0cakxwRBIOjVmDJcp1JBcC+bbGu6xuRjCjhYwEAAA==
+X-Change-ID: 20250818-glymur_pcie5-db4ef032e233
+To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, Wenbin Yao <wenbin.yao@oss.qualcomm.com>,
+        konrad.dybcio@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
+        Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755769489; l=1713;
+ i=wenbin.yao@oss.qualcomm.com; s=20250806; h=from:subject:message-id;
+ bh=QAfC8/GKZlOXKe0IiJ9ssRTYFtHubuURyiBbBpoQUlE=;
+ b=hjDHizvCmTAIWNi3O5kn7CLcEJfo89l/8R0D8hRr2p5iAeNmzVL6igb8B1gAi992fModJgPvK
+ E2f0M+vVoyMABXxh3EesKONtWGN5B7B3jplFwJKQc8WjnC726wNGKuq
+X-Developer-Key: i=wenbin.yao@oss.qualcomm.com; a=ed25519;
+ pk=nBPq+51QejLSupTaJoOMvgFbXSyRVCJexMZ+bUTG5KU=
+X-Proofpoint-ORIG-GUID: MMUivTy8-hRZgJsc9-9aF9x1mgHtidVk
+X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a6ea94 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=450xJL59MvcON_dSg4wA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-GUID: MMUivTy8-hRZgJsc9-9aF9x1mgHtidVk
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX6vYY48p8cuak
+ B/forMTnPf7P4GJDmR4uVf7pqIys/78ANZT5rLvAmvQXs31FmoYWbBigPN2tCvd/6/jfEMM6L25
+ GItvYRCFIHU3xPq+lQDxtm4EEaefFaZFnZCMsBuudN2NIe+P+ka/eKyl2Ucu9zLxaq9y44BnjQq
+ JvOUzV4KVJvo+3ARb3RU2wWV/0uaWYcbaTKAadxL6l+YBaUvUF4tBeT2aiF7BOa6Dn3o44boNKC
+ k00pgSvWxR01jkrxE85ZC+jJcWl0/VJBlqobZNcTYtJTHtc68X221K/gZKWkmIrvXoOdf2b4wGC
+ DOFF3JzeqHIer3QYnZMT/NqF2kg75CnXTU6Yt2w4ft44dX2Ww/k0wAs5D8EfqnrhWlA4ErAXvEE
+ vkuot+aeAC4UI/xukFiH5veAw5d0DQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-21_02,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 spamscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
+Glymur is the next generation compute SoC of Qualcomm. This patch series
+aims to add support for the fifth PCIe instance on it. The fifth PCIe
+instance on Glymur has a Gen5 4-lane PHY. Patch [1/4] documents PHY as a
+separate compatible and Patch [2/4] documents controller as a separate
+compatible. Patch [3/4] describles the new PCS offsets in a dedicated
+header file. Patch [4/4] adds configuration and compatible for PHY.
 
+The device tree changes and whatever driver patches that are not part of
+this patch series will be posted separately after official announcement of
+the SOC.
 
-On 8/20/2025 10:36 PM, Neil Armstrong wrote:
-> Fix remove if firmware failed to load:
-> qcom-iris aa00000.video-codec: Direct firmware load for qcom/vpu/vpu33_p4.mbn failed with error -2
-> qcom-iris aa00000.video-codec: firmware download failed
-> qcom-iris aa00000.video-codec: core init failed
-> 
-> then:
-> $ echo aa00000.video-codec > /sys/bus/platform/drivers/qcom-iris/unbind
-> 
-> Triggers:
-> genpd genpd:1:aa00000.video-codec: Runtime PM usage count underflow!
-> ------------[ cut here ]------------
-> video_cc_mvs0_clk already disabled
-> WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#1: sh/542
-> <snip>
-> pc : clk_core_disable+0xa4/0xac
-> lr : clk_core_disable+0xa4/0xac
-> <snip>
-> Call trace:
->  clk_core_disable+0xa4/0xac (P)
->  clk_disable+0x30/0x4c
->  iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
->  iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
->  iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
->  iris_vpu_power_off+0x34/0x84 [qcom_iris]
->  iris_core_deinit+0x44/0xc8 [qcom_iris]
->  iris_remove+0x20/0x48 [qcom_iris]
->  platform_remove+0x20/0x30
->  device_remove+0x4c/0x80
-> <snip>
-> ---[ end trace 0000000000000000 ]---
-> ------------[ cut here ]------------
-> video_cc_mvs0_clk already unprepared
-> WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#2: sh/542
-> <snip>
-> pc : clk_core_unprepare+0xf0/0x110
-> lr : clk_core_unprepare+0xf0/0x110
-> <snip>
-> Call trace:
->  clk_core_unprepare+0xf0/0x110 (P)
->  clk_unprepare+0x2c/0x44
->  iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
->  iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
->  iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
->  iris_vpu_power_off+0x34/0x84 [qcom_iris]
->  iris_core_deinit+0x44/0xc8 [qcom_iris]
->  iris_remove+0x20/0x48 [qcom_iris]
->  platform_remove+0x20/0x30
->  device_remove+0x4c/0x80
-> <snip>
-> ---[ end trace 0000000000000000 ]---
-> genpd genpd:0:aa00000.video-codec: Runtime PM usage count underflow!
-> ------------[ cut here ]------------
-> gcc_video_axi0_clk already disabled
-> WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#4: sh/542
-> <snip>
-> pc : clk_core_disable+0xa4/0xac
-> lr : clk_core_disable+0xa4/0xac
-> <snip>
-> Call trace:
->  clk_core_disable+0xa4/0xac (P)
->  clk_disable+0x30/0x4c
->  iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
->  iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
->  iris_vpu_power_off+0x48/0x84 [qcom_iris]
->  iris_core_deinit+0x44/0xc8 [qcom_iris]
->  iris_remove+0x20/0x48 [qcom_iris]
->  platform_remove+0x20/0x30
->  device_remove+0x4c/0x80
-> <snip>
-> ------------[ cut here ]------------
-> gcc_video_axi0_clk already unprepared
-> WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#4: sh/542
-> <snip>
-> pc : clk_core_unprepare+0xf0/0x110
-> lr : clk_core_unprepare+0xf0/0x110
-> <snip>
-> Call trace:
->  clk_core_unprepare+0xf0/0x110 (P)
->  clk_unprepare+0x2c/0x44
->  iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
->  iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
->  iris_vpu_power_off+0x48/0x84 [qcom_iris]
->  iris_core_deinit+0x44/0xc8 [qcom_iris]
->  iris_remove+0x20/0x48 [qcom_iris]
->  platform_remove+0x20/0x30
->  device_remove+0x4c/0x80
-> <snip>
-> ---[ end trace 0000000000000000 ]---
-> 
-> Skip deinit if initialization never succeeded.
-> 
-> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-> ---
->  drivers/media/platform/qcom/iris/iris_core.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
-> index 0fa0a3b549a23877af57c9950a5892e821b9473a..8406c48d635b6eba0879396ce9f9ae2292743f09 100644
-> --- a/drivers/media/platform/qcom/iris/iris_core.c
-> +++ b/drivers/media/platform/qcom/iris/iris_core.c
-> @@ -15,10 +15,12 @@ void iris_core_deinit(struct iris_core *core)
->  	pm_runtime_resume_and_get(core->dev);
->  
->  	mutex_lock(&core->lock);
-> -	iris_fw_unload(core);
-> -	iris_vpu_power_off(core);
-> -	iris_hfi_queues_deinit(core);
-> -	core->state = IRIS_CORE_DEINIT;
-> +	if (core->state != IRIS_CORE_DEINIT) {
-> +		iris_fw_unload(core);
-> +		iris_vpu_power_off(core);
-> +		iris_hfi_queues_deinit(core);
-> +		core->state = IRIS_CORE_DEINIT;
-> +	}
->  	mutex_unlock(&core->lock);
->  
->  	pm_runtime_put_sync(core->dev);
-> 
+Signed-off-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+---
+Changes in v2:
+- Add offsets of PLL and TXRXZ register blocks for v8.50 PHY in Patch[4/4].
+- Link to v1: https://lore.kernel.org/r/20250819-glymur_pcie5-v1-0-2ea09f83cbb0@oss.qualcomm.com
 
-The iris_core_deinit() API should ideally not be called when core->state is
-in IRIS_CORE_DEINIT. Better to handle this check in the caller itself.
+---
+Prudhvi Yarlagadda (4):
+      dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Document the Glymur QMP PCIe PHY
+      dt-bindings: PCI: qcom: Document the Glymur PCIe Controller
+      phy: qcom-qmp: pcs: Add v8.50 register offsets
+      phy: qcom: qmp-pcie: Add support for Glymur PCIe Gen5x4 PHY
 
-> ---
-> base-commit: 5303936d609e09665deda94eaedf26a0e5c3a087
-> change-id: 20250820-topic-sm8x50-iris-remove-fix-76f86621d6ac
-> 
-> Best regards,
+ .../bindings/pci/qcom,pcie-x1e80100.yaml           |  7 ++++-
+ .../bindings/phy/qcom,sc8280xp-qmp-pcie-phy.yaml   |  3 ++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 32 ++++++++++++++++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-v8_50.h      | 13 +++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h                |  2 ++
+ 5 files changed, 56 insertions(+), 1 deletion(-)
+---
+base-commit: 886e5e7b0432360842303d587bb4a65d10741ae8
+change-id: 20250818-glymur_pcie5-db4ef032e233
+
+Best regards,
+-- 
+Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+
 
