@@ -1,230 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-70152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70153-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B27EB2F74C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 13:57:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D429EB2F777
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 14:05:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B45EA1887C0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:56:29 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B562A7A5A91
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 12:03:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54C3B2E0929;
-	Thu, 21 Aug 2025 11:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97E1E2E0929;
+	Thu, 21 Aug 2025 12:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="NJDFrpGJ";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Gj5tANSU";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Tnc6NDIT";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="uTGuQaRo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="maaJAvxv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A0C2E0419
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 11:56:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E892B20D50B;
+	Thu, 21 Aug 2025 12:04:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755777366; cv=none; b=RytNu23jAKw7y4FJu+dbz1EaBL5BCQFV5Qb+BOjGXh91wIBeDCRxr35Cqr5Zb+C2fQ5AXgprJlH5p0CI02iOqHi8b2/fiOzqsrXlD0fBOLu8TtPlC4rZ6g3C3Ul8UURjLg/9qTsV3rKkK0PNfAfGLnjkIMdRkN374o+ICrEAzLc=
+	t=1755777897; cv=none; b=kJ71PDqKGA6bQfUAKHWw6vmtJE0KKOVIczDOgHDv4ovqOh1DuHbchejpSIfNQVXWqznZVqgr3yzU2RIAgvk3+ECUZUD2pu3IFExuQM+/Jc9h6BWGbRwqQ83mgFUR0qQo/oVeHZzgayH6+kRIU7sdHOOMUpgfVlx3vzvQsLSMDQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755777366; c=relaxed/simple;
-	bh=ROSdBt4rAukDNYQZ8F5SYKNT+P39hcMTH7N7m4Tl5Ko=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dnOR2Kmn5JVwQFVHwMNIt2ZW2L9KrPOipvIlr5n3uf0g36De2Pu3XKMD5HB7CtoAQU+4kv5auK+ST8KLShni2b7BGT6iplKz0gYB+zLmSVLwIJtNy/fwyyZ7unYNRNVGVu09bG2I6xAhIGiBTezXJ5O799d2ZOD1xLFJ5HhQvcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=NJDFrpGJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Gj5tANSU; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Tnc6NDIT; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=uTGuQaRo; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id E8C1D223BF;
-	Thu, 21 Aug 2025 11:56:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1755777361; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
-	b=NJDFrpGJO5iUNdKMkobo3gxiDs3KVSoOo+c0Kx7YFvkYIlgx7bnpDXIsS/c0P0cQgrh+OM
-	dExS90hja4MkiIhNcN5ACrES3HoMUaxtBTvpFmwjVxAsz+p2OyiAVBW8rAxUPAhgsnlwwj
-	CZwQn8osw/hfaBvpa9NaTEKf6lTT/M4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1755777361;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
-	b=Gj5tANSUdM5J9dvfsooU4xEjtijJBFnr7I7ne0BmLL2IbI4EPgjzdAm3py48jgBwCGMxQT
-	boIwMwnxQsGrzgBw==
-Authentication-Results: smtp-out1.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Tnc6NDIT;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=uTGuQaRo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1755777360; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
-	b=Tnc6NDIT4e91MUk3u/uv4DBnosFc2L+6LZYV25zaGB1PKdcEVuIh/llq9RiUXqkK4mkPMk
-	PfJV61ySMLhVweEIcriS3pU6Ueb/KxgiopzgPBhPws1+a3mjWGyK16+rO3Zyq+/M8wuFE7
-	qfdE97vz5rt+BUFGKinpdAml62Ot91s=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1755777360;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
-	b=uTGuQaRowDi9JsJ2CDS0TXWPegM6sn88iHyhpAFbnDit/r3KkSK5wNpUCdTeRnRo1G9Xoi
-	pAPRiwf+LpsK+VAA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 30D9513867;
-	Thu, 21 Aug 2025 11:56:00 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id Ozw5ClAJp2j0UAAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Thu, 21 Aug 2025 11:56:00 +0000
-Message-ID: <7918ea7e-8914-4c0f-97be-d660043a4aab@suse.de>
-Date: Thu, 21 Aug 2025 13:55:59 +0200
+	s=arc-20240116; t=1755777897; c=relaxed/simple;
+	bh=c6UQ/BkOyGnAZtiZu1VrT/RJ3fByK+kTXyI+rOIXHZk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=L87IwfpMGp5gKL4MqkTm/gqTRS/EqlOA48jhG+cJjMzUbP8THY5B1+KPrdr/bI3jrNQEA7k0k+KgzwnITjOlpKiLAYkcz6l8G0M3Hg5lNLaF9ePiL3wJmADStWseDQ0pwhG48pNiOjR41BjjL684hV8sLeoR7u44x5lUb7TfqzQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=maaJAvxv; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9bC2Q031439;
+	Thu, 21 Aug 2025 12:04:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	xBBFqalNh5s8t2iKJIbEORIyjEwCQ+PjvcFtOq+otRs=; b=maaJAvxvmqsnv/86
+	kR+qkNY06L5brmxrubJ985ePQeysKj7qE6ipITETS6bR1V2u00KeSye1YvGrEDCE
+	girzhJLqJnIKEVkVZADHIKcqjqg4gEcLtzYyi028RARuH6sil3A7+9cwWrvQz3uZ
+	ON+fNkNc33BEnG9mjHCHMf0OQYPhWmrCRFlj9Ot5pZ+rxTHQy27kpYOXbB1VnYqZ
+	t0eIreCCYHWklrkQyUdwpzNdTbDTISIQgbtU3B0MqdBjqxA5n0rKxQ6ZgriOLFsk
+	5V4yqeo2iYBeaSMggFkUDFoFhZnzjpQruzMeNmozsPiuwrwbENwq5fexF19KaE8h
+	DqtSzg==
+Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52aw6v4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Aug 2025 12:04:51 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57LC4o2H002265
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Aug 2025 12:04:50 GMT
+Received: from [10.216.5.63] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 21 Aug
+ 2025 05:04:48 -0700
+Message-ID: <9c318b7c-544c-df55-eead-e00244d2992f@quicinc.com>
+Date: Thu, 21 Aug 2025 17:34:44 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 18/25] drm/renesas/rz-du: Compute dumb-buffer sizes
- with drm_mode_size_dumb()
-To: Biju Das <biju.das.jz@bp.renesas.com>, "simona@ffwll.ch"
- <simona@ffwll.ch>, "airlied@gmail.com" <airlied@gmail.com>,
- "mripard@kernel.org" <mripard@kernel.org>,
- "maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
- geert <geert@linux-m68k.org>,
- "tomi.valkeinen" <tomi.valkeinen@ideasonboard.com>
-Cc: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
- "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
- "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "imx@lists.linux.dev" <imx@lists.linux.dev>,
- "linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>,
- "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>,
- "virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
- "spice-devel@lists.freedesktop.org" <spice-devel@lists.freedesktop.org>,
- "linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
- "linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>,
- "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
- "intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
- "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>
-References: <20250821081918.79786-1-tzimmermann@suse.de>
- <20250821081918.79786-19-tzimmermann@suse.de>
- <TY3PR01MB11346A4F40CE555D24C093F278632A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH] media: venus: firmware: Use correct reset sequence for
+ IRIS2
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <TY3PR01MB11346A4F40CE555D24C093F278632A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>
+CC: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Hans Verkuil
+	<hverkuil@kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250820-venus-iris2-no-tz-v1-1-9ebcc343195a@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20250820-venus-iris2-no-tz-v1-1-9ebcc343195a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Rspamd-Queue-Id: E8C1D223BF
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_TO(0.00)[bp.renesas.com,ffwll.ch,gmail.com,kernel.org,linux.intel.com,linux-m68k.org,ideasonboard.com];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	TO_DN_EQ_ADDR_SOME(0.00)[];
-	ARC_NA(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[21];
-	MIME_TRACE(0.00)[0:+];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_COUNT_TWO(0.00)[2];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	MID_RHS_MATCH_FROM(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
-	DKIM_TRACE(0.00)[suse.de:+];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
-X-Spam-Score: -3.01
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX0PjUm5s3Lxpq
+ by98Wa1KOxQi9etHVzEAp1Q2QW8e7hbM/8LJSCZ3uxcACaf6WNjIwSYL4Jz7LMG65jGq07Kzlv7
+ z29Yk5SdMdENdeqNfTwjmBwDSGICf6xXvfoBs9twdkzBgmM9MsYYPYvULbvh1eGCzCCrbx/uV6I
+ etZYe6CvxfPWrw8MjsImic7Z/8pvs/Fp+FUr+k9NJpHGoZ09c4k8lCOIX1sEpkbvTVi/JeWQZ9N
+ zKnT8hNIqQp+SH+eb0znRbKFRMiucWX9LqMOfDgu+OsE353YaU+e8tfGRUyN0JbY+gFiZ4AHqyq
+ cdSnrA9fxVygpwNcbClSiauQpHqTRsYVne9J0xRS9b0znn9W//YnM3vRNK0BDv8BRM0istGMQQP
+ fpJ2jKGJwRwM9zYzr1IgaOcBZ2pAmA==
+X-Authority-Analysis: v=2.4 cv=TIIci1la c=1 sm=1 tr=0 ts=68a70b64 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8
+ a=COk6AnOGAAAA:8 a=Zxh-gqEWaZ_blzi-cf4A:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: i7SL1eFTQbSwWBNmMhoIPXQfVktjE72q
+X-Proofpoint-GUID: i7SL1eFTQbSwWBNmMhoIPXQfVktjE72q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-21_03,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 suspectscore=0 priorityscore=1501 clxscore=1015 phishscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-Hi
 
-Am 21.08.25 um 13:28 schrieb Biju Das:
-> Hi Thomas Zimmermann,
->
-> Thanks for the patch.
->
->> -----Original Message-----
->> From: Thomas Zimmermann <tzimmermann@suse.de>
->> Sent: 21 August 2025 09:17
->> Subject: [PATCH v6 18/25] drm/renesas/rz-du: Compute dumb-buffer sizes with drm_mode_size_dumb()
->>
->> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and buffer size. Align the pitch
->> according to hardware requirements.
->>
->> v5:
->> - include dumb-buffers header for drm_mode_size_dumb() (kernel test robot)
->>
->> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->> Cc: Biju Das <biju.das.jz@bp.renesas.com>
-> Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
+On 8/20/2025 8:46 PM, Stephan Gerhold wrote:
+> When starting venus with the "no_tz" code path, IRIS2 needs the same
+> boot/reset sequence as IRIS2_1. This is because most of the registers were
+> moved to the "wrapper_tz_base", which is already defined for both IRIS2 and
+> IRIS2_1 inside core.c. Add IRIS2 to the checks inside firmware.c as well to
+> make sure that it uses the correct reset sequence.
+> 
+> Both IRIS and IRIS2_1 are HFI v6 variants, so the correct sequence was used
 
-Thanks for testing. Could you also review the patch, please?
+s/IRIS/IRIS2
 
-Best regards
-Thomas
+> before commit c38610f8981e ("media: venus: firmware: Sanitize
+> per-VPU-version").
+> 
+> Fixes: c38610f8981e ("media: venus: firmware: Sanitize per-VPU-version")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/firmware.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
 
->
-> Cheers,
-> Biju
-
--- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
-
+with that addressed,
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
 
 
