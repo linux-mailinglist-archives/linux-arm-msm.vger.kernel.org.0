@@ -1,228 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-70119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D63E6B2F474
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:47:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97CC9B2F48C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:50:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 74423AA583B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 09:45:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 86E3F603FB8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 09:48:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48CB22EFD87;
-	Thu, 21 Aug 2025 09:45:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1F791F3BAE;
+	Thu, 21 Aug 2025 09:48:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="O4SimEev"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XzDtKrlf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840C02F5333
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 09:44:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C964B2797A5;
+	Thu, 21 Aug 2025 09:48:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755769500; cv=none; b=Yz9XoGlNMy8vs1/wdQ9vzKkYpv6vmbM7uNLYZvZDYjzuahHS/snMLqTuon+YLJfYSyEyAOEiJSVM3FJfoyJ1wVY+Ig6flW1DFT6gqqgQD3c0ljiSDu0HmIeKK1MmosKK0o4/QeIo0X6jzNwTWbxQiKKrlAHYuhkbiMxM2b0dWZc=
+	t=1755769697; cv=none; b=DJEPua2c27xloi5HLPEx1C6QIhPRoMAGl1oqbzhMqNBIsvIVdRYQIUUnufMx7/2XBnM7Pa3xewVB2HmqfK+bIP8sPyVHilvHp/BxGQy2THVY5b/bUOgW8iraUO4oZDZwKRpD0H7KnFeuqYze9IPWkB+mtyJ9X6tnK6hVO5O+PfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755769500; c=relaxed/simple;
-	bh=u8m9J6JQcdijVzZyCUGGAb3P5FvSVwhfqYJgvJbWutg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=aOf1sZzHPortDUAnu5Cu42xpOdu9sI6FygzjUdFAGVt05fEsAspvIYLkUOayd1SX0oXUFxHeWrGwKrSwGPC46qS6/SCrO6ZdghcdBnixR+5MMx/3rV/lKnyFj29X90VAOS2TjTkY29E8t/09ZQqFXRQpCwAI+UUgDdUZjPAdfgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=O4SimEev; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9bC3u015272
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 09:44:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1755769697; c=relaxed/simple;
+	bh=UQVO6N7adw0yAk/8xO9tJGI+/p8dNbC9LHEk2Znmfy8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hJaf0Ietievao/3D16ny705r851/hAZWJd0/9ztyX3s64HNrEvhf087zaBsqvCXIuuzyoxuZDC6Oiv81O2TIc7PYqgEJb4fdufr0ibWbSvjoSsXnIs+TlzmoK0lgO163BEJsmzE3PUms7yTvF72aROFf2YA8LUAv2JsHNTd56yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XzDtKrlf; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9bDx1027108;
+	Thu, 21 Aug 2025 09:48:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pAjVIj9zZFihL1lRBahHpibojgWb7AeuAiH+1H/bqwE=; b=O4SimEevwrTiOB8/
-	Q/CV5f89mpciz9a9uEDPJyNEn8VgtPq9vk+dKGBbBRSB1dIe4iLYwrUlBkmjskIG
-	hk6wu8bY8y9gSp2RX85NjuPxbk/z94PtBw7SBru61U4Q+oYqVu5cN36pMaqauKPP
-	lWS0SVIDkfWIb2/07PSxPsjt0uSvSm+XxiSiaXFd5aW9SuJu7ZYdlqNWnvBd7ZyV
-	HvCnBn/wkpkYVIuq9vn7q0Qa59XoSIvDeSLtrfs4GXJ9A0NcAfAFyP/59NbL2DxE
-	B5lyV8Xt5SmDYrIyTx/Fpw7JKEldqS53xz3nfT4x38PfkctgChymWsTpn81YYCJp
-	llIGsQ==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52cmyag-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 09:44:57 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-76e54a1646aso988070b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 02:44:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755769497; x=1756374297;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pAjVIj9zZFihL1lRBahHpibojgWb7AeuAiH+1H/bqwE=;
-        b=R4df/LBbIjY+ktMnlBLcWueRg9vHQUbN/KEFg0PZRSW/SH+61yVDPgUsPqgsCNahm5
-         qm6USdgwHJMTi7yyz85+eyYYieV4yBicES6wo6unAx1+W8J1n3v4cVM8b5dU3B0Lwqs9
-         EQthAgCaky4fgtpz42QyRmJt3yPBD6Yl5de64LVQcK8ixaigQ8hGCxHXRt3ZVX7W5aOr
-         h9BrWTWyJoUHmP7ZvEk9mBlx6ReFgF+2YaYJC7s0LbggCi0dqSHZJ06Mw+YZnQ/MQqQn
-         Z/mkyoUfX0s7X04th9K8n4bSdd4MUtJpMSLrhn466ZxO35kyVtFodJuWr81gXzwBVrJy
-         ju7A==
-X-Gm-Message-State: AOJu0YxsLlrSftmxCr8Lgp9iYUxuiG9NuBOu8r/1/uWyYDlyA6jGIP2s
-	VWjUweFtwR18T9OQn0zM+STjxenB4CtF7YUv1v9GetAvKWVWXzV/KiouC/A4i0a4cQouAV4ffm7
-	V7BgSDgSUyeMApLTUM/hDlwsJtWG55GXMop/EHn4StiduRRgS7XW3GpIZhrM/Lo3P/uAQ
-X-Gm-Gg: ASbGnct9ondDlGueMC0Gotle7i5bCn0iXW7KjV+hlrNJSa0brhWwHLvp8QFEeVfz1ww
-	bQbBE05PHYvBSLEY51Ppa68cf7zwzneWOF/NAXpHXlotW1fZqUDTH1CA2wrmAyDeCXJVhwScMKG
-	5Czm5jExQtjUEQWLUHpr8HQ1D1SAVnDIDdL9SlsUIPmiwxllSDN/SL++R03A6ZjPFXuX3nSJ2/f
-	E4XTh3WdC75FsIBhdb9gTtJgMmqP9c/u2KKfnINmVEEK+ZjoKYqjf9HcbCuSQA2EF8tXVpEEJUY
-	K3BEA043ytC3I+mGjPc08i9qrfB94y4HRNuikNQAwb15Z1OO0Je1arp9ow8LlM4UJXsYWoE4DT9
-	csQqX/htot0EjfsU=
-X-Received: by 2002:a05:6a21:6daa:b0:240:1a3a:d7bc with SMTP id adf61e73a8af0-2433074ea5dmr2729243637.3.1755769496734;
-        Thu, 21 Aug 2025 02:44:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/MpkzQr3ODF27xl6H7fzctS/steJVN2Lh7mmHLZCmX18Qc+LXKukq9LL+tR+L4vIIZsB+BQ==
-X-Received: by 2002:a05:6a21:6daa:b0:240:1a3a:d7bc with SMTP id adf61e73a8af0-2433074ea5dmr2729197637.3.1755769496270;
-        Thu, 21 Aug 2025 02:44:56 -0700 (PDT)
-Received: from hu-wenbyao-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-324f23d853esm1426078a91.6.2025.08.21.02.44.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 21 Aug 2025 02:44:55 -0700 (PDT)
-From: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
-Date: Thu, 21 Aug 2025 02:44:31 -0700
-Subject: [PATCH v2 4/4] phy: qcom: qmp-pcie: Add support for Glymur PCIe
- Gen5x4 PHY
+	HyJzaTdgmo+1GtlzA5hdtallp9EqJkR4eDWztKTpFVw=; b=XzDtKrlfEk1elitL
+	wY09ANDZUJ76qTxmAfsZWjGBoCwZACMVFqE/IkdLl0/mVu0ipjpjpHy7bAA+6JxK
+	fzbDCtW633J6gGzAJEBlts7/LYowolvPROeR/0fc38tX/+WdfPW/uhD9W5v4u9ND
+	uoqRXj0QADN8Au+vm7Cq6GqQy/KYQcgpwBh+ZgiNesQsyd8nzfo/H4dmPAgqYmu7
+	TOQLC4RgkxH5D7aT/ycNM1s1fRfaCum3RpL1m6DLx57gDFU3pUZHak2Y3a6Us1Dq
+	JHr9wWoA0GDI/zy11opCmyJlM4SddgkUilB+Cb3PD5C6a4qQRcv/gwDMCorW5xfZ
+	F15O2g==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n528vxs5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Aug 2025 09:48:12 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57L9mBWW018376
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Aug 2025 09:48:11 GMT
+Received: from [10.50.10.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 21 Aug
+ 2025 02:48:08 -0700
+Message-ID: <b277a521-acb8-00f7-19c7-32931cfdc181@quicinc.com>
+Date: Thu, 21 Aug 2025 15:18:05 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] media: venus: firmware: Use correct reset sequence for
+ IRIS2
+Content-Language: en-US
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>
+CC: Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Hans Verkuil
+	<hverkuil@kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+References: <20250820-venus-iris2-no-tz-v1-1-9ebcc343195a@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <20250820-venus-iris2-no-tz-v1-1-9ebcc343195a@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250821-glymur_pcie5-v2-4-cd516784ef20@oss.qualcomm.com>
-References: <20250821-glymur_pcie5-v2-0-cd516784ef20@oss.qualcomm.com>
-In-Reply-To: <20250821-glymur_pcie5-v2-0-cd516784ef20@oss.qualcomm.com>
-To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org, Wenbin Yao <wenbin.yao@oss.qualcomm.com>,
-        konrad.dybcio@oss.qualcomm.com, qiang.yu@oss.qualcomm.com,
-        Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755769489; l=2773;
- i=wenbin.yao@oss.qualcomm.com; s=20250806; h=from:subject:message-id;
- bh=JCxdUH/Y1jTAi945mFOnkGKBqKReuEeHRFI8YpRwdqY=;
- b=6wWnoLAUA4kYP35QHTffBdgSdXwR5Lbvh/SsOGFjyL6WHXSpedpTdCm7nm6S/liahDEy/d2bs
- IHolWYfa9GbCqIKvGTxQIMxeN2g6PHyR0poVPj8UmQfDLMRioUouvFd
-X-Developer-Key: i=wenbin.yao@oss.qualcomm.com; a=ed25519;
- pk=nBPq+51QejLSupTaJoOMvgFbXSyRVCJexMZ+bUTG5KU=
-X-Proofpoint-GUID: ZTtJODn6eEgyKs5bgf8ikV9NfJBrqfaN
-X-Proofpoint-ORIG-GUID: ZTtJODn6eEgyKs5bgf8ikV9NfJBrqfaN
-X-Authority-Analysis: v=2.4 cv=Xpij+VF9 c=1 sm=1 tr=0 ts=68a6ea99 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=KvwrgBbZ-pJFRlqJlL4A:9 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX46CVu+6sEJIv
- rL/GZSfUEPgDlqBebVABtguFoV0VRe4XmcyqS6w6z4qhjm67Tn4fpY4SlbIMIvC7tir9xfvtnQn
- Nvg42jK+c7s7zox+ujn6QtEvOcTn31fojfGpNtSRqinATJkL7Gbt4ZCoZil9aM2C+FWq35UO+OV
- zw0RqHb8aHP9725eio7BDDnfuBOxxwXmACY6jFSgwuORrpVkbYyxDLGQavaxL9bVyIgRM55aJI1
- 76M8ri7RJ2wHGNL5oNw0lN4xSQUR12zmSTe04qPdH2z4Tphh2yGr911OYaob+wS9e07OWaw+oPa
- /oKoye+H9h7uT+Ngk36ISyMSd46/q+MorZKjxWQ3Ft3mIbvdi/sO+H58s4bQr/Q2lvNykbu1gPi
- k7t4hWLhSi9VkoqvULpMGrxKufmBBA==
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=I4c8hNgg c=1 sm=1 tr=0 ts=68a6eb5c cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8
+ a=COk6AnOGAAAA:8 a=xVNrxXhrsQtHBxWYos8A:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: hcWK-m61zkAJz5noYorrTl6AzUdmja_e
+X-Proofpoint-ORIG-GUID: hcWK-m61zkAJz5noYorrTl6AzUdmja_e
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX5AEAwkv+0cab
+ t3DhqmZvi1NIJjtG7FP/+YYYWvfI4NgkAxGL2eJPn07t9lLKFV4sYnJQf8mgPfdjOW4gVfzdDGw
+ bBCiUUZBng7VDNWyGY3KaFPP+5dIMqh+KIkVtCJte5LQpMzgp3NN//Wk+e6vG5DEkP9d575lxf8
+ 6y8MDlu9XUjbRD9Jgts/vlWDg11QpYMq0xQHWpN3gwOH3PPFgSocE2L8Gyc/Dst1GihFxOioP4g
+ lkfxL1oU3ZDyHhegJG7T43AZKi5zE59HXkHw9QUuLgDAyr2EYNl3Ab6g6/2/zJVCy13n4hNKuy0
+ bYoUoC4eobLnHp70151piU1myHnGwVqb7DSEp21Zh0RSaveuIdZz0BaR7OnHjqQL20DhsRWdcxN
+ b2/6V0gi4zR33P90Tyhw8xZxts8ROA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-21_02,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 lowpriorityscore=0 bulkscore=0 impostorscore=0
- adultscore=0 spamscore=0 phishscore=0 malwarescore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 malwarescore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 impostorscore=0 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-From: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
 
-Add support for Gen5 x4 PCIe QMP PHY found on Glymur platform.
 
-Signed-off-by: Prudhvi Yarlagadda <quic_pyarlaga@quicinc.com>
-Signed-off-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+On 8/20/2025 8:46 PM, Stephan Gerhold wrote:
+> When starting venus with the "no_tz" code path, IRIS2 needs the same
+> boot/reset sequence as IRIS2_1. This is because most of the registers were
+> moved to the "wrapper_tz_base", which is already defined for both IRIS2 and
+> IRIS2_1 inside core.c. Add IRIS2 to the checks inside firmware.c as well to
+> make sure that it uses the correct reset sequence.
+> 
+> Both IRIS and IRIS2_1 are HFI v6 variants, so the correct sequence was used
+> before commit c38610f8981e ("media: venus: firmware: Sanitize
+> per-VPU-version").
+> 
+> Fixes: c38610f8981e ("media: venus: firmware: Sanitize per-VPU-version")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+>  drivers/media/platform/qcom/venus/firmware.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media/platform/qcom/venus/firmware.c
+> index 66a18830e66dac2acbe11751a8c250876e20d795..4e2636b0536693a86dc51503d01dc2bca40b532a 100644
+> --- a/drivers/media/platform/qcom/venus/firmware.c
+> +++ b/drivers/media/platform/qcom/venus/firmware.c
+> @@ -30,7 +30,7 @@ static void venus_reset_cpu(struct venus_core *core)
+>  	u32 fw_size = core->fw.mapped_mem_size;
+>  	void __iomem *wrapper_base;
+>  
+> -	if (IS_IRIS2_1(core))
+> +	if (IS_IRIS2(core) || IS_IRIS2_1(core))
+>  		wrapper_base = core->wrapper_tz_base;
+>  	else
+>  		wrapper_base = core->wrapper_base;
+> @@ -42,7 +42,7 @@ static void venus_reset_cpu(struct venus_core *core)
+>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_START_ADDR);
+>  	writel(fw_size, wrapper_base + WRAPPER_NONPIX_END_ADDR);
+>  
+> -	if (IS_IRIS2_1(core)) {
+> +	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+>  		/* Bring XTSS out of reset */
+>  		writel(0, wrapper_base + WRAPPER_TZ_XTSS_SW_RESET);
+>  	} else {
+> @@ -68,7 +68,7 @@ int venus_set_hw_state(struct venus_core *core, bool resume)
+>  	if (resume) {
+>  		venus_reset_cpu(core);
+>  	} else {
+> -		if (IS_IRIS2_1(core))
+> +		if (IS_IRIS2(core) || IS_IRIS2_1(core))
+>  			writel(WRAPPER_XTSS_SW_RESET_BIT,
+>  			       core->wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+>  		else
+> @@ -181,7 +181,7 @@ static int venus_shutdown_no_tz(struct venus_core *core)
+>  	void __iomem *wrapper_base = core->wrapper_base;
+>  	void __iomem *wrapper_tz_base = core->wrapper_tz_base;
+>  
+> -	if (IS_IRIS2_1(core)) {
+> +	if (IS_IRIS2(core) || IS_IRIS2_1(core)) {
+>  		/* Assert the reset to XTSS */
+>  		reg = readl(wrapper_tz_base + WRAPPER_TZ_XTSS_SW_RESET);
+>  		reg |= WRAPPER_XTSS_SW_RESET_BIT;
+> 
+> ---
+> base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+> change-id: 20250815-venus-iris2-no-tz-f9b52f33c4d0
+> 
+> Best regards,
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-index 95830dcfdec9b1f68fd55d1cc3c102985cfafcc1..fc67ee1e4a3c0c6f2ec23f51c09c3cc16df9aaf4 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
-@@ -93,6 +93,12 @@ static const unsigned int pciephy_v6_regs_layout[QPHY_LAYOUT_SIZE] = {
- 	[QPHY_PCS_POWER_DOWN_CONTROL]	= QPHY_V6_PCS_POWER_DOWN_CONTROL,
- };
- 
-+static const unsigned int pciephy_v8_50_regs_layout[QPHY_LAYOUT_SIZE] = {
-+	[QPHY_START_CTRL]		= QPHY_V8_50_PCS_START_CONTROL,
-+	[QPHY_PCS_STATUS]		= QPHY_V8_50_PCS_STATUS1,
-+	[QPHY_PCS_POWER_DOWN_CONTROL]   = QPHY_V8_50_PCS_POWER_DOWN_CONTROL,
-+};
-+
- static const struct qmp_phy_init_tbl msm8998_pcie_serdes_tbl[] = {
- 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_BIAS_EN_CLKBUFLR_EN, 0x14),
- 	QMP_PHY_INIT_CFG(QSERDES_V3_COM_CLK_SELECT, 0x30),
-@@ -2963,6 +2969,7 @@ struct qmp_pcie_offsets {
- 	u16 rx2;
- 	u16 txz;
- 	u16 rxz;
-+	u16 txrxz;
- 	u16 ln_shrd;
- };
- 
-@@ -3229,6 +3236,12 @@ static const struct qmp_pcie_offsets qmp_pcie_offsets_v6_30 = {
- 	.ln_shrd	= 0x8000,
- };
- 
-+static const struct qmp_pcie_offsets qmp_pcie_offsets_v8_50 = {
-+	.serdes     = 0x8000,
-+	.pcs        = 0x9000,
-+	.txrxz      = 0xd000,
-+};
-+
- static const struct qmp_phy_cfg ipq8074_pciephy_cfg = {
- 	.lanes			= 1,
- 
-@@ -4258,6 +4271,22 @@ static const struct qmp_phy_cfg qmp_v6_gen4x4_pciephy_cfg = {
- 	.phy_status             = PHYSTATUS_4_20,
- };
- 
-+static const struct qmp_phy_cfg glymur_qmp_gen5x4_pciephy_cfg = {
-+	.lanes = 4,
-+
-+	.offsets        = &qmp_pcie_offsets_v8_50,
-+
-+	.reset_list     = sdm845_pciephy_reset_l,
-+	.num_resets     = ARRAY_SIZE(sdm845_pciephy_reset_l),
-+	.vreg_list      = sm8550_qmp_phy_vreg_l,
-+	.num_vregs      = ARRAY_SIZE(sm8550_qmp_phy_vreg_l),
-+
-+	.regs           = pciephy_v8_50_regs_layout,
-+
-+	.pwrdn_ctrl     = SW_PWRDN | REFCLK_DRV_DSBL,
-+	.phy_status     = PHYSTATUS_4_20,
-+};
-+
- static void qmp_pcie_init_port_b(struct qmp_pcie *qmp, const struct qmp_phy_cfg_tbls *tbls)
- {
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
-@@ -5114,6 +5143,9 @@ static const struct of_device_id qmp_pcie_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,x1p42100-qmp-gen4x4-pcie-phy",
- 		.data = &qmp_v6_gen4x4_pciephy_cfg,
-+	}, {
-+		.compatible = "qcom,glymur-qmp-gen5x4-pcie-phy",
-+		.data = &glymur_qmp_gen5x4_pciephy_cfg,
- 	},
- 	{ },
- };
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
 
--- 
-2.34.1
-
+Thanks,
+Dikshita
 
