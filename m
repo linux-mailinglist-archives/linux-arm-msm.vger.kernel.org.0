@@ -1,107 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-70038-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70039-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1EAAB2EBE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 05:23:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77C01B2EC00
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 05:34:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A6D61CC1B5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 03:23:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E38A2A24F95
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 03:33:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 645D32D5408;
-	Thu, 21 Aug 2025 03:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AA92E281353;
+	Thu, 21 Aug 2025 03:33:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="yoGmijxh"
+	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="Hmv4e2X6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3322580CF;
-	Thu, 21 Aug 2025 03:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CD62E7BC6;
+	Thu, 21 Aug 2025 03:33:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755746577; cv=none; b=mbwQfMFIbv/G9kU9LBv5dU0XQAbI91yV88eQDqqf60rfncyqwRmi8IKF3ZAgy+PI4LzOmPvIUTd3g/0QJ0nJKJB8BHfZp8J1v6WFzCU1Z5HCsSN9gqdxK8AyFgr0zs4ikqvUyK4Q5vTTaY27F6YxHSrz91JdHzLxfqUxmtMG0NE=
+	t=1755747216; cv=none; b=qCxUWBGRCvXFwjarXQQxK9oa5AiHUKwM/BmtlgwgR0gVzle2I7L/7l3ksX14I8a3GuCHeXVyXecxwbsv40I92Fpxed0rzgfByxENLbUd+vE1vy2VPZB9MlQ84E4Q5BsgBULA8ZX+hqQmwgLGvy9oUgTllr7rQAlHHtOowmMMxqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755746577; c=relaxed/simple;
-	bh=lTkLYpS7J9grEnH13m9iDrODUzapd1P6qOw2pLKanOw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TguyMuNC+gC6/ZA9BmI5f/SkZjYEutw28tap+gZDmjAZrjdnVdixUtkFl3zjKp9oNLutaCOHjEsoug9Kq2lPgLcaqt8wsQ0nAvS4DNAIKBPRu9mjPPn7zLShUw1PZ4quwq7rboR4fz6EetAzNIjmSVeQALRcX38opjxt1rIWcfQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=yoGmijxh; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=VMXZvWdTxmpFtlVQ9jlbQoJIR5oaIbYtP1S8SHubNqQ=; b=yoGmijxhHu+wEGIhK6HrD097at
-	6cMBFlz8C8WVswT3oLGSdlC5KkEc0GJEgqJwbV8yzsQpRCMqZWEH7cYmoXwKbA9+97QaXBfzNzVVA
-	rPsxXlHDomjMQsPBHw57yLen1Wa6o9YiIhAGdncGVYxeRxwyKMeyaYqd6WJ23oX0YvMLIDlWDw6FH
-	/c1Hx7P/HcqKDcDf068VRYtA+YALxUoTHnHjXbOkO+vJ3SrLCBi4CqU8nRMMKu5JCDwJxkgxnc3A3
-	OhVJJo3UNzlzAs8juRI10/qO5MWvTRtl8REiq3Pt9PVi9WzraKdDI4GqpO3hfo8qqdOV9Qtl6U1qQ
-	Qwr6krsQ==;
-Received: from [50.53.25.54] (helo=[192.168.254.17])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uovt7-0000000FcTp-3v7h;
-	Thu, 21 Aug 2025 03:22:53 +0000
-Message-ID: <74ba8f4e-1ccd-4962-bb5e-48a9157da952@infradead.org>
-Date: Wed, 20 Aug 2025 20:22:52 -0700
+	s=arc-20240116; t=1755747216; c=relaxed/simple;
+	bh=24BH5Rkal4AnYqqQtj74V/4hPzsLJlrlUZGruS4Dg3g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sCRdU5qC96Ql6SmPK/tGMLPr1eYwwWWe6t1R/oX5C8gzbDYJnu7ZhtVFRl3oUJuXmSZOd6TQyUROLN6mHiUBTNL5SQ5eIcbkhAn70nuD/tpOlC2rTPBDAnJcu1k+wFmsv1A0bajgjMclspA98o8mdVgxSMIboBvQWHp97nUf47Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=Hmv4e2X6; arc=none smtp.client-ip=156.67.10.101
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=NhecIOpybuUkmVRn+RV36PWvwdJyuFnrfxzmzDFBna8=; b=Hmv4e2X61kfRt4AKpoofe646kq
+	+OlNDQvtDGPXi8oms7OYJ/6oEIjEzhjsJL7A5gesXFfDlcKge+jHv9dBJY7j3XTHjRIhzF4LDk1xe
+	gSVBZl88aCPwpRJU9bXmBTeLW2ajoPbGtz6VNWFLA7d3SqcqG1hM3eowksQ0wkAClWoE=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1uow3G-005P9K-PC; Thu, 21 Aug 2025 05:33:22 +0200
+Date: Thu, 21 Aug 2025 05:33:22 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Andrew Lunn <andrew+netdev@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>, netdev@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, stable+noautosel@kernel.org
+Subject: Re: [PATCH v4 2/6] net: stmmac: Inverse the phy-mode definition
+Message-ID: <f93d325f-2c04-49ab-ae92-b87ae88ab49d@lunn.ch>
+References: <20250819-qcs615_eth-v4-0-5050ed3402cb@oss.qualcomm.com>
+ <20250819-qcs615_eth-v4-2-5050ed3402cb@oss.qualcomm.com>
+ <80a60564-3174-4edd-a57c-706431f2ad91@lunn.ch>
+ <f467aade-e604-448d-b23e-9b169c30ff2e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 04/11] tee: add TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
- Jens Wiklander <jens.wiklander@linaro.org>,
- Sumit Garg <sumit.garg@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Apurupa Pattapu <quic_apurupa@quicinc.com>, Kees Cook <kees@kernel.org>,
- "Gustavo A. R. Silva" <gustavoars@kernel.org>,
- Sumit Semwal <sumit.semwal@linaro.org>,
- =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc: Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org,
- op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org,
- linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org,
- Sumit Garg <sumit.garg@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>
-References: <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-0-7066680f138a@oss.qualcomm.com>
- <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-4-7066680f138a@oss.qualcomm.com>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-4-7066680f138a@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f467aade-e604-448d-b23e-9b169c30ff2e@oss.qualcomm.com>
 
+On Thu, Aug 21, 2025 at 10:22:05AM +0800, Yijie Yang wrote:
+> 
+> 
+> On 2025-08-20 00:20, Andrew Lunn wrote:
+> > >   static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
+> > >   {
+> > >   	struct device *dev = &ethqos->pdev->dev;
+> > > -	int phase_shift;
+> > > +	int phase_shift = 0;
+> > >   	int loopback;
+> > >   	/* Determine if the PHY adds a 2 ns TX delay or the MAC handles it */
+> > > -	if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID ||
+> > > -	    ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_TXID)
+> > > -		phase_shift = 0;
+> > > -	else
+> > > +	if (ethqos->phy_mode == PHY_INTERFACE_MODE_RGMII_ID)
+> > >   		phase_shift = RGMII_CONFIG2_TX_CLK_PHASE_SHIFT_EN;
+> > 
+> > Does this one setting control both RX and TX delays? The hardware
+> > cannot support 2ns delay on TX, but 0ns on RX? Or 2ns on RX but 0ns on
+> > TX?
+> > 
+> 
+> This setting is only for Tx delay. Rx delays are taken care separately with
+> DLL delays.
 
+If this is only for Tx delays, why is it also not used for
+PHY_INTERFACE_MODE_RGMII_TXID?
 
-On 8/20/25 4:38 PM, Amirreza Zarrabi wrote:
-> +/**
-> + * struct tee_ioctl_invoke_func_arg - Invokes an object in a Trusted Application
-> + * @id:		[in] Object id
-> + * @op:		[in] Object operation, specific to the object
-> + * @ret:	[out] return value
-> + * @num_params	[in] number of parameters following this struct
+It is simpler to just let the PHY add the delays, the PHY drivers get
+this right, are well tested, and just work. MAC drivers often get
+delays wrong.
 
-Missing colon (':') above:
-    * @num_params:
-
-> + */
-> +struct tee_ioctl_object_invoke_arg {
-> +	__u64 id;
-> +	__u32 op;
-> +	__u32 ret;
-> +	__u32 num_params;
-> +	/* num_params tells the actual number of element in params */
-> +	struct tee_ioctl_param params[];
-> +};
-
--- 
-~Randy
-
+	Andrew
 
