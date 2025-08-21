@@ -1,191 +1,230 @@
-Return-Path: <linux-arm-msm+bounces-70151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70152-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0FF7EB2F712
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 13:50:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B27EB2F74C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 13:57:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D34837B1873
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:48:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B45EA1887C0A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:56:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2149C2D5A16;
-	Thu, 21 Aug 2025 11:50:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54C3B2E0929;
+	Thu, 21 Aug 2025 11:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="G74n8+Ut"
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="NJDFrpGJ";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="Gj5tANSU";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="Tnc6NDIT";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="uTGuQaRo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B7120C47C;
-	Thu, 21 Aug 2025 11:50:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A0C2E0419
+	for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 11:56:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755777023; cv=none; b=YmNc1FMwzvNuAEqddyJILTszw3lP3Ja9th68d1wSYC8fRvkPN9ZnWOFgpdTpMqnYWYNJJsujCl/Qd9NmhBZoQI9CGlRyaSYC/4imv9vvH+XDMjEW81Ov8t0YnhRILi6RG1yFFXkHBP4JhxZQLvXOKcylHLMIltY4PLKKyvxlGSE=
+	t=1755777366; cv=none; b=RytNu23jAKw7y4FJu+dbz1EaBL5BCQFV5Qb+BOjGXh91wIBeDCRxr35Cqr5Zb+C2fQ5AXgprJlH5p0CI02iOqHi8b2/fiOzqsrXlD0fBOLu8TtPlC4rZ6g3C3Ul8UURjLg/9qTsV3rKkK0PNfAfGLnjkIMdRkN374o+ICrEAzLc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755777023; c=relaxed/simple;
-	bh=+3GD7TzyzN1hp52chJbQNaT204DkAVn9fTVWn2s9rIE=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kzVkraBMTET+Oz7hEcfz5WOG8kHqSW3/Pl1s+pjd8uASjVzvfIunu5hzKhGqeGkNF8V5elSzL4mUo2dEHgwsiZxqsK1SEDkt+svRBEkmk1iIrQ9q3QgVQ334m9X/a6b/WXs0FuDLYbULA2mTDLKIucykyDxdyAWU3TVsLWVJg5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=G74n8+Ut; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9bIZj015033;
-	Thu, 21 Aug 2025 11:50:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=QTkfN012JLVmsopUmDkmnS5cKvt0oC5JM6u
-	hFBfTuYM=; b=G74n8+UtC839SVuE0lkcO5JCT8tklTqeiXMPB1SoIYkhooE+cs5
-	M9alN9NZxaTL4/c9PaI8AdYP1rNe/Z7He1vBV76ddaxSenKcEHw09pWqHAat8t2s
-	YxTRLy6Nlqtk6WCzz/q41jHfrtFC9lhqARMwPHmxKXQrMoJrWbcNansKrVm+ipPF
-	pumKt6oRgz3qzZmK4TIcn3IUVdMY1J/2PBmOtnpr2bZRAnkxcrP/nksREOJXy7aL
-	kNGaFIeQTFrU+mil8SD6yPkfbvQbFk+nxWH73eDLrxRFojqJzjYEFFCFmogcNA0M
-	i9fUx/RXizPMrzJnrnYOanaO+xVUl6JTUiw==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n528w7bq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 11:50:15 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 57LBo5OV019733;
-	Thu, 21 Aug 2025 11:50:05 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 48mvc92qcr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 11:50:05 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 57LBo4pa019730;
-	Thu, 21 Aug 2025 11:50:04 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 57LBo4wm019727
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 11:50:04 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
-	id BC26C22927; Thu, 21 Aug 2025 19:50:03 +0800 (CST)
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: linux-bluetooth@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: quic_bt@quicinc.com, Shuai Zhang <quic_shuaz@quicinc.com>
-Subject: [PATCH v6] Bluetooth: Fix SSR (SubSystem Restart) fail when BT_EN is pulled up by hw
-Date: Thu, 21 Aug 2025 19:50:01 +0800
-Message-Id: <20250821115001.2690706-1-quic_shuaz@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1755777366; c=relaxed/simple;
+	bh=ROSdBt4rAukDNYQZ8F5SYKNT+P39hcMTH7N7m4Tl5Ko=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dnOR2Kmn5JVwQFVHwMNIt2ZW2L9KrPOipvIlr5n3uf0g36De2Pu3XKMD5HB7CtoAQU+4kv5auK+ST8KLShni2b7BGT6iplKz0gYB+zLmSVLwIJtNy/fwyyZ7unYNRNVGVu09bG2I6xAhIGiBTezXJ5O799d2ZOD1xLFJ5HhQvcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=NJDFrpGJ; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=Gj5tANSU; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=Tnc6NDIT; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=uTGuQaRo; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id E8C1D223BF;
+	Thu, 21 Aug 2025 11:56:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1755777361; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
+	b=NJDFrpGJO5iUNdKMkobo3gxiDs3KVSoOo+c0Kx7YFvkYIlgx7bnpDXIsS/c0P0cQgrh+OM
+	dExS90hja4MkiIhNcN5ACrES3HoMUaxtBTvpFmwjVxAsz+p2OyiAVBW8rAxUPAhgsnlwwj
+	CZwQn8osw/hfaBvpa9NaTEKf6lTT/M4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1755777361;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
+	b=Gj5tANSUdM5J9dvfsooU4xEjtijJBFnr7I7ne0BmLL2IbI4EPgjzdAm3py48jgBwCGMxQT
+	boIwMwnxQsGrzgBw==
+Authentication-Results: smtp-out1.suse.de;
+	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Tnc6NDIT;
+	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=uTGuQaRo
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1755777360; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
+	b=Tnc6NDIT4e91MUk3u/uv4DBnosFc2L+6LZYV25zaGB1PKdcEVuIh/llq9RiUXqkK4mkPMk
+	PfJV61ySMLhVweEIcriS3pU6Ueb/KxgiopzgPBhPws1+a3mjWGyK16+rO3Zyq+/M8wuFE7
+	qfdE97vz5rt+BUFGKinpdAml62Ot91s=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1755777360;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=sfJDevyhbJHQ4pRUZzGgDUzFw8/hjC9NL73k+UbtfNI=;
+	b=uTGuQaRowDi9JsJ2CDS0TXWPegM6sn88iHyhpAFbnDit/r3KkSK5wNpUCdTeRnRo1G9Xoi
+	pAPRiwf+LpsK+VAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 30D9513867;
+	Thu, 21 Aug 2025 11:56:00 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id Ozw5ClAJp2j0UAAAD6G6ig
+	(envelope-from <tzimmermann@suse.de>); Thu, 21 Aug 2025 11:56:00 +0000
+Message-ID: <7918ea7e-8914-4c0f-97be-d660043a4aab@suse.de>
+Date: Thu, 21 Aug 2025 13:55:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=fpOFpF4f c=1 sm=1 tr=0 ts=68a707f8 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=Zh3eq0SbisOj6M6HGuUA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: yYEDfzO3LXfOgrVYkcudMS5J_LK4YBZp
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX8qnQ6mKrtW3a
- wmRSYwNzXF19Zr7KOtZKQzwYasHiMFEJ9GVSjWC43dpgqD++fd4e8/tcytFOltv/q6yR2B94UvG
- aKtqK3ltgCUhj2owaale8J1hy9I3hRw4LJxIuAOZiK8QkColA1LBsu9mwURupQ7UZ+RKTCx9K7H
- VCXCPcXf1iboJasjALHt40PCedsJlg79ENCFmOlNHiYFpiTdT4+cPRUoyIGA9wyFu2xtquZi9iK
- fl6f8e+huwNn713ITekq8UEQiOQIMvbL6ytmdCJd47Vyea8SukK5lKeg3WUW1ELGyySDX3eKgAs
- Rv/10AGzrLu7QBgqend0kF4F2rXFjUqSwHRwWGJP+3FCB9wDWIKistbG5dcCrlMqri8et8dfulS
- 6P/dP0AEvSOXWuuSFyo0M4DfX/t4fg==
-X-Proofpoint-ORIG-GUID: yYEDfzO3LXfOgrVYkcudMS5J_LK4YBZp
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-21_03,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 spamscore=0 clxscore=1015 adultscore=0
- suspectscore=0 bulkscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 18/25] drm/renesas/rz-du: Compute dumb-buffer sizes
+ with drm_mode_size_dumb()
+To: Biju Das <biju.das.jz@bp.renesas.com>, "simona@ffwll.ch"
+ <simona@ffwll.ch>, "airlied@gmail.com" <airlied@gmail.com>,
+ "mripard@kernel.org" <mripard@kernel.org>,
+ "maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
+ geert <geert@linux-m68k.org>,
+ "tomi.valkeinen" <tomi.valkeinen@ideasonboard.com>
+Cc: "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+ "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
+ "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ "imx@lists.linux.dev" <imx@lists.linux.dev>,
+ "linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>,
+ "nouveau@lists.freedesktop.org" <nouveau@lists.freedesktop.org>,
+ "virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
+ "spice-devel@lists.freedesktop.org" <spice-devel@lists.freedesktop.org>,
+ "linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>,
+ "linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>,
+ "linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+ "intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>,
+ "xen-devel@lists.xenproject.org" <xen-devel@lists.xenproject.org>
+References: <20250821081918.79786-1-tzimmermann@suse.de>
+ <20250821081918.79786-19-tzimmermann@suse.de>
+ <TY3PR01MB11346A4F40CE555D24C093F278632A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+Content-Language: en-US
+From: Thomas Zimmermann <tzimmermann@suse.de>
+Autocrypt: addr=tzimmermann@suse.de; keydata=
+ xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
+ XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
+ BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
+ hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
+ 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
+ AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
+ AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
+ AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
+ lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
+ U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
+ vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
+ 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
+ j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
+ T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
+ 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
+ GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
+ hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
+ EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
+ C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
+ yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
+ SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
+ Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
+ 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
+In-Reply-To: <TY3PR01MB11346A4F40CE555D24C093F278632A@TY3PR01MB11346.jpnprd01.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Rspamd-Queue-Id: E8C1D223BF
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	MX_GOOD(-0.01)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FREEMAIL_TO(0.00)[bp.renesas.com,ffwll.ch,gmail.com,kernel.org,linux.intel.com,linux-m68k.org,ideasonboard.com];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	TO_DN_EQ_ADDR_SOME(0.00)[];
+	ARC_NA(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[21];
+	MIME_TRACE(0.00)[0:+];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com];
+	RCVD_TLS_ALL(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	FROM_EQ_ENVFROM(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	TO_DN_SOME(0.00)[];
+	MID_RHS_MATCH_FROM(0.00)[];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+	DKIM_TRACE(0.00)[suse.de:+];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email]
+X-Spam-Score: -3.01
 
-When the host actively triggers SSR and collects coredump data,
-the Bluetooth stack sends a reset command to the controller. However, due
-to the inability to clear the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits,
-the reset command times out.
+Hi
 
-To address this, this patch clears the QCA_SSR_TRIGGERED and
-QCA_IBS_DISABLED flags and adds a 50ms delay after SSR, but only when
-HCI_QUIRK_NON_PERSISTENT_SETUP is not set. This ensures the controller
-completes the SSR process when BT_EN is always high due to hardware.
+Am 21.08.25 um 13:28 schrieb Biju Das:
+> Hi Thomas Zimmermann,
+>
+> Thanks for the patch.
+>
+>> -----Original Message-----
+>> From: Thomas Zimmermann <tzimmermann@suse.de>
+>> Sent: 21 August 2025 09:17
+>> Subject: [PATCH v6 18/25] drm/renesas/rz-du: Compute dumb-buffer sizes with drm_mode_size_dumb()
+>>
+>> Call drm_mode_size_dumb() to compute dumb-buffer scanline pitch and buffer size. Align the pitch
+>> according to hardware requirements.
+>>
+>> v5:
+>> - include dumb-buffers header for drm_mode_size_dumb() (kernel test robot)
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> Cc: Biju Das <biju.das.jz@bp.renesas.com>
+> Tested-by: Biju Das <biju.das.jz@bp.renesas.com>
 
-For the purpose of HCI_QUIRK_NON_PERSISTENT_SETUP, please refer to
-the comment in `include/net/bluetooth/hci.h`.
+Thanks for testing. Could you also review the patch, please?
 
-The HCI_QUIRK_NON_PERSISTENT_SETUP quirk is associated with BT_EN,
-and its presence can be used to determine whether BT_EN is defined in DTS.
+Best regards
+Thomas
 
-After SSR, host will not download the firmware, causing
-controller to remain in the IBS_WAKE state. Host needs
-to synchronize with the controller to maintain proper operation.
+>
+> Cheers,
+> Biju
 
-Multiple triggers of SSR only first generate coredump file,
-due to memcoredump_flag no clear.
-
-add clear coredump flag when ssr completed.
-
-When the SSR duration exceeds 2 seconds, it triggers
-host tx_idle_timeout, which sets host TX state to sleep. due to the
-hardware pulling up bt_en, the firmware is not downloaded after the SSR.
-As a result, the controller does not enter sleep mode. Consequently,
-when the host sends a command afterward, it sends 0xFD to the controller,
-but the controller does not respond, leading to a command timeout.
-
-So reset tx_idle_timer after SSR to prevent host enter TX IBS_Sleep mode.
-
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
----
- drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 4e56782b0..9dc59b002 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1653,6 +1653,39 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
- 		skb_queue_purge(&qca->rx_memdump_q);
- 	}
- 
-+	/*
-+	 * If the BT chip's bt_en pin is connected to a 3.3V power supply via
-+	 * hardware and always stays high, driver cannot control the bt_en pin.
-+	 * As a result, during SSR (SubSystem Restart), QCA_SSR_TRIGGERED and
-+	 * QCA_IBS_DISABLED flags cannot be cleared, which leads to a reset
-+	 * command timeout.
-+	 * Add an msleep delay to ensure controller completes the SSR process.
-+	 *
-+	 * Host will not download the firmware after SSR, controller to remain
-+	 * in the IBS_WAKE state, and the host needs to synchronize with it
-+	 *
-+	 * Since the bluetooth chip has been reset, clear the memdump state.
-+	 */
-+	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
-+		/*
-+		 * When the SSR (SubSystem Restart) duration exceeds 2 seconds,
-+		 * it triggers host tx_idle_delay, which sets host TX state
-+		 * to sleep. Reset tx_idle_timer after SSR to prevent
-+		 * host enter TX IBS_Sleep mode.
-+		 */
-+		mod_timer(&qca->tx_idle_timer, jiffies +
-+				  msecs_to_jiffies(qca->tx_idle_delay));
-+
-+		/* Controller reset completion time is 50ms */
-+		msleep(50);
-+
-+		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
-+		clear_bit(QCA_IBS_DISABLED, &qca->flags);
-+
-+		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
-+		qca->memdump_state = QCA_MEMDUMP_IDLE;
-+	}
-+
- 	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
- }
- 
 -- 
-2.34.1
+--
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Frankenstrasse 146, 90461 Nuernberg, Germany
+GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
+HRB 36809 (AG Nuernberg)
+
 
 
