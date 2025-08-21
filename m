@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-70149-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A79A1B2F723
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 13:52:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2F1CB2F72C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 13:54:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87186A03565
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:49:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBFCF189A862
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:50:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A7A628850B;
-	Thu, 21 Aug 2025 11:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F1932DEA78;
+	Thu, 21 Aug 2025 11:49:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ntOxQ0Dt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SOdMdOOt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BD21C701F;
-	Thu, 21 Aug 2025 11:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD3E82DCBF1;
+	Thu, 21 Aug 2025 11:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755776940; cv=none; b=nHuRxrPN4WaiK2Lzv9BVjgiv/bZO5pY22o/LDypwG223XUqeEjDSRmzsGETusKn2xw8zJlXmDX5eE25MdwcXXhDsOUibcu2TwbtDUZ+1jmC6V6zDz3fSH22Zqi8tw9Zh03ok3y/IccgO+QYZLPWpx8B30KmV5wHm0QaE5QjtxfA=
+	t=1755776982; cv=none; b=DbWUi4N9iyhd0pluOyk5+0r7bV0t6rMFYUyE8DRlLJgdOTVJqPheih0kv4Z1+Jm/YnnqqhhoP36FHb6lWZrFdLH7WOGQimFdpa9ThuBPLFVBZNNNrX9bYdd1U/Hvq4WFFGxOf5uEyCSc4ZHr2isF3jGn0vQmSvpFlEprQ533HSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755776940; c=relaxed/simple;
-	bh=0NWLerZlY7JLFwPPReQ1nHcEzIPTGI766Bz8gaO/alY=;
+	s=arc-20240116; t=1755776982; c=relaxed/simple;
+	bh=6PVq/zZa+SwhhHyRiLenM67ntGlbcg2uiCnKoN4945M=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=c+iBbUtfHSaVPp7Hkpvy2TamfbTVSTGPzSsf6vGmIU6gBRJ3Gv4QEG0YTYLxSWzNRRplDkPw3V56biTa74zx4BP2XYuSKJDtzkWPYMNV0k1p7etCuCqLd9rsETo58VNyG5qS7LH8JJEbiiEjYyxqKlcPtCqd3DC6nPjCPheMNQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ntOxQ0Dt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E407CC4CEEB;
-	Thu, 21 Aug 2025 11:48:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=MxtIlfg7C/c+uJ97LLdKpwPmPZW5FzOtyK43dTcmSRxaoin/QxmvMQrcj0r/5mIGadsCPUZiQSi/eZJGN/WQPVQaahPcC5aRVwbr2ouz1LgdL1qg1FZVce0MTQSrDNhdPIwKak7KX2UA/P47wr6hPAR2xwHPgU7oPbPe/F0aAtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SOdMdOOt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7109AC4CEEB;
+	Thu, 21 Aug 2025 11:49:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755776939;
-	bh=0NWLerZlY7JLFwPPReQ1nHcEzIPTGI766Bz8gaO/alY=;
+	s=k20201202; t=1755776981;
+	bh=6PVq/zZa+SwhhHyRiLenM67ntGlbcg2uiCnKoN4945M=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ntOxQ0DtWTjh/846XzMNSJGdZz51guu8r4qMSRwddJNY2jDmuOczfZtFqW0af4tJN
-	 cT94AHW/eVYbRUmLQaPjypYoYOquTrP+5/us7RKdY+LMzyXkcH+iMzuqHhLBCZQrqI
-	 dyc110HbNi9o6q4KgnEh8a5fDzaAnmVLmyZTiRazUvsisArTCLygQrzHWG1v2M1tUZ
-	 G72yJmZHD+2XzNQAgxJkJo458LZHhZiSqt+NmfCSNB9XdntNlKr3s4HONARpcNl1Rp
-	 eGUFABzfv8B+GQfwiQ6lwDtPx//XIzt7j8+Io85FLpY/nI20tEnTWVI0pqvNwKdTX0
-	 6GCx+5cEF6jFQ==
-Message-ID: <1ccecf69-0bd8-4156-945d-e5876b6dea01@kernel.org>
-Date: Thu, 21 Aug 2025 13:48:54 +0200
+	b=SOdMdOOtNPhCHtZ6SyQ5cRqp3KT0LvzjSTuKeR4lp63lR7maBkQLkRmMivnkdH7w9
+	 mbvdG3k1X/pugtI7rKs0L2hKxLSKwI/rFPYAnXCOzf+TuHqd6jzD87129xAHBDt8rg
+	 KbpbCF8JEr5IlpjQ3EyeOfW9Ms3cp5i3BoCxArDRaOgW0+w8C87+ffM5gFgUI5fkt8
+	 OnFOBeWyjXRe8GnUn5tcN+2zoyTa1E9GGyuXpaahIXTeMWXkuXlpqoD6qV1xLY+xde
+	 lkr4Umvb0l+1lA9gJW/twbNfNL3Y0ipJJkW4tYHCzS1X8LBxDEZiI0AqiLhypc3la6
+	 4MG0uwlgjFCWg==
+Message-ID: <eeecc7a3-8ce3-4cfd-8d40-988736fc0c59@kernel.org>
+Date: Thu, 21 Aug 2025 13:49:36 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 3/5] scsi: ufs: core: Remove unused ufshcd_res_info
- structure
+Subject: Re: [PATCH V3 4/5] arm64: dts: qcom: sm8650: Enable MCQ support for
+ UFS controller
 To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, andersson@kernel.org,
  konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
  conor+dt@kernel.org, mani@kernel.org, James.Bottomley@HansenPartnership.com,
@@ -59,7 +59,7 @@ To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, andersson@kernel.org,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
 References: <20250821112403.12078-1-quic_rdwivedi@quicinc.com>
- <20250821112403.12078-4-quic_rdwivedi@quicinc.com>
+ <20250821112403.12078-5-quic_rdwivedi@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,27 +105,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250821112403.12078-4-quic_rdwivedi@quicinc.com>
+In-Reply-To: <20250821112403.12078-5-quic_rdwivedi@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 21/08/2025 13:24, Ram Kumar Dwivedi wrote:
-> From: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Enable Multi-Circular Queue (MCQ) support for the UFS host controller
+> on the Qualcomm SM8650 platform by updating the device tree node. This
+> includes adding new register region for MCQ and specifying the MSI parent
+> required for MCQ operation.
 > 
-> Remove the ufshcd_res_info structure and associated enum ufshcd_res
-> definitions from the UFS host controller header. These were previously
-> used for MCQ resource mapping but are no longer needed following recent
-> refactoring to use direct base addresses instead of multiple separate
-> resource regions
-> 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8650.dtsi | 7 ++++++-
 
-Incomplete SoB chain.
-
-But anyway this makes no sense as independent patch. First you remove
-users of it making it redundant... and then you remove it? No.
-
-Organize your patches in logical chunks.
+I don't understand why you combine DTS patch into UFS patchset. This
+creates impression of dependent work, which would be a trouble for merging.
 
 Best regards,
 Krzysztof
