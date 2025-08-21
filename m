@@ -1,187 +1,244 @@
-Return-Path: <linux-arm-msm+bounces-70113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA09CB2F447
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:42:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B904CB2F457
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 11:45:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8609E3AD67B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 09:40:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ED366681E83
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 21 Aug 2025 09:42:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DABF62E0936;
-	Thu, 21 Aug 2025 09:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D7742ED868;
+	Thu, 21 Aug 2025 09:42:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b="n5hHxiHw"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="HVAe29ZC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx07-00178001.pphosted.com (mx07-00178001.pphosted.com [185.132.182.106])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F6335975;
-	Thu, 21 Aug 2025 09:40:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.132.182.106
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7392E29BDA0;
+	Thu, 21 Aug 2025 09:42:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755769241; cv=none; b=Z+BJ5d7pBOQXPmocuBILnnmrYavYH4QPIYJEu0pPZFx1xuKy3N3NnvUNGGKDNMjQ0+xWdbvxxJGTp5qbGbbURbGhJh8gsGUO7QS8a4bmyZnPNR/7E/1wI2g+Tyto58HS8xTYtIwgcKEdhkf0+FliPplJc1EhqTZQYmcpAwSr4+4=
+	t=1755769371; cv=none; b=sn0GoBWAMYVb1HX9BfxhRZwzsICS1cHdzTFX/n/IVmJ7RtnPWEvWryA42breFxR2ijKP1qJHYYsvA+otRMJw7HJOVvydFIeFlJrLepcbLwrS6wQ4DhxvpE2KDfi4Y5nnwQrMNlU1wdxDzigyUHUM9i39BjWz9YOa3fnPOLwFABE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755769241; c=relaxed/simple;
-	bh=sKHSsSP2t9Q4hu73ZWzI6GSojTG0sgBzfCBLWO9XCxk=;
+	s=arc-20240116; t=1755769371; c=relaxed/simple;
+	bh=daHHXk6hGkf6STMZel23S0oS9VyuqpLyuFZi6TkLXIg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=o+uoQ5xi6GSy4bYciAf6GycyQH1vLHlLWOv+WGa+4Fulp1wRhpnhKOMwqAhKXNHmrHJatIlG8TBbqRYzDeCErXRNuFjeswK/OKtw4SmCBysXRPjpFro+8UkXWzEvsSCl0zO66lba6CDBujRzdH9VsmT+901JVuiVygFDpQUZbOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com; spf=pass smtp.mailfrom=foss.st.com; dkim=pass (2048-bit key) header.d=foss.st.com header.i=@foss.st.com header.b=n5hHxiHw; arc=none smtp.client-ip=185.132.182.106
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=foss.st.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=foss.st.com
-Received: from pps.filterd (m0241204.ppops.net [127.0.0.1])
-	by mx07-00178001.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L73mkn017291;
-	Thu, 21 Aug 2025 11:39:56 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=
+	 In-Reply-To:Content-Type; b=hx8CeviS4swOehxUXcWzlH6ALgtTQQd9gmHF2QKxywtj/SuumW09kvGol1PSUAQH5I914b4B1+1kzAYTQIamHRPUyRc4pGbxWhYddlXs/Io1/iQPcJu7HEWGVw87V1TcODdbZb6S9pQDxyr2Z/KeaFuull7y2JIPBmMz9s1Cntg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=HVAe29ZC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57L9bJM1013297;
+	Thu, 21 Aug 2025 09:42:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=selector1; bh=
-	WlqqfI0U0npfmgU+tmlUwSHbK4ZelsnQ4LVffls/8aw=; b=n5hHxiHwTKdbVyRl
-	vHBWgMduDM+tlhtZeSXTi/mGPgVEsu/HOgOcBgDrwFVAPAVlc6/35j9oQpPweKad
-	b2qSUj3MTwx77kAkK3nbKgC77W4lGqLmIjx7LNzvM/UjDvLLrDJrMHOuAU6CtxCr
-	xjP3lYfEXbJUS0nBw/4kiq15Gi9Rf9+B5RecphEiZFJCv1mCLprGvM8uV+5MUVZT
-	fO1CxdWtOi6kMZTY82cKed2gYCB3d7Ds4+8ggAbvIlE4ywU/hhm9sKiDDh5r8zpz
-	/8z7stmnBupg7HBOfEsgTrji6B2v+Hp+gya+hzkvCOsMcbEyZJRxy1z+LDv1JwVz
-	vEpSJg==
-Received: from beta.dmz-ap.st.com (beta.dmz-ap.st.com [138.198.100.35])
-	by mx07-00178001.pphosted.com (PPS) with ESMTPS id 48n70de72d-1
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QxuQGDuMIJKU3/yfOdhqngcZERhDk4reACtx5u6/wi0=; b=HVAe29ZCL54LUJ4h
+	BCKOQUU9ZtC/9O56FVpEtI1AWr4uPiqc0ejzJgzrfF4IoAWXVc0N2qL1zKhPWbaG
+	H4WJunwr/kKN4+ZNMMrXuQN100rTFN1lsORxcwDs+R+8ZoozcRyc8FyK7LlRaxfq
+	T5LKDU8/B8LbOFatArLO4aTu29Yc92wkgqjBQoh8HqtJNVmLtnGN01u331yMaYKZ
+	9LCcFhqnd8fMfBoTDRZZz5wHtuicWDTGC5wEqrAgZYXSuN0goCcmdZFMR+OjOiap
+	+OHUZjSZfZQOxouRDiJ8sWEhX8+0bG9NpBB4ekZQKaEdGWhuJmozNzk56wukMNeR
+	YTWPWA==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52dmvj9-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 21 Aug 2025 11:39:56 +0200 (MEST)
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 3446F40046;
-	Thu, 21 Aug 2025 11:37:35 +0200 (CEST)
-Received: from Webmail-eu.st.com (shfdag1node3.st.com [10.75.129.71])
-	by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id F3EAD73DB5A;
-	Thu, 21 Aug 2025 11:36:15 +0200 (CEST)
-Received: from [10.48.87.178] (10.48.87.178) by SHFDAG1NODE3.st.com
- (10.75.129.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 21 Aug
- 2025 11:36:14 +0200
-Message-ID: <86adb9ce-68de-494f-92e8-6e11773987fe@foss.st.com>
-Date: Thu, 21 Aug 2025 11:36:13 +0200
+	Thu, 21 Aug 2025 09:42:36 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57L9gZAL017835
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 21 Aug 2025 09:42:35 GMT
+Received: from [10.50.10.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 21 Aug
+ 2025 02:42:33 -0700
+Message-ID: <6c93b790-6d84-aec5-5b4d-2584d249f74e@quicinc.com>
+Date: Thu, 21 Aug 2025 15:12:29 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/9] drm/stm/lvds: convert from round_rate() to
- determine_rate()
-To: Brian Masney <bmasney@redhat.com>, Philipp Zabel <p.zabel@pengutronix.de>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard
-	<mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie
-	<airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Shawn Guo
-	<shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        "Pengutronix
- Kernel Team" <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Clark
-	<robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        "Abhinav
- Kumar" <abhinav.kumar@linux.dev>,
-        Jessica Zhang
-	<jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        Raphael Gallais-Pou
-	<raphael.gallais-pou@foss.st.com>,
-        Philippe Cornu
-	<philippe.cornu@foss.st.com>,
-        Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Chen-Yu Tsai
-	<wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland
-	<samuel@sholland.org>, Stephen Boyd <sboyd@kernel.org>
-CC: <linux-clk@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <imx@lists.linux.dev>, <linux-arm-kernel@lists.infradead.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <freedreno@lists.freedesktop.org>,
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <linux-sunxi@lists.linux.dev>
-References: <20250811-drm-clk-round-rate-v2-0-4a91ccf239cf@redhat.com>
- <20250811-drm-clk-round-rate-v2-7-4a91ccf239cf@redhat.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] media: iris: fix module removal if firmware download
+ failed
 Content-Language: en-US
-From: Yannick FERTRE <yannick.fertre@foss.st.com>
-In-Reply-To: <20250811-drm-clk-round-rate-v2-7-4a91ccf239cf@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: EQNCAS1NODE4.st.com (10.75.129.82) To SHFDAG1NODE3.st.com
- (10.75.129.71)
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250820-topic-sm8x50-iris-remove-fix-v1-1-07b23a0bd8fc@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <20250820-topic-sm8x50-iris-remove-fix-v1-1-07b23a0bd8fc@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfXymIFYtlw7Wlc
+ +GQWnTbstkTSkNX4hbhRR/mRJLglZ5iuqHhXjQ+l34pQxZqEAsyNYfWDquLtxCYgueZEY59w/Tj
+ pAjHH3yB6Xqnq0vhGV9VcCz+qcvEktBN13kq+M4ADUAXBIbozeaF9AEbz106YooaRRsmaB0hyTg
+ wVa4/RKjVQxwodJ2EKIwWfcLuQhSk084sqfE89wOSXVfDyFZSt2FXmdspgYe+xBFydIK7Zq7yQo
+ j5zq2bnh51AJuuX/G7wVGyXUYZn8ric0V3fHS2hFdjcncv7wgugQ8CW7yJ+8ELguEbdPxRrNhpf
+ IuNDjZlC/v5Q68OD2E2Zq5jN1tFcpg4z/hFIrj+PiO6u17JxiC3WL9Kac5qI1yy1pTUJEY6n1xY
+ auVlnzlMr4N1O1rlJXl4rnPwLjXiyQ==
+X-Proofpoint-ORIG-GUID: XF2zJmIe4FqVWKRRtjNIbo_1XtHV0-qI
+X-Proofpoint-GUID: XF2zJmIe4FqVWKRRtjNIbo_1XtHV0-qI
+X-Authority-Analysis: v=2.4 cv=SoXJKPO0 c=1 sm=1 tr=0 ts=68a6ea0c cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8
+ a=MzbH1S0u4NuMHKOXcXYA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+ a=cPQSjfK2_nFv0Q5t_7PE:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-21_02,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-Hi Brian,
 
-thanks for the patch.
 
-Acked-by: Yannick Fertre <yannick.fertre@foss.st.com>
-
-Le 11/08/2025 à 12:56, Brian Masney a écrit :
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
->
-> Acked-by: Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+On 8/20/2025 10:36 PM, Neil Armstrong wrote:
+> Fix remove if firmware failed to load:
+> qcom-iris aa00000.video-codec: Direct firmware load for qcom/vpu/vpu33_p4.mbn failed with error -2
+> qcom-iris aa00000.video-codec: firmware download failed
+> qcom-iris aa00000.video-codec: core init failed
+> 
+> then:
+> $ echo aa00000.video-codec > /sys/bus/platform/drivers/qcom-iris/unbind
+> 
+> Triggers:
+> genpd genpd:1:aa00000.video-codec: Runtime PM usage count underflow!
+> ------------[ cut here ]------------
+> video_cc_mvs0_clk already disabled
+> WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#1: sh/542
+> <snip>
+> pc : clk_core_disable+0xa4/0xac
+> lr : clk_core_disable+0xa4/0xac
+> <snip>
+> Call trace:
+>  clk_core_disable+0xa4/0xac (P)
+>  clk_disable+0x30/0x4c
+>  iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+>  iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+>  iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+>  iris_vpu_power_off+0x34/0x84 [qcom_iris]
+>  iris_core_deinit+0x44/0xc8 [qcom_iris]
+>  iris_remove+0x20/0x48 [qcom_iris]
+>  platform_remove+0x20/0x30
+>  device_remove+0x4c/0x80
+> <snip>
+> ---[ end trace 0000000000000000 ]---
+> ------------[ cut here ]------------
+> video_cc_mvs0_clk already unprepared
+> WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#2: sh/542
+> <snip>
+> pc : clk_core_unprepare+0xf0/0x110
+> lr : clk_core_unprepare+0xf0/0x110
+> <snip>
+> Call trace:
+>  clk_core_unprepare+0xf0/0x110 (P)
+>  clk_unprepare+0x2c/0x44
+>  iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+>  iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+>  iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+>  iris_vpu_power_off+0x34/0x84 [qcom_iris]
+>  iris_core_deinit+0x44/0xc8 [qcom_iris]
+>  iris_remove+0x20/0x48 [qcom_iris]
+>  platform_remove+0x20/0x30
+>  device_remove+0x4c/0x80
+> <snip>
+> ---[ end trace 0000000000000000 ]---
+> genpd genpd:0:aa00000.video-codec: Runtime PM usage count underflow!
+> ------------[ cut here ]------------
+> gcc_video_axi0_clk already disabled
+> WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#4: sh/542
+> <snip>
+> pc : clk_core_disable+0xa4/0xac
+> lr : clk_core_disable+0xa4/0xac
+> <snip>
+> Call trace:
+>  clk_core_disable+0xa4/0xac (P)
+>  clk_disable+0x30/0x4c
+>  iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+>  iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+>  iris_vpu_power_off+0x48/0x84 [qcom_iris]
+>  iris_core_deinit+0x44/0xc8 [qcom_iris]
+>  iris_remove+0x20/0x48 [qcom_iris]
+>  platform_remove+0x20/0x30
+>  device_remove+0x4c/0x80
+> <snip>
+> ------------[ cut here ]------------
+> gcc_video_axi0_clk already unprepared
+> WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#4: sh/542
+> <snip>
+> pc : clk_core_unprepare+0xf0/0x110
+> lr : clk_core_unprepare+0xf0/0x110
+> <snip>
+> Call trace:
+>  clk_core_unprepare+0xf0/0x110 (P)
+>  clk_unprepare+0x2c/0x44
+>  iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+>  iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+>  iris_vpu_power_off+0x48/0x84 [qcom_iris]
+>  iris_core_deinit+0x44/0xc8 [qcom_iris]
+>  iris_remove+0x20/0x48 [qcom_iris]
+>  platform_remove+0x20/0x30
+>  device_remove+0x4c/0x80
+> <snip>
+> ---[ end trace 0000000000000000 ]---
+> 
+> Skip deinit if initialization never succeeded.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 > ---
->   drivers/gpu/drm/stm/lvds.c | 12 +++++++-----
->   1 file changed, 7 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/gpu/drm/stm/lvds.c b/drivers/gpu/drm/stm/lvds.c
-> index 07788e8d3d8302a3951e97d64736b721033998d3..fe38c0984b2b552e1ccaef4d1e589b9d86a40ee3 100644
-> --- a/drivers/gpu/drm/stm/lvds.c
-> +++ b/drivers/gpu/drm/stm/lvds.c
-> @@ -682,8 +682,8 @@ static unsigned long lvds_pixel_clk_recalc_rate(struct clk_hw *hw,
->   	return (unsigned long)lvds->pixel_clock_rate;
->   }
->   
-> -static long lvds_pixel_clk_round_rate(struct clk_hw *hw, unsigned long rate,
-> -				      unsigned long *parent_rate)
-> +static int lvds_pixel_clk_determine_rate(struct clk_hw *hw,
-> +					 struct clk_rate_request *req)
->   {
->   	struct stm_lvds *lvds = container_of(hw, struct stm_lvds, lvds_ck_px);
->   	unsigned int pll_in_khz, bdiv = 0, mdiv = 0, ndiv = 0;
-> @@ -703,7 +703,7 @@ static long lvds_pixel_clk_round_rate(struct clk_hw *hw, unsigned long rate,
->   	mode = list_first_entry(&connector->modes,
->   				struct drm_display_mode, head);
->   
-> -	pll_in_khz = (unsigned int)(*parent_rate / 1000);
-> +	pll_in_khz = (unsigned int)(req->best_parent_rate / 1000);
->   
->   	if (lvds_is_dual_link(lvds->link_type))
->   		multiplier = 2;
-> @@ -719,14 +719,16 @@ static long lvds_pixel_clk_round_rate(struct clk_hw *hw, unsigned long rate,
->   	lvds->pixel_clock_rate = (unsigned long)pll_get_clkout_khz(pll_in_khz, bdiv, mdiv, ndiv)
->   					 * 1000 * multiplier / 7;
->   
-> -	return lvds->pixel_clock_rate;
-> +	req->rate = lvds->pixel_clock_rate;
-> +
-> +	return 0;
->   }
->   
->   static const struct clk_ops lvds_pixel_clk_ops = {
->   	.enable = lvds_pixel_clk_enable,
->   	.disable = lvds_pixel_clk_disable,
->   	.recalc_rate = lvds_pixel_clk_recalc_rate,
-> -	.round_rate = lvds_pixel_clk_round_rate,
-> +	.determine_rate = lvds_pixel_clk_determine_rate,
->   };
->   
->   static const struct clk_init_data clk_data = {
->
+>  drivers/media/platform/qcom/iris/iris_core.c | 10 ++++++----
+>  1 file changed, 6 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+> index 0fa0a3b549a23877af57c9950a5892e821b9473a..8406c48d635b6eba0879396ce9f9ae2292743f09 100644
+> --- a/drivers/media/platform/qcom/iris/iris_core.c
+> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+> @@ -15,10 +15,12 @@ void iris_core_deinit(struct iris_core *core)
+>  	pm_runtime_resume_and_get(core->dev);
+>  
+>  	mutex_lock(&core->lock);
+> -	iris_fw_unload(core);
+> -	iris_vpu_power_off(core);
+> -	iris_hfi_queues_deinit(core);
+> -	core->state = IRIS_CORE_DEINIT;
+> +	if (core->state != IRIS_CORE_DEINIT) {
+> +		iris_fw_unload(core);
+> +		iris_vpu_power_off(core);
+> +		iris_hfi_queues_deinit(core);
+> +		core->state = IRIS_CORE_DEINIT;
+> +	}
+>  	mutex_unlock(&core->lock);
+>  
+>  	pm_runtime_put_sync(core->dev);
+> 
+
+The iris_core_deinit() API should ideally not be called when core->state is
+in IRIS_CORE_DEINIT. Better to handle this check in the caller itself.
+
+> ---
+> base-commit: 5303936d609e09665deda94eaedf26a0e5c3a087
+> change-id: 20250820-topic-sm8x50-iris-remove-fix-76f86621d6ac
+> 
+> Best regards,
 
