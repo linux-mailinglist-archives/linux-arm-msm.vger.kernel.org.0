@@ -1,235 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-70290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B443CB312D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:23:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6474FB312EA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:25:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 747AC561DFD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:21:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 772835C5165
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:24:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BD702E2F17;
-	Fri, 22 Aug 2025 09:21:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A01C32C21E8;
+	Fri, 22 Aug 2025 09:23:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YbQCAlpl"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="JarX3u1N"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E2D813A3F7
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D665129E10F;
+	Fri, 22 Aug 2025 09:23:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755854481; cv=none; b=kYmChkz1TtjcH0IvX0OLxF7YgosTJa5O0/sM0Hi4aTfekXPe5UKhzKA3biNvSClgNxS3PrQHoZHwDGnKfsvmFe+F3H0EKfzFtTJMbhon9gFCsS3R4nfTR/HTnkQ05Xi748awsiHx/pizErzUZvxQU09HDh/BAkBpxwBaHarUpdk=
+	t=1755854626; cv=none; b=L9/t8IzuwCKD++pRlR7VAS/Vr3ODFG7xvigz1xVkOURG+Dw1n49l378tPi7Rs5bBbuWfMw0QwswO6NZ3jVDBC4KxlGFgWc00QNDgvJqss6UbRk0gI+l0+7z4u1KLWvQJ5SgeJKqoGQRKn5oLKA2bRskGKg5bYyJMrgOrGeNspBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755854481; c=relaxed/simple;
-	bh=yNbdXORajyB6uUaMUAhu4mOLFE93vNT+gPSj/d3fJCQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qtsGsvm+KmJ+IEhsKdJa4fGu0ASP85RFMlHBecnk+A9pMipOPj5yUt86pKOkW/dq2TPvhcUhV0ZDCUxzLKvhRuDTUr2L3tzJZA6fAabARAu51Dp3xUTtOGpHFGfpKdQF340XcIjYm+5G9yKKkYArA2bitDjkpy8X9fL+xzOneIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YbQCAlpl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UKA4005632
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:21:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1755854626; c=relaxed/simple;
+	bh=kYXpNa0/O5F2E4mtT7HmzydM7FRm2oH//LuQw09Ui4o=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=hiUeXyxy4OXWnouD0v6X5gx0kuy88946WQQU4F3bFUw5CdMKXjIvPlJOevWC4YQH+QG8tNk3yv9som1OyGDNdc7hCt93nwQ/o6/P8v9jaotPYQfCdTm+pH46tsX8fs+YKrBXXKy5QZzchklijvt+39bctAxFRWzRqvUAVE7Ofhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=JarX3u1N; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UJE0020865;
+	Fri, 22 Aug 2025 09:23:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IOCyID8v1JmSthjeoZP7YK+Yq23g9nLuF93nvuZi7jg=; b=YbQCAlplt/Wpi/WH
-	yv8oHte/mq+ndlCMTemNruW3G6tGClfh1ifyy+t4UpBCCHg9R9JD6yNnm8kwbdBP
-	mcPiwm7IdZ20ccYQtS2157zT3IKtJKjVw+RQXhcNjwuLbQYaEVUSDKhdMYUxI43g
-	m58D04oOshRGrTnQerRdHHrctuYKyqKjNKwrC311aSmODdKmI9CTbo1zrVLeDfj3
-	HIgFto3NUdgILSn/j3M3r0G6ezuAGjV4Md3BSXmwpf5ROC7G9r7RF2Pj6LLzI+9J
-	8Sp2rnR2i36m69BE9wj29OYoZRQMjWJlc9ybt7ybp42KRfCSRjque6ZC3CtbB3FV
-	Id1uaA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52drjm3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:21:18 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-76e2e60221fso4091793b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:21:18 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755854477; x=1756459277;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IOCyID8v1JmSthjeoZP7YK+Yq23g9nLuF93nvuZi7jg=;
-        b=O9c8KjfPwRClMmIm0eyy6XxgvuL+hhnFQYPaZX13Kgm/Sms9lD4z9BjXyXurvYNugD
-         Eqnlj3geEnWUnIKSgYQW58xhMeVpA2zSfrUQuAAUz0Sx6/ATpwAQ+N8GIx0UFoZgjZ9/
-         hweVIfXAsiSpMO66YuaCUwAgr+Rb8sUlde4YjSYilon7+ZJvdzZTbMJok483oLgZpHL6
-         +9NCR/Q+lYIc5X9wjyjMEH+fDIsfz+cobDTrUvIb9bgKBtKwQE/kUT623Udi3fn2L03W
-         CeJPThVhwZutpPZJXFJXjofK1YvMQ5EQcB5XtUShNltM+AGsRVrU1QYMtnxzK336ePgG
-         Wb1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX6g/hvEZ38mU0JFrdhIY1O4klMxb7NcN883VdUvG/HGHy0ul3wNvL2D2yfmEJ8+lDDOkB9VftkRoGxIb01@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVBroYknlAfxDx1mZDnBcG95SvHB8Z2qO5r449GqtGec3RBrPS
-	jd1FPNmFPpOR59GORl35NMQhZB9xRBVAF+AXtVfcS6u0VdVAHDJ76G5iMecdCAF1hHqoPxkGBVa
-	0gtx+QYQQUSAzwGPhpL2YmgFDcO7x9WYV8DVPjZrUeyiYKcO+CxBlNqPKtckf2bl6pm8q
-X-Gm-Gg: ASbGnctOx1+2XJDE1lgameuu5dsQWOAQ1VJdPpQZ4WcBXuetuxXxCrXuk9ANsWuq5nc
-	7fXslLBohvds8QfEk/bPtNgw2A03dDDBwUUeN/rgOxFUVHC4q7R/3VH/a+sVB2Jye81joQbFcI3
-	H04pcEhqczrtOTFY05lcUu1NIrZQSUH6uVjsIG/flqFpgZsl1o8XLEoTp6I46wVWjkzXyoPqzo+
-	lBZxi7Cyc9kh8AjS+4JEVrfjWPIgwW2W1pYgOejxtiQYgE095IC88CdRvPIi38p7r9hr0R9+Xwn
-	muYq0Jln6/EgDvpM/WpQwFI9j7zibR38AMVtYJY+9734wjSVIINpAqqC4N6PznRs3nY=
-X-Received: by 2002:a05:6a00:1ca8:b0:76b:dedb:3048 with SMTP id d2e1a72fcca58-7702fa0a9e3mr3338305b3a.14.1755854477057;
-        Fri, 22 Aug 2025 02:21:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE169SwcjAeKFg+hGSDS6nNE0NmrbfptvokZy+amX2UJ70H+B4WuVrskBuZjtYUqvzfDL1gJQ==
-X-Received: by 2002:a05:6a00:1ca8:b0:76b:dedb:3048 with SMTP id d2e1a72fcca58-7702fa0a9e3mr3338263b3a.14.1755854476577;
-        Fri, 22 Aug 2025 02:21:16 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e843bb510sm9369488b3a.53.2025.08.22.02.21.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 02:21:16 -0700 (PDT)
-Date: Fri, 22 Aug 2025 14:51:09 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, linux-remoteproc@vger.kernel.org
-Subject: Re: [PATCH v2 06/11] remoteproc: Move resource table data structure
- to its own header
-Message-ID: <20250822092109.awrfyqz2tfaxchjy@hu-mojha-hyd.qualcomm.com>
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-7-mukesh.ojha@oss.qualcomm.com>
- <aKWDXySSt57tXHVP@linaro.org>
- <20250820151822.6cmowxfsheqxfrnb@hu-mojha-hyd.qualcomm.com>
- <20250820163250.hszey3i2gtd3o2i6@hu-mojha-hyd.qualcomm.com>
- <aKX9kO5eHUp40oRj@linaro.org>
+	gX61FoazzEu2dfspbNtw7L4e4zRSy/lHaPgZlW4iuU4=; b=JarX3u1NTmzTg/3A
+	rqCY4qeE9MZHXvqA8VrR+WySD3gGGxdKi/oD/ZVsioZDRo/pih1/+5Pt+rcdEXeG
+	88dvtn+h3RLPbI3hBN5vJqsX67AALG4DRpbKwxD3uz9UV2RZkS6Evtze5uu5yw8i
+	fsOvYFCXyqzcqcF4E5scpdPuvSUShT5juDMzXCojloeg4tjCDJNN/QZVk8G4Hbif
+	7XPFi/gjwa20K/Ib5B/kOXIlHSOUM5rPFLP3Mr0I6B6hwc3unhy9X/n3dObOliYW
+	Z/W0to+8lx4RUBcZmFwPv3B2Owe6eAi4gBLE/EOvuIGXj9Ov2fLsBX2lV3ob1x14
+	WrX9ZQ==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5290pf2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 09:23:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57M9NcrG026076
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 09:23:38 GMT
+Received: from [10.216.22.206] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 22 Aug
+ 2025 02:23:35 -0700
+Message-ID: <2635ced4-b91f-4c79-ae2a-079f06bbb8a9@quicinc.com>
+Date: Fri, 22 Aug 2025 14:53:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add regulator loads for SM8650
+ and SM8750
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        "Manivannan
+ Sadhasivam" <mani@kernel.org>
+CC: <vkoul@kernel.org>, <kishon@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
+References: <20250819222832.8471-1-quic_nitirawa@quicinc.com>
+ <20250819222832.8471-3-quic_nitirawa@quicinc.com>
+ <ger4kizeltjwalfuwu4dpfjiskrv2okgo5c7d6n3pb24yaxgfo@nkcndblyx3il>
+ <xir3u3hlmcvfu6uasijz6g2oialoasmuu4bno6ctxpscqcebz6@6kw6xpm5bxbd>
+ <761c97bb-ee90-4ace-acd3-08349831aade@oss.qualcomm.com>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <761c97bb-ee90-4ace-acd3-08349831aade@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aKX9kO5eHUp40oRj@linaro.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX1Ic6SEcwuqMe
- jOrh7vqofNZRpAfxK41W9ouD68UZRRDMO1mkQW+s9vwU9EWehzrV8cN6mtLKkySx6xX+3EXFrUZ
- IYJxhH3419Ds3BMLyO11Kc1W9At7rRjPvkU+32cVr15VN4mMqD42zlDcRuqJdKNh1A2h900Htsh
- xv3+YHMcCmuzFErAqESSIfo+Ff8Zk40shdOHyvlIqUjcW7sNWOtYGkjrm5nHlunTdE4LV28BQVr
- 4mrOmsVJWhovsInw26k/X17IHgOF4ilN/rdM25xi7A5fAcHKm1iY5kZlKeHqrB3vI8UaxZf6hr1
- 2mlTVKoRf8y/EUbvwe9qpbFhPtEO4zzukO2r/doiDlvu2wrAQMBwC0Nd6hs52GDRqwFG/s5y8pJ
- CMR3vH1/n4Mxd5BwLXDTS4+CcVy8nA==
-X-Proofpoint-ORIG-GUID: mg34tKBYN67l28nLQ1nYX3B3Qem_Abct
-X-Proofpoint-GUID: mg34tKBYN67l28nLQ1nYX3B3Qem_Abct
-X-Authority-Analysis: v=2.4 cv=SoXJKPO0 c=1 sm=1 tr=0 ts=68a8368e cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
- a=EUspDBNiAAAA:8 a=iMW2xQpcS57KE3qV-eEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=zc0IvFSfCIW2DFIPzwfm:22 a=cvBusfyB2V15izCimMoJ:22
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=I4c8hNgg c=1 sm=1 tr=0 ts=68a8371b cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
+ a=3vFY76kdcj1CIDOknBYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: XfsU-EhmgXv_0IHsY4LYIOFZEA96EXrq
+X-Proofpoint-ORIG-GUID: XfsU-EhmgXv_0IHsY4LYIOFZEA96EXrq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX4UUL2xrAk2kz
+ uvd3m5dNMtxCRIK4tWLkarYROGzkgov3/Q+B8ByHYTeESsDYdnIgZgHiwpcKvgGF3dMQ+RFDxlA
+ NLMQNOlX4sZQoHSDmjtxnV1HvHuY42yquzkGY9Z1A0lvJGNWgDmps8uFdOkAAWH7x6DeoGy3fvX
+ pcmhew8toRhCgTYZq75DvKitfdGR/rrjLbk4HiqT9TzypnQMRDuAVP9oKggFBGSYIljP++JHe9E
+ ltyPmROTnGU8Rg0lM/mJ6RaXBEwW70C1q3oNvzAVCm+46z3VANPI51e0+dAQ9tQIquTvP6boE8h
+ tAh/JyISwooS/uiu0S5qBzhJeDVosPQHeeP8d37s4CT2ewNU6nR+4e6xjD+GuEqd+5atr+tspQL
+ k7PiuMYkZtIShujb12CLV2+572EG1Q==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0 clxscore=1015
+ adultscore=0 clxscore=1015 malwarescore=0 spamscore=0 priorityscore=1501
+ lowpriorityscore=0 phishscore=0 impostorscore=0 bulkscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-On Wed, Aug 20, 2025 at 06:53:36PM +0200, Stephan Gerhold wrote:
-> On Wed, Aug 20, 2025 at 10:02:50PM +0530, Mukesh Ojha wrote:
-> > On Wed, Aug 20, 2025 at 08:48:22PM +0530, Mukesh Ojha wrote:
-> > > On Wed, Aug 20, 2025 at 10:12:15AM +0200, Stephan Gerhold wrote:
-> > > > On Tue, Aug 19, 2025 at 10:24:41PM +0530, Mukesh Ojha wrote:
-> > > > > The resource table data structure has traditionally been associated with
-> > > > > the remoteproc framework, where the resource table is included as a
-> > > > > section within the remote processor firmware binary. However, it is also
-> > > > > possible to obtain the resource table through other means—such as from a
-> > > > > reserved memory region populated by the boot firmware, statically
-> > > > > maintained driver data, or via a secure SMC call—when it is not embedded
-> > > > > in the firmware.
-> > > > > 
-> > > > > There are multiple Qualcomm remote processors (e.g., Venus, Iris, GPU,
-> > > > > etc.) in the upstream kernel that do not use the remoteproc framework to
-> > > > > manage their lifecycle for various reasons.
-> > > > > 
-> > > > > When Linux is running at EL2, similar to the Qualcomm PAS driver
-> > > > > (qcom_q6v5_pas.c), client drivers for subsystems like video and GPU may
-> > > > > also want to use the resource table SMC call to retrieve and map
-> > > > > resources before they are used by the remote processor.
-> > > > > 
-> > > > 
-> > > > All the examples you give here (Venus/Iris, GPU) have some sort of EL2
-> > > > support already for older platforms:
-> > > 
-> > > Example was taken from perspective of remote processor life-cycle management.
-> > > You are right they have worked before in non-secure way for Chrome.
-> > > 
-> > > > 
-> > > >  - For GPU, we just skip loading the ZAP shader and access the protected
-> > > >    registers directly. I would expect the ZAP shader does effectively
-> > > >    the same, perhaps with some additional handling for secure mode. Is
-> > > >    this even a real remote processor that has a separate IOMMU domain?
-> > > > 
-> > > 
-> > > I don't think it is the case and think the same that they can skip
-> > > loading and Hence, I have not yet added support for it.
-> > > 
-> > > Will check internally before doing anything on GPU.
-> > > 
-> > > >  - For Venus/Iris, there is code upstream similar to your PATCH 11/11
-> > > >    that maps the firmware with the IOMMU (but invokes reset directly
-> > > >    using the registers, without using PAS). There is no resource table
-> > > >    used for that either, so at least all Venus/Iris versions so far
-> > > >    apparently had no need for any mappings aside from the firmware
-> > > >    binary.
-> > > 
-> > > You are absolutely right
-> > > 
-> > > > 
-> > > > I understand that you want to continue using PAS for these, but I'm a
-> > > > bit confused what kind of mappings we would expect to have in the
-> > > > resource table for video and GPU. Could you give an example?
-> > > 
-> > > We have some debug hw tracing available for video for lemans, which is
-> > > optional However, I believe infra is good to have incase we need some
-> > > required resources to be map for Video to work for a SoC.
-> > > 
-> > > > 
-> > > > Thanks,
-> > > > Stephan
-> > > 
-> > > -- 
-> > > -Mukesh Ojha
-> > 
-> > Since I am not subscribed to any of the mailing lists to which this
-> > series was sent, I am not receiving emails from the list. As a result,
-> > your recent messages did not reach my inbox. Additionally, it seems your
-> > reply inadvertently removed me from the To-list.
-> > 
-> > 
-> > https://lore.kernel.org/lkml/aKXqSU-487b6Je2B@linaro.org/
-> > 
-> > https://lore.kernel.org/lkml/aKXQAoXZyR6SRPAA@linaro.org/
-> > 
-> 
-> Indeed, but I don't think this is my fault: You have a strange
-> "Mail-Followup-To:" list in the email header of your reply [1] and my
-> email client honors it when I press "group reply". Your email client or
-> server seems to produce this header without including you in the follow
-> up list, as if you don't want to receive any replies. :-)
-> 
-> I fixed it up manually this time, but perhaps you should look into the
-> source of this weird header in your replies, I'm probably not the only
-> person using mutt and just hitting "group reply" all the time ...
 
-Thanks for pointing out.
-I am trying to fix this, let me see with this reply.
+
+On 8/22/2025 2:45 PM, Dmitry Baryshkov wrote:
+> On 22/08/2025 11:53, Manivannan Sadhasivam wrote:
+>> On Wed, Aug 20, 2025 at 03:49:31AM GMT, Dmitry Baryshkov wrote:
+>>> On Wed, Aug 20, 2025 at 03:58:26AM +0530, Nitin Rawat wrote:
+>>>> Add regulator load voting support for SM8650 and SM8750 platforms by
+>>>> introducing dedicated regulator bulk data arrays with their load
+>>>> values.
+>>>>
+>>>> The load requirements are:
+>>>> - SM8650: vdda-phy (205mA), vdda-pll (17.5mA)
+>>>> - SM8750: vdda-phy (213mA), vdda-pll (18.3mA)
+>>>>
+>>>> This ensures stable operation and proper power management for these
+>>>> platforms where regulators are shared between the QMP USB PHY and
+>>>> other IP blocks by setting appropriate regulator load currents 
+>>>> during PHY
+>>>> operations.
+>>>>
+>>>> Configurations without specific load requirements will continue to work
+>>>> unchanged, as init_load_uA remains zero-initialized when .init_load_uA
+>>>> is not provided.
+>>>
+>>> Can we please get configuration for the rest of the platforms?
+>>>
+>>
+>> Only if the rest of the platforms require setting the load... It is 
+>> not very
+>> clear if the older platforms share the regulators with other IPs or not.
+> 
+> Yes, they are usually shared. USB. PCIe and DSI frequently sit on the 
+> same voltage rails.
+
+Yes, it’s typically shared across multiple clients.
+
+However, as I mentioned earlier, in the current upstream codebase, the 
+"regulator-allow-set-load" property is defined only for SM8750 and 
+SM8650 within the PMIC PHY and PLL device tree nodes. This means that 
+even if the UFS PHY driver is updated to vote for this configuration on 
+other platforms, it will have no effect, as the property is not 
+supported there.
+
 
 > 
-> Stephan
 > 
-> [1]: https://lore.kernel.org/linux-arm-msm/20250820163250.hszey3i2gtd3o2i6@hu-mojha-hyd.qualcomm.com/raw
 
--- 
--Mukesh Ojha
 
