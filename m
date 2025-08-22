@@ -1,83 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-70380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70381-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8278DB3160D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 13:03:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51435B3161C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 13:09:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 555971D03473
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:03:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0C0F0A23298
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:09:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 889F62C029E;
-	Fri, 22 Aug 2025 11:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 076802C0262;
+	Fri, 22 Aug 2025 11:09:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="d8DfVnKr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BHtOQyOP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD92283C9E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 11:02:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18E1F26FA4B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 11:08:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755860581; cv=none; b=W/wHQvcU/w4KwLe2uQVHQfAm0nCRwjAoOehr2klA3kdRJ20SuWjMGwbebhZdI74v6xQp9EKwHHChAPd4I7Er85R5rVniTDhen3oA7rY+5Ta7h+77lGS44FxnL3C+b+6SPANchuDM0VUekn0fEV2mx97YCy7QfyJ7KFdtSs4hOp0=
+	t=1755860939; cv=none; b=ulQm9cXqsUKf50C24uliV7SCVfgtXMnIP4tJmYnuZw4uNN2VPbWfQCK1w24ZKKFWznTViZWl6DJKYqJu1RPnLdDV3GwbTfEf1LMU9ZLu1zHEERqpjvZ4VGhpZRwqdYUz3EFBMNQFbvhSi5tIBKqOEq8xyNOQEbCdPciBwutRjt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755860581; c=relaxed/simple;
-	bh=wEg0i8ljpxKTk+ox+KSaAg2bJ9cNagorHHhQEBmrDtU=;
+	s=arc-20240116; t=1755860939; c=relaxed/simple;
+	bh=OT3HSae7R65W4PAndKvu7iADgArEJirDbvmmcXLhdeE=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=fR6QHBnXVhywXLqH5iMX1qjJSuulNk/5BTCnJ6zeBT6AubsdD2L+Z3hW4fueIwXa201/LjqtPIXwMsI6VgmRUCY+tKPNc2UwdUygpT3NzwbYlAKjVM3pD67AwP0mosBffDYxKfo9KLnvA86m8HW/kFZVx9z/z0cDgd+1mVyLGK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=d8DfVnKr; arc=none smtp.client-ip=209.85.128.53
+	 In-Reply-To:Content-Type; b=SFkZv0puANrGbL5Mol15+vRyyvPxZ29/PVUxXp2FPPCkgiTnspS/eION2z7vIyKper5aidKnjkjbeYas9Roli+u3aRMZ29eHm6DKrDJ8Egp5o27SwfTr5YdYAy/0/XbBiEZXx//f6xHWaDkHD4wlzQ7U3wuSdqrPhU7ndDqples=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BHtOQyOP; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45b4d892175so8522605e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 04:02:58 -0700 (PDT)
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45a1b0990b2so14960885e9.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 04:08:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755860577; x=1756465377; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1755860936; x=1756465736; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=cSPNDRQEXSByP3k9ud61Mdrc8MbERDVLg0jj88ZjWgE=;
-        b=d8DfVnKrAvg6QVFmg9IlUIrbXthKUUTiQSyIbp9xRyNDyv97l5hEPKm2bUY1RahPTu
-         tvCr/IMMLskmrkIMBC5z4kKcv4MqwH1QPgnAHtdHQNCdkXKVunDqobsqpkf3CETLDnnw
-         mR6VKBNbMSHeKhyZl4PVQw0fh1NZbOEKLUj9TiM2NAvwTLPk6CkUIduRn99xYk1l+SNS
-         +sCVcFdLZZs4zXd1DCWoHxrvMBPaH4BXecD5KsOpGHGd54iUybngpC7FLGh9OqfjCkZZ
-         HpQ0p9TGeJkefyHd06FOYZk0mh31V8/I+BhKkX1F7HKn0xGzATyteVcvK4YAFk5JZW2+
-         Cg3Q==
+        bh=O3DVCW96rCgg3n/nWKKS7K0ME3L8qhV8+wGLF4ed4gE=;
+        b=BHtOQyOPo/heTSX88n4wlli9WcykxH6fAWK4KiiUkoPRjB80aaOr9rf+RBwQsVYNsm
+         YLTT1vIvMFzn5oH5jiM6pLaSxEiVFKYlV3Ma/Lp2XhsE/x96EGauRJNOJeHmAg9poMlk
+         1a05xQFxx4HAjbsJK89t8La2UmtuKCc5rYhLlQH9437Wf9r/E0doa6c9GPFf50Za3Tn3
+         wbzeYGUPc95LvAWIXj+8Wy+aUmbHtwR08HLqGqQruW8COuYSYix0004foSUZMOmc/x05
+         I2G5RYMffTs24b8rlxzzmnU4LC8vP/A5xfpiW8cZ2ZNoGrVnRR4eGvdXSUAeVpk2bqxN
+         RcnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755860577; x=1756465377;
+        d=1e100.net; s=20230601; t=1755860936; x=1756465736;
         h=content-transfer-encoding:in-reply-to:organization:autocrypt
          :content-language:references:cc:to:subject:reply-to:from:user-agent
          :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=cSPNDRQEXSByP3k9ud61Mdrc8MbERDVLg0jj88ZjWgE=;
-        b=Pu0p4wRlwJRlaf9hgZcHwcGl4wbQmmSy4D6GT40lfL63prZrCjCiLSn8EAzA0Nnxj3
-         /U0uD0Shpuo/uX5XvsRt5jjynYVEh1tY9tSbtvkh1M7ZXkyy0WBRyhfmhzgmWq7IJEec
-         ZWoNYZfmY3Wq00qTDHCrhLSFg7EYkFWLn6Axha/YrRuVIuVqGk8OCw0kXVGjH55fVjII
-         xWY5M9+KjpWB59m2U4IJda6XqHZACJxbXqQl1i+kBLKREySREVTMv6PF5d+hVf9DE7zQ
-         vELe6AYiA+v8AKP9XP11Y5Cia5Z+Uj0rf+XAoEofPjuxFI+/eWGonlBQjfJxilSiI1Wr
-         zdEw==
-X-Forwarded-Encrypted: i=1; AJvYcCUI/a7I4KixOPjC0wvgrWUxE9Kh4eU+uChh+Z2a4g3XsotgnyJVLELzTjcyTiatOLc+JRi/39CQvym3p+9e@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8ioIC3Hgt5NmAIgTF+111Fe4visYedQZfz6gKOztJ+HmXGQKI
-	/jmZ8Am/pY4Zjk3G4BrsZYYE3649KJcLvxK2f0/ImsW1MUN57HsDF6FiFIi9aOm7pIc=
-X-Gm-Gg: ASbGncs9ONYIYVnRGH3LXKbmldqEuU4uiQbQgJ1Ic+KtvpfIxka+voBKtRhncvoETqb
-	vQXzubRyscpWdaBrKOP4vr3glZpNPcbHgX2PSr3TDgAdW18baJ/2YuAMXxs7zTL2RyYY50GCVkd
-	mDewk8nshqwcPH7CblB0GJhwV7mdL4KZz3LoavOvt8DsYDnsVkxR80hOzofIJbG4RvBO77rKJ3b
-	Y7t12OHpIHsBzTVxV/5HkDcELzTH6IU+B7B7CVeHYWFv3Pv5wkIDatFnQkEn8t9JU+o28DZOXFW
-	GRg4W6yz34b8lJxSfV42KrXoYWQaTK8NYq9/OyPWFRr6w8coaZzTt9Lwy7hdrJkVKeDL4O9DAGZ
-	3lW/cidX3lNOQ55Yy3EHGyNIM3FO19VXTGRRmkfsPolgoTVPPSZBksUHSCiiNphHxvfNrpcs5RW
-	w=
-X-Google-Smtp-Source: AGHT+IE9PTwlyQ2HBsXoeltYN2/3zplP7/7veKdqNUYfYAOzMFeQKW/6u0My0eAnWH9Eypu5kHR5qw==
-X-Received: by 2002:a05:600c:3b22:b0:458:c002:6888 with SMTP id 5b1f17b1804b1-45b517d9ef7mr18067295e9.32.1755860576998;
-        Fri, 22 Aug 2025 04:02:56 -0700 (PDT)
+        bh=O3DVCW96rCgg3n/nWKKS7K0ME3L8qhV8+wGLF4ed4gE=;
+        b=iRqu/0kWtAHGMTAYK4tuTQpRGYlcT1kTdGujIZjDoGqPvefqSxSq5ecqd74tHg9/Xr
+         Uoc6z/vF2aI4z/5xwhVheyydrvs3CLErGNEFkzYYJmXgevfcBQ/zRwc+d1WNfdEEvjp5
+         tZKlU/1Dm++H/EM4UmA6tg6OJawEmHDXO0M17pwPuXO7l9IhcTrzGrgEXigAfbEnxetY
+         /Z8NuzJvzqyG3KMS+USRjNbGK1st+yctuIbcBmUxiqq/uLGhz3jhZuA9r0u6za6dx9DE
+         n+YlMpIY/eQ0jOAGJQ2QshzEYVaFAHoEEBN+iy8b7SFvjXyjgan9nKpDpZJAc8LqvO5E
+         nakA==
+X-Forwarded-Encrypted: i=1; AJvYcCVOLZhu8b41sK36sv9/YLs2M6g8O66LyIhC5F86q7UeutiKvm8js6F8iU3EDJ1oyOvA34i/VYdAH8l28gy+@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz6z3m006vkUJ4U0PFBEO+Sa5hf10Zkn9Bcc1juq1o31tyVGsl5
+	1sYuz826CPzoXM62Wv3NF0mHiRKjFzVwLEnCSQogdFsNY5s1n+VdFlU/p9hh6PKwG4Y=
+X-Gm-Gg: ASbGncuDSriOldsQ4CM91GBBkiHhcxHwFn8qVZI6BfN3Y0wcOrZ96EixE+GjOua62qu
+	PMlZmgF083PesDx/IsfEeAXTVOCW4MxZHTBIaX3E8kVZH20p+3RsH2sDe+lr8I9q/hyGMIX8CPC
+	xeiyC+61vl1FshpP27WhWxS2Rp2Cftdmv31acbPIl1bmDkOWwwzmKmXwlRW8G/AMM0jsytlcXAR
+	uIZDCdt7+q7tgfF+h3GhT1WUTfg2n39PdeF0czaaSIfSqH4eT75LXZxwJUYsIGL9oob0Bblqhwh
+	hqCaZj9yEmsGeqCIybwHuGEEaYhxFDbq4lBxzzYrUvRscvDtUEy5auiF9n4/5aLOXhiPFA0p7gA
+	MgtyBFI02XUZsxPynFDOYkJrL21sNpJiwevCSG7n9JspHlc0KGyX5fDUN088SgEmcwnG+O0/eII
+	k=
+X-Google-Smtp-Source: AGHT+IGCVe9bfrzPpi2RuGVqVugcIjq7Pad1nS2JNmjT8LBzTfwmXherE8yXAAufyte/ynJR0prSWg==
+X-Received: by 2002:adf:a115:0:b0:3c6:2010:ffcd with SMTP id ffacd0b85a97d-3c62011038fmr1026778f8f.45.1755860936268;
+        Fri, 22 Aug 2025 04:08:56 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:3d9:2080:3dd7:7361:c101:6a77? ([2a01:e0a:3d9:2080:3dd7:7361:c101:6a77])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b50e3a587sm35232305e9.18.2025.08.22.04.02.56
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c61843c8fcsm1901354f8f.22.2025.08.22.04.08.55
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Aug 2025 04:02:56 -0700 (PDT)
-Message-ID: <431de5f8-2dca-4ec0-9b94-fcc12480e8c9@linaro.org>
-Date: Fri, 22 Aug 2025 13:02:56 +0200
+        Fri, 22 Aug 2025 04:08:55 -0700 (PDT)
+Message-ID: <0662da96-8987-45ae-ab06-c60003ef26e3@linaro.org>
+Date: Fri, 22 Aug 2025 13:08:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -87,19 +87,25 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH RFC 3/3] arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s:
- add HDMI nodes
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250821-topic-x1e80100-hdmi-v1-0-f14ad9430e88@linaro.org>
- <20250821-topic-x1e80100-hdmi-v1-3-f14ad9430e88@linaro.org>
- <as7pbmhfgsg3ht3s5lu25pfjjamaxyonuohkuohono3kr2mxii@posspuko4vwa>
+Subject: Re: [PATCH v3 00/26] Enable H.264/H.265 encoder support and fixes in
+ iris driver common code
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Vedang Nagar <quic_vnagar@quicinc.com>, Hans Verkuil <hverkuil@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Renjiang Han <quic_renjiang@quicinc.com>,
+ Wangao Wang <quic_wangaow@quicinc.com>
+References: <20250820-iris-video-encoder-v3-0-80ab0ba58b3d@quicinc.com>
+ <9584a286-7d8a-48b0-a65c-7a37ced78ac6@linaro.org>
+ <38d56655-cfea-ef3d-46ff-a77d81e35297@quicinc.com>
+ <19f844ee-da08-4497-a4f7-c90d45554534@linaro.org>
+ <cdce193e-c055-6599-16e5-83e33123099e@quicinc.com>
+ <92f50738-571c-479c-9be8-b72c32fd8b70@linaro.org>
+ <25d44811-953c-1145-73b9-967909fc3983@quicinc.com>
 Content-Language: en-US, fr
 Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
@@ -126,117 +132,80 @@ Autocrypt: addr=neil.armstrong@linaro.org; keydata=
  4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
  QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
 Organization: Linaro
-In-Reply-To: <as7pbmhfgsg3ht3s5lu25pfjjamaxyonuohkuohono3kr2mxii@posspuko4vwa>
+In-Reply-To: <25d44811-953c-1145-73b9-967909fc3983@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 22/08/2025 13:01, Dmitry Baryshkov wrote:
-> On Thu, Aug 21, 2025 at 03:53:28PM +0200, Neil Armstrong wrote:
->> The Thinkpad T14s embeds a transparent 4lanes DP->HDMI transceiver
->> connected to the third QMP Combo PHY 4 lanes.
->>
->> Add all the data routing, disable mode switching and specify the
->> QMP Combo PHY should be in DP-Only mode to route the 4 lanes to
->> the underlying DP phy.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
->>   .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    | 44 ++++++++++++++++++++++
->>   1 file changed, 44 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
->> index 4cf61c2a34e31233b1adc93332bcabef22de3f86..5b62b8c3123633360f249e3ecdc8ea23f44e8e09 100644
->> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
->> @@ -62,6 +62,20 @@ switch-lid {
->>   		};
->>   	};
->>   
->> +
->> +	hdmi-connector {
->> +		compatible = "hdmi-connector";
->> +		type = "a";
->> +		pinctrl-0 = <&hdmi_hpd_default>;
->> +		pinctrl-names = "default";
+On 22/08/2025 12:09, Vikash Garodia wrote:
 > 
-> If this is a DP HPD signal, it should be a part of the DP device.
+> On 8/22/2025 1:47 PM, Neil Armstrong wrote:
+>> [  157.299604] qcom-iris aa00000.video-codec: <VFW_H:CmdDec:265e:a723e008:00>
+>> SetProperty(HFI_PROP_MAX_GOP_FRAMES) --> 0x0000003b
+>> [  157.311341] qcom-iris aa00000.video-codec: <VFW_H:CmdDec:265e:a723e008:00>
+>> Disabling ONE_SLICE mode, tiling:0 numTile:1 CP:0 SliceDelivery:0 MultiSliceMode:0
+>> [  157.325847] qcom-iris aa00000.video-codec: <VFW_H:CmdDec:265e:a723e008:00>
+>> HFI_BUFFER_COMMON_INTERNAL_SCRATCH, Driver macro size = 9563648 vs FW HFI macro
+>> size = 7953920 vs FW golden buffer size = 5833728
+>> [  157.344542] qcom-iris aa00000.video-codec: <VFW_H:CmdDec:265e:a723e008:00>
+>> HFI_BUFFER_COMMON_INTERNAL_SCRATCH_1_NON_COMV, Driver macro size = 299008 vs FW
+>> HFI macro size = 299264 vs FW golden buffer size = 299264
+>> [  157.363944] qcom-iris aa00000.video-codec: <VFW_E:CmdDec:265e:a723e008:00>
+>> venc_c2Start(3860): Send HFI_CMD_START error response for port 1
+>> [  157.376855] qcom-iris aa00000.video-codec: <VFW_E:CmdDec:265e:a723e008:00>
+>> VenusVencCodecEmptyThisBuffer(6732): ETB received in wrong state!
+>> [  157.389836] qcom-iris aa00000.video-codec: <VFW_E:CmdDec:265e:a723e008:00>
+>> VenusVencCodecEmptyThisBuffer(6732): ETB received in wrong state!
+>> [  157.402827] qcom-iris aa00000.video-codec: <VFW_E:CmdDec:265e:a723e008:00>
+>> VenusVencCodecEmptyThisBuffer(6732): ETB received in wrong state!
+>> [  157.415816] qcom-iris aa00000.video-codec: <VFW_E:CmdDec:265e:a723e008:00>
+>> VenusVencCodecEmptyThisBuffer(6732): ETB received in wrong state!
+>> [  157.428832] qcom-iris aa00000.video-codec: session error received 0x1000005:
+>> unknown
+>> [  157.436848] qcom-iris aa00000.video-codec: session error received 0x1000005:
+>> unknown
 > 
->> +
->> +		port {
->> +			hdmi_con: endpoint {
->> +				remote-endpoint = <&usb_1_ss2_qmpphy_out>;
+> Thank you for the logs, the issue is due to driver non_comv macro size (299008)
+> is less than firmware requirement (299264). Please try below fix, if that works
+> for SM8650
 > 
-> Please describe the transparent bridge too. It can be covered by the
-> simple-bridge.yaml / simple-bridge.c
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> index 558dba37dbfbc..3247ad736a17c 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> @@ -967,7 +967,8 @@ static u32 iris_vpu_enc_non_comv_size(struct iris_inst *inst)
+>          if (inst->codec == V4L2_PIX_FMT_HEVC) {
+>                  lcu_size = 32;
+>                  return hfi_buffer_non_comv_enc(width, height, num_vpp_pipes,
+> -                                              lcu_size, HFI_CODEC_ENCODE_HEVC);
+> +                                              lcu_size, HFI_CODEC_ENCODE_HEVC) +
+> +                                              SIZE_ONE_SLICE_BUF;
+>          }
+> 
+>          return hfi_buffer_non_comv_enc(width, height, num_vpp_pipes,
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+> b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+> index 1ff1b07ecbaa8..94668c5b3d15f 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+> @@ -41,6 +41,7 @@ struct iris_inst;
+> #define SIZE_SLIST_BUF_H265 (BIT(10))
+> #define H265_DISPLAY_BUF_SIZE (3072)
+> #define H265_NUM_FRM_INFO (48)
+> +#define SIZE_ONE_SLICE_BUF 256
+> 
+> #define VP9_NUM_FRAME_INFO_BUF 32
+> #define VP9_NUM_PROBABILITY_TABLE_BUF (VP9_NUM_FRAME_INFO_BUF + 4)
 
-Ack, indeed it could take the pinctrl thing.
+Works like a charm !
 
+Do you want me to add it to the iri33 buffer size patch I'm preparing ?
+
+Thanks,
 Neil
 
 > 
-> 
->> +			};
->> +		};
->> +	};
->> +
->>   	pmic-glink {
->>   		compatible = "qcom,x1e80100-pmic-glink",
->>   			     "qcom,sm8550-pmic-glink",
->> @@ -1007,6 +1021,14 @@ &mdss_dp1_out {
->>   	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
->>   };
->>   
->> +&mdss_dp2 {
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dp2_out {
->> +	data-lanes = <0 1 2 3>;
->> +};
->> +
->>   &mdss_dp3 {
->>   	/delete-property/ #sound-dai-cells;
->>   
->> @@ -1263,6 +1285,12 @@ &tlmm {
->>   			       <72 2>, /* Secure EC I2C connection (?) */
->>   			       <238 1>; /* UFS Reset */
->>   
->> +	hdmi_hpd_default: hdmi-hpd-default-state {
->> +		pins = "gpio126";
->> +		function = "usb2_dp";
->> +		bias-disable;
->> +	};
->> +
->>   	eusb3_reset_n: eusb3-reset-n-state {
->>   		pins = "gpio6";
->>   		function = "gpio";
->> @@ -1486,6 +1514,22 @@ &usb_1_ss0_qmpphy_out {
->>   	remote-endpoint = <&retimer_ss0_ss_in>;
->>   };
->>   
->> +&usb_1_ss2_qmpphy {
->> +	vdda-phy-supply = <&vreg_l2j_1p2>;
->> +	vdda-pll-supply = <&vreg_l2d_0p9>;
->> +
->> +	qcom,combo-initial-mode = "dp";
->> +
->> +	/delete-property/ mode-switch;
->> +	/delete-property/ orientation-switch;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&usb_1_ss2_qmpphy_out {
->> +	remote-endpoint = <&hdmi_con>;
->> +};
->> +
->>   &usb_1_ss1_hsphy {
->>   	vdd-supply = <&vreg_l3j_0p8>;
->>   	vdda12-supply = <&vreg_l2j_1p2>;
->>
->> -- 
->> 2.34.1
->>
-> 
+> Regards,
+> Vikash
 
 
