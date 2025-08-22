@@ -1,238 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-70288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16E7BB312BC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:19:20 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCDF3B312C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:20:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E2AEC16C789
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:19:19 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D1BBB7BC0A9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:18:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D795F25F7A7;
-	Fri, 22 Aug 2025 09:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84D692E1EE3;
+	Fri, 22 Aug 2025 09:20:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jBDRRZ+H"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VV+A+wDW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCA5214232
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:19:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641272820A3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:20:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755854355; cv=none; b=PMqxZnPTiZUqflp2Ju6VvC3F4wnVc7sqKns4dovFZsYl/lep9dYD0gGOBx/6oGmdotzCJnbUW+IX/OHcvrQvEVC26uU2yPI869nrquBjFCoZFhGOIBlQhB+ufD7BYVFllNHkycei20wqesuGPll5LzLYZmKIoIVmyQw4/0hnWQU=
+	t=1755854407; cv=none; b=rz7r1BjSMUwfNCCD5y+/JFjqpDWLchYmm6o3FbtkB32VMTB2FTQm19+a/LSZRRR9snBNkrojTQuRu7MtDNllsn/ws6TB1prim+ZRgECP7XokoMyUvyF9DgnVQA3BYi/l101VokQM7i1vCOy2GwYx9hHITwGg2NPz8KUc60j+5+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755854355; c=relaxed/simple;
-	bh=v6k5RWnZnRqmPJ73pd1EMHbTJmMfnyZBSuSPtczMxQw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KKoOd11l+Dj3AI0e49RRWR0YdY7kVSnKCtIfzpdWuOEo2gV7LIJUKV1ytsUuuUA2bgDSAeIZ2lgX8nwCa2m7VgGrivEQChzRi8CF0BJ+1DfGrmPMobrlZy1D8SIWtqfry1x6J9Jt5OB9Oxxpy0xfjSBbkCFQLHWJiZv956Ypsmc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jBDRRZ+H; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UNV0001102
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:19:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UR8YTvAoFiE7uKP9EFgzqtNd9BlRcDjah+SNG7rFzDQ=; b=jBDRRZ+HBX2UQimW
-	WkaIb5r8nv1RvU3YDVQxzw+rMKYZP5zD6xsLPPpgCl+ToW2+6EBx4OKR61YW+oBL
-	Y9j0x4DNkSJvoD1EtP9nVSMN/7CIyHb/HO9Wt11u4PCA17aCZ/JuSAcwYk5EHGKa
-	4JKFmezsDUp74aLQpBt0aOh4mQJAuN8sUHt/LDRx+NJrdCTuWqeY5PLgxmU4v6L6
-	uX/RSSmhP+1L0AwTXs4jPxM6LT8UJbuRbWtcEHLjFd+qjbxd9G1eV6rewEM2NsOP
-	JGh8p7+HyJi4hT7FkCyel9ZqM3u0JPdxuxSRC6HHGkVkLhgox8vMwqxobVFiaPOA
-	MR/qYw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5298nyv-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:19:13 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b109ab2cbaso44230821cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:19:13 -0700 (PDT)
+	s=arc-20240116; t=1755854407; c=relaxed/simple;
+	bh=iM0FAlXoDiAnqKjE56cTuUMYBOH6AEfWAW+iy6g2ImQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=uR7CXs4kYmkcoL1ybEsRiEeE/vZvRv7BVzOO+W6MWMb7BbfVJaP5iEVD8oX1uGHbC1IApVotn7Bm0tOdvxWvB5wQAIBo5Yc6AI0P006ShNDrQLDHN+t82TMpbBsj8NiuLo6oPXiN/FReLHohPRMpuMx/SyfKKbp7rIALxnVmBKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VV+A+wDW; arc=none smtp.client-ip=209.85.128.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-45a1b066b5eso9975765e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:20:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755854404; x=1756459204; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=C0/+9yqFoKIvAVObRIwLOna6zmCwJTMEn2vAw2VG6Kg=;
+        b=VV+A+wDWSMlmDbrmBpKpKfwi3sfKXPPgYYehKKbA8Kjxknwf42WHS9ia/n2RnFurie
+         AwAOZwEiaJMa62tApB4kFB77xJ9D3MRGpq03f/4szcbxcYuehHbSHWW3G7YCJagkXDqW
+         /Jzd1vFDA3DureXWaYH1IoWG8OuW23FhvxdaDQku1SfU2p+vCVpFx5qvU4N4keglCtKf
+         4dY47luSBLn4r97XqzqvQRR18v+YiUweD+tR42tcPFG9mCaToJnOML5i3sxjgRuUJ+U5
+         8PEgz+20rsgHe1yhn1w9Om/DEH0dPI60M5pqvv5BxkerZgKsvGZFUJpIzPmS38A45HQi
+         Az1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755854352; x=1756459152;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UR8YTvAoFiE7uKP9EFgzqtNd9BlRcDjah+SNG7rFzDQ=;
-        b=Z5EXk4+VB2di9mwZD2zep8sncHE02z9Tm8WTq7REQpUfIJWJYmWAFojhwDGC3tXAcn
-         CYd/GVZDFU+oGEYMP0I17Fcud2GURvFOymf5FZG79njNVz9XcPXTYkbGEtxnd7fanTot
-         niNpxgmivC6ZUWt4VkofSBROlDIAnD1j1GwaE5bKyoDuRbjvEfVV75T9CKFfQkz0s0VA
-         hPDwMnA6YHyDf8Vn3UiNqhtAalHsurYMEZjpdYhnQ6pAb44kTr6prXgq5LTnQERWhuuJ
-         yGjRrMoA/H0xGhP5gLKVxEuvjnVJWnW80J7RJ/+6cer/UvRSgT0XdUpmmtCZ6bBTlg09
-         Whvw==
-X-Forwarded-Encrypted: i=1; AJvYcCXb/j22Gk0Wtl/79VTOlqNw/+2WxUoZQBjOR4XVEGvQh6HpP7tFJcRnFiNlsVb0af5Qj0y8jLsOxQG8qmRd@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw78ptaXlteSx5SwkWCki0Yht7S9XGtflUc/Nt9ITCRgrjbal3W
-	M8CO5v7nA56OS1cgEH8OhVyRxJWeh7SJxQKaTaoz4jE2qMS5iLigVgKEc3dtKCePYtj6eRLup1p
-	u0aZ0uS/7kuMcuUFJLjVpN7+vxOs7HHcFl6hT9REXQjlvvf89ozuaL70JFwFKpa4Epap3qWf1aN
-	WF
-X-Gm-Gg: ASbGncuhdwVAIjRRhVL+DLc52551poguR3rwLIqzi9MTTXs2FShwa6uxhae66C704CJ
-	uc4bwpMo9ZewcxGIae/SmDeDUSxzlBTw3a2eJKDgJytDAEq0Yen7kHdU4URsWilbwmh56P0I2CT
-	jDHjTx+1mOXVUS31fICBbJg1vkqQMv2QsGJTAvIEOWfBJ+SbjY3VGRQwXHfEV++kQXtwGovlj4P
-	KCUaDaM5e7sujTM2h9fwsLarueVWLJZowz8oL1r6bZxjlRLV2ZwRUf6S0yBxzcwKFJy8rj1lKYg
-	BfZh7OQbczv4Jy3nGsUsa6O9ZeaeIpFKPsZM5zEjgrWq/y7kBr5Ox4Laz4cilrmmN/rI0UyfK9s
-	Z3UqpBTvVHDovVW2hhQ==
-X-Received: by 2002:a05:622a:1353:b0:4b2:8ac5:25a7 with SMTP id d75a77b69052e-4b2aab75c87mr22539921cf.80.1755854352008;
-        Fri, 22 Aug 2025 02:19:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEhQe/0qT5qVOaaQF4aOu6Jtxg+P2oHtaij6naoDV2P2u2q7XUfpRoxorEfQKrlbAq8zOb79Q==
-X-Received: by 2002:a05:622a:1353:b0:4b2:8ac5:25a7 with SMTP id d75a77b69052e-4b2aab75c87mr22539701cf.80.1755854351366;
-        Fri, 22 Aug 2025 02:19:11 -0700 (PDT)
-Received: from [10.207.49.70] (84-253-220-51.bb.dnainternet.fi. [84.253.220.51])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f32d1e17csm101972e87.17.2025.08.22.02.19.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Aug 2025 02:19:10 -0700 (PDT)
-Message-ID: <8aa65fdc-d5a1-4a81-bcc1-8d953fa0ffa8@oss.qualcomm.com>
-Date: Fri, 22 Aug 2025 12:19:11 +0300
+        d=1e100.net; s=20230601; t=1755854404; x=1756459204;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C0/+9yqFoKIvAVObRIwLOna6zmCwJTMEn2vAw2VG6Kg=;
+        b=dZXOatD5T3Ml8oyewbTx8Qs6AFYe6gMBOHTPqcohkHgvLyqtlxT276KLZKsgx+RyQB
+         ATc3ew7BtfRlCsl8mocgAXH1T/VvWMXXPwACdd251bnDA6UBRZ3DuBPKKdgLUBorMwMe
+         WTpzmNUOBzWuV/qcntTrmddsJe1OiJ0YLdImdkoDaQLKcNjiJeYXL7Xv73VUmBYindQD
+         OZahmKtvG+Hrua6B6IhUnPxfbywvp6mbMqew32u/LR7pg70VAfHinv2mYbtq3eQX8lgJ
+         X1L7qtz/0i/Axc9IelWAIrr9IM9TFnM+13DV8sDZIHIR4VqnfaHr/gM5k7NsZQcEqhaR
+         VctA==
+X-Forwarded-Encrypted: i=1; AJvYcCUK/90cte4i/JLmnjom9Cg4VK6ZIGm1Mjqrp5mVv13yT6U8yQVWj70mDi5MNlL3hSSSvm6Ffn8alGoJ5UJU@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZpkfukE5yn8SU8xH3arLACHJMzpaiNMDmqJhJCbxRwYw1lXzR
+	ypqn2U/TgDCWbkzo/fclyUIBq5QwYthSwyXtPzsj1pyDzQB9fzQ9hMpdVZTjCe13KF0=
+X-Gm-Gg: ASbGncsGmXLI7FOoDt07mLwM9UAUchHBxB8N7+j0j6Ddy9sEYMg82tA9JEbGDKPQdOh
+	hblzOuJcC6rNABCELEO0OCUuMrvF7LuCmLxyqzkXaPdGKIEozDSAD1FPg1Mwhtf0epKBh54zqjf
+	K+4vys1/xc6aG48YTo5TOXtlUPY4iDZ7Zs2teQlYBYIRf59dInhPIhN7fZxGtHdVx+pJM38Zxox
+	3mFTOylzZaeIOOGbDFXR9g7c+Cy8zCq19RafeO914yrlplF9p8vhsWn6rROhNCQfFkAYTZlUv2q
+	/tt85ZuBW8BVdjJcWS45MSemfNWhaIQm3PmbvZeF+ld36n16m70DXxIgsmJNRJgBIj1T/+51Vxn
+	azYEjRfaYWt2gMysC8OhTLegE8cOzMkiKA7/zCp7MxCw=
+X-Google-Smtp-Source: AGHT+IErm/G1H55TuP6+Hp23h4l7QjnCdC3Jl1cv85GdjdCTkLgA8VEUKXNV5pq6R+jKnhruCClfnw==
+X-Received: by 2002:a05:6000:18a3:b0:3b6:1630:9204 with SMTP id ffacd0b85a97d-3c5daefc7bfmr1455599f8f.19.1755854403564;
+        Fri, 22 Aug 2025 02:20:03 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b51589647sm24913475e9.2.2025.08.22.02.20.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Aug 2025 02:20:03 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Fri, 22 Aug 2025 11:20:01 +0200
+Subject: [PATCH v2] media: iris: fix module removal if firmware download
+ failed
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add regulator loads for SM8650
- and SM8750
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: vkoul@kernel.org, kishon@kernel.org, mani@kernel.org, andersson@kernel.org,
-        konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-References: <20250819222832.8471-1-quic_nitirawa@quicinc.com>
- <20250819222832.8471-3-quic_nitirawa@quicinc.com>
- <ger4kizeltjwalfuwu4dpfjiskrv2okgo5c7d6n3pb24yaxgfo@nkcndblyx3il>
- <b453b8ff-a460-4ccd-9019-aed746a7d52d@quicinc.com>
- <ukxv7donvkulgci2dwrokuflzxzeyh4kohoyja2vywropntxnb@qepcssbe4wpc>
- <9a38ec05-f7ab-4241-ba47-0d514b79e808@quicinc.com>
-Content-Language: en-US
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-In-Reply-To: <9a38ec05-f7ab-4241-ba47-0d514b79e808@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: dH96LDaWqx2-ibMq_c36gyre1aHcasXe
-X-Proofpoint-ORIG-GUID: dH96LDaWqx2-ibMq_c36gyre1aHcasXe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX824Jy12yKf7k
- wYzxyd8+XY8nCVy/Ra+dSbdRnnNmSM+rWZvcg9DCht/Cv3YvRBiOMvb2FRqx+MoOjFk9y7xnOxR
- aYIuD+5GvKXI6QSLiXCI8wNIoxQqaK8b62nVkok9BDDI3QJwdTttTVoBx3tI8CLrt2rLcVW1IBp
- DR0TkvPIzojRek4P6dlHKRB0PY+m6NKcILtxed5KSgBISqIEb/R16TPusSB5di1mWmA0KSeYQTq
- I5N1jhp/hJSRWpgYMSuP69+FITtZO9BN9y8NePNTY0vnk6xlCi3J+krkx5EzfTqKfcTXnf52QcX
- 5YHfs+sEecuWjt9a1AoYEO0IlBVMDF4JQfVESgmK06ZoCEWa/5WUDD0GH7NnyTqoh3vZm5mS5u6
- FBeF9a88dz8PUlJUHg7nS2PaDF32fQ==
-X-Authority-Analysis: v=2.4 cv=SPkblOvH c=1 sm=1 tr=0 ts=68a83611 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=JdIsBVl79nXNK9flUcZCTw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=9j3tyaYXLkDgBcrGQc0A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
- impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250822-topic-sm8x50-iris-remove-fix-v2-1-5dc41c9b2731@linaro.org>
+X-B4-Tracking: v=1; b=H4sIAEA2qGgC/42NQQqDMBAAvyJ77pYkxRh66j+KhxhXXahGNhIs4
+ t+b9gU9zhxmDkgkTAnu1QFCmRPHpYC5VBAmv4yE3BcGo0ytnFG4xZUDptnttUIWTig0x0w48I6
+ NHZy1RvfWByiJVajoX/7ZFp44bVHev1vWX/tnOGvUqJrO3LzqejeEx4sXL/EaZYT2PM8P7gr0j
+ 8kAAAA=
+X-Change-ID: 20250820-topic-sm8x50-iris-remove-fix-76f86621d6ac
+To: Vikash Garodia <quic_vgarodia@quicinc.com>, 
+ Dikshita Agarwal <quic_dikshita@quicinc.com>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Mauro Carvalho Chehab <mchehab@kernel.org>, 
+ Stefan Schmidt <stefan.schmidt@linaro.org>, 
+ Hans Verkuil <hverkuil@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4854;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=iM0FAlXoDiAnqKjE56cTuUMYBOH6AEfWAW+iy6g2ImQ=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBoqDZC4mw5gAKtCiSvzJVE+Ed40X375bBKxYiy0J0z
+ UgVUPCOJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKg2QgAKCRB33NvayMhJ0dcYEA
+ Cs6CJgNrTjFuO6/KNaIJ+m5Vmki9Hsi0CMsahoKALp0hWfYmoQAsj+Vk7WpSt2DAp4THnzJOsECaq0
+ 3Gl8y/vrVRNCmPqtWcySN4lnGGmt1FBjbM362eMDK57SAR8frQIy5undxpJPmPPbFc7HIfIMiEbZF8
+ oGnftnIWJiCTSp6M39/nXiEBKfPODYlxvr8j3mlr9SYBjMfgV71nR8JwFU/qZw+PgHKpMWEb4omfXa
+ quPQaDmuZOOfwM3EnoOI/lb+hC52MCCvnLSWY1E4AbQa62wC+fAuurHifGdW6JLjQqVpO1OL8g6iBD
+ AZqVH8mTypTGGRxxuw9XM5At/EP0WMz9Pg6sF1HYvXP1O/aoQehwDLBiFqhRGpAze+jRgLXlGI7tjQ
+ llurkVFOOgl4R3cB6Rxz8BrNkbF0KxrR2YLH8KOuiqcvx37729AeWy1nzSW0xwLxRSA3HBU2bqFGPa
+ K4L2UQC7M6Q/588gGtSWHfr4WpMLs/hknDclWnESxsIBEbXWmV8BzWJsV0XnTpYPydAZnKbQwx8HV8
+ MBycLq+p7E6kkkUZtJm3AjhYefudyPEtdUhwRHVyzf+REk/H6/+BGYLpVeDxZHOF5hQwNl/OQV6/4J
+ GD/HrhdPVtMKBMe4rnRRBSdvDJ+/DLz5P67MSCfhIqOq64i3+Lw+/f/lXQzA==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-On 21/08/2025 19:02, Nitin Rawat wrote:
-> 
-> 
-> On 8/20/2025 5:24 PM, Dmitry Baryshkov wrote:
->> On Wed, Aug 20, 2025 at 12:07:57PM +0530, Nitin Rawat wrote:
->>>
->>>
->>> On 8/20/2025 6:19 AM, Dmitry Baryshkov wrote:
->>>> On Wed, Aug 20, 2025 at 03:58:26AM +0530, Nitin Rawat wrote:
->>>>> Add regulator load voting support for SM8650 and SM8750 platforms by
->>>>> introducing dedicated regulator bulk data arrays with their load
->>>>> values.
->>>>>
->>>>> The load requirements are:
->>>>> - SM8650: vdda-phy (205mA), vdda-pll (17.5mA)
->>>>> - SM8750: vdda-phy (213mA), vdda-pll (18.3mA)
->>>>>
->>>>> This ensures stable operation and proper power management for these
->>>>> platforms where regulators are shared between the QMP USB PHY and
->>>>> other IP blocks by setting appropriate regulator load currents 
->>>>> during PHY
->>>>> operations.
->>>>>
->>>>> Configurations without specific load requirements will continue to 
->>>>> work
->>>>> unchanged, as init_load_uA remains zero-initialized when .init_load_uA
->>>>> is not provided.
->>>>
->>>> Can we please get configuration for the rest of the platforms?
->>>
->>> Hi Dmitry,
->>>
->>> If you're okay with it, can I merge the configuration for the remaining
->>> platforms in the next patch series after I complete testing on all 
->>> remaining
->>> platforms.
->>
->> You don't need to test, finding MSM8996 or 98 might be troublesome. Just
->> fill in the values from the hardware documentation.
-> 
-> Hi Dmitry,
-> 
-> While implementing changes for all remaining platform, I noticed that 
-> the "regulator-allow-set-load" property is defined only for SM8750 and 
-> SM8850 within the PMIC PHY and PLL device tree nodes which means that 
-> even if the UFS PHY driver is updated to vote for this configuration on 
-> other platforms, it will have no impact.
+Fix remove if firmware failed to load:
+qcom-iris aa00000.video-codec: Direct firmware load for qcom/vpu/vpu33_p4.mbn failed with error -2
+qcom-iris aa00000.video-codec: firmware download failed
+qcom-iris aa00000.video-codec: core init failed
 
-If I remember correctly, on other platforms we don't allow setting the 
-load exactly because consumers were not voting on the current/power 
-requirements.
+then:
+$ echo aa00000.video-codec > /sys/bus/platform/drivers/qcom-iris/unbind
 
-> 
-> Should I still proceed with applying the change across all platform, or 
-> limit it to just the SM8750 and SM8850 drivers? What’s your recommendation?
+Triggers:
+genpd genpd:1:aa00000.video-codec: Runtime PM usage count underflow!
+------------[ cut here ]------------
+video_cc_mvs0_clk already disabled
+WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#1: sh/542
+<snip>
+pc : clk_core_disable+0xa4/0xac
+lr : clk_core_disable+0xa4/0xac
+<snip>
+Call trace:
+ clk_core_disable+0xa4/0xac (P)
+ clk_disable+0x30/0x4c
+ iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+ iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+ iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+ iris_vpu_power_off+0x34/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+---[ end trace 0000000000000000 ]---
+------------[ cut here ]------------
+video_cc_mvs0_clk already unprepared
+WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#2: sh/542
+<snip>
+pc : clk_core_unprepare+0xf0/0x110
+lr : clk_core_unprepare+0xf0/0x110
+<snip>
+Call trace:
+ clk_core_unprepare+0xf0/0x110 (P)
+ clk_unprepare+0x2c/0x44
+ iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+ iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+ iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+ iris_vpu_power_off+0x34/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+---[ end trace 0000000000000000 ]---
+genpd genpd:0:aa00000.video-codec: Runtime PM usage count underflow!
+------------[ cut here ]------------
+gcc_video_axi0_clk already disabled
+WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#4: sh/542
+<snip>
+pc : clk_core_disable+0xa4/0xac
+lr : clk_core_disable+0xa4/0xac
+<snip>
+Call trace:
+ clk_core_disable+0xa4/0xac (P)
+ clk_disable+0x30/0x4c
+ iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+ iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+ iris_vpu_power_off+0x48/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+------------[ cut here ]------------
+gcc_video_axi0_clk already unprepared
+WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#4: sh/542
+<snip>
+pc : clk_core_unprepare+0xf0/0x110
+lr : clk_core_unprepare+0xf0/0x110
+<snip>
+Call trace:
+ clk_core_unprepare+0xf0/0x110 (P)
+ clk_unprepare+0x2c/0x44
+ iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+ iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+ iris_vpu_power_off+0x48/0x84 [qcom_iris]
+ iris_core_deinit+0x44/0xc8 [qcom_iris]
+ iris_remove+0x20/0x48 [qcom_iris]
+ platform_remove+0x20/0x30
+ device_remove+0x4c/0x80
+<snip>
+---[ end trace 0000000000000000 ]---
 
-I think, we should proceed, then once all PHYs get those votes we can 
-enable load toggling on those platforms too.
+Skip deinit if initialization never succeeded.
 
-> 
-> ===========================================================================
-> // Device tree:
-> vreg_l1j_0p91: ldo1 {
->      regulator-name = "vreg_l1j_0p91";
->      regulator-min-microvolt = <880000>;
->      regulator-max-microvolt = <920000>;
->      regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
->      regulator-allow-set-load;
->      regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM 
-> RPMH_REGULATOR_MODE_HPM>;
-> };
-> 
-> ===========================================================================
-> drivers/regulator/of_regulator.c
-> 
-> 
-> if (of_property_read_bool(np, "regulator-allow-set-load"))
->          constraints->valid_ops_mask |= REGULATOR_CHANGE_DRMS;
-> 
-> ===========================================================================
-> //drivers/regulator/core.c
-> static int drms_uA_update(struct regulator_dev *rdev)
-> {
->      ...
->      if (!regulator_ops_is_valid(rdev, REGULATOR_CHANGE_DRMS)) {
->          rdev_dbg(rdev, "DRMS operation not allowed\n");
->          return 0;
->      }
->      ...
-> }
-> 
-> 
-> Regards,
-> Nitin
-> 
-> 
-> 
-> 
->>
-> 
+Fixes: d7378f84e94e ("media: iris: introduce iris core state management with shared queues")
+Fixes: d19b163356b8 ("media: iris: implement video firmware load/unload")
+Fixes: bb8a95aa038e ("media: iris: implement power management")
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+---
+Changes in v2:
+- Added fixes tags
+- Added r-b tags
+- Link to v1: https://lore.kernel.org/r/20250820-topic-sm8x50-iris-remove-fix-v1-1-07b23a0bd8fc@linaro.org
+---
+ drivers/media/platform/qcom/iris/iris_core.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/drivers/media/platform/qcom/iris/iris_core.c b/drivers/media/platform/qcom/iris/iris_core.c
+index 0fa0a3b549a23877af57c9950a5892e821b9473a..8406c48d635b6eba0879396ce9f9ae2292743f09 100644
+--- a/drivers/media/platform/qcom/iris/iris_core.c
++++ b/drivers/media/platform/qcom/iris/iris_core.c
+@@ -15,10 +15,12 @@ void iris_core_deinit(struct iris_core *core)
+ 	pm_runtime_resume_and_get(core->dev);
+ 
+ 	mutex_lock(&core->lock);
+-	iris_fw_unload(core);
+-	iris_vpu_power_off(core);
+-	iris_hfi_queues_deinit(core);
+-	core->state = IRIS_CORE_DEINIT;
++	if (core->state != IRIS_CORE_DEINIT) {
++		iris_fw_unload(core);
++		iris_vpu_power_off(core);
++		iris_hfi_queues_deinit(core);
++		core->state = IRIS_CORE_DEINIT;
++	}
+ 	mutex_unlock(&core->lock);
+ 
+ 	pm_runtime_put_sync(core->dev);
 
+---
+base-commit: 5303936d609e09665deda94eaedf26a0e5c3a087
+change-id: 20250820-topic-sm8x50-iris-remove-fix-76f86621d6ac
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Neil Armstrong <neil.armstrong@linaro.org>
+
 
