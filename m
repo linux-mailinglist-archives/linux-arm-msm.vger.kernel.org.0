@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-70306-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70307-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA9AEB31335
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:33:16 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3C1BB31337
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:33:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2AAE1625BBA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:30:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D32B95C2623
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:30:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 270422F362A;
-	Fri, 22 Aug 2025 09:28:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC3D22F3625;
+	Fri, 22 Aug 2025 09:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gLGG8d+q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Hp3LNij+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6EF2F3604
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80A42F1FE6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:28:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755854892; cv=none; b=blfEA5w33DCe3S0CaxewzfdmG5i+QqMJNc7hxZI3yrlTktl9tcggDAYgAKoD6tZfS1JAuDiT75n1TJKPyT5vW3p6TdSx0iphmK4gA/ivezCpBlyIChXguVlyPh9vuce6/Hyy/f821onBrraBHpW/uARdG14xH4Gcc1bDcGbj0xU=
+	t=1755854898; cv=none; b=GjwJagORZbcQ7wV/9srYWhKvCYRKu8LVeyC6gVd/rp3I5oCq/rOm79yzo3QcOHBBPfANPQzFetgrJ6SxhO87c95i3lvc5+8TApNy/n7jV9sEt34f8HLImYWlvgctN03AGQ+ZeYmCenrUOVPAWQCaOPBMuBXyOp7MXHlah6dpXKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755854892; c=relaxed/simple;
-	bh=nFLg5wH8xIrGYdT9z6N4nECdAzi2W08MBmRhPyuekxQ=;
+	s=arc-20240116; t=1755854898; c=relaxed/simple;
+	bh=SOT5cGlpb58tUYLt/M6MzsCLIazUCm6K/kilP0NCvb8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NiDd+Yxnz2d5jtLZPVzRlHInCo3oHMrVNh3n9gK6O6IXK3FWwuXSIMvafmhxwjfkGy3sxV5IQmxMvFYq8pMN1nNLA1/rEAl54log5qbADei1LOpqmMKHNMxsLd2SIbLW6YZ89IoKyS3gLetBvncDcdmv1cOxHfmMesxUzD4RAdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gLGG8d+q; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=WJ7sAv3NgkmRcnONN1UlisKIQ3beysUQEQLNnKv/0RLcCdxqVvrBSEt+v0tkYE6SLxygYLBfO3qCokdsxTqYGUklviWsOveGZ0zoag/jtwv73LRHsdyKKQ1+QlYFhLVGZlMRCzzHWhiEEHv2NBe0ae73bPsMMEPOQHWDlgBahUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Hp3LNij+; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UHMT000981
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:28:09 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UH3J021755
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:28:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UGPmSMrj+Neb0BNEQ1okalh3SAoYshKWEx9mCEgb7/E=; b=gLGG8d+qMpWz9vr6
-	mv7hcmU9NYivMERYERElviqTjLTRxxhDUv9iqTLHZ8jU41Y+gh+TKaRhktAiOwZY
-	tNUDUahqrEOT41zOTCI2jJE1h4lJQIOWJqEZAuKH2DSMBGN3yRA7Q+ZXaOPwo+Na
-	hOoCHIm+ZG44TixGzjGGf0H6+bsxPq/+Bch+Cr+AVfPMTWFYaYZq9t8heQfa0hRs
-	t39GDCTCWSD+Mf5OuvHtG3j9UXJjnAow7LR74z8f3qXbCu5uChp75zq1qx8+CvG1
-	1wJXriViAU8QNZnVtH7vFEa+CTVo4FWgNCIv1sW+fV72xya7jEUoNauw7kMprjfA
-	s3ISyw==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5298q3e-1
+	mdI99dLf1C1ECl5BQMbQ2XzHbC/9lRRaEhwE6+uDPVk=; b=Hp3LNij+hhmAgt0W
+	Qz603IKO6AGRWBBsM4I/cWVuRInqyXVApRJ7Evt2AIbmKYWN/mFEFbxAaW04pERg
+	Cz05Vl6qyIgzKwyLayo2nNbN1GIryaduRTGHG6KCy8ab68ANGAP4XRZg0KfLkTqZ
+	64XWtVbm+iCudMMJuUTAUmwZbNX2I6ArF2ss0e7MBX6YAyDoZZZW+EAuqOjHzS7S
+	gYs49gwroJRTt8cxp/fJdKB9XEBj21az+WjgwNseVgAI/WadAg5RvOeFqqa9RfC+
+	1eDjue23wbYe+a2h62RiytoHBX4LrZh9WoOBaGv36kkvEHpml5lovrUXfGAoAcOO
+	mbIJiQ==
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52a8r7u-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:28:09 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b4716fa1e59so1634126a12.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:28:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:28:14 +0000 (GMT)
+Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-324fbd47789so1428093a91.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:28:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755854888; x=1756459688;
+        d=1e100.net; s=20230601; t=1755854894; x=1756459694;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=UGPmSMrj+Neb0BNEQ1okalh3SAoYshKWEx9mCEgb7/E=;
-        b=w/+YqRycezPIg8Nag1K+dOrohRzaRwuRyexb9KhF38aR6vCUNL774PZuZJ8e6Nf+je
-         aI7SPl/wr3lCgbyFRt1hPHJtzwo5yiyO6PswvKzFr4379bk2aa0SpLCmbqNJddVJlLgn
-         M4Mbd9ctxuDc7NjImWk90+5/XZS/H2j2NgaYJFfDtTMfaglthIjMrUnt8skN5rOj1jvC
-         Gv+TPg+Con4u6ntUVBR/sDPM6Onu5phjnMK8LGFCeAo0za18y09gcN/+ep+f/vyPAmN/
-         Yxg6SibpHhNigYJn2G4aWJEoLahVgwVUNR+JK7EdUvueDYPo/YRlLSZmjhOAYINj4w47
-         Lxiw==
-X-Gm-Message-State: AOJu0YypgZRpFoPs4u8z4r6lxBndTDpFmnLQac+qIMLBxBGKyy/eHVbe
-	hPa0euVXfHeflM1Ra207IgaWZZkpyGy0QU6JNflqNSF8gzfcSLDgY4qMvm6n+bpNc2RdwSthv2T
-	dhaRIqWQiMpVZuGLZMDp/pqzdzhRl0P2IhfweRzKLVXl4EAvghc4NrLIooaTI+xtD37Nl
-X-Gm-Gg: ASbGncszpgoUR2MSl7rmCv35OiJH4Os7ox3QrfmkNVwZn+Nj5URTEvJC6z4sRBq9e08
-	2ut6ldApfPn9Lk+dlfh0BzrgbjVnKBQxhgzrsIG7jpnINx/4suwOkxSpWjfMmomx49yObnGVqBM
-	Yaly+GOffbOkytxRRrZcCm+9mMZMCZ691II33YFcuPncLqKZv3hQPler8pgKyL/R76gmKcbRTPV
-	jbdJevSLCNwrL4EOBnaQzrzpJA1gZRL59l6vP37Iz+EhcDN4+HFd/bpEeR0FyleuKlDhiH4mKZm
-	zfsuJOUCJ6SrlR9ANKe+74iK2Xb2MZQtjcz82nb2RfXWqpgHdSK1zOuSLv5NVBvfelT9CvTRhn0
+        bh=mdI99dLf1C1ECl5BQMbQ2XzHbC/9lRRaEhwE6+uDPVk=;
+        b=Mm0POXUScf09rL2EdoVmXcSyV91PRFnC3PaG5UB9OJtnyzbmZOgyQBIG/iggblV7sv
+         YZcQdXVqBYvjTbKcvndWJnRf9x/aoBBifF4HCecjv7MM4QHAfh0oX0lvADd9fL1M0ncd
+         9EX22PlGaRMBQaTpCd0m9gXCXRZS5yUC6CddlqoUP5x2TULqq9uWBCeiHOdlQOOEyYbu
+         tz1fFUQm+0yhx9/JZ41OBHoWrqGX7bqfn6hG6pthJC6hYQtCN7l/OL9AHJusxXQxssR7
+         xbBwdZOeBN14/ACR2YBPO9ne65HgPlDFZejH/sj+eWSwQo1CDu2gVsrtn3dXEXoAWsuo
+         1/Iw==
+X-Gm-Message-State: AOJu0Ywb3oSsp/rTaLopgY6qelEr+1XcAVouw0Tgv3enGnYcbrTCCpJS
+	rhzmjSxdb98uRu1kVtfE+5jgQKQb1JeAu5j9vo4Feqyv+x74k51W5k7kmtaV0xqjYVUTztdzRmq
+	LHU/VuBW840ROmb8BdKHrnundYrsZJdiI01hf2qcDtMEkKUsogWOxNbMgWGD3Ldl8UHTR
+X-Gm-Gg: ASbGncuDE0AMFctrDF8JnUUiAuruEOCPX+PVLEjZrpoEtnUA0b1MttOcO6pk3N5xkS4
+	zb5t82Md/p4RY87SvxFoP0YtM4elzClYntPc64Xj4dgvdkxQX58g43hNQaxBSp7aIx/pWtnXWVu
+	dn+cB6KyMKjDoD409+qZH2c7LRgpbPGvks/ZfRNmRmE+bIQKloyAfPfYTeAlntJ8ExQISo0wG4P
+	X3m58N5/eUQStnYUEahBDqlye3KwILsCLAvqxmpti72sj0BA1Bx1CjQgs+Swe3RA+oeA3VK1UYy
+	+fOg3RPEtRHSpLQG+xNDH1hybOFjBgI/rwjL75TGvhHxibJ5GQm6XlW1Bl0AShz6dVlA8A1hTwU
 	=
-X-Received: by 2002:a05:6a20:3c8f:b0:243:78a:829f with SMTP id adf61e73a8af0-24340e4855bmr3682363637.56.1755854888043;
-        Fri, 22 Aug 2025 02:28:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGIYst4jdKeCh8OnTlVJBggJPua77/Bqprt9VZ0Teh08jJqTPXVAam405W8hCqKNxsyiI/9EQ==
-X-Received: by 2002:a05:6a20:3c8f:b0:243:78a:829f with SMTP id adf61e73a8af0-24340e4855bmr3682329637.56.1755854887593;
-        Fri, 22 Aug 2025 02:28:07 -0700 (PDT)
+X-Received: by 2002:a17:90b:278b:b0:323:7e7f:b8f4 with SMTP id 98e67ed59e1d1-32518b80cfamr3394087a91.37.1755854893864;
+        Fri, 22 Aug 2025 02:28:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE7VrExFnDlGbeOR1PxrtvPDRrJOKWRFkczToKjKFje2jrXPwafW08yHjZroWItQyC6aiaimQ==
+X-Received: by 2002:a17:90b:278b:b0:323:7e7f:b8f4 with SMTP id 98e67ed59e1d1-32518b80cfamr3394041a91.37.1755854893306;
+        Fri, 22 Aug 2025 02:28:13 -0700 (PDT)
 Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32525205d1csm549417a91.4.2025.08.22.02.28.02
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32525205d1csm549417a91.4.2025.08.22.02.28.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 02:28:07 -0700 (PDT)
+        Fri, 22 Aug 2025 02:28:12 -0700 (PDT)
 From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Date: Fri, 22 Aug 2025 14:57:32 +0530
-Subject: [PATCH v7 4/5] PCI: dwc: Add ECAM support with iATU configuration
+Date: Fri, 22 Aug 2025 14:57:33 +0530
+Subject: [PATCH v7 5/5] PCI: qcom: Add support for ECAM feature
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250822-ecam_v4-v7-4-098fb4ca77c1@oss.qualcomm.com>
+Message-Id: <20250822-ecam_v4-v7-5-098fb4ca77c1@oss.qualcomm.com>
 References: <20250822-ecam_v4-v7-0-098fb4ca77c1@oss.qualcomm.com>
 In-Reply-To: <20250822-ecam_v4-v7-0-098fb4ca77c1@oss.qualcomm.com>
 To: cros-qcom-dts-watchers@chromium.org,
@@ -109,320 +109,181 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         quic_vpernami@quicinc.com, mmareddy@quicinc.com,
         Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755854858; l=9433;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755854858; l=5936;
  i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=nFLg5wH8xIrGYdT9z6N4nECdAzi2W08MBmRhPyuekxQ=;
- b=FmtAM0GbiyuC6JP1x5jgJ4JsvWYfMNAQmhVU8NdT+BdTvTx6GzXBbF66rEgmDsvVRVAxkmipT
- OPpysaDEO3hD8vOSCjyjkrvFq+81sN4sin3c1h3EBHAIfHct5YX0sXD
+ bh=SOT5cGlpb58tUYLt/M6MzsCLIazUCm6K/kilP0NCvb8=;
+ b=PF3Wa+0tr/NJw7WQoFVepnVqF4s/maNySJH6w91uf6PxfRpxdKYWzXvtiHWI00ODmZi0e+AyM
+ cFpVdfFbJotBfmpnqZpairwKVe3mtoiCKIThAB27sQVUiXkXXjyy32N
 X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
  pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Proofpoint-GUID: LpnS--LX8idontN5z7bk5TUr6F9OH_O_
-X-Proofpoint-ORIG-GUID: LpnS--LX8idontN5z7bk5TUr6F9OH_O_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX9hev7nLolXT6
- 3qVIStrSW49yJNBoNPcpZsItiuhs6nHOCTt0CImV3aN6xdWQoHOmg4a1EwOMGSe2C04bWNHcVg0
- vd0m12z7CEupaEVmYLk4vaX2jEXl5UcnMddLdAR808yro90M0za+sCIO3NGWrCbp2IFDxKRfmze
- ata8Vpf6UKOSQVOrL7Cm2rixOOJ7MpfIxjdomt3Qu0zr94lebTaFmEGhZCqmfFDKPtspfbgeKpo
- yC54JuKY/eLIyQUJ/DQmJMLgxhVz7fOFWf9Buza3MkyXJeD3K+jwMSCVdKSUVg5rD2X/fDKN12d
- o5VrpI1Ew7yPnEqSHqLHfx48CFnOx3iyra7J+EA6QqiFRoXfKD5ToahuM9KlSGw8DXQUiEzi1xd
- 1HVlXFQyTeI9Bjy3g5oTmq7iN+2IuA==
-X-Authority-Analysis: v=2.4 cv=SPkblOvH c=1 sm=1 tr=0 ts=68a83829 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=KLD09g9XOrCUKH48cnIA:9
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
+X-Authority-Analysis: v=2.4 cv=feD0C0QF c=1 sm=1 tr=0 ts=68a8382e cx=c_pps
+ a=0uOsjrqzRL749jD1oC5vDA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=oQbQ34n3Jerzy_GFPTkA:9
+ a=QEXdDO2ut3YA:10 a=mQ_c8vxmzFEMiUWkPHU9:22
+X-Proofpoint-ORIG-GUID: i6oIszwTWYEojihjo4L-iTD0HX3bsTJo
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfXzmJshbXLxhg7
+ /PhM5J12USfBi/JDtxFwtvL1dkDuJSisqQjQ/rASrZz2p4yD21Mcpiao0IqIRi9PTpcNgC/3f+j
+ Q6b2SFglHdfTpsL1DVoU33ftgUo+63FroBug0zizO+QTm/EUBeE7gch8QioWdUCK52v99FRue02
+ FHo35WUZWRgW+DVV+EBtS2madMp6c1sovVR1BocAyyJg9VWtaxjHutJ8Rvsi941RgP+8XNU112g
+ V0RAQLiJE7HW8z4HSD512zZDTquFqgUiIWZJBxtxhh2+08j6Z/MPY5MTwRvXJdnZ6EqoTgVD+yR
+ 8BJFUzxNb7fTmC20IZ7PdT1tcwiTcKTNlSjIKzbWszbvVcgS6RE4AR5tDiLi6tT24s4ERF7nxjT
+ fX7fmNFfD20k8rUv8BkTUDiw+aOyCA==
+X-Proofpoint-GUID: i6oIszwTWYEojihjo4L-iTD0HX3bsTJo
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
- impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-The current implementation requires iATU for every configuration
-space access which increases latency & cpu utilization.
+The ELBI registers falls after the DBI space, PARF_SLV_DBI_ELBI register
+gives us the offset from which ELBI starts. So override ELBI with the
+offset from PARF_SLV_DBI_ELBI and cfg win to map these regions.
 
-Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
-which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
-would be matched against the Base and Limit addresses) of the incoming
-CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
-
-Configuring iATU in config shift feature enables ECAM feature to access the
-config space, which avoids iATU configuration for every config access.
-
-Add "ctrl2" into struct dw_pcie_ob_atu_cfg  to enable config shift feature.
-
-As DBI comes under config space, this avoids remapping of DBI space
-separately. Instead, it uses the mapped config space address returned from
-ECAM initialization. Change the order of dw_pcie_get_resources() execution
-to achieve this.
-
-Enable the ECAM feature if the config space size is equal to size required
-to represent number of buses in the bus range property.
+On root bus, we have only the root port. Any access other than that
+should not go out of the link and should return all F's. Since the iATU
+is configured for the buses which starts after root bus, block the
+transactions starting from function 1 of the root bus to the end of
+the root bus (i.e from dbi_base + 4kb to dbi_base + 1MB) from going
+outside the link through ECAM blocker through PARF registers.
 
 Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 ---
- drivers/pci/controller/dwc/Kconfig                |   1 +
- drivers/pci/controller/dwc/pcie-designware-host.c | 131 +++++++++++++++++++---
- drivers/pci/controller/dwc/pcie-designware.c      |   2 +-
- drivers/pci/controller/dwc/pcie-designware.h      |   5 +
- 4 files changed, 124 insertions(+), 15 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 70 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 70 insertions(+)
 
-diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-index ff6b6d9e18ecfa44273e87931551f9e63fbe3cba..a0e7ad3fb5afec63b0f919732a50147229623186 100644
---- a/drivers/pci/controller/dwc/Kconfig
-+++ b/drivers/pci/controller/dwc/Kconfig
-@@ -20,6 +20,7 @@ config PCIE_DW_HOST
- 	bool
- 	select PCIE_DW
- 	select IRQ_MSI_LIB
-+	select PCI_HOST_COMMON
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 5092752de23866ef95036bb3f8fae9bb06e8ea1e..8f3c86c77e2604fd7826083f63b66b4cb62a341d 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -55,6 +55,7 @@
+ #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+ #define PARF_Q2A_FLUSH				0x1ac
+ #define PARF_LTSSM				0x1b0
++#define PARF_SLV_DBI_ELBI			0x1b4
+ #define PARF_INT_ALL_STATUS			0x224
+ #define PARF_INT_ALL_CLEAR			0x228
+ #define PARF_INT_ALL_MASK			0x22c
+@@ -64,6 +65,16 @@
+ #define PARF_DBI_BASE_ADDR_V2_HI		0x354
+ #define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
+ #define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35c
++#define PARF_BLOCK_SLV_AXI_WR_BASE		0x360
++#define PARF_BLOCK_SLV_AXI_WR_BASE_HI		0x364
++#define PARF_BLOCK_SLV_AXI_WR_LIMIT		0x368
++#define PARF_BLOCK_SLV_AXI_WR_LIMIT_HI		0x36c
++#define PARF_BLOCK_SLV_AXI_RD_BASE		0x370
++#define PARF_BLOCK_SLV_AXI_RD_BASE_HI		0x374
++#define PARF_BLOCK_SLV_AXI_RD_LIMIT		0x378
++#define PARF_BLOCK_SLV_AXI_RD_LIMIT_HI		0x37c
++#define PARF_ECAM_BASE				0x380
++#define PARF_ECAM_BASE_HI			0x384
+ #define PARF_NO_SNOOP_OVERRIDE			0x3d4
+ #define PARF_ATU_BASE_ADDR			0x634
+ #define PARF_ATU_BASE_ADDR_HI			0x638
+@@ -87,6 +98,7 @@
  
- config PCIE_DW_EP
- 	bool
-diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-index 952f8594b501254d2b2de5d5e056e16d2aa8d4b7..abb93265a19fd62d3fecc64f29f37baf67291b40 100644
---- a/drivers/pci/controller/dwc/pcie-designware-host.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-@@ -413,6 +413,81 @@ static void dw_pcie_host_request_msg_tlp_res(struct dw_pcie_rp *pp)
- 	}
+ /* PARF_SYS_CTRL register fields */
+ #define MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN	BIT(29)
++#define PCIE_ECAM_BLOCKER_EN			BIT(26)
+ #define MST_WAKEUP_EN				BIT(13)
+ #define SLV_WAKEUP_EN				BIT(12)
+ #define MSTR_ACLK_CGC_DIS			BIT(10)
+@@ -134,6 +146,9 @@
+ /* PARF_LTSSM register fields */
+ #define LTSSM_EN				BIT(8)
+ 
++/* PARF_SLV_DBI_ELBI */
++#define SLV_DBI_ELBI_ADDR_BASE			GENMASK(11, 0)
++
+ /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
+ #define PARF_INT_ALL_LINK_UP			BIT(13)
+ #define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
+@@ -317,6 +332,48 @@ static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
+ 	qcom_perst_assert(pcie, false);
  }
  
-+static int dw_pcie_config_ecam_iatu(struct dw_pcie_rp *pp)
++static void qcom_pci_config_ecam(struct dw_pcie_rp *pp)
 +{
 +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct dw_pcie_ob_atu_cfg atu = {0};
-+	resource_size_t bus_range_max;
-+	struct resource_entry *bus;
-+	int ret;
++	struct qcom_pcie *pcie = to_qcom_pcie(pci);
++	u64 addr, addr_end;
++	u32 val;
 +
-+	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
++	/* Set the ECAM base */
++	writel_relaxed(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
++	writel_relaxed(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
 +
 +	/*
-+	 * Root bus under the host bridge doesn't require any iATU configuration
-+	 * as DBI region will be used to access root bus config space.
-+	 * Immediate bus under Root Bus, needs type 0 iATU configuration and
-+	 * remaining buses need type 1 iATU configuration.
++	 * The only device on root bus is the Root Port. Any access to the PCIe
++	 * region will go outside the PCIe link. As part of enumeration the PCI
++	 * sw can try to read to vendor ID & device ID with different device
++	 * number and function number under root bus. As any access other than
++	 * root bus, device 0, function 0, should not go out of the link and
++	 * should return all F's. Since the iATU is configured for the buses
++	 * which starts after root bus, block the transactions starting from
++	 * function 1 of the root bus to the end of the root bus (i.e from
++	 * dbi_base + 4kb to dbi_base + 1MB) from going outside the link.
 +	 */
-+	atu.index = 0;
-+	atu.type = PCIE_ATU_TYPE_CFG0;
-+	atu.parent_bus_addr = pp->cfg0_base + SZ_1M;
-+	/* 1MiB is to cover 1 (bus) * 32 (devices) * 8 (functions) */
-+	atu.size = SZ_1M;
-+	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
-+	ret = dw_pcie_prog_outbound_atu(pci, &atu);
-+	if (ret)
-+		return ret;
++	addr = pci->dbi_phys_addr + SZ_4K;
++	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE);
++	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE_HI);
 +
-+	bus_range_max = resource_size(bus->res);
++	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE);
++	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE_HI);
 +
-+	if (bus_range_max < 2)
-+		return 0;
++	addr_end = pci->dbi_phys_addr + SZ_1M - 1;
 +
-+	/* Configure remaining buses in type 1 iATU configuration */
-+	atu.index = 1;
-+	atu.type = PCIE_ATU_TYPE_CFG1;
-+	atu.parent_bus_addr = pp->cfg0_base + SZ_2M;
-+	atu.size = (SZ_1M * bus_range_max) - SZ_2M;
-+	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
++	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT);
++	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT_HI);
 +
-+	return dw_pcie_prog_outbound_atu(pci, &atu);
++	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT);
++	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT_HI);
++
++	val = readl_relaxed(pcie->parf + PARF_SYS_CTRL);
++	val |= PCIE_ECAM_BLOCKER_EN;
++	writel_relaxed(val, pcie->parf + PARF_SYS_CTRL);
 +}
 +
-+static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *res)
-+{
-+	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-+	struct device *dev = pci->dev;
-+	struct resource_entry *bus;
+ static int qcom_pcie_start_link(struct dw_pcie *pci)
+ {
+ 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+@@ -326,6 +383,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+ 		qcom_pcie_common_set_16gt_lane_margining(pci);
+ 	}
+ 
++	if (pci->pp.ecam_enabled)
++		qcom_pci_config_ecam(&pci->pp);
 +
-+	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
-+	if (!bus)
-+		return -ENODEV;
-+
-+	pp->cfg = pci_ecam_create(dev, res, bus->res, &pci_generic_ecam_ops);
-+	if (IS_ERR(pp->cfg))
-+		return PTR_ERR(pp->cfg);
-+
-+	pci->dbi_base = pp->cfg->win;
-+	pci->dbi_phys_addr = res->start;
-+
-+	return 0;
-+}
-+
-+static bool dw_pcie_ecam_enabled(struct dw_pcie_rp *pp, struct resource *config_res)
-+{
-+	struct resource *bus_range;
-+	u64 nr_buses;
-+
-+	bus_range = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS)->res;
-+	if (!bus_range)
-+		return false;
-+
-+	nr_buses = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
-+
-+	return !!(nr_buses >= resource_size(bus_range));
-+}
-+
- static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
+ 	/* Enable Link Training state machine */
+ 	if (pcie->cfg->ops->ltssm_enable)
+ 		pcie->cfg->ops->ltssm_enable(pcie);
+@@ -1314,6 +1374,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
  {
  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-@@ -422,10 +497,6 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
- 	struct resource *res;
+ 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
++	u16 offset;
  	int ret;
  
--	ret = dw_pcie_get_resources(pci);
--	if (ret)
--		return ret;
--
- 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
- 	if (!res) {
- 		dev_err(dev, "Missing \"config\" reg space\n");
-@@ -435,9 +506,32 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
- 	pp->cfg0_size = resource_size(res);
- 	pp->cfg0_base = res->start;
- 
--	pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
--	if (IS_ERR(pp->va_cfg0_base))
--		return PTR_ERR(pp->va_cfg0_base);
-+	pp->ecam_enabled = dw_pcie_ecam_enabled(pp, res);
-+	if (pp->ecam_enabled) {
-+		ret = dw_pcie_create_ecam_window(pp, res);
-+		if (ret)
-+			return ret;
-+
-+		pp->bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
-+		pp->bridge->sysdata = pp->cfg;
-+		pp->cfg->priv = pp;
-+	} else {
-+		pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
-+		if (IS_ERR(pp->va_cfg0_base))
-+			return PTR_ERR(pp->va_cfg0_base);
-+
-+		/* Set default bus ops */
-+		pp->bridge->ops = &dw_pcie_ops;
-+		pp->bridge->child_ops = &dw_child_pcie_ops;
-+		pp->bridge->sysdata = pp;
-+	}
-+
-+	ret = dw_pcie_get_resources(pci);
-+	if (ret) {
-+		if (pp->cfg)
-+			pci_ecam_free(pp->cfg);
-+		return ret;
-+	}
- 
- 	/* Get the I/O range from DT */
- 	win = resource_list_first_type(&pp->bridge->windows, IORESOURCE_IO);
-@@ -476,14 +570,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+ 	qcom_ep_reset_assert(pcie);
+@@ -1322,6 +1383,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
  	if (ret)
  		return ret;
  
--	/* Set default bus ops */
--	bridge->ops = &dw_pcie_ops;
--	bridge->child_ops = &dw_child_pcie_ops;
--
- 	if (pp->ops->init) {
- 		ret = pp->ops->init(pp);
- 		if (ret)
--			return ret;
-+			goto err_free_ecam;
- 	}
- 
- 	if (pci_msi_enabled()) {
-@@ -525,6 +615,14 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (ret)
- 		goto err_free_msi;
- 
 +	if (pp->ecam_enabled) {
-+		ret = dw_pcie_config_ecam_iatu(pp);
-+		if (ret) {
-+			dev_err(dev, "Failed to configure iATU in ECAM mode\n");
-+			goto err_free_msi;
-+		}
++		/*
++		 * Override ELBI when ECAM is enabled, as when ECAM
++		 * is enabled ELBI moves along with the dbi config space.
++		 */
++		offset = FIELD_GET(SLV_DBI_ELBI_ADDR_BASE, readl(pcie->parf + PARF_SLV_DBI_ELBI));
++		pci->elbi_base = pci->dbi_base + offset;
 +	}
 +
- 	/*
- 	 * Allocate the resource for MSG TLP before programming the iATU
- 	 * outbound window in dw_pcie_setup_rc(). Since the allocation depends
-@@ -560,8 +658,6 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
- 		/* Ignore errors, the link may come up later */
- 		dw_pcie_wait_for_link(pci);
- 
--	bridge->sysdata = pp;
--
- 	ret = pci_host_probe(bridge);
+ 	ret = qcom_pcie_phy_power_on(pcie);
  	if (ret)
- 		goto err_stop_link;
-@@ -587,6 +683,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (pp->ops->deinit)
- 		pp->ops->deinit(pp);
- 
-+err_free_ecam:
-+	if (pp->cfg)
-+		pci_ecam_free(pp->cfg);
-+
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(dw_pcie_host_init);
-@@ -609,6 +709,9 @@ void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
- 
- 	if (pp->ops->deinit)
- 		pp->ops->deinit(pp);
-+
-+	if (pp->cfg)
-+		pci_ecam_free(pp->cfg);
- }
- EXPORT_SYMBOL_GPL(dw_pcie_host_deinit);
- 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 4684c671a81bee468f686a83cc992433b38af59d..6826ddb9478d41227fa011018cffa8d2242336a9 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -576,7 +576,7 @@ int dw_pcie_prog_outbound_atu(struct dw_pcie *pci,
- 		val = dw_pcie_enable_ecrc(val);
- 	dw_pcie_writel_atu_ob(pci, atu->index, PCIE_ATU_REGION_CTRL1, val);
- 
--	val = PCIE_ATU_ENABLE;
-+	val = PCIE_ATU_ENABLE | atu->ctrl2;
- 	if (atu->type == PCIE_ATU_TYPE_MSG) {
- 		/* The data-less messages only for now */
- 		val |= PCIE_ATU_INHIBIT_PAYLOAD | atu->code;
-diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-index ceb022506c3191cd8fe580411526e20cc3758fed..f770e160ce7c538e0835e7cf80bae9ed099f906c 100644
---- a/drivers/pci/controller/dwc/pcie-designware.h
-+++ b/drivers/pci/controller/dwc/pcie-designware.h
-@@ -20,6 +20,7 @@
- #include <linux/irq.h>
- #include <linux/msi.h>
- #include <linux/pci.h>
-+#include <linux/pci-ecam.h>
- #include <linux/reset.h>
- 
- #include <linux/pci-epc.h>
-@@ -169,6 +170,7 @@
- #define PCIE_ATU_REGION_CTRL2		0x004
- #define PCIE_ATU_ENABLE			BIT(31)
- #define PCIE_ATU_BAR_MODE_ENABLE	BIT(30)
-+#define PCIE_ATU_CFG_SHIFT_MODE_ENABLE	BIT(28)
- #define PCIE_ATU_INHIBIT_PAYLOAD	BIT(22)
- #define PCIE_ATU_FUNC_NUM_MATCH_EN      BIT(19)
- #define PCIE_ATU_LOWER_BASE		0x008
-@@ -387,6 +389,7 @@ struct dw_pcie_ob_atu_cfg {
- 	u8 func_no;
- 	u8 code;
- 	u8 routing;
-+	u32 ctrl2;
- 	u64 parent_bus_addr;
- 	u64 pci_addr;
- 	u64 size;
-@@ -425,6 +428,8 @@ struct dw_pcie_rp {
- 	struct resource		*msg_res;
- 	bool			use_linkup_irq;
- 	struct pci_eq_presets	presets;
-+	bool			ecam_enabled;
-+	struct pci_config_window *cfg;
- };
- 
- struct dw_pcie_ep_ops {
+ 		goto err_deinit;
 
 -- 
 2.34.1
