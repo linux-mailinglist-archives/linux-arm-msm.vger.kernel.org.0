@@ -1,224 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-70431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21811B31BB6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 16:34:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71098B31C1E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 16:40:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C67AA1D40DEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 14:29:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DABD3A25A0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 14:32:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07B1D311C31;
-	Fri, 22 Aug 2025 14:22:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC5D1305E15;
+	Fri, 22 Aug 2025 14:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qaMeOYRl"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OOFxFx+z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2644311598;
-	Fri, 22 Aug 2025 14:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4D23054F0;
+	Fri, 22 Aug 2025 14:27:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755872551; cv=none; b=SAZ++34CmdRkoTYqR0+bPsorkJLYnFTcI6TORopgVGSnB+Iv2N5c4zMmiILGJn+LidOFG8FGaFq1e4PiUAg+aRxqXqHCd+R+oR1USW+eUxdWRjQwoN0wLNl+0eYqSmn9anCXRsa0LIY3X3yV5L/8pZCdjRKsOzZAb48+U2F0kjM=
+	t=1755872876; cv=none; b=l3AZqr09pG7U6FBMk1Twdt/8tIm3IheV7BSVsq9DvcIbTErryuWslkyIU0mPZFryHE8ENKA0DZFA9wzurTO+i459+r9fJCgGJDG/6Y//xNhjThrTNkjdBR2WfUqKhRCrhPEXjlAxB3YNLDkz5rLRBG4Hc/73piWpCpAG3PYAkpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755872551; c=relaxed/simple;
-	bh=Jfs2aObCoc6/9U+QUowqTuZJPGKpl9EHfkAakKt01fA=;
+	s=arc-20240116; t=1755872876; c=relaxed/simple;
+	bh=irk5yZ+gV1gl0gGAvBwOOJ8uWctLDlLbZ+2m5RgI+CU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lc+b4DINo46kzu+eSQ1pALfZ3Am+ucThNWVQ/jSzD1uhAcJeRUaHBIGsnbXtzRb42OsP+kfE7OqYRJ3Gz6q0UkFIahAX3o8PPu49jPbrsmEg9L7vIUomVtcs8xcuuwwr7FXzSp6WCWV/vvh29bIkVgURLfYs76VIPNgP1YRACm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qaMeOYRl; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39066C4CEED;
-	Fri, 22 Aug 2025 14:22:31 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=D30EcqENqbUXbbroBCwUF33ETJ5YNA8XUSO5hJblv/qCNLKq/ZlKyBi8z9cbBrOa7SS/7Jk4QXvQ2TZXlMbDJoLiqhtA51a2Y8dlNUZtZgOIpaCfaMhEoOf7VrajdT6koy5hftt56uBsimHo7AGGGmiKE9XxEYbHn8e458qTphE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OOFxFx+z; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06EDC113D0;
+	Fri, 22 Aug 2025 14:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755872551;
-	bh=Jfs2aObCoc6/9U+QUowqTuZJPGKpl9EHfkAakKt01fA=;
+	s=k20201202; t=1755872876;
+	bh=irk5yZ+gV1gl0gGAvBwOOJ8uWctLDlLbZ+2m5RgI+CU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=qaMeOYRlR4Wv/Qpfazr+fo0Yo7+OBcRJGW62A3b4/mgjwe9k/g3rOj6w0V6+obcSO
-	 YwUvSrcRG9N16SjtpKOJ245+NA/KDnGZ8/Flkm2gy06fvsfE1pUYx55oo0EJdYouBR
-	 5OaUow07gdPvg7YjN9xh4t7cZoroh7XWXR8hVT+ordFWaXUhQjXXFIOk4C7vKd3Vrb
-	 KeXDdrxgd6taY8hNG6Ro96WkMwQ115uk/0SmE5YCfZcy5oORlqyxpCFZNO4iU92Q0R
-	 LOJM9aJrkloBRtFQ1N0+m+r5o3LwqtQBi0TkEcMn5/igGCqMpEgMrEfdEjzEgi2DVY
-	 wfA3Lm/2ip+/Q==
-Date: Fri, 22 Aug 2025 09:22:30 -0500
-From: Rob Herring <robh@kernel.org>
-To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com,
-	tingwei.zhang@oss.qualcomm.com,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	quic_lliu6@quicinc.com
-Subject: Re: [PATCH v3 02/14] dt-bindings: phy: Add QMP USB3+DP PHY for QCS615
-Message-ID: <20250822142230.GA3591699-robh@kernel.org>
-References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
- <20250820-add-displayport-support-for-qcs615-platform-v3-2-a43bd25ec39c@oss.qualcomm.com>
+	b=OOFxFx+z6AHFNDnYjlj4uDUZVzNvpKzmRYbH8U9WeJYP/Nt6LS9xT4v2cqHWB9FQr
+	 28OzgQndB9SvEeE6BDakhVsfOebO6662OesQsdRQiRnlDrLshYSI3v5xhVcsqssXa5
+	 CcKx3ipUE1ffUrPxPXEOpsWbT5a+yBLaVcnq0u7xPGGxyxVgulrCbCxiaWEwTOzXJJ
+	 hG6vv8dCruR6z4zyqxEjZj5TyEGLacAIjkw4Gj8BM474HS+GZwrrbKwMAQp62yrYx7
+	 eQh4qxpZgMu3EnvwMbIjg7DMPRVcPfbB/xhpAtnSqZnM1k6CcMqRGq8aszaGhJtCdj
+	 zswqaDnXbaNXQ==
+Date: Fri, 22 Aug 2025 19:57:41 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Rob Herring <robh@kernel.org>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
+	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Brian Norris <briannorris@chromium.org>
+Subject: Re: [PATCH 4/6] PCI: of: Add an API to get the BDF for the device
+ node
+Message-ID: <nphfnyl4ps7y76ra4bvlyhl2rwcaal42zyrspzlmeqqksqa5bi@zzpiolboiomp>
+References: <20250819-pci-pwrctrl-perst-v1-0-4b74978d2007@oss.qualcomm.com>
+ <20250819-pci-pwrctrl-perst-v1-4-4b74978d2007@oss.qualcomm.com>
+ <20250822135147.GA3480664-robh@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250820-add-displayport-support-for-qcs615-platform-v3-2-a43bd25ec39c@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250822135147.GA3480664-robh@kernel.org>
 
-On Wed, Aug 20, 2025 at 05:34:44PM +0800, Xiangxu Yin wrote:
-> Add device tree binding documentation for the Qualcomm QMP USB3+DP PHY
-> on QCS615 Platform. This PHY supports both USB3 and DP functionality
-> over USB-C, with PHY mode switching capability. It does not support
-> combo mode.
+On Fri, Aug 22, 2025 at 08:51:47AM GMT, Rob Herring wrote:
+> On Tue, Aug 19, 2025 at 12:44:53PM +0530, Manivannan Sadhasivam wrote:
+> > Bus:Device:Function (BDF) numbers are used to uniquely identify a
+> > device/function on a PCI bus. Hence, add an API to get the BDF from the
+> > devicetree node of a device.
 > 
-> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-> ---
->  .../bindings/phy/qcom,qcs615-qmp-usb3dp-phy.yaml   | 108 +++++++++++++++++++++
->  1 file changed, 108 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-usb3dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-usb3dp-phy.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..c2b1fbab2930f0653f4ddb95f7b54d8fe994f92d
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/phy/qcom,qcs615-qmp-usb3dp-phy.yaml
-> @@ -0,0 +1,108 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/phy/qcom,qcs615-qmp-usb3dp-phy.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm QMP USB3-DP PHY controller (DP, QCS615)
-> +
-> +maintainers:
-> +  - Vinod Koul <vkoul@kernel.org>
+> For FDT, the bus should always be 0. It doesn't make sense for FDT. The 
+> bus number in DT reflects how firmware configured the PCI buses, but 
+> there's no firmware configuration of PCI for FDT.
 
-No, this should be someone who has the h/w.
+This API is targeted for DT platforms only, where it is used to uniquely
+identify a devfn. What should I do to make it DT specific and not FDT?
 
-> +
-> +description:
-> +  The QMP PHY controller supports physical layer functionality for both
-> +  USB3 and DisplayPort over USB-C. While it enables mode switching
-> +  between USB3 and DisplayPort, but does not support combo mode.
+- Mani
 
-Wrap at 80 chars.
-
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - qcom,qcs615-qmp-usb3-dp-phy
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 2
-> +
-> +  clock-names:
-> +    items:
-> +      - const: cfg_ahb
-> +      - const: ref
-> +
-> +  resets:
-> +    maxItems: 2
-> +
-> +  reset-names:
-> +    items:
-> +      - const: phy_phy
-
-phy_phy?
-
-> +      - const: dp_phy
-> +
-> +  vdda-phy-supply: true
-> +
-> +  vdda-pll-supply: true
-> +
-> +  "#clock-cells":
-> +    const: 1
-> +    description:
-> +      See include/dt-bindings/phy/phy-qcom-qmp.h
-> +
-> +  "#phy-cells":
-> +    const: 1
-> +    description:
-> +      See include/dt-bindings/phy/phy-qcom-qmp.h
-> +
-> +  qcom,tcsr-reg:
-> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> +    items:
-> +      - items:
-> +          - description: phandle to TCSR hardware block
-> +          - description: offset of the VLS CLAMP register
-> +      - items:
-> +          - description: phandle to TCSR hardware block
-> +          - description: offset of the DP PHY mode register
-> +    description: Clamp and PHY mode register present in the TCSR
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - resets
-> +  - reset-names
-> +  - vdda-phy-supply
-> +  - vdda-pll-supply
-> +  - "#clock-cells"
-> +  - "#phy-cells"
-> +  - qcom,tcsr-reg
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,qcs615-gcc.h>
-> +    #include <dt-bindings/clock/qcom,rpmh.h>
-> +
-> +    phy@88e8000 {
-> +      compatible = "qcom,qcs615-qmp-usb3-dp-phy";
-> +      reg = <0x88e8000 0x2000>;
-> +
-> +      clocks = <&gcc GCC_AHB2PHY_WEST_CLK>,
-> +               <&gcc GCC_USB3_SEC_CLKREF_CLK>;
-> +      clock-names = "cfg_ahb",
-> +                    "ref";
-> +
-> +      resets = <&gcc GCC_USB3PHY_PHY_SEC_BCR >,
-> +               <&gcc GCC_USB3_DP_PHY_SEC_BCR>;
-> +      reset-names = "phy_phy",
-> +                    "dp_phy";
-> +
-> +      vdda-phy-supply = <&vreg_l11a>;
-> +      vdda-pll-supply = <&vreg_l5a>;
-> +
-> +      #clock-cells = <1>;
-> +      #phy-cells = <1>;
-> +
-> +      qcom,tcsr-reg = <&tcsr 0xbff0>,
-> +                      <&tcsr 0xb24c>;
-> +    };
-> 
-> -- 
-> 2.34.1
-> 
+-- 
+மணிவண்ணன் சதாசிவம்
 
