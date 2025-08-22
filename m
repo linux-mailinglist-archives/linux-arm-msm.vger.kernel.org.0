@@ -1,254 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-70301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70302-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EAD9B3133A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:33:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84411B31325
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:32:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 077B23BF3CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:28:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 847D86244BD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:28:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB6C62EC557;
-	Fri, 22 Aug 2025 09:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 65BFF2EE616;
+	Fri, 22 Aug 2025 09:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RrYgcryB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CjF4PYzP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288571DDC08;
-	Fri, 22 Aug 2025 09:27:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA32A2E7163
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:27:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755854845; cv=none; b=mIOF5y3fXVuAn5LlNg+uI8E+cvqnKkh6P2hoaOGvGmWwtLOPXceiVoEuLBme11KCQXEodoOJ8YCYedWUjvShMs5iZg6ghXTLm8ipnYjXRTxxpjvQbRuJm3Mr0xNdV/wpGn9Zw7BzJdGb7gE+j0s+hRlDV+l1K05cmBu6/6066fw=
+	t=1755854868; cv=none; b=gogLy6CpeoUy1QNpJLhncAaFyaMXuLcrwicjGBM/EoPPS6ptOnzOE1Zhzn8lj1lsc9BqtKxD33ifzWZldg8NH0443YE5tee2mK7lJ9vaEE6BFFZ90qSzILEsfRvJ5Ayh31XfP1/oPGLzuradCU8FtPDiHHRRR2Tre89zGumBP3w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755854845; c=relaxed/simple;
-	bh=ffU7Jra2FYSdcW5dsy4J/IV/g2I533TmyZFGxSO9MgE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Aqfcw1C6k9pRwZ8C2hCAzxghLnOxXdUzs4/6Lagc7Vy8v2ahJ1gV2n5B0GZF1n2xEvgf6q+Cwm5erQnK+JuqpXRQbYm0Tl+ZFUwWMsCO0nN4cwwMt1JYr5gPAU8ubiwSKPxGFxOcLZwPg9SxSnZK28/CCS83H3pQCjxHakqyuS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RrYgcryB; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UK5O030513;
-	Fri, 22 Aug 2025 09:27:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	F7C43LdngdbYQcXlgkqyvxQt7FMCMKlcyPUzmO1c3Q4=; b=RrYgcryBkUU+rbVj
-	rqRY3PmkBotCdfHm2hdgW2aN0rFykkw/eozpkSjBEBI6ajb5BKmeQsh70HAXfm5D
-	zb2wLvSIG+0dbs6mEweNxKzxNvwE3kobxO0VF/XJ/HBvGhoQfUu5aLm2UQQ83gxk
-	2mcBVnub2q/GvATT0eFQfHLsiXaZTjPfGDlBYsDQV2Bwf/V9EARofiJ9B9e1PrIj
-	xucyTiNPsZKS9WJws31Y652ODMzXz7laCsIsKrq80S47sxpFMFhIV/OCuIZRWZN9
-	BjTiVb/vhKHbqn8tSitIrabrmWayvFfVVRoFPxlG4RBxGLckfbwzRzLU5SiBqOU8
-	ycRy6A==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ngtdphdf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Aug 2025 09:27:20 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57M9RKi8008056
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Aug 2025 09:27:20 GMT
-Received: from [10.218.42.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 22 Aug
- 2025 02:27:16 -0700
-Message-ID: <ff418c34-0f06-46fe-adda-4d9d8e409b6e@quicinc.com>
-Date: Fri, 22 Aug 2025 14:57:13 +0530
+	s=arc-20240116; t=1755854868; c=relaxed/simple;
+	bh=yXJV3kFmbspce5ZH3bdBirn6VeTHhu1tH4YGgNviN+M=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=L1f2hCIXieNP3GB17kUE7MNSitrvbfOwKrqXH5jU/FbiVbOpqVE9j+Dxhyurp/70lTtVgxNgKjAEIWwz/AduMIT9xud555tM2UiqRdgsPwIuWqI28ULYOyJq1FJ2H2GYmluIFLQkMu+ZdOgswET99g4/uXz35Z4ybKguVWWdCLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CjF4PYzP; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UH3A021755
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:27:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=XpL0M86UlKf7ZCJz90gMGA
+	89euCiWUR+5qp7LqODIu8=; b=CjF4PYzPh5ruNgkiYayyjeX4/Wrq6aVBMUlldV
+	KFYDiFjmTpxQJDA+8mvOgz6WmKZPnWe6ukzbXms/jfXcpwvGkhSzrkil8BG5/b/k
+	J6euN2QnYNMEAQcZA0uv+Vj6RS0ioVPWN3VPPzIBdkJcNQucZuV9Yy1XcwWGcwo1
+	9b/u/ner8HDTibI47O+0dqDw8AQRnffy2FEC1aVv6uYIzR6SMyX9dF9yT5SGeeyg
+	7cDBzKj1OqtLAZYEeMktrgf/Ngl6bKqKhB0zGfPz3H4dUpOzYbalPeJkbckQv4XF
+	a8joBLpqzfoP/Hs4LK2INWlgIsfLM5ThPteiZqMbwH0zI79Q==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52a8r4g-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:27:45 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-325017f25aaso2054965a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:27:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755854865; x=1756459665;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XpL0M86UlKf7ZCJz90gMGA89euCiWUR+5qp7LqODIu8=;
+        b=cFD/nurHx6q0p7D7dD7aLoy7xGB+WyxoPKZf2j5VyUVoptpLaJUA3RdNqiEOUlalDf
+         kbByyOVlv1eNLP5nVFp62KgPpWq6KkEe9VhngHTJ0J0P7r7ZjJu0HN18BGv/nzNtTPUd
+         eXWmR/q7Zlx9+ZeJTGufRrx0+N6RLXJPBjEHhk+DFIvhys/Y3gYrbGs81uEAumnOvY93
+         6o5Ed5jU7VXZYR4r4v6YEF2pBEM5Iv+nmYltjOktkYpp+EGwqPlcoJO3U4SyghbCxdPQ
+         SZIUCLn6C8739VDweUfw/i3sv5SLSlta5UyNShUNQhom3Ap30SADsK+IB8AYAsxsME0U
+         JLLQ==
+X-Gm-Message-State: AOJu0YwU/TBKCWawEdyI0qzH/xauRkfL46ycTPy/VsCw4ewslmsFZrqs
+	+B0mHtemnDsHfahmXSuSVxVEGEddtQERya9+lJg2Tg/gxNro8D7FVRPvu6CI1bey9aA3aJxo94Z
+	ZUtZeMlBu8lqpEognW9pssBRmp0RKqL8NKKmS3ceLxk1vmPgtKlKyhn8zJmb7uZzv853P
+X-Gm-Gg: ASbGncscfD06UsmG/ptS+0VfypqqKiTh9HwjfpzPujsaljvroBgen9hSMGsph05+1G8
+	E6J0YmM2FFntI7MLLTez3WxNRaYLIhL6HCqKpx33MRBGnLtZc3SahRiF1d6qqQZomn8UeeUffQA
+	1w9tqh+c5DldvN7qmtPZsK5A0SWJu/BgTmi6qjbD+DmGFdh+eWH2Zzpj7m8HXQooehZLO3kaUob
+	mLHK+A5woUxwtD0RsPxltiRBlOMWXmDgSgaZOzL93tvtuNotNYV5MoNpq907+EwNK5LE8t9whqE
+	jR0qC9wMAtUfxGbXa8Iyr4t6Yqo5Lkjbp93e4DRlRel22FTDGhIhwHhbhHyvF1FUZNAeiwO6Ld8
+	=
+X-Received: by 2002:a17:90b:3e44:b0:31e:ebb6:6499 with SMTP id 98e67ed59e1d1-32515ec135dmr3652781a91.24.1755854864610;
+        Fri, 22 Aug 2025 02:27:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFYtQzKOaZCDpvTt97KeO48fJ7AYIXggvayF45Tbj92jL5AzTKglrhB+gP4Rkm1fziAbf9Icw==
+X-Received: by 2002:a17:90b:3e44:b0:31e:ebb6:6499 with SMTP id 98e67ed59e1d1-32515ec135dmr3652738a91.24.1755854864128;
+        Fri, 22 Aug 2025 02:27:44 -0700 (PDT)
+Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32525205d1csm549417a91.4.2025.08.22.02.27.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Aug 2025 02:27:43 -0700 (PDT)
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: [PATCH v7 0/5] PCI: dwc: Add ECAM support with iATU configuration
+Date: Fri, 22 Aug 2025 14:57:28 +0530
+Message-Id: <20250822-ecam_v4-v7-0-098fb4ca77c1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] bus: mhi: ep: Fix chained transfer handling in read
- path
-To: Sumit Kumar <quic_sumk@quicinc.com>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>,
-        Alex Elder <elder@kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <quic_akhvin@quicinc.com>,
-        <quic_skananth@quicinc.com>, <quic_vbadigan@quicinc.com>,
-        Sumit Kumar
-	<sumk@qti.qualcomm.com>, <stable@vger.kernel.org>,
-        Akhil Vinod
-	<akhvin@qti.qualcomm.com>
-References: <20250822-chained_transfer-v2-1-7aeb5ac215b6@quicinc.com>
-Content-Language: en-US
-From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
-In-Reply-To: <20250822-chained_transfer-v2-1-7aeb5ac215b6@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=LexlKjfi c=1 sm=1 tr=0 ts=68a837f8 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=M4kYh_c735O1KADJ0OkA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-GUID: 8hNGEUj82K9cppp1HVTEM5-dYkNl6lxz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDEzNSBTYWx0ZWRfX/pcU32vb9qcO
- yN6Vt4BAwVjilUF4t6pkne16HFyS7CFkW0Nu2TTJgrGFzfhNknbmqTBwrqATVlULwyaof6Ok+l2
- Nto5yjGHj8SmvKYh7Cmsa8nEIDrCiS8UtnUs2FNm19smIcj3fSlaM34jMZN98+38DbMIa7C6dhR
- cKjyo6zNARDKoEY6ksbrrwNJrkOO7aHJMXiMMliHKyk6DTwoylkszEOs4M8YM5SJ7ZW9xfTM+pq
- t8KwlxxQPQOVFwfVOcryJ8COMw5J35W/IKtP6rYQWjswflo++Z5REz2lrhzXTIpXt47wv3qv984
- qBf64ME9Yqp9ySHMHxZq6+aJ2VUEPFUb7iAXBztvGRFPwd15cnvJRo7Ii/ya9v9lMXIIuBbNSOR
- 0n6wwdSu9tODi1LM5QDVJnoq80LjLA==
-X-Proofpoint-ORIG-GUID: 8hNGEUj82K9cppp1HVTEM5-dYkNl6lxz
+X-B4-Tracking: v=1; b=H4sIAAA4qGgC/3XM0QqDIBiG4VsZHq8w08wddR9jjLTfJaxa2mQju
+ vf9dRJsDET4xOedSQDvIJDTYSYeogtu6HHI44GYtu5vkLgGN2GUCcqoTMDU3TXyxHLQSpcqB9A
+ Efz88WPfaSucL7taFafDvLRz5+vrbwEMTxbVoBBhBM1kNIaTjs76boetSvMiaimLnOVU7F8hLs
+ BYLSira/OHFzmXGdl4gb0pGrcoY5IJX4+S++LIsH4dIeDwjAQAA
+X-Change-ID: 20250207-ecam_v4-f4eb9b893eeb
+To: cros-qcom-dts-watchers@chromium.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
+        quic_vpernami@quicinc.com, mmareddy@quicinc.com,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755854858; l=5197;
+ i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
+ bh=yXJV3kFmbspce5ZH3bdBirn6VeTHhu1tH4YGgNviN+M=;
+ b=bKdh1xwdvRKX/Dzkk189uKobWstlcTm2FsrwdLTePzDnfecIOI3m1Ce90U8HRb7UB5I854WxB
+ V8GP3B/lcv1CjST7S+11GvfCND8q1BOWlmxhCpgr0SK938UseFuv9I7
+X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
+ pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
+X-Authority-Analysis: v=2.4 cv=feD0C0QF c=1 sm=1 tr=0 ts=68a83811 cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=eK1vwzyvm-k7PeNkGdoA:9 a=QEXdDO2ut3YA:10
+ a=iS9zxrgQBfv6-_F4QbHw:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: JPuyDEFumUVOryz9BXNEn7VeeWweqPP8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX7Yd31LmV3CHh
+ UcqxsUbD6Pr5NQojiGTgE0wWxN2CbHF98e62EcsN9FOz3BjdRCswwgq5vRrhcLlYwYsI6l2Ux03
+ V2uhi+c6FLXDP7kiUIb+it4BL9Hp4PNwN6WbhC8x8bIOvC2+WoI0ln+sWHngExv0IbvWtm8riEJ
+ Q1bKgq+f5USoPSHf5ZKkVbu4NXdMvRpIBNuYCLgC675Ik1MyfJ2azuzHeqKryJdyPpmYKuvfyYx
+ abrD/x7CETj0+vQNB3J8vy+/CibbKLzlSfkZM6ez0mEHCbd4QeFp8MnrcIGa0UAJNPOeGSO0FTB
+ v9kntD3Csw8iy89tisqygbLWWYTyyG6fxVoZicNoqTohmJ6WqX6mAQHOfkjX3xn1eOv72nTKXXZ
+ mbHhiwVjn/i/Oct0wNvfY3RoSte2nA==
+X-Proofpoint-GUID: JPuyDEFumUVOryz9BXNEn7VeeWweqPP8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0
- spamscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ priorityscore=1501 phishscore=0 adultscore=0 malwarescore=0 bulkscore=0
+ lowpriorityscore=0 spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200135
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
+The current implementation requires iATU for every configuration
+space access which increases latency & cpu utilization.
 
+Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
+which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
+would be matched against the Base and Limit addresses) of the incoming
+CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
 
-On 8/22/2025 2:54 PM, Sumit Kumar wrote:
-> From: Sumit Kumar <sumk@qti.qualcomm.com>
-> 
-> The current implementation of mhi_ep_read_channel, in case of chained
-> transactions, assumes the End of Transfer(EOT) bit is received with the
-> doorbell. As a result, it may incorrectly advance mhi_chan->rd_offset
-> beyond wr_offset during host-to-device transfers when EOT has not yet
-> arrived. This can lead to access of unmapped host memory, causing
-> IOMMU faults and processing of stale TREs.
-> 
-> This change modifies the loop condition to ensure mhi_queue is not empty,
-> allowing the function to process only valid TREs up to the current write
-> pointer. This prevents premature reads and ensures safe traversal of
-> chained TREs.
-> 
-> Removed buf_left from the while loop condition to avoid exiting prematurely
-> before reading the ring completely.
-> 
-> Removed write_offset since it will always be zero because the new cache
-> buffer is allocated everytime.
-> 
-> Fixes: 5301258899773 ("bus: mhi: ep: Add support for reading from the host")
-> Cc: stable@vger.kernel.org
-> Co-developed-by: Akhil Vinod <akhvin@qti.qualcomm.com>
-> Signed-off-by: Akhil Vinod <akhvin@qti.qualcomm.com>
-> Signed-off-by: Sumit Kumar <sumk@qti.qualcomm.com>
-Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
-> Changes in v2:
-> - Use mhi_ep_queue_is_empty in while loop (Mani).
-> - Remove do while loop in mhi_ep_process_ch_ring (Mani).
-> - Remove buf_left, wr_offset, tr_done.
-> - Haven't added Reviewed-by as there is change in logic.
-> - Link to v1: https://lore.kernel.org/r/20250709-chained_transfer-v1-1-2326a4605c9c@quicinc.com
-> ---
->   drivers/bus/mhi/ep/main.c | 37 ++++++++++++-------------------------
->   1 file changed, 12 insertions(+), 25 deletions(-)
-> 
-> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
-> index b3eafcf2a2c50d95e3efd3afb27038ecf55552a5..cdea24e9291959ae0a92487c1b9698dc8164d2f1 100644
-> --- a/drivers/bus/mhi/ep/main.c
-> +++ b/drivers/bus/mhi/ep/main.c
-> @@ -403,17 +403,13 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
->   {
->   	struct mhi_ep_chan *mhi_chan = &mhi_cntrl->mhi_chan[ring->ch_id];
->   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> -	size_t tr_len, read_offset, write_offset;
-> +	size_t tr_len, read_offset;
->   	struct mhi_ep_buf_info buf_info = {};
->   	u32 len = MHI_EP_DEFAULT_MTU;
->   	struct mhi_ring_element *el;
-> -	bool tr_done = false;
->   	void *buf_addr;
-> -	u32 buf_left;
->   	int ret;
->   
-> -	buf_left = len;
-> -
->   	do {
->   		/* Don't process the transfer ring if the channel is not in RUNNING state */
->   		if (mhi_chan->state != MHI_CH_STATE_RUNNING) {
-> @@ -426,24 +422,23 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
->   		/* Check if there is data pending to be read from previous read operation */
->   		if (mhi_chan->tre_bytes_left) {
->   			dev_dbg(dev, "TRE bytes remaining: %u\n", mhi_chan->tre_bytes_left);
-> -			tr_len = min(buf_left, mhi_chan->tre_bytes_left);
-> +			tr_len = min(len, mhi_chan->tre_bytes_left);
->   		} else {
->   			mhi_chan->tre_loc = MHI_TRE_DATA_GET_PTR(el);
->   			mhi_chan->tre_size = MHI_TRE_DATA_GET_LEN(el);
->   			mhi_chan->tre_bytes_left = mhi_chan->tre_size;
->   
-> -			tr_len = min(buf_left, mhi_chan->tre_size);
-> +			tr_len = min(len, mhi_chan->tre_size);
->   		}
->   
->   		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
-> -		write_offset = len - buf_left;
->   
->   		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL);
->   		if (!buf_addr)
->   			return -ENOMEM;
->   
->   		buf_info.host_addr = mhi_chan->tre_loc + read_offset;
-> -		buf_info.dev_addr = buf_addr + write_offset;
-> +		buf_info.dev_addr = buf_addr;
->   		buf_info.size = tr_len;
->   		buf_info.cb = mhi_ep_read_completion;
->   		buf_info.cb_buf = buf_addr;
-> @@ -459,16 +454,12 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
->   			goto err_free_buf_addr;
->   		}
->   
-> -		buf_left -= tr_len;
->   		mhi_chan->tre_bytes_left -= tr_len;
->   
-> -		if (!mhi_chan->tre_bytes_left) {
-> -			if (MHI_TRE_DATA_GET_IEOT(el))
-> -				tr_done = true;
-> -
-> +		if (!mhi_chan->tre_bytes_left)
->   			mhi_chan->rd_offset = (mhi_chan->rd_offset + 1) % ring->ring_size;
-> -		}
-> -	} while (buf_left && !tr_done);
-> +	/* Read until the some buffer is left or the ring becomes not empty */
-> +	} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
->   
->   	return 0;
->   
-> @@ -502,15 +493,11 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring)
->   		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
->   	} else {
->   		/* UL channel */
-> -		do {
-> -			ret = mhi_ep_read_channel(mhi_cntrl, ring);
-> -			if (ret < 0) {
-> -				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
-> -				return ret;
-> -			}
-> -
-> -			/* Read until the ring becomes empty */
-> -		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
-> +		ret = mhi_ep_read_channel(mhi_cntrl, ring);
-> +		if (ret < 0) {
-> +			dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
-> +			return ret;
-> +		}
->   	}
->   
->   	return 0;
-> 
-> ---
-> base-commit: 4c06e63b92038fadb566b652ec3ec04e228931e8
-> change-id: 20250709-chained_transfer-0b95f8afa487
-> 
-> Best regards,
+Configuring iATU in config shift mode enables ECAM feature to access the
+config space, which avoids iATU configuration for every config access.
+
+Add cfg_shft_mode into struct dw_pcie_ob_atu_cfg to enable config shift mode.
+
+As DBI comes under config space, this avoids remapping of DBI space
+separately. Instead, it uses the mapped config space address returned from
+ECAM initialization. Change the order of dw_pcie_get_resources() execution
+to acheive this.
+
+Enable the ECAM feature if the config space size is equal to size required
+to represent number of buses in the bus range property.
+
+ELBI registers are optional registers which are part of dwc. So move
+ELBI resource mapping to dwc. Also change the dtbinding and devicetree
+to make the elbi registers as optional one. Having ELBI as the required
+one is making the ecam feature complicated.
+
+The ELBI registers falls after the DBI space, PARF_SLV_DBI_ELBI register
+gives us the offset from which ELBI starts. so use this offset and cfg
+win to map these regions instead of doing the ioremap again.
+
+On root bus, we have only the root port. Any access other than that
+should not go out of the link and should return all F's. Since the iATU
+is configured for the buses which starts after root bus, block the
+transactions starting from function 1 of the root bus to the end of
+the root bus (i.e from dbi_base + 4kb to dbi_base + 1MB) from going
+outside the link through ECAM blocker through PARF registers.
+
+Increase the configuration size to 256MB as required by the ECAM feature
+and also move config space, DBI, iATU to upper space and use lower space
+entirely for BAR region.
+
+Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+---
+Changes in v7:
+- Rebased with the latest kernel.
+- change ecam_mode to ecam_enabled (Konrad)
+- change dw_pcie_ecam_supported to dw_pcie_ecam_enabled
+- use FIELD_GET & GENMASK for reading elbi offset (Konrad)
+- Link to v6: https://lore.kernel.org/r/20250712-ecam_v4-v6-0-d820f912e354@qti.qualcomm.com
+
+Changes in v6:
+- Remove the dtbinding and dt changes which make elbi optional
+- Use non overlap region in the devicetree and in the driver ELBI
+  registers will be overridden using offset of elbi from dbi start using
+  parf registers (mani).
+- Link to v5: https://lore.kernel.org/r/20250309-ecam_v4-v5-0-8eff4b59790d@oss.qualcomm.com
+
+Changes in v5:
+- Make elbi as optional and move resource mapping to the dwc (Mani)
+- Make the changes in the code as we made elbi as optional.
+- Link to v4: https://lore.kernel.org/r/20250207-ecam_v4-v4-0-94b5d5ec5017@oss.qualcomm.com
+
+Changes in v4:
+- Update the commit messgaes and do minor code changes like adding
+  export for the api, adding error message( mani)
+- Link to v3: https://lore.kernel.org/all/20250121-enable_ecam-v3-0-cd84d3b2a7ba@oss.qualcomm.com/
+Changes in v3:
+- if bus range is less than 2 return with out configuring iATU for next
+  bus & update the logic of ecam_supported() as suggested ( Konrad)
+- updated commit text and update S-o-b (Bjorn Andresson)
+- Link to v2: https://lore.kernel.org/r/20241224-enable_ecam-v2-0-43daef68a901@oss.qualcomm.com
+
+changes in v2:
+- rename enable_ecam to ecam_mode as suggested by mani.
+- refactor changes as suggested by bjorn
+- remove ecam_init() function op as we have removed ELBI virtual address
+update from the ecam_init and moved to host init as we need the clocks
+to be enabled to read the ELBI offset from the PARF registers.
+- Update comments and commit message as suggested by bjorn.
+- Allocate host bridge in the DWC glue drivers as suggested by bjorn
+- move qcom_pcie_ecam_supported to dwc as suggested by mani.
+Link to v1: https://lore.kernel.org/r/linux-devicetree/20241117-ecam-v1-1-6059faf38d07@quicinc.com/T/
+
+---
+Krishna Chaitanya Chundru (5):
+      arm64: dts: qcom: sc7280: Increase config size to 256MB for ECAM feature
+      PCI: dwc: Add support for ELBI resource mapping
+      PCI: dwc: qcom: Switch to dwc ELBI resource mapping
+      PCI: dwc: Add ECAM support with iATU configuration
+      PCI: qcom: Add support for ECAM feature
+
+ arch/arm64/boot/dts/qcom/sc7280.dtsi              |  14 +--
+ drivers/pci/controller/dwc/Kconfig                |   1 +
+ drivers/pci/controller/dwc/pcie-designware-host.c | 131 +++++++++++++++++++---
+ drivers/pci/controller/dwc/pcie-designware.c      |  11 +-
+ drivers/pci/controller/dwc/pcie-designware.h      |   6 +
+ drivers/pci/controller/dwc/pcie-qcom.c            |  86 ++++++++++++--
+ 6 files changed, 218 insertions(+), 31 deletions(-)
+---
+base-commit: 3957a5720157264dcc41415fbec7c51c4000fc2d
+change-id: 20250207-ecam_v4-f4eb9b893eeb
+
+Best regards,
+-- 
+Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+
 
