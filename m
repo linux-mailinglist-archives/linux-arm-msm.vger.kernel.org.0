@@ -1,206 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-70456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C804B3223B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 20:21:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4DADB3226D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 20:51:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D6ADA62855E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 18:21:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8A0A06884F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 18:51:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 540372BEC5A;
-	Fri, 22 Aug 2025 18:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E65592C0297;
+	Fri, 22 Aug 2025 18:51:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WsHZD8bU"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="RjEAWOvJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2082.outbound.protection.outlook.com [40.107.237.82])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE23B2BE039
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 18:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755886914; cv=none; b=BVLkS7Y/9wCdjhz67+4G2r8kNrWsJEGmh3C/3e7Jl8ZuGUHQbPf7h82hfWg07aXPyCSUFmjsSBeBs9xeOeafv2v1X5olxDgctn0fRDborfIKe9aMRfkmp5LkVKpQ4DXpLo5J9u0iAaCP60kR8UIvrBw1KMjUeu1KnYHGiOHwQBA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755886914; c=relaxed/simple;
-	bh=XnfyyBM6Pz+Nxj3ytKVde+CXgWpxq6tYu+r2xS+ravM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Qj5hJ53QQ9sxjAMJK7zCa3+eVAUxo8gVjPmCvd0zzkRHffjApuxyR8zNS8rCdXpiXvVujmwHxKBI5jdgq4lX15EiqjaBWLQ5CoxOxKfROYvTXXnu9pIJFqdEFMNY9g4zhvqFaTEsGSLJEDoZQH2PmFcxY69w7cAFUgydTt0syvo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WsHZD8bU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57MHUhVu005961
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 18:21:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=z3XjF/GiPBvLacOcQzaE00w+
-	swQurw1OEiUWR3vIT3E=; b=WsHZD8bUiNGS77HfTwzv0EQtuW6ifmDmqfUy3Eiv
-	rObPs+LQFsS77HSBCwTVpwLLjBDlC1G9zS8Q/JgXbd/tO+5aOp5X0qgAJKubzx59
-	mNA4sM36AcPMyeAnAsGfsxBALIYYuDSTnsWdQJ8TonyZXQ/D0sVRsVrh8lPY7dcR
-	T/FJrvhC2dlna2o/DNS42kftjrksAu+hPlB6W4JXr2ErCJyh4eV4Ej9T5pSfrdMZ
-	BJhJ3tOFe5xG4fu5EbJnMMkgmk617Zk/d0CHRV1UisvpHNmWW+rDGcwsLZjzUV49
-	xU30ssrrS7zUbFFuESZjv3yRwR7T2u/UlhpPVlTVTSLbrA==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48pw0yr4yu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 18:21:51 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-70d93f579ceso32841596d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 11:21:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755886910; x=1756491710;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z3XjF/GiPBvLacOcQzaE00w+swQurw1OEiUWR3vIT3E=;
-        b=klUcBUx7oDm8Sr/cuqSJ89yKndlM9TEXoY3jvXqFX2WuvsCtTByOi3cQlUKW0YuMJX
-         poKNd6VbRgUiKF7zPggx+eSVsep8nubBweJ4PTCjY9fKvMpAlZYxluMoJSHjxIdE2pia
-         mPgOC9SUK+4mLhxm0kvuXs5lzCyP2270ZMPIAHJ12dzm49/pHF4cEymFqLnOV9V+zYax
-         lG8WinGU1T8SZ/KM6Ln+bT7422TjTgOKDXg9ikEzQuA9OqYMsRFdjYNOdO5NIlRGOVsi
-         7b9tXDiDFUsei7ML5a2rc/1UsE/vaemGfBfZB891rSoxFwxibfNqSqK1P2P8Gm0350gC
-         SisQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUawE3mQuxqqqBC3jVbbfoWUAONn4PO/E7N4UjrjK90dycmHRk9BqLpZulPLHzei1pqfpNbxs+acxV7R5Hi@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUt0iykuDGdLOa9pF1/dSFtnAjjsNBksweG8ZGfEBscFJbLPGz
-	RRiYMeaMthSu7TI0jQUZYbQy/isb1i9kJl3mt51MXClxn0QsEfuoS31QNS9s7DEHw6f6WkmVYf5
-	cmp/UBVeBiOTMKTEU86N0pjp1bA5HPNb82+nopdZYFDMcRbjbRcNlWKfCIKKCXEZJB+gc
-X-Gm-Gg: ASbGnctymZuiNbfg4o8aeOGDU0rxRjeD7ShVer8YvXOK2hm/9D80x1tbwCMBzZ9oRAI
-	5itaUS7UjBBFcO0M3/MjOCtcxRxm2N/73PP3zXYpNYxM75aoLO3OOG5BNPIvJ2oYtMNDo6uiERn
-	FPtb8eGu6SkWHzi+0KsaDsN/w3CbeXg1nLufI/LqAx4PbF996UkZOxpbXd9Y8lFicl/vAzAegVi
-	P75UAPe+BOKksEY4IFnKPgZp35Gp+Mat2FB88g9pb4cQ30kTfsoM3gIuDz6TuRs4fRPatfcOQ4X
-	sC0vvVQQ+xahKAaegfNipJpjxjPJMl9q7IGjLwYsfVxg9BZPtceVJAaFsMVZHZddrSREX+C6gB9
-	HEA6WBFqfSFw3feEbmDZqHm78PCOS4B1pvfGBU4u+vvJMO5+ewVLU
-X-Received: by 2002:a05:6214:2a4d:b0:707:4229:6e8c with SMTP id 6a1803df08f44-70d971f5efemr56637076d6.12.1755886910406;
-        Fri, 22 Aug 2025 11:21:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXxaLnv1Y9uAXo5cfUz4pwJXUczPdAECaz58MIxnRLI3/YKXEsleDUu2qANw4OMZIlzAK5zA==
-X-Received: by 2002:a05:6214:2a4d:b0:707:4229:6e8c with SMTP id 6a1803df08f44-70d971f5efemr56636626d6.12.1755886909861;
-        Fri, 22 Aug 2025 11:21:49 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c8ba22sm86692e87.100.2025.08.22.11.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 11:21:48 -0700 (PDT)
-Date: Fri, 22 Aug 2025 21:21:46 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Shuai Zhang <quic_shuaz@quicinc.com>
-Cc: marcel@holtmann.org, luiz.dentz@gmail.com, linux-bluetooth@vger.kernel.org,
-        stable@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_chejiang@quicinc.com
-Subject: Re: [PATCH v8] Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail
- when BT_EN is pulled up by hw
-Message-ID: <eg6hush5t5r2seelkolmb3hqjlmh7w3yzekb3lnn4sm3qxufee@e3eberzr4izp>
-References: <20250822123605.757306-1-quic_shuaz@quicinc.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40008299A90;
+	Fri, 22 Aug 2025 18:51:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.237.82
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755888689; cv=fail; b=JHl++kcOezy8Rvp1KP5yLVN7yYkxVeyi/luPakHa2nV51Rtoz1A53dDpGDyhyc4DZjVjnxv2zjLGfVKQAmxUBbNTlCtbH58E2c74ZMevBj2XdrIhwcuTt/9rCocKAitij55HcXme2tTV2t/q7wRXQRP9EVwOqtNjXAnxDlr8JwE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755888689; c=relaxed/simple;
+	bh=1rAnXX0H2ON1Lh20LfT2X+K0gIMJKJ2V63+5lj75nhk=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kTS17zXqRFeictWaXxY9mXc5N8PWaEqaqpoJNgJ+YEIo9FMBH9EvKa03b+0twgQmBtssfpFBacLUQ6GE42w3/jIgGAMd6KYAixiXMLRN5mcqr/cS9eRs5lAfqByNy39AiYud1hl+J4bcbOXlhq131MpQzKDraEqAzWQ288SjBn8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=RjEAWOvJ; arc=fail smtp.client-ip=40.107.237.82
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pTWsjEZ+/0EndzCwcvH9w6ArGbgEdDKdzl8eSaAz9xg9deOnQc8GD6vZfr57eVu6Bs3eIqxRb1/aKZVR8mQk87Vd42HkAZdR7FPEh5VJA7/+VANH6thE6t5o6NbjgL2dnmDtctI8CYRzq+M0F33TGcTxvuuzA8jnMV+zVHE+xyR5KQ39J/DTbRHlmguo9vtaeLQ35RRX2lG821oyXn2J5xZKnRm4uIesM3dTDf5UOLLVO3qXZzamVx6PcTv3y6ZpzvHWausFWi/jSXOgG0MykGgncousvTyAYgi3ixAd1HfwOq4mB+8fj+N9w9L6Mlmd2p3ZoB+SpHg6G5pBcz72fg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XqsAVqx2D9fPf18hSHoZHOjMqFsEIFJD0EpmkHZBGjU=;
+ b=c27a7TbfigbI4OkO9I8N9C2JO/JOKOvX1ua9M5DKDv2HlqcBo2Y60l2KGgUMt324hS/s14TETlul9zfFaTxIJ49oTaBfsp/pXg+wUhpWgf0BaEV96nG3JLOeNv4ox8WP/v3UAPppt/vS3WYqva09z/J6epa/xrf8Xb87p4DUIQpARhkro8GypH7dzeTza4AC2VdylJfwMW/p1/JSBMHVWAiV4ueuHq+Z33ckc+uYJT1EuI411KVeHcQSD/a8jqEca/jdpwrvj5uBqiGhX3eF0pDW58+A1PzcFTmtnM6IOmXaedeFkIVPpcxycPVrGiyOsjoTgcsm9l10gC9iwp9U9w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XqsAVqx2D9fPf18hSHoZHOjMqFsEIFJD0EpmkHZBGjU=;
+ b=RjEAWOvJg8Fu0AGHqv+UtRlOiU6BrBAXL0eiEP9HETxmxyKg1FirCZ3DCqgr2cNRpIfkSFWJ5Tcuvwz4ZuvfGBbaorj1SbO/ohnpal6UNvxe+M2esQ6e1kLOf+j16B3QpDgZ9HBBt+B4ICzLRDA+RBPk8M9EStpY8PpHC4E+BgTk0yfYDtEhXzh0b+GriCuEgVVIrkfM6Ex8ybGYWxbJcRvtwvrt41NhRhhCdwK1PkSaPrGjmeyhia6RiKHDaSLLE8NulPDTtQtAKIg1UHce/nDRzUrnoGdL7kiSAIrKkkD1YChuuL4JODJbaB1gDrNaMWlJBB4zPksOjW+AkUW+zg==
+Received: from MW4PR02CA0003.namprd02.prod.outlook.com (2603:10b6:303:16d::30)
+ by DS4PR12MB9658.namprd12.prod.outlook.com (2603:10b6:8:280::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.14; Fri, 22 Aug
+ 2025 18:51:24 +0000
+Received: from CO1PEPF000042AA.namprd03.prod.outlook.com
+ (2603:10b6:303:16d:cafe::92) by MW4PR02CA0003.outlook.office365.com
+ (2603:10b6:303:16d::30) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.18 via Frontend Transport; Fri,
+ 22 Aug 2025 18:51:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CO1PEPF000042AA.mail.protection.outlook.com (10.167.243.39) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9052.8 via Frontend Transport; Fri, 22 Aug 2025 18:51:23 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 22 Aug
+ 2025 11:51:02 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Fri, 22 Aug
+ 2025 11:51:01 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Fri, 22 Aug 2025 11:50:59 -0700
+Date: Fri, 22 Aug 2025 11:50:58 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Ethan Zhao <etzhao1900@gmail.com>, <robin.murphy@arm.com>,
+	<joro@8bytes.org>, <bhelgaas@google.com>, <will@kernel.org>,
+	<robin.clark@oss.qualcomm.com>, <yong.wu@mediatek.com>,
+	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
+	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+	<rafael@kernel.org>, <lenb@kernel.org>, <kevin.tian@intel.com>,
+	<yi.l.liu@intel.com>, <baolu.lu@linux.intel.com>,
+	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-mediatek@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
+	<helgaas@kernel.org>
+Subject: Re: [PATCH v3 5/5] pci: Suspend iommu function prior to resetting a
+ device
+Message-ID: <aKi8EqEp1DKG+h38@Asurada-Nvidia>
+References: <cover.1754952762.git.nicolinc@nvidia.com>
+ <3749cd6a1430ac36d1af1fadaa4d90ceffef9c62.1754952762.git.nicolinc@nvidia.com>
+ <550635db-00ce-410e-add0-77c1a75adb11@gmail.com>
+ <aKTzq6SLGB22Xq5b@Asurada-Nvidia>
+ <20250821130741.GL802098@nvidia.com>
+ <aKgPr3mUcIsd1iuT@Asurada-Nvidia>
+ <20250822140821.GE1311579@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20250822123605.757306-1-quic_shuaz@quicinc.com>
-X-Proofpoint-GUID: MJObmSm94h2zqNSYlO5kg_bcdRCWwpzo
-X-Proofpoint-ORIG-GUID: MJObmSm94h2zqNSYlO5kg_bcdRCWwpzo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIyMDE2MCBTYWx0ZWRfX2Tc+wnjkMQ4p
- f4DCvuHNGPgwV5z8H7LHd2hOc+iy4r9ELIvm4LOUsNkesKf6Dd2YYlzrfyK8MmnAFvGAi6CHGPv
- fvN5zwjKrdzT7jyf0qzKjp/ndZGmSqx7ASJAoQrdrjAb5Kh0e1fvPgyugOvZX9G9ZdFqPW1j+8X
- A1F4JTCJncuLNZaKZF06yYOF/A6Vjp88evGNYBQ40bkjIIhsow8r2TXhldT6AJafAdfSa0mBmpa
- vr4CgqRvXmPnkIqq78sAVJr2q6tbVqr9LRC1CIhRA6BC1j3yJiKU003+3i+auf/YNLKctWb0N5s
- KDXCAxnyeyoA3zvR+eJParELsnBrQvJCOgIwvWyu9+s7mm49sac01rQowrr1WwXDyrvXz+xUgOS
- 9qvUZ2rw
-X-Authority-Analysis: v=2.4 cv=TpzmhCXh c=1 sm=1 tr=0 ts=68a8b53f cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=Xgb9nbmtQSVvgoRKimMA:9 a=CjuIK1q_8ugA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-22_04,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 priorityscore=1501 bulkscore=0 suspectscore=0
- adultscore=0 spamscore=0 clxscore=1015 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508220160
+In-Reply-To: <20250822140821.GE1311579@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PEPF000042AA:EE_|DS4PR12MB9658:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2c9d1356-26f5-4af7-21e8-08dde1ace464
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|1800799024|7416014|82310400026|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?F9NqNtOQk/XokkfZEOw6E09rWDMnPzWrkLZ6Zy26tNzb2zWG+yZ4ZOOGIrRy?=
+ =?us-ascii?Q?OOVS2vR4nr+G1oykLPvNivO7z6tk1VXYdCJ1W18Bl/pdQiLWYKMpn3rPAyrm?=
+ =?us-ascii?Q?uaC6jKfNyV/fZnNxixvPafcSanajs0v6R09XpmTqhknpqolCjSX4CU7tpPGk?=
+ =?us-ascii?Q?oSKOTdHpk/VbaqFmPqpAsyKgR2AnNBP1s5rB3gNFhuKd2ZigIhztk4kcbHeU?=
+ =?us-ascii?Q?OVw3HQoBtfXHjyG3b/dZdqLsLewLy662iLMl1sPof8pehXLKizpbVpH38Eed?=
+ =?us-ascii?Q?1Mw/4RGVExlN9DFw1AsZADwsaTuTbveoG5mY9D67fhWqeok+kP94xTPHm26+?=
+ =?us-ascii?Q?hJyxjqpviUuHRH2uinFZ8u3yrk8ARIm3WfVMI8PCiO8HBJ4qnUK624XmiYa9?=
+ =?us-ascii?Q?jK2+KEtGG0ISahiZb21ThzLHYb1yeCeJ2Q3InPDinCOYXxRe5jUJekJq5jxR?=
+ =?us-ascii?Q?TX7L27YG7IWbrhhg6R7wOMrgO+0UL638+CiQEzHfhCF6k8hpwoP0YeM8nkl5?=
+ =?us-ascii?Q?w6u0rgJNaAG9tfZL/ayj8apoNyBgh9FDhw3kkFBBYJ7kmSde98fHd6QqFB8C?=
+ =?us-ascii?Q?hP9mNsfr2MP3g04ziDFRHFGZgpGOtsVV/YRcVEznkCLpmVU3cTHazsffRlsm?=
+ =?us-ascii?Q?cLuYSyUBz3e1ApMnrsTQiq0vwwX5I6Pw8NeL2L756Fmute1bWDPcsK8Vb+VK?=
+ =?us-ascii?Q?BvH9scCS/MmC5zHUpP7yYy7jgknbU/oSWCmxhvRoUT3YrEjQEYALeDCVPlV9?=
+ =?us-ascii?Q?4CghCW1RdptgsTmxzQ2tcctLOUYKLww6GZgx6yD+EzCmqcU5p1BMQ1GsiLJ1?=
+ =?us-ascii?Q?wRUUtFfzH+lAoSqoOwOXxqS5EO7PPttMbQoKsiXy7TZ+vYBben/2fFIFg7yn?=
+ =?us-ascii?Q?LhjZEG8UdWJVFZdFCyMmVWSoWovBtJCZ0MX49nu2lNxPKfzyMFIy45WjNBQQ?=
+ =?us-ascii?Q?fniVgHXEiK+Z//uQt41ySM0rRAIE6gkQna/qIn71Q1rzjZoY4F30bKuZ4OK6?=
+ =?us-ascii?Q?Xn0PHAzPmhjLQ3JL43pam/dIfu3UPm1zh9cE24Vn+Y53WfrN/QvptCGxUKvu?=
+ =?us-ascii?Q?UBte+0EYMC6QFf+b9Bebp7bgW4rnURFPlJz1JJ8+zkixrIMNdrLqXD99eDSo?=
+ =?us-ascii?Q?qzmWtmeQZHAInMnBA7BMhtVoa/jxuKMe/BKqSjuhJ7FmYbjtygKyYpqHBnFY?=
+ =?us-ascii?Q?ne9eeGVNIaSG6JVMcyMmSH7OriOQI26hs2P+vm1zXvAQf4SphbH5BPuZcojq?=
+ =?us-ascii?Q?5FH7h5pt61bWEWF4sWawU0I0dgakZHD8gpw7RjC7HKWldEqJjWpFw9WP61Oe?=
+ =?us-ascii?Q?NDZSqKHn2sLb54zOayn6YfsCbZYV72yskXUjBU8ehdWjrZdTquFChsU/Av9e?=
+ =?us-ascii?Q?FgL8e1NbhFB6U8RihNEASIrZBZEklNQH9xYtpvUVNU2fJCSWgp4UtAlNMlyF?=
+ =?us-ascii?Q?qNqZqSIzERLtTvX478NZ5iSq9y4llOn/7i/oplz+MZm44nH4Gz7Y/gdqDk89?=
+ =?us-ascii?Q?qka5toPAmz3+MnqmSNI9mGWa9TN9WeYWtDY8?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(1800799024)(7416014)(82310400026)(376014);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2025 18:51:23.7474
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2c9d1356-26f5-4af7-21e8-08dde1ace464
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1PEPF000042AA.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PR12MB9658
 
-On Fri, Aug 22, 2025 at 08:36:05PM +0800, Shuai Zhang wrote:
-> When the host actively triggers SSR and collects coredump data,
-> the Bluetooth stack sends a reset command to the controller. However, due
-> to the inability to clear the QCA_SSR_TRIGGERED and QCA_IBS_DISABLED bits,
-> the reset command times out.
+On Fri, Aug 22, 2025 at 11:08:21AM -0300, Jason Gunthorpe wrote:
+> On Thu, Aug 21, 2025 at 11:35:27PM -0700, Nicolin Chen wrote:
+> > On Thu, Aug 21, 2025 at 10:07:41AM -0300, Jason Gunthorpe wrote:
+> > > On Tue, Aug 19, 2025 at 02:59:07PM -0700, Nicolin Chen wrote:
+> > > >  c) multiple pci_devs with their own RIDs
+> > > > 
+> > > >     In this case, either FLR or IOMMU only resets the PF. That
+> > > >     being said, VFs might be affected since PF is resetting?
+> > > >     If there is an issue, I don't see it coming from the IOMMU-
+> > > >     level reset..
+> > > 
+> > > It would still allow the ATS issue from the VF side. The VF could be
+> > > pushing an invalidation during the PF reset that will get clobbered.
+> > > 
+> > > I haven't fully checked but I think Linux doesn't really (easially?)
+> > > allow resetting a PF while a VF is present...
+> > 
+> > Hmm, what if the PF encountered some fault? Does Linux have a choice
+> > not to reset PF?
 > 
-> To address this, this patch clears the QCA_SSR_TRIGGERED and
-> QCA_IBS_DISABLED flags and adds a 50ms delay after SSR, but only when
-> HCI_QUIRK_NON_PERSISTENT_SETUP is not set. This ensures the controller
-> completes the SSR process when BT_EN is always high due to hardware.
-> 
-> For the purpose of HCI_QUIRK_NON_PERSISTENT_SETUP, please refer to
-> the comment in `include/net/bluetooth/hci.h`.
-> 
-> The HCI_QUIRK_NON_PERSISTENT_SETUP quirk is associated with BT_EN,
-> and its presence can be used to determine whether BT_EN is defined in DTS.
-> 
-> After SSR, host will not download the firmware, causing
-> controller to remain in the IBS_WAKE state. Host needs
-> to synchronize with the controller to maintain proper operation.
-> 
-> Multiple triggers of SSR only first generate coredump file,
-> due to memcoredump_flag no clear.
-> 
-> add clear coredump flag when ssr completed.
-> 
-> When the SSR duration exceeds 2 seconds, it triggers
-> host tx_idle_timeout, which sets host TX state to sleep. due to the
-> hardware pulling up bt_en, the firmware is not downloaded after the SSR.
-> As a result, the controller does not enter sleep mode. Consequently,
-> when the host sends a command afterward, it sends 0xFD to the controller,
-> but the controller does not respond, leading to a command timeout.
-> 
-> So reset tx_idle_timer after SSR to prevent host enter TX IBS_Sleep mode.
-> 
-> Changes since v6-7:
-> - Merge the changes into a single patch.
-> - Update commit.
-> 
-> Changes since v1-5:
-> - Add an explanation for HCI_QUIRK_NON_PERSISTENT_SETUP.
-> - Add commments for msleep(50).
-> - Update format and commit.
+> Upon more reflect I guess outside VFIO I seem to remember the SRIOV
+> reset to the PFs will clobber the VFs too and then restore the SRIOV
+> configuration in config space to bring them back.
 
-Changelog doesn't belong to the commit message. It should be placed
-under tripple-dash.
+Yea, I see ci_restore_iov_state() called in pci_restore_state().
 
+> > > Arguably if the PF is reset the VFs should have their translations
+> > > blocked too.
+> > 
+> > Yea, that sounds plausible to me. But, prior to that (an IOMMU-level
+> > reset), should VFs be first reset at the PCI level?
 > 
-> Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
-> ---
->  drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-> index 4e56782b0..9dc59b002 100644
-> --- a/drivers/bluetooth/hci_qca.c
-> +++ b/drivers/bluetooth/hci_qca.c
-> @@ -1653,6 +1653,39 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
->  		skb_queue_purge(&qca->rx_memdump_q);
->  	}
->  
-> +	/*
-> +	 * If the BT chip's bt_en pin is connected to a 3.3V power supply via
-> +	 * hardware and always stays high, driver cannot control the bt_en pin.
-> +	 * As a result, during SSR (SubSystem Restart), QCA_SSR_TRIGGERED and
-> +	 * QCA_IBS_DISABLED flags cannot be cleared, which leads to a reset
-> +	 * command timeout.
-> +	 * Add an msleep delay to ensure controller completes the SSR process.
-> +	 *
-> +	 * Host will not download the firmware after SSR, controller to remain
-> +	 * in the IBS_WAKE state, and the host needs to synchronize with it
-> +	 *
-> +	 * Since the bluetooth chip has been reset, clear the memdump state.
-> +	 */
-> +	if (!test_bit(HCI_QUIRK_NON_PERSISTENT_SETUP, &hdev->quirks)) {
+> PF reset of a SRIOV PF disables the VFs and effectively resets them
+> already.
 
-Still based on some old tree. Could you please stop doing that?
+Yea, I was expecting something like a SW reset routine, for each VF,
+which would invoke iommu_dev_reset_prepare/_done() individually.
 
+Without that, iommu_dev_reset_prepare/_done() has to iterate all VFs
+internally and block them.
 
--- 
-With best wishes
-Dmitry
+> But reaching out to mangle the translation of the VFs means you do
+> have to take care not to disrupt anything else the VF owning driver is
+> doing since it is fully unaware of this. Ie it could be reattaching to
+> something else concurrently.
+
+Hmm, and this is tricky now..
+
+The current version allows deferring the concurrent attach during a
+reset. But, as Kevin pointed out, we may have no choice but to fail
+any concurrent attach with -EBUSY, because a deferred attach might
+fail due to incompatibility triggering a WARN_ON only in done().
+
+This isn't likely a problem for PF, as we can expect its driver not
+to do an insane concurrent attach during a reset. But it would be a
+very sane case for a VF. So if its driver doesn't retry or defer an
+EBUSY-ed attach properly, it would not be restored successfully..
+
+It feels like we need a no-fail re-attach operation, or at least an
+unlikely-to-fail one. I recall years ago we tried a can_attach op
+to test the compatibility but it didn't get merged. Maybe we'd need
+it so that a concurrent attach can test compatibility, allowing the
+re-attach in iommu_dev_reset_done() to more likely succeed.
+
+Thanks
+Nicolin
 
