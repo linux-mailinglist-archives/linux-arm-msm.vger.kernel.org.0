@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-70243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 988B2B30ECB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:22:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8225FB30F00
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:33:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 685643AE98E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 06:22:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C2B97177855
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 06:31:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC1432E5402;
-	Fri, 22 Aug 2025 06:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 999F52E426C;
+	Fri, 22 Aug 2025 06:31:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OeOz3AD7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="smudoD37"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8CF72E3B1A;
-	Fri, 22 Aug 2025 06:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452492459CD;
+	Fri, 22 Aug 2025 06:31:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755843735; cv=none; b=QKOKaQqrEbgVBrhPb3s+yDrhcqvDVuH2BQBfChC46OIjiI8cTCx/I8Gd0vT2L+D8FkHkTIp/mV9bogMpkzn9gdT5pX0kTjeur6tVpBTZ7VZftlEkX5lNp+OvxUxR3TklHNzXV4Etg3lYyY4x3r8zf75EfDh7vSEXxyMsvqV7ABo=
+	t=1755844289; cv=none; b=POzZdhvfQPbBsqxD2G1naVgNKmvb/fYlOY8dgtqJR8VqOAVjYGOecalrG1DKPwGbYR/DM7LNr90guBV5QGNutUFTQgU0eHRDDZRqMK9cxr+tnIGfytzCuv0aee1wDFmKdAIdcZfj1dVh5bT9Sw5FXcjVxXxOF79rRZ1aS0d/cZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755843735; c=relaxed/simple;
-	bh=7D6xFa70wJx5tX3UlUgObYaakCA6UJ6UXORQl4xRTuU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=AE8/ewTR6I5SvMWHLq+eqz1QOoeitZ2fAuesU/pvPE4BSEOdQ0yUnEdCISdPaDZTFhErs6BD4hSdklXTQ3+CF8IBjjQvRiF9S0UyFboZyXpMIztNVlP0DDe50zwTTiKfPsIXxRoiWJZFnOQWsMTcUUd2GWzN2sJgI8b644PNKHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OeOz3AD7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D2ACC4CEF4;
-	Fri, 22 Aug 2025 06:22:12 +0000 (UTC)
+	s=arc-20240116; t=1755844289; c=relaxed/simple;
+	bh=S0EtvDojJcb9ng9oKlg7nM6uF6tX+Gcl/Vg/yItF0B0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=MmQ81nFx4coxk/nYZVdethyYyNr2266xA7dK2o49R6LBimaieYJXCHV0I9kCTEtwNxxbLJuBV3UYWpoXr9zAjx20a8PduJuwm57yAdvPHuhc8RXDBenfIhkcK1v0iy/tOuIGZ1M3mPy58BfOH1OSDDrujizPXT+UG/9IxCluvpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=smudoD37; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 349D5C4CEF1;
+	Fri, 22 Aug 2025 06:31:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755843735;
-	bh=7D6xFa70wJx5tX3UlUgObYaakCA6UJ6UXORQl4xRTuU=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=OeOz3AD7YTyewfU3ZmNeXRKQDuQnjvcd3MIFu4agBTN3tioPQQJutCIqI2Skpt2oh
-	 SR8Wn4lP9uoJQ+DAsuorZ1XND1OFwme8xav9QCoiCasiUDnXS/Kg35ncaGYnSyGFwL
-	 YZxddHtZW3P5gGT/MTlRhxVQHlAKj/L+EySkWo/4RILOmqI11KLoXocba6WvT0U2TO
-	 TVvEonB65rZ/zrBcLHLTQcJVUGjz33GrQuSM9z8s/cU19lFMmUJJQJgQfF3VEGVvzY
-	 eeFJOtBMxeVS0OgdSrIpDvdfpJgJGjMqBc/r8mtcbhNYQmh6rf50BFJu9BkaU98Uea
-	 FL3VtWFqL09jw==
-Message-ID: <0741fed1-33d3-431d-8cf3-04b47fe80b03@kernel.org>
-Date: Fri, 22 Aug 2025 08:22:10 +0200
+	s=k20201202; t=1755844288;
+	bh=S0EtvDojJcb9ng9oKlg7nM6uF6tX+Gcl/Vg/yItF0B0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=smudoD37JbeCgskOA4dELZ7jIo+NtDFWQPjLhJYLKNuXZvB0UiCuc61R5hdoVsLmM
+	 ybo+TWt+wVJ2Rs4cZ75R9sLl2P3KleD0hQR9dONOUY2fdfE6xduX1tT8UNoVXdkuuF
+	 OEVLxOGXuBIHC//tRFStTH8sJOKjTi0BH7nKAvGeHJ++81afMtsRBHl34d+Rp6NP4Y
+	 F+RPOKtNtL/I0b5HBPExCKAh/CHtE+JXeRHe9NwYrf4TZz4s74ac8vhGZWFo+tT7f8
+	 bCXGXF48GrCtFYG/mDIZrimPojIXIrrldiIsne70iQlCF2SMoy+M7y1tAied6EfjvO
+	 P2TFMkTz/iohQ==
+Message-ID: <1907e1c7-2b15-4729-8497-a7e6f0526366@kernel.org>
+Date: Fri, 22 Aug 2025 08:31:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,66 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] firmware: qcom_scm: Add
- qcom_scm_pas_get_rsc_table() to get resource table
-To: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- linux-remoteproc@vger.kernel.org
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-8-mukesh.ojha@oss.qualcomm.com>
- <4a60c3d3-11fb-40fb-8686-3d83539f250b@kernel.org>
- <20250821172043.fh6sr6w4bwyhov5q@hu-mojha-hyd.qualcomm.com>
+Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated round_rate()
+ to determine_rate()
+To: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>,
+ Stephen Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Cristian Marussi <cristian.marussi@arm.com>,
+ Chen Wang <unicorn_wang@outlook.com>, Inochi Amaoto <inochiama@gmail.com>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+ Paul Cercueil <paul@crapouillou.net>, Keguang Zhang
+ <keguang.zhang@gmail.com>, Taichi Sugaya <sugaya.taichi@socionext.com>,
+ Takao Orito <orito.takao@socionext.com>, Shawn Guo <shawnguo@kernel.org>,
+ Sascha Hauer <s.hauer@pengutronix.de>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Fabio Estevam <festevam@gmail.com>, Jacky Huang <ychuang3@nuvoton.com>,
+ Shan-Chun Hung <schung@nuvoton.com>, Vladimir Zapolskiy <vz@mleia.com>,
+ Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Samuel Holland <samuel.holland@sifive.com>, Yixun Lan <dlan@gentoo.org>,
+ Steen Hegelund <Steen.Hegelund@microchip.com>,
+ Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com,
+ Orson Zhai <orsonzhai@gmail.com>, Baolin Wang
+ <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Michal Simek <michal.simek@amd.com>, Maxime Ripard <mripard@kernel.org>,
+ =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+ Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>,
+ Janne Grunau <j@jannau.net>, Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+ Neal Gompa <neal@gompa.dev>, Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+ Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Daniel Palmer <daniel@thingy.jp>, Romain Perier <romain.perier@gmail.com>,
+ Andrew Lunn <andrew@lunn.ch>, Gregory Clement <gregory.clement@bootlin.com>,
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Heiko Stuebner <heiko@sntech.de>, Andrea della Porta
+ <andrea.porta@suse.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>,
+ Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
+ Ulf Hansson <ulf.hansson@linaro.org>,
+ Luca Ceresoli <luca.ceresoli@bootlin.com>,
+ Alex Helms <alexander.helms.jy@renesas.com>,
+ Linus Walleij <linus.walleij@linaro.org>, Liviu Dudau <liviu.dudau@arm.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>,
+ Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev,
+ linux-riscv@lists.infradead.org, spacemit@lists.linux.dev,
+ linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com,
+ linux-actions@lists.infradead.org, asahi@lists.linux.dev,
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -111,34 +155,20 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250821172043.fh6sr6w4bwyhov5q@hu-mojha-hyd.qualcomm.com>
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 21/08/2025 19:20, Mukesh Ojha wrote:
->>
->> Srsly, what sort of AI hallucinated slop it is?
->>
->> I think this is pretty close to proof that your submission does not meet
->> criteria of open source contribution.
->>
->> Did you run any of this through your legal process in Qualcomm?
->>
->> I don't trust any part of this code.
-> 
-> I don't know what made you think that way. There could be confusion with
-> my writing and may not have expressed the thing i wanted.
-Commits were written by two different people, but signed only by you.
-They have 100% different style and the other looks like taken out of
-ChatGPT.
+On 11/08/2025 17:17, Brian Masney via B4 Relay wrote:
+> The round_rate() clk ops is deprecated in the clk framework in favor
+> of the determine_rate() clk ops, so let's go ahead and convert the
+> various clk drivers using the Coccinelle semantic patch posted below.
+> I did a few minor cosmetic cleanups of the code in a few cases.
 
-Editing patches post factum is another reason.
+This is going to create huge conflicts and I did not find here any
+merging strategy.
 
-Reasoning here is typical for LLM - first claim something ("static is
-possible"), then claim another ("dynamic are always") and then connect
-these two to create false third statement (static and dynamic are always).
-
-You got three strong indications. So this is what made me think that way.
+What do you expect from us here?
 
 Best regards,
 Krzysztof
