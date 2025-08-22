@@ -1,181 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-70252-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 098DAB30F84
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:49:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 78BF2B30F88
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:50:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A962A18884E3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 06:49:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4B799587CE7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 06:50:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBC742E371A;
-	Fri, 22 Aug 2025 06:49:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4490A2E6120;
+	Fri, 22 Aug 2025 06:50:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XpypsNBc"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MX/sGEZf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4984923B607
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 06:49:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76DBB2E611B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 06:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755845365; cv=none; b=gbKOy5wQdQUjNwVmd7nR4lW3LXrBN1Rt00uGBJkDWHxPtDNP/ch+b7kEpA4eNh4EZUbvZHzheMZsg3Inh0Gg+lSws/bdlUW6z3N81N4iK1s8eRPCL79kD1GmnF7b2gzsqvJXfGWgRQwomH7q6qj9098GoHTHSa6ZMlV7eoUuj+Q=
+	t=1755845432; cv=none; b=PUw37bfqbIhvSl0veAWIWOTs2sD8cDcIKCaZDlGv8GpjBzCnZg15syCjDdIg6bhqkXERq1+bXc26WB0u6VlJtKtV+Xgnv7c/TOzXUoqT6FzFKLBp8iqrfzuihVLVZ2EfO+FnPkWiq6fOaD50CE77dZ4OphMn/3VYjQdDj5KXYx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755845365; c=relaxed/simple;
-	bh=d51gPt9fVVIQrlb71UzF3auHKTHOiR8lyyNLgba0IKI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=F79DctCvD5Do7Ke8rCghJLqYXRvJf1ocbDjs141R3d6tbTAa5D1zeapNUuJIU4TTTzL/11mIf+gThGhcrTNDY/Rp79TWSIOBfLkRL5PPDoN7WNWFDV/uNMH5wnazPXHbHzWbkdmYTktomMeEeSLSRHZJ1h24+ZfLNndiZbWllng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XpypsNBc; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M6Gc8H002961
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 06:49:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	PAelQyATkPA6YSXiRQaF3kDsfrHXJ4J/shH4gx5CIb8=; b=XpypsNBcuyAp/E9l
-	cMSqL9doPX/KQeFqCC5fdM4wqiI1J54UThwJttpQCwPqaSWuP3Exn3DdAtl6z7nH
-	dxunfAwgv4QMLgEo2clVv8ZtS7Hl5FjHMy2ujAsTDUJYY0jt6qtfMKI1xgZMo7fr
-	K3O//G/YQBO0uqeuP83fdJl+g5dwuMzWisOt+OYY8y37rekTc1VPy0j5gp0cuBBE
-	G1Hse0gaaU4//wDwBnX7+uL17KX0/EKFzABR9OY79PS+8tKi+f++eLP3WmpwMSEv
-	1Gcl+sbQ4IP9+x+gdEHHa8m3Fc31y/QIxHm42aNykv4nJRwADxGei5WViPKfh+J2
-	5Aso1g==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ngtdny7q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 06:49:23 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b4756169c46so461032a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 23:49:23 -0700 (PDT)
+	s=arc-20240116; t=1755845432; c=relaxed/simple;
+	bh=DuqjwUZ0I0wbqeZg4eSLBetmOHd1tcp0S+RZur3J6SU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MKHmNMoFaouCOUwwvCTv08OXcyJ5t5YSz/ZX7ASmgQwzPeSDIyn/2Iu94+Pqxxskfz2MovgkejqoxOt/jS8vsMwCFhxYLRXxttO9r4TcYTC3le5i3dLPpRwLtspGdHhUFgs/tA+HrpnUl46LWP9pin6+WhbZVX7ZcwNZEbJx/90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MX/sGEZf; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-24456ce0b96so18749925ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 21 Aug 2025 23:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1755845430; x=1756450230; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ac9oBg+zAj6kXtu216Jjjabie+kjofFUW2rsHnH5Bqk=;
+        b=MX/sGEZfNy9iQcvjl7FFBF1vsjt8G6QeSkTRRHFyMssJtFS3fwWqYNAB4hqoi7wnil
+         /ePRZXcTc4PPbpNcazpUzo3T9llgN5AXyyG3lo4buW0/UE5HxJxNZqGrgt83KKhCM66V
+         1OUrvBF7EwH5HNXZcWer4EGeaVvBZ1NvQXjFDZynTrCEr7M7pYjbQTdMjVBkVDCCEZ42
+         o26jdkQnQDDe8RhdGJP0y2ekKfMIvmI/KszLzrmDP02WfHDbC//yl3R0gY1Cf7OAvxsJ
+         zuEys1rTKqi8BMyazR8gG7bRZyekxK7kxeWPdUVYEpFhzK7OdhcDcFpSg6GhhSAkbHnm
+         uA1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755845363; x=1756450163;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=PAelQyATkPA6YSXiRQaF3kDsfrHXJ4J/shH4gx5CIb8=;
-        b=T3UIVQse/uw/2bKtdr+tYnxpLIucVSCRaT0Ul/Usx0JZYYf3+PGluu016BczLIKAvm
-         +KqiE7DaYV4PVIpmtoUG7nMKuBRKQCrNQR4+jFfFAD9vY8rLQbRtytWUHUgtAnsRi7/Z
-         ku011JlLBppEP9pxcdIU7tg/DXkNEXe1qlfHzxmZOAiD+0jWfxsyW4BuILzYEveEEbMf
-         lLD/rmdavhm0BjCaRZlNzyELUC38/JMwb4FM1kwnun6GZd3MTjxg1ReqCelrKn2kzqYz
-         OYFyad0sUG8PMqzlFM+JI/Vqdkfflfgl1oSbpYUaphDnoOVD/UzWFWJevkHV0jGC2gGM
-         HHxg==
-X-Forwarded-Encrypted: i=1; AJvYcCV2sBNU9BXrzB+BpItNrtZ6bgl348wsVoPtQLaFptOXCLY3tx8/LksXJT/q/JCnDRJ2+AB4ZsEVFcUvYfBa@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/kZXkG+n0D+RtQ9dfPZe/ObNBWHes0HKqZAfjQ4XT4AAMgIOT
-	5gMXZMDyV5eeNlupPwRa8hyXIa6u5aAVsLdlIE9FbVh8oBWDnutK0HcynKCc6DqwfdYb1BMYRyk
-	5n+TRlyI2qJQ9VCJkyVJeir/F2WPoddsAV7pPtxfuRD1Nfq1aqXbidIGIZjKAGNhkaU3D
-X-Gm-Gg: ASbGncuQBVzxiMXvmrg6osmDF/7FkXyWAuVpiAodhfsK9cLlMrqk0Giy6xCqvPqmp99
-	l0eailJlurTZC6cIJc30XIkSQUJa253L45WfHUDko646odywQOHpSlB+gBNvFELun5dRUO9zQN1
-	zE0gZS90W+g2+53369lbt/NjT5x5Eqeok9R6MIQvjnKY8xh3xw96Dc9/yaWuykJEKrJ8X9Rn3l8
-	ypEDIXKbvBCZbSm1jvareejdLXB03EC4wq8TRtAkPtc5nyec2MnPzBIPpPfnOf7SDGfGZp4SmQw
-	hg6Kd5tvbvn9cI8DFBaSojSa8+LIhP/4R8pMyd2+ow9YC1IrOJ3a9+RY0syrakRcKRJkhFlcMu6
-	lhG4J684Hk9rZ0fVhhkI7eDrgIlqzdw==
-X-Received: by 2002:a05:6a00:4b16:b0:748:f854:b76b with SMTP id d2e1a72fcca58-7702fc0b4b9mr1451099b3a.3.1755845362728;
-        Thu, 21 Aug 2025 23:49:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGw2XinJYhFdfeOr2DKaBI1LxvJNvXAx1nbOyA+a6mHNvNi1D2KrOEAJ42/+JTdElCmxHO/Qw==
-X-Received: by 2002:a05:6a00:4b16:b0:748:f854:b76b with SMTP id d2e1a72fcca58-7702fc0b4b9mr1451069b3a.3.1755845362261;
-        Thu, 21 Aug 2025 23:49:22 -0700 (PDT)
-Received: from [10.133.33.119] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-76e7d10fdd6sm10099827b3a.29.2025.08.21.23.49.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 21 Aug 2025 23:49:21 -0700 (PDT)
-Message-ID: <d21c4c74-a36b-4f01-9c22-44bcec3c20eb@oss.qualcomm.com>
-Date: Fri, 22 Aug 2025 14:49:13 +0800
+        d=1e100.net; s=20230601; t=1755845430; x=1756450230;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ac9oBg+zAj6kXtu216Jjjabie+kjofFUW2rsHnH5Bqk=;
+        b=NznDrHLXKa1ZIb6Dvt6XS3aJEvzsBy35bpfacNzsNPfpnDZYqMmZ/fqoPuGW+KZrwF
+         BQ/xzrVd3UwNGgx5isNU87rep/SmfsI4fXsMZFdHWHL29cDnx0AwRz+j2EZIhlfGOzy0
+         N5xuS6/ripZX/KHtgO/62RtY24FeevA8GsSfRDX+9v/P2MPxA38+bXLP4XqoCExIxjR8
+         mt8xty7XtLQgfYph0jvSigoMweXZODaLPGHx5wD35/rbifXQ2gs2Vzn97ZQrWO0PZZ+e
+         2l89P1oiKkDCjouLLECPD5NLZbR+3FcSCobAjxFyQQ2nDeHLNWlEDr7sQqygo//wLMlk
+         eOrw==
+X-Forwarded-Encrypted: i=1; AJvYcCUvVnkflp/Fp/uTun4irqlosLyG1+5LVhK/mAVKLXv/Pbrux+1mWDX5n4sVe+50jAr+4UsAdnURj+2SMw7e@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUFIY1ho2e7/FJ42gi1iEG6fstVdhh/qy68PIGHCC6ZD5LcMRw
+	Zd4jc1fRIaXB7c4eAXihekKEOfdc1LEihmTSKSV92es5LIy9mFx8+K3sVkNhDT5BgUA=
+X-Gm-Gg: ASbGncsNLEJxmWhavAGvTCF+k/jB+YvecZ5qdorIyuol0sphnX5/OYrmii0DLX5WMTv
+	5dpaPk4qQb7PdStWGCohdhN6Dfk8mPgGmg3noMoaK/3K+/VKzoZqlKg8SeB8sClBTzQ+JmuKrN6
+	0M+CakE1nUqocgLRaWQVj6OSxmqR+5qa95eJzwZFTwqcT+olzX0PaOqBzXTpK8sd1/AUCEiJl6o
+	7dW4eDhJpps90xvIXksYortaD2TFjeYoc+LoHud9CJSgD8Dfq8jXkBlEu9qXdD9jrLZEBXSxyGA
+	s4kD5MXQoHynWNZAIdfaORYfFI59LH6AKLlfGayR+EqEJHax8TN2L3cDb8w7/CczcSBJzOjHhq9
+	sVkBQ7ab23NnSA/Hr+pPKnjQR
+X-Google-Smtp-Source: AGHT+IHgwZxe9A1mdJuJEAilKFh6/5WCjKikIYsvxCBNTe/vWqdxRw/EgUKt2pMsNi1wJJYtqOnVBA==
+X-Received: by 2002:a17:902:e888:b0:240:4d19:8774 with SMTP id d9443c01a7336-24633d6a31amr23345995ad.24.1755845429661;
+        Thu, 21 Aug 2025 23:50:29 -0700 (PDT)
+Received: from localhost ([122.172.87.165])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-245ed33df68sm74340735ad.21.2025.08.21.23.50.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 21 Aug 2025 23:50:29 -0700 (PDT)
+Date: Fri, 22 Aug 2025 12:20:26 +0530
+From: Viresh Kumar <viresh.kumar@linaro.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v4 1/7] OPP: Add support to find OPP for a set of keys
+Message-ID: <20250822065026.2ve2uscdjfismm7v@vireshk-i7>
+References: <20250820-opp_pcie-v4-0-273b8944eed0@oss.qualcomm.com>
+ <20250820-opp_pcie-v4-1-273b8944eed0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 04/14] phy: qcom: qmp-usbc: Add USBC PHY type enum
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, fange.zhang@oss.qualcomm.com,
-        yongxing.mou@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
- <20250820-add-displayport-support-for-qcs615-platform-v3-4-a43bd25ec39c@oss.qualcomm.com>
- <cueyo7huj2m2yt46sjk3atfktft6y5slhhtslwmi44r7h7lxbn@5zvwxtdmk34t>
-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-In-Reply-To: <cueyo7huj2m2yt46sjk3atfktft6y5slhhtslwmi44r7h7lxbn@5zvwxtdmk34t>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=LexlKjfi c=1 sm=1 tr=0 ts=68a812f3 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=LJgbN-Jd--P93uwsTkIA:9
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-GUID: 2B3PasB2j1M3pshHQ34TchPJi2lhJomY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDEzNSBTYWx0ZWRfX2brl0JEjjM2O
- ev5yWipkzLasFmOLNE/8JRLIADk5cc9b3qt90E/Ueh+sceHcjP3A6AIRtjpv2o3PxJPzAf5X0rm
- QgBElBBBY/XHGEKy7moWOx0pMCooPDfs4XVyut6Voadp+/EzvLKldrZ8hY5br6rewaCOOaDiwqm
- wgbdyJB+eY8aDIPLsZbXNn960jaKkl+e8Z2HUyO73k1son4Nmv7mmpWgUa+OhdjnHLKPaCg3y85
- 4IU/zhr472Z2jkl+3iw9D//yjfXgOo/fSQP+MARWhypKP2XlAt4+ljyZ4n8/mlReHO6PYaVTDe9
- fNwsCF6cmz6lmm9Pd6PNzjpmm0E8ct2YhKDo9iOwgtUsvmTCw9LHJ/iJCA082x8a2AUHJ9d1tg0
- f47CD4CiiqwOiIHebEwXjDL6ljr5ZQ==
-X-Proofpoint-ORIG-GUID: 2B3PasB2j1M3pshHQ34TchPJi2lhJomY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-22_02,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0
- spamscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200135
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250820-opp_pcie-v4-1-273b8944eed0@oss.qualcomm.com>
 
+On 20-08-25, 13:58, Krishna Chaitanya Chundru wrote:
+> Some clients, such as PCIe, may operate at the same clock frequency
+> across different data rates by varying link width. In such cases,
+> frequency alone is not sufficient to uniquely identify an OPP.
+> To support these scenarios, introduce a new API
+> dev_pm_opp_find_key_exact() that allows OPP lookup with different
+> set of keys like freq, level & bandwidth.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/opp/core.c     | 97 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  include/linux/pm_opp.h | 30 ++++++++++++++++
+>  2 files changed, 127 insertions(+)
 
-On 8/20/2025 7:34 PM, Dmitry Baryshkov wrote:
-> On Wed, Aug 20, 2025 at 05:34:46PM +0800, Xiangxu Yin wrote:
->> Introduce qmp_phy_usbc_type enum and a 'type' field in qmp_phy_cfg to
->> differentiate between USB-only PHYs and USB/DP switchable PHYs.
->>
->> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
->> ---
->>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->> index e484caec2be20121cfe287c507b17af28fb9f211..5afe090b546977a11265bbffa7c355feb8c72dfa 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->> @@ -284,6 +284,11 @@ static const struct qmp_phy_init_tbl qcm2290_usb3_pcs_tbl[] = {
->>  	QMP_PHY_INIT_CFG(QPHY_V3_PCS_RX_SIGDET_LVL, 0x88),
->>  };
->>  
->> +enum qmp_phy_usbc_type {
->> +	QMP_PHY_USBC_USB3_ONLY,
->> +	QMP_PHY_USBC_USB3_DP,
-> Drop, you can use presense of DP offsets in order to differentiate
-> between USB3 and USB3+DP.
+Applied with this diff:
 
+diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+index a36c3daac39c..bba4f7daff8c 100644
+--- a/drivers/opp/core.c
++++ b/drivers/opp/core.c
+@@ -476,7 +476,8 @@ static unsigned long _read_bw(struct dev_pm_opp *opp, int index)
+        return opp->bandwidth[index].peak;
+ }
 
-Ok, will drop.
+-static unsigned long _read_opp_key(struct dev_pm_opp *opp, int index, struct dev_pm_opp_key *key)
++static unsigned long _read_opp_key(struct dev_pm_opp *opp, int index,
++                                  struct dev_pm_opp_key *key)
+ {
+        key->bw = opp->bandwidth ? opp->bandwidth[index].peak : 0;
+        key->freq = opp->rates[index];
+@@ -518,12 +519,13 @@ static bool _compare_floor(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
+        return false;
+ }
 
+-static bool _compare_opp_key_exact(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
+-                                  struct dev_pm_opp_key opp_key, struct dev_pm_opp_key key)
++static bool _compare_opp_key_exact(struct dev_pm_opp **opp,
++               struct dev_pm_opp *temp_opp, struct dev_pm_opp_key *opp_key,
++               struct dev_pm_opp_key *key)
+ {
+-       bool level_match = (key.level == OPP_LEVEL_UNSET || opp_key.level == key.level);
+-       bool freq_match = (key.freq == 0 || opp_key.freq == key.freq);
+-       bool bw_match = (key.bw == 0 || opp_key.bw == key.bw);
++       bool level_match = (key->level == OPP_LEVEL_UNSET || opp_key->level == key->level);
++       bool freq_match = (key->freq == 0 || opp_key->freq == key->freq);
++       bool bw_match = (key->bw == 0 || opp_key->bw == key->bw);
 
->> +};
->> +
->>  struct qmp_usbc_offsets {
->>  	u16 serdes;
->>  	u16 pcs;
+        if (freq_match && level_match && bw_match) {
+                *opp = temp_opp;
+@@ -570,7 +572,7 @@ static struct dev_pm_opp *_opp_table_find_opp_key(struct opp_table *opp_table,
+                unsigned long (*read)(struct dev_pm_opp *opp, int index,
+                                      struct dev_pm_opp_key *key),
+                bool (*compare)(struct dev_pm_opp **opp, struct dev_pm_opp *temp_opp,
+-                               struct dev_pm_opp_key opp_key, struct dev_pm_opp_key key),
++                               struct dev_pm_opp_key *opp_key, struct dev_pm_opp_key *key),
+                bool (*assert)(struct opp_table *opp_table, unsigned int index))
+ {
+        struct dev_pm_opp *temp_opp, *opp = ERR_PTR(-ERANGE);
+@@ -585,9 +587,8 @@ static struct dev_pm_opp *_opp_table_find_opp_key(struct opp_table *opp_table,
+        list_for_each_entry(temp_opp, &opp_table->opp_list, node) {
+                if (temp_opp->available == available) {
+                        read(temp_opp, 0, &temp_key);
+-                       if (compare(&opp, temp_opp, temp_key, *key)) {
++                       if (compare(&opp, temp_opp, &temp_key, key)) {
+                                /* Increment the reference count of OPP */
+-                               *key = temp_key;
+                                dev_pm_opp_get(opp);
+                                break;
+                        }
+@@ -689,20 +690,20 @@ struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
+ EXPORT_SYMBOL_GPL(dev_pm_opp_find_freq_exact);
+
+ /**
+- * dev_pm_opp_find_key_exact() - Search for an exact OPP key
+- * @dev:                Device for which the OPP is being searched
+- * @key:                OPP key to match
+- * @available:          true/false - match for available OPP
++ * dev_pm_opp_find_key_exact() - Search for an OPP with exact key set
++ * @dev:               Device for which the OPP is being searched
++ * @key:               OPP key set to match
++ * @available:         true/false - match for available OPP
+  *
+- * Search for an exact match the OPP key in the OPP table.
++ * Search for an exact match of the key set in the OPP table.
+  *
+- * Return: matching *opp, else returns ERR_PTR in case of error and should
+- * be using IS_ERR. Error return values can be:
+- * EINVAL:      for bad pointer
+- * ERANGE:      no match found for search
+- * ENODEV:      if device not found in list of registered devices
++ * Return: A matching opp on success, else ERR_PTR in case of error.
++ * Possible error values:
++ * EINVAL:     for bad pointers
++ * ERANGE:     no match found for search
++ * ENODEV:     if device not found in list of registered devices
+  *
+- * Note: 'available' is a modifier for the search. If 'available'=true,
++ * Note: 'available' is a modifier for the search. If 'available' == true,
+  * then the match is for exact matching key and is available in the stored
+  * OPP table. If false, the match is for exact key which is not available.
+  *
+@@ -713,7 +714,7 @@ EXPORT_SYMBOL_GPL(dev_pm_opp_find_freq_exact);
+  * use.
+  */
+ struct dev_pm_opp *dev_pm_opp_find_key_exact(struct device *dev,
+-                                            struct dev_pm_opp_key key,
++                                            struct dev_pm_opp_key *key,
+                                             bool available)
+ {
+        struct opp_table *opp_table __free(put_opp_table) = _find_opp_table(dev);
+@@ -724,8 +725,9 @@ struct dev_pm_opp *dev_pm_opp_find_key_exact(struct device *dev,
+                return ERR_CAST(opp_table);
+        }
+
+-       return _opp_table_find_opp_key(opp_table, &key, available, _read_opp_key,
+-                                      _compare_opp_key_exact, assert_single_clk);
++       return _opp_table_find_opp_key(opp_table, key, available,
++                                      _read_opp_key, _compare_opp_key_exact,
++                                      assert_single_clk);
+ }
+ EXPORT_SYMBOL_GPL(dev_pm_opp_find_key_exact);
+
+diff --git a/include/linux/pm_opp.h b/include/linux/pm_opp.h
+index 5d244bf97489..789406d95e69 100644
+--- a/include/linux/pm_opp.h
++++ b/include/linux/pm_opp.h
+@@ -151,7 +151,7 @@ struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
+                                              bool available);
+
+ struct dev_pm_opp *dev_pm_opp_find_key_exact(struct device *dev,
+-                                            struct dev_pm_opp_key key,
++                                            struct dev_pm_opp_key *key,
+                                             bool available);
+
+ struct dev_pm_opp *
+@@ -313,7 +313,7 @@ static inline struct dev_pm_opp *dev_pm_opp_find_freq_exact(struct device *dev,
+ }
+
+ static inline struct dev_pm_opp *dev_pm_opp_find_key_exact(struct device *dev,
+-                                                          struct dev_pm_opp_key key,
++                                                          struct dev_pm_opp_key *key,
+                                                           bool available)
+ {
+        return ERR_PTR(-EOPNOTSUPP);
+
+-- 
+viresh
 
