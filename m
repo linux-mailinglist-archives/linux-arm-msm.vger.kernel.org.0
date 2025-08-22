@@ -1,237 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-70237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28A12B30DBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 06:54:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A613B30DD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 07:11:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A51A3AF235
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 04:52:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB752587B9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 05:11:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A4B6266B67;
-	Fri, 22 Aug 2025 04:52:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C077828B3E7;
+	Fri, 22 Aug 2025 05:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="E5AE4X8a"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OsCBn8KX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2071.outbound.protection.outlook.com [40.107.236.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF2981FECAD;
-	Fri, 22 Aug 2025 04:52:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755838337; cv=none; b=Zqnhh3l2THGYqG7nupkUgtOr8xgTwzukl1SSeJa2cyAOEhTbpVczXpJ107eTrVwAbEmAx72630gRTNv3Qdsu9dVT3w1vjcxlKB934TZgq+4hd7LRMBAZmrkT/EX1wOGWgyZnipBnxhn+m93/eFK323hwqrztWj+BKzCBTuuzARY=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755838337; c=relaxed/simple;
-	bh=+R8nj+3x8K/Ut/4FayZ+IQKFiZDBedtKBHySn+2Kpm0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:To:CC; b=j7s+5r9Y5DXzeaeCFd/WqFwm/LGJl8BmylT0Z1dWwt3vL9ElH6xkUyvtGOJ+KJ9iYWzqaNwSwGpoJel3YYJQyxSkIHJbHp1htEBXXfQFT7sGM65RgYwhvhPiqxB7BI6B3Lp5DCPnTpItmmXc0tPbhICHrXoP8jArtMW7WSGa84E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=E5AE4X8a; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57LI936q010518;
-	Fri, 22 Aug 2025 04:52:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=ebTaIP0/FT3mZgpVGuhuvu
-	AHCYJeQHUzfan7ZQTqUG0=; b=E5AE4X8a6Qm8ZEU4Yo/sXXYLxM961GM2X6ISTl
-	2iWiGd4YLc07+FR9EJNjJq+G+izFJ6jgW+eoZxd1eGZnWQ1fKuCRJGYin3/x9MKL
-	f9QQgSJSJkATjamP6Uq3EyopdqwZTF5xxRjYGINkeluN5E2tZUf4TNuaIeioABfb
-	PNOtxcOtg2GkuvVsJk53AUtaUDVhmP3Q1CqsBJBC7X/+KT0CRLkGwWirkgV9LIan
-	G4BimyoWIBHsJ/p5t/BlOsUp8WdUk6VsqxGttxKdKAUGVJq6iGKlnUJfp7pxgvEK
-	cRNmZnOaoTfs0UXrsbqRD+vAUYIkDdA005WkPKd2As/4Xhyg==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ngt8dmpt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Aug 2025 04:52:12 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57M4qBM9023101
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 22 Aug 2025 04:52:11 GMT
-Received: from hu-vpernami-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.10; Thu, 21 Aug 2025 21:52:09 -0700
-From: Vivek.Pernamitta@quicinc.com
-Date: Fri, 22 Aug 2025 10:22:03 +0530
-Subject: [PATCH] bus: mhi: host: Add uevent support in MHI driver
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CC91917D6;
+	Fri, 22 Aug 2025 05:11:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.71
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755839507; cv=fail; b=AXBCH0/+TuLLe8wRo5DAeaMVDY4ezgdrXeHg2AvtpOxhMDd0gfho5AVmerW2Lfao5CJqJVRSiINRZ8avs8fii6OV0T3QiyUCuVAP0AI6cQfeGqD3Lva/FyK/GSQQ5nCGV1hcfPvVUsnubH3z9+dH3i+oDHA8oTi1GUyJOBIRHwg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755839507; c=relaxed/simple;
+	bh=fAWN6SQg5lPMkh1v5siKEL6NGroPZx83SZ2bBpG7nB0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Bn54K5W0YAJHEDJZm1s1cN5GnsOKSvZQi2usu1qW0llmLFeUWv+siwjYGPJWqifHGXJy/Fbfw9hPkkM693tJwwguDRuHp1Hf/5fCIjV+Fr6ubc9wGx/0b87WEiHzKnpr9X17/y6upUN3c8xp6Gm/RYtXD8BDcVyST+RUPWDRTXw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OsCBn8KX; arc=fail smtp.client-ip=40.107.236.71
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AVsYzvzDDNOZQtSzeJ2FMw3sb+UQd2iHadyW3r/OLm6hwYBFW4ckL2wIwPRK8ldrrC7ubh3dJtdis1Gn/p8AfqfVGP7C4jtz5omgoyMe66LEi++709tOi747pnuPT+aGGfe3noqP+Dyw+HmwToWW1dmDJN+sCJr4I0/DlaZ0wxx/6q02WWCl7OMBROPgcVKzVyRV4Uk+rM8D4z12A1Q2gAi/JSv5Er+qag2LvQ/ajtLqtHZ9X6cgWy8b7Kq0bJwXrYXE424QFZyM/Wsbpp3dqVMW4IA1NUIIAwqChOT2iBGcuo3XPpu3GjYRV0Agr2I5KM9AEUIQIy+v/iTR1vx9+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=BpIpCP4uEJEkXPDzjwAmYmnsbZihBAoiaiozj7nDRJw=;
+ b=JuqcZTyqevJlAj4S+tUhNAwsQX3S5gHZ9Hkw/aF1fN7r51cRwLpoad7R0GCDOwAKlb8iU7jBkHgmHPlXRLhqpTRyUXZN9mFNNvwElDQDz32ZmKIIsmoPG9lKfFDkLrC5cZ7eulW3jmkPFNjmR7oPfcbLFBKo8LIHSXHjyG/JfYf6gRtwFz/qiIIiv45zGP3xw/mouA4Bn5BsrV2bsdxUw5sKJPT50JJSYqd9thCIuYGzed6GipaXp09fuQg6ORZ6k76xyV6uH+ZWeNKyZLXDAkv775ueKwXrPx6pvbcyirF10eD38Hl66EpPEPq/zwm4n08L/GakgnNF84n0GRKFJw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=BpIpCP4uEJEkXPDzjwAmYmnsbZihBAoiaiozj7nDRJw=;
+ b=OsCBn8KXcf3+Jqy6nTa3BjBHMbv9AQxS4nx7KXbq+GDi/jUun0mBHL8l3bhYdTKk9OvFqdQfN1b8bWQ4eA1ytG9y76WkQBKWsfCoGzeVdE3MdwEHhzKtHf//9lo9ABYDAn8qdWddc4W1tVN4TJggnf0Yu3XTL7tTjrRDG9kJF1QpvBd2sI67kgOedk2Cn2LzrdgqcpS2Oa7i3O4IyJq1sYDjAbEu2k2qFqYk3Bz/zdEVXS67RbeZrM7kgTOYaWY3jSW/VrSdseBZs7oyLUo4DBMv21geCcU8Gp12zKrAXzjpIQ5JUAqGOr3gy/TxgxJLXbsQVyLSVpcuIOv/6+VMCQ==
+Received: from IA4P220CA0004.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:558::8)
+ by IA1PR12MB7759.namprd12.prod.outlook.com (2603:10b6:208:420::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.15; Fri, 22 Aug
+ 2025 05:11:40 +0000
+Received: from BL02EPF00029929.namprd02.prod.outlook.com
+ (2603:10b6:208:558:cafe::bb) by IA4P220CA0004.outlook.office365.com
+ (2603:10b6:208:558::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.17 via Frontend Transport; Fri,
+ 22 Aug 2025 05:11:40 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BL02EPF00029929.mail.protection.outlook.com (10.167.249.54) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9052.8 via Frontend Transport; Fri, 22 Aug 2025 05:11:40 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 21 Aug
+ 2025 22:11:27 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 21 Aug
+ 2025 22:11:27 -0700
+Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Thu, 21 Aug 2025 22:11:26 -0700
+Date: Thu, 21 Aug 2025 22:11:24 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: <robin.murphy@arm.com>, <joro@8bytes.org>, <bhelgaas@google.com>,
+	<will@kernel.org>, <robin.clark@oss.qualcomm.com>, <yong.wu@mediatek.com>,
+	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
+	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+	<rafael@kernel.org>, <lenb@kernel.org>, <kevin.tian@intel.com>,
+	<yi.l.liu@intel.com>, <baolu.lu@linux.intel.com>,
+	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-mediatek@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
+	<helgaas@kernel.org>, <etzhao1900@gmail.com>
+Subject: Re: [PATCH v3 3/5] iommu: Add iommu_get_domain_for_dev_locked()
+ helper
+Message-ID: <aKf7/Fk/dT6UZWb9@Asurada-Nvidia>
+References: <a69557026b7e2353bae67104bbe6a88f0682305e.1754952762.git.nicolinc@nvidia.com>
+ <20250818143949.GO802098@nvidia.com>
+ <aKNhIr08fK+xIYcg@Asurada-Nvidia>
+ <20250818234241.GF802098@nvidia.com>
+ <aKQG9/skig6F8LdQ@Asurada-Nvidia>
+ <20250819125249.GG802098@nvidia.com>
+ <aKSyzI9Xz3J0nhfk@Asurada-Nvidia>
+ <20250821131304.GM802098@nvidia.com>
+ <aKc5niDWTwaCInH2@Asurada-Nvidia>
+ <20250821183704.GP802098@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-ID: <20250822-uevent_vdev_next-20250821-v1-1-9ed3a8162194@quicinc.com>
-X-B4-Tracking: v=1; b=H4sIAHL3p2gC/y2M0QpAQBQFf0X32da6iPyKJOzBfVnaZVPy7zZ5n
- KaZmzycwFOT3OQQxMtmI2RpQtM62AVKTGRizaWumdWJAHv0wSD0FtehfpMpgykvRj1UJTPFfne
- Y5frebfc8L6FJ0JlrAAAA
-X-Change-ID: 20250822-uevent_vdev_next-20250821-dec34b0a7522
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Vivek Pernamitta <quic_vpernami@quicinc.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755838329; l=4907;
- i=<quic_vpernami@quicinc.com>; s=20241114; h=from:subject:message-id;
- bh=STkvCusmiOpM6Yhb7DF2ssrgL0ORFfvkMePsVhEQb2E=;
- b=rJ+E6nOKOxJ8tet+rh1lGxlgVdN8IZRmnFfMW7IWLNdkHLrsiu5WVYEn4paSkkmwszNRK2PNr
- W84vJq6B3w4C3ce5E8KUjflHhUKOF1F0T8x2tgAPBzN6inbaCqYA96e
-X-Developer-Key: i=<quic_vpernami@quicinc.com>; a=ed25519;
- pk=HDwn8xReb8K52LA6/CJc6S9Zik8gDCZ5LO4Cypff71Y=
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDEzNCBTYWx0ZWRfX9sItxnHmzw6T
- rORwoKajAK4UPEWmGEK70+FZeA5qFHiqzUQXvpfQPfe/5FWfD1utRYG+uqtrfBwaAc6tnoLO5pY
- bYhwh50cQCyJ9Ay+RxE2bh6+UnUapZAFXdzrw3h6qJ6At+q6DeeR9j7+A/tU3kb4jMEV+ln0vUC
- qr92ituf19Vrx6gawxplC1BGH+ySYXaEJfgOFkk7ieDyWitBHdsOMSZlNswvo10osRNpngAb/Be
- n5yD7F8W66GVJCuG9OishGwRcLypTxB6PqDjemYBsNUDfP5qM/tkF7XF5Oy73V2n3zQIPuDGreH
- 5xruRuH1giw8WI9U6o5obyC/z3JrVxKd/W4nkKjPx1DXFxgcORvfszPZwlr+OAvr0YpTvrj7e+j
- /bQxy6nVF4UNcU+gIBec6J6lnNV0eg==
-X-Authority-Analysis: v=2.4 cv=c/fygR9l c=1 sm=1 tr=0 ts=68a7f77c cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=ok3_zkLAggRPmFeU4moA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: qddB0PnQczr58LR_3VeqwBxka7HiB8B-
-X-Proofpoint-ORIG-GUID: qddB0PnQczr58LR_3VeqwBxka7HiB8B-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-22_01,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- phishscore=0 spamscore=0 impostorscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200134
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250821183704.GP802098@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF00029929:EE_|IA1PR12MB7759:EE_
+X-MS-Office365-Filtering-Correlation-Id: 66b59cdb-8784-4321-6367-08dde13a60d2
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|82310400026|376014|7416014|1800799024|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?PX08El9zB/iKwWcqDTmB5sNCDCRqqq42VGvhf1D8fWaBzr/5uhBB0haUloEQ?=
+ =?us-ascii?Q?8tvbMV74P2TlEvLCF4f80zleGgMVlhitMKeXYhJw65oc9ukSLvRNHXD7uf24?=
+ =?us-ascii?Q?J4NU3/DNBhF8hjfj2l4tU1Lb6OdjJjSXHPSwJRBqESMi5LBsKg68dK+l44jW?=
+ =?us-ascii?Q?DpUVIQjUaaH3NIeCA0AlrMJS/RuBAY5PLBqj+qYwv5ebXSt6YtgbjVuLwyzd?=
+ =?us-ascii?Q?2UdRo4d5IjfhyZFZYvTGhQ0REpTyBbHzQHCjnCsBRU5Rm+LapxEAW9D6y64k?=
+ =?us-ascii?Q?oFRnrUDTS7Z04BUy1gsANouEAR5ym9jC+zgzo/TbedejgCG5J2CvnucImkye?=
+ =?us-ascii?Q?ZolsM/fRdL+aYEKK5EPq61rN5Jk8kiSO2HzdXUpv4W1VT+k+YC8FaYqp40fU?=
+ =?us-ascii?Q?g7/9qKIWVwxt4yd/oXwMe694JU7bC5MBPuZfqDwwsD2IaU9ZROpWeYAM6da9?=
+ =?us-ascii?Q?YYbAhEViISM8Gy0tofmbDyufwOKqxRZF3V7WzHxhiLxqysKuzNa3lsdH5sAz?=
+ =?us-ascii?Q?y/ehDaCuWb64yFsaAmi8d2dw9nj1K51U+j5V2k72EeeZHkFCA1uk0IZ/X+jw?=
+ =?us-ascii?Q?0SsyrstqoXxKS3fQ2ew6POBQSABKRw/8sOZjXnKq4eXeaak4PwSE05IvsNs4?=
+ =?us-ascii?Q?jf4ljOhnYsJe0cZfbDg7iFfCtdt97iOFeS1juh3CsX9ebE7ER1V09pYpwK8Y?=
+ =?us-ascii?Q?NJ6KpF3xEsj2QaFblH7dly02fwJVHUbqRRsG1dxEeFdd6BoWJGtr64VyU6/+?=
+ =?us-ascii?Q?JHLjGmJWZpw9udICwDnDo4XkrSyiEYU2sGpdGdfVC3fdXmcM/Ufl8XMjb13E?=
+ =?us-ascii?Q?vWumPqefq0iDLiJJvpbu8RMpl0WekUB+DZ4kD8EEPKZZ0oIvMxnjVaXs4rtQ?=
+ =?us-ascii?Q?2UBWHnv4/5EfLgE5DvCrGYQ0c0FEBZJ3+EnIkthf18F6J3lH+/ugcXsBR9Gm?=
+ =?us-ascii?Q?z2Oxox5bYSo4XxvaJaxUticE2wB42AgyteitTpeb9eAssf7KEtXKFEqIF2zm?=
+ =?us-ascii?Q?Ez0Fy1gvTnUvb3pdUIo4/2JykwPNBm9t42+cimnwcJ1InhQ5r04I879wZkew?=
+ =?us-ascii?Q?Nor+XYEks3UcGNhrO/pRFL5tjcPf8Wr9OaJSvXvf2IksfWJoCBJvYvjoU9wX?=
+ =?us-ascii?Q?5M7NAh7MXmz+oWXvNeCY5aWuoCamxBuWKo6w2bLAft3FPhR6I84aCpuMhugU?=
+ =?us-ascii?Q?EAgAe3fWGtb1L5qTH1HFJIWWwjcLuQRaejctt590v06G+qx1DEQZc9WPAwkY?=
+ =?us-ascii?Q?gv1cQQoOh8BfIqUnGSD4gLasbYHBMdWB7RT7eS0HwL+x4bcy/hlbGforofV1?=
+ =?us-ascii?Q?/TU25Rgt3osU4AgpCv7a4HxsFFb3s3yaRBY7szAmj7BymWrusiP4cJo6Y0zD?=
+ =?us-ascii?Q?SntLMcE2u7NC/x19JGYGiC57RGd3VonZrLUhDb5nEV+z/UbEo8Td6Az7tNQA?=
+ =?us-ascii?Q?j2+2qv1Hey7zMLQGGvC/magf+7Av/t/8dTMfhzknExiA7WCI9YDANks/mXnH?=
+ =?us-ascii?Q?KTd3hdA0ferBdwU4xQhiir98AC4rJLHNoxjW?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(376014)(7416014)(1800799024)(36860700013);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2025 05:11:40.3324
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 66b59cdb-8784-4321-6367-08dde13a60d2
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	BL02EPF00029929.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7759
 
-From: Vivek Pernamitta <quic_vpernami@quicinc.com>
+On Thu, Aug 21, 2025 at 03:37:04PM -0300, Jason Gunthorpe wrote:
+> On Thu, Aug 21, 2025 at 08:22:06AM -0700, Nicolin Chen wrote:
+> > I should have pasted the full piece:
+> > drivers/gpu/drm/tegra/drm.c-960-	/*
+> > drivers/gpu/drm/tegra/drm.c:961:	 * If the host1x client is already attached to an IOMMU domain that is
+> > drivers/gpu/drm/tegra/drm.c-962-	 * not the shared IOMMU domain, don't try to attach it to a different
+> > drivers/gpu/drm/tegra/drm.c-963-	 * domain. This allows using the IOMMU-backed DMA API.
+> > drivers/gpu/drm/tegra/drm.c-964-	 */
+> > drivers/gpu/drm/tegra/drm.c-965-	if (domain && domain->type != IOMMU_DOMAIN_IDENTITY &&
+> > drivers/gpu/drm/tegra/drm.c-966-	    domain != tegra->domain)
+> > 
+> > So, the check is two-fold:
+> > 1) is attached
+> > 2) is the shared IOMMU domain (tegra->domain?)
+> 
+> Yea
+> 
+>  iommu_is_domain_currently_attached(dev, tegra->domain)
 
-Notify the MHI device's Execution Environment (EE) state via uevent,
-enabling applications to receive real-time updates and take appropriate
-actions based on the current state of MHI.
+Ah, yea.
 
-Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
----
-Notify the MHI device's Execution Environment (EE) state via uevent,
-enabling applications to receive real-time updates and take appropriate
-actions based on the current state.
+> > Overall, I feel this would be a big project yet arguably for a low
+> > reward..
+> 
+> Indeed, we can drop a FIXME comment there and leave it as the last
+> user or something perhaps
 
-Signed-off-by:
----
-Usage:
+I see. We could keep it in the library but discourage new callers.
 
-Enabling 16 virtual fucntions for SRIOV device QDU100 once device reached
-mission mode from systemd service file
+I will start with the internal cleanup as we discussed, as a part
+of this PCI reset series. Then, I will try adding those new helper
+functions that we've listed here, as a separate series.
 
-SUBSYSTEM=="mhi", ENV{EXEC_ENV}=="MISSION MODE", SUBSYSTEMS=="pci", ATTRS{device}=="0x0601",ATTR{../sriov_numvfs}="16"
----
-
----
- drivers/bus/mhi/host/internal.h |  1 +
- drivers/bus/mhi/host/main.c     |  1 +
- drivers/bus/mhi/host/pm.c       | 22 ++++++++++++++++++++++
- 3 files changed, 24 insertions(+)
-
-diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-index 034be33565b78eff9bdefd93faa4f3ce93825bad..d455f0bf00133775fa23882a727782275640e43b 100644
---- a/drivers/bus/mhi/host/internal.h
-+++ b/drivers/bus/mhi/host/internal.h
-@@ -403,6 +403,7 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
- 				struct mhi_event *mhi_event, u32 event_quota);
- int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
- 			     struct mhi_event *mhi_event, u32 event_quota);
-+void mhi_uevent_notify(struct mhi_controller *mhi_cntrl, enum mhi_ee_type ee);
- 
- /* ISR handlers */
- irqreturn_t mhi_irq_handler(int irq_number, void *dev);
-diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-index 52bef663e182de157e50f64c1764a52545c70865..8615512743199a59a58c3756d9cc3407079cee7e 100644
---- a/drivers/bus/mhi/host/main.c
-+++ b/drivers/bus/mhi/host/main.c
-@@ -512,6 +512,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
- 		if (mhi_cntrl->rddm_image && mhi_is_active(mhi_cntrl)) {
- 			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_RDDM);
- 			mhi_cntrl->ee = ee;
-+			mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
- 			wake_up_all(&mhi_cntrl->state_event);
- 		}
- 		break;
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 33d92bf2fc3ed48db5f7fe80e4f0ef9fe2d2f2ab..1b849f334c49e52636821ed7587865a9254e9118 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -418,6 +418,7 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
- 	device_for_each_child(&mhi_cntrl->mhi_dev->dev, &current_ee,
- 			      mhi_destroy_device);
- 	mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_MISSION_MODE);
-+	mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
- 
- 	/* Force MHI to be in M0 state before continuing */
- 	ret = __mhi_device_get_sync(mhi_cntrl);
-@@ -631,6 +632,8 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
- 	/* Wake up threads waiting for state transition */
- 	wake_up_all(&mhi_cntrl->state_event);
- 
-+	mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
-+
- 	if (MHI_REG_ACCESS_VALID(prev_state)) {
- 		/*
- 		 * If the device is in PBL or SBL, it will only respond to
-@@ -829,6 +832,8 @@ void mhi_pm_st_worker(struct work_struct *work)
- 			mhi_create_devices(mhi_cntrl);
- 			if (mhi_cntrl->fbc_download)
- 				mhi_download_amss_image(mhi_cntrl);
-+
-+			mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
- 			break;
- 		case DEV_ST_TRANSITION_MISSION_MODE:
- 			mhi_pm_mission_mode_transition(mhi_cntrl);
-@@ -838,6 +843,7 @@ void mhi_pm_st_worker(struct work_struct *work)
- 			mhi_cntrl->ee = MHI_EE_FP;
- 			write_unlock_irq(&mhi_cntrl->pm_lock);
- 			mhi_create_devices(mhi_cntrl);
-+			mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
- 			break;
- 		case DEV_ST_TRANSITION_READY:
- 			mhi_ready_state_transition(mhi_cntrl);
-@@ -1240,6 +1246,8 @@ static void __mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful,
- 	write_unlock_irq(&mhi_cntrl->pm_lock);
- 	mutex_unlock(&mhi_cntrl->pm_mutex);
- 
-+	mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
-+
- 	if (destroy_device)
- 		mhi_queue_state_transition(mhi_cntrl,
- 					   DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE);
-@@ -1338,3 +1346,17 @@ void mhi_device_put(struct mhi_device *mhi_dev)
- 	read_unlock_bh(&mhi_cntrl->pm_lock);
- }
- EXPORT_SYMBOL_GPL(mhi_device_put);
-+
-+void mhi_uevent_notify(struct mhi_controller *mhi_cntrl, enum mhi_ee_type ee)
-+{
-+	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	char *buf[2];
-+	int ret;
-+
-+	buf[0] = kasprintf(GFP_KERNEL, "EXEC_ENV=%s", TO_MHI_EXEC_STR(ee));
-+	buf[1] = NULL;
-+
-+	ret = kobject_uevent_env(&dev->kobj, KOBJ_CHANGE, buf);
-+	if (ret)
-+		dev_err(dev, "Failed to send %s uevent\n", TO_MHI_EXEC_STR(ee));
-+}
-
----
-base-commit: 7fa4d8dc380fbd81a9d702a855c50690c9c6442c
-change-id: 20250822-uevent_vdev_next-20250821-dec34b0a7522
-
-Best regards,
--- 
-Vivek Pernamitta <<quic_vpernami@quicinc.com>>
-
+Thanks
+Nicolin
 
