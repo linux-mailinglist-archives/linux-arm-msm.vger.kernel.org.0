@@ -1,96 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-70351-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70352-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2268AB314E8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:16:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5B66B314E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:14:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 81095720806
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:13:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 516F317D7B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:14:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A64412C21DA;
-	Fri, 22 Aug 2025 10:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C7D822D4805;
+	Fri, 22 Aug 2025 10:14:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fGuSBfgB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="R5OH58iB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34AAC2C028F
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:13:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F4FE2C029C
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:14:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755857584; cv=none; b=daPtqMr++gYUEvkS2YfLtEaC9qiD9yMUAEjE+CWG609nccgnBxWl+NHwIp4YE9tUdPa5uji5yP1pEh3epN9apoMTM0j3RCgLhHHp6hHdKAzJbMJtkccU1HTolMABsaiWhvkrymqZfxKhjorXz10U+nWlOLBhBsbDV4pqO3kggkY=
+	t=1755857659; cv=none; b=akwr7NeeCID3tfBqlIuyoSJLJfcaYrXnp3jW9pu6Po06C1OMHnZkxg0xb95h7hxzIk93x5n5diiQ7FA2dEX7tIIuvoh2CslQ7DoLcW9iCN2gwHYAhBE009ZOPhO1p+Jv6ycem9hd9fBUSTzKu2USJKRH6gniQxztWMoGQ4wnpkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755857584; c=relaxed/simple;
-	bh=Qu5wamvtgPOHj4op5pFq9nE+dkAKOV+C77B4Uq8zqgc=;
+	s=arc-20240116; t=1755857659; c=relaxed/simple;
+	bh=n4XlHGSeVV4u/xbLlWPIf9uljQMpisW4a0en2tZ2Heo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N9D4QQujtOSt+VzDCZ3paXUhcwf0Fi+Mdy218qoYLkyT/GhnEddvGEFiuow8lhOYXQEWNmyX5sBZHVuAf95PUyARbZ3UUWk5/Rsum0hIiyzkKGcI57vmpBUAwn591QAOtGIv/MAp6efYLkSdW/P5eL+M66YhK91m/daQGYjUb4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fGuSBfgB; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=W7OzyWuHSXZWDXWRwfTU8KI1spuUUb2TWZsUFTlv+86Cb2exbs0SwFhzXvWWYQl9bBhZ275jVr56FkFBIVbBIQpmSYxI3L7EXuiJmUrkdgFPyYv7BQDz1X8kLoWVmFtcVHG+h0XCugSjerZa+l8pgAUVpzN6o+XvaTzOisGnH4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=R5OH58iB; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UO5N024194
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:13:02 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UJ8i024112
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:14:17 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=ktdLtsHklNrwvbK6WHHw6N1i
-	oePlVUtRlafrkhtR9/E=; b=fGuSBfgBMG7R9fqPCzbaiC26z/RC6FHi/LvG964P
-	Zq5ck+ZG2o9TM2EAlXlMPXK2a9FrW5P8uHFKsGnm/hhz1MujhkYqQrqmRkdTOnFu
-	zb3EMtRJhUHxiHQ1fzhm3qMc15ii/0skGEcyVKxEwqMNFfw6BODDA0hcBppfFMU6
-	Pet7stfgEuAl8WIoVvup3qGscLWr99aDs9bRhU7KsFB7j88VOZ8u6y2DdlAP7OaQ
-	tzF8FcV1/Q0Fphv1SkPAyr+Pmitkb9Jx7rc6qoqWxxQV5yqbNb0/TVLeIhUFqVce
-	z8G3k6KE2pabGViwtY7OM6WHjqRxbZwGTgVB25oUtOagVQ==
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com [209.85.222.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52agwcf-1
+	:references:subject:to; s=qcppdkim1; bh=nJJ4C4c1AFbf34ScS1nOa6Ac
+	tdPWOXGtr4HiQq9bwqc=; b=R5OH58iBcrn9G871ea30573DuAaYzeeW6CpwHJtB
+	8iWmxl0RNsJSom9nWbNnAGviY7GKRT0MyAPZACJkRZtwokhI3047U0Vx3tGXrn5X
+	oo5OvjLmF6ABdb8Trf7Xgi4v1VBSTD/liJfoCzQOvaaO+NJGu9YmdsSF6FIXQfPh
+	t6cqfxbf10MY72cTI0C24GbvNG7xPaRraeXS37cKezv2gyLg5RIPRGW6DfK8ttLG
+	8iJ+SK034B7fMcCzO9EvzEOV20Lk+FSeades/CpmjJ+1q1fxspLO32I07GZPaZyf
+	PckGKMZZroSnwWenGoq1M5plGvnrrgLfTAHZkDD/K8fqJw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52agwg0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:13:02 +0000 (GMT)
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7e8706abd44so507012885a.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 03:13:02 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:14:17 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70d9eb2eb9bso5061066d6.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 03:14:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755857580; x=1756462380;
+        d=1e100.net; s=20230601; t=1755857656; x=1756462456;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ktdLtsHklNrwvbK6WHHw6N1ioePlVUtRlafrkhtR9/E=;
-        b=X9dVonnIc6E3pkt2jT8SU9HCXRVRjqVF6aFk223339vGomMeDeIgMsFV8++nmQ0jVE
-         wRwYw8kHEj8R0SVTAjxvkneKn7yvcIAuFaoALXcHitOv9pEqT9Rtzq3scvZS39AQYev/
-         hmhQGowp3m7QiPZMMoMNRfYfLctNNXQz4SfeKKbR+Z9UXUuJYbBtNwchpe6wyMDTro/k
-         r+N2WksjrrW9ZM8y/jnMPlgLpkcruBAofSImaBAMv1E5bl8qqD7lEIf936o2/3NbNu7T
-         +Xh0KXNfX9NIpyR6Osj3z4P4VvPkfLJ/uq9qCinbI2nJDS1rn5vqmQSo++A0Z76WOF9i
-         EvcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWDwZH9gKFKJmXHMR9PtLHbSMlvYlsNTzG7chYf200Jyr6CSRaDjdsQWII7Ah+9jtJnuuuSFI+kerYx+WKK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzJZMLVaXL8o6ReEFiXOlRM0pBwQFvYqC1P1Z6cY+fNyjpmmqQD
-	lqakRFLe3nz11xEK3Fz0Bv8oI4oTCzv/2oGfMiXlCSkrJ7fFZNltmWLxQRHC8SznToqX+uXKk0j
-	YoKIhy8dT7xCCY/UsABE0yzSxmZtpXLtQu9y+uHALTMDpl3tPXqj8kVzuSG0XvGzEatYtJ/oaAm
-	Gz
-X-Gm-Gg: ASbGncvMiTi+bgkZzg2DEcf5FNYbInA0ul4743BWO6uMyYmFnwD8foas5jZlNoeTTAb
-	XlZpq2VLoww8IZOhgKAKTApjYF6gqqPjEuorCB5ETPp7Q/bF8VSjoY1xv+zK0N611BjqxszsEWq
-	qzb8iH6eoEtje4BVYDbBkPfi8W+l1p2IPjnW0qye1Dbz5S9TCFiMHjnGieBfYujzX1+ujJwWl4F
-	JNeaG0BA850iTSVC93IxxjyrvhUZjUpGH/f2M0Kb0IexH2nhvfxLTjy8e4OuRUruDG9Lpxivelj
-	I1be1+qnUP74ebuTJLIz5UZuK7YTlIE7H9CfmtIc5N8SR6oy0VZEuTow5hWw/YYzcvXhhrXo1Xt
-	o5E7Q+P/BcFGaY26uUC63CK8/qPIdqNPnKyOzXIwmvUAw4DjkfsuH
-X-Received: by 2002:ac8:5e12:0:b0:4b0:87ac:233 with SMTP id d75a77b69052e-4b2aaa196bbmr25694911cf.5.1755857580389;
-        Fri, 22 Aug 2025 03:13:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHlnCz62MvGFGGfOY7Zb1xiypS5D1InHxski9LRLgZOv29qsFZiE/JXKwiBS0HULHnR3aSnuA==
-X-Received: by 2002:ac8:5e12:0:b0:4b0:87ac:233 with SMTP id d75a77b69052e-4b2aaa196bbmr25694611cf.5.1755857579892;
-        Fri, 22 Aug 2025 03:12:59 -0700 (PDT)
+        bh=nJJ4C4c1AFbf34ScS1nOa6ActdPWOXGtr4HiQq9bwqc=;
+        b=irG3IEKdVn1VLRKNW4k4N1zNl/y1KKrAg9ALuvZKFecn6QdEawG7uCXLekbDR3mBB5
+         ciTxMFbpZCj5bPxF+m6hs0wNo5P/MumilVnWnvm+j01DpH15LZOkKz2EKptd0za6uDTZ
+         Wh4NpVoNdTz8waDVg1LjqhNdpwEeay3OTsWzYPT6HEvI5IJDnatb5LuB5idOxVq+VHr1
+         bUN/N3E16LY1XG1gV0xw+V1y4R2dNCe5waQPV9XYfRRbZ9ioUy2ndG6gx8GDSqGxQBCM
+         Ni99l/0BzvzHVlwKLrKduVf5TI/ujNG7yWQ6OdUFPV2GMYpEkw5782HvVesDjdmDhTUb
+         GE+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXZ8KR7F8PFPIweB2TwNC92ISpbpt66XMGQ2e/MtnD1F3SpWZpqeA2Ge7X+kFIbyu0kwwptYat+ACGNscc2@vger.kernel.org
+X-Gm-Message-State: AOJu0YzInvxfV5+KWnORI0VZ+3L6eG6XxCD6sdL1fUSkedHBn60oILf7
+	o/2YGHSbS08M28HIXqimAS3GL+DrSE0i/lgC/d7ErbCuvlQTc47GVWeigTn+4VVOzpgT6VZUyGk
+	rnbmVTVFNHUiZY1iA7lpRfSpqgm4cvYkNn8Q8qGnoAnN30AbkOpkCbBts44qA+lxv3D8P
+X-Gm-Gg: ASbGncvKhMYpZcptzXT++joT9Li8qdAkL5x4u8a0XXm6z1hlML6l3QdyARpOFuh/1JO
+	Rj4zjee0iiVWu/DUT1qoiHYHkrrsBICoMAbMA+W9eRxlAC54yo8T18AwI/uRLlDy5ShJTczIQVH
+	rghDcdXHDMfskHh4va+kG4A/pRrut8v0LJjDNXEShHRF+Pkwre3Z/Pt7cE12PzQ85qrdjd4EAZT
+	JOVmyNQuBQwcrIAZbXd2OHEtobxfJsC36MVv3JKK0klZssPDSy6Tbk7bv031ZjpCFvThgCBEgOO
+	S5rnSigZxbihyc8LgLMDi82Iv3sNYVXU8nZo/warHqanKVk1u2pVoFzvztWkfuNzv3mjn4ahP6c
+	xYgpzsz7e1wV4hY/2wH5cwFDpBCcPQx9zroJOpcC1/A6jRuOVQ3jp
+X-Received: by 2002:a05:6214:411c:b0:70d:8aef:8d0a with SMTP id 6a1803df08f44-70d9723d63dmr28732206d6.59.1755857656279;
+        Fri, 22 Aug 2025 03:14:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGvj+OJvL4U4ICh4U+njjBOvCBqdT8JPERhEDd9yPBFxhlUitzuVfVPcNlnrlKx+hna3vy4zQ==
+X-Received: by 2002:a05:6214:411c:b0:70d:8aef:8d0a with SMTP id 6a1803df08f44-70d9723d63dmr28731856d6.59.1755857655703;
+        Fri, 22 Aug 2025 03:14:15 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef4732a5sm3386969e87.162.2025.08.22.03.12.58
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3340a604776sm35600511fa.47.2025.08.22.03.14.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 03:12:58 -0700 (PDT)
-Date: Fri, 22 Aug 2025 13:12:57 +0300
+        Fri, 22 Aug 2025 03:14:14 -0700 (PDT)
+Date: Fri, 22 Aug 2025 13:14:12 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: srinivas.kandagatla@oss.qualcomm.com
 Cc: andersson@kernel.org, mathieu.poirier@linaro.org, srichara@quicinc.com,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Stable@vger.kernel.org
-Subject: Re: [PATCH 1/2] rpmsg: glink_native: fix rpmsg device leak
-Message-ID: <pnkk65dkrruj5br7mmzolhrln6s53wstshn3fbdktjtjyam6ex@ssjemdrzwap3>
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] rpmsg: glink_native: remove duplicate code for rpmsg
+ device remove
+Message-ID: <54moh5c4s4hssl47tabtlqm5mu33frf3x4k3fdhsrlc6abfltg@n6igz6vf5yd4>
 References: <20250822100043.2604794-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com>
+ <20250822100043.2604794-3-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -99,20 +99,20 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250822100043.2604794-2-srinivas.kandagatla@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: Y9ldgSKeHrR5GTfM0IB3Hm70sAbi47wb
-X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a842ae cx=c_pps
- a=HLyN3IcIa5EE8TELMZ618Q==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=NZc0qn8vRsVWR2Eyjd0A:9
- a=CjuIK1q_8ugA:10 a=bTQJ7kPSJx9SKPbeHEYW:22
-X-Proofpoint-GUID: Y9ldgSKeHrR5GTfM0IB3Hm70sAbi47wb
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX59wrrlI8Bh+F
- M1ryu4uXY1ZcXiRIR69pXLh5uF6JB1FdvcnGXxrm30GgPIge7AVY0COzICtnHV44skPlZK5/zjn
- RViwh42VnAncsbtSV0p0zF3ziXV6+3E50zFPjN8Z5l9qjOANfXlBRrsB7nFXr9Jaj4FMfRMPRqE
- Z1sE0x86/5ZYxlCkxG5vXGQENA8dcYpzipKrsG/THaFuqRpn+AJ68tRpd4e9PqBdVvLCrPO7crl
- VC/lCbIrap+p0KtYML3nyxi2romjN7mkihrcI1nSKs3vzg/RW+gftmrg2/CytVXiQ06fIbJXtqz
- rNMgVxTWobeFqY6SvRipmiliJKFr3HqZgFe3cQZuakOv+xLDD8E3/6SACVx9DQb8Zf0xqd+/GAm
- S+mJj6CifUNbJhKxZdcV5NXElacslw==
+In-Reply-To: <20250822100043.2604794-3-srinivas.kandagatla@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: dO3ukui0c5VtDNdXhzMiM-dDrmpn_WON
+X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a842f9 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=iW8-pYDVSSCBICfSpsoA:9 a=CjuIK1q_8ugA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
+X-Proofpoint-GUID: dO3ukui0c5VtDNdXhzMiM-dDrmpn_WON
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX7NJfW8rJtCK9
+ CTSOPDTUu0tCynpdgqUx1l29unLXA9paNRnd68epkW1ecX7IGBtbhTKjTJ30puAo4MKP1XHarXF
+ veFnC1SmwUi1betEaMS7E8pogYH5sRePH/AfJKqiK4sVVSgT+lmzk3RYcBPyvL3fHYuN3KbT1nj
+ dd0Iugflt4/dlW3ooIEPo2P5m60Ha+2JaGv9ExTY9DFrLoG+VJFkqVbzpNKlCzcfk+UQ9sRz1vQ
+ qwEgG3s0ScOU+JhyU/489SrkHqceCkhvt0PFxzyblKP2DtC2pr3KeG+ywKdi5fFSHkFNMBMuE2g
+ RCO4fu+4XKrO/QjoJ1TZ8on7CishkRBZebdf2lftZI8KzS8V85JAhQ85HfBQ/CVpMWBYcksVe5X
+ ILGbAwHMsRe99KBEF/usUvCSf3WYCg==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
@@ -122,63 +122,21 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-On Fri, Aug 22, 2025 at 11:00:42AM +0100, srinivas.kandagatla@oss.qualcomm.com wrote:
+On Fri, Aug 22, 2025 at 11:00:43AM +0100, srinivas.kandagatla@oss.qualcomm.com wrote:
 > From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+> 
+> rpmsg device remove code is duplicated in at-least 2-3 places, add a
+> helper function to remove this duplicated code.
 
-Please adjust your git's sendemail.from line to include your name. Then
-git-send-email will not generate extra From headers.
+I think it's better to sqiash this into the previous patch. Otherwise
+you are fixing the code that you've just added.
 
 > 
-> While testing rpmsg-char interface it was noticed that duplicate sysfs
-> entries are getting created and below warning is noticed.
-> 
-> Reason for this is that we are leaking rpmsg device pointer, setting it
-> null without actually unregistering device.
-> Any further attempts to unregister fail because rpdev is NULL,
-> resulting in a leak.
-> 
-> Fix this by unregistering rpmsg device before removing its reference
-> from rpmsg channel.
-> 
-> sysfs: cannot create duplicate filename '/devices/platform/soc@0/3700000.remot
-> eproc/remoteproc/remoteproc1/3700000.remoteproc:glink-edge/3700000.remoteproc:
-> glink-edge.adsp_apps.-1.-1'
-> [  114.115347] CPU: 0 UID: 0 PID: 9 Comm: kworker/0:0 Not
->  tainted 6.16.0-rc4 #7 PREEMPT
-> [  114.115355] Hardware name: Qualcomm Technologies, Inc. Robotics RB3gen2 (DT)
-> [  114.115358] Workqueue: events qcom_glink_work
-> [  114.115371] Call trace:8
-> [  114.115374]  show_stack+0x18/0x24 (C)
-> [  114.115382]  dump_stack_lvl+0x60/0x80
-> [  114.115388]  dump_stack+0x18/0x24
-> [  114.115393]  sysfs_warn_dup+0x64/0x80
-> [  114.115402]  sysfs_create_dir_ns+0xf4/0x120
-> [  114.115409]  kobject_add_internal+0x98/0x260
-> [  114.115416]  kobject_add+0x9c/0x108
-> [  114.115421]  device_add+0xc4/0x7a0
-> [  114.115429]  rpmsg_register_device+0x5c/0xb0
-> [  114.115434]  qcom_glink_work+0x4bc/0x820
-> [  114.115438]  process_one_work+0x148/0x284
-> [  114.115446]  worker_thread+0x2c4/0x3e0
-> [  114.115452]  kthread+0x12c/0x204
-> [  114.115457]  ret_from_fork+0x10/0x20
-> [  114.115464] kobject: kobject_add_internal failed for 3700000.remoteproc:
-> glink-edge.adsp_apps.-1.-1 with -EEXIST, don't try to register things with
-> the same name in the same directory.
-> [  114.250045] rpmsg 3700000.remoteproc:glink-edge.adsp_apps.-1.-1:
-> device_add failed: -17
-> 
-> Fixes: 835764ddd9af ("rpmsg: glink: Move the common glink protocol implementation to glink_native.c")
-> Cc: <Stable@vger.kernel.org>
 > Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > ---
->  drivers/rpmsg/qcom_glink_native.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
+>  drivers/rpmsg/qcom_glink_native.c | 43 ++++++++++++-------------------
+>  1 file changed, 16 insertions(+), 27 deletions(-)
 > 
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
-
 -- 
 With best wishes
 Dmitry
