@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-70322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70323-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80571B31399
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:42:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A30BB31405
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:49:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E187B4E137E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:42:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 36C5C3AEE36
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:42:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3372216E26;
-	Fri, 22 Aug 2025 09:39:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C82512327A3;
+	Fri, 22 Aug 2025 09:39:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="S7nxXvcR"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IN0g4o+Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C8422F755
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6772C0282
 	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:39:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755855565; cv=none; b=F+132DUPjk1MlLjvREYH5HziW/IrpEk73BGl5tt/DAgqi9hiqQpH7Bvxy3G+2u/wfO5Oa/KjwE/s3cO1ELd3ppJIlX68A4S7OTuagW/pxPLm3NswCMEluAGCQEaKl4yq3STrXdphxiNZfsMIoaF8iF/fqh7vbJlFyz0Uvtgf87k=
+	t=1755855566; cv=none; b=O1f9jT9/1HPq8hWUUzejRCHnpft6CAxfHfesjSeuQcioXJ+LOsBtBXzrIEFLBYQW2bYAJje9D4R1I15LXKxYBYggBjdU3ca1yCwUtfzYDtb+pvh962+iBGSLhvhTRpXBsCPAdwQijSQoFB0pa+V+5PQGUz6voXeEnuG7to2Lv5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755855565; c=relaxed/simple;
-	bh=TIqaNaL0gX7EiN8vDS4n9ZA4L0xlzt9xa/4X4cyRVQc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Y82kloEemsI1bmnOFE/85pa+IEuk58gt1wQxbSD5N9z7/j3LIPL5mqKIaYdLkRAIkmo6cOLqx4zA215l+DD3iSzjnXDeQ/UlM9Q2uh0cAUis06owa7q7uOy06Ld+Baze9T7Tnp5v/+645ewi5LxzDejUaGUPeiJuxYLHlFfc00Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=S7nxXvcR; arc=none smtp.client-ip=209.85.221.46
+	s=arc-20240116; t=1755855566; c=relaxed/simple;
+	bh=w1VZqVZB4tsSvRFPjcFON1TkRO+UIqwQJ3G42TS9+0c=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=oRZIji8q50HjDI4rAZw5QU/8FBdLexQShmj80u3qHIoPnyX1n3m9nDxtCO67TCIq8FNA3Z2zDLypZ95nnUTT5hSq+tEOfpPJu5MatizAV4AdIPc5CQ3+DZwQxl0MO0MeVaAjDlFdtwAiqxTuftHdxa+Vi7vHinY2a09a0ujzuKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IN0g4o+Z; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3c68ac7e1c4so75658f8f.2
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3b9d41c1964so827211f8f.0
         for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:39:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google; t=1755855562; x=1756460362; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Srvxyt7qia+o9DraeIvmf5P7b+TsFXGBXi5TRfM4NGY=;
-        b=S7nxXvcRdzqGtOTyNRZt0nO5wQ/Q9lqeyLhbCBj2KNnYsX4No+V3yPryWKPIqAHuoE
-         zRRqCDz8Nup7WNFLgx3yOn9MaVz6TXQzY/eHv2l1ZJoUbOedLrZ9iXmFNNU3rER6SLy7
-         vCQWEFLszbCGJ7Xbv/5SICNz2KETr06hD7eB+nN2OY24KUL/AYvOToyla8XrV9xLsBII
-         Er+siuVdyx2OuIAqKtiwOYMye1zUOZDmaPVUGQnAuY6M+tPuE403WrzGceP4pVk3jBrq
-         39o8GY/BLovxwXsdGcus27xdFxuU8vF065hwabt5FGtB6WilYBTX4Hnpontv6DztZg+t
-         9sYg==
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GLNjFnxfd0fsnNGaZyEi99xhqnfoLRLL41xepcgfytM=;
+        b=IN0g4o+ZVAV4o5fU50P44tUBd/R6YESm96l2sXzV5H1OL9tOh1tQBbKyyNS/tX+4GJ
+         G2eIov3oOVGDI5inIvwuzh3R3kPHRXc2Uw3oHtpZ27ICqB/tlo1XjTObvTMKx4DK0Xvg
+         EXj5y2krm0ba7+aLzaDYDISWSgF7pnbkpUJkyiK/hYCH7SD9iJ4ZoxaNMX2PjmuqsGFq
+         NHrUL3pScfdb5wKaM398b9NbZGmXKu4iOB4g8YgSnosr9IwpxspjF4BTp2yuYb/1hyND
+         rbe8BlOVJLw5t3z9ppR2KarcT3C19Gtcq8EdKThfp41CKrkfSgGz+xyv5si4SQukhXwq
+         DLSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1755855562; x=1756460362;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Srvxyt7qia+o9DraeIvmf5P7b+TsFXGBXi5TRfM4NGY=;
-        b=mBeZ6jqMQKzinmunx/7Wyqi20mklFbSogZHC0iZHj8c7Poq82zIqk1GvXvGa/0nxPh
-         S3F7F7VkV2UxbDTdFUO08+azbGuV68TndeMkUf6TmtwTZKNNvjTLsnP09KGXbZ4qHHzq
-         B+O2N1kBPVoCZmfk/4NRqQU7geuNM9y+rDiJ8shRifRSLPNwVBfL8sqynpw7AyZlUbN0
-         wlHjxKTBlkyyOQZ2m1VE7ayn4c8ZPLQtJjJmbXeFpLiIJ4+ewSjHUMIy8OmlTEE9ip+X
-         Nov24Ads4qNqZeRHV+yzagER65GAQtCSC/eySxoBFNCotlBit9AvswpUyhSSwCpf2L1o
-         86mg==
-X-Gm-Message-State: AOJu0YzYrSraH2StOBmzNxXv82qAHyp//8c9G1qtVHenoPlH36SoOrHG
-	2HgBXO5GcziZdAmXNihjdtI3631J4eKC5Z7P+0hWJKnTlV5MTIk9fXUWLSaBbNVYgc0=
-X-Gm-Gg: ASbGnct0ntwQv70fkmmCjJdi9xoQfIElBevZjrqjSmSxDQZoaQy7f/VMH+X+3nutRK/
-	t6q9BIrZWcAgG5MoicrWeFAYQ5WkXkKdCQiMhfhGr2hO3MS+O0hCA6KM+vpYYcg1Izpvs7finJW
-	DQNK5N2tDb3ZFaiLf+d5SuqeFA8836WG0AwOeoOnvZTQqb2A1mTq/BsRY9XDNYzP1CFpcUvx73o
-	by2JD1kh3ZxGP88RjN/KTqrVTC1EUkaqE88Tz68gd6xPHI83KZ0lgSuyrsFEgTsdRZ8PurUVvgw
-	4xkS/EE+5mZLFqCDchcw5WZegFR8CKGKy8I/aUujRp2duBoRh4Lvl0VCmfNK7pUjeKKq1MCbYlM
-	jRSgMVhDd+vT3V2wn9ZMThjOZ6qAKGo+IydbHYMLkH6p9TwtvpMvUVg==
-X-Google-Smtp-Source: AGHT+IHeFIBzV2r3sYOLFd7iddmZZKUTrFnHKzrIxe3IQQc3wPOkW2LDawTIdP4/CvycIRR/Cn5GxA==
-X-Received: by 2002:a05:6000:3105:b0:3b4:9721:2b32 with SMTP id ffacd0b85a97d-3c5da83c440mr1673951f8f.10.1755855561507;
-        Fri, 22 Aug 2025 02:39:21 -0700 (PDT)
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=GLNjFnxfd0fsnNGaZyEi99xhqnfoLRLL41xepcgfytM=;
+        b=VN65yUxv1RQNU0TeDmAO9K+gIklgBpYNDGO8PwoUn23fu1pEpuRAxlSGeiiOm8EtN4
+         FujfIwPu14fOTo47fsa+JR3JkHXbnFXE0LOg2lsd0Cqgv+DIF7Wr/BCagkwHqa5s7PsX
+         Z2A1nPAeZP5T+CDhjXmteSCshOQXL0f8odpNCEXu/3RKNbANRfk0se1hBn/9/+B6T9sj
+         03rURUupLTLPGfsd+zm2jBZMLhXhsWCNnwmhH3ai+T4wkKtX8kG62vcsqb3SnnwAaM45
+         ZQrxh6tJmlEc5HTtTRb8CvK3vLMN2lRErJkE+JmRN6sReHm26ZKm7RJj4oWfLLhIMZCo
+         WtJw==
+X-Gm-Message-State: AOJu0YwnqEWVYfaABm0rOqPD+j/GRI3IbodXdaHunKZOsjRdWrr79/fJ
+	uy44E8Hs8KD8YS+BcejThWK5qvCC7xjoTwj+EVCVoNZtfgqIEGCq4agUyE/GlD+ybEE=
+X-Gm-Gg: ASbGnctKl/C8qKdeIympSQFcnp/CyglQFx73Qb8U5SWwzbS7dRZKxlZO2Xybg3/xxAL
+	YcEjw7jno6aui/hoTOVjQDifWJ/Vw7WiPtQsCR5sfr4IQ7mHRfnthXJhkPPq24ZLmFxc+X3rjq+
+	iy7aG6MnHPsVFZMB6dbvJaOVzHC1g2eWuSL8HQKtyhF8jt5aS21Cu56TbW8zftRQEzsMFTPQ0tG
+	8BdVNKa/vR/hR4RyBND6jnsWaKKcbbC1+x0wVs2A9ybL8WpXrOxLzUxFtuzjUFtuP6EcqXZeLhK
+	iPm2WblCunpMZpth2ikcHaDemlELJonmp605gneU1KjMpEFJbBM6Qn5Ef44AvWjSPj852prxenE
+	fZxfEETK9wlsYW9aj7odgHvBBFTv+5bdrJdpVRW8Gisw=
+X-Google-Smtp-Source: AGHT+IHy3KG4vkGuFAeI6qddwSJpHTf7vSyak1cG2dJX8+Ge4WfPE0JK4X6GNyVAf4EaKb56Dv/NVw==
+X-Received: by 2002:a05:6000:1449:b0:3b7:9bfe:4f64 with SMTP id ffacd0b85a97d-3c5dcdfbfc6mr1949889f8f.54.1755855562213;
+        Fri, 22 Aug 2025 02:39:22 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c684524163sm609890f8f.61.2025.08.22.02.39.20
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c684524163sm609890f8f.61.2025.08.22.02.39.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 22 Aug 2025 02:39:21 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v2 00/16] arm64: dts: qcom: Set up 4-lane DP for sm8[56]50
- & x1e boards
-Date: Fri, 22 Aug 2025 11:39:12 +0200
-Message-Id: <20250822-topic-x1e80100-4lanes-v2-0-4b21372b1901@linaro.org>
+Date: Fri, 22 Aug 2025 11:39:13 +0200
+Subject: [PATCH v2 01/16] arm64: dts: qcom: sm8550: allow mode-switch
+ events to reach the QMP Combo PHY
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,11 +84,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAMA6qGgC/4WNQQ6CMBBFr0Jm7ZiZKgquvIdhUekAk5CWtIRgC
- He3cgGX7yX//Q2SRJUEj2KDKIsmDT6DORXQDtb3guoygyFTUmUY5zBpiytLRUyE19F6SWgr5+4
- dt6681ZC3U5RO16P7ajIPmuYQP8fNwj/7r7gwEtKbLTmqLzn8HNXbGM4h9tDs+/4Fy5mKzrsAA
- AA=
-X-Change-ID: 20250821-topic-x1e80100-4lanes-a8dd7f1cd569
+Message-Id: <20250822-topic-x1e80100-4lanes-v2-1-4b21372b1901@linaro.org>
+References: <20250822-topic-x1e80100-4lanes-v2-0-4b21372b1901@linaro.org>
+In-Reply-To: <20250822-topic-x1e80100-4lanes-v2-0-4b21372b1901@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
  Krzysztof Kozlowski <krzk+dt@kernel.org>, 
@@ -95,76 +94,45 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2878;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=724;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=TIqaNaL0gX7EiN8vDS4n9ZA4L0xlzt9xa/4X4cyRVQc=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBoqDrBn5Knle7ab5jQ6tTSPSwa6mZx4CftwvSOA5d8
- j/ENNqaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKg6wQAKCRB33NvayMhJ0QzvEA
- CZH9RwnWiPy7u3Uxp6tHmhBwZHDrJpB1Wj5hxKCIllJz45WiTX6vvMTMI9WiuiBpvzQ2fFu+jqLohr
- MrgN1TWQ1SYnLZnWb2pObXkWEEnsNfcFKgxzX8aEjcf8s3qDv4B2IEouLC5/ZynkDRzHMns4aTkwLQ
- X9T1WC+XSsNN3VsW2Vg84WTBb9h6NwXqKxkpsayHu8XbOC6ycNKYqdyJlpP36uJsELzbkDWO2QnvVJ
- RSHXXtJtgPU7wEN4EE7DhV/BwDD3A1NRg4iLQvneNy7JqU53RAefkal96UX5p2YV9Go5yqQH4i/9U8
- hdoq68ykuHLwrIvHPK7mwXETyf59PxtACNM1MwGx3vPJMC3cX1cipy4evJEXepuDxUdkZLsf7BJ50o
- m6BjpjxejnK7dKkHOhygEH8jUafiRw+xWjh5rFV+Ri7bQBxd2XFaISKwbamAdeOuDGJ6+Pqz8Zyo8Y
- F/RIVklPI/ei9eYPTSYI9CAyFSASekWB+HvdE2m9iuTceZbBah6kWpbijdI+8xYNg/B0zAAPnxK0c0
- /lS+6OGbuuTK5ICCcDPukxCB2lrUvqgqwhm6NBikElPxoUvyBw9dmem/SCS3jkoRXVj6G0s6cTQGox
- g0uroU52ebe9m9DeV2OhQMXhVbf8ltwqlKAVXJ0L9m41RdvXB1+I3hxUI3LQ==
+ bh=w1VZqVZB4tsSvRFPjcFON1TkRO+UIqwQJ3G42TS9+0c=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBoqDrCK0byhdjaXKo+3isP9OgllaTUkkVEwThKOE8Z
+ zpSGwzGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKg6wgAKCRB33NvayMhJ0T8LD/
+ 9oehvNFU1x7iCHosmp9mm4Qu5Ybip9Zlw/H5gBW7vjkdJvBaRAI9B6OlW1YKR6HNvP+A8KVcFQCebx
+ yOIjhAd/84HJBnP9OMyMWUlhzTp7zrT7ryfOnWRN+wDx+4qpREpgEi8xueaplZvWu3SCsBSWmQ8H7W
+ +LYxaED9BJM1CX38K1isPbJljd3dJuX2C/3Rmv6Hv1sathrP64+ifTcqKaS4fk055Zh5Pz5JSk9Aez
+ OfomRBA8JVHRrxNw/vGYkJeYii7DCXS9uX2fSSF/vDLyraU/BTvF0NIR0Bqj+RkNQxeReBt/NXYq5R
+ ZGOZj0ZRUfvjOYuc1/kmG7k1XiS/2WueeulOgedPnNm26qAgpiImUvXvVETvN1fkR7WUbSi/DIWwuC
+ BQHgiaCpCnMuDxYTeWbQFLh7Rwwg37dw14yI20hGM4P2+EOaEUion3aR+mbcvge2M953wueZd/JId+
+ FSMMxXjh7CN1UmgtMQoPRodX9fX3oD4qUxaHMmvsYi3m7BPahVD7C3K0gyfb+dtkYpQtYwDcMwoZQB
+ rfwQsF4+n20cd9LA5OSgOFCifUAK3pC5SARuXxoSAeXJXFSnApuUzYks/Ff2tBoK/S0pPlI/ilkYg4
+ IfE5PupypOP5lYcq3bEmks4z6CzaTwMzNHrKWz3j493OhIbzq1CFMrqxN9eA==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-Now the 4lanes support in the QMP Combo PHY has been merged in [1],
-add the required plumbing in DT.
-
-[1] https://lore.kernel.org/all/20250807-topic-4ln_dp_respin-v4-0-43272d6eca92@oss.qualcomm.com/
+Allow mode-switch events to reach the QMP Combo PHY to support
+setting the QMP Combo PHY in DP 4Lanes Altmode.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Changes in v2:
-- Add missing x1-asus-zenbook-a14 & x1-crd
-- Link to v1: https://lore.kernel.org/r/20250821-topic-x1e80100-4lanes-v1-0-0b1a0d093cd5@linaro.org
+ arch/arm64/boot/dts/qcom/sm8550.dtsi | 1 +
+ 1 file changed, 1 insertion(+)
 
----
-Neil Armstrong (16):
-      arm64: dts: qcom: sm8550: allow mode-switch events to reach the QMP Combo PHY
-      arm64: dts: qcom: sm8650: allow mode-switch events to reach the QMP Combo PHY
-      arm64: dts: qcom: x1e80100: allow mode-switch events to reach the QMP Combo PHYs
-      arm64: dts: qcom: sm8550-hdk: Set up 4-lane DP
-      arm64: dts: qcom: sm8550-qrd: Set up 4-lane DP
-      arm64: dts: qcom: sm8650-hdk: Set up 4-lane DP
-      arm64: dts: qcom: sm8650-qrd: Set up 4-lane DP
-      arm64: dts: qcom: x1e001de-devkit: Set up 4-lane DP
-      arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: Set up 4-lane DP
-      arm64: dts: qcom: x1e80100-dell-xps13-9345: Set up 4-lane DP
-      arm64: dts: qcom: x1e80100-hp-omnibook-x14: Set up 4-lane DP
-      arm64: dts: qcom: x1e80100-lenovo-yoga-slim7x: Set up 4-lane DP
-      arm64: dts: qcom: x1e80100-microsoft-romulus: Set up 4-lane DP
-      arm64: dts: qcom: x1e80100-qcp: Set up 4-lane DP
-      arm64: dts: qcom: x1-crd: Set up 4-lane DP
-      arm64: dts: qcom: x1-asus-zenbook-a14: Set up 4-lane DP
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index 38d139d1dd4a994287c03d064ca01d59a11ac771..0409ae7517f239171a89bc0ba7bb47bc9e7fedaf 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -4051,6 +4051,7 @@ usb_dp_qmpphy: phy@88e8000 {
+ 			#clock-cells = <1>;
+ 			#phy-cells = <1>;
+ 
++			mode-switch;
+ 			orientation-switch;
+ 
+ 			status = "disabled";
 
- arch/arm64/boot/dts/qcom/sm8550-hdk.dts                     | 2 +-
- arch/arm64/boot/dts/qcom/sm8550-qrd.dts                     | 2 +-
- arch/arm64/boot/dts/qcom/sm8550.dtsi                        | 1 +
- arch/arm64/boot/dts/qcom/sm8650-hdk.dts                     | 2 +-
- arch/arm64/boot/dts/qcom/sm8650-qrd.dts                     | 2 +-
- arch/arm64/boot/dts/qcom/sm8650.dtsi                        | 1 +
- arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi           | 4 ++--
- arch/arm64/boot/dts/qcom/x1-crd.dtsi                        | 6 +++---
- arch/arm64/boot/dts/qcom/x1e001de-devkit.dts                | 6 +++---
- arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts       | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts       | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts    | 6 +++---
- arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi    | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                   | 6 +++---
- arch/arm64/boot/dts/qcom/x1e80100.dtsi                      | 3 +++
- 16 files changed, 31 insertions(+), 26 deletions(-)
----
-base-commit: 7fa4d8dc380fbd81a9d702a855c50690c9c6442c
-change-id: 20250821-topic-x1e80100-4lanes-a8dd7f1cd569
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
 
