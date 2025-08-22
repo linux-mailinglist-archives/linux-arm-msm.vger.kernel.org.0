@@ -1,310 +1,496 @@
-Return-Path: <linux-arm-msm+bounces-70346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CCF6B314B8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:07:17 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFD0BB314C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:08:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85B453B4CEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:05:26 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6DA9C7A4FF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:07:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A2BC27E041;
-	Fri, 22 Aug 2025 10:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A34E2C0288;
+	Fri, 22 Aug 2025 10:08:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gFOV+fWL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="b7A9xvj7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1C4285CA2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4875296BA0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:08:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755857123; cv=none; b=JplyvhekBfyymrUU2uT2sbcyCUfpRZBsBPVaqb0Xnm15x4uS34hbZTu290nigykgFl9OerzstIqCzsjS2s1GBV2oJEq9y/0T0dfhZDruyFQ5KdDuVoN+R+tik7Y5gdwmz3c+NiSxzjTSy4KBXuT/87NfIcJGqHQnnOsORu8tTW0=
+	t=1755857326; cv=none; b=FEjtdbTubmjSvDO4WfCrba8skAmHEY+joHftCuScpdlyspEWQb4nD606714ww9u98Pn0swCFdSh4USVximVPua8khZaSJzUYbDJPb8P6jW3+KmgXKbgiNWzk5K/y5ZNsE9jb6EkJXc2pnUBA/P4movkb3AUdfWtoh1XeAmZees4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755857123; c=relaxed/simple;
-	bh=KivU5RnfA0zCwbsH7zhExGKtReC3rbkiFiOi0NUu8JU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rVm6k9FAt3d51yUIf95r2XclxOnXjEmjH+8TbkwEgzD+SQnigabQdC2PHO85/JO2RJmW+fuyIPv2NcfUU/SQN3PW6lMcqbnG8lMfgIvHnfz+0zusWSe31FkfDYA7DUPDvgpRXwEIc6fWheLZCrzoOkyXS+j/p/9EXTgp1UiraUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gFOV+fWL; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1755857326; c=relaxed/simple;
+	bh=K8QAahUnGe4mLUckNZSB/FwuYGl6ZTHXSv95Ldt0mjg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kSiaxxoGYnEbw+xxsW+oyOH3bMfusUXcYhwEH3ICDaxOPgXK9pNh07p0NGz9tQjcv/5lMyiL10GYTbv+609J2HxgrUQ2wNK9nQ4nwMlJqcC26AoTwtsjPuU/vr/4pib4Lm6oQRCF9H6jXL1cle/Ufadd+oYPVFE7YLqbme98V8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=b7A9xvj7; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UIY1003566
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:05:20 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UTQ9030555
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:08:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	NCvb4E87MdnkwFWFQpgaGoK+/UWKLd0ckk9/uB8fxpI=; b=gFOV+fWLijaslLma
-	A9XqpoRAKL4OPj1l1BTVvFvigN6fQ/5oXcLvh1AkfQ1phE5QY85wqYHzG3EUAO4o
-	AajQcO5PCy9VAtP4uI/4dGv0ZzShI8AsgTwfq1xwFCLv/0LPmynBt5Smv/E3+R9D
-	SC6GYK/YDOPW+OTy2JbKDmuDNtfu4AjSbimMahTTqAJsOuW6oHxOg36wdINf/KxP
-	pnmCJMkgL+aSBAZ64BwF6mGNz9Dewgrjw1tD3EQG9HZYTq8C8kxbz9X49B4KgEpc
-	6tnGmO/fv9ZNLQwM1hTOwLEys2rXsFWep8nI6/TS1t/VKrN0Wg2O8kwkW9D38ykj
-	GV/MlA==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5298rue-1
+	w3Oq6IeqsBr8d7DMg28n6xntUOJRa6+XhNN7IG19x7g=; b=b7A9xvj79dzpxdm/
+	h2l9yrwCowspJz/Wy8HahV+ulqa8KniauN7Y38rru0oMx04WImTmhH03s3Tt2ouI
+	WH5BG4T/fE1cYKRwmLE+WEEVgTieRu/xi5yb0dqPbh5mOCHoOTFjga9nx/RGrYda
+	uoNhYsFdDIv486TFI3cZ4O02cFHDtCsS4V2Ll1M+l57pGnQJ+H3Q2YdGETocfgcB
+	2o7iRySUqY8h8ngvB+Fnu5Hf0doyLe8APuececJc6cS1YDCX0up6r6FiR3xDdHZn
+	PY+rt0E/N6pIuybTWDi63w70fgG9Eg34Q6nqMsHr9GkH3AaqOgx2P1KyFS+SmLY1
+	6Ny3Cg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ngtdpp2v-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:05:20 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-244581c62faso26084505ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 03:05:17 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:08:43 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b134a9a179so19792481cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 03:08:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755857115; x=1756461915;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1755857322; x=1756462122;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NCvb4E87MdnkwFWFQpgaGoK+/UWKLd0ckk9/uB8fxpI=;
-        b=S6S0iILFs2uZMoSELVIHfqpk/2faEoM2On44XXxoSH749ozyyjHPUpqmS3xdDBSAhQ
-         HtkzsMxbxCUqNsPklRIK5w+qd44FsuCROhOy0cJk2NB4WfmYj8PU72Vd+Dqq4pBiipl6
-         /YU9wTDvdcEbW068oJx6l3O6wyq1UGeF1fFVEoepNDrKdNdM9BeGJyZKKhl7inpwXvux
-         I2atbcL1VWKVQaYlnT7fAMORjOxgGzbaP2h+c/gP+s0JDG95/UFMi5rFWqIKFZfktA2Q
-         yIXSZc8WZyaY+WNjyxPub5uR0Bwn92w9EWeDZ71LDVYFj07gqp4jN007qoAL16iJa/je
-         Qamg==
-X-Forwarded-Encrypted: i=1; AJvYcCV7B1b/OV83UnBot4aEZdokCfcWdmlJjkgpAQih87ShqN+xEYmfV0Ho1HaOo/9PdlwLXtB1dgq7Ym3sdHZd@vger.kernel.org
-X-Gm-Message-State: AOJu0YwT4WupZkUbrETTTxlg8hSbt+0aPWXVEXd+HkC7ws9iYYXarFWd
-	yeDYZUHddl+QZPS51Be0BuX0ba26OAo45apRnU6WnU/3CnzXfwniAOOheCONhzmPP/brraxskTF
-	fzAr27nGura73+BJnWsUi5TgZj0iwroFHXmdtwqDD0GairZttgYvFo/uWiQKd27PwD6kv
-X-Gm-Gg: ASbGncvNNr4wOiltZFiNNI78+nPWQJrz20W36IAosFJCP/LmukvVObr+3X5gGWQkFlL
-	d9MvD4OlqIwbTxJle50bze05MKHj/n3P5rRcH1awAuAjEAWnZB9XBNHYbtLVc44CH/7DQrJVHSj
-	NdJQsVYnYhzNOVfsPzz4DUGSfcsJElSvvsdryf9MIdDvaIRWf7Jt/vLvafUxloXke9BTiSha0Gg
-	69cTQN6Kto7oWD95Iq18xZmtcAKizsvXcaBXCE/uD5TBI4ZzP2V4+LQAStSFIwGrHFMe0Oh1Uh/
-	3GCj/RwvOt866VuNTs2fnicKzWI0+RUc8zknkaGqvBvBeRKNv2NE/XYC3YHfEG7pKxYCvw2IEUL
-	HPedz6cHcQP3aqSt5m/q4VQbgjm7XEMg=
-X-Received: by 2002:a17:903:22cc:b0:240:640a:c57b with SMTP id d9443c01a7336-2462ef1f7bamr36120355ad.37.1755857115005;
-        Fri, 22 Aug 2025 03:05:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHShlcLRCyxd3es3abUH//R1uFG+bwmxmXbbL+TYec1DVJUwY5M/qqhUXum/j4nkYom6lZREg==
-X-Received: by 2002:a17:903:22cc:b0:240:640a:c57b with SMTP id d9443c01a7336-2462ef1f7bamr36119655ad.37.1755857114355;
-        Fri, 22 Aug 2025 03:05:14 -0700 (PDT)
-Received: from [10.133.33.128] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32513902819sm2098106a91.14.2025.08.22.03.05.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 22 Aug 2025 03:05:13 -0700 (PDT)
-Message-ID: <b43382fc-a2c3-4c6b-b462-0cabf7a2103d@oss.qualcomm.com>
-Date: Fri, 22 Aug 2025 18:05:04 +0800
+        bh=w3Oq6IeqsBr8d7DMg28n6xntUOJRa6+XhNN7IG19x7g=;
+        b=tWpFYZFTlRnMIHuORvm0sgdFg0SUlUZZphUZtQ4Q3ofuAuvKRTryivMWhzgGZRhLid
+         Fqpiw2pMBPup9uHXv3xtpTepmzZaJ4XBDy0efmWssTnITmEANzYFi5JeDfWuH2J+cv0E
+         Vu9bj90aQts4Z+AP0idEFBu4OUdo+k3NehRxwoIgjVf5gXDpHyUj8kA5QWCmVxAwM37n
+         DFqomb1apTzQO99bFO+NihpN9Rk6i2RCumhbYKQTTuhdVvnzAKAS3LkGcSPrSxuqePhg
+         XfzSqKVyF/jIZm9whY6j7PekB8EOQWCSidc6EgKRRQVc6bxgm/e4Fi366dnB6Bpa3XHL
+         40LQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVf2fefI/IWls1HjD7tnxZyhG0sW++CQFC77QA+UZsGdGYFl7xXg7XiV7wCGYSfxAPLiYlQPm7ZCWD1BGIR@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoI1aUucagNDgfDYtliLIKKZp8mP/ZHQcBbF9yNSpovzoG/NGK
+	nbj6ANJlaiDxv/yZ419wFr7g8E7jT9qOjhsm0A2hLEq0B6coQjWjtmIw9P+hD7W6zlBmvgoheQu
+	iCGiFdN12lTI6UKxwxSA5LE0Ad34+aQmcXRdeb/uM79x3p3DriNaxwx734B5FSLbs15MY
+X-Gm-Gg: ASbGncuEm9lJf5z+9OTH1Grg2m3caXiT+bRb8AnPPhKSnjCUu1nl7r5YgbLb0f6QYHv
+	QIF0sqAoCCUZgZjFCHQPbTO8EjxO4SkUXyZ27PoqAZCTL7ZpcQ5pZATOMnErQtlCqUWaE/DQXlp
+	RrAAl/GTRBdl4MPBNO7X7pDqM3pHByJr/KgMn1hw+9gAGSBSskNU+MjRMiuypkI9DDDH1/k5OOp
+	x++o8kGzKAzZwYy6GzYH7KKJJThBKahEmHiuy5H9gkR/l3lQ694OG249MWIBFTqX0QKdz3/NHKa
+	RXD+08HNy6nalTlPZ8KyMxUOi+KjeOuyT8fiSype+38C5dhRQvf6bLHyyRQvPE56Wi3tXXwX4V5
+	ludlp/2ak1abVYLlGKxNWsfcVP+FTQ0mcKtTouRehhk/cbpC9YRFe
+X-Received: by 2002:a05:622a:2513:b0:4b1:bf7:2adf with SMTP id d75a77b69052e-4b2aaa6d0f2mr27808641cf.18.1755857322058;
+        Fri, 22 Aug 2025 03:08:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHEHAQ24q8+UPlpw3prxSB0tJZfAhyWevqYdOauxJKuca8cbecxJRyCfe29anp4IxL7US8Izw==
+X-Received: by 2002:a05:622a:2513:b0:4b1:bf7:2adf with SMTP id d75a77b69052e-4b2aaa6d0f2mr27808181cf.18.1755857321263;
+        Fri, 22 Aug 2025 03:08:41 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55cef369a73sm3442266e87.65.2025.08.22.03.08.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Aug 2025 03:08:39 -0700 (PDT)
+Date: Fri, 22 Aug 2025 13:08:37 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, fange.zhang@oss.qualcomm.com,
+        yongxing.mou@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v3 07/14] phy: qcom: qmp-usbc: Move reset and regulator
+ config into PHY cfg
+Message-ID: <llrt3xnd5gagovnmyzqebp2da5v67bkxjntfcgc5r5auamspyj@7v5taph3i3c4>
+References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
+ <20250820-add-displayport-support-for-qcs615-platform-v3-7-a43bd25ec39c@oss.qualcomm.com>
+ <ofvzduf5xyip7w6yde2xwsrvv3tdh7ew3yyzeya2qzpqty3j7p@bnetyjowhdn5>
+ <6f7c3962-ccfc-4400-a77f-399b06da93e1@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/3] PCI: qcom: Add equalization settings for 8.0 GT/s
- and 32.0 GT/s
-To: Manivannan Sadhasivam <mani@kernel.org>,
-        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-        lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
-        johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org,
-        neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-phy@lists.infradead.org, quic_krichai@quicinc.com,
-        quic_vbadigan@quicinc.com
-References: <20250819071649.1531437-1-ziyue.zhang@oss.qualcomm.com>
- <20250819071649.1531437-2-ziyue.zhang@oss.qualcomm.com>
- <z54p5x5u56u7dprrlv3obzhxotjgimbufa2spajoqvnlrevgdd@4dejnkmiegrh>
-Content-Language: en-US
-From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-In-Reply-To: <z54p5x5u56u7dprrlv3obzhxotjgimbufa2spajoqvnlrevgdd@4dejnkmiegrh>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Aui3HO9P c=1 sm=1 tr=0 ts=68a840e0 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=uZ_Y6Hf0VBP1xoXJwNUA:9
- a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-ORIG-GUID: I01_D-JAlTSflDPKkQUUCakkAvs__J9B
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX5JIcu22FxkSM
- wh1QIH/yxFOM+o22QE902OwD/3WkJ08w0GRsX7VaFHtpih6iLxUyD+77RKwVFnZ3PiG2qc6uaTB
- lovdDc8K8bmnYYq1pGezC+7j1jp9Oq4TZQRWyNirrySFxKhv7migHTZDPFNCanFHIBTFNgw3wwd
- oEywNA0wHIF87ya9QR+I6+dfwufwa8iB5DWG2aAfAUl1Z2prf5mCwASmHmCyn+UX4f23WHop0V2
- EPeFx8Eetzuyg+Cbu/TrRptPif6uup9ZSDij3pOM7pYi78UmaxbvDciBavQ0jqRv6h7liFsAAtu
- 18Ef260vmx3hycUdqrRhaAeYJAWgUbMkObrT1D//UyBFJjD0j9w8jih5hnNPyr5UI7BKsJakAC7
- 4n2kq9QZo1XfQMBpo8JPm4uaC+b62w==
-X-Proofpoint-GUID: I01_D-JAlTSflDPKkQUUCakkAvs__J9B
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <6f7c3962-ccfc-4400-a77f-399b06da93e1@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=LexlKjfi c=1 sm=1 tr=0 ts=68a841ab cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=eGj7nJ6_Ab5DLtFNWjwA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-GUID: 3d6paYR5YuvuultBWXcdwpx4F7eGLF58
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDEzNSBTYWx0ZWRfX8FJb+DMRUrZW
+ za2wL5FI6plncPvGDbMkTGxGS6uVXJ6Jpkz6ixFEwjQenqENtFeFbcg1daDJq/4//jzWxnawGQ5
+ i2ugL/MjMps/Q6PLKNPKDX+9kaF8LzkOBkVYhtJLvnCyBUyXfRv3c32EHnQAd4qxVtCJ6/A5KWI
+ ofG9FGZ9++KkRG6AYJ7yeZ8ruTgYSClkxXOp5wSHcGJ81xDJdXLFzYr4nTZmi6tOSM6BBUilVPE
+ XhBYfxLWVPjL7z4sa+0pH6SP0yxEje64Etm6BZ/uBd/dpjqpU+NoSs3/dJ4YAFGKLaI+sk9JvPk
+ P6Oo1oA3NweagbBGeuATckvZWy7cqF3uZiuH++IsYM1MbDDmHJSdQ3J4E/sEdg6yB943Kjp7+Mg
+ 4PuzG4/hzCTk4wahMc4jxlTCYeuAyQ==
+X-Proofpoint-ORIG-GUID: 3d6paYR5YuvuultBWXcdwpx4F7eGLF58
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1011 phishscore=0 lowpriorityscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0 bulkscore=0
- spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
- definitions=main-2508200013
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200135
 
-
-
-On 8/22/2025 4:06 PM, Manivannan Sadhasivam wrote:
-> On Tue, Aug 19, 2025 at 03:16:46PM GMT, Ziyue Zhang wrote:
->> Add lane equalization setting for 8.0 GT/s and 32.0 GT/s to enhance link
->> stability and avoid AER Correctable Errors reported on some platforms
->> (eg. SA8775P).
->>
+On Fri, Aug 22, 2025 at 04:29:28PM +0800, Xiangxu Yin wrote:
 > 
-> So this is fixing an issue, right? Then you should add relevant Fixes tag. I
-> guess the tag here would be the commit that added SA8775p.
+> On 8/20/2025 7:30 PM, Dmitry Baryshkov wrote:
+> > On Wed, Aug 20, 2025 at 05:34:49PM +0800, Xiangxu Yin wrote:
+> >> Refactor reset and regulator configuration to be managed via qmp_phy_cfg
+> >> instead of hardcoded lists. This enables per-PHY customization and
+> >> simplifies initialization logic for USB-only and USB/DP switchable PHYs.
+> > Please split into two patches in order to simplify reviewing.
 > 
->> 8.0 GT/s, 16.0 GT/s and 32.0 GT/s require the same equalization setting.
->> This setting is programmed into a group of shadow registers, which can be
->> switched to configure equalization for different speeds by writing 00b,
->> 01b and 10b to `RATE_SHADOW_SEL`.
->>
->> Hence program equalization registers in a loop using link speed as index,
->> so that equalization setting can be programmed for 8.0 GT/s, 16.0 GT/s
->> and 32.0 GT/s.
->>
->> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
->> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
->> Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
->> ---
->>   drivers/pci/controller/dwc/pcie-designware.h  |  1 -
->>   drivers/pci/controller/dwc/pcie-qcom-common.c | 58 +++++++++++--------
->>   drivers/pci/controller/dwc/pcie-qcom-common.h |  2 +-
->>   drivers/pci/controller/dwc/pcie-qcom-ep.c     |  6 +-
->>   drivers/pci/controller/dwc/pcie-qcom.c        |  6 +-
->>   5 files changed, 41 insertions(+), 32 deletions(-)
->>
->> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
->> index b5e7e18138a6..11de844428e5 100644
->> --- a/drivers/pci/controller/dwc/pcie-designware.h
->> +++ b/drivers/pci/controller/dwc/pcie-designware.h
->> @@ -123,7 +123,6 @@
->>   #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE	BIT(16)
->>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
->>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
->> -#define GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT	0x1
->>   
->>   #define GEN3_EQ_CONTROL_OFF			0x8A8
->>   #define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
->> index 3aad19b56da8..cb98e66d81d9 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
->> @@ -8,9 +8,11 @@
->>   #include "pcie-designware.h"
->>   #include "pcie-qcom-common.h"
->>   
->> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
->> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci)
->>   {
->>   	u32 reg;
->> +	u16 speed;
->> +	struct device *dev = pci->dev;
 > 
-> Reverse Xmas order please.
+> Ok, will split reset and regulator part.
 > 
->>   
->>   	/*
->>   	 * GEN3_RELATED_OFF register is repurposed to apply equalization
->> @@ -19,32 +21,40 @@ void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
->>   	 * determines the data rate for which these equalization settings are
->>   	 * applied.
->>   	 */
->> -	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
->> -	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
->> -	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
->> -	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
->> -			  GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT);
->> -	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
->>   
->> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
->> -	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
->> -		GEN3_EQ_FMDC_N_EVALS |
->> -		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
->> -		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
->> -	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
->> -		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
->> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
->> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
->> -	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
->> +	for (speed = PCIE_SPEED_8_0GT; speed <= pcie_link_speed[pci->max_link_speed]; ++speed) {
->> +		if (speed > PCIE_SPEED_32_0GT) {
->> +			dev_warn(dev, "Skipped equalization settings for speeds higher than 32.0 GT/s\n");
->> +			break;
->> +		}
->>   
->> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
->> -	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
->> -		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
->> -		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
->> -		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
->> -	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
->> +		reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
->> +		reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
->> +		reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
->> +		reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
->> +			  speed - PCIE_SPEED_8_0GT);
->> +		dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
->> +
->> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
->> +		reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
->> +			GEN3_EQ_FMDC_N_EVALS |
->> +			GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
->> +			GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
->> +		reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
->> +			FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
->> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
->> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
->> +		dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
->> +
->> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
->> +		reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
->> +			GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
->> +			GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
->> +			GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
->> +		dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
->> +	}
->>   }
->> -EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_equalization);
->> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_equalization);
->>   
->>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci)
->>   {
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
->> index 7d88d29e4766..7f5ca2fd9a72 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
->> @@ -8,7 +8,7 @@
->>   
->>   struct dw_pcie;
->>   
->> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci);
->> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci);
->>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci);
->>   
->>   #endif
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> index 60afb4d0134c..aeb166f68d55 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
->> @@ -511,10 +511,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
->>   		goto err_disable_resources;
->>   	}
->>   
->> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
->> -		qcom_pcie_common_set_16gt_equalization(pci);
->> +	qcom_pcie_common_set_equalization(pci);
->> +
->> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
 > 
-> This condition has existed even before this patch, but just noticing this
-> possible issue. So if 'max_link_speed' is > 16 GT/s, we do not need to set lane
-> margining? We used the same logic to set equalization setting earlier also.
+> >> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+> >> ---
+> >>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 108 +++++++++++++++----------------
+> >>  1 file changed, 53 insertions(+), 55 deletions(-)
+> >>
+> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> >> index 61128d606238321d1b573655b3b987226aa2d594..4e797b7e65da0e3a827efa9a179f1c150c1b8b00 100644
+> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> >> @@ -421,8 +421,9 @@ struct qmp_phy_cfg {
+> >>  	int (*configure_dp_phy)(struct qmp_usbc *qmp);
+> >>  	int (*calibrate_dp_phy)(struct qmp_usbc *qmp);
+> >>  
+> >> -	/* regulators to be requested */
+> >> -	const char * const *vreg_list;
+> >> +	const char * const *reset_list;
+> >> +	int num_resets;
+> >> +	const struct regulator_bulk_data *vreg_list;
+> >>  	int num_vregs;
+> >>  
+> >>  	/* array of registers with different offsets */
+> >> @@ -453,7 +454,6 @@ struct qmp_usbc {
+> >>  	struct clk_hw dp_pixel_hw;
+> >>  	struct clk_bulk_data *clks;
+> >>  	int num_clks;
+> >> -	int num_resets;
+> >>  	struct reset_control_bulk_data *resets;
+> >>  	struct regulator_bulk_data *vregs;
+> >>  
+> >> @@ -514,9 +514,18 @@ static const char * const usb3phy_reset_l[] = {
+> >>  	"phy_phy", "phy",
+> >>  };
+> >>  
+> >> -/* list of regulators */
+> >> -static const char * const qmp_phy_vreg_l[] = {
+> >> -	"vdda-phy", "vdda-pll",
+> >> +static const char * const usb3dpphy_reset_l[] = {
+> >> +	"phy_phy", "dp_phy",
+> >> +};
+> >> +
+> >> +static const struct regulator_bulk_data qmp_phy_usb_vreg_l[] = {
+> >> +	{ .supply = "vdda-phy" },
+> >> +	{ .supply = "vdda-pll" },
+> > Please fill in the values for all platforms. It well might be that they
+> > all share the same current requirements.
+> 
+> 
+> I checked previous DP projects and found all platforms configured vdda-phy with 21.8mA and vdda-pll with 36mA.
 
-Lane margining is supported for 16 GT/s and 32 GT/s. The settings are
-dependent on phy design. For a specific phy, they have same settings
-for 16 GT/s and 32 GT/s. Perhaps we can get the settings from devicetree
-and program them in a loop.
-
-But I'm not sure why we need to program it. It will no affect singal
-quality and only required when user wants to collect margining info.
-
-- Qiang Yu
+No. On SDM660 and MSM8998 DP defines 73.4 mA for 0.9V supply and
+12.560 mA for 1.8 V supply.
 
 > 
-> - Mani
-> 
+> However, I didn’t find USB load configs in downstream and from SoC related power grids:
 
+Please check the actual HW documentation for those platforms.
+
+> QCS615
+> L12A: VDDA_USB0_SS_1P8/VDDA_USB1_SS_1P8 Ipk:20ma
+> L5A: VDDA_USB0_SS_0P9/VDDA_USB1_SS_0P9 Ipk:50mA
+> 
+> sm6150
+> L11A: VDDA_USB0_SS_1P8/VDDA_USB1_SS_1P8 Ipk:20ma
+> L4A: VDDA_USB0_SS_0P9/VDDA_USB1_SS_0P9 Ipk:50mA
+> 
+> SM6115
+> L12A: VDDA_USB_SS_DP_1P8 Ipk:13.3mA
+> L4A: VDDA_USB_SS_DP_CORE Ipk:66.1mA
+> 
+> QCM2290
+> L13A: VDDA_USB_SS_DP_1P8 Ipk:13.3mA
+> L12A: VDDA_USB_SS_DP_CORE Ipk:66.1mA
+> 
+> sdm660
+> LDO10A: VDDA_USB_SS_1P8 Ipk:14mA
+> LDO1B: VDDA_USB_SS_CORE Ipk:68.6mA
+> 
+> msm8998
+> L2A: VDDA_USB_SS_1P2 Ipk:14.2mA
+> L1A: VDDA_USB_SS_CORE Ipk:68.6mA
+> 
+> It seems the USB power requirements vary across platforms, and the
+> 21800 µA load for vdda-phy exceeds the Ipk range in most cases.
+
+Ipk being ?
+
+> I also tested removing the load settings for USB+DP PHY, and DP still works fine.
+
+It mostly works either because we don't allow mode switching on older
+platforms (yet) or because somebody else has already voted and that vote
+keeps the required mode.
+
+As you've started looking on specifying proper current load, please
+finish the work.
+
+> So, can we keep the regulator config as original qmp_phy_vreg_l?
+> static const char * const qmp_phy_vreg_l[] = { "vdda-phy", "vdda-pll"} 
+> 
+> 
+> >> +};
+> >> +
+> >> +static const struct regulator_bulk_data qmp_phy_usbdp_vreg_l[] = {
+> >> +	{ .supply = "vdda-phy", .init_load_uA = 21800 },
+> >> +	{ .supply = "vdda-phy", .init_load_uA = 36000 },
+> > Typo
+> 
+> 
+> Sorry for Typo, will fix in next patch.
+> 
+> 
+> >>  };
+> >>  
+> >>  static const struct qmp_usbc_offsets qmp_usbc_offsets_v3_qcm2290 = {
+> >> @@ -569,8 +578,10 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
+> >>  	.rx_tbl_num             = ARRAY_SIZE(msm8998_usb3_rx_tbl),
+> >>  	.pcs_tbl                = msm8998_usb3_pcs_tbl,
+> >>  	.pcs_tbl_num            = ARRAY_SIZE(msm8998_usb3_pcs_tbl),
+> >> -	.vreg_list              = qmp_phy_vreg_l,
+> >> -	.num_vregs              = ARRAY_SIZE(qmp_phy_vreg_l),
+> >> +	.reset_list		= usb3phy_reset_l,
+> >> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
+> >> +	.vreg_list              = qmp_phy_usb_vreg_l,
+> >> +	.num_vregs              = ARRAY_SIZE(qmp_phy_usb_vreg_l),
+> >>  	.regs                   = qmp_v3_usb3phy_regs_layout,
+> >>  };
+> >>  
+> >> @@ -586,8 +597,10 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
+> >>  	.rx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_rx_tbl),
+> >>  	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
+> >>  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
+> >> -	.vreg_list		= qmp_phy_vreg_l,
+> >> -	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >> +	.reset_list		= usb3phy_reset_l,
+> >> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
+> >> +	.vreg_list		= qmp_phy_usb_vreg_l,
+> >> +	.num_vregs		= ARRAY_SIZE(qmp_phy_usb_vreg_l),
+> >>  	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
+> >>  };
+> >>  
+> >> @@ -603,8 +616,10 @@ static const struct qmp_phy_cfg sdm660_usb3phy_cfg = {
+> >>  	.rx_tbl_num		= ARRAY_SIZE(sdm660_usb3_rx_tbl),
+> >>  	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
+> >>  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
+> >> -	.vreg_list		= qmp_phy_vreg_l,
+> >> -	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+> >> +	.reset_list		= usb3phy_reset_l,
+> >> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
+> >> +	.vreg_list		= qmp_phy_usb_vreg_l,
+> >> +	.num_vregs		= ARRAY_SIZE(qmp_phy_usb_vreg_l),
+> >>  	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
+> >>  };
+> >>  
+> >> @@ -637,6 +652,11 @@ static const struct qmp_phy_cfg qcs615_usb3dp_phy_cfg = {
+> >>  
+> >>  	.swing_tbl		= &qmp_dp_voltage_swing_hbr2_rbr,
+> >>  	.pre_emphasis_tbl	= &qmp_dp_pre_emphasis_hbr2_rbr,
+> >> +
+> >> +	.reset_list		= usb3dpphy_reset_l,
+> >> +	.num_resets		= ARRAY_SIZE(usb3dpphy_reset_l),
+> >> +	.vreg_list		= qmp_phy_usbdp_vreg_l,
+> >> +	.num_vregs		= ARRAY_SIZE(qmp_phy_usbdp_vreg_l),
+> >>  };
+> >>  
+> >>  static int qmp_usbc_com_init(struct phy *phy)
+> >> @@ -653,13 +673,13 @@ static int qmp_usbc_com_init(struct phy *phy)
+> >>  		return ret;
+> >>  	}
+> >>  
+> >> -	ret = reset_control_bulk_assert(qmp->num_resets, qmp->resets);
+> >> +	ret = reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+> >>  	if (ret) {
+> >>  		dev_err(qmp->dev, "reset assert failed\n");
+> >>  		goto err_disable_regulators;
+> >>  	}
+> >>  
+> >> -	ret = reset_control_bulk_deassert(qmp->num_resets, qmp->resets);
+> >> +	ret = reset_control_bulk_deassert(cfg->num_resets, qmp->resets);
+> >>  	if (ret) {
+> >>  		dev_err(qmp->dev, "reset deassert failed\n");
+> >>  		goto err_disable_regulators;
+> >> @@ -682,7 +702,7 @@ static int qmp_usbc_com_init(struct phy *phy)
+> >>  	return 0;
+> >>  
+> >>  err_assert_reset:
+> >> -	reset_control_bulk_assert(qmp->num_resets, qmp->resets);
+> >> +	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+> >>  err_disable_regulators:
+> >>  	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+> >>  
+> >> @@ -694,7 +714,7 @@ static int qmp_usbc_com_exit(struct phy *phy)
+> >>  	struct qmp_usbc *qmp = phy_get_drvdata(phy);
+> >>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> >>  
+> >> -	reset_control_bulk_assert(qmp->num_resets, qmp->resets);
+> >> +	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+> >>  
+> >>  	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+> >>  
+> >> @@ -921,42 +941,22 @@ static const struct dev_pm_ops qmp_usbc_pm_ops = {
+> >>  			   qmp_usbc_runtime_resume, NULL)
+> >>  };
+> >>  
+> >> -static int qmp_usbc_vreg_init(struct qmp_usbc *qmp)
+> >> +static int qmp_usbc_reset_init(struct qmp_usbc *qmp)
+> >>  {
+> >>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+> >> -	struct device *dev = qmp->dev;
+> >> -	int num = cfg->num_vregs;
+> >> -	int i;
+> >> -
+> >> -	qmp->vregs = devm_kcalloc(dev, num, sizeof(*qmp->vregs), GFP_KERNEL);
+> >> -	if (!qmp->vregs)
+> >> -		return -ENOMEM;
+> >> -
+> >> -	for (i = 0; i < num; i++)
+> >> -		qmp->vregs[i].supply = cfg->vreg_list[i];
+> >> -
+> >> -	return devm_regulator_bulk_get(dev, num, qmp->vregs);
+> >> -}
+> >> -
+> >> -static int qmp_usbc_reset_init(struct qmp_usbc *qmp,
+> >> -			      const char *const *reset_list,
+> >> -			      int num_resets)
+> >> -{
+> >>  	struct device *dev = qmp->dev;
+> >>  	int i;
+> >>  	int ret;
+> >>  
+> >> -	qmp->resets = devm_kcalloc(dev, num_resets,
+> >> +	qmp->resets = devm_kcalloc(dev, cfg->num_resets,
+> >>  				   sizeof(*qmp->resets), GFP_KERNEL);
+> >>  	if (!qmp->resets)
+> >>  		return -ENOMEM;
+> >>  
+> >> -	for (i = 0; i < num_resets; i++)
+> >> -		qmp->resets[i].id = reset_list[i];
+> >> +	for (i = 0; i < cfg->num_resets; i++)
+> >> +		qmp->resets[i].id = cfg->reset_list[i];
+> >>  
+> >> -	qmp->num_resets = num_resets;
+> >> -
+> >> -	ret = devm_reset_control_bulk_get_exclusive(dev, num_resets, qmp->resets);
+> >> +	ret = devm_reset_control_bulk_get_exclusive(dev, cfg->num_resets, qmp->resets);
+> >>  	if (ret)
+> >>  		return dev_err_probe(dev, ret, "failed to get resets\n");
+> >>  
+> >> @@ -1146,11 +1146,6 @@ static int qmp_usbc_parse_usb_dt_legacy(struct qmp_usbc *qmp, struct device_node
+> >>  
+> >>  	qmp->num_clks = ret;
+> >>  
+> >> -	ret = qmp_usbc_reset_init(qmp, usb3phy_legacy_reset_l,
+> >> -				 ARRAY_SIZE(usb3phy_legacy_reset_l));
+> >> -	if (ret)
+> >> -		return ret;
+> >> -
+> >>  	return 0;
+> >>  }
+> >>  
+> >> @@ -1187,14 +1182,9 @@ static int qmp_usbc_parse_usb_dt(struct qmp_usbc *qmp)
+> >>  	qmp->pipe_clk = devm_clk_get(dev, "pipe");
+> >>  	if (IS_ERR(qmp->pipe_clk)) {
+> >>  		return dev_err_probe(dev, PTR_ERR(qmp->pipe_clk),
+> >> -				     "failed to get pipe clock\n");
+> >> +					"failed to get pipe clock\n");
+> > unrelated
+> 
+> 
+> Ack.
+> 
+> 
+> >>  	}
+> >>  
+> >> -	ret = qmp_usbc_reset_init(qmp, usb3phy_reset_l,
+> >> -				 ARRAY_SIZE(usb3phy_reset_l));
+> >> -	if (ret)
+> >> -		return ret;
+> >> -
+> >>  	return 0;
+> >>  }
+> >>  
+> >> @@ -1228,6 +1218,7 @@ static int qmp_usbc_probe(struct platform_device *pdev)
+> >>  	struct phy_provider *phy_provider;
+> >>  	struct device_node *np;
+> >>  	struct qmp_usbc *qmp;
+> >> +	const struct qmp_phy_cfg *cfg;
+> >>  	int ret;
+> >>  
+> >>  	qmp = devm_kzalloc(dev, sizeof(*qmp), GFP_KERNEL);
+> >> @@ -1239,13 +1230,20 @@ static int qmp_usbc_probe(struct platform_device *pdev)
+> >>  
+> >>  	qmp->orientation = TYPEC_ORIENTATION_NORMAL;
+> >>  
+> >> -	qmp->cfg = of_device_get_match_data(dev);
+> >> -	if (!qmp->cfg)
+> >> +	cfg = of_device_get_match_data(dev);
+> >> +	if (!cfg)
+> >>  		return -EINVAL;
+> >>  
+> >> +	qmp->cfg = cfg;
+> > Why? This doesn't seem related at all.
+> 
+> 
+> I added the |cfg| variable to simplify access to |num_vregs| and |vreg_list| in the following lines, 
+> 
+> avoiding repeated |qmp->cfg->...| usage. 
+> 
+> If this is considered unrelated, I’ll remove it in the next version.
+
+This all gets clogged in a mixture of regulator and reset changes.
+Hopefully it will be more obvious with the patches being split.
+
+> 
+> 
+> >
+> >> +
+> >>  	mutex_init(&qmp->phy_mutex);
+> >>  
+> >> -	ret = qmp_usbc_vreg_init(qmp);
+> >> +	ret = qmp_usbc_reset_init(qmp);
+> >> +	if (ret)
+> >> +		return ret;
+> >> +
+> >> +	ret = devm_regulator_bulk_get_const(qmp->dev, cfg->num_vregs,
+> >> +					 cfg->vreg_list, &qmp->vregs);
+> >>  	if (ret)
+> >>  		return ret;
+> >>  
+> >>
+> >> -- 
+> >> 2.34.1
+> >>
+
+-- 
+With best wishes
+Dmitry
 
