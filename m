@@ -1,230 +1,310 @@
-Return-Path: <linux-arm-msm+bounces-70345-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2F10B314A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:04:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8CCF6B314B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:07:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2779616D053
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:01:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 85B453B4CEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:05:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4036929DB6E;
-	Fri, 22 Aug 2025 10:00:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A2BC27E041;
+	Fri, 22 Aug 2025 10:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XXbmBnsf"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gFOV+fWL"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 914892D7DC5
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:00:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1C4285CA2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:05:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755856856; cv=none; b=JwpeJ9/Nf91Ks6uSNgRFj1voAO/iCyZwdc0I5cfn8UWgmbLOLfp7x8SBpl9tz7GBr01JnKux2FgZ5kaDos0VJrFKtNTRsW6bThD2EjG3QIE6TwFjUnJbx1l4tnaVoDuWzcHG9MQXjOgm3duq09Viy9+OjEjtYe5D6wjRLIJO2ec=
+	t=1755857123; cv=none; b=JplyvhekBfyymrUU2uT2sbcyCUfpRZBsBPVaqb0Xnm15x4uS34hbZTu290nigykgFl9OerzstIqCzsjS2s1GBV2oJEq9y/0T0dfhZDruyFQ5KdDuVoN+R+tik7Y5gdwmz3c+NiSxzjTSy4KBXuT/87NfIcJGqHQnnOsORu8tTW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755856856; c=relaxed/simple;
-	bh=pEetoVTDodelXBwJrt38dostCVJshVjnFzOU+XhTBjs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tTAKcuWcGRxoPoHHJ3lZb5eJmR6xKbNFMVnTr7vv3jJQ3KX4vYyrfHOjl+8A0fHMjbtbtTFQme9QOODq67NPJe7PT4RbmkyFNy51iD2pqMcF/H5rqAtpvxIKD8CKUw918CEXBWVN+Njrz4dCOuCAjAZvoxt20/shRQlcXNzacIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XXbmBnsf; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1755857123; c=relaxed/simple;
+	bh=KivU5RnfA0zCwbsH7zhExGKtReC3rbkiFiOi0NUu8JU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rVm6k9FAt3d51yUIf95r2XclxOnXjEmjH+8TbkwEgzD+SQnigabQdC2PHO85/JO2RJmW+fuyIPv2NcfUU/SQN3PW6lMcqbnG8lMfgIvHnfz+0zusWSe31FkfDYA7DUPDvgpRXwEIc6fWheLZCrzoOkyXS+j/p/9EXTgp1UiraUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gFOV+fWL; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UZDJ011707
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:00:53 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UIY1003566
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:05:20 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=seU5VyNwZ7P
-	hzDSFhbvRs6XB3sWasRwy3GspI+Jm/Rs=; b=XXbmBnsfM/h5W2KrZFVAzKUJTZt
-	Z1HMKDfhL73N9zmko0vHj4DE1/2uIFzyajQNaY7RJkexgDqKZEdsFUKTPKuhvwl3
-	1/AEhJmtWvegV9k/5+aZGMENqlhZpy64KRB5DMW6ND7hZCogtvVl970NuOht1oy0
-	v1qAfTosPJv0JFEkiEZjiEyUTJ+bY4CFgCktnLoq3f3xslGRIycWxok31ThipGaT
-	8fpvK/MzZ71t6SxePnGQM2FnTISo0FEg9zpdoQfPBEQB+a3rlqLucSmi/oHagUuN
-	LoFkWa3gdUAr2IN0NdPOcK5R7zQ6YWl2zHo1H2iE6frDXdvioiw738goV1A==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ngt8em7d-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	NCvb4E87MdnkwFWFQpgaGoK+/UWKLd0ckk9/uB8fxpI=; b=gFOV+fWLijaslLma
+	A9XqpoRAKL4OPj1l1BTVvFvigN6fQ/5oXcLvh1AkfQ1phE5QY85wqYHzG3EUAO4o
+	AajQcO5PCy9VAtP4uI/4dGv0ZzShI8AsgTwfq1xwFCLv/0LPmynBt5Smv/E3+R9D
+	SC6GYK/YDOPW+OTy2JbKDmuDNtfu4AjSbimMahTTqAJsOuW6oHxOg36wdINf/KxP
+	pnmCJMkgL+aSBAZ64BwF6mGNz9Dewgrjw1tD3EQG9HZYTq8C8kxbz9X49B4KgEpc
+	6tnGmO/fv9ZNLQwM1hTOwLEys2rXsFWep8nI6/TS1t/VKrN0Wg2O8kwkW9D38ykj
+	GV/MlA==
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5298rue-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:00:53 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b109bc103bso46292221cf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 03:00:53 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:05:20 +0000 (GMT)
+Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-244581c62faso26084505ad.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 03:05:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755856852; x=1756461652;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=seU5VyNwZ7PhzDSFhbvRs6XB3sWasRwy3GspI+Jm/Rs=;
-        b=RrkwohWc7IF7ttlayg7jCyM+IIpwHSlW4Ix4lHUFjpWo18n4a+WAe33B9SsKleI9bF
-         pQXt27ac9/HKOkQL0Zq5OjiqyT1Zhfav7oCZ9HyyodNL0b+fgV1y6PXEn95pDWBUuTmA
-         PZGmqgS9OgqIx1KurLVrfSkYDCrrYo9z8/P421601DecS/5rAQTc7/UCVcsBM3ocnPt6
-         uzP58tSA2f+q/TEhwX5IHiPyw0nb7QtndKxvfVQ4smyBQR4U36bDSLiAQ0hvxv4R+nYJ
-         bCvy59C+RhDLQSW7Ien/1RGIafBAqKYSYB3okjqy0Oq9vo0awf0yTGzrRtnGXANtrvhS
-         IJCw==
-X-Forwarded-Encrypted: i=1; AJvYcCWgZbBQNDbqenUMuGxKcQ9O5UYh2wCBi6gXJyfkWHEwyqOtipu3OYqBfWy/SuJM/4nV/gtVHMvU+0V4GCLw@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkUt6nqKQxiUi0JCN5oxz23wzjNnx8gddvGSxnXsbVvQlZxZ/h
-	OY6HWQBUykmlfTnujtSFlMS+GJkEupj5ofbqvanG0kLUX7hA3HdJGKkMvDh9LzUtMrGfWy+Atny
-	hLYyNxGImwALXfFq/bmhlqbqZTQt6KlcryzoJv+d4sXENC/Gy6ebkraFM6v+TfnD8WRc5helwNj
-	i2
-X-Gm-Gg: ASbGncvxNJNoC6cxzHQjafKomANUBKNvxgGMsiWDYctYImna7QPq6csBuXOGEcUFloc
-	BXtTfelmZ0UiwLxBkD9O8ThPXJ8bo+J2+ATQ4h3Tu1etM6gMX3LxtKZDi9gtXCutcGXFd/I9+2y
-	G1dCIXcP4B+vWvN/lWo9W0vx3I9KPo+rV9QpT54BpawEZHSYimSEg4cPGK2j9sM3btKoTA5Ktv6
-	U8G4ywv2sdlU/aJzzqG/aPMWhCkG0IL3EsB2rkzUNKSYBIuc3gsifZga+Xncn3jIRusbGw0w86k
-	PqTtKGrWk3+eZsz3v8JJrIYfyIGfVf7k8pNw/MHoQEaMB4f/JS//Mw==
-X-Received: by 2002:a05:622a:1cc9:b0:4b2:94a7:217b with SMTP id d75a77b69052e-4b2aaa599d7mr28342411cf.37.1755856852092;
-        Fri, 22 Aug 2025 03:00:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTI6SJSLk1AF3i7MxH2gUf6ex3W/Wf5mKpRmzSeB4ddoFBiT2mWoh4+lF7VcoIx6vuIho8PA==
-X-Received: by 2002:a05:622a:1cc9:b0:4b2:94a7:217b with SMTP id d75a77b69052e-4b2aaa599d7mr28341801cf.37.1755856851491;
-        Fri, 22 Aug 2025 03:00:51 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c0748797a1sm14184608f8f.5.2025.08.22.03.00.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 03:00:51 -0700 (PDT)
-From: srinivas.kandagatla@oss.qualcomm.com
-To: andersson@kernel.org
-Cc: mathieu.poirier@linaro.org, srichara@quicinc.com,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH 2/2] rpmsg: glink_native: remove duplicate code for rpmsg device remove
-Date: Fri, 22 Aug 2025 11:00:43 +0100
-Message-ID: <20250822100043.2604794-3-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250822100043.2604794-1-srinivas.kandagatla@oss.qualcomm.com>
-References: <20250822100043.2604794-1-srinivas.kandagatla@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1755857115; x=1756461915;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NCvb4E87MdnkwFWFQpgaGoK+/UWKLd0ckk9/uB8fxpI=;
+        b=S6S0iILFs2uZMoSELVIHfqpk/2faEoM2On44XXxoSH749ozyyjHPUpqmS3xdDBSAhQ
+         HtkzsMxbxCUqNsPklRIK5w+qd44FsuCROhOy0cJk2NB4WfmYj8PU72Vd+Dqq4pBiipl6
+         /YU9wTDvdcEbW068oJx6l3O6wyq1UGeF1fFVEoepNDrKdNdM9BeGJyZKKhl7inpwXvux
+         I2atbcL1VWKVQaYlnT7fAMORjOxgGzbaP2h+c/gP+s0JDG95/UFMi5rFWqIKFZfktA2Q
+         yIXSZc8WZyaY+WNjyxPub5uR0Bwn92w9EWeDZ71LDVYFj07gqp4jN007qoAL16iJa/je
+         Qamg==
+X-Forwarded-Encrypted: i=1; AJvYcCV7B1b/OV83UnBot4aEZdokCfcWdmlJjkgpAQih87ShqN+xEYmfV0Ho1HaOo/9PdlwLXtB1dgq7Ym3sdHZd@vger.kernel.org
+X-Gm-Message-State: AOJu0YwT4WupZkUbrETTTxlg8hSbt+0aPWXVEXd+HkC7ws9iYYXarFWd
+	yeDYZUHddl+QZPS51Be0BuX0ba26OAo45apRnU6WnU/3CnzXfwniAOOheCONhzmPP/brraxskTF
+	fzAr27nGura73+BJnWsUi5TgZj0iwroFHXmdtwqDD0GairZttgYvFo/uWiQKd27PwD6kv
+X-Gm-Gg: ASbGncvNNr4wOiltZFiNNI78+nPWQJrz20W36IAosFJCP/LmukvVObr+3X5gGWQkFlL
+	d9MvD4OlqIwbTxJle50bze05MKHj/n3P5rRcH1awAuAjEAWnZB9XBNHYbtLVc44CH/7DQrJVHSj
+	NdJQsVYnYhzNOVfsPzz4DUGSfcsJElSvvsdryf9MIdDvaIRWf7Jt/vLvafUxloXke9BTiSha0Gg
+	69cTQN6Kto7oWD95Iq18xZmtcAKizsvXcaBXCE/uD5TBI4ZzP2V4+LQAStSFIwGrHFMe0Oh1Uh/
+	3GCj/RwvOt866VuNTs2fnicKzWI0+RUc8zknkaGqvBvBeRKNv2NE/XYC3YHfEG7pKxYCvw2IEUL
+	HPedz6cHcQP3aqSt5m/q4VQbgjm7XEMg=
+X-Received: by 2002:a17:903:22cc:b0:240:640a:c57b with SMTP id d9443c01a7336-2462ef1f7bamr36120355ad.37.1755857115005;
+        Fri, 22 Aug 2025 03:05:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHShlcLRCyxd3es3abUH//R1uFG+bwmxmXbbL+TYec1DVJUwY5M/qqhUXum/j4nkYom6lZREg==
+X-Received: by 2002:a17:903:22cc:b0:240:640a:c57b with SMTP id d9443c01a7336-2462ef1f7bamr36119655ad.37.1755857114355;
+        Fri, 22 Aug 2025 03:05:14 -0700 (PDT)
+Received: from [10.133.33.128] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32513902819sm2098106a91.14.2025.08.22.03.05.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 22 Aug 2025 03:05:13 -0700 (PDT)
+Message-ID: <b43382fc-a2c3-4c6b-b462-0cabf7a2103d@oss.qualcomm.com>
+Date: Fri, 22 Aug 2025 18:05:04 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDEzNCBTYWx0ZWRfX0DxshPJ60WrQ
- DRJYIDKFJsMh1tssHvNhj3TLczm0fDVGYGaj6BR+bE6mY/uchVU1PrALZMI0er14VdpMkNLSSdM
- YRvckDi3ZtDWHkYc72RJSNeRNuOwKcegYYPiEtBHKmnsNTIHxQN/HBAU9Pgb1sAD5mxHeVSEb+b
- YVtbCfD9/o5mroxXZG2k6KE0UAuxX8H42MdmgBbkVYpcYLx1WJtpojy/kqWUubOvLsUE1iujvoz
- lWvk6UxXYI1dx4DyRbEwf2tZ2O3fpSvjXr7EaR+pIYaR+IHQjJvykOLjRu8ZtegKk6Py4Eobszt
- UxcTyQ6DsBJOEY3XW3lMmDpB1ObXACzTqTLUt8D1ee3kneg3A3FzCLkOXGutvo6/t4Gjvyx/Vys
- GhzeFyZq2IYf9meFFSaVHK0Q4SbWaA==
-X-Authority-Analysis: v=2.4 cv=c/fygR9l c=1 sm=1 tr=0 ts=68a83fd5 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=9_ireLxDWfKNmGTEU-MA:9
- a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: 3Xkp4k8mXl_9irg3XWXeWatXbxuVwQbE
-X-Proofpoint-ORIG-GUID: 3Xkp4k8mXl_9irg3XWXeWatXbxuVwQbE
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/3] PCI: qcom: Add equalization settings for 8.0 GT/s
+ and 32.0 GT/s
+To: Manivannan Sadhasivam <mani@kernel.org>,
+        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        lpieralisi@kernel.org, kwilczynski@kernel.org, bhelgaas@google.com,
+        johan+linaro@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+        neil.armstrong@linaro.org, abel.vesa@linaro.org, kw@linux.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, quic_krichai@quicinc.com,
+        quic_vbadigan@quicinc.com
+References: <20250819071649.1531437-1-ziyue.zhang@oss.qualcomm.com>
+ <20250819071649.1531437-2-ziyue.zhang@oss.qualcomm.com>
+ <z54p5x5u56u7dprrlv3obzhxotjgimbufa2spajoqvnlrevgdd@4dejnkmiegrh>
+Content-Language: en-US
+From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+In-Reply-To: <z54p5x5u56u7dprrlv3obzhxotjgimbufa2spajoqvnlrevgdd@4dejnkmiegrh>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Aui3HO9P c=1 sm=1 tr=0 ts=68a840e0 cx=c_pps
+ a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=uZ_Y6Hf0VBP1xoXJwNUA:9
+ a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
+X-Proofpoint-ORIG-GUID: I01_D-JAlTSflDPKkQUUCakkAvs__J9B
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX5JIcu22FxkSM
+ wh1QIH/yxFOM+o22QE902OwD/3WkJ08w0GRsX7VaFHtpih6iLxUyD+77RKwVFnZ3PiG2qc6uaTB
+ lovdDc8K8bmnYYq1pGezC+7j1jp9Oq4TZQRWyNirrySFxKhv7migHTZDPFNCanFHIBTFNgw3wwd
+ oEywNA0wHIF87ya9QR+I6+dfwufwa8iB5DWG2aAfAUl1Z2prf5mCwASmHmCyn+UX4f23WHop0V2
+ EPeFx8Eetzuyg+Cbu/TrRptPif6uup9ZSDij3pOM7pYi78UmaxbvDciBavQ0jqRv6h7liFsAAtu
+ 18Ef260vmx3hycUdqrRhaAeYJAWgUbMkObrT1D//UyBFJjD0j9w8jih5hnNPyr5UI7BKsJakAC7
+ 4n2kq9QZo1XfQMBpo8JPm4uaC+b62w==
+X-Proofpoint-GUID: I01_D-JAlTSflDPKkQUUCakkAvs__J9B
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0
- phishscore=0 spamscore=0 impostorscore=0 clxscore=1015 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200134
+ impostorscore=0 clxscore=1011 phishscore=0 lowpriorityscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 malwarescore=0 bulkscore=0
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2508110000
+ definitions=main-2508200013
 
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-rpmsg device remove code is duplicated in at-least 2-3 places, add a
-helper function to remove this duplicated code.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
----
- drivers/rpmsg/qcom_glink_native.c | 43 ++++++++++++-------------------
- 1 file changed, 16 insertions(+), 27 deletions(-)
+On 8/22/2025 4:06 PM, Manivannan Sadhasivam wrote:
+> On Tue, Aug 19, 2025 at 03:16:46PM GMT, Ziyue Zhang wrote:
+>> Add lane equalization setting for 8.0 GT/s and 32.0 GT/s to enhance link
+>> stability and avoid AER Correctable Errors reported on some platforms
+>> (eg. SA8775P).
+>>
+> 
+> So this is fixing an issue, right? Then you should add relevant Fixes tag. I
+> guess the tag here would be the commit that added SA8775p.
+> 
+>> 8.0 GT/s, 16.0 GT/s and 32.0 GT/s require the same equalization setting.
+>> This setting is programmed into a group of shadow registers, which can be
+>> switched to configure equalization for different speeds by writing 00b,
+>> 01b and 10b to `RATE_SHADOW_SEL`.
+>>
+>> Hence program equalization registers in a loop using link speed as index,
+>> so that equalization setting can be programmed for 8.0 GT/s, 16.0 GT/s
+>> and 32.0 GT/s.
+>>
+>> Co-developed-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+>> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
+>> Signed-off-by: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+>> ---
+>>   drivers/pci/controller/dwc/pcie-designware.h  |  1 -
+>>   drivers/pci/controller/dwc/pcie-qcom-common.c | 58 +++++++++++--------
+>>   drivers/pci/controller/dwc/pcie-qcom-common.h |  2 +-
+>>   drivers/pci/controller/dwc/pcie-qcom-ep.c     |  6 +-
+>>   drivers/pci/controller/dwc/pcie-qcom.c        |  6 +-
+>>   5 files changed, 41 insertions(+), 32 deletions(-)
+>>
+>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+>> index b5e7e18138a6..11de844428e5 100644
+>> --- a/drivers/pci/controller/dwc/pcie-designware.h
+>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+>> @@ -123,7 +123,6 @@
+>>   #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE	BIT(16)
+>>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT	24
+>>   #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK	GENMASK(25, 24)
+>> -#define GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT	0x1
+>>   
+>>   #define GEN3_EQ_CONTROL_OFF			0x8A8
+>>   #define GEN3_EQ_CONTROL_OFF_FB_MODE		GENMASK(3, 0)
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.c b/drivers/pci/controller/dwc/pcie-qcom-common.c
+>> index 3aad19b56da8..cb98e66d81d9 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom-common.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.c
+>> @@ -8,9 +8,11 @@
+>>   #include "pcie-designware.h"
+>>   #include "pcie-qcom-common.h"
+>>   
+>> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+>> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci)
+>>   {
+>>   	u32 reg;
+>> +	u16 speed;
+>> +	struct device *dev = pci->dev;
+> 
+> Reverse Xmas order please.
+> 
+>>   
+>>   	/*
+>>   	 * GEN3_RELATED_OFF register is repurposed to apply equalization
+>> @@ -19,32 +21,40 @@ void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci)
+>>   	 * determines the data rate for which these equalization settings are
+>>   	 * applied.
+>>   	 */
+>> -	reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+>> -	reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+>> -	reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+>> -	reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+>> -			  GEN3_RELATED_OFF_RATE_SHADOW_SEL_16_0GT);
+>> -	dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+>>   
+>> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+>> -	reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+>> -		GEN3_EQ_FMDC_N_EVALS |
+>> -		GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+>> -		GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+>> -	reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+>> -		FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+>> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+>> -		FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+>> -	dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+>> +	for (speed = PCIE_SPEED_8_0GT; speed <= pcie_link_speed[pci->max_link_speed]; ++speed) {
+>> +		if (speed > PCIE_SPEED_32_0GT) {
+>> +			dev_warn(dev, "Skipped equalization settings for speeds higher than 32.0 GT/s\n");
+>> +			break;
+>> +		}
+>>   
+>> -	reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+>> -	reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+>> -		GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+>> -		GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+>> -		GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+>> -	dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+>> +		reg = dw_pcie_readl_dbi(pci, GEN3_RELATED_OFF);
+>> +		reg &= ~GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL;
+>> +		reg &= ~GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK;
+>> +		reg |= FIELD_PREP(GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK,
+>> +			  speed - PCIE_SPEED_8_0GT);
+>> +		dw_pcie_writel_dbi(pci, GEN3_RELATED_OFF, reg);
+>> +
+>> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF);
+>> +		reg &= ~(GEN3_EQ_FMDC_T_MIN_PHASE23 |
+>> +			GEN3_EQ_FMDC_N_EVALS |
+>> +			GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA |
+>> +			GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA);
+>> +		reg |= FIELD_PREP(GEN3_EQ_FMDC_T_MIN_PHASE23, 0x1) |
+>> +			FIELD_PREP(GEN3_EQ_FMDC_N_EVALS, 0xd) |
+>> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_PRE_CUSROR_DELTA, 0x5) |
+>> +			FIELD_PREP(GEN3_EQ_FMDC_MAX_POST_CUSROR_DELTA, 0x5);
+>> +		dw_pcie_writel_dbi(pci, GEN3_EQ_FB_MODE_DIR_CHANGE_OFF, reg);
+>> +
+>> +		reg = dw_pcie_readl_dbi(pci, GEN3_EQ_CONTROL_OFF);
+>> +		reg &= ~(GEN3_EQ_CONTROL_OFF_FB_MODE |
+>> +			GEN3_EQ_CONTROL_OFF_PHASE23_EXIT_MODE |
+>> +			GEN3_EQ_CONTROL_OFF_FOM_INC_INITIAL_EVAL |
+>> +			GEN3_EQ_CONTROL_OFF_PSET_REQ_VEC);
+>> +		dw_pcie_writel_dbi(pci, GEN3_EQ_CONTROL_OFF, reg);
+>> +	}
+>>   }
+>> -EXPORT_SYMBOL_GPL(qcom_pcie_common_set_16gt_equalization);
+>> +EXPORT_SYMBOL_GPL(qcom_pcie_common_set_equalization);
+>>   
+>>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci)
+>>   {
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-common.h b/drivers/pci/controller/dwc/pcie-qcom-common.h
+>> index 7d88d29e4766..7f5ca2fd9a72 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom-common.h
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-common.h
+>> @@ -8,7 +8,7 @@
+>>   
+>>   struct dw_pcie;
+>>   
+>> -void qcom_pcie_common_set_16gt_equalization(struct dw_pcie *pci);
+>> +void qcom_pcie_common_set_equalization(struct dw_pcie *pci);
+>>   void qcom_pcie_common_set_16gt_lane_margining(struct dw_pcie *pci);
+>>   
+>>   #endif
+>> diff --git a/drivers/pci/controller/dwc/pcie-qcom-ep.c b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>> index 60afb4d0134c..aeb166f68d55 100644
+>> --- a/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>> +++ b/drivers/pci/controller/dwc/pcie-qcom-ep.c
+>> @@ -511,10 +511,10 @@ static int qcom_pcie_perst_deassert(struct dw_pcie *pci)
+>>   		goto err_disable_resources;
+>>   	}
+>>   
+>> -	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT) {
+>> -		qcom_pcie_common_set_16gt_equalization(pci);
+>> +	qcom_pcie_common_set_equalization(pci);
+>> +
+>> +	if (pcie_link_speed[pci->max_link_speed] == PCIE_SPEED_16_0GT)
+> 
+> This condition has existed even before this patch, but just noticing this
+> possible issue. So if 'max_link_speed' is > 16 GT/s, we do not need to set lane
+> margining? We used the same logic to set equalization setting earlier also.
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 3a15d9d10808..5ea096acc858 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1395,11 +1395,23 @@ static int qcom_glink_announce_create(struct rpmsg_device *rpdev)
- 	return 0;
- }
- 
-+static void qcom_glink_remove_rpmsg_device(struct qcom_glink *glink, struct glink_channel *channel)
-+{
-+	struct rpmsg_channel_info chinfo;
-+
-+	if (channel->rpdev) {
-+		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
-+		chinfo.src = RPMSG_ADDR_ANY;
-+		chinfo.dst = RPMSG_ADDR_ANY;
-+		rpmsg_unregister_device(glink->dev, &chinfo);
-+	}
-+	channel->rpdev = NULL;
-+}
-+
- static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
- {
- 	struct glink_channel *channel = to_glink_channel(ept);
- 	struct qcom_glink *glink = channel->glink;
--	struct rpmsg_channel_info chinfo;
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&channel->recv_lock, flags);
-@@ -1407,14 +1419,7 @@ static void qcom_glink_destroy_ept(struct rpmsg_endpoint *ept)
- 	spin_unlock_irqrestore(&channel->recv_lock, flags);
- 
- 	/* Decouple the potential rpdev from the channel */
--	if (channel->rpdev) {
--		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	qcom_glink_send_close_req(glink, channel);
- }
-@@ -1705,7 +1710,6 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
- 
- static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- {
--	struct rpmsg_channel_info chinfo;
- 	struct glink_channel *channel;
- 	unsigned long flags;
- 
-@@ -1721,14 +1725,7 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- 	/* cancel pending rx_done work */
- 	cancel_work_sync(&channel->intent_work);
- 
--	if (channel->rpdev) {
--		strscpy_pad(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	qcom_glink_send_close_ack(glink, channel);
- 
-@@ -1742,7 +1739,6 @@ static void qcom_glink_rx_close(struct qcom_glink *glink, unsigned int rcid)
- 
- static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
- {
--	struct rpmsg_channel_info chinfo;
- 	struct glink_channel *channel;
- 	unsigned long flags;
- 
-@@ -1764,14 +1760,7 @@ static void qcom_glink_rx_close_ack(struct qcom_glink *glink, unsigned int lcid)
- 	spin_unlock_irqrestore(&glink->idr_lock, flags);
- 
- 	/* Decouple the potential rpdev from the channel */
--	if (channel->rpdev) {
--		strscpy(chinfo.name, channel->name, sizeof(chinfo.name));
--		chinfo.src = RPMSG_ADDR_ANY;
--		chinfo.dst = RPMSG_ADDR_ANY;
--
--		rpmsg_unregister_device(glink->dev, &chinfo);
--	}
--	channel->rpdev = NULL;
-+	qcom_glink_remove_rpmsg_device(glink, channel);
- 
- 	kref_put(&channel->refcount, qcom_glink_channel_release);
- }
--- 
-2.50.0
+Lane margining is supported for 16 GT/s and 32 GT/s. The settings are
+dependent on phy design. For a specific phy, they have same settings
+for 16 GT/s and 32 GT/s. Perhaps we can get the settings from devicetree
+and program them in a loop.
+
+But I'm not sure why we need to program it. It will no affect singal
+quality and only required when user wants to collect margining info.
+
+- Qiang Yu
+
+> 
+> - Mani
+> 
 
 
