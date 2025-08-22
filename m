@@ -1,151 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-70300-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70301-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC104B3131C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:31:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5EAD9B3133A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:33:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9F09606D80
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:27:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 077B23BF3CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:28:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 127042EF657;
-	Fri, 22 Aug 2025 09:26:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB6C62EC557;
+	Fri, 22 Aug 2025 09:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bkDTW1Yv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="RrYgcryB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B4852EF653
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:26:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288571DDC08;
+	Fri, 22 Aug 2025 09:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755854808; cv=none; b=nwpH3VTiNGZ7ySPnshmKWT0W2RNEhW/JwZ5eES1dSBY+xi7BK2q05daQ5edTw1T3+VHwONhyMIMFzr6bMx5d3QRIndZQKTJ+iiX1Z+ZXq+CmljozAmbnlelYnVpKRugeYURyl26nCoiZFwX9fSYtZMdg8kzv0EoNpQRnV2lCys4=
+	t=1755854845; cv=none; b=mIOF5y3fXVuAn5LlNg+uI8E+cvqnKkh6P2hoaOGvGmWwtLOPXceiVoEuLBme11KCQXEodoOJ8YCYedWUjvShMs5iZg6ghXTLm8ipnYjXRTxxpjvQbRuJm3Mr0xNdV/wpGn9Zw7BzJdGb7gE+j0s+hRlDV+l1K05cmBu6/6066fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755854808; c=relaxed/simple;
-	bh=wo+28rzLb9E7nLBgQRSXIPSdalCHv6JNOeyFv5zLcqk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a6GlYBjVgWOIeUKEIRyX3J52TxKPsrzIf1F9n4tjC4TAybADYsGmUGEcal9Oai6tbKbtXLu3ID4Cl9tMbhIkK4ZGQMgK618zoTudV721NH1/tcCJdQW0L78p3RXgQReOek5rccNWXtLzFqV+/58Ly86ZHC9kJ3Q5rcPoD13UW5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bkDTW1Yv; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3b9e4193083so1466832f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:26:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755854804; x=1756459604; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A4iYMHLc4WfPh2tAiIuQ5o+Q2It/ACAsF7CETw+1bqM=;
-        b=bkDTW1YvcK29cGzpP55tDFOXzUvgae+IgN0QGSwmRKMwel1L8ABecAuMgylvqy9K8C
-         GTUWnd87XgNxp8X8zp3FnUVe4tQAsP5FG8Mvl4jauqnXNSWy2cSQ4T+tB4y6X1Lezjmd
-         Cn+tpA7yQpUQnCiOlreLaXhiFYJ0AZwMlfOUow/iJtCifnH7jsANDQ3/lyQczASWe4uH
-         ysKdlZrw7cStzc6xSb50azZGqpEAkCi+Z5zU1njvXAKHjb8SIC1oe1pg3KrIERnWgAhA
-         aYjdI50YjMda9isvPTGpv0JgCcKRECcO6jtDE6qU8uVceUKc0Jpcj0cjI9uCypK7Sg5D
-         A0aA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755854804; x=1756459604;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A4iYMHLc4WfPh2tAiIuQ5o+Q2It/ACAsF7CETw+1bqM=;
-        b=GzfBcutGVWYNpYkZsYqgYYcvst3Upp+YV0eceVeSksewbN9U05mPvnMXZfmAVfLM1v
-         KvSFe2AIJcItH1bYzTopSUuFu3PP7UNjt2I6U5rbk7Qz6GqmbhveRlqn83TX3PKfTfvx
-         DBamLDEUwsW19NKtK0d8IZP43FTtYVDu5gszNmLc8IgzfVn0BBNSzMFGyNB/NPdYmNUo
-         K9at0Swg14e1e0py8b9npktHESLniABwHg15Nuv+Q63jXUQcqvYpbohc6ueCPpYAeqjt
-         jqXDcBadAfkAU71chhPBcTPjsjD1K83WxdkxvVb9HuApEBsAUjib49SELs9+pba5GrDq
-         AM4Q==
-X-Gm-Message-State: AOJu0Yzpxofuv6YbSrl/ns+9nozqFOgQqBC4ZduvOoWHfRbzNqasquXF
-	m3caFvMOcY0yw9GAZ/IkTbmtYf9CCScC+gQOIw+OQgSKZww24Zjk3j/lcQpp2NfLngQ=
-X-Gm-Gg: ASbGnctTsYsapFMIS8/jz21KTQ8DguUc+NmVJT9tp2DZVq8DB0jhx6216U/3+Bdmqti
-	eAE9pboBHtLKgla7u2v6u+rmGfRcTpS9CVRGe6w4sp7E3x/GOFG5Jh+ocEmTsZKqg+dJ4cyyXJL
-	VPK7c7lTEL+r6p3f0VtKFSaY18EKr8Zt2Rn3h8ohw6mPq2buhqNWWuI8Rk340BFh8YU+ms8OOSI
-	CzrUzm71BQE9qS1naWTXO4zhbkbEdMsC8+y0Wd+GhmKsPZywBfCeFShSNmeH9AgA6W86mb3GZ8W
-	ORmJnB2CmmtSubYFCfx8R6sqruQALX5RUGiYU9FZIz6o9kkwTdiSZpEHw+nueEU27PP++PJqpVY
-	Tl1VQAm377HcljlzwA6LlFKNEOqlZLgkJy5F2MGTgiUkTUmvLL4MgbQ==
-X-Google-Smtp-Source: AGHT+IHWimNmhX2D+e0rAbr+oUyeChnSAW/pbGvbaUpaR6zi2utB6mY/Z10H3CaZcm5CXc2OFCrfew==
-X-Received: by 2002:a5d:5f4b:0:b0:3b7:7563:9d59 with SMTP id ffacd0b85a97d-3c5dceff114mr1593265f8f.57.1755854804453;
-        Fri, 22 Aug 2025 02:26:44 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c5826751d5sm3297007f8f.14.2025.08.22.02.26.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 02:26:44 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 22 Aug 2025 11:26:38 +0200
-Subject: [PATCH v2 6/6] arm64: dts: qcom: sm8650: Additionally manage MXC
- power domain in camcc
+	s=arc-20240116; t=1755854845; c=relaxed/simple;
+	bh=ffU7Jra2FYSdcW5dsy4J/IV/g2I533TmyZFGxSO9MgE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=Aqfcw1C6k9pRwZ8C2hCAzxghLnOxXdUzs4/6Lagc7Vy8v2ahJ1gV2n5B0GZF1n2xEvgf6q+Cwm5erQnK+JuqpXRQbYm0Tl+ZFUwWMsCO0nN4cwwMt1JYr5gPAU8ubiwSKPxGFxOcLZwPg9SxSnZK28/CCS83H3pQCjxHakqyuS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=RrYgcryB; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UK5O030513;
+	Fri, 22 Aug 2025 09:27:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	F7C43LdngdbYQcXlgkqyvxQt7FMCMKlcyPUzmO1c3Q4=; b=RrYgcryBkUU+rbVj
+	rqRY3PmkBotCdfHm2hdgW2aN0rFykkw/eozpkSjBEBI6ajb5BKmeQsh70HAXfm5D
+	zb2wLvSIG+0dbs6mEweNxKzxNvwE3kobxO0VF/XJ/HBvGhoQfUu5aLm2UQQ83gxk
+	2mcBVnub2q/GvATT0eFQfHLsiXaZTjPfGDlBYsDQV2Bwf/V9EARofiJ9B9e1PrIj
+	xucyTiNPsZKS9WJws31Y652ODMzXz7laCsIsKrq80S47sxpFMFhIV/OCuIZRWZN9
+	BjTiVb/vhKHbqn8tSitIrabrmWayvFfVVRoFPxlG4RBxGLckfbwzRzLU5SiBqOU8
+	ycRy6A==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ngtdphdf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 09:27:20 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57M9RKi8008056
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 09:27:20 GMT
+Received: from [10.218.42.132] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 22 Aug
+ 2025 02:27:16 -0700
+Message-ID: <ff418c34-0f06-46fe-adda-4d9d8e409b6e@quicinc.com>
+Date: Fri, 22 Aug 2025 14:57:13 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] bus: mhi: ep: Fix chained transfer handling in read
+ path
+To: Sumit Kumar <quic_sumk@quicinc.com>,
+        Manivannan Sadhasivam
+	<mani@kernel.org>,
+        Alex Elder <elder@kernel.org>,
+        Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>
+CC: <mhi@lists.linux.dev>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_akhvin@quicinc.com>,
+        <quic_skananth@quicinc.com>, <quic_vbadigan@quicinc.com>,
+        Sumit Kumar
+	<sumk@qti.qualcomm.com>, <stable@vger.kernel.org>,
+        Akhil Vinod
+	<akhvin@qti.qualcomm.com>
+References: <20250822-chained_transfer-v2-1-7aeb5ac215b6@quicinc.com>
+Content-Language: en-US
+From: Krishna Chaitanya Chundru <quic_krichai@quicinc.com>
+In-Reply-To: <20250822-chained_transfer-v2-1-7aeb5ac215b6@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250822-topic-sm8x50-upstream-pll-multi-pd-voting-dt-v2-6-28f35728a146@linaro.org>
-References: <20250822-topic-sm8x50-upstream-pll-multi-pd-voting-dt-v2-0-28f35728a146@linaro.org>
-In-Reply-To: <20250822-topic-sm8x50-upstream-pll-multi-pd-voting-dt-v2-0-28f35728a146@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Jagadeesh Kona <quic_jkona@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1186;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=ZndUBUupjU+OOdgcN5TmqiL/eMh2uIr1+LmbccinqKg=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBoqDfOCJnAzwaebLAVtkSCcABycmAsCAfOcMDIVLyn
- YLAXinaJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKg3zgAKCRB33NvayMhJ0bqbEA
- CsT1D9Ow705PLEPkKSK32uNTf42QVbKH3pGRSRr3VOTfhNZCRpnnkRh1+1FoCjLI3ZGjG+RmZmrO0Q
- qvi/McXqk0bXsnKLoVnE5+uHivcz/qSlb7iRG/FkBMdqHjbNI+vlHIiKlB7l3sEZSWV5/3RGnXExdA
- fGwgEXVqitPMcRXA75S1EtBJl0E+8j1zL+wwmjYAgf7Cu6qT+KRgGk7ZvMv2YE9HodC743cEZxWuGg
- g6wnYm3gHXBBN175LvSn91VhNrb+UgbvtLT/LQBOxo3KKEFVgYth2qJj9rG1AkHhpX3LpksdlRquxe
- U7cklzUA64WnqwxZ95lv3gksSUK+kh/A+dGhwKKpZF9Q4YFi+FoTRKqnYNYMvUDO/zYbTrtoaBvtOX
- SlboOQ5kiQS9HsjX8WFlZoYMlVeEEC2MAYJ8BDpTCdNgmwbivA9S1RQ2I485ASdBZW1VzArproZiKO
- tI0357El2XZvb/119I6zpGj0oEUDrR/jPzubcOX7aOZnJhtHOKk9WY3hNBc+MLs3n6Uczz8JWFcm9q
- zXnaBW/6ewLiZTauMdpaud4c1Gjn9lgJYQigtrw0p+ZKGbBZg6/SiaLi/nb/SJ4HDIhyWNWw3XsQt3
- vKMIRGIRuuhBawqMsOiZDtguEXn+Vxbz3RhRduo5be8xC4/7ktBI2fC5embQ==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=LexlKjfi c=1 sm=1 tr=0 ts=68a837f8 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=M4kYh_c735O1KADJ0OkA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-GUID: 8hNGEUj82K9cppp1HVTEM5-dYkNl6lxz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDEzNSBTYWx0ZWRfX/pcU32vb9qcO
+ yN6Vt4BAwVjilUF4t6pkne16HFyS7CFkW0Nu2TTJgrGFzfhNknbmqTBwrqATVlULwyaof6Ok+l2
+ Nto5yjGHj8SmvKYh7Cmsa8nEIDrCiS8UtnUs2FNm19smIcj3fSlaM34jMZN98+38DbMIa7C6dhR
+ cKjyo6zNARDKoEY6ksbrrwNJrkOO7aHJMXiMMliHKyk6DTwoylkszEOs4M8YM5SJ7ZW9xfTM+pq
+ t8KwlxxQPQOVFwfVOcryJ8COMw5J35W/IKtP6rYQWjswflo++Z5REz2lrhzXTIpXt47wv3qv984
+ qBf64ME9Yqp9ySHMHxZq6+aJ2VUEPFUb7iAXBztvGRFPwd15cnvJRo7Ii/ya9v9lMXIIuBbNSOR
+ 0n6wwdSu9tODi1LM5QDVJnoq80LjLA==
+X-Proofpoint-ORIG-GUID: 8hNGEUj82K9cppp1HVTEM5-dYkNl6lxz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 bulkscore=0 adultscore=0 malwarescore=0
+ spamscore=0 priorityscore=1501 suspectscore=0 clxscore=1015 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200135
 
-From: Jagadeesh Kona <quic_jkona@quicinc.com>
 
-Camcc requires both MMCX and MXC rails to be powered ON to configure
-the camera PLLs on SM8650 platform. Hence add MXC power domain to
-camcc node on SM8650.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Jagadeesh Kona <quic_jkona@quicinc.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8650.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-index 99b7c6603f284df54b0a4e0ed554817fa8ce6f35..890c4341179a471416bd63308d13b0e313188142 100644
---- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-@@ -5349,7 +5349,8 @@ camcc: clock-controller@ade0000 {
- 				 <&bi_tcxo_div2>,
- 				 <&bi_tcxo_ao_div2>,
- 				 <&sleep_clk>;
--			power-domains = <&rpmhpd RPMHPD_MMCX>;
-+			power-domains = <&rpmhpd RPMHPD_MMCX>,
-+					<&rpmhpd RPMHPD_MXC>;
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
-
--- 
-2.34.1
-
+On 8/22/2025 2:54 PM, Sumit Kumar wrote:
+> From: Sumit Kumar <sumk@qti.qualcomm.com>
+> 
+> The current implementation of mhi_ep_read_channel, in case of chained
+> transactions, assumes the End of Transfer(EOT) bit is received with the
+> doorbell. As a result, it may incorrectly advance mhi_chan->rd_offset
+> beyond wr_offset during host-to-device transfers when EOT has not yet
+> arrived. This can lead to access of unmapped host memory, causing
+> IOMMU faults and processing of stale TREs.
+> 
+> This change modifies the loop condition to ensure mhi_queue is not empty,
+> allowing the function to process only valid TREs up to the current write
+> pointer. This prevents premature reads and ensures safe traversal of
+> chained TREs.
+> 
+> Removed buf_left from the while loop condition to avoid exiting prematurely
+> before reading the ring completely.
+> 
+> Removed write_offset since it will always be zero because the new cache
+> buffer is allocated everytime.
+> 
+> Fixes: 5301258899773 ("bus: mhi: ep: Add support for reading from the host")
+> Cc: stable@vger.kernel.org
+> Co-developed-by: Akhil Vinod <akhvin@qti.qualcomm.com>
+> Signed-off-by: Akhil Vinod <akhvin@qti.qualcomm.com>
+> Signed-off-by: Sumit Kumar <sumk@qti.qualcomm.com>
+Reviewed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Use mhi_ep_queue_is_empty in while loop (Mani).
+> - Remove do while loop in mhi_ep_process_ch_ring (Mani).
+> - Remove buf_left, wr_offset, tr_done.
+> - Haven't added Reviewed-by as there is change in logic.
+> - Link to v1: https://lore.kernel.org/r/20250709-chained_transfer-v1-1-2326a4605c9c@quicinc.com
+> ---
+>   drivers/bus/mhi/ep/main.c | 37 ++++++++++++-------------------------
+>   1 file changed, 12 insertions(+), 25 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/ep/main.c b/drivers/bus/mhi/ep/main.c
+> index b3eafcf2a2c50d95e3efd3afb27038ecf55552a5..cdea24e9291959ae0a92487c1b9698dc8164d2f1 100644
+> --- a/drivers/bus/mhi/ep/main.c
+> +++ b/drivers/bus/mhi/ep/main.c
+> @@ -403,17 +403,13 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+>   {
+>   	struct mhi_ep_chan *mhi_chan = &mhi_cntrl->mhi_chan[ring->ch_id];
+>   	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> -	size_t tr_len, read_offset, write_offset;
+> +	size_t tr_len, read_offset;
+>   	struct mhi_ep_buf_info buf_info = {};
+>   	u32 len = MHI_EP_DEFAULT_MTU;
+>   	struct mhi_ring_element *el;
+> -	bool tr_done = false;
+>   	void *buf_addr;
+> -	u32 buf_left;
+>   	int ret;
+>   
+> -	buf_left = len;
+> -
+>   	do {
+>   		/* Don't process the transfer ring if the channel is not in RUNNING state */
+>   		if (mhi_chan->state != MHI_CH_STATE_RUNNING) {
+> @@ -426,24 +422,23 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+>   		/* Check if there is data pending to be read from previous read operation */
+>   		if (mhi_chan->tre_bytes_left) {
+>   			dev_dbg(dev, "TRE bytes remaining: %u\n", mhi_chan->tre_bytes_left);
+> -			tr_len = min(buf_left, mhi_chan->tre_bytes_left);
+> +			tr_len = min(len, mhi_chan->tre_bytes_left);
+>   		} else {
+>   			mhi_chan->tre_loc = MHI_TRE_DATA_GET_PTR(el);
+>   			mhi_chan->tre_size = MHI_TRE_DATA_GET_LEN(el);
+>   			mhi_chan->tre_bytes_left = mhi_chan->tre_size;
+>   
+> -			tr_len = min(buf_left, mhi_chan->tre_size);
+> +			tr_len = min(len, mhi_chan->tre_size);
+>   		}
+>   
+>   		read_offset = mhi_chan->tre_size - mhi_chan->tre_bytes_left;
+> -		write_offset = len - buf_left;
+>   
+>   		buf_addr = kmem_cache_zalloc(mhi_cntrl->tre_buf_cache, GFP_KERNEL);
+>   		if (!buf_addr)
+>   			return -ENOMEM;
+>   
+>   		buf_info.host_addr = mhi_chan->tre_loc + read_offset;
+> -		buf_info.dev_addr = buf_addr + write_offset;
+> +		buf_info.dev_addr = buf_addr;
+>   		buf_info.size = tr_len;
+>   		buf_info.cb = mhi_ep_read_completion;
+>   		buf_info.cb_buf = buf_addr;
+> @@ -459,16 +454,12 @@ static int mhi_ep_read_channel(struct mhi_ep_cntrl *mhi_cntrl,
+>   			goto err_free_buf_addr;
+>   		}
+>   
+> -		buf_left -= tr_len;
+>   		mhi_chan->tre_bytes_left -= tr_len;
+>   
+> -		if (!mhi_chan->tre_bytes_left) {
+> -			if (MHI_TRE_DATA_GET_IEOT(el))
+> -				tr_done = true;
+> -
+> +		if (!mhi_chan->tre_bytes_left)
+>   			mhi_chan->rd_offset = (mhi_chan->rd_offset + 1) % ring->ring_size;
+> -		}
+> -	} while (buf_left && !tr_done);
+> +	/* Read until the some buffer is left or the ring becomes not empty */
+> +	} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
+>   
+>   	return 0;
+>   
+> @@ -502,15 +493,11 @@ static int mhi_ep_process_ch_ring(struct mhi_ep_ring *ring)
+>   		mhi_chan->xfer_cb(mhi_chan->mhi_dev, &result);
+>   	} else {
+>   		/* UL channel */
+> -		do {
+> -			ret = mhi_ep_read_channel(mhi_cntrl, ring);
+> -			if (ret < 0) {
+> -				dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
+> -				return ret;
+> -			}
+> -
+> -			/* Read until the ring becomes empty */
+> -		} while (!mhi_ep_queue_is_empty(mhi_chan->mhi_dev, DMA_TO_DEVICE));
+> +		ret = mhi_ep_read_channel(mhi_cntrl, ring);
+> +		if (ret < 0) {
+> +			dev_err(&mhi_chan->mhi_dev->dev, "Failed to read channel\n");
+> +			return ret;
+> +		}
+>   	}
+>   
+>   	return 0;
+> 
+> ---
+> base-commit: 4c06e63b92038fadb566b652ec3ec04e228931e8
+> change-id: 20250709-chained_transfer-0b95f8afa487
+> 
+> Best regards,
 
