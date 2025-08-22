@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-70399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70400-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F010EB316D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 14:03:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 515A7B316DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 14:04:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 11A3AAE788D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:02:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 29373565C6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:04:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1A1AD2EA73A;
-	Fri, 22 Aug 2025 12:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F8C42FABF2;
+	Fri, 22 Aug 2025 12:04:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VcljSDg6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MbgwkUtm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33E02E7BCB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 12:02:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A2721255B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 12:04:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755864140; cv=none; b=c4B8F+VyR9s0d5JCDd0f4hF2U0/Ya5yjoL22gn6G5Jma2RIOfag5iEVn5A5yg6M9XX0SQPCLgzof8qMcRa1e10XHTiDtp/pn6W277xZQzD+pckA9o1K35ORYjpRDxFathUrk5/UdiAuZuwZNxaiZutW0Rp92xrrI4rhzkDjM+6Q=
+	t=1755864271; cv=none; b=qfM+Mi8azhOZ9IXpCnbOeV3ia7XKziMWShUWg7KY2yMPJv0hhKUaHpAUID0nIUX5iia1DFqNzwI6F9ceICLd3J6vBPmbnoS2OOtx3VLpPC15tqnHypgXRqKWhUESQi0JQyHv/KwPmx4YYAhHi4q0L27n+4YVKTsspQCJZZtEV1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755864140; c=relaxed/simple;
-	bh=hmsFha62hBYxNEmWQE2a9XRWH3IZz4cwWzWGkhDYQzc=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=epuVHu9nG4Zk/dwb9q7q3Y1jWn88J+ofvbs3OVeLAOPwEbeNir3ZA7EHylr2JaUc0Yz1OzuWBA5nB8K67FESsjgbuuDuuadl/h30Cvz7+xuEgnSUB4D0nIolcZ0JwQSq8LJGMKS1zDzWfnxn8lAN6kXiZCZ2eRPp21wgpg+1n78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VcljSDg6; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1755864271; c=relaxed/simple;
+	bh=ubXV3U1HqSfj9OfyDdIEu14wx2rqvpN6shiVlE6XX5A=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UpRDXJ4t37pPYLYzuis7aOn5v6kizzV0+OvIFCI7twP0WZDQZUb+ZzJVj5iZ/c78weUqw0MJ1Ix/lKMB/aor8Y99l4PdguYYjSmJ5cfrr6ogwa970ts8heBsze9F8laZDo5vIexRRqeLbQO4a575gYMtFGyrqFC/IlM2Sdu6Dco=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MbgwkUtm; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45a1b00e4a1so16567195e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 05:02:17 -0700 (PDT)
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-618adbeff22so235510a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 05:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755864136; x=1756468936; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8SWI9DLP5lStpnCjpTkxBn8nTBRDdls4+/CPBAumrqk=;
-        b=VcljSDg6BnWlwsB+FGhsr+W8tbUYtad0qSheSAaBGsTHBWyb07eOCUfqUt3aYlLGfc
-         tcj9UBXLpTQl3Z0NRoYnk3DEuAUcawV/VjJQZR0tjOzd7Y7t0Cjz3oBpNaB4M3ou92uc
-         aQAffZa2RHSqC1nx38VzPK2mQotxMHRlDDPBcmH0cbhsrmyRvUE3dFi04dppMUQ8l1If
-         x9Daqj1jUqM7RGOv5MsmVGDx2EFgCYUL1+nbakS27t7v3gTe/Am5waWClVn6bSgVMz5+
-         Q0SwRC2R/SMrpTlGM3PHnvTDhs9O97MIA9NdyryI8ifJAWa1x9N+IdMykL8v3z3tHxUh
-         FkKw==
+        d=linaro.org; s=google; t=1755864266; x=1756469066; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=jfJNn+5fJKG0Y4abB6dAOaGr2vAo++XaGnEeHRfq9sw=;
+        b=MbgwkUtmlWlM1VKp/LE2MPnDqP8KGlVl6vZtfptHCxM49t4FuxzTHYMsiX3kLpq7oV
+         0KwkTHZ0fEmszZB+AeKKW/AVnFt8syiSWGH+Betp8TPhD4BTPDB65DTmEnUVJmvLH1e8
+         dMck02LXRGgNi1r7nlHT2g7pRZMnDK1PQZWCNfoBEjhtT1rtng+x1KPATRgqCvCF86b4
+         WKQ2Tn7GToemqSh2em/Vg7QDvdlLyJzdVjUhY6NSinBrZyEv8+WA4EqtkPJCe2BAso0c
+         a3cSCMxcrdEYYfUZ6iGJzoInHweGBa7MAWrdk3GyRpSMfOGj0RJ153kQ41UgJJhSnGDH
+         A+nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755864136; x=1756468936;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1755864266; x=1756469066;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=8SWI9DLP5lStpnCjpTkxBn8nTBRDdls4+/CPBAumrqk=;
-        b=sr4/ONZdh6yGG9ZdwM2J8gHPx+GqKb2oAsQhZWGq3W89MssMYszUDJzwWbVM4KWOAv
-         SpJdACvXcsQdztIGidgzR4V5k4MFaZ97VpKPv6/XSjRRpv1phw2bzvcHUtsQaizu43/Q
-         6mRC7gQtNJMYAV3GhDV1QWxCZGeQlhqBzjfWljRMBYVysUaDKGwJsp3k9E+9RTQpGLAT
-         Zzxzrhq4kxCHVoxI8dnFNDZGp9eIwJLoHbZ516ubLnAPe33Po+vnwOkXWoxG/xyZbON7
-         nldGmm4mczNN30J4lVRzz3rWPpDSfutujv9PwnyWekXl3bhGONIiDeV5dLotxEk4yqKv
-         31uw==
-X-Forwarded-Encrypted: i=1; AJvYcCUb/yLjDPCw5ZbUpDRZzZb4rZfLJY08hpgbACmFF5e9PJJkA0qZ+eAOCgTFmFTehit0fFt5gUGsf5SLhRaB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyr7gbJN7pkuMC8u0Cg3K+TeMXyn2cqb/mtbEYGFaFtSa9AmAOH
-	CUxBabf+OlVm3NKioubpZgoescZIuv4OfI+wwiTLjhDHrkomwcBTI7551rpWXI/03Ho=
-X-Gm-Gg: ASbGncs1/hceu3lUpY06gaCJFKRKbY3otwm2+z1c0E796wGe4A1d5v5HjinR+/w2N+p
-	TjiqZKBnOjUQ84aoffA9/a4MTr676y9eKwRDKkcutd4gqIDDgPIR1ltRtfppG5Wfz8fIxDqMqxT
-	Zchlue3tDCkmRLNW7Hr874s9DFO33iSt7QmPLNMwpHDzqcU/asZ6RJaBMkt2C9ohSmJqat5vVjW
-	Eo+SL14cBLd7xIDuH16oU4pS92yViZduQ+hpixs5SH6YIUjAimOwZn6WRs2EQW7PqCxdiQfNLvM
-	alZxoMtV5M/FwsvPgi5rI37ONayKs9nsK+5vDvYOu1LYrB+hbiHDFrHOssvXOK2j2tgVlK8IiE9
-	QZrKCJJXlzzysWGfnSXC1TLEQ1j4Mkdx3/uDeeFfzqB8=
-X-Google-Smtp-Source: AGHT+IH83B7ODFHyYMcRtllawZ/lAAKJpqszR+2hPDA2zmKCFTwOE62vwh3/S58f0KI5rcPBHd6VVg==
-X-Received: by 2002:a05:600c:1912:b0:453:8bc7:5cbb with SMTP id 5b1f17b1804b1-45b517d2885mr23835645e9.25.1755864135688;
-        Fri, 22 Aug 2025 05:02:15 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b50e2fb15sm36836465e9.12.2025.08.22.05.02.14
+        bh=jfJNn+5fJKG0Y4abB6dAOaGr2vAo++XaGnEeHRfq9sw=;
+        b=MwNZPeh1Won+7f/xmP87C1eqKMn6OJABpZ9kd0olPBsPvTb43cfdQyicZHVtcDfYID
+         K4E8Gn5INGj2YMLI2STfNPEQLXERwuiUVIPbYifoTNLjqfQyB4JwGy23Ns6k8sWY2bHW
+         beHzBvm9zVP8gxdLkLGyqGwFwOhPpeaB+gTTAMqym5WFNvKlmAw/1dNjhmKFDy9AMrWr
+         MMVrtF51B7pAq/UB2m4StB0+Fgruu5sGfp/Ipd/CqKBS1b+rOmwA5HMrI9ikD3OvFET7
+         rsH9zaoAIfn6zCsdpYrtKaLbPDuQg9oCffOBbbNIRLTS8KGu02yRAmwqDnZ5vJ7kwoEy
+         WcVQ==
+X-Gm-Message-State: AOJu0YzV/FQFRllWDdcLAaBXiCJ5Kz4cCW8MzXdB9cLxkfqWQbNExBYo
+	vXaQEPxknPelWYzLkRIDf8unwYf/biUo0nceOlEMcVMyVCaP5a2undz1LyJLH6llXso=
+X-Gm-Gg: ASbGncte7IrO9a0MhHXIbkXo0kMalDEKCMRGSK/1KqRgHpn2/Nh7WESqOqUcGYHz1I0
+	lxem6XY6WUKpxtYfx5QKoZeUdxkJ/o42H/qInzhSc8tfoI9dJbL2AxeSVBuZ6lC8LARNeYS+Sx7
+	2PstBFw7noDLRyv4VNGOsLhpJkEaiFy/s/T53U5mAHHtkLC9nxfSyualE6042eiUTCYuTi5a7R3
+	9lkbJwwa8k0qZmEH6MBezDiRjtHDKKK6ClDQyJB9AVgzqWmDOJGbYIfWCAAwf7AZ19GKvyQccQO
+	uA7Kaw0PxAnDjg2N/Pnnu0g63B9wae5BMG1UY2YfKLbpC3weEAq+3GIZL6QrIvfkE8q/4DQHusv
+	6QmndWzqhN5zWb3WF2OJ3ID51H5L7KlQOJUXFiw7f3B9oBe/iJg==
+X-Google-Smtp-Source: AGHT+IHmjEs885WlhaSX+1Z/NPmVu/xZy65YW+ueP3qjkq3QbfxO2ReR7rqjb5TzQUQsLcfo8FeHMg==
+X-Received: by 2002:a05:6402:234b:b0:618:1835:faa4 with SMTP id 4fb4d7f45d1cf-61c1b4d0198mr1457282a12.3.1755864266343;
+        Fri, 22 Aug 2025 05:04:26 -0700 (PDT)
+Received: from [127.0.1.1] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-61a757b9b39sm6690444a12.48.2025.08.22.05.04.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 05:02:14 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 22 Aug 2025 14:02:10 +0200
-Subject: [PATCH] media: iris: add VPU33 specific encoding buffer
- calculation
+        Fri, 22 Aug 2025 05:04:25 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH 00/15] arm64: dts: qcom: Fix interrupt-map dtc W=1 warning
+ and cleanup
+Date: Fri, 22 Aug 2025 14:04:00 +0200
+Message-Id: <20250822-dts-interrupt-address-cells-v1-0-d54d44b74460@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,355 +83,92 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250822-topic-sm8x50-iris-encoder-v3-hevc-debug-v1-1-633d904ff7d3@linaro.org>
-X-B4-Tracking: v=1; b=H4sIAEJcqGgC/x3NywrCMBBG4Vcps3YgF4vBVxEXmvxtZ2FSMjYUS
- t/d4PLbnHOQogqU7sNBFU1USu6wl4Hi8sozWFI3OeNGE5zjb1klsn7CPhqWKsrIsSRUbp4XtMg
- J721ma+zNT9fgAzz12loxyf4/PZ7n+QO9hskIeQAAAA==
-X-Change-ID: 20250822-topic-sm8x50-iris-encoder-v3-hevc-debug-10173f4838e3
-To: Vikash Garodia <quic_vgarodia@quicinc.com>, 
- Dikshita Agarwal <quic_dikshita@quicinc.com>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-B4-Tracking: v=1; b=H4sIALBcqGgC/x3MwQqDMAwA0F+RnBdowxzVX5EdShtnQKokdQzEf
+ 1/x+C7vBGMVNhi7E5S/YrKVBv/oIC2xfBglNwM56l0gwlwNpVRWPfaKMWdlM0y8robRP/tXGFy
+ k4KENu/Isv3uf3tf1BwMWPB5tAAAA
+X-Change-ID: 20250822-dts-interrupt-address-cells-a1456890a281
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, cros-qcom-dts-watchers@chromium.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=14244;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=hmsFha62hBYxNEmWQE2a9XRWH3IZz4cwWzWGkhDYQzc=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBoqFxFuAG85JO+w/yQnIH5DAQjGs5Anai9Nbhl9DEj
- bo9bW8iJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKhcRQAKCRB33NvayMhJ0S4rEA
- C2AIq8pfqC150XrD7K1L/9Px7X3KTEN97Enuqy2Xh1YHbYQQLsFUH0CdkXN+U36TptNO91aDPs+vJg
- Qq1FjBFHqo1mDwlWBDxjhPV9F8ull7pEnau0uzV5fi3DtIp8VwLDLrSPSTKZ+bBp5bB7TUXr/59b0I
- NOcvwRnCSY3TQInBBQl+MPC5G0fwEk0QK33sVo7WJV7N6HMvmOp/ArbWLEp/vIL8QmcKsNjPmd83fQ
- ijSb7NNBGOMR/W3pbSh2SUrnzQr6v/mLtDke0x+kdqVf+NGr5kod25Zx3XRfAcBxK6MXhJmgEy/5RR
- E3BbeggmeWn7jLwZ1lL0527Bg7KHS82HTt+2dIuyezqevmnvjoEC92Zz0w6IdzmF+H4ME7DRX9c/vt
- pOxKshhVtle5/Ed+UYUKY78eeEgl3oRZKPDmmrBHu5E69XeieBTtX1KAvrI6S78CU2wTLrI+tcbcn4
- qDMBy/nYGsC6XDGakjbGpl8TdHgfed6vbMIVEOK4x0C1LgNtuUFS9ZiBGx/T8QvFZMZc/81W6rxISr
- De9nFfb4dS7xHBS3hmO2Q/NmBP8QkYJMcgDCofZJeDsDyLA5c0ZO0d6fNTD/giUudpCCoTbcASJ2rP
- /9zPSkMvco/HXygpW1GU79Ha1id9rAtqWEuIl+bqZrPKMHIwCBucw5LTW0Tg==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2982;
+ i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
+ bh=ubXV3U1HqSfj9OfyDdIEu14wx2rqvpN6shiVlE6XX5A=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBoqFy38uowu36sbFsiFqEXMOUJX8drqKsk6Ukfa
+ WRSipGAu46JAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaKhctwAKCRDBN2bmhouD
+ 188OD/4s+sVEu5Mom7pUe87dG7UydICa+W8PAkmmLrQN58UTOsBavBTNNVqgTqykYSXjK2F5x8Z
+ wcaR362wu3XHjjrDw5Q7/pLWCl5DRZNUElMeanrQERqSCM4NKCzll+4GSr2gpwPlkfZAvDE/vTq
+ /PCqXcxu7CXsAWQHIluUMNlLcz6iJIyVsosbpsgMM6MkkckBY7My02Ga9YI+QT9LMe+9NbflHuN
+ DdoN8h5iT1t994vZepmWOkqvVothdWSLMlwTtSmtYdaafh0PrQTwBv+LIMZEHSV23RPNFvkN8zP
+ wM8FJU4CEb12uYmgPEmlXEx5c6x+yj4N+yt7TFgSrS9S5ZC0hrrz7uu/sfkC20+M16fto0okQeu
+ cS2CUdLJ5FYN5NQtK69TaLY9Pjs+eVRORTaYkDvtKT+oTxSQdacJlbzCd4+QXvnYBtfpr9cW5xs
+ 0GU2hl+8pnxwYJQ3FlhKl2LP2HeUpASzTX0Fio+ROgdASrcIgtBI0gsPSAwFoxV7mPMc/gLIbyI
+ i7rNIv4Bxgvb+fJVg6SHHC14PmIgOGGV7b698LiiSRYiCBl9Li3WkHBQgB9OS1xF0EHEu/AwxcU
+ iVmfoqgn4socqbUust67tnD6AKqIkoKj+0IilknIFG7icn2pTiMyoJ4nlIPdDb0vGhJmcoPer/q
+ gr/zqtAUtnqAR3w==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
+ fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-The VPU33 found in the SM8650 Platform requires some slighly different
-buffer calculation for encoding to allow working with the latest
-firwware uploaded on linux-firmware at [1].
+Get rid of one dtc W=1 warning and cleanup (verified with dtx_diff).
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=ece445af91bbee49bf0d8b23c2b99b596ae6eac7
-
-Suggested-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
-[2] https://lore.kernel.org/all/20250820-iris-video-encoder-v3-0-80ab0ba58b3d@quicinc.com/
----
- drivers/media/platform/qcom/iris/iris_buffer.c     |   2 +-
- .../platform/qcom/iris/iris_hfi_gen1_command.c     |   2 +-
- .../platform/qcom/iris/iris_platform_common.h      |   2 +
- .../media/platform/qcom/iris/iris_platform_gen2.c  |   4 +
- .../platform/qcom/iris/iris_platform_sm8250.c      |   2 +
- drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 118 ++++++++++++++++++++-
- drivers/media/platform/qcom/iris/iris_vpu_buffer.h |   4 +-
- 7 files changed, 127 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-index 8891a297d384b018b3cc8313ad6416db6317798b..c0900038e7defccf7de3cb60e17c71e36a0e8ead 100644
---- a/drivers/media/platform/qcom/iris/iris_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-@@ -284,7 +284,7 @@ static void iris_fill_internal_buf_info(struct iris_inst *inst,
- {
- 	struct iris_buffers *buffers = &inst->buffers[buffer_type];
- 
--	buffers->size = iris_vpu_buf_size(inst, buffer_type);
-+	buffers->size = inst->core->iris_platform_data->get_vpu_buffer_size(inst, buffer_type);
- 	buffers->min_count = iris_vpu_buf_count(inst, buffer_type);
- }
- 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-index 29cf392ca2566da286ea3e928ce4a22c2e970cc8..e1788c266bb1080921f17248fd5ee60156b3143d 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-@@ -911,7 +911,7 @@ static int iris_hfi_gen1_set_bufsize(struct iris_inst *inst, u32 plane)
- 
- 	if (iris_split_mode_enabled(inst)) {
- 		bufsz.type = HFI_BUFFER_OUTPUT;
--		bufsz.size = iris_vpu_buf_size(inst, BUF_DPB);
-+		bufsz.size = inst->core->iris_platform_data->get_vpu_buffer_size(inst, BUF_DPB);
- 
- 		ret = hfi_gen1_set_property(inst, ptype, &bufsz, sizeof(bufsz));
- 		if (ret)
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
-index 96fa7b1bb592441e85664da408ea4ba42c9a15b5..7057c4cd1a9ebefa02c855014e5f19993da58e38 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_common.h
-+++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
-@@ -7,6 +7,7 @@
- #define __IRIS_PLATFORM_COMMON_H__
- 
- #include <linux/bits.h>
-+#include "iris_buffer.h"
- 
- struct iris_core;
- struct iris_inst;
-@@ -189,6 +190,7 @@ struct iris_platform_data {
- 	void (*init_hfi_command_ops)(struct iris_core *core);
- 	void (*init_hfi_response_ops)(struct iris_core *core);
- 	struct iris_inst *(*get_instance)(void);
-+	u32 (*get_vpu_buffer_size)(struct iris_inst *inst, enum iris_buffer_type buffer_type);
- 	const struct vpu_ops *vpu_ops;
- 	void (*set_preset_registers)(struct iris_core *core);
- 	const struct icc_info *icc_tbl;
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-index cf4b92f534b272a0a1ac2a0e7bb9316501374332..78a04e76de7c00703b84bd3c1c6e9a884ee7cebe 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
-@@ -8,6 +8,7 @@
- #include "iris_hfi_gen2.h"
- #include "iris_hfi_gen2_defines.h"
- #include "iris_platform_common.h"
-+#include "iris_vpu_buffer.h"
- #include "iris_vpu_common.h"
- 
- #include "iris_platform_qcs8300.h"
-@@ -738,6 +739,7 @@ struct iris_platform_data sm8550_data = {
- 	.get_instance = iris_hfi_gen2_get_instance,
- 	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
- 	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
-+	.get_vpu_buffer_size = iris_vpu_buf_size,
- 	.vpu_ops = &iris_vpu3_ops,
- 	.set_preset_registers = iris_set_sm8550_preset_registers,
- 	.icc_tbl = sm8550_icc_table,
-@@ -827,6 +829,7 @@ struct iris_platform_data sm8650_data = {
- 	.get_instance = iris_hfi_gen2_get_instance,
- 	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
- 	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
-+	.get_vpu_buffer_size = iris_vpu33x_buf_size,
- 	.vpu_ops = &iris_vpu33_ops,
- 	.set_preset_registers = iris_set_sm8550_preset_registers,
- 	.icc_tbl = sm8550_icc_table,
-@@ -916,6 +919,7 @@ struct iris_platform_data qcs8300_data = {
- 	.get_instance = iris_hfi_gen2_get_instance,
- 	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
- 	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
-+	.get_vpu_buffer_size = iris_vpu_buf_size,
- 	.vpu_ops = &iris_vpu3_ops,
- 	.set_preset_registers = iris_set_sm8550_preset_registers,
- 	.icc_tbl = sm8550_icc_table,
-diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-index 978d0130d43b5f6febb65430a9bbe3932e8f24df..16486284f8acccf6a95a27f6003e885226e28f4d 100644
---- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-+++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
-@@ -9,6 +9,7 @@
- #include "iris_resources.h"
- #include "iris_hfi_gen1.h"
- #include "iris_hfi_gen1_defines.h"
-+#include "iris_vpu_buffer.h"
- #include "iris_vpu_common.h"
- 
- #define BITRATE_MIN		32000
-@@ -317,6 +318,7 @@ struct iris_platform_data sm8250_data = {
- 	.get_instance = iris_hfi_gen1_get_instance,
- 	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
- 	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
-+	.get_vpu_buffer_size = iris_vpu_buf_size,
- 	.vpu_ops = &iris_vpu2_ops,
- 	.set_preset_registers = iris_set_sm8250_preset_registers,
- 	.icc_tbl = sm8250_icc_table,
-diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-index 7337d8d33715810669399d9f86b864d0eb002897..5658acf371506d1190e885986d362b2731b0660e 100644
---- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
-@@ -867,6 +867,34 @@ u32 size_vpss_line_buf(u32 num_vpp_pipes_enc, u32 frame_height_coded,
- 		      (((((max_t(u32, (frame_width_coded),
- 				 (frame_height_coded)) + 3) >> 2) << 5) + 256) * 16)), 256);
- }
-+static inline
-+u32 size_vpss_line_buf_vpu33x(u32 num_vpp_pipes_enc, u32 frame_height_coded,
-+			      u32 frame_width_coded)
-+{
-+	u32 vpss_4tap_top = 0, vpss_4tap_left = 0, vpss_div2_top = 0;
-+	u32 vpss_div2_left = 0, vpss_top_lb = 0, vpss_left_lb = 0;
-+	u32 size_left = 0, size_top = 0;
-+
-+	vpss_4tap_top = (max_t(u32, frame_width_coded, frame_height_coded) * 2) + 3;
-+	vpss_4tap_top >>= 2;
-+	vpss_4tap_top <<= 4;
-+	vpss_4tap_top += 256;
-+	vpss_4tap_left = (((8192 + 3) >> 2) << 5) + 64;
-+	vpss_div2_top = max_t(u32, frame_width_coded, frame_height_coded) + 3;
-+	vpss_div2_top >>= 2;
-+	vpss_div2_top <<= 4;
-+	vpss_div2_top += 256;
-+	vpss_div2_left = (max_t(u32, frame_width_coded, frame_height_coded) * 2) + 3;
-+	vpss_div2_left >>= 2;
-+	vpss_div2_left <<= 5;
-+	vpss_div2_left += 64;
-+	vpss_top_lb = (frame_width_coded + 1) << 3;
-+	vpss_left_lb = (frame_height_coded << 3) * num_vpp_pipes_enc;
-+	size_left = (vpss_4tap_left + vpss_div2_left) * 2 * num_vpp_pipes_enc;
-+	size_top = (vpss_4tap_top + vpss_div2_top) * 2;
-+
-+	return ALIGN(size_left + size_top + vpss_top_lb + vpss_left_lb, DMA_ALIGNMENT);
-+}
- 
- static inline
- u32 size_top_line_buf_first_stg_sao(u32 frame_width_coded)
-@@ -975,9 +1003,17 @@ static u32 iris_vpu_enc_non_comv_size(struct iris_inst *inst)
- 				       lcu_size, HFI_CODEC_ENCODE_AVC);
- }
- 
-+static u32 iris_vpu33x_enc_non_comv_size(struct iris_inst *inst)
-+{
-+	if (inst->codec == V4L2_PIX_FMT_HEVC)
-+		return iris_vpu_enc_non_comv_size(inst) + SIZE_ONE_SLICE_BUF;
-+
-+	return iris_vpu_enc_non_comv_size(inst);
-+}
-+
- static inline
--u32 hfi_buffer_line_enc(u32 frame_width, u32 frame_height, bool is_ten_bit,
--			u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
-+u32 hfi_buffer_line_enc_base(u32 frame_width, u32 frame_height, bool is_ten_bit,
-+			     u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
- {
- 	u32 width_in_lcus = ((frame_width) + (lcu_size) - 1) / (lcu_size);
- 	u32 height_in_lcus = ((frame_height) + (lcu_size) - 1) / (lcu_size);
-@@ -1017,10 +1053,38 @@ u32 hfi_buffer_line_enc(u32 frame_width, u32 frame_height, bool is_ten_bit,
- 		line_buff_recon_pix_size +
- 		size_left_linebuff_ctrl_fe(frame_height_coded, num_vpp_pipes_enc) +
- 		size_line_buf_sde(frame_width_coded) +
--		size_vpss_line_buf(num_vpp_pipes_enc, frame_height_coded, frame_width_coded) +
- 		size_top_line_buf_first_stg_sao(frame_width_coded);
- }
- 
-+static inline
-+u32 hfi_buffer_line_enc(u32 frame_width, u32 frame_height, bool is_ten_bit,
-+			u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
-+{
-+	u32 width_in_lcus = ((frame_width) + (lcu_size) - 1) / (lcu_size);
-+	u32 height_in_lcus = ((frame_height) + (lcu_size) - 1) / (lcu_size);
-+	u32 frame_height_coded = height_in_lcus * (lcu_size);
-+	u32 frame_width_coded = width_in_lcus * (lcu_size);
-+
-+	return hfi_buffer_line_enc_base(frame_width, frame_height, is_ten_bit,
-+					num_vpp_pipes_enc, lcu_size, standard) +
-+		size_vpss_line_buf(num_vpp_pipes_enc, frame_height_coded, frame_width_coded);
-+}
-+
-+static inline
-+u32 hfi_buffer_line_enc_vpu33x(u32 frame_width, u32 frame_height, bool is_ten_bit,
-+			       u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
-+{
-+	u32 width_in_lcus = ((frame_width) + (lcu_size) - 1) / (lcu_size);
-+	u32 height_in_lcus = ((frame_height) + (lcu_size) - 1) / (lcu_size);
-+	u32 frame_height_coded = height_in_lcus * (lcu_size);
-+	u32 frame_width_coded = width_in_lcus * (lcu_size);
-+
-+	return hfi_buffer_line_enc_base(frame_width, frame_height, is_ten_bit,
-+					num_vpp_pipes_enc, lcu_size, standard) +
-+		size_vpss_line_buf_vpu33x(num_vpp_pipes_enc, frame_height_coded,
-+					  frame_width_coded);
-+}
-+
- static u32 iris_vpu_enc_line_size(struct iris_inst *inst)
- {
- 	u32 num_vpp_pipes = inst->core->iris_platform_data->num_vpp_pipe;
-@@ -1039,6 +1103,24 @@ static u32 iris_vpu_enc_line_size(struct iris_inst *inst)
- 				   lcu_size, HFI_CODEC_ENCODE_AVC);
- }
- 
-+static u32 iris_vpu33x_enc_line_size(struct iris_inst *inst)
-+{
-+	u32 num_vpp_pipes = inst->core->iris_platform_data->num_vpp_pipe;
-+	struct v4l2_format *f = inst->fmt_dst;
-+	u32 height = f->fmt.pix_mp.height;
-+	u32 width = f->fmt.pix_mp.width;
-+	u32 lcu_size = 16;
-+
-+	if (inst->codec == V4L2_PIX_FMT_HEVC) {
-+		lcu_size = 32;
-+		return hfi_buffer_line_enc_vpu33x(width, height, 0, num_vpp_pipes,
-+						  lcu_size, HFI_CODEC_ENCODE_HEVC);
-+	}
-+
-+	return hfi_buffer_line_enc_vpu33x(width, height, 0, num_vpp_pipes,
-+					  lcu_size, HFI_CODEC_ENCODE_AVC);
-+}
-+
- static inline
- u32 hfi_buffer_dpb_enc(u32 frame_width, u32 frame_height, bool is_ten_bit)
- {
-@@ -1386,7 +1468,7 @@ struct iris_vpu_buf_type_handle {
- 	u32 (*handle)(struct iris_inst *inst);
- };
- 
--int iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
-+u32 iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
- {
- 	const struct iris_vpu_buf_type_handle *buf_type_handle_arr = NULL;
- 	u32 size = 0, buf_type_handle_size = 0, i;
-@@ -1430,6 +1512,34 @@ int iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
- 	return size;
- }
- 
-+u32 iris_vpu33x_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
-+{
-+	u32 size = 0, i;
-+
-+	static const struct iris_vpu_buf_type_handle enc_internal_buf_type_handle[] = {
-+		{BUF_BIN,         iris_vpu_enc_bin_size         },
-+		{BUF_COMV,        iris_vpu_enc_comv_size        },
-+		{BUF_NON_COMV,    iris_vpu33x_enc_non_comv_size },
-+		{BUF_LINE,        iris_vpu33x_enc_line_size     },
-+		{BUF_ARP,         iris_vpu_enc_arp_size         },
-+		{BUF_VPSS,        iris_vpu_enc_vpss_size        },
-+		{BUF_SCRATCH_1,   iris_vpu_enc_scratch1_size    },
-+		{BUF_SCRATCH_2,   iris_vpu_enc_scratch2_size    },
-+	};
-+
-+	if (inst->domain == DECODER)
-+		return iris_vpu_buf_size(inst, buffer_type);
-+
-+	for (i = 0; i < ARRAY_SIZE(enc_internal_buf_type_handle); i++) {
-+		if (enc_internal_buf_type_handle[i].type == buffer_type) {
-+			size = enc_internal_buf_type_handle[i].handle(inst);
-+			break;
-+		}
-+	}
-+
-+	return size;
-+}
-+
- static u32 internal_buffer_count(struct iris_inst *inst,
- 				 enum iris_buffer_type buffer_type)
- {
-diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
-index 1ff1b07ecbaa85345ca948affeb1c4a1c55e36b0..e4fd1fcf2dbf25e69d55599a8fd4ad775f9e6575 100644
---- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
-+++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
-@@ -41,6 +41,7 @@ struct iris_inst;
- #define SIZE_SLIST_BUF_H265 (BIT(10))
- #define H265_DISPLAY_BUF_SIZE (3072)
- #define H265_NUM_FRM_INFO (48)
-+#define SIZE_ONE_SLICE_BUF 256
- 
- #define VP9_NUM_FRAME_INFO_BUF 32
- #define VP9_NUM_PROBABILITY_TABLE_BUF (VP9_NUM_FRAME_INFO_BUF + 4)
-@@ -145,7 +146,8 @@ static inline u32 size_h264d_qp(u32 frame_width, u32 frame_height)
- 	return DIV_ROUND_UP(frame_width, 64) * DIV_ROUND_UP(frame_height, 64) * 128;
- }
- 
--int iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
-+u32 iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
-+u32 iris_vpu33x_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
- int iris_vpu_buf_count(struct iris_inst *inst, enum iris_buffer_type buffer_type);
- 
- #endif
+Best regards,
+Krzysztof
 
 ---
-base-commit: 3390731fe7686441519f59d7599962e0abbca7d6
-change-id: 20250822-topic-sm8x50-iris-encoder-v3-hevc-debug-10173f4838e3
+Krzysztof Kozlowski (15):
+      arm64: dts: qcom: ipq5424: Add default GIC address cells
+      arm64: dts: qcom: lemans: Add default GIC address cells
+      arm64: dts: qcom: msm8996: Add default GIC address cells
+      arm64: dts: qcom: qcs404: Add default GIC address cells
+      arm64: dts: qcom: sc8180x: Add default GIC address cells
+      arm64: dts: qcom: sm6150: Add default GIC address cells
+      arm64: dts: qcom: sm8150: Add default GIC address cells
+      arm64: dts: qcom: sm8250: Add default GIC address cells
+      arm64: dts: qcom: sm8350: Add default GIC address cells
+      arm64: dts: qcom: Use GIC_SPI for interrupt-map for readability
+      ARM: dts: qcom: ipq4019: Add default GIC address cells
+      ARM: dts: qcom: apq8064: Add default GIC address cells
+      ARM: dts: qcom: ipq8064: Add default GIC address cells
+      ARM: dts: qcom: sdx55: Add default GIC address cells
+      ARM: dts: qcom: Use GIC_SPI for interrupt-map for readability
+
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi |  9 +++----
+ arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi |  9 +++----
+ arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi | 25 ++++++++++----------
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi   |  9 +++----
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi    | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi    | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/ipq5424.dtsi    | 33 +++++++++++++-------------
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi    |  8 +++----
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi    | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi    | 32 ++++++++++++-------------
+ arch/arm64/boot/dts/qcom/lemans.dtsi     |  1 +
+ arch/arm64/boot/dts/qcom/msm8996.dtsi    | 25 ++++++++++----------
+ arch/arm64/boot/dts/qcom/qcs404.dtsi     |  1 +
+ arch/arm64/boot/dts/qcom/sar2130p.dtsi   | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/sc7280.dtsi     | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/sc8180x.dtsi    | 33 +++++++++++++-------------
+ arch/arm64/boot/dts/qcom/sc8280xp.dtsi   | 40 ++++++++++++++++----------------
+ arch/arm64/boot/dts/qcom/sdm845.dtsi     | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/sm6150.dtsi     |  1 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi     | 17 +++++++-------
+ arch/arm64/boot/dts/qcom/sm8250.dtsi     | 25 ++++++++++----------
+ arch/arm64/boot/dts/qcom/sm8350.dtsi     | 17 +++++++-------
+ arch/arm64/boot/dts/qcom/sm8450.dtsi     | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/sm8550.dtsi     | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/sm8650.dtsi     | 16 ++++++-------
+ arch/arm64/boot/dts/qcom/x1e80100.dtsi   | 24 +++++++++----------
+ 26 files changed, 233 insertions(+), 220 deletions(-)
+---
+base-commit: 931e46dcbc7e6035a90e9c4a27a84b660e083f0a
+change-id: 20250822-dts-interrupt-address-cells-a1456890a281
 
 Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 
