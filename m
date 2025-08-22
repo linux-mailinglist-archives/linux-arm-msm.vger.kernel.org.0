@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-70330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1725B313A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:43:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A0A9B31406
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 11:49:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DA704BA042A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:42:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0168C1D228E2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 09:43:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA7752C0282;
-	Fri, 22 Aug 2025 09:39:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FA452F3C3B;
+	Fri, 22 Aug 2025 09:39:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ot2cmto/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="I+eLrQV1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B86692EF657
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:39:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3512D2ED17D
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 09:39:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755855573; cv=none; b=CY58TUkjpBVjssYIiE7Poda5lu7uAU9ByuBPV4iXCPFJk+8Yxh/aaG28mn0kaad3dSf3iGOIoMeBYYtHBBahMjluPBKhG/SgEt4Ii5VwrIFm1ROmNx1KxLf6YnPlg6MFID20YGPTCs79SxVythNw0RjBF+ektZbHOuzCaIdLQDQ=
+	t=1755855574; cv=none; b=LHYO3PIih2FKwDPRD6OCo59GqSKIcmJV8IGeZlUFbta4MfRYyPVr441NsKz49eRqYKcyuR35S6CK+Kjf4JkU6O/jvdncKWuD25bRw+I/Kv/AJMZnhVYy0NkhleqoQlWWu7wz8lSrV8AJaeV9xQufZVFUgn4fJLk5pIFFlW3OQbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755855573; c=relaxed/simple;
-	bh=WfJTFOkiFfJ8imdBbfyVJQJksDVscMbwStcuwHTKDos=;
+	s=arc-20240116; t=1755855574; c=relaxed/simple;
+	bh=/ijYBip4Gef+08P0Kp9cDhiylfO8cgPDqcobGaJy3Uo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KB4LFx1925Cxk+/Fb5QHq4nfLl4hk/3jCwScr0DxVhIE70kvtrSPHU9YulKGgZLlmCuCiRRx69OPPsgAacRZnQeAiatrx04ZuklFpFVmUlkeFvOPvAROZylFcSuz7PZt3ML4VVxUgTbs8rS3zmOZfrSGE8vZ4mUoubZK1gFi/rE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ot2cmto/; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:To:Cc; b=s8+5fmrPqc7AgpM7og81+3aix56s1MY1WSvIOS5xk0KzK/Dua7E4zOCKOiSTlnRVO5iRa1C4AQWxpmZrtM6RjlgX1sp0J2HZDqQDt3XsOLgmu3BajnE3RG+e8KxjXoAaTNU3YIJSNieCvy2cHjY5s8wY/mtqoFSid+j7oLUzPdI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=I+eLrQV1; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45a1b0990b2so14327825e9.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:39:28 -0700 (PDT)
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3c51f0158d8so1164749f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 02:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1755855566; x=1756460366; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1755855567; x=1756460367; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=HblogMXc0c0fbHZC8tuteY/HEVF9rO/2JJ7XgNKcksY=;
-        b=Ot2cmto/DzNJ2O8WbJvf5WV8CuqC49K5ZP3dfEgKFaN5DAioWioLpUnxEzoBp8Z0hs
-         P9nkK7WfB0HjTftZ2UNyJJLXbrKhAc8rIaQ7kRtTkC90NaZJshyGVBiIK8UqjtCF3utM
-         ofTO8U1ueDlidejYl2oXNWUPtUmNDMGY1jhw4IdbIHA2VJ8upZnJzaj5A7virbsYZS4u
-         pkuDOvhuJLFz8L+opgT/kyvz1FLsmlRrwYiEpWzonqnBpep8XvVn0nV0kkuM8BRweWWX
-         7eqYx8CiY0x0Mlp6CZwug5Qsm8YNrg6IU0mMRgO/WppbZwH/waUjA+XGr7ENFFChMaom
-         F+AQ==
+        bh=5qJ51d/LzxXtFMmJ/9ohPT/eBh8hSvxUNsu8PvJJDNs=;
+        b=I+eLrQV1NcGu6bAqE3fJzZmJAq05p/6JepqSCDsEBNB4rJ2TjUdtWeqaBIgEJ32CMa
+         mvCK+xseo4l9CnB89Y84lV+L9wij2WcHb1/ZlGlxw9huIIpTiXgji3GfTAiGhuP2ogmL
+         XbNwMlp9BWlv7ypZpSxhr7/6C4wmrowz91/P9geaH6hP8Bkw9aZNsNglS6hHQ5PHqWlX
+         0g8EwdSk/32LOhY21NK3r321jNk+/hik8WXBpp639mTbh1dKfi0TicuZUP4dfK+M3OU1
+         5CiTCXYgThzQVe/OPkVktHOXAdP0oMa7Y/YbVBytNKJqIT4c3/7Gm+WIHxNokuamq78I
+         KtYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755855566; x=1756460366;
+        d=1e100.net; s=20230601; t=1755855567; x=1756460367;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HblogMXc0c0fbHZC8tuteY/HEVF9rO/2JJ7XgNKcksY=;
-        b=NUOPI2b5vdBEaEBXkvwBqYL7P91Hfmd1+ZSutP2xdhm39mjcNjIK9+CoXQxoJ8A0pI
-         orrKtgcg8lj0wGOJP90BbuYzaBgYviwS5NO+ByMK/CrO3Gm1nZodaEsogU2m7fymlcxk
-         M6dTvC+kJAOug3fAWW6NVMqjKPUZgi4fAxuJ3gwwhc3oQO0lKiO2kXnSImJwJINWAR8x
-         cKjksqKGpAjqAaOKZpH5yaU50PVnxXAGuls/uJcDIDeG9loN9BjHC5ACpTsd0UsOqSee
-         eyewKZrpWKyDXI36CxEgNkycJNvlE+u5ngNzYORQyMAaWRXRunXhfWfbKd1tbHA2JNfX
-         JR7Q==
-X-Gm-Message-State: AOJu0YyKcr5hPjao++q1Lxeg43NwM25OyYi+JAh0oyb+0i94RSDUNPtg
-	boP8/PlZJbxX0zwzOo70iL3vo54PjrApMHzj0xOXHHMqz/+3bHymXl3slTHRDRzTEc0=
-X-Gm-Gg: ASbGnctFP46UO4sthPxVDu2IWMYWuC0eD/Ctphvou/1hYzMF4pXF0rAcrseuOcR/GgO
-	OJNfTzO0GoMzb/Mv89K9CndFt/8KaYVftvl4ivQ8XVZuEoEmURfzBr8PtgcQERf/MDjvxA/Qn4M
-	Z413hSEeXpt8ouKQgx+pjMLv70EicOXu3ELnXgJZM8rTXH+fxnr5bb25y4E3aGtWgxqo9DKFcLq
-	yMn1RNjhFyMlNN5DKJc71S5I8tRu84CTYwlieoY9q5lVpdmLkS7k+cvzhivJMrV1Pca+zsxlAUo
-	f5xkTtpahT3biWgVSoQrE7y1ZhLh/lOR+uYikaQ7Uqpd4Sr9LGW0wZZPU33dJB6jMecf5PjgTMd
-	k7g3RIGRoKz9Zi226gAIAF5Kr20RMGFa9E7LpqhU2ja0XkYurYwkPjg==
-X-Google-Smtp-Source: AGHT+IEFZf0iPzP6rxsAyIV261ItRqbrT/i4PxGfzqmPGqWuvtcq1FqGCxJEmHWOyGtJpgIDPl6/rw==
-X-Received: by 2002:a5d:5f4a:0:b0:3b8:d4ad:6af0 with SMTP id ffacd0b85a97d-3c5dcdfe499mr1667246f8f.40.1755855566265;
+        bh=5qJ51d/LzxXtFMmJ/9ohPT/eBh8hSvxUNsu8PvJJDNs=;
+        b=GKpabLV0HhOq0Ce6molG9lNxX1TRYGUtgu+Lt9WNACct9QzKSjBEkyUEs3L2CBG4qP
+         Pvpgxcs1WiEwVzBBOcP8mDdv97kHUJnmecfAuuNkPMmUw0jLIvFcs+qeR9cfJgOw23oT
+         bYDRyLm1kWalzKmhIE1wtDUOJMReFLq3isAB659lekwoWsbIF/CG+5bc+ZCXxybRfEn7
+         2XfxC6Uw6DfzdGF30sHMSPkYVOduZl3BA9WgPqDvY3OyBBKlPTLQ/IVFzKBZaVGfcNCJ
+         HcQoLamxemTBI87EeFAyORBP/hHCP9cQEiuOO449lGV+h7QV6ZK+NhHkdgXDQaznzMta
+         20oA==
+X-Gm-Message-State: AOJu0Ywl8bS8WBMP6mFu01QIDVVY41dp3wAZn0rSGoorzdEC+klNwp/y
+	vLcj3RVkgtheFu1fIu/LL5Peoz17huE9s+6SBWmFtZzIzN9DyvOVMfNZgmYWnNR9CH4=
+X-Gm-Gg: ASbGncsW4gy1UqYCENlIlphbz/y2Fi4UuNH3RI3tppmR16dmNDJ0IPry2169T9gWRnZ
+	hK5FXD2LhR010qfm6ZuwQLVotksaI05hq1d1n2tk7WP8HuEo75TPJ10Z2h67an1M2vID0zY4XGm
+	msXs+br8KfmrtZTl7GRq62dtzkFuFh2z+jXgpLsjncO9y+gBftWh5VhtSN/yXH1wwwCtIE8V5Ua
+	s8R4BX7cBgdM+cHm53Yr0K7j+lRNxZKgSwzpPr5g+A90wUPfz8CCd4jB0Y1dykFnuVLwvvx1uPz
+	icVyo4eNAXCq2L0A0IxuM2osksDcjXzBEMY6CfnN9rzakyjO7SrEkuyZDQ92sFyD6uhYrl7+djp
+	95q84qru4jQZuKw8Asf/qjbW3k1V1PwMYfWcrSW7x+i8=
+X-Google-Smtp-Source: AGHT+IGLbeNgCPY3QzD01aDKsP++v1teSlpVKBAg69DzLUXtEAXS8+pA2PvrG1/xF48FV08k8DIZWA==
+X-Received: by 2002:a05:6000:400c:b0:3c6:a970:1501 with SMTP id ffacd0b85a97d-3c6a9701cebmr110928f8f.5.1755855566927;
         Fri, 22 Aug 2025 02:39:26 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c684524163sm609890f8f.61.2025.08.22.02.39.25
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3c684524163sm609890f8f.61.2025.08.22.02.39.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Fri, 22 Aug 2025 02:39:26 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Fri, 22 Aug 2025 11:39:19 +0200
-Subject: [PATCH v2 07/16] arm64: dts: qcom: sm8650-qrd: Set up 4-lane DP
+Date: Fri, 22 Aug 2025 11:39:20 +0200
+Subject: [PATCH v2 08/16] arm64: dts: qcom: x1e001de-devkit: Set up 4-lane
+ DP
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250822-topic-x1e80100-4lanes-v2-7-4b21372b1901@linaro.org>
+Message-Id: <20250822-topic-x1e80100-4lanes-v2-8-4b21372b1901@linaro.org>
 References: <20250822-topic-x1e80100-4lanes-v2-0-4b21372b1901@linaro.org>
 In-Reply-To: <20250822-topic-x1e80100-4lanes-v2-0-4b21372b1901@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -93,20 +94,20 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=732;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1225;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=WfJTFOkiFfJ8imdBbfyVJQJksDVscMbwStcuwHTKDos=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBoqDrEOajx6C4sFY9R2ZFNqgl31CWXPBPuPDwQEkue
- y+pMUOCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKg6xAAKCRB33NvayMhJ0ZCbD/
- 9YKTh7dZXEmP3OHThGTzoeOhPj802ukfqgW71WoQvUm3YvGNBbl7fvFXhdg5GxqCJ9hNNart7UQcXy
- uagF9/nklJ/xAaC8l0e2fulzlM0FIFELVpmC5EgBiH+4S60CYtQ/DVyd45XJykN7CT+ySnpAYmc7hT
- z+hltEixPvEAgcm313dIc/y3EQbE7JnmPpXTBqW4A0wZvWClaFmjfvj6/y3vBoNh+TCCP3RbTG0zPa
- KBt2vcyVWyrlTE7bPnlmZPgXHcxQXM3demJ+/cFoNd5NoTUxmFPsSq/aDvtG3tyBuS7dlnXMMAiHHm
- xNvMrVYRrzwMQBDog9h5TnY94ToaW95md66Qo0B3S10fG9jDcQmIVus9EvPgYuxcS5m6UK/vr0IoEv
- CAJRPbIOWNVTP4XLBZY4ob2na7GySZansx00R0OJ/+7b+PzDbsLrXSkg1lvYaOSFdqbfszIrXO1OTG
- UK/gd/hBPa/7flawOxzK6hf5FlkpE4cEGtPr+M4LRS30Ph4rWol+/pZVDGjns497ofrNl3Idjdejf/
- NuTy5bNKlsTO9bp1swGuR4LwS1CYn6eLLyIo18/mVYM5WArnkIc8YE9gLuUfsWHRFaPX2P/eojpIuQ
- ZcSZ32ufjx01W/sq1uOiMCuIPVl8ahIzYw+V3m1PrbSmXG6j3jFs0QjuEFeg==
+ bh=/ijYBip4Gef+08P0Kp9cDhiylfO8cgPDqcobGaJy3Uo=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBoqDrE4Tmp8qOSpiuxCPDdZyYqOEkzZjfZkV2QUK2P
+ vl8CfTCJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaKg6xAAKCRB33NvayMhJ0Y7dD/
+ 9HH65FmwV0TTwin7fXUg0Aa9FMKMuafXSeFqKDcbGa+AyNAmPKhcBvrdMJA5Ri2zHw9BuAgewAyWOx
+ SsAT3tdmwOvMfZUYc26UZpAan8e2snbK7DryR+3xQ4+owPb9en/dOILZTsB9fp2ZOvklVmf/JCYZNa
+ PQk+KaRxkCrpXJ0QNQTnAsiI9up3r0eyXwcplxSUjBwfjRTKSLxtaHoXhGW+i4yOVfCV6PgO5mkkLd
+ aY/Nj206vW1mKQWFbc6bC0XlH9b1+jkdIvl1YoupTcAy613daGm6NgAsyqhZm2DRYuHpNuzNIXsE8f
+ VbO+u33JwkeEWyW+G9sCfqy9DPeQnGEXtvmNDLppfGfxJ6VlUOWMq4fIERcHPfsfi66KYs0W76zaEg
+ KwDtlSYG29BdoNKz4TZjjfc+oNZ4sUVRrdtz6fTxg1tQXy+cxSy+OKsZ9hQXpXBXK3YCXZVvfK8Z7N
+ oxA/tTgwJ3Pn+IXBXZHM9NVWGCfW55J/wv8aiMPmNAnfgqasg7nYWCHUFn42P5xDbeiiBLsLXSVzqw
+ QceHSp0LBftb89m5gYbW/k4GWB1wXpIJEnmcqbzckm6mkVaEUhTUvG0Rwc7FaHVUfkCv5htx3GSN9X
+ iQ2lvsJCZJhpHUTexb53jN+aznF4DazTfWjlTBwZATgKeBC+fCuozLoPcDmg==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
@@ -115,22 +116,40 @@ controllers now the mode-switch events can reach the QMP Combo PHYs.
 
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sm8650-qrd.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/x1e001de-devkit.dts | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-index 081b7e40f5742120a611cbfa57a59dfb1dc19b9f..88e202e1d49053230f58d719d3c7d57df2c9922e 100644
---- a/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-+++ b/arch/arm64/boot/dts/qcom/sm8650-qrd.dts
-@@ -893,7 +893,7 @@ &mdss_dp0 {
+diff --git a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+index 2d9627e6c7983daedba87619ba01074ee22b43c9..b055925da389146c4a141152bf0025624be53dda 100644
+--- a/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
++++ b/arch/arm64/boot/dts/qcom/x1e001de-devkit.dts
+@@ -983,7 +983,7 @@ &mdss_dp0 {
  };
  
  &mdss_dp0_out {
 -	data-lanes = <0 1>;
 +	data-lanes = <0 1 2 3>;
+ 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
  };
  
- &pcie0 {
+@@ -992,7 +992,7 @@ &mdss_dp1 {
+ };
+ 
+ &mdss_dp1_out {
+-	data-lanes = <0 1>;
++	data-lanes = <0 1 2 3>;
+ 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+ };
+ 
+@@ -1001,7 +1001,7 @@ &mdss_dp2 {
+ };
+ 
+ &mdss_dp2_out {
+-	data-lanes = <0 1>;
++	data-lanes = <0 1 2 3>;
+ 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
+ };
+ 
 
 -- 
 2.34.1
