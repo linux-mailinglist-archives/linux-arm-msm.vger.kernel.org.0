@@ -1,187 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-70451-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEBE0B32168
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 19:19:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 31C78B3218B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 19:33:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9480E642829
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 17:19:56 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 497B7B2338E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 17:33:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C288E27A11B;
-	Fri, 22 Aug 2025 17:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2B8931283A;
+	Fri, 22 Aug 2025 17:33:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZsKQAFhx"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Ut2gKRSU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ACA1096F;
-	Fri, 22 Aug 2025 17:19:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0253828E579;
+	Fri, 22 Aug 2025 17:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755883192; cv=none; b=W3yYWW7jS3LmtilXZfXvAeWC+DJW9p0/DzILJ8TTBY2iY4C+PB3wURJPmE7UCOvUzk3LGUrUQ/ilfo8d2YeVPIFwu7O+jXa6za46br060XVkdMwe8CazlPjvYW/VPCVX1fVs6Q+dZL/UZpMnRxAxFeIKG/ONkI0bgt1Lc6XUljc=
+	t=1755884023; cv=none; b=Six5breNF5UlmdbOJMTXhT5G1e+4ftayLd+Sm6S/O78haenrYqw5W6/9rGmWbatuAFhiZ5rdtqyLer5tXCI3Tp3S9snuRnSRSy+C86Zenc1MKoI/N5bLzgzUo//AfrUoq0kSCUKXDesfkNEZoMj0QLBzmlunqqZpwGYIIhgQ9r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755883192; c=relaxed/simple;
-	bh=L7VZUdX3MLspbO+BuCJOeSCnsEFhb0f9Kl8vZtDysSU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=drdztylgrJvpovhdy1ti8lTQO+3XkpXOuEkDVBwOwRglPOl+4bJTxxGm52e4b2b8BTm6jtf/a2PuJorBotYDiOH85M/fVviHS+X9vggU+6c2UL/opi6xDBR0SFzz6u6BHdzItipqMFRxg2Q1wYGWKa7nPEuH2y7jcvbOlj0bXgw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZsKQAFhx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BA0C4CEED;
-	Fri, 22 Aug 2025 17:19:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755883192;
-	bh=L7VZUdX3MLspbO+BuCJOeSCnsEFhb0f9Kl8vZtDysSU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ZsKQAFhxdGePNlkVD4aEm20sTIPjMYYfRa6stb19nSTj9HjxHmB9goFCBQ92LmWew
-	 X62qmO8SQICVukO3DyipX380hqA3IHaKf6ZQbymLkikdit4oohE7wNEBatKmhToLqp
-	 sKYWiY4ty2IdRGPQBOx3ISVrCwxBjyr3DQeKcuSWy/FfHOZ/B5gV5mLVzBOrKf0gIT
-	 PuILVn3n7Wr+Z1axv+T3JTzh1qwp3Vd1NRa49yHmB5yrrUNsnVoAbcVIbMA7X1/0+F
-	 3ScSpZjtIo9xgr6SI4kulLAH/F0oCugR0cukDQne76w3rCAFPRrvy9xsNdZL/Dzx6z
-	 MMUwh0vaHlfCg==
-Date: Fri, 22 Aug 2025 22:49:39 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Vivek.Pernamitta@quicinc.com
-Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Vivek Pernamitta <quic_vpernami@quicinc.com>
-Subject: Re: [PATCH] bus: mhi: host: Add uevent support in MHI driver
-Message-ID: <6g32g3zqzsdoo3h6d232jbtatp34tm3s5m6huc37h5sfir2bnf@syyou6tqyuxy>
-References: <20250822-uevent_vdev_next-20250821-v1-1-9ed3a8162194@quicinc.com>
+	s=arc-20240116; t=1755884023; c=relaxed/simple;
+	bh=qzGcX2QKJZgPau8n3KCGHQhknefVrNuVSIhpxGsvuW8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=h3+XdSlzbbdWaAHpKK0NSNSISfSTOWkxMPo/vuwhpqNSUEjLpGfepj2er6kf2y1SSAHHCcbgwj3dwCOGEDXzrdkKM3DaeSrGI6fTrGmjmIh9W63rqEiC+9wMZ+DwSmhZ2gPZbDD64cRLPkNoJN/pP6AR2kLuiF0dAz415vZ+a+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Ut2gKRSU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57MHV3Ht019350;
+	Fri, 22 Aug 2025 17:33:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lwBcAcs5br8qQtNHRCfNFC2LF/dfcqaA+kuFhinPq08=; b=Ut2gKRSUymGL4/bK
+	c9MIkKE7fuCO638jNdFZFemNgcLoYBGF+5gSS7CI1zlrDvILZgOt/2buTbxk2Oa0
+	yf2LsmRjJiXzl2zld+G+N09p9WDXeGGZXiJ+bCpr135zikkBuhpUSEhloX0X4hNV
+	fgRYKcqnWI4To7KSr0aHknFHo0aPDXpZSWoWGOXdKeIEn8Yd9QfmIkRmOJoCTDUg
+	aiFpiXl8rCFa9nmNRyOZjBtck/P27a9AL2jMMBn57RMUoKLhhwx/29eJCD4oX3ik
+	JTxLBJ7O0CLzivkHiMJpMVSvEKGI0VwnROwNPdYyzzD/rsCWNwNeGsMcOsupJWwj
+	KAkEwg==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48pw10r0cv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 17:33:36 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57MHXZEv026286
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 17:33:35 GMT
+Received: from [10.216.23.37] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 22 Aug
+ 2025 10:33:30 -0700
+Message-ID: <c81019f3-3570-4437-a10a-d49cabc4952d@quicinc.com>
+Date: Fri, 22 Aug 2025 23:03:27 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/9] Enable audio on qcs6490-RB3Gen2 and qcm6490-idp
+ boards
+To: Linus Walleij <linus.walleij@linaro.org>
+CC: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        <cros-qcom-dts-watchers@chromium.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-gpio@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-sound@vger.kernel.org>,
+        <kernel@oss.qualcomm.com>,
+        Mohammad Rafi Shaik
+	<mohammad.rafi.shaik@oss.qualcomm.com>
+References: <20250821044914.710044-1-quic_pkumpatl@quicinc.com>
+ <CACRpkdYEzbM33HBAhHEmAg9f4Zpi=2WvqPdZ35=M2eVCqcTTFg@mail.gmail.com>
+Content-Language: en-US
+From: Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+In-Reply-To: <CACRpkdYEzbM33HBAhHEmAg9f4Zpi=2WvqPdZ35=M2eVCqcTTFg@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250822-uevent_vdev_next-20250821-v1-1-9ed3a8162194@quicinc.com>
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIyMDE2MCBTYWx0ZWRfX9pZidifCGK7S
+ jn07VXThat6c3gUuOxH3AD+f0IG1JNB4WoCuDf2wwFVzqIXCQ9gtHcsIJ+nfhuR7I0nLUwq/24C
+ QZD36ryFNGTwSCsobS/792yjN46l50eAdZOz9MBC9aSuGVHcVZkNeDFF0VEo1CmA53iU8e9F6Zr
+ fn0MA/HyUmqpAnCHDiROGNZQOEFS5C6GgEZkvPOJ03eyrf2SjY/7LUZnM/D8MInThV7BD89eGP4
+ vQB09SFK2RngOvky69hNw9UNykO1DMyPl4rbD2qxkmYkE81X/eof3510+HQXlZLrI73cqNg0Edz
+ gxVxt9tDmMTyY+qxeLoh1rX+ot00li2PH61jBn4gQx+xLIPevkvDwjYt6XBDZt1wC/OaGieFbaf
+ KCyK3+cz
+X-Authority-Analysis: v=2.4 cv=eaA9f6EH c=1 sm=1 tr=0 ts=68a8a9f0 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
+ a=eBniO7g4Yh2Fc4B1ST8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: o6nGBWm1tINpdsv4yEeZS4GtajS-cSJS
+X-Proofpoint-ORIG-GUID: o6nGBWm1tINpdsv4yEeZS4GtajS-cSJS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-22_04,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 suspectscore=0 impostorscore=0 malwarescore=0
+ priorityscore=1501 phishscore=0 spamscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508220160
 
-On Fri, Aug 22, 2025 at 10:22:03AM GMT, Vivek.Pernamitta@quicinc.com wrote:
-> From: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> 
-> Notify the MHI device's Execution Environment (EE) state via uevent,
-> enabling applications to receive real-time updates and take appropriate
-> actions based on the current state of MHI.
-> 
-> Signed-off-by: Vivek Pernamitta <quic_vpernami@quicinc.com>
-> ---
-> Notify the MHI device's Execution Environment (EE) state via uevent,
-> enabling applications to receive real-time updates and take appropriate
-> actions based on the current state.
-> 
-> Signed-off-by:
-> ---
-> Usage:
-> 
-> Enabling 16 virtual fucntions for SRIOV device QDU100 once device reached
-> mission mode from systemd service file
-> 
-> SUBSYSTEM=="mhi", ENV{EXEC_ENV}=="MISSION MODE", SUBSYSTEMS=="pci", ATTRS{device}=="0x0601",ATTR{../sriov_numvfs}="16"
-> ---
-> 
-> ---
->  drivers/bus/mhi/host/internal.h |  1 +
->  drivers/bus/mhi/host/main.c     |  1 +
->  drivers/bus/mhi/host/pm.c       | 22 ++++++++++++++++++++++
->  3 files changed, 24 insertions(+)
-> 
-> diff --git a/drivers/bus/mhi/host/internal.h b/drivers/bus/mhi/host/internal.h
-> index 034be33565b78eff9bdefd93faa4f3ce93825bad..d455f0bf00133775fa23882a727782275640e43b 100644
-> --- a/drivers/bus/mhi/host/internal.h
-> +++ b/drivers/bus/mhi/host/internal.h
-> @@ -403,6 +403,7 @@ int mhi_process_data_event_ring(struct mhi_controller *mhi_cntrl,
->  				struct mhi_event *mhi_event, u32 event_quota);
->  int mhi_process_ctrl_ev_ring(struct mhi_controller *mhi_cntrl,
->  			     struct mhi_event *mhi_event, u32 event_quota);
-> +void mhi_uevent_notify(struct mhi_controller *mhi_cntrl, enum mhi_ee_type ee);
->  
->  /* ISR handlers */
->  irqreturn_t mhi_irq_handler(int irq_number, void *dev);
-> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
-> index 52bef663e182de157e50f64c1764a52545c70865..8615512743199a59a58c3756d9cc3407079cee7e 100644
-> --- a/drivers/bus/mhi/host/main.c
-> +++ b/drivers/bus/mhi/host/main.c
-> @@ -512,6 +512,7 @@ irqreturn_t mhi_intvec_threaded_handler(int irq_number, void *priv)
->  		if (mhi_cntrl->rddm_image && mhi_is_active(mhi_cntrl)) {
->  			mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_RDDM);
->  			mhi_cntrl->ee = ee;
-> +			mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
->  			wake_up_all(&mhi_cntrl->state_event);
->  		}
->  		break;
-> diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-> index 33d92bf2fc3ed48db5f7fe80e4f0ef9fe2d2f2ab..1b849f334c49e52636821ed7587865a9254e9118 100644
-> --- a/drivers/bus/mhi/host/pm.c
-> +++ b/drivers/bus/mhi/host/pm.c
-> @@ -418,6 +418,7 @@ static int mhi_pm_mission_mode_transition(struct mhi_controller *mhi_cntrl)
->  	device_for_each_child(&mhi_cntrl->mhi_dev->dev, &current_ee,
->  			      mhi_destroy_device);
->  	mhi_cntrl->status_cb(mhi_cntrl, MHI_CB_EE_MISSION_MODE);
-> +	mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
->  
->  	/* Force MHI to be in M0 state before continuing */
->  	ret = __mhi_device_get_sync(mhi_cntrl);
-> @@ -631,6 +632,8 @@ static void mhi_pm_sys_error_transition(struct mhi_controller *mhi_cntrl)
->  	/* Wake up threads waiting for state transition */
->  	wake_up_all(&mhi_cntrl->state_event);
->  
-> +	mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
-> +
->  	if (MHI_REG_ACCESS_VALID(prev_state)) {
->  		/*
->  		 * If the device is in PBL or SBL, it will only respond to
-> @@ -829,6 +832,8 @@ void mhi_pm_st_worker(struct work_struct *work)
->  			mhi_create_devices(mhi_cntrl);
->  			if (mhi_cntrl->fbc_download)
->  				mhi_download_amss_image(mhi_cntrl);
-> +
-> +			mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
->  			break;
->  		case DEV_ST_TRANSITION_MISSION_MODE:
->  			mhi_pm_mission_mode_transition(mhi_cntrl);
-> @@ -838,6 +843,7 @@ void mhi_pm_st_worker(struct work_struct *work)
->  			mhi_cntrl->ee = MHI_EE_FP;
->  			write_unlock_irq(&mhi_cntrl->pm_lock);
->  			mhi_create_devices(mhi_cntrl);
-> +			mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
->  			break;
->  		case DEV_ST_TRANSITION_READY:
->  			mhi_ready_state_transition(mhi_cntrl);
-> @@ -1240,6 +1246,8 @@ static void __mhi_power_down(struct mhi_controller *mhi_cntrl, bool graceful,
->  	write_unlock_irq(&mhi_cntrl->pm_lock);
->  	mutex_unlock(&mhi_cntrl->pm_mutex);
->  
-> +	mhi_uevent_notify(mhi_cntrl, mhi_cntrl->ee);
-> +
->  	if (destroy_device)
->  		mhi_queue_state_transition(mhi_cntrl,
->  					   DEV_ST_TRANSITION_DISABLE_DESTROY_DEVICE);
-> @@ -1338,3 +1346,17 @@ void mhi_device_put(struct mhi_device *mhi_dev)
->  	read_unlock_bh(&mhi_cntrl->pm_lock);
->  }
->  EXPORT_SYMBOL_GPL(mhi_device_put);
-> +
-> +void mhi_uevent_notify(struct mhi_controller *mhi_cntrl, enum mhi_ee_type ee)
-> +{
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	char *buf[2];
-> +	int ret;
-> +
-> +	buf[0] = kasprintf(GFP_KERNEL, "EXEC_ENV=%s", TO_MHI_EXEC_STR(ee));
-> +	buf[1] = NULL;
-> +
-> +	ret = kobject_uevent_env(&dev->kobj, KOBJ_CHANGE, buf);
-> +	if (ret)
-> +		dev_err(dev, "Failed to send %s uevent\n", TO_MHI_EXEC_STR(ee));
 
-You are leaking buf[0] here.
 
-- Mani
+On 8/21/2025 7:04 PM, Linus Walleij wrote:
+> On Thu, Aug 21, 2025 at 6:49 AM Prasad Kumpatla
+> <quic_pkumpatl@quicinc.com> wrote:
+> 
+>> Mohammad Rafi Shaik (9):
+>>    dt-bindings: pinctrl: qcom,sc7280-lpass-lpi-pinctrl: Document the
+>>      clock property
+> 
+> Can I just apply this one patch to the pinctrl tree?
 
--- 
-மணிவண்ணன் சதாசிவம்
+yes, please go ahead.
+
+Thanks,
+Prasad>
+> Yours,
+> Linus Walleij
+
 
