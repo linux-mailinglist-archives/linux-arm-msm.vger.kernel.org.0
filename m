@@ -1,127 +1,196 @@
-Return-Path: <linux-arm-msm+bounces-70376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CFE50B315F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:57:05 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7351DB315F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 12:57:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 121593AB031
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:56:18 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 51BEEB61CCA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:55:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5981A2F8BFC;
-	Fri, 22 Aug 2025 10:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC0392F90DC;
+	Fri, 22 Aug 2025 10:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KfNXgrRb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lAqfUhGa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CCE2F6189;
-	Fri, 22 Aug 2025 10:56:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59A122F90C5
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755860175; cv=none; b=NBDXXUbBpAFZQTMg09/4LhFu+VVhEji21WWZ/VrvVOMWAPiw4KhvpOn/qsg84BvKpN+DPaCYB1MG4mhU53lWmIOtXlo+8VFUtB7RQbJOTc9rv19J7maABxqxAPCleX+5IoiM1XWz4NBqRPBN2qLGiUHI+G2ftraSPqKrMQp/gdE=
+	t=1755860233; cv=none; b=u+KKm5ESvK/zGgsvFAV0o55L/YmH7iE032XDgUCewm+5sdxYCLmTMoFmLM8DaJYk7Cz3TQK2MEJzzEYDBsp1bjwfwT+CXaD4xwAi8/HrfW5WMsVS3l9AGE4UhI6QFu/Ur2QoGJoBAQjXq6E+7B+2hNyRx2einXZaLkm1Qdoiv8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755860175; c=relaxed/simple;
-	bh=Y29p5D56IdCwPxS75fiLrqc2z3/aZOozQQw7iVirDKA=;
+	s=arc-20240116; t=1755860233; c=relaxed/simple;
+	bh=UfiA5LSSLvdOsSgP5c+PQ814BcBr0jYp6fSxRFsuPUg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fGFc4ckPQ6CKjDcIurLqeItT0n3VHGOGf57PxVominCVuuQJC0oWRxeZFUIvtsbDTqcUtphe041W8RbflsRI3272dcjCe/wJ4bEo3/QNznNj+i3RdpNYx5eSSCaBfJSfyBxqdzxc40F8WBoapttXe05j/q10IvWuzy0a2f/bZnw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KfNXgrRb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F6BBC4CEED;
-	Fri, 22 Aug 2025 10:56:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755860174;
-	bh=Y29p5D56IdCwPxS75fiLrqc2z3/aZOozQQw7iVirDKA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KfNXgrRbTlpTGbncUjlp3oKLl7vbSs/EWWibyFfXjtl3UGv+tfjVM0i/VivP5Ecmk
-	 XtxHyqCyy5oRv+OUz7rDUvasw8Y366O9NLfB7KJzRPZ8SAAu5Vq+ByoXqHeGklFgi/
-	 TCSDhzvLl6NYU0JPscssiq/XIUo4ebFfP/58gOL9NXLj6GmCgzsitZU5JFgc3ILnE3
-	 uW19gZGeb6q12rmhUGnLE8DJVrnHhxim5AAR88ypJlP62AF2zFyhR+CNUFvrAT4C/n
-	 xI1Xk1ojoI9qO2pKrNXKrX8f+YIjiYxCBkzVLAXfFZndMeeBxaZvqiv4aH35KbJc+M
-	 TMlTAzqBldumw==
-Date: Fri, 22 Aug 2025 16:26:01 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, vkoul@kernel.org, 
-	kishon@kernel.org, andersson@kernel.org, konradybcio@kernel.org, 
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH V3 2/2] phy: qcom-qmp-ufs: Add regulator loads for SM8650
- and SM8750
-Message-ID: <pp3hr3kssytyfuuesdfrzdo6hm6e3tjlahla53mlmydetsgxdy@wmxwkatf7lvr>
-References: <20250819222832.8471-1-quic_nitirawa@quicinc.com>
- <20250819222832.8471-3-quic_nitirawa@quicinc.com>
- <ger4kizeltjwalfuwu4dpfjiskrv2okgo5c7d6n3pb24yaxgfo@nkcndblyx3il>
- <xir3u3hlmcvfu6uasijz6g2oialoasmuu4bno6ctxpscqcebz6@6kw6xpm5bxbd>
- <761c97bb-ee90-4ace-acd3-08349831aade@oss.qualcomm.com>
- <2635ced4-b91f-4c79-ae2a-079f06bbb8a9@quicinc.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=usJS4set4PdV0JVeRHa4IhdigNwB9pSE3oouP6c53VwG+kcJpWBDbisxUs4clneUvq/mL1zTG9SBjMLle9BwrY2qgI6hb9werXLtA5EYZRM1g9HZ9Vy/uC5+fUN7glt7/X7/AgN5RsHmRNY1wmjyqs/m9welIe4a8XwgNmyij44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lAqfUhGa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8UIFF024018
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:57:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=3UQrGVqjSSQmpliOJA4Xb1OO
+	EwV8MQbwtqNERrXa4jA=; b=lAqfUhGaCj3cvEsrQ1qieqfNR4feDyAk0ZYKpHej
+	n0rgynhAy/xBSToDOgjPUK+nIUF8LYGr9r9M34aInEyIiALxi8D6LRd+m5xXFWOw
+	zEDsnwr8x7rUBH92hfCISqdP7wg4kqyUvt5t1hKP+LK2UjYuO3bGeRqoWCbyoN+i
+	jWHpWhiNqTU38wZvKk+SJDH1eR6LIs6bid+jA2axGlLJ3hQ/zh3PV2sz9ciSwHXq
+	4Pgnsf77VBlx1pHHHDMz6GE9EGzp+ER4w+0b7bzfdDLDq4i2wCtlzOYW3hlli3za
+	ejQTZRl/kpDfzPSMKqUMef6ahfcqwboRFG8JKkKFXvbkqg==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52ah0x2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 10:57:11 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b10ab0062aso46392201cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 03:57:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755860230; x=1756465030;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3UQrGVqjSSQmpliOJA4Xb1OOEwV8MQbwtqNERrXa4jA=;
+        b=wzgkeYIAMttKvcgz9uxHy6uPWVZMcrb8xtTl0g9V0126sdGuqIb3mGYG9Lx/L2HxFO
+         gfVFBZUmB1+Fmqi8JOOnBre/FLCnzxArqwypppNfGxVvdkzwwr2gMt+CPRkdILoCe2Mk
+         9vtgXnz/qbn6HpI2Rod0Ig+2VjZ9VsSwCfPhuZliQtX4Uv7SuoJz5PtX4WAB1pj7fS55
+         z1xfN8BBJ30u1jgA4zLcG49IW32o9DFhaeNIWKkeRndlXWlnthwUsp2BQnM46VjPFpTs
+         dWnWH/Q+PKs1E3udBhCqQPvBPus50Cw6ncXeTQ+X1nFn0f4nS+KBjTJZZ7/0lbrVRixv
+         JDeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXxoSqfyE8kFy3NwRt5hXsk+keQaKr8MloaFTsqrsqSLsNoj3sQuWNh4amNNbHXrIfWEK3nkZF0lJ8D05C2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxClat8oa9Fow/KHznE0EPwYa1pX1ygpPiuMiXIQICtBJXOM2OQ
+	0KJ91MMvt5Cwpam4oNbbWbYX+MF8T/Nbrhyui/Fh8ElOw+NF/2T7CrwcXzLtweenhtJP76CIsr/
+	RILOpJNkAOem5RKmvK6UgkV1G/Lesi09vhYY7kulIwHHcpQmSfwV3pN437y3LX9z0JIv6
+X-Gm-Gg: ASbGncv8y3M2ZzYQW/5ToIJLIPTfumZ3QqoaJ1DkWyYpR0449rndZm/opSCOjRCP8NL
+	kITMP8reefto4SIGAJaJan6Gu+OkTKMFVNbz0Kb6wAiq4fAYFoMUaHCBrn2Y8X6vN/0+O/rBMjR
+	UKrsaUFN/JQX4tz9cT+/9VtEHkig92kw7gDJRCWD+0kmyauyF2X0xbUZH8Rfg1wXcuPhQndl9CS
+	wooJyH/2GTAZ8Eg9IL29AW01nN0c5ydu5zqNbDt/9+K83BSAlst6ruVmQMc4JY7oJua/swQw9tW
+	jhImGidkQWHWmW7iDkiG1AtgNxGrDFjD5eeKHyNCvoe0auHgelMXU6r6iHdcmz874aVh7bGV7P+
+	23YRmmA0+C03SgevKIPXQasGHeku0mUqizWTTXaqJ7JAHodVYwNGC
+X-Received: by 2002:a05:622a:ca:b0:4b2:8ac4:ef70 with SMTP id d75a77b69052e-4b2aab40c3amr29596721cf.83.1755860230223;
+        Fri, 22 Aug 2025 03:57:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEuLWCCZnI5In7y4ErM2MToO2IgEg0s/ty1U+t0OKmjsrE3j0h7gWXUiKhn+W/Ngv68PUajSQ==
+X-Received: by 2002:a05:622a:ca:b0:4b2:8ac4:ef70 with SMTP id d75a77b69052e-4b2aab40c3amr29596431cf.83.1755860229666;
+        Fri, 22 Aug 2025 03:57:09 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-3340a481a13sm35509521fa.34.2025.08.22.03.57.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 22 Aug 2025 03:57:08 -0700 (PDT)
+Date: Fri, 22 Aug 2025 13:57:07 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH RFC 1/3] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy:
+ Document default phy mode
+Message-ID: <yc7ceoq3bn3lkxdwkrk64ecubej64vblpwlwzyj5cuep2wmjui@nln2t2yicu7o>
+References: <20250821-topic-x1e80100-hdmi-v1-0-f14ad9430e88@linaro.org>
+ <20250821-topic-x1e80100-hdmi-v1-1-f14ad9430e88@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2635ced4-b91f-4c79-ae2a-079f06bbb8a9@quicinc.com>
+In-Reply-To: <20250821-topic-x1e80100-hdmi-v1-1-f14ad9430e88@linaro.org>
+X-Proofpoint-ORIG-GUID: OGFb6X4ObHPuXW9t6ClztC32ivYER-bH
+X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a84d07 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8 a=QmbdcxT1eW_NYhLIMYYA:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: OGFb6X4ObHPuXW9t6ClztC32ivYER-bH
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX1rS7tjeZEPo4
+ sxV+QFHBvq76qixFpckF0zZpwywC+AKjjJITOdxaTpAI+kl6IOMvyhK49R5LdnJf91Rvy5nWUPY
+ a+nrqd8rTsgueYwgajXFkdCPdhugrbAnaAXaQg705fss1/TPS7mI+dCKuR9/iWUWigmJCcRMh0J
+ 2bJbQ92He4Zm/qhquZ/NLHWBDvtHfk+4njVa6FEh0JXI/5ePFnWeEq93uiA1ybGYPlxiDILj01p
+ 8HLguygbOTfr19WjPy0LwVxMLfi+Sp+FhLYd896e5aia07NS+j/2J3DasR3mz2bjqoqfPfZtyre
+ Yl6fVTxqxci8ZTGvcz9JAeJMqNI10UiEScZVTuewqFoDuXrE9TEWLYvhpnW+mNq1R3he8qJLpsI
+ mw9jMQjW32daoUBTihZCBU7oNSg48g==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-22_03,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-On Fri, Aug 22, 2025 at 02:53:31PM GMT, Nitin Rawat wrote:
+On Thu, Aug 21, 2025 at 03:53:26PM +0200, Neil Armstrong wrote:
+> The QMP USB3/DP Combo PHY hosts an USB3 phy and a DP PHY on top
+> of a combo glue to route either lanes to the 4 shared physical lanes.
 > 
+> The routing of the lanes can be:
+> - 2 DP + 2 USB3
+> - 4 DP
+> - 2 USB3
 > 
-> On 8/22/2025 2:45 PM, Dmitry Baryshkov wrote:
-> > On 22/08/2025 11:53, Manivannan Sadhasivam wrote:
-> > > On Wed, Aug 20, 2025 at 03:49:31AM GMT, Dmitry Baryshkov wrote:
-> > > > On Wed, Aug 20, 2025 at 03:58:26AM +0530, Nitin Rawat wrote:
-> > > > > Add regulator load voting support for SM8650 and SM8750 platforms by
-> > > > > introducing dedicated regulator bulk data arrays with their load
-> > > > > values.
-> > > > > 
-> > > > > The load requirements are:
-> > > > > - SM8650: vdda-phy (205mA), vdda-pll (17.5mA)
-> > > > > - SM8750: vdda-phy (213mA), vdda-pll (18.3mA)
-> > > > > 
-> > > > > This ensures stable operation and proper power management for these
-> > > > > platforms where regulators are shared between the QMP USB PHY and
-> > > > > other IP blocks by setting appropriate regulator load
-> > > > > currents during PHY
-> > > > > operations.
-> > > > > 
-> > > > > Configurations without specific load requirements will continue to work
-> > > > > unchanged, as init_load_uA remains zero-initialized when .init_load_uA
-> > > > > is not provided.
-> > > > 
-> > > > Can we please get configuration for the rest of the platforms?
-> > > > 
-> > > 
-> > > Only if the rest of the platforms require setting the load... It is
-> > > not very
-> > > clear if the older platforms share the regulators with other IPs or not.
-> > 
-> > Yes, they are usually shared. USB. PCIe and DSI frequently sit on the
-> > same voltage rails.
+> And the layout of the lanes can be swpped depending of an
+> eventual USB-C connector orientation.
 > 
-> Yes, it’s typically shared across multiple clients.
+> Nevertheless those QMP Comby PHY can be statically used to
+> drive a DisplayPort connector, DP->HDMI bridge, USB3 A Connector...
 > 
-> However, as I mentioned earlier, in the current upstream codebase, the
-> "regulator-allow-set-load" property is defined only for SM8750 and SM8650
-> within the PMIC PHY and PLL device tree nodes. This means that even if the
-> UFS PHY driver is updated to vote for this configuration on other platforms,
-> it will have no effect, as the property is not supported there.
+> But if a 4lanes DP->HDMI bridge is directly connected to the
+> QMP Comby PHY lanes, in the default routing 2 or the 4 lanes would
+> probbaly be USB3, making the DP->HDMI bridge non functional.
 > 
+> Add a property to hint in which layout mode the QMP Comby PHY
+> should be as startup.
+> 
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+>  .../bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         | 13 +++++++++++++
+>  1 file changed, 13 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> index c8bc512df08b5694c8599f475de78679a4438449..129475a1d9527733e43ded5a38aad766f9810fe7 100644
+> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> @@ -76,6 +76,19 @@ properties:
+>    mode-switch: true
+>    orientation-switch: true
+>  
+> +  qcom,combo-initial-mode:
+> +    description:
+> +      Describe the initial mode of the Combo PHY configuration.
+> +      The Combo PHY is a wrapper on top of a DP PHY and an USB3 PHY,
+> +      sharing the same SuperSpeed lanes with either DisplayPort over
+> +      the 4 lanes (dp), USB3 on a pair of lanes (usb3) or both
+> +      technologies in a 2+2 configuration (usb3+dp) as default.
 
-Which means:
+SPecifying this as an initial mode means that it can be switched later.
+Should we generalize this and desribe it as bus-type (from
+video-interfaces.yaml) and allow it to be present only if there is no
+mode-switch property?
 
-1. Those platforms are still prone to this stability issue.
-2. Only UFS is setting the regulator constraint, but not other drivers sharing
-the same regulator.
 
-IMO, both cases are bad. At leat, you can update the UFS driver to set the load
-now and later on add the DTS property as a follow-up series for those platforms.
-
-- Mani
+> +    default: usb3+dp
+> +    enum:
+> +      - usb3+dp
+> +      - usb3
+> +      - dp
+> +
+>    ports:
+>      $ref: /schemas/graph.yaml#/properties/ports
+>      properties:
+> 
+> -- 
+> 2.34.1
+> 
 
 -- 
-மணிவண்ணன் சதாசிவம்
+With best wishes
+Dmitry
 
