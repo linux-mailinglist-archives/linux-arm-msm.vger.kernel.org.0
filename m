@@ -1,218 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-70424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70425-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44251B318F1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 15:13:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D71BB31926
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 15:19:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 08DA91CE3A7B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 13:09:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E21F318837CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 13:19:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F5D42FC00E;
-	Fri, 22 Aug 2025 13:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD17F2FE574;
+	Fri, 22 Aug 2025 13:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="e5JcKPQp"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ux6oa44T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD3B2FC02B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 13:09:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250502D3ED3
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 13:19:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755868159; cv=none; b=nrn3JgeWFoJKpX2zwcZer0TAQ4zytvY9KipmPirUtV4fvwwK34c3VV/PJiebFM1oDrAel0khn6GdUQ/uzrtLZON454SVo2pQsFKttqUPlrI3GQNU5grhm4IkKKtqQ+8zUOaJvnOfFxCzFaBzN4Iwhmk8tmQGDF3o7/ABt4zgGCQ=
+	t=1755868767; cv=none; b=BOEQv1RKOppxgY0l1nOcnFSlHCbT0meCfAsvCWaUacAUFJRN5wT/BjnvbOGLiqtediAR3ArNQdzijqPyxlfMLxaSjUpi1kyfHDOJ6as+XYGRj5zcWWdWSB0B1Se8PudCmDPGvxkT1uidGMcpCwJmIi2UxAw/+GmOw6ZXdHxje2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755868159; c=relaxed/simple;
-	bh=O0asdK8SeOVtorPLNtX9IHFVw5PwpWz+Y/IXMS4KmCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eVuHik/fC23f8YMR9Tgb+lTqACQmalYwAwU5q3OTc4myqBJAoUZJrrNCnSSXwKP72r3Dpe4nHKGykbazeS18vEsvr8YUmQFZzq+KhW9pVT84nptqDL3dF35rRrSXyWqDIzhknOeHbA2xRpLflspsm9Gq5TL17HVyke+BvKbY8EE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=e5JcKPQp; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1755868156;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=a26YwWriI/cAZNSFk7MZK1EJDFmLtTh5uMUvUQRBu1c=;
-	b=e5JcKPQpMPpiORnmnxJoAeuLPnzAdfa90NM9JK3H273fWWIkszLJ1cdgJfpOAIfErssA3O
-	ETkMAbC/gje/pEudqa7HDbMI/IV3Kn8ISjloK2IlvSvWxobn9O+gH6L3UnAKbfVvwryZoN
-	Kc2EaAF84ycUCbdFN7fs2NIZDJXV564=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-20-F88ipm5hP8u1SohbMf87Vg-1; Fri, 22 Aug 2025 09:09:13 -0400
-X-MC-Unique: F88ipm5hP8u1SohbMf87Vg-1
-X-Mimecast-MFC-AGG-ID: F88ipm5hP8u1SohbMf87Vg_1755868153
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-7e8704e0264so566712285a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 06:09:13 -0700 (PDT)
+	s=arc-20240116; t=1755868767; c=relaxed/simple;
+	bh=YNV1LrD2QFce9EN/XgBYwEMHh3mO+bzTVuJXLM3hZF0=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ozj94x3joZQrS6Swsg4M6V5E0Nv+ENorspfTgL0/vOe27CPBuUK361LJWgCIeJ7SZ8pc9HHpnTaOgqI5kVamYmKE33IdqMY+niQOQH5nA4BUZ6sv8oRyIwhVog4cQGImRifNavPwZh5z/LDdhrBWSoDtXer5f72uZhgHs/nAh0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ux6oa44T; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57M8ULab024175
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 13:19:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=imXHhpz/Q9XQaF1cibhyG8kOwiQPGXABLuO
+	t1hZHVgk=; b=Ux6oa44TR+QdlXmLcQPDkU/6p+PkIgsH83lG1eij0hgQEH5D9Uh
+	r5W+AG5YyeOPRyqDses1aZRfB5ZxYdK83iw397OJzUav+72Sm6Rb5nS+2kytjk1N
+	6cFWa1lWujNQ1nDadIngFUhL1mNowQPWkODcSyoS4IDnzC5PZUl4Q1vV15MejhNu
+	eYoEPenCOXa7HHGmCEGMUe28/+84rXP5oXNHwNJr78Ht20rVjBXQg/ww7MKpKPdZ
+	qFRECYZHQAF1duLfatKZOuqz/sS4lp3hKWUL3bq/fh8iAP3pfeUUOfjWjOvteKal
+	QmKY5epFhfBGyEGMK7EnnM3O4/7qORKRLag==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n52ahcwe-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 13:19:25 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-32326e21dd6so3735243a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 22 Aug 2025 06:19:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755868153; x=1756472953;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=a26YwWriI/cAZNSFk7MZK1EJDFmLtTh5uMUvUQRBu1c=;
-        b=Q6R3at9s3LUP+/j2aUUe8NVwMdWzk85V7kYPeDphCifN8KQuMblzH0ZP9d/YZF5wH0
-         kGPtiSXPV1hch/7dNyBAW0ADcnRci+wgsq9EZQmCbIUTI/OhUCISyA21bSHmF2+Z2Ue9
-         lp6ULmO7+n3cIf0/exsm4azkrYbEpEqAaluIZiDXscw1rpK75iTmff0kK5ORA3zeOjyE
-         egwDfs3Uhi8w4qll2MxMruLznQ0jw/dbqGjnhtbQg1EsEicaxf1rVYwktXbdmLNdDbps
-         MrwrI1HVnzVPpQwHB0gdcXc4ZXZis5E70LA12ZGO08s0y+cP9Znm2KpMawm1utHHTaiv
-         CQ0g==
-X-Forwarded-Encrypted: i=1; AJvYcCUBjAnq8TcrEDm+GG7DXojrqySK1Lf0oEYHfYNPJZUgA+/RmUiEPC24BSqXhnHe/A7jepxvZ0bFE89nD8WF@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywe3HMHi2cpHo+EmSg2AZV4/uiSja3eoxKHEn9y5kiW2eRNz4ss
-	TEbjKVkNgmeXwKyd84uK/xZhQDiwJ7vWrjfhEYMtSFFAaGhTmgO/+2yTEWNCGyiKVrln7DqAmul
-	Scx3Mf40YgUd3dLCZTMgIPQE7x815S/SaZAZWpE/bBeZu6KeM0pI2OZpR1MjdkVQb4es=
-X-Gm-Gg: ASbGnctwWWNVRYrdrsiIqTmCCm6EC6q9OvG6ZMw6+LKZioAicV4t/TpZZdoe0BlEOPa
-	Rw1OE/I++tNCOfFUElWHaDzoZyHPBZYStoTFYI2NLwG0tiB/Qav6yvMqX6qU6ziTHdfDeOj8ioX
-	DxHcFxiekvWb+NrmTkXX/x89qXD7wBfLrg5CtyewQhbrvGf/Be4M5A9tDakXq4EgBFd9MNh/zA3
-	IZz4OymUOs6I88cI8jd+i5GmB8tasxwEHfqtsfrKLlFBimmsCJUV89iFSvH5n5WBFFsaXIuRFfo
-	/6b+8ds4PwLUJnl0Wl76g7eeuYIyiS5QSET1Z4IbqfosU19h0Ezke3ABe9tdA1shdg4uE5yxbjr
-	j/SNNOPQxQgYJI6IOaoE=
-X-Received: by 2002:a05:620a:6cc2:b0:7e3:6a01:e6ba with SMTP id af79cd13be357-7ea10f538ddmr299226585a.8.1755868152302;
-        Fri, 22 Aug 2025 06:09:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEW1uvjDvOlgb0eZoGZSzJHV+ZTat1aB9dEJTqNDB/h4VuJNJ3Q109+V4G1CkIe7Ilb4zQPqA==
-X-Received: by 2002:a05:620a:6cc2:b0:7e3:6a01:e6ba with SMTP id af79cd13be357-7ea10f538ddmr299210885a.8.1755868151398;
-        Fri, 22 Aug 2025 06:09:11 -0700 (PDT)
-Received: from x1 (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7e87e1c9b9dsm1332247685a.70.2025.08.22.06.09.05
+        d=1e100.net; s=20230601; t=1755868764; x=1756473564;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=imXHhpz/Q9XQaF1cibhyG8kOwiQPGXABLuOt1hZHVgk=;
+        b=fugqagrfY3RP8oLUNqMQs7/0/g2tgqEcaLsTXIQXChyCQEWAZx7mp0ITbHgTmqHiZc
+         yB1B+sdpLlhv3jDIXQ5+lVZqGIAVsLWUQrfbvSXLhvmubGm4DJzt5EKnyVqaw0telgWR
+         qO6m4qP34rtyHKdvP9yCAAUYOW7W3E/Dw++pfzt00KAxIiaRyq0Edq/h7YqpeJEarOxi
+         0L7llI9H5S1jNJ5UWVq4pCMXKCDQnVrKTkq/Kh/A9wR+xlDUNNpEiyUwMXfqm2VdqUjt
+         pm+9M+TxMlRD5Q+fSdL2gHY5muio7X04lbhsXHUNADDalRUEFJCazxliz0h6CtK6Lz3j
+         akfg==
+X-Gm-Message-State: AOJu0Ywl8oP4W3cQpTjsiOCvfV86XfFiaeIDnM4scbaeJtQ9TJsgTG3B
+	HVWA1MKyAqbRHjH1GDVj3NrGaXbo6jADxLQ+ExuSPaOaKKJyKv035O16JKh//W2R9vQKVKxJO/w
+	v4rs8Cp7b/ezewLIGuLmZ3ifTeRj+GF9Z3iJJdCWFEDinzudbExS4xBrgJ0hGNMsA2EyQncZvvr
+	bo
+X-Gm-Gg: ASbGnctwoF6y7jWoeLVjha1BimdtznHjcc5goakve7kwYvq0Xqw0PuFVmQa2grgrD/W
+	iKQNy3Sly+bjjEnC3s/4oGiPieBq8uqJKvHrjla+36qCBUhPz4M1Wxq3TARQbWA71KFrUlVDi0f
+	t/jC2Okb2WYpjF85onBqXo9vKZ5y+QtEx2Y1UQZOujTwh/QNbxkn+cKcfw+OTUz8DFVPFerycXF
+	/UA6NE4XaANawkvqFQs13wkq5FfSV2DajWgRs3MIDRLNF7tG7APgZHoDxKIZ0HBUps37g0uljzL
+	DeH6GO0eMrhLlwkftdbN9y9VjB28QA8gjL1obXJ/PwVKNWWEzvI2Z6KYC4SZCooEg2GAr3R4QXz
+	e
+X-Received: by 2002:a17:90a:e7cd:b0:31e:d2a5:c08d with SMTP id 98e67ed59e1d1-32518b80c05mr4395424a91.33.1755868764404;
+        Fri, 22 Aug 2025 06:19:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErq5+QQLhrxzfeOYSCSWDZYPvzVemM5r5mVKVuqDABlcj5ugI37RBZfS3JE3k6YLPbh8Rv6A==
+X-Received: by 2002:a17:90a:e7cd:b0:31e:d2a5:c08d with SMTP id 98e67ed59e1d1-32518b80c05mr4395379a91.33.1755868763952;
+        Fri, 22 Aug 2025 06:19:23 -0700 (PDT)
+Received: from hu-mohs-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7703d2b7301sm405621b3a.93.2025.08.22.06.19.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 22 Aug 2025 06:09:10 -0700 (PDT)
-Date: Fri, 22 Aug 2025 09:09:04 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Krzysztof Kozlowski <krzk@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Chen Wang <unicorn_wang@outlook.com>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Paul Cercueil <paul@crapouillou.net>,
-	Keguang Zhang <keguang.zhang@gmail.com>,
-	Taichi Sugaya <sugaya.taichi@socionext.com>,
-	Takao Orito <orito.takao@socionext.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Jacky Huang <ychuang3@nuvoton.com>,
-	Shan-Chun Hung <schung@nuvoton.com>,
-	Vladimir Zapolskiy <vz@mleia.com>,
-	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Samuel Holland <samuel.holland@sifive.com>,
-	Yixun Lan <dlan@gentoo.org>,
-	Steen Hegelund <Steen.Hegelund@microchip.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
-	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
-	Neal Gompa <neal@gompa.dev>,
-	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
-	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Romain Perier <romain.perier@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory Clement <gregory.clement@bootlin.com>,
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Andrea della Porta <andrea.porta@suse.com>,
-	Sylwester Nawrocki <s.nawrocki@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Alex Helms <alexander.helms.jy@renesas.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Liviu Dudau <liviu.dudau@arm.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
-	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
-	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
-	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
-	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated
- round_rate() to determine_rate()
-Message-ID: <aKhr8NYhei59At0s@x1>
-References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
- <1907e1c7-2b15-4729-8497-a7e6f0526366@kernel.org>
- <aKhVVJPEPxCoKKjI@x1>
- <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org>
+        Fri, 22 Aug 2025 06:19:23 -0700 (PDT)
+From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com
+Subject: [PATCH v4 0/2] Enable audio on lemans-evk board
+Date: Fri, 22 Aug 2025 18:49:00 +0530
+Message-Id: <20250822131902.1848802-1-mohammad.rafi.shaik@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: EFRfz0KGyXTzJGt0t4K9pPmUN78kEhAi
+X-Authority-Analysis: v=2.4 cv=B83gEOtM c=1 sm=1 tr=0 ts=68a86e5d cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=7hm8zFFwfbrGz74eRGgA:9
+ a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: EFRfz0KGyXTzJGt0t4K9pPmUN78kEhAi
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX5ytiKmLDsX39
+ lOb3wBIWAX75WZKAVerbtsM38FiAGGiF9CpXsUeXey/DrKZhIUJUZ1XqLmFJReTneYixswCn1wc
+ g33atgjBRz3jjBxEqNFtkaMbQu3vjwK9+WB82umrFvedsaOCdFsAniDTeF/QJbmPLkCwG5x7lMt
+ 0JWUlFtIVsfe4Pkp68lwLvo4mg5WxUUqW01MVykE+x2Lhx5CeDR2/o8lguQ8VIxFg0pSGAb1U7U
+ KSyylRuNQUS/stGTQWjdEpBAizltOjHU/YjGsVassqxIkUT40wYoTLzUAVFyTzuD+7+b/OqgDl5
+ SR2jViOHeF0jcRCR1zWDGU1Tg0XRrgQ8vIhY/EDZtWeCeratM6mYht5W2ivcEjOjge5Qf9T0bWm
+ jQpo39OJlIbA3ANjujJNcFQ5BcmB0Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-22_04,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 bulkscore=0 priorityscore=1501 suspectscore=0 malwarescore=0
+ lowpriorityscore=0 adultscore=0 impostorscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-On Fri, Aug 22, 2025 at 02:23:50PM +0200, Krzysztof Kozlowski wrote:
-> On 22/08/2025 13:32, Brian Masney wrote:
-> > 7 of the 114 patches in this series needs a v2 with a minor fix. I see
-> > several paths forward to merging this. It's ultimately up to Stephen how
-> > he wants to proceed.
-> > 
-> > - I send Stephen a PULL request with all of these patches with the minor
-> >   cleanups to the 7 patches. Depending on the timing, Stephen can merge
-> >   the other work first, and I deal with cleaning up the merge conflicts.
-> >   Or he can if he prefers to instead.
-> > 
-> > - Stephen applies everyone else's work first to his tree, and then the
-> >   good 107 patches in this series. He skips anything that doesn't apply
-> >   due to other people's work and I follow up with a smaller series.
-> 
-> Both cause cross tree merge conflicts. Anyway, please document clearly
-> the dependencies between patches.
+Enable audio support on lemans-evk board.
 
-This series only touches drivers/clk, so it shouldn't cause any issues
-with other subsystems, unless there's a topic branch somewhere, or I'm
-missing something?
+Introduce HS (High-Speed) MI2S pin control support.
+The I2S max98357a speaker amplifier is connected via HS0 and I2S
+microphones utilize the HS2 interface.
 
-There are some drivers under drivers/clk/ where there is an entry in the
-MAINTAINERS file that's not Stephen, although it wasn't clear to me if
-all of those people will send PULL requests to Stephen. I described on
-the cover how how the series was broken up.
+DT-Binding link for sound compatible:
+https://lore.kernel.org/linux-sound/20250519083244.4070689-3-mohammad.rafi.shaik@oss.qualcomm.com/
 
-  - Patches 4-70 are for drivers where there is no clk submaintainer
-  - Patches 71-110 are for drivers where this is an entry in MAINTAINERS
-    (for drivers/clk)
+changes in [v4]:
+	- Nodes sorted in the proper order reported by Konrad Dybcio.
+	- Since the base SoC device tree Renamed from sa8775p.dtsi to lemans.dtsi, and
+	  the board-specific device tree from qcs9075-iq-9075-evk.dts to lemans-evk.dts,
+	  moved audio support device tree nodes to the new lemans device tree.
+	  Renamed device tree reference Link: https://lore.kernel.org/all/20250803110113.401927-1-wasim.nazir@oss.qualcomm.com/
+	- Link to V3 : https://lore.kernel.org/linux-arm-msm/20250724155632.236675-1-mohammad.rafi.shaik@oss.qualcomm.com/
 
-For the clk subdirectories that had say more than 3 patches, I sent
-those off as separate patch series. The ones in this series have an
-entry in MAINTAINERS only have a few patches for each maintainer.
+changes in [v3]:
+	- Updated link-name from HS0 MI2S to HS1 MI2S and sorted nodes in order.
+	- Link to V2 : https://lore.kernel.org/linux-arm-msm/20250616070405.4113564-1-mohammad.rafi.shaik@oss.qualcomm.com/
 
-As for patch dependencies, patches 111 (clk/divider) and
-114 (clk/fixed-factor) should go in last. It doesn't matter the order
-everything else goes in.
+changes in [v2]:
+	- Updated commit message as suggested by Dmitry Baryshkov.
+	- Link to V1 : https://lore.kernel.org/linux-arm-msm/20250525155356.2081362-1-mohammad.rafi.shaik@oss.qualcomm.com/
 
-Brian
+Mohammad Rafi Shaik (2):
+  arm64: dts: qcom: lemans: Add gpr node
+  arm64: dts: qcom: lemans-evk: Add sound card
+
+ arch/arm64/boot/dts/qcom/lemans-evk.dts | 52 ++++++++++++++++++++++++
+ arch/arm64/boot/dts/qcom/lemans.dtsi    | 54 +++++++++++++++++++++++++
+ 2 files changed, 106 insertions(+)
+
+
+base-commit: 0f4c93f7eb861acab537dbe94441817a270537bf
+-- 
+2.34.1
 
 
