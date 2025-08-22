@@ -1,100 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-70463-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70464-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41240B32503
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 00:23:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D197B32550
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 01:13:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7F6A61D20EAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 22:21:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 285793BE680
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 23:13:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E68FB27AC2A;
-	Fri, 22 Aug 2025 22:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D0032773D9;
+	Fri, 22 Aug 2025 23:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Kg5vkRsw"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UietGIt3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE26915539A;
-	Fri, 22 Aug 2025 22:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647E419DF62;
+	Fri, 22 Aug 2025 23:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755901269; cv=none; b=r+9xCRCkeKk2Klq7lFizeWg7rk1Bs8EkhCbgnEAPDZvK5+3f6h2zbm/Wv8SPBVKjB9Xye4So3VGvjfm6zvpnI2OfjUHSanukcyEsEdFxFTkXysMXYkzGCwk7+yIMoN4G1RF+3rG/E6LAz0+YYWhg1eYxZ6f4hEr3c6x7obAuKTA=
+	t=1755904392; cv=none; b=fGc72AnrPbyqq7Z/8i12NbgUQgyEmzK/p+XdybL4vAtRMLh2PFmTBbTF5pHO+SMIdkKne+ptvFxFJIffMpDWAyqbyxF31ZCor78Yl/oQ0Te2nDu9ibDxM9XHfD476NGAAClFriQ1Ssb8R3LKgFL9a0fIpFCTaTOvf8S4sbUlvTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755901269; c=relaxed/simple;
-	bh=1Z6GTjqZUoYLu0n+fPRDRUch1MWREiojl8WgKrm2nTA=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bvpj0iUZ0ulg564qcY2Q1OYEE02cSHNNaPngdmzjB7LmNB83c+0enpyH4sQ1lg7rZBNEwbDAEwueQIyOaBPJtXrXIeBR+9NrNBWQSMoVwP9NvNvIodpVPuhLs3nP2V0bHUFKa99nMobuoLXz1K/FgEySvGgRxi4IQrVhs4HxjcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Kg5vkRsw; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3EDCC4CEED;
-	Fri, 22 Aug 2025 22:21:08 +0000 (UTC)
+	s=arc-20240116; t=1755904392; c=relaxed/simple;
+	bh=I5xOOlTlsl1gEAyBnvuWnA9gnCaou1eiZGWyj04CjLU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=d/sMGjjE/y4c8p8rR3Z5TzDRXFrvl/AjaPyNyju3waU/JS7gHGyzrCfs3r516YchKPP96SiKsEycglZtacNSONP7qw2zZPdJuv2jEylhy65rNeA2uNMUlrMs1FCv8UOBZVCKmriHMBRyVPhHzKafs2bFsOwzVHdDQZWz9RNM96Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UietGIt3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C891AC4CEED;
+	Fri, 22 Aug 2025 23:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755901269;
-	bh=1Z6GTjqZUoYLu0n+fPRDRUch1MWREiojl8WgKrm2nTA=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=Kg5vkRswA36yWTffqxPpqyX8aeCy5H23GTbocMTenTyn+62tB7/2WaVT/o6edzngS
-	 Vuugl1X+g3nFRKIJ1dRWNYXIh45ybI0CqLG4iqNG3nnBfCMljAX6giNtxjITG3B/ft
-	 tKgHJsMhwvUypZ4Qh1m0dZ5sZ8oehuMs7ysYpxDXp48cT7Tk3n/D+EzLRjmQ6FU3aG
-	 8+hhlM5BI1gORlM7kSGryfxIuyNrITooB27Ux15cXG1amO0Z/0IZC2du2Q7Jg0NE5H
-	 +j/m7D0Ru8ShnxfigLFxX9MZ/eTfQSSDV2DDBLjKcFrJ0yF5T1Xjq0QmJGggUXdtLg
-	 U2V1hoDBZrP2w==
-Date: Fri, 22 Aug 2025 15:21:08 -0700
-From: Jakub Kicinski <kuba@kernel.org>
-To: Mihai Moldovan <ionic@ionic.de>
-Cc: linux-arm-msm@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>,
- Denis Kenzior <denkenz@gmail.com>, Eric Dumazet <edumazet@google.com>,
- Kuniyuki Iwashima <kuniyu@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Willem de Bruijn <willemb@google.com>, "David S . Miller"
- <davem@davemloft.net>, Simon Horman <horms@kernel.org>,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org
-Subject: Re: [PATCH v5 01/11] net: qrtr: ns: validate msglen before ctrl_pkt
- use
-Message-ID: <20250822152108.323af5e5@kernel.org>
-In-Reply-To: <d5ae397b-a33a-42c9-91a1-5ba3fcc367a5@ionic.de>
-References: <cover.1754962436.git.ionic@ionic.de>
-	<161d8d203f17fde87ac7dd2c9c24be6d1f35a3c1.1754962436.git.ionic@ionic.de>
-	<20250815110900.2da8f3c5@kernel.org>
-	<d5ae397b-a33a-42c9-91a1-5ba3fcc367a5@ionic.de>
+	s=k20201202; t=1755904392;
+	bh=I5xOOlTlsl1gEAyBnvuWnA9gnCaou1eiZGWyj04CjLU=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=UietGIt3h77y7zuiq7YFhM0VrpywFhju+K18giWmvLQWsvo2dxbQ029RiXYcXPVkV
+	 sTlj4fug4t6/d35KEWd17rr32OB3DJvf12ijkKS/Jb/s7Dz6xX2dwQ+hvuzOWmGRXs
+	 u7zHlaqmxMkMZt0w4dqOZ2E4WgPm2+prJDKCeydXHZEirmCIP6tFEzCkdQpbh619Ji
+	 bW5OQZYmqxI/RmYefQTiCxiAeZpkDvXDUvgS5b1nXARoR64pTOqy8SlqbgOk0+Hy27
+	 4UuMtVTdrUItneUpNqVHyBTj9WMqiONRd8eTjOHmQoU/6SmCktcnRwFAgK3Vvgpk/z
+	 SuzXpPfTRlrFQ==
+Message-ID: <5489a439-e628-47a1-b3e9-e1d0f877b7d0@kernel.org>
+Date: Sat, 23 Aug 2025 00:13:07 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 05/11] firmware: qcom_scm: Add shmbridge support to
+ pas_init/release function
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org
+References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
+ <20250819165447.4149674-6-mukesh.ojha@oss.qualcomm.com>
+ <de4b4872-061c-4f03-ae1d-1ad93b35ed71@linaro.org>
+ <Qfxl6YfI0Dz_tCk9ukTFlrQpwm06pE4E4DCyITA5T3qnF2lsXpwAvLSttPsnMQb60UyKLpC8Koz4aSYwuoP4Qw==@protonmail.internalid>
+ <20250821170337.y7vzhtiugaeydqmh@hu-mojha-hyd.qualcomm.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20250821170337.y7vzhtiugaeydqmh@hu-mojha-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On Fri, 22 Aug 2025 21:08:47 +0200 Mihai Moldovan wrote:
-> >> diff --git a/net/qrtr/ns.c b/net/qrtr/ns.c
-> >> index 3de9350cbf30..2bcfe539dc3e 100644
-> >> --- a/net/qrtr/ns.c
-> >> +++ b/net/qrtr/ns.c
-> >> @@ -619,6 +619,9 @@ static void qrtr_ns_worker(struct work_struct *work)
-> >>   			break;
-> >>   		}
-> >>   
-> >> +		if ((size_t)msglen < sizeof(*pkt))
-> >> +			break;  
-> > 
-> > why not continue?  
-> 
-> I don't really know and am not familiar with the QRTR protocol, but here's my 
-> best guess:
-> 
-> Since we're using non-blocking I/O, it doesn't seem to make sense to continue, 
-> because the next receive call would just break out anyway once it returns no 
-> data at all. Notice that we're also breaking out for -EAGAIN.
-> 
-> Also, if we somehow got a short read, and we're currently dropping the buffer we 
-> just read, any additional data after a subsequent receive would be garbage to us 
-> anyway. We'd probably have to keep the old buffer content around and concatenate 
-> it with data returned from a new receive call.
+On 21/08/2025 18:03, Mukesh Ojha wrote:
+>> Please review the error paths here especially WRT to qcom_mdt_pas_init();
+> Sure, will send the fix patch for the existing bug.
 
-Okay, I don't know this proto and driver either. Just reading the
-existing code it seemed like it's only breaks if the socket itself
-has an error. If the command is not recognized or garbage the loop
-will at most print an error and carry on looping..
+In which case please structure your next submission with bugfixes coming 
+first in the series with Fixes: tags and then apply your changes on top 
+as a progressive set of changes so we can apply this fix to -stable.
+
+Don't forget to Cc: stable
+
+---
+bod
 
