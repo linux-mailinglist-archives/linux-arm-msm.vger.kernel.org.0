@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-70249-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE797B30F51
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:44:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B845B30F4E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:44:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 11DD81CE4D9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 06:44:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE7101CE5040
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 06:44:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D34F22E6104;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5FCB2E5B15;
 	Fri, 22 Aug 2025 06:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k9SVHYJK"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uPerhmzw"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99AFB2E5B04;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A282E5B01;
 	Fri, 22 Aug 2025 06:44:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755845057; cv=none; b=f/S6fu/FcEWfQFMIOJnZumSZak51cVgF0TK1Rofp8if6cKt+yhJlEsQn7Yl448EfwpUFKax1+2vaChbEUUNaHQhkE8wIUi+8W9RZA2abCQf83X3IXh6YPM+tsRagWKA5biEQFQKs6JxNKZN3pPdDyMIVZffBb6HxHneZadhfinM=
+	t=1755845057; cv=none; b=alwRguJIfvevXWosfwvit+Gu22lOXrGPhm+aKQMSFazv/xg+/hwQPUf6pqMrIAx7S4hMKX1POU+UJusHSdMAC1HcQlLT/s7Vy0aSbw9z5kF+2Fv0bGJI4fr4wJlrpxes/dQYDvP9laHMtWp2Mfl0rLUbEHvf39C4jn27LG1hZi4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1755845057; c=relaxed/simple;
-	bh=+G42y066SWtg+n/148FHRfa9US8aatQp3K1VDW7lbtA=;
+	bh=wWJSMe4mTNkFQJtPuNMErOaR9Hcax6akq527grewDaY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=b6UUwZa4qKZz13jVwmne6zwtalrKjBHqA0HID3YsgP3rT4X148e/VVOjriK/z/GApHgHsOmanIw4zSAJxgm1tBzHsmejtrzYplV2qeFrAOyaJnsXdCsiHyVtLNih2ZOcSSuHy0Xk0C0D1gXZACFYqAMDoXORxXRb2rO4I6k9heM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k9SVHYJK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 366A8C113D0;
+	 In-Reply-To:To:Cc; b=DVJNfXw/ZK8leYxUYPobPT74Pj2PEDFsrVnkqbAJ7Fw6TKfELxOLsZhv7sr7rw7a9cnxURsi6f01bGjqaXel41WwgjeqWauB2rt7i6LppkUJdNOfUh6uJasITz1WCItt4dxkuloy+yoTzIP+If0taOv3MgMKFerzcIeRQcGzcqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uPerhmzw; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 42721C4CEF4;
 	Fri, 22 Aug 2025 06:44:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1755845057;
-	bh=+G42y066SWtg+n/148FHRfa9US8aatQp3K1VDW7lbtA=;
+	bh=wWJSMe4mTNkFQJtPuNMErOaR9Hcax6akq527grewDaY=;
 	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=k9SVHYJK/Y5tXzXxYtxVlfgJPyZa0T0h+63rYt7MSZSuu8PpYxHSNNwAI+eTjz2GY
-	 71wl9PFXOC421HwBcQZKgf68KUFfOgQoO+XaTeQDcjS3mvjO5McmVHkvtQa4DWhLM7
-	 k8dvGhjwgQXUqtIFl/6BmLu4N8YrhUazL/ahN97lF0sY52JIExzSHdmcKO8oazTuph
-	 g+oa7CgwMPsPU3B0aHSkytrF9fVfSZAn7o/iZlG5cIC5junAvSZlyTRTpwhXVDEc3s
-	 k6OLt9AjxkXCMp82jj2KdX3qvUU89MQz5vdjVhh2XLn/8/bVOgh7hH1eqQNVaaGX+V
-	 HdwfeXZQSkFgg==
+	b=uPerhmzw/qm3AUhprM6KK4EJVJ+ylMl3UAceBLyt49EFzDcdcxAozJjKgixeXurrB
+	 pHlsWQzfrBtOV04vkWdEFgmew0RCeS1Fn7l08TJqRiwDQ3Zfr3RixGCXcBllFIkm0q
+	 E8CXU9hsemkNxbK2HTQ3grWZGo4TBomnn45rOmjRxKweTr/Z9hhiIjNfuuDdK7VrxF
+	 I11/ad97gw3niDgK82nskOSOJZCZyVEYe+AC6WVW3PK9V2BsZAbNhRnpcarLb19zhr
+	 wSzoYqHeSUozBY0+iRP/Wher18GrUjZ4YXhqT3Qr1WjbuWtrxuLgjGJU7C5IqpkTpi
+	 ajcc1rWq/Qxdw==
 Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 25D08CA0EEB;
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 346A1CA0FE7;
 	Fri, 22 Aug 2025 06:44:17 +0000 (UTC)
 From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Fri, 22 Aug 2025 08:44:10 +0200
-Subject: [PATCH v12 1/3] dt-bindings: arm: qcom: Add Lenovo TB16 support
+Date: Fri, 22 Aug 2025 08:44:11 +0200
+Subject: [PATCH v12 2/3] firmware: qcom: scm: Allow QSEECOM on Lenovo
+ Thinkbook 16
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -55,7 +56,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250822-tb16-dt-v12-1-bab6c2986351@oldschoolsolutions.biz>
+Message-Id: <20250822-tb16-dt-v12-2-bab6c2986351@oldschoolsolutions.biz>
 References: <20250822-tb16-dt-v12-0-bab6c2986351@oldschoolsolutions.biz>
 In-Reply-To: <20250822-tb16-dt-v12-0-bab6c2986351@oldschoolsolutions.biz>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -66,14 +67,15 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, 
  linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1755845055; l=952;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1755845055; l=938;
  i=jens.glathe@oldschoolsolutions.biz; s=20240919;
  h=from:subject:message-id;
- bh=thk+MxsHNEPHwSzWHQ050lhc842Rldx6y6UuBNa55OY=;
- b=w7rhyqRsRcbSqaVGGnOzu2y2mlXLISTbu8/EOwiw0799z6rSsKvwwcVwBfiKYuEUNTogh66hW
- G4359EFhf/gB5tojAUfdVbOJ+/VMK5VMqAWcdGgiIUSrcqsD6et7z+W
+ bh=nAcBj2eAxxIhxFJdMW6aj0QHBCBVvicxAb6Q+N6TBBo=;
+ b=IjotK5DT0hqXrCvbhX64eIJAkG+QW7hFKx4sOLn90kpy251SE87aEBtjr+rv0OEw44uSGjGHq
+ OXQ8s4uu/K5BHNCWZ12bztIw26fKN5NQ2B8yOug7K/wuX9pSxstQRu7
 X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
  pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
 X-Endpoint-Received: by B4 Relay for
@@ -83,28 +85,26 @@ Reply-To: jens.glathe@oldschoolsolutions.biz
 
 From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 
-Document the x1p-42-100/x1-26-100 variants of the Thinkbook 16 G7 QOY.
+Allow particular machine accessing eg. efivars.
 
-[1]: https://psref.lenovo.com/syspool/Sys/PDF/ThinkBook/ThinkBook_16_G7_QOY/ThinkBook_16_G7_QOY_Spec.pdf
-
-Acked-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
+ drivers/firmware/qcom/qcom_scm.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 55e5eb75af8905c93e6604d54d516585f70a8e29..55113096dde567dddec419e67b916a0bff8c318e 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1072,6 +1072,7 @@ properties:
-       - items:
-           - enum:
-               - asus,zenbook-a14-ux3407qa
-+              - lenovo,thinkbook-16
-               - qcom,x1p42100-crd
-           - const: qcom,x1p42100
- 
+diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
+index edeae6cdcf311228ae4b193cc37d0ce9414606ba..6a0184e49114e2e32a76490e90f3cc971dd6999a 100644
+--- a/drivers/firmware/qcom/qcom_scm.c
++++ b/drivers/firmware/qcom/qcom_scm.c
+@@ -1999,6 +1999,7 @@ static const struct of_device_id qcom_scm_qseecom_allowlist[] __maybe_unused = {
+ 	{ .compatible = "hp,omnibook-x14" },
+ 	{ .compatible = "huawei,gaokun3" },
+ 	{ .compatible = "lenovo,flex-5g" },
++	{ .compatible = "lenovo,thinkbook-16" },
+ 	{ .compatible = "lenovo,thinkpad-t14s" },
+ 	{ .compatible = "lenovo,thinkpad-x13s", },
+ 	{ .compatible = "lenovo,yoga-slim7x" },
 
 -- 
 2.48.1
