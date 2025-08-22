@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-70274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70275-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 983EBB311D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:30:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id F042CB311F0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 10:36:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6AA7216CB94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:30:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43888189C6F7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 08:36:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B34092EACEE;
-	Fri, 22 Aug 2025 08:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FE8D2EAD16;
+	Fri, 22 Aug 2025 08:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Up+Vs1Ce"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ap9Qbd7d"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C5A2C11FA;
-	Fri, 22 Aug 2025 08:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF062E62B9;
+	Fri, 22 Aug 2025 08:35:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755851433; cv=none; b=onPfCyj4KPW5tkVD1g+dhSWsH20ccnz2fmwWPz2N7tCPnwH3ZV+M34+ZkJ1TdXhYcBOwa4q2B3JaHcluMH6oYf+7jcFJ6Nrr81uc25tbmC2l54Be9Qyu5GrbGW/2ASwY1MemRVXqVuB4LBLl4scidujv++X0hC1rz3Zn4q1cGCw=
+	t=1755851748; cv=none; b=tzv8ZpnAIoeHxrDZs+3nsfhpr7/WGMGCvxbg2qEO8uXlDkN7u386w55/il6B5HSja2xBjRSJ9D/iBj8iEZQV8czhrrQiemBsUnyATvI3XPli7HsX31OFWYM1c1UAKAPRXJcmZ2ugHv6AM+xPazqrUiVIkNiFX5Yo5LXH3yAIKU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755851433; c=relaxed/simple;
-	bh=AxK/GoCw3MHhRHI3TEY7MZkHfJclsaHmg2x1YWuJfvQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=DjtjVc/ZZDW0ksd5Apa3cLp5ZcZZxRIcCDlrBpbtT/y79lFUWCDUduQq/AG0CfXsP0DdS1zB8BrJcN2/emXE1VxTss9W2SgPoOo17fzVMFpWV74viOK7vzK7bSNHd1Wuv/5D+tZJlonSHocHQWICTexjtEHoaSxgupFNOLK0E7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Up+Vs1Ce; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75984C4CEF1;
-	Fri, 22 Aug 2025 08:30:30 +0000 (UTC)
+	s=arc-20240116; t=1755851748; c=relaxed/simple;
+	bh=H9lu8IIKIr/d/6s4w/r7KFXClzR6cx39yR+Lr1+/eqI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=qXMYILWAIyjSc6z/uUlYfGaSw6w64u4IbZpoiv4oYa0xtcIIcGU4YNSpcoi+b2hJXny9SkpGPtcaxvJiOTgeUa3n9OKDKS9wEFltSGZnvUeB6TfTeAGTvp5lwBzhe0MUUazJMSo+XZOlY8bxUWM1BalI0Gc4eRkH6wnsU0ZDLZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ap9Qbd7d; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34505C4CEF1;
+	Fri, 22 Aug 2025 08:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755851433;
-	bh=AxK/GoCw3MHhRHI3TEY7MZkHfJclsaHmg2x1YWuJfvQ=;
-	h=Date:Subject:From:To:References:In-Reply-To:From;
-	b=Up+Vs1CeNdgpnM+zWU0tUf42oBESeU7bN1ukPQbzn2FPUDX0fZ2MUNzUy+O541TGe
-	 2iu8NvKQ+BUGda2ZVhWiJ9YQFbNVE1kEKKCcZCPKwQ/OMW4hOWcqaMVwv5jBHgBYZT
-	 NMePuocVxG9jwKM6cbWze1RcfzO4imguiLtzA7adLnQXEHxC1Xybs2bvOkiHaTRBnu
-	 9XRqdUZPRzXELSn+T6ReXnswU/chlojQpblhPSo7zD3QzgzqULWrZB84FY6bhzNYnh
-	 dYjjIK9yqIgmmLZGhAAOkfwTuw/JkN7u7Ps8+3UxZgXg4aczyA/FRZDyI/ag1BzShd
-	 wGRx/zToNZrhQ==
-Message-ID: <705e0588-50be-477f-a515-089df2d9bfd2@kernel.org>
-Date: Fri, 22 Aug 2025 10:30:28 +0200
+	s=k20201202; t=1755851747;
+	bh=H9lu8IIKIr/d/6s4w/r7KFXClzR6cx39yR+Lr1+/eqI=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=Ap9Qbd7dFK1GsRdJNaKHBEss6cyFnT5snS7UzKrox32sHiN7i7ib8ZF4YPk6+shXZ
+	 rglrjCuBY8tpvs2hYZ2OsikjvEHBgwPKcGMn7jS3tWAs8lQdL7HtRASihxzVnfiMM3
+	 aymY6KzRZ3A4sEEcevXncE3q3Iz/IVHSgXC6VZp2itW6p6DVVrOlvThQOIbV4CeeuR
+	 Q90iPSPDzpBckVIV8Hpyiq9FjEOAA5PU2XQ0ISQGmeqxRaSsDCSDzLVPx1oI4iCspN
+	 nQoKXJooSjNJJXRYuH4z/2zvt4tRh9YnrJva2i7bWyCVBS7Rs7668wzizUz23hLGrP
+	 Y638UglPokXvw==
+Message-ID: <a59da8d7-4e35-4af5-8b9c-96aaf1597271@kernel.org>
+Date: Fri, 22 Aug 2025 10:35:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,10 +50,10 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/11] firmware: qcom_scm: Add
- qcom_scm_pas_get_rsc_table() to get resource table
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2 06/11] remoteproc: Move resource table data structure
+ to its own header
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
  Vikash Garodia <quic_vgarodia@quicinc.com>,
  Dikshita Agarwal <quic_dikshita@quicinc.com>,
@@ -64,10 +64,11 @@ To: Bjorn Andersson <andersson@kernel.org>,
  linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
  linux-remoteproc@vger.kernel.org
 References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <20250819165447.4149674-8-mukesh.ojha@oss.qualcomm.com>
- <4a60c3d3-11fb-40fb-8686-3d83539f250b@kernel.org>
- <20250821172043.fh6sr6w4bwyhov5q@hu-mojha-hyd.qualcomm.com>
- <0741fed1-33d3-431d-8cf3-04b47fe80b03@kernel.org>
+ <20250819165447.4149674-7-mukesh.ojha@oss.qualcomm.com>
+ <aKWDXySSt57tXHVP@linaro.org>
+ <20250820151822.6cmowxfsheqxfrnb@hu-mojha-hyd.qualcomm.com>
+ <20250820163250.hszey3i2gtd3o2i6@hu-mojha-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -112,43 +113,28 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <0741fed1-33d3-431d-8cf3-04b47fe80b03@kernel.org>
+In-Reply-To: <20250820163250.hszey3i2gtd3o2i6@hu-mojha-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 22/08/2025 08:22, Krzysztof Kozlowski wrote:
-> On 21/08/2025 19:20, Mukesh Ojha wrote:
->>>
->>> Srsly, what sort of AI hallucinated slop it is?
->>>
->>> I think this is pretty close to proof that your submission does not meet
->>> criteria of open source contribution.
->>>
->>> Did you run any of this through your legal process in Qualcomm?
->>>
->>> I don't trust any part of this code.
+On 20/08/2025 18:32, Mukesh Ojha wrote:
 >>
->> I don't know what made you think that way. There could be confusion with
->> my writing and may not have expressed the thing i wanted.
-> Commits were written by two different people, but signed only by you.
-> They have 100% different style and the other looks like taken out of
-> ChatGPT.
+>> -- 
+>> -Mukesh Ojha
 > 
-> Editing patches post factum is another reason.
-> 
-> Reasoning here is typical for LLM - first claim something ("static is
-> possible"), then claim another ("dynamic are always") and then connect
-> these two to create false third statement (static and dynamic are always).
-> 
-> You got three strong indications. So this is what made me think that way.
+> Since I am not subscribed to any of the mailing lists to which this
+> series was sent, I am not receiving emails from the list. As a result,
+> your recent messages did not reach my inbox. Additionally, it seems your
+> reply inadvertently removed me from the To-list.
 
-Huh, so this email was not sent to you, because of weird headers you
-have in your email client ("Mail-Followup-To:"). You were notified about
-this by Stephan and yet you ignored the problem.
 
-Well, your call, your problem to find emails if you decide not to
-receive replies. :/
+You decided to remove your address from replies via "Mail-Followup-To:"
+header you introduced. It's on your email client.
+
+Just like you will not receive this email (surprise!)...
+
 
 Best regards,
 Krzysztof
+
 
