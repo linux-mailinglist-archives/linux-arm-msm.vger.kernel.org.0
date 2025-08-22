@@ -1,204 +1,272 @@
-Return-Path: <linux-arm-msm+bounces-70238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A613B30DD8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 07:11:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19E1CB30DF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 07:29:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EB752587B9D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 05:11:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 29DB77BD208
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 22 Aug 2025 05:28:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C077828B3E7;
-	Fri, 22 Aug 2025 05:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B03272D3ED6;
+	Fri, 22 Aug 2025 05:29:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="OsCBn8KX"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="SviNHeyD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on2071.outbound.protection.outlook.com [40.107.236.71])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41CC91917D6;
-	Fri, 22 Aug 2025 05:11:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.236.71
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755839507; cv=fail; b=AXBCH0/+TuLLe8wRo5DAeaMVDY4ezgdrXeHg2AvtpOxhMDd0gfho5AVmerW2Lfao5CJqJVRSiINRZ8avs8fii6OV0T3QiyUCuVAP0AI6cQfeGqD3Lva/FyK/GSQQ5nCGV1hcfPvVUsnubH3z9+dH3i+oDHA8oTi1GUyJOBIRHwg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755839507; c=relaxed/simple;
-	bh=fAWN6SQg5lPMkh1v5siKEL6NGroPZx83SZ2bBpG7nB0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Bn54K5W0YAJHEDJZm1s1cN5GnsOKSvZQi2usu1qW0llmLFeUWv+siwjYGPJWqifHGXJy/Fbfw9hPkkM693tJwwguDRuHp1Hf/5fCIjV+Fr6ubc9wGx/0b87WEiHzKnpr9X17/y6upUN3c8xp6Gm/RYtXD8BDcVyST+RUPWDRTXw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=OsCBn8KX; arc=fail smtp.client-ip=40.107.236.71
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=AVsYzvzDDNOZQtSzeJ2FMw3sb+UQd2iHadyW3r/OLm6hwYBFW4ckL2wIwPRK8ldrrC7ubh3dJtdis1Gn/p8AfqfVGP7C4jtz5omgoyMe66LEi++709tOi747pnuPT+aGGfe3noqP+Dyw+HmwToWW1dmDJN+sCJr4I0/DlaZ0wxx/6q02WWCl7OMBROPgcVKzVyRV4Uk+rM8D4z12A1Q2gAi/JSv5Er+qag2LvQ/ajtLqtHZ9X6cgWy8b7Kq0bJwXrYXE424QFZyM/Wsbpp3dqVMW4IA1NUIIAwqChOT2iBGcuo3XPpu3GjYRV0Agr2I5KM9AEUIQIy+v/iTR1vx9+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BpIpCP4uEJEkXPDzjwAmYmnsbZihBAoiaiozj7nDRJw=;
- b=JuqcZTyqevJlAj4S+tUhNAwsQX3S5gHZ9Hkw/aF1fN7r51cRwLpoad7R0GCDOwAKlb8iU7jBkHgmHPlXRLhqpTRyUXZN9mFNNvwElDQDz32ZmKIIsmoPG9lKfFDkLrC5cZ7eulW3jmkPFNjmR7oPfcbLFBKo8LIHSXHjyG/JfYf6gRtwFz/qiIIiv45zGP3xw/mouA4Bn5BsrV2bsdxUw5sKJPT50JJSYqd9thCIuYGzed6GipaXp09fuQg6ORZ6k76xyV6uH+ZWeNKyZLXDAkv775ueKwXrPx6pvbcyirF10eD38Hl66EpPEPq/zwm4n08L/GakgnNF84n0GRKFJw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BpIpCP4uEJEkXPDzjwAmYmnsbZihBAoiaiozj7nDRJw=;
- b=OsCBn8KXcf3+Jqy6nTa3BjBHMbv9AQxS4nx7KXbq+GDi/jUun0mBHL8l3bhYdTKk9OvFqdQfN1b8bWQ4eA1ytG9y76WkQBKWsfCoGzeVdE3MdwEHhzKtHf//9lo9ABYDAn8qdWddc4W1tVN4TJggnf0Yu3XTL7tTjrRDG9kJF1QpvBd2sI67kgOedk2Cn2LzrdgqcpS2Oa7i3O4IyJq1sYDjAbEu2k2qFqYk3Bz/zdEVXS67RbeZrM7kgTOYaWY3jSW/VrSdseBZs7oyLUo4DBMv21geCcU8Gp12zKrAXzjpIQ5JUAqGOr3gy/TxgxJLXbsQVyLSVpcuIOv/6+VMCQ==
-Received: from IA4P220CA0004.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:558::8)
- by IA1PR12MB7759.namprd12.prod.outlook.com (2603:10b6:208:420::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.15; Fri, 22 Aug
- 2025 05:11:40 +0000
-Received: from BL02EPF00029929.namprd02.prod.outlook.com
- (2603:10b6:208:558:cafe::bb) by IA4P220CA0004.outlook.office365.com
- (2603:10b6:208:558::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.17 via Frontend Transport; Fri,
- 22 Aug 2025 05:11:40 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- BL02EPF00029929.mail.protection.outlook.com (10.167.249.54) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9052.8 via Frontend Transport; Fri, 22 Aug 2025 05:11:40 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 21 Aug
- 2025 22:11:27 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 21 Aug
- 2025 22:11:27 -0700
-Received: from Asurada-Nvidia (10.127.8.12) by mail.nvidia.com (10.129.68.6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 21 Aug 2025 22:11:26 -0700
-Date: Thu, 21 Aug 2025 22:11:24 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <robin.murphy@arm.com>, <joro@8bytes.org>, <bhelgaas@google.com>,
-	<will@kernel.org>, <robin.clark@oss.qualcomm.com>, <yong.wu@mediatek.com>,
-	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
-	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
-	<rafael@kernel.org>, <lenb@kernel.org>, <kevin.tian@intel.com>,
-	<yi.l.liu@intel.com>, <baolu.lu@linux.intel.com>,
-	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-mediatek@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
-	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
-	<helgaas@kernel.org>, <etzhao1900@gmail.com>
-Subject: Re: [PATCH v3 3/5] iommu: Add iommu_get_domain_for_dev_locked()
- helper
-Message-ID: <aKf7/Fk/dT6UZWb9@Asurada-Nvidia>
-References: <a69557026b7e2353bae67104bbe6a88f0682305e.1754952762.git.nicolinc@nvidia.com>
- <20250818143949.GO802098@nvidia.com>
- <aKNhIr08fK+xIYcg@Asurada-Nvidia>
- <20250818234241.GF802098@nvidia.com>
- <aKQG9/skig6F8LdQ@Asurada-Nvidia>
- <20250819125249.GG802098@nvidia.com>
- <aKSyzI9Xz3J0nhfk@Asurada-Nvidia>
- <20250821131304.GM802098@nvidia.com>
- <aKc5niDWTwaCInH2@Asurada-Nvidia>
- <20250821183704.GP802098@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD544B661;
+	Fri, 22 Aug 2025 05:29:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1755840582; cv=none; b=cAIthSg/4N/gqR9Z5Mva725+OHfwzhVfAq9Bjnu8gAxzz5rnsgXd96kTAsrrtx6+Em9/5f/XPqNhKDSR3phO2h8VM1j2xjjWSyq9UnT9LPI1Uf0J87pndPLRp00HNHOtchQ1A/WQdVuTJm8Mgy7KtmEPIfyv+7AhfS5h60DdKBw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1755840582; c=relaxed/simple;
+	bh=34Wicx5fiqySh4vcbwHKLgw38TXxHzyUyeFT3n/7A2g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=YbvRXeoobdn+jUsWukUGFE9Ls56lzIpqyqyQWHVQ82rzlkqH8Wuaooxh9o+sdpx245XBseYeOqJYWR91GPOpdVJvzmA8icXSFRJiDDMekdoZjeSun3pmLp+GLosazL9rlPii+hd1nZA+Gb+xheB2MBOIlTMIAOOOvZBQKHBvvPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=SviNHeyD; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57LI94uv003022;
+	Fri, 22 Aug 2025 05:29:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	GjN8tcpqQR7ngN/208vaK7sSHrIqTJw0swa0+U/r4TQ=; b=SviNHeyDRZ51mI3i
+	EbS8NBK9fryyoe4cKQ7Ay1R9rRlMwq7PjKbQ2j6QrZ1lMNfKb9NgJLIBEzAnl+4/
+	uNWflwscJoCIIw/Ga3+vOm29N+9kFgzz7TUZ2OEgU62D+4in1MwRY8MrHuX0U7T7
+	T3f0RXcABiLFsUGYiq8Pk6r99NcKHIyKKZqVQhvQCY7I75Aauynepyx1NSF0yl+T
+	Lm39IDI3Dw3gwcTy1cj2b0loUQSE4qoYBhGGmG9ymv9qXGd4WYNSuzKFrgIxKpKb
+	3Uc08gVWwWyG96xernN09/nvYh6yQdx7+l2h4SmDasq9WdenEEArBp6fDxL7RNbD
+	ojy5Jw==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48n5297x0d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 05:29:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57M5TXrV009617
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 22 Aug 2025 05:29:33 GMT
+Received: from [10.50.10.127] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Thu, 21 Aug
+ 2025 22:29:30 -0700
+Message-ID: <567f7007-12b1-ecf9-30cc-11fe9e90af39@quicinc.com>
+Date: Fri, 22 Aug 2025 10:59:27 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20250821183704.GP802098@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF00029929:EE_|IA1PR12MB7759:EE_
-X-MS-Office365-Filtering-Correlation-Id: 66b59cdb-8784-4321-6367-08dde13a60d2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|82310400026|376014|7416014|1800799024|36860700013;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?PX08El9zB/iKwWcqDTmB5sNCDCRqqq42VGvhf1D8fWaBzr/5uhBB0haUloEQ?=
- =?us-ascii?Q?8tvbMV74P2TlEvLCF4f80zleGgMVlhitMKeXYhJw65oc9ukSLvRNHXD7uf24?=
- =?us-ascii?Q?J4NU3/DNBhF8hjfj2l4tU1Lb6OdjJjSXHPSwJRBqESMi5LBsKg68dK+l44jW?=
- =?us-ascii?Q?DpUVIQjUaaH3NIeCA0AlrMJS/RuBAY5PLBqj+qYwv5ebXSt6YtgbjVuLwyzd?=
- =?us-ascii?Q?2UdRo4d5IjfhyZFZYvTGhQ0REpTyBbHzQHCjnCsBRU5Rm+LapxEAW9D6y64k?=
- =?us-ascii?Q?oFRnrUDTS7Z04BUy1gsANouEAR5ym9jC+zgzo/TbedejgCG5J2CvnucImkye?=
- =?us-ascii?Q?ZolsM/fRdL+aYEKK5EPq61rN5Jk8kiSO2HzdXUpv4W1VT+k+YC8FaYqp40fU?=
- =?us-ascii?Q?g7/9qKIWVwxt4yd/oXwMe694JU7bC5MBPuZfqDwwsD2IaU9ZROpWeYAM6da9?=
- =?us-ascii?Q?YYbAhEViISM8Gy0tofmbDyufwOKqxRZF3V7WzHxhiLxqysKuzNa3lsdH5sAz?=
- =?us-ascii?Q?y/ehDaCuWb64yFsaAmi8d2dw9nj1K51U+j5V2k72EeeZHkFCA1uk0IZ/X+jw?=
- =?us-ascii?Q?0SsyrstqoXxKS3fQ2ew6POBQSABKRw/8sOZjXnKq4eXeaak4PwSE05IvsNs4?=
- =?us-ascii?Q?jf4ljOhnYsJe0cZfbDg7iFfCtdt97iOFeS1juh3CsX9ebE7ER1V09pYpwK8Y?=
- =?us-ascii?Q?NJ6KpF3xEsj2QaFblH7dly02fwJVHUbqRRsG1dxEeFdd6BoWJGtr64VyU6/+?=
- =?us-ascii?Q?JHLjGmJWZpw9udICwDnDo4XkrSyiEYU2sGpdGdfVC3fdXmcM/Ufl8XMjb13E?=
- =?us-ascii?Q?vWumPqefq0iDLiJJvpbu8RMpl0WekUB+DZ4kD8EEPKZZ0oIvMxnjVaXs4rtQ?=
- =?us-ascii?Q?2UBWHnv4/5EfLgE5DvCrGYQ0c0FEBZJ3+EnIkthf18F6J3lH+/ugcXsBR9Gm?=
- =?us-ascii?Q?z2Oxox5bYSo4XxvaJaxUticE2wB42AgyteitTpeb9eAssf7KEtXKFEqIF2zm?=
- =?us-ascii?Q?Ez0Fy1gvTnUvb3pdUIo4/2JykwPNBm9t42+cimnwcJ1InhQ5r04I879wZkew?=
- =?us-ascii?Q?Nor+XYEks3UcGNhrO/pRFL5tjcPf8Wr9OaJSvXvf2IksfWJoCBJvYvjoU9wX?=
- =?us-ascii?Q?5M7NAh7MXmz+oWXvNeCY5aWuoCamxBuWKo6w2bLAft3FPhR6I84aCpuMhugU?=
- =?us-ascii?Q?EAgAe3fWGtb1L5qTH1HFJIWWwjcLuQRaejctt590v06G+qx1DEQZc9WPAwkY?=
- =?us-ascii?Q?gv1cQQoOh8BfIqUnGSD4gLasbYHBMdWB7RT7eS0HwL+x4bcy/hlbGforofV1?=
- =?us-ascii?Q?/TU25Rgt3osU4AgpCv7a4HxsFFb3s3yaRBY7szAmj7BymWrusiP4cJo6Y0zD?=
- =?us-ascii?Q?SntLMcE2u7NC/x19JGYGiC57RGd3VonZrLUhDb5nEV+z/UbEo8Td6Az7tNQA?=
- =?us-ascii?Q?j2+2qv1Hey7zMLQGGvC/magf+7Av/t/8dTMfhzknExiA7WCI9YDANks/mXnH?=
- =?us-ascii?Q?KTd3hdA0ferBdwU4xQhiir98AC4rJLHNoxjW?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.160;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge1.nvidia.com;CAT:NONE;SFS:(13230040)(82310400026)(376014)(7416014)(1800799024)(36860700013);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Aug 2025 05:11:40.3324
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 66b59cdb-8784-4321-6367-08dde13a60d2
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.160];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF00029929.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7759
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] media: iris: fix module removal if firmware download
+ failed
+Content-Language: en-US
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Vikash Garodia
+	<quic_vgarodia@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250820-topic-sm8x50-iris-remove-fix-v1-1-07b23a0bd8fc@linaro.org>
+ <6c93b790-6d84-aec5-5b4d-2584d249f74e@quicinc.com>
+ <802b5a3c-15c7-4291-8e3e-e598b5587fb8@linaro.org>
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+In-Reply-To: <802b5a3c-15c7-4291-8e3e-e598b5587fb8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: RQquNLQIQSg_prhf40Tv8TcbcjvIdXml
+X-Proofpoint-ORIG-GUID: RQquNLQIQSg_prhf40Tv8TcbcjvIdXml
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIwMDAxMyBTYWx0ZWRfX8snhT1ZZuBf8
+ ngM4vdCEW8Ix/kD8GpBmDIZo+4tu0IuwDIcR4kcxxcwsm/GJB7DvTM5BbnJWrUdjfN0LwWGZdkI
+ 9LB+/9Nrg//kvfv3Jd+oc+4aprBjZ0f1I3lnM/azq+TFMAUVP5EJZYzWGAasOAN3NHbIgQXZv5V
+ ea4yIK0Vhp152fBMJHDof8bBobyEcw64hwnpfuZHwXDn1nO/eo0BtfTwzV4ldC4XI1/U0BmRq3G
+ dt6x8G0qzmiu5eA2rKfQXWaqEqFJ79W1GuUo15LXA2lFebqvCthrBcIdU7YX73BY+k7cjHOjJWY
+ tzUtDbygd67hQBbATIYGPNiq3kiMZ3fqi5ignlqozAro9nvwyS4YK0LxAYxCKqt0QWckc2JkN2q
+ dSoFvgVKRqwlyo5wF0Nw5eT+BExlXw==
+X-Authority-Analysis: v=2.4 cv=SPkblOvH c=1 sm=1 tr=0 ts=68a8003e cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=KKAkSRfTAAAA:8
+ a=COk6AnOGAAAA:8 a=Azs14qeiMlSh3algld4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-22_01,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 bulkscore=0 spamscore=0 phishscore=0
+ impostorscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2508110000 definitions=main-2508200013
 
-On Thu, Aug 21, 2025 at 03:37:04PM -0300, Jason Gunthorpe wrote:
-> On Thu, Aug 21, 2025 at 08:22:06AM -0700, Nicolin Chen wrote:
-> > I should have pasted the full piece:
-> > drivers/gpu/drm/tegra/drm.c-960-	/*
-> > drivers/gpu/drm/tegra/drm.c:961:	 * If the host1x client is already attached to an IOMMU domain that is
-> > drivers/gpu/drm/tegra/drm.c-962-	 * not the shared IOMMU domain, don't try to attach it to a different
-> > drivers/gpu/drm/tegra/drm.c-963-	 * domain. This allows using the IOMMU-backed DMA API.
-> > drivers/gpu/drm/tegra/drm.c-964-	 */
-> > drivers/gpu/drm/tegra/drm.c-965-	if (domain && domain->type != IOMMU_DOMAIN_IDENTITY &&
-> > drivers/gpu/drm/tegra/drm.c-966-	    domain != tegra->domain)
-> > 
-> > So, the check is two-fold:
-> > 1) is attached
-> > 2) is the shared IOMMU domain (tegra->domain?)
+
+
+On 8/21/2025 5:57 PM, Neil Armstrong wrote:
+> On 21/08/2025 11:42, Dikshita Agarwal wrote:
+>>
+>>
+>> On 8/20/2025 10:36 PM, Neil Armstrong wrote:
+>>> Fix remove if firmware failed to load:
+>>> qcom-iris aa00000.video-codec: Direct firmware load for
+>>> qcom/vpu/vpu33_p4.mbn failed with error -2
+>>> qcom-iris aa00000.video-codec: firmware download failed
+>>> qcom-iris aa00000.video-codec: core init failed
+>>>
+>>> then:
+>>> $ echo aa00000.video-codec > /sys/bus/platform/drivers/qcom-iris/unbind
+>>>
+>>> Triggers:
+>>> genpd genpd:1:aa00000.video-codec: Runtime PM usage count underflow!
+>>> ------------[ cut here ]------------
+>>> video_cc_mvs0_clk already disabled
+>>> WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#1:
+>>> sh/542
+>>> <snip>
+>>> pc : clk_core_disable+0xa4/0xac
+>>> lr : clk_core_disable+0xa4/0xac
+>>> <snip>
+>>> Call trace:
+>>>   clk_core_disable+0xa4/0xac (P)
+>>>   clk_disable+0x30/0x4c
+>>>   iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+>>>   iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+>>>   iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+>>>   iris_vpu_power_off+0x34/0x84 [qcom_iris]
+>>>   iris_core_deinit+0x44/0xc8 [qcom_iris]
+>>>   iris_remove+0x20/0x48 [qcom_iris]
+>>>   platform_remove+0x20/0x30
+>>>   device_remove+0x4c/0x80
+>>> <snip>
+>>> ---[ end trace 0000000000000000 ]---
+>>> ------------[ cut here ]------------
+>>> video_cc_mvs0_clk already unprepared
+>>> WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#2:
+>>> sh/542
+>>> <snip>
+>>> pc : clk_core_unprepare+0xf0/0x110
+>>> lr : clk_core_unprepare+0xf0/0x110
+>>> <snip>
+>>> Call trace:
+>>>   clk_core_unprepare+0xf0/0x110 (P)
+>>>   clk_unprepare+0x2c/0x44
+>>>   iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+>>>   iris_vpu_power_off_hw+0x48/0x58 [qcom_iris]
+>>>   iris_vpu33_power_off_hardware+0x44/0x230 [qcom_iris]
+>>>   iris_vpu_power_off+0x34/0x84 [qcom_iris]
+>>>   iris_core_deinit+0x44/0xc8 [qcom_iris]
+>>>   iris_remove+0x20/0x48 [qcom_iris]
+>>>   platform_remove+0x20/0x30
+>>>   device_remove+0x4c/0x80
+>>> <snip>
+>>> ---[ end trace 0000000000000000 ]---
+>>> genpd genpd:0:aa00000.video-codec: Runtime PM usage count underflow!
+>>> ------------[ cut here ]------------
+>>> gcc_video_axi0_clk already disabled
+>>> WARNING: drivers/clk/clk.c:1206 at clk_core_disable+0xa4/0xac, CPU#4:
+>>> sh/542
+>>> <snip>
+>>> pc : clk_core_disable+0xa4/0xac
+>>> lr : clk_core_disable+0xa4/0xac
+>>> <snip>
+>>> Call trace:
+>>>   clk_core_disable+0xa4/0xac (P)
+>>>   clk_disable+0x30/0x4c
+>>>   iris_disable_unprepare_clock+0x20/0x48 [qcom_iris]
+>>>   iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+>>>   iris_vpu_power_off+0x48/0x84 [qcom_iris]
+>>>   iris_core_deinit+0x44/0xc8 [qcom_iris]
+>>>   iris_remove+0x20/0x48 [qcom_iris]
+>>>   platform_remove+0x20/0x30
+>>>   device_remove+0x4c/0x80
+>>> <snip>
+>>> ------------[ cut here ]------------
+>>> gcc_video_axi0_clk already unprepared
+>>> WARNING: drivers/clk/clk.c:1065 at clk_core_unprepare+0xf0/0x110, CPU#4:
+>>> sh/542
+>>> <snip>
+>>> pc : clk_core_unprepare+0xf0/0x110
+>>> lr : clk_core_unprepare+0xf0/0x110
+>>> <snip>
+>>> Call trace:
+>>>   clk_core_unprepare+0xf0/0x110 (P)
+>>>   clk_unprepare+0x2c/0x44
+>>>   iris_disable_unprepare_clock+0x28/0x48 [qcom_iris]
+>>>   iris_vpu33_power_off_controller+0x17c/0x428 [qcom_iris]
+>>>   iris_vpu_power_off+0x48/0x84 [qcom_iris]
+>>>   iris_core_deinit+0x44/0xc8 [qcom_iris]
+>>>   iris_remove+0x20/0x48 [qcom_iris]
+>>>   platform_remove+0x20/0x30
+>>>   device_remove+0x4c/0x80
+>>> <snip>
+>>> ---[ end trace 0000000000000000 ]---
+>>>
+>>> Skip deinit if initialization never succeeded.
+>>>
+>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>>> ---
+>>>   drivers/media/platform/qcom/iris/iris_core.c | 10 ++++++----
+>>>   1 file changed, 6 insertions(+), 4 deletions(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/iris/iris_core.c
+>>> b/drivers/media/platform/qcom/iris/iris_core.c
+>>> index
+>>> 0fa0a3b549a23877af57c9950a5892e821b9473a..8406c48d635b6eba0879396ce9f9ae2292743f09 100644
+>>> --- a/drivers/media/platform/qcom/iris/iris_core.c
+>>> +++ b/drivers/media/platform/qcom/iris/iris_core.c
+>>> @@ -15,10 +15,12 @@ void iris_core_deinit(struct iris_core *core)
+>>>       pm_runtime_resume_and_get(core->dev);
+>>>         mutex_lock(&core->lock);
+>>> -    iris_fw_unload(core);
+>>> -    iris_vpu_power_off(core);
+>>> -    iris_hfi_queues_deinit(core);
+>>> -    core->state = IRIS_CORE_DEINIT;
+>>> +    if (core->state != IRIS_CORE_DEINIT) {
+>>> +        iris_fw_unload(core);
+>>> +        iris_vpu_power_off(core);
+>>> +        iris_hfi_queues_deinit(core);
+>>> +        core->state = IRIS_CORE_DEINIT;
+>>> +    }
+>>>       mutex_unlock(&core->lock);
+>>>         pm_runtime_put_sync(core->dev);
+>>>
+>>
+>> The iris_core_deinit() API should ideally not be called when core->state is
+>> in IRIS_CORE_DEINIT. Better to handle this check in the caller itself.
 > 
-> Yea
+> Checking core->state in iris_remove() won't be protected by the core->lock,
+> so the check and call to iris_core_deinit() should be done _after_
+> unregistering
+> the v4l2 devices to make sure there's no more users of core.
 > 
->  iommu_is_domain_currently_attached(dev, tegra->domain)
+> As you want, I think my approach is simpler and don't change the state if
+> already in deinit state.
 
-Ah, yea.
+Agree.
 
-> > Overall, I feel this would be a big project yet arguably for a low
-> > reward..
+Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+
 > 
-> Indeed, we can drop a FIXME comment there and leave it as the last
-> user or something perhaps
-
-I see. We could keep it in the library but discourage new callers.
-
-I will start with the internal cleanup as we discussed, as a part
-of this PCI reset series. Then, I will try adding those new helper
-functions that we've listed here, as a separate series.
-
-Thanks
-Nicolin
+> Neil
+> 
+>>
+>>> ---
+>>> base-commit: 5303936d609e09665deda94eaedf26a0e5c3a087
+>>> change-id: 20250820-topic-sm8x50-iris-remove-fix-76f86621d6ac
+>>>
+>>> Best regards,
+> 
 
