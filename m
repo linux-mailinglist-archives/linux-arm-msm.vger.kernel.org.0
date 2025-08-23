@@ -1,157 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-70478-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2A84B32916
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 16:21:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12637B329B3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 17:42:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0F37B5C4BC3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 14:21:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A80AA1BA856E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 15:41:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16B35143C61;
-	Sat, 23 Aug 2025 14:21:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 04F702E8B6F;
+	Sat, 23 Aug 2025 15:41:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pCzJiM3i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="on+jiIsZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88BB31B4248
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Aug 2025 14:21:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B0F12B93;
+	Sat, 23 Aug 2025 15:41:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755958891; cv=none; b=HDmFjPsblF1c6gilemEdniSnFIibibBtHVpSa4GDPDvXjVVfxs4IK/t/wJCTQtwoFvuDAXCI43jsp45npWU1Ld27AG6vluQX7aADReK29i/A9zYFvBgD1O96kZepbJk0SGUulVAOun2gcx6Avb4Feq/6lKVdFIQIj6gmlBOsfq0=
+	t=1755963686; cv=none; b=lBPV+G6HbbXqhHCpUbOuuZkSsDMRzWE/EyCLheY6LMboLCqhZwP3+6Zy7muPsFzhQS6SDsz2xorvdWDQy0TFoYf9qIWNri3ZZGS0rEqn+kmlPxEWO0fmoBwoCGJktTJgBvquxAOnaZxke6K8+Z5PsmoLohGjJUIOme1B3MYzy+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755958891; c=relaxed/simple;
-	bh=khbVORoJwmzj8VKDm/dKhHweKD4KPWw0WHkplcKZ+Bs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=ZrpSiFaI1zGTlyuPjJxOyxzAk6AH1Zh0ShZ2WAUF8+MpC3YIz3CQmPBZHsoLmxxEy/QyrGfenjaoxSPiSHgKZ6AE/U1qqK/9IHcbJKklGsbxuvQ47H1SRLWP4CtLLeje2yNl1aQqeCb5aUt6SzO/PF6e2GY4A7cmieFT852D/aI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pCzJiM3i; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57N4BuOd002779
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Aug 2025 14:21:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ECk1LsCNk3gjT6xoXSEgvWTIsSpYG9wG+965yN0jkes=; b=pCzJiM3iXeqj/lbN
-	IV/J3mt6UntuZdlR3Ql5v+ass/KUy5aSHm8CbHFhBC9mm/jj2TVb32KpOIBEwYp5
-	QlcmpyeDvvuKpxB/F4r8HH81zxGA3gblbiB+uWnoH9sFc2QA64XKxmEi0MoL0NH6
-	lplW6K+gf5NrLnI18QZ4xKgXKem+MTryp9xjAhyuxJGjAU+Dkn+h1tTDP5s0N4A1
-	baR5OUcMbcNmBL0qEN+OzZzSQ3uARnI2aDX/bAnMotkfRkNpicaP2oHj2QuC8Vw8
-	ksopgrjb5AI7c4WgnaNjEXlPtzn8rr3rHdICw3NdEz5+xFBIaflKVOnzQzKfZ5XB
-	4HMIjQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6de0x8f-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Aug 2025 14:21:29 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b109bccebaso87652961cf.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Aug 2025 07:21:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1755958887; x=1756563687;
-        h=content-transfer-encoding:mime-version:date:message-id:subject
-         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ECk1LsCNk3gjT6xoXSEgvWTIsSpYG9wG+965yN0jkes=;
-        b=Asus184ChZens/XuFBHwu3ZjbU5M9tcQmY6eoJLDai7F5S47F+5p99cbdvLLjVgSDK
-         3ls4Sop2zaY+72kRvELxaw27YTkP7m6TZGghIKT6C/T3MDNG0AFB3lBLTullrYH7cdZm
-         ncRXv83xAbSMOhwCMRmx7H0RjDoFf8CBJXAxPIj4cF9f0C3bt8aVH8fhuhiQKMaJ4Suv
-         TBCgdgzHSBHa8xaYEYabc9F0ETZ6sIhWuvVOyMwu95XXIxFc60GUjp66jy95zw+7YXrk
-         uQY/pB1S+snIEaOoetcbfpiyHs5WzISoLFDA5E30BvlCUoTRG49Da9JcBCXjiZk2YLk3
-         b0kQ==
-X-Gm-Message-State: AOJu0Yz115I00ERKCBXXIQYKlKlz9AAkKGvuMSR2qC+SxjU6p+TWYU5E
-	8JDRFJS7cO4/Bge3UPeG21cXpN4LRh+XN44So8wGfI0U45bBBJWWTzF44/bUG7mPNXbv/7IU0/5
-	UeMzjRXdX/cbjWTf/3zv+TIp0F8ncEmJ82CTg5KIKVyJaXrHBS9Ylj3kZnFL7C/aM6vUC
-X-Gm-Gg: ASbGnculCr0/BnbXWsn1LHVthSjE+MT3z+oB18VgNpO4i6G/q+PFQ54+QzzHM/sxeRV
-	uumgZSZ2f0dQ6jd2ae6ZqD4xh6Hm73S8NGJcUP8evyjFMLvtJ5lDk13DhdwhihiJRrIVKLapCWB
-	zIB/U/BeDlaah/Px4N3TPWWTIDsqYjto40Wtp7VC0B95LD6C6l0/QLElBBGIXXXJ2syd5yGk0KI
-	wSdjeIG7W9b0akYn6UC/I6iD4MVOXRBADsmDsSk59wt6WpxByhAv5w4j6lG0G3xvS2rpk8DVLzl
-	vlTONBggDdVPaDryNk1qVD41UVcaAxIfK/6Yg+Xpq+znp8b4YZtCwEpJ9n3lWZ0YryYzMtFP2WG
-	NfKk8aLJgnMbpO0tVx2BkTmHPY6Dr0jHVuREN/sULtGEV9JxKd16n
-X-Received: by 2002:ac8:690d:0:b0:4b1:a3f:adde with SMTP id d75a77b69052e-4b2aaa40e39mr103546801cf.27.1755958887008;
-        Sat, 23 Aug 2025 07:21:27 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4PmkSmlgiF18xFq5d2W4o3JzzrwhL20Gh1Sspi04wdUKBR/io81yO2DxJF6sLkzYTQNqwZQ==
-X-Received: by 2002:ac8:690d:0:b0:4b1:a3f:adde with SMTP id d75a77b69052e-4b2aaa40e39mr103546091cf.27.1755958886482;
-        Sat, 23 Aug 2025 07:21:26 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c9a1efsm523398e87.118.2025.08.23.07.21.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 23 Aug 2025 07:21:25 -0700 (PDT)
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Matthew Brost <matthew.brost@intel.com>,
-        Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
-        Danilo Krummrich <dakr@kernel.org>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Danct12 <danct12@disroot.org>
-In-Reply-To: <20250823-msm-fix-gpuvm-init-v1-1-e199cd5b1983@oss.qualcomm.com>
-References: <20250823-msm-fix-gpuvm-init-v1-1-e199cd5b1983@oss.qualcomm.com>
-Subject: Re: [PATCH] drm/msm: fix msm_gem_vma_new() allocations for managed
- GPUVMs
-Message-Id: <175595888536.1764874.11815793767108601921.b4-ty@oss.qualcomm.com>
-Date: Sat, 23 Aug 2025 17:21:25 +0300
+	s=arc-20240116; t=1755963686; c=relaxed/simple;
+	bh=l+oY0LG5o5JPU8CPKPruiyIdSya8OG8OkT4q31h7EVw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=piEU8KvhIhCBtiZg55QvfBG0GJhKfiQ3Huk7PfRn4mhvTXk4VdnAIxkz2p3BwP5mDpw8fB0NikUry5EkzPuIxeuqbRrMmKHsIYsKJr/cSMftPPLkB5ZPJPHR8Pl2WYYy18il9x9YhOpHXIVV5UrCztN8AMPlUH4CypuM2p2nlRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=on+jiIsZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 593C4C4CEF4;
+	Sat, 23 Aug 2025 15:41:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1755963686;
+	bh=l+oY0LG5o5JPU8CPKPruiyIdSya8OG8OkT4q31h7EVw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=on+jiIsZwzyNAjUrI94d0Kv96torKKdPlRvxyy+V8SN+fGKKV3sFA33MXmuXypDzQ
+	 hBmWOmADjTS3pwwBJ35zS0K/cKnMtqbpM2VDVV9ZozL8G6/fBZ9TYyV2PmbBUYH6uZ
+	 hN5vFz4DCN553OITIQSJhOxrSz8yC5AZtaf79t3jItq/0wMrY5R9TNS7JMPjrmpYRm
+	 IsxETz79RZPHdOHqRVY9aiciiKGkoXZGnLZW590yU5yKJY4p2RSARuYyh1iCjNykQk
+	 XkdfqzkD6qUuYTdzjQDUwciKK5N6Uooenq17g6Kk3VqiqeNCKF73bRdNuMNBbYziA3
+	 sfXMpbV3eqQxQ==
+Message-ID: <46013223-5463-4164-9f61-87ea5ce2412c@kernel.org>
+Date: Sat, 23 Aug 2025 17:41:21 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/11] media: iris: Enable Secure PAS support with
+ IOMMU managed by Linux
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org
+References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
+ <20250819165447.4149674-12-mukesh.ojha@oss.qualcomm.com>
+ <e18ac460-dcbb-4ac0-9c5e-3aaadf3485fd@kernel.org>
+ <20250822151346.skwtsh5abr3tmrjz@hu-mojha-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250822151346.skwtsh5abr3tmrjz@hu-mojha-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzNyBTYWx0ZWRfXyIdY0eners+j
- jObcLIZK0JjUkmnpyq06JR2RWrqZHK4HneJTmwDXF1NLggVvhY6sZKoohjr7ZsH4uROFiYoNTIu
- dRtJl7QA+5z/bL88v589p8ayWArcSHoe0hQ1AV5xGyVVKLSbSGOVkm/DJs4jj1fUv20vCrDMaeQ
- 7fJQ+yRn9v3WeIE4hODmV5zRlDMUI4Uq/JR/cqUbQitKN2I1VQbaWxyW9+rxJjpCD6glLxcZk4D
- OtJLrf8zKN6ptX/5RAG1tbahvD4Z+VtjpXAGAF54AruvZJ7OLgtaXKiAnX+XoEJzh9TYy+SU/QU
- kKABXYGvhtzodPiUHgXfsLOkZxPC5fIS/cwYfsCn7YuHFATpvmHi0NKNjjolJCfl3Yx6SflV5VF
- 0NdfPWKA
-X-Proofpoint-ORIG-GUID: wR_D4ybNOYFtHRmJ9Dz9ztKfJrpMPkXx
-X-Proofpoint-GUID: wR_D4ybNOYFtHRmJ9Dz9ztKfJrpMPkXx
-X-Authority-Analysis: v=2.4 cv=K7UiHzWI c=1 sm=1 tr=0 ts=68a9ce69 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=2OwXVqhp2XgA:10 a=yaBPxWdkq7d3F1QRnygA:9 a=QEXdDO2ut3YA:10
- a=zgiPjhLxNE0A:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-23_01,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 malwarescore=0 suspectscore=0 adultscore=0
- bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230037
 
-On Sat, 23 Aug 2025 03:12:00 +0300, Dmitry Baryshkov wrote:
-> Since commit 3309323241fb ("drm/gpuvm: Kill drm_gpuva_init()") MSM
-> driver fails to init, failing with "[drm:msm_gpu_init] *ERROR* could not
-> allocate memptrs: -22" errors. The mentioned commit reworked the
-> function, but didn't take into account that op_map is initialized at the
-> top of the function, while ranges might change if GPUVM is managed by
-> the kernel.
+On 22/08/2025 17:13, Mukesh Ojha wrote:
+> On Fri, Aug 22, 2025 at 10:45:50AM +0200, Krzysztof Kozlowski wrote:
+>> On 19/08/2025 18:54, Mukesh Ojha wrote:
+>>> +int iris_fw_init(struct iris_core *core)
+>>> +{
+>>> +	struct platform_device_info info;
+>>> +	struct iommu_domain *iommu_dom;
+>>> +	struct platform_device *pdev;
+>>> +	struct device_node *np;
+>>> +	int ret;
+>>> +
+>>> +	np = of_get_child_by_name(core->dev->of_node, "video-firmware");
+>>
+>> Undocumented ABI.
+>>
+>> If you tested your DTS, you would notice warnings.
 > 
-> [...]
+> qcom,venus-common.yaml is documenting video-firmware and getting included in
+> Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
 
-Applied to drm-misc-next, thanks!
-
-[1/1] drm/msm: fix msm_gem_vma_new() allocations for managed GPUVMs
-      commit: efe927b9702643a1d80472664c2642f0304cb608
+Uh, why? Why does qcom keep this legacy pattern also for iris?
 
 Best regards,
--- 
-With best wishes
-Dmitry
-
-
+Krzysztof
 
