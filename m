@@ -1,238 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-70487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D54F5B32B59
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 19:44:22 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44AA7B32BB4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 21:38:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84C1F563CE4
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 17:44:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0DF81580851
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 23 Aug 2025 19:38:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA3F22E719D;
-	Sat, 23 Aug 2025 17:44:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8F0212E7F2F;
+	Sat, 23 Aug 2025 19:38:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cmepMl6V"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lXrTgQr6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD69B1E32DB;
-	Sat, 23 Aug 2025 17:44:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E381A2206BB
+	for <linux-arm-msm@vger.kernel.org>; Sat, 23 Aug 2025 19:38:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1755971057; cv=none; b=LnWFDE/KwgpRqjcf5/d+ve1tPEKTNcwibVjjk9WTyIirAO3ZJi+QmAhUAWmRZgkRRUUxXFtJxSdZad6t9VNawUwMykT8Fy554wFFK/UukM3LNswUuRnJFt/VNAHBjI/QaGMEi7GYD8hajNo87McTgXlpF79/2/u1ElkbhS+YnjE=
+	t=1755977913; cv=none; b=Urvpqxdt7IBM0toCPFC3MT81gEoa0iBZDcFng9lk/9FTYU/gYcylVK1Kv7yFa2rC2XTaifMUIDAvEKTp4uzsDXZpR5mGQQuPlPziyHP0ael6sfCCiSFue5vxBVqqpfmiCrPdNuIWaM7qTRXfhauSFbjPIppoaLSp4H5ALMGalZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1755971057; c=relaxed/simple;
-	bh=ITDCWkMf1Ws3XB5dEpE/PDc45fLUzmzNuMSSBuSZ5O4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=rpcbzK7qjtFso9Feuh3/CmCuhD4/FsPC8yZLhtQMosYLmPcTUadTgT8TAF1XKu3pL4CP5/kork5FxXmsyef1ZSyAy8avmme42YndA92VvCP4HIH1SzXHyN+dhrbBoniUD+x+2WGbyh6scYDIwFEYDDDDcUJlq+ZpqXIQWP7QnS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cmepMl6V; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id E2882C4CEE7;
-	Sat, 23 Aug 2025 17:44:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1755971057;
-	bh=ITDCWkMf1Ws3XB5dEpE/PDc45fLUzmzNuMSSBuSZ5O4=;
-	h=From:Date:Subject:To:Cc:Reply-To:From;
-	b=cmepMl6VPEX+/DIBSfIAO6/qly5skE0KMH4X3j0G8vGvtU5JMN9HnIYH2MI9Ju7+H
-	 1o4pB6ERyNEJVrgnOrvIrEMzEPBI57T5ngoST6TcdH4ebYekBAZpV+4x+7V7FQGlIa
-	 Vj4Vivjs5MueQLvIxdQgV9tA6XtP0+GVrmR39X2zVIY8pRxcxJ93paedmxpJA3Qq73
-	 9u/5baAwNRmz3RaIRdDzv5rpuPRy9s/a8342u6xAeknI8zCOqX5O0KPxWG3AB2QW4F
-	 2fFRsz3+kUIsR7dJAF0FQX77A2j9X0fziovKFmSMMZl72HP6PidHEPSkh9LtfziaRN
-	 5R40Xc1N+YNfw==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id CF518CA0EE4;
-	Sat, 23 Aug 2025 17:44:16 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Sat, 23 Aug 2025 23:14:11 +0530
-Subject: [PATCH v2] PCI: qcom: Use pci_host_set_default_pcie_link_state()
- API to enable ASPM for all platforms
+	s=arc-20240116; t=1755977913; c=relaxed/simple;
+	bh=9H5EWBk4yVKoWb98oK8R5kJWtyTvHlhBWPggxu4SXn0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uxKyFoF1uDsiQ9O3Mk7NxZ4uQtxeOkIz/rQleTBJtewvcMcfRqzMaIFUh4mG9Rm/4bVtDjUs60UiAq2onlRd7DjZAOOMkdGnOWIBVQD8EFXF3Q4eJd0I19TlBdhvYTs/M/OFM5k07k89p2Gpu0Q+V+yhDmoY9HQj5wLicDuF8wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lXrTgQr6; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-76e2ea933b7so2894125b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 23 Aug 2025 12:38:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1755977911; x=1756582711; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=vFoZeto/FDI3HbNA3+yLmKkVSsUZjUZFotfhVBL12vM=;
+        b=lXrTgQr6JhIISSPI/TtVrVlmguy8BHG8uXDzcqkFX6zsY7Al1UgdklHiI/03eLuwGn
+         3i2EvUT5VPG/86ibT1WOjbVGpfzQa1NLHc9hRxz6+sd85PFNF6FU0QMi9Ibzkb4Lqj4O
+         8etasAsGJzw5sinGD11CFVSH+HfTD8L3/N7jc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1755977911; x=1756582711;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vFoZeto/FDI3HbNA3+yLmKkVSsUZjUZFotfhVBL12vM=;
+        b=AuJm1Q5/2lGhb98G2GDgYKqsmWcoPF/Z8gxe03iTrzsw0nNJU+yr6O8+EH5yFvmMNh
+         z0ACePRhc2V3p5WimoIkO2jIbfWB40xIGDRjcydXXSs966jt+Jpe+W2rVLqQS+Ic6FbU
+         3I+Sk0eclIsZl3tlBAX3Aos/O+OZTgSXTcoAgbqwc2SK6zzllm5Kpyt/Fo6qYlmYw/C6
+         WCB4WDADQnnNWFva/6E5Va8rywauueB5PXbpigF1f5LMCx8yD1+HDYcJvAU1a6qqF9R3
+         vVbXKXv0Jof4SYbRPDoVR8HOgZJxew1IlNJ0AqLai/t1sKj2Vk/PhDY614sdnXNDSTIX
+         Fzxg==
+X-Forwarded-Encrypted: i=1; AJvYcCVFMnR3A9HMmyLq29uye8PBh2//EI8OtEHt22k7u0DLj11FidI8uBrQZ2UDZEE2Hy8UNpZjXLw8uvCDfCpC@vger.kernel.org
+X-Gm-Message-State: AOJu0YymSI0++rPqjyYg8CAfhEF6aKD82TbFn5u/tFkaAJ6AvRbgmfEF
+	3k8XU54OrF6gF+hfkwlcsmh/6OUZ7oaKcuWl+GJW3VEPaVBM6XAcfGTOwar8cFqb1w==
+X-Gm-Gg: ASbGncs13b8ExG+wPggcnYFHFtR4lE2lWgHXmVlFMZQhQRXnFh5pH8Y6sTPbA+qVnE3
+	FQySundMrwvOvgyHZsgtiKLvVD4umwE0mRCbkVXbK91dQz6TglJbFK2AtK95OzGSSM11O98o618
+	BhzECyAnOBnKwTPvApTQvuL/iz4JM/w1bfSWf9qfotuXNfCXhS5/SMtwXt+wUYLbwX/YiMKwPXO
+	y19veTVXcRkceuPsz7IvIm+2iTF2ju13ypZvP7dHC0CDTn1m1V+we8PyTxqlRkglZPq5NvfAQU6
+	7wnko2J2+v9Ho0eMmWehBLKBQK0eMH7218mcHUEDZ/x90mxL7GG1gER1rqHOstAgSqtxrBl7dLC
+	JiB3YQ0pgYfszf0VhNuEVF5fsSVc3MuD8B4bIeHH2xC7XluDJOvLoJ9xMA7cw
+X-Google-Smtp-Source: AGHT+IHZgEfPSgrzNcfJP0y8VFbZ/mI9XmL1DW5PZYFaB2PJIzNbSTWb31bEH3e4F4au31IY+qw7iw==
+X-Received: by 2002:a05:6a20:258a:b0:23f:f729:2e72 with SMTP id adf61e73a8af0-24340b5832dmr8588883637.1.1755977911137;
+        Sat, 23 Aug 2025 12:38:31 -0700 (PDT)
+Received: from localhost ([2a00:79e0:2e14:7:dde2:2ecc:d200:6390])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-7704025ef80sm3093608b3a.108.2025.08.23.12.38.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 23 Aug 2025 12:38:30 -0700 (PDT)
+From: Brian Norris <briannorris@chromium.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Georgi Djakov <djakov@kernel.org>,
+	Odelu Kukatla <quic_okukatla@quicinc.com>
+Cc: Douglas Anderson <dianders@chromium.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Brian Norris <briannorris@chromium.org>
+Subject: [RFC PATCH] arm64: dts: qcom: sc7280: Drop aggre{1,2}_noc QOS clocks on Herobrine
+Date: Sat, 23 Aug 2025 12:37:18 -0700
+Message-ID: <20250823123718.RFC.1.Idebf1d8bd8ff507462fef9dc1ff47e84c01e9b60@changeid>
+X-Mailer: git-send-email 2.51.0.rc2.233.g662b1ed5c5-goog
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250823-qcom_aspm_fix-v2-1-7cef4066663c@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAOv9qWgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyjHQUlJIzE
- vPSU3UzU4B8JSMDI1MDCyNj3cLk/Nz4xOKC3Pi0zApdYyMzE0sjsyTTJEMTJaCegqJUoDDYvOj
- Y2loAU4Asg18AAAA=
-X-Change-ID: 20250823-qcom_aspm_fix-3264926b5b14
-To: Manivannan Sadhasivam <mani@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org, 
- linux-kernel@vger.kernel.org, "David E. Box" <david.e.box@linux.intel.com>, 
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
- Johan Hovold <johan@kernel.org>, stable+noautosel@kernel.org, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5931;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=FvAS2lrBy4QcQciNcZNf/ZyUYHY+/IJEof92RVatcC8=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBoqf3uYNbOl0o5Jc7QJ8AgmJwxlhykuMzGO3fAH
- /bOjc22Oq+JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaKn97gAKCRBVnxHm/pHO
- 9TlzB/4n4OPJa4xZvM+2Pt5FZm2cusOd4R0VaRaJFRA4MEZ9S1K0aVUhftS0Lp/lLuBIKJquAC2
- Okhe1oT8qtTZ5lQ1+NBWg34I66VekaUSZX9hD1as0Uh+8V0/suT3Jo20AYxB7i6x2uxoOJhOp4u
- iOSTQKbdk4cEITzaft1tCPrW25euQThCGIiTzqir5zkvmjDlCB1eppoFROzhEFRulD0FxRGZQOa
- +a9CZSmDQ6PetY3H7crO1wAeHKob98a7JwBbRWSJ3JJXO9I5sVYSnWpCKmMrFns46szyybrbyvq
- 7b0Npu0rSNZnWsLI4lPo+JESXkIXcswAADea7uvOf3DIO60l
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Ever since these two commits
 
-Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0
-ops") allowed the Qcom controller driver to enable ASPM for all PCI devices
-enumerated at the time of the controller driver probe. It proved to be
-useful for devices already powered on by the bootloader, as it allowed
-devices to enter ASPM without user intervention.
+  fbd908bb8bc0 ("interconnect: qcom: sc7280: enable QoS configuration")
+  2b5004956aff ("arm64: dts: qcom: sc7280: Add clocks for QOS configuration")
 
-However, it could not enable ASPM for the hotplug capable devices i.e.,
-devices enumerated *after* the controller driver probe. This limitation
-mostly went unnoticed as the Qcom PCI controllers are not hotplug capable
-and also the bootloader has been enabling the PCI devices before Linux
-Kernel boots (mostly on the Qcom compute platforms which users use on a
-daily basis).
+Herobrine systems fail to boot due to crashes like the following:
 
-But with the advent of the commit b458ff7e8176 ("PCI/pwrctl: Ensure that
-pwrctl drivers are probed before PCI client drivers"), the pwrctrl driver
-started to block the PCI device enumeration until it had been probed.
-Though, the intention of the commit was to avoid race between the pwrctrl
-driver and PCI client driver, it also meant that the pwrctrl controlled PCI
-devices may get probed after the controller driver and will no longer have
-ASPM enabled. So users started noticing high runtime power consumption with
-WLAN chipsets on Qcom compute platforms like Thinkpad X13s, and Thinkpad
-T14s, etc...
+[    0.243171] Kernel panic - not syncing: Asynchronous SError Interrupt
+[    0.243173] CPU: 7 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.11.0 #1 c5464041cff584ced692726af2c4400fa2bde1db
+[    0.243178] Hardware name: Qualcomm Technologies, Inc. sc7280 CRD platform (rev5+) (DT)
+[    0.243180] Call trace:
+[    0.243182]  dump_backtrace+0x104/0x128
+[    0.243194]  show_stack+0x24/0x38
+[    0.243202]  __dump_stack+0x28/0x38
+[    0.243208]  dump_stack_lvl+0x28/0xb8
+[    0.243211]  dump_stack+0x18/0x30
+[    0.243215]  panic+0x134/0x340
+[    0.243219]  nmi_panic+0x48/0x98
+[    0.243227]  arm64_serror_panic+0x6c/0x80
+[    0.243245]  arm64_is_fatal_ras_serror+0xd8/0xe0
+[    0.243261]  do_serror+0x5c/0xa8
+[    0.243265]  el1h_64_error_handler+0x34/0x48
+[    0.243272]  el1h_64_error+0x7c/0x80
+[    0.243285]  regmap_mmio_read+0x5c/0xc0
+[    0.243289]  _regmap_bus_reg_read+0x78/0xf8
+[    0.243296]  regmap_update_bits_base+0xec/0x3a8
+[    0.243300]  qcom_icc_rpmh_probe+0x2d4/0x490
+[    0.243308]  platform_probe+0xb4/0xe0
+[...]
 
-Obviously, it is the pwrctrl change that caused regression, but it
-ultimately uncovered a flaw in the ASPM enablement logic of the controller
-driver. So to address the actual issue, use the newly introduced
-pci_host_set_default_pcie_link_state() API, which allows the controller
-drivers to set the default ASPM state for *all* devices. This default state
-will be honored by the ASPM driver while enabling ASPM for all the devices.
+Specifically, they fail in qcom_icc_set_qos() when trying to write the
+QoS settings for qhm_qup1. Several of the previous nodes (qhm_qspi,
+qhm_qup0, ...) seem to configure without crashing.
 
-So with this change, we can get rid of the controller driver specific
-'qcom_pcie_ops::host_post_init' callback.
+I don't really know what's unique about Herobrine systems vs other
+sc7280 systems that presumably work fine. I'd guess there's some
+conflict with something configured by the boot firmware.
 
-Also with this change, ASPM is now enabled by default on all Qcom
-platforms as I haven't heard of any reported issues (apart from the
-unsupported L0s on some platorms, which is still handled separately).
+I'm submitting as an RFC just to get thoughts from people who hopefully
+know better than me what might be going wrong here.
 
-Cc: stable+noautosel@kernel.org # API dependency
-Fixes: 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops")
-Reported-by: Johan Hovold <johan@kernel.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Fixes: fbd908bb8bc0 ("interconnect: qcom: sc7280: enable QoS configuration")
+Fixes: 2b5004956aff ("arm64: dts: qcom: sc7280: Add clocks for QOS configuration")
+Signed-off-by: Brian Norris <briannorris@chromium.org>
 ---
-Changes in v2:
 
-* Used the new API introduced in this patch instead of bus notifier:
-https://lore.kernel.org/linux-pci/20250822031159.4005529-1-david.e.box@linux.intel.com/
+ arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-* Enabled ASPM on all platforms as there is no specific reason to limit it to a
-few.
----
- drivers/pci/controller/dwc/pcie-qcom.c | 34 ++--------------------------------
- 1 file changed, 2 insertions(+), 32 deletions(-)
-
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 294babe1816e4d0c2b2343fe22d89af72afcd6cd..71f14bc3a06ade1da1374e88b0ebef8c4e266064 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -247,7 +247,6 @@ struct qcom_pcie_ops {
- 	int (*get_resources)(struct qcom_pcie *pcie);
- 	int (*init)(struct qcom_pcie *pcie);
- 	int (*post_init)(struct qcom_pcie *pcie);
--	void (*host_post_init)(struct qcom_pcie *pcie);
- 	void (*deinit)(struct qcom_pcie *pcie);
- 	void (*ltssm_enable)(struct qcom_pcie *pcie);
- 	int (*config_sid)(struct qcom_pcie *pcie);
-@@ -1040,25 +1039,6 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
- 	return 0;
- }
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+index 2ba4ea60cb14..59203ce58c61 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-herobrine.dtsi
+@@ -394,6 +394,16 @@ &vreg_l2c_1p8 {
  
--static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
--{
--	/*
--	 * Downstream devices need to be in D0 state before enabling PCI PM
--	 * substates.
--	 */
--	pci_set_power_state_locked(pdev, PCI_D0);
--	pci_enable_link_state_locked(pdev, PCIE_LINK_STATE_ALL);
--
--	return 0;
--}
--
--static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
--{
--	struct dw_pcie_rp *pp = &pcie->pci->pp;
--
--	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
--}
--
- static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
- {
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-@@ -1358,19 +1338,9 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
- 	pcie->cfg->ops->deinit(pcie);
- }
+ /* ADDITIONS TO NODES DEFINED IN PARENT DEVICE TREE FILES */
  
--static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
--{
--	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
--	struct qcom_pcie *pcie = to_qcom_pcie(pci);
--
--	if (pcie->cfg->ops->host_post_init)
--		pcie->cfg->ops->host_post_init(pcie);
--}
--
- static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
- 	.init		= qcom_pcie_host_init,
- 	.deinit		= qcom_pcie_host_deinit,
--	.post_init	= qcom_pcie_host_post_init,
- };
- 
- /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
-@@ -1432,7 +1402,6 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_7_0,
- 	.init = qcom_pcie_init_2_7_0,
- 	.post_init = qcom_pcie_post_init_2_7_0,
--	.host_post_init = qcom_pcie_host_post_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- 	.config_sid = qcom_pcie_config_sid_1_9_0,
-@@ -1443,7 +1412,6 @@ static const struct qcom_pcie_ops ops_1_21_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_7_0,
- 	.init = qcom_pcie_init_2_7_0,
- 	.post_init = qcom_pcie_post_init_2_7_0,
--	.host_post_init = qcom_pcie_host_post_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- };
-@@ -1979,6 +1947,8 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	if (pcie->mhi)
- 		qcom_pcie_init_debugfs(pcie);
- 
-+	pci_host_set_default_pcie_link_state(pp->bridge, PCIE_LINK_STATE_ALL);
++/* QoS seems to have conflicts with boot firmware on these devices. */
++&aggre1_noc {
++	/delete-property/ clocks;
++};
 +
- 	return 0;
- 
- err_host_deinit:
-
----
-base-commit: 681accdad91923ef4938b96ff3eea62e29af74c3
-change-id: 20250823-qcom_aspm_fix-3264926b5b14
-
-Best regards,
++/* QoS seems to have conflicts with boot firmware on these devices. */
++&aggre2_noc {
++	/delete-property/ clocks;
++};
++
+ &edp_panel {
+ 	/* Our board provides power to the qcard for the eDP panel. */
+ 	power-supply = <&vreg_edp_3p3>;
 -- 
-Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-
+2.51.0.rc2.233.g662b1ed5c5-goog
 
 
