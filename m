@@ -1,335 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-70524-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3753EB3329D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 22:42:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D75CBB33296
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 22:42:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 014AC1B22416
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 20:43:17 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B7A320291C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 20:42:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E7620246768;
-	Sun, 24 Aug 2025 20:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97ECA230BDF;
+	Sun, 24 Aug 2025 20:42:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b="U5jcIcbA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="VumOLMx+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from forward102b.mail.yandex.net (forward102b.mail.yandex.net [178.154.239.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97F4F23D7DD;
-	Sun, 24 Aug 2025 20:42:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DED222560
+	for <linux-arm-msm@vger.kernel.org>; Sun, 24 Aug 2025 20:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756068156; cv=none; b=J7ytI5wIYV6NnWtbPhZMe+NGop71X95zHHJZ7t01GFWoF7zTAZTohsXi/7ALvcUuNx7GAunBsYmoOBw4jjWMYYab8OdQ1s1Me5RiRb0+vVADDqpAsT9qOt2VIjInczqa+Cx8IkJ6B8DfqGl2nPR42WWPAkvdj2d+KcZRlww90Ws=
+	t=1756068152; cv=none; b=D4pVgyTsb6t6RapTYcT10gfqQNSq3MajMOCDFRh8u68CQfC4q72wq4A7okZm+4zaNKuouCcRnK3GaDLACEM+arcrNOIh7aRnoOtk04cqYZZIJB2GKRQt90GOUl8nOoCuJiGQ1RKug2SoyHPjKpo2BTH9iZ7IBOOQsvuNu2K4sgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756068156; c=relaxed/simple;
-	bh=2rG/G9NBxbqTu6CuJVAkY8SKvl3EGxAO04K3tqLr340=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=TQUBHee0Gv0h6oB5M2qgUowG10mzdB1NQoAQaETr1gj1/dugrZgBThkbuTnjtiFgwdJbdZsK7B8Ni1Rz56pbwt/ZSsOcPpPo4pwGqtMmjAddEosKh/kQLZ4eehvJpHWQRa2qZb/JOToPcC/tOjcKmeVO0xvTEw308mb7gYoDsMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru; spf=pass smtp.mailfrom=yandex.ru; dkim=pass (1024-bit key) header.d=yandex.ru header.i=@yandex.ru header.b=U5jcIcbA; arc=none smtp.client-ip=178.154.239.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=yandex.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=yandex.ru
-Received: from mail-nwsmtp-smtp-production-main-73.sas.yp-c.yandex.net (mail-nwsmtp-smtp-production-main-73.sas.yp-c.yandex.net [IPv6:2a02:6b8:c37:7521:0:640:a008:0])
-	by forward102b.mail.yandex.net (Yandex) with ESMTPS id 5D404C0006;
-	Sun, 24 Aug 2025 23:42:26 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-73.sas.yp-c.yandex.net (smtp/Yandex) with ESMTPSA id MgdcKKcLCa60-bf40ep3f;
-	Sun, 24 Aug 2025 23:42:26 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1756068146; bh=T7mI96+5ebnUKGoLkkPBcQK3Tj7pFqnEqbDek2swFQA=;
-	h=Cc:In-Reply-To:Message-Id:To:Date:References:From:Subject;
-	b=U5jcIcbAnBwiPUQOENbvgmrFjedx8iZBK4VJkaBKb/YhOLjdW3+zHvuDDdU7eLyu4
-	 E+1YPVcZEfcVk+NyBVoLjymyMw0wbXViZkpIw4M3PQ1wsO8FlPev37woe4YYxKa6eN
-	 gduiu2X2ptA8K4vz/PLvypZm7+1pjWVcODAgcOa4=
-Authentication-Results: mail-nwsmtp-smtp-production-main-73.sas.yp-c.yandex.net; dkim=pass header.i=@yandex.ru
-From: Nickolay Goppen <setotau@yandex.ru>
-Date: Sun, 24 Aug 2025 23:42:25 +0300
-Subject: [PATCH 3/3] pinctrl: qcom: Add SDM660 LPASS LPI TLMM
+	s=arc-20240116; t=1756068152; c=relaxed/simple;
+	bh=C/8GUiJvnBqOTJg3TfWosmFteUexRkCdL+VzF3kRzQ8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=mV8cRFgsTGVOtqqb5o7aCA5djKhxTw7wSkt9fcTf6h7mmZ9whXAmHjk+pZPCvlpMSeH/4ZTQgwIDUCNBrg7YkNFrfVONidkygR1yKNbFBHMLIqbNZ3pkhllv/1coHkYYdTrKsUqeEpM5TXhutBo9PVtsaLHzu80cb4ymvoFBHX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=VumOLMx+; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-55ce5221f0bso505616e87.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 24 Aug 2025 13:42:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756068148; x=1756672948; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C/8GUiJvnBqOTJg3TfWosmFteUexRkCdL+VzF3kRzQ8=;
+        b=VumOLMx+mTy0ELqhbikIZz8LVKuRcetGcrpVRP/F1oKmcT7f6d/OJFS9Iabrzdduk9
+         AdZxt0GbQbOELhXUbwYhZR2zINHd6BfLzff0utx2xPk89xUaQWP87PAvyXvRCqTldQXs
+         A9K4I3rlHgG7AbgSwGlN4k30yzkKiJXu9TuVuWumPjODYv6cnJ0sCbW4xawEoM6+OoBC
+         pIQKZlwxkTbubolebCl7QkQwKNGzVqv0RW5kysyy3lbN0RPXO22RiLmolP+KKJh/uzwI
+         YS3TkOSlBHtPi1S8VrQe3JoIs9nrcUrdg7z4d+hYBN/gQ1Y2I9BE/iNGD7D8yF4zP6KY
+         YBtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756068148; x=1756672948;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=C/8GUiJvnBqOTJg3TfWosmFteUexRkCdL+VzF3kRzQ8=;
+        b=tpZ6QuTADgjXAlJhiAFW1AgyCFIQ099+AbWJEuW7CFEAtOWCOb8itOnuUhDAn7Auqa
+         jG24VBnGdVi/QVYvwAFR+yjnImlGj4Z6Si6eTJLa1w2Q2+q3ERAL5NkTDTu/E25QK007
+         Iayghg0HvoArSS/hUVT5zDkJ+n1LRiTTqnr2MpUXEwuMpAK4PYki/jYUPevSJyu7D+1z
+         Nq6PwtUxmHFiaZBvmqiLLwl1+5Si9A6jU1gwHUACmYLiWmkuu4UkFfl+xGHgECp9uyG2
+         as76MmJoDom3xLWuDRN8WH2W9N3q7WFY/I5I6CrvOe+ismADDHpTNLwC3h3VV9UI2oWQ
+         TZPQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWYw/rQcGaJq9LrQWgx9YAA69ZZJxTwrJ+OhCzOERSQ53ErvD2RU0upvqk4CQ5nQJG6UP9tFLz4CIvthIjB@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8zffQMfCTkRA9RA1vdk/xm+ybvK5mk8e1fM0oOa1fgw7sNO1b
+	/Jx5ZqtEz3h51sboKdoflGWAs9+OI0HFGx+JIGhHcltIRaYwx5NKAR9h9pjGDC5O1dM=
+X-Gm-Gg: ASbGncuCZq0vvZyTl5yCnGtj6gD8MXcE2HInFa+x90L1gVRLCaR8OIOBsa1xoFYGJp2
+	HhEGhOAjgRpqh2q8m/gDppFsGw438P7/XxRJYZTR1DxfQ/GHXsPLwKTGLBvXM8f8XQw2paH+e9R
+	yBMDV0n1S9ZgHtcrSWwDlvzwc70wnBDWxFnZMUCdjPtCFpgmDs0IgYP1wdDxzCV1zkl0hIATfLH
+	37woJBnpD7MUdNBQVZ20hEDY+ExWclj3Rlfc75Qc5Zf02p5eR2UR8/ZX1E13CXC9DExajuOYR1l
+	ze8ujTwzDrUbk8j8vtzbk/cAOVaNYCnjqOCbf16R0lmK4GGuYobUOR+ieT64b126PDC/oSvjoHv
+	ti1X9l2i/sF3iwYCiGV+jdg9zLh+oq0pxCUBJxMT74gitzsbZNJyisNi3AlvEFj5EeydXIoo11B
+	qz8FD9fdYMhtM=
+X-Google-Smtp-Source: AGHT+IGWgsCt2VJ+xCYl+IyLUHn4O6zIeOE3pXBGBweoMCG8vV78TvvqZYiI5f6yHa+6cXVqILSgJQ==
+X-Received: by 2002:a05:6512:3e13:b0:55c:e752:e9b9 with SMTP id 2adb3069b0e04-55f0ccdd4c3mr1547336e87.2.1756068148375;
+        Sun, 24 Aug 2025 13:42:28 -0700 (PDT)
+Received: from [192.168.1.100] (88-112-128-43.elisa-laajakaista.fi. [88.112.128.43])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f3b939c3fsm992004e87.166.2025.08.24.13.42.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 24 Aug 2025 13:42:26 -0700 (PDT)
+Message-ID: <6aa2b8bc-caa5-44ea-8fd9-18c138a942d3@linaro.org>
+Date: Sun, 24 Aug 2025 23:42:26 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250824-sdm660-lpass-lpi-v1-3-003d5cc28234@yandex.ru>
-References: <20250824-sdm660-lpass-lpi-v1-0-003d5cc28234@yandex.ru>
-In-Reply-To: <20250824-sdm660-lpass-lpi-v1-0-003d5cc28234@yandex.ru>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, Nickolay Goppen <setotau@yandex.ru>, 
- Richard Acayan <mailingradian@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756068142; l=8797;
- i=setotau@yandex.ru; s=20250815; h=from:subject:message-id;
- bh=yyEQydoIE+MJbMTGAvlVS0a75IXP1UAi2TgmCLS314Q=;
- b=AsyhebLKXBpyIjE6gAjEbut4/bSkvN7vpr4LWsN8R0LDxPoexqgm9gkSmkEi+4xHFZ52M47e/
- IkGrjjSywe+CQPHP549cNFggQSZ9VHkM6+ISGjs1bR4BvpqzwfYefPp
-X-Developer-Key: i=setotau@yandex.ru; a=ed25519;
- pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
+User-Agent: Mozilla Thunderbird
+Subject: Re: camss NULL-deref on power on with 6.12-rc2
+To: Johan Hovold <johan@kernel.org>
+Cc: Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+In-Reply-To: <Zwjw6XfVWcufMlqM@hovoldconsulting.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-From: Richard Acayan <mailingradian@gmail.com>
-
-The Snapdragon 660 has a Low-Power Island (LPI) TLMM for configuring
-pins related to audio. Add the driver for this.
-Also, this driver uses it's own quirky pin_offset function like downstream
-driver does [1].
-
-[1] https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/LA.UM.7.2.c27-07400-sdm660.0/drivers/pinctrl/qcom/pinctrl-lpi.c#L107
-
-Co-developed-by: Nickolay Goppen <setotau@yandex.ru>
-Signed-off-by: Nickolay Goppen <setotau@yandex.ru>
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
----
- drivers/pinctrl/qcom/Kconfig                    |  10 ++
- drivers/pinctrl/qcom/Makefile                   |   1 +
- drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c | 196 ++++++++++++++++++++++++
- 3 files changed, 207 insertions(+)
-
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index dd9bbe8f3e11c37418d2143b33c21eeea10d456b..ef42520115f461302098d878cb76c6f25e55b5e4 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -68,6 +68,16 @@ config PINCTRL_SC7280_LPASS_LPI
- 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
- 	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
- 
-+config PINCTRL_SDM660_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SDM660 LPASS LPI pin controller driver"
-+	depends on GPIOLIB
-+	depends on ARM64 || COMPILE_TEST
-+	depends on PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SDM660 platform.
-+
- config PINCTRL_SM4250_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc SM4250 LPASS LPI pin controller driver"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index 954f5291cc37242baffc021e3c68d850aabd57cd..cea8617ac650ecfc75c2a0c745a53d6a1b829842 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -43,6 +43,7 @@ obj-$(CONFIG_PINCTRL_SC7280_LPASS_LPI) += pinctrl-sc7280-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SC8180X)	+= pinctrl-sc8180x.o
- obj-$(CONFIG_PINCTRL_SC8280XP)	+= pinctrl-sc8280xp.o
- obj-$(CONFIG_PINCTRL_SDM660)   += pinctrl-sdm660.o
-+obj-$(CONFIG_PINCTRL_SDM660_LPASS_LPI) += pinctrl-sdm660-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SDM670) += pinctrl-sdm670.o
- obj-$(CONFIG_PINCTRL_SDM845) += pinctrl-sdm845.o
- obj-$(CONFIG_PINCTRL_SDX55) += pinctrl-sdx55.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..788e1c019b0b7a22360d8c32180b5abf4d0fc0dc
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c
-@@ -0,0 +1,196 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * This driver is solely based on the limited information in downstream code.
-+ * Any verification with schematics would be greatly appreciated.
-+ *
-+ * Copyright (c) 2023, Richard Acayan. All rights reserved.
-+ */
-+
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/pinctrl/pinctrl.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_comp_rx,
-+	LPI_MUX_dmic12,
-+	LPI_MUX_dmic34,
-+	LPI_MUX_mclk0,
-+	LPI_MUX_pdm_2_gpios,
-+	LPI_MUX_pdm_clk,
-+	LPI_MUX_pdm_rx,
-+	LPI_MUX_pdm_sync,
-+
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
-+};
-+
-+static const u32 sdm660_lpi_offset[] = {
-+	0x00000000,
-+	0x00001000,
-+	0x00002000,
-+	0x00002010,
-+	0x00003000,
-+	0x00003010,
-+	0x00004000,
-+	0x00004010,
-+	0x00005000,
-+	0x00005010,
-+	0x00005020,
-+	0x00005030,
-+	0x00006000,
-+	0x00006010,
-+	0x00007000,
-+	0x00007010,
-+	0x00005040,
-+	0x00005050,
-+	0x00008000,
-+	0x00008010,
-+	0x00008020,
-+	0x00008030,
-+	0x00008040,
-+	0x00008050,
-+	0x00008060,
-+	0x00008070,
-+	0x00009000,
-+	0x00009010,
-+	0x0000A000,
-+	0x0000A010,
-+	0x0000B000,
-+	0x0000B010,
-+};
-+
-+static const struct pinctrl_pin_desc sdm660_lpi_pinctrl_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+	PINCTRL_PIN(15, "gpio15"),
-+	PINCTRL_PIN(16, "gpio16"),
-+	PINCTRL_PIN(17, "gpio17"),
-+	PINCTRL_PIN(18, "gpio18"),
-+	PINCTRL_PIN(19, "gpio19"),
-+	PINCTRL_PIN(20, "gpio20"),
-+	PINCTRL_PIN(21, "gpio21"),
-+	PINCTRL_PIN(22, "gpio22"),
-+	PINCTRL_PIN(23, "gpio23"),
-+	PINCTRL_PIN(24, "gpio24"),
-+	PINCTRL_PIN(25, "gpio25"),
-+	PINCTRL_PIN(26, "gpio26"),
-+	PINCTRL_PIN(27, "gpio27"),
-+	PINCTRL_PIN(28, "gpio28"),
-+	PINCTRL_PIN(29, "gpio29"),
-+	PINCTRL_PIN(30, "gpio30"),
-+	PINCTRL_PIN(31, "gpio31"),
-+};
-+
-+static const char * const comp_rx_groups[] = { "gpio22", "gpio24" };
-+static const char * const dmic12_groups[] = { "gpio26", "gpio28" };
-+static const char * const dmic34_groups[] = { "gpio27", "gpio29" };
-+static const char * const mclk0_groups[] = { "gpio18" };
-+static const char * const pdm_2_gpios_groups[] = { "gpio20" };
-+static const char * const pdm_clk_groups[] = { "gpio18" };
-+static const char * const pdm_rx_groups[] = { "gpio21", "gpio23", "gpio25" };
-+static const char * const pdm_sync_groups[] = { "gpio19" };
-+
-+const struct lpi_pingroup sdm660_lpi_pinctrl_groups[] = {
-+	LPI_PINGROUP(0, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(1, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(2, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(3, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(4, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(5, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(6, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(7, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(8, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(9, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(10, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(11, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(12, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(13, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(14, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(15, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(16, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(17, LPI_NO_SLEW, _, _, _, _),
-+
-+	/* The function names of the PDM GPIOs are derived from SDM670 */
-+	LPI_PINGROUP(18, LPI_NO_SLEW, pdm_clk, mclk0, _, _),
-+	LPI_PINGROUP(19, LPI_NO_SLEW, pdm_sync, _, _, _),
-+	LPI_PINGROUP(20, LPI_NO_SLEW, pdm_2_gpios, _, _, _),
-+	LPI_PINGROUP(21, LPI_NO_SLEW, pdm_rx, _, _, _),
-+	LPI_PINGROUP(22, LPI_NO_SLEW, comp_rx, _, _, _),
-+	LPI_PINGROUP(23, LPI_NO_SLEW, pdm_rx, _, _, _),
-+	LPI_PINGROUP(24, LPI_NO_SLEW, comp_rx, _, _, _),
-+	LPI_PINGROUP(25, LPI_NO_SLEW, pdm_rx, _, _, _),
-+	LPI_PINGROUP(26, LPI_NO_SLEW, dmic12, _, _, _),
-+	LPI_PINGROUP(27, LPI_NO_SLEW, dmic34, _, _, _),
-+	LPI_PINGROUP(28, LPI_NO_SLEW, dmic12, _, _, _),
-+	LPI_PINGROUP(29, LPI_NO_SLEW, dmic34, _, _, _),
-+
-+	LPI_PINGROUP(30, LPI_NO_SLEW, _, _, _, _),
-+	LPI_PINGROUP(31, LPI_NO_SLEW, _, _, _, _),
-+};
-+
-+const struct lpi_function sdm660_lpi_pinctrl_functions[] = {
-+	LPI_FUNCTION(comp_rx),
-+	LPI_FUNCTION(dmic12),
-+	LPI_FUNCTION(dmic34),
-+	LPI_FUNCTION(mclk0),
-+	LPI_FUNCTION(pdm_2_gpios),
-+	LPI_FUNCTION(pdm_clk),
-+	LPI_FUNCTION(pdm_rx),
-+	LPI_FUNCTION(pdm_sync),
-+};
-+
-+static u32 pin_offset_sdm660(int pin_id)
-+{
-+	return sdm660_lpi_offset[pin_id];
-+}
-+
-+static const struct lpi_pinctrl_variant_data sdm660_lpi_pinctrl_data = {
-+	.pins = sdm660_lpi_pinctrl_pins,
-+	.npins = ARRAY_SIZE(sdm660_lpi_pinctrl_pins),
-+	.groups = sdm660_lpi_pinctrl_groups,
-+	.ngroups = ARRAY_SIZE(sdm660_lpi_pinctrl_groups),
-+	.functions = sdm660_lpi_pinctrl_functions,
-+	.nfunctions = ARRAY_SIZE(sdm660_lpi_pinctrl_functions),
-+	.flags = LPI_FLAG_SLEW_RATE_SAME_REG,
-+	.pin_offset = pin_offset_sdm660,
-+};
-+
-+static const struct of_device_id sdm660_lpi_pinctrl_of_match[] = {
-+	{
-+		.compatible = "qcom,sdm660-lpass-lpi-pinctrl",
-+		.data = &sdm660_lpi_pinctrl_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, sdm660_lpi_pinctrl_of_match);
-+
-+static struct platform_driver sdm660_lpi_pinctrl_driver = {
-+	.driver = {
-+		.name = "qcom-sdm660-lpass-lpi-pinctrl",
-+		.of_match_table = sdm660_lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove = lpi_pinctrl_remove,
-+};
-+module_platform_driver(sdm660_lpi_pinctrl_driver);
-+
-+MODULE_AUTHOR("Richard Acayan <mailingradian@gmail.com>");
-+MODULE_DESCRIPTION("QTI SDM660 LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
-
--- 
-2.51.0
-
+SGkgSm9oYW4uDQoNCk9uIDEwLzExLzI0IDEyOjMzLCBKb2hhbiBIb3ZvbGQgd3JvdGU6DQo+
+IEhpLA0KPiANCj4gVGhpcyBtb3JuaW5nIEkgaGl0IHRoZSBiZWxvdyBOVUxMLWRlcmVmIGlu
+IGNhbXNzIHdoZW4gYm9vdGluZyBhIDYuMTItcmMyDQo+IGtlcm5lbCBvbiB0aGUgTGVub3Zv
+IFRoaW5rUGFkIFgxM3MuDQo+IA0KPiBJIGJvb3RlZCB0aGUgc2FtZSBrZXJuZWwgYW5vdGhl
+ciA1MCB0aW1lcyB3aXRob3V0IGhpdHRpbmcgaXQgYWdhaW4gaXQgc28NCj4gaXQgbWF5IG5v
+dCBiZSBhIHJlZ3Jlc3Npb24sIGJ1dCBzaW1wbHkgYW4gb2xkZXIsIGhhcmQgdG8gaGl0IGJ1
+Zy4NCj4gDQo+IEhvcGVmdWxseSB5b3UgY2FuIGZpZ3VyZSBvdXQgd2hhdCB3ZW50IHdyb25n
+IGZyb20ganVzdCBzdGFyaW5nIGF0IHRoZQ0KPiBvb3BzIGFuZCBjb2RlLg0KPiANCj4gSm9o
+YW4NCj4gDQo+IA0KPiBbICAgIDUuNjU3ODYwXSBvdjU2NzUgMjQtMDAxMDogZmFpbGVkIHRv
+IGdldCBIVyBjb25maWd1cmF0aW9uOiAtNTE3DQo+IFsgICAgNS42NzYxODNdIHZyZWdfbDZx
+OiBCcmluZ2luZyAyODAwMDAwdVYgaW50byAxODAwMDAwLTE4MDAwMDB1Vg0KPiANCj4gWyAg
+ICA2LjUxNzY4OV0gcWNvbS1jYW1zcyBhYzVhMDAwLmNhbXNzOiBBZGRpbmcgdG8gaW9tbXUg
+Z3JvdXAgMjINCj4gDQo+IFsgICAgNi41ODkyMDFdIFVuYWJsZSB0byBoYW5kbGUga2VybmVs
+IE5VTEwgcG9pbnRlciBkZXJlZmVyZW5jZSBhdCB2aXJ0dWFsIGFkZHJlc3MgMDAwMDAwMDAw
+MDAwMDAzMA0KPiBbICAgIDYuNTg5NjI1XSBNZW0gYWJvcnQgaW5mbzoNCj4gWyAgICA2LjU4
+OTk2MF0gICBFU1IgPSAweDAwMDAwMDAwOTYwMDAwMDQNCj4gWyAgICA2LjU5MDI5M10gICBF
+QyA9IDB4MjU6IERBQlQgKGN1cnJlbnQgRUwpLCBJTCA9IDMyIGJpdHMNCj4gWyAgICA2LjU5
+MDYzMF0gICBTRVQgPSAwLCBGblYgPSAwDQo+IFsgICAgNi41OTE2MTldICAgRUEgPSAwLCBT
+MVBUVyA9IDANCj4gWyAgICA2LjU5MTk2OF0gICBGU0MgPSAweDA0OiBsZXZlbCAwIHRyYW5z
+bGF0aW9uIGZhdWx0DQo+IFsgICAgNi41OTIyOThdIERhdGEgYWJvcnQgaW5mbzoNCj4gWyAg
+ICA2LjU5MjYyMV0gICBJU1YgPSAwLCBJU1MgPSAweDAwMDAwMDA0LCBJU1MyID0gMHgwMDAw
+MDAwMA0KPiBbICAgIDYuNTkzMTEyXSAgIENNID0gMCwgV25SID0gMCwgVG5EID0gMCwgVGFn
+QWNjZXNzID0gMA0KPiBbICAgIDYuNTkzNDUwXSAgIEdDUyA9IDAsIE92ZXJsYXkgPSAwLCBE
+aXJ0eUJpdCA9IDAsIFhzID0gMA0KPiBbICAgIDYuNTkzNzgzXSB1c2VyIHBndGFibGU6IDRr
+IHBhZ2VzLCA0OC1iaXQgVkFzLCBwZ2RwPTAwMDAwMDAxMGRhZWYwMDANCj4gWyAgICA2LjU5
+NDEzOV0gWzAwMDAwMDAwMDAwMDAwMzBdIHBnZD0wMDAwMDAwMDAwMDAwMDAwLCBwNGQ9MDAw
+MDAwMDAwMDAwMDAwMA0KPiBbICAgIDYuNTk0MjE0XSBJbnRlcm5hbCBlcnJvcjogT29wczog
+MDAwMDAwMDA5NjAwMDAwNCBbIzFdIFBSRUVNUFQgU01QDQo+IFsgICAgNi41OTQ3NTNdIE1v
+ZHVsZXMgbGlua2VkIGluOiBxcnRyX21oaSBjYmMgZGVzX2dlbmVyaWMgbGliZGVzIGFsZ2lm
+X3NrY2lwaGVyIG1kNSBhbGdpZl9oYXNoIGFmX2FsZyBpcDZfdGFibGVzIHh0X0xPRyBuZl9s
+b2dfc3lzbG9nIHI4MTUyIGlwdF9SRUpFQ1QgbWlpIG5mX3JlamVjdF9pcHY0IGxpYnBoeSB4
+dF90Y3B1ZHAgeHRfY29ubnRyYWNrIG5mX2Nvbm50cmFjayBsaWJjcmMzMmMgbmZfZGVmcmFn
+X2lwdjYgbmZfZGVmcmFnX2lwdjQgaXB0YWJsZV9maWx0ZXIgcWNvbV9wbTgwMDhfcmVndWxh
+dG9yIG92NTY3NSBzbmRfcTZhcG0oKykgaGNpX3VhcnQgYnRxY2EgdmVudXNfZW5jIHZlbnVz
+X2RlYyBibHVldG9vdGggdmlkZW9idWYyX2RtYV9jb250aWcgcWNvbV9wbTgwMDggcG1pY19n
+bGlua19hbHRtb2RlIHFjb21fc3BtaV9hZGM1IGxlZHNfcWNvbV9scGcgcWNvbV9zcG1pX2Fk
+Y190bTUgbWZkX2NvcmUgc25kX3NvY19zYzgyODB4cCBxY29tX3NwbWlfdGVtcF9hbGFybSBx
+Y29tX3BvbiBycG1zZ19jdHJsIGVjZGhfZ2VuZXJpYyBmYXN0cnBjIGFwciBycG1zZ19jaGFy
+IHFydHJfc21kIHFjb21fcGRfbWFwcGVyIHJ0Y19wbTh4eHggcWNvbV9iYXR0bWdyIGVjYyBh
+dXhfaHBkX2JyaWRnZSByZWJvb3RfbW9kZSBxY29tX3ZhZGNfY29tbW9uIGluZHVzdHJpYWxp
+byBudm1lbV9xY29tX3NwbWlfc2RhbSBsZWRfY2xhc3NfbXVsdGljb2xvciByZWdtYXBfaTJj
+IGkyY19oaWRfb2ZfZWxhbiBzbmRfc29jX3Fjb21fY29tbW9uIHNuZF9zb2NfcWNvbV9zZHcg
+cHdyc2VxX3Fjb21fd2NuIGF0aDExa19wY2kgcWNvbV9jYW1zcyB2ZW51c19jb3JlIHZpZGVv
+YnVmMl9kbWFfc2cgdmlkZW9idWYyX21lbW9wcyB2NGwyX21lbTJtZW0gdjRsMl9md25vZGUg
+dmlkZW9idWYyX3Y0bDIgbXNtIHY0bDJfYXN5bmMgdmlkZW9idWYyX2NvbW1vbiBxY29tX3N0
+YXRzIGdwaW9fc2J1X211eCBhdGgxMWsgdmlkZW9kZXYgZHJtX2V4ZWMgZGlzcGNjX3NjODI4
+MHhwIHNuZF9zb2Nfd2NkOTM4eCBwaHlfcWNvbV9lZHAgZ3B1X3NjaGVkDQo+IFsgICAgNi41
+OTQ4MTRdICBzbmRfc29jX3djZF9jbGFzc2ggc25kX3NvY193Y2Q5Mzh4X3NkdyBtYWM4MDIx
+MSBkcm1fZGlzcGxheV9oZWxwZXIgbWMgc25kX3NvY19scGFzc19yeF9tYWNybyBzbmRfc29j
+X2xwYXNzX3dzYV9tYWNybyBkcm1fZHBfYXV4X2J1cyBzbmRfc29jX2xwYXNzX3R4X21hY3Jv
+IHNuZF9zb2NfbHBhc3NfdmFfbWFjcm8gY2FtY2Nfc2M4MjgweHAgcmVnbWFwX3NkdyB2aWRl
+b2NjX3NtODM1MCBpMmNfcWNvbV9jY2kgc291bmR3aXJlX3Fjb20gc25kX3NvY193Y2RfbWJo
+YyBsaWJhcmM0IHNuZF9zb2NfbHBhc3NfbWFjcm9fY29tbW9uIHBoeV9xY29tX3FtcF9jb21i
+byBjZmc4MDIxMSBxY29tX3E2djVfcGFzIGxsY2NfcWNvbSBhdXhfYnJpZGdlIHNuZF9zb2Nf
+Y29yZSBzbmRfY29tcHJlc3MgcWNvbV9waWxfaW5mbyByZmtpbGwgcWNvbV9jb21tb24gc25k
+X3BjbSBxY29tX2dsaW5rX3NtZW0gcGNpX3B3cmN0bF9wd3JzZXEgZHJtX2ttc19oZWxwZXIg
+cGNpX3B3cmN0bF9jb3JlIG1oaSB0eXBlYyBxY29tX2dsaW5rIHB3cnNlcV9jb3JlIGljY19i
+d21vbiBzbmRfdGltZXIgcGh5X3Fjb21fcW1wX3VzYiBxcnRyIHBoeV9xY29tX3NucHNfZmVt
+dG9fdjIgcWNvbV9xNnY1IGdwdWNjX3NjODI4MHhwIHBpbmN0cmxfc2M4MjgweHBfbHBhc3Nf
+bHBpIHNuZCBxY29tX3N5c21vbiBwaW5jdHJsX2xwYXNzX2xwaSBscGFzc2NjX3NjODI4MHhw
+IHBtaWNfZ2xpbmsgc291bmRjb3JlIG1kdF9sb2FkZXIgcGRyX2ludGVyZmFjZSBzb3VuZHdp
+cmVfYnVzIHFjb21fcm5nIHJwbXNnX2NvcmUgbGVkc19ncGlvIGlucHV0X2xlZHMgcWNvbV9w
+ZHJfbXNnIHNvY2luZm8gcW1pX2hlbHBlcnMgcm5nX2NvcmUgcWNvbV93ZHQgcHdtX2JsIGlj
+Y19vc21fbDMgbGVkX2NsYXNzIGZ1c2UgZG1fbW9kIGlwX3RhYmxlcyB4X3RhYmxlcyBpcHY2
+IGF1dG9mczQgcGNpZV9xY29tIGNyYzggcGh5X3Fjb21fcW1wX3BjaWUgbnZtZSBudm1lX2Nv
+cmUgaGlkX211bHRpdG91Y2ggaTJjX3Fjb21fZ2VuaSBpMmNfaGlkX29mIGkyY19oaWQgZHJt
+DQo+IFsgICAgNi41OTQ4NjZdICBpMmNfY29yZQ0KPiBbICAgIDYuNTk0ODY4XSBDUFU6IDAg
+VUlEOiAwIFBJRDogNTU3IENvbW06IHY0bF9pZCBOb3QgdGFpbnRlZCA2LjEyLjAtcmMyICMx
+NjUNCj4gWyAgICA2LjU5NDg3MV0gSGFyZHdhcmUgbmFtZTogTEVOT1ZPIDIxQllaOVNSVVMv
+MjFCWVo5U1JVUywgQklPUyBOM0hFVDg3VyAoMS41OSApIDEyLzA1LzIwMjMNCj4gWyAgICA2
+LjU5NDg3Ml0gcHN0YXRlOiA4MDQwMDAwNSAoTnpjdiBkYWlmICtQQU4gLVVBTyAtVENPIC1E
+SVQgLVNTQlMgQlRZUEU9LS0pDQo+IFsgICAgNi41OTQ4NzRdIHBjIDogY2Ftc3NfZmluZF9z
+ZW5zb3IrMHgyMC8weDc0IFtxY29tX2NhbXNzXQ0KPiBbICAgIDYuNTk0ODg1XSBsciA6IGNh
+bXNzX2dldF9waXhlbF9jbG9jaysweDE4LzB4NjAgW3Fjb21fY2Ftc3NdDQo+IFsgICAgNi41
+OTQ4ODldIHNwIDogZmZmZjgwMDA4MmQ1MzhmMA0KPiBbICAgIDYuNTk0ODkwXSB4Mjk6IGZm
+ZmY4MDAwODJkNTM4ZjAgeDI4OiBmZmZmODAwMDgyZDUzYzcwIHgyNzogZmZmZjY3MGNjMDQw
+NDYxOA0KPiBbICAgIDYuNTk0ODkzXSB4MjY6IDAwMDAwMDAwMDAwMDAwMDAgeDI1OiAwMDAw
+MDAwMDAwMDAwMDAwIHgyNDogZmZmZjY3MGNkMzMxNzNkMA0KPiBbICAgIDYuNTk0ODk1XSB4
+MjM6IGZmZmY4MDAwODJkNTM5YTggeDIyOiBmZmZmNjcwY2QzMzE5MmM4IHgyMTogZmZmZjgw
+MDA4MmQ1MzliOA0KPiBbICAgIDYuNTk0ODk4XSB4MjA6IDAwMDAwMDAwMDAwMDAwMDIgeDE5
+OiAwMDAwMDAwMDAwMDIwMDAxIHgxODogMDAwMDAwMDAwMDAwMDAwMA0KPiBbICAgIDYuNTk0
+OTAwXSB4MTc6IDAwMDAwMDAwMDAwMDAwMDAgeDE2OiBmZmZmYmYwYmZmYmVjZGQwIHgxNTog
+MDAwMDAwMDAwMDAwMDAwMQ0KPiBbICAgIDYuNTk0OTAyXSB4MTQ6IGZmZmY2NzBjYzVjOTUz
+MDAgeDEzOiBmZmZmNjcwY2MwYjM4OTgwIHgxMjogZmZmZjY3MGNjNWM5NWJhOA0KPiBbICAg
+IDYuNTk0OTA1XSB4MTE6IGZmZmZiZjBjMDBmNzMwMDAgeDEwOiAwMDAwMDAwMDAwMDAwMDAw
+IHg5IDogMDAwMDAwMDAwMDAwMDAwMA0KPiBbICAgIDYuNTk0OTA3XSB4OCA6IGZmZmZiZjBj
+MDA4NWQwMDAgeDcgOiAwMDAwMDAwMDAwMDAwMDAwIHg2IDogMDAwMDAwMDAwMDAwMDA3OA0K
+PiBbICAgIDYuNTk0OTEwXSB4NSA6IDAwMDAwMDAwMDAwMDAwMDAgeDQgOiBmZmZmNjcwY2Qz
+MzE4NTk4IHgzIDogZmZmZjY3MGNkMzMxODQ2OA0KPiBbICAgIDYuNTk0OTEyXSB4MiA6IGZm
+ZmY2NzBjZDMzMTc3MjggeDEgOiBmZmZmODAwMDgyZDUzOWI4IHgwIDogMDAwMDAwMDAwMDAw
+MDAwMA0KPiBbICAgIDYuNTk0OTE1XSBDYWxsIHRyYWNlOg0KPiBbICAgIDYuNTk0OTE1XSAg
+Y2Ftc3NfZmluZF9zZW5zb3IrMHgyMC8weDc0IFtxY29tX2NhbXNzXQ0KPiBbICAgIDYuNTk0
+OTIwXSAgY2Ftc3NfZ2V0X3BpeGVsX2Nsb2NrKzB4MTgvMHg2MCBbcWNvbV9jYW1zc10NCj4g
+WyAgICA2LjU5NDkyNF0gIHZmZV9nZXQrMHhiOC8weDUwNCBbcWNvbV9jYW1zc10NCj4gWyAg
+ICA2LjU5NDkzMV0gIHZmZV9zZXRfcG93ZXIrMHgzMC8weDU4IFtxY29tX2NhbXNzXQ0KPiBb
+ICAgIDYuNTk0OTM2XSAgcGlwZWxpbmVfcG1fcG93ZXJfb25lKzB4MTNjLzB4MTUwIFt2aWRl
+b2Rldl0NCj4gWyAgICA2LjU5NDk1MV0gIHBpcGVsaW5lX3BtX3Bvd2VyLnBhcnQuMCsweDU4
+LzB4ZjQgW3ZpZGVvZGV2XQ0KPiBbICAgIDYuNTk0OTYwXSAgdjRsMl9waXBlbGluZV9wbV91
+c2UrMHg1OC8weDk0IFt2aWRlb2Rldl0NCj4gWyAgICA2LjU5NDk2OV0gIHY0bDJfcGlwZWxp
+bmVfcG1fZ2V0KzB4MTQvMHgyMCBbdmlkZW9kZXZdDQo+IFsgICAgNi41OTQ5NzhdICB2aWRl
+b19vcGVuKzB4NzgvMHhmNCBbcWNvbV9jYW1zc10NCj4gWyAgICA2LjU5NDk4Ml0gIHY0bDJf
+b3BlbisweDgwLzB4MTIwIFt2aWRlb2Rldl0NCg0KQXMgeW91IHJlbWVtYmVyIHRoZSBwcm9i
+bGVtIGhhcyBiZWVuIGRpc2N1c3NlZCBpbiB0aGUgcGFzdCBbMV0sIGZvcg0KeW91ciBpbmZv
+cm1hdGlvbiB0aGUgaXNzdWUgaGFzIGJlZW4gaW5kaXJlY3RseSBmaXhlZCBpbiB2Ni4xNy1y
+YzEgYnkNCmdldHRpbmcgcmlkIG9mIHY0bDJfcGlwZWxpbmVfcG1fZ2V0KCkgZnJvbSAub3Bl
+biwgc2VlIGNvbW1pdA0KMTY0MjAyZjY4MjAzICgibWVkaWE6IHFjb206IGNhbXNzOiBQb3dl
+ciBwaXBlbGluZSBvbmx5IHdoZW4gc3RyZWFtaW5nIikuDQoNClN0aWxsIHRoZSBvbGQgcmFj
+ZSBpcyBsZWZ0IHVucmVzb2x2ZWQsIGFuZCBpdCBjb3VsZCBsZWFkIHRvIGEgTlVMTA0KcG9p
+bnRlciBkZXJlZmVyZW5jZSwgYnV0IHByYWN0aWNhbGx5IGl0IHdvdWxkIGJlIGNsb3NlIHRv
+IGltcG9zc2libGUgdG8NCnJlcHJvZHVjZSBpdCwgc2luY2Ugb25lIG1vcmUgc3RlcCBvZiBz
+dGFydGluZyBhIHZpZGVvIHN0cmVhbSBpcyBuZWVkZWQuDQoNCj4gWyAgICA2LjU5NDk5MV0g
+IGNocmRldl9vcGVuKzB4YjQvMHgyMDQNCj4gWyAgICA2LjU5NDk5Nl0gIGRvX2RlbnRyeV9v
+cGVuKzB4MTM4LzB4NGQwDQo+IFsgICAgNi41OTUwMDBdICB2ZnNfb3BlbisweDJjLzB4ZTQN
+Cj4gWyAgICA2LjU5NTAwM10gIHBhdGhfb3BlbmF0KzB4MmI0LzB4OWZjDQo+IFsgICAgNi41
+OTUwMDVdICBkb19maWxwX29wZW4rMHg4MC8weDEzMA0KPiBbICAgIDYuNTk1MDA3XSAgZG9f
+c3lzX29wZW5hdDIrMHhiNC8weGU4DQo+IFsgICAgNi41OTUwMTBdICBfX2FybTY0X3N5c19v
+cGVuYXQrMHg2NC8weGFjDQo+IFsgICAgNi41OTUwMTJdICBpbnZva2Vfc3lzY2FsbCsweDQ4
+LzB4MTEwDQo+IFsgICAgNi41OTUwMTZdICBlbDBfc3ZjX2NvbW1vbi5jb25zdHByb3AuMCsw
+eGMwLzB4ZTANCj4gWyAgICA2LjU5NTAxOF0gIGRvX2VsMF9zdmMrMHgxYy8weDI4DQo+IFsg
+ICAgNi41OTUwMjFdICBlbDBfc3ZjKzB4NDgvMHgxMTQNCj4gWyAgICA2LjU5NTAyM10gIGVs
+MHRfNjRfc3luY19oYW5kbGVyKzB4YzAvMHhjNA0KPiBbICAgIDYuNTk1MDI1XSAgZWwwdF82
+NF9zeW5jKzB4MTkwLzB4MTk0DQo+IFsgICAgNi41OTUwMjhdIENvZGU6IDUyODAwMDMzIDcy
+YTAwMDUzIGQ1MDMyMDFmIGY5NDAyNDAwIChmOTQwMTgwMSkNCj4gWyAgICA2LjU5NTAyOV0g
+LS0tWyBlbmQgdHJhY2UgMDAwMDAwMDAwMDAwMDAwMCBdLS0tDQoNClsxXSBodHRwczovL2xv
+cmUua2VybmVsLm9yZy9hbGwvYUVfaGxHSGtSWnFGRmFjUkBob3ZvbGRjb25zdWx0aW5nLmNv
+bS8NCg0KLS0gDQpCZXN0IHdpc2hlcywNClZsYWRpbWlyDQo=
 
