@@ -1,69 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-70506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3601B32D3A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 05:01:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7509CB32D41
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 05:02:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C41F91B66C8E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 02:59:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BF6721882DB1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 03:00:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7726D242D8E;
-	Sun, 24 Aug 2025 02:56:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40699246768;
+	Sun, 24 Aug 2025 02:56:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mp/L285J"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LQmaTTGK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDB1242D6C;
-	Sun, 24 Aug 2025 02:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D58524502D;
+	Sun, 24 Aug 2025 02:56:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756004176; cv=none; b=SeaLnaD+moxFjHa1CPwLdGYiNwfKNju540+D6J2Mz/aFblrd5LQnxUG69R5k+njM3VYmPNYmdCLmvKSkjTOeyKDObpFeGSAuhACaztofnKv86ESCJF91TB8PrUhmjEMmdoHSFMyuryZM9UPNXqbRlD3hsY2JuoFWUHchKbiF9tw=
+	t=1756004177; cv=none; b=VsuYn69RoE87ZPTtszJec/zSJ3izinbL3wOn+J6FpaN2Gm15l0RolCi4Bb36V/N3kYi2kRWhqDnbmSZeRrpdV7AP7fqxKYrUbxrJ8DxsUyxtzGDWvE4AYLuUpYgdnEQRhdzMTL5WEj3Z64gWyZyf5ADyk7UHNjcnPkHcja2X9Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756004176; c=relaxed/simple;
-	bh=YoBQlm0ulSox3GmjDc721psnQpnF9RNfbeehuLeMArQ=;
+	s=arc-20240116; t=1756004177; c=relaxed/simple;
+	bh=Ib6MVpnSQ/lRd4i3sjkAEuseQhQRFD3H7JWFSjhFmqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RkkQOKFhsA9lLarMSEWHL8IP3U3a3aV/HJoPkQ85AfjA4VF1tJuSw2qlfGTlxBBe6vKMLdlzwSB7wqqpBrCQl6WHuEctKg91qOZwfgor55Id2wLJZVUVuz++mHZkOi7dikNPOI6rdfqBBF5t8mlyKCqgjfgJNNv3NT1Xxv4uIts=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mp/L285J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9736C113D0;
-	Sun, 24 Aug 2025 02:56:14 +0000 (UTC)
+	 MIME-Version:Content-Type; b=GP18T47JY8MfTwkvQo1TTP+iFulckSh98vZjVvvlvr7JB28JX3YSISgjSXYaYVFsQrt/lPN7t5/iqbe6QTaeG+g0hqdp5HUAmvNLJ7IL/og4mE3YjXkydzcZSD3qd1Y5b61o9szTY2igUjFq+szS56+Y1srpLQxE1WEmxGPutOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LQmaTTGK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C2AC4CEE7;
+	Sun, 24 Aug 2025 02:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756004175;
-	bh=YoBQlm0ulSox3GmjDc721psnQpnF9RNfbeehuLeMArQ=;
+	s=k20201202; t=1756004176;
+	bh=Ib6MVpnSQ/lRd4i3sjkAEuseQhQRFD3H7JWFSjhFmqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mp/L285JmYGRq+LCzcFVp1/DXEJ7HSy6Cc9KXQqpsziPWkWnNQLZK0qZxkfoWnhK2
-	 9wMvO/Lbquii8jgBLvTHVP/m0MAmqD2m9rGUHynZmBz5TG+aUIHVk3+N3GL+WkAl9k
-	 YbZCC2+FzASNo6EHgrRystdht53vhg8kTBM6i01Wr86FHgWWfAxnWiD/4v/qb3fK27
-	 m9R8D+DMEFJNvhkxCY7+30SKVPzfw7ls128wCD9LJLu9s79gWHW0k+jW8UWJqzPwwQ
-	 3IHFZtBPS3/ynhQ4mqcdfzqmMeA8U9YnW+B5tKrTGlHTq+nEZCNxOiP0qNUp1SzFf5
-	 B7gXsaqrkpr5g==
+	b=LQmaTTGK8Nh0htH/TLQpP/x9S1ic3SCnoDHnPezeQtTCdxOwesn/fOAalUa4wnEQN
+	 UzVnwO4BvyuZef92lneud8zyALjxD61JCVuH06fyPlS65fuhLkG7u1z4WYYMp9C0B0
+	 bqN28Dh7LK+ihhCxOkR7qtRPg/SaFaxIJS9ni0Xy3/3HX6BZyb0VeLHovqDPhxMWWd
+	 JbZXVPTI8DX072eWRAEONMZMFb0bhZpR1r2LQfNUshop6DMv09KXxDusgKwopbmhL/
+	 wXfWNNMKkwEnCQD7z1CuyyovSBZw4gypgpR7jstHHeZ/I/MZS5Kg7CfVuOzPj0suTG
+	 z/cMlGQvXuaVQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
+To: linux-kernel@vger.kernel.org,
+	Raymond Hackley <raymondhackley@protonmail.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>
-Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
-	Imran Shaik <quic_imrashai@quicinc.com>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-pm@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v5 0/3] Add support for clock controllers and CPU scaling for QCS615
-Date: Sat, 23 Aug 2025 21:55:49 -0500
-Message-ID: <175600415261.952266.11240532352802429049.b4-ty@kernel.org>
+	phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH] ARM: dts: qcom: msm8226-samsung-ms013g: Add touch keys
+Date: Sat, 23 Aug 2025 21:55:50 -0500
+Message-ID: <175600415263.952266.15140026240923293247.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250702-qcs615-mm-cpu-dt-v4-v5-0-df24896cbb26@quicinc.com>
-References: <20250702-qcs615-mm-cpu-dt-v4-v5-0-df24896cbb26@quicinc.com>
+In-Reply-To: <20250708122118.157791-1-raymondhackley@protonmail.com>
+References: <20250708122118.157791-1-raymondhackley@protonmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,26 +68,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 02 Jul 2025 14:43:08 +0530, Taniya Das wrote:
-> Add the video, camera, display and gpu clock controller nodes and the
-> cpufreq-hw node to support cpu scaling.
+On Tue, 08 Jul 2025 12:21:42 +0000, Raymond Hackley wrote:
+> Touch keys feature on Galaxy Grand 2 is provided by Zinitix touchscreen.
+> Add property linux,keycodes to enable touch keys.
 > 
-> Clock Dependency:
-> https://lore.kernel.org/all/20250702-qcs615-mm-v10-clock-controllers-v11-0-9c216e1615ab@quicinc.com
 > 
-> Changes in v5:
-> - Update the documentation for CPUFREQ-HW for QCS615.
-> - Update the device tree node for cpufreq-hw to point to the new compatible.
-> - Link to v4: https://lore.kernel.org/r/20250625-qcs615-mm-cpu-dt-v4-v4-0-9ca880c53560@quicinc.com
-> 
-> [...]
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: qcs615: Add clock nodes for multimedia clock
-      commit: f9c36698db91780eed4ee3a90794bda2a4252166
-[3/3] arm64: dts: qcom: qcs615: Add CPU scaling clock node
-      commit: fecc6e0b0260279cd1508903db62f370ef4530d4
+[1/1] ARM: dts: qcom: msm8226-samsung-ms013g: Add touch keys
+      commit: e0d48bea315a4beef9e76c8d6ba7bc95948582cc
 
 Best regards,
 -- 
