@@ -1,63 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-70495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70496-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68636B32D16
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 04:57:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 09C90B32D19
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 04:58:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D0AF1B666EB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 02:57:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BC401B66CC3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 02:57:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E7B32147F5;
-	Sun, 24 Aug 2025 02:56:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7312321A43C;
+	Sun, 24 Aug 2025 02:56:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lMdmy+oX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bgMUQyFt"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E321CEACB;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D04219315;
 	Sun, 24 Aug 2025 02:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756004166; cv=none; b=kkfWdPIoGZvCjihpuuHdLG3gB7x9in7W6DmE/FfOqIuXLApJShipxZNrKMXWiMTy/29+FJJ44eQPI6lZNWtKljsjtd2IRS0sgDLWr0udv/LiQqLquDp1ebTYMg2Wd9DJUoGFkgKYhlhY/EdQFaFUGk+qsND9gcEmKZJ8WGc75OE=
+	t=1756004167; cv=none; b=pFMXsbteb906lHqiT+5o37EIn6bptY6pSjApnroAdoquRjWZ+1VeYOgZfBsjCmhkHsKmq55fpPTCD1ViE3UgRSiVJQK9JQMvIIuo2wlWe43T/b8a1iofi/BV0lJv/VHnDKy66u7drQuKgXS1M0J4gipHenyeQvGWY7bMdJcj5S0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756004166; c=relaxed/simple;
-	bh=Xo9dMBAwRvw5oPH2A209J/ZEJUT9khYptiOgPCJ4lm0=;
+	s=arc-20240116; t=1756004167; c=relaxed/simple;
+	bh=hg6MdezxFyiTA2XfYrbbTxxhde8E6qHMRL5Sq+vk1l0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Av8lwsorcrybbQD45T3ujtJaxtygGPY4obB6Uz2wdRZr6UagueNpFyKoq6HvwFpcrhy+0j0fVUYti5U9FVZ2r3cCX/M3R/4f6LC54VkWSQB97/g/3qPWFR17QgTmmb2Wi+Bq9GL27GbaGEOqzG4PPehkcGVmBktN+tgN3QR/QL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lMdmy+oX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59132C113D0;
-	Sun, 24 Aug 2025 02:56:05 +0000 (UTC)
+	 MIME-Version:Content-Type; b=IZIBgHBqn4hsI7emLZL1ymnEjyCXDP4Pb6MJHfwk8v1EyBmW1vXcl4WnQsgvAGqEUvFcuQHcU1kNhkCkff6rVhBDC7GztzwhV4bZ1BiLQnOdMq7TBNKNUTQl3K/h33tBJ5r05xHuEimhZAFBbtEvpRJrETQWpwbpk0F1ma3THrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bgMUQyFt; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47331C2BCB9;
+	Sun, 24 Aug 2025 02:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1756004166;
-	bh=Xo9dMBAwRvw5oPH2A209J/ZEJUT9khYptiOgPCJ4lm0=;
+	bh=hg6MdezxFyiTA2XfYrbbTxxhde8E6qHMRL5Sq+vk1l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMdmy+oX/m5BZlMyjqJf5/A4dmyI5hV05h8c9ekQoTOOtuRaPqmSpp7EV77iGfO2v
-	 cKm2inPOWa4/3/lrENK3cN18MctUOuaXyejMsUwNgG8O8UeFzsTTqMgoxPEEJKPtIH
-	 SKHHxnyvf9lc/BwwOHxa01JegEq4w3/+MnTXfUjK7lxVCqFa9Dc9cMdZR+dXke107I
-	 KJER39fFq+606FSjzm6ZTKM7liNLj45wVONEvdMdwjuGQF1FjvUmbtJ8Fw4UXlsuAN
-	 4IZXVQbkDxAh72VMGLDJlljVbXkeevjtMsVPDuCVpE6isu9za6xIcDdKUiORMOvsRB
-	 YSP0wLZ9hx38A==
+	b=bgMUQyFtWfS08rugruHFayJztukGAM5pvAikeij057SWN7KIPw7A71oQXxpr8uqM8
+	 qnmNmqRJQkKzH9kbyb47dyq4srXWHo1B1UP02AdZRnAzT9H1KsSQKVV2l/ypAZdrqn
+	 ffOPw6OA4lXYoLUV6Rgp78MQXBUr2tle/LRI3uHEB9vBDGwvESCRnUOTSKdG7mU7eY
+	 QLFL5T8wKySuTNRkeZOxctBbxEV4FyIywe0E3I20HegST9hP+bFkRwAt3jhls0ipsN
+	 DiRuVKyCZVhsabufWZuw9Ltl5Pw9NOhp2366YYjpfCR7URxfwJ5ZsS3fb5n/YRv7sl
+	 S7HNUlOlADHaw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+	Gabor Juhos <j4g8y7@gmail.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: use DT label for DSI outputs
-Date: Sat, 23 Aug 2025 21:55:38 -0500
-Message-ID: <175600415282.952266.14336881469326134086.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: ipq9574-rdp433: remove unused 'sdc-default-state'
+Date: Sat, 23 Aug 2025 21:55:39 -0500
+Message-ID: <175600415280.952266.15562716392863532328.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250815-msm-dsi-outs-v2-1-3662704e833f@oss.qualcomm.com>
-References: <20250815-msm-dsi-outs-v2-1-3662704e833f@oss.qualcomm.com>
+In-Reply-To: <20250701-rdp433-remove-sdc-state-v1-1-ca0f156a42d5@gmail.com>
+References: <20250701-rdp433-remove-sdc-state-v1-1-ca0f156a42d5@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,17 +66,16 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 15 Aug 2025 18:46:04 +0300, Dmitry Baryshkov wrote:
-> Instead of keeping a copy of the DT tree going down to the DSI output
-> endpoint use the label to reference it directly, making DTs less
-> error-prone.
+On Tue, 01 Jul 2025 12:10:13 +0200, Gabor Juhos wrote:
+> Since commit 8140d10568a8 ("arm64: dts: qcom: ipq9574: Remove eMMC node"),
+> the 'sdc-default-state' pinctrl state is not used so remove that.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: use DT label for DSI outputs
-      commit: d7d28bcc2038bd66a4f5912b8e1b162f5ba6faa8
+[1/1] arm64: dts: qcom: ipq9574-rdp433: remove unused 'sdc-default-state'
+      commit: a300bbd90c3b3c43b1668e1923cd170fc8d5fc89
 
 Best regards,
 -- 
