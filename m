@@ -1,191 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-70518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0F3FB32E9E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 11:08:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4037B32ED2
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 11:29:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE8581B2722B
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 09:08:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4167F17877F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 24 Aug 2025 09:29:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E66C3246333;
-	Sun, 24 Aug 2025 09:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54B3F2641FB;
+	Sun, 24 Aug 2025 09:29:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MgQqIIEt"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I0K/RGGk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B364E20322;
-	Sun, 24 Aug 2025 09:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22783262FC1;
+	Sun, 24 Aug 2025 09:29:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756026500; cv=none; b=kvXJgiWoXnGhGpttLGp3ccB1iyXZ7T46KUOAc8st+SfQRKpYDUEJZuZ9QKAGvfHK+Ri/lO8ICpbgDe32diqKoudc310by1uqoYK6Nnk6l+0FT9Bunun1fFlIV7WN+yd+6vOfFAXYKz3XHhMERZcrE6aCOpQ9yjgqeKrqCjOp8WY=
+	t=1756027762; cv=none; b=VpJi0IuOWmGmgllscwWGhU0yviIWhpR9XrXe/6HWvM3I7lf79YWSqUYAV2CSUCFSG+ir5dNGleolpovO8cM+2YMmwEIXwUYLRUTc0TW9ECGkoUGXGTXk0+hDKNU/DmJl86b1bFzK9dPVKcXm+lJVWZWpE3AA2vLBi/lGSu14oHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756026500; c=relaxed/simple;
-	bh=Yg1Y0LWbqbOqNwBgnXz+CRC+dctwOX6xg8qtYYFm5J4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tziMNDhg6HDtMPMOW5l4K3JyrFUHB7lY6pjJiCGz+HmQpBWaHInkKN5YuVCrs9OhC/eo2/DULVCKVTcmWmZm6ATXjhg6mhZnlDpyhPISWtDsUVJ+D7pgTz1e3f+El9brllZQPduPFKUZN0PsnUd2uVMslScU0Dy8A6nQRY/KB8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MgQqIIEt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFFB2C4CEEB;
-	Sun, 24 Aug 2025 09:08:15 +0000 (UTC)
+	s=arc-20240116; t=1756027762; c=relaxed/simple;
+	bh=cSkJEEyBPIJyXDtyo5nFOPAKxDPEKL1H9DoVn2/BkYM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pEhB9yKxhg5JJV6oGbsJ0QA72KU2VA0CQ25ruMMVt3pozrXf76AYP4CHU7RhE/Bj7pw8kxdy8ianVvopjUy8WYz9FgKoPpEyqAkj9O3FtuvduZqtsrWCpfbU0PFm4D9MnDNv0K1FIdDNMIHTdpJAo5ftLR2Xt/X9N8hPdfZ/iMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I0K/RGGk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B8CEC4CEEB;
+	Sun, 24 Aug 2025 09:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756026499;
-	bh=Yg1Y0LWbqbOqNwBgnXz+CRC+dctwOX6xg8qtYYFm5J4=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MgQqIIEt1wGaCYel8cG5qPcOMR83GKAVFur1sZ8/lqIO2J6G4zDD0Ft2DuNGFNpUq
-	 +6e9/P4w7wKQXRJvqhpAm6bpvEWSc/YNEWAgrcJ8sYDxvEdT4ljpkmTWr8pmcRCQE+
-	 CHBxDOu20v4r2Po9Z33nhSnAS8j0sAsZQqCLIN2pMoWQOOLLz70wuFHlQFN0TpNpK6
-	 tSfF0stPcrUMMnDC2/C6sbu6HZeZWM4XOflD6qhNXHIQCn8gHGqVSBonr1rr17iolT
-	 2sI1LyrW4EoR2OzXfNbutZO7SHWTDgExWdCivpJY3XSMGIEgX0CxIg8gqLuRM0UzEb
-	 HOQwJRdOlHSsQ==
-Message-ID: <00f50d92-e4ea-4805-b771-147fa5f5ebe4@kernel.org>
-Date: Sun, 24 Aug 2025 11:08:14 +0200
+	s=k20201202; t=1756027760;
+	bh=cSkJEEyBPIJyXDtyo5nFOPAKxDPEKL1H9DoVn2/BkYM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=I0K/RGGkV+/PTur/t2+0HGKOunPAX7DgRFsVTRHVbKvqtegKwGTKkRtJibQHt8n5e
+	 wSo3KW86pk2sxa5/+CkP2HF+QAN4eXctfbxo+/FgBeTpo2YtNBfP6rT4naaByO0LAW
+	 1UpfkhcS6nnUprSbcjgCbv+kgcRdC9WE/XzFkt/Ywbo25UPYrEDMHJtWCIectLp3rr
+	 9Cci2MBHRspPJ4pdCCpjEDfpv6xj8ZDtmih4EUiJmLW65yHyL15Cz4PyHZtUcEbrks
+	 5P+/iDt7MaFQCVPf3sn1HnPQZwVv0s0WSD5ifw3nmQmF3bKlc3f+88LdtIfQBwHzWS
+	 3I1yDp4gBDL1A==
+Date: Sun, 24 Aug 2025 11:29:18 +0200
+From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+Cc: mani@kernel.org, alim.akhtar@samsung.com, avri.altman@wdc.com, 
+	bvanassche@acm.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	andersson@kernel.org, konradybcio@kernel.org, agross@kernel.org, 
+	James.Bottomley@hansenpartnership.com, martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V2 1/4] ufs: dt-bindings: Document gear and rate limit
+ properties
+Message-ID: <20250824-elated-granite-leopard-5633c7@kuoka>
+References: <20250821101609.20235-1-quic_rdwivedi@quicinc.com>
+ <20250821101609.20235-2-quic_rdwivedi@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: interconnect: add clocks property to
- enable QoS on sa8775p
-To: Odelu Kukatla <odelu.kukatla@oss.qualcomm.com>,
- Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Raviteja Laggyshetty <quic_rlaggysh@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Mike Tipton <mike.tipton@oss.qualcomm.com>
-References: <20250808140300.14784-1-odelu.kukatla@oss.qualcomm.com>
- <20250808140300.14784-2-odelu.kukatla@oss.qualcomm.com>
- <90b51e31-3217-4483-bb5b-ec328665a723@kernel.org>
- <28b97952-1b67-411f-a7fb-ddd558739839@oss.qualcomm.com>
- <ac83c453-c24d-4c4d-83bc-9ed13f2f9d1e@kernel.org>
- <7d3e5cf7-4167-4005-ba4b-c1915c254705@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <7d3e5cf7-4167-4005-ba4b-c1915c254705@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250821101609.20235-2-quic_rdwivedi@quicinc.com>
 
-On 20/08/2025 10:51, Odelu Kukatla wrote:
-> 
-> 
-> On 8/13/2025 11:32 AM, Krzysztof Kozlowski wrote:
->> On 13/08/2025 07:55, Odelu Kukatla wrote:
->>>
->>>
->>> On 8/12/2025 3:47 PM, Krzysztof Kozlowski wrote:
->>>> On 08/08/2025 16:02, Odelu Kukatla wrote:
->>>>> Add reg and clocks properties to enable the clocks required
->>>>> for accessing QoS configuration.
->>>>
->>>>
->>>> Nothing here explains why EXISTING hardware is being changed. I also
->>>> remember big discussions and big confusing patches regarding sa8775p
->>>> (its rename, dropping/changing all providers), and this patch feels like
->>>> pieces of it without proper justification.
->>>>
->>> Thanks for the review.
->>> I have added description in cover letter, i will add here as well in next revision.> And this is hidden ABI break, no justification, no mentioning either.
->>>> Again we are discussing basics of ABI breaking patches?
->>>>
->>> If you are talking ABI break if we load old DT which may lead to crash, we have .qos_requires_clocks flag which takes care of skipping QoS if required clocks are not enabled.we have addressed this issue through https://lore.kernel.org/all/20240704125515.22194-1-quic_okukatla@quicinc.com/ 
->>
->> Format your emails correctly, it's difficult to read.
->>
->> Your binding did not require reg and clocks. Now it requires reg and
->> clocks. This is called ABI break.
->>
->> Please follow Qualcomm extensive upstreaming guide, it explains this,
->> doesn't it? Or follow writing bindings...
->>
-> 
-> Thanks for your review and guidance.
-> 
-> I agree that adding reg and clocks properties to existing bindings is an
-> ABI break. The sa8775p is a relatively older platform, and when the
-> interconnect provider driver was initially upstreamed, QoS configuration
-> support was not available in the framework. As a result, QoS was not
-> enabled at that time.
+On Thu, Aug 21, 2025 at 03:46:06PM +0530, Ram Kumar Dwivedi wrote:
+> +  limit-hs-gear:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 1
+> +    maximum: 5
 
+default:
 
-That's irrelevant reason. Writing bindings since long time ask pretty
-clearly to describe hardware completely, regardless whether Linux
-supports this or not.
+> +    description:
+> +      Restricts the maximum HS gear used in both TX and RX directions,
+> +      typically for hardware or power constraints in automotive use cases.
+> +
+> +  limit-rate:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    enum: [1, 2]
 
-It does not matter if you enable QoS or not.
+default:
 
-> 
-> The motivation for this change is that certain interconnect paths on
-> sa8775p require specific clocks to be enabled to access QoS registers.
+> +    description:
+> +      Restricts the UFS controller to Rate A (1) or Rate B (2) for both
 
-This does not look at all like existing device is completely broken.
-
-You just add new feature, so no ABI break.
-
-> QoS configuration is essential for managing latency and bandwidth across
-> subsystems such as CPU, GPU, and multimedia engines. Without it, the
-> system may experience performance degradation, especially under
-
-So how was it working for the last 2 years?
-
-
-> concurrent workloads. Enabling QoS improves system responsiveness and
-> ensures more predictable behavior in high-throughput scenarios.
-
-
+Is 1 and 2 known in UFS spec? Feels like you wanted here string for 'a'
+and 'b'.
 
 Best regards,
 Krzysztof
+
 
