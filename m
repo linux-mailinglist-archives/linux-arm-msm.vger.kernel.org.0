@@ -1,359 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-70586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4C84B3376F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 09:10:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DA5FB3376A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 09:09:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B37E4484B1C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 07:08:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E1BE6189150C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 07:09:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 70B952C0F8A;
-	Mon, 25 Aug 2025 07:02:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62D90257836;
+	Mon, 25 Aug 2025 07:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="n/4euQgT"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="I2Y/pkM+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9329F2C0F67;
-	Mon, 25 Aug 2025 07:02:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA6C280024;
+	Mon, 25 Aug 2025 07:09:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756105374; cv=none; b=IEjIZg5gc8+vIshMoYwZ8aVbfXCcKjgjtNg6RiMzylsRPfrtuwMQguajyDx5oYb3iYMVzKjUAdoLzAWDj5RFIs5Q1xtrVZndGGq24iwKEUAqlQrPigD1NRUQZhZIANZrperZ7WYSOsyFcbxYFtUfBr4lQd3bwTFiau4pJTo5cX8=
+	t=1756105765; cv=none; b=IjhyiD7/NWzyWGi+LAUG+Q18j8QjmUOPKKoQj0gmWCGNBiWUl8c7v+xHo3+mwGZnoUEhdfZfdEopjK6dQhHk9FmwBAkNvbbM33/L3F6uddzwR4i68rNXIxk1hr+9KXQsXRN2wH0HDdUORT+Flf1qigAEv4do0PO5C/InCV/aVvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756105374; c=relaxed/simple;
-	bh=Vbeavr89PDKEj4k5fGXHKhhkNlgtlDEHpHax0Ikvbic=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-ID:References:
-	 In-Reply-To:To:CC; b=Z3LyOEyYHrAVYgn1TIfiS8SUxjAsttDYI70emZQ5PGKPM0y0d9jmJCx/NHr7AgCIN6bSJWOgc0enQBjpTk64pCskHLaTbNX3XuZFz6NgIV+S0HHA8ddFiBbWWFk0e8maOA3AKIZs3cLtggTsJkByDwngQ/WnGt2LXE7IrAhMyGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=n/4euQgT; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57ONOqEa014572;
-	Mon, 25 Aug 2025 07:02:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MGXo42muxmZvOBlNzWL0iTJh1bgqDXgn/9FfZhEEBNc=; b=n/4euQgTzNmSy90i
-	UtxhJRoVJp0pDnviPrFmnejKv5F2j4kiVfVUt/80e4viP08+8H40HObBhL+vjdT5
-	cqSVCySO4yfn00jFmBFiU76neNDHBspdFKmyKax38oWOZtpg34xQjhMQgYViQEdV
-	ZNOwVO3t8Ej00iORIfom/EkbJ/M4oaQ+UT3uTPpPFTuPBBVCzkdKWwzKbzx+WcYp
-	KvN0vu+nw9quKSqTZg124ov6mjzaVK7IiR2E2AcfhF3pOFSYA5Ef+5g7HPy/fjNX
-	M9C1foOHm4i/uu8HV1VmIuu5nlZzJIjKXXoEEj/O1Q0QZExEXbjNKkfiFRgwDY6W
-	O1CMSQ==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5y5c1bt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Aug 2025 07:02:32 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57P72Vrj010929
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 25 Aug 2025 07:02:31 GMT
-Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.24; Mon, 25 Aug 2025 00:02:27 -0700
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-Date: Mon, 25 Aug 2025 12:30:50 +0530
-Subject: [PATCH v4 26/26] media: iris: Add support for drain sequence in
- encoder video device
+	s=arc-20240116; t=1756105765; c=relaxed/simple;
+	bh=iUR1+y42WvW+BSZ7IHiyGJ9P9sfY7TKHI2TsSml0YKI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=oAEm68kH3F4NR48K5V97uGEuM0Q0IeIQk18yK5MTwzLEk0SDJVPbEphuCk3Zd+AECUqiV4HX/ZYum1IxUpIPOHz/9fOVJFOSJ7qPv5VKenxe3m0z7pmlzCrG9ct1o5kDJDUA9MYoOzb/Pte2oZDS8dB5vFH93MVQb5jmrwNvEoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=I2Y/pkM+; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1756105754;
+	bh=iUR1+y42WvW+BSZ7IHiyGJ9P9sfY7TKHI2TsSml0YKI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=I2Y/pkM+TgiZug17GVODXPxW68NOiUie7faHTtXV/LfPQpBeMfYHXhiZrsc+/Glzx
+	 5klU06EyCtvZmMLBcKtV/6Bzc7wpkDhTtbpHm2BndQKYHJQ2gXTf1hwWFrKRUQxoEc
+	 GwBbS6pwuQuVUZPZVw6EnwbU29AQMU6SBkmtqjWH6TtTQpmZi16uDjzuRl8FfPtvEL
+	 J3Vo8hMScBqUNtmRF4M61dt0hXjAyPti0oboU/ILO5tSPm0YZ3XDD2XRRgsUxq3YF7
+	 G3cMtWjzQAlpLaX2Q3Y3KOMRi2pbRCtobNj+VjOByCYB20GAFtklSvX6z9M9BXBQaD
+	 AeCQsMVa5fnVA==
+Received: from fedora (unknown [IPv6:2a01:e0a:2c:6930:d919:a6e:5ea1:8a9f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: bbrezillon)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id E77E017E1357;
+	Mon, 25 Aug 2025 09:09:13 +0200 (CEST)
+Date: Mon, 25 Aug 2025 09:09:08 +0200
+From: Boris Brezillon <boris.brezillon@collabora.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang
+ <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, Marijn
+ Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>,
+ Simona Vetter <simona@ffwll.ch>, Matthew Brost <matthew.brost@intel.com>,
+ Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>, Danilo Krummrich
+ <dakr@kernel.org>, linux-arm-msm@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, Danct12 <danct12@disroot.org>
+Subject: Re: [PATCH] drm/msm: fix msm_gem_vma_new() allocations for managed
+ GPUVMs
+Message-ID: <20250825090908.269e1119@fedora>
+In-Reply-To: <20250823-msm-fix-gpuvm-init-v1-1-e199cd5b1983@oss.qualcomm.com>
+References: <20250823-msm-fix-gpuvm-init-v1-1-e199cd5b1983@oss.qualcomm.com>
+Organization: Collabora
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Message-ID: <20250825-iris-video-encoder-v4-26-84aa2bc0a46b@quicinc.com>
-References: <20250825-iris-video-encoder-v4-0-84aa2bc0a46b@quicinc.com>
-In-Reply-To: <20250825-iris-video-encoder-v4-0-84aa2bc0a46b@quicinc.com>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar
-	<abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Stefan Schmidt
-	<stefan.schmidt@linaro.org>,
-        Vedang Nagar <quic_vnagar@quicinc.com>,
-        "Hans
- Verkuil" <hverkuil@kernel.org>,
-        Hans Verkuil <hverkuil@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Renjiang Han <quic_renjiang@quicinc.com>,
-        Wangao Wang <quic_wangaow@quicinc.com>,
-        Dikshita Agarwal
-	<quic_dikshita@quicinc.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756105234; l=9278;
- i=quic_dikshita@quicinc.com; s=20240917; h=from:subject:message-id;
- bh=Vbeavr89PDKEj4k5fGXHKhhkNlgtlDEHpHax0Ikvbic=;
- b=F1d7mxCSGiLSu62lB0FSJPNVSgHoi6If2p/Sixs64E8rHeZVNhbKIKuO8zs9KpmQZayUg18L5
- 24bAA3K2f9/C3u72ly8q69hFqD6UCXcyMHGeSbKRSbEMmZSyjhj6SIA
-X-Developer-Key: i=quic_dikshita@quicinc.com; a=ed25519;
- pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX9kZpUww1Y184
- ybjzaN2ATWhjcADqbzQb0Kztyz8TNlOoCkILwgjsndzEpq6SfnJU3ctt+C8Cpu7fUpD8N+8iKyS
- n65MTk3oX9RJR26wND60JqAg8ByBf3OO3He+/tN4D+SbRIlfcb5kbzHotEBV0nvCqT4y2scLX3n
- a40kqhTNeaPfQizZtH3JsoBi4/iGKqAdtPQiAW+jk+qVS7Lj4wjEsDonEOtU4oUhi8+c1WaSVcr
- X4q1JQykVhsn51qAto6LuonZNKpEXTXOAZR8mHVEyNRLYrhUBe2MVeexM5dgdwyW2RDYpa7/tYD
- aSBO2JqwqYUmWk0pdMut0u9GthMs0gKbQCEdRpCSPEetEVc9eOwFr/gxSag9ZmO1OSm87yc06Te
- ARahxrV9
-X-Authority-Analysis: v=2.4 cv=Lco86ifi c=1 sm=1 tr=0 ts=68ac0a88 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8
- a=KKAkSRfTAAAA:8 a=r7ZXCG3a63ecvIjfNBIA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 6m9kgMQW0X7B4OtPxP3-0texYBZbjoob
-X-Proofpoint-ORIG-GUID: 6m9kgMQW0X7B4OtPxP3-0texYBZbjoob
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-25_03,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 clxscore=1015 malwarescore=0 spamscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
 
-Add support for handling start and stop commands, including the
-end-of-stream (drain) sequence, in the encoder video device.
+On Sat, 23 Aug 2025 03:12:00 +0300
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
 
-This enables proper signaling to the firmware and ensures that all
-pending frames are processed and flushed before completing the stream.
+> Since commit 3309323241fb ("drm/gpuvm: Kill drm_gpuva_init()") MSM
+> driver fails to init, failing with "[drm:msm_gpu_init] *ERROR* could not
+> allocate memptrs: -22" errors. The mentioned commit reworked the
+> function, but didn't take into account that op_map is initialized at the
+> top of the function, while ranges might change if GPUVM is managed by
+> the kernel.
+> 
+> Move op_mode initialization after finalizing all addresses and right
+> before the drm_gpuva_init_from_op() call.
+> 
+> Reported-by: Danct12 <danct12@disroot.org>
+> Fixes: 3309323241fb ("drm/gpuvm: Kill drm_gpuva_init()")
+> Suggested-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/msm_gem_vma.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+> index 3f440bc1f7106f3b0091f037611d0b433e5e2c18..6df6b7c0984da57fe64de41fa54f7dea0a324c74 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_vma.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+> @@ -368,12 +368,6 @@ struct drm_gpuva *
+>  msm_gem_vma_new(struct drm_gpuvm *gpuvm, struct drm_gem_object *obj,
+>  		u64 offset, u64 range_start, u64 range_end)
+>  {
+> -	struct drm_gpuva_op_map op_map = {
+> -		.va.addr = range_start,
+> -		.va.range = range_end - range_start,
+> -		.gem.obj = obj,
+> -		.gem.offset = offset,
+> -	};
+>  	struct msm_gem_vm *vm = to_msm_vm(gpuvm);
+>  	struct drm_gpuvm_bo *vm_bo;
+>  	struct msm_gem_vma *vma;
+> @@ -402,6 +396,13 @@ msm_gem_vma_new(struct drm_gpuvm *gpuvm, struct drm_gem_object *obj,
+>  	if (obj)
+>  		GEM_WARN_ON((range_end - range_start) > obj->size);
+>  
+> +	struct drm_gpuva_op_map op_map = {
+> +		.va.addr = range_start,
+> +		.va.range = range_end - range_start,
+> +		.gem.obj = obj,
+> +		.gem.offset = offset,
+> +	};
 
-Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # X1E80100
-Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
-Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
----
- .../platform/qcom/iris/iris_hfi_gen1_command.c     | 30 ++++++++---
- .../platform/qcom/iris/iris_hfi_gen1_response.c    |  5 ++
- drivers/media/platform/qcom/iris/iris_state.c      |  4 +-
- drivers/media/platform/qcom/iris/iris_venc.c       | 58 ++++++++++++++++++++++
- drivers/media/platform/qcom/iris/iris_venc.h       |  2 +
- drivers/media/platform/qcom/iris/iris_vidc.c       | 35 +++++++++++++
- 6 files changed, 125 insertions(+), 9 deletions(-)
+OOC, are we now allowed to declare local variables in the middle of a
+code block in kernel code? I must admit that's not something I tried
+doing recently, but I've had gcc warnings in the past because of that.
 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-index d10a23a3d592c2c5eb6c82f67e330957a01baa8a..29cf392ca2566da286ea3e928ce4a22c2e970cc8 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-@@ -450,15 +450,31 @@ static int iris_hfi_gen1_session_unset_buffers(struct iris_inst *inst, struct ir
- 
- static int iris_hfi_gen1_session_drain(struct iris_inst *inst, u32 plane)
- {
--	struct hfi_session_empty_buffer_compressed_pkt ip_pkt = {0};
-+	if (inst->domain == DECODER) {
-+		struct hfi_session_empty_buffer_compressed_pkt ip_pkt = {0};
-+
-+		ip_pkt.shdr.hdr.size = sizeof(struct hfi_session_empty_buffer_compressed_pkt);
-+		ip_pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_EMPTY_BUFFER;
-+		ip_pkt.shdr.session_id = inst->session_id;
-+		ip_pkt.flags = HFI_BUFFERFLAG_EOS;
-+		ip_pkt.packet_buffer = 0xdeadb000;
-+
-+		return iris_hfi_queue_cmd_write(inst->core, &ip_pkt, ip_pkt.shdr.hdr.size);
-+	}
- 
--	ip_pkt.shdr.hdr.size = sizeof(struct hfi_session_empty_buffer_compressed_pkt);
--	ip_pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_EMPTY_BUFFER;
--	ip_pkt.shdr.session_id = inst->session_id;
--	ip_pkt.flags = HFI_BUFFERFLAG_EOS;
--	ip_pkt.packet_buffer = 0xdeadb000;
-+	if (inst->domain == ENCODER) {
-+		struct hfi_session_empty_buffer_uncompressed_pkt ip_pkt = {0};
-+
-+		ip_pkt.shdr.hdr.size = sizeof(struct hfi_session_empty_buffer_uncompressed_pkt);
-+		ip_pkt.shdr.hdr.pkt_type = HFI_CMD_SESSION_EMPTY_BUFFER;
-+		ip_pkt.shdr.session_id = inst->session_id;
-+		ip_pkt.flags = HFI_BUFFERFLAG_EOS;
-+		ip_pkt.packet_buffer = 0xdeadb000;
-+
-+		return iris_hfi_queue_cmd_write(inst->core, &ip_pkt, ip_pkt.shdr.hdr.size);
-+	}
- 
--	return iris_hfi_queue_cmd_write(inst->core, &ip_pkt, ip_pkt.shdr.hdr.size);
-+	return -EINVAL;
- }
- 
- static int
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-index a55d214c84048c6a3ac19a041c0f78f7e58918b8..8e864c239e293e004d21e9c3604d3e985c15d9bd 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_response.c
-@@ -485,6 +485,11 @@ static void iris_hfi_gen1_session_ftb_done(struct iris_inst *inst, void *packet)
- 				flags |= V4L2_BUF_FLAG_LAST;
- 				inst->last_buffer_dequeued = true;
- 			}
-+		} else if (inst->domain == ENCODER) {
-+			if (!inst->last_buffer_dequeued && iris_drain_pending(inst)) {
-+				flags |= V4L2_BUF_FLAG_LAST;
-+				inst->last_buffer_dequeued = true;
-+			}
- 		}
- 	}
- 	buf->timestamp = timestamp_us;
-diff --git a/drivers/media/platform/qcom/iris/iris_state.c b/drivers/media/platform/qcom/iris/iris_state.c
-index d1dc1a863da0b0b1af60974e9ed2ef68ea225cdd..d14472414750dc7edc4834f32a51f2c5adc3762e 100644
---- a/drivers/media/platform/qcom/iris/iris_state.c
-+++ b/drivers/media/platform/qcom/iris/iris_state.c
-@@ -263,11 +263,11 @@ bool iris_allow_cmd(struct iris_inst *inst, u32 cmd)
- 	struct vb2_queue *src_q = v4l2_m2m_get_src_vq(inst->m2m_ctx);
- 	struct vb2_queue *dst_q = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
- 
--	if (cmd == V4L2_DEC_CMD_START) {
-+	if (cmd == V4L2_DEC_CMD_START || cmd == V4L2_ENC_CMD_START) {
- 		if (vb2_is_streaming(src_q) || vb2_is_streaming(dst_q))
- 			if (iris_drc_pending(inst) || iris_drain_pending(inst))
- 				return true;
--	} else if (cmd == V4L2_DEC_CMD_STOP) {
-+	} else if (cmd == V4L2_DEC_CMD_STOP || cmd == V4L2_ENC_CMD_STOP) {
- 		if (vb2_is_streaming(src_q))
- 			if (inst->sub_state != IRIS_INST_SUB_DRAIN)
- 				return true;
-diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
-index 3270c0da668e739d4f98f008db780a0eb5d3dca4..099bd5ed4ae0294725860305254c4cad1ec88d7e 100644
---- a/drivers/media/platform/qcom/iris/iris_venc.c
-+++ b/drivers/media/platform/qcom/iris/iris_venc.c
-@@ -519,3 +519,61 @@ int iris_venc_qbuf(struct iris_inst *inst, struct vb2_v4l2_buffer *vbuf)
- 
- 	return iris_queue_buffer(inst, buf);
- }
-+
-+int iris_venc_start_cmd(struct iris_inst *inst)
-+{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	enum iris_inst_sub_state clear_sub_state = 0;
-+	struct vb2_queue *dst_vq;
-+	int ret;
-+
-+	dst_vq = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
-+
-+	if (inst->sub_state & IRIS_INST_SUB_DRAIN &&
-+	    inst->sub_state & IRIS_INST_SUB_DRAIN_LAST) {
-+		vb2_clear_last_buffer_dequeued(dst_vq);
-+		clear_sub_state = IRIS_INST_SUB_DRAIN | IRIS_INST_SUB_DRAIN_LAST;
-+		if (inst->sub_state & IRIS_INST_SUB_INPUT_PAUSE) {
-+			if (hfi_ops->session_resume_drain) {
-+				ret = hfi_ops->session_resume_drain(inst,
-+					V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
-+				if (ret)
-+					return ret;
-+			}
-+			clear_sub_state |= IRIS_INST_SUB_INPUT_PAUSE;
-+		}
-+		if (inst->sub_state & IRIS_INST_SUB_OUTPUT_PAUSE) {
-+			if (hfi_ops->session_resume_drain) {
-+				ret = hfi_ops->session_resume_drain(inst,
-+					V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
-+				if (ret)
-+					return ret;
-+			}
-+			clear_sub_state |= IRIS_INST_SUB_OUTPUT_PAUSE;
-+		}
-+	} else {
-+		dev_err(inst->core->dev, "start called before receiving last_flag\n");
-+		iris_inst_change_state(inst, IRIS_INST_ERROR);
-+		return -EBUSY;
-+	}
-+
-+	inst->last_buffer_dequeued = false;
-+
-+	return iris_inst_change_sub_state(inst, clear_sub_state, 0);
-+}
-+
-+int iris_venc_stop_cmd(struct iris_inst *inst)
-+{
-+	const struct iris_hfi_command_ops *hfi_ops = inst->core->hfi_ops;
-+	int ret;
-+
-+	ret = hfi_ops->session_drain(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
-+	if (ret)
-+		return ret;
-+
-+	ret = iris_inst_change_sub_state(inst, 0, IRIS_INST_SUB_DRAIN);
-+
-+	iris_scale_power(inst);
-+
-+	return ret;
-+}
-diff --git a/drivers/media/platform/qcom/iris/iris_venc.h b/drivers/media/platform/qcom/iris/iris_venc.h
-index bbf3b635288dd6cc39719bdde1942918357791aa..c4db7433da537578e05d566d53d89a22e1901678 100644
---- a/drivers/media/platform/qcom/iris/iris_venc.h
-+++ b/drivers/media/platform/qcom/iris/iris_venc.h
-@@ -21,5 +21,7 @@ int iris_venc_s_param(struct iris_inst *inst, struct v4l2_streamparm *s_parm);
- int iris_venc_streamon_input(struct iris_inst *inst);
- int iris_venc_streamon_output(struct iris_inst *inst);
- int iris_venc_qbuf(struct iris_inst *inst, struct vb2_v4l2_buffer *vbuf);
-+int iris_venc_start_cmd(struct iris_inst *inst);
-+int iris_venc_stop_cmd(struct iris_inst *inst);
- 
- #endif
-diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
-index 245a68248a3f0fdda13b993ece45fa4c0a45aff9..798c3613e57eac1742633d61c1482229dbc32562 100644
---- a/drivers/media/platform/qcom/iris/iris_vidc.c
-+++ b/drivers/media/platform/qcom/iris/iris_vidc.c
-@@ -597,6 +597,39 @@ static int iris_dec_cmd(struct file *filp, void *fh,
- 	return ret;
- }
- 
-+static int iris_enc_cmd(struct file *filp, void *fh,
-+			struct v4l2_encoder_cmd *enc)
-+{
-+	struct iris_inst *inst = iris_get_inst(filp);
-+	int ret = 0;
-+
-+	mutex_lock(&inst->lock);
-+
-+	ret = v4l2_m2m_ioctl_encoder_cmd(filp, fh, enc);
-+	if (ret)
-+		goto unlock;
-+
-+	if (inst->state == IRIS_INST_DEINIT)
-+		goto unlock;
-+
-+	if (!iris_allow_cmd(inst, enc->cmd)) {
-+		ret = -EBUSY;
-+		goto unlock;
-+	}
-+
-+	if (enc->cmd == V4L2_ENC_CMD_START)
-+		ret = iris_venc_start_cmd(inst);
-+	else if (enc->cmd == V4L2_ENC_CMD_STOP)
-+		ret = iris_venc_stop_cmd(inst);
-+	else
-+		ret = -EINVAL;
-+
-+unlock:
-+	mutex_unlock(&inst->lock);
-+
-+	return ret;
-+}
-+
- static struct v4l2_file_operations iris_v4l2_file_ops = {
- 	.owner                          = THIS_MODULE,
- 	.open                           = iris_open,
-@@ -672,6 +705,8 @@ static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops_enc = {
- 	.vidioc_qbuf                    = v4l2_m2m_ioctl_qbuf,
- 	.vidioc_dqbuf                   = v4l2_m2m_ioctl_dqbuf,
- 	.vidioc_remove_bufs             = v4l2_m2m_ioctl_remove_bufs,
-+	.vidioc_try_encoder_cmd         = v4l2_m2m_ioctl_try_encoder_cmd,
-+	.vidioc_encoder_cmd             = iris_enc_cmd,
- };
- 
- void iris_init_ops(struct iris_core *core)
-
--- 
-2.34.1
+> +
+>  	drm_gpuva_init_from_op(&vma->base, &op_map);
+>  	vma->mapped = false;
+>  
+> 
+> ---
+> base-commit: 0f4c93f7eb861acab537dbe94441817a270537bf
+> change-id: 20250823-msm-fix-gpuvm-init-520d87ebcf26
+> 
+> Best regards,
 
 
