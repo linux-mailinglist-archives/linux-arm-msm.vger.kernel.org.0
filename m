@@ -1,226 +1,338 @@
-Return-Path: <linux-arm-msm+bounces-70723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90798B34617
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 17:42:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7130BB34661
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 17:54:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7BE371A81A82
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 15:43:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 510A31B20221
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 15:54:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B259A2FE054;
-	Mon, 25 Aug 2025 15:42:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B3A82FCC02;
+	Mon, 25 Aug 2025 15:54:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="JK+3iD5m";
-	dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b="cBY7avmx"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="o0SLw+wP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E572FCBFD;
-	Mon, 25 Aug 2025 15:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.177.32
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756136561; cv=fail; b=VKloOJSLvdft+288s0qxC9dxbd6N8OzBGYtlLmzBpjYhxuiXqEsW8QP95DpZwSuHDhXTAScocE7sVxPipgjpOIBfRg2qVCSbGG7tLC2dh2ErsUevQgAC8EQCjyHwQUpCRk+jVIMr9rAEZ9d2akQmfGKjabv/OTHvKH1C7nfpJB8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756136561; c=relaxed/simple;
-	bh=JpKwFjSkbfQiggd9zgjemfYZE6jrdfi8/jc0MyWlsvw=;
-	h=To:Cc:Subject:From:In-Reply-To:Message-ID:References:Date:
-	 Content-Type:MIME-Version; b=lKuaHpY2xOEUvjrhap3cHfsiE5GserYts9r0iFGsJoVFHkfQiYDdDnZPezj7Vzlix1leKdoVnNfedUkWfatj+iN0ydQ2hCnRCfG7VK+F0PiomFK9mFcXK5YpVVCMFKbOK9wpsAoDRJSE9m6AA8TQ+rkCE5j61wG9p0APp+6pcRg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=JK+3iD5m; dkim=pass (1024-bit key) header.d=oracle.onmicrosoft.com header.i=@oracle.onmicrosoft.com header.b=cBY7avmx; arc=fail smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PFfnfL012618;
-	Mon, 25 Aug 2025 15:42:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=corp-2025-04-25; bh=GehUguqUmitgw+xFIF
-	VdAoQzO8eC+48f1JL+aH38Q/s=; b=JK+3iD5mfpMAkS3F8AJa27rkzTelQaEnNW
-	raGqp9M0s/G5uslz/0KJ7fqh02hBYWi22Dx0k7snbBSP0EJ/nXnACfo96/cEsCsh
-	26wKIlAQDU3SFqqlj0Zu9tI9uMNQCdvMm4gLhyvIHEzOJIvumCpDtA/fKuZoWSIk
-	agWVaotutXujAbCwgxU/lCodZzFVEBiTkvAGHuGC4nNqm8aGNfdd/ya9mNM2iqJD
-	ASSBRAqQjuscsaNQD3zay+dgdUgdSYTFO6Anfm0ehvv0jb2jlQHO1wPJc8FdPFkz
-	HIGXkx7AGzcrrngNz723WH9bgBivqWREQZc2+OvPJrC2mtg/cPhg==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 48q4e22krs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 25 Aug 2025 15:42:27 +0000 (GMT)
-Received: from pps.filterd (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 57PFeFF3014625;
-	Mon, 25 Aug 2025 15:42:27 GMT
-Received: from nam12-bn8-obe.outbound.protection.outlook.com (mail-bn8nam12on2054.outbound.protection.outlook.com [40.107.237.54])
-	by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id 48q438c5b1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 25 Aug 2025 15:42:27 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kFaysUB3OvHdcTB08emBHW/t9XYmGH0oVOm/G5TSt1BoHMq2oXXDWoRTYNNkq4Qy9LIU2lGFqoC5KZ7UwCkdgq3p9TjPCLpiIDuySzr5DDx+opKXfmyWqm9oH0owNUHY7Av8FQaDgbV1tojvbP3Tta7/QGFuTecLL6m2vOmt0CGew3oAlEMhU/i4J98vQ1TkbngF8ohypx7qJvzo+PDtW2ZbrI4/as/O3hZ/CGPXEtv0mQgTGvCR22WESiFqY+gYnLrU0alumSGLNMNEgE8Wq/DAgFICMjkOaeVtpii1QM/MlnSRSzi1xvOai+8RaJjnCxxSPaGP90QIohaFhsXS8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GehUguqUmitgw+xFIFVdAoQzO8eC+48f1JL+aH38Q/s=;
- b=whlS44IbGFhpVJEj13Z0g444s0gIU16rbTA+d/Uvgp4qCHwHJiZWMLRzFuqh/n+xzXGl213vK+39NuSZB2pI79VdVa9UQMAUqlVNt2u3jW21mXONtoaV9oL8h1sLHlVks16RJFSp23ta4D2aYe0Hsh6dwIHwv82HG6zcvXEnnH5Rxs/4W35xqWtmipdXjwNbVRItGr5VC1mrGie5ZermGYaHaByhdTnCNtpKS+SUUqDVx+YDEtkBsOxvJaJDCKRTeHp3hYX6Zsa4LSwhIHDytbLp2z3jViA3583fTLJGYugXt4+tjTs/Y2kw6/qAxLSHcRi2ByNjVbyuLtRG1aLQ1Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55F2FE58F
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 15:53:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756137240; cv=none; b=IDQU0Kl9qUa7AHYABEg6YuJ3jVpec19EUt09bYgDaDPKEPMSVr9tbOoakEOw/ZrcF8C8jBWNgAe3gJUTLVNVO6cmHYQr8h6mGz7YTaRJ8q6Z0ZGjigPbeRhesfqZ+i3mb1kwE2wAsXjVzh2n50G/C3WxGCaXRAKP1XWl8S7p1uM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756137240; c=relaxed/simple;
+	bh=iDIMFaPmP6Ptap4BSySC5MxVV+P3d+K2pyIekorzzbo=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=KAEUrnVlTBKq2a98GgpR7G8EPapBevwVqMUBmTsJEDuBiJw99rtnUi+ryV560/0yEMB2/qZpDFP5jibl+oAO13ejwB2bgb2tunOzsEJY6j4tfZtkCAQ4mkWxM9YL9unzG4PxhzJb1mf3sLAFFBv9Gmgzn9v+BepK9Wn20AlkaD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=o0SLw+wP; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-afcb7a2befdso667533166b.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 08:53:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GehUguqUmitgw+xFIFVdAoQzO8eC+48f1JL+aH38Q/s=;
- b=cBY7avmx7jWmwfJ9Dw5RxS3TMMgd8X8znOcPyF/e5tmMBEsglTqe0PpjQVDcGdeznhanZsgRee8tmm5DmhquLBX0WP3I2Lrw/blrJG0OX776j6WoR/k62q5NQ9mUlIVM2J1s11CZzsi1twIESqXA+01tWotR3b6yM6Qc3/CpS4o=
-Received: from CH0PR10MB5338.namprd10.prod.outlook.com (2603:10b6:610:cb::8)
- by CH0PR10MB5209.namprd10.prod.outlook.com (2603:10b6:610:da::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.20; Mon, 25 Aug
- 2025 15:42:24 +0000
-Received: from CH0PR10MB5338.namprd10.prod.outlook.com
- ([fe80::5cca:2bcc:cedb:d9bf]) by CH0PR10MB5338.namprd10.prod.outlook.com
- ([fe80::5cca:2bcc:cedb:d9bf%6]) with mapi id 15.20.9031.014; Mon, 25 Aug 2025
- 15:42:24 +0000
-To: Nitin Rawat <quic_nitirawa@quicinc.com>
-Cc: <mani@kernel.org>, <James.Bottomley@HansenPartnership.com>,
-        <martin.petersen@oracle.com>, <bvanassche@acm.org>,
-        <neil.armstrong@linaro.org>, <konrad.dybcio@oss.qualcomm.com>,
-        <tglx@linutronix.de>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH V2] ufs: ufs-qcom: Fix ESI null pointer dereference
-From: "Martin K. Petersen" <martin.petersen@oracle.com>
-In-Reply-To: <37563dd8-341f-4db4-8a4b-c7f96dbfebff@quicinc.com> (Nitin Rawat's
-	message of "Fri, 22 Aug 2025 01:01:47 +0530")
-Organization: Oracle Corporation
-Message-ID: <yq1bjo3s9c6.fsf@ca-mkp.ca.oracle.com>
-References: <20250811073330.20230-1-quic_nitirawa@quicinc.com>
-	<37563dd8-341f-4db4-8a4b-c7f96dbfebff@quicinc.com>
-Date: Mon, 25 Aug 2025 11:42:21 -0400
-Content-Type: text/plain
-X-ClientProxiedBy: BN9PR03CA0143.namprd03.prod.outlook.com
- (2603:10b6:408:fe::28) To CH0PR10MB5338.namprd10.prod.outlook.com
- (2603:10b6:610:cb::8)
+        d=fairphone.com; s=fair; t=1756137235; x=1756742035; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3HqowhwKhilGiIPsPTFLVOfvfqilXqLVrLNuX0vYRl8=;
+        b=o0SLw+wPAtkVA9cVDuec/zje+HDAOCIO1NrveoFG195mCQpM9erUKFUZ81uhSvlFpc
+         Laf8qKGtVqBxXsfR3AVXuDf+XXB2xusNPIG5W26KP/xcmtRxpMZ1ic6TshUJTdFiKa/A
+         UwHIIATPuxcsf/hFud1Z4Z/TzB711ipM1B3Z+1wQGu3Y9/Pa9rL1uscKEzAw0vzqLrkF
+         cc3N82hq+7MmmdWhoYaWm9MK/Q3qt/vbvSdtpoddAaBuaWwye3ai6EDx7mJaMZ3ghHgG
+         EzKPBQTTfMgsLWkmONelIVDpKX5rLH5OFUHvw8Cm1S9TycB/EtLvevHkjEyD/ST1iMw+
+         DHLA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756137235; x=1756742035;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3HqowhwKhilGiIPsPTFLVOfvfqilXqLVrLNuX0vYRl8=;
+        b=txErDk5PeSL48NUU5ymcvztQkONGMsJ+I5jPQdr7xiCnfb8t2fyXpqXwI7/EAqxQyW
+         vLTwK5pDaICGbw9NLi5irVpbAXl93FagULfZRM2sczXYKwxBVSyeGEhRJRs7n2/7x1Y/
+         IAWBi6ZdULigbikcnajYlppcMhjLFV8NC7GqDW9zLoY+USOw9eAL6K1X1z/N01AlELTh
+         b02EtJDH1jQ5fi1bUQPieWU3ZdsBbTCl1U3lYKwlLBYtn2A6qjJAEHeV5AyEB/pks5+9
+         7K7+JCGUKZnHPIjZurw13iA4RPlTxdUGje78/Z20s8X8vS521fGSaJT0Xm1XarDB/bvm
+         F2cA==
+X-Forwarded-Encrypted: i=1; AJvYcCVrt4er1XueeQUuzVwRWWHqiICbhZIGitDl2gyZ9S6IuTw0ZT+bydylPJuEmLt5uFh7/hODO0gjrs8hyKK/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3lXlqmDRLjP6wst2AI8M3qHo1oxnA/lKGuHupxUSGjD83px8O
+	MuwwQGSIreAIxpQ4y9263Fkyyv+sHRav8ojE2bmMPgQuvzpiG6/jxLlR+GcSyogA+gI=
+X-Gm-Gg: ASbGncucMhQ2DakAlxqk9+/wCo8PqXczx2EvORO1lsMNlwwSxE0fAOi72NrnEeoW01u
+	89OC22QY3n9FS/iVK2TpsVg10PMZwB+ODwdf+FSixf+zOhT7lmfjKvG3Gdi1wrkQ36/X3D68Djt
+	nNcZkEwocEG6173Czv73lu5a4n5/9m7YAAVOtPLY1e7aU7bM8tGTnfhEcKyg7De6hIURzGsYIOl
+	sbi3oS25bOVRSZWH7RZPaViBqCJV6BmwY58oRABcxtaeWfYBhl54gy8e3bivIaDGRfwFcOVV0Zc
+	foqeln9Xs8ub3N73yfdlmhsYRwWIQn9A3ZBVbny+MC8DAbLY4MPd+TRfQ9t+wK8JnEP3RXQHSYJ
+	s/7jMRp9YL+um/RFKcEBciUCvjGYV9JwZvjFhq3+ICoI/JTSYRTkvN9aXUoztDlZMMEyT5K/xZZ
+	QZcJg=
+X-Google-Smtp-Source: AGHT+IEDOv6gprEj6Ksbmo7p57Z4tZTNEHhZ9DTRLeOqT0HCwoH6lmCXLeF8Wklr2ttI5zxfbuX7Eg==
+X-Received: by 2002:a17:906:7943:b0:ae3:b2b7:7f2f with SMTP id a640c23a62f3a-afe296e74c2mr1283531066b.40.1756137234813;
+        Mon, 25 Aug 2025 08:53:54 -0700 (PDT)
+Received: from localhost (83-97-14-181.biz.kpn.net. [83.97.14.181])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afe8b5fbc8dsm139360466b.1.2025.08.25.08.53.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 25 Aug 2025 08:53:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH0PR10MB5338:EE_|CH0PR10MB5209:EE_
-X-MS-Office365-Filtering-Correlation-Id: d87ed906-b92b-44c2-8a3a-08dde3edfcb5
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?kmBDWuaDWPLwBcmN+rJClIx6D5kCyVi3e8Xodq1Grsg1IV6KUHQAsfbJC640?=
- =?us-ascii?Q?F/0G3WAFCn2e2wZt7NuN5PU0uAiHiyPM4v4+IG9ln9m0WuoYxsppIuWV1MPH?=
- =?us-ascii?Q?4meAiv1+LIfw/9I9Bg5T/54kbIa2Cbamm/YvISDUMCwvGTMq4rsdgzK6BnpD?=
- =?us-ascii?Q?UbuBIPXhLt7Aji+1MxAww0OaSUfirRhqgw/ecChlNUsMCOBe1zskvI8UKjut?=
- =?us-ascii?Q?pzQqW/dsHlC4sccNR0B+5or5Y2kNhI6ZeCJ4prMgBmf3jKEEQuWd+/kPZwTl?=
- =?us-ascii?Q?zvCLBxVqCzlz+gErR1Edlr07YOJwW+GGDNdK/jaCim8u7NhyuW7PZRKPR8VQ?=
- =?us-ascii?Q?t1kiY46b/dkwpZdqTDS18Vh1h7ukV6VMok7VoxGz0gY9JENiaAlWDECbQvOe?=
- =?us-ascii?Q?8Huv21QjpwQa3dvc/vWSVc0JDpF+6xgMhQDdnoyDuLzZk60V2isvSkvF7C7s?=
- =?us-ascii?Q?Go42OtAp4A+/wlgrJT42HPyenyJ7Ef3FfDSM6FB7Iu8VqebtSPtE2uWPd52p?=
- =?us-ascii?Q?m8O8Gby/KaOHciWHbHmNdLxOBpzGOM1jsKraO75WxzaFw0rATKhbEyg88bhs?=
- =?us-ascii?Q?ICqFn1byEWsGOPZHXmfKy72zd5NcjJD6BnjK51up0tyDN5TW2uvCDRmsQQc1?=
- =?us-ascii?Q?1QhzLDbVlePLAIfCcjuisopSfAh9WGd9gByke4bW7Om9TYaF291h6WuRIVNC?=
- =?us-ascii?Q?XYKrQLrega7nZtWADu60WYr2KotZeLSROPrKp+WaKj49ARVVPYo3mXqTMU/N?=
- =?us-ascii?Q?WdvdAkp054sarKhDlp/okOBT4Q79MB5sw3dLBYIQ1ho5mDhP3lVZfRO9vA82?=
- =?us-ascii?Q?fNPpzlTAUIgj8PgvSlSap7ybUc77QtuBwNFEHOmWf775llsH2U7N/GiW4tYu?=
- =?us-ascii?Q?4TAIc3/FY7L7EbLG3rmCqDrCuhft32s7KLFWtL+H4D5g0+IsppQChlYViNiz?=
- =?us-ascii?Q?KoZfaZ68xwtTnKbsV6yc08rAwqa8G1Y6M9Qc+u4vbHN0Hr4FdT6vz1ntn8J+?=
- =?us-ascii?Q?ltBSCQOzf5EFzd/g4OaAvSyHEBQ8rRQXNRHFBd73Eo35K2FuBb1MFRtBQzoK?=
- =?us-ascii?Q?I3zP8ZyfGmQxux7F/a2hMl8vr2wAXfKr/ENTWZJ5D1PKvDpn1ErhNE4LDSgG?=
- =?us-ascii?Q?SowehQ67qDyr3KXvF6kj4mpr5ywGsnuwPeV0ise+AROqm/CdtC61GsupTY0C?=
- =?us-ascii?Q?dhfp4Wd1dYps6d53OE4f6skt6V5hXuE5RWwgzkgkS4IcCE25CVNkpsZsPYPO?=
- =?us-ascii?Q?TiT34OJB0MslxuXglXlanC6Y78RXeoJuT08hFjxHfGRfL93+LwjSKWt7Uq/q?=
- =?us-ascii?Q?5v4EyXdfW2mJN6L4c9u0978AoKUcMLWBfo8jxoeFOB+JvKM+p0vu1GsIuyGe?=
- =?us-ascii?Q?OZXoYwHOqZucFLbm6/CesfGAI6g3lwfPrUk6TBM13SP928OK++9It0j5McOO?=
- =?us-ascii?Q?uxhmgG/NJdk=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH0PR10MB5338.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?/HXE90ZbRmZdQCFjh6znFrm52gRKwyIy5dn/yPzMpSFO/ZSXM9tnCwmmBy0V?=
- =?us-ascii?Q?0hPZdEF9ZPuZjFvDhXUDffPV59lEjs0V5qoo8FlQD4KyCvXh7x8O3Xdb4BR6?=
- =?us-ascii?Q?1HiCrAZo4hajUe5wv+HMaETj1i3JiXSSGVRhqLFUO2DlKb3sG+DAK2XbOM+m?=
- =?us-ascii?Q?TCRMahAZbn1Yz87IYZHSOwDkTFiDoGe35/l5FGh78oYLDevNg/v0izZEV1cW?=
- =?us-ascii?Q?OEzmulo8qHcAZNVjdoydqFeu7JC/Y4nIPX/Bbmxyq5egxuysxvdSY1I1dymt?=
- =?us-ascii?Q?9p+91UNSaylrMpr7IH90E1dRtbKf6R6yEsTofyyYCeoskkX03f/eDReVZZFK?=
- =?us-ascii?Q?aoziAO/V4kl28AH1XpbtOanJGs8bZQBdnOcRwk/Cqmmk4qQM2vKy4cLhTwZF?=
- =?us-ascii?Q?g3bWte4iknGQgh7CAgy78h3BFhoCqN2gujYJQg7MbknUC9rr69dNvo5YJsol?=
- =?us-ascii?Q?Cx9qiUfl6Ns5MObXvViyZ/JUVnEmc1WtpUdy+//V+2vYZM8BxgZjvYlMdyzQ?=
- =?us-ascii?Q?K3pCuQWWPICA99IhVk+gQlpn24gmntKpHiFI+95KffF49pcG0ISuuwxgqEt/?=
- =?us-ascii?Q?xuFPxfNd+kMfC/GzV+wzBMu+HJxtGbHvLx8EvC9X6Typdd9rg0aogdIsc+CA?=
- =?us-ascii?Q?g1H/GEgWarp+0hmARdcrztPEp24qmsA7AtCn/ny7MC7JvwHulQwUKISa1kUb?=
- =?us-ascii?Q?pJ0EuTJksZymhBOPeRskfKEIE3KI3QpE9vB91bHNbCrbHsYBXkFf5BqNbXUi?=
- =?us-ascii?Q?V4USJyNDsPtaTbp5WMzgUSvjdYvpVOEUDsAWkcDSRVQSkC0bvmwuOH9O2d5r?=
- =?us-ascii?Q?+/or07Q2mJjwJttCXKM2ASqbqMC8w89TKgPeGNb0DZ67B24yQSimqUiHj3mQ?=
- =?us-ascii?Q?cC0DRGL7QEqKvnN95cvRlkoNWfkkF7tFXhMdiz+5UqnvbqTzKRmwp7vJ3696?=
- =?us-ascii?Q?E2EZchIJoMDjOw+bh2iUB3LGwGW2iTYj1zrWMP8yZULJi2c5CgLNRhYSdWVJ?=
- =?us-ascii?Q?mF5iYOGGGm/d1dlboq97p4hRdCLCq5celkYPF0xDetnLkEvK8zkPsaiKmtEg?=
- =?us-ascii?Q?PTDcb+pqrTYtZxiXhv0INPwn4t9Ychv0hxTkifF9JAU/VHxf2O8dOiredMEx?=
- =?us-ascii?Q?PkT0FXMYWCO5aYe8fPIMwZOIAa6CgnyGtqPK8/+QfNh02ee1xRlSA/SrdvQE?=
- =?us-ascii?Q?cKbORX/aVJYammi8LSnt2LAbBC33N/xSD+wMk5beGpt++4DbZnNrToWzgnQQ?=
- =?us-ascii?Q?ChBTeJHyw3lCiG82yPYKQKoDiRZPKoWst69h9/yVZnH5VwUfJykkTZKWs/ph?=
- =?us-ascii?Q?Ek7iRV1zXNS9fo0AB37yx9cMNx9uAc4oO0/wj7wwJm+yUzpljZMduDSuQA15?=
- =?us-ascii?Q?1XS3Imt4nyveQHdP7JW3uv0yu68K0fEoc9ekrJO3C2tASEYLcFCheahtpnIh?=
- =?us-ascii?Q?BzQPU9WnDaED9GM9awfizeoGTegFRERBv8MY3wwXrCv5QTw14MFqcIXr1KR3?=
- =?us-ascii?Q?T/sIcpnonv/6dkZmmA8uMrBnubtJZQDkENiOTjg1n0FWX+s9CJJeI5QBflsp?=
- =?us-ascii?Q?KbvrCnnOtkOgjYEdljdAkMfNNN8K1/c/GRK+M2KmT37MA2G8bIEQzB434s39?=
- =?us-ascii?Q?Qg=3D=3D?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	/gv9odLjHvxjg9+8MjckSYri/3mol3/zRweoDYdFc77Ly0vbDQJ01ceF2Bx07BDzqX0c7GLvzWnhiG+AqNGpPeh8pKFFheyrTPR2nnfbgfDOplubkaXC6IfHyz9Z6Z1NvTTdP8EF7y9IerKI+UPVSPyieXN/xnnSj7If9fLigbvfd9apptBrZIvMqTcDd1sTjJELzxjZhgogelYLfNiirxiK75a+Q9kosYpNEQzeswICydlmHbGT21QkPX6K+HDBq5yVvi/09sZKgUcPWjvubwfOEJiMO4lsVg1FHAy+Bdje5riGiIJjKyhxlHnTVhPiaQvFRdUmYkYA2gSIc4m6XPr4f2q5EWQqy7tJhrROkqesNBM98ZeE6YqJLHIFwci/yEGaYzDaOULdSu3kFBrySCxjCFLS7hs9/2c8nnQwI2QbGG8FkZmw36LH6+fmlGylJTuyWMyk/0kOc6zEkbn/PCzY9r5uzqFaRNOF5L2OdNIl3L96Kny2xYjSVD4Byac/HYO4pgeiPz6ng9YCRM+q+cV00D7A8D8AtF1eshh37jjBO2AOXtR1/yk1wj/9HXUnbeWwEMWdCqgkIQVHN+xkSVELcYheYz3cJ1yIKXs5BOo=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d87ed906-b92b-44c2-8a3a-08dde3edfcb5
-X-MS-Exchange-CrossTenant-AuthSource: CH0PR10MB5338.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Aug 2025 15:42:24.4903
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Yxjp4ToyxyYIZUGF3wAYDsJI2J0vGGifJClOfduxRyhzfsD3OwGb62hnhr/3UIK5LRHEHNxkM0w1un0XnAYJSrK7Havlpq6vOnNAnZ6xW58=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR10MB5209
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-25_07,2025-08-20_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 mlxlogscore=932
- mlxscore=0 bulkscore=0 phishscore=0 adultscore=0 spamscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2508110000 definitions=main-2508250142
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAxNyBTYWx0ZWRfX7Gl4zGKt9I94
- gekLy4cWJl3smDwFIQrfKyt4KDLJ/uHDXtKhmQTGEyJMzAKKyqmwbkyZqAv6BY2zPNM/tGdWAXx
- BLTjXYRrVGcsCmwmJBl8mXSd01IcngbPXAboqQukLKOuMZGT9OZoSgIETeV9nbZyu4CzISsE7WE
- kbT1qhS0WJ2lmH/w+wQZPIB/eJwjw938dVH4Sy4zd3NOggNh75zDpveAMgY0XyTEv2jFY3ouMFf
- ukuYH9jiJ0swluapuu8vG/2ocYwHavnnhmqLXVsvkPiG0NvZvNZ1LNt4edz4E1Nyf2G7Zy7X5iQ
- GJHKcgpf0OYWxaiGVGeLW53/6UVv3mI8wTfk2YkhjAXosRBnghWakWkbxcEhzebEfsBrK4MJqkx
- k/0SasUuJuTwjjicwJLUsrXKrS9cgg==
-X-Proofpoint-ORIG-GUID: h5MW82MJYhRHDUImYAIjCMD3Svz9KTcV
-X-Proofpoint-GUID: h5MW82MJYhRHDUImYAIjCMD3Svz9KTcV
-X-Authority-Analysis: v=2.4 cv=IauHWXqa c=1 sm=1 tr=0 ts=68ac8463 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=2OwXVqhp2XgA:10
- a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=y04tpmO5tCGq7rHjvBoA:9 cc=ntf
- awl=host:13600
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 25 Aug 2025 17:53:53 +0200
+Message-Id: <DCBMOZQ7BFI9.2B3A3PEZ0DTYD@fairphone.com>
+Cc: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Will Deacon"
+ <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel"
+ <joro@8bytes.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
+ <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Rafael J.
+ Wysocki" <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>,
+ "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert Xu"
+ <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
+ "Vinod Koul" <vkoul@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Robert Marko"
+ <robimarko@gmail.com>, "Das Srinagesh" <quic_gurus@quicinc.com>, "Thomas
+ Gleixner" <tglx@linutronix.de>, "Jassi Brar" <jassisinghbrar@gmail.com>,
+ "Amit Kucheria" <amitk@kernel.org>, "Thara Gopinath"
+ <thara.gopinath@gmail.com>, "Daniel Lezcano" <daniel.lezcano@linaro.org>,
+ "Zhang Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>,
+ "Ulf Hansson" <ulf.hansson@linaro.org>,
+ <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+ <linux-mmc@vger.kernel.org>
+Subject: Re: [PATCH v2 14/15] arm64: dts: qcom: Add initial Milos dtsi
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
+References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
+ <20250713-sm7635-fp6-initial-v2-14-e8f9a789505b@fairphone.com>
+ <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
+ <DBE6TK1KDOTP.IIT72I1LUN5M@fairphone.com>
+ <DBE8G88CIQ53.2N51CABIBJOOO@fairphone.com>
+ <DBOC7QBND54K.1SI5V9C2Z76BY@fairphone.com>
+ <55420d89-fcd4-4cb5-a918-d8bbe2a03d19@oss.qualcomm.com>
+ <DC74DPI8WS81.17VCYVY34C2F9@fairphone.com>
+ <2hv4yuc7rgtglihc2um2lr5ix4dfqxd4abb2bqb445zkhpjpsi@rozikfwrdtlk>
+In-Reply-To: <2hv4yuc7rgtglihc2um2lr5ix4dfqxd4abb2bqb445zkhpjpsi@rozikfwrdtlk>
 
+Hi Dmitry,
 
-Hi Nitin!
-
->> ESI/MSI is a performance optimization feature that provides dedicated
->> interrupts per MCQ hardware queue . This is optional feature and UFS
->> MCQ should work with and without ESI feature.
+On Wed Aug 20, 2025 at 1:52 PM CEST, Dmitry Baryshkov wrote:
+> On Wed, Aug 20, 2025 at 10:42:09AM +0200, Luca Weiss wrote:
+>> Hi Konrad,
+>>=20
+>> On Sat Aug 2, 2025 at 2:04 PM CEST, Konrad Dybcio wrote:
+>> > On 7/29/25 8:49 AM, Luca Weiss wrote:
+>> >> Hi Konrad,
+>> >>=20
+>> >> On Thu Jul 17, 2025 at 11:46 AM CEST, Luca Weiss wrote:
+>> >>> Hi Konrad,
+>> >>>
+>> >>> On Thu Jul 17, 2025 at 10:29 AM CEST, Luca Weiss wrote:
+>> >>>> On Mon Jul 14, 2025 at 1:06 PM CEST, Konrad Dybcio wrote:
+>> >>>>> On 7/13/25 10:05 AM, Luca Weiss wrote:
+>> >>>>>> Add a devicetree description for the Milos SoC, which is for exam=
+ple
+>> >>>>>> Snapdragon 7s Gen 3 (SM7635).
+>> >>>>>>
+>> >>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> >>>>>> ---
+>> >>>>>
+>> >>>>> [...]
+>> >>>>>> +
+>> >>>>>> +		spmi_bus: spmi@c400000 {
+>> >>>>>> +			compatible =3D "qcom,spmi-pmic-arb";
+>> >>>>>
+>> >>>>> There's two bus instances on this platform, check out the x1e bind=
+ing
+>> >>>>
+>> >>>> Will do
+>> >>>
+>> >>> One problem: If we make the labels spmi_bus0 and spmi_bus1 then we c=
+an't
+>> >>> reuse the existing PMIC dtsi files since they all reference &spmi_bu=
+s.
+>> >>>
+>> >>> On FP6 everything's connected to PMIC_SPMI0_*, and PMIC_SPMI1_* is n=
+ot
+>> >>> connected to anything so just adding the label spmi_bus on spmi_bus0
+>> >>> would be fine.
+>> >>>
+>> >>> Can I add this to the device dts? Not going to be pretty though...
+>> >>>
+>> >>> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch=
+/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+>> >>> index d12eaa585b31..69605c9ed344 100644
+>> >>> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+>> >>> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+>> >>> @@ -11,6 +11,9 @@
+>> >>>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+>> >>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>> >>>  #include "milos.dtsi"
+>> >>> +
+>> >>> +spmi_bus: &spmi_bus0 {};
+>> >>> +
+>> >>>  #include "pm7550.dtsi"
+>> >>>  #include "pm8550vs.dtsi"
+>> >>>  #include "pmiv0104.dtsi" /* PMIV0108 */
+>> >>>
+>> >>> Or I can add a second label for the spmi_bus0 as 'spmi_bus'. Not sur=
+e
+>> >>> other designs than SM7635 recommend using spmi_bus1 for some stuff.
+>> >>>
+>> >>> But I guess longer term we'd need to figure out a solution to this, =
+how
+>> >>> to place a PMIC on a given SPMI bus, if reference designs start to
+>> >>> recommend putting different PMIC on the separate busses.
+>> >>=20
+>> >> Any feedback on this regarding the spmi_bus label?
+>> >
+>> > I had an offline chat with Bjorn and we only came up with janky
+>> > solutions :)
+>> >
+>> > What you propose works well if the PMICs are all on bus0, which is
+>> > not the case for the newest platforms. If some instances are on bus0
+>> > and others are on bus1, things get ugly really quick and we're going
+>> > to drown in #ifdefs.
+>> >
+>> >
+>> > An alternative that I've seen downstream is to define PMIC nodes in
+>> > the root of a dtsi file (not in the root of DT, i.e. NOT under / { })
+>> > and do the following:
+>> >
+>> > &spmi_busN {
+>> > 	#include "pmABCDX.dtsi"
+>> > };
+>> >
+>> > Which is "okay", but has the visible downside of having to define the
+>> > temp alarm thermal zone in each board's DT separately (and doing
+>> > mid-file includes which is.. fine I guess, but also something we avoid=
+ed
+>> > upstream for the longest time)
+>> >
+>> >
+>> > Both are less than ideal when it comes to altering the SID under
+>> > "interrupts", fixing that would help immensely. We were hoping to
+>> > leverage something like Johan's work on drivers/mfd/qcom-pm8008.c,
+>> > but that seems like a longer term project.
+>> >
+>> > Please voice your opinions
+>>=20
+>> Since nobody else jumped in, how can we continue?
+>>=20
+>> One janky solution in my mind is somewhat similar to the PMxxxx_SID
+>> defines, doing something like "#define PM7550_SPMI spmi_bus0" and then
+>> using "&PM7550_SPMI {}" in the dtsi. I didn't try it so not sure that
+>> actually works but something like this should I imagine.
+>>=20
+>> But fortunately my Milos device doesn't have the problem that it
+>> actually uses both SPMI busses for different PMICs, so similar to other
+>> SoCs that already have two SPMI busses, I could somewhat ignore the
+>> problem and let someone else figure out how to actually place PMICs on
+>> spmi_bus0 and spmi_bus1 if they have such a hardware.
 >
-> Gentle Reminder!!
->
+> I'd say, ignore it for now.
 
-Already upstream:
+You mean ignoring that there's a second SPMI bus on this SoC, and just
+modelling one with the label "spmi_bus"? Or something else?
 
-  https://git.kernel.org/torvalds/c/6300d5c54387
 
--- 
-Martin K. Petersen
+I have also actually tried out the C define solution that I was writing
+about in my previous email and this is actually working, see diff below.
+In my opinion it just expands on what we have with the SID defines, so
+shouldn't be tooo unacceptable :)
+
+diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/=
+boot/dts/qcom/milos-fairphone-fp6.dts
+index 9fb174592e2d..96e1b5df4f65 100644
+--- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
++++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
+@@ -7,6 +7,12 @@
+=20
+ #define PMIV0104_SID 7
+=20
++#define PM7550_SPMI spmi_bus0
++#define PM8550VS_SPMI spmi_bus0
++#define PMIV0104_SPMI spmi_bus0
++#define PMK8550_SPMI spmi_bus0
++#define PMR735B_SPMI spmi_bus0
++
+ #include <dt-bindings/leds/common.h>
+ #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+diff --git a/arch/arm64/boot/dts/qcom/pm7550.dtsi b/arch/arm64/boot/dts/qco=
+m/pm7550.dtsi
+index b886c2397fe7..08d7969128c2 100644
+--- a/arch/arm64/boot/dts/qcom/pm7550.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm7550.dtsi
+@@ -34,7 +34,7 @@ trip1 {
+ 	};
+ };
+=20
+-&spmi_bus {
++&PM7550_SPMI {
+ 	pm7550: pmic@1 {
+ 		compatible =3D "qcom,pm7550", "qcom,spmi-pmic";
+ 		reg =3D <0x1 SPMI_USID>;
+diff --git a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi b/arch/arm64/boot/dts/q=
+com/pm8550vs.dtsi
+index 7b5898c263ad..3c8c5f3724a2 100644
+--- a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
+@@ -91,7 +91,7 @@ trip1 {
+ };
+=20
+=20
+-&spmi_bus {
++&PM8550VS_SPMI {
+ 	pm8550vs_c: pmic@2 {
+ 		compatible =3D "qcom,pm8550", "qcom,spmi-pmic";
+ 		reg =3D <0x2 SPMI_USID>;
+diff --git a/arch/arm64/boot/dts/qcom/pmiv0104.dtsi b/arch/arm64/boot/dts/q=
+com/pmiv0104.dtsi
+index 85ee8911d93e..bf0c02974e74 100644
+--- a/arch/arm64/boot/dts/qcom/pmiv0104.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmiv0104.dtsi
+@@ -40,7 +40,7 @@ trip2 {
+ 	};
+ };
+=20
+-&spmi_bus {
++&PMIV0104_SPMI {
+ 	pmic@PMIV0104_SID {
+ 		compatible =3D "qcom,pmiv0104", "qcom,spmi-pmic";
+ 		reg =3D <PMIV0104_SID SPMI_USID>;
+diff --git a/arch/arm64/boot/dts/qcom/pmk8550.dtsi b/arch/arm64/boot/dts/qc=
+om/pmk8550.dtsi
+index 583f61fc16ad..f1c34f0a2522 100644
+--- a/arch/arm64/boot/dts/qcom/pmk8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmk8550.dtsi
+@@ -18,7 +18,7 @@ reboot-mode {
+ 	};
+ };
+=20
+-&spmi_bus {
++&PMK8550_SPMI {
+ 	pmk8550: pmic@0 {
+ 		compatible =3D "qcom,pm8550", "qcom,spmi-pmic";
+ 		reg =3D <0x0 SPMI_USID>;
+diff --git a/arch/arm64/boot/dts/qcom/pmr735b.dtsi b/arch/arm64/boot/dts/qc=
+om/pmr735b.dtsi
+index 09affc05b397..91b53348a4ae 100644
+--- a/arch/arm64/boot/dts/qcom/pmr735b.dtsi
++++ b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
+@@ -30,7 +30,7 @@ pmr735b_crit: pmr735a-crit {
+ 	};
+ };
+=20
+-&spmi_bus {
++&PMR735B_SPMI {
+ 	pmr735b: pmic@5 {
+ 		compatible =3D "qcom,pmr735b", "qcom,spmi-pmic";
+ 		reg =3D <0x5 SPMI_USID>;
 
