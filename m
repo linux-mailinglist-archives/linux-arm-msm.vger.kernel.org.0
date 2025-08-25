@@ -1,251 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-70638-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70639-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD4B5B340DD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 15:36:59 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE338B34109
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 15:43:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9E35A18899D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 13:37:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A3718163E30
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 13:43:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4667D271479;
-	Mon, 25 Aug 2025 13:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66A9B275AE6;
+	Mon, 25 Aug 2025 13:43:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xL2gfzC/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sqFlSdR6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3616E203710
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 13:36:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8F723D297;
+	Mon, 25 Aug 2025 13:43:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756129016; cv=none; b=uqlL2e5bbRFECCtvrTJzb626RCgb2R2ElBV0JU/THw8LNWAzh6lZGHSYc6gADdBaW32jkQSFoM26cH9dSQQFvzsJs9fye53d4R0vYbibnakO4wyqiB1Aq8Q1hDWmnqADyjIvnY9j1ws/oMR5vF2uGgi0PmlR7ZdasVAPFs3/SAc=
+	t=1756129416; cv=none; b=bmQjwb54aCSa8pkoRhxJD63JFIYXCalekDnfJYkmjtAQOGxdunauxgFpJKhcktfwMQW3134aNtU2OICeN+oESo30YVdIBGcHPQufw++JdDPaOtlTVGJkzxNKZAkbmsJ4pOR+5qJ9wsn7Zl39YSpOhtHCa+XpLDNfUaFvrPJVCvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756129016; c=relaxed/simple;
-	bh=4m9o+RKBgJ5Col1Fd/r0APHp/9BhO/z8l4G4dr4+Ozc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dwplkzV9ngYNx4/mMPbW9o95MOuG0ErqXCvSEBIVEnLoKlepLtxCvzDuxVSkmnB0TQtaWZXzLf0bxPc9EgzqHOS9dH1iCcmDd79sbAuySTHfxaCpp6ul84RGrw8YxEU1r2w75joiHO02x0wCWw27ErJxXJX5YCNbkwYNTB2vbb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xL2gfzC/; arc=none smtp.client-ip=209.85.218.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-afcb72d5409so728825366b.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 06:36:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756129012; x=1756733812; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pDTMpOHUU+5woUIgWQOxnynpQcS2ptNxqXsiFnt7QfQ=;
-        b=xL2gfzC/JZSqTjP4DzofRVYHI2qAkIHZpT7u21FrK0KTnUwZLRn0vkW5HAE1gjhUTq
-         iXYnHA3QloE+DUNgTaC7EA463mQs92RXZbK3rX011+jwAZKhkkcvQizEB79cB7wFZ1SY
-         uWFke1I2j+07d67e40aFOeas/bEDnmtVYYQXfxCXtck7fkmqS/tsbbbaGSzhVIQDiY03
-         aj4xxQ5vd4G+JJgVTGLoBT3IpUYQ/575wtgIcOYyBHEyEgxjz/tsUJjtTfEmMcGM0Pt+
-         S5WSxVOmcvmN5Sk3KaqONgghY2Kdme3ak6Wj2MFu4xmDoCzM1/iOJP4RWe6ZHB9lna6F
-         kqLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756129012; x=1756733812;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pDTMpOHUU+5woUIgWQOxnynpQcS2ptNxqXsiFnt7QfQ=;
-        b=ZZykgL+Wmua9AQ452pVk27QfDoHhHU/dUPc3XYe3zkhDGAvCWhNzcxxRvXCLau6ecP
-         nO1QtcqqKoES0egWRnprqua7JXsLtCjEIFGHfR0NtSVxAjIzjcWcDqQOuu6PdUSkBeIb
-         oU/kcRdoucFQXBbkZXkx7nCKeQEAk6qjRNo4UrDxsKqUdxU57DxM2xLVm3ByH9Nlkm1s
-         4DOK/7L4vi7/59QkOAMZ/r63XGR/SQPL3U+/Ilbhj4bZVGmWRtAXPe43wHZmrCE2OUnY
-         YJbU8D50Sz2hadl7kf+SEt3oPw9Xhe6rs4gB1gvSWoqg9Ke8QM28UR1ibPIPVhiE4U/C
-         slkw==
-X-Forwarded-Encrypted: i=1; AJvYcCXo/GbX+cq4A6jDaxZ+yozOlVsqarjuiH8PavpYNVhp0FOHjCdn5wuScRD1hq/R77jsEI0jhJk0i7XZQyFp@vger.kernel.org
-X-Gm-Message-State: AOJu0YwE3DvPCHuQM0BB0EFhzCW6Yr04YJhjN+tLy8E69yoi/zUVl+z3
-	/kmm7SVfZzMvd4MOHaibpIIEmVr5OWjo3GCM8QcBQJAWdkUhVc9mwxKK+q4b7io0RYbU5CIg+il
-	MO6K48cUSetBg
-X-Gm-Gg: ASbGncsFQa1OE7bo6qmZrY5Gv+vPtz7OokVJ0yo+8tG1zBU6uOM4fb8zuiSA6fj6Gg7
-	demHIUFCGFc9ZLNlinMwXFwclbqX21rtrdXqx60doBRDVP6mre5r+POzzYSzqrOxA4d7jCZEyn9
-	JwE8RVFnvSRl4MqPw1sXIWEaPOIOqdkuUw6cZGI0ZGo2olnkoO70m8IYTvzdlaopyQE1XKTmMXt
-	cZzha5ZVdF/O/qHRmqS4qdhPXVgf2XJM2PbKPxrGUtCCYZmq+2ihVk/6WFtNmaPyCspVtfC8Mmh
-	7IAVgz79XU0aOXy0iHMr/7M8bDd9wh8oVLwJhGVnJqywVCe2dIMPQ+cvQksGFOZm+OEPhxDM91J
-	AvDlClHI/tNyWx8a4JqZklrd7L1JdMQ==
-X-Google-Smtp-Source: AGHT+IFLBUsjEEaRTMKTTS5UYe1p7dIIzUWH6NZxIBU0sDo3Xlc4F0hHutvr4vh9c1wWtrm9SoU6bw==
-X-Received: by 2002:a17:907:7202:b0:af9:bfef:156b with SMTP id a640c23a62f3a-afe296a7876mr865808766b.59.1756129012418;
-        Mon, 25 Aug 2025 06:36:52 -0700 (PDT)
-Received: from [192.168.0.24] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afe91744c66sm72984966b.88.2025.08.25.06.36.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Aug 2025 06:36:52 -0700 (PDT)
-Message-ID: <01c67173-818c-48cf-8515-060751074c37@linaro.org>
-Date: Mon, 25 Aug 2025 16:36:50 +0300
+	s=arc-20240116; t=1756129416; c=relaxed/simple;
+	bh=wsGg4o5rIk6iWnwj3c0e+ddrWYACRADM//93hdU20w4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=D44jAz3uRWweYox7UGVlvckTpVZYtggom/x7cV28tiVl214A+9CMLsw6Hwey91Bg7J53d4JPmm0vpr69s4Y55Uw+JjiUOh1mGd7qpQQxyOsw11lHmq8fyGZSxV7UwiZBAd17GRQ9ZuNunSa6Rki7/Rlp3kRYXWYGEuo4gvvtesw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sqFlSdR6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38BB9C4CEED;
+	Mon, 25 Aug 2025 13:43:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756129414;
+	bh=wsGg4o5rIk6iWnwj3c0e+ddrWYACRADM//93hdU20w4=;
+	h=From:Subject:Date:To:Cc:From;
+	b=sqFlSdR6wzioHCIWCTuXe4gIb398iawEGQ0noC6vq3qfSpKD/GhQbNFo/BZMPrL04
+	 fKiuK5wA+i9NFKyGHsjC/hJ22L6DxIOxsIDCQWlHDlbpVj4xLCLv/3e48GURiiSEpo
+	 CpRm/oIfhfcKqoepBNvwkntHaXlfSkrgtiWe3FtbOG2bPeTeDS1nsYCI+SbIpjF4oW
+	 nclGltUfOEK7eUrRlCc238qoG8MsuEdWy35bURpgLz+Tisfc/MMY954heq9Pnfqqmt
+	 RuDCuulMO26sW/CkrFyLalMIN8EiP3wn/2vWATpdOdqe7dd/1NPRg1OQrbh1TYYeIh
+	 wB6/rJBuExbaQ==
+From: Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH 00/39] drm/atomic: Get rid of existing states (not really)
+Date: Mon, 25 Aug 2025 15:43:05 +0200
+Message-Id: <20250825-drm-no-more-existing-state-v1-0-f08ccd9f85c9@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
-To: David Hildenbrand <david@redhat.com>, Michal Hocko <mhocko@suse.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
- jonechou@google.com, tudor.ambarus@linaro.org,
- Christoph Hellwig <hch@infradead.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>
-References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-23-eugen.hristev@linaro.org>
- <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
- <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
- <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
- <aJCRgXYIjbJ01RsK@tiehlicka>
- <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
- <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
- <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
- <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
- <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
- <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
- <64a93c4a-5619-4208-9e9f-83848206d42b@linaro.org>
- <f1f290fc-b2f0-483b-96d5-5995362e5a8b@redhat.com>
-From: Eugen Hristev <eugen.hristev@linaro.org>
-Content-Language: en-US
-In-Reply-To: <f1f290fc-b2f0-483b-96d5-5995362e5a8b@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGlorGgC/x3MwQqDMAwA0F+RnBeoKQW3XxEPrUaXg+1IyhCk/
+ 76y47u8G4xV2OA13KD8FZOSO8bHAOs75oNRtm4gR8FNFHDTE3PBsygjX2JV8oFWY2V8Jk+B1jF
+ 6n6AHH+Vdrn8+L639AIn9C4BsAAAA
+X-Change-ID: 20250825-drm-no-more-existing-state-9b3252c1a33b
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>, Louis Chauvet <louis.chauvet@bootlin.com>, 
+ Haneen Mohammed <hamohammed.sa@gmail.com>, 
+ Melissa Wen <melissa.srw@gmail.com>, Jyri Sarha <jyri.sarha@iki.fi>, 
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+ Paul Cercueil <paul@crapouillou.net>, Liviu Dudau <liviu.dudau@arm.com>, 
+ Russell King <linux@armlinux.org.uk>, 
+ Manikandan Muralidharan <manikandan.m@microchip.com>, 
+ Dharma Balasubiramani <dharma.b@microchip.com>, 
+ Nicolas Ferre <nicolas.ferre@microchip.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, Inki Dae <inki.dae@samsung.com>, 
+ Seung-Woo Kim <sw0312.kim@samsung.com>, 
+ Kyungmin Park <kyungmin.park@samsung.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, Liu Ying <victor.liu@nxp.com>, 
+ Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, 
+ Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>, 
+ Lucas Stach <l.stach@pengutronix.de>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Anitha Chrisanthus <anitha.chrisanthus@intel.com>, 
+ Edmund Dea <edmund.j.dea@intel.com>, Paul Kocialkowski <paulk@sys-base.io>, 
+ Sui Jingfeng <suijingfeng@loongson.cn>, 
+ Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ Sandy Huang <hjc@rock-chips.com>, 
+ =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
+ Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+ Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Mikko Perttunen <mperttunen@nvidia.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, Hans de Goede <hansg@kernel.org>, 
+ Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+ =?utf-8?q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>, 
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ linux-mips@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+ linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev, 
+ linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+ freedreno@lists.freedesktop.org, linux-rockchip@lists.infradead.org, 
+ linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org, 
+ Maxime Ripard <mripard@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5301; i=mripard@kernel.org;
+ h=from:subject:message-id; bh=wsGg4o5rIk6iWnwj3c0e+ddrWYACRADM//93hdU20w4=;
+ b=owGbwMvMwCmsHn9OcpHtvjLG02pJDBlrMoqmcab9SaxeoL8+8fGLztO2hw5uF8s7cXj22mXn5
+ tepO9/r7ZjKwiDMySArpsjyRCbs9PL2xVUO9it/wMxhZQIZwsDFKQATuXKdsaHn3ankZUatfg2R
+ r99tjDXavWHDnETW9lnXphXduWK1i3/PAUFhlmbnCXk1p2ez1uZ9qmBseF0nvzr8bH5d1fUWnkc
+ 9/asdYqdWijaknuX6vvl6Q5LYkrt7xcpMPwdtYnle5sEVXLUIAA==
+X-Developer-Key: i=mripard@kernel.org; a=openpgp;
+ fpr=BE5675C37E818C8B5764241C254BCFC56BF6CE8D
 
+Hi,
 
+Here's a series to get rid of the drm_atomic_helper_get_existing_*_state
+accessors.
 
-On 8/25/25 16:20, David Hildenbrand wrote:
-> 
->>>
->>> IIRC, kernel/vmcore_info.c is never built as a module, as it also
->>> accesses non-exported symbols.
->>
->> Hello David,
->>
->> I am looking again into this, and there are some things which in my
->> opinion would be difficult to achieve.
->> For example I looked into my patch #11 , which adds the `runqueues` into
->> kmemdump.
->>
->> The runqueues is a variable of `struct rq` which is defined in
->> kernel/sched/sched.h , which is not supposed to be included outside of
->> sched.
->> Now moving all the struct definition outside of sched.h into another
->> public header would be rather painful and I don't think it's a really
->> good option (The struct would be needed to compute the sizeof inside
->> vmcoreinfo). Secondly, it would also imply moving all the nested struct
->> definitions outside as well. I doubt this is something that we want for
->> the sched subsys. How the subsys is designed, out of my understanding,
->> is to keep these internal structs opaque outside of it.
-> 
-> All the kmemdump module needs is a start and a length, correct? So the 
-> only tricky part is getting the length.
+The initial intent was to remove the __drm_*_state->state pointer to
+only rely on old and new states, but we still need it now to know which
+of the two we need to free: if a state has not been committed (either
+dropped or checked only), then we need to free the new one, if it has
+been committed we need to free the old state. 
 
-I also have in mind the kernel user case. How would a kernel programmer
-want to add some kernel structs/info/buffers into kmemdump such that the
-dump would contain their data ? Having "KMEMDUMP_VAR(...)" looks simple
-enough.
-Otherwise maybe the programmer has to write helpers to compute lengths
-etc, and stitch them into kmemdump core.
-I am not saying it's impossible, but just tiresome perhaps.
+Thus, the state pointer is kept (and documented) only to point to the
+state we should free eventually.
 
-> 
-> One could just add a const variable that holds this information, or even 
-> better, a simple helper function to calculate that.
-> 
-> Maybe someone else reading along has a better idea.
+All users have been converted to the relevant old or new state
+accessors.  
 
-This could work, but it requires again adding some code into the
-specific subsystem. E.g. struct_rq_get_size()
-I am open to ideas , and thank you very much for your thoughts.
+This was build tested only.
 
-> 
-> Interestingly, runqueues is a percpu variable, which makes me wonder if 
-> what you had would work as intended (maybe it does, not sure).
+Let me know what you think,
+Maxime
 
-I would not really need to dump the runqueues. But the crash tool which
-I am using for testing, requires it. Without the runqueues it will not
-progress further to load the kernel dump.
-So I am not really sure what it does with the runqueues, but it works.
-Perhaps using crash/gdb more, to actually do something with this data,
-would give more insight about its utility.
-For me, it is a prerequisite to run crash, and then to be able to
-extract the log buffer from the dump.
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+---
+Maxime Ripard (39):
+      drm/atomic: Make drm_atomic_get_connector_state() early return consistent
+      drm/atomic: Convert drm_atomic_get_connector_state() to state accessor
+      drm/atomic: Convert drm_atomic_get_connector_state() to use new connector state
+      drm/atomic: Remove unused drm_atomic_get_existing_connector_state()
+      drm/atomic: Document __drm_connectors_state state pointer
+      drm/atomic: Convert __drm_atomic_get_current_plane_state() to modern accessor
+      drm/atomic: Convert drm_atomic_get_plane_state() to use new plane state
+      drm/vkms: Convert vkms_crtc_atomic_check() to use new plane state
+      drm/tilcdc: crtc: Use drm_atomic_helper_check_crtc_primary_plane()
+      drm/atomic: Remove unused drm_atomic_get_existing_plane_state()
+      drm/atomic: Document __drm_planes_state state pointer
+      drm/atomic: Convert drm_atomic_get_crtc_state() to use new connector state
+      drm/ingenic: ipu: Switch to drm_atomic_get_new_crtc_state()
+      drm/arm/malidp: Switch to drm_atomic_get_new_crtc_state()
+      drm/armada: Switch to drm_atomic_get_new_crtc_state()
+      drm/atmel-hlcdc: Switch to drm_atomic_get_new_crtc_state()
+      drm/exynos: Switch to drm_atomic_get_new_crtc_state()
+      drm/imx-dc: Switch to drm_atomic_get_new_crtc_state()
+      drm/imx-dcss: Switch to drm_atomic_get_new_crtc_state()
+      drm/imx-ipuv3: Switch to drm_atomic_get_new_crtc_state()
+      drm/ingenic: Switch to drm_atomic_get_new_crtc_state()
+      drm/kmb: Switch to drm_atomic_get_new_crtc_state()
+      drm/logicvc: Switch to drm_atomic_get_new_crtc_state()
+      drm/loongson: Switch to drm_atomic_get_new_crtc_state()
+      drm/mediatek: Switch to drm_atomic_get_new_crtc_state()
+      drm/msm/mdp5: Switch to drm_atomic_get_new_crtc_state()
+      drm/omap: Switch to drm_atomic_get_new_crtc_state()
+      drm/rockchip: Switch to drm_atomic_get_new_crtc_state()
+      drm/sun4i: Switch to drm_atomic_get_new_crtc_state()
+      drm/tegra: Switch to drm_atomic_get_new_crtc_state()
+      drm/tilcdc: Switch to drm_atomic_get_new_crtc_state()
+      drm/vboxvideo: Switch to drm_atomic_get_new_crtc_state()
+      drm/vc4: Switch to drm_atomic_get_new_crtc_state()
+      drm/atomic: Switch to drm_atomic_get_new_crtc_state()
+      drm/framebuffer: Switch to drm_atomic_get_new_crtc_state()
+      drm/atomic: Remove unused drm_atomic_get_existing_crtc_state()
+      drm/atomic: Document __drm_crtcs_state state pointer
+      drm/atomic: Convert drm_atomic_get_private_obj_state() to use new plane state
+      drm/atomic: Document __drm_private_objs_state state pointer
 
-> 
->>
->>  From my perspective it's much simpler and cleaner to just add the
->> kmemdump annotation macro inside the sched/core.c as it's done in my
->> patch. This macro translates to a noop if kmemdump is not selected.
-> 
-> I really don't like how we are spreading kmemdump all over the kernel, 
-> and adding complexity with __section when really, all we need is a place 
-> to obtain a start and a length.
-> 
+ drivers/gpu/drm/arm/malidp_planes.c             |   2 +-
+ drivers/gpu/drm/armada/armada_plane.c           |   3 +-
+ drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c |   2 +-
+ drivers/gpu/drm/drm_atomic.c                    |  23 ++--
+ drivers/gpu/drm/drm_framebuffer.c               |   2 +-
+ drivers/gpu/drm/exynos/exynos_drm_plane.c       |   2 +-
+ drivers/gpu/drm/imx/dc/dc-plane.c               |   2 +-
+ drivers/gpu/drm/imx/dcss/dcss-plane.c           |   4 +-
+ drivers/gpu/drm/imx/ipuv3/ipuv3-plane.c         |   3 +-
+ drivers/gpu/drm/ingenic/ingenic-drm-drv.c       |   3 +-
+ drivers/gpu/drm/ingenic/ingenic-ipu.c           |   4 +-
+ drivers/gpu/drm/kmb/kmb_plane.c                 |   3 +-
+ drivers/gpu/drm/logicvc/logicvc_layer.c         |   4 +-
+ drivers/gpu/drm/loongson/lsdc_plane.c           |   2 +-
+ drivers/gpu/drm/mediatek/mtk_plane.c            |   3 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c      |   7 +-
+ drivers/gpu/drm/omapdrm/omap_plane.c            |   2 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c     |   6 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c    |   2 +-
+ drivers/gpu/drm/sun4i/sun8i_ui_layer.c          |   3 +-
+ drivers/gpu/drm/sun4i/sun8i_vi_layer.c          |   3 +-
+ drivers/gpu/drm/tegra/dc.c                      |   2 +-
+ drivers/gpu/drm/tilcdc/tilcdc_crtc.c            |   9 +-
+ drivers/gpu/drm/tilcdc/tilcdc_plane.c           |   3 +-
+ drivers/gpu/drm/vboxvideo/vbox_mode.c           |   8 +-
+ drivers/gpu/drm/vc4/vc4_plane.c                 |   6 +-
+ drivers/gpu/drm/vkms/vkms_crtc.c                |   4 +-
+ include/drm/drm_atomic.h                        | 144 ++++++++++++------------
+ 28 files changed, 125 insertions(+), 136 deletions(-)
+---
+base-commit: 7fa4d8dc380fbd81a9d702a855c50690c9c6442c
+change-id: 20250825-drm-no-more-existing-state-9b3252c1a33b
 
-I understand. The section idea was suggested by Thomas. Initially I was
-skeptic, but I like how it turned out.
+Best regards,
+-- 
+Maxime Ripard <mripard@kernel.org>
 
-> So we should explore if there is anything easier possible.
-> 
->>>
->>>>
->>>> So I am unsure whether just removing the static and adding them into
->>>> header files would be more acceptable.
->>>>
->>>> Added in CC Cristoph Hellwig and Sergey Senozhatsky maybe they could
->>>> tell us directly whether they like or dislike this approach, as kmemdump
->>>> would be builtin and would not require exports.
->>>>
->>>> One other thing to mention is the fact that the printk code dynamically
->>>> allocates memory that would need to be registered. There is no mechanism
->>>> for kmemdump to know when this process has been completed (or even if it
->>>> was at all, because it happens on demand in certain conditions).
->>>
->>> If we are talking about memblock allocations, they sure are finished at
->>> the time ... the buddy is up.
->>>
->>> So it's just a matter of placing yourself late in the init stage where
->>> the buddy is already up and running.
->>>
->>> I assume dumping any dynamically allocated stuff through the buddy is
->>> out of the picture for now.
->>>
->>
->> The dumping mechanism needs to work for dynamically allocated stuff, and
->> right now, it works for e.g. printk, if the buffer is dynamically
->> allocated later on in the boot process.
-> 
-> You are talking about the memblock_alloc() result, correct? Like
-> 
-> new_log_buf = memblock_alloc(new_log_buf_len, LOG_ALIGN);
-> 
-> The current version is always stored in
-> 
-> static char *log_buf = __log_buf;
-> 
-> 
-> Once early boot is done and memblock gets torn down, you can just use 
-> log_buf and be sure that it will not change anymore.
-> 
->>
->> To have this working outside of printk, it would be required to walk
->> through all the printk structs/allocations and select the required info.
->> Is this something that we want to do outside of printk ?
-> 
-> I don't follow, please elaborate.
-> 
-> How is e.g., log_buf_len_get() + log_buf_addr_get() not sufficient, 
-> given that you run your initialization after setup_log_buf() ?
-> 
-> 
-
-My initial thought was the same. However I got some feedback from Petr
-Mladek here :
-
-https://lore.kernel.org/lkml/aBm5QH2p6p9Wxe_M@localhost.localdomain/
-
-Where he explained how to register the structs correctly.
-It can be that setup_log_buf is called again at a later time perhaps.
 
