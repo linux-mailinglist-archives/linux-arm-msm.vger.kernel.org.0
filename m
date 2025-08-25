@@ -1,218 +1,277 @@
-Return-Path: <linux-arm-msm+bounces-70730-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70731-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 059FAB347D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 18:44:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93127B347F2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 18:51:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 15CB27A3F4B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 16:42:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 85D922A26DC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 16:50:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C21F301029;
-	Mon, 25 Aug 2025 16:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F2A84F5E0;
+	Mon, 25 Aug 2025 16:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dkEjYpXW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZspILKvF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926B92FE059
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 16:44:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA723BD04
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 16:50:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756140253; cv=none; b=TXdFi2zUWMEHLSvdhwXaORToz1Y7EM1LbL8xnfkBJE4iZtSjpNzQpHQm/7OKsucysUdU+NcOdfT2P5+BWwIBltbsAUFTAE+df8gJ1foJuACKVyJKCFSL5IDhO5MLKaudf+Dg7yEMcFlQNdrqSISGZ2iowj/jqr7VvXttgdxT5nk=
+	t=1756140657; cv=none; b=LzJ5F39HIQscfa5vDNqoYxsNgC/YCoaiCkMOCXYrkOePqziob7BRe8uLgarA2vtVSPbFhhYngQcPf8NLUmZyYvIZWMlo90TfGiLZJXhCTzSnrRts0HE09T4ceg09pP2soSnhIGwdik7PdV7GmQcLPn7f3k+Z76N/SefwjqRVZxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756140253; c=relaxed/simple;
-	bh=4+DrdL61UaJwKBOPyjvDbGLxMCh1l0N12pclwMqiu1I=;
+	s=arc-20240116; t=1756140657; c=relaxed/simple;
+	bh=5rffhWlHaMM9NYWWbtLlVs1vIMOIydqOcfqzIMaoRho=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dX55FP6dsLQzD58bhYffsT+0Q9ByyM6tuGbrQ4gAV3+mJ6fsJJUckqSkr4quM+/bVmuVcrHNQIs15ACs7Vc2mXeYSUqUv5hp7i2nDuOgyJ/xCS6sQuHVtRYy2pCsiQOm2OjfPl06aiaGqv/YKA6u6V26BLbZyqelbbq3UM0JveE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dkEjYpXW; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=tvaDHFHSBEVrdB6SgXxa+a8jKb0PXLy5ZbIXhxFBOc02TktVj4q9c9vazVRiq9D+z8G9H+yKg/cBqZmW1qxzcdbty80cVmXAFLPqdPa29Fxslb/AaOV1Reo0ddLVPJqZ7P7FfmxxWRiNTTg5peavBf37R03LQCi/d7SmP0xEvqc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZspILKvF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PFfBWk005797
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 16:44:10 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PFcPGJ022063
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 16:50:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VkXgtXV7f37xL22OCgZ71BFwpcYjM8tCLgUNGf2Ra+o=; b=dkEjYpXW5sHvhH4g
-	ghdGqvR2iEkwBjqgPHURmzUcyhmYK8tF82KGlkDrORTWNR4SG57jWfIaHY2KaQdA
-	skJ0p0qxEMGw+SJUBJMU1PD6VEJ1K2hq1Fjr71j60nZMgQpCMbEd0uNYHfYu3jXL
-	QzCZm9inT7LXSNVCD8A32S60W7XMHp8Lrc2VTsw8qWX+SMMAFNXK4E1U4bWMtRWo
-	UHzS/AHSZK/LvzO8crc23P3sL81Uz1mfkM64PNaBzSjctycOZQoj8dmuaNSnv6TS
-	Fvuzst8IlOfMdfzazl8DSqImr0yzwYCIFf5JJXqVS2MZ0qiZR56mBVdlVxn6+bTG
-	cerzGg==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48rtper6qj-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=jrK6peDEUA+3SL53OzlkDtdt
+	0fhhvGzt5hC7i2Ev/TE=; b=ZspILKvFLiB3LXXDIzSk+2kGOluIqieGTOur9XPr
+	e+twuhC0JviSUowvNL1zm9MBjtlvlpmMAjI/Sp2WTiADiumMQlkwJpHl8do3a1UL
+	q3TKAQomy8hGjHK1uraEPM+1Muyloy3KZ7ArIzIDWSumiZmtI+tHP5Jb/XJ01YaQ
+	/TFNaAX+7r2GIzaQUM3tUt2ovtey5oXfAOEo5iSJ9Y/fJlUZUPxbBHlHZ43BYYz7
+	Vy5d4QUpAJJIRxTmiHXMh8HtSX94NuwdVhLd03q4KI85tf+AVKHb2EwxaUMfSm2J
+	4nRjRYlPh5+Wva43OsZg1zNOnhqwFZk6/09mOJUEvlhDOA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6x85u49-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 16:44:10 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-24636484391so34506195ad.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 09:44:10 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 16:50:55 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b2d09814efso20764001cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 09:50:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756140249; x=1756745049;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VkXgtXV7f37xL22OCgZ71BFwpcYjM8tCLgUNGf2Ra+o=;
-        b=PV42Z7qtLyIObdMA6ocdMuYawtPdOy7Kf5Kj6pfna699PQJ7eF4vKBew9xKCylMRKT
-         PBVaKvR/GtiM2DetMg6nvdLoBR3SkVPUAhOeuubQJSUbDsh3PY6nVYTwKl55gOBhurTj
-         6mrAFNkYzCAYkIgVFxYL+sl02FRiXj++eqajQgy+W7BxmCerSi3vVj73MrfFhpaLDPWw
-         GLDoZhpvwpSlVKz3r8KQxSvo3qgubfEb0nLy6qWETlUkD2Qgz1G0fjrx/DxPrllpYkd8
-         gIqYWVp0x5UFGZldHdd9jfB4PthW6kcFdcAMnQDUtUyjQHyor5VbBbL0Va5hMMe2xYg0
-         AEUw==
-X-Forwarded-Encrypted: i=1; AJvYcCUUIgZh+KP+TzCX5zOqs7rT749QCiq+6dBfjwuGX3mEC9CWNWC7q1CtRpdz5Yci+kuj3tIfIOPTdPSSZK/y@vger.kernel.org
-X-Gm-Message-State: AOJu0YxKw/fk5bZgqY0U5YDLq4fKxkE1zXZUGgbrq2IqYmVn5gZr4hCQ
-	hbI3Z84t1JHW8VZJ2j3W8PArsdcyZ/d5wr15L8z38DxzQEfD11d2KCYVohAAqh9OA0kF6EGC79g
-	Lu/jHJjJg5WWg8lHwI4EcsXFH4rwNz4/j5J4X9qMH72QBebzgOyY4gBzzbYFEBl0C0Y0o
-X-Gm-Gg: ASbGncuXEXvFDARckw8WIGElO2HgRIvSN0uwLgykToiT+vIfqAWUfrg/Wsjk8fDx9Fw
-	Gwi0WURjWwP5vGwRpJOYcn0jH7ZWTH1y2Y+QRNXwFCgIg8h9dQ2KUKQi4FzzTfFwY5qaZE3T7Mf
-	DwR4Z/cVxo4vJLzqLITS0FYc0W2OthOkYq42MjAlcX3cw4CfhChdaUuzTgJJTFDh4+YA3q3stbI
-	d4C3/G7hauGbkaeisTMVJ9qJimwPpjOieNVvS1Wtd3U2mGYMAlT9QWp8ZV/5OtYLRoCIX9/YQBq
-	rKNdjsLgO8mmRBWyq+bBosMvUL90Jz5HCiLHqaNKTBTxrtrvaF3hES0zc//35nNDEwj/
-X-Received: by 2002:a17:902:ce8b:b0:240:52c8:2564 with SMTP id d9443c01a7336-2462ee8e8f4mr191030415ad.26.1756140249188;
-        Mon, 25 Aug 2025 09:44:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+qUQTI7dH9WfoK+mxz4DLGdk08USfScffsegOK+mgoCLUWBBdePL8ik/Y/ki6NK0tKflmSw==
-X-Received: by 2002:a17:902:ce8b:b0:240:52c8:2564 with SMTP id d9443c01a7336-2462ee8e8f4mr191030065ad.26.1756140248682;
-        Mon, 25 Aug 2025 09:44:08 -0700 (PDT)
-Received: from hu-wasimn-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24668889dbbsm72715395ad.132.2025.08.25.09.44.03
+        d=1e100.net; s=20230601; t=1756140654; x=1756745454;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jrK6peDEUA+3SL53OzlkDtdt0fhhvGzt5hC7i2Ev/TE=;
+        b=FWnkI+E59Qijgmztt1fcNYXfEi6UqGMKkfi3h2xfhgQaRKjE0eyjVdQGGYSwQ/TWOU
+         /KJs/iBCjB+bka3vcv1FQyGoEgYToIdw7zGGd0VhpTn3EJTqdl9UXEoFWzj2xPlLeJOb
+         mmB5wVgI+aqFQzNIgUcFtbsTbvp71j/oJOpOH7zvsXGRE350cTMKms/DZIyoigPfmDtW
+         L8ErBQovhttszoFR3UEK+EjHIaTn6SCRR8+i7FM8p+kshaLtD+QSlaMnp3Hob3KkDPP5
+         Y5Lp5/xbgCh9QFOoK/RQPcjZkQj41VvsNf8lYLWdilpLyBr6TcyjsPRrS15Vb/z2m/6F
+         1vFw==
+X-Forwarded-Encrypted: i=1; AJvYcCWpzPD9lrszX7YPzvq5hj0anGlq7grj+YdAmBNeFSW/pg+7TAEMOEzddTswwF+Ul+dCHB/psBipKaOn1/y7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw4xjtair25QgVjp1+BeGaOtrg3on9PGZbKp0EJw/ULPpBUYHlN
+	4bYzjlAEDMb/pJd85JLVRIinfM33kNCLa+5OvO+hwGRtPowNEpS4lSjThtK6hEsyf9HUak2aCtf
+	KT+AWijkrNwQXdqe/VGkX+fF+pv6uPP80FAYIlkgQd2eBwDYr/eEWoxOUmVGtN8XYjeJm
+X-Gm-Gg: ASbGncvkxKCXKevsA6IZixE+zb/tMwJ7a2Yu0+BJQEPX/H+GRI73hyIdsE4kuAgUOsn
+	ZG+Snch8+ojckZRe5JtLBvIVq/v4E4FGxUetn4PoXOBedtU7qdoMw7Gxg6RxDoY5wt8oeQLDQro
+	qbgnTTW06Rz1WV515qGcUQbd8CGJOArnIPAGKQzrvHMzpi0G92UeOJwlU9b/xEUJOGgUz8ldeDy
+	0JFDWrePp3/+Y68I8/G8ihZeHURCyfLEfELsY7b2gsFu884ewt3h5TK1H/6RzDkBMGhydFhS20y
+	jRRLbilY4PHkLYoHskYUQ+pmgnVTpgbXy461toTpjj5hGhO/VQ6q4r48s8GQD26kfRRKNTvV2lt
+	8Vbx9uGipR7gpGRRANPbACCRHABixEGInQL2SZmhipUQXqHvjyQhB
+X-Received: by 2002:a05:622a:294:b0:4b2:9bdc:5da2 with SMTP id d75a77b69052e-4b2aab6797amr162388371cf.76.1756140653460;
+        Mon, 25 Aug 2025 09:50:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHLHZdiFKldHnq/hjsXNMEr2yDqWUyubbDvhtKmQyFhUwo+jZoQ3RY2EppFdHKWmCE4ejb+OA==
+X-Received: by 2002:a05:622a:294:b0:4b2:9bdc:5da2 with SMTP id d75a77b69052e-4b2aab6797amr162387811cf.76.1756140652710;
+        Mon, 25 Aug 2025 09:50:52 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c136a1sm1696542e87.52.2025.08.25.09.50.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Aug 2025 09:44:08 -0700 (PDT)
-Date: Mon, 25 Aug 2025 22:14:01 +0530
-From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 0/7] OPP: Add support to find OPP for a set of keys
-Message-ID: <aKyS0RGZX4bxbjDj@hu-wasimn-hyd.qualcomm.com>
-References: <20250820-opp_pcie-v4-0-273b8944eed0@oss.qualcomm.com>
+        Mon, 25 Aug 2025 09:50:52 -0700 (PDT)
+Date: Mon, 25 Aug 2025 19:50:50 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v3 02/38] drm/msm/dp: remove dp_display's dp_mode and use
+ dp_panel's instead
+Message-ID: <aa35nnvo4mugk363rwa3cndjwj5sukfchdxv65yob2uf5ugskz@gus3l4d6vccc>
+References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
+ <20250825-msm-dp-mst-v3-2-01faacfcdedd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250820-opp_pcie-v4-0-273b8944eed0@oss.qualcomm.com>
-X-Proofpoint-GUID: RyYteOdrZFZ5HD24cTk0c2B3n2xMZ1uR
-X-Proofpoint-ORIG-GUID: RyYteOdrZFZ5HD24cTk0c2B3n2xMZ1uR
-X-Authority-Analysis: v=2.4 cv=Hd8UTjE8 c=1 sm=1 tr=0 ts=68ac92da cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=76l3OPsZB85xAofE:21 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=1xens5CjvSCak2KtytIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI1MDE0MiBTYWx0ZWRfX8CmVXUrVJRTK
- JstGNlGMj/1tgJQRxQy17C54iaSogZ4qKHQ+BcXPINzq0qWeA5toarkcUJzzXwkJNVAgA9ilAeH
- 2nJhAApjn+EUxPvv50tO5jyCbnA8Nrq4CG+fYAECoYNtHqp/vajJzRkJBJwJkq7izdMaFFVhebH
- MP4BX+9uBRN+w15EP6vsAKXxTPtrfXiniH+fdNegeNonIJdUIRScn6ovG0rqBm8Bf6crbNzmVRt
- ZSORnzT4DB4+xFkIBLUhGx3lLdzA6P8faX+uh+lujlchAGL5izUTVR8aLLndnE2vRv8tgV1AkjJ
- U+bpqZO4FPKIWzsxVm/OmrsmaEXqUWJGR1mFOWGhEF7Hf2QNKPb6h13vhRALouZrACfJQ68ghpe
- uCwIjuQ7
+In-Reply-To: <20250825-msm-dp-mst-v3-2-01faacfcdedd@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: blXLpvgsXI1vgEoMw73e0blTYZ4OjIZT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA0NCBTYWx0ZWRfX8RXG4uY1YDua
+ tYWUY4zUss2WiuZQBwbVNFMWcXNakJqWuSp7xaZ/lHpIGeGbwOq6qNcx2/oqtFK3u6cbfNk8OJD
+ 4kU73l2YEgYfEQaGoGSy3CaxN2lQGn4RH7H3vEbPZwX/UCQ0mx2l0/uba1sk6HRboJI4rzShto8
+ rUWTAashT7+UgGy2dRWRKkupTQFn19huENlLebGc+1VGVqbLVwIy84dbNz0c4qb+okKn4XnIZOj
+ Ujab7w1yzFlBq4LQLM+bfutNJZVhRlDGWSGpWehbwX3805xm24frOz4eEg5cSUHQbjf/H8JVpVy
+ bAedCvO3k5RMg2TC+e7YEcmrnruk5fr82H+Q5hn57Sz8GePLd4xRO2gS4k7dMuMpAwnZiSMfbei
+ 1d6zXUMy
+X-Proofpoint-GUID: blXLpvgsXI1vgEoMw73e0blTYZ4OjIZT
+X-Authority-Analysis: v=2.4 cv=Ep/SrTcA c=1 sm=1 tr=0 ts=68ac946f cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=uIfkYmwNqBCjC_dUfjAA:9
+ a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-25_08,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
- adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508250142
+ clxscore=1015 spamscore=0 adultscore=0 bulkscore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230044
 
-On Wed, Aug 20, 2025 at 01:58:46PM +0530, Krishna Chaitanya Chundru wrote:
-> The existing OPP table in the device tree for PCIe is shared across
-> different link configurations such as data rates 8GT/s x2 and 16GT/s x1.
-> These configurations often operate at the same frequency, allowing them
-> to reuse the same OPP entries. However, 8GT/s and 16 GT/s may have
-> different characteristics beyond frequency—such as RPMh votes in QCOM
-> case, which cannot be represented accurately when sharing a single OPP.
+On Mon, Aug 25, 2025 at 10:15:48PM +0800, Yongxing Mou wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> In such cases, frequency alone is not sufficient to uniquely identify
-> an OPP. To support these scenarios, introduce a new API
-> dev_pm_opp_find_key_exact() that allows OPP lookup for set of keys like
-> frequency, level & bandwidth.
+> dp_display caches the current display mode and then passes it onto
+> the panel to be used for programming the panel params. Remove this
+> two level passing and directly populate the panel's dp_display_mode
+> instead.
 > 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 > ---
-> Changes in v4:
-> - Included dtsi changes for all platforms.
-> - Made the changes as requested by Viresh like adding comments, some
->   coding styles etc.
-> - Link to v3: https://lore.kernel.org/r/20250819-opp_pcie-v3-0-f8bd7e05ce41@oss.qualcomm.com
+>  drivers/gpu/drm/msm/dp/dp_display.c | 66 ++++++++++++++-----------------------
+>  1 file changed, 24 insertions(+), 42 deletions(-)
 > 
-> Changes in v3:
-> - Always check for frequency match unless user doesn't pass it (Viresh).
-> - Make dev_pm_opp_key public and let user pass the key (Viresh).
-> - Include bandwidth as part of dev_pm_opp_key (Viresh).
-> - Link to v2: https://lore.kernel.org/r/20250818-opp_pcie-v2-0-071524d98967@oss.qualcomm.com
-> 
-> Changes in v2:
-> - Use opp-level to indentify data rate and use both frequency and level
->   to identify the OPP. (Viresh)
-> - Link to v1: https://lore.kernel.org/r/20250717-opp_pcie-v1-0-dde6f452571b@oss.qualcomm.com
-> 
-> ---
-> Krishna Chaitanya Chundru (7):
->       OPP: Add support to find OPP for a set of keys
->       OPP: Move refcount and key update for readability in _opp_table_find_key()
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index dadf31bc37763c4f07f68b76fbbe33fb77b20850..632a1191e4e48fecd7dbda2f6ec6b8ed0aeebc93 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -60,7 +60,6 @@ struct msm_dp_display_private {
+>  	struct msm_dp_panel   *panel;
+>  	struct msm_dp_ctrl    *ctrl;
+>  
+> -	struct msm_dp_display_mode msm_dp_mode;
+>  	struct msm_dp msm_dp_display;
+>  
+>  	/* wait for audio signaling */
+> @@ -649,16 +648,29 @@ static int msm_dp_init_sub_modules(struct msm_dp_display_private *dp)
+>  }
+>  
+>  static int msm_dp_display_set_mode(struct msm_dp *msm_dp_display,
+> -			       struct msm_dp_display_mode *mode)
+> +				   const struct drm_display_mode *adjusted_mode,
+> +				   struct msm_dp_panel *msm_dp_panel)
+>  {
+> -	struct msm_dp_display_private *dp;
+> +	u32 bpp;
+>  
+> -	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+> +	drm_mode_copy(&msm_dp_panel->msm_dp_mode.drm_mode, adjusted_mode);
+> +
+> +	if (msm_dp_display_check_video_test(msm_dp_display))
+> +		bpp = msm_dp_display_get_test_bpp(msm_dp_display);
+> +	else
+> +		bpp = msm_dp_panel->connector->display_info.bpc * 3;
+> +
+> +	msm_dp_panel->msm_dp_mode.bpp = bpp ? bpp : 24; /* Default bpp */
+>  
+> -	drm_mode_copy(&dp->panel->msm_dp_mode.drm_mode, &mode->drm_mode);
+> -	dp->panel->msm_dp_mode.bpp = mode->bpp;
+> -	dp->panel->msm_dp_mode.out_fmt_is_yuv_420 = mode->out_fmt_is_yuv_420;
+> -	msm_dp_panel_init_panel_info(dp->panel);
+> +	msm_dp_panel->msm_dp_mode.v_active_low =
+> +		!!(adjusted_mode->flags & DRM_MODE_FLAG_NVSYNC);
+> +	msm_dp_panel->msm_dp_mode.h_active_low =
+> +		!!(adjusted_mode->flags & DRM_MODE_FLAG_NHSYNC);
+> +	msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 =
+> +		drm_mode_is_420_only(&msm_dp_panel->connector->display_info, adjusted_mode) &&
+> +		msm_dp_panel->vsc_sdp_supported;
+> +
+> +	msm_dp_panel_init_panel_info(msm_dp_panel);
+>  	return 0;
+>  }
+>  
+> @@ -1328,7 +1340,7 @@ bool msm_dp_wide_bus_available(const struct msm_dp *msm_dp_display)
+>  
+>  	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	if (dp->msm_dp_mode.out_fmt_is_yuv_420)
+> +	if (dp->panel->msm_dp_mode.out_fmt_is_yuv_420)
+>  		return false;
+>  
+>  	return dp->wide_bus_supported;
+> @@ -1389,10 +1401,6 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>  	bool force_link_train = false;
+>  
+>  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+> -	if (!msm_dp_display->msm_dp_mode.drm_mode.clock) {
+> -		DRM_ERROR("invalid params\n");
+> -		return;
+> -	}
+>  
+>  	if (dp->is_edp)
+>  		msm_dp_hpd_plug_handle(msm_dp_display, 0);
+> @@ -1405,12 +1413,6 @@ void msm_dp_bridge_atomic_enable(struct drm_bridge *drm_bridge,
+>  	if (msm_dp_display->link->sink_count == 0)
+>  		return;
+>  
+> -	rc = msm_dp_display_set_mode(dp, &msm_dp_display->msm_dp_mode);
 
-Hi Krishna,
+Why is it being moved from atomic_enable? You can access crtc_state here
+and thus the adjusted_mode. The mode_set is clearly declared as
+deprecated. We should move moving code from that function rather than
+adding code to it.
 
-Patch 2/7 is applied in linux-next (20250825) as commit
-b5323835f050 (OPP: Reorganize _opp_table_find_key()) which is causing
-regression on my board (lemans-evk (arm64)).
-Reverting the change is resolving the issue.
-
-Kernel log:
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000016
-...
-Call trace:
- _read_bw+0x0/0x10 (P)
- _find_key+0xb8/0x194
- dev_pm_opp_find_bw_floor+0x54/0x8c
- bwmon_intr_thread+0x84/0x284 [icc_bwmon]
- irq_thread_fn+0x2c/0xa8
- irq_thread+0x174/0x334
- kthread+0x134/0x208
- ret_from_fork+0x10/0x20
-
->       arm64: dts: qcom: sm8450: Add opp-level to indicate PCIe data rates
->       arm64: dts: qcom: sm8550: Add opp-level to indicate PCIe data rates
->       arm64: dts: qcom: sm8650: Add opp-level to indicate PCIe data rates
->       arm64: dts: qcom: x1e80100: Add opp-level to indicate PCIe data rates
->       PCI: qcom: Use frequency and level based OPP lookup
+> -	if (rc) {
+> -		DRM_ERROR("Failed to perform a mode set, rc=%d\n", rc);
+> -		return;
+> -	}
+> -
+>  	if (dp->link_ready && !dp->power_on) {
+>  		msm_dp_display_host_phy_init(msm_dp_display);
+>  		force_link_train = true;
+> @@ -1479,31 +1481,11 @@ void msm_dp_bridge_mode_set(struct drm_bridge *drm_bridge,
+>  	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+>  	msm_dp_panel = msm_dp_display->panel;
+>  
+> -	memset(&msm_dp_display->msm_dp_mode, 0x0, sizeof(struct msm_dp_display_mode));
+> -
+> -	if (msm_dp_display_check_video_test(dp))
+> -		msm_dp_display->msm_dp_mode.bpp = msm_dp_display_get_test_bpp(dp);
+> -	else /* Default num_components per pixel = 3 */
+> -		msm_dp_display->msm_dp_mode.bpp = dp->connector->display_info.bpc * 3;
+> -
+> -	if (!msm_dp_display->msm_dp_mode.bpp)
+> -		msm_dp_display->msm_dp_mode.bpp = 24; /* Default bpp */
+> -
+> -	drm_mode_copy(&msm_dp_display->msm_dp_mode.drm_mode, adjusted_mode);
+> -
+> -	msm_dp_display->msm_dp_mode.v_active_low =
+> -		!!(msm_dp_display->msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NVSYNC);
+> -
+> -	msm_dp_display->msm_dp_mode.h_active_low =
+> -		!!(msm_dp_display->msm_dp_mode.drm_mode.flags & DRM_MODE_FLAG_NHSYNC);
+> -
+> -	msm_dp_display->msm_dp_mode.out_fmt_is_yuv_420 =
+> -		drm_mode_is_420_only(&dp->connector->display_info, adjusted_mode) &&
+> -		msm_dp_panel->vsc_sdp_supported;
+> +	msm_dp_display_set_mode(dp, adjusted_mode, msm_dp_panel);
+>  
+>  	/* populate wide_bus_support to different layers */
+> -	msm_dp_display->ctrl->wide_bus_en =
+> -		msm_dp_display->msm_dp_mode.out_fmt_is_yuv_420 ? false : msm_dp_display->wide_bus_supported;
+> +	msm_dp_display->ctrl->wide_bus_en = msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 ?
+> +		false : msm_dp_display->wide_bus_supported;
+>  }
+>  
+>  void msm_dp_bridge_hpd_enable(struct drm_bridge *bridge)
 > 
->  arch/arm64/boot/dts/qcom/sm8450.dtsi   |  41 ++++++++++---
->  arch/arm64/boot/dts/qcom/sm8550.dtsi   |  63 ++++++++++++++-----
->  arch/arm64/boot/dts/qcom/sm8650.dtsi   |  63 ++++++++++++++-----
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi |  90 ++++++++++++++++++++++-----
->  drivers/opp/core.c                     | 107 +++++++++++++++++++++++++++++++--
->  drivers/pci/controller/dwc/pcie-qcom.c |   7 ++-
->  include/linux/pm_opp.h                 |  30 +++++++++
->  7 files changed, 341 insertions(+), 60 deletions(-)
-> ---
-> base-commit: c17b750b3ad9f45f2b6f7e6f7f4679844244f0b9
-> change-id: 20250717-opp_pcie-793160b2b113
-> 
-> Best regards,
 > -- 
-> Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> 2.34.1
 > 
 
 -- 
-Regards,
-Wasim
+With best wishes
+Dmitry
 
