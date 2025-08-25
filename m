@@ -1,287 +1,303 @@
-Return-Path: <linux-arm-msm+bounces-70680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FABCB342B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 16:08:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 28E61B3430B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 16:17:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8CFDD2A143A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 14:03:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3A69A2038A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 14:17:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D48BB2F0C50;
-	Mon, 25 Aug 2025 13:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE6B62FA0F2;
+	Mon, 25 Aug 2025 14:17:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="H/QoveyH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EBqQFEmE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA31C2F39B1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 13:59:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7BA02F361C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 14:17:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756130384; cv=none; b=rsp46F3jrj64Antk/axP7+bmq0MOiNlP0ltHVzi4Hrtxb/PllbEIpoz4Uw5yjoIiZ6lSZJhSQVSunRcSo8xt8NBrAF2R3kk7/WTtqB+Vbh7nwWJhs1wbjphnNqTuUPMoyMdkY2kzFEB5fMkU7KzQV9iQjOlfA6vXQlkr6wcpKh8=
+	t=1756131436; cv=none; b=Wm/5qkY+ahca1LVOQfrtJApkbZ+UPD65KjTspVF0enf2jCCZFtO+nQV9D+0bHculWnO7mczRq4nsmbUIu5uo2dphab/RTeVF8bhLH8wxay28vJtnI/tEhxDIuqOWiFu1/Ezv8pi+fS7j9x5sgbdCjfSxN+1aHgYW5HcEeZegS6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756130384; c=relaxed/simple;
-	bh=v3Gi5YTVW/Cp+kTwx9Yt+qf7HZfn+UuKaA8V/d2uE4k=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:From:In-Reply-To:
-	 Content-Type:References; b=p45hVUJrbJaD0lGd9xnsajDdAvCQwnfRQOTg/W8mhsk8QBU8M0qvtJfuy1VpC0eqzvws/GMC0+c/+W+P6ZT/PLN3+OFIheoVouycyYW8cqxAXrIxhGc0pcuZEyyr70YK+smG82AWooE1TZdtOUcnoSXpuAquikQLhrnVFLMbWqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=H/QoveyH; arc=none smtp.client-ip=210.118.77.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20250825135940euoutp01d6ed2dd089d0c60f2ad25411340252fd~fB0a8LEjk2199121991euoutp01N
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 13:59:40 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20250825135940euoutp01d6ed2dd089d0c60f2ad25411340252fd~fB0a8LEjk2199121991euoutp01N
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1756130380;
-	bh=3cyM1i33QvECmO3VGKlA/wlGJx1DA9pp0W8lw/26QYE=;
-	h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
-	b=H/QoveyHvcQzgAot0x+iV8pueXg2ZF17RltiPR+t9D4LGAbmuTUpK/i5J4E4k2rEw
-	 4kfZJa7nIgD93f+cROxKac2b6uv7VgEXVwaOUIgnLL/iW3Tx1P/csXm9SpPglW4QnL
-	 TXqsmgkHfSM6bOpECYJwGnrLu0flq/wiDZOyyKDw=
-Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250825135939eucas1p206b6e2b5ba115f51618c773a1f37939c~fB0ajcpg01631516315eucas1p2u;
-	Mon, 25 Aug 2025 13:59:39 +0000 (GMT)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250825135937eusmtip155667559731c29c009ae9b30c1a36298~fB0Y2twp60569705697eusmtip1V;
-	Mon, 25 Aug 2025 13:59:37 +0000 (GMT)
-Message-ID: <4066c0b4-807f-401e-baaa-25f4891f10ac@samsung.com>
-Date: Mon, 25 Aug 2025 15:59:37 +0200
+	s=arc-20240116; t=1756131436; c=relaxed/simple;
+	bh=kfjbd1frALmT1ax3tPvnTDTCNGsQG/utV3Zk0tWS9yk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=JjDNUh+mQ9n2q8iZBndnNoU4EAJmZcCQHfyUhTUt2yCJ6alhxIDG7yf/UQT6ZUZ0DL2ec9Ete+0YFFDyOJ/cX18B9s3JaogbNr+4MKQbTqcrXCM0eNoWiEYi+2cQAEr44KMZF/Bc2Y2JGqQY4d/poGVj0cOtbQ54eaxr++5GD9g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EBqQFEmE; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57P93keu017699
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 14:17:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=Wu59sfweUtQOepucpDZNuv
+	NpI5esikaRW2HFZthjgiI=; b=EBqQFEmEb4LFZci+yyCapE1F+ikAQ0g8qStJJM
+	+2Ee3zZqTkoit9ztuq36OpNHUoQxVwWxlUFMLYlW6N+oCijlS6c3B2aVMvtMBE9E
+	2tLvLHYoyJG5wg+H5UyUOvokjr6tNT6v3VMxmiwn5osb3fFzaLDlfjldr/8NM7eg
+	wScnU+XlKYcn4ZyavHWCixWPaL1ENSSr+BLfe1hIRP+zFd9Kod29stCbl47RYcm2
+	9wZKH3QAdHgmMc/8J02f2FSKDMhI5JQs5DqtO8yucFrKYPCmG+BWKx86n7yAiRzv
+	EUwRE+iQEZFIpKCs3YN70ObiecGlnaEUI3cCrdXItHYx5aEA==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5uc57cm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 14:17:12 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-771e43782aaso912330b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 07:17:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756131430; x=1756736230;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Wu59sfweUtQOepucpDZNuvNpI5esikaRW2HFZthjgiI=;
+        b=uR24qpuje6WLbQIzG0D7hanH9/UUNipEgPZ4GxKseYGYuk12fdv6kJR6Nb8ejX+ttF
+         W2wLhM247FCPxiQ/3gD8uxNstlK5O1lnFyXgj8IoKfNJeZe4Znm2RVpyZo2hfnnOLHNV
+         IKBs8+X6e1ZaeMi/wsP/xHbBT8cwGzO3maft0aDFitN6zoCcyN6kdUq/YdDzxaOQfYuT
+         uphN6DaCvKJUkCpyL9bhpzke3Rrmz6J6WJwFuoiWlBiYP+Dz0hS9JPHQM5+k5QahUabf
+         GMR2kCORSLRzilsGWyR1Crs98NVtjYyoVhcYP/mWDBx+Egzd6ebWeCAeG9OKyt5RbpxQ
+         mYnQ==
+X-Gm-Message-State: AOJu0Yzd+QGw7WuHdQ1UvaMa0+e226vVSs1owHQMElp+q4p4gEOZm4wJ
+	Qx4N7ZJDp2RhZz1VDZOiVREZS2I9nM7ujmAzJXRMwj4KbiU43y/PrBN/phWBoh3P54bbrBFO3QA
+	wFCvJh5vYwrYM/ncudTn3FsvkPbOR0Jh+8Wesf4EHM3VLxFbN7LjZWZTaxsedVC1v5Jwz
+X-Gm-Gg: ASbGncsCWAb7g1M9VtvElET9/KTlnKtFwhImrf25q/ekbdpL83Jbc9nTB3OFYkoE8px
+	m4EjOjoAYn71LA3kwVy4oa9e3xthMaUYL5pJBsSaFEaLk4E9l1GrattfuWXVpZlNNfhyRyrctNS
+	25RGNvOJBhP+lkw9jBi1QyzbRraC2NBttNSSc3QQ4m0+48OGmOysQBjtc9rmxRlcm2b6AuFlI8Z
+	WRzujAdAETRlwjemmZz+HINsbrGRP9YuhSGXtkuVUV+yP0coX3KbK1qLiOMlTZeNnwU/HYLBTCE
+	Wu2iPujA8BLUR5Tu4QiyiX7sFir2C0lVuJDUYIDJ9J7KLkE5P1vV3zpkSn6YAks1xvcAGXQ=
+X-Received: by 2002:a05:6a21:99aa:b0:21a:ecf5:ea71 with SMTP id adf61e73a8af0-24340b5b4cemr18097563637.15.1756131429863;
+        Mon, 25 Aug 2025 07:17:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOPO2PNUo52ZuG+6CW22LxjvJm4xtZ8v2rB+Z73p7mL0+2JIJAvhHlUHydOCE2L8s62+uKGg==
+X-Received: by 2002:a05:6a21:99aa:b0:21a:ecf5:ea71 with SMTP id adf61e73a8af0-24340b5b4cemr18097509637.15.1756131429212;
+        Mon, 25 Aug 2025 07:17:09 -0700 (PDT)
+Received: from cse-cd01-lnx.ap.qualcomm.com ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-770401eb20dsm7672339b3a.79.2025.08.25.07.17.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 07:17:08 -0700 (PDT)
+From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Subject: [PATCH v3 00/38] drm/msm/dp: Add MST support for MSM chipsets
+Date: Mon, 25 Aug 2025 22:15:46 +0800
+Message-Id: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH v4 2/7] OPP: Move refcount and key update for
- readability in _opp_table_find_key()
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Viresh
-	Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, Stephen Boyd
-	<sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, Manivannan
-	Sadhasivam <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring
-	<robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, Bjorn Andersson
-	<andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Krzysztof
-	Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Content-Language: en-US
-From: Marek Szyprowski <m.szyprowski@samsung.com>
-In-Reply-To: <20250820-opp_pcie-v4-2-273b8944eed0@oss.qualcomm.com>
-Content-Transfer-Encoding: 8bit
-X-CMS-MailID: 20250825135939eucas1p206b6e2b5ba115f51618c773a1f37939c
-X-Msg-Generator: CA
 Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20250825135939eucas1p206b6e2b5ba115f51618c773a1f37939c
-X-EPHeader: CA
-X-CMS-RootMailID: 20250825135939eucas1p206b6e2b5ba115f51618c773a1f37939c
-References: <20250820-opp_pcie-v4-0-273b8944eed0@oss.qualcomm.com>
-	<20250820-opp_pcie-v4-2-273b8944eed0@oss.qualcomm.com>
-	<CGME20250825135939eucas1p206b6e2b5ba115f51618c773a1f37939c@eucas1p2.samsung.com>
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIABtwrGgC/22Q22rDMBBEf8XouQq6WLZsSsl/lBCk1ToR1JdYj
+ mkJ/veulVfrQWIW9mhmXizhHDGxtnixGdeY4jiQ0B8Fg7sbbshjIM2UUEZUouF96nmY6Fk4hAC
+ qq2RwiIwWphm7+Jth35e3nvHxJObyHrIeU3KZ2RafGWmF5fcpcFp1sIwzXxUXvO5KlFiX0jl9H
+ lM6PZ7uB8a+P9H1tf91QJKGjF3J2NXHIcThlvhaEQxraTwdo211DPMuId8ncWkLL03ZGCGltQA
+ NeldrBcp4oXXoamc0AOhSdmyPeI+JTP/l+laVMx41lUM5UwbbCOWUDmeqBeIAuwV22bbtH3EiI
+ vOJAQAA
+X-Change-ID: 20250609-msm-dp-mst-cddc2f61daee
+To: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756131418; l=8527;
+ i=yongxing.mou@oss.qualcomm.com; s=20241121; h=from:subject:message-id;
+ bh=kfjbd1frALmT1ax3tPvnTDTCNGsQG/utV3Zk0tWS9yk=;
+ b=pq/EJ6TWfDHS3WCZCgRE8W3NSKY5/yb6xpdK0+tGEID8XzYMbOkrrSgiL1+314NLYFEBYDbna
+ kkd04rYvOpoA99SBZ8b/dnTqXd9AmunH74k3s8/oK2attZF3ijBf/M6
+X-Developer-Key: i=yongxing.mou@oss.qualcomm.com; a=ed25519;
+ pk=zeCnFRUqtOQMeFvdwex2M5o0Yf67UHYfwCyBRQ3kFbU=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMiBTYWx0ZWRfXyjiQNiV1wPgC
+ 2FZvci/DyUHuJrRpwGmIYdg4n3/peu4mIons3633aneWbsg+8BGY8zYpZtDRDonMHztxwAkQugu
+ zQZ255xrUMgax7U+38jiY/92/Sftb1g9j7EjeuufUrDDmnPc11Pjcvq7ZyB0OjJwhW9Mor534TM
+ NMr9sRALdGnnAVftcV7HJ4cgFJzaL7ENVBR2fJ56BYSBkzcmNGqwr87udQDe2dxY1Lde3JPT/RU
+ GrKWZyk8kculraD7LKmoE2V7bZkr/PQ4qa6MaqCdMu6PCjuM0PVHAml5T8N8wCRcS8xSBG7TaAT
+ 5Xeg4n3I0UIPjEGOLpofoBPtaIcbgEjuSSNwrXxl0Bh3xVpCVFDK4HQfHoS6bqRxJT7nUKLu8w5
+ WABKsHRq
+X-Proofpoint-ORIG-GUID: wY_oj2dok3L8NUt4M2ap6kx7Xwf3nsYX
+X-Authority-Analysis: v=2.4 cv=I85lRMgg c=1 sm=1 tr=0 ts=68ac7068 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=e5mUnYsNAAAA:8 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=tVI0ZWmoAAAA:8 a=pGLkceISAAAA:8
+ a=l6kI6A2B7Aiyxt7-y2QA:9 a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+ a=Vxmtnl_E_bksehYqCbjh:22 a=TjNXssC_j7lpFel5tvFf:22 a=-BPWgnxRz2uhmvdm1NTO:22
+X-Proofpoint-GUID: wY_oj2dok3L8NUt4M2ap6kx7Xwf3nsYX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-25_06,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 adultscore=0 bulkscore=0 malwarescore=0
+ suspectscore=0 phishscore=0 clxscore=1015 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230032
 
-On 20.08.2025 10:28, Krishna Chaitanya Chundru wrote:
-> Refactor _opp_table_find_key() to improve readability by moving the
-> reference count increment and key update inside the match condition block.
->
-> Also make the 'assert' check mandatory instead of treating it as optional.
->
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Add support for Multi-stream transport for MSM chipsets that allow
+a single instance of DP controller to send multiple streams.
 
-This patch landed in today's linux-next (20250825) as commit 
-b5323835f050 ("OPP: Reorganize _opp_table_find_key()"). In my tests I 
-found that it causes regressions on my test boards. Reverting this 
-change on top of linux-next fixes booting of all the affected boards.
+This series has been validated on sa8775p ride platform using multiple
+MST dongles and also daisy chain method on both DP0 and DP1 upto 1080P.
 
-Here are kernel logs with lockdep enabled:
+With 4x4K monitors, due to lack of layer mixers that combination will not
+work but this can be supported as well after some rework on the DPU side.
 
-1. Exynos4412-based Odroid-U3 board (ARM 32bit):
+In addition, SST was re-validated with all these changes to ensure there
+were no regressions.
 
-============================================
-WARNING: possible recursive locking detected
-6.17.0-rc3-next-20250825 #10901 Not tainted
---------------------------------------------
-kworker/u16:0/12 is trying to acquire lock:
-cf896040 (&devfreq->lock){+.+.}-{3:3}, at: devfreq_notifier_call+0x30/0x124
+This patch series was made on top of:
 
-but task is already holding lock:
-cf896040 (&devfreq->lock){+.+.}-{3:3}, at: devfreq_monitor+0x1c/0x1a4
+[1] : https://patchwork.freedesktop.org/series/151522/ (v2 to fix up HPD)
 
-other info that might help us debug this:
-  Possible unsafe locking scenario:
+Bindings for the pixel clock for additional stream is available at :
 
-        CPU0
-        ----
-   lock(&devfreq->lock);
-   lock(&devfreq->lock);
+[2] : https://patchwork.freedesktop.org/series/152718/
 
-  *** DEADLOCK ***
+Overall, the patch series has been organized in the following way:
 
-  May be due to missing lock nesting notation
+1) First set are a couple of fixes made while debugging MST but applicable
+to SST as well so go ahead of everything else
+2) Prepare the DP driver to get ready to handle multiple streams. This is the bulk
+of the work as current DP driver design had to be adjusted to make this happen.
+3) Finally, new files to handle MST related operations
 
-4 locks held by kworker/u16:0/12:
-  #0: c289d0b4 ((wq_completion)devfreq_wq){+.+.}-{0:0}, at: 
-process_one_work+0x1b0/0x70c
-  #1: f0899f18 
-((work_completion)(&(&devfreq->work)->work)#2){+.+.}-{0:0}, at: 
-process_one_work+0x1dc/0x70c
-  #2: cf896040 (&devfreq->lock){+.+.}-{3:3}, at: devfreq_monitor+0x1c/0x1a4
-  #3: c2e78c4c (&(&opp_table->head)->rwsem){++++}-{3:3}, at: 
-blocking_notifier_call_chain+0x28/0x60
+Validation was done on the latest linux-next on top of above changes and
+both FB console and weston compositors were validated with these changes.
 
-stack backtrace:
-CPU: 2 UID: 0 PID: 12 Comm: kworker/u16:0 Not tainted 
-6.17.0-rc3-next-20250825 #10901 PREEMPT
-Hardware name: Samsung Exynos (Flattened Device Tree)
-Workqueue: devfreq_wq devfreq_monitor
-Call trace:
-  unwind_backtrace from show_stack+0x10/0x14
-  show_stack from dump_stack_lvl+0x68/0x88
-  dump_stack_lvl from print_deadlock_bug+0x370/0x380
-  print_deadlock_bug from __lock_acquire+0x1428/0x29ec
-  __lock_acquire from lock_acquire+0x134/0x388
-  lock_acquire from __mutex_lock+0xac/0x10c0
-  __mutex_lock from mutex_lock_nested+0x1c/0x24
-  mutex_lock_nested from devfreq_notifier_call+0x30/0x124
-  devfreq_notifier_call from notifier_call_chain+0x84/0x1d4
-  notifier_call_chain from blocking_notifier_call_chain+0x44/0x60
-  blocking_notifier_call_chain from _opp_kref_release+0x3c/0x5c
-  _opp_kref_release from exynos_bus_target+0x24/0x70
-  exynos_bus_target from devfreq_set_target+0x8c/0x2e8
-  devfreq_set_target from devfreq_update_target+0x9c/0xf8
-  devfreq_update_target from devfreq_monitor+0x28/0x1a4
-  devfreq_monitor from process_one_work+0x24c/0x70c
-  process_one_work from worker_thread+0x1b8/0x3bc
-  worker_thread from kthread+0x13c/0x264
-  kthread from ret_from_fork+0x14/0x28
-Exception stack(0xf0899fb0 to 0xf0899ff8)
+To: Rob Clark <robin.clark@oss.qualcomm.com>
+To: Dmitry Baryshkov <lumag@kernel.org>
+To: Abhinav Kumar <abhinav.kumar@linux.dev>
+To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+To: Sean Paul <sean@poorly.run>
+To: Marijn Suijten <marijn.suijten@somainline.org>
+To: David Airlie <airlied@gmail.com>
+To: Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
 
-...
+Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+---
+Changes in v3: Fixed review comments from Dmitry
+- Fixed lots of comments from series V1/V2.
+- Rebased onto next-20250808.
+- Rebased onto Jessica's HPD-refactor branch.
+- Fixed formatting issues in commit messages under changes.
+- Removed unnecessary one-line wrappers.
+- Relocated MST-related .atomic_check() calls to their appropriate positions.
+- Removed the logic related to slot checking in .mode_valid().
+- Link to v2: https://lore.kernel.org/r/20250609-msm-dp-mst-v2-0-a54d8902a23d@quicinc.com
 
+Changes in v2: Fixed review comments from Dmitry
+- Rebase on top of next-20250606
+- Add all 4 streams pixel clks support and MST2/MST3 Link clk support
+- Address the formatting issues mentioned in the review comments
+- Drop the cache of msm_dp_panel->drm_edid cached
+- Remove the one-line wrapper funtion and redundant conditional check
+- Fixed the commit messgae descriptions of some patches
+- Reordered the patches and renamed some functions and variables
+- Link to v1: https://lore.kernel.org/all/20241205-dp_mst-v1-0-f
+8618d42a99a@quicinc.com/
 
-2. Exynos5422-based Odroid-XU3 board (ARM 32bit):
+---
+Abhinav Kumar (30):
+      drm/msm/dp: remove dp_display's dp_mode and use dp_panel's instead
+      drm/msm/dp: break up dp_display_enable into two parts
+      drm/msm/dp: re-arrange dp_display_disable() into functional parts
+      drm/msm/dp: allow dp_ctrl stream APIs to use any panel passed to it
+      drm/msm/dp: split dp_ctrl_off() into stream and link parts
+      drm/msm/dp: make bridge helpers use dp_display to allow re-use
+      drm/msm/dp: separate dp_display_prepare() into its own API
+      drm/msm/dp: introduce max_streams for DP controller MST support
+      drm/msm/dp: introduce stream_id for each DP panel
+      drm/msm/dp: Add support for programming p1/p2/p3 register blocks
+      drm/msm/dp: use stream_id to change offsets in dp_catalog
+      drm/msm/dp: add support to send ACT packets for MST
+      drm/msm/dp: Add support to enable MST in mainlink control
+      drm/msm/dp: no need to update tu calculation for mst
+      drm/msm/dp: Add support for MST channel slot allocation
+      drm/msm/dp: Add support for sending VCPF packets in DP controller
+      drm/msm/dp: Always program MST_FIFO_CONSTANT_FILL for MST use cases
+      drm/msm/dp: abstract out the dp_display stream helpers to accept a panel
+      drm/msm/dp: replace power_on with active_stream_cnt for dp_display
+      drm/msm/dp: Mark the SST bridge disconnected when mst is active
+      drm/msm/dp: add an API to initialize MST on sink side
+      drm/msm/dp: add dp_display_get_panel() to initialize DP panel
+      drm/msm/dp: add dp_mst_drm to manage DP MST bridge operations
+      drm/msm/dp: add connector abstraction for DP MST
+      drm/msm/dp: add HPD callback for dp MST
+      drm/msm: add support for MST non-blocking commits
+      drm/msm: initialize DRM MST encoders for DP controllers
+      drm/msm/dp: initialize dp_mst module for each DP MST controller
+      drm/msm/dpu: use msm_dp_get_mst_intf_id() to get the intf id
+      drm/msm/dp: fix the intf_type of MST interfaces
 
-8<--- cut here ---
-Unable to handle kernel NULL pointer dereference at virtual address 
-00000000 when read
-[00000000] *pgd=00000000
-Internal error: Oops: 5 [#1] SMP ARM
-Modules linked in:
-CPU: 7 UID: 0 PID: 68 Comm: kworker/u34:1 Not tainted 
-6.17.0-rc3-next-20250825 #10901 PREEMPT
-Hardware name: Samsung Exynos (Flattened Device Tree)
-Workqueue: devfreq_wq devfreq_monitor
-PC is at _opp_compare_key+0x30/0xb4
-LR is at 0xfffffffc
-pc : [<c09831c4>]    lr : [<fffffffc>]    psr: 20000013
-sp : f0a89de0  ip : cfb0e94c  fp : c1574880
-r10: c14095a4  r9 : f0a89e44  r8 : c2a9c010
-r7 : cfb0ea80  r6 : 00000001  r5 : cfb0e900  r4 : 00000001
-r3 : 00000000  r2 : cfb0e900  r1 : cfb0ea80  r0 : cfaf5800
-Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
-Control: 10c5387d  Table: 4000406a  DAC: 00000051
-Register r0 information: slab kmalloc-1k start cfaf5800 pointer offset 0 
-size 1024
-Register r1 information: slab kmalloc-128 start cfb0ea80 pointer offset 
-0 size 128
-Register r2 information: slab kmalloc-128 start cfb0e900 pointer offset 
-0 size 128
-Register r3 information: NULL pointer
-Register r4 information: non-paged memory
-Register r5 information: slab kmalloc-128 start cfb0e900 pointer offset 
-0 size 128
-Register r6 information: non-paged memory
-Register r7 information: slab kmalloc-128 start cfb0ea80 pointer offset 
-0 size 128
-Register r8 information: slab kmalloc-1k start c2a9c000 pointer offset 
-16 size 1024
-Register r9 information: 2-page vmalloc region starting at 0xf0a88000 
-allocated at kernel_clone+0x58/0x3c4
-Register r10 information: non-slab/vmalloc memory
-Register r11 information: non-slab/vmalloc memory
-Register r12 information: slab kmalloc-128 start cfb0e900 pointer offset 
-76 size 128
-Process kworker/u34:1 (pid: 68, stack limit = 0x050eb3d7)
-Stack: (0xf0a89de0 to 0xf0a8a000)
-..
-Call trace:
-  _opp_compare_key from _set_opp+0x78/0x50c
-  _set_opp from dev_pm_opp_set_rate+0x15c/0x21c
-  dev_pm_opp_set_rate from panfrost_devfreq_target+0x2c/0x3c
-  panfrost_devfreq_target from devfreq_set_target+0x8c/0x2e8
-  devfreq_set_target from devfreq_update_target+0x9c/0xf8
-  devfreq_update_target from devfreq_monitor+0x28/0x1a4
-  devfreq_monitor from process_one_work+0x24c/0x70c
-  process_one_work from worker_thread+0x1b8/0x3bc
-  worker_thread from kthread+0x13c/0x264
-  kthread from ret_from_fork+0x14/0x28
-Exception stack(0xf0a89fb0 to 0xf0a89ff8)
-...
----[ end trace 0000000000000000 ]---
+Yongxing Mou (8):
+      drm/msm/dp: remove cached drm_edid from panel
+      drm/msm/dp: splite msm_dp_ctrl_config_ctrl() into link parts and stream parts
+      drm/msm/dp: extract MISC1_MISC0 configuration into a separate function
+      drm/msm/dp: move the pixel clock control to its own API
+      drm/msm/dp: Add catalog support for 3rd/4th stream MST
+      drm/msm/dp: add MST atomic check to msm_atomic_check()
+      drm/msm/dp: propagate MST state changes to dp mst module
+      drm/msm/dp: Add MST stream support for SA8775P DP controller 0 and 1
 
+ drivers/gpu/drm/msm/Makefile                       |   3 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h   |   6 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h    |  12 +-
+ .../drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h   |   6 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c        |  51 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.h        |   2 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            |  29 +-
+ drivers/gpu/drm/msm/dp/dp_audio.c                  |   2 +-
+ drivers/gpu/drm/msm/dp/dp_ctrl.c                   | 664 +++++++++++---
+ drivers/gpu/drm/msm/dp/dp_ctrl.h                   |  23 +-
+ drivers/gpu/drm/msm/dp/dp_display.c                | 569 ++++++++----
+ drivers/gpu/drm/msm/dp/dp_display.h                |  36 +-
+ drivers/gpu/drm/msm/dp/dp_drm.c                    |  51 +-
+ drivers/gpu/drm/msm/dp/dp_drm.h                    |  12 -
+ drivers/gpu/drm/msm/dp/dp_mst_drm.c                | 994 +++++++++++++++++++++
+ drivers/gpu/drm/msm/dp/dp_mst_drm.h                |  90 ++
+ drivers/gpu/drm/msm/dp/dp_panel.c                  | 295 +++---
+ drivers/gpu/drm/msm/dp/dp_panel.h                  |  27 +-
+ drivers/gpu/drm/msm/dp/dp_reg.h                    |  46 +-
+ drivers/gpu/drm/msm/msm_atomic.c                   |  10 +-
+ drivers/gpu/drm/msm/msm_drv.h                      |  19 +
+ drivers/gpu/drm/msm/msm_kms.c                      |   2 +
+ 22 files changed, 2529 insertions(+), 420 deletions(-)
+---
+base-commit: b1549501188cc9eba732c25b033df7a53ccc341f
+change-id: 20250609-msm-dp-mst-cddc2f61daee
+prerequisite-message-id: <20250808-hpd-refactor-v2-0-7f4e1e741aa3@oss.qualcomm.com>
+prerequisite-patch-id: 0fc90e557ae4bb852757444b92af71ebb3c0698f
+prerequisite-patch-id: a58ebaf429385c622869c83e83ce7ffdfe9ea27e
+prerequisite-patch-id: 9840ae12755ebc1528d6719b058b86ce8ba3e5e8
+prerequisite-patch-id: 8d5d7ac0302a333ecaf01d420f067d2db7195783
+prerequisite-patch-id: 49532adadff58e9069a96b37f26017847fb29a3d
+prerequisite-patch-id: 3d58007342ba985e1c7f0f85ebc5da29c8b67b5c
+prerequisite-patch-id: 46274f99ffb986e53a48d6802e2fc05beb7b7b01
+prerequisite-patch-id: 67536f5bceaf6e9aae18cb8e95874b71ef22dee4
+prerequisite-patch-id: f5fb952fb63bce96161cb56db065927fa0a91e87
+prerequisite-patch-id: 981c763c51c815adda57909ffe567cfa1069d5f5
+prerequisite-patch-id: 3f738fbbf3634482eaf46e5bd5b83c0cf2ce0fe1
+prerequisite-patch-id: 1e250d144e7bad58e2f1ea33f74ceea8e26335e0
+prerequisite-message-id: <20250815-dp_mst_bindings-v6-0-e715bbbb5386@oss.qualcomm.com>
+prerequisite-patch-id: ffeeb0739a4b3d310912f4bb6c0bd17802818879
+prerequisite-patch-id: f0f92109d1bfffa6a1142f2aaecbd72a29b858c0
+prerequisite-patch-id: 9cabb6be69b17e8580a2cffc7aa2709106cc1adf
+prerequisite-patch-id: a389a2e4eca44bf62bb2c861c96596368be7a021
+prerequisite-patch-id: 4f02ab9314f95984ab7dc9b852ba4d6c676746a7
+prerequisite-patch-id: 62d643df7c88d8db2279def1e4b63a605e9145c0
 
-3. Qualcomm Technologies, Inc. Robotics RB5(ARM 64bit):
-
-ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
-ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: Unable to find 
-vdd-hba-supply regulator, assuming enabled
-ufshcd-qcom 1d84000.ufshc: Failed to find OPP for MIN frequency
-ufshcd-qcom 1d84000.ufshc: ufshcd_pltfrm_init: OPP parse failed -34
-ufshcd-qcom 1d84000.ufshc: error -ERANGE: ufshcd_pltfrm_init() failed
-ufshcd-qcom 1d84000.ufshc: probe with driver ufshcd-qcom failed with 
-error -34
-
-
-
-> ---
->   drivers/opp/core.c | 14 ++++++--------
->   1 file changed, 6 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
-> index a36c3daac39cd0bdd2a1f7e9bad5b92f0c756153..bf49709b8c39271431772924daf0c003b45eec7f 100644
-> --- a/drivers/opp/core.c
-> +++ b/drivers/opp/core.c
-> @@ -544,24 +544,22 @@ static struct dev_pm_opp *_opp_table_find_key(struct opp_table *opp_table,
->   	struct dev_pm_opp *temp_opp, *opp = ERR_PTR(-ERANGE);
->   
->   	/* Assert that the requirement is met */
-> -	if (assert && !assert(opp_table, index))
-> +	if (!assert(opp_table, index))
->   		return ERR_PTR(-EINVAL);
->   
->   	guard(mutex)(&opp_table->lock);
->   
->   	list_for_each_entry(temp_opp, &opp_table->opp_list, node) {
->   		if (temp_opp->available == available) {
-> -			if (compare(&opp, temp_opp, read(temp_opp, index), *key))
-> +			if (compare(&opp, temp_opp, read(temp_opp, index), *key)) {
-> +				/* Increment the reference count of OPP */
-> +				*key = read(opp, index);
-> +				dev_pm_opp_get(opp);
->   				break;
-> +			}
->   		}
->   	}
->   
-> -	/* Increment the reference count of OPP */
-> -	if (!IS_ERR(opp)) {
-> -		*key = read(opp, index);
-> -		dev_pm_opp_get(opp);
-> -	}
-> -
->   	return opp;
->   }
->   
->
-Best regards
+Best regards,
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 
 
