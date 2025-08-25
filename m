@@ -1,338 +1,349 @@
-Return-Path: <linux-arm-msm+bounces-70724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7130BB34661
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 17:54:18 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA98EB3466D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 17:57:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 510A31B20221
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 15:54:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6E88E163F5C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 15:57:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B3A82FCC02;
-	Mon, 25 Aug 2025 15:54:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14C8A2FE58F;
+	Mon, 25 Aug 2025 15:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="o0SLw+wP"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eSVbWHny"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B55F2FE58F
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 15:53:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1744278146
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 15:56:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756137240; cv=none; b=IDQU0Kl9qUa7AHYABEg6YuJ3jVpec19EUt09bYgDaDPKEPMSVr9tbOoakEOw/ZrcF8C8jBWNgAe3gJUTLVNVO6cmHYQr8h6mGz7YTaRJ8q6Z0ZGjigPbeRhesfqZ+i3mb1kwE2wAsXjVzh2n50G/C3WxGCaXRAKP1XWl8S7p1uM=
+	t=1756137422; cv=none; b=I703Ng5M0owPMiK+Emk4+vxEYGb8BPkt2SvSrSGKqH0k+LVHQiN1ajCPmy4TaAvS1q27zpub5iMhNYqDMshNqqpZZnui/MwhnC9nXZfp1xJXc2MWvOktpOH4Ryrx3Z8bTMj+dogZDDoPMF6f3NodX/9jRu0oWgJofQOJpx0rvKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756137240; c=relaxed/simple;
-	bh=iDIMFaPmP6Ptap4BSySC5MxVV+P3d+K2pyIekorzzbo=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=KAEUrnVlTBKq2a98GgpR7G8EPapBevwVqMUBmTsJEDuBiJw99rtnUi+ryV560/0yEMB2/qZpDFP5jibl+oAO13ejwB2bgb2tunOzsEJY6j4tfZtkCAQ4mkWxM9YL9unzG4PxhzJb1mf3sLAFFBv9Gmgzn9v+BepK9Wn20AlkaD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=o0SLw+wP; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-afcb7a2befdso667533166b.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 08:53:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1756137235; x=1756742035; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3HqowhwKhilGiIPsPTFLVOfvfqilXqLVrLNuX0vYRl8=;
-        b=o0SLw+wPAtkVA9cVDuec/zje+HDAOCIO1NrveoFG195mCQpM9erUKFUZ81uhSvlFpc
-         Laf8qKGtVqBxXsfR3AVXuDf+XXB2xusNPIG5W26KP/xcmtRxpMZ1ic6TshUJTdFiKa/A
-         UwHIIATPuxcsf/hFud1Z4Z/TzB711ipM1B3Z+1wQGu3Y9/Pa9rL1uscKEzAw0vzqLrkF
-         cc3N82hq+7MmmdWhoYaWm9MK/Q3qt/vbvSdtpoddAaBuaWwye3ai6EDx7mJaMZ3ghHgG
-         EzKPBQTTfMgsLWkmONelIVDpKX5rLH5OFUHvw8Cm1S9TycB/EtLvevHkjEyD/ST1iMw+
-         DHLA==
+	s=arc-20240116; t=1756137422; c=relaxed/simple;
+	bh=JC64w3tuSkbajzgasYe6Zh8VlInyWVH1Pll+dy7VGfo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=m0b1w78M/0OBJJ/zxb5SUD6FxVQz7l5ZT1Q4Brs6g1ZEtNkURVUi+MgZmvzixIoiU/C3KE/D8tvHl6Eblpim0f9RfjOi2A5mPuucUR9Sx2UfTVv9qxJocF5WHwEIGsNWzaMvw8oq9+Ny+pMq0xnHaUVpDV/bRRYDVgbx1IB/TQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eSVbWHny; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PFtpbg007281
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 15:56:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QutffaOQ13Xwk3xH5hQhBka1Be9Thp0ZBqEZpEIMmX4=; b=eSVbWHny/cJccXmn
+	S9JOMBfpnGg6yJJDMgRqDrLtLomR8hUkVFrW2C8iMAVHVja7mHsIdGOQil2rV8es
+	rMo59RJAgl2fR/CYAuMGUWM0y3zoSseb5q5fk6oa8yFzyT4oapyaPlsd0Wt3UXOy
+	fCoRGsYnFxUBrh/JqM1Ybb3+0vdK8CoZ8y8ZziSQ9Q9J1LZu2zd1HNUwuBbXiaTM
+	LOALguo8PDIkmhykfwFvNnaTWYZ8tX61om9T3kxOLK7dL9d9TsK+BL+1wOv5a/Rt
+	ozOnuIXRZfJVwXE6CsCW7OhWR/u0zykML1S57q7CzA1GRJK02UM9IOxiANKgZ0UJ
+	sbfbKQ==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5w2nsr4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 15:56:58 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b49c4e7ba85so1424743a12.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 08:56:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756137235; x=1756742035;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=3HqowhwKhilGiIPsPTFLVOfvfqilXqLVrLNuX0vYRl8=;
-        b=txErDk5PeSL48NUU5ymcvztQkONGMsJ+I5jPQdr7xiCnfb8t2fyXpqXwI7/EAqxQyW
-         vLTwK5pDaICGbw9NLi5irVpbAXl93FagULfZRM2sczXYKwxBVSyeGEhRJRs7n2/7x1Y/
-         IAWBi6ZdULigbikcnajYlppcMhjLFV8NC7GqDW9zLoY+USOw9eAL6K1X1z/N01AlELTh
-         b02EtJDH1jQ5fi1bUQPieWU3ZdsBbTCl1U3lYKwlLBYtn2A6qjJAEHeV5AyEB/pks5+9
-         7K7+JCGUKZnHPIjZurw13iA4RPlTxdUGje78/Z20s8X8vS521fGSaJT0Xm1XarDB/bvm
-         F2cA==
-X-Forwarded-Encrypted: i=1; AJvYcCVrt4er1XueeQUuzVwRWWHqiICbhZIGitDl2gyZ9S6IuTw0ZT+bydylPJuEmLt5uFh7/hODO0gjrs8hyKK/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx3lXlqmDRLjP6wst2AI8M3qHo1oxnA/lKGuHupxUSGjD83px8O
-	MuwwQGSIreAIxpQ4y9263Fkyyv+sHRav8ojE2bmMPgQuvzpiG6/jxLlR+GcSyogA+gI=
-X-Gm-Gg: ASbGncucMhQ2DakAlxqk9+/wCo8PqXczx2EvORO1lsMNlwwSxE0fAOi72NrnEeoW01u
-	89OC22QY3n9FS/iVK2TpsVg10PMZwB+ODwdf+FSixf+zOhT7lmfjKvG3Gdi1wrkQ36/X3D68Djt
-	nNcZkEwocEG6173Czv73lu5a4n5/9m7YAAVOtPLY1e7aU7bM8tGTnfhEcKyg7De6hIURzGsYIOl
-	sbi3oS25bOVRSZWH7RZPaViBqCJV6BmwY58oRABcxtaeWfYBhl54gy8e3bivIaDGRfwFcOVV0Zc
-	foqeln9Xs8ub3N73yfdlmhsYRwWIQn9A3ZBVbny+MC8DAbLY4MPd+TRfQ9t+wK8JnEP3RXQHSYJ
-	s/7jMRp9YL+um/RFKcEBciUCvjGYV9JwZvjFhq3+ICoI/JTSYRTkvN9aXUoztDlZMMEyT5K/xZZ
-	QZcJg=
-X-Google-Smtp-Source: AGHT+IEDOv6gprEj6Ksbmo7p57Z4tZTNEHhZ9DTRLeOqT0HCwoH6lmCXLeF8Wklr2ttI5zxfbuX7Eg==
-X-Received: by 2002:a17:906:7943:b0:ae3:b2b7:7f2f with SMTP id a640c23a62f3a-afe296e74c2mr1283531066b.40.1756137234813;
-        Mon, 25 Aug 2025 08:53:54 -0700 (PDT)
-Received: from localhost (83-97-14-181.biz.kpn.net. [83.97.14.181])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afe8b5fbc8dsm139360466b.1.2025.08.25.08.53.53
+        d=1e100.net; s=20230601; t=1756137418; x=1756742218;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QutffaOQ13Xwk3xH5hQhBka1Be9Thp0ZBqEZpEIMmX4=;
+        b=fYIAbw1IUQ4ouS8NnKfOLrxB9w6j4NCneYFfebmKkyYFo2YjmPtMlqzEvOqBBcxuc8
+         Ud+DUS1uwp6GcGhi2zuKyrfAiG9iYjIR/Sd72IImzjHjzq/C6Z1PZxRnJAzXcfnWIpN7
+         5znoPd2N9kAmC0KYzuiYqzjgFKujjug6FpmPKfO7sySZKjMYWtZXJu47tujwsQwNmBDd
+         s4YzwQpHt/TL95XVn+JLM+Xx8IVY0EgV+T6TpauMQPhemaud67TdT5R4KmYJXSc1ijAm
+         yhxCi6TSl5wIxysfEVhT3kNqTZx9+OAXiE0f99GfOeJH6GekVq8ieIIdNx/EjeWIdPr3
+         xgog==
+X-Forwarded-Encrypted: i=1; AJvYcCVodg8qvttYgEe0GAliXUDD6YlLrevOKzZ2KXoCMOX7X5Yysys37aSBBa3+bOFch+zDs5r+K1axUdvu+bV9@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw5bxImnLWnxOlGg1VFFyP6kLHMgn9pzJb3bTo0K/i8rf21/Mg3
+	rQzmxEtkJgsrCd2qqiOMBNxPOEQT/Hj/ruDw5UugYP+qw+UxuddNtBEkYCa6gbya8KCF5cJkZXD
+	xS50ha3BnvlnOUS/TasbVbjzO4MEdb6y2N4q7EwiqDN4UmSntiZ0zeHhkpayLP7GFyqiC
+X-Gm-Gg: ASbGncvl44cqQBDFss2PcNB4CXxFUxjfoil0bbLmm7+he6B18gwpYoKWsp6WTkuuA41
+	NcEc6xH4sS5iT2Cu0BCIxjJu9WSjQTdp1fwPFlxXodOqBmMjypCTp22Dr4GvnWzuJ9NzjN0tNjV
+	P951Pg6M4Gqb/Z1K70OhmzHgVJlRGRJytKa3AoYWpy3jKF5MRTTwiE4uN18RkdzSh52c9TB4WdQ
+	kWg7R6W6uhEBuGGdZqhNfM7LTSx3P4kMv5EMJ2o/ynN72M7dc2FPzmsAiSFuyGd971SHX1Jljv6
+	rgtv4pmYkRZf2W16VlABW5Y5OHadHdf4vwokIprDmy6LSbXdWjGkfr8V2ScaJTWZuejw8EIXONo
+	c
+X-Received: by 2002:a17:902:ce87:b0:246:e7ca:3598 with SMTP id d9443c01a7336-246e7ca3766mr35835075ad.38.1756137417896;
+        Mon, 25 Aug 2025 08:56:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHgrzCJcPV9SeMDkGSRfPk/j1dIRe81ecf4/C6a6KOY63K2M2JwS5OVVxjAsuQl2S0Ot4bAiw==
+X-Received: by 2002:a17:902:ce87:b0:246:e7ca:3598 with SMTP id d9443c01a7336-246e7ca3766mr35834875ad.38.1756137417383;
+        Mon, 25 Aug 2025 08:56:57 -0700 (PDT)
+Received: from [192.168.29.113] ([49.43.227.218])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246e1b6fae5sm27049645ad.140.2025.08.25.08.56.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Aug 2025 08:53:54 -0700 (PDT)
+        Mon, 25 Aug 2025 08:56:57 -0700 (PDT)
+Message-ID: <919ea7ce-a36a-4eaa-a13a-c693eb9c6c2f@oss.qualcomm.com>
+Date: Mon, 25 Aug 2025 21:26:49 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 25 Aug 2025 17:53:53 +0200
-Message-Id: <DCBMOZQ7BFI9.2B3A3PEZ0DTYD@fairphone.com>
-Cc: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Will Deacon"
- <will@kernel.org>, "Robin Murphy" <robin.murphy@arm.com>, "Joerg Roedel"
- <joro@8bytes.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof Kozlowski"
- <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>, "Rafael J.
- Wysocki" <rafael@kernel.org>, "Viresh Kumar" <viresh.kumar@linaro.org>,
- "Manivannan Sadhasivam" <mani@kernel.org>, "Herbert Xu"
- <herbert@gondor.apana.org.au>, "David S. Miller" <davem@davemloft.net>,
- "Vinod Koul" <vkoul@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Robert Marko"
- <robimarko@gmail.com>, "Das Srinagesh" <quic_gurus@quicinc.com>, "Thomas
- Gleixner" <tglx@linutronix.de>, "Jassi Brar" <jassisinghbrar@gmail.com>,
- "Amit Kucheria" <amitk@kernel.org>, "Thara Gopinath"
- <thara.gopinath@gmail.com>, "Daniel Lezcano" <daniel.lezcano@linaro.org>,
- "Zhang Rui" <rui.zhang@intel.com>, "Lukasz Luba" <lukasz.luba@arm.com>,
- "Ulf Hansson" <ulf.hansson@linaro.org>,
- <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-pm@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-crypto@vger.kernel.org>, <dmaengine@vger.kernel.org>,
- <linux-mmc@vger.kernel.org>
-Subject: Re: [PATCH v2 14/15] arm64: dts: qcom: Add initial Milos dtsi
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>
-X-Mailer: aerc 0.20.1-0-g2ecb8770224a-dirty
-References: <20250713-sm7635-fp6-initial-v2-0-e8f9a789505b@fairphone.com>
- <20250713-sm7635-fp6-initial-v2-14-e8f9a789505b@fairphone.com>
- <3e0299ad-766a-4876-912e-438fe2cc856d@oss.qualcomm.com>
- <DBE6TK1KDOTP.IIT72I1LUN5M@fairphone.com>
- <DBE8G88CIQ53.2N51CABIBJOOO@fairphone.com>
- <DBOC7QBND54K.1SI5V9C2Z76BY@fairphone.com>
- <55420d89-fcd4-4cb5-a918-d8bbe2a03d19@oss.qualcomm.com>
- <DC74DPI8WS81.17VCYVY34C2F9@fairphone.com>
- <2hv4yuc7rgtglihc2um2lr5ix4dfqxd4abb2bqb445zkhpjpsi@rozikfwrdtlk>
-In-Reply-To: <2hv4yuc7rgtglihc2um2lr5ix4dfqxd4abb2bqb445zkhpjpsi@rozikfwrdtlk>
-
-Hi Dmitry,
-
-On Wed Aug 20, 2025 at 1:52 PM CEST, Dmitry Baryshkov wrote:
-> On Wed, Aug 20, 2025 at 10:42:09AM +0200, Luca Weiss wrote:
->> Hi Konrad,
->>=20
->> On Sat Aug 2, 2025 at 2:04 PM CEST, Konrad Dybcio wrote:
->> > On 7/29/25 8:49 AM, Luca Weiss wrote:
->> >> Hi Konrad,
->> >>=20
->> >> On Thu Jul 17, 2025 at 11:46 AM CEST, Luca Weiss wrote:
->> >>> Hi Konrad,
->> >>>
->> >>> On Thu Jul 17, 2025 at 10:29 AM CEST, Luca Weiss wrote:
->> >>>> On Mon Jul 14, 2025 at 1:06 PM CEST, Konrad Dybcio wrote:
->> >>>>> On 7/13/25 10:05 AM, Luca Weiss wrote:
->> >>>>>> Add a devicetree description for the Milos SoC, which is for exam=
-ple
->> >>>>>> Snapdragon 7s Gen 3 (SM7635).
->> >>>>>>
->> >>>>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->> >>>>>> ---
->> >>>>>
->> >>>>> [...]
->> >>>>>> +
->> >>>>>> +		spmi_bus: spmi@c400000 {
->> >>>>>> +			compatible =3D "qcom,spmi-pmic-arb";
->> >>>>>
->> >>>>> There's two bus instances on this platform, check out the x1e bind=
-ing
->> >>>>
->> >>>> Will do
->> >>>
->> >>> One problem: If we make the labels spmi_bus0 and spmi_bus1 then we c=
-an't
->> >>> reuse the existing PMIC dtsi files since they all reference &spmi_bu=
-s.
->> >>>
->> >>> On FP6 everything's connected to PMIC_SPMI0_*, and PMIC_SPMI1_* is n=
-ot
->> >>> connected to anything so just adding the label spmi_bus on spmi_bus0
->> >>> would be fine.
->> >>>
->> >>> Can I add this to the device dts? Not going to be pretty though...
->> >>>
->> >>> diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch=
-/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> >>> index d12eaa585b31..69605c9ed344 100644
->> >>> --- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> >>> +++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
->> >>> @@ -11,6 +11,9 @@
->> >>>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->> >>>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->> >>>  #include "milos.dtsi"
->> >>> +
->> >>> +spmi_bus: &spmi_bus0 {};
->> >>> +
->> >>>  #include "pm7550.dtsi"
->> >>>  #include "pm8550vs.dtsi"
->> >>>  #include "pmiv0104.dtsi" /* PMIV0108 */
->> >>>
->> >>> Or I can add a second label for the spmi_bus0 as 'spmi_bus'. Not sur=
-e
->> >>> other designs than SM7635 recommend using spmi_bus1 for some stuff.
->> >>>
->> >>> But I guess longer term we'd need to figure out a solution to this, =
-how
->> >>> to place a PMIC on a given SPMI bus, if reference designs start to
->> >>> recommend putting different PMIC on the separate busses.
->> >>=20
->> >> Any feedback on this regarding the spmi_bus label?
->> >
->> > I had an offline chat with Bjorn and we only came up with janky
->> > solutions :)
->> >
->> > What you propose works well if the PMICs are all on bus0, which is
->> > not the case for the newest platforms. If some instances are on bus0
->> > and others are on bus1, things get ugly really quick and we're going
->> > to drown in #ifdefs.
->> >
->> >
->> > An alternative that I've seen downstream is to define PMIC nodes in
->> > the root of a dtsi file (not in the root of DT, i.e. NOT under / { })
->> > and do the following:
->> >
->> > &spmi_busN {
->> > 	#include "pmABCDX.dtsi"
->> > };
->> >
->> > Which is "okay", but has the visible downside of having to define the
->> > temp alarm thermal zone in each board's DT separately (and doing
->> > mid-file includes which is.. fine I guess, but also something we avoid=
-ed
->> > upstream for the longest time)
->> >
->> >
->> > Both are less than ideal when it comes to altering the SID under
->> > "interrupts", fixing that would help immensely. We were hoping to
->> > leverage something like Johan's work on drivers/mfd/qcom-pm8008.c,
->> > but that seems like a longer term project.
->> >
->> > Please voice your opinions
->>=20
->> Since nobody else jumped in, how can we continue?
->>=20
->> One janky solution in my mind is somewhat similar to the PMxxxx_SID
->> defines, doing something like "#define PM7550_SPMI spmi_bus0" and then
->> using "&PM7550_SPMI {}" in the dtsi. I didn't try it so not sure that
->> actually works but something like this should I imagine.
->>=20
->> But fortunately my Milos device doesn't have the problem that it
->> actually uses both SPMI busses for different PMICs, so similar to other
->> SoCs that already have two SPMI busses, I could somewhat ignore the
->> problem and let someone else figure out how to actually place PMICs on
->> spmi_bus0 and spmi_bus1 if they have such a hardware.
->
-> I'd say, ignore it for now.
-
-You mean ignoring that there's a second SPMI bus on this SoC, and just
-modelling one with the label "spmi_bus"? Or something else?
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/7] OPP: Move refcount and key update for readability
+ in _opp_table_find_key()
+To: Marek Szyprowski <m.szyprowski@samsung.com>,
+        Viresh Kumar <vireshk@kernel.org>
+Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>, Nishanth Menon <nm@ti.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+References: <20250820-opp_pcie-v4-0-273b8944eed0@oss.qualcomm.com>
+ <20250820-opp_pcie-v4-2-273b8944eed0@oss.qualcomm.com>
+ <CGME20250825135939eucas1p206b6e2b5ba115f51618c773a1f37939c@eucas1p2.samsung.com>
+ <4066c0b4-807f-401e-baaa-25f4891f10ac@samsung.com>
+Content-Language: en-US
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <4066c0b4-807f-401e-baaa-25f4891f10ac@samsung.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Z/vsHGRA c=1 sm=1 tr=0 ts=68ac87ca cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=TWSI64EsO1MY+X2Q/zVH0g==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=Wpt1jf_klKcEcVUAeWIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX51b2BkrMHqfx
+ K2VgnwVY/E/JzDYZZlEav7eMgmHsSAmtR35+8W6nt2CrHFCNVg2hQM7kY2g1xE47VfW66o1GkX4
+ 21MwDE1QaRFs/A2kudl96H6pFxMopY4hOd/fhUKtXbeLKPV+Y3m4YRJbCOHi2QzbNEAyWPI0AZa
+ oldnxQDa//uImI2ASK+NXBHh3MI4MSufZ9dyOgRQ7q9954TIP4bjgYv4aM92cKwFKpnQEAIPMAB
+ xuAeYEKPmB79zcXBGEqGw2tB0wyjHnGfBbdBYbceEpakKChl3rmUEovVSe3Mq8S8Q8OHd6+J5A8
+ pPYK41UDI25jRibwCTJlCxupco03Bx2zskaBq5KR2h+VNJAtfchkEgf0P7R2TSimqheaWWBvC1c
+ jXtneabv
+X-Proofpoint-GUID: fhB9Q9zN9Ky2zKmG-tUCJfAhjvOPu8Fj
+X-Proofpoint-ORIG-GUID: fhB9Q9zN9Ky2zKmG-tUCJfAhjvOPu8Fj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-25_07,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 malwarescore=0 phishscore=0 clxscore=1015
+ suspectscore=0 impostorscore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
 
 
-I have also actually tried out the C define solution that I was writing
-about in my previous email and this is actually working, see diff below.
-In my opinion it just expands on what we have with the SID defines, so
-shouldn't be tooo unacceptable :)
 
-diff --git a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts b/arch/arm64/=
-boot/dts/qcom/milos-fairphone-fp6.dts
-index 9fb174592e2d..96e1b5df4f65 100644
---- a/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-+++ b/arch/arm64/boot/dts/qcom/milos-fairphone-fp6.dts
-@@ -7,6 +7,12 @@
-=20
- #define PMIV0104_SID 7
-=20
-+#define PM7550_SPMI spmi_bus0
-+#define PM8550VS_SPMI spmi_bus0
-+#define PMIV0104_SPMI spmi_bus0
-+#define PMK8550_SPMI spmi_bus0
-+#define PMR735B_SPMI spmi_bus0
-+
- #include <dt-bindings/leds/common.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-diff --git a/arch/arm64/boot/dts/qcom/pm7550.dtsi b/arch/arm64/boot/dts/qco=
-m/pm7550.dtsi
-index b886c2397fe7..08d7969128c2 100644
---- a/arch/arm64/boot/dts/qcom/pm7550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm7550.dtsi
-@@ -34,7 +34,7 @@ trip1 {
- 	};
- };
-=20
--&spmi_bus {
-+&PM7550_SPMI {
- 	pm7550: pmic@1 {
- 		compatible =3D "qcom,pm7550", "qcom,spmi-pmic";
- 		reg =3D <0x1 SPMI_USID>;
-diff --git a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi b/arch/arm64/boot/dts/q=
-com/pm8550vs.dtsi
-index 7b5898c263ad..3c8c5f3724a2 100644
---- a/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8550vs.dtsi
-@@ -91,7 +91,7 @@ trip1 {
- };
-=20
-=20
--&spmi_bus {
-+&PM8550VS_SPMI {
- 	pm8550vs_c: pmic@2 {
- 		compatible =3D "qcom,pm8550", "qcom,spmi-pmic";
- 		reg =3D <0x2 SPMI_USID>;
-diff --git a/arch/arm64/boot/dts/qcom/pmiv0104.dtsi b/arch/arm64/boot/dts/q=
-com/pmiv0104.dtsi
-index 85ee8911d93e..bf0c02974e74 100644
---- a/arch/arm64/boot/dts/qcom/pmiv0104.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmiv0104.dtsi
-@@ -40,7 +40,7 @@ trip2 {
- 	};
- };
-=20
--&spmi_bus {
-+&PMIV0104_SPMI {
- 	pmic@PMIV0104_SID {
- 		compatible =3D "qcom,pmiv0104", "qcom,spmi-pmic";
- 		reg =3D <PMIV0104_SID SPMI_USID>;
-diff --git a/arch/arm64/boot/dts/qcom/pmk8550.dtsi b/arch/arm64/boot/dts/qc=
-om/pmk8550.dtsi
-index 583f61fc16ad..f1c34f0a2522 100644
---- a/arch/arm64/boot/dts/qcom/pmk8550.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmk8550.dtsi
-@@ -18,7 +18,7 @@ reboot-mode {
- 	};
- };
-=20
--&spmi_bus {
-+&PMK8550_SPMI {
- 	pmk8550: pmic@0 {
- 		compatible =3D "qcom,pm8550", "qcom,spmi-pmic";
- 		reg =3D <0x0 SPMI_USID>;
-diff --git a/arch/arm64/boot/dts/qcom/pmr735b.dtsi b/arch/arm64/boot/dts/qc=
-om/pmr735b.dtsi
-index 09affc05b397..91b53348a4ae 100644
---- a/arch/arm64/boot/dts/qcom/pmr735b.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmr735b.dtsi
-@@ -30,7 +30,7 @@ pmr735b_crit: pmr735a-crit {
- 	};
- };
-=20
--&spmi_bus {
-+&PMR735B_SPMI {
- 	pmr735b: pmic@5 {
- 		compatible =3D "qcom,pmr735b", "qcom,spmi-pmic";
- 		reg =3D <0x5 SPMI_USID>;
+On 8/25/2025 7:29 PM, Marek Szyprowski wrote:
+> On 20.08.2025 10:28, Krishna Chaitanya Chundru wrote:
+>> Refactor _opp_table_find_key() to improve readability by moving the
+>> reference count increment and key update inside the match condition block.
+>>
+>> Also make the 'assert' check mandatory instead of treating it as optional.
+>>
+>> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> 
+> This patch landed in today's linux-next (20250825) as commit
+> b5323835f050 ("OPP: Reorganize _opp_table_find_key()"). In my tests I
+> found that it causes regressions on my test boards. Reverting this
+> change on top of linux-next fixes booting of all the affected boards.
+> 
+> Here are kernel logs with lockdep enabled:
+> 
+> 1. Exynos4412-based Odroid-U3 board (ARM 32bit):
+> 
+> ============================================
+> WARNING: possible recursive locking detected
+> 6.17.0-rc3-next-20250825 #10901 Not tainted
+> --------------------------------------------
+> kworker/u16:0/12 is trying to acquire lock:
+> cf896040 (&devfreq->lock){+.+.}-{3:3}, at: devfreq_notifier_call+0x30/0x124
+> 
+> but task is already holding lock:
+> cf896040 (&devfreq->lock){+.+.}-{3:3}, at: devfreq_monitor+0x1c/0x1a4
+> 
+> other info that might help us debug this:
+>    Possible unsafe locking scenario:
+> 
+>          CPU0
+>          ----
+>     lock(&devfreq->lock);
+>     lock(&devfreq->lock);
+> 
+>    *** DEADLOCK ***
+> 
+>    May be due to missing lock nesting notation
+> 
+> 4 locks held by kworker/u16:0/12:
+>    #0: c289d0b4 ((wq_completion)devfreq_wq){+.+.}-{0:0}, at:
+> process_one_work+0x1b0/0x70c
+>    #1: f0899f18
+> ((work_completion)(&(&devfreq->work)->work)#2){+.+.}-{0:0}, at:
+> process_one_work+0x1dc/0x70c
+>    #2: cf896040 (&devfreq->lock){+.+.}-{3:3}, at: devfreq_monitor+0x1c/0x1a4
+>    #3: c2e78c4c (&(&opp_table->head)->rwsem){++++}-{3:3}, at:
+> blocking_notifier_call_chain+0x28/0x60
+> 
+> stack backtrace:
+> CPU: 2 UID: 0 PID: 12 Comm: kworker/u16:0 Not tainted
+> 6.17.0-rc3-next-20250825 #10901 PREEMPT
+> Hardware name: Samsung Exynos (Flattened Device Tree)
+> Workqueue: devfreq_wq devfreq_monitor
+> Call trace:
+>    unwind_backtrace from show_stack+0x10/0x14
+>    show_stack from dump_stack_lvl+0x68/0x88
+>    dump_stack_lvl from print_deadlock_bug+0x370/0x380
+>    print_deadlock_bug from __lock_acquire+0x1428/0x29ec
+>    __lock_acquire from lock_acquire+0x134/0x388
+>    lock_acquire from __mutex_lock+0xac/0x10c0
+>    __mutex_lock from mutex_lock_nested+0x1c/0x24
+>    mutex_lock_nested from devfreq_notifier_call+0x30/0x124
+>    devfreq_notifier_call from notifier_call_chain+0x84/0x1d4
+>    notifier_call_chain from blocking_notifier_call_chain+0x44/0x60
+>    blocking_notifier_call_chain from _opp_kref_release+0x3c/0x5c
+>    _opp_kref_release from exynos_bus_target+0x24/0x70
+>    exynos_bus_target from devfreq_set_target+0x8c/0x2e8
+>    devfreq_set_target from devfreq_update_target+0x9c/0xf8
+>    devfreq_update_target from devfreq_monitor+0x28/0x1a4
+>    devfreq_monitor from process_one_work+0x24c/0x70c
+>    process_one_work from worker_thread+0x1b8/0x3bc
+>    worker_thread from kthread+0x13c/0x264
+>    kthread from ret_from_fork+0x14/0x28
+> Exception stack(0xf0899fb0 to 0xf0899ff8)
+> 
+> ...
+> 
+> 
+> 2. Exynos5422-based Odroid-XU3 board (ARM 32bit):
+> 
+> 8<--- cut here ---
+> Unable to handle kernel NULL pointer dereference at virtual address
+> 00000000 when read
+> [00000000] *pgd=00000000
+> Internal error: Oops: 5 [#1] SMP ARM
+> Modules linked in:
+> CPU: 7 UID: 0 PID: 68 Comm: kworker/u34:1 Not tainted
+> 6.17.0-rc3-next-20250825 #10901 PREEMPT
+> Hardware name: Samsung Exynos (Flattened Device Tree)
+> Workqueue: devfreq_wq devfreq_monitor
+> PC is at _opp_compare_key+0x30/0xb4
+> LR is at 0xfffffffc
+> pc : [<c09831c4>]    lr : [<fffffffc>]    psr: 20000013
+> sp : f0a89de0  ip : cfb0e94c  fp : c1574880
+> r10: c14095a4  r9 : f0a89e44  r8 : c2a9c010
+> r7 : cfb0ea80  r6 : 00000001  r5 : cfb0e900  r4 : 00000001
+> r3 : 00000000  r2 : cfb0e900  r1 : cfb0ea80  r0 : cfaf5800
+> Flags: nzCv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+> Control: 10c5387d  Table: 4000406a  DAC: 00000051
+> Register r0 information: slab kmalloc-1k start cfaf5800 pointer offset 0
+> size 1024
+> Register r1 information: slab kmalloc-128 start cfb0ea80 pointer offset
+> 0 size 128
+> Register r2 information: slab kmalloc-128 start cfb0e900 pointer offset
+> 0 size 128
+> Register r3 information: NULL pointer
+> Register r4 information: non-paged memory
+> Register r5 information: slab kmalloc-128 start cfb0e900 pointer offset
+> 0 size 128
+> Register r6 information: non-paged memory
+> Register r7 information: slab kmalloc-128 start cfb0ea80 pointer offset
+> 0 size 128
+> Register r8 information: slab kmalloc-1k start c2a9c000 pointer offset
+> 16 size 1024
+> Register r9 information: 2-page vmalloc region starting at 0xf0a88000
+> allocated at kernel_clone+0x58/0x3c4
+> Register r10 information: non-slab/vmalloc memory
+> Register r11 information: non-slab/vmalloc memory
+> Register r12 information: slab kmalloc-128 start cfb0e900 pointer offset
+> 76 size 128
+> Process kworker/u34:1 (pid: 68, stack limit = 0x050eb3d7)
+> Stack: (0xf0a89de0 to 0xf0a8a000)
+> ..
+> Call trace:
+>    _opp_compare_key from _set_opp+0x78/0x50c
+>    _set_opp from dev_pm_opp_set_rate+0x15c/0x21c
+>    dev_pm_opp_set_rate from panfrost_devfreq_target+0x2c/0x3c
+>    panfrost_devfreq_target from devfreq_set_target+0x8c/0x2e8
+>    devfreq_set_target from devfreq_update_target+0x9c/0xf8
+>    devfreq_update_target from devfreq_monitor+0x28/0x1a4
+>    devfreq_monitor from process_one_work+0x24c/0x70c
+>    process_one_work from worker_thread+0x1b8/0x3bc
+>    worker_thread from kthread+0x13c/0x264
+>    kthread from ret_from_fork+0x14/0x28
+> Exception stack(0xf0a89fb0 to 0xf0a89ff8)
+> ...
+> ---[ end trace 0000000000000000 ]---
+> 
+> 
+> 3. Qualcomm Technologies, Inc. Robotics RB5(ARM 64bit):
+> 
+> ufshcd-qcom 1d84000.ufshc: freq-table-hz property not specified
+> ufshcd-qcom 1d84000.ufshc: ufshcd_populate_vreg: Unable to find
+> vdd-hba-supply regulator, assuming enabled
+> ufshcd-qcom 1d84000.ufshc: Failed to find OPP for MIN frequency
+> ufshcd-qcom 1d84000.ufshc: ufshcd_pltfrm_init: OPP parse failed -34
+> ufshcd-qcom 1d84000.ufshc: error -ERANGE: ufshcd_pltfrm_init() failed
+> ufshcd-qcom 1d84000.ufshc: probe with driver ufshcd-qcom failed with
+> error -34
+> 
+> 
+> 
+>> ---
+>>    drivers/opp/core.c | 14 ++++++--------
+>>    1 file changed, 6 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/opp/core.c b/drivers/opp/core.c
+>> index a36c3daac39cd0bdd2a1f7e9bad5b92f0c756153..bf49709b8c39271431772924daf0c003b45eec7f 100644
+>> --- a/drivers/opp/core.c
+>> +++ b/drivers/opp/core.c
+>> @@ -544,24 +544,22 @@ static struct dev_pm_opp *_opp_table_find_key(struct opp_table *opp_table,
+>>    	struct dev_pm_opp *temp_opp, *opp = ERR_PTR(-ERANGE);
+>>    
+>>    	/* Assert that the requirement is met */
+>> -	if (assert && !assert(opp_table, index))
+>> +	if (!assert(opp_table, index))
+>>    		return ERR_PTR(-EINVAL);
+>>    
+>>    	guard(mutex)(&opp_table->lock);
+>>    
+>>    	list_for_each_entry(temp_opp, &opp_table->opp_list, node) {
+>>    		if (temp_opp->available == available) {
+>> -			if (compare(&opp, temp_opp, read(temp_opp, index), *key))
+>> +			if (compare(&opp, temp_opp, read(temp_opp, index), *key)) {
+>> +				/* Increment the reference count of OPP */
+>> +				*key = read(opp, index);
+>> +				dev_pm_opp_get(opp);
+>>    				break;
+>> +			}
+>>    		}
+>>    	}
+>>    
+>> -	/* Increment the reference count of OPP */
+>> -	if (!IS_ERR(opp)) {
+>> -		*key = read(opp, index);
+>> -		dev_pm_opp_get(opp);
+>> -	}
+>> -
+>>    	return opp;
+>>    }
+>>    
+>>
+> Best regards
+Thanks Marek for reporting.
+
+Viresh,
+
+looks like for compare_floor we need to iterate to the OPP table till
+the OPP key is greater than the target key and return previous OPP.
+
+In that case the updation of the key and dev_pm_opp_get() should be
+outside as before. We need to remove this part of the patch.
+
+Thanks & Regards,
+Krishna Chaitanya.
 
