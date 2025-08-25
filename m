@@ -1,56 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-70776-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8F39B34ECC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 00:12:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id CD1FEB34EE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 00:19:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 89D6F167293
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 22:12:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 4C3637AC45F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 22:17:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4439629BD9C;
-	Mon, 25 Aug 2025 22:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2239224B03;
+	Mon, 25 Aug 2025 22:18:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uxnnTVSZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kkgf964o"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4922820DB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 22:12:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD631DDA15
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 22:18:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756159929; cv=none; b=MqyPH1YxdUl4Ge1rQ4G7JAKe0v7hz//X4xlUMl8C0l9UGLVxIcIr0JAb0EuA/UJ7hfunH33FY9WpC12qFNJ/u4gdR2jbOqh7f90GpqqxKy3w/KFOAs4GQs2X8CIF3OqqZoWlxdsQYzRQBkmH8uxp31cP+Qanwjw9gnO4RtICAn0=
+	t=1756160314; cv=none; b=R93IvjO/h3VPmEnpTM89R+qTU4MpooYHFd/NXvG/SpZep51Xau/3kc+Htzm5fmT0wkZ+7OUZHudpLkkfLiPR1MOkT1Xk09iidwe/4rueGOaHT+cRdltT4EtNYjppbuzFD7kIdn5Tq8iBwlWgrY8fUtAHRphU+6RMMnwy6Jcu1Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756159929; c=relaxed/simple;
-	bh=7WG3Yd04KG8k/CItCoZH6NEBq1q9hulD9LCXjOyQNhc=;
+	s=arc-20240116; t=1756160314; c=relaxed/simple;
+	bh=18+G9ItYgu2+dXrIWwH0AUSy1PIG1s8r32WNAn8YTP4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WQbk6bE7kTyv5a3BQXvDu4HvJ7Nu1nhNE3ZV7vrF9dcYJMLN42gsZZFLxecWhSTaKfRcBGreFywenqsJBoFYhZpj/gHAyF98maLMPC/RP67n9Bl5g2itV+P3rhHAU/daB3KoEFjtSFi12zgPkXfAXMsEUQWhI9wVUZdQHGbbvog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uxnnTVSZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260D3C4CEED;
-	Mon, 25 Aug 2025 22:12:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756159928;
-	bh=7WG3Yd04KG8k/CItCoZH6NEBq1q9hulD9LCXjOyQNhc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uxnnTVSZ1Use1CjeuRtx5C4HdbOP4K9P3jQlrXwBBuFFINYNBAMvNB8MwlwwVZbla
-	 JVy0+pgYA0z+B7GOgToPh6yHj5ZiBtIO6IylvJboRXjti6dsQ/bITZN5dGFb9FPZSq
-	 Cw5VekmztUR2Rj11OmOdu/nNN6yeMbt6w7PXaZsA5rLnzrnjJcm01rpkz58o2GS0fa
-	 PT+bCcqCauR2vW9tTsQPUhUwploFfTcZlOwepqnt6R1bqLyJoG8qPynry+ojL8astz
-	 MgqCQdP3i0Lkafsh/TWEKLNQFfzUUrVbNx+HWZr6KLO8zFVm7HSuYK1VHukQVo3ZAR
-	 ZZt/pM1g3FZ/g==
-Date: Mon, 25 Aug 2025 17:12:06 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Kishore Batta <kishore.batta@oss.qualcomm.com>
-Cc: jeff.hugo@oss.qualcomm.com, bjorn.andersson@oss.qualcomm.com, 
-	konradybcio@kernel.org, konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v1 05/12] drivers: soc: qcom: Move Sahara driver to
- drivers/soc/qcom directory.
-Message-ID: <6n4e6luxfu2f7taijdcdhjscfkyh47bbql6cpnx6p2wmmwmm6q@gyp7jhzhuu2v>
-References: <20250825101926.2160554-1-kishore.batta@oss.qualcomm.com>
- <20250825101926.2160554-6-kishore.batta@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=FTW1K18ar3YIy9hJYkfadY2SScKZ2tRsXc6O66cWRTDsc4xxpOokL8xZHjKHsR1NfbRNuKRRc3+KbGSf1Go+saJuBkr1VIYkrX0Tr/ymLzzbELPf4TO+spUCQaMyqYEOvWUmjq2+y9K75iWeBQZWt7ZA3m4gz5QNegE2rHEFGOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kkgf964o; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PGvELq025255
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 22:18:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=6Ie393XGfhaHZ0Us6yXgzMFw
+	LUpvRvDwsjf8xQ5Wbcs=; b=kkgf964oa7jkEbAPaxIw+eB7CnTrPrpjz6us7Qcr
+	+FbgGWIflQnYdI5iW0RtNdz+od2nphnzOmgI2Eat5WdfYjtLZOGjz1BgQpI+n93V
+	FfYbl09yvJepz9SPQOrdimTtpFLgd31QTqt+tY0LKe5UCkkX4Xl5i/SywG5HvNbL
+	wJmNKvA6jGvh3d+lupwZSCiSeX0o2+16t7S7V5AflR590DBskfz3htTQHLEun48q
+	WCCXfOWb7NOEuhayI7TLNGFRkAY8jodlge87/o45c8AVfKTvt84NRdH8wMydL/rK
+	/3Yyw09eQPgZXF4PpphUjz0kxujUUdSK4P9nCUDDIiUEKw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48rusk8s7h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 22:18:31 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b2d09814efso25655861cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 15:18:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756160310; x=1756765110;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6Ie393XGfhaHZ0Us6yXgzMFwLUpvRvDwsjf8xQ5Wbcs=;
+        b=OebDNCBClVCqA6/0dlivKraAj5nfLVPiMcrBac+nk8cSt3FqlQZ02pBK5G54LwLGbP
+         h4RDdMUutIFgZ1AGnwiuXlUvUS/TG+ZLZgsG86jVCWmxE6IHec/rsCH4pJf6v7iQVNHK
+         1ORNSntoXirA3Sn6PWfV+tGHwtPSySPASMonmcL4HXKWCv2ipyGkm4Mg4maPl6YuUj4e
+         MJB9Ue8gKKL/Nu28J5rW26Ycz2IQr4fH7J4Z9Rb4yu8z1fSrARN9zmQ2/AYwwIKCL6k3
+         mLakVcMi+jrsKTcdTLlIvHApTRQtXebHIx1GAqcOYguacFNPlB2LJAcsZgQji7c4Tk49
+         /Nuw==
+X-Forwarded-Encrypted: i=1; AJvYcCUQKHZU3kHJd1U5ggYUrTAILgr986uOylbEwPifBmH4nWZJhpeH4lNe4a/j8d15jOGWvW39La3NB7fBVJ4n@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkGYDiMGPJ4mdsYqpGY5okCI0hts4DT+gP0RoKIan1vkueEfqy
+	Z7Kdg8U3YfqKMc7WvuYJ+M4TjTnSEbyyQ8yLGvaxoqy99vW5wsQl8ZKWXr2GZ8oix+0wLcwpAcE
+	u3upRO//Ik8NNOStUI/d8ZhgWDmLpDSEmJBpJrn9e09uzkRuh5iCUUx2vVrfJYzDUun6D
+X-Gm-Gg: ASbGncteekvpZY1+52NVZZumZmTiku65tTAgoaYUS3fPi5VbkYzewoxyuZegssYfvX0
+	6JMTQ9o3UrJHViWeRSY9m5LY2H1Bq45vnU2XH1izIMUygqgpWJTbYAxn4RE161c4M3bh7rF1qVJ
+	ro72SXyn4Eco8WchPNHzI8gqWloYH2FZNx/OfZ2YglmaocGeqmsOJaI+QCghz+VkSpd9eubi3zV
+	JkcaRn/mJUFi6BuMBKKY03rLFYZmDsqdb8ajzF00dHJtsTsWHO8LMayNGOu9uEB+E2zwnJv0NM7
+	kzOizR2Kp5+R8nXQ4Dkbd35rOQVG0m+3X6elVBOwV4cc48WvcJZjDkRxmLqJnnkPDS+ievHTn7I
+	L/tE8d3wtuOYJPy9mzMZI/Ppeg2SGPgze66CYjsab5jhJ4czcK8nR
+X-Received: by 2002:a05:622a:494:b0:4b0:8eb3:7c9e with SMTP id d75a77b69052e-4b2aaa9507emr138550701cf.36.1756160310207;
+        Mon, 25 Aug 2025 15:18:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFwgt1vEz2gXMrLQpWwvX6melW5EcGvji+K/cgoy8aqU+Ga0jrWISvg+KVNNOXH4k4qNO/GkQ==
+X-Received: by 2002:a05:622a:494:b0:4b0:8eb3:7c9e with SMTP id d75a77b69052e-4b2aaa9507emr138550331cf.36.1756160309464;
+        Mon, 25 Aug 2025 15:18:29 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f3fe78b1fsm1327329e87.134.2025.08.25.15.18.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 15:18:28 -0700 (PDT)
+Date: Tue, 26 Aug 2025 01:18:26 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v3 23/38] drm/msm/dp: abstract out the dp_display stream
+ helpers to accept a panel
+Message-ID: <f6y7h2nikuqedo64nqzh27fjteyyvndfeqakqw3ce2cvcz4v7s@jmpwlgoqsw3i>
+References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
+ <20250825-msm-dp-mst-v3-23-01faacfcdedd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,322 +106,327 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250825101926.2160554-6-kishore.batta@oss.qualcomm.com>
+In-Reply-To: <20250825-msm-dp-mst-v3-23-01faacfcdedd@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=SY73duRu c=1 sm=1 tr=0 ts=68ace138 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=8K8LDW8wUMBAfiAu:21 a=xqWC_Br6kY4A:10
+ a=kj9zAlcOel0A:10 a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=8-mp4fwYeUK2sr-pB3oA:9 a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 9fJGAUxArTQbe6qxeXqNFFabJotEACKS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI1MDE1MyBTYWx0ZWRfXxN+wRsE+2emA
+ XqKRzkrebNNNLGMEvU0VC7p63flq3qHfLA8rOB3ruqllLe32gi6enmCcwPY3CBgBLGDEKdGKtRG
+ +sGIsUTJ7sem6E6s827QV954GDWnjhSghgqTY0eSdfY/ooT7cIzQZBprv5EdwJdmsTgbE/OCJEc
+ AvA1ALTvcmVM9cNipFf6s07vxMm0zckH4gWQv9ky0nf/UA9m7z/7nJnaDOt++2YajrtQBvwLIv1
+ XLIQ3xUIIQyB+bpl3Rn9dAFnMXNxpXWMcB0LKQRmAYnZPjCze/th+BkXI1g5YPQPG12IANkKnlI
+ u0uOG7xr4By+BYWpbVmJQVwWCKJSVo7jl2KRdQy0aH3XahGzgJZp8nO5W9KvHZjkI07qVUEdZfB
+ 5JiE2QYF
+X-Proofpoint-ORIG-GUID: 9fJGAUxArTQbe6qxeXqNFFabJotEACKS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-25_10,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 clxscore=1015 malwarescore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508250153
 
-On Mon, Aug 25, 2025 at 03:49:19PM +0530, Kishore Batta wrote:
-> Move the Sahara protocol driver from the "drivers/accel" directory
-> to the "drivers/soc/qcom" directory. This change makes the Sahara
-> driver applicable to all Qualcomm devices, not just Qualcomm Accelerator
-> devices. It also facilitates adding support for new devices. Client drivers
-> can use the registration and deregistration functionalities of the Sahara
-> driver as needed.
+On Mon, Aug 25, 2025 at 10:16:09PM +0800, Yongxing Mou wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> Signed-off-by: Kishore Batta <kishore.batta@oss.qualcomm.com>
+> Currently the dp_display bridge helpers, in particular the
+> dp_display_enable()/dp_display_disable() use the cached panel.
+> To be able to re-use these helpers for MST use-case abstract the
+> helpers to use the panel which is passed in to them.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 > ---
->  drivers/accel/qaic/Kconfig                      |  1 +
->  drivers/accel/qaic/Makefile                     |  4 +---
->  drivers/accel/qaic/mhi_controller.c             |  2 +-
->  drivers/accel/qaic/qaic_drv.c                   |  9 +--------
->  drivers/soc/qcom/Kconfig                        |  6 ++++--
->  drivers/soc/qcom/Makefile                       |  1 +
->  drivers/soc/qcom/sahara/Kconfig                 | 17 +++++++++++++++++
-
-No other drivers under drivers/soc/qcom/ has their own directory, I'm
-not sure I see a reason for Sahara to be different.
-
->  drivers/soc/qcom/sahara/Makefile                |  6 ++++++
->  .../{accel/qaic => soc/qcom/sahara}/sahara.c    | 11 ++++++++---
->  .../qcom/sahara}/sahara_image_table.c           |  7 ++++++-
->  {drivers/accel/qaic => include/linux}/sahara.h  |  0
->  .../linux}/sahara_image_table_ops.h             |  0
->  12 files changed, 46 insertions(+), 18 deletions(-)
->  create mode 100644 drivers/soc/qcom/sahara/Kconfig
->  create mode 100644 drivers/soc/qcom/sahara/Makefile
->  rename drivers/{accel/qaic => soc/qcom/sahara}/sahara.c (99%)
->  rename drivers/{accel/qaic => soc/qcom/sahara}/sahara_image_table.c (94%)
->  rename {drivers/accel/qaic => include/linux}/sahara.h (100%)
->  rename {drivers/accel/qaic => include/linux}/sahara_image_table_ops.h (100%)
-
-I was going to say something about other soc drivers living in
-include/linux/soc/qcom/...
-
-But that does touch upon another topic...drivers/soc/qcom is for
-Qualcomm SoC drivers; and at least in the case of qaic, this driver
-doesn't have anything to do with Qualcomm SoCs...
-
-
-Given that this implementation only support, and is only ever going to
-be used with, MHI. Perhaps drivers/bus/mhi would be a better home?
-
+>  drivers/gpu/drm/msm/dp/dp_display.c | 138 +++++++++++++++++++++++-------------
+>  drivers/gpu/drm/msm/dp/dp_display.h |  12 ++++
+>  2 files changed, 102 insertions(+), 48 deletions(-)
 > 
-> diff --git a/drivers/accel/qaic/Kconfig b/drivers/accel/qaic/Kconfig
-> index 5e405a19c157..5e2ac1ecede3 100644
-> --- a/drivers/accel/qaic/Kconfig
-> +++ b/drivers/accel/qaic/Kconfig
-> @@ -8,6 +8,7 @@ config DRM_ACCEL_QAIC
->  	depends on DRM_ACCEL
->  	depends on PCI && HAS_IOMEM
->  	depends on MHI_BUS
-> +	select QCOM_SAHARA_PROTOCOL
->  	select CRC32
->  	help
->  	  Enables driver for Qualcomm's Cloud AI accelerator PCIe cards that are
-> diff --git a/drivers/accel/qaic/Makefile b/drivers/accel/qaic/Makefile
-> index 586a6877e568..4ad84f7e2162 100644
-> --- a/drivers/accel/qaic/Makefile
-> +++ b/drivers/accel/qaic/Makefile
-> @@ -11,8 +11,6 @@ qaic-y := \
->  	qaic_data.o \
->  	qaic_drv.o \
->  	qaic_ras.o \
-> -	qaic_timesync.o \
-> -	sahara.o \
-> -	sahara_image_table.o
-> +	qaic_timesync.o
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index e02ada7a3dc3b89618aeadd998e9a41236ee6bbf..0815973e6597492e09f33359d9777c0e8ce31e0d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -695,6 +695,11 @@ static int msm_dp_display_prepare(struct msm_dp_display_private *dp)
 >  
->  qaic-$(CONFIG_DEBUG_FS) += qaic_debugfs.o
-> diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
-> index 16c346e0e3b5..76beef6018a7 100644
-> --- a/drivers/accel/qaic/mhi_controller.c
-> +++ b/drivers/accel/qaic/mhi_controller.c
-> @@ -9,11 +9,11 @@
->  #include <linux/mhi.h>
->  #include <linux/moduleparam.h>
->  #include <linux/pci.h>
-> +#include <linux/sahara_image_table_ops.h>
->  #include <linux/sizes.h>
+>  	drm_dbg_dp(dp->drm_dev, "sink_count=%d\n", dp->link->sink_count);
 >  
->  #include "mhi_controller.h"
->  #include "qaic.h"
-> -#include "sahara_image_table_ops.h"
+> +	if (msm_dp_display->prepared) {
+
+Why is it a part of this patch?
+
+> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
+> +		return 0;
+> +	}
+> +
+>  	rc = pm_runtime_resume_and_get(&msm_dp_display->pdev->dev);
+>  	if (rc) {
+>  		DRM_ERROR("failed to pm_runtime_resume\n");
+> @@ -722,7 +727,8 @@ static int msm_dp_display_prepare(struct msm_dp_display_private *dp)
+>  	return rc;
+>  }
 >  
->  #define MAX_RESET_TIME_SEC 25
->  
-> diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-> index 5c4fab328003..a55e279411c3 100644
-> --- a/drivers/accel/qaic/qaic_drv.c
-> +++ b/drivers/accel/qaic/qaic_drv.c
-> @@ -15,6 +15,7 @@
->  #include <linux/msi.h>
->  #include <linux/mutex.h>
->  #include <linux/pci.h>
-> +#include <linux/sahara.h>
->  #include <linux/spinlock.h>
->  #include <linux/workqueue.h>
->  #include <linux/wait.h>
-> @@ -31,7 +32,6 @@
->  #include "qaic_debugfs.h"
->  #include "qaic_ras.h"
->  #include "qaic_timesync.h"
-> -#include "sahara.h"
->  
->  MODULE_IMPORT_NS("DMA_BUF");
->  
-> @@ -682,12 +682,6 @@ static int __init qaic_init(void)
->  		goto free_pci;
+> -static int msm_dp_display_enable(struct msm_dp_display_private *dp)
+> +static int msm_dp_display_enable(struct msm_dp_display_private *dp,
+> +				 struct msm_dp_panel *msm_dp_panel)
+
+These changes look fine, but they raise an interesting question: should
+we rework the interface, making the msm_dp_panel the top-level object,
+which then controls the ctrl, link, etc.?
+
+>  {
+>  	int rc = 0;
+>  	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+> @@ -733,7 +739,7 @@ static int msm_dp_display_enable(struct msm_dp_display_private *dp)
+>  		return 0;
 >  	}
 >  
-> -	ret = sahara_register();
-> -	if (ret) {
-> -		pr_debug("qaic: sahara_register failed %d\n", ret);
-> -		goto free_mhi;
+> -	rc = msm_dp_ctrl_on_stream(dp->ctrl, dp->panel, dp->max_stream);
+> +	rc = msm_dp_ctrl_on_stream(dp->ctrl, msm_dp_panel, dp->max_stream);
+>  	if (!rc)
+>  		msm_dp_display->power_on = true;
+>  
+> @@ -779,37 +785,17 @@ static void msm_dp_display_audio_notify_disable(struct msm_dp_display_private *d
+>  	msm_dp_display->audio_enabled = false;
+>  }
+>  
+> -static int msm_dp_display_disable(struct msm_dp_display_private *dp)
+> +static int msm_dp_display_disable(struct msm_dp_display_private *dp,
+> +				  struct msm_dp_panel *msm_dp_panel)
+>  {
+>  	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+>  
+>  	if (!msm_dp_display->power_on)
+>  		return 0;
+>  
+> -	msm_dp_panel_disable_vsc_sdp(dp->panel);
+> +	msm_dp_panel_disable_vsc_sdp(msm_dp_panel);
+>  
+> -	/* dongle is still connected but sinks are disconnected */
+> -	if (dp->link->sink_count == 0) {
+> -		/*
+> -		 * irq_hpd with sink_count = 0
+> -		 * hdmi unplugged out of dongle
+> -		 */
+> -
+> -		/* set dongle to D3 (power off) mode */
+> -		msm_dp_link_psm_config(dp->link, &dp->panel->link_info, true);
+> -		msm_dp_ctrl_off_pixel_clk(dp->ctrl, dp->panel->stream_id);
+> -		msm_dp_ctrl_off_link(dp->ctrl);
+> -		/* re-init the PHY so that we can listen to Dongle disconnect */
+> -		msm_dp_ctrl_reinit_phy(dp->ctrl);
+> -	} else {
+> -		/*
+> -		 * unplugged interrupt
+> -		 * dongle unplugged out of DUT
+> -		 */
+> -		msm_dp_ctrl_off_pixel_clk(dp->ctrl, dp->panel->stream_id);
+> -		msm_dp_ctrl_off_link(dp->ctrl);
+> -		msm_dp_display_host_phy_exit(dp);
 > -	}
-> -
->  	ret = qaic_sahara_register_image_tables();
->  	if (ret) {
->  		pr_debug("qaic: Image table registration failed %d\n", ret);
-> @@ -737,7 +731,6 @@ static void __exit qaic_exit(void)
->  	qaic_ras_unregister();
->  	qaic_bootlog_unregister();
->  	qaic_timesync_deinit();
-> -	sahara_unregister();
->  	mhi_driver_unregister(&qaic_mhi_driver);
->  	pci_unregister_driver(&qaic_pci_driver);
+> +	msm_dp_ctrl_off_pixel_clk(dp->ctrl, msm_dp_panel->stream_id);
+
+This doesn't seems to be a part of this patch. Maybe move it to the
+previous patch, reworking this piece of code?
+
+>  
+>  	msm_dp_display->power_on = false;
+>  
+> @@ -1538,52 +1524,90 @@ void msm_dp_display_atomic_prepare(struct msm_dp *msm_dp_display)
+>  	return;
 >  }
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 2caadbbcf830..7ea4cff9a679 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -295,8 +295,6 @@ config QCOM_PBS
->  	  This module provides the APIs to the client drivers that wants to send the
->  	  PBS trigger event to the PBS RAM.
 >  
-> -endmenu
-> -
->  config QCOM_UBWC_CONFIG
->  	tristate
->  	help
-> @@ -304,3 +302,7 @@ config QCOM_UBWC_CONFIG
->  	  (UBWC) engines across various IP blocks, which need to be initialized
->  	  with coherent configuration data. This module functions as a single
->  	  source of truth for that information.
-> +
-> +source "drivers/soc/qcom/sahara/Kconfig"
-> +
-> +endmenu
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index b7f1d2a57367..99e490e3174e 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -40,3 +40,4 @@ qcom_ice-objs			+= ice.o
->  obj-$(CONFIG_QCOM_INLINE_CRYPTO_ENGINE)	+= qcom_ice.o
->  obj-$(CONFIG_QCOM_PBS) +=	qcom-pbs.o
->  obj-$(CONFIG_QCOM_UBWC_CONFIG) += ubwc_config.o
-> +obj-$(CONFIG_QCOM_SAHARA_PROTOCOL) += sahara/
-> diff --git a/drivers/soc/qcom/sahara/Kconfig b/drivers/soc/qcom/sahara/Kconfig
-> new file mode 100644
-> index 000000000000..4be90959736e
-> --- /dev/null
-> +++ b/drivers/soc/qcom/sahara/Kconfig
-> @@ -0,0 +1,17 @@
-> +config QCOM_SAHARA_PROTOCOL
-> +	tristate "Qualcomm Sahara protocol"
-
-It's bad practice to mix "select" and human selectable options. Drop the
-"Qualcomm Sahara Protocol" and rely on the select to enable the driver.
-
-> +	depends on MHI_BUS
-> +	select FW_LOADER_COMPRESS
-> +	select FW_LOADER_COMPRESS_XZ
-> +	select FW_LOADER_COMPRESS_ZSTD
-> +	help
-> +	  The sahara protocol is primarily designed for transferring software
-> +	  images from a host device to a target device using a simplified data
-> +	  transfer mechanism over any physical link. However, the sahara
-> +	  protocol does not support any authentication/validation of data sent
-> +	  between devices. Such mechanism is beyond the scope of protocol.
-> +
-> +	  If unsure, say N.
-> +
-> +	  To compile this driver as a module, choose M here: the module will be
-> +	  called qcom_sahara.
-> diff --git a/drivers/soc/qcom/sahara/Makefile b/drivers/soc/qcom/sahara/Makefile
-> new file mode 100644
-> index 000000000000..ad3922b30a31
-> --- /dev/null
-> +++ b/drivers/soc/qcom/sahara/Makefile
-> @@ -0,0 +1,6 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +
-> +obj-$(CONFIG_QCOM_SAHARA_PROTOCOL) := qcom_sahara.o
-> +
-> +qcom_sahara-y := sahara.o \
-> +		sahara_image_table.o
-> diff --git a/drivers/accel/qaic/sahara.c b/drivers/soc/qcom/sahara/sahara.c
-> similarity index 99%
-> rename from drivers/accel/qaic/sahara.c
-> rename to drivers/soc/qcom/sahara/sahara.c
-> index 7eae329396be..5e17d71a2d34 100644
-> --- a/drivers/accel/qaic/sahara.c
-> +++ b/drivers/soc/qcom/sahara/sahara.c
-> @@ -9,13 +9,12 @@
-
-Make sure the style of the copyright comment matches the subsystem where
-you move this driver to.
-
->  #include <linux/minmax.h>
->  #include <linux/mod_devicetable.h>
->  #include <linux/overflow.h>
-> +#include <linux/sahara.h>
-> +#include <linux/sahara_image_table_ops.h>
->  #include <linux/types.h>
->  #include <linux/vmalloc.h>
->  #include <linux/workqueue.h>
->  
-> -#include "sahara.h"
-> -#include "sahara_image_table_ops.h"
-> -
->  #define SAHARA_HELLO_CMD		0x1  /* Min protocol version 1.0 */
->  #define SAHARA_HELLO_RESP_CMD		0x2  /* Min protocol version 1.0 */
->  #define SAHARA_READ_DATA_CMD		0x3  /* Min protocol version 1.0 */
-> @@ -814,8 +813,14 @@ int sahara_register(void)
+> -void msm_dp_display_atomic_enable(struct msm_dp *msm_dp_display)
+> +void msm_dp_display_enable_helper(struct msm_dp *msm_dp_display, struct msm_dp_panel *msm_dp_panel)
 >  {
->  	return mhi_driver_register(&sahara_mhi_driver);
->  }
-> +module_init(sahara_register);
+>  	struct msm_dp_display_private *dp;
+>  	int rc = 0;
 >  
->  void sahara_unregister(void)
+>  	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	msm_dp_display_set_stream_info(msm_dp_display, dp->panel, 0, 0, 0, 0, 0);
+> -
+
+Please, don't mix different kinds of refactoring. You've promised to
+bring in msm_dp_panel as an argument, but then you are also
+restructuring functions. Try making your changes more logical or atomic.
+
+>  	if (msm_dp_display->prepared) {
+> -		rc = msm_dp_display_enable(dp);
+> +		rc = msm_dp_display_enable(dp, msm_dp_panel);
+>  		if (rc)
+>  			DRM_ERROR("DP display enable failed, rc=%d\n", rc);
+>  
+>  		rc = msm_dp_display_post_enable(msm_dp_display);
+>  		if (rc) {
+>  			DRM_ERROR("DP display post enable failed, rc=%d\n", rc);
+> -			msm_dp_display_disable(dp);
+> +			msm_dp_display_disable(dp, msm_dp_panel);
+>  		}
+>  	}
+>  
+>  	drm_dbg_dp(msm_dp_display->drm_dev, "type=%d Done\n", msm_dp_display->connector_type);
+>  }
+>  
+> -void msm_dp_display_atomic_disable(struct msm_dp *msm_dp_display)
+> +void msm_dp_display_atomic_enable(struct msm_dp *msm_dp_display)
 >  {
->  	mhi_driver_unregister(&sahara_mhi_driver);
->  }
-> +module_exit(sahara_unregister);
+>  	struct msm_dp_display_private *dp;
+>  
+>  	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	msm_dp_ctrl_push_idle(dp->ctrl, dp->panel);
+> +	msm_dp_display_set_stream_info(msm_dp_display, dp->panel, 0, 0, 0, 0, 0);
 > +
-> +MODULE_LICENSE("GPL");
-> +MODULE_AUTHOR("Qualcomm Innovation Center, Inc");
-
-Skip MODULE_AUTHOR, or correct it.
-
-> +MODULE_DESCRIPTION("Sahara driver");
-
-There's already another driver by the name "sahara", so be more
-specific.
-
-Regards,
-Bjorn
-
-> diff --git a/drivers/accel/qaic/sahara_image_table.c b/drivers/soc/qcom/sahara/sahara_image_table.c
-> similarity index 94%
-> rename from drivers/accel/qaic/sahara_image_table.c
-> rename to drivers/soc/qcom/sahara/sahara_image_table.c
-> index dd0793a33727..18f9b7a59f25 100644
-> --- a/drivers/accel/qaic/sahara_image_table.c
-> +++ b/drivers/soc/qcom/sahara/sahara_image_table.c
-> @@ -5,8 +5,8 @@
->  #include <linux/device.h>
->  #include <linux/list.h>
->  #include <linux/mutex.h>
-> +#include <linux/sahara_image_table_ops.h>
->  
-> -#include "sahara_image_table_ops.h"
->  
->  struct sahara_image_table_context {
->  	struct list_head provider_list;
-> @@ -49,6 +49,7 @@ int sahara_register_image_table_provider(struct sahara_image_table_provider
->  
->  	return 0;
+> +	msm_dp_display_enable_helper(msm_dp_display, dp->panel);
+> +}
+> +
+> +void msm_dp_display_disable_helper(struct msm_dp *msm_dp_display,
+> +				   struct msm_dp_panel *msm_dp_panel)
+> +{
+> +	struct msm_dp_display_private *dp;
+> +
+> +	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+> +
+> +	msm_dp_ctrl_push_idle(dp->ctrl, msm_dp_panel);
+>  	msm_dp_ctrl_mst_stream_channel_slot_setup(dp->ctrl,
+>  		dp->max_stream);
+>  	msm_dp_ctrl_mst_send_act(dp->ctrl);
 >  }
-> +EXPORT_SYMBOL_GPL(sahara_register_image_table_provider);
 >  
->  /**
->   * sahara_get_image_table - Get the image table for a given device name
-> @@ -78,6 +79,7 @@ const char * const *sahara_get_image_table(const char *dev_name)
+> -static void msm_dp_display_unprepare(struct msm_dp_display_private *dp)
+> +void msm_dp_display_atomic_disable(struct msm_dp *msm_dp_display)
+>  {
+> -	struct msm_dp *msm_dp_display = &dp->msm_dp_display;
+> +	struct msm_dp_display_private *dp;
+> +
+> +	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+> +
+> +	msm_dp_display_disable_helper(msm_dp_display, dp->panel);
+> +}
+> +
+> +void msm_dp_display_unprepare(struct msm_dp *msm_dp_display)
+> +{
+> +	struct msm_dp_display_private *dp;
+> +
+> +	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+> +
+> +	if (!msm_dp_display->prepared) {
+> +		drm_dbg_dp(dp->drm_dev, "Link already setup, return\n");
+> +		return;
+> +	}
+> +
+> +	/* dongle is still connected but sinks are disconnected */
+> +	if (dp->link->sink_count == 0)
+> +		msm_dp_link_psm_config(dp->link, &dp->panel->link_info, true);
+> +
+> +	msm_dp_ctrl_off_link(dp->ctrl);
+> +
+> +	/* re-init the PHY so that we can listen to Dongle disconnect */
+> +	if (dp->link->sink_count == 0)
+> +		msm_dp_ctrl_reinit_phy(dp->ctrl);
+> +	else
+> +		msm_dp_display_host_phy_exit(dp);
 >  
->  	return NULL;
+>  	pm_runtime_put_sync(&msm_dp_display->pdev->dev);
+>  
+>  	msm_dp_display->prepared = false;
 >  }
-> +EXPORT_SYMBOL_GPL(sahara_get_image_table);
 >  
->  /**
->   * sahara_get_image_table_size - Get the size of the image table for a given
-> @@ -109,6 +111,7 @@ size_t sahara_get_image_table_size(const char *dev_name)
+> -void msm_dp_display_atomic_post_disable(struct msm_dp *dp)
+> +void msm_dp_display_atomic_post_disable_helper(struct msm_dp *dp, struct msm_dp_panel *msm_dp_panel)
+>  {
+>  	struct msm_dp_display_private *msm_dp_display;
 >  
->  	return 0;
+> @@ -1597,28 +1621,46 @@ void msm_dp_display_atomic_post_disable(struct msm_dp *dp)
+>  
+>  	msm_dp_display_audio_notify_disable(msm_dp_display);
+>  
+> -	msm_dp_display_disable(msm_dp_display);
+> +	msm_dp_display_disable(msm_dp_display, msm_dp_panel);
+> +
+> +	drm_dbg_dp(dp->drm_dev, "type=%d Done\n", dp->connector_type);
+> +}
+> +
+> +void msm_dp_display_atomic_post_disable(struct msm_dp *msm_dp_display)
+> +{
+> +	struct msm_dp_display_private *dp;
+> +
+> +	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+> +
+> +	msm_dp_display_atomic_post_disable_helper(msm_dp_display, dp->panel);
+>  
+>  	msm_dp_display_unprepare(msm_dp_display);
+> +}
+>  
+> -	drm_dbg_dp(dp->drm_dev, "type=%d Done\n", dp->connector_type);
+> +void msm_dp_display_mode_set_helper(struct msm_dp *msm_dp,
+> +				    const struct drm_display_mode *mode,
+> +				    const struct drm_display_mode *adjusted_mode,
+> +				    struct msm_dp_panel *msm_dp_panel)
+> +{
+> +	struct msm_dp_display_private *dp;
+> +
+> +	dp = container_of(msm_dp, struct msm_dp_display_private, msm_dp_display);
+> +
+> +	msm_dp_display_set_mode(msm_dp, adjusted_mode, msm_dp_panel);
+> +	/* populate wide_bus_support to different layers */
+> +	dp->ctrl->wide_bus_en = msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 ?
+> +		false : dp->wide_bus_supported;
 >  }
-> +EXPORT_SYMBOL_GPL(sahara_get_image_table_size);
 >  
->  /**
->   * sahara_unregister_image_table_provider - Unregister an image table provider.
-> @@ -139,6 +142,7 @@ int sahara_unregister_image_table_provider(struct sahara_image_table_provider
+> -void msm_dp_display_mode_set(struct msm_dp *dp,
+> +void msm_dp_display_mode_set(struct msm_dp *msm_dp,
+>  			     const struct drm_display_mode *mode,
+>  			     const struct drm_display_mode *adjusted_mode)
+>  {
+> -	struct msm_dp_display_private *msm_dp_display;
+> -	struct msm_dp_panel *msm_dp_panel;
+> -
+> -	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+> -	msm_dp_panel = msm_dp_display->panel;
+> +	struct msm_dp_display_private *dp;
 >  
->  	return 0;
+> -	msm_dp_display_set_mode(dp, adjusted_mode, msm_dp_panel);
+> +	dp = container_of(msm_dp, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	/* populate wide_bus_support to different layers */
+> -	msm_dp_display->ctrl->wide_bus_en = msm_dp_panel->msm_dp_mode.out_fmt_is_yuv_420 ?
+> -		false : msm_dp_display->wide_bus_supported;
+> +	msm_dp_display_mode_set_helper(msm_dp, mode, adjusted_mode, dp->panel);
 >  }
-> +EXPORT_SYMBOL_GPL(sahara_unregister_image_table_provider);
 >  
->  /**
->   * sahara_get_fw_folder_name - Retrieve the firmware folder name for a given
-> @@ -171,3 +175,4 @@ char *sahara_get_fw_folder_name(const char *dev_name)
+>  void msm_dp_bridge_hpd_enable(struct drm_bridge *bridge)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index fa92f763d2304f15af7c4e1e7e8aab5a6ffd3459..20b7ed735b3f428e894b82ae2756d0efcfa47624 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -51,5 +51,17 @@ enum drm_mode_status msm_dp_display_mode_valid(struct msm_dp *dp,
+>  int msm_dp_display_set_stream_info(struct msm_dp *dp_display, struct msm_dp_panel *panel,
+>  				   enum msm_dp_stream_id stream_id,
+>  				   u32 start_slot, u32 num_slots, u32 pbn, int vcpi);
+> +void msm_dp_display_enable_helper(struct msm_dp *msm_dp_display,
+> +				  struct msm_dp_panel *msm_dp_panel);
+> +void msm_dp_display_disable_helper(struct msm_dp *msm_dp_display,
+> +				   struct msm_dp_panel *msm_dp_panel);
+> +void msm_dp_display_mode_set_helper(struct msm_dp *msm_dp_display,
+> +				    const struct drm_display_mode *mode,
+> +				    const struct drm_display_mode *adjusted_mode,
+> +				    struct msm_dp_panel *msm_dp_panel);
+> +void msm_dp_display_atomic_post_disable_helper(struct msm_dp *msm_dp_display,
+> +					       struct msm_dp_panel *msm_dp_panel);
+> +
+> +void msm_dp_display_unprepare(struct msm_dp *dp);
 >  
->  	return NULL;
->  }
-> +EXPORT_SYMBOL_GPL(sahara_get_fw_folder_name);
-> diff --git a/drivers/accel/qaic/sahara.h b/include/linux/sahara.h
-> similarity index 100%
-> rename from drivers/accel/qaic/sahara.h
-> rename to include/linux/sahara.h
-> diff --git a/drivers/accel/qaic/sahara_image_table_ops.h b/include/linux/sahara_image_table_ops.h
-> similarity index 100%
-> rename from drivers/accel/qaic/sahara_image_table_ops.h
-> rename to include/linux/sahara_image_table_ops.h
+>  #endif /* _DP_DISPLAY_H_ */
+> 
 > -- 
 > 2.34.1
 > 
+
+-- 
+With best wishes
+Dmitry
 
