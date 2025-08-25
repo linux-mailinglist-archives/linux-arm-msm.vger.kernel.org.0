@@ -1,271 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-70635-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70636-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4184B3401E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 14:55:16 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 432B0B34062
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 15:09:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 777011647D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 12:55:16 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A6B997AAC62
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 13:07:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A77C13EFE3;
-	Mon, 25 Aug 2025 12:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DF23207DE2;
+	Mon, 25 Aug 2025 13:08:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XhEYek19"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Q5AcVBoa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AABD31FDE31
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 12:55:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F341155322
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 13:08:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756126513; cv=none; b=C+5dcffUZIuZ2FHjxuhoV/VtwC9AGVln4jJUDtWHM7owQF9bd3WXhIFr5CTJepigRW89JvjBWqymy9CcZMqbLAYk6LzNR6NhU8heDg8QuFOBEqN8D0szXCcaAmeEACroqqp0MKQSIcAru7FTUkWmGuJnVoLRlI/cNl4P7tvns8Q=
+	t=1756127331; cv=none; b=WAyJDFlZkiZOVcS99vW7Lgi802Wq5aHp9dVZac3qHyYw7FAWvOaqMO5Theo3SjYdiLWN5a2WON8OoIQMPbtNiCbsS+RoANseOUSiPY93i1ViGd8wy5q9Px8VwOK5FuJ91Hrtn6SyOke9JkIjBoa2PonGWHvWXx6gpNrlenMKA7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756126513; c=relaxed/simple;
-	bh=p6Zmaj5smnWJq2PWn5FiDiA6cSwI6w5qSVM1iEtB1lM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BOcXaj+JRv8nBqV35CGX8sbrKB2mQlpAU0ppzDZ2XoWS7KkGOGV4cBKL3R2Nesr072nt7rdcgE56j+OJgwZPjXa0gJ2CQe/UvwRHGD4bSMuNGchEF2/M28T6a0RTJ5MKl9R82uGW2ecbT8NyuG1u3rWVHMFxDcWw2dsuluSPF0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XhEYek19; arc=none smtp.client-ip=209.85.221.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-3c8fe6bd038so607633f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 05:55:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756126510; x=1756731310; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nyb7W0i1P3IjF0jcI+ICuOqZQ1VFzRLlpkO8ArSEv2U=;
-        b=XhEYek19T5/sOMJKe+Xz4/zVwm71KDg/IEs2q2n0mApkAfodD9NJ7S5McLDgflqOOB
-         vVeH1UUGz5sOuFNPJgLbnSSefMyh5FfHHbm9fY5KHLBt4MN2d4t9kieYx+Spt0B5Bv3G
-         yyk+PJDpdnsvaYQhK2RRdvoQIEA8uFDqOLnYfIh/0nkJI6QfqL0IW4H+ayMC+kVB3mfD
-         vSmeBya6U8JknaHWogW1GW3gEM6N+lpLOWSuLzsn7mZNfVbC0aGdxAMGCzdwbQGLK6PV
-         iCcDaPWN0bwDNG4DqdMQWTCha0tI6rojMVmcCfgF5eX8G+ky9tXQ7KRcHFEVofARS5RK
-         uSYw==
+	s=arc-20240116; t=1756127331; c=relaxed/simple;
+	bh=yPhH/IQFNsqEBNzQi3kQnfLSDLzCTqB9rCJ5OwhV0vA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GqHzH39gBWqZ59QfLJPbgiQOvY8eQeBkxXJp0r/R1uss3bR1M9ozc16rBpS81i6BV63L76buoYl2ZylPTZdt4jmvyBrXfavFsud3oQ1Ifn+i0IpAfc5sgYi5zShcu8b7ascYY9vm6sIeE4MuAUIDzT8wJc1OfiKIbpDECwmXraw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Q5AcVBoa; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57P8AerD006172
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 13:08:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=mLb5kXtp3JZDVVL6Y5bEFTlZwa6bARViRJ9g/Jqdr/w=; b=Q5
+	AcVBoaQmdmull2cK/OetVXsMAs4whnLUM3fHKV7+h52HRj/y+M1Lt3UKKYIJeoDD
+	/P8Gtl4hDIh46VOHqlV+5Iqlykj34KATBbU2VJ56xwmRFoMLyQlg6HJuKIPbcX9c
+	E1VQssucmWlVUIurCGwxagI/eiaq27zvndo4M0GRc/nRoNCVzEO3sEkn5gEm3VQI
+	P0ewY9pQpQ8vN6Hd1ApE9gkQEFsffM6PchmBk2xET9xksYOEeFHFDfQpPwZ3EBSC
+	AZ+uI/3EuJqFd3qOSLckI/8B+5UjbKtg4euhR9Ufeqh+fS2yNLE+7LQDuiVuvHA4
+	tOFSbMhv83JxHwA5FIWg==
+Received: from mail-ot1-f71.google.com (mail-ot1-f71.google.com [209.85.210.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6thw4by-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 13:08:49 +0000 (GMT)
+Received: by mail-ot1-f71.google.com with SMTP id 46e09a7af769-744eaf75d8fso5625695a34.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 06:08:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756126510; x=1756731310;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nyb7W0i1P3IjF0jcI+ICuOqZQ1VFzRLlpkO8ArSEv2U=;
-        b=ubAD4GlTTFolmjNYElndlh9G/zTOfffqo0NuFpUTWL/CnuI2l6tct99K2SXruvxmzm
-         n8Spx2O7+2kG4WoG+jiBD9pdVvM9z33VS9lwM2Nx+hda4PFsuA8zHojmCQHW10BbzlEf
-         3CCEbyxlj4AJ9TwlrpI2zJ4k8StVjJ9z2oHytcdrQPQOx5H+9fJ+eQAumKSiv+g2gjMo
-         EAM5480SDkFSKLttLAtziMEGuGmHI64Gc52IF267pKmcCKtn8I77g5xvQ/m7BVGsOpaa
-         lQeCeMInwMvz8OsQ1ijmogM0njZbAi+/cbCnjcuTR3AlVDTDP14Cji18wjNKLRWnD7sj
-         YVqg==
-X-Forwarded-Encrypted: i=1; AJvYcCU5M5ILjJp3sK90hdxPd/NFqENxwFVMMaHuFtnInxMPsKL2KTMmqD1vDehaN2AKNNKbsl8QPxccAY3CeOgO@vger.kernel.org
-X-Gm-Message-State: AOJu0YyH2XhP8x0Z2CKG/PsCUAtO/VhlW7sicXJTXO3xcf1CG6bPNtEw
-	3ybHSN/5lTeX42dEeFMMj1J8co3IJugcCGiMNkLiq2+m6jfZuyVlUA4dICP7pAItP0s=
-X-Gm-Gg: ASbGnct8LcIhJPIds+EiZzB+F1OJ4lzpNA82MgPqBWsZK2PhyL4lTq1sjh7MnvUKSY1
-	Io9Wz8tMt+MjU+0YpdNXVciUaaCw53vVrp7FSkRdvT7rD37NwfnkmisBil956U4+uF/3NwXBbuT
-	AwMOSd9NM2xr75nZvg9+Z8No/s1ZF3jN7mcjr7uSLIKKBd6CcOSf51wLfJ2olMgFpcIkhaMUgb+
-	V/beH7nqmz0eihmsbjWndOumdWC+N9NtDOHX63/Tf00SlxkF3/fq69MdkoYtjjsUBR6CzpW9w4d
-	Dsz26So3TcExNnpHZw/jyq6/hniFEEpa9oLNscsp670zGUXOpBVnZGZT1/tvB+xuFmHfYE7x9hd
-	fUWnh3huGDyPKss+xI3NEYSf8pce26Q==
-X-Google-Smtp-Source: AGHT+IGiatYdBiQIlX08WDb3q8TgWhNu9cU7pZ5BZYgWH52vQcA/WE9cIPHsPYf1nJo7amAILSvRZA==
-X-Received: by 2002:a05:6000:40dd:b0:3a4:d6ed:8df8 with SMTP id ffacd0b85a97d-3c5dc734927mr8857444f8f.39.1756126509927;
-        Mon, 25 Aug 2025 05:55:09 -0700 (PDT)
-Received: from [192.168.0.24] ([82.76.24.202])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b57487910sm107774225e9.15.2025.08.25.05.55.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Aug 2025 05:55:09 -0700 (PDT)
-Message-ID: <64a93c4a-5619-4208-9e9f-83848206d42b@linaro.org>
-Date: Mon, 25 Aug 2025 15:55:07 +0300
+        d=1e100.net; s=20230601; t=1756127328; x=1756732128;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mLb5kXtp3JZDVVL6Y5bEFTlZwa6bARViRJ9g/Jqdr/w=;
+        b=MYtEUfWZL1VZpYec7AMMo/M6UZYbtm0HKtD0Rq7R+YiNaYwZOJxyd8htxF69DNE8JN
+         o9wHpW2fH9Xe2GH+tC2hr7fo36GzgpPu/JT17a+zUODfBJiuEbEqKNYGj3g61xRjEc65
+         NdsD4/H6UKtLnkKdpAELVfAV+o1wmeBMm5ktHpoF2t01bk1oUPjVs3jSKy7RUu+yBWFt
+         LtJc9jttzyNjCThtLQ2JDDckynf+WwNB0nKuFAyuPxmECHhM1d1HitVg7uR9bm0d+/Qz
+         SYlPuXF/QCiN72BGDu5Tmrm2U+uazMUlDPREEpKqjakIxMRjcVbltjlA9Y/QOQ+yaGnQ
+         RiCA==
+X-Forwarded-Encrypted: i=1; AJvYcCWfvoC4iwaNB+QVPWEa2xiJkzk6GDIJCU12z6c0Yi9GTgkZp65s864fo+nZcItfgV5CEnsAD/xzM7ufic7n@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCKzQZpYiw9U01fYhkJzmvB4dOTU1fmL5UGOUdci4+xdxQ1sS3
+	vppBjrDbd1l368Q7IIByQD+B/U7WZ2Va/yCBN0blbuOU7guClPlHKTZSzmE4gwStypPOi5JXjzi
+	2CDLkhThcR4aenwiej7Wiepz1RFXQ0pgD4w80ECyPMYwxhTzjrdALFHTNL9s4fUOiZsSFeYyTzO
+	3+Qw9UjkDPKSBStdDBjy1okapzaXbHNHDC/D4q0bvMSqw=
+X-Gm-Gg: ASbGncugBcVQ/kElcoLXkCDnczAmLz3tPnpvno2FlQ5qmvfwJsB/SXt5bkPajENG/84
+	vJlh71fbEYfjOCOvttp8SaOzWfK8Ma/ZuhxSOT2p7tqDvOIbzZXZnJdMGsbnYyGWsdwdbBlMSK9
+	3QJX1UhrKa9ei239qddQ86GekGraSUHX2P//qX6bZoCK48XbGCpJ0x
+X-Received: by 2002:a05:6830:618b:b0:73e:5bdd:a26a with SMTP id 46e09a7af769-7450096feb5mr6755102a34.9.1756127328379;
+        Mon, 25 Aug 2025 06:08:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHf1mlBVCjf4vOsM5MnwVwSaIvX8715qihb4fhYBKinuor019PfotnBMd06hPMWBc+xl0MSuBbV6ACZ4S2dee4=
+X-Received: by 2002:a05:6830:618b:b0:73e:5bdd:a26a with SMTP id
+ 46e09a7af769-7450096feb5mr6755016a34.9.1756127326391; Mon, 25 Aug 2025
+ 06:08:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
-To: David Hildenbrand <david@redhat.com>, Michal Hocko <mhocko@suse.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
- jonechou@google.com, tudor.ambarus@linaro.org,
- Christoph Hellwig <hch@infradead.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>
-References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-23-eugen.hristev@linaro.org>
- <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
- <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
- <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
- <aJCRgXYIjbJ01RsK@tiehlicka>
- <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
- <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
- <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
- <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
- <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
- <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
-From: Eugen Hristev <eugen.hristev@linaro.org>
-Content-Language: en-US
-In-Reply-To: <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250823-msm-fix-gpuvm-init-v1-1-e199cd5b1983@oss.qualcomm.com> <20250825090908.269e1119@fedora>
+In-Reply-To: <20250825090908.269e1119@fedora>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Mon, 25 Aug 2025 06:08:34 -0700
+X-Gm-Features: Ac12FXxVMbN4YIAqrvV2kTi7-EqGh6ZKLdVC2PGJCMTcARzTFOGIUb9P7BDgx8Q
+Message-ID: <CACSVV02uJCRW8imFz7Q4fDZ3gfwkjQW2TkKYEVKLrfs4bXRFCg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: fix msm_gem_vma_new() allocations for managed GPUVMs
+To: Boris Brezillon <boris.brezillon@collabora.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Matthew Brost <matthew.brost@intel.com>,
+        Himal Prasad Ghimiray <himal.prasad.ghimiray@intel.com>,
+        Danilo Krummrich <dakr@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, Danct12 <danct12@disroot.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA0MyBTYWx0ZWRfXyp9lUXaNzCzC
+ 21uUlfjcL17EDWIrIpiHdD9Rcnwdq3vBWiRcSDxmIXFV9GP9oGgyuah0DzHyP1oizvEELyrFXrG
+ SA0q2L3H+CnEM3ebPglQMNfH47pIMUGDsLMUC5u3vULX4MDaMFfuTvrdcvmJRaI3xfIKqpF6/LO
+ 2MWpZYCh1BZ5GaTSdY1vGT5odcA6vYgKxyhqOswh+xSS9ouBzHQYbyMTUD4qROBqM6hpfEaFvuh
+ O/NYAKqmOuvg0GdZoKKmA7erVSI2qYLTvN60mLPt8IJYmQPZPLFa6+xvLmluvS48FcW+4VZ6BnW
+ 9kiZggJ3+/45kBSIpEq8wmG/Tz/lZX9Ud7NIcC4Q4sQhx3DcND86xLC0xB86bB45WkF2YUXOAcK
+ IA+WHMKE
+X-Proofpoint-ORIG-GUID: _JWklx7-XxXXXNH3PHh69YpioeL5guro
+X-Proofpoint-GUID: _JWklx7-XxXXXNH3PHh69YpioeL5guro
+X-Authority-Analysis: v=2.4 cv=W544VQWk c=1 sm=1 tr=0 ts=68ac6061 cx=c_pps
+ a=OI0sxtj7PyCX9F1bxD/puw==:117 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
+ a=QX4gbG5DAAAA:8 a=EUspDBNiAAAA:8 a=LpNgXrTXAAAA:8 a=fJUbV6HVZzjmhIKkI0cA:9
+ a=QEXdDO2ut3YA:10 a=Z1Yy7GAxqfX1iEi80vsk:22 a=AbAUZ8qAyYyZVLSsDulk:22
+ a=LqOpv0_-CX5VL_7kjZO3:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-25_06,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230043
 
+On Mon, Aug 25, 2025 at 12:09=E2=80=AFAM Boris Brezillon
+<boris.brezillon@collabora.com> wrote:
+>
+> On Sat, 23 Aug 2025 03:12:00 +0300
+> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> > Since commit 3309323241fb ("drm/gpuvm: Kill drm_gpuva_init()") MSM
+> > driver fails to init, failing with "[drm:msm_gpu_init] *ERROR* could no=
+t
+> > allocate memptrs: -22" errors. The mentioned commit reworked the
+> > function, but didn't take into account that op_map is initialized at th=
+e
+> > top of the function, while ranges might change if GPUVM is managed by
+> > the kernel.
+> >
+> > Move op_mode initialization after finalizing all addresses and right
+> > before the drm_gpuva_init_from_op() call.
+> >
+> > Reported-by: Danct12 <danct12@disroot.org>
+> > Fixes: 3309323241fb ("drm/gpuvm: Kill drm_gpuva_init()")
+> > Suggested-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/msm_gem_vma.c | 13 +++++++------
+> >  1 file changed, 7 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/ms=
+m_gem_vma.c
+> > index 3f440bc1f7106f3b0091f037611d0b433e5e2c18..6df6b7c0984da57fe64de41=
+fa54f7dea0a324c74 100644
+> > --- a/drivers/gpu/drm/msm/msm_gem_vma.c
+> > +++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+> > @@ -368,12 +368,6 @@ struct drm_gpuva *
+> >  msm_gem_vma_new(struct drm_gpuvm *gpuvm, struct drm_gem_object *obj,
+> >               u64 offset, u64 range_start, u64 range_end)
+> >  {
+> > -     struct drm_gpuva_op_map op_map =3D {
+> > -             .va.addr =3D range_start,
+> > -             .va.range =3D range_end - range_start,
+> > -             .gem.obj =3D obj,
+> > -             .gem.offset =3D offset,
+> > -     };
+> >       struct msm_gem_vm *vm =3D to_msm_vm(gpuvm);
+> >       struct drm_gpuvm_bo *vm_bo;
+> >       struct msm_gem_vma *vma;
+> > @@ -402,6 +396,13 @@ msm_gem_vma_new(struct drm_gpuvm *gpuvm, struct dr=
+m_gem_object *obj,
+> >       if (obj)
+> >               GEM_WARN_ON((range_end - range_start) > obj->size);
+> >
+> > +     struct drm_gpuva_op_map op_map =3D {
+> > +             .va.addr =3D range_start,
+> > +             .va.range =3D range_end - range_start,
+> > +             .gem.obj =3D obj,
+> > +             .gem.offset =3D offset,
+> > +     };
+>
+> OOC, are we now allowed to declare local variables in the middle of a
+> code block in kernel code? I must admit that's not something I tried
+> doing recently, but I've had gcc warnings in the past because of that.
 
+yes.. I try not to go overboard with it, but this is a case where it
+seems like the cleanest solution
 
-On 8/4/25 16:26, David Hildenbrand wrote:
-> On 04.08.25 15:03, Eugen Hristev wrote:
->>
->>
->> On 8/4/25 15:49, David Hildenbrand wrote:
->>> On 04.08.25 14:29, Eugen Hristev wrote:
->>>>
->>>>
->>>> On 8/4/25 15:18, David Hildenbrand wrote:
->>>>> On 04.08.25 13:06, Eugen Hristev wrote:
->>>>>>
->>>>>>
->>>>>> On 8/4/25 13:54, Michal Hocko wrote:
->>>>>>> On Wed 30-07-25 16:04:28, David Hildenbrand wrote:
->>>>>>>> On 30.07.25 15:57, Eugen Hristev wrote:
->>>>>>> [...]
->>>>>>>>> Yes, registering after is also an option. Initially this is how I
->>>>>>>>> designed the kmemdump API, I also had in mind to add a flag, but, after
->>>>>>>>> discussing with Thomas Gleixner, he came up with the macro wrapper idea
->>>>>>>>> here:
->>>>>>>>> https://lore.kernel.org/lkml/87ikkzpcup.ffs@tglx/
->>>>>>>>> Do you think we can continue that discussion , or maybe start it here ?
->>>>>>>>
->>>>>>>> Yeah, I don't like that, but I can see how we ended up here.
->>>>>>>>
->>>>>>>> I also don't quite like the idea that we must encode here what to include in
->>>>>>>> a dump and what not ...
->>>>>>>>
->>>>>>>> For the vmcore we construct it at runtime in crash_save_vmcoreinfo_init(),
->>>>>>>> where we e.g., have
->>>>>>>>
->>>>>>>> VMCOREINFO_STRUCT_SIZE(pglist_data);
->>>>>>>>
->>>>>>>> Could we similar have some place where we construct what to dump similarly,
->>>>>>>> just not using the current values, but the memory ranges?
->>>>>>>
->>>>>>> All those symbols are part of kallsyms, right? Can we just use kallsyms
->>>>>>> infrastructure and a list of symbols to get what we need from there?
->>>>>>>
->>>>>>> In other words the list of symbols to be completely external to the code
->>>>>>> that is defining them?
->>>>>>
->>>>>> Some static symbols are indeed part of kallsyms. But some symbols are
->>>>>> not exported, for example patch 20/29, where printk related symbols are
->>>>>> not to be exported. Another example is with static variables, like in
->>>>>> patch 17/29 , not exported as symbols, but required for the dump.
->>>>>> Dynamic memory regions are not have to also be considered, have a look
->>>>>> for example at patch 23/29 , where dynamically allocated memory needs to
->>>>>> be registered.
->>>>>>
->>>>>> Do you think that I should move all kallsyms related symbols annotation
->>>>>> into a separate place and keep it for the static/dynamic regions in place ?
->>>>>
->>>>> If you want to use a symbol from kmemdump, then make that symbol
->>>>> available to kmemdump.
->>>>
->>>> That's what I am doing, registering symbols with kmemdump.
->>>> Maybe I do not understand what you mean, do you have any suggestion for
->>>> the static variables case (symbols not exported) ?
->>>
->>> Let's use patch #20 as example:
->>>
->>> What I am thinking is that you would not include "linux/kmemdump.h" and
->>> not leak all of that KMEMDUMP_ stuff in all these files/subsystems that
->>> couldn't less about kmemdump.
->>>
->>> Instead of doing
->>>
->>> static struct printk_ringbuffer printk_rb_dynamic;
->>>
->>> You'd do
->>>
->>> struct printk_ringbuffer printk_rb_dynamic;
->>>
->>> and have it in some header file, from where kmemdump could lookup the
->>> address.
->>>
->>> So you move the logic of what goes into a dump from the subsystems to
->>> the kmemdump core.
->>>
->>
->> That works if the people maintaining these systems agree with it.
->> Attempts to export symbols from printk e.g. have been nacked :
->>
->>   https://lore.kernel.org/all/20250218-175733-neomutt-senozhatsky@chromium.org/
-> 
-> Do you really need the EXPORT_SYMBOL?
-> 
-> Can't you just not export symbols, building the relevant kmemdump part 
-> into the core not as a module.
-> 
-> IIRC, kernel/vmcore_info.c is never built as a module, as it also 
-> accesses non-exported symbols.
+BR,
+-R
 
-Hello David,
-
-I am looking again into this, and there are some things which in my
-opinion would be difficult to achieve.
-For example I looked into my patch #11 , which adds the `runqueues` into
-kmemdump.
-
-The runqueues is a variable of `struct rq` which is defined in
-kernel/sched/sched.h , which is not supposed to be included outside of
-sched.
-Now moving all the struct definition outside of sched.h into another
-public header would be rather painful and I don't think it's a really
-good option (The struct would be needed to compute the sizeof inside
-vmcoreinfo). Secondly, it would also imply moving all the nested struct
-definitions outside as well. I doubt this is something that we want for
-the sched subsys. How the subsys is designed, out of my understanding,
-is to keep these internal structs opaque outside of it.
-
-From my perspective it's much simpler and cleaner to just add the
-kmemdump annotation macro inside the sched/core.c as it's done in my
-patch. This macro translates to a noop if kmemdump is not selected.
-
-How do you see this done another way ?
-
-> 
->>
->> So I am unsure whether just removing the static and adding them into
->> header files would be more acceptable.
->>
->> Added in CC Cristoph Hellwig and Sergey Senozhatsky maybe they could
->> tell us directly whether they like or dislike this approach, as kmemdump
->> would be builtin and would not require exports.
->>
->> One other thing to mention is the fact that the printk code dynamically
->> allocates memory that would need to be registered. There is no mechanism
->> for kmemdump to know when this process has been completed (or even if it
->> was at all, because it happens on demand in certain conditions).
-> 
-> If we are talking about memblock allocations, they sure are finished at 
-> the time ... the buddy is up.
-> 
-> So it's just a matter of placing yourself late in the init stage where 
-> the buddy is already up and running.
-> 
-> I assume dumping any dynamically allocated stuff through the buddy is 
-> out of the picture for now.
-> 
-
-The dumping mechanism needs to work for dynamically allocated stuff, and
-right now, it works for e.g. printk, if the buffer is dynamically
-allocated later on in the boot process.
-
-To have this working outside of printk, it would be required to walk
-through all the printk structs/allocations and select the required info.
-Is this something that we want to do outside of printk ? E.g. for the
-printk panic-dump case, the whole dumping is done by registering a
-dumper that does the job inside printk. There is no mechanism walking
-through printk data in another subsystem (in my example, pstore).
-So for me it is logical to register the data inside the printk.
-
-Does this make sense ?
-
+> > +
+> >       drm_gpuva_init_from_op(&vma->base, &op_map);
+> >       vma->mapped =3D false;
+> >
+> >
+> > ---
+> > base-commit: 0f4c93f7eb861acab537dbe94441817a270537bf
+> > change-id: 20250823-msm-fix-gpuvm-init-520d87ebcf26
+> >
+> > Best regards,
+>
 
