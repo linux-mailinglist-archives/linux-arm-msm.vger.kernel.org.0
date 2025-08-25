@@ -1,56 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-70773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C082B34E2E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 23:39:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9D4AB34E72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 23:52:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 267F91A8855F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 21:39:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FF1A3A9081
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 21:52:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA95623ABA7;
-	Mon, 25 Aug 2025 21:38:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2801C29D26A;
+	Mon, 25 Aug 2025 21:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ffa5LHOz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AYcJqTdm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947CEF9CB
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 21:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EAB928726C
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 21:52:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756157934; cv=none; b=dSXRTE/Rixinat6PmgEQGWOyIJXYbYjfXcHMloJWtuQN2sqJilA0Gt1IHWqFasdecAJj3b7dNH1+CrJ7KaxX2b8GdUSXReRtAq6HZqzSBQOl5tOwd00z04gynqLsNYy2DtDZUejk56MitztiGtPxh7J0sgvtBwwUyXufAQFpRlo=
+	t=1756158758; cv=none; b=lAJJqoGodpXNXSyFJ9kdD4NX5oEpLFRCUwh7Ze8Dybw0Fbc1WlToTKWxFwXUmsYWy6KI0Js4nJ0PPHUP+Zf4KtMUCywUnzwAcssWzGjionxlm7w0MYyF2GALDgEdkOA7Gk72yc2HZK2t2CNK0k300voyLHuicsHZ1K21kKsY3wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756157934; c=relaxed/simple;
-	bh=z47pfTHUHGCj0fmiKTUydnHjSn9MrUcsv68MZZ7Vo/Q=;
+	s=arc-20240116; t=1756158758; c=relaxed/simple;
+	bh=10eedD1gOuU+o/uAhQzM9f24w5D8De9uD2PGeV1uyUo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oWDFupARkrTTTWg4Bk1XBW4Yn5wPzSvn6hrNJ+iT1qVtdtth0WaR3voWa5gjSV6y+5B0sPetrOiGk1o0emu6GF9KaVQBME3b1nshPXAo3kJLOOWuC/2viuIQRykTpOAIgfhMyrwV39RMBYWYWJ/FOpB0wBIL9wQwTMSURI8kQw8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ffa5LHOz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49177C4CEED;
-	Mon, 25 Aug 2025 21:38:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756157933;
-	bh=z47pfTHUHGCj0fmiKTUydnHjSn9MrUcsv68MZZ7Vo/Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Ffa5LHOzS3dpzZVro18wrXQCoHw6VzqLxMB9gLbvapfxlN5KRc1hAK99VSKuq7yT9
-	 XdXa2cZHcF+hAUVyq5dz4m/67LFrzNjuvzfqWbecCvfOLyLRaScx21dEnPyYMZ6vEO
-	 R3kE9JuT6WNZiRFJ/X5bxONpnJQpkPKyjpEKOk0ulSQjHGRZ8hUIKvIql5JxvmvSt0
-	 iuEOOcAAAQrKpmbzh/hoF2jEO6cLXpU6aaGi90lZ3b27spV2hY4dQHqRpqVQR/oJ+e
-	 k6FVBbwZ+T7oFdv/miPLtitZrfmU5x5RmLYXpnA2Tq8q9o5YIqGnzy3Kk3XLHkhAJh
-	 EFbvKuRLw1bpQ==
-Date: Mon, 25 Aug 2025 16:38:51 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Kishore Batta <kishore.batta@oss.qualcomm.com>
-Cc: jeff.hugo@oss.qualcomm.com, bjorn.andersson@oss.qualcomm.com, 
-	konradybcio@kernel.org, konrad.dybcio@oss.qualcomm.com, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v1 04/12] drivers: accel: Register Qualcomm AIC specific
- image tables with Sahara.
-Message-ID: <mftf4oqwa2mslfghmkohkrgyx2ka2cowfjmfnly35pdly337ny@3o4xk75ppmax>
-References: <20250825101926.2160554-1-kishore.batta@oss.qualcomm.com>
- <20250825101926.2160554-5-kishore.batta@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=sqiUoS7bqIxaN23jv8hiMwsPeF/Des7JVcwbCqIgFHazGjec3KibB85L8PZzEBJtxt5FqdCniLk3VUkxflIeDosJEAHQs5HdzBPAyGW0GnJVxMpKkB9granlu8cnAIdRTkATL4ski+N4Kqa72ojKSylqfCrycuQaU+H1w0dQeyk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AYcJqTdm; arc=none smtp.client-ip=205.220.168.131
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PFb89I004377
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 21:52:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=rzP7DKMfRUX0VkJ6PVSwHW2+
+	tdCAdM+bAVofUptR3os=; b=AYcJqTdm6Eq8YvN7JJ+8RZDUN30VAly6mptHdSgz
+	zb7F4V7K8JWLPzrIJ9wl8sSx6Ns1ftyFkAG8fLAXK9SO1KfborFJo9iwiAc37vaE
+	i2ntf3TG1AzU6PDw9oHvgexq+Rt7pdf+GAymiktWcU8uLdzmN32PCeNqedXiYTEk
+	6LjxBR2hMWeBZOx6WQbkJnf0k//N6K+0JmWnjZnbTkUkHgiRSQG1xfXJsnA8bQUH
+	TleLpefJGZoNgSpN4CITYIniNFyZb6XAdBRCizU2ZPulu2MAf+X5uXPZ7x4TZS93
+	0juBc4pvabqAeTlFksuV6g+PDc6+RzPbneGndBIreqDDhw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5xpppda-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 21:52:35 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b109a92dddso142832811cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 14:52:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756158753; x=1756763553;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rzP7DKMfRUX0VkJ6PVSwHW2+tdCAdM+bAVofUptR3os=;
+        b=lf1S8ltmhE4AUJnl7EkUEYfnZjvuV/TQ5XzXykszRfuJn1AuPza5R13O5poIx8beMz
+         AL0LiraioxORLsigB+SaklzD3lclqupAiOjntp9/t1creO+AEvCd4S8zItGM2FJoHzmV
+         JnQZY/2MJD4+hRV6JRvj9QLVV+CplT7TPK6a4sdpcbT6S3ZjyxadVD6RMKlL2kgFfLLC
+         5SxZiakzEgOKndrXCdn5jBKIefPJIn358RdvSnBcPU+gJcLN38o+Nk4A/BGluzOMdBJy
+         NV2gT/efjcB51B1QhbDmaXxhKDtQweT0LNUlAzMLcSnTpSgRBklp/su7HUr0GSk76DXd
+         EZRg==
+X-Forwarded-Encrypted: i=1; AJvYcCU1sUPKSAlqNzrKDnh7KBYpY9lisqCXDm0cpj1YdSXMNaI2i/Y0wBUsICj07EeRYCsJ+s+4sAOZdcPiLV19@vger.kernel.org
+X-Gm-Message-State: AOJu0YwP9G/Yl9h+VqUouryGTLp5pwr9muXvdXZB5eCB0VFvbpm7iqtI
+	o4ixgn/J7X8O8nJq2ErOu7AXLMktVB890S4hCuJ6i8CiOP0lRv8zxE/dMm9A6GrmsyrHD6KYwjT
+	ahtgsMO6CWmY3SXXtydrOjZrBnlXLYdZH+W/wURypkob+HYC+9NCy4e1W15WujFrq0a13
+X-Gm-Gg: ASbGnctM/ldhKJ3FiB7xokwwKAAC7vFPf/ldr3SRnMAGN8k9LMVLu4axL6hszJHaIsv
+	kP1+hCv+CqBZUWYAq8Gsos9CJ+honyHrUNdK53HwH0+GPgW/3snEwck+mf5TF0Le7ZpculJEl4w
+	f0ABJv1xC/y8O+vmIJUAW9OIhDBVpLfjIlAy1j7ydtyAcITLDsL65q7ItRzAmh0NN1xNzO70Chp
+	a90IUoAV0A/aRgySkUjKXoWio/r1Wu7mVbkEPRKDxVbPoedx5uzxO3SZbSoB6uob3OvjNAkckMw
+	CPvtae4UGYJqDufMeRF6lsCIDNHfot1Eti74HheHhsTSa/7LcTdY63+KPCAG9ZUchJzedjuF4yk
+	fIPt6U9wqnPasZ7aLepZ3hyy2DYAB3Dt0JOVbx5znibUi4di5uxpA
+X-Received: by 2002:ac8:7dcd:0:b0:4b2:967f:cb4b with SMTP id d75a77b69052e-4b2aab242c5mr154403091cf.63.1756158752994;
+        Mon, 25 Aug 2025 14:52:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHRE/RoN4lvZ0O44LljLL95XWWsQGSlyUtdu63KRiRfQWg+Pz5EWS583JNP2BeD47L/qFiraQ==
+X-Received: by 2002:ac8:7dcd:0:b0:4b2:967f:cb4b with SMTP id d75a77b69052e-4b2aab242c5mr154402661cf.63.1756158752175;
+        Mon, 25 Aug 2025 14:52:32 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f48177b55sm567102e87.62.2025.08.25.14.52.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 14:52:31 -0700 (PDT)
+Date: Tue, 26 Aug 2025 00:52:29 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v3 20/38] drm/msm/dp: Add support for MST channel slot
+ allocation
+Message-ID: <jbobh2meagyzmv6p3lxnu55wyzavldhyqloudcfj3cybeaco3e@hfip5yehyepv>
+References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
+ <20250825-msm-dp-mst-v3-20-01faacfcdedd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,215 +104,498 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250825101926.2160554-5-kishore.batta@oss.qualcomm.com>
+In-Reply-To: <20250825-msm-dp-mst-v3-20-01faacfcdedd@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=KOlaDEFo c=1 sm=1 tr=0 ts=68acdb23 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=Sfuty-t4yrZ6XxHQvawA:9
+ a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 77MJ5zqA2NLvElkFErRQkLIHP62QnYai
+X-Proofpoint-ORIG-GUID: 77MJ5zqA2NLvElkFErRQkLIHP62QnYai
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfXwJt58CFznr1F
+ tH8JF3YrWgMKKOAM3xLSSpxaFWprMGzVk0Kxlm1Hk54k1Hbzov6NSZARKBZIAZjT5CS93PkMy6R
+ k41LNg+1WVqJpoGGZ09mT2rJAgf70JqnupVZSP4t6U2a7Ezq2Gb0drb81FK5tuvC1WUBibz6xBJ
+ EK3yRwg8wKhl5b5rLiD2OxQvfZ3S0tUHtDqvDZei+dtnylAtAjz9t+ltDbC4naaXWbMzfXuT3C5
+ Zw4lv6LIpb2f2hixvq3H7/KpSzY1mh1lKVlSeoAot7dZWacAB3ds+FgSeF0L0U+MbtG6NWQErYX
+ yaGTaSxmmLTXey27UCTMvGfz1qm1j/0B1wSRvp869F1so+8Xr9873QddbG7iL7b9y5X6WDSpvFW
+ g0Ni86vT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-25_10,2025-08-20_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0 phishscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
 
-On Mon, Aug 25, 2025 at 03:49:18PM +0530, Kishore Batta wrote:
-> Register Qualcomm AIC-specific image tables with the Sahara protocol.
-> The Sahara protocol provides a method for client drivers to register
-> device-specific image tables, which is mandatory for firmware transfer.
-> During QAIC device initialization, the QAIC driver must register the
-> image table information with the Sahara protocol for firmware transfer
-> to occur. Once the device is probed, it sends the required Sahara packets
-> to the host. Based on the connected device, Sahara selects the appropriate
-> image table and sends the firmware image data back to the device.
-
-This does describe things that is happening. But it doesn't describe the
-purpose of this patch.
-
+On Mon, Aug 25, 2025 at 10:16:06PM +0800, Yongxing Mou wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 > 
-> Signed-off-by: Kishore Batta <kishore.batta@oss.qualcomm.com>
+> DP MST streams share 64 MTP slots in a time-multiplexed manner. This patch
+> adds support for calculating the rate governor, slot allocation, and slot
+> reservation in the DP controller.
+> 
+> Each MST stream can reserve its slots by calling
+> dp_display_set_stream_info() from its bridge callbacks.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 > ---
->  drivers/accel/qaic/mhi_controller.c | 57 +++++++++++++++++++++++++++--
->  drivers/accel/qaic/mhi_controller.h |  2 +
->  drivers/accel/qaic/qaic_drv.c       |  7 ++++
->  drivers/accel/qaic/sahara.c         | 17 +++++----
->  drivers/accel/qaic/sahara.h         |  6 ---
->  5 files changed, 73 insertions(+), 16 deletions(-)
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c    | 213 +++++++++++++++++++++++++++++++++++-
+>  drivers/gpu/drm/msm/dp/dp_ctrl.h    |   7 +-
+>  drivers/gpu/drm/msm/dp/dp_display.c |  40 ++++---
+>  drivers/gpu/drm/msm/dp/dp_display.h |   5 +-
+>  drivers/gpu/drm/msm/dp/dp_panel.h   |   1 +
+>  drivers/gpu/drm/msm/dp/dp_reg.h     |  14 ++-
+>  6 files changed, 262 insertions(+), 18 deletions(-)
 > 
-> diff --git a/drivers/accel/qaic/mhi_controller.c b/drivers/accel/qaic/mhi_controller.c
-> index 5cc7994f4809..16c346e0e3b5 100644
-> --- a/drivers/accel/qaic/mhi_controller.c
-> +++ b/drivers/accel/qaic/mhi_controller.c
-> @@ -13,6 +13,7 @@
->  
->  #include "mhi_controller.h"
->  #include "qaic.h"
-> +#include "sahara_image_table_ops.h"
->  
->  #define MAX_RESET_TIME_SEC 25
->  
-> @@ -801,8 +802,6 @@ const char * const aic100_image_table[] = {
->  	[10] = "qcom/aic100/fw10.bin",
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index c313a3b4853a1571c43a9f3c9e981fbc22d51d55..9d58d9480fc4ab33c58218ef9beb54c64805c34c 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -109,6 +109,11 @@ struct msm_dp_vc_tu_mapping_table {
+>  	u8 tu_size_minus1;
 >  };
 >  
-> -const size_t aic100_image_table_size = ARRAY_SIZE(aic100_image_table);
-> -
->  const char * const aic200_image_table[] = {
->  	[5]  = "qcom/aic200/uefi.elf",
->  	[12] = "qcom/aic200/aic200-nsp.bin",
-> @@ -831,7 +830,59 @@ const char * const aic200_image_table[] = {
->  	[75] = "qcom/aic200/pvs.bin",
+> +struct msm_dp_mst_ch_slot_info {
+> +	u32 start_slot;
+> +	u32 tot_slots;
+> +};
+> +
+>  struct msm_dp_ctrl_private {
+>  	struct msm_dp_ctrl msm_dp_ctrl;
+>  	struct drm_device *drm_dev;
+> @@ -143,6 +148,8 @@ struct msm_dp_ctrl_private {
+>  	bool link_clks_on;
+>  	bool stream_clks_on[DP_STREAM_MAX];
+>  	bool mst_active;
+> +
+> +	struct msm_dp_mst_ch_slot_info mst_ch_info[DP_STREAM_MAX];
 >  };
 >  
-> -const size_t aic200_image_table_size = ARRAY_SIZE(aic200_image_table);
-> +static struct sahara_image_table_provider aic100_provider = {
-> +	.image_table = aic100_image_table,
-> +	.image_table_size = ARRAY_SIZE(aic100_image_table),
-> +	.dev_name = "AIC100",
-> +	.fw_folder_name = "aic100",
-> +	.list = LIST_HEAD_INIT(aic100_provider.list)
-> +};
-> +
-> +static struct sahara_image_table_provider aic200_provider = {
-> +	.image_table = aic200_image_table,
-> +	.image_table_size = ARRAY_SIZE(aic200_image_table),
-> +	.dev_name = "AIC200",
-> +	.fw_folder_name = "aic200",
-> +	.list = LIST_HEAD_INIT(aic200_provider.list)
-> +};
-> +
-> +static struct sahara_image_table_provider *aic_providers[] = {
-> +	&aic100_provider,
-> +	&aic200_provider,
-> +};
-> +
-> +int qaic_sahara_register_image_tables(void)
+>  static inline u32 msm_dp_read_ahb(const struct msm_dp_ctrl_private *ctrl, u32 offset)
+> @@ -267,6 +274,77 @@ static void msm_dp_ctrl_mst_config(struct msm_dp_ctrl_private *ctrl, bool enable
+>  	msm_dp_write_link(ctrl, REG_DP_MAINLINK_CTRL, mainlink_ctrl);
+>  }
+>  
+> +static void msm_dp_ctrl_mst_channel_alloc(struct msm_dp_ctrl_private *ctrl,
+> +				      enum msm_dp_stream_id stream_id, u32 ch_start_slot,
+> +				      u32 tot_slot_cnt)
 > +{
-> +	int ret;
+> +	u32 i, slot_reg_1, slot_reg_2, slot;
+> +	u32 reg_off = 0;
+> +	int const num_slots_per_reg = 32;
 > +
-> +	for (int i = 0; i < ARRAY_SIZE(aic_providers); i++) {
-> +		ret = sahara_register_image_table_provider(aic_providers[i]);
-> +		if (ret) {
-> +			pr_err("qaic: Failed to register image table %d\n",
-> +			       ret);
+> +	if (ch_start_slot > DP_MAX_TIME_SLOTS ||
+> +	    (ch_start_slot + tot_slot_cnt > DP_MAX_TIME_SLOTS)) {
+> +		DRM_ERROR("invalid slots start %d, tot %d\n",
+> +			  ch_start_slot, tot_slot_cnt);
+> +		return;
+> +	}
 > +
-> +			/* Rollback previously registered providers */
-> +			while (--i >= 0)
-> +				sahara_unregister_image_table_provider(aic_providers[i]);
+> +	drm_dbg_dp(ctrl->drm_dev, "stream_id %d, start_slot %d, tot_slot %d\n",
+> +		   stream_id, ch_start_slot, tot_slot_cnt);
 > +
-> +			return ret;
+> +	if (stream_id == DP_STREAM_1)
+> +		reg_off = REG_DP_DP1_TIMESLOT_1_32 - REG_DP_DP0_TIMESLOT_1_32;
+> +
+> +	slot_reg_1 = 0;
+> +	slot_reg_2 = 0;
+> +
+> +	if (ch_start_slot && tot_slot_cnt) {
+> +		ch_start_slot--;
+> +		for (i = 0; i < tot_slot_cnt; i++) {
+
+You can replace loops with maths.
+
+> +			if (ch_start_slot < num_slots_per_reg) {
+> +				slot_reg_1 |= BIT(ch_start_slot);
+> +			} else {
+> +				slot = ch_start_slot - num_slots_per_reg;
+> +				slot_reg_2 |= BIT(slot);
+> +			}
+> +			ch_start_slot++;
 > +		}
 > +	}
-> +	return 0;
-> +}
 > +
-> +void qaic_sahara_unregister_image_tables(void)
-> +{
-> +	int ret;
+> +	drm_dbg_dp(ctrl->drm_dev, "stream_id:%d slot_reg_1:%d, slot_reg_2:%d\n", stream_id,
+> +		   slot_reg_1, slot_reg_2);
 > +
-> +	for (int i = 0; i < ARRAY_SIZE(aic_providers); i++) {
-> +		ret = sahara_unregister_image_table_provider(aic_providers[i]);
-> +		if (ret)
-> +			pr_err("qaic: Failed to unregister image table %d\n",
-> +			       ret);
+> +	if (stream_id > DP_STREAM_1) {
+> +		msm_dp_write_mstlink(ctrl, stream_id, REG_DP_MSTLINK_TIMESLOT_1_32,
+> +				      slot_reg_1);
+> +		msm_dp_write_mstlink(ctrl, stream_id, REG_DP_MSTLINK_TIMESLOT_33_63,
+> +				      slot_reg_2);
+> +	} else {
+> +		msm_dp_write_link(ctrl, REG_DP_DP0_TIMESLOT_1_32 + reg_off, slot_reg_1);
+> +		msm_dp_write_link(ctrl, REG_DP_DP0_TIMESLOT_33_63 + reg_off, slot_reg_2);
 > +	}
 > +}
 > +
+> +static void msm_dp_ctrl_update_rg(struct msm_dp_ctrl_private *ctrl,
+> +				 enum msm_dp_stream_id stream_id, u32 x_int, u32 y_frac_enum)
+> +{
+> +	u32 rg, reg_off = 0;
+> +
+> +	rg = y_frac_enum;
+> +	rg |= (x_int << 16);
+> +
+> +	drm_dbg_dp(ctrl->drm_dev, "stream_id: %d x_int:%d y_frac_enum:%d rg:%d\n",
+> +		stream_id, x_int, y_frac_enum, rg);
+> +
+> +	if (stream_id == DP_STREAM_1)
+> +		reg_off = REG_DP_DP1_RG - REG_DP_DP0_RG;
+> +
+> +	if (stream_id > DP_STREAM_1)
+> +		msm_dp_write_mstlink(ctrl, stream_id, REG_DP_MSTLINK_DP_RG, rg);
+> +	else
+> +		msm_dp_write_link(ctrl, REG_DP_DP0_RG + reg_off, rg);
+> +}
+> +
+>  /*
+>   * NOTE: resetting DP controller will also clear any pending HPD related interrupts
+>   */
+> @@ -2634,7 +2712,105 @@ int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_li
+>  	return ret;
+>  }
 >  
->  static int mhi_read_reg(struct mhi_controller *mhi_cntrl, void __iomem *addr, u32 *out)
+> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *msm_dp_panel)
+> +static void msm_dp_ctrl_mst_calculate_rg(struct msm_dp_ctrl_private *ctrl,
+> +					 struct msm_dp_panel *panel,
+> +					 u32 *p_x_int, u32 *p_y_frac_enum)
+
+A comment would be appreciated.
+
+> +{
+> +	u64 min_slot_cnt, max_slot_cnt;
+> +	u64 raw_target_sc, target_sc_fixp;
+> +	u64 ts_denom, ts_enum, ts_int;
+> +	u64 pclk = panel->msm_dp_mode.drm_mode.clock;
+> +	u64 lclk = 0;
+> +	u64 lanes = ctrl->link->link_params.num_lanes;
+> +	u64 bpp = panel->msm_dp_mode.bpp;
+> +	u64 pbn = panel->pbn;
+> +	u64 numerator, denominator, temp, temp1, temp2;
+> +	u32 x_int = 0, y_frac_enum = 0;
+> +	u64 target_strm_sym, ts_int_fixp, ts_frac_fixp, y_frac_enum_fixp;
+> +
+> +	lclk = ctrl->link->link_params.rate;
+> +
+> +	/* min_slot_cnt */
+> +	numerator = pclk * bpp * 64 * 1000;
+> +	denominator = lclk * lanes * 8 * 1000;
+> +	min_slot_cnt = drm_fixp_from_fraction(numerator, denominator);
+> +
+> +	/* max_slot_cnt */
+> +	numerator = pbn * 54 * 1000;
+> +	denominator = lclk * lanes;
+> +	max_slot_cnt = drm_fixp_from_fraction(numerator, denominator);
+> +
+> +	/* raw_target_sc */
+> +	numerator = max_slot_cnt + min_slot_cnt;
+> +	denominator = drm_fixp_from_fraction(2, 1);
+> +	raw_target_sc = drm_fixp_div(numerator, denominator);
+> +
+> +	/* target_sc */
+> +	temp = drm_fixp_from_fraction(256 * lanes, 1);
+> +	numerator = drm_fixp_mul(raw_target_sc, temp);
+> +	denominator = drm_fixp_from_fraction(256 * lanes, 1);
+> +	target_sc_fixp = drm_fixp_div(numerator, denominator);
+> +
+> +	ts_enum = 256 * lanes;
+> +	ts_denom = drm_fixp_from_fraction(256 * lanes, 1);
+> +	ts_int = drm_fixp2int(target_sc_fixp);
+> +
+> +	temp = drm_fixp2int_ceil(raw_target_sc);
+> +	if (temp != ts_int) {
+> +		temp = drm_fixp_from_fraction(ts_int, 1);
+> +		temp1 = raw_target_sc - temp;
+> +		temp2 = drm_fixp_mul(temp1, ts_denom);
+> +		ts_enum = drm_fixp2int(temp2);
+> +	}
+> +
+> +	/* target_strm_sym */
+> +	ts_int_fixp = drm_fixp_from_fraction(ts_int, 1);
+> +	ts_frac_fixp = drm_fixp_from_fraction(ts_enum, drm_fixp2int(ts_denom));
+> +	temp = ts_int_fixp + ts_frac_fixp;
+> +	temp1 = drm_fixp_from_fraction(lanes, 1);
+> +	target_strm_sym = drm_fixp_mul(temp, temp1);
+> +
+> +	/* x_int */
+> +	x_int = drm_fixp2int(target_strm_sym);
+> +
+> +	/* y_enum_frac */
+> +	temp = drm_fixp_from_fraction(x_int, 1);
+> +	temp1 = target_strm_sym - temp;
+> +	temp2 = drm_fixp_from_fraction(256, 1);
+> +	y_frac_enum_fixp = drm_fixp_mul(temp1, temp2);
+> +
+> +	temp1 = drm_fixp2int(y_frac_enum_fixp);
+> +	temp2 = drm_fixp2int_ceil(y_frac_enum_fixp);
+> +
+> +	y_frac_enum = (u32)((temp1 == temp2) ? temp1 : temp1 + 1);
+> +
+> +	*p_x_int = x_int;
+> +	*p_y_frac_enum = y_frac_enum;
+> +
+> +	drm_dbg_dp(ctrl->drm_dev, "mst lane_cnt:%llu, rate:%llu x_int:%d, y_frac:%d\n",
+
+globally, for all patches: s/\<mst\>/MST/g
+
+> +		   lanes, lclk, x_int, y_frac_enum);
+> +}
+> +
+> +static void msm_dp_ctrl_mst_stream_setup(struct msm_dp_ctrl_private *ctrl,
+> +					 struct msm_dp_panel *panel,
+> +					 u32 max_streams)
+
+It's not that max_streams can change... I'd totally prefer to stop
+passing it as params.
+
+> +{
+> +	u32 x_int, y_frac_enum;
+> +
+> +	if (!ctrl->mst_active)
+> +		return;
+> +
+> +	drm_dbg_dp(ctrl->drm_dev, "mst stream channel allocation\n");
+> +
+> +	msm_dp_ctrl_mst_stream_channel_slot_setup(&ctrl->msm_dp_ctrl, max_streams);
+> +
+> +	msm_dp_ctrl_mst_calculate_rg(ctrl, panel, &x_int, &y_frac_enum);
+> +
+> +	msm_dp_ctrl_update_rg(ctrl, panel->stream_id, x_int, y_frac_enum);
+> +}
+> +
+> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl,
+> +			  struct msm_dp_panel *msm_dp_panel, u32 max_streams)
 >  {
-> diff --git a/drivers/accel/qaic/mhi_controller.h b/drivers/accel/qaic/mhi_controller.h
-> index 8939f6ae185e..90c0f07cbdf6 100644
-> --- a/drivers/accel/qaic/mhi_controller.h
-> +++ b/drivers/accel/qaic/mhi_controller.h
-> @@ -12,5 +12,7 @@ struct mhi_controller *qaic_mhi_register_controller(struct pci_dev *pci_dev, voi
->  void qaic_mhi_free_controller(struct mhi_controller *mhi_cntrl, bool link_up);
->  void qaic_mhi_start_reset(struct mhi_controller *mhi_cntrl);
->  void qaic_mhi_reset_done(struct mhi_controller *mhi_cntrl);
-> +int qaic_sahara_register_image_tables(void);
-> +void qaic_sahara_unregister_image_tables(void);
+>  	int ret = 0;
+>  	bool mainlink_ready = false;
+> @@ -2688,6 +2864,8 @@ int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *
+>  	if (!ctrl->mst_active)
+>  		msm_dp_ctrl_setup_tr_unit(ctrl);
 >  
->  #endif /* MHICONTROLLERQAIC_H_ */
-> diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-> index e31bcb0ecfc9..5c4fab328003 100644
-> --- a/drivers/accel/qaic/qaic_drv.c
-> +++ b/drivers/accel/qaic/qaic_drv.c
-> @@ -688,6 +688,12 @@ static int __init qaic_init(void)
->  		goto free_mhi;
+> +	msm_dp_ctrl_mst_stream_setup(ctrl, msm_dp_panel, max_streams);
+> +
+>  	msm_dp_write_link(ctrl, REG_DP_STATE_CTRL, DP_STATE_CTRL_SEND_VIDEO);
+>  
+>  	msm_dp_ctrl_mst_send_act(msm_dp_ctrl);
+> @@ -2742,6 +2920,39 @@ void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl)
+>  			phy, phy->init_count, phy->power_count);
+>  }
+>  
+> +void msm_dp_ctrl_set_mst_channel_info(struct msm_dp_ctrl *msm_dp_ctrl,
+> +				      enum msm_dp_stream_id stream_id,
+> +				      u32 start_slot, u32 tot_slots)
+> +{
+> +	struct msm_dp_ctrl_private *ctrl;
+> +
+> +	if (!msm_dp_ctrl || stream_id >= DP_STREAM_MAX) {
+> +		DRM_ERROR("invalid input\n");
+> +		return;
+> +	}
+> +
+> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
+> +
+> +	ctrl->mst_ch_info[stream_id].start_slot = start_slot;
+> +	ctrl->mst_ch_info[stream_id].tot_slots = tot_slots;
+> +}
+> +
+> +void msm_dp_ctrl_mst_stream_channel_slot_setup(struct msm_dp_ctrl *msm_dp_ctrl, u32 max_streams)
+> +{
+> +	struct msm_dp_ctrl_private *ctrl;
+> +	int i;
+> +
+> +	ctrl = container_of(msm_dp_ctrl, struct msm_dp_ctrl_private, msm_dp_ctrl);
+> +
+> +	if (!ctrl->mst_active)
+> +		return;
+> +
+> +	for (i = DP_STREAM_0; i < max_streams; i++) {
+> +		msm_dp_ctrl_mst_channel_alloc(ctrl, i, ctrl->mst_ch_info[i].start_slot,
+> +					      ctrl->mst_ch_info[i].tot_slots);
+> +	}
+> +}
+> +
+>  irqreturn_t msm_dp_ctrl_isr(struct msm_dp_ctrl *msm_dp_ctrl)
+>  {
+>  	struct msm_dp_ctrl_private *ctrl;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.h b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> index abf84ddf463638900684f2511549a593783d2247..751f00c97b94dc3b9e8fae2a86e261f71f293425 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.h
+> @@ -17,7 +17,8 @@ struct msm_dp_ctrl {
+>  struct phy;
+>  
+>  int msm_dp_ctrl_on_link(struct msm_dp_ctrl *msm_dp_ctrl, bool mst_active);
+> -int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl, struct msm_dp_panel *msm_dp_panel);
+> +int msm_dp_ctrl_on_stream(struct msm_dp_ctrl *msm_dp_ctrl,
+> +			  struct msm_dp_panel *msm_dp_panel, u32 max_streams);
+>  int msm_dp_ctrl_prepare_stream_on(struct msm_dp_ctrl *msm_dp_ctrl, bool force_link_train);
+>  void msm_dp_ctrl_off_link(struct msm_dp_ctrl *msm_dp_ctrl);
+>  void msm_dp_ctrl_off_pixel_clk(struct msm_dp_ctrl *msm_dp_ctrl, enum msm_dp_stream_id stream_id);
+> @@ -51,4 +52,8 @@ void msm_dp_ctrl_disable_irq(struct msm_dp_ctrl *msm_dp_ctrl);
+>  
+>  void msm_dp_ctrl_reinit_phy(struct msm_dp_ctrl *msm_dp_ctrl);
+>  void msm_dp_ctrl_mst_send_act(struct msm_dp_ctrl *msm_dp_ctrl);
+> +void msm_dp_ctrl_mst_stream_channel_slot_setup(struct msm_dp_ctrl *msm_dp_ctrl, u32 max_streams);
+> +void msm_dp_ctrl_set_mst_channel_info(struct msm_dp_ctrl *msm_dp_ctrl,
+> +				      enum msm_dp_stream_id stream_id,
+> +				      u32 start_slot, u32 tot_slots);
+>  #endif /* _DP_CTRL_H_ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index eeba73f81c5ce7929dac88f4b47ac3741659864b..17633ba79aa7642856051b69227e8f5b23d76730 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -733,7 +733,7 @@ static int msm_dp_display_enable(struct msm_dp_display_private *dp)
+>  		return 0;
 >  	}
 >  
-> +	ret = qaic_sahara_register_image_tables();
+> -	rc = msm_dp_ctrl_on_stream(dp->ctrl, dp->panel);
+> +	rc = msm_dp_ctrl_on_stream(dp->ctrl, dp->panel, dp->max_stream);
+>  	if (!rc)
+>  		msm_dp_display->power_on = true;
+>  
+> @@ -817,21 +817,33 @@ static int msm_dp_display_disable(struct msm_dp_display_private *dp)
+>  	return 0;
+>  }
+>  
+> -int msm_dp_display_set_stream_id(struct msm_dp *dp,
+> -				 struct msm_dp_panel *panel, enum msm_dp_stream_id stream_id)
+> +int msm_dp_display_set_stream_info(struct msm_dp *msm_dp_display, struct msm_dp_panel *panel,
+> +				   enum msm_dp_stream_id stream_id, u32 start_slot,
+> +				   u32 num_slots, u32 pbn, int vcpi)
 
-Now that you're doing this on a per-device basis (but actually per
-driver), could this somehow be done from qaic_mhi_register_controller()
-instead. So we don't run this code unless you actually have a QAIC
-attached?
+vcpi isn't being used at this patch, don't add it.
 
-> +	if (ret) {
-> +		pr_debug("qaic: Image table registration failed %d\n", ret);
-
-That's not a debug print...which is also the reason why you pr_err()
-inside the function. I.e. this is at best spamming the log.
-
-> +		goto free_mhi;
+>  {
+>  	int rc = 0;
+> -	struct msm_dp_display_private *msm_dp_display;
+> +	struct msm_dp_display_private *dp;
+> +	const int max_slots = 64;
+>  
+> -	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+> +	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	if (!msm_dp_display) {
+> +	if (!dp) {
+>  		DRM_ERROR("invalid input\n");
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (panel)
+> +	if (start_slot + num_slots > max_slots) {
+> +		DRM_ERROR("invalid channel info received. start:%d, slots:%d\n",
+> +			  start_slot, num_slots);
+> +		return -EINVAL;
 > +	}
 > +
-
-Regards,
-Bjorn
-
->  	ret = qaic_timesync_init();
->  	if (ret)
->  		pr_debug("qaic: qaic_timesync_init failed %d\n", ret);
-> @@ -727,6 +733,7 @@ static void __exit qaic_exit(void)
->  	 * reinitializing the link_up state after the cleanup is done.
->  	 */
->  	link_up = true;
-> +	qaic_sahara_unregister_image_tables();
->  	qaic_ras_unregister();
->  	qaic_bootlog_unregister();
->  	qaic_timesync_deinit();
-> diff --git a/drivers/accel/qaic/sahara.c b/drivers/accel/qaic/sahara.c
-> index cf8f8b585223..7eae329396be 100644
-> --- a/drivers/accel/qaic/sahara.c
-> +++ b/drivers/accel/qaic/sahara.c
-> @@ -14,6 +14,7 @@
->  #include <linux/workqueue.h>
->  
->  #include "sahara.h"
-> +#include "sahara_image_table_ops.h"
->  
->  #define SAHARA_HELLO_CMD		0x1  /* Min protocol version 1.0 */
->  #define SAHARA_HELLO_RESP_CMD		0x2  /* Min protocol version 1.0 */
-> @@ -738,13 +739,15 @@ static int sahara_mhi_probe(struct mhi_device *mhi_dev, const struct mhi_device_
->  	INIT_WORK(&context->fw_work, sahara_processing);
->  	INIT_WORK(&context->dump_work, sahara_dump_processing);
->  
-> -	if (!strcmp(mhi_dev->mhi_cntrl->name, "AIC200")) {
-> -		context->image_table = aic200_image_table;
-> -		context->table_size = aic200_image_table_size;
-> -	} else {
-> -		context->image_table = aic100_image_table;
-> -		context->table_size = aic100_image_table_size;
-> -	}
-> +	/* Get the image table for a given device name */
-> +	context->image_table = sahara_get_image_table(mhi_dev->mhi_cntrl->name);
-> +	if (!context->image_table)
-> +		return -EINVAL;
+> +	msm_dp_ctrl_set_mst_channel_info(dp->ctrl, stream_id, start_slot, num_slots);
 > +
-> +	/* Get the image table size for a given device name */
-> +	context->table_size = sahara_get_image_table_size(mhi_dev->mhi_cntrl->name);
-> +	if (!context->table_size)
-> +		return -EINVAL;
+> +	if (panel) {
+
+The panel is always passed, as far as I can see.
+
+>  		panel->stream_id = stream_id;
+> +		panel->pbn = pbn;
+> +	}
 >  
->  	context->active_image_id = SAHARA_IMAGE_ID_NONE;
->  	dev_set_drvdata(&mhi_dev->dev, context);
-> diff --git a/drivers/accel/qaic/sahara.h b/drivers/accel/qaic/sahara.h
-> index d7fd447ca85b..dde8c736d29e 100644
-> --- a/drivers/accel/qaic/sahara.h
-> +++ b/drivers/accel/qaic/sahara.h
-> @@ -8,10 +8,4 @@
->  int sahara_register(void);
->  void sahara_unregister(void);
+>  	return rc;
+>  }
+> @@ -1533,7 +1545,7 @@ void msm_dp_display_atomic_enable(struct msm_dp *msm_dp_display)
 >  
-> -extern const char * const aic200_image_table[];
-> -extern const size_t aic200_image_table_size;
+>  	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	msm_dp_display_set_stream_id(msm_dp_display, dp->panel, 0);
+> +	msm_dp_display_set_stream_info(msm_dp_display, dp->panel, 0, 0, 0, 0, 0);
+>  
+>  	if (msm_dp_display->prepared) {
+>  		rc = msm_dp_display_enable(dp);
+> @@ -1550,14 +1562,16 @@ void msm_dp_display_atomic_enable(struct msm_dp *msm_dp_display)
+>  	drm_dbg_dp(msm_dp_display->drm_dev, "type=%d Done\n", msm_dp_display->connector_type);
+>  }
+>  
+> -void msm_dp_display_atomic_disable(struct msm_dp *dp)
+> +void msm_dp_display_atomic_disable(struct msm_dp *msm_dp_display)
+>  {
+> -	struct msm_dp_display_private *msm_dp_display;
+> +	struct msm_dp_display_private *dp;
+>  
+> -	msm_dp_display = container_of(dp, struct msm_dp_display_private, msm_dp_display);
+> +	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
+>  
+> -	msm_dp_ctrl_push_idle(msm_dp_display->ctrl);
+> -	msm_dp_ctrl_mst_send_act(msm_dp_display->ctrl);
+> +	msm_dp_ctrl_push_idle(dp->ctrl);
+> +	msm_dp_ctrl_mst_stream_channel_slot_setup(dp->ctrl,
+> +		dp->max_stream);
+> +	msm_dp_ctrl_mst_send_act(dp->ctrl);
+>  }
+>  
+>  static void msm_dp_display_unprepare(struct msm_dp_display_private *dp)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> index 9442157bca9d63467b4c43fa644651ad2cbcbef5..fa92f763d2304f15af7c4e1e7e8aab5a6ffd3459 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+> @@ -48,7 +48,8 @@ void msm_dp_display_mode_set(struct msm_dp *dp,
+>  enum drm_mode_status msm_dp_display_mode_valid(struct msm_dp *dp,
+>  					       const struct drm_display_info *info,
+>  					       const struct drm_display_mode *mode);
+> -int msm_dp_display_set_stream_id(struct msm_dp *dp,
+> -				 struct msm_dp_panel *panel, enum msm_dp_stream_id stream_id);
+> +int msm_dp_display_set_stream_info(struct msm_dp *dp_display, struct msm_dp_panel *panel,
+> +				   enum msm_dp_stream_id stream_id,
+> +				   u32 start_slot, u32 num_slots, u32 pbn, int vcpi);
+>  
+>  #endif /* _DP_DISPLAY_H_ */
+> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.h b/drivers/gpu/drm/msm/dp/dp_panel.h
+> index 2bfe3695994235d04e209a2785915107c6a8e413..cb5bf6c99a6f7a68995f0f0ac48382dc90beca31 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_panel.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_panel.h
+> @@ -50,6 +50,7 @@ struct msm_dp_panel {
+>  	u32 hw_revision;
+>  
+>  	enum msm_dp_stream_id stream_id;
+> +	u32 pbn;
+>  
+>  	u32 max_dp_lanes;
+>  	u32 max_dp_link_rate;
+> diff --git a/drivers/gpu/drm/msm/dp/dp_reg.h b/drivers/gpu/drm/msm/dp/dp_reg.h
+> index fda847b33f8d0d6ec4d2589586b5a3d6c9b1ccf3..ee4debf796910e00d370ab4c687009747bae5378 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_reg.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_reg.h
+> @@ -364,6 +364,19 @@
+>  #define REG_DP_PHY_AUX_BIST_CFG			(0x00000050)
+>  #define REG_DP_PHY_AUX_INTERRUPT_STATUS         (0x000000BC)
+>  
+> +/* DP MST related registers */
+> +#define DP_MAX_TIME_SLOTS 64
+> +
+> +#define REG_DP_MSTLINK_DP_RG			(0X0000011C)
+> +#define REG_DP_DP0_TIMESLOT_1_32		(0x00000404)
+> +#define REG_DP_DP0_TIMESLOT_33_63		(0x00000408)
+> +#define REG_DP_DP1_TIMESLOT_1_32		(0x0000040C)
+> +#define REG_DP_DP1_TIMESLOT_33_63		(0x00000410)
+> +#define REG_DP_MSTLINK_TIMESLOT_1_32		(0x00000038)
+> +#define REG_DP_MSTLINK_TIMESLOT_33_63		(0x0000003C)
+> +#define REG_DP_DP0_RG				(0x000004F8)
+> +#define REG_DP_DP1_RG				(0x000004FC)
+> +
+>  /* DP HDCP 1.3 registers */
+>  #define DP_HDCP_CTRL                                   (0x0A0)
+>  #define DP_HDCP_STATUS                                 (0x0A4)
+> @@ -388,5 +401,4 @@
+>  #define HDCP_SEC_DP_TZ_HV_HLOS_HDCP_RCVPORT_DATA10     (0x018)
+>  #define HDCP_SEC_DP_TZ_HV_HLOS_HDCP_RCVPORT_DATA11     (0x01C)
+>  #define HDCP_SEC_DP_TZ_HV_HLOS_HDCP_RCVPORT_DATA12     (0x020)
 > -
-> -extern const char * const aic100_image_table[];
-> -extern const size_t aic100_image_table_size;
-> -
->  #endif /* __SAHARA_H__ */
+>  #endif /* _DP_REG_H_ */
+> 
 > -- 
 > 2.34.1
 > 
+
+-- 
+With best wishes
+Dmitry
 
