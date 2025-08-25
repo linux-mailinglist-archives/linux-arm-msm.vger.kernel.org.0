@@ -1,440 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-70754-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70755-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDC2FB349BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 20:06:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7188CB34A17
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 20:20:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C62113BEBEE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 18:05:43 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30B611692A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 25 Aug 2025 18:20:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C5C56278771;
-	Mon, 25 Aug 2025 18:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6596306D3F;
+	Mon, 25 Aug 2025 18:19:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LMgPx6M/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EsbjFYjB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DCB271475
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 18:05:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E9F309DB0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 18:19:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756145141; cv=none; b=UodguTBqVhX2v/ftr5vcGSLJL3WWH6joNwBE/FwSePyrBJFrVBMHkcdQT/3jcIsSGskRjrNV9GeCqvVPEJ1C41V1GpfdIDbceTtFpEL5Elaf49xokVl1zouwQsXX/joqR9ui8gK0ObR3QbtM25Empwlqs64Z+KPyFXEZJfti48c=
+	t=1756145971; cv=none; b=lxEjX7Ir+9KAMN+WMTFx+bccS82t2rbdQR0khA7Xl/i7EIhkRE/et/L6vBzZMrAXsEhqO7Pp2sJTew9FpXj9Rtv14gBkMRS0EWJlNsqKv0M80s6w3Dxg8Oq8Y/BSbwgOIDNawnRBSqpmmHvsHXGaSa/mxWdfvpPNtCdn/7ujV58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756145141; c=relaxed/simple;
-	bh=cvUm6zxQrVlFZAWEO8Grh3hyegMPEmfg+le2PJ3EYtg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PVw/3k46NdjKVpfBU/E7HRB9c9FRtZPvFof7yF1Tq1ksjUYS77qsVUTLoxODbS9hIxS5pnRY7HCJkl4UbjPqlDCKP3ieF/5DlTKMzB4IPvRu8t3WLBdQt1oZNA+IFIGWq2XMrTw3TZ5UcUTFzVVX7oZr/snpcZUQGNioS5E1Lyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LMgPx6M/; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1756145971; c=relaxed/simple;
+	bh=2CzEcrYm4XTOiqK8m34i8odSZZw0BFHNLZkz/gbIabs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=TX9lYCZ6gPw4UsSCT9jkTqDjLMi7D0vkeOM/kkbgtu5kiN/VJ1sUehip6Rco0OTMeAixSLSx4IxyKvEAaxSBkQYvCKfQgmYZ5hYXfPMmFFGN1DrK/C1WKO4Dmua073qgHPGXD+3/F2lGn19ExefAYZDKuBMQLOzcrymDU8e35g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EsbjFYjB; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PG1FbA021749
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 18:05:39 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57PFfOTZ006050
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 18:19:28 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6A280ECCuxHYYu+C8Aygeam4jG3GMOZao8i9RHRtO9E=; b=LMgPx6M/2qQjGSQI
-	jbshBnr+jFTyfx2qPnDvuaL7Mg+i5LVZV97IMzRZlhRKMwULeZgqrnOJTvKZDYxQ
-	62Qu9kVNC/FXdCgY17SxXTF/oMFmNVmz5aXJzZZWqZdWct8OMq/g85a2/NYqJY3h
-	8WMi3CjAYsa32PqmRv0JQy6Z7STM3XvWrwJd1YyGPHOGjxKegml7bKpc51B2rDqq
-	LCKCmu8qjn4TyEVNn/nqHYMzANHPILOaLfJwhEae1PZc+2/xO5EKlTJTbO2GFA1O
-	aAeGgSJje5UYd24b+7FWDupCoQ29WRtBBpVRVE2WuGkoQmkjeCSFnYORA/cmVgqd
-	Wmw0Mw==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5w2p5pe-1
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=A+MJf3gYcSkZlZ5iU+sJo7
+	4M2Td1GfyUqV5Y/ilHPak=; b=EsbjFYjB2Lj8eO22JFGTanrUpr2T5fkcnKHUTo
+	lBISo5uLYOOO3CrYD4hABr3v/aEBgBr+iIXZ1+SBMlRLUPmbwM68EyA239VS7vuO
+	kmxeRSchNI2Rscehry4/xQJ+3Lj13eF6dW4LbkyVOI4rrNFldDflI8VidiYdDd0I
+	BCleUG++tGokvRAENoJvsTgT8DGr1WxE5rlFYhn5pq8gnLVCwbH9nzxWPSshD8A4
+	RccK0uy5B26//sNK4Wjj6ChFRMFeBHnuvrty1tv1n+6hlm1PPLe8CIw4US5brMAF
+	hcCs0hygjh9E4Na2v5TCPkOWAMKPGsGZSo01lRqOT/NvLXVg==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48rtperfjj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 18:05:39 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-771f1645e31so392809b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 11:05:39 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 18:19:28 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2461c537540so47587925ad.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 25 Aug 2025 11:19:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756145138; x=1756749938;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6A280ECCuxHYYu+C8Aygeam4jG3GMOZao8i9RHRtO9E=;
-        b=DFa2CP2sL+gFUjVJxE9HuOTiz2GldfX4v6ldBTxIz0MAGeKstgKFcYe6yvBVY3LeHe
-         Tw7sgdsc5rPvmKYMkwikU4Ft6ui9A/C5XH8Rq5NDrJzvVVlnhIaxvzqbCna5DO5E+yPc
-         RUubuJ1QOFFm6I7CA5eAdbUzAJb9FQTgGELfDQ4/bobzVwVAYrRA5PulauKOa1yKdUyu
-         OmYF97kh6U457lteG50H5bSmW5sqsJlSuggmUltFqRl4Ghc2XwLMcOqUxbjFhQWYkwNq
-         RSuUDckoQ+m0EhSAyhgeufvhchuzyjJgcbvcj/soRZxYIqiHbvj0qoPZeRBi/t6fGh0R
-         Tk2Q==
-X-Gm-Message-State: AOJu0Yx/dpawV3Y959nz4+X3ZUPkswYQe1IBkB9vrIgTXpGO+Xe302eI
-	gWQh6DjIPkpSgeE0TTj66mviQB263K/KYcoJy8PjsOg2t9M4ms7mC746yQiSpZQMGh+aq6DDAvD
-	Hd7RN+KisKU9jevCHf44Q9wJXhey5KnbxlAkmKUMpx/y7Z+w1w7TXjDYmzAcKfCCZRbKN5Cg8pR
-	hp
-X-Gm-Gg: ASbGncvDJh4Lu/DvuEczkwODBw8aQfIuMa55e5VLymVSwjLmxZNWjSTf6ygbrkB6xqs
-	k0ZfuBYFwJIiuhnQvML50dy3h5yU/hNwbSo4rm4hcUV/VhCXbN5imEZGSjQUuy7tGcuT2VhQGzB
-	EbSOzAvpxvXSYYHTQ7TvULlGXDXuzoUXMrWP7qv54Pv/ydYpXuAAWHWeFRV5npLCMs/R1YJcETG
-	sdKcFj/mlXSeq80LW/FOgC0FASSTymsUrUwMcCNzJRCrio6/+sxXHBGmJ3W2bSUiqlUBnb0aitY
-	k7ex9WCsc0Cr0pssMJKvhcw7efNJwqd4n35z2amUweGxgIZZnUpT1SbKPWRqFKYa/ik/6FxxpQw
-	yqW1xhGlC0A==
-X-Received: by 2002:a05:6a00:2308:b0:771:e341:ce68 with SMTP id d2e1a72fcca58-771f58c7a6emr524799b3a.5.1756145138091;
-        Mon, 25 Aug 2025 11:05:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiC+VUxQlXfaub6eJUtfnQK6RBJAo0sZiKzpd3PEppU3iLl0+ZO4/IxMGo0jI3sAsAcOM3sA==
-X-Received: by 2002:a05:6a00:2308:b0:771:e341:ce68 with SMTP id d2e1a72fcca58-771f58c7a6emr524754b3a.5.1756145137517;
-        Mon, 25 Aug 2025 11:05:37 -0700 (PDT)
-Received: from [10.73.115.24] (pat_11.qualcomm.com. [192.35.156.11])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771e10d8446sm3676694b3a.78.2025.08.25.11.05.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 25 Aug 2025 11:05:37 -0700 (PDT)
-Message-ID: <a158c4f5-e9c3-48c2-b440-fa9dc281b276@oss.qualcomm.com>
-Date: Mon, 25 Aug 2025 11:05:35 -0700
+        d=1e100.net; s=20230601; t=1756145967; x=1756750767;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A+MJf3gYcSkZlZ5iU+sJo74M2Td1GfyUqV5Y/ilHPak=;
+        b=N32WM6rzeCd8qrTEGa9vAZxiRHl6B3weU4vQa+v8cunG4AjSujZQK5GSrD4MryXAzu
+         T5wSZFogdLjGRdqWL7pVT9VhGGA56SCwacq2qy381QLuwVtBeIBQuAeVqxuqERMGFoz+
+         S4Awm0eb6211OgD5pBwAExTyROnb0aOXlUwuMAZC6AgvAE0quiuRsy49fQMA+ZplYSry
+         YURjQ/sUW8jY4QXBm4o4Vo6fuPRKi8kkPySZOml1HgiJHWgE4Hl8YOGOC2FiCsTSHfZg
+         9fGBmxAVErliC07nJfLpUugd5PV8lYSNTWeS5A6+JdoOP5aJ8//sDA5Sc6G/sXtt3Vwi
+         RrbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV4XSQURrlJjw+GDfm4PoIpiFcaYrJrSGH/a66U2fZXUIM6jGNndzoIDsl0TO8t5LEXRHdDN7GSmjwo7Qx5@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+8FBhXDgicIunP4ev2lYYm9buKBg6Dab9htqNrKJiLfD9lDMP
+	q7cau7mSpTGp/X38fH0x8zXsr8fIhmae7qfHpqGUfRaclJEVDZ0Ln69iFB654rtNB6YrQRlZlfT
+	yejSyyFqQph/DWHekGtGhQYpDP9xHC5BZr6Fc+8G59kQqU2PAPTPf0gB6VARE88WXH4Xx
+X-Gm-Gg: ASbGnctusHAiVe03K803gUUsrYvbx5rz0cjgruB/5TeV97Nc+DjAPhiIc7xaLLgVHHC
+	xlDief/FiEZfpnKmrI9zfZd5JRT8boitDbspEb4VpCW2xlySqvC2vMSq6RL/wXLlv/5HtlNUgCv
+	s0uaJ2tM96+b+CKRWEcMI5MhkB/ebEz4rinE28GhiGObr9C++lYZ7gqyGOxb9iKtOCqvo+4/pnK
+	uq2l+Js8LfOYCXYTMGmW1Yl3O4uHT0B36YRs4twGlq1mOu3xNi+BlvWaSdxaD8c2/wWxBXsO2Ii
+	r/ds+gxpotROmBipMrjc8qIfkoXr+IMMkfLa4qcD3qMNVsf4e8v2DOjElewjkw/W
+X-Received: by 2002:a17:903:40c5:b0:246:cc19:17eb with SMTP id d9443c01a7336-246cc19229dmr67934935ad.19.1756145966957;
+        Mon, 25 Aug 2025 11:19:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHfrQ3rfUy1vjKe9ObjfuC5Y7lAp3eXHihBwf3qoFxZvehwnvsdwwga41y5vUdUY+s9TveoGQ==
+X-Received: by 2002:a17:903:40c5:b0:246:cc19:17eb with SMTP id d9443c01a7336-246cc19229dmr67934395ad.19.1756145966420;
+        Mon, 25 Aug 2025 11:19:26 -0700 (PDT)
+Received: from hu-tdas-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246688647acsm74174015ad.87.2025.08.25.11.19.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 25 Aug 2025 11:19:26 -0700 (PDT)
+From: Taniya Das <taniya.das@oss.qualcomm.com>
+Subject: [PATCH v5 0/7] Add support for Clock controllers for Glymur SoC
+Date: Mon, 25 Aug 2025 23:49:07 +0530
+Message-Id: <20250825-glymur-clock-controller-v5-v5-0-01b8c8681bcd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/5] PCI: dwc: Add ECAM support with iATU configuration
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        cros-qcom-dts-watchers@chromium.org,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
-        quic_vpernami@quicinc.com, mmareddy@quicinc.com
-References: <20250822-ecam_v4-v7-0-098fb4ca77c1@oss.qualcomm.com>
- <20250822-ecam_v4-v7-4-098fb4ca77c1@oss.qualcomm.com>
-Content-Language: en-US
-From: Mayank Rana <mayank.rana@oss.qualcomm.com>
-In-Reply-To: <20250822-ecam_v4-v7-4-098fb4ca77c1@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Z/vsHGRA c=1 sm=1 tr=0 ts=68aca5f3 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=8YObFgqK2cPrU_DjqCAA:9
- a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX796R7Km0PT5V
- Xvz2S9fZcapc9DPzOZEjdIA6BPi5bxGoTOYJUMGSUmeKe4IedH1ADp41B7gVrPfppJytk0tF74U
- EI+q2FVyTqgoONmJb/UcMK2nj85UIgPOCPJX1z/rXHL6eCku93g2FHoBRHQpJQZInPLaYnrNpgI
- PFhDb7urc11+x0Q+Eb6eAyOVmF7d53ylF/7/tjwzMbS6KV1CvJsiNStyYLBm68gn490gKe2f64v
- 376bfRvRvhvy3R/GNnN5g9/+LKkYLFnp8lHmBxrNfOy5JxMud1bKS5bpeSiui9ME/QCkBuZFU/s
- A7dbPZhR3DcRkMCB9c1jxu3Mjk4ml7T5PNRZIILyUnS9CamqKaPqo/cIJvQF9XdrRGfuYKYDyZS
- slVcSG8e
-X-Proofpoint-GUID: psS9zccBU3EOzmdpbTbYvo0SXevQp5Cu
-X-Proofpoint-ORIG-GUID: psS9zccBU3EOzmdpbTbYvo0SXevQp5Cu
+X-B4-Tracking: v=1; b=H4sIABuprGgC/x3MwQrCMAwA0F8ZORsI1eDYr4gHjXEGu1bSWZSxf
+ 1/Z8V3eAkXdtMDQLeBarVhODXzoQF63NCraoxkCBaY+MI7xP30dJWZ5o+Q0e45RHSsjneVEpP2
+ djwQt+Lg+7bfnl+u6bqtaSM1sAAAA
+X-Change-ID: 20250825-glymur-clock-controller-v5-07c400e8b530
+To: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Taniya Das <taniya.das@oss.qualcomm.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Abel Vesa <abel.vesa@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.15-dev-aa3f6
+X-Proofpoint-GUID: FCUKPvx3vST8Po-QfhR4drj6R72v0rH1
+X-Proofpoint-ORIG-GUID: FCUKPvx3vST8Po-QfhR4drj6R72v0rH1
+X-Authority-Analysis: v=2.4 cv=Hd8UTjE8 c=1 sm=1 tr=0 ts=68aca930 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=0T6YAe87-15ivgeVu1UA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI1MDE0MiBTYWx0ZWRfX8hekty+45EHo
+ pgG6/A8Of6Q9I788mksJHOWMYbqig1cTy/URRNRBDBfHbdpIXGa+hSbVrC0eJpsq42Tkz4aLMlM
+ RLjLnCkuhU+dG1e+G0uoV54SQeG0RLEPa0vsU3j8rDrdXkwdzF49izJZPFY2ZuHS//Y3UKJ3tg2
+ lrrHnjODplAuDHSRPPdJFwQuTAAj/CuhTdL98n1WwcJ8JfhgvRDPsf8t9Rs1rWoWMHqxFhlcEth
+ 4IyXHz1iZefEDJBo+Ug+xpVRvrlc4eQLE7xCTUBL8b9MwWHGd3LQoj738Ywic0XIMC+WQWqqcwY
+ qxTRXZpBxDWL2gEkTI0B2iIWOXqt06RC0/ChmJlufFb5pRmVbSN3WJ2w/epEjCc2naL0OGRAUPW
+ kC3mEsNJ
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-25_08,2025-08-20_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 malwarescore=0 phishscore=0 clxscore=1015
- suspectscore=0 impostorscore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
+ priorityscore=1501 malwarescore=0 suspectscore=0 phishscore=0 bulkscore=0
+ adultscore=0 clxscore=1015 impostorscore=0 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508250142
 
-Hi Krishna
+Introduce the support for Global clock controller(GCC), TCSR and the RPMH clock controller for
 
-On 8/22/2025 2:27 AM, Krishna Chaitanya Chundru wrote:
-> The current implementation requires iATU for every configuration
-> space access which increases latency & cpu utilization.
-> 
-> Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
-> which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
-> would be matched against the Base and Limit addresses) of the incoming
-> CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
-> 
-> Configuring iATU in config shift feature enables ECAM feature to access the
-> config space, which avoids iATU configuration for every config access.
-> 
-> Add "ctrl2" into struct dw_pcie_ob_atu_cfg  to enable config shift feature.
-> 
-> As DBI comes under config space, this avoids remapping of DBI space
-> separately. Instead, it uses the mapped config space address returned from
-> ECAM initialization. Change the order of dw_pcie_get_resources() execution
-> to achieve this.
-> 
-> Enable the ECAM feature if the config space size is equal to size required
-> to represent number of buses in the bus range property.
+Qualcomm's next gen compute SoC - Glymur.
 
-Also add 256 MB alignment requirement for using iATU config shift mode here.
+Device tree changes aren't part of this series and will be posted separately after the
+official announcement of the Glymur SoC.
 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->   drivers/pci/controller/dwc/Kconfig                |   1 +
->   drivers/pci/controller/dwc/pcie-designware-host.c | 131 +++++++++++++++++++---
->   drivers/pci/controller/dwc/pcie-designware.c      |   2 +-
->   drivers/pci/controller/dwc/pcie-designware.h      |   5 +
->   4 files changed, 124 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/controller/dwc/Kconfig
-> index ff6b6d9e18ecfa44273e87931551f9e63fbe3cba..a0e7ad3fb5afec63b0f919732a50147229623186 100644
-> --- a/drivers/pci/controller/dwc/Kconfig
-> +++ b/drivers/pci/controller/dwc/Kconfig
-> @@ -20,6 +20,7 @@ config PCIE_DW_HOST
->   	bool
->   	select PCIE_DW
->   	select IRQ_MSI_LIB
-> +	select PCI_HOST_COMMON
->   
->   config PCIE_DW_EP
->   	bool
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 952f8594b501254d2b2de5d5e056e16d2aa8d4b7..abb93265a19fd62d3fecc64f29f37baf67291b40 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -413,6 +413,81 @@ static void dw_pcie_host_request_msg_tlp_res(struct dw_pcie_rp *pp)
->   	}
->   }
->   
-> +static int dw_pcie_config_ecam_iatu(struct dw_pcie_rp *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct dw_pcie_ob_atu_cfg atu = {0};
-> +	resource_size_t bus_range_max;
-> +	struct resource_entry *bus;
-> +	int ret;
-> +
-> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
-> +
-> +	/*
-> +	 * Root bus under the host bridge doesn't require any iATU configuration
-> +	 * as DBI region will be used to access root bus config space.
-> +	 * Immediate bus under Root Bus, needs type 0 iATU configuration and
-> +	 * remaining buses need type 1 iATU configuration.
-> +	 */
-> +	atu.index = 0;
-> +	atu.type = PCIE_ATU_TYPE_CFG0;
-> +	atu.parent_bus_addr = pp->cfg0_base + SZ_1M;
-> +	/* 1MiB is to cover 1 (bus) * 32 (devices) * 8 (functions) */
-> +	atu.size = SZ_1M;
-> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
-> +	ret = dw_pcie_prog_outbound_atu(pci, &atu);
-> +	if (ret)
-> +		return ret;
-> +
-> +	bus_range_max = resource_size(bus->res);
-> +
-> +	if (bus_range_max < 2)
-> +		return 0;
-> +
-> +	/* Configure remaining buses in type 1 iATU configuration */
-> +	atu.index = 1;
-> +	atu.type = PCIE_ATU_TYPE_CFG1;
-> +	atu.parent_bus_addr = pp->cfg0_base + SZ_2M;
-> +	atu.size = (SZ_1M * bus_range_max) - SZ_2M;
-> +	atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
-> +
-> +	return dw_pcie_prog_outbound_atu(pci, &atu);
-> +}
-> +
-> +static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct resource *res)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct device *dev = pci->dev;
-> +	struct resource_entry *bus;
-> +
-> +	bus = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS);
-> +	if (!bus)
-> +		return -ENODEV;
-> +	pp->cfg = pci_ecam_create(dev, res, bus->res, &pci_generic_ecam_ops);
-> +	if (IS_ERR(pp->cfg))
-> +		return PTR_ERR(pp->cfg);
-> +
-> +	pci->dbi_base = pp->cfg->win;
-> +	pci->dbi_phys_addr = res->start;
-> +
-> +	return 0;
-> +}
-> +
-> +static bool dw_pcie_ecam_enabled(struct dw_pcie_rp *pp, struct resource *config_res)
-> +{
-> +	struct resource *bus_range;
-> +	u64 nr_buses;
+Changes in v5:
+ - wrap commit message for 'TCSR Clock Controller binding'
+ - Fix the GCC documentation binding for the clock descriptions and
+   clock phandles for 'pcie 4b --> pcie 3b' and remove extra 'pcie 6b'.
+ - Add RB tag from
+	- [Bjorn], [Krzysztof] for RPMh/TCSR clock binding.
+	- [Abel] for TCSR Clock Controller driver.
+	- [Dmitry] for GCC clock controller driver.
+ - Link to v4: https://lore.kernel.org/all/20250813-glymur-clock-controller-v4-v4-0-a408b390b22c@oss.qualcomm.com/
 
-As change is using Synopsis IP based iATU config shift mode 
-functionality, it is must that ECAM/DBI base address has to be 256 MB 
-aligned. Hence add change to check against alignment.
+Changes in v4:
+ - Update the commit message for all dt-bindings to incorporate "Glymur SoC".
+ - Add the xo parent for the TCSR CC clocks[Abel]
+ - Update the GCC driver to cleanup dfs_rcgs as part of 'qcom_cc_driver_data'[Dmitry]
+ - Add RB tag from [Konrad]
+ - Fix the broken previous patchset links.
+ - Link to v3: https://lore.kernel.org/lkml/20250729-glymur-gcc-tcsrcc-rpmhcc-v3-0-227cfe5c8ef4@oss.qualcomm.com/
 
-#define IS_256MB_ALIGNED(x) IS_ALIGNED(x, SZ_256M)
+Changes in v3:
+- Update the commit message for all the dt-bindings [Krzysztof]
+- Update the commit message as required.
+- Link to v2: https://lore.kernel.org/all/20250724-glymur_clock_controllers-v2-0-ab95c07002b4@oss.qualcomm.com/
 
-if (!IS_256MB_ALIGNED(config_res->start))
-           return false;
+Changes in v2:
+- Drop second/last, redundant "bindings" in TCSR and also align the
+  filename [Krzysztof]
+- Update the year to the copyright [Krzysztof]
+- Align to the new Kconfig name CLK_GLYMUR_GCC/TCSR [Abel, Bjorn]
+- Use qcom_cc_probe() for tcsrcc [Dmitry]
+- Add RB tag from [Dmitry] to patch #5
+- Link to v1: https://lore.kernel.org/lkml/20250716152017.4070029-1-pankaj.patil@oss.qualcomm.com/
 
-> +
-> +	bus_range = resource_list_first_type(&pp->bridge->windows, IORESOURCE_BUS)->res;
-> +	if (!bus_range)
-> +		return false;
-> +
-> +	nr_buses = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
-> +
-> +	return !!(nr_buses >= resource_size(bus_range));
-> +}
-> +
->   static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
->   {
->   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> @@ -422,10 +497,6 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
->   	struct resource *res;
->   	int ret;
->   
-> -	ret = dw_pcie_get_resources(pci);
-> -	if (ret)
-> -		return ret;
-> -
->   	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config");
->   	if (!res) {
->   		dev_err(dev, "Missing \"config\" reg space\n");
-> @@ -435,9 +506,32 @@ static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
->   	pp->cfg0_size = resource_size(res);
->   	pp->cfg0_base = res->start;
->   
-> -	pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
-> -	if (IS_ERR(pp->va_cfg0_base))
-> -		return PTR_ERR(pp->va_cfg0_base);
-> +	pp->ecam_enabled = dw_pcie_ecam_enabled(pp, res);
-> +	if (pp->ecam_enabled) {
-> +		ret = dw_pcie_create_ecam_window(pp, res);
-> +		if (ret)
-> +			return ret;
-> +
-> +		pp->bridge->ops = (struct pci_ops *)&pci_generic_ecam_ops.pci_ops;
-> +		pp->bridge->sysdata = pp->cfg;
-> +		pp->cfg->priv = pp;
-> +	} else {
-> +		pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
-> +		if (IS_ERR(pp->va_cfg0_base))
-> +			return PTR_ERR(pp->va_cfg0_base);
-> +
-> +		/* Set default bus ops */
-> +		pp->bridge->ops = &dw_pcie_ops;
-> +		pp->bridge->child_ops = &dw_child_pcie_ops;
-> +		pp->bridge->sysdata = pp;
-> +	}
-> +
-> +	ret = dw_pcie_get_resources(pci);
-> +	if (ret) {
-> +		if (pp->cfg)
-> +			pci_ecam_free(pp->cfg);
-> +		return ret;
-> +	}
->   
->   	/* Get the I/O range from DT */
->   	win = resource_list_first_type(&pp->bridge->windows, IORESOURCE_IO);
-> @@ -476,14 +570,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   	if (ret)
->   		return ret;
->   
-> -	/* Set default bus ops */
-> -	bridge->ops = &dw_pcie_ops;
-> -	bridge->child_ops = &dw_child_pcie_ops;
-> -
->   	if (pp->ops->init) {
->   		ret = pp->ops->init(pp);
->   		if (ret)
-> -			return ret;
-> +			goto err_free_ecam;
->   	}
->   
->   	if (pci_msi_enabled()) {
-> @@ -525,6 +615,14 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   	if (ret)
->   		goto err_free_msi;
->   
-> +	if (pp->ecam_enabled) {
-> +		ret = dw_pcie_config_ecam_iatu(pp);
-> +		if (ret) {
-> +			dev_err(dev, "Failed to configure iATU in ECAM mode\n");
-> +			goto err_free_msi;
-> +		}
-> +	}
-> +
->   	/*
->   	 * Allocate the resource for MSG TLP before programming the iATU
->   	 * outbound window in dw_pcie_setup_rc(). Since the allocation depends
-> @@ -560,8 +658,6 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   		/* Ignore errors, the link may come up later */
->   		dw_pcie_wait_for_link(pci);
->   
-> -	bridge->sysdata = pp;
-> -
->   	ret = pci_host_probe(bridge);
->   	if (ret)
->   		goto err_stop_link;
-> @@ -587,6 +683,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
->   	if (pp->ops->deinit)
->   		pp->ops->deinit(pp);
->   
-> +err_free_ecam:
-> +	if (pp->cfg)
-> +		pci_ecam_free(pp->cfg);
-> +
->   	return ret;
->   }
->   EXPORT_SYMBOL_GPL(dw_pcie_host_init);
-> @@ -609,6 +709,9 @@ void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
->   
->   	if (pp->ops->deinit)
->   		pp->ops->deinit(pp);
-> +
-> +	if (pp->cfg)
-> +		pci_ecam_free(pp->cfg);
->   }
->   EXPORT_SYMBOL_GPL(dw_pcie_host_deinit);
->   
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-> index 4684c671a81bee468f686a83cc992433b38af59d..6826ddb9478d41227fa011018cffa8d2242336a9 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware.c
-> @@ -576,7 +576,7 @@ int dw_pcie_prog_outbound_atu(struct dw_pcie *pci,
->   		val = dw_pcie_enable_ecrc(val);
->   	dw_pcie_writel_atu_ob(pci, atu->index, PCIE_ATU_REGION_CTRL1, val);
->   
-> -	val = PCIE_ATU_ENABLE;
-> +	val = PCIE_ATU_ENABLE | atu->ctrl2;
->   	if (atu->type == PCIE_ATU_TYPE_MSG) {
->   		/* The data-less messages only for now */
->   		val |= PCIE_ATU_INHIBIT_PAYLOAD | atu->code;
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index ceb022506c3191cd8fe580411526e20cc3758fed..f770e160ce7c538e0835e7cf80bae9ed099f906c 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -20,6 +20,7 @@
->   #include <linux/irq.h>
->   #include <linux/msi.h>
->   #include <linux/pci.h>
-> +#include <linux/pci-ecam.h>
->   #include <linux/reset.h>
->   
->   #include <linux/pci-epc.h>
-> @@ -169,6 +170,7 @@
->   #define PCIE_ATU_REGION_CTRL2		0x004
->   #define PCIE_ATU_ENABLE			BIT(31)
->   #define PCIE_ATU_BAR_MODE_ENABLE	BIT(30)
-> +#define PCIE_ATU_CFG_SHIFT_MODE_ENABLE	BIT(28)
->   #define PCIE_ATU_INHIBIT_PAYLOAD	BIT(22)
->   #define PCIE_ATU_FUNC_NUM_MATCH_EN      BIT(19)
->   #define PCIE_ATU_LOWER_BASE		0x008
-> @@ -387,6 +389,7 @@ struct dw_pcie_ob_atu_cfg {
->   	u8 func_no;
->   	u8 code;
->   	u8 routing;
-> +	u32 ctrl2;
->   	u64 parent_bus_addr;
->   	u64 pci_addr;
->   	u64 size;
-> @@ -425,6 +428,8 @@ struct dw_pcie_rp {
->   	struct resource		*msg_res;
->   	bool			use_linkup_irq;
->   	struct pci_eq_presets	presets;
-> +	bool			ecam_enabled;
-> +	struct pci_config_window *cfg;
->   };
->   
->   struct dw_pcie_ep_ops {
-> 
-Regards,
-Mayank
+Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+---
+Taniya Das (7):
+      dt-bindings: clock: qcom-rpmhcc: Add support for Glymur SoCs
+      dt-bindings: clock: qcom: Document the Glymur SoC TCSR Clock Controller
+      clk: qcom: Add TCSR clock driver for Glymur SoC
+      clk: qcom: rpmh: Add support for Glymur rpmh clocks
+      clk: qcom: clk-alpha-pll: Add support for Taycan EKO_T PLL
+      dt-bindings: clock: qcom: document the Glymur Global Clock Controller
+      clk: qcom: gcc: Add support for Global Clock Controller
+
+ .../devicetree/bindings/clock/qcom,glymur-gcc.yaml |  121 +
+ .../devicetree/bindings/clock/qcom,rpmhcc.yaml     |    1 +
+ .../bindings/clock/qcom,sm8550-tcsr.yaml           |    3 +
+ drivers/clk/qcom/Kconfig                           |   17 +
+ drivers/clk/qcom/Makefile                          |    2 +
+ drivers/clk/qcom/clk-alpha-pll.h                   |    6 +
+ drivers/clk/qcom/clk-rpmh.c                        |   22 +
+ drivers/clk/qcom/gcc-glymur.c                      | 8616 ++++++++++++++++++++
+ drivers/clk/qcom/tcsrcc-glymur.c                   |  313 +
+ include/dt-bindings/clock/qcom,glymur-gcc.h        |  578 ++
+ include/dt-bindings/clock/qcom,glymur-tcsr.h       |   24 +
+ 11 files changed, 9703 insertions(+)
+---
+base-commit: 0f4c93f7eb861acab537dbe94441817a270537bf
+change-id: 20250825-glymur-clock-controller-v5-07c400e8b530
+
+Best regards,
+-- 
+Taniya Das <taniya.das@oss.qualcomm.com>
+
 
