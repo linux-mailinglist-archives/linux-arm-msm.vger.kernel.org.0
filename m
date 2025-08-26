@@ -1,149 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-70887-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70888-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1435BB35C02
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 13:30:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B793B35EC9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 14:08:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 17FC51887B8E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 11:26:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C6E42174FF4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:06:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F1A42F8BD9;
-	Tue, 26 Aug 2025 11:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1BE8A31985F;
+	Tue, 26 Aug 2025 12:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eedoylHX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="F3+pRQgF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35E88226CF0;
-	Tue, 26 Aug 2025 11:25:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F8129D293
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:06:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756207557; cv=none; b=hzCJCneo8EVVBymqc2oVtua/hR5JGOff+dyBWLNTf1jWdFQCIfWpk9D7YwsROsJ359LC0wO0Ra+/B4x5vpRMXbqwWIjGTGfkvdvbHvvZpMQ+AosYjBNYaLAut7LSMPK/OlmOK8RL6uH/zo0lchpwWUDiIgN7Fbc2bg+wA1Kgp38=
+	t=1756209980; cv=none; b=fDeSZavAwL0sXYz4f4QX53svhgmnEM5wRoQpuibWE46/X5cKIyrJThsk31ChCyY0631Ggkp/x8kt43e2zqd5oeRmIaNzKHDOu8N7hmrrDMNEZeG40A86eJdqmEch4kA0SkphfFtkoq+gBT5rY2jRtAmAWix0lDlNi835A+LcYXM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756207557; c=relaxed/simple;
-	bh=aHdEMSws7fRcIwGTzg0rwO2wfhhdwDS4g+2yHKnt8c0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oZPLy0+RJrkOOS4+nS8fFvgGZZVIbbTg+6j6tAjVoxkbCgNANg1fxmN+yHJahUd4xcGQJTWZQdySN32r1gZ4WfUEP1Tpq7eykILNIy3QzcIa811aF0YoeHkObYPmDVFlscifUSAE81r3mwYA1e62O76WpL3QDKqbxq9jDeVdFfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eedoylHX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28C0C4CEF1;
-	Tue, 26 Aug 2025 11:25:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756207556;
-	bh=aHdEMSws7fRcIwGTzg0rwO2wfhhdwDS4g+2yHKnt8c0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=eedoylHX+VgyzfA7oE0y+itfj7OHB7qJjyLwovf9JcfXwrBh9mvIaCHUm3SVrxvbL
-	 m9GDK55u8kQTJzLRa7MDqNOF+FYbDIgb+fPQmqSfq7LEZxwUMMdhmM4kL93GMpBm/b
-	 T5n2W8fTSbSN2iNnUG3ah25+yrMb6lSBlV5P3AZqwJaCHxPJSzJlkqp8BLIIeBuUCs
-	 xU+kkcviZ8uj/HJSHdHqHG8D+2tq0zJPnJfiu+vgBSvezjZizrjXDCNVsrUjMJdHmH
-	 65ptTosvUy0rsjRPQJ7tqMho8OBqwdY+R9rI2CUAikSBCgq+ZIn+hcmBw5tLcM/HfC
-	 2OpZwIxEb8kyg==
-Message-ID: <7d80f1e1-df18-4e20-abee-1286a764a226@kernel.org>
-Date: Tue, 26 Aug 2025 13:25:51 +0200
+	s=arc-20240116; t=1756209980; c=relaxed/simple;
+	bh=bSRRUAqhvp44h3dVi1WARRkNFMByO0ADl300jk30jNI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=J1leIqfMv0eEN+EOktCrEGurv1wywOhmeq135a5rETjG1rrVDQf5PnP0MeVWhcfZXrMHjCD8t3wVamL0IuTKtZvCbHHYlvm/ZoDFOH582kdjlsURbsPo1xm5mXoyBNUEmHaLm3t9M/KF8M0poGNqItId40APONpu/Jb4WtD/XFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=F3+pRQgF; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb78ead12so762099966b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 05:06:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756209975; x=1756814775; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=lxFjkTB2P79PoUaLxLAUp+gv0c2aOYdZxNYZuNh3BDw=;
+        b=F3+pRQgFkpzCCYJ7wQ3Odb12m1NnauCMjLfwz3R88V/o068VVmnJwLdcbZ3TKgeER0
+         j4QTlKzDI/eTaobO9531MJDSjHATCSqZoKUNfMxJgx8LfagE5YZ/jn1YgplEKVLBrGay
+         rot0DUgC//tgLU2brQm4i4q/pJdWaY4QfY+HFsVHwYdFeWLA43wdAqrf7tJnIXlaY1Xh
+         Y5udcfd7K7KIJqtQ1tq3paHmiQMqgynhay41Gv29Le5E6dbXGdsgZVMa9k1hzQ5CZJRr
+         mVaD4QVyNi2mJWXfu7WxrOutA+HTEPGLsueBVlkCbNWpnS1K3Lk4AyZ7ngDRCod0LP08
+         x+SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756209975; x=1756814775;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=lxFjkTB2P79PoUaLxLAUp+gv0c2aOYdZxNYZuNh3BDw=;
+        b=KpZARPqazfygQD5Q4Xf2Kjlwel29I4d/s/NTIrllj4P/4bQdKQaIyoxr2PgsG18as0
+         oyzLqhNgLmWHO/auGOGqpbFsuCs4A2SKWGU1PjCvRDlUXto8a1jRd0kKhn06e0vQJ0E0
+         DsUc2a5smKNYDmoSoMYAtW3fcOnBXYcHTnNzMyVtnag49v6MwBf2vGyF1/OGxOosOaUX
+         W9z5IFwslqzLVbwO3qn1Bs7OVCA94+MDG6pZH5WbYm4HVLbMq/P12A4t/DoZaYX4iglw
+         yLX2AJ75180xMzYudaVQhm6eFj/NbxTY5g59IIEdZImZe5pcSNeJkNYgNhHq3WoiGx5Y
+         b+Bg==
+X-Forwarded-Encrypted: i=1; AJvYcCX3UKbab9C8JFb+UV/Zu1ZRUXM7qEwm0kTpytEipgElsYVW936bGd/7AL6kb1VAkN87MR2EiXutuDNqswVw@vger.kernel.org
+X-Gm-Message-State: AOJu0YxE7mNpqvcw07//uEwsBKlOf/AgVseeGCNwze25uu0uPVG9AiVh
+	1RIFa2wR9ES2k8rFFWFFapGjFnZ/aEUOT9bFXvpEP54R3pSbr+dZ7W6zGPDtwLMUK2llnqF7bqq
+	HXT7Hx6vcSsOxqce4JdI4UJNHbBcsIrXgMfntLhtiSQ==
+X-Gm-Gg: ASbGncuKGWZ0zJY5+E6Wey6+LFIwrw2+KZUy/ELbv7839Fk6fwHQadmUQR235kZS11M
+	JfStxJlXkYCG2g5Crs0TaUNNwYnUpxldX5gO1konM37lE76gAJH0qWW/ywlejncwrf3VN9WUbs4
+	QCjwgWR8kbv71MWo6NkqkxKbx1xN/tepy4u4eGsLeNUwo/SkvtSMBEFXDWN4b2hGLBgVGkuvcmi
+	QJUe6/t0QuXiXF43GmCyNofPXm9FsoAkg4zbQg=
+X-Google-Smtp-Source: AGHT+IHCPPogA5I5xYJjZ3AF2Jj1OEbjkizkVIqqQo3oG7dsb9k66ChvqgzLqUtgok2+xdd2moMuf4gTw379MNCuFxA=
+X-Received: by 2002:a17:907:3f0f:b0:ae0:b3be:f214 with SMTP id
+ a640c23a62f3a-afe28ec592dmr1369727666b.9.1756209975430; Tue, 26 Aug 2025
+ 05:06:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/7] OPP: Move refcount and key update for readability
- in _opp_table_find_key()
-To: Marek Szyprowski <m.szyprowski@samsung.com>,
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
- Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
- Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>,
- Manivannan Sadhasivam <mani@kernel.org>,
- Lorenzo Pieralisi <lpieralisi@kernel.org>,
- =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250820-opp_pcie-v4-0-273b8944eed0@oss.qualcomm.com>
- <20250820-opp_pcie-v4-2-273b8944eed0@oss.qualcomm.com>
- <CGME20250825135939eucas1p206b6e2b5ba115f51618c773a1f37939c@eucas1p2.samsung.com>
- <4066c0b4-807f-401e-baaa-25f4891f10ac@samsung.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <4066c0b4-807f-401e-baaa-25f4891f10ac@samsung.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250818124458.334548733@linuxfoundation.org> <CA+G9fYt5sknJ3jbebYZrqMRhbcLZKLCvTDHfg5feNnOpj-j9Wg@mail.gmail.com>
+ <CA+G9fYt6SAsPo6TvfgtnDWHPHO2q7xfppGbCaW0JxpL50zqWew@mail.gmail.com>
+ <CACMJSeu_DTVK=XtvaSD3Fj3aTXBJ5d-MpQMuysJYEFBNwznDqQ@mail.gmail.com> <2025081931-chump-uncurled-656b@gregkh>
+In-Reply-To: <2025081931-chump-uncurled-656b@gregkh>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Date: Tue, 26 Aug 2025 14:06:04 +0200
+X-Gm-Features: Ac12FXzW7NUCjgYWSamJwSOH-347hP9Z3Gi-swjOizdLDz6f5VXnlkQBVvbGglE
+Message-ID: <CACMJSesMDcUM+bvmT76m2s05a+-T7NxGQwe72yS03zkEJ-KzCw@mail.gmail.com>
+Subject: Re: [PATCH 6.15 000/515] 6.15.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
+	Ben Copeland <benjamin.copeland@linaro.org>, Anders Roxell <anders.roxell@linaro.org>, 
+	Dan Carpenter <dan.carpenter@linaro.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Bjorn Andersson <andersson@kernel.org>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, 
+	Linux ARM <linux-arm-kernel@lists.infradead.org>, srinivas.kandagatla@oss.qualcomm.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 25/08/2025 15:59, Marek Szyprowski wrote:
-> Register r10 information: non-slab/vmalloc memory
-> Register r11 information: non-slab/vmalloc memory
-> Register r12 information: slab kmalloc-128 start cfb0e900 pointer offset 
-> 76 size 128
-> Process kworker/u34:1 (pid: 68, stack limit = 0x050eb3d7)
-> Stack: (0xf0a89de0 to 0xf0a8a000)
-> ..
-> Call trace:
->   _opp_compare_key from _set_opp+0x78/0x50c
->   _set_opp from dev_pm_opp_set_rate+0x15c/0x21c
->   dev_pm_opp_set_rate from panfrost_devfreq_target+0x2c/0x3c
->   panfrost_devfreq_target from devfreq_set_target+0x8c/0x2e8
->   devfreq_set_target from devfreq_update_target+0x9c/0xf8
->   devfreq_update_target from devfreq_monitor+0x28/0x1a4
->   devfreq_monitor from process_one_work+0x24c/0x70c
->   process_one_work from worker_thread+0x1b8/0x3bc
->   worker_thread from kthread+0x13c/0x264
->   kthread from ret_from_fork+0x14/0x28
-> Exception stack(0xf0a89fb0 to 0xf0a89ff8)
+On Tue, 19 Aug 2025 at 13:52, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> On Tue, Aug 19, 2025 at 01:30:46PM +0200, Bartosz Golaszewski wrote:
+> > On Tue, 19 Aug 2025 at 12:02, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > >
+> > > On Tue, 19 Aug 2025 at 00:18, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> > > >
+> > > >
+> > > > Boot regression: stable-rc 6.15.11-rc1 arm64 Qualcomm Dragonboard 410c
+> > > > Unable to handle kernel NULL pointer dereference
+> > > > qcom_scm_shm_bridge_enable
+> > >
+> > > I have reverted the following patch and the regression got fixed.
+> > >
+> > > firmware: qcom: scm: initialize tzmem before marking SCM as available
+> > >     [ Upstream commit 87be3e7a2d0030cda6314d2ec96b37991f636ccd ]
+> > >
+> >
+> > Hi! I'm on vacation, I will look into this next week. I expect there
+> > to be a fix on top of this commit.
+>
+> Ok, I'll go and drop this one from the queues now, thanks.
+>
+> greg k-h
 
-I also saw this on today's next:
+Hi!
 
-https://krzk.eu/#/builders/21/builds/6690/steps/13/logs/serial0
+The issue was caused by only picking up commit 7ab36b51c6bee
+("firmware: qcom: scm: request the waitqueue irq *after* initializing
+SCM") into stable, while the following four must be applied instead:
 
-Best regards,
-Krzysztof
+23972da96e1ee ("firmware: qcom: scm: remove unused arguments from SHM
+bridge routines")
+dc3f4e75c54c1 ("firmware: qcom: scm: take struct device as argument in
+SHM bridge enable")
+87be3e7a2d003 ("firmware: qcom: scm: initialize tzmem before marking
+SCM as available")
+7ab36b51c6bee ("firmware: qcom: scm: request the waitqueue irq *after*
+initializing SCM")
+
+Bartosz
 
