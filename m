@@ -1,241 +1,149 @@
-Return-Path: <linux-arm-msm+bounces-70875-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70876-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E4CFB35A15
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:29:21 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id DC78BB35A57
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:46:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DE1D23BF653
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 10:29:19 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DE8124E1778
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 10:46:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4102F2BEC20;
-	Tue, 26 Aug 2025 10:29:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="VJOlpBQE"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89C0130146D;
+	Tue, 26 Aug 2025 10:46:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FC62BE7B6;
-	Tue, 26 Aug 2025 10:29:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6E1C327790;
+	Tue, 26 Aug 2025 10:46:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756204157; cv=none; b=dv/B52GQW/+6/RubbJLxB/icvFU1Cmw0nM13I0DWD10/cI8jcTuUE7rlHXdKUyEr4k97qQc9tSfZ0V/nFEsqxdtjjIawil4Gf8WBlnwf/iwQWlG4xw7PDn1KbcV5+H7nLHKj1rLLm6Geh+iFzXESXScNcVe6O+3EVZKOcalzx+c=
+	t=1756205186; cv=none; b=r/NIMxaaXHdfaS6cJe8mD0qcxsnylRiSA/CnCAloga8Y6Tui2xtkTBc3y3sGUu8aXo4eCML1HsZ6/MZkRw/ps0JQpXDOSqwAbYdk/Ds1jqMuBx74lxDvheSSLmpj8F2V8A2zkt93rd6J3GVKsDULDwLYDchNP81Rfq3cttJR1u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756204157; c=relaxed/simple;
-	bh=mX9QBiCJqxB4VZf9ASx5A8Odnaib7u9cvsMOKUr/1Ag=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=DC9Qz3moATzCyIfkkX1j1Oj1qene4K9aC06dNwDXJIVjweDfUPTVah/LAf+/H3bmslbAu8h0JNhLyPqt77+JBCJP1NkqEd+eeKAun3aBR0cgEOjgFy0+2kH353i3WhgJ3UubOQ+Fk8uItwgfKHG+Cspot0vhoSrp+nCD7UWUQSs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=VJOlpBQE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57Q4FWsL004580;
-	Tue, 26 Aug 2025 10:29:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WeJc6gdRVGRLNoV6G+Timuykst6YYsMsFtf09tJIXCY=; b=VJOlpBQE8RgE1zC2
-	xibKq2zGWSXk4FDi2ut6K2h29kXfUiF5wOtlQ4pM4DwtuWKzztidqwfTlDavbpPZ
-	eqxOUrYajJfRcyhIY2AJJ943jchW8wL4MxY8BIz4C7Z4tI6iN/JCmFgo775SY4gG
-	FLg4MYrm5LdFXDeEOTSekrjvRXjPU4w7vBZj1PAku+WqaBvL258o/kA7GqbIch0a
-	9+6vnGIle/3b6sHy65cLyQ06XOsmEZAmknl0cveFGDcqlcgsh1pjxm4PqI24uq+q
-	DQLbV1MoJc+O2tkS2P/5ijnr0CTxxn/jkjEkQ6HjDAI6Rx8Y9bnXSbfoyGBuqwrS
-	TPelLQ==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5um8j1n-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Aug 2025 10:29:10 +0000 (GMT)
-Received: from nasanex01c.na.qualcomm.com (nasanex01c.na.qualcomm.com [10.45.79.139])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57QATAAe029562
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 26 Aug 2025 10:29:10 GMT
-Received: from [10.216.45.32] (10.80.80.8) by nasanex01c.na.qualcomm.com
- (10.45.79.139) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 26 Aug
- 2025 03:29:03 -0700
-Message-ID: <5ae730f4-5337-49f8-8bec-8605a2495f37@quicinc.com>
-Date: Tue, 26 Aug 2025 15:59:00 +0530
+	s=arc-20240116; t=1756205186; c=relaxed/simple;
+	bh=H3tVdYrDOxdRlNSFXF/jMCHZ3FgH+2UV7laTh6NYYEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nFJYUOq5A6E9j+0qXg+Ldef6aZCGnKbnc0SsGAghEhfr2vzghjTVd9eRrciyq0/tY21xWTWZv5zWZQhY5nDMAvhPBHf4DlFMdkMxP4hsf9bNMfq18S3KUnlKfIgGej+7CwrG9+6vbewCThidWYRN4MqkSfKiHcAqqkLUqdPwbAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A06821A25;
+	Tue, 26 Aug 2025 03:46:15 -0700 (PDT)
+Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8000D3F694;
+	Tue, 26 Aug 2025 03:46:14 -0700 (PDT)
+Date: Tue, 26 Aug 2025 11:46:10 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: peterz@infradead.org, mingo@redhat.com, will@kernel.org,
+	acme@kernel.org, namhyung@kernel.org,
+	alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+	irogers@google.com, adrian.hunter@intel.com,
+	kan.liang@linux.intel.com, linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-alpha@vger.kernel.org,
+	linux-snps-arc@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+	linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+	linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+	sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
+	linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+	iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 01/19] perf/arm-cmn: Fix event validation
+Message-ID: <aK2QclH4jlHJ28EJ@J2N7QTR9R3>
+References: <cover.1755096883.git.robin.murphy@arm.com>
+ <0716da3e77065f005ef6ea0d10ddf67fc53e76cb.1755096883.git.robin.murphy@arm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 7/8] serial: qcom-geni: Enable PM runtime for serial
- driver
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Alexey Klimov
-	<alexey.klimov@linaro.org>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-serial@vger.kernel.org>,
-        Greg Kroah-Hartman
-	<gregkh@linuxfoundation.org>,
-        <linux-kernel@vger.kernel.org>, <dmitry.baryshkov@oss.qualcomm.com>,
-        <psodagud@quicinc.com>, <djaggi@quicinc.com>,
-        <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
-        <quic_arandive@quicinc.com>, <quic_cchiluve@quicinc.com>,
-        <quic_shazhuss@quicinc.com>, Jiri Slaby
-	<jirislaby@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <devicetree@vger.kernel.org>,
-        <bryan.odonoghue@linaro.org>, <neil.armstrong@linaro.org>,
-        <srini@kernel.org>
-References: <20250721174532.14022-1-quic_ptalari@quicinc.com>
- <20250721174532.14022-8-quic_ptalari@quicinc.com>
- <DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org>
- <577d05d4-789b-4556-a2d2-d0ad15b2c213@quicinc.com>
- <dcad137d-8ac9-4a0b-9b64-de799536fd32@kernel.org>
- <DCC8WLEKNS8W.9GAJHQGYPZIY@linaro.org>
- <8689a8b4-75cb-4f01-ad6c-0a8367851257@kernel.org>
- <DCC9B5C7SSU2.GRI1UY0VUDHF@linaro.org>
- <890ede8a-c049-4332-8f62-5dce2fa0f77b@kernel.org>
-Content-Language: en-US
-From: Praveen Talari <quic_ptalari@quicinc.com>
-In-Reply-To: <890ede8a-c049-4332-8f62-5dce2fa0f77b@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01c.na.qualcomm.com (10.45.79.139)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=VtIjA/2n c=1 sm=1 tr=0 ts=68ad8c76 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=pppSVFNryQhGxNBe3yQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMiBTYWx0ZWRfX50+h4DrBNnfL
- v/jdyKBoo5Yd09IySOg4XvE1Ldnl+JlPWgjcrjeStU+yWVZZIHFLHgOjK6r/f73fQGHsHBa/5C4
- yDEKfrSE0AXsTJnC3enbmXlVrNHfVC5LegjgGIUKaZ+GeIY0N7lbBrb5KXtBlDDGbiuYt8zB6zD
- xi64tjPVmrE+kRr6wVzPJfESJ6zPh1PEj4CC8bVTikZ340Hum8RjvLdpnz6lQqf3y50defbi9yp
- Uh+Q1UXrM7UUvwM4brXj/bw983JJyeeTcIisjM3AeYiKiQr1vnEUjLspE5wZFM+5MuFNMXlqE8X
- aH7CRdJkBWPdtF1O7wsdym6utDm0NeqL5WUX2puk53QS7H7fIYhFKY4jjrgxDNI7judeeZgM7nh
- FZNpLeV0
-X-Proofpoint-GUID: uvJknOoi9DXKqn62yR3xGDAGOJTdBevm
-X-Proofpoint-ORIG-GUID: uvJknOoi9DXKqn62yR3xGDAGOJTdBevm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 adultscore=0 spamscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508230032
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0716da3e77065f005ef6ea0d10ddf67fc53e76cb.1755096883.git.robin.murphy@arm.com>
 
-Hi Alexey/Krzysztof,
+Hi Robin,
 
+On Wed, Aug 13, 2025 at 06:00:53PM +0100, Robin Murphy wrote:
+> In the hypothetical case where a CMN event is opened with a software
+> group leader that already has some other hardware sibling, currently
+> arm_cmn_val_add_event() could try to interpret the other event's data
+> as an arm_cmn_hw_event, which is not great since we dereference a
+> pointer from there... Thankfully the way to be more robust is to be
+> less clever - stop trying to special-case software events and simply
+> skip any event that isn't for our PMU.
 
-On 8/26/2025 3:36 PM, Krzysztof Kozlowski wrote:
-> On 26/08/2025 11:37, Alexey Klimov wrote:
->> On Tue Aug 26, 2025 at 10:21 AM BST, Krzysztof Kozlowski wrote:
->>> On 26/08/2025 11:18, Alexey Klimov wrote:
->>>>>> May i know what is testcase which you are running on target?
->>>>>
->>>>> Boot the board?
->>>>>
->>>>>> what is target?
->>>>>
->>>>> It is written in original report. Did you even read it?
->>>>>
->>>>>> Which usecase is this issue occurring in?
->>>>>
->>>>> Boot?
->>>>
->>>> FWIW, what said above by Krzysztof is correct, there is no usecase, just booting the board.
->>>>
->>> 12 days and nothing improved, right? if this was not dropped now,
->>> Alexey, can you send a revert? Author clearly approches stability with a
->>> very relaxed way and is just happy that patch was thrown over the wall
->>> and job is done.
->>>
->>>
->>> If you do not want to send revert, let me know, I will do it.
->>
->> I am okay with sending revert, just trying to see if there is any interest
->> in fixing this.
+I think this is missing some important context w.r.t. how the core perf
+code behaves (and hence why this change doesn't cause other problems).
+I'd suggest that we give the first few patches a common preamble:
+
+| When opening a new perf event, the core perf code calls
+| pmu::event_init() before checking whether the new event would cause an
+| event group to span multiple hardware PMUs. Considering this:
+| 
+| (1) Any pmu::event_init() callback needs to be robust to cases where
+|     a non-software group_leader or sibling event targets a distinct
+|     PMU.
+| 
+| (2) Any pmu::event_init() callback doesn't need to explicitly reject
+|     groups that span multiple hardware PMUs, as the core code will
+|     reject this later.
+
+... and then spell out the specific issues in the driver, e.g.
+
+| The logic in arm_cmn_validate_group() doesn't account for cases where
+| a non-software sibling event targets a distinct PMU. In such cases,
+| arm_cmn_val_add_event() will erroneously interpret the sibling's
+| event::hw as as struct arm_cmn_hw_event, including dereferencing
+| pointers from potentially user-controlled fields.
+|
+| Fix this by skipping any events for distinct PMUs, and leaving it to
+| the core code to reject event groups that span multiple hardware PMUs.
+
+With that context, the patch itself looks good to me.
+
+This will need a Cc stable. I'm not sure what Fixes tag is necessary;
+has this been broken since its introduction?
+
+Mark.
+
 > 
-> Any interest should have happened after 1 day of reporting linux-next
-> breakage. It has been like what? 12 days?
+> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+> ---
+>  drivers/perf/arm-cmn.c | 5 +----
+>  1 file changed, 1 insertion(+), 4 deletions(-)
 > 
-> That's typical throw the patch over the wall. Revert.
-
-Really sorry for the delay.
-
-I forgot to mention earlier that I’ve been actively investigating this
-issue across different platform SoCs. I was able to reproduce the
-problem on the SC7280.
-
-Here’s a summary of the observed behavior:
-
-The issue appears to originate from the qcom_geni_serial driver during
-device runtime resume. It results in a blocked IRQ thread, which in turn
-causes system instability.
-
-The call trace suggests a deadlock scenario where the IRQ
-thread—responsible for handling wake-up events—becomes unresponsive
-while interacting with the pinctrl subsystem.
-
-Specifically, the msm_pinmux_set_mux function attempts to invoke
-disable_irq, which is problematic when called from an IRQ thread context.
-Since the IRQ itself is a wake-up source, this leads to contention or a
-self-deadlock situation.
-
-I have verified below diff and about to post it
-
-diff --git a/drivers/tty/serial/qcom_geni_serial.c 
-b/drivers/tty/serial/qcom_geni_serial.c
-index c9c52c52a98d..cb3b4febd8c2 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1848,16 +1848,36 @@ static int __maybe_unused 
-qcom_geni_serial_runtime_suspend(struct device *dev)
-  {
-         struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
-         struct uart_port *uport = &port->uport;
-+       int ret;
-+
-+       ret = geni_serial_resources_off(uport);
-+       if(ret) {
-+               if (device_may_wakeup(dev))
-+                       disable_irq_wake(port->wakeup_irq);
-+       }
-
--       return geni_serial_resources_off(uport);
-+       if (device_may_wakeup(dev))
-+               enable_irq_wake(port->wakeup_irq);
-+
-+       return ret;
-  }
-
-  static int __maybe_unused qcom_geni_serial_runtime_resume(struct 
-device *dev)
-  {
-         struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
-         struct uart_port *uport = &port->uport;
-+       int ret;
-+
-+       if (device_may_wakeup(dev))
-+               disable_irq_wake(port->wakeup_irq);
-
--       return geni_serial_resources_on(uport);
-+       ret = geni_serial_resources_on(uport);
-+       if(ret) {
-+               if (device_may_wakeup(dev))
-+                       enable_irq_wake(port->wakeup_irq);
-+       }
-+
-+       return ret;
-  }
-
-Thanks,
-Praveen Talari
-
-> Best regards,
-> Krzysztof
+> diff --git a/drivers/perf/arm-cmn.c b/drivers/perf/arm-cmn.c
+> index 11fb2234b10f..f8c9be9fa6c0 100644
+> --- a/drivers/perf/arm-cmn.c
+> +++ b/drivers/perf/arm-cmn.c
+> @@ -1652,7 +1652,7 @@ static void arm_cmn_val_add_event(struct arm_cmn *cmn, struct arm_cmn_val *val,
+>  	enum cmn_node_type type;
+>  	int i;
+>  
+> -	if (is_software_event(event))
+> +	if (event->pmu != &cmn->pmu)
+>  		return;
+>  
+>  	type = CMN_EVENT_TYPE(event);
+> @@ -1693,9 +1693,6 @@ static int arm_cmn_validate_group(struct arm_cmn *cmn, struct perf_event *event)
+>  	if (leader == event)
+>  		return 0;
+>  
+> -	if (event->pmu != leader->pmu && !is_software_event(leader))
+> -		return -EINVAL;
+> -
+>  	val = kzalloc(sizeof(*val), GFP_KERNEL);
+>  	if (!val)
+>  		return -ENOMEM;
+> -- 
+> 2.39.2.101.g768bb238c484.dirty
+> 
 
