@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-70889-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB5B0B35EE5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 14:12:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4E78B35F0E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 14:21:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C4EA81BA0522
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:12:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2FC7188D2DF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:22:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B75E92F531C;
-	Tue, 26 Aug 2025 12:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA12A318146;
+	Tue, 26 Aug 2025 12:21:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dLqBO4s7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YL3OJjeH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97BA2BDC37
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:11:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2742BDC23
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:21:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756210313; cv=none; b=jGbVkCSzVXbYzukgbTs3zhgYn8FRXnu74vdxXh9VtoJTbKKXfZKjQmN4lyWxZ8mtkKshkLj7+OHZPXnekf8HeXE4YcHtWmJxgV7lLheCQUsAWZ6fANi2dKyZ+QRgxygdenXfDFGOkepyykl6TucYwjMaDKxWPIuhi0edQvu6/1c=
+	t=1756210907; cv=none; b=My+ffaucvp48OdHORmSiW6auKWIhZnX1deKpi3fwVhT5eB7x4BIUtKfxYXn+Y5toewgUyygOooLr1mmzL2d+dD8XgMyivdUMdlJK40J+TSmDpVy8i4pCC3dkJyi5dqCVbaSuay12NTf3bT8DXxhzSYG3GjbczMMCHvXGEbw8u+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756210313; c=relaxed/simple;
-	bh=C/ncFO0+meiwcT0dGWH6sqW5HyxoBvUGYHPaEyCmDgg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RNLZCrnKqi0ZJAIUN97m1ozuH6mafBNunVGbHvqvlx4Zcx8/e0HBGieuCUIJQHKxkvKIch4oRdIzsvOK6yRrcNIP95/BPtXRMMISG5jgWr2tMOQALlrFV0cO5rC4HVp0twdg8MhYReagsLk4jGYKfSlbjkPVt1Qj5mmbut+yD8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dLqBO4s7; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1756210907; c=relaxed/simple;
+	bh=cDZY4sOyXdEWG+JCocZJFf7HDgOgg81Kbcw/od9SAq0=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=o9lA9R8jvogyv4ETKlTTrRP0UC2y/+i1CNLgc4rx+a75SnSSMc2ky0iL4d223NleElKd4BQIj97Jq1cCCxfL4HI1uSQ/EdKIfuqU5JNEsZF7PASCjdu4JrLiPdix35lQq0+fZQuc9zjDA/OuTgpOUDvth3fyS1JsUxfDlaUq0Bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YL3OJjeH; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57Q8kJmU020022
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:11:49 GMT
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QC8d2l030514
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:21:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	paLKss0IUBWc+jaJlEOsMKMsvnxtyXrSg9oZkdly/Ns=; b=dLqBO4s7mv5mKici
-	wuWjk/+jlVhmLhv4egor9qx27Ty0KbfEn1hKUgeeBFT6BZMy+4bInHT/Wo+JXzdO
-	avLuoNj3sF+GK7l+5A/Xb7F869eadzkLT2QJV/0mIuPCB3p1+hFt72zfFTzU77ml
-	OZcvgQqZOqw0wZpHGXZvcbhwuarwdSTe6RgXKjpzF7lnKup3TIGbn4pEdTzqpF4/
-	Mcliv4vFszOGAPGP8F/rTxjl+ijRZ4JM4gyjE0SkSEF/VEFQM3LI8M/f5fV6UXZe
-	kS8ANmcgsNWqE3zFeZEBce9BzO93PiOtucfRz9qk9ncpFrPj/h2M/T9wPY0T8Q6m
-	wrExPQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q615gkt2-1
+	xj/MZA6A4yQOjokPCqmS06vMg9EIcp9det7tR39R6Hw=; b=YL3OJjeHRaQdDKf5
+	3h0iLKmUcTx8Ohu5CA9ce49/fhE0kC3sb90PvGKqsm6R9EV3jMCrKNKN4yl+pymv
+	Sy+UeAyvNicAGshwsTvkfYrMjMhi540zTFXv5aGC4ZG8A9WxpSTZnUmURnvlqUal
+	bcsXjZzodMtgc75e3jmAvoI3AcQLG9E/VyzTtjghg1zIKNN55hYMf3M9q9flUkGV
+	U47aitsd6VWnhdsvjGjXeAHub9sd65aPEECzWqYjB4wuXWLcUgvB115OotK3Qhk5
+	HwhESSjWqn6OHluYLOanbNCsBCByAVsdjYH2ds+i7kOXzuhOph75Vys6zIT1PuT5
+	VcNgwA==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6tj0qx4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:11:49 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-244581953b8so63970595ad.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 05:11:49 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:21:44 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-76e395107e2so5215206b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 05:21:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756210308; x=1756815108;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1756210903; x=1756815703;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:from:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=paLKss0IUBWc+jaJlEOsMKMsvnxtyXrSg9oZkdly/Ns=;
-        b=ggb1tgTuUQc9/oUMIGC5ygW8kd5ecki0i5UveHWB16PMAo2b1lW7Lgu8e8yu6jbyPZ
-         9THi8ymc/6nOurmwIY3VJH7El0QPm6LAgvRYbV3UvRfILDk+XiZ3wgGaD1IYBceJhje0
-         6i5YWzRMVP1QpEHi0hnzHHJI+O5hx4UYGoCXEuLuhv+FkmeZ54w1h3sjd1t1fc3UFC+v
-         jz37MtDMg1AeuDgmlzPm5KT+QQ4qMSnEGoJ/9sZOfzn2QryBiwLlqfUWNXZeIb+3rNgz
-         ekuHYhL9aX+xvN6bMWnrChG6BjcFDHm1QDiWX41bVdngg5QSgJk3VU1PVYp8L7LN0YN+
-         4HyA==
-X-Forwarded-Encrypted: i=1; AJvYcCUTbjZ4EZRunaFjY4BtIPp9WqaU+Nrw9Afuwgp2eoa54/LuSRiyLVq32WkGNVVWlgyDoAGzf6eDhZlFABQW@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxt9hnlvnIUegIM4wRcVuiXDRYEvbbgFPYHetjaCPy36OPAlbbt
-	zVzKm7wut9SKa2bcWq2LDZIYwXKiK3pz4XRgJwoEGgB+UH2Z3TsochYrsN6QhT4TXSw0N6SLgmr
-	MYZ/Zdk9DN2qy5rD+mzbQ7Us+6te2CMFxg24wMgEPWtkBJ+aOIHa5p3A7X3ZK5GrGqmkn
-X-Gm-Gg: ASbGncuCGWMYEBS4cuX6i+Enj6rik6fMgpJFZ6sVFANrUEmhnocZ+u2yo7I3C9MkTFZ
-	/zPQ6TvBHvYWymHN+0AYcKJWun3RgJLF5ayKcpbOBvK1k/wMQgltydpFyLn7EtK/Ebk3+t4IxUa
-	a66aIVhOzy5LrzFQgfcJayNZMOdAuN489CXHYXoc1byyuOok6S0qzimpDomhomGdqULrxx9va+m
-	WJW4spQaDeiRjdNOkoNgI71YaSTtDqUhOqmfXu4Jk7Ximz2VsnADtd9UnTmBqBYaIzuMB0w+Fb/
-	UvVBaWI+snG0pm9DddHbhxpJTwbO3teI5+X/CRIBI9pmpUpYrtBFk8SFe5lD6jV6i0CWLp5b7wF
-	jBHZzRnaxqcxDuiSab/1LPM8+mw4R0Q==
-X-Received: by 2002:a17:903:40d1:b0:246:d00b:4ae3 with SMTP id d9443c01a7336-246d00b549dmr78980235ad.61.1756210307955;
-        Tue, 26 Aug 2025 05:11:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGWt+ZKuYL/s7XdOx51tNH2twlSp1YzsVOyChmLbB+Co/aIapze6oU9D35MvVYX1XhVnb+v5w==
-X-Received: by 2002:a17:903:40d1:b0:246:d00b:4ae3 with SMTP id d9443c01a7336-246d00b549dmr78979735ad.61.1756210307420;
-        Tue, 26 Aug 2025 05:11:47 -0700 (PDT)
-Received: from [10.133.33.155] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246688645eesm94817945ad.99.2025.08.26.05.11.44
+        bh=xj/MZA6A4yQOjokPCqmS06vMg9EIcp9det7tR39R6Hw=;
+        b=OoPv0fepCQQujXNnE9erxIQOHTvGAQMrctc1MNH+9PAB0yiCtLMSBTUl174Pcf8Sr6
+         7DIw28QbS7QE1WBdZ/9pXuefTM2t1DWYCSsF2vR+FmvZCoVnNh6cVRMEHbc1KxVwi2vP
+         72qhq/hXjkqTbxd55ifl/6ZAQ44O4huuz+eWstipMjW0lLxK58AJu0J1GDdyQd7shQ8S
+         LJYd/ou0HWZYhFtWnYkabq23xX1xQQUdpkbtNSv2rJu7/8vpjYKcaQBK/o1SpGlLW5lR
+         9mBYshdpPRFtuo5qIAIMEUuxePNW0dBy5a+qdYJbrRLsg5ogkXR1Vv2SKqOTME2ZPggJ
+         BcvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXkxqZn1OYKQb1zwTEcWF0Nx87PG/vzvNoUeIUvSWvcCMayMpqYKWEljS9ew0QeEL6R25y7Bkel3jwBUh78@vger.kernel.org
+X-Gm-Message-State: AOJu0YxmTzdvxG6tHSv14ndTZUrJFBBAbhsyTR8Mz7Jfcl8qSsbHd+l4
+	a1u+b4yv6aMzhoxR72OzZvKohL2ClN5swKP7YmxgoR7jL1rClwwimZB+lyYVJ74sG9qq2lA134N
+	XCxl5Flb/yELLvWWK0QEqyP0vTA1RjwrdUKlH7nIx/JFZq7tiZQrfb/Jv48F1fhujM50f
+X-Gm-Gg: ASbGncs7Ijdbedfw+YeBtbgHe++sZ8+omRAcvWEqSQ1c2HtCHdDnA1/0O0GRWY7TFJT
+	JDWiA9+/a3aWwma1glEQRJnK8WqQanas4s8DYak779+q0eanV3ohVO7vhS2ZJZBfz+TFGOapHkd
+	h65zity8+1zRGjoe0AGiG2PHnCP1p+sKFm0Jc8+x7Qu5gfD7GYVjidTsFG75/Qi/WGxZZhle9Ym
+	VTcXoLeXtFJgOYZBpyJQndv+CF6DSsfWWabYmZ5SjxQ5CAhL8rC85UNO+WDiqpGLFa0f6wxwqVj
+	0PlI7eCkj8OWNIjiHdIB4iQ5mym92Ox/cnyvlVyoGYR5hXOKOSQedqZb2C/PoPgqaA==
+X-Received: by 2002:a05:6a00:10d1:b0:76e:7aee:35f2 with SMTP id d2e1a72fcca58-7702fc15031mr16945604b3a.30.1756210903203;
+        Tue, 26 Aug 2025 05:21:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdHFcw5nbbR7DmXRWjmRQkX5tmIcocsB+qO88Jb3kvJp1o/g2CVqD8Sf5HxYdMvi7GPrmIRA==
+X-Received: by 2002:a05:6a00:10d1:b0:76e:7aee:35f2 with SMTP id d2e1a72fcca58-7702fc15031mr16945559b3a.30.1756210902626;
+        Tue, 26 Aug 2025 05:21:42 -0700 (PDT)
+Received: from [10.64.16.151] ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771e9c6f2ffsm4758155b3a.6.2025.08.26.05.21.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 05:11:47 -0700 (PDT)
-Message-ID: <5df27be9-0347-49d1-ba1e-21d6a2172314@oss.qualcomm.com>
-Date: Tue, 26 Aug 2025 20:11:41 +0800
+        Tue, 26 Aug 2025 05:21:42 -0700 (PDT)
+Message-ID: <adda1cff-61c8-4f9d-bb9c-7c0cc70a21f1@oss.qualcomm.com>
+Date: Tue, 26 Aug 2025 20:21:37 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,221 +89,303 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] coresight: tpda: add sysfs node to flush specific
- port
-To: James Clark <james.clark@linaro.org>, Jie Gan <jie.gan@oss.qualcomm.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
- <mike.leach@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
-References: <20250826070150.5603-1-jie.gan@oss.qualcomm.com>
- <20250826070150.5603-4-jie.gan@oss.qualcomm.com>
- <3ac2954e-5663-4ea0-bc1d-a09e1992af5b@linaro.org>
- <a6be4d7b-d163-47df-9ab3-ca410f703555@oss.qualcomm.com>
- <939eb45c-f48e-40ce-86e8-710afa2b5c9b@linaro.org>
+Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: Add display support for QCS615
+ RIDE board
+From: Fange Zhang <fange.zhang@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Li Liu <quic_lliu6@quicinc.com>, dmitry.baryshkov@oss.qualcomm.com,
+        tingwei.zhang@oss.qualcomm.com, xiangxu.yin@oss.qualcomm.com
+References: <20250818-add-display-support-for-qcs615-platform-v6-0-62aad5138a78@oss.qualcomm.com>
+ <20250818-add-display-support-for-qcs615-platform-v6-2-62aad5138a78@oss.qualcomm.com>
+ <hlajupt4mwb27j4kbygdk5rifthnbnyv4ypcrqd2jk4vvdytoy@fef26rluqkxi>
+ <8243f4f2-4505-4264-91ab-3688f4f6fc6e@oss.qualcomm.com>
 Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <939eb45c-f48e-40ce-86e8-710afa2b5c9b@linaro.org>
+In-Reply-To: <8243f4f2-4505-4264-91ab-3688f4f6fc6e@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzNCBTYWx0ZWRfX8L295w/B/e0o
- u3mKsm15stx/3CU2mViUbUX0jgb9UZkMDw951z+oBVphaLdoQKnHGGCEUo9gCi+6KmGMfC12P+g
- pc/iUpgvAzfDuFULa09hy/kSNvL5ZCjb5rnRRNvk9sFcS1/XKAu6FcRahO034T+S6A3ABiSBKJC
- qC375roWIXIwmYljdVwJY956YbV5Pl0CWYkPjOakDDgm23Nspx1VjP4VcY3aqyzmzmAkZ5jbiy4
- /GXO8H+UiTW6IMZ0jIL4RMEbNACSI8XP6W6N2kGMEOHGrT+UNiqlDt/kU4irD4XWS9AKJ0XJp1y
- IJOjdY7EAEH/d8b5IS9ehHlIMjwpHN0YuRvp1HEP+tgTZjBhyoZLoMZsiZMU9yEh2qaW5ob3kZK
- J1F8cRPs
-X-Proofpoint-GUID: Gk9TUAh39RIRzpFddxbMf8DRw0EVfMh-
-X-Authority-Analysis: v=2.4 cv=K+AiHzWI c=1 sm=1 tr=0 ts=68ada485 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=-hWpzLsPYw3_ZpqOosEA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: Gk9TUAh39RIRzpFddxbMf8DRw0EVfMh-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA0MyBTYWx0ZWRfX0VYcwHAfDf+I
+ HvmRS5Gg8FmWsrAxGiDWA5lbl4W5IlH9T6AXTpkXjbkzY9xubky9SOAyCmbEcmiXe7v4crdWmGB
+ +EdsDttt+hZISl14ETjtRVBQir9p+CZDvVy27S8+cYv3Wx+vsJZy8UQ48WUArQCnle1Ty7HwzMT
+ Btn5bxUDiCIfkmyWu2dt1Yw3vmLw2ABDqHWvi/AdZTN6KOkbJgPpD1fTXA8/TqFzO0n3nRSrhWA
+ KhIASJmfpTLrGNoBeQmTfMeWCyhVWAWIVZbJbGXuIjUSjkH4Xzd9KUqH0e2czxMpDcYgs4pdWXw
+ MfH0AuAHEmUiZkGtDaagRnR62C8SeGMJ0jmE4VRVxuZPhvxgCWIN1ehBGqtUICsKjdmy5gsUppI
+ 3EVghVJ+
+X-Proofpoint-ORIG-GUID: kpkyFzQDpWw4Y8xRqIJFlENtH2BOOmU5
+X-Proofpoint-GUID: kpkyFzQDpWw4Y8xRqIJFlENtH2BOOmU5
+X-Authority-Analysis: v=2.4 cv=W544VQWk c=1 sm=1 tr=0 ts=68ada6d8 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=fAMiPJdJibrns1U4IokA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22 a=sptkURWiP4Gy88Gu7hUp:22
+ a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 spamscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
+ bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230034
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230043
 
 
 
-On 8/26/2025 5:54 PM, James Clark wrote:
+On 8/26/2025 4:08 PM, Fange Zhang wrote:
 > 
 > 
-> On 26/08/2025 10:39 am, Jie Gan wrote:
->>
->>
->> On 8/26/2025 5:27 PM, James Clark wrote:
+> On 8/24/2025 11:15 AM, Bjorn Andersson wrote:
+>> On Mon, Aug 18, 2025 at 12:39:21PM +0800, Fange Zhang wrote:
+>>> From: Li Liu <quic_lliu6@quicinc.com>
 >>>
+>>> Add display MDSS and DSI configuration for QCS615 RIDE board.
+>>> QCS615 has a DP port, and DP support will be added in a later patch.
 >>>
->>> On 26/08/2025 8:01 am, Jie Gan wrote:
->>>> From: Tao Zhang <tao.zhang@oss.qualcomm.com>
->>>>
->>>> Setting bit i in the TPDA_FLUSH_CR register initiates a flush request
->>>> for port i, forcing the data to synchronize and be transmitted to the
->>>> sink device.
->>>>
->>>> Signed-off-by: Tao Zhang <tao.zhang@oss.qualcomm.com>
->>>> Co-developed-by: Jie Gan <jie.gan@oss.qualcomm.com>
->>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
->>>> ---
->>>>   .../testing/sysfs-bus-coresight-devices-tpda  |  7 +++
->>>>   drivers/hwtracing/coresight/coresight-tpda.c  | 45 +++++++++++++++ 
->>>> ++++
->>>>   drivers/hwtracing/coresight/coresight-tpda.h  |  1 +
->>>>   3 files changed, 53 insertions(+)
->>>>
->>>> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices- 
->>>> tpda b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
->>>> index e827396a0fa1..8803158ba42f 100644
->>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
->>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
->>>> @@ -41,3 +41,10 @@ Contact:    Jinlong Mao 
->>>> <jinlong.mao@oss.qualcomm.com>, Tao Zhang <tao.zhang@oss.qu
->>>>   Description:
->>>>           (RW) Configure the CMB/MCMB channel mode for all enabled 
->>>> ports.
->>>>           Value 0 means raw channel mapping mode. Value 1 means 
->>>> channel pair marking mode.
->>>> +
->>>> +What:        /sys/bus/coresight/devices/<tpda-name>/port_flush_req
->>>> +Date:        August 2025
->>>> +KernelVersion:    6.17
->>>> +Contact:    Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Tao Zhang 
->>>> <tao.zhang@oss.qualcomm.com>, Jie Gan <jie.gan@oss.qualcomm.com>
->>>> +Description:
->>>> +        (RW) Configure the bit i to requests a flush operation of 
->>>> port i on the TPDA.
->>>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/ 
->>>> hwtracing/coresight/coresight-tpda.c
->>>> index 9e623732d1e7..c5f169facc51 100644
->>>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>>> @@ -509,6 +509,50 @@ static ssize_t cmbchan_mode_store(struct device 
->>>> *dev,
->>>>   }
->>>>   static DEVICE_ATTR_RW(cmbchan_mode);
->>>> +static ssize_t port_flush_req_show(struct device *dev,
->>>> +                   struct device_attribute *attr,
->>>> +                   char *buf)
->>>> +{
->>>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>> +    unsigned long val;
->>>> +
->>>> +    guard(spinlock)(&drvdata->spinlock);
->>>> +    if (!drvdata->csdev->refcnt)
->>>> +        return -EPERM;
->>>> +
->>>> +    val = readl_relaxed(drvdata->base + TPDA_FLUSH_CR);
->>>> +    return sysfs_emit(buf, "%lx\n", val);
->>>
->>> Decimal would be better for a port number that goes from 0 - 127. If 
->>> you really want to use hex then don't you need to prefix it with 0x? 
->>> Otherwise you can't tell the difference between decimal 10 and hex 
->>> 10, and it's not documented that it's hex either.
->>>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
+>>> Signed-off-by: Fange Zhang <fange.zhang@oss.qualcomm.com>
 >>
->> Got it. I will fix the code here, and update the description in document.
+>> Running dtb checker after applying your patch gives me the following:
+>>> $ make qcom/qcs615-ride.dtb CHECK_DTBS=1
+>>>    UPD     include/config/kernel.release
+>>>    HOSTCC  scripts/basic/fixdep
+>>>    SCHEMA  Documentation/devicetree/bindings/processed-schema.json
+>>> Documentation/devicetree/bindings/net/snps,dwmac.yaml: mac-mode: 
+>>> missing type definition
+>>> Documentation/devicetree/bindings/net/nfc/ti,trf7970a.yaml: ti,rx- 
+>>> gain-reduction-db: missing type definition
+>>> Documentation/devicetree/bindings/phy/fsl,imx8mq-usb-phy.yaml: 
+>>> fsl,phy-pcs-tx-deemph-3p5db-attenuation-db: missing type definition
+>>>    DTC [C] arch/arm64/boot/dts/qcom/qcs615-ride.dtb
+>>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@100000: 
+>>> 'clock-names' is a required property
+>>>          from schema $id: http://devicetree.org/schemas/clock/ 
+>>> qcom,qcs615-gcc.yaml#
 >>
->>>> +}
->>>> +
->>>> +static ssize_t port_flush_req_store(struct device *dev,
->>>> +                    struct device_attribute *attr,
->>>> +                    const char *buf,
->>>> +                    size_t size)
->>>> +{
->>>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>> +    unsigned long val;
->>>> +
->>>> +    if (kstrtoul(buf, 0, &val))
->>>> +        return -EINVAL;
->>>> +
->>>> +    /* The valid value ranges from 0 to 127 */
->>>> +    if (val > 127)
->>>> +        return -EINVAL;
->>>> +
->>>> +    guard(spinlock)(&drvdata->spinlock);
->>>> +    if (!drvdata->csdev->refcnt)
->>>> +        return -EPERM;
->>>> +
->>>> +    if (val) {
->>>
->>> If 0 - 127 are valid don't you want to write 0 too?
->>
->> It's 1-127 here. 0 may leads to an unexpected issue here.
->>
->> Thanks,
->> Jie
->>
+>> Taniya is looking at this one.
 > 
-> Then can't the above be this:
+> Got it. Since the patch appears to be accepted, should I still wait for 
+> mm clk version 7?
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/20250814- 
+> qcs615-mm-cpu-dt-v6-v6-1-a06f69928ab5@oss.qualcomm.com/
 > 
->    /* The valid value ranges from 1 to 127 */
->    if (val < 1 || val > 127)
->      return -EINVAL;
+>>
+>>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: gpio@3e: $nodename:0: 
+>>> 'gpio@3e' does not match '^(pinctrl|pinmux)(@[0-9a-f]+)?$'
+>>>          from schema $id: http://devicetree.org/schemas/pinctrl/ 
+>>> semtech,sx1501q.yaml#
+>>
+>> This is from your patch.
 > 
-> But I'm wondering how you flush port 0?
+> got it, will change "gpio@3e" to "pinctrl@3e"
 > 
+>>
+>>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'vdd10-supply' 
+>>> is a required property
+>>>          from schema $id: http://devicetree.org/schemas/display/ 
+>>> bridge/analogix,anx7625.yaml#
+>>
+>> This is from your patch.
+> 
+> got it, will add this part like https://lore.kernel.org/ 
+> all/20250604071851.1438612-3-quic_amakhija@quicinc.com/
+> 
+> @@ -51,6 +51,64 @@ dp_dsi0_connector_in: endpoint {
+> };
+> };
+> 
+> +       vreg_12p0: vreg-12p0-regulator {=
+> ...
+> @@ -338,7 +396,9 @@ bridge@58 {
+>                                  interrupts-extended = <&io_expander 0 
+> IRQ_TYPE_EDGE_FALLING>;
+>                                  enable-gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
+>                                  reset-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
+> -                               wakeup-source;
+> +                               vdd10-supply = <&vreg_1p0>;
+> +                               vdd18-supply = <&vreg_1p8>;
+> +                               vdd33-supply = <&vreg_3p0>;
+> 
+>>
+>>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'vdd18-supply' 
+>>> is a required property
+>>>          from schema $id: http://devicetree.org/schemas/display/ 
+>>> bridge/analogix,anx7625.yaml#
+>>
+>> This is from your patch.
+> 
+> same as above
+> 
+>>
+>>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'vdd33-supply' 
+>>> is a required property
+>>>          from schema $id: http://devicetree.org/schemas/display/ 
+>>> bridge/analogix,anx7625.yaml#
+>>
+>> This is from your patch.
+> 
+> same as above
+> 
+>>
+>>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'wakeup-source' 
+>>> does not match any of the regexes: 'pinctrl-[0-9]+'
+>>>          from schema $id: http://devicetree.org/schemas/display/ 
+>>> bridge/analogix,anx7625.yaml#
+>>
+>> This is from your patch.
+> 
+> will remove it
+> 
+>>
+>>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: phy@ae94400: Unevaluated 
+>>> properties are not allowed ('vdds-supply' was unexpected)
+>>>          from schema $id: http://devicetree.org/schemas/display/msm/ 
+>>> dsi-phy-14nm.yaml#
+>>
+>> This is from your patch.
+> 
+> will change "vdds-supply" to "vcca-supply"
+> 
+>>
+>>
+>> Am I missing something? Is there any reason why these 6 new errors
+>> should be added?
+> 
+> Sorry, I missed those parts earlier. I've re-tested and confirmed the 
+> changes. The patch can pass after refine.
+> Would it be appropriate to send v7 now, or should I wait until the mm 
+> clk v7 is ready?
 
-BIT(0) represents port 0 with value 1 and the default value 0 means 
-nothing will be triggered here.
+ok, I saw it's already included in linux-next. I'll send v7 tomorrow 
+based on the latest linux-next. may i?
+https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=f9c36698db91780eed4ee3a90794bda2a4252166
 
-> Isn't the default value 0? So if you never write to port_flush_req then 
-> you'd flush port 0, but why can't you change it back to 0 after writing 
-> a different value?
-
-We can change the value back to 0 but I think we shouldn't do this 
-although I haven't suffer issue after I changed it back to 0(for bit).
-Because the document mentioned: "Once set, the bit remains set until the 
-flush operation on port i completes and the bit then clears to 0". So I 
-think we should let the flush operation finish as expected and clear the 
-bit by itself? Or may suffer unexpected error when try to interrupt the 
-flush operation?
-
-Thanks,
-Jie
-  >>>
->>>> +        CS_UNLOCK(drvdata->base);
->>>> +        writel_relaxed(val, drvdata->base + TPDA_FLUSH_CR);
->>>> +        CS_LOCK(drvdata->base);
->>>> +    }
->>>> +
->>>> +    return size;
->>>> +}
->>>> +static DEVICE_ATTR_RW(port_flush_req);
->>>> +
->>>>   static struct attribute *tpda_attrs[] = {
->>>>       &dev_attr_trig_async_enable.attr,
->>>>       &dev_attr_trig_flag_ts_enable.attr,
->>>> @@ -516,6 +560,7 @@ static struct attribute *tpda_attrs[] = {
->>>>       &dev_attr_freq_ts_enable.attr,
->>>>       &dev_attr_global_flush_req.attr,
->>>>       &dev_attr_cmbchan_mode.attr,
->>>> +    &dev_attr_port_flush_req.attr,
->>>>       NULL,
->>>>   };
->>>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/ 
->>>> hwtracing/coresight/coresight-tpda.h
->>>> index 00d146960d81..55a18d718357 100644
->>>> --- a/drivers/hwtracing/coresight/coresight-tpda.h
->>>> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
->>>> @@ -10,6 +10,7 @@
->>>>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
->>>>   #define TPDA_FPID_CR        (0x084)
->>>>   #define TPDA_SYNCR        (0x08C)
->>>> +#define TPDA_FLUSH_CR        (0x090)
->>>>   /* Cross trigger FREQ packets timestamp bit */
->>>>   #define TPDA_CR_FREQTS        BIT(2)
->>>
->>>
->>
 > 
+>>
+>> Regards,
+>> Bjorn
+>>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 90 +++++++++++++++++++++ 
+>>> +++++++++++
+>>>   1 file changed, 90 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/ 
+>>> boot/dts/qcom/qcs615-ride.dts
+>>> index 
+>>> 59582d3dc4c49828ef4a0d22a1cbaba715c7ce8c..39c757b66f47579d9bc7cc5c4d703f7af4434df4 100644
+>>> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>>> @@ -39,6 +39,18 @@ xo_board_clk: xo-board-clk {
+>>>           };
+>>>       };
+>>> +    dp-dsi0-connector {
+>>> +        compatible = "dp-connector";
+>>> +        label = "DSI0";
+>>> +        type = "mini";
+>>> +
+>>> +        port {
+>>> +            dp_dsi0_connector_in: endpoint {
+>>> +                remote-endpoint = <&dsi2dp_bridge_out>;
+>>> +            };
+>>> +        };
+>>> +    };
+>>> +
+>>>       vreg_conn_1p8: regulator-conn-1p8 {
+>>>           compatible = "regulator-fixed";
+>>>           regulator-name = "vreg_conn_1p8";
+>>> @@ -294,6 +306,84 @@ &gcc {
+>>>            <&sleep_clk>;
+>>>   };
+>>> +&i2c2 {
+>>> +    clock-frequency = <400000>;
+>>> +    status = "okay";
+>>> +
+>>> +    io_expander: gpio@3e {
+>>> +        compatible = "semtech,sx1509q";
+>>> +        reg = <0x3e>;
+>>> +        interrupts-extended = <&tlmm 58 IRQ_TYPE_EDGE_FALLING>;
+>>> +        gpio-controller;
+>>> +        #gpio-cells = <2>;
+>>> +        interrupt-controller;
+>>> +        #interrupt-cells = <2>;
+>>> +        semtech,probe-reset;
+>>> +    };
+>>> +
+>>> +    i2c-mux@77 {
+>>> +        compatible = "nxp,pca9542";
+>>> +        reg = <0x77>;
+>>> +        #address-cells = <1>;
+>>> +        #size-cells = <0>;
+>>> +
+>>> +        i2c@0 {
+>>> +            reg = <0>;
+>>> +            #address-cells = <1>;
+>>> +            #size-cells = <0>;
+>>> +
+>>> +            bridge@58 {
+>>> +                compatible = "analogix,anx7625";
+>>> +                reg = <0x58>;
+>>> +                interrupts-extended = <&io_expander 0 
+>>> IRQ_TYPE_EDGE_FALLING>;
+>>> +                enable-gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
+>>> +                reset-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
+>>> +                wakeup-source;
+>>> +
+>>> +                ports {
+>>> +                    #address-cells = <1>;
+>>> +                    #size-cells = <0>;
+>>> +
+>>> +                    port@0 {
+>>> +                        reg = <0>;
+>>> +
+>>> +                        dsi2dp_bridge_in: endpoint {
+>>> +                            remote-endpoint = <&mdss_dsi0_out>;
+>>> +                        };
+>>> +                    };
+>>> +
+>>> +                    port@1 {
+>>> +                        reg = <1>;
+>>> +
+>>> +                        dsi2dp_bridge_out: endpoint {
+>>> +                            remote-endpoint = <&dp_dsi0_connector_in>;
+>>> +                        };
+>>> +                    };
+>>> +                };
+>>> +            };
+>>> +        };
+>>> +    };
+>>> +};
+>>> +
+>>> +&mdss {
+>>> +    status = "okay";
+>>> +};
+>>> +
+>>> +&mdss_dsi0 {
+>>> +    vdda-supply = <&vreg_l11a>;
+>>> +    status = "okay";
+>>> +};
+>>> +
+>>> +&mdss_dsi0_out {
+>>> +    remote-endpoint = <&dsi2dp_bridge_in>;
+>>> +    data-lanes = <0 1 2 3>;
+>>> +};
+>>> +
+>>> +&mdss_dsi0_phy {
+>>> +    vdds-supply = <&vreg_l5a>;
+>>> +    status = "okay";
+>>> +};
+>>> +
+>>>   &pcie {
+>>>       perst-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
+>>>       wake-gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
+>>>
+>>> -- 
+>>> 2.34.1
+>>>
 > 
 
 
