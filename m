@@ -1,67 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-70922-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2B65B36F6E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 18:05:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D59D4B36F3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 18:02:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 09069983202
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 15:58:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 433011BC1667
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 15:58:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 627F336CC79;
-	Tue, 26 Aug 2025 15:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5D42352FD7;
+	Tue, 26 Aug 2025 15:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lWrLwiyZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8ECDE3680AF;
-	Tue, 26 Aug 2025 15:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D7D35AAAB;
+	Tue, 26 Aug 2025 15:55:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756223760; cv=none; b=Qt4HBc0xM4mZUaAEAo41fCLeJ05mKVj7Ij6ClpueH3FEihL0AyH5byguGwwwAULyDWQgww54UOuQk+Du3P3OAOgikEyNRF5KGYqXK1UOA1Hgdm/3m8pXt40D3TwDg55xsJHcn/nCpZZBaGkIH5zn/0UuOeYnNPexi7kmUI036Y8=
+	t=1756223754; cv=none; b=VJ+vtBpS/f5iFopFrfUZ2soJ8kX+zvwO7ZaRE0W/UJM508iW1JUQjBGuNu+FxURyB6leqlOnVRF12BNyuOJI4UP30EIIxhm/KpdZOWxi8BTQz+A1LqCMwz/hk1pP5OOYQH7ycU1BijYM2+n0mWB72e6Ng9dfLRIyLOVwHm7GTZM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756223760; c=relaxed/simple;
-	bh=jYBq+PgIvySwkPnJ+epoOGBplfR4iCEGkU3hyHU0kTA=;
+	s=arc-20240116; t=1756223754; c=relaxed/simple;
+	bh=7D1gRpLyK2KWpavVC/GDGqLHUTmC2s3yYbsERqNk5is=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GIjlREOUZrDmonqDN5qo2cMkuniab44noHlyO0ehsA8wRIWGxNnZaDB7fqdldWpbskt+GT7mfRaIPLdIrazDPQvYbOYakPjgUxCedyKUc521urMHBTqTq/5H6sWSSfUGoHS936nLA/KHg1UDe/KtnPXQgbpm31g36quD2rnacTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id A3F871A25;
-	Tue, 26 Aug 2025 08:55:49 -0700 (PDT)
-Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D7E113F694;
-	Tue, 26 Aug 2025 08:55:51 -0700 (PDT)
-Date: Tue, 26 Aug 2025 16:55:49 +0100
-From: Mark Rutland <mark.rutland@arm.com>
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: peterz@infradead.org, mingo@redhat.com, will@kernel.org,
-	acme@kernel.org, namhyung@kernel.org,
-	alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-	irogers@google.com, adrian.hunter@intel.com,
-	kan.liang@linux.intel.com, linux-perf-users@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-alpha@vger.kernel.org,
-	linux-snps-arc@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
-	linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
-	linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
-	sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
-	linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
-	iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 02/19] perf/hisilicon: Fix group validation
-Message-ID: <aK3ZBUQ3QeB2egX7@J2N7QTR9R3>
-References: <cover.1755096883.git.robin.murphy@arm.com>
- <c7b877e66ba0d34d8558c5af8bbb620e8c0e47d9.1755096883.git.robin.murphy@arm.com>
- <aK2XS_GhLw1EQ2ml@J2N7QTR9R3>
- <ab80cb84-42b2-4ce8-aa6c-4ce6be7a12b7@arm.com>
- <aK3TS3s5_Pczx1nu@J2N7QTR9R3>
+	 Content-Type:Content-Disposition:In-Reply-To; b=C2HkpJ9JBKVU79QEJo5yoKyK3Fi17u+g3SGfHFFXuvHulnKTS1x4TKe6jX857DMHfdW8AlRkSul5itZmNsLw8UkLVvwhedrpRBOGuI+tY3J9FkUvfE3bVXlcKNiXhw7RbhSapjhmfPgNCAMWWK0LRfL+iOw13q/9QdkAIPFnFEk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lWrLwiyZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803CBC4CEF1;
+	Tue, 26 Aug 2025 15:55:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756223753;
+	bh=7D1gRpLyK2KWpavVC/GDGqLHUTmC2s3yYbsERqNk5is=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lWrLwiyZzcyORghQyM1Dmlwptz6xFlfKujYzcNYF43ww95Vl3j5CsSDBwZxv5/o9l
+	 dvNcj5p4QpQYUPLZ7A73wQqhU6Y7Ua0DQI4YqDY4VtYyxk3lFNGTAItm04j1Zn5Qso
+	 Os0o+00S6/H+96fgyctfUN+kbLtIsnU3sQJR42vpEoQ7rdIRqWXCUo2izZQ7OagZZN
+	 QbV0+v2NHqv7e8lo/7KhJ7kahFaq7LkdDa1vCnIJ6KtaYoXfAvi4kJbCrO0EbgEs9E
+	 KMI71QC/4JBaMSo3ujPmADmp7oKT3bh+fEVAb4DT5rbSd8QuS08WNvbenpmec4RwJR
+	 F4fhtQI2tcLSw==
+Date: Tue, 26 Aug 2025 10:55:50 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: Jens Wiklander <jens.wiklander@linaro.org>, 
+	Sumit Garg <sumit.garg@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Apurupa Pattapu <quic_apurupa@quicinc.com>, 
+	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
+	Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org, 
+	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org, 
+	Sumit Garg <sumit.garg@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v8 09/11] qcomtee: add primordial object
+Message-ID: <4rbfpubsaxgv2buksonfigbdkw6geas6l7pycxuukdymqfohga@ohd4hqzvra3w>
+References: <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-0-7066680f138a@oss.qualcomm.com>
+ <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-9-7066680f138a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,77 +65,183 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aK3TS3s5_Pczx1nu@J2N7QTR9R3>
+In-Reply-To: <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-9-7066680f138a@oss.qualcomm.com>
 
-On Tue, Aug 26, 2025 at 04:31:23PM +0100, Mark Rutland wrote:
-> On Tue, Aug 26, 2025 at 03:35:48PM +0100, Robin Murphy wrote:
-> > On 2025-08-26 12:15 pm, Mark Rutland wrote:
-> > > On Wed, Aug 13, 2025 at 06:00:54PM +0100, Robin Murphy wrote:
-> > > > diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-> > > > index c5394d007b61..3b0b2f7197d0 100644
-> > > > --- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
-> > > > +++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
-> > > > @@ -338,21 +338,16 @@ static bool hisi_pcie_pmu_validate_event_group(struct perf_event *event)
-> > > >   	int counters = 1;
-> > > >   	int num;
-> > > > -	event_group[0] = leader;
-> > > > -	if (!is_software_event(leader)) {
-> > > > -		if (leader->pmu != event->pmu)
-> > > > -			return false;
-> > > > +	if (leader == event)
-> > > > +		return true;
-> > > > -		if (leader != event && !hisi_pcie_pmu_cmp_event(leader, event))
-> > > > -			event_group[counters++] = event;
-> > > > -	}
-> > > > +	event_group[0] = event;
-> > > > +	if (leader->pmu == event->pmu && !hisi_pcie_pmu_cmp_event(leader, event))
-> > > > +		event_group[counters++] = leader;
-> > > 
-> > > Looking at this, the existing logic to share counters (which
-> > > hisi_pcie_pmu_cmp_event() is trying to permit) looks to be bogus, given
-> > > that the start/stop callbacks will reprogram the HW counters (and hence
-> > > can fight with one another).
-> > 
-> > Yeah, this had a dodgy smell when I first came across it, but after doing
-> > all the digging I think it does actually work out - the trick seems to be
-> > the group_leader check in hisi_pcie_pmu_get_event_idx(), with the
-> > implication the PMU is going to be stopped while scheduling in/out the whole
-> > group, so assuming hisi_pcie_pmu_del() doesn't clear the counter value in
-> > hardware (even though the first call nukes the rest of the event
-> > configuration), then the events should stay in sync.
-> 
-> I don't think that's sufficient. If nothing else, overflow is handled
-> per-event, and for a group of two identical events, upon overflow
-> hisi_pcie_pmu_irq() will reprogram the shared HW counter when handling
-> the first event, and the second event will see an arbitrary
-> discontinuity. Maybe no-one has spotted that due to the 2^63 counter
-> period that we program, but this is clearly bogus.
-> 
-> In addition, AFAICT the IRQ handler doesn't stop the PMU, so in general
-> groups aren't handled atomically, and snapshots of the counters won't be
-> atomic.
-> 
-> > It does seem somewhat nonsensical to have multiple copies of the same event
-> > in the same group, but I imagine it could happen with some sort of scripted
-> > combination of metrics, and supporting it at this level saves needing
-> > explicit deduplication further up. So even though my initial instinct was to
-> > rip it out too, in the end I concluded that that doesn't seem justified.
-> 
+On Wed, Aug 20, 2025 at 04:38:56PM -0700, Amirreza Zarrabi wrote:
 
-[...]
+Looking at other commits in drivers/tee/ I'd expect the subject prefix
+to be "tee: qcom: ".
 
-> As above, I think it's clearly bogus. I don't think we should have
-> merged it as-is and it's not something I'd like to see others copy.
-> Other PMUs don't do this sort of event deduplication, and in general it
-> should be up to the user or userspace software to do that rather than
-> doing that badly in the kernel.
+> After booting, the kernel provides a static object known as the
+> primordial object. This object is utilized by QTEE for native
+> kernel services such as yield or privileged operations.
 > 
-> Given it was implemented with no rationale I think we should rip it out.
-> If that breaks someone's scripting, then we can consider implementing
-> something that actually works.
+> Acked-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+> Tested-by: Harshal Dev <quic_hdev@quicinc.com>
+> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+> ---
+>  drivers/tee/qcomtee/Makefile         |  1 +
+>  drivers/tee/qcomtee/core.c           | 19 ++++++++---
+>  drivers/tee/qcomtee/primordial_obj.c | 66 ++++++++++++++++++++++++++++++++++++
+>  drivers/tee/qcomtee/qcomtee.h        |  3 ++
+>  4 files changed, 84 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/tee/qcomtee/Makefile b/drivers/tee/qcomtee/Makefile
+> index 600af2b8f1c1..78f8e899d143 100644
+> --- a/drivers/tee/qcomtee/Makefile
+> +++ b/drivers/tee/qcomtee/Makefile
+> @@ -3,5 +3,6 @@ obj-$(CONFIG_QCOMTEE) += qcomtee.o
+>  qcomtee-objs += async.o
+>  qcomtee-objs += call.o
+>  qcomtee-objs += core.o
+> +qcomtee-objs += primordial_obj.o
+>  qcomtee-objs += shm.o
+>  qcomtee-objs += user_obj.o
+> diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
+> index 578299a3eabc..561a48319f91 100644
+> --- a/drivers/tee/qcomtee/core.c
+> +++ b/drivers/tee/qcomtee/core.c
+> @@ -31,10 +31,12 @@ int qcomtee_next_arg_type(struct qcomtee_arg *u, int i,
+>  }
+>  
+>  /*
+> - * QTEE expects IDs with the QCOMTEE_MSG_OBJECT_NS_BIT set for objects
+> - * of the QCOMTEE_OBJECT_TYPE_CB type.
+> + * QTEE expects IDs with QCOMTEE_MSG_OBJECT_NS_BIT set for objects of
+> + * QCOMTEE_OBJECT_TYPE_CB type. The first ID with QCOMTEE_MSG_OBJECT_NS_BIT
+> + * set is reserved for the primordial object.
+>   */
+> -#define QCOMTEE_OBJECT_ID_START (QCOMTEE_MSG_OBJECT_NS_BIT + 1)
+> +#define QCOMTEE_OBJECT_PRIMORDIAL (QCOMTEE_MSG_OBJECT_NS_BIT)
+> +#define QCOMTEE_OBJECT_ID_START (QCOMTEE_OBJECT_PRIMORDIAL + 1)
+>  #define QCOMTEE_OBJECT_ID_END (U32_MAX)
+>  
+>  #define QCOMTEE_OBJECT_SET(p, type, ...) \
+> @@ -157,7 +159,9 @@ static void qcomtee_object_release(struct kref *refcount)
+>   */
+>  int qcomtee_object_get(struct qcomtee_object *object)
+>  {
+> -	if (object != NULL_QCOMTEE_OBJECT && object != ROOT_QCOMTEE_OBJECT)
+> +	if (object != &qcomtee_primordial_object &&
+> +	    object != NULL_QCOMTEE_OBJECT &&
+> +	    object != ROOT_QCOMTEE_OBJECT)
+>  		return kref_get_unless_zero(&object->refcount);
+>  
+>  	return 0;
+> @@ -169,7 +173,9 @@ int qcomtee_object_get(struct qcomtee_object *object)
+>   */
+>  void qcomtee_object_put(struct qcomtee_object *object)
+>  {
+> -	if (object != NULL_QCOMTEE_OBJECT && object != ROOT_QCOMTEE_OBJECT)
+> +	if (object != &qcomtee_primordial_object &&
+> +	    object != NULL_QCOMTEE_OBJECT &&
+> +	    object != ROOT_QCOMTEE_OBJECT)
+>  		kref_put(&object->refcount, qcomtee_object_release);
+>  }
+>  
+> @@ -261,6 +267,9 @@ qcomtee_local_object_get(struct qcomtee_object_invoke_ctx *oic,
+>  	struct qcomtee *qcomtee = tee_get_drvdata(oic->ctx->teedev);
+>  	struct qcomtee_object *object;
+>  
+> +	if (object_id == QCOMTEE_OBJECT_PRIMORDIAL)
+> +		return &qcomtee_primordial_object;
+> +
+>  	guard(rcu)();
+>  	object = xa_load(&qcomtee->xa_local_objects, object_id);
+>  	/* It already checks for %NULL_QCOMTEE_OBJECT. */
+> diff --git a/drivers/tee/qcomtee/primordial_obj.c b/drivers/tee/qcomtee/primordial_obj.c
+> new file mode 100644
+> index 000000000000..df94fbf5f141
+> --- /dev/null
+> +++ b/drivers/tee/qcomtee/primordial_obj.c
+> @@ -0,0 +1,66 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
-FWIW, I'm happy to go do that as a follow-up, so if that's a pain, feel
-free to leave that as-is for now.
+I don't see any pr_*() functions in this file, please drop this.
 
-Mark.
+Regards,
+Bjorn
+
+> +
+> +#include <linux/delay.h>
+> +
+> +#include "qcomtee.h"
+> +
+> +/**
+> + * DOC: Primordial Object
+> + *
+> + * After boot, the kernel provides a static object of type
+> + * %QCOMTEE_OBJECT_TYPE_CB called the primordial object. This object is used
+> + * for native kernel services or privileged operations.
+> + *
+> + * We support:
+> + *  - %QCOMTEE_OBJECT_OP_YIELD to yield by the thread running in QTEE.
+> + *  - %QCOMTEE_OBJECT_OP_SLEEP to wait for a period of time.
+> + */
+> +
+> +#define QCOMTEE_OBJECT_OP_YIELD 1
+> +#define QCOMTEE_OBJECT_OP_SLEEP 2
+> +
+> +static int
+> +qcomtee_primordial_obj_dispatch(struct qcomtee_object_invoke_ctx *oic,
+> +				struct qcomtee_object *primordial_object_unused,
+> +				u32 op, struct qcomtee_arg *args)
+> +{
+> +	int err = 0;
+> +
+> +	switch (op) {
+> +	case QCOMTEE_OBJECT_OP_YIELD:
+> +		cond_resched();
+> +		/* No output object. */
+> +		oic->data = NULL;
+> +		break;
+> +	case QCOMTEE_OBJECT_OP_SLEEP:
+> +		/* Check message format matched QCOMTEE_OBJECT_OP_SLEEP op. */
+> +		if (qcomtee_args_len(args) != 1 ||
+> +		    args[0].type != QCOMTEE_ARG_TYPE_IB ||
+> +		    args[0].b.size < sizeof(u32))
+> +			return -EINVAL;
+> +
+> +		msleep(*(u32 *)(args[0].b.addr));
+> +		/* No output object. */
+> +		oic->data = NULL;
+> +		break;
+> +	default:
+> +		err = -EINVAL;
+> +	}
+> +
+> +	return err;
+> +}
+> +
+> +static struct qcomtee_object_operations qcomtee_primordial_obj_ops = {
+> +	.dispatch = qcomtee_primordial_obj_dispatch,
+> +};
+> +
+> +struct qcomtee_object qcomtee_primordial_object = {
+> +	.name = "primordial",
+> +	.object_type = QCOMTEE_OBJECT_TYPE_CB,
+> +	.ops = &qcomtee_primordial_obj_ops
+> +};
+> diff --git a/drivers/tee/qcomtee/qcomtee.h b/drivers/tee/qcomtee/qcomtee.h
+> index f34be992e68b..084b3882017e 100644
+> --- a/drivers/tee/qcomtee/qcomtee.h
+> +++ b/drivers/tee/qcomtee/qcomtee.h
+> @@ -140,4 +140,7 @@ int qcomtee_user_object_submit(struct tee_context *ctx,
+>  			       struct tee_param *params, int num_params,
+>  			       int req_id, int errno);
+>  
+> +/* (2) Primordial Object. */
+> +extern struct qcomtee_object qcomtee_primordial_object;
+> +
+>  #endif /* QCOMTEE_H */
+> 
+> -- 
+> 2.34.1
+> 
 
