@@ -1,128 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-70932-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70933-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAA7BB37169
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 19:37:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBAD0B37182
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 19:43:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7F510367926
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 17:37:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CA2D8367C43
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 17:43:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 812642E1EE7;
-	Tue, 26 Aug 2025 17:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00AE130ACEA;
+	Tue, 26 Aug 2025 17:43:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a2898ijb"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZrnQRgWA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2522D3A7B
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 17:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E175D3164A6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 17:43:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756229819; cv=none; b=BQt3nvU04DnlORenS9fmA4XuHhK6uWfwGplNVX3GsDkhqmxKmQ2MG2d1ahtttZJTNeWJtXEWG+XIIfPMMylFEUrVTwELFbzt6V++U8AURuhtdsNm2Y0e3U80KrOqy077rw/n8pPihGd/ZXjqLeFhWHtm/WSyrThZ/SXc0HqqSs4=
+	t=1756230189; cv=none; b=RegAhe1yIeSw+cRhtrz8VOS6DjEFOtyM0KjUVVV5Jr8+Si4mRHU8eOhhC227ZXvt4smeY+/+nfescMJZNatYCDVr5MGyVhIIR+gdGjmbXi+7r9XLb5FSKu0qwh0wBjUyiZqwTmKWWE0Xe+27tTTb2WYOQtY5ioKqWWlpvb3tsUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756229819; c=relaxed/simple;
-	bh=DMkAE1W0j+iQGQXLgzzgJbg1eGILHP5QHEVwudC4ntw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lyuWCfR++zOUqGmxLAkj0EpEHRzpyTKYoJDLjM7clEoZhMs0rZX3r3NGtdPsB6JmHywdFgn8Np+o0bGb33ttXUYfkIf/OsVJzdQqLbtFXZre23mq/71mTjN/a5aVXzTPgYQhbDF0eg7M55WSDzxtjSwxg3ATvN4d02EPk60OlaI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a2898ijb; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1756230189; c=relaxed/simple;
+	bh=bfnwVVloFhicPWzS7Y+TjlD2Uktumm4IK3dYzF+i4A4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uSolK5a7y4cXA4Ywlpzgqbf1CApKsApRU20kehG1niQVlBIFXTwoyVv3/kKcx4jygbzjCk8Q4trJXawUJ4dV6SShc29qUsh6N2L4+3AahYg3l9W96c5D4IsE2LJvJ1P2Y8BLZfhz/IPcpCs3rEvzeRRZaxPaGAKNwcla/Z0RzVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZrnQRgWA; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QD1vdj028616
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 17:36:55 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QG4qrh002894
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 17:43:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	f17eY4ZEtWToQVINE0JoOBhcXHndlaC3tgPDaZ5NpfI=; b=a2898ijbndyrp6we
-	6qZOLZnNjV1tkT9Uc+XmUO4esC3FALDewXKBUyYxCVQgHZ4G0qWK11UZ+f7eacaC
-	ZqGgQJHz0Fr/jV5GGQKx7o+dLQ8G4qiHEtcTAToNeV8QS7FyBSr8LPPo4SxOjljk
-	6nD6JPWp672PmYhuxSmiLTLl+75HQd7iuezU1AlLl8XLfUXwuZN+1yAwOgev3pdy
-	wW4JSKw8ti6UtfZl+Gt88xnE/gh0pfLqrKwN3cOxP43fd9tIBGNp9v2ICHZHcNHz
-	XeWX+V06CvQDHMG/c1kgZhaEcWB8xNtCyGRXje2j8hvv6224nsxD52cGC/b7ovaQ
-	fq5O9Q==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5we1nva-1
+	xoedk/PMBK7pIAev2tYhMB+hGdIr3Of+XAwj6Xe0YVM=; b=ZrnQRgWAcP58BLSW
+	5DMhu4AflIYc19Rsoo9nSSY0p4nKaLIw50jyGnXnYSzXFPul9RE5MvBTVxWE63Th
+	6cpBHY6bKzz/X3+7zIy5ubkelnsR43OzuEiLtnXFmnmt9NXJ33rd1l1LWID3cu2J
+	qGtf3YPlVHXRfYiad+nFavb5Ai6qCFZbvPE6hY5dzzS5AE0WpLAdxbKT4XdCcZ6B
+	FCXp90p+h+djQcqRFgdwEAHA4LVip8dvHWB5HVCOjOUcSdCimGiUifTqT8mgjRci
+	w+vKx+VCy+CInoISZqi0veuFxpNpnIJdZMPKlqr6pCReBo7O2+yaKizzNBtHbEGi
+	KGCZRA==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5we1pc2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 17:36:55 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70ddadde46bso8343096d6.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 10:36:55 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 17:43:06 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-248942647c5so728035ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 10:43:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756229815; x=1756834615;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1756230185; x=1756834985;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=f17eY4ZEtWToQVINE0JoOBhcXHndlaC3tgPDaZ5NpfI=;
-        b=l+h3D6BzOS6hR9H9PXjLc4HsajE8DcEol1tKgJ9OBYDA2nvhIqdec1DOdZMNIbnD/F
-         NFPN4v5iiJN+OWFpjrjTFZJghLCpIytV2XptvLHHl6eFOEQhHGp+s8sIw7YV4L5dMHEG
-         Qd1aW8fge+Yxpr+3x4u9ssZlV6R7G+tkcjdPLwzciiO7UKgisYytJnQxc+Wln6xr8bs/
-         cTzzAX5vkJ4x6NGVkM2ipEn0Lh1xwsUM/5VoaMiNALYO2o3HoFZHihSmnR+xEEXo75mx
-         4byTZ7V85cej7wFU8+LaDE+lGUwEQCGiIC73Omy0ZWdn1k+8bL/BbhtzXdPDMXtfEf7F
-         WSbA==
-X-Forwarded-Encrypted: i=1; AJvYcCWTiL4vBGC/xy5kCBBMBECy0CxCS7SifXNf0CUCWbFLydFyGdyQ0s8O6TrTQpUKfHoHyvNd8jm/H4DIMwIQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YxIvLAvOvd8B0WdCP0y7akR7763YgFLQOHOk0urLj/ofSwVD/2E
-	xBeYNKJwGlssQa1+pAZjiAEmt/0w+vNNy67jF+0Q/lMaiYGRKbAaLGbwMFaXbLc/OL3RB660pK8
-	+nNAVMjnFVH8nyk5afYLHwvYgp+Tk66S0rNW0GqcwYFMHcbDDAY5PyDPIihUNXOwsgwXj
-X-Gm-Gg: ASbGncvtIILqMwReQh70cC8CIE5d/IFdItA/zVOgchrjNlw+cw1r/Cp2/tsCltsfIwP
-	+U67EgUQYt4F0uPi4kbtfDkCJ7+j5k1EQSbHJWMh88Vxv/hz+Ln8jImLCpuz2jV7ZfDmMhnIto0
-	6ZUFtuxE7e5LA6BuebiwAwTmhq6c8b8I9JqdwEYjmq+zl5QFwyThil+m7KAl/dipsFN21wE18yY
-	qFt5bFuIO7EJk4Y9PLFUdlKl22HQenHJCQu0BqMvVLRdwk4a0jRFUgPYyYFsjKEXmM0I8VgORUz
-	hmRgfNF0iOQIlHRnjT5fHljp3wL8JONCKwaTTsQS6KZYZ8eVqX0XVt/AvUQ18/tslwlDabw2ADf
-	L7AovKId4sVXwm43/s4wCZ02VDAfI8epuzmuCbb6bQ6JlfNT2MYnb
-X-Received: by 2002:a05:6214:f2c:b0:70d:a9c5:1d69 with SMTP id 6a1803df08f44-70da9c528a6mr123262936d6.53.1756229814218;
-        Tue, 26 Aug 2025 10:36:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRagHVjerTUgz59TdGFX10tvV1NLQnk5HahCHgL9gEPoa/C8zoXOFpFd7uOdfg2GEGcPS6MQ==
-X-Received: by 2002:a05:6214:f2c:b0:70d:a9c5:1d69 with SMTP id 6a1803df08f44-70da9c528a6mr123262536d6.53.1756229813507;
-        Tue, 26 Aug 2025 10:36:53 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35bffafcsm2416045e87.17.2025.08.26.10.36.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 10:36:52 -0700 (PDT)
-Date: Tue, 26 Aug 2025 20:36:50 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [PATCH v3 28/38] drm/msm/dp: add dp_mst_drm to manage DP MST
- bridge operations
-Message-ID: <h22zh2zcgdcv2k3mxc5rslpfd3xnerjfailehtaw3wbtpnisy3@s56vudwvoh4q>
-References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
- <20250825-msm-dp-mst-v3-28-01faacfcdedd@oss.qualcomm.com>
+        bh=xoedk/PMBK7pIAev2tYhMB+hGdIr3Of+XAwj6Xe0YVM=;
+        b=kDB7YunVUgxknm6DDbfTYZKGMK2n3oBNm+yPKIESQZR7PryuLTJq8/+HlBRyPXCvp8
+         /QvhEQD3FfYUbWZhTg2tzXLzXu6gfGJj4sBlKeW5DHgrau7rhJII2n5A+LGH/FaJRkKj
+         Hglc30szfJkIvMGmKrAcEdoc9I2wWG1R7VHWWEiNurKEZPVVfxowCMFnKpNvT6T8B3W5
+         +37yLgmugQb/gF/LWuaxRgJiQ4bVEE1JSLO+zZ4EqAR6OkCq0xPXG352VX33jXXPxobi
+         WayCE9J6hvVM+d8C1hFt/sSRxBWN8d0OxlZY6d2X9o4YAT5+VtjI+8pROftFGmNwbTNQ
+         Xp2A==
+X-Gm-Message-State: AOJu0YzsaHeF9F7gZNyDPyZxbIWL3q0DEdx4+i9s2K1JgUTApyZfzJj5
+	zcVxb4LhehKv4zCD0uz+N6BOAeQEF+mPGndEevwc0pjtrHrE0I8kcU3fMVVk9PDJFFL+aXuryQt
+	gsbnMQwbnvNyzkGfetJ1H2Lvr2QFSLn81+3LFsWcJnbXqy5Ojcra3il/voldVlFS2Gwc8
+X-Gm-Gg: ASbGncvvvViE4i3VNkSiobP4AK6PhsnDU0foNE/D7WDR39J+40f/XjSdZxgDmGePzyl
+	QI+qjmZNl3JNOl5Jl1BuNbrbJwT96n8Lc1TeWdu8GY7GAHoazLiAfluVEYy7TBDbCf+ALuhazw3
+	AhfPRUaP7VP7AohT3alBJzU9zUOBU9IMQQaXCFsFZT91LsQQ0/WlRBxImuJZccJPTuo65VLPQlN
+	8R0WyUlOl1VFNOwEak2sQEwpOIoZsIfQ7DKaf1o0cfPQkkBseFzYsVVlTYmby2pBeuT5RFYqCCi
+	lZB7x0G01E98lwIG+MUmUaiRxQ6q9clnN1fNDomegzoRJ0TE4psZnnFgB8q4anMKEu8G7hhxXGj
+	eaIMwlQrXpbBzqSJ06FnJ
+X-Received: by 2002:a17:902:f64c:b0:23f:b00a:d4c with SMTP id d9443c01a7336-248753a24e5mr30192145ad.2.1756230185171;
+        Tue, 26 Aug 2025 10:43:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHgXGumLPD8X74PC7IR8NcXfZiks8xk1E3jrVCWqnrTZoC+Lrzn8dfDYWV8lxkbiMkU71Rl3g==
+X-Received: by 2002:a17:902:f64c:b0:23f:b00a:d4c with SMTP id d9443c01a7336-248753a24e5mr30191585ad.2.1756230184508;
+        Tue, 26 Aug 2025 10:43:04 -0700 (PDT)
+Received: from [10.71.114.175] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24668779fcbsm101621345ad.8.2025.08.26.10.43.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Aug 2025 10:43:03 -0700 (PDT)
+Message-ID: <052bdaf1-37b2-4ee8-af6a-68912a152955@oss.qualcomm.com>
+Date: Tue, 26 Aug 2025 10:43:01 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 4/5] PCI: dwc: Add ECAM support with iATU configuration
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        cros-qcom-dts-watchers@chromium.org,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com,
+        quic_vpernami@quicinc.com, mmareddy@quicinc.com
+References: <20250822-ecam_v4-v7-0-098fb4ca77c1@oss.qualcomm.com>
+ <20250822-ecam_v4-v7-4-098fb4ca77c1@oss.qualcomm.com>
+ <a158c4f5-e9c3-48c2-b440-fa9dc281b276@oss.qualcomm.com>
+ <c89fc295-0dfa-4910-838d-3520272cb26b@oss.qualcomm.com>
+Content-Language: en-US
+From: Mayank Rana <mayank.rana@oss.qualcomm.com>
+In-Reply-To: <c89fc295-0dfa-4910-838d-3520272cb26b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250825-msm-dp-mst-v3-28-01faacfcdedd@oss.qualcomm.com>
-X-Proofpoint-GUID: HsRXU6AzLArUEKjSElZW3I0ork-WTyu6
-X-Proofpoint-ORIG-GUID: HsRXU6AzLArUEKjSElZW3I0ork-WTyu6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX9it1Ua7dT3bc
- WqUlVU8LGhXh0q8RTTLORvzHQOIkxpppalC5a4M1lPZDzkQXvl0eOxB4G1DdRdJmsOsmkvU6GR1
- HZiFJ+Px2GSf1fJVDxXycHedvGNNDpzPoaOThNGy3iuGuud9Bfc204oLAE5UL44Dr713EWfcEpJ
- BVnv3NFj+lW3jF0Ng7xFESewDjSpkzOZZLB7EiDvchXJAVOoqTu34xetuNg7CwDdCMWgvhw+rcl
- OQi9yXpgaxscIMaP3LE7xTmejjE4LfdsToLOkrmiJkA0XHsmNkTCfQ+ZJbY1vWraPm4qolm/Q1Z
- LfImUaxoiSkv5EXMVSpPZFVhvLISXIxYeA8luBZYbMDh9Mh2NXUg9R3rr36yLvyc6czdIcaOjNX
- eLMHtg3+
-X-Authority-Analysis: v=2.4 cv=BJazrEQG c=1 sm=1 tr=0 ts=68adf0b7 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=5RzYBUBdIxyJWEM-9xwA:9
- a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=OIgjcC2v60KrkQgK7BGD:22
- a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: ALNhs4C4lHw1F4LWpw1i2lSd7hWTsVkb
+X-Proofpoint-ORIG-GUID: ALNhs4C4lHw1F4LWpw1i2lSd7hWTsVkb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX8GO42i6sJPZu
+ bU7NR0IwT5G/De9LQdfbWIjVggayDjh9w81I21I5OyVDBtJmHOxM5hfl/K7gVnJBjnrFMZicQHN
+ hNDDJT9u8zCPY7kR3dl64grpM1LXGuiFskB6rWIGD5tFeqrhvTN/5JRHdPa6kY+12bC/66076OS
+ uOi5di96XIrEO+fhJeT7wkH7Aad9hs6jNb1jDA8Vdqrg2euTjuRkSZtjJaPsWokyVgDNowgN/fo
+ oBS078m9Y0D361RRJijhtefiu0JLCkCBjPkFuFKMMIiqTVCYqWVn2hDQYO9sq20R5TyDnwEn7K/
+ 0xixEgjtNdyiBdC7SRFH+vKDzPnHtqOKMQD0JaFBqysYvBe8R6XnKtAW3k1Rz5PbIbKhOVkH2+Q
+ 06rS2EsN
+X-Authority-Analysis: v=2.4 cv=BJazrEQG c=1 sm=1 tr=0 ts=68adf22a cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=CH8LhjkbK6pyuAcbkdYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
@@ -132,791 +136,361 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2507300000 definitions=main-2508230033
 
-On Mon, Aug 25, 2025 at 10:16:14PM +0800, Yongxing Mou wrote:
-> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+
+
+On 8/26/2025 5:46 AM, Krishna Chaitanya Chundru wrote:
 > 
-> Add a new file dp_mst_drm to manage the DP MST bridge operations
-> similar to the dp_drm file which manages the SST bridge operations.
-> Each MST encoder creates one bridge and each bridge is bound to its
-> own dp_panel abstraction to manage the operations of its pipeline.
 > 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/Makefile        |   3 +-
->  drivers/gpu/drm/msm/dp/dp_display.h |   3 +
->  drivers/gpu/drm/msm/dp/dp_mst_drm.c | 556 ++++++++++++++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_mst_drm.h |  86 ++++++
->  4 files changed, 647 insertions(+), 1 deletion(-)
+> On 8/25/2025 11:35 PM, Mayank Rana wrote:
+>> Hi Krishna
+>>
+>> On 8/22/2025 2:27 AM, Krishna Chaitanya Chundru wrote:
+>>> The current implementation requires iATU for every configuration
+>>> space access which increases latency & cpu utilization.
+>>>
+>>> Designware databook 5.20a, section 3.10.10.3 says about CFG Shift 
+>>> Feature,
+>>> which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
+>>> would be matched against the Base and Limit addresses) of the incoming
+>>> CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
+>>>
+>>> Configuring iATU in config shift feature enables ECAM feature to 
+>>> access the
+>>> config space, which avoids iATU configuration for every config access.
+>>>
+>>> Add "ctrl2" into struct dw_pcie_ob_atu_cfg  to enable config shift 
+>>> feature.
+>>>
+>>> As DBI comes under config space, this avoids remapping of DBI space
+>>> separately. Instead, it uses the mapped config space address returned 
+>>> from
+>>> ECAM initialization. Change the order of dw_pcie_get_resources() 
+>>> execution
+>>> to achieve this.
+>>>
+>>> Enable the ECAM feature if the config space size is equal to size 
+>>> required
+>>> to represent number of buses in the bus range property.
+>>
+>> Also add 256 MB alignment requirement for using iATU config shift mode 
+>> here.
+>>
+>>> Signed-off-by: Krishna Chaitanya Chundru 
+>>> <krishna.chundru@oss.qualcomm.com>
+>>> ---
+>>>   drivers/pci/controller/dwc/Kconfig                |   1 +
+>>>   drivers/pci/controller/dwc/pcie-designware-host.c | 131 +++++++++++ 
+>>> ++++++++---
+>>>   drivers/pci/controller/dwc/pcie-designware.c      |   2 +-
+>>>   drivers/pci/controller/dwc/pcie-designware.h      |   5 +
+>>>   4 files changed, 124 insertions(+), 15 deletions(-)
+>>>
+>>> diff --git a/drivers/pci/controller/dwc/Kconfig b/drivers/pci/ 
+>>> controller/dwc/Kconfig
+>>> index 
+>>> ff6b6d9e18ecfa44273e87931551f9e63fbe3cba..a0e7ad3fb5afec63b0f919732a50147229623186 100644
+>>> --- a/drivers/pci/controller/dwc/Kconfig
+>>> +++ b/drivers/pci/controller/dwc/Kconfig
+>>> @@ -20,6 +20,7 @@ config PCIE_DW_HOST
+>>>       bool
+>>>       select PCIE_DW
+>>>       select IRQ_MSI_LIB
+>>> +    select PCI_HOST_COMMON
+>>>   config PCIE_DW_EP
+>>>       bool
+>>> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/ 
+>>> drivers/pci/controller/dwc/pcie-designware-host.c
+>>> index 
+>>> 952f8594b501254d2b2de5d5e056e16d2aa8d4b7..abb93265a19fd62d3fecc64f29f37baf67291b40 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+>>> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+>>> @@ -413,6 +413,81 @@ static void 
+>>> dw_pcie_host_request_msg_tlp_res(struct dw_pcie_rp *pp)
+>>>       }
+>>>   }
+>>> +static int dw_pcie_config_ecam_iatu(struct dw_pcie_rp *pp)
+>>> +{
+>>> +    struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>>> +    struct dw_pcie_ob_atu_cfg atu = {0};
+>>> +    resource_size_t bus_range_max;
+>>> +    struct resource_entry *bus;
+>>> +    int ret;
+>>> +
+>>> +    bus = resource_list_first_type(&pp->bridge->windows, 
+>>> IORESOURCE_BUS);
+>>> +
+>>> +    /*
+>>> +     * Root bus under the host bridge doesn't require any iATU 
+>>> configuration
+>>> +     * as DBI region will be used to access root bus config space.
+>>> +     * Immediate bus under Root Bus, needs type 0 iATU configuration 
+>>> and
+>>> +     * remaining buses need type 1 iATU configuration.
+>>> +     */
+>>> +    atu.index = 0;
+>>> +    atu.type = PCIE_ATU_TYPE_CFG0;
+>>> +    atu.parent_bus_addr = pp->cfg0_base + SZ_1M;
+>>> +    /* 1MiB is to cover 1 (bus) * 32 (devices) * 8 (functions) */
+>>> +    atu.size = SZ_1M;
+>>> +    atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
+>>> +    ret = dw_pcie_prog_outbound_atu(pci, &atu);
+>>> +    if (ret)
+>>> +        return ret;
+>>> +
+>>> +    bus_range_max = resource_size(bus->res);
+>>> +
+>>> +    if (bus_range_max < 2)
+>>> +        return 0;
+>>> +
+>>> +    /* Configure remaining buses in type 1 iATU configuration */
+>>> +    atu.index = 1;
+>>> +    atu.type = PCIE_ATU_TYPE_CFG1;
+>>> +    atu.parent_bus_addr = pp->cfg0_base + SZ_2M;
+>>> +    atu.size = (SZ_1M * bus_range_max) - SZ_2M;
+>>> +    atu.ctrl2 = PCIE_ATU_CFG_SHIFT_MODE_ENABLE;
+>>> +
+>>> +    return dw_pcie_prog_outbound_atu(pci, &atu);
+>>> +}
+>>> +
+>>> +static int dw_pcie_create_ecam_window(struct dw_pcie_rp *pp, struct 
+>>> resource *res)
+>>> +{
+>>> +    struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>>> +    struct device *dev = pci->dev;
+>>> +    struct resource_entry *bus;
+>>> +
+>>> +    bus = resource_list_first_type(&pp->bridge->windows, 
+>>> IORESOURCE_BUS);
+>>> +    if (!bus)
+>>> +        return -ENODEV;
+>>> +    pp->cfg = pci_ecam_create(dev, res, bus->res, 
+>>> &pci_generic_ecam_ops);
+>>> +    if (IS_ERR(pp->cfg))
+>>> +        return PTR_ERR(pp->cfg);
+>>> +
+>>> +    pci->dbi_base = pp->cfg->win;
+>>> +    pci->dbi_phys_addr = res->start;
+>>> +
+>>> +    return 0;
+>>> +}
+>>> +
+>>> +static bool dw_pcie_ecam_enabled(struct dw_pcie_rp *pp, struct 
+>>> resource *config_res)
+>>> +{
+>>> +    struct resource *bus_range;
+>>> +    u64 nr_buses;
+>>
+>> As change is using Synopsis IP based iATU config shift mode 
+>> functionality, it is must that ECAM/DBI base address has to be 256 MB 
+>> aligned. Hence add change to check against alignment.
+>>
+> Just to clarify this is not Synopsis IP requirement it is PCie
+> requirement. PCIe spec 6, sec 7.2.2 says "base address of the range is
+> aligned to a 2(n+20)-byte memory address boundary". n is 8 here.
+Clarify what is n is suggesting here ?
+
+Agree. ECAM is PCIe spec defined feature, and it doesn't suggest how
+PCIe controller handle iATU configuration to support ECAM mode. The ECAM 
+address alignment requirement is based on the size of the access being 
+performed, and it needs to be naturally aligned i.e. 32-bit access must 
+be 4-byte aligned.
+
+As here you are explicitly configuring iATU once using config shift mode 
+to support ECAM, this brings 256 MB requirement with Synopsis PCIe
+controller. Even for bus range 1, We need 256 MB alignment requirement
+with Synopsys PCIe controller when using iATU config shift mode. The 
+iATU of controller uses bits [27:12] of the original address to form 
+bits [31:16] (BDF location) of the outgoing CFG TLP when using iATU 
+config shift mode.
+
+We can have ECAM mode support without using iATU config shift mode in 
+which all config space access will require to reconfigure iATU for each 
+config space access, and doesn't need to hold this alignement 
+requirement of 256 MB.
+
+Regards,
+Mayank>
+> I will add this info as a comment.
+>> #define IS_256MB_ALIGNED(x) IS_ALIGNED(x, SZ_256M)
+>>
+>> if (!IS_256MB_ALIGNED(config_res->start))
+>>            return false;
+>>
+> Ack.
 > 
-> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> index 0c0dfb25f01b193b10946fae20138caf32cf0ed2..a61fa2637ff317ed4dee715de5d12a7befa987f5 100644
-> --- a/drivers/gpu/drm/msm/Makefile
-> +++ b/drivers/gpu/drm/msm/Makefile
-> @@ -142,7 +142,8 @@ msm-display-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
->  	dp/dp_link.o \
->  	dp/dp_panel.o \
->  	dp/dp_audio.o \
-> -	dp/dp_utils.o
-> +	dp/dp_utils.o \
-> +	dp/dp_mst_drm.o
->  
->  msm-display-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
->  
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index d5889b801d190b6f33b180ead898c1e4ebcbf8f3..f958de6244b556df5452a5dbec6899fb79a57193 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -7,6 +7,7 @@
->  #define _DP_DISPLAY_H_
->  
->  #include "dp_panel.h"
-> +#include "dp_mst_drm.h"
->  #include "disp/msm_disp_snapshot.h"
->  
->  #define DP_MAX_PIXEL_CLK_KHZ	675000
-> @@ -25,6 +26,8 @@ struct msm_dp {
->  	bool is_edp;
->  	bool internal_hpd;
->  
-> +	struct msm_dp_mst *msm_dp_mst;
-> +
->  	struct msm_dp_audio *msm_dp_audio;
->  	bool psr_supported;
->  };
-> diff --git a/drivers/gpu/drm/msm/dp/dp_mst_drm.c b/drivers/gpu/drm/msm/dp/dp_mst_drm.c
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..73de29136801ef5f45e0b2d09280fe113021b68c
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/dp/dp_mst_drm.c
-> @@ -0,0 +1,556 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + */
-> +
-> +/*
-> + * Copyright � 2014 Red Hat.
+> - Krishna Chaitanya.
+>>> +
+>>> +    bus_range = resource_list_first_type(&pp->bridge->windows, 
+>>> IORESOURCE_BUS)->res;
+>>> +    if (!bus_range)
+>>> +        return false;
+>>> +
+>>> +    nr_buses = resource_size(config_res) >> PCIE_ECAM_BUS_SHIFT;
+>>> +
+>>> +    return !!(nr_buses >= resource_size(bus_range));
+>>> +}
+>>> +
+>>>   static int dw_pcie_host_get_resources(struct dw_pcie_rp *pp)
+>>>   {
+>>>       struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>>> @@ -422,10 +497,6 @@ static int dw_pcie_host_get_resources(struct 
+>>> dw_pcie_rp *pp)
+>>>       struct resource *res;
+>>>       int ret;
+>>> -    ret = dw_pcie_get_resources(pci);
+>>> -    if (ret)
+>>> -        return ret;
+>>> -
+>>>       res = platform_get_resource_byname(pdev, IORESOURCE_MEM, 
+>>> "config");
+>>>       if (!res) {
+>>>           dev_err(dev, "Missing \"config\" reg space\n");
+>>> @@ -435,9 +506,32 @@ static int dw_pcie_host_get_resources(struct 
+>>> dw_pcie_rp *pp)
+>>>       pp->cfg0_size = resource_size(res);
+>>>       pp->cfg0_base = res->start;
+>>> -    pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
+>>> -    if (IS_ERR(pp->va_cfg0_base))
+>>> -        return PTR_ERR(pp->va_cfg0_base);
+>>> +    pp->ecam_enabled = dw_pcie_ecam_enabled(pp, res);
+>>> +    if (pp->ecam_enabled) {
+>>> +        ret = dw_pcie_create_ecam_window(pp, res);
+>>> +        if (ret)
+>>> +            return ret;
+>>> +
+>>> +        pp->bridge->ops = (struct pci_ops 
+>>> *)&pci_generic_ecam_ops.pci_ops;
+>>> +        pp->bridge->sysdata = pp->cfg;
+>>> +        pp->cfg->priv = pp;
+>>> +    } else {
+>>> +        pp->va_cfg0_base = devm_pci_remap_cfg_resource(dev, res);
+>>> +        if (IS_ERR(pp->va_cfg0_base))
+>>> +            return PTR_ERR(pp->va_cfg0_base);
+>>> +
+>>> +        /* Set default bus ops */
+>>> +        pp->bridge->ops = &dw_pcie_ops;
+>>> +        pp->bridge->child_ops = &dw_child_pcie_ops;
+>>> +        pp->bridge->sysdata = pp;
+>>> +    }
+>>> +
+>>> +    ret = dw_pcie_get_resources(pci);
+>>> +    if (ret) {
+>>> +        if (pp->cfg)
+>>> +            pci_ecam_free(pp->cfg);
+>>> +        return ret;
+>>> +    }
+>>>       /* Get the I/O range from DT */
+>>>       win = resource_list_first_type(&pp->bridge->windows, 
+>>> IORESOURCE_IO);
+>>> @@ -476,14 +570,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>>>       if (ret)
+>>>           return ret;
+>>> -    /* Set default bus ops */
+>>> -    bridge->ops = &dw_pcie_ops;
+>>> -    bridge->child_ops = &dw_child_pcie_ops;
+>>> -
+>>>       if (pp->ops->init) {
+>>>           ret = pp->ops->init(pp);
+>>>           if (ret)
+>>> -            return ret;
+>>> +            goto err_free_ecam;
+>>>       }
+>>>       if (pci_msi_enabled()) {
+>>> @@ -525,6 +615,14 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>>>       if (ret)
+>>>           goto err_free_msi;
+>>> +    if (pp->ecam_enabled) {
+>>> +        ret = dw_pcie_config_ecam_iatu(pp);
+>>> +        if (ret) {
+>>> +            dev_err(dev, "Failed to configure iATU in ECAM mode\n");
+>>> +            goto err_free_msi;
+>>> +        }
+>>> +    }
+>>> +
+>>>       /*
+>>>        * Allocate the resource for MSG TLP before programming the iATU
+>>>        * outbound window in dw_pcie_setup_rc(). Since the allocation 
+>>> depends
+>>> @@ -560,8 +658,6 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>>>           /* Ignore errors, the link may come up later */
+>>>           dw_pcie_wait_for_link(pci);
+>>> -    bridge->sysdata = pp;
+>>> -
+>>>       ret = pci_host_probe(bridge);
+>>>       if (ret)
+>>>           goto err_stop_link;
+>>> @@ -587,6 +683,10 @@ int dw_pcie_host_init(struct dw_pcie_rp *pp)
+>>>       if (pp->ops->deinit)
+>>>           pp->ops->deinit(pp);
+>>> +err_free_ecam:
+>>> +    if (pp->cfg)
+>>> +        pci_ecam_free(pp->cfg);
+>>> +
+>>>       return ret;
+>>>   }
+>>>   EXPORT_SYMBOL_GPL(dw_pcie_host_init);
+>>> @@ -609,6 +709,9 @@ void dw_pcie_host_deinit(struct dw_pcie_rp *pp)
+>>>       if (pp->ops->deinit)
+>>>           pp->ops->deinit(pp);
+>>> +
+>>> +    if (pp->cfg)
+>>> +        pci_ecam_free(pp->cfg);
+>>>   }
+>>>   EXPORT_SYMBOL_GPL(dw_pcie_host_deinit);
+>>> diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/ 
+>>> pci/controller/dwc/pcie-designware.c
+>>> index 
+>>> 4684c671a81bee468f686a83cc992433b38af59d..6826ddb9478d41227fa011018cffa8d2242336a9 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-designware.c
+>>> +++ b/drivers/pci/controller/dwc/pcie-designware.c
+>>> @@ -576,7 +576,7 @@ int dw_pcie_prog_outbound_atu(struct dw_pcie *pci,
+>>>           val = dw_pcie_enable_ecrc(val);
+>>>       dw_pcie_writel_atu_ob(pci, atu->index, PCIE_ATU_REGION_CTRL1, 
+>>> val);
+>>> -    val = PCIE_ATU_ENABLE;
+>>> +    val = PCIE_ATU_ENABLE | atu->ctrl2;
+>>>       if (atu->type == PCIE_ATU_TYPE_MSG) {
+>>>           /* The data-less messages only for now */
+>>>           val |= PCIE_ATU_INHIBIT_PAYLOAD | atu->code;
+>>> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/ 
+>>> pci/controller/dwc/pcie-designware.h
+>>> index 
+>>> ceb022506c3191cd8fe580411526e20cc3758fed..f770e160ce7c538e0835e7cf80bae9ed099f906c 100644
+>>> --- a/drivers/pci/controller/dwc/pcie-designware.h
+>>> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+>>> @@ -20,6 +20,7 @@
+>>>   #include <linux/irq.h>
+>>>   #include <linux/msi.h>
+>>>   #include <linux/pci.h>
+>>> +#include <linux/pci-ecam.h>
+>>>   #include <linux/reset.h>
+>>>   #include <linux/pci-epc.h>
+>>> @@ -169,6 +170,7 @@
+>>>   #define PCIE_ATU_REGION_CTRL2        0x004
+>>>   #define PCIE_ATU_ENABLE            BIT(31)
+>>>   #define PCIE_ATU_BAR_MODE_ENABLE    BIT(30)
+>>> +#define PCIE_ATU_CFG_SHIFT_MODE_ENABLE    BIT(28)
+>>>   #define PCIE_ATU_INHIBIT_PAYLOAD    BIT(22)
+>>>   #define PCIE_ATU_FUNC_NUM_MATCH_EN      BIT(19)
+>>>   #define PCIE_ATU_LOWER_BASE        0x008
+>>> @@ -387,6 +389,7 @@ struct dw_pcie_ob_atu_cfg {
+>>>       u8 func_no;
+>>>       u8 code;
+>>>       u8 routing;
+>>> +    u32 ctrl2;
+>>>       u64 parent_bus_addr;
+>>>       u64 pci_addr;
+>>>       u64 size;
+>>> @@ -425,6 +428,8 @@ struct dw_pcie_rp {
+>>>       struct resource        *msg_res;
+>>>       bool            use_linkup_irq;
+>>>       struct pci_eq_presets    presets;
+>>> +    bool            ecam_enabled;
+>>> +    struct pci_config_window *cfg;
+>>>   };
+>>>   struct dw_pcie_ep_ops {
+>>>
+>> Regards,
+>> Mayank
 
-Is it based on? Using the code? C&P?
-
-> + *
-> + * Permission to use, copy, modify, distribute, and sell this software and its
-> + * documentation for any purpose is hereby granted without fee, provided that
-> + * the above copyright notice appear in all copies and that both that copyright
-> + * notice and this permission notice appear in supporting documentation, and
-> + * that the name of the copyright holders not be used in advertising or
-> + * publicity pertaining to distribution of the software without specific,
-> + * written prior permission.  The copyright holders make no representations
-> + * about the suitability of this software for any purpose.  It is provided "as
-> + * is" without express or implied warranty.
-> + *
-> + * THE COPYRIGHT HOLDERS DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
-> + * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
-> + * EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY SPECIAL, INDIRECT OR
-> + * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
-> + * DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-> + * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
-> + * OF THIS SOFTWARE.
-
-Why? Anyway, MIT licence would be absorbed into GPL-2.0-only (or it
-should be GPL-2.0-only OR MIT)
-
-> + */
-> +
-> +#include "dp_mst_drm.h"
-> +
-> +#define to_msm_dp_mst_bridge(x)     container_of((x), struct msm_dp_mst_bridge, base)
-> +#define to_msm_dp_mst_bridge_priv(x) \
-
-Unused
-
-> +		container_of((x), struct msm_dp_mst_bridge, obj)
-> +#define to_msm_dp_mst_bridge_state_priv(x) \
-
-Why is it _priv? There is no 'private' bridge state.
-
-> +		container_of((x), struct msm_dp_mst_bridge_state, base)
-> +#define to_msm_dp_mst_bridge_state(x) \
-> +		to_msm_dp_mst_bridge_state_priv((x)->obj.state)
-> +#define to_msm_dp_mst_connector(x) \
-> +		container_of((x), struct msm_dp_mst_connector, connector)
-> +
-> +#define DP_MST_CONN_ID(bridge) ((bridge)->connector ? \
-> +		(bridge)->connector->base.id : 0)
-> +
-> +#define MAX_DPCD_TRANSACTION_BYTES 16
-> +
-> +static struct drm_private_state *msm_dp_mst_duplicate_bridge_state(struct drm_private_obj *obj)
-> +{
-> +	struct msm_dp_mst_bridge_state *mst_bridge_state;
-> +
-> +	mst_bridge_state = kmemdup(obj->state, sizeof(*mst_bridge_state), GFP_KERNEL);
-> +	if (!mst_bridge_state)
-> +		return NULL;
-> +
-> +	__drm_atomic_helper_private_obj_duplicate_state(obj, &mst_bridge_state->base);
-> +
-> +	return &mst_bridge_state->base;
-> +}
-> +
-> +static void msm_dp_mst_destroy_bridge_state(struct drm_private_obj *obj,
-> +					    struct drm_private_state *state)
-> +{
-> +	struct msm_dp_mst_bridge_state *mst_bridge_state =
-> +		to_msm_dp_mst_bridge_state_priv(state);
-> +
-> +	kfree(mst_bridge_state);
-> +}
-> +
-> +static const struct drm_private_state_funcs msm_dp_mst_bridge_state_funcs = {
-> +	.atomic_duplicate_state = msm_dp_mst_duplicate_bridge_state,
-> +	.atomic_destroy_state = msm_dp_mst_destroy_bridge_state,
-> +};
-> +
-> +/**
-> + * dp_mst_find_vcpi_slots() - Find VCPI slots for this PBN value
-> + * @mgr: manager to use
-> + * @pbn: payload bandwidth to convert into slots.
-> + *
-> + * Calculate the number of VCPI slots that will be required for the given PBN
-> + * value.
-> + *
-> + * RETURNS:
-
-Return: foo, abc or def
-
-> + * The total slots required for this port, or error.
-> + */
-> +static int msm_dp_mst_find_vcpi_slots(struct drm_dp_mst_topology_mgr *mgr, int pbn)
-> +{
-> +	int num_slots;
-> +	struct drm_dp_mst_topology_state *state;
-> +
-> +	state = to_drm_dp_mst_topology_state(mgr->base.state);
-> +	num_slots = DIV_ROUND_UP(pbn, dfixed_trunc(state->pbn_div));
-
-Don't you get those as payload->time_slots ?
-
-> +
-> +	/* max. time slots - one slot for MTP header */
-> +	if (num_slots > 63)
-> +		return -ENOSPC;
-> +	return num_slots;
-> +}
-> +
-> +static void msm_dp_mst_update_timeslots(struct msm_dp_mst *mst,
-> +					 struct msm_dp_mst_bridge *mst_bridge,
-> +					 struct drm_atomic_state *state,
-> +					 struct drm_dp_mst_port *port)
-> +{
-> +	int i;
-> +	struct msm_dp_mst_bridge *msm_dp_bridge;
-> +	struct drm_dp_mst_topology_state *mst_state;
-> +	struct drm_dp_mst_atomic_payload *payload;
-> +	struct msm_dp_mst_bridge_state *mst_bridge_state;
-> +	int prev_start = 0;
-> +	int prev_slots = 0;
-> +
-> +	mst_state = to_drm_dp_mst_topology_state(mst->mst_mgr.base.state);
-> +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
-> +
-> +	if (!payload) {
-> +		DRM_ERROR("mst bridge [%d] update_timeslots failed, null payload\n",
-> +			  mst_bridge->id);
-> +		return;
-> +	}
-> +
-> +	for (i = 0; i < mst->max_streams; i++) {
-> +		msm_dp_bridge = mst->mst_bridge[i];
-> +		if (mst_bridge == msm_dp_bridge) {
-> +			mst_bridge_state = to_msm_dp_mst_bridge_state(msm_dp_bridge);
-> +			/*
-> +			 * When a payload was removed make sure to move any payloads after it
-> +			 * to the left so all payloads are aligned to the left.
-> +			 */
-
-The comment is not valid anymore, as far as I understand.
-
-> +			if (payload->vc_start_slot < 0) {
-> +				// cache the payload
-> +				prev_start = mst_bridge_state->start_slot;
-> +				prev_slots = mst_bridge_state->num_slots;
-> +				mst_bridge_state->pbn = 0;
-> +				mst_bridge_state->start_slot = 1;
-> +				mst_bridge_state->num_slots = 0;
-> +				mst_bridge_state->vcpi = 0;
-> +			} else { //add payload
-> +				mst_bridge_state->pbn = payload->pbn;
-> +				mst_bridge_state->start_slot = payload->vc_start_slot;
-> +				mst_bridge_state->num_slots = payload->time_slots;
-> +				mst_bridge_state->vcpi = payload->vcpi;
-
-I still see a lot of manual slot management here. Can't we use the
-struct drm_dp_mst_atomic_payload directly instead of copying and caching
-everything?
-
-> +			}
-> +		}
-> +	}
-> +
-> +	// Now commit all the updated payloads
-> +	for (i = 0; i < mst->max_streams; i++) {
-> +		msm_dp_bridge = mst->mst_bridge[i];
-> +
-> +		mst_bridge_state = to_msm_dp_mst_bridge_state(msm_dp_bridge);
-> +		//Shift payloads to the left if there was a removed payload.
-> +		if (payload->vc_start_slot < 0 && mst_bridge_state->start_slot > prev_start)
-> +			mst_bridge_state->start_slot -= prev_slots;
-
-Well... Don't MST helpers do this already for you? I see corresponding
-part in drm_dp_remove_payload_part2().
-
-> +
-> +		msm_dp_display_set_stream_info(mst->msm_dp, msm_dp_bridge->msm_dp_panel,
-> +					       msm_dp_bridge->id, mst_bridge_state->start_slot,
-> +					       mst_bridge_state->num_slots,
-> +					       mst_bridge_state->pbn, mst_bridge_state->vcpi);
-> +		drm_dbg_dp(mst->msm_dp->drm_dev,
-> +			   "conn:%d vcpi:%d start_slot:%d num_slots:%d, pbn:%d\n",
-> +			   DP_MST_CONN_ID(msm_dp_bridge), mst_bridge_state->vcpi,
-> +			   mst_bridge_state->start_slot,
-> +			   mst_bridge_state->num_slots, mst_bridge_state->pbn);
-> +	}
-> +}
-> +
-> +static int msm_dp_mst_bridge_pre_enable_part1(struct msm_dp_mst_bridge *dp_bridge,
-> +					       struct drm_atomic_state *state)
-> +{
-> +	struct msm_dp *dp_display = dp_bridge->display;
-> +	struct msm_dp_mst *mst = dp_display->msm_dp_mst;
-> +	struct msm_dp_mst_connector *mst_conn = to_msm_dp_mst_connector(dp_bridge->connector);
-> +	struct drm_dp_mst_port *port = mst_conn->mst_port;
-> +	struct drm_dp_mst_topology_state *mst_state;
-> +	struct drm_dp_mst_atomic_payload *payload;
-> +	struct msm_dp_panel *dp_panel = mst_conn->dp_panel;
-> +	int pbn, slots;
-> +	int rc = 0;
-> +
-> +	mst_state = drm_atomic_get_new_mst_topology_state(state, &mst->mst_mgr);
-> +
-> +	pbn = drm_dp_calc_pbn_mode(dp_panel->msm_dp_mode.drm_mode.clock,
-> +				   (mst_conn->connector.display_info.bpc * 3) << 4);
-> +
-> +	slots = msm_dp_mst_find_vcpi_slots(&mst->mst_mgr, pbn);
-
-payload->time_slots ?
-
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "conn:%d pbn:%d, slots:%d\n", DP_MST_CONN_ID(dp_bridge),
-> +		   pbn, slots);
-> +
-> +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
-> +	if (!payload || payload->time_slots <= 0) {
-> +		DRM_ERROR("time slots not allocated for conn:%d\n", DP_MST_CONN_ID(dp_bridge));
-> +		rc = -EINVAL;
-> +		return rc;
-> +	}
-> +
-> +	drm_dp_mst_update_slots(mst_state, DP_CAP_ANSI_8B10B);
-> +
-> +	rc = drm_dp_add_payload_part1(&mst->mst_mgr, mst_state, payload);
-> +	if (rc) {
-> +		DRM_ERROR("payload allocation failure for conn:%d\n", DP_MST_CONN_ID(dp_bridge));
-> +		return rc;
-> +	}
-> +
-> +	msm_dp_mst_update_timeslots(mst, dp_bridge, state, port);
-> +
-> +	return rc;
-> +}
-> +
-> +static void _msm_dp_mst_bridge_pre_enable_part2(struct msm_dp_mst_bridge *dp_bridge,
-> +						struct drm_atomic_state *state)
-> +{
-> +	struct msm_dp *dp_display = dp_bridge->display;
-> +	struct msm_dp_mst *mst = dp_display->msm_dp_mst;
-> +	struct msm_dp_mst_connector *mst_conn = to_msm_dp_mst_connector(dp_bridge->connector);
-> +	struct drm_dp_mst_port *port = mst_conn->mst_port;
-> +	struct drm_dp_mst_topology_state *mst_state;
-> +	struct drm_dp_mst_atomic_payload *payload;
-> +
-> +	drm_dp_check_act_status(&mst->mst_mgr);
-> +
-> +	mst_state = to_drm_dp_mst_topology_state(mst->mst_mgr.base.state);
-> +	payload = drm_atomic_get_mst_payload_state(mst_state, port);
-> +
-> +	if (!payload) {
-
-Kill all defensive coding. If something can not happen, there is no need
-to check for it.
-
-> +		DRM_ERROR("mst bridge [%d] null payload\n", dp_bridge->id);
-> +		return;
-> +	}
-> +
-> +	if (!payload->port) {
-> +		DRM_ERROR("mst bridge [%d] null port\n", dp_bridge->id);
-> +		return;
-> +	}
-> +
-> +	if (!payload->port->connector) {
-> +		DRM_ERROR("mst bridge [%d] part-2 failed, null connector\n",
-> +			  dp_bridge->id);
-> +		return;
-> +	}
-> +
-> +	if (payload->vc_start_slot == -1) {
-> +		DRM_ERROR("mst bridge [%d] part-2 failed, payload alloc part 1 failed\n",
-> +			  dp_bridge->id);
-> +		return;
-> +	}
-> +
-> +	drm_dp_add_payload_part2(&mst->mst_mgr, payload);
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "mst bridge [%d] _pre enable part-2 complete\n",
-> +		   dp_bridge->id);
-> +}
-> +
-> +static void msm_dp_mst_bridge_pre_disable_part1(struct msm_dp_mst_bridge *dp_bridge,
-> +						 struct drm_atomic_state *state)
-> +{
-> +	struct msm_dp *dp_display = dp_bridge->display;
-> +	struct msm_dp_mst *mst = dp_display->msm_dp_mst;
-> +	struct msm_dp_mst_connector *mst_conn = to_msm_dp_mst_connector(dp_bridge->connector);
-> +	struct drm_dp_mst_port *port = mst_conn->mst_port;
-> +	struct drm_dp_mst_topology_state *old_mst_state;
-> +	struct drm_dp_mst_topology_state *new_mst_state;
-> +	const struct drm_dp_mst_atomic_payload *old_payload;
-> +	struct drm_dp_mst_atomic_payload *new_payload;
-> +
-> +	old_mst_state = drm_atomic_get_old_mst_topology_state(state, &mst->mst_mgr);
-> +
-> +	new_mst_state = drm_atomic_get_new_mst_topology_state(state, &mst->mst_mgr);
-> +
-> +	old_payload = drm_atomic_get_mst_payload_state(old_mst_state, port);
-> +	new_payload = drm_atomic_get_mst_payload_state(new_mst_state, port);
-> +
-> +	if (!old_payload || !new_payload) {
-> +		DRM_ERROR("mst bridge [%d] _pre disable part-1 failed, null payload\n",
-> +			  dp_bridge->id);
-> +		return;
-> +	}
-> +
-> +	drm_dp_remove_payload_part1(&mst->mst_mgr, new_mst_state, new_payload);
-> +	drm_dp_remove_payload_part2(&mst->mst_mgr, new_mst_state, old_payload, new_payload);
-> +
-> +	msm_dp_mst_update_timeslots(mst, dp_bridge, state, port);
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "mst bridge [%d] _pre disable part-1 complete\n",
-> +		   dp_bridge->id);
-> +}
-> +
-> +static void msm_dp_mst_bridge_atomic_pre_enable(struct drm_bridge *drm_bridge,
-> +						struct drm_atomic_state *state)
-> +{
-> +	int rc = 0;
-> +	struct msm_dp_mst_bridge *bridge;
-> +	struct msm_dp *dp_display;
-> +	struct msm_dp_mst_bridge_state *mst_bridge_state;
-> +	struct msm_dp_mst *dp_mst;
-> +
-> +	if (!drm_bridge) {
-> +		DRM_ERROR("Invalid params\n");
-> +		return;
-> +	}
-> +
-> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
-> +	mst_bridge_state = to_msm_dp_mst_bridge_state(bridge);
-> +	dp_display = bridge->display;
-> +	dp_mst = dp_display->msm_dp_mst;
-> +
-> +	/* to cover cases of bridge_disable/bridge_enable without modeset */
-> +	bridge->connector = mst_bridge_state->connector;
-> +	bridge->msm_dp_panel = mst_bridge_state->msm_dp_panel;
-> +
-> +	if (!bridge->connector) {
-> +		DRM_ERROR("Invalid connector\n");
-> +		return;
-> +	}
-> +
-> +	mutex_lock(&dp_mst->mst_lock);
-> +	msm_dp_display_atomic_prepare(dp_display);
-> +
-> +	rc = msm_dp_mst_bridge_pre_enable_part1(bridge, state);
-> +	if (rc) {
-> +		DRM_ERROR("[%d] DP display pre-enable failed, rc=%d\n", bridge->id, rc);
-> +		msm_dp_display_unprepare(dp_display);
-> +		mutex_unlock(&dp_mst->mst_lock);
-> +		return;
-> +	}
-> +
-> +	msm_dp_display_enable_helper(dp_display, bridge->msm_dp_panel);
-> +
-> +	_msm_dp_mst_bridge_pre_enable_part2(bridge, state);
-> +
-> +	mutex_unlock(&dp_mst->mst_lock);
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "conn:%d mode:%s fps:%d vcpi:%d slots:%d to %d\n",
-> +		   DP_MST_CONN_ID(bridge), bridge->msm_dp_panel->msm_dp_mode.drm_mode.name,
-> +		   drm_mode_vrefresh(&bridge->msm_dp_panel->msm_dp_mode.drm_mode),
-> +		   mst_bridge_state->vcpi, mst_bridge_state->start_slot,
-> +		   mst_bridge_state->start_slot + mst_bridge_state->num_slots);
-> +}
-> +
-> +static void msm_dp_mst_bridge_atomic_disable(struct drm_bridge *drm_bridge,
-> +					     struct drm_atomic_state *state)
-> +{
-> +	struct msm_dp_mst_bridge *bridge;
-> +	struct msm_dp *dp_display;
-> +	struct msm_dp_mst *mst;
-> +
-> +	if (!drm_bridge) {
-> +		DRM_ERROR("Invalid params\n");
-> +		return;
-> +	}
-> +
-> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
-> +	if (!bridge->connector) {
-> +		DRM_ERROR("Invalid connector\n");
-> +		return;
-> +	}
-> +
-> +	dp_display = bridge->display;
-> +	mst = dp_display->msm_dp_mst;
-> +
-> +	mutex_lock(&mst->mst_lock);
-> +
-> +	msm_dp_mst_bridge_pre_disable_part1(bridge, state);
-> +
-> +	msm_dp_display_disable_helper(dp_display, bridge->msm_dp_panel);
-> +
-> +	drm_dp_check_act_status(&mst->mst_mgr);
-> +
-> +	mutex_unlock(&mst->mst_lock);
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "mst bridge:%d conn:%d disable complete\n", bridge->id,
-> +		   DP_MST_CONN_ID(bridge));
-> +}
-> +
-> +static void msm_dp_mst_bridge_atomic_post_disable(struct drm_bridge *drm_bridge,
-> +						  struct drm_atomic_state *state)
-> +{
-> +	int conn = 0;
-> +	struct msm_dp_mst_bridge *bridge;
-> +	struct msm_dp *dp_display;
-> +	struct msm_dp_mst *mst;
-> +
-> +	if (!drm_bridge) {
-> +		DRM_ERROR("Invalid params\n");
-> +		return;
-> +	}
-> +
-> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
-> +	if (!bridge->connector) {
-> +		DRM_ERROR("Invalid connector\n");
-> +		return;
-> +	}
-> +
-> +	conn = DP_MST_CONN_ID(bridge);
-> +
-> +	dp_display = bridge->display;
-> +	mst = dp_display->msm_dp_mst;
-> +
-> +	mutex_lock(&mst->mst_lock);
-> +
-> +	msm_dp_display_atomic_post_disable_helper(dp_display, bridge->msm_dp_panel);
-> +
-> +	if (!dp_display->mst_active)
-> +		msm_dp_display_unprepare(dp_display);
-> +
-> +	bridge->connector = NULL;
-> +	bridge->msm_dp_panel =  NULL;
-> +
-> +	mutex_unlock(&mst->mst_lock);
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "mst bridge:%d conn:%d post disable complete\n",
-> +		   bridge->id, conn);
-> +}
-> +
-> +static int msm_dp_mst_bridge_atomic_check(struct drm_bridge *drm_bridge,
-> +				struct drm_bridge_state *bridge_state,
-> +				struct drm_crtc_state *crtc_state,
-> +				struct drm_connector_state *conn_state)
-> +{
-> +	struct drm_atomic_state *state = crtc_state->state;
-> +	struct drm_connector *connector = conn_state->connector;
-> +	struct drm_dp_mst_topology_state *mst_state;
-> +	struct msm_dp_mst_connector *mst_conn;
-> +	struct msm_dp *dp_display;
-> +	struct msm_dp_mst *mst;
-> +	int rc = 0, pbn, slots;
-> +	u32 bpp;
-> +
-> +	if (!drm_atomic_crtc_needs_modeset(crtc_state) || !crtc_state->enable) {
-> +		return 0;
-> +	}
-> +
-> +	mst_conn = to_msm_dp_mst_connector(connector);
-> +	dp_display = mst_conn->msm_dp;
-> +	mst = dp_display->msm_dp_mst;
-> +
-> +	bpp = connector->display_info.bpc * 3;
-> +
-> +	if (!bpp)
-> +		bpp = 24;
-> +
-> +	pbn = drm_dp_calc_pbn_mode(crtc_state->mode.clock, bpp << 4);
-> +
-> +	mst_state = to_drm_dp_mst_topology_state(mst->mst_mgr.base.state);
-> +	if (IS_ERR(mst_state))
-> +		return PTR_ERR(mst_state);
-> +
-> +	if (!dfixed_trunc(mst_state->pbn_div)) {
-> +		mst_state->pbn_div =
-> +			drm_dp_get_vc_payload_bw(mst_conn->dp_panel->link_info.rate,
-> +						mst_conn->dp_panel->link_info.num_lanes);
-> +	}
-> +
-> +	slots = drm_dp_atomic_find_time_slots(state, &mst->mst_mgr, mst_conn->mst_port, pbn);
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "add slots, conn:%d pbn:%d slots:%d rc:%d\n",
-> +			connector->base.id, pbn, slots, rc);
-> +
-> +	return 0;
-> +}
-> +
-> +static void msm_dp_mst_bridge_mode_set(struct drm_bridge *drm_bridge,
-> +				       const struct drm_display_mode *mode,
-> +				       const struct drm_display_mode *adjusted_mode)
-
-It's clearly defined as deprecated, not to be used by new drivers. Any
-reason for not following it?
-
-> +{
-> +	struct msm_dp_mst_bridge *bridge;
-> +	struct msm_dp_mst_bridge_state *mst_bridge_state;
-> +	struct msm_dp *dp_display;
-> +	struct msm_dp_panel *msm_dp_panel;
-> +
-> +	if (!drm_bridge || !mode || !adjusted_mode) {
-
-Ugh. No overprotective coding.
-
-> +		DRM_ERROR("Invalid params\n");
-> +		return;
-> +	}
-> +
-> +	bridge = to_msm_dp_mst_bridge(drm_bridge);
-> +
-> +	mst_bridge_state = to_msm_dp_mst_bridge_state(bridge);
-> +	bridge->connector = mst_bridge_state->connector;
-> +	bridge->msm_dp_panel = mst_bridge_state->msm_dp_panel;
-
-Why? All important functions should have access to bridge state and thus state fields.
-
-> +
-> +	msm_dp_panel = bridge->msm_dp_panel;
-> +	dp_display = bridge->display;
-> +
-> +	msm_dp_display_mode_set_helper(dp_display, mode, adjusted_mode, bridge->msm_dp_panel);
-> +	msm_dp_panel->pbn = drm_dp_calc_pbn_mode(msm_dp_panel->msm_dp_mode.drm_mode.clock,
-> +							  (msm_dp_panel->msm_dp_mode.bpp << 4));
-> +	drm_dbg_dp(dp_display->drm_dev, "mst bridge:%d conn:%d mode set complete %s\n", bridge->id,
-> +		   DP_MST_CONN_ID(bridge), mode->name);
-> +}
-> +
-> +/* DP MST Bridge APIs */
-> +static const struct drm_bridge_funcs msm_dp_mst_bridge_ops = {
-> +	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
-> +	.atomic_destroy_state   = drm_atomic_helper_bridge_destroy_state,
-> +	.atomic_reset           = drm_atomic_helper_bridge_reset,
-> +	.atomic_pre_enable   = msm_dp_mst_bridge_atomic_pre_enable,
-> +	.atomic_disable      = msm_dp_mst_bridge_atomic_disable,
-> +	.atomic_post_disable = msm_dp_mst_bridge_atomic_post_disable,
-> +	.atomic_check = msm_dp_mst_bridge_atomic_check,
-> +	.mode_set     = msm_dp_mst_bridge_mode_set,
-> +};
-> +
-> +int msm_dp_mst_drm_bridge_init(struct msm_dp *dp_display, struct drm_encoder *encoder)
-> +{
-> +	int rc = 0;
-> +	struct msm_dp_mst_bridge *bridge = NULL;
-> +	struct msm_dp_mst_bridge_state *mst_bridge_state;
-> +	struct drm_device *dev;
-> +	struct msm_dp_mst *mst = dp_display->msm_dp_mst;
-> +	int i;
-> +
-> +	for (i = 0; i < mst->max_streams; i++) {
-> +		if (!mst->mst_bridge[i]->in_use) {
-> +			bridge = mst->mst_bridge[i];
-> +			bridge->encoder = encoder;
-> +			bridge->in_use = true;
-> +			bridge->id = i;
-> +			break;
-> +		}
-> +	}
-> +
-> +	if (i == mst->max_streams) {
-> +		DRM_ERROR("mst supports only %d bridges\n", i);
-> +		rc = -EACCES;
-> +		goto end;
-> +	}
-> +
-> +	dev = dp_display->drm_dev;
-> +	bridge->display = dp_display;
-> +	bridge->base.funcs = &msm_dp_mst_bridge_ops;
-> +	bridge->base.encoder = encoder;
-> +	bridge->base.type = dp_display->connector_type;
-> +	bridge->base.ops = DRM_BRIDGE_OP_MODES;
-> +	drm_bridge_add(&bridge->base);
-> +
-> +	rc = drm_bridge_attach(encoder, &bridge->base, NULL, 0);
-> +	if (rc) {
-> +		DRM_ERROR("failed to attach bridge, rc=%d\n", rc);
-> +		goto end;
-> +	}
-> +
-> +	mst_bridge_state = kzalloc(sizeof(*mst_bridge_state), GFP_KERNEL);
-> +	if (!mst_bridge_state) {
-> +		rc = -ENOMEM;
-> +		goto end;
-> +	}
-> +
-> +	drm_atomic_private_obj_init(dev, &bridge->obj,
-> +				    &mst_bridge_state->base,
-> +				    &msm_dp_mst_bridge_state_funcs);
-
-Why do you register a separate object if you already have bridge and you
-can use bridge's state?
-
-> +
-> +	drm_dbg_dp(dp_display->drm_dev, "mst drm bridge init. bridge id:%d\n", i);
-> +
-> +	return 0;
-> +
-> +end:
-> +	return rc;
-> +}
-> diff --git a/drivers/gpu/drm/msm/dp/dp_mst_drm.h b/drivers/gpu/drm/msm/dp/dp_mst_drm.h
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..d75731ca2e5870377026e8ad1057bdcc5f0d4c78
-> --- /dev/null
-> +++ b/drivers/gpu/drm/msm/dp/dp_mst_drm.h
-> @@ -0,0 +1,86 @@
-> +/* SPDX-License-Identifier: GPL-2.0-only */
-> +/*
-> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> + *
-> + * Permission to use, copy, modify, distribute, and sell this software and its
-> + * documentation for any purpose is hereby granted without fee, provided that
-> + * the above copyright notice appear in all copies and that both that copyright
-> + * notice and this permission notice appear in supporting documentation, and
-> + * that the name of the copyright holders not be used in advertising or
-> + * publicity pertaining to distribution of the software without specific,
-> + * written prior permission.  The copyright holders make no representations
-> + * about the suitability of this software for any purpose.  It is provided "as
-> + * is" without express or implied warranty.
-> + *
-> + * THE COPYRIGHT HOLDERS DISCLAIM ALL WARRANTIES WITH REGARD TO THIS SOFTWARE,
-> + * INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO
-> + * EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY SPECIAL, INDIRECT OR
-> + * CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,
-> + * DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER
-> + * TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE
-> + * OF THIS SOFTWARE.
-
-Please check what you are sending. The SPDX header says GPL-2.0-only,
-while the licence text is MIT. Why?
-
-> + */
-> +
-> +#ifndef _DP_MST_DRM_H_
-> +#define _DP_MST_DRM_H_
-> +
-> +#include <linux/kernel.h>
-> +#include <linux/init.h>
-> +#include <linux/errno.h>
-> +#include <linux/version.h>
-> +
-> +#include <drm/drm_atomic_helper.h>
-> +#include <drm/drm_atomic.h>
-> +#include <drm/drm_bridge.h>
-> +#include <drm/drm_crtc.h>
-> +#include <drm/drm_fixed.h>
-> +#include <drm/drm_connector.h>
-> +#include <drm/display/drm_dp_helper.h>
-> +#include <drm/display/drm_dp_mst_helper.h>
-
-Are all those includes necessary here? Replace them with forward struct
-definitions and move includes to the source file. Only keep those, which
-are actually necessary for the contents of the header.
-
-> +
-> +#include "dp_panel.h"
-> +#include "dp_display.h"
-> +
-> +struct msm_dp_mst_bridge {
-> +	struct drm_bridge base;
-> +	struct drm_private_obj obj;
-> +	u32 id;
-> +
-> +	bool in_use;
-
-What does it mean? In use currently for one of outputs?
-
-> +
-> +	struct msm_dp *display;
-> +	struct drm_encoder *encoder;
-> +
-> +	struct drm_connector *connector;
-
-Why do you have connector both as a part of the bridge and bridge state?
-
-Please describe design decisions in the commit mesage or as comments.
-
-> +	struct msm_dp_panel *msm_dp_panel;
-> +};
-> +
-> +struct msm_dp_mst_bridge_state {
-> +	struct drm_private_state base;
-> +	struct drm_connector *connector;
-> +	struct msm_dp_panel *msm_dp_panel;
-> +
-> +	int vcpi;
-> +	int pbn;
-> +	int num_slots;
-> +	int start_slot;
-
-I'd definitely prefer to have payload pointer here, if that's also a
-part of the state.
-
-> +};
-> +
-> +struct msm_dp_mst {
-> +	struct drm_dp_mst_topology_mgr mst_mgr;
-> +	struct msm_dp_mst_bridge *mst_bridge[DP_STREAM_MAX];
-> +	struct msm_dp *msm_dp;
-> +	u32 max_streams;
-> +	struct mutex mst_lock;
-> +};
-> +
-> +struct msm_dp_mst_connector {
-> +	struct drm_connector connector;
-> +	struct drm_dp_mst_port *mst_port;
-> +	struct msm_dp *msm_dp;
-> +	struct msm_dp_panel *dp_panel;
-> +};
-> +
-> +int msm_dp_mst_drm_bridge_init(struct msm_dp *dp, struct drm_encoder *encoder);
-> +
-> +#endif /* _DP_MST_DRM_H_ */
-> 
-> -- 
-> 2.34.1
-> 
-
--- 
-With best wishes
-Dmitry
 
