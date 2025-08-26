@@ -1,254 +1,109 @@
-Return-Path: <linux-arm-msm+bounces-70893-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70894-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68338B3604D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 14:59:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F6E5B36134
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 15:07:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D60641BC01F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:56:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 83B962A37C4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 13:04:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C39B1F1538;
-	Tue, 26 Aug 2025 12:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5474F2494FE;
+	Tue, 26 Aug 2025 13:03:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lBxPNHbZ"
+	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="s5T3h8Qu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from casper.infradead.org (casper.infradead.org [90.155.50.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FF01EB9F2;
-	Tue, 26 Aug 2025 12:55:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6B522A4EE;
+	Tue, 26 Aug 2025 13:03:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=90.155.50.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756212955; cv=none; b=CPTfdkLLiYAwonuc5EfEA6emA0VJs324nP84E6TuuLTX57CZPog1Pj2YIeLmD/7sCK0kNEydX588paaparx3n3tRWHYl+HdQiXWah62un98YG6cLejkRa7swyLS56Di7pdVagM6p0UwSat7Iq9wsG31iaI2q5kEE+N0o+TyKxKA=
+	t=1756213422; cv=none; b=UPNlmMLaJeEZQeg3++4mH1sFExavwuKhCQWINJjrNLCAtMwErxXnyTrOba9dGiI5omeOC/DqLaRt0jKa55qNcue3nMslRS4C+LyRGqMD2qwSEU+Gl9zBnLP8tDsiLNR7PTPdolrLm07GiLRCB17RWrYTgAl4AGrVyVsUIIWy734=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756212955; c=relaxed/simple;
-	bh=R4iU1jfyixe8o3Lo4PGR4XGLQyegIIrVAMccWj8FMcM=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=qHe0JwpRQSdaC1WmgYLEiQfa8WanAilnvZTRl2phrjwizOLHLQdd5QDoBabESbza0kdTKtW85b+70O4MDeR5xNAijabeF/hNJv3t7XUSIlaujD/aKcY2hGoRBOrtNzjhh5lBNtLq3tpWewKtcjB83c5rxbldgkrplvnWJARSp1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lBxPNHbZ; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1756212954; x=1787748954;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version:content-id;
-  bh=R4iU1jfyixe8o3Lo4PGR4XGLQyegIIrVAMccWj8FMcM=;
-  b=lBxPNHbZi6luuGmdMBVp+xWKYwCA17hjKPbfm6mLYbIywgk2+d/aemzx
-   X2z9F2k+svnMkoWEQ9a0d8wNPCn8ehUh8WjuKNd+Glai8GY89BWS4s7kx
-   ItHg56FZ5eU0KX6FJRC9VGvOOfaZ5lU3Zd7Q9WuvTZeO/8+nU7vJK3pYy
-   hAlXSdPWm7HPgVc+LcuQGS2P6u3xI1IXypRJqdMeCOWhnz59mdmlU92Lk
-   PnAebwJWM/T9pywa4CA5RX5jCAEEYpV0XQsbL9+s9g2Eq4F57j/LQAjVN
-   Ac8JPCzyWBPfmLoseb+hKaKZlAsRp30z2cwTUfi4L+R3ByzW6JJZEiAj6
-   g==;
-X-CSE-ConnectionGUID: Xy+l5tuITeeChhUapWtAng==
-X-CSE-MsgGUID: C+/6LF5xTm+A4cu4N22uBg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11534"; a="69814749"
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
-   d="scan'208";a="69814749"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2025 05:55:53 -0700
-X-CSE-ConnectionGUID: auHUum6tRHS2IljYMCxSQg==
-X-CSE-MsgGUID: o1h+Y04mS+OxNUWKpynnLw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
-   d="scan'208";a="206733326"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.4])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2025 05:55:46 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Tue, 26 Aug 2025 15:55:42 +0300 (EEST)
-To: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-    David Box <david.e.box@linux.intel.com>
-cc: Bjorn Helgaas <bhelgaas@google.com>, 
-    Manivannan Sadhasivam <mani@kernel.org>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
-    Rob Herring <robh@kernel.org>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
-    Jonathan Derrick <jonathan.derrick@linux.dev>, 
-    Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org, 
-    LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
-    linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
-    ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
-    Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-    "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH v2 2/8] PCI/ASPM: Fix the behavior of pci_enable_link_state*()
- APIs
-In-Reply-To: <20250825-ath-aspm-fix-v2-2-61b2f2db7d89@oss.qualcomm.com>
-Message-ID: <f644fc83-31cc-1f0e-58cf-7c007e6173e4@linux.intel.com>
-References: <20250825-ath-aspm-fix-v2-0-61b2f2db7d89@oss.qualcomm.com> <20250825-ath-aspm-fix-v2-2-61b2f2db7d89@oss.qualcomm.com>
+	s=arc-20240116; t=1756213422; c=relaxed/simple;
+	bh=pe5SE8cLTPPyLKyF6S5l44TjxJSycuwoPwH53Hc4MBc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=R/IhJQReJM/y5yPxstRXY4glIAPG+irhAYQ1Dl/tu+dTBZVHBslYt6eXuUZCHaswxY0AN5C7u5H7XJ+16uaRbaIi/6A2RrMmnEvveP4c5LLWke2z0v58DmzAPLcHdciYpRjRjIYJUZsT5NybQCho4uWpFzRg1MjJkiILdzlpoWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=s5T3h8Qu; arc=none smtp.client-ip=90.155.50.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=casper.20170209; h=In-Reply-To:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description;
+	bh=pe5SE8cLTPPyLKyF6S5l44TjxJSycuwoPwH53Hc4MBc=; b=s5T3h8QunORHMVi1lJq+TueBjc
+	cEFljtvjN5QJ03jRIuUbqZT2dzYWLCkq7EIgZ1HjiZepKSvKZUS4jhIftbJpUomzAxLkXpo4MhYIl
+	ZCvpLQBdWeqllwk2L5LEakNCj50aVxzY1I5n8BnO+qCbmyfysUZaBrevf4ZwX/NHQuj2PrtwGK3Is
+	jhSt6FlQLnGrrRwVWOG3VEhB1mGDJu+1EhbkwSGhAG25rhQM5DyWklhsvsXQh2tW5FYLoYbc8dttl
+	tsa9sX+EEmcEbn/jBCdJY0wOlh7GZntWiVjKPlxT8hw9CmspDWHiAZfhSZSTIR8f/mKGoVnI/OKYV
+	DfymEZ2w==;
+Received: from 77-249-17-252.cable.dynamic.v4.ziggo.nl ([77.249.17.252] helo=noisy.programming.kicks-ass.net)
+	by casper.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
+	id 1uqtKk-00000002CWx-1CxP;
+	Tue, 26 Aug 2025 13:03:31 +0000
+Received: by noisy.programming.kicks-ass.net (Postfix, from userid 1000)
+	id E7FAC3002C5; Tue, 26 Aug 2025 15:03:29 +0200 (CEST)
+Date: Tue, 26 Aug 2025 15:03:29 +0200
+From: Peter Zijlstra <peterz@infradead.org>
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: mingo@redhat.com, will@kernel.org, mark.rutland@arm.com,
+	acme@kernel.org, namhyung@kernel.org,
+	alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+	irogers@google.com, adrian.hunter@intel.com,
+	kan.liang@linux.intel.com, linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-alpha@vger.kernel.org,
+	linux-snps-arc@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+	linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+	linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+	sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
+	linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+	iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 12/19] perf: Ignore event state for group validation
+Message-ID: <20250826130329.GX4067720@noisy.programming.kicks-ass.net>
+References: <cover.1755096883.git.robin.murphy@arm.com>
+ <d6cda4e2999aba5794c8178f043c91068fa8080c.1755096883.git.robin.murphy@arm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; BOUNDARY="8323328-846575285-1756206986=:934"
-Content-ID: <ed51a60b-2da2-8824-e685-a71851c626aa@linux.intel.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d6cda4e2999aba5794c8178f043c91068fa8080c.1755096883.git.robin.murphy@arm.com>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Wed, Aug 13, 2025 at 06:01:04PM +0100, Robin Murphy wrote:
+> It may have been different long ago, but today it seems wrong for these
+> drivers to skip counting disabled sibling events in group validation,
+> given that perf_event_enable() could make them schedulable again, and
+> thus increase the effective size of the group later. Conversely, if a
+> sibling event is truly dead then it stands to reason that the whole
+> group is dead, so it's not worth going to any special effort to try to
+> squeeze in a new event that's never going to run anyway. Thus, we can
+> simply remove all these checks.
 
---8323328-846575285-1756206986=:934
-Content-Type: text/plain; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Content-ID: <96a2aa14-031e-f827-2cad-088a1b047808@linux.intel.com>
+So currently you can do sort of a manual event rotation inside an
+over-sized group and have it work.
 
-+David
+I'm not sure if anybody actually does this, but its possible.
 
-On Mon, 25 Aug 2025, Manivannan Sadhasivam via B4 Relay wrote:
+Eg. on a PMU that supports only 4 counters, create a group of 5 and
+periodically cycle which of the 5 events is off.
 
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
->=20
-> pci_enable_link_state() and pci_enable_link_state_locked() APIs are
-> supposed to be symmectric with pci_disable_link_state() and
-> pci_disable_link_state_locked() APIs.
->=20
-> But unfortunately, they are not symmetric. This behavior was mentioned in
-> the kernel-doc of these APIs:
->=20
-> " Clear and set the default device link state..."
->=20
-> and
->=20
-> "Also note that this does not enable states disabled by
-> pci_disable_link_state()"
->=20
-> These APIs won't enable all the states specified by the 'state' parameter=
-,
-> but only enable the ones not previously disabled by the
-> pci_disable_link_state*() APIs. But this behavior doesn't align with the
-> naming of these APIs, as they give the impression that these APIs will
-> enable all the specified states.
->=20
-> To resolve this ambiguity, allow these APIs to enable the specified state=
-s,
-> regardeless of whether they were previously disabled or not. This is
-> accomplished by clearing the previously disabled states from the
-> 'link::aspm_disable' parameter in __pci_enable_link_state() helper. Also,
-> reword the kernel-doc to reflect this behavior.
->=20
-> The current callers of pci_enable_link_state_locked() APIs (vmd and
-> pcie-qcom) did not disable the ASPM states before calling this API. So it
-> is evident that they do not depend on the previous behavior of this API a=
-nd
-> intend to enable all the specified states.
+So I'm not against changing this, but changing stuff like this always
+makes me a little fearful -- it wouldn't be the first time that when it
+finally trickles down to some 'enterprise' user in 5 years someone comes
+and finally says, oh hey, you broke my shit :-(
 
-While it might be "safe" in the sense that ->aspm_disable is not set by=20
-anything, I'm still not sure if overloading this function for two=20
-different use cases is a good idea.
-
-I'd like to hear David's opinion on this as he grasps the ->aspm_default=20
-vs ->aspm_disable thing much better than I do.
-
-> And the other API, pci_enable_link_state() doesn't have a caller for now,
-> but will be used by the 'atheros' WLAN drivers in the subsequent commits.
->=20
-> Suggested-by: Ilpo J=E4rvinen <ilpo.jarvinen@linux.intel.com>
-
-This tag sound like I'm endorsing this approach which is not the case. I'd=
-=20
-prefer separate functions for each use case, setting aspm_default and=20
-another for the enable state.
-
---=20
- i.
-
-> Co-developed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.=
-com>
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.co=
-m>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
-com>
-> ---
->  drivers/pci/pcie/aspm.c | 33 ++++++++++++++++++---------------
->  1 file changed, 18 insertions(+), 15 deletions(-)
->=20
-> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
-> index be9bd272057c3472f3e31dc9568340b19d52012a..fac46113a90c7fac6c97125e6=
-a7e385045780005 100644
-> --- a/drivers/pci/pcie/aspm.c
-> +++ b/drivers/pci/pcie/aspm.c
-> @@ -1459,6 +1459,7 @@ static int __pci_enable_link_state(struct pci_dev *=
-pdev, int state, bool locked)
->  =09=09down_read(&pci_bus_sem);
->  =09mutex_lock(&aspm_lock);
->  =09link->aspm_default =3D pci_calc_aspm_enable_mask(state);
-> +=09link->aspm_disable &=3D ~state;
->  =09pcie_config_aspm_link(link, policy_to_aspm_state(link));
-> =20
->  =09link->clkpm_default =3D (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
-> @@ -1471,17 +1472,18 @@ static int __pci_enable_link_state(struct pci_dev=
- *pdev, int state, bool locked)
->  }
-> =20
->  /**
-> - * pci_enable_link_state - Clear and set the default device link state s=
-o that
-> - * the link may be allowed to enter the specified states. Note that if t=
-he
-> - * BIOS didn't grant ASPM control to the OS, this does nothing because w=
-e can't
-> - * touch the LNKCTL register. Also note that this does not enable states
-> - * disabled by pci_disable_link_state(). Return 0 or a negative errno.
-> + * pci_enable_link_state - Enable device's link state
-> + * @pdev: PCI device
-> + * @state: Mask of ASPM link states to enable
-> + *
-> + * Enable device's link state, so the link will enter the specified stat=
-es.
-> + * Note that if the BIOS didn't grant ASPM control to the OS, this does
-> + * nothing because we can't touch the LNKCTL register.
->   *
->   * Note: Ensure devices are in D0 before enabling PCI-PM L1 PM Substates=
-, per
->   * PCIe r6.0, sec 5.5.4.
->   *
-> - * @pdev: PCI device
-> - * @state: Mask of ASPM link states to enable
-> + * Return: 0 on success, a negative errno otherwise.
->   */
->  int pci_enable_link_state(struct pci_dev *pdev, int state)
->  {
-> @@ -1490,19 +1492,20 @@ int pci_enable_link_state(struct pci_dev *pdev, i=
-nt state)
->  EXPORT_SYMBOL(pci_enable_link_state);
-> =20
->  /**
-> - * pci_enable_link_state_locked - Clear and set the default device link =
-state
-> - * so that the link may be allowed to enter the specified states. Note t=
-hat if
-> - * the BIOS didn't grant ASPM control to the OS, this does nothing becau=
-se we
-> - * can't touch the LNKCTL register. Also note that this does not enable =
-states
-> - * disabled by pci_disable_link_state(). Return 0 or a negative errno.
-> + * pci_enable_link_state_locked - Enable device's link state
-> + * @pdev: PCI device
-> + * @state: Mask of ASPM link states to enable
-> + *
-> + * Enable device's link state, so the link will enter the specified stat=
-es.
-> + * Note that if the BIOS didn't grant ASPM control to the OS, this does
-> + * nothing because we can't touch the LNKCTL register.
->   *
->   * Note: Ensure devices are in D0 before enabling PCI-PM L1 PM Substates=
-, per
->   * PCIe r6.0, sec 5.5.4.
->   *
-> - * @pdev: PCI device
-> - * @state: Mask of ASPM link states to enable
-> - *
->   * Context: Caller holds pci_bus_sem read lock.
-> + *
-> + * Return: 0 on success, a negative errno otherwise.
->   */
->  int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
->  {
->=20
->=20
---8323328-846575285-1756206986=:934--
 
