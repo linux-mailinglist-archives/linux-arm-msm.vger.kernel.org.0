@@ -1,177 +1,352 @@
-Return-Path: <linux-arm-msm+bounces-70884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70885-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2A3EB35AA0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 13:04:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 123C7B35ABF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 13:10:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 72F592A17B0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 11:04:10 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 13AE07B3091
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 11:08:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7604322754;
-	Tue, 26 Aug 2025 11:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDF329D280;
+	Tue, 26 Aug 2025 11:09:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jahjgjn/"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="MNUnQ5X3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD29321438
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 11:03:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B5C9199935;
+	Tue, 26 Aug 2025 11:09:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756206200; cv=none; b=b/zhyStPbHuVLmkjbcqoJl2bdHW5A+ZesuHYw6wgFRvlAUO+94m7cVB+I9G0Upo7flMparvG5hr9w9QXlvXLhGSij2j8amjjbyu20U6B/V7cJKpZw06tkE9NrbV4ce0qqgJcEW5GSWBynCZI/oVTpRWAz+2ELW1l6qHCdooNegk=
+	t=1756206594; cv=none; b=e7ml7PzhRsUX725bScvciZ3HkA2HodlQOaAdt6FU8OwinruyJp27lpEf3OydOsRi9t5CLJ16fIcdGSnjyHGVN0RHxepB7B8/FWjz3yW6l0byd4srVM/ABirfOjeFsiuxCpPsA0bU0Ot7tdxTipGTX+5mnWxriI3t1IC0CrlK6Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756206200; c=relaxed/simple;
-	bh=wjx9GMHTJv+sVXCnnpOXOAGgSyeX0KAgl8FPgsVCss8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=I5g/YU/4XZTFcQhDH7qUsFuVSpzZh+1evqXV9TQrUYwvX9+ak2617j/HzfQruBXMfJHYA19+D6bijTLGYoDvLS4aeM9fiaNVaW8aG1qdQEb9QYhfb4hF+nb2uKPR3SMgDZdAHZqwywuPxqz2NjPGgzCGDrL1HwDmqvRVwLc9OZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jahjgjn/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57Q8Yc0o019757
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 11:03:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+DPSOTrO4cYwZj0R18ru4Kcr+olXie/WQj6w6L3l2ss=; b=jahjgjn/kxh6JZTo
-	n78k0lULURc8IHG/Robbj7CS9D6Ss9qepDv0yicP4w9Q1ahpv9UlZNb54wuGrtqu
-	QUd0dBqXPJvHfP5MZTWZZIh6yisFRFZKXoSKQ153mLYOdPNHaM4Kfn0IMDZuOe9t
-	idCvDWytRnisTRH+IhQJMG8a3IgYDmMvA9CbpCItsGw6vrtdAKsGUer210NkF/IF
-	5sDZQxyL+tyN4Vu6k5OyBOeKBLER5C6KsbqO1zdA6vQeuygF9g2LZ2rfroTY/iAg
-	j5SRGZIt/Q990yNdOHnxW1G+lWjEtGConyEJbv/r/WKjt0lect2qmm2rcA239SQ8
-	bBFItw==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5unre0q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 11:03:18 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2465bc6da05so48378965ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 04:03:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756206197; x=1756810997;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+DPSOTrO4cYwZj0R18ru4Kcr+olXie/WQj6w6L3l2ss=;
-        b=QhR7YhtgRrnh2Rk2jQViDXUBglatS19YhYTgMrzXVzHmmu6EblxP0YRiKZL5R8Jrbn
-         riPoNKryf3UtRe6kikIoYujJTzG88Av0myVRIWBOAhc56MUP7g11hIkbb48jEUdwNJXf
-         jhrGHknVhPZDhIbHh78P2MSf1FkorDd01yqlIJYBa9pdCvsfeqC5SZ2c2ydnaUF03bc0
-         NyX/mABhvyLBhyly7Bw2O5u2bnc25mrkT+FMJWoCzRPy40ajHN+Z32uU1X08tyJeD0PL
-         Ix5XaKNwbHX5PhetUL7b1TyonvtaTGhCp+UhJG7jPnNVDYLzyEgy2le8P1PwKcKepvTT
-         R/QA==
-X-Gm-Message-State: AOJu0YwK+qMgZlq4/7WTav5wcg7xIG+hFCqovAHZPdLSKBT8bTmQCjIl
-	90mSQorl2PAVM5L3CUfQs/Z28cdNmGmXfcDDsdSQaE9sddHaTJLhlFFsB28+jK1yjERGR32X9Fk
-	j9dDfz+1cVVB18HkWU6jV8zRldQ9JWct3Cmc97M1p4Lmqgh+8bRV5yFoLQFc2T0KP5mi3
-X-Gm-Gg: ASbGncs3/W6hnYQ8zV9mwwRRMXWlsFbxnSe69FeKA+v5WdeL5mZx2anAGrUaSiTIaCF
-	zoO9jDFZhve9eZjcUK1HwzuUQAahDBOci/ci7x4qldReIbiVh03p8pe8M2cqv4JJXE8J6tdoSIW
-	w6feS7i7Yrs08UfGo75KD3rAztdLZwox24MeVTgc6JxxXyaPPTAvf648ZWbU0Zv4y5V64W7WWGw
-	ke/OVFSqoqLEgIaqcx546nOr/MEqr2ljeIdh9KKE8ZYToo60Tuy7CY4fZ7xObcJ6GYa7ubISRwE
-	3TCdTkhw4MU08tKPvaafnQCC/2sRFxui2roHgw0RHjFtKTz33tLdm2QqAGkmS8EPH87rHCYwyzY
-	=
-X-Received: by 2002:a17:902:cec2:b0:246:61e:b564 with SMTP id d9443c01a7336-2462f1d82c4mr184211965ad.61.1756206196090;
-        Tue, 26 Aug 2025 04:03:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFb/AZx3XW6vrNMBVNQNlwghugBEj5Jl+a3IPk5UUCn6++1jKG/5K7QzZFQ/5XN3S+gDRMYRg==
-X-Received: by 2002:a17:902:cec2:b0:246:61e:b564 with SMTP id d9443c01a7336-2462f1d82c4mr184211365ad.61.1756206195528;
-        Tue, 26 Aug 2025 04:03:15 -0700 (PDT)
-Received: from hu-krichai-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246688a5e5esm93207955ad.161.2025.08.26.04.03.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 04:03:15 -0700 (PDT)
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Date: Tue, 26 Aug 2025 16:32:55 +0530
-Subject: [PATCH v3 3/3] PCI: qcom: Restrict port parsing only to pci child
- nodes
+	s=arc-20240116; t=1756206594; c=relaxed/simple;
+	bh=CkeQv8JCpXRiBeQmeJclVsjkmIRNHeTxVyCEIZHQ8rQ=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=DCElgWg0vkI5zMe0OOvr3EUG4SgBQe/Q0XmVPfPOsBBex1cRdEPBEEZ5PTlPxyLQxdJ3LOM76SUU9K7/MZ3bdGXMyMjT1lgiu2LThS7v0Kk7pz4KNYiCFvkQYh+d5oieJISxKNvArz2GqIIioIHzK/Woq3NRzMdHn/xWnqNB7vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=MNUnQ5X3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57Q5QUxZ013270;
+	Tue, 26 Aug 2025 11:09:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=09+H95LC1jngBr5AC9iW5D
+	m3V6CiAv4To8aTiQJrTxI=; b=MNUnQ5X3rp/xo8H82qRgjQ5/x57h+2rnX3kuUC
+	/8B4pVwZ1k6g3HhpKuXENJ1M4kOLq/ac5Fe4E2DQFcv6VlZxZSrSJSElYDfVSYrr
+	onJgslfjRePHFxixLF1gIZO3nHvNI1GL82+QaaK5B5dmtuDu+ypdscaEmWwHCmRp
+	X478Enjh83ZbCkZfLHJmkJidqVL9hcwNb1TuPcqZxEtEJRG8GG8f0UShrM2GZ4Je
+	olPy/n/Cjgi+F17tGWEOhrUJ3gxccLjPE0k5GjrjBMwQC7JFxAHd1q27LDTz2nAa
+	GnmKEPqdv3fcE4SBsvgL3ATJkOLBO2ul4Ep7w8oErPl6T9eA==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5xprphh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Aug 2025 11:09:45 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57QB9j1t012202
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 26 Aug 2025 11:09:45 GMT
+Received: from hu-utiwari-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Tue, 26 Aug 2025 04:09:42 -0700
+From: <quic_utiwari@quicinc.com>
+To: <herbert@gondor.apana.org.au>, <thara.gopinath@gmail.com>,
+        <davem@davemloft.net>
+CC: <linux-crypto@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_neersoni@quicinc.com>,
+        <quic_kuldsing@quicinc.com>, <quic_gaurkash@quicinc.com>
+Subject: [PATCH v2] crypto: qce - Add runtime PM and interconnect bandwidth scaling support
+Date: Tue, 26 Aug 2025 16:39:17 +0530
+Message-ID: <20250826110917.3383061-1-quic_utiwari@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250826-pakala-v3-3-721627bd5bb0@oss.qualcomm.com>
-References: <20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com>
-In-Reply-To: <20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com>
-To: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
-        quic_mrana@quicinc.com,
-        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756206175; l=1564;
- i=krishna.chundru@oss.qualcomm.com; s=20230907; h=from:subject:message-id;
- bh=wjx9GMHTJv+sVXCnnpOXOAGgSyeX0KAgl8FPgsVCss8=;
- b=C0xBQUzGHEvIUVnt+TDkqiJDzJlJ3dBZwRdN3YqQCt7Cp8x8kuf2+DS17yh6DcNQNE0FJYI5o
- XBtet90TSDPCSMC2G8ETJoAda/ei6+0M0XJb054TozCWTN7TI3xe++D
-X-Developer-Key: i=krishna.chundru@oss.qualcomm.com; a=ed25519;
- pk=10CL2pdAKFyzyOHbfSWHCD0X0my7CXxj8gJScmn1FAg=
-X-Proofpoint-GUID: O9GJ5mo0Vu6KXOBM4imP_L6pDwIgBGK5
-X-Proofpoint-ORIG-GUID: O9GJ5mo0Vu6KXOBM4imP_L6pDwIgBGK5
-X-Authority-Analysis: v=2.4 cv=JJo7s9Kb c=1 sm=1 tr=0 ts=68ad9476 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=Py5lcOcq67Lbq8UMOfUA:9
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMSBTYWx0ZWRfXzzRnfIahCstA
- B5HcAsxzeCfcWvxk+iA07QLfQ7+hitc4QvFkA1XejFcWX5FWgRKl8lqSaroKP+wthLWFI1e8JDg
- xSCYwdfR+gAiE+papWCMFG9EpJyLkDHgB2cl0zfjGW8g9ecNbo2RdV6i3Tt97nTalumFvULPdUo
- nMki7URdQyUe+OCcQjSmAD7QoFrolIbf2Sbe+wnlv6NKxH/jJXRK2NNP7VoIKGva5sb1JQPI651
- R95J7tynMua0TTTYyx98BS6UpqKb1lPyR2wJdeaXvdCytleS5LxveeiwHz+ezbf2ZuTFgf21ioM
- c+PY631LeeRH64cpCTsKMOnamTJw/lH01F3W89dNWOJcR/4WBv08c3VpOaQ1NJsxFLN2zbPikSE
- cRyY719r
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=KOlaDEFo c=1 sm=1 tr=0 ts=68ad95f9 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=gfq5eMhS0q4ALXmgQ6sA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: 2ztlS_nzhQaM33PpZ_r-n1R9_lc-9BQn
+X-Proofpoint-ORIG-GUID: 2ztlS_nzhQaM33PpZ_r-n1R9_lc-9BQn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX64+Q3TqHQmz1
+ X3o10Q8C6eQCiZNDbYTRF2/KdM8W/0SMSSOoq2x3heea+8ZVkr9vXw0C1a9YbaFaxNmeLyv/Kly
+ QdzAD/ZzmxM0ZHXSvDyWPtB0hd3dsg4ZaocbaYbcAAA3RIpq0tzQfTNWMPJACCh5GY/8rr/FqOG
+ hTjccLMEp8CnzWukqkzD+1Qv7iK6POi0O8rfnmPSJL9GonN3VfmNuwOIUx6sN9o4fTXR2KasfOT
+ Wlj2idq+yGe7OR9GmHzTnIrDohOu8fdm8EC8zCyRnF4WEO7MNIg/Ae3GqCk7KtL5apLdz5kaP8f
+ om5l3kIcm09hrg/vIDu2m3TyLH9Ht157RpADN4aqDPTWGxTw/+nmQUQKxO7LZkg4ir/lBxv9WWA
+ TnMMtIis
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 adultscore=0 bulkscore=0 spamscore=0 impostorscore=0
- malwarescore=0 clxscore=1015 priorityscore=1501 suspectscore=0
+ malwarescore=0 clxscore=1011 bulkscore=0 adultscore=0 phishscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230031
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
 
-The qcom_pcie_parse_ports() function currently iterates over all available
-child nodes of the PCIe controller's device tree node. This includes
-unrelated nodes such as OPP (Operating Performance Points) nodes, which do
-not contain the expected 'reset' and 'phy' properties. As a result, parsing
-fails and the driver falls back to the legacy method of parsing the
-controller node directly. However, this fallback also fails when properties
-are shifted to the root port, leading to probe failure.
+From: Udit Tiwari <quic_utiwari@quicinc.com>
 
-Fix this by restricting the parsing logic to only consider child nodes with
-device_type = "pci", which is the expected and required property for PCIe
-ports as defined in pci-bus-common.yaml.
+The Qualcomm Crypto Engine (QCE) driver currently lacks support for
+runtime power management (PM) and interconnect bandwidth control.
+As a result, the hardware remains fully powered and clocks stay
+enabled even when the device is idle. Additionally, static
+interconnect bandwidth votes are held indefinitely, preventing the
+system from reclaiming unused bandwidth.
 
-Fixes: a2fbecdbbb9d ("PCI: qcom: Add support for parsing the new Root Port binding")
-Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Address this by enabling runtime PM and dynamic interconnect
+bandwidth scaling to allow the system to suspend the device when idle
+and scale interconnect usage based on actual demand. Improve overall
+system efficiency by reducing power usage and optimizing interconnect
+resource allocation.
+
+Make the following changes as part of this integration:
+
+- Add support for pm_runtime APIs to manage device power state
+  transitions.
+- Implement runtime_suspend() and runtime_resume() callbacks to gate
+  clocks and vote for interconnect bandwidth only when needed.
+- Replace devm_clk_get_optional_enabled() with
+  devm_clk_get_optional() and move clock enabling to the resume path.
+- Register dev_pm_ops with the platform driver to hook into the PM
+  framework.
+
+Tested:
+
+- Verify that ICC votes drop to zero after probe and upon request
+  completion.
+- Confirm that runtime PM usage count increments during active
+  requests and decrements afterward.
+- Observe that the device correctly enters the suspended state when
+  idle.
+
+Signed-off-by: Udit Tiwari <quic_utiwari@quicinc.com>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 2 ++
- 1 file changed, 2 insertions(+)
+Changes in v2:
+- Extend suspend/resume support to include runtime PM and ICC scaling.
+- Register dev_pm_ops and implement runtime_suspend/resume callbacks.
+- Link to v1: https://lore.kernel.org/lkml/20250606105808.2119280-1-quic_utiwari@quicinc.com/
+---
+ drivers/crypto/qce/core.c | 120 ++++++++++++++++++++++++++++++++++----
+ 1 file changed, 108 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 294babe1816e4d0c2b2343fe22d89af72afcd6cd..fbed7130d7475aafb0d8adf07427c3495921152f 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1740,6 +1740,8 @@ static int qcom_pcie_parse_ports(struct qcom_pcie *pcie)
- 	int ret = -ENOENT;
+diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+index e95e84486d9a..70b9d9e739be 100644
+--- a/drivers/crypto/qce/core.c
++++ b/drivers/crypto/qce/core.c
+@@ -12,6 +12,7 @@
+ #include <linux/module.h>
+ #include <linux/mod_devicetable.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_runtime.h>
+ #include <linux/types.h>
+ #include <crypto/algapi.h>
+ #include <crypto/internal/hash.h>
+@@ -91,22 +92,28 @@ static int qce_handle_queue(struct qce_device *qce,
+ 	struct crypto_async_request *async_req, *backlog;
+ 	int ret = 0, err;
  
- 	for_each_available_child_of_node_scoped(dev->of_node, of_port) {
-+		if (!of_node_is_type(of_port, "pci"))
-+			continue;
- 		ret = qcom_pcie_parse_port(pcie, of_port);
- 		if (ret)
- 			goto err_port_del;
-
++	ret = pm_runtime_get_sync(qce->dev);
++	if (ret < 0) {
++		pr_err("error with pm_runtime_get_sync");
++		pm_runtime_put_noidle(qce->dev);
++		return ret;
++	}
++
+ 	scoped_guard(mutex, &qce->lock) {
+ 		if (req)
+ 			ret = crypto_enqueue_request(&qce->queue, req);
+ 
+ 		/* busy, do not dequeue request */
+ 		if (qce->req)
+-			return ret;
++			goto qce_suspend;
+ 
+ 		backlog = crypto_get_backlog(&qce->queue);
+ 		async_req = crypto_dequeue_request(&qce->queue);
+ 		if (async_req)
+ 			qce->req = async_req;
+ 	}
+-
+ 	if (!async_req)
+-		return ret;
++		goto qce_suspend;
+ 
+ 	if (backlog) {
+ 		scoped_guard(mutex, &qce->lock)
+@@ -119,6 +126,8 @@ static int qce_handle_queue(struct qce_device *qce,
+ 		schedule_work(&qce->done_work);
+ 	}
+ 
++qce_suspend:
++	pm_runtime_put_autosuspend(qce->dev);
+ 	return ret;
+ }
+ 
+@@ -208,37 +217,43 @@ static int qce_crypto_probe(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		return ret;
+ 
+-	qce->core = devm_clk_get_optional_enabled(qce->dev, "core");
++	qce->core = devm_clk_get_optional(dev, "core");
+ 	if (IS_ERR(qce->core))
+ 		return PTR_ERR(qce->core);
+ 
+-	qce->iface = devm_clk_get_optional_enabled(qce->dev, "iface");
++	qce->iface = devm_clk_get_optional(dev, "iface");
+ 	if (IS_ERR(qce->iface))
+ 		return PTR_ERR(qce->iface);
+ 
+-	qce->bus = devm_clk_get_optional_enabled(qce->dev, "bus");
++	qce->bus = devm_clk_get_optional(dev, "bus");
+ 	if (IS_ERR(qce->bus))
+ 		return PTR_ERR(qce->bus);
+ 
+-	qce->mem_path = devm_of_icc_get(qce->dev, "memory");
++	qce->mem_path = devm_of_icc_get(dev, "memory");
+ 	if (IS_ERR(qce->mem_path))
+ 		return PTR_ERR(qce->mem_path);
+ 
+-	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
++	/* Enable runtime PM after clocks and ICC are acquired */
++
++	ret = devm_pm_runtime_enable(dev);
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = devm_qce_dma_request(qce->dev, &qce->dma);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret)
+ 		return ret;
+ 
++	ret = devm_qce_dma_request(qce->dev, &qce->dma);
++	if (ret)
++		goto err_pm;
++
+ 	ret = qce_check_version(qce);
+ 	if (ret)
+-		return ret;
++		goto err_pm;
+ 
+ 	ret = devm_mutex_init(qce->dev, &qce->lock);
+ 	if (ret)
+-		return ret;
++		goto err_pm;
+ 
+ 	INIT_WORK(&qce->done_work, qce_req_done_work);
+ 	crypto_init_queue(&qce->queue, QCE_QUEUE_LENGTH);
+@@ -246,9 +261,89 @@ static int qce_crypto_probe(struct platform_device *pdev)
+ 	qce->async_req_enqueue = qce_async_request_enqueue;
+ 	qce->async_req_done = qce_async_request_done;
+ 
+-	return devm_qce_register_algs(qce);
++	ret = devm_qce_register_algs(qce);
++	if (ret)
++		goto err_pm;
++
++	/* Configure autosuspend after successful init */
++	pm_runtime_set_autosuspend_delay(dev, 100);
++	pm_runtime_use_autosuspend(dev);
++	pm_runtime_mark_last_busy(dev);
++	pm_runtime_put_autosuspend(dev);
++
++	return 0;
++
++err_pm:
++	pm_runtime_put(dev);
++
++	return ret;
++}
++
++static int qce_runtime_suspend(struct device *dev)
++{
++	struct qce_device *qce = dev_get_drvdata(dev);
++
++	clk_disable_unprepare(qce->bus);
++	clk_disable_unprepare(qce->iface);
++	clk_disable_unprepare(qce->core);
++	icc_disable(qce->mem_path);
++
++	return 0;
++}
++
++static int qce_runtime_resume(struct device *dev)
++{
++	struct qce_device *qce = dev_get_drvdata(dev);
++	int ret = 0;
++
++	ret = icc_enable(qce->mem_path);
++	if (ret)
++		return ret;
++
++	ret = icc_set_bw(qce->mem_path, QCE_DEFAULT_MEM_BANDWIDTH, QCE_DEFAULT_MEM_BANDWIDTH);
++	if (ret)
++		goto err_icc;
++
++	ret = clk_prepare_enable(qce->core);
++	if (ret)
++		goto err_icc;
++
++	ret = clk_prepare_enable(qce->iface);
++	if (ret)
++		goto err_core;
++
++	ret = clk_prepare_enable(qce->bus);
++	if (ret)
++		goto err_iface;
++
++	return 0;
++
++err_iface:
++	clk_disable_unprepare(qce->iface);
++err_core:
++	clk_disable_unprepare(qce->core);
++err_icc:
++	icc_disable(qce->mem_path);
++	return ret;
+ }
+ 
++static int qce_suspend(struct device *dev)
++{
++	return qce_runtime_suspend(dev);
++}
++
++static int qce_resume(struct device *dev)
++{
++	return qce_runtime_resume(dev);
++}
++
++static const struct dev_pm_ops qce_crypto_pm_ops = {
++	.runtime_suspend = qce_runtime_suspend,
++	.runtime_resume  = qce_runtime_resume,
++	.suspend         = qce_suspend,
++	.resume          = qce_resume,
++};
++
+ static const struct of_device_id qce_crypto_of_match[] = {
+ 	{ .compatible = "qcom,crypto-v5.1", },
+ 	{ .compatible = "qcom,crypto-v5.4", },
+@@ -262,6 +357,7 @@ static struct platform_driver qce_crypto_driver = {
+ 	.driver = {
+ 		.name = KBUILD_MODNAME,
+ 		.of_match_table = qce_crypto_of_match,
++		.pm = &qce_crypto_pm_ops,
+ 	},
+ };
+ module_platform_driver(qce_crypto_driver);
 -- 
 2.34.1
 
