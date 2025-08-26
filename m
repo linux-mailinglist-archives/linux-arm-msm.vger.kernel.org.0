@@ -1,40 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-70928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0EA0B3708B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 18:35:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3F4E5B370AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 18:40:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 13A693A9663
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 16:35:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 47E8C7A559B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 16:39:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B231B3680A8;
-	Tue, 26 Aug 2025 16:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69D4D1F2380;
+	Tue, 26 Aug 2025 16:40:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="G58DRmbu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 984B5362078;
-	Tue, 26 Aug 2025 16:35:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD7F72BEFF6
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 16:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756226126; cv=none; b=WzpnlZGTV8MbtXNa1m3NS8QdCm/56MDcgWoMYggcCn3KExtxnEgZlrfI7C/hKw/GJkCI62Kfmmaz+3969AMx6CAStR10r5Ang1YXoYg5CzbnClXA26HyHkSDg2WxxQFjXE4dSpV5QxYBH/m+MkAFecXlBAsULiwB3Ym7TUHscns=
+	t=1756226443; cv=none; b=WeeuDz1rl2qQHFf4uiUTHF05T9U+8MxXoUzWmhwnPkzthw0bO/hARaEsQOrdc0+5w7YxY7u4ifG9GroU93Ahrp+61LPfCl+BcoQ+aIGZGx7fvu1g5ub7KVgbKkJfGlsQiJ37L0nG9ydBguXxyFtGUnmH/zx7E+0bCSi1Q7gbtGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756226126; c=relaxed/simple;
-	bh=Qr2qTi+512p+e4SYLAIsyC00OV8S61hM2BP79hz1vL4=;
+	s=arc-20240116; t=1756226443; c=relaxed/simple;
+	bh=J56EJimurRukl3HtUzV6/w+RvxdfQC5smmvRwJRThGk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RTnm4y7h5ZZ/UTvzOdkB5oxEB9mFnSoMaZOUaAC+YHOneg6tbAG/4vKqRoYuNWYP1XBSdhL98+tRjMJ62MELogaQz2m9KkQzdPQfi3hfj3UovIXRRcdnzzAtUayna3VLzimij34HlQwmgWMT6WH3FxGh5D/QevhHJho1AQiMA2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8E4571A25;
-	Tue, 26 Aug 2025 09:35:15 -0700 (PDT)
-Received: from [10.57.4.86] (unknown [10.57.4.86])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A5A1B3F694;
-	Tue, 26 Aug 2025 09:35:17 -0700 (PDT)
-Message-ID: <8d6ac059-fc8f-4a5d-b49e-d02777c01cfb@arm.com>
-Date: Tue, 26 Aug 2025 17:35:15 +0100
+	 In-Reply-To:Content-Type; b=eZ3H+T2wW42A1CyfPRDYALNCXRzcwuEjKB+t/IrF9SgOXdEv4GtXRsRz+uczuGUqhYiNoL7L8LbIFiZN8Q8QLNwUkKnHJJw3yBprygbtRjN2x35WCAQCLfW458E2MIkC1m4J3EVvDN2GCGOmt13CO45yMTM2YtoGHsZ+KhK5QhQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=G58DRmbu; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QFrexc004390
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 16:40:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	D8Cf1CJKboWxP5q6R9op8Umbt3K2i/Dw/P1MbHCzwOI=; b=G58DRmbuwEUS4o2h
+	8tV3cbWxBlhGZysuRweeh60AncgOaM3rPSQVPCZoBEAdLGxK60cKoGCIOuJEcL7m
+	Q9mNEve5xv+EfeCXpqc3lWz+dr/U9cV+wYYyO1mPltRPWf2NarpdBrziynk4lUsz
+	NeFX+VrObpy/5frnVlzvuOKGstYpF33J3323wdw/xDs9NC6GxCFqOLKk3aG9gaF/
+	vX/DA3S0beVvqKryKMVJ+L5EZe/2ZKps8tdsnIKx7+EwA68MhxdGvLDSWLRz3R6x
+	YAiQoB857POlABA/DuetPtzzqDFQ7rzMPHPm2rA5kM1xdzqfeXjPaA/ca0Jx3Ly/
+	ju7H9g==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5we1gct-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 16:40:40 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-24457ef983fso118866275ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 09:40:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756226439; x=1756831239;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D8Cf1CJKboWxP5q6R9op8Umbt3K2i/Dw/P1MbHCzwOI=;
+        b=ALJ0o/cDngpBqHwTIIMyW3+g6+kmO/x7b3vpeJOs/cMxipw1lBxKQDd3m+YVelf2X0
+         EsSqsSYT1oCSpHQ9xo5PLQEtt4n6n2huXt3MvDdcxSyqOaoTlStS/zm+APG4FIS11Wis
+         rnI9ev2jy0bZ8rxE5GmsStcoNMf/8Mo9Thsi8BAZoRs+fVO1wfk8o/jHzOcHG2DYE500
+         ZBTa0rGC2psq1kUak6m7/MPHnBarGXO7DWsi7m9+Z4eV1hnkvmt9M6YqcwqIG3Tt9icG
+         hqmXh7wRVY5wZ0AtZDigSMcztynftL+Egsi5aYkaNOdBVZ4nr6B3lNsdAnZWLdbQ1yLP
+         9CRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW4A0RgGmECtwf5gQ77aAmbRBUc5ioQJc1tCsSbu04LB44408s61yU3tYXM8UqeQcS9uTWLk0QA3Vd81Sm7@vger.kernel.org
+X-Gm-Message-State: AOJu0YxS0AmCYpwwdesazlQXSsEDnD9SjT9cEhUCdKp0YgZ3OJ+PjXCB
+	14fbA54CJGXrd2kTHE52r8f7qVXVSjcY+ouRT0uKr+Y9BZ33Kt/cePrYn3gugGjncNOhl1Yor4t
+	aByPWlcsr8j6+55xhLSiwu3AxkvDxFfiAoI4pctyR/mK/e41whbqnA1b/H3/vWRDFjbKn
+X-Gm-Gg: ASbGnctYisw8UnpL+Ya8IEm2STMux4mnmdIRdIpjedIlEIs4VickgN+SQsI/Xcp1D1V
+	hVV9nhZg+h1JUQff/DdrVTSg53xKHPT3KJtCqQ0T+50NERa69Q3tqaabmOd2djuZVZTq9B5BJVA
+	u1bHfYn3Nm6zXw7+Ia8MOFl7hLaQghYtFUhN+d9BQGNKCg2dm5GTPGdEfS8hA+2LEJbKRs2rdWN
+	utOvkgNt6/6vsuz51NCdVVvipM/vlr2H9vOBhM93R7zcrkWG2t4VZPzolAAR1KVFn9Vq5o0cSVx
+	59hbJaU+JeJufTSqIwJxTxsVt7hYYxYgmYlJbtWPEi4Keod64sV5TLlgf6tEGzzEG9LmTi41+Cd
+	8N7FLFog+JPnWgO8mXwc=
+X-Received: by 2002:a17:903:187:b0:235:ec11:f0ee with SMTP id d9443c01a7336-2462eded8bbmr208960565ad.14.1756226439413;
+        Tue, 26 Aug 2025 09:40:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkvFu2SKqaYn2g8jSdQZR+kEMDsbfiuYDSgXyjcnbv8H+hGCJesN+r1R0F9BmVI7ktbx+DaA==
+X-Received: by 2002:a17:903:187:b0:235:ec11:f0ee with SMTP id d9443c01a7336-2462eded8bbmr208960165ad.14.1756226438902;
+        Tue, 26 Aug 2025 09:40:38 -0700 (PDT)
+Received: from [10.227.110.203] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24668864a4fsm100775575ad.91.2025.08.26.09.40.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 26 Aug 2025 09:40:38 -0700 (PDT)
+Message-ID: <e4178055-f3a6-4cb3-8c86-731130c6f25a@oss.qualcomm.com>
+Date: Tue, 26 Aug 2025 09:40:35 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -42,83 +90,96 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/19] perf: Introduce positive capability for sampling
-To: Mark Rutland <mark.rutland@arm.com>, Peter Zijlstra <peterz@infradead.org>
-Cc: mingo@redhat.com, will@kernel.org, acme@kernel.org, namhyung@kernel.org,
- alexander.shishkin@linux.intel.com, jolsa@kernel.org, irogers@google.com,
- adrian.hunter@intel.com, kan.liang@linux.intel.com,
- linux-perf-users@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
- linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
- linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
- linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
- sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
- linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
- linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
- iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
- linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-riscv@lists.infradead.org
-References: <cover.1755096883.git.robin.murphy@arm.com>
- <ae81cb65b38555c628e395cce67ac6c7eaafdd23.1755096883.git.robin.murphy@arm.com>
- <20250826130806.GY4067720@noisy.programming.kicks-ass.net>
- <aK22izKE4r6wI_D9@J2N7QTR9R3>
-From: Robin Murphy <robin.murphy@arm.com>
-Content-Language: en-GB
-In-Reply-To: <aK22izKE4r6wI_D9@J2N7QTR9R3>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v2 6/8] wifi: ath12k: Use
+ pci_{enable/disable}_link_state() APIs to enable/disable ASPM states
+To: =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Manivannan Sadhasivam
+ <mani@kernel.org>,
+        Lorenzo Pieralisi <lpieralisi@kernel.org>,
+        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Nirmal Patel <nirmal.patel@linux.intel.com>,
+        Jonathan Derrick <jonathan.derrick@linux.dev>,
+        Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org,
+        LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
+        ath11k@lists.infradead.org, ath10k@lists.infradead.org,
+        Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Qiang Yu <qiang.yu@oss.qualcomm.com>
+References: <20250825-ath-aspm-fix-v2-0-61b2f2db7d89@oss.qualcomm.com>
+ <20250825-ath-aspm-fix-v2-6-61b2f2db7d89@oss.qualcomm.com>
+ <2fab10a7-8758-4a5c-95ff-2bb9a6dea6bf@oss.qualcomm.com>
+ <705a4fe5-658e-25ac-9e4d-6b8089abca46@linux.intel.com>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <705a4fe5-658e-25ac-9e4d-6b8089abca46@linux.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: W48J3LX5E30QZa5yljPCqXTO6kEadKew
+X-Proofpoint-ORIG-GUID: W48J3LX5E30QZa5yljPCqXTO6kEadKew
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfXwYifTRQJT24v
+ 5MkFxLQdacZhz7a/zSdU7FIxuqqqIF/82S9iy3oEFPHlG9Dre8Pk02Ia7JKCJe1NZ+EhxjFpq26
+ oIRxCYixeGR8npk6zx8R8dCARbtCHAuDDyDz46ACindEqH7aYqIX+OFo1hcp2beWgb2YUv+C7lM
+ NcI1ayjI4+aH7hcvaBHV9+mZ8YJI40nPCfL766T36Bp7RLJFgevMOC0GIL15H+0IUeEJgWsBOCF
+ 2O1uAJZLw/t9aH+I+zFK/y5izmTfwx5jq5oMd322w+1OAqmWGEwozLvfJ2AEK4MvFq7dJ/WFiI2
+ tiyAx5Ph6D4JNmAn82KFrhEQt9C31yPkWxAWp+gJ+Dbkl0fK2O6xeeFaunlWIDxr5Z86qfcYqFT
+ KfQRaRjb
+X-Authority-Analysis: v=2.4 cv=BJazrEQG c=1 sm=1 tr=0 ts=68ade388 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=8JU3Fd4Pt_mHVKaqA_UA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 priorityscore=1501 clxscore=1015 impostorscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508230033
 
-On 2025-08-26 2:28 pm, Mark Rutland wrote:
-> On Tue, Aug 26, 2025 at 03:08:06PM +0200, Peter Zijlstra wrote:
->> On Wed, Aug 13, 2025 at 06:01:08PM +0100, Robin Murphy wrote:
->>> Sampling is inherently a feature for CPU PMUs, given that the thing
->>> to be sampled is a CPU context. These days, we have many more
->>> uncore/system PMUs than CPU PMUs, so it no longer makes much sense to
->>> assume sampling support by default and force the ever-growing majority
->>> of drivers to opt out of it (or erroneously fail to). Instead, let's
->>> introduce a positive opt-in capability that's more obvious and easier to
->>> maintain.
->>
->>> diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
->>> index 4d439c24c901..bf2cfbeabba2 100644
->>> --- a/include/linux/perf_event.h
->>> +++ b/include/linux/perf_event.h
->>> @@ -294,7 +294,7 @@ struct perf_event_pmu_context;
->>>   /**
->>>    * pmu::capabilities flags
->>>    */
->>> -#define PERF_PMU_CAP_NO_INTERRUPT	0x0001
->>> +#define PERF_PMU_CAP_SAMPLING		0x0001
->>>   #define PERF_PMU_CAP_NO_NMI		0x0002
->>>   #define PERF_PMU_CAP_AUX_NO_SG		0x0004
->>>   #define PERF_PMU_CAP_EXTENDED_REGS	0x0008
->>> @@ -305,6 +305,7 @@ struct perf_event_pmu_context;
->>>   #define PERF_PMU_CAP_EXTENDED_HW_TYPE	0x0100
->>>   #define PERF_PMU_CAP_AUX_PAUSE		0x0200
->>>   #define PERF_PMU_CAP_AUX_PREFER_LARGE	0x0400
->>> +#define PERF_PMU_CAP_NO_INTERRUPT	0x0800
->>
->> So NO_INTERRUPT was supposed to be the negative of your new SAMPLING
->> (and I agree with your reasoning).
->>
->> What I'm confused/curious about is why we retain NO_INTERRUPT?
+On 8/26/2025 9:00 AM, Ilpo Järvinen wrote:
+> On Tue, 26 Aug 2025, Jeff Johnson wrote:
 > 
-> I see from your other reply that you spotted the next patch does that.
+>> On 8/25/2025 10:44 AM, Manivannan Sadhasivam via B4 Relay wrote:
+>>> --- a/drivers/net/wireless/ath/ath12k/Kconfig
+>>> +++ b/drivers/net/wireless/ath/ath12k/Kconfig
+>>> @@ -1,7 +1,7 @@
+>>>  # SPDX-License-Identifier: BSD-3-Clause-Clear
+>>>  config ATH12K
+>>>  	tristate "Qualcomm Technologies Wi-Fi 7 support (ath12k)"
+>>> -	depends on MAC80211 && HAS_DMA && PCI
+>>> +	depends on MAC80211 && HAS_DMA && PCI && PCIEASPM
+>>
+>> As you point out in patch 1/8, PCIEASPM is protected by EXPERT.
+>>
+>> Won't this prevent the driver from being built (or even showing up in
+>> menuconfig) if EXPERT is not enabled?
 > 
-> For the sake of other reviewers or anyone digging through the git
-> history it's probably worth adding a line to this commit message to say:
+> It doesn't work that way, PCIEASPM defaults to y:
 > 
-> | A subsequent patch will remove PERF_PMU_CAP_NO_INTERRUPT as this
-> | requires some additional cleanup.
+> $ sed -i -e 's|CONFIG_PCIEASPM=y|CONFIG_PCIEASPM=n|g' .config && make oldconfig && grep -e 'CONFIG_EXPERT ' -e 'CONFIG_PCIEASPM=' .config
+> #
+> # configuration written to .config
+> #
+> # CONFIG_EXPERT is not set
+> CONFIG_PCIEASPM=y
+> 
+>> Should we consider having a separate CONFIG item that is used to protect just
+>> the PCI ASPM interfaces? And then we could split out the ath12k_pci_aspm
+>> functions into a separate file that is conditionally built based upon that
+>> config item?
+>>
+>> Or am I too paranoid since everyone enables EXPERT?
+> 
+> One just cannot control PCIEASPM value if EXPERT is not set. ASPM is 
+> expected to be enabled, or "experts" get to keep the pieces.
+> 
 
-Yup, the main reason is the set of drivers getting the new cap is 
-smaller than the set of drivers currently not rejecting sampling events, 
-so I wanted it to be clearly visible in the patch. Indeed I shall 
-clarify the relationship to NO_INTERRUPT in the commit message.
+Thanks for the clarification. I now have no issues with the ath driver patches.
 
-Thanks,
-Robin.
+/jeff
+
 
