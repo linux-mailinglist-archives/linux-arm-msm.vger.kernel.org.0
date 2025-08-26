@@ -1,238 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-70902-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEA46B365BF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 15:50:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D5B8B36784
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 16:07:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 87C13468439
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 13:43:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 134341C2788E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 13:58:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A847B3376A5;
-	Tue, 26 Aug 2025 13:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC1FD352FC2;
+	Tue, 26 Aug 2025 13:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qVuy7TuI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 446331ACEDA;
-	Tue, 26 Aug 2025 13:43:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE4C35209D;
+	Tue, 26 Aug 2025 13:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756215807; cv=none; b=YLdvFT2dTzEKsfnMgeUqN+Gw78rZpQFml+C33OKcqNYn4zr5p7uQg/kwAJi6bklqbapAq0i/vwldKuW2TdEj47eBmwC/fiy6d4QXUCCM6vZlQ/Crxb411mBrMM9gaVoPCYQdEhm343EDXAcNVLtUphJt7Ps5+zFmHOUBJsokuYU=
+	t=1756216606; cv=none; b=Su94pPr4wg7E58m6D5qN+8kyCsAgDlfKAvX77gbZmtqDYhbfd/zNubawONSg37KjCeANXa4L+mbyFUzoy1uzDbYiBHvUmVQ1dFuu0ENF5E/yxkZ7NvhLN3uUmnFQCGNywe8upCnl3OJxythqb9rsCMMX3viasuobsvpW7XBhteQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756215807; c=relaxed/simple;
-	bh=NSFdsUFlpKhN8H0ekHru05yw4WSdjN+zOrEkvz1mKVQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WVkLxr91RFrGSaBzdALgbmE2/n2dSCsNxWPKBs7kEIbkeu14ey2Qqo88OoKH2EtRNCVflCjcjnWmHvr3Ls1isB8o5ya118iNhPsP4K9PgnkB6YZ/Nz8ubON70M7kn4nu4Kbxps9EmP0HOMvog8npPGiiRIfr8SH86aWkrVZY3nI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5E7311A25;
-	Tue, 26 Aug 2025 06:43:16 -0700 (PDT)
-Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8B8A73F63F;
-	Tue, 26 Aug 2025 06:43:18 -0700 (PDT)
-Date: Tue, 26 Aug 2025 14:43:16 +0100
-From: Mark Rutland <mark.rutland@arm.com>
-To: Robin Murphy <robin.murphy@arm.com>
-Cc: peterz@infradead.org, mingo@redhat.com, will@kernel.org,
-	acme@kernel.org, namhyung@kernel.org,
-	alexander.shishkin@linux.intel.com, jolsa@kernel.org,
-	irogers@google.com, adrian.hunter@intel.com,
-	kan.liang@linux.intel.com, linux-perf-users@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-alpha@vger.kernel.org,
-	linux-snps-arc@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
-	linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
-	linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
-	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
-	sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
-	linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-	intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
-	iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
-	linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-riscv@lists.infradead.org
-Subject: Re: [PATCH 18/19] perf: Introduce positive capability for raw events
-Message-ID: <aK259PrpyxguQzdN@J2N7QTR9R3>
-References: <cover.1755096883.git.robin.murphy@arm.com>
- <542787fd188ea15ef41c53d557989c962ed44771.1755096883.git.robin.murphy@arm.com>
+	s=arc-20240116; t=1756216606; c=relaxed/simple;
+	bh=nd3CQ34Xe56IKG456UFoWEYOWYvtYcS68YFfQ7k9gS4=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=HTUzxl6+jMo2PfTujejVFTm8pL5jdNX0HexBEGcRS6R9MleqtQPkYvuseRgqtKkyikidnCZKR/hLNr1Bh2DXi9M4KWyKmbjClgYp0ai8FdtEKglWOYvGjZukwm25W9T3cwCa8hEQxs7jLZvUVQQIXCT0gdHiRaQaA8v/FyP/sT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qVuy7TuI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EC4C116D0;
+	Tue, 26 Aug 2025 13:56:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756216606;
+	bh=nd3CQ34Xe56IKG456UFoWEYOWYvtYcS68YFfQ7k9gS4=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=qVuy7TuI+FdrXztlovmBpOGsaAom9wXQu6e5lKGHnE8ZgzN/haS5Lo/w42R29V0R8
+	 pUDqSzC1vxWsTOiUEkD5axNIEyd/Akx7tK+/UT6sHor2e7wSX9Vq2+/qRsSTJSg0pj
+	 gsnpiRwfF6X5i69r8FWY7Bt/FCBYAJ1lO8xqXjD50GY7TYQkXdGBK4NFS/r6200MYY
+	 L9YLxZxf6cR4yT/WMwThvUEKkJHp6lhi5pxkKT3V03d7RmEb4lBpG9Z1kg3u93dam0
+	 R9Gaw+9+2VvaNH7V0AsVWH8WNZWh85RtA1gY6tKRVF8ssanZbiYavvyidubDPOCxI6
+	 Z49zDNDEbMpkw==
+Date: Tue, 26 Aug 2025 08:56:45 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <542787fd188ea15ef41c53d557989c962ed44771.1755096883.git.robin.murphy@arm.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Kishon Vijay Abraham I <kishon@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, linux-pci@vger.kernel.org, 
+ devicetree@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>, 
+ linux-phy@lists.infradead.org, quic_mrana@quicinc.com, 
+ quic_vbadigan@quicinc.com, linux-kernel@vger.kernel.org, 
+ Bjorn Helgaas <bhelgaas@google.com>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com>
+References: <20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com>
+Message-Id: <175621649862.159548.14099860400165270689.robh@kernel.org>
+Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: Add PCIe Support for sm8750
 
-On Wed, Aug 13, 2025 at 06:01:10PM +0100, Robin Murphy wrote:
-> Only a handful of CPU PMUs accept PERF_TYPE_{RAW,HARDWARE,HW_CACHE}
-> events without registering themselves as PERF_TYPE_RAW in the first
-> place. Add an explicit opt-in for these special cases, so that we can
-> make life easier for every other driver (and probably also speed up the
-> slow-path search) by having perf_try_init_event() do the basic type
-> checking to cover the majority of cases.
+
+On Tue, 26 Aug 2025 16:32:52 +0530, Krishna Chaitanya Chundru wrote:
+> Describe PCIe controller and PHY. Also add required system resources like
+> regulators, clocks, interrupts and registers configuration for PCIe.
 > 
-> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-
-
-To bikeshed a little here, I'm not keen on the PERF_PMU_CAP_RAW_EVENTS
-name, because it's not clear what "RAW" really means, and people will
-definitely read that to mean something else.
-
-Could we go with something like PERF_PMU_CAP_COMMON_CPU_EVENTS, to make
-it clear that this is about opting into CPU-PMU specific event types (of
-which PERF_TYPE_RAW is one of)?
-
-Likewise, s/is_raw_pmu()/pmu_supports_common_cpu_events()/.
-
+> The qcom_pcie_parse_ports() function currently iterates over all available
+> child nodes of the PCIe controller's device tree node. This includes
+> unrelated nodes such as OPP (Operating Performance Points) nodes, which do
+> not contain the expected 'reset' and 'phy' properties. As a result, parsing
+> fails and the driver falls back to the legacy method of parsing the
+> controller node directly. However, this fallback also fails when properties
+> are shifted to the root port, leading to probe failure.
+> 
+> Fix this by restricting the parsing logic to only consider child nodes with
+> device_type = "pci", which is the expected and required property for PCIe
+> ports as defined in pci-bus-common.yaml.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 > ---
+> Changes in v3:
+> - Use device_type to find pci node or not instead of node name.
+> - Link to v2: https://lore.kernel.org/r/20250826-pakala-v2-0-74f1f60676c6@oss.qualcomm.com
 > 
-> A further possibility is to automatically add the cap to PERF_TYPE_RAW
-> PMUs in perf_pmu_register() to have a single point-of-use condition; I'm
-> undecided...
-
-I reckon we don't need to automagically do that, but I reckon that
-is_raw_pmu()/pmu_supports_common_cpu_events() should only check the cap,
-and we don't read anything special into any of
-PERF_TYPE_{RAW,HARDWARE,HW_CACHE}.
-
+> Changes in v2:
+> - Follow the x1e80100.dtsi pcie node description (Konrad).
+> - define phy & perst, wake in port node as per latest bindings.
+> - Add check in the driver to parse only pcie child nodes.
+> - Added acked by tag(Rob).
+> - Removed dtbinding and phy driver patches as they got applied.
+> - Link to v1: https://lore.kernel.org/r/20250809-pakala-v1-0-abf1c416dbaa@oss.qualcomm.com
+> 
 > ---
->  arch/s390/kernel/perf_cpum_cf.c    |  1 +
->  arch/s390/kernel/perf_pai_crypto.c |  2 +-
->  arch/s390/kernel/perf_pai_ext.c    |  2 +-
->  arch/x86/events/core.c             |  2 +-
->  drivers/perf/arm_pmu.c             |  1 +
->  include/linux/perf_event.h         |  1 +
->  kernel/events/core.c               | 15 +++++++++++++++
->  7 files changed, 21 insertions(+), 3 deletions(-)
+> Krishna Chaitanya Chundru (3):
+>       dt-bindings: PCI: qcom,pcie-sm8550: Add SM8750 compatible
+>       arm64: dts: qcom: sm8750: Add PCIe PHY and controller node
+>       PCI: qcom: Restrict port parsing only to pci child nodes
 > 
-> diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
-> index 1a94e0944bc5..782ab755ddd4 100644
-> --- a/arch/s390/kernel/perf_cpum_cf.c
-> +++ b/arch/s390/kernel/perf_cpum_cf.c
-> @@ -1054,6 +1054,7 @@ static void cpumf_pmu_del(struct perf_event *event, int flags)
->  /* Performance monitoring unit for s390x */
->  static struct pmu cpumf_pmu = {
->  	.task_ctx_nr  = perf_sw_context,
-> +	.capabilities = PERF_PMU_CAP_RAW_EVENTS,
->  	.pmu_enable   = cpumf_pmu_enable,
->  	.pmu_disable  = cpumf_pmu_disable,
->  	.event_init   = cpumf_pmu_event_init,
-
-Tangential, but use of perf_sw_context here looks bogus.
-
-> diff --git a/arch/s390/kernel/perf_pai_crypto.c b/arch/s390/kernel/perf_pai_crypto.c
-> index a64b6b056a21..b5b6d8b5d943 100644
-> --- a/arch/s390/kernel/perf_pai_crypto.c
-> +++ b/arch/s390/kernel/perf_pai_crypto.c
-> @@ -569,7 +569,7 @@ static const struct attribute_group *paicrypt_attr_groups[] = {
->  /* Performance monitoring unit for mapped counters */
->  static struct pmu paicrypt = {
->  	.task_ctx_nr  = perf_hw_context,
-> -	.capabilities = PERF_PMU_CAP_SAMPLING,
-> +	.capabilities = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
->  	.event_init   = paicrypt_event_init,
->  	.add	      = paicrypt_add,
->  	.del	      = paicrypt_del,
-> diff --git a/arch/s390/kernel/perf_pai_ext.c b/arch/s390/kernel/perf_pai_ext.c
-> index 1261f80c6d52..bcd28c38da70 100644
-> --- a/arch/s390/kernel/perf_pai_ext.c
-> +++ b/arch/s390/kernel/perf_pai_ext.c
-> @@ -595,7 +595,7 @@ static const struct attribute_group *paiext_attr_groups[] = {
->  /* Performance monitoring unit for mapped counters */
->  static struct pmu paiext = {
->  	.task_ctx_nr  = perf_hw_context,
-> -	.capabilities = PERF_PMU_CAP_SAMPLING,
-> +	.capabilities = PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
->  	.event_init   = paiext_event_init,
->  	.add	      = paiext_add,
->  	.del	      = paiext_del,
-> diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-> index 789dfca2fa67..764728bb80ae 100644
-> --- a/arch/x86/events/core.c
-> +++ b/arch/x86/events/core.c
-> @@ -2697,7 +2697,7 @@ static bool x86_pmu_filter(struct pmu *pmu, int cpu)
->  }
->  
->  static struct pmu pmu = {
-> -	.capabilities		= PERF_PMU_CAP_SAMPLING,
-> +	.capabilities		= PERF_PMU_CAP_SAMPLING | PERF_PMU_CAP_RAW_EVENTS,
->  
->  	.pmu_enable		= x86_pmu_enable,
->  	.pmu_disable		= x86_pmu_disable,
-> diff --git a/drivers/perf/arm_pmu.c b/drivers/perf/arm_pmu.c
-> index 72d8f38d0aa5..bc772a3bf411 100644
-> --- a/drivers/perf/arm_pmu.c
-> +++ b/drivers/perf/arm_pmu.c
-> @@ -877,6 +877,7 @@ struct arm_pmu *armpmu_alloc(void)
->  		 * specific PMU.
->  		 */
->  		.capabilities	= PERF_PMU_CAP_SAMPLING |
-> +				  PERF_PMU_CAP_RAW_EVENTS |
->  				  PERF_PMU_CAP_EXTENDED_REGS |
->  				  PERF_PMU_CAP_EXTENDED_HW_TYPE,
->  	};
-> diff --git a/include/linux/perf_event.h b/include/linux/perf_event.h
-> index 183b7c48b329..c6ad036c0037 100644
-> --- a/include/linux/perf_event.h
-> +++ b/include/linux/perf_event.h
-> @@ -305,6 +305,7 @@ struct perf_event_pmu_context;
->  #define PERF_PMU_CAP_EXTENDED_HW_TYPE	0x0100
->  #define PERF_PMU_CAP_AUX_PAUSE		0x0200
->  #define PERF_PMU_CAP_AUX_PREFER_LARGE	0x0400
-> +#define PERF_PMU_CAP_RAW_EVENTS		0x0800
->  
->  /**
->   * pmu::scope
-> diff --git a/kernel/events/core.c b/kernel/events/core.c
-> index 71b2a6730705..2ecee76d2ae2 100644
-> --- a/kernel/events/core.c
-> +++ b/kernel/events/core.c
-> @@ -12556,11 +12556,26 @@ static inline bool has_extended_regs(struct perf_event *event)
->  	       (event->attr.sample_regs_intr & PERF_REG_EXTENDED_MASK);
->  }
->  
-> +static bool is_raw_pmu(const struct pmu *pmu)
-> +{
-> +	return pmu->type == PERF_TYPE_RAW ||
-> +	       pmu->capabilities & PERF_PMU_CAP_RAW_EVENTS;
-> +}
-
-As above, I reckon we should make this:
-
-static bool pmu_supports_common_cpu_events(const struct pmu *pmu)
-{
-	return pmu->capabilities & PERF_PMU_CAP_RAW_EVENTS;
-}
-
-Other than the above, this looks good to me.
-
-Mark.
-
-> +
->  static int perf_try_init_event(struct pmu *pmu, struct perf_event *event)
->  {
->  	struct perf_event_context *ctx = NULL;
->  	int ret;
->  
-> +	/*
-> +	 * Before touching anything, we can safely skip:
-> +	 * - any event for a specific PMU which is not this one
-> +	 * - any common event if this PMU doesn't support them
-> +	 */
-> +	if (event->attr.type != pmu->type &&
-> +	    (event->attr.type >= PERF_TYPE_MAX || is_raw_pmu(pmu)))
-> +		return -ENOENT;
-> +
->  	if (!try_module_get(pmu->module))
->  		return -ENODEV;
->  
-> -- 
-> 2.39.2.101.g768bb238c484.dirty
+>  .../devicetree/bindings/pci/qcom,pcie-sm8550.yaml  |   1 +
+>  arch/arm64/boot/dts/qcom/sm8750.dtsi               | 180 ++++++++++++++++++++-
+>  drivers/pci/controller/dwc/pcie-qcom.c             |   2 +
+>  3 files changed, 182 insertions(+), 1 deletion(-)
+> ---
+> base-commit: b6add54ba61890450fa54fd9327d10fdfd653439
+> change-id: 20250809-pakala-25a7c1ddba85
 > 
+> Best regards,
+> --
+> Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> 
+> 
+> 
+
+
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
+
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
+
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
+
+  pip3 install dtschema --upgrade
+
+
+This patch series was applied (using b4) to base:
+ Base: using specified base-commit b6add54ba61890450fa54fd9327d10fdfd653439
+
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
+
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com:
+
+arch/arm64/boot/dts/qcom/sm8750-mtp.dtb: /soc@0/phy@1c06000: failed to match any schema with compatible: ['qcom,sm8750-qmp-gen3x2-pcie-phy']
+arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: /soc@0/phy@1c06000: failed to match any schema with compatible: ['qcom,sm8750-qmp-gen3x2-pcie-phy']
+
+
+
+
+
 
