@@ -1,153 +1,257 @@
-Return-Path: <linux-arm-msm+bounces-70903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70904-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D5B8B36784
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 16:07:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56593B36C10
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 16:52:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 134341C2788E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 13:58:48 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 931B8361541
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 14:38:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC1FD352FC2;
-	Tue, 26 Aug 2025 13:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qVuy7TuI"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1478734F48B;
+	Tue, 26 Aug 2025 14:36:02 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE4C35209D;
-	Tue, 26 Aug 2025 13:56:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3759341AD4;
+	Tue, 26 Aug 2025 14:35:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756216606; cv=none; b=Su94pPr4wg7E58m6D5qN+8kyCsAgDlfKAvX77gbZmtqDYhbfd/zNubawONSg37KjCeANXa4L+mbyFUzoy1uzDbYiBHvUmVQ1dFuu0ENF5E/yxkZ7NvhLN3uUmnFQCGNywe8upCnl3OJxythqb9rsCMMX3viasuobsvpW7XBhteQ=
+	t=1756218962; cv=none; b=g6OByuay35VUQtTjf4/9hSbWOjk8GuOcdzT8irzQRh2MXtDM6p4hVDnFRJFDzY6FR6QuNaGa45LFHoujfA4zenHMILubm9gbuwiT9bkgLEftoxngL+JPWYOerlEXMUcPjKaIk2sGxTEb7QnBor+fevaz9HblU4eRtQwRg04FiLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756216606; c=relaxed/simple;
-	bh=nd3CQ34Xe56IKG456UFoWEYOWYvtYcS68YFfQ7k9gS4=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=HTUzxl6+jMo2PfTujejVFTm8pL5jdNX0HexBEGcRS6R9MleqtQPkYvuseRgqtKkyikidnCZKR/hLNr1Bh2DXi9M4KWyKmbjClgYp0ai8FdtEKglWOYvGjZukwm25W9T3cwCa8hEQxs7jLZvUVQQIXCT0gdHiRaQaA8v/FyP/sT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qVuy7TuI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EC4C116D0;
-	Tue, 26 Aug 2025 13:56:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756216606;
-	bh=nd3CQ34Xe56IKG456UFoWEYOWYvtYcS68YFfQ7k9gS4=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=qVuy7TuI+FdrXztlovmBpOGsaAom9wXQu6e5lKGHnE8ZgzN/haS5Lo/w42R29V0R8
-	 pUDqSzC1vxWsTOiUEkD5axNIEyd/Akx7tK+/UT6sHor2e7wSX9Vq2+/qRsSTJSg0pj
-	 gsnpiRwfF6X5i69r8FWY7Bt/FCBYAJ1lO8xqXjD50GY7TYQkXdGBK4NFS/r6200MYY
-	 L9YLxZxf6cR4yT/WMwThvUEKkJHp6lhi5pxkKT3V03d7RmEb4lBpG9Z1kg3u93dam0
-	 R9Gaw+9+2VvaNH7V0AsVWH8WNZWh85RtA1gY6tKRVF8ssanZbiYavvyidubDPOCxI6
-	 Z49zDNDEbMpkw==
-Date: Tue, 26 Aug 2025 08:56:45 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1756218962; c=relaxed/simple;
+	bh=t6JNfnPxFUx/NjoupvZ1RlQEj1Zq+C4DgHkgiTtqzX4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JW5+cILD49k/9ssvG+R9Zwi106xSXHp4cRgIyvILpasmeh+WQWXHMaPuFOGGkxSt17FT+VZViGqPXLEaTQtsf9YttKLaMHihVeR9XoVW08gBbsBtTW6GOfydqXqJc8yQywmfdfj8L6hEWN/KgH3UyMuwdGZXiQsUVVBvoJaBSx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8CB231A25;
+	Tue, 26 Aug 2025 07:35:50 -0700 (PDT)
+Received: from [10.57.4.86] (unknown [10.57.4.86])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id E899E3F694;
+	Tue, 26 Aug 2025 07:35:51 -0700 (PDT)
+Message-ID: <ab80cb84-42b2-4ce8-aa6c-4ce6be7a12b7@arm.com>
+Date: Tue, 26 Aug 2025 15:35:48 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- linux-arm-msm@vger.kernel.org, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, linux-pci@vger.kernel.org, 
- devicetree@vger.kernel.org, Manivannan Sadhasivam <mani@kernel.org>, 
- linux-phy@lists.infradead.org, quic_mrana@quicinc.com, 
- quic_vbadigan@quicinc.com, linux-kernel@vger.kernel.org, 
- Bjorn Helgaas <bhelgaas@google.com>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com>
-References: <20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com>
-Message-Id: <175621649862.159548.14099860400165270689.robh@kernel.org>
-Subject: Re: [PATCH v3 0/3] arm64: dts: qcom: Add PCIe Support for sm8750
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/19] perf/hisilicon: Fix group validation
+To: Mark Rutland <mark.rutland@arm.com>
+Cc: peterz@infradead.org, mingo@redhat.com, will@kernel.org, acme@kernel.org,
+ namhyung@kernel.org, alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+ irogers@google.com, adrian.hunter@intel.com, kan.liang@linux.intel.com,
+ linux-perf-users@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-alpha@vger.kernel.org, linux-snps-arc@lists.infradead.org,
+ linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+ linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+ linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+ linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+ sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
+ linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
+ linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+ dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+ iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+ linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-riscv@lists.infradead.org
+References: <cover.1755096883.git.robin.murphy@arm.com>
+ <c7b877e66ba0d34d8558c5af8bbb620e8c0e47d9.1755096883.git.robin.murphy@arm.com>
+ <aK2XS_GhLw1EQ2ml@J2N7QTR9R3>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <aK2XS_GhLw1EQ2ml@J2N7QTR9R3>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On Tue, 26 Aug 2025 16:32:52 +0530, Krishna Chaitanya Chundru wrote:
-> Describe PCIe controller and PHY. Also add required system resources like
-> regulators, clocks, interrupts and registers configuration for PCIe.
+On 2025-08-26 12:15 pm, Mark Rutland wrote:
+> On Wed, Aug 13, 2025 at 06:00:54PM +0100, Robin Murphy wrote:
+>> The group validation logic shared by the HiSilicon HNS3/PCIe drivers is
+>> a bit off, in that given a software group leader, it will consider that
+>> event *in place of* the actual new event being opened. At worst this
+>> could theoretically allow an unschedulable group if the software event
+>> config happens to look like one of the hardware siblings.
+>>
+>> The uncore framework avoids that particular issue,
 > 
-> The qcom_pcie_parse_ports() function currently iterates over all available
-> child nodes of the PCIe controller's device tree node. This includes
-> unrelated nodes such as OPP (Operating Performance Points) nodes, which do
-> not contain the expected 'reset' and 'phy' properties. As a result, parsing
-> fails and the driver falls back to the legacy method of parsing the
-> controller node directly. However, this fallback also fails when properties
-> are shifted to the root port, leading to probe failure.
+> What is "the uncore framework"? I'm not sure exactly what you're
+> referring to, nor how that composes with the problem described above.
+
+Literally that hisi_uncore_pmu.c is actually a framework for half a 
+dozen individual sub-drivers rather than a "driver" itself per se, but I 
+suppose that detail doesn't strictly matter at this level.
+
+>> but all 3 also share the common issue of not preventing racy access to
+>> the sibling list,
 > 
-> Fix this by restricting the parsing logic to only consider child nodes with
-> device_type = "pci", which is the expected and required property for PCIe
-> ports as defined in pci-bus-common.yaml.
+> Can you please elaborate on this racy access to the silbing list? I'm
+> not sure exactly what you're referring to.
+
+Hmm, yes, I guess an actual race is probably impossible since if we're 
+still in the middle of opening the group leader event then we haven't 
+yet allocated the fd that userspace would need to start adding siblings, 
+even if it tried to guess. I leaned on "racy" as a concise way to infer 
+"when it isn't locked (even though the reasons for that are more 
+subtle)" repeatedly over several patches - after all, the overall theme 
+of this series is that I dislike repetitive boilerplate :)
+
+I'll dedicate some time for polishing commit messages for v2, especially 
+the common context for these "part 1" patches per your feedback on patch #1.
+
+>> and some redundant checks which can be cleaned up.
+>>
+>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+>> ---
+>>   drivers/perf/hisilicon/hisi_pcie_pmu.c   | 17 ++++++-----------
+>>   drivers/perf/hisilicon/hisi_uncore_pmu.c | 23 +++++++----------------
+>>   drivers/perf/hisilicon/hns3_pmu.c        | 17 ++++++-----------
+>>   3 files changed, 19 insertions(+), 38 deletions(-)
+>>
+>> diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+>> index c5394d007b61..3b0b2f7197d0 100644
+>> --- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
+>> +++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+>> @@ -338,21 +338,16 @@ static bool hisi_pcie_pmu_validate_event_group(struct perf_event *event)
+>>   	int counters = 1;
+>>   	int num;
+>>   
+>> -	event_group[0] = leader;
+>> -	if (!is_software_event(leader)) {
+>> -		if (leader->pmu != event->pmu)
+>> -			return false;
+>> +	if (leader == event)
+>> +		return true;
+>>   
+>> -		if (leader != event && !hisi_pcie_pmu_cmp_event(leader, event))
+>> -			event_group[counters++] = event;
+>> -	}
+>> +	event_group[0] = event;
+>> +	if (leader->pmu == event->pmu && !hisi_pcie_pmu_cmp_event(leader, event))
+>> +		event_group[counters++] = leader;
 > 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
-> Changes in v3:
-> - Use device_type to find pci node or not instead of node name.
-> - Link to v2: https://lore.kernel.org/r/20250826-pakala-v2-0-74f1f60676c6@oss.qualcomm.com
+> Looking at this, the existing logic to share counters (which
+> hisi_pcie_pmu_cmp_event() is trying to permit) looks to be bogus, given
+> that the start/stop callbacks will reprogram the HW counters (and hence
+> can fight with one another).
+
+Yeah, this had a dodgy smell when I first came across it, but after 
+doing all the digging I think it does actually work out - the trick 
+seems to be the group_leader check in hisi_pcie_pmu_get_event_idx(), 
+with the implication the PMU is going to be stopped while scheduling 
+in/out the whole group, so assuming hisi_pcie_pmu_del() doesn't clear 
+the counter value in hardware (even though the first call nukes the rest 
+of the event configuration), then the events should stay in sync.
+
+It does seem somewhat nonsensical to have multiple copies of the same 
+event in the same group, but I imagine it could happen with some sort of 
+scripted combination of metrics, and supporting it at this level saves 
+needing explicit deduplication further up. So even though my initial 
+instinct was to rip it out too, in the end I concluded that that doesn't 
+seem justified.
+
+Thanks,
+Robin.
+
+> I suspect that can be removed *entirely*, and this can be simplified
+> down to allocating N counters, without a quadratic event comparison.  We
+> don't try to share counters in other PMU drivers, and there was no
+> rationale for trying to do this when this wa introduced in commit:
 > 
-> Changes in v2:
-> - Follow the x1e80100.dtsi pcie node description (Konrad).
-> - define phy & perst, wake in port node as per latest bindings.
-> - Add check in the driver to parse only pcie child nodes.
-> - Added acked by tag(Rob).
-> - Removed dtbinding and phy driver patches as they got applied.
-> - Link to v1: https://lore.kernel.org/r/20250809-pakala-v1-0-abf1c416dbaa@oss.qualcomm.com
+>    8404b0fbc7fbd42e ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
 > 
-> ---
-> Krishna Chaitanya Chundru (3):
->       dt-bindings: PCI: qcom,pcie-sm8550: Add SM8750 compatible
->       arm64: dts: qcom: sm8750: Add PCIe PHY and controller node
->       PCI: qcom: Restrict port parsing only to pci child nodes
+> The 'link' tag in that comment goes to v13, which doesn't link to prior
+> postings, so I'm not going to dig further.
 > 
->  .../devicetree/bindings/pci/qcom,pcie-sm8550.yaml  |   1 +
->  arch/arm64/boot/dts/qcom/sm8750.dtsi               | 180 ++++++++++++++++++++-
->  drivers/pci/controller/dwc/pcie-qcom.c             |   2 +
->  3 files changed, 182 insertions(+), 1 deletion(-)
-> ---
-> base-commit: b6add54ba61890450fa54fd9327d10fdfd653439
-> change-id: 20250809-pakala-25a7c1ddba85
+> Mark.
 > 
-> Best regards,
-> --
-> Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> 
-> 
-> 
-
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: using specified base-commit b6add54ba61890450fa54fd9327d10fdfd653439
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/sm8750-mtp.dtb: /soc@0/phy@1c06000: failed to match any schema with compatible: ['qcom,sm8750-qmp-gen3x2-pcie-phy']
-arch/arm64/boot/dts/qcom/sm8750-qrd.dtb: /soc@0/phy@1c06000: failed to match any schema with compatible: ['qcom,sm8750-qmp-gen3x2-pcie-phy']
-
-
-
-
-
+>>   
+>>   	for_each_sibling_event(sibling, event->group_leader) {
+>> -		if (is_software_event(sibling))
+>> -			continue;
+>> -
+>>   		if (sibling->pmu != event->pmu)
+>> -			return false;
+>> +			continue;
+>>   
+>>   		for (num = 0; num < counters; num++) {
+>>   			/*
+>> diff --git a/drivers/perf/hisilicon/hisi_uncore_pmu.c b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+>> index a449651f79c9..3c531b36cf25 100644
+>> --- a/drivers/perf/hisilicon/hisi_uncore_pmu.c
+>> +++ b/drivers/perf/hisilicon/hisi_uncore_pmu.c
+>> @@ -101,26 +101,17 @@ static bool hisi_validate_event_group(struct perf_event *event)
+>>   	/* Include count for the event */
+>>   	int counters = 1;
+>>   
+>> -	if (!is_software_event(leader)) {
+>> -		/*
+>> -		 * We must NOT create groups containing mixed PMUs, although
+>> -		 * software events are acceptable
+>> -		 */
+>> -		if (leader->pmu != event->pmu)
+>> -			return false;
+>> +	if (leader == event)
+>> +		return true;
+>>   
+>> -		/* Increment counter for the leader */
+>> -		if (leader != event)
+>> -			counters++;
+>> -	}
+>> +	/* Increment counter for the leader */
+>> +	if (leader->pmu == event->pmu)
+>> +		counters++;
+>>   
+>>   	for_each_sibling_event(sibling, event->group_leader) {
+>> -		if (is_software_event(sibling))
+>> -			continue;
+>> -		if (sibling->pmu != event->pmu)
+>> -			return false;
+>>   		/* Increment counter for each sibling */
+>> -		counters++;
+>> +		if (sibling->pmu == event->pmu)
+>> +			counters++;
+>>   	}
+>>   
+>>   	/* The group can not count events more than the counters in the HW */
+>> diff --git a/drivers/perf/hisilicon/hns3_pmu.c b/drivers/perf/hisilicon/hns3_pmu.c
+>> index c157f3572cae..382e469257f9 100644
+>> --- a/drivers/perf/hisilicon/hns3_pmu.c
+>> +++ b/drivers/perf/hisilicon/hns3_pmu.c
+>> @@ -1058,21 +1058,16 @@ static bool hns3_pmu_validate_event_group(struct perf_event *event)
+>>   	int counters = 1;
+>>   	int num;
+>>   
+>> -	event_group[0] = leader;
+>> -	if (!is_software_event(leader)) {
+>> -		if (leader->pmu != event->pmu)
+>> -			return false;
+>> +	if (leader == event)
+>> +		return true;
+>>   
+>> -		if (leader != event && !hns3_pmu_cmp_event(leader, event))
+>> -			event_group[counters++] = event;
+>> -	}
+>> +	event_group[0] = event;
+>> +	if (leader->pmu == event->pmu && !hns3_pmu_cmp_event(leader, event))
+>> +		event_group[counters++] = leader;
+>>   
+>>   	for_each_sibling_event(sibling, event->group_leader) {
+>> -		if (is_software_event(sibling))
+>> -			continue;
+>> -
+>>   		if (sibling->pmu != event->pmu)
+>> -			return false;
+>> +			continue;
+>>   
+>>   		for (num = 0; num < counters; num++) {
+>>   			/*
+>> -- 
+>> 2.39.2.101.g768bb238c484.dirty
+>>
 
