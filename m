@@ -1,202 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-70801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A438B353A3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 07:57:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87A01B353AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 08:02:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 644E0167654
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 05:57:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 63C631B62F19
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 06:02:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A07F62F28FF;
-	Tue, 26 Aug 2025 05:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 662B02D5C83;
+	Tue, 26 Aug 2025 06:02:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ln9gUA1G"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TSSJUf+V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF042EF64A;
-	Tue, 26 Aug 2025 05:57:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DA21D5178;
+	Tue, 26 Aug 2025 06:02:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756187848; cv=none; b=Zp9YdvavQm4ZBJ1Gu1Jq4cRX9Watz4M/M0Ktk9IUxaA6GWfoamuPZjJYChLDvFQrooV4KJKoFtsRz0/bMJHXDhMeW5C1RufMokuqsk8jEAfUb3J4OsQ9hj9aXaavubjeQA5iqSfEHlHA+NRENupIZuAeOv5qtPMU78A5OH0zyug=
+	t=1756188128; cv=none; b=jCvK0cOIeKgDgAAPwQB9I5kaD3+dUlKMt2/zKGqrljupv/3S5u1kSOnIdiAGIkBxz3oxXxSqbsKvCsnbIsWwFKlSSvHwgEqy1wQnxdKccXft5y9b1J/74uqCKWHeAL5P51vvMmmpz1Ii2P3w5mEq8x6/xm32QsttCBnneWtzYAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756187848; c=relaxed/simple;
-	bh=kKNH8NUIKhO94RwCUn5nWlFEWU6qfkkFMbDLyS0gX0Q=;
+	s=arc-20240116; t=1756188128; c=relaxed/simple;
+	bh=/NAbA3KKPlkGUVLEW64dW+p7Ub0Umd/LU/ByfgYQHFI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ri4XUoBaWJCZEHICFjYiWzDyfE1meuCFLqge7VzE5vUT1U4TqwcXEygyXw5OL0P0bYPIgoY7MpL6yyjzQPOezElZXo4//+yp7xRsIT8TbdIxnyu4Gkj+AGdFm01pchIo1px7pEbwlK7EKZ3SLsMzj1249nwbgnaQnrPi+5Kk+Fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ln9gUA1G; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC04AC4CEF1;
-	Tue, 26 Aug 2025 05:57:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756187847;
-	bh=kKNH8NUIKhO94RwCUn5nWlFEWU6qfkkFMbDLyS0gX0Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ln9gUA1G06fZktO8IE1FEsVV3ABrBpoEvWvmBLz2mWUJIu1k7gwHVtEwna4XoA9g/
-	 V9EpMnEOF8H7QyGHxgr7eck3KTr0lYbav+9YwjJcGdeh6iohVzfUJXhT0GRMOy+ejc
-	 g2AXVc0668NFypwEHhVGnGoKy1/YUvMgkVVFWbymrUN713HNWZRQznBlNm5Fr6Oqn/
-	 FBPmpKrvsoieRxEuuQp9lu4V6vKNEjYYUw9gfxFAAjRYufUivmMOVvpGl0aXwwSw56
-	 YBVmEvDnkFgoFQ9WvB4hI8B64Bh4pcP00U3D40cGQvgZ/iVvL853IvAFxLDja/ht70
-	 aqNFoO4SZ4OaQ==
-Date: Tue, 26 Aug 2025 11:27:11 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>, 
-	Stephen Boyd <sboyd@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-pm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 3/7] arm64: dts: qcom: sm8450: Add opp-level to
- indicate PCIe data rates
-Message-ID: <6nwss6gl3d47zer4pai23xcu4weok7m3ptyuptvu5oli7u7ads@zzhbw67hnhz5>
-References: <20250820-opp_pcie-v4-0-273b8944eed0@oss.qualcomm.com>
- <20250820-opp_pcie-v4-3-273b8944eed0@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=h4b0vUTXXa53csTDUxmJ4p43lwXpysgmiZnHFdvDre2qGdZK+lCbfp1VXeBFqoNyTXe1eVTF7Ou8DMSA7lFWWB0D59OyqH5Ud4OiAMNX9ymERxc0jSOU8QpuHwTR8IT7yLJ7Y7KUZrhZXgwrttLNXDN4z3ZZChMTwEO2qTW8Vvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TSSJUf+V; arc=none smtp.client-ip=192.198.163.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1756188126; x=1787724126;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=/NAbA3KKPlkGUVLEW64dW+p7Ub0Umd/LU/ByfgYQHFI=;
+  b=TSSJUf+V5hz5I1NHQD0i0xZ1uDcJgRm60cJmcj8yWTWygIfwdibGjvs8
+   5iSznAOW68X3Bcs96CwKVM/uDeuZusLIyzIY6y4IRH8HZoYkwz8JWJnD9
+   uQ0a2dNaIEft6DurwXNsMDCK3U1jGZT+UJq6XxvLAgFaICzK5p3ScXYpc
+   GyPEkOPzVzkBXC8hUWTKUdjUgQPS8nOQyTjZv3P6aefpQj2uCcEGSNSmC
+   eLWv6DW7dOFZ/qDZI7sWSihCBf7P7AQRtQRtju9lMTefMbsLrq5yJ7Wcx
+   gxMrkLARZclPDIg12B8dufakb3kijovrFvjhRhjPE5fdtAk39nIZtvj2X
+   Q==;
+X-CSE-ConnectionGUID: awJM9WHWTyaZIfYAzUbxJQ==
+X-CSE-MsgGUID: gKuj3Oe8QH6OaAgwSBH/Iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11533"; a="45989821"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
+   d="scan'208";a="45989821"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2025 23:02:05 -0700
+X-CSE-ConnectionGUID: dBjAjTnISYmtD9zAf5DjAg==
+X-CSE-MsgGUID: aLP9yIKGRpqcaAGSsX+lxw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
+   d="scan'208";a="169654456"
+Received: from lkp-server02.sh.intel.com (HELO 4ea60e6ab079) ([10.239.97.151])
+  by orviesa008.jf.intel.com with ESMTP; 25 Aug 2025 23:02:02 -0700
+Received: from kbuild by 4ea60e6ab079 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uqmkp-000OG7-0N;
+	Tue, 26 Aug 2025 06:01:59 +0000
+Date: Tue, 26 Aug 2025 14:01:15 +0800
+From: kernel test robot <lkp@intel.com>
+To: Nickolay Goppen <setotau@yandex.ru>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+	Nickolay Goppen <setotau@yandex.ru>,
+	Richard Acayan <mailingradian@gmail.com>
+Subject: Re: [PATCH 3/3] pinctrl: qcom: Add SDM660 LPASS LPI TLMM
+Message-ID: <202508261333.8hcdJOVB-lkp@intel.com>
+References: <20250824-sdm660-lpass-lpi-v1-3-003d5cc28234@yandex.ru>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250820-opp_pcie-v4-3-273b8944eed0@oss.qualcomm.com>
+In-Reply-To: <20250824-sdm660-lpass-lpi-v1-3-003d5cc28234@yandex.ru>
 
-On Wed, Aug 20, 2025 at 01:58:49PM GMT, Krishna Chaitanya Chundru wrote:
-> Add opp-level to indicate PCIe data rates and also define OPP enteries
-> for each link width and data rate. Append the opp level to name of the
-> opp node to indicate both frequency and level.
-> 
+Hi Nickolay,
 
-First define the problem statement of why this change is needed. You've
-mentioned it in the cover letter, but that won't be preserved in git history.
-Then you need to justify the change and make it clear that *this* platform
-doesn't suffer the issue but you are doing it for the unification.
+kernel test robot noticed the following build warnings:
 
-This needs to be done for all DTS patches.
+[auto build test WARNING on 038d61fd642278bab63ee8ef722c50d10ab01e8f]
 
-- Mani
+url:    https://github.com/intel-lab-lkp/linux/commits/Nickolay-Goppen/pinctrl-qcom-lpass-lpi-Introduce-pin_offset-callback/20250825-045348
+base:   038d61fd642278bab63ee8ef722c50d10ab01e8f
+patch link:    https://lore.kernel.org/r/20250824-sdm660-lpass-lpi-v1-3-003d5cc28234%40yandex.ru
+patch subject: [PATCH 3/3] pinctrl: qcom: Add SDM660 LPASS LPI TLMM
+config: microblaze-randconfig-r123-20250826 (https://download.01.org/0day-ci/archive/20250826/202508261333.8hcdJOVB-lkp@intel.com/config)
+compiler: microblaze-linux-gcc (GCC) 9.5.0
+reproduce: (https://download.01.org/0day-ci/archive/20250826/202508261333.8hcdJOVB-lkp@intel.com/reproduce)
 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/sm8450.dtsi | 41 +++++++++++++++++++++++++++++-------
->  1 file changed, 33 insertions(+), 8 deletions(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> index 33574ad706b915136546c7f92c7cd0b8a0d62b7e..d7f8706ca4949e253a4102474c92b393a345262f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-> @@ -2052,6 +2052,7 @@ opp-2500000 {
->  					opp-hz = /bits/ 64 <2500000>;
->  					required-opps = <&rpmhpd_opp_low_svs>;
->  					opp-peak-kBps = <250000 1>;
-> +					opp-level = <1>;
->  				};
->  
->  				/* GEN 2 x1 */
-> @@ -2059,6 +2060,7 @@ opp-5000000 {
->  					opp-hz = /bits/ 64 <5000000>;
->  					required-opps = <&rpmhpd_opp_low_svs>;
->  					opp-peak-kBps = <500000 1>;
-> +					opp-level = <2>;
->  				};
->  
->  				/* GEN 3 x1 */
-> @@ -2066,6 +2068,7 @@ opp-8000000 {
->  					opp-hz = /bits/ 64 <8000000>;
->  					required-opps = <&rpmhpd_opp_nom>;
->  					opp-peak-kBps = <984500 1>;
-> +					opp-level = <3>;
->  				};
->  			};
->  
-> @@ -2210,45 +2213,67 @@ pcie1_opp_table: opp-table {
->  				compatible = "operating-points-v2";
->  
->  				/* GEN 1 x1 */
-> -				opp-2500000 {
-> +				opp-2500000-1 {
->  					opp-hz = /bits/ 64 <2500000>;
->  					required-opps = <&rpmhpd_opp_low_svs>;
->  					opp-peak-kBps = <250000 1>;
-> +					opp-level = <1>;
->  				};
->  
-> -				/* GEN 1 x2 and GEN 2 x1 */
-> -				opp-5000000 {
-> +				/* GEN 1 x2 */
-> +				opp-5000000-1 {
-> +					opp-hz = /bits/ 64 <5000000>;
-> +					required-opps = <&rpmhpd_opp_low_svs>;
-> +					opp-peak-kBps = <500000 1>;
-> +					opp-level = <1>;
-> +				};
-> +
-> +				/* GEN 2 x1 */
-> +				opp-5000000-2 {
->  					opp-hz = /bits/ 64 <5000000>;
->  					required-opps = <&rpmhpd_opp_low_svs>;
->  					opp-peak-kBps = <500000 1>;
-> +					opp-level = <2>;
->  				};
->  
->  				/* GEN 2 x2 */
-> -				opp-10000000 {
-> +				opp-10000000-2 {
->  					opp-hz = /bits/ 64 <10000000>;
->  					required-opps = <&rpmhpd_opp_low_svs>;
->  					opp-peak-kBps = <1000000 1>;
-> +					opp-level = <2>;
->  				};
->  
->  				/* GEN 3 x1 */
-> -				opp-8000000 {
-> +				opp-8000000-3 {
->  					opp-hz = /bits/ 64 <8000000>;
->  					required-opps = <&rpmhpd_opp_nom>;
->  					opp-peak-kBps = <984500 1>;
-> +					opp-level = <3>;
-> +				};
-> +
-> +				/* GEN 3 x2 */
-> +				opp-16000000-3 {
-> +					opp-hz = /bits/ 64 <16000000>;
-> +					required-opps = <&rpmhpd_opp_nom>;
-> +					opp-peak-kBps = <1969000 1>;
-> +					opp-level = <3>;
->  				};
->  
-> -				/* GEN 3 x2 and GEN 4 x1 */
-> -				opp-16000000 {
-> +				/* GEN 4 x1 */
-> +				opp-16000000-4 {
->  					opp-hz = /bits/ 64 <16000000>;
->  					required-opps = <&rpmhpd_opp_nom>;
->  					opp-peak-kBps = <1969000 1>;
-> +					opp-level = <4>;
->  				};
->  
->  				/* GEN 4 x2 */
-> -				opp-32000000 {
-> +				opp-32000000-4 {
->  					opp-hz = /bits/ 64 <32000000>;
->  					required-opps = <&rpmhpd_opp_nom>;
->  					opp-peak-kBps = <3938000 1>;
-> +					opp-level = <4>;
->  				};
->  			};
->  
-> 
-> -- 
-> 2.34.1
-> 
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202508261333.8hcdJOVB-lkp@intel.com/
+
+sparse warnings: (new ones prefixed by >>)
+>> drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c:110:27: sparse: sparse: symbol 'sdm660_lpi_pinctrl_groups' was not declared. Should it be static?
+>> drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c:148:27: sparse: sparse: symbol 'sdm660_lpi_pinctrl_functions' was not declared. Should it be static?
+
+vim +/sdm660_lpi_pinctrl_groups +110 drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c
+
+   109	
+ > 110	const struct lpi_pingroup sdm660_lpi_pinctrl_groups[] = {
+   111		LPI_PINGROUP(0, LPI_NO_SLEW, _, _, _, _),
+   112		LPI_PINGROUP(1, LPI_NO_SLEW, _, _, _, _),
+   113		LPI_PINGROUP(2, LPI_NO_SLEW, _, _, _, _),
+   114		LPI_PINGROUP(3, LPI_NO_SLEW, _, _, _, _),
+   115		LPI_PINGROUP(4, LPI_NO_SLEW, _, _, _, _),
+   116		LPI_PINGROUP(5, LPI_NO_SLEW, _, _, _, _),
+   117		LPI_PINGROUP(6, LPI_NO_SLEW, _, _, _, _),
+   118		LPI_PINGROUP(7, LPI_NO_SLEW, _, _, _, _),
+   119		LPI_PINGROUP(8, LPI_NO_SLEW, _, _, _, _),
+   120		LPI_PINGROUP(9, LPI_NO_SLEW, _, _, _, _),
+   121		LPI_PINGROUP(10, LPI_NO_SLEW, _, _, _, _),
+   122		LPI_PINGROUP(11, LPI_NO_SLEW, _, _, _, _),
+   123		LPI_PINGROUP(12, LPI_NO_SLEW, _, _, _, _),
+   124		LPI_PINGROUP(13, LPI_NO_SLEW, _, _, _, _),
+   125		LPI_PINGROUP(14, LPI_NO_SLEW, _, _, _, _),
+   126		LPI_PINGROUP(15, LPI_NO_SLEW, _, _, _, _),
+   127		LPI_PINGROUP(16, LPI_NO_SLEW, _, _, _, _),
+   128		LPI_PINGROUP(17, LPI_NO_SLEW, _, _, _, _),
+   129	
+   130		/* The function names of the PDM GPIOs are derived from SDM670 */
+   131		LPI_PINGROUP(18, LPI_NO_SLEW, pdm_clk, mclk0, _, _),
+   132		LPI_PINGROUP(19, LPI_NO_SLEW, pdm_sync, _, _, _),
+   133		LPI_PINGROUP(20, LPI_NO_SLEW, pdm_2_gpios, _, _, _),
+   134		LPI_PINGROUP(21, LPI_NO_SLEW, pdm_rx, _, _, _),
+   135		LPI_PINGROUP(22, LPI_NO_SLEW, comp_rx, _, _, _),
+   136		LPI_PINGROUP(23, LPI_NO_SLEW, pdm_rx, _, _, _),
+   137		LPI_PINGROUP(24, LPI_NO_SLEW, comp_rx, _, _, _),
+   138		LPI_PINGROUP(25, LPI_NO_SLEW, pdm_rx, _, _, _),
+   139		LPI_PINGROUP(26, LPI_NO_SLEW, dmic12, _, _, _),
+   140		LPI_PINGROUP(27, LPI_NO_SLEW, dmic34, _, _, _),
+   141		LPI_PINGROUP(28, LPI_NO_SLEW, dmic12, _, _, _),
+   142		LPI_PINGROUP(29, LPI_NO_SLEW, dmic34, _, _, _),
+   143	
+   144		LPI_PINGROUP(30, LPI_NO_SLEW, _, _, _, _),
+   145		LPI_PINGROUP(31, LPI_NO_SLEW, _, _, _, _),
+   146	};
+   147	
+ > 148	const struct lpi_function sdm660_lpi_pinctrl_functions[] = {
+   149		LPI_FUNCTION(comp_rx),
+   150		LPI_FUNCTION(dmic12),
+   151		LPI_FUNCTION(dmic34),
+   152		LPI_FUNCTION(mclk0),
+   153		LPI_FUNCTION(pdm_2_gpios),
+   154		LPI_FUNCTION(pdm_clk),
+   155		LPI_FUNCTION(pdm_rx),
+   156		LPI_FUNCTION(pdm_sync),
+   157	};
+   158	
 
 -- 
-மணிவண்ணன் சதாசிவம்
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
