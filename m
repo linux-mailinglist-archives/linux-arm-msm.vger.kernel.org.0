@@ -1,87 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-70890-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70891-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4E78B35F0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 14:21:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3358FB35F20
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 14:30:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2FC7188D2DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:22:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 100F11BA079F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 12:31:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA12A318146;
-	Tue, 26 Aug 2025 12:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DD7AE28751F;
+	Tue, 26 Aug 2025 12:30:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YL3OJjeH"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eUJDouHc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2742BDC23
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:21:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32757262E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:30:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756210907; cv=none; b=My+ffaucvp48OdHORmSiW6auKWIhZnX1deKpi3fwVhT5eB7x4BIUtKfxYXn+Y5toewgUyygOooLr1mmzL2d+dD8XgMyivdUMdlJK40J+TSmDpVy8i4pCC3dkJyi5dqCVbaSuay12NTf3bT8DXxhzSYG3GjbczMMCHvXGEbw8u+Q=
+	t=1756211448; cv=none; b=qZsOh54fnNaWcWtHiZSuZdwI3nnGvPorYbxFfOPI3GyKDv/p/9AS8nKrx8FUe979L+zxMmTcM9arNymmntw1wQ03KUsWFHYscmN3pO1LdOMUiCO8ChLCzcYRwtU4WTJN2Yuxju9/+OALPfpYhfHr19R5bOtfo/IHtIScLTQYryY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756210907; c=relaxed/simple;
-	bh=cDZY4sOyXdEWG+JCocZJFf7HDgOgg81Kbcw/od9SAq0=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=o9lA9R8jvogyv4ETKlTTrRP0UC2y/+i1CNLgc4rx+a75SnSSMc2ky0iL4d223NleElKd4BQIj97Jq1cCCxfL4HI1uSQ/EdKIfuqU5JNEsZF7PASCjdu4JrLiPdix35lQq0+fZQuc9zjDA/OuTgpOUDvth3fyS1JsUxfDlaUq0Bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YL3OJjeH; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QC8d2l030514
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:21:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xj/MZA6A4yQOjokPCqmS06vMg9EIcp9det7tR39R6Hw=; b=YL3OJjeHRaQdDKf5
-	3h0iLKmUcTx8Ohu5CA9ce49/fhE0kC3sb90PvGKqsm6R9EV3jMCrKNKN4yl+pymv
-	Sy+UeAyvNicAGshwsTvkfYrMjMhi540zTFXv5aGC4ZG8A9WxpSTZnUmURnvlqUal
-	bcsXjZzodMtgc75e3jmAvoI3AcQLG9E/VyzTtjghg1zIKNN55hYMf3M9q9flUkGV
-	U47aitsd6VWnhdsvjGjXeAHub9sd65aPEECzWqYjB4wuXWLcUgvB115OotK3Qhk5
-	HwhESSjWqn6OHluYLOanbNCsBCByAVsdjYH2ds+i7kOXzuhOph75Vys6zIT1PuT5
-	VcNgwA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6tj0qx4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:21:44 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-76e395107e2so5215206b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 05:21:44 -0700 (PDT)
+	s=arc-20240116; t=1756211448; c=relaxed/simple;
+	bh=ma5t6YXeVJpIipfm5/CG8lKCSELEwhRTnwbTvkULl+I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=a8CjPa8lIH1W5EUaqunx+/n8rR7c1DOkxPF7JWZBzLhbaLKP5r5drZ3NaiCsbRF3SXXBBTtYVP1ioEazdvonuhKemu8uEsIiGJF5dXPD2kxUOi5s27FOzVr0/1BCu02SsCHpM6k1VFOw8l0GYHPm+1e5Vt5fv8jUcvtGYZ3JWhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eUJDouHc; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6188b6f501cso5952616a12.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 05:30:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756211445; x=1756816245; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pkoS1mgQUsuKKrSkoR2eKBjtP1PvOwI34/oZkFfI/4w=;
+        b=eUJDouHc+6pKfunKmb2yl59eCyT5uiPyLf10a8OP59YkRIz5YsPcDq8ijoVD34+UNA
+         iOz4HP5YwiVxCVltnDLrUwIPgr++iogxRWNcgGSAaKT6GRtq7t/Q1PcNXtrTS5q3E08A
+         pI6qo9UhBpTrZ1NNt3Cks7MLqQuSp+jWa1vx3huxgfp7gasrKP07VuAZbfVII5hqC6OJ
+         lzatrkgirbOx9nvF8t7orj8LhKTrq2BylRP5wG9zYNfpRx4sQlCvgE6Wki44PBgb43+s
+         8BMfmSYMYPfY8ltThU5/j2rZZBa5HS9A3VeEQAEfU3x6FM4t8xg5aA8jWGb/Md0WiVhV
+         3Y2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756210903; x=1756815703;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1756211445; x=1756816245;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xj/MZA6A4yQOjokPCqmS06vMg9EIcp9det7tR39R6Hw=;
-        b=OoPv0fepCQQujXNnE9erxIQOHTvGAQMrctc1MNH+9PAB0yiCtLMSBTUl174Pcf8Sr6
-         7DIw28QbS7QE1WBdZ/9pXuefTM2t1DWYCSsF2vR+FmvZCoVnNh6cVRMEHbc1KxVwi2vP
-         72qhq/hXjkqTbxd55ifl/6ZAQ44O4huuz+eWstipMjW0lLxK58AJu0J1GDdyQd7shQ8S
-         LJYd/ou0HWZYhFtWnYkabq23xX1xQQUdpkbtNSv2rJu7/8vpjYKcaQBK/o1SpGlLW5lR
-         9mBYshdpPRFtuo5qIAIMEUuxePNW0dBy5a+qdYJbrRLsg5ogkXR1Vv2SKqOTME2ZPggJ
-         BcvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXkxqZn1OYKQb1zwTEcWF0Nx87PG/vzvNoUeIUvSWvcCMayMpqYKWEljS9ew0QeEL6R25y7Bkel3jwBUh78@vger.kernel.org
-X-Gm-Message-State: AOJu0YxmTzdvxG6tHSv14ndTZUrJFBBAbhsyTR8Mz7Jfcl8qSsbHd+l4
-	a1u+b4yv6aMzhoxR72OzZvKohL2ClN5swKP7YmxgoR7jL1rClwwimZB+lyYVJ74sG9qq2lA134N
-	XCxl5Flb/yELLvWWK0QEqyP0vTA1RjwrdUKlH7nIx/JFZq7tiZQrfb/Jv48F1fhujM50f
-X-Gm-Gg: ASbGncs7Ijdbedfw+YeBtbgHe++sZ8+omRAcvWEqSQ1c2HtCHdDnA1/0O0GRWY7TFJT
-	JDWiA9+/a3aWwma1glEQRJnK8WqQanas4s8DYak779+q0eanV3ohVO7vhS2ZJZBfz+TFGOapHkd
-	h65zity8+1zRGjoe0AGiG2PHnCP1p+sKFm0Jc8+x7Qu5gfD7GYVjidTsFG75/Qi/WGxZZhle9Ym
-	VTcXoLeXtFJgOYZBpyJQndv+CF6DSsfWWabYmZ5SjxQ5CAhL8rC85UNO+WDiqpGLFa0f6wxwqVj
-	0PlI7eCkj8OWNIjiHdIB4iQ5mym92Ox/cnyvlVyoGYR5hXOKOSQedqZb2C/PoPgqaA==
-X-Received: by 2002:a05:6a00:10d1:b0:76e:7aee:35f2 with SMTP id d2e1a72fcca58-7702fc15031mr16945604b3a.30.1756210903203;
-        Tue, 26 Aug 2025 05:21:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFdHFcw5nbbR7DmXRWjmRQkX5tmIcocsB+qO88Jb3kvJp1o/g2CVqD8Sf5HxYdMvi7GPrmIRA==
-X-Received: by 2002:a05:6a00:10d1:b0:76e:7aee:35f2 with SMTP id d2e1a72fcca58-7702fc15031mr16945559b3a.30.1756210902626;
-        Tue, 26 Aug 2025 05:21:42 -0700 (PDT)
-Received: from [10.64.16.151] ([114.94.8.21])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771e9c6f2ffsm4758155b3a.6.2025.08.26.05.21.39
+        bh=pkoS1mgQUsuKKrSkoR2eKBjtP1PvOwI34/oZkFfI/4w=;
+        b=LjuX9tZIBTpmtY+c34ROcrfva0JDvAv4vMaBoaf1ko7RsT4FQ38kFTXQFi/fqX0RLq
+         kDPUwzPTI2f4b3dl/Gs896iIIG4GfWe7Rr6t/6LA72EVeUtKntorLzmapOkteccPzhHg
+         fCtztwIqQkjbjp/yA/lPKBTAgpbttp5aYjM6zJzFqnso+8IWcI6jgAbNJ1QYv/Eaml23
+         7i64tlgQCYCpLhlO4aSEbkQnx6wG9bsZTeH3dzdxxY+FlMM3POuQv0FciQcr9rQIbNQi
+         XLBXXhCMar5+x1WQz88iCw4c8RLG9K2nYCBl2NVSXGNmR3h8Q38EOXcmEODmE53a3xch
+         a1Ww==
+X-Forwarded-Encrypted: i=1; AJvYcCXH9Kfe1UvBMwFenH2RXw3CzxjlUN9Cfygd+a7a7W+D8ZNOJ8Gh+V3sQkAQ5GbVvH1EA84hcXYyLqZx3ZVj@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdKkkUmC99D8SJD+4hjjVcl+oi/ZMmiHTjwcB0/ujqhHZWV/Wn
+	8PEyUGfNEWb5LkZFGb38Axyc3w83HAlKRlIRtdN8LeAZDOyf8vIWQIFb8ADkR7PzHE0=
+X-Gm-Gg: ASbGnctGM6I0ABIBVbBrRsDwpLoSnEqmzKCBq/i2XXWlImtyKHD0G1mtUrF2lBfvaT0
+	Yh5k8w0eXsQfZhki9tyQVG51FpTpdWbBQAk+1LKzdmh0eh+2bsH+Lq4GCTYhVaSBCDHAthFRhrn
+	FFWiSHyoS4BBdoCMJJCS8JVEARLTb+9wL8P/m+unOpAlXFUGhZ8Zz3klIYWDKB6REnbLQTdFbnD
+	fiKOFjCuHXxVjdcqUqwudIzvEsaMG9dK80B+0ONkV7/NSd6WtskmxmVCZT6xbpN7DJlX3qAoMiv
+	C3DHYYgVPzkzQMLU6UcO9V5lvua1EM3Ml2mIphRI2zTprErt3K4f8ABp4WYcrwwfPwLWl8Ylfty
+	g8+Y3KF4AZxB4LrMTJllxY+LpkGIjWOAC7t7kBPvHbrchzR211uNa9jo+oXM9+0LKNvvf02/Svq
+	JEv+GwPsJj4NbFT6eA+er9UvcwZWNEf6irbslezZ4SCA==
+X-Google-Smtp-Source: AGHT+IFoNo4sUuPVz97d4PkLZSbI/f1UFt/iMJnmEAyKXCStBHMmMzr2bqFoTjxJ9/MLfPPKQLWMCg==
+X-Received: by 2002:a05:6402:40c4:b0:61c:9cd7:e5b3 with SMTP id 4fb4d7f45d1cf-61c9cd7e885mr392714a12.28.1756211444652;
+        Tue, 26 Aug 2025 05:30:44 -0700 (PDT)
+Received: from [172.31.14.217] (static-243-216-117-93.thenetworkfactory.nl. [93.117.216.243])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-61c3172ef02sm7148078a12.39.2025.08.26.05.30.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 05:21:42 -0700 (PDT)
-Message-ID: <adda1cff-61c8-4f9d-bb9c-7c0cc70a21f1@oss.qualcomm.com>
-Date: Tue, 26 Aug 2025 20:21:37 +0800
+        Tue, 26 Aug 2025 05:30:44 -0700 (PDT)
+Message-ID: <d828855f-1371-4a0d-a636-b04de47376a7@linaro.org>
+Date: Tue, 26 Aug 2025 14:30:42 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,303 +83,155 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/2] arm64: dts: qcom: Add display support for QCS615
- RIDE board
-From: Fange Zhang <fange.zhang@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Li Liu <quic_lliu6@quicinc.com>, dmitry.baryshkov@oss.qualcomm.com,
-        tingwei.zhang@oss.qualcomm.com, xiangxu.yin@oss.qualcomm.com
-References: <20250818-add-display-support-for-qcs615-platform-v6-0-62aad5138a78@oss.qualcomm.com>
- <20250818-add-display-support-for-qcs615-platform-v6-2-62aad5138a78@oss.qualcomm.com>
- <hlajupt4mwb27j4kbygdk5rifthnbnyv4ypcrqd2jk4vvdytoy@fef26rluqkxi>
- <8243f4f2-4505-4264-91ab-3688f4f6fc6e@oss.qualcomm.com>
+Subject: Re: [PATCH v7 7/8] serial: qcom-geni: Enable PM runtime for serial
+ driver
+To: Praveen Talari <quic_ptalari@quicinc.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Alexey Klimov <alexey.klimov@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-serial@vger.kernel.org, Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>, linux-kernel@vger.kernel.org,
+ dmitry.baryshkov@oss.qualcomm.com, psodagud@quicinc.com, djaggi@quicinc.com,
+ quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+ quic_arandive@quicinc.com, quic_cchiluve@quicinc.com,
+ quic_shazhuss@quicinc.com, Jiri Slaby <jirislaby@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+ neil.armstrong@linaro.org, srini@kernel.org
+References: <20250721174532.14022-1-quic_ptalari@quicinc.com>
+ <20250721174532.14022-8-quic_ptalari@quicinc.com>
+ <DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org>
+ <577d05d4-789b-4556-a2d2-d0ad15b2c213@quicinc.com>
+ <dcad137d-8ac9-4a0b-9b64-de799536fd32@kernel.org>
+ <DCC8WLEKNS8W.9GAJHQGYPZIY@linaro.org>
+ <8689a8b4-75cb-4f01-ad6c-0a8367851257@kernel.org>
+ <DCC9B5C7SSU2.GRI1UY0VUDHF@linaro.org>
+ <890ede8a-c049-4332-8f62-5dce2fa0f77b@kernel.org>
+ <5ae730f4-5337-49f8-8bec-8605a2495f37@quicinc.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <8243f4f2-4505-4264-91ab-3688f4f6fc6e@oss.qualcomm.com>
+In-Reply-To: <5ae730f4-5337-49f8-8bec-8605a2495f37@quicinc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA0MyBTYWx0ZWRfX0VYcwHAfDf+I
- HvmRS5Gg8FmWsrAxGiDWA5lbl4W5IlH9T6AXTpkXjbkzY9xubky9SOAyCmbEcmiXe7v4crdWmGB
- +EdsDttt+hZISl14ETjtRVBQir9p+CZDvVy27S8+cYv3Wx+vsJZy8UQ48WUArQCnle1Ty7HwzMT
- Btn5bxUDiCIfkmyWu2dt1Yw3vmLw2ABDqHWvi/AdZTN6KOkbJgPpD1fTXA8/TqFzO0n3nRSrhWA
- KhIASJmfpTLrGNoBeQmTfMeWCyhVWAWIVZbJbGXuIjUSjkH4Xzd9KUqH0e2czxMpDcYgs4pdWXw
- MfH0AuAHEmUiZkGtDaagRnR62C8SeGMJ0jmE4VRVxuZPhvxgCWIN1ehBGqtUICsKjdmy5gsUppI
- 3EVghVJ+
-X-Proofpoint-ORIG-GUID: kpkyFzQDpWw4Y8xRqIJFlENtH2BOOmU5
-X-Proofpoint-GUID: kpkyFzQDpWw4Y8xRqIJFlENtH2BOOmU5
-X-Authority-Analysis: v=2.4 cv=W544VQWk c=1 sm=1 tr=0 ts=68ada6d8 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=gEfo2CItAAAA:8 a=VwQbUJbxAAAA:8
- a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=fAMiPJdJibrns1U4IokA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22 a=sptkURWiP4Gy88Gu7hUp:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 clxscore=1015 suspectscore=0 phishscore=0
- bulkscore=0 impostorscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230043
 
-
-
-On 8/26/2025 4:08 PM, Fange Zhang wrote:
+On 26/08/2025 11:29, Praveen Talari wrote:
+> Hi Alexey/Krzysztof,
 > 
 > 
-> On 8/24/2025 11:15 AM, Bjorn Andersson wrote:
->> On Mon, Aug 18, 2025 at 12:39:21PM +0800, Fange Zhang wrote:
->>> From: Li Liu <quic_lliu6@quicinc.com>
+> On 8/26/2025 3:36 PM, Krzysztof Kozlowski wrote:
+>> On 26/08/2025 11:37, Alexey Klimov wrote:
+>>> On Tue Aug 26, 2025 at 10:21 AM BST, Krzysztof Kozlowski wrote:
+>>>> On 26/08/2025 11:18, Alexey Klimov wrote:
+>>>>>>> May i know what is testcase which you are running on target?
+>>>>>>
+>>>>>> Boot the board?
+>>>>>>
+>>>>>>> what is target?
+>>>>>>
+>>>>>> It is written in original report. Did you even read it?
+>>>>>>
+>>>>>>> Which usecase is this issue occurring in?
+>>>>>>
+>>>>>> Boot?
+>>>>>
+>>>>> FWIW, what said above by Krzysztof is correct, there is no usecase, 
+>>>>> just booting the board.
+>>>>>
+>>>> 12 days and nothing improved, right? if this was not dropped now,
+>>>> Alexey, can you send a revert? Author clearly approches stability 
+>>>> with a
+>>>> very relaxed way and is just happy that patch was thrown over the wall
+>>>> and job is done.
+>>>>
+>>>>
+>>>> If you do not want to send revert, let me know, I will do it.
 >>>
->>> Add display MDSS and DSI configuration for QCS615 RIDE board.
->>> QCS615 has a DP port, and DP support will be added in a later patch.
->>>
->>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> Signed-off-by: Li Liu <quic_lliu6@quicinc.com>
->>> Signed-off-by: Fange Zhang <fange.zhang@oss.qualcomm.com>
+>>> I am okay with sending revert, just trying to see if there is any 
+>>> interest
+>>> in fixing this.
 >>
->> Running dtb checker after applying your patch gives me the following:
->>> $ make qcom/qcs615-ride.dtb CHECK_DTBS=1
->>>    UPD     include/config/kernel.release
->>>    HOSTCC  scripts/basic/fixdep
->>>    SCHEMA  Documentation/devicetree/bindings/processed-schema.json
->>> Documentation/devicetree/bindings/net/snps,dwmac.yaml: mac-mode: 
->>> missing type definition
->>> Documentation/devicetree/bindings/net/nfc/ti,trf7970a.yaml: ti,rx- 
->>> gain-reduction-db: missing type definition
->>> Documentation/devicetree/bindings/phy/fsl,imx8mq-usb-phy.yaml: 
->>> fsl,phy-pcs-tx-deemph-3p5db-attenuation-db: missing type definition
->>>    DTC [C] arch/arm64/boot/dts/qcom/qcs615-ride.dtb
->>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: clock-controller@100000: 
->>> 'clock-names' is a required property
->>>          from schema $id: http://devicetree.org/schemas/clock/ 
->>> qcom,qcs615-gcc.yaml#
+>> Any interest should have happened after 1 day of reporting linux-next
+>> breakage. It has been like what? 12 days?
 >>
->> Taniya is looking at this one.
+>> That's typical throw the patch over the wall. Revert.
 > 
-> Got it. Since the patch appears to be accepted, should I still wait for 
-> mm clk version 7?
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/20250814- 
-> qcs615-mm-cpu-dt-v6-v6-1-a06f69928ab5@oss.qualcomm.com/
+> Really sorry for the delay.
 > 
->>
->>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: gpio@3e: $nodename:0: 
->>> 'gpio@3e' does not match '^(pinctrl|pinmux)(@[0-9a-f]+)?$'
->>>          from schema $id: http://devicetree.org/schemas/pinctrl/ 
->>> semtech,sx1501q.yaml#
->>
->> This is from your patch.
+> I forgot to mention earlier that I’ve been actively investigating this
+> issue across different platform SoCs. I was able to reproduce the
+> problem on the SC7280.
 > 
-> got it, will change "gpio@3e" to "pinctrl@3e"
+> Here’s a summary of the observed behavior:
 > 
->>
->>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'vdd10-supply' 
->>> is a required property
->>>          from schema $id: http://devicetree.org/schemas/display/ 
->>> bridge/analogix,anx7625.yaml#
->>
->> This is from your patch.
+> The issue appears to originate from the qcom_geni_serial driver during
+> device runtime resume. It results in a blocked IRQ thread, which in turn
+> causes system instability.
 > 
-> got it, will add this part like https://lore.kernel.org/ 
-> all/20250604071851.1438612-3-quic_amakhija@quicinc.com/
+> The call trace suggests a deadlock scenario where the IRQ
+> thread—responsible for handling wake-up events—becomes unresponsive
+> while interacting with the pinctrl subsystem.
 > 
-> @@ -51,6 +51,64 @@ dp_dsi0_connector_in: endpoint {
-> };
-> };
+> Specifically, the msm_pinmux_set_mux function attempts to invoke
+> disable_irq, which is problematic when called from an IRQ thread context.
+> Since the IRQ itself is a wake-up source, this leads to contention or a
+> self-deadlock situation.
 > 
-> +       vreg_12p0: vreg-12p0-regulator {=
-> ...
-> @@ -338,7 +396,9 @@ bridge@58 {
->                                  interrupts-extended = <&io_expander 0 
-> IRQ_TYPE_EDGE_FALLING>;
->                                  enable-gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
->                                  reset-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
-> -                               wakeup-source;
-> +                               vdd10-supply = <&vreg_1p0>;
-> +                               vdd18-supply = <&vreg_1p8>;
-> +                               vdd33-supply = <&vreg_3p0>;
+> I have verified below diff and about to post it
 > 
->>
->>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'vdd18-supply' 
->>> is a required property
->>>          from schema $id: http://devicetree.org/schemas/display/ 
->>> bridge/analogix,anx7625.yaml#
->>
->> This is from your patch.
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/ 
+> qcom_geni_serial.c
+> index c9c52c52a98d..cb3b4febd8c2 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -1848,16 +1848,36 @@ static int __maybe_unused 
+> qcom_geni_serial_runtime_suspend(struct device *dev)
+>   {
+>          struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+>          struct uart_port *uport = &port->uport;
+> +       int ret;
+> +
+> +       ret = geni_serial_resources_off(uport);
+> +       if(ret) {
+> +               if (device_may_wakeup(dev))
+> +                       disable_irq_wake(port->wakeup_irq);
+> +       }
 > 
-> same as above
+> -       return geni_serial_resources_off(uport);
+> +       if (device_may_wakeup(dev))
+> +               enable_irq_wake(port->wakeup_irq);
+> +
+> +       return ret;
+>   }
 > 
->>
->>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'vdd33-supply' 
->>> is a required property
->>>          from schema $id: http://devicetree.org/schemas/display/ 
->>> bridge/analogix,anx7625.yaml#
->>
->> This is from your patch.
+>   static int __maybe_unused qcom_geni_serial_runtime_resume(struct 
+> device *dev)
+>   {
+>          struct qcom_geni_serial_port *port = dev_get_drvdata(dev);
+>          struct uart_port *uport = &port->uport;
+> +       int ret;
+> +
+> +       if (device_may_wakeup(dev))
+> +               disable_irq_wake(port->wakeup_irq);
 > 
-> same as above
+> -       return geni_serial_resources_on(uport);
+> +       ret = geni_serial_resources_on(uport);
+> +       if(ret) {
+> +               if (device_may_wakeup(dev))
+> +                       enable_irq_wake(port->wakeup_irq);
+> +       }
+> +
+> +       return ret;
+>   }
 > 
->>
->>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: bridge@58: 'wakeup-source' 
->>> does not match any of the regexes: 'pinctrl-[0-9]+'
->>>          from schema $id: http://devicetree.org/schemas/display/ 
->>> bridge/analogix,anx7625.yaml#
->>
->> This is from your patch.
+> Thanks,
+> Praveen Talari
 > 
-> will remove it
-> 
->>
->>> arch/arm64/boot/dts/qcom/qcs615-ride.dtb: phy@ae94400: Unevaluated 
->>> properties are not allowed ('vdds-supply' was unexpected)
->>>          from schema $id: http://devicetree.org/schemas/display/msm/ 
->>> dsi-phy-14nm.yaml#
->>
->> This is from your patch.
-> 
-> will change "vdds-supply" to "vcca-supply"
-> 
->>
->>
->> Am I missing something? Is there any reason why these 6 new errors
->> should be added?
-> 
-> Sorry, I missed those parts earlier. I've re-tested and confirmed the 
-> changes. The patch can pass after refine.
-> Would it be appropriate to send v7 now, or should I wait until the mm 
-> clk v7 is ready?
+>> Best regards,
+>> Krzysztof
 
-ok, I saw it's already included in linux-next. I'll send v7 tomorrow 
-based on the latest linux-next. may i?
-https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?id=f9c36698db91780eed4ee3a90794bda2a4252166
+Don't forget to include a Fixes: tag for this change.
 
-> 
->>
->> Regards,
->> Bjorn
->>
->>> ---
->>>   arch/arm64/boot/dts/qcom/qcs615-ride.dts | 90 +++++++++++++++++++++ 
->>> +++++++++++
->>>   1 file changed, 90 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/ 
->>> boot/dts/qcom/qcs615-ride.dts
->>> index 
->>> 59582d3dc4c49828ef4a0d22a1cbaba715c7ce8c..39c757b66f47579d9bc7cc5c4d703f7af4434df4 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
->>> @@ -39,6 +39,18 @@ xo_board_clk: xo-board-clk {
->>>           };
->>>       };
->>> +    dp-dsi0-connector {
->>> +        compatible = "dp-connector";
->>> +        label = "DSI0";
->>> +        type = "mini";
->>> +
->>> +        port {
->>> +            dp_dsi0_connector_in: endpoint {
->>> +                remote-endpoint = <&dsi2dp_bridge_out>;
->>> +            };
->>> +        };
->>> +    };
->>> +
->>>       vreg_conn_1p8: regulator-conn-1p8 {
->>>           compatible = "regulator-fixed";
->>>           regulator-name = "vreg_conn_1p8";
->>> @@ -294,6 +306,84 @@ &gcc {
->>>            <&sleep_clk>;
->>>   };
->>> +&i2c2 {
->>> +    clock-frequency = <400000>;
->>> +    status = "okay";
->>> +
->>> +    io_expander: gpio@3e {
->>> +        compatible = "semtech,sx1509q";
->>> +        reg = <0x3e>;
->>> +        interrupts-extended = <&tlmm 58 IRQ_TYPE_EDGE_FALLING>;
->>> +        gpio-controller;
->>> +        #gpio-cells = <2>;
->>> +        interrupt-controller;
->>> +        #interrupt-cells = <2>;
->>> +        semtech,probe-reset;
->>> +    };
->>> +
->>> +    i2c-mux@77 {
->>> +        compatible = "nxp,pca9542";
->>> +        reg = <0x77>;
->>> +        #address-cells = <1>;
->>> +        #size-cells = <0>;
->>> +
->>> +        i2c@0 {
->>> +            reg = <0>;
->>> +            #address-cells = <1>;
->>> +            #size-cells = <0>;
->>> +
->>> +            bridge@58 {
->>> +                compatible = "analogix,anx7625";
->>> +                reg = <0x58>;
->>> +                interrupts-extended = <&io_expander 0 
->>> IRQ_TYPE_EDGE_FALLING>;
->>> +                enable-gpios = <&tlmm 4 GPIO_ACTIVE_HIGH>;
->>> +                reset-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
->>> +                wakeup-source;
->>> +
->>> +                ports {
->>> +                    #address-cells = <1>;
->>> +                    #size-cells = <0>;
->>> +
->>> +                    port@0 {
->>> +                        reg = <0>;
->>> +
->>> +                        dsi2dp_bridge_in: endpoint {
->>> +                            remote-endpoint = <&mdss_dsi0_out>;
->>> +                        };
->>> +                    };
->>> +
->>> +                    port@1 {
->>> +                        reg = <1>;
->>> +
->>> +                        dsi2dp_bridge_out: endpoint {
->>> +                            remote-endpoint = <&dp_dsi0_connector_in>;
->>> +                        };
->>> +                    };
->>> +                };
->>> +            };
->>> +        };
->>> +    };
->>> +};
->>> +
->>> +&mdss {
->>> +    status = "okay";
->>> +};
->>> +
->>> +&mdss_dsi0 {
->>> +    vdda-supply = <&vreg_l11a>;
->>> +    status = "okay";
->>> +};
->>> +
->>> +&mdss_dsi0_out {
->>> +    remote-endpoint = <&dsi2dp_bridge_in>;
->>> +    data-lanes = <0 1 2 3>;
->>> +};
->>> +
->>> +&mdss_dsi0_phy {
->>> +    vdds-supply = <&vreg_l5a>;
->>> +    status = "okay";
->>> +};
->>> +
->>>   &pcie {
->>>       perst-gpios = <&tlmm 101 GPIO_ACTIVE_LOW>;
->>>       wake-gpios = <&tlmm 100 GPIO_ACTIVE_HIGH>;
->>>
->>> -- 
->>> 2.34.1
->>>
-> 
-
+---
+bod
 
