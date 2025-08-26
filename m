@@ -1,237 +1,238 @@
-Return-Path: <linux-arm-msm+bounces-70951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39AFBB37372
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 21:54:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 03F2EB3745B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 23:24:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E34F65E81BE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 19:54:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id ADD363B73D6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 21:24:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1278027EFFE;
-	Tue, 26 Aug 2025 19:54:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FE6A2FE045;
+	Tue, 26 Aug 2025 21:24:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="kVo2jcyH"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EPLGG/7V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BB42EFDB8
-	for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 19:54:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC9D28151E;
+	Tue, 26 Aug 2025 21:24:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756238084; cv=none; b=XhSk4bNO41Ad3IZVicw6LR4jYObC4VmPvmcf2eRt4dW+DuHzu6yWzj3UzCECEqaTFr95A3zXDypXA8J+1X5jt3ySJ1iA4lfIBau+fwqLh3ZzQ58FBr9p3+Yu2G69fgLrti4GttuaEpXKhykwAaPto4kKzQ3J5Al/gxwOhoz7so0=
+	t=1756243450; cv=none; b=C3r6buO2OnCWnlWwLFbYf2IUejAnRHWtYNNKb9nJMkxsEbgmKE/FEsqOXGiOMn/4IkqTOoqCsMxpqryGCVsio+kB+85vP++UuU0c/VSlOkFn0R6oFsnYVZIANBp6QNsLnoUOE2elqjGdXbrH2SqeQm+u5GGqmbQnaZWTvZitfKU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756238084; c=relaxed/simple;
-	bh=nHV+MoADmuu9Flb/SEZp6v3PcnQ8ZAvPvJ2YlUDEGqg=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
-	 References:In-Reply-To; b=WWLIWyoDP+Dih4vUgD3Qej1gksg3s1T9vZCJwpc3cS/QylkLMm6IhZlyIkTJCo2zerAC7FBJOYPpirEvL/1qBDZOFUPb1Tox5sjTIrXqHn6r8Zv964p+3Qw3XfJM3ksP4xEyWXMTzGy9Gyo48o5pwzd+eGerBKCSUOabeZg2OBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=kVo2jcyH; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45b4a25ccceso36125015e9.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 12:54:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756238080; x=1756842880; darn=vger.kernel.org;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=p5ZZNfqznY43NdEJ8oweClpq/lUKtG6cvHvhI0eKnkw=;
-        b=kVo2jcyHjhJQIYTuA3M/9+RzN7Ft3MDQgkVwqOJKJKQiv03+ApkeCbQKaYGAYs7A6V
-         qhth2u8o2bj53Y48lTwskvQc38tQS/kYI5BMMu5Wh+CluwBu8QhVnT8sTES9/m30ng5k
-         vp7vsTJM+kKboSPZzqQB3WP5ljXCGedd0e6KWNPzC7hYvW5JhTnncYxhOxLVMr+CcCEx
-         DuwfBW3jaCMjtDPYf7uS3VfkuHnUynMGg28QvTNXBTbNeYBrNce1sp1MwfsR0IrBBVKC
-         BiOjFNHDF4IpM62a56M9gGoUa2AVgSM6YiV8OcG4CvKGl9/PS4X4zyeFMfZi9QH0jAbO
-         F8VA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756238080; x=1756842880;
-        h=in-reply-to:references:cc:to:from:subject:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=p5ZZNfqznY43NdEJ8oweClpq/lUKtG6cvHvhI0eKnkw=;
-        b=AvW5dpSFC4SJcpYmYhN7DuwNJeDMhoJdVHS5wOSPv4+qDU5Xz14W6d/qrpQXQdSMvp
-         tU6fsjqS1vfmtMkkLYFXKt8Gw3ZdOFGfyqUyDx9ndkNbMXtRjsqkddQQBmOAGwtwdA6g
-         7nQw8XO+l1ZCKtZSWLljk8NikdfubI6D/N34I29pSsxf+OaGc6JJmbqHctXGUhhtNYYU
-         1hGss2Qdl2DBkCpviyGnlyAoD8BBRZQKPg/A3cgkTfY5e24OKQm+yA3DxuuaAdmqKJPv
-         FDTY1uffKGhVqZo+uLy01hmdCkXndPui5bRCRSeIjBzdA8fHt3YZuRTIzEN+HnVSyP4I
-         VpjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWChyHX5ijNz6kgaFPOabC8Qj+CRKdoZTNUYz3OGZxYd4a5OJzC7PgTOAEixgzhB7bjX+6PmbdgnLA0IMws@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtGA0JdduwH7gmm5DKCVTeJuXulXlMZ41QvbzPF5t+jZXV3j23
-	BKOap9azrmBkOv8gltN7AbrhT7J6P3RYyKLeXs5fkGapFngeq7GEva42LTR7Z5l9x5g=
-X-Gm-Gg: ASbGncv77ZWzBSS4M0q8NcHI9yC2kdwOwliH6e8jW3IFrBSfikxDH/MQIpVICedmVmS
-	+hMehE/DbFIzcWK/fa8zyjGDtMlaNH0H0BFngOjJco79Do+nP0YP5nO0y+YqbFeMIZDwULr7CXJ
-	TYwHCGMyWy1IZKKLgGRE5R09QicTk3kYVvdE53pPkq4h0y29HTjZWT5ygyM5a3B6C5o42GIpswS
-	LFjrRMfgKk8aY5RyxLbw5UydK2OGX2FKhTu7IHve9+CdU8EMap22CKd6SQ6JwqEDHur25wh8nJd
-	cZMKhE2/+bxbascirXUsnE2a1PXSN7LGKDcy5J5ipcFUFulbEO6/NPXpH+ObWMnGtgn0SUmwaBh
-	UX9g50j1jyEgLKSfJKqOFrDksvoU=
-X-Google-Smtp-Source: AGHT+IGHAaQcE5nk8+2l2gN+bgEDgLzg5nPrVxn2sZgSHR1KIyMJyR1EB3qvooivM+uG4c5VtH8DHw==
-X-Received: by 2002:a05:600c:1392:b0:453:5a04:b60e with SMTP id 5b1f17b1804b1-45b517d4e23mr135380295e9.26.1756238080215;
-        Tue, 26 Aug 2025 12:54:40 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:e633:2c7e:2d3c:f5ec])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0f320esm23865e9.16.2025.08.26.12.54.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 12:54:39 -0700 (PDT)
+	s=arc-20240116; t=1756243450; c=relaxed/simple;
+	bh=l883/XMWp2sJPEUKA3Wy082jQu7V8ivTJMDHeeXauTU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dHbM8VkbkfBjPs1FN5cLJryPP/2JG+8VbetcHsPDaqHAZz9xzDXKcPiOlRsY5bvjZNiS/o88TivvH9OPoi2eOixtO6QkAEcMi64Bp9bRycBXR4mkzNVui16eRIf306ydDn8NAkQPbx/DB9tIp4y4Qf555ORVkhMgN2pGnTrHWc0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EPLGG/7V; arc=none smtp.client-ip=198.175.65.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1756243449; x=1787779449;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=l883/XMWp2sJPEUKA3Wy082jQu7V8ivTJMDHeeXauTU=;
+  b=EPLGG/7V18wNdYewZSMWBjdnxb+DRe71eo3L4m3/+31Y1FFNomap68tU
+   NQMLT2tA9RiVCJ1+azuuKb4eJxkNFO5xu+oTrzujPYjMcMbs0QHg6q946
+   /uhfuafpy2f7QiqD6mbQ11zQvjm2IVRdM7XQiVT5Tzsbwv/9vedKjOuhU
+   QuPNPznunH0CGIs5kCQvi9btNeo/B8PEQKX6jG1BQT50Kqc75IjJm4cmo
+   soVIvbXiLcm0AFafXdxGpSilib/dSSTtT33FH3YvScUU5RMP2cNlCcFPV
+   ByB6H3mZhuQj4FsrU0/lAjAMlIrxiUcfPWMxzXDKouV+mixk6tqGDiWwU
+   w==;
+X-CSE-ConnectionGUID: 2o0t4PlyTgWVBuaH9n42qQ==
+X-CSE-MsgGUID: vUNrkn//SnGI9Y4jeIu7ww==
+X-IronPort-AV: E=McAfee;i="6800,10657,11534"; a="58644683"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
+   d="scan'208";a="58644683"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2025 14:24:08 -0700
+X-CSE-ConnectionGUID: FL09nxxnRhaPH9mjGQ3DxQ==
+X-CSE-MsgGUID: ojYl6mGmTkKBIEZtGn/+eg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
+   d="scan'208";a="200632650"
+Received: from mgerlach-mobl1.amr.corp.intel.com (HELO localhost) ([10.124.223.116])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2025 14:24:07 -0700
+Date: Tue, 26 Aug 2025 14:24:05 -0700
+From: David Box <david.e.box@linux.intel.com>
+To: Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>
+Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Manivannan Sadhasivam <mani@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
+	Jonathan Derrick <jonathan.derrick@linux.dev>, Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org, 
+	LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, linux-wireless@vger.kernel.org, 
+	ath12k@lists.infradead.org, ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, "Rafael J. Wysocki" <rafael@kernel.org>
+Subject: Re: [PATCH v2 2/8] PCI/ASPM: Fix the behavior of
+ pci_enable_link_state*() APIs
+Message-ID: <qfw7nv53hmy6whxnf4zqfdtvjzkdxkvxn7eghuxzuuojmvxl34@sxw2jvxze4wm>
+References: <20250825-ath-aspm-fix-v2-0-61b2f2db7d89@oss.qualcomm.com>
+ <20250825-ath-aspm-fix-v2-2-61b2f2db7d89@oss.qualcomm.com>
+ <f644fc83-31cc-1f0e-58cf-7c007e6173e4@linux.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 26 Aug 2025 20:54:38 +0100
-Message-Id: <DCCMFVC0DW1I.GXZVG2BQEFX7@linaro.org>
-Subject: Re: [PATCH v7 7/8] serial: qcom-geni: Enable PM runtime for serial
- driver
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Praveen Talari" <quic_ptalari@quicinc.com>, "Krzysztof Kozlowski"
- <krzk@kernel.org>
-Cc: "Bjorn Andersson" <andersson@kernel.org>, "Konrad Dybcio"
- <konradybcio@kernel.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-serial@vger.kernel.org>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, <linux-kernel@vger.kernel.org>,
- <dmitry.baryshkov@oss.qualcomm.com>, <psodagud@quicinc.com>,
- <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
- <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
- <quic_cchiluve@quicinc.com>, <quic_shazhuss@quicinc.com>, "Jiri Slaby"
- <jirislaby@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- <devicetree@vger.kernel.org>, <bryan.odonoghue@linaro.org>,
- <neil.armstrong@linaro.org>, <srini@kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20250721174532.14022-1-quic_ptalari@quicinc.com>
- <20250721174532.14022-8-quic_ptalari@quicinc.com>
- <DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org>
- <577d05d4-789b-4556-a2d2-d0ad15b2c213@quicinc.com>
- <dcad137d-8ac9-4a0b-9b64-de799536fd32@kernel.org>
- <DCC8WLEKNS8W.9GAJHQGYPZIY@linaro.org>
- <8689a8b4-75cb-4f01-ad6c-0a8367851257@kernel.org>
- <DCC9B5C7SSU2.GRI1UY0VUDHF@linaro.org>
- <890ede8a-c049-4332-8f62-5dce2fa0f77b@kernel.org>
- <5ae730f4-5337-49f8-8bec-8605a2495f37@quicinc.com>
-In-Reply-To: <5ae730f4-5337-49f8-8bec-8605a2495f37@quicinc.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f644fc83-31cc-1f0e-58cf-7c007e6173e4@linux.intel.com>
 
-On Tue Aug 26, 2025 at 11:29 AM BST, Praveen Talari wrote:
-> Hi Alexey/Krzysztof,
->
->
-> On 8/26/2025 3:36 PM, Krzysztof Kozlowski wrote:
->> On 26/08/2025 11:37, Alexey Klimov wrote:
->>> On Tue Aug 26, 2025 at 10:21 AM BST, Krzysztof Kozlowski wrote:
->>>> On 26/08/2025 11:18, Alexey Klimov wrote:
->>>>>>> May i know what is testcase which you are running on target?
->>>>>>
->>>>>> Boot the board?
->>>>>>
->>>>>>> what is target?
->>>>>>
->>>>>> It is written in original report. Did you even read it?
->>>>>>
->>>>>>> Which usecase is this issue occurring in?
->>>>>>
->>>>>> Boot?
->>>>>
->>>>> FWIW, what said above by Krzysztof is correct, there is no usecase, j=
-ust booting the board.
->>>>>
->>>> 12 days and nothing improved, right? if this was not dropped now,
->>>> Alexey, can you send a revert? Author clearly approches stability with=
- a
->>>> very relaxed way and is just happy that patch was thrown over the wall
->>>> and job is done.
->>>>
->>>>
->>>> If you do not want to send revert, let me know, I will do it.
->>>
->>> I am okay with sending revert, just trying to see if there is any inter=
-est
->>> in fixing this.
->>=20
->> Any interest should have happened after 1 day of reporting linux-next
->> breakage. It has been like what? 12 days?
->>=20
->> That's typical throw the patch over the wall. Revert.
->
-> Really sorry for the delay.
->
-> I forgot to mention earlier that I=E2=80=99ve been actively investigating=
- this
-> issue across different platform SoCs. I was able to reproduce the
-> problem on the SC7280.
->
-> Here=E2=80=99s a summary of the observed behavior:
->
-> The issue appears to originate from the qcom_geni_serial driver during
-> device runtime resume. It results in a blocked IRQ thread, which in turn
-> causes system instability.
->
-> The call trace suggests a deadlock scenario where the IRQ
-> thread=E2=80=94responsible for handling wake-up events=E2=80=94becomes un=
-responsive
-> while interacting with the pinctrl subsystem.
->
-> Specifically, the msm_pinmux_set_mux function attempts to invoke
-> disable_irq, which is problematic when called from an IRQ thread context.
-> Since the IRQ itself is a wake-up source, this leads to contention or a
-> self-deadlock situation.
->
-> I have verified below diff and about to post it
+On Tue, Aug 26, 2025 at 03:55:42PM +0300, Ilpo Järvinen wrote:
+> +David
+> 
+> On Mon, 25 Aug 2025, Manivannan Sadhasivam via B4 Relay wrote:
+> 
+> > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > 
+> > pci_enable_link_state() and pci_enable_link_state_locked() APIs are
+> > supposed to be symmectric with pci_disable_link_state() and
+> > pci_disable_link_state_locked() APIs.
+> > 
+> > But unfortunately, they are not symmetric. This behavior was mentioned in
+> > the kernel-doc of these APIs:
+> > 
+> > " Clear and set the default device link state..."
+> > 
+> > and
+> > 
+> > "Also note that this does not enable states disabled by
+> > pci_disable_link_state()"
+> > 
+> > These APIs won't enable all the states specified by the 'state' parameter,
+> > but only enable the ones not previously disabled by the
+> > pci_disable_link_state*() APIs. But this behavior doesn't align with the
+> > naming of these APIs, as they give the impression that these APIs will
+> > enable all the specified states.
+> > 
+> > To resolve this ambiguity, allow these APIs to enable the specified states,
+> > regardeless of whether they were previously disabled or not. This is
+> > accomplished by clearing the previously disabled states from the
+> > 'link::aspm_disable' parameter in __pci_enable_link_state() helper. Also,
+> > reword the kernel-doc to reflect this behavior.
+> > 
+> > The current callers of pci_enable_link_state_locked() APIs (vmd and
+> > pcie-qcom) did not disable the ASPM states before calling this API. So it
+> > is evident that they do not depend on the previous behavior of this API and
+> > intend to enable all the specified states.
+> 
+> While it might be "safe" in the sense that ->aspm_disable is not set by 
+> anything, I'm still not sure if overloading this function for two 
+> different use cases is a good idea.
+> 
+> I'd like to hear David's opinion on this as he grasps the ->aspm_default 
+> vs ->aspm_disable thing much better than I do.
 
-Was the original patch, that introduced the regression, also created by AI =
-tools?
-Just trying to understand how we ended up with untested commit in -master.
+The concern I see is that this would override the init-time blacklist which is
+set in pcie_aspm_sanity_check() and only consulted during initialization.
+__pci_disable_link_state() doesn't do this. It ORs in bits to aspm_disable.  By
+contrast, this change would clear bits from aspm_disable in the enable path,
+which allows ASPM to be enabled on links that pcie_aspm_sanity_check()
+determined should be disabled.
 
-Did you test the change below on real hardware?
+But I noticed the sysfs path, aspm_attr_store_common(), already permits this
+override. That may be unintentional though since the comment in
+pcie_aspm_sanity_check() implies the blacklist can only be overridden with
+pcie_aspm=force. At minimum, that needs to be clarified.
 
+David
 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c=20
-> b/drivers/tty/serial/qcom_geni_serial.c
-> index c9c52c52a98d..cb3b4febd8c2 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1848,16 +1848,36 @@ static int __maybe_unused=20
-> qcom_geni_serial_runtime_suspend(struct device *dev)
->   {
->          struct qcom_geni_serial_port *port =3D dev_get_drvdata(dev);
->          struct uart_port *uport =3D &port->uport;
-> +       int ret;
-> +
-> +       ret =3D geni_serial_resources_off(uport);
-> +       if(ret) {
-> +               if (device_may_wakeup(dev))
-> +                       disable_irq_wake(port->wakeup_irq);
-> +       }
->
-> -       return geni_serial_resources_off(uport);
-> +       if (device_may_wakeup(dev))
-> +               enable_irq_wake(port->wakeup_irq);
-> +
-> +       return ret;
->   }
->
->   static int __maybe_unused qcom_geni_serial_runtime_resume(struct=20
-> device *dev)
->   {
->          struct qcom_geni_serial_port *port =3D dev_get_drvdata(dev);
->          struct uart_port *uport =3D &port->uport;
-> +       int ret;
-> +
-> +       if (device_may_wakeup(dev))
-> +               disable_irq_wake(port->wakeup_irq);
->
-> -       return geni_serial_resources_on(uport);
-> +       ret =3D geni_serial_resources_on(uport);
-> +       if(ret) {
-> +               if (device_may_wakeup(dev))
-> +                       enable_irq_wake(port->wakeup_irq);
-> +       }
-> +
-> +       return ret;
->   }
-
-Best regards,
-Alexey
+> 
+> > And the other API, pci_enable_link_state() doesn't have a caller for now,
+> > but will be used by the 'atheros' WLAN drivers in the subsequent commits.
+> > 
+> > Suggested-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+> 
+> This tag sound like I'm endorsing this approach which is not the case. I'd 
+> prefer separate functions for each use case, setting aspm_default and 
+> another for the enable state.
+> 
+> -- 
+>  i.
+> 
+> > Co-developed-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> >  drivers/pci/pcie/aspm.c | 33 ++++++++++++++++++---------------
+> >  1 file changed, 18 insertions(+), 15 deletions(-)
+> > 
+> > diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> > index be9bd272057c3472f3e31dc9568340b19d52012a..fac46113a90c7fac6c97125e6a7e385045780005 100644
+> > --- a/drivers/pci/pcie/aspm.c
+> > +++ b/drivers/pci/pcie/aspm.c
+> > @@ -1459,6 +1459,7 @@ static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
+> >  		down_read(&pci_bus_sem);
+> >  	mutex_lock(&aspm_lock);
+> >  	link->aspm_default = pci_calc_aspm_enable_mask(state);
+> > +	link->aspm_disable &= ~state;
+> >  	pcie_config_aspm_link(link, policy_to_aspm_state(link));
+> >  
+> >  	link->clkpm_default = (state & PCIE_LINK_STATE_CLKPM) ? 1 : 0;
+> > @@ -1471,17 +1472,18 @@ static int __pci_enable_link_state(struct pci_dev *pdev, int state, bool locked)
+> >  }
+> >  
+> >  /**
+> > - * pci_enable_link_state - Clear and set the default device link state so that
+> > - * the link may be allowed to enter the specified states. Note that if the
+> > - * BIOS didn't grant ASPM control to the OS, this does nothing because we can't
+> > - * touch the LNKCTL register. Also note that this does not enable states
+> > - * disabled by pci_disable_link_state(). Return 0 or a negative errno.
+> > + * pci_enable_link_state - Enable device's link state
+> > + * @pdev: PCI device
+> > + * @state: Mask of ASPM link states to enable
+> > + *
+> > + * Enable device's link state, so the link will enter the specified states.
+> > + * Note that if the BIOS didn't grant ASPM control to the OS, this does
+> > + * nothing because we can't touch the LNKCTL register.
+> >   *
+> >   * Note: Ensure devices are in D0 before enabling PCI-PM L1 PM Substates, per
+> >   * PCIe r6.0, sec 5.5.4.
+> >   *
+> > - * @pdev: PCI device
+> > - * @state: Mask of ASPM link states to enable
+> > + * Return: 0 on success, a negative errno otherwise.
+> >   */
+> >  int pci_enable_link_state(struct pci_dev *pdev, int state)
+> >  {
+> > @@ -1490,19 +1492,20 @@ int pci_enable_link_state(struct pci_dev *pdev, int state)
+> >  EXPORT_SYMBOL(pci_enable_link_state);
+> >  
+> >  /**
+> > - * pci_enable_link_state_locked - Clear and set the default device link state
+> > - * so that the link may be allowed to enter the specified states. Note that if
+> > - * the BIOS didn't grant ASPM control to the OS, this does nothing because we
+> > - * can't touch the LNKCTL register. Also note that this does not enable states
+> > - * disabled by pci_disable_link_state(). Return 0 or a negative errno.
+> > + * pci_enable_link_state_locked - Enable device's link state
+> > + * @pdev: PCI device
+> > + * @state: Mask of ASPM link states to enable
+> > + *
+> > + * Enable device's link state, so the link will enter the specified states.
+> > + * Note that if the BIOS didn't grant ASPM control to the OS, this does
+> > + * nothing because we can't touch the LNKCTL register.
+> >   *
+> >   * Note: Ensure devices are in D0 before enabling PCI-PM L1 PM Substates, per
+> >   * PCIe r6.0, sec 5.5.4.
+> >   *
+> > - * @pdev: PCI device
+> > - * @state: Mask of ASPM link states to enable
+> > - *
+> >   * Context: Caller holds pci_bus_sem read lock.
+> > + *
+> > + * Return: 0 on success, a negative errno otherwise.
+> >   */
+> >  int pci_enable_link_state_locked(struct pci_dev *pdev, int state)
+> >  {
+> > 
+> > 
 
 
