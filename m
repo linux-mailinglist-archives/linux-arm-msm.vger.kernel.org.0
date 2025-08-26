@@ -1,247 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-70921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70923-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D59D4B36F3E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 18:02:12 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3983BB36F78
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 18:07:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 433011BC1667
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 15:58:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 37EC04619AB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 26 Aug 2025 16:01:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5D42352FD7;
-	Tue, 26 Aug 2025 15:55:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8CFE23164BF;
+	Tue, 26 Aug 2025 16:00:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lWrLwiyZ"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Q9ZTeb6I"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D7D35AAAB;
-	Tue, 26 Aug 2025 15:55:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C280E30FC3E;
+	Tue, 26 Aug 2025 16:00:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.13
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756223754; cv=none; b=VJ+vtBpS/f5iFopFrfUZ2soJ8kX+zvwO7ZaRE0W/UJM508iW1JUQjBGuNu+FxURyB6leqlOnVRF12BNyuOJI4UP30EIIxhm/KpdZOWxi8BTQz+A1LqCMwz/hk1pP5OOYQH7ycU1BijYM2+n0mWB72e6Ng9dfLRIyLOVwHm7GTZM=
+	t=1756224043; cv=none; b=MpQUUb1fe3y+/OljInHVGhHEEwYqBt4LVpBp6OKXGMERH+AfzT+i7OvYM2/zPlEY2STBND2Z5KzzkFOoifdwVSyNKfMB+yfPYNXgeexLaoG+FbvG7zKPer1A63oz4P3Ui4CZX04TtwCuT21LZqVktWyER2u2chDexxweyoXhK4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756223754; c=relaxed/simple;
-	bh=7D1gRpLyK2KWpavVC/GDGqLHUTmC2s3yYbsERqNk5is=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C2HkpJ9JBKVU79QEJo5yoKyK3Fi17u+g3SGfHFFXuvHulnKTS1x4TKe6jX857DMHfdW8AlRkSul5itZmNsLw8UkLVvwhedrpRBOGuI+tY3J9FkUvfE3bVXlcKNiXhw7RbhSapjhmfPgNCAMWWK0LRfL+iOw13q/9QdkAIPFnFEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lWrLwiyZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803CBC4CEF1;
-	Tue, 26 Aug 2025 15:55:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756223753;
-	bh=7D1gRpLyK2KWpavVC/GDGqLHUTmC2s3yYbsERqNk5is=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lWrLwiyZzcyORghQyM1Dmlwptz6xFlfKujYzcNYF43ww95Vl3j5CsSDBwZxv5/o9l
-	 dvNcj5p4QpQYUPLZ7A73wQqhU6Y7Ua0DQI4YqDY4VtYyxk3lFNGTAItm04j1Zn5Qso
-	 Os0o+00S6/H+96fgyctfUN+kbLtIsnU3sQJR42vpEoQ7rdIRqWXCUo2izZQ7OagZZN
-	 QbV0+v2NHqv7e8lo/7KhJ7kahFaq7LkdDa1vCnIJ6KtaYoXfAvi4kJbCrO0EbgEs9E
-	 KMI71QC/4JBaMSo3ujPmADmp7oKT3bh+fEVAb4DT5rbSd8QuS08WNvbenpmec4RwJR
-	 F4fhtQI2tcLSw==
-Date: Tue, 26 Aug 2025 10:55:50 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: Jens Wiklander <jens.wiklander@linaro.org>, 
-	Sumit Garg <sumit.garg@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Apurupa Pattapu <quic_apurupa@quicinc.com>, 
-	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
-	Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org, 
-	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org, 
-	Sumit Garg <sumit.garg@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v8 09/11] qcomtee: add primordial object
-Message-ID: <4rbfpubsaxgv2buksonfigbdkw6geas6l7pycxuukdymqfohga@ohd4hqzvra3w>
-References: <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-0-7066680f138a@oss.qualcomm.com>
- <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-9-7066680f138a@oss.qualcomm.com>
+	s=arc-20240116; t=1756224043; c=relaxed/simple;
+	bh=MvazfRK55Y+YfphRl006UAxhYW9WAxvC/vVYPiYdSR4=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=GvdFX+DOaYgRbmzCYdqjIesPaXJtCcJ7Z7ciZSMMEoXwRig/jp3ZvPEW5IadoGtqPcWqvvO89cwVLdRKse09Aacx+cOWVc84zb8JaVDzK2vcQvaINrCBpjwJMuOLo+w6oXDGKa8cD70DBfYw1NaPmjd+1uE2rVx2zj6JejA8S3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Q9ZTeb6I; arc=none smtp.client-ip=192.198.163.13
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1756224042; x=1787760042;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=MvazfRK55Y+YfphRl006UAxhYW9WAxvC/vVYPiYdSR4=;
+  b=Q9ZTeb6I4ya61jsZXZMsSmBKNN0A0HE5a5ywSSr6VIvkca3zjazxIJ3P
+   rE6rLRec7H0IQ8aPj9Wrx2nRG2d3tNFz691DT4uHfpyGgNwYas1gjrlJ9
+   dkrNdYn5w1B2QKXiD/ctOya6aZH/c9Wvp2DfHoN/BZ6tUv6mXxA/9Pkvd
+   aMTrr5fZru/1L8/iuKB79LYfUFiVKlJScA5cwrq8rP5n3zHZB186ebPAj
+   taCHqWCTXRJ5sxPxZ41J/YQ6Rq1aTm86L0XN0nItrMQGPdnMxIDGQkDO7
+   B8X17gb52tSzEP/2MeNJlqbGd3UGioBlWlsT1ySGNpWj633TAS3HE417V
+   w==;
+X-CSE-ConnectionGUID: MO0TTCxlT/uRxa7XDxz2vw==
+X-CSE-MsgGUID: pv8PHRpeTQKqBBvtIaaJ7Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11534"; a="61099302"
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
+   d="scan'208";a="61099302"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2025 09:00:41 -0700
+X-CSE-ConnectionGUID: zv1x8OSWQXeJW9G/Mr2ptw==
+X-CSE-MsgGUID: saIygWOLRJWUlK7H39/AOA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,214,1751266800"; 
+   d="scan'208";a="169519770"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.4])
+  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2025 09:00:29 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Tue, 26 Aug 2025 19:00:25 +0300 (EEST)
+To: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+cc: manivannan.sadhasivam@oss.qualcomm.com, 
+    Bjorn Helgaas <bhelgaas@google.com>, 
+    Manivannan Sadhasivam <mani@kernel.org>, 
+    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
+    Rob Herring <robh@kernel.org>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
+    Jonathan Derrick <jonathan.derrick@linux.dev>, 
+    Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org, 
+    LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
+    linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
+    ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
+    =?ISO-8859-15?Q?Ilpo_J=E4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
+    Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+    "Rafael J. Wysocki" <rafael@kernel.org>, 
+    Qiang Yu <qiang.yu@oss.qualcomm.com>
+Subject: Re: [PATCH v2 6/8] wifi: ath12k: Use pci_{enable/disable}_link_state()
+ APIs to enable/disable ASPM states
+In-Reply-To: <2fab10a7-8758-4a5c-95ff-2bb9a6dea6bf@oss.qualcomm.com>
+Message-ID: <705a4fe5-658e-25ac-9e4d-6b8089abca46@linux.intel.com>
+References: <20250825-ath-aspm-fix-v2-0-61b2f2db7d89@oss.qualcomm.com> <20250825-ath-aspm-fix-v2-6-61b2f2db7d89@oss.qualcomm.com> <2fab10a7-8758-4a5c-95ff-2bb9a6dea6bf@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-9-7066680f138a@oss.qualcomm.com>
+Content-Type: text/plain; charset=US-ASCII
 
-On Wed, Aug 20, 2025 at 04:38:56PM -0700, Amirreza Zarrabi wrote:
+On Tue, 26 Aug 2025, Jeff Johnson wrote:
 
-Looking at other commits in drivers/tee/ I'd expect the subject prefix
-to be "tee: qcom: ".
-
-> After booting, the kernel provides a static object known as the
-> primordial object. This object is utilized by QTEE for native
-> kernel services such as yield or privileged operations.
+> On 8/25/2025 10:44 AM, Manivannan Sadhasivam via B4 Relay wrote:
+> > --- a/drivers/net/wireless/ath/ath12k/Kconfig
+> > +++ b/drivers/net/wireless/ath/ath12k/Kconfig
+> > @@ -1,7 +1,7 @@
+> >  # SPDX-License-Identifier: BSD-3-Clause-Clear
+> >  config ATH12K
+> >  	tristate "Qualcomm Technologies Wi-Fi 7 support (ath12k)"
+> > -	depends on MAC80211 && HAS_DMA && PCI
+> > +	depends on MAC80211 && HAS_DMA && PCI && PCIEASPM
 > 
-> Acked-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Tested-by: Harshal Dev <quic_hdev@quicinc.com>
-> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-> ---
->  drivers/tee/qcomtee/Makefile         |  1 +
->  drivers/tee/qcomtee/core.c           | 19 ++++++++---
->  drivers/tee/qcomtee/primordial_obj.c | 66 ++++++++++++++++++++++++++++++++++++
->  drivers/tee/qcomtee/qcomtee.h        |  3 ++
->  4 files changed, 84 insertions(+), 5 deletions(-)
+> As you point out in patch 1/8, PCIEASPM is protected by EXPERT.
 > 
-> diff --git a/drivers/tee/qcomtee/Makefile b/drivers/tee/qcomtee/Makefile
-> index 600af2b8f1c1..78f8e899d143 100644
-> --- a/drivers/tee/qcomtee/Makefile
-> +++ b/drivers/tee/qcomtee/Makefile
-> @@ -3,5 +3,6 @@ obj-$(CONFIG_QCOMTEE) += qcomtee.o
->  qcomtee-objs += async.o
->  qcomtee-objs += call.o
->  qcomtee-objs += core.o
-> +qcomtee-objs += primordial_obj.o
->  qcomtee-objs += shm.o
->  qcomtee-objs += user_obj.o
-> diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
-> index 578299a3eabc..561a48319f91 100644
-> --- a/drivers/tee/qcomtee/core.c
-> +++ b/drivers/tee/qcomtee/core.c
-> @@ -31,10 +31,12 @@ int qcomtee_next_arg_type(struct qcomtee_arg *u, int i,
->  }
->  
->  /*
-> - * QTEE expects IDs with the QCOMTEE_MSG_OBJECT_NS_BIT set for objects
-> - * of the QCOMTEE_OBJECT_TYPE_CB type.
-> + * QTEE expects IDs with QCOMTEE_MSG_OBJECT_NS_BIT set for objects of
-> + * QCOMTEE_OBJECT_TYPE_CB type. The first ID with QCOMTEE_MSG_OBJECT_NS_BIT
-> + * set is reserved for the primordial object.
->   */
-> -#define QCOMTEE_OBJECT_ID_START (QCOMTEE_MSG_OBJECT_NS_BIT + 1)
-> +#define QCOMTEE_OBJECT_PRIMORDIAL (QCOMTEE_MSG_OBJECT_NS_BIT)
-> +#define QCOMTEE_OBJECT_ID_START (QCOMTEE_OBJECT_PRIMORDIAL + 1)
->  #define QCOMTEE_OBJECT_ID_END (U32_MAX)
->  
->  #define QCOMTEE_OBJECT_SET(p, type, ...) \
-> @@ -157,7 +159,9 @@ static void qcomtee_object_release(struct kref *refcount)
->   */
->  int qcomtee_object_get(struct qcomtee_object *object)
->  {
-> -	if (object != NULL_QCOMTEE_OBJECT && object != ROOT_QCOMTEE_OBJECT)
-> +	if (object != &qcomtee_primordial_object &&
-> +	    object != NULL_QCOMTEE_OBJECT &&
-> +	    object != ROOT_QCOMTEE_OBJECT)
->  		return kref_get_unless_zero(&object->refcount);
->  
->  	return 0;
-> @@ -169,7 +173,9 @@ int qcomtee_object_get(struct qcomtee_object *object)
->   */
->  void qcomtee_object_put(struct qcomtee_object *object)
->  {
-> -	if (object != NULL_QCOMTEE_OBJECT && object != ROOT_QCOMTEE_OBJECT)
-> +	if (object != &qcomtee_primordial_object &&
-> +	    object != NULL_QCOMTEE_OBJECT &&
-> +	    object != ROOT_QCOMTEE_OBJECT)
->  		kref_put(&object->refcount, qcomtee_object_release);
->  }
->  
-> @@ -261,6 +267,9 @@ qcomtee_local_object_get(struct qcomtee_object_invoke_ctx *oic,
->  	struct qcomtee *qcomtee = tee_get_drvdata(oic->ctx->teedev);
->  	struct qcomtee_object *object;
->  
-> +	if (object_id == QCOMTEE_OBJECT_PRIMORDIAL)
-> +		return &qcomtee_primordial_object;
-> +
->  	guard(rcu)();
->  	object = xa_load(&qcomtee->xa_local_objects, object_id);
->  	/* It already checks for %NULL_QCOMTEE_OBJECT. */
-> diff --git a/drivers/tee/qcomtee/primordial_obj.c b/drivers/tee/qcomtee/primordial_obj.c
-> new file mode 100644
-> index 000000000000..df94fbf5f141
-> --- /dev/null
-> +++ b/drivers/tee/qcomtee/primordial_obj.c
-> @@ -0,0 +1,66 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +
-> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+> Won't this prevent the driver from being built (or even showing up in
+> menuconfig) if EXPERT is not enabled?
 
-I don't see any pr_*() functions in this file, please drop this.
+It doesn't work that way, PCIEASPM defaults to y:
 
-Regards,
-Bjorn
+$ sed -i -e 's|CONFIG_PCIEASPM=y|CONFIG_PCIEASPM=n|g' .config && make oldconfig && grep -e 'CONFIG_EXPERT ' -e 'CONFIG_PCIEASPM=' .config
+#
+# configuration written to .config
+#
+# CONFIG_EXPERT is not set
+CONFIG_PCIEASPM=y
 
-> +
-> +#include <linux/delay.h>
-> +
-> +#include "qcomtee.h"
-> +
-> +/**
-> + * DOC: Primordial Object
-> + *
-> + * After boot, the kernel provides a static object of type
-> + * %QCOMTEE_OBJECT_TYPE_CB called the primordial object. This object is used
-> + * for native kernel services or privileged operations.
-> + *
-> + * We support:
-> + *  - %QCOMTEE_OBJECT_OP_YIELD to yield by the thread running in QTEE.
-> + *  - %QCOMTEE_OBJECT_OP_SLEEP to wait for a period of time.
-> + */
-> +
-> +#define QCOMTEE_OBJECT_OP_YIELD 1
-> +#define QCOMTEE_OBJECT_OP_SLEEP 2
-> +
-> +static int
-> +qcomtee_primordial_obj_dispatch(struct qcomtee_object_invoke_ctx *oic,
-> +				struct qcomtee_object *primordial_object_unused,
-> +				u32 op, struct qcomtee_arg *args)
-> +{
-> +	int err = 0;
-> +
-> +	switch (op) {
-> +	case QCOMTEE_OBJECT_OP_YIELD:
-> +		cond_resched();
-> +		/* No output object. */
-> +		oic->data = NULL;
-> +		break;
-> +	case QCOMTEE_OBJECT_OP_SLEEP:
-> +		/* Check message format matched QCOMTEE_OBJECT_OP_SLEEP op. */
-> +		if (qcomtee_args_len(args) != 1 ||
-> +		    args[0].type != QCOMTEE_ARG_TYPE_IB ||
-> +		    args[0].b.size < sizeof(u32))
-> +			return -EINVAL;
-> +
-> +		msleep(*(u32 *)(args[0].b.addr));
-> +		/* No output object. */
-> +		oic->data = NULL;
-> +		break;
-> +	default:
-> +		err = -EINVAL;
-> +	}
-> +
-> +	return err;
-> +}
-> +
-> +static struct qcomtee_object_operations qcomtee_primordial_obj_ops = {
-> +	.dispatch = qcomtee_primordial_obj_dispatch,
-> +};
-> +
-> +struct qcomtee_object qcomtee_primordial_object = {
-> +	.name = "primordial",
-> +	.object_type = QCOMTEE_OBJECT_TYPE_CB,
-> +	.ops = &qcomtee_primordial_obj_ops
-> +};
-> diff --git a/drivers/tee/qcomtee/qcomtee.h b/drivers/tee/qcomtee/qcomtee.h
-> index f34be992e68b..084b3882017e 100644
-> --- a/drivers/tee/qcomtee/qcomtee.h
-> +++ b/drivers/tee/qcomtee/qcomtee.h
-> @@ -140,4 +140,7 @@ int qcomtee_user_object_submit(struct tee_context *ctx,
->  			       struct tee_param *params, int num_params,
->  			       int req_id, int errno);
->  
-> +/* (2) Primordial Object. */
-> +extern struct qcomtee_object qcomtee_primordial_object;
-> +
->  #endif /* QCOMTEE_H */
+> Should we consider having a separate CONFIG item that is used to protect just
+> the PCI ASPM interfaces? And then we could split out the ath12k_pci_aspm
+> functions into a separate file that is conditionally built based upon that
+> config item?
 > 
-> -- 
-> 2.34.1
-> 
+> Or am I too paranoid since everyone enables EXPERT?
+
+One just cannot control PCIEASPM value if EXPERT is not set. ASPM is 
+expected to be enabled, or "experts" get to keep the pieces.
+
+-- 
+ i.
+
 
