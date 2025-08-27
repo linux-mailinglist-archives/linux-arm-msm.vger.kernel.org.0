@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-71048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B452B38E6C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 00:27:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD5A7B38E77
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 00:28:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 424493A4EBD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 22:27:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 60F323647AD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 22:28:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D57032ECE91;
-	Wed, 27 Aug 2025 22:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68EFE2E9EDF;
+	Wed, 27 Aug 2025 22:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N3nSP7Gc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ksBOx0Fa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449371E0DE3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98FD2F83B4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:28:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756333647; cv=none; b=qCRf1n/bd+kwT48PoPT7ddm97AOgOtmzXRJQjq16qYsF3/8Q1HnsDwB13mY+0m1bNLKRJt2XwlzyB8vVcOkiGtpxrIfe0qYTWznJAWuK3SZkbzIHw8YkEIZukSOIMoE3drsznDpRKiL7YFODuGlU4OyhmgxoOecQKcfsuLQN2Vg=
+	t=1756333717; cv=none; b=qA5vFJqVWZkNSsRNZ03kwj+H1Z69Klys3juRpgQY3YoqkoJJFYNV+IdvSKkrO2HJEiSSpGiqzR7BfgV1VmE9PVzuPWWAmUELexKwSokxySM0BoEqF6Iyz2se0ytiJgxP8P/7aLz+46Jnnjff4laWTjmiDYYSVe2kMfyq47Zxv3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756333647; c=relaxed/simple;
-	bh=39TfirOm0CvaijkhQPEcSMxZAXyiBUqSqGTWwYkVIEs=;
+	s=arc-20240116; t=1756333717; c=relaxed/simple;
+	bh=Enfpdt0lrNqevhutRfiz1sNVpTDatf+D/XBiia59tWs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OGTazWLwIxTV3jSrXoeynY+urcxVK6GGHyAx+HD7oXtp2ipHW66jCqetuEKp3Ldko+qXjuskTxfbkwuQEGHkCon83Rcc+KxU6FtPynGJmfiPk79nZEbXG+vyZwBtSfHb/noTdEFxDtF4e5MYXWdmvdTA5ebp9m6nKzywcFOtS7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N3nSP7Gc; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=cLZTVxwxuB3XB0aQmGr2Hp9P5IudCtJP95fT0fEwjwoHhqjmJ2eqNGnL54DG0GHRmfGtrYJ6FMpe4kkrsCpgf9xmQj1EfvKLnaX+jinfs71/yBTdvftLB8ZYF+FHFvJEJJrW6K0ibQJe7x2kvqyLLD+pP/nUcfXJ58jfxjD0pug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ksBOx0Fa; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57RGo2ei008283
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:27:25 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57RGfTLM029081
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:28:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=coI2WbZxINU7lzeYxnfoWTr2
-	sAMMNa2PgUU+5RmzHvA=; b=N3nSP7Gc5TMt+IIn+qZ9uGuYzVafaBp1ac2JStUp
-	K7rRbNrItFfkrE4pn3NSwfK3EJKU+G54f3mtlHj6FVmTiyk34UhAcW763bLSlDn6
-	lE8nZPvaSrrbDD1z8NV8GMsE+EejI9+PUuTSSHiKEagz9bQN6sfvpB5/sPOKcU3B
-	hixfH4Wr/PN3um5++i/3CX9NXOAeLZ9SXBULzqfYPbTbm7cJ0YT0lWqwC5hM7lYu
-	l1sOWd/H9mcZguQFv0ANnTeWef+C8qNF9wb0KmfE+GAKuhHp+eDVTrDi1PKjuj3Y
-	LyVxJjOjvzkfxEw8ajNN66YMc9YGBbuSSUh3zv0iLcgaEQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48sh8ambrf-1
+	:references:subject:to; s=qcppdkim1; bh=LcrLZoaMuieBwoDNhdy1YKKE
+	PmtaqIZQcasiCx3hw8M=; b=ksBOx0FaLwkdk0t38aj7T0xGmpchr04zFiJSkZgZ
+	Ba64KDw1scqklvR5h9sPhUMIU5Lm2ULbS+dB0sk27byD5zxz1LdT8vRZaUw1mIEL
+	xh0i2qoc9SiowpsxDWLGj59eU9BUKYNTd+Lt+SZ/9us8XpkdePkPbROX9L0c1Nis
+	xuzdRsy97JbgBGv09uGR8V2gtRSajQOd+AstxEjUOr+Q/Lp78EBk7+sbA+6J7rxg
+	ssnXa5MEdmfrn2nI2mdVDxwzLzHHqhlfufrgyew42L4gAJrqTf9p2WsvRy8xNAKa
+	HZ7JFU2mS/Vczvql0G9Re9yqBmoUE7SgnNjvTTRqpyeYxg==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5ume8ss-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:27:25 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b2f9e8dca6so8235261cf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 15:27:25 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:28:34 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b109be41a1so13386731cf.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 15:28:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756333644; x=1756938444;
+        d=1e100.net; s=20230601; t=1756333713; x=1756938513;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=coI2WbZxINU7lzeYxnfoWTr2sAMMNa2PgUU+5RmzHvA=;
-        b=Oh5dVcmzRGdNOf6HCSGdmG5CgC3EKJ4bKPhfzu39N7fASsciKHX3BHnHO1dL8Cw8lS
-         xBx6fxUFCtm2scmJ8+fZGM+b5VDRyTPBMU1h4hEO1Nee24UYpGgk9BTTKiYLjBLQPQIx
-         0+dYsfzxMqDoWVyXP2kv2kvhomDuwhYoDXXLdA7PnNKNNLy21dhjnTlC3RwN5UzQp19y
-         XH9UUE41KJP8GVUQ4P9gt+5WoEZJeRRB5mL1jH8rYG2qFT6BV4usRNIa9hgGPaSB2+B3
-         iGRBUUQQ0lLplSew2fG9oYs83vzN61/ST3g4CwbOXrNK1YRPj8iuh4gbfPrK/4VnjtrI
-         zSFg==
-X-Forwarded-Encrypted: i=1; AJvYcCVEupVR+bpE7DG0ucPrc2j+PjQ2T1aHvwfmvECoKemjUzxYBTDw2/wBdkrcWz8nJtb5O+0zS2GNCcBA5Gi1@vger.kernel.org
-X-Gm-Message-State: AOJu0YyaeUqJxBcBkvDoH30tpWoc3YzjBhvntXOMTXL/dJ7RF/Bhbr2L
-	RKToAKZ1kwIIzTiwB42LGE9XQ43Dhzbc8yqnJQg2iRAflxAXcKgdn4cbvebLy16LdqTzmmWyk5D
-	w33Gdqwm2qsmg4JhD8gvjgFO7ZbJsSHWrgiRP4M8DrtMdFXkMOcJwCCyPbXQPQEQj3bU0
-X-Gm-Gg: ASbGnct7m1Fy/+g0ju0tMQ+OkEFr5tXIvC3Hau3atZBYvaHvx5q6/ZQ4RgANHjXdOWs
-	x3wc5joIITlm/UXSmNJuNR1iGoOZoLBmgfQEnTOblXzne/w+/r/iqwDwojEHeR77BfKmrqpXK4+
-	2PHBpLJw5uPqP67ljl6i/qkZaEpyNTkWBUljFEO1MF4B8SKrV0Ytoj6Pt8H692AiYx5Ug3khQFx
-	J8Klr+Cs7ow1azieV64yOHCmLTFt9yAeSt0MZN6vSSCgq1kdCmY3yXeL7mh0HrKpW7wfAByTCWL
-	cpSKXRYeBVMBwnSXh93nvWKgbhtaZkHQxCwE2lRhAOfxIfKHfUJz0dxJ96uD1s+GtecnF+y3qcH
-	K/QRMd+PxdapDxvhCrrxWnBLeq6lcv/sYNuvg2vAzKcpVgf3aQqcA
-X-Received: by 2002:a05:622a:4c8e:b0:4b0:8f6e:d70a with SMTP id d75a77b69052e-4b2de073d4amr102607001cf.22.1756333644061;
-        Wed, 27 Aug 2025 15:27:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGfGaJaSCsOEz0+c7R0GpHgMKXCo1cAu/f4pCkJRC2KgnMVotYeSkSM/eNVsc6qfr/OnO8xNw==
-X-Received: by 2002:a05:622a:4c8e:b0:4b0:8f6e:d70a with SMTP id d75a77b69052e-4b2de073d4amr102606571cf.22.1756333643552;
-        Wed, 27 Aug 2025 15:27:23 -0700 (PDT)
+        bh=LcrLZoaMuieBwoDNhdy1YKKEPmtaqIZQcasiCx3hw8M=;
+        b=DbRaAi4xjji5J5fw9yMCgG7GtCI+XaFyCZbj1dpHv/1OmrDltJ3K5aFNF9LR0WKxyo
+         auktrtb84/GK6JafuPaHkcNoUMBg6/SIyxDuNzqaNynv2gEEXhdZakjhdBaUf5L44dux
+         QYWUnuZiIXXdQLKSOL4KnHbjbhu3wGsJinA3sCTq/M179iU48lve0rEKXXJjT2FavnfE
+         5V6NZCTakcPLfeqxNfXRHru/OReoOc1nrlqb0UZlMIF2yqzv6K33uaLngh6m1Vc2pTqG
+         qfnOtUxS2OGcHH2MjiEcrcQ5AhzQo+fTsGRzCbR2quazVsajoxhHkWJivF/pD9WbU/hf
+         M3Hg==
+X-Forwarded-Encrypted: i=1; AJvYcCWhB0kZgxI9Ch7LkztuJ60w5PAdx+7FwJqSOR/eajL2Z/pNA0QIvJni5revpyGIHx8yiPJBBIdnnIvPkfc+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzkyKENLv5iTpKrSyyf77mogjkhuEUVyx5k7wM4WsNiTzgghCrt
+	AeKhr3CynZLC/KLr182si8IxQSC4yOB8dwFhISbozZTi7HDdf15B5/ByP9HgPK6ieW5ugtt5Lwv
+	LlhheTIRI26obLOEe0zxFyX4Fqnt0NwMyhM7SVLSoezG5vYru2WvgFKs9IInm35ldw15T
+X-Gm-Gg: ASbGncvhg/alUJ/FrTNNhLI2vsd81pWUMd1mcnVLYYZdZ8ns/rp14ephw1Pap0Eq1cC
+	bF7BGuLkcCSllISmG+Zn+en/bLH/wfmjFrpzTMdDL2IpJLk4c8/d0I7Xb9bKziV3p33JRp6+QVU
+	vqx7Kw9qFyRpaTYZjbi4pq4E6FpBLGZq8LUrOzKguivLpPnr/bORW2cUAg08C+xN07w97MsEjkO
+	hxAMXr8Yd1YZEBIoALt4Oq4FnyW/adFWTARKyo0pXnZTNsy4Xcz9ji9poL9OLT+wOaDEmZc2rfo
+	wGo/BNWjBf21qOUvVDUjiaUPvc5M6WFwv0ZRFvdT30qqmG0bwCqHV8XWmmEZX6dwRmglU6iwo67
+	MMzFifClQFtHENUjQR+p9l303mHn+HS7cAVMboBAgNFrYNueQr2vu
+X-Received: by 2002:a05:622a:cd:b0:4b2:dfc5:fbee with SMTP id d75a77b69052e-4b2dfc5fdb1mr105541881cf.32.1756333712541;
+        Wed, 27 Aug 2025 15:28:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5nmdIbVBTqmW1BSWH9OY/lezBX2PorYOAsLp+HwXKOdiRgVyGEp2e8fxZ/9eVS1zmC9A+GQ==
+X-Received: by 2002:a05:622a:cd:b0:4b2:dfc5:fbee with SMTP id d75a77b69052e-4b2dfc5fdb1mr105541351cf.32.1756333712052;
+        Wed, 27 Aug 2025 15:28:32 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-336818f1d41sm14139131fa.51.2025.08.27.15.27.20
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c13debsm2882288e87.57.2025.08.27.15.28.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 15:27:21 -0700 (PDT)
-Date: Thu, 28 Aug 2025 01:27:19 +0300
+        Wed, 27 Aug 2025 15:28:31 -0700 (PDT)
+Date: Thu, 28 Aug 2025 01:28:27 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: Maxime Ripard <mripard@kernel.org>
 Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
@@ -140,11 +140,11 @@ Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
         linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
         freedreno@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
         linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 03/39] drm/atomic: Convert
- drm_atomic_get_connector_state() to use new connector state
-Message-ID: <hab6s4wyauqiej5ankh3gppdqkm2ymlevhrnklfe76kqjmmjqy@fptmzxpqv5av>
+Subject: Re: [PATCH 04/39] drm/atomic: Remove unused
+ drm_atomic_get_existing_connector_state()
+Message-ID: <a3hwkno4nemddbmaz6dayd24rmqcr3zxujrvsspnulrivntxjz@o3tm6o4mc6nt>
 References: <20250825-drm-no-more-existing-state-v1-0-f08ccd9f85c9@kernel.org>
- <20250825-drm-no-more-existing-state-v1-3-f08ccd9f85c9@kernel.org>
+ <20250825-drm-no-more-existing-state-v1-4-f08ccd9f85c9@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -153,69 +153,41 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250825-drm-no-more-existing-state-v1-3-f08ccd9f85c9@kernel.org>
-X-Authority-Analysis: v=2.4 cv=cLDgskeN c=1 sm=1 tr=0 ts=68af864d cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=wpE8WlYdICmIRzy2dDcA:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI2MDE1MyBTYWx0ZWRfX5lFpziEYDQ4I
- 0Y27bkXwkhCnB86SOei6BoAsqXovbXe+2CzS7u13CYU5tbGCnyWNvHKLCQPmKL5Gg7PzKfB2D1s
- w+zlen7r4t3RBE+LU0Qw6oco5Zb1zuatpEi+kaC0P0JoHQJOotz/HtvYTG5yyxSPJTeMPkrPPwC
- tHPvPaDRQiJUZypPTM5fpN4+2Zpb6Mz+0OsoRrz6vsMTFTHZ7u8aTATCdgvQZS0fNEWAkoiQgVP
- bJAiRzMulD5AvHK8kfppnagcGn2hXI98u/LSHRiuoFqOnF5is7HJL7v3Fifj93HqJxlLd/ipS6Y
- mRvc91MWJiRT7pVzyAspu7VrQ/YDT/Gq4m6xAlhYNeIsRvpvcXK36NB1e/h/4XaUjllTLdn6XmT
- QescWJEm
-X-Proofpoint-GUID: YFtoCb2_n9xYtGIVp0VfacYFra3xai46
-X-Proofpoint-ORIG-GUID: YFtoCb2_n9xYtGIVp0VfacYFra3xai46
+In-Reply-To: <20250825-drm-no-more-existing-state-v1-4-f08ccd9f85c9@kernel.org>
+X-Authority-Analysis: v=2.4 cv=VtIjA/2n c=1 sm=1 tr=0 ts=68af8692 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ROUmOPvenB7E6LXmrzQA:9
+ a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMiBTYWx0ZWRfXyxXVtmAN1bNM
+ 2TBSOXJ56oVuf5LSzk40pL9J6bzToh0KTQS2clY9W1mUGglSy+RZWopN6+nt0ahDYgFA2ooV5dN
+ TosDlGMMU0Ic9ON+gDL4X45HzvBPm7I9XqTz5PgUCExO+GgGJMsFAB0RgKMCfXz4goXMaef6maB
+ I4s0/iCJYcO8jg9UW4y8VdJmq4O11/b9TAKqT71Q8BkgFyDcD4fn8A3+4oqyDaAi9BlPweDsmV6
+ GnVH9qBkNpE+yQMAt8HaSXoWTq6Yhr5X+8+wag0SXbm6JJHz77Lw/vpjots2ogq/V8BXj7oeS6z
+ N6w4iZxBF92LcwDBUEtnN9R42vLR+Wu5vPGJt6DR6dt8KQrgvQGxbHFcf4/phISEkejN3iqW3dD
+ q3UEZuL2
+X-Proofpoint-GUID: MvfFwp2u4aHo_fxnawn3uAY8MMQRHRBX
+X-Proofpoint-ORIG-GUID: MvfFwp2u4aHo_fxnawn3uAY8MMQRHRBX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0 adultscore=0
- impostorscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508260153
+ clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 adultscore=0 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508230032
 
-On Mon, Aug 25, 2025 at 03:43:08PM +0200, Maxime Ripard wrote:
-> The drm_atomic_get_connector_state() function calls the deprecated
-> drm_atomic_get_existing_connector_state() helper to get find if a
-> connector state had already been allocated and was part of the given
-> drm_atomic_state.
-> 
-> At the point in time where drm_atomic_get_connector_state() can be
-> called (ie, during atomic_check), the existing state is the new state
-> and drm_atomic_get_existing_connector_state() can thus be replaced by
-> drm_atomic_get_new_connector_state().
+On Mon, Aug 25, 2025 at 03:43:09PM +0200, Maxime Ripard wrote:
+> The drm_atomic_get_existing_connector_state() function is deprecated and
+> isn't used anymore, so let's remove it.
 > 
 > Signed-off-by: Maxime Ripard <mripard@kernel.org>
 > ---
->  drivers/gpu/drm/drm_atomic.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  include/drm/drm_atomic.h | 23 -----------------------
+>  1 file changed, 23 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
-> index 660b081ff5d8c39061cebfb5ea122ac1e51677ad..30b7ec05a1af07075e40cd2822ecfd67df004ba2 100644
-> --- a/drivers/gpu/drm/drm_atomic.c
-> +++ b/drivers/gpu/drm/drm_atomic.c
-> @@ -1128,11 +1128,11 @@ drm_atomic_get_connector_state(struct drm_atomic_state *state,
->  	struct drm_mode_config *config = &connector->dev->mode_config;
->  	struct drm_connector_state *connector_state;
->  
->  	WARN_ON(!state->acquire_ctx);
->  
-> -	connector_state = drm_atomic_get_existing_connector_state(state, connector);
-> +	connector_state = drm_atomic_get_new_connector_state(state, connector);
 
-I'd say, drop patches 1-2 and use this function directly as is now.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
->  	if (connector_state)
->  		return connector_state;
->  
->  	ret = drm_modeset_lock(&config->connection_mutex, state->acquire_ctx);
->  	if (ret)
-> 
-> -- 
-> 2.50.1
-> 
 
 -- 
 With best wishes
