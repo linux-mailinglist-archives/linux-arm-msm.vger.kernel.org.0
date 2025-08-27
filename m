@@ -1,209 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-71030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D094B38799
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 18:15:08 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 456CAB387CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 18:32:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 987D81B26657
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 16:15:28 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 241014E258D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 16:32:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB436366;
-	Wed, 27 Aug 2025 16:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ECBE2D1F7E;
+	Wed, 27 Aug 2025 16:32:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WgVXKxWV"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="gg6p/4E5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f53.google.com (mail-lf1-f53.google.com [209.85.167.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A874F30100E
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 16:15:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D946A1A3172
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 16:32:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756311303; cv=none; b=RXyGno8D7r2XoPGuGIlaGSkr/cnUOkfpKcELe38stPnUYRlhar6aJFHwca8BHoOyMNTm5SKV+kzRM6b+MX0167Th52zGl7xS/lb0D43uNVYt7GK77kSLf4lwwbedrZTwdo2nVNFAQTtfZpmyuNHUXH3g5yMsLetpHVFtM3B4L8s=
+	t=1756312367; cv=none; b=revjaUZaqDlQhyAdM8k01gF15R1vuO5jhhfLue25IYHXCINKQZrsZ5yxNYS6cushu59mEjZBxMOLZWJFWrwlexJIrz3np8mSNqMYw8Tu03J4D1OXiVrpffpaQhw5JYWixRxTYtu/2YTim+VDh3LQoxDFD3dnK9KsBG6T7aMEVmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756311303; c=relaxed/simple;
-	bh=gpUlzt4Na+WwKgd1hRi5gsdeAaG9Ll65uQiPj5/AZiA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=buW9geChitdnjdyZmGMLrXS6dtTimo2WP3VmWKNjZfe9jd+fGtNqWgxfHnp71OOdgngqcgN2Ld1ouaLQwUDW5DugpDxaR8ISEepHMudEl8dbumRh3nRGkVwZ4rCusBuYJ2im/mzKuRRbwwyxT/arsfvEnjGgNJeuiWb6Ee9zqK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WgVXKxWV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57R6kOVB031340
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 16:15:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	72Snl19eM9SG13obf5lnpG+wAP1deg4gz5g3WQbmbnU=; b=WgVXKxWVJuRBsVz9
-	XHDVQMH89DBN52LZM0i6JeZ4HCO9BuZ+WqFlW+VLMi/eo3WJWoTOFmZ9dqk7WD9n
-	gexfdNriIyYI+ZBpsbjCX4VcJO5mNo7yVDWfCqBgY56v6EMaaU5mFcaXO4gXKKYt
-	5kr87RDxfNTDSA28KzPnSE9m32vauXAfpsRUCw8xgtrmcVg30I815WVOQI9ZKNVh
-	4MeJ0ttIpcouCf9Z659WXuzLiGmyIfWFPZgmr4piBzXGSGSMWEsFvc3FWa/70htd
-	AXv3ABUIQ9tWJTgnkg+GQtG6wS6Zoc5CqDYoAOVFPLieKtbT710xZQVDaqWZ5eEv
-	ZjXmDA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q615n51h-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 16:15:00 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b10993f679so326741cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 09:15:00 -0700 (PDT)
+	s=arc-20240116; t=1756312367; c=relaxed/simple;
+	bh=sokmmttEF6WQPkFswGePVZ5nkysqROOmFeWowMPSpUo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Q8vDHHygvW9MPSUKaCfiHlRmJp2a9ZjHEuomLlq+iynacJ6hdxkno31iRtyu+84pmCUDdeN71mwRiKSGtMJkebUCsnmBq17lAwEh7dEhUf/mkQbckWSjK52GIEtO8/tKjmsamGg5bg28vEADld9kFvvTa70ZY4d89jakYx5kisM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=gg6p/4E5; arc=none smtp.client-ip=209.85.167.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f53.google.com with SMTP id 2adb3069b0e04-55f3edab4c7so43651e87.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 09:32:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1756312362; x=1756917162; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uA1HrGWTiFMd6/17t962MubCXtdKe85dul62wLkDnTc=;
+        b=gg6p/4E5aHVjH2uXxUZQmHFeMlCI6dMmMHKdqeWL05IuMASeI8AzbS0b5vbm14JQSc
+         Vl1hta3TK28UU5Cmfixr0mIj1j4u+27ey6lTR3ItGQYtGlFPslHa3dePuw+oszlpum54
+         pkE8qYAIp2Xdniv9uBYfZZMUYLIBFoGBEHqb1uDoEsXa4UyC2IBbdLzjnQ5WgY6FwoWA
+         RigQ/8/HWXRfJ5M4w9iFlYznxoMEcmvYZjOXaegue2qEEil2Jpt3KRQD4fam6q5T/CQu
+         w+hZqa/tQuFAny2PpcJg3w577VtVqDtfaaU9RnxtxAyVk2cqFtbldLGsEuGbSWh10b5k
+         KMsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756311300; x=1756916100;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=72Snl19eM9SG13obf5lnpG+wAP1deg4gz5g3WQbmbnU=;
-        b=qD/x6CXk/MxNY/plj+mIIWjsjjogw5avH7I6Q+j+IOldVvdabKvAahkxMcULOqQXeL
-         +S1crih29BmcMUdUkyfYMCBvNYaHgJLoE/QV4owCG3hM7EylnCL2wTBHF55hFM1kGNsA
-         9/JQj5cemWIWTcmDa0dkfXsxnfqXmOOVyCedQVQqHexZHCXwIJ5kBzfXf/t4qL+4DCgP
-         KYuNGv/WMtQjkDB3B1Te3gwTANPHWckGslWoMH0yuxpAUEH5R5RMef5+f0NOVxb0lm9D
-         PImCGAa7Fqy45/lQVkmQJNjaC49qg5m+iafJQ9zrDMKwPwjgAmwF7n1f1DOkq8AqfvYF
-         aNHw==
-X-Forwarded-Encrypted: i=1; AJvYcCXZc9yXEhtajL+LG7vf8vVF1nSRoUua1qHj7ggpT4msHf86d5Q8zDPjA7/NBqwC921iRoG+GJpBmHzv1XI7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhJzSxz6S0nofEHR0Gl3wQSoezYrxK203QiYS1C1tBidvil0xB
-	dXYdVuD8mdilZf8xwIpSkqi5HxkvV17RyCoznNFKWX5SGqzfNWWbjoOI7yZeXtUONqWOhTDcMVE
-	rEgLWbff5FF9rFPr/NBMVThnAUm/WvcOZM8kUjc5DqbxKFpdO4e71msbdlL2RWgoL9eNT
-X-Gm-Gg: ASbGncuhbjz+aRbxErFF+ztLpEOt3QUJ+oQWnfniu+yRgQdjw+kxvhUk+W1BDiB8Z5h
-	DX+0AH7oERbwWzY+BFwKxABgR5UguH3WCmipGlsMdj21wSvaibU1RscCPsTHOxviEUu3eQ2SRLw
-	0v1yIc1Sqzh0q0W0yYZDz80HbBIzVe8iNfe3E35fDqQiRoSwBO9a1HXZ/83vBpU52Ean9CZanyh
-	JCu476PhDL//i4MHEI6ifS9rivmoXZLCyY/P70WoexuNJ5/uDADLBSIbxBDkswvviYjvtllPJQw
-	eqihim3H00gKUQbfcNVc3+lFoErc5/c6AksuKezaEjC03EADOS6enrY8zwohMLN72HeZcxnfBbG
-	31+ChjHjeRQsFq+uT8cfiH2Ku5+n7rVhtwCUyANMQlUp7zJ1mtCOI
-X-Received: by 2002:a05:622a:4ac8:b0:4b2:e0ac:63b0 with SMTP id d75a77b69052e-4b2e0ac6451mr82573181cf.77.1756311299631;
-        Wed, 27 Aug 2025 09:14:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPzGcbfBYbuRl3Du92a0zsaKioL4MbDCRH7YFgTAKCluORsEyl5ZX6nTkAvEBJ0xy1YynMxA==
-X-Received: by 2002:a05:622a:4ac8:b0:4b2:e0ac:63b0 with SMTP id d75a77b69052e-4b2e0ac6451mr82572361cf.77.1756311298937;
-        Wed, 27 Aug 2025 09:14:58 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c02020sm2863442e87.29.2025.08.27.09.14.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 09:14:57 -0700 (PDT)
-Date: Wed, 27 Aug 2025 19:14:55 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, fange.zhang@oss.qualcomm.com,
-        yongxing.mou@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, quic_lliu6@quicinc.com
-Subject: Re: [PATCH v3 11/14] phy: qcom: qmp-usbc: Finalize USB/DP switchable
- PHY support
-Message-ID: <inxoswyre3qalrb3dj3lz3b5vmnpnkyy3hh4oum3z6p7yqlo2v@7g67yvvb25tc>
-References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
- <20250820-add-displayport-support-for-qcs615-platform-v3-11-a43bd25ec39c@oss.qualcomm.com>
- <jjsijdmh4hdbgd2boebtrmzvblvhz2hnl7mtv5ga76ine2fnsb@i72dz3r4lbjp>
- <82d19340-b887-4093-9d24-4b2e19b99f8b@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1756312362; x=1756917162;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uA1HrGWTiFMd6/17t962MubCXtdKe85dul62wLkDnTc=;
+        b=cv4T/0KcP6AeejzyQM8usy/F8L0cI1uYueF7LwaNL6sSZTUlsFZKTeNqfsnIA/fhSF
+         v9BOklcut7oaR/nMQfwCC3rpxuMDS4VJl0RuBXXZwP3z+5UXYTNImSicRxlTNZnZENiS
+         BNTU9O1L07fcfKnBcHI2HfxyaFUSW1bfpw9icydVU3rz+V1HqCJGGW9CL+/pn04ZqWRm
+         4mnCRrSm0fqzrmNoLEoRK5UC9RYjRXRUSedZabpo7fGfu/gfN5RcJqLxF3qTJNF87A00
+         wa9AeJGdsS+p3hGYJn4f9Xr9buzMWmkmV6VX7uVkQYYfhajkR3s7P42uLHr2x2nBsyyV
+         8qYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU6y0TbBpmBVjRoOx+9VcLDaqX3H7AA5Dp6rv7uZOHi2X8NNF+CaKX40YNVllzEq5BALW9C8I/mnrZd3FR0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDKfBgXUqoH3qa5cbbz0jGs11JLA00f0y/5NUOUetP7ChSMPpT
+	wdXO68xVoDHnwGrxI+YxwrA1/dim1/xpAtUgISYxhb0j3ii67iEo78U2Z+VkQni1Nq4rRt1VbWD
+	/OMZfOyEYr+OdyY5OKwZIVCLpMJIW9HoxGP6eZ3ojW1OgfEEMIA6o
+X-Gm-Gg: ASbGncv4T72eMr1t3Fg2N8MfV8momGb9NyRXtOUy3sAFboEZ+O9SB7hCKdAm/8d0+cO
+	K/44d9JryoaceB4AZToWxsqzkGBoMiSN2wD+J7dCqCxMxBxDhUwyUPkmJ6GX9xxlKEMQR2Wr7Un
+	nnMaw/FO/QM+A/MC41HDNcRW3Yr8H+YhOUgURQ0TwxGpcRPJb8CybHv+oV4KGijlxCpHG8HqvUb
+	CREepYaRIbKogqW8Fs4+wejvDWeqXq3uHcyKqmEH+9DbQlWKg==
+X-Google-Smtp-Source: AGHT+IGmaVgA4GxBThOJulhfd/FOmckKPWhf4GB/qcPY+ghPacNlqJYq74uWQJwg/9d4AeS4NhA5YVY0Wv+MelGFJfg=
+X-Received: by 2002:a05:6512:2903:b0:55f:4760:ffc4 with SMTP id
+ 2adb3069b0e04-55f47610278mr2391780e87.29.1756312361741; Wed, 27 Aug 2025
+ 09:32:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <82d19340-b887-4093-9d24-4b2e19b99f8b@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzNCBTYWx0ZWRfXyZ1JRTRg3yGF
- Fg/MPrHCNSIayWBcHEkji5k4dlHRx5e+bHYnDk5Jk0sOVB0dM2WeJYS+ou2xDF8/qbH5N9lCbks
- QpXtrLiNM+AUsnCIXjqWbfN+Oa/C5UzejqOQPKdyMbZY9gYlNNtkBZdlpFz6co9NSZ1PZFc6Hoz
- JOEA2rq5zHWeh9NjfXC4r/+vMG1EH0xVsPXWHIBv2zRZ07Kpt4lZ0WV0B7k5EygYGHmYgaYik6I
- KchcaWnq/ATr4K9g1VxsiFbrFh9me5bksizWCnKbWYNTvqEioxzB1xI+IawPQBpeR8Ry4uEdUDt
- l/neuEjNe9snB0aAFr9f64tVh9F7Gtta1T3bfL+2RSKxyvKz2LsTkyqFNoEc4BtvYzfwAfmyuPO
- d2HbWDPV
-X-Proofpoint-GUID: 8ppkG1hr3zCmFBmc0fj_tqlz3TfO4nyv
-X-Authority-Analysis: v=2.4 cv=K+AiHzWI c=1 sm=1 tr=0 ts=68af2f04 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=M2k1YX_etJ5cuwz7zUoA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: 8ppkG1hr3zCmFBmc0fj_tqlz3TfO4nyv
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230034
+References: <20250819-pci-pwrctrl-perst-v1-0-4b74978d2007@oss.qualcomm.com> <20250819-pci-pwrctrl-perst-v1-3-4b74978d2007@oss.qualcomm.com>
+In-Reply-To: <20250819-pci-pwrctrl-perst-v1-3-4b74978d2007@oss.qualcomm.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 27 Aug 2025 18:32:30 +0200
+X-Gm-Features: Ac12FXz1RS70--AFk1fE2akY5GEXMKvlLbcKfDDlrSH8dzP6VB_vbFzt6mioyQE
+Message-ID: <CAMRc=Me2P9r9w-UPtjMAEvuQ_oNtibzPBg6tE7s1wdKkLmQgcQ@mail.gmail.com>
+Subject: Re: [PATCH 3/6] PCI/pwrctrl: Add support for toggling PERST#
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Manivannan Sadhasivam <mani@kernel.org>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	=?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, 
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Brian Norris <briannorris@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Aug 27, 2025 at 08:34:39PM +0800, Xiangxu Yin wrote:
-> 
-> On 8/20/2025 7:42 PM, Dmitry Baryshkov wrote:
-> > On Wed, Aug 20, 2025 at 05:34:53PM +0800, Xiangxu Yin wrote:
-> >> Complete USB/DP switchable PHY integration by adding DP clock
-> >> registration, aux bridge setup, and DT parsing. Implement clock
-> >> provider logic for USB and DP branches, and extend PHY translation
-> >> to support both USB and DP instances.
-> >>
-> >> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-> >> ---
-> >>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 331 ++++++++++++++++++++++++++++---
-> >>  1 file changed, 299 insertions(+), 32 deletions(-)
-> >>
-> >>  static int qmp_usbc_probe(struct platform_device *pdev)
-> >>  {
-> >>  	struct device *dev = &pdev->dev;
-> >> @@ -1703,16 +1944,32 @@ static int qmp_usbc_probe(struct platform_device *pdev)
-> >>  	if (ret)
-> >>  		return ret;
-> >>  
-> >> -	/* Check for legacy binding with child node. */
-> >> -	np = of_get_child_by_name(dev->of_node, "phy");
-> >> -	if (np) {
-> >> -		ret = qmp_usbc_parse_usb_dt_legacy(qmp, np);
-> >> -	} else {
-> >> +	if (qmp->cfg->type == QMP_PHY_USBC_USB3_DP) {
-> > Should not be necessary.
-> 
-> 
-> Got it. I’ll merge the parsing logic into a single qmp_usbc_parse_dt function.
-> 
-> Also, I checked the compatible strings in the dtsi files for this PHY series
-> looks like no current product uses the legacy binding. 
-> I’ll drop qmp_usbc_parse_usb_dt_legacy in the next version.
+On Tue, Aug 19, 2025 at 9:15=E2=80=AFAM Manivannan Sadhasivam via B4 Relay
+<devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org> wrote:
+>
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+>
+> As per PCIe spec r6.0, sec 6.6.1, PERST# is an auxiliary signal provided =
+by
+> the system to a component as a Fundamental Reset. This signal if availabl=
+e,
+> should conform to the rules defined by the electromechanical form factor
+> specifications like PCIe CEM spec r4.0, sec 2.2.
+>
+> Since pwrctrl driver is meant to control the power supplies, it should al=
+so
+> control the PERST# signal if available. But traditionally, the host bridg=
+e
+> (controller) drivers are the ones parsing and controlling the PERST#
+> signal. They also sometimes need to assert PERST# during their own hardwa=
+re
+> initialization. So it is not possible to move the PERST# control away fro=
+m
+> the controller drivers and it must be shared logically.
+>
+> Hence, add a new callback 'pci_host_bridge::toggle_perst', that allows th=
+e
+> pwrctrl core to toggle PERST# with the help of the controller drivers. Bu=
+t
+> care must be taken care by the controller drivers to not deassert the
+> PERST# signal if this callback is populated.
+>
+> This callback if available, will be called by the pwrctrl core during the
+> device power up and power down scenarios. Controller drivers should
+> identify the device using the 'struct device_node' passed during the
+> callback and toggle PERST# accordingly.
+>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.=
+com>
+> ---
+>  drivers/pci/pwrctrl/core.c | 27 +++++++++++++++++++++++++++
+>  include/linux/pci.h        |  1 +
+>  2 files changed, 28 insertions(+)
+>
+> diff --git a/drivers/pci/pwrctrl/core.c b/drivers/pci/pwrctrl/core.c
+> index 6bdbfed584d6d79ce28ba9e384a596b065ca69a4..8a26f432436d064acb7ebbbc9=
+ce8fc339909fbe9 100644
+> --- a/drivers/pci/pwrctrl/core.c
+> +++ b/drivers/pci/pwrctrl/core.c
+> @@ -6,6 +6,7 @@
+>  #include <linux/device.h>
+>  #include <linux/export.h>
+>  #include <linux/kernel.h>
+> +#include <linux/of.h>
+>  #include <linux/pci.h>
+>  #include <linux/pci-pwrctrl.h>
+>  #include <linux/property.h>
+> @@ -61,6 +62,28 @@ void pci_pwrctrl_init(struct pci_pwrctrl *pwrctrl, str=
+uct device *dev)
+>  }
+>  EXPORT_SYMBOL_GPL(pci_pwrctrl_init);
+>
+> +static void pci_pwrctrl_perst_deassert(struct pci_pwrctrl *pwrctrl)
+> +{
+> +       struct pci_host_bridge *host_bridge =3D to_pci_host_bridge(pwrctr=
+l->dev->parent);
+> +       struct device_node *np =3D dev_of_node(pwrctrl->dev);
+> +
+> +       if (!host_bridge->toggle_perst)
+> +               return;
+> +
+> +       host_bridge->toggle_perst(host_bridge, np, false);
+> +}
+> +
+> +static void pci_pwrctrl_perst_assert(struct pci_pwrctrl *pwrctrl)
+> +{
+> +       struct pci_host_bridge *host_bridge =3D to_pci_host_bridge(pwrctr=
+l->dev->parent);
+> +       struct device_node *np =3D dev_of_node(pwrctrl->dev);
+> +
+> +       if (!host_bridge->toggle_perst)
+> +               return;
+> +
+> +       host_bridge->toggle_perst(host_bridge, np, true);
+> +}
+> +
+>  /**
+>   * pci_pwrctrl_device_set_ready() - Notify the pwrctrl subsystem that th=
+e PCI
+>   * device is powered-up and ready to be detected.
+> @@ -82,6 +105,8 @@ int pci_pwrctrl_device_set_ready(struct pci_pwrctrl *p=
+wrctrl)
+>         if (!pwrctrl->dev)
+>                 return -ENODEV;
+>
+> +       pci_pwrctrl_perst_deassert(pwrctrl);
+> +
+>         pwrctrl->nb.notifier_call =3D pci_pwrctrl_notify;
+>         ret =3D bus_register_notifier(&pci_bus_type, &pwrctrl->nb);
+>         if (ret)
+> @@ -103,6 +128,8 @@ void pci_pwrctrl_device_unset_ready(struct pci_pwrctr=
+l *pwrctrl)
+>  {
+>         cancel_work_sync(&pwrctrl->work);
+>
+> +       pci_pwrctrl_perst_assert(pwrctrl);
+> +
+>         /*
+>          * We don't have to delete the link here. Typically, this functio=
+n
+>          * is only called when the power control device is being detached=
+. If
+> diff --git a/include/linux/pci.h b/include/linux/pci.h
+> index 59876de13860dbe50ee6c207cd57e54f51a11079..9eeee84d550bb9f15a90b5db9=
+da03fccef8097ee 100644
+> --- a/include/linux/pci.h
+> +++ b/include/linux/pci.h
+> @@ -605,6 +605,7 @@ struct pci_host_bridge {
+>         void (*release_fn)(struct pci_host_bridge *);
+>         int (*enable_device)(struct pci_host_bridge *bridge, struct pci_d=
+ev *dev);
+>         void (*disable_device)(struct pci_host_bridge *bridge, struct pci=
+_dev *dev);
+> +       void (*toggle_perst)(struct pci_host_bridge *bridge, struct devic=
+e_node *np, bool assert);
 
+Shouldn't this be wrapped in an #if IS_ENABLED(PCI_PWRCTL)?
 
-No. It's _legacy_, it has been implemented in order to support old DTs,
-which existed at some point but then were refactored into the current
-state. You can't randomly drop DT support.
+Bart
 
-> 
-> 
-> >>  		np = of_node_get(dev->of_node);
-> >> -		ret = qmp_usbc_parse_usb_dt(qmp);
-> >> +
-> >> +		ret = qmp_usbc_parse_usb3dp_dt(qmp);
-> >> +		if (ret) {
-> >> +			dev_err(qmp->dev, "parse DP dt fail ret=%d\n", ret);
-> >> +			goto err_node_put;
-> >> +		}
-> >> +
-> >> +		ret = drm_aux_bridge_register(dev);
-> >> +		if (ret) {
-> >> +			dev_err(qmp->dev, "aux bridge reg fail ret=%d\n", ret);
-> >> +			goto err_node_put;
-> >> +		}
-
--- 
-With best wishes
-Dmitry
+>         void            *release_data;
+>         unsigned int    ignore_reset_delay:1;   /* For entire hierarchy *=
+/
+>         unsigned int    no_ext_tags:1;          /* No Extended Tags */
+>
+> --
+> 2.45.2
+>
+>
 
