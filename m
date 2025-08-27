@@ -1,243 +1,235 @@
-Return-Path: <linux-arm-msm+bounces-70984-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70985-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EC41B37A25
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 08:06:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C5F2B37A75
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 08:34:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 05068685534
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 06:06:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3280D1B24349
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 06:34:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E877B30DD22;
-	Wed, 27 Aug 2025 06:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1419B2F39D0;
+	Wed, 27 Aug 2025 06:34:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n06+6yXW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a9JgtiBX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36F922D73B4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 06:06:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB6C92F39B7;
+	Wed, 27 Aug 2025 06:34:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756274789; cv=none; b=THb1ZlUwV/G/iofSgcO2wQlGn846v/kuPEwlCGk099UyZshAGhnrgzHRGbtd6XfrAHeKlfPnL2ycbY3SQb8dT3Liik8j4z69fihutZbFVeKuF7HrN5CJ8/gzS5JYf9dSSYuiaEVniSoBWW6rJ3zw+RtWguDkovVg2ic3+ABfd3w=
+	t=1756276471; cv=none; b=jpMYfOVmlK3ribHqWFEdwUXaGVFSmQH4tqD3EYfWi79Gtqwf1r6XlrWtu7olDWsPZMOANKeExhgYGXj3jUBqBv8JhDdctd5i7vrul6cXJfKpaNbmhdQft2zxj4rCeZOLQXuoSsgNiKFY+DB2RH94JKlISSh0Fy1v4m7AlamhRBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756274789; c=relaxed/simple;
-	bh=wMGz6LtFcqKacfGBJToPMAl+pHQslhvTR58QLzr0q7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=g+/1LHTLxfx5QvRn7Dt3cZgMt7yndlkvxzuBO56iIDBJB2OaNsnZRAPHiqQ6FZWqSFBSuGioIgE77Ad8YAoWv0ZwyQBoKdJd8C61UY9KJWIpWBxAkuTIvT667uY+auZzs6/qVDw5Me2DXDctUqcU5N+FjY1/kHbeaTUHkUChwVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n06+6yXW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57R5Yvk6023877
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 06:06:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	IvtoMULgukZ1V1cgtQetdWBAfSoYzONqp4myym0U6ZU=; b=n06+6yXW0wU0IpKz
-	/+cogiaPfyl+lmuJ7TkprUJ72V/3CKRv7h/oJxp36crzCJpUNmcMeyRp09RunAMn
-	C21412ZnXj3muBeVY7sPWwXYZ+vkj9n3ZZEehipGEvQAXd7J0BY3VBxwbvuOX4qi
-	6KmthjfMvu8hO4TkUwZQzP1C8fyypOa/EylDhNmDMHedafqFBS7SQj706WS/YC39
-	SLkxUBa39PGF7SHrIoO/Bg9etaQjwvWUl0LcaiJM4b/BduiSIBozd/bJ3EmK61+Y
-	h4FQlyPWG4avYytuEIDHAXJq33C7x91FRUn6hYgjQLMUC2475PDhbS/nq3ou/dWt
-	SE9oQw==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q615khj1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 06:06:26 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-77057266d0bso5413158b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 23:06:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756274786; x=1756879586;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=IvtoMULgukZ1V1cgtQetdWBAfSoYzONqp4myym0U6ZU=;
-        b=xRGpgY8n5gqC8lnrCd7mBSSxoxl3wvuq1EwEnq7n300U/7WrnornuBhdza+hAJDuCl
-         Yp9LEa6QWbrxzcIu3kQGwSmVDsZZ4CU4/b5xCMowRVtVRTALp9yXqlYA1jyE/nl2DD7b
-         +QqaT0cpI+muyS/AVhfpQ6F7NuAEZilwwSLqM3PO2KVBNIzlXniOe04utkn8bN1xgJJ4
-         fMjTpz8expSkgVkuNzK/+c6jjRBBX4Dnzq3PIJX0lsCh/+laEGU9tqbtJPAV0gYv4wkZ
-         s8qeBuJomMX1LVim4y+Cw3K5oSc2FtF9iiXBze+ofBvJMUt82TJAdSpDOFYP6AkIeV57
-         2V1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWsc5+3uo23yFX5ZiThim1m7TOokgIJFsMrew0GVS9wbUI2sgOLDDgubaJKflKfkY8NY2NHkFzSyO5hJrEv@vger.kernel.org
-X-Gm-Message-State: AOJu0YxsiVrr7er6bsUwN010iwDCLBkantPmwZ0vqD28a+lqllrLZVbQ
-	SmnUJGgweSTAAsjG4rgebBUcaT/o77vgtf9q6Zre76p9gjy4nHCOliIHDv9zwitgFpQQuO64a2d
-	FVYeC8QKjEW/sa9iHWprTVNc1PVXy+nK1w3XIyE3rARtJHN9zK8gAEEEmjI3UUvUQ5RM=
-X-Gm-Gg: ASbGncv7LC1OhY//payLwVaXbfMmOk2ikksh3rQUAWe3PX8GDm9MPgxbW16/Qatnq8f
-	j0wSOh/iDNMDCqhd2eAAY2O4gRWDcH/CFNShrYzNlEWc+NH6zZEINo1k5XB0CXMS6zPtdBtCp4h
-	Uyki+2bUeqvwcgrRDqAyWF7UjFUbi4gi/tyT5nGlGw8wzGC5kCpYT0GFoO3eh8tzlQG3xBTKWka
-	CSy0G5Asr0HKGewL7+iM7WXi5zGAyTC2x4zGjZyB78L8d4JAa/EjwgnbCue75I5GhRHvceGEMe0
-	JUtzkQameIkY163Lu6lXuI6fZjeV0X/onzU9bVJ36ZyB6Q6gsWtsAwi+3JPBrXhNW/vXTNj7gOk
-	2f5UiHjqJEaWRfIfUfX5BLBNSvDpqYBwk8BICGg==
-X-Received: by 2002:a05:6a00:340e:b0:771:ea51:690e with SMTP id d2e1a72fcca58-771ea5170d6mr9587237b3a.20.1756274785572;
-        Tue, 26 Aug 2025 23:06:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjXY9tZYbdaHdBkaKUQPtpmPxg/EWHTA5baJ83nFS3+u9isarHBBJ/FYnGHhPcbEv04uBR8Q==
-X-Received: by 2002:a05:6a00:340e:b0:771:ea51:690e with SMTP id d2e1a72fcca58-771ea5170d6mr9587212b3a.20.1756274785081;
-        Tue, 26 Aug 2025 23:06:25 -0700 (PDT)
-Received: from [192.168.0.74] (n1-41-240-65.bla22.nsw.optusnet.com.au. [1.41.240.65])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771ecc4454esm6208226b3a.0.2025.08.26.23.06.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 23:06:24 -0700 (PDT)
-Message-ID: <265e23fb-8865-4dee-99ed-f08450975ba8@oss.qualcomm.com>
-Date: Wed, 27 Aug 2025 16:06:16 +1000
+	s=arc-20240116; t=1756276471; c=relaxed/simple;
+	bh=dOTckYvVImYjZpxv/z1LSXxh9jwhCh1JDe2QIDn/QlQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eb1YtJXAybSw75eueWkxJPELMtJQpvlud44Hq0kRU/e4smfH/+zif2C9rxhJ3HlGLsA1y9fXqWNi4LIG5StLDrH4WwT6c4J6cf/gzf5CwhBoBbpJHn/epg/EjT6qcoD2rGiHnETNyNBDb4zjRRklUXZukH3KMg1XnP4QWvuWpSA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a9JgtiBX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C05A1C4CEEB;
+	Wed, 27 Aug 2025 06:34:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756276470;
+	bh=dOTckYvVImYjZpxv/z1LSXxh9jwhCh1JDe2QIDn/QlQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=a9JgtiBXRDvkjujnxJ63j3G2BMBZVXUoeQbzJbonwjIZLHPiuoODiOQnpyZfvAFSv
+	 2eeWEu4bPG9d3tqUKmy94/CaSdPvNzDmYgid7EqE5KZMs8ZhF1mOl+uQ0Rg8kv34rR
+	 +JF2p+orkisruTV7t1/t8vri6wXXMA8EaCEU+rhWWND/ItO2jnsfY8MnkxdPMwJQXm
+	 GoDw5Cz3c6E55kksuBZc4BsvgleH9LUm39UmPVpP8ixE8stafVx2ht4sV+IpXsQ1+M
+	 efTdYxGKDj72P0jGMA/6sMEql96ydxNBxpBhJUBM8ifaJPEAJaVh8DH1uYqWuH90Wc
+	 DN7o74Mp3X6Jg==
+Date: Wed, 27 Aug 2025 08:34:27 +0200
+From: "mripard@kernel.org" <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: "Kandpal, Suraj" <suraj.kandpal@intel.com>, 
+	"liviu.dudau@arm.com" <liviu.dudau@arm.com>, Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+	"kernel-list@raspberrypi.com" <kernel-list@raspberrypi.com>, "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>, 
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
+	"linux-renesas-soc@vger.kernel.org" <linux-renesas-soc@vger.kernel.org>, "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>, 
+	"freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>, 
+	"dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>, 
+	"intel-xe@lists.freedesktop.org" <intel-xe@lists.freedesktop.org>, 
+	"intel-gfx@lists.freedesktop.org" <intel-gfx@lists.freedesktop.org>, "Nautiyal, Ankit K" <ankit.k.nautiyal@intel.com>, 
+	"Murthy, Arun R" <arun.r.murthy@intel.com>, "Shankar, Uma" <uma.shankar@intel.com>, 
+	"Nikula, Jani" <jani.nikula@intel.com>, "harry.wentland@amd.com" <harry.wentland@amd.com>, 
+	"siqueira@igalia.com" <siqueira@igalia.com>, "alexander.deucher@amd.com" <alexander.deucher@amd.com>, 
+	"christian.koenig@amd.com" <christian.koenig@amd.com>, "airlied@gmail.com" <airlied@gmail.com>, 
+	"simona@ffwll.ch" <simona@ffwll.ch>, 
+	"maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>, "robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>, 
+	"abhinav.kumar@linux.dev" <abhinav.kumar@linux.dev>, "tzimmermann@suse.de" <tzimmermann@suse.de>, 
+	"jessica.zhang@oss.qualcomm.com" <jessica.zhang@oss.qualcomm.com>, "sean@poorly.run" <sean@poorly.run>, 
+	"marijn.suijten@somainline.org" <marijn.suijten@somainline.org>, "mcanal@igalia.com" <mcanal@igalia.com>, 
+	"dave.stevenson@raspberrypi.com" <dave.stevenson@raspberrypi.com>, 
+	"tomi.valkeinen+renesas@ideasonboard.com" <tomi.valkeinen+renesas@ideasonboard.com>, 
+	"kieran.bingham+renesas@ideasonboard.com" <kieran.bingham+renesas@ideasonboard.com>, "louis.chauvet@bootlin.com" <louis.chauvet@bootlin.com>
+Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
+ structure
+Message-ID: <20250827-helpful-outgoing-capuchin-d2acc8@houat>
+References: <awtqznhquyn7etojonmjn7karznefsb7fdudawcjsj5g2bok3u@2iqcdviuiz2s>
+ <20250811111546.GA30760@pendragon.ideasonboard.com>
+ <2ah3pau7p7brgw7huoxznvej3djct76vgfwtc72n6uub7sjojd@zzaebjdcpdwf>
+ <DM3PPF208195D8D0E55A761A3C16B87BAEEE32AA@DM3PPF208195D8D.namprd11.prod.outlook.com>
+ <aJ4LQvqli36TlETu@e110455-lin.cambridge.arm.com>
+ <hc6f6wgsnauh72cowocpm55tikejhiha5z4mgufeq7v6gb2qml@kmgfd26bigos>
+ <wr76vyag2osox2xf7ducnkiaanzk2k5ehd2ahnoyqdm5qiywlk@penf4v5bvg5z>
+ <DM3PPF208195D8D87AECE8397914A67D9A1E33EA@DM3PPF208195D8D.namprd11.prod.outlook.com>
+ <20250826-skinny-dancing-otter-de9be4@houat>
+ <76cmo6pqa534cdnckfgsnspczenzt7kiwkpgg4olxysjn2can7@g5dxteqi5jjs>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 06/11] firmware: qcom: scm: add support for object
- invocation
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Jens Wiklander <jens.wiklander@linaro.org>,
-        Sumit Garg <sumit.garg@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Apurupa Pattapu <quic_apurupa@quicinc.com>,
-        Kees Cook <kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org,
-        linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-0-7066680f138a@oss.qualcomm.com>
- <20250820-qcom-tee-using-tee-ss-without-mem-obj-v8-6-7066680f138a@oss.qualcomm.com>
- <itpdolgmxp4ofdv3vf2ghulo7slj5wjby2tvawehihwvenbep2@ub5sdgf6gxeh>
-Content-Language: en-US
-From: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-In-Reply-To: <itpdolgmxp4ofdv3vf2ghulo7slj5wjby2tvawehihwvenbep2@ub5sdgf6gxeh>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzNCBTYWx0ZWRfXzVcYozFVRI8e
- dZSEUf96AJBVHdpMiz4Qh42iaU4C0JzOG+6ePnpG8ape5WpaP+j3lp+SA4pClIUFF0WNCcVqlK0
- hmj5osaH6SgUoyfXIJAL1LfU9Guw3k4Nv7i2p3OLEOTP7vuUW9d0ZEyKYPpuIcjsyIaFbem6BPL
- m1Sgdy6uNvoEJAFdb+AmNMsXCKfDf/12WHYQicGIRQ5hwsNJGtDFMr2h9gSg7JDxd6enFu+2XbP
- JkUJmnQsBdi1dmczXgPgKXGIrDqVkre+WHnIjbnF9FydyGXJUU2WFF15Yfk46Re3ingx8vPcHD4
- YZnbI9cVdlJdNqdDGphPiwQg0CT82m3uy3FoCwCXLdRcztlJYpnIFXMFlCrj6nhwjJoXwdZq73P
- cgAwbnEG
-X-Proofpoint-GUID: xdvdK9JzftpwTCfiRbwaMdFzwO86p8zn
-X-Authority-Analysis: v=2.4 cv=K+AiHzWI c=1 sm=1 tr=0 ts=68aea062 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=hi51d+lTLNy/RbqRqnOomQ==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=3sczFqAQEyrjP0LPqEUA:9
- a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: xdvdK9JzftpwTCfiRbwaMdFzwO86p8zn
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230034
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="2bcu3ttzioot2gyg"
+Content-Disposition: inline
+In-Reply-To: <76cmo6pqa534cdnckfgsnspczenzt7kiwkpgg4olxysjn2can7@g5dxteqi5jjs>
 
-Hi Bjorn,
 
-On 8/27/2025 1:52 AM, Bjorn Andersson wrote:
-> On Wed, Aug 20, 2025 at 04:38:53PM -0700, Amirreza Zarrabi wrote:
->> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> [..]
->> +static void qcom_scm_qtee_free(void *data)
->> +{
->> +	struct platform_device *qtee_dev = data;
->> +
->> +	platform_device_unregister(qtee_dev);
->> +}
->> +
->> +static int qcom_scm_qtee_init(struct qcom_scm *scm)
->> +{
->> +	struct platform_device *qtee_dev;
->> +	u64 result, response_type;
->> +	int ret;
->> +
->> +	/*
->> +	 * Check if QTEE supports smcinvoke:
->> +	 * This will fail due to invalid buffers, but first, it checks whether
->> +	 * the call is supported in QTEE syscall handler.
->> +	 * If not supported, -EIO is returned.
->> +	 */
->> +	ret = qcom_scm_qtee_invoke_smc(0, 0, 0, 0, &result, &response_type);
->> +	if (ret == -EIO)
->> +		return -EIO;
->> +
->> +	/* Setup QTEE interface device. */
->> +	qtee_dev = platform_device_alloc("qcomtee", -1);
->> +	if (!qtee_dev)
->> +		return -ENOMEM;
->> +
->> +	qtee_dev->dev.parent = scm->dev;
->> +
->> +	ret = platform_device_add(qtee_dev);
->> +	if (ret) {
->> +		platform_device_put(qtee_dev);
->> +		return ret;
->> +	}
-> 
-> Wouldn't this work instead of the alloc + parent + add?
-> 
-> 	qtee_dev = platform_device_alloc_data(scm->dev, "qcomtee", -1, NULL, 0);
-> 	if (IS_ERR(qtee_dev))
-> 		return PTR_ERR(qtee_dev);
->
+--2bcu3ttzioot2gyg
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor drm_writeback_connector
+ structure
+MIME-Version: 1.0
 
-You are right, I'll replace it with platform_device_register_data().
+On Tue, Aug 26, 2025 at 07:08:17PM +0300, Dmitry Baryshkov wrote:
+> On Tue, Aug 26, 2025 at 05:48:18PM +0200, mripard@kernel.org wrote:
+> > On Mon, Aug 25, 2025 at 06:26:48AM +0000, Kandpal, Suraj wrote:
+> > > > Subject: Re: [RFC PATCH 1/8] drm: writeback: Refactor
+> > > > drm_writeback_connector structure
+> > > >=20
+> > > > Hi,
+> > > >=20
+> > > > On Sat, Aug 16, 2025 at 01:20:53AM +0300, Dmitry Baryshkov wrote:
+> > > > > On Thu, Aug 14, 2025 at 05:13:54PM +0100, liviu.dudau@arm.com wro=
+te:
+> > > > > > Hi,
+> > > > > >
+> > > > > > On Wed, Aug 13, 2025 at 10:04:22AM +0000, Kandpal, Suraj wrote:
+> > > > > > > > > > };
+> > > > > > > > >
+> > > > > > > > > I still don't like that. This really doesn't belong here.=
+ If
+> > > > > > > > > anything, the drm_connector for writeback belongs to drm_=
+crtc.
+> > > > > > > >
+> > > > > > > > Why? We already have generic HDMI field inside drm_connecto=
+r. I
+> > > > > > > > am really hoping to be able to land DP parts next to it. In
+> > > > > > > > theory we can have a DVI- specific entry there (e.g. with t=
+he
+> > > > subconnector type).
+> > > > > > > > The idea is not to limit how the drivers subclass those str=
+uctures.
+> > > > > > > >
+> > > > > > > > I don't see a good case why WB should deviate from that des=
+ign.
+> > > > > > > >
+> > > > > > > > > If the issue is that some drivers need a custom drm_conne=
+ctor
+> > > > > > > > > subclass, then I'd rather turn the connector field of
+> > > > > > > > > drm_writeback_connector into a pointer.
+> > > > > > > >
+> > > > > > > > Having a pointer requires additional ops in order to get
+> > > > > > > > drm_connector from WB code and vice versa. Having
+> > > > > > > > drm_connector_wb inside drm_connector saves us from those o=
+ps
+> > > > (which don't manifest for any other kind of structure).
+> > > > > > > > Nor will it take any more space since union will reuse space
+> > > > > > > > already taken up by HDMI part.
+> > > > > > > >
+> > > > > > > > >
+> > > > > > >
+> > > > > > > Seems like this thread has died. We need to get a conclusion =
+on the
+> > > > design.
+> > > > > > > Laurent do you have any issue with the design given Dmitry's
+> > > > > > > explanation as to why this Design is good for drm_writeback_c=
+onnector.
+> > > > > >
+> > > > > > I'm with Laurent here. The idea for drm_connector (and a lot of=
+ drm
+> > > > > > structures) are to be used as base "classes" for extended
+> > > > > > structures. I don't know why HDMI connector ended up inside
+> > > > > > drm_connector as not all connectors have HDMI functionality, bu=
+t that's a
+> > > > cleanup for another day.
+> > > > >
+> > > > > Maybe Maxime can better comment on it, but I think it was made ex=
+actly
+> > > > > for the purpose of not limiting the driver's design. For example,=
+ a
+> > > > > lot of drivers subclass drm_connector via drm_bridge_connector. If
+> > > > > struct drm_connector_hdmi was a wrapper around struct drm_connect=
+or,
+> > > > > then it would have been impossible to use HDMI helpers for bridge
+> > > > > drivers, while current design freely allows any driver to utilize
+> > > > > corresponding library code.
+> > > >=20
+> > > > That's exactly why we ended up like this. With that design, we woul=
+dn't have
+> > > > been able to "inherit" two connector "classes": bridge_connector is=
+ one,
+> > > > intel_connector another one.
+> > > >=20
+> > > > See here for the rationale:
+> > > > https://lore.kernel.org/dri-devel/ZOTDKHxn2bOg+Xmg@phenom.ffwll.loc=
+al/
+> > > >=20
+> > > > I don't think the "but we'll bloat drm_connector" makes sense eithe=
+r.
+> > > > There's already a *lot* of things that aren't useful to every conne=
+ctor (fwnode,
+> > > > display_info, edid in general, scaling, vrr, etc.)
+> > > >=20
+> > > > And it's not like we allocate more than a handful of them during a =
+system's life.
+> > >=20
+> > > So Are we okay with the approach mentioned here with the changes that=
+ have been proposed here like
+> > > Having drm_writeback_connector in union with drm_hdmi_connector
+> >=20
+> > I don't think we need a union here. It artificially creates the same
+> > issue: we can't have two types for a connector if we do so.
+>=20
+> Well... What kind of connector would be both HDMI and WriteBack? I think
+> they are mutually exclusive already.
+>=20
+> > > Also one more thing I would like to clarify here is how everyone would
+> > > like the patches patches where each patch changes both the drm core
+> > > and all related drivers (ensures buildability but then review is tough
+> > > for each driver). Or patches where we have initial drm core changes
+> > > and then each patch does the all changes in a driver in its own
+> > > respective patch.
+> >=20
+> > The latter should be preferred, but if you can't maintain bisectability
+> > that way, then it's the most important and you should fall back to the
+> > former.
+>=20
+> I'd say, we should be trying our best in providing bisectability. It
+> really a PITA if one can not use `git bisect run`.
 
->> +
->> +	return devm_add_action_or_reset(scm->dev, qcom_scm_qtee_free, qtee_dev);
->> +}
->> +
->>  /**
->>   * qcom_scm_is_available() - Checks if SCM is available
->>   */
->> @@ -2326,6 +2450,16 @@ static int qcom_scm_probe(struct platform_device *pdev)
->>  	ret = qcom_scm_qseecom_init(scm);
->>  	WARN(ret < 0, "failed to initialize qseecom: %d\n", ret);
->>  
->> +	/*
->> +	 * Initialize the QTEE object interface.
->> +	 *
->> +	 * This only represents the availability for QTEE object invocation
->> +	 * and callback support. On failure, ignore the result. Any subsystem
->> +	 * depending on it may fail if it tries to access this interface.
->> +	 */
->> +	ret = qcom_scm_qtee_init(scm);
->> +	dev_warn_probe(scm->dev, ret, "Failed to initialize qcomtee\n");
-> 
-> A successful boot of db410c (APQ8016) now has the following in the log:
-> 
-> [    0.161437] qcom_scm firmware:scm: error -EIO: Failed to initialize qcomtee
-> 
-> If the target doesn't implement qtee, I'd expect that you tell me that -
-> or preferably stay silent.
-> 
-> Looking at the other error conditions, we find -ENOMEM, for which you
-> should also avoid printing. In fact, I believe all other error paths of
-> qcom_scm_qtee_init() will have printed an error already (if not, please
-> move the error print to the place(s) where it's needed).
-> 
-> As you're ignoring the return value, please then also change the return
-> type of the function to void.
-> 
-> Regards,
-> Bjorn
-> 
+Yeah, I believe we are saying the same thing :)
 
-Sure, a successful QTEE boot already logs its version from TEE SS,
-along with any internal error messages. Based on those logs,
-it's quite clear whether this function failed or succeeded at the
-beginning. I'll remove the print statements.
+Maxime
 
-Regards,
-Amir
+--2bcu3ttzioot2gyg
+Content-Type: application/pgp-signature; name="signature.asc"
 
->> +
->>  	return 0;
->>  }
+-----BEGIN PGP SIGNATURE-----
 
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaK6m7wAKCRAnX84Zoj2+
+doq7AYCGPkzQsh6eK7sNZpx+oS1S0ulIy7SlWpjGFlx+gKw8CWeZ49ePtAl290cq
+u833Oa0BgLNM0z3GhbAuoZEIMj3lrg5ki7r3yNe4zG/aPbKJZ1ocfGrd2wTgY+q3
+3zMMttn/aw==
+=kBfE
+-----END PGP SIGNATURE-----
+
+--2bcu3ttzioot2gyg--
 
