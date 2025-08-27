@@ -1,348 +1,169 @@
-Return-Path: <linux-arm-msm+bounces-70960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7DFA6B37641
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 02:50:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72030B376B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 03:18:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B4F973AD636
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 00:50:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C53A1B66599
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 01:19:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 667D01D63E4;
-	Wed, 27 Aug 2025 00:50:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 883CA1C6BE;
+	Wed, 27 Aug 2025 01:18:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QGWz+Jg9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aUJYYuwf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F7C1C7009
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 00:50:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDDAE10A1E
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 01:18:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756255836; cv=none; b=MYujFLXx3Qo1Kp3g+hG+bIqWzKOjGzXvJ5IRnqHll6fHnISvnv9u43nE0DocH7IzQjvAF54GV3tdzp87P/+Cja+3xyk9N9Zdn9Yn3eSe/ALx3u/7+1dFOuPmyrf+BSpskSP9wyLWkBdKKUHKnZhZiokhC2Yhpkpmgb8tBQV/BRs=
+	t=1756257522; cv=none; b=RvVE9jey3+o6Q8zmaGoK3g2Qt9I381102k2biihDJiu4sWbG7WFcx2WyvVQo+wH3z5CTFMmbOomR/jxEkaKCGAGTJiGjEupZ4mqCgJH5I2CbRP1/4rR9EFtZKvIfcRCVgXljPRZNxc7p5oDp3XiHntSHyjxxM236l8X1Ttl9/IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756255836; c=relaxed/simple;
-	bh=jc2oRXhF62m0HmEZ4Sh6qy6cb37Rxe4E9F5U+bXM+lE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WXXLojldFQhQvphwXwD27OdvibDu/8JBHPOH7am4kYkKwHDSI3SAzgAAfL8vbgYTshqcUUHKY2X4z9Nwtr4We6+7OX3sWsXFImRTd1VY+XHeuui7dTf4WWqhLrnT/J3MgV7McnxXCgTbbSK25gZ05JpckD2b5rSeUnYxg1xaczE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QGWz+Jg9; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1756257522; c=relaxed/simple;
+	bh=fHA3mzUAXqJvLfjfjKK/r45B7b0zgHidGy9xFM6J7NM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=D2UCBVvTqrELGvWlbF0KcJBZorqd5V8k5y9DYZOhuLMS5wJFrXBGyr3LHVjlMOWax6IeJgWSO3YO0WnsA37v/dkeZ79ceA39GS72B2RoTVmR6m44Nrae1RRB+1VfSBZCneASVep9v2FfAtovqUoTuTSgL6Em/eIj+QUdyxIFKnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aUJYYuwf; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QL1RHN021722
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 00:50:33 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QJVskS012652
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 01:18:40 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	glRSAxJN2AjWW4WUDCqiAntJEGUI7+4xI5No65gXeBw=; b=QGWz+Jg9WDfLQN2c
-	BExT4ziVIzeiROOd2pSbCpx3EI4kztUj681rCk8yjm8g1MHGEBW1qMrPZWpP4O0H
-	cz2+UmVpzVa1WRSfpa8cUkx3Ag4brvEymHD72++v29IlHa8Qt/8LYdLwNODCTlfa
-	Ffo42Xn2PD7WQOJiBsPcSKaV7IU8NdRn0zawaiprY3I53vM6m9meYkt/vfZ+H3Jg
-	NzrYSEdtOWXAhYJDWUniJU3scpfXyHvBGJ7U5Ud0MBVFerfG9uQryLAwf2NGmefa
-	ceFIz0Ag4peg5n2yt+nmbn9xOjRhK/iYfdkt0WOvp3o44G6395wRkKw6tuz4s/eQ
-	q9hxlA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q615jrms-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=Bx+duUP1GALERBeSBTVPOrXM
+	scOH+ezdQWGpYAtJpSQ=; b=aUJYYuwfAjFvp98BcSfP9wgOvviNGgAb3iP/Uyeh
+	bBZajVeViijgS9PvK0tayRC8E663JaLFc1TW2wc9yW9NTzWdct/Ktwu3WYaahJ7a
+	CvaB67tBd/ERl/Q5BxfuMavD009wwGPSnkVDuyQAEB9IukNJsbkOWYv0z4LUo4r/
+	ETVF0iTRrWZ5FJN0tPoYoVPgJdCXJyerzFruYWehFJaX+uj+qX7sNb+RplTrQFic
+	qgBjzpoA0uHMBSZbp4yLslNTFpbAYK6w2WN0hkhTWxz6T2mLvvPUmO+v+GsPw6NM
+	mNcQd+1Wq4b0NXFQCZ0JtdXRj8rd1v5wi+Zek7+UNZDhLg==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5xpu2h3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 00:50:33 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-246f49067bdso26223195ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 17:50:33 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 01:18:40 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b109765d3fso9641111cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 18:18:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756255832; x=1756860632;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=glRSAxJN2AjWW4WUDCqiAntJEGUI7+4xI5No65gXeBw=;
-        b=DGYgesDghmwei/rfPiPMp/ZGj4R4HUHAQQUF0Ts7AGqKJxf//AuLEb2VNHMsSN/FvK
-         K9tEMi2vxTNePc+cuhbejJ1YbHbNR2KB9NSz7TNpUQlmTGD/+WnfM1kwGDNbcqr/BLy3
-         vjx12KdageAcqMWQZfAtv7SmtcnckMnuY7w82VHtL2l5grZPE2bLaPyQkvU9nr2ERuut
-         iwQPtbW52Y5aPhN2TUAHBzeWuHA916WZe7/KMD4HDYquf/5DkVlFZB9h0tWZZ3mgQhOU
-         MsOTU/7Ssf7gHIafwCBGSpmG+iyw8MrbqM8uzop61gPM2OxWBQR/jNBOnHCNMGPQoEtB
-         IUJQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXhIq49LNuWEy/LAY2m0ZmX7pf0++L/mx2ceMTjWwjoXFZalcrtw6rovkQj80aNd98KPO6W1FD1oJPweNv9@vger.kernel.org
-X-Gm-Message-State: AOJu0YxpztRitIbUa/xTew2lndzv215+hHODUsBRXktPBnXffLt1YOId
-	AC/kJugd1Ys4yhwoNnCptyIgP5qRMJD8P9dXsRfr2+BfuMbHMDhrpntLLgDMQDIPCKJ81frpNT2
-	ss6Pdi478QOqMUAS0rrVtjZ31pCSzbhT+vDYy7OOT1bNRtsjZfRY9lUMpvUdNQGo+LeU8
-X-Gm-Gg: ASbGnctm2cHnxywOdkh6POzgTMKLaQ2UsucbkD+9wGnP8k4Ncp7sGlcL2cYC1oTkqZK
-	aXgHogCvdNbxMm2Ukn+8BlHmQadqsMWsARs4Xs8dH7zlkg+TrxTjcUWrEg9bubqWOt1jaqQgk/L
-	nIN75GUhpgS4STyn9CMKEJ5FqrluCVeACER6I8R+cks5BTpZqNYRNLICnapux5hYkTu7NWefi4K
-	ZXPXAoJfHUVSQVcG9y4Jasa9i+TCSPuX0C2gWyFV2mWnoZU1yXcA50nXANtNrVoib/ifFCocfiP
-	PmNKM5Zm1C0VM5oaXwhndhx6C6BUXii7TIeUYYtoRBebRDpRnXgckPWTIGPEsza3/KKczLrvZbO
-	lRb8R4rKoJSJQhR8LlA==
-X-Received: by 2002:a17:902:e847:b0:246:d00b:4acb with SMTP id d9443c01a7336-246d00b54c3mr119968015ad.21.1756255831902;
-        Tue, 26 Aug 2025 17:50:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHwFC+uzN4UQKAUk+UDeEAr+1U4rJTdSanlizuzHOsK+hW/6Ls7ID3DQU9KNSI3l0wqsWk+SQ==
-X-Received: by 2002:a17:902:e847:b0:246:d00b:4acb with SMTP id d9443c01a7336-246d00b54c3mr119967635ad.21.1756255831362;
-        Tue, 26 Aug 2025 17:50:31 -0700 (PDT)
-Received: from [10.133.33.155] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24668880bfbsm106922665ad.129.2025.08.26.17.50.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 26 Aug 2025 17:50:31 -0700 (PDT)
-Message-ID: <6378d925-5d99-406e-a7e2-0d2ebcb2f975@oss.qualcomm.com>
-Date: Wed, 27 Aug 2025 08:50:27 +0800
+        d=1e100.net; s=20230601; t=1756257519; x=1756862319;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Bx+duUP1GALERBeSBTVPOrXMscOH+ezdQWGpYAtJpSQ=;
+        b=E4ASVZFCYAbLFPIOMneMiIfZ3y+nv7tuO6QyydiYGdfCpi5QMN/eWimTKsIYhQxdyg
+         km3XoR71RufNeXFmyzHuWZ13/NH9UqDHnntmexwQafljvXjmTlJIDgAlThCOvu+gjGeO
+         0v7mtwcjSzYMyn4ZL8ixVuPhnCmQpvyIAtHa5tuLCvnQLfrnW9nK4qNH0v/8k+Bzt57V
+         yUVJ1Il0keR5qMdSGElRImxnIUeDgWEqtp9KnCv/SEWjFlssH9rPW2q89137TpCpSfox
+         CgeW6gQWDi/yGGGhAY1IO/w2sOSBbuhYOJN9N2dZQixpdEfVdiN+sWbrzpnzpp14CxG2
+         wzuQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVPFd4HMwC8ApTHCOEd31Kss039JI/poaGG378pYIhYv8JXdP1hW9IaCTaT8vbRrRAgvgEVKvZGua9Sj1wV@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPn0JWWDH3gftNEI/b2RTiN0a3AVPMP8ZYv6xo/fqzfWYTl1QW
+	J0ccWHX+eX52gaf+1zZS8Z309Xc9+wqQAcyUk1BubZRma2QyPBjKPAO8/komaNEC6M7UKhp3Rqg
+	a5VzY3s8qrPrzguviUFiRZppRsKZU+GQTMc9dUmgWBnlP9KFbLpWJBmPU4nVH4o0GJKYh
+X-Gm-Gg: ASbGnctQMG8A/43umX1kAhzZi6e8sA+W2fhbgpy3UnStLEpLnRlMex28DEQAMhfMyuI
+	Mb0PO99plgGLNsuFlvAvWRNJ7IW8PxSA9tqHHvY0EzKJxSHxvxyIbTZ/rXF09ajzkSdkWhjaKgd
+	W+VGSaG/lNYYmxQ4mXoGhY9tVMiLFg+4bmaMqf4kSK+Sg+CoEHdQ6endOcjAKqkvqlMAmzkUlKN
+	v3NKcoGPFh0Y1wk78EZMBtcgrc+Pb9BJ5VZsE6D/D5qBsRw1RA7hNg6jodK4JDI7EGPwTLtH7+M
+	ZlISaIIhbEGx56plpBlAq+wngMvvkFLmXs5BYS9TTv07L8n3Eq6thD/DAhBU9Xj8hp304sbXG2h
+	nirLtVGKrAjAZwAxAn47apUI/YoP4pri4uCPgqaO97YsrH6eFBvll
+X-Received: by 2002:a05:622a:5c0e:b0:4b2:9b79:e6ff with SMTP id d75a77b69052e-4b2e76f6c24mr36188161cf.7.1756257518812;
+        Tue, 26 Aug 2025 18:18:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHlWgyLt/FiqiOWOJS0LqGdTAYap/k8kB9YXuoapGqnOCEle6fLztfOxdXwebefsByFu+0ZLg==
+X-Received: by 2002:a05:622a:5c0e:b0:4b2:9b79:e6ff with SMTP id d75a77b69052e-4b2e76f6c24mr36188011cf.7.1756257518351;
+        Tue, 26 Aug 2025 18:18:38 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c02020sm2529995e87.29.2025.08.26.18.18.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 26 Aug 2025 18:18:37 -0700 (PDT)
+Date: Wed, 27 Aug 2025 04:18:34 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: Re: [PATCH v3 37/38] drm/msm/dp: fix the intf_type of MST interfaces
+Message-ID: <pp7s4wyvchoe2en6xqtow7cw3wfjfgnb5lu2l4f26azwssolpk@ydjm2ezqumu5>
+References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
+ <20250825-msm-dp-mst-v3-37-01faacfcdedd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] coresight: tpda: add sysfs node to flush specific
- port
-To: James Clark <james.clark@linaro.org>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
- <mike.leach@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
-References: <20250826070150.5603-1-jie.gan@oss.qualcomm.com>
- <20250826070150.5603-4-jie.gan@oss.qualcomm.com>
- <3ac2954e-5663-4ea0-bc1d-a09e1992af5b@linaro.org>
- <a6be4d7b-d163-47df-9ab3-ca410f703555@oss.qualcomm.com>
- <939eb45c-f48e-40ce-86e8-710afa2b5c9b@linaro.org>
- <5df27be9-0347-49d1-ba1e-21d6a2172314@oss.qualcomm.com>
- <8f3a1f75-3476-47e9-a8d6-f396939b3240@linaro.org>
-Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <8f3a1f75-3476-47e9-a8d6-f396939b3240@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzNCBTYWx0ZWRfXxWO+yCYiYtQ5
- 7I6whF2WkP4rK836T1HmRfXmYUkOGSIaYhpFguxWYEEZ86iF1a0HFGqPpjIqcakkh+/bUVH8PyS
- fZ1Xu8WYWrjFgWJIicYzg4TUSwPW+PJXeOD5jYgYxUgbt9VmBWoLuZHdtS3PJ0ZGbMC9UDZXHic
- KzrEw4bJwsWp4/BLuUnO7rx5QiqGUJi3WYKqx7AYQ3jzhQRkdbeoZYvIscXSNkeEtl7hDKBQe1U
- OZb0d9uHjljUv5DkTv5H2Nf3KMY4FL9TmO9KNwWO3zP1oYj/ewIHurYkD8Sk4V+s0p6gzM83+N4
- SsivDnAUDWjR5TytVhxF2fhk7B3nYctG9oiDrtIZitbCiYbiAjPiFNvscItBGJtWfdRgsqfiMaJ
- GOKoJ738
-X-Proofpoint-GUID: md8m8HTlrb6YzlnRP4EmYCHHGybNokm5
-X-Authority-Analysis: v=2.4 cv=K+AiHzWI c=1 sm=1 tr=0 ts=68ae5659 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=0QyNbH6Kj7jDSduTYYIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-ORIG-GUID: md8m8HTlrb6YzlnRP4EmYCHHGybNokm5
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250825-msm-dp-mst-v3-37-01faacfcdedd@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=KOlaDEFo c=1 sm=1 tr=0 ts=68ae5cf0 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=ELchz9PJ39Up9ouDmgAA:9
+ a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: _ImsvALy3PZPr32mX-nhoslqKDiBv0YT
+X-Proofpoint-ORIG-GUID: _ImsvALy3PZPr32mX-nhoslqKDiBv0YT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfXyy6sc31QcNoe
+ PnbZuJeWj24C7xYmnV7E0XCtS06eh705Kcb/oH0Vri1mFatEtfUBTrUN9436eOz8GB+cA5UrDNe
+ l8CJuV772jcLkyzp2/3AEbGWAER310rA1O2ZfX6H2s/JDd/y+KwxTnQfh/gx6BxisHGrWe4PZoD
+ 56d+Ck25SRtmAB+tSRzIMGLoiLN8WKWPTWjRGJMjU4j6JcyumrfQQIu5XRaP2a3I0lL59l36peU
+ MiufUU0LKc3QayC3oY4ym/V3ei/b8JIYZT93fzATF053L7AyHgQgRpZKlAn3nJTgKbDWVpWzNFQ
+ C7M/XXi7xdil+1K1Wz60oKc1rvYqxUo8OoyJc0mXwos90bxoHE/8DueNgF1gtU5+OoE74lqexOq
+ zfPLr4GX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 bulkscore=0 clxscore=1015 adultscore=0
- impostorscore=0 priorityscore=1501 phishscore=0 spamscore=0
+ malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0 phishscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230034
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
+
+On Mon, Aug 25, 2025 at 10:16:23PM +0800, Yongxing Mou wrote:
+> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> 
+> Interface type of MST interfaces is currently INTF_NONE. Update this to
+> INTF_DP. And correct the intf_6 intr_underrun/intr_vsync index for
+> dpu_8_4_sa8775p.
+> 
+> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_0_sc8280xp.h |  6 +++---
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h  | 12 ++++++------
+>  drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_9_2_x1e80100.h |  6 +++---
+
+Also, as far as I remember, INTF_3 is not a DP1, but DP0 MST on the following platforms:
+- 4.0, SDM845
+- 5.0, SM8150
+- 5.2, SM7150
+- 5.3, SM6150
+- 6.0, SM8250
+- 7.0, SM8350
+- 8.1, SM8450
+- 9.0, SM8550
+- 9.1, SAR2130P
+- 10.0, SM8650
+
+Please update them them as a separate patch.
+
+For this patch:
+
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
 
 
-On 8/26/2025 9:29 PM, James Clark wrote:
-> 
-> 
-> On 26/08/2025 1:11 pm, Jie Gan wrote:
->>
->>
->> On 8/26/2025 5:54 PM, James Clark wrote:
->>>
->>>
->>> On 26/08/2025 10:39 am, Jie Gan wrote:
->>>>
->>>>
->>>> On 8/26/2025 5:27 PM, James Clark wrote:
->>>>>
->>>>>
->>>>> On 26/08/2025 8:01 am, Jie Gan wrote:
->>>>>> From: Tao Zhang <tao.zhang@oss.qualcomm.com>
->>>>>>
->>>>>> Setting bit i in the TPDA_FLUSH_CR register initiates a flush request
->>>>>> for port i, forcing the data to synchronize and be transmitted to the
->>>>>> sink device.
->>>>>>
->>>>>> Signed-off-by: Tao Zhang <tao.zhang@oss.qualcomm.com>
->>>>>> Co-developed-by: Jie Gan <jie.gan@oss.qualcomm.com>
->>>>>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
->>>>>> ---
->>>>>>   .../testing/sysfs-bus-coresight-devices-tpda  |  7 +++
->>>>>>   drivers/hwtracing/coresight/coresight-tpda.c  | 45 +++++++++++++ 
->>>>>> + + ++++
->>>>>>   drivers/hwtracing/coresight/coresight-tpda.h  |  1 +
->>>>>>   3 files changed, 53 insertions(+)
->>>>>>
->>>>>> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight- 
->>>>>> devices- tpda b/Documentation/ABI/testing/sysfs-bus-coresight- 
->>>>>> devices-tpda
->>>>>> index e827396a0fa1..8803158ba42f 100644
->>>>>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
->>>>>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
->>>>>> @@ -41,3 +41,10 @@ Contact:    Jinlong Mao 
->>>>>> <jinlong.mao@oss.qualcomm.com>, Tao Zhang <tao.zhang@oss.qu
->>>>>>   Description:
->>>>>>           (RW) Configure the CMB/MCMB channel mode for all enabled 
->>>>>> ports.
->>>>>>           Value 0 means raw channel mapping mode. Value 1 means 
->>>>>> channel pair marking mode.
->>>>>> +
->>>>>> +What:        /sys/bus/coresight/devices/<tpda-name>/port_flush_req
->>>>>> +Date:        August 2025
->>>>>> +KernelVersion:    6.17
->>>>>> +Contact:    Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Tao Zhang 
->>>>>> <tao.zhang@oss.qualcomm.com>, Jie Gan <jie.gan@oss.qualcomm.com>
->>>>>> +Description:
->>>>>> +        (RW) Configure the bit i to requests a flush operation of 
->>>>>> port i on the TPDA.
->>>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/ 
->>>>>> drivers/ hwtracing/coresight/coresight-tpda.c
->>>>>> index 9e623732d1e7..c5f169facc51 100644
->>>>>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
->>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
->>>>>> @@ -509,6 +509,50 @@ static ssize_t cmbchan_mode_store(struct 
->>>>>> device *dev,
->>>>>>   }
->>>>>>   static DEVICE_ATTR_RW(cmbchan_mode);
->>>>>> +static ssize_t port_flush_req_show(struct device *dev,
->>>>>> +                   struct device_attribute *attr,
->>>>>> +                   char *buf)
->>>>>> +{
->>>>>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>> +    unsigned long val;
->>>>>> +
->>>>>> +    guard(spinlock)(&drvdata->spinlock);
->>>>>> +    if (!drvdata->csdev->refcnt)
->>>>>> +        return -EPERM;
->>>>>> +
->>>>>> +    val = readl_relaxed(drvdata->base + TPDA_FLUSH_CR);
->>>>>> +    return sysfs_emit(buf, "%lx\n", val);
->>>>>
->>>>> Decimal would be better for a port number that goes from 0 - 127. 
->>>>> If you really want to use hex then don't you need to prefix it with 
->>>>> 0x? Otherwise you can't tell the difference between decimal 10 and 
->>>>> hex 10, and it's not documented that it's hex either.
->>>>>
->>>>
->>>> Got it. I will fix the code here, and update the description in 
->>>> document.
->>>>
->>>>>> +}
->>>>>> +
->>>>>> +static ssize_t port_flush_req_store(struct device *dev,
->>>>>> +                    struct device_attribute *attr,
->>>>>> +                    const char *buf,
->>>>>> +                    size_t size)
->>>>>> +{
->>>>>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
->>>>>> +    unsigned long val;
->>>>>> +
->>>>>> +    if (kstrtoul(buf, 0, &val))
->>>>>> +        return -EINVAL;
->>>>>> +
->>>>>> +    /* The valid value ranges from 0 to 127 */
->>>>>> +    if (val > 127)
->>>>>> +        return -EINVAL;
->>>>>> +
->>>>>> +    guard(spinlock)(&drvdata->spinlock);
->>>>>> +    if (!drvdata->csdev->refcnt)
->>>>>> +        return -EPERM;
->>>>>> +
->>>>>> +    if (val) {
->>>>>
->>>>> If 0 - 127 are valid don't you want to write 0 too?
->>>>
->>>> It's 1-127 here. 0 may leads to an unexpected issue here.
->>>>
->>>> Thanks,
->>>> Jie
->>>>
->>>
->>> Then can't the above be this:
->>>
->>>    /* The valid value ranges from 1 to 127 */
->>>    if (val < 1 || val > 127)
->>>      return -EINVAL;
->>>
->>> But I'm wondering how you flush port 0?
->>>
->>
->> BIT(0) represents port 0 with value 1 and the default value 0 means 
->> nothing will be triggered here.
->>
->>> Isn't the default value 0? So if you never write to port_flush_req 
->>> then you'd flush port 0, but why can't you change it back to 0 after 
->>> writing a different value?
->>
->> We can change the value back to 0 but I think we shouldn't do this 
->> although I haven't suffer issue after I changed it back to 0(for bit).
->> Because the document mentioned: "Once set, the bit remains set until 
->> the flush operation on port i completes and the bit then clears to 0". 
->> So I think we should let the flush operation finish as expected and 
->> clear the bit by itself? Or may suffer unexpected error when try to 
->> interrupt the flush operation?
->>
->> Thanks,
->> Jie
-> 
-> Oh I see, I thought this was a port number, not a bit for each port. 
-> That changes this and my other comment about changing the output to be 
-> decimal then. Hex is probably better but it needs the 0x prefix.
-> 
-> I would also treat 0 as EINVAL. It doesn't do anything different to any 
-> other out of range request so it should be treated the same way.
-> 
-> Then comparing to 127 isn't that obvious either. Something like 
-> FIELD_FITS() more clearly states that values have to fit into a bitfield 
-> rather than be less than some value:
-> 
->    if (!val || !FIELD_FIT(TPDA_FLUSH_CR_PORTNUM, val))
->      return -EINVAL;
-
-I found I made a mistake here for value range. 0-127 is for port 0 to 
-port 6. But the TPDA device could support up to 32 ports, means u32 here.
-
-So the mask here, the TPDA_FLUSH_CR_PORTNUM, should be designed for 32 
-bits, like 0xffffffff.
-
-Thanks,
-Jie
-
-> 
-> 
->>   >>>
->>>>>> +        CS_UNLOCK(drvdata->base);
->>>>>> +        writel_relaxed(val, drvdata->base + TPDA_FLUSH_CR);
->>>>>> +        CS_LOCK(drvdata->base);
->>>>>> +    }
->>>>>> +
->>>>>> +    return size;
->>>>>> +}
->>>>>> +static DEVICE_ATTR_RW(port_flush_req);
->>>>>> +
->>>>>>   static struct attribute *tpda_attrs[] = {
->>>>>>       &dev_attr_trig_async_enable.attr,
->>>>>>       &dev_attr_trig_flag_ts_enable.attr,
->>>>>> @@ -516,6 +560,7 @@ static struct attribute *tpda_attrs[] = {
->>>>>>       &dev_attr_freq_ts_enable.attr,
->>>>>>       &dev_attr_global_flush_req.attr,
->>>>>>       &dev_attr_cmbchan_mode.attr,
->>>>>> +    &dev_attr_port_flush_req.attr,
->>>>>>       NULL,
->>>>>>   };
->>>>>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/ 
->>>>>> drivers/ hwtracing/coresight/coresight-tpda.h
->>>>>> index 00d146960d81..55a18d718357 100644
->>>>>> --- a/drivers/hwtracing/coresight/coresight-tpda.h
->>>>>> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
->>>>>> @@ -10,6 +10,7 @@
->>>>>>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
->>>>>>   #define TPDA_FPID_CR        (0x084)
->>>>>>   #define TPDA_SYNCR        (0x08C)
->>>>>> +#define TPDA_FLUSH_CR        (0x090)
->>>>>>   /* Cross trigger FREQ packets timestamp bit */
->>>>>>   #define TPDA_CR_FREQTS        BIT(2)
->>>>>
->>>>>
->>>>
->>>
->>>
->>
-> 
-
+-- 
+With best wishes
+Dmitry
 
