@@ -1,80 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-70994-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7DA1B37EA6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 11:21:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2E16B37F30
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 11:48:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BAC0D1B669C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 09:21:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 607AE361702
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 09:48:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E85DE343D7D;
-	Wed, 27 Aug 2025 09:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A3DE283FDF;
+	Wed, 27 Aug 2025 09:48:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HS/yE1n+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gp6Gog+s"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036373431E6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 09:21:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2D22299927
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 09:48:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756286489; cv=none; b=ZVArkxU97XtPxd0C2re8y1YDE/DBmkgrvf73L03CUrLP6FG/mngOoqxfEJ2sudjyQ8mTfo4+gcZ5hqDT2Hhhf/7t/uzLgEybYnJDna4L+dI72RHUm6xmWGy/MEJIYlqhpTI0d5SRTrGu1oKrDbhPUlf/C5vt0UAz0CrURNrlms8=
+	t=1756288126; cv=none; b=WyKhzCFznbK8+eUP4QGfZEXdPMSNaOsYCQCTgs2HgBZtI3Bx5qk5lsSGJKqsuENB0OJjX2QMi2e7XZK+ijNdEQSheFIPkSouaZeC2iGh7DYTuiyzhRca2aEYb79MBkpZB2OpzhM1b2AF/9ae82nhWKE4FXSE25Lk69gylMMi9c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756286489; c=relaxed/simple;
-	bh=UYHRh0nnf5/4PfZfTpjBoaA1YeifpOFb2r0eI6/SlwM=;
+	s=arc-20240116; t=1756288126; c=relaxed/simple;
+	bh=PIwn2V4YS3wMdr0tSgltoQZvAPWbCRTaiD2JFY6WSRM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=KUUvtXMETE0HC+U5phopHJt9fka8mRZQxfGlN4KjZGhvqnVGqlhdwpF5DajELGOxiK90c/+LSjLqXcFeCPdVjj1orK9CmPywXM6K5M7TijdhV5NGjTpaKM864zW6gn9fQ233DodfUwThsC9Gx+wc7Hgcbw1V4hXgOQlDoTogawE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HS/yE1n+; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3c854b644c1so2455932f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:21:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756286486; x=1756891286; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Mker59khNl9LO6XVA193w6BS5zlp+w383B89UYOvyb4=;
-        b=HS/yE1n+5NTaDm4mGxRBgJVsxsxzwDfQ15YEo/KJpQQekCMObkiT2JYX0vUhxePwF6
-         Y1VeuV2OB7D90tOtN81Q1Q81HfBlmoY/mIYVRnkFTWWsu4yc3RAHE8yBq7B/ugSXFB+N
-         lXznf0exYygNhTcLd8UMVO1SetzxZv9YKsRSNwRkwrCFnnGvtBD183f5DN8eMNeKKDiz
-         yKb01C5d6mJdqT7V+lh+8gLqV3evMzhuAYp1WTlN6d24Qp9MvTcRX4jzX0ItvBAxm3Ke
-         t/CW/CbKyqImbpeQegxvMDTyJ8cSKq7Or/MJQVL/Tdn+UF2J3F5fXqN3PzY5QWCBJrZY
-         uXww==
+	 In-Reply-To:Content-Type; b=awkK6ZgQbjRU8EAx/mlYMCX6P3xN75iiE/5ev7AsuhdBaSn9CXEFcP9ptbw9PNzMXp4F4UO3BrZ52d+OtEMl+L4dpZLdjH2j6VL8sLBk0ppm5aexNSixunpgZ7EEv7HoQlf8gRH1kUkUOtkb0lY5g2C7c4B44ITjjHPxpsLUaBo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gp6Gog+s; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57R6kTX2003899
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 09:48:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+HdTnP5QHwQGCOtYD2hb1Prc2QDYDtKqL2msgNtal+s=; b=gp6Gog+sVWMDkmwu
+	bXT9zIDGoaehq+DQOlI6ElG1Ny6cu5HwsHSolaqpsS29nqRo/KTJDIdd20f3AfFH
+	nT3lesr629vYxdVUl2kvMBhqIvXJBlDUvy4arpk0P+kxij19s4kb4QuA0uuC2JnW
+	hzvVHI1XvsKjQyIs5djn/hB1QNEOg5SSwVoEan7O6o6wRgjEZtFHnVftHdJgNY5x
+	B6c5UgJXbvFrmjCynLjkgFQYUUvhJTuZAsmny5uJ8utS514Ndp50R4/tiDKkSrAS
+	Hcigk0BW05A/caTbSnQgJjiCVdJOzdS7ThydWgpb3VQxN6V35w5ZLd0B/5FDVsdu
+	DG3iSA==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6x8c9tm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 09:48:43 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-244581ce13aso119585375ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:48:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756286486; x=1756891286;
+        d=1e100.net; s=20230601; t=1756288123; x=1756892923;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mker59khNl9LO6XVA193w6BS5zlp+w383B89UYOvyb4=;
-        b=Ls20KQy4B+O9hUuBbY4+n9BPUpErZekFz5SIQTfGam3rt1iQgiRLe8NFMmsygy63qg
-         BLzq25qWKxwd9Kg5XqpLJ5QBylMfBNEdiCZwdhuoJwigFFoJL5gkHGPlSVjMqLeq8BCQ
-         hrmUCy/HlvdQhErprFWpcQfeLGJj8ugATx8OmLbLC/E4CUP/AsfZqSuZfGKg1MSexYPz
-         OD/ZqbE6o3AgKQbo9ZR1Z8rmCO7NDXs6ucaFGoQ5ig2DQXeMSjxox3BDWAHC8SQsTOdR
-         WV498E0i8snoTFt5mq3QbpwdAvZ96dMuyAR9iroQl3jBUS7e+ZwKunoSY/3HSTQqmsJH
-         Twkw==
-X-Forwarded-Encrypted: i=1; AJvYcCX37Dk0gm/pGT0b3u/3sQFt71bDm8Ni2VfK+NxhDuYXg1fjdO+HtfGX95Nrfe0xq0NaX/pAtBQ/SNKY1JFb@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywg6Fe2DhA88y9cJ5YKpd2xgqibNEFUColAJE7lK6uhgAxM/Lzm
-	vJEcEnuLci+6sDh1WZM7CJHLj7dk9218ZalFIewbAK/MEv2d0ymaOaz0gJahTl1Q078=
-X-Gm-Gg: ASbGncuYUg7/fsbtxdJKCIeb5GaGIHRDg9jw918XnPXnyt28E24RJvQzKRtH1tOD2K4
-	jD1jLEUqiYmS4Arz3s2/prcc5APjMYKBw8ZgTya8SOjdXNJR22v780hHrtMnqEt6nzi1nMdrius
-	Fah+A4knATESnKJgd55bMrmEbTy8UNOhbYbwdCjE2INqI4SgBCfJXNE5m9bjqB9PlccIGiQwXxl
-	Ig3YGKSBPAJQeGns/Fl7IGKnl7xukC+hBYqxKBOnSdnbvf90My93NsDxFH7MOJcV4LV2dUAda41
-	TU/pcUa84rHpaE0tXSZ1gY5rTbLAENf12pfk/qmnsoknoHzgoYMSVMn4biXYPP+RgmbAE7PT0ve
-	ldwZYiC4sBKDMqy3IFp8iYiYfkVE=
-X-Google-Smtp-Source: AGHT+IFvRqEa1ogDaSXzE5145n6AsbEdzn4jkuxQuGsQWp+ChfJK8nOqGUjd3LT9Dxkf37baNqI9Dw==
-X-Received: by 2002:a05:6000:26c8:b0:3c7:6348:4089 with SMTP id ffacd0b85a97d-3c7634846admr10821566f8f.11.1756286486239;
-        Wed, 27 Aug 2025 02:21:26 -0700 (PDT)
-Received: from [192.168.1.3] ([185.48.76.109])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3cc7b699d5dsm2665466f8f.48.2025.08.27.02.21.25
+        bh=+HdTnP5QHwQGCOtYD2hb1Prc2QDYDtKqL2msgNtal+s=;
+        b=DOSYXbkhDN03AA5zcljYQ/LbARtPoGtwutPzPOQuiEt0yPO33yxfSKbVsDuXz++DyH
+         OzHVCpSZtYKW/IRONJO1vVlHnFC/WV52pkwrUDzNOJLhuYA6rVTwy2GEvC/Lvwd6pQTy
+         3MMW487PeUxKXRz/BE5qT8UXvTdpy75og3aqzRjf9KNyioj4pKQp/uARpU5Q3CzkMn50
+         yF9hWCBWDPq/M/kMpYUoLpXyfpyMJ2zCPoD6VmEBUSTlbyzEn5pkGlt6LSVBsR3Kzgik
+         S7vx9CqhMo2dbI9BMCGTo3scOCNZOecoq9ILaEhTCXIqHoMNmxPYHTtNqAeQr1RmC/mB
+         dC9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWooATylVhmvCU7F7tGGuOpocPKqsxgAOV+2diFL1G2SS42L52zUFdQMBkjI6ZxNiWmNVWnHdTxYxg7h6IR@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7aM7zWLSrwtpA1lKhGz30Cn2vI0rtkpUVnUslQ19g1KOdjDkr
+	Pw+Oy1BUkwjFHnfg64Y+50Dq/J+tAtIgllKZh79jUsMr6OPr8CsKJi9CKIfjeZ+RVB1cw5Z9XNH
+	UaWOpYGYMZ4QvX+cTVgxMFRmZK/JRZ0mhpsW4vH8KQgg16mR8LLgrhIvEfnIFBJEb9QgY
+X-Gm-Gg: ASbGncteemZIybnjxhRwnBF7Q3/3yaS5NsE0GqD0z1MXq8dZpDT6ui955HuGA6vckTJ
+	pcS5ph6Kargb598Rm7I3gt4OeOMvoaqnEe/Wt6DaHscD9wVXUNt/ky6BpvV8Z7em0wjzbFy1MDO
+	+jt2pcW35gG5WMZq0fCykE9U9BgfDEQGRvLWFLZ5QnuZLS2ky0fUqnph3k/1XUPghIxV3bxyx/w
+	kSynBZlcSIQnzo7+tSVwpky9Lk7crYu30av0hi0i7vX/12geAhozqlers6NcB+xR3S/RDBCQ+5H
+	CAMkKbqAf+KhSf0D3XyWOm/Y2R6BFlfnemAdAT4nQATnFl4ElLUV6PIZxD7RBU/xqizFEFoJkUf
+	3Q/RNdYrAEhGoN2P0hpXcRCTKXrKYLQ==
+X-Received: by 2002:a17:903:1b43:b0:242:cf0b:66cd with SMTP id d9443c01a7336-2462ef409a0mr239136565ad.34.1756288122739;
+        Wed, 27 Aug 2025 02:48:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEdYfLujcpHIuYuPpdbaf+LeMGQ3BjzTtQgLFI4UMOmo6EcN71ZQccOEPzQ+NRJaIY2fr/phw==
+X-Received: by 2002:a17:903:1b43:b0:242:cf0b:66cd with SMTP id d9443c01a7336-2462ef409a0mr239136295ad.34.1756288122123;
+        Wed, 27 Aug 2025 02:48:42 -0700 (PDT)
+Received: from [10.133.33.155] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2488bc5b32esm22486785ad.82.2025.08.27.02.48.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Aug 2025 02:21:25 -0700 (PDT)
-Message-ID: <4ca657cf-1c8e-4d51-aba9-c894c32a23b3@linaro.org>
-Date: Wed, 27 Aug 2025 10:21:25 +0100
+        Wed, 27 Aug 2025 02:48:41 -0700 (PDT)
+Message-ID: <78d2ab99-f304-4fab-bc7b-859c8aa781d6@oss.qualcomm.com>
+Date: Wed, 27 Aug 2025 17:48:33 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,91 +90,195 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/3] coresight: tpda: add logic to configure TPDA_SYNCR
- register
-To: Jie Gan <jie.gan@oss.qualcomm.com>
+Subject: Re: [PATCH v2 3/3] coresight: tpda: add sysfs node to flush specific
+ port
+To: James Clark <james.clark@linaro.org>, Jie Gan <jie.gan@oss.qualcomm.com>
 Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Suzuki K Poulose <suzuki.poulose@arm.com>, Mike Leach
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach
  <mike.leach@linaro.org>,
- Alexander Shishkin <alexander.shishkin@linux.intel.com>,
- Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
 References: <20250827042042.6786-1-jie.gan@oss.qualcomm.com>
- <20250827042042.6786-3-jie.gan@oss.qualcomm.com>
+ <20250827042042.6786-4-jie.gan@oss.qualcomm.com>
+ <b1f79a26-97e1-40f4-b076-51d5c2abe736@linaro.org>
 Content-Language: en-US
-From: James Clark <james.clark@linaro.org>
-In-Reply-To: <20250827042042.6786-3-jie.gan@oss.qualcomm.com>
+From: Jie Gan <jie.gan@oss.qualcomm.com>
+In-Reply-To: <b1f79a26-97e1-40f4-b076-51d5c2abe736@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 8Q0_HpDKmU1pu9Kbu-K7Hi82ZVpGhVX8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA0NCBTYWx0ZWRfXxaQ6S7w0F4Xf
+ oL4wYp9U4GvmRKGsHtumCb0RdBDKlQkVEG2PKJmPmIAImOhMazroGxVVU0YK1e9nSoEIcYFQIch
+ wcHOQNaCgxwDyraNnANxmeLQdPvLVCQY+4941tp3mtks+o6wxn36qTc9OVPRHIIe0xmu9oRvVw5
+ gBXLrduMZNPQEyud/irXY4pegBBfuY8Zx5zoG9igBfdLNvz438yuIxQfB0pSvMEEJfdoEsQOJoW
+ u0VsDJP3ifgsD1MdXBywFK2lh/2LDInFZ/2ejkdZr3qtQ/RkWvUh/z7hpB/nhXFSjTxBK68qCKH
+ Zn/krJP5Ze7kA8pnzox9q4RDWrIEi8O2uz8Dh4f3gUP8Of6crBeHQ0PUPyUpl/qpLpRFB9+PpWE
+ 6EDGbuTw
+X-Proofpoint-GUID: 8Q0_HpDKmU1pu9Kbu-K7Hi82ZVpGhVX8
+X-Authority-Analysis: v=2.4 cv=Ep/SrTcA c=1 sm=1 tr=0 ts=68aed47b cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=DHl-jJOTjm6sWMnFDpYA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-27_01,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 adultscore=0 bulkscore=0 suspectscore=0
+ phishscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230044
 
 
 
-On 27/08/2025 5:20 am, Jie Gan wrote:
-> From: Tao Zhang <tao.zhang@oss.qualcomm.com>
+On 8/27/2025 5:17 PM, James Clark wrote:
 > 
-> The TPDA_SYNCR register defines the frequency at which TPDA generates
-> ASYNC packets, enabling userspace tools to accurately parse each valid
-> packet.
 > 
-> Signed-off-by: Tao Zhang <tao.zhang@oss.qualcomm.com>
-> Co-developed-by: Jie Gan <jie.gan@oss.qualcomm.com>
-> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpda.c | 7 +++++++
->   drivers/hwtracing/coresight/coresight-tpda.h | 6 ++++++
->   2 files changed, 13 insertions(+)
+> On 27/08/2025 5:20 am, Jie Gan wrote:
+>> From: Tao Zhang <tao.zhang@oss.qualcomm.com>
+>>
+>> Setting bit i in the TPDA_FLUSH_CR register initiates a flush request
+>> for port i, forcing the data to synchronize and be transmitted to the
+>> sink device.
+>>
+>> Signed-off-by: Tao Zhang <tao.zhang@oss.qualcomm.com>
+>> Co-developed-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
+>> ---
+>>   .../testing/sysfs-bus-coresight-devices-tpda  |  7 ++++
+>>   drivers/hwtracing/coresight/coresight-tpda.c  | 42 +++++++++++++++++++
+>>   drivers/hwtracing/coresight/coresight-tpda.h  |  2 +
+>>   3 files changed, 51 insertions(+)
+>>
+>> diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices- 
+>> tpda b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
+>> index fb651aebeb31..2cf2dcfc13c8 100644
+>> --- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
+>> +++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
+>> @@ -41,3 +41,10 @@ Contact:    Jinlong Mao 
+>> <jinlong.mao@oss.qualcomm.com>, Tao Zhang <tao.zhang@oss.qu
+>>   Description:
+>>           (RW) Configure the CMB/MCMB channel mode for all enabled ports.
+>>           Value 0 means raw channel mapping mode. Value 1 means 
+>> channel pair marking mode.
+>> +
+>> +What:        /sys/bus/coresight/devices/<tpda-name>/port_flush_req
+>> +Date:        August 2025
+>> +KernelVersion:    6.17
+>> +Contact:    Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Tao Zhang 
+>> <tao.zhang@oss.qualcomm.com>, Jie Gan <jie.gan@oss.qualcomm.com>
+>> +Description:
+>> +        (RW) Configure the bit i to requests a flush operation of 
+>> port i on the TPDA.
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/ 
+>> hwtracing/coresight/coresight-tpda.c
+>> index 430f76c559f2..8b1fe128881d 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.c
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
+>> @@ -487,6 +487,47 @@ static ssize_t cmbchan_mode_store(struct device 
+>> *dev,
+>>   }
+>>   static DEVICE_ATTR_RW(cmbchan_mode);
+>> +static ssize_t port_flush_req_show(struct device *dev,
+>> +                   struct device_attribute *attr,
+>> +                   char *buf)
+>> +{
+>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if (!drvdata->csdev->refcnt)
+>> +        return -EINVAL;
+>> +
+>> +    guard(spinlock)(&drvdata->spinlock);
+>> +    CS_UNLOCK(drvdata->base);
+>> +    val = readl_relaxed(drvdata->base + TPDA_FLUSH_CR);
+>> +    CS_LOCK(drvdata->base);
+>> +    return sysfs_emit(buf, "%lx\n", val);
 > 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-> index 647ab49a98d7..430f76c559f2 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
-> @@ -187,6 +187,13 @@ static void tpda_enable_pre_port(struct tpda_drvdata *drvdata)
->   	 */
->   	if (drvdata->trig_flag_ts)
->   		writel_relaxed(0x0, drvdata->base + TPDA_FPID_CR);
-> +
-> +	/* Program the counter value for TPDA_SYNCR */
-> +	val = readl_relaxed(drvdata->base + TPDA_SYNCR);
-> +	/* Clear the mode */
-> +	val &= ~TPDA_SYNCR_MODE_CTRL;
-> +	val |= FIELD_PREP(TPDA_SYNCR_COUNTER_MASK, TPDA_SYNCR_MAX_COUNTER_VAL);
+> Still missing the 0x prefix
 
-Just use the mask directly if you want to set all the bits. This makes 
-it seem like the MAX_COUNTER_VAL is something different.
+Will re-check rest of the codes and add prefix. Sorry I missed it during 
+the review process.
 
-val |= TPDA_SYNCR_COUNTER_MASK
+> 
+>> +}
+>> +
+>> +static ssize_t port_flush_req_store(struct device *dev,
+>> +                    struct device_attribute *attr,
+>> +                    const char *buf,
+>> +                    size_t size)
+>> +{
+>> +    struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
+>> +    unsigned long val;
+>> +
+>> +    if (kstrtoul(buf, 0, &val))
+>> +        return -EINVAL;
+>> +
+>> +    if (!drvdata->csdev->refcnt || !val)
+>> +        return -EINVAL;
+>> +
+>> +    val |= FIELD_PREP(TPDA_MAX_INPORTS_MASK, val);
+> 
+> Using FIELD_PREP() now that it's the full width of the register makes 
+> less sense. Especially when there is no corresponding FIELD_FIT() check, 
+>   which is fine because everything always fits. But if you didn't know 
+> the mask was the full width you'd wonder if the check is missing.
+> 
+> I would just write val directly to TPDA_FLUSH_CR so it's simpler.
+> 
+> It should also have been val = FIELD_PREP(...)
 
-> +	writel_relaxed(val, drvdata->base + TPDA_SYNCR);
->   }
->   
->   static int tpda_enable_port(struct tpda_drvdata *drvdata, int port)
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/hwtracing/coresight/coresight-tpda.h
-> index 0be625fb52fd..8e1b66115ad1 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
-> @@ -9,6 +9,7 @@
->   #define TPDA_CR			(0x000)
->   #define TPDA_Pn_CR(n)		(0x004 + (n * 4))
->   #define TPDA_FPID_CR		(0x084)
-> +#define TPDA_SYNCR		(0x08C)
->   
->   /* Cross trigger FREQ packets timestamp bit */
->   #define TPDA_CR_FREQTS		BIT(2)
-> @@ -27,6 +28,11 @@
->   #define TPDA_Pn_CR_CMBSIZE		GENMASK(7, 6)
->   /* Aggregator port DSB data set element size bit */
->   #define TPDA_Pn_CR_DSBSIZE		BIT(8)
-> +/* TPDA_SYNCR mode control bit */
-> +#define TPDA_SYNCR_MODE_CTRL		BIT(12)
-> +/* TPDA_SYNCR counter mask */
-> +#define TPDA_SYNCR_COUNTER_MASK		GENMASK(11, 0)
-> +#define TPDA_SYNCR_MAX_COUNTER_VAL	(0xFFF)
+Yeah, it should have been val = FIELD_PREP(...) here... sorry for the 
+mistake here..
 
-No need to define a numeric value that's the same as the mask. It also 
-opens the possibility of making a mistake.
+I was thinking the unsigned long here could be 64 or 32 bits and we only 
+need the value of the lower 32 bits. So that's why I am using val = 
+FIELD_PREP(...) here. We shouldn't write a value greater than UINT32_MAX 
+to the register.
 
->   
->   #define TPDA_MAX_INPORTS	32
->   
+Thanks,
+Jie
+
+> 
+>> +    guard(spinlock)(&drvdata->spinlock);
+>> +    CS_UNLOCK(drvdata->base);
+>> +    writel_relaxed(val, drvdata->base + TPDA_FLUSH_CR);
+>> +    CS_LOCK(drvdata->base);
+>> +
+>> +    return size;
+>> +}
+>> +static DEVICE_ATTR_RW(port_flush_req);
+>> +
+>>   static struct attribute *tpda_attrs[] = {
+>>       &dev_attr_trig_async_enable.attr,
+>>       &dev_attr_trig_flag_ts_enable.attr,
+>> @@ -494,6 +535,7 @@ static struct attribute *tpda_attrs[] = {
+>>       &dev_attr_freq_ts_enable.attr,
+>>       &dev_attr_global_flush_req.attr,
+>>       &dev_attr_cmbchan_mode.attr,
+>> +    &dev_attr_port_flush_req.attr,
+>>       NULL,
+>>   };
+>> diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/ 
+>> hwtracing/coresight/coresight-tpda.h
+>> index 8e1b66115ad1..56d3ad293e46 100644
+>> --- a/drivers/hwtracing/coresight/coresight-tpda.h
+>> +++ b/drivers/hwtracing/coresight/coresight-tpda.h
+>> @@ -10,6 +10,7 @@
+>>   #define TPDA_Pn_CR(n)        (0x004 + (n * 4))
+>>   #define TPDA_FPID_CR        (0x084)
+>>   #define TPDA_SYNCR        (0x08C)
+>> +#define TPDA_FLUSH_CR        (0x090)
+>>   /* Cross trigger FREQ packets timestamp bit */
+>>   #define TPDA_CR_FREQTS        BIT(2)
+>> @@ -35,6 +36,7 @@
+>>   #define TPDA_SYNCR_MAX_COUNTER_VAL    (0xFFF)
+>>   #define TPDA_MAX_INPORTS    32
+>> +#define TPDA_MAX_INPORTS_MASK    GENMASK(31, 0)
+>>   /* Bits 6 ~ 12 is for atid value */
+>>   #define TPDA_CR_ATID        GENMASK(12, 6)
+> 
+> 
 
 
