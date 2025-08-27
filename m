@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-71008-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CF76B3821D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 14:18:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8041CB3821E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 14:18:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A50963B7068
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 12:18:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3419D3A3A5A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 12:18:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2E89302773;
-	Wed, 27 Aug 2025 12:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 021EE285061;
+	Wed, 27 Aug 2025 12:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lR8vuIvd"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="akX5hxrL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB30285061
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:17:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED80A3019B7
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:18:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756297074; cv=none; b=IwmN/2/ElQifJGbrBKPr6qCRmT1qTRnBO9v/PI38jkX81MdvZLlYcJEPqtqD9zfhCLeDZlimJ1wva9vJurzaBHJBM1tvDXO1FMWteJxbo279nimd/D1jCpFJjYYkLEAceMhE4A64yF/8qiVnQtFA2ldQ5WxT5P6GUL6Zbikvpt0=
+	t=1756297099; cv=none; b=etiGVpIzKhyw1+fQK4BGczN62wdKqPbl0vzt6JcsiEqUbWFoAvovvlxaUbdi7ZRMBYcL1HYJn31AuGxowNrUWYOzPU8xHlco/8lJbwIRB0Z2duCfLebGHXCbjktEQslVwws5/H4iznYrk4P2TIXOHIvPMaoYcOsUp3OjIVfmDHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756297074; c=relaxed/simple;
-	bh=xB63zHf8WWsvv2dV71RhZN1tcOaGZ44qUPczHpUw1A0=;
+	s=arc-20240116; t=1756297099; c=relaxed/simple;
+	bh=LcxoTNEUGWA19zsuzs2xECe0w8rzLJkV3yijyU4BxyM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=O8E8WU13ixCSotHF8VnZCDaNiMrUDA7dZ5VszlJl1jcgdjiSKWq5zZGmya1reN0SorouCXELtq6xsvzuIVPeZBcrAcceCwybl4FUKt1GxXgvw6FOA2FAZvPIOJqMp+uqeT1dGoZFWszTtXeXYgPOpO89ftqfcYnJqr4ZPO+cWAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lR8vuIvd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57R6kI1J003138
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:17:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	X8RSqvNCRDDgijasg0nbutFMmtBqyja8T4LtC7m2lA8=; b=lR8vuIvdVjrFz78j
-	ZphFCEx85h7qmFpG4lXcHddG6+Uo/V6xt+7hh51h9rUmisheQ/iPYr0OHEDEYnsM
-	Wt9dfgxex3zll6bUY1mXRrVSULlVA1pFczVpGvBsM9QtZ+j9WdlF1XvhxgvYMthp
-	r2NY1ev16MXzsOTvfUjrWyfo+tnHs7TdEIINU4XQac0ygWRPBBci1JV7hjE7VGEM
-	1W//Rw9/SIszUvctz6T6wpKOCoR6IpbB8wDNmFpxQEl/pQCeRogqEW2LXLimkmPS
-	RLJvSgZPvb+6nYNgNhVO4HdLoUvX+u3wgGinYyuXSD+old4avxQkFK9T0vD0pIx1
-	1OaPMA==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6x8cnbs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:17:51 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-24457f484d6so24704795ad.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 05:17:51 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=lZo04m/ZAvuZ7BPuSJ+/HtQ63WiW9mk6VVb8mnpiuNximC8IegaRyd2aPuxH5kKcqautZ4jO4uazpS1SinTCc1XpQK61oeOWjHMA5NATauD2cFt1Aki5jKKgj4k3joxMpWvy7j2bgD7rjToeHd6MdAkkdvFAHVWnYDkBDtHXkt4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=akX5hxrL; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1756297095;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=8l0wgpCnVzJ3ae7raIbUJYfNE+a8xTvmO0EAk2QD0X8=;
+	b=akX5hxrLmbKCsHLAIN+mKv3z3f7k/t2aAXC/Kdm3JAqaFYcX7gjYwUJdsIsVgC0PosrY3x
+	z2OkLkzMa9sz9WiNhg9Yb6P5dPcv4SwZZ29pO8VRc/AQqM8Ohwn+aQqhcayIHageRIIhwn
+	gFZemcj6/cIu2TijlzhVPLFlEOe0OPM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-317-okI_fmILM2OdCSKRGRzuag-1; Wed, 27 Aug 2025 08:18:14 -0400
+X-MC-Unique: okI_fmILM2OdCSKRGRzuag-1
+X-Mimecast-MFC-AGG-ID: okI_fmILM2OdCSKRGRzuag_1756297094
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7f7706f53aaso170598485a.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 05:18:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756297070; x=1756901870;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=X8RSqvNCRDDgijasg0nbutFMmtBqyja8T4LtC7m2lA8=;
-        b=E9xIfGZsM9syfz/TyymKGW5lDi9jEsBRl8nUcPfMXt6iw7C35VOlUfwavdQhGxd2A9
-         TEwbnoWBqDwh/ci1/X/tlZXNN1xNc2VGCPgRjoPwwR1OR0EMhq0UI3ogDTk115fRAmxS
-         cR6lyo6kDj9fl/aeS85WhqlyGqSEoVDTMvwNJvohfvs2JVFMnj9JgauOeQ5nSvq7GI5I
-         Qb+05LdCf3CWyOsr4iGq9IJlXbxfwWBLEqgUUEkOcBxlS1dn6UJdyCcetReN9SEqPXEv
-         LlGbTN2+2oW4NZYmBOOWixLyCgaKNUaqY1yMDRwpYJVQoT+HeinYi3eTi3U+KJaogYSf
-         6mCw==
-X-Forwarded-Encrypted: i=1; AJvYcCUbc0dKE/o7Hs0PaWERmumxs7Fn/RkZW4SIXbGL/Y9VUkXMWaxttSha0tP8vvC1XMufQgSNNqFmCGhR7CWQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yza/huGzdgyII9F8IMVjqseIjqql2rQV9lTJ7eCZNSTM/jAhbLd
-	JoJmlgAerHMS4Omlt6ac18gczWckK2AR0ljq/YrARewNs4FWF+2w5TXTChL4/icGB9uFQQ4U1rj
-	iaaNsdNhsV5lvLqhbBv+mtG77i3C3Zl4Z29QobgwRttqJZCZoSvL9HtyNrZ3j69XSqaPK
-X-Gm-Gg: ASbGncskWoxwjB881szJAUffYkeyxtaDItPZjDl4KySQneOV4KsqseInRWBPHnEQg02
-	KNbPpkRmIyoLmntk93Crc7NlZtNTTyN5QrFtc7iUyG+UEi2IaESlpSfslprEC6VcPVqfYf5Eemk
-	+sRm59r1SJahLXrRCw4llktNYI9a3qitZxehBY3dluG/2wcE8QIxj+zCYXlTGAWmuokeq0ayI9V
-	KPR0L+eAKc/k/YKT4yImmh8MyjBV5MKVLOWkoWs8ZrsHTFZqxXGGgqd9H7+ogYRRsnU8nNBm42Q
-	TuNGcM8WQPO9LSKjhF+wsowlyhDVaMiBM4lOjZgnUJfaaxamzPmjNiq0M4qfDKroyVH2bUzYeeo
-	Gz+56sjaaeozTuBltH/cd7D6Mrbt20A==
-X-Received: by 2002:a17:902:fb8b:b0:248:bf0a:a127 with SMTP id d9443c01a7336-248bf0aa1bfmr1663325ad.1.1756297070522;
-        Wed, 27 Aug 2025 05:17:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHWwdfvw8f7MeJn13rr7IAskUSFh8jN+On8IyJ79l4iyWHwbCU7vdfd6HxX6olsZxDiEsjN2A==
-X-Received: by 2002:a17:902:fb8b:b0:248:bf0a:a127 with SMTP id d9443c01a7336-248bf0aa1bfmr1663025ad.1.1756297069957;
-        Wed, 27 Aug 2025 05:17:49 -0700 (PDT)
-Received: from [10.133.33.166] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3276fcd3285sm1910956a91.14.2025.08.27.05.17.42
+        d=1e100.net; s=20230601; t=1756297094; x=1756901894;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8l0wgpCnVzJ3ae7raIbUJYfNE+a8xTvmO0EAk2QD0X8=;
+        b=KY49WNqW2EY2GCE18mTB7Cv10zq+FOS9MUF/iPsdgtY0EDTNXRHZ4bVK/eKt8YJNo+
+         qA+PlslFoMToBTyPcBFH5oz1A0mJNLMesDB6dVXL9K6P6oA1tJ3sTvEDc44iLNhr/xWw
+         SiOOLjfRrbktVy1GbUKadsQ5wvOgkSpkIL5OSYBLdQJv7ZiU0S1PfHPMLJuS1hfI+oXZ
+         66Sw05Is4TRLhYfjTF5tWgLDSY0Cj1TmMvRVurtJfJCpJvFb7XHZOv0dV+NxFCJMkoPH
+         GDLdnMb72DQOsTxaqQzffn3MM1u61bcwMys99k3RIjcxY6lgqQGGLiXjiB7OoqALFvmf
+         lYpQ==
+X-Forwarded-Encrypted: i=1; AJvYcCULrore1yPuj0W36801VOG9MkASUd0X6oXxzIqwWxfm+iwgDecCTCt2Nl9Q0WmBUSrusmNkzG8tfIsJ/yYz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyGRc8APqsvE6QR/Sl71jNdWD030aXeX+uLZYaYk3FKcQo3B10Y
+	yEHdQvEdStNpOaWCexIPdE4SAeAPhk7qNRc3A1mOU/RRfDINRP0U39mB8/pMtjYIyD4hCT+bOPW
+	XENyK82wnJLgXX/28jiu84aV0JaiMGMbGAd/JLV8mH+XTUNweE3BRqnFuuTqlL7joisWhr/U8uB
+	uKF4p+
+X-Gm-Gg: ASbGncuHD2VNOJooRvqLW14TmTsdodE9msyauwCpjlgkXUkLxeKuYLxpQ7RRo1KKmwE
+	pYJ+dPRCKqMQhh3m+qgZTZRWrr5G4GUKz40wfiyv+s/5mByZriDsg8GP4npbQCuOPaN6LQGtt8h
+	DsxMeWyKSTz+vIxhmA1zvL+mOQhzp40wOwbjiduGeyfXsrDvJygej/IMgjjqi1DIbOL6HRprS0x
+	24IbwFd+OEmYY1UIEw/NfUIb7bFYT3JDPzrHzcna4EwV2sefItTsJKJtdzu/01G14y1UpnYTqBd
+	qCImD+MEoRLY9yIUDbCfL1et5j0+sPVotjbkbh/cV9Bt+RQ60/Sh8yPbfpUekQ==
+X-Received: by 2002:a05:620a:294a:b0:7f1:650:2241 with SMTP id af79cd13be357-7f1066ebf38mr1006462585a.79.1756297093700;
+        Wed, 27 Aug 2025 05:18:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFHxYiFqJY3iuFSza3TUFjyiCig33JVHK+pO7P7M/s44Kch6adTIPvS5zTIUoMSPILP7krh2w==
+X-Received: by 2002:a05:620a:294a:b0:7f1:650:2241 with SMTP id af79cd13be357-7f1066ebf38mr1006457685a.79.1756297093122;
+        Wed, 27 Aug 2025 05:18:13 -0700 (PDT)
+Received: from [10.32.64.156] (nat-pool-muc-t.redhat.com. [149.14.88.26])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ebed79a712sm854386485a.17.2025.08.27.05.18.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Aug 2025 05:17:49 -0700 (PDT)
-Message-ID: <9bf7f51b-dcfb-4ff8-848e-dcf144936f2e@oss.qualcomm.com>
-Date: Wed, 27 Aug 2025 20:17:39 +0800
+        Wed, 27 Aug 2025 05:18:12 -0700 (PDT)
+Message-ID: <99d2cc96-03ea-4026-883e-1ee083a96c39@redhat.com>
+Date: Wed, 27 Aug 2025 14:18:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,129 +90,315 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 09/14] phy: qcom: qmp-usbc: Add DP PHY ops for USB/DP
- switchable Type-C PHYs
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, fange.zhang@oss.qualcomm.com,
-        yongxing.mou@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, quic_lliu6@quicinc.com
-References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
- <20250820-add-displayport-support-for-qcs615-platform-v3-9-a43bd25ec39c@oss.qualcomm.com>
- <3pr7ninjxr4pgsz56dr6ojjmx27fzzszmtt6mx4r6qaqt25tnc@nrgx5qiqc7z4>
-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-In-Reply-To: <3pr7ninjxr4pgsz56dr6ojjmx27fzzszmtt6mx4r6qaqt25tnc@nrgx5qiqc7z4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: NZP0q2mVpqkD_Irt36f5ZcjCVSArXejn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA0NCBTYWx0ZWRfXy4gQQObBUl+o
- Qwfpzai7x/5RSSlRM+hQ7SnGkrkh4G5V26lotNxnrd9hUy6M4Gfqy9teZpTG6p4dgvTfPxYiJIk
- M3bNAhfl46C9eInb97NVOSkUo48E6CeipBJDLrh9RJxqerCmcNvhUmpf4CJM1/J1jttlH2Tw4i5
- QSTbtwVi8JNLz8M0fMZ7YIoAHMgqmL8Ys77as+P/HZQg6RkSbrDgS0+9qyGHq181UP2HswEl18X
- U4KGpKy1PcRAYq7SZ1UpiWQT0CUV17mAwQm5DOd3xDEcLhWlsPTVJzUmf44doKJqqR3Ea6rwpzj
- 4mOyWYz6M4UB+yyffkcH2gFAi2BO9FuWzwWly6OqSpco6JYNoOJnttnmYrxnGe8jD1+XQ9Iet11
- aZa+0Ovo
-X-Proofpoint-GUID: NZP0q2mVpqkD_Irt36f5ZcjCVSArXejn
-X-Authority-Analysis: v=2.4 cv=Ep/SrTcA c=1 sm=1 tr=0 ts=68aef76f cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=eEvFyuGTnR1_S7nXHuIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-27_02,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 adultscore=0 bulkscore=0 suspectscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230044
+Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
+To: Eugen Hristev <eugen.hristev@linaro.org>, Michal Hocko <mhocko@suse.com>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
+ andersson@kernel.org, pmladek@suse.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
+ jonechou@google.com, tudor.ambarus@linaro.org,
+ Christoph Hellwig <hch@infradead.org>,
+ Sergey Senozhatsky <senozhatsky@chromium.org>
+References: <20250724135512.518487-1-eugen.hristev@linaro.org>
+ <20250724135512.518487-23-eugen.hristev@linaro.org>
+ <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
+ <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
+ <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
+ <aJCRgXYIjbJ01RsK@tiehlicka>
+ <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
+ <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
+ <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
+ <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
+ <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
+ <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
+ <64a93c4a-5619-4208-9e9f-83848206d42b@linaro.org>
+ <f1f290fc-b2f0-483b-96d5-5995362e5a8b@redhat.com>
+ <01c67173-818c-48cf-8515-060751074c37@linaro.org>
+ <aab5e2af-04d6-485f-bf81-557583f2ae4b@redhat.com>
+ <1b52419c-101b-487e-a961-97bd405c5c33@linaro.org>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <1b52419c-101b-487e-a961-97bd405c5c33@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-
-On 8/20/2025 7:45 PM, Dmitry Baryshkov wrote:
-> On Wed, Aug 20, 2025 at 05:34:51PM +0800, Xiangxu Yin wrote:
->> Define qmp_usbc_dp_phy_ops struct to support DP mode on USB/DP
->> switchable PHYs.
+On 27.08.25 13:59, Eugen Hristev wrote:
+> 
+> 
+> On 8/25/25 16:58, David Hildenbrand wrote:
+>> On 25.08.25 15:36, Eugen Hristev wrote:
+>>>
+>>>
+>>> On 8/25/25 16:20, David Hildenbrand wrote:
+>>>>
+>>>>>>
+>>>>>> IIRC, kernel/vmcore_info.c is never built as a module, as it also
+>>>>>> accesses non-exported symbols.
+>>>>>
+>>>>> Hello David,
+>>>>>
+>>>>> I am looking again into this, and there are some things which in my
+>>>>> opinion would be difficult to achieve.
+>>>>> For example I looked into my patch #11 , which adds the `runqueues` into
+>>>>> kmemdump.
+>>>>>
+>>>>> The runqueues is a variable of `struct rq` which is defined in
+>>>>> kernel/sched/sched.h , which is not supposed to be included outside of
+>>>>> sched.
+>>>>> Now moving all the struct definition outside of sched.h into another
+>>>>> public header would be rather painful and I don't think it's a really
+>>>>> good option (The struct would be needed to compute the sizeof inside
+>>>>> vmcoreinfo). Secondly, it would also imply moving all the nested struct
+>>>>> definitions outside as well. I doubt this is something that we want for
+>>>>> the sched subsys. How the subsys is designed, out of my understanding,
+>>>>> is to keep these internal structs opaque outside of it.
+>>>>
+>>>> All the kmemdump module needs is a start and a length, correct? So the
+>>>> only tricky part is getting the length.
+>>>
+>>> I also have in mind the kernel user case. How would a kernel programmer
+>>> want to add some kernel structs/info/buffers into kmemdump such that the
+>>> dump would contain their data ? Having "KMEMDUMP_VAR(...)" looks simple
+>>> enough.
 >>
->> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
->> ---
->>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 163 +++++++++++++++++++++++++++++++
->>  1 file changed, 163 insertions(+)
+>> The other way around, why should anybody have a saying in adding their
+>> data to kmemdump? Why do we have that all over the kernel?
 >>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->> index 1508a4a5f57aff85318485b79528325f28a825a4..a1495a2029cf038bb65c36e42d0a4f633e544558 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
->> @@ -22,6 +22,8 @@
->>  #include <linux/slab.h>
->>  #include <linux/usb/typec.h>
->>  #include <linux/usb/typec_mux.h>
->> +#include <dt-bindings/phy/phy-qcom-qmp.h>
->> +#include <drm/bridge/aux-bridge.h>
-> This one is not necessary yet
-
-
-Ok, will remove unnecessary aux-bridge related part.
-
-
->>  
->>  #include "phy-qcom-qmp-common.h"
->>  
-> [...]
->
->>  static const struct phy_ops qmp_usbc_usb_phy_ops = {
->>  	.init		= qmp_usbc_usb_enable,
->>  	.exit		= qmp_usbc_usb_disable,
->> @@ -1095,6 +1248,16 @@ static const struct phy_ops qmp_usbc_usb_phy_ops = {
->>  	.owner		= THIS_MODULE,
->>  };
->>  
->> +static const struct phy_ops qmp_usbc_dp_phy_ops = {
-> Please try restructuring your patches so that there are no unused
-> warnings in the middle of the series. You can split the next patch into
-> 'parse' and 'enable' parts, then squash this patch into the 'enable'
-> one.
-
-
-You mean it's better to define and register new functions in the same patch 
-
-where they're first used, to avoid unused warnings? And for things like parse_dt and phy_ops,
-
-it's fine to split them into separate patches if each part is used right away?
-
-
->
->> +	.init		= qmp_usbc_dp_enable,
->> +	.exit		= qmp_usbc_dp_disable,
->> +	.configure	= qmp_usbc_dp_configure,
->> +	.calibrate	= qmp_usbc_dp_calibrate,
->> +	.power_on	= qmp_usbc_dp_power_on,
->> +	.power_off	= qmp_usbc_dp_power_off,
->> +	.owner		= THIS_MODULE,
->> +};
->> +
->>  static void qmp_usbc_enable_autonomous_mode(struct qmp_usbc *qmp)
->>  {
->>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>> Is your mechanism really so special?
 >>
->> -- 
->> 2.34.1
+>> A single composer should take care of that, and it's really just start +
+>> len of physical memory areas.
 >>
+>>> Otherwise maybe the programmer has to write helpers to compute lengths
+>>> etc, and stitch them into kmemdump core.
+>>> I am not saying it's impossible, but just tiresome perhaps.
+>>
+>> In your patch set, how many of these instances did you encounter where
+>> that was a problem?
+>>
+>>>>
+>>>> One could just add a const variable that holds this information, or even
+>>>> better, a simple helper function to calculate that.
+>>>>
+>>>> Maybe someone else reading along has a better idea.
+>>>
+>>> This could work, but it requires again adding some code into the
+>>> specific subsystem. E.g. struct_rq_get_size()
+>>> I am open to ideas , and thank you very much for your thoughts.
+>>>
+>>>>
+>>>> Interestingly, runqueues is a percpu variable, which makes me wonder if
+>>>> what you had would work as intended (maybe it does, not sure).
+>>>
+>>> I would not really need to dump the runqueues. But the crash tool which
+>>> I am using for testing, requires it. Without the runqueues it will not
+>>> progress further to load the kernel dump.
+>>> So I am not really sure what it does with the runqueues, but it works.
+>>> Perhaps using crash/gdb more, to actually do something with this data,
+>>> would give more insight about its utility.
+>>> For me, it is a prerequisite to run crash, and then to be able to
+>>> extract the log buffer from the dump.
+>>
+>> I have the faint recollection that percpu vars might not be stored in a
+>> single contiguous physical memory area, but maybe my memory is just
+>> wrong, that's why I was raising it.
+>>
+>>>
+>>>>
+>>>>>
+>>>>>    From my perspective it's much simpler and cleaner to just add the
+>>>>> kmemdump annotation macro inside the sched/core.c as it's done in my
+>>>>> patch. This macro translates to a noop if kmemdump is not selected.
+>>>>
+>>>> I really don't like how we are spreading kmemdump all over the kernel,
+>>>> and adding complexity with __section when really, all we need is a place
+>>>> to obtain a start and a length.
+>>>>
+>>>
+>>> I understand. The section idea was suggested by Thomas. Initially I was
+>>> skeptic, but I like how it turned out.
+>>
+>> Yeah, I don't like it. Taste differs ;)
+>>
+>> I am in particular unhappy about custom memblock wrappers.
+>>
+>> [...]
+>>
+>>>>>
+>>>>> To have this working outside of printk, it would be required to walk
+>>>>> through all the printk structs/allocations and select the required info.
+>>>>> Is this something that we want to do outside of printk ?
+>>>>
+>>>> I don't follow, please elaborate.
+>>>>
+>>>> How is e.g., log_buf_len_get() + log_buf_addr_get() not sufficient,
+>>>> given that you run your initialization after setup_log_buf() ?
+>>>>
+>>>>
+>>>
+>>> My initial thought was the same. However I got some feedback from Petr
+>>> Mladek here :
+>>>
+>>> https://lore.kernel.org/lkml/aBm5QH2p6p9Wxe_M@localhost.localdomain/
+>>>
+>>> Where he explained how to register the structs correctly.
+>>> It can be that setup_log_buf is called again at a later time perhaps.
+>>>
+>>
+>> setup_log_buf() is a __init function, so there is only a certain time
+>> frame where it can be called.
+>>
+>> In particular, once the buddy is up, memblock allocations are impossible
+>> and it would be deeply flawed to call this function again.
+>>
+>> Let's not over-engineer this.
+>>
+>> Peter is on CC, so hopefully he can share his thoughts.
+>>
+> 
+> Hello David,
+> 
+> I tested out this snippet (on top of my series, so you can see what I
+> changed):
+> 
+> 
+> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+> index 18ba6c1e174f..7ac4248a00e5 100644
+> --- a/kernel/sched/core.c
+> +++ b/kernel/sched/core.c
+> @@ -67,7 +67,6 @@
+>   #include <linux/wait_api.h>
+>   #include <linux/workqueue_api.h>
+>   #include <linux/livepatch_sched.h>
+> -#include <linux/kmemdump.h>
+> 
+>   #ifdef CONFIG_PREEMPT_DYNAMIC
+>   # ifdef CONFIG_GENERIC_IRQ_ENTRY
+> @@ -120,7 +119,12 @@
+> EXPORT_TRACEPOINT_SYMBOL_GPL(sched_update_nr_running_tp);
+>   EXPORT_TRACEPOINT_SYMBOL_GPL(sched_compute_energy_tp);
+> 
+>   DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
+> -KMEMDUMP_VAR_CORE(runqueues, sizeof(runqueues));
+> +
+> +size_t runqueues_get_size(void);
+> +size_t runqueues_get_size(void)
+> +{
+> +       return sizeof(runqueues);
+> +}
+> 
+>   #ifdef CONFIG_SCHED_PROXY_EXEC
+>   DEFINE_STATIC_KEY_TRUE(__sched_proxy_exec);
+> diff --git a/kernel/vmcore_info.c b/kernel/vmcore_info.c
+> index d808c5e67f35..c6dd2d6e96dd 100644
+> --- a/kernel/vmcore_info.c
+> +++ b/kernel/vmcore_info.c
+> @@ -24,6 +24,12 @@
+>   #include "kallsyms_internal.h"
+>   #include "kexec_internal.h"
+> 
+> +typedef void* kmemdump_opaque_t;
+> +
+> +size_t runqueues_get_size(void);
+> +
+> +extern kmemdump_opaque_t runqueues;
+
+I would have tried that through:
+
+struct rq;
+extern struct rq runqueues;
+
+But the whole PER_CPU_SHARED_ALIGNED makes this all weird, and likely
+not the way we would want to handle that.
+
+>   /* vmcoreinfo stuff */
+>   unsigned char *vmcoreinfo_data;
+>   size_t vmcoreinfo_size;
+> @@ -230,6 +236,9 @@ static int __init crash_save_vmcoreinfo_init(void)
+> 
+>          kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_VMCOREINFO,
+>                               (void *)vmcoreinfo_data, vmcoreinfo_size);
+> +       kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_runqueues,
+> +                            (void *)&runqueues, runqueues_get_size());
+> +
+>          return 0;
+>   }
+> 
+> With this, no more .section, no kmemdump code into sched, however, there
+> are few things :
+
+I would really just do here something like the following:
+
+/**
+  * sched_get_runqueues_area - obtain the runqueues area for dumping
+  * @start: ...
+  * @size: ...
+  *
+  * The obtained area is only to be used for dumping purposes.
+  */
+void sched_get_runqueues_area(void *start, size_t size)
+{
+	start = &runqueues;
+	size = sizeof(runqueues);
+}
+
+might be cleaner.
+
+
+Having said that, if you realize that there is a fundamental issue with 
+what I propose, please speak up.
+
+So far, I feel like there are only limited number of "suboptimal" cases 
+of this kind, but I might be wrong of course.
+
+-- 
+Cheers
+
+David / dhildenb
+
 
