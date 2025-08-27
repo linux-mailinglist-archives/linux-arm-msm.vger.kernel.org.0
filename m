@@ -1,280 +1,223 @@
-Return-Path: <linux-arm-msm+bounces-71047-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC5BCB38B86
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 23:35:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B452B38E6C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 00:27:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEEA61BA87BC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 21:35:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 424493A4EBD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 22:27:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 15ED62F3C1A;
-	Wed, 27 Aug 2025 21:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D57032ECE91;
+	Wed, 27 Aug 2025 22:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="grIPs08/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N3nSP7Gc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E7130DD3B;
-	Wed, 27 Aug 2025 21:34:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449371E0DE3
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:27:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756330500; cv=none; b=WA1T2tZvvsT77aAEr6iMTSvd85VJMjf4hvjgbzTkQ2cDqMIz3Fch0cIEYkQiTHUklKjQy7y+TYxoTLYhV7fF8zT8qoBb1F+DKt3qLBJ9IMOMhXlumMFgCEMTloItN3GoAQY+ZKuAc8YHNbF7AivCjAsjG/EVyFzkarxj9P1KN0s=
+	t=1756333647; cv=none; b=qCRf1n/bd+kwT48PoPT7ddm97AOgOtmzXRJQjq16qYsF3/8Q1HnsDwB13mY+0m1bNLKRJt2XwlzyB8vVcOkiGtpxrIfe0qYTWznJAWuK3SZkbzIHw8YkEIZukSOIMoE3drsznDpRKiL7YFODuGlU4OyhmgxoOecQKcfsuLQN2Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756330500; c=relaxed/simple;
-	bh=QcpX55h5PJAVRTi11X7cV7Fa6uhEGt7e9rcElHyaW0s=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R51KS0MTTzb1sL/gHVGTXShTQEdMJoz0lyU2xfqBXYc/0yu76QK4r1URV5rn18apAV8dZi91vKIoUh2jtcM2dRIu1a/d8qRn5lgxpLUSICwa9B41YWgYSJgcCVt2QCMN4svXaZy+rqTNZSGVoZBNQWXGqqKkKtxhBB0CjG4YiyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=grIPs08/; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-32326e202e0so279198a91.2;
-        Wed, 27 Aug 2025 14:34:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756330498; x=1756935298; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fbysr8Q057thi5IBavhGuNL0Ocl+NxTnsfRHbgFg4WQ=;
-        b=grIPs08/wJqT9jSYJBCLpH9+KSLLYq4wQlU314OjSuoYi0DcGiRVdf4nY8+stiynRQ
-         aNhVOJqCkKckTIdtOP/cyqOWMC9niqOPxDcMxeRvcTlnAB/rWnAJ+LNbp2RIV5Sow79K
-         DVy5RBFsQq3dIlgp0gJ/27zjonQNLiwuhdWeiZ7mmEGlyT0o26FD8evl5ztf6QOW/g+/
-         /N4CXuffHwtzyKOhltdeNx5L3YyKqMD68RP3SJD5oV4nCI4Bv5cKBwCXBvYSPvPIxjsh
-         O9+JE2SQIYyx3SVbOBWz2rHDypnR2gngQEp8oxinMoVFbscFw+t5bHMMX9j9T2ry9ojR
-         oCWw==
+	s=arc-20240116; t=1756333647; c=relaxed/simple;
+	bh=39TfirOm0CvaijkhQPEcSMxZAXyiBUqSqGTWwYkVIEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OGTazWLwIxTV3jSrXoeynY+urcxVK6GGHyAx+HD7oXtp2ipHW66jCqetuEKp3Ldko+qXjuskTxfbkwuQEGHkCon83Rcc+KxU6FtPynGJmfiPk79nZEbXG+vyZwBtSfHb/noTdEFxDtF4e5MYXWdmvdTA5ebp9m6nKzywcFOtS7E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N3nSP7Gc; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57RGo2ei008283
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:27:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=coI2WbZxINU7lzeYxnfoWTr2
+	sAMMNa2PgUU+5RmzHvA=; b=N3nSP7Gc5TMt+IIn+qZ9uGuYzVafaBp1ac2JStUp
+	K7rRbNrItFfkrE4pn3NSwfK3EJKU+G54f3mtlHj6FVmTiyk34UhAcW763bLSlDn6
+	lE8nZPvaSrrbDD1z8NV8GMsE+EejI9+PUuTSSHiKEagz9bQN6sfvpB5/sPOKcU3B
+	hixfH4Wr/PN3um5++i/3CX9NXOAeLZ9SXBULzqfYPbTbm7cJ0YT0lWqwC5hM7lYu
+	l1sOWd/H9mcZguQFv0ANnTeWef+C8qNF9wb0KmfE+GAKuhHp+eDVTrDi1PKjuj3Y
+	LyVxJjOjvzkfxEw8ajNN66YMc9YGBbuSSUh3zv0iLcgaEQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48sh8ambrf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:27:25 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b2f9e8dca6so8235261cf.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 15:27:25 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756330498; x=1756935298;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fbysr8Q057thi5IBavhGuNL0Ocl+NxTnsfRHbgFg4WQ=;
-        b=A2CndJ5Uxt47Cc96j1VIXJ1c4rWI+DhsBqhRl2+MUH2DGaCh5PeDN6qLpqgIJj0d4k
-         afQOFb4vXLhftu4om0a3Z3IVdoSzDgnHDRnnZikwXk6qbRtFmG2+QJZcImnvULV4qgOL
-         M0um2YdV3b53J62GQ7/LpEDXdNDund0QBmuc6Yvvwgs4fQmhR/kUxACaoEnH/bcnCKI5
-         cUXpoBP/2SdTx8v72GHshWxb9J8exMTZweEdfcVmMCphtaDTWKKonWahzwuZ8Fc7XJsX
-         bFBvoacnE4Jhyl4EiA0ba1QykToCk/ZaDo/gN12nVXyF0+6POfQL3mdJknDNrw2/9ywK
-         3BQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUwJlCCvkYCU9i+TF3DP56TAKbPXJbe+A1CL938G/43pJNweVUG5rpfwXhPDaEBGwvItOAX51Or8FPDucMm@vger.kernel.org, AJvYcCXxcYQ/uI+0LLeGy/Y7hyo66RqtkY6wg9HOR8mWx8rc64UeVI/996zdm/SRrR6fcCSOTSh2zvz3QrFI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4fKsEcMe8jtvTpGu0XX8ci/G2nptRKthcef+86Ge52vxXaZMI
-	fmwnutkKPIGB6H+4C8KX9BlilypD4T5oJrtibuPI7hIefNx6OfUWUb4Q
-X-Gm-Gg: ASbGncv/vBbzPkpsnbvx9ALZkKzC3RJOye9/L3ddPQZ45eIn5Pzk7Ks5lQboYATyc68
-	9yCMv4fP/sMYFjlWL0mmEosuercZlsX34SRIenuqkmaAu8Oun79IShp3wsBUU6GxbGjMLUp8lCc
-	sWtUprXbdSxjox21wzy4OSkSbQ9aGDeesd0VdiBhIsBKsvTzTvoxUkZJWeYtzuFDjnp6z54nNFc
-	2lylZ/BQqphLL+YbvX3exJdyy1LcK/pi5NN/porGmeAlVWZhpjAM5LEIfymVhoexIbG4CqPAPGK
-	B6RN5ADZ4YWacBfSWdB0nJthEJsmoYp6xKhI77iAfUnpt+mKj5RicZLID/sbemktzsf/LddHjME
-	ibm9pC4ZEaoLzXjwMRoDXTQ==
-X-Google-Smtp-Source: AGHT+IEsWsQLGBdzNhvrzHc2tMe6DgpgQJ8Y6e0dfxs83gss3jTytVDp8ps/hYEAyjsoBVYIzIpDAQ==
-X-Received: by 2002:a17:90b:3d0d:b0:311:df4b:4b93 with SMTP id 98e67ed59e1d1-32515ec3216mr28512033a91.7.1756330498469;
-        Wed, 27 Aug 2025 14:34:58 -0700 (PDT)
-Received: from archlinux ([179.110.125.177])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327ab0dbe86sm193016a91.21.2025.08.27.14.34.55
+        d=1e100.net; s=20230601; t=1756333644; x=1756938444;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=coI2WbZxINU7lzeYxnfoWTr2sAMMNa2PgUU+5RmzHvA=;
+        b=Oh5dVcmzRGdNOf6HCSGdmG5CgC3EKJ4bKPhfzu39N7fASsciKHX3BHnHO1dL8Cw8lS
+         xBx6fxUFCtm2scmJ8+fZGM+b5VDRyTPBMU1h4hEO1Nee24UYpGgk9BTTKiYLjBLQPQIx
+         0+dYsfzxMqDoWVyXP2kv2kvhomDuwhYoDXXLdA7PnNKNNLy21dhjnTlC3RwN5UzQp19y
+         XH9UUE41KJP8GVUQ4P9gt+5WoEZJeRRB5mL1jH8rYG2qFT6BV4usRNIa9hgGPaSB2+B3
+         iGRBUUQQ0lLplSew2fG9oYs83vzN61/ST3g4CwbOXrNK1YRPj8iuh4gbfPrK/4VnjtrI
+         zSFg==
+X-Forwarded-Encrypted: i=1; AJvYcCVEupVR+bpE7DG0ucPrc2j+PjQ2T1aHvwfmvECoKemjUzxYBTDw2/wBdkrcWz8nJtb5O+0zS2GNCcBA5Gi1@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaeUqJxBcBkvDoH30tpWoc3YzjBhvntXOMTXL/dJ7RF/Bhbr2L
+	RKToAKZ1kwIIzTiwB42LGE9XQ43Dhzbc8yqnJQg2iRAflxAXcKgdn4cbvebLy16LdqTzmmWyk5D
+	w33Gdqwm2qsmg4JhD8gvjgFO7ZbJsSHWrgiRP4M8DrtMdFXkMOcJwCCyPbXQPQEQj3bU0
+X-Gm-Gg: ASbGnct7m1Fy/+g0ju0tMQ+OkEFr5tXIvC3Hau3atZBYvaHvx5q6/ZQ4RgANHjXdOWs
+	x3wc5joIITlm/UXSmNJuNR1iGoOZoLBmgfQEnTOblXzne/w+/r/iqwDwojEHeR77BfKmrqpXK4+
+	2PHBpLJw5uPqP67ljl6i/qkZaEpyNTkWBUljFEO1MF4B8SKrV0Ytoj6Pt8H692AiYx5Ug3khQFx
+	J8Klr+Cs7ow1azieV64yOHCmLTFt9yAeSt0MZN6vSSCgq1kdCmY3yXeL7mh0HrKpW7wfAByTCWL
+	cpSKXRYeBVMBwnSXh93nvWKgbhtaZkHQxCwE2lRhAOfxIfKHfUJz0dxJ96uD1s+GtecnF+y3qcH
+	K/QRMd+PxdapDxvhCrrxWnBLeq6lcv/sYNuvg2vAzKcpVgf3aQqcA
+X-Received: by 2002:a05:622a:4c8e:b0:4b0:8f6e:d70a with SMTP id d75a77b69052e-4b2de073d4amr102607001cf.22.1756333644061;
+        Wed, 27 Aug 2025 15:27:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfGaJaSCsOEz0+c7R0GpHgMKXCo1cAu/f4pCkJRC2KgnMVotYeSkSM/eNVsc6qfr/OnO8xNw==
+X-Received: by 2002:a05:622a:4c8e:b0:4b0:8f6e:d70a with SMTP id d75a77b69052e-4b2de073d4amr102606571cf.22.1756333643552;
+        Wed, 27 Aug 2025 15:27:23 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-336818f1d41sm14139131fa.51.2025.08.27.15.27.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 14:34:58 -0700 (PDT)
-From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	=?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-Subject: [PATCH v8 1/1] arm64: dts: qcom: add initial support for Samsung Galaxy S22
-Date: Wed, 27 Aug 2025 21:34:08 +0000
-Message-ID: <20250827213414.43033-2-ghatto404@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250827213414.43033-1-ghatto404@gmail.com>
-References: <20250827213414.43033-1-ghatto404@gmail.com>
+        Wed, 27 Aug 2025 15:27:21 -0700 (PDT)
+Date: Thu, 28 Aug 2025 01:27:19 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Maxime Ripard <mripard@kernel.org>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Louis Chauvet <louis.chauvet@bootlin.com>,
+        Haneen Mohammed <hamohammed.sa@gmail.com>,
+        Melissa Wen <melissa.srw@gmail.com>, Jyri Sarha <jyri.sarha@iki.fi>,
+        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Manikandan Muralidharan <manikandan.m@microchip.com>,
+        Dharma Balasubiramani <dharma.b@microchip.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+        Inki Dae <inki.dae@samsung.com>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Alim Akhtar <alim.akhtar@samsung.com>, Liu Ying <victor.liu@nxp.com>,
+        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
+        Edmund Dea <edmund.j.dea@intel.com>,
+        Paul Kocialkowski <paulk@sys-base.io>,
+        Sui Jingfeng <suijingfeng@loongson.cn>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Samuel Holland <samuel@sholland.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Mikko Perttunen <mperttunen@nvidia.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Hans de Goede <hansg@kernel.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-mips@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev,
+        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
+        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 03/39] drm/atomic: Convert
+ drm_atomic_get_connector_state() to use new connector state
+Message-ID: <hab6s4wyauqiej5ankh3gppdqkm2ymlevhrnklfe76kqjmmjqy@fptmzxpqv5av>
+References: <20250825-drm-no-more-existing-state-v1-0-f08ccd9f85c9@kernel.org>
+ <20250825-drm-no-more-existing-state-v1-3-f08ccd9f85c9@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250825-drm-no-more-existing-state-v1-3-f08ccd9f85c9@kernel.org>
+X-Authority-Analysis: v=2.4 cv=cLDgskeN c=1 sm=1 tr=0 ts=68af864d cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=wpE8WlYdICmIRzy2dDcA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI2MDE1MyBTYWx0ZWRfX5lFpziEYDQ4I
+ 0Y27bkXwkhCnB86SOei6BoAsqXovbXe+2CzS7u13CYU5tbGCnyWNvHKLCQPmKL5Gg7PzKfB2D1s
+ w+zlen7r4t3RBE+LU0Qw6oco5Zb1zuatpEi+kaC0P0JoHQJOotz/HtvYTG5yyxSPJTeMPkrPPwC
+ tHPvPaDRQiJUZypPTM5fpN4+2Zpb6Mz+0OsoRrz6vsMTFTHZ7u8aTATCdgvQZS0fNEWAkoiQgVP
+ bJAiRzMulD5AvHK8kfppnagcGn2hXI98u/LSHRiuoFqOnF5is7HJL7v3Fifj93HqJxlLd/ipS6Y
+ mRvc91MWJiRT7pVzyAspu7VrQ/YDT/Gq4m6xAlhYNeIsRvpvcXK36NB1e/h/4XaUjllTLdn6XmT
+ QescWJEm
+X-Proofpoint-GUID: YFtoCb2_n9xYtGIVp0VfacYFra3xai46
+X-Proofpoint-ORIG-GUID: YFtoCb2_n9xYtGIVp0VfacYFra3xai46
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 clxscore=1015 malwarescore=0 spamscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508260153
 
-Add new device support for the Samsung Galaxy S22 (SM-S901E) phone
+On Mon, Aug 25, 2025 at 03:43:08PM +0200, Maxime Ripard wrote:
+> The drm_atomic_get_connector_state() function calls the deprecated
+> drm_atomic_get_existing_connector_state() helper to get find if a
+> connector state had already been allocated and was part of the given
+> drm_atomic_state.
+> 
+> At the point in time where drm_atomic_get_connector_state() can be
+> called (ie, during atomic_check), the existing state is the new state
+> and drm_atomic_get_existing_connector_state() can thus be replaced by
+> drm_atomic_get_new_connector_state().
+> 
+> Signed-off-by: Maxime Ripard <mripard@kernel.org>
+> ---
+>  drivers/gpu/drm/drm_atomic.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/drm_atomic.c b/drivers/gpu/drm/drm_atomic.c
+> index 660b081ff5d8c39061cebfb5ea122ac1e51677ad..30b7ec05a1af07075e40cd2822ecfd67df004ba2 100644
+> --- a/drivers/gpu/drm/drm_atomic.c
+> +++ b/drivers/gpu/drm/drm_atomic.c
+> @@ -1128,11 +1128,11 @@ drm_atomic_get_connector_state(struct drm_atomic_state *state,
+>  	struct drm_mode_config *config = &connector->dev->mode_config;
+>  	struct drm_connector_state *connector_state;
+>  
+>  	WARN_ON(!state->acquire_ctx);
+>  
+> -	connector_state = drm_atomic_get_existing_connector_state(state, connector);
+> +	connector_state = drm_atomic_get_new_connector_state(state, connector);
 
-What works:
-- SimpleFB
-- USB
+I'd say, drop patches 1-2 and use this function directly as is now.
 
-Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 145 ++++++++++++++++++
- 2 files changed, 146 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+>  	if (connector_state)
+>  		return connector_state;
+>  
+>  	ret = drm_modeset_lock(&config->connection_mutex, state->acquire_ctx);
+>  	if (ret)
+> 
+> -- 
+> 2.50.1
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 94a84770b080..d311e637327e 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -285,6 +285,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx214.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx215.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-samsung-r0q.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx223.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-new file mode 100644
-index 000000000000..b7533c2287b7
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
-@@ -0,0 +1,145 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+
-+#include "sm8450.dtsi"
-+#include "pm8350.dtsi"
-+#include "pm8350c.dtsi"
-+
-+/ {
-+	model = "Samsung Galaxy S22 5G";
-+	compatible = "samsung,r0q", "qcom,sm8450";
-+	chassis-type = "handset";
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		framebuffer: framebuffer@b8000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0x0 0xb8000000 0x0 0x2b00000>;
-+			width = <1080>;
-+			height = <2340>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+		};
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+		regulator-always-on;
-+		regulator-boot-on;
-+	};
-+
-+	reserved-memory {
-+		/*
-+		 * The bootloader will only keep display hardware enabled
-+		 * if this memory region is named exactly 'splash_region'
-+		 */
-+		splash-region@b8000000 {
-+			reg = <0x0 0xb8000000 0x0 0x2b00000>;
-+			no-map;
-+		};
-+	};
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8350-rpmh-regulators";
-+		qcom,pmic-id = "b";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+		vdd-s11-supply = <&vph_pwr>;
-+		vdd-s12-supply = <&vph_pwr>;
-+
-+		vdd-l2-l7-supply = <&vreg_bob>;
-+		vdd-l3-l5-supply = <&vreg_bob>;
-+
-+		vreg_l2b_3p07: ldo2 {
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5b_0p88: ldo5 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <888000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8350c-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+
-+		vdd-l1-l12-supply = <&vreg_bob>;
-+		vdd-l2-l8-supply = <&vreg_bob>;
-+		vdd-l3-l4-l5-l7-l13-supply = <&vreg_bob>;
-+		vdd-l6-l9-l11-supply = <&vreg_bob>;
-+
-+		vdd-bob-supply = <&vph_pwr>;
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+		};
-+
-+		vreg_l1c_1p8: ldo1 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <36 4>; /* SPI (not linked to anything) */
-+};
-+
-+&usb_1 {
-+	/* Keep USB 2.0 only for now */
-+	qcom,select-utmi-as-pipe-clk;
-+
-+	dr_mode = "peripheral";
-+	maximum-speed = "high-speed";
-+	/* Remove USB3 phy */
-+	phys = <&usb_1_hsphy>;
-+	phy-names = "usb2-phy";
-+
-+	status = "okay";
-+};
-+
-+&usb_1_hsphy {
-+	vdda-pll-supply = <&vreg_l5b_0p88>;
-+	vdda18-supply = <&vreg_l1c_1p8>;
-+	vdda33-supply = <&vreg_l2b_3p07>;
-+
-+	status = "okay";
-+};
 -- 
-2.50.1
-
+With best wishes
+Dmitry
 
