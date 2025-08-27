@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-71009-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8041CB3821E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 14:18:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68598B3822D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 14:24:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3419D3A3A5A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 12:18:23 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 721F9189FE9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 12:24:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 021EE285061;
-	Wed, 27 Aug 2025 12:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9783C303C88;
+	Wed, 27 Aug 2025 12:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="akX5hxrL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="F1xRJG/Y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED80A3019B7
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:18:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E464F3019C2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:23:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756297099; cv=none; b=etiGVpIzKhyw1+fQK4BGczN62wdKqPbl0vzt6JcsiEqUbWFoAvovvlxaUbdi7ZRMBYcL1HYJn31AuGxowNrUWYOzPU8xHlco/8lJbwIRB0Z2duCfLebGHXCbjktEQslVwws5/H4iznYrk4P2TIXOHIvPMaoYcOsUp3OjIVfmDHY=
+	t=1756297436; cv=none; b=fu7BnJTZdJCGU5/f8x/K02lc/C5LYytwGWlXOJ3JyE1j/pyRLKylc4tTd07M51suncFECXTAplIl8ZeF+O4v+iIc5xHBXq9iZvBQX4G0TER1z/QC91sePAkoHfvdmzke/lky80OtJGzq8RiobDTh1kDjN9cB5QYOtACzGPjzIXs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756297099; c=relaxed/simple;
-	bh=LcxoTNEUGWA19zsuzs2xECe0w8rzLJkV3yijyU4BxyM=;
+	s=arc-20240116; t=1756297436; c=relaxed/simple;
+	bh=8H1AJtkLp2gwRFDlX1OHVsQwtabmn0YuK3YmZA8GhpA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lZo04m/ZAvuZ7BPuSJ+/HtQ63WiW9mk6VVb8mnpiuNximC8IegaRyd2aPuxH5kKcqautZ4jO4uazpS1SinTCc1XpQK61oeOWjHMA5NATauD2cFt1Aki5jKKgj4k3joxMpWvy7j2bgD7rjToeHd6MdAkkdvFAHVWnYDkBDtHXkt4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=akX5hxrL; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1756297095;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=8l0wgpCnVzJ3ae7raIbUJYfNE+a8xTvmO0EAk2QD0X8=;
-	b=akX5hxrLmbKCsHLAIN+mKv3z3f7k/t2aAXC/Kdm3JAqaFYcX7gjYwUJdsIsVgC0PosrY3x
-	z2OkLkzMa9sz9WiNhg9Yb6P5dPcv4SwZZ29pO8VRc/AQqM8Ohwn+aQqhcayIHageRIIhwn
-	gFZemcj6/cIu2TijlzhVPLFlEOe0OPM=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-317-okI_fmILM2OdCSKRGRzuag-1; Wed, 27 Aug 2025 08:18:14 -0400
-X-MC-Unique: okI_fmILM2OdCSKRGRzuag-1
-X-Mimecast-MFC-AGG-ID: okI_fmILM2OdCSKRGRzuag_1756297094
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-7f7706f53aaso170598485a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 05:18:14 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=GMO/l3sWgkMulN+C8C0WcW+NVOzPYjFzTK6trW80OKYLcJe0Oygda35lWLyOXGHgcwkVdh0zdxaaECfRU2hqgI6dL4O9QbcbzznOIARA3QoI2tLYCJzJagiVVpdQhhqsaV6Hkqe85mFuf/s0y1FTjzGU+p2IGMkXsrNfE4otmpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=F1xRJG/Y; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57R6kFcf031769
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:23:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	Yg5rxRbbc1HilhImNhc6AceAQ1YLgYvqFXETiddrEsM=; b=F1xRJG/Y43/PUj4n
+	2qa33XazZeg/c6iTHvg2mveoPws0W9aCxxaPfgCQHoJOFROgsYN4F1U9ntwmkdEs
+	ejtjAMp47VKEnVdkVCVTbAASVSZo310nWe7KM9li9tnBLvITVDNXRx+h50mpxVp5
+	EcNJyo8aEmNtA21jmv8xTQ8T2+5ONunGoVzdtY1EnM8QzmZofYH5nE5M6V8jx/6z
+	KtTuM7OIgpaN4XadNDLoLxMlZgOOr3gOdzex1F0mWU4l2dm1fx9jxpQG9nLxMop9
+	tZPVbgzMXcRA0ksKoEDUzxEZEY4j8Qs5AE4JSiVKHC0nTyhOg4NWJs4RTobyDw7E
+	10phqA==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5xpvscb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 12:23:54 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-24457f484d6so24718875ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 05:23:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756297094; x=1756901894;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8l0wgpCnVzJ3ae7raIbUJYfNE+a8xTvmO0EAk2QD0X8=;
-        b=KY49WNqW2EY2GCE18mTB7Cv10zq+FOS9MUF/iPsdgtY0EDTNXRHZ4bVK/eKt8YJNo+
-         qA+PlslFoMToBTyPcBFH5oz1A0mJNLMesDB6dVXL9K6P6oA1tJ3sTvEDc44iLNhr/xWw
-         SiOOLjfRrbktVy1GbUKadsQ5wvOgkSpkIL5OSYBLdQJv7ZiU0S1PfHPMLJuS1hfI+oXZ
-         66Sw05Is4TRLhYfjTF5tWgLDSY0Cj1TmMvRVurtJfJCpJvFb7XHZOv0dV+NxFCJMkoPH
-         GDLdnMb72DQOsTxaqQzffn3MM1u61bcwMys99k3RIjcxY6lgqQGGLiXjiB7OoqALFvmf
-         lYpQ==
-X-Forwarded-Encrypted: i=1; AJvYcCULrore1yPuj0W36801VOG9MkASUd0X6oXxzIqwWxfm+iwgDecCTCt2Nl9Q0WmBUSrusmNkzG8tfIsJ/yYz@vger.kernel.org
-X-Gm-Message-State: AOJu0YyGRc8APqsvE6QR/Sl71jNdWD030aXeX+uLZYaYk3FKcQo3B10Y
-	yEHdQvEdStNpOaWCexIPdE4SAeAPhk7qNRc3A1mOU/RRfDINRP0U39mB8/pMtjYIyD4hCT+bOPW
-	XENyK82wnJLgXX/28jiu84aV0JaiMGMbGAd/JLV8mH+XTUNweE3BRqnFuuTqlL7joisWhr/U8uB
-	uKF4p+
-X-Gm-Gg: ASbGncuHD2VNOJooRvqLW14TmTsdodE9msyauwCpjlgkXUkLxeKuYLxpQ7RRo1KKmwE
-	pYJ+dPRCKqMQhh3m+qgZTZRWrr5G4GUKz40wfiyv+s/5mByZriDsg8GP4npbQCuOPaN6LQGtt8h
-	DsxMeWyKSTz+vIxhmA1zvL+mOQhzp40wOwbjiduGeyfXsrDvJygej/IMgjjqi1DIbOL6HRprS0x
-	24IbwFd+OEmYY1UIEw/NfUIb7bFYT3JDPzrHzcna4EwV2sefItTsJKJtdzu/01G14y1UpnYTqBd
-	qCImD+MEoRLY9yIUDbCfL1et5j0+sPVotjbkbh/cV9Bt+RQ60/Sh8yPbfpUekQ==
-X-Received: by 2002:a05:620a:294a:b0:7f1:650:2241 with SMTP id af79cd13be357-7f1066ebf38mr1006462585a.79.1756297093700;
-        Wed, 27 Aug 2025 05:18:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFHxYiFqJY3iuFSza3TUFjyiCig33JVHK+pO7P7M/s44Kch6adTIPvS5zTIUoMSPILP7krh2w==
-X-Received: by 2002:a05:620a:294a:b0:7f1:650:2241 with SMTP id af79cd13be357-7f1066ebf38mr1006457685a.79.1756297093122;
-        Wed, 27 Aug 2025 05:18:13 -0700 (PDT)
-Received: from [10.32.64.156] (nat-pool-muc-t.redhat.com. [149.14.88.26])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7ebed79a712sm854386485a.17.2025.08.27.05.18.10
+        d=1e100.net; s=20230601; t=1756297433; x=1756902233;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Yg5rxRbbc1HilhImNhc6AceAQ1YLgYvqFXETiddrEsM=;
+        b=MeZzE9V8EzuG3msmpsevkmjERsTH+PtkScLFOGiDUrvU+GJIbI9Bs6fODNgRfIhCye
+         UPvCLX3KOgl/pr3wAA4pPbBqi7cL0Uuomm5ILOuRslozGARcSQxNcu8K6PfSuvJuU7t3
+         7fgzTiAwr+ModGcnkGaOGUKjVZmQhquW22ydD6Ts9d/5+/jMRcsFBntdmYoZYvIIwO2U
+         sg715MiUDnOSi8uqxUfq58c7e5oVRfevrH5egrpHoa8SBNTmXVbWWT5QnNSlgvaMvbW3
+         s/FaOdg7w6Eb+e4/YcFXHnFHX6r6TupojYoMP3GuG1kltE3fbFXDV12iwF2wqRupc6/s
+         ud6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX0Et4sAVJcErl29bGtNUc0IRjGGIhFwjzQJGPDpa7JAgL1h/xvJeDOrLMo/DhYTcfrW92LAkSZ8KUTpS5H@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyq86gHJiu54EgQJCDhiWTkdQFmM22TTvhXdrnDo1ppYYytlQ0R
+	AFG+zoIIRSYp/Wj9PU+G2EYaLDdSVcC7Vtk6AcqGzutVqYShLKMeqFnyPM9WGhWgxE9guuZLw3C
+	ZGJwaFuXnAiq82UJBkaybExk2+0tEZl+JRLCMWOZ73y1iungFMkr1zmg0kJCyxv8ca5Uk
+X-Gm-Gg: ASbGncu0yTWAmMBHjk/7XOp5DUgMfavaH/wzzwjTz8x/SV75qpQFZT5T46YN+4OG6p0
+	5cBl5ETKCMGT11ywj5lTIwbm4PJBNnR+Daun4X9WfQZiysayNhByiYnszZqk29ulfPMEb7iWJsB
+	NUPCUR4KODOy/9uCrUnyx0u17ewc0YUrtXwsTJGgmAmCRzGhPkLA5tfTJf0iyKlGTA+gRjcDiPZ
+	+Gs2kD5jK02T8qokBXb+xVmZbjw1SwyxGpEKUaPkfm5ZN2/k3VEZMIAwVEdzoAvdzwJPPBctNlV
+	dIfxh6FAuQ8Nbap6fK0Q4FmZyxYk4NumCnbixjyM2YCjYdQC62k7MK/7ljRQDhZNgCuPsCvy6xJ
+	wiryswraCLfb1ip6/JgxRZUYEW1wKYg==
+X-Received: by 2002:a05:6a20:3c90:b0:1ee:d621:3c3f with SMTP id adf61e73a8af0-24340813412mr15976464637.0.1756297432944;
+        Wed, 27 Aug 2025 05:23:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEq4Ue3miEW/c4T5E12xCiOE3p54Gi40oJLlOOke+fWNSMS7NYIwTRSwIrKoAICZzp9mEFDsA==
+X-Received: by 2002:a05:6a20:3c90:b0:1ee:d621:3c3f with SMTP id adf61e73a8af0-24340813412mr15976433637.0.1756297432356;
+        Wed, 27 Aug 2025 05:23:52 -0700 (PDT)
+Received: from [10.133.33.166] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7720af250cdsm1392821b3a.90.2025.08.27.05.23.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 27 Aug 2025 05:18:12 -0700 (PDT)
-Message-ID: <99d2cc96-03ea-4026-883e-1ee083a96c39@redhat.com>
-Date: Wed, 27 Aug 2025 14:18:08 +0200
+        Wed, 27 Aug 2025 05:23:51 -0700 (PDT)
+Message-ID: <08997fc3-8175-4638-96ea-ac15ad20160c@oss.qualcomm.com>
+Date: Wed, 27 Aug 2025 20:23:41 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,315 +90,247 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
-To: Eugen Hristev <eugen.hristev@linaro.org>, Michal Hocko <mhocko@suse.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
- jonechou@google.com, tudor.ambarus@linaro.org,
- Christoph Hellwig <hch@infradead.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>
-References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-23-eugen.hristev@linaro.org>
- <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
- <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
- <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
- <aJCRgXYIjbJ01RsK@tiehlicka>
- <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
- <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
- <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
- <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
- <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
- <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
- <64a93c4a-5619-4208-9e9f-83848206d42b@linaro.org>
- <f1f290fc-b2f0-483b-96d5-5995362e5a8b@redhat.com>
- <01c67173-818c-48cf-8515-060751074c37@linaro.org>
- <aab5e2af-04d6-485f-bf81-557583f2ae4b@redhat.com>
- <1b52419c-101b-487e-a961-97bd405c5c33@linaro.org>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- qIws/H2t
-In-Reply-To: <1b52419c-101b-487e-a961-97bd405c5c33@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-On 27.08.25 13:59, Eugen Hristev wrote:
-> 
-> 
-> On 8/25/25 16:58, David Hildenbrand wrote:
->> On 25.08.25 15:36, Eugen Hristev wrote:
->>>
->>>
->>> On 8/25/25 16:20, David Hildenbrand wrote:
->>>>
->>>>>>
->>>>>> IIRC, kernel/vmcore_info.c is never built as a module, as it also
->>>>>> accesses non-exported symbols.
->>>>>
->>>>> Hello David,
->>>>>
->>>>> I am looking again into this, and there are some things which in my
->>>>> opinion would be difficult to achieve.
->>>>> For example I looked into my patch #11 , which adds the `runqueues` into
->>>>> kmemdump.
->>>>>
->>>>> The runqueues is a variable of `struct rq` which is defined in
->>>>> kernel/sched/sched.h , which is not supposed to be included outside of
->>>>> sched.
->>>>> Now moving all the struct definition outside of sched.h into another
->>>>> public header would be rather painful and I don't think it's a really
->>>>> good option (The struct would be needed to compute the sizeof inside
->>>>> vmcoreinfo). Secondly, it would also imply moving all the nested struct
->>>>> definitions outside as well. I doubt this is something that we want for
->>>>> the sched subsys. How the subsys is designed, out of my understanding,
->>>>> is to keep these internal structs opaque outside of it.
->>>>
->>>> All the kmemdump module needs is a start and a length, correct? So the
->>>> only tricky part is getting the length.
->>>
->>> I also have in mind the kernel user case. How would a kernel programmer
->>> want to add some kernel structs/info/buffers into kmemdump such that the
->>> dump would contain their data ? Having "KMEMDUMP_VAR(...)" looks simple
->>> enough.
->>
->> The other way around, why should anybody have a saying in adding their
->> data to kmemdump? Why do we have that all over the kernel?
->>
->> Is your mechanism really so special?
->>
->> A single composer should take care of that, and it's really just start +
->> len of physical memory areas.
->>
->>> Otherwise maybe the programmer has to write helpers to compute lengths
->>> etc, and stitch them into kmemdump core.
->>> I am not saying it's impossible, but just tiresome perhaps.
->>
->> In your patch set, how many of these instances did you encounter where
->> that was a problem?
->>
->>>>
->>>> One could just add a const variable that holds this information, or even
->>>> better, a simple helper function to calculate that.
->>>>
->>>> Maybe someone else reading along has a better idea.
->>>
->>> This could work, but it requires again adding some code into the
->>> specific subsystem. E.g. struct_rq_get_size()
->>> I am open to ideas , and thank you very much for your thoughts.
->>>
->>>>
->>>> Interestingly, runqueues is a percpu variable, which makes me wonder if
->>>> what you had would work as intended (maybe it does, not sure).
->>>
->>> I would not really need to dump the runqueues. But the crash tool which
->>> I am using for testing, requires it. Without the runqueues it will not
->>> progress further to load the kernel dump.
->>> So I am not really sure what it does with the runqueues, but it works.
->>> Perhaps using crash/gdb more, to actually do something with this data,
->>> would give more insight about its utility.
->>> For me, it is a prerequisite to run crash, and then to be able to
->>> extract the log buffer from the dump.
->>
->> I have the faint recollection that percpu vars might not be stored in a
->> single contiguous physical memory area, but maybe my memory is just
->> wrong, that's why I was raising it.
->>
->>>
->>>>
->>>>>
->>>>>    From my perspective it's much simpler and cleaner to just add the
->>>>> kmemdump annotation macro inside the sched/core.c as it's done in my
->>>>> patch. This macro translates to a noop if kmemdump is not selected.
->>>>
->>>> I really don't like how we are spreading kmemdump all over the kernel,
->>>> and adding complexity with __section when really, all we need is a place
->>>> to obtain a start and a length.
->>>>
->>>
->>> I understand. The section idea was suggested by Thomas. Initially I was
->>> skeptic, but I like how it turned out.
->>
->> Yeah, I don't like it. Taste differs ;)
->>
->> I am in particular unhappy about custom memblock wrappers.
->>
->> [...]
->>
->>>>>
->>>>> To have this working outside of printk, it would be required to walk
->>>>> through all the printk structs/allocations and select the required info.
->>>>> Is this something that we want to do outside of printk ?
->>>>
->>>> I don't follow, please elaborate.
->>>>
->>>> How is e.g., log_buf_len_get() + log_buf_addr_get() not sufficient,
->>>> given that you run your initialization after setup_log_buf() ?
->>>>
->>>>
->>>
->>> My initial thought was the same. However I got some feedback from Petr
->>> Mladek here :
->>>
->>> https://lore.kernel.org/lkml/aBm5QH2p6p9Wxe_M@localhost.localdomain/
->>>
->>> Where he explained how to register the structs correctly.
->>> It can be that setup_log_buf is called again at a later time perhaps.
->>>
->>
->> setup_log_buf() is a __init function, so there is only a certain time
->> frame where it can be called.
->>
->> In particular, once the buddy is up, memblock allocations are impossible
->> and it would be deeply flawed to call this function again.
->>
->> Let's not over-engineer this.
->>
->> Peter is on CC, so hopefully he can share his thoughts.
->>
-> 
-> Hello David,
-> 
-> I tested out this snippet (on top of my series, so you can see what I
-> changed):
-> 
-> 
-> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-> index 18ba6c1e174f..7ac4248a00e5 100644
-> --- a/kernel/sched/core.c
-> +++ b/kernel/sched/core.c
-> @@ -67,7 +67,6 @@
->   #include <linux/wait_api.h>
->   #include <linux/workqueue_api.h>
->   #include <linux/livepatch_sched.h>
-> -#include <linux/kmemdump.h>
-> 
->   #ifdef CONFIG_PREEMPT_DYNAMIC
->   # ifdef CONFIG_GENERIC_IRQ_ENTRY
-> @@ -120,7 +119,12 @@
-> EXPORT_TRACEPOINT_SYMBOL_GPL(sched_update_nr_running_tp);
->   EXPORT_TRACEPOINT_SYMBOL_GPL(sched_compute_energy_tp);
-> 
->   DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
-> -KMEMDUMP_VAR_CORE(runqueues, sizeof(runqueues));
-> +
-> +size_t runqueues_get_size(void);
-> +size_t runqueues_get_size(void)
-> +{
-> +       return sizeof(runqueues);
-> +}
-> 
->   #ifdef CONFIG_SCHED_PROXY_EXEC
->   DEFINE_STATIC_KEY_TRUE(__sched_proxy_exec);
-> diff --git a/kernel/vmcore_info.c b/kernel/vmcore_info.c
-> index d808c5e67f35..c6dd2d6e96dd 100644
-> --- a/kernel/vmcore_info.c
-> +++ b/kernel/vmcore_info.c
-> @@ -24,6 +24,12 @@
->   #include "kallsyms_internal.h"
->   #include "kexec_internal.h"
-> 
-> +typedef void* kmemdump_opaque_t;
-> +
-> +size_t runqueues_get_size(void);
-> +
-> +extern kmemdump_opaque_t runqueues;
-
-I would have tried that through:
-
-struct rq;
-extern struct rq runqueues;
-
-But the whole PER_CPU_SHARED_ALIGNED makes this all weird, and likely
-not the way we would want to handle that.
-
->   /* vmcoreinfo stuff */
->   unsigned char *vmcoreinfo_data;
->   size_t vmcoreinfo_size;
-> @@ -230,6 +236,9 @@ static int __init crash_save_vmcoreinfo_init(void)
-> 
->          kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_VMCOREINFO,
->                               (void *)vmcoreinfo_data, vmcoreinfo_size);
-> +       kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_runqueues,
-> +                            (void *)&runqueues, runqueues_get_size());
-> +
->          return 0;
->   }
-> 
-> With this, no more .section, no kmemdump code into sched, however, there
-> are few things :
-
-I would really just do here something like the following:
-
-/**
-  * sched_get_runqueues_area - obtain the runqueues area for dumping
-  * @start: ...
-  * @size: ...
-  *
-  * The obtained area is only to be used for dumping purposes.
-  */
-void sched_get_runqueues_area(void *start, size_t size)
-{
-	start = &runqueues;
-	size = sizeof(runqueues);
-}
-
-might be cleaner.
+Subject: Re: [PATCH v3 10/14] phy: qcom: qmp-usbc: Add TCSR parsing and USB/DP
+ mode mutex handling
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, fange.zhang@oss.qualcomm.com,
+        yongxing.mou@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, quic_lliu6@quicinc.com
+References: <20250820-add-displayport-support-for-qcs615-platform-v3-0-a43bd25ec39c@oss.qualcomm.com>
+ <20250820-add-displayport-support-for-qcs615-platform-v3-10-a43bd25ec39c@oss.qualcomm.com>
+ <i4rc5siu4q2o4sjk3j4bex7b7qdrs26y6lxsfnike7e7kqdva3@xddrd7vowtlb>
+From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+In-Reply-To: <i4rc5siu4q2o4sjk3j4bex7b7qdrs26y6lxsfnike7e7kqdva3@xddrd7vowtlb>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=KOlaDEFo c=1 sm=1 tr=0 ts=68aef8da cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=-nZFuMMc53900W69ytMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-GUID: LiNNBtutiy7E5a0ZnXmeFLpttfua84Ck
+X-Proofpoint-ORIG-GUID: LiNNBtutiy7E5a0ZnXmeFLpttfua84Ck
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX1aCkeLaf4gF0
+ jSSoOxo2/6u7fIEHHTMws9d0s/kF9dDuw18Y8Ega8NvAHYAsk5WZM8gwT0yLz3dWjV3TT3ImfgZ
+ WViD3kL+TYdUARNeewVFAAwXKW279aG22djU4WQCyP+cCF/XUi5bcS51qCTa/rnoClpu7UQ/1G7
+ sPSXBl7oPgjMRs5QuT4POQd4aHajDw7diay4FxXB5FujDbw7kAlCjlytKJdynGTywxUKV9Y8PaH
+ dKJOSO/33EHe9T+QXAKLX3BkaqG2Pk+mo6mYfXORvnDzzLdAXPtvKEfXdK6AjMbeANLoTzoZcAP
+ 0qA2FAcqXBpVRnX23FxYeaZ3PpPMNmSvrHl+UQqpBdwKgPTj4hrOyvtO+IKirEZ9PSR3yxhTYh+
+ FnzMf8RD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-27_02,2025-08-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0 phishscore=0
+ impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
 
 
-Having said that, if you realize that there is a fundamental issue with 
-what I propose, please speak up.
+On 8/20/2025 7:24 PM, Dmitry Baryshkov wrote:
+> On Wed, Aug 20, 2025 at 05:34:52PM +0800, Xiangxu Yin wrote:
+>> Parse TCSR registers to support DP mode signaling via dp_phy_mode_reg.
+>> Introduce mutual exclusion between USB and DP PHY modes to prevent
+>> simultaneous activation. Also update com_init/com_exit to reflect DP
+>> mode initialization and cleanup.
+>>
+>> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+>> ---
+>>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 60 +++++++++++++++++++++++++-------
+>>  1 file changed, 47 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+>> index a1495a2029cf038bb65c36e42d0a4f633e544558..821398653bef23e1915d9d3a3a2950b0bfbefb9a 100644
+>> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+>> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+>> @@ -674,7 +674,7 @@ static const struct qmp_phy_cfg qcs615_usb3dp_phy_cfg = {
+>>  	.num_vregs		= ARRAY_SIZE(qmp_phy_usbdp_vreg_l),
+>>  };
+>>  
+>> -static int qmp_usbc_com_init(struct phy *phy)
+>> +static int qmp_usbc_com_init(struct phy *phy, bool is_dp)
+>>  {
+>>  	struct qmp_usbc *qmp = phy_get_drvdata(phy);
+>>  	const struct qmp_phy_cfg *cfg = qmp->cfg;
+>> @@ -704,15 +704,20 @@ static int qmp_usbc_com_init(struct phy *phy)
+>>  	if (ret)
+>>  		goto err_assert_reset;
+>>  
+>> -	qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+>> +	if (!is_dp) {
+>> +		qphy_setbits(pcs, cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL], SW_PWRDN);
+> Why? Don't we need to program those bits for DP PHY too?
+>
+> If not, move them to USB init call.
 
-So far, I feel like there are only limited number of "suboptimal" cases 
-of this kind, but I might be wrong of course.
 
--- 
-Cheers
+For these USB3DP PHY series, USB registers in pcs_misc will don’t affect DP. 
 
-David / dhildenb
+I’ll move them to USB init call.
 
+
+>>  
+>>  #define SW_PORTSELECT_VAL			BIT(0)
+>>  #define SW_PORTSELECT_MUX			BIT(1)
+>> -	/* Use software based port select and switch on typec orientation */
+>> -	val = SW_PORTSELECT_MUX;
+>> -	if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
+>> -		val |= SW_PORTSELECT_VAL;
+>> -	writel(val, qmp->pcs_misc);
+>> +		/* Use software based port select and switch on typec orientation */
+>> +		val = SW_PORTSELECT_MUX;
+>> +		if (qmp->orientation == TYPEC_ORIENTATION_REVERSE)
+>> +			val |= SW_PORTSELECT_VAL;
+>> +		writel(val, qmp->pcs_misc);
+>> +	}
+>> +
+>> +	if (qmp->tcsr_map && qmp->dp_phy_mode_reg)
+>> +		regmap_write(qmp->tcsr_map, qmp->dp_phy_mode_reg, is_dp);
+> Write this reg directly from USB / DP init.
+
+
+Ok.
+
+
+>>  
+>>  	return 0;
+>>  
+>> @@ -733,6 +738,9 @@ static int qmp_usbc_com_exit(struct phy *phy)
+>>  
+>>  	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+>>  
+>> +	if (qmp->tcsr_map && qmp->dp_phy_mode_reg)
+>> +		regmap_write(qmp->tcsr_map, qmp->dp_phy_mode_reg, 0);
+> Why?
+
+
+Since this is a switchable PHY, it makes more sense to set it only during enable.
+I’ll remove the TCSR handling from com_exit in the next patch.
+
+
+>> +
+>>  	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
+>>  
+>>  	return 0;
+>> @@ -1045,6 +1053,17 @@ static int qmp_usbc_usb_power_off(struct phy *phy)
+>>  	return 0;
+>>  }
+>>  
+>> +static int qmp_check_mutex_phy(struct qmp_usbc *qmp, bool is_dp)
+>> +{
+>> +	if ((is_dp && qmp->usb_init_count) ||
+>> +	    (!is_dp && qmp->dp_init_count)) {
+>> +		dev_err(qmp->dev, "%s PHY busy\n", is_dp ? "USB" : "DP");
+> "PHY is configured for %s, can not enable %s\n"
+
+
+Ack.
+
+
+>> +		return -EBUSY;
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>  static int qmp_usbc_usb_enable(struct phy *phy)
+>>  {
+>>  	struct qmp_usbc *qmp = phy_get_drvdata(phy);
+>> @@ -1052,7 +1071,11 @@ static int qmp_usbc_usb_enable(struct phy *phy)
+>>  
+>>  	mutex_lock(&qmp->phy_mutex);
+>>  
+>> -	ret = qmp_usbc_com_init(phy);
+>> +	ret = qmp_check_mutex_phy(qmp, false);
+>> +	if (ret)
+>> +		goto out_unlock;
+>> +
+>> +	ret = qmp_usbc_com_init(phy, false);
+>>  	if (ret)
+>>  		goto out_unlock;
+>>  
+>> @@ -1103,7 +1126,11 @@ static int qmp_usbc_dp_enable(struct phy *phy)
+>>  
+>>  	mutex_lock(&qmp->phy_mutex);
+>>  
+>> -	ret = qmp_usbc_com_init(phy);
+>> +	ret = qmp_check_mutex_phy(qmp, true);
+>> +	if (ret)
+>> +		goto dp_init_unlock;
+>> +
+>> +	ret = qmp_usbc_com_init(phy, true);
+>>  	if (ret)
+>>  		goto dp_init_unlock;
+>>  
+>> @@ -1467,7 +1494,7 @@ static int qmp_usbc_typec_switch_set(struct typec_switch_dev *sw,
+>>  		qmp_usbc_usb_power_off(qmp->usb_phy);
+>>  		qmp_usbc_com_exit(qmp->usb_phy);
+>>  
+>> -		qmp_usbc_com_init(qmp->usb_phy);
+>> +		qmp_usbc_com_init(qmp->usb_phy, false);
+>>  		qmp_usbc_usb_power_on(qmp->usb_phy);
+>>  	}
+>>  
+>> @@ -1602,13 +1629,13 @@ static int qmp_usbc_parse_usb_dt(struct qmp_usbc *qmp)
+>>  	return 0;
+>>  }
+>>  
+>> -static int qmp_usbc_parse_vls_clamp(struct qmp_usbc *qmp)
+>> +static int qmp_usbc_parse_tcsr(struct qmp_usbc *qmp)
+>>  {
+>>  	struct of_phandle_args tcsr_args;
+>>  	struct device *dev = qmp->dev;
+>>  	int ret;
+>>  
+>> -	/*  for backwards compatibility ignore if there is no property */
+>> +	/*  for backwards compatibility ignore if there is 1 or no property */
+>>  	ret = of_parse_phandle_with_fixed_args(dev->of_node, "qcom,tcsr-reg", 1, 0,
+>>  					       &tcsr_args);
+>>  	if (ret == -ENOENT)
+>> @@ -1623,6 +1650,13 @@ static int qmp_usbc_parse_vls_clamp(struct qmp_usbc *qmp)
+>>  
+>>  	qmp->vls_clamp_reg = tcsr_args.args[0];
+>>  
+>> +	ret = of_parse_phandle_with_fixed_args(dev->of_node, "qcom,tcsr-reg", 1, 1,
+>> +					       &tcsr_args);
+>> +	if (ret == -ENOENT)
+>> +		return 0;
+>> +
+>> +	qmp->dp_phy_mode_reg = tcsr_args.args[0];
+>> +
+>>  	return 0;
+>>  }
+>>  
+>> @@ -1665,7 +1699,7 @@ static int qmp_usbc_probe(struct platform_device *pdev)
+>>  	if (ret)
+>>  		return ret;
+>>  
+>> -	ret = qmp_usbc_parse_vls_clamp(qmp);
+>> +	ret = qmp_usbc_parse_tcsr(qmp);
+>>  	if (ret)
+>>  		return ret;
+>>  
+>>
+>> -- 
+>> 2.34.1
+>>
 
