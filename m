@@ -1,266 +1,386 @@
-Return-Path: <linux-arm-msm+bounces-71022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22ABDB38467
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 16:05:09 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE00EB3846F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 16:09:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A0A973BF92E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 14:05:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 856A97A8762
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 14:07:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74DF23570B2;
-	Wed, 27 Aug 2025 14:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 11B5D3570A2;
+	Wed, 27 Aug 2025 14:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="H9ALsPMi"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HGUp8HdP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0CA35209F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 14:05:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB38E2EBDCF
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 14:08:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756303503; cv=none; b=c4oWvWDgOuqLkNsVR5Gjht99HAafItTSCGCZSIizPGEDWr2wXJOmUjcPTLmPxmz5O2caOOlulROnizt5u3W/OLpRi4Uim3Dlgp47q0nDF01hLbpmT6MyJKCgIsbnec/x0j593YXOoDDybDpdlaog/K4KwEChIfO49KZBsix8tuQ=
+	t=1756303738; cv=none; b=tj9K6xu9VfemQBmZrP5QRMt8wc9988PcVabUfWm9v9Rjs5HUC9FFhh7aIK2xb8xGpPqflZafaJIANtBoVhvqA1GCF+gzgi0Dldg5CS8mmmIzNMw3hh+TXe7mYrrOVfEgATULkszA4lLXJrmYgThFQCHEVOPP+AmFAAehj1/0qh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756303503; c=relaxed/simple;
-	bh=t12YjdhsTGpQKfc4B42sBiYKoH2eblSNKJiu1uWwT/4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OI9JjUc8OyYf0fJQE5el0oegPwBN0DN8hftf/nOZb7u9hJ5xV4DGLuuWNFjftXjRPf1G9pa3GEiuG1DYAcEWIdxZ+hmmDgKCswGCubOwSipF1aXSiIA0vaMUiB0vrEEj2Ag+Hn5NmvrZkcBcSMEbb0NYFYyM4NWPMpzzS8AHgoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=H9ALsPMi; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57R6kTNt031932
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 14:05:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=3n2g0Y56LJ8V+gTCm6izqR6c
-	NmLrEHV5/R5UXj9u9s4=; b=H9ALsPMiECpSZnQXU2DW4FIqnnpUD94/ULdoZiy0
-	qN2lzn8VtL6uoNXZdnR2C+U1A1sUExlCx6MMlJrN4HKN3V6S8a7w07U238xpL4mb
-	y1qQ0jXaTUHWT/mm4aT5sztcNM0AQpow3HRi6R2SYZGgKC78TFHp/WYXicXa7BEi
-	JciTR8mHsb3HCI0x/eOnk6vF9lBZ16987ABMFpPF3ov4RJlGcgEZ45aO6720q+8o
-	YazMiJVLwznoljH6k+S9oQfFgOn1gD/1SFCRjT3up7GVWiVlBP05MBYGx7SONp//
-	yKrzgMxsvrKdmDYIT0tbeoaGU6i+Lh5zyKpk+ZsgzPfflg==
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com [209.85.166.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5xpw1ch-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 14:05:00 +0000 (GMT)
-Received: by mail-il1-f198.google.com with SMTP id e9e14a558f8ab-3e6766c3935so83610965ab.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 07:05:00 -0700 (PDT)
+	s=arc-20240116; t=1756303738; c=relaxed/simple;
+	bh=YTISNKJVJ8MY89bk7WOjHxjc0eIoX4hY9eRNO6eflsU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Iur8j4eA7Si5m1YCM7wWGa64yiiO3ViNNtEUXhDwRTrNSngL3wxdQIWxmFe/nNqkvMX42v3vPNP+FrCUiT0A5sZiDflUw9Odl415gw6KAQ8KCZy9julvo7J6VvbRz/Srntpa/vuS8djESKY2ZuzbeOJhPElQ0GZH+EvWCBWGXb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HGUp8HdP; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3cd59c5a953so244479f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 07:08:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756303734; x=1756908534; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xvE4LTDafzST+ebfuxrN2rVGDKvjsNA49QvlFFlyWIM=;
+        b=HGUp8HdP2807EgbpXRxdAuj9zzWFmJ1flNQ+2JKDiuH1AKfFKfBxYi6FTLcwlecJwl
+         Ewzk63rwAH3SwCUHOzq7AGlD0YM2IPyuvo2ag8wxhb0UFKzv+hME/Cwtn5o0f+zUPRwd
+         UMNfc1sanB5BK9TknBQizLNCy65fG1hr7B7r3asvjcXKha0KydFlva3glpOp5Z4o1twU
+         mlnSd47qY9c8NDI8sKamazOPAaQH9O+euaKOzIf/L8h0U9hPbIyGSCrcDK5jMUai25OD
+         kx/DPv5pRoeD/VMPvMlxUaXLhN7zgzvTeyCogpXps+scUEJ22aqXuuiWiw8vW+yCPeG8
+         6tlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756303500; x=1756908300;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3n2g0Y56LJ8V+gTCm6izqR6cNmLrEHV5/R5UXj9u9s4=;
-        b=wiL2cbrkLfrPNIKk2M0a82kVn3GHE/cXWz3+f7tIpAvD5TilkXh3kMnMrMkBPlf+Xz
-         Bq5GlY+tfIQBAbhXabLZQyzl/koIJF4h/Us1FWgeDcM6JzLegGrOJOV9Zu287rWH6nGq
-         GJGVJ3SiDGpIo5ZILfHs4TSk1aN7Z0aWqnzr6iWuo63YkkkiL854cwVPxNliCgmxPxFy
-         cMaLHSIj342OtW6SapWTb16cXzQyxg3dKl9+YLr/IwJg0J7CtMa7uUlhUKpCcEV6+OUm
-         yUGX2wxRgZTjUJtiatojiigNAXbgwdnIG8ZJg0lhunTSliX7oedSaFhee83JMq6CTuuR
-         MH9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXbUMY3XUJSCHlQe6bk9YCeGJPrcFz1LSFmRdz+QQJSk2Gb4k1RzHHMxmDFFe8UaEMAqXk0EsJyodW2C9Sz@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzo+oi5yBzfsqWFFIOsHblrwyWGiLmGfbLcoBW211ZL1mkMYf3t
-	m23CQUDRZpSzgbRMi+2vc+iVBNVtuA2X8JzkITFyenGGrWJJZPFlAnw5qGTLLTNp5w4Z9L7fFvb
-	RrQFckEr1hFWqc0Omx3b3+C8ESSrKfrIJ70Knonc4rKmOXdgbU7hAkK/SYpvcwWCghIxA
-X-Gm-Gg: ASbGncvdNu38P1f3ThPLNksjutbhIYuFec4Cj3FWBlDR5tfsmyDdKdfjQjQOwG+KbSu
-	+ywuW0rviQf56vFMymPTqr1hFM3LSMIlMd5bK8fQKU0l7bxGy6fiQg5DEfjBBgWtem+BXQIJVG8
-	oOlT+MPD7pCG2WT128Lbdx8GRvfDenDL+m+0Z1PkrpE5UWqbv5wwyiTvKorCioiJ+9SZ4EG0aO6
-	Vy457GmbYilfCXzJ43HWhdVj8VvmGHJah426LV/WoZ5rTgB9VYggKJI5D7eFsyUue8thk+81UhC
-	HtG1exJAJJhTUHSDpISfgS77HLluEHX5U/EKizkWWpWfYuI67F0KQnHCxJjRUw+y/q57k0FGh33
-	CDOUsVSe6fzjO4AwhBz3WhF/jPMtJ7BEhvCJMZbflI2b4N9aLsPJi
-X-Received: by 2002:a05:6e02:1b0c:b0:3ef:1b56:c8ea with SMTP id e9e14a558f8ab-3ef1b56c9f9mr67415775ab.11.1756303498874;
-        Wed, 27 Aug 2025 07:04:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/xsdrf+XrjtSQ2K8ar35ewr1T+sNBP+/hCqgRfZjcDR4oY8KJbZTP/1e4Kh/mCkfx80z06g==
-X-Received: by 2002:a05:6e02:1b0c:b0:3ef:1b56:c8ea with SMTP id e9e14a558f8ab-3ef1b56c9f9mr67415045ab.11.1756303498104;
-        Wed, 27 Aug 2025 07:04:58 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c11ffesm2878362e87.40.2025.08.27.07.04.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 07:04:56 -0700 (PDT)
-Date: Wed, 27 Aug 2025 17:04:53 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
-        Samuel Holland <samuel@sholland.org>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-        Liu Ying <victor.liu@nxp.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/8] drm/connector: let drivers declare infoframes as
- unsupported
-Message-ID: <jrvjvayhjczgb4yx3xshbv3e6ndzkmb7uu3ynoes2maniwjg37@hamxu5mzqmf7>
-References: <20250819-drm-limit-infoframes-v2-0-7595dda24fbd@oss.qualcomm.com>
- <20250819-drm-limit-infoframes-v2-1-7595dda24fbd@oss.qualcomm.com>
- <20250820-artichoke-silkworm-of-election-521b5e@houat>
- <v7w7xkefm6ap7delx7wsvxmc76fwptqhe4ehokzfh4baueb7hr@acrx36exv42v>
- <20250827-adorable-ocelot-of-adventure-ba88b7@houat>
+        d=1e100.net; s=20230601; t=1756303734; x=1756908534;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xvE4LTDafzST+ebfuxrN2rVGDKvjsNA49QvlFFlyWIM=;
+        b=KNYOBafSxFq4rZhDCk/FpZnXR/wFsG0qgz3DWyFZ1gQ0/21wy08cCARjP8fxRbPGWp
+         sodOmRpgvAFfj3NUx5eVKBZZtKFU9lqrJgnGnezrUFsLCgD5gvRcG6VT0S1+sUFVYOTm
+         MpDNngz5QSSoMmbDDU2GSWSZZoOHWndPnq9/bDf6ExzCRFiQ6IZ071K2tC/JVIvA2ngR
+         QglWTiamu/amiBluBg9fpOAFBYy/F+omcbyQMnG5Kkc7gVFL0V2KMEkupu/3AaWsL27m
+         es7Y78IBAQJ1NaCQJwMJYDGzlHmAUp2d/gg1NbWtPa+qvj7H6avcizoZ5mHQ4ZLWKssW
+         mfxA==
+X-Forwarded-Encrypted: i=1; AJvYcCXDSpdb6QPkhxzmEbRsIQErok+ZfbKzx9dFapzEHlKJbss/hFZqI9bMgd97GnC1O1umMQcW6GfKb4m3C74H@vger.kernel.org
+X-Gm-Message-State: AOJu0YyPN4B/VCaqYmoTOgtthJv1wTQAy4lX/AkCUcuDpScL+Y7YWSTF
+	SdWDn5G5SKFO5+tcWr+wO1eg4EwRnppCvMJiGoGUgFU8jd0WoLXpSNDr/N7Ye0uAQBw=
+X-Gm-Gg: ASbGnctzJ6pGrsIcY6drsUMev6lrDr55TpT8crtXXQkRYGPKMK0GOL3TCifTXqsP1lA
+	VDNGLuBxnlrmdkHgGJKxgMWw51BubQ9kHsY/KlxgS4uyKJXYFE494cETMHf8TmboekUH5TIb6OU
+	+nwrmZe30Nn0Tlsj0994sgtQDcb0NFTPuK11e8g7Namb5n5WnL5pnn/34yKJMzPCEG+f5DAuWyR
+	dw33ylgmi3/6Au4b37D1HRpNHk5baQrdP1+0DZjIoOYQdH84Zi4je8x84LR4pYAied6v35oY4Nm
+	pWUoQ53a/+yHizXZ0uTpIpeE4wmyJcqx9NxUyRcdV23sbn2LIXPA2YukM7W7rU5gPMbufpsBMjk
+	rfZhls0IraHVnysvGcGHWAL0vdoSR8w==
+X-Google-Smtp-Source: AGHT+IHkXcu1NEQam2q8j8cNwacl8Imtu6GXIMZzfeXxsacEy+DVaG4nf82ZkbK5vX8UXnyEqjuJwg==
+X-Received: by 2002:a05:6000:188e:b0:3cd:9794:cbcf with SMTP id ffacd0b85a97d-3cd9794cc94mr128751f8f.60.1756303733978;
+        Wed, 27 Aug 2025 07:08:53 -0700 (PDT)
+Received: from [192.168.0.24] ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3cc56bde919sm4094896f8f.59.2025.08.27.07.08.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 27 Aug 2025 07:08:53 -0700 (PDT)
+Message-ID: <98afe1bd-99d2-4b5d-866a-e9541390fab4@linaro.org>
+Date: Wed, 27 Aug 2025 17:08:51 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250827-adorable-ocelot-of-adventure-ba88b7@houat>
-X-Authority-Analysis: v=2.4 cv=KOlaDEFo c=1 sm=1 tr=0 ts=68af108c cx=c_pps
- a=knIvlqb+BQeIC/0qDTJ88A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=WI-fMjCVXOxGoBDYoyYA:9 a=CjuIK1q_8ugA:10
- a=8vIIu0IPYQVSORyX1RVL:22
-X-Proofpoint-GUID: lyQlGV8KwQEwglGVsmDalmMSED1_TtaC
-X-Proofpoint-ORIG-GUID: lyQlGV8KwQEwglGVsmDalmMSED1_TtaC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX4xco9bUNb3No
- IWknNPWxiR/Xp8y4KZ69RY0Vfuud2nEyIeJrWohY0R4HoqlKcPr49tllxd4/UzfBcIbbbltdQ5J
- OAf4pwqFkQ6HLZVF8TCL1lTLTfwJRcCpypi218xDYjQB7t06aYsltzI0u7sWfimeNswNYttruTs
- Zcsdc8us8my7mUVYY4NfqjaaBwY+a0sVvyRpOxMxzh9nDOO7ac39x/IeFfLkwnsBSm6NFIcYw2p
- JD2sHAZNwRGngzS6T8KJfKu/Q6rwT78FjeTgQg9uLN98yqhA8Ou4ijsVv0zPZRMhTJrmR4R2sF8
- sEk8swFFo/nVdqUgsCzuLRkPzmY5c9WoSILORXsNSEiLRrMhNVxMEXAdPZ6jrUg/+Hw1NiTvDoI
- 7apm/SOj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-27_03,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 bulkscore=0 adultscore=0 phishscore=0
- impostorscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
+To: David Hildenbrand <david@redhat.com>, Michal Hocko <mhocko@suse.com>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
+ andersson@kernel.org, pmladek@suse.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
+ jonechou@google.com, tudor.ambarus@linaro.org,
+ Christoph Hellwig <hch@infradead.org>,
+ Sergey Senozhatsky <senozhatsky@chromium.org>
+References: <20250724135512.518487-1-eugen.hristev@linaro.org>
+ <20250724135512.518487-23-eugen.hristev@linaro.org>
+ <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
+ <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
+ <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
+ <aJCRgXYIjbJ01RsK@tiehlicka>
+ <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
+ <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
+ <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
+ <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
+ <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
+ <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
+ <64a93c4a-5619-4208-9e9f-83848206d42b@linaro.org>
+ <f1f290fc-b2f0-483b-96d5-5995362e5a8b@redhat.com>
+ <01c67173-818c-48cf-8515-060751074c37@linaro.org>
+ <aab5e2af-04d6-485f-bf81-557583f2ae4b@redhat.com>
+ <1b52419c-101b-487e-a961-97bd405c5c33@linaro.org>
+ <99d2cc96-03ea-4026-883e-1ee083a96c39@redhat.com>
+From: Eugen Hristev <eugen.hristev@linaro.org>
+Content-Language: en-US
+In-Reply-To: <99d2cc96-03ea-4026-883e-1ee083a96c39@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Aug 27, 2025 at 09:30:20AM +0200, Maxime Ripard wrote:
-> Hi,
+
+
+On 8/27/25 15:18, David Hildenbrand wrote:
+> On 27.08.25 13:59, Eugen Hristev wrote:
+>>
+>>
+>> On 8/25/25 16:58, David Hildenbrand wrote:
+>>> On 25.08.25 15:36, Eugen Hristev wrote:
+>>>>
+>>>>
+>>>> On 8/25/25 16:20, David Hildenbrand wrote:
+>>>>>
+>>>>>>>
+>>>>>>> IIRC, kernel/vmcore_info.c is never built as a module, as it also
+>>>>>>> accesses non-exported symbols.
+>>>>>>
+>>>>>> Hello David,
+>>>>>>
+>>>>>> I am looking again into this, and there are some things which in my
+>>>>>> opinion would be difficult to achieve.
+>>>>>> For example I looked into my patch #11 , which adds the `runqueues` into
+>>>>>> kmemdump.
+>>>>>>
+>>>>>> The runqueues is a variable of `struct rq` which is defined in
+>>>>>> kernel/sched/sched.h , which is not supposed to be included outside of
+>>>>>> sched.
+>>>>>> Now moving all the struct definition outside of sched.h into another
+>>>>>> public header would be rather painful and I don't think it's a really
+>>>>>> good option (The struct would be needed to compute the sizeof inside
+>>>>>> vmcoreinfo). Secondly, it would also imply moving all the nested struct
+>>>>>> definitions outside as well. I doubt this is something that we want for
+>>>>>> the sched subsys. How the subsys is designed, out of my understanding,
+>>>>>> is to keep these internal structs opaque outside of it.
+>>>>>
+>>>>> All the kmemdump module needs is a start and a length, correct? So the
+>>>>> only tricky part is getting the length.
+>>>>
+>>>> I also have in mind the kernel user case. How would a kernel programmer
+>>>> want to add some kernel structs/info/buffers into kmemdump such that the
+>>>> dump would contain their data ? Having "KMEMDUMP_VAR(...)" looks simple
+>>>> enough.
+>>>
+>>> The other way around, why should anybody have a saying in adding their
+>>> data to kmemdump? Why do we have that all over the kernel?
+>>>
+>>> Is your mechanism really so special?
+>>>
+>>> A single composer should take care of that, and it's really just start +
+>>> len of physical memory areas.
+>>>
+>>>> Otherwise maybe the programmer has to write helpers to compute lengths
+>>>> etc, and stitch them into kmemdump core.
+>>>> I am not saying it's impossible, but just tiresome perhaps.
+>>>
+>>> In your patch set, how many of these instances did you encounter where
+>>> that was a problem?
+>>>
+>>>>>
+>>>>> One could just add a const variable that holds this information, or even
+>>>>> better, a simple helper function to calculate that.
+>>>>>
+>>>>> Maybe someone else reading along has a better idea.
+>>>>
+>>>> This could work, but it requires again adding some code into the
+>>>> specific subsystem. E.g. struct_rq_get_size()
+>>>> I am open to ideas , and thank you very much for your thoughts.
+>>>>
+>>>>>
+>>>>> Interestingly, runqueues is a percpu variable, which makes me wonder if
+>>>>> what you had would work as intended (maybe it does, not sure).
+>>>>
+>>>> I would not really need to dump the runqueues. But the crash tool which
+>>>> I am using for testing, requires it. Without the runqueues it will not
+>>>> progress further to load the kernel dump.
+>>>> So I am not really sure what it does with the runqueues, but it works.
+>>>> Perhaps using crash/gdb more, to actually do something with this data,
+>>>> would give more insight about its utility.
+>>>> For me, it is a prerequisite to run crash, and then to be able to
+>>>> extract the log buffer from the dump.
+>>>
+>>> I have the faint recollection that percpu vars might not be stored in a
+>>> single contiguous physical memory area, but maybe my memory is just
+>>> wrong, that's why I was raising it.
+>>>
+>>>>
+>>>>>
+>>>>>>
+>>>>>>    From my perspective it's much simpler and cleaner to just add the
+>>>>>> kmemdump annotation macro inside the sched/core.c as it's done in my
+>>>>>> patch. This macro translates to a noop if kmemdump is not selected.
+>>>>>
+>>>>> I really don't like how we are spreading kmemdump all over the kernel,
+>>>>> and adding complexity with __section when really, all we need is a place
+>>>>> to obtain a start and a length.
+>>>>>
+>>>>
+>>>> I understand. The section idea was suggested by Thomas. Initially I was
+>>>> skeptic, but I like how it turned out.
+>>>
+>>> Yeah, I don't like it. Taste differs ;)
+>>>
+>>> I am in particular unhappy about custom memblock wrappers.
+>>>
+>>> [...]
+>>>
+>>>>>>
+>>>>>> To have this working outside of printk, it would be required to walk
+>>>>>> through all the printk structs/allocations and select the required info.
+>>>>>> Is this something that we want to do outside of printk ?
+>>>>>
+>>>>> I don't follow, please elaborate.
+>>>>>
+>>>>> How is e.g., log_buf_len_get() + log_buf_addr_get() not sufficient,
+>>>>> given that you run your initialization after setup_log_buf() ?
+>>>>>
+>>>>>
+>>>>
+>>>> My initial thought was the same. However I got some feedback from Petr
+>>>> Mladek here :
+>>>>
+>>>> https://lore.kernel.org/lkml/aBm5QH2p6p9Wxe_M@localhost.localdomain/
+>>>>
+>>>> Where he explained how to register the structs correctly.
+>>>> It can be that setup_log_buf is called again at a later time perhaps.
+>>>>
+>>>
+>>> setup_log_buf() is a __init function, so there is only a certain time
+>>> frame where it can be called.
+>>>
+>>> In particular, once the buddy is up, memblock allocations are impossible
+>>> and it would be deeply flawed to call this function again.
+>>>
+>>> Let's not over-engineer this.
+>>>
+>>> Peter is on CC, so hopefully he can share his thoughts.
+>>>
+>>
+>> Hello David,
+>>
+>> I tested out this snippet (on top of my series, so you can see what I
+>> changed):
+>>
+>>
+>> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
+>> index 18ba6c1e174f..7ac4248a00e5 100644
+>> --- a/kernel/sched/core.c
+>> +++ b/kernel/sched/core.c
+>> @@ -67,7 +67,6 @@
+>>   #include <linux/wait_api.h>
+>>   #include <linux/workqueue_api.h>
+>>   #include <linux/livepatch_sched.h>
+>> -#include <linux/kmemdump.h>
+>>
+>>   #ifdef CONFIG_PREEMPT_DYNAMIC
+>>   # ifdef CONFIG_GENERIC_IRQ_ENTRY
+>> @@ -120,7 +119,12 @@
+>> EXPORT_TRACEPOINT_SYMBOL_GPL(sched_update_nr_running_tp);
+>>   EXPORT_TRACEPOINT_SYMBOL_GPL(sched_compute_energy_tp);
+>>
+>>   DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
+>> -KMEMDUMP_VAR_CORE(runqueues, sizeof(runqueues));
+>> +
+>> +size_t runqueues_get_size(void);
+>> +size_t runqueues_get_size(void)
+>> +{
+>> +       return sizeof(runqueues);
+>> +}
+>>
+>>   #ifdef CONFIG_SCHED_PROXY_EXEC
+>>   DEFINE_STATIC_KEY_TRUE(__sched_proxy_exec);
+>> diff --git a/kernel/vmcore_info.c b/kernel/vmcore_info.c
+>> index d808c5e67f35..c6dd2d6e96dd 100644
+>> --- a/kernel/vmcore_info.c
+>> +++ b/kernel/vmcore_info.c
+>> @@ -24,6 +24,12 @@
+>>   #include "kallsyms_internal.h"
+>>   #include "kexec_internal.h"
+>>
+>> +typedef void* kmemdump_opaque_t;
+>> +
+>> +size_t runqueues_get_size(void);
+>> +
+>> +extern kmemdump_opaque_t runqueues;
 > 
-> On Wed, Aug 20, 2025 at 12:52:44PM +0300, Dmitry Baryshkov wrote:
-> > On Wed, Aug 20, 2025 at 09:15:36AM +0200, Maxime Ripard wrote:
-> > > Hi,
-> > > 
-> > > On Tue, Aug 19, 2025 at 09:57:30PM +0300, Dmitry Baryshkov wrote:
-> > > > Currently DRM framework expects that the HDMI connector driver supports
-> > > > all infoframe types: it generates the data as required and calls into
-> > > > the driver to program all of them, letting the driver to soft-fail if
-> > > > the infoframe is unsupported. This has a major drawback on userspace
-> > > > API: the framework also registers debugfs files for all Infoframe types,
-> > > > possibly surprising the users when infoframe is visible in the debugfs
-> > > > file, but it is not visible on the wire.
-> > > > 
-> > > > Let drivers declare that they support only a subset of infoframes,
-> > > > creating a more consistent interface.
-> > > > 
-> > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > > 
-> > > I'm not really convinced. Infoframes aren't really something you should
-> > > ignore, AVI is effectively mandatory, HDMI kind of is too, AUDIO is if
-> > > audio support is enabled, DRM is mandatory if HDR is used.
-> > 
-> > Nevertheless, sun4i, innohdmi, adv7511, it6263 and rk3066 drivers
-> > provide support only for the AVI infoframe.
+> I would have tried that through:
 > 
-> Yes, but it's still something we shouldn't paper over. The spec mandates
-> it, if drivers want to deviate from it it's something we should warn
-> about, not silence.
+> struct rq;
+> extern struct rq runqueues;
 > 
-> sun4i is a good example, to me at least since I have the doc. The
-> hardware supports AVI, Audio, ACP, and SPD. HDR isn't supported, so DRM
-> isn't either. The only missing one is HDMI, but the documentation isn't
-> the best so it might still be supported. In short, it's a driver issue.
+> But the whole PER_CPU_SHARED_ALIGNED makes this all weird, and likely
+> not the way we would want to handle that.
 > 
-> adv7511 supports AVI, Audio, ACP, SPD, ACP, and looks to have a
-> mechanism to send any infoframe as is. So, again, driver issue.
+>>   /* vmcoreinfo stuff */
+>>   unsigned char *vmcoreinfo_data;
+>>   size_t vmcoreinfo_size;
+>> @@ -230,6 +236,9 @@ static int __init crash_save_vmcoreinfo_init(void)
+>>
+>>          kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_VMCOREINFO,
+>>                               (void *)vmcoreinfo_data, vmcoreinfo_size);
+>> +       kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_runqueues,
+>> +                            (void *)&runqueues, runqueues_get_size());
+>> +
+>>          return 0;
+>>   }
+>>
+>> With this, no more .section, no kmemdump code into sched, however, there
+>> are few things :
+> 
+> I would really just do here something like the following:
+> 
+> /**
+>   * sched_get_runqueues_area - obtain the runqueues area for dumping
+>   * @start: ...
+>   * @size: ...
+>   *
+>   * The obtained area is only to be used for dumping purposes.
+>   */
+> void sched_get_runqueues_area(void *start, size_t size)
+> {
+> 	start = &runqueues;
+> 	size = sizeof(runqueues);
+> }
+> 
+> might be cleaner.
+> 
 
-I've send a patch, enabling SPD and VSI (HDMI) InfoFrames on ADV7511.
+How about this in the header:
+
+#define DECLARE_DUMP_AREA_FUNC(subsys, symbol) \
+
+void subsys ## _get_ ## symbol ##_area(void **start, size_t *size);
+
+
+
+#define DEFINE_DUMP_AREA_FUNC(subsys, symbol) \
+
+void subsys ## _get_ ## symbol ##_area(void **start, size_t *size)\
+
+{\
+
+        *start = &symbol;\
+
+        *size = sizeof(symbol);\
+
+}
+
+
+then, in sched just
+
+DECLARE_DUMP_AREA_FUNC(sched, runqueues);
+
+DEFINE_DUMP_AREA_FUNC(sched, runqueues);
+
+or a single macro that wraps both.
+
+would make it shorter and neater.
+
+What do you think ?
 
 > 
-> I couldn't find the other datasheet, but I'd be very surprised if it
-> wasn't the case for these too.
+> Having said that, if you realize that there is a fundamental issue with 
+> what I propose, please speak up.
 > 
-> > Some of them can be extended to support other infoframe kinds (e.g.
-> > ADV7511 has two spare infoframes which can be used for HDMI and SPD).
-> > 
-> > > SPD is indeed optional though.
-> > > 
-> > > So, it's really dynamic in essence, and not really something we should
-> > > expect drivers to ignore.
-> > > 
-> > > I do acknowledge that a lot of drivers just silently ignore the
-> > > infoframes they don't support at the moment, which isn't great either.
-> > > 
-> > > Maybe we should standardize and document what drivers should do when
-> > > they don't support a given infoframe type?
-> > 
-> > The chips might be generating infoframes internally. This series was
-> > triggered by LT9611UXC, which does all HDMI work under the hood in the
-> > firmware. See [1]. The series I posted hooks HDMI audio directly into
-> > the bridge driver, but I'd really prefer to be able to use
-> > drm_atomic_helper_connector_hdmi_hotplug(), especially if I ever get to
-> > implementing CEC support for it.
-> > 
-> > ADV7511 likewise generates audio infoframe without Linux
-> > help (audio-related fields are programmed, but it's not the
-> > infoframe itself).
+> So far, I feel like there are only limited number of "suboptimal" cases 
+> of this kind, but I might be wrong of course.
 > 
-> Implementing the write_infoframe hooks as a nop with a comment in those
-> case is totally reasonable to me.
-> 
-> I'd still like to document that drivers should only return 0 if they
-> programmed the infoframe, and -ENOTSUPP (and the core logging a warning)
-> otherwise.
-> 
-> That way, we would be able to differentiate between the legimitate
-> LT9611UXC case, and the "driver is broken" sun4i (and others) case.
 
-I don't want to end up in a sitation where userspace has a different
-idea of the InfoFrame being sent than the actual one being present on
-the wire. It seems, we need several states per the infoframe:
-
-- Not supported
-- Autogenerated
-- Generated by software
-
-E.g. in case of ADV7511 we can declare that Audio InfofFrame is
-autogenerated, AVI, HDMI and SPD as 'software-generated' and DRM (HDR)
-as unsupported. LT9611UXC will declare all (need to check) frame types
-as auto.
-
-This way we can implement the checks and still keep userspace from
-having irrelevant data in debugfs.
-
-I will update my patchset to implement this, but I have another question
-beforehand: should we just declare VSI support or should it be more exact,
-specifying that the driver support HVS (00:0c:03), HVFS (c4:5d:d8), etc?
-
-I'm asking, because e.g. MSM HDMI controller has hardware support for
-generating HVS frames (but only HVS, the OUI is not programmed, register
-format doesn't match 1:1 frame contents, etc). I instead ended up using
-GENERIC0, because it was more flexible (it's like SPARE packets on
-ADV7511, the contents is being sent as is). However if we ever need to
-send DRM infoframes, we might need to switch from GENERIC0 to HVS, for
-the price of being unable to send HVFS frames.
-
-WDYT?
-
--- 
-With best wishes
-Dmitry
 
