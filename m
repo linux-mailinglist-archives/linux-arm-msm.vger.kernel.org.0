@@ -1,225 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-71027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 58BB0B38648
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 17:19:32 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BAC9BB386E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 17:47:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7ECE87C580D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 15:18:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 764F07C3415
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 15:47:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B7414277CA9;
-	Wed, 27 Aug 2025 15:15:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B0F22DAFB5;
+	Wed, 27 Aug 2025 15:47:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="SSFbhUaY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Hy5aSNrp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC97277CAC
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 15:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15E62D0C91;
+	Wed, 27 Aug 2025 15:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756307747; cv=none; b=mt8kBiC38CfIVJp3PMwzyw8bCsGzlESCBWtBogXxkfMrHFDe/kVyBL7Sjmas+JBtvJx6bYtsXQj8Br6+5s/GLX2lbtID4KJuUP0URb8FYlBw4+jS2VL5r/+3lsL6Q+T6bi9sYyHvre0gRe64GW2vebSEGZzIRSZ430oIdUv883s=
+	t=1756309662; cv=none; b=b41O+YqrKgq0Ulfb13JXbQYvDsmuXmXVNFkdJuHGP+7y4Oa01GK6yp8ZjyhosIko+1XusgM8UNqg0mXEEczVdA4JTzWueLo8ePZuq2wTBKZ5VLvjPkx8CXfNo2KvrU7yHYxzqp96lvVwczBopSPC4K/+DmGXS/ixWEAFeXBsT2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756307747; c=relaxed/simple;
-	bh=PgEPxKHnOwEJrisDshuEuJU9SWQbfG1NSTYMYsAtWZE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qKeruX+Lv4TGirzv7RXxsCHI92rmn7Dz79kLDXhsJsinCV3c6V3w+Hc2Lcgl0b9W4JCX8dI1Sr3wDone9Oy7K/6PXu6cI+2DTRSd3rFK2qXTdX+IOlxlCoZjDlZ+9dWinwOufF/p0BgTthPz1/1uDfPQZ985oicVYOaE0QAodAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=SSFbhUaY; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-24611734e50so164665ad.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 08:15:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1756307744; x=1756912544; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aGPhYDWt388RttmicU0o24RVsxY/twdNMb4O/vzImCs=;
-        b=SSFbhUaYSdGFBbG5CfGErl8PBJrdJ0XQ6Ofi8i4VHffvxMFqpxvd+tBC70A4/nMPRf
-         ybU1ppZn3tbfrOKYfvpliGhWaHEjfd5gmSxVQ/LbuKHpjRkSVK/4QDjzT58X9EiCYNwA
-         VD20oxfdWFrKFhsWdsiCSaeb4dGSHE6WYM7wX1tKv/9tXSTFRPgl7S0bV6soxF8q1uLR
-         qxqz6E2uiRoLyV2iMsgCO9EDPozzvbWTmTIFD9Mqi0RfocbBhhawnxcyQPOk098SvjNw
-         4KYeQe65GchDlKYvnMaty9HoninLLGNTawIlgfvoFCkk4VwTfWXkTNirqjX14LEt8qKn
-         OHIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756307744; x=1756912544;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aGPhYDWt388RttmicU0o24RVsxY/twdNMb4O/vzImCs=;
-        b=ZKUPg1AfjwX8I0OL8UlwQ9Yzu/LjLPfE5GkWFmRmrzvDhZblGLNLKNfqz5r5O2Y1js
-         y/8Zx6rf1DBEmDmf7CukpAh/DkEZhxuf1RryXWbSx51ocKwocg8HWe1FBHWH96qm3ish
-         UchBf+hrDbu8L0VaJkK7CpFfzxS4uhGPLaxfwfk0tV2W6gxEuG3slaaqnHULji72SPni
-         5dytEwPmgEuQGIQ1H7SImpoZm2Ce1VSiAx/Mp+HuJfScbv2uSB/NMUxG8PdmGczM8ANC
-         7ClzSsJBAo5/UiqWmEx4CjiQl/A39jz0pjBYtqGoW/hz9a6o6blZ5NF419q5FmvshIWb
-         yE/w==
-X-Forwarded-Encrypted: i=1; AJvYcCWMV6Wm9THKjZ3aLrvgQ7o17BlhCXg71aJIP2V+Ey1I51wzxOt7lSqgSmwZNyygFrZCfOCIAxHMury01s49@vger.kernel.org
-X-Gm-Message-State: AOJu0YzEXsDfKQOsOUdwkX0WsXkoDMlig1aOjKWBwagXCLkyEvR1usl0
-	/ZIH5pGp9mpkbzjuTroHvkkP1ePplIMR/Jemei4Io+jeyqnWDt1B6SFaMnOIutPlMZfLtTfU37s
-	MBMRybrpCEU3/h2W+njh3jR6KAs1NHYgNlBPwhttK
-X-Gm-Gg: ASbGncuUk78SOdvnV+W4wQfgVss+/8aT66TEvLLacaG3mIVo5sSk04zDygitZ+iwWWn
-	8yLdyG7oibi8EEiLskQCp7fFj5e1MM2KzwBez6bPj7jG2ZGwpSJg/vQbTn0nSnvetvwruy3EpE8
-	/xbwBWL7L2caz3Zn02w925YM06KEs9LuTmG4LjpsvFx+kB5j3dySdlhUbXtFZezbH5fNYlgEHdr
-	zJ+SaupHHjgfRh7njPPG64/mF0TRMk4OJPZeFw/Bwc=
-X-Google-Smtp-Source: AGHT+IExi0QgPJP/5AblrVahQdACSVklatzIIhzDoM8PROF9H/mRXxhxpv9GhjknP28Wz6ljzGsei6gbP7f3oTXJLVM=
-X-Received: by 2002:a17:902:ec87:b0:246:a8ac:1a36 with SMTP id
- d9443c01a7336-2485ba5311amr9397575ad.2.1756307741849; Wed, 27 Aug 2025
- 08:15:41 -0700 (PDT)
+	s=arc-20240116; t=1756309662; c=relaxed/simple;
+	bh=mxcSBMoTgvmfaOSxlDt3Ox0+FxehjBeucQjS9ZMt4Vs=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ARQ8DfT/MKIfdh5l93O6MbdTgFrzQB7l0rflfjisnD3BeqjuqI206R318lIU3HP6OcKHPfcX0YZDArTBUMjlnfm9lNWYxZSsswiidEw9tHvxoz3xfmOkLrK1tAuVhMPm/J4mlMzezjXPPV7vYOCB/u2CbiQ8mM6E0G+B/JbCxsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Hy5aSNrp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19337C4CEEB;
+	Wed, 27 Aug 2025 15:47:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756309661;
+	bh=mxcSBMoTgvmfaOSxlDt3Ox0+FxehjBeucQjS9ZMt4Vs=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=Hy5aSNrpVl9JJiC7+Fn+wg/YyEXijF4qSZVVsyE+Nzi73/WJPkyGa/uuLSnT7jIil
+	 UYX7BIuOwFtt46+zzCaLT8+efOun0PhBIOMPHqqBzwEz/Z6qAYPVKpRv/3LUkjRO/Y
+	 WremwAVlL0Fw0ximwz0CRJtiUhbHeqqPtDmRkQKkE5BPcVksOpuWE2Gq3lRn96BDmY
+	 oi1Qv5TBv1iXTjb8D7eqywVfyk47C0ImyqeTZnuh+SRdZw1p3SKvDoVASNzqS2OyPS
+	 BAqi00srxf3olPrSaB3JiLNn+s8kBWp+Gz/MX254IhOwaYocbGS5baiu486a8N5obs
+	 OydAgF1r3nRbw==
+Date: Wed, 27 Aug 2025 10:47:39 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Johan Hovold <johan@kernel.org>, stable+noautosel@kernel.org
+Subject: Re: [PATCH v3] PCI: qcom: Use pci_host_set_default_pcie_link_state()
+ API to enable ASPM for all platforms
+Message-ID: <20250827154739.GA888232@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1755096883.git.robin.murphy@arm.com> <d6cda4e2999aba5794c8178f043c91068fa8080c.1755096883.git.robin.murphy@arm.com>
- <20250826130329.GX4067720@noisy.programming.kicks-ass.net>
- <6080e45d-032e-48c2-8efc-3d7e5734d705@arm.com> <CAP-5=fXF2x3hW4Sk+A362T-50cBbw6HVd7KY+QEUjFwT+JL37Q@mail.gmail.com>
- <aK6_XrA_OaLnoFkr@J2N7QTR9R3>
-In-Reply-To: <aK6_XrA_OaLnoFkr@J2N7QTR9R3>
-From: Ian Rogers <irogers@google.com>
-Date: Wed, 27 Aug 2025 08:15:29 -0700
-X-Gm-Features: Ac12FXwUZ4TrRSXyzgr8XTQRkesJ87wwMtoKHvx086ZRlV4GbvgOq2WSyedNfZ4
-Message-ID: <CAP-5=fU0-QDMP-VG3O1qBvJ8uzHHYCQ8j1Vrzy9a0YUk=UMvHw@mail.gmail.com>
-Subject: Re: [PATCH 12/19] perf: Ignore event state for group validation
-To: Mark Rutland <mark.rutland@arm.com>
-Cc: Robin Murphy <robin.murphy@arm.com>, Peter Zijlstra <peterz@infradead.org>, mingo@redhat.com, 
-	will@kernel.org, acme@kernel.org, namhyung@kernel.org, 
-	alexander.shishkin@linux.intel.com, jolsa@kernel.org, adrian.hunter@intel.com, 
-	kan.liang@linux.intel.com, linux-perf-users@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-alpha@vger.kernel.org, 
-	linux-snps-arc@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	imx@lists.linux.dev, linux-csky@vger.kernel.org, loongarch@lists.linux.dev, 
-	linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org, 
-	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org, 
-	sparclinux@vger.kernel.org, linux-pm@vger.kernel.org, 
-	linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org, 
-	linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org, 
-	intel-xe@lists.freedesktop.org, coresight@lists.linaro.org, 
-	iommu@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-riscv@lists.infradead.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250825-qcom_aspm_fix-v3-1-02c8d414eefb@oss.qualcomm.com>
 
-On Wed, Aug 27, 2025 at 1:18=E2=80=AFAM Mark Rutland <mark.rutland@arm.com>=
- wrote:
->
-> On Tue, Aug 26, 2025 at 11:48:48AM -0700, Ian Rogers wrote:
-> > On Tue, Aug 26, 2025 at 8:32=E2=80=AFAM Robin Murphy <robin.murphy@arm.=
-com> wrote:
-> > >
-> > > On 2025-08-26 2:03 pm, Peter Zijlstra wrote:
-> > > > On Wed, Aug 13, 2025 at 06:01:04PM +0100, Robin Murphy wrote:
-> > > >> It may have been different long ago, but today it seems wrong for =
-these
-> > > >> drivers to skip counting disabled sibling events in group validati=
-on,
-> > > >> given that perf_event_enable() could make them schedulable again, =
-and
-> > > >> thus increase the effective size of the group later. Conversely, i=
-f a
-> > > >> sibling event is truly dead then it stands to reason that the whol=
-e
-> > > >> group is dead, so it's not worth going to any special effort to tr=
-y to
-> > > >> squeeze in a new event that's never going to run anyway. Thus, we =
-can
-> > > >> simply remove all these checks.
-> > > >
-> > > > So currently you can do sort of a manual event rotation inside an
-> > > > over-sized group and have it work.
-> > > >
-> > > > I'm not sure if anybody actually does this, but its possible.
-> > > >
-> > > > Eg. on a PMU that supports only 4 counters, create a group of 5 and
-> > > > periodically cycle which of the 5 events is off.
-> >
-> > I'm not sure this is true, I thought this would fail in the
-> > perf_event_open when adding the 5th event and there being insufficient
-> > counters for the group.
->
-> We're talking specifically about cases where the logic in a pmu's
-> pmu::event_init() callback doesn't count events in specific states, and
-> hence the 5th even doesn't get rejected when it is initialised.
->
-> For example, in arch/x86/events/core.c, validate_group() uses
-> collect_events(), which has:
->
->         for_each_sibling_event(event, leader) {
->                 if (!is_x86_event(event) || event->state <=3D PERF_EVENT_=
-STATE_OFF)
->                         continue;
->
->                 if (collect_event(cpuc, event, max_count, n))
->                         return -EINVAL;
->
->                 n++;
->         }
->
-> ... and so where an event's state is <=3D PERF_EVENT_STATE_OFF at init
-> time, that event is not counted to see if it fits into HW counters.
+On Mon, Aug 25, 2025 at 01:52:57PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> 
+> Commit 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0
+> ops") allowed the Qcom controller driver to enable ASPM for all PCI devices
+> enumerated at the time of the controller driver probe. It proved to be
+> useful for devices already powered on by the bootloader, as it allowed
+> devices to enter ASPM without user intervention.
+> 
+> However, it could not enable ASPM for the hotplug capable devices i.e.,
+> devices enumerated *after* the controller driver probe. This limitation
+> mostly went unnoticed as the Qcom PCI controllers are not hotplug capable
+> and also the bootloader has been enabling the PCI devices before Linux
+> Kernel boots (mostly on the Qcom compute platforms which users use on a
+> daily basis).
+> 
+> But with the advent of the commit b458ff7e8176 ("PCI/pwrctl: Ensure that
+> pwrctl drivers are probed before PCI client drivers"), the pwrctrl driver
+> started to block the PCI device enumeration until it had been probed.
+> Though, the intention of the commit was to avoid race between the pwrctrl
+> driver and PCI client driver, it also meant that the pwrctrl controlled PCI
+> devices may get probed after the controller driver and will no longer have
+> ASPM enabled. So users started noticing high runtime power consumption with
+> WLAN chipsets on Qcom compute platforms like Thinkpad X13s, and Thinkpad
+> T14s, etc...
+> 
+> Obviously, it is the pwrctrl change that caused regression, but it
+> ultimately uncovered a flaw in the ASPM enablement logic of the controller
+> driver. So to address the actual issue, use the newly introduced
+> pci_host_set_default_pcie_link_state() API, which allows the controller
+> drivers to set the default ASPM state for *all* devices. This default state
+> will be honored by the ASPM driver while enabling ASPM for all the devices.
 
-Hmm.. Thinking out loud. So it looked like perf with weak groups could
-be broken then:
-```
-$ sudo perf stat -vv -e '{instructions,cycles}:W' true
-...
-perf_event_attr:
- type                             0 (PERF_TYPE_HARDWARE)
- size                             136
- config                           0x400000001
-(cpu_core/PERF_COUNT_HW_INSTRUCTIONS/)
- sample_type                      IDENTIFIER
- read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING|ID|=
-GROUP
- disabled                         1
- inherit                          1
- enable_on_exec                   1
-------------------------------------------------------------
-sys_perf_event_open: pid 3337764  cpu -1  group_fd -1  flags 0x8 =3D 5
-------------------------------------------------------------
-perf_event_attr:
- type                             0 (PERF_TYPE_HARDWARE)
- size                             136
- config                           0x400000000
-(cpu_core/PERF_COUNT_HW_CPU_CYCLES/)
- sample_type                      IDENTIFIER
- read_format                      TOTAL_TIME_ENABLED|TOTAL_TIME_RUNNING|ID|=
-GROUP
- inherit                          1
-------------------------------------------------------------
-sys_perf_event_open: pid 3337764  cpu -1  group_fd 5  flags 0x8 =3D 7
-...
-```
-Note, the group leader (instructions) is disabled because of:
-https://web.git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools-next.gi=
-t/tree/tools/perf/util/stat.c?h=3Dperf-tools-next#n761
-```
-/*
-* Disabling all counters initially, they will be enabled
-* either manually by us or by kernel via enable_on_exec
-* set later.
-*/
-if (evsel__is_group_leader(evsel)) {
-        attr->disabled =3D 1;
-```
-but the checking of being disabled (PERF_EVENT_STATE_OFF) is only done
-on siblings in the code you show above. So yes, you can disable the
-group events to allow the perf_event_open to succeed but not on the
-leader which is always checked (no PERF_EVENT_STATE_OFF check):
-https://web.git.kernel.org/pub/scm/linux/kernel/git/perf/perf-tools-next.gi=
-t/tree/arch/x86/events/core.c?h=3Dperf-tools-next#n1204
-```
-if (is_x86_event(leader)) {
-        if (collect_event(cpuc, leader, max_count, n))
-                return -EINVAL;
-```
+So I guess this fixes a power consumption regression that became
+visible with b458ff7e8176 ("PCI/pwrctl: Ensure that pwrctl drivers are
+probed before PCI client drivers").  Arguably we should have a Fixes:
+tag for that, and maybe even skip the tag for 9f4f3dfad8cf, since if
+you have 9f4f3dfad8cf but not b458ff7e8176, it doesn't sound like you
+would need to backport this change?
 
-Thanks,
-Ian
+I *love* getting rid of the bus walk and solving the hotplug issue.
+
+> So with this change, we can get rid of the controller driver specific
+> 'qcom_pcie_ops::host_post_init' callback.
+> 
+> Also with this change, ASPM is now enabled by default on all Qcom
+> platforms as I haven't heard of any reported issues (apart from the
+> unsupported L0s on some platorms, which is still handled separately).
+
+If ASPM hasn't been enabled by default, how would you hear about
+issues?  Is ASPM commonly enabled in some other way?
+
+If you think the risk of ASPM issues is nil, I guess it's OK to do at
+the same time.  From a maintenance perspective it might be nice to
+separate that change so if there happened to be a regression, we could
+identify and revert that part by itself if necessary.  It looks like
+previously, ASPM was only enabled for one part:
+
+  ops_2_7_0   # cfg_2_7_0 qcom,pcie-sdm845
+
+But after this patch, ASPM will be enabled for many more parts:
+
+  ops_2_1_0   # cfg_2_1_0 qcom,pcie-apq8064 qcom,pcie-ipq8064 qcom,pcie-ipq8064-v2
+  ops_1_0_0   # cfg_1_0_0 qcom,pcie-apq8084
+  ops_2_3_2   # cfg_2_3_2 qcom,pcie-msm8996
+  ops_2_4_0   # cfg_2_4_0 qcom,pcie-ipq4019 qcom,pcie-qcs404
+  ops_2_3_3   # cfg_2_3_3 qcom,pcie-ipq8074
+  ops_1_9_0   # cfg_1_9_0 qcom,pcie-sc7280 qcom,pcie-sc8180x qcom,pcie-sdx55 qcom,pcie-sm8150 qcom,pcie-sm8250 qcom,pcie-sm8350 qcom,pcie-sm8450-pcie0 qcom,pcie-sm8450-pcie1 qcom,pcie-sm8550
+	      # cfg_1_34_0 qcom,pcie-sa8775p
+  ops_1_21_0  # cfg_sc8280xp qcom,pcie-sa8540p qcom,pcie-sc8280xp qcom,pcie-x1e80100
+  ops_2_9_0   # cfg_2_9_0 qcom,pcie-ipq5018 qcom,pcie-ipq6018 qcom,pcie-ipq8074-gen3 qcom,pcie-ipq9574
+
+> Cc: stable+noautosel@kernel.org # API dependency
+> Fixes: 9f4f3dfad8cf ("PCI: qcom: Enable ASPM for platforms supporting 1.9.0 ops")
+> Reported-by: Johan Hovold <johan@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+> Changes in v3:
+> 
+> - Moved the ASPM change to qcom_pcie_host_init()
+> - Link to v2: https://lore.kernel.org/r/20250823-qcom_aspm_fix-v2-1-7cef4066663c@oss.qualcomm.com
+> 
+> Changes in v2:
+> 
+> * Used the new API introduced in this patch instead of bus notifier:
+> https://lore.kernel.org/linux-pci/20250822031159.4005529-1-david.e.box@linux.intel.com/
+> 
+> * Enabled ASPM on all platforms as there is no specific reason to limit it to a
+> few.
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 34 ++--------------------------------
+>  1 file changed, 2 insertions(+), 32 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 294babe1816e4d0c2b2343fe22d89af72afcd6cd..0c6741b9a9585bd5566b23ba68ef12f1febab56b 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -247,7 +247,6 @@ struct qcom_pcie_ops {
+>  	int (*get_resources)(struct qcom_pcie *pcie);
+>  	int (*init)(struct qcom_pcie *pcie);
+>  	int (*post_init)(struct qcom_pcie *pcie);
+> -	void (*host_post_init)(struct qcom_pcie *pcie);
+>  	void (*deinit)(struct qcom_pcie *pcie);
+>  	void (*ltssm_enable)(struct qcom_pcie *pcie);
+>  	int (*config_sid)(struct qcom_pcie *pcie);
+> @@ -1040,25 +1039,6 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  	return 0;
+>  }
+>  
+> -static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
+> -{
+> -	/*
+> -	 * Downstream devices need to be in D0 state before enabling PCI PM
+> -	 * substates.
+> -	 */
+> -	pci_set_power_state_locked(pdev, PCI_D0);
+> -	pci_enable_link_state_locked(pdev, PCIE_LINK_STATE_ALL);
+> -
+> -	return 0;
+> -}
+> -
+> -static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
+> -{
+> -	struct dw_pcie_rp *pp = &pcie->pci->pp;
+> -
+> -	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
+> -}
+> -
+>  static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> @@ -1336,6 +1316,8 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+>  			goto err_assert_reset;
+>  	}
+>  
+> +	pci_host_set_default_pcie_link_state(pp->bridge, PCIE_LINK_STATE_ALL);
+> +
+>  	return 0;
+>  
+>  err_assert_reset:
+> @@ -1358,19 +1340,9 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
+>  	pcie->cfg->ops->deinit(pcie);
+>  }
+>  
+> -static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
+> -{
+> -	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> -	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> -
+> -	if (pcie->cfg->ops->host_post_init)
+> -		pcie->cfg->ops->host_post_init(pcie);
+> -}
+> -
+>  static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
+>  	.init		= qcom_pcie_host_init,
+>  	.deinit		= qcom_pcie_host_deinit,
+> -	.post_init	= qcom_pcie_host_post_init,
+>  };
+>  
+>  /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
+> @@ -1432,7 +1404,6 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+>  	.get_resources = qcom_pcie_get_resources_2_7_0,
+>  	.init = qcom_pcie_init_2_7_0,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+> -	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+>  	.deinit = qcom_pcie_deinit_2_7_0,
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  	.config_sid = qcom_pcie_config_sid_1_9_0,
+> @@ -1443,7 +1414,6 @@ static const struct qcom_pcie_ops ops_1_21_0 = {
+>  	.get_resources = qcom_pcie_get_resources_2_7_0,
+>  	.init = qcom_pcie_init_2_7_0,
+>  	.post_init = qcom_pcie_post_init_2_7_0,
+> -	.host_post_init = qcom_pcie_host_post_init_2_7_0,
+>  	.deinit = qcom_pcie_deinit_2_7_0,
+>  	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+>  };
+> 
+> ---
+> base-commit: 681accdad91923ef4938b96ff3eea62e29af74c3
+> change-id: 20250823-qcom_aspm_fix-3264926b5b14
+> 
+> Best regards,
+> -- 
+> Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> 
+> 
 
