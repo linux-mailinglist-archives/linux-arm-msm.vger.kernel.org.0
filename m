@@ -1,183 +1,193 @@
-Return-Path: <linux-arm-msm+bounces-70987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33D61B37BB0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 09:30:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0314AB37D32
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 10:11:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 31EB91BA1271
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 07:30:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB3675E75F2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 08:11:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8348C313554;
-	Wed, 27 Aug 2025 07:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RhxgsoN3"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5482632A3FD;
+	Wed, 27 Aug 2025 08:11:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544A7279DA3;
-	Wed, 27 Aug 2025 07:30:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 539DB322768;
+	Wed, 27 Aug 2025 08:11:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756279823; cv=none; b=q5mT4GvhFIdy7Zv7FVVF/TayJvm1pDtl2sKDFq3NAPFh+8rYP0h9ibMQkqXzZ78hlOrqcHMk7Yo4SxmawmkpcG2CZ/ATBANsFmYdtVXgVYrNs7fUUyQa1vS3vvvysFCt3jePhqAsWzVYhQKEpQhj4s3oSGtBC7q9cCVf4AR/UsI=
+	t=1756282298; cv=none; b=TTPeA3eSrZMZoUgVJ0Hm4iyQp/LxWPdfrZKjArsjM9vuDnVCDI8cgKj2GKXjfdL536x1AaphojUzZomW6B7ze2y2XoaV6Q+7OwERL6Q8flieXOdwzU0CQli2lEuXlTSVCraUttSqjxxjy7GDmcwX6RqakiS/NCmbdrx1Rx4r92E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756279823; c=relaxed/simple;
-	bh=DENKWc0ekq4UNDhRRQjwLrtYtoA+KfqAypfKZC86Eqk=;
+	s=arc-20240116; t=1756282298; c=relaxed/simple;
+	bh=/qXxxLaNG/fJKAgG5N1611Recp7NdyiAzN47tqQDfTE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oZ3M/fZq0zYCl7OtbeNYnTF9iEFuw2xw29dChWVpQQnuBLlvvYT+Y0ujiqQK3wwJAsaOZpNOr0J4hTOk8vXJQzV6qPpe3hSqjZCgYJm6PaED5VTUXJG8PsryhE+f8Qb8qaajrKz8M7pdWyrwKhb/2sG+J/Na/26nK6/nQJcd21Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RhxgsoN3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 587B4C4CEEB;
-	Wed, 27 Aug 2025 07:30:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756279822;
-	bh=DENKWc0ekq4UNDhRRQjwLrtYtoA+KfqAypfKZC86Eqk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RhxgsoN3lmna/+JExixoNPap1mGT+zqpO8/iUSe0edBRPqG+uoL1AosmqpeX5IHTh
-	 2chWd0LuCV5uA/wGXzLmitAFUDvq/N2tsQO6PHg3VWq7FgO8gIIqA6TBaSckSJRa5K
-	 D/wIP3nU5H/MFsycCY/pxU8O00LxnYf2Rf4sYeMrQNL1vszte/bHWROoYjh07yq76F
-	 kCIXEhSsvJvRwHGh8TO3/KAScj63Tkf8THgvAMfGKLUc202xART5lI5zoNuiRyDqH6
-	 WtSV8ls84DVWfVSwbVY0+Ak+yUFRK6mcWFzICNSG3mLbZJ206lIt7L0gtlMiPrZDHv
-	 XNBqbnNQJS+Tw==
-Date: Wed, 27 Aug 2025 09:30:20 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Sandy Huang <hjc@rock-chips.com>, 
-	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 1/8] drm/connector: let drivers declare infoframes as
- unsupported
-Message-ID: <20250827-adorable-ocelot-of-adventure-ba88b7@houat>
-References: <20250819-drm-limit-infoframes-v2-0-7595dda24fbd@oss.qualcomm.com>
- <20250819-drm-limit-infoframes-v2-1-7595dda24fbd@oss.qualcomm.com>
- <20250820-artichoke-silkworm-of-election-521b5e@houat>
- <v7w7xkefm6ap7delx7wsvxmc76fwptqhe4ehokzfh4baueb7hr@acrx36exv42v>
+	 Content-Type:Content-Disposition:In-Reply-To; b=aHWB/Z+Gp6aqz7cnFkCAZxRqR6hyAB/uDf6OPNGd2tM6QVH0/vX+Mtvq0OEZIo1nzBwnlJP96dFjMuaZi9VLwfPu/JhDfrT7qrxkHGH6X2ycGl9rp6h13M6lL7dRmZ3pDWy9cCyiVrGg/pqobtLdz14bdpqe/y2O0WrlYTF3TsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3E3641691;
+	Wed, 27 Aug 2025 01:05:09 -0700 (PDT)
+Received: from J2N7QTR9R3 (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D650B3F694;
+	Wed, 27 Aug 2025 01:05:07 -0700 (PDT)
+Date: Wed, 27 Aug 2025 09:04:46 +0100
+From: Mark Rutland <mark.rutland@arm.com>
+To: Robin Murphy <robin.murphy@arm.com>
+Cc: peterz@infradead.org, mingo@redhat.com, will@kernel.org,
+	acme@kernel.org, namhyung@kernel.org,
+	alexander.shishkin@linux.intel.com, jolsa@kernel.org,
+	irogers@google.com, adrian.hunter@intel.com,
+	kan.liang@linux.intel.com, linux-perf-users@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-alpha@vger.kernel.org,
+	linux-snps-arc@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+	linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+	linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+	sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
+	linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+	intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+	iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+	linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-riscv@lists.infradead.org
+Subject: Re: [PATCH 18/19] perf: Introduce positive capability for raw events
+Message-ID: <aK68Ht03vZ0G3Xpt@J2N7QTR9R3>
+References: <cover.1755096883.git.robin.murphy@arm.com>
+ <542787fd188ea15ef41c53d557989c962ed44771.1755096883.git.robin.murphy@arm.com>
+ <aK259PrpyxguQzdN@J2N7QTR9R3>
+ <015974a4-f129-4ae5-adf9-c94b29f0576a@arm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="wgcccbljqt4firco"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <v7w7xkefm6ap7delx7wsvxmc76fwptqhe4ehokzfh4baueb7hr@acrx36exv42v>
+In-Reply-To: <015974a4-f129-4ae5-adf9-c94b29f0576a@arm.com>
 
+On Tue, Aug 26, 2025 at 11:46:02PM +0100, Robin Murphy wrote:
+> On 2025-08-26 2:43 pm, Mark Rutland wrote:
+> > On Wed, Aug 13, 2025 at 06:01:10PM +0100, Robin Murphy wrote:
+> > To bikeshed a little here, I'm not keen on the PERF_PMU_CAP_RAW_EVENTS
+> > name, because it's not clear what "RAW" really means, and people will
+> > definitely read that to mean something else.
+> > 
+> > Could we go with something like PERF_PMU_CAP_COMMON_CPU_EVENTS, to make
+> > it clear that this is about opting into CPU-PMU specific event types (of
+> > which PERF_TYPE_RAW is one of)?
+> 
+> Indeed I started with that very intention after our previous discussion, but
+> soon realised that in fact nowhere in the code is there any definition or
+> even established notion of what "common" means in this context, so it's
+> hardly immune to misinterpretation either.
 
---wgcccbljqt4firco
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v2 1/8] drm/connector: let drivers declare infoframes as
- unsupported
-MIME-Version: 1.0
+We can document that; it's everything less than PERF_TYPE_MAX:
 
-Hi,
+	enum perf_type_id {
+		PERF_TYPE_HARDWARE                      = 0, 
+		PERF_TYPE_SOFTWARE                      = 1, 
+		PERF_TYPE_TRACEPOINT                    = 2, 
+		PERF_TYPE_HW_CACHE                      = 3, 
+		PERF_TYPE_RAW                           = 4, 
+		PERF_TYPE_BREAKPOINT                    = 5, 
 
-On Wed, Aug 20, 2025 at 12:52:44PM +0300, Dmitry Baryshkov wrote:
-> On Wed, Aug 20, 2025 at 09:15:36AM +0200, Maxime Ripard wrote:
-> > Hi,
-> >=20
-> > On Tue, Aug 19, 2025 at 09:57:30PM +0300, Dmitry Baryshkov wrote:
-> > > Currently DRM framework expects that the HDMI connector driver suppor=
-ts
-> > > all infoframe types: it generates the data as required and calls into
-> > > the driver to program all of them, letting the driver to soft-fail if
-> > > the infoframe is unsupported. This has a major drawback on userspace
-> > > API: the framework also registers debugfs files for all Infoframe typ=
-es,
-> > > possibly surprising the users when infoframe is visible in the debugfs
-> > > file, but it is not visible on the wire.
-> > >=20
-> > > Let drivers declare that they support only a subset of infoframes,
-> > > creating a more consistent interface.
-> > >=20
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> >=20
-> > I'm not really convinced. Infoframes aren't really something you should
-> > ignore, AVI is effectively mandatory, HDMI kind of is too, AUDIO is if
-> > audio support is enabled, DRM is mandatory if HDR is used.
->=20
-> Nevertheless, sun4i, innohdmi, adv7511, it6263 and rk3066 drivers
-> provide support only for the AVI infoframe.
+		PERF_TYPE_MAX,                          /* non-ABI */
+	};
 
-Yes, but it's still something we shouldn't paper over. The spec mandates
-it, if drivers want to deviate from it it's something we should warn
-about, not silence.
+... and maybe you could use "PERF_PMU_CAP_ABI_TYPES" to align with that
+comment?
 
-sun4i is a good example, to me at least since I have the doc. The
-hardware supports AVI, Audio, ACP, and SPD. HDR isn't supported, so DRM
-isn't either. The only missing one is HDMI, but the documentation isn't
-the best so it might still be supported. In short, it's a driver issue.
+> Furthermore the semantics of the cap as it ended up are specifically
+> that the PMU wants the same behaviour as if it had registered as
+> PERF_TYPE_RAW, so having "raw" in the name started to look like the
+> more intuitive option after all (plus being nice and short helps.)
 
-adv7511 supports AVI, Audio, ACP, SPD, ACP, and looks to have a
-mechanism to send any infoframe as is. So, again, driver issue.
+I appreciate the shortness, but I think it's misleading to tie this to
+"RAW" specifically, when really this is a capabiltiy to say "please let
+me try to init any events for non-dynamic types, in addition to whatever
+specific type I am registered with".
 
-I couldn't find the other datasheet, but I'd be very surprised if it
-wasn't the case for these too.
+> If anything, it's "events" that carries the implication that's proving hard
+> to capture precisely and concisely here, so maybe the answer to avoid
+> ambiguity is to lean further away from a "what it represents" to a "what it
+> actually does" naming - PERF_PMU_CAP_TYPE_RAW, anyone?
 
-> Some of them can be extended to support other infoframe kinds (e.g.
-> ADV7511 has two spare infoframes which can be used for HDMI and SPD).
->=20
-> > SPD is indeed optional though.
-> >=20
-> > So, it's really dynamic in essence, and not really something we should
-> > expect drivers to ignore.
-> >=20
-> > I do acknowledge that a lot of drivers just silently ignore the
-> > infoframes they don't support at the moment, which isn't great either.
-> >=20
-> > Maybe we should standardize and document what drivers should do when
-> > they don't support a given infoframe type?
->=20
-> The chips might be generating infoframes internally. This series was
-> triggered by LT9611UXC, which does all HDMI work under the hood in the
-> firmware. See [1]. The series I posted hooks HDMI audio directly into
-> the bridge driver, but I'd really prefer to be able to use
-> drm_atomic_helper_connector_hdmi_hotplug(), especially if I ever get to
-> implementing CEC support for it.
->=20
-> ADV7511 likewise generates audio infoframe without Linux
-> help (audio-related fields are programmed, but it's not the
-> infoframe itself).
+I'm happy with TYPE in the name; it's just RAW specifically that I'm
+objecting to.
 
-Implementing the write_infoframe hooks as a nop with a comment in those
-case is totally reasonable to me.
+> > Likewise, s/is_raw_pmu()/pmu_supports_common_cpu_events()/.
+> 
+> Case in point: is it any more logical and expected that supporting common
+> CPU events implies a PMU should be offered software or breakpoint events as
+> well? Because that's what such a mere rename would currently mean :/
 
-I'd still like to document that drivers should only return 0 if they
-programmed the infoframe, and -ENOTSUPP (and the core logging a warning)
-otherwise.
+Yes, I think it is.
 
-That way, we would be able to differentiate between the legimitate
-LT9611UXC case, and the "driver is broken" sun4i (and others) case.
+> > > ---
+> > > 
+> > > A further possibility is to automatically add the cap to PERF_TYPE_RAW
+> > > PMUs in perf_pmu_register() to have a single point-of-use condition; I'm
+> > > undecided...
+> > 
+> > I reckon we don't need to automagically do that, but I reckon that
+> > is_raw_pmu()/pmu_supports_common_cpu_events() should only check the cap,
+> > and we don't read anything special into any of
+> > PERF_TYPE_{RAW,HARDWARE,HW_CACHE}.
+> 
+> OK, but that would then necessitate having to explicitly add the cap to all
+> 15-odd other drivers which register as PERF_TYPE_RAW as well, at which point
+> it starts to look like a more general "I am a CPU PMU in terms of most
+> typical assumptions you might want to make about that" flag...
+> 
+> To clarify (and perhaps something for a v2 commit message), we currently
+> have 3 categories of PMU driver:
+> 
+> 1: (Older/simpler CPUs) Registers as PERF_TYPE_RAW, wants
+> PERF_TYPE_RAW/HARDWARE/HW_CACHE events
+> 2: (Heterogeneous CPUs) Registers as dynamic type, wants
+> PERF_TYPE_RAW/HARDWARE/HW_CACHE events plus events of its own type
+> 3: (Mostly uncore) Registers as dynamic type, only wants events of its own
+> type
 
-Maxime
+Sure, but I think that separating 1 and 2 is an artificial distinction,
+and what we really have is:
 
---wgcccbljqt4firco
-Content-Type: application/pgp-signature; name="signature.asc"
+(a) Wants to handle (some of) the non-dynamic/common/ABI types (in
+    addition to whatever specific type it was registered with). Needs to
+    have a switch statement somewhere in pmu::event_init().
 
------BEGIN PGP SIGNATURE-----
+(b) Only wants to handle the specific type the PMU was registered with.
 
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaK60CAAKCRAnX84Zoj2+
-dkbWAYCMfUjpHErZH+SQIgUybfgwR6GGsSh167v91iFWGWz8EJiwF3fqRZNLLMX0
-Bs7dH+QBf3E+xTNLU4qS9e3zJulsSQ7EeLySYfsKG21vEhU0ndIesR3W4HshDPTR
-mJeUGxkx9g==
-=m9tf
------END PGP SIGNATURE-----
+> My vested interest is in making category 3 the default behaviour, given that
+> the growing majority of new drivers are uncore (and I keep having to write
+> them...) 
 
---wgcccbljqt4firco--
+Yes, we're aligned on that.
+
+> However unclear the type overlaps in category 1 might be, it's been
+> like that for 15 years, so I didn't feel compelled to churn fossils like
+> Alpha more than reasonably necessary. Category 2 is only these 5 drivers, so
+> a relatively small tweak to distinguish them from category 3 and let them
+> retain the effective category 1 behaviour (which remains the current one of
+> potentially still being offered software etc. events too) seemed like the
+> neatest way to make progress.
+
+I just think we should combine 1 and 2 (into categroy a as above), since
+that removes the need to treat RAW specially going forwards.
+
+> I'm not saying I'm necessarily against a general overhaul of CPU PMUs being
+> attempted too, just that it seems more like a whole other side-quest, and
+> I'd really like to slay the uncore-boilerplate dragon first.
+
+I think that adding the cap to those 15 PMUs would take less time than
+it has taken me to write this email, so I do not understand the
+objection.
+
+Mark.
 
