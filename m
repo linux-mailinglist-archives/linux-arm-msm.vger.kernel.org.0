@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-70976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 078FDB3785B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 04:53:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC150B3785D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 04:53:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BD891362157
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 02:53:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9CA8B36206B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 02:53:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E659306D2B;
-	Wed, 27 Aug 2025 02:53:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDBA030496C;
+	Wed, 27 Aug 2025 02:53:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="InzpCzgy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W3xANphO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C9FA307496
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753A9302CBA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:53:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756263180; cv=none; b=MO4oQLvTU9H1xU2X0dhV6SSLFGxa0fv/KB+LXuKF0dg3DeqlcK4hyc0q2dssKsC304h0GP+2a9pxPEdy6cUGdftK84czL3FakuaX6FmvQggGzC3MvkibTfFaMKBLuOxOOqJFXS30EN8eBs8pRM3FQMrgSIr4UhEcAW7pv55/0Xo=
+	t=1756263184; cv=none; b=ihUMPiGofjJS81sg07U518niUIQILt7yuBP1mwRwK6ixnqWtp9IvD3SymCZUMQeTKdO/iwRrCw2QCVSDjyd1YH4f2Pr4AkexA7gHpSDXWwPaMK0Ac4ezRajvN5R2CURgAUSVwhxGRt3HK8VlL5BoUVp16cZsEHqCxLRqr1syPYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756263180; c=relaxed/simple;
-	bh=oWr+J2BikmN/nWmxjNgfVsXgAUjE81muHkUshS8lPEg=;
+	s=arc-20240116; t=1756263184; c=relaxed/simple;
+	bh=AQU4bvBWCAy8DBtcR3JEj54cRJbZwKftL1Hi8V8oWmw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UZqdMVqQEdJTJqOLMTmcPU3ARs9il7vRJ5FP2H4pcOTqDYhKYY/0PsH4G+IYtxVsuMjngLJhF69Ogjgqsg42YBZf61on/zeAp6BI+6ZPb7iWfL1R6gi13BPlbgPosMR7Lfw2pZUhRONsL+cvVqor/xSEJq9irGlKd458WY3IVug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=InzpCzgy; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=E3kMRZuD5RNEG/+3Imj6M1OvETbVb3yQC6+se82L70zxzBJsA8AbS2WeoOV0M/f5ytqwrzFPXdJEl+VDFn1K3HhnTmXexN1RlfixcW0/CLqw2A4UNp0lCA4Bvb/MxZT6IzkqQECGg2QrGD72/bxr4oWljoPHotl6RD9hKHYcIk4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W3xANphO; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QJP4sp007563
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:52:57 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QLeu6A030384
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:53:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	M/dYgwVL8zgNxV4oftrZr/eg0nH5e/gAEL1tnAqGh30=; b=InzpCzgyjMx45TyH
-	fceud0iuqPgN1zWHfpllxLzSYP9sOGh/H9EUk3WBzsaB75GionmG0SiH7gyfzHUp
-	zM+qUjXyNFs+FKBtL5hyjZTtseIRLG1iZ1btyUu9a7kfh/33ZoArO2O9BmjVLFzj
-	P22yoZazox+CBs2Uw5dHFo8fZA7i1kv4vgeppT/Z4OJSKzbbJC0hql3aniTXtfDh
-	oVOTXwD5IPjeyVkGRRkE07kXXo3qUYhz1iU8YbBz1C1anNwlclzOQh95FSqGBPkA
-	OG1cSu3BOZN4qBC5XJDPUc33cfWTBMgueGKwzDxGOdRU1XmLjRMbpIndguWA8NVY
-	NA8w9A==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q6x8b81s-1
+	GazQeRqGMxs4Jiu6nQFWxHgKmeKHqCz8vKUY9uwwtRg=; b=W3xANphOrBAD9YAR
+	7iXazYNNlWpncsjNU8jv+wybjIG/Fgedais4/4323qx4Bkf9mS+IIY0HCXirowa+
+	JZCBj+N6kV+QuWaiygFSByZKfvsfii9oGLCYg7+eSKcETNRhREOfJxwj5zv/W8ib
+	dYjslnfZvOsNperJgIs4qZclpeOfrmZ5zWgyyMk0WP8OpqZwN9qk9rGHxbR9nW4M
+	AfMGDqAU1Y4h5y8ycXrqYfLW1q3wagXygHn5Y/Hg/ANlfjezv9UQdq8nIfiIs083
+	2vJ7/thwouUy2Xyoi78XXuFcxzE84/l5qf4q1wpYSaDvhgSY9pzs1AE/8n7KoxLt
+	hCBabA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5umb9uq-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:52:57 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2464dc09769so104758795ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 19:52:57 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 02:53:01 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2461c537540so66580955ad.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 19:53:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756263176; x=1756867976;
+        d=1e100.net; s=20230601; t=1756263181; x=1756867981;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=M/dYgwVL8zgNxV4oftrZr/eg0nH5e/gAEL1tnAqGh30=;
-        b=qIXkSYtQOU5ivucfbQ+Hq0DL6d/Ov69WkGdNoB49YM0/MqVaRH+Ui3bitdpcWfHaBQ
-         KqbLZsNKvTG2aMuRyXueb7SxY4IeFjOehEbjgAyLg6r6nGoxGPd3I/FY5SH9MoCTmvXO
-         5kgWDJ/WY2tZSqkW/MZlrjPpWDJU33eCX7/B6OYlZmyEhAdOGJrReyqxwLZ9YJi6M9uN
-         vNjS5Q2YIo6TqGg3SXquj6+UJiQ+WoXA8bmO3739HVHJWi8oWw410IR1+VCbO+sgME9R
-         ZamW3qc5MfUgG7osvlmIRMg1MWPVf2JutycTYtCPBO6yUdQKf4ZTBe5VYw3A1o/3i8Rp
-         E+lw==
-X-Gm-Message-State: AOJu0YygHKIcpGliAQBreO+seA5XihLe/n13hbseMFxjT1sEy427nWFG
-	qJXU98lH6lQUwesSth/otP30k1rMAQVlKiQerOaB8YdvWEtOfMizV1EvPhtppGynTrSUUguE58G
-	vO77f+k7MupUYcq7gQAA99QxDWGWM/F3dizW1vWAmQBHjw34ijeMiex1zFdw3OJ2pu9z4
-X-Gm-Gg: ASbGncvigqjBbm4l8J1ZZ5cuFKWKsvOTiSMAkvRim0or5dIY6gmRLLil8qfGuFfwYl2
-	USq4HPlHkgn59u+FP8MPISzDn1qqoOuyUjo/V95iKchujPjPuxlFjfYXoCApxmJg75fNLndA2rc
-	0fRPBxLuKkJEIlKAATusZm1/TwlAVStufPXyjPbOZn6oqfc8jtNGSOLmYbFmVLD4r0lVFGVU6Ho
-	BCGBFCW9qXt/95b+RS1/xzZetSStkHXrzZmOsLUZDn/r4iJFbatkxzXyzkJ/k1URBDXTL+QZiUV
-	rPnAy4cKY0ZC66h7XnJYJycmr7aF0ell37QFwgTRbgPhH9iYBwtJCWMrcKHau4TjJEKhuO4t+DV
-	MTYfRGlJCsnBaP12xRb8/UrhzQac83NcCVg==
-X-Received: by 2002:a17:902:c40f:b0:244:99aa:54a1 with SMTP id d9443c01a7336-2462ee0b77emr251213665ad.7.1756263175761;
-        Tue, 26 Aug 2025 19:52:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH5fiVLd4ozGG0N9J7pUZYijDjCB678zgvELGavpbGsU/erZ8ZnWruo4NXCatguC1tm9E2kRw==
-X-Received: by 2002:a17:902:c40f:b0:244:99aa:54a1 with SMTP id d9443c01a7336-2462ee0b77emr251213485ad.7.1756263175257;
-        Tue, 26 Aug 2025 19:52:55 -0700 (PDT)
+        bh=GazQeRqGMxs4Jiu6nQFWxHgKmeKHqCz8vKUY9uwwtRg=;
+        b=nAawFNCBOznECpdN9YFx131NWgdcQxWT5lJIvsRYQtTGzfX5l+TVrV5NiSHj5jJotV
+         jQWyE0RzSvCKYA0LaeU/rSkyqgYUjH4RMyKqjC/EXJCYJj82Sqi6pyL6+ga5leLOAhEj
+         TR/VETqWJUhGRGGfvHEAXi8/ekozylYcq3dLoJm6fM4AMo22P5O+etp3EGwAd0Aj0U7Z
+         Fvbg0mtMjDLQjTQqvFZ+tNIzHdTeGP3FAEwB6iFShykaq1tEn2dzVf5utNbcemXfV0j/
+         2DlfrFFRDJ7e9y70zku8saNctK0yjUjhdMjTugFA7XcfQoD/899u1mW3HWa+71cm+2yy
+         Y0rA==
+X-Gm-Message-State: AOJu0Yw1VB1mk1LuDTLl1wn+paUwbti7vqIrtTUSOUqcYDy7NQ1HKXU1
+	mS1cP0hd8SmVGNRFd34PaoP0/Noog1KIvHltk5SAA/HrqN2LK2rEHL8KKVMdAMdKxDwqEt/u8tb
+	cEiM0Sb9Ks8ikYOsVJFFwcGKE1yglO93XN/GVdLZvGq9uwCgHgZ7hDtxFMiNKWd+yeimR
+X-Gm-Gg: ASbGncttPuCIyadkytmkOTSA4nUb5gzG75LCJsJF+WpFdHNYbP+4QqGnILqpeGN9Rcm
+	Xeh2KRX3L19dmWqPbQdhjik4TWyARGl+l0WMA92lUjyjWfvn25Tw5kIZDCHG2b9Q28lN0ZeiCSO
+	9Hrq5z1JcQJPCy+a6QkRJRqNbys6v4iezb4jkFRaQYhsFnxO8ULdsqKgos14yJeu5TULs1EGpLh
+	UQS8cM8VbTavk+rzdffHRucnTVxV2ULf3kql4d3Ci8YpsqkbcI6PMMlGhc9yERA3wtPDhFcQAhW
+	1Iypod/wp7PtXV3jbG4IPWKbBU0cmFPFLmozlh4Re+8W4GEK+y1GwOTBuWa42zwGuuSMCiyLSV7
+	k9YCIB3COCNNK47Oo/WAPoiGBlCv6aIio8Q==
+X-Received: by 2002:a17:902:d485:b0:247:4a3:2613 with SMTP id d9443c01a7336-24704a32c1emr96819035ad.54.1756263180390;
+        Tue, 26 Aug 2025 19:53:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdFxv53VqQSiT5BXUXGvdqmX4qjbXI7W+FL0ZFFHACbcH0616taYGC5lajCJW4ZDfirgFysg==
+X-Received: by 2002:a17:902:d485:b0:247:4a3:2613 with SMTP id d9443c01a7336-24704a32c1emr96818545ad.54.1756263179686;
+        Tue, 26 Aug 2025 19:52:59 -0700 (PDT)
 Received: from yijiyang-gv.ap.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246687a661fsm109337585ad.43.2025.08.26.19.52.52
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246687a661fsm109337585ad.43.2025.08.26.19.52.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 19:52:54 -0700 (PDT)
+        Tue, 26 Aug 2025 19:52:59 -0700 (PDT)
 From: Yijie Yang <yijie.yang@oss.qualcomm.com>
-Date: Wed, 27 Aug 2025 10:52:19 +0800
-Subject: [PATCH v7 2/3] arm64: dts: qcom: Add HAMOA-IOT-SOM platform
+Date: Wed, 27 Aug 2025 10:52:20 +0800
+Subject: [PATCH v7 3/3] arm64: dts: qcom: Add base HAMOA-IOT-EVK board
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,8 +90,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250827-hamoa_initial-v7-2-f9b81d564bb2@oss.qualcomm.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250827-hamoa_initial-v7-3-f9b81d564bb2@oss.qualcomm.com>
 References: <20250827-hamoa_initial-v7-0-f9b81d564bb2@oss.qualcomm.com>
 In-Reply-To: <20250827-hamoa_initial-v7-0-f9b81d564bb2@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
@@ -100,675 +100,1335 @@ To: Bjorn Andersson <andersson@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, Yijie Yang <yijie.yang@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Yingying Tang <quic_yintang@quicinc.com>
+        Quill Qi <le.qi@oss.qualcomm.com>, Jie Zhang <quic_jiezh@quicinc.com>,
+        Shuai Zhang <quic_shuaz@quicinc.com>,
+        Yongxing Mou <quic_yongmou@quicinc.com>
 X-Mailer: b4 0.15-dev-5bbf5
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756263163; l=15931;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756263163; l=28283;
  i=yijie.yang@oss.qualcomm.com; s=20240408; h=from:subject:message-id;
- bh=oWr+J2BikmN/nWmxjNgfVsXgAUjE81muHkUshS8lPEg=;
- b=tApY5HtbPKp9Oy+jE/BwsQw/X5BL6Zae7tizMp0PjDfYUM+9y0qXDEfpMpWr1tuXLAmufw3Mb
- 7QdjGN32ExNA4BNJmzeROhiMZvqpM4Jypt2MKJrgSPig6L2UEJ535MG
+ bh=AQU4bvBWCAy8DBtcR3JEj54cRJbZwKftL1Hi8V8oWmw=;
+ b=dei9CrRxvr1l1a9lft8OM+IVZHmCFWx32aopCtTo4oYdlkX3pJNaGNQuJ/kiFk3AkCUGPD4VE
+ B9mW//jcrRDBSWAoS69sRI02SuoOSCpACVqyurnm1bADXQObechJnCk
 X-Developer-Key: i=yijie.yang@oss.qualcomm.com; a=ed25519;
  pk=XvMv0rxjrXLYFdBXoFjTdOdAwDT5SPbQ5uAKGESDihk=
-X-Proofpoint-ORIG-GUID: 5-D3Pr7Dn2K-I-NW5HLcKCOPlt49TW2k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDA0NCBTYWx0ZWRfX1ADMzqG6ht19
- UqommgSlUYAf63MpzgPUy3sERwBkdW/09vFhaQzVF5Oj2YrTAZEJSZDpTzTQG3o9R0vHdORt4Nj
- VxdRc+1cZ/aHAduvj345oz9XfJCU0Y5u4ASpMAZ4/yFLD6AQQy1+rBExff83d56+oCkgfni31jy
- vwiOCirZjC4Lgohc7YSC31Uo61CMcncGJfOVwdz48hUnOh8exnDwdK9/fluFh+IyD3IPZB9ebTw
- 23g3xrKtx+sR6aiRJwY+Kvq05MzE3OWr6TuIPEE6vvVB0QmZMucBej9Jkuz7e942DOIZbvfyB/L
- n99MY+FOSNYiK7kDhznwdgSSNrF2o0NtMXAf1ddKPQo1m+I9Yhq2RrdGYISGC2MwLCOS5B0LjWh
- 35KZ01yT
-X-Proofpoint-GUID: 5-D3Pr7Dn2K-I-NW5HLcKCOPlt49TW2k
-X-Authority-Analysis: v=2.4 cv=Ep/SrTcA c=1 sm=1 tr=0 ts=68ae7309 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+X-Authority-Analysis: v=2.4 cv=VtIjA/2n c=1 sm=1 tr=0 ts=68ae730d cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
  a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
- a=kJpOf-JYLzBZDkfq8aYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=324X-CrmTo6CU4MGRt3R:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=kVwVPuH_WQyquiqLNToA:9 a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMiBTYWx0ZWRfX11rP5YslVf1f
+ wrqjAVT4gciLGT4VTveVOh2N58N5cHirWeKVIJxuYyJiaKFUr+1jRhbcxACgghwnk456hbmjunD
+ jLSajlkhcJxvrAjXlHAzDLZAH9v5ucsnaoDMDEYb1nCviAVdHc1E0XFe3k8vmKCsNrdxJ/kc0qV
+ 0AiGLSU4ZDVSuoDH0IY6wjYCY0r4xjriCYIymzoZ5I2KIZ+n/IlWmNCSaUKIZSmuRQwlNy9+Ku0
+ RiCzqJiCTriTy2AbOAXtncZ/YhOeGf0NQgcogVqGZuPsPJImCTgxmh25kXKQkKTxemzjuAhUqxA
+ P/XiK1YsSjBE0gSOlI2expmYvoZrfZRVaSFalxGuGPrvn5bYOCJ0vBG9A9UO/TE2nVfE1ihysav
+ uun0sTOe
+X-Proofpoint-GUID: fMPkrkfTJZOEkGoQYH6Shz5KAy2fZlJf
+X-Proofpoint-ORIG-GUID: fMPkrkfTJZOEkGoQYH6Shz5KAy2fZlJf
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 adultscore=0 bulkscore=0 suspectscore=0
- phishscore=0 priorityscore=1501 malwarescore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230044
+ clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 adultscore=0 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508230032
 
-The HAMOA-IOT-SOM is a compact computing module that integrates a System
-on Chip (SoC) — specifically the x1e80100 — along with essential
-components optimized for IoT applications. It is designed to be mounted on
-carrier boards, enabling the development of complete embedded systems.
+The HAMOA-IOT-EVK is an evaluation platform for IoT products, composed of
+the Hamoa IoT SoM and a carrier board. Together, they form a complete
+embedded system capable of booting to UART.
 
-This change enables the following components:
-- Regulators on the SOM
-- Reserved memory regions
-- PCIe6a and its PHY
-- PCIe4 and its PHY
-- USB0 through USB6 and their PHYs
-- ADSP, CDSP
-- WLAN, Bluetooth (M.2 interface)
+This change enables the following peripherals on the carrier board:
+- UART
+- On-board regulators
+- USB Type-C mux
+- Pinctrl
+- Embedded USB (EUSB) repeaters
+- NVMe
+- pmic-glink
+- USB DisplayPorts
+- Bluetooth
+- Graphic
+- Audio
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Co-developed-by: Yingying Tang <quic_yintang@quicinc.com> # PCIe4 and WLAN
-Signed-off-by: Yingying Tang <quic_yintang@quicinc.com>
+Co-developed-by: Quill Qi <le.qi@oss.qualcomm.com> # Audio
+Signed-off-by: Quill Qi <le.qi@oss.qualcomm.com>
+Co-developed-by: Jie Zhang <quic_jiezh@quicinc.com> # Graphic
+Signed-off-by: Jie Zhang <quic_jiezh@quicinc.com>
+Co-developed-by: Shuai Zhang <quic_shuaz@quicinc.com> # Bluetooth
+Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
+Co-developed-by: Yongxing Mou <quic_yongmou@quicinc.com> # USB DisplayPorts
+Signed-off-by: Yongxing Mou <quic_yongmou@quicinc.com>
 Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
 ---
- arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 609 ++++++++++++++++++++++++++++
- 1 file changed, 609 insertions(+)
+ arch/arm64/boot/dts/qcom/Makefile          |    1 +
+ arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 1247 ++++++++++++++++++++++++++++
+ 2 files changed, 1248 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 94a84770b080..5e19535ad63d 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -13,6 +13,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= apq8039-t2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8094-sony-xperia-kitakami-karin_windy.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-db820c.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8096-ifc6640.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= hamoa-iot-evk.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-rdp432-c2.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= ipq5018-tplink-archer-ax55-v1.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= ipq5332-rdp441.dtb
+diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
 new file mode 100644
-index 000000000000..5facc5544c3d
+index 000000000000..b1a8380d6639
 --- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
-@@ -0,0 +1,609 @@
++++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+@@ -0,0 +1,1247 @@
 +// SPDX-License-Identifier: BSD-3-Clause
 +/*
 + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
 + */
 +
-+#include "x1e80100.dtsi"
-+#include "x1e80100-pmics.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++/dts-v1/;
++
++#include "hamoa-iot-som.dtsi"
 +
 +/ {
-+	compatible = "hamoa-iot-som", "qcom,x1e80100";
++	model = "Qualcomm Technologies, Inc. Hamoa IoT EVK";
++	compatible = "qcom,hamoa-iot-evk", "qcom,hamoa-iot-som", "qcom,x1e80100";
++	chassis-type = "embedded";
 +
-+	reserved-memory {
-+		linux,cma {
-+			compatible = "shared-dma-pool";
-+			size = <0x0 0x8000000>;
-+			reusable;
-+			linux,cma-default;
++	aliases {
++		serial0 = &uart21;
++		serial1 = &uart14;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	pmic-glink {
++		compatible = "qcom,x1e80100-pmic-glink",
++			     "qcom,sm8550-pmic-glink",
++			     "qcom,pmic-glink";
++		#address-cells = <1>;
++		#size-cells = <0>;
++		orientation-gpios = <&tlmm 121 GPIO_ACTIVE_HIGH>,
++				    <&tlmm 123 GPIO_ACTIVE_HIGH>,
++				    <&tlmm 125 GPIO_ACTIVE_HIGH>;
++
++		connector@0 {
++			compatible = "usb-c-connector";
++			reg = <0>;
++			power-role = "dual";
++			data-role = "dual";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					pmic_glink_ss0_hs_in: endpoint {
++						remote-endpoint = <&usb_1_ss0_dwc3_hs>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					pmic_glink_ss0_ss_in: endpoint {
++						remote-endpoint = <&usb_1_ss0_qmpphy_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					pmic_glink_ss0_sbu: endpoint {
++						remote-endpoint = <&usb_1_ss0_sbu_mux>;
++					};
++				};
++			};
++		};
++
++		connector@1 {
++			compatible = "usb-c-connector";
++			reg = <1>;
++			power-role = "dual";
++			data-role = "dual";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					pmic_glink_ss1_hs_in: endpoint {
++						remote-endpoint = <&usb_1_ss1_dwc3_hs>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					pmic_glink_ss1_ss_in: endpoint {
++						remote-endpoint = <&retimer_ss1_ss_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					pmic_glink_ss1_con_sbu_in: endpoint {
++						remote-endpoint = <&retimer_ss1_con_sbu_out>;
++					};
++				};
++			};
++		};
++
++		connector@2 {
++			compatible = "usb-c-connector";
++			reg = <2>;
++			power-role = "dual";
++			data-role = "dual";
++
++			ports {
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				port@0 {
++					reg = <0>;
++
++					pmic_glink_ss2_hs_in: endpoint {
++						remote-endpoint = <&usb_1_ss2_dwc3_hs>;
++					};
++				};
++
++				port@1 {
++					reg = <1>;
++
++					pmic_glink_ss2_ss_in: endpoint {
++						remote-endpoint = <&retimer_ss2_ss_out>;
++					};
++				};
++
++				port@2 {
++					reg = <2>;
++
++					pmic_glink_ss2_con_sbu_in: endpoint {
++						remote-endpoint = <&retimer_ss2_con_sbu_out>;
++					};
++				};
++			};
++		};
++	};
++
++	vreg_edp_3p3: regulator-edp-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_EDP_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 70 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&edp_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	sound {
++		compatible = "qcom,x1e80100-sndcard";
++		model = "X1E80100-EVK";
++		audio-routing = "WooferLeft IN",
++				"WSA WSA_SPK1 OUT",
++				"TweeterLeft IN",
++				"WSA WSA_SPK2 OUT",
++				"WooferRight IN",
++				"WSA2 WSA_SPK2 OUT",
++				"TweeterRight IN",
++				"WSA2 WSA_SPK2 OUT",
++				"IN1_HPHL",
++				"HPHL_OUT",
++				"IN2_HPHR",
++				"HPHR_OUT",
++				"AMIC2",
++				"MIC BIAS2",
++				"VA DMIC0",
++				"MIC BIAS3",
++				"VA DMIC1",
++				"MIC BIAS3",
++				"VA DMIC2",
++				"MIC BIAS1",
++				"VA DMIC3",
++				"MIC BIAS1",
++				"VA DMIC0",
++				"VA MIC BIAS3",
++				"VA DMIC1",
++				"VA MIC BIAS3",
++				"VA DMIC2",
++				"VA MIC BIAS1",
++				"VA DMIC3",
++				"VA MIC BIAS1",
++				"TX SWR_INPUT1",
++				"ADC2_OUTPUT";
++
++		wcd-playback-dai-link {
++			link-name = "WCD Playback";
++
++			codec {
++				sound-dai = <&wcd938x 0>, <&swr1 0>, <&lpass_rxmacro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wcd-capture-dai-link {
++			link-name = "WCD Capture";
++
++			codec {
++				sound-dai = <&wcd938x 1>, <&swr2 1>, <&lpass_txmacro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		wsa-dai-link {
++			link-name = "WSA Playback";
++
++			codec {
++				sound-dai = <&left_woofer>,
++					    <&left_tweeter>,
++					    <&swr0 0>,
++					    <&lpass_wsamacro 0>,
++					    <&right_woofer>,
++					    <&right_tweeter>,
++					    <&swr3 0>,
++					    <&lpass_wsa2macro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai WSA_CODEC_DMA_RX_0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++
++		va-dai-link {
++			link-name = "VA Capture";
++
++			codec {
++				sound-dai = <&lpass_vamacro 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6apmbedai VA_CODEC_DMA_TX_0>;
++			};
++
++			platform {
++				sound-dai = <&q6apm>;
++			};
++		};
++	};
++
++	vph_pwr: regulator-vph-pwr {
++		compatible = "regulator-fixed";
++
++		regulator-name = "vph_pwr";
++		regulator-min-microvolt = <3700000>;
++		regulator-max-microvolt = <3700000>;
++
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
++	vreg_nvme: regulator-nvme {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_NVME_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 18 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&nvme_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	/* Left unused as the retimer is not used on this board. */
++	vreg_rtmr0_1p15: regulator-rtmr0-1p15 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR0_1P15";
++		regulator-min-microvolt = <1150000>;
++		regulator-max-microvolt = <1150000>;
++
++		gpio = <&pmc8380_5_gpios 8 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb0_pwr_1p15_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr0_1p8: regulator-rtmr0-1p8 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR0_1P8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++
++		gpio = <&pm8550ve_9_gpios 8 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb0_1p8_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr0_3p3: regulator-rtmr0-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR0_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&pm8550_gpios 11 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb0_3p3_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr1_1p15: regulator-rtmr1-1p15 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR1_1P15";
++		regulator-min-microvolt = <1150000>;
++		regulator-max-microvolt = <1150000>;
++
++		gpio = <&tlmm 188 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb1_pwr_1p15_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr1_1p8: regulator-rtmr1-1p8 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR1_1P8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++
++		gpio = <&tlmm 175 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb1_pwr_1p8_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr1_3p3: regulator-rtmr1-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR1_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 186 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb1_pwr_3p3_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr2_1p15: regulator-rtmr2-1p15 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR2_1P15";
++		regulator-min-microvolt = <1150000>;
++		regulator-max-microvolt = <1150000>;
++
++		gpio = <&tlmm 189 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb2_pwr_1p15_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr2_1p8: regulator-rtmr2-1p8 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR2_1P8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++
++		gpio = <&tlmm 126 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb2_pwr_1p8_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_rtmr2_3p3: regulator-rtmr2-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_RTMR2_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 187 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&usb2_pwr_3p3_reg_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	vreg_wcn_3p3: regulator-wcn-3p3 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_3P3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 214 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&wcn_sw_en>;
++		pinctrl-names = "default";
++
++		regulator-always-on;
++	};
++
++	usb-1-ss0-sbu-mux {
++		compatible = "onnn,fsusb42", "gpio-sbu-mux";
++
++		enable-gpios = <&tlmm 168 GPIO_ACTIVE_LOW>;
++		select-gpios = <&tlmm 167 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&usb_1_ss0_sbu_default>;
++		pinctrl-names = "default";
++
++		mode-switch;
++		orientation-switch;
++
++		port {
++			usb_1_ss0_sbu_mux: endpoint {
++				remote-endpoint = <&pmic_glink_ss0_sbu>;
++			};
++		};
++	};
++
++	/*
++	 * TODO: These two regulators are actually part of the removable M.2
++	 * card and not the CRD mainboard. Need to describe this differently.
++	 * Functionally it works correctly, because all we need to do is to
++	 * turn on the actual 3.3V supply above.
++	 */
++	vreg_wcn_0p95: regulator-wcn-0p95 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_0P95";
++		regulator-min-microvolt = <950000>;
++		regulator-max-microvolt = <950000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	vreg_wcn_1p9: regulator-wcn-1p9 {
++		compatible = "regulator-fixed";
++
++		regulator-name = "VREG_WCN_1P9";
++		regulator-min-microvolt = <1900000>;
++		regulator-max-microvolt = <1900000>;
++
++		vin-supply = <&vreg_wcn_3p3>;
++	};
++
++	vreg_wwan: regulator-wwan {
++		compatible = "regulator-fixed";
++
++		regulator-name = "SDX_VPH_PWR";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++
++		gpio = <&tlmm 221 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		pinctrl-0 = <&wwan_sw_en>;
++		pinctrl-names = "default";
++
++		regulator-boot-on;
++	};
++
++	wcd938x: audio-codec {
++		compatible = "qcom,wcd9385-codec";
++
++		pinctrl-0 = <&wcd_default>;
++		pinctrl-names = "default";
++
++		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
++
++		qcom,micbias1-microvolt = <1800000>;
++		qcom,micbias2-microvolt = <1800000>;
++		qcom,micbias3-microvolt = <1800000>;
++		qcom,micbias4-microvolt = <1800000>;
++		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000
++		500000 500000 500000 500000>;
++		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
++		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
++		qcom,rx-device = <&wcd_rx>;
++		qcom,tx-device = <&wcd_tx>;
++
++		vdd-buck-supply = <&vreg_l15b_1p8>;
++		vdd-rxtx-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l15b_1p8>;
++		vdd-mic-bias-supply = <&vreg_bob1>;
++
++		#sound-dai-cells = <1>;
++	};
++
++	wcn7850-pmu {
++		compatible = "qcom,wcn7850-pmu";
++
++		vdd-supply = <&vreg_wcn_0p95>;
++		vddio-supply = <&vreg_l15b_1p8>;
++		vddaon-supply = <&vreg_wcn_0p95>;
++		vdddig-supply = <&vreg_wcn_0p95>;
++		vddrfa1p2-supply = <&vreg_wcn_1p9>;
++		vddrfa1p8-supply = <&vreg_wcn_1p9>;
++
++		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
++
++		pinctrl-0 = <&wcn_bt_en>;
++		pinctrl-names = "default";
++
++		regulators {
++			vreg_pmu_rfa_cmn: ldo0 {
++				regulator-name = "vreg_pmu_rfa_cmn";
++			};
++
++			vreg_pmu_aon_0p59: ldo1 {
++				regulator-name = "vreg_pmu_aon_0p59";
++			};
++
++			vreg_pmu_wlcx_0p8: ldo2 {
++				regulator-name = "vreg_pmu_wlcx_0p8";
++			};
++
++			vreg_pmu_wlmx_0p85: ldo3 {
++				regulator-name = "vreg_pmu_wlmx_0p85";
++			};
++
++			vreg_pmu_btcmx_0p85: ldo4 {
++				regulator-name = "vreg_pmu_btcmx_0p85";
++			};
++
++			vreg_pmu_rfa_0p8: ldo5 {
++				regulator-name = "vreg_pmu_rfa_0p8";
++			};
++
++			vreg_pmu_rfa_1p2: ldo6 {
++				regulator-name = "vreg_pmu_rfa_1p2";
++			};
++
++			vreg_pmu_rfa_1p8: ldo7 {
++				regulator-name = "vreg_pmu_rfa_1p8";
++			};
++
++			vreg_pmu_pcie_0p9: ldo8 {
++				regulator-name = "vreg_pmu_pcie_0p9";
++			};
++
++			vreg_pmu_pcie_1p8: ldo9 {
++				regulator-name = "vreg_pmu_pcie_1p8";
++			};
 +		};
 +	};
 +};
 +
-+&apps_rsc {
-+	/* PMC8380C_B */
-+	regulators-0 {
-+		compatible = "qcom,pm8550-rpmh-regulators";
-+		qcom,pmic-id = "b";
++&gpu {
++	status = "okay";
++};
 +
-+		vdd-bob1-supply = <&vph_pwr>;
-+		vdd-bob2-supply = <&vph_pwr>;
-+		vdd-l1-l4-l10-supply = <&vreg_s4c_1p8>;
-+		vdd-l2-l13-l14-supply = <&vreg_bob1>;
-+		vdd-l5-l16-supply = <&vreg_bob1>;
-+		vdd-l6-l7-supply = <&vreg_bob2>;
-+		vdd-l8-l9-supply = <&vreg_bob1>;
-+		vdd-l12-supply = <&vreg_s5j_1p2>;
-+		vdd-l15-supply = <&vreg_s4c_1p8>;
-+		vdd-l17-supply = <&vreg_bob2>;
++&gpu_zap_shader {
++	firmware-name = "qcom/x1e80100/gen70500_zap.mbn";
++};
 +
-+		vreg_bob1: bob1 {
-+			regulator-name = "vreg_bob1";
-+			regulator-min-microvolt = <3008000>;
-+			regulator-max-microvolt = <3960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++&i2c1 {
++	clock-frequency = <400000>;
++	status = "okay";
 +
-+		vreg_bob2: bob2 {
-+			regulator-name = "vreg_bob2";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++	typec-mux@8 {
++		compatible = "parade,ps8830";
++		reg = <0x08>;
 +
-+		vreg_l1b_1p8: ldo1 {
-+			regulator-name = "vreg_l1b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++		clocks = <&rpmhcc RPMH_RF_CLK5>;
 +
-+		vreg_l2b_3p0: ldo2 {
-+			regulator-name = "vreg_l2b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++		vdd-supply = <&vreg_rtmr2_1p15>;
++		vdd33-supply = <&vreg_rtmr2_3p3>;
++		vdd33-cap-supply = <&vreg_rtmr2_3p3>;
++		vddar-supply = <&vreg_rtmr2_1p15>;
++		vddat-supply = <&vreg_rtmr2_1p15>;
++		vddio-supply = <&vreg_rtmr2_1p8>;
 +
-+		vreg_l4b_1p8: ldo4 {
-+			regulator-name = "vreg_l4b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++		reset-gpios = <&tlmm 185 GPIO_ACTIVE_LOW>;
 +
-+		vreg_l5b_3p0: ldo5 {
-+			regulator-name = "vreg_l5b_3p0";
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++		pinctrl-0 = <&rtmr2_default>;
++		pinctrl-names = "default";
 +
-+		vreg_l6b_1p8: ldo6 {
-+			regulator-name = "vreg_l6b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++		orientation-switch;
++		retimer-switch;
 +
-+		vreg_l7b_2p8: ldo7 {
-+			regulator-name = "vreg_l7b_2p8";
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
 +
-+		vreg_l8b_3p0: ldo8 {
-+			regulator-name = "vreg_l8b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++			port@0 {
++				reg = <0>;
 +
-+		vreg_l9b_2p9: ldo9 {
-+			regulator-name = "vreg_l9b_2p9";
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++				retimer_ss2_ss_out: endpoint {
++					remote-endpoint = <&pmic_glink_ss2_ss_in>;
++				};
++			};
 +
-+		vreg_l10b_1p8: ldo10 {
-+			regulator-name = "vreg_l10b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++			port@1 {
++				reg = <1>;
 +
-+		vreg_l12b_1p2: ldo12 {
-+			regulator-name = "vreg_l12b_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
++				retimer_ss2_ss_in: endpoint {
++					remote-endpoint = <&usb_1_ss2_qmpphy_out>;
++				};
++			};
 +
-+		vreg_l13b_3p0: ldo13 {
-+			regulator-name = "vreg_l13b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
++			port@2 {
++				reg = <2>;
 +
-+		vreg_l14b_3p0: ldo14 {
-+			regulator-name = "vreg_l14b_3p0";
-+			regulator-min-microvolt = <3072000>;
-+			regulator-max-microvolt = <3072000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15b_1p8: ldo15 {
-+			regulator-name = "vreg_l15b_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_l16b_2p9: ldo16 {
-+			regulator-name = "vreg_l16b_2p9";
-+			regulator-min-microvolt = <2912000>;
-+			regulator-max-microvolt = <2912000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l17b_2p5: ldo17 {
-+			regulator-name = "vreg_l17b_2p5";
-+			regulator-min-microvolt = <2504000>;
-+			regulator-max-microvolt = <2504000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/* PMC8380VE_C */
-+	regulators-1 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-l1-supply = <&vreg_s5j_1p2>;
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s4-supply = <&vph_pwr>;
-+
-+		vreg_s4c_1p8: smps4 {
-+			regulator-name = "vreg_s4c_1p8";
-+			regulator-min-microvolt = <1856000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1c_1p2: ldo1 {
-+			regulator-name = "vreg_l1c_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2c_0p8: ldo2 {
-+			regulator-name = "vreg_l2c_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3c_0p8: ldo3 {
-+			regulator-name = "vreg_l3c_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/* PMC8380_D */
-+	regulators-2 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "d";
-+
-+		vdd-l1-supply = <&vreg_s1f_0p7>;
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s4c_1p8>;
-+		vdd-s1-supply = <&vph_pwr>;
-+
-+		vreg_l1d_0p8: ldo1 {
-+			regulator-name = "vreg_l1d_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2d_0p9: ldo2 {
-+			regulator-name = "vreg_l2d_0p9";
-+			regulator-min-microvolt = <912000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3d_1p8: ldo3 {
-+			regulator-name = "vreg_l3d_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/* PMC8380_E */
-+	regulators-3 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vdd-l2-supply = <&vreg_s1f_0p7>;
-+		vdd-l3-supply = <&vreg_s5j_1p2>;
-+
-+		vreg_l2e_0p8: ldo2 {
-+			regulator-name = "vreg_l2e_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3e_1p2: ldo3 {
-+			regulator-name = "vreg_l3e_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/* PMC8380_F */
-+	regulators-4 {
-+		compatible = "qcom,pmc8380-rpmh-regulators";
-+		qcom,pmic-id = "f";
-+
-+		vdd-l1-supply = <&vreg_s5j_1p2>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s5j_1p2>;
-+		vdd-s1-supply = <&vph_pwr>;
-+
-+		vreg_s1f_0p7: smps1 {
-+			regulator-name = "vreg_s1f_0p7";
-+			regulator-min-microvolt = <700000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1f_1p0: ldo1 {
-+			regulator-name = "vreg_l1f_1p0";
-+			regulator-min-microvolt = <1024000>;
-+			regulator-max-microvolt = <1024000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2f_1p0: ldo2 {
-+			regulator-name = "vreg_l2f_1p0";
-+			regulator-min-microvolt = <1024000>;
-+			regulator-max-microvolt = <1024000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3f_1p0: ldo3 {
-+			regulator-name = "vreg_l3f_1p0";
-+			regulator-min-microvolt = <1024000>;
-+			regulator-max-microvolt = <1024000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/* PMC8380VE_I */
-+	regulators-6 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "i";
-+
-+		vdd-l1-supply = <&vreg_s4c_1p8>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+
-+		vreg_s1i_0p9: smps1 {
-+			regulator-name = "vreg_s1i_0p9";
-+			regulator-min-microvolt = <900000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s2i_1p0: smps2 {
-+			regulator-name = "vreg_s2i_1p0";
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1100000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1i_1p8: ldo1 {
-+			regulator-name = "vreg_l1i_1p8";
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2i_1p2: ldo2 {
-+			regulator-name = "vreg_l2i_1p2";
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3i_0p8: ldo3 {
-+			regulator-name = "vreg_l3i_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	/* PMC8380VE_J */
-+	regulators-7 {
-+		compatible = "qcom,pm8550ve-rpmh-regulators";
-+		qcom,pmic-id = "j";
-+
-+		vdd-l1-supply = <&vreg_s1f_0p7>;
-+		vdd-l2-supply = <&vreg_s5j_1p2>;
-+		vdd-l3-supply = <&vreg_s1f_0p7>;
-+		vdd-s5-supply = <&vph_pwr>;
-+
-+		vreg_s5j_1p2: smps5 {
-+			regulator-name = "vreg_s5j_1p2";
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l1j_0p8: ldo1 {
-+			regulator-name = "vreg_l1j_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2j_1p2: ldo2 {
-+			regulator-name = "vreg_l2j_1p2";
-+			regulator-min-microvolt = <1256000>;
-+			regulator-max-microvolt = <1256000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3j_0p8: ldo3 {
-+			regulator-name = "vreg_l3j_0p8";
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <920000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++				retimer_ss2_con_sbu_out: endpoint {
++					remote-endpoint = <&pmic_glink_ss2_con_sbu_in>;
++				};
++			};
 +		};
 +	};
 +};
 +
-+&pcie4 {
-+	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
++&i2c5 {
++	clock-frequency = <400000>;
++	status = "okay";
 +
-+	pinctrl-0 = <&pcie4_default>;
++	eusb3_repeater: redriver@47 {
++		compatible = "nxp,ptn3222";
++		reg = <0x47>;
++		#phy-cells = <0>;
++
++		vdd3v3-supply = <&vreg_l13b_3p0>;
++		vdd1v8-supply = <&vreg_l4b_1p8>;
++
++		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
++
++		pinctrl-0 = <&eusb3_reset_n>;
++		pinctrl-names = "default";
++	};
++
++	eusb5_repeater: redriver@43 {
++		compatible = "nxp,ptn3222";
++		reg = <0x43>;
++		#phy-cells = <0>;
++
++		vdd3v3-supply = <&vreg_l13b_3p0>;
++		vdd1v8-supply = <&vreg_l4b_1p8>;
++
++		reset-gpios = <&tlmm 7 GPIO_ACTIVE_LOW>;
++
++		pinctrl-0 = <&eusb5_reset_n>;
++		pinctrl-names = "default";
++	};
++
++	eusb6_repeater: redriver@4f {
++		compatible = "nxp,ptn3222";
++		reg = <0x4f>;
++		#phy-cells = <0>;
++
++		vdd3v3-supply = <&vreg_l13b_3p0>;
++		vdd1v8-supply = <&vreg_l4b_1p8>;
++
++		reset-gpios = <&tlmm 184 GPIO_ACTIVE_LOW>;
++
++		pinctrl-0 = <&eusb6_reset_n>;
++		pinctrl-names = "default";
++	};
++};
++
++&i2c7 {
++	clock-frequency = <400000>;
++
++	status = "okay";
++
++	typec-mux@8 {
++		compatible = "parade,ps8830";
++		reg = <0x8>;
++
++		clocks = <&rpmhcc RPMH_RF_CLK4>;
++
++		vdd-supply = <&vreg_rtmr1_1p15>;
++		vdd33-supply = <&vreg_rtmr1_3p3>;
++		vdd33-cap-supply = <&vreg_rtmr1_3p3>;
++		vddar-supply = <&vreg_rtmr1_1p15>;
++		vddat-supply = <&vreg_rtmr1_1p15>;
++		vddio-supply = <&vreg_rtmr1_1p8>;
++
++		reset-gpios = <&tlmm 176 GPIO_ACTIVE_LOW>;
++
++		pinctrl-0 = <&rtmr1_default>;
++		pinctrl-names = "default";
++
++		retimer-switch;
++		orientation-switch;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				retimer_ss1_ss_out: endpoint {
++					remote-endpoint = <&pmic_glink_ss1_ss_in>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				retimer_ss1_ss_in: endpoint {
++					remote-endpoint = <&usb_1_ss1_qmpphy_out>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++
++				retimer_ss1_con_sbu_out: endpoint {
++					remote-endpoint = <&pmic_glink_ss1_con_sbu_in>;
++				};
++			};
++		};
++	};
++};
++
++&lpass_tlmm {
++	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
++		pins = "gpio12";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++
++	spkr_23_sd_n_active: spkr-23-sd-n-active-state {
++		pins = "gpio13";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++};
++
++&lpass_vamacro {
++	pinctrl-0 = <&dmic01_default>, <&dmic23_default>;
 +	pinctrl-names = "default";
 +
++	vdd-micb-supply = <&vreg_l1b_1p8>;
++	qcom,dmic-sample-rate = <4800000>;
++};
++
++&mdss {
 +	status = "okay";
 +};
 +
-+&pcie4_phy {
-+	vdda-phy-supply = <&vreg_l3i_0p8>;
-+	vdda-pll-supply = <&vreg_l3e_1p2>;
-+
++&mdss_dp0 {
 +	status = "okay";
 +};
 +
-+&pcie6a {
-+	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
-+	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
++&mdss_dp0_out {
++	data-lanes = <0 1>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++};
 +
-+	pinctrl-0 = <&pcie6a_default>;
-+	pinctrl-names = "default";
-+
++&mdss_dp1 {
 +	status = "okay";
 +};
 +
-+&pcie6a_phy {
-+	vdda-phy-supply = <&vreg_l1d_0p8>;
++&mdss_dp1_out {
++	data-lanes = <0 1>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++};
++
++&mdss_dp2 {
++	status = "okay";
++};
++
++&mdss_dp2_out {
++	data-lanes = <0 1>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++};
++
++&mdss_dp3 {
++	/delete-property/ #sound-dai-cells;
++
++	status = "okay";
++
++	aux-bus {
++		panel {
++			compatible = "edp-panel";
++			power-supply = <&vreg_edp_3p3>;
++
++			port {
++				edp_panel_in: endpoint {
++					remote-endpoint = <&mdss_dp3_out>;
++				};
++			};
++		};
++	};
++};
++
++&mdss_dp3_out {
++	data-lanes = <0 1 2 3>;
++	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
++
++	remote-endpoint = <&edp_panel_in>;
++};
++
++&mdss_dp3_phy {
++	vdda-phy-supply = <&vreg_l3j_0p8>;
 +	vdda-pll-supply = <&vreg_l2j_1p2>;
 +
 +	status = "okay";
 +};
 +
-+&qupv3_0 {
++&pcie6a {
++	vddpe-3v3-supply = <&vreg_nvme>;
++};
++
++&pm8550_gpios {
++	rtmr0_default: rtmr0-reset-n-active-state {
++		pins = "gpio10";
++		function = "normal";
++		power-source = <1>; /* 1.8V */
++		bias-disable;
++		input-disable;
++		output-enable;
++	};
++
++	usb0_3p3_reg_en: usb0-3p3-reg-en-state {
++		pins = "gpio11";
++		function = "normal";
++		power-source = <1>; /* 1.8V */
++		bias-disable;
++		input-disable;
++		output-enable;
++	};
++};
++
++&pm8550ve_9_gpios {
++	usb0_1p8_reg_en: usb0-1p8-reg-en-state {
++		pins = "gpio8";
++		function = "normal";
++		power-source = <1>; /* 1.8V */
++		bias-disable;
++		input-disable;
++		output-enable;
++	};
++};
++
++&pmc8380_5_gpios {
++	usb0_pwr_1p15_reg_en: usb0-pwr-1p15-reg-en-state {
++		pins = "gpio8";
++		function = "normal";
++		power-source = <1>; /* 1.8V */
++		bias-disable;
++		input-disable;
++		output-enable;
++	};
++};
++
++&smb2360_0 {
 +	status = "okay";
 +};
 +
-+&qupv3_1 {
++&smb2360_0_eusb2_repeater {
++	vdd18-supply = <&vreg_l3d_1p8>;
++	vdd3-supply = <&vreg_l2b_3p0>;
++};
++
++&smb2360_1 {
 +	status = "okay";
 +};
 +
-+&qupv3_2 {
++&smb2360_1_eusb2_repeater {
++	vdd18-supply = <&vreg_l3d_1p8>;
++	vdd3-supply = <&vreg_l14b_3p0>;
++};
++
++&smb2360_2 {
 +	status = "okay";
 +};
 +
-+&remoteproc_adsp {
-+	firmware-name = "qcom/x1e80100/adsp.mbn",
-+			"qcom/x1e80100/adsp_dtb.mbn";
-+
-+	status = "okay";
++&smb2360_2_eusb2_repeater {
++	vdd18-supply = <&vreg_l3d_1p8>;
++	vdd3-supply = <&vreg_l8b_3p0>;
 +};
 +
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/x1e80100/cdsp.mbn",
-+			"qcom/x1e80100/cdsp_dtb.mbn";
-+
++&swr0 {
 +	status = "okay";
++
++	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
++	pinctrl-names = "default";
++
++	/* WSA8845, Left Woofer */
++	left_woofer: speaker@0,0 {
++		compatible = "sdw20217020400";
++		reg = <0 0>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "WooferLeft";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <1 2 3 7 10 13>;
++	};
++
++	/* WSA8845, Left Tweeter */
++	left_tweeter: speaker@0,1 {
++		compatible = "sdw20217020400";
++		reg = <0 1>;
++		reset-gpios = <&lpass_tlmm 12 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "TweeterLeft";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <4 5 6 7 11 13>;
++	};
++};
++
++&swr1 {
++	status = "okay";
++
++	/* WCD9385 RX */
++	wcd_rx: codec@0,4 {
++		compatible = "sdw20217010d00";
++		reg = <0 4>;
++		qcom,rx-port-mapping = <1 2 3 4 5>;
++	};
++};
++
++&swr2 {
++	status = "okay";
++
++	/* WCD9385 TX */
++	wcd_tx: codec@0,3 {
++		compatible = "sdw20217010d00";
++		reg = <0 3>;
++		qcom,tx-port-mapping = <2 2 3 4>;
++	};
++};
++
++&swr3 {
++	status = "okay";
++
++	pinctrl-0 = <&wsa2_swr_active>, <&spkr_23_sd_n_active>;
++	pinctrl-names = "default";
++
++	/* WSA8845, Right Woofer */
++	right_woofer: speaker@0,0 {
++		compatible = "sdw20217020400";
++		reg = <0 0>;
++		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "WooferRight";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <1 2 3 7 10 13>;
++	};
++
++	/* WSA8845, Right Tweeter */
++	right_tweeter: speaker@0,1 {
++		compatible = "sdw20217020400";
++		reg = <0 1>;
++		reset-gpios = <&lpass_tlmm 13 GPIO_ACTIVE_LOW>;
++		#sound-dai-cells = <0>;
++		sound-name-prefix = "TweeterRight";
++		vdd-1p8-supply = <&vreg_l15b_1p8>;
++		vdd-io-supply = <&vreg_l12b_1p2>;
++		qcom,port-mapping = <4 5 6 7 11 13>;
++	};
 +};
 +
 +&tlmm {
-+	gpio-reserved-ranges = <34 2>, /* TPM LP & INT */
-+			       <44 4>; /* SPI (TPM) */
++	edp_reg_en: edp-reg-en-state {
++		pins = "gpio70";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++	};
 +
-+	pcie4_default: pcie4-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio147";
-+			function = "pcie4_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
++	eusb3_reset_n: eusb3-reset-n-state {
++		pins = "gpio6";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++		output-low;
++	};
 +
-+		perst-n-pins {
-+			pins = "gpio146";
++	eusb5_reset_n: eusb5-reset-n-state {
++		pins = "gpio7";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++		output-low;
++	};
++
++	eusb6_reset_n: eusb6-reset-n-state {
++		pins = "gpio184";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++		output-low;
++	};
++
++	nvme_reg_en: nvme-reg-en-state {
++		pins = "gpio18";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	rtmr1_default: rtmr1-reset-n-active-state {
++		pins = "gpio176";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	rtmr2_default: rtmr2-reset-n-active-state {
++		pins = "gpio185";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	usb1_pwr_1p15_reg_en: usb1-pwr-1p15-reg-en-state {
++		pins = "gpio188";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	usb1_pwr_1p8_reg_en: usb1-pwr-1p8-reg-en-state {
++		pins = "gpio175";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	usb1_pwr_3p3_reg_en: usb1-pwr-3p3-reg-en-state {
++		pins = "gpio186";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	usb2_pwr_1p15_reg_en: usb2-pwr-1p15-reg-en-state {
++		pins = "gpio189";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	usb2_pwr_1p8_reg_en: usb2-pwr-1p8-reg-en-state {
++		pins = "gpio126";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	usb2_pwr_3p3_reg_en: usb2-pwr-3p3-reg-en-state {
++		pins = "gpio187";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	usb_1_ss0_sbu_default: usb-1-ss0-sbu-state {
++		mode-pins {
++			pins = "gpio166";
 +			function = "gpio";
-+			drive-strength = <2>;
 +			bias-disable;
++			drive-strength = <2>;
++			output-high;
 +		};
 +
-+		wake-n-pins {
-+			pins = "gpio148";
++		oe-n-pins {
++			pins = "gpio168";
 +			function = "gpio";
++			bias-disable;
 +			drive-strength = <2>;
-+			bias-pull-up;
++		};
++
++		sel-pins {
++			pins = "gpio167";
++			function = "gpio";
++			bias-disable;
++			drive-strength = <2>;
 +		};
 +	};
 +
-+	pcie6a_default: pcie6a-default-state {
-+		clkreq-n-pins {
-+			pins = "gpio153";
-+			function = "pcie6a_clk";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
++	wcd_default: wcd-reset-n-active-state {
++		pins = "gpio191";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
 +
-+		perst-n-pins {
-+			pins = "gpio152";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
++	wcn_bt_en: wcn-bt-en-state {
++		pins = "gpio116";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
 +
-+		wake-n-pins {
-+			pins = "gpio154";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
++	wwan_sw_en: wwan-sw-en-state {
++		pins = "gpio221";
++		function = "gpio";
++		drive-strength = <4>;
++		bias-disable;
++	};
 +
-+		};
++	wcn_sw_en: wcn-sw-en-state {
++		pins = "gpio214";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	/* Switches USB signal routing between the USB connector and the Wi-Fi card. */
++	wcn_usb_sw_n: wcn-usb-sw-n-state {
++		pins = "gpio225";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++		output-high;
 +	};
 +};
 +
-+&usb_1_ss0 {
++&uart14 {
++	status = "okay";
++
++	bluetooth {
++		compatible = "qcom,wcn7850-bt";
++		max-speed = <3200000>;
++
++		vddaon-supply = <&vreg_pmu_aon_0p59>;
++		vddwlcx-supply = <&vreg_pmu_wlcx_0p8>;
++		vddwlmx-supply = <&vreg_pmu_wlmx_0p85>;
++		vddrfacmn-supply = <&vreg_pmu_rfa_cmn>;
++		vddrfa0p8-supply = <&vreg_pmu_rfa_0p8>;
++		vddrfa1p2-supply = <&vreg_pmu_rfa_1p2>;
++		vddrfa1p8-supply = <&vreg_pmu_rfa_1p8>;
++	};
++};
++
++&uart21 {
++	compatible = "qcom,geni-debug-uart";
++
 +	status = "okay";
 +};
 +
-+&usb_1_ss0_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
++&usb_1_ss0_dwc3_hs {
++	remote-endpoint = <&pmic_glink_ss0_hs_in>;
 +};
 +
 +&usb_1_ss0_hsphy {
-+	vdd-supply = <&vreg_l3j_0p8>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
-+
-+	status = "okay";
++	phys = <&smb2360_0_eusb2_repeater>;
 +};
 +
-+&usb_1_ss0_qmpphy {
-+	vdda-phy-supply = <&vreg_l2j_1p2>;
-+	vdda-pll-supply = <&vreg_l1j_0p8>;
-+
-+	status = "okay";
++&usb_1_ss0_qmpphy_out {
++	remote-endpoint = <&pmic_glink_ss0_ss_in>;
 +};
 +
-+&usb_1_ss1 {
-+	status = "okay";
-+};
-+
-+&usb_1_ss1_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
++&usb_1_ss1_dwc3_hs {
++	remote-endpoint = <&pmic_glink_ss1_hs_in>;
 +};
 +
 +&usb_1_ss1_hsphy {
-+	vdd-supply = <&vreg_l3j_0p8>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
-+
-+	status = "okay";
++	phys = <&smb2360_1_eusb2_repeater>;
 +};
 +
-+&usb_1_ss1_qmpphy {
-+	vdda-phy-supply = <&vreg_l2j_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
-+	status = "okay";
++&usb_1_ss1_qmpphy_out {
++	remote-endpoint = <&retimer_ss1_ss_in>;
 +};
 +
-+&usb_1_ss2 {
-+	status = "okay";
-+};
-+
-+&usb_1_ss2_dwc3 {
-+	dr_mode = "otg";
-+	usb-role-switch;
++&usb_1_ss2_dwc3_hs {
++	remote-endpoint = <&pmic_glink_ss2_hs_in>;
 +};
 +
 +&usb_1_ss2_hsphy {
-+	vdd-supply = <&vreg_l3j_0p8>;
-+	vdda12-supply = <&vreg_l2j_1p2>;
-+
-+	status = "okay";
++	phys = <&smb2360_2_eusb2_repeater>;
 +};
 +
-+&usb_1_ss2_qmpphy {
-+	vdda-phy-supply = <&vreg_l2j_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "host";
++&usb_1_ss2_qmpphy_out {
++	remote-endpoint = <&retimer_ss2_ss_in>;
 +};
 +
 +&usb_2_hsphy {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
++	phys = <&eusb5_repeater>;
 +
-+	status = "okay";
-+};
-+
-+&usb_mp {
-+	status = "okay";
++	pinctrl-0 = <&wcn_usb_sw_n>;
++	pinctrl-names = "default";
 +};
 +
 +&usb_mp_hsphy0 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
++	phys = <&eusb6_repeater>;
 +};
 +
 +&usb_mp_hsphy1 {
-+	vdd-supply = <&vreg_l2e_0p8>;
-+	vdda12-supply = <&vreg_l3e_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy0 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p8>;
-+
-+	status = "okay";
-+};
-+
-+&usb_mp_qmpphy1 {
-+	vdda-phy-supply = <&vreg_l3e_1p2>;
-+	vdda-pll-supply = <&vreg_l3c_0p8>;
-+
-+	status = "okay";
++	phys = <&eusb3_repeater>;
 +};
 
 -- 
