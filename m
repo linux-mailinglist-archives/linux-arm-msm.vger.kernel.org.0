@@ -1,239 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-70981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-70982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75C79B3790B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 06:21:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81A48B379CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 07:27:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EAC61B624FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 04:21:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 80C151B278FD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 05:28:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 078692C3250;
-	Wed, 27 Aug 2025 04:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BA7230F94E;
+	Wed, 27 Aug 2025 05:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iNhbMWaJ"
+	dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b="fFfa87uM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40407283FC8
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 04:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5612430F941;
+	Wed, 27 Aug 2025 05:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.163.158.5
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756268461; cv=none; b=fpTWSHubnFBcn1qVyErsXlz6D1UASumz8DJSFRKzaGUKbsC9Nn1rhRWSnXbdJvMf0jki66+wLzZc1P47uuZyVxTgDTf5M+cDpAYa1BJk6lwr6TfDx09uTZkH7vvYRXmgyV1ehy0kqSn0m22Id0sGFIbR+9MhN241gC5ZkVMysBc=
+	t=1756272460; cv=none; b=FGICX/Qc4V8BVhSlnN4c7QJlEL7qkGS3IZO04/lkhMLsEOrRjQIZpEnb57zmVc1gbtYjlmOtTCGk1RGOjDvH82+JPKm0Ado0RfQ40Ux0gHX9CkfBjYEjpvFpEl4vF9g9pCC8auJGy5clikLip0Cl+QQochIumJsksaufqScXVCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756268461; c=relaxed/simple;
-	bh=ocp4EtIWT0yQZJx2kabJRwppCpqBBhc20itvLNY7cW4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sinXy7EAyn9FYLi8EngWCJf+XMIi/Z3yZ9VIxrQnoFK+axieYZ3CSFUc91VCbEO7bfh2jRwgxpS9XnJe2sgwr2sQaFc09lKVkmgmT9iHAxs6HtCYG/pNG6C+yrXXU6F2l7399CV1z5rEyw3UxU9UKvzPjCmMXF1bzHZlLmntLb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iNhbMWaJ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QM1AYM027928
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 04:20:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=LFgzrZAixnT
-	qFsEdbAYjDQONQ2mnmA9c8+kXB2USXhQ=; b=iNhbMWaJDlRl7uFXPhJdTn/l/sK
-	oVXznRwiU+6nBM+5O1M8eEXZJDPjaY8C3tr1MgdcUTFUL4FXZhyjk1fg8a0BFisD
-	/04GkXfCopoJ1xjouI4i2/2TwdzY0PquJaJARlyivNCPc2R8Miezam0CnTG6WKor
-	ruRJy2p38cQ1aF8+HmMEQa1Y4l6N2HAmrJDn94r7W/Lt41qx5wZvMsMnUJLx3wI4
-	E7HN24cgv2/E4a7koHRewY1SzgJFaXh90IbfR4H2yOqWDA3gYIrnBjDAawTk6Rk3
-	SFTcAe20c1eh87dxOvntLL9FfjgZGuolCrREc4gfMyIquCHjmYRyr31l+IA==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5we368r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 04:20:59 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-771b23c098dso2587641b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 26 Aug 2025 21:20:59 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756268458; x=1756873258;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LFgzrZAixnTqFsEdbAYjDQONQ2mnmA9c8+kXB2USXhQ=;
-        b=t8WOdmwT0LBx3qwReRMrCYxclowlLyz5IOpn5uouPDVRei82K50pUkS1jRWXekAxss
-         J4Oifp0ldUALnubKQKuywt63QqNgnMD3be7q+6F5TjXC2Ci8Q3oG1wfERZetjoMsXBrM
-         npHapLkzxeu0Oi8ttv4VlFx7B8AMev5rc4QnSK+M5hzOwpA8SsRi/KGFst0xCZosd+1/
-         pYVRe4xv7RSMB1vepO3VV69tqYSzeSmJqX4lrirmQ9b461D5HFE5ro4SRT7gMINXWmOX
-         CSRI5VDTjePGcwnMPYcsVg8CKQ49FnYCN45qqnuCEbyzaSPtVXGsqtQSTs6w1Si8Fw8d
-         3a/A==
-X-Forwarded-Encrypted: i=1; AJvYcCUSsOwxcdSMiCelMOVqSCbAeK+0Fv5ybZ/VxhtvwCWLMipXrsvsys1c9I0N2aNU0NFzu445yEOeMFbMp0Yy@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywjw+IZ5TMG6APQ4wieurYaEhoGg3wku5XcQrqIo1+542LkAXTp
-	rhUbRD1ljqkcZecy0FUoXMvMhPMnqv45X8JBipNdsQOnxWxhCw+JUD04nxrfxtF8+uyDGQJjH0M
-	enQV5F/EI79TvUzkhx2d+B18HPP9EyX6c4wisb/YxYYef6o8cbQBKs6INb7YIZguUgT1W
-X-Gm-Gg: ASbGnctldV8+WNfbbcceobcO5zDLR4KxuyB5PEq2XilbcjlEwJEssFFH4PX5d5USka1
-	8N+2sD+wYacU5kt1JtJs1oaiRzkfVQ08ylilb9cctsE+8209spIaq4wfUOAD68HcQ6MTPhLP/0j
-	FQfmsONbWR9CP6kYs7KBXeI3ertUDBJXbv3hcKmGRRGtHFV/HWTAGxjivx+JZ7K8ilwUKjIgn54
-	AmBX0WaRn85LskvQblCHf/U3wIy/Zwp5T5ldQnqSaH1+DrVpzpn10z7/OkmBXkE0eo/cGr/2ZSg
-	NwqXjKoqncJ3AUhDgMWRakaV1EIxH/XTXip8pexB6rv0IvIFzbyP7CLOI1KxYR+To+nrggL9DP1
-	PLHT0y+cOVm7DDPxc4q1P
-X-Received: by 2002:a05:6a20:244f:b0:230:3710:9aa9 with SMTP id adf61e73a8af0-24340bce30emr25026147637.4.1756268457891;
-        Tue, 26 Aug 2025 21:20:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHdCRcL4yrE9XGANFjJJjHieROHuyk+4KHF1iEmPx2C2KpvsxbNZ36c7SUdVsYPPF6S/m2zyw==
-X-Received: by 2002:a05:6a20:244f:b0:230:3710:9aa9 with SMTP id adf61e73a8af0-24340bce30emr25026121637.4.1756268457424;
-        Tue, 26 Aug 2025 21:20:57 -0700 (PDT)
-Received: from jiegan.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-771f4072ac4sm4323076b3a.34.2025.08.26.21.20.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 26 Aug 2025 21:20:57 -0700 (PDT)
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>
-Cc: coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 3/3] coresight: tpda: add sysfs node to flush specific port
-Date: Wed, 27 Aug 2025 12:20:42 +0800
-Message-Id: <20250827042042.6786-4-jie.gan@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250827042042.6786-1-jie.gan@oss.qualcomm.com>
-References: <20250827042042.6786-1-jie.gan@oss.qualcomm.com>
+	s=arc-20240116; t=1756272460; c=relaxed/simple;
+	bh=+pAURm+gSzUePMcSSAf3SHQZLY9qMhpS2XZkBkV2krw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=dhtd3JwEEiBiPtMFMcvHfmbhK90l1F1v/Y3ZyX2/FuvUhwGFjQCkwo1bOGFhpuw2HHWSulcocUfw+Hn8mhqtfC9/WnnmBt23dUfqNKWZ6PrMQtQPg2Q44n9UL2GjTyJveN33NsGiuLiAMDGbK3htJGjMBn1m0KHj2QQ00OgNMaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com; spf=pass smtp.mailfrom=linux.ibm.com; dkim=pass (2048-bit key) header.d=ibm.com header.i=@ibm.com header.b=fFfa87uM; arc=none smtp.client-ip=148.163.158.5
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.ibm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.ibm.com
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57QJuQZo029875;
+	Wed, 27 Aug 2025 05:27:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+	:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=pp1; bh=jxijss
+	tmEiNGZJKG6yltOja4dBZKrqMyUi/HgZLz1Sk=; b=fFfa87uMu8acvDC8OVnLiF
+	3Gw7T94UM/oONEZ9FfO6ESJm9dykU5EYEWzJ6thKl8AEybeSnU7jVczC+OsbSmIg
+	U1DTm1ikvBxQhtMsBkqiirIjOSbWdtCJnpSDht3JKVzPoBOjH3KPPIjRZwjgIoz4
+	PIz+4T0pathmf8bjMQQcBo9Nngpp8r0YuSt99tds0+EviRwkVU+5p0dMPKzJ5SJZ
+	NqSby3CqAv1CiFuqsjN+UtUj0P6MofPcWemNISQn5nz/ZN8twBsE28xbYF1o/y5D
+	T+rxMTdyXFQiS1FQNk9wuoFsc0iqqXm08NakEBDb3JoIMWYZ+sB++DfGZXvYi8bQ
+	==
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q42j2cs9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Aug 2025 05:27:07 +0000 (GMT)
+Received: from m0353725.ppops.net (m0353725.ppops.net [127.0.0.1])
+	by pps.reinject (8.18.1.12/8.18.0.8) with ESMTP id 57R5K8Rl017639;
+	Wed, 27 Aug 2025 05:27:06 GMT
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 48q42j2cs6-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Aug 2025 05:27:06 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 57R3lXEH029924;
+	Wed, 27 Aug 2025 05:27:05 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 48qsfmpe9d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Aug 2025 05:27:05 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com [10.20.54.105])
+	by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 57R5R1oh53739874
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 27 Aug 2025 05:27:01 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6821520049;
+	Wed, 27 Aug 2025 05:27:01 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A772520040;
+	Wed, 27 Aug 2025 05:27:00 +0000 (GMT)
+Received: from [9.152.212.92] (unknown [9.152.212.92])
+	by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 27 Aug 2025 05:27:00 +0000 (GMT)
+Message-ID: <ac6dfaec-38ea-486d-89a0-ab02768cee42@linux.ibm.com>
+Date: Wed, 27 Aug 2025 07:27:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 18/19] perf: Introduce positive capability for raw events
+To: Mark Rutland <mark.rutland@arm.com>, Robin Murphy <robin.murphy@arm.com>,
+        Sumanth Korikkar <sumanthk@linux.ibm.com>,
+        Jan Polensky <japo@linux.ibm.com>
+Cc: peterz@infradead.org, mingo@redhat.com, will@kernel.org, acme@kernel.org,
+        namhyung@kernel.org, alexander.shishkin@linux.intel.com,
+        jolsa@kernel.org, irogers@google.com, adrian.hunter@intel.com,
+        kan.liang@linux.intel.com, linux-perf-users@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-alpha@vger.kernel.org,
+        linux-snps-arc@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org, imx@lists.linux.dev,
+        linux-csky@vger.kernel.org, loongarch@lists.linux.dev,
+        linux-mips@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-s390@vger.kernel.org, linux-sh@vger.kernel.org,
+        sparclinux@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-rockchip@lists.infradead.org, dmaengine@vger.kernel.org,
+        linux-fpga@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        intel-xe@lists.freedesktop.org, coresight@lists.linaro.org,
+        iommu@lists.linux.dev, linux-amlogic@lists.infradead.org,
+        linux-cxl@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-riscv@lists.infradead.org
+References: <cover.1755096883.git.robin.murphy@arm.com>
+ <542787fd188ea15ef41c53d557989c962ed44771.1755096883.git.robin.murphy@arm.com>
+ <aK259PrpyxguQzdN@J2N7QTR9R3>
+Content-Language: en-US
+From: Thomas Richter <tmricht@linux.ibm.com>
+Organization: IBM
+In-Reply-To: <aK259PrpyxguQzdN@J2N7QTR9R3>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: q3znjMaAZ7aNIGNLzm98rcpZTkyOJNLl
-X-Proofpoint-ORIG-GUID: q3znjMaAZ7aNIGNLzm98rcpZTkyOJNLl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfX8FumInb9HLKf
- 8JZzdMeP7j7x6HbA+a3wgkFCKOU5t1vF3pCW7SKz+z//c7RWgVDwUt6T8fWmGsETnLhp84OaXPD
- qp4MzzC3Y4ew5bGIsBN2mrtcTMEfVgx6Chj4du75eD0UrrFiyQ94cQLy0zyQK1dI8fwDBnR+wIM
- W2vOAOchO9vUzJg6swLscJ9HrkW16SJpKqZ+/ph90xIaEPVRISzbgUPAMLwQ2+JP+YyUPFFkHJV
- zt2FLdvZqgJMEBVNQMcDOvd2WDjKxA4Ts7B48wUjVT+GCP9e/cPRQiquQvKZ/tU7zPewQ4N76/O
- pqaFM75K63lbeNCgfTG16dRzeseOpNL7fjl7Nh5qfUDB1aBBBA6Oo4H+HRpzs+f/uxfEDNfjAKY
- GozDp1Kc
-X-Authority-Analysis: v=2.4 cv=BJazrEQG c=1 sm=1 tr=0 ts=68ae87ab cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=l6kBNUb3cY0M__Xq7_0A:9
- a=zc0IvFSfCIW2DFIPzwfm:22
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAxMCBTYWx0ZWRfXx7bT3ieVYWZ1
+ FvRIJn/6odyl76gPtjq2fdUI3+ddgoyBguazv17xAc0h1PWPsciO7Io1+yf38004HJX48EZKQe4
+ jjqa2jsZ613Il7PEWWZLmHVXl0DVElauSgaXsW2jrn5unNTZZAgCkgP5ixkSnbssGkUA98RWoHK
+ 6CllyViFj8nmb4/kmZamtgDzlo/xirMdIPTqK1ytIy748E4TyQcONzfTAVM6cDoHbAMLdYuTHtD
+ UT6EmBwE8Tz6Ajw1M3OeNTbMk21jMwITf/ouwlMB6Q/Hm12FuudC6E2iwfSIPWm8nU5cvD4JBmw
+ ghpRUxLnbbdBrU5mCsCpBm2H2yjaVRWCqCxRNsBxe1xCwhV1Oev6PUoPQ5TLoGumXLZUFEfuXwo
+ /BJHYr+T
+X-Proofpoint-ORIG-GUID: Z1OBCqtS81HxjTSNcENNGRKeOQ0QzPO9
+X-Proofpoint-GUID: 4pnWswYamnTcgbcPVqCp3LQWR1ph9h16
+X-Authority-Analysis: v=2.4 cv=evffzppX c=1 sm=1 tr=0 ts=68ae972b cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=7CQSdrXTAAAA:8 a=KByoUL483hSIROooWq4A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=a-qgeE7W1pNrGK8U0ZQC:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-08-26_02,2025-08-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 adultscore=0 priorityscore=1501 clxscore=1015 impostorscore=0
- bulkscore=0 phishscore=0 suspectscore=0 spamscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508230033
+ suspectscore=0 adultscore=0 malwarescore=0 spamscore=0 bulkscore=0
+ impostorscore=0 clxscore=1015 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230010
 
-From: Tao Zhang <tao.zhang@oss.qualcomm.com>
+On 8/26/25 15:43, Mark Rutland wrote:
+> On Wed, Aug 13, 2025 at 06:01:10PM +0100, Robin Murphy wrote:
+>> Only a handful of CPU PMUs accept PERF_TYPE_{RAW,HARDWARE,HW_CACHE}
+>> events without registering themselves as PERF_TYPE_RAW in the first
+>> place. Add an explicit opt-in for these special cases, so that we can
+>> make life easier for every other driver (and probably also speed up the
+>> slow-path search) by having perf_try_init_event() do the basic type
+>> checking to cover the majority of cases.
+>>
+>> Signed-off-by: Robin Murphy <robin.murphy@arm.com>
+> 
+> 
+> To bikeshed a little here, I'm not keen on the PERF_PMU_CAP_RAW_EVENTS
+> name, because it's not clear what "RAW" really means, and people will
+> definitely read that to mean something else.
+> 
+> Could we go with something like PERF_PMU_CAP_COMMON_CPU_EVENTS, to make
+> it clear that this is about opting into CPU-PMU specific event types (of
+> which PERF_TYPE_RAW is one of)?
+> 
+> Likewise, s/is_raw_pmu()/pmu_supports_common_cpu_events()/.
+> 
+>> ---
+>>
+>> A further possibility is to automatically add the cap to PERF_TYPE_RAW
+>> PMUs in perf_pmu_register() to have a single point-of-use condition; I'm
+>> undecided...
+> 
+> I reckon we don't need to automagically do that, but I reckon that
+> is_raw_pmu()/pmu_supports_common_cpu_events() should only check the cap,
+> and we don't read anything special into any of
+> PERF_TYPE_{RAW,HARDWARE,HW_CACHE}.
+> 
+>> ---
+>>  arch/s390/kernel/perf_cpum_cf.c    |  1 +
+>>  arch/s390/kernel/perf_pai_crypto.c |  2 +-
+>>  arch/s390/kernel/perf_pai_ext.c    |  2 +-
+>>  arch/x86/events/core.c             |  2 +-
+>>  drivers/perf/arm_pmu.c             |  1 +
+>>  include/linux/perf_event.h         |  1 +
+>>  kernel/events/core.c               | 15 +++++++++++++++
+>>  7 files changed, 21 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/arch/s390/kernel/perf_cpum_cf.c b/arch/s390/kernel/perf_cpum_cf.c
+>> index 1a94e0944bc5..782ab755ddd4 100644
+>> --- a/arch/s390/kernel/perf_cpum_cf.c
+>> +++ b/arch/s390/kernel/perf_cpum_cf.c
+>> @@ -1054,6 +1054,7 @@ static void cpumf_pmu_del(struct perf_event *event, int flags)
+>>  /* Performance monitoring unit for s390x */
+>>  static struct pmu cpumf_pmu = {
+>>  	.task_ctx_nr  = perf_sw_context,
+>> +	.capabilities = PERF_PMU_CAP_RAW_EVENTS,
+>>  	.pmu_enable   = cpumf_pmu_enable,
+>>  	.pmu_disable  = cpumf_pmu_disable,
+>>  	.event_init   = cpumf_pmu_event_init,
+> 
+> Tangential, but use of perf_sw_context here looks bogus.
+> 
 
-Setting bit i in the TPDA_FLUSH_CR register initiates a flush request
-for port i, forcing the data to synchronize and be transmitted to the
-sink device.
+It might look strange, but it was done on purpose. For details see
+commit 9254e70c4ef1 ("s390/cpum_cf: use perf software context for hardware counters")
 
-Signed-off-by: Tao Zhang <tao.zhang@oss.qualcomm.com>
-Co-developed-by: Jie Gan <jie.gan@oss.qualcomm.com>
-Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
----
- .../testing/sysfs-bus-coresight-devices-tpda  |  7 ++++
- drivers/hwtracing/coresight/coresight-tpda.c  | 42 +++++++++++++++++++
- drivers/hwtracing/coresight/coresight-tpda.h  |  2 +
- 3 files changed, 51 insertions(+)
+Background was a WARN_ON() statement which fired, because several PMU device drivers
+existed in parallel on s390x platform.
+Not sure if this condition is still true after all these years...
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
-index fb651aebeb31..2cf2dcfc13c8 100644
---- a/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
-+++ b/Documentation/ABI/testing/sysfs-bus-coresight-devices-tpda
-@@ -41,3 +41,10 @@ Contact:	Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Tao Zhang <tao.zhang@oss.qu
- Description:
- 		(RW) Configure the CMB/MCMB channel mode for all enabled ports.
- 		Value 0 means raw channel mapping mode. Value 1 means channel pair marking mode.
-+
-+What:		/sys/bus/coresight/devices/<tpda-name>/port_flush_req
-+Date:		August 2025
-+KernelVersion:	6.17
-+Contact:	Jinlong Mao <jinlong.mao@oss.qualcomm.com>, Tao Zhang <tao.zhang@oss.qualcomm.com>, Jie Gan <jie.gan@oss.qualcomm.com>
-+Description:
-+		(RW) Configure the bit i to requests a flush operation of port i on the TPDA.
-diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-index 430f76c559f2..8b1fe128881d 100644
---- a/drivers/hwtracing/coresight/coresight-tpda.c
-+++ b/drivers/hwtracing/coresight/coresight-tpda.c
-@@ -487,6 +487,47 @@ static ssize_t cmbchan_mode_store(struct device *dev,
- }
- static DEVICE_ATTR_RW(cmbchan_mode);
- 
-+static ssize_t port_flush_req_show(struct device *dev,
-+				   struct device_attribute *attr,
-+				   char *buf)
-+{
-+	struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned long val;
-+
-+	if (!drvdata->csdev->refcnt)
-+		return -EINVAL;
-+
-+	guard(spinlock)(&drvdata->spinlock);
-+	CS_UNLOCK(drvdata->base);
-+	val = readl_relaxed(drvdata->base + TPDA_FLUSH_CR);
-+	CS_LOCK(drvdata->base);
-+	return sysfs_emit(buf, "%lx\n", val);
-+}
-+
-+static ssize_t port_flush_req_store(struct device *dev,
-+				    struct device_attribute *attr,
-+				    const char *buf,
-+				    size_t size)
-+{
-+	struct tpda_drvdata *drvdata = dev_get_drvdata(dev->parent);
-+	unsigned long val;
-+
-+	if (kstrtoul(buf, 0, &val))
-+		return -EINVAL;
-+
-+	if (!drvdata->csdev->refcnt || !val)
-+		return -EINVAL;
-+
-+	val |= FIELD_PREP(TPDA_MAX_INPORTS_MASK, val);
-+	guard(spinlock)(&drvdata->spinlock);
-+	CS_UNLOCK(drvdata->base);
-+	writel_relaxed(val, drvdata->base + TPDA_FLUSH_CR);
-+	CS_LOCK(drvdata->base);
-+
-+	return size;
-+}
-+static DEVICE_ATTR_RW(port_flush_req);
-+
- static struct attribute *tpda_attrs[] = {
- 	&dev_attr_trig_async_enable.attr,
- 	&dev_attr_trig_flag_ts_enable.attr,
-@@ -494,6 +535,7 @@ static struct attribute *tpda_attrs[] = {
- 	&dev_attr_freq_ts_enable.attr,
- 	&dev_attr_global_flush_req.attr,
- 	&dev_attr_cmbchan_mode.attr,
-+	&dev_attr_port_flush_req.attr,
- 	NULL,
- };
- 
-diff --git a/drivers/hwtracing/coresight/coresight-tpda.h b/drivers/hwtracing/coresight/coresight-tpda.h
-index 8e1b66115ad1..56d3ad293e46 100644
---- a/drivers/hwtracing/coresight/coresight-tpda.h
-+++ b/drivers/hwtracing/coresight/coresight-tpda.h
-@@ -10,6 +10,7 @@
- #define TPDA_Pn_CR(n)		(0x004 + (n * 4))
- #define TPDA_FPID_CR		(0x084)
- #define TPDA_SYNCR		(0x08C)
-+#define TPDA_FLUSH_CR		(0x090)
- 
- /* Cross trigger FREQ packets timestamp bit */
- #define TPDA_CR_FREQTS		BIT(2)
-@@ -35,6 +36,7 @@
- #define TPDA_SYNCR_MAX_COUNTER_VAL	(0xFFF)
- 
- #define TPDA_MAX_INPORTS	32
-+#define TPDA_MAX_INPORTS_MASK	GENMASK(31, 0)
- 
- /* Bits 6 ~ 12 is for atid value */
- #define TPDA_CR_ATID		GENMASK(12, 6)
 -- 
-2.34.1
+Thomas Richter, Dept 3303, IBM s390 Linux Development, Boeblingen, Germany
+--
+IBM Deutschland Research & Development GmbH
 
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+
+Geschäftsführung: David Faller
+
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht Stuttgart, HRB 243294
 
