@@ -1,195 +1,724 @@
-Return-Path: <linux-arm-msm+bounces-71049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD5A7B38E77
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 00:28:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AB55B38E7E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 00:35:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 60F323647AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 22:28:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C9B313ACEC1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 27 Aug 2025 22:35:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68EFE2E9EDF;
-	Wed, 27 Aug 2025 22:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7B8D2FD7AD;
+	Wed, 27 Aug 2025 22:34:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ksBOx0Fa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GiMiXmZJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98FD2F83B4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:28:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD064438B;
+	Wed, 27 Aug 2025 22:34:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756333717; cv=none; b=qA5vFJqVWZkNSsRNZ03kwj+H1Z69Klys3juRpgQY3YoqkoJJFYNV+IdvSKkrO2HJEiSSpGiqzR7BfgV1VmE9PVzuPWWAmUELexKwSokxySM0BoEqF6Iyz2se0ytiJgxP8P/7aLz+46Jnnjff4laWTjmiDYYSVe2kMfyq47Zxv3s=
+	t=1756334099; cv=none; b=H3mkSIKzhVDdPyfDzc8CByEMM5YhaPj5UGT2w+bLgaAK1fmFt/laH3TujPISJn5G3Iy+mn8RJ5ZzyeTkDVexEMjFgDPAdfcQlfmh/9X2or58GxgUjBbpS+tFi+b7dia5oPvnx+7ottZ3h6ztsZh8IOxBgo1kb4zCPX2m9zbQg0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756333717; c=relaxed/simple;
-	bh=Enfpdt0lrNqevhutRfiz1sNVpTDatf+D/XBiia59tWs=;
+	s=arc-20240116; t=1756334099; c=relaxed/simple;
+	bh=i3u6/aj5Eue5VjcDEtYoQotYP3uJqs5m0GzEDZoBVPU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cLZTVxwxuB3XB0aQmGr2Hp9P5IudCtJP95fT0fEwjwoHhqjmJ2eqNGnL54DG0GHRmfGtrYJ6FMpe4kkrsCpgf9xmQj1EfvKLnaX+jinfs71/yBTdvftLB8ZYF+FHFvJEJJrW6K0ibQJe7x2kvqyLLD+pP/nUcfXJ58jfxjD0pug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ksBOx0Fa; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57RGfTLM029081
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:28:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=LcrLZoaMuieBwoDNhdy1YKKE
-	PmtaqIZQcasiCx3hw8M=; b=ksBOx0FaLwkdk0t38aj7T0xGmpchr04zFiJSkZgZ
-	Ba64KDw1scqklvR5h9sPhUMIU5Lm2ULbS+dB0sk27byD5zxz1LdT8vRZaUw1mIEL
-	xh0i2qoc9SiowpsxDWLGj59eU9BUKYNTd+Lt+SZ/9us8XpkdePkPbROX9L0c1Nis
-	xuzdRsy97JbgBGv09uGR8V2gtRSajQOd+AstxEjUOr+Q/Lp78EBk7+sbA+6J7rxg
-	ssnXa5MEdmfrn2nI2mdVDxwzLzHHqhlfufrgyew42L4gAJrqTf9p2WsvRy8xNAKa
-	HZ7JFU2mS/Vczvql0G9Re9yqBmoUE7SgnNjvTTRqpyeYxg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5ume8ss-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 22:28:34 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b109be41a1so13386731cf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 27 Aug 2025 15:28:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756333713; x=1756938513;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LcrLZoaMuieBwoDNhdy1YKKEPmtaqIZQcasiCx3hw8M=;
-        b=DbRaAi4xjji5J5fw9yMCgG7GtCI+XaFyCZbj1dpHv/1OmrDltJ3K5aFNF9LR0WKxyo
-         auktrtb84/GK6JafuPaHkcNoUMBg6/SIyxDuNzqaNynv2gEEXhdZakjhdBaUf5L44dux
-         QYWUnuZiIXXdQLKSOL4KnHbjbhu3wGsJinA3sCTq/M179iU48lve0rEKXXJjT2FavnfE
-         5V6NZCTakcPLfeqxNfXRHru/OReoOc1nrlqb0UZlMIF2yqzv6K33uaLngh6m1Vc2pTqG
-         qfnOtUxS2OGcHH2MjiEcrcQ5AhzQo+fTsGRzCbR2quazVsajoxhHkWJivF/pD9WbU/hf
-         M3Hg==
-X-Forwarded-Encrypted: i=1; AJvYcCWhB0kZgxI9Ch7LkztuJ60w5PAdx+7FwJqSOR/eajL2Z/pNA0QIvJni5revpyGIHx8yiPJBBIdnnIvPkfc+@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkyKENLv5iTpKrSyyf77mogjkhuEUVyx5k7wM4WsNiTzgghCrt
-	AeKhr3CynZLC/KLr182si8IxQSC4yOB8dwFhISbozZTi7HDdf15B5/ByP9HgPK6ieW5ugtt5Lwv
-	LlhheTIRI26obLOEe0zxFyX4Fqnt0NwMyhM7SVLSoezG5vYru2WvgFKs9IInm35ldw15T
-X-Gm-Gg: ASbGncvhg/alUJ/FrTNNhLI2vsd81pWUMd1mcnVLYYZdZ8ns/rp14ephw1Pap0Eq1cC
-	bF7BGuLkcCSllISmG+Zn+en/bLH/wfmjFrpzTMdDL2IpJLk4c8/d0I7Xb9bKziV3p33JRp6+QVU
-	vqx7Kw9qFyRpaTYZjbi4pq4E6FpBLGZq8LUrOzKguivLpPnr/bORW2cUAg08C+xN07w97MsEjkO
-	hxAMXr8Yd1YZEBIoALt4Oq4FnyW/adFWTARKyo0pXnZTNsy4Xcz9ji9poL9OLT+wOaDEmZc2rfo
-	wGo/BNWjBf21qOUvVDUjiaUPvc5M6WFwv0ZRFvdT30qqmG0bwCqHV8XWmmEZX6dwRmglU6iwo67
-	MMzFifClQFtHENUjQR+p9l303mHn+HS7cAVMboBAgNFrYNueQr2vu
-X-Received: by 2002:a05:622a:cd:b0:4b2:dfc5:fbee with SMTP id d75a77b69052e-4b2dfc5fdb1mr105541881cf.32.1756333712541;
-        Wed, 27 Aug 2025 15:28:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5nmdIbVBTqmW1BSWH9OY/lezBX2PorYOAsLp+HwXKOdiRgVyGEp2e8fxZ/9eVS1zmC9A+GQ==
-X-Received: by 2002:a05:622a:cd:b0:4b2:dfc5:fbee with SMTP id d75a77b69052e-4b2dfc5fdb1mr105541351cf.32.1756333712052;
-        Wed, 27 Aug 2025 15:28:32 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f35c13debsm2882288e87.57.2025.08.27.15.28.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Aug 2025 15:28:31 -0700 (PDT)
-Date: Thu, 28 Aug 2025 01:28:27 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Louis Chauvet <louis.chauvet@bootlin.com>,
-        Haneen Mohammed <hamohammed.sa@gmail.com>,
-        Melissa Wen <melissa.srw@gmail.com>, Jyri Sarha <jyri.sarha@iki.fi>,
-        Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Manikandan Muralidharan <manikandan.m@microchip.com>,
-        Dharma Balasubiramani <dharma.b@microchip.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-        Inki Dae <inki.dae@samsung.com>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>, Liu Ying <victor.liu@nxp.com>,
-        Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        Anitha Chrisanthus <anitha.chrisanthus@intel.com>,
-        Edmund Dea <edmund.j.dea@intel.com>,
-        Paul Kocialkowski <paulk@sys-base.io>,
-        Sui Jingfeng <suijingfeng@loongson.cn>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Samuel Holland <samuel@sholland.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Mikko Perttunen <mperttunen@nvidia.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Hans de Goede <hansg@kernel.org>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-mips@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        linux-samsung-soc@vger.kernel.org, imx@lists.linux.dev,
-        linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-rockchip@lists.infradead.org,
-        linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org
-Subject: Re: [PATCH 04/39] drm/atomic: Remove unused
- drm_atomic_get_existing_connector_state()
-Message-ID: <a3hwkno4nemddbmaz6dayd24rmqcr3zxujrvsspnulrivntxjz@o3tm6o4mc6nt>
-References: <20250825-drm-no-more-existing-state-v1-0-f08ccd9f85c9@kernel.org>
- <20250825-drm-no-more-existing-state-v1-4-f08ccd9f85c9@kernel.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=jRo6Uq810I9LBJm1czceBOtI0VPNfkKRq8gH23+faC1K46hwTVAiiTM14+eAAAlo9pbZX7EYE2fBksOzqZcboznI69fDe80btKek/mQQfDHqjlyX3ZaEaHZWUM64noJMlRMeTwuzERDaK47K6ffJKNPaVdKv/Aas5iulNkahZR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GiMiXmZJ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E466C4CEEB;
+	Wed, 27 Aug 2025 22:34:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756334099;
+	bh=i3u6/aj5Eue5VjcDEtYoQotYP3uJqs5m0GzEDZoBVPU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GiMiXmZJcH+6lDg7zkqFB6PQ857v8PCKy7qky5AzXYzk9RTUmh0nUfbEz2HZj+xQk
+	 TAwl2x3iWZYyjAxnaPxNqVuGSncy5mSSKZGM3Xg2iwhk8/aHQcJ0tS8Vk9HgQUhQW2
+	 t8qZ0nkU0+GexXpe8tFtUnug9uhiF98B1J0WtzLPVmxP27FjE1CRrB6rWxEPUGpgjr
+	 Csj2lKOHMBatJD0S7estipOgXFF8wNCVCHjTqaOOtV+D4Y1jYvMQgCtGVBDONM3MVf
+	 bmH7WgWTdhVRR6+iPr4ywyhC3CEXy2CeFEPuAriLFwirVZFUenh+2jyeC1M5O+6V3J
+	 xgmKb6JkJOZ9g==
+Date: Wed, 27 Aug 2025 17:34:56 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Yijie Yang <yijie.yang@oss.qualcomm.com>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Yingying Tang <quic_yintang@quicinc.com>
+Subject: Re: [PATCH v7 2/3] arm64: dts: qcom: Add HAMOA-IOT-SOM platform
+Message-ID: <gbdg5hkuzd2oynypnz2j6icauqthnweg4tjimeph4bqwvjdkuc@srkxskvxc6sm>
+References: <20250827-hamoa_initial-v7-0-f9b81d564bb2@oss.qualcomm.com>
+ <20250827-hamoa_initial-v7-2-f9b81d564bb2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250825-drm-no-more-existing-state-v1-4-f08ccd9f85c9@kernel.org>
-X-Authority-Analysis: v=2.4 cv=VtIjA/2n c=1 sm=1 tr=0 ts=68af8692 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ROUmOPvenB7E6LXmrzQA:9
- a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMiBTYWx0ZWRfXyxXVtmAN1bNM
- 2TBSOXJ56oVuf5LSzk40pL9J6bzToh0KTQS2clY9W1mUGglSy+RZWopN6+nt0ahDYgFA2ooV5dN
- TosDlGMMU0Ic9ON+gDL4X45HzvBPm7I9XqTz5PgUCExO+GgGJMsFAB0RgKMCfXz4goXMaef6maB
- I4s0/iCJYcO8jg9UW4y8VdJmq4O11/b9TAKqT71Q8BkgFyDcD4fn8A3+4oqyDaAi9BlPweDsmV6
- GnVH9qBkNpE+yQMAt8HaSXoWTq6Yhr5X+8+wag0SXbm6JJHz77Lw/vpjots2ogq/V8BXj7oeS6z
- N6w4iZxBF92LcwDBUEtnN9R42vLR+Wu5vPGJt6DR6dt8KQrgvQGxbHFcf4/phISEkejN3iqW3dD
- q3UEZuL2
-X-Proofpoint-GUID: MvfFwp2u4aHo_fxnawn3uAY8MMQRHRBX
-X-Proofpoint-ORIG-GUID: MvfFwp2u4aHo_fxnawn3uAY8MMQRHRBX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-27_04,2025-08-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 priorityscore=1501 impostorscore=0 bulkscore=0
- suspectscore=0 malwarescore=0 adultscore=0 spamscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508230032
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250827-hamoa_initial-v7-2-f9b81d564bb2@oss.qualcomm.com>
 
-On Mon, Aug 25, 2025 at 03:43:09PM +0200, Maxime Ripard wrote:
-> The drm_atomic_get_existing_connector_state() function is deprecated and
-> isn't used anymore, so let's remove it.
+On Wed, Aug 27, 2025 at 10:52:19AM +0800, Yijie Yang wrote:
+> The HAMOA-IOT-SOM is a compact computing module that integrates a System
+> on Chip (SoC) — specifically the x1e80100 — along with essential
+> components optimized for IoT applications. It is designed to be mounted on
+> carrier boards, enabling the development of complete embedded systems.
 > 
-> Signed-off-by: Maxime Ripard <mripard@kernel.org>
+> This change enables the following components:
+> - Regulators on the SOM
+> - Reserved memory regions
+> - PCIe6a and its PHY
+> - PCIe4 and its PHY
+> - USB0 through USB6 and their PHYs
+> - ADSP, CDSP
+> - WLAN, Bluetooth (M.2 interface)
+> 
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Co-developed-by: Yingying Tang <quic_yintang@quicinc.com> # PCIe4 and WLAN
+> Signed-off-by: Yingying Tang <quic_yintang@quicinc.com>
+> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
+
+I'm sorry, but I can't merge this as checkpatch doesn't approve of the
+way you write the Co-developed-by, and I don't like it either - in
+particular when looking at the 3rd patch,
+
+As this is all from Qualcomm, please change this such that one person
+(the author) certifies the origin of the patch (in accordance with DCO
+1.1 bullet a). You can attribute the additional authors by writing
+"Written in collaboration with Yingying Tang <and other names for the
+3rd patch>" above the tags.
+
+PS. Please run checkpatch before sending your patches.
+
+Regards,
+Bjorn
+
 > ---
->  include/drm/drm_atomic.h | 23 -----------------------
->  1 file changed, 23 deletions(-)
+>  arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 609 ++++++++++++++++++++++++++++
+>  1 file changed, 609 insertions(+)
 > 
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
-
--- 
-With best wishes
-Dmitry
+> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
+> new file mode 100644
+> index 000000000000..5facc5544c3d
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi
+> @@ -0,0 +1,609 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
+> +
+> +#include "x1e80100.dtsi"
+> +#include "x1e80100-pmics.dtsi"
+> +#include <dt-bindings/gpio/gpio.h>
+> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> +
+> +/ {
+> +	compatible = "hamoa-iot-som", "qcom,x1e80100";
+> +
+> +	reserved-memory {
+> +		linux,cma {
+> +			compatible = "shared-dma-pool";
+> +			size = <0x0 0x8000000>;
+> +			reusable;
+> +			linux,cma-default;
+> +		};
+> +	};
+> +};
+> +
+> +&apps_rsc {
+> +	/* PMC8380C_B */
+> +	regulators-0 {
+> +		compatible = "qcom,pm8550-rpmh-regulators";
+> +		qcom,pmic-id = "b";
+> +
+> +		vdd-bob1-supply = <&vph_pwr>;
+> +		vdd-bob2-supply = <&vph_pwr>;
+> +		vdd-l1-l4-l10-supply = <&vreg_s4c_1p8>;
+> +		vdd-l2-l13-l14-supply = <&vreg_bob1>;
+> +		vdd-l5-l16-supply = <&vreg_bob1>;
+> +		vdd-l6-l7-supply = <&vreg_bob2>;
+> +		vdd-l8-l9-supply = <&vreg_bob1>;
+> +		vdd-l12-supply = <&vreg_s5j_1p2>;
+> +		vdd-l15-supply = <&vreg_s4c_1p8>;
+> +		vdd-l17-supply = <&vreg_bob2>;
+> +
+> +		vreg_bob1: bob1 {
+> +			regulator-name = "vreg_bob1";
+> +			regulator-min-microvolt = <3008000>;
+> +			regulator-max-microvolt = <3960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_bob2: bob2 {
+> +			regulator-name = "vreg_bob2";
+> +			regulator-min-microvolt = <2504000>;
+> +			regulator-max-microvolt = <3008000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1b_1p8: ldo1 {
+> +			regulator-name = "vreg_l1b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2b_3p0: ldo2 {
+> +			regulator-name = "vreg_l2b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l4b_1p8: ldo4 {
+> +			regulator-name = "vreg_l4b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l5b_3p0: ldo5 {
+> +			regulator-name = "vreg_l5b_3p0";
+> +			regulator-min-microvolt = <3000000>;
+> +			regulator-max-microvolt = <3000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l6b_1p8: ldo6 {
+> +			regulator-name = "vreg_l6b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l7b_2p8: ldo7 {
+> +			regulator-name = "vreg_l7b_2p8";
+> +			regulator-min-microvolt = <2800000>;
+> +			regulator-max-microvolt = <2800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l8b_3p0: ldo8 {
+> +			regulator-name = "vreg_l8b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l9b_2p9: ldo9 {
+> +			regulator-name = "vreg_l9b_2p9";
+> +			regulator-min-microvolt = <2960000>;
+> +			regulator-max-microvolt = <2960000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l10b_1p8: ldo10 {
+> +			regulator-name = "vreg_l10b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l12b_1p2: ldo12 {
+> +			regulator-name = "vreg_l12b_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-always-on;
+> +		};
+> +
+> +		vreg_l13b_3p0: ldo13 {
+> +			regulator-name = "vreg_l13b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l14b_3p0: ldo14 {
+> +			regulator-name = "vreg_l14b_3p0";
+> +			regulator-min-microvolt = <3072000>;
+> +			regulator-max-microvolt = <3072000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l15b_1p8: ldo15 {
+> +			regulator-name = "vreg_l15b_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +			regulator-always-on;
+> +		};
+> +
+> +		vreg_l16b_2p9: ldo16 {
+> +			regulator-name = "vreg_l16b_2p9";
+> +			regulator-min-microvolt = <2912000>;
+> +			regulator-max-microvolt = <2912000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l17b_2p5: ldo17 {
+> +			regulator-name = "vreg_l17b_2p5";
+> +			regulator-min-microvolt = <2504000>;
+> +			regulator-max-microvolt = <2504000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	/* PMC8380VE_C */
+> +	regulators-1 {
+> +		compatible = "qcom,pm8550ve-rpmh-regulators";
+> +		qcom,pmic-id = "c";
+> +
+> +		vdd-l1-supply = <&vreg_s5j_1p2>;
+> +		vdd-l2-supply = <&vreg_s1f_0p7>;
+> +		vdd-l3-supply = <&vreg_s1f_0p7>;
+> +		vdd-s4-supply = <&vph_pwr>;
+> +
+> +		vreg_s4c_1p8: smps4 {
+> +			regulator-name = "vreg_s4c_1p8";
+> +			regulator-min-microvolt = <1856000>;
+> +			regulator-max-microvolt = <2000000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1c_1p2: ldo1 {
+> +			regulator-name = "vreg_l1c_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2c_0p8: ldo2 {
+> +			regulator-name = "vreg_l2c_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3c_0p8: ldo3 {
+> +			regulator-name = "vreg_l3c_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	/* PMC8380_D */
+> +	regulators-2 {
+> +		compatible = "qcom,pmc8380-rpmh-regulators";
+> +		qcom,pmic-id = "d";
+> +
+> +		vdd-l1-supply = <&vreg_s1f_0p7>;
+> +		vdd-l2-supply = <&vreg_s1f_0p7>;
+> +		vdd-l3-supply = <&vreg_s4c_1p8>;
+> +		vdd-s1-supply = <&vph_pwr>;
+> +
+> +		vreg_l1d_0p8: ldo1 {
+> +			regulator-name = "vreg_l1d_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2d_0p9: ldo2 {
+> +			regulator-name = "vreg_l2d_0p9";
+> +			regulator-min-microvolt = <912000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3d_1p8: ldo3 {
+> +			regulator-name = "vreg_l3d_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	/* PMC8380_E */
+> +	regulators-3 {
+> +		compatible = "qcom,pmc8380-rpmh-regulators";
+> +		qcom,pmic-id = "e";
+> +
+> +		vdd-l2-supply = <&vreg_s1f_0p7>;
+> +		vdd-l3-supply = <&vreg_s5j_1p2>;
+> +
+> +		vreg_l2e_0p8: ldo2 {
+> +			regulator-name = "vreg_l2e_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3e_1p2: ldo3 {
+> +			regulator-name = "vreg_l3e_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	/* PMC8380_F */
+> +	regulators-4 {
+> +		compatible = "qcom,pmc8380-rpmh-regulators";
+> +		qcom,pmic-id = "f";
+> +
+> +		vdd-l1-supply = <&vreg_s5j_1p2>;
+> +		vdd-l2-supply = <&vreg_s5j_1p2>;
+> +		vdd-l3-supply = <&vreg_s5j_1p2>;
+> +		vdd-s1-supply = <&vph_pwr>;
+> +
+> +		vreg_s1f_0p7: smps1 {
+> +			regulator-name = "vreg_s1f_0p7";
+> +			regulator-min-microvolt = <700000>;
+> +			regulator-max-microvolt = <1100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1f_1p0: ldo1 {
+> +			regulator-name = "vreg_l1f_1p0";
+> +			regulator-min-microvolt = <1024000>;
+> +			regulator-max-microvolt = <1024000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2f_1p0: ldo2 {
+> +			regulator-name = "vreg_l2f_1p0";
+> +			regulator-min-microvolt = <1024000>;
+> +			regulator-max-microvolt = <1024000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3f_1p0: ldo3 {
+> +			regulator-name = "vreg_l3f_1p0";
+> +			regulator-min-microvolt = <1024000>;
+> +			regulator-max-microvolt = <1024000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	/* PMC8380VE_I */
+> +	regulators-6 {
+> +		compatible = "qcom,pm8550ve-rpmh-regulators";
+> +		qcom,pmic-id = "i";
+> +
+> +		vdd-l1-supply = <&vreg_s4c_1p8>;
+> +		vdd-l2-supply = <&vreg_s5j_1p2>;
+> +		vdd-l3-supply = <&vreg_s1f_0p7>;
+> +		vdd-s1-supply = <&vph_pwr>;
+> +		vdd-s2-supply = <&vph_pwr>;
+> +
+> +		vreg_s1i_0p9: smps1 {
+> +			regulator-name = "vreg_s1i_0p9";
+> +			regulator-min-microvolt = <900000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_s2i_1p0: smps2 {
+> +			regulator-name = "vreg_s2i_1p0";
+> +			regulator-min-microvolt = <1000000>;
+> +			regulator-max-microvolt = <1100000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1i_1p8: ldo1 {
+> +			regulator-name = "vreg_l1i_1p8";
+> +			regulator-min-microvolt = <1800000>;
+> +			regulator-max-microvolt = <1800000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2i_1p2: ldo2 {
+> +			regulator-name = "vreg_l2i_1p2";
+> +			regulator-min-microvolt = <1200000>;
+> +			regulator-max-microvolt = <1200000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3i_0p8: ldo3 {
+> +			regulator-name = "vreg_l3i_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +
+> +	/* PMC8380VE_J */
+> +	regulators-7 {
+> +		compatible = "qcom,pm8550ve-rpmh-regulators";
+> +		qcom,pmic-id = "j";
+> +
+> +		vdd-l1-supply = <&vreg_s1f_0p7>;
+> +		vdd-l2-supply = <&vreg_s5j_1p2>;
+> +		vdd-l3-supply = <&vreg_s1f_0p7>;
+> +		vdd-s5-supply = <&vph_pwr>;
+> +
+> +		vreg_s5j_1p2: smps5 {
+> +			regulator-name = "vreg_s5j_1p2";
+> +			regulator-min-microvolt = <1256000>;
+> +			regulator-max-microvolt = <1304000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l1j_0p8: ldo1 {
+> +			regulator-name = "vreg_l1j_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l2j_1p2: ldo2 {
+> +			regulator-name = "vreg_l2j_1p2";
+> +			regulator-min-microvolt = <1256000>;
+> +			regulator-max-microvolt = <1256000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +
+> +		vreg_l3j_0p8: ldo3 {
+> +			regulator-name = "vreg_l3j_0p8";
+> +			regulator-min-microvolt = <880000>;
+> +			regulator-max-microvolt = <920000>;
+> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
+> +		};
+> +	};
+> +};
+> +
+> +&pcie4 {
+> +	perst-gpios = <&tlmm 146 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 148 GPIO_ACTIVE_LOW>;
+> +
+> +	pinctrl-0 = <&pcie4_default>;
+> +	pinctrl-names = "default";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie4_phy {
+> +	vdda-phy-supply = <&vreg_l3i_0p8>;
+> +	vdda-pll-supply = <&vreg_l3e_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie6a {
+> +	perst-gpios = <&tlmm 152 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 154 GPIO_ACTIVE_LOW>;
+> +
+> +	pinctrl-0 = <&pcie6a_default>;
+> +	pinctrl-names = "default";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie6a_phy {
+> +	vdda-phy-supply = <&vreg_l1d_0p8>;
+> +	vdda-pll-supply = <&vreg_l2j_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_0 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_1 {
+> +	status = "okay";
+> +};
+> +
+> +&qupv3_2 {
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_adsp {
+> +	firmware-name = "qcom/x1e80100/adsp.mbn",
+> +			"qcom/x1e80100/adsp_dtb.mbn";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&remoteproc_cdsp {
+> +	firmware-name = "qcom/x1e80100/cdsp.mbn",
+> +			"qcom/x1e80100/cdsp_dtb.mbn";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&tlmm {
+> +	gpio-reserved-ranges = <34 2>, /* TPM LP & INT */
+> +			       <44 4>; /* SPI (TPM) */
+> +
+> +	pcie4_default: pcie4-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio147";
+> +			function = "pcie4_clk";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio146";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio148";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	pcie6a_default: pcie6a-default-state {
+> +		clkreq-n-pins {
+> +			pins = "gpio153";
+> +			function = "pcie6a_clk";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-n-pins {
+> +			pins = "gpio152";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-disable;
+> +		};
+> +
+> +		wake-n-pins {
+> +			pins = "gpio154";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +
+> +		};
+> +	};
+> +};
+> +
+> +&usb_1_ss0 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss0_dwc3 {
+> +	dr_mode = "otg";
+> +	usb-role-switch;
+> +};
+> +
+> +&usb_1_ss0_hsphy {
+> +	vdd-supply = <&vreg_l3j_0p8>;
+> +	vdda12-supply = <&vreg_l2j_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss0_qmpphy {
+> +	vdda-phy-supply = <&vreg_l2j_1p2>;
+> +	vdda-pll-supply = <&vreg_l1j_0p8>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss1 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss1_dwc3 {
+> +	dr_mode = "otg";
+> +	usb-role-switch;
+> +};
+> +
+> +&usb_1_ss1_hsphy {
+> +	vdd-supply = <&vreg_l3j_0p8>;
+> +	vdda12-supply = <&vreg_l2j_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss1_qmpphy {
+> +	vdda-phy-supply = <&vreg_l2j_1p2>;
+> +	vdda-pll-supply = <&vreg_l2d_0p9>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss2 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss2_dwc3 {
+> +	dr_mode = "otg";
+> +	usb-role-switch;
+> +};
+> +
+> +&usb_1_ss2_hsphy {
+> +	vdd-supply = <&vreg_l3j_0p8>;
+> +	vdda12-supply = <&vreg_l2j_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_1_ss2_qmpphy {
+> +	vdda-phy-supply = <&vreg_l2j_1p2>;
+> +	vdda-pll-supply = <&vreg_l2d_0p9>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_2 {
+> +	status = "okay";
+> +};
+> +
+> +&usb_2_dwc3 {
+> +	dr_mode = "host";
+> +};
+> +
+> +&usb_2_hsphy {
+> +	vdd-supply = <&vreg_l2e_0p8>;
+> +	vdda12-supply = <&vreg_l3e_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp {
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp_hsphy0 {
+> +	vdd-supply = <&vreg_l2e_0p8>;
+> +	vdda12-supply = <&vreg_l3e_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp_hsphy1 {
+> +	vdd-supply = <&vreg_l2e_0p8>;
+> +	vdda12-supply = <&vreg_l3e_1p2>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp_qmpphy0 {
+> +	vdda-phy-supply = <&vreg_l3e_1p2>;
+> +	vdda-pll-supply = <&vreg_l3c_0p8>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&usb_mp_qmpphy1 {
+> +	vdda-phy-supply = <&vreg_l3e_1p2>;
+> +	vdda-pll-supply = <&vreg_l3c_0p8>;
+> +
+> +	status = "okay";
+> +};
+> 
+> -- 
+> 2.34.1
+> 
 
