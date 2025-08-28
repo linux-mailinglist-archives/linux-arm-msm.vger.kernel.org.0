@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-71171-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 432E5B3A86B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 19:41:41 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4F01B3A873
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 19:42:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D09C27B5207
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 17:39:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5E7FE205436
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 17:42:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95A4133A032;
-	Thu, 28 Aug 2025 17:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8ED0338F38;
+	Thu, 28 Aug 2025 17:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rJPaURO1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RW739Xh4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0E72522A1;
-	Thu, 28 Aug 2025 17:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9766322DB3;
+	Thu, 28 Aug 2025 17:41:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756402881; cv=none; b=HDCMaYlgIGOk+dgSAWkG9/B/zaxnDTdcNiIUCslzWN+QE5vPGUwjB1yDIMaFGpmG5Uy+yDrQEGveK2ganqDpALRVW3vxIn2/0pY5hAAmLJ7btPFb0KBhRuPwgWtWmcwVbeOKeAlccoG9NtLfonK5t4RCp15OHTqQtVa2+0pQKbo=
+	t=1756402916; cv=none; b=P085f2jmjxlj+iO3QVbH3cwDkZxQUnQz6Rq7eTRNV72PnOG1NnTkZN1O3gXeM7RkxwRGK9KTCw/hSFgpHnkPn99u4Kn03VVDyas4iy583yhyoZe2Qhk+stZDLtvlTG6KdvA3vggEdm21rOQb/tDa58kcbOC6F8Ne7J0bgb3YXK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756402881; c=relaxed/simple;
-	bh=Whm/k3VGDw273oLGDiuwhfv68/dbFsIWO6xxoExuOyI=;
+	s=arc-20240116; t=1756402916; c=relaxed/simple;
+	bh=2UYNXGDieoZ95XzWgQcQITQA1YLH3BH5DbxP1Zj3114=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rCNAqL5tnra5hruSyf1u58qbm3v+I+5mgfgemXWROIpcbd0jPyQ/wv1BPGn3CctBHl6Q1BwSU3UOQnQFFEowzpNjFgHB7j1t89if1gj2wdw2fbY8ucNBLmBWgVyPKVKKG+IqNSTCx0m5pFJdy96GlXe2m4wdFtcHaopQXshFXNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rJPaURO1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9DF9C4CEEB;
-	Thu, 28 Aug 2025 17:41:17 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=MfVgwCEQIJbFJxNyC5gytQhfFd/ceFdkcAqda8/TvBsXY8AEoHbYG197Mx9YJ7J6xt6KwJgtDXRypu+cm1k8Aio4yfH+nWXr/ilu/0wo1fyG1VQMtqLWxLllpWWw9PFKJyu7OJJlD7P4Rz3fBaEH2MGem23Ou8RGCRqzux3KmWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RW739Xh4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73F2C4CEED;
+	Thu, 28 Aug 2025 17:41:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756402881;
-	bh=Whm/k3VGDw273oLGDiuwhfv68/dbFsIWO6xxoExuOyI=;
+	s=k20201202; t=1756402916;
+	bh=2UYNXGDieoZ95XzWgQcQITQA1YLH3BH5DbxP1Zj3114=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rJPaURO1X1r4ngOp6fGrCnphKS6WEoylX2RqrgeZ4nO2D/zXxYPE2urUUWJeou0vA
-	 qVXgaMskPNjh8P6+T9MFKL7N5kWUhcinyIVmzT6GtlWFxaBUYWbR6uURnsGoEpS3b0
-	 QlXvHqoBsgyLljrmdQg2OS9ZdHk+jEWwrs73xVQ23XN0TkAElIWigr5G7vexXhfPT6
-	 1J6JIQyrXSbIpgXuWgsuVdt2nFOnsrgdQbV6XE+mKUVLb5C6ZmSApRnGDmJ/8Uo78K
-	 eVf/o9RKtlqJXUha3AGVl0xfg17nOh+zJJ3zXh7E9vGs2ln71biwtUHRH4w7Sm/ST8
-	 tvh652KGWbcSQ==
-Message-ID: <e0c1be1e-ee98-4de4-8470-e272e2093205@kernel.org>
-Date: Thu, 28 Aug 2025 19:41:15 +0200
+	b=RW739Xh45IPUVSlytuo2cI/g6ty1WeKTa43IsX5pNsnTlRiajWRKe8HqSuOvuAxpA
+	 1OJEu8ifJu9nUT4nt0ImxMrEin+B8tnpZyv/NVFqP10AyLwsZbLHpu/9OROY1FEOeJ
+	 mzj+Dr5oQq8fJWGM8s/wSWyyXUF5/Ezg3YgR23V2G155hVkhJcaucoPam0J4GiWW6E
+	 O9bqepTC5qee2hbj1viB9int9r1EgtMZeLvW6+rTBnyg3A9zCNq9XV+TFnhxo01sZL
+	 rU2zRahnLXgxwDLqmJ5D5dIpXX71e4LToXulw3cgmg+35LMVxcQNZempMJhxqcDrys
+	 9YPdOKzq2RW/w==
+Message-ID: <c73b16e5-bc48-493d-a1a7-06b779a7a7ab@kernel.org>
+Date: Thu, 28 Aug 2025 19:41:50 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,7 +62,7 @@ Cc: linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
 References: <20250826150855.7725-1-quic_rdwivedi@quicinc.com>
  <20250826150855.7725-2-quic_rdwivedi@quicinc.com>
  <9944c595-da68-43c0-8364-6a8665a0fc3f@acm.org>
- <03402267-3953-462b-9e3f-b0053a9cdcd8@quicinc.com>
+ <8d705694-498a-4592-b93a-7df6a1dd5211@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -108,11 +108,11 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <03402267-3953-462b-9e3f-b0053a9cdcd8@quicinc.com>
+In-Reply-To: <8d705694-498a-4592-b93a-7df6a1dd5211@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-On 28/08/2025 18:25, Ram Kumar Dwivedi wrote:
+On 28/08/2025 18:45, Ram Kumar Dwivedi wrote:
 > 
 > 
 > On 26-Aug-25 9:05 PM, Bart Van Assche wrote:
@@ -128,12 +128,32 @@ On 28/08/2025 18:25, Ram Kumar Dwivedi wrote:
 >>
 >> The UFSHCI 5.0 spec will add gear 6 soon. So why to restrict the maximum
 >> gear to 5?
-> 
+>>
+>>> +  limit-rate:
+>>> +    $ref: /schemas/types.yaml#/definitions/uint32
+>>> +    enum: [1, 2]
+>>> +    default: 2
+>>> +    description:
+>>> +      Restricts the UFS controller to Rate A (1) or Rate B (2) for both
+>>> +      TX and RX directions, often required in automotive environments due
+>>> +      to hardware limitations.
+>>
+>> As far as I know no numeric values are associated with these rates in
+>> the UFSHCI 4.1 standard nor in any of the previous versions of this
+>> standard. Does the .yaml syntax support something like "enum: [A, B]"?
 > Hi Bart,
 > 
-> Thanks for the suggestion. I limited it to Gear 5 based on current upstream support.
+> As per the MIPI UniPro spec:
+> 
+> In Section 5.7.12.3.2, the hs_series is defined as:
+> hs_series = Flags[3] + 1;
+> 
+> In Section 5.7.7.1, Flags[3] is described as:
+> Set to ‘0’ for Series A and ‘1’ for Series B (PA_HSSeries).
 
-Upstream of what? Bindings describe hardware.
+That's register value. Why are you using values as argument of actual
+meaning of rates?
+
 
 Best regards,
 Krzysztof
