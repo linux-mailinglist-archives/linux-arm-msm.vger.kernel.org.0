@@ -1,147 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-71082-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71083-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B943FB39783
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 10:51:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 736A9B39832
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 11:27:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8D5937AF487
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 08:50:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 323655E8446
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 09:27:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56B062EACEF;
-	Thu, 28 Aug 2025 08:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10D522E3360;
+	Thu, 28 Aug 2025 09:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CxUz4OE7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FqeLVVHg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15C0430CD89;
-	Thu, 28 Aug 2025 08:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6721E2DFF13
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 09:27:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756371111; cv=none; b=CF1a4N1/A0WlYKH4O2WfhYeLjcOvy57cx8ISulJJBeeVnq/Rkb3GLRm+WDdTv3DOwLPbULPRtszQ6GVRpBPdbgSQwUNvQ7RGYwKeO1FU1o99t/dRoM5hUXYDWE32xRTHOQF2WTma24uSlpn5EiKad2fJu1a4ytT2LaC9Dm7AoHQ=
+	t=1756373250; cv=none; b=KP8h4h1+qeWoJYx+vfXCDvg0Pam7he+PGKxW+4b3jEJYMxnyhkJl+WvPrK133MKvWcaI7oy5z3wtFIPPgohbW1lHsJdDQwJh89T878XHhFCtx7Uwp8O+LGZLYEvTquydrzlf7JOBBkYts1g2GaEwYZy9oPydr5pD1iU0R64Grmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756371111; c=relaxed/simple;
-	bh=3YzdMt4Qw41h9On9I6WWC7I2bIUYtljay6e0dtrlQB0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N9NnpuXbBnwSXIcIu2u23R/XRyrjdiogzPrL5rpKpTYtdQEDM30Bn123ZmbgZuqNh8tDZSivVJmd2ZwAPi1D036B5qDEUApKX9GHCydqvzIuBQ5/4SdWp73OGbFp/aqwrb9LJ6WjQIAbm+3B/m2CEeUlCgwAmL0Ye8bc9TCUm0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CxUz4OE7; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAA74C4CEEB;
-	Thu, 28 Aug 2025 08:51:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756371110;
-	bh=3YzdMt4Qw41h9On9I6WWC7I2bIUYtljay6e0dtrlQB0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CxUz4OE7D1NGKWLHEwzYtKgtTZECCDgFwxLLFeEJiE5hR7TF/HdMp0veLk2o6qfDv
-	 KrmFmQeAKMvmoCGTsN2QEpErm2Z/n46G4CUgdan/vOqQ9+XQ8CHs5YjX+RarjPGWNt
-	 4fgJOJt8RG0sXbgl0kwnayykHV1vIbocYp6VitOqSIqH+RSsoJuBA8wtGEelQ3uPo5
-	 xCNZZZqIFBHNQnmi6rQHhugNHWi8N0tBMVwx+A651+DQ29n0lH/uQg909DvdKUppWS
-	 TcZgiGOplL37u0h/PshdhvyJVU8d5z8Os53O2PwwUjdkj2x+Ik0u8cPM+8bvR7rx0x
-	 zclGiA7ZwYXog==
-Date: Thu, 28 Aug 2025 10:51:44 +0200
-From: Mark Brown <broonie@kernel.org>
-To: Bartosz Golaszewski <brgl@bgdev.pl>
-Cc: Linus Walleij <linus.walleij@linaro.org>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Alexey Klimov <alexey.klimov@linaro.org>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Sean Wang <sean.wang@kernel.org>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
-	Andy Shevchenko <andy@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Hildenbrand <david@redhat.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
-	Vlastimil Babka <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Michal Hocko <mhocko@suse.com>, Dong Aisheng <aisheng.dong@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	NXP S32 Linux Team <s32@nxp.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Tony Lindgren <tony@atomide.com>,
-	Haojian Zhuang <haojian.zhuang@linaro.org>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-mediatek@lists.infradead.org,
-	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
-	linux-hardening@vger.kernel.org, linux-mm@kvack.org,
-	imx@lists.linux.dev, linux-omap@vger.kernel.org,
-	linux-renesas-soc@vger.kernel.org,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v5 00/15] pinctrl: introduce the concept of a GPIO pin
- function category
-Message-ID: <aLAYoDyz8Xie4Dhb@finisterre.sirena.org.uk>
-References: <20250815-pinctrl-gpio-pinfuncs-v5-0-955de9fd91db@linaro.org>
- <CACRpkdaDGmdhaik+1saRv7Ts4myQ+tg1aQqGU3xQyT7ma8dJFw@mail.gmail.com>
- <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
- <CACRpkda4soRCLF5=W=6R4wnwT3pjk743j022XfJxjTTQzuarAA@mail.gmail.com>
- <534ad082-08fa-42c0-9c24-f0c11af7d5b2@sirena.org.uk>
- <CAMRc=Mdn0_yPXyYq4sbvH4P9-h71vEc4arLPBfSk1PiEFaB7jQ@mail.gmail.com>
- <1804d9dc-8814-47d4-af88-c819c3f17bc0@sirena.org.uk>
- <CAMRc=MdKgqa+vjhHvD2+Tjw5NwBtFv-0aUivi5UuEQd+n4KxmA@mail.gmail.com>
+	s=arc-20240116; t=1756373250; c=relaxed/simple;
+	bh=UZn1e/0QvG5mcFs0SicONTgp5MkJcxhTgH/qXUOPqHM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LofhEdaHqu/BSYI3laeH2VQQW0x55ju2B/T4CKdAA3k8poz9mDjwvHQDBhZVzXUxdwweEYsN3ZR8HN61hD3jwVsUuCkvE4gKLyOgQ0UkN1M95Vn1jlAYoXcsbZ3hHKev3VAn85Cfui5nGnio0IaROffd3quhL4zOUUoxF6UsRFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FqeLVVHg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57S94CmK007201
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 09:27:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=+R9FlvtB5DBD9MbgaBe0G9
+	oR+n+eBr41Ts62Yq9hEFA=; b=FqeLVVHgNUrUFUccrdByhf8d7BEAeH7Q8u4jmB
+	2RoWLGv0WmXidDQHub+XHpq7WBHRjzQ3hZZ3tA04xZMOpGYqj9A3O8XTURouXu3A
+	jtVy5XI6ug8wXUw9568htF3N2s6q0ma7OSM52bNnLvGybzqC0uAeRJohm0Ql+Wgo
+	pl2ApNDTJAOIkQofpHy1Mf9SfvKpVdzZ46iiBSLoa0nCTUzKatMjZCoRqBdIvlEF
+	vUZATbqJjruvJIrSQKkyBkwviR4Hx00nZJ2gVdF6ua7WcWnr1xiMajgFIJnFJ/X3
+	yQ06XHkjZYJjHmDB7eCHVDAtZiPHaiR0HJgF6EdG2b82R4iQ==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48tbpghecu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 09:27:28 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b4c46fbb997so1289883a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 02:27:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756373247; x=1756978047;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+R9FlvtB5DBD9MbgaBe0G9oR+n+eBr41Ts62Yq9hEFA=;
+        b=kZVjW+bRFFabAqX7Hacut2KogMoPb2dZs1eF8xn5qYR5GA1ZsqG0rh977u4a/oqg+n
+         pDBN1TKOBLSanid6Oqv7UtiPosG+/dOk6UpkWRrAUUuJdsdFcE1qYD6tFHR6DxxSTYce
+         2zimqAsQv7U3KRdz3l8UEmE8dkcUVWQxJLmQuQeQYIZcoye0cXOIqGa7M9LYZlh2opW0
+         6UOGTeqTXHxChNn/fkjJAV7EZJqOobMDVvUE4yUf8/oszxId0gJFlMH7tgAfBEuVGU0b
+         D+KJpvOWCHZvskmTMR5Wjj5yufEBPnShSx1fyqaY0xk6UX1YM40MvI7dwfhhFwtaIBLF
+         qwIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVwqsY1TOO8BIZGRKO/mGc120+29LUdJz+3xlbP2mQh7iDiecFz5dnJfJk4kZ4FIHX35y4MOgJrtneVBCPk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0CEL2BRlt+8K3hIVyJzOdx24C9Omt+pqjlCYycNr2hQNf0zKi
+	uKIAjq9z8+UNqtwBLMSg9W4bOUzSJXnGBRV18tR5c28qJh1bSYAJJFOiNpDxKo//UiFYZbTvTeU
+	CVdgSIHHAlbeIqQWdRTC7/eX6t53apHlzVsLymAcKmJnwvisz2iIwziPrRJQALCCG7GiW
+X-Gm-Gg: ASbGncsM0JpdHYqFaqgTS4wCtOTfCSXEW3vO43rYJdjYz/6qoagg5cHLBXS4jbaJt3J
+	wiD+WTZUGmmNHg7wTqSCe2cujvKlVaxFOO8h65MFZJQu3yD7iao+rGKIwDFmq8X6HY1GSdix11f
+	3XUtmajE1osGnv05rPm1C02VUFisRcw2xOXDkEMzcEKGKtGYdvjFRfvmHq1Aq/NPeJ6fujHCmwO
+	9PnYirJamwpn+McI3xqdw/edu454sut2d/CQJcQGPWl3Orroj5BL/22V1OM01q9dj2U42aSGLVO
+	acOBzA08MhiWKKGMBujpaUkqC2QR0hnW+Sqo3ON6F3SsOsDHTYQR4SvL5ddVpJqltLRabXejQhe
+	yDFybq78U+yWz0Fn0FbFpDQ==
+X-Received: by 2002:a17:903:38cc:b0:246:2cb3:5768 with SMTP id d9443c01a7336-248753a2bd8mr119449165ad.30.1756373246885;
+        Thu, 28 Aug 2025 02:27:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxz54QfBeeANm1Mg3jqliReUDNjYOnWOmNkEg2Int6lFhWZh1T5+xjUbSHeCwCMBvkxsM8RQ==
+X-Received: by 2002:a17:903:38cc:b0:246:2cb3:5768 with SMTP id d9443c01a7336-248753a2bd8mr119448925ad.30.1756373246396;
+        Thu, 28 Aug 2025 02:27:26 -0700 (PDT)
+Received: from hu-yuanfang-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-246ed91ee20sm92497015ad.136.2025.08.28.02.27.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Aug 2025 02:27:26 -0700 (PDT)
+From: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+Subject: [PATCH v3 0/3] coresight-tnoc: Add support for Interconnect TNOC
+Date: Thu, 28 Aug 2025 02:27:21 -0700
+Message-Id: <20250828-itnoc-v3-0-f1b55dea7a27@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="CMe5mpL7NfxBkMEj"
-Content-Disposition: inline
-In-Reply-To: <CAMRc=MdKgqa+vjhHvD2+Tjw5NwBtFv-0aUivi5UuEQd+n4KxmA@mail.gmail.com>
-X-Cookie: Filmed before a live audience.
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAPogsGgC/22MzQrCMBAGX6XkbEqySX/05HuIhzbZ2gXbaFKDU
+ vrupgVBxMvCLN/MzAJ6wsAO2cw8RgrkxgRqlzHTN+MFOdnEDAQUopYFp2l0hutSQKWsbGthWNr
+ ePHb03Dqnc+KewuT8a8tGuX5/C1FywUswNequaqyCowshvz+aq3HDkKfD1lCEb3n/kSHJYAWWL
+ WqN0P2Rl2V5A/SpbjveAAAA
+X-Change-ID: 20250815-itnoc-460273d1b80c
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: kernel@oss.qualcomm.com, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756373245; l=1882;
+ i=yuanfang.zhang@oss.qualcomm.com; s=20250814; h=from:subject:message-id;
+ bh=UZn1e/0QvG5mcFs0SicONTgp5MkJcxhTgH/qXUOPqHM=;
+ b=5VRyT8mvsMZTvKcbUoKzMdYJSJHBUeFfYA72DcRGlU9FwKOHc3xVkJXJ0DKDPy1rLuzZyvRMr
+ bBSAjcTFTVKAPlKlLEDBXtfxAFVXeekAglNonHiaB8LbqnCy41XIA8K
+X-Developer-Key: i=yuanfang.zhang@oss.qualcomm.com; a=ed25519;
+ pk=9oS/FoPW5k0CsqSDDrPlnV+kVIOUaAe0O5pr4M1wHgY=
+X-Proofpoint-GUID: AtznLjQ_AuVkm3E9zdp1ujjSfoylNmru
+X-Proofpoint-ORIG-GUID: AtznLjQ_AuVkm3E9zdp1ujjSfoylNmru
+X-Authority-Analysis: v=2.4 cv=G7gcE8k5 c=1 sm=1 tr=0 ts=68b02100 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=s8j_kBg_6ddNrZYoh_kA:9 a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI3MDE5OSBTYWx0ZWRfX1B7t9PNgaINM
+ Xr3KWgWB5DCaZuynqdoHo/jsbl1gXxOsIVcN9ILnZqJqyg4nAqN6iHRbJJG6Ywessm4PqwMG4i8
+ hqNOIipH9vu6FlglEVs2GXivEKUFpv/mzNna/EsT3/7T+/+gLNT1ncdFXV6pWUnpywUUNUU0rM3
+ p6kxBxp3rauunqDMmwF+B4fqMBBdsQnPkwF4X+8t20M2bVRJEjosK+WEiJKsPLSP0WffNC1Pq/E
+ XHF/JVjwZwrDW1vd/WNE1a++vvidw+sw7JwySb1QJpJ0bSAgxWrabQiclCU4t9s6DaTlGtR3L/S
+ g48yBtORVjfx9iGIIuG7tAFRJy9uSHdvsJGOXiPYBRPcYG0NKXZlpdh5Fa7qGIr3AeRk18GhxFr
+ sJbPgyhJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-28_02,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 priorityscore=1501 adultscore=0 impostorscore=0
+ bulkscore=0 suspectscore=0 clxscore=1015 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508270199
 
+This patch series adds support for the Qualcomm CoreSight Interconnect TNOC
+(Trace Network On Chip) block, which acts as a CoreSight graph link forwarding
+trace data from subsystems to the Aggregator TNOC. Unlike the Aggregator TNOC,
+this block does not support aggregation or ATID assignment.
 
---CMe5mpL7NfxBkMEj
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+---
+Changes in v3:
+- Add detail for changes in V2.
+- Remove '#address-cells' and '#size-cells' properties from in-ports field.
+- Fix comment indentation for packet description.
+- Link to v2: https://lore.kernel.org/r/20250819-itnoc-v2-0-2d0e6be44e2f@oss.qualcomm.com
 
-On Wed, Aug 27, 2025 at 06:46:28PM +0200, Bartosz Golaszewski wrote:
-> On Wed, Aug 27, 2025 at 12:22=E2=80=AFPM Mark Brown <broonie@kernel.org> =
-wrote:
+Changes in v2:
+- Removed the trailing '|' after the description in qcom,coresight-itnoc.yaml.
+- Dropped the 'select' section from the YAML file.
+- Updated node name to use a more generic naming convention.
+- Removed the 'items' property from the compatible field.
+- Deleted the description for the reg property.
+- Dropped clock-names and adjusted the order of clock-names and clocks.
+- Moved additionalProperties to follow the $ref of out-ports.
+- Change "atid" type from u32 to int, set it as "-EOPNOTSUPP" for non-AMBA device.
+- Link to v1: https://lore.kernel.org/r/20250815-itnoc-v1-0-62c8e4f7ad32@oss.qualcomm.com
 
-> > I've just got the log I linked above.
+---
+Yuanfang Zhang (3):
+      dt-bindings: arm: qcom: Add Coresight Interconnect TNOC
+      coresight-tnoc: add platform driver to support Interconnect TNOC
+      coresight-tnoc: Add runtime PM support for Interconnect TNOC
 
-> So, I've been looking at this bisect email and clicking the links to
-> LAVA jobs and I can't find anything. Does it fail to build? Fail at
-> run-time? I'm not sure how to read this.
+ .../bindings/arm/qcom,coresight-itnoc.yaml         |  90 +++++++++++++
+ drivers/hwtracing/coresight/coresight-tnoc.c       | 139 +++++++++++++++++++--
+ 2 files changed, 216 insertions(+), 13 deletions(-)
+---
+base-commit: 2b52cf338d39d684a1c6af298e8204902c026aca
+change-id: 20250815-itnoc-460273d1b80c
 
-It's failing prior to putting any output on the console.  I was also
-seeing an issue on i.MX6 so it might be all i.MX boards, same issue:
+Best regards,
+-- 
+Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
 
-   https://lava.sirena.org.uk/scheduler/job/1697667
-
-so it's possibly all the i.MX platforms failing.
-
---CMe5mpL7NfxBkMEj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmiwGJ8ACgkQJNaLcl1U
-h9Dgwgf/cCYgHVux4WcIOpHZVKvbhmDSDtzns435zt8WkkHs0HTefX6c8qkduloE
-AKCQvlOXq4w9mLYUJB73eu5lR2UZ9F/crY4Skm4QKJSl7xbmcTrUKkDh4anAgPCr
-TzCuAz0wBXpZDV6rbgGsv50bHpga2TkeYe4ILfO9i5WsXq884j6qH3q37x3LK9nk
-lbgltpZaBfzXdFk8ofMDg7QZQI/JDl0cR+6rsMZ60fSoehdmCHlO3Yk1ce8K2PMt
-jeC24eNQXFrAPZojnEdcSiHf7+AGirU7we0+4EPcomJRcfJDrf5lr4Mj/c5ofgNV
-ElALxe39ERW5FGeRn5q9m5nQ+3/dMQ==
-=cP5U
------END PGP SIGNATURE-----
-
---CMe5mpL7NfxBkMEj--
 
