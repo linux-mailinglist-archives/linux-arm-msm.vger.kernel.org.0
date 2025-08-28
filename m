@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-71128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1A236B39E82
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 15:18:27 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4617FB39EB3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 15:24:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3876118963B7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 13:18:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B145E560C5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 13:22:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77D55310628;
-	Thu, 28 Aug 2025 13:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3E3D313E05;
+	Thu, 28 Aug 2025 13:22:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="K4KMzgX1"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="lL7Q5tev"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFFF43101AD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 13:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D1E311C07
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 13:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756387101; cv=none; b=d7II8L/QsYD/Rdmbdl6tZX2lQ9whK7mtWSESjGEU/YlCQuh3MJO2MAfF6t3TglrT/y4c9+jKKc9wFV//n4wlrtygsxoEJgrNsG9byMoq+xcez+6/Bx0L0zbDU3cfAHE3rqnTfV3UxyoorO1ppdeqFaN8J3jlYsJhFYy/yNFv9wk=
+	t=1756387328; cv=none; b=g455C7qe6v4Uiy5uwN6k12sMzkQcc9HpoAvoHbTw9pi7HejNWcfMUUeGqZDVBraCd1Rs5KM7d7J/7EifmhyCQ6HZeLU+2Wr63wacBi0S/pnXKWeAw/pDV9CAU3M2XDidCKbcD9bJ9r1kKrZBliKjOJykheLsDEhGZTVMaSmGof0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756387101; c=relaxed/simple;
-	bh=u/bP4tvPoy/0KUYiAoVQNrKJ8OYvub5fbY8ufALoEuY=;
+	s=arc-20240116; t=1756387328; c=relaxed/simple;
+	bh=5XTE+m+s7gCBnjAYMBLxzzkoPX0/i4ayIw1uWSSs0VU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PXgKkToqoT9ke2tqNCrgWnugnZXII7hzV0G6ufWyp0dKXYEeQG/lhuNc5ds4gUvC0VKGFyajhmPRssm9FarJvSdAIib38quf4yKaXHxRBqOmAvL8Gm2GZh2qwBcnt0mt7Hf5+czqiT16frWyOY/IGnQjN2ilF8MJFZm959LmFGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=K4KMzgX1; arc=none smtp.client-ip=209.85.218.49
+	 In-Reply-To:Content-Type; b=ZFqjqrcpF4vtlbrta6/Bb42/KXSSHriCyqQ7LuwX4N/F41UTN1BT8JWNE2EC979twXAfqBlNCXfSZyhkmDPYrFB/liKhRqX6qmGhlx7zKBLHSKhYA4AKign6fpyPzhA67gDM6e3xxbLHUJuT6ZN0cSscKSkmOXW8Zif7DdaODsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=lL7Q5tev; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-afe8cefd7d1so9455966b.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 06:18:19 -0700 (PDT)
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-afee6037847so110698466b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 06:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756387098; x=1756991898; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ND6UgQ0zYG7BjHOnoMGFlrHy9Xk924w+fHThkmCoXvU=;
-        b=K4KMzgX1SjhoIhmAxyXr51nsa3qflLbClnpYyWTogZUXuHIImtauiRmT0x5BJNOzov
-         hsIbL137PVE7quzLTc2omUS92wEzM0Syz4WPbYMN5yD/fNLAhKO9i1uNeIa7XC/yXKHi
-         4Ba73AMdVhol4nh7ofbUiLvsKYR+X0zZIPUBEmjYTnaXTJ4zyTf2FVqVPu27hsAmgcRr
-         IL94sXdFh/qK4F/uPz+1IunqiN7unAvU7WEtK/lszi80ONWYa4mguZSxMpwGUCvveFYp
-         Vf/BSzcgOkU2BArpx9GWUGcfPQ3ol/qaRECGtkKy4mrTVNo2xaXu3zsK1NW4874QdXGG
-         Oy5g==
+        d=linaro.org; s=google; t=1756387325; x=1756992125; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Qi55o5psDKNexWDsg9drcRiKGnBJjMSdfWzuesdk1og=;
+        b=lL7Q5tevqEro8Xu3p4QvA/2Gwlde2cJ76gkz52FQT6N402qOMOU2hW0vB+ShJot7ki
+         fZyPiIcjsTiJ+8MhOgoS60DS7FqhvOeFufpqiRYy9LiWLq/DjTlS6V3pheiaNxqvXjuE
+         U+G9USWmDs3klFmMI9rTJJX79EkOFAi+vRo2OVUlfoVkXam2H/Nm/MvbYfSFrDNMqjJE
+         86E968adXlRH81Mice70FqKlvJyhT15fxv9HRWSma8JoVPEAWVLOk7fC2LpkvILzVhBd
+         zO7TYY5EuBfG72oyKDUqSrCbK38tWhgpdR7aYiZ8im0Qx1f95PxaO1ISlZnRTIdTL46l
+         OwfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756387098; x=1756991898;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ND6UgQ0zYG7BjHOnoMGFlrHy9Xk924w+fHThkmCoXvU=;
-        b=V7BEITesocMEEu9Pr+wb4ojK0+eOZdQ7DHSlzRUg7MAkYORtSGzvcw9Tv0NBn5Tg1v
-         HPzMhsaE2reUDtnbJqAsG/usPpaq/t0qzaajqKXZPlsYAf+fVTNsIopDYqn+r522nRLW
-         grUgUo+XebJIFrbCbFBl4v3hpmjJ5/ssu4uJy94Jy7GMGwPofysDoLzzb9FrYGz6MG4Z
-         tU4cC6DCfGq3F9nfqBnsV0pvR3x7QBqG4QaZ6eQ0MNDxTp+EVGBYhgplBAat9508D6fV
-         qLnMQcH+P+If9Amt/xWhpkwOfS6QJmkTTKcarEIqVtnM68gEN7RdqOV7De9iTA2Q1E9Z
-         5R/w==
-X-Forwarded-Encrypted: i=1; AJvYcCVfZfrPETrDLxhJw7EO00ldL9GUE0lESMgiFb2gXKfsMOmvKbz9ITYUAAsVbUK+PeqXwDrFv3kPwxcRJQY/@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx35P7pT24cA8ybXIK5+rOqJYPBjy2iJg9uq6E4mIImcM2A/iGZ
-	E+P7fwietTwkSVQElZ0HB8r7ge8bz+Sf7PYLREwmwegiPQAR1e1baooAqP9SUc7Vb/A=
-X-Gm-Gg: ASbGncvsP5wBv9ydbA9Qvwp/tv2amz8XPcTKLDhWJvi0vbLj+rtrvG6kNnJ1TQy74fw
-	MaI4LwituuHhKQjd99a8amQFY8cGEMNzc2o/SdHEraBzRv9TkqMnDYO8Ff+0dmWLdQ7OjeLG/en
-	kfI682fvFEIINx/xqyaD310HJDGne2UQr2vx5f4+ptgm5W4zCMwUE3LeFcUSgSSTaH1Z/NExG6K
-	scv1qxwWU7/eHiNa29b/RwTnZKwQn6o63xbXs17yNrPgeG8YTo7MlQWg6OUnUZjoHiDFK+DLIoK
-	pnlC6JFsGh+2TsTI9MF+JpnWnlCwk7d16hquOw25I9uA/TPZLdEUehsA+XzdVvG3wPpvRk+ucm8
-	ftF6hVskvPSwb9NM5C3/Nko5wUPQtLYEU87lbTBdLjcaYXxPvNrzr4A==
-X-Google-Smtp-Source: AGHT+IF5E2M6Ee19M9gGMPoxFz4LLAUKeU9C63N84862Qi0sinffPxyW0u4cRjCCBiOXEiDCKHWZKg==
-X-Received: by 2002:a17:907:3dac:b0:afe:db34:d76f with SMTP id a640c23a62f3a-afedb34dc5bmr145802766b.8.1756387098008;
-        Thu, 28 Aug 2025 06:18:18 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afe9b5f56c3sm648036666b.24.2025.08.28.06.18.16
+        d=1e100.net; s=20230601; t=1756387325; x=1756992125;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qi55o5psDKNexWDsg9drcRiKGnBJjMSdfWzuesdk1og=;
+        b=V+hlr7jnxOuDAA/KGdsED0FlVxRwVFgIJPjVpLBQiUSZTPIuqn75pfrups7jHQOIRD
+         DpPAF0Kw1feH0qgQZxnpFFD/Jkow08zDYBQ7rjJfHpOeBlj+QyI1W65cbDjihLuUbTtN
+         MA+nL+1rNbrM/AS5PUCq+ItgNIyj9gCuORqpVZ4LFPoH3UDLR5jm8es604OXZb5SXwnU
+         qORPAAT1Md1URS0pLRQS/3R6qPFc+YVmKZ+UyWKcT9VHy6qZ9e1Lwa9tNY/gxA58i14V
+         58AOP1Bst5t312Qe5/j8Pn3ehb5Zd9bgKJ9zpygbD9LMbGoJ/3H1ZUfVToF5izZZ8Grq
+         QCjg==
+X-Forwarded-Encrypted: i=1; AJvYcCUpIOpSXhFY82jhmK+51Ro/88xiFtLAEeaAEvq8iERMlJLVtAy905LRSNn9YK5S56aLvhVMKJ7NVsXarCga@vger.kernel.org
+X-Gm-Message-State: AOJu0YzywK+/Kh99MhgEVLatYaS8UuEILoZdCPpouEL88nPg/bMWVlcQ
+	UIPAQJ1GHPO0UYvISViPFeFGEvj/G8KLIpVb25Vcnk2wVOCPcait2LyBYoNGjeySaIo=
+X-Gm-Gg: ASbGncunA3g/lQu/XXPfRY8V6eXdTM1b1J7SfW+TXM7Cq8Ybd5q7GC4VxZJMBoIzKxk
+	06wiog0LM5+MmOMt/NIlO0ZRyIKo91TyW0aKGmJrHiLkH9F2KME3Mp/dvSTh5Bo1FT1dvxChXOU
+	DH235zNHrX4DxT6yQLxKvI+97pe26Yc34V8HVdd9UPqHlfJ1zW9ARS+JSlwj5z10dacsW8pc+3e
+	Ze9uBPDMGOzt25+Xpdk4OiAOhGWPg+LmqhCm0rc+3U+OUbf/rBlaiH1dwP9Cjq7mrqxGhSjDF11
+	BONiHAdw4qGZmUSAaFYceNfYWBoZNxXGGhfETqEO+9xkN/F6iQhy20ix62hYPMs/sEzVKcKpFT0
+	Ys619sXMLsj6YIDYnslYLXcDeTE6AyFg1Sjr2LaIzSyxkxncpC4HKO/cTjBK6rQ62M7sFdpQiCO
+	LT
+X-Google-Smtp-Source: AGHT+IGjzycD3I8jpbmQVU59Xd7O/26hTjS+y9agnGzek0/A/beiz9E8xi5Rv70X95Pxh+1hKUOYSQ==
+X-Received: by 2002:a17:907:9403:b0:afe:f92d:9178 with SMTP id a640c23a62f3a-afef92d9a2cmr10323866b.60.1756387324635;
+        Thu, 28 Aug 2025 06:22:04 -0700 (PDT)
+Received: from [192.168.1.36] (p4fc3dd6f.dip0.t-ipconnect.de. [79.195.221.111])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-afe81890cd7sm865837266b.109.2025.08.28.06.22.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 Aug 2025 06:18:17 -0700 (PDT)
-Message-ID: <5b34ebed-b993-4f0d-bb30-0dfab1cff95d@linaro.org>
-Date: Thu, 28 Aug 2025 15:18:15 +0200
+        Thu, 28 Aug 2025 06:22:03 -0700 (PDT)
+Message-ID: <88ee0a26-8d64-4060-b703-40156cd011a7@linaro.org>
+Date: Thu, 28 Aug 2025 15:22:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,107 +83,247 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] media: iris: Add support for SM8750 (VPU v3.5)
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250804-sm8750-iris-v2-0-6d78407f8078@linaro.org>
- <20250804-sm8750-iris-v2-3-6d78407f8078@linaro.org>
- <83205cad-14f5-65a1-1818-677335a1ab91@quicinc.com>
- <db11085e-bca3-4d54-b435-c8f8d8672acd@kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v14 03/10] power: reset: reboot-mode: Add support for 64
+ bit magic
 Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <db11085e-bca3-4d54-b435-c8f8d8672acd@kernel.org>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>, Sebastian Reichel <sre@kernel.org>,
+ Rob Herring <robh@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>,
+ Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Andy Yan <andy.yan@rock-chips.com>,
+ Mark Rutland <mark.rutland@arm.com>,
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+ Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org,
+ Vinod Koul <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>,
+ Will Deacon <will@kernel.org>,
+ Florian Fainelli <florian.fainelli@broadcom.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
+ Stephen Boyd <swboyd@chromium.org>, Andre Draszik
+ <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ Elliot Berman <quic_eberman@quicinc.com>,
+ Srinivas Kandagatla <srini@kernel.org>
+References: <20250815-arm-psci-system_reset2-vendor-reboots-v14-0-37d29f59ac9a@oss.qualcomm.com>
+ <20250815-arm-psci-system_reset2-vendor-reboots-v14-3-37d29f59ac9a@oss.qualcomm.com>
+From: Casey Connolly <casey.connolly@linaro.org>
+In-Reply-To: <20250815-arm-psci-system_reset2-vendor-reboots-v14-3-37d29f59ac9a@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 12/08/2025 10:16, Krzysztof Kozlowski wrote:
->>> +	ret = readl_poll_timeout(core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_STATUS,
->>> +				 val, val & BIT(0), 200, 2000);
->>> +	if (ret)
->>> +		goto disable_power;
->>> +
->>> +	writel(0x0, core->reg_base + WRAPPER_IRIS_CPU_NOC_LPI_CONTROL);
->>> +
->>> +	writel(REQ_POWER_DOWN_PREP, core->reg_base + AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_CONTROL);
->>
->>
->> Read initial status of AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_STATUS
->>
->> based on value, run the retry loop.
->> This loop runs till the desired LPI state is reached i.e. BIT(0) is set,
->> and hardware is idle i.e. BIT(1) or BIT(2) are unset. This suggests a
->> situation where the hardware might be stuck or slow to transition.
->>
->> This sequence was not needed for SM8650 since it doesn't have
->> AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_CONTROL/STATUS registers.
->> But required for SM8750, so please add.
+Hi Shivendra,
+
+On 15/08/2025 16:35, Shivendra Pratap wrote:
+> Current reboot-mode supports a single 32-bit argument for any
+> supported mode. Some reboot-mode based drivers may require
+> passing two independent 32-bit arguments during a reboot
+> sequence, for uses-cases, where a mode requires an additional
+> argument. Such drivers may not be able to use the reboot-mode
+> driver. For example, ARM PSCI vendor-specific resets, need two
+> arguments for its operation – reset_type and cookie, to complete
+> the reset operation. If a driver wants to implement this
+> firmware-based reset, it cannot use reboot-mode framework.
 > 
+> Introduce 64-bit magic values in reboot-mode driver to
+> accommodate dual 32-bit arguments when specified via device tree.
+> In cases, where no second argument is passed from device tree,
+> keep the upper 32-bit of magic un-changed(0) to maintain backward
+> compatibility.
+
+How about adding a n_magic_args property to struct reboot_mode_driver?
+Then in struct mode_info change magic to be a u32 array of a fixed
+length (currently two in-keeping with the DT bindings).
+
+Parsing the DT values then gets simpler (u32_array) and the magic value
+can be passed into the ->write() cb as a pointer since all the
+reboot_mode drivers already know how big the array is. Unpopulated DT
+values would just be 0.
+
+Kind regards,
+
 > 
-> Sure
-
-I am implementing the changes you asked and this one I will skip,
-because the loop is already there:
-
+> Update the current drivers using reboot-mode for a 64-bit magic
+> value.
 > 
->>
->>
->>> +	ret = readl_poll_timeout(core->reg_base + AON_WRAPPER_MVP_VIDEO_CTL_NOC_LPI_STATUS,
->>> +				 val, val & (BIT(0) | BIT(1) | BIT(2)), 15, 1000);
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
+>  drivers/power/reset/nvmem-reboot-mode.c  | 13 +++++++++----
+>  drivers/power/reset/qcom-pon.c           | 11 ++++++++---
+>  drivers/power/reset/reboot-mode.c        | 19 +++++++++++++------
+>  drivers/power/reset/syscon-reboot-mode.c | 11 ++++++++---
+>  include/linux/reboot-mode.h              |  3 ++-
+>  5 files changed, 40 insertions(+), 17 deletions(-)
+> 
+> diff --git a/drivers/power/reset/nvmem-reboot-mode.c b/drivers/power/reset/nvmem-reboot-mode.c
+> index 41530b70cfc48c2a83fbbd96f523d5816960a0d1..5d73dde585b1fd438b1847f884feb37cd9e4dd5c 100644
+> --- a/drivers/power/reset/nvmem-reboot-mode.c
+> +++ b/drivers/power/reset/nvmem-reboot-mode.c
+> @@ -16,15 +16,20 @@ struct nvmem_reboot_mode {
+>  	struct nvmem_cell *cell;
+>  };
+>  
+> -static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot,
+> -				    unsigned int magic)
+> +static int nvmem_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>  {
+> -	int ret;
+>  	struct nvmem_reboot_mode *nvmem_rbm;
+> +	u32 magic_32;
+> +	int ret;
+> +
+> +	if (magic > U32_MAX)
+> +		return -EINVAL;
+> +
+> +	magic_32 = magic;
+>  
+>  	nvmem_rbm = container_of(reboot, struct nvmem_reboot_mode, reboot);
+>  
+> -	ret = nvmem_cell_write(nvmem_rbm->cell, &magic, sizeof(magic));
+> +	ret = nvmem_cell_write(nvmem_rbm->cell, &magic_32, sizeof(magic_32));
+>  	if (ret < 0)
+>  		dev_err(reboot->dev, "update reboot mode bits failed\n");
+>  
+> diff --git a/drivers/power/reset/qcom-pon.c b/drivers/power/reset/qcom-pon.c
+> index 7e108982a582e8243c5c806bd4a793646b87189f..d0ed9431a02313a7bbaa93743c16fa1ae713ddfe 100644
+> --- a/drivers/power/reset/qcom-pon.c
+> +++ b/drivers/power/reset/qcom-pon.c
+> @@ -27,17 +27,22 @@ struct qcom_pon {
+>  	long reason_shift;
+>  };
+>  
+> -static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot,
+> -				    unsigned int magic)
+> +static int qcom_pon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>  {
+>  	struct qcom_pon *pon = container_of
+>  			(reboot, struct qcom_pon, reboot_mode);
+> +	u32 magic_32;
+>  	int ret;
+>  
+> +	if (magic > U32_MAX || (magic << pon->reason_shift) > U32_MAX)
+> +		return -EINVAL;
+> +
+> +	magic_32 = magic << pon->reason_shift;
+> +
+>  	ret = regmap_update_bits(pon->regmap,
+>  				 pon->baseaddr + PON_SOFT_RB_SPARE,
+>  				 GENMASK(7, pon->reason_shift),
+> -				 magic << pon->reason_shift);
+> +				 magic_32);
+>  	if (ret < 0)
+>  		dev_err(pon->dev, "update reboot mode bits failed\n");
+>  
+> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/reboot-mode.c
+> index 9bb97bcd33cd3d58c75c791e9b568024e810e5b0..ac81b8b0a9b7fc31f8ef21024333a050087ce90f 100644
+> --- a/drivers/power/reset/reboot-mode.c
+> +++ b/drivers/power/reset/reboot-mode.c
+> @@ -19,12 +19,11 @@
+>  
+>  struct mode_info {
+>  	const char *mode;
+> -	u32 magic;
+> +	u64 magic;
+>  	struct list_head list;
+>  };
+>  
+> -static unsigned int get_reboot_mode_magic(struct reboot_mode_driver *reboot,
+> -					  const char *cmd)
+> +static u64 get_reboot_mode_magic(struct reboot_mode_driver *reboot, const char *cmd)
+>  {
+>  	const char *normal = "normal";
+>  	struct mode_info *info;
+> @@ -66,7 +65,7 @@ static int reboot_mode_notify(struct notifier_block *this,
+>  			      unsigned long mode, void *cmd)
+>  {
+>  	struct reboot_mode_driver *reboot;
+> -	unsigned int magic;
+> +	u64 magic;
+>  
+>  	reboot = container_of(this, struct reboot_mode_driver, reboot_notifier);
+>  	magic = get_reboot_mode_magic(reboot, cmd);
+> @@ -89,6 +88,8 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct device_node *
+>  	struct mode_info *next;
+>  	struct property *prop;
+>  	size_t len = strlen(PREFIX);
+> +	u32 magic_arg1;
+> +	u32 magic_arg2;
+>  	int ret;
+>  
+>  	if (!np)
+> @@ -108,12 +109,18 @@ int reboot_mode_register(struct reboot_mode_driver *reboot, struct device_node *
+>  			goto error;
+>  		}
+>  
+> -		if (of_property_read_u32(np, prop->name, &info->magic)) {
+> -			pr_err("reboot mode %s without magic number\n", info->mode);
+> +		if (of_property_read_u32(np, prop->name, &magic_arg1)) {
+> +			pr_err("reboot mode without magic number\n");
+>  			kfree(info);
+>  			continue;
+>  		}
+>  
+> +		if (of_property_read_u32_index(np, prop->name, 1, &magic_arg2))
+> +			magic_arg2 = 0;
+> +
+> +		info->magic = magic_arg2;
+> +		info->magic = (info->magic << 32) | magic_arg1;
+> +
+>  		info->mode = kstrdup_const(prop->name + len, GFP_KERNEL);
+>  		if (!info->mode) {
+>  			ret =  -ENOMEM;
+> diff --git a/drivers/power/reset/syscon-reboot-mode.c b/drivers/power/reset/syscon-reboot-mode.c
+> index e0772c9f70f7a19cd8ec8a0b7fdbbaa7ba44afd0..3cbd000c512239b12ec51987e900d260540a9dea 100644
+> --- a/drivers/power/reset/syscon-reboot-mode.c
+> +++ b/drivers/power/reset/syscon-reboot-mode.c
+> @@ -20,16 +20,21 @@ struct syscon_reboot_mode {
+>  	u32 mask;
+>  };
+>  
+> -static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot,
+> -				    unsigned int magic)
+> +static int syscon_reboot_mode_write(struct reboot_mode_driver *reboot, u64 magic)
+>  {
+>  	struct syscon_reboot_mode *syscon_rbm;
+> +	u32 magic_32;
+>  	int ret;
+>  
+> +	if (magic > U32_MAX)
+> +		return -EINVAL;
+> +
+> +	magic_32 = magic;
+> +
+>  	syscon_rbm = container_of(reboot, struct syscon_reboot_mode, reboot);
+>  
+>  	ret = regmap_update_bits(syscon_rbm->map, syscon_rbm->offset,
+> -				 syscon_rbm->mask, magic);
+> +				 syscon_rbm->mask, magic_32);
+>  	if (ret < 0)
+>  		dev_err(reboot->dev, "update reboot mode bits failed\n");
+>  
+> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
+> index 98f68f95c9e8460be23282c51ef7fcbed73887bd..370228b5161963aac1d75af752ada0e8282b1078 100644
+> --- a/include/linux/reboot-mode.h
+> +++ b/include/linux/reboot-mode.h
+> @@ -3,11 +3,12 @@
+>  #define __REBOOT_MODE_H__
+>  
+>  #include <linux/mutex.h>
+> +#include <linux/types.h>
+>  
+>  struct reboot_mode_driver {
+>  	struct device *dev;
+>  	struct list_head head;
+> -	int (*write)(struct reboot_mode_driver *reboot, unsigned int magic);
+> +	int (*write)(struct reboot_mode_driver *reboot, u64 magic);
+>  	struct notifier_block reboot_notifier;
+>  	/*Protects access to reboot mode list*/
+>  	struct mutex rb_lock;
+> 
 
+-- 
+// Casey (she/her)
 
-
-Best regards,
-Krzysztof
 
