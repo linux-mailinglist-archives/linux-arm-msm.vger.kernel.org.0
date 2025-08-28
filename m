@@ -1,115 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-71131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10859B39F0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 15:35:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9845B39F17
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 15:37:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 68FCA1888D2E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 13:35:08 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F61D3A55EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 13:36:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79B33314A62;
-	Thu, 28 Aug 2025 13:33:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAD4030F7E6;
+	Thu, 28 Aug 2025 13:36:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UZJj84nM"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="anyIY6bq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f43.google.com (mail-lf1-f43.google.com [209.85.167.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481AD314A60;
-	Thu, 28 Aug 2025 13:33:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076D918EFD1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 13:36:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756388037; cv=none; b=p+9XbKZb36YJhdyypsiWftCULEXVh5Qcg8XTjGk/MH4EW9MBvtb3VzwfSe4I+NGDaEssSQ/A3YDomynuduHbShLEKw3E2kZFAV/n4pWjmTo2AmD99S+PTP3eJO++FABNKi7COnTA2Sdzkx8TvjJ5lwKnO6VNBbs5jhmDn8PfUB0=
+	t=1756388217; cv=none; b=JNf7C27gFcGOVbf/P+PtjPAZdWA10lvQcx3KbgzOH6S1Ia8t553NT2N22xm4lQqkkbzvCpFHetQV/lg/N+kgT3et74NdpBwOzercIUXJf7GQir/LCTK5fa+os5Z5TDhyc+tj74HXG+tNIb3d+4ArV3nEuftwohkLvZRC/MpXX9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756388037; c=relaxed/simple;
-	bh=QlOPoW+AsqGV4UPZNL5CsgpuSr4uhjeiUp1aWP4DO9Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mOxHUz8oDvfH3DlRXwu4H5RZONmY0uEAbiZsJsvz7PQtB61gjk3lzfTWY6Tpt5waDSZBDVr1ngFb9qA7NpBungoHf1SpYKHO78Agu6c7pxI+2Ga006Krf+5GZ1v9+Y21cYKK6KQ6ayShH99jAqXIofOqiR6NQRisd+qA5L+upCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UZJj84nM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754E8C4CEEB;
-	Thu, 28 Aug 2025 13:33:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756388037;
-	bh=QlOPoW+AsqGV4UPZNL5CsgpuSr4uhjeiUp1aWP4DO9Q=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=UZJj84nMcM6FQJ29K/z+6yzfH5Le1m7JhSE37PCnJpJIFfuJv3xZWviaIy6OW1hdn
-	 OUkxrPCz2z0dYm9TWtG2xQa58ed8qYW185/irmFqdRMKJJtdpv9kODpEsnK7JfdMsW
-	 uf8w0P1mwtVr37tGcxWoJj+RHa1S9t96okO5M4tHC2qnAp9L+Yzse4qnfRE7fYtdgA
-	 Z+CBQktkgMgE58CW7w6MGc26Mn9luoTQHnWfl+1hiV33DQFsrYZC0ke1TgRdG6ASp4
-	 mHOoHeBJF+d4dbEO34e3yU1ucZjYJ4aVCLbXoa+dB/p4JMyAsxoap4vt8m3BkPpkD8
-	 CtD5/IXLzS65Q==
-Date: Thu, 28 Aug 2025 19:03:49 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Rob Herring <robh@kernel.org>
-Cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Bjorn Helgaas <bhelgaas@google.com>, Bartosz Golaszewski <brgl@bgdev.pl>, 
-	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH 4/6] PCI: of: Add an API to get the BDF for the device
- node
-Message-ID: <zlh37vqxyqtx6u2a3i4og7xxlfbj4byu76egda5bmyxys6htap@ekaup4gslnzs>
-References: <20250819-pci-pwrctrl-perst-v1-0-4b74978d2007@oss.qualcomm.com>
- <20250819-pci-pwrctrl-perst-v1-4-4b74978d2007@oss.qualcomm.com>
- <20250822135147.GA3480664-robh@kernel.org>
- <nphfnyl4ps7y76ra4bvlyhl2rwcaal42zyrspzlmeqqksqa5bi@zzpiolboiomp>
- <20250825224315.GA771834-robh@kernel.org>
- <jqgvw3u6lkewaz2ycjkozcfqrmdln5gacgrog4lhioazhvk5yz@3ph2z25zwqvj>
- <CAL_Jsq+66jVM33oBCbCFjcZdd+veA-QKQRtG9iD6PP+8Bq7-Ug@mail.gmail.com>
+	s=arc-20240116; t=1756388217; c=relaxed/simple;
+	bh=Dhz0H3gxyGM+rtfeLPQ0WqeuSnXhqTSw/EjNYLEea7o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=t/kcbeViBafQTVpoHlSjXj0JtXklT/0KkYvM54lKNWvX7GtH/fKtt/Su59SrhR8KkEDhBORQwG+w8wTooVVhzXaNBHaJgip/sTisLzyOQqrX8E7ETroGgpqdYNFs5FKBPBFbVdplO/OYjiWJorI4Q9gNy4g4pK95nEdJKFMojWY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=anyIY6bq; arc=none smtp.client-ip=209.85.167.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-55f39c0a22dso1087445e87.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 06:36:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1756388214; x=1756993014; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vO3s8KTMvJZFdHoHnp5Qdx1sAV4PfJarnSm1ctLLZ3E=;
+        b=anyIY6bqVld6bKz8zoUj4u6nWSrlXYXFKJEP89W77u18bB/2lG+RYlILX7aQPRPShc
+         nJl6ZKM2A4uOlfQ16kJb/njGo8qy4IkWcTgx2TLc4dyU63llworYglBgTaLn3owQZ4L0
+         imd5Vd2uYCxy23QscTs3SksqZWsN/oAfvVeVXfQtFM9pZLTxL1/Qw2fEncFn4cIXDx71
+         zgsGax3Zka2RpeEv/ElE2kOz37Z0i6dUtst5MwCzMX3X6hjjQz/PDMQHE9HW4VXvW4Dk
+         vrfoSYCc8aGrcEU5TXPVPrm7hzs9clPI/vinO7Fvu9cWxTaTUgUEwyEXZ/gx/tpIC9+m
+         C3Mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756388214; x=1756993014;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vO3s8KTMvJZFdHoHnp5Qdx1sAV4PfJarnSm1ctLLZ3E=;
+        b=sb4vhR7X8KjognSHPZhvYb/hjsYR8zbZ/62zVc4XTHVTpDW/4+GxsJXLNjRMgsnGhT
+         UjpgXBegKQlVLwuNnOXk3ZOxJtEirZlAFUSgpZopPChQLHtJijzuDbAAzTrJpilB+7Yu
+         SFTU8/0rwzi2uWyGEbi/yAvFE8rliTE8EgOUYfEEVLa0uWCGNWjk6qqgXpY/jFbgE7wB
+         D0UI8nijPVU9qQnraEGkSTm7kQpUaohuq0gnruQ3nDdbAZqXQwN12DRlReXWnPNtu4YQ
+         4iEk4NzruvlqntHuK+KJKbNFMSOgR5nG/2W17303+Pqd6hhc82hFVf6MY243db54KfII
+         qrzA==
+X-Forwarded-Encrypted: i=1; AJvYcCV+PbRS/S1rw7z4drlh8FUjscchsbR87uS60cV4ivLSOzWhVdQO0JqLgyl45xgzv/viVe+MMPXTrztSeyWz@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBL8Oxh84IGzPQkn/zHQaDaGaGa4LECVe6BhYGHw6x5CjHGkgM
+	oG91jgovSaQGGDEvvmaBlIIwTcovYJnTKccIgqrYoCuTzbpQC4P9qUIEDmVoPYRMXh04iXZRNWg
+	pmF8oyuJVeSVGEXUlteJaTtdkrlwrqfE2jz+qyMr1lg==
+X-Gm-Gg: ASbGnctYelpxI4DyssggOXddX0M7ReKQ/0McJLfoHpDTu2+IqaK+KRRBJV00SIX8kcH
+	HaRinpZJX9oZs0IjhS+9h7H3ZrVDgf2VT8tnFzynJRA38BskB8ieXuGg3YNVFEceO2tn3EW7p0m
+	P9VlDY33gmuKkjKp06nRGf+uScWX+KrDLc+P2KhJU298mu9fJBFPfHJxgXed9+fsZRYLkdijzvY
+	Nf9OX7fTvCclec161FHHxpQzLF0Lx6o3ok99DQ=
+X-Google-Smtp-Source: AGHT+IGjT2OYHV9mzILkObbuSFLpi9Xf+oP+6Uws6rzp7smTv5kAfs8i0u8RIWSnII9gINWFQq3zddWVjDxSq4eH8MM=
+X-Received: by 2002:a05:6512:245b:b0:55f:51b3:9419 with SMTP id
+ 2adb3069b0e04-55f51b39621mr1791521e87.50.1756388214118; Thu, 28 Aug 2025
+ 06:36:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL_Jsq+66jVM33oBCbCFjcZdd+veA-QKQRtG9iD6PP+8Bq7-Ug@mail.gmail.com>
+References: <20250815-pinctrl-gpio-pinfuncs-v5-0-955de9fd91db@linaro.org>
+ <CACRpkdaDGmdhaik+1saRv7Ts4myQ+tg1aQqGU3xQyT7ma8dJFw@mail.gmail.com>
+ <CAHp75VephepLq61HrVy=PX2oKUQd5NK2qS-vOC5h_NR65td3Uw@mail.gmail.com>
+ <CACRpkda4soRCLF5=W=6R4wnwT3pjk743j022XfJxjTTQzuarAA@mail.gmail.com>
+ <534ad082-08fa-42c0-9c24-f0c11af7d5b2@sirena.org.uk> <CAMRc=Mdn0_yPXyYq4sbvH4P9-h71vEc4arLPBfSk1PiEFaB7jQ@mail.gmail.com>
+ <1804d9dc-8814-47d4-af88-c819c3f17bc0@sirena.org.uk> <CAMRc=MdKgqa+vjhHvD2+Tjw5NwBtFv-0aUivi5UuEQd+n4KxmA@mail.gmail.com>
+ <aLAYoDyz8Xie4Dhb@finisterre.sirena.org.uk>
+In-Reply-To: <aLAYoDyz8Xie4Dhb@finisterre.sirena.org.uk>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Thu, 28 Aug 2025 15:36:43 +0200
+X-Gm-Features: Ac12FXwlaqUs0TeuR0_lKNQwkWNyJ4q4Po7liyAa4ioyozolnG0jRU9pqqtYG0I
+Message-ID: <CAMRc=Mdd3fmKjFAfbUB-AAhx-5_CR+c7f36pePkF1k_2LDoORw@mail.gmail.com>
+Subject: Re: [PATCH v5 00/15] pinctrl: introduce the concept of a GPIO pin
+ function category
+To: Mark Brown <broonie@kernel.org>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Andy Shevchenko <andy.shevchenko@gmail.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Lorenzo Bianconi <lorenzo@kernel.org>, 
+	Sean Wang <sean.wang@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev, 
+	linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Chen-Yu Tsai <wenst@chromium.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Aug 26, 2025 at 08:12:53AM GMT, Rob Herring wrote:
-> On Tue, Aug 26, 2025 at 2:15 AM Manivannan Sadhasivam <mani@kernel.org> wrote:
-> >
-> > On Mon, Aug 25, 2025 at 05:43:15PM GMT, Rob Herring wrote:
-> > > On Fri, Aug 22, 2025 at 07:57:41PM +0530, Manivannan Sadhasivam wrote:
-> > > > On Fri, Aug 22, 2025 at 08:51:47AM GMT, Rob Herring wrote:
-> > > > > On Tue, Aug 19, 2025 at 12:44:53PM +0530, Manivannan Sadhasivam wrote:
-> > > > > > Bus:Device:Function (BDF) numbers are used to uniquely identify a
-> > > > > > device/function on a PCI bus. Hence, add an API to get the BDF from the
-> > > > > > devicetree node of a device.
-> > > > >
-> > > > > For FDT, the bus should always be 0. It doesn't make sense for FDT. The
-> > > > > bus number in DT reflects how firmware configured the PCI buses, but
-> > > > > there's no firmware configuration of PCI for FDT.
-> > > >
-> > > > This API is targeted for DT platforms only, where it is used to uniquely
-> > > > identify a devfn. What should I do to make it DT specific and not FDT?
-> > >
-> > > I don't understand. There are FDT and OF (actual OpenFirmware)
-> > > platforms. I'm pretty sure you don't care about the latter.
-> > >
-> >
-> > Sorry, I mixed the terminologies. Yes, I did refer the platforms making use of
-> > the FDT binary and not OF platforms.
-> >
-> > In the DTS, we do use bus number to differentiate between devices, not just
-> > devfn. But I get your point, bus no other than 0 are not fixed and allocated by
-> > the OS during runtime or by the firmware.
-> >
-> > So how should we uniquely identify a PCIe node here, if not by BDF?
-> 
-> By path. Which is consistent since there is also no bus num in the unit-address.
-> 
+On Thu, Aug 28, 2025 at 10:51=E2=80=AFAM Mark Brown <broonie@kernel.org> wr=
+ote:
+>
+> On Wed, Aug 27, 2025 at 06:46:28PM +0200, Bartosz Golaszewski wrote:
+> > On Wed, Aug 27, 2025 at 12:22=E2=80=AFPM Mark Brown <broonie@kernel.org=
+> wrote:
+>
+> > > I've just got the log I linked above.
+>
+> > So, I've been looking at this bisect email and clicking the links to
+> > LAVA jobs and I can't find anything. Does it fail to build? Fail at
+> > run-time? I'm not sure how to read this.
+>
+> It's failing prior to putting any output on the console.  I was also
+> seeing an issue on i.MX6 so it might be all i.MX boards, same issue:
+>
+>    https://lava.sirena.org.uk/scheduler/job/1697667
+>
+> so it's possibly all the i.MX platforms failing.
 
-But there is no straightforward way to know the full path, isn't it? Anyway, for
-simplicity, I'll just use the node pointer itself to identify the node.
+Not even with earlycon? That's weird. There are no smatch warnings on
+this patch and I can't see anything obviously wrong upon visual
+inspection. I fixed all other issues but this one I can't test. :(
 
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Bartosz
 
