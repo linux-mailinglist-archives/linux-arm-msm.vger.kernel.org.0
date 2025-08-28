@@ -1,202 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-71181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DCF2B3AAFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 21:35:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 16741B3AB36
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 22:02:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07B103BB171
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 19:35:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C0433A007B7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 20:01:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12D7426E6FB;
-	Thu, 28 Aug 2025 19:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 34A201FE474;
+	Thu, 28 Aug 2025 20:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Drtc/X9M"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Aj/zIdXi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2077.outbound.protection.outlook.com [40.107.243.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC6B25D1E9;
-	Thu, 28 Aug 2025 19:35:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.77
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756409728; cv=fail; b=FCy9BvhlP3ZeCENDlMx1P7t6DVB6hJSYv90d3+gS579CucZm36SmTqZpRtiQrKEk1ZHeMaAFw7WvR+89IgHE4SroD2jqLs1GaiyP1abv3Hk0WgmSL4YNvFjhxUYPD8AJrNE1zAXjBP/p8bUaV/pxz7O4RmDKji9e9JWv0KxpptA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756409728; c=relaxed/simple;
-	bh=QEm4HwmAL4URzKrDR3wXyu6utypi8ZKxdBWlirDbaK0=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BaKQikUMsNJ63qu9mhLMGNoBqKK5yi93B9+70+hgrbzmgcQ5e1Hpj2n7n4RWFojjtDCb+skxy2gkFLgYClr5Ez+VLNJPHhzYoNLeDFGOBAOfnorPihz4SRatEuLg/Zoe0YYORAIRJM/0H8gB3FK36hDuLL+yfgrfXpPommz9eGs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Drtc/X9M; arc=fail smtp.client-ip=40.107.243.77
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=t9OWX3nWOEybonKoVbiT86kw+E7+SYHk10VRm9cbA5DzZu3IGid49YUzcF+fSso+DfFDVLIi/ClFQK18VB6HVeOGLHnIRcgJqvH0LlZu7gyw1vvJabukeGFzlcbOIDDqElnQlSvL2pyQXsTLPx9poON4z3Rlb0djh9vXRYy4zh2JdvPOHYhAcY4Wc0YxkNmVxq3ADmG555P8qusa8SoPKQJTAeWsKFMbxec1pih3xWoQBXhpBD6VxkX4KamomBGJrDuflmWxieNkoyenZQcG+Gxk3ogNi9PR5U1SlnYHy90SrGnq3cws8dGw+VRzjnTlod4bZLdghyOGkbhx6QA3oA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0XgMkENTR3L73wyAV+uXRRvm5qmOP1DhbV717XUFyRQ=;
- b=ZuztEisGnpe3nleZbKooQQIjc69pUHihdpNog7SMFwO16cGC8lTOR/gCQBJn7HEYF/H6ClMFNf8sknlFQoQKcenEmIWPQVJWIa2zeQCpI2bIY4vjU86ZY3c1JldMXMLD5U2ssl2lEMgNjvMaMH/4lGaCED8zlOLasbKPbXTwPcZQUNvnTwHoByFzNn6UKSo4heH0ODgANGrETKkMvayxN1KdUEwdsYsPyXdi1cQdCtGVryHlLVJjqMArWpco4Dq/7SYgkPid8FT58z23YnPkob5v5wTC1jLJdrOrQ041uf0zB5b39iQmQhvIi5vN+HMrwq7LDRTadYOrxIrG6+DaNQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0XgMkENTR3L73wyAV+uXRRvm5qmOP1DhbV717XUFyRQ=;
- b=Drtc/X9M0x3sl85D1j3q3L3pfca8Xm/td8slz8tY/SfIZi7BfnimXTLHW/EGrQvwoT8WgoHDfj3CDnRps8klxbO2hYzAJFWUBGO2c6N14ypJ8lq8gV/GVLUtYYELZpDr/qGdJUL4LipNufNniI7rbrABPCthXmc6KruXuOhU0q7rE7A2nvqBMfSDX8sdk3vnsNwa7hQjQbvi5eL7VKNUqpDKsu7klk60S++33/ic3tc23IFP66+DbxUGhP3pHGRkrrmtGBPfxJTgm38KUGn5aHM+fs1hoYLUpCfxQ06Gbd0DjMOz/xFlT5Sp7QUNM2GX7zj62xF4sTniWhqMxY23yA==
-Received: from CH2PR17CA0030.namprd17.prod.outlook.com (2603:10b6:610:53::40)
- by SA3PR12MB7950.namprd12.prod.outlook.com (2603:10b6:806:31c::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.13; Thu, 28 Aug
- 2025 19:35:17 +0000
-Received: from CH2PEPF0000013D.namprd02.prod.outlook.com
- (2603:10b6:610:53:cafe::5a) by CH2PR17CA0030.outlook.office365.com
- (2603:10b6:610:53::40) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.21 via Frontend Transport; Thu,
- 28 Aug 2025 19:35:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CH2PEPF0000013D.mail.protection.outlook.com (10.167.244.69) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9052.8 via Frontend Transport; Thu, 28 Aug 2025 19:35:16 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 28 Aug
- 2025 12:35:03 -0700
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 28 Aug
- 2025 12:35:03 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Thu, 28 Aug 2025 12:35:01 -0700
-Date: Thu, 28 Aug 2025 12:35:00 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Ethan Zhao <etzhao1900@gmail.com>, <robin.murphy@arm.com>,
-	<joro@8bytes.org>, <bhelgaas@google.com>, <will@kernel.org>,
-	<robin.clark@oss.qualcomm.com>, <yong.wu@mediatek.com>,
-	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
-	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
-	<rafael@kernel.org>, <lenb@kernel.org>, <kevin.tian@intel.com>,
-	<yi.l.liu@intel.com>, <baolu.lu@linux.intel.com>,
-	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-mediatek@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
-	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
-	<helgaas@kernel.org>
-Subject: Re: [PATCH v3 5/5] pci: Suspend iommu function prior to resetting a
- device
-Message-ID: <aLCvZOm11EAvrpx9@Asurada-Nvidia>
-References: <3749cd6a1430ac36d1af1fadaa4d90ceffef9c62.1754952762.git.nicolinc@nvidia.com>
- <550635db-00ce-410e-add0-77c1a75adb11@gmail.com>
- <aKTzq6SLGB22Xq5b@Asurada-Nvidia>
- <20250821130741.GL802098@nvidia.com>
- <aKgPr3mUcIsd1iuT@Asurada-Nvidia>
- <20250822140821.GE1311579@nvidia.com>
- <aKi8EqEp1DKG+h38@Asurada-Nvidia>
- <20250828125149.GD7333@nvidia.com>
- <aLBw3UTAX6F0IOCf@Asurada-Nvidia>
- <20250828184608.GF7333@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE6D220F5D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 20:01:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756411317; cv=none; b=ZIOXZS1fc2vHwBjNWO73Vd1dzCs8ZJ4+zDYnqYE3wcHpWK+v0wkH5MnwyjYbUXuur75zs/4OY1cjMveuku8Gb9DQp5MqaUmmKHIWaHijbhV8RdGL64eaLOidnx2USDmAiNWzZaYtDOCZr7uAxVoziWO8kMG3/fwni+38ck+AeCo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756411317; c=relaxed/simple;
+	bh=oFN7wNXWLeYqEKNIevToJQ/RzV8ZlgtiskiMxC59NR4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=kU9ulBgRWmxVlp13O3xUJkNBjNiIo0e08QJ2Z1USCDMUnCDZFuywCEChsLHjaic5ifcKjI6fo+y+J+F0DAW4tzwEi87yHLmD5p1d6KZqCwXxSywUhmmYTHc37SkNnW6wnVZb2uiOWQX4Z0pK7rEesE0gHRyzqCDY4qWJpEg7h8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Aj/zIdXi; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-771e15ce64eso1193809b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 28 Aug 2025 13:01:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1756411315; x=1757016115; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=phR9doI5X4q1LR98gybIzZyU1kdJD+t4ijHV2CMLbUI=;
+        b=Aj/zIdXinEHD9VWJVQyaxdHA1AEVnfZS1PfPz/Bbe3byufLPQKQVtJY1hsM5+Ej1l0
+         rJwsOfAEqa0ZiOu7oiXbjDVsdsO1dyzJ1XccuIIYxiFhFNf/YYCcwAr8PHOCPeyf8E3e
+         2WdUI50wmVl8zyun3MvRq8VyfzLu76yke29ck=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756411315; x=1757016115;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=phR9doI5X4q1LR98gybIzZyU1kdJD+t4ijHV2CMLbUI=;
+        b=kwI2p51Pxh7Zs1X9ekxuh/Xsa1L0hbv1zmRJx6L3pFb8ylS8YhIgKY1d/VWJAnBIw1
+         4N+VqbAlg5GtPTt8rOeBtPOA7lx67FzZyWbnxcl4HTN0dN7PgVjPDQsUYqFO6wfI0Iwz
+         xR0tur2f2CmUmjVLX2q+fEXvu76r9cX4CqrXLQtzE5o5SDTHE7PgsJQJXH0uroQe8vah
+         1t1nj5/TgkVbuyzczNaHIDQdU4iStJSnENkeje/qRzecsg7m3bntGrulNij3/bir0wJ9
+         xC9Vu3uP7Qk0kJSfjrr+JUWP1EtvThFYmp77AkeV2EkemVCyxqKt+s5B79ZZlsTfOpKO
+         YSkA==
+X-Forwarded-Encrypted: i=1; AJvYcCVXY6c77xV+sCoXSsacmZucvuvYFEwWQF/GyfEq2AuqxfbY/gIPI7zeQoZF71Emn7mEEkCNI3eV9TBxKk45@vger.kernel.org
+X-Gm-Message-State: AOJu0YyC5E3iRVA6Ts/N28s56rKsuPohVmJnURXeO1846oTzY2O9oxeu
+	5bh61uMtKak8+ce45NmZ7Whd7Fn4QZJOTHLyB7ZsRFBl5fPIPKCglsU0RTFUPbYY0w==
+X-Gm-Gg: ASbGncs68cPmUvAg/AMHwIUILoU8KY1F9flkV/zzhmNBaxhCA3LcY0IG+nP3pvEM42B
+	Y6HWVWp34q8AJSEymMpeIDGfMkChIBqPlmjMBLv2MX97S6Vx0JIgigQNHZOak30u9SU+ipH6FLB
+	/Y1TQ9RXTFLc+qwufmsNqfe3ytfwFPkKOl7DKU5PHClL1VdtrtKg1+kzIm2dibI7TcP7ivnd1mM
+	vToNyxcmVmJ4XCski5u6mtWCPzAPuncKZKTHP3pLzjY78zH05Lf9EAWbbcxcIVqp0lXKjxHAC3L
+	34nwmGzP/YWnGLJ3ZJ3AhI9USYHQ0PB6/WvR+EpIjpNMZfGNxhs5pZR4knzyqszl9V8BpeUxtNx
+	CYFPiF+atHnkHq72UTysOdkWaozYl35i5rO/Vx25suQOJC8tuk+HtumF3bxNH24NNx4+/ufU=
+X-Google-Smtp-Source: AGHT+IGRMI2y6ukLzuxA0A2Y52962J0xzxUUU/p9/lxC5pAaBaeFe2iw+3odm0xYYkw4AIuMGBT6Hw==
+X-Received: by 2002:a17:903:13c8:b0:248:6d1a:430f with SMTP id d9443c01a7336-2486d1a46b2mr149396845ad.25.1756411314801;
+        Thu, 28 Aug 2025 13:01:54 -0700 (PDT)
+Received: from localhost ([2a00:79e0:2e14:7:2893:df0f:26ec:df00])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-24905da3be1sm3479885ad.69.2025.08.28.13.01.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 28 Aug 2025 13:01:53 -0700 (PDT)
+Date: Thu, 28 Aug 2025 13:01:51 -0700
+From: Brian Norris <briannorris@chromium.org>
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Niklas Cassel <cassel@kernel.org>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: Re: [PATCH v6 0/4] PCI: Add support for resetting the Root Ports in
+ a platform specific way
+Message-ID: <aLC1rzdTVoN56Phc@google.com>
+References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250828184608.GF7333@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF0000013D:EE_|SA3PR12MB7950:EE_
-X-MS-Office365-Filtering-Correlation-Id: d826f1b6-8c1a-47a5-9cde-08dde66a044b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|376014|7416014|82310400026|1800799024;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?OQiiDQjtGvO3tPwOgl97upHNXlwinnf6ipSL91H2MjjTgqjKc6e09UMw7YFD?=
- =?us-ascii?Q?mzhPUcGo0tEq7qp73+5QGPBXcmt14mz6Z5vNHO6n83UO7RzKyf7mFAaAZ18F?=
- =?us-ascii?Q?Uib8+0TuuadJx6FJ/2V8Qw90sUz1A1/1XqPwlTq2L0tacWyAATOR2EiRxA12?=
- =?us-ascii?Q?MTUT/Vext2rutI3hLdoGSCyHUe7Q4AiTuHb4jRWfrWU3b51JVLkDQNsRZxME?=
- =?us-ascii?Q?/YkJzYJQBDJnJ9sXQmEhIv0tdPbEqp/qmQTtG1HzqIiKUySxYBoGLrgEVza1?=
- =?us-ascii?Q?yb9HwXVqa2wmoscDmbhlmjQRVXhBK8aiwLFGAB2/uIXQr5dRBq1ZFf/LKO2+?=
- =?us-ascii?Q?XTZeRURfbHffCbB3Y7fjDcoKchDCKVubcWf/5HNI+blLQk5bka0ggNcUa2uD?=
- =?us-ascii?Q?tC74fXaBzj5UWxuzwx4VI2vlADJiOmgPE0fewu288TLExvx+8eBdWhqtU282?=
- =?us-ascii?Q?T0V0XIVDLDFmuIChbYi/idGMkYkVs4lKTHNr2mBcUhmXpfXlJGdUKCEvm/II?=
- =?us-ascii?Q?bW2RKQCwP220ZFFbJucljmuTGRXGcpNs48HmMpBDcPTgQgZHNKKOEf4Bte+7?=
- =?us-ascii?Q?0z3eFD1hxijadvhZfhwJzlEvito6EthT5WmfaMB5DZwuhORYd1issvu3HjFB?=
- =?us-ascii?Q?IanDdHz1ETXx5KVK3HaYNwVE313ZtwuF+LRWTlM8uDbl+7ilacFBc8+xsIZK?=
- =?us-ascii?Q?wFaWp2/ZmGxNxSS2iNQQSUnocIlstN9ddxHlEuiV/8fIpfOlZErrL3SDYpus?=
- =?us-ascii?Q?xY0SsflxI1QWQURDmueWRySDrV+crCGIXoI5RZjX+mJjxO2a/WiuqGqyA+IF?=
- =?us-ascii?Q?NW7PAfwEQTMYAmEXM5nYoWVqaqSK+Qz+dz/Cq05sjGFwSA0hhOMUYwuzG2kO?=
- =?us-ascii?Q?MccpcH06LGeoZLzUN+QbetImWEJq0x/soAPi1viKIr2JQX8FAGJ3y5ErbzeU?=
- =?us-ascii?Q?55L9QdH0D1MA5SV+sDJRlUB4SfytDElTFxKv/LgIHVnFUYcncIb3u6ZL58bu?=
- =?us-ascii?Q?igl4O81gpYaSX2D9n7Yw0UprQjCSD3a9u4H7vwFdJW8gW45VWkqOgbp7KUgD?=
- =?us-ascii?Q?mmrJ01Y6XqQ7km4L916GbTW2CWGyKDTbxdR6EC/tPaCQeRYFPtGVdre4UMc2?=
- =?us-ascii?Q?g5rPdmh4zlaKpzDLADn+XyJpi9x1f4K3z3o8RaMB3VNeo00mKhLSUkS8ySrt?=
- =?us-ascii?Q?qnBnED/OquG8U1vPrG1/X87hTubH8/zOrcnQWljonWyfa/QwsDAEk2vfXCaf?=
- =?us-ascii?Q?gu/2S6IapV+MdUqhkW21WjXVbvMxW2P0+X62sk5bwAmttNi1YpD3XQzPpPAH?=
- =?us-ascii?Q?KKs5I3APqx5iFvYHIlZgWDkrdjquJUS0dWUehNuXht7bnGLBO4dOSIqidtxE?=
- =?us-ascii?Q?JA7+4VfCfJV1wsW0FwCzkLdnVICzbbIGzr8vptPXTioMTx/pZzC+Da3guwGg?=
- =?us-ascii?Q?MntshWPsi/CWOcAOUw6EFAm8TM3d/fNfTnIYHnBX/GQz0GWVQwLeUs2Tweiw?=
- =?us-ascii?Q?plupT82O3BVNWGZvzh19twOrNWrIbVTGiD/z?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(7416014)(82310400026)(1800799024);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 19:35:16.7969
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d826f1b6-8c1a-47a5-9cde-08dde66a044b
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	CH2PEPF0000013D.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7950
+In-Reply-To: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
 
-On Thu, Aug 28, 2025 at 03:46:08PM -0300, Jason Gunthorpe wrote:
-> On Thu, Aug 28, 2025 at 08:08:13AM -0700, Nicolin Chen wrote:
-> > On Thu, Aug 28, 2025 at 09:51:49AM -0300, Jason Gunthorpe wrote:
-> > > On Fri, Aug 22, 2025 at 11:50:58AM -0700, Nicolin Chen wrote:
-> > > 
-> > > > It feels like we need a no-fail re-attach operation, or at least an
-> > > > unlikely-to-fail one. I recall years ago we tried a can_attach op
-> > > > to test the compatibility but it didn't get merged. Maybe we'd need
-> > > > it so that a concurrent attach can test compatibility, allowing the
-> > > > re-attach in iommu_dev_reset_done() to more likely succeed.
-> > > 
-> > > This is probably the cleanest option to split these things
-> > 
-> > Yea, that could avoid failing a concurrent attach_dev during FLR
-> > unless the dryrun fails, helping non-SRIOV cases too.
-> > 
-> > So, next version could have some new preparatory patches:
-> >  - Pass in old domain to attach_dev
-> >  - Add a can_attach_dev op
+On Tue, Jul 15, 2025 at 07:51:03PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> Hi,
 > 
-> I wouldn't make this more complicated, just focus on the signal device
-> case here then we move on from there
+> Currently, in the event of AER/DPC, PCI core will try to reset the slot (Root
+> Port) and its subordinate devices by invoking bridge control reset and FLR. But
+> in some cases like AER Fatal error, it might be necessary to reset the Root
+> Ports using the PCI host bridge drivers in a platform specific way (as indicated
+> by the TODO in the pcie_do_recovery() function in drivers/pci/pcie/err.c).
+> Otherwise, the PCI link won't be recovered successfully.
 > 
-> Just adding can_attach_dev is big series on its own
+> So this series adds a new callback 'pci_host_bridge::reset_root_port' for the
+> host bridge drivers to reset the Root Port when a fatal error happens.
+> 
+> Also, this series allows the host bridge drivers to handle PCI link down event
+> by resetting the Root Ports and recovering the bus. This is accomplished by the
+> help of the new 'pci_host_handle_link_down()' API. Host bridge drivers are
+> expected to call this API (preferrably from a threaded IRQ handler) with
+> relevant Root Port 'pci_dev' when a link down event is detected for the port.
+> The API will reuse the pcie_do_recovery() function to recover the link if AER
+> support is enabled, otherwise it will directly call the reset_root_port()
+> callback of the host bridge driver (if exists).
+> 
+> For reference, I've modified the pcie-qcom driver to call
+> pci_host_handle_link_down() API with Root Port 'pci_dev' after receiving the
+> LINK_DOWN global_irq event and populated 'pci_host_bridge::reset_root_port()'
+> callback to reset the Root Port. Since the Qcom PCIe controllers support only
+> a single Root Port (slot) per controller instance, the API is going to be
+> invoked only once. For multi Root Port controllers, the controller driver is
+> expected to detect the Root Port that received the link down event and call
+> the pci_host_handle_link_down() API with 'pci_dev' of that Root Port.
+> 
+> Testing
+> -------
+> 
+> I've lost access to my test setup now. So Krishna (Cced) will help with testing
+> on the Qcom platform and Wilfred or Niklas should be able to test it on Rockchip
+> platform. For the moment, this series is compile tested only.
 
-OK. I suppose a concurrent attach on a single device will be rare,
-so failing it won't impact that much and thus can be a Part-1.
+For the series:
 
-Then, for part-2, we will do can_attach_dev and support SRIOV.
+Tested-by: Brian Norris <briannorris@chromium.org>
 
-Thanks
-Nicolin
+I've tested the whole thing on Qualcomm SC7280 Herobrine systems with
+NVMe. After adding a debugfs node to control toggling PERST, I can force
+the link to reset, and see it recover and resume NVMe traffic.
+
+I've tested the first two on Pixel phones, using a non-upstream
+DWC-based driver that I'm working on getting in better shape. (We've
+previously supported a custom link-error API setup instead.) I'd love to
+see this available upstream.
+
+Regards,
+Brian
 
