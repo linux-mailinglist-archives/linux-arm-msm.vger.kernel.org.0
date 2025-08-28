@@ -1,301 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-71180-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77E54B3AAD1
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 21:23:59 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DCF2B3AAFB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 21:35:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8927A1BA7AA8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 19:24:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 07B103BB171
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 28 Aug 2025 19:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F7052797B8;
-	Thu, 28 Aug 2025 19:23:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12D7426E6FB;
+	Thu, 28 Aug 2025 19:35:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j67G3Cyy"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="Drtc/X9M"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2077.outbound.protection.outlook.com [40.107.243.77])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15444270EBC;
-	Thu, 28 Aug 2025 19:23:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756409020; cv=none; b=kqHu8UwBfjMVUIob6RQopSsRiKoZ5+1mmpNvLeI0muX7+DAHejOi/kneCPQYRrFbt2+g8e81+6tG+hdmnMW0ZH/UOgikAQnfYZ774zzDX2KV5nDA4lfWVIw9JRXklR1/+QYTXhEgbDonIY9Oj/zB0dEpf5GLGvFrJNL8oIvcTAI=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756409020; c=relaxed/simple;
-	bh=KT3ThlL77vylRlL0LdnhraifmjDYP6lox3AggI8ipEk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EiTg//c+ZP6iuNMzf+1E2v7tr4YLYqgAXyKJdhERx1sdbM5LOG8lweGq0SBO8SRyBCGFwom/aEa5yq+52Ct7ELT2lclfqdFvqGDKJwSaz3EKNPKMqyT7PEyLqzI+EqiWRbIWJlqv72vICDu3wNRe3xabZfF9WJS+nKePa0B8Wo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j67G3Cyy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id BE2FBC4CEFD;
-	Thu, 28 Aug 2025 19:23:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756409019;
-	bh=KT3ThlL77vylRlL0LdnhraifmjDYP6lox3AggI8ipEk=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=j67G3CyyAVMD/x9IX7prKr9A/ZYH0xpXThcl7jNgsCLhw2uOESQDgVz91La6OI3Ts
-	 e7Vklhm37Smu+a6GJXv5PgtXH5IF2MFSePHlRGUYYxyj4lJQrHPNpBQgCgixNpURCD
-	 Ctm7DhrryV6V3e2YaWQ/lzOYfTdXJMWOc2TteMVYYuKolqV9WHQJyhT2jxZURrEHhO
-	 55rPjrd/051lggFzBCVrhzt+wa3zf5RycwKys4tthdfOwPWOTMRUNBst78or+JLeme
-	 O26UvJBQIP5ibclkNF3OKpRdWr7zsesuOp2FcBWnRnCAi4h/q1U9dEO3KhRasju2L0
-	 KvtxjLP9EsvZQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B5D73CA0FF7;
-	Thu, 28 Aug 2025 19:23:39 +0000 (UTC)
-From: Nickolay Goppen via B4 Relay <devnull+setotau.yandex.ru@kernel.org>
-Date: Thu, 28 Aug 2025 22:23:39 +0300
-Subject: [PATCH v4 3/3] pinctrl: qcom: Add SDM660 LPASS LPI TLMM
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC6B25D1E9;
+	Thu, 28 Aug 2025 19:35:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.243.77
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756409728; cv=fail; b=FCy9BvhlP3ZeCENDlMx1P7t6DVB6hJSYv90d3+gS579CucZm36SmTqZpRtiQrKEk1ZHeMaAFw7WvR+89IgHE4SroD2jqLs1GaiyP1abv3Hk0WgmSL4YNvFjhxUYPD8AJrNE1zAXjBP/p8bUaV/pxz7O4RmDKji9e9JWv0KxpptA=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756409728; c=relaxed/simple;
+	bh=QEm4HwmAL4URzKrDR3wXyu6utypi8ZKxdBWlirDbaK0=;
+	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BaKQikUMsNJ63qu9mhLMGNoBqKK5yi93B9+70+hgrbzmgcQ5e1Hpj2n7n4RWFojjtDCb+skxy2gkFLgYClr5Ez+VLNJPHhzYoNLeDFGOBAOfnorPihz4SRatEuLg/Zoe0YYORAIRJM/0H8gB3FK36hDuLL+yfgrfXpPommz9eGs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=Drtc/X9M; arc=fail smtp.client-ip=40.107.243.77
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=t9OWX3nWOEybonKoVbiT86kw+E7+SYHk10VRm9cbA5DzZu3IGid49YUzcF+fSso+DfFDVLIi/ClFQK18VB6HVeOGLHnIRcgJqvH0LlZu7gyw1vvJabukeGFzlcbOIDDqElnQlSvL2pyQXsTLPx9poON4z3Rlb0djh9vXRYy4zh2JdvPOHYhAcY4Wc0YxkNmVxq3ADmG555P8qusa8SoPKQJTAeWsKFMbxec1pih3xWoQBXhpBD6VxkX4KamomBGJrDuflmWxieNkoyenZQcG+Gxk3ogNi9PR5U1SlnYHy90SrGnq3cws8dGw+VRzjnTlod4bZLdghyOGkbhx6QA3oA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0XgMkENTR3L73wyAV+uXRRvm5qmOP1DhbV717XUFyRQ=;
+ b=ZuztEisGnpe3nleZbKooQQIjc69pUHihdpNog7SMFwO16cGC8lTOR/gCQBJn7HEYF/H6ClMFNf8sknlFQoQKcenEmIWPQVJWIa2zeQCpI2bIY4vjU86ZY3c1JldMXMLD5U2ssl2lEMgNjvMaMH/4lGaCED8zlOLasbKPbXTwPcZQUNvnTwHoByFzNn6UKSo4heH0ODgANGrETKkMvayxN1KdUEwdsYsPyXdi1cQdCtGVryHlLVJjqMArWpco4Dq/7SYgkPid8FT58z23YnPkob5v5wTC1jLJdrOrQ041uf0zB5b39iQmQhvIi5vN+HMrwq7LDRTadYOrxIrG6+DaNQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=lists.linux.dev smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0XgMkENTR3L73wyAV+uXRRvm5qmOP1DhbV717XUFyRQ=;
+ b=Drtc/X9M0x3sl85D1j3q3L3pfca8Xm/td8slz8tY/SfIZi7BfnimXTLHW/EGrQvwoT8WgoHDfj3CDnRps8klxbO2hYzAJFWUBGO2c6N14ypJ8lq8gV/GVLUtYYELZpDr/qGdJUL4LipNufNniI7rbrABPCthXmc6KruXuOhU0q7rE7A2nvqBMfSDX8sdk3vnsNwa7hQjQbvi5eL7VKNUqpDKsu7klk60S++33/ic3tc23IFP66+DbxUGhP3pHGRkrrmtGBPfxJTgm38KUGn5aHM+fs1hoYLUpCfxQ06Gbd0DjMOz/xFlT5Sp7QUNM2GX7zj62xF4sTniWhqMxY23yA==
+Received: from CH2PR17CA0030.namprd17.prod.outlook.com (2603:10b6:610:53::40)
+ by SA3PR12MB7950.namprd12.prod.outlook.com (2603:10b6:806:31c::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.13; Thu, 28 Aug
+ 2025 19:35:17 +0000
+Received: from CH2PEPF0000013D.namprd02.prod.outlook.com
+ (2603:10b6:610:53:cafe::5a) by CH2PR17CA0030.outlook.office365.com
+ (2603:10b6:610:53::40) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9052.21 via Frontend Transport; Thu,
+ 28 Aug 2025 19:35:16 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CH2PEPF0000013D.mail.protection.outlook.com (10.167.244.69) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9052.8 via Frontend Transport; Thu, 28 Aug 2025 19:35:16 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 28 Aug
+ 2025 12:35:03 -0700
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Thu, 28 Aug
+ 2025 12:35:03 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Thu, 28 Aug 2025 12:35:01 -0700
+Date: Thu, 28 Aug 2025 12:35:00 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Jason Gunthorpe <jgg@nvidia.com>
+CC: Ethan Zhao <etzhao1900@gmail.com>, <robin.murphy@arm.com>,
+	<joro@8bytes.org>, <bhelgaas@google.com>, <will@kernel.org>,
+	<robin.clark@oss.qualcomm.com>, <yong.wu@mediatek.com>,
+	<matthias.bgg@gmail.com>, <angelogioacchino.delregno@collabora.com>,
+	<thierry.reding@gmail.com>, <vdumpa@nvidia.com>, <jonathanh@nvidia.com>,
+	<rafael@kernel.org>, <lenb@kernel.org>, <kevin.tian@intel.com>,
+	<yi.l.liu@intel.com>, <baolu.lu@linux.intel.com>,
+	<linux-arm-kernel@lists.infradead.org>, <iommu@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-mediatek@lists.infradead.org>, <linux-tegra@vger.kernel.org>,
+	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+	<patches@lists.linux.dev>, <pjaroszynski@nvidia.com>, <vsethi@nvidia.com>,
+	<helgaas@kernel.org>
+Subject: Re: [PATCH v3 5/5] pci: Suspend iommu function prior to resetting a
+ device
+Message-ID: <aLCvZOm11EAvrpx9@Asurada-Nvidia>
+References: <3749cd6a1430ac36d1af1fadaa4d90ceffef9c62.1754952762.git.nicolinc@nvidia.com>
+ <550635db-00ce-410e-add0-77c1a75adb11@gmail.com>
+ <aKTzq6SLGB22Xq5b@Asurada-Nvidia>
+ <20250821130741.GL802098@nvidia.com>
+ <aKgPr3mUcIsd1iuT@Asurada-Nvidia>
+ <20250822140821.GE1311579@nvidia.com>
+ <aKi8EqEp1DKG+h38@Asurada-Nvidia>
+ <20250828125149.GD7333@nvidia.com>
+ <aLBw3UTAX6F0IOCf@Asurada-Nvidia>
+ <20250828184608.GF7333@nvidia.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250828-sdm660-lpass-lpi-v4-3-af4afdd52965@yandex.ru>
-References: <20250828-sdm660-lpass-lpi-v4-0-af4afdd52965@yandex.ru>
-In-Reply-To: <20250828-sdm660-lpass-lpi-v4-0-af4afdd52965@yandex.ru>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- ~postmarketos/upstreaming@lists.sr.ht, Nickolay Goppen <setotau@yandex.ru>, 
- Richard Acayan <mailingradian@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756409018; l=8801;
- i=setotau@yandex.ru; s=20250815; h=from:subject:message-id;
- bh=FAksBGnsZ8kDvC0bR8KQg80odraUiy0qtIYjCppkfNo=;
- b=H6FQVCwkTKEnaqCp8ClKVwTY50I120DOqK9XGjbXJpf2kN+GQv2hCdK5t+KPkOXr2182GzwJy
- LYnUEQUB67iBa+NJGR/dwvIrNTA4pE2eLRiFGR/x6UipX8V2jDcnouC
-X-Developer-Key: i=setotau@yandex.ru; a=ed25519;
- pk=Og7YO6LfW+M2QfcJfjaUaXc8oOr5zoK8+4AtX5ICr4o=
-X-Endpoint-Received: by B4 Relay for setotau@yandex.ru/20250815 with
- auth_id=492
-X-Original-From: Nickolay Goppen <setotau@yandex.ru>
-Reply-To: setotau@yandex.ru
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <20250828184608.GF7333@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF0000013D:EE_|SA3PR12MB7950:EE_
+X-MS-Office365-Filtering-Correlation-Id: d826f1b6-8c1a-47a5-9cde-08dde66a044b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|36860700013|376014|7416014|82310400026|1800799024;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?OQiiDQjtGvO3tPwOgl97upHNXlwinnf6ipSL91H2MjjTgqjKc6e09UMw7YFD?=
+ =?us-ascii?Q?mzhPUcGo0tEq7qp73+5QGPBXcmt14mz6Z5vNHO6n83UO7RzKyf7mFAaAZ18F?=
+ =?us-ascii?Q?Uib8+0TuuadJx6FJ/2V8Qw90sUz1A1/1XqPwlTq2L0tacWyAATOR2EiRxA12?=
+ =?us-ascii?Q?MTUT/Vext2rutI3hLdoGSCyHUe7Q4AiTuHb4jRWfrWU3b51JVLkDQNsRZxME?=
+ =?us-ascii?Q?/YkJzYJQBDJnJ9sXQmEhIv0tdPbEqp/qmQTtG1HzqIiKUySxYBoGLrgEVza1?=
+ =?us-ascii?Q?yb9HwXVqa2wmoscDmbhlmjQRVXhBK8aiwLFGAB2/uIXQr5dRBq1ZFf/LKO2+?=
+ =?us-ascii?Q?XTZeRURfbHffCbB3Y7fjDcoKchDCKVubcWf/5HNI+blLQk5bka0ggNcUa2uD?=
+ =?us-ascii?Q?tC74fXaBzj5UWxuzwx4VI2vlADJiOmgPE0fewu288TLExvx+8eBdWhqtU282?=
+ =?us-ascii?Q?T0V0XIVDLDFmuIChbYi/idGMkYkVs4lKTHNr2mBcUhmXpfXlJGdUKCEvm/II?=
+ =?us-ascii?Q?bW2RKQCwP220ZFFbJucljmuTGRXGcpNs48HmMpBDcPTgQgZHNKKOEf4Bte+7?=
+ =?us-ascii?Q?0z3eFD1hxijadvhZfhwJzlEvito6EthT5WmfaMB5DZwuhORYd1issvu3HjFB?=
+ =?us-ascii?Q?IanDdHz1ETXx5KVK3HaYNwVE313ZtwuF+LRWTlM8uDbl+7ilacFBc8+xsIZK?=
+ =?us-ascii?Q?wFaWp2/ZmGxNxSS2iNQQSUnocIlstN9ddxHlEuiV/8fIpfOlZErrL3SDYpus?=
+ =?us-ascii?Q?xY0SsflxI1QWQURDmueWRySDrV+crCGIXoI5RZjX+mJjxO2a/WiuqGqyA+IF?=
+ =?us-ascii?Q?NW7PAfwEQTMYAmEXM5nYoWVqaqSK+Qz+dz/Cq05sjGFwSA0hhOMUYwuzG2kO?=
+ =?us-ascii?Q?MccpcH06LGeoZLzUN+QbetImWEJq0x/soAPi1viKIr2JQX8FAGJ3y5ErbzeU?=
+ =?us-ascii?Q?55L9QdH0D1MA5SV+sDJRlUB4SfytDElTFxKv/LgIHVnFUYcncIb3u6ZL58bu?=
+ =?us-ascii?Q?igl4O81gpYaSX2D9n7Yw0UprQjCSD3a9u4H7vwFdJW8gW45VWkqOgbp7KUgD?=
+ =?us-ascii?Q?mmrJ01Y6XqQ7km4L916GbTW2CWGyKDTbxdR6EC/tPaCQeRYFPtGVdre4UMc2?=
+ =?us-ascii?Q?g5rPdmh4zlaKpzDLADn+XyJpi9x1f4K3z3o8RaMB3VNeo00mKhLSUkS8ySrt?=
+ =?us-ascii?Q?qnBnED/OquG8U1vPrG1/X87hTubH8/zOrcnQWljonWyfa/QwsDAEk2vfXCaf?=
+ =?us-ascii?Q?gu/2S6IapV+MdUqhkW21WjXVbvMxW2P0+X62sk5bwAmttNi1YpD3XQzPpPAH?=
+ =?us-ascii?Q?KKs5I3APqx5iFvYHIlZgWDkrdjquJUS0dWUehNuXht7bnGLBO4dOSIqidtxE?=
+ =?us-ascii?Q?JA7+4VfCfJV1wsW0FwCzkLdnVICzbbIGzr8vptPXTioMTx/pZzC+Da3guwGg?=
+ =?us-ascii?Q?MntshWPsi/CWOcAOUw6EFAm8TM3d/fNfTnIYHnBX/GQz0GWVQwLeUs2Tweiw?=
+ =?us-ascii?Q?plupT82O3BVNWGZvzh19twOrNWrIbVTGiD/z?=
+X-Forefront-Antispam-Report:
+	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(7416014)(82310400026)(1800799024);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Aug 2025 19:35:16.7969
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d826f1b6-8c1a-47a5-9cde-08dde66a044b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CH2PEPF0000013D.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR12MB7950
 
-From: Richard Acayan <mailingradian@gmail.com>
+On Thu, Aug 28, 2025 at 03:46:08PM -0300, Jason Gunthorpe wrote:
+> On Thu, Aug 28, 2025 at 08:08:13AM -0700, Nicolin Chen wrote:
+> > On Thu, Aug 28, 2025 at 09:51:49AM -0300, Jason Gunthorpe wrote:
+> > > On Fri, Aug 22, 2025 at 11:50:58AM -0700, Nicolin Chen wrote:
+> > > 
+> > > > It feels like we need a no-fail re-attach operation, or at least an
+> > > > unlikely-to-fail one. I recall years ago we tried a can_attach op
+> > > > to test the compatibility but it didn't get merged. Maybe we'd need
+> > > > it so that a concurrent attach can test compatibility, allowing the
+> > > > re-attach in iommu_dev_reset_done() to more likely succeed.
+> > > 
+> > > This is probably the cleanest option to split these things
+> > 
+> > Yea, that could avoid failing a concurrent attach_dev during FLR
+> > unless the dryrun fails, helping non-SRIOV cases too.
+> > 
+> > So, next version could have some new preparatory patches:
+> >  - Pass in old domain to attach_dev
+> >  - Add a can_attach_dev op
+> 
+> I wouldn't make this more complicated, just focus on the signal device
+> case here then we move on from there
+> 
+> Just adding can_attach_dev is big series on its own
 
-The Snapdragon 660 has a Low-Power Island (LPI) TLMM for configuring
-pins related to audio. Add the driver for this.
-Also, this driver uses predefined pin_offsets for each pin taken from
-downstream driver, which does not follow the usual 0x1000 distance
-between pins and uses an array with predefined offsets that do not
-follow any regular pattern [1].
+OK. I suppose a concurrent attach on a single device will be rare,
+so failing it won't impact that much and thus can be a Part-1.
 
-[1] https://git.codelinaro.org/clo/la/kernel/msm-4.4/-/blob/LA.UM.7.2.c27-07400-sdm660.0/drivers/pinctrl/qcom/pinctrl-lpi.c#L107
+Then, for part-2, we will do can_attach_dev and support SRIOV.
 
-Signed-off-by: Richard Acayan <mailingradian@gmail.com>
-Co-developed-by: Nickolay Goppen <setotau@yandex.ru>
-Signed-off-by: Nickolay Goppen <setotau@yandex.ru>
----
- drivers/pinctrl/qcom/Kconfig                    |  10 ++
- drivers/pinctrl/qcom/Makefile                   |   1 +
- drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c | 155 ++++++++++++++++++++++++
- 3 files changed, 166 insertions(+)
-
-diff --git a/drivers/pinctrl/qcom/Kconfig b/drivers/pinctrl/qcom/Kconfig
-index dd9bbe8f3e11c37418d2143b33c21eeea10d456b..ef42520115f461302098d878cb76c6f25e55b5e4 100644
---- a/drivers/pinctrl/qcom/Kconfig
-+++ b/drivers/pinctrl/qcom/Kconfig
-@@ -68,6 +68,16 @@ config PINCTRL_SC7280_LPASS_LPI
- 	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
- 	  (Low Power Island) found on the Qualcomm Technologies Inc SC7280 platform.
- 
-+config PINCTRL_SDM660_LPASS_LPI
-+	tristate "Qualcomm Technologies Inc SDM660 LPASS LPI pin controller driver"
-+	depends on GPIOLIB
-+	depends on ARM64 || COMPILE_TEST
-+	depends on PINCTRL_LPASS_LPI
-+	help
-+	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
-+	  Qualcomm Technologies Inc LPASS (Low Power Audio SubSystem) LPI
-+	  (Low Power Island) found on the Qualcomm Technologies Inc SDM660 platform.
-+
- config PINCTRL_SM4250_LPASS_LPI
- 	tristate "Qualcomm Technologies Inc SM4250 LPASS LPI pin controller driver"
- 	depends on ARM64 || COMPILE_TEST
-diff --git a/drivers/pinctrl/qcom/Makefile b/drivers/pinctrl/qcom/Makefile
-index 954f5291cc37242baffc021e3c68d850aabd57cd..cea8617ac650ecfc75c2a0c745a53d6a1b829842 100644
---- a/drivers/pinctrl/qcom/Makefile
-+++ b/drivers/pinctrl/qcom/Makefile
-@@ -43,6 +43,7 @@ obj-$(CONFIG_PINCTRL_SC7280_LPASS_LPI) += pinctrl-sc7280-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SC8180X)	+= pinctrl-sc8180x.o
- obj-$(CONFIG_PINCTRL_SC8280XP)	+= pinctrl-sc8280xp.o
- obj-$(CONFIG_PINCTRL_SDM660)   += pinctrl-sdm660.o
-+obj-$(CONFIG_PINCTRL_SDM660_LPASS_LPI) += pinctrl-sdm660-lpass-lpi.o
- obj-$(CONFIG_PINCTRL_SDM670) += pinctrl-sdm670.o
- obj-$(CONFIG_PINCTRL_SDM845) += pinctrl-sdm845.o
- obj-$(CONFIG_PINCTRL_SDX55) += pinctrl-sdx55.o
-diff --git a/drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c b/drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..7e7e2202c6da75f4ccc60cecc4a47655f5aa5de1
---- /dev/null
-+++ b/drivers/pinctrl/qcom/pinctrl-sdm660-lpass-lpi.c
-@@ -0,0 +1,155 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * This driver is solely based on the limited information in downstream code.
-+ * Any verification with schematics would be greatly appreciated.
-+ *
-+ * Copyright (c) 2023, Richard Acayan. All rights reserved.
-+ */
-+
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/pinctrl/pinctrl.h>
-+
-+#include "pinctrl-lpass-lpi.h"
-+
-+enum lpass_lpi_functions {
-+	LPI_MUX_comp_rx,
-+	LPI_MUX_dmic12,
-+	LPI_MUX_dmic34,
-+	LPI_MUX_mclk0,
-+	LPI_MUX_pdm_2_gpios,
-+	LPI_MUX_pdm_clk,
-+	LPI_MUX_pdm_rx,
-+	LPI_MUX_pdm_sync,
-+
-+	LPI_MUX_gpio,
-+	LPI_MUX__,
-+};
-+
-+static const struct pinctrl_pin_desc sdm660_lpi_pinctrl_pins[] = {
-+	PINCTRL_PIN(0, "gpio0"),
-+	PINCTRL_PIN(1, "gpio1"),
-+	PINCTRL_PIN(2, "gpio2"),
-+	PINCTRL_PIN(3, "gpio3"),
-+	PINCTRL_PIN(4, "gpio4"),
-+	PINCTRL_PIN(5, "gpio5"),
-+	PINCTRL_PIN(6, "gpio6"),
-+	PINCTRL_PIN(7, "gpio7"),
-+	PINCTRL_PIN(8, "gpio8"),
-+	PINCTRL_PIN(9, "gpio9"),
-+	PINCTRL_PIN(10, "gpio10"),
-+	PINCTRL_PIN(11, "gpio11"),
-+	PINCTRL_PIN(12, "gpio12"),
-+	PINCTRL_PIN(13, "gpio13"),
-+	PINCTRL_PIN(14, "gpio14"),
-+	PINCTRL_PIN(15, "gpio15"),
-+	PINCTRL_PIN(16, "gpio16"),
-+	PINCTRL_PIN(17, "gpio17"),
-+	PINCTRL_PIN(18, "gpio18"),
-+	PINCTRL_PIN(19, "gpio19"),
-+	PINCTRL_PIN(20, "gpio20"),
-+	PINCTRL_PIN(21, "gpio21"),
-+	PINCTRL_PIN(22, "gpio22"),
-+	PINCTRL_PIN(23, "gpio23"),
-+	PINCTRL_PIN(24, "gpio24"),
-+	PINCTRL_PIN(25, "gpio25"),
-+	PINCTRL_PIN(26, "gpio26"),
-+	PINCTRL_PIN(27, "gpio27"),
-+	PINCTRL_PIN(28, "gpio28"),
-+	PINCTRL_PIN(29, "gpio29"),
-+	PINCTRL_PIN(30, "gpio30"),
-+	PINCTRL_PIN(31, "gpio31"),
-+};
-+
-+static const char * const comp_rx_groups[] = { "gpio22", "gpio24" };
-+static const char * const dmic12_groups[] = { "gpio26", "gpio28" };
-+static const char * const dmic34_groups[] = { "gpio27", "gpio29" };
-+static const char * const mclk0_groups[] = { "gpio18" };
-+static const char * const pdm_2_gpios_groups[] = { "gpio20" };
-+static const char * const pdm_clk_groups[] = { "gpio18" };
-+static const char * const pdm_rx_groups[] = { "gpio21", "gpio23", "gpio25" };
-+static const char * const pdm_sync_groups[] = { "gpio19" };
-+
-+const struct lpi_pingroup sdm660_lpi_pinctrl_groups[] = {
-+	LPI_PINGROUP_OFFSET(0, LPI_NO_SLEW, _, _, _, _, 0x0000),
-+	LPI_PINGROUP_OFFSET(1, LPI_NO_SLEW, _, _, _, _, 0x1000),
-+	LPI_PINGROUP_OFFSET(2, LPI_NO_SLEW, _, _, _, _, 0x2000),
-+	LPI_PINGROUP_OFFSET(3, LPI_NO_SLEW, _, _, _, _, 0x2010),
-+	LPI_PINGROUP_OFFSET(4, LPI_NO_SLEW, _, _, _, _, 0x3000),
-+	LPI_PINGROUP_OFFSET(5, LPI_NO_SLEW, _, _, _, _, 0x3010),
-+	LPI_PINGROUP_OFFSET(6, LPI_NO_SLEW, _, _, _, _, 0x4000),
-+	LPI_PINGROUP_OFFSET(7, LPI_NO_SLEW, _, _, _, _, 0x4010),
-+	LPI_PINGROUP_OFFSET(8, LPI_NO_SLEW, _, _, _, _, 0x5000),
-+	LPI_PINGROUP_OFFSET(9, LPI_NO_SLEW, _, _, _, _, 0x5010),
-+	LPI_PINGROUP_OFFSET(10, LPI_NO_SLEW, _, _, _, _, 0x5020),
-+	LPI_PINGROUP_OFFSET(11, LPI_NO_SLEW, _, _, _, _, 0x5030),
-+	LPI_PINGROUP_OFFSET(12, LPI_NO_SLEW, _, _, _, _, 0x6000),
-+	LPI_PINGROUP_OFFSET(13, LPI_NO_SLEW, _, _, _, _, 0x6010),
-+	LPI_PINGROUP_OFFSET(14, LPI_NO_SLEW, _, _, _, _, 0x7000),
-+	LPI_PINGROUP_OFFSET(15, LPI_NO_SLEW, _, _, _, _, 0x7010),
-+	LPI_PINGROUP_OFFSET(16, LPI_NO_SLEW, _, _, _, _, 0x5040),
-+	LPI_PINGROUP_OFFSET(17, LPI_NO_SLEW, _, _, _, _, 0x5050),
-+
-+	/* The function names of the PDM GPIOs are derived from SDM670 */
-+	LPI_PINGROUP_OFFSET(18, LPI_NO_SLEW, pdm_clk, mclk0, _, _, 0x8000),
-+	LPI_PINGROUP_OFFSET(19, LPI_NO_SLEW, pdm_sync, _, _, _, 0x8010),
-+	LPI_PINGROUP_OFFSET(20, LPI_NO_SLEW, pdm_2_gpios, _, _, _, 0x8020),
-+	LPI_PINGROUP_OFFSET(21, LPI_NO_SLEW, pdm_rx, _, _, _, 0x8030),
-+	LPI_PINGROUP_OFFSET(22, LPI_NO_SLEW, comp_rx, _, _, _, 0x8040),
-+	LPI_PINGROUP_OFFSET(23, LPI_NO_SLEW, pdm_rx, _, _, _, 0x8050),
-+	LPI_PINGROUP_OFFSET(24, LPI_NO_SLEW, comp_rx, _, _, _, 0x8060),
-+	LPI_PINGROUP_OFFSET(25, LPI_NO_SLEW, pdm_rx, _, _, _, 0x8070),
-+	LPI_PINGROUP_OFFSET(26, LPI_NO_SLEW, dmic12, _, _, _, 0x9000),
-+	LPI_PINGROUP_OFFSET(27, LPI_NO_SLEW, dmic34, _, _, _, 0x9010),
-+	LPI_PINGROUP_OFFSET(28, LPI_NO_SLEW, dmic12, _, _, _, 0xa000),
-+	LPI_PINGROUP_OFFSET(29, LPI_NO_SLEW, dmic34, _, _, _, 0xa010),
-+
-+	LPI_PINGROUP_OFFSET(30, LPI_NO_SLEW, _, _, _, _, 0xb000),
-+	LPI_PINGROUP_OFFSET(31, LPI_NO_SLEW, _, _, _, _, 0xb010),
-+};
-+
-+const struct lpi_function sdm660_lpi_pinctrl_functions[] = {
-+	LPI_FUNCTION(comp_rx),
-+	LPI_FUNCTION(dmic12),
-+	LPI_FUNCTION(dmic34),
-+	LPI_FUNCTION(mclk0),
-+	LPI_FUNCTION(pdm_2_gpios),
-+	LPI_FUNCTION(pdm_clk),
-+	LPI_FUNCTION(pdm_rx),
-+	LPI_FUNCTION(pdm_sync),
-+};
-+
-+static const struct lpi_pinctrl_variant_data sdm660_lpi_pinctrl_data = {
-+	.pins = sdm660_lpi_pinctrl_pins,
-+	.npins = ARRAY_SIZE(sdm660_lpi_pinctrl_pins),
-+	.groups = sdm660_lpi_pinctrl_groups,
-+	.ngroups = ARRAY_SIZE(sdm660_lpi_pinctrl_groups),
-+	.functions = sdm660_lpi_pinctrl_functions,
-+	.nfunctions = ARRAY_SIZE(sdm660_lpi_pinctrl_functions),
-+	.flags = LPI_FLAG_SLEW_RATE_SAME_REG | LPI_FLAG_USE_PREDEFINED_PIN_OFFSET
-+};
-+
-+static const struct of_device_id sdm660_lpi_pinctrl_of_match[] = {
-+	{
-+		.compatible = "qcom,sdm660-lpass-lpi-pinctrl",
-+		.data = &sdm660_lpi_pinctrl_data,
-+	},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, sdm660_lpi_pinctrl_of_match);
-+
-+static struct platform_driver sdm660_lpi_pinctrl_driver = {
-+	.driver = {
-+		.name = "qcom-sdm660-lpass-lpi-pinctrl",
-+		.of_match_table = sdm660_lpi_pinctrl_of_match,
-+	},
-+	.probe = lpi_pinctrl_probe,
-+	.remove = lpi_pinctrl_remove,
-+};
-+module_platform_driver(sdm660_lpi_pinctrl_driver);
-+
-+MODULE_AUTHOR("Richard Acayan <mailingradian@gmail.com>");
-+MODULE_DESCRIPTION("QTI SDM660 LPI GPIO pin control driver");
-+MODULE_LICENSE("GPL");
-
--- 
-2.51.0
-
-
+Thanks
+Nicolin
 
