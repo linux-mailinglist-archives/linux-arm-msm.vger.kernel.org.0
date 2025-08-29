@@ -1,240 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-71253-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85A09B3C0A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 18:25:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B73AB3C0C9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 18:32:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BA04D189D9E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 16:25:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBFAD1C88BAE
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 16:32:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC7BF326D7C;
-	Fri, 29 Aug 2025 16:24:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Vx1+Nkfe"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A94A326D7C;
+	Fri, 29 Aug 2025 16:31:26 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CD70326D44
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 16:24:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB79D32254F;
+	Fri, 29 Aug 2025 16:31:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756484680; cv=none; b=JRfKDPLKLD1a37vDC47BC9aoXcTtZPj+8hE8RdZl5lEEoaLFRbrCDs0rtlZVHW1Q1mPDzlxJOOaaB6l+SMLWgmZbM4OdjAqqGDk/Qjf8jeytW4sxZ6EItBq3LkS/QO1310Kt47bsL4xu9Be0m/+gWumL1a/wwB53HoHPH2IT8Yk=
+	t=1756485085; cv=none; b=PbzAMOKvdeFB/qfvRHYigOS7JOtphX6yMFnGuy0mK1LH3dqme9qTeAaYfYWZxXOwLbM+L/Nz3z5mCHwFZSAIAedUZ4OJjLG6hmLdpIQS0Uc3RQRMiap0osvSBAccCWfArpWJJFIQKMKuQqWhRLAUUcRJNBRPcN8ZKnZRlkIzCsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756484680; c=relaxed/simple;
-	bh=3B97zBH4p9jRcLgMlEAc2P4fRn926Py9yl1OWBr7GvA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t6b37/hHenQyUAzdlS2qU8iif9tfUlnuIeNfviONdOtzJeMleSwSSvGohYH/m5khuNnyrjtvdOknbOlfRQX9QP9w39JXHMVk301lWXquk4+QTUHBTiCPms0XcPzUqQ6tQ9G5xZhDy+dMlltgnIDoxb2wQi7b/Aoie1xQ7v+mFtg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Vx1+Nkfe; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57T85K7L001901
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 16:24:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	XCIfjiGc29TyHYiTm4KLiwCktBOr1c2fqrZ/oTTcfZo=; b=Vx1+NkfegDhBk6Bf
-	fz9QkSj4uQXedF2HcUipcq/YN/IeXx+DvrakGMN4PA8SIbyDMeF/EFY8+SGlJhCM
-	hWQuULnOEPwdLEE9OI3kN3J9ENLVFPsOSQGeArClQUEq5AT2HDzNZZXN7cXGDlL2
-	XEMstV+DzQaqKeu5+yvsyikbFjzUAsBHRJXkxz/H0qyhjmQUeNxQ4OMXTUVTOAFb
-	hw2ZCWfBXFpoFE987qMsXv8Y4aL1WzcICnFpLL76rNO4YL2wqNF+jM2zBcUZCD1y
-	MoKNK2FFxccJCt1R8PkBP7U6X615kh7h6V8HaaawsANhi73UCyGASKypSnlclA95
-	rWCH/Q==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48se173dnp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 16:24:38 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b2ffba8809so40690941cf.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 09:24:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756484677; x=1757089477;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XCIfjiGc29TyHYiTm4KLiwCktBOr1c2fqrZ/oTTcfZo=;
-        b=JYRKLBzr1WTjCdz03+nhYIpGKhSnwmTlOaTiZlpJHj9r9Gy4TrjpPjzy6a/S44cKbC
-         3oqGloMaKF9k9Jawrw5r/UnGVdZr9ufkg5UI1VvtBtlJYHE4EqU5biDKAd56BPDzRyZh
-         IYeHyJMOmPIWQjv8ylOFgpYQU6HOc9Eba8i1DFAjaOeCSMzT3ZFUPRQSIz7jlnEqcaGb
-         MbqATX36seFuzKKgbC2p2uPHpR6gjxEW4tepQrmM2UYt2RJAQHg7KCmxuCxeuIUEnDhc
-         v/HSwmEG+so6Vshe3WCVNZQd83ckOF9SZp/rx+J4fYM+3KDdeHAyV6M91PoZCPK+kYIo
-         Culg==
-X-Forwarded-Encrypted: i=1; AJvYcCXE3beOeEJLnjth0Hov8Ov0Zu+SSjXjjyIjW39305LYD2elARnnGDz8vxwy+FknzLlOvcWDnKjUDfYQxaHN@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRpS/fCcIOGXmCmp+IROrLqUVN7MvBrD9umO4h5VZel0GCwWhG
-	4AYqj2VNHwipVkjMZGyN7g7k9OAVTw0xU+TP6XqU6V0uT6LvaVUhmNOLIkngFUEubWQvPFs5uQ8
-	p7OW5zICzm0dcpX+pIcJH85GrSWmQErI28RvcRbr+LZuOcAcuQanopmueEq3DijN3RiD/
-X-Gm-Gg: ASbGncvsCKJmLqWSAzkrwOnG32H0jcSC6/0eV1EKsyBYj0FcquFdGvQUbbwevkwVY4+
-	Q/YWVQVdZGfRGkeRgpeFAGYlMV81/YORkR4SHyFT6cyJR554w6PYEYZIQp4i7gxKxHAXtd6p+/W
-	ZRBLWnBAn+ZMoGViFofCc+rAqgahi20dTlNMHVW9CE94pCzu2YEqTQs/e6522Sjsln2kT5tMt19
-	w1lwUBz6qXWD7XgcKFdSbk110QKIHnpVrs6V2l3zW2UlehuGwK05WRPk52BdpC/D9cZlpBXWGJs
-	MjMG1Kk/yLI7bhYEbM1ygxTozL++JCjh8D/G+1bmi3NE33Tch5ACY6q9UGk0VYJ4ddXxIYrLpw8
-	V70uhD7KXHWMf+FWD8DYhP/fCDNyLh/EtsTtskAj/iJrEZnB7UisR
-X-Received: by 2002:a05:622a:2c1:b0:4af:bfd:82bf with SMTP id d75a77b69052e-4b2e76f6c2fmr159960161cf.17.1756484676479;
-        Fri, 29 Aug 2025 09:24:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG3avH1Zre9WfCU8qCI5LcLOBiCx7PfjvDuQh+HklBIJkQz+ZtJjjyCJREb1zAER0kzRP6i/A==
-X-Received: by 2002:a05:622a:2c1:b0:4af:bfd:82bf with SMTP id d75a77b69052e-4b2e76f6c2fmr159959551cf.17.1756484675754;
-        Fri, 29 Aug 2025 09:24:35 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f678450dfsm713370e87.72.2025.08.29.09.24.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 29 Aug 2025 09:24:34 -0700 (PDT)
-Date: Fri, 29 Aug 2025 19:24:32 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Monish Chunara <quic_mchunara@quicinc.com>
-Cc: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>,
-        Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>, kernel@oss.qualcomm.com,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org,
-        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-        Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>,
-        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-        Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Vishal Kumar Pal <quic_vispal@quicinc.com>
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: lemans-evk: Extend peripheral and
- subsystem support
-Message-ID: <ozkebjk6gfgnootoyqklu5tqj7a7lgrm34xbag7yhdwn5xfpcj@zpwr6leefs3l>
-References: <20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com>
- <20250826-lemans-evk-bu-v1-3-08016e0d3ce5@oss.qualcomm.com>
- <kycmxk3qag7uigoiitzcxcak22cewdv253fazgaidjcnzgzlkz@htrh22msxteq>
- <3f94ccc8-ac8a-4c62-8ac6-93dd603dcd36@quicinc.com>
- <zys26seraohh3gv2kl3eb3rd5pdo3y5vpfw6yxv6a7y55hpaux@myzhufokyorh>
- <aLG3SbD1JNULED20@hu-mchunara-hyd.qualcomm.com>
+	s=arc-20240116; t=1756485085; c=relaxed/simple;
+	bh=KsN9haKZUzNYjRtO2PLxiJ7ZD5EUe6g/Jd3HCROYaEo=;
+	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=mO91mlJnjpC5axE7o+AYeQSDxfwOW6ykT/NS688AKSFh9zKryocmg76CF28dTT/yZJceuIKkYjr+G2120s1PE7wyqrlwCSC1Sv1NBDgnV9QlPMoZZ0tNxJ9Pqyh5DVjmCCDfi2uuI2Ff8JrAQf/fahREN7YZHLd7oBAYTXI0XMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cD3b734Tqz6L5vG;
+	Sat, 30 Aug 2025 00:27:47 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+	by mail.maildlp.com (Postfix) with ESMTPS id 860FA140145;
+	Sat, 30 Aug 2025 00:31:19 +0800 (CST)
+Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 29 Aug
+ 2025 18:31:18 +0200
+Date: Fri, 29 Aug 2025 17:31:17 +0100
+From: Jonathan Cameron <jonathan.cameron@huawei.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Jishnu Prakash
+	<jishnu.prakash@oss.qualcomm.com>, <jic23@kernel.org>, <robh@kernel.org>,
+	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <agross@kernel.org>,
+	<andersson@kernel.org>, <lumag@kernel.org>, <konradybcio@kernel.org>,
+	<daniel.lezcano@linaro.org>, <sboyd@kernel.org>, <amitk@kernel.org>,
+	<thara.gopinath@gmail.com>, <lee@kernel.org>, <rafael@kernel.org>,
+	<subbaraman.narayanamurthy@oss.qualcomm.com>,
+	<david.collins@oss.qualcomm.com>, <anjelique.melendez@oss.qualcomm.com>,
+	<kamal.wadhwa@oss.qualcomm.com>, <rui.zhang@intel.com>,
+	<lukasz.luba@arm.com>, <devicetree@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
+	<cros-qcom-dts-watchers@chromium.org>, <quic_kotarake@quicinc.com>,
+	<neil.armstrong@linaro.org>, <stephan.gerhold@linaro.org>
+Subject: Re: [PATCH V7 0/5] Add support for QCOM SPMI PMIC5 Gen3 ADC
+Message-ID: <20250829173117.000029e6@huawei.com>
+In-Reply-To: <nsyhau4pnn2nbxdf35npwq4gvjiphocrftrwi4seirxqzurww6@6jgyzzmjyg7q>
+References: <20250826083657.4005727-1-jishnu.prakash@oss.qualcomm.com>
+	<20250829-demonic-soft-guppy-512c13@kuoka>
+	<zgm2k2osmasdal6anba66pw24a7fiypgwlf3c36kvteshz7uef@wee4had7x54u>
+	<8fdc99b6-4ad2-4a08-9dca-6289c8fdddd6@linaro.org>
+	<nsyhau4pnn2nbxdf35npwq4gvjiphocrftrwi4seirxqzurww6@6jgyzzmjyg7q>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aLG3SbD1JNULED20@hu-mchunara-hyd.qualcomm.com>
-X-Proofpoint-GUID: 63fd3kSe3uTIJZfGoiFp_esRZyKZwUYg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI2MDEyMCBTYWx0ZWRfX/zp3To6PZ+ol
- lpNDGjXQMpGFk5CS7ZJqmRcx7fQ0NGtCsatduKJVubpvmvEmKL0bK97ikL+VFeqWDIDuWuvH5ok
- dGtnRN/Mdb9D5ZSfsclPT8+cWBSeRLPbhShDCRTLR7895XN1f6r33iTou7TSa06WrdS5Q4qd2pI
- Bfk1xJP1ZC8XNJTcZF3p1f/3Wz1/AjkuNiqE0b2NhYjyir2DrIOVCL+LngR/XCR3n7nqQ/rWrVA
- Ctn2hESsnkneKGQxUEF3P1hDH8NUK74hN2Fkezi1eTM/L2tHY2v0Fk7ctGc0NfnU6XOaAB9rPZc
- IFEFHFdVPa8KtO/pzDzwMu1XdxSiV0qyqn96SWQ+BV64tJ1ZHQY221QAlmf1EWVHL9Z2i64HJgq
- M4uhd0r+
-X-Proofpoint-ORIG-GUID: 63fd3kSe3uTIJZfGoiFp_esRZyKZwUYg
-X-Authority-Analysis: v=2.4 cv=CNYqXQrD c=1 sm=1 tr=0 ts=68b1d446 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=YDAz1v9_iDTVm1Y559YA:9
- a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=dawVfQjAaf238kedN5IG:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-29_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0 priorityscore=1501 adultscore=0 spamscore=0
- phishscore=0 suspectscore=0 bulkscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508260120
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
+ frapeml500008.china.huawei.com (7.182.85.71)
 
-On Fri, Aug 29, 2025 at 07:50:57PM +0530, Monish Chunara wrote:
-> On Thu, Aug 28, 2025 at 04:30:00PM +0300, Dmitry Baryshkov wrote:
-> > On Thu, Aug 28, 2025 at 06:38:03PM +0530, Sushrut Shree Trivedi wrote:
+On Fri, 29 Aug 2025 12:20:45 +0300
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+
+> On Fri, Aug 29, 2025 at 11:11:48AM +0200, Krzysztof Kozlowski wrote:
+> > On 29/08/2025 10:09, Dmitry Baryshkov wrote:  
+> > > On Fri, Aug 29, 2025 at 09:12:59AM +0200, Krzysztof Kozlowski wrote:  
+> > >> On Tue, Aug 26, 2025 at 02:06:52PM +0530, Jishnu Prakash wrote:  
+> > >>>  create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
+> > >>>  create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550-adc5-gen3.h
+> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550b-adc5-gen3.h
+> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550vx-adc5-gen3.h
+> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pmk8550-adc5-gen3.h
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm7325.h (98%)
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h (98%)
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h (99%)
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h (97%)
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h (95%)
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h (95%)
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h (93%)
+> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (78%)
+> > >>>  create mode 100644 include/linux/iio/adc/qcom-adc5-gen3-common.h
+> > >>>
+> > >>>
+> > >>> base-commit: 0f4c93f7eb861acab537dbe94441817a270537bf  
+> > >>
+> > >> What's the base commit?
+> > >>
+> > >> git show 0f4c93f7eb861acab537dbe94441817a270537bf
+> > >> fatal: bad object 0f4c93f7eb861acab537dbe94441817a270537bf  
 > > > 
-> > > On 8/27/2025 7:05 AM, Dmitry Baryshkov wrote:
-> > > > On Tue, Aug 26, 2025 at 11:51:02PM +0530, Wasim Nazir wrote:
-> > > > > Enhance the Qualcomm Lemans EVK board file to support essential
-> > > > > peripherals and improve overall hardware capabilities, as
-> > > > > outlined below:
-> > > > >    - Enable GPI (Generic Peripheral Interface) DMA-0/1/2 and QUPv3-0/2
-> > > > >      controllers to facilitate DMA and peripheral communication.
-> > > > >    - Add support for PCIe-0/1, including required regulators and PHYs,
-> > > > >      to enable high-speed external device connectivity.
-> > > > >    - Integrate the TCA9534 I/O expander via I2C to provide 8 additional
-> > > > >      GPIO lines for extended I/O functionality.
-> > > > >    - Enable the USB0 controller in device mode to support USB peripheral
-> > > > >      operations.
-> > > > >    - Activate remoteproc subsystems for supported DSPs such as Audio DSP,
-> > > > >      Compute DSP-0/1 and Generic DSP-0/1, along with their corresponding
-> > > > >      firmware.
-> > > > >    - Configure nvmem-layout on the I2C EEPROM to store data for Ethernet
-> > > > >      and other consumers.
-> > > > >    - Enable the QCA8081 2.5G Ethernet PHY on port-0 and expose the
-> > > > >      Ethernet MAC address via nvmem for network configuration.
-> > > > >      It depends on CONFIG_QCA808X_PHY to use QCA8081 PHY.
-> > > > >    - Add support for the Iris video decoder, including the required
-> > > > >      firmware, to enable video decoding capabilities.
-> > > > >    - Enable SD-card slot on SDHC.
-> > > > > 
-> > > > > Co-developed-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-> > > > > Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
-> > > > > Co-developed-by: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
-> > > > > Signed-off-by: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
-> > > > > Co-developed-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
-> > > > > Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
-> > > > > Co-developed-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-> > > > > Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-> > > > > Co-developed-by: Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>
-> > > > > Signed-off-by: Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>
-> > > > > Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> > > > > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
-> > > > > Co-developed-by: Monish Chunara <quic_mchunara@quicinc.com>
-> > > > > Signed-off-by: Monish Chunara <quic_mchunara@quicinc.com>
-> > > > > Co-developed-by: Vishal Kumar Pal <quic_vispal@quicinc.com>
-> > > > > Signed-off-by: Vishal Kumar Pal <quic_vispal@quicinc.com>
-> > > > > Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> > > > > ---
-> > > > >   arch/arm64/boot/dts/qcom/lemans-evk.dts | 387 ++++++++++++++++++++++++++++++++
-> > > > >   1 file changed, 387 insertions(+)
-> > > > > 
-> > > > 
-> > > > > @@ -356,6 +720,29 @@ &ufs_mem_phy {
-> > > > >   	status = "okay";
-> > > > >   };
-> > > > > +&usb_0 {
-> > > > > +	status = "okay";
-> > > > > +};
-> > > > > +
-> > > > > +&usb_0_dwc3 {
-> > > > > +	dr_mode = "peripheral";
-> > > > Is it actually peripheral-only?
-> > > 
-> > > Hi Dmitry,
-> > > 
-> > > HW supports OTG mode also, but for enabling OTG we need below mentioned
-> > > driver changes in dwc3-qcom.c :
+> > > https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=next-20250822&id=0f4c93f7eb861acab537dbe94441817a270537bf  
 > > 
-> > Is it the USB-C port? If so, then you should likely be using some form
-> > of the Type-C port manager (in software or in hardware). These platforms
-> > usually use pmic-glink in order to handle USB-C.
+> > I see:
+> > "Notice: this object is not reachable from any branch."
 > > 
-> > Or is it micro-USB-OTG port?
-> > 
+> > I guess you think this is 20250822?  
 > 
-> Yes, it is a USB Type-C port for usb0 and we are using a 3rd party Type-C port
-> controller for the same. Will be enabling relevant dts node as part of OTG
-> enablement once driver changes are in place.
-
-Which controller are you using? In the existing designs USB-C works
-without extra patches for the DWC3 controller.
-
+> Well, it kinda is. It's a commit by Stephen, it has proper contents,
+> etc.  next-20250822 is not a branch, but a tag, that's why you observe
+> the warning from gitweb. You can verify it yourself by manually pulling
+> the tag from the repo.
 > 
-> > > 
-> > > a) dwc3 core callback registration by dwc3 glue driver; this change is under
-> > >     review in upstream.
-> > > b) vbus supply enablement for host mode; this change is yet to be submitted
-> > >     to upstream.
-> > > 
-> > > Post the above mentioned driver changes, we are planning to enable OTG on
-> > > usb0.
 
--- 
-With best wishes
-Dmitry
+Kind of immaterial.  Typically subsystem maintainers want a base of
+*-rc1 unless there is a dependency in their tree.
+
+J
 
