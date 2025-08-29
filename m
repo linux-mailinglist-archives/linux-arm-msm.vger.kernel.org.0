@@ -1,165 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-71258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71259-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79682B3C23A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 20:07:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1603AB3C5DD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 01:59:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ED7407B4D8C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 18:05:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 611E61C882CA
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 23:59:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9244433A02B;
-	Fri, 29 Aug 2025 18:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 288E835CEAE;
+	Fri, 29 Aug 2025 23:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pP5t/5fL"
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="QwpIW/gI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1A921019E;
-	Fri, 29 Aug 2025 18:06:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA5335CEA4
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 23:58:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756490821; cv=none; b=DkCVdF2u7V0s6bZg7RIyF+xvD29Nnu6Tk3HtH0hQlCD1oN4gKQkT3lqIquYIp+1yUMDvAW/jmgFhNBfyQz3OpxTSNLjj8ECUK2NEG2E7Zx4eb+GkIjBLCm8CLefaQH00RFO0v5cjvewkVLUjxXukjaQcHz+JZsNOs/9vdPWQS8k=
+	t=1756511910; cv=none; b=uKqs6KGZjIdtpcclTWu7KoCOij0tIKwlKFhIRpfcBLJl0dPpBZjiP4eUYyJuCNGU8p3Ng4eSxrinnz7Whii/YjFGjxTPx+ueSha/Rr3YABxVDVYITEe7Ex8GDKW5h3LZGulTHwR9nFO7cjuIfALwgXsVjzhrpElnFMOCq6ClZpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756490821; c=relaxed/simple;
-	bh=gh4BtveoclPRfsi619KfjHVuQLrHKsEBTiSbhqe0ZIE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=ZSXFG63s4gEexrZQpNoxO02pL7tRwqodHaVnAYMSo+dcrTTVSo23MEbjDTjc3J1e/PkYkGH4lbNjsvydSbrNBqW264kOsKgR4eoei5s5vGEb/1pKO72Emkrnt9GxsAwnjXEnejfc3/ZPtp7ABKutXXG+9q60LHxqW+lFLVANoXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pP5t/5fL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57T85RKv032471;
-	Fri, 29 Aug 2025 18:06:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	0NWcftQ9sByIGoJwYg7DuNerhyMKFe2bgHR2XaZF9JQ=; b=pP5t/5fLxEc5yHRU
-	UxZ46KKd9eunHIk07IzjW+I4grgoQmfeuAlPo1MW5v81x0DHRx07RSJC+YQs2MZ7
-	LUlygqVYMz45/10OMHSVt5Kk7kkRnJDpiE49oVs565tHBEJNNc7879uQCGmSJybV
-	r6s90pMSXVUli5/MwZQOxwDoDcbPaM1i58WakOJvrydiRzPd+B2fU0rDhdC3Kzm7
-	RDTZmdoqthi7mvhmu9twOU7tWbUVzPPPz/1/VHJZK8pVkec1o7JB2WbNPWJuTBIz
-	4C8eTt7sdWL2j9JubiLRxGCkCmnDslIRTnp4mS4HHJY/+JMKOiGAIEsC8vepSU5s
-	9nwoRw==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48q5y5vc93-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Aug 2025 18:06:42 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 57TI6f5v029709
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 29 Aug 2025 18:06:41 GMT
-Received: from [10.50.32.220] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Fri, 29 Aug
- 2025 11:06:36 -0700
-Message-ID: <e9f86dee-3938-b9ac-4ec9-ee8ed419882a@quicinc.com>
-Date: Fri, 29 Aug 2025 23:36:16 +0530
+	s=arc-20240116; t=1756511910; c=relaxed/simple;
+	bh=8itxN2CvlAYGgXC2jkdop3/WfWUI/Yu8r0UJfeNgHxc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lC/GfZ21y03tM1Q8G8nIE7RoYi/ptdaK4uMnvfxDL9ThHn33ZRHurlMu9Cm+u6Gdph+2QIjxYmWmCjwq0AJ0vCbxkPcZ7kF+19Xntl/alYW7drLdbUUue3tqCO/6UQOStwHQo9iRUwBkbGVAjauc8nejK0nrxg76FZhe7wfYWeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=QwpIW/gI; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-2465cb0e81bso21363915ad.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 16:58:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1756511907; x=1757116707; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=4ZkOb/hPcVe8gnDPdefZkpPuz6ZACFjeMAIL1vSEcE4=;
+        b=QwpIW/gIhYlW+ZpPfejRKNhjd/ujxeMTbooCX4wz3WvJjglfFIruZN+Qqr9JE7X9Qe
+         9nwYwpkLyV36JGb2Y/FchHTTEBkpb9/OTNYOVADjImUtwuSnmXVS1nVgAfoo2AAAJD1g
+         CnCnuMb+z7rlnyZ2xd02AVjcceyCAS9CXRLzQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756511907; x=1757116707;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4ZkOb/hPcVe8gnDPdefZkpPuz6ZACFjeMAIL1vSEcE4=;
+        b=icCuivW4JBIvMMXHeW/Xh7UBGJGmnbh5OV16PIW+2+S0I+gpMZJH0VIGFnWk2ziPRA
+         53sG9dDQN66rBX229rctL75458UON+4ZSoXYCbnljyfuyJPCr9i9Yu0gvZ3BQHJUOPj7
+         baSstP1NnosKO8nrfkJZUf8L1iRauBPfCFDIlRSpQ3roA6zIso+6jqDnDRLoyN5QIFvw
+         d9DBQz9XPwDk+fwZC0yNU81gz4GY5ScxmJcSt/quqzttBy4fv6EbUpedSWvP2KkSbdPD
+         1eUys9LqACigmjHRcZDjUTWupFrRBLaoj/XBYMe7gCpsncrKw3DFu9frujkS/9gm9CWu
+         NO5A==
+X-Forwarded-Encrypted: i=1; AJvYcCX1fpKOgDHnJfraHKZoaW5+lnsfaFSeNpIt8a+7Zej+Q8CP/Slc/0+z7ezLVrPM87dJCMAR+53g0dtjwfyX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpYYBHNAA8c5+a7XgGiQkiVWbiAORX+fgo//qpbfbsvS0xcR9p
+	Vdqxq3BK30cW09PFddlTPrOM45MnBzOQBmPJcoPdh/MAVZLuTEr91PAFA/r+41u0bw==
+X-Gm-Gg: ASbGncsuypfRzgm1IGzLepsnG4TtbkyxjdPGPrleroHvKbMXRiuC/3seo/wDADTAa2J
+	BnuRzG5felPOfZTg5sesBr6njhi5pUpXVgCChkU9ByDsEXNeSqNVWFIcu3+FPxPUd8XdtMtOyH2
+	BsS17qS7Cp6SQX1f9woHR/2KQ+yDK905nokSQDeLUzgLB6T+mTQSL6i0lHYOZllYEdnPsXAIYwo
+	3PkeeHsOsAs2XklNIQq7aS/pzOqBgFy9/MtMwouZOoGELbDT5gwCklIh14cHXClK06Rk8vxIdz0
+	Opw8A8zUl0urN+aKGJMgBsj3plyp/51l7xGqdZXoHrKgVZvW2Tpqp8/HiksLMk5w/XxwUodXD7h
+	HUKcyo7iopXdQzaqgttT6yImvHMEQC2aChPW63UccuuTRZnC1rcrrLmx9IW7b
+X-Google-Smtp-Source: AGHT+IFvZvVbN+tcqDt9IuyuJa1uB30zy62FBhMsBU2d4G2xup0DO7jJDkNE7M+ZQIjDPW8i5FxZDw==
+X-Received: by 2002:a17:903:2308:b0:249:33da:b3a with SMTP id d9443c01a7336-249448ad928mr5527165ad.14.1756511906811;
+        Fri, 29 Aug 2025 16:58:26 -0700 (PDT)
+Received: from localhost ([2a00:79e0:2e14:7:1d4b:87a6:eef4:9438])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-24906390e6bsm36386045ad.96.2025.08.29.16.58.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 29 Aug 2025 16:58:25 -0700 (PDT)
+Date: Fri, 29 Aug 2025 16:58:24 -0700
+From: Brian Norris <briannorris@chromium.org>
+To: Lukas Wunner <lukas@wunner.de>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczynski <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Niklas Cassel <cassel@kernel.org>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH v6 2/4] PCI: host-common: Add link down handling for Root
+ Ports
+Message-ID: <aLI-oKWVJHFfst-i@google.com>
+References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
+ <20250715-pci-port-reset-v6-2-6f9cce94e7bb@oss.qualcomm.com>
+ <aLC7KIoi-LoH2en4@google.com>
+ <aLFmSFe5iyYDrIjt@wunner.de>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH v4 24/26] media: iris: Allocate and queue internal buffers
- for encoder video device
-To: Bryan O'Donoghue <bod@kernel.org>,
-        Vikash Garodia
-	<quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab
-	<mchehab@kernel.org>,
-        Stefan Schmidt <stefan.schmidt@linaro.org>,
-        "Vedang
- Nagar" <quic_vnagar@quicinc.com>,
-        Hans Verkuil <hverkuil@kernel.org>
-CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>,
-        Renjiang Han <quic_renjiang@quicinc.com>,
-        Wangao Wang <quic_wangaow@quicinc.com>,
-        Neil Armstrong
-	<neil.armstrong@linaro.org>
-References: <20250825-iris-video-encoder-v4-0-84aa2bc0a46b@quicinc.com>
- <RkFtovt6YeFZgD2napWwptCOf-5LP3ZqNbmfbDB-Z__cCvrJA5DfFRVU1IxihkEayS3ksQp8AzL1dE9Kd7r_2Q==@protonmail.internalid>
- <20250825-iris-video-encoder-v4-24-84aa2bc0a46b@quicinc.com>
- <9210ea3a-970b-4cf3-8ab5-35952a9c5cf6@kernel.org>
-Content-Language: en-US
-From: Dikshita Agarwal <quic_dikshita@quicinc.com>
-In-Reply-To: <9210ea3a-970b-4cf3-8ab5-35952a9c5cf6@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODIzMDAzMyBTYWx0ZWRfXxf4H8m7e/Nxj
- /QMNxCdSqqeMtbP6bPYBOeJ4auympyKEDQVUDZVZcDzmfEmbUlyLzLT6lR8Sv8SAF25heJlGkLY
- JXcM+KcTTmLVdLW6Oux3lc4rwuJsboMzS30o3udbH88eFE3XOCD0Fg/rMISiiu5/wAClXti0sjz
- kipmWK4ecMMdp4aVTkzDlmBi0Ptd+krMoMy07e2yOq9Xf4Q8zSQbtXvpP2gwTtmpDaJ9P3Voib+
- tAb6/7CGNAVB173qECKlPQD3jYCOzf83Mhis2JsR1+gb5poze4ZSUv1+n8TMLgmkINCBZhct0sr
- 4xHt0KHRQexfbEzZX+/GTDT1ZATlKIksrzBTjHqbBpkKc+U6+J5wTldGgAXYNeLs24X6lYOIsyz
- tYsGdB5b
-X-Authority-Analysis: v=2.4 cv=Lco86ifi c=1 sm=1 tr=0 ts=68b1ec32 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10
- a=E2upXWrYFGlahwAtZIwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: dHN2rDbAyuip8OXhmS6p-pAfg6AK7Iih
-X-Proofpoint-ORIG-GUID: dHN2rDbAyuip8OXhmS6p-pAfg6AK7Iih
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-29_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 clxscore=1011 malwarescore=0 spamscore=0
- suspectscore=0 phishscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508230033
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aLFmSFe5iyYDrIjt@wunner.de>
 
+Hi Lukas,
 
-
-On 8/29/2025 2:35 PM, Bryan O'Donoghue wrote:
-> On 25/08/2025 08:00, Dikshita Agarwal wrote:
->> +static inline
->> +u32 size_enc_single_pipe(u32 rc_type, u32 bitbin_size, u32 num_vpp_pipes,
->> +             u32 frame_width, u32 frame_height, u32 lcu_size)
->> +{
->> +    u32 size_aligned_height = ALIGN((frame_height), lcu_size);
->> +    u32 size_aligned_width = ALIGN((frame_width), lcu_size);
->> +    u32 size_single_pipe_eval = 0, sao_bin_buffer_size = 0;
->> +    u32 padded_bin_sz;
->> +
->> +    if ((size_aligned_width * size_aligned_height) > (3840 * 2160))
->> +        size_single_pipe_eval = (bitbin_size / num_vpp_pipes);
->> +    else if (num_vpp_pipes > 2)
->> +        size_single_pipe_eval = bitbin_size / 2;
->> +    else
->> +        size_single_pipe_eval = bitbin_size;
->> +
->> +    sao_bin_buffer_size = (64 * ((((frame_width) + 32) * ((frame_height)
->> + 32)) >> 10)) + 384;
->> +    padded_bin_sz = ALIGN(size_single_pipe_eval, 256);
->> +    size_single_pipe_eval = sao_bin_buffer_size + padded_bin_sz;
->> +
->> +    return ALIGN(size_single_pipe_eval, 256);
->> +}
+On Fri, Aug 29, 2025 at 10:35:20AM +0200, Lukas Wunner wrote:
+> On Thu, Aug 28, 2025 at 01:25:12PM -0700, Brian Norris wrote:
+> > On the flip side: it's not clear
+> > PCI_ERS_RESULT_NEED_RESET+pci_channel_io_normal works as documented
+> > either. An endpoint might think it's requesting a slot reset, but
+> > pcie_do_recovery() will ignore that and skip reset_subordinates()
+> > (pci_host_reset_root_port()).
+> > 
+> > All in all, the docs sound like endpoints _should_ have control over
+> > whether we exercise a full port/slot reset for all types of errors. But
+> > in practice, we do not actually give it that control. i.e., your commit
+> > message is correct, and the docs are not.
+> > 
+> > I have half a mind to suggest the appended change, so the behavior
+> > matches (some of) the docs a little better [1].
 > 
-> Applying your full series, this function is unused and causes a warning in CI.
+> A change similar to the one you're proposing is already queued on the
+> pci/aer topic branch for v6.18:
 > 
-> Assuming tests pass for me, I'll be dropping this function in the PR and
-> you can resubmit it if/when you find a use for it.
+> https://git.kernel.org/pci/pci/c/d0a2dee7d458
 
-you're right, this is unused. Strangely I didn't see any such warnings
-during my runs, but yes, this is good to be dropped.
+Wow, nice coincidence. It's a reminder I should work off the maintainer
+/ -next branch, instead of just mainline...
 
-Thanks,
-Dikshita
+> Here's the corresponding cover letter:
 > 
-> ---
-> bod
+> https://lore.kernel.org/r/cover.1755008151.git.lukas@wunner.de
+> 
+> There was a discussion why I didn't take the exact same approach you're
+> proposing, but only a similar one:
+> 
+> https://lore.kernel.org/r/aJ2uE6v46Zib30Jh@wunner.de
+> https://lore.kernel.org/r/aKHWf3L0NCl_CET5@wunner.de
+
+Wow, that's a ton of great background and explanation. Thanks!
+
+> > Specifically, I'm trying to see what's supposed to happen with
+> > PCI_ERS_RESULT_CAN_RECOVER. I see that for pci_channel_io_frozen, almost
+> > all endpoint drivers return PCI_ERS_RESULT_NEED_RESET, but if drivers
+> > actually return PCI_ERS_RESULT_CAN_RECOVER, it's unclear what should
+> > happen.
+> > 
+> > Today, we don't actually respect it; pcie_do_recovery() just calls
+> > reset_subordinates() (pci_host_reset_root_port()) unconditionally. The
+> > only thing that return code affects is whether we call
+> > report_mmio_enabled() vs report_slot_reset() afterward. This seems odd.
+> 
+> In the series queued on pci/aer, I've only allowed drivers to opt in
+> to a reset on Non-Fatal Errors.  I didn't dare also letting them opt
+> out of a reset on Fatal Errors.
+
+Right, I can see where the latter is risky. Frankly, while I have
+endpoint drivers suggesting they should be able to do this, I'm not sure
+that's a great idea. Or at least, I can see how it would potentially
+break other clients, as you explain.
+
+> These changes of behavior are always risky, so it seemed prudent to not
+> introduce too many changes at once.  There was no urgent need to also
+> change behavior for Fatal Errors for the use case at hand (the xe graphics
+> driver).  I went through all drivers with pci_error_handlers to avoid
+> breaking any of them.  It's very tedious work, takes weeks.  It would
+> be necessary to do that again when changing behavior for Fatal Errors.
+> 
+> pcieaer-howto.rst justifies the unconditional reset on Fatal Errors by
+> saying that the link is unreliable and that a reset is thus required.
+> 
+> On the other hand, pci-error-recovery.rst (which is a few months older
+> than pcieaer-howto.rst) says in section "STEP 3: Link Reset":
+> "This is a PCIe specific step and is done whenever a fatal error has been
+> detected"
+> 
+> I'm wondering if the authors of pcieaer-howto.rst took that at face value
+> and thought they'd *have* to reset the link on Fatal Errors.
+> 
+> Looking through the Fatal Errors in PCIe r7.0 sec 6.2.7, I think a reset
+> is justified for some of them, but optional for others.  Which leads me
+> to believe that the AER driver should actually enforce a reset only for
+> certain Fatal Errors, not all of them.  So this seems like something
+> worth revisiting in the future.
+
+Hmm, possibly. I haven't looked so closely at the details on all Fatal
+Errors, but I may have a look eventually.
+
+> > All in all, the docs sound like endpoints _should_ have control over
+> > whether we exercise a full port/slot reset for all types of errors. But
+> > in practice, we do not actually give it that control. i.e., your commit
+> > message is correct, and the docs are not.
+> 
+> Indeed the documentation is no longer in sync with the code.  I've just
+> submitted a series to rectify that and cc'ed you:
+> 
+> https://lore.kernel.org/r/cover.1756451884.git.lukas@wunner.de
+
+Thanks! I'll try to take a pass at reviewing, but it may not be prompt.
+
+Thanks again for all the info and work here.
+
+Brian
 
