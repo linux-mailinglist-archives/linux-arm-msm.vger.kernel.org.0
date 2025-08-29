@@ -1,127 +1,115 @@
-Return-Path: <linux-arm-msm+bounces-71254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71255-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B73AB3C0C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 18:32:39 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A015B3C127
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 18:50:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EBFAD1C88BAE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 16:32:17 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B9E527B750F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 16:49:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A94A326D7C;
-	Fri, 29 Aug 2025 16:31:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 372993101C5;
+	Fri, 29 Aug 2025 16:50:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F3++3ncM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from frasgout.his.huawei.com (frasgout.his.huawei.com [185.176.79.56])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB79D32254F;
-	Fri, 29 Aug 2025 16:31:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.176.79.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E20B225416
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 16:50:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756485085; cv=none; b=PbzAMOKvdeFB/qfvRHYigOS7JOtphX6yMFnGuy0mK1LH3dqme9qTeAaYfYWZxXOwLbM+L/Nz3z5mCHwFZSAIAedUZ4OJjLG6hmLdpIQS0Uc3RQRMiap0osvSBAccCWfArpWJJFIQKMKuQqWhRLAUUcRJNBRPcN8ZKnZRlkIzCsI=
+	t=1756486240; cv=none; b=MiOgAGAEt3sw0jvyeRs0B24iFY4YfWLqMQVaqnZ197eL6AjUShdGOP24eRZ134+BPmNUmaSObXUop/r8Cpd6NZG1PBCpUl8qt9WZ6hCLu75Fp1C429Xsuc5hjDFf0vnkTELz5fHe3yRwEqfPmkaLzQRAS0tiHJOYWnXkOCzosSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756485085; c=relaxed/simple;
-	bh=KsN9haKZUzNYjRtO2PLxiJ7ZD5EUe6g/Jd3HCROYaEo=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mO91mlJnjpC5axE7o+AYeQSDxfwOW6ykT/NS688AKSFh9zKryocmg76CF28dTT/yZJceuIKkYjr+G2120s1PE7wyqrlwCSC1Sv1NBDgnV9QlPMoZZ0tNxJ9Pqyh5DVjmCCDfi2uuI2Ff8JrAQf/fahREN7YZHLd7oBAYTXI0XMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; arc=none smtp.client-ip=185.176.79.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
-Received: from mail.maildlp.com (unknown [172.18.186.231])
-	by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4cD3b734Tqz6L5vG;
-	Sat, 30 Aug 2025 00:27:47 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
-	by mail.maildlp.com (Postfix) with ESMTPS id 860FA140145;
-	Sat, 30 Aug 2025 00:31:19 +0800 (CST)
-Received: from localhost (10.203.177.15) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 29 Aug
- 2025 18:31:18 +0200
-Date: Fri, 29 Aug 2025 17:31:17 +0100
-From: Jonathan Cameron <jonathan.cameron@huawei.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Jishnu Prakash
-	<jishnu.prakash@oss.qualcomm.com>, <jic23@kernel.org>, <robh@kernel.org>,
-	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <agross@kernel.org>,
-	<andersson@kernel.org>, <lumag@kernel.org>, <konradybcio@kernel.org>,
-	<daniel.lezcano@linaro.org>, <sboyd@kernel.org>, <amitk@kernel.org>,
-	<thara.gopinath@gmail.com>, <lee@kernel.org>, <rafael@kernel.org>,
-	<subbaraman.narayanamurthy@oss.qualcomm.com>,
-	<david.collins@oss.qualcomm.com>, <anjelique.melendez@oss.qualcomm.com>,
-	<kamal.wadhwa@oss.qualcomm.com>, <rui.zhang@intel.com>,
-	<lukasz.luba@arm.com>, <devicetree@vger.kernel.org>,
-	<linux-arm-msm@vger.kernel.org>, <linux-iio@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-pm@vger.kernel.org>,
-	<cros-qcom-dts-watchers@chromium.org>, <quic_kotarake@quicinc.com>,
-	<neil.armstrong@linaro.org>, <stephan.gerhold@linaro.org>
-Subject: Re: [PATCH V7 0/5] Add support for QCOM SPMI PMIC5 Gen3 ADC
-Message-ID: <20250829173117.000029e6@huawei.com>
-In-Reply-To: <nsyhau4pnn2nbxdf35npwq4gvjiphocrftrwi4seirxqzurww6@6jgyzzmjyg7q>
-References: <20250826083657.4005727-1-jishnu.prakash@oss.qualcomm.com>
-	<20250829-demonic-soft-guppy-512c13@kuoka>
-	<zgm2k2osmasdal6anba66pw24a7fiypgwlf3c36kvteshz7uef@wee4had7x54u>
-	<8fdc99b6-4ad2-4a08-9dca-6289c8fdddd6@linaro.org>
-	<nsyhau4pnn2nbxdf35npwq4gvjiphocrftrwi4seirxqzurww6@6jgyzzmjyg7q>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+	s=arc-20240116; t=1756486240; c=relaxed/simple;
+	bh=E827slSMyEXIP3Og8ZPNsIaUKvkZDhLHtnvmu1k8kgo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=d4JzixPIqcq8/givXtoFarRbZYQb4d6Rc9A2prfl2wXCT6vnlWA3inUq6l6U7H1ooLmyih/4qyiz+cnuVKkya3rhqRigVIIPiBDHikax2Ba4CqxaKjwEvhri2WG2zAZ9BeK8n1RDCpU9MsRrKw0Kl8XDBmGvbSll+BD7LPshZkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F3++3ncM; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3ceb830dd58so933059f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 09:50:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756486237; x=1757091037; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hsFZBQJQAIvZJfF34HPCQsJUYySIMV0W2zYPfupSo7A=;
+        b=F3++3ncMHoJlCSabWK7plIIoUraGUMWIOlXzpnCo4we+5EHzEyLyC89JCx8lsK/wBk
+         ISOYPzZWDgjNdPI1BVnfjACkmnLS4iOByboPpmUoB86gjG2ppf+GxsUCXud42NF1/Tjh
+         IM6IsX8FYXQiDldzbEbSbVv1DYNWN0J5+oGf/ckxwAKTH/A+H16y3GM24/Ii05VLSUuf
+         V84YtT8Hix1EXJcOEAEtBfqlhr0Pnn/LPIwjCiHqqfPk8gfYfQZRH2LFrXA8SBMmX1dC
+         Wub+7Ja1oe+B44zDpmOL6LabVWEqJE0KJ1R2bDKH12RxQvsHaVzbTj6GWejCWI2uJD07
+         J5Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756486237; x=1757091037;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=hsFZBQJQAIvZJfF34HPCQsJUYySIMV0W2zYPfupSo7A=;
+        b=ta2e2UvB0f3ySdn8fHinpZPUQ0Fp5FWepjPEk8q0o/Xjdx95pWQFehp5L4F6lUASgV
+         vL7lyqHoRL80Wrzreh8mtgcsdrRj0PAUbQCvaHt9bd8dBEYWB1Z5FyCpKSk6dr2NF7yn
+         6qJwez0TBs5pAn2eeiVyssb4wLQHhc4otmsJtgnzmFK/R7DO+M5gwittEj4ecRoTVp/v
+         V344+fc+m7/kwRj1gZFE7eaTuH7QOSV8SiyTWUF+tdhyJcbhwz42dCwo8/wsfdy8j+g1
+         6cItArdHF22ZB5zFAN2ylHGIrw5oVW0PNB7W5MTFQO06vAvbw6yscZ8JFPdZxI30HRky
+         /Rzg==
+X-Gm-Message-State: AOJu0Yzvus/ihIgUNXCXNVUQ/R5Tc3sMI833jfhHxTbOB4j3co+mfUAl
+	AYKiHi2Gyfv1PUgsZAb4Ce/BiwubK5bVcrZYqr1kbbbAnWNVBbH5TgimEgs5rA==
+X-Gm-Gg: ASbGncvsLARJgjqtI059T2M9px1xXeCuWHWBwnaHDeKXNNOZWRTGdDCKBxvB940nvCY
+	KycH5OBFgOy2YtbZ4ESunWmPHracqxYlf3aZP+qheVU84oQeWKCM+2ncalI55sn2vVmmakYqBfv
+	IwD32Vawl+eBxzlQk3j3nTZNyy76lgzsfDIMCUORG34dCDPum0GQZBEIk/43+Jd17urxbYl00Eh
+	3KQ04kYLHwMe0qc+tZUPENyaWX0PE20hZbUY9lOi2Kzt3Z6IAa1Y3BcW9aRJlSdmoOpRcsDddmw
+	fvMRWHtCz4Fi00NXGMTAo5m5kscIC3JrnHdUjxV7zDUe1ih5v81M9P576A3oIkHFPv4CCHfjRYX
+	FmMATH1FpR9JKUdO5HzIYjWqIE5I/YdWBNv24oKvsCDDW0fE=
+X-Google-Smtp-Source: AGHT+IE4g/jMyzZ/INHXqzhTRgjeEwar8NJUP8jHUvddyUYpJLpweqpKrfi05z3PLfGEWRwl1WRm0g==
+X-Received: by 2002:a05:6000:400b:b0:3c4:edc0:28ae with SMTP id ffacd0b85a97d-3cbb15c9db7mr10644186f8f.28.1756486236614;
+        Fri, 29 Aug 2025 09:50:36 -0700 (PDT)
+Received: from x230.suse.cz (gw1.ms-free.net. [185.243.124.10])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7271cd01sm116188015e9.23.2025.08.29.09.50.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Aug 2025 09:50:36 -0700 (PDT)
+From: Petr Vorel <petr.vorel@gmail.com>
+To: linux-arm-msm@vger.kernel.org
+Cc: linux-arm-kernel@lists.infradead.org,
+	Petr Vorel <petr.vorel@gmail.com>,
+	Alex Elder <elder@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Subject: [PATCH 1/1] ARM: defconfig: Remove obsolete CONFIG_USB_EHCI_MSM
+Date: Fri, 29 Aug 2025 18:50:31 +0200
+Message-ID: <20250829165031.110850-1-petr.vorel@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- frapeml500008.china.huawei.com (7.182.85.71)
+Content-Transfer-Encoding: 8bit
 
-On Fri, 29 Aug 2025 12:20:45 +0300
-Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+CONFIG_USB_EHCI_MSM was removed long time ago in v4.14-rc6
+8b3f863033f9f ("usb: host: remove ehci-msm.c").
 
-> On Fri, Aug 29, 2025 at 11:11:48AM +0200, Krzysztof Kozlowski wrote:
-> > On 29/08/2025 10:09, Dmitry Baryshkov wrote:  
-> > > On Fri, Aug 29, 2025 at 09:12:59AM +0200, Krzysztof Kozlowski wrote:  
-> > >> On Tue, Aug 26, 2025 at 02:06:52PM +0530, Jishnu Prakash wrote:  
-> > >>>  create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
-> > >>>  create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
-> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550-adc5-gen3.h
-> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550b-adc5-gen3.h
-> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550vx-adc5-gen3.h
-> > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pmk8550-adc5-gen3.h
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm7325.h (98%)
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h (98%)
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h (99%)
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h (97%)
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h (95%)
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h (95%)
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h (93%)
-> > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (78%)
-> > >>>  create mode 100644 include/linux/iio/adc/qcom-adc5-gen3-common.h
-> > >>>
-> > >>>
-> > >>> base-commit: 0f4c93f7eb861acab537dbe94441817a270537bf  
-> > >>
-> > >> What's the base commit?
-> > >>
-> > >> git show 0f4c93f7eb861acab537dbe94441817a270537bf
-> > >> fatal: bad object 0f4c93f7eb861acab537dbe94441817a270537bf  
-> > > 
-> > > https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=next-20250822&id=0f4c93f7eb861acab537dbe94441817a270537bf  
-> > 
-> > I see:
-> > "Notice: this object is not reachable from any branch."
-> > 
-> > I guess you think this is 20250822?  
-> 
-> Well, it kinda is. It's a commit by Stephen, it has proper contents,
-> etc.  next-20250822 is not a branch, but a tag, that's why you observe
-> the warning from gitweb. You can verify it yourself by manually pulling
-> the tag from the repo.
-> 
+Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
+---
+ arch/arm/configs/qcom_defconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-Kind of immaterial.  Typically subsystem maintainers want a base of
-*-rc1 unless there is a dependency in their tree.
+diff --git a/arch/arm/configs/qcom_defconfig b/arch/arm/configs/qcom_defconfig
+index ec52ccece0ca7..3de9d6c242dcb 100644
+--- a/arch/arm/configs/qcom_defconfig
++++ b/arch/arm/configs/qcom_defconfig
+@@ -187,7 +187,6 @@ CONFIG_USB_ANNOUNCE_NEW_DEVICES=y
+ CONFIG_USB_OTG=y
+ CONFIG_USB_MON=y
+ CONFIG_USB_EHCI_HCD=y
+-CONFIG_USB_EHCI_MSM=y
+ CONFIG_USB_ACM=y
+ CONFIG_USB_DWC3=y
+ CONFIG_USB_CHIPIDEA=y
+-- 
+2.51.0
 
-J
 
