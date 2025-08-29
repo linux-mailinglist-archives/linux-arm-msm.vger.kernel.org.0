@@ -1,67 +1,55 @@
-Return-Path: <linux-arm-msm+bounces-71235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 491B6B3B612
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 10:35:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8542DB3B622
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 10:41:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E6C21B25BA5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 08:35:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 57459172605
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 08:41:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D97B2857C2;
-	Fri, 29 Aug 2025 08:35:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2FF8C26F445;
+	Fri, 29 Aug 2025 08:41:24 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FD6261B6D;
-	Fri, 29 Aug 2025 08:35:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1551A1CD215;
+	Fri, 29 Aug 2025 08:41:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756456525; cv=none; b=laVSc2+QfcrTZXUBjBg/gl9hfmCpnYlxoBAuTsvr9HjUc23QEH144tHRrgjEPmq/MCObaOTjagy4tykCsNe+Dy66EfhR1ve9YMJcXks9/ZNW6/cOnPxh1h1rfrmBdDsR6ak7C2gWGWvBfAtGgySx3J7rTgUvHNyOy1Ggv0aUn7Q=
+	t=1756456884; cv=none; b=cOtJm3PDjaIPbW5isxk7YALrUm1yf9i7fbLjJWjISgCpfouz43+JQFgQHdV6bAKJuk0wtv+vkkSXFt11XXI+fI+U+tXaVpZLjnrzRUHvFvkGZ3+yBhRrxtnIhd6ZhkoJiwYIUQzeiSJ1zPCHF/zo5IKNRs6WG+veATP7Z3oNDS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756456525; c=relaxed/simple;
-	bh=zhFUw5FTo/Ejp3wHfGNYEMRD/5WGxpxHaIqzXWPclzo=;
+	s=arc-20240116; t=1756456884; c=relaxed/simple;
+	bh=+TkQduhHeqp88AnpMMHoIn/oa6jhoLgxvZhJsC3ptBc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=puSBbknJ6J4Wj5CfVQUBHpNQYy7NaTRwfROXEQgGod7RIGf8mAnk/cipRL+zLMkn6SK88hhp4nAGWwYWY9AcHIXRYCEJH4kG9/aS35z0454qug3JobVqGqnSXts7P9XQkV0lYt99bL4KpAFGDH2vR8ZUyG/D/CFJbY/GsFUHods=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
-Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
-	by bmailout3.hostsharing.net (Postfix) with ESMTPS id 98F5D2C09E19;
-	Fri, 29 Aug 2025 10:35:20 +0200 (CEST)
-Received: by h08.hostsharing.net (Postfix, from userid 100393)
-	id 6A41242A4F0; Fri, 29 Aug 2025 10:35:20 +0200 (CEST)
-Date: Fri, 29 Aug 2025 10:35:20 +0200
-From: Lukas Wunner <lukas@wunner.de>
-To: Brian Norris <briannorris@chromium.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
-	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof Wilczynski <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	 Content-Type:Content-Disposition:In-Reply-To; b=VRaq9uq2/JHkMY2UwmH1UD6mQzHegpbIyKId82hVHfjVS0T0JF+9kAqTZkB8zPVG+9okkeSoqLXVY4XxO1TjZEUEZrzaNhvvIZAYUxQ+MUFSg13nDadlNAqm53DPdCUKAnJsO7mO+QuIjevqKyIumTkvS3sCv0UDCed9sfCTIl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id F32D61BCB;
+	Fri, 29 Aug 2025 01:41:12 -0700 (PDT)
+Received: from localhost (e132581.arm.com [10.1.196.87])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id DE35B3F694;
+	Fri, 29 Aug 2025 01:41:20 -0700 (PDT)
+Date: Fri, 29 Aug 2025 09:41:18 +0100
+From: Leo Yan <leo.yan@arm.com>
+To: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
+Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Mike Leach <mike.leach@linaro.org>,
+	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	kernel@oss.qualcomm.com, coresight@lists.linaro.org,
 	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-rockchip@lists.infradead.org,
-	Niklas Cassel <cassel@kernel.org>,
-	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: Re: [PATCH v6 2/4] PCI: host-common: Add link down handling for Root
- Ports
-Message-ID: <aLFmSFe5iyYDrIjt@wunner.de>
-References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
- <20250715-pci-port-reset-v6-2-6f9cce94e7bb@oss.qualcomm.com>
- <aLC7KIoi-LoH2en4@google.com>
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] coresight-tnoc: Add runtime PM support for
+ Interconnect TNOC
+Message-ID: <20250829084118.GG745921@e132581.arm.com>
+References: <20250828-itnoc-v3-0-f1b55dea7a27@oss.qualcomm.com>
+ <20250828-itnoc-v3-3-f1b55dea7a27@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,90 +58,15 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aLC7KIoi-LoH2en4@google.com>
+In-Reply-To: <20250828-itnoc-v3-3-f1b55dea7a27@oss.qualcomm.com>
 
-On Thu, Aug 28, 2025 at 01:25:12PM -0700, Brian Norris wrote:
-> On the flip side: it's not clear
-> PCI_ERS_RESULT_NEED_RESET+pci_channel_io_normal works as documented
-> either. An endpoint might think it's requesting a slot reset, but
-> pcie_do_recovery() will ignore that and skip reset_subordinates()
-> (pci_host_reset_root_port()).
+On Thu, Aug 28, 2025 at 02:27:24AM -0700, Yuanfang Zhang wrote:
+> This patch adds runtime power management support for platform-based
+> CoreSight Interconnect TNOC (ITNOC) devices. It introduces suspend and
+> resume callbacks to manage the APB clock (`pclk`) during device runtime
+> transitions.
 > 
-> All in all, the docs sound like endpoints _should_ have control over
-> whether we exercise a full port/slot reset for all types of errors. But
-> in practice, we do not actually give it that control. i.e., your commit
-> message is correct, and the docs are not.
-> 
-> I have half a mind to suggest the appended change, so the behavior
-> matches (some of) the docs a little better [1].
+> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
 
-A change similar to the one you're proposing is already queued on the
-pci/aer topic branch for v6.18:
-
-https://git.kernel.org/pci/pci/c/d0a2dee7d458
-
-Here's the corresponding cover letter:
-
-https://lore.kernel.org/r/cover.1755008151.git.lukas@wunner.de
-
-There was a discussion why I didn't take the exact same approach you're
-proposing, but only a similar one:
-
-https://lore.kernel.org/r/aJ2uE6v46Zib30Jh@wunner.de
-https://lore.kernel.org/r/aKHWf3L0NCl_CET5@wunner.de
-
-
-> Specifically, I'm trying to see what's supposed to happen with
-> PCI_ERS_RESULT_CAN_RECOVER. I see that for pci_channel_io_frozen, almost
-> all endpoint drivers return PCI_ERS_RESULT_NEED_RESET, but if drivers
-> actually return PCI_ERS_RESULT_CAN_RECOVER, it's unclear what should
-> happen.
-> 
-> Today, we don't actually respect it; pcie_do_recovery() just calls
-> reset_subordinates() (pci_host_reset_root_port()) unconditionally. The
-> only thing that return code affects is whether we call
-> report_mmio_enabled() vs report_slot_reset() afterward. This seems odd.
-
-In the series queued on pci/aer, I've only allowed drivers to opt in
-to a reset on Non-Fatal Errors.  I didn't dare also letting them opt
-out of a reset on Fatal Errors.
-
-These changes of behavior are always risky, so it seemed prudent to not
-introduce too many changes at once.  There was no urgent need to also
-change behavior for Fatal Errors for the use case at hand (the xe graphics
-driver).  I went through all drivers with pci_error_handlers to avoid
-breaking any of them.  It's very tedious work, takes weeks.  It would
-be necessary to do that again when changing behavior for Fatal Errors.
-
-pcieaer-howto.rst justifies the unconditional reset on Fatal Errors by
-saying that the link is unreliable and that a reset is thus required.
-
-On the other hand, pci-error-recovery.rst (which is a few months older
-than pcieaer-howto.rst) says in section "STEP 3: Link Reset":
-"This is a PCIe specific step and is done whenever a fatal error has been
-detected"
-
-I'm wondering if the authors of pcieaer-howto.rst took that at face value
-and thought they'd *have* to reset the link on Fatal Errors.
-
-Looking through the Fatal Errors in PCIe r7.0 sec 6.2.7, I think a reset
-is justified for some of them, but optional for others.  Which leads me
-to believe that the AER driver should actually enforce a reset only for
-certain Fatal Errors, not all of them.  So this seems like something
-worth revisiting in the future.
-
-
-> All in all, the docs sound like endpoints _should_ have control over
-> whether we exercise a full port/slot reset for all types of errors. But
-> in practice, we do not actually give it that control. i.e., your commit
-> message is correct, and the docs are not.
-
-Indeed the documentation is no longer in sync with the code.  I've just
-submitted a series to rectify that and cc'ed you:
-
-https://lore.kernel.org/r/cover.1756451884.git.lukas@wunner.de
-
-Thanks,
-
-Lukas
+Reviewed-by: Leo Yan <leo.yan@arm.com>
 
