@@ -1,134 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-71246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71247-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88836B3BCF4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 15:57:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15190B3BD55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 16:18:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3F210561B68
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 13:57:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C9E3E5671C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 14:18:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1E73E31DD83;
-	Fri, 29 Aug 2025 13:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6129F31A06F;
+	Fri, 29 Aug 2025 14:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HG7qR2Np"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="iDJCUt00"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C27347B4;
-	Fri, 29 Aug 2025 13:57:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A989314B6B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 14:17:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756475827; cv=none; b=MdwweYw+aOTZst99LnJKQb1sygAr1HjsEf8zs7fTbl5ZQndNSsz9oYgdUF7t/A5h6SFg7LoIfds8g3NZYNYaUVt1mY156ya+BaF8bpmxyYtOLkYfA62pk46LbgeMXkqlytp5yO3gxNjM5OszPUi6O/Uq2+Hptpq51r6UPQStOTo=
+	t=1756477079; cv=none; b=hWWg2nAFEhh8/zR7d7LNVw3ZSnshqGiZAYByJ4I/292jMYvRKpNyhokrLzWvS5SB7fKmH40LM55cs92gV13zSGd/6l2Ub0LKSh/KGGhnvuG/7jl+lw7dX4gJ2AJcJfmHFLuUIVHcf68hDnl+aeD7zCrG4oWAii29InTstrwbq1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756475827; c=relaxed/simple;
-	bh=TPcM7vsR5BgNayppQJ/9+eqOOaE0BLCmHtlJiHw2x00=;
+	s=arc-20240116; t=1756477079; c=relaxed/simple;
+	bh=jL7e0H9l7oWIUOWsTHCRgC8GOaaqt4s2mWR0NDrqIeI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZiC7V5CJTFIcYKnE+M1+gWn6XvuqiKvY+BRHq2g4wWtmCK7uao1TSaGEAi7LsRd+xXKX3Q/OgdiSmjwBaQ9IbGRPxe/mJcZp0hecF5PPZrI+ybcb5foY3+pZ5P6Aa3eArYRIDnUy1kJiiTcuEHqxqqnuQnnxxplXefe1FJGI1b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HG7qR2Np; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3EDC4CEF0;
-	Fri, 29 Aug 2025 13:57:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756475826;
-	bh=TPcM7vsR5BgNayppQJ/9+eqOOaE0BLCmHtlJiHw2x00=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=HG7qR2NpViDP3330Rb3+QPhGOoxUP21ucjupQwVZKBcIDr6ufqfMnR0hZ92q/tXjj
-	 RmOWxxOjua0rd4S3QlxP5u55wLh0SkpxoR8gxxnjs1oSWUq9Wzv45cyjdJpj6R/x1q
-	 Fqb9eIP6XcU+N5ZjhpwAm87yAyqOongAIahxeIav2dVjcbL6V1mlQQ0EM3s1NSBSfy
-	 myXVVVHQeEI+43tlZF1SvT0V3sD4rfF8O9njHVkY+uD6QLq+0PMjyXEDbdDLmnNu3P
-	 3Fl5/n5sqcruuH6EstM67V0Y4OPto9EUCzd5+nOaQ9TcYhk2Yc07/m71tRiZsnTTMN
-	 y9f/ja0kprk1w==
-Date: Fri, 29 Aug 2025 19:26:56 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Brian Norris <briannorris@chromium.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Mahesh J Salgaonkar <mahesh@linux.ibm.com>, 
-	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>, 
-	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linuxppc-dev@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	Niklas Cassel <cassel@kernel.org>, Wilfred Mallawa <wilfred.mallawa@wdc.com>, 
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, Lukas Wunner <lukas@wunner.de>
-Subject: Re: [PATCH v6 0/4] PCI: Add support for resetting the Root Ports in
- a platform specific way
-Message-ID: <zhu77qldhrr7ovp2g2tpusl67zsacjx5oapnaasxo2ybmhfohn@io3oqqc6gtte>
-References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
- <aLC1rzdTVoN56Phc@google.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=sSt+3XK2Sx9BsQeecdL0/OO/yGF2Y7hqPY93GSx0I56Uzdu7VVIEGgk3LjrmXIvzhFJhMWmW+P2mzda0cl+LQ34jexcE5HCUG4pn7uugC3aEyk6Czpiu3pGY5bu+gaDZxBeIk3R9LbiU8qhi0mT5vUpXQ/xgSjC85r33iBBv25s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=iDJCUt00; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3d0dd9c9229so534403f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 07:17:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756477074; x=1757081874; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=0UKM7Hh31pGB257PcQYyxWg4WwmJZnesfP8m107J2rg=;
+        b=iDJCUt00Zgh3BuW/C42aYbn9tZ4lJSJ2nY6VAi7mWY+oFOi5a4+M2Lf837+yE5D5z0
+         66C03abwX5uTrdIZRNBHe/F6CYtVuMvSMfRCDB2HG9zV6cV5YvB5B7wLHtGlkldXCUCr
+         IyUwMTVAt4WXRWWcXaE2gF0Ayrc15o+i7axIiTffN3mB4uKfcm4AO8b5gCcgZmnghbzD
+         E4YEpE+Ky3UxWUNuyagwInHqT5gOQH9Y9QdRn8S63yWpDAomzXL9Lfzct2Vx61HkW/SI
+         rgyF7qZvmVGPdq3IlOUE576bTG86TL8e1XlxYFebW07vLFU+H9ABdw+fMjh2F28XQe7u
+         bkfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756477074; x=1757081874;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0UKM7Hh31pGB257PcQYyxWg4WwmJZnesfP8m107J2rg=;
+        b=n/d3I6Qet1v+/SZYcdk5M3M5OtQCXPnsuMyVRipqa/6wvZJtNLxwJiJL2V4u3NKgc4
+         4zLy9f/XeM7Nux8f7nLTwtRnD0q27NcUHEkHeNNfSpIz2De1C5ExACZmr5j1MIKIddry
+         g1aDw3yAQo8p5EkJQzcnQZ7FMR8Dl1Isd0yQuW+fXq3IOGQz5u4WUvJ8fVFJq4Z+wfMp
+         l10cmqYu8U1DZbBsAnVT+W2rF+73nBDxvYK1/pFmy2xA4MX/B1Gr4E3q4hDKEyCrXUhw
+         PKz9gmPI+sNlcQykBWzo4p8fZXqnqXuFF+Z+N1iIx6JSIwZjJxv3n5K59CyJYvqsK2K2
+         fSlw==
+X-Forwarded-Encrypted: i=1; AJvYcCV1jM5b8yhvRIJ1i888Ia0CMVKMrJkuMh6AnU2o9b5prxyMtgVJ9+ylSOg2wPwmPUC/GwRcy4moy0NolOjU@vger.kernel.org
+X-Gm-Message-State: AOJu0YwcWFWVjsnTn68t2pYBZy16KBv1JgHpd9fDTSEuk4WXJx5qLA16
+	9N6vuUHaCr7wFVgr4VBq94tiyxwxn3VqcUs9FzvnCpwHs1e06oSIDWte0jagQWUWupw=
+X-Gm-Gg: ASbGncugrY8AnAUbEk4wcVasLobDva6YNl08IglK4RQQ9u4pzPDkzJ8eR+LOmq1O8sY
+	B26gGePQzb0YMmA6IjRW2lILFEPdaGvcYZ5pBHSSghhroeSBte2bTbxKt0QJg4xCNHtdfS+bSTh
+	7SM4dvvgcJ5gANAWfWB2zUJaj0XdTASRB/XqM+UIbuHkYS/JLxnuX+IiZIKxaOqKa+KsjX8/qS6
+	rkvk24cQWphcgqvjo3jmWzSuGV/+umQbVFJ8HuvBKuVmFAjdhXMHLwWy1ed7J7UeotUWsTU1Fuj
+	hqFoWh0FYkj2RmQ/7BbdIA6prePY3RzFy+qZr1ChStcuqrN/uxW4gWhdGRGwOnliw+NO4yvLSQo
+	AzDo6suOXorQQeEAZn6WzXHxOYAc=
+X-Google-Smtp-Source: AGHT+IGRlrJL/hMg2fvOfjrwxfuiOfMWO4VNgYqpwRsWHXMQIhRsVFY7GAkc+zMu0TB3KTQQDEX5sw==
+X-Received: by 2002:a05:6000:288e:b0:3b7:895c:1562 with SMTP id ffacd0b85a97d-3c5da83c60dmr22817307f8f.11.1756477074430;
+        Fri, 29 Aug 2025 07:17:54 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-45b74950639sm94583545e9.17.2025.08.29.07.17.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 29 Aug 2025 07:17:53 -0700 (PDT)
+Date: Fri, 29 Aug 2025 17:17:50 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: stable@vger.kernel.org
+Cc: djakov@kernel.org, naresh.kamboju@linaro.org, lkft@linaro.org,
+	nathan@kernel.org, kees@kernel.org, konradybcio@kernel.org,
+	quic_okukatla@quicinc.com, quic_rlaggysh@quicinc.com,
+	linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] interconnect: qcom: icc-rpm: Set the count member before
+ accessing the flex array
+Message-ID: <aLG2jl7bwYVEoumO@stanley.mountain>
+References: <20241203223334.233404-1-djakov@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aLC1rzdTVoN56Phc@google.com>
+In-Reply-To: <20241203223334.233404-1-djakov@kernel.org>
 
-On Thu, Aug 28, 2025 at 01:01:51PM GMT, Brian Norris wrote:
-> On Tue, Jul 15, 2025 at 07:51:03PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > Hi,
-> > 
-> > Currently, in the event of AER/DPC, PCI core will try to reset the slot (Root
-> > Port) and its subordinate devices by invoking bridge control reset and FLR. But
-> > in some cases like AER Fatal error, it might be necessary to reset the Root
-> > Ports using the PCI host bridge drivers in a platform specific way (as indicated
-> > by the TODO in the pcie_do_recovery() function in drivers/pci/pcie/err.c).
-> > Otherwise, the PCI link won't be recovered successfully.
-> > 
-> > So this series adds a new callback 'pci_host_bridge::reset_root_port' for the
-> > host bridge drivers to reset the Root Port when a fatal error happens.
-> > 
-> > Also, this series allows the host bridge drivers to handle PCI link down event
-> > by resetting the Root Ports and recovering the bus. This is accomplished by the
-> > help of the new 'pci_host_handle_link_down()' API. Host bridge drivers are
-> > expected to call this API (preferrably from a threaded IRQ handler) with
-> > relevant Root Port 'pci_dev' when a link down event is detected for the port.
-> > The API will reuse the pcie_do_recovery() function to recover the link if AER
-> > support is enabled, otherwise it will directly call the reset_root_port()
-> > callback of the host bridge driver (if exists).
-> > 
-> > For reference, I've modified the pcie-qcom driver to call
-> > pci_host_handle_link_down() API with Root Port 'pci_dev' after receiving the
-> > LINK_DOWN global_irq event and populated 'pci_host_bridge::reset_root_port()'
-> > callback to reset the Root Port. Since the Qcom PCIe controllers support only
-> > a single Root Port (slot) per controller instance, the API is going to be
-> > invoked only once. For multi Root Port controllers, the controller driver is
-> > expected to detect the Root Port that received the link down event and call
-> > the pci_host_handle_link_down() API with 'pci_dev' of that Root Port.
-> > 
-> > Testing
-> > -------
-> > 
-> > I've lost access to my test setup now. So Krishna (Cced) will help with testing
-> > on the Qcom platform and Wilfred or Niklas should be able to test it on Rockchip
-> > platform. For the moment, this series is compile tested only.
-> 
-> For the series:
-> 
-> Tested-by: Brian Norris <briannorris@chromium.org>
-> 
-> I've tested the whole thing on Qualcomm SC7280 Herobrine systems with
-> NVMe. After adding a debugfs node to control toggling PERST, I can force
-> the link to reset, and see it recover and resume NVMe traffic.
-> 
-> I've tested the first two on Pixel phones, using a non-upstream
-> DWC-based driver that I'm working on getting in better shape. (We've
-> previously supported a custom link-error API setup instead.) I'd love to
-> see this available upstream.
-> 
+Hi Greg,
 
-Thanks, Brian for testing! I didn't get time to look into the report from
-Niklas (which is the only blocking thing for this series). I'll try to dig into
-it today/tomorrow.
+Could you pick up this commit for 6.12 and 6.6:
 
-- Mani
+00a973e093e9 ("interconnect: qcom: icc-rpm: Set the count member before accessing the flex array")
 
--- 
-மணிவண்ணன் சதாசிவம்
+It just silences a UBSan warning so it doesn't affect regular users, but
+it helps in testing to silence those warnings.  It is a clean cherry-pick.
+
+regards,
+dan carpenter
+
+
+On Wed, Dec 04, 2024 at 12:33:34AM +0200, djakov@kernel.org wrote:
+> From: Georgi Djakov <djakov@kernel.org>
+> 
+> The following UBSAN error is reported during boot on the db410c board on
+> a clang-19 build:
+> 
+> Internal error: UBSAN: array index out of bounds: 00000000f2005512 [#1] PREEMPT SMP
+> ...
+> pc : qnoc_probe+0x5f8/0x5fc
+> ...
+> 
+> The cause of the error is that the counter member was not set before
+> accessing the annotated flexible array member, but after that. Fix this
+> by initializing it earlier.
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> Closes: https://lore.kernel.org/r/CA+G9fYs+2mBz1y2dAzxkj9-oiBJ2Acm1Sf1h2YQ3VmBqj_VX2g@mail.gmail.com
+> Fixes: dd4904f3b924 ("interconnect: qcom: Annotate struct icc_onecell_data with __counted_by")
+> Signed-off-by: Georgi Djakov <djakov@kernel.org>
+> ---
+>  drivers/interconnect/qcom/icc-rpm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/interconnect/qcom/icc-rpm.c b/drivers/interconnect/qcom/icc-rpm.c
+> index a8ed435f696c..ea1042d38128 100644
+> --- a/drivers/interconnect/qcom/icc-rpm.c
+> +++ b/drivers/interconnect/qcom/icc-rpm.c
+> @@ -503,6 +503,7 @@ int qnoc_probe(struct platform_device *pdev)
+>  			    GFP_KERNEL);
+>  	if (!data)
+>  		return -ENOMEM;
+> +	data->num_nodes = num_nodes;
+>  
+>  	qp->num_intf_clks = cd_num;
+>  	for (i = 0; i < cd_num; i++)
+> @@ -597,7 +598,6 @@ int qnoc_probe(struct platform_device *pdev)
+>  
+>  		data->nodes[i] = node;
+>  	}
+> -	data->num_nodes = num_nodes;
+>  
+>  	clk_bulk_disable_unprepare(qp->num_intf_clks, qp->intf_clks);
+>  
 
