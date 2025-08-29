@@ -1,78 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-71237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2832B3B667
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 10:51:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 320A5B3B6B5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 11:07:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 34E691CC06CC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 08:51:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7099BA05BBF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 09:06:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 666932D24A0;
-	Fri, 29 Aug 2025 08:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09D9C2F39D2;
+	Fri, 29 Aug 2025 09:05:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O/aZtrQI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA1D42BEC4A;
-	Fri, 29 Aug 2025 08:49:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F282F39D4;
+	Fri, 29 Aug 2025 09:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756457348; cv=none; b=MNg87/oMoSoKiZLWHEIYvlECChW3XeWXz3HOT3iC9R4Kb8tQKEdXnH/HklrxByrXuoPBjDQ1Io/xiwqUOm7w1gcwy4IE8JLlFpMddi8zb0Nw7rbfK54/bmpyyEjf+zXMBBBxWAVju4fUR90Rl0Ymv9sWFN6gCQY2CqVbGAflv/4=
+	t=1756458314; cv=none; b=VdRGq/qh9TnbtiUbJBZEa2titalBBbXxkJElbgkddrlY/n3ttI21hxw0hbNU3pUiCqdSmlrhRXpkiCAAgDLs9a87BsNYdbuq9GXNLDkH/gcY3hxoGT6f0d7zbkDwHuQbYMH/hOM86O14+lNlGfb7U6ZzhxiDPvZ7bj8iXeUZFcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756457348; c=relaxed/simple;
-	bh=t3QfyuZB/5zyTNfAgwicIE9XR9qIE64yDMjoQZUN1GQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sn0jUqDlxTuF2WLl2OJVyabzYOBOtkdAQ0fWShhSZ1KtCA/HM2uimJsxgNTDC43eS4Qvyw9nqsLlK2B5MFablDdXnwPtLhfvtoXWoW4n7WYTiEMQ3XTxuvE0eHuIox4xJaiTow1Xj+xe6gOdp1LpoyB/U5d5s7u0FGINCKSOiN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id D85441BCB;
-	Fri, 29 Aug 2025 01:48:57 -0700 (PDT)
-Received: from localhost (e132581.arm.com [10.1.196.87])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C42B53F694;
-	Fri, 29 Aug 2025 01:49:05 -0700 (PDT)
-Date: Fri, 29 Aug 2025 09:49:04 +0100
-From: Leo Yan <leo.yan@arm.com>
-To: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Mike Leach <mike.leach@linaro.org>,
-	James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	kernel@oss.qualcomm.com, coresight@lists.linaro.org,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 0/3] coresight-tnoc: Add support for Interconnect TNOC
-Message-ID: <20250829084904.GH745921@e132581.arm.com>
-References: <20250828-itnoc-v3-0-f1b55dea7a27@oss.qualcomm.com>
+	s=arc-20240116; t=1756458314; c=relaxed/simple;
+	bh=NqP+Lu0s6zMq+mXI8sKUzNzHzDIZFi7M4YhenC0/UME=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=KCXAOiq9jr+u3QfMxAOnNDObk2jvH9ac/+ehlUc+Q555Xh3REG7jbjhv56Kj3rknnbjTAkKgLh/YCp0DN5W3uB8vpOU3E1AOME9TzU5zZHbVOdNPpZDsfpAtTHePbj0A9KU+uPYm/8LvKGfFICL1DkWKNujyDGVdjemmzm60hZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O/aZtrQI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8A0C4CEF0;
+	Fri, 29 Aug 2025 09:05:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756458314;
+	bh=NqP+Lu0s6zMq+mXI8sKUzNzHzDIZFi7M4YhenC0/UME=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=O/aZtrQIrK+pjFscVOTtr0zXLtW3sVgAwQKVyh/R4vDZIg8NcUxEMp+RFKF6k/2kR
+	 yo4O3GYfHeB6VYvr+FM+PJiLvb4EhF+zCsadI3RYCxMF6rjgIIiJur0ndvcyGZnCS6
+	 cLd864PWBnaPYvVPHN1odrYVLkGAzDyeaLYD03hApQ0Ft26UEyy7+I6gyFa1uTzvnM
+	 nCgF8rsAw5UVSIxR6sVvrmQBd7mq+Qt0tN1YNxkPxOlD3OvSfu5OJGA/dDi4nVeiwt
+	 wGr4g1NxYhXMV3HXnHpPstcXGScCrmVBXVLYP673kxBTXdc24OoxL+VEl7I0qXu3Ww
+	 kUxe/i2pf0PjQ==
+Message-ID: <9210ea3a-970b-4cf3-8ab5-35952a9c5cf6@kernel.org>
+Date: Fri, 29 Aug 2025 10:05:09 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250828-itnoc-v3-0-f1b55dea7a27@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 24/26] media: iris: Allocate and queue internal buffers
+ for encoder video device
+To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Stefan Schmidt <stefan.schmidt@linaro.org>,
+ Vedang Nagar <quic_vnagar@quicinc.com>, Hans Verkuil <hverkuil@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Renjiang Han <quic_renjiang@quicinc.com>,
+ Wangao Wang <quic_wangaow@quicinc.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+References: <20250825-iris-video-encoder-v4-0-84aa2bc0a46b@quicinc.com>
+ <RkFtovt6YeFZgD2napWwptCOf-5LP3ZqNbmfbDB-Z__cCvrJA5DfFRVU1IxihkEayS3ksQp8AzL1dE9Kd7r_2Q==@protonmail.internalid>
+ <20250825-iris-video-encoder-v4-24-84aa2bc0a46b@quicinc.com>
+From: Bryan O'Donoghue <bod@kernel.org>
+Content-Language: en-US
+In-Reply-To: <20250825-iris-video-encoder-v4-24-84aa2bc0a46b@quicinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Aug 28, 2025 at 02:27:21AM -0700, Yuanfang Zhang wrote:
-> This patch series adds support for the Qualcomm CoreSight Interconnect TNOC
-> (Trace Network On Chip) block, which acts as a CoreSight graph link forwarding
-> trace data from subsystems to the Aggregator TNOC. Unlike the Aggregator TNOC,
-> this block does not support aggregation or ATID assignment.
+On 25/08/2025 08:00, Dikshita Agarwal wrote:
+> +static inline
+> +u32 size_enc_single_pipe(u32 rc_type, u32 bitbin_size, u32 num_vpp_pipes,
+> +			 u32 frame_width, u32 frame_height, u32 lcu_size)
+> +{
+> +	u32 size_aligned_height = ALIGN((frame_height), lcu_size);
+> +	u32 size_aligned_width = ALIGN((frame_width), lcu_size);
+> +	u32 size_single_pipe_eval = 0, sao_bin_buffer_size = 0;
+> +	u32 padded_bin_sz;
+> +
+> +	if ((size_aligned_width * size_aligned_height) > (3840 * 2160))
+> +		size_single_pipe_eval = (bitbin_size / num_vpp_pipes);
+> +	else if (num_vpp_pipes > 2)
+> +		size_single_pipe_eval = bitbin_size / 2;
+> +	else
+> +		size_single_pipe_eval = bitbin_size;
+> +
+> +	sao_bin_buffer_size = (64 * ((((frame_width) + 32) * ((frame_height) + 32)) >> 10)) + 384;
+> +	padded_bin_sz = ALIGN(size_single_pipe_eval, 256);
+> +	size_single_pipe_eval = sao_bin_buffer_size + padded_bin_sz;
+> +
+> +	return ALIGN(size_single_pipe_eval, 256);
+> +}
 
-I tested this series with building and static checker, the result is
-good.
+Applying your full series, this function is unused and causes a warning 
+in CI.
 
-I'd highlight that this series is based on my patch series Arm CoreSight
-clock refactoring [1] (thanks!). The dependency might be matter when
-picking up patches, I would leave this to Suzuki.
+Assuming tests pass for me, I'll be dropping this function in the PR and 
+you can resubmit it if/when you find a use for it.
 
-Thanks,
-Leo
-
-[1] https://lore.kernel.org/linux-arm-kernel/20250731-arm_cs_fix_clock_v4-v6-0-1dfe10bb3f6f@arm.com/
+---
+bod
 
