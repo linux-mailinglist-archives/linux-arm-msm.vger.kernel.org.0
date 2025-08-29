@@ -1,233 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-71234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2AAC4B3B5FA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 10:25:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 491B6B3B612
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 10:35:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D9D6216F755
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 08:25:02 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5E6C21B25BA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 29 Aug 2025 08:35:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1964B298CC4;
-	Fri, 29 Aug 2025 08:24:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cZ32Ag5c"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D97B2857C2;
+	Fri, 29 Aug 2025 08:35:25 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from bmailout3.hostsharing.net (bmailout3.hostsharing.net [176.9.242.62])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 523D12877FC
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 08:24:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1FD6261B6D;
+	Fri, 29 Aug 2025 08:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=176.9.242.62
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756455896; cv=none; b=Yey4Be/UzYc8fTI+XAmiB98RQyUC76RG9GtYQwus7pN1UwuDqjXsTCicRhTBTs4JvcxvJBA4tXqLRVC+hhMY2JIf/8lhLNb6aEx1or2IirNVWnaZNBOLv33F2e74UR/CIfz1uFGqFvfKa1TG9rah8y966Hk+ufsqLB4JV0dywWg=
+	t=1756456525; cv=none; b=laVSc2+QfcrTZXUBjBg/gl9hfmCpnYlxoBAuTsvr9HjUc23QEH144tHRrgjEPmq/MCObaOTjagy4tykCsNe+Dy66EfhR1ve9YMJcXks9/ZNW6/cOnPxh1h1rfrmBdDsR6ak7C2gWGWvBfAtGgySx3J7rTgUvHNyOy1Ggv0aUn7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756455896; c=relaxed/simple;
-	bh=zJSmfRVOkbtIQDtehxlC4Tzz6O3pXqvUInfxHeMwYz8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=R15FRdPy9/EF6nSGNBKlZxDzd1pYKYuI9HH4j+XaqmH9ROwcOIkZHPewjkNy/2354oG4nNZ5i5B0o88aPDBNIrOZ4YPNQAXPqIOQaVlqSjB24drQun/+4bPe2OcpUjI1KOl9khDJ8Su1ASq7aHdHdxEDWml2mSozgCS6Px98ZTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cZ32Ag5c; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57T85ER4018640
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 08:24:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ZmutOEL4BSdKwbUx9oh5gSZnIUCZlQ2dXVG3r2aUCeQ=; b=cZ32Ag5cV7lQib3P
-	Apx9u1mcGxt6bBzqSbyaJU9Gzh8bJvapCUVJT4mxX/ipO2HXWjLmKOqclM3rLBgq
-	JzL/KP1PnzaWlE/SXFHQ/hTouO3geinjc5YywXheztw+iIRoL1nX30vRuzu2pqq0
-	FboL6whzLKrKO+GQXR4YW2Aai60yGBAuN5D4/VNOb0tcYOmYE0Si4UMIf0XaRAcL
-	Of0mTM54xRhryjGxhpw1uf8PpcnPhY68Nvxdkl0Zniouey/Y+R0FC7B6eUv7FZ9n
-	Z8L0PlMiZLkhwZY2crPTOxge05Skp8zfewyOga7zB3Gs3GUeSH8s4Mr5Zw7/DTE0
-	NSE+aA==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48tn67keh2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 08:24:52 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-2488490fe4eso25954355ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 29 Aug 2025 01:24:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756455891; x=1757060691;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZmutOEL4BSdKwbUx9oh5gSZnIUCZlQ2dXVG3r2aUCeQ=;
-        b=V7tp/iaYyzLaBHxXBRJH2uWG8ZTNtZ1OAtFXK/Bp8t6VU6dH67amvaQnTgiuXYxCfC
-         7IxxX1MA81hslAijUf9Jj+klez4ks0tTpR8/mSqXbCHv5SBG+jwOGr+V4Q4+V4K+tSxU
-         r3w0PPnTPmMxVag3LtRMWPl1scgOJH85JG51iEXZ7TlaX/tHiwLGSSQGTUEPPvbinbNI
-         Zx0Lra3i5VHojUFC27yL4GYJebMTVlMwlNQlGCYELo2IrS9hdpojmipj9UQIXOxGzcoM
-         78fVdRRnFfi0oYpqS5c8lkT1mKAPhkscg2AfczPi1l4xFiOR/O23qEhiik/l7qo+qjas
-         p11A==
-X-Forwarded-Encrypted: i=1; AJvYcCUgVRR/PnTKT2G+JYZRxxWDEIPsUQ0nx6HP4vigIe3S6vIqjOYZEY9mSOw1o34ln66JFrXABfuYRaETRWsU@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHL36FAel1jMXzr1BA4KRNKz4L3Sa21rlFEOxtVeHmIW8FdiST
-	YWmxVGF/cFXpAJFbg9PlNGnCO4zv0kAlbD+pYFdCSL3+StlliKzH9yMDWSY9/T0VnC0RCTyE0PF
-	v4E3x3EnPr3k9WmQSLHwKQq1CY9SKkLY7X5qZExxp0Jy7HyyICO7I1YUaxNJKdtefz0kj
-X-Gm-Gg: ASbGncueSiGzTqDzPhhLn0UxoR9KEYURXbcWGLj+kKkIEttZL1uFTm0jD3sG2T5lDxz
-	riEiDCZFoO8OwHsF2OLemKDhH8sVd+gCc2BplVTkc6PwOcI2ayC/ndUr9x6qirnAhn86OaTBcHZ
-	j6GBuUni4uUT0diVzSb/phXJKbns45TZtfmDr+xsHVuEyic4laX0SA4kpz/b2bqrGGXJFq6PrKW
-	JZBy8+h5lplX+DYJQ3S4g18Yhf8U41Wx9R27WSQ8l4o7UGv7qVmwrcRQo5efqG01wavEE9MmtfR
-	zyrE3zQVvK6PXHmtcJO5wXyD1xHXgFX2t6fHGoTdngio07RtED0r5ZvwGckNsM2KeCGO
-X-Received: by 2002:a17:903:384f:b0:246:2b29:71c7 with SMTP id d9443c01a7336-2462ee92ef2mr364175345ad.25.1756455891396;
-        Fri, 29 Aug 2025 01:24:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBH0NFwkkluNtoyFp/sOGVeW9GAErFZVXGcvAduDHifrpu0UX3YiAiOgtNINcHVTBJqK21Bw==
-X-Received: by 2002:a17:903:384f:b0:246:2b29:71c7 with SMTP id d9443c01a7336-2462ee92ef2mr364175035ad.25.1756455890943;
-        Fri, 29 Aug 2025 01:24:50 -0700 (PDT)
-Received: from [192.168.0.195] ([49.204.25.176])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24905da4d44sm17598275ad.83.2025.08.29.01.24.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 29 Aug 2025 01:24:50 -0700 (PDT)
-Message-ID: <558ca51d-e1ca-4267-9166-2b929216c43a@oss.qualcomm.com>
-Date: Fri, 29 Aug 2025 13:54:45 +0530
+	s=arc-20240116; t=1756456525; c=relaxed/simple;
+	bh=zhFUw5FTo/Ejp3wHfGNYEMRD/5WGxpxHaIqzXWPclzo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=puSBbknJ6J4Wj5CfVQUBHpNQYy7NaTRwfROXEQgGod7RIGf8mAnk/cipRL+zLMkn6SK88hhp4nAGWwYWY9AcHIXRYCEJH4kG9/aS35z0454qug3JobVqGqnSXts7P9XQkV0lYt99bL4KpAFGDH2vR8ZUyG/D/CFJbY/GsFUHods=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de; spf=none smtp.mailfrom=h08.hostsharing.net; arc=none smtp.client-ip=176.9.242.62
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=wunner.de
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=h08.hostsharing.net
+Received: from h08.hostsharing.net (h08.hostsharing.net [83.223.95.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "*.hostsharing.net", Issuer "RapidSSL TLS RSA CA G1" (verified OK))
+	by bmailout3.hostsharing.net (Postfix) with ESMTPS id 98F5D2C09E19;
+	Fri, 29 Aug 2025 10:35:20 +0200 (CEST)
+Received: by h08.hostsharing.net (Postfix, from userid 100393)
+	id 6A41242A4F0; Fri, 29 Aug 2025 10:35:20 +0200 (CEST)
+Date: Fri, 29 Aug 2025 10:35:20 +0200
+From: Lukas Wunner <lukas@wunner.de>
+To: Brian Norris <briannorris@chromium.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof Wilczynski <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Niklas Cassel <cassel@kernel.org>,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH v6 2/4] PCI: host-common: Add link down handling for Root
+ Ports
+Message-ID: <aLFmSFe5iyYDrIjt@wunner.de>
+References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
+ <20250715-pci-port-reset-v6-2-6f9cce94e7bb@oss.qualcomm.com>
+ <aLC7KIoi-LoH2en4@google.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: clock: Add DISPCC and reset controller
- for GLYMUR SoC
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Ajit Pandey <quic_ajipan@quicinc.com>,
-        Imran Shaik <quic_imrashai@quicinc.com>,
-        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250829-glymur-disp-clock-controllers-v1-0-0ce6fabd837c@oss.qualcomm.com>
- <20250829-glymur-disp-clock-controllers-v1-1-0ce6fabd837c@oss.qualcomm.com>
- <hpfeihpixuauter7ik6om5sv7ocmots5gq3fw7cvn5wkuieipt@jitqslr4pkw4>
-Content-Language: en-US
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-In-Reply-To: <hpfeihpixuauter7ik6om5sv7ocmots5gq3fw7cvn5wkuieipt@jitqslr4pkw4>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODI4MDA4NSBTYWx0ZWRfX+uTTX4lxZRYp
- afeXn5JiPQB+fsggF5EOlQ7e+HdJ26qQb1gCyVB5/CVbKfylhEsGvee7EU7QISI767S6getsF9s
- ROc6z79aVk8Z0IroBXRLBxvsPvTxT1hR73hY9isfMQtKpcufPfe2kac3roN9i8rL9f6htjvRXSb
- QSSVKAWPsIv7w5FLlr9ygyKcNgKnfMcrxIJHXDB6/Ga51+GeE2KWv3HnLBfghEjtURzmOkb9y8r
- 794VBpwgKk/dPwidPaTBAg/MMkp4gNkUwCNBOtVBhCB0dRuhCdBaMqC3hpSR+YCV7z1/gdfWpMp
- HenyuPqWUlSYVybT/Frxzpz0WPShqlsBdVmpic7LOB19WJFNLKSkCtdZ0KVDAzdoAWgiME87G1D
- K/hYqYxH
-X-Proofpoint-GUID: OiSuC1msWAirdhzK05DvELUbjriQfV0X
-X-Proofpoint-ORIG-GUID: OiSuC1msWAirdhzK05DvELUbjriQfV0X
-X-Authority-Analysis: v=2.4 cv=P7c6hjAu c=1 sm=1 tr=0 ts=68b163d4 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=ubyLEIH+BItvSySilgXupg==:17
- a=IkcTkHD0fZMA:10 a=2OwXVqhp2XgA:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8
- a=1ut_qpqdL47trf14q9UA:9 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
- a=sptkURWiP4Gy88Gu7hUp:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-29_02,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 clxscore=1015 impostorscore=0 priorityscore=1501
- adultscore=0 phishscore=0 malwarescore=0 spamscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508280085
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aLC7KIoi-LoH2en4@google.com>
+
+On Thu, Aug 28, 2025 at 01:25:12PM -0700, Brian Norris wrote:
+> On the flip side: it's not clear
+> PCI_ERS_RESULT_NEED_RESET+pci_channel_io_normal works as documented
+> either. An endpoint might think it's requesting a slot reset, but
+> pcie_do_recovery() will ignore that and skip reset_subordinates()
+> (pci_host_reset_root_port()).
+> 
+> All in all, the docs sound like endpoints _should_ have control over
+> whether we exercise a full port/slot reset for all types of errors. But
+> in practice, we do not actually give it that control. i.e., your commit
+> message is correct, and the docs are not.
+> 
+> I have half a mind to suggest the appended change, so the behavior
+> matches (some of) the docs a little better [1].
+
+A change similar to the one you're proposing is already queued on the
+pci/aer topic branch for v6.18:
+
+https://git.kernel.org/pci/pci/c/d0a2dee7d458
+
+Here's the corresponding cover letter:
+
+https://lore.kernel.org/r/cover.1755008151.git.lukas@wunner.de
+
+There was a discussion why I didn't take the exact same approach you're
+proposing, but only a similar one:
+
+https://lore.kernel.org/r/aJ2uE6v46Zib30Jh@wunner.de
+https://lore.kernel.org/r/aKHWf3L0NCl_CET5@wunner.de
 
 
+> Specifically, I'm trying to see what's supposed to happen with
+> PCI_ERS_RESULT_CAN_RECOVER. I see that for pci_channel_io_frozen, almost
+> all endpoint drivers return PCI_ERS_RESULT_NEED_RESET, but if drivers
+> actually return PCI_ERS_RESULT_CAN_RECOVER, it's unclear what should
+> happen.
+> 
+> Today, we don't actually respect it; pcie_do_recovery() just calls
+> reset_subordinates() (pci_host_reset_root_port()) unconditionally. The
+> only thing that return code affects is whether we call
+> report_mmio_enabled() vs report_slot_reset() afterward. This seems odd.
 
-On 8/29/2025 1:42 PM, Dmitry Baryshkov wrote:
-> On Fri, Aug 29, 2025 at 01:28:03PM +0530, Taniya Das wrote:
->> Add the device tree bindings for the display clock controller which are
->> required on Qualcomm Glymur SoC.
->>
->> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
->> ---
->>  .../bindings/clock/qcom,glymur-dispcc.yaml         |  99 ++++++++++++++++++
->>  include/dt-bindings/clock/qcom,glymur-dispcc.h     | 114 +++++++++++++++++++++
->>  2 files changed, 213 insertions(+)
->>
->> diff --git a/Documentation/devicetree/bindings/clock/qcom,glymur-dispcc.yaml b/Documentation/devicetree/bindings/clock/qcom,glymur-dispcc.yaml
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..063da2416dbaed764b8579a090bc5fc0531ab60d
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/clock/qcom,glymur-dispcc.yaml
->> @@ -0,0 +1,99 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/clock/qcom,glymur-dispcc.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Display Clock & Reset Controller on GLYMUR
->> +
->> +maintainers:
->> +  - Taniya Das <taniya.das@oss.qualcomm.com>
->> +
->> +description: |
->> +  Qualcomm display clock control module which supports the clocks, resets and
->> +  power domains for the MDSS instances on GLYMUR SoC.
->> +
->> +  See also:
->> +    include/dt-bindings/clock/qcom,dispcc-glymur.h
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,glymur-dispcc
->> +
->> +  clocks:
->> +    items:
->> +      - description: Board CXO clock
->> +      - description: Board sleep clock
->> +      - description: DisplayPort 0 link clock
->> +      - description: DisplayPort 0 VCO div clock
->> +      - description: DisplayPort 1 link clock
->> +      - description: DisplayPort 1 VCO div clock
->> +      - description: DisplayPort 2 link clock
->> +      - description: DisplayPort 2 VCO div clock
->> +      - description: DisplayPort 3 link clock
->> +      - description: DisplayPort 3 VCO div clock
->> +      - description: DSI 0 PLL byte clock
->> +      - description: DSI 0 PLL DSI clock
->> +      - description: DSI 1 PLL byte clock
->> +      - description: DSI 1 PLL DSI clock
->> +      - description: Standalone PHY 0 PLL link clock
->> +      - description: Standalone PHY 0 VCO div clock
->> +      - description: Standalone PHY 1 PLL link clock
->> +      - description: Standalone PHY 1 VCO div clock
->> +
->> +  power-domains:
->> +    description:
->> +      A phandle and PM domain specifier for the MMCX power domain.
->> +    maxItems: 1
->> +
->> +  required-opps:
->> +    description:
->> +      A phandle to an OPP node describing required MMCX performance point.
->> +    maxItems: 1
->> +
->> +required:
->> +  - compatible
->> +  - clocks
->> +  - power-domains
->> +  - '#power-domain-cells'
->> +
->> +allOf:
->> +  - $ref: qcom,gcc.yaml#
->> +
->> +unevaluatedProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/clock/qcom,glymur-dispcc.h>
-> Should not be needed
+In the series queued on pci/aer, I've only allowed drivers to opt in
+to a reset on Non-Fatal Errors.  I didn't dare also letting them opt
+out of a reset on Fatal Errors.
 
-Sure Dmitry, will remove this in the next patchset.
+These changes of behavior are always risky, so it seemed prudent to not
+introduce too many changes at once.  There was no urgent need to also
+change behavior for Fatal Errors for the use case at hand (the xe graphics
+driver).  I went through all drivers with pci_error_handlers to avoid
+breaking any of them.  It's very tedious work, takes weeks.  It would
+be necessary to do that again when changing behavior for Fatal Errors.
 
--- 
+pcieaer-howto.rst justifies the unconditional reset on Fatal Errors by
+saying that the link is unreliable and that a reset is thus required.
+
+On the other hand, pci-error-recovery.rst (which is a few months older
+than pcieaer-howto.rst) says in section "STEP 3: Link Reset":
+"This is a PCIe specific step and is done whenever a fatal error has been
+detected"
+
+I'm wondering if the authors of pcieaer-howto.rst took that at face value
+and thought they'd *have* to reset the link on Fatal Errors.
+
+Looking through the Fatal Errors in PCIe r7.0 sec 6.2.7, I think a reset
+is justified for some of them, but optional for others.  Which leads me
+to believe that the AER driver should actually enforce a reset only for
+certain Fatal Errors, not all of them.  So this seems like something
+worth revisiting in the future.
+
+
+> All in all, the docs sound like endpoints _should_ have control over
+> whether we exercise a full port/slot reset for all types of errors. But
+> in practice, we do not actually give it that control. i.e., your commit
+> message is correct, and the docs are not.
+
+Indeed the documentation is no longer in sync with the code.  I've just
+submitted a series to rectify that and cc'ed you:
+
+https://lore.kernel.org/r/cover.1756451884.git.lukas@wunner.de
+
 Thanks,
-Taniya Das
 
+Lukas
 
