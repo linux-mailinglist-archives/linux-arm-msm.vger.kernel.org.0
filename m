@@ -1,74 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-71285-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5D88B3CB84
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 16:50:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 470D0B3CC7A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 17:58:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 981343B5388
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 14:50:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 689B97B88F4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 15:56:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F1E71862A;
-	Sat, 30 Aug 2025 14:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB70F28489B;
+	Sat, 30 Aug 2025 15:58:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b="LcBJ+zK+";
+	dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b="LcBJ+zK+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp30.allytech.com (smtp30.allytech.com [200.68.105.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from honk.sigxcpu.org (honk.sigxcpu.org [24.134.29.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E1A3770B
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 14:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=200.68.105.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D677B26980B;
+	Sat, 30 Aug 2025 15:58:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=24.134.29.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756565422; cv=none; b=TrGAvq4DQgGjOhnmElSqsj+/lNbhQVnZ90FAdsVxdh5WYa3G7o/9NIn5zT5yOeixnXm6Mrfk9Z2FTMQWNN9QUkssSim44RufWB1f+sfgHVwtbfJGnllbeKs3enZtfAIuK8TfZQATLQoIcd7UZokly+pXRf2fnPsrWgodSZU3T8E=
+	t=1756569493; cv=none; b=pjmQJxLo+DQbIxdTg6audwyRJPdjS0rH6t7f7wcGWrhGOysNqObXsBppKwxA7jzyLsk0r78VrM3b3bSaleBmUmtPgg3hCIEoDuDpWD3V2GBCa0TF9CEHBG3lr2E8+te/eUeD2qqTtGjCcwT3MmcRLhDc8Gq0WEn61wDWq5r8VKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756565422; c=relaxed/simple;
-	bh=oK117el173H4G+yQkm0QFrZ6zNAaMBItOSIbaEGGjF8=;
-	h=To:Subject:Date:From:Message-ID:MIME-Version:Content-Type; b=LERbXDxgw1emAFBUCWAW/fkLDQHOW1ABC+UVUhkORNiFIQARmD1l8mxieBX8H/WDqWqEzXi7iVkIl9aElQ6ZuByTss+QbUS1CGoyjKBvwtLr84Mc58kTQYL8Kh8V5uZE89UT6a1KLTNZ+QmGErwfQ5GAOfjCy+0NR0gSz+8NY14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zanellatoequipos.com.ar; spf=pass smtp.mailfrom=zanellatoequipos.com.ar; arc=none smtp.client-ip=200.68.105.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=zanellatoequipos.com.ar
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zanellatoequipos.com.ar
-X-DomainKeys: Sendmail DomainKeys Filter v1.0.2 smtp30.allytech.com 57UElumb011249
-DomainKey-Signature: a=rsa-sha1; s=main; d=zanellatoequipos.com.ar; c=nofws; q=dns;
-	h=received:x-authentication-warning:to:subject:date:from:
-	reply-to:message-id:x-priority:x-mailer:mime-version:
-	content-transfer-encoding:content-type;
-	b=dSEG/sIh30VeDTa1wQJOIslDvyJX3vmNQX3uxP+l6Cc6CYeA8ryywSKVKZc9aMB50
-	t3vLlIhUmm5doQnTabPLg==
-Received: from smtp30.allytech.com (smtp30.allytech.com [127.0.0.1])
-	by smtp30.allytech.com (8.15.2/8.15.2) with ESMTPS id 57UElumb011249
-	(version=TLSv1.2 cipher=DHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 11:47:56 -0300
-Received: (from uv019371@localhost)
-	by smtp30.allytech.com (8.15.2/8.15.2/Submit) id 57UEluKD011247;
-	Sat, 30 Aug 2025 11:47:56 -0300
-X-Authentication-Warning: smtp30.allytech.com: uv019371 set sender to equipos@zanellatoequipos.com.ar using -f
-To: linux-arm-msm@vger.kernel.org
-Subject: Detalles de la cuenta para Hi, this is Jenny. I am sending you my intimate photos as I promised. https://tinyurl.com/2ddpxk7pB1ECSk de Zanellato
-Date: Sat, 30 Aug 2025 11:47:56 -0300
-From: Zanellato <equipos@zanellatoequipos.com.ar>
-Reply-To: Zanellato <equipos@zanellatoequipos.com.ar>
-Message-ID: <b5131dc1c5bbd28dd19ee3e60e203e82@zanellatoequipos.com.ar>
-X-Priority: 3
-X-Mailer: PHPMailer 5.2.1 (http://code.google.com/a/apache-extras.org/p/phpmailer/)
+	s=arc-20240116; t=1756569493; c=relaxed/simple;
+	bh=2NYra8bevS3woikAQuBf3T0J2BxLCqPEXnPzpCmkJ84=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=uBIzis+sP8lU0qbEkySjHnwmIdRWwjSeIRZmVmm6q6sAVo4H9Ve/wVGxyBgH3Fmh+guPOOUoQooNl5s7eayflJ3QHnou8naRQdlyXuEmUR8dps+Ax6fwvc3V9eJPz8Fw6jNvvXt/Q3pSYS78+t+whCRF+ka+6sHirOalAU3P+Vw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigxcpu.org; spf=pass smtp.mailfrom=sigxcpu.org; dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b=LcBJ+zK+; dkim=pass (2048-bit key) header.d=sigxcpu.org header.i=@sigxcpu.org header.b=LcBJ+zK+; arc=none smtp.client-ip=24.134.29.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sigxcpu.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sigxcpu.org
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sigxcpu.org; s=2024;
+	t=1756569488; bh=2NYra8bevS3woikAQuBf3T0J2BxLCqPEXnPzpCmkJ84=;
+	h=From:To:Subject:Date:From;
+	b=LcBJ+zK+1Xgkae7qRTSxGsugwr61QxR9A0cBw39itcEC+wx/crrKUjV4ASMUjSo/C
+	 iXZpD5RzbMMFpufVQ5cbnBDgZKMSLxVeIE0SLC6jbvwkQrvqKdHX3LvI5NqLdtj7qs
+	 yqeRJaGGoLBhDCl4Vqf1Gqg+hSTNcyyWpyXfZfvh9B1c27/cgRv/YWyo+4/v7Nd+rk
+	 gyqLwuDaY9mFdElTxlZCAFfwhwVWJKlaNE9/HXrca8HAq0jJB8E8FJb59MMisck8IA
+	 zuGwSjgAl4mEiOBtgWQ/yexo7NBgrwQwoaf53GsiolD8RM9AhdwaES1vvkBYsl7kQu
+	 dE2LdSOdSQxlA==
+Received: from localhost (localhost [127.0.0.1])
+	by honk.sigxcpu.org (Postfix) with ESMTP id B9175FB05;
+	Sat, 30 Aug 2025 17:58:08 +0200 (CEST)
+Received: from honk.sigxcpu.org ([127.0.0.1])
+	by localhost (honk.sigxcpu.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id cvm6FoYYZI8z; Sat, 30 Aug 2025 17:58:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sigxcpu.org; s=2024;
+	t=1756569488; bh=2NYra8bevS3woikAQuBf3T0J2BxLCqPEXnPzpCmkJ84=;
+	h=From:To:Subject:Date:From;
+	b=LcBJ+zK+1Xgkae7qRTSxGsugwr61QxR9A0cBw39itcEC+wx/crrKUjV4ASMUjSo/C
+	 iXZpD5RzbMMFpufVQ5cbnBDgZKMSLxVeIE0SLC6jbvwkQrvqKdHX3LvI5NqLdtj7qs
+	 yqeRJaGGoLBhDCl4Vqf1Gqg+hSTNcyyWpyXfZfvh9B1c27/cgRv/YWyo+4/v7Nd+rk
+	 gyqLwuDaY9mFdElTxlZCAFfwhwVWJKlaNE9/HXrca8HAq0jJB8E8FJb59MMisck8IA
+	 zuGwSjgAl4mEiOBtgWQ/yexo7NBgrwQwoaf53GsiolD8RM9AhdwaES1vvkBYsl7kQu
+	 dE2LdSOdSQxlA==
+From: =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	phone-devel@vger.kernel.org
+Subject: [PATCH] arch: arm64: dts: qcom: sdm845-shift-axolotl: set chassis type
+Date: Sat, 30 Aug 2025 17:57:29 +0200
+Message-ID: <3e04efc06a795a32b0080b2f23a138e139057b02.1756569434.git.agx@sigxcpu.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
 
-Hola, Hi, this is Jenny. I am sending you my intimate photos as I promised. https://tinyurl.com/2ddpxk7pB1ECSk:
+It's a handset.
 
-Gracias por registrarse en Zanellato. Su cuenta ha sido creada y debe ser activada antes de que la pueda usar.
-Para activar la cuenta, haga clic sobre el siguiente enlace o copie y pegue la URL completa en su navegador:
-http://zanellatoequipos.com.ar/index.php?option=com_users&task=registration.activate&token=f3c2ae0550bcf4051b771070bb9a15f9 
+Signed-off-by: Guido Günther <agx@sigxcpu.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 1 +
+ 1 file changed, 1 insertion(+)
 
-Tras la activación, ya podrá acceder a http://zanellatoequipos.com.ar/ usando el siguiente usuario y contraseña:
-
-Usuario: Hi, this is Jeniffer. I am sending you my intimate photos as I promised. https://tinyurl.com/23nh72wj#B1ECSk
-Contraseña: poqg8y@L46S
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index 2cf7b5e1243ca..2b04adcb53ee0 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -17,6 +17,7 @@
+ / {
+ 	model = "SHIFT SHIFT6mq";
+ 	compatible = "shift,axolotl", "qcom,sdm845";
++	chassis-type = "handset";
+ 	qcom,msm-id = <321 0x20001>;
+ 	qcom,board-id = <11 0>;
+ 
+-- 
+2.51.0
 
 
