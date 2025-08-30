@@ -1,175 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-71296-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71297-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id DEB1BB3CFD3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 00:21:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 19454B3CFDF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 00:29:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5433F5E5376
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 22:21:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C2558166328
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 22:29:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED3C62673B7;
-	Sat, 30 Aug 2025 22:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE89D2517AA;
+	Sat, 30 Aug 2025 22:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bFr3+C+7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i3GnX8W6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11C71258EDF;
-	Sat, 30 Aug 2025 22:21:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11812201266
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 22:29:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756592491; cv=none; b=cQZv1cu1O928v2t/Il6/+gHzcL7j2QSTQMqBR+43XUmyvA+6tUlYl9PPSb5e7T3Kq66j++TRi5fR+zvgdW0L4J1BLk0udZHrmO+CO7Z9l3gBVOuIriV9iwK0tgOxdBiYMzAzffbUV1LerhBqt/V8R6OepIgaKfAkPckH+w2hNuA=
+	t=1756592961; cv=none; b=WsAnuHPbgMJNJHdkGQWbELgZzjvwFi3dAzVT7mWrmhiYUMpYH1zvw+96P31v0kpkDL/OZWSxBVcxEtApQBClNNbHcHFGqHkUw+41FkqH/eZpVzAw+f4AcN6Nt49U1JmoDto9hglRYfYPP1aKakdFe7y1QuGaK4rM7e+canc4eUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756592491; c=relaxed/simple;
-	bh=4VKfVT3I8DaBzxZttRBkoDhbOeWOmCZY/Gu7cAz8rKk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iG+ljA6FS0KPMHIYHFO9pk7pEsC9NxLryCm9Wk1CAMnvA9atwAqRbo7E5ZPe/6eBnRgJbj6UPsgOuPRGF4otziTD/WT1LuHYZEwjhDORJBXLKMKBniTSIjmf9bDKLTcGiUbqP/fg0j3/WelKREjm7MeCN+GU/P8fSCNddfejR9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bFr3+C+7; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-afcb7322da8so604480366b.0;
-        Sat, 30 Aug 2025 15:21:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756592488; x=1757197288; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D6MFTTmmrKhHwzeBfzYKhPuh9THrsl4NpWB/GL/MmNA=;
-        b=bFr3+C+7C1r9JgPoYxCSR1e0R1LztIOofQ7UhFqwXVIx9wRz+C1SIhP40fhI9j0n5j
-         weQCUma0pQeB7JVrxGGoFEGw5FhK2FdpdFjP+LOp9+Na4vqHtDcoXMWQ4qrHVBQQ6qkr
-         QOk+N1R9b1sx8cwJq+M03/6cr6Tc6LkGNmSj0kKUTYJxV2UP67KOhZph+Bl1+GiZn5Tm
-         e3hWzrNCZofd3dxvgrRYdiKqGLS/RqE8FQ7wClUA1CGCmve6jDiqsS9u63epKdY0qHJ7
-         q0+meF/bC/ziIZ00AGKY7h0AdK7LcvwghC1xCyUFjEjKQj0tKEMfm/RQ5OVSVnwKfoDM
-         h5hw==
+	s=arc-20240116; t=1756592961; c=relaxed/simple;
+	bh=yIyAp386I3Prc3FkKEid6JF6HPgnBsg602KONjAF4go=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SLenR6gOMONUYAfdDXBzFSJlEm+8njJWSPCCBeyewZQZG3BF9cuggKe01HwXLPjv/AuZTq3VABOgQIkZYlehB6Q/QbEhhADojKtcaOeRuXpFDfHJwb7PqAlOYiSRTV6jmusPMKljTO+nMWGYOV80rf365bE84+/In9vcv4EHXnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i3GnX8W6; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57UEuj61012511
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 22:29:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=GNi6qlMhUO/dlDLKPCpe1Eoh
+	MUP/BhLmz8wF/QSm9/A=; b=i3GnX8W6MzF7/jJqLQfusJdMEK+lmRXnmxPfHHY1
+	JPvU271NEVX0/v6y7ODjamnq+H35oviI2R0naUJNBJpMjQ372GejEdRgYAaVwriD
+	UuP6g6EZHnfjp6jRkib7fwem4DSzBXnuwGFWs8Bx/dKken7qgT+Q47BDBEnHD/fW
+	AOjVS77HhoxWByxt9zCkSoPxghyGfIfk80XXJk/y483CHjFMaGP4kjQ/AcYT6ciI
+	i0qD3LFPO0B/sa8mnRCx5iomQnAJyXkhrVP00urFpwzbtyFGPxJgQ03tWBSnsQAX
+	T1fqATL+5HD27JlCxMLfLyKmM7EZNQWozZhMbvA9sqGkOQ==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmj99ph-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 22:29:18 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-70dd6d25609so75081726d6.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 15:29:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756592488; x=1757197288;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=D6MFTTmmrKhHwzeBfzYKhPuh9THrsl4NpWB/GL/MmNA=;
-        b=YBVk7exZ0XxyEWqZLMt++Dj9wBSw1AZ0rtBKmnW+Sb4GsTF1Y7/x4Rik4mnUjZOGvH
-         1HSlOT97Srof2rlzms8wlC4diIF72+QFYxm6oaLPCFiYWibb35oRJVi9hkyg2NnLttb9
-         /GyKTTP0YYgXMymb/xowuDiounhg0IcwPk/dX6/YX1zDG00Xjl8g7t8ahoblziTFdsQe
-         KX9GNmdk0+SPx8BXKdILHS76yPO1kbkr7JpHUlau7CHDuDVTf2DxDeXARwC7rODRMzkZ
-         l5Fq7A12ui12n4ZUkNcf7L/2JjuRz/kaOEXQTsJY9Ka43STGclrtcaiBD8goINikVsbU
-         8gMw==
-X-Forwarded-Encrypted: i=1; AJvYcCUG1rMCwKH8URgYe72CI08TM0N5buN9YpQw9Z/wQcNinFs3PzwYAKnoQ32E59RcEXPx/09DirTIPC1/@vger.kernel.org, AJvYcCXJwEImhGXYn3xN13G17AlAmhiPGWnCiqyur1mLJFNfSSKry+NEkifbt2XXlTQKAF2YJtSt4AXBq5ZEyA2akQ==@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywt6iYCWBt4Jx2rsh6dGvhwvFTFMuLXQk7EyJq8kVAzXqp9o935
-	HjQ+y2m5sz2pRgoWH4wjnKYNVnkJ6yWFo9bzuwda+F/qMa5h6mq0zUDg
-X-Gm-Gg: ASbGnct3oR3iyYZZATYbcdTMUr8AEXvL3Z2Svd9H6hdoLhpgri/RUVa5wPrQaJ4NzHR
-	+pPUdSrvQY7aIaGAegnFGiWoW6R8Go9KkprEHv8ISMJTEytrRTdjV4GsULujDHH1uxAAgt17QhK
-	Tr6er0I6OkbHv5/1+E8KG3OBHCXWaigvyi/vEbDsYeViVO3pDHq0PZfre1j7BMR/PFK74k0ZCQ1
-	ejoX9ohQRdCmgmXycRKSJ0gFBvparDu3nC0XdQejljN0T1jbHaTV8/ue+jQP/V0tZ3yqai0WQWE
-	R4rM+G+LMAhRPjP7GFk3gUWBYEpYNeAYCuMB/NSItt4XXnH4WoLXTRC7MqrgEHQfFADvsW+yfOj
-	emFc+BZgAn8vghSUu8v8D
-X-Google-Smtp-Source: AGHT+IGfFSgtxcpKYmv/w5r01kKycrsLuR0sQc/bc+raRF/3d8gHN6rZNoIXJCIuwAjgcENoBeFOcA==
-X-Received: by 2002:a17:907:7e86:b0:afe:ad18:8662 with SMTP id a640c23a62f3a-b01d8c74c8emr314742466b.23.1756592488174;
-        Sat, 30 Aug 2025 15:21:28 -0700 (PDT)
-Received: from [127.0.1.1] ([46.53.240.27])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-b016e56a4e2sm241201366b.26.2025.08.30.15.21.27
+        d=1e100.net; s=20230601; t=1756592958; x=1757197758;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GNi6qlMhUO/dlDLKPCpe1EohMUP/BhLmz8wF/QSm9/A=;
+        b=nr7yr2LDWAhZnPeHqMc0mzZrLIUP6rlklaceXF/0kQVBcC4kEYuXBwNhxekGM8MWOO
+         hc8ReW4owDuY/D/w2tQPB4nrpxbikqEr8+6px6xJ/4ocojDZzbm1qNxEzPOh5Snfwe7h
+         qRIYktgPzOsU9wO+lguj+R35If/kA+Ju38erFL4UNIaV/2IJojZ+BG6h8iYDj3iFrpKV
+         mJf+CNi1xgH1HBNk5Me+pyLGLTgJWGImOPiVXC0nJIxgKZhZWI37utQ+ihMxYKYuCFu+
+         PLyCf+MoNb6lpL+g8M002TRQ3+WdqETLhgfQ+SCEXO6fU1iVVSxtZiVYfkWuMIM0f/cy
+         mIcw==
+X-Forwarded-Encrypted: i=1; AJvYcCV1WgsCIA2madzijKPM5nMvD7h5PxlfC5qr1TC7rgJJLMqPDGGVDVh+aFiESeKenTPYSeZycAQR/fzb1u4W@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz81iMWiIzpG4/EiAvRyLpZjy9GymxdTmaVHFGJIjC72JiqD23e
+	TlKxVGO3pamySo6Hc2YurT09s1yEnekfnBGSDIq1NGahpEvqi3wHgc9JleXWiHhc5hBUsVOhJRh
+	ZU/SsmPDh5kYv3OKo6aMu4YBWoYWChEeHd+QmBDj1v3JmyVk+/M4K55jwxFFZO2rxgc4A
+X-Gm-Gg: ASbGncu0csIP8WM3jfrPJ6Q25hQ1aUSNahAENwuMHaacFRPEj1kElCpX7FKv+IFRtUL
+	j4En/w2my1X1HKHkUzdTEDIESiFQvS5cRcwVPq2u9RIvo/GCConuM5+XfGjuL3vqSmL1nVEmktR
+	8NiCr0ADikQ/88Z7x64KRozazAwJinUcb6EnfFoZClkZ95mIzoRkziAauobzUxbaYgIPhDQPb54
+	RRbX1CuQYSyX4312s4GaZsQqJZD3j0ZiLk5APSdNTBxRXG0WurRKSgX8STzCiybtB3WvcONEYF3
+	b3/ygOKrR6DFkUpAh8xcCe0VqAqFiXTovgjd0LnAcRUVmL//MWvKJ3tABMYU0fZ2Bxp0L0Y4va/
+	d3ALrIR3VYT7V9zS7V0G9eecnCLVy9y6LPi3pvt3QrCA/+dp1h1CD
+X-Received: by 2002:a05:6214:21cb:b0:70d:c6b9:c256 with SMTP id 6a1803df08f44-70fac94115cmr30677486d6.58.1756592957735;
+        Sat, 30 Aug 2025 15:29:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFaqdCzqqQwp+xBjOwKvWSPX4p3qiZ0ZzV9L7+TYukjcGa33kntlWRwDlkYGow/owafc/jjnw==
+X-Received: by 2002:a05:6214:21cb:b0:70d:c6b9:c256 with SMTP id 6a1803df08f44-70fac94115cmr30677306d6.58.1756592956994;
+        Sat, 30 Aug 2025 15:29:16 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-336d0e3f3absm4929391fa.37.2025.08.30.15.29.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 30 Aug 2025 15:21:27 -0700 (PDT)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Sun, 31 Aug 2025 01:21:22 +0300
-Subject: [PATCH 2/2] arch: arm64: sdm845: starqltechn: fix max77705
- interrupts
+        Sat, 30 Aug 2025 15:29:15 -0700 (PDT)
+Date: Sun, 31 Aug 2025 01:29:13 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Daniel Stone <daniel@fooishbar.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
+        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
+        Samuel Holland <samuel@sholland.org>,
+        Dave Stevenson <dave.stevenson@raspberrypi.com>,
+        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
+        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
+        Liu Ying <victor.liu@nxp.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+Message-ID: <57ekub6uba7iee34sviadareqxv234zbmkr7avqofxes4mqnru@vgkppexnj6cb>
+References: <20250830-drm-limit-infoframes-v3-0-32fcbec4634e@oss.qualcomm.com>
+ <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250831-starqltechn-correct_max77705_nodes-v1-2-5f2af9d13dad@gmail.com>
-References: <20250831-starqltechn-correct_max77705_nodes-v1-0-5f2af9d13dad@gmail.com>
-In-Reply-To: <20250831-starqltechn-correct_max77705_nodes-v1-0-5f2af9d13dad@gmail.com>
-To: Chanwoo Choi <cw00.choi@samsung.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, Dzmitry Sankouski <dsankouski@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756592484; l=2119;
- i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=4VKfVT3I8DaBzxZttRBkoDhbOeWOmCZY/Gu7cAz8rKk=;
- b=HMSKrqlVMCEizKgHWhGYlbxEhQwb+7Lq58vFREjceJ133p+uhw4VCCTpGpqJpQoyZlVjPCPi4
- NAcuUkQwEJBDLYfS+c8sHmBg0XSL05NdrOgC/SNlr/4FavRS4X/VatW
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com>
+X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68b37b3e cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=EUspDBNiAAAA:8 a=eLVs-IFDZWC_gK9YM6cA:9 a=CjuIK1q_8ugA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-GUID: VKTjbYdDM5P1MbfFMCDc50a1MHZv37SX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfX6YncCxAJZDzf
+ Eh5SXUuwzBnDN7YzQNiRqF1w3kqvDSgg3lOLg3JMrhxXGDwEinOkFcybpk4mfvFfR1IhD2GoowJ
+ 0SrE1ScLWz1pOYNwEbS8U1+Z7CBlf9UGYcXFc6/rGxVZ5nkeuvADgApgN2/QsMjnAk4MYuPQM+W
+ bXDVjnf7TQKJvnBszNtef26HXqxjogwC7Yjgmbr7XIKqYeFqI0cj20yWdMvUmL92YYlmH29REaa
+ /cyxwBHkLz5TCtoqedcIZ8qRHQnVgbrw+Baw4nVrrEu5EDliG/h2eEoDBBmPl+5QhhBce/OFYFX
+ SX5gb8+uo0QmBvOgRBGsLyCtlCNfIfHg8PFJyGpl0z1YHb3KAJVPQKPE3H3bbWz+wr9Hq2h7qIo
+ zHenhLMI
+X-Proofpoint-ORIG-GUID: VKTjbYdDM5P1MbfFMCDc50a1MHZv37SX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-08-30_09,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
 
-Since max77705 has a register, which indicates interrupt source, it acts
-as an interrupt controller.
+On Sat, Aug 30, 2025 at 09:30:01AM +0200, Daniel Stone wrote:
+> Hi Dmitry,
+> 
+> On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > It's not uncommon for the particular device to support only a subset of
+> > HDMI InfoFrames. It's not a big problem for the kernel, since we adopted
+> > a model of ignoring the unsupported Infoframes, but it's a bigger
+> > problem for the userspace: we end up having files in debugfs which do
+> > mot match what is being sent on the wire.
+> >
+> > Sort that out, making sure that all interfaces are consistent.
+> 
+> Thanks for the series, it's a really good cleanup.
+> 
+> I know that dw-hdmi-qp can support _any_ infoframe, by manually
+> packing it into the two GHDMI banks. So the supported set there is
+> 'all of the currently well-known ones, plus any two others, but only
+> two and not more'. I wonder if that has any effect on the interface
+> you were thinking about for userspace?
 
-Use max77705 as an interrupt controller for charger and fuelgauge
-subdevices.
+I was mostly concerned with the existing debugfs interface (as it is
+also used e.g. for edid-decode, etc).
 
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
----
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+It seems "everything + 2 spare" is more or less common (ADV7511, MSM
+HDMI also have those. I don't have at hand the proper datasheet for
+LT9611 (non-UXC one), but I think its InfoFrames are also more or less
+generic).  Maybe we should change debugfs integration to register the
+file when the frame is being enabled and removing it when it gets unset.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 03b63b987a18..7ccab6ba7d21 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -10,6 +10,7 @@
- #include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/leds/common.h>
-+#include <dt-bindings/mfd/max77705.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- #include <dt-bindings/sound/qcom,q6afe.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-@@ -584,14 +585,16 @@ &uart9 {
- &i2c14 {
- 	status = "okay";
- 
--	pmic@66 {
-+	max77705: pmic@66 {
- 		compatible = "maxim,max77705";
- 		reg = <0x66>;
- 		interrupt-parent = <&pm8998_gpios>;
- 		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
- 		pinctrl-0 = <&pmic_int_default>;
- 		pinctrl-names = "default";
- 		#address-cells = <1>;
-+		#interrupt-cells = <2>;
- 		#size-cells = <0>;
- 
- 		leds {
-@@ -631,8 +634,8 @@ max77705_charger: charger@69 {
- 		reg = <0x69>;
- 		compatible = "maxim,max77705-charger";
- 		monitored-battery = <&battery>;
--		interrupt-parent = <&pm8998_gpios>;
--		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&max77705>;
-+		interrupts = <MAX77705_IRQ_CHG IRQ_TYPE_LEVEL_LOW>;
- 
- 	};
- 
-@@ -641,8 +644,8 @@ fuel-gauge@36 {
- 		compatible = "maxim,max77705-battery";
- 		power-supplies = <&max77705_charger>;
- 		maxim,rsns-microohm = <5000>;
--		interrupt-parent = <&pm8998_gpios>;
--		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&max77705>;
-+		interrupts = <MAX77705_IRQ_FG IRQ_TYPE_LEVEL_LOW>;
- 	};
- };
- 
+Then in the long run we can add 'slots' and allocate some of the frames
+to the slots. E.g. ADV7511 would get 'software AVI', 'software SPD',
+'auto AUDIO' + 2 generic slots (and MPEG InfoFrame which can probably be
+salvaged as another generic one)). MSM HDMI would get 'software AVI',
+'software AUDIO' + 2 generic slots (+MPEG + obsucre HDMI which I don't
+want to use). Then the framework might be able to prioritize whether to
+use generic slots for important data (as DRM HDR, HDMI) or less important
+(SPD).
 
 -- 
-2.39.5
-
+With best wishes
+Dmitry
 
