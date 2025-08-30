@@ -1,87 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-71280-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71281-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 626A8B3C8C8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 09:34:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17461B3C8D2
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 09:39:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2032A1677C8
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 07:34:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 74A4518962BD
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 30 Aug 2025 07:39:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4632230264;
-	Sat, 30 Aug 2025 07:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C54E3277C88;
+	Sat, 30 Aug 2025 07:39:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="AYfuSV+V"
+	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="NAy3HAkl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6411D16F0FE
-	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 07:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32EF51E98E6
+	for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 07:39:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756539280; cv=none; b=XCdO7FLishJCs+cPO2LqoOFT6iZTW8LRgzT9v4hs47//gujGxvrYDLyos3oaDLyyCY4EV+EYtkFkv/RYYAedjLYIZTewS2v63Pzhd3UwATtxrEdaIbOULaq3JjObzoWrk/RVox16xmaRI0alUA+qFOsZKRzDpJlMA+oAlZOFNaA=
+	t=1756539549; cv=none; b=Jten5338OqWzPy1n4EafuHVQDL2b+sE3jB0A/d0x9vV5hKwqn4us32WqpYoVDltlHyQB/hG8q5URZzBxX9PApXzEbxeU/Fi1gVPlehUBKh/XcWnqiWt0jYgbjxrJGrgYiPPkZw7BvB9VLFjofIpFqoxWgSc09W2645boRTp3+HI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756539280; c=relaxed/simple;
-	bh=ddimCuuu8iN3xYZdmcMu0ICYLJHfknoay+NbdcrWIto=;
+	s=arc-20240116; t=1756539549; c=relaxed/simple;
+	bh=7fzjqNbnl1FH7mVwqP6ExvQ8qLgU7/T3+Fqhp2L/qAI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eExdz61DWn0XMVj/ZXtfSIwA4a5GM0faoFR18Dj5tzV4oeYfrdgp9Q2fuHQJk2mg73iAy2AXAyhMO/MCCpSBDMWbNz9kqh9HgqDno0RLn+c9OVQHfKU1ocTwyIvbYxhR+xjhx/TIZ83345fi+pHgtwTyEePWjS6hXth5p4IxiyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=AYfuSV+V; arc=none smtp.client-ip=209.85.160.182
+	 To:Cc:Content-Type; b=cW25DcTTySjWXKUwXaTX/NcEdg8oVJ5ZTTJ1Md1lXQoFZl0xwOiuUkzxDRl2MkW2e+ihA8h8qzqISnmHIyeDku1VxCwip4r/hWWgiSk2k6gQCojfbVcZvjDdihunx9C5bEIKTfuD9g3JSv4Lz/tWixaTrwVkOFAXiUTmyzvEwPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=NAy3HAkl; arc=none smtp.client-ip=209.85.222.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fooishbar.org
-Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4b1099192b0so53082191cf.0
-        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 00:34:39 -0700 (PDT)
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7f8ea864d68so264530885a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 30 Aug 2025 00:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fooishbar.org; s=google; t=1756539278; x=1757144078; darn=vger.kernel.org;
+        d=fooishbar.org; s=google; t=1756539547; x=1757144347; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/XKolNdOG4rWtnm/Z1Xm//IS1jzblLqTcVqQ5IMS/rM=;
-        b=AYfuSV+V1/7udVcc68cZuehl7KiGUQpOfk5ZND2KQyaW+oKFYFOa1u6iVPj9tWPfGf
-         FormpVOGlBZDCurCe4hnCOOtnDFI25Ct/85ucZPuqZoHeM7XSdWrWX2A9OWNHAX72sYf
-         gsvdMUZwBY93jRHsIyOmkAcCIRc0HG0jvZ9QE6pTC9xGzV553hJmtTEZVHplWiEPHw90
-         v8tt3BCdoqdQVbWnP0kd+pag/MsP1Y0bJ3D8y/4hpmree2BcwBdVaK29RP9aq59cfwgY
-         4i6FVqY+eaFE7IEXhbLqPpvdwGLUw0lJxUiS6EIDzG1MlEFG9I2HPSqC3+2BA9K29m23
-         8G5g==
+        bh=7fzjqNbnl1FH7mVwqP6ExvQ8qLgU7/T3+Fqhp2L/qAI=;
+        b=NAy3HAkl0EYVr7fs937tf/3j3bYJ5daRw+PK/Ga0aeCyFj3ojjbht+MANM4Ikx3B3a
+         BYC1qIXoUrCDkrmIgIMjBr668z194EKDcZCOjDsSzX/j/zTlZWMcfMCVPU8oEYRSX8Hy
+         nokJdcLgBh9kD/zERg1SIDjm7MFa+gjhIL7gLDxmfUa1AIhTZMO4t3pfp7r4mjVoyQ/o
+         f7Es4a7aVO6Zy3nNaYtMAH4wLxFtaNQuow1XvkHLuiNnoRm9u7j4q3pkUamx3AqZjSL4
+         xK6AXoBEQXWg+nWqh48YbnGIFtW51BbMZV9qiF8wKm9wajj/mDHqlAY2OcdQw4LZWRev
+         QIbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756539278; x=1757144078;
+        d=1e100.net; s=20230601; t=1756539547; x=1757144347;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/XKolNdOG4rWtnm/Z1Xm//IS1jzblLqTcVqQ5IMS/rM=;
-        b=lBwCxoe9Vxdu3mnwViP25fWuWoBj4cIwMYA3FIRicfFG9FQTuFW6smyCgqg/OKDqok
-         bFPCMeWSts4+mt5qHXtYmfvkQGUL8ocflTKGhxmZ4nl718M4zqhWxegKMqsU/TrqAnwV
-         O4GiMugt6VGHl6FThZ4Gv47lMUISkJUxN4WQb8TGIMLie08RC+jpwYBPgcwZMZPuwAlc
-         CkgT+Zv6RBu8pNgHu6clhcjN0DbuqXWy+I8fMRX3uM5yZBsYnQd81xrn0GA1RFj2/UXf
-         wlozL1CGjbK8VN07Ynt0yVgLOp4+uYE15fVUpqqpKxH6CEZjzb8sRjRG6HIQGvP4cG97
-         mrAw==
-X-Forwarded-Encrypted: i=1; AJvYcCVUcSWK8AnyVODfKFVI8Sm94BBut3LIjJT+Ug/2UTEj+FfZp8qPCBOqJFMHCR8iS78GwfjY4pquHJEdqnxT@vger.kernel.org
-X-Gm-Message-State: AOJu0YymWuK/ssth04c84e4S1ZqfNPvB9ZexmYbaSilcmEv0dsF4yBs8
-	fglZHe9Gltfn2lSt4o98Va0BLb3oXCa9sKG0kwYHe/jlWwm7wYWVsOLfEAd23lR6p2XuW2CJ4MC
-	ExIf9VIfw10cLrb0bjIRnd/RE6NbiIHlw6IyeUsbxjg==
-X-Gm-Gg: ASbGncsArGvxxntyiQW+4/GA5uea0rEsR+/ZNgFRMKGOnb2EB3J98QJefwePBlMxjQB
-	mJtUS4rT/Qx11UyCry1ZYY2QT/94g4xS5h0mmAFqL8SAsQKMv3Y5STLVQRfbAq4ySJ/sAtYcOLu
-	pxaR4SUV7oIAAt7W2NBeqrJAuBWq0rHG/8YY5i4RN5qf1fk9Ex+7uLc3PraY0NOMUyZ4HbTKacp
-	prB5A==
-X-Google-Smtp-Source: AGHT+IF+RtT0nHcRaStCokPpIqIxLujpZpjFFgu9P7ssG1Dbp9cdTPQGJvkbcXDD3qNhvrdS/Kj2NXgLvHLELse+VQw=
-X-Received: by 2002:a05:622a:4116:b0:4b2:ec43:3de4 with SMTP id
- d75a77b69052e-4b31dcb27f5mr15037901cf.75.1756539278311; Sat, 30 Aug 2025
- 00:34:38 -0700 (PDT)
+        bh=7fzjqNbnl1FH7mVwqP6ExvQ8qLgU7/T3+Fqhp2L/qAI=;
+        b=rleebkZHsZinPhKioppXYArtMIM6NdCPHtLM1696XORaFlTynraC1ufxMEeAs28z+L
+         XGh21293rnK14A/SILmgeDtU4ZEpkN6ybUEvEepGoRIKB5+RT64Df8qWBjHiBX5GOz52
+         tRwqog7+Ghs75ikUxhmarsuMYYO6S+0VixrC9F52KG+iodIXDj9w8xALJdwWHUmN6RZS
+         NNpc+azFLvMEWK+j8ObyNCdv5WHy4e46j884xThyzdGcBKo/ORpH7yhgbTGrWXO8jl7P
+         MpA2knLJdBiHWnzJ5SfPkQ6nh3ImbprKjgfWvX3PV3zmaHWTCJlqTCoY72Fvfy8djNBJ
+         VruA==
+X-Forwarded-Encrypted: i=1; AJvYcCU+loqHVy7TOBN3qwLlcYg8yqS2m48SbGdxisZbLgo9dLaF7baxlgsE7HThHj5aa359krUxVlGBQzdpgWGT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxcs+R1Rt1xVe7fcfacPmwF5gykyyZ5v7AmU5tF8jf1rEaEqAig
+	8tgwiDADiYzavu8jMJNWwYGhsg05RWdMqrgmdTSD1vdy8CJmyU4/Fdk0uqOu3b4lJCAETeE5X/6
+	UOPCHQEQ/uBOs48VKJuKBnfUL1wLX4t/Vj8Ofp7vKoA==
+X-Gm-Gg: ASbGncuv6WnIU1UFDFIhfqImzfbA0DLgGwBpKdUzumCn6WsTGJbfYprAyg9IHSkyHai
+	etGhm9QJDTdrKZRG3/GNuixWblVA9pBGJfGHPJ12w8nfnOKNEzDmVCZvxBwTGAxGQYEkzAes2ea
+	0Lg3m1Rcb6k00vxa4IPRh4uee1TyEybJilLft6aT3K/gJ7S8Cq3qij556lVqnihfC5JF8DMAuLv
+	tPj5TaXLUYjPM4u
+X-Google-Smtp-Source: AGHT+IGcdIb5Bh5zrCRPBVL3fLoDcfNzuR05JRese/yFeQ6WZnki9GRGlAQtC8Gf4B7czjKl7GD5FNu5efT2Tyeq4FE=
+X-Received: by 2002:a05:620a:3194:b0:7e9:f820:2b72 with SMTP id
+ af79cd13be357-7ff2c51b1dfmr138787485a.72.1756539547138; Sat, 30 Aug 2025
+ 00:39:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250830-drm-limit-infoframes-v3-0-32fcbec4634e@oss.qualcomm.com> <20250830-drm-limit-infoframes-v3-9-32fcbec4634e@oss.qualcomm.com>
-In-Reply-To: <20250830-drm-limit-infoframes-v3-9-32fcbec4634e@oss.qualcomm.com>
+References: <20250830-drm-limit-infoframes-v3-0-32fcbec4634e@oss.qualcomm.com> <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com>
+In-Reply-To: <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com>
 From: Daniel Stone <daniel@fooishbar.org>
-Date: Sat, 30 Aug 2025 09:34:26 +0200
-X-Gm-Features: Ac12FXz1p7iZOdEEQR_vXRtXiF18jyko9t937NCSmf3jeVcnUDmrfFo9HX_W5zM
-Message-ID: <CAPj87rNMr-2ZeZ2Pqb5qG4Z-xtUyOVxbY635pw_PDEjVpd5-OQ@mail.gmail.com>
-Subject: Re: [PATCH v3 09/11] drm/connector: verify that HDMI connectors
- support necessary InfoFrames
+Date: Sat, 30 Aug 2025 09:38:55 +0200
+X-Gm-Features: Ac12FXzM9U8oA3u3fX5rkC_Acspb1Bpg3nyPrRsz__oJ7apEVkNTDxD29-I5hyE
+Message-ID: <CAPj87rNz7PPqZ7P4JSKdnizFaEoaBMf2VFBYbpVn3VNt1giU0w@mail.gmail.com>
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per driver capabilities
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
 	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
@@ -102,10 +101,19 @@ Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@lina
 	freedreno@lists.freedesktop.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
-> +       if (!(supported_infoframes & DRM_CONNECTOR_INFOFRAME_VENDOR))
-> +               drm_info(dev, "HDMI conneector with no support for Vendor-Specific InfoFrame\n");
+On Sat, 30 Aug 2025 at 09:30, Daniel Stone <daniel@fooishbar.org> wrote:
+> On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > It's not uncommon for the particular device to support only a subset of
+> > HDMI InfoFrames. It's not a big problem for the kernel, since we adopted
+> > a model of ignoring the unsupported Infoframes, but it's a bigger
+> > problem for the userspace: we end up having files in debugfs which do
+> > mot match what is being sent on the wire.
+> >
+> > Sort that out, making sure that all interfaces are consistent.
+>
+> Thanks for the series, it's a really good cleanup.
 
-'conneector'
+FWIW, the rest of the series is:
+Acked-by: Daniel Stone <daniels@collabora.com>
 
