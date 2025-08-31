@@ -1,145 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-71321-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71322-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8D6FB3D3BB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 15:46:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B247AB3D416
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 17:14:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 03630189A3C9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 13:47:05 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 690373BB3B5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 15:14:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6062C257820;
-	Sun, 31 Aug 2025 13:46:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B85E3267AF1;
+	Sun, 31 Aug 2025 15:14:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b="SxQv0gk+"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Nn3FK+LW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2008242D7B
-	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 13:46:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B71DB2475E3
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 15:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756647999; cv=none; b=tpjemedFVqkl85U4TKNe9pnBiQ9BWOyqhhVrxPhT8P3KE4Lnnc7q1BsS90AKOFu5XUFSngaRkWgSYj+0A/DGCV25joaCfbjx0RvyPci9f39LtGCH+9tRFWrUvY5HiS99n/m6mvCAPRa8/TF8OHi6XfvZTgI+9UPbufSK1wvxs2o=
+	t=1756653254; cv=none; b=CujlzC1+s0+kneiZBP/7ODmXd9Pa6WNQ5219lKD/3KiQwPQhcwavd2DBrFDwn+IjAya+TascxAF8fmSFFh4tdssnPAHjiD3SZyYfTcgkJ+a25NrAn9O21aFoSCq4fe1nlZCPXMkga0dXcCRHzwFGjy3+pt+1KQ1MRrTG+01faxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756647999; c=relaxed/simple;
-	bh=0d5wm8C4Q5yjpa9NOEPusF9Ma+0IGpCMou/z5myvIx0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MOpTn5TdHZJlNJPj0yQC34+hEJ8poGJUxSQRdL6PXjEjrz689cIjZeByrV1JOf+mESQoVm75zhZODZIowqdi+yHNmwkwVBDci70IOyWfDqV+PRT8bzTpXfBgyZSr5xwF8JdRjB1ndrLViIc3mqZ7oNziNKsI09xM1fJFq9WzXF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org; spf=pass smtp.mailfrom=fooishbar.org; dkim=pass (2048-bit key) header.d=fooishbar.org header.i=@fooishbar.org header.b=SxQv0gk+; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fooishbar.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fooishbar.org
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7e8704e9687so344628085a.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 06:46:37 -0700 (PDT)
+	s=arc-20240116; t=1756653254; c=relaxed/simple;
+	bh=DGJyra+rwgJAphZIeTb6FsB1qNLlyBd7vZfq76WHVp8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=V9tT79ZLRFmvIQWH0Lp1tAobWdMMFm1yDtNTZsEL8QiFFfEI4x65on+PJ0Q4nQxYuuJ6E0Z/7T7pwW8oZe6yz7n1+D9cUsxtiw3i4ms1IqWs+vM1CG0tuuBtembsAI2BrP5KzMNwAERWwbIkVr8HTQK73gANyvlG/BiMqIofG9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Nn3FK+LW; arc=none smtp.client-ip=209.85.218.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-aff08beb8b8so35249966b.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 08:14:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fooishbar.org; s=google; t=1756647996; x=1757252796; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jwybc7U/Gu47otp5cNNeYZoMPwQff+yr/8w72U7737w=;
-        b=SxQv0gk+gVRSkfvPkkfLfl7PHO+1eabhvWdBzNey1YHeu1Ir3/twY5tWUG/jAlCmDH
-         ZOELCk5K7wkvThoACMveqwcYZVjN1uKmZcVXozZZrt7VMx8gNUy/cFkBFPu9TW+IN+r2
-         R5g4kGTKS6d4YFsB6AVlcUKdjK/x6YtN+7/mxo6ciNGqbIhTaGi6neGZab9CBBMB/M83
-         8o3ED/hiBlzXmL7A19TMoy0QBHXLl9DsApb80+1pn9+yoU3V/DUG+WIsXXzYpTLbAe1K
-         rX9Ry2gfUAy3Nc+h6PJ0U4a+iap+AmxaQAWvNB1aa1ibgQ5eD+62V/VXGCrHmX+Sn9me
-         Depw==
+        d=linaro.org; s=google; t=1756653251; x=1757258051; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=C5B22inhBsHQPQ7rSsv0dytfBGuA96Htpzu5sxp54L8=;
+        b=Nn3FK+LW0t80ADXbkttn7niF3XoHFsfFPo9Uc/oUl395QO4nMaTYInRfE5I+/MHGwK
+         /DYEo6994c2ugw6yQ6Ozo4P9GPYmDnAxIycBDVfPF0Le1bR7GzLPdDCsRSCrJY4mGo9e
+         PCNSqRo/H9N1G4OYeK21jpaXWE4yZNCaNAT4tQ4umuZoVJnU9fCyJHyqN+q7ONuijJVK
+         pWBfRmHxl0qwFJvn/oHmBx8eGzjF6ApEGvlg2Koiq9VnJNYLyCNp6QiGaiE9X2erU92b
+         MYYVFzo3pJLbo03HiEbmLfRdK3GmH+vYYhziqOkqNsY/G21c/Y1UuLFVhcsCm0ZAUWlg
+         uyGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756647996; x=1757252796;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1756653251; x=1757258051;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jwybc7U/Gu47otp5cNNeYZoMPwQff+yr/8w72U7737w=;
-        b=nOJIe6na8ahsk27/OKhokz8R5yCHp1OPozgKkoP9l2nQ1GWpkRlpI1KA1NA+tDperj
-         bcsRXCRJ4sMM5ftEbUZMSqxD4vhNaOK6A4Ey5xfqS/1VESbgdxK+jhsNcMSOAQX/RQ2s
-         OYOQxi3Dpu9x2SOAievNY9O8i+2oOLLpAJnbvnh2KDIDD+TC4SHkdx/IkJHQEd0XPQ1i
-         clWHmc32P1SHISEDpJJgOHNQJyMBmaVGw4n5ilkJ7m2Vi7QiFJVUQRpNhQyKB0zmbku/
-         dBENoFjWqvccwew5qepA/98+fPxpNrqRGFabDONx48llS1SUkbBrU5A5UwHTge1oyur/
-         7wmw==
-X-Forwarded-Encrypted: i=1; AJvYcCXSn8IZZDunqT1R6bcfKdEAiKYrG2RtrH37KnNXp9JQNxMHXn5lq6Ce5Z/U+W2FLeXVUVfPi21oOmdzIQc5@vger.kernel.org
-X-Gm-Message-State: AOJu0YyEQ7nWzJjYzTxm3OyqPdKlxKuYOWJSIme/Xy/v2uW+uVubnjG9
-	WWA/F1fxgTmb+EJ2IUy9Ah+dgpfLrOIP2m9CJGEvgVGrbOqL6ArD4DEXF/FPXNUteEd676xu+C1
-	66aLk70vtCPbbC7gi7nNu2bly7+aUsCvDMZJAWPnH9g==
-X-Gm-Gg: ASbGncvdQ8aO0HSu5Yoq/hzF9GYOAjqzDj2XD1BcRbRUiji/1/8FXMzT9aT+LaaMMTd
-	rZIG9831aqRVxuQO9x2ZCnQAUN44Ucklb7pe2ZzeHmAj0RQa4x995k9VFEqOvsxUshke5kiZiix
-	NU4sejTfWiDL7aVu+2rTj60lJtCJ1R6RKvLsCrKhCMc/kJ7PwxzyiRKpTZanTMhbidSUjJh29fA
-	SFupQ==
-X-Google-Smtp-Source: AGHT+IF0dh6mtaD+ci0SXGWWOl3LWwfmYnKKOgfGlK7FZ7iXiuG8d9Mqq2iCDHrHKRWGSRl6Gppx/kRr2i15hBvQ/kA=
-X-Received: by 2002:a05:620a:c43:b0:7f7:c2a3:eaa5 with SMTP id
- af79cd13be357-7ff2b9817c6mr503403385a.68.1756647996439; Sun, 31 Aug 2025
- 06:46:36 -0700 (PDT)
+        bh=C5B22inhBsHQPQ7rSsv0dytfBGuA96Htpzu5sxp54L8=;
+        b=kWobH7DUGJmSFwXH4IHtp/T1ij+qOBGocPca5Ebxuvtf/MiapoUJXtzUY4o+wgbvkw
+         CznNSSGZ5U3TdhazUKC9XotkMsZdYJGoBWDqZfNlvwyKVwZGBc0GuUf00U+C/1pI1Iv4
+         CukJK7hoFTX3C7RciCNIfX1oro5r/WlLhj1kCcKUzCdyUAX81RHCGqchiu/xt6X1grI4
+         OtvXVasfUXNgaKfaugUwImBb+3RtHVDW3kjhosgFKNzJQ2D11LhodQ2cZlIAZWZqK2HL
+         1TvgtxIkHi/sL6GyVlg/7kD5VYeS96cR5vUXxqDL3VW7eZ4Nrhici2/Or2bNL918yqhL
+         h5wQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVOlDGHr5RtAmlFjcM3Zo1VTOOXUBXMebffU7LLDU5yKGSPcMlxAQIJ8gG8Bm/QoXqCClR/SAaVge6yhq2Y@vger.kernel.org
+X-Gm-Message-State: AOJu0YxpfjnfzJRtTR4fAdLNpuS3AAolyIfIIw7aK+I7ZTrhg5I9zUYL
+	rFkUoVBNIQu2/x99ngpv0lk7MT80nfmk6ju45r2iOZ41F4Txlz0DxS7y04DQRxE3/NY=
+X-Gm-Gg: ASbGnctpr4kKUge996+5dASku36lRUEhfBa97gLEGXm74w8rUZedbPHVZcE2fzALlVI
+	zSMbUIHSSnpq9iUaHFoWSSwC34rM68rHPzr8i3eftJ1Mtsgdk0a9+mUpVnbbmFSQp707AIzDzWJ
+	vx9pCjbyKPPHiWmjo101UguLEvIIqM4J5rjH85KCI3YXpdd5mFpRAVcsNwme26a8tJVzB4gr9qr
+	eg5Y0K3BeNS6ldZ7lpeHDy2hWBlVZ3LV2L1Mve5cuaDGZ0J5tYKA0ss3LKV0glzQ1nOxj0ko7Of
+	qvm7hA6cWqnUeOzPmSrDX5aBVCv5erz4agJELOyUZFFX7FssMWJJSVaQcVROsBP8bEJ5qu/lmRi
+	lXxicDTvp5Blk9SBBciykO118EwpNzX5VPw==
+X-Google-Smtp-Source: AGHT+IGYNSQVqee984CDJ+qU/cYBl5yGpRS0pEsogwANun04auLoq11OzPQ8DtrTICXP4aURf50JCw==
+X-Received: by 2002:a05:6402:13d1:b0:61c:d24d:e2fa with SMTP id 4fb4d7f45d1cf-61cfe7eb745mr4818387a12.2.1756653250965;
+        Sun, 31 Aug 2025 08:14:10 -0700 (PDT)
+Received: from kuoka.. ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-61cfc5306e6sm5345361a12.47.2025.08.31.08.14.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 31 Aug 2025 08:14:09 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH] ASoC: codecs: lpass-wsa-macro: Fix speaker quality distortion
+Date: Sun, 31 Aug 2025 17:14:02 +0200
+Message-ID: <20250831151401.30897-2-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250830-drm-limit-infoframes-v3-0-32fcbec4634e@oss.qualcomm.com>
- <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com> <57ekub6uba7iee34sviadareqxv234zbmkr7avqofxes4mqnru@vgkppexnj6cb>
-In-Reply-To: <57ekub6uba7iee34sviadareqxv234zbmkr7avqofxes4mqnru@vgkppexnj6cb>
-From: Daniel Stone <daniel@fooishbar.org>
-Date: Sun, 31 Aug 2025 15:46:25 +0200
-X-Gm-Features: Ac12FXyJd7t7ZABF85TqQwXSEhwFfQP0deD84tmrq8IHkkpEGuVOeuzNQcUs-Sw
-Message-ID: <CAPj87rOSb90S_TeA8Cu5kd-M8bbfiE0fvPzgr9Gr4e9_rfZeFQ@mail.gmail.com>
-Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per driver capabilities
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Sandy Huang <hjc@rock-chips.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
-	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?UTF-8?B?TWHDrXJhIENhbmFs?= <mcanal@igalia.com>, 
-	Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, Liu Ying <victor.liu@nxp.com>, 
-	Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
-	Sean Paul <sean@poorly.run>, Marijn Suijten <marijn.suijten@somainline.org>, 
-	dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, 
-	linux-sunxi@lists.linux.dev, linux-arm-msm@vger.kernel.org, 
-	freedreno@lists.freedesktop.org
-Content-Type: text/plain; charset="UTF-8"
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3285; i=krzysztof.kozlowski@linaro.org;
+ h=from:subject; bh=DGJyra+rwgJAphZIeTb6FsB1qNLlyBd7vZfq76WHVp8=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBotGa5TMRfOjWazCtrTvyznajNWZMNJZ9mRXGNk
+ 7G54joliqiJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaLRmuQAKCRDBN2bmhouD
+ 181LD/9uEBEG/Ygk8wzpQieaPDZqEiuUDRuaegIE9lIa10NkNgHeqQzj130FzD6iKrpu6re7a1H
+ VvpsJKQRl4WurWeou12C27HM77g6juxbdYWBR391W1NDlXKCsXriG4VOdxmgvPIv9N259gZ44dT
+ aecIK1qgnPVVYDlZlVrpGBZ0XPZT+A9Zyf9a95BRDBWh88OIu4qBlCkR0k38OO4kV0/vFyYuygx
+ BfB4hXeDrwGwb5IybkQCIGU61xaysjdRjaz3vdSyopMi7Q2WW4uhVST5pco4aW1B2KpUmk3uCGW
+ UPLZE10HBUoXd+LrvcCJuNgqrJ2Ls6+ardjnyHV1Qt7X5gFEKefu95WDYEMR3mejNrHAIKdOQ+C
+ 7lTea2lxG2Yv53SA+iBsBUxqiGaArcyCelLhhZTwi/P5HrV74TjuxB5dvp8DHE0z+NZfEwxzQRb
+ +lrzZ1CwzVDXJE1L89slqj7j6VaXfuD785KHSc1OGg9u2LjhdK4AKU1CQqSFi0LymonNUbOmOC3
+ EeZ2py1NPqJqE7yUUOZifv2hQujFLZTJStFdznkWa7CbwiuY5lYF0EFZc+hjRdZ2a9iAUHiL/Zc
+ 421g5tW6MF3j4jfdnhgngH6lJ5nF66tM8NfSEj2zH1zYi2SyTXT96pD5zIC1gQqXg97dEzGN5Jf boPUPr+N8hTnioQ==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
 
-Hi Dmitry,
+Commit bb4a0f497bc1 ("ASoC: codecs: lpass: Drop unused
+AIF_INVALID first DAI identifier") removed first entry in enum with DAI
+identifiers, because it looked unused.  Turns out that there is a
+relation between DAI ID and "WSA RX0 Mux"-like kcontrols (which use
+"rx_mux_text" array).  That "rx_mux_text" array used first three entries
+of DAI IDs enum, with value '0' being invalid.
 
-On Sun, 31 Aug 2025 at 00:29, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
-> On Sat, Aug 30, 2025 at 09:30:01AM +0200, Daniel Stone wrote:
-> > I know that dw-hdmi-qp can support _any_ infoframe, by manually
-> > packing it into the two GHDMI banks. So the supported set there is
-> > 'all of the currently well-known ones, plus any two others, but only
-> > two and not more'. I wonder if that has any effect on the interface
-> > you were thinking about for userspace?
->
-> I was mostly concerned with the existing debugfs interface (as it is
-> also used e.g. for edid-decode, etc).
->
-> It seems "everything + 2 spare" is more or less common (ADV7511, MSM
-> HDMI also have those. I don't have at hand the proper datasheet for
-> LT9611 (non-UXC one), but I think its InfoFrames are also more or less
-> generic).  Maybe we should change debugfs integration to register the
-> file when the frame is being enabled and removing it when it gets unset.
+The value passed tp "WSA RX0 Mux"-like kcontrols was used as DAI ID and
+set to configure active channel count and mask, which are arrays indexed
+by DAI ID.
 
-Oh right, that's really interesting.
+After removal of first AIF_INVALID DAI identifier, this kcontrol was
+updating wrong entries in active channel count and mask arrays which was
+visible in reduced quality (distortions) during speaker playback on
+several boards like Lenovo T14s laptop and Qualcomm SM8550-based boards.
 
-> Then in the long run we can add 'slots' and allocate some of the frames
-> to the slots. E.g. ADV7511 would get 'software AVI', 'software SPD',
-> 'auto AUDIO' + 2 generic slots (and MPEG InfoFrame which can probably be
-> salvaged as another generic one)). MSM HDMI would get 'software AVI',
-> 'software AUDIO' + 2 generic slots (+MPEG + obsucre HDMI which I don't
-> want to use). Then the framework might be able to prioritize whether to
-> use generic slots for important data (as DRM HDR, HDMI) or less important
-> (SPD).
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Fixes: bb4a0f497bc1 ("ASoC: codecs: lpass: Drop unused AIF_INVALID first DAI identifier")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Yeah, that sounds good! I wonder if we want to surface that from the
-debugfs interface: maybe just files named 0..$numslots with the
-content of the infoframes, one named 'slots' with the integer index,
-which infoframe type it's currently carrying, and which types it's
-capable of carrying. Then to preserve the current interface, symlinks
-from the infoframe type name to the slot index.
+---
 
-Cheers,
-Daniel
+Reported via IRC.
+Fix for current v6.17-RC cycle.
+
+I will be investigating rest of lpass macro codecs a bit later.
+---
+ sound/soc/codecs/lpass-wsa-macro.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
+index da6adb3de21d..d7eec9fdaf9c 100644
+--- a/sound/soc/codecs/lpass-wsa-macro.c
++++ b/sound/soc/codecs/lpass-wsa-macro.c
+@@ -368,6 +368,7 @@ static struct interp_sample_rate int_mix_sample_rate_val[] = {
+ 	{192000, 0x6},	/* 192K */
+ };
+ 
++/* Matches also rx_mux_text */
+ enum {
+ 	WSA_MACRO_AIF1_PB,
+ 	WSA_MACRO_AIF_MIX1_PB,
+@@ -465,6 +466,7 @@ static const char *const rx_mix_ec_text[] = {
+ 	"ZERO", "RX_MIX_TX0", "RX_MIX_TX1"
+ };
+ 
++/* Order must match WSA_MACRO_MAX_DAIS enum (offset by 1) */
+ static const char *const rx_mux_text[] = {
+ 	"ZERO", "AIF1_PB", "AIF_MIX1_PB"
+ };
+@@ -2207,6 +2209,7 @@ static int wsa_macro_rx_mux_put(struct snd_kcontrol *kcontrol,
+ 	u32 rx_port_value = ucontrol->value.integer.value[0];
+ 	u32 bit_input;
+ 	u32 aif_rst;
++	unsigned int dai_id;
+ 	struct wsa_macro *wsa = snd_soc_component_get_drvdata(component);
+ 
+ 	aif_rst = wsa->rx_port_value[widget->shift];
+@@ -2224,17 +2227,22 @@ static int wsa_macro_rx_mux_put(struct snd_kcontrol *kcontrol,
+ 
+ 	switch (rx_port_value) {
+ 	case 0:
+-		if (wsa->active_ch_cnt[aif_rst]) {
+-			clear_bit(bit_input,
+-				  &wsa->active_ch_mask[aif_rst]);
+-			wsa->active_ch_cnt[aif_rst]--;
++		/*
++		 * active_ch_cnt and active_ch_mask use DAI IDs (WSA_MACRO_MAX_DAIS).
++		 * active_ch_cnt == 0 was tested in if() above.
++		 */
++		dai_id = aif_rst - 1;
++		if (wsa->active_ch_cnt[dai_id]) {
++			clear_bit(bit_input, &wsa->active_ch_mask[dai_id]);
++			wsa->active_ch_cnt[dai_id]--;
+ 		}
+ 		break;
+ 	case 1:
+ 	case 2:
+-		set_bit(bit_input,
+-			&wsa->active_ch_mask[rx_port_value]);
+-		wsa->active_ch_cnt[rx_port_value]++;
++		/* active_ch_cnt and active_ch_mask use DAI IDs (WSA_MACRO_MAX_DAIS). */
++		dai_id = rx_port_value - 1;
++		set_bit(bit_input, &wsa->active_ch_mask[dai_id]);
++		wsa->active_ch_cnt[dai_id]++;
+ 		break;
+ 	default:
+ 		dev_err(component->dev,
+-- 
+2.48.1
+
 
