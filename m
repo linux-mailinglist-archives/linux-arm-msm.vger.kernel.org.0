@@ -1,710 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-71309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 430C9B3D1C9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 12:00:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 250B8B3D1D1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 12:05:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5D2C41888F1F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 10:00:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E48383B712C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 31 Aug 2025 10:05:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2B9D23F405;
-	Sun, 31 Aug 2025 10:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 019A1225A38;
+	Sun, 31 Aug 2025 10:05:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kg/QekD6"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ni1a+nfF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0AD421CC5B
-	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 10:00:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879951FFC46
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 10:05:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756634432; cv=none; b=sDJGBI8UJChuATNdU75NzYWRIY4ls6bITAZqOQtvtP7LRuTfB1T7/giZ17+wLitZAaCeOVWBFC8gc6PR+7Be+Z3WZpp3CS5bSmWsOLbS9PhTja5Fbrn4P2Zblmis8HRp62H7xwqf+8o4udf4T3ZEMnKJTaHNrv1wQzuFTZRfVmc=
+	t=1756634714; cv=none; b=h7+9vSQONDp2m09auP5z/8qSgZOZAPK0vNeYGFbwccybPw0FpitejpNyg89WykntRq5nWNRcdRkl+lE8PTdOF3i1/4uzMzqHVd6V4vzESFYHlHgcsXWJbwLALLpP0wQnyQy/Q9y8ra+7RZR8SvqpcXz7gewcSLg1dVojp/bBb9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756634432; c=relaxed/simple;
-	bh=iFmbQb9JSPT9Qnq1c89NuEhFG4tIwLVQr7w8umJhtYg=;
+	s=arc-20240116; t=1756634714; c=relaxed/simple;
+	bh=qgZOJ23E7GKrRrkmvhIvbpHwFEbyncXhUWLXTsvOz7g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SVn+qaEHFGaaOhGCNQEP8IfbicTvHsQI/h47I3hnIidWcdQKtc9J09F8JGphxi7NuOzmgRboa9A/zQQyG5xPed/sPjo4lBVRK+cqsmj8mTTFkIZ3gW4oYsfY0RzjfwWT+LaYc39nZ3PlB6dI9xb4NoO5JINo4cSa+5eW2PU4VLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kg/QekD6; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=Owk2y2SydDVnsw/YKDTVPOM/ZbGzc+0GUh1QLLuAT/QLd/QHfRa/ZWUzrEZZV2oy54genR7lTH755cvtMLWPAYs3ApCZ8lhXz9AUsNmOYcXqdAkHwqM7lgOOxUCo6Cm+/8Avvi/8fKET+Kp77sQXoJaUsMREzOTUUyjFGGxxclk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ni1a+nfF; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57V7h4dN022071
-	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 10:00:29 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57V8sV5j021569
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 10:05:13 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	qD5oRl6PaN2DjJNUuUSysf512mj6mjwHEypDav6WIT4=; b=kg/QekD6M8g46WOp
-	Ex/OpvguNct1GPmddlTPxc0VbSNcgUL1OUGaOQ1UKSspO/dLtVwW27H/oIQFn0oV
-	3iTHam2elpP1qaggWIkGaiYRcp29t3jX47YAHmk3vpb2SRYg1KbfOfapGsjlwb92
-	M26mbUsLRojMQH/Wx1BSKqOzCIAY01SJ0uxlEljF22YI6NR/OLvNYJauNst8LZbZ
-	6AagqSqgaFZlj//rR+CFLVXbgO+rfVMZYyUatbWIZQUfOR0sLrP6gx4bHx+TXn1u
-	5bBD0RDjnMkbJp+8io56Mqf2ca0A/wSizlD0UgeaXuqmDr13lziooGXMS45bv1IO
-	le1Wuw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urvysw0n-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=WtmVK7p/SotPayBLtQrG1bWg
+	qezjRJbwZ0ptisq/x4g=; b=ni1a+nfFBepFZIUGTSVLat6LgmRUrjZdFjbzB7fL
+	TCcZLbzXWz/J8sSwjtc4VqCUG2/yHcV9oYX5Xz6gZ21Ouw1BXyzfWMMpbtHhlaZz
+	mojI06occsqeRs5L2TQDU/xlDDbuCZcZcS5YLFu0V6TGvNFmM6UooS291/2pi51X
+	f2Xiak/bHNEV8OPO8bYUl4AiYB+zNmxj76aBWhkiduz38qvQWysgeBco/Sff0aFE
+	J8pg0ylTrC9DccUS3nDzZPWSGzk72/CBropCQdd0jzhS2TRrVUMGR7b4mocRgHbJ
+	dfPrfcPnn8IdH57tBMQAbAs/RRDD3IOb6IBVcsdliTMsgA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48utk8ssex-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 10:00:29 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b32d323297so5810901cf.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 03:00:29 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 10:05:12 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b32fe42b83so2439601cf.0
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 03:05:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756634428; x=1757239228;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qD5oRl6PaN2DjJNUuUSysf512mj6mjwHEypDav6WIT4=;
-        b=ODuoBWJsQwCieaZE5Rzqx0zZwsxsUZABpxAykjuclIKvp6EPhkHZ6uS2+LZfiV6Kwq
-         0+ktreIPYSAGfyaqEkkbs/9bQiThGpB1mP3LMvkmEFq4XE46Nn4vhpjn7G5hFFHGH13x
-         bWdMI4e2vx5YgEr1j+cadWDO6nzOnYI4VVCSlfyf+hOxPYYx8RG9uwW28I4UMNnZ00Hz
-         ui8CRTEFu136Zv2i/lteUfh30e6JAf6VtlqCZ3EcMh0eguzM0l6J8gH9Po4cbJyhFiyD
-         s/Qff0FMUvhPb1XAsekd+ZjXYxxXGA8l9oM5plMFZqAlN4/ZvA4Xw4jHe4hcRCdVs5Gd
-         fezw==
-X-Forwarded-Encrypted: i=1; AJvYcCUoFO4dZHQrmFJKULXeYHVWJD5Zm+BtDlhdfBF72jqDNC99kSFqHaCwUtRng0tBqzhKsOlOp40NjU826QQ9@vger.kernel.org
-X-Gm-Message-State: AOJu0YygeD3xsQAZzswIivby3krF2l6grXg8J7l4LmZPRJOlrXz9Djev
-	PtrrRhTUoEdkIWcrK7UHtHEYViLIO5gQDdhzaq8XoMafKu0RLOgQjLXFWPSOGK/D3sVirV5xsGA
-	3H+vWH2BXzMhyEAczAx+mSvPYg95IiOjC88yN0P5EV2nxkETlYr1xGlJtPvk5LwHY8N32
-X-Gm-Gg: ASbGncuYedfVmrDImGrG5dp6ssz8Sg3fS0udI1EGImITr0L0kNaObj2byH9VKsm/8SL
-	pVSRVOjP3pyc36c87PBurHHq8ntVqipPsVgh/ThVIMI1w8vQfIFpQQf8yfGA/PH6IoxSxwcwHX2
-	mDGBLjidWcmxyu5/7b8J44lV1WnVOb5UfwC3/NQruAJFW0DNk61LG5+EHHQlA81yWVnhxYLmLNk
-	vYNmP5kY5FVsU75Y17q9DF2epR2cl9lvdpkxcyiJmNRVLGjqFTV/vebnwWZ8U1yGH+SrWgCsQGq
-	4IbXF/bP6RjegG+b5aN5XiIRy3CD9TOhBHkwQa3j3IVzWuwyKU/Gf8qSM8YFCRJgaEA13wVaqPA
-	sNQ+9BaPhB6DwzvoM0gX4IhFzgsZRTfJ6/WYEGmq/RvB4R0rUduTU
-X-Received: by 2002:a05:622a:1812:b0:4b2:94e5:9847 with SMTP id d75a77b69052e-4b31dcac538mr59712591cf.74.1756634428112;
-        Sun, 31 Aug 2025 03:00:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFpiHqGgSFYOFPDu7JwQJBWckE87BwsT8u/A9LiwCj49Zah2l6SdAxeMKGdwGN9bMfC2Cr/A==
-X-Received: by 2002:a05:622a:1812:b0:4b2:94e5:9847 with SMTP id d75a77b69052e-4b31dcac538mr59711811cf.74.1756634427339;
-        Sun, 31 Aug 2025 03:00:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1756634704; x=1757239504;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WtmVK7p/SotPayBLtQrG1bWgqezjRJbwZ0ptisq/x4g=;
+        b=i5i3LQu08nyHwR7juGZCfCy6gjwWcWl9mu6QYe7/aBvZ/9zkrMVSTtHerOoNWGBlWC
+         fCse5n3Eb3I+8YNyPbDQayG0pGcUg8OpczOJdFi0L14nRrMN2DTD+DzsikDQgHiYiHFP
+         HC8n0V2T0yU9du3/GfkGsfc9/XlOj1Pp+ZNeK9RKfWCPeHjBWE7YvAvQrNBUmAnoWSky
+         iq0JNHBVeTvXTQMP7vpMvMg7lxGilsr3rGZ3U/lGiByTHh4amGIsZCbEdPPGxKcyXwzy
+         yMwRZbPuxPC73uLMV0O1up3HEN08ikVWp/rJWDFPrplvkatul8x0g9kzDaZlW1PodK2p
+         xO6w==
+X-Forwarded-Encrypted: i=1; AJvYcCXf+eZjGOiJRZnxj9lmuyOZ2KOLYNrTFcxrDZoBVOT9Hvjq20PEY1xgh44TSutXQ0f3Cgacbhi5ekPM7A3q@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+KYfwSuitozqphVOuCvzTHyTw7yHxKQKnpl5GRTtGg7OtWmcB
+	R35BLtrtFdmJv/op68/DFUY/fg9UcEO2CM+sx3gIpo80dqjlJpC5wMsVhW4bi/5efZ7dVv8LVXh
+	1tlFYM9oJK+hwHs314RU0lzE+rErxHN8hNkt+v75fidLrE2q2TPQ3kK3ZfGekEF1XvQuA
+X-Gm-Gg: ASbGncuY/uRWjm0AuvoKEmPfub68SD7M06qE6hfhbyNAdAwpcKjk2Whwd7dJkLDs2yN
+	HGa6Xl2OIlCF3pmvhk4vZKOAwopL+Ev3lZ9SPwtJZIp908v+ozOgru0qYE9oGqU6bPJWQ1rfmCu
+	uPhGs9/NyF4sICPisR7ya+KqsoV9VKeYjb/jPuPVKHhO20oe2jSBxV2Jry6mIRhyaxcfnBIW8fz
+	mYa9rOPri0itgiBNyVrQYoGad5BQp/3isd13a4/2QuwcNY8c7L18KzGk0pvVjURwzI9JW+oTNQU
+	CzKxrQpKPlwS56PmoU4G21wTsrKaJ3yMrVnaDDmVum8yftz1TOIATToPUOEaLc6SqU1WZIdsYnQ
+	fDgO98Sj7ZX2fD5SFqPVwfS8MU0fo1mZE8hW2ikKYvQT7RwSGngxX
+X-Received: by 2002:a05:622a:259a:b0:4b2:ed82:29d5 with SMTP id d75a77b69052e-4b31d8526bcmr50235261cf.33.1756634704033;
+        Sun, 31 Aug 2025 03:05:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHb2lKo0iJNscirT3bEFWvA/JJp5w1yC0Ywe+zyzyU6LqWGRFeZc7bNUVhMX/eTELojDizGSg==
+X-Received: by 2002:a05:622a:259a:b0:4b2:ed82:29d5 with SMTP id d75a77b69052e-4b31d8526bcmr50234921cf.33.1756634703397;
+        Sun, 31 Aug 2025 03:05:03 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f79801b2csm257066e87.117.2025.08.31.03.00.25
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-55f6770d9a8sm2101064e87.40.2025.08.31.03.05.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 31 Aug 2025 03:00:26 -0700 (PDT)
-Date: Sun, 31 Aug 2025 13:00:23 +0300
+        Sun, 31 Aug 2025 03:05:02 -0700 (PDT)
+Date: Sun, 31 Aug 2025 13:05:00 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: =?utf-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Otto =?utf-8?Q?Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
-        Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Adam Skladowski <a_skl39@protonmail.com>,
-        Sireesh Kodali <sireeshkodali@protonmail.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Srinivas Kandagatla <srini@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
-        iommu@lists.linux.dev, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, linux@mainlining.org,
-        Dang Huynh <danct12@riseup.net>
-Subject: Re: [PATCH v7 4/6] arm64: dts: qcom: Add initial support for MSM8937
-Message-ID: <fv4jz6unxpncqazgptet4ie67vdrqqnq3owpjuh7huqvepoozd@yelivqgci2om>
-References: <20250831-msm8937-v7-0-232a9fb19ab7@mainlining.org>
- <20250831-msm8937-v7-4-232a9fb19ab7@mainlining.org>
+To: Dzmitry Sankouski <dsankouski@gmail.com>
+Cc: Chanwoo Choi <cw00.choi@samsung.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>,
+        Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: add mfd/max77705 definitions
+Message-ID: <4atqwegfaq5ivrd6oypsfev3xpgfjhqw3hooxh4mit3fl23rtq@a5vbqtts46vv>
+References: <20250831-starqltechn-correct_max77705_nodes-v1-0-5f2af9d13dad@gmail.com>
+ <20250831-starqltechn-correct_max77705_nodes-v1-1-5f2af9d13dad@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250831-msm8937-v7-4-232a9fb19ab7@mainlining.org>
-X-Proofpoint-GUID: LpRwjhR-zxLrpnqiAl-VQBv2TdDbXHJX
-X-Proofpoint-ORIG-GUID: LpRwjhR-zxLrpnqiAl-VQBv2TdDbXHJX
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX3Z7pAHP1oNx7
- 81xvBaxZOmchawjELKvwFdFwSrQ7RtRyXbMYrhHTuXW6s73cTo0dgyAdWU77eF2Ir72wo4e0XAM
- 5kYipVTgfttgahpwA1qzMz4leoOq1chUMXnZmmY0Rpjrx4dj3/H2e5l5c+30EgixbSDAK3TTw1m
- 5+D5y20x3I4EzHDuUYAVjN2ZWk0oMNva9HacPttTpjY8smlve5TX5ez4VPkmR83ZhYtx6DqH8Z4
- OYPcD81i3VEXGxG6CgNW4J7zJHAy9ApUGZDsptcIXHBn4I67g9rpEzPkbcaJuBwPYrAmB8rzrqC
- zFyYTRTz2ni/kd4snWKeWqqiFFYgAITVOyVi2vF0oa597YNEOMeKhuvUcRJKYhenycdLtnQlcFY
- l0JfRYfA
-X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b41d3d cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=2OwXVqhp2XgA:10 a=bBqXziUQAAAA:8 a=OuZLqq7tAAAA:8 a=BfrjIcddtau6jJL3F9YA:9
- a=r_sqX3LX-aZnKoI4:21 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
- a=kacYvNCVWA4VmyqE58fU:22 a=BjKv_IHbNJvPKzgot4uq:22 a=AKGiAy9iJ-JzxKVHQNES:22
+In-Reply-To: <20250831-starqltechn-correct_max77705_nodes-v1-1-5f2af9d13dad@gmail.com>
+X-Proofpoint-GUID: kKLhhldIyKWc8Z2ANCWyqC7MwHkVI7O2
+X-Proofpoint-ORIG-GUID: kKLhhldIyKWc8Z2ANCWyqC7MwHkVI7O2
+X-Authority-Analysis: v=2.4 cv=ccnSrmDM c=1 sm=1 tr=0 ts=68b41e58 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=2OwXVqhp2XgA:10 a=pGLkceISAAAA:8 a=pNwjqshDI-g99FjbY1cA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDA0MiBTYWx0ZWRfX4tudGXn4a7uf
+ Vg6fUKEx7Q8cCi3D7kUAkSiZptfej8osZWWlV1LS2E2bIkvmHgMTSh0R+1zqKrhqf5Ts9hXpBpF
+ XQrEpkBaC7isCDVKrjCyedSNf6HRQcpzD/8FyJ4MyOAY4sQro47kGL7sl9EfzxfVadbREUjS0QM
+ ak6orGDbRrPENnX5hqatcK0MxJnUdZOPBehl7FXpqStYIglAVvrpqlStMu+ZLYhRHwamykAx9bm
+ 02JZVHpxEH0isF0jQgj9mALHpE8UerwIsDq9wGy554Urcf93CWXfTF0vqeKaLRw8HsXZvgLJNVz
+ ICrAx3M8wzrUVSSZWBtV8tDitg88uvIpOmwX5mc0zmJqC6ltZVEOBrnam0hfsihQ+l4IXfTenSn
+ 9mHW8KUF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-08-31_04,2025-08-28_01,2025-03-28_01
+ definitions=2025-08-31_05,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
- impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
+ adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ clxscore=1015 suspectscore=0 spamscore=0 bulkscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300027
+ engine=8.19.0-2507300000 definitions=main-2508300042
 
-On Sun, Aug 31, 2025 at 12:38:16AM +0200, Barnabás Czémán wrote:
-> From: Dang Huynh <danct12@riseup.net>
+On Sun, Aug 31, 2025 at 01:21:21AM +0300, Dzmitry Sankouski wrote:
+> Add a dt-bindings include file for max77705 devicetree definition, define
+> available irq numbers.
 > 
-> Add initial support for MSM8937 SoC.
-> 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> Co-developed-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
+> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
 > ---
->  arch/arm64/boot/dts/qcom/msm8937.dtsi | 2134 +++++++++++++++++++++++++++++++++
->  1 file changed, 2134 insertions(+)
+>  MAINTAINERS                        |  1 +
+>  include/dt-bindings/mfd/max77705.h | 16 ++++++++++++++++
+>  2 files changed, 17 insertions(+)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 020d7aa13188..82f500cf3c02 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -15166,6 +15166,7 @@ F:	drivers/clk/clk-max77686.c
+>  F:	drivers/extcon/extcon-max14577.c
+>  F:	drivers/extcon/extcon-max77693.c
+>  F:	drivers/rtc/rtc-max77686.c
+> +F:	include/dt-bindings/mfd/max77705.h
+>  F:	include/linux/mfd/max14577*.h
+>  F:	include/linux/mfd/max77686*.h
+>  F:	include/linux/mfd/max77693*.h
+> diff --git a/include/dt-bindings/mfd/max77705.h b/include/dt-bindings/mfd/max77705.h
+> new file mode 100644
+> index 000000000000..34fcf1642e2d
+> --- /dev/null
+> +++ b/include/dt-bindings/mfd/max77705.h
+> @@ -0,0 +1,16 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +/*
+> + * DTS binding definitions used for the MAX77705 PMIC.
+> + *
+> + * Copyright (C) 2025 Dzmitry Sankouski <dsankouski@gmail.com>
+> + */
+> +
+> +#ifndef _DT_BINDINGS_MFD_MAX77705_H
+> +#define _DT_BINDINGS_MFD_MAX77705_H
+> +
+> +#define MAX77705_IRQ_CHG	0
+> +#define MAX77705_IRQ_TOP	1
+> +#define MAX77705_IRQ_FG		2
+> +#define MAX77705_IRQ_USBC	3
 
-> +	};
-> +
-> +
-> +	firmware {
-> +		scm: scm {
-> +			compatible = "qcom,scm-msm8916", "qcom,scm";
+There is usually no need to define IRQs as bindings.
 
-"qcom,scm-msm8937", "qcom,scm"
-
-> +			clocks = <&gcc GCC_CRYPTO_CLK>,
-> +				 <&gcc GCC_CRYPTO_AXI_CLK>,
-> +				 <&gcc GCC_CRYPTO_AHB_CLK>;
-> +			clock-names = "core",
-> +				      "bus",
-> +				      "iface";
-> +			#reset-cells = <1>;
 > +
-> +			qcom,dload-mode = <&tcsr 0x6100>;
-> +		};
-> +	};
-> +
-> +	memory@80000000 {
-> +		/* We expect the bootloader to fill in the reg */
-> +		reg = <0 0x80000000 0 0>;
-> +		device_type = "memory";
-> +	};
-> +
-> +	reserved-memory {
-> +		ranges;
-> +		#address-cells = <2>;
-> +		#size-cells = <2>;
-> +
-> +		qseecom_mem: reserved@85b00000 {
-> +			reg = <0x0 0x85b00000 0x0 0x800000>;
-> +			no-map;
-> +		};
-> +
-> +		smem@86300000 {
-> +			compatible = "qcom,smem";
-> +			reg = <0x0 0x86300000 0x0 0x100000>;
-> +			no-map;
-> +
-> +			hwlocks = <&tcsr_mutex 3>;
-> +			qcom,rpm-msg-ram = <&rpm_msg_ram>;
-> +		};
-> +
-> +		reserved@86400000 {
-> +			reg = <0x0 0x86400000 0x0 0x400000>;
-> +			no-map;
-> +		};
-> +
-> +		rmtfs@92100000 {
-> +			compatible = "qcom,rmtfs-mem";
-> +			reg = <0x0 0x92100000 0x0 0x180000>;
-> +			no-map;
-> +
-> +			qcom,client-id = <1>;
-> +		};
-> +
-> +		adsp_mem: adsp {
-> +			size = <0x0 0x1100000>;
-> +			alignment = <0x0 0x100000>;
-> +			alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
-> +			no-map;
-> +			status = "disabled";
-> +		};
-> +
-> +		mba_mem: mba {
-> +			size = <0x0 0x100000>;
-> +			alignment = <0x0 0x100000>;
-> +			alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
-> +			no-map;
-> +			status = "disabled";
-> +		};
-> +
-> +		wcnss_mem: wcnss {
-> +			size = <0x0 0x700000>;
-> +			alignment = <0x0 0x100000>;
-> +			alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
-> +			no-map;
-> +			status = "disabled";
-> +		};
-> +
-> +		venus_mem: venus {
-> +			size = <0x0 0x400000>;
-> +			alignment = <0x0 0x100000>;
-> +			alloc-ranges = <0x0 0x86800000 0x0 0x8000000>;
-> +			no-map;
-> +			status = "disabled";
-> +		};
-> +	};
-> +
-> +	cpu_opp_table_c0: opp-table-c0 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-768000000 {
-> +			opp-hz = /bits/ 64 <768000000>;
-> +		};
-> +
-> +		opp-902400000 {
-> +			opp-hz = /bits/ 64 <902400000>;
-> +		};
-> +
-> +		opp-998400000 {
-> +			opp-hz = /bits/ 64 <998400000>;
-> +		};
-> +
-> +		opp-1094400000 {
-> +			opp-hz = /bits/ 64 <1094400000>;
-> +		};
-> +	};
-> +
-> +	cpu_opp_table_c1: opp-table-c1 {
-> +		compatible = "operating-points-v2";
-> +		opp-shared;
-> +
-> +		opp-960000000 {
-> +			opp-hz = /bits/ 64 <960000000>;
-> +		};
-> +
-> +		opp-1094400000 {
-> +			opp-hz = /bits/ 64 <1094400000>;
-> +		};
-> +
-> +		opp-1209600000 {
-> +			opp-hz = /bits/ 64 <1209600000>;
-> +		};
-> +
-> +		opp-1248000000 {
-> +			opp-hz = /bits/ 64 <1248000000>;
-> +		};
-> +
-> +		opp-1344000000 {
-> +			opp-hz = /bits/ 64 <1344000000>;
-> +		};
-> +
-> +		opp-1401600000 {
-> +			opp-hz = /bits/ 64 <1401600000>;
-> +		};
-> +	};
-> +
-> +	pmu {
-> +		compatible = "arm,cortex-a53-pmu";
-> +		interrupts = <GIC_PPI 7 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_HIGH)>;
-> +	};
-> +
-> +	psci {
-> +		compatible = "arm,psci-1.0";
-> +		method = "smc";
-> +	};
-> +
-> +	rpm: remoteproc {
-> +		compatible = "qcom,msm8937-rpm-proc", "qcom,rpm-proc";
-> +
-> +		smd-edge {
-> +			interrupts = <GIC_SPI 168 IRQ_TYPE_EDGE_RISING>;
-> +			qcom,ipc = <&apcs1 8 0>;
-> +			qcom,smd-edge = <15>;
-> +
-> +			rpm_requests: rpm-requests {
-> +				compatible = "qcom,rpm-msm8937", "qcom,smd-rpm";
-> +				qcom,smd-channels = "rpm_requests";
-> +
-> +				rpmcc: clock-controller {
-> +					compatible = "qcom,rpmcc-msm8937", "qcom,rpmcc";
-> +					#clock-cells = <1>;
-> +					clocks = <&xo_board>;
-> +					clock-names = "xo";
-> +				};
-> +
-> +				rpmpd: power-controller {
-> +					compatible = "qcom,msm8937-rpmpd", "qcom,msm8917-rpmpd";
-> +					#power-domain-cells = <1>;
-> +					operating-points-v2 = <&rpmpd_opp_table>;
-> +
-> +					rpmpd_opp_table: opp-table {
-> +						compatible = "operating-points-v2";
-> +
-> +						rpmpd_opp_ret: opp1 {
-> +							opp-level = <RPM_SMD_LEVEL_RETENTION>;
-> +						};
-> +
-> +						rpmpd_opp_ret_plus: opp2 {
-> +							opp-level = <RPM_SMD_LEVEL_RETENTION_PLUS>;
-> +						};
-> +
-> +						rpmpd_opp_min_svs: opp3 {
-> +							opp-level = <RPM_SMD_LEVEL_MIN_SVS>;
-> +						};
-> +
-> +						rpmpd_opp_low_svs: opp4 {
-> +							opp-level = <RPM_SMD_LEVEL_LOW_SVS>;
-> +						};
-> +
-> +						rpmpd_opp_svs: opp5 {
-> +							opp-level = <RPM_SMD_LEVEL_SVS>;
-> +						};
-> +
-> +						rpmpd_opp_svs_plus: opp6 {
-> +							opp-level = <RPM_SMD_LEVEL_SVS_PLUS>;
-> +						};
-> +
-> +						rpmpd_opp_nom: opp7 {
-> +							opp-level = <RPM_SMD_LEVEL_NOM>;
-> +						};
-> +
-> +						rpmpd_opp_nom_plus: opp8 {
-> +							opp-level = <RPM_SMD_LEVEL_NOM_PLUS>;
-> +						};
-> +
-> +						rpmpd_opp_turbo: opp9 {
-> +							opp-level = <RPM_SMD_LEVEL_TURBO>;
-> +						};
-> +					};
-> +				};
-> +			};
-> +		};
-> +	};
-> +
-> +	smp2p-adsp {
-> +		compatible = "qcom,smp2p";
-> +		qcom,smem = <443>, <429>;
-> +
-> +		interrupts = <GIC_SPI 291 IRQ_TYPE_EDGE_RISING>;
-> +
-> +		mboxes = <&apcs1 10>;
-> +
-> +		qcom,local-pid = <0>;
-> +		qcom,remote-pid = <2>;
-> +
-> +		adsp_smp2p_out: master-kernel {
-> +			qcom,entry-name = "master-kernel";
-> +
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		adsp_smp2p_in: slave-kernel {
-> +			qcom,entry-name = "slave-kernel";
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	smp2p-modem {
-> +		compatible = "qcom,smp2p";
-> +		qcom,smem = <435>, <428>;
-> +
-> +		interrupts = <GIC_SPI 27 IRQ_TYPE_EDGE_RISING>;
-> +
-> +		mboxes = <&apcs1 14>;
-> +
-> +		qcom,local-pid = <0>;
-> +		qcom,remote-pid = <1>;
-> +
-> +		modem_smp2p_out: master-kernel {
-> +			qcom,entry-name = "master-kernel";
-> +
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		modem_smp2p_in: slave-kernel {
-> +			qcom,entry-name = "slave-kernel";
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	smp2p-wcnss {
-> +		compatible = "qcom,smp2p";
-> +		qcom,smem = <451>, <431>;
-> +
-> +		interrupts = <GIC_SPI 143 IRQ_TYPE_EDGE_RISING>;
-> +
-> +		mboxes = <&apcs1 18>;
-> +
-> +		qcom,local-pid = <0>;
-> +		qcom,remote-pid = <4>;
-> +
-> +		wcnss_smp2p_out: master-kernel {
-> +			qcom,entry-name = "master-kernel";
-> +
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		wcnss_smp2p_in: slave-kernel {
-> +			qcom,entry-name = "slave-kernel";
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	smsm {
-> +		compatible = "qcom,smsm";
-> +
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +
-> +		mboxes = <0>, <&apcs1 13>, <0>, <&apcs1 19>;
-> +
-> +		apps_smsm: apps@0 {
-> +			reg = <0>;
-> +
-> +			#qcom,smem-state-cells = <1>;
-> +		};
-> +
-> +		hexagon_smsm: hexagon@1 {
-> +			reg = <1>;
-> +			interrupts = <GIC_SPI 26 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +
-> +		wcnss_smsm: wcnss@6 {
-> +			reg = <6>;
-> +			interrupts = <GIC_SPI 144 IRQ_TYPE_EDGE_RISING>;
-> +
-> +			interrupt-controller;
-> +			#interrupt-cells = <2>;
-> +		};
-> +	};
-> +
-> +	soc: soc@0 {
-> +		compatible = "simple-bus";
-> +		ranges = <0 0 0 0xffffffff>;
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +
-> +		qfprom: qfprom@a4000 {
-> +			compatible = "qcom,msm8937-qfprom", "qcom,qfprom";
-> +			reg = <0x000a4000 0x1000>;
-> +			#address-cells = <1>;
-> +			#size-cells = <1>;
-> +
-> +			tsens_base1: base1@1d8 {
-> +				reg = <0x1d8 0x1>;
-> +				bits = <0 8>;
-> +			};
-> +
-> +			tsens_s5_p1: s5-p1@1d9 {
-> +				reg = <0x1d9 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +
-> +			tsens_s5_p2: s5-p2@1d9 {
-> +				reg = <0x1d9 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +
-> +			tsens_s6_p1: s6-p1@1da {
-> +				reg = <0x1da 0x2>;
-> +				bits = <4 6>;
-> +			};
-> +
-> +			tsens_s6_p2: s6-p2@1db {
-> +				reg = <0x1db 0x1>;
-> +				bits = <2 6>;
-> +			};
-> +
-> +			tsens_s7_p1: s7-p1@1dc {
-> +				reg = <0x1dc 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +
-> +			tsens_s7_p2: s7-p2@1dc {
-> +				reg = <0x1dc 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +
-> +			tsens_s8_p1: s8-p1@1dd {
-> +				reg = <0x1dd 0x2>;
-> +				bits = <4 6>;
-> +			};
-> +
-> +			tsens_s8_p2: s8-p2@1de {
-> +				reg = <0x1de 0x1>;
-> +				bits = <2 6>;
-> +			};
-> +
-> +			tsens_base2: base2@1df {
-> +				reg = <0x1df 0x1>;
-> +				bits = <0 8>;
-> +			};
-> +
-> +			tsens_mode: mode@210 {
-> +				reg = <0x210 0x1>;
-> +				bits = <0 3>;
-> +			};
-> +
-> +			tsens_s0_p1: s0-p1@210 {
-> +				reg = <0x210 0x2>;
-> +				bits = <3 6>;
-> +			};
-> +
-> +			tsens_s0_p2: s0-p2@211 {
-> +				reg = <0x211 0x1>;
-> +				bits = <1 6>;
-> +			};
-> +
-> +			tsens_s1_p1: s1-p1@211 {
-> +				reg = <0x211 0x2>;
-> +				bits = <7 6>;
-> +			};
-> +
-> +			tsens_s1_p2: s1-p2@212 {
-> +				reg = <0x212 0x2>;
-> +				bits = <5 6>;
-> +			};
-> +
-> +			tsens_s2_p1: s2-p1@213 {
-> +				reg = <0x213 0x2>;
-> +				bits = <3 6>;
-> +			};
-> +
-> +			tsens_s2_p2: s2-p2@214 {
-> +				reg = <0x214 0x1>;
-> +				bits = <1 6>;
-> +			};
-> +
-> +			tsens_s3_p1: s3-p1@214 {
-> +				reg = <0x214 0x2>;
-> +				bits = <7 6>;
-> +			};
-> +
-> +			tsens_s3_p2: s3-p2@215 {
-> +				reg = <0x215 0x2>;
-> +				bits = <5 6>;
-> +			};
-> +
-> +			tsens_s4_p1: s4-p1@216 {
-> +				reg = <0x216 0x2>;
-> +				bits = <3 6>;
-> +			};
-> +
-> +			tsens_s4_p2: s4-p2@217 {
-> +				reg = <0x217 0x1>;
-> +				bits = <1 6>;
-> +			};
-> +
-> +			tsens_s9_p1: s9-p1@230 {
-> +				reg = <0x230 0x1>;
-> +				bits = <0 6>;
-> +			};
-> +
-> +			tsens_s9_p2: s9-p2@230 {
-> +				reg = <0x230 0x2>;
-> +				bits = <6 6>;
-> +			};
-> +
-> +			tsens_s10_p1: s10-p1@231 {
-> +				reg = <0x231 0x2>;
-> +				bits = <4 6>;
-> +			};
-> +
-> +			tsens_s10_p2: s10-p2@232 {
-> +				reg = <0x232 0x1>;
-> +				bits = <2 6>;
-> +			};
-> +
-> +			gpu_speed_bin: gpu-speed-bin@601b {
-> +				reg = <0x601b 0x1>;
-> +				bits = <7 1>;
-> +			};
-> +		};
-> +
-> +		usb_hs_phy: phy@6c000 {
-> +			compatible = "qcom,usb-hs-28nm-femtophy";
-> +			reg = <0x0006c000 0x200>;
-> +			#phy-cells = <0>;
-> +			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
-> +				 <&gcc GCC_USB_HS_PHY_CFG_AHB_CLK>,
-> +				 <&gcc GCC_USB2A_PHY_SLEEP_CLK>;
-> +			clock-names = "ref",
-> +				      "ahb",
-> +				      "sleep";
-> +			resets = <&gcc GCC_QUSB2_PHY_BCR>,
-> +				 <&gcc GCC_USB2_HS_PHY_ONLY_BCR>;
-> +			reset-names = "phy",
-> +				      "por";
-> +			status = "disabled";
-> +		};
-> +
-> +		rng@e3000 {
-> +			compatible = "qcom,prng";
-> +			reg = <0x000e3000 0x1000>;
-> +			clocks = <&gcc GCC_PRNG_AHB_CLK>;
-> +			clock-names = "core";
-> +		};
-> +
-> +		tsens: thermal-sensor@4a9000 {
-> +			compatible = "qcom,msm8937-tsens", "qcom,tsens-v1";
-> +			reg = <0x004a9000 0x1000>,
-> +			      <0x004a8000 0x1000>;
-> +			interrupts = <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "uplow";
-> +			nvmem-cells = <&tsens_mode>,
-> +				      <&tsens_base1>, <&tsens_base2>,
-> +				      <&tsens_s0_p1>, <&tsens_s0_p2>,
-> +				      <&tsens_s1_p1>, <&tsens_s1_p2>,
-> +				      <&tsens_s2_p1>, <&tsens_s2_p2>,
-> +				      <&tsens_s3_p1>, <&tsens_s3_p2>,
-> +				      <&tsens_s4_p1>, <&tsens_s4_p2>,
-> +				      <&tsens_s5_p1>, <&tsens_s5_p2>,
-> +				      <&tsens_s6_p1>, <&tsens_s6_p2>,
-> +				      <&tsens_s7_p1>, <&tsens_s7_p2>,
-> +				      <&tsens_s8_p1>, <&tsens_s8_p2>,
-> +				      <&tsens_s9_p1>, <&tsens_s9_p2>,
-> +				      <&tsens_s10_p1>, <&tsens_s10_p2>;
-> +			nvmem-cell-names = "mode",
-> +					   "base1", "base2",
-> +					   "s0_p1", "s0_p2",
-> +					   "s1_p1", "s1_p2",
-> +					   "s2_p1", "s2_p2",
-> +					   "s3_p1", "s3_p2",
-> +					   "s4_p1", "s4_p2",
-> +					   "s5_p1", "s5_p2",
-> +					   "s6_p1", "s6_p2",
-> +					   "s7_p1", "s7_p2",
-> +					   "s8_p1", "s8_p2",
-> +					   "s9_p1", "s9_p2",
-> +					   "s10_p1", "s10_p2";
-> +			#qcom,sensors = <11>;
-> +			#thermal-sensor-cells = <1>;
-> +		};
-> +
-> +		rpm_msg_ram: sram@60000 {
-
-This node is wrongly placed.
-
-> +			compatible = "qcom,rpm-msg-ram";
-> +			reg = <0x00060000 0x8000>;
-> +		};
-> +
-> +		restart@4ab000 {
-> +			compatible = "qcom,pshold";
-> +			reg = <0x004ab000 0x4>;
-> +		};
-> +
+> +#endif
+> 
+> -- 
+> 2.39.5
+> 
 
 -- 
 With best wishes
