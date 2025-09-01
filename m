@@ -1,164 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-71364-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71365-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEA30B3DB23
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 09:34:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AC19B3DB55
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 09:44:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B3D31173128
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 07:34:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 275A03A3CBC
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 07:44:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BE672727FA;
-	Mon,  1 Sep 2025 07:33:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0869A2D7DC3;
+	Mon,  1 Sep 2025 07:44:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PM6mUZH8"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fWzYiGCF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E33D427147C
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 07:33:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C242D7813
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 07:44:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756712026; cv=none; b=pflUpGN8VAXhRiD3TgCKfvkDppraPKEnPXgfTxnU3/OcMD0YPRg82NAXAfNirH6OtYWN6II5tiVK0acTb8ElI62KjT7j9BZilOLVEtj00/bKVhAmepLQCnQQItai5hk+biRH9+UpXpZ2HxRR1PviPiSRqbXx1QWscF64H90UmlM=
+	t=1756712653; cv=none; b=kJj1qTqfO+oqXUkL0Mmc700+Nko2tvzvCWN3OVr6A6mBlrUGRt7ufbVQ2ieH7GrN1mm3IU3A6l7/CydTYEUjp5ncCNFG9pwAfaDIk3a5HtzJj84cy+ER1EW/zbH6PCalr3NxkH6aFc/7HgK4TlYdRKJdNk8QonHW8p6DMDYCPzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756712026; c=relaxed/simple;
-	bh=ujcFgU9lsNqpiUBtm/dP2KDUpvBIQ3hN5MxiI40kdfo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YWS/M/a6g5+1Q28dSE3t9MV/hC5AEutndGsLSdTD3p7PuLCQL4+ndnMb8go8OUPm48zl2BGYkaJMDjoKZDtPyPdJ5hfFmuBWkPhuTZ3x3VXSw/aezULTPSiH7Diup+YZsar31jqV1khg1cycokVHq68obJtRdg4tEOdpgCBpkA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PM6mUZH8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57VNoB01015661
-	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Sep 2025 07:33:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	mKI1EuqCEf8olXCKajGIiUgp6StjsHv4nQfApAiwJhY=; b=PM6mUZH8KsGfkmLs
-	6jV5Jcfk5v+Q3B7+/TEZsBeTYEJtKHxHWSyD9FK+5d3IJkcIL24gnC7hxFcagIYM
-	Fu+/4pAztC49sS2xbpv94XV9s0OGzlN10lebhyvBd20xHxYg7iGC7VIHR1f9FKQi
-	b4+qKpzAWBT3bXEQltuSo8CHBUjOLdC6LMKdF2I+qtjQJKJtgTmHBKkpFnvRDuB0
-	2zTcyT40YlLbenb9htS4d9iBLeofd3SAXmWuGkWqTztxen80b4vu1rThIL12qFRe
-	d/kgED761fa55+EwIGVlCzG62Cy0spb/zWCU6QtnWF1kqEczt6ApgAgs4lLfnIEG
-	6x/TfA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjbrjd-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 07:33:43 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-325b2959306so7008156a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 00:33:43 -0700 (PDT)
+	s=arc-20240116; t=1756712653; c=relaxed/simple;
+	bh=Vxka5qT8/uDls9RKQOa3EW/m9jEVUYrP8KPc6uEZ08g=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T1fr6FBY+GNzmhzItAlXFyE7qaoLtygK884JJBjtDvonJBVTwI5HhwdHtQDkhaISwDdAipJXK/iJH+sWPrRt+FB273IfJW1aE5Vpp5Yt/qyLnfp4NU0tmRR4RkfFXFylOhHapxGndkNbPj/X8ZzU8yW9DitK7pNxP4dE4ZsMAb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fWzYiGCF; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45b76f3b24eso4245795e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 00:44:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756712650; x=1757317450; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tcU2RxzATqV6/o5XbejVv5AzlOG3rbxZx3bA+k7/LJw=;
+        b=fWzYiGCF6HnMhXKk17HORP6U/RGRV3zTa0hdtPU+snJYP37EpBsGwc3xckX+z4ev3X
+         dF9CsZ6BD7pTGnxycWSBsU5ZTEREjL8u1fL7DnkG2VWp6ZKfSq+z5UTAZTRFYvzyBD8q
+         J+6qvlnG+SEzeW0cCNwedrbSc7XF39Rxqo5OPG95g1RHm//kADRq/hRA1ZR8Ia2tbrBY
+         31fNVuDfW+xqLKo+6+p4SE6/Q5kJggTqCt4jMypVJBOELMY2ls3ZmKdkGOL0GI7ukjsi
+         sA+zwwbV3mJzFe3JsO+ngcB65CHHRw5AfwKkCSPpBUmNQw+W2F1esIzqWqugF/gjA5dq
+         bfPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756712023; x=1757316823;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=mKI1EuqCEf8olXCKajGIiUgp6StjsHv4nQfApAiwJhY=;
-        b=wh4dlFoTcMU2aut5lS1YuqzTdUITaslMhIhJkt4lvTzsE+liCkIhNlClUmkKqDSplk
-         rEFiXqAelCqNtiMAv6ERc3EpZtlJmgEq7CaYffEBasQRzRQmIpiMlOMzvXJ/OwzvKI2P
-         nno3vKfXBvyT3mqYXpMMs+kMWYv9t7tiHnTv+TQNWP8kC/LbU1Qfovnip0syi9yLvsc8
-         ES2UOnucBj0G6Pv7vbDmvklNg1UVIBcBPW+lPgJ2GqBO7UXvAYHL2Widi6L2Fh1zK4rY
-         MX/UNVTkuSKU9W51rGFFTuRqsLixeYEMYRg4EjRHECkz4OU1JqVejE4gA6AUn8mVKenu
-         Wx/g==
-X-Forwarded-Encrypted: i=1; AJvYcCV52KizYJPJpT3LMuHCqWIQOXORg5Co6zCglB1kl7gHk+LxYId2XT7XmdoT3TZzXPr52G80V8FEZuqEO0VQ@vger.kernel.org
-X-Gm-Message-State: AOJu0YwXf20L+5JI0t4qX9+6btuhCZ/q52JdLVEkaXP95yWt7SWl/mvp
-	3ClAlXEekoX1obn90dXZXKGSUsmOMSIkVFJiLgSsCPo4bpgljLXUCp4sF4CXG3X8g6RLDWZm75y
-	Fzp4Tna0JxKHfAXjQNvh/VoZzQEGpzEo6jVprxaSKEbBbFZSOSV2Zcq4KweFhRzRll9U9
-X-Gm-Gg: ASbGnct1kR7SYXRKiORibGWxVcJPbpjlOx9xPf4RIXfkKaEl3Kox/5dg0cCo1+PEIVR
-	nY4QpFVHDCCiPvoZM4MmgdzkxUhq5AmITzJPVALe01pQsUxIqMC/oqj86GlIsH59gSgPRHeFAQx
-	z43Y5FdWARbaTi5JZTlUsWlJrp0Mabf7q61yrg4bNVze6C88pyb+MARYyr8Oxf1Sxp2BrM875Wa
-	jovjGTvyUtj+EejZd+2lUcXEZ25o7rfxCXXtposkzYglurU9g1SI3xLMfGNnHKX2q8A4BOQdX9T
-	S6VwGNa2LMJR6vabrsqDd34jIL0XTkvP1fqzJmS4JGSbI7BDpw4HRmS4BJwX11A2EE4petEmtD9
-	0cA==
-X-Received: by 2002:a17:90b:518f:b0:327:ee13:5763 with SMTP id 98e67ed59e1d1-328156f5089mr8468430a91.32.1756712022597;
-        Mon, 01 Sep 2025 00:33:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMj4YhATKJBdX0k6p9CwKSrzEIy1hQHpVWIKW0FjyMWoSgvZO/K3vtkbwdpJGdfV+932/EHg==
-X-Received: by 2002:a17:90b:518f:b0:327:ee13:5763 with SMTP id 98e67ed59e1d1-328156f5089mr8468400a91.32.1756712021819;
-        Mon, 01 Sep 2025 00:33:41 -0700 (PDT)
-Received: from hu-dikshita-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3276f5a0bf9sm16095554a91.13.2025.09.01.00.33.38
+        d=1e100.net; s=20230601; t=1756712650; x=1757317450;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tcU2RxzATqV6/o5XbejVv5AzlOG3rbxZx3bA+k7/LJw=;
+        b=B7vVnqxW9xP8yNeOR3dHuupIsK+Fox2r82bBzMPmCbQ/cpX60N5knwUm7l1cY6GX/Q
+         wEadt4JCS5eohzDwo2oJr67xHnNBSwRHyRfUyzWtaNlCYvM+pdjly2Eb7RdczN9UgCjt
+         To2YGKlkvWGS4TdFmrkZNjIhA2r+6d1oAN3QGWS6ul/QcQNp8QBP13S+n2m09PHkOf6+
+         NUvAE03ysY4OmYdXw5JbbJx4gQhvdUkyQpl0EF8E8HndSmCLSeAxHx61JArGfRbiqK0r
+         Hl8N+3FkArsZUonJVjghMLG7GYvxMh9FSrSm2esOZ4+bu99dY1P3aL5iO1Vra3ADMOPE
+         CSQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWEnj4J0blGgAcqZj8GPor9Wza59YV7oVOwyQHmXfJxCEsf+bm72KsPfRX3qTvHcVwfDUmxlTLqMTG8djjG@vger.kernel.org
+X-Gm-Message-State: AOJu0YzK4KUFeHmeMhOEil6F+6jbgIQDnSdGXHfGz1RhrGYdXUHTQcYg
+	vDrBHfQ9QOCBMSbRqsdCJmOFWodB3G3SXFwrFUsxcZc8Q/mBRQwj/B+J20rfmRaM4Aw=
+X-Gm-Gg: ASbGnctgi+PttHspXCQYNPgyR3HIJD/IVx320thri0jooHKB7GY6J3mF1UaX9TfGAeO
+	ZMXcYs+lLAJbn9MYPzhQChgl0lkw+K94QbzMch4N71P1axrCSIJgvZeqbCHwxeNRphbokGXFH0P
+	8aYM2dWo0FdCqO8dxzwY44FHAGXE2KNNtcTthUVLmxduDvMfffEnMDy6eOzEAeDdQT6RYUoOlcx
+	RffZe9XoM4u39I1QZZ/zSyliKuS8FKzYvYvrleDckSrrHXDwSDa27505sQvGm9BvneleoykOyFP
+	U9nE9lkQYeSIwy/s5RyOgC+0Ol8BI+U5Ar5/dKloqcEQMhFYnmZWleD0IpP5aod/IURJXI+qVhd
+	x6ZUQKigQa4AfBF69h+v2G45uZBi5abNY6uXUv8H1rxXk
+X-Google-Smtp-Source: AGHT+IH9FZQ41C3sDmdAO6rj5abHXFmiWvN6t1Pqd5y20uTQNyr7rY7eF4mlm1/4d2htMW3wctdAnw==
+X-Received: by 2002:a05:600c:6385:b0:451:dee4:cd07 with SMTP id 5b1f17b1804b1-45b81e23616mr42044525e9.0.1756712650372;
+        Mon, 01 Sep 2025 00:44:10 -0700 (PDT)
+Received: from kuoka.. ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b72c55c1bsm230437605e9.10.2025.09.01.00.44.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Sep 2025 00:33:41 -0700 (PDT)
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Date: Mon, 01 Sep 2025 13:03:29 +0530
-Subject: [PATCH 2/2] Documentation: media: update Dikshita Agarwal's email
- address
+        Mon, 01 Sep 2025 00:44:09 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH] ASoC: codecs: lpass-rx-macro: Fix playback quality distortion
+Date: Mon,  1 Sep 2025 09:44:04 +0200
+Message-ID: <20250901074403.137263-2-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250901-update-email-v1-2-8fd49d58c0e5@oss.qualcomm.com>
-References: <20250901-update-email-v1-0-8fd49d58c0e5@oss.qualcomm.com>
-In-Reply-To: <20250901-update-email-v1-0-8fd49d58c0e5@oss.qualcomm.com>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756712010; l=1006;
- i=dikshita.agarwal@oss.qualcomm.com; s=20240917; h=from:subject:message-id;
- bh=ujcFgU9lsNqpiUBtm/dP2KDUpvBIQ3hN5MxiI40kdfo=;
- b=kI412KkTrHeqRBFV25KZpIcRmGUCvuT/ZTUTEmFZCV8daSMJLxwB6vmDd3FbvrHJ9S6bH1lZ0
- rB1zuT0P0/wBZJ4xMuqccMh/JXN25svrieR2FHqYsSpJLHdFBw0y2lo
-X-Developer-Key: i=dikshita.agarwal@oss.qualcomm.com; a=ed25519;
- pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
-X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68b54c57 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=DWy_KaASFEtLuoGz1HEA:9 a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: wA9SFJTyZ-mCR58AQwprBmT3tizLoUC9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfX0x/hbjpuXqdd
- qPnkDB2CX82pWYvRqmxWdiqPbcalGL1R20VJpLmUBzvP+KuUlf/x5psAwJBwp6x3sqE7VWNenYo
- E4aCF5lw9Yfx1OZwbrms/6uyxnIQCNfZnMxNS/EU46ydvE1XRoUF/qlVV53Y0hw7XWGJMQ4TwJn
- /N5lggRYkxaZJp2f9uugMgCUgf8a6IaIp/CZCGcrNp3qFdbhzNWX4ZZIfpmy2Bo2tb+ZYIhun07
- WbDk56ALcfC0U56S3wVat6ZIN2KtryzXoyTFsHvUHIOGVPX2yxWLOwYmRzhkoSRl6SQWiAI7pw+
- ZEIpeHwnzEoD7iMeAj+F4UMubtZ14NTlk4KGrKwD8d8MyBhaodBGoPgVGyQ3/m5JZRnKCEx7oop
- OFCPZ9uS
-X-Proofpoint-ORIG-GUID: wA9SFJTyZ-mCR58AQwprBmT3tizLoUC9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-01_03,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- adultscore=0 clxscore=1011 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3401; i=krzysztof.kozlowski@linaro.org;
+ h=from:subject; bh=Vxka5qT8/uDls9RKQOa3EW/m9jEVUYrP8KPc6uEZ08g=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBotU7Dy0ku0kPuFmrWUIGkwnMpl6DsCcP2XTh5x
+ rPc2UlHNPaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaLVOwwAKCRDBN2bmhouD
+ 15MVD/9BEHj+OpjjCS1xDovHbyjTGs/5IDGH01ze82DAsbbezDdc4h+6ASFLDvWjxLlRxe3XfDg
+ 62L0pyqyrMtwVi0S3nryp8NNlU20IjgtSvHzTJfKA7j56hrNvwRThREvuVyN94qBvo7bC+LrpbV
+ dFJTH2K8G6OmMw7pgTbobWsZfix7TcpK8Pr6HO2EpSnd1vD7kSUExLWpNY3LHp+sHbtUvC4V80H
+ xYDXN3vTaEsDsGT3sx8qN1UHLLxJho7/vCuOQQjOTGjIbkuUok7lt6g/VocpB9IJjy16BBDxiYN
+ /Q3pYa/3cSoJegH2/W/PXPM6CeK0LbxUCNjy8f7NlT+sjIFq0KVlVt+Vl+nFQuJ5diEWrIwRzVh
+ CvIzTX+pS9Sl4dxJqj1iKcbnRY/Br4jzkyBsgiBvTqQPHqmqykouSTdjaSfivxQpcDNmzFCJ2Q1
+ DOyHwPiZdJgZPpRmgFL9f66b8lZ/kN02o90eVLMRrxPerJ0Byx208tVM1j+SDM0Xakmf30RSTgP
+ nNSjfdcxtnPcAqGboTqODoWdzrMKhLeMHRn3G6/XqgimtqBoMpxNxVxLfhb0SCxK27wOUcGR33A
+ 0eMZuNmhO+5dzWC1ZXPTnFJ9W0HaA07FQl8JPnM1FxG9rdc+argqr0iyBTMYgUCqzIhgS8puutO +AgcY4Q09L2/mBg==
+X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
+Content-Transfer-Encoding: 8bit
 
-Replace quic_dikshita@quicinc.com by dikshita.agarwal@oss.qualcomm.com.
+Commit bb4a0f497bc1 ("ASoC: codecs: lpass: Drop unused
+AIF_INVALID first DAI identifier") removed first entry in enum with DAI
+identifiers, because it looked unused.  Turns out that there is a
+relation between DAI ID and "RX_MACRO RX0 MUX"-like kcontrols which use
+"rx_macro_mux_text" array.  That "rx_macro_mux_text" array used first
+three entries of DAI IDs enum, with value '0' being invalid.
 
-Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+The value passed tp "RX_MACRO RX0 MUX"-like kcontrols was used as DAI ID
+and set to configure active channel count and mask, which are arrays
+indexed by DAI ID.
+
+After removal of first AIF_INVALID DAI identifier, this kcontrol was
+updating wrong entries in active channel count and mask arrays which was
+visible in reduced quality (distortions) during headset playback on the
+Qualcomm SM8750 MTP8750 board.  It seems it also fixes recording silence
+(instead of actual sound) via headset, even though that's different
+macro codec.
+
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+Fixes: bb4a0f497bc1 ("ASoC: codecs: lpass: Drop unused AIF_INVALID first DAI identifier")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 ---
- Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-index c79bf2101812d83b99704f38b7348a9f728dff44..0d630e620b097d01001fa866b6a4a3c6328e89ca 100644
---- a/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-+++ b/Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml
-@@ -8,7 +8,7 @@ title: Qualcomm iris video encode and decode accelerators
- 
- maintainers:
-   - Vikash Garodia <quic_vgarodia@quicinc.com>
--  - Dikshita Agarwal <quic_dikshita@quicinc.com>
-+  - Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
- 
- description:
-   The iris video processing unit is a video encode and decode accelerator
+Reported via IRC.
+Fix for current v6.17-RC cycle.
+---
+ sound/soc/codecs/lpass-rx-macro.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
+diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+index 238dbdb46c18..a8fc842cc94e 100644
+--- a/sound/soc/codecs/lpass-rx-macro.c
++++ b/sound/soc/codecs/lpass-rx-macro.c
+@@ -618,6 +618,7 @@ static struct interp_sample_rate sr_val_tbl[] = {
+ 	{176400, 0xB}, {352800, 0xC},
+ };
+ 
++/* Matches also rx_macro_mux_text */
+ enum {
+ 	RX_MACRO_AIF1_PB,
+ 	RX_MACRO_AIF2_PB,
+@@ -722,6 +723,7 @@ static const char * const rx_int2_2_interp_mux_text[] = {
+ 	"ZERO", "RX INT2_2 MUX",
+ };
+ 
++/* Order must match RX_MACRO_MAX_DAIS enum (offset by 1) */
+ static const char *const rx_macro_mux_text[] = {
+ 	"ZERO", "AIF1_PB", "AIF2_PB", "AIF3_PB", "AIF4_PB"
+ };
+@@ -2474,6 +2476,7 @@ static int rx_macro_mux_put(struct snd_kcontrol *kcontrol,
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+ 	struct snd_soc_dapm_update *update = NULL;
+ 	u32 rx_port_value = ucontrol->value.enumerated.item[0];
++	unsigned int dai_id;
+ 	u32 aif_rst;
+ 	struct rx_macro *rx = snd_soc_component_get_drvdata(component);
+ 
+@@ -2490,19 +2493,24 @@ static int rx_macro_mux_put(struct snd_kcontrol *kcontrol,
+ 
+ 	switch (rx_port_value) {
+ 	case 0:
+-		if (rx->active_ch_cnt[aif_rst]) {
+-			clear_bit(widget->shift,
+-				&rx->active_ch_mask[aif_rst]);
+-			rx->active_ch_cnt[aif_rst]--;
++		/*
++		 * active_ch_cnt and active_ch_mask use DAI IDs (RX_MACRO_MAX_DAIS).
++		 * active_ch_cnt == 0 was tested in if() above.
++		 */
++		dai_id = aif_rst - 1;
++		if (rx->active_ch_cnt[dai_id]) {
++			clear_bit(widget->shift, &rx->active_ch_mask[dai_id]);
++			rx->active_ch_cnt[dai_id]--;
+ 		}
+ 		break;
+ 	case 1:
+ 	case 2:
+ 	case 3:
+ 	case 4:
+-		set_bit(widget->shift,
+-			&rx->active_ch_mask[rx_port_value]);
+-		rx->active_ch_cnt[rx_port_value]++;
++		/* active_ch_cnt and active_ch_mask use DAI IDs (WSA_MACRO_MAX_DAIS). */
++		dai_id = rx_port_value - 1;
++		set_bit(widget->shift, &rx->active_ch_mask[dai_id]);
++		rx->active_ch_cnt[dai_id]++;
+ 		break;
+ 	default:
+ 		dev_err(component->dev,
 -- 
-2.34.1
+2.48.1
 
 
