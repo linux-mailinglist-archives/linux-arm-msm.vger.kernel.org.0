@@ -1,150 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-71401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 942B2B3E4A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 15:21:08 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A690B3E5CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 15:43:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8F1D67A6AE3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 13:19:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id A99A27AE373
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 13:41:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 737172EF649;
-	Mon,  1 Sep 2025 13:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1005633CE9B;
+	Mon,  1 Sep 2025 13:42:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="NXqh/pNg"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bqchslqc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61963277030
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 13:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D86C5335BDB;
+	Mon,  1 Sep 2025 13:42:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756732859; cv=none; b=hOXrz0AqrJa4wVsQLKdaqyxe8y1YdZ8nCWCqofspBJmKp1G46j72Tg4xGcPCMxj4jAMCbZdpV1oUqRCa6nNF+TfDIauuSoW0jcdoiC4jZxD23/holZ6FNtHiFb4T7ufYAZ1T+gZSyT/OdVKtL/CMxOxS5vl8dVdmBCffUrMm0/4=
+	t=1756734158; cv=none; b=FfPPixYknNtt8NZgp49Zh8xcVhbYiTrMiFozdEOMbXb+KnYDozGTRyvuOUa01nF57o12Y+GUA7ng5v2TZKFSdGhK/i+8BomVFj5BBdk4nL0O9S4C3kUH8vZV3MQJI/uoRced/iEN+cYovH14A7V7sZdwCR1a4ew7AySgzfc26ic=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756732859; c=relaxed/simple;
-	bh=+FzHD6P3GIG+WbvurBqu4eNuHXM1ihNGPdVL0Rl46EY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PYr0+VPU+G37r+xMs7ArdU1X3b43c2KOipxEcSrxqqua5THUwzOAyIob0dWFXElKe7lwEcMDrf0jKkjwY1LeI+XOXLemICrlLTIudEFzq2xLP4i3zZoMbiNdhdOopcqbKdPuHEFeSRFLnccWpkJcilALgdVFfMPWjndKo5yUkiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=NXqh/pNg; arc=none smtp.client-ip=209.85.167.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-55f6f434c96so2186168e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 06:20:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1756732855; x=1757337655; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/ApJifxHePLgmXB9tTWAWedH0XfL5fOO8paxsOA3xkw=;
-        b=NXqh/pNgFvdh9534gdG5el6/ZagbcM4qdqFZr+bWDTOqlYOI7PzxLWNJpKAk0Jgw1o
-         s0tv+sMZ1fZfMi3cl0T8CdMrzwyvldKPomK1W+l9cLLBhtRBFqMYxk+MIhqu352PH1FT
-         PBoChcd91xX7UCHGjfj9JfHSxJGjH+w1vA2E39gFTUVFDLhItLGeT/Pfj5lTzSy+u+L+
-         OZz2VDGzuqaMeTUlrGP0aZEP6BDnjizjkuyz4hPpPspV1+PUkkfcCcSBLyrjgJDaT80r
-         /+xEWKIfUPKJMg4uwzkVzJBqSKLL4VEHXvCwu4IaATXnNwATlNbZ01/S335v8zUvalv5
-         AMYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756732855; x=1757337655;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/ApJifxHePLgmXB9tTWAWedH0XfL5fOO8paxsOA3xkw=;
-        b=jZxr6A7u6r2A8mdDXHcRnSf5bjEP6gyTAO/mY7NBiiVbKRy/2O+EGylEnIv1rncLQs
-         dJR9J6/gaX+vnKmIIbm6bZSN3jXqS60qMbVFUBEOVqRA7UyqIZlve8Vn8zOctUt5gGYs
-         t9oInjEMYy5HwjrayBTZqTpY+Lx7Om9dD20PKx4CI1L+Lfxg/+jyBIywO8WC3tiOFYni
-         UWv9jSd65E5SrxlH+HNERY+0DTDy89oXNhws8cUUnpgb3igyrIxleRejug+LwMPGx9rL
-         YnwpvXv4zMH8XeqyAe4Sh+Btwm28u0NgJ8meuz68vaz6NV69mlVdMd7dxNnqyx/Oz2Sx
-         do8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVjJG7qidIZLt6RwTX2up7CvoLFbtIU/sd0GTFOy+FyNJVbrkPep7ckJ60H02oRfO2FpTaYNJsnufnq3Wb7@vger.kernel.org
-X-Gm-Message-State: AOJu0YxTzfFKKh/YB8wUhNFWrfcq66vNRgylSJcO7cYgvYS8pqkvho+H
-	VQfbn2Cig73FfsCdGSF0OrMsVWHZeYsEhsSTaPGmhKkwOfue4ZTxEpVTfY/eCl4VvKBmuW2Cbdk
-	QCa1CS0ghlGAOXYiRePz9SwvWZttvVf3kVESiDoJ1SQ==
-X-Gm-Gg: ASbGncusqWZ4tWr+0RM/J+fs00JPl2HXPI1k+RfVOgMiOzlmmrh+4kIR5NQK6l45TYG
-	s8jmghJGTaDv0lRwmSp194Vv4o3cL/hL/mEcKyhCNiN8ZiySLm3wTTJF262NHlVofBHhTEH2azT
-	NziA94uvFS41F6wqbTN+xT6Njf+yig6N/pKrncmzm048R6kdItks6lzaq+jxMk2mOsB+8JIrE6G
-	eIBYRCaYgNtQw8CGGatKaS9S9zjfe+JI1RbAyM=
-X-Google-Smtp-Source: AGHT+IH912XrSXzjBk2qT9512Zc2BnDvh2hCyUh1tIL/e/b5XAWzm9U6VOUb2k8kMnjWcaLf9C4w4UWLuNtsABXzYyY=
-X-Received: by 2002:a05:6512:2513:b0:55f:4016:ad2b with SMTP id
- 2adb3069b0e04-55f708eae52mr2361617e87.30.1756732855435; Mon, 01 Sep 2025
- 06:20:55 -0700 (PDT)
+	s=arc-20240116; t=1756734158; c=relaxed/simple;
+	bh=stSa6AbVOyKjdWayNfoBi8bf/zGdedt720iK82+UpbU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=TYimE423aXg9YznH+c52v48a8E0dlgKmY9IUOqnRmHIkz7Lb/jwuCZKgoKxLRLCB/XEc6Vr9tK92v12rvPBzz55h6JlU8cvn2hzxrzh9vl5W0ZBxsaYHfQgUfCqWK/eM1eDaJtzC8NQ/HtlnJD9iI/amho5yuy/If8g9y4UaNUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bqchslqc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923C2C4CEF0;
+	Mon,  1 Sep 2025 13:42:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756734157;
+	bh=stSa6AbVOyKjdWayNfoBi8bf/zGdedt720iK82+UpbU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=bqchslqcFoOMQT0/h8q8vlwjU1ITL62660X9gRcekGYkdnHHOUX7rXHOeBUWREkQP
+	 +hsuCjqHVDdf3P0wNbFIYYWUk89cd2OOj3eM9cuZL/Drhor5e/IW+KeZNG/1Lwp+9U
+	 WrTVLMJaYOyv7CBKHuG38FkTHAU4yd1PoyD8MdTS12v8hyfov9zLbTSiQNrO3Okio0
+	 wWLqiTIo7+MEkhEA+UDM49jqlO5EegjvADcJNc/LUxeq3rL5DidsdDNJlg2iBNZ2T8
+	 ovz8GxLGPNAVtE3LKPSJwVpfsK+Ij5Xk/lGB7P1piGMbLKABN3NQQDoITRHkVEl9oY
+	 nN2tsEuYn9akg==
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: cros-qcom-dts-watchers@chromium.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+ quic_vbadigan@quicinc.com, quic_mrana@quicinc.com, 
+ quic_vpernami@quicinc.com, mmareddy@quicinc.com, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250828-ecam_v4-v8-0-92a30e0fa02d@oss.qualcomm.com>
+References: <20250828-ecam_v4-v8-0-92a30e0fa02d@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v8 0/5] PCI: dwc: Add ECAM support with iATU
+ configuration
+Message-Id: <175673415116.10403.13836370686011733892.b4-ty@kernel.org>
+Date: Mon, 01 Sep 2025 19:12:31 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250828-pinctrl-gpio-pinfuncs-v6-0-c9abb6bdb689@linaro.org>
- <20250828-pinctrl-gpio-pinfuncs-v6-6-c9abb6bdb689@linaro.org> <61bad868-d976-4f49-805c-8d14d4d8b3e4@sirena.org.uk>
-In-Reply-To: <61bad868-d976-4f49-805c-8d14d4d8b3e4@sirena.org.uk>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 1 Sep 2025 15:20:44 +0200
-X-Gm-Features: Ac12FXxw4k3UY5TBARAefSnKyhMDuDCBaUNs2qyNKYW8yrbkHP8etuyQPhIAuGM
-Message-ID: <CAMRc=MfB_3e0sjCpV+XaKcKvit7Opk5LczH2wsxO=RftrAabjg@mail.gmail.com>
-Subject: Re: [PATCH v6 06/15] pinctrl: imx: don't access the pin function
- radix tree directly
-To: Mark Brown <broonie@kernel.org>
-Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
-	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
-	Matthias Brugger <matthias.bgg@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
-	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
-	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
-	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
-	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
-	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
-	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
-	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Danilo Krummrich <dakr@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, linux-gpio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	linux-mips@vger.kernel.org, linux-hardening@vger.kernel.org, 
-	linux-mm@kvack.org, imx@lists.linux.dev, linux-omap@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.2
 
-On Mon, Sep 1, 2025 at 2:07=E2=80=AFPM Mark Brown <broonie@kernel.org> wrot=
-e:
->
-> On Thu, Aug 28, 2025 at 06:00:14PM +0200, Bartosz Golaszewski wrote:
-> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> >
-> > The radix tree containing pin function descriptors should not be
-> > accessed directly by drivers. There are dedicated functions for it. I
-> > suppose this driver does it so that the memory containing the function
-> > description is not duplicated but we're going to address that shortly s=
-o
-> > convert it to using generic pinctrl APIs.
->
-> This is still failing for me:
->
-> [    0.628221] Unable to handle kernel NULL pointer dereference at virtua=
-l address 0000000000000000
-> [    0.636506] Mem abort info:
->
-> ...
->
-> [    0.801855]  __pi_strcmp+0x20/0x140 (P)
-> [    0.805704]  pinmux_generic_add_pinfunction+0x28/0xe0
-> [    0.810777]  imx_pinctrl_parse_functions.isra.0+0xf8/0x4a0
-> [    0.816289]  imx_pinctrl_probe+0x404/0x520
->
-> Full log:
->
->    https://lava.sirena.org.uk/scheduler/job/1758025#L704
 
-That's not a lot of info but it fails in strcmp() which - I suppose -
-is the one in pinmux_func_name_to_selector(). Any chance you could
-check what the value of np->name is in imx_pinctrl_parse_functions()?
-Is it NULL for some reason?
+On Thu, 28 Aug 2025 13:04:21 +0530, Krishna Chaitanya Chundru wrote:
+> The current implementation requires iATU for every configuration
+> space access which increases latency & cpu utilization.
+> 
+> Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
+> which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
+> would be matched against the Base and Limit addresses) of the incoming
+> CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
+> 
+> [...]
 
-Bart
+Applied, thanks!
+
+[2/5] PCI: dwc: Add support for ELBI resource mapping
+      commit: d39e0103e38f9889271a77a837b6179b42d6730d
+[3/5] PCI: dwc: qcom: Switch to dwc ELBI resource mapping
+      commit: 6955a13b1349376a00ebca80d1a8e2960de3fb0f
+[4/5] PCI: dwc: Add ECAM support with iATU configuration
+      commit: 0c959f675ce0338f3bee2636437bce4d5713ea03
+[5/5] PCI: qcom: Add support for ECAM feature
+      commit: 0bba488d552dccda4b803fa4b5d4d5d3029d601d
+
+Best regards,
+-- 
+Manivannan Sadhasivam <mani@kernel.org>
+
 
