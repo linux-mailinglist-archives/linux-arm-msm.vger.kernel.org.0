@@ -1,83 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-71370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 77000B3DC2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 10:20:47 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA472B3DC5E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 10:31:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D72A518970E5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 08:21:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B90F817CC1D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 08:31:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC6F52E090B;
-	Mon,  1 Sep 2025 08:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF6392CCDB;
+	Mon,  1 Sep 2025 08:30:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zc76uvj5"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VrBsvSuG"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B5B2EFD99
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 08:20:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C441A9F90
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 08:30:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756714831; cv=none; b=KmAZoQQ1FxhAiujVlNRXHVRcUVbYhKodi61yYOwRhSEjUoED5Ba2jq1Uc7KbFe4uUYMSoJF2EL1UC07MU10TjYpQxSSQKrkvuHA3haM/9WfPksvGJU8n2mWBEY4Z4RvaPTxM/X+PjCI51pTurBxv4sTiptzl2vBBj6SnGs0PLa4=
+	t=1756715457; cv=none; b=aTP5rvAdUWLZDweylJBdloc8qZGtD6MiPN5OL/6AwfuM1PJsOfJigcLlKoqFXYq9Rr1eirVVFAL60hEKv53CT9njs1+Ayvb7ypZLj84j0uLOHYQiEu1b7L/tDr2gXe9N9CIdpxYV9HHAHdt0Y0END9UozcJKEmY8AQ5DcoNVBVk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756714831; c=relaxed/simple;
-	bh=aZzb5Dnjpt87o6rinPuQ4mDWJUz0l4tbIBjHhqUstH8=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=rrv5AJeAMpH/Io8OJiDILcq4Xk3oZuYS/XDbDwbarKFeAP4kLhyljsdge0DrXuJThBmaXcqsQPJC42fRSgJPvugqd+xjnb/Ex4pA3Toi0m0eCmta+P8coJRkagOBbVjFZyy83K8f815K9QoH1n/aD7bHWUh13CmgrUgz3t7TpOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zc76uvj5; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3d0dd9c9381so2695533f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 01:20:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756714827; x=1757319627; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vIDbvw0dQVZGx06wUE3YhwCSQsoehVltdwHmuGJe+Vo=;
-        b=zc76uvj5iBbAJ6yTesnHqGMf8InG7pgKmyOzOIoyw3vF8dc29Chh6CxQhUvPIT0nuC
-         6bG+ZX7CIRdu56wbCz5C2M+t2COynZcr9/beNDjyPrgL6wuzgWVRewZywcD50bOaUSjA
-         5Idk+QrK0Cd3Sf5jrqm6VI0gNnZUuq1c+/z9sl2X05VWDevAsl9JvS6ILpftuhBgzOik
-         986lOSYK6D2GoiiUQj+3pCDliKFvKVyhFgO5fXC8bhimDJQFM/2k/JrDE2rwM5T6RBdD
-         gIxBg87NDKeJYsOvELKVFo8u65TBvoBA+/HKH6ErJVNcw+FTn4HQB9FoqQnBKy+gdP0G
-         uWeA==
+	s=arc-20240116; t=1756715457; c=relaxed/simple;
+	bh=75HRYRuu0ytPjpHHK4y4NaBYsbl3ct2Mtmj6P6gyI7c=;
+	h=Content-Type:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To; b=Y/tVKyVe3p3ClmERZ2l8uVh7eHGbHsRvrn1K+QQRwcYe9WozG1GcLPUmCJ6d9q5HZATKbvbyecYiG42I1qnpeZoagSu10zRYlipXtw5ZZhlvkHwtshdepGoP7xPibuO8SHNPkoKi0N7WA3Fg6v416iA8RGMQ1N6NdIqlkd9Tgbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VrBsvSuG; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5818Ei4v027871
+	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Sep 2025 08:30:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=PAlnvbMmNT7cy5qH7wwaB4n/
+	geslp9PTYb6i4MqxfhM=; b=VrBsvSuGp6hTuyiIvvci/n39wJlnQdFV8TWfsgRi
+	KzqlDuhayFXbALYDzBkYwapUATBzgQs2DzFdB9im+gk/RyzeBPrhtlZ/N/dKVkEK
+	5r5ez0Z4HgumEWbAJHU2pocxZj557+x1yFDtLQMmGKDisMUxSKLFKTgS8JOr1xq2
+	h+G0IC7Or2h+LlfOIQoz34rpxS4s819dUqTBKVo34HahfsOGV/kAi1DyDethwxmu
+	MQC3kzJH9AEjzyx2ZXu8uVFk3Cn9UjsesRygI5qBUp4EmNBNe89xUYWouSy9w4zB
+	Er0RngvAy3pSprCskz1DRKgAhK2Dls5g1LutrZ5jpsUiqg==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uscuuxue-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 08:30:54 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-327b016a1f3so4266649a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 01:30:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756714827; x=1757319627;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=vIDbvw0dQVZGx06wUE3YhwCSQsoehVltdwHmuGJe+Vo=;
-        b=buYqZch7u7gDEHT0QVDnibEjmid/dULbTxIeLE2mELVPHaCiHMQbSjbAWpzvam7RIp
-         BTiAWKcINdykRFtNbY0JkookYSn8Cvf4ZTJ1FmdmRrEU2Ug8Q5Y4Dh/wu+e6spN41EID
-         20EVtKfh+yQ6rjvfuG1UgIO2pm7DyNfNyc/mayiCTivAUdJjoxOmDwurjC+V9OGLd4+s
-         loToU20oTtEnYSIxVV4cOX+Gig4MBWMh8Jt+6WSkzuiXU+516W9x75K7WlzE93JAeksS
-         35Njg9ruSfgZ8GXToUv5c8Q5c7QtJSf9OfvQMXKBllsngw0lM9A10WSHI56rpe744jKp
-         RacA==
-X-Forwarded-Encrypted: i=1; AJvYcCWd5UTZIb1B13G579H3pfm3kpe7Yo8paJdOc3Pdu/amXuiU1CzkiEo6Rx44Jvq5HY0T6jN+Y/Cf3vezSm4s@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyf+0aZlQapZna5luAmgeTUb8QZwe36OXaAwjgIdr/Ep26KmvEr
-	xETxaWKvDY6d6+G6WR4Ok7xMjAe4F8c/1A1qGS30UA+LvXaM+l4yxi2M0vsUNcdWnbw=
-X-Gm-Gg: ASbGnctIrvPh8BhT6tvX24O0A4tBbsyRYLOzT+nCxXr39ALlDTciLxBi5tKAmvH+ntu
-	GWdp22tXBl7gRwE8CpeP4mFKH4wMqez7zg1mMq2MLiHYDT22TpDDC7ufX8ncQRISI+LD/UBSLO1
-	U156QDEeVElDLOWhERFBnEnNwlCS2GVC2AyYONe9QTjNzjnB5KS5olOv7ICrBCEERpok9GqP3Db
-	I1LQGSNQn5s5OAUtwufGsSsrH2PNMcbNoW8qxMqhsFOL2+itsGG/d+3K6tFbhH7CvD6U3okk++T
-	7EuhoYxRJ1xzRSugJshM/swfL4Op+DsTG0M3yCPXeq4slxppOmypPsRB8w7GSjij2vkre0AWQJU
-	rnDJW4EEtpwwclPCpdd/bk4RTr9F15luXUTdAMLT2DxKgybEm27F1U1Jzz8pbX2aTrfrgcRStRD
-	gWFOSHhdo=
-X-Google-Smtp-Source: AGHT+IGJECIIAmi+nv+q6Nvy1Sm8F6AtGZk4avjvD5iwXIfWzvYFQu4NlHq9yjXiW+lQZxu/bSQpRg==
-X-Received: by 2002:a05:6000:200b:b0:3ca:4b59:2715 with SMTP id ffacd0b85a97d-3d1dcf56456mr5038229f8f.20.1756714827333;
-        Mon, 01 Sep 2025 01:20:27 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:881c:7d0e:ad0a:d9a? ([2a01:e0a:3d9:2080:881c:7d0e:ad0a:d9a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7e68c83asm154115295e9.20.2025.09.01.01.20.25
+        d=1e100.net; s=20230601; t=1756715453; x=1757320253;
+        h=in-reply-to:from:content-language:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=PAlnvbMmNT7cy5qH7wwaB4n/geslp9PTYb6i4MqxfhM=;
+        b=sXuSy/1pXWjFNXKJ1BNOXUPfuijoHrN7UHCiM+Ab5KaUjwpTDI1+rQYIyAetQ4gKH7
+         PoskvaC+RnkaDkldUFy1FwhmXHzoYTQWY/MDJReUgvDQklw+vhaDcr4FPs4Rsz9SFk3l
+         5MgBZKUskrqE4GNT6M7BC3OZxudz63XSnyHgcHEM78anpw4Jove5IkPE32cFQ2xJdzoz
+         ZxYR4NHpUeM7WNPCawfZcipHLb3WVohSJSH6VrfxArQv5hZxl0bxWNILC6cn7hQxhevO
+         0vaox0jS1BnpTga5PQTXtLiHwosoPpuhRMx4VOmCDftbRgrh+bS+mxVJxWU114lQsmuP
+         gEHg==
+X-Forwarded-Encrypted: i=1; AJvYcCUePgWLhUuGRDFrm0cqCO36AEF22/DyQZg227XGRbbwl3mK0yAeCYAT7C3lEEgtLgJfr22+R35KASZ6ncTf@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxv+rZ3JqtybUMBz1O3n6XUK/rndF2VrMp+2HaG1mr5T7TfYvMX
+	mEnKCoRk+YcsMGJMfpQ3C4SgVRttoWtxNakUapXfKyiJLVLdUSjiXgND1uOTkbwrJEeDG8jJ1wa
+	WvCAWDRdCuFvdToNCCQCssJED5s7Y7yNNvwd5QUZ8cwqGvxPRCGdF7ZBCEh+dz8g8odEA
+X-Gm-Gg: ASbGnctgK41+004GT6iybCd8nmUL5eZrVo4u6YyqdZArOEb7Z97lTiL9d91aZPUDxpi
+	59XeNvj6P3s0rh0pnQ2GG3UbLiBRyG2kDCr4ExLjUCVFv0JMkTOYPol8R4iyISAwGPwkuK5bK0p
+	+agDMKxzayoNRqirdSnQzhQ29rQZ3ztjl23JoZyNYWR4OncZrNQE8400QV02WiJGGb+JZ0zeCBO
+	jb7mvuMHxkiSsIy0+oPYFhwWFjBal2dc5hCLXmmDYqx5YnaBkyULvkW1huXK1IV9A4pue+dDHSH
+	Mzpe38LinVyzyGgGZe04kMMz8Qz71eDYysKTl70xmFB2CZeElYV5DOadsK1fgVoeg/InVtihDi/
+	nScTC2VoD5CcPE+PzshgHzgctjcbSMIFKfg==
+X-Received: by 2002:a17:90b:3b46:b0:31f:2bbb:e6a8 with SMTP id 98e67ed59e1d1-3280d34bedfmr9411703a91.12.1756715453474;
+        Mon, 01 Sep 2025 01:30:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFEFLIh6cXUMrhl0nWYZjIF+ftbFIXMfmYoczlM+ivv4wmziz6mmeKwe5E6V4o0QqOwRn+XyQ==
+X-Received: by 2002:a17:90b:3b46:b0:31f:2bbb:e6a8 with SMTP id 98e67ed59e1d1-3280d34bedfmr9411659a91.12.1756715452874;
+        Mon, 01 Sep 2025 01:30:52 -0700 (PDT)
+Received: from [10.133.33.247] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3296f871acbsm5626087a91.5.2025.09.01.01.30.49
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Sep 2025 01:20:26 -0700 (PDT)
-Message-ID: <fcd4161d-45ad-4915-a6a4-5819eeaff98d@linaro.org>
-Date: Mon, 1 Sep 2025 10:20:25 +0200
+        Mon, 01 Sep 2025 01:30:52 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="------------Y1gY7oQI0ggObi7uDTnXfL60"
+Message-ID: <b608b4b2-f850-4b49-be65-b2f4e3784dd5@oss.qualcomm.com>
+Date: Mon, 1 Sep 2025 16:30:47 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,275 +90,199 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v6 00/15] pinctrl: introduce the concept of a GPIO pin
- function category
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Linus Walleij <linus.walleij@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Alexey Klimov <alexey.klimov@linaro.org>,
- Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
- Andy Shevchenko <andy@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, David Hildenbrand <david@redhat.com>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka
- <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
- Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>,
- Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- NXP S32 Linux Team <s32@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
- Tony Lindgren <tony@atomide.com>, Haojian Zhuang
- <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>,
- Mark Brown <broonie@kernel.org>
-Cc: linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
- linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev,
- linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Chen-Yu Tsai <wenst@chromium.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250828-pinctrl-gpio-pinfuncs-v6-0-c9abb6bdb689@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250828-pinctrl-gpio-pinfuncs-v6-0-c9abb6bdb689@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v4 3/3] coresight-tnoc: Add runtime PM support for
+ Interconnect TNOC
+To: Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: kernel@oss.qualcomm.com, coresight@lists.linaro.org,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250831-itnoc-v4-0-f0fb0ef822a5@oss.qualcomm.com>
+ <20250831-itnoc-v4-3-f0fb0ef822a5@oss.qualcomm.com>
+Content-Language: en-US
+From: yuanfang zhang <yuanfang.zhang@oss.qualcomm.com>
+In-Reply-To: <20250831-itnoc-v4-3-f0fb0ef822a5@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMSBTYWx0ZWRfX2aeo8um2FYer
+ +mxm9GaCTl60ZHXpiAwa8RIyzk5GysAnaN/j6mzLXAHWTS8em79NjucPexivBBqTwSKxaBWRuCf
+ l439mr7U2LoZSKLmDRMz8O7uQOo2HtkPX078rcbneze3jnpN04fZrA9ykc66RPJDTNID5HbCeaB
+ QNCc6eGJsiaQaSVl8UDKTldCepq2qph8kZhbWuP6JfJeOx9/cDkDY1/wbYIEieFwoPzOMawSUqz
+ EX7BA+WfKDWVbgkqahs1Fo8hfCbrvEYmr/bV0cFMQA15FTHAbkv0dlac3ra/cMcYeJw85bywTKX
+ jZosPCF3xdTQ/H/S78o/5NRfgJvNDMEZQKmBbomQFDkbTatRBxEnbli5gjugkrsVdTmofxcs7yG
+ DBSjYmWX
+X-Authority-Analysis: v=2.4 cv=A8xsP7WG c=1 sm=1 tr=0 ts=68b559be cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=yJojWOMRYYMA:10 a=r77TgQKjGQsHNAKrUKIA:9 a=EUspDBNiAAAA:8 a=7CQSdrXTAAAA:8
+ a=2_w7q_4OogOuaEAj4c4A:9 a=QEXdDO2ut3YA:10 a=pD-t-wKbIgpBmJTf4s8A:9
+ a=Gcllsu8IzuiZ4xof:21 a=_W_S_7VecoQA:10 a=L03L2QfmqWoA:10 a=1WNtSb5ECZgA:10
+ a=82JZpTc5bpwA:10 a=uKXjsCUrEbL0IQVhDsJ9:22 a=a-qgeE7W1pNrGK8U0ZQC:22
+X-Proofpoint-ORIG-GUID: YsoFkjA86anmkEsxorgc-dSqQ7ZpwQm6
+X-Proofpoint-GUID: YsoFkjA86anmkEsxorgc-dSqQ7ZpwQm6
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-01_04,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300031
+
+This is a multi-part message in MIME format.
+--------------Y1gY7oQI0ggObi7uDTnXfL60
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 28/08/2025 18:00, Bartosz Golaszewski wrote:
-> Problem: when pinctrl core binds pins to a consumer device and the
-> pinmux ops of the underlying driver are marked as strict, the pin in
-> question can no longer be requested as a GPIO using the GPIO descriptor
-> API. It will result in the following error:
+On 9/1/2025 2:58 PM, Yuanfang Zhang wrote:
+> This patch adds runtime power management support for platform-based
+> CoreSight Interconnect TNOC (ITNOC) devices. It introduces suspend and
+> resume callbacks to manage the APB clock (`pclk`) during device runtime
+> transitions.
 > 
-> [    5.095688] sc8280xp-tlmm f100000.pinctrl: pin GPIO_25 already requested by regulator-edp-3p3; cannot claim for f100000.pinctrl:570
-> [    5.107822] sc8280xp-tlmm f100000.pinctrl: error -EINVAL: pin-25 (f100000.pinctrl:570)
-> 
-> This typically makes sense except when the pins are muxed to a function
-> that actually says "GPIO". Of course, the function name is just a string
-> so it has no meaning to the pinctrl subsystem.
-> 
-> We have many Qualcomm SoCs (and I can imagine it's a common pattern in
-> other platforms as well) where we mux a pin to "gpio" function using the
-> `pinctrl-X` property in order to configure bias or drive-strength and
-> then access it using the gpiod API. This makes it impossible to mark the
-> pin controller module as "strict".
-> 
-> This series proposes to introduce a concept of a sub-category of
-> pinfunctions: GPIO functions where the above is not true and the pin
-> muxed as a GPIO can still be accessed via the GPIO consumer API even for
-> strict pinmuxers.
-> 
-> To that end: we first clean up the drivers that use struct function_desc
-> and make them use the smaller struct pinfunction instead - which is the
-> correct structure for drivers to describe their pin functions with. We
-> also rework pinmux core to not duplicate memory used to store the
-> pinfunctions unless they're allocated dynamically.
-> 
-> First: provide the kmemdup_const() helper which only duplicates memory
-> if it's not in the .rodata section. Then rework all pinctrl drivers that
-> instantiate objects of type struct function_desc as they should only be
-> created by pinmux core. Next constify the return value of the accessor
-> used to expose these structures to users and finally convert the
-> pinfunction object within struct function_desc to a pointer and use
-> kmemdup_const() to assign it. With this done proceed to add
-> infrastructure for the GPIO pin function category and use it in Qualcomm
-> drivers. At the very end: make the Qualcomm pinmuxer strict.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
 > ---
-> Changes in v6:
-> - Select GENERIC_PINMUX_FUNCTIONS when using generic pinmux helpers in
->    qcom pinctrl drivers to fix build on ARM 32-bit platforms
-> - Assume that a pin can be requested in pin_request() if it has no
->    mux_setting assigned
-> - Also check if a function is a GPIO for pins within GPIO ranges
-> - Fix an issue with the imx pinctrl driver where the conversion patch
->    confused the function and pin group radix trees
-> - Add a FIXME to the imx driver mentioning the need to switch to the
->    provided helpers for accessing the group radix tree
-> - Link to v5: https://lore.kernel.org/r/20250815-pinctrl-gpio-pinfuncs-v5-0-955de9fd91db@linaro.org
+>  drivers/hwtracing/coresight/coresight-tnoc.c | 23 +++++++++++++++++++++++
+>  1 file changed, 23 insertions(+)
 > 
-> Changes in v5:
-> - Fix a potential NULL-pointer dereference in
->    pinmux_can_be_used_for_gpio()
-> - Use PINCTRL_PINFUNCTION() in pinctrl-airoha
-> - Link to v4: https://lore.kernel.org/r/20250812-pinctrl-gpio-pinfuncs-v4-0-bb3906c55e64@linaro.org
+> diff --git a/drivers/hwtracing/coresight/coresight-tnoc.c b/drivers/hwtracing/coresight/coresight-tnoc.c
+> index 5be882300d79bc0173aa6a19d7da1d48c4aaca9c..2c5370497076536bfa868f0d80db775ef242968b 100644
+> --- a/drivers/hwtracing/coresight/coresight-tnoc.c
+> +++ b/drivers/hwtracing/coresight/coresight-tnoc.c
+> @@ -301,6 +301,28 @@ static void itnoc_remove(struct platform_device *pdev)
+>  	pm_runtime_disable(&pdev->dev);
+>  }
+>  
+> +#ifdef CONFIG_PM
+> +static int itnoc_runtime_suspend(struct device *dev)
+> +{
+> +	struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev);
+> +
+> +	clk_disable_unprepare(drvdata->pclk);
+> +
+> +	return 0;
+> +}
+> +
+> +static int itnoc_runtime_resume(struct device *dev)
+> +{
+> +	struct trace_noc_drvdata *drvdata = dev_get_drvdata(dev);
+> +
+> +	return clk_prepare_enable(drvdata->pclk);
+> +}
+> +#endif
+> +
+> +static const struct dev_pm_ops itnoc_dev_pm_ops = {
+> +	SET_RUNTIME_PM_OPS(itnoc_runtime_suspend, itnoc_runtime_resume, NULL)
+> +};
+> +
+>  static const struct of_device_id itnoc_of_match[] = {
+>  	{ .compatible = "qcom,coresight-itnoc" },
+>  	{}
+> @@ -314,6 +336,7 @@ static struct platform_driver itnoc_driver = {
+>  		.name = "coresight-itnoc",
+>  		.of_match_table = itnoc_of_match,
+>  		.suppress_bind_attrs = true,
+> +		.pm = &itnoc_dev_pm_ops,
+>  	},
+>  };
+>  
 > 
-> Changes in v4:
-> - Update the GPIO pin function definitions to include the new qcom
->    driver (milos)
-> - Provide devm_kmemdup_const() instead of a non-managed kmemdup_const()
->    as a way to avoid casting out the 'const' modifier when passing the
->    const pointer to devm_add_action_or_reset()
-> - Use devm_krealloc_array() where applicable instead of devm_krealloc()
-> - Fix typos
-> - Fix kerneldocs
-> - Improve commit messages
-> - Small tweaks as pointed out by Andy
-> - Rebased on top of v6.17-rc1
-> - Link to v3: https://lore.kernel.org/r/20250724-pinctrl-gpio-pinfuncs-v3-0-af4db9302de4@linaro.org
-> 
-> Changes in v3:
-> - Add more patches in front: convert pinctrl drivers to stop defining
->    their own struct function_desc objects and make pinmux core not
->    duplicate .rodata memory in which struct pinfunction objects are
->    stored.
-> - Add a patch constifying pinmux_generic_get_function().
-> - Drop patches that were applied upstream.
-> - Link to v2: https://lore.kernel.org/r/20250709-pinctrl-gpio-pinfuncs-v2-0-b6135149c0d9@linaro.org
-> 
-> Changes in v2:
-> - Extend the series with providing pinmux_generic_add_pinfunction(),
->    using it in several drivers and converting pinctrl-msm to using
->    generic pinmux helpers
-> - Add a generic function_is_gpio() callback for pinmux_ops
-> - Convert all qualcomm drivers to using the new GPIO pin category so
->    that we can actually enable the strict flag
-> - Link to v1: https://lore.kernel.org/r/20250702-pinctrl-gpio-pinfuncs-v1-0-ed2bd0f9468d@linaro.org
-> 
-> ---
-> Bartosz Golaszewski (15):
->        devres: provide devm_kmemdup_const()
->        pinctrl: ingenic: use struct pinfunction instead of struct function_desc
->        pinctrl: airoha: replace struct function_desc with struct pinfunction
->        pinctrl: mediatek: mt7988: use PINCTRL_PIN_FUNCTION()
->        pinctrl: mediatek: moore: replace struct function_desc with struct pinfunction
->        pinctrl: imx: don't access the pin function radix tree directly
->        pinctrl: keembay: release allocated memory in detach path
->        pinctrl: keembay: use a dedicated structure for the pinfunction description
->        pinctrl: constify pinmux_generic_get_function()
->        pinctrl: make struct pinfunction a pointer in struct function_desc
->        pinctrl: qcom: use generic pin function helpers
->        pinctrl: allow to mark pin functions as requestable GPIOs
->        pinctrl: qcom: add infrastructure for marking pin functions as GPIOs
->        pinctrl: qcom: mark the `gpio` and `egpio` pins function as non-strict functions
->        pinctrl: qcom: make the pinmuxing strict
-> 
->   drivers/base/devres.c                            | 21 ++++++++
->   drivers/pinctrl/freescale/pinctrl-imx.c          | 43 +++++++--------
->   drivers/pinctrl/mediatek/pinctrl-airoha.c        | 19 +++----
->   drivers/pinctrl/mediatek/pinctrl-moore.c         | 10 ++--
->   drivers/pinctrl/mediatek/pinctrl-moore.h         |  7 +--
->   drivers/pinctrl/mediatek/pinctrl-mt7622.c        |  2 +-
->   drivers/pinctrl/mediatek/pinctrl-mt7623.c        |  2 +-
->   drivers/pinctrl/mediatek/pinctrl-mt7629.c        |  2 +-
->   drivers/pinctrl/mediatek/pinctrl-mt7981.c        |  2 +-
->   drivers/pinctrl/mediatek/pinctrl-mt7986.c        |  2 +-
->   drivers/pinctrl/mediatek/pinctrl-mt7988.c        | 44 ++++++---------
->   drivers/pinctrl/mediatek/pinctrl-mtk-common-v2.h |  2 +-
->   drivers/pinctrl/pinctrl-equilibrium.c            |  2 +-
->   drivers/pinctrl/pinctrl-ingenic.c                | 49 ++++++++---------
->   drivers/pinctrl/pinctrl-keembay.c                | 26 +++++----
->   drivers/pinctrl/pinctrl-single.c                 |  4 +-
->   drivers/pinctrl/pinmux.c                         | 68 ++++++++++++++++++++----
->   drivers/pinctrl/pinmux.h                         |  9 ++--
->   drivers/pinctrl/qcom/Kconfig                     |  1 +
->   drivers/pinctrl/qcom/pinctrl-ipq5018.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-ipq5332.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-ipq5424.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-ipq6018.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-ipq8074.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-ipq9574.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-mdm9607.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-mdm9615.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-milos.c             |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm.c               | 45 ++++++----------
->   drivers/pinctrl/qcom/pinctrl-msm.h               |  5 ++
->   drivers/pinctrl/qcom/pinctrl-msm8226.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8660.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8909.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8916.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8917.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8953.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8960.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8976.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8994.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8996.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8998.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-msm8x74.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-qcm2290.c           |  4 +-
->   drivers/pinctrl/qcom/pinctrl-qcs404.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-qcs615.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-qcs8300.c           |  4 +-
->   drivers/pinctrl/qcom/pinctrl-qdu1000.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sa8775p.c           |  4 +-
->   drivers/pinctrl/qcom/pinctrl-sar2130p.c          |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sc7180.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sc7280.c            |  4 +-
->   drivers/pinctrl/qcom/pinctrl-sc8180x.c           |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sc8280xp.c          |  4 +-
->   drivers/pinctrl/qcom/pinctrl-sdm660.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sdm670.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sdm845.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sdx55.c             |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sdx65.c             |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sdx75.c             |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm4450.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm6115.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm6125.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm6350.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm6375.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm7150.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm8150.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm8250.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm8350.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm8450.c            |  4 +-
->   drivers/pinctrl/qcom/pinctrl-sm8550.c            |  2 +-
->   drivers/pinctrl/qcom/pinctrl-sm8650.c            |  4 +-
->   drivers/pinctrl/qcom/pinctrl-sm8750.c            |  4 +-
->   drivers/pinctrl/qcom/pinctrl-x1e80100.c          |  2 +-
->   drivers/pinctrl/renesas/pinctrl-rza1.c           |  2 +-
->   drivers/pinctrl/renesas/pinctrl-rza2.c           |  2 +-
->   drivers/pinctrl/renesas/pinctrl-rzg2l.c          |  2 +-
->   drivers/pinctrl/renesas/pinctrl-rzv2m.c          |  2 +-
->   include/linux/device/devres.h                    |  2 +
->   include/linux/pinctrl/pinctrl.h                  | 14 +++++
->   include/linux/pinctrl/pinmux.h                   |  2 +
->   80 files changed, 287 insertions(+), 224 deletions(-)
-> ---
-> base-commit: 1b237f190eb3d36f52dffe07a40b5eb210280e00
-> change-id: 20250701-pinctrl-gpio-pinfuncs-de82bd9aac43
-> 
-> Best regards,
 
-Tested on a bunch on qcom boards, no issues observed, regression of v5 no longers appears.
+missed Reviewed-by: Leo Yan <leo.yan@arm.com> tag.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
+thanks,
+yuanfang.
+--------------Y1gY7oQI0ggObi7uDTnXfL60
+Content-Type: text/html; charset=UTF-8;
+ name="https://lore.kernel.org/linux-arm-kernel/20250829084118.GG745921@e132581.arm.com/"
+Content-Disposition: attachment;
+ filename*0="https://lore.kernel.org/linux-arm-kernel/20250829084118.GG74";
+ filename*1="5921@e132581.arm.com/"
+Content-Location: https://lore.kernel.org/linux-arm-kernel/20250829084118.GG745921@e132581.arm.com/
+Content-Transfer-Encoding: base64
 
-Probably only applies on patches 1, 9, 10, 11, 12, 13, 14, & 15
+PCFkb2N0eXBlIGh0bWw+PGh0bWwgbGFuZz0iZW4iPjxoZWFkPjx0aXRsZT5NYWtpbmcgc3Vy
+ZSB5b3UmIzM5O3JlIG5vdCBhIGJvdCE8L3RpdGxlPjxsaW5rIHJlbD0ic3R5bGVzaGVldCIg
+aHJlZj0iLy53aXRoaW4ud2Vic2l0ZS94L3hlc3MveGVzcy5taW4uY3NzP2NhY2hlYnVzdGVy
+PTEuMjEuMyI+PG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13
+aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPjxtZXRhIG5hbWU9InJvYm90cyIgY29udGVudD0i
+bm9pbmRleCxub2ZvbGxvdyI+PHN0eWxlPgogICAgICAgIGJvZHksCiAgICAgICAgaHRtbCB7
+CiAgICAgICAgICAgIGhlaWdodDogMTAwJTsKICAgICAgICAgICAgZGlzcGxheTogZmxleDsK
+ICAgICAgICAgICAganVzdGlmeS1jb250ZW50OiBjZW50ZXI7CiAgICAgICAgICAgIGFsaWdu
+LWl0ZW1zOiBjZW50ZXI7CiAgICAgICAgICAgIG1hcmdpbi1sZWZ0OiBhdXRvOwogICAgICAg
+ICAgICBtYXJnaW4tcmlnaHQ6IGF1dG87CiAgICAgICAgfQoKICAgICAgICAuY2VudGVyZWQt
+ZGl2IHsKICAgICAgICAgICAgdGV4dC1hbGlnbjogY2VudGVyOwogICAgICAgIH0KCiAgICAg
+ICAgI3N0YXR1cyB7CiAgICAgICAgICAgIGZvbnQtdmFyaWFudC1udW1lcmljOiB0YWJ1bGFy
+LW51bXM7CiAgICAgICAgfQoKICAgICAgICAjcHJvZ3Jlc3MgewogICAgICAgICAgZGlzcGxh
+eTogbm9uZTsKICAgICAgICAgIHdpZHRoOiA5MCU7CiAgICAgICAgICB3aWR0aDogbWluKDIw
+cmVtLCA5MCUpOwogICAgICAgICAgaGVpZ2h0OiAycmVtOwogICAgICAgICAgYm9yZGVyLXJh
+ZGl1czogMXJlbTsKICAgICAgICAgIG92ZXJmbG93OiBoaWRkZW47CiAgICAgICAgICBtYXJn
+aW46IDFyZW0gMCAycmVtOwoJCQkJCW91dGxpbmUtb2Zmc2V0OiAycHg7CgkJCQkJb3V0bGlu
+ZTogI2IxNjI4NiBzb2xpZCA0cHg7CgkJCQl9CgogICAgICAgIC5iYXItaW5uZXIgewogICAg
+ICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjYjE2Mjg2OwogICAgICAgICAgICBoZWlnaHQ6
+IDEwMCU7CiAgICAgICAgICAgIHdpZHRoOiAwOwogICAgICAgICAgICB0cmFuc2l0aW9uOiB3
+aWR0aCAwLjI1cyBlYXNlLWluOwogICAgICAgIH0KICAgIAk8L3N0eWxlPjxzY3JpcHQgaWQ9
+ImFudWJpc192ZXJzaW9uIiB0eXBlPSJhcHBsaWNhdGlvbi9qc29uIj4iMS4yMS4zIgo8L3Nj
+cmlwdD48c2NyaXB0IGlkPSJhbnViaXNfY2hhbGxlbmdlIiB0eXBlPSJhcHBsaWNhdGlvbi9q
+c29uIj57InJ1bGVzIjp7ImFsZ29yaXRobSI6ImZhc3QiLCJkaWZmaWN1bHR5Ijo0LCJyZXBv
+cnRfYXMiOjR9LCJjaGFsbGVuZ2UiOiJjY2VhN2Y3YzA0MmVkZjYzMmZjYzc1ZjFlNTMyYWNm
+MGU3OGMxNTA5ODExYzM0YTA0ZjA3YzgwMTc4YmVjMjE4YmI4YWY4ZmI4NDk5OTU5MWE0ZWFh
+MmEzOWI2YWIzZmE4NzQxMzEzNTRhZTIxNjNkZDBkY2ExMDA2ZmEzYTBlZWMxMjNkYWIzMWE3
+NWY0YTc3ZTJlMzFjNmVjOTk5Yzg0MGE5NjMwZTcwYzM4OGJmMjM5NGQ2MjFmZjdlNmQ0ODZk
+NTRmZjlkY2I2MjEzNmU1Y2U3ZmIxYzBjZGY2Mjk2OWVmM2E5Njg2MDAwZWEyZGUyY2YxNTI1
+YTQ1ZGY1Mzg3OTVmOWQ5Y2E3YzU0NGM0NWViMGYxNzgzZDk5ZDk2Y2FiNzg0MGJlOTM4NmYx
+YjM4Nzc5YmJjMWU2YzhhOGJjMzA1OTE1MzUxYWQxOTQ0MDdlNzBkOTZiYTExMzAyZTI2ZWVi
+ZWQ0NmJiYzY4ZjEwOGI5NmY0YzFkNTg1MzI2ZWZmODYyMTc1N2U1NzJkMjhkZDBlOTczNmYz
+NjkyZTA5M2NjNWNiZTk1ZDhiMGYzOWZlYmM1MjdmZTY1MTNhMmFjZGYzMGNhZGY2NWIzNjk0
+ODE3MmVkMDAzZjJhNmQ1ZDVhNGQ4ZGQwYzFkNWRkYmExNTRmOTdhYmE2ODU1N2NmNCJ9Cjwv
+c2NyaXB0PjxzY3JpcHQgaWQ9ImFudWJpc19iYXNlX3ByZWZpeCIgdHlwZT0iYXBwbGljYXRp
+b24vanNvbiI+IiIKPC9zY3JpcHQ+PC9oZWFkPjxib2R5IGlkPSJ0b3AiPjxtYWluPjxoMSBp
+ZD0idGl0bGUiIGNsYXNzPSJjZW50ZXJlZC1kaXYiPk1ha2luZyBzdXJlIHlvdSYjMzk7cmUg
+bm90IGEgYm90ITwvaDE+PGRpdiBjbGFzcz0iY2VudGVyZWQtZGl2Ij48aW1nIGlkPSJpbWFn
+ZSIgc3R5bGU9IndpZHRoOjEwMCU7bWF4LXdpZHRoOjI1NnB4OyIgc3JjPSIvLndpdGhpbi53
+ZWJzaXRlL3gvY21kL2FudWJpcy9zdGF0aWMvaW1nL3BlbnNpdmUud2VicD9jYWNoZUJ1c3Rl
+cj0xLjIxLjMiPiA8aW1nIHN0eWxlPSJkaXNwbGF5Om5vbmU7IiBzdHlsZT0id2lkdGg6MTAw
+JTttYXgtd2lkdGg6MjU2cHg7IiBzcmM9Ii8ud2l0aGluLndlYnNpdGUveC9jbWQvYW51Ymlz
+L3N0YXRpYy9pbWcvaGFwcHkud2VicD9jYWNoZUJ1c3Rlcj0xLjIxLjMiPjxwIGlkPSJzdGF0
+dXMiPkxvYWRpbmcuLi48L3A+PHNjcmlwdCBhc3luYyB0eXBlPSJtb2R1bGUiIHNyYz0iLy53
+aXRoaW4ud2Vic2l0ZS94L2NtZC9hbnViaXMvc3RhdGljL2pzL21haW4ubWpzP2NhY2hlQnVz
+dGVyPTEuMjEuMyI+PC9zY3JpcHQ+PGRpdiBpZD0icHJvZ3Jlc3MiIHJvbGU9InByb2dyZXNz
+YmFyIiBhcmlhLWxhYmVsbGVkYnk9InN0YXR1cyI+PGRpdiBjbGFzcz0iYmFyLWlubmVyIj48
+L2Rpdj48L2Rpdj48ZGV0YWlscz48c3VtbWFyeT5XaHkgYW0gSSBzZWVpbmcgdGhpcz88L3N1
+bW1hcnk+PHA+WW91IGFyZSBzZWVpbmcgdGhpcyBiZWNhdXNlIHRoZSBhZG1pbmlzdHJhdG9y
+IG9mIHRoaXMgd2Vic2l0ZSBoYXMgc2V0IHVwIEFudWJpcyB0byBwcm90ZWN0IHRoZSBzZXJ2
+ZXIgYWdhaW5zdCB0aGUgc2NvdXJnZSBvZiBBSSBjb21wYW5pZXMgYWdncmVzc2l2ZWx5IHNj
+cmFwaW5nIHdlYnNpdGVzLiBUaGlzIGNhbiBhbmQgZG9lcyBjYXVzZSBkb3dudGltZSBmb3Ig
+dGhlIHdlYnNpdGVzLCB3aGljaCBtYWtlcyB0aGVpciByZXNvdXJjZXMgaW5hY2Nlc3NpYmxl
+IGZvciBldmVyeW9uZS48L3A+PHA+QW51YmlzIGlzIGEgY29tcHJvbWlzZS4gQW51YmlzIHVz
+ZXMgYSBQcm9vZi1vZi1Xb3JrIHNjaGVtZSBpbiB0aGUgdmVpbiBvZiBIYXNoY2FzaCwgYSBw
+cm9wb3NlZCBwcm9vZi1vZi13b3JrIHNjaGVtZSBmb3IgcmVkdWNpbmcgZW1haWwgc3BhbS4g
+VGhlIGlkZWEgaXMgdGhhdCBhdCBpbmRpdmlkdWFsIHNjYWxlcyB0aGUgYWRkaXRpb25hbCBs
+b2FkIGlzIGlnbm9yYWJsZSwgYnV0IGF0IG1hc3Mgc2NyYXBlciBsZXZlbHMgaXQgYWRkcyB1
+cCBhbmQgbWFrZXMgc2NyYXBpbmcgbXVjaCBtb3JlIGV4cGVuc2l2ZS48L3A+PHA+VWx0aW1h
+dGVseSwgdGhpcyBpcyBhIGhhY2sgd2hvc2UgcmVhbCBwdXJwb3NlIGlzIHRvIGdpdmUgYSAm
+IzM0O2dvb2QgZW5vdWdoJiMzNDsgcGxhY2Vob2xkZXIgc29sdXRpb24gc28gdGhhdCBtb3Jl
+IHRpbWUgY2FuIGJlIHNwZW50IG9uIGZpbmdlcnByaW50aW5nIGFuZCBpZGVudGlmeWluZyBo
+ZWFkbGVzcyBicm93c2VycyAoRUc6IHZpYSBob3cgdGhleSBkbyBmb250IHJlbmRlcmluZykg
+c28gdGhhdCB0aGUgY2hhbGxlbmdlIHByb29mIG9mIHdvcmsgcGFnZSBkb2VzbiYjMzk7dCBu
+ZWVkIHRvIGJlIHByZXNlbnRlZCB0byB1c2VycyB0aGF0IGFyZSBtdWNoIG1vcmUgbGlrZWx5
+IHRvIGJlIGxlZ2l0aW1hdGUuPC9wPjxwPlBsZWFzZSBub3RlIHRoYXQgQW51YmlzIHJlcXVp
+cmVzIHRoZSB1c2Ugb2YgbW9kZXJuIEphdmFTY3JpcHQgZmVhdHVyZXMgdGhhdCBwbHVnaW5z
+IGxpa2UgSlNoZWx0ZXIgd2lsbCBkaXNhYmxlLiBQbGVhc2UgZGlzYWJsZSBKU2hlbHRlciBv
+ciBvdGhlciBzdWNoIHBsdWdpbnMgZm9yIHRoaXMgZG9tYWluLjwvcD48cD5UaGlzIHdlYnNp
+dGUgaXMgcnVubmluZyBBbnViaXMgdmVyc2lvbiA8Y29kZT4xLjIxLjM8L2NvZGU+LjwvcD48
+L2RldGFpbHM+PG5vc2NyaXB0PjxwPlNhZGx5LCB5b3UgbXVzdCBlbmFibGUgSmF2YVNjcmlw
+dCB0byBnZXQgcGFzdCB0aGlzIGNoYWxsZW5nZS4gVGhpcyBpcyByZXF1aXJlZCBiZWNhdXNl
+IEFJIGNvbXBhbmllcyBoYXZlIGNoYW5nZWQgdGhlIHNvY2lhbCBjb250cmFjdCBhcm91bmQg
+aG93IHdlYnNpdGUgaG9zdGluZyB3b3Jrcy4gQSBuby1KUyBzb2x1dGlvbiBpcyBhIHdvcmst
+aW4tcHJvZ3Jlc3MuPC9wPjwvbm9zY3JpcHQ+PGRpdiBpZD0idGVzdGFyZWEiPjwvZGl2Pjwv
+ZGl2Pjxmb290ZXI+PGRpdiBjbGFzcz0iY2VudGVyZWQtZGl2Ij48cD5Qcm90ZWN0ZWQgYnkg
+PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL1RlY2hhcm9IUS9hbnViaXMiPkFudWJpczwv
+YT4gRnJvbSA8YSBocmVmPSJodHRwczovL3RlY2hhcm8ubG9sIj5UZWNoYXJvPC9hPi4gTWFk
+ZSB3aXRoIOKdpO+4jyBpbiDwn4eo8J+Hpi48L3A+PHA+TWFzY290IGRlc2lnbiBieSA8YSBo
+cmVmPSJodHRwczovL2Jza3kuYXBwL3Byb2ZpbGUvY2VscGhhc2UuYnNreS5zb2NpYWwiPkNF
+TFBIQVNFPC9hPi48L3A+PC9kaXY+PC9mb290ZXI+PC9tYWluPjwvYm9keT48L2h0bWw+
 
-Neil
+--------------Y1gY7oQI0ggObi7uDTnXfL60--
 
