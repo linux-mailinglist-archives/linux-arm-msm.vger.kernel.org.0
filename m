@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-71376-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71377-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71310B3DD20
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 10:57:25 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D0BEB3DD86
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 11:04:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2E65189D4AE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 08:57:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 02A437A2432
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 09:02:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 946062FF140;
-	Mon,  1 Sep 2025 08:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 182453009F3;
+	Mon,  1 Sep 2025 09:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jertd+g0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="uLsPWZpO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488352FE06D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 08:57:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0AF2FF154
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 09:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756717036; cv=none; b=revTq9aK4oEJ1SIMqruh29D/i1C2ZTAJHvZE2pzLecML1hLHSp6gvYMV3jnsfX/mqQIEmHmMOjUetRsm+SRrfoGt/ctT04XkVnhVXJj1aeokVh+Yixus1VeJ0F86TQm10XyNyMOtqjv+J7yLSLIFgEJcfZArHFf06Tt+h+LcAU8=
+	t=1756717441; cv=none; b=oMGBcXa1FN6S3j/eIZ3UdWwR/Xi4N+T/WKHaBX5nnElErHHrwP9fazh5eFZLS8tkRpUdMgwu7EhFxw5qF1tMW8LQIu+oxXgCWTjkcqdrWy+mYJYy8NC63SweBH8S6xiyq9mk2/8M6LbZWz5Nwqv/aVSMvzTk8+Am35wpu1tJRqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756717036; c=relaxed/simple;
-	bh=S5LxcegLHjjkJFwecl3nvsi4dPkd/e09Ww7/aNdBdvU=;
+	s=arc-20240116; t=1756717441; c=relaxed/simple;
+	bh=BRVffIraDrTcVxvFJdlUUUnJJYHLdGtchn0lCofCxlk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bSf+bYIZfGUFMn556plCYZzJ2S1OYMW73thzIflSgTZLkRKkva5P22SfudcMtFLiCXgaZWOlRhLJkEExmApTKMYDNpAtBgapD3XAcxgvCBYplbaGQ26vgNrumL+C69cwVtjm/5x8eWjvvXmsNlM6al4/feSXWKAoKFC09FH9np0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jertd+g0; arc=none smtp.client-ip=209.85.128.171
+	 In-Reply-To:Content-Type; b=lfkrq/i0gIjtH/SU3rOsP1ZDSovdpQlsX4gR8WHUt+EnyWTEmfIi8l0SD9f48mtJ3nf/JmbFLqdhSjWh2nuXRXvdvtSOqYJN1el1frKVIt8b+6nrd6FrFF7vZQdjoI/XUfDjq3hskt57MHQKJ0WI3pyISG6Wx3BjqwGq8xqUWKk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=uLsPWZpO; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-71d603acc23so32197677b3.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 01:57:13 -0700 (PDT)
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45b89147cfbso10438815e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 02:03:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756717032; x=1757321832; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qgvQHB1ThISY9uVHxKPAb9k4TCRL2UiR6ffxI/PWq3M=;
-        b=Jertd+g0KUmgdzzUxrEWW0ujJM79vx5caBqd82hXrxFJU1a9k7xq6dTjKlI5DF9bWZ
-         TanqX838J1PRyV3NxyxzoLZIoLzp2dKSgzWFYxw5xpRGMGdeoBy3BSFLtSZchkXMQSy4
-         RkJRFjDXRi6Hrhzp1rbPggv/WHsfwCywFnRXSOLXv4PnaPPC8NctCnWIXSQu47AVvrJ+
-         Ljz3Ub4Pd+IUXsVETYH1FJAqvC24KybXm4N36mBZGCbridSpTdFWO2DDKatsGjsJ2cq9
-         70Tzr0237PgXP5hlGIZkyQLZNe9wdd+OksazAzGgks9SfTPK3qf66bsMVkLSMdQHQwm3
-         VdCw==
+        d=linaro.org; s=google; t=1756717437; x=1757322237; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=MLxQeBkb7pg30Hm1b4BwH3XF1UA4XXnA9/e/abfa5DU=;
+        b=uLsPWZpO019pbS6/8j8oIeTYmgvvc0Ex3Jaa+l0/de6ZS0cox4UQD8OmLDE9g4lidC
+         VdVG/JIYaHK8wonXs2kyiOId1/FJRwxzbS9SPmNKlWxdx28wcFexYlFalBwiCGVSa1Fv
+         qv4ggfNjlB7jWQNTz2rBnAmEvuAE86tioWV1tnb3yqAmmWDxvrZDlu9em/6bEZSJBoEZ
+         a2weE2PMsHZyhb1/uX9ngo/SqovPnAJobqXXsEJMUIs+wS5a0N6WuAf5rq2EOiGqyjPw
+         AUZOUc0rWcO1msp0xKiZoC84VHXPWRSddvx1GZHSHY6nWeuG+dO6pZQFv1KiTARIsBtu
+         khQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756717032; x=1757321832;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qgvQHB1ThISY9uVHxKPAb9k4TCRL2UiR6ffxI/PWq3M=;
-        b=DjFHQ1o+wGEQAbB25K2tMxnrq3y6Pohb/DDPhxc8+mWtKn3X9oJoP/20IhCe3TLGst
-         3buD3bEWLrJk4voJ/D1GhlZ+jtPfaogMGjaFvOPgciXnEQ0LlkMs2tyN0YH4BhB2MXcu
-         PUfHIOdyh+U4ToI8kyjiyH2BNiWF/Z4jf9ybtOwzUG6TZokrs7/86HvL1YWTWzur5bTl
-         9hG9USuqfWMf/F4B4+061H2UHN6RjNEQazoP7b+oVocGB1QYgY0FCs13xPMWUP6ThUTA
-         OzrnMYFvmR6bFqB7c67DVZJrS/ZQvmhYPm+wJbfOpWeChNYqwyAxjSxGCin3w+75agR3
-         PNIA==
-X-Forwarded-Encrypted: i=1; AJvYcCXG7SB3yRHhs7FArpjT8CZ4RO147I7vVIGMwkyjupsdgf/G6DigW+MehZi30VXx62w9i1f+4n8SrT0oJPFN@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzca2I77CyyL/rmwZM9pFPGgg6j/29DEVouQK95B7va5ZP32K8q
-	fXUHMmFmXSruibboZqyMZR1bwQtVdDD0j3ff6K1+AkI0zqS1oTqzGfyxBbdAtvp9aOw=
-X-Gm-Gg: ASbGncv7SXjlG72kaTuLdW4h7s0QbOMsfrRVTeUxG5z50xbsfjMQcycQeZiZY6QAFSb
-	VcB4xsEJ122slKbY65HgE/awGsmqdtdz9+/K4SoyfzYM+RRBR+P8KwgMBleHb93AxycLo3w4ybY
-	S/RWqh2W48MljaFt6bEMnCOcVL2UY7qC0wxCgNOHHDHe+PanjoABB9MnKAh15uzTsjUwM7r+our
-	k1yoi1YRYef9KOkbSwyhc4y/9ZXNEtVFshSt2mxxoFZsS/4seKy2xCaHjF0NQ+2TBjXAr9HtW5S
-	aGOpIqwVI56n3ke3gj0uwWapgMBd8kiY7Ral4FkEBJelFWaik8O4s6Cg/iIM833bO/FuUKUVfHl
-	0H0/ycRBrHrRkedn3Ndbp3sX4ENNoY26yXLsoGfr8TJQnWrW3xXqybokS/c8thKs3XgQU3fDx11
-	KnOCUvbgfpXZQpLw==
-X-Google-Smtp-Source: AGHT+IG38bjjyQjzt0c80VXnwoUSoXxUbipjOE1UiZhaYOXnFBnq4b3rik9mxtcs1scAlzx7pRovJg==
-X-Received: by 2002:a05:690c:a4c1:20b0:722:92c5:8e80 with SMTP id 00721157ae682-72292c59299mr23345777b3.40.1756717032133;
-        Mon, 01 Sep 2025 01:57:12 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:335e:2208:211c:f884:abe7:c955? ([2a0d:3344:335e:2208:211c:f884:abe7:c955])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-7227d8cc1fbsm13391337b3.37.2025.09.01.01.57.07
+        d=1e100.net; s=20230601; t=1756717437; x=1757322237;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MLxQeBkb7pg30Hm1b4BwH3XF1UA4XXnA9/e/abfa5DU=;
+        b=ADmWDhkVzX3k45Uwsbr9s80OBabiSsslihWNTge2dbJU78xPzCMs6wsdacFx++gAkg
+         5dQn4HccCrDcF1UhSkyHkgQASdDfaLztfVx+ceqMDMc5B2BRrABK/IYA3Jscb7uN+4F1
+         M/MvKhwkNTtNeq+D7G9eDKKWRfU6GVou2mSVp7NnFYd8DTNxM/0JlwY8f5qfv906pUL7
+         3fCbT5qXJlqD8GXSSFQd/SyFEinaJVnHjIjMRhyG+pKSvI77MlOEUxlcZzqMM8/ZCZeZ
+         m9/0d0MQjJCga3s8kbHWZQic1MyUDmR5JqTEkMkIbRC4UALyFR965wc88NTP+CrkSDyA
+         BHLQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVN7zQgCafL0yV7LhdzfRvpVZbvLGoc6fIyNH4QJxbBmM15sL5Og6OE7ttZKTmLwrbLVx/jbyPDAHVZ7/7L@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/BbfR3WpkzV42JUAzF2Nfxc+H8qQhJxbk+Wnc2TzrrZS9JEJg
+	0eu6KRjM2dkxAcqMCOcShGUh7fo/QfOnIlCc9KZwOMI4/iZgzTtdYHujVhqhOlOIZFc=
+X-Gm-Gg: ASbGnctKa0lQlmUKaOeD3aDI9KNISHFlsHGuB71TTKvfojmX/2IVw7tVShb+x+KyE91
+	MqhhfMI+ID/zr7XLxjMShiHRymt93FT/CrEb20gEL8rFVWVuwAgZ2ZQMoow03HJZo8jXsEBrd2x
+	w50IKsAHDmHbj+O3lLtpHUB4xdALFydryVnCXGOcWeFIKc+mAwjBWIdnLngAaMQsN6I3qxtSt8g
+	hQLV/IORGeaR22U+6pA/wla1nY/2jraM1/0F1SRWuplO/o42OAZhoaaRK6e0pKVYGmE6glLmLlc
+	Ws4H5cabr0J065uQt1I6YJLPL5Q3lgi42NQAr3m6iuoOk2cq/FAqyLVhjDrYn6qLE8i17eOKUXM
+	V7bBEldmf+TOh6ENyUU6wzs1pW8iHHdQThQNjFVONGsw6wCptFxsfQGYTB/LfIy09zXT1Wal8Xe
+	IkycUoMPE=
+X-Google-Smtp-Source: AGHT+IFRon1/4eAXp3QDGK+LmMCItN7KW9fmyhhUSOX/aEte7rl35eC/lBri5/0sH+daAyHsLqfoNA==
+X-Received: by 2002:a05:600c:4692:b0:43c:eeee:b713 with SMTP id 5b1f17b1804b1-45b855983f8mr46646315e9.20.1756717437302;
+        Mon, 01 Sep 2025 02:03:57 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:881c:7d0e:ad0a:d9a? ([2a01:e0a:3d9:2080:881c:7d0e:ad0a:d9a])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7d9548edsm93591505e9.5.2025.09.01.02.03.56
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Sep 2025 01:57:11 -0700 (PDT)
-Message-ID: <40e802eb-3764-47af-8b4f-9f7c8b5b60c1@linaro.org>
-Date: Mon, 1 Sep 2025 11:57:06 +0300
+        Mon, 01 Sep 2025 02:03:56 -0700 (PDT)
+Message-ID: <d39a0299-bbda-4284-b7ab-81648a787305@linaro.org>
+Date: Mon, 1 Sep 2025 11:03:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,323 +85,104 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
-To: David Hildenbrand <david@redhat.com>, Michal Hocko <mhocko@suse.com>
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
- andersson@kernel.org, pmladek@suse.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
- jonechou@google.com, tudor.ambarus@linaro.org,
- Christoph Hellwig <hch@infradead.org>,
- Sergey Senozhatsky <senozhatsky@chromium.org>
-References: <20250724135512.518487-1-eugen.hristev@linaro.org>
- <20250724135512.518487-23-eugen.hristev@linaro.org>
- <ffc43855-2263-408d-831c-33f518249f96@redhat.com>
- <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
- <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
- <aJCRgXYIjbJ01RsK@tiehlicka>
- <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
- <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
- <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
- <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
- <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
- <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
- <64a93c4a-5619-4208-9e9f-83848206d42b@linaro.org>
- <f1f290fc-b2f0-483b-96d5-5995362e5a8b@redhat.com>
- <01c67173-818c-48cf-8515-060751074c37@linaro.org>
- <aab5e2af-04d6-485f-bf81-557583f2ae4b@redhat.com>
- <1b52419c-101b-487e-a961-97bd405c5c33@linaro.org>
- <99d2cc96-03ea-4026-883e-1ee083a96c39@redhat.com>
- <98afe1bd-99d2-4b5d-866a-e9541390fab4@linaro.org>
- <c59f2528-31b0-4b9d-8d20-f204a0600ff6@redhat.com>
-From: Eugen Hristev <eugen.hristev@linaro.org>
-Content-Language: en-US
-In-Reply-To: <c59f2528-31b0-4b9d-8d20-f204a0600ff6@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 0/3] platform: arm64: thinkpad-t14s-ec: new driver
+To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Mark Pearson <mpearson-lenovo@squebb.ca>
+Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>,
+ Henrique de Moraes Holschuh <hmh@hmh.eng.br>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250831-thinkpad-t14s-ec-v1-0-6e06a07afe0f@collabora.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250831-thinkpad-t14s-ec-v1-0-6e06a07afe0f@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-
-
-On 8/27/25 23:06, David Hildenbrand wrote:
-> On 27.08.25 16:08, Eugen Hristev wrote:
->>
->>
->> On 8/27/25 15:18, David Hildenbrand wrote:
->>> On 27.08.25 13:59, Eugen Hristev wrote:
->>>>
->>>>
->>>> On 8/25/25 16:58, David Hildenbrand wrote:
->>>>> On 25.08.25 15:36, Eugen Hristev wrote:
->>>>>>
->>>>>>
->>>>>> On 8/25/25 16:20, David Hildenbrand wrote:
->>>>>>>
->>>>>>>>>
->>>>>>>>> IIRC, kernel/vmcore_info.c is never built as a module, as it also
->>>>>>>>> accesses non-exported symbols.
->>>>>>>>
->>>>>>>> Hello David,
->>>>>>>>
->>>>>>>> I am looking again into this, and there are some things which in my
->>>>>>>> opinion would be difficult to achieve.
->>>>>>>> For example I looked into my patch #11 , which adds the `runqueues` into
->>>>>>>> kmemdump.
->>>>>>>>
->>>>>>>> The runqueues is a variable of `struct rq` which is defined in
->>>>>>>> kernel/sched/sched.h , which is not supposed to be included outside of
->>>>>>>> sched.
->>>>>>>> Now moving all the struct definition outside of sched.h into another
->>>>>>>> public header would be rather painful and I don't think it's a really
->>>>>>>> good option (The struct would be needed to compute the sizeof inside
->>>>>>>> vmcoreinfo). Secondly, it would also imply moving all the nested struct
->>>>>>>> definitions outside as well. I doubt this is something that we want for
->>>>>>>> the sched subsys. How the subsys is designed, out of my understanding,
->>>>>>>> is to keep these internal structs opaque outside of it.
->>>>>>>
->>>>>>> All the kmemdump module needs is a start and a length, correct? So the
->>>>>>> only tricky part is getting the length.
->>>>>>
->>>>>> I also have in mind the kernel user case. How would a kernel programmer
->>>>>> want to add some kernel structs/info/buffers into kmemdump such that the
->>>>>> dump would contain their data ? Having "KMEMDUMP_VAR(...)" looks simple
->>>>>> enough.
->>>>>
->>>>> The other way around, why should anybody have a saying in adding their
->>>>> data to kmemdump? Why do we have that all over the kernel?
->>>>>
->>>>> Is your mechanism really so special?
->>>>>
->>>>> A single composer should take care of that, and it's really just start +
->>>>> len of physical memory areas.
->>>>>
->>>>>> Otherwise maybe the programmer has to write helpers to compute lengths
->>>>>> etc, and stitch them into kmemdump core.
->>>>>> I am not saying it's impossible, but just tiresome perhaps.
->>>>>
->>>>> In your patch set, how many of these instances did you encounter where
->>>>> that was a problem?
->>>>>
->>>>>>>
->>>>>>> One could just add a const variable that holds this information, or even
->>>>>>> better, a simple helper function to calculate that.
->>>>>>>
->>>>>>> Maybe someone else reading along has a better idea.
->>>>>>
->>>>>> This could work, but it requires again adding some code into the
->>>>>> specific subsystem. E.g. struct_rq_get_size()
->>>>>> I am open to ideas , and thank you very much for your thoughts.
->>>>>>
->>>>>>>
->>>>>>> Interestingly, runqueues is a percpu variable, which makes me wonder if
->>>>>>> what you had would work as intended (maybe it does, not sure).
->>>>>>
->>>>>> I would not really need to dump the runqueues. But the crash tool which
->>>>>> I am using for testing, requires it. Without the runqueues it will not
->>>>>> progress further to load the kernel dump.
->>>>>> So I am not really sure what it does with the runqueues, but it works.
->>>>>> Perhaps using crash/gdb more, to actually do something with this data,
->>>>>> would give more insight about its utility.
->>>>>> For me, it is a prerequisite to run crash, and then to be able to
->>>>>> extract the log buffer from the dump.
->>>>>
->>>>> I have the faint recollection that percpu vars might not be stored in a
->>>>> single contiguous physical memory area, but maybe my memory is just
->>>>> wrong, that's why I was raising it.
->>>>>
->>>>>>
->>>>>>>
->>>>>>>>
->>>>>>>>     From my perspective it's much simpler and cleaner to just add the
->>>>>>>> kmemdump annotation macro inside the sched/core.c as it's done in my
->>>>>>>> patch. This macro translates to a noop if kmemdump is not selected.
->>>>>>>
->>>>>>> I really don't like how we are spreading kmemdump all over the kernel,
->>>>>>> and adding complexity with __section when really, all we need is a place
->>>>>>> to obtain a start and a length.
->>>>>>>
->>>>>>
->>>>>> I understand. The section idea was suggested by Thomas. Initially I was
->>>>>> skeptic, but I like how it turned out.
->>>>>
->>>>> Yeah, I don't like it. Taste differs ;)
->>>>>
->>>>> I am in particular unhappy about custom memblock wrappers.
->>>>>
->>>>> [...]
->>>>>
->>>>>>>>
->>>>>>>> To have this working outside of printk, it would be required to walk
->>>>>>>> through all the printk structs/allocations and select the required info.
->>>>>>>> Is this something that we want to do outside of printk ?
->>>>>>>
->>>>>>> I don't follow, please elaborate.
->>>>>>>
->>>>>>> How is e.g., log_buf_len_get() + log_buf_addr_get() not sufficient,
->>>>>>> given that you run your initialization after setup_log_buf() ?
->>>>>>>
->>>>>>>
->>>>>>
->>>>>> My initial thought was the same. However I got some feedback from Petr
->>>>>> Mladek here :
->>>>>>
->>>>>> https://lore.kernel.org/lkml/aBm5QH2p6p9Wxe_M@localhost.localdomain/
->>>>>>
->>>>>> Where he explained how to register the structs correctly.
->>>>>> It can be that setup_log_buf is called again at a later time perhaps.
->>>>>>
->>>>>
->>>>> setup_log_buf() is a __init function, so there is only a certain time
->>>>> frame where it can be called.
->>>>>
->>>>> In particular, once the buddy is up, memblock allocations are impossible
->>>>> and it would be deeply flawed to call this function again.
->>>>>
->>>>> Let's not over-engineer this.
->>>>>
->>>>> Peter is on CC, so hopefully he can share his thoughts.
->>>>>
->>>>
->>>> Hello David,
->>>>
->>>> I tested out this snippet (on top of my series, so you can see what I
->>>> changed):
->>>>
->>>>
->>>> diff --git a/kernel/sched/core.c b/kernel/sched/core.c
->>>> index 18ba6c1e174f..7ac4248a00e5 100644
->>>> --- a/kernel/sched/core.c
->>>> +++ b/kernel/sched/core.c
->>>> @@ -67,7 +67,6 @@
->>>>    #include <linux/wait_api.h>
->>>>    #include <linux/workqueue_api.h>
->>>>    #include <linux/livepatch_sched.h>
->>>> -#include <linux/kmemdump.h>
->>>>
->>>>    #ifdef CONFIG_PREEMPT_DYNAMIC
->>>>    # ifdef CONFIG_GENERIC_IRQ_ENTRY
->>>> @@ -120,7 +119,12 @@
->>>> EXPORT_TRACEPOINT_SYMBOL_GPL(sched_update_nr_running_tp);
->>>>    EXPORT_TRACEPOINT_SYMBOL_GPL(sched_compute_energy_tp);
->>>>
->>>>    DEFINE_PER_CPU_SHARED_ALIGNED(struct rq, runqueues);
->>>> -KMEMDUMP_VAR_CORE(runqueues, sizeof(runqueues));
->>>> +
->>>> +size_t runqueues_get_size(void);
->>>> +size_t runqueues_get_size(void)
->>>> +{
->>>> +       return sizeof(runqueues);
->>>> +}
->>>>
->>>>    #ifdef CONFIG_SCHED_PROXY_EXEC
->>>>    DEFINE_STATIC_KEY_TRUE(__sched_proxy_exec);
->>>> diff --git a/kernel/vmcore_info.c b/kernel/vmcore_info.c
->>>> index d808c5e67f35..c6dd2d6e96dd 100644
->>>> --- a/kernel/vmcore_info.c
->>>> +++ b/kernel/vmcore_info.c
->>>> @@ -24,6 +24,12 @@
->>>>    #include "kallsyms_internal.h"
->>>>    #include "kexec_internal.h"
->>>>
->>>> +typedef void* kmemdump_opaque_t;
->>>> +
->>>> +size_t runqueues_get_size(void);
->>>> +
->>>> +extern kmemdump_opaque_t runqueues;
->>>
->>> I would have tried that through:
->>>
->>> struct rq;
->>> extern struct rq runqueues;
->>>
->>> But the whole PER_CPU_SHARED_ALIGNED makes this all weird, and likely
->>> not the way we would want to handle that.
->>>
->>>>    /* vmcoreinfo stuff */
->>>>    unsigned char *vmcoreinfo_data;
->>>>    size_t vmcoreinfo_size;
->>>> @@ -230,6 +236,9 @@ static int __init crash_save_vmcoreinfo_init(void)
->>>>
->>>>           kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_VMCOREINFO,
->>>>                                (void *)vmcoreinfo_data, vmcoreinfo_size);
->>>> +       kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_runqueues,
->>>> +                            (void *)&runqueues, runqueues_get_size());
->>>> +
->>>>           return 0;
->>>>    }
->>>>
->>>> With this, no more .section, no kmemdump code into sched, however, there
->>>> are few things :
->>>
->>> I would really just do here something like the following:
->>>
->>> /**
->>>    * sched_get_runqueues_area - obtain the runqueues area for dumping
->>>    * @start: ...
->>>    * @size: ...
->>>    *
->>>    * The obtained area is only to be used for dumping purposes.
->>>    */
->>> void sched_get_runqueues_area(void *start, size_t size)
->>> {
->>> 	start = &runqueues;
->>> 	size = sizeof(runqueues);
->>> }
->>>
->>> might be cleaner.
->>>
->>
->> How about this in the header:
->>
->> #define DECLARE_DUMP_AREA_FUNC(subsys, symbol) \
->>
->> void subsys ## _get_ ## symbol ##_area(void **start, size_t *size);
->>
->>
->>
->> #define DEFINE_DUMP_AREA_FUNC(subsys, symbol) \
->>
->> void subsys ## _get_ ## symbol ##_area(void **start, size_t *size)\
->>
->> {\
->>
->>          *start = &symbol;\
->>
->>          *size = sizeof(symbol);\
->>
->> }
->>
->>
->> then, in sched just
->>
->> DECLARE_DUMP_AREA_FUNC(sched, runqueues);
->>
->> DEFINE_DUMP_AREA_FUNC(sched, runqueues);
->>
->> or a single macro that wraps both.
->>
->> would make it shorter and neater.
->>
->> What do you think ?
+On 31/08/2025 23:28, Sebastian Reichel wrote:
+> Introduce driver for the ThinkPad T14s Gen6 Snapdragon EC. In theory
+> it seems to be compatible with the ThinkPad ACPI driver, but these
+> devices are booted with device tree. As the name implies, the existing
+> ThinkPad ACPI driver only supports the ACPI interface. Looking at
+> the implementation, the ACPI DSDT contains many mapping functions
+> to translate the low level I2C messages into the interface used by
+> the ThinkPad ACPI driver. Adding DT support to the ThinkPad ACPI driver
+> would require adding all those translation functions, which would add
+> more or less the same amount of code as writing a separate driver using
+> the low level interface directly. I don't think it's sensible to make
+> the existing ACPI driver even more complicated, so I went for a separate
+> driver.
 > 
-> Looks a bit over-engineered, and will require us to import a header 
-> (likely kmemdump.h) in these files, which I don't really enjoy.
+> I managed to get system LEDs, audio LEDs, extra keys and the keyboard
+> backlight control working. The EC also seems to be used for some thermal
+> bits, which I haven't looked into deeply. As far as I understand most
+> thermal and fan control is handled by a different controller
+> (0x36@i2c5) anyways.
 > 
-> I would start simple, without any such macro-magic. It's a very simple 
-> function after all, and likely you won't end up having many of these?
+> Apart from that the EC is involved in proper system suspend, which
+> is something I do not yet understand (I don't have any documentation
+> apart from the dis-assembled DSDT and existing ACPI driver). Right
+> now I disabled wake capabilities for the IRQ, since it would wake
+> up the system when closing the LID. Hopefully a way to mask specific
+> events will be found in the future.
 > 
+> Signed-off-by: Sebastian Reichel <sre@kernel.org>
+> ---
+> Sebastian Reichel (3):
+>        dt-bindings: platform: Add Lenovo Thinkpad T14s EC
+>        platform: arm64: thinkpad-t14s-ec: new driver
+>        arm64: dts: qcom: x1e80100-t14s: add EC
+> 
+>   .../bindings/platform/lenovo,thinkpad-t14s-ec.yaml |  49 ++
+>   MAINTAINERS                                        |   6 +
+>   .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    |  23 +
+>   drivers/platform/arm64/Kconfig                     |  20 +
+>   drivers/platform/arm64/Makefile                    |   1 +
+>   drivers/platform/arm64/lenovo-thinkpad-t14s.c      | 597 +++++++++++++++++++++
+>   6 files changed, 696 insertions(+)
+> ---
+> base-commit: c8bc81a52d5a2ac2e4b257ae123677cf94112755
+> change-id: 20250831-thinkpad-t14s-ec-ddeb23dbdafb
+> 
+> Best regards,
 
-Thanks David, I will do it as you suggested and see what comes out of it.
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S OLED
 
-I have one side question you might know much better to answer:
-As we have a start and a size for each region, this start is a virtual
-address. The firmware/coprocessor that reads the memory and dumps it,
-requires physical addresses. What do you suggest to use to retrieve that
-address ? virt_to_phys might be problematic, __pa or __pa_symbol? or
-better lm_alias ?
-As kmemdump is agnostic of the region of the memory the `start` comes
-from, and it should be portable and platform independent.
+All worked :-)
 
-Thanks again,
-Eugen
+Thanks !
+
+Neil
 
