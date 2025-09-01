@@ -1,435 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-71392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 039B8B3E1A0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 13:33:10 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD21FB3E224
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 14:03:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE40F3A6E21
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 11:33:08 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E0E457A22F1
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 12:01:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F70C30E0D8;
-	Mon,  1 Sep 2025 11:33:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B033257453;
+	Mon,  1 Sep 2025 12:02:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="gXkvTvjl"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XvMiE8Nt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9B419C546;
-	Mon,  1 Sep 2025 11:33:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6486724336D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 12:02:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756726385; cv=none; b=c8Fv4a0DnNGBGiZ8ea9/Dx15NdNdq8D86rVMfPQWLjPkKSolvLabhcnc8wglvP/dMVF8YNY8EDgXlBnVsEAYhxqkP5fX1efj2uRs9nX5ZSHjfRG4XeeMUVU0fnkwDdHzEwSIZcEcpzmudNU4Y8urs2E8JIjdXeZOLsge82pd5bw=
+	t=1756728173; cv=none; b=DMR6N6vaZx1/3OrDkCG8LaF+xL1l5+glWihkSyh7jZPetG8DfPZzLASp/NYanbYcQWBg3/AUo6AvOLKFH1M06Jgo1OvZheKDF1B0/4zD/ke1QDihgXex+6wVDuZgUGHXdhi0ZCMjtD3U7AWx5R2NawdW+IXm6QbX1M0QTO3kARw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756726385; c=relaxed/simple;
-	bh=GFnrP6JwvU09jDl6n07k3pybJKEpR6EemzyESBXXvLI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=boOLqdEovnUQAw+FEEERxdl46pVXyd++xA0YzB0i7RwJlmuHvmBHaKnrioUn6wN7mp/uS2pu1P8cKHienKKuOyyi9B6MKFRwZBk4sLLYjfszOWE2q6KVEznBqD+CQfI+OGWHGCyE7y0fKrBx77i1ErlfIt3YoxnH+qvrsm/fYTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=gXkvTvjl; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 581B48Dn013576;
-	Mon, 1 Sep 2025 11:32:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	geyyxU/R0ar/l1jPxU6KhljisvuggeaV7RE374LO5z0=; b=gXkvTvjlBClqVIJT
-	dUSDX9ImM46wQVuIkbWQJ/bCv/o55bzmQ5AMa3PMdyVkPBfp8BlcGK3b0dslScv/
-	boxJCO89fJ9Qc/WAdePv+nUjmbjPTK3VFPD24n0/AaH4yvvxmp/adZSVvkc9EPBw
-	7BfjSkyNGBrtnCpgls4o0tRlv0+lNPaUtPzO8REPTo6dAYOJaMXm7ogjkuZYiwPb
-	I8GzLdFQ2LdRk5TxDv0rI/99HF+prgV8l5x4zcus8bD6h9ud1TWn04Xl7nobZeuk
-	+un/aKBoFg510r1FT/MzAQgsEbB/VDT4YDC742RdzagYaRNyfZO52NNJxEVGNsUZ
-	UTmLDw==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8mmb2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Sep 2025 11:32:58 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 581BWv2X028131
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Sep 2025 11:32:57 GMT
-Received: from [10.204.100.211] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 1 Sep
- 2025 04:32:51 -0700
-Message-ID: <961c54b2-3335-5fe2-f149-9c89a91d030d@quicinc.com>
-Date: Mon, 1 Sep 2025 17:02:48 +0530
+	s=arc-20240116; t=1756728173; c=relaxed/simple;
+	bh=8cO1XIiop7tlwEYA72YK/zDG0yqN75FP63jpCU3Sb3U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Wn2Bgo0uqhjQuRlfM3p0EqOGVVZ1V65CwGqZxh4kYiXlMfgSawxBPQAFt6GkU3psqjsj5XB8OixMRpVRpCaqykMXBN3RnkefpwQS4Z1bEJCqGjgVs+WEW0l0BzuYZgroOIb69SdzL2Q3kyKQKhRwz2z6snSsa65uUgkCYFrzewo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XvMiE8Nt; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3cdfb1ff7aeso2106450f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 05:02:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756728170; x=1757332970; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=RnfmWiYHUC8i19glkM7oL/LSJL9iA4N5hQ/wPd1r+F0=;
+        b=XvMiE8NtCm26jovAFPIJKndkpRI67zXpt39QogtmkP3kmj1nRyNDlzhgGzBP/8X3Il
+         28YcVzX86ZzY8V/odgnYo4zTVg6/3RNCz7Rj3Versuz+AihAa9lhw8cj0snNT4RqVFrN
+         HSCKz0FTng5UDyYYu3CWGjZ2EoD29Ul5rdMNE3iKhIWxRTntdfla5SBszpuYCXmzBAWv
+         g1cpKoyIOAbenxvAjmcWZoiBHNcIJUrLCMW+c4DwJYoo8Wm0sIF6SKUeMd5xV+zIn1tI
+         kUQT7l762EdGTQ/prYDXbgQuf1j4QEz4iRAj28FHIzIHX68O0H6cvAfdmxH9YYMWu6ts
+         Cx5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756728170; x=1757332970;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RnfmWiYHUC8i19glkM7oL/LSJL9iA4N5hQ/wPd1r+F0=;
+        b=bkQOlbmBRWmE++R9KDOzR/S8QrjeRK5KX8MOXq0BF6RjjutuAvTBWFrH9yLzH35nwx
+         hilMwmz3sDwB6ffSlF6P9bFGcFivHSuZkmRz5IS5/v3t2AHyly2W9z42Qns13G5ylJRe
+         sNEnGIbiX6TMNvYQAFQcTW5S3yciF8kJnMHJwQ3SgelrYt14zv03wvzIxAr4uRBOqYFt
+         5PLXR3iy3kHw3GzIKqkBKVGGKPSe/bnaZgafDM+PHc/pJ/pHEgGOu0rK45HNjyosc8Ld
+         7jk992Eze6qSf8A8KGWqmC59276FNBk5qql7k65xloo5D31Pmd7FjXyvAdPWsKnpRo1T
+         NU/w==
+X-Forwarded-Encrypted: i=1; AJvYcCX6TDhJdoR6WqhB6Ai1Ay9cXHizweZWHnywMZm8jxTYPThrCDFZiAplb/GiE1c36jvrKC6k3Hxttf+tjnjL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0WCbUx3svMKWSM+k9GrOtERBNiHyBBw/J4N5X3XdYwWGSfkRj
+	TzbV82txIivXt7fae0dnZ0aQPZ27iuOZfy6/NSZYFSkClMta9Fr1cYrfWJK2l53Qh0Q=
+X-Gm-Gg: ASbGncvNYXR5rpUDUW2PqMw4YMouPHeWrWUPPWceMFvsIWVuKKtj/8m1kuyDMk5PXwW
+	LcCCJqtdpyF88QjqLlV64cK/zcLCJNKeRdDs0CzUcgykuf6JxCatsercK7qYgw/1fvA3LeQcDxH
+	NNLLOAfRA3lm1NdDYaHbi+TTa9NhahObf1gfVsm9RgBWzgq72lJwbI2dCKUpTMVsZ3sPHWRbKV4
+	qT+/Jq8L+OuwJvOT4+ZmS/JXtRUdYkCtdqaUU1EzVRnSArIcyId3h8EWWQzlhpX66+YDxmhZL2Z
+	moGiIp5tLvDnsBjel58cP9WFDSVjP61bMvZ5s1iQcYxjW9tTOoIkdv9clCWuaape0h2VcM3i/96
+	B79mzVk7lIAfclRc7GAfkHpCfXiZsg9eqBEty8jgcpmUuPNB1pAsSSM0/3s29rkzm0Gu4zBDhue
+	CDd1E=
+X-Google-Smtp-Source: AGHT+IGtFYqe1NkisHt6TuhFoDyL75/fnRaNQlYXgCsJGFwGxCneAkzy9wIFe6z6w5vZIfrX/R2fCA==
+X-Received: by 2002:a5d:5f90:0:b0:3d9:2fa8:1009 with SMTP id ffacd0b85a97d-3d92fa81454mr79263f8f.45.1756728169537;
+        Mon, 01 Sep 2025 05:02:49 -0700 (PDT)
+Received: from ?IPV6:2a0d:3344:335e:2208:72de:40f7:b7be:9bb7? ([2a0d:3344:335e:2208:72de:40f7:b7be:9bb7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7e88785bsm154333855e9.14.2025.09.01.05.02.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Sep 2025 05:02:48 -0700 (PDT)
+Message-ID: <94f537ae-c2b1-4928-a3f3-6449c30cb624@linaro.org>
+Date: Mon, 1 Sep 2025 15:02:41 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 3/5] arm64: dts: qcom: lemans-evk: Extend peripheral and
- subsystem support
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC][PATCH v2 22/29] mm/numa: Register information into Kmemdump
+To: David Hildenbrand <david@redhat.com>, Michal Hocko <mhocko@suse.com>
+Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-arch@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
+ andersson@kernel.org, pmladek@suse.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ corbet@lwn.net, mojha@qti.qualcomm.com, rostedt@goodmis.org,
+ jonechou@google.com, tudor.ambarus@linaro.org,
+ Christoph Hellwig <hch@infradead.org>,
+ Sergey Senozhatsky <senozhatsky@chromium.org>
+References: <20250724135512.518487-1-eugen.hristev@linaro.org>
+ <e66f29c2-9f9f-4b04-b029-23383ed4aed4@linaro.org>
+ <751514db-9e03-4cf3-bd3e-124b201bdb94@redhat.com>
+ <aJCRgXYIjbJ01RsK@tiehlicka>
+ <e2c031e8-43bd-41e5-9074-c8b1f89e04e6@linaro.org>
+ <23e7ec80-622e-4d33-a766-312c1213e56b@redhat.com>
+ <f43a61b4-d302-4009-96ff-88eea6651e16@linaro.org>
+ <77d17dbf-1609-41b1-9244-488d2ce75b33@redhat.com>
+ <ecd33fa3-8362-48f0-b3c2-d1a11d8b02e3@linaro.org>
+ <9f13df6f-3b76-4d02-aa74-40b913f37a8a@redhat.com>
+ <64a93c4a-5619-4208-9e9f-83848206d42b@linaro.org>
+ <f1f290fc-b2f0-483b-96d5-5995362e5a8b@redhat.com>
+ <01c67173-818c-48cf-8515-060751074c37@linaro.org>
+ <aab5e2af-04d6-485f-bf81-557583f2ae4b@redhat.com>
+ <1b52419c-101b-487e-a961-97bd405c5c33@linaro.org>
+ <99d2cc96-03ea-4026-883e-1ee083a96c39@redhat.com>
+ <98afe1bd-99d2-4b5d-866a-e9541390fab4@linaro.org>
+ <c59f2528-31b0-4b9d-8d20-f204a0600ff6@redhat.com>
+ <40e802eb-3764-47af-8b4f-9f7c8b5b60c1@linaro.org>
+ <7e1f4f64-dfc4-4366-8e01-0891b2d4d2b4@redhat.com>
+From: Eugen Hristev <eugen.hristev@linaro.org>
 Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Wasim Nazir
-	<wasim.nazir@oss.qualcomm.com>
-CC: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>, <kernel@oss.qualcomm.com>,
-        <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <netdev@vger.kernel.org>,
-        Viken Dadhaniya
-	<viken.dadhaniya@oss.qualcomm.com>,
-        Sushrut Shree Trivedi
-	<quic_sushruts@quicinc.com>,
-        Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>,
-        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-        Mohd Ayaan Anwar
-	<quic_mohdayaa@quicinc.com>,
-        Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Monish Chunara <quic_mchunara@quicinc.com>,
-        Vishal Kumar Pal
-	<quic_vispal@quicinc.com>
-References: <20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com>
- <20250826-lemans-evk-bu-v1-3-08016e0d3ce5@oss.qualcomm.com>
- <kycmxk3qag7uigoiitzcxcak22cewdv253fazgaidjcnzgzlkz@htrh22msxteq>
-From: Vikash Garodia <quic_vgarodia@quicinc.com>
-In-Reply-To: <kycmxk3qag7uigoiitzcxcak22cewdv253fazgaidjcnzgzlkz@htrh22msxteq>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <7e1f4f64-dfc4-4366-8e01-0891b2d4d2b4@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: cjNiJyjpakaQNwQXA5N5buEVyjiDk1wk
-X-Proofpoint-GUID: cjNiJyjpakaQNwQXA5N5buEVyjiDk1wk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfX7d0MmbWQ1giu
- sGWK8GiHOsClDZdd9ZGC3vVIS8cVMX99vHwKM3bTqBLfmYWfOe1RDPwZsS+HrW7mlm24btQghpf
- cy+Gk92kBlK8TzIg8oihPZw5FRVzfT/DGxEj8e56c0999S2nPa8eefFlunhUII2vmNLVKW1P8Ns
- bzRm6owpP4o2pM1xwAEJ/+P+pXOjpCzTZTK+mbVRQwfmTYqJBX2nnICrNj9PcD2rkPAJT/C5VZt
- XCxUfHZv7Azxah9pvzRFAIvWsw9xmJSEIlEdtuj2VqOuFsPhZbcXiCww8bpg+bBaVTls3+dGKu6
- r20j5irblexX97TkXwnITNbthsUnQuNURQQNmuwCM4ljWBT0kI3qY72pB/R6wg6AJAAoDUtK74g
- WL9NGfrM
-X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b5846a cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=iTsxKKdsydDJoPdPDDIA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-01_05,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1011 adultscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
 
 
-On 8/27/2025 7:05 AM, Dmitry Baryshkov wrote:
-> On Tue, Aug 26, 2025 at 11:51:02PM +0530, Wasim Nazir wrote:
->> Enhance the Qualcomm Lemans EVK board file to support essential
->> peripherals and improve overall hardware capabilities, as
->> outlined below:
->>   - Enable GPI (Generic Peripheral Interface) DMA-0/1/2 and QUPv3-0/2
->>     controllers to facilitate DMA and peripheral communication.
->>   - Add support for PCIe-0/1, including required regulators and PHYs,
->>     to enable high-speed external device connectivity.
->>   - Integrate the TCA9534 I/O expander via I2C to provide 8 additional
->>     GPIO lines for extended I/O functionality.
->>   - Enable the USB0 controller in device mode to support USB peripheral
->>     operations.
->>   - Activate remoteproc subsystems for supported DSPs such as Audio DSP,
->>     Compute DSP-0/1 and Generic DSP-0/1, along with their corresponding
->>     firmware.
->>   - Configure nvmem-layout on the I2C EEPROM to store data for Ethernet
->>     and other consumers.
->>   - Enable the QCA8081 2.5G Ethernet PHY on port-0 and expose the
->>     Ethernet MAC address via nvmem for network configuration.
->>     It depends on CONFIG_QCA808X_PHY to use QCA8081 PHY.
->>   - Add support for the Iris video decoder, including the required
->>     firmware, to enable video decoding capabilities.
->>   - Enable SD-card slot on SDHC.
+
+On 9/1/25 13:01, David Hildenbrand wrote:
+>>>> What do you think ?
+>>>
+>>> Looks a bit over-engineered, and will require us to import a header
+>>> (likely kmemdump.h) in these files, which I don't really enjoy.
+>>>
+>>> I would start simple, without any such macro-magic. It's a very simple
+>>> function after all, and likely you won't end up having many of these?
+>>>
 >>
->> Co-developed-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
->> Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
->> Co-developed-by: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
->> Signed-off-by: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
->> Co-developed-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
->> Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
->> Co-developed-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
->> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
->> Co-developed-by: Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>
->> Signed-off-by: Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>
->> Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
->> Co-developed-by: Monish Chunara <quic_mchunara@quicinc.com>
->> Signed-off-by: Monish Chunara <quic_mchunara@quicinc.com>
->> Co-developed-by: Vishal Kumar Pal <quic_vispal@quicinc.com>
->> Signed-off-by: Vishal Kumar Pal <quic_vispal@quicinc.com>
->> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
->> ---
->>  arch/arm64/boot/dts/qcom/lemans-evk.dts | 387 ++++++++++++++++++++++++++++++++
->>  1 file changed, 387 insertions(+)
+>> Thanks David, I will do it as you suggested and see what comes out of it.
 >>
->> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
->> index 9e415012140b..642b66c4ad1e 100644
->> --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
->> +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
->> @@ -16,7 +16,10 @@ / {
->>  	compatible = "qcom,lemans-evk", "qcom,qcs9100", "qcom,sa8775p";
->>  
->>  	aliases {
->> +		ethernet0 = &ethernet0;
->> +		mmc1 = &sdhc;
->>  		serial0 = &uart10;
->> +		serial1 = &uart17;
->>  	};
->>  
->>  	chosen {
->> @@ -46,6 +49,30 @@ edp1_connector_in: endpoint {
->>  			};
->>  		};
->>  	};
->> +
->> +	vmmc_sdc: regulator-vmmc-sdc {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vmmc_sdc";
+>> I have one side question you might know much better to answer:
+>> As we have a start and a size for each region, this start is a virtual
+>> address. The firmware/coprocessor that reads the memory and dumps it,
+>> requires physical addresses.
 > 
-> Non-switchable, always enabled?
-> 
->> +
->> +		regulator-min-microvolt = <2950000>;
->> +		regulator-max-microvolt = <2950000>;
->> +	};
->> +
->> +	vreg_sdc: regulator-vreg-sdc {
->> +		compatible = "regulator-gpio";
->> +
->> +		regulator-min-microvolt = <1800000>;
->> +		regulator-max-microvolt = <2950000>;
->> +		regulator-name = "vreg_sdc";
->> +		regulator-type = "voltage";
-> 
-> This one also can not be disabled?
-> 
->> +
->> +		startup-delay-us = <100>;
->> +
->> +		gpios = <&expander1 7 GPIO_ACTIVE_HIGH>;
->> +
->> +		states = <1800000 0x1
->> +			  2950000 0x0>;
->> +	};
->>  };
->>  
->>  &apps_rsc {
->> @@ -277,6 +304,161 @@ vreg_l8e: ldo8 {
->>  	};
->>  };
->>  
->> +&ethernet0 {
->> +	phy-handle = <&hsgmii_phy0>;
->> +	phy-mode = "2500base-x";
->> +
->> +	pinctrl-0 = <&ethernet0_default>;
->> +	pinctrl-names = "default";
->> +
->> +	snps,mtl-rx-config = <&mtl_rx_setup>;
->> +	snps,mtl-tx-config = <&mtl_tx_setup>;
->> +	snps,ps-speed = <1000>;
->> +
->> +	nvmem-cells = <&mac_addr0>;
->> +	nvmem-cell-names = "mac-address";
->> +
->> +	status = "okay";
->> +
->> +	mdio {
->> +		compatible = "snps,dwmac-mdio";
->> +		#address-cells = <1>;
->> +		#size-cells = <0>;
->> +
->> +		hsgmii_phy0: ethernet-phy@1c {
->> +			compatible = "ethernet-phy-id004d.d101";
->> +			reg = <0x1c>;
->> +			reset-gpios = <&pmm8654au_2_gpios 8 GPIO_ACTIVE_LOW>;
->> +			reset-assert-us = <11000>;
->> +			reset-deassert-us = <70000>;
->> +		};
->> +	};
->> +
->> +	mtl_rx_setup: rx-queues-config {
->> +		snps,rx-queues-to-use = <4>;
->> +		snps,rx-sched-sp;
->> +
->> +		queue0 {
->> +			snps,dcb-algorithm;
->> +			snps,map-to-dma-channel = <0x0>;
->> +			snps,route-up;
->> +			snps,priority = <0x1>;
->> +		};
->> +
->> +		queue1 {
->> +			snps,dcb-algorithm;
->> +			snps,map-to-dma-channel = <0x1>;
->> +			snps,route-ptp;
->> +		};
->> +
->> +		queue2 {
->> +			snps,avb-algorithm;
->> +			snps,map-to-dma-channel = <0x2>;
->> +			snps,route-avcp;
->> +		};
->> +
->> +		queue3 {
->> +			snps,avb-algorithm;
->> +			snps,map-to-dma-channel = <0x3>;
->> +			snps,priority = <0xc>;
->> +		};
->> +	};
->> +
->> +	mtl_tx_setup: tx-queues-config {
->> +		snps,tx-queues-to-use = <4>;
->> +
->> +		queue0 {
->> +			snps,dcb-algorithm;
->> +		};
->> +
->> +		queue1 {
->> +			snps,dcb-algorithm;
->> +		};
->> +
->> +		queue2 {
->> +			snps,avb-algorithm;
->> +			snps,send_slope = <0x1000>;
->> +			snps,idle_slope = <0x1000>;
->> +			snps,high_credit = <0x3e800>;
->> +			snps,low_credit = <0xffc18000>;
->> +		};
->> +
->> +		queue3 {
->> +			snps,avb-algorithm;
->> +			snps,send_slope = <0x1000>;
->> +			snps,idle_slope = <0x1000>;
->> +			snps,high_credit = <0x3e800>;
->> +			snps,low_credit = <0xffc18000>;
->> +		};
->> +	};
->> +};
->> +
->> +&gpi_dma0 {
->> +	status = "okay";
->> +};
->> +
->> +&gpi_dma1 {
->> +	status = "okay";
->> +};
->> +
->> +&gpi_dma2 {
->> +	status = "okay";
->> +};
->> +
->> +&i2c18 {
->> +	status = "okay";
->> +
->> +	expander0: pca953x@38 {
->> +		compatible = "ti,tca9538";
->> +		#gpio-cells = <2>;
->> +		gpio-controller;
->> +		reg = <0x38>;
->> +	};
->> +
->> +	expander1: pca953x@39 {
->> +		compatible = "ti,tca9538";
->> +		#gpio-cells = <2>;
->> +		gpio-controller;
->> +		reg = <0x39>;
->> +	};
->> +
->> +	expander2: pca953x@3a {
->> +		compatible = "ti,tca9538";
->> +		#gpio-cells = <2>;
->> +		gpio-controller;
->> +		reg = <0x3a>;
->> +	};
->> +
->> +	expander3: pca953x@3b {
->> +		compatible = "ti,tca9538";
->> +		#gpio-cells = <2>;
->> +		gpio-controller;
->> +		reg = <0x3b>;
->> +	};
->> +
->> +	eeprom@50 {
->> +		compatible = "atmel,24c256";
->> +		reg = <0x50>;
->> +		pagesize = <64>;
->> +
->> +		nvmem-layout {
->> +			compatible = "fixed-layout";
->> +			#address-cells = <1>;
->> +			#size-cells = <1>;
->> +
->> +			mac_addr0: mac-addr@0 {
->> +				reg = <0x0 0x6>;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +&iris {
->> +	firmware-name = "qcom/vpu/vpu30_p4_s6.mbn";
-> 
-> Should it be just _s6.mbn or _s6_16mb.mbn?
+> Right. I was asking myself the same question while reviewing: should we 
+> directly export physical ranges here instead of virtual ones. I guess 
+> virtual ones is ok.
 
-_s6_16mb.mbn
+In patch 22/29, some areas are registered using
+memblock_phys_alloc_try_nid() which allocates physical.
+In this case , phys_to_virt() didn't work for me, it was returning a
+wrong address. I used __va() and this worked. So there is a difference
+between them.
 
 > 
->> +
->> +	status = "okay";
->> +};
->> +
->>  &mdss0 {
->>  	status = "okay";
->>  };
->> @@ -323,14 +505,196 @@ &mdss0_dp1_phy {
->>  	status = "okay";
->>  };
->>  
->> +&pcie0 {
->> +	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
->> +	wake-gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
+> What do you suggest to use to retrieve that
+>> address ? virt_to_phys might be problematic, __pa or __pa_symbol? or
+>> better lm_alias ?
 > 
-> I think Mani has been asking lately to define these GPIOs inside the
-> port rather than in the host controller.
+> All areas should either come from memblock or be global variables, right?
+
+I would like to be able to register from anywhere. For example someone
+debugging their driver, to just register kmalloc'ed struct.
+Other use case is to register dma coherent CMA areas.
+
 > 
->> +
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&pcie0_default_state>;
->> +
->> +	status = "okay";
->> +};
->> +
+> IIRC, virt_to_phys() should work for these. Did you run into any 
+> problems with them or why do you think virt_to_phys could be problematic?
 > 
-> [...]
-> 
->> @@ -356,6 +720,29 @@ &ufs_mem_phy {
->>  	status = "okay";
->>  };
->>  
->> +&usb_0 {
->> +	status = "okay";
->> +};
->> +
->> +&usb_0_dwc3 {
->> +	dr_mode = "peripheral";
-> 
-> Is it actually peripheral-only?
-> 
->> +};
->> +
-> 
+
+I am pondering about whether it would work in all cases, considering
+it's source code comments that it shall not be used because it does not
+work for any address.
+
+Someone also reported its unavailability like this:
+drivers/debug/kmemdump_coreimage.c:67:24: error: call to undeclared
+function 'virt_to_phys'; ISO C99 and later do not support implicit
+function declarations [-Wimplicit-function-declaration]
+
+I am yet to figure out which config fails.
+
 
