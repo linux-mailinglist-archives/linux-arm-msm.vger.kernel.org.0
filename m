@@ -1,68 +1,69 @@
-Return-Path: <linux-arm-msm+bounces-71448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71449-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7610B3EEC0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 21:49:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A4C2BB3EEC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 21:49:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 21A941A885D5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 19:49:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F322A1A88706
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 19:49:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3732F34DCF3;
-	Mon,  1 Sep 2025 19:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BCE5350839;
+	Mon,  1 Sep 2025 19:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eX/2DigA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hgkZWN+S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027A334DCDE;
-	Mon,  1 Sep 2025 19:46:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5CB261B64;
+	Mon,  1 Sep 2025 19:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756755985; cv=none; b=jZCIPZ1re7Rn2KARrUXBKR2chdyGCYhcUsWFYpfFYHuMrpIgVRzePo9nPE/QwZAXeeiadZ0BtFk1oiC4ArIpSRffXCMHfueBJIwiCVLWXR9DXqUSmdgROhrTF9CrFqFMyxkNe/r6+R4D9GvJPHaeUMQC/Fn5ogK2UIF1X0dZ4FY=
+	t=1756755986; cv=none; b=MMCl5hYrnyMDzhY9EYq4WifB0IjBya9DDvkuThCyMjC1Dl54KT/f9ejH6bKXRBISKg3L82Q3aFrGtRZGYa8oBLF9OVxHHmurO1+DWsNjR5R/QlPyM/QQNBU8EmLbqxYKs4Z9cX+JeOyvrqTxH1kfUHqFHd3A3T0GD07VcUAbzWw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756755985; c=relaxed/simple;
-	bh=xn/VcIgzHE0PmB/v3LOHApTytoYKXknTVhZ//rRTXPg=;
+	s=arc-20240116; t=1756755986; c=relaxed/simple;
+	bh=Li59/wUW70jcWPW1p9qN4ZU56Bwt2w1u8OT0KmPmjdo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DYmasV0k3dmF6E0KswWBSO2Ri9f4ScarF+i6EImhsPlcH0uag6nuKE44j5X0h6jCMO+XcEU5cd3qlyT6WbEMZTzXrzkQhLs4y6z4erTOMEWM0KnYQBjFgLberwQKLK3iCadrWXSnTRhHIiAo99S34exZjHOrHZGJntVUkPcd5W0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eX/2DigA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3D6EC4CEF0;
-	Mon,  1 Sep 2025 19:46:23 +0000 (UTC)
+	 MIME-Version:Content-Type; b=WQgeAUTAFKxLPo+LuVHeQ3v6/KzJrVNKTNJ4W7XC7vEc0qDWgyr2UxgxrWD256utnSo9DbbVvQth+mRb6mKOGFnVdCckya8Uft6g+GABEyeSi22CgJuUQOHd8YLYDiZB6yrA6CkFMovEUXI+ftRrLgc0++8h9nN4fqIaxDcofc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hgkZWN+S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191AAC4CEF1;
+	Mon,  1 Sep 2025 19:46:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756755984;
-	bh=xn/VcIgzHE0PmB/v3LOHApTytoYKXknTVhZ//rRTXPg=;
+	s=k20201202; t=1756755986;
+	bh=Li59/wUW70jcWPW1p9qN4ZU56Bwt2w1u8OT0KmPmjdo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eX/2DigAipoH8LZ1yzPeYdsSTG9icEIzHyLoMY2pMGhuWVPHCgJZ65ckmSe1sMXpZ
-	 y89byCrXB+rnPDy/nko/utRST3mAqrGrlWyvIT7QeotKTOIaz39XoQ/FnFRvrx/w1U
-	 dJFrHW7EAqvu9TAJ+NPak6NnCWTU9TqWFVx144Q+abQitQd4GbmbcyddYkgIh2Ivuf
-	 /SILTe45+M4N4KFCXF6v7PnFD7SNLuZXbfIcjDRk+UgTcUvfxgt6LY7epKfLVzjiaE
-	 QJZeBcvYSfn600h2ocld8oOIm0CU3OuyqwOPTb8c64fOBGuz2XV/5UFUx/Stjwg5xl
-	 rsy5eyU7yxFKw==
+	b=hgkZWN+SXCIbwOOlU4gHGKGn87XJi8/bg0qligrtddOerEaR7Fi1sJtLh64Q5lhNv
+	 EzAq1Ajd7YIi9/UquzMX1s53sZPOBeocRu9KUzsTp0uRV7DIM9A4cXRRCk7QkRUoyF
+	 hGvJTixIGXPlbxqU1y1FRIVo8o2g8snneXElyqwoJFq9JJdmD98asA8T6BYH5eFgnN
+	 vcETS6eTlUGnFuRbjLCFMFSQEli6F3yk1lZXQ76ASKgQ7TnQj/0VnTcdayXCdDIhTP
+	 Yp0WhR+Q+bzZjzhxy9Kr7VXRQaDa5Vr4HI4pCo+fza8v3YRpvYqESwvbndH3S1p8D5
+	 BurPzuEvQOtXA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: srini@kernel.org,
-	amahesh@qti.qualcomm.com,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org,
-	konradybcio@kernel.org,
-	arnd@arndb.de,
-	gregkh@linuxfoundation.org,
-	Ling Xu <quic_lxu5@quicinc.com>
-Cc: quic_kuiw@quicinc.com,
-	ekansh.gupta@oss.qualcomm.com,
-	devicetree@vger.kernel.org,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Satya Priya Kakitapalli <quic_skakitap@quicinc.com>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+	Imran Shaik <quic_imrashai@quicinc.com>,
+	Taniya Das <quic_tdas@quicinc.com>,
+	Jagadeesh Kona <quic_jkona@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH v10 0/5] Add support for gdsp remoteproc on lemans
-Date: Mon,  1 Sep 2025 14:46:05 -0500
-Message-ID: <175675595927.1796591.9742902752337762891.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: (subset) [PATCH v4 0/2] Add video clock controller DT support for sc8180x
+Date: Mon,  1 Sep 2025 14:46:06 -0500
+Message-ID: <175675595933.1796591.14268648917937104042.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250813030638.1075-1-quic_lxu5@quicinc.com>
-References: <20250813030638.1075-1-quic_lxu5@quicinc.com>
+In-Reply-To: <20250710-sc8180x-videocc-dt-v4-0-07a9d9d5e0e6@quicinc.com>
+References: <20250710-sc8180x-videocc-dt-v4-0-07a9d9d5e0e6@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,40 +74,14 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 13 Aug 2025 08:36:33 +0530, Ling Xu wrote:
-> The fastrpc driver has support for 5 types of remoteprocs. There are
-> some products which support GDSP remoteprocs. GDSP is General Purpose
-> DSP where tasks can be offloaded. Add fastrpc nodes and task offload
-> support for GDSP. Also strict domain IDs for domain.
-> Patch [v9]: https://lore.kernel.org/linux-arm-msm/20250716132836.1008119-1-quic_lxu5@quicinc.com/
+On Thu, 10 Jul 2025 18:30:38 +0530, Satya Priya Kakitapalli wrote:
 > 
-> Changes in v10:
->   - Rebase patch because the file is renamed to lemans.dtsi.
-> Changes in v9:
->   - Change the patches order.
-> Changes in v8:
->   - Split patch.
-> Changes in v7:
->   - Edit commit message.
-> Changes in v6:
->   - Edit commit message.
->   - Remove unused definition.
-> Changes in v5:
->   - Edit commit message and add sapce before comment end.
->   - Move domain definitions back to driver.
-> Changes in v4:
->   - Split patch and change to common syntax.
-> Changes in v3:
->   - Restrict domain IDs to represent a domain.
-> Changes in v2:
->   - Add GPDSP labels in dt-bindings.
-> 
-> [...]
+
 
 Applied, thanks!
 
-[2/5] arm64: dts: qcom: lemans: add GDSP fastrpc-compute-cb nodes
-      commit: efc28845524843f199e420695eab3841299b05d2
+[2/2] arm64: dts: qcom: sc8180x: Add video clock controller node
+      commit: 03253befa1d1f36b297889c7ce2805c9319814ff
 
 Best regards,
 -- 
