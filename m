@@ -1,148 +1,99 @@
-Return-Path: <linux-arm-msm+bounces-71408-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8959B3E6CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:14:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 893ADB3E74B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:36:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 62E0F3B6773
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 14:14:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E89E3A7B35
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 14:36:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A76073376AD;
-	Mon,  1 Sep 2025 14:14:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1312B2EFD83;
+	Mon,  1 Sep 2025 14:36:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="axSOgp/S"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GjiQCPUH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 799871804A;
-	Mon,  1 Sep 2025 14:14:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581AC26D4F8;
+	Mon,  1 Sep 2025 14:36:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756736067; cv=none; b=YZDGDfzHshEUfPipmNktaSFCs7k/hkQyvCRaulBFW4Ehy6PYVjoFzr/c1PRNHNxyzEPt5P6Kyis/lwtVB3EyGE3H6wZe8qRxm3Ff29wsWxMawTQggxdtQwGFf7Hf/o/hIziGC9yXARpvDk5SsJhhs2TxiGaknqc1V6HKlU4qdFs=
+	t=1756737383; cv=none; b=nDsEPhsEcI92fh3eZgYF5uwhYVnTLDLzcb4lg0V21lYjzu0aZp9FVnrb4NHUo4HQcTfsqLpXSRcFMYlsfFTXSvbgeVf73MUPReZqwKimiBy+s0pmaQ4EpC4rP46VSfRqDAPHdXWZrAyfd81e2wHa5IvXHlzppJ1pG09VGB1RN3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756736067; c=relaxed/simple;
-	bh=RZ4KGqP2cdIxmSmm54RD6q9JseO1TT++MM74St5Kp4Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rJQ5c3UwweOwHbcEoigXH+yP5WMRLhiGT02RcP5A1KG/E9/JfQUHQ595pfjlzsHwlqYTYkdgZvlOTmAerQjft6w5VejRFaIfiByN+YjqL7Y+naPYNkdwSLito4G7dcPx4CFIX4SSy8aJFfLgBD1bdjXMWHo7P75TMOFMhrMtjMY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=axSOgp/S; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BB2FC4CEF0;
-	Mon,  1 Sep 2025 14:14:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756736067;
-	bh=RZ4KGqP2cdIxmSmm54RD6q9JseO1TT++MM74St5Kp4Q=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=axSOgp/S2x3mrEikVHNI80eUTvkBOGKITEnQFVS6RQjxPC0tEBvKrrm0oOR4gz2bK
-	 WDZ3X+m69PVmvkvC8J4p2r27sqd5xUbhdje8izl/yHnEmEE3YxjLOY39BYYFfvAjc3
-	 2M/rE2nlofwfKgVCjPcFxcXX4XQFKkZH2r8B+uC6o9P2xm/6YmBwr2v4kGSkBDDzMJ
-	 89UnxQIIoc10MKiYmfi/lY0G9U2op2etJpsaa1KSq/HZzTprO1hpkD9BlOjSfcJHi2
-	 p+u/JEjsa9o2RQU8LiImv0DTh6DuSCN2B+IpqBXwr1HqfIrA/rMG3pPCJuj5sksh0I
-	 uGz8weKAkG3jw==
-Message-ID: <fff4d178-cc0c-471b-90f4-ddc16e41a284@kernel.org>
-Date: Mon, 1 Sep 2025 16:14:22 +0200
+	s=arc-20240116; t=1756737383; c=relaxed/simple;
+	bh=/asUPJ4qddFpFZXxNIxNr8KI9+jGLpqj0ruUkRnuXjw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=KdzvBqli/hjsinUSda65gVFyY1PZQJ1aJyaZWdJdoQmXSvFWDbPXfG6dA7TDzYn8jAeqB1YiB+ajivmgKGMPucEZ/z4qQJtX1o5b5aA66AwCm9GNMKJFvss4vw5kIt8YaIf1liA4U3/tAkQ/K3UT8MPSotCOR9WEkOq/4O4Zz5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GjiQCPUH; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b00a9989633so387142566b.0;
+        Mon, 01 Sep 2025 07:36:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1756737380; x=1757342180; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=U/Q4vlxzc15KtYa0RmAFTKXznLq7AQ5jpKT/GnpTxtU=;
+        b=GjiQCPUH0+5j8tcwCXdOpug71eC9EfkkZDWbEW/8AnOorPzY1zt2RJ6LmUVUQh87F9
+         8PQFxHsxrfSoUMpAk6Z+BKr6WZjTYSO28fWHxjk/R+mSMtLSt+ZrGEE6AbH5BJdeKNdh
+         9ldQk7X8RtLjZtv6hYTwlNAvl6VT0dRSjyzBNmlCEexwNqbh32e7cF4KRrGITXrqK3EZ
+         zjda+1YUs4Xtf9JsI+wa0XJUQeJatWQ9EXvOI3XF4C3D6d4JoyPfsJN+EbC6GDt2vJFP
+         2/LemUn+gSMxNjskiJNZ+xIExy14vAIzk6melkxI/Ud1VoURByCESpN4XfFX0FIOThV8
+         ffGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756737380; x=1757342180;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U/Q4vlxzc15KtYa0RmAFTKXznLq7AQ5jpKT/GnpTxtU=;
+        b=NwAZXbhG9MrCnLuHIsInJRmwReCmUl5B/+BXFcsGbmsXn9viXkstQi0x5UZza5DOQ4
+         YNUg2HnS4WrM1zI6yuiL6n7izD0JkPCKSPzAe+TEZ6pz5cIjxeVp/9GsysCoiIB2YJPI
+         7aDvGx7OKzEY4XsBD4zucdxARPT4T8IDXB0DIPUM//XF/L1c0QyVPUGAripeb+Kkl+xp
+         8Fm7anHFYrqVOFkVAQPaJ4uSeGyHCsHfOyNcSm/vOKesrs6sZYlkI7aJWPRThap/TdlX
+         0hM+PyT5AvRkZRamnQ0FvS1JRkGINrNotMIfN5Z0uqLMfivhiCnOm/rfhO6VLDAiZkEF
+         jZfg==
+X-Forwarded-Encrypted: i=1; AJvYcCUrRfoJ94IXOopSNJ0qbrvR8KLN9lhEUQIrCrf3nhpuuD1zzg+srxms3bC/D6unfCCwa3tJjmQpw5obWW/l@vger.kernel.org, AJvYcCV3tsOBJLhKQ3TX0p6OSoAWgThC7Y/CcD35lqjl39uLk9v60Ccg4v5Ay5P/pGDCp5UfTs6Ld8yAn4e1/lyo@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrOJn3FOQDC2HbagKCywsU34MJA36mQuqPXOBJNO28dh87Jmv8
+	gA/N/U+7jheneV70WfOi17nqGQaMH32oDwoPUnitJ7+TgYLxtU4HneiOrk27qOGqfzmkxDqj1Rb
+	f4KgtFdUn4i34Llsnn5QldYI4Nx9lmSU=
+X-Gm-Gg: ASbGncuDctyxxkMWeUF9ESsUuV/PR4Nvxw5EYhvwYaNTKRV8X7btdyUGsBiodUMKHFG
+	gAM067nS3WSzBhc3/Q54r7O5+aZsx7vRrxLjXPT6J2/bSiJch/SrUCHSknx8RLxzS4t9Cl6Ef57
+	NlfpdA3cnv0NwH7xe/RXDv7Oc4fbcQrCm7U5lbvrQp5bNBO68x9CiPWQyJ8BSNzUCKtLvhcBftH
+	3ulgCmaBA==
+X-Google-Smtp-Source: AGHT+IHjQOdawi2esWQelRENcKIwimb1JvVhliQn35lo/U7xOxTkOPmmKbXA+gVmbrjawp77zJuwTNWilcm4uvadS60=
+X-Received: by 2002:a17:906:4fca:b0:afe:ac57:f0be with SMTP id
+ a640c23a62f3a-b010832f5famr891067066b.31.1756737379357; Mon, 01 Sep 2025
+ 07:36:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4] media: iris: vpu3x: Add MNoC low power handshake
- during hardware power-off
-To: Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-References: <20250822-sm8650-power-sequence-fix-v4-1-e3d587e1f9e6@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250822-sm8650-power-sequence-fix-v4-1-e3d587e1f9e6@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Philippe Simons <simons.philippe@gmail.com>
+Date: Mon, 1 Sep 2025 16:36:07 +0200
+X-Gm-Features: Ac12FXwkPHnzGDnv68BtpYpmvnGmaEaOzUtKfszjAD__GMuZ1vAETdTF8Wb3cKU
+Message-ID: <CADomA48h_p6opr_HF=Z43417bp2W-Lv-VaN1FXw=zAc5Td4sjw@mail.gmail.com>
+Subject: Re: [PATCH] soc: qcom: mdt_loader: Allow empty section headers in mdt_header_valid()
+To: dan.carpenter@linaro.org
+Cc: andersson@kernel.org, konradybcio@kernel.org, 
+	linux-arm-msm@vger.kernel.org, open list <linux-kernel@vger.kernel.org>, 
+	val@packett.cool
+Content-Type: text/plain; charset="UTF-8"
 
-On 22/08/2025 07:53, Dikshita Agarwal wrote:
-> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> index 9b7c9a1495ee2f51c60b1142b2ed4680ff798f0a..bfc52eb04ed0e1c88efe74a8d27bb95e8a0ca331 100644
-> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
-> @@ -19,6 +19,9 @@
->  #define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
->  #define REQ_POWER_DOWN_PREP			BIT(0)
->  #define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
-> +#define NOC_LPI_STATUS_DONE			BIT(0) /* Indicates the NOC handshake is complete */
-> +#define NOC_LPI_STATUS_DENY			BIT(1) /* Indicates the NOC handshake is denied */
-> +#define NOC_LPI_STATUS_ACTIVE		BIT(2) /* Indicates the NOC is active */
->  #define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
->  #define CORE_CLK_RUN				0x0
->  
-> @@ -109,7 +112,9 @@ static void iris_vpu3_power_off_hardware(struct iris_core *core)
->  
->  static void iris_vpu33_power_off_hardware(struct iris_core *core)
->  {
-> +	bool handshake_done = false, handshake_busy = false;
->  	u32 reg_val = 0, value, i;
-> +	u32 count = 0;
+This fix GMU firmware issues on SM8550.
 
-unsigned int, that's not a register but standard kernel counting type.
+[   19.858684] [drm] Loaded GMU firmware v4.1.9
+[   19.875711] msm_dpu ae01000.display-controller:
+[drm:adreno_load_gpu] *ERROR* gpu hw init failed: -22
+[   19.885839] platform 3d6a000.gmu: [drm:a6xx_gmu_set_oob] *ERROR*
+Timeout waiting for GMU OOB set GPU_SET: 0x0
+[   19.909450] platform 3d6a000.gmu: [drm:a6xx_rpmh_start] *ERROR*
+Unable to power on the GPU RSC
+[   19.909570] msm_dpu ae01000.display-controller:
+[drm:adreno_load_gpu] *ERROR* Couldn't power up the GPU: -110
 
->  	int ret;
->  
->  	if (iris_vpu3x_hw_power_collapsed(core))
-> @@ -128,13 +133,36 @@ static void iris_vpu33_power_off_hardware(struct iris_core *core)
->  			goto disable_power;
->  	}
-
-
-Best regards,
-Krzysztof
-
+Tested-by: Simons Philippe <simons.philippe@gmail.com>
 
