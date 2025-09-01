@@ -1,99 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-71409-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71410-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 893ADB3E74B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:36:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5C1FB3E754
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:37:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1E89E3A7B35
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 14:36:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6D223A87C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 14:37:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1312B2EFD83;
-	Mon,  1 Sep 2025 14:36:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F19A833A03A;
+	Mon,  1 Sep 2025 14:37:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GjiQCPUH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DJgb866O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 581AC26D4F8;
-	Mon,  1 Sep 2025 14:36:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF21B2EFD83;
+	Mon,  1 Sep 2025 14:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756737383; cv=none; b=nDsEPhsEcI92fh3eZgYF5uwhYVnTLDLzcb4lg0V21lYjzu0aZp9FVnrb4NHUo4HQcTfsqLpXSRcFMYlsfFTXSvbgeVf73MUPReZqwKimiBy+s0pmaQ4EpC4rP46VSfRqDAPHdXWZrAyfd81e2wHa5IvXHlzppJ1pG09VGB1RN3s=
+	t=1756737464; cv=none; b=tLAbKRb+UcvN9wbVV6f6MjhEug+Vp+vlThsF5Rq18BxzdTdGs52uBDDAbZY0Rc4UryKdzyKF0KkM7t14sVL4xcQmjYpsAT28jWhb93+A/3wFCE258tea+C/XDW3TjVxWxwbCaKsMGRzuYvIbNxusSIlaoz5CjlRn9IR80xwFs3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756737383; c=relaxed/simple;
-	bh=/asUPJ4qddFpFZXxNIxNr8KI9+jGLpqj0ruUkRnuXjw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=KdzvBqli/hjsinUSda65gVFyY1PZQJ1aJyaZWdJdoQmXSvFWDbPXfG6dA7TDzYn8jAeqB1YiB+ajivmgKGMPucEZ/z4qQJtX1o5b5aA66AwCm9GNMKJFvss4vw5kIt8YaIf1liA4U3/tAkQ/K3UT8MPSotCOR9WEkOq/4O4Zz5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GjiQCPUH; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b00a9989633so387142566b.0;
-        Mon, 01 Sep 2025 07:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1756737380; x=1757342180; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=U/Q4vlxzc15KtYa0RmAFTKXznLq7AQ5jpKT/GnpTxtU=;
-        b=GjiQCPUH0+5j8tcwCXdOpug71eC9EfkkZDWbEW/8AnOorPzY1zt2RJ6LmUVUQh87F9
-         8PQFxHsxrfSoUMpAk6Z+BKr6WZjTYSO28fWHxjk/R+mSMtLSt+ZrGEE6AbH5BJdeKNdh
-         9ldQk7X8RtLjZtv6hYTwlNAvl6VT0dRSjyzBNmlCEexwNqbh32e7cF4KRrGITXrqK3EZ
-         zjda+1YUs4Xtf9JsI+wa0XJUQeJatWQ9EXvOI3XF4C3D6d4JoyPfsJN+EbC6GDt2vJFP
-         2/LemUn+gSMxNjskiJNZ+xIExy14vAIzk6melkxI/Ud1VoURByCESpN4XfFX0FIOThV8
-         ffGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756737380; x=1757342180;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=U/Q4vlxzc15KtYa0RmAFTKXznLq7AQ5jpKT/GnpTxtU=;
-        b=NwAZXbhG9MrCnLuHIsInJRmwReCmUl5B/+BXFcsGbmsXn9viXkstQi0x5UZza5DOQ4
-         YNUg2HnS4WrM1zI6yuiL6n7izD0JkPCKSPzAe+TEZ6pz5cIjxeVp/9GsysCoiIB2YJPI
-         7aDvGx7OKzEY4XsBD4zucdxARPT4T8IDXB0DIPUM//XF/L1c0QyVPUGAripeb+Kkl+xp
-         8Fm7anHFYrqVOFkVAQPaJ4uSeGyHCsHfOyNcSm/vOKesrs6sZYlkI7aJWPRThap/TdlX
-         0hM+PyT5AvRkZRamnQ0FvS1JRkGINrNotMIfN5Z0uqLMfivhiCnOm/rfhO6VLDAiZkEF
-         jZfg==
-X-Forwarded-Encrypted: i=1; AJvYcCUrRfoJ94IXOopSNJ0qbrvR8KLN9lhEUQIrCrf3nhpuuD1zzg+srxms3bC/D6unfCCwa3tJjmQpw5obWW/l@vger.kernel.org, AJvYcCV3tsOBJLhKQ3TX0p6OSoAWgThC7Y/CcD35lqjl39uLk9v60Ccg4v5Ay5P/pGDCp5UfTs6Ld8yAn4e1/lyo@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrOJn3FOQDC2HbagKCywsU34MJA36mQuqPXOBJNO28dh87Jmv8
-	gA/N/U+7jheneV70WfOi17nqGQaMH32oDwoPUnitJ7+TgYLxtU4HneiOrk27qOGqfzmkxDqj1Rb
-	f4KgtFdUn4i34Llsnn5QldYI4Nx9lmSU=
-X-Gm-Gg: ASbGncuDctyxxkMWeUF9ESsUuV/PR4Nvxw5EYhvwYaNTKRV8X7btdyUGsBiodUMKHFG
-	gAM067nS3WSzBhc3/Q54r7O5+aZsx7vRrxLjXPT6J2/bSiJch/SrUCHSknx8RLxzS4t9Cl6Ef57
-	NlfpdA3cnv0NwH7xe/RXDv7Oc4fbcQrCm7U5lbvrQp5bNBO68x9CiPWQyJ8BSNzUCKtLvhcBftH
-	3ulgCmaBA==
-X-Google-Smtp-Source: AGHT+IHjQOdawi2esWQelRENcKIwimb1JvVhliQn35lo/U7xOxTkOPmmKbXA+gVmbrjawp77zJuwTNWilcm4uvadS60=
-X-Received: by 2002:a17:906:4fca:b0:afe:ac57:f0be with SMTP id
- a640c23a62f3a-b010832f5famr891067066b.31.1756737379357; Mon, 01 Sep 2025
- 07:36:19 -0700 (PDT)
+	s=arc-20240116; t=1756737464; c=relaxed/simple;
+	bh=gIvp8Vp/E1swy4wyBXx3jb2SoCxt+LuCiS4lw6AuyVU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LC+TXcTCtI2pZAQGJSfbbIsllVCVmJQ7pvJDXNcxGASp7VyifoyO/LeylLgRYPDaH0RITVdqz0PCkzQ5y1lUCqQa/P8k9EB4XPHfkAVdsa9JDy+p8M5hJSYkG7XROIgK2DugP83gQ9/Eexx9o5GHUi2YVQHHtGbiWLcKR4ziV+I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DJgb866O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91158C4CEF0;
+	Mon,  1 Sep 2025 14:37:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756737464;
+	bh=gIvp8Vp/E1swy4wyBXx3jb2SoCxt+LuCiS4lw6AuyVU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=DJgb866OavVlQXKjEcSDRgX01RL+TgYXMilYRhox1DG2A4pbmL/EMuUOSPQkhKm9y
+	 ZvbgzuWzlkHcKChIVmdcfSamTbXnIcObi8vEvl5/9muDCgJpxid02CByyOsACIh1yU
+	 OKX98+D8HARzpuduhCAuxsNQWh5qbLNOOQS83t6frONv3iLVNfsFrehXLjwvOHBqVS
+	 gJYuwaea4P7AtESKCzphgnRjeu3/3j4HbVoPTYqH34hpPGEiqkEowrs9BdVtPLHybV
+	 TE95H7tVbki8s9jUEg4vMUHVN4eZ+ZaHfW6KZvrIPhItfOg2iPgxsvk5RylWjzgxwD
+	 tuJt2jvYGPKOQ==
+Date: Mon, 1 Sep 2025 15:37:33 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>, Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	NXP S32 Linux Team <s32@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Haojian Zhuang <haojian.zhuang@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org,
+	imx@lists.linux.dev, linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v6 06/15] pinctrl: imx: don't access the pin function
+ radix tree directly
+Message-ID: <4a633387-08a9-43c8-81d7-488e7222aeda@sirena.org.uk>
+References: <20250828-pinctrl-gpio-pinfuncs-v6-0-c9abb6bdb689@linaro.org>
+ <20250828-pinctrl-gpio-pinfuncs-v6-6-c9abb6bdb689@linaro.org>
+ <61bad868-d976-4f49-805c-8d14d4d8b3e4@sirena.org.uk>
+ <CAMRc=MfB_3e0sjCpV+XaKcKvit7Opk5LczH2wsxO=RftrAabjg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Philippe Simons <simons.philippe@gmail.com>
-Date: Mon, 1 Sep 2025 16:36:07 +0200
-X-Gm-Features: Ac12FXwkPHnzGDnv68BtpYpmvnGmaEaOzUtKfszjAD__GMuZ1vAETdTF8Wb3cKU
-Message-ID: <CADomA48h_p6opr_HF=Z43417bp2W-Lv-VaN1FXw=zAc5Td4sjw@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Allow empty section headers in mdt_header_valid()
-To: dan.carpenter@linaro.org
-Cc: andersson@kernel.org, konradybcio@kernel.org, 
-	linux-arm-msm@vger.kernel.org, open list <linux-kernel@vger.kernel.org>, 
-	val@packett.cool
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="j8LdXSlZH7SdW4XI"
+Content-Disposition: inline
+In-Reply-To: <CAMRc=MfB_3e0sjCpV+XaKcKvit7Opk5LczH2wsxO=RftrAabjg@mail.gmail.com>
+X-Cookie: Auction:
 
-This fix GMU firmware issues on SM8550.
 
-[   19.858684] [drm] Loaded GMU firmware v4.1.9
-[   19.875711] msm_dpu ae01000.display-controller:
-[drm:adreno_load_gpu] *ERROR* gpu hw init failed: -22
-[   19.885839] platform 3d6a000.gmu: [drm:a6xx_gmu_set_oob] *ERROR*
-Timeout waiting for GMU OOB set GPU_SET: 0x0
-[   19.909450] platform 3d6a000.gmu: [drm:a6xx_rpmh_start] *ERROR*
-Unable to power on the GPU RSC
-[   19.909570] msm_dpu ae01000.display-controller:
-[drm:adreno_load_gpu] *ERROR* Couldn't power up the GPU: -110
+--j8LdXSlZH7SdW4XI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Tested-by: Simons Philippe <simons.philippe@gmail.com>
+On Mon, Sep 01, 2025 at 03:20:44PM +0200, Bartosz Golaszewski wrote:
+
+> That's not a lot of info but it fails in strcmp() which - I suppose -
+> is the one in pinmux_func_name_to_selector(). Any chance you could
+> check what the value of np->name is in imx_pinctrl_parse_functions()?
+> Is it NULL for some reason?
+
+[    0.628245] imx8mp-pinctrl 30330000.pinctrl: np->name pinctrl
+
+https://lava.sirena.org.uk/scheduler/job/1758947#L705
+
+--j8LdXSlZH7SdW4XI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmi1r60ACgkQJNaLcl1U
+h9BW/wf/VkjCjvE+ktBljc+ZJ9dT0UQZrXYUDHUyuCETxomTnFA+SILt5aJ5bGe/
+iD8AWBpbbDsJH4vnF0ozS/kwuILQKFDettcRtaH7dIBsn/izkOQipQk8GdpbQ8WM
+hWYcC4httv6HQ2rMJMgKMjRxy7L5L6xf+VRzgPc8X+0GfzYeCig6jLv6tX80PLkO
+kOxJn1iP3VVHkXsDCw2fENaiXRuUOaSlrbwkkvBihKNbrM0499j/uQ4hwqAT8bTa
+9ubBJhS8X9FGO12dl2qkEJPtjal2M0Vf4H4PoJilobNInq/WByIDsQANxJC8XDhG
+4/h5vZiPNAzd8Qj8VQAkfeNquySq2Q==
+=Lt5F
+-----END PGP SIGNATURE-----
+
+--j8LdXSlZH7SdW4XI--
 
