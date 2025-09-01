@@ -1,73 +1,71 @@
-Return-Path: <linux-arm-msm+bounces-71419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4595B3EBBC
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 18:01:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 559FDB3EBB0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 17:59:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E7AE718825B3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:00:06 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 31BA9173B3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 15:59:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6442F2EC09F;
-	Mon,  1 Sep 2025 15:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0A95E2EC088;
+	Mon,  1 Sep 2025 15:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CN22WcWo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="b2NHKBAp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0FDC2E6CAD;
-	Mon,  1 Sep 2025 15:58:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 753C72E6CDB;
+	Mon,  1 Sep 2025 15:58:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756742324; cv=none; b=K8WkN2MX0bg1J5c4hd3SaajE2uNjFn/y4a/tt74AiPZx8rkuMVd/SyiRGFvKe3Sebx13A997S6pkgNs2qSDrOzgwpFnN9QeoZza6eLvAfkL0M/xm0a1bERSy+tdCVr2ROFP05w6PSLNLoZ5YKWYQYBy7mkNwma0+lbXRmDDzTuo=
+	t=1756742322; cv=none; b=DKQ36cFAxPeKMWwMHtOWuOho0WEDbXwe4Jev0mpszvqY/FV+OmMmCQfV4HJa+8k1kfrFFN25LvDC6QMnuRAwZTM2wBF80uiqdGLIWDSNoRnqhwq+HSfHwPbpICOS0xWRvx19n2TV2ECHsayYkNZHw8CwrKxKdABP3Y+ogCTVsjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756742324; c=relaxed/simple;
-	bh=3OdJp/OWdH3e6+1e6ZGf0PH9HmjVvKxRsJXul26bRWI=;
+	s=arc-20240116; t=1756742322; c=relaxed/simple;
+	bh=8eYUMhvn+IIZ06qLAmibbHFTwdcu3kwbiOXeFVmY048=;
 	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g3i8TIc3tbY6MGs8ebnVtAzEuelTc3cGH3+2x6+j6DK1v+VLwGknTia5/kbR3z19J5ZVx5+dw5fL2QffK+NIMiTxIYSOKt1H1TRlilUKTMXTVBgvPbb2FCmuRr78oFIBW8wkkVU2WKF08qtN+SaYLP1xDMhp64o4DZTqjDt+Ko4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CN22WcWo; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version:Content-Type; b=Bjp7g773JvoT4lzuCNWRCXCGmSP5T0eYkftcTHa10v8N1Z0Pf1xRA3jCk69x9JZ9SqlaEuowmV0dZzZCnFSu8zV8giiVJxWpR0iz7cFzwIXoqGghUZMRl/C36HyslyCSI7JtZGdueTJJ2v47MQRWsuQhfP7r2t3UdwqTbTJRbIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=b2NHKBAp; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 581B42lu011342;
-	Mon, 1 Sep 2025 15:58:29 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 581B43gn025100;
+	Mon, 1 Sep 2025 15:58:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7rgD8AWQ/4GZdPewcpEta5t2EVVG4Hzw8nikLbJlnEI=; b=CN22WcWooHPAX5FA
-	gaGPqjxaNmer2AXBBjk4hLtoYapyFmqgyRZCY3gLxJhml50jokEik5xFe/b4/U/U
-	v09eng5afLuKIP5Le4NzljFAgm2Ku9sKB7xBUdY3iR7oZmLBZHQdMdwzOG9NFAkx
-	uUrwFEXlNVBFc337crkt875hfiLU9luTBZZ8hsYzbSLOpSK44J1XxIjtTCElICvT
-	JnTj7Dl/JGOQ/KCzISbOZ3RI5YsC4yMwxpPxY/GlCyFBnGrXwyuc296rczZB+NpT
-	0ZMLkexWRZuyAfet6+74rOf1b8NpQY1ChezZmJMAziI2t7dKOpqpjVHxMSs0p5KP
-	6inoug==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48w8wy129m-1
+	t7EPwV5hN2UKWWwQJXTqQgiIfLRoD8LnWdqlkMnK+d0=; b=b2NHKBApERx1tTAH
+	9ioxDlKA9HBOfWdinsWhFpgdcofvPd8CeqKLGZiXkUAdoBxeeRVYdYZ3t+zxLz37
+	6f0r3ELL45xIpwsd/+zjQusFwjUsvF4KDNFdNa3/6exRHUpGXk4PlA2R6/5yck8X
+	zlnD09kb9JjG0tct7wahcZq/IGzRUeTRzRRJg1eWNL9yceWYLz2X9qD6gVb+7o4Q
+	rorNuHxiXjOZ/ty9yfiQ8exibV9c2P27c56mgIz1vpDwX/LB4eylru+Yk0VxWjrC
+	MV6AYOkxs/qR2POk5Btc9e14KFOBLFreux8gMIJRxhzq+nbDAsCGJGgF/HN1TrqE
+	zI49GA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2fd64w-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Sep 2025 15:58:29 +0000 (GMT)
+	Mon, 01 Sep 2025 15:58:33 +0000 (GMT)
 Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 581FwSPH013331
+	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 581FwWME003196
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Sep 2025 15:58:28 GMT
+	Mon, 1 Sep 2025 15:58:32 GMT
 Received: from hu-rdwivedi-hyd.qualcomm.com (10.80.80.8) by
  nalasex01b.na.qualcomm.com (10.47.209.197) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.24; Mon, 1 Sep 2025 08:58:24 -0700
+ 15.2.1748.24; Mon, 1 Sep 2025 08:58:28 -0700
 From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 To: <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
         <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
         <mani@kernel.org>, <James.Bottomley@HansenPartnership.com>,
         <martin.petersen@oracle.com>
 CC: <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        Nitin Rawat
-	<quic_nitirawa@quicinc.com>
-Subject: [PATCH V4 3/4] ufs: pltfrm: Allow limiting HS gear and rate via DT
-Date: Mon, 1 Sep 2025 21:27:59 +0530
-Message-ID: <20250901155801.26988-4-quic_rdwivedi@quicinc.com>
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
+Subject: [PATCH V4 4/4] ufs: ufs-qcom: Add support for limiting HS gear and rate
+Date: Mon, 1 Sep 2025 21:28:00 +0530
+Message-ID: <20250901155801.26988-5-quic_rdwivedi@quicinc.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250901155801.26988-1-quic_rdwivedi@quicinc.com>
 References: <20250901155801.26988-1-quic_rdwivedi@quicinc.com>
@@ -83,103 +81,70 @@ X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01b.na.qualcomm.com (10.47.209.197)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=Ycq95xRf c=1 sm=1 tr=0 ts=68b5c2a5 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfXzaz8PEMi4tT+
+ Ti/49o/9+ujqOzr/jM8EzgfOB6riKKVY1KH0FUpU8HPzjpuVnX5qV3I5Bs1GXDcPp5ovi8IaTAg
+ cPUbBGHHHBppys5VknoFfeDUwZ3ziMvpy+xfPTsOyuNU4Ik2wzJArj0Bmx/keGunCHBwPPCvICs
+ +YMdguOrzjpMG+Ylf15ie55s1WBQwNj8ZXWFs1F0jN7bRh9t1LQD/2Hi8ghiHbJZmN2NLXJ+tKB
+ uDCs4mFxY6Dmc4XL5SV+W0mJSQrMaHZzFXtm1N6Tx9I5TVXEkR89Or5ZUBelETW2SRdOiti7V7C
+ Ne4hxdxVw1cdCwAXRVKn4xQl7n8VX1XRfVuJoyRNpgds14ON8BivMhAKyXjEcgClzfhot0yXHRF
+ iuTKwznU
+X-Proofpoint-ORIG-GUID: 9HRUwHyaRdWszOK_7j2PawCTeMNOsE5m
+X-Proofpoint-GUID: 9HRUwHyaRdWszOK_7j2PawCTeMNOsE5m
+X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b5c2a9 cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=4SmWkoQrYTlKMa40LuYA:9
+ a=GEpy-HfZoHoA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=YZsCTDY-3J_n_fZr9xEA:9
  a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: IEON68wP28JXhI-qGaLYPqB0MNSK9KHd
-X-Proofpoint-ORIG-GUID: IEON68wP28JXhI-qGaLYPqB0MNSK9KHd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAxMDEwMSBTYWx0ZWRfXxdixDjON3yhQ
- Uh/0U5K+wugZsFuLj0W1FEu9zHvh18FjYLG6Hdsn5Hxvos8Q4mm7qjlUKBIRF1hwk+AtHU7X7aM
- 13trOY4FGE1JvniwNLGsI9I0bLq1r3aLlWs0N3xyg6VL4ZUU5ANMhFrxr3qHZdXZ8oV8ftlmiB8
- czovHoC1DCrOEVmmtepPERWgHgG04uv6MW8k8yv4PDAXPSbglW/BRIQ0V0llJ0KTMQoe2RWkTrf
- u7F1L9/MU5OtPPHueV72xsrjcwWSMPw2DGtsbA+sDXiT1YqacV4EALnHchxb9a8r1xwq8Tlgp32
- RGnSVOcHP04eZ7kOk8vX51/tE3DcelMLgIU8gFrFoSN8M6GvXOiC9xG8E5Hi/sAESINxp/aNgr6
- vIJ9OUj3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-01_06,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
- bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509010101
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
 
-Add support for parsing 'limit-hs-gear' and 'limit-rate' device tree
-properties to restrict high-speed gear and rate during initialization.
+Add support to limit Tx/Rx gear and rate during UFS initialization
+based on DT property.
 
-This is useful in cases where the customer board may have signal
-integrity, clock configuration or layout issues that prevent reliable
-operation at higher gears. Such limitations are especially critical in
-those platforms, where stability is prioritized over peak performance.
+Also update the phy_gear to ensure PHY calibrations align with
+the required gear and rate.
 
-Co-developed-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 ---
- drivers/ufs/host/ufshcd-pltfrm.c | 36 ++++++++++++++++++++++++++++++++
- drivers/ufs/host/ufshcd-pltfrm.h |  1 +
- 2 files changed, 37 insertions(+)
+ drivers/ufs/host/ufs-qcom.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/ufs/host/ufshcd-pltfrm.c b/drivers/ufs/host/ufshcd-pltfrm.c
-index ffe5d1d2b215..a3cfb1935bbc 100644
---- a/drivers/ufs/host/ufshcd-pltfrm.c
-+++ b/drivers/ufs/host/ufshcd-pltfrm.c
-@@ -430,6 +430,42 @@ int ufshcd_negotiate_pwr_params(const struct ufs_host_params *host_params,
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index 1a93351fb70e..53c64d5fb95d 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1092,6 +1092,18 @@ static void ufs_qcom_set_phy_gear(struct ufs_qcom_host *host)
+ 	}
  }
- EXPORT_SYMBOL_GPL(ufshcd_negotiate_pwr_params);
  
-+/**
-+ * ufshcd_parse_limits - Parse DT-based gear and rate limits for UFS
-+ * @hba: Pointer to UFS host bus adapter instance
-+ * @host_params: Pointer to UFS host parameters structure to be updated
-+ *
-+ * This function reads optional device tree properties to apply
-+ * platform-specific constraints.
-+ *
-+ * "limit-hs-gear": Specifies the max HS gear.
-+ * "limit-rate": Specifies the max High-Speed rate.
-+ */
-+void ufshcd_parse_limits(struct ufs_hba *hba, struct ufs_host_params *host_params)
++static void ufs_qcom_parse_limits(struct ufs_hba *hba)
 +{
-+	struct device_node *np = hba->dev->of_node;
-+	u32 hs_gear;
-+	const char *hs_rate;
++	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
++	struct ufs_host_params *host_params = &host->host_params;
++	u32 hs_gear_old = host_params->hs_tx_gear;
 +
-+	if (!np)
-+		return;
-+
-+	if (!of_property_read_u32(np, "limit-hs-gear", &hs_gear)) {
-+		host_params->hs_tx_gear = hs_gear;
-+		host_params->hs_rx_gear = hs_gear;
-+	}
-+
-+	if (!of_property_read_string(np, "limit-rate", &hs_rate)) {
-+		if (!strcmp(hs_rate, "Rate-A"))
-+			host_params->hs_rate = PA_HS_MODE_A;
-+		else if (!strcmp(hs_rate, "Rate-B"))
-+			host_params->hs_rate = PA_HS_MODE_B;
-+		else
-+			dev_warn(hba->dev, "Invalid limit-rate value\n", hs_rate);
++	ufshcd_parse_limits(hba, host_params);
++	if (host_params->hs_tx_gear != hs_gear_old) {
++		host->phy_gear = host_params->hs_tx_gear;
 +	}
 +}
-+EXPORT_SYMBOL_GPL(ufshcd_parse_limits);
 +
- void ufshcd_init_host_params(struct ufs_host_params *host_params)
+ static void ufs_qcom_set_host_params(struct ufs_hba *hba)
  {
- 	*host_params = (struct ufs_host_params){
-diff --git a/drivers/ufs/host/ufshcd-pltfrm.h b/drivers/ufs/host/ufshcd-pltfrm.h
-index 3017f8e8f93c..1617f2541273 100644
---- a/drivers/ufs/host/ufshcd-pltfrm.h
-+++ b/drivers/ufs/host/ufshcd-pltfrm.h
-@@ -29,6 +29,7 @@ int ufshcd_negotiate_pwr_params(const struct ufs_host_params *host_params,
- 				const struct ufs_pa_layer_attr *dev_max,
- 				struct ufs_pa_layer_attr *agreed_pwr);
- void ufshcd_init_host_params(struct ufs_host_params *host_params);
-+void ufshcd_parse_limits(struct ufs_hba *hba, struct ufs_host_params *host_params);
- int ufshcd_pltfrm_init(struct platform_device *pdev,
- 		       const struct ufs_hba_variant_ops *vops);
- void ufshcd_pltfrm_remove(struct platform_device *pdev);
+ 	struct ufs_qcom_host *host = ufshcd_get_variant(hba);
+@@ -1333,6 +1345,7 @@ static int ufs_qcom_init(struct ufs_hba *hba)
+ 	ufs_qcom_advertise_quirks(hba);
+ 	ufs_qcom_set_host_params(hba);
+ 	ufs_qcom_set_phy_gear(host);
++	ufs_qcom_parse_limits(hba);
+ 
+ 	err = ufs_qcom_ice_init(host);
+ 	if (err)
 -- 
 2.50.1
 
