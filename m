@@ -1,136 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-71422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38F83B3EBE0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 18:07:09 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3956B3EBE5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 18:08:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C9F0C4E30BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:07:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BFDA1885F84
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:09:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0F17A2DF15E;
-	Mon,  1 Sep 2025 16:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 793732E6CAB;
+	Mon,  1 Sep 2025 16:08:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="exO2Wsdd"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Kl0c3/a6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C213E02A;
-	Mon,  1 Sep 2025 16:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A65713E02A;
+	Mon,  1 Sep 2025 16:08:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756742823; cv=none; b=eK/yLEEMJstj0tdU6oFx74f+Dn+JY5DA3zWDBamyCj3BAPyr3SfKBtfSq2NzJ1KfblyS2ocPDg9jfSf3Jtyfhq9OmkOE6pF9sMqTiQbHYB1oy0ElmDJ9Ojx4Hpzl956saJ6yLWdwr2qLiHFOyDZx+5mm6pii2C0us1+kw1nTlhA=
+	t=1756742920; cv=none; b=E8n6Jpige6s7zS5ujl04sz1S2LMY5/YdQHSncQzSWcBmZHgtryCUDKXmYhBjjKTOiPdQvNmTDPW1lTuMH37u3ewl34eLF95XVZO2XP/FOjDbD0V4tQ6NynhVNzfVynhjsjom1NHdTGoMqPngEU/Ej2UHvpgzC4vpN8b+jS34uJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756742823; c=relaxed/simple;
-	bh=1n8bL3qjuAF4p+1koFRifHNBeybfCeqhb3xbbjrMBGU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uNqAiiZNNf/Ijy1OwjB8OqOqJSgCXZTH96U4C2RoYOaMgAd+rWUi4HtCItAgvDJCh4kUhH8ZR1jIjF89A6q4RmGTH6jgV5E6AItaSWjhTrrW3onxcjK9H0K9Ige8bk9EYA+JpcTHPsyNYs59hVxrU/FrH8J6hVunXLzgC41Ozbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=exO2Wsdd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D78C4CEF0;
-	Mon,  1 Sep 2025 16:07:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756742822;
-	bh=1n8bL3qjuAF4p+1koFRifHNBeybfCeqhb3xbbjrMBGU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=exO2WsddNgSx8isiIJdfX8l1xUcTKuPRE0G3bM1n9AgVcrKWDK1qXqrvx1lTWVPjD
-	 ixZLeIda06WleCny4w4eW408eHvqyljwcYsY88AigjimKwpAuwvFx/ifnJQBrwRlEc
-	 FShtGozwtJ2Xri8AsPQu6xJjjGGiLiL5M+lUxLgtz+d6inpDSmWqXKE4yR5pct7L3O
-	 d/+qU/J7VCsaLquQ/b8HM5tcaCZV6HtVbBMqkau+y12AykQDZFqf5XCfqImS8XEdmq
-	 TT/BTk3jewNKN1eBFCCs98xUWFuTfYOXYQTmIDlu35CX9/90IJBTGE7jSZ+zjLOKmb
-	 rDBL23IJn20xQ==
-Date: Mon, 1 Sep 2025 11:06:59 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: ipq5424: Add support for emergency
- download mode
-Message-ID: <vzxop3tp6zjql23juykhnyf6fq6df45ikppw7jwp3oktfrymvg@iys54hjpk65p>
-References: <20250828-ipq5424-edl-v1-1-d6a403800023@oss.qualcomm.com>
+	s=arc-20240116; t=1756742920; c=relaxed/simple;
+	bh=EqeoXDvX4Ec7OVi70BK9y0ZJUtPChN7RnVzhxWXW0xA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=ceY6Rvi3ykPHvS5y48Hhz8OU7jRQBECgwLU3FwslfJ5RSp0EeRIJOW4SRfXyxuNpGnAvhsBww1DRMT4TC5BaCmZ1ZYUB0N5li3me3EjQxm1G93aDy8FvdBHu7vWBVgU0U8asbVq+cnzr9qPGx7hNConHKoHXF2y74wyA+9KLQrE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Kl0c3/a6; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 581B4KB5015350;
+	Mon, 1 Sep 2025 16:08:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	8NHbnWA+ivENT66Nk4iYanDhKZZcbI1nQw9qnGL0QzM=; b=Kl0c3/a6dcN8+wt+
+	E8q1c5TiWkCSDeMFZ8qEneTZ/4NLbs9FLHJzW8Jy5HhLAMcpb50sSy4kZobmTy0N
+	ut1q5qCN7pl7PPTO7fh8gaC5LpnxautUE/Qgdg7kXGa8r6VLrgo6AfpW3sWpfOXl
+	5HEveiY//dFDBAOBd0wFFLwX8P8e+hPNRZ/0FXiJ46lE5CH6f3EbzzDTSKRK4STc
+	V5tpr2kYiPQim5CkhHH4GTl81cQL6i3r1FHpTpSfOP8AfjTivg7iT5vyf5vFrwZO
+	mQDgHdMXRDTJz9pvIClNWM/VuPxCE03gRlg4KRDRT3M6IteCE2kxF4GWHeQ1unLy
+	D/sexA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48utfkd63h-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 01 Sep 2025 16:08:34 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 581G8XJb026669
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 1 Sep 2025 16:08:33 GMT
+Received: from [10.216.44.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 1 Sep
+ 2025 09:08:28 -0700
+Message-ID: <1efa429d-7576-49da-a769-b1eba9345958@quicinc.com>
+Date: Mon, 1 Sep 2025 21:38:25 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250828-ipq5424-edl-v1-1-d6a403800023@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 3/5] scsi: ufs: core: Remove unused ufshcd_res_info
+ structure
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Ram Kumar Dwivedi
+	<quic_rdwivedi@quicinc.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <mani@kernel.org>,
+        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>
+CC: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-scsi@vger.kernel.org>
+References: <20250821112403.12078-1-quic_rdwivedi@quicinc.com>
+ <20250821112403.12078-4-quic_rdwivedi@quicinc.com>
+ <1ccecf69-0bd8-4156-945d-e5876b6dea01@kernel.org>
+Content-Language: en-US
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <1ccecf69-0bd8-4156-945d-e5876b6dea01@kernel.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=eaQ9f6EH c=1 sm=1 tr=0 ts=68b5c502 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8
+ a=2ANJes_M-wHGjwGGIWkA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: baEnfMBlZR06je6vcouClH91UY1MjV6O
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDA0MCBTYWx0ZWRfXz+Lr2ypsoGVA
+ fvl6l4jVny94Npt2x20KpJaxFMPEfpZVdsvCugGNvymdT7q0VP5tFytfRt4BbyWal3xmdwUeE+H
+ dzffcQb3kARYwbXUHm3ZFuDLQl7EiiA5wm1uXz95Pjv3YpJLe95iqcXrYhBT894N1E8+OJZB170
+ DGYHXMhYb0WanT/hIS8+YUBeCdBD1zE1dStdubPTcsu/cFe/ny5XhU4lx+7Tafl+sgVHVRR0REb
+ FWJNkrWPuG4XXMwYviDt96ZjBGlyXXieAtuUa9PXzwcPOFCB5vS75g9BNEJApKrS/GQooDFnegO
+ 85PHvwOFJKfo5QxhKJLcJIf1kCKHI70yUMBnG0CLxxUQfkNOXuIPxwxWK4byUP2meeEPsL9nYD+
+ ES0bBnx7
+X-Proofpoint-GUID: baEnfMBlZR06je6vcouClH91UY1MjV6O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-01_06,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 impostorscore=0 spamscore=0 malwarescore=0
+ adultscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300040
 
-On Thu, Aug 28, 2025 at 01:25:31PM +0530, Kathiravan Thirumoorthy wrote:
-> Enable support for the vendor-specific SYSTEM_RESET2 reset in PSCI reboot
-> modes. Using "edl" as the reboot mode will reboot the device into emergency
-> download mode, allowing image loading via the USB interface at the Primary
-> Boot Loader (PBL) stage.
+
+
+On 8/21/2025 5:18 PM, Krzysztof Kozlowski wrote:
+> On 21/08/2025 13:24, Ram Kumar Dwivedi wrote:
+>> From: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>
+>> Remove the ufshcd_res_info structure and associated enum ufshcd_res
+>> definitions from the UFS host controller header. These were previously
+>> used for MCQ resource mapping but are no longer needed following recent
+>> refactoring to use direct base addresses instead of multiple separate
+>> resource regions
+>>
+>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
 > 
-> Signed-off-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-> ---
-> Depends-on:
-> https://lore.kernel.org/linux-arm-msm/20250815-arm-psci-system_reset2-vendor-reboots-v14-10-37d29f59ac9a@oss.qualcomm.com/
-
-This hasn't been merged, so there's not much I can do with this patch.
-Please resubmit once the dependencies are in linux-next.
-
-Thank you,
-Bjorn
-
-> ---
->  arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts | 6 ++++++
->  arch/arm64/boot/dts/qcom/ipq5424.dtsi       | 2 +-
->  2 files changed, 7 insertions(+), 1 deletion(-)
+> Incomplete SoB chain.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> index 738618551203b9fb58ee3d6f7b7a46b38eea4bf4..b47b0be41a61438c922b1e29d9a2ebc37fca2d70 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> +++ b/arch/arm64/boot/dts/qcom/ipq5424-rdp466.dts
-> @@ -108,6 +108,12 @@ &pcie3_phy {
->  	status = "okay";
->  };
->  
-> +&psci {
-> +	reboot-mode {
-> +		mode-edl = <0 0x1>;
-> +	};
-> +};
-> +
->  &qusb_phy_0 {
->  	vdd-supply = <&vreg_misc_0p925>;
->  	vdda-pll-supply = <&vreg_misc_1p8>;
-> diff --git a/arch/arm64/boot/dts/qcom/ipq5424.dtsi b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-> index 67877fbbdf3a0dcb587e696ed4241f1075000366..8f2ee755d2cc406374faf9e76b0d409d159a7b12 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq5424.dtsi
-> @@ -184,7 +184,7 @@ pmu-dsu {
->  		cpus = <&cpu0>, <&cpu1>, <&cpu2>, <&cpu3>;
->  	};
->  
-> -	psci {
-> +	psci: psci {
->  		compatible = "arm,psci-1.0";
->  		method = "smc";
->  	};
+> But anyway this makes no sense as independent patch. First you remove
+> users of it making it redundant... and then you remove it? No.
+
+Hi Krzysztof,
+
+The driver changes are in the UFS Qualcomm platform driver, which uses 
+the definitions, while ufshcd.h is part of the UFS core driver. Hence 
+kept in 2 separate patch.
+
+Thanks,
+Nitin
+
 > 
-> ---
-> base-commit: 8cd53fb40a304576fa86ba985f3045d5c55b0ae3
-> change-id: 20250828-ipq5424-edl-8c826a2af996
-> prerequisite-change-id: 20250709-arm-psci-system_reset2-vendor-reboots-46c80044afcf:v14
-> prerequisite-patch-id: 38f76a48b6b824f3fa8d8cbc05ae76b43ce79556
-> prerequisite-patch-id: ae7ae183210708f64fb3ff4f097de3c8af31680a
-> prerequisite-patch-id: 5ba323084ac74aa744696b54ff0c17d34e26b7de
-> prerequisite-patch-id: 3a2cedabc1bff24067dc224b2c077373c08b39a0
-> prerequisite-patch-id: e30b97929026120277585907cde2dc000a25a621
-> prerequisite-patch-id: e3ff400e6c72e835612b733b5573b01b045e7336
-> prerequisite-patch-id: 50e081a2a21166aee74af428934bc3b52d3cf43b
-> prerequisite-patch-id: a0148031385883a309dc165fac299d3eb5d4bcd4
-> prerequisite-patch-id: 3c0f5c0e93261f6dab1d9e7293a1a28ef64e2a66
-> prerequisite-patch-id: bb68380b11f9e868eacb0db9f97cc5f3ae8aa29a
+> Organize your patches in logical chunks.
 > 
 > Best regards,
-> -- 
-> Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
+> Krzysztof
 > 
+
 
