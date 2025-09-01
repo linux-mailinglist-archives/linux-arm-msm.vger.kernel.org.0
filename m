@@ -1,68 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-71446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71447-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E80EBB3EEB9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 21:48:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42004B3EEBF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 21:49:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 0C2B17A39B1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 19:47:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CA8C4859CD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 19:49:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D7A534A335;
-	Mon,  1 Sep 2025 19:46:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A5DE34AB14;
+	Mon,  1 Sep 2025 19:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QxSf4sLO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Dp+gKZX4"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350062580CA;
-	Mon,  1 Sep 2025 19:46:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EC8634AB07;
+	Mon,  1 Sep 2025 19:46:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756755983; cv=none; b=TaaH2jkaq2wj3Bor9FUH3WzUjgxWXR4rK2RILyr6qnksHLYW2CKgYsYG4WKu/8QsYkKVlGIxoHy5TIYsB/RBuRj3Ko/N+v8r3ePJxpW/sOw2YBLU5A8cjL44hd4gqok00DsF1fyEC7lz0gBjColgBbp4rRjuKB17yv1TkSDw5LA=
+	t=1756755984; cv=none; b=MPzvc1OX9xvOjNI7ykYaoplyUt/0h4NlZiWWStTZGWZl3jAsbJz8plW6p4QrRPV7ZbJTqLprdArBBeegtcrqfALvK9DargNIVksH+PFoq3kUD7rzDaexNspcPf1YuZoA7/w/UCYKzZX3gcy4XERR0EjzGrQIzQvZuaqdWxQjoEk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756755983; c=relaxed/simple;
-	bh=HhvOQysCGO4qIj31A9iudcRkMaj6vVD/qLcp087j1YI=;
+	s=arc-20240116; t=1756755984; c=relaxed/simple;
+	bh=3c/GB+QozKKz7qUOjnw6EVNTpYwv/SUHOlGBgRlQlmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Dm6hVBlzjOOAC8DYBb2zH7aFO+jTVkLiwjXFFGCigHQm9/mynM5qBysLFOxH3Sr9aFfiW2DQbuc+B4ZS8s0aW4flnxkw+BVTlp7NdLOvl4N6iDH4nlPGQnZSi4zFtoNR5Vs6+EXohZzT2BcWcaI73PxP1LZ/cPrWysQCKG8fDBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QxSf4sLO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB171C4CEF8;
-	Mon,  1 Sep 2025 19:46:21 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Dz5Oeg1u+aPb+i5y6XXECcGzpox/eEdCgq3g3xtlFr6iHDXpiazpNglgeY88OYYl8uCBA8dyw8h4M9mgCZ5mdZRxYcRcytjXT56C7yngi3Q16stzWVbZgdO6qMVBZJgiL/S6BNWjWTw1bkJ1/KtbrAzBetmlbVGY70YLP0NFiKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Dp+gKZX4; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D23CC4CEF5;
+	Mon,  1 Sep 2025 19:46:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756755982;
-	bh=HhvOQysCGO4qIj31A9iudcRkMaj6vVD/qLcp087j1YI=;
+	s=k20201202; t=1756755983;
+	bh=3c/GB+QozKKz7qUOjnw6EVNTpYwv/SUHOlGBgRlQlmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QxSf4sLO5/kdbxcEeaW1l3k6qzuO9FYSVGvdKhhL04b7dzV6TnQH003LAp2eNR9MM
-	 2NBo+r1+mUcK9ta4VflHinXW8Xnr37BePfwLvriqPOeBlS74D8S1PSubM+TYPDwhLJ
-	 DY+blOOT3Ze5Yc8Nlm0pnpbzeu04e4DDjordOwSWoO83oZYmst8KKaTET6BT5sGd0A
-	 oBply86rXAJhLVKTrAYoW5XD/ybbEVDyb5MHi0dVaNW9HUC3wlrm7Qqswx3fj96Ska
-	 wHGRoNyAhOgf8ceVX6n7PdyRmLzfeAXtnvDoxZ/sNrIeVJ00cHLfnsIZjfzhtOFHC3
-	 IW1peqbzTl2TQ==
+	b=Dp+gKZX4pgqmAkkyIc05H7pdG8kJNL2GFq4XtpXs9YLp8HY0T/zBVYJepOtLLdwnG
+	 +9eSQp56XTMpSwrdWBGWHi4Z9aMyQf27RPtc1HrubkopIkqVdoPDBa6Zaj/2mZgIXu
+	 3i/576xYvVrZVHqDLFYPQgBLDczbmC6vAATOdCmLUF7uahPwpLEar49ONoJONjItmO
+	 QN2Myrx2aRBTNKGo2wkCCpMir/TpLPVILJOPd1j8ng40z5++JVX3By5+kqoGIiXmb6
+	 pyVekwUQ0CiedupusgJzzhOmC+BqpkuF3DWc5MMEEA5MEQCWyoc9uGK60W05beXkrX
+	 tx+CefnyxLZSA==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Jagadeesh Kona <quic_jkona@quicinc.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
 	Neil Armstrong <neil.armstrong@linaro.org>
 Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Taniya Das <quic_tdas@quicinc.com>
-Subject: Re: [PATCH v2 0/6] arm64: dts: qcom: Add multiple power domains in videocc/gpucc
-Date: Mon,  1 Sep 2025 14:46:03 -0500
-Message-ID: <175675595908.1796591.8603544075341274375.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 0/9] arm64: dts: qcom: Set up 4-lane DP for sm8[56]50 & x1e boards
+Date: Mon,  1 Sep 2025 14:46:04 -0500
+Message-ID: <175675595917.1796591.3711447410941152906.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250822-topic-sm8x50-upstream-pll-multi-pd-voting-dt-v2-0-28f35728a146@linaro.org>
-References: <20250822-topic-sm8x50-upstream-pll-multi-pd-voting-dt-v2-0-28f35728a146@linaro.org>
+In-Reply-To: <20250822-topic-x1e80100-4lanes-v3-0-5363acad9e32@linaro.org>
+References: <20250822-topic-x1e80100-4lanes-v3-0-5363acad9e32@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,31 +66,34 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 22 Aug 2025 11:26:32 +0200, Neil Armstrong wrote:
-> This is a continuation of [1] ("clk: qcom: Add support to attach multiple power domains in cc probe"),
-> where all the clock changes were merged and the DT changes are lying
-> on the lists for allmost 4 months now.
+On Fri, 22 Aug 2025 17:56:48 +0200, Neil Armstrong wrote:
+> Now the 4lanes support in the QMP Combo PHY has been merged in [1],
+> add the required plumbing in DT.
 > 
-> I kindly asked for those patches to be re-send separately [2], but was
-> ignored, and the lack of those causes a bunch of DT check errors, hopefully they can
-> be picked for the next revision.
+> [1] https://lore.kernel.org/all/20250807-topic-4ln_dp_respin-v4-0-43272d6eca92@oss.qualcomm.com/
 > 
-> [...]
+> 
 
 Applied, thanks!
 
-[1/6] arm64: dts: qcom: sm8450: Additionally manage MXC power domain in videocc
-      commit: 235399565582d092ff8fb5757eee63b1367ea6b9
-[2/6] arm64: dts: qcom: sm8550: Additionally manage MXC power domain in videocc
-      commit: d49e683574537d416aa0fb022d800430e7c045b6
-[3/6] arm64: dts: qcom: sm8650: Additionally manage MXC power domain in videocc
-      commit: 086079090571910ead0510e756cea14ff3759d4e
-[4/6] arm64: dts: qcom: sm8450: Additionally manage MXC power domain in camcc
-      commit: ad43a5317a8bda7fd9d6ad5f0b6248ba11900b44
-[5/6] arm64: dts: qcom: sm8550: Additionally manage MXC power domain in camcc
-      commit: 169ccd7cec9b702778ffb58a436f757db23154f2
-[6/6] arm64: dts: qcom: sm8650: Additionally manage MXC power domain in camcc
-      commit: 673fa9a42606a755068e7ab6ab92cf61db243149
+[1/9] arm64: dts: qcom: sm8550: allow mode-switch events to reach the QMP Combo PHY
+      commit: 99d741245e7a6d8b533511f96fc110a7d89aee1b
+[2/9] arm64: dts: qcom: sm8650: allow mode-switch events to reach the QMP Combo PHY
+      commit: 6cc36611ac7925a6a6bc64c625b85f80d36fa1a6
+[3/9] arm64: dts: qcom: x1e80100: allow mode-switch events to reach the QMP Combo PHYs
+      commit: 7b8849178ecf183880dbdf19d853c92d0877a280
+[4/9] arm64: dts: qcom: sm8550: move dp0 data-lanes to SoC dtsi
+      commit: bdd235f2df6d5d6cf00cdf474970b1e6d177f2bd
+[5/9] arm64: dts: qcom: sm8650: move dp0 data-lanes to SoC dtsi
+      commit: 35f549fcf5f1d99997cd865170fd7cb1bb66c1d7
+[6/9] arm64: dts: qcom: x1e80100: move dp0/1/2 data-lanes to SoC dtsi
+      commit: 458de584248a5630878ed11ea23188f6007036b2
+[7/9] arm64: dts: qcom: sm8550: Set up 4-lane DP
+      commit: b942e087564b0c1b0bf1c31c1058a59dfd5df841
+[8/9] arm64: dts: qcom: sm8650: Set up 4-lane DP
+      commit: 630c05a1dd350822e9166857ab120c0a7269b57a
+[9/9] arm64: dts: qcom: x1e80100: Set up 4-lane DP
+      commit: 2e66c88bb2649133da470d2685646f6536d1e0d5
 
 Best regards,
 -- 
