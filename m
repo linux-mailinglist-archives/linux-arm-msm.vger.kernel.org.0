@@ -1,63 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-71338-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71339-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E635B3D6E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 05:02:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03B47B3D739
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 05:23:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 612C8173196
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 03:02:46 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B60541783A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 03:23:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B4821E1E16;
-	Mon,  1 Sep 2025 03:02:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 262EF219A81;
+	Mon,  1 Sep 2025 03:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="YDaij8Iq"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NTyDiR+z"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 843C14C6E;
-	Mon,  1 Sep 2025 03:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FC631E5B73
+	for <linux-arm-msm@vger.kernel.org>; Mon,  1 Sep 2025 03:23:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756695762; cv=none; b=aOAALp2bQVaqz10am6bYGSMwZUS68eEIq4e+KmhUuu9TzNOxYpNpmAH74fxgQEeTugtzgTRNapIW2X6E+ppY6IX54uFYl8VekPsEdlDVTIr0/TRsMRWYgiWLTbvCk0fNZ0mnv/VsCQyXpNwhyN3agOe5X9nsYhqwhlbykdoBU1M=
+	t=1756697021; cv=none; b=sjkypWnGJ2tuMl3tbS9zWFi6MsGjBSP0psopuwqB6cSfipBK4LHyxr2VF11RcJVQbMbE7onELT4wqjwrq5+PHEslt0Ln5lFH5g7fbraAwbDTd4EX65v98HR7yYKtYfi9zRjDqlgmxsMf8Z2lRr3MyvOfiag/lXTtbzsLW/pVsCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756695762; c=relaxed/simple;
-	bh=/GeSo6aqW0iRvi5bNwvklAoIc1/5j86BFOko6iANmfg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=VU4/l+cx8QaAiw96QlWqprBqUfjoyJB/93wJh4HY3YgZzbC/oj1m7Rhr7qFVUt6LDis6bHMiArx2wsCr7MMDubR9TDrg15At+KlQvps/ewGcNnHudfpfTP1wJEQNqvQl3lQbd0riA/u3a//SqqGKLxxUC5XZ9s2xUGAe51/NLuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=YDaij8Iq; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57VMtFcE032543;
-	Mon, 1 Sep 2025 03:02:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1756697021; c=relaxed/simple;
+	bh=9u1Iyz9w4OoTFAcKVumHTocTm3/ljOLKuUAu2ftIz74=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aMtPIP0AgBsrD6ShyA97TTXINL9MZcb2/q2KTlRpzLItfAex4DorgYbHG9XZ5paljYKAyvEnPAOmu8zdxf6wRFzEMu39T2yM4+LcnsGttBZkwEuNct68zipswfst09154mKfpfy0EIWrXmf06nfsEkGIWtRPg9H+Lw+7LlSU84o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NTyDiR+z; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 57VLegZO010504
+	for <linux-arm-msm@vger.kernel.org>; Mon, 1 Sep 2025 03:23:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5j5Ih0Zi5PFlfqoVw+xfTf+B8ZinewdU6wMNz8NtHnA=; b=YDaij8IqmY3taSUo
-	2szCabliXgumXKV6V0PP/1kKyC+8tFBls2zVkWsAXFA/syVI0tQGyVilsbHJPYDh
-	kHiJD/GjrKjfbbCcpG5ITD8iES9zGUaJ7UhuWolosh8e5Z6T2nGFT8PdKZ3gevJr
-	TEccwu0XG/U2CYDjIMf5wbfZGLz04OARNl3T+uXwm8RzIcfs3o7lOSKvsAdfWDbp
-	2b0+xJXVbRSQEik5p7seqnvFiLbAZGihJJTzWg1kuTm/DaoVnt0HjzesBFWcyS5L
-	LLXda6i+5hlgmQvySlvCE/iT7AQqltNP7KnoXPKnHbyv3suLwPnAcpdxMJYtboI8
-	wS+0cA==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48usp7tyeg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Sep 2025 03:02:30 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58132TjZ027597
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Sep 2025 03:02:29 GMT
-Received: from [10.253.73.182] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Sun, 31 Aug
- 2025 20:02:26 -0700
-Message-ID: <1600b292-df57-4328-baa6-db6467e00096@quicinc.com>
-Date: Mon, 1 Sep 2025 11:02:24 +0800
+	PjN1yLilRk397qA+PzJJvK6p0jC552oT6L++agGXKkk=; b=NTyDiR+zBfQX+ggj
+	weKVzijsaqYqdMyryC177QQIwALpbjHf3dv5CcGy69gpnkaWDnWfwsVvO6Cpp9eG
+	CV8XsMRhHCA40vdYUGAZtqAB8Mcnl9Ewdc2/Kyp9L/49n96Tt7CKEk24WZkYi8qx
+	7cFJw6EiJ6b2UOjHu9I68sTlbcMudftKhZ4BQttKQQayMG1LzVepir3w8DoOs0K3
+	H3Or2ltReoIcWM2+7aEYre5PvHOemBUBVc7SKkCWqyLDdfoEi80Sg4KIoKWFjwOz
+	KfyCE4V/W07AWMh9UTrKPXY4B3u5VhNKOd7BqVaPJe2sCFQATmZ9M4T7LAGcvQF7
+	Rr9KeQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urvyu2k8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 03:23:37 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-77237977e7aso1529950b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Sun, 31 Aug 2025 20:23:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756697016; x=1757301816;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PjN1yLilRk397qA+PzJJvK6p0jC552oT6L++agGXKkk=;
+        b=af8N8Yf62mQD2hZBt4kdbLeiF3CgvMpO0u8NHUrIiMhoPkBJ4Nchgaos+oWHchszAX
+         eW/KzPSh9vfYcHKvTKqgTp3XOXo1SsrRhMdFAm3p4AVqGetSu2lbhIGfuVCqYAOEJ/b8
+         meWp8+GfwpQEcpjV0C0f72iOyv+Glw9plPwQUlqR9/6SAqWsMLi/P3wo31gX8v4gvZFX
+         YAfW0B03jFbvS9bxCSxYsfeb7SdEu4CFYU9RWTC6CrKXWgL5Hl/wH+jtWuVMueO4iLrj
+         JwG6/Af7VyAuLF9Vco9hSt8v7x0Mmbbhee2JDCSdWLI2CfZemkvh2ZHtmG9+f99nbSbN
+         JldQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXQ/FphK1gBQr0MJ4AHd8+bc4k08UlyosQg4NnXqbxIaiqK5ntSRXkIztBV9DJrApVYiBWyW66iWg7KhihE@vger.kernel.org
+X-Gm-Message-State: AOJu0YzpbTpo573C9uKgqsptkCHdVVMssca0/5fuSgmGJ0f0nGnIbZfg
+	s/g7Q6Z9Nsbyx1siehUeCmrBocgY0y0Z5RzdJ8p5qUjOW5bWAwS5/cwbRarGmHB2aIZ/GgCezm0
+	Xw0s1j5V8mj3JsGTQR0v27mvQRjfQpA0suuVlMKNv+MONgTWemT1DDGfZFCFjpo+saPc5+ZJCdH
+	Qw
+X-Gm-Gg: ASbGncuNS72qF/t6W0WADZ/fsYAX7lz62QVVdiWMG8xfQwedH69M1RXZ7Li1oRxnWc8
+	S9n6mcF5VLHhbSTykj+FtSblaIuFyhiIgd1TGx/xp7OfSfoxkiwGqonwDuUza/rpV/xmDXEZSnF
+	VkGs0vuPmyw7RmR99uvQAZREbFyYCNH+huF33/mxKMX08mochutDMHUy6dahyxnoIJQj1hgG+TU
+	rINL1GWlvZEtRAcvN8ZNI2ii5szIh7NZttJe6dyTbCmslTs1z3HW81S3HNps+qNjCVO5mE9ChPo
+	0bgw7ENYoZ4IQ3eDLAxOICvh+kFVPnTHzz/c3fTyjoIA1PDQSKdHNS305xr+aKlllWAZnLrq/TS
+	GoTXeYqyUZChJcIAQ2B6HXw/41BkbzGKFhCk=
+X-Received: by 2002:a05:6a20:938e:b0:243:b92d:72df with SMTP id adf61e73a8af0-243d6f3815amr8066488637.48.1756697016395;
+        Sun, 31 Aug 2025 20:23:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH0190mt0RVSuvwv1+iiVLncI1fqwJEIt6Vm9FOvlOeDiniWtCaJD2Ld9loVDCs2pzwhbc7RA==
+X-Received: by 2002:a05:6a20:938e:b0:243:b92d:72df with SMTP id adf61e73a8af0-243d6f3815amr8066455637.48.1756697015915;
+        Sun, 31 Aug 2025 20:23:35 -0700 (PDT)
+Received: from [10.249.20.242] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4dad911628sm6507511a12.11.2025.08.31.20.23.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 31 Aug 2025 20:23:35 -0700 (PDT)
+Message-ID: <ae4ef090-7edc-49f8-a964-090bb94ff097@oss.qualcomm.com>
+Date: Mon, 1 Sep 2025 11:23:28 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,145 +91,154 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v8 3/3] arm64: dts: qcom: Add base HAMOA-IOT-EVK board
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Yijie Yang
-	<yijie.yang@oss.qualcomm.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio
-	<konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski
-	<krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        Yingying Tang <yintang@qti.qualcomm.com>,
-        <miaoqing.pan@oss.qualcomm.com>,
-        "stone Zhang (Stone)"
-	<stonez@qti.qualcomm.com>,
-        <zhichen@qti.qualcomm.com>
-References: <20250828-hamoa_initial-v8-0-c9d173072a5c@oss.qualcomm.com>
- <20250828-hamoa_initial-v8-3-c9d173072a5c@oss.qualcomm.com>
- <qgirqibqvsld7n2ac4cvuvtqknhqkq535jkxnxjjqvss5wpm36@i3mbp7qgqxju>
-From: Yingying Tang <quic_yintang@quicinc.com>
-In-Reply-To: <qgirqibqvsld7n2ac4cvuvtqknhqkq535jkxnxjjqvss5wpm36@i3mbp7qgqxju>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: Add display support for QCS615
+ RIDE board
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        xiangxu.yin@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+        Li Liu <li.liu@oss.qualcomm.com>
+References: <20250827-add-display-support-for-qcs615-platform-v7-0-917c3de8f9ca@oss.qualcomm.com>
+ <20250827-add-display-support-for-qcs615-platform-v7-2-917c3de8f9ca@oss.qualcomm.com>
+ <yutyrfb73wbxlweoq3mc6ezyqr56snzmznw3k6mcbc56fpfayg@3h5jwymlo3ol>
+ <0c2a4877-d63b-4650-b7d4-a06a2730c73c@oss.qualcomm.com>
+ <zoogyjua4l6e2bgsvxx7w26n6v2hwnp2pvkizzzsds3c6cgaag@2bvqdl2z5ds6>
+ <4913e937-3892-42ac-8145-cc9c2364242c@oss.qualcomm.com>
+ <snery6acisgvxtofsrbbqtpoirh5ffyha64lz4zekg3kvwrsyv@tfyydedc7ddm>
+Content-Language: en-US
+From: Fange Zhang <fange.zhang@oss.qualcomm.com>
+In-Reply-To: <snery6acisgvxtofsrbbqtpoirh5ffyha64lz4zekg3kvwrsyv@tfyydedc7ddm>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzNCBTYWx0ZWRfX+kMful3OwoQD
- VXRk73uZAcuyj/V0tRxJaG5qXwc9Nk/Y15l2rDrEy+5AnoCOW80R9nnQMbYOOqHfmaK4bj5gInf
- OI/C6p/XSa1lj6UZzPAGmoTEjpgwb4bVzUBckv9cUqrrlMnIn2oz6vQzbEeLSW0T+0oV7jgJ7/Q
- E9pu3M43CQZ8ISDriyREqx96F0bARgPGBP6QTE5cy4w5UL9VntOk+6oJzXEAzSL4pWizKsLUiNg
- kgb0EHTSClYyrNTWcPvM5wGexktV7wR6dc9R1gw/y5IEomnSURvwjWPQO/fFYTWgczAyRFY0M7F
- z7ndKiiI0bse6ZnaDm/xJ4JsCWypS48Pciokur9I49gMDKqqnMeAdFH97fN3bULOUSnkq5ZScB3
- 0YOV4//j
-X-Authority-Analysis: v=2.4 cv=e6wGSbp/ c=1 sm=1 tr=0 ts=68b50cc6 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8
- a=COk6AnOGAAAA:8 a=GvplJkfO0sNFHy_S6poA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: 0yyMA9OkAVfLuqhvy5UvF9w4EwVHOXmY
-X-Proofpoint-ORIG-GUID: 0yyMA9OkAVfLuqhvy5UvF9w4EwVHOXmY
+X-Proofpoint-GUID: iSjEQlCd5eDbInL7XeSOmb2ytyEPIye2
+X-Proofpoint-ORIG-GUID: iSjEQlCd5eDbInL7XeSOmb2ytyEPIye2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX+vIbYXz95qwO
+ GF4e5zo7kJsEmFa8glaLuQX472eYqG21fujFmDTajISbcL1Za+sHLv3/Gb2DDgH7PHUzVyBMcXl
+ svD7g5JS+/P+0DbEvvlCDsQ8yHQzKX/kfQBPR2FIVevx04yUWnr2cxFtT/fqIlU3eA4tQMeU41A
+ mRZ0sdp9dFBSRzRJjSgPQ7f9uzNcth0+RV7nnI9GRGMuvifves0pJ9DtBYlh6Jig/WEVpEmLWLQ
+ 3T7fW1gW3GmZkmWqKE+HH98d4L+a8lnTZhEX1prQbbXxu+RFRWllDobfrMjhJUYeM+IfZM/gaEG
+ IwYZiqb3C+MYaRAXAgNytR4us0b1cH9SEj/l1oTDBgTK/LIyavvsIY6+SfP7PgK0ezPjMEfaYkH
+ JGH5u5vL
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b511ba cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=mg5Ue5vNRgZXP2P1fq8A:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-01_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 spamscore=0 clxscore=1015 phishscore=0
- malwarescore=0 bulkscore=0 suspectscore=0 adultscore=0 classifier=typeunknown
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300034
+ engine=8.19.0-2507300000 definitions=main-2508300027
 
 
 
-On 8/28/2025 7:18 PM, Dmitry Baryshkov wrote:
-> On Thu, Aug 28, 2025 at 12:48:47PM +0800, Yijie Yang wrote:
->> The HAMOA-IOT-EVK is an evaluation platform for IoT products, composed of
->> the Hamoa IoT SoM and a carrier board. Together, they form a complete
->> embedded system capable of booting to UART.
+On 8/28/2025 7:02 PM, Dmitry Baryshkov wrote:
+> On Thu, Aug 28, 2025 at 01:12:14PM +0800, Fange Zhang wrote:
 >>
->> This change enables the following peripherals on the carrier board:
->> - UART
->> - On-board regulators
->> - USB Type-C mux
->> - Pinctrl
->> - Embedded USB (EUSB) repeaters
->> - NVMe
->> - pmic-glink
->> - USB DisplayPorts
->> - Bluetooth
->> - Graphic
->> - Audio
 >>
->> Written in collaboration with Quill Qi (Audio) <le.qi@oss.qualcomm.com>,
->> Jie Zhang (Graphics) <quic_jiezh@quicinc.com>, Shuai Zhang (Bluetooth)
->> <quic_shuaz@quicinc.com>, and Yongxing Mou (USB DisplayPorts)
->> <quic_yongmou@quicinc.com>.
+>> On 8/28/2025 12:41 PM, Dmitry Baryshkov wrote:
+>>> On Thu, Aug 28, 2025 at 10:57:41AM +0800, Fange Zhang wrote:
+>>>>
+>>>>
+>>>> On 8/28/2025 4:01 AM, Dmitry Baryshkov wrote:
+>>>>> On Wed, Aug 27, 2025 at 09:08:39PM +0800, Fange Zhang wrote:
+>>>>>> From: Li Liu <li.liu@oss.qualcomm.com>
+>>>>>>
+>>>>>> Add display MDSS and DSI configuration for QCS615 RIDE board.
+>>>>>> QCS615 has a DP port, and DP support will be added in a later patch.
+>>>>>>
+>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>>>>> Signed-off-by: Li Liu <li.liu@oss.qualcomm.com>
+>>>>>> Signed-off-by: Fange Zhang <fange.zhang@oss.qualcomm.com>
+>>>>>> ---
+>>>>>>     arch/arm64/boot/dts/qcom/qcs615-ride.dts | 150 +++++++++++++++++++++++++++++++
+>>>>>>     1 file changed, 150 insertions(+)
+>>>>>>
+>>>>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>>>>>> index e663343df75d59481786192cde647017a83c4191..f6e0c82cf85459d8989332497ded8b6ea3670c76 100644
+>>>>>> --- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>>>>>> +++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+>>>>>> @@ -39,6 +39,76 @@ xo_board_clk: xo-board-clk {
+>>>>>>     		};
+>>>>>>     	};
+>>>>>> +	dp-dsi0-connector {
+>>>>>> +		compatible = "dp-connector";
+>>>>>> +		label = "DSI0";
+>>>>>> +		type = "mini";
+>>>>>> +
+>>>>>> +		port {
+>>>>>> +			dp_dsi0_connector_in: endpoint {
+>>>>>> +				remote-endpoint = <&dsi2dp_bridge_out>;
+>>>>>> +			};
+>>>>>> +		};
+>>>>>> +	};
+>>>>>> +
+>>>>>> +	vreg_12p0: vreg-12p0-regulator {
+>>>>>
+>>>>> I should be more carefull when doing reviews. I thought that it was
+>>>>> pointed out already and didn't some of the obvious things...
+>>>>>
+>>>>> First of all, the nodes are sorted. By the name, not by the label.
+>>>>> Second, there are already regulators in this file. Why are the new nodes
+>>>>> not following the existing pattern and why are they not placed at a
+>>>>> proper place?
+>>>>
+>>>> Initially, we referred to https://patchwork.kernel.org/project/linux-arm-msm/patch/20250604071851.1438612-3-quic_amakhija@quicinc.com/
+>>>> as a reference, but its node ordering seems a bit unconventional.
+>>>>
+>>>> Would this revised ordering be acceptable?
+>>>>
+>>>> ...
+>>>> + dp-dsi0-connector
+>>>>
+>>>> vreg_conn_1p8: regulator-conn-1p8
+>>>> vreg_conn_pa: regulator-conn-pa
+>>>> regulator-usb2-vbus
+>>>
+>>> So... Existing regulator nodes have the name of 'regulator-foo-bar'.
+>>>
+>>>>
+>>>> + vreg_12p0: vreg-12p0-regulator
+>>>> + vreg_1p0: vreg-1p0-regulator
+>>>> + vreg_1p8: vreg-1p8-regulator
+>>>> + vreg_3p0: vreg-3p0-regulator
+>>>> + vreg_5p0: vreg-5p0-regulator
+>>>
+>>> While yours use 'vreg-baz-regulator'. Why? Don't blindly c&p data from
+>>> other platforms.
 >>
->> Signed-off-by: Yijie Yang <yijie.yang@oss.qualcomm.com>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile          |    1 +
->>  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 1247 ++++++++++++++++++++++++++++
->>  2 files changed, 1248 insertions(+)
+>> Got it, The revised format will be:
 >>
->> +
->> +	wcd938x: audio-codec {
->> +		compatible = "qcom,wcd9385-codec";
->> +
->> +		pinctrl-0 = <&wcd_default>;
->> +		pinctrl-names = "default";
->> +
->> +		reset-gpios = <&tlmm 191 GPIO_ACTIVE_LOW>;
->> +
->> +		qcom,micbias1-microvolt = <1800000>;
->> +		qcom,micbias2-microvolt = <1800000>;
->> +		qcom,micbias3-microvolt = <1800000>;
->> +		qcom,micbias4-microvolt = <1800000>;
->> +		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000
->> +		500000 500000 500000 500000>;
+>> + vreg_12p0: regulator-vreg-12p0
+>> + vreg_1p0: regulator-vreg-1p0
+>> + vreg_1p8: regulator-vreg-1p8
+>> + vreg_3p0: regulator-vreg-3p0
+>> + vreg_5p0: regulator-vreg-5p0
+>>
+>> Let me know if you have any further suggestions.
 > 
-> Other platforms use a single line here. If you don't want to do it,
-> align data to start from the same column rather than restarting from the
-> column 1.
-> 
->> +		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
->> +		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
->> +		qcom,rx-device = <&wcd_rx>;
->> +		qcom,tx-device = <&wcd_tx>;
->> +
->> +		vdd-buck-supply = <&vreg_l15b_1p8>;
->> +		vdd-rxtx-supply = <&vreg_l15b_1p8>;
->> +		vdd-io-supply = <&vreg_l15b_1p8>;
->> +		vdd-mic-bias-supply = <&vreg_bob1>;
->> +
->> +		#sound-dai-cells = <1>;
->> +	};
->> +
->> +	wcn7850-pmu {
->> +		compatible = "qcom,wcn7850-pmu";
->> +
->> +		vdd-supply = <&vreg_wcn_0p95>;
->> +		vddio-supply = <&vreg_l15b_1p8>;
->> +		vddaon-supply = <&vreg_wcn_0p95>;
->> +		vdddig-supply = <&vreg_wcn_0p95>;
->> +		vddrfa1p2-supply = <&vreg_wcn_1p9>;
->> +		vddrfa1p8-supply = <&vreg_wcn_1p9>;
->> +
->> +		bt-enable-gpios = <&tlmm 116 GPIO_ACTIVE_HIGH>;
-> 
-> Okay, so how is WiFi controlled? Is there a GPIO? The DT should be
-> describing the hardware, not the UEFI behaviour.
-> 
-Hi Dmitry, as I described in previous mail, On hamoa platfrom whole wifi module's power supply and enable gpio are voted in UEFI.
-Hamoa is PC platform, so BIOS/UEFI behavior is compatible with Windows/ACPI architecture. UEFI is responsible for enabling power supply 
-for all devices which may be used in boot phase (such as WLAN may be used to boot from network).
+> What's the name of power rail in the schematics? vreg-Np0?
 
-So we need not Wifi chip's power and control GPIO in kernel side, thanks 
->> +
->> +		pinctrl-0 = <&wcn_bt_en>;
->> +		pinctrl-names = "default";
->> +
+I reviewed the Ride board schematics and found the following power rail 
+mappings:
+
+VREG_1P0 -> DSI0_DVDD10 / DSI0_AVDD10 -> ANX7625 AVDD10 / DVDD10
+VREG_1P8 -> DSI0_AVDD18 -> ANX7625 AVDD18
+VREG_S4A_1P8 -> DSI0_DVDD18 -> ANX7625 DVDD18
+VIDEO_OUT_VREG_3P3 -> DSI0_AVDD30 -> ANX7625 AVDD30
+
+would the current approach also be acceptable?
+or we need configure the power supplies strictly according to this mapping.
+Appreciate your guidance.
+
+> 
 > 
 
 
