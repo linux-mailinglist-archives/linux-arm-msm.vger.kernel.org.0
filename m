@@ -1,113 +1,89 @@
-Return-Path: <linux-arm-msm+bounces-71426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC8CCB3EC6E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 18:41:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32A00B3ECE2
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 19:04:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C033C1B2038C
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:41:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 98A451B2122D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 17:04:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2ED6C30E839;
-	Mon,  1 Sep 2025 16:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2523320A1F;
+	Mon,  1 Sep 2025 17:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DjkkWupj"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fFfWtwLz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BE31C5D7D;
-	Mon,  1 Sep 2025 16:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1A832F777;
+	Mon,  1 Sep 2025 17:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756744856; cv=none; b=C7yTZsesfO8Yus4LTFCskejXG6Dy+SikJE/Rq3SxNvL5HOXuzJpE8509G/pyLGYNgbQu+lyY8MFIWOfG3BwHUR3hp/8WjZuvfK6WhOu+r08byED/KJifMyc+9O+5rTJ9otMS3WV6cEt+MQgHeEqqNs5/uYLqc50dhk5jMCK9xN0=
+	t=1756746243; cv=none; b=JrXO1dXJiZySSIZzPrtBcZ6QnUYft3DAp5zJJcXkt5fS/fWoZFAP3tafJx70yQFM2UhKGBXCpaPW1jOi2+pm6FFz3+DdG8zU7IDek9tK9maVbBbWKWvfTJYYMlyGKKf7ZA1+5DyT5jk9Ik851AdFKrvg+dkKIl1IUwG/AbFQCRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756744856; c=relaxed/simple;
-	bh=iJeiMi9VRSfUO8RM1XIwm8HC63zzuJMuJ5giNeAnYAw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tkrCDltYfssDCtHrZnLxg/R4NMa4QENiSoM6/yxjruzwF1SgkPu+WfJggt1CK8PHdDT5Kr3sJe7RPv6+x3lcWvjXCViYr8DsJszWI0Qf3QUGY7EEuNqPyofiO5enn86mt6RbaF8phfWnG62UMMYPjLrRkWd667Xur2J8icoVEuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DjkkWupj; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B96C4CEF0;
-	Mon,  1 Sep 2025 16:40:54 +0000 (UTC)
+	s=arc-20240116; t=1756746243; c=relaxed/simple;
+	bh=uznjV6GNtsUeaw8/qZ8vz+/Qm7K/KuRh7317nxeEPLU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=SKJk5fOh07Zc9pBRTombm1AJtbwJyOjyX8EXwJuzO82awCWonSRQN/w2P/mcTuLTli2pVGoBoJ/nsYpQ18Bs8dKgY44pq4ynoA+quiqJ23XP1lRwoU+qIn68EmLwsW4B6GPjp6iwg7ZeGJuBH06O0i8gfk/f9pwjDhZi+isCgYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fFfWtwLz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2CCEC4CEF1;
+	Mon,  1 Sep 2025 17:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756744855;
-	bh=iJeiMi9VRSfUO8RM1XIwm8HC63zzuJMuJ5giNeAnYAw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=DjkkWupjeUDajgy5fDD14Mz+uiylr8E5YZeTV5U3B9EgyVqccxSwHBmlNUuXSBOzU
-	 ADT1gjzI3a9sBDmiaGOf0ZYFca/5J0ppZVNGLGnvbF6qwl7c1g/YNzRMD/obVTg4+6
-	 sZT1ridrtk5aEW6NvrPu9qV+2psAeY1TybkJ/nuMhyZ9hCEI5uXnVJ6OdozHPRklU3
-	 eQerOuAEgqweZFHl8c4W2rLzeZwC67T2DLpHASel4zXgDDuJKzSbVzbUOpDzBPbVAK
-	 8jzAxDAfpytN+9gPYvCv/jFxKHukBeIL2XLkHwPnusVfneFKH0OvKNfVUB3C8WZls2
-	 pPn2kpOIi3org==
-Date: Mon, 1 Sep 2025 11:40:53 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	cros-qcom-dts-watchers@chromium.org, Sai Prakash Ranjan <quic_saipraka@quicinc.com>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH 04/10] arm64: dts: qcom: sc7180: Explicitly describe the
- IPA IMEM slice
-Message-ID: <6eqsy3vo7p6pszkyqorpe3gxlk66q2kpeadqdchqfyqerym35p@7rrfea5tgnnt>
-References: <20250523-topic-ipa_mem_dts-v1-0-f7aa94fac1ab@oss.qualcomm.com>
- <20250523-topic-ipa_mem_dts-v1-4-f7aa94fac1ab@oss.qualcomm.com>
+	s=k20201202; t=1756746243;
+	bh=uznjV6GNtsUeaw8/qZ8vz+/Qm7K/KuRh7317nxeEPLU=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=fFfWtwLzE3P+Mt49+YmZCC4AOAq9O2gFL5m3JARScjkvB1ukfrvR47IpCM+hADOqW
+	 fngm/6eVS8jp4T93IcSEF46eGhpWvx3CS5nq+Gr3CuTLczvlnn5kwpSjJuz0tcaQcO
+	 A8UKT8OjBwJaCxWXaHdG3gykZrx4Cu9vufEJe0t63g7+CBnhb/NEhGkrtuOFy+Wdhb
+	 IHujTtco+R/xtMgRvq4mw7kywIzqioxgZ/27AqWSsVz7zLA7p4nlXlxpvkWZ7q04U5
+	 mHEJXntqlNDt7X8t3XhaiLuOYZKXZcTUv3WTUzxEyAEwezXKM8yXcQrFsi/8TT+acd
+	 O/yLS65LONKew==
+From: Vinod Koul <vkoul@kernel.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>, 
+ Wenbin Yao <quic_wenbyao@quicinc.com>, Qiang Yu <qiang.yu@oss.qualcomm.com>, 
+ Manivannan Sadhasivam <mani@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>
+In-Reply-To: <20250821-phy-qcom-qmp-pcie-nocsr-fix-v3-1-4898db0cc07c@linaro.org>
+References: <20250821-phy-qcom-qmp-pcie-nocsr-fix-v3-1-4898db0cc07c@linaro.org>
+Subject: Re: [PATCH v3] phy: qcom: qmp-pcie: Fix PHY initialization when
+ powered down by firmware
+Message-Id: <175674623951.175374.7267419073491468594.b4-ty@kernel.org>
+Date: Mon, 01 Sep 2025 22:33:59 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250523-topic-ipa_mem_dts-v1-4-f7aa94fac1ab@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
 
-On Fri, May 23, 2025 at 01:18:19AM +0200, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> As part of stepping away from crazy hardcoding in the driver, move
-> define the slice explicitly and pass it to the IPA node.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/sc7180.dtsi | 6 ++++++
->  1 file changed, 6 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> index 3afb69921be363bd35a996bc1d6f70ff007c6af8..84b032dc09d36e56eeaf182125cceb44e7333765 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-> @@ -1640,6 +1640,8 @@ ipa: ipa@1e40000 {
->  			qcom,smem-state-names = "ipa-clock-enabled-valid",
->  						"ipa-clock-enabled";
->  
-> +			sram = <&ipa_modem_tables>;
 
-Please resubmit the second half of this series, once sram is an accepted
-property.
-
-Thanks,
-Bjorn
-
-> +
->  			status = "disabled";
->  		};
->  
-> @@ -3535,6 +3537,10 @@ sram@14680000 {
->  
->  			ranges = <0 0 0x14680000 0x2e000>;
->  
-> +			ipa_modem_tables: modem-tables@28000 {
-> +				reg = <0x28000 0x2000>;
-> +			};
-> +
->  			pil-reloc@2a94c {
->  				compatible = "qcom,pil-reloc-info";
->  				reg = <0x2a94c 0xc8>;
+On Thu, 21 Aug 2025 10:01:47 +0200, Stephan Gerhold wrote:
+> Commit 0cc22f5a861c ("phy: qcom: qmp-pcie: Add PHY register retention
+> support") added support for using the "no_csr" reset to skip configuration
+> of the PHY if the init sequence was already applied by the boot firmware.
+> The expectation is that the PHY is only turned on/off by using the "no_csr"
+> reset, instead of powering it down and re-programming it after a full
+> reset.
 > 
-> -- 
-> 2.49.0
-> 
+> [...]
+
+Applied, thanks!
+
+[1/1] phy: qcom: qmp-pcie: Fix PHY initialization when powered down by firmware
+      commit: 6cb8c1f957f674ca20b7d7c96b1f1bb11b83b679
+
+Best regards,
+-- 
+~Vinod
+
+
 
