@@ -1,165 +1,135 @@
-Return-Path: <linux-arm-msm+bounces-71412-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71413-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73730B3E7D7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 16:51:25 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3FD09B3EAD3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 17:36:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 55DDB7ACD46
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 14:49:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0E90D3AF7A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 15:31:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4002630DEBE;
-	Mon,  1 Sep 2025 14:51:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CE13341AB7;
+	Mon,  1 Sep 2025 15:20:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="U6I6+Ffd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GXFrVX3g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EF3B34167B;
-	Mon,  1 Sep 2025 14:51:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C48334372;
+	Mon,  1 Sep 2025 15:20:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756738271; cv=none; b=HDregFQB0keeXvhGfGKOFVMuda96wqaVHJrmjj31/uRxun6Mq+Igt0nR00PK2vb9CrMURiLp2SJocrFD8pFrdO4w3/QjxH+cjV84Ask4BQh9r1a+WJKZpPSIItz53sZ6IIIJuHkOL7tdZl8bIULdv8uk6YYv+0ohgfI8MC9g7QA=
+	t=1756740049; cv=none; b=gB9e5r9QFibND6V1YzaPjllndm/o5hHQ5Tc7TPQvnGBGKuQ47U+tLGBguV8pE8UZ/nWdWLoI/YNpODPKYyT2tfdZkatTrNfuBWUzQQygai8pIf3+bogsfse6flXpPtIRHgxGbquvUe8DWMgECttG84mXehXQc0XsxsRrQU82jXg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756738271; c=relaxed/simple;
-	bh=HMfcWtZH4GfvP8ZQjqKKGaNEwZCreXFhbBtPKK8hH3I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=hxDoqNUtfUJ1hIbSNnoJhB2s+NcAFV5XsLYMnzFn7koIYmJhwSLU4r8hxdKXRaDotOLL6pHUgqd7Q7/XNVDGK6MBmEZ+hPZcByFqZ49gN20saModee2S4JDuNv/NxGgxHdsm1n0xJHhf1OnV0fWiWaijT5tGjHylT+orHy523QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=U6I6+Ffd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 581B4I7B013737;
-	Mon, 1 Sep 2025 14:50:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	WylkCM7GEVrZp/hwxRtLeGV36zbXgc2z6PnvbtJ5bTc=; b=U6I6+Ffd9KhhFhgg
-	aX76Nih1gnjMMXNYR8+C5ZtuND0JQaKvRrFC8nD3LOhWhy3rKgpglfZjbSERqmvD
-	KcXyVJB1xFYCaVD0eANfRHpkAk9GTBI60MfiKnJlbW0/Yq4Frd8+sNenqHtM/jZH
-	4MxXPefptHLKNdPnThRaHGbchXg9aaJtUWuExdCdhjr2XNm1VSXPbjHZkFca1yHh
-	8kH+PVJvaMOj1+ZGqnRfUv4f+EaP0e7GIBVO41Q1udRu0HrK4zy0jWRA4+jZk2Ml
-	WVg5ZyAYHhwZkyMefBgxlqDuwyVGUMbMaOMRAlIkBLQKTkYRKVKgb3kbqnGyAwlV
-	tpqWlA==
-Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8n2ys-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 01 Sep 2025 14:50:37 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 581Eoawx020499
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 1 Sep 2025 14:50:36 GMT
-Received: from [10.216.44.84] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 1 Sep
- 2025 07:50:31 -0700
-Message-ID: <0fb24c50-1f4f-4dd8-a3c7-4c84fd0bb7c1@quicinc.com>
-Date: Mon, 1 Sep 2025 20:20:29 +0530
+	s=arc-20240116; t=1756740049; c=relaxed/simple;
+	bh=fYYU8NMNLyVlLnO0IlrsfJJzJO/BBopDiQds5sD+5IE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=d286CR2tFb81j0b+iu4buvV22V8MXkw5ueBe4NseVqWjLkjaj8Yzaf6S+2S37aSAgEBZB1foaFs3s+E88VmSA/AZ1FoJdSiG0UpCSIsVrL1DZozVFf7jAoH+3xzqkxxUlN8RSSLd6I4dgMNW4c72MXY0nYWvqVvQZSC1xrhPiJE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GXFrVX3g; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87825C4CEF0;
+	Mon,  1 Sep 2025 15:20:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756740047;
+	bh=fYYU8NMNLyVlLnO0IlrsfJJzJO/BBopDiQds5sD+5IE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GXFrVX3gf/tcrem+lyBbwfdS6AHuCHPQF2/lq5E7UmoBLTnaPBMOwiLE5YhZPSyEq
+	 uswqR/b+n/8ZhYJ8bkJ6beLW/OMGHNouJc4fIWvPPJkRo3/CqZgdqgqYvJ03FZWxsM
+	 ceFhBIzOPJs8pR5VM4/eXOP772I+SNl8+B3F36xbiRjaVNV9/nNrQKRE7spJ6nMMCw
+	 nr0UJmyC2WonGC/h8bIngoF88Vlv1IU3XoEmFCYKIi1FmTs7/qD+H52yYZqABxiHri
+	 Zd+AbMrsQYN74WRR/haDxIMbZVs/Mwzy3ucow5Cxjv1pUS7gqW1zSAgtCtVwQOXmwk
+	 ZiAihGO1gGPVA==
+Received: by venus (Postfix, from userid 1000)
+	id 545A41801BA; Mon, 01 Sep 2025 17:20:45 +0200 (CEST)
+Date: Mon, 1 Sep 2025 17:20:45 +0200
+From: Sebastian Reichel <sre@kernel.org>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Hans de Goede <hansg@kernel.org>, Ilpo =?utf-8?B?SsOkcnZpbmVu?= <ilpo.jarvinen@linux.intel.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Mark Pearson <mpearson-lenovo@squebb.ca>, "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+	Henrique de Moraes Holschuh <hmh@hmh.eng.br>, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	platform-driver-x86@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/3] platform: arm64: thinkpad-t14s-ec: new driver
+Message-ID: <wyv3ounark6jccvhj4vp5qxgmn4bleq6hsqinr4s6r32kld4xp@lhbmetuhydns>
+References: <20250831-thinkpad-t14s-ec-v1-0-6e06a07afe0f@collabora.com>
+ <20250831-thinkpad-t14s-ec-v1-2-6e06a07afe0f@collabora.com>
+ <899b2e79-572d-44f3-8dff-0d301f254b1a@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 4/5] arm64: dts: qcom: sm8650: Enable MCQ support for
- UFS controller
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Manivannan Sadhasivam
-	<mani@kernel.org>
-CC: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <James.Bottomley@hansenpartnership.com>,
-        <martin.petersen@oracle.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>
-References: <20250821112403.12078-1-quic_rdwivedi@quicinc.com>
- <20250821112403.12078-5-quic_rdwivedi@quicinc.com>
- <eeecc7a3-8ce3-4cfd-8d40-988736fc0c59@kernel.org>
- <34aqaxgkykyhenrjfj3vrarin2c3uebgfaya7rxi7d5p5skhom@ie4gitcw36mr>
- <ba227580-add8-4ea8-a973-c39083301e67@kernel.org>
- <aonf4hobz6b3a75lwiblu44gxvae4hnp2mcnh5sqlyzo6k7hwe@a5toymspbkdy>
- <b049c4be-f3c1-49e4-8737-c29c52185e60@kernel.org>
-Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <b049c4be-f3c1-49e4-8737-c29c52185e60@kernel.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: 1Az8Emd4kY7JrAF6MIzkayett6GvseOy
-X-Proofpoint-GUID: 1Az8Emd4kY7JrAF6MIzkayett6GvseOy
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfXzTCkh25E7X7T
- VQcMM6bincj015S4W+/aheJUuVxgHnBwRv8M4N+1EY7U/ML7AwQGQUlXhOmFJzxOqqsiUTFC28G
- sXRQ+cvXdvKFmV7unLCeXOZpMScuOYLpYuCF8K7VQ53WCmGEn+fnH2W4RjQbGFMb2uEiIUuBuIE
- KRUWiyhFlDM7NhLNFAw0rqefJgStjpgF7KHKerVkaA850mihnr4mrIMbd0xDimuTkfIRYKQ3VCi
- P/WnCcj1NQDd+lzLZu9F5pjOIpxvLpaYdybogeX0qdfNt2aZ2kIfLL9Bx1OOZAZMDGDFyd94m4F
- 4tXSQfdflrtazmJCUzbWpcJrh2qkv28DRwkiEpXRZJiSaDaU4pDhaM6DB5NqcSJHClXqoRH0atX
- J1xeTLJ+
-X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b5b2bd cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
- a=WDwdR3GTf5Sq1hJQ3NcA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-01_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <899b2e79-572d-44f3-8dff-0d301f254b1a@linaro.org>
 
+Hello Bryan,
 
-
-On 9/1/2025 1:35 PM, Krzysztof Kozlowski wrote:
-> On 01/09/2025 06:15, Manivannan Sadhasivam wrote:
->>>>>
->>>>> I don't understand why you combine DTS patch into UFS patchset. This
->>>>> creates impression of dependent work, which would be a trouble for merging.
->>>>>
->>>>
->>>> What trouble? Even if the DTS depends on the driver/bindings change, can't it
->>>> still go through a different tree for the same cycle? It happened previously as
->>>
->>> It all depends on sort of dependency.
->>>
->>>> well, unless the rule changed now.
->>>
->>> No, the point is that there is absolutely nothing relevant between the
->>> DTS and drivers here. Combining unrelated patches, completely different
->>> ones, targeting different subsystems into one patchset was always a
->>> mistake. This makes only life of maintainers more difficult, for no gain.
->>>
->>
->> Ok. Since patch 2 is just a refactoring, it should not be required for enabling
->> MCQ. But it is not clear if that is the case.
->>
->> @Ram/Nitin: Please confirm if MCQ can be enabled without patch 2. If yes, then
->> post the DTS separately, otherwise, you need to rewrite the commit message of
->> patch 2 to state it explicitly.
+On Mon, Sep 01, 2025 at 09:43:11AM +0100, Bryan O'Donoghue wrote:
+> On 31/08/2025 22:28, Sebastian Reichel wrote:
+> > Introduce EC driver for the ThinkPad T14s Gen6 Snapdragon, which
+> > is in theory compatible with ThinkPad ACPI. On Linux the system
+> > is booted with device tree, which is not supported by the ThinkPad
+> > ACPI driver. Also most of the hardware compatibility is handled
+> > via ACPI tables, which are obviously not used when booting via
+> > device tree. Thus adding DT compatibility to the existing driver
+> > is not worth it (almost no code sharing).
 > 
-> Dependency of DTS on driver would be another issue and in any case must
-> be clearly documented, not implicit via patch order.
+> What is the name of that driver, you should name it in your commit
+> log. Lenovo WMI ?
 
-Hi Krzysztof/Mani,
+The existing driver is known as "ThinkPad ACPI" and thus already
+referenced in the commit message. You can find it here:
 
-We've verified that the driver and DTS function correctly when tested 
-independently. We Will submit separate patches for the driver and DTS.
+drivers/platform/x86/lenovo/thinkpad_acpi.c
 
-Regards,
-Nitin
+Feel free to suggest a specific wording that I can take over, which
+would have helped you to figure that out :)
 
-
-
-
+> [...]
+> > +	ret = __i2c_transfer(client->adapter, &request, 1);
+> > +	if (ret < 0)
+> > +		goto out;
 > 
-> Best regards,
-> Krzysztof
-> 
+> I realise this is your coding style but suggest newline after these gotos.
 
+I will look into using that style in v2 throughout the file.
+
+> [...]
+> > +static int thinkpad_t14s_led_blink_set(struct led_classdev *led_cdev,
+> > +				       unsigned long *delay_on,
+> > +				       unsigned long *delay_off)
+> > +{
+> > +	struct thinkpad_t14s_ec_led_classdev *led = container_of(led_cdev,
+> > +			struct thinkpad_t14s_ec_led_classdev, led_classdev);
+> > +
+> > +	/* Can we choose the flash rate? */
+> > +	if (*delay_on == 0 && *delay_off == 0) {
+> > +		/* yes. set them to the hardware blink rate (1 Hz) */
+> > +		*delay_on = 500; /* ms */
+> > +		*delay_off = 500; /* ms */
+> > +	} else if ((*delay_on != 500) || (*delay_off != 500))
+> > +		return -EINVAL;
+> 
+> Those 500s should probably be defines
+
+Ack.
+
+> Aside from those few nits, great to see someone take this on, glorious in
+> fact.
+> 
+> I don't have this particular hardware myself so I can't test but:
+> 
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+
+Thanks for the review.
+
+Greetings,
+
+-- Sebastian
 
