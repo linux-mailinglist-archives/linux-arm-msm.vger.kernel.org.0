@@ -1,205 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-71380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA700B3DE8F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 11:31:25 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1BCCB3DF17
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 11:55:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 055A43B59A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 09:30:33 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A063B17D192
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  1 Sep 2025 09:55:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7064530BF63;
-	Mon,  1 Sep 2025 09:28:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DrQ86so5"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BED86301493;
+	Mon,  1 Sep 2025 09:55:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 238712FB628;
-	Mon,  1 Sep 2025 09:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21872277813;
+	Mon,  1 Sep 2025 09:55:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756718911; cv=none; b=EIEwQpykWvRBf7ChkH8SZ1uv3T5+4KdGtqY+3QRUsoIV1stMBoAa9exjTiwt5lk0W+zAGur44C4SNMDW7JM9td6KrQlPysPj6MSzAqBo4McCzvFN7c93otFkjzLnoeIBCjufzj2DoZMtTnHt/soU4kkORKCXVaJoLLSudkI1gNo=
+	t=1756720538; cv=none; b=Tsliqz45cZjkZgGGpSU8HVZIUxPFf7ZVpn/h1yBd21SymK7hztyJndE9PBzIPXxR8gOOLKv9UAq96vuQ4Vt+q4AY0IJkGqNoerjv5WOuglB/2huVIs9Vbg0306xOYZaQWgCeRTNCAoFNmQYacpIL9X+rLxAIShGytVxyQF2hphk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756718911; c=relaxed/simple;
-	bh=shaElPSOObJfmkZY5LcTmt3dvO0ZWW/U6309J45jo38=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bY05yh+d0jq3lkJc+FjC/9mubtO0sEpNIQpfj9eTrDCQDmz+ZGU5jPH2os2fkF+qcLW8wx3hxkBPcaM3/PpVToAhqtIjXUSOzmq1Ilhvc15l46Ia8j5EibhtAIkSqjGrAHWoUmS0B1+DPOCoIE+M9gKfFxB6XCZ6Mji1QGm/AwY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DrQ86so5; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A83F2C4CEF0;
-	Mon,  1 Sep 2025 09:28:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756718910;
-	bh=shaElPSOObJfmkZY5LcTmt3dvO0ZWW/U6309J45jo38=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=DrQ86so5j2ATBrGJSrkZA1SwnOTQVXVGj0BfVcU29yQ7YLX6a/D/utPuco4g1UCbr
-	 qQdlP1U40hLWhipNtw9Vi1ncwBPsLcFqDCj9jOFw/orQTZBcDfSV06hbaci1d87WB+
-	 pG2N0ZlrXuNdqYjpC6B8eLSgbZD2SwMPLRdbNxAFalRawBRXpTIlH+abGRiRCm7Bn9
-	 cPQz7tx4829tpuYp0tz0YEW+ht80uFYUFYB7pHUbbbtBIP5Q0VBmGwFR4KR5gWUbCI
-	 /tg0gMy60kTEbc7fVgCKjBD8ick3A6xKmmAFGbqLqhstrsm/9rjlIBd1554mIoU3QU
-	 BK3zkVDcvrXvg==
-Message-ID: <aec3629c-27a0-49d9-9fcf-5922b0f9035f@kernel.org>
-Date: Mon, 1 Sep 2025 11:28:24 +0200
+	s=arc-20240116; t=1756720538; c=relaxed/simple;
+	bh=ZHCWs4HH+c5lN4IlE9gqTWg9pmmhgAFoeTj2IWPQWHQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gP3rpIjhpMrjmvgT8TeP5SiSIUxN04fAcwYIRwuhiTtwe95wEIkJ9cZbquW/1OsWlzJZ+XhKH1Kvoneq8gSmzX+i5csHp+l9WsKpEF2ZNyTUcGkLBJfzJvjO/MfvRcfrFEErUn+b2ju5TBHv9tRYQj5qHhaSOb2wn8qawr/Fdhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7e86faa158fso433481885a.1;
+        Mon, 01 Sep 2025 02:55:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756720536; x=1757325336;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5tFy+S32zcH8SOQI+WY2rqVzMFSU7CQi//EUuweLF5I=;
+        b=gkgVRwmTvrHY8QjA24Ae5C0EU6BTXQJ4h83NWkwEJv3qr7ZdZrzvKtrdxEJqQJy8Op
+         y6DgfdGRSQBoMfTkfyJxfqoVrUfBCG2hLXKq8YhJorvSPrhgaHeARofrUxHmSxRPqzWm
+         VuWGjx9dUVzde0HzHmnR7vVJzJtAmfLEoyKDPgk1YNOYUdTifQ3RZ40LOLdShW0dyhtL
+         ayU0eR76FlL6baN1derAx20KU5vkrddPZ4FWQlSzma7r1bfpJBoWh1JzVRuquwzmUjjF
+         sJzpRQfoJCL51DIvr9fOkduFpkhkLOqIJn0xQvsG7mb+SgBen7eaLY0bm8pm4aJK5cE0
+         dlsA==
+X-Forwarded-Encrypted: i=1; AJvYcCVM69MgPxyoR5Ut5aeWygoHr2XUIaQDJwu1fyTWaibj5wv3J0XXzx7sim4+tW69urS9w2kcpJkq8A==@vger.kernel.org, AJvYcCVbL6OrZIOvBxOjnR+pyPDujq/LoDpLxHhzNZ9oD/DY7jng2U9a8i37TUz8/BYT7beZOHT2EmL5UPAaXQ==@vger.kernel.org, AJvYcCVdop25MYNDUoYyn0qe2IPO/jihXUygnuWkDkWkMq5JD62Wl029HYSBB6cg+A9EVkjdu68ZsFZ80+CCHbMSiAP/qyI=@vger.kernel.org, AJvYcCVeqjHQ21KWXaPYHKnsy/aryWgyEAfHB8rWCG3j38KgkuJvKcoht4IkRS8fC7fby/+h/9MTLfFeXfgnFUTvJA==@vger.kernel.org, AJvYcCWaHvinxtxPdxoeffoboUjY4hchGV/xRfqRPc6USd0Op9t0swuHYuuI955q07VPWXH1OuGRaByyjdBPbH3g@vger.kernel.org, AJvYcCXSVMZ7HMvDMxhqmun1tiiRk9p8fp7hXonWnCXu9vXJAGIOMHbXQpSz2MayBL6w2M1/jCGfK1+lpjaRDexarHk4K70=@vger.kernel.org, AJvYcCXot2odj62uBzP9nx/PMNOiRePPiFxnvNANdVQVRz8kMJBtZBXqH7sTJUaBJZxYkUnwV3l70OKLZM9N@vger.kernel.org
+X-Gm-Message-State: AOJu0YwiWOitpcdaO9ZiOGO1JFv1SDQ3Da8V1V6FvQgxtCo+iwWvtksw
+	UrNjJIWy5w6UkJ45fRVkeXKRkDNizN1vnUK2QtYMJdRZkPcXjhFTwOlj2UWANFcR
+X-Gm-Gg: ASbGnctTlLPATc09KAlNjicABySP6ryuDvuUDlOlvSOc3gNXPynQvjTlaN01aabJy9p
+	l7Bn0OCZGVCtNRN5mOxmi0XdM6jWYAdblhQlwJ9QWP8WZR0TUDXZkHSMstxgBr8I6RmZBcRIFBp
+	cxT+Niw8ADiVKobPVbQuCRZ4ZkUVRaONb7p5RojucufCT31jBSfr8YLWRueYqdqKhEVh4uYRE+O
+	T6COdIlMjXpGdFseIQxUDXohyXdfqVPyFXn1q+e+ZE6kaktAbOT/lsMK7Idimd//aFwDmFuERc3
+	wo6Fl1Nwby6OKNDHeX7hXDklTWPZQE8Cen1aiuhBEgNBx2E1Wp3MCV02/ZYfbowMt6wzZMqJW93
+	kAunp35i02klmrThHDPFPeRUoIQfrzXFjpmr2h7wJNQvFQJNbFX69Mj4HC7sU9uN1
+X-Google-Smtp-Source: AGHT+IF8wII5eWZgQBadnO5DQfaiFS5/z1JMcEs8d28tEnWe/M9RrAxpKwKDZsxBK/TMzbXJ9H2a6w==
+X-Received: by 2002:a05:620a:46a5:b0:7e6:81cc:6999 with SMTP id af79cd13be357-7fed6bab7f7mr818725185a.32.1756720535666;
+        Mon, 01 Sep 2025 02:55:35 -0700 (PDT)
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com. [209.85.222.181])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7fc1654744csm641029085a.70.2025.09.01.02.55.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 01 Sep 2025 02:55:35 -0700 (PDT)
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7e86faa158fso433481385a.1;
+        Mon, 01 Sep 2025 02:55:35 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUXw615kq5XrGvYFkU1BLhtLw4rGwyHzEv7Z2H3SDkwpe43pjhT1RoyPC+thz/DSHqKsfDStgLYH15WArsUpisQZhM=@vger.kernel.org, AJvYcCV5VrtR3uT/x1JzzMIDprdcFs+obhmjjUdj3elf9JcRU1W183Gqu5gkFqUcQqUC/6SAZb62InEUgIgvoQ==@vger.kernel.org, AJvYcCVoIuidq2GYFe0raAPkO6C3zClF02UgpIj/4qPAeZS3K9JKMq9b0JnjQlIXXPQfPYZFS2sjjo+6k3kgG+CEdg==@vger.kernel.org, AJvYcCWF3dvjLB2rAkX28vi0foTXvMYvCBz+56BvqDHySa5EchIKDcjFC3bAy8eX1QwFOZijNt4/KBwMsuKa6a1O@vger.kernel.org, AJvYcCWIYremoaJEEbaaotkhJhxiTdgpTdsfQ33n6yRqVwUsh0i3FKKrW1RblL2LBZxVVQt8j2u+FzfnFw==@vger.kernel.org, AJvYcCWM62SW2FvpqbErLI00vjtChxU5iFI+2NeKrUPoWU/RhLuSS/zraz7DTci1AN6hGUabgfl1V+XycdKZ@vger.kernel.org, AJvYcCWxlejoKbpjStSOSvBW076S1QroRHDeTDl5sWwhSR+Goz3va+z4XuPlHcF2HZUzASRDPGH+4QErwLfbyx40rRchMdg=@vger.kernel.org
+X-Received: by 2002:a05:6102:5e8e:b0:50d:feb0:316e with SMTP id
+ ada2fe7eead31-52aeb7798e1mr2104974137.2.1756720196368; Mon, 01 Sep 2025
+ 02:49:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] dt-bindings: platform: Add Lenovo Thinkpad T14s EC
-To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
- =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Mark Pearson <mpearson-lenovo@squebb.ca>
-Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>,
- Henrique de Moraes Holschuh <hmh@hmh.eng.br>, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250831-thinkpad-t14s-ec-v1-0-6e06a07afe0f@collabora.com>
- <20250831-thinkpad-t14s-ec-v1-1-6e06a07afe0f@collabora.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250831-thinkpad-t14s-ec-v1-1-6e06a07afe0f@collabora.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+ <1907e1c7-2b15-4729-8497-a7e6f0526366@kernel.org> <aKhVVJPEPxCoKKjI@x1>
+ <4d31df9e-62c9-4988-9301-2911ff7de229@kernel.org> <aKhr8NYhei59At0s@x1> <7c6cc42c-fc76-4300-b0d2-8dabf54cf337@kernel.org>
+In-Reply-To: <7c6cc42c-fc76-4300-b0d2-8dabf54cf337@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Mon, 1 Sep 2025 11:49:45 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdUB4QGBaMk5r5eNRCPriUWAY+LBE2C7kVEkE9eCNE1TUA@mail.gmail.com>
+X-Gm-Features: Ac12FXwQn8nZWuX__OUteos14KQ8Ceq7TOY9AfEwCR3rwgzCn6YxJiejdZ6ywp8
+Message-ID: <CAMuHMdUB4QGBaMk5r5eNRCPriUWAY+LBE2C7kVEkE9eCNE1TUA@mail.gmail.com>
+Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated round_rate()
+ to determine_rate()
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Brian Masney <bmasney@redhat.com>, Michael Turquette <mturquette@baylibre.com>, 
+	Stephen Boyd <sboyd@kernel.org>, Sudeep Holla <sudeep.holla@arm.com>, 
+	Cristian Marussi <cristian.marussi@arm.com>, Chen Wang <unicorn_wang@outlook.com>, 
+	Inochi Amaoto <inochiama@gmail.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, 
+	Alexandre Belloni <alexandre.belloni@bootlin.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+	Paul Cercueil <paul@crapouillou.net>, Keguang Zhang <keguang.zhang@gmail.com>, 
+	Taichi Sugaya <sugaya.taichi@socionext.com>, Takao Orito <orito.takao@socionext.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, Fabio Estevam <festevam@gmail.com>, 
+	Jacky Huang <ychuang3@nuvoton.com>, Shan-Chun Hung <schung@nuvoton.com>, 
+	Vladimir Zapolskiy <vz@mleia.com>, Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>, 
+	Paul Walmsley <paul.walmsley@sifive.com>, Samuel Holland <samuel.holland@sifive.com>, 
+	Yixun Lan <dlan@gentoo.org>, Steen Hegelund <Steen.Hegelund@microchip.com>, 
+	Daniel Machon <daniel.machon@microchip.com>, UNGLinuxDriver@microchip.com, 
+	Orson Zhai <orsonzhai@gmail.com>, Baolin Wang <baolin.wang@linux.alibaba.com>, 
+	Chunyan Zhang <zhang.lyra@gmail.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
+	Alexandre Torgue <alexandre.torgue@foss.st.com>, Michal Simek <michal.simek@amd.com>, 
+	Maxime Ripard <mripard@kernel.org>, =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>, 
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>, Neal Gompa <neal@gompa.dev>, 
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>, Ray Jui <rjui@broadcom.com>, 
+	Scott Branden <sbranden@broadcom.com>, 
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, Daniel Palmer <daniel@thingy.jp>, 
+	Romain Perier <romain.perier@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
+	Gregory Clement <gregory.clement@bootlin.com>, 
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Geert Uytterhoeven <geert+renesas@glider.be>, Heiko Stuebner <heiko@sntech.de>, 
+	Andrea della Porta <andrea.porta@suse.com>, Sylwester Nawrocki <s.nawrocki@samsung.com>, 
+	Chanwoo Choi <cw00.choi@samsung.com>, Alim Akhtar <alim.akhtar@samsung.com>, 
+	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>, 
+	Ulf Hansson <ulf.hansson@linaro.org>, Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+	Alex Helms <alexander.helms.jy@renesas.com>, Linus Walleij <linus.walleij@linaro.org>, 
+	Liviu Dudau <liviu.dudau@arm.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>, linux-clk@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, arm-scmi@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, sophgo@lists.linux.dev, 
+	linux-mips@vger.kernel.org, imx@lists.linux.dev, 
+	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
+	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
+	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
+	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 
-On 31/08/2025 23:28, Sebastian Reichel wrote:
-> Add binding for the EC found in the Thinkpad T14s Gen6 Snapdragon,
-> which is based on the Qualcomm X1 Elite. Some of the system LEDs
-> and extra keys are only accessible via the EC.
-> 
-> Signed-off-by: Sebastian Reichel <sre@kernel.org>
-> ---
->  .../bindings/platform/lenovo,thinkpad-t14s-ec.yaml | 49 ++++++++++++++++++++++
+On Sat, 23 Aug 2025 at 18:43, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+> On 22/08/2025 15:09, Brian Masney wrote:
+> > On Fri, Aug 22, 2025 at 02:23:50PM +0200, Krzysztof Kozlowski wrote:
+> >> On 22/08/2025 13:32, Brian Masney wrote:
+> >>> 7 of the 114 patches in this series needs a v2 with a minor fix. I see
+> >>> several paths forward to merging this. It's ultimately up to Stephen how
+> >>> he wants to proceed.
+> >>>
+> >>> - I send Stephen a PULL request with all of these patches with the minor
+> >>>   cleanups to the 7 patches. Depending on the timing, Stephen can merge
+> >>>   the other work first, and I deal with cleaning up the merge conflicts.
+> >>>   Or he can if he prefers to instead.
+> >>>
+> >>> - Stephen applies everyone else's work first to his tree, and then the
+> >>>   good 107 patches in this series. He skips anything that doesn't apply
+> >>>   due to other people's work and I follow up with a smaller series.
+> >>
+> >> Both cause cross tree merge conflicts. Anyway, please document clearly
+> >> the dependencies between patches.
+> >
+> > This series only touches drivers/clk, so it shouldn't cause any issues
+> > with other subsystems, unless there's a topic branch somewhere, or I'm
+> > missing something?
+>
+> Individual maintainers handle subdirectories.
 
-Please place it in embedded-controller. I moved there all ECs.
+FWI(still)W, I have taken the Renesas SoC-specific patches through
+the renesas-clk tree...
 
->  1 file changed, 49 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/platform/lenovo,thinkpad-t14s-ec.yaml b/Documentation/devicetree/bindings/platform/lenovo,thinkpad-t14s-ec.yaml
-> new file mode 100644
-> index 0000000000000000000000000000000000000000..bab20df2d9ede9a3cb0359944b26b3d18ff7d9b8
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/platform/lenovo,thinkpad-t14s-ec.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/platform/lenovo,thinkpad-t14s-ec.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Lenovo Thinkpad T14s Embedded Controller.
+> > There are some drivers under drivers/clk/ where there is an entry in the
+> > MAINTAINERS file that's not Stephen, although it wasn't clear to me if
+> > all of those people will send PULL requests to Stephen. I described on
+> > the cover how how the series was broken up.
+> >
+> >   - Patches 4-70 are for drivers where there is no clk submaintainer
+> >   - Patches 71-110 are for drivers where this is an entry in MAINTAINERS
+> >     (for drivers/clk)
+>
+> It's hidden between multiple other descriptions of patches, so I really
+> would not think that this means that it is okay by individual maintainer
+> to take the patch.
+>
+> This really should be the one most important part of the cover letter
+> for something like this.
+> ..
 
-Drop full stop, titles never have them.
+It was indeed rather implicit:
 
-> +
-> +maintainers:
-> +  - Sebastian Reichel <sre@kernel.org>
-> +
-> +description:
-> +  The Qualcomm Snapdragon-based Lenovo Thinkpad T14s has an Embedded Controller
-> +  (EC) which handles things such as keyboard backlight, LEDs or non-standard keys.
+   "Once all of my conversion patches across the various trees in the kernel
+    have been merged, I will post a small series that removes the
+    round_rate() op from the clk core and the documentation. Here's the
+    other patch series that are currently in flight that need to be merged
+    before we can remove round_rate() from the core. [...]"
 
-Please wrap at 80.
+Gr{oetje,eeting}s,
 
-> +  This binding describes the interface, on an I2C bus, to this EC.
+                        Geert
 
-Drop, or just describe the hardware, not binding.
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-> +
-> +properties:
-> +  compatible:
-> +    const: lenovo,thinkpad-t14s-ec
-> +
-> +  reg:
-> +    const: 0x28
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |+
-> +    #include <dt-bindings/interrupt-controller/irq.h>
-> +    i2c1 {
-
-i2c
-
-> +        clock-frequency = <400000>;
-
-Drop
-
-> +
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        embedded-controller@28 {
-> +            compatible = "lenovo,thinkpad-t14s-ec";
-> +            reg = <0x28>;
-> +            interrupts-extended = <&tlmm 66 IRQ_TYPE_LEVEL_LOW>;
-> +        };
-> +    };
-> +...
-> 
-
-
-Best regards,
-Krzysztof
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
 
