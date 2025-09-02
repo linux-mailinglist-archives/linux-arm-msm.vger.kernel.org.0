@@ -1,59 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-71510-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71511-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0387B3F857
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 10:29:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 32188B3F8A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 10:36:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 584CF189B75D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 08:29:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8ADED3B3E15
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 08:36:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C99412E88AE;
-	Tue,  2 Sep 2025 08:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 128F42EACFE;
+	Tue,  2 Sep 2025 08:33:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RUnXee45"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UOfxfH01"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8213D987;
-	Tue,  2 Sep 2025 08:29:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFB42EACF7;
+	Tue,  2 Sep 2025 08:33:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756801759; cv=none; b=pOHoVeohXEbcD7+PFDKE9uIx5EQ5m7zO8gtFMeadyD6ARGLs2kSEPtGTcBwj5wxxQ+ixKckztMHWzPuDePUbG6EKykCJD0UwhDQHS3xNkTbC5zLVpJSmSWfU4Im6Af4wGX40Z5+iWyC7/6zLvQbuAXbxU+SgRYYEzoyDRAjF5/Y=
+	t=1756802025; cv=none; b=kniS5FzNMeBk6AMvGgqLendRnepswlO/Sb0QX0tRaNQuZsHWMce8kTT7tLckicUlU9GdUUAnK3spcntU3N9FqOqykd8qLPXAbxRg2JxVhcgny4P4Tu6uNgPdB7QfW4zzV6dCqlPaQL8AvAn5t/BbT0B6t1SHi/u6OrrvqBmK9uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756801759; c=relaxed/simple;
-	bh=TI8iWiXPUcMsp1Yq4V7ng0SNQZgecLWmnTLlRDdrUAA=;
+	s=arc-20240116; t=1756802025; c=relaxed/simple;
+	bh=12zafy0/ryRdHHOWmOb3bmG4FdXNuAu84Y6LNCYxwbI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HMXwccuSF7ZYAVQVXq9UbmVtgeZx5JtngIdqxbogup82FRzE38fjqAc1TqufKbHNkb0xscJJJxbjg4e30CgPwAoyfJJkH86QeyT8T4pDP2XJGwRvpRPcUmasFgW/XOqyAJSV5g+QRYd2eHrZvwuMKfMCCIEYDVpD/+eGX2gyRHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RUnXee45; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E0BC4CEED;
-	Tue,  2 Sep 2025 08:29:18 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xo8c8q1zs9rZMar65IZJwCmWoWtiZCTAKTkRYBXKtXo4nmi0hc9LXY8Wql7RZ0XWsYS+CtgT1rvaHk6b60/gq39LJxwaHmXCdje9UHkhbODg+esvpSeyamE+4F74OT/HTgwiWlfbW6BLqMhvn1lDGzN7q1lYLEW5gAvM9WIZyyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UOfxfH01; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A31C4CEF7;
+	Tue,  2 Sep 2025 08:33:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756801759;
-	bh=TI8iWiXPUcMsp1Yq4V7ng0SNQZgecLWmnTLlRDdrUAA=;
+	s=k20201202; t=1756802024;
+	bh=12zafy0/ryRdHHOWmOb3bmG4FdXNuAu84Y6LNCYxwbI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RUnXee45Km6xClRAZTwN3sRjENamYZ9KGX5sNdIU5whvk9R4xxDvDF63XxVGMZRLj
-	 SE29c2F5wMc/T8oFQ9R2txEAnccp2MAu4jAvWuecS4Jgls8B0n5sgECxGZ2upQgld6
-	 2ryRVnvrbRU/cSpNGK5bp/4sfE5fKabw5M7IHVdXthCd+VQhFktQlFK7nPy0xtkydD
-	 EcNsvcmajRwqC5sk1r77X2aRtmRL2jsHi5fS6gCKxhgQyhyK7tgPr21sJt4WaVMCPb
-	 fZXgVg6dOkieSOpteNEG7WZfmyNisHRzcECS73+b8uBhpJ+lpwTXGLSmk5ZcyitWY9
-	 5LOp6YRXJjObQ==
-Date: Tue, 2 Sep 2025 10:29:16 +0200
+	b=UOfxfH01HPfZ8s0zoXxVR/MSDHgVC2Kwc2B1R3OaoaQqEfnyIS1bZ1t/icICMknek
+	 F6BZDWAtBt0vwqtZb1/1IxzGR6koJ7Xp/LFo3NFQZ2ojfZ+y61yxBQS7o9nh6ugEjR
+	 0c0kCyFq70hpnZTGR4Al7j78ktrfdUmgujvpvjsbj1a5JHd3Mlozv5wGC5NzTALSiX
+	 /au1pG0RZ8zPVtibc9EDTVIqJGTCmlqr1J1a1WcPK2gVD9o63M4mEx0Sv8TfzACtby
+	 LjP0u+2tY8FtcOl1m+yckLNKrsL2Cw8a8dA3V8pvkRMkmW/BtuVmdRMvdzKiUwni6v
+	 b3f4acYXEQB1A==
+Date: Tue, 2 Sep 2025 10:33:42 +0200
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Cc: Vikash Garodia <quic_vgarodia@quicinc.com>, 
-	Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH 2/2] Documentation: media: update Dikshita Agarwal's
- email address
-Message-ID: <20250902-space-sawfly-of-protection-ffdb06@kuoka>
-References: <20250901-update-email-v1-0-8fd49d58c0e5@oss.qualcomm.com>
- <20250901-update-email-v1-2-8fd49d58c0e5@oss.qualcomm.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, vkoul@kernel.org, 
+	conor+dt@kernel.org, srini@kernel.org, yung-chuan.liao@linux.intel.com, 
+	pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-sound@vger.kernel.org
+Subject: Re: [PATCH 3/7] dt-bindings: soundwire: qcom: deprecate
+ qcom,din/out-ports
+Message-ID: <20250902-ubiquitous-screeching-parrot-4b967d@kuoka>
+References: <20250901195037.47156-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20250901195037.47156-4-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,23 +61,21 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250901-update-email-v1-2-8fd49d58c0e5@oss.qualcomm.com>
+In-Reply-To: <20250901195037.47156-4-srinivas.kandagatla@oss.qualcomm.com>
 
-On Mon, Sep 01, 2025 at 01:03:29PM +0530, Dikshita Agarwal wrote:
-> Replace quic_dikshita@quicinc.com by dikshita.agarwal@oss.qualcomm.com.
+On Mon, Sep 01, 2025 at 08:50:33PM +0100, Srinivas Kandagatla wrote:
+> Number of input and output ports can be dynamically read from the
+> controller registers, getting this value from Device Tree is redundant
+> and potentially lead to bugs.
 > 
-> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> Mark these two properties as deprecated in device tree bindings.
+> 
+> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 > ---
->  Documentation/devicetree/bindings/media/qcom,sm8550-iris.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
+>  .../devicetree/bindings/soundwire/qcom,soundwire.yaml      | 7 ++-----
+>  1 file changed, 2 insertions(+), 5 deletions(-)
 
-Please use subject prefixes matching the subsystem. You can get them for
-example with 'git log --oneline -- DIRECTORY_OR_FILE' on the directory
-your patch is touching. For bindings, the preferred subjects are
-explained here:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
