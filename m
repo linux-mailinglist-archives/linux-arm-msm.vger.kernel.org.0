@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-71497-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71498-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0D6A2B3F50D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 08:12:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E9CB0B3F53C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 08:18:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7902B189E04D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 06:12:34 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A00183B8B17
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 06:18:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E79AB2E282B;
-	Tue,  2 Sep 2025 06:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EA2F2E3B1C;
+	Tue,  2 Sep 2025 06:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="S7RttNuH"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f4SpTO5H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78001865FA;
-	Tue,  2 Sep 2025 06:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9212E3B12;
+	Tue,  2 Sep 2025 06:18:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756793528; cv=none; b=CWdxlSzPUOdcmZMOGLtVu0/haUbmAbqgPoMePmAV9ddDcxcbhoQgJp8XtpgIyclZ/kzw1cveHX7VQYZgVI6Zf38YzcEeg/mQq/qMx6v/+VpiF1CtyTrNGiXNa1lYctM/nlR9FqsgAIOSMbuq8nQtf7wW2FASJjDjY2/eicdT27s=
+	t=1756793899; cv=none; b=K4K8bKl4IXqs7b7frKAa4U3W3O5ZNqX5WhKsT5xLctr2ucwIsa+r5OqjquC9N4YCInj8FUuzZF2pdWa/jzl9ooICONn4kuuj2DxH6TZQejl087WYbURu0dnaWg5hvOv1/k629tG0VwxqZEC2m6E6d1+rnAu7oxzs3H9/8RmX468=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756793528; c=relaxed/simple;
-	bh=WHpET5CPM65c2mG2ZilHs/KpUufXou2ZaaMlzfygKF4=;
+	s=arc-20240116; t=1756793899; c=relaxed/simple;
+	bh=fCCieUa2bOrYzWEYwRiPHXPLqo498Xg5NLm++31//28=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H6ZopYe0ROS0EhcWaCsoeW9B+Foc1Y+M2N+mNK0HcHHzjCeBYWfYIAF5AWfOnAZ1PAhdOPGeFlHkN+vYiBfQi8/xbr7LTolxaoNDMaq6I5kooP8hj1yBTb8zWG+uRXFpFC/kph/KwMAu6CdxnZE18frl6JyAR9kjSFMyQkTKGGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=S7RttNuH; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF7BC4CEED;
-	Tue,  2 Sep 2025 06:12:04 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=NbndypuOLsMNdhiLK73782n7QLVOrSRcXel77+BZ3/1Vs1vV052pu8EdZY8TVNAYIl4nfEGXFggKLNXKvjsgO4N+6lfuyuDSBX2WGR3LNuxSiZFChiSV0t905eYpmOsfe9MfcC6MtCmvvIVcO+oW9Trvy7wO6BLG0EhkeuzAjXc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f4SpTO5H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B427BC4CEF6;
+	Tue,  2 Sep 2025 06:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756793528;
-	bh=WHpET5CPM65c2mG2ZilHs/KpUufXou2ZaaMlzfygKF4=;
+	s=k20201202; t=1756793898;
+	bh=fCCieUa2bOrYzWEYwRiPHXPLqo498Xg5NLm++31//28=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=S7RttNuHqhWajDoSd5i6k1zpzaSzBqmZFR8djPBMAqotaTeKVjYaVyExTOJytcNmL
-	 zismXcWn53pQ4bW219bay2CXcd1j6F1oPpmepEDsU4z/3DNiRmI6iOlEvlCZZeWZIL
-	 O/EY30K53M+biCe0GhaucVGQ6tH0Ig5Pilp4DMxWbF4lygiMdaHYipgh62yWHNTTQ/
-	 HDPZAQ46VyjlItlhbKvbO3Pzjt1vMpim7QfvCAlinw+631DWThh5h62Bjx9NxkzVTy
-	 sRVl2mfA8wtM91jvG5swzAU6HHlGij46A09buVXgnQylnyGu/cPPhWJtRXyz6aX7At
-	 Vjlb8DBftjdWg==
-Message-ID: <5cbfa653-03c3-41dd-a309-406eaf3b6033@kernel.org>
-Date: Tue, 2 Sep 2025 08:12:03 +0200
+	b=f4SpTO5HbRtl7Xi3xwi8h9tTRsTDr/hJDP6knv0cso5gBMYkfhcoUf95iAd9UJ/GW
+	 pEHAuNQoNfdzTa8g3jUWSkTx3S6j6SWPRIq01YiDpVyT7oV9nB6okj61kBiUI2iAXJ
+	 yUHnc9WM5iPtWyNpkDsB/aDgAY0RsrT8ZOHU7f79M50ts0hX72u4U8px7IFerwMYI7
+	 P8o8jxCwaTQ1FUvAXTViK/RrudPro5cttYm2Adeikk1MK27oR7FK6jiGu57CeOIZ08
+	 tIiEqid2BaOqGe9CM1ah1Y1wFIFzcN5+i8rj8qncG0ydH2jhJqYHXfwG97R5pnGm3S
+	 nGKzVIwgqDAcA==
+Message-ID: <79555a86-d434-414f-bafc-be311a92482c@kernel.org>
+Date: Tue, 2 Sep 2025 08:18:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,16 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 1/4] ufs: dt-bindings: Document gear and rate limit
- properties
-To: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, alim.akhtar@samsung.com,
- avri.altman@wdc.com, bvanassche@acm.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, mani@kernel.org,
- James.Bottomley@HansenPartnership.com, martin.petersen@oracle.com
-Cc: linux-scsi@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20250901155801.26988-1-quic_rdwivedi@quicinc.com>
- <20250901155801.26988-2-quic_rdwivedi@quicinc.com>
+Subject: Re: [PATCH V3 3/5] scsi: ufs: core: Remove unused ufshcd_res_info
+ structure
+To: Nitin Rawat <quic_nitirawa@quicinc.com>,
+ Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, andersson@kernel.org,
+ konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, mani@kernel.org, James.Bottomley@HansenPartnership.com,
+ martin.petersen@oracle.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-scsi@vger.kernel.org
+References: <20250821112403.12078-1-quic_rdwivedi@quicinc.com>
+ <20250821112403.12078-4-quic_rdwivedi@quicinc.com>
+ <1ccecf69-0bd8-4156-945d-e5876b6dea01@kernel.org>
+ <1efa429d-7576-49da-a769-b1eba9345958@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,52 +108,40 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250901155801.26988-2-quic_rdwivedi@quicinc.com>
+In-Reply-To: <1efa429d-7576-49da-a769-b1eba9345958@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 01/09/2025 17:57, Ram Kumar Dwivedi wrote:
-> Add optional "limit-hs-gear" and "limit-rate" properties to the
-> UFS controller common binding. These properties allow limiting
-> the maximum HS gear and rate.
+On 01/09/2025 18:08, Nitin Rawat wrote:
 > 
-> This is useful in cases where the customer board may have signal
-> integrity, clock configuration or layout issues that prevent reliable
-> operation at higher gears. Such limitations are especially critical in
-> those platforms, where stability is prioritized over peak performance.
 > 
-> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> ---
->  .../devicetree/bindings/ufs/ufs-common.yaml      | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+> On 8/21/2025 5:18 PM, Krzysztof Kozlowski wrote:
+>> On 21/08/2025 13:24, Ram Kumar Dwivedi wrote:
+>>> From: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>
+>>> Remove the ufshcd_res_info structure and associated enum ufshcd_res
+>>> definitions from the UFS host controller header. These were previously
+>>> used for MCQ resource mapping but are no longer needed following recent
+>>> refactoring to use direct base addresses instead of multiple separate
+>>> resource regions
+>>>
+>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>
+>> Incomplete SoB chain.
+>>
+>> But anyway this makes no sense as independent patch. First you remove
+>> users of it making it redundant... and then you remove it? No.
 > 
-> diff --git a/Documentation/devicetree/bindings/ufs/ufs-common.yaml b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-> index 31fe7f30ff5b..b4c99fee552f 100644
-> --- a/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-> +++ b/Documentation/devicetree/bindings/ufs/ufs-common.yaml
-> @@ -89,6 +89,22 @@ properties:
->  
->    msi-parent: true
->  
-> +  limit-hs-gear:
-> +    $ref: /schemas/types.yaml#/definitions/uint32
-> +    minimum: 1
-> +    maximum: 5
+> Hi Krzysztof,
+> 
+> The driver changes are in the UFS Qualcomm platform driver, which uses 
+> the definitions, while ufshcd.h is part of the UFS core driver. Hence 
+> kept in 2 separate patch.
+Don't explain the obvious but address the comment. I am going to repeat
+since you just respond whatever:
 
-No improvements.
-
-> +    default: 5
-> +    description:
-> +      Restricts the maximum HS gear used in both TX and RX directions.
-> +
-> +  limit-rate:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    enum: [Rate-A, Rate-B]
-
-lowercase
-
-> +    default: Rate-B
-
+This makes no sense as independent patch. First you remove
+users of it making it redundant... and then you remove it? No.
 
 Best regards,
 Krzysztof
