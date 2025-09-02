@@ -1,210 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-71664-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71665-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B6B4B40A4E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 18:13:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5302B40A97
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 18:29:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0AE0E17DF9B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 16:13:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3C0531BA28E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 16:29:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA67A33CEA9;
-	Tue,  2 Sep 2025 16:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D762E3375DE;
+	Tue,  2 Sep 2025 16:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jNniZDQ/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pqnWvNzC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228F933A000
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 16:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35AC6322743
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 16:29:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756829562; cv=none; b=kmzLTmpN/OjFqEr0QX3Y07uEhBQYDUJeA1ctbiq3WxrPoVCajeNKOM9N5bi1ZUpwPzIynBxX9gz0OVtAJoAv/rai7mASs6mUs4oE2+4+nJmtOqxmqagRkP62CV5wLaLvaDJLcI6pb7p9FVlxV9ndycxT+geVu8jAZGNKMUh7Omg=
+	t=1756830571; cv=none; b=Y1Jg94dK2LEKLeYpewFLPenr6JuBeT5NvtFapqLHcdbJrVJz8/2bzBcSPBUyBC3j68gVgHWapV2pYhfPORiM20Di7FuGDHQRjwDCmuTliHOiqVGxdloigJmDEz9KDCNM3ZYmW2pL2vlbTChI8E+g2SebE/xX9hAy8m1ZytN8dtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756829562; c=relaxed/simple;
-	bh=cDbUjx0sul7Ld8NAml0P9RB4bTXO2/6aIeTTun2M03c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H02fUkRx6GoziW1b9mTG98lv87cAtmv/yOy0aKH9DYUtrdRYbSJNIPy/ij5yp8BGbALICvCVgbnZ1ZfvRAeJTPjgU8FIfdZ07gpNtVN8zI8sWdIZysSB+eh4o+xw511zgWbbye0uEPKqC7R3g2U36s4WK3432eRBW3t6pUg5Y9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jNniZDQ/; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1756830571; c=relaxed/simple;
+	bh=WFH1Jfn1U0TXQSVf4nsILSflDG/MQ3GDVE1dYbCd9fA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NtKgalMh9MdLmmv5AVTvJB7AdZngm+tfUcu6RZpmx1dWPaiO9BYggnd0f1MSFL2f9+jZ/ftrfBhxd0aG8W00rvDMVMcVAKYQgmT09NKLjzDd9Ym/0aYRXcXYNuNkhfnAuGvVuPBpxAyoZjMhea82zHfhAbBStR+6V2aqMEa2Pio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pqnWvNzC; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqBwF019558
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 16:12:40 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqCw4024047
+	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 16:29:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=p6zH1ji2py6
-	p7TMrlf20HqiWhyTErSKTHz4p6GLgtuE=; b=jNniZDQ/HuuRMY7vxY/SDIYphgO
-	HnPY7Ec9mAL+NzRujGmW4/Al5s7zsWObl3L322QNjswDxOSXOC0SmQMLkeySP92z
-	QgCytiQFdQWQWwZh0ieIykydbxKxe2wSpHQzX1Yhsoge3S9PwWHIb2jfhsI02vQ/
-	/VxJy0eydnAsuqDD4pmle+csTgNx1qSZ3EeV6AiIirAfQxxTkvhOGfPXujbBNcYx
-	zhncxjX8SfL6TaV9GyDEAMFWZxr9fc68HGWLINGUeBMVd2M8cvu2YSvt4JtS+Ept
-	hBQFmNr47LYwSTPS/CSUsVwXE7nxSlWT8MDJV5525SvzRCoPTd+NVu/eefA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urw00fvh-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=0Xxhh8bgiL0H7q1l1CPpc3m0
+	Gq3jEgstS7KK5RQ+9VE=; b=pqnWvNzCfd/RNxtmImQvE1QlmXaD3JuDbokxD8+e
+	AlRWtv6H8yq2RMDqaZhS/1/aHWoBKFqaeesFrta4ZToioz+CPQ6kCKhG2x3MquSN
+	OxsdldxaaYKNMZgdc6b7ylAh3z9ASeezPKbGsaM4iWxR8vx2Vap2AoL/aFLCotcv
+	l7Bsoe9Y+ktRiFqOTR1gPSkd8LQxTd/EuFj4oAwaLiwmrh+gpT7/OVRS45SDhfY+
+	694mpFOnpDAlooskdhtjXSmCoOiVQsoBzWdGXhFN74lwhOFtXD7AOx7md/e09oX8
+	xc6F6YCDnTnRAaXFI+mI1xMncK4nGcARjs3HYt8pBs1rTw==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ush30dwp-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 16:12:40 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b3349c2c38so52334791cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 09:12:39 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 16:29:29 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-72023d1be83so29620926d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 09:29:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756829559; x=1757434359;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=p6zH1ji2py6p7TMrlf20HqiWhyTErSKTHz4p6GLgtuE=;
-        b=gZMHFtMlfAcggmVI+0rxojRKdQaOZhcTGE+8V91fdUP6mH9B41TrskgOfIz6qbvigN
-         AS1LcWBGFd5m14ev0rdcxqwn4OEjDtquGX4Y5tX7WF+0Sl2yfzXluuZ83IXMsDRmzaOZ
-         UAhU9BxZdCI7BkiWe1HHIO2RX5Ir155jJkGX4S1ueAQhX01QbuExWNZtMVPxlqe8muKk
-         kw+Yms0yi2q5wphm8sTUQe+9NDh3VCwWUoGXWMScKA4Yrsu3tczmYi6AGPP0GbNsnz1z
-         2Bc13oGacUtB/Mrz25pE0c0gVobunFzXlXIZ0JOYHABuvhFhjFIgn7g4hGy+du8etEse
-         BtFw==
-X-Forwarded-Encrypted: i=1; AJvYcCXnLgoH8HfgEe6UWxqJO043Crv5RJwSUUafAlMJn3ZXevix2kpI4xQEQT62q1bodGMEsTMQ+wrpkuUR0IO6@vger.kernel.org
-X-Gm-Message-State: AOJu0YyAcyVj2owIm75v4N7nLEznDVgL83LCAaONqZwo4hEG1PXeJMBh
-	g6Y6hHG2fzD6JcKFkIPj84zcd7IOlH37XTkCmC9sKCdLeosmwJQavPBHpFc55sa/W+V9syLeKIR
-	lFsAfXJC6ddElrGdgEiu/fTr09PUsPkb5tTXKQGF7FbJLxvtepeO9/wPRFL3/Q9xboLEe
-X-Gm-Gg: ASbGncvZtaSmSgdcyv8JDTNp5KQmt7KjZvz6l7DL9jxkljVUu5QtdIGtC5haJx4tvDI
-	wCEojl2uapjTrm4+RstnS2uTBTOmaFpMhCh/rk2IGckcNjIrA7Yug4M/2v4vYWuWN28y+k/kDAy
-	Aq81rXKZxqvaUIpLF0OikHMsBF3YRlPvhy4zAB8f8+4/3AZZo4muu5lHwREruAVLvs9OtLv5hGe
-	xZ+a6nBpOt30Hn4g/5GRfPcVucE2Hed7kyzeePLld1g4KaNzcxkHrSTjAZufyE9s/hyIhDupqiw
-	YerDDdwBTmSRlFffdgJGRToFwMhMeEnt27vnkEKf4+6EaULPrA2NaA==
-X-Received: by 2002:ac8:5f85:0:b0:4b3:81b:c598 with SMTP id d75a77b69052e-4b31d80cc48mr143181101cf.9.1756829558780;
-        Tue, 02 Sep 2025 09:12:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG/2aSVAGC3oxLVCCAX9s65bT1/9R+lpOycsHDEcdffv1fXpb8bVJBWCm7x5TQMfvcz1MFwig==
-X-Received: by 2002:ac8:5f85:0:b0:4b3:81b:c598 with SMTP id d75a77b69052e-4b31d80cc48mr143180711cf.9.1756829558337;
-        Tue, 02 Sep 2025 09:12:38 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0d32a2sm309894655e9.9.2025.09.02.09.12.37
+        d=1e100.net; s=20230601; t=1756830568; x=1757435368;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0Xxhh8bgiL0H7q1l1CPpc3m0Gq3jEgstS7KK5RQ+9VE=;
+        b=RwYkWzDoYpbYBUpoy3ZZ1V9v1rFBa3Ld7PF1BgUi1UQrExZOLPDrQ4EtLf6wLVtsIs
+         Hl+hw8mA8R5TO18fzgRO8tnstk3zplBrKqniPnPW0XBAotvbJvv/Xhp0Gj7jhI/K9VxA
+         7TJhN+PR4AjZrtxzghchJ/kYFf6ia0cjCcpeGP6Pbd/WCvtzY8t8rB7Xgzaz0IyNrbA4
+         4iybpAZgEtez5fN12UPMWhSu+u4hv+LKxMIx+d/QQnUzcSNVxBYVdCn+TAJwmr2sEpbU
+         MimJmSg+H98W622n7UwhugzL3ZGv+FxrWRE0bnhfnQCcZs+OJ1zdLvBfeKjEJNIED4zh
+         RgrA==
+X-Forwarded-Encrypted: i=1; AJvYcCXrZdO74CzcdxxPmmIMQ5SC7a3vm6F/5Nwn3RFaafbeYgjJItidHC9WqfwAAt5M3flVBFq+yocXDfVS6lAv@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz140s4K0pCIO0p54BzGjCD4/GoyifzBRDNhNlPwDg6BPjPJ4ha
+	sLOP3dR6QnJVKnXyQVwkRtw100YBw9NPnyrfQyPSZBgROfParAcEZqSAOFGSFAr9PCE5M9ljYBK
+	D6/StXseZNPIUdMuPxOpIT5W5JrMNfNbMssdIFg19GGKVXHLsbqa1DweI7ypdERcvZvdl
+X-Gm-Gg: ASbGncttC/WbJIClwdiLNLO4TrVT/ea5dRG2W8674hqcLMtebBuVGBf+Q73pudgkgTU
+	QThguyrZVw/RtpJuQw2J0lGFrhOqu7ieHSb83LUs8Zjx90+oghWnNkLpEJfgaxY4d1jcRrzRm/V
+	cMN0INU1WS0myPbhpQz1SJ6nP6LG/JaKDVZLrMXdMT1kafJih4Bwmi/qJuny6MHM5pwd8gcm/LT
+	F6bvnfLbWyiHBn9TrAPvFSqXXHRJy9mhq7pN6ZaCBbU0NH5jDMBkX0G8PSCLr+fOhkt4gmn9Zaf
+	32EB1wL+mzr4U/WPZCB7HD822SlempuX7P7k395tLIdLGZGRKB+mi6pMf7TQOGn5as7lJm0wE9b
+	Rhy89qucAZT7QXeRAhkj6hNTDTkAeLoBZr7R3LUQJUJk/yjmInhyM
+X-Received: by 2002:a05:6214:2527:b0:70d:f3cc:59e2 with SMTP id 6a1803df08f44-70fac9458b7mr133849996d6.61.1756830567684;
+        Tue, 02 Sep 2025 09:29:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFvokzjH8YEZWHbH11++jlAcTV7UtSBU6wke16GEF1L7hdGxUd+DZW6hiZcGYHtBEnpACwuQ==
+X-Received: by 2002:a05:6214:2527:b0:70d:f3cc:59e2 with SMTP id 6a1803df08f44-70fac9458b7mr133849526d6.61.1756830566977;
+        Tue, 02 Sep 2025 09:29:26 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-560826dd3fcsm808649e87.58.2025.09.02.09.29.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Sep 2025 09:12:37 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-To: robh@kernel.org, krzk+dt@kernel.org, vkoul@kernel.org
-Cc: conor+dt@kernel.org, srini@kernel.org, yung-chuan.liao@linux.intel.com,
-        pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH v2 7/7] soundwire: qcom: adding support for v3.1.0
-Date: Tue,  2 Sep 2025 17:11:56 +0100
-Message-ID: <20250902161156.145521-8-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250902161156.145521-1-srinivas.kandagatla@oss.qualcomm.com>
-References: <20250902161156.145521-1-srinivas.kandagatla@oss.qualcomm.com>
+        Tue, 02 Sep 2025 09:29:25 -0700 (PDT)
+Date: Tue, 2 Sep 2025 19:29:24 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Abel Vesa <abel.vesa@linaro.org>, Mahadevan <quic_mahap@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v7 2/9] dt-bindings: display/msm: dp-controller: fix
+ fallback for SM6350
+Message-ID: <rivif67xphnva5ql3s6p6gk6uzjde55nzi34unyqktrrjtalgm@gnjqibxo6jzz>
+References: <20250829-dp_mst_bindings-v7-0-2b268a43917b@oss.qualcomm.com>
+ <20250829-dp_mst_bindings-v7-2-2b268a43917b@oss.qualcomm.com>
+ <20250901-arboreal-gay-wolf-bcaaec@kuoka>
+ <qy6c2gundpbz5ixqpt2hefzfb56wcrzcaclqwg2opof4zc7lep@dpc3nv6usurk>
+ <24999a53-ea5a-4823-a84f-2ca0ca184bb4@linaro.org>
+ <ysj4ndb4twcvmlxb3marh2vktxxsup5l6ioljdgzlod46uimh2@pkgta6r3ydqx>
+ <c69ced3d-d1f1-46a8-9930-463306b1ba41@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: sE-Oz1DjSB0W_0-5yMHxsmutF1g8zpfj
-X-Proofpoint-ORIG-GUID: sE-Oz1DjSB0W_0-5yMHxsmutF1g8zpfj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX5fukQVV9ZWD1
- qHmsvKcbFqRusrsuos/stLnnBmTyGLnXslMnyJ9kd7/e8wgy8Q3QdvlP5nxIkuFAznRIR1qr0Eu
- PdG6fYm7qGauyaxfdhZW8Fd/Ki9Y2xcxxL5HQmat+2BEEH0q/uloWh2I1Akt+foOvofnGybesJh
- 4GexVQXiqW/Cg4/D6XHWqupIpVm3b4lbGgiHYqV1WDhZl8922kGEoFGml39sBKjDIUYo+iKRpDg
- uFzvE2qzpWx7riI1RgT9Rg+heeR7AT3b0ttLBVhju8H6lxcGuRvPAV7nZNCKJ/5pcSovPnnmrjW
- ZAk75HVf2E4uA5wmf5qbRNMaNBZMce2Ke3nR8whVQGcyypolxZmSnXnX/Nq7x/GmjohZyr/SoBo
- ZA/HA6Ra
-X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b71778 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=2e052FzMMQUWBbw-z-wA:9
- a=dawVfQjAaf238kedN5IG:22
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c69ced3d-d1f1-46a8-9930-463306b1ba41@linaro.org>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMiBTYWx0ZWRfXz1yxhYR24dE5
+ VadA9vLlngM4cZi2vpgv/lwf8KCgUJTSgEVZBwXSwf1AvxwmIvp63HEKfDvQSkGdAQGOjpoudik
+ N8EVqWtyKx/QvCs5GZAbsCzbl6gY1PIVAzriC6Kzi5QBJpQlqf1PlH7U6Pug/o6M6anX3Dq1BgA
+ w/jXkkyrVFEERoGFGlPvCFmzH5XTMKglLdoyiKxvXMjhhO6ZNtT7JuvWCgI4UFWAJ7IzLTNlQDm
+ etcv2AM2yexo7FRLHPcHy1S8HNJ/DQ0/vfuzFRhJVsnVmIy5dO5bccgqDazwqQ/hb2pKmRQAQJx
+ BFHK0qf9GjGSnCCW6hWwu3tdCu74XXpUKlttKHEHiqRTe2GHQ4RecgSTXHUIaw2V22BdIsw91KC
+ 8ylBjrXa
+X-Proofpoint-ORIG-GUID: kHFe8TGk2CG0mIv-nORWDgZAsu9z2FLU
+X-Proofpoint-GUID: kHFe8TGk2CG0mIv-nORWDgZAsu9z2FLU
+X-Authority-Analysis: v=2.4 cv=M9NNKzws c=1 sm=1 tr=0 ts=68b71b69 cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=CoDk-osl1XWOh_45pGoA:9 a=CjuIK1q_8ugA:10
+ a=OIgjcC2v60KrkQgK7BGD:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_05,2025-08-28_01,2025-03-28_01
+ definitions=2025-09-02_06,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
- impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
+ impostorscore=0 adultscore=0 spamscore=0 priorityscore=1501 malwarescore=0
+ clxscore=1015 suspectscore=0 phishscore=0 bulkscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300027
+ engine=8.19.0-2507300000 definitions=main-2508300032
 
-Add support for controller version v3.1.0, which has changes in
-register layout and some register fields compared to v2.0.
+On Tue, Sep 02, 2025 at 02:09:02PM +0200, Krzysztof Kozlowski wrote:
+> On 02/09/2025 12:01, Dmitry Baryshkov wrote:
+> > On Tue, Sep 02, 2025 at 08:04:54AM +0200, Krzysztof Kozlowski wrote:
+> >> On 02/09/2025 06:03, Dmitry Baryshkov wrote:
+> >>> On Mon, Sep 01, 2025 at 05:45:49AM +0200, Krzysztof Kozlowski wrote:
+> >>>> On Fri, Aug 29, 2025 at 01:48:15AM +0300, Dmitry Baryshkov wrote:
+> >>>>> The SM6350 doesn't have MST support, as such it is not compatible with
+> >>>>> the SM8350 platform. Add new entry for SM6350 with fallback to SC7180
+> >>>>> (which belongs to the same generation and also doesn't have MST
+> >>>>> support).
+> >>>>>
+> >>>>> Fixes: 39086151593a ("dt-bindings: display: msm: dp-controller: document SM6350 compatible")
+> >>>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> >>>>> ---
+> >>>>>  .../devicetree/bindings/display/msm/dp-controller.yaml     | 14 +++++++++++++-
+> >>>>>  1 file changed, 13 insertions(+), 1 deletion(-)
+> >>>>>
+> >>>>> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> >>>>> index aed3bafa67e3c24d2a876acd29660378b367603a..0f814aa6f51406fdbdd7386027f88dfbacb24392 100644
+> >>>>> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> >>>>> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> >>>>> @@ -31,13 +31,25 @@ properties:
+> >>>>>            - qcom,sm8650-dp
+> >>>>>        - items:
+> >>>>>            - enum:
+> >>>>> -              - qcom,sar2130p-dp
+> >>>>>                - qcom,sm6350-dp
+> >>>>> +          - const: qcom,sc7180-dp
+> >>>>> +
+> >>>>> +      # deprecated entry for compatibility with old DT
+> >>>>> +      - items:
+> >>>>> +          - enum:
+> >>>>> +              - qcom,sm6350-dp
+> >>>>> +          - const: qcom,sm8350-dp
+> >>>>> +        deprecated: true
+> >>>>
+> >>>> If it is only about bindings then there is little benefit in keeping
+> >>>> this, just drop this case.  However you cannot drop it from DTS, so this
+> >>>> is a bit pointless.
+> >>>
+> >>> Our plan is:
+> >>> - land updated DT bindings, describing MST clocks on MST-enabled
+> >>>   platforms,
+> >>> - land updated DTS, adding MST clocks where applicable,
+> >>
+> >> This part breaks all out-of-tree users of DTS.
+> > 
+> > User of which one? SM6350 or all DTS?
+> 
+> SM6350.
+> 
+> > 
+> > It extends the ABI, so no, it shouldn't. We add regions and clocks,
+> 
+> No, it does not extend the ABI. You are changing the fallback, so you
+> are changing the ABI.
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
----
- drivers/soundwire/qcom.c | 37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 3d4d0c443977..a7b6d9ecc3ba 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -31,6 +31,7 @@
- #define SWRM_VERSION_1_5_1					0x01050001
- #define SWRM_VERSION_1_7_0					0x01070000
- #define SWRM_VERSION_2_0_0					0x02000000
-+#define SWRM_VERSION_3_1_0					0x03010000
- #define SWRM_COMP_HW_VERSION					0x00
- #define SWRM_COMP_CFG_ADDR					0x04
- #define SWRM_COMP_CFG_IRQ_LEVEL_OR_PULSE_MSK			BIT(1)
-@@ -40,6 +41,9 @@
- #define SWRM_COMP_PARAMS_RD_FIFO_DEPTH				GENMASK(19, 15)
- #define SWRM_COMP_PARAMS_DOUT_PORTS_MASK			GENMASK(4, 0)
- #define SWRM_COMP_PARAMS_DIN_PORTS_MASK				GENMASK(9, 5)
-+#define SWRM_V3_COMP_PARAMS_WR_FIFO_DEPTH			GENMASK(17, 10)
-+#define SWRM_V3_COMP_PARAMS_RD_FIFO_DEPTH			GENMASK(23, 18)
-+
- #define SWRM_COMP_MASTER_ID					0x104
- #define SWRM_V1_3_INTERRUPT_STATUS				0x200
- #define SWRM_V2_0_INTERRUPT_STATUS				0x5000
-@@ -296,6 +300,32 @@ static const struct qcom_swrm_data swrm_v2_0_data = {
- 	.reg_layout = swrm_v2_0_reg_layout,
- };
- 
-+static const unsigned int swrm_v3_0_reg_layout[] = {
-+	[SWRM_REG_FRAME_GEN_ENABLED] = SWRM_V2_0_LINK_STATUS,
-+	[SWRM_REG_INTERRUPT_STATUS] = SWRM_V2_0_INTERRUPT_STATUS,
-+	[SWRM_REG_INTERRUPT_MASK_ADDR] = 0, /* Not present */
-+	[SWRM_REG_INTERRUPT_CLEAR] = SWRM_V2_0_INTERRUPT_CLEAR,
-+	[SWRM_REG_INTERRUPT_CPU_EN] = SWRM_V2_0_INTERRUPT_CPU_EN,
-+	[SWRM_REG_CMD_FIFO_WR_CMD] = SWRM_V2_0_CMD_FIFO_WR_CMD,
-+	[SWRM_REG_CMD_FIFO_RD_CMD] = SWRM_V2_0_CMD_FIFO_RD_CMD,
-+	[SWRM_REG_CMD_FIFO_STATUS] = SWRM_V2_0_CMD_FIFO_STATUS,
-+	[SWRM_REG_CMD_FIFO_RD_FIFO_ADDR] = SWRM_V2_0_CMD_FIFO_RD_FIFO_ADDR,
-+	[SWRM_OFFSET_DP_PORT_CTRL_BANK]		= 0x1224,
-+	[SWRM_OFFSET_DP_PORT_CTRL_2_BANK]	= 0x1228,
-+	[SWRM_OFFSET_DP_BLOCK_CTRL_1]		= 0x122c,
-+	[SWRM_OFFSET_DP_BLOCK_CTRL2_BANK]	= 0x1230,
-+	[SWRM_OFFSET_DP_PORT_HCTRL_BANK]	= 0x1234,
-+	[SWRM_OFFSET_DP_BLOCK_CTRL3_BANK]	= 0x1238,
-+	[SWRM_OFFSET_DP_SAMPLECTRL2_BANK]	= 0x123c,
-+};
-+
-+static const struct qcom_swrm_data swrm_v3_0_data = {
-+	.default_rows = 50,
-+	.default_cols = 16,
-+	.sw_clk_gate_required = true,
-+	.max_reg = SWR_V2_0_MSTR_MAX_REG_ADDR,
-+	.reg_layout = swrm_v3_0_reg_layout,
-+};
- #define to_qcom_sdw(b)	container_of(b, struct qcom_swrm_ctrl, bus)
- 
- static int qcom_swrm_ahb_reg_read(struct qcom_swrm_ctrl *ctrl, int reg,
-@@ -919,7 +949,11 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
- 	swrm_wait_for_frame_gen_enabled(ctrl);
- 	ctrl->slave_status = 0;
- 	ctrl->reg_read(ctrl, SWRM_COMP_PARAMS, &val);
--	ctrl->wr_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_WR_FIFO_DEPTH, val);
-+
-+	if (ctrl->version >= SWRM_VERSION_3_1_0)
-+		ctrl->wr_fifo_depth = FIELD_GET(SWRM_V3_COMP_PARAMS_WR_FIFO_DEPTH, val);
-+	else
-+		ctrl->wr_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_WR_FIFO_DEPTH, val);
- 
- 	return 0;
- }
-@@ -1765,6 +1799,7 @@ static const struct of_device_id qcom_swrm_of_match[] = {
- 	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_6_data },
- 	{ .compatible = "qcom,soundwire-v1.7.0", .data = &swrm_v1_5_data },
- 	{ .compatible = "qcom,soundwire-v2.0.0", .data = &swrm_v2_0_data },
-+	{ .compatible = "qcom,soundwire-v3.1.0", .data = &swrm_v3_0_data },
- 	{/* sentinel */},
- };
- 
+I was thinking about the whole patchset: adding DP MST-specific clocks
+and regions. For this particular patch you are correct.
+
+> 
+> 
+> > existing users can use the previously defined feature set.
+> > 
+> > Anyway, is it about adding more explicit note to the cover letter and/or
+> > commit message or would you have any other proposal on how to handle the
+> > issue?
+> 
+> Please be explicit if Linux was working with the old fallback or not. In
+> the DTS change be explicit about impact, e.g. that sc7180 fallback is
+> there since forever.
+
+Ack.
+
+> 
+> > 
+> >>
+> >>> - land driver changes, keeping legacy support for non-MST DTs on
+> >>>   MST-enabled SoCs
+> >>>
+> >>>>
+> >>>> Lack of MST support is not informative enough to claim it is not
+> >>>> compatible with 8350. For example if it was working fine via fallback,
+> >>>> then that statement is simply not correct.
+> >>>>
+> >>>> And it HAD to work fine, because there is nothing binding to
+> >>>> qcom,sm6350-dp.
+> >>>
+> >>> It is working fine since currently we don't have MST support on the
+> >>> driver side (nor do we describe MST clocks in DT). It's true that the
+> >>> driver will have to handle non-MST DT for SM8350. However I definitely
+> >>> don't want to describe both cases in the bindings. SM6350 is not going
+> >>> to be compatible with the MST-enabled SM8350 schema.
+> >>
+> >> The question is rather: is SM6350 going to be compatible (working) with
+> >> MST-enabled drivers.
+> > 
+> > If somebody implements e.g. U-Boot DP MST support after we land DP MST
+> > bindings, I would not guarantee that. SM8350 will already have second
+> > stream clock.
+> 
+> 
+> Having second stream clock does not mean device stops working with Linux
+> kernel. I can easily imagine both cases after adding MST to the drivers,
+> the SM6350 stops working or keeps working...
+
+It will keep on working, since we need to support old MST-less
+sm8350.dtsi. 
+
 -- 
-2.50.0
-
+With best wishes
+Dmitry
 
