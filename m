@@ -1,278 +1,428 @@
-Return-Path: <linux-arm-msm+bounces-71489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71491-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AD59B3F407
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 06:58:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0350EB3F491
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 07:32:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B25E33BD355
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 04:58:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DD5857A584D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 05:30:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BF1F52E5B02;
-	Tue,  2 Sep 2025 04:56:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8A7A2D593E;
+	Tue,  2 Sep 2025 05:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Tx4vpK2W"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="egWT1/Gu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101532E613C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 04:56:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABA4922DF95;
+	Tue,  2 Sep 2025 05:31:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756788993; cv=none; b=HLOX2bWDgD/TCvCG+SDVe5GuWtD0eiTLfEsyjGHTBytUr8Lk0PNNBVa5dRwI6dRDg2/ObATLxlO3lvYWCRH/ar/LhxMXKQy3cS6DLpOeHn9VF7wqn4a3xmXrIasZV4Og4NZZu80dzOhyV793BP7xKR2j8ZmYfnx2CmIsdPE/Z/A=
+	t=1756791112; cv=none; b=KsQcNXJWmRPVwtOSJc3pTy1fzCN0ftoxV/GbuFGv+sVjUWEo7BR//+/tOxSrS4HdAi6nttEZKW+O3h64jSS8Wpr/DDtg01uVBUg4YdUjm0RdLWABZ33xs5vgqYKBa0F5ESyMN3wkydbsMYVReIGSFxxZ5JPTiOVQalF/AQQW5K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756788993; c=relaxed/simple;
-	bh=696U7/FWwaaFIGlzeZRWykn9zjUkr8pce7ma6fekJEY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=c9liDWJF7JB4nqSG2t2TWrVv8oNzrbF9+/AE8HjhXvgw9aPqWrmHG9GR3w0/9iB+xX/r9Hvd1t/43bW35KZKQ8DWkJgp66HBDaMriuM1XQok5+mvpXKeaqXBB7esVxDPdEGG7INLDMoTej+gK8/xT91OiORHUWcsBuA5cBmIeCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Tx4vpK2W; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RlL1021618
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 04:56:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	s=arc-20240116; t=1756791112; c=relaxed/simple;
+	bh=xgjmYzQnPTS0xIn/OCCSCEaAz3gbxJdPOI/8bRZXbj0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=iaFE8OHSsymT/C8gmu/Yb65FKY1HbGDcwiBxqtZN1cm4ZSQoGBT/XGZ4a4eyw/o9jImeUDlgYKrUO1cZBwqD+0qqJs0pmNuYu2EZEB9RJB0npXhcq9ue1iP/lnUDacKQCJTUrL/G94Rq+ZtMT6NPFWn7IGfrTpwZCF9c1nV42Us=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=egWT1/Gu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RkZi016270;
+	Tue, 2 Sep 2025 05:31:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4C5VhC/4pFCnYsmQJ5EmNbV8HXu0TRSksgnPURzlR3I=; b=Tx4vpK2WBWhiCtNY
-	sm8/FoCB0SlXn37FORfYCgOjeQemeJ+LUOOETXQnEpU3iT1gg48+xYQYmiqqEDjH
-	YlLvUrEakatZJT2NVCkbY8cC1x0OY4F28Xd89XznVUJb6yGUmoebgKRG9OMfZASS
-	cVB+1BG8wKyNAk8rId4bZlpUCSiZ0jW0y2HCxJgJ9tJ1cQt1nh5nlA/6noek+//f
-	3lr9VfvgN2Ogih1uKI0Y40B0KWdbBNOm6OTbb+JmIJnk+7IdDbq4f7ICQkKJiXV4
-	7hOBQeX0qItaRIg7VEu2hEnVwuUVNMUcXIz1lrWg3kACSeXjqt3ZCYTboFHAW90v
-	G5CdVA==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnp6pcj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 04:56:30 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-248981c02cfso54470405ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 21:56:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756788989; x=1757393789;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4C5VhC/4pFCnYsmQJ5EmNbV8HXu0TRSksgnPURzlR3I=;
-        b=kFsAcaxARWQkfpXGj2cml4uodSqfBCEDq9qLam35S1KoyThNW+uNSJWsxYC5zwbOW9
-         4YW2Ol7wUVLnOLyGhZbYMf0TDDwWCJL2aZolEo20DrvWWRyRbo64WVaskrNQCIBRahCc
-         6fJ6Wq4LG+AwmeFYT40w2ASmvtjx7RudmAk2+xmLse97QSODfc9VHjwLxNa0wWuRFNn5
-         7M3ZHAaqcbT3SrFpkouE8M0haV49wUWhr0yQd6e7UKgZQDNJpDV26j64d37znjy8MJMf
-         W7RAjkDTd9zPtLEQJh13NdcrkhHh3wa5p1cFqVLDgWRmP9rrJ7z66upJgA60wplnnTlh
-         z8hg==
-X-Forwarded-Encrypted: i=1; AJvYcCXZFp9+Wle/ShipOdkCHt+6gXDxXNh+N9Sq8RLjfYV0ga8RmbOjzWbjmOlo1bq8h9NCCWh4BNgEluuxjM3X@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDEuBT33VxFFvsyc6XqAxAtVfB+QR85dGuPxTuqrIivh5yeK8P
-	4Sipw5lBsiS9QGGgOgW76VNyFtVtStLtCvPNb2VrqZF0UWE+9N/KOyflbXQ4kEbp417srqIunLf
-	6mERiT5CYsSYIu7MBt7mHSh41wy9dmLzinJyJqK0bixv3kqb0MW441ydu7h8lXCFgNAY=
-X-Gm-Gg: ASbGncuThy7F6bycbpwNQacC1/TMm2BTimpzogbXy1/MC6Q91Snve7YoR9C2vTuyWBO
-	JW/TJwc75ZykwCK1G2kP3N2TFd68O13noS/UficH6cI2uc1kkICGqsocnmR60MF1xwS1zrZJzzU
-	Lrb9uOeLO9e7K3ODjrbGQTKnTsKDXGwe+lk8Rj7pmc5hNvGR8PhtCTc2b5izlXu64+fdw2P7W5N
-	AXBUPBUEqDUb1Inhe1ydEnfAhEl2FgjJAM7J3OiUsSIfr9PoLkvbWhf1EPlnIhgE5QaUIeccQ0i
-	0oJi9UAL1zKX9px3hbQgIIBZxTSjYCZJrGuMErjE1wnpNrYZao+XehIeezX+oiYCtszCC66Q8uh
-	N0SyY4NCWZ5gnCS5lqw3NiJQ=
-X-Received: by 2002:a17:902:d502:b0:246:fdf7:2c71 with SMTP id d9443c01a7336-24944af12e2mr132951205ad.47.1756788988611;
-        Mon, 01 Sep 2025 21:56:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7F0eEjJmAaiuShpIkxQfExITaVHfEaEVCThMdzzbDlLzUzKrz3dCFXLdIOBLWZwLgt+OxrA==
-X-Received: by 2002:a17:902:d502:b0:246:fdf7:2c71 with SMTP id d9443c01a7336-24944af12e2mr132950855ad.47.1756788988089;
-        Mon, 01 Sep 2025 21:56:28 -0700 (PDT)
-Received: from hu-azarrabi-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24b1f30a63asm1795345ad.66.2025.09.01.21.56.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 01 Sep 2025 21:56:27 -0700 (PDT)
-From: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Date: Mon, 01 Sep 2025 21:55:58 -0700
-Subject: [PATCH v9 11/11] Documentation: tee: Add Qualcomm TEE driver
+	jhkZem1KJFZH65MgqN0v05Cu7ALio2yvyLPMXllcnTE=; b=egWT1/GuxW4xi13K
+	RWfYn9Umakq5eUmVNRouzWV1U81xxOdZxp3qoCN0oQu5Dvn3xGOM2EpjaE8Uywaj
+	2oRZi2d3XRehATI+lqLzLF2AAupsKD+a0AKZxFAi/JrYw8zfyaL42tVJ3ngQJ5T6
+	MK6sQMue9DsfZspuPvZbie0GcF4X4cJm5dyvR6QZ01E1fX310jBWAUu5F7ff6YxP
+	m4kJDepeaEjr1Mks6ktr6GcppDm/2BhAcHywVi1H9w7/untrVWOJcTcM44LG7nmZ
+	adYyEU6W16M7jFjM2t+MRmVDHc+ykgX0LZzanjyDQ1J/i1gILb5m+BLGvOJ8/aZR
+	JbB1iQ==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48utk8xetj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 02 Sep 2025 05:31:43 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5825VhNM032479
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 2 Sep 2025 05:31:43 GMT
+Received: from [10.216.53.8] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 1 Sep
+ 2025 22:31:40 -0700
+Message-ID: <19f83c54-bff7-5316-1255-f64dbf487c35@quicinc.com>
+Date: Tue, 2 Sep 2025 11:01:36 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v2] media: iris: add VPU33 specific encoding buffer
+ calculation
+Content-Language: en-US
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+References: <20250901-topic-sm8x50-iris-encoder-v3-hevc-debug-v2-1-c65406bbdf68@linaro.org>
+From: Vikash Garodia <quic_vgarodia@quicinc.com>
+In-Reply-To: <20250901-topic-sm8x50-iris-encoder-v3-hevc-debug-v2-1-c65406bbdf68@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250901-qcom-tee-using-tee-ss-without-mem-obj-v9-11-a2af23f132d5@oss.qualcomm.com>
-References: <20250901-qcom-tee-using-tee-ss-without-mem-obj-v9-0-a2af23f132d5@oss.qualcomm.com>
-In-Reply-To: <20250901-qcom-tee-using-tee-ss-without-mem-obj-v9-0-a2af23f132d5@oss.qualcomm.com>
-To: Jens Wiklander <jens.wiklander@linaro.org>,
-        Sumit Garg <sumit.garg@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Apurupa Pattapu <quic_apurupa@quicinc.com>,
-        Kees Cook <kees@kernel.org>,
-        "Gustavo A. R. Silva" <gustavoars@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc: Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org,
-        op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org,
-        linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org,
-        Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>,
-        Sumit Garg <sumit.garg@oss.qualcomm.com>
-X-Mailer: b4 0.13.0
-X-Proofpoint-GUID: wfNkd-9psI58yLLmKoWdleQ17NI8xEdZ
-X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b678fe cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=7CQSdrXTAAAA:8
- a=NEAV23lmAAAA:8 a=VwQbUJbxAAAA:8 a=vCTlBN6rBY5pDr9NrAkA:9 a=QEXdDO2ut3YA:10
- a=M0EVDjxxv-UA:10 a=1OuFwYUASf3TG4hYMiVC:22 a=a-qgeE7W1pNrGK8U0ZQC:22
-X-Proofpoint-ORIG-GUID: wfNkd-9psI58yLLmKoWdleQ17NI8xEdZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfX7zFz2Lv0fQVF
- An1w90CEaDg+OGB8JAW3+gLZx16VGI4HEKDOG8/fKdY16bF8B2i8RK6Vl7d5d7T+iaPsCNHDzx3
- j6SMb07/vLTwQCYjekY3yNwtibKwQNOOOYZX8N+VdWX/gtpEajc5YOfd/KCH07Hnn8vxSo7fA/E
- TbjTbPmpKSlo10e0wYrXvRMI7NoelVKsgrzfEmYhAzOMsOOPuFkTZDsqFaKy1D5IL7bP97kTNyx
- qw3KFMNjJAV86jHKeMiOy4b7lytb+Ob8zJtC/zONsH9eNDLEfAfe40jLBcq+HlYn/xx6eS5dM2X
- p8RJVA6gGtOn1EyiFkzpZKgA9etkbqdmVMRMt2KO468EWUNMeRs2NJ+glHiAZ9MxLoMBNZGSU6U
- mQYXKQOv
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: dI88Ujj_36jauaG5yWDX-BaXWNJbBDUq
+X-Proofpoint-ORIG-GUID: dI88Ujj_36jauaG5yWDX-BaXWNJbBDUq
+X-Authority-Analysis: v=2.4 cv=ccnSrmDM c=1 sm=1 tr=0 ts=68b68140 cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8 a=5KdB-QnLsuRpzNL6S04A:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDA0MiBTYWx0ZWRfX3PLvpK4tJFPQ
+ pYs393vguqYSe0u090Wd/dXOH0JH9J1ewMe+Yk0rIFrBw33YXW71sa0ZujBzEl9qupaOn0vlFG6
+ M9f7bW1GL+1SMTpZbAVDVDzqI8GFybv5WNav/dYfmMS0tb3a3vKR0ThHDvGXtzFXcqEf5jyG4dj
+ xgQFN3i9mx/p30SjaSbkNHTQmbomSmHi9bvPYVq9RLHohRIw2vlVOJtl44DLVyP13PYRkNGTv/G
+ Qpu2cQGQN2Pp66M0HN0KMf7lJIqU/7yLG81Zzl/CeWH/d91wz97bXWPJ4G3EC9BQhtf2Wk9GTpF
+ cB5ibq/aQmYdW9+Qq75V2yC3GpqJsafoK7WnfCEH22bRok5DKMmmaCdlJs5TtDKpZ1a0zr69mBy
+ DepW6jpt
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_01,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ clxscore=1015 suspectscore=0 spamscore=0 bulkscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300001
+ engine=8.19.0-2507300000 definitions=main-2508300042
 
-Add documentation for the Qualcomm TEE driver.
 
-Acked-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
----
- Documentation/tee/index.rst |  1 +
- Documentation/tee/qtee.rst  | 96 +++++++++++++++++++++++++++++++++++++++++++++
- MAINTAINERS                 |  1 +
- 3 files changed, 98 insertions(+)
+On 9/1/2025 1:25 PM, Neil Armstrong wrote:
+> The VPU33 found in the SM8650 Platform requires some slighly different
+> buffer calculation for encoding to allow working with the latest
+> firwware uploaded on linux-firmware at [1].
+> 
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/commit/?id=ece445af91bbee49bf0d8b23c2b99b596ae6eac7
+> 
+> Suggested-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
+> [2] https://lore.kernel.org/all/20250825-iris-video-encoder-v4-0-84aa2bc0a46b@quicinc.com/
+> ---
+> Changes in v2:
+> - Removed calculation fix for hevc encoding, as it was added in common code
+> - Link to v1: https://lore.kernel.org/r/20250822-topic-sm8x50-iris-encoder-v3-hevc-debug-v1-1-633d904ff7d3@linaro.org
+> ---
+>  drivers/media/platform/qcom/iris/iris_buffer.c     |   2 +-
+>  .../platform/qcom/iris/iris_hfi_gen1_command.c     |   2 +-
+>  .../platform/qcom/iris/iris_platform_common.h      |   2 +
+>  .../media/platform/qcom/iris/iris_platform_gen2.c  |   4 +
+>  .../platform/qcom/iris/iris_platform_sm8250.c      |   2 +
+>  drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 110 ++++++++++++++++++++-
+>  drivers/media/platform/qcom/iris/iris_vpu_buffer.h |   3 +-
+>  7 files changed, 118 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
+> index 8891a297d384b018b3cc8313ad6416db6317798b..c0900038e7defccf7de3cb60e17c71e36a0e8ead 100644
+> --- a/drivers/media/platform/qcom/iris/iris_buffer.c
+> +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+> @@ -284,7 +284,7 @@ static void iris_fill_internal_buf_info(struct iris_inst *inst,
+>  {
+>  	struct iris_buffers *buffers = &inst->buffers[buffer_type];
+>  
+> -	buffers->size = iris_vpu_buf_size(inst, buffer_type);
+> +	buffers->size = inst->core->iris_platform_data->get_vpu_buffer_size(inst, buffer_type);
+>  	buffers->min_count = iris_vpu_buf_count(inst, buffer_type);
+>  }
+>  
+> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> index 29cf392ca2566da286ea3e928ce4a22c2e970cc8..e1788c266bb1080921f17248fd5ee60156b3143d 100644
+> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+> @@ -911,7 +911,7 @@ static int iris_hfi_gen1_set_bufsize(struct iris_inst *inst, u32 plane)
+>  
+>  	if (iris_split_mode_enabled(inst)) {
+>  		bufsz.type = HFI_BUFFER_OUTPUT;
+> -		bufsz.size = iris_vpu_buf_size(inst, BUF_DPB);
+> +		bufsz.size = inst->core->iris_platform_data->get_vpu_buffer_size(inst, BUF_DPB);
+>  
+>  		ret = hfi_gen1_set_property(inst, ptype, &bufsz, sizeof(bufsz));
+>  		if (ret)
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> index 96fa7b1bb592441e85664da408ea4ba42c9a15b5..7057c4cd1a9ebefa02c855014e5f19993da58e38 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_common.h
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+> @@ -7,6 +7,7 @@
+>  #define __IRIS_PLATFORM_COMMON_H__
+>  
+>  #include <linux/bits.h>
+> +#include "iris_buffer.h"
+>  
+>  struct iris_core;
+>  struct iris_inst;
+> @@ -189,6 +190,7 @@ struct iris_platform_data {
+>  	void (*init_hfi_command_ops)(struct iris_core *core);
+>  	void (*init_hfi_response_ops)(struct iris_core *core);
+>  	struct iris_inst *(*get_instance)(void);
+> +	u32 (*get_vpu_buffer_size)(struct iris_inst *inst, enum iris_buffer_type buffer_type);
+>  	const struct vpu_ops *vpu_ops;
+>  	void (*set_preset_registers)(struct iris_core *core);
+>  	const struct icc_info *icc_tbl;
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> index cf4b92f534b272a0a1ac2a0e7bb9316501374332..78a04e76de7c00703b84bd3c1c6e9a884ee7cebe 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+> @@ -8,6 +8,7 @@
+>  #include "iris_hfi_gen2.h"
+>  #include "iris_hfi_gen2_defines.h"
+>  #include "iris_platform_common.h"
+> +#include "iris_vpu_buffer.h"
+>  #include "iris_vpu_common.h"
+>  
+>  #include "iris_platform_qcs8300.h"
+> @@ -738,6 +739,7 @@ struct iris_platform_data sm8550_data = {
+>  	.get_instance = iris_hfi_gen2_get_instance,
+>  	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
+>  	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
+> +	.get_vpu_buffer_size = iris_vpu_buf_size,
+>  	.vpu_ops = &iris_vpu3_ops,
+>  	.set_preset_registers = iris_set_sm8550_preset_registers,
+>  	.icc_tbl = sm8550_icc_table,
+> @@ -827,6 +829,7 @@ struct iris_platform_data sm8650_data = {
+>  	.get_instance = iris_hfi_gen2_get_instance,
+>  	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
+>  	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
+> +	.get_vpu_buffer_size = iris_vpu33x_buf_size,
 
-diff --git a/Documentation/tee/index.rst b/Documentation/tee/index.rst
-index 4be6e69d7837..62afb7ee9b52 100644
---- a/Documentation/tee/index.rst
-+++ b/Documentation/tee/index.rst
-@@ -11,6 +11,7 @@ TEE Subsystem
-    op-tee
-    amd-tee
-    ts-tee
-+   qtee
- 
- .. only::  subproject and html
- 
-diff --git a/Documentation/tee/qtee.rst b/Documentation/tee/qtee.rst
-new file mode 100644
-index 000000000000..2fa2c1bf6384
---- /dev/null
-+++ b/Documentation/tee/qtee.rst
-@@ -0,0 +1,96 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+=============================================
-+QTEE (Qualcomm Trusted Execution Environment)
-+=============================================
-+
-+The QTEE driver handles communication with Qualcomm TEE [1].
-+
-+The lowest level of communication with QTEE builds on the ARM SMC Calling
-+Convention (SMCCC) [2], which is the foundation for QTEE's Secure Channel
-+Manager (SCM) [3] used internally by the driver.
-+
-+In a QTEE-based system, services are represented as objects with a series of
-+operations that can be called to produce results, including other objects.
-+
-+When an object is hosted within QTEE, executing its operations is referred
-+to as "direct invocation". QTEE can also invoke objects hosted in the non-secure
-+world using a method known as "callback request".
-+
-+The SCM provides two functions to support direct invocation and callback requests:
-+
-+- QCOM_SCM_SMCINVOKE_INVOKE: Used for direct invocation. It can return either
-+  a result or initiate a callback request.
-+- QCOM_SCM_SMCINVOKE_CB_RSP: Used to submit a response to a callback request
-+  triggered by a previous direct invocation.
-+
-+The QTEE Transport Message [4] is stacked on top of the SCM driver functions.
-+
-+A message consists of two buffers shared with QTEE: inbound and outbound
-+buffers. The inbound buffer is used for direct invocation, and the outbound
-+buffer is used to make callback requests. This picture shows the contents of
-+a QTEE transport message::
-+
-+                                      +---------------------+
-+                                      |                     v
-+    +-----------------+-------+-------+------+--------------------------+
-+    | qcomtee_msg_    |object | buffer       |                          |
-+    |  object_invoke  |  id   | offset, size |                          | (inbound buffer)
-+    +-----------------+-------+--------------+--------------------------+
-+    <---- header -----><---- arguments ------><- in/out buffer payload ->
-+
-+                                      +-----------+
-+                                      |           v
-+    +-----------------+-------+-------+------+----------------------+
-+    | qcomtee_msg_    |object | buffer       |                      |
-+    |  callback       |  id   | offset, size |                      | (outbound buffer)
-+    +-----------------+-------+--------------+----------------------+
-+
-+Each buffer is started with a header and array of arguments.
-+
-+QTEE Transport Message supports four types of arguments:
-+
-+- Input Object (IO) is an object parameter to the current invocation
-+  or callback request.
-+- Output Object (OO) is an object parameter from the current invocation
-+  or callback request.
-+- Input Buffer (IB) is (offset, size) pair to the inbound or outbound region
-+  to store parameter to the current invocation or callback request.
-+- Output Buffer (OB) is (offset, size) pair to the inbound or outbound region
-+  to store parameter from the current invocation or callback request.
-+
-+Picture of the relationship between the different components in the QTEE
-+architecture::
-+
-+         User space               Kernel                     Secure world
-+         ~~~~~~~~~~               ~~~~~~                     ~~~~~~~~~~~~
-+   +--------+   +----------+                                +--------------+
-+   | Client |   |callback  |                                | Trusted      |
-+   +--------+   |server    |                                | Application  |
-+      /\        +----------+                                +--------------+
-+      ||  +----------+ /\                                          /\
-+      ||  |callback  | ||                                          ||
-+      ||  |server    | ||                                          \/
-+      ||  +----------+ ||                                   +--------------+
-+      ||       /\      ||                                   | TEE Internal |
-+      ||       ||      ||                                   | API          |
-+      \/       \/      \/   +--------+--------+             +--------------+
-+   +---------------------+  | TEE    | QTEE   |             | QTEE         |
-+   |   libqcomtee [5]    |  | subsys | driver |             | Trusted OS   |
-+   +-------+-------------+--+----+-------+----+-------------+--------------+
-+   |      Generic TEE API        |       |   QTEE MSG                      |
-+   |      IOCTL (TEE_IOC_*)      |       |   SMCCC (QCOM_SCM_SMCINVOKE_*)  |
-+   +-----------------------------+       +---------------------------------+
-+
-+References
-+==========
-+
-+[1] https://docs.qualcomm.com/bundle/publicresource/topics/80-70015-11/qualcomm-trusted-execution-environment.html
-+
-+[2] http://infocenter.arm.com/help/topic/com.arm.doc.den0028a/index.html
-+
-+[3] drivers/firmware/qcom/qcom_scm.c
-+
-+[4] drivers/tee/qcomtee/qcomtee_msg.h
-+
-+[5] https://github.com/quic/quic-teec
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 5086db700aeb..bac9436f65c7 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -20984,6 +20984,7 @@ QUALCOMM TEE (QCOMTEE) DRIVER
- M:	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
- L:	linux-arm-msm@vger.kernel.org
- S:	Maintained
-+F:	Documentation/tee/qtee.rst
- F:	drivers/tee/qcomtee/
- 
- QUALCOMM TRUST ZONE MEMORY ALLOCATOR
+Pls keep it as vpu33, instead of 33x, as 33 is the variant of 3x. Accordingly at
+other places as well in this patch.
 
--- 
-2.34.1
+Regards,
+Vikash
 
+>  	.vpu_ops = &iris_vpu33_ops,
+>  	.set_preset_registers = iris_set_sm8550_preset_registers,
+>  	.icc_tbl = sm8550_icc_table,
+> @@ -916,6 +919,7 @@ struct iris_platform_data qcs8300_data = {
+>  	.get_instance = iris_hfi_gen2_get_instance,
+>  	.init_hfi_command_ops = iris_hfi_gen2_command_ops_init,
+>  	.init_hfi_response_ops = iris_hfi_gen2_response_ops_init,
+> +	.get_vpu_buffer_size = iris_vpu_buf_size,
+>  	.vpu_ops = &iris_vpu3_ops,
+>  	.set_preset_registers = iris_set_sm8550_preset_registers,
+>  	.icc_tbl = sm8550_icc_table,
+> diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> index 978d0130d43b5f6febb65430a9bbe3932e8f24df..16486284f8acccf6a95a27f6003e885226e28f4d 100644
+> --- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> +++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+> @@ -9,6 +9,7 @@
+>  #include "iris_resources.h"
+>  #include "iris_hfi_gen1.h"
+>  #include "iris_hfi_gen1_defines.h"
+> +#include "iris_vpu_buffer.h"
+>  #include "iris_vpu_common.h"
+>  
+>  #define BITRATE_MIN		32000
+> @@ -317,6 +318,7 @@ struct iris_platform_data sm8250_data = {
+>  	.get_instance = iris_hfi_gen1_get_instance,
+>  	.init_hfi_command_ops = &iris_hfi_gen1_command_ops_init,
+>  	.init_hfi_response_ops = iris_hfi_gen1_response_ops_init,
+> +	.get_vpu_buffer_size = iris_vpu_buf_size,
+>  	.vpu_ops = &iris_vpu2_ops,
+>  	.set_preset_registers = iris_set_sm8250_preset_registers,
+>  	.icc_tbl = sm8250_icc_table,
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> index 34a9094201ccd11d30a776f284ede8248d8017a9..9cb7701722c3644ef4c369fa58490ac83258ea7e 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+> @@ -867,6 +867,34 @@ u32 size_vpss_line_buf(u32 num_vpp_pipes_enc, u32 frame_height_coded,
+>  		      (((((max_t(u32, (frame_width_coded),
+>  				 (frame_height_coded)) + 3) >> 2) << 5) + 256) * 16)), 256);
+>  }
+> +static inline
+> +u32 size_vpss_line_buf_vpu33x(u32 num_vpp_pipes_enc, u32 frame_height_coded,
+> +			      u32 frame_width_coded)
+> +{
+> +	u32 vpss_4tap_top = 0, vpss_4tap_left = 0, vpss_div2_top = 0;
+> +	u32 vpss_div2_left = 0, vpss_top_lb = 0, vpss_left_lb = 0;
+> +	u32 size_left = 0, size_top = 0;
+> +
+> +	vpss_4tap_top = (max_t(u32, frame_width_coded, frame_height_coded) * 2) + 3;
+> +	vpss_4tap_top >>= 2;
+> +	vpss_4tap_top <<= 4;
+> +	vpss_4tap_top += 256;
+> +	vpss_4tap_left = (((8192 + 3) >> 2) << 5) + 64;
+> +	vpss_div2_top = max_t(u32, frame_width_coded, frame_height_coded) + 3;
+> +	vpss_div2_top >>= 2;
+> +	vpss_div2_top <<= 4;
+> +	vpss_div2_top += 256;
+> +	vpss_div2_left = (max_t(u32, frame_width_coded, frame_height_coded) * 2) + 3;
+> +	vpss_div2_left >>= 2;
+> +	vpss_div2_left <<= 5;
+> +	vpss_div2_left += 64;
+> +	vpss_top_lb = (frame_width_coded + 1) << 3;
+> +	vpss_left_lb = (frame_height_coded << 3) * num_vpp_pipes_enc;
+> +	size_left = (vpss_4tap_left + vpss_div2_left) * 2 * num_vpp_pipes_enc;
+> +	size_top = (vpss_4tap_top + vpss_div2_top) * 2;
+> +
+> +	return ALIGN(size_left + size_top + vpss_top_lb + vpss_left_lb, DMA_ALIGNMENT);
+> +}
+>  
+>  static inline
+>  u32 size_top_line_buf_first_stg_sao(u32 frame_width_coded)
+> @@ -977,8 +1005,8 @@ static u32 iris_vpu_enc_non_comv_size(struct iris_inst *inst)
+>  }
+>  
+>  static inline
+> -u32 hfi_buffer_line_enc(u32 frame_width, u32 frame_height, bool is_ten_bit,
+> -			u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
+> +u32 hfi_buffer_line_enc_base(u32 frame_width, u32 frame_height, bool is_ten_bit,
+> +			     u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
+>  {
+>  	u32 width_in_lcus = ((frame_width) + (lcu_size) - 1) / (lcu_size);
+>  	u32 height_in_lcus = ((frame_height) + (lcu_size) - 1) / (lcu_size);
+> @@ -1018,10 +1046,38 @@ u32 hfi_buffer_line_enc(u32 frame_width, u32 frame_height, bool is_ten_bit,
+>  		line_buff_recon_pix_size +
+>  		size_left_linebuff_ctrl_fe(frame_height_coded, num_vpp_pipes_enc) +
+>  		size_line_buf_sde(frame_width_coded) +
+> -		size_vpss_line_buf(num_vpp_pipes_enc, frame_height_coded, frame_width_coded) +
+>  		size_top_line_buf_first_stg_sao(frame_width_coded);
+>  }
+>  
+> +static inline
+> +u32 hfi_buffer_line_enc(u32 frame_width, u32 frame_height, bool is_ten_bit,
+> +			u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
+> +{
+> +	u32 width_in_lcus = ((frame_width) + (lcu_size) - 1) / (lcu_size);
+> +	u32 height_in_lcus = ((frame_height) + (lcu_size) - 1) / (lcu_size);
+> +	u32 frame_height_coded = height_in_lcus * (lcu_size);
+> +	u32 frame_width_coded = width_in_lcus * (lcu_size);
+> +
+> +	return hfi_buffer_line_enc_base(frame_width, frame_height, is_ten_bit,
+> +					num_vpp_pipes_enc, lcu_size, standard) +
+> +		size_vpss_line_buf(num_vpp_pipes_enc, frame_height_coded, frame_width_coded);
+> +}
+> +
+> +static inline
+> +u32 hfi_buffer_line_enc_vpu33x(u32 frame_width, u32 frame_height, bool is_ten_bit,
+> +			       u32 num_vpp_pipes_enc, u32 lcu_size, u32 standard)
+> +{
+> +	u32 width_in_lcus = ((frame_width) + (lcu_size) - 1) / (lcu_size);
+> +	u32 height_in_lcus = ((frame_height) + (lcu_size) - 1) / (lcu_size);
+> +	u32 frame_height_coded = height_in_lcus * (lcu_size);
+> +	u32 frame_width_coded = width_in_lcus * (lcu_size);
+> +
+> +	return hfi_buffer_line_enc_base(frame_width, frame_height, is_ten_bit,
+> +					num_vpp_pipes_enc, lcu_size, standard) +
+> +		size_vpss_line_buf_vpu33x(num_vpp_pipes_enc, frame_height_coded,
+> +					  frame_width_coded);
+> +}
+> +
+>  static u32 iris_vpu_enc_line_size(struct iris_inst *inst)
+>  {
+>  	u32 num_vpp_pipes = inst->core->iris_platform_data->num_vpp_pipe;
+> @@ -1040,6 +1096,24 @@ static u32 iris_vpu_enc_line_size(struct iris_inst *inst)
+>  				   lcu_size, HFI_CODEC_ENCODE_AVC);
+>  }
+>  
+> +static u32 iris_vpu33x_enc_line_size(struct iris_inst *inst)
+> +{
+> +	u32 num_vpp_pipes = inst->core->iris_platform_data->num_vpp_pipe;
+> +	struct v4l2_format *f = inst->fmt_dst;
+> +	u32 height = f->fmt.pix_mp.height;
+> +	u32 width = f->fmt.pix_mp.width;
+> +	u32 lcu_size = 16;
+> +
+> +	if (inst->codec == V4L2_PIX_FMT_HEVC) {
+> +		lcu_size = 32;
+> +		return hfi_buffer_line_enc_vpu33x(width, height, 0, num_vpp_pipes,
+> +						  lcu_size, HFI_CODEC_ENCODE_HEVC);
+> +	}
+> +
+> +	return hfi_buffer_line_enc_vpu33x(width, height, 0, num_vpp_pipes,
+> +					  lcu_size, HFI_CODEC_ENCODE_AVC);
+> +}
+> +
+>  static inline
+>  u32 hfi_buffer_dpb_enc(u32 frame_width, u32 frame_height, bool is_ten_bit)
+>  {
+> @@ -1387,7 +1461,7 @@ struct iris_vpu_buf_type_handle {
+>  	u32 (*handle)(struct iris_inst *inst);
+>  };
+>  
+> -int iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
+> +u32 iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
+>  {
+>  	const struct iris_vpu_buf_type_handle *buf_type_handle_arr = NULL;
+>  	u32 size = 0, buf_type_handle_size = 0, i;
+> @@ -1431,6 +1505,34 @@ int iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
+>  	return size;
+>  }
+>  
+> +u32 iris_vpu33x_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type)
+> +{
+> +	u32 size = 0, i;
+> +
+> +	static const struct iris_vpu_buf_type_handle enc_internal_buf_type_handle[] = {
+> +		{BUF_BIN,         iris_vpu_enc_bin_size         },
+> +		{BUF_COMV,        iris_vpu_enc_comv_size        },
+> +		{BUF_NON_COMV,    iris_vpu_enc_non_comv_size    },
+> +		{BUF_LINE,        iris_vpu33x_enc_line_size     },
+> +		{BUF_ARP,         iris_vpu_enc_arp_size         },
+> +		{BUF_VPSS,        iris_vpu_enc_vpss_size        },
+> +		{BUF_SCRATCH_1,   iris_vpu_enc_scratch1_size    },
+> +		{BUF_SCRATCH_2,   iris_vpu_enc_scratch2_size    },
+> +	};
+> +
+> +	if (inst->domain == DECODER)
+> +		return iris_vpu_buf_size(inst, buffer_type);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(enc_internal_buf_type_handle); i++) {
+> +		if (enc_internal_buf_type_handle[i].type == buffer_type) {
+> +			size = enc_internal_buf_type_handle[i].handle(inst);
+> +			break;
+> +		}
+> +	}
+> +
+> +	return size;
+> +}
+> +
+>  static u32 internal_buffer_count(struct iris_inst *inst,
+>  				 enum iris_buffer_type buffer_type)
+>  {
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+> index 94668c5b3d15fb6e10d0b5ed6ed704cadb5a6534..e4fd1fcf2dbf25e69d55599a8fd4ad775f9e6575 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.h
+> @@ -146,7 +146,8 @@ static inline u32 size_h264d_qp(u32 frame_width, u32 frame_height)
+>  	return DIV_ROUND_UP(frame_width, 64) * DIV_ROUND_UP(frame_height, 64) * 128;
+>  }
+>  
+> -int iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
+> +u32 iris_vpu_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
+> +u32 iris_vpu33x_buf_size(struct iris_inst *inst, enum iris_buffer_type buffer_type);
+>  int iris_vpu_buf_count(struct iris_inst *inst, enum iris_buffer_type buffer_type);
+>  
+>  #endif
+> 
+> ---
+> base-commit: 58717ecfffd642c1e0950dee4a247dd6cdfeb31e
+> change-id: 20250822-topic-sm8x50-iris-encoder-v3-hevc-debug-10173f4838e3
+> 
+> Best regards,
 
