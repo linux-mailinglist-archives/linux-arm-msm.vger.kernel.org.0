@@ -1,137 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-71680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 33150B40CB8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 20:05:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42FBAB40CC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 20:07:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 99053547FA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 18:05:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B4A5020423A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 18:07:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3FE5A34A327;
-	Tue,  2 Sep 2025 18:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B400C33CEB9;
+	Tue,  2 Sep 2025 18:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kLUtS4EQ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oUJUzb/F"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 070F0342CB8;
-	Tue,  2 Sep 2025 18:04:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803EC2FD1DC;
+	Tue,  2 Sep 2025 18:06:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756836286; cv=none; b=aALaqA8s3tGsfnDathfSEjDBs2jV5BysmsE1d+ePBZ7NJaNBxL7yK3LkcIB/gxs/AR/B8luGm+bSZCglRytKim3rBd3dexnPm2jQn7oczXo7rMwZqyJ4yoG6yeAzx2MEXN0JTPf7kGtYWN+EavWHG/9zECUiRBksLC3v4zq2OiM=
+	t=1756836418; cv=none; b=KIJSBQ23OrEzJhv1dVuLV+Jw1xjpNgKeh5kW0IEyBFiB/+23agTzKIeUpwlGff5SMGDoHNT8sK85CapftAe9iJjjG2FlyvSxbYSg/EluQqhuANrgG3HruVaGuqAG8drwt+0bC5aTDZCBo1zqDobzJr1EtAvpQW5+iNl6Goqdcak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756836286; c=relaxed/simple;
-	bh=EeQ8qmgl4PWfxl1pAaKnRAnYiAo1vJ0KyU0hmIyxK4w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=koVKvX46S+RoLpQ2NgpKmn4d+1BozNvbjiiDIU7/fXXO2BAGbBdv/azEJ6OrKIIaMWt0e8u0KjrZhhh5XNteqcWe4kI2xmj4xFTgKYJuHcbsZFxQ/rgvfbNEUvjBrzFy/fcNaC26G+qjk3cx2MTkh4aaLXu2oqX8xTS+Ld4kr3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kLUtS4EQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE14C4CEF5;
-	Tue,  2 Sep 2025 18:04:45 +0000 (UTC)
+	s=arc-20240116; t=1756836418; c=relaxed/simple;
+	bh=gHqutckRXz5XP4RgC8sLZI2+EMilxv4s1+VahX0x4KQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O2vK1uGDMGS+ase08GM4RpRp9Kp91dcEFRWt6XQtK1h16wmTCw851SZ3As3spqY0vWV7B5//lrji54HGTXJkqnhWzPtIa+PHfvOPUGyeymrNakfRpRuK+mtxDhOzsfpdNbHQ/Ig5Nx0GDSNihpbdP+Pf8WllVtdYCKGvZdcbK78=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oUJUzb/F; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD5BC4CEED;
+	Tue,  2 Sep 2025 18:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756836285;
-	bh=EeQ8qmgl4PWfxl1pAaKnRAnYiAo1vJ0KyU0hmIyxK4w=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=kLUtS4EQCkk/A9dMyixoi1pGnw8CaT7/84yqRE0njOsg7CM9YeKCsMJW2LZqf/3el
-	 OwkLmz0zmHq/Ult0Mjr+J3xAczSUME/cJj+KIXIpKd2tFpIBXsvDUA3dYAeFh3xrrc
-	 PVSXoeERVQ1XBMcvHz8gfRkBvTxrA9Z5py1fkabCPxPqrr6etzxIFWOKWRg/IKjarU
-	 VsS8FcOdKXyrR1omkG8kdLEyhSKjHNP2CPLo/lqGpTvrnlLJrm0y422E5+xy6W7aox
-	 WOFv69o5TYtUmb/4fVCkFspy4l2qy/HJ0wAE27xvGE7ICT3+iEZbI0ctdpyICJE8tH
-	 57cM+k93Ss8hw==
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-61cd6089262so9235852a12.3;
-        Tue, 02 Sep 2025 11:04:45 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVdZy2qaA2iYd6AnlPvrkdMCZE1a0AlVNBOrgvJSh83okn0OuObIXRD1HrUqsymLHOeYUpc6BFgn8+2ToU=@vger.kernel.org, AJvYcCWT03hd+m6J0ShcjZdkS1WuzTSHywcSd5rQwsA497gcmu8Nd1LbLfIryTvHX5xgbEblykSKpBtXTY4f9LJ/wA==@vger.kernel.org, AJvYcCWzzEieouwW1HSw12ZDiKIXQjMQ+UXb1wl5UZwvB0G3aYLlmtFMmBIMbhaYIkSJY+94dzd/WhZellw8@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUMlhndtS3D6a6CTXptaeORz0erv3STVrqZzn9FJ1vRjDMtB08
-	AxotFFFxV4kdE5g04WSD8BcJCLb1kbG0EAxpUULiVjeU0uE0JIAd8sVGjEnSLZslQ1mZstgl0tv
-	4gf2gdZMwrTCGzZjBRLBE4pmzjjGaiQ==
-X-Google-Smtp-Source: AGHT+IFS6/jTBaxYrOJnscPEN+/2YvkXakCmNm/PwzwXCk1mnjslLPBcUGBBbnZoHxpujqjkp7TnqY/26l/YlWGGcLY=
-X-Received: by 2002:a05:6402:2815:b0:61c:1b27:56d4 with SMTP id
- 4fb4d7f45d1cf-61d26da447cmr10421007a12.35.1756836284070; Tue, 02 Sep 2025
- 11:04:44 -0700 (PDT)
+	s=k20201202; t=1756836418;
+	bh=gHqutckRXz5XP4RgC8sLZI2+EMilxv4s1+VahX0x4KQ=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oUJUzb/FCp7NMEMYs7VrpnjLkQ4z3xyyxo0dFDOlkccenX3RYl+IjxI6ZrfoPzpmb
+	 o3t7H7+LF+M5QWFZbWBjtREhH/ttv7QweXoz7ucvQ6jH15IElwi1u+MnpZn9y4Zlkm
+	 NnqrxijmeZelPHcqMtV0fEAat5SSKrTAPlYvDofyYf/fakv7h0PWcuLC7IB4Ty8Gp0
+	 qPHxHaXT8pfXbKj6V9XvRnxWCvyq0WXViZ6Ymt6Xp31vL/zpTKgU2nlss3Lm8lapEP
+	 UTmDxT+ybdxll8FHpizGh8N5C0+jFYyqoOCByleDes9gcVPFLDmyUqNG8fin5TmUQJ
+	 s5gCqTYfkaVtA==
+Date: Tue, 2 Sep 2025 20:06:54 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Daniel Stone <daniel@fooishbar.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+Message-ID: <st6wob5hden6ypxt2emzokfhl3ezpbuypv2kdtf5zdrdhlyjfw@l2neflb4uupo>
+References: <20250830-drm-limit-infoframes-v3-0-32fcbec4634e@oss.qualcomm.com>
+ <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com>
+ <57ekub6uba7iee34sviadareqxv234zbmkr7avqofxes4mqnru@vgkppexnj6cb>
+ <20250901-voracious-classy-hedgehog-ee28ef@houat>
+ <voknqdv3zte2jzue5yxmysdiixxkogvpblvrccp5gu55x5ycca@srrcscly4ch4>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250902161156.145521-1-srinivas.kandagatla@oss.qualcomm.com> <20250902161156.145521-2-srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <20250902161156.145521-2-srinivas.kandagatla@oss.qualcomm.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 2 Sep 2025 13:04:31 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKxPJ5KSJLoQNQjnivAYZF9j2wCLAxs4TgqeB7P6+XMOA@mail.gmail.com>
-X-Gm-Features: Ac12FXzChS6xv6fFnfBFo-YbbDH_HBgYtWIDPAASPv30eOZopkMvjiG8g64KNhI
-Message-ID: <CAL_JsqKxPJ5KSJLoQNQjnivAYZF9j2wCLAxs4TgqeB7P6+XMOA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/7] of: base: Add of_property_read_u8_index
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: krzk+dt@kernel.org, vkoul@kernel.org, conor+dt@kernel.org, 
-	srini@kernel.org, yung-chuan.liao@linux.intel.com, 
-	pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-sound@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="w4agiwtkcjwsgz6j"
+Content-Disposition: inline
+In-Reply-To: <voknqdv3zte2jzue5yxmysdiixxkogvpblvrccp5gu55x5ycca@srrcscly4ch4>
+
+
+--w4agiwtkcjwsgz6j
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+MIME-Version: 1.0
 
-On Tue, Sep 2, 2025 at 11:12=E2=80=AFAM Srinivas Kandagatla
-<srinivas.kandagatla@oss.qualcomm.com> wrote:
->
-> Add support for of_property_read_u8_index(), simillar to others
-> u16 and u32 variants. Having this helper makes the code more tidy in
-> isome cases, specially when we are parsing multiple of these into
-> data structures.
->
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-> ---
->  drivers/of/property.c | 33 +++++++++++++++++++++++++++++++++
->  include/linux/of.h    |  9 +++++++++
->  2 files changed, 42 insertions(+)
->
-> diff --git a/drivers/of/property.c b/drivers/of/property.c
-> index c1feb631e383..a644b24d5b75 100644
-> --- a/drivers/of/property.c
-> +++ b/drivers/of/property.c
-> @@ -147,6 +147,39 @@ static void *of_find_property_value_of_size(const st=
-ruct device_node *np,
->         return prop->value;
->  }
->
-> +/**
-> + * of_property_read_u8_index - Find and read a u8 from a multi-value pro=
-perty.
-> + *
-> + * @np:                device node from which the property value is to b=
-e read.
-> + * @propname:  name of the property to be searched.
-> + * @index:     index of the u8 in the list of values
-> + * @out_value: pointer to return value, modified only if no error.
-> + *
-> + * Search for a property in a device node and read nth 8-bit value from
-> + * it.
-> + *
-> + * Return: 0 on success, -EINVAL if the property does not exist,
-> + * -ENODATA if property does not have a value, and -EOVERFLOW if the
-> + * property data isn't large enough.
-> + *
-> + * The out_value is modified only if a valid u8 value can be decoded.
-> + */
-> +int of_property_read_u8_index(const struct device_node *np,
-> +                                      const char *propname,
-> +                                      u32 index, u8 *out_value)
-> +{
-> +       const u8 *val =3D of_find_property_value_of_size(np, propname,
-> +                                       ((index + 1) * sizeof(*out_value)=
-),
-> +                                       0, NULL);
-> +
-> +       if (IS_ERR(val))
-> +               return PTR_ERR(val);
-> +
-> +       *out_value =3D *(val + index);
+On Tue, Sep 02, 2025 at 06:45:44AM +0300, Dmitry Baryshkov wrote:
+> On Mon, Sep 01, 2025 at 09:07:02AM +0200, Maxime Ripard wrote:
+> > On Sun, Aug 31, 2025 at 01:29:13AM +0300, Dmitry Baryshkov wrote:
+> > > On Sat, Aug 30, 2025 at 09:30:01AM +0200, Daniel Stone wrote:
+> > > > Hi Dmitry,
+> > > >=20
+> > > > On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
+> > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > > > It's not uncommon for the particular device to support only a sub=
+set of
+> > > > > HDMI InfoFrames. It's not a big problem for the kernel, since we =
+adopted
+> > > > > a model of ignoring the unsupported Infoframes, but it's a bigger
+> > > > > problem for the userspace: we end up having files in debugfs whic=
+h do
+> > > > > mot match what is being sent on the wire.
+> > > > >
+> > > > > Sort that out, making sure that all interfaces are consistent.
+> > > >=20
+> > > > Thanks for the series, it's a really good cleanup.
+> > > >=20
+> > > > I know that dw-hdmi-qp can support _any_ infoframe, by manually
+> > > > packing it into the two GHDMI banks. So the supported set there is
+> > > > 'all of the currently well-known ones, plus any two others, but only
+> > > > two and not more'. I wonder if that has any effect on the interface
+> > > > you were thinking about for userspace?
+> > >=20
+> > > I was mostly concerned with the existing debugfs interface (as it is
+> > > also used e.g. for edid-decode, etc).
+> > >=20
+> > > It seems "everything + 2 spare" is more or less common (ADV7511, MSM
+> > > HDMI also have those. I don't have at hand the proper datasheet for
+> > > LT9611 (non-UXC one), but I think its InfoFrames are also more or less
+> > > generic).  Maybe we should change debugfs integration to register the
+> > > file when the frame is being enabled and removing it when it gets uns=
+et.
+> >=20
+> > But, like, for what benefit?
+> >=20
+> > It's a debugfs interface for userspace to consume. The current setup
+> > works fine with edid-decode already. Why should we complicate the design
+> > that much and create fun races like "I'm running edid-decode in parallel
+> > to a modeset that would remove the file I just opened, what is the file
+> > now?".
+>=20
+> Aren't we trading that with the 'I'm running edid-decode in paralle with
+> to a modeset and the file suddenly becomes empty'?
 
-val[index]
+In that case, you know what the file is going to be: empty. And you went
+=66rom a racy, straightforward, design to a racy, complicated, design.
 
-Otherwise,
+It was my question before, but I still don't really see what benefits it
+would have, and why we need to care about it in the core, when it could
+be dealt with in the drivers just fine on a case by case basis.
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> > > Then in the long run we can add 'slots' and allocate some of the fram=
+es
+> > > to the slots. E.g. ADV7511 would get 'software AVI', 'software SPD',
+> > > 'auto AUDIO' + 2 generic slots (and MPEG InfoFrame which can probably=
+ be
+> > > salvaged as another generic one)). MSM HDMI would get 'software AVI',
+> > > 'software AUDIO' + 2 generic slots (+MPEG + obsucre HDMI which I don't
+> > > want to use). Then the framework might be able to prioritize whether =
+to
+> > > use generic slots for important data (as DRM HDR, HDMI) or less impor=
+tant
+> > > (SPD).
+> >=20
+> > Why is it something for the framework to deal with? If you want to have
+> > extra infoframes in there, just go ahead and create additional debugfs
+> > files in your driver.
+> >=20
+> > If you want to have the slot mechanism, check in your atomic_check that
+> > only $NUM_SLOT at most infoframes are set.
+>=20
+> The driver can only decide that 'we have VSI, SPD and DRM InfoFrames
+> which is -ETOOMUCH for 2 generic slots'. The framework should be able to
+> decide 'the device has 2 generic slots, we have HDR data, use VSI and
+> DRM InfoFrames and disable SPD for now'.
+
+I mean... the spec does? The spec says when a particular feature
+requires to send a particular infoframe. If your device cannot support
+to have more than two "features" enabled at the same time, so be it. It
+something that should be checked in that driver atomic_check.
+
+Or just don't register the SPD debugfs file, ignore it, put a comment
+there, and we're done too.
+
+> But... We are not there yet and I don't have clear usecase (we support
+> HDR neither on ADV7511 nor on MSM HDMI, after carefully reading the
+> guide I realised that ADV7511 has normal audio infoframes). Maybe I
+> should drop all the 'auto' features, simplifying this series and land
+> [1] for LT9611UXC as I wanted origianlly.
+>=20
+> [1] https://lore.kernel.org/dri-devel/20250803-lt9611uxc-hdmi-v1-2-cb9ce1=
+793acf@oss.qualcomm.com/
+
+Looking back at that series, I think it still has value to rely on the
+HDMI infrastructure at the very least for the atomic_check sanitization.
+
+But since you wouldn't use the generated infoframes, just skip the
+debugfs files registration. You're not lying to userspace anymore, and
+you get the benefits of the HDMI framework.
+
+Maxime
+
+--w4agiwtkcjwsgz6j
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaLcyPgAKCRAnX84Zoj2+
+doX0AX93Q4zANj52tF9dUYikkKhfOnVgebYAQL9Lxom3OCpl8W6kZ2Ik+VcbTiyU
+1tDN4eoBgIeHZ7m/7ekMpxpStDQ1y4lq8smmLkNZ3KMveJKiM0MD3WjPNuxmmLEZ
+63+ZOyFlqA==
+=5/yk
+-----END PGP SIGNATURE-----
+
+--w4agiwtkcjwsgz6j--
 
