@@ -1,221 +1,326 @@
-Return-Path: <linux-arm-msm+bounces-71686-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71687-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34E4AB40F97
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 23:45:57 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AF198B40FE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 00:17:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E8B46542C5B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 21:45:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2EC6B7B1F60
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 22:16:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74776353376;
-	Tue,  2 Sep 2025 21:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EC9E2749C0;
+	Tue,  2 Sep 2025 22:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KU9FxQr0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NQCaPVv+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA7111F948
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 21:45:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6108923B63B
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 22:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756849551; cv=none; b=GMNMBKiqKhcAF2xRSRuhMSPxNsXG4lnnOZ6JXZ8T6QjlkjDTJ/d8vdh99sQ4Dd58LGqLKKzkwegE6bsSfvj2tGKpYaJ/79G0xZFw/fHKSI95IIAlT6S+9207AWXSOCsjuJIxTJQ2kqHlEqTirtzb/uPCh1FgDi9xRhW7P7XFANE=
+	t=1756851460; cv=none; b=Hgm3g/gLN3GJMEY1aXeSCbOEsuepXjWSTl3lI7yaPHx/0EVRBtmp4OIZrzt4YyDUI9YkQteJKWc2MdxVKcYsLptFtrpAi9URI1XU6HrKkatZsGCryTP+q/qTRMytyVU/Lbx64ajK/GEybD/lNvCfeEnXRiNG180u52ZlVBHUKiQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756849551; c=relaxed/simple;
-	bh=qYbjt0FRDxWppmSPNceU5fkD9FJzBHfBeD7f4c9by6U=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=gdrVXAVJO3qxgArxSjd3s/kszeBXsJGxqCGmV4w6jY4153kW2EZOK2as/V1bzRvwoc4SvnKb6sriziCRAPmd/LI70fqm73MfJr8iPttuT4/jm3hN5E0VJmjhZtHDeMPJQ1CtwEUR/SIDNW7fSoE+BqOg9D13CPpTuXbASdK3WVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KU9FxQr0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqciI032759
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 21:45:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=uQQZgphG6OFoqGrYvnuOA6GQYJfzJK/1Em6
-	trqgSBFU=; b=KU9FxQr0S1hM6aTfaGQbAlJPr3sO7X01UNOj4kS1uM/qD00TI9Q
-	pL/ZRMbwspj0ys6TIt9MP9pQEFPdKu6L2qTJa2tAqZGHj/Y+bP2Z14FY09FU5JYW
-	05L8OnT17p4EgTSUpU4VnBuy8YMK4hhmrvXX9T1GQFFXaLUvbmw/ArhEyN5HtNFb
-	hnZfSEVB0H2WpjmlYX2vIukGRtfbFjx6moY/OhcdVyN1ts/OZZEOZ8ZEVMTizxH4
-	tW9bhBTHWbNJFTC/tZprCDbkltAIBKhdXBweT52D5pHWpYZk5GddlHVH8vRPElRC
-	bX7We2C2OD1ox56+pwGTcRWawkjvLjZXWnQ==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8s9eg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 21:45:47 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-24909dffc72so49925535ad.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 14:45:47 -0700 (PDT)
+	s=arc-20240116; t=1756851460; c=relaxed/simple;
+	bh=YEIc194Ao5yrfy9fw80PwIuIjisIq6gf8KDaB/zh1tw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=u2gxRPvwJ3EbhTjmYq+7gj21esG0yMZe8UHay0XVxsVTlxFF4mUyvrOTmR60bQrjirNGHsgZcMQ2EN+qmpbu/CxXdO0oW09vQNT20UUbhhi6d2ngRyRV5rocmlib6zsC6Xdowoo05k3TAw/lwZ9tuaiagzq1DgsBQsn7gFcPK6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NQCaPVv+; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45b8b2712d8so29666195e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 15:17:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756851457; x=1757456257; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Odc+SKaLkvuOl8Zr1Krcde+q8Sa9570C7V06vYvfBtQ=;
+        b=NQCaPVv+QuqGlQ3snW2yZBTfOnYt2jhf3sFYE6JTQ7b5HFlK8xGhlFet0L+RSkgVST
+         YKxXWnm3OI+ZQAEw2GznTLEibGWlzZo2aU5Nt5McVMhg+KmKIfJeeB8zVrBXuuZ4wiPr
+         MpZvm2CN0dGOZeflnTHzzkjFeRNp16iKyvi2duQ2fSJy1l/GNEQTQgWOG42+47Ne0bQS
+         mUgzxGMcxlHkX+sj7F3mPmTDPdq+WJTPEreI81MhkkKCUFDOmphQHGMvzhA5LrlmDZjB
+         iZTYMhyP0qEkxipD9CFk1MabQRFDV+EWHWGyCM1vwCKu5bCDT1KaEIysXQWcyrm2CJPy
+         WwAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756849546; x=1757454346;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uQQZgphG6OFoqGrYvnuOA6GQYJfzJK/1Em6trqgSBFU=;
-        b=PC8fOPNeXHLdnulZQd7R72XuSDegmLqTJlnk05uIaNC48C0FWdCpBu99X0TBYg/9/X
-         CW9DgbKe4tdVRhI1pUOe5zyh1I+akb+8RiBikHcROZKTt33mH36+KdaP6nczaGF3syM9
-         zzZlw+Ur5bFgk7+qHdRFxHcUU74+QZaON4Xz8V8lDr5y4MOIfvx5wOc/qnk2VOHWtY7g
-         rgrp3xF17QoU2cb7RPnDWPcKR7RKQycGOMjSVv7ifyH4aflt1zxdSwzYjNldaBZQHOOV
-         v6Z2mgcoEe+41KFlFeD9cRhi7qhfcUea8UuvHj52VtuqWQb/qw6Um92VoCSBVhTp10av
-         w81A==
-X-Gm-Message-State: AOJu0YykxqcCwmlZvkGyDpB8+2WE90+dlJrMDXbhgHmyv++i9ijZP8Cb
-	ujESLDvsaMXolP723RnXEGhRU6pNrXKhMQGFgmT2ETJIv1dNLLQA5zhJwQf+AT3iaDyBF1z4IKK
-	rEhJdWFTpyUVBVQ3EsLUW+O3MJ9ALTllWUOz4V1AODmO1iHY1j7x+CSWKo26fnDH61UWi
-X-Gm-Gg: ASbGncsxctF5uwYkAxkztduMGeYrKkjjx1EwbTwpKsJpwmmwI4SsAyg3nRB5YccYfHj
-	VNPNtelTgzk5Pzp9OkeNfjdBGxy0P2w5zafaoZMFm0J0tpk36RceXTtdy6Qkgh5ou/Y2XbAYDav
-	buDlkmKMespnIXD8JxIfRThk/Dnth1BUpEQJ6w6n4feayknJoK9gw1PBnEATzlpusBGvvk9WIvf
-	Ro52m9kde7WS6cJB52s0aX33cekjHFneEAJNxqinpH6z6du8Jxxe7WiQbsiKuaAmBOHwxNcW0G9
-	aoIFybhSQBXlmfRLLnA0w7tvP7I9tXx8M6rf0ImAYNBV9XtqaEguslYP81i7aF/ZV3A76YnH91U
-	7VNE1YuGYua9vFC8lDKf1m3ilAeY=
-X-Received: by 2002:a17:902:e747:b0:24a:8ed6:fa0 with SMTP id d9443c01a7336-24a8ed61300mr149952495ad.54.1756849546251;
-        Tue, 02 Sep 2025 14:45:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGvIOhICh15uD16Xcr9z8S+z0F+ibedqbckSK2cFUoHumlbYdDSIxPBy7TIzVczTgcnxsaRRw==
-X-Received: by 2002:a17:902:e747:b0:24a:8ed6:fa0 with SMTP id d9443c01a7336-24a8ed61300mr149952285ad.54.1756849545811;
-        Tue, 02 Sep 2025 14:45:45 -0700 (PDT)
-Received: from hu-amelende-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-329cb6a2ec2sm4746324a91.21.2025.09.02.14.45.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Sep 2025 14:45:45 -0700 (PDT)
-From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-To: andersson@kernel.org, konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] soc: qcom: pmic_glink: Add support for SOCCP remoteproc channels
-Date: Tue,  2 Sep 2025 14:45:44 -0700
-Message-Id: <20250902214544.543038-1-anjelique.melendez@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1756851457; x=1757456257;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Odc+SKaLkvuOl8Zr1Krcde+q8Sa9570C7V06vYvfBtQ=;
+        b=JQ4uS99waqZDeLp5q4Ttwh7IwdXJqiiY17rT4goqVOBraZHanRUjTo4eLWH8MCW1pA
+         GZMFUOSHYXbGs5A34mztsMjHoisHWg2CpiO3FEB44/ZE/m8nyfGEIoV8PLz+wHTgTUI1
+         qTwO+XBHgEyXQ8Km3TfxBDV6GuyycC9KSJBNfi0gOwIq36UUHsvg3tf3ok0nBPRp4809
+         kc3pgT8UB28GkGPeUqyUTZ64zpPiUojjGjJULOD0BY7HU9w0PACmLZIb+FC4CLUwlQ65
+         Tl4zga8SsV+30J2S2wQfU4mjUNF+TVSRImSjTyl/QgSDHlIujKBT7K9hWS5G/qz88mSH
+         pTIg==
+X-Forwarded-Encrypted: i=1; AJvYcCUv/tVQI/nPon6tISlLktq1Kl6l6TRlmb/e5Rjc9oXuDl4+dk0or8RBuOywXJLtPtKMi1Njtnim3f1N8Fbz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyoJwQJxX3/9x4A6C+iiGrSHixnKoMP4Oy54kPLMqMEkvTDTfwp
+	gqR5/ssRgCNoY+3JfnA+vlwWVqAo6zF0dEn7i5u5EwB7KmsXNlSHnZD2AXPoKH+4vVE=
+X-Gm-Gg: ASbGncuyORPl5/COZrwh77sHwwASqY7dJnci3U/uU2fkYTMUV3YC/0MOQ862WN82Xea
+	nEBvsGKdKclGwUfyZuVvP6LAAtSRSgf5wR957F1QxW0u4KV6fXR2ccqq3/W8UjgxvSVnAwAQz0e
+	FYcoLjrzydsYrs70MZALeP3QskxBGcmy1t5d71v5kB7meaXMs/Oxbe4hbCLOxTxpcsUIQ01EeGA
+	sYLXdejY1lhLpAHJhJqih3HreP4hcTvybZ83oBlq52wsg1UwDas96bcjmoB+3Wp9EZrpnoKaKi9
+	EIOR4H2HvpRcYHbD4K3tfCeS/mC+/H+qTqGOIMjJtLpuQPpmkaRNeFr/UkTXfl6r0JMey2969hU
+	QeekENvOWdrOEYtg0j2I9t0FGduwI71+53DoNjEy6BXoHa+8FAjth4Eymh9n/JbcxEspD+TWeUx
+	woYbG6w6sq19thQAnoy9WTTJt7EsLBDtw=
+X-Google-Smtp-Source: AGHT+IEcfnYXz+ii1oNYKNXIttKMgpo4bfd3Q7jINqKFuzP2Jas3kpGopgl+yDLGBteadORdYJEmQA==
+X-Received: by 2002:a05:600c:3153:b0:458:bda4:43df with SMTP id 5b1f17b1804b1-45b85570996mr137042635e9.17.1756851456607;
+        Tue, 02 Sep 2025 15:17:36 -0700 (PDT)
+Received: from [192.168.0.13] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45c447244c4sm15302105e9.6.2025.09.02.15.17.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Sep 2025 15:17:36 -0700 (PDT)
+Message-ID: <80bc915b-16fa-4cab-b461-b18b9a124d0e@linaro.org>
+Date: Tue, 2 Sep 2025 23:17:35 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: CuBKbNfgsJmjdH_GNutzUrsf8161cxZm
-X-Proofpoint-GUID: CuBKbNfgsJmjdH_GNutzUrsf8161cxZm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfX/6PIHVduz9Y/
- GZuYYru0mzOZAoqQoJEVUzmU2BgNFrtDOMQgCwz108+VNNMxpcWBqWGtFFxj8z11x46aNmCHM3/
- i6UwkLPs7Z27Fuvuna8267EYYRLi1zZUiieDwqdDnAliBiXMhjU62gw1Rp7qKKzo9otwzi9Lt9r
- Rq6JTWwEXVn3E4Kkwwhp8l09lwfCK/2Ev5rr4yECxVw+sI4FRH/Xj6A8qhs3EOq0e7TGiRnyuTI
- Uwn652IvHhPR6tWM2tHM+u1yGYDB/V/hR63nZps51eBnNFef1qBGjm+MFYzqKGWGNbNYY+LxiEA
- WrUySUBWbwOZuSp2PFTE2ospTLQ9cYybOhHvcsGsb0kq5LcgGLlnJrh5jPvXZLKGdZSoelKHsUy
- 0uxzc4AD
-X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b7658b cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=XlvkYG1BLVWRrT8hbnoA:9
- a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_08,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/3] media: dt-bindings: qcom,sm8550-iris: Add SM8750
+ video codec
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250902-sm8750-iris-v3-0-564488b412d2@linaro.org>
+ <20250902-sm8750-iris-v3-1-564488b412d2@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20250902-sm8750-iris-v3-1-564488b412d2@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Add support for charger FW running on SOCCP by adding the
-"PMIC_RTR_SOCCP_APPS" channel name to the rpmsg_match list and
-updating notify_clients logic.
-
-SOCCP does not have multiple PDs and hence PDR is not supported. So, if
-the subsystem comes up/down, rpmsg driver would be probed or removed.
-Use that for notifiying clients of pmic_glink for PDR events.
-
-Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
----
- drivers/soc/qcom/pmic_glink.c | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index c0a4be5df926..bcd17fc05544 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -17,6 +17,11 @@
- 
- #define PMIC_GLINK_SEND_TIMEOUT (5 * HZ)
- 
-+enum {
-+	PMIC_GLINK_PDR_UNAVAIL = 0,
-+	PMIC_GLINK_PDR_AVAIL,
-+};
-+
- enum {
- 	PMIC_GLINK_CLIENT_BATT = 0,
- 	PMIC_GLINK_CLIENT_ALTMODE,
-@@ -39,6 +44,7 @@ struct pmic_glink {
- 	struct mutex state_lock;
- 	unsigned int client_state;
- 	unsigned int pdr_state;
-+	bool pdr_available;
- 
- 	/* serializing clients list updates */
- 	spinlock_t client_lock;
-@@ -203,17 +209,17 @@ static void pmic_glink_del_aux_device(struct pmic_glink *pg,
- 	auxiliary_device_uninit(aux);
- }
- 
--static void pmic_glink_state_notify_clients(struct pmic_glink *pg)
-+static void pmic_glink_state_notify_clients(struct pmic_glink *pg, unsigned int state)
- {
- 	struct pmic_glink_client *client;
- 	unsigned int new_state = pg->client_state;
- 	unsigned long flags;
- 
- 	if (pg->client_state != SERVREG_SERVICE_STATE_UP) {
--		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
-+		if (state == SERVREG_SERVICE_STATE_UP && pg->ept)
- 			new_state = SERVREG_SERVICE_STATE_UP;
- 	} else {
--		if (pg->pdr_state == SERVREG_SERVICE_STATE_DOWN || !pg->ept)
-+		if (state == SERVREG_SERVICE_STATE_DOWN || !pg->ept)
- 			new_state = SERVREG_SERVICE_STATE_DOWN;
- 	}
- 
-@@ -233,7 +239,7 @@ static void pmic_glink_pdr_callback(int state, char *svc_path, void *priv)
- 	guard(mutex)(&pg->state_lock);
- 	pg->pdr_state = state;
- 
--	pmic_glink_state_notify_clients(pg);
-+	pmic_glink_state_notify_clients(pg, state);
- }
- 
- static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
-@@ -246,10 +252,14 @@ static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
- 		return dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
- 
- 	dev_set_drvdata(&rpdev->dev, pg);
-+	pg->pdr_available = rpdev->id.driver_data;
- 
- 	guard(mutex)(&pg->state_lock);
- 	pg->ept = rpdev->ept;
--	pmic_glink_state_notify_clients(pg);
-+	if (pg->pdr_available)
-+		pmic_glink_state_notify_clients(pg, pg->pdr_state);
-+	else
-+		pmic_glink_state_notify_clients(pg, SERVREG_SERVICE_STATE_UP);
- 
- 	return 0;
- }
-@@ -265,11 +275,15 @@ static void pmic_glink_rpmsg_remove(struct rpmsg_device *rpdev)
- 
- 	guard(mutex)(&pg->state_lock);
- 	pg->ept = NULL;
--	pmic_glink_state_notify_clients(pg);
-+	if (pg->pdr_available)
-+		pmic_glink_state_notify_clients(pg, pg->pdr_state);
-+	else
-+		pmic_glink_state_notify_clients(pg, SERVREG_SERVICE_STATE_DOWN);
- }
- 
- static const struct rpmsg_device_id pmic_glink_rpmsg_id_match[] = {
--	{ "PMIC_RTR_ADSP_APPS" },
-+	{.name = "PMIC_RTR_ADSP_APPS", .driver_data = PMIC_GLINK_PDR_AVAIL },
-+	{.name = "PMIC_RTR_SOCCP_APPS", .driver_data = PMIC_GLINK_PDR_UNAVAIL },
- 	{}
- };
- 
--- 
-2.34.1
-
+On 02/09/2025 13:45, Krzysztof Kozlowski wrote:
+> Add binding for Qualcom SM8750 Iris video codec, which comes with
+> significantly different powering up sequence than previous SM8650, thus
+> different clocks and resets.  For consistency keep existing clock and
+> clock-names naming, so the list shares common part.
+> 
+> Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>   .../bindings/media/qcom,sm8750-iris.yaml           | 201 +++++++++++++++++++++
+>   1 file changed, 201 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..1d9e8479a4b04eaf571cfd022725dc0b397e4947
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml
+> @@ -0,0 +1,201 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/media/qcom,sm8750-iris.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm SM8750 SoC Iris video encoder and decoder
+> +
+> +maintainers:
+> +  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> +
+> +description:
+> +  The Iris video processing unit on Qualcomm SM8750 SoC is a video encode and
+> +  decode accelerator.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sm8750-iris
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 6
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface          # AXI0
+> +      - const: core
+> +      - const: vcodec0_core
+> +      - const: iface1         # AXI1
+> +      - const: core_freerun
+> +      - const: vcodec0_core_freerun
+> +
+> +  dma-coherent: true
+> +
+> +  firmware-name:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: cpu-cfg
+> +      - const: video-mem
+> +
+> +  iommus:
+> +    maxItems: 2
+> +
+> +  memory-region:
+> +    maxItems: 1
+> +
+> +  operating-points-v2: true
+> +  opp-table:
+> +    type: object
+> +
+> +  power-domains:
+> +    maxItems: 4
+> +
+> +  power-domain-names:
+> +    items:
+> +      - const: venus
+> +      - const: vcodec0
+> +      - const: mxc
+> +      - const: mmcx
+> +
+> +  resets:
+> +    maxItems: 4
+> +
+> +  reset-names:
+> +    items:
+> +      - const: bus0
+> +      - const: bus1
+> +      - const: core
+> +      - const: vcodec0_core
+> +
+> +required:
+> +  - compatible
+> +  - dma-coherent
+> +  - interconnects
+> +  - interconnect-names
+> +  - iommus
+> +  - power-domain-names
+> +  - resets
+> +  - reset-names
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/clock/qcom,sm8750-gcc.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interconnect/qcom,icc.h>
+> +    #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
+> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+> +
+> +    video-codec@aa00000 {
+> +        compatible = "qcom,sm8750-iris";
+> +        reg = <0x0aa00000 0xf0000>;
+> +
+> +        clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
+> +                 <&videocc_mvs0c_clk>,
+> +                 <&videocc_mvs0_clk>,
+> +                 <&gcc GCC_VIDEO_AXI1_CLK>,
+> +                 <&videocc_mvs0c_freerun_clk>,
+> +                 <&videocc_mvs0_freerun_clk>;
+> +        clock-names = "iface",
+> +                      "core",
+> +                      "vcodec0_core",
+> +                      "iface1",
+> +                      "core_freerun",
+> +                      "vcodec0_core_freerun";
+> +
+> +        dma-coherent;
+> +        iommus = <&apps_smmu 0x1940 0>,
+> +                 <&apps_smmu 0x1947 0>;
+> +
+> +        interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+> +                         &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
+> +                        <&mmss_noc MASTER_VIDEO_MVP QCOM_ICC_TAG_ALWAYS
+> +                         &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+> +        interconnect-names = "cpu-cfg",
+> +                             "video-mem";
+> +
+> +        interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +        operating-points-v2 = <&iris_opp_table>;
+> +
+> +        memory-region = <&video_mem>;
+> +
+> +        power-domains = <&videocc_mvs0c_gdsc>,
+> +                        <&videocc_mvs0_gdsc>,
+> +                        <&rpmhpd RPMHPD_MXC>,
+> +                        <&rpmhpd RPMHPD_MMCX>;
+> +        power-domain-names = "venus",
+> +                             "vcodec0",
+> +                             "mxc",
+> +                             "mmcx";
+> +
+> +        resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>,
+> +                 <&gcc GCC_VIDEO_AXI1_CLK_ARES>,
+> +                 <&videocc_mvs0c_freerun_clk_ares>,
+> +                 <&videocc_mvs0_freerun_clk_ares>;
+> +        reset-names = "bus0",
+> +                      "bus1",
+> +                      "core",
+> +                      "vcodec0_core";
+> +
+> +        iris_opp_table: opp-table {
+> +            compatible = "operating-points-v2";
+> +
+> +            opp-240000000 {
+> +                opp-hz = /bits/ 64 <240000000>;
+> +                required-opps = <&rpmhpd_opp_low_svs_d1>,
+> +                                <&rpmhpd_opp_low_svs_d1>;
+> +            };
+> +
+> +            opp-338000000 {
+> +                opp-hz = /bits/ 64 <338000000>;
+> +                required-opps = <&rpmhpd_opp_low_svs>,
+> +                                <&rpmhpd_opp_low_svs>;
+> +            };
+> +
+> +            opp-420000000 {
+> +                opp-hz = /bits/ 64 <420000000>;
+> +                required-opps = <&rpmhpd_opp_svs>,
+> +                                <&rpmhpd_opp_svs>;
+> +            };
+> +
+> +            opp-444000000 {
+> +                opp-hz = /bits/ 64 <444000000>;
+> +                required-opps = <&rpmhpd_opp_svs_l1>,
+> +                                <&rpmhpd_opp_svs_l1>;
+> +            };
+> +
+> +            opp-533333334 {
+> +                opp-hz = /bits/ 64 <533333334>;
+> +                required-opps = <&rpmhpd_opp_nom>,
+> +                                <&rpmhpd_opp_nom>;
+> +            };
+> +
+> +            opp-570000000 {
+> +                opp-hz = /bits/ 64 <570000000>;
+> +                required-opps = <&rpmhpd_opp_nom_l1>,
+> +                                <&rpmhpd_opp_nom_l1>;
+> +            };
+> +
+> +            opp-630000000 {
+> +                opp-hz = /bits/ 64 <630000000>;
+> +                required-opps = <&rpmhpd_opp_turbo>,
+> +                                <&rpmhpd_opp_turbo>;
+> +            };
+> +        };
+> +    };
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
