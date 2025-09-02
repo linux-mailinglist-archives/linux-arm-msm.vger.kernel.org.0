@@ -1,188 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-71640-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71641-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id E28EDB40689
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 16:21:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05988B406CD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 16:31:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A433C1883419
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 14:21:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B14103ABB00
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 14:31:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4437B2F6192;
-	Tue,  2 Sep 2025 14:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79DFC3064BF;
+	Tue,  2 Sep 2025 14:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SWE+h9ba"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="hi7F8Pqx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27913064AF
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 14:21:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CA62FD1CA;
+	Tue,  2 Sep 2025 14:31:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756822873; cv=none; b=O6aBS07c87ISaNzsdc0WhqVKQDs25Z9ifn2t5VhvxBzgD5Ny2oUhsKBwjtl6+MqAxh6u+5OKd6h3pywBHthoD+pPr/dgazfdfnY5EHRp+Pwa7PZLQKOefvwVlrQfBp6ehNYWP9JiXTglDFYA4YA2rsHI3I0y+NTGwf323X4Y+ms=
+	t=1756823479; cv=none; b=jT6JuD2RJrO7gFFLjk+dOhq5R8QfDZL18UCIJTwpmhXFMCyRFirtXv3x5R0Zw5IfnYpbKzOe3sOI1gzyQfNzJ5nlrdSVrKKXL8BeNQhMeVPAbS4eesE4EQfVTc/5QItOZHsX8jVvjKTTDUtUNZbyDo06g2Q3TwugCYXew7oRnH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756822873; c=relaxed/simple;
-	bh=Mo3fvh+zcipnakizUINPMwCYdgGPfGwVYd3T2yXE6PQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nC7AYjiJeS7up83PtSljdUKsDSDTN1Mg1QEO4id8X2F3oMwgauQKtmGLrWb+fEq2JzYOTX+S+6XwyxPgA539tUAe2uK5es8Z+gatKZAua9N2fwen3QDtAZ9KAagdl7xEzNBINtiRiRK+XL3khEdUoLSah8bC48Sy0NLs3CdJ5cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SWE+h9ba; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582B2ohp013338
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 14:21:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	cFH5cDNds5B5T/pje3FPEuPlO2hxs24Eot+U2AM5tl8=; b=SWE+h9baJZPg0zr+
-	h1VZBwnEPUP82cZ9ImIy24Jh4zgzo/2qILVaNrT21iAph2NMju2XB3jE5iQxS7uG
-	Iwl1soq01wpYlpscMNpjn3haYm3gzIyvm6XWOYT7tfCemR+a7OkbNsCEwJBsCYVj
-	gOdLUGnVpCtqtLB/Q4Z5j9NgLmA3R8J/wshkDR2wcPJ2EEMN+7WDwr6ta/UvVMJa
-	+4z1oo9rg4lSxeIwSBHqFAk5fJMlsDGwRd5BuNxcy77ZMn4TxnhUw22EDCyS3UvR
-	hTdD+MpQOgivxSlhDw6JFyTADU0xanIEsPOSM5PBMWUz02c0xzvKuM3oT7InLn3Z
-	1fs5Ng==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2ffyy6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 14:21:10 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-7724046c346so2699274b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 07:21:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756822869; x=1757427669;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cFH5cDNds5B5T/pje3FPEuPlO2hxs24Eot+U2AM5tl8=;
-        b=pM74ewSwCiJ1YgOID13bJGQbaoYhk8me8Hxlp/OHBxwTRwZhu8boU/aPYwWbW/vLbD
-         xnWwbSlKjEhchWoN1JMYDoSKyu1yUarRxZlUIC1ZJT0sLpzz2NClEdCHV2VDymF79ONT
-         Ti6AayyVrqTjI20lCV4PpjHV0m95/cq5pJnEYrZD2I1WLBqw3wDFO5CH3IIbT+6doTwJ
-         8RBSXLHbeQUg+Lo69vR8o7nmePK+/ktlZsEkgRyIZFT953KLTcudDdBh/N4jL8ZweKqu
-         nS5bCS7bjrLGGsMv8ljOc+91g1ULqms3siKv3gy0uQSTV1zApC8/1bepMIfJtEkou/in
-         DTaA==
-X-Forwarded-Encrypted: i=1; AJvYcCUFlxVqjA3lSjKQUJwPNw1Itk0yjwsWkJf1nlfV8JqIeLVjCAx3xP+L4KIjxAKuX99yv0OAmDaJ9WPWQVK2@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyavulqo+uSPDMupJXk57m1QDAoOiUa3iybbUc6ICYo4S2QcK/8
-	f+F7v7wGPS8A5ntFihdhG2IMK1lB5uurMSVaH70NWNQ7P+GdjSVQtbRt4XxcuMFYFZXDrc13/pt
-	4ynbPxkB7ok9yrW/4nf+dYojYvFOI4Sh7hqpNKhq9rp6W2mpLuIVZMHYTz1xwhoJAx1U9
-X-Gm-Gg: ASbGncsvXuBO0btH8ej6EQE0L2z8f/IXbqcp3iOiZ5nk5gUXI07B+9QGROpOKemKijs
-	I4rse4SEo9fXn78emXc+wOxssNHesK41akcxv2abryYSulsgpZNkUzo/YwQ4ouUlu7eSnIFwh6z
-	Fp51udc1veLpfaLAXRQnfqFxUpEVxye01fmtKSFSzExlZRJDBAN5StbmEGPRPS/3tWFhcOx30Ye
-	FjVlK2QhJCSy1MVIDqujiay2I/pcBIkcvXb2mfLXj8DqDz0B3GZczISYBaUg4/rfBWb6o3Hcrgh
-	nOEsT9fUz42iLWfu3NzH5ddnDnxKsB5c5GReFskFzZdLX3DBbwuPQ+WVPqDJSELmd/k2bkdJ
-X-Received: by 2002:a05:6a20:3949:b0:243:25b0:2321 with SMTP id adf61e73a8af0-243d6f7e6d2mr17559799637.52.1756822869335;
-        Tue, 02 Sep 2025 07:21:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFqXouN6x5NC3Ff1ESu4awUlD3wgjdZZfk9g/KwRyDmJBn/xJVqTV3xHk+1W13vbBTuHhuaMw==
-X-Received: by 2002:a05:6a20:3949:b0:243:25b0:2321 with SMTP id adf61e73a8af0-243d6f7e6d2mr17559757637.52.1756822868877;
-        Tue, 02 Sep 2025 07:21:08 -0700 (PDT)
-Received: from [10.216.7.97] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-772396d2dbcsm11499176b3a.50.2025.09.02.07.20.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Sep 2025 07:21:08 -0700 (PDT)
-Message-ID: <f7394b06-d51a-cdbc-7990-13209b478398@oss.qualcomm.com>
-Date: Tue, 2 Sep 2025 19:50:58 +0530
+	s=arc-20240116; t=1756823479; c=relaxed/simple;
+	bh=wNLf2ov03mImFGkf61U7OTdGwEMuGY1mZCV4bcE5xQ4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pTPM8l/7flytcH3pcZWSH+n2n0dR+cYx3WeWHg8PJFGyChCBqi/XbNzFEhq2iOS2R/mXOlgppyr54qTbBIEvylf7k2btY2YrT6lc1RWatS4+lFYhlDPv1VpZ/qWh1qZmpHrwKG/AE+LmIqk4bvQ7ojCi+6qxvESR4uSy1ROpOjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=hi7F8Pqx; arc=none smtp.client-ip=198.175.65.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1756823478; x=1788359478;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=wNLf2ov03mImFGkf61U7OTdGwEMuGY1mZCV4bcE5xQ4=;
+  b=hi7F8PqxTiWmXg6tOg2omhuA8qoAj1WmL2vsIhAh++8y2daC+M56gfv8
+   OJ04UBZMGEfUbTKFmlWjNST+zfchgROgDLecQy+PhAalpzreLiLtbuyhG
+   9r8xqXc8TR0M6hyjO8GHw8Y77SqvfQ2+TsVEDAv1F2icxHwzVqbwRiS4i
+   zdCK+819Z3deGa+JTJNaVzJMM5T4laD6qXOu3vUP865+vBEY30lMNK73w
+   qWbrHPx/Iy5UJ0juwbiniKCgS7T+mMgxaZf+QCiP2b6Cln5APBk/5CVhj
+   DPhiGZbTHJ/MURdjtPnjiQEEZPzSnaMbTaDWIcQFWU4Si4Ppsn9pCIMRq
+   g==;
+X-CSE-ConnectionGUID: wmplzVwmRjKQebKTMlxJOw==
+X-CSE-MsgGUID: ceZnExAtQQKDPxt/pjFAoA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="76543125"
+X-IronPort-AV: E=Sophos;i="6.18,230,1751266800"; 
+   d="scan'208";a="76543125"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2025 07:31:16 -0700
+X-CSE-ConnectionGUID: fiXJ/SYAR0Our4Y6vRb6cQ==
+X-CSE-MsgGUID: /BXe/BoATnONrCvRrOtmbQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,230,1751266800"; 
+   d="scan'208";a="171186010"
+Received: from smile.fi.intel.com ([10.237.72.52])
+  by orviesa007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Sep 2025 07:31:04 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1utS2G-0000000AiTf-1Q9X;
+	Tue, 02 Sep 2025 17:31:00 +0300
+Date: Tue, 2 Sep 2025 17:31:00 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>, Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	NXP S32 Linux Team <s32@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Haojian Zhuang <haojian.zhuang@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Brown <broonie@kernel.org>, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org,
+	imx@lists.linux.dev, linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH v7 13/16] pinctrl: allow to mark pin functions as
+ requestable GPIOs
+Message-ID: <aLb_pOG-yc-CHoiY@smile.fi.intel.com>
+References: <20250902-pinctrl-gpio-pinfuncs-v7-0-bb091daedc52@linaro.org>
+ <20250902-pinctrl-gpio-pinfuncs-v7-13-bb091daedc52@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.1
-Subject: Re: [PATCH v14 03/10] power: reset: reboot-mode: Add support for 64
- bit magic
-Content-Language: en-US
-To: Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh@kernel.org>,
-        Casey Connolly <casey.connolly@linaro.org>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andre Draszik
- <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srini@kernel.org>
-References: <20250815-arm-psci-system_reset2-vendor-reboots-v14-0-37d29f59ac9a@oss.qualcomm.com>
- <20250815-arm-psci-system_reset2-vendor-reboots-v14-3-37d29f59ac9a@oss.qualcomm.com>
- <88ee0a26-8d64-4060-b703-40156cd011a7@linaro.org>
-From: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-In-Reply-To: <88ee0a26-8d64-4060-b703-40156cd011a7@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfX8j32XXwHN204
- V9kRI1V5xz55GyecjNvqMCDu22lnEVwqvHQ8nWt3+aMPwsovtLBKneii17AsRg2IP3KIS+9O6iO
- DjoNSd07UHN30/VEKBvdFeFtXTl8CnE/oPUC5brqTmnv8kK6TsvfAnsoRiQbX1D339XwtKBPAAQ
- fCVXF8ax1D35MdsmHmuukil+6T/iyAQn8sQysagPIT6lmu04IbTTRLD3iKKL9vDMjRqJMW/fhZz
- I42mV+DO9glbDQ8XjW9F/zsWXa+Ney+THCKM+dBW1APcAddloUagzVPdD5ZLM+LP/wSR7ZYy8QV
- aBXfWfBP3OWCmCXU0v5d6THAcbPhULd+1hpi8Rn58kN0h2E5g5AzP2SFKunPVsLtrfTAsLwdd8L
- 43m3F9xQ
-X-Proofpoint-ORIG-GUID: WbdrfnR2tU559wckGEDbjntf_1j1Cant
-X-Proofpoint-GUID: WbdrfnR2tU559wckGEDbjntf_1j1Cant
-X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b6fd56 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=FBzynz1gJkPyhc2EhIcA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_04,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250902-pinctrl-gpio-pinfuncs-v7-13-bb091daedc52@linaro.org>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-
-
-On 8/28/2025 6:52 PM, Casey Connolly wrote:
-> Hi Shivendra,
+On Tue, Sep 02, 2025 at 01:59:22PM +0200, Bartosz Golaszewski wrote:
 > 
-> On 15/08/2025 16:35, Shivendra Pratap wrote:
->> Current reboot-mode supports a single 32-bit argument for any
->> supported mode. Some reboot-mode based drivers may require
->> passing two independent 32-bit arguments during a reboot
->> sequence, for uses-cases, where a mode requires an additional
->> argument. Such drivers may not be able to use the reboot-mode
->> driver. For example, ARM PSCI vendor-specific resets, need two
->> arguments for its operation – reset_type and cookie, to complete
->> the reset operation. If a driver wants to implement this
->> firmware-based reset, it cannot use reboot-mode framework.
->>
->> Introduce 64-bit magic values in reboot-mode driver to
->> accommodate dual 32-bit arguments when specified via device tree.
->> In cases, where no second argument is passed from device tree,
->> keep the upper 32-bit of magic un-changed(0) to maintain backward
->> compatibility.
-> 
-> How about adding a n_magic_args property to struct reboot_mode_driver?
-> Then in struct mode_info change magic to be a u32 array of a fixed
-> length (currently two in-keeping with the DT bindings).
+> The name of the pin function has no real meaning to pinctrl core and is
+> there only for human readability of device properties. Some pins are
+> muxed as GPIOs but for "strict" pinmuxers it's impossible to request
+> them as GPIOs if they're bound to a devide - even if their function name
+> explicitly says "gpio". Add a new field to struct pinfunction that
+> allows to pass additional flags to pinctrl core.
 
-Arnd/Rob,
+Which I disagree with. The pin control _knows_ about itself. If one needs
+to request a pin as GPIO it can be done differently (perhaps with a new,
+special callback or with the existing ones, I need to dive to this).
+On a brief view this can be done in the same way as valid_mask in GPIO,
+actually this is exactly what should be (re-)used in my opinion here.
 
-As per previous discussion on patch v10, magic and cookie were implemented
-as a 64 bit number (64 bit magic).
+> While we could go with
+> a boolean "is_gpio" field, a flags field is more future-proof.
 
-Need you thoughts that if we should change the magic to 32bit array, as being
-suggested in the above comments.
+This sentence is probably extra in the commit message and can be omitted.
 
-thanks,
-Shivendra
+> If the PINFUNCTION_FLAG_GPIO is set for a given function, the pin muxed
+> to it can be requested as GPIO even on strict pin controllers.
+
+So. this changes the contract between pin control (mux) core and drivers.
+Why? How is it supposed to work on the really strict controllers, please?
+
+> Add a new callback to struct pinmux_ops - function_is_gpio() - that allows
+> pinmux core to inspect a function and see if it's a GPIO one. Provide a
+> generic implementation of this callback.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
 
