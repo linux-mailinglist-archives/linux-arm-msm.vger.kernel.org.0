@@ -1,80 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-71603-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71604-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4D20B40100
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 14:45:24 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06571B4011A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 14:47:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9F6D9481D26
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 12:45:23 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E2E507BA4D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 12:44:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 544802D130B;
-	Tue,  2 Sep 2025 12:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9149C2D3A98;
+	Tue,  2 Sep 2025 12:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="q4dF/nF/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OjiAF4Hz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51])
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACA62D060E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 12:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0D22C326F
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 12:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756817122; cv=none; b=WCbpf3sqKq2/gbpHAmLqhZxj4xcoMK9Xiava517IYIKI8Max+1FxZCV6IjZwsW0n0t/O2Yr5ryzNOAQMa4XD2EO7bofIIReQaFuLnuOCBwDdTNSrBUDENXfMCG3Nt3bCmKJ2dhyHlzyLvXhTx/RMsDJAPRFiP8+KoaxshkGrDJc=
+	t=1756817125; cv=none; b=t7JNapDrueUa9ACoxtSLlDZRzvMio/0n2VCyU0w9ljNkhpTncQMC61RZQcaQnc2lvgU9+l1mb2FENghA0QAo6FXZ+0quSILI/hQgZWKs2We/R0Bx3lp+0GJck3XzuZiEpCuNLxy2i+s9TW5xRooUHjaHZ7GjMHTmx/U2uhSGFew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756817122; c=relaxed/simple;
-	bh=+HMleIjUCtRWa7u9aco2rJ0KaGzCpa/tdzXVN8oW82s=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=aO7B+6unWR7kcycr78OuVxCzo1RRh21FA0o+xB3rJIEfXL7e9FLTUbFtblZ3u+qFP7RQY788GbDu9Rtd5pnob58SNeW+j0KCS59097LdyauqRiDfi/IdFbb5J9FvdIvw+Q7twL7/MzkhIBJhhjRsjU9OZDsmds7MMzZCqmr9Jik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=q4dF/nF/; arc=none smtp.client-ip=209.85.218.51
+	s=arc-20240116; t=1756817125; c=relaxed/simple;
+	bh=sbjyRnxTLBt2ugASXwvg+gxrL1cNeK5WCtqhGVwFYjo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=ac9T8SwCNYXdzKdIIgof5IROGDv0dPmqi/Va2mArvitm4zEkkcfWI8CBZ87sca9NtdWjgL5MNlGvCLJskvmMWL0e2YmQfijFPiL2+znIpLU2hmhQT3EubOQXux5NDuGyjHAGi3UMSTldmECqTy9IzFrusAAYhZNgyE25EdzjG4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OjiAF4Hz; arc=none smtp.client-ip=209.85.218.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-afcb731ca55so99969966b.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 05:45:20 -0700 (PDT)
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-b04260d72aaso28603466b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 05:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756817119; x=1757421919; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dfyuJshObVa+wHBR2tMga45j89hx5b/Qk3+dnyKvnZM=;
-        b=q4dF/nF/Q2q6LdrQ672hQ4uCCyMSNEjP9euGvbjRTVCgeREPxgn645Kb1IXja/gVrY
-         aLfuemYafwH/02imp2I5F8hHRWxx0eLHEl7YawkqZcuo9cGXG6qctypD+bMMNiqXPfiK
-         ne5YjljwMht4PKehIoYKaaRpB482Gftu4akIyK9SgKHE/qd1MPvoZt7brOrDhBmxU3C8
-         ahwSEK7ZQAJAqCYk5zGoqi4cfGDzkhsNmwW6cv3nqgZEomlomx9jldmTIv00qIkIYikT
-         3j/hzibmVQSqQc8z3UAh40BtEV7QB2bFmPzlTRHNKOlE9V6AKIBff+NEnTksy/W0elDJ
-         AZmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756817119; x=1757421919;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1756817120; x=1757421920; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dfyuJshObVa+wHBR2tMga45j89hx5b/Qk3+dnyKvnZM=;
-        b=TD+OjZbqWDweddEr3NgIuDN2C8uWSmd3yiM3itUYGdMI1aT48/il4l3aasL1jUbZC6
-         F9rIKigcehRpJCI7n3IzIYAonUqUm3LqzWScFBMYCvv0Zn7D453mo1EET3VyJVJZIs+r
-         zLePpElUfq9+e7S6HBnBrPYC4H0JigoaaBNowxZrTTWAsDDoMdWL2YzGJ+QOZFc8+A1o
-         WWWMFJlWZd8TmhxQfajUXy0Eg9/RpnO6mnLevFzwLxUOVAqd/opP1LCsZjJGnqPi/cIi
-         5y4WXdVkQN5k5krcviJqeoFkaxrwlkuKII7hgWORL7RpU8NEz35hBtihkxMVeOfdhPeE
-         VbIg==
-X-Forwarded-Encrypted: i=1; AJvYcCWzCntGFlCnJO92IwaTgl3mmZi/uXCdeWD4ULpQEwXE0lyrdBfqW8bZw51WCJG6zhijBdFlY+7Btl6a+xkh@vger.kernel.org
-X-Gm-Message-State: AOJu0YwdGzQTCwQJLfj9KRtImT8CULYmgDDWE4w2uCIR7Tqe1glXuNSj
-	XJoHe90yM9Rvb67CeixNxGtM1HZJQxfLcAWeJ8vLCtasEnNJntrdJTJe1oKhFqnLlzo=
-X-Gm-Gg: ASbGncs8Oqa1hr76VUr4Fay0Ho7Xc4LAZt9L8vc0TdyfZf3qb6d/Si49SuQvMedAPzy
-	gUhTda25glEbkDMiafq1+DUE0dQKjQ04uu6Phwjr/zgZm5OmWsjvEVbCgegLpUUdF034buFhYu1
-	JU/KXeh4ggTKbe1YVo/opmlp16MYx/JQlmDiqQ7v7JAr1EduLawC52e9/xJv+cNkpchZD45Rra3
-	ohw/f7+kIfy7UWKx4TXYxu0rs3cNNzyGqqv5squH47gwW12EQ5LneMAzlKT0CRQX0XAy4nf98ZK
-	0hOKDT4hDYdEnVi7rKZUsCpdWxHr44rgXDZnsCm5Y5NKUDjEQGQ8+7tFv4i1/tH9jlYmWFxPs90
-	0p8H3MiwKI2aGOGAH9j1KQwD+6hCpbnDSiTIT/GA=
-X-Google-Smtp-Source: AGHT+IGHfjpHW63pHl9+bQc4F8HWfe7CjKrHuhNZOOtUE5jb6dg3KmLwdut+wHWDarGF1MPHJxlt7w==
-X-Received: by 2002:a17:907:9629:b0:af9:5903:3696 with SMTP id a640c23a62f3a-aff04059ba9mr828710966b.2.1756817118624;
-        Tue, 02 Sep 2025 05:45:18 -0700 (PDT)
+        bh=F+9TiZTM1RZR2Wj46fze89iF02ABnVNqr4NQNbD13/I=;
+        b=OjiAF4Hzg1Gk9loKCmU26GsFoqTNvQpQzkyiAcFp/lm9B1flb0MN2/VRKlSILiJ3UC
+         PmDFwiuaID2PAnY0p/oqVhpax/hUrUH+asilVDRdAXVOpo1+zdQlXIEWgksUobIQQFd/
+         CzoLIr1tH5Su+pGuKx4NTNEplk7Coi11KoT2u4UMX5k2H9B3vQKCuxgmUe+aFNPSG5E+
+         55zpQGNAOgQ7Bhj+CK+PjTZ2u1Z1siAyJhirj02cYAHDTHy9gBSp6kc4rX2XSmerUgUj
+         6zAeV8U9aalQNBLR1GBdfY9H6KgZf1R6bbRyH/jGURoKWobN+YqGd+7gVdcX6a7EfxkE
+         OA5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756817120; x=1757421920;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=F+9TiZTM1RZR2Wj46fze89iF02ABnVNqr4NQNbD13/I=;
+        b=TDRlnQpctDDRINCpcmbj67XxNReASj40fCABgAE5DEzgSBIWUF2cigXk5Kq/EQhGme
+         tYEu43c9PGpxtURWE0kbo33+Jt68k2425PeSSVw0sgyZgXzPIgt2XIkwZUHUX5A2SR7V
+         UGVfBdO2G0/NInXMIwvAmqcZ3GDUkgGhM3LUBem8BrCoO1YU/HmDgNfj43wv10PpPh9O
+         Cyp2Y0oASBW5MBKcZxFX2PaiOB4NUcz4FjErApxzbqn0FKaCZG+kCSDr7kVMsmLAu+cZ
+         Pf9/MNHH8RM/paz8vWGgE4AmXUGuUb65dTbQqvq6sWjYf1DE7TobiB4ut3+q/voLFgSK
+         3+Ig==
+X-Forwarded-Encrypted: i=1; AJvYcCWS0LSANe8xi/1xkFqHFFOwSeZwB99Xd43dOoCQq8awHeWtwd8zv44I4jv2zEYb7JqFG4kvjxYz5/cZG53y@vger.kernel.org
+X-Gm-Message-State: AOJu0YwpERdSvOCiRSdROselnYZZryJnYCx1zTWIFHy0ZPdSjcgqvXVw
+	DEut5aIIq0ZPCqAH7Borl2eT/tPnCpB/vSb2lBcBAxOPomXJPl50DGHtHOxPbE700OU=
+X-Gm-Gg: ASbGncsqPKCaADULrCvibyjyx9CLM6Si8JUD1/tOPPsASFt0teGNrBeegoT1I34K2Rd
+	ipOND8zvQ2LAYbyUeSdOvu5mHdfSdTtjMW/5o/lNWcxbxgryEadxtXFomY2OzMDYZ+OJ+VCVTik
+	Nl0B/ptFIMKIYlxA4/Dvl0GUpIq69xAY+7Gqp0jTY6bMSGnwePVsTYht81Z7SDrrOuJX37j/rPP
+	gEhCYPzM7odv+N1P2OWnbmQCdDkmj5GNXltABJICHXEtyl4sN5dYCBHCWw8PPl247pC4mheq8Cm
+	l5EIyPTMGzuBKLDMkB8ReLw4M6YkRPqJXR9KKydlFDKdwgNlsZKhSm/ijR70Rzrmz6kmz2tB+Uq
+	qgM8NTklc48zq5sjZ+/CuuBU4+rS1Fyk68ne/crp7dJ73qyfnnw==
+X-Google-Smtp-Source: AGHT+IFSz//rZE+/Nu573m7a/hh0V9stQds6GQBqIi6S/sgqWW8yivrgTSM5p/+4ua1ud0OHF5CCQg==
+X-Received: by 2002:a17:906:1b13:b0:b04:35c3:40a0 with SMTP id a640c23a62f3a-b0435c3424fmr280742266b.7.1756817120319;
+        Tue, 02 Sep 2025 05:45:20 -0700 (PDT)
 Received: from [127.0.1.1] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0428f88a61sm515784866b.70.2025.09.02.05.45.16
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0428f88a61sm515784866b.70.2025.09.02.05.45.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Sep 2025 05:45:17 -0700 (PDT)
+        Tue, 02 Sep 2025 05:45:19 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v3 0/3] media: iris: Add support for SM8750 (VPU v3.5)
-Date: Tue, 02 Sep 2025 14:45:09 +0200
-Message-Id: <20250902-sm8750-iris-v3-0-564488b412d2@linaro.org>
+Date: Tue, 02 Sep 2025 14:45:10 +0200
+Subject: [PATCH v3 1/3] media: dt-bindings: qcom,sm8550-iris: Add SM8750
+ video codec
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,12 +85,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANXmtmgC/22Py26DMBBFfwV5XaOxMdigKMp/VF04YJIRAbcel
- yZE/HsJqOpDXd6Rzrlz74xcQEesSu4suBEJ/bCE7Clh9dkOJ8exWTKTIHPQQnHqjc6BY0DiSql
- GS6HqEjK2EK/BtXhdbc8vWw7u7X2Rxu3IekdkV2mV7DYnSJEpkZtUCiiLgkvehelGU/Rt2vnp4
- j+ow8MFBxt86sNp/2g6WnK89n2PsUoGd43860H2KD4jRR9u66pRrM3/DhgFB54BFLLMbH6s9Y+
- eVTTKb9jAH1gucNFoo0C3BrT5Bc/z/Amfdz4kXQEAAA==
-X-Change-ID: 20250714-sm8750-iris-444d7214c903
+Message-Id: <20250902-sm8750-iris-v3-1-564488b412d2@linaro.org>
+References: <20250902-sm8750-iris-v3-0-564488b412d2@linaro.org>
+In-Reply-To: <20250902-sm8750-iris-v3-0-564488b412d2@linaro.org>
 To: Vikash Garodia <quic_vgarodia@quicinc.com>, 
  Dikshita Agarwal <quic_dikshita@quicinc.com>, 
  Abhinav Kumar <abhinav.kumar@linux.dev>, 
@@ -100,177 +99,244 @@ Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
  linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5236;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6580;
  i=krzysztof.kozlowski@linaro.org; h=from:subject:message-id;
- bh=+HMleIjUCtRWa7u9aco2rJ0KaGzCpa/tdzXVN8oW82s=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBotubZMzNM1v7htENgFY5uzpAdbStKyXlnkd4Zv
- DH93jN7WpyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaLbm2QAKCRDBN2bmhouD
- 1/0JD/0W2BzUu3QrTri+Ma0kCl4Z94l0koGcXeZUC0aPNEJNeI9qTTzfoQYDiqgbRBoxdn/yPZA
- jRr+dbaYfy+Ezk9g2sYePxh4Vn5nnQ6eoD1FqDgtRgVE+zgucICLXnW78qEvUqODnI7ojsE2u7+
- 6E/r6IQNn5Toqqkzvg/zmFTxwLMuJ5OhdF0vGs1yZ2d1Jck61uez9moLeVIp9RFDT6tZrN415o6
- fgg3zN599ThSbBVhOUBuOLpTBjGq9XNUCXl9NXXpYkUE8jb6taORx28qsY+svUGRZTfPlo7GupN
- hdxNP6fb+h46FfSlMVxWhsaexDxZnn/RmGuTzMVn3tJoewcD1e5ztskhGy5dkpzzmtQtdFb0//c
- y1LOK2+ilTSXxD6i29Gb22TECjMCm1yTnHd/+771DEsVuGWN5BFY0N4BNjIYYim5H/OUAhT6j+x
- mvcit/xUSl/uzhf9sAyCYT42dge7A3ucOa3z2t0M4FVh0yvthFYmzPvOKIXqNFXfkaFH4Od20gE
- 6CMNq0wbF+StxGv3OqxRZlWN++3UPP6G5UI29PAvV42sUdUgXvMl9IqIxLBMmSKA0Iiv+tZu0Jk
- 6m2fjnqxnyxKsqq16zNkCyc5gMt7GlOyIGzxbhaQgluO5xTjb1fIJRxkNPbhX5ntAxiPxPIRZOX
- L/now3bVj+YMcEQ==
+ bh=sbjyRnxTLBt2ugASXwvg+gxrL1cNeK5WCtqhGVwFYjo=;
+ b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBotuba/wINgZXIpk7P/hVyDyQ44P1tOKN2GfanG
+ /XCgdVggYaJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaLbm2gAKCRDBN2bmhouD
+ 12pFD/4tDByOxPAcUP6Zam1w7QloYbA+rPCS4yaqJymL8EKxpupE7DXgdtQ/yME9K91KgUOaTpK
+ y0Ie9GlvsktI8rj9fbK9Yc/GBk2GRRlmAYJqYlWcS05tBwA8IDCO4O21a+Treyq7zpVL+TW8niq
+ xOPEXGw7qY2ZTMO1TmuOjNBIxAhBrVn8KGH4CsnNA2DgEWzV0pjiBr/T8Epa8yCKPaMKMR13Cd7
+ sgfCIWBeBJC/uLGKURSlsAyoVvhx7+nNV9lCltMt6sMUJlJvIVoA638dkUfAdCJYm4iNE2mEVgM
+ WEsabuqUEddEQYWNy4LJFCzLhGRkYeuhTcxGP6Z+LWO+LfB24WFDOi5zQu/DBUa+wVsL/odZrNp
+ UN23/hLhNcZCPsnKCZjAMJgh+ViENrkVQIdhCX+rzNspsfa9wrtEx6X4Gm/SJMOoS8XVcZP/zGO
+ ngWNXiDulkf672cdrQc3Ybsox3hzLNqYh8DDVT04yoYJRrv5fymOPY4P9nttW3sTm4BaQSRo6fQ
+ M0BSnd0zXkdE7GM6l+e03MRzg/gXRObHFekhaX0U1gCUUSndxQWhExrux6/6LZHB+qgNw6WQzjV
+ mGDUszsAIL4E9Y1mqYF22emsm0LC7lI+FI1RxorZhfj4QHu1bk0+cU4dPscmaEonal7jSh3wO1Z
+ mX05UGpiPZ15OiQ==
 X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp;
  fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
 
-Changes in v3:
-- Patch #1 dt-bindings: Drop venus-common.yaml, add missing opp-570
-  in the example.
-- Patch #3:
-   - Drop reset_control_bulk_reset() in iris_vpu35_power_on_controller()
-     (Dikshita)
-   - Implement write-retry loop for WRAPPER_IRIS_CPU_NOC_LPI_CONTROL,
-     similarly what is done for VPU v3.3
-- Link to v2: https://lore.kernel.org/r/20250804-sm8750-iris-v2-0-6d78407f8078@linaro.org
+Add binding for Qualcom SM8750 Iris video codec, which comes with
+significantly different powering up sequence than previous SM8650, thus
+different clocks and resets.  For consistency keep existing clock and
+clock-names naming, so the list shares common part.
 
-Changes in v2:
-- Unify power-off sequence with SM8650 and re-use existing callbacks.
-- Drop incorrect WRAPPER_CORE_POWER_CONTROL and unused
-  controller_resets.
-- Rename FW to qcom/vpu/vpu35_p4.mbn.
-- DT binding: correct typo + Rb tag.
-- Link to v1: https://lore.kernel.org/r/20250714-sm8750-iris-v1-0-3006293a5bc7@linaro.org
-
-DTS for reference was posted here:
-https://lore.kernel.org/all/20250806-b4-sm8750-iris-dts-v2-0-2ce197525eed@linaro.org/
-
-Description:
-============
-Add support for SM8750 Iris codec with major differences against
-previous generation SM8650.
-
-DTS will follow up separately (depends on other DTS patches so cannot be
-merged as is).
-
-Tested decoding with Gstreamer (v4l2h264dec).
-
-v4l2-compliance report:
-
-v4l2-compliance 1.30.1, 64 bits, 64-bit time_t
-
-Compliance test for iris_driver device /dev/video0:
-
-Driver Info:
-	Driver name      : iris_driver
-	Card type        : Iris Decoder
-	Bus info         : platform:aa00000.video-codec
-	Driver version   : 6.16.0
-	Capabilities     : 0x84204000
-		Video Memory-to-Memory Multiplanar
-		Streaming
-		Extended Pix Format
-		Device Capabilities
-	Device Caps      : 0x04204000
-		Video Memory-to-Memory Multiplanar
-		Streaming
-		Extended Pix Format
-	Detected Stateful Decoder
-
-Required ioctls:
-	test VIDIOC_QUERYCAP: OK
-	test invalid ioctls: OK
-
-Allow for multiple opens:
-	test second /dev/video0 open: OK
-	test VIDIOC_QUERYCAP: OK
-	test VIDIOC_G/S_PRIORITY: OK
-	test for unlimited opens: OK
-
-Debug ioctls:
-	test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
-	test VIDIOC_LOG_STATUS: OK (Not Supported)
-
-Input ioctls:
-	test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
-	test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
-	test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
-	test VIDIOC_ENUMAUDIO: OK (Not Supported)
-	test VIDIOC_G/S/ENUMINPUT: OK (Not Supported)
-	test VIDIOC_G/S_AUDIO: OK (Not Supported)
-	Inputs: 0 Audio Inputs: 0 Tuners: 0
-
-Output ioctls:
-	test VIDIOC_G/S_MODULATOR: OK (Not Supported)
-	test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
-	test VIDIOC_ENUMAUDOUT: OK (Not Supported)
-	test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
-	test VIDIOC_G/S_AUDOUT: OK (Not Supported)
-	Outputs: 0 Audio Outputs: 0 Modulators: 0
-
-Input/Output configuration ioctls:
-	test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
-	test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK (Not Supported)
-	test VIDIOC_DV_TIMINGS_CAP: OK (Not Supported)
-	test VIDIOC_G/S_EDID: OK (Not Supported)
-
-Control ioctls:
-	test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
-	test VIDIOC_QUERYCTRL: OK
-	test VIDIOC_G/S_CTRL: OK
-	test VIDIOC_G/S/TRY_EXT_CTRLS: OK
-	test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
-	test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
-	Standard Controls: 10 Private Controls: 0
-
-Format ioctls:
-	test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
-	test VIDIOC_G/S_PARM: OK (Not Supported)
-	test VIDIOC_G_FBUF: OK (Not Supported)
-	test VIDIOC_G_FMT: OK
-	test VIDIOC_TRY_FMT: OK
-	test VIDIOC_S_FMT: OK
-	test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
-	test Cropping: OK
-	test Composing: OK
-	test Scaling: OK (Not Supported)
-
-Codec ioctls:
-	test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
-	test VIDIOC_G_ENC_INDEX: OK (Not Supported)
-	test VIDIOC_(TRY_)DECODER_CMD: OK
-
-Buffer ioctls:
-	test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
-	test CREATE_BUFS maximum buffers: OK
-	test VIDIOC_REMOVE_BUFS: OK
-	test VIDIOC_EXPBUF: OK
-	test Requests: OK (Not Supported)
-	test blocking wait: OK
-
-Total for iris_driver device /dev/video0: 48, Succeeded: 48, Failed: 0, Warnings: 0
-
-Best regards,
-Krzysztof
-
+Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 ---
-Krzysztof Kozlowski (3):
-      media: dt-bindings: qcom,sm8550-iris: Add SM8750 video codec
-      media: iris: Split power on per variants
-      media: iris: Add support for SM8750 (VPU v3.5)
-
  .../bindings/media/qcom,sm8750-iris.yaml           | 201 +++++++++++++++++++++
- .../platform/qcom/iris/iris_platform_common.h      |   6 +-
- .../media/platform/qcom/iris/iris_platform_gen2.c  |  68 +++++++
- .../platform/qcom/iris/iris_platform_sm8750.h      |  22 +++
- drivers/media/platform/qcom/iris/iris_probe.c      |   4 +
- drivers/media/platform/qcom/iris/iris_vpu2.c       |   2 +
- drivers/media/platform/qcom/iris/iris_vpu3x.c      | 170 +++++++++++++++++
- drivers/media/platform/qcom/iris/iris_vpu_common.c |  12 +-
- drivers/media/platform/qcom/iris/iris_vpu_common.h |   6 +
- 9 files changed, 486 insertions(+), 5 deletions(-)
----
-base-commit: 709a73d51f11d75ee2aee4f690e4ecd8bc8e9bf3
-change-id: 20250714-sm8750-iris-444d7214c903
-prerequisite-message-id: <20250702134158.210966-2-krzysztof.kozlowski@linaro.org>
-prerequisite-patch-id: 1658ac2fc03eb4b33a236c2dfc2a053249068354
+ 1 file changed, 201 insertions(+)
 
-Best regards,
+diff --git a/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml b/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..1d9e8479a4b04eaf571cfd022725dc0b397e4947
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/qcom,sm8750-iris.yaml
+@@ -0,0 +1,201 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/qcom,sm8750-iris.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm SM8750 SoC Iris video encoder and decoder
++
++maintainers:
++  - Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
++
++description:
++  The Iris video processing unit on Qualcomm SM8750 SoC is a video encode and
++  decode accelerator.
++
++properties:
++  compatible:
++    enum:
++      - qcom,sm8750-iris
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 6
++
++  clock-names:
++    items:
++      - const: iface          # AXI0
++      - const: core
++      - const: vcodec0_core
++      - const: iface1         # AXI1
++      - const: core_freerun
++      - const: vcodec0_core_freerun
++
++  dma-coherent: true
++
++  firmware-name:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  interconnects:
++    maxItems: 2
++
++  interconnect-names:
++    items:
++      - const: cpu-cfg
++      - const: video-mem
++
++  iommus:
++    maxItems: 2
++
++  memory-region:
++    maxItems: 1
++
++  operating-points-v2: true
++  opp-table:
++    type: object
++
++  power-domains:
++    maxItems: 4
++
++  power-domain-names:
++    items:
++      - const: venus
++      - const: vcodec0
++      - const: mxc
++      - const: mmcx
++
++  resets:
++    maxItems: 4
++
++  reset-names:
++    items:
++      - const: bus0
++      - const: bus1
++      - const: core
++      - const: vcodec0_core
++
++required:
++  - compatible
++  - dma-coherent
++  - interconnects
++  - interconnect-names
++  - iommus
++  - power-domain-names
++  - resets
++  - reset-names
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,rpmh.h>
++    #include <dt-bindings/clock/qcom,sm8750-gcc.h>
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/interconnect/qcom,icc.h>
++    #include <dt-bindings/interconnect/qcom,sm8750-rpmh.h>
++    #include <dt-bindings/power/qcom-rpmpd.h>
++    #include <dt-bindings/power/qcom,rpmhpd.h>
++
++    video-codec@aa00000 {
++        compatible = "qcom,sm8750-iris";
++        reg = <0x0aa00000 0xf0000>;
++
++        clocks = <&gcc GCC_VIDEO_AXI0_CLK>,
++                 <&videocc_mvs0c_clk>,
++                 <&videocc_mvs0_clk>,
++                 <&gcc GCC_VIDEO_AXI1_CLK>,
++                 <&videocc_mvs0c_freerun_clk>,
++                 <&videocc_mvs0_freerun_clk>;
++        clock-names = "iface",
++                      "core",
++                      "vcodec0_core",
++                      "iface1",
++                      "core_freerun",
++                      "vcodec0_core_freerun";
++
++        dma-coherent;
++        iommus = <&apps_smmu 0x1940 0>,
++                 <&apps_smmu 0x1947 0>;
++
++        interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
++                         &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
++                        <&mmss_noc MASTER_VIDEO_MVP QCOM_ICC_TAG_ALWAYS
++                         &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
++        interconnect-names = "cpu-cfg",
++                             "video-mem";
++
++        interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++        operating-points-v2 = <&iris_opp_table>;
++
++        memory-region = <&video_mem>;
++
++        power-domains = <&videocc_mvs0c_gdsc>,
++                        <&videocc_mvs0_gdsc>,
++                        <&rpmhpd RPMHPD_MXC>,
++                        <&rpmhpd RPMHPD_MMCX>;
++        power-domain-names = "venus",
++                             "vcodec0",
++                             "mxc",
++                             "mmcx";
++
++        resets = <&gcc GCC_VIDEO_AXI0_CLK_ARES>,
++                 <&gcc GCC_VIDEO_AXI1_CLK_ARES>,
++                 <&videocc_mvs0c_freerun_clk_ares>,
++                 <&videocc_mvs0_freerun_clk_ares>;
++        reset-names = "bus0",
++                      "bus1",
++                      "core",
++                      "vcodec0_core";
++
++        iris_opp_table: opp-table {
++            compatible = "operating-points-v2";
++
++            opp-240000000 {
++                opp-hz = /bits/ 64 <240000000>;
++                required-opps = <&rpmhpd_opp_low_svs_d1>,
++                                <&rpmhpd_opp_low_svs_d1>;
++            };
++
++            opp-338000000 {
++                opp-hz = /bits/ 64 <338000000>;
++                required-opps = <&rpmhpd_opp_low_svs>,
++                                <&rpmhpd_opp_low_svs>;
++            };
++
++            opp-420000000 {
++                opp-hz = /bits/ 64 <420000000>;
++                required-opps = <&rpmhpd_opp_svs>,
++                                <&rpmhpd_opp_svs>;
++            };
++
++            opp-444000000 {
++                opp-hz = /bits/ 64 <444000000>;
++                required-opps = <&rpmhpd_opp_svs_l1>,
++                                <&rpmhpd_opp_svs_l1>;
++            };
++
++            opp-533333334 {
++                opp-hz = /bits/ 64 <533333334>;
++                required-opps = <&rpmhpd_opp_nom>,
++                                <&rpmhpd_opp_nom>;
++            };
++
++            opp-570000000 {
++                opp-hz = /bits/ 64 <570000000>;
++                required-opps = <&rpmhpd_opp_nom_l1>,
++                                <&rpmhpd_opp_nom_l1>;
++            };
++
++            opp-630000000 {
++                opp-hz = /bits/ 64 <630000000>;
++                required-opps = <&rpmhpd_opp_turbo>,
++                                <&rpmhpd_opp_turbo>;
++            };
++        };
++    };
+
 -- 
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+2.48.1
 
 
