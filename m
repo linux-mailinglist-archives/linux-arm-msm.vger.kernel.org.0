@@ -1,248 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-71521-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0C58B3F96C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 11:01:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DB21B3F9F1
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 11:14:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 60A6A7A235A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 08:59:54 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E80A41887971
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 09:15:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7CBBF2EAB6F;
-	Tue,  2 Sep 2025 09:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E07AD2E9733;
+	Tue,  2 Sep 2025 09:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mO0Us49U"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lqJ89l/X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F6F2EA482
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 09:00:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360DB2580CF
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 09:14:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756803642; cv=none; b=MgDN+Xnl7WazH3JctxAT9DNRQDI6LiByo7WaIax0sudhq77xI9Tn8j3BwV2QKWL3mtedsk+BrZCEfGiVYJ5nyjnGKI0fMhM9XG90JtKu8DHgEkMXOgdQupGnTFY++ZDhZNxH8FNdbuM+GV+19S7PlogChQvJp1YmWcI3EBL/n+g=
+	t=1756804493; cv=none; b=MdA0j8FucGuMOOeY4Q4RL/R/OJy3eE2STPDotJLIfAccNt7Rw932hbPLMimz0FiX0aR0gzAvStR2aYJ4EVJwCFntxKvnpWW/h9il+enArp8lE+6+Kf4cyIMiPzEBbRCGSH3DLQQ/byNEWmDpesPdJPRs4W9c2nc3fNHFS4Hf2ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756803642; c=relaxed/simple;
-	bh=9hYVY7VJpLHKc+fjiw16Zkq8W4WOmrto8l6+8H9lR/0=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=stBXGIlq1qKewWLyN6a5SvVwWNrCNAIPsGHUxw+hj78YXOER1+YmYVEoPOr5KmIZkeTen23jnSdufCQKZtdUqbU996RbYg5/Se1Ox3EppB1/RlgrwYPa7dvwkoDglLLmJi7f66dyboKLzd7FKNIofqVQVINvLxtR76K2il1AjCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mO0Us49U; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45b7c56a987so15631565e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 02:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756803638; x=1757408438; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zx3flAD2tM7boXAz2/Brkk0fygpQR/lnc3aW0wO9axk=;
-        b=mO0Us49UG7WM2d5qDu8kwiNUYyyEp5fuqmehOQQJlWpVqbqNH3BTWmpb1REDbPoxwA
-         xjuLzly4W78CGx0DfxP0Dedyb2vwfAQXJGFExzkENIXuhRaazepdD1Fv1HevIVTLqHOX
-         u3VtlxqkuA20qt+bWYgRkbIS3zbtK7BvtYEhXggVrYNdpyPYnZ47afv9w98hLMViKSKE
-         mXqJbriZ8rH+XpLIoMpZ/6a1aiIJwuYmZvKSYgrWaWQDGyJjHxDfRqMXolEEIWGyvzyB
-         sri3jBnZ5ty3LV0Wj5FuPvo91Xpb9iwE+N8ExtFdRc2UEni4Q3pITLv3hRugzZUCYGxm
-         rY7g==
+	s=arc-20240116; t=1756804493; c=relaxed/simple;
+	bh=Sv5rjcMW0XRL3T4QTlzK6bGt+YKcn27Pk+A4Io6DRG4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RyN9/ZSWZvTIAJuD1aZ3v2C+SnbWLuAPkGIiCYKVL4HUUzXECwEsDlF0dsrlKsCFxckS3SHTNu1MbuZJBFJIfqNvbrRlKohQznD2khfPzHewhga//Uy24YElRVa5gWcFX+HUKtmIB6UyfeTTb5NTEPc5ta603r9U8SUXH8PHCb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lqJ89l/X; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822S4ec030589
+	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 09:14:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	JO1ghtzbf6msdOeC9Wq7UpFQnYphPOPa6N9e0whQQw4=; b=lqJ89l/XL7eohyXm
+	B8/rx5P7wR+PqB9DzMZasnXgDSPmlEoK0i6/51pgt12C+LHKoT0bJF/KkQyXl9U5
+	/j3cmOREMAt54FT0DhrgbglP+buY+m6sudUohFCofhElnTMcSRVAvRFXIVmEHoWh
+	MVQVFJSCboTZr8znRg0t9C7Ey52df/8ukG8fFVbYGBts2SpLHlxo9yMaT5ufsWsK
+	gj9vNI3vMtbR0GZ/ExiSL2nmQ5bgBHeT/Ar25Y0+CQIvigpZuC2KmD5cCgMugjr6
+	7QdNBXVkGEubRGSogx2YmIHaqTnk8m09pdDdlL6QtWXrEoXbfhxNe4mzDq2XJjvD
+	sn72Nw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8q79q-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 09:14:50 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b307e1bef2so13932921cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 02:14:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756803638; x=1757408438;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zx3flAD2tM7boXAz2/Brkk0fygpQR/lnc3aW0wO9axk=;
-        b=FXqienMrB9GnDq0nu+teAUb5XMZPTj2jjkfu/cZ8i5YkqbirQCw4APUrF90ND9mNjX
-         o+3M6gv4tzIa+S52DlhE0+foWzvhsvHg3iBXFOiUa1s1wseIFsufGuXrusp1Y8dnRQxZ
-         KmY2qBapoHxbHvY86aAiBakxkaWRY5Su80SZVDwhRzq1hBb+SdHVDAwaitS7DVzGeH68
-         J1i/s+vekNGkezZHC92V4HN/W8NLPj3TqgNJYf2tBL3+tqL2wBx0fn7LIZ5SFPg8ApD8
-         7LI3niMLOIZ/c1Hn7gJKEvMyf1SyBP8HHhykqghyo3LleaWfG5AFtGzRAuLxVBtyOE6+
-         w9Rw==
-X-Forwarded-Encrypted: i=1; AJvYcCXtWC91hayoUggSGRHeafWH4RBpaDfdBIu6CcO0wqLNJTmf8ECSQsxkhI4TvMoQE+GFhO9hjLSSn0QDO7/M@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywb9TDXH2XJMtj3EMJG8sR8lOplLLY8qJs6UjQ82LerbGCz1Ol6
-	Xqshipg5qzOoKAu7JYu4CcJ4KX7TLZ7LZYBEgzuu+3ug9iVFC1KfLg64MaeUUbHwovQ=
-X-Gm-Gg: ASbGncs6OAg9k/EDil+AnTgyON2mYZl6uVZJDxzPu6FfRzJlHddBptfVk3PZOfW2F0E
-	/i//lw9V+B3ryUxIjeiKcoymHK5hYIidz8DjetxP5MFYjnfKtXxIS7h5Aw4178wMgcNniaXI7Vu
-	iO5k8Pjs8EXmtwy8A2/BMyIHSwW6P8Jlo/GkGDe1bc/KM9sQhRtgOQlhNhmWRALFFRuxfeNQak/
-	LboxWJFuvh6ayh5/vVax3tpBZrtDETQ6C0douu+j/e10wyKZEcoLK65QPDphN9KvAxAz6rlTzVx
-	A9CcKWUxKS+1+Qoaq2CF9m0rmXebZLd5xXahfWdpIVII0L7Z7m4RCNq02PI9bLLIZ3VVn+v6Fa0
-	dT3tPYYIPa4/sQRW3lv20b4qP0Fq+BjZPvAA1Ue/mB9IUOLweCgNXkg==
-X-Google-Smtp-Source: AGHT+IGij0ie2Kz1Bgob+LBfjmeb9ZeUV3Yq9N4Ha8C0Mceh6P8zBrbcRv8Ri3pPkr9v5oW9bYbvYA==
-X-Received: by 2002:a05:600c:1f84:b0:45b:7ce0:fb8a with SMTP id 5b1f17b1804b1-45b8559bd2fmr85788675e9.35.1756803638238;
-        Tue, 02 Sep 2025 02:00:38 -0700 (PDT)
-Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7271cd01sm261112045e9.23.2025.09.02.02.00.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Sep 2025 02:00:37 -0700 (PDT)
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Date: Tue, 02 Sep 2025 11:00:32 +0200
-Subject: [PATCH v2 5/5] arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s:
- add HDMI nodes
+        d=1e100.net; s=20230601; t=1756804490; x=1757409290;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JO1ghtzbf6msdOeC9Wq7UpFQnYphPOPa6N9e0whQQw4=;
+        b=DixPhQ8pcq32K6E3mqKnolmB1/73PCTB7hfta+IPXRi2qYIKtgDiJXogV/lL1dIkaM
+         i2+kUF+iTuKdlSESDgGoa4q8/W8RCFoRnSnMQCrFk4u5MG+Hxf+jOwR7zUSm4N6IkruJ
+         cgu6M1TTSIWg1Ae4Gt0Zux5uTVK/VFeIgGdPozYfhD1Ir/djqwu9scLeK5HDqwk/V/FF
+         bFHyYJfqCtx76+t7XTcqlaBYhYJg28cHMbvp+h8KmPESxJJbkAsu+1oDvCOBwouYVBQV
+         iA52W8hrsCeeAO4r94csYi/PP2ijuxVLJOE8/idRwuluNUpnahzag6OFlJzdQkamkOKr
+         CJYw==
+X-Forwarded-Encrypted: i=1; AJvYcCVyxW36397rRejFuVSsS0yuReCGjXgpnQaCyXIURFVPyr0y3m/8RG15TMNqnb7OKAxYXL3/+rylFa5FUE4Q@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdCiRQ3jxKpZlnxrSxqQXoWdiQwS1Z8GFINAUEqjcnUxAD0Kgz
+	PaXpZQKE3SPFJfVtyw8IFQ1nXiQBpkZx0Sfq+CrENCY4Ml33sRBd0ejJBHii0j5S2jqTz9pLFMn
+	Mr+zd0PDNzJs4j9298Ta4RXtEs/9mwDhAaxZCUhqiLxDLNFykYdeouc3RMM96OF9TAcSS
+X-Gm-Gg: ASbGncuZD5xbPdtcaaPtL1zYIpG6iHB13A0Ehh95HNSTAmdEmdef6Or0G4u7YHfmPay
+	0kkwPzr2iJTpKNNdXGOKl9enErfE769o6Uy9UKnOXQKgwqy2t+mwvkdWDrh5r05+ers1gX34LUG
+	QN1o5pIU1zPIKiTOmPXH5CEyy+JkBVZIGaqcVnOORMFqR8O/MtCVTJNfkg1KS16sZklj11C1b7z
+	vNOQEVEzbsbdysbTRdt5IKByZshm0VwodRK0mmM+j2yZ+EG1pv7FgbxW7SVBX8pVtEP6KlHideN
+	XhjSNifx1n4T68leEjU6J6AQtlFCBtX8LTqnFZVI7u0sCZloK+d37PE84KOo6RTxVKHj+lGgxB2
+	lyLnXS/kKLOloxf3OatVnZA==
+X-Received: by 2002:a05:6214:5083:b0:70d:dcc0:75e with SMTP id 6a1803df08f44-70fa1e3755cmr93720476d6.4.1756804490097;
+        Tue, 02 Sep 2025 02:14:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdxjzG5x24toM7rERz1x8tefpoUw5nxnJ08BKoZmfBLD2lh1HYnUpQ1tPf3aK4LYj/wz/d7A==
+X-Received: by 2002:a05:6214:5083:b0:70d:dcc0:75e with SMTP id 6a1803df08f44-70fa1e3755cmr93720336d6.4.1756804489632;
+        Tue, 02 Sep 2025 02:14:49 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-61ec8516621sm192683a12.26.2025.09.02.02.14.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 02 Sep 2025 02:14:49 -0700 (PDT)
+Message-ID: <16698a59-1a2f-4816-98fe-56b125be669b@oss.qualcomm.com>
+Date: Tue, 2 Sep 2025 11:14:46 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] bus: mhi: host: Update the Time sync logic to read 64
+ bit register value
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>
+Cc: mhi@lists.linux.dev, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
+        taniya.das@oss.qualcomm.com, imran.shaik@oss.qualcomm.com,
+        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
+References: <20250818-tsc_time_sync-v1-0-2747710693ba@oss.qualcomm.com>
+ <20250818-tsc_time_sync-v1-4-2747710693ba@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250818-tsc_time_sync-v1-4-2747710693ba@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250902-topic-x1e80100-hdmi-v2-5-f4ccf0ef79ab@linaro.org>
-References: <20250902-topic-x1e80100-hdmi-v2-0-f4ccf0ef79ab@linaro.org>
-In-Reply-To: <20250902-topic-x1e80100-hdmi-v2-0-f4ccf0ef79ab@linaro.org>
-To: Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>, 
- Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, Neil Armstrong <neil.armstrong@linaro.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3093;
- i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=9hYVY7VJpLHKc+fjiw16Zkq8W4WOmrto8l6+8H9lR/0=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBotrIwu0sNoblRGMg/0v5iPuw5a57X5zTkoD58YXhD
- q564EnGJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaLayMAAKCRB33NvayMhJ0XORD/
- 9YQAu9Ntnbhk0gv94yL4gdqIpoyK9YjqPgH7Y+GJklbEO52Lll1leq/BaEKzlZDHqFiyyQourvx5JF
- nkOXgQTvLJdVdrVSuDv3RihURsY3n5Fnk4vU14gOEf9ApYAM2SHSKOjmtleeGq3jVcEIGunbg8ERAS
- ntOpRLIcNv2nSbFwuH8/ArwkrKFiDD2TOvCZQPKS5AuZFihTs4SWH+X6qTyaze7kAcCcKD7g5wFINp
- Yq06J9ieaJB8GbPDUGqXmhr6GUlviK55y7AuwCEt7T+FwtmPNu4jvqeCU9f00S0LyzeZljHh/Icob6
- CkfSTeaDYjdvNsTzHwYQOulsE+zTjEZKCobCuGG7fyk1W4vTx2hRiFIgirktwJ+B5UQ28x6IibUUh/
- Cy7dBhLpt0M3OQTQx4JBGxcCDy7ONh3aTGA2Sr9cHkbParyVoo50GhNqhG3mm9TYI2wrIiJy4ZkNyS
- E3EFhTw6YGf3qtxoBAy5VBgq/Rql1ep80JvWVUmtGqEqZ99Oc2MX2uub64Zzd1xOp38LHMgc5u1laB
- XpunOut8RFkj9AkbZC/bOdgnvGQ0G5FwoWsjTpKCCipb01c2jhHCe3eDnFz4mK3rF5jPh1awFYr0L8
- K6wWOLuuo61Cja1Toh2xw2fXMXh+s4mvhjZ2WymEILU2KBhsEzcpeVjOjJjA==
-X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
- fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
+X-Proofpoint-ORIG-GUID: Q2KhSOAsCFfyJW0OtYCXwa87Cz7bLZUr
+X-Proofpoint-GUID: Q2KhSOAsCFfyJW0OtYCXwa87Cz7bLZUr
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfXwHibfX6/cN1g
+ BWzVL/2EVoTJyDxu+HRWjxp6qc/9mMK6b4P7/H6Vu+MumjIF+kT7fcL34zVHQKL9V1rH6l/zmVG
+ ERu3xLIRrLdmLD6eBEUta32dfX3LvLt1wqXyZLCGtKYVPTBSNYIxB9wrIINvJEOkd2tcsf87b3v
+ Di06kDCNJSpg/i9vwJD5d4NIgFb7QAysY+VW24c87DiOWOr0M/ONDHOlTt3uHz+bgL0OZMTayyE
+ glBe6waulgD4H/eTCDjNFIqf1bubGyCH1Sa1KUn/eTcETxRDAL19/74uD0vcU9Qig0VrvLkoxnu
+ z17DAyqYtPN0Xvl70eHyQSt7GJx/rRzBQSzsnkx/cpwr6T0avAM81O54477yaV9Wl8DREkRZ0mF
+ EZy/D/eL
+X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b6b58a cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=YtfURPx0HkL0cCzLSeoA:9
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-02_02,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
 
-The Thinkpad T14s embeds a transparent 4lanes DP->HDMI transceiver
-connected to the third QMP Combo PHY 4 lanes.
+On 8/18/25 8:55 AM, Krishna Chaitanya Chundru wrote:
+> Instead of reading low and high of the mhi registers twice use 64 bit
+> register value to avoid any time penality.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/bus/mhi/host/main.c | 19 +++++++++++++++----
+>  1 file changed, 15 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/host/main.c b/drivers/bus/mhi/host/main.c
+> index b7ceeb7261b708d46572d1f68dc277b6e1186b6e..f628198218ef9dc760bbfc3ec496603d1a45dfc1 100644
+> --- a/drivers/bus/mhi/host/main.c
+> +++ b/drivers/bus/mhi/host/main.c
+> @@ -1719,6 +1719,7 @@ static int mhi_get_remote_time(struct mhi_controller *mhi_cntrl, struct mhi_time
+>  			       struct mhi_timesync_info *time)
+>  {
+>  	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	u64 val = U64_MAX;
+>  	int ret, i;
+>  
+>  	if (!mhi_tsync && !mhi_tsync->time_reg) {
+> @@ -1756,15 +1757,25 @@ static int mhi_get_remote_time(struct mhi_controller *mhi_cntrl, struct mhi_time
+>  	 * transition to L0.
+>  	 */
+>  	for (i = 0; i < MHI_NUM_BACK_TO_BACK_READS; i++) {
+> -		ret = mhi_read_reg(mhi_cntrl, mhi_tsync->time_reg,
+> -				   TSC_TIMESYNC_TIME_LOW_OFFSET, &time->t_dev_lo);
+> +		if (mhi_cntrl->read_reg64) {
+> +			ret = mhi_read_reg64(mhi_cntrl, mhi_tsync->time_reg,
+> +					     TSC_TIMESYNC_TIME_LOW_OFFSET, &val);
 
-Add all the data routing, disable mode switching and specify the
-QMP Combo PHY should be in DP-Only mode to route the 4 lanes to
-the underlying DP phy.
+Since you're passing mhi_cntrl to the read_reg64 function anyway,
+perhaps this could remove some verbosity:
 
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
----
- .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    | 70 ++++++++++++++++++++++
- 1 file changed, 70 insertions(+)
+int mhi_read_reg64(...) {
+	u32 val_hi, val_lo;
+	u64 val;
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-index 4cf61c2a34e31233b1adc93332bcabef22de3f86..1ff183844a48d67888a0f4cf8342575ce7f7af47 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-@@ -9,6 +9,7 @@
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/input/gpio-keys.h>
- #include <dt-bindings/input/input.h>
-+#include <dt-bindings/phy/phy.h>
- #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
- 
-@@ -62,6 +63,45 @@ switch-lid {
- 		};
- 	};
- 
-+	hdmi-bridge {
-+		compatible = "realtek,rtd2171";
-+
-+		pinctrl-0 = <&hdmi_hpd_default>;
-+		pinctrl-names = "default";
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+
-+				hdmi_bridge_dp_in: endpoint {
-+					remote-endpoint = <&usb_1_ss2_qmpphy_out>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+
-+				hdmi_bridge_tmds_out: endpoint {
-+					remote-endpoint = <&hdmi_con>;
-+				};
-+			};
-+		};
-+	};
-+
-+	hdmi-connector {
-+		compatible = "hdmi-connector";
-+		type = "a";
-+
-+		port {
-+			hdmi_con: endpoint {
-+				remote-endpoint = <&hdmi_bridge_tmds_out>;
-+			};
-+		};
-+	};
-+
- 	pmic-glink {
- 		compatible = "qcom,x1e80100-pmic-glink",
- 			     "qcom,sm8550-pmic-glink",
-@@ -1007,6 +1047,14 @@ &mdss_dp1_out {
- 	link-frequencies = /bits/ 64 <1620000000 2700000000 5400000000 8100000000>;
- };
- 
-+&mdss_dp2 {
-+	status = "okay";
-+};
-+
-+&mdss_dp2_out {
-+	data-lanes = <0 1 2 3>;
-+};
-+
- &mdss_dp3 {
- 	/delete-property/ #sound-dai-cells;
- 
-@@ -1263,6 +1311,12 @@ &tlmm {
- 			       <72 2>, /* Secure EC I2C connection (?) */
- 			       <238 1>; /* UFS Reset */
- 
-+	hdmi_hpd_default: hdmi-hpd-default-state {
-+		pins = "gpio126";
-+		function = "usb2_dp";
-+		bias-disable;
-+	};
-+
- 	eusb3_reset_n: eusb3-reset-n-state {
- 		pins = "gpio6";
- 		function = "gpio";
-@@ -1486,6 +1540,22 @@ &usb_1_ss0_qmpphy_out {
- 	remote-endpoint = <&retimer_ss0_ss_in>;
- };
- 
-+&usb_1_ss2_qmpphy {
-+	vdda-phy-supply = <&vreg_l2j_1p2>;
-+	vdda-pll-supply = <&vreg_l2d_0p9>;
-+
-+	qcom,static-lanes-mapping = <PHY_TYPE_DP PHY_TYPE_DP PHY_TYPE_DP PHY_TYPE_DP>;
-+
-+	/delete-property/ mode-switch;
-+	/delete-property/ orientation-switch;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_ss2_qmpphy_out {
-+	remote-endpoint = <&hdmi_bridge_dp_in>;
-+};
-+
- &usb_1_ss1_hsphy {
- 	vdd-supply = <&vreg_l3j_0p8>;
- 	vdda12-supply = <&vreg_l2j_1p2>;
+	if (mhi_cntrl->read_reg64) {
+		...
+	} else {
+		...
+		val = FIELD_PREP(GENMASK(63, 32), val_hi)) |
+		      FIELD_PREP(GENMASK(31, 0), val_lo));
+	}
 
--- 
-2.34.1
+	return val
+}
 
+
+Konrad
 
