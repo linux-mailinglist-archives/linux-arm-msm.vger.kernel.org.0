@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-71652-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05C6BB40917
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 17:38:43 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 755B7B4099B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 17:48:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CADC9166425
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:38:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 185DA7B185A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:46:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD4CC31B131;
-	Tue,  2 Sep 2025 15:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53CCB32BF49;
+	Tue,  2 Sep 2025 15:47:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zh70MZgO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qoop0PUo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BB825EFBF;
-	Tue,  2 Sep 2025 15:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B9E322C63;
+	Tue,  2 Sep 2025 15:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756827518; cv=none; b=daAJtnJvr5z/X7bllSGTeDcE24DPdHUJ71brlnWJaYzsDrv+j8+/xpeHmXrmpQ1nHM3C9x6ZGcOul7YYVy5fXxRcnnJrKoW701RH27+5OjvkdCgf69XgkGWVKXHpZVpjOQEuevBbkAxiEy9jWQZK1AyKbRTdOEVVKAlMINTe6qw=
+	t=1756828033; cv=none; b=mbUqsDHmlszu/ipyOtM9QqP6V11WV66HD2ts04QbHwZq3Hl5Jjn0xwM3UBdiBeSYzmlfVEgsbnOCk/huL0QkkzvAm9+dAyNewjdyjLWY+oADaQ2g5lx4wSovxJv30BTLW50CuKqAQdJDgzDCMrjuXOKCIi688p3IDtz9/UbWuQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756827518; c=relaxed/simple;
-	bh=v+DuYfBUiGbE23dCrrZocBSYiEeU9i6PmQBrfDGbt+c=;
+	s=arc-20240116; t=1756828033; c=relaxed/simple;
+	bh=hySp48UnvCMROUWJRYJLQKxmvnRkw1XrdDo4283avGI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ou0TzRA4lX6dB1qFaYy02kTJO24tBLrVfdgoSpztcPVtaiAmofWb50ubIHxDCZhJM7LnFFSeHUgPpQrPVcYHInY4Gws3eB7uoFxn9bKnF60IWzeO8vhGFZlfSpAMywAAg2rcEChgMwYG4mlzRkQCMMMzb/YStALLr1mX18rBFq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zh70MZgO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DD3C4CEED;
-	Tue,  2 Sep 2025 15:38:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=qrcHWKWRt8byknsPurO20oeJP8SOu/7DsZRFt2tqXofCJ/jB5AFGfagl5TvatKCrHwJ08IFld5kynidpxIxhbJddXjzC2ZBJlWH5cLSH0jqG4WanGAe7qledJJpxbnoBQwEX2L8AFrH6Pd4irgQvuzDio4dkYFY/KY/y1pZHMB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qoop0PUo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B677EC4CEF5;
+	Tue,  2 Sep 2025 15:47:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756827517;
-	bh=v+DuYfBUiGbE23dCrrZocBSYiEeU9i6PmQBrfDGbt+c=;
+	s=k20201202; t=1756828032;
+	bh=hySp48UnvCMROUWJRYJLQKxmvnRkw1XrdDo4283avGI=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Zh70MZgOxvxIxj6UMkzT706dj4grAuw+KArw+LrHivUyAmevwHRbmzsy8tdhtqckQ
-	 ctnQW14LrxH7lpGTWRcPysIxgPyheRuMy9Tnoya1qMd019iqz8ogyz/ZzskmCsRTY4
-	 F6vO7VOs9YxEPQ4KZXd48LQZlpVHk12uvjES7uMNnLSDH8kOAWc5bmmaMvxzgl8PYT
-	 QFuBANh8pcFrndFTx8KlSmz3GDHmSM2T49B2D/EK+RnKYtzD4IBBt8MHQCCaSTZdMa
-	 hyyllZ2BaEg7ss7qp0XMJFqiosZEUGgYOmQQXbvtOguQ5wDzIV/4TdwKF//sOzHuI/
-	 Cne8GehwJZyYw==
-Message-ID: <5c9f8c2e-6785-4464-b2cf-f8a6aeec42ea@kernel.org>
-Date: Tue, 2 Sep 2025 17:38:24 +0200
+	b=Qoop0PUoSRM7ccmH7X8HwPTe7IYpZZvry2Ic2hA7KoefFUH/anzpnvOBKOltqjwe1
+	 OpzJ0z4m8CdbdMVbYpijEzEwETP+ZqCYtD0xxYJq+wRa/L2rC7mnCRPaQj8m38RJLc
+	 ELXcPSUI2XtH2MOk9xI7+bNNrwyGW/zdP3S+DvU585IbH18Uw5xg34If1MBch5Z6Df
+	 JqeNkacp9ytKscwh8qyTDQsx4UhWLdN73ToFtubojBtKQTgUUnRR7EerCIdJExV8w5
+	 FE+5OUtRHQnapmtloTd4b1BecIQDSwl9YuR4lCgOEuLzsUkHoDOxRw1YtE50Mj2pT3
+	 pRjiTS+ZxJMAw==
+Message-ID: <ebd1a1b7-c911-43f6-91cc-fcc2c01bc600@kernel.org>
+Date: Tue, 2 Sep 2025 17:47:08 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,44 +50,16 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 12/16] pinctrl: qcom: use generic pin function helpers
-To: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: Bartosz Golaszewski <brgl@bgdev.pl>,
- Linus Walleij <linus.walleij@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Alexey Klimov <alexey.klimov@linaro.org>,
- Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>,
- Matthias Brugger <matthias.bgg@gmail.com>,
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
- Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
- Andy Shevchenko <andy@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, David Hildenbrand <david@redhat.com>,
- Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
- "Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka
- <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
- Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
- Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>,
- Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
- Pengutronix Kernel Team <kernel@pengutronix.de>,
- NXP S32 Linux Team <s32@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
- Tony Lindgren <tony@atomide.com>, Haojian Zhuang
- <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>,
- Neil Armstrong <neil.armstrong@linaro.org>, Mark Brown <broonie@kernel.org>,
- linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
- linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev,
- linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250902-pinctrl-gpio-pinfuncs-v7-0-bb091daedc52@linaro.org>
- <20250902-pinctrl-gpio-pinfuncs-v7-12-bb091daedc52@linaro.org>
- <aLbt2euqYQM5xXuZ@smile.fi.intel.com>
- <1034c70a-da67-4914-b23c-8d006b7611bf@kernel.org>
- <aLcM58IEH8hGYLnx@smile.fi.intel.com>
+Subject: Re: [PATCH 4/7] soundwire: qcom: deprecate qcom,din/out-ports
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: robh@kernel.org, krzk+dt@kernel.org, vkoul@kernel.org,
+ conor+dt@kernel.org, srini@kernel.org, yung-chuan.liao@linux.intel.com,
+ pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-sound@vger.kernel.org
+References: <20250901195037.47156-1-srinivas.kandagatla@oss.qualcomm.com>
+ <20250901195037.47156-5-srinivas.kandagatla@oss.qualcomm.com>
+ <20250902-light-vegan-snake-efe03c@kuoka>
+ <3c41bc8e-796b-4efe-97cd-03b737f09689@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -133,43 +105,102 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aLcM58IEH8hGYLnx@smile.fi.intel.com>
+In-Reply-To: <3c41bc8e-796b-4efe-97cd-03b737f09689@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/09/2025 17:27, Andy Shevchenko wrote:
-> On Tue, Sep 02, 2025 at 05:12:24PM +0200, Krzysztof Kozlowski wrote:
->> On 02/09/2025 15:15, Andy Shevchenko wrote:
->>> On Tue, Sep 02, 2025 at 01:59:21PM +0200, Bartosz Golaszewski wrote:
-> 
-> ...
-> 
->>>> +	for (i = 0; i < soc_data->nfunctions; i++) {
->>>> +		func = &soc_data->functions[i];
->>>> +
->>>> +		ret = pinmux_generic_add_pinfunction(pctrl->pctrl, func, NULL);
->>>> +		if (ret < 0)
+On 02/09/2025 15:13, Srinivas Kandagatla wrote:
+> On 9/2/25 9:38 AM, Krzysztof Kozlowski wrote:
+>> On Mon, Sep 01, 2025 at 08:50:34PM +0100, Srinivas Kandagatla wrote:
+>>> Number of input and output ports can be dynamically read from the
+>>> controller registers, getting this value from Device Tree is redundant
+>>> and potentially lead to bugs.
 >>>
->>> Why not simply
+>>> Remove the code parsing this property along with marking this as
+>>> deprecated in device tree bindings.
 >>>
->>> 		if (ret)
+>>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+>>> ---
+>>>  drivers/soundwire/qcom.c | 134 ++++++++++++++-------------------------
+>>>  1 file changed, 49 insertions(+), 85 deletions(-)
+>>>
+>>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+>>> index 7f19ebba6137..4fa3e1c080ef 100644
+>>> --- a/drivers/soundwire/qcom.c
+>>> +++ b/drivers/soundwire/qcom.c
+>>> @@ -128,7 +128,6 @@
+>>>  #define MAX_FREQ_NUM						1
+>>>  #define TIMEOUT_MS						100
+>>>  #define QCOM_SWRM_MAX_RD_LEN					0x1
+>>> -#define QCOM_SDW_MAX_PORTS					14
+>>>  #define DEFAULT_CLK_FREQ					9600000
+>>>  #define SWRM_MAX_DAIS						0xF
+>>>  #define SWR_INVALID_PARAM					0xFF
+>>> @@ -195,6 +194,7 @@ struct qcom_swrm_ctrl {
+>>>  	int wake_irq;
+>>>  	int num_din_ports;
+>>>  	int num_dout_ports;
+>>> +	int nports;
+>>>  	int cols_index;
+>>>  	int rows_index;
+>>>  	unsigned long port_mask;
+>>> @@ -202,7 +202,7 @@ struct qcom_swrm_ctrl {
+>>>  	u8 rcmd_id;
+>>>  	u8 wcmd_id;
+>>>  	/* Port numbers are 1 - 14 */
+>>> -	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS + 1];
+>>> +	struct qcom_swrm_port_config *pconfig;
+>>>  	struct sdw_stream_runtime *sruntime[SWRM_MAX_DAIS];
+>>>  	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
+>>>  	int (*reg_read)(struct qcom_swrm_ctrl *ctrl, int reg, u32 *val);
+>>> @@ -1157,7 +1157,7 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
+>>>  				       struct snd_pcm_hw_params *params,
+>>>  				       int direction)
+>>>  {
+>>> -	struct sdw_port_config pconfig[QCOM_SDW_MAX_PORTS];
+>>> +	struct sdw_port_config *pconfig __free(kfree) = NULL;
 >>
->> Because existing code is as readable?
+>> That's incorrect usage of __free(), missing constructor.
+>>
+>>>  	struct sdw_stream_config sconfig;
+>>>  	struct sdw_master_runtime *m_rt;
+>>>  	struct sdw_slave_runtime *s_rt;
+>>> @@ -1167,6 +1167,10 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
+>>>  	int maxport, pn, nports = 0, ret = 0;
+>>>  	unsigned int m_port;
+>>>  
+>>> +	pconfig = kcalloc(ctrl->nports, sizeof(*pconfig), GFP_KERNEL);
+>>
+>> This almost always goes to definition and I do not see anything
+>> preventing it.
+> Yes, It can go to the definition.
 > 
-> I don't agree on this. And Bart explained why. So, it's an API requirement
-> after all.
+> But does this matter for a single instance of __free? I thought this was
 
-If pinmux_generic_add_pinfunction() was returning 0 or error code, which
-I assume you thought this function is doing, then your suggestion was
-nitpicking and existing code would be readable. Requesting (ret) for
-such case is really not helping.
+EVERY __free() must have constructor in definition and only exceptions
+are allowed if you cannot find such constructor (e.g. there are two for
+the same variable).
 
-If, as it turns out if you looked at the code,
-pinmux_generic_add_pinfunction() returns non-error for success, your
-comment was even wrong.
+> an issue if we have multiple __free() or guard() and __free() the order
+> of definitions matter.
 
-So either you are nitpicking which is not helpful or you are finding
-fake issues which is counter productive.
+Yeah, for that reason this would matter, but here it is about preferred
+style.
+
+> 
+> Will follow the recommendation in v2.
+> 
+> thanks,
+> --srini
+>>
+>>> +	if (!pconfig)
+>>> +		return -ENOMEM;
+>>
+>> Best regards,
+>> Krzysztof
+>>
+> 
+
 
 Best regards,
 Krzysztof
