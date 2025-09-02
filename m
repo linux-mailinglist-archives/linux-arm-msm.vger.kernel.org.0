@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-71494-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71495-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CB83B3F4F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 08:05:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 06B95B3F504
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 08:07:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id D47034E2F0D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 06:05:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B593A3A8B93
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 06:07:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48537284885;
-	Tue,  2 Sep 2025 06:05:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E2C7B2E267E;
+	Tue,  2 Sep 2025 06:07:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="T6tieQTu"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eq4Fo0OB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C553E573
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 06:04:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2946E2DF158
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 06:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756793101; cv=none; b=TYG2y+rlFraHjiCly9wk0zNnmxaDaTQ3x+2n7gmwdZZLc8rYygmtSfe0my4G8F13QKQQJZLMSUyDva9pNzrbtt9g1hncZ8aDKB6p7p7uj9Nl2l+QNVGazBYJp7ylavqqiFiZNeSJElguGL0WiP97sjN8Iglpj4Z1KHRUKKog0ZQ=
+	t=1756793248; cv=none; b=AcwXDllGPaUpbVT4HnZc3IEDX6Z0lVjfYmgBQGoLmpXNU0vtr/uPMZ9BB4Gqb2GeNgPJCBzvereES8oXOpCLiE+fd8RtmmoKc1fyA1hW6YauaCPRAKOWRFfZn+EDshFziqXligoyurasX/QGHx2odvwdillH82vaK8ur6YjFveA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756793101; c=relaxed/simple;
-	bh=VpE8wK0YIOoaEuss6FDJDDOgvvJkk4hgdGuL0nfvsf0=;
+	s=arc-20240116; t=1756793248; c=relaxed/simple;
+	bh=lcRKGuBTIwV8aVWzCNRgaz6ffqBzMJw3nBGepR5YPBk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=l96IeV8HWoWKaUZc1CdiZdm4hWoRw7zcG9sapBddu4vzm41VsMxo/xxH2aC1nGKPt4snuCo2Liq9mIZGxDmGC/t8IQ7YKYMHDS8KrqAenkgokP8mdOaUTuQKSzG2qJfMYjDVeJmJyqssdFOb1w0B4YUFbJdrbBfL3m8pgAe90Jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=T6tieQTu; arc=none smtp.client-ip=209.85.221.41
+	 In-Reply-To:Content-Type; b=CEIWfukXTT3LU6CPvBjJxjqrAIQzF6TzX5cVQWxuXKlXZEdpA+LWhokGMY/v4GzMjRhH3Kgcn0ygc7bWcqgFP2lIenaob9JfS6H8Ely15tSXQg0QQBhO0xWSuBD18inBJiJd7pdPqKWCIK9JmLLnF9fL0wbO3r1R3uo1BJlvFlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eq4Fo0OB; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3d6af847306so215840f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 23:04:59 -0700 (PDT)
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3cef2c300afso630150f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 01 Sep 2025 23:07:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756793098; x=1757397898; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1756793244; x=1757398044; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2b3JuSsnshEbB2H24ad5BMEkyTFrlBTid3O0T6ibdMc=;
-        b=T6tieQTuFnWKSfMspzWBL9GPwnoxbmRxAHdIhK1N4mfnaN3XWTrtI4t4KWT5Jsog63
-         Jrh3Q44aocdJFJTOLo4O/9GgXYD0jEWIHkTk3c/HzLEUh94oyYjknw8RTVfTbivWJiXW
-         1DTL0rmfvQDdkaKAiOWq6HfpTzra/r9zgXTO311jdLzB3o0zdokyo39JYTMs8x/vwRjS
-         vptdVPswfEnRwUArHLhyLeE/k4B5V6nk6X4J/mBEfzBQipeUh/pjMmGbmesD8JidDLRn
-         6Y3PeHneq0m8hpISpyWY4Kpg25IvmOvzMUfvo+vbk16I5D0z6Z/wseK83In5/sJ31XRg
-         vReg==
+        bh=t/B1FaoD/CzixDmOU5vubVEgdSvYSaE5OyF1FY9TFP8=;
+        b=eq4Fo0OB48ug0o42blUy1TViLJd+GzMSgN+8DH2C/hOMuIRebDXsv2BqZZqXxGRa/5
+         zFXFcdODNkSlMhE6m2hf7yxsMmUc0gWjmFTBqtpUWEo3otBFUWgXmN331lNSLx2thxs+
+         UTScoh1dJu/XZHOTw7TN3+fpmGdE7ehfXNVInmG9Lcper/9RgqaDXzRE1DR1EbiMQTmD
+         fLHnClYL3IgSM4KpgKgNbq+wy2n0OsepaNdE3XrAJkuTq8V+/JLEdYc+yaYQoc0lxqYL
+         XgZPpqceiU6YyHB9NcOD46McvsMvf/h/Ao7r1Dc08TQ4aos1pcx8H/9FMamaPvtZwpZ2
+         WbaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756793098; x=1757397898;
+        d=1e100.net; s=20230601; t=1756793244; x=1757398044;
         h=content-transfer-encoding:in-reply-to:autocrypt:content-language
          :from:references:cc:to:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=2b3JuSsnshEbB2H24ad5BMEkyTFrlBTid3O0T6ibdMc=;
-        b=KiNodmB/6wKyWxLSfenhxc9JN2CS0+YeRyoxY76ZSqLE3Cc9uHBBeVMx4KaTgIdMKR
-         /wP+n+Z2n9xLYIgGsk5xQISkJuVAC/c2D+oMERbmQa123Dbg2kqsdcKKpKjG73NZ7rsI
-         UuNkaGGSVe+NjIqMN3sr3H6RYOzNQNEuXwCsXDXN24MDsuJbJyp0L4LbB7emSqqcLpP6
-         scWPIUF63lwIBS+bypZ70D1N3cyem6fxFPqHBbJIpPCmq9mAtlypw1ozgTcsPYqY7RQV
-         soYUX5TcTmbhQFxtY0ZYM8F+bKHUB1psmCeJ4ovvWb1n+9lz7hgkEw3j5OYo8xW1/H0l
-         XY9Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUS2/wvmjVqBbDLcL1rjc9n1CUQ4EZ5nwoJwToLRrrFAzpmgjE2QtHaOU98Y+ntXpmy92RiAEnefsDFEdHh@vger.kernel.org
-X-Gm-Message-State: AOJu0YxoMav1oerdnxc8Gsoj2IPzJ/mwwzDdzGVA8L0s77hGBsvUQKRl
-	0973H/12VSy0CGkM8rQcHMGgatQdEPdT1ecC//KtRSj1zLjnMH5X9S7uJumOnLDLVMo=
-X-Gm-Gg: ASbGncuRJS8M18/I0uF7P7QbfTQCbUTCYOoiV4ZiR287P/VpnRh6z4BjIJuRoVyL5WN
-	nWo7DM8R3creV6k0GgA3z5Y670dlDrVUgP39iqrFvLnxVubIJiQLa000m5R3Y9dUobCGpOrmpcT
-	bs2fWDvY8qCUTdaIstkX8Ulr3TvcJQGQtiYGv05MyzqXgHbbthte9g9eWZMitx7zdDRXETF4lTY
-	CmhfsXZs++Vc6X3ZyW/xAy5ckr/+bSCUTKt0RCLtywY/uZrDd0sdRfAepaMFYJcADA6ckVSg/Kl
-	+Jqwp6KyTzNNaIwGWeIjOTxEMqURk5RasAQfzII3ijgtxcLELR5nsUvHL763QlaCaCAj+fQYsyW
-	A/sbvpbQJaGBsHjuj8p2Cd1bBWgf9j07E1DEqyWMuxcQ=
-X-Google-Smtp-Source: AGHT+IGzQvNWUwBdb294u3aSfKMN/4Lhuayvos0l/gCcNz8KPqZ1Si6aA9RC3fHNpONP2IXnMVzHIA==
-X-Received: by 2002:a05:6000:2307:b0:3c9:774f:6484 with SMTP id ffacd0b85a97d-3d0fa72c0d8mr4993112f8f.5.1756793097550;
-        Mon, 01 Sep 2025 23:04:57 -0700 (PDT)
+        bh=t/B1FaoD/CzixDmOU5vubVEgdSvYSaE5OyF1FY9TFP8=;
+        b=giWBH1iVrD4Yz8YxxVleuGCAiLPpvz0rnw92PLqWG89pkVgsRnrxXeeEQGOi1DDl7i
+         DrZE2QoWCuTSLI5hihEUTKGEm0gNl/90vt5GxGtnD8VFcfmT8wT0o72hOaZII/vh17Eb
+         KyVJ/FKuUku4YfWBfpWXyAHPNxRMXCwNHF0l/TkxIRHyz2MK1OCvrv/GXPx9X9twWMHv
+         vMfUbYvOu3WgIgaW5hV175W7i57XgdV3WtB9Zytdh9A4M9FyqNWkgpNa8V0K0TEbXTji
+         C2CQVBaFkrJVa4h/i8JMLYsVS+w/xei8XRznY8NiKpVXGJbIHpPxhwNHjQldYl3e3o6K
+         HP5w==
+X-Forwarded-Encrypted: i=1; AJvYcCXCyxEkK8fia38v/Vz9vv0d7kssVrOVXDhKZrRyoFkYJNIwCSoSfModXcqN571WFY/Mk5TP/YzbCj8nUcn2@vger.kernel.org
+X-Gm-Message-State: AOJu0Yym7EqoalmfLuMlzc73eS8vDkHyR/OdJW97xXMAC9fgXvF0f1Tn
+	b3neXXY1GlhUFUU0qQjqA7QEtMGpnVFZvbBrQiG/K4/wumaZXs3lbRvbfOF2i+EKdWU=
+X-Gm-Gg: ASbGncsOL0jm31kePXbyulcFSuhC20WiWDAlZw3Q2PoMrCoMNPcA8mkewNURnNT0C27
+	ulOKjQkcW4KElgXtnq5RFDHHOsrAMC5CE6o8aVSq0K5RsEZsebUt4DIjbRLaNeLN2mbA9yv/aw6
+	zBLBYtwHbL4VhoAh4QsHIYRj6D65Rj09cxSvVIoSSWfLXvxFPVhlvhAuFz6XpViUU34vbSv6nyR
+	RekWK1kY6riNDRQTo2da2apaV4dJdKngiz5OUWo9+uKgk4+nSgOfRqI05tZrl+CZVfKxAfobzCx
+	nrGBP8vOXjCD0C8bDPbiey0xbJjASTpt5581pTvstGbe4qZ8SpmWXvAzuiCl472UjDKDNv6tRg3
+	ToYXqSbCh089LFYLAGWx8sZdjUT7vvrDr7feoGe/96AaYrpl455jGpQ==
+X-Google-Smtp-Source: AGHT+IHlJQa2ozPDy4pXB3L1qvYBOkak8WzZG+cqww52jrlmExUNErZsn4LdUbYEor0rhiu5nFzizw==
+X-Received: by 2002:a05:600c:4f8b:b0:455:f12f:e3fc with SMTP id 5b1f17b1804b1-45b81e92f7fmr56974255e9.2.1756793244503;
+        Mon, 01 Sep 2025 23:07:24 -0700 (PDT)
 Received: from [192.168.1.29] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d1007c0dc8sm16442802f8f.53.2025.09.01.23.04.55
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7e74b72esm186726245e9.0.2025.09.01.23.07.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 01 Sep 2025 23:04:56 -0700 (PDT)
-Message-ID: <24999a53-ea5a-4823-a84f-2ca0ca184bb4@linaro.org>
-Date: Tue, 2 Sep 2025 08:04:54 +0200
+        Mon, 01 Sep 2025 23:07:23 -0700 (PDT)
+Message-ID: <ddd0f518-f9e1-49e8-bbaf-b810adcd35b3@linaro.org>
+Date: Tue, 2 Sep 2025 08:07:22 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,8 +83,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 2/9] dt-bindings: display/msm: dp-controller: fix
- fallback for SM6350
+Subject: Re: [PATCH v7 8/9] arm64: dts: qcom: sm6350: correct DP compatibility
+ strings
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
  Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar
@@ -101,9 +101,9 @@ Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
  dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20250829-dp_mst_bindings-v7-0-2b268a43917b@oss.qualcomm.com>
- <20250829-dp_mst_bindings-v7-2-2b268a43917b@oss.qualcomm.com>
- <20250901-arboreal-gay-wolf-bcaaec@kuoka>
- <qy6c2gundpbz5ixqpt2hefzfb56wcrzcaclqwg2opof4zc7lep@dpc3nv6usurk>
+ <20250829-dp_mst_bindings-v7-8-2b268a43917b@oss.qualcomm.com>
+ <20250901-defiant-illegal-marmot-7ce0db@kuoka>
+ <abkkn4f7uca6tzjasltyysxecuuirxxvbjz6l6re5v4z6jlmuh@ugz6jtw6vo4n>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
@@ -150,73 +150,36 @@ Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  h0At/TN/618e/QVlZPbMeNSp3S3ieMP9Q6y4gw5CfgiDRJ2K9g99m6Rvlx1qwom6QbU06ltb
  vJE2K9oKd9nPp1NrBfBdEhX8oOwdCLJXEq83vdtOEqE42RxfYta4P3by0BHpcwzYbmi/Et7T
  2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <qy6c2gundpbz5ixqpt2hefzfb56wcrzcaclqwg2opof4zc7lep@dpc3nv6usurk>
+In-Reply-To: <abkkn4f7uca6tzjasltyysxecuuirxxvbjz6l6re5v4z6jlmuh@ugz6jtw6vo4n>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 02/09/2025 06:03, Dmitry Baryshkov wrote:
-> On Mon, Sep 01, 2025 at 05:45:49AM +0200, Krzysztof Kozlowski wrote:
->> On Fri, Aug 29, 2025 at 01:48:15AM +0300, Dmitry Baryshkov wrote:
->>> The SM6350 doesn't have MST support, as such it is not compatible with
->>> the SM8350 platform. Add new entry for SM6350 with fallback to SC7180
->>> (which belongs to the same generation and also doesn't have MST
->>> support).
+On 02/09/2025 06:04, Dmitry Baryshkov wrote:
 >>>
->>> Fixes: 39086151593a ("dt-bindings: display: msm: dp-controller: document SM6350 compatible")
->>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>> ---
->>>  .../devicetree/bindings/display/msm/dp-controller.yaml     | 14 +++++++++++++-
->>>  1 file changed, 13 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->>> index aed3bafa67e3c24d2a876acd29660378b367603a..0f814aa6f51406fdbdd7386027f88dfbacb24392 100644
->>> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->>> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
->>> @@ -31,13 +31,25 @@ properties:
->>>            - qcom,sm8650-dp
->>>        - items:
->>>            - enum:
->>> -              - qcom,sar2130p-dp
->>>                - qcom,sm6350-dp
->>> +          - const: qcom,sc7180-dp
->>> +
->>> +      # deprecated entry for compatibility with old DT
->>> +      - items:
->>> +          - enum:
->>> +              - qcom,sm6350-dp
->>> +          - const: qcom,sm8350-dp
->>> +        deprecated: true
+>>> diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>> index 2493b9611dcb675f4c33794ecc0ee9e8823e24d4..8459b27cacc72a4827a2e289e669163ad6250059 100644
+>>> --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+>>> @@ -2249,7 +2249,7 @@ opp-560000000 {
+>>>  			};
+>>>  
+>>>  			mdss_dp: displayport-controller@ae90000 {
+>>> -				compatible = "qcom,sm6350-dp", "qcom,sm8350-dp";
+>>> +				compatible = "qcom,sm6350-dp", "qcom,sc7180-dp";
 >>
->> If it is only about bindings then there is little benefit in keeping
->> this, just drop this case.  However you cannot drop it from DTS, so this
->> is a bit pointless.
+>> No, that's breaking all the users.
 > 
-> Our plan is:
-> - land updated DT bindings, describing MST clocks on MST-enabled
->   platforms,
-> - land updated DTS, adding MST clocks where applicable,
+> WHy though? Both old and new lines are using fallbacks to bind the
+> driver to the device.
 
-This part breaks all out-of-tree users of DTS.
+Kernel has sc7180 fallback, but what if other DTS user does not and that
+other user was relying on sm8350 fallback compatible? That other user
+won't have sm6350 dedicated handling as well.
 
-> - land driver changes, keeping legacy support for non-MST DTs on
->   MST-enabled SoCs
-> 
->>
->> Lack of MST support is not informative enough to claim it is not
->> compatible with 8350. For example if it was working fine via fallback,
->> then that statement is simply not correct.
->>
->> And it HAD to work fine, because there is nothing binding to
->> qcom,sm6350-dp.
-> 
-> It is working fine since currently we don't have MST support on the
-> driver side (nor do we describe MST clocks in DT). It's true that the
-> driver will have to handle non-MST DT for SM8350. However I definitely
-> don't want to describe both cases in the bindings. SM6350 is not going
-> to be compatible with the MST-enabled SM8350 schema.
+That breaking of users I meant.
 
-The question is rather: is SM6350 going to be compatible (working) with
-MST-enabled drivers.
+With the kernel it should work, assuming SC7180-dp was introduced
+similar time as 8350-dp.
 
 Best regards,
 Krzysztof
