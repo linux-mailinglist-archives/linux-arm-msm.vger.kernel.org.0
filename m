@@ -1,180 +1,176 @@
-Return-Path: <linux-arm-msm+bounces-71620-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71621-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C7AAB402C9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:23:55 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEB16B403F0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:38:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 956CB178E6F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 13:22:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 76D697B9B82
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 13:32:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 590903043CA;
-	Tue,  2 Sep 2025 13:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F87330DEC0;
+	Tue,  2 Sep 2025 13:29:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I3U9eeT5"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Pqx7oMJZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07B42ECD1A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 13:21:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 349CF31A548
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 13:29:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756819315; cv=none; b=QGgsoFzf8CsyTMZJwcztskTjNbYLZl4dbKOhjPXlrx7Gttsy4ybA0Vukky5lao3/W54/q9uSOlkRIDZydYL7BhGv29D22MBed/VKpRAHuAeFBKgUm1vmR/AEUvHPFXmlImHuSqhXqUPXT6IPSoVy4aebGduXqHFacEwrvh8YezE=
+	t=1756819788; cv=none; b=qzA5XJCR9b7JFz+TelYmhy1iw/otHpk5M65ecv3GReI76P9E/JCSkrIdzO6q5SxvmzygQzzj4jENi/jOqNW/vDOiZ6glr3FCnHWyyKOfyJCiduJAMpGIUe/2tIMkN4/ZTc2hiWobv7acwtvvc6mF4cgVilxAE8Ld4DcpZp/ISMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756819315; c=relaxed/simple;
-	bh=CWiUnmAw+vPsRhD1SkHyKDhqzUdNzR/yf9yGGUVjYHM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Hfb3SyRR4oKdBh/D7wPma4BtQio8eVzCJuwxSmPnhNsUpDMo56eR1qQSNs/olkphTWsmpO9SpQcMHmhXHbpILKOEryFgCMFVEICHp90XrDLgnyoQvO92d8KQIchD89QWdD9E5+osXRFJ1yloNNzN8xISmux6jyEw5OPqLP8YCJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I3U9eeT5; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582AQAZA027558
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 13:21:52 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	JaC59KBlwwCcOLBxHtuji6zgMyRa9S7aKGEwvTUep20=; b=I3U9eeT5pnO4RJAg
-	owJhVON8S/oZBIKm6nhzL1ZvqAWe5rQvOUY89w70y679wfzHeOg8OuSz4aXNokMI
-	lA9NsVKj1PSM2bIiNQAics2u4s6NdTKUcXU0EgbeRwAq9LfpI2F/vdgHNubsirq3
-	sEf1tqYfIIM9GnqxoNULC6ksTxsaXc1gmH+a1OjO40JwbcN0VakdTrM3WTpoqB9A
-	MCGkNFSKZN3S0n9I1Xs5CJ1+GblJMn8Eg7objwj7zhl28mtKONd7SCNQJkPuQvz7
-	rwz9TmesLzyO88D/AmiJ7sZ45EOTO1zMtNpLjXwU4E6ycwAcdd6FL1KLEnCQJ5WO
-	r6jg6A==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uscuyxka-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 13:21:52 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-772642f9fa3so1251501b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 06:21:52 -0700 (PDT)
+	s=arc-20240116; t=1756819788; c=relaxed/simple;
+	bh=3QlkS9Ed9gmuv+futXyyIrRTd0WcKtKmub0+uBCFWn8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rwHmqcvecZ1+f2HOVJxZ9MYSilS4Bwuu9dbMhmXc7wcQs79uQAxXpNyUbdIOt2tByjQR6JUe0mKHVltGX3jSBaVM1h8mpQE+ZJPagDKrgvjUnBiZaS6wHuPFYmk93OwB16FWQAwUT5eqcj251b67mBgjVHL8aOVjhQ/UAb6RB+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Pqx7oMJZ; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-55f6aef1a7dso3867297e87.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 06:29:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1756819784; x=1757424584; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jZCKJv4aYcw+dSdOw+40akoqTFv6AX+SyMdRpV8+ksQ=;
+        b=Pqx7oMJZ8qmUS++jRYyyhqdtBvKrDhz7thM/sP/AIUqNiNpmHftLPYJhhVme284dqw
+         RAdtqlFKT7FrZ3Rz1GX8xhGW+BBM2QY5VPYjbSIWJuspwmGwceeFVM3b2ynGB3qctMRL
+         idvbLeA23uCw893n0faRQHAcJdXUOueZbbg3Q1uyM8rjLhN9n/JEH56hN41R7v0yIyE2
+         VfSbUISln8Tf8hmVMNHM2iy6fBq4WeSjxD4NMa2DBCpLD6n19eKlCuCMmEPLAedCr82s
+         sQQm6i+QzNXR90VfLxaQp7REQlM9F3sBlV2+DmLu5DACOk0Vfg9QLZB7yUEkwZJVmSA1
+         mNzA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756819310; x=1757424110;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JaC59KBlwwCcOLBxHtuji6zgMyRa9S7aKGEwvTUep20=;
-        b=bD7fD7w75qKhD+DAFHVOnms9wY4U2P8djiWTKZHC7TaDjZF5zcDBr09B9EehZBBabz
-         4IsmDWR6qjJXTVsOW9aG6TV5iiqHQFsUb+dsamXpKx6tfkPn4+cxZYPY/3hFY37KuE3N
-         c6GMTndCm0Aqp4sxCQ72ORjfNh9mkDNJLtMh1QAmyAVNwBiMFUc//Uv1ImP+CMzh01Vn
-         KeI02xYG0NccRz9hWlfMuLBqfuqmw7UPSrCMYWWZQjl4SBhBojFTHe6HcKbrFFV79wL2
-         9P4IXH5RDv4pEOQ3bLDVXjikrJWWCzlJg+joGUJHeGQwsRFq3CsI97pb8D2nBpJAWpGO
-         R8Tg==
-X-Forwarded-Encrypted: i=1; AJvYcCWhKjmtql0DXuHfghlRrAw+5n/W1rNNKbtoSwiGkqaqFq7+QGseSCr/ydAjL02baHHDp7ElmM/Q53zg+DGY@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy2Ve4xEYYmomfXPKbFJ8w9qF3QGwGHvHFrTiaeJ4KeyeSv8aD6
-	d0Okc7j9IYB8S/R5xqAUbRIAgrAtq6EZy1PHvT/nVH4VQMWReMwAE0BHjrNamAymSOk4IOL40jc
-	OaQpbBO3r+VDflAVyzKByu5jkRWqIZKaarqyunEVAVxfH3ZhlWjstRwmHrmiVdt/8ZsgC
-X-Gm-Gg: ASbGncv/tki0Q4b/dXm5urkP0/XvDzENwS03jGGZvUy4foN9KBV5uVILGL8hZgD9oxV
-	8knP2JupvijiozdZkJFLKb+wHji0TsrRw6K6rP+EgsHGkZ/saKXMFeIGtKiiN3f9A1ITj1E1Hrj
-	Y3RAHZ7lX90zVhU69oKuQpsxgjCaUcE6kYGimFEIlRfa4M4khWaVizJuu04S/Lu2BcIWPsRwy0B
-	FJ3a9OdLu8nQUzgVQSJI58dZma8CudzhlUe5k2/AzYNVhwtww8+hcbQ5QjVb3jG51Eb8c0JK9fW
-	ROT+K+ScGm67RgqxvGHzR7BefviFfMaDdmsNDV37D2X1dnv4UXSXg2UO0YT1Og==
-X-Received: by 2002:a05:6a20:9145:b0:246:3a6:3e47 with SMTP id adf61e73a8af0-24603a66346mr664556637.12.1756819310272;
-        Tue, 02 Sep 2025 06:21:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtkIfOFvD0HUzJY6Lkpwe4Ds7LLmmdnhloqIvQ0PtyT9neILbf8iU/dMY87XxE3U3HYu3y8w==
-X-Received: by 2002:a05:6a20:9145:b0:246:3a6:3e47 with SMTP id adf61e73a8af0-24603a66346mr664480637.12.1756819309536;
-        Tue, 02 Sep 2025 06:21:49 -0700 (PDT)
-Received: from [10.91.118.43] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7727bce1b58sm143396b3a.9.2025.09.02.06.21.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Sep 2025 06:21:49 -0700 (PDT)
-Message-ID: <72cc7f71-fe49-411f-9a7e-71c4f51c283f@oss.qualcomm.com>
-Date: Tue, 2 Sep 2025 18:51:43 +0530
+        d=1e100.net; s=20230601; t=1756819784; x=1757424584;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jZCKJv4aYcw+dSdOw+40akoqTFv6AX+SyMdRpV8+ksQ=;
+        b=RyTXu2a8jss1Upke+iJDH7bu/q/yzT5Bd5K0wFnfPTV04z2tdCxIdkoeVfm2uP0+/x
+         0OxjVHwSYkv8dLlYhw7mmRT93UQ4Il3sZeOqqRZ1/v+NhKJSRBxAbhIsDPC1oT9ExqxP
+         clL5PMV1NhPWLjA9oEbEp4eoTVICcsWcXNu+UWvKvcF88dKXJABxH1Cmo7jwnzX+rrHI
+         pqIztI/PpHbsUjauZKo3C4c9zu27HLJW+hS746ZmOqnGHTgfKi+WMatqOmwQP7O2op1X
+         5xmLk3WQzBZ+YxWVMpZunl3de2FTgXxbWEGQ4xN2wiW5jPSxRrHGcRosVoFqbN5qvIzL
+         y18w==
+X-Forwarded-Encrypted: i=1; AJvYcCXyBHO+GL5LcXTqA5roTRZxJDdRnLquzRPnpHmwlfJXqTJjG52p0DOZXWiZlrzvyCHGAoZW0zubaz9Xbk15@vger.kernel.org
+X-Gm-Message-State: AOJu0YyEIBn8E4Acra8QBYplmZWdMzRTuHk+5tOr/SnbAlEF4W6rOTU8
+	OAEvFFBQ1/1d6DbbmLwTJRUVs9P+Svv5pNW5SXeQ+5zanvj3eu2aq1+AA1O2nNKylIAuEH/dJVi
+	/TpIkMgxaH35lVdLQ9vjEUazC0hxBmizIQeVKhfPpZA==
+X-Gm-Gg: ASbGncsvb5fXqzCA1B14MSL9crQCvTvud6mf5592jCvaDQKok+rYFFRrFGuX/U/CHpB
+	vMd8S/xdulXZv1vhk64tTCrLmKZvYJInB4OfM883XCeGiZYa+cGm78HzYbg8kGov8gnS/FOXD13
+	dMNFrrUQDifPLqQXl069JwEfaorToP4dhn1qc4fIBMKuuPZ0sMXsA1UlbARPe9WtZgD4slXCu1b
+	S+gfVolHUBmyyvdDKKspjXJcvvoa3IYlmQbh+SQUo2uESJ75A==
+X-Google-Smtp-Source: AGHT+IEokI8/QdZgrQf6Khw+qmZIKYKiiUgjGe2BsWGspCY5PLtcBEV9VcspomwVXiAZN5jhrLGIGNRfYpYegqH5QMI=
+X-Received: by 2002:a05:6512:6512:b0:55f:4760:ffc4 with SMTP id
+ 2adb3069b0e04-55f709953admr2780344e87.29.1756819782757; Tue, 02 Sep 2025
+ 06:29:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] drm/msm/a6xx: Fix GMU firmware parser
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov
- <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250902-assorted-sept-1-v1-0-f3ec9baed513@oss.qualcomm.com>
- <20250902-assorted-sept-1-v1-2-f3ec9baed513@oss.qualcomm.com>
- <9df42327-b417-454d-9f4a-608979498f79@oss.qualcomm.com>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <9df42327-b417-454d-9f4a-608979498f79@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMSBTYWx0ZWRfX24RxDwySkB9W
- MvuSAiQwqIfYobatKBoeLtDbkCSG8CSXjvCNckS8oQofYFwd29ROCxYVfsWc5H00GOHsAYNrinn
- r2LhdOIfw28ZMkXsyTZznaD/91N5xCqf2hY00XlX5JoMsnlFIT2b4XkjL0aTH5jD/uIdxoeQdIM
- 0RMBO8q+pK8FEcBAVr+1g+7Gbq7lkfXZP/QntzTdTBNfu51eyIJCUMqrpUEePuy+64S7nBNQlPS
- bRpdCt0DHFL5tU6RLhRk5C6v+II0dw7geYcvOLoX+UE5jAYY4R/u9eL3ZNtC6LsZSovcS5kTSIl
- 2jSNnoCWGDgXs0jSpX0UwDwWlJXR4LylipDsORKENtZ3mI4dnAYILpwdhdhGBONO4ffrqrcvYnn
- GO5K8914
-X-Authority-Analysis: v=2.4 cv=A8xsP7WG c=1 sm=1 tr=0 ts=68b6ef70 cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=L25_lxYj0dBuOpUmPZMA:9
- a=QEXdDO2ut3YA:10 a=zc0IvFSfCIW2DFIPzwfm:22
-X-Proofpoint-ORIG-GUID: 8fVLdT0YJs_JUPcU6AEziyaB5TrRXYH9
-X-Proofpoint-GUID: 8fVLdT0YJs_JUPcU6AEziyaB5TrRXYH9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_04,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
- suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300031
+References: <20250902-pinctrl-gpio-pinfuncs-v7-0-bb091daedc52@linaro.org>
+ <20250902-pinctrl-gpio-pinfuncs-v7-1-bb091daedc52@linaro.org> <aLbrz5DYS5Yxx_UE@smile.fi.intel.com>
+In-Reply-To: <aLbrz5DYS5Yxx_UE@smile.fi.intel.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Tue, 2 Sep 2025 15:29:31 +0200
+X-Gm-Features: Ac12FXxptM2x0FIw3VzAD9gZWlHPceo9WcRvgcocpGcthnkDE6yjXmv7vVmpP9U
+Message-ID: <CAMRc=Mfx5czDM=vfEYhFtVO3MviYaW4wKBYjGZ9ZnMbr-+T4mg@mail.gmail.com>
+Subject: Re: [PATCH v7 01/16] pinctrl: check the return value of pinmux_ops::get_function_name()
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Linus Walleij <linus.walleij@linaro.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Alexey Klimov <alexey.klimov@linaro.org>, 
+	Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>, 
+	Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Mark Brown <broonie@kernel.org>, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mips@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	linux-mm@kvack.org, imx@lists.linux.dev, linux-omap@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, stable@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/2/2025 5:59 PM, Konrad Dybcio wrote:
-> On 9/2/25 1:50 PM, Akhil P Oommen wrote:
->> Current parser logic for GMU firmware assumes a dword aligned payload
->> size for every block. This is not true for all GMU firmwares. So, fix
->> this by using correct 'size' value in the calculation for the offset
->> for the next block's header.
-> 
-> Hm, I haven't seen this in the wild - do you have any specific examples?
+On Tue, Sep 2, 2025 at 3:06=E2=80=AFPM Andy Shevchenko
+<andriy.shevchenko@intel.com> wrote:
+>
+> On Tue, Sep 02, 2025 at 01:59:10PM +0200, Bartosz Golaszewski wrote:
+> > From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> >
+> > While the API contract in docs doesn't specify it explicitly,
+>
+> So, why not to amend the doc at the same time?
+>
 
-I saw this in an unreleased chipset's fw. But felt it might show up in
-newer gmu fw versions of older chipsets too.
+Because this series is already big as is. That would be another commit
+that can be separate.
 
-> 
->>
->> Fixes: c6ed04f856a4 ("drm/msm/a6xx: A640/A650 GMU firmware path")
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
->>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c | 4 +++-
->>  1 file changed, 3 insertions(+), 1 deletion(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index 28e6705c6da682c7b41c748e375dda59a6551898..ea52374c9fcd481d816ed9608e9f6eb1c2e3005a 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> @@ -758,6 +758,8 @@ static bool fw_block_mem(struct a6xx_gmu_bo *bo, const struct block_header *blk)
->>  	return true;
->>  }
->>  
->> +#define NEXT_BLK(blk) ((const struct block_header *)((const char *)blk + sizeof(*blk) + blk->size))
-> 
-> CHECK: Macro argument 'blk' may be better as '(blk)' to avoid precedence issues
-> #146: FILE: drivers/gpu/drm/msm/adreno/a6xx_gmu.c:761:
-> +#define NEXT_BLK(blk) ((const struct block_header *)((const char *)blk + sizeof(*blk) + blk->size))
+> > the generic implementation of the get_function_name() callback from str=
+uct
+> > pinmux_ops - pinmux_generic_get_function_name() - can fail and return
+> > NULL. This is already checked in pinmux_check_ops() so add a similar
+> > check in pinmux_func_name_to_selector() instead of passing the returned
+> > pointer right down to strcmp() where the NULL can get dereferenced. Thi=
+s
+> > is normal operation when adding new pinfunctions.
+>
+> Fixes?
 
-Ack. Thanks.
+This has always been like that.
 
--Akhil.
+> Reported?
 
-> 
-> Konrad
+I mean, technically Mark Brown reported my previous patch failing but
+I don't think we do this if we're still within the same series just
+another iteration?
 
+> Closes?
 
+Ditto.
+
+>
+> ...
+>
+> >       while (selector < nfuncs) {
+> >               const char *fname =3D ops->get_function_name(pctldev, sel=
+ector);
+> >
+> > -             if (!strcmp(function, fname))
+> > +             if (fname && !strcmp(function, fname))
+> >                       return selector;
+>
+> I would slightly refactor this:
+>
+>                 const char *fname;
+>
+>                 fname =3D ops->get_function_name(pctldev, selector);
+>                 if (fname && !strcmp(function, fname))
+>                         return selector;
+>
+> >               selector++;
+>
+
+You can do this in a subsequent patch, I prefer a smaller diff personally.
+
+Bartosz
 
