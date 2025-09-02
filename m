@@ -1,162 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-71528-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71529-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7147B3FAA7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 11:36:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0ADBFB3FABA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 11:36:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1B4DC1899C86
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 09:36:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 25EA316C0DD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 09:36:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 148DE2EB873;
-	Tue,  2 Sep 2025 09:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEB23275106;
+	Tue,  2 Sep 2025 09:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RoCTbPlW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BYvIywrX"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E7E2EB86C
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 09:36:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D5DC2E8E0A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 09:36:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756805772; cv=none; b=GCsAe/9FBrX56Ixhqg5EksyGtIYdT/iPaYHd6dqNbd8Pfum75sra4orCfveJAQHCEhwrlsP0PuvHc6W9ecp3FzDVT/FsQLIm1aHgrjHlbseiKIa1AsVOHtrg33J2Ii43gd65kn8yWZAxDo116OiCwAN3Iv+Om+mqu+bOx+ZWAUU=
+	t=1756805787; cv=none; b=kwwFUlpEps1LJ8iDj/EC7f4u1roK3nnyabT5WDK/N+UbTD4jmuNSIQHRh0YSVL6wmYBNIP1Yr/VSroRHZV7Jv9nPurT6O4gvsHUkTT2ma2grPogZtX7DIPK0rg84zVaLVvupk/ziA1m00m9tG9aqCg83gw9W1EJnp/Tpo2zGL4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756805772; c=relaxed/simple;
-	bh=T+ush01pThxveIf0yG0grCHC7b6l5Pu8d/79tGLvJb4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SjWyuOKYtN3qWN+fN8v4aSWNRKjBwbMkshWRoQ8ETUNcuq1/ZTN3nTK3Ie5Q84vYvFOWOEFa8P58gZQos3Sm5n8ktcyPktKz7CCPZdCLc4rFTpg9NEM0TvbI7phtnI/NsqMJu2Z/nNeBB1vQX5cN1yaieEjsGjQVcCCz47M1R9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RoCTbPlW; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1756805787; c=relaxed/simple;
+	bh=YYBOJ0SUlz8HvGAIGlmhlyEV4PWBo+R1ZBUAuZZS+u4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=PeTHVLQZik/bR9zpI6xSX0aq2sacqfN0mwdHo0Pzqk36Va8OICHhI6htlGUQ0pmlSBD7x5WMa7jMn/A3qMqy32FhLJiAuS7rihzgNPgVXzhATsT4tdpC7MJ5o3L72rBye8CSpP2EVhprysM6eRZg9u6j2cqSFkB7nsYVeJ1Mikc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BYvIywrX; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822S5Cd022217
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 09:36:10 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822Rog4029965
+	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 09:36:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	tl/lcg8Vvutgd2X0nRCKCHGLUZWnWVuMPA89h352iRk=; b=RoCTbPlWxVKYakv6
-	KKQaoyQRyVVuJWhXkduNvIRHO93U2I6kCQ5uw1pDJitUJCocwKELR6i+8TlT3SiU
-	jc+ePAQ61Y04brd7oqfkT9x69OQ7IHUi7FE/F9+uyhCfjqYLH5r0JZgaAoyTXAhY
-	dQj3LCNPECR+qkzrXxU/YqVSpCRekgtEn0v4dXi4fEwJEkkP3hhgheFjyznOAnrg
-	PlyPhf4USp9muDHJBif6yHt7WMCqvgLSGeTOYT78IQghhp3pluCf3uJT+O6g5C+0
-	8V1CDxLeOsKFQ+PdCRJL3h9wVD0rJ0lXq3F0d0sPpwv48sWhRYfvrrW/Y6Msu+55
-	njEhbQ==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnp7fac-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=zwxseqR+TZhAlHd8nXn4rEVr
+	gvLiKS1QfDCvUia9uDs=; b=BYvIywrX3heQ7ne5hRRZ5urv5nl4T7xAfnc+SZM1
+	/i5UPcTEuA/pByNJR0mc3t+cw+DdPg8mYjpo8RAcOSuTkTWvJhpcr/BAuzYDC1x+
+	rnip3mPByRZc1p/LcON3dNibvaAyzY99svf9HnmOiKPDPJleFdLGcTrDpp6oVQYG
+	YBtCVvI1NloXtXqOOqMAPQwzgQVMWt3pOGGwo2GLlWkLvNsfm7A40wUSt179x/1w
+	8joq2vla9hDBamSayx3Gjl0H/Mr0E1kpSqZSBgBke1+VmT1z00xLtZQb+j61CVRk
+	Iua3yEjZh4VDVx8jhku+r7DMkHn+VWS04c6zZRYzguMKGQ==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48w8wy34nb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 09:36:10 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b3387c826eso6811351cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 02:36:10 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 09:36:25 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b2f7851326so129158081cf.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 02:36:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756805769; x=1757410569;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=tl/lcg8Vvutgd2X0nRCKCHGLUZWnWVuMPA89h352iRk=;
-        b=hUm7MrmfsZ3TExUAWD5gWfOm1589eJsDFvzhsJtCxkpPkP5lyv1p9KkQgsZcRfQous
-         DGPY8tzxkRDkz1MxfaLTNn32PsfsaTSNd0Cd3iu0oww4FKTD4SgRtifAT8E0gU3dyBOJ
-         d9214wW1z8J6Msx+jBRx9IcKSRXOy03FTJPEBQGkZFEtC5Cnu7J+F5s3dh0MGDRZPoGn
-         LoWJtKdzt3lYB2jJ8s2c53eM/2eM13kPlRBxAWPIRzWf1TCOvCmjoOm7uOHJuZSAmyp/
-         6vq2h52ucq/FiYtY2BMdQDZIkKtROf6YglqEULxUM9Ac3kCtbH+FW4a3wdE8JJ0AexbY
-         1hZg==
-X-Gm-Message-State: AOJu0YyoIKZQ/SuGZVpTuIYB3Q5gNSskfKq8DK94X/zVC1z2VCx4Lz5c
-	euj7/WRn9J25BI9wKdlcn6GJ2Yq4doHFoNbZafpbdnzjm7LKoMlRk0wcfl2i5eC/DI9Az2A9wK0
-	P1iiQgvBwcLncnc4jYaXK+zpi+ImbKKTiRafaWBCLkFhIjFgXRbLivgsbT/jK2OMc5L5kClRsEa
-	GO
-X-Gm-Gg: ASbGncu6zzSez6v2zK7qmNLPFr2+BUdngbyZy4o1o41lao6KWtQeA6GWMYFLzI+obta
-	G8VotAjqBe7aVBmmk20+mVKmephAheXpU4nMLfnzw89aVThEgaLRrEKAKoKKLyfp2NtQJTG8/qu
-	KOi9lbZpwTsKCxmlBEkECCauaz8Au03o8WTQjTWqk2Ww8SC746LrWVl7VR5b2KYNEyO35kFbC/0
-	25TJOMXK2enPg/bPsbmVE7f3wdoq3L1YUf6a0o6tLvbRnvqZDXLO5m5rSWMXB4z24qpnDxL+k83
-	oSmHtsLM4PQRUiD4avDn25uEO1u74OaEUCu4oS+lvOBZGe5U6VyRymxru2la6qFKcVMzOgROrZX
-	RKBnTw+DXDt9rLGii8PZ+uw==
-X-Received: by 2002:ac8:7e89:0:b0:4b1:1e8c:13af with SMTP id d75a77b69052e-4b313b8c812mr90242781cf.0.1756805768972;
-        Tue, 02 Sep 2025 02:36:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFl44Pco1b/qvJrJe/DJPXSQCR9wDNYF6uLVy6zduo7vkFZyrpgXm2kKC7QlUx4jo7DSH1DkA==
-X-Received: by 2002:ac8:7e89:0:b0:4b1:1e8c:13af with SMTP id d75a77b69052e-4b313b8c812mr90242631cf.0.1756805768360;
-        Tue, 02 Sep 2025 02:36:08 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0421939da1sm527037866b.27.2025.09.02.02.36.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Sep 2025 02:36:07 -0700 (PDT)
-Message-ID: <f9d6106a-d59a-4565-bc80-fa7816a1d6ac@oss.qualcomm.com>
-Date: Tue, 2 Sep 2025 11:36:06 +0200
+        d=1e100.net; s=20230601; t=1756805784; x=1757410584;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zwxseqR+TZhAlHd8nXn4rEVrgvLiKS1QfDCvUia9uDs=;
+        b=xRyDCvpUgFvMvLHrHkwraZb3gphyLdHJytTDFixZe7PP1MQed9dkl1G4RI3rxrWD3j
+         I9fvULZwb1Brkr6kqIByc5Y/u/5UOiJM27KuEiGpHIVCTkXDpugfDKBtukez/XPcRHYP
+         ATGz0rEXEeFBIH5RcU7cpJx+/iNimE7gLmW3BHiinF1xf1huviMDUx+eojmMnAX4ARqS
+         ENZUR1NxSx4wFa9+igL5QgM34oI54Ef4JbIfP27DUIMDlcr9uLsypJpDhSjMtDMhbZHj
+         Tg+bulccF0gT5b0+4WQ5MZESqGchcQni6havgOhSZQnDhbkNP2PQ9kv1mNg+c7y3kt4H
+         1jWg==
+X-Forwarded-Encrypted: i=1; AJvYcCVGRG5/PBs5EBxh8pYdaMIF9BoPtD7GCe4udnNBQhmNmGVChROJTkFyKFP8KAHXLTY+2kYNlPaR6VMJtn5G@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCJ3nJDpUAPFFu8IyChD5X4n8GA4/QW65bOzul2gnK/bQexibH
+	HDt4uDBUHGJNxQI+KGMGsNTzfxBj88uGQOKyx/HhIMgA4pizPJs0giJlMstUtea2W8F0X3hFP5X
+	m4YtTerEPC6/Xb0ThkFkMRa0WN/X+iPYa/u2PI2WgEW+RISS7Eeh1eoLgSKK5h7qUaA5Z
+X-Gm-Gg: ASbGncsYXPOuw+Adc2wdAcCckwkCTSxYJwefMicvoTie8d6LLzAGnfykweYrMjF+ELS
+	Rf4z0iziD9MnFx6lnibwi3+DWz2WAaDGuB6G8MUggJux8UlkNfr38/YCtRwOAcYG2KzNNVubwf9
+	ph/CsRxIGUFVNbQT+d+bK7fgmrjJBcV8wkcpPVtUWDAu+kY1TRJAFwcWpFhMuWMeL62+048tCi9
+	GbtnWNBXqzFHoSmKT4mYgKWRKwOm3onQtNGFYEDGedDevh+XSYE4RiLlAuVp5BVE7T3mlJHSyr+
+	xjOuYPvnX09+crxbYjCvBIX8S0PD5Kzx/g52U7lFk5KkDYR7kMBwtuFC34kJs7hMydJ7DVDjIrj
+	yQIYeV2U10mM5KhLRHvKToC+W2n/hg8iVcJb6dV3nKmUF5K4Aq+1i
+X-Received: by 2002:a05:622a:5e0d:b0:4b3:459c:6eef with SMTP id d75a77b69052e-4b3459c7a6bmr18166001cf.47.1756805784132;
+        Tue, 02 Sep 2025 02:36:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHx6nrwggqsOXBxF3/OABMklDbP3IK5x4SRajgGDGpPKXyjhgzvQjkfyqsdwZoBMZXal4NHjQ==
+X-Received: by 2002:a05:622a:5e0d:b0:4b3:459c:6eef with SMTP id d75a77b69052e-4b3459c7a6bmr18165671cf.47.1756805783493;
+        Tue, 02 Sep 2025 02:36:23 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-560827aabf5sm544368e87.137.2025.09.02.02.36.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Sep 2025 02:36:22 -0700 (PDT)
+Date: Tue, 2 Sep 2025 12:36:20 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 01/38] drm/msm/dp: remove cached drm_edid from panel
+Message-ID: <yarnaujunszlfrbduakodv7n63wjgh6og3t4qowhu3n6tz6fmn@4kb4crd5rqq7>
+References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
+ <20250825-msm-dp-mst-v3-1-01faacfcdedd@oss.qualcomm.com>
+ <otmy4kttxflsxkvacwdsqynck4nqeww7jsxaq2xwjtlooxnhvx@gmpezdliskck>
+ <5b142910-81e7-462d-8933-70705334ef0a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V2 2/2] phy: qcom-qmp-ufs: Add regulator loads for SM8550
- and SM8750
-To: Nitin Rawat <quic_nitirawa@quicinc.com>, vkoul@kernel.org,
-        kishon@kernel.org, mani@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
-        andersson@kernel.org, konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org
-References: <20250818124110.8136-1-quic_nitirawa@quicinc.com>
- <20250818124110.8136-3-quic_nitirawa@quicinc.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250818124110.8136-3-quic_nitirawa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: LijHAOp0ZPB6e1UNGln2dJaiZL9ubOT2
-X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b6ba8a cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=FoF8l4-XPnHLV7uwFA0A:9
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: LijHAOp0ZPB6e1UNGln2dJaiZL9ubOT2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfX54wCYszeGxCx
- t00LE+Vc/HC/w6N66ywR1cOuYTLcbNwKu7FoA+ETR+S0xyqbwJGYAOwf+GN397XJ/nzRqO/ZKBT
- /CbPh3BCIwOSU7e7EHyv9ClT+pVefugQjRXHrJzNj6CaqKcI/JXGgQFcWyxPkHqmn1BDrOgxSV5
- RzN5kWvYyhCZoImWxOtrsR2k6G2toB1bqRNbLmX62jpYNx3ikkHnyGCcZj1LbyO0LRBolp3laNg
- INvFIzv4UZSDD8DphibLqIkQECfEQJiLwILwNF4GPyPd3mIrfkjFqjgMeSPEwZjZRRTbbewBAB7
- r7ItstYR8cvtt0CBHS2FpxiYWIoIoRIie79ZntPNdYphBOk9MuMxIqvbbcN9q+oZXwpjfgFZlC5
- tv42g8ZH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <5b142910-81e7-462d-8933-70705334ef0a@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=Ycq95xRf c=1 sm=1 tr=0 ts=68b6ba99 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=kpPRz-UtyBwCQlaFug4A:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-GUID: LDM-AXeQd0xP_L7zlmiKvuOhuXkqk57A
+X-Proofpoint-ORIG-GUID: LDM-AXeQd0xP_L7zlmiKvuOhuXkqk57A
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAxMDEwMSBTYWx0ZWRfXwUcW7mSxefsw
+ gfn0I1mpZsCAPrwKDWnCGccS3gwPfUBJtfDnCxXbNcfORA6svvZ/G/ISw9jg+Xuzd6D+YfT4Rhj
+ cWPNdvhVu9rgg2TtKwXaOn6/xdfb4qh4w9Y9Glh//3aaTYP6Wa3hs2MTHTG/sWl8IwqMAm93sJk
+ yZCVIcSlCWHm0o8ISBvlwXVwNnZNghfM5Xv24Ncpj8PJ5PwsSeVQQuxV9VFXmag5f4GaPDurcCu
+ KJiyt02DaGL5jLgOqRkhgnPIoiIV5AMIG+UuwMr6ZCXZz7fv5bv8LLB/w6g9li/WT+YMlo28ugj
+ o/pKroD8FAUiG9umaA/tL4357ex41Vq6risS3l5nT7v2vZzxlrZDxBlPGcEIr/jIieQnlcNTdZO
+ SJvR5ELE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_03,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300001
+ engine=8.19.0-2507300000 definitions=main-2509010101
 
-On 8/18/25 2:41 PM, Nitin Rawat wrote:
-> Add regulator load configuration for SM8550 and SM8750 UFS PHY.
-> This ensure proper regulator load management and mode selection for
-> optimal power efficiency on these SoC platforms where regulators may
-> be shared with other IP blocks.
+On Tue, Sep 02, 2025 at 04:42:18PM +0800, Yongxing Mou wrote:
 > 
-> The load requirements are:
 > 
-> - SM8550: vdda-phy=205000uA, vdda-pll=17500uA
-> - SM8750: vdda-phy=213000uA, vdda-pll=18300uA
-> 
-> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-ufs.c | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> index f7a4a8334026..50875d9609f6 100644
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-ufs.c
-> @@ -1172,6 +1172,17 @@ static const char * const qmp_phy_vreg_l[] = {
->  	"vdda-phy", "vdda-pll",
->  };
-> 
-> +/* Regulator load arrays for specific configurations */
-> +static const int sm8650_vreg_load_ua[] = {
-> +	205000, /* vdda-phy */
-> +	17500,  /* vdda-pll */
+> On 8/26/2025 12:41 AM, Dmitry Baryshkov wrote:
+> > On Mon, Aug 25, 2025 at 10:15:47PM +0800, Yongxing Mou wrote:
+> > > The cached drm_edid in msm_dp_panel was redundant and led to unnecessary
+> > > state management complexity. This change removes the drm_edid member from
+> > 
+> > Please see Documentation/process/submitting-patches.rst on how to write
+> > commit messages. Please use imperative language instead of describing
+> > the changes.
+> > 
+> > THe patch LGTM.
+> > 
+> Thanks, will update it in next version. Since the HPD refactor series are
+> unlikely to be merged soon. Can I separate out some patches from the MST
+> series that don't have dependencies and send them individually to make it
+> get applied? This would help reduce the number of the MST series.
 
-Is one really supposed to be 10x higher? I mean, it may be, but
-it looks odd..
+Yes, of course. Please keep version number monothonic for those patches
+(e.g. by telling b4 that it should start from v4).
 
-Konrad
+> 
+> > > the panel structure and refactors related functions to use locally read
+> > > EDID data instead.
+> > > 
+> > > - Replaces msm_dp_panel_read_sink_caps() with msm_dp_panel_read_link_caps()
+> > > - Updates msm_dp_panel_handle_sink_request() to accept drm_edid as input
+> > > - Removes msm_dp_panel_get_modes() and drm_edid caching logic
+> > > - Cleans up unused drm_edid_free() calls
+> > > 
+> > > This simplifies EDID handling and avoids stale data issues.
+> > > 
+> > > Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+> > > ---
+> > >   drivers/gpu/drm/msm/dp/dp_display.c | 28 +++++++++++++++-------
+> > >   drivers/gpu/drm/msm/dp/dp_panel.c   | 47 ++++---------------------------------
+> > >   drivers/gpu/drm/msm/dp/dp_panel.h   |  9 +++----
+> > >   3 files changed, 26 insertions(+), 58 deletions(-)
+> > > 
+> > 
+> 
+> 
+
+-- 
+With best wishes
+Dmitry
 
