@@ -1,207 +1,248 @@
-Return-Path: <linux-arm-msm+bounces-71653-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71654-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 755B7B4099B
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 17:48:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 134E6B409DC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 17:55:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 185DA7B185A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:46:35 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C1CB18985EE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:56:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53CCB32BF49;
-	Tue,  2 Sep 2025 15:47:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D71E731DDAF;
+	Tue,  2 Sep 2025 15:55:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Qoop0PUo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iYbekwim"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B9E322C63;
-	Tue,  2 Sep 2025 15:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16A23322C99
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 15:55:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756828033; cv=none; b=mbUqsDHmlszu/ipyOtM9QqP6V11WV66HD2ts04QbHwZq3Hl5Jjn0xwM3UBdiBeSYzmlfVEgsbnOCk/huL0QkkzvAm9+dAyNewjdyjLWY+oADaQ2g5lx4wSovxJv30BTLW50CuKqAQdJDgzDCMrjuXOKCIi688p3IDtz9/UbWuQQ=
+	t=1756828534; cv=none; b=hAIyITaPHx61MOt9NYf6OdvrOYVgQFHRYrlfqkk6IZ1Hjx1CUqYuXmrLckrIT5E+efLqxxcOLH43nMhqa75Dh8tg6fENigj7MgDXl0ahyYVxQ9bFyH2nmHTEt6uGYjcgIDl0cv0wGatGx0s/X4/l1WAi5TiGiav4Y+f1vtqmFfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756828033; c=relaxed/simple;
-	bh=hySp48UnvCMROUWJRYJLQKxmvnRkw1XrdDo4283avGI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qrcHWKWRt8byknsPurO20oeJP8SOu/7DsZRFt2tqXofCJ/jB5AFGfagl5TvatKCrHwJ08IFld5kynidpxIxhbJddXjzC2ZBJlWH5cLSH0jqG4WanGAe7qledJJpxbnoBQwEX2L8AFrH6Pd4irgQvuzDio4dkYFY/KY/y1pZHMB0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Qoop0PUo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B677EC4CEF5;
-	Tue,  2 Sep 2025 15:47:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756828032;
-	bh=hySp48UnvCMROUWJRYJLQKxmvnRkw1XrdDo4283avGI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Qoop0PUoSRM7ccmH7X8HwPTe7IYpZZvry2Ic2hA7KoefFUH/anzpnvOBKOltqjwe1
-	 OpzJ0z4m8CdbdMVbYpijEzEwETP+ZqCYtD0xxYJq+wRa/L2rC7mnCRPaQj8m38RJLc
-	 ELXcPSUI2XtH2MOk9xI7+bNNrwyGW/zdP3S+DvU585IbH18Uw5xg34If1MBch5Z6Df
-	 JqeNkacp9ytKscwh8qyTDQsx4UhWLdN73ToFtubojBtKQTgUUnRR7EerCIdJExV8w5
-	 FE+5OUtRHQnapmtloTd4b1BecIQDSwl9YuR4lCgOEuLzsUkHoDOxRw1YtE50Mj2pT3
-	 pRjiTS+ZxJMAw==
-Message-ID: <ebd1a1b7-c911-43f6-91cc-fcc2c01bc600@kernel.org>
-Date: Tue, 2 Sep 2025 17:47:08 +0200
+	s=arc-20240116; t=1756828534; c=relaxed/simple;
+	bh=dK9sYjxBI31vHpMEu0I2MqTUx5Jz2eJzoqQiNViFJcQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ta+SXUjzyU8DEoi8rEXQB37laXbR6I5wzf/Hskpy6v7CIi4QCzsF0hQaW7elb1qeNxeccrHmx2HQ3xW0dDmBARUJll0kIiBpkgm9b5pcEAFdwjC5JFbZkdRNnPjAMHLv1W4LEoB+xaudhVBgJg8yhl1al3a1x7dZotTHX3yYu/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iYbekwim; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqESE023514
+	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 15:55:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=A3gqSpoIQ3gnaOLqW/dm0/FqkEZT7i2DBb0/fr+ypKE=; b=iY
+	bekwim/S+o4b/4mz7R241d0gq1jTBYADedQsYVStLu2BprGGnjer6MEqIN95XOiO
+	a50a38xOjdPv+Ac8vCO70lZqQExDRqPZc1tVyc4GCPqEknUSMOODx/oAHig5+VXT
+	K0lZvxBC8i2UMmqSTJlqxtStDf248DPJq1iaazjbRL8T0OUiIDLPqQDZAQSGfqpu
+	VUXR9olBc4/EKWf5uMtlk1pp1+3hgC6SEwb4RdIDSUYDKmA6cooCp+rlOXrpia93
+	sEhlBrvh90zf1wgTE6Ge2MiKlfl/xeuo9nPuhWyt4qqLHATv8H3bOT94QthpFP2i
+	sIU829PTMLxWEnngA4ZA==
+Received: from mail-oi1-f200.google.com (mail-oi1-f200.google.com [209.85.167.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnp8hjx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 15:55:31 +0000 (GMT)
+Received: by mail-oi1-f200.google.com with SMTP id 5614622812f47-435de6eabc7so6271253b6e.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 08:55:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756828531; x=1757433331;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=A3gqSpoIQ3gnaOLqW/dm0/FqkEZT7i2DBb0/fr+ypKE=;
+        b=cS4vzpKgjWcQN6mytI2p0qarLz/cLdGXS9UIZjs7y3UTnbUltQZmPB6RqEdn/5rQfZ
+         wg261pdq4XmLwYYNVl6ZBptE5UQ4Ll5m7P32DtnoO5KhskCZC4NVWXOYSLKfGRzXFC8p
+         XiScw6K2EE0XhFCLQMAO7QN1eC9gMi7N4vQAu+G0tXE9l6WjY3boDtCkZy2IsOlVUj7p
+         Ml5ta3sYLy2vYWUHnqbB1BPZQhmAYzO8stjGoPAffZ3Nk+mnDBs3J+l86Gq8nwM4uZRH
+         o19eNp0KKCWil/Gq8XgUlLWrzf13IIaetvrrB0Mg7UbpnY2sA4NGibVwfncAeDTp42R2
+         yNbg==
+X-Forwarded-Encrypted: i=1; AJvYcCVZaxMoJZg+7JEuVitC+dbqqABskRowYfKsWpJix1O0zdM/nOMpSTtjIG1VFe6d4/rjFAo7wdAoteQGlzul@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy293HqsB671K7Zp5YzCkm7SdQ2EUm6k/wQ6WnY4Kg1geKv+zj+
+	p/+pZLVCp87jbjXZOjWpbSFCYra/Lj+1BgS7YHsq6x9oWaoOPrmVp73KDoUbt4lDu+Tdb/JWJ1G
+	eY/GS2xWuPIxtOH9woVv607ecBfM5xPgFMfrVsEsthPdmtAtjsXyx90XIjHqomBEm96dEFJ8g2G
+	x1jvEobUTda9h3I2Vz4ClPaEkdSNsoe/eKbjbL1gqWmy5/ZLH1qW0=
+X-Gm-Gg: ASbGncsL56O0GxMDk1hdD7Alk2NU/5fD/ptPXnMYPCb7RksOA6NuhNiqlEbY2UUzg1p
+	DTClSpKRj+/njEJjylbBBykWa0T3YTRT/u5rU/Tvus02OTYxzUnIyZXFZMwaGSYIuY1ZDfD5UMR
+	XDxWFJZxomD9hu83rw4dFAsy7io3NVcObiGnFxSouSbkX9AK19Jxc5
+X-Received: by 2002:a05:6808:48d5:b0:437:dade:463f with SMTP id 5614622812f47-437f7d994c4mr4151947b6e.34.1756828530745;
+        Tue, 02 Sep 2025 08:55:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1uf3jNioSmAshEc9z3yyLmgANd+2PnHEVtARN4d50VJILUSoxTI1ggnEVO/qE8F0+1dvdgSEHxjdhqo4mTMM=
+X-Received: by 2002:a05:6808:48d5:b0:437:dade:463f with SMTP id
+ 5614622812f47-437f7d994c4mr4151933b6e.34.1756828530347; Tue, 02 Sep 2025
+ 08:55:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/7] soundwire: qcom: deprecate qcom,din/out-ports
-To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, vkoul@kernel.org,
- conor+dt@kernel.org, srini@kernel.org, yung-chuan.liao@linux.intel.com,
- pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-sound@vger.kernel.org
-References: <20250901195037.47156-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250901195037.47156-5-srinivas.kandagatla@oss.qualcomm.com>
- <20250902-light-vegan-snake-efe03c@kuoka>
- <3c41bc8e-796b-4efe-97cd-03b737f09689@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <3c41bc8e-796b-4efe-97cd-03b737f09689@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <20250902-assorted-sept-1-v1-0-f3ec9baed513@oss.qualcomm.com> <20250902-assorted-sept-1-v1-1-f3ec9baed513@oss.qualcomm.com>
+In-Reply-To: <20250902-assorted-sept-1-v1-1-f3ec9baed513@oss.qualcomm.com>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Tue, 2 Sep 2025 08:55:18 -0700
+X-Gm-Features: Ac12FXxe1UwMG2c7pfYzqGvYc64XhcrboIhwaNGex0OludbeUsMDhRZIRxFJEYY
+Message-ID: <CACSVV026d+FWS09VOqRfFESJjk0g1Gp4TJhcdrBcWaZ3H4f3mQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] drm/msm: Fix bootup splat with separate_gpu_drm modparam
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: zeqtKbaqWEaKIdC8KKTSoHvYhxsBThmX
+X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b71373 cx=c_pps
+ a=AKZTfHrQPB8q3CcvmcIuDA==:117 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
+ a=EUspDBNiAAAA:8 a=Yc-ri1j8BvKz7xlZgGsA:9 a=QEXdDO2ut3YA:10
+ a=pF_qn-MSjDawc0seGVz6:22
+X-Proofpoint-ORIG-GUID: zeqtKbaqWEaKIdC8KKTSoHvYhxsBThmX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfXxbv+Qe8bzU/W
+ MCVFROGD2kaw50Ci1ytCPIWpQn35smAiXLIOitkKM64kIs5eg/tdMZsQngjN4shXQ1ZQfwcYREr
+ 0A+7ogCQRjhP0QhWoOoDzxFLpYhndW9nd947BJDwLXsqxlHiLJG0y/wyxWfA6gBFYUshembunLt
+ ykJVUq9RXUGTszhJq+C5F+/SHkAO03C8fBfLTdBplbgvW3oNhzea440bAC9/ZB46fZtz/nWdxQO
+ t2CWyjGeXcZts8OwIX7hBDbpRTNdmD1Ihr2RobXMLo3S7/XPBV3HPKs5O5BN1igTFrHTHLVOVEU
+ mmXJB+xOpD8nRNX/4uKcpqsWQpAWXXPAaUF80wGHcznZ8bj3GYagarIWe6FOysLQXRvWH0D83ns
+ +iRfbA0O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-02_05,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
+ spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300001
 
-On 02/09/2025 15:13, Srinivas Kandagatla wrote:
-> On 9/2/25 9:38 AM, Krzysztof Kozlowski wrote:
->> On Mon, Sep 01, 2025 at 08:50:34PM +0100, Srinivas Kandagatla wrote:
->>> Number of input and output ports can be dynamically read from the
->>> controller registers, getting this value from Device Tree is redundant
->>> and potentially lead to bugs.
->>>
->>> Remove the code parsing this property along with marking this as
->>> deprecated in device tree bindings.
->>>
->>> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
->>> ---
->>>  drivers/soundwire/qcom.c | 134 ++++++++++++++-------------------------
->>>  1 file changed, 49 insertions(+), 85 deletions(-)
->>>
->>> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->>> index 7f19ebba6137..4fa3e1c080ef 100644
->>> --- a/drivers/soundwire/qcom.c
->>> +++ b/drivers/soundwire/qcom.c
->>> @@ -128,7 +128,6 @@
->>>  #define MAX_FREQ_NUM						1
->>>  #define TIMEOUT_MS						100
->>>  #define QCOM_SWRM_MAX_RD_LEN					0x1
->>> -#define QCOM_SDW_MAX_PORTS					14
->>>  #define DEFAULT_CLK_FREQ					9600000
->>>  #define SWRM_MAX_DAIS						0xF
->>>  #define SWR_INVALID_PARAM					0xFF
->>> @@ -195,6 +194,7 @@ struct qcom_swrm_ctrl {
->>>  	int wake_irq;
->>>  	int num_din_ports;
->>>  	int num_dout_ports;
->>> +	int nports;
->>>  	int cols_index;
->>>  	int rows_index;
->>>  	unsigned long port_mask;
->>> @@ -202,7 +202,7 @@ struct qcom_swrm_ctrl {
->>>  	u8 rcmd_id;
->>>  	u8 wcmd_id;
->>>  	/* Port numbers are 1 - 14 */
->>> -	struct qcom_swrm_port_config pconfig[QCOM_SDW_MAX_PORTS + 1];
->>> +	struct qcom_swrm_port_config *pconfig;
->>>  	struct sdw_stream_runtime *sruntime[SWRM_MAX_DAIS];
->>>  	enum sdw_slave_status status[SDW_MAX_DEVICES + 1];
->>>  	int (*reg_read)(struct qcom_swrm_ctrl *ctrl, int reg, u32 *val);
->>> @@ -1157,7 +1157,7 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
->>>  				       struct snd_pcm_hw_params *params,
->>>  				       int direction)
->>>  {
->>> -	struct sdw_port_config pconfig[QCOM_SDW_MAX_PORTS];
->>> +	struct sdw_port_config *pconfig __free(kfree) = NULL;
->>
->> That's incorrect usage of __free(), missing constructor.
->>
->>>  	struct sdw_stream_config sconfig;
->>>  	struct sdw_master_runtime *m_rt;
->>>  	struct sdw_slave_runtime *s_rt;
->>> @@ -1167,6 +1167,10 @@ static int qcom_swrm_stream_alloc_ports(struct qcom_swrm_ctrl *ctrl,
->>>  	int maxport, pn, nports = 0, ret = 0;
->>>  	unsigned int m_port;
->>>  
->>> +	pconfig = kcalloc(ctrl->nports, sizeof(*pconfig), GFP_KERNEL);
->>
->> This almost always goes to definition and I do not see anything
->> preventing it.
-> Yes, It can go to the definition.
-> 
-> But does this matter for a single instance of __free? I thought this was
+On Tue, Sep 2, 2025 at 4:50=E2=80=AFAM Akhil P Oommen <akhilpo@oss.qualcomm=
+.com> wrote:
+>
+> The drm_gem_for_each_gpuvm_bo() call from lookup_vma() accesses
+> drm_gem_obj.gpuva.list, which is not initialized when the drm driver
+> does not support DRIVER_GEM_GPUVA feature. Enable it for msm_kms
+> drm driver to fix the splat seen when msm.separate_gpu_drm=3D1 modparam
+> is set:
+>
+> [    9.506020] Unable to handle kernel paging request at virtual address =
+fffffffffffffff0
+> [    9.523160] Mem abort info:
+> [    9.523161]   ESR =3D 0x0000000096000006
+> [    9.523163]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
+> [    9.523165]   SET =3D 0, FnV =3D 0
+> [    9.523166]   EA =3D 0, S1PTW =3D 0
+> [    9.523167]   FSC =3D 0x06: level 2 translation fault
+> [    9.523169] Data abort info:
+> [    9.523170]   ISV =3D 0, ISS =3D 0x00000006, ISS2 =3D 0x00000000
+> [    9.523171]   CM =3D 0, WnR =3D 0, TnD =3D 0, TagAccess =3D 0
+> [    9.523172]   GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, Xs =3D 0
+> [    9.523174] swapper pgtable: 4k pages, 48-bit VAs, pgdp=3D0000000ad370=
+f000
+> [    9.523176] [fffffffffffffff0] pgd=3D0000000000000000, p4d=3D0000000ad=
+4787403, pud=3D0000000ad4788403, pmd=3D0000000000000000
+> [    9.523184] Internal error: Oops: 0000000096000006 [#1]  SMP
+> [    9.592968] CPU: 9 UID: 0 PID: 448 Comm: (udev-worker) Not tainted 6.1=
+7.0-rc4-assorted-fix-00005-g0e9bb53a2282-dirty #3 PREEMPT
+> [    9.592970] Hardware name: Qualcomm CRD, BIOS 6.0.240718.BOOT.MXF.2.4-=
+00515-HAMOA-1 07/18/2024
+> [    9.592971] pstate: a1400005 (NzCv daif +PAN -UAO -TCO +DIT -SSBS BTYP=
+E=3D--)
+> [    9.592973] pc : lookup_vma+0x28/0xe0 [msm]
+> [    9.592996] lr : get_vma_locked+0x2c/0x128 [msm]
+> [    9.763632] sp : ffff800082dab460
+> [    9.763666] Call trace:
+> [    9.763668]  lookup_vma+0x28/0xe0 [msm] (P)
+> [    9.763688]  get_vma_locked+0x2c/0x128 [msm]
+> [    9.763706]  msm_gem_get_and_pin_iova_range+0x68/0x11c [msm]
+> [    9.763723]  msm_gem_get_and_pin_iova+0x18/0x24 [msm]
+> [    9.763740]  msm_fbdev_driver_fbdev_probe+0xd0/0x258 [msm]
+> [    9.763760]  __drm_fb_helper_initial_config_and_unlock+0x288/0x528 [dr=
+m_kms_helper]
+> [    9.763771]  drm_fb_helper_initial_config+0x44/0x54 [drm_kms_helper]
+> [    9.763779]  drm_fbdev_client_hotplug+0x84/0xd4 [drm_client_lib]
+> [    9.763782]  drm_client_register+0x58/0x9c [drm]
+> [    9.763806]  drm_fbdev_client_setup+0xe8/0xcf0 [drm_client_lib]
+> [    9.763809]  drm_client_setup+0xb4/0xd8 [drm_client_lib]
+> [    9.763811]  msm_drm_kms_post_init+0x2c/0x3c [msm]
+> [    9.763830]  msm_drm_init+0x1a8/0x22c [msm]
+> [    9.763848]  msm_drm_bind+0x30/0x3c [msm]
+> [    9.919273]  try_to_bring_up_aggregate_device+0x168/0x1d4
+> [    9.919283]  __component_add+0xa4/0x170
+> [    9.919286]  component_add+0x14/0x20
+> [    9.919288]  msm_dp_display_probe_tail+0x4c/0xac [msm]
+> [    9.919315]  msm_dp_auxbus_done_probe+0x14/0x20 [msm]
+> [    9.919335]  dp_aux_ep_probe+0x4c/0xf0 [drm_dp_aux_bus]
+> [    9.919341]  really_probe+0xbc/0x298
+> [    9.919345]  __driver_probe_device+0x78/0x12c
+> [    9.919348]  driver_probe_device+0x40/0x160
+> [    9.919350]  __driver_attach+0x94/0x19c
+> [    9.919353]  bus_for_each_dev+0x74/0xd4
+> [    9.919355]  driver_attach+0x24/0x30
+> [    9.919358]  bus_add_driver+0xe4/0x208
+> [    9.919360]  driver_register+0x60/0x128
+> [    9.919363]  __dp_aux_dp_driver_register+0x24/0x30 [drm_dp_aux_bus]
+> [    9.919365]  atana33xc20_init+0x20/0x1000 [panel_samsung_atna33xc20]
+> [    9.919370]  do_one_initcall+0x6c/0x1b0
+> [    9.919374]  do_init_module+0x58/0x234
+> [    9.919377]  load_module+0x19cc/0x1bd4
+> [    9.919380]  init_module_from_file+0x84/0xc4
+> [    9.919382]  __arm64_sys_finit_module+0x1b8/0x2cc
+> [    9.919384]  invoke_syscall+0x48/0x110
+> [    9.919389]  el0_svc_common.constprop.0+0xc8/0xe8
+> [    9.919393]  do_el0_svc+0x20/0x2c
+> [    9.919396]  el0_svc+0x34/0xf0
+> [    9.919401]  el0t_64_sync_handler+0xa0/0xe4
+> [    9.919403]  el0t_64_sync+0x198/0x19c
+> [    9.919407] Code: eb0000bf 54000480 d100a003 aa0303e2 (f8418c44)
+> [    9.919410] ---[ end trace 0000000000000000 ]---
+>
+> Fixes: 217ed15bd399 ("drm/msm: enable separate binding of GPU and display=
+ devices")
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/msm_drv.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.=
+c
+> index 9dcc7a596a11d9342a515dab694bac93dc2805cb..7e977fec4100792394dccf590=
+97a01c2b2556608 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -826,6 +826,7 @@ static const struct file_operations fops =3D {
+>
+>  #define DRIVER_FEATURES_KMS ( \
+>                 DRIVER_GEM | \
+> +               DRIVER_GEM_GPUVA | \
 
-EVERY __free() must have constructor in definition and only exceptions
-are allowed if you cannot find such constructor (e.g. there are two for
-the same variable).
+Hmm, the description of DRIVER_GEM_GPUVA is that "Driver supports user
+defined GPU VA bindings for GEM objects", which isn't really true.
+Fortunately the only thing that it actually seems to control currently
+is the list head initialization.
 
-> an issue if we have multiple __free() or guard() and __free() the order
-> of definitions matter.
+Idk if it would be better to make the list head init unconditional, or
+just add a comment here?
 
-Yeah, for that reason this would matter, but here it is about preferred
-style.
+BR,
+-R
 
-> 
-> Will follow the recommendation in v2.
-> 
-> thanks,
-> --srini
->>
->>> +	if (!pconfig)
->>> +		return -ENOMEM;
->>
->> Best regards,
->> Krzysztof
->>
-> 
-
-
-Best regards,
-Krzysztof
+>                 DRIVER_ATOMIC | \
+>                 DRIVER_MODESET | \
+>                 0 )
+>
+> --
+> 2.50.1
+>
 
