@@ -1,103 +1,112 @@
-Return-Path: <linux-arm-msm+bounces-71531-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71532-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F230B3FAD7
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 11:41:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id CC076B3FAFA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 11:46:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9B84216CB2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 09:41:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 817CD483BAB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 09:46:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBFDD2EB86E;
-	Tue,  2 Sep 2025 09:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 369772777EA;
+	Tue,  2 Sep 2025 09:46:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Xb6ZPcu/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bMAnIhXa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0161E2EBDD7
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 09:41:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7887D2773EA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 09:46:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756806083; cv=none; b=HxYUeFDiU/RfNX+hwuqThpMRbrp5VkCIFD9uHiNY2Pik+eLwVF6Kcj7N018DK+ZaYE1bS+Pj+BbN97mNvhjnquv7mPRa/e86iX0DFyYLR5D2mi/U8IHesRO72Ej5GUsoL5Kgx2y3i9GSAaMAmwzfaiup45esbmDRXZr8MiRenZA=
+	t=1756806368; cv=none; b=RA8kT0vR6Jp7msjLiDCIWNFTgGsexi5YAwYahuvOXvpJj3LvZQESs93AOnqCHTDudaWnLher+NlNSs9xV+8PrVI51XyZ3QrKcoRe977T9Z7WIvbLTe/hBkVFZ3Qp05XttffXtA01WIZn4qMno+zhPRA2d8TrViIiNq5YxP6qAs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756806083; c=relaxed/simple;
-	bh=eNCr3Qsml0DgY/4i2urWK0EeUYy2WAtNI9PwH9H9Xio=;
+	s=arc-20240116; t=1756806368; c=relaxed/simple;
+	bh=9vZm+CpE5/TzBi01gAUyiY0mPJeQCDJqZEKw0Bh6/Qs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fYS3fLIFbqDJ/bh7yLs+cdzYt09Gt0QU2bcrrhYRBHUvnmjDbNo725S0JvwRHInCdswJJvXFhYSth4YMfXL1gvRfFltXC8O4GZYcCC30o5q+ZZNnAvq8umjGNWk+SnEZAMd4hKfH2m5196g8AwFEtHKf+WWmZewQ9KcFqF1MxBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Xb6ZPcu/; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=QBD+QHzKh7QWKhBpuG6JoBZbXEM2uKuHz/qG6tN2ZxVJsAgBfXP3eI3HCUE29HrFmVsMgVuD62lF1rYlDrfk9vuouRRXyo3SeBO8K8NXsXVE6QWIeFaseEbaOMfk2Y75KUJWnTjzFfkR/EzID71x9ANPSdDngoCaFICCWGbIR9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bMAnIhXa; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822Skr0026392
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 09:41:20 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5822RlXQ012426
+	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 09:46:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=X8F1Aylw8vvRYnvl4Vx+2yEC
-	SAL/1P4EKbFDjgjCCS4=; b=Xb6ZPcu/3DtxMHqcWy4rG8k1k3LMUuMBDhpv893t
-	Vry64vS3KcRkI5c5P+5EmC9T17IxqW+Qnl8BZz1uO1ZBI3aHVRLlqDZSD/eGAJ3h
-	3kaIchCS0up2/Oeb1Xaozv+ve5opMxxeVBonvlKQb8JygRwN1tanbo9DvNPc6lZM
-	9gM3T5X0qcotf74lDfUG7/g7eaTnoew6gckPrkAdmwVXWCMYUo9rzXM0D7pAh22Y
-	l8r5dylc2QI2IghY4vzmynI8PUA40U5LCy9IbSgEYCtJh4EkmqPXaXK62vddlQPn
-	UrNw1H3qPqUGh+OxJVRAtFZ6IEzwuDXYtGE8gezUUw/qAQ==
+	:references:subject:to; s=qcppdkim1; bh=kuvcx9dK+4uPO7PcKf2xDvCA
+	/wZvMuQBYtW1BRkUMHs=; b=bMAnIhXaL4tjXQoR242+kYg3wyyhu8xAaePglGcF
+	rX5tb9HzfAvjws3tmxb8bkdJ2TKxWrbU9xEj43O1eD+HVJjlOMgxj24sZL0ifFU+
+	JGPGBe0mkYm8Dsj+TkVgO7vcdqsX9MNKNYXdo3D5wMX1M9l2zdQIjVY4C0q88Xx7
+	lMzcCHo8Rmiz/CvGGDJPKCz2s5zlaiBsqoF3uoaaYnV8ss3UkYTgR7tyzqTA00mX
+	ub09LEkAnNUF4EsRb9ap87MR16rrRCcYmp8AcAGcvOoqT1mfVTvQl8WwUX5AgobT
+	OiQwK0kRTpVrWwJ+HjHHv/LHOz+Celi5n2TutAWVr1VMyA==
 Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uscuybtf-1
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0effqa-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 09:41:20 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b3349c2c38so42427591cf.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 02:41:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 09:46:05 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b32fe42b83so32230921cf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 02:46:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756806080; x=1757410880;
+        d=1e100.net; s=20230601; t=1756806364; x=1757411164;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=X8F1Aylw8vvRYnvl4Vx+2yECSAL/1P4EKbFDjgjCCS4=;
-        b=wJi7Nqdvsu1G3uugV+cL94vPJ4VhX6aRQfHO5BiFSiQ8iWwh/xKmwRhXsTCDzEhPAj
-         x1X3An2KB0svWwDyMflvD4nGdhEEVjvqiSaWPLcL1QEVpZ6Tq9+wk4bBXOW4NyfC/o1Z
-         xX4e82yHvoeNUXJfLJLX/8yoTuvOAZDoGkJfJZRrL9WQq5YowbakrbBTvG4NnBb7EwZU
-         iVDnvNNm31tp66zQClhCN9N2GKPgZhO2T+XRElonJLLJ1+91dbF31VINkJpiX6fLriFv
-         CtEMytXZMP7wDhqtMc0KwgGcMvDejB48+uOqQfASQZ55//6Ob3ktmFXlF9Z9a86W/Rvs
-         3y0A==
-X-Forwarded-Encrypted: i=1; AJvYcCXVla8OHvDlnqKRR/pwBn7pyBT5EjfkfQLgNoxUIqF4roQYismqy+9wecG2+HkgMuHiXzXdGYqFXzmHMP4H@vger.kernel.org
-X-Gm-Message-State: AOJu0YwVdfKWoi+k0jed+bffXMiIHKD10nDGddqGprdI8UQmYGHp/qRr
-	RHqV8k3a5IIXJlmEdrss++loEv8juNPZ352mUVj3Rvb0L7UKg8lDKuOxw3gcoHTIyXbmRaazOm3
-	pvGkTwei6OkPq2Pd9TboHT1s/A4UpTJXdxdS2d8Rfsg/rIS6R3PtC9+vNqqTEyPL/baNi
-X-Gm-Gg: ASbGncsF8lwV+JYrHIFkgSxhljJ7t6btmP8UQdNciIj2rc4u3Q2j6QBobzwr+EW2Sy+
-	C7vPUmIMJo+Z9v4xYpWG0+NEzXHiiuehpljh35fI858mOpkf+/2KYtIBPvp7jFuvRa1DcXS+JEZ
-	q1Ktd3R8VIUdeyFmErBI5wmHLG7eRCfnQbfpf1fyj/+AocXQmjrgggcuehuNEDdrabuOWnsXKzs
-	mdFjAjccfExJcmoMKWmyVsd9HuR7EZJkOByKLlRPTzdZ0Nn7hKGesk4GVqPkvAWcy9vdLwrDCBG
-	2prBIxCZTSqPeSA0diHve2mNPslYSK3FHWwbKwFdEFhA1iyFOM9hy41Vfz1e7QkwWaLVeRRYBDS
-	zJHY423enGA/PoUq5smcH0rqatM91Xkx8AHPGnCaQEMuS6Smamim/
-X-Received: by 2002:a05:622a:1a86:b0:4b0:c1c8:ba6b with SMTP id d75a77b69052e-4b31d84640bmr144942201cf.23.1756806079703;
-        Tue, 02 Sep 2025 02:41:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG1kM1KKXIRQLni8+uR7WNKiFx9E+rFnyVU/tfrtMInNL9wYmJHshcvZJNSvNe3Lbzu//4Sng==
-X-Received: by 2002:a05:622a:1a86:b0:4b0:c1c8:ba6b with SMTP id d75a77b69052e-4b31d84640bmr144941971cf.23.1756806078981;
-        Tue, 02 Sep 2025 02:41:18 -0700 (PDT)
+        bh=kuvcx9dK+4uPO7PcKf2xDvCA/wZvMuQBYtW1BRkUMHs=;
+        b=q2z2lwUZbxxnB9phg4aY5sAOWuRjr/tsz5FdyHGfgnf/Dhk9p4zw4wmy/zDqDcjL5w
+         qLB01JEpggkuAjHHuYzG/SdYwTG7BGSdBHwGpkh+r9Rw8PvLFW5boeDzD18hFdpvcdDY
+         89F9eA5XUN3e3sqRXE0Ol506yIXOfnDZgpCWs2NAdzGNQqhH2bhO9+lm8OiyC9ryZ7Xw
+         ZKxzXnmlLN1L77xa17NIs03aHE6uEExaS/2svBcEJyvX7f+ntUk6hfpClpIPdowNRV/e
+         ZFsnQNjb0xcm6J6FMBG5H3PX6hmJkPMaDe9olaPY9QZQWkuyylYvToxj6Ij96diR+zN+
+         bkRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUVJyGRIcnk2dAI8rJpW78Pn2T2nDM3c8sHFZIcON6Nb+ugVDcYgnAQyPeM1L95Q/qtWPN9fgFiEbbdnG1I@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXzp5FiJ6/WLMV2eOZAjAHZg83rh7xGLBSO1kTAhJtO12JGHt2
+	W7wtha3Gx5CJGFsFfMKiWoYuV/dtteBQAV3bb7GdeN/3RnbuiHDf6ywYUX40BFoOFMF5fOGGjEb
+	I7s6Z20Z/Aw9UH69mmw+ZcfdUnltKnQiLK2o4RZCL9dqb65mRwnw0VP4OBQli1jSoXVj4
+X-Gm-Gg: ASbGncsO1iYRuUcYZ7ukh46WIrPixPdfYvKYiptd0C/H54PEIIr86dMfXAwBOzxaQZa
+	LJCOSbx0Fh2f2jtBmpq7RiJfHm4qiv3bGAqe8LP/sueu+9qVIpN6uV6MdvCZmDpo4iPRecef87N
+	8818/KkF7PznYGCSuLUHknNqFtkOLc3girs1Zy8vi/7eax277MyxVMgkLl+DPAsIZ0Vm0M1uD+l
+	d5wzyegVBHOAd9XwgWx5fiZng2BTSd6p8ohhafPD0oorsHeSdxStVynl8JuzdjWPsCgmm0miIvU
+	uninIuakyoDq0g8CfGmzQyPQq3Yy4O+KhddPSyMkpdIKE7HVRR/PEPLhjwZQshS6DQeQR2CgAqN
+	IYNOhbkJoOuZpoyuuhkop3niBkq+8wU06hM3blmAfXJ5tNZb/J0KD
+X-Received: by 2002:a05:622a:1898:b0:4af:af49:977f with SMTP id d75a77b69052e-4b31d843106mr110963151cf.30.1756806364148;
+        Tue, 02 Sep 2025 02:46:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6+NH9LnUGOobc8Z3ipkGt2tyqr1PSej/+J4YRMh0RhCCuZpIUdsEIhFAtonApsNUh/JxvIw==
+X-Received: by 2002:a05:622a:1898:b0:4af:af49:977f with SMTP id d75a77b69052e-4b31d843106mr110962671cf.30.1756806363442;
+        Tue, 02 Sep 2025 02:46:03 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-337f4c904dbsm3631981fa.17.2025.09.02.02.41.17
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-337f4c91d37sm3581281fa.19.2025.09.02.02.46.02
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 02 Sep 2025 02:41:18 -0700 (PDT)
-Date: Tue, 2 Sep 2025 12:41:16 +0300
+        Tue, 02 Sep 2025 02:46:02 -0700 (PDT)
+Date: Tue, 2 Sep 2025 12:46:00 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
+To: Neil Armstrong <neil.armstrong@linaro.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: Re: [PATCH v3 12/38] drm/msm/dp: introduce max_streams for DP
- controller MST support
-Message-ID: <lngtq2tw4qajgjk57un5xrveblkmtjkkz3yjgue53vp6wwmqmf@owderf4zerfq>
-References: <20250825-msm-dp-mst-v3-0-01faacfcdedd@oss.qualcomm.com>
- <20250825-msm-dp-mst-v3-12-01faacfcdedd@oss.qualcomm.com>
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2 3/5] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy:
+ Document static lanes mapping
+Message-ID: <tl4fskw6yq6rniwwqkrvnulfpgym3jswlt5bmulgquogv7xkct@6bl4boesilsw>
+References: <20250902-topic-x1e80100-hdmi-v2-0-f4ccf0ef79ab@linaro.org>
+ <20250902-topic-x1e80100-hdmi-v2-3-f4ccf0ef79ab@linaro.org>
+ <slgu2d4iv6ef76f43gvwaelcl5ymymsvhokyunalq7z3l2ht3j@t7pko4rtqvgm>
+ <bf772209-2420-4794-a52a-1d5932146307@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -106,133 +115,156 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250825-msm-dp-mst-v3-12-01faacfcdedd@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMSBTYWx0ZWRfXzCSWr6oU87sp
- uQvIcvvHt5UPiR6NDVAlwhWKXElYKYQPvrQZ2vHt+QBjrSyP0mLnyltISYs6B7oFJs+tU16fzLP
- BGyfd21EDRcK29LH1KXoJuOk0w3JDM6trMA9LvWYvDBxoDbaaRWpME5/zeUoGoP+gGy5NFD1XE7
- zOe8Js8q6ik2bDfh8lYbTd5QMnUSyXaAnrvDdVN3kCNqaWBr64M00Y7VWe0CyMPA+J8gSXXs3r6
- V8AZ4TUQV6flS9VqS2iZ6Z+vIBWYPyilHF2VVteh3TNTNyXY25seYE+GZkPkQi/zBMhPzmnKCJ6
- QPC2TJ5jmZN2RY8Kx3TnGdDdVzxsgYrqunUOKdTVh7o8qrE1m6R+LHyLMxkDZpWjF9xXdrmuQbG
- WNA10wgC
-X-Authority-Analysis: v=2.4 cv=A8xsP7WG c=1 sm=1 tr=0 ts=68b6bbc0 cx=c_pps
+In-Reply-To: <bf772209-2420-4794-a52a-1d5932146307@linaro.org>
+X-Proofpoint-GUID: gp2DKaRA8L2cpg5mirCpvB9_i8tuIt5c
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfXyiDpicPfCBs+
+ is8Cy/cy059W0/iVW+S97zRX8wXwCiTujweFEdovipowE40I339VYzyGPTWarUtddL3U5igdtZf
+ SanDzeN8UFnIEx6UjszgGeG4oVbEnfKdFl7VpYuDPvbQbw33CE/0vkZxSZNedONEGlQHhfKUwZz
+ zQXd52oaO8t6rgrqLHvEeIJQJdz2S3hXQ7Y+gjwnoFa8WbzRdntWAXqcSis/Lvh4TudVzbnZE6v
+ 0hQBlCX1bj861NxrIjmLHoRlXRErTpStaF6qPJ5L4quTY4oBRds1AaAmAEjjpZMHrsrcUDhce9f
+ eGHnSaPQ8xIfxEvY/ZiK1qygDIvlr+Lvjs/uuCz1IeSnS74DrzG6eg9fa7MT/RlHTbPcY0oMWNP
+ mEHE8Trl
+X-Proofpoint-ORIG-GUID: gp2DKaRA8L2cpg5mirCpvB9_i8tuIt5c
+X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68b6bcdd cx=c_pps
  a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=KSwXNKDnAPCPISpuv5EA:9
- a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: yzPfHzete5yXMHbwbSze8mzHsm-aEAw-
-X-Proofpoint-GUID: yzPfHzete5yXMHbwbSze8mzHsm-aEAw-
+ a=yJojWOMRYYMA:10 a=KKAkSRfTAAAA:8 a=SY17gm6z-Ks54HuadOoA:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-02_03,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
- suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300031
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
 
-On Mon, Aug 25, 2025 at 10:15:58PM +0800, Yongxing Mou wrote:
-> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On Tue, Sep 02, 2025 at 11:35:25AM +0200, Neil Armstrong wrote:
+> On 02/09/2025 11:30, Dmitry Baryshkov wrote:
+> > On Tue, Sep 02, 2025 at 11:00:30AM +0200, Neil Armstrong wrote:
+> > > The QMP USB3/DP Combo PHY hosts an USB3 phy and a DP PHY on top
+> > > of a combo glue to route either lanes to the 4 shared physical lanes.
+> > > 
+> > > The routing of the lanes can be:
+> > > - 2 DP + 2 USB3
+> > > - 4 DP
+> > > - 2 USB3
+> > > 
+> > > The layout of the lanes was designed to be mapped and swapped
+> > > related to the USB-C Power Delivery negociation, so it supports
+> > > a finite set of mappings inherited by the USB-C Altmode layouts.
+> > > 
+> > > Nevertheless those QMP Comby PHY can be statically used to
+> > > drive a DisplayPort connector, DP->HDMI bridge, USB3 A Connector,
+> > > etc... without an USB-C connector and no PD events.
+> > > 
+> > > Add a property that documents the static lanes mapping to
+> > > each underlying PHY to allow supporting boards directly
+> > > connecting USB3 and DisplayPort lanes to the QMP Combo
+> > > lanes.
+> > > 
+> > > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > > ---
+> > >   .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         | 29 ++++++++++++++++++++++
+> > >   1 file changed, 29 insertions(+)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> > > index c8bc512df08b5694c8599f475de78679a4438449..12511a462bc6245e0b82726d053d8605148c5047 100644
+> > > --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> > > +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+> > > @@ -76,6 +76,35 @@ properties:
+> > >     mode-switch: true
+> > >     orientation-switch: true
+> > > +  qcom,static-lanes-mapping:
+> > > +    $ref: /schemas/types.yaml#/definitions/uint32-array
+> > > +    minItems: 4
+> > > +    items:
+> > > +      enum:
+> > > +        - 0 # Unconnected (PHY_NONE)
+> > > +        - 4 # USB3 (PHY_TYPE_USB3)
+> > > +        - 6 # DisplayPort (PHY_TYPE_DP)
+> > > +    description:
+> > > +      Describes the static mapping of the Combo PHY lanes, when not used
+> > > +      a in a Type-C dynamic setup using USB-C PD Events to change the mapping.
+> > > +      The 4 lanes can either routed to the underlying DP PHY or the USB3 PHY.
+> > > +      Only 2 of the lanes can be connected to the USB3 PHY, but the 4 lanes can
+> > > +      be connected to the DP PHY.
+> > 
+> > It feels like this significantly duplicates existing data-lanes
+> > definitions. Can we use that property to express the same semantics?
 > 
-> Introduce the `mst_streams` field in each DP controller descriptor to
-> specify the number of supported MST streams. Most platforms support 2 or
-> 4 MST streams, while platforms without MST support default to a single
-> stream (`DEFAULT_STREAM_COUNT = 1`).
+> Well yes it has the same semantics, but not really the same meaning. data-lanes is designed
+> to describes the lanes layout/ordering, not the type/mapping.
 > 
-> This change also accounts for platforms with asymmetric stream support,
-> e.g., DP0 supporting 4 streams and DP1 supporting 2.
+> Here, we do not describe the ordering, i.e which source lane is connected to which endpoint splot,
+> but which lane is supposed to connect to which internal PHY.
 > 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 21 +++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->  2 files changed, 22 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 78d932bceb581ee54116926506b1025bd159108f..a8477a0a180137f15cbb1401c3964636aa32626c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -33,6 +33,7 @@ module_param(psr_enabled, bool, 0);
->  MODULE_PARM_DESC(psr_enabled, "enable PSR for eDP and DP displays");
->  
->  #define HPD_STRING_SIZE 30
-> +#define DEFAULT_STREAM_COUNT 1
->  
->  enum {
->  	ISR_DISCONNECTED,
-> @@ -52,6 +53,7 @@ struct msm_dp_display_private {
->  	bool core_initialized;
->  	bool phy_initialized;
->  	bool audio_supported;
-> +	bool mst_supported;
->  
->  	struct drm_device *drm_dev;
->  
-> @@ -84,12 +86,15 @@ struct msm_dp_display_private {
->  
->  	void __iomem *p0_base;
->  	size_t p0_len;
-> +
-> +	int max_stream;
->  };
->  
->  struct msm_dp_desc {
->  	phys_addr_t io_start;
->  	unsigned int id;
->  	bool wide_bus_supported;
-> +	int mst_streams;
->  };
->  
->  static const struct msm_dp_desc msm_dp_desc_sa8775p[] = {
-> @@ -1213,6 +1218,15 @@ static int msm_dp_display_get_io(struct msm_dp_display_private *display)
->  	return 0;
->  }
->  
-> +int msm_dp_get_mst_max_stream(struct msm_dp *msm_dp_display)
-> +{
-> +	struct msm_dp_display_private *dp;
-> +
-> +	dp = container_of(msm_dp_display, struct msm_dp_display_private, msm_dp_display);
-> +
-> +	return dp->max_stream;
-> +}
-> +
->  static int msm_dp_display_probe(struct platform_device *pdev)
->  {
->  	int rc = 0;
-> @@ -1239,6 +1253,13 @@ static int msm_dp_display_probe(struct platform_device *pdev)
->  	dp->msm_dp_display.is_edp =
->  		(dp->msm_dp_display.connector_type == DRM_MODE_CONNECTOR_eDP);
->  	dp->hpd_isr_status = 0;
-> +	dp->max_stream = DEFAULT_STREAM_COUNT;
-> +	dp->mst_supported = FALSE;
-> +
-> +	if (desc->mst_streams > DEFAULT_STREAM_COUNT) {
-> +		dp->max_stream = desc->mst_streams;
+> Anyway, I'm open to suggestions.
 
-We should keep compatibility with earlier DT files which didn't define
-enough stream clocks for DP MST case. Please check how many stream
-clocks are actually present in the DT and set max_stream accordingly.
+phy@abcdef {
+	ports {
+		port@1 {
+			endpoint {
+				remote-endpoint = <&&usb_1_dwc3_ss>;
+				data-lanes = <2 3>;
+			};
+		};
 
-> +		dp->mst_supported = TRUE;
-> +	}
->  
->  	rc = msm_dp_display_get_io(dp);
->  	if (rc)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index 37c6e87db90ce951274cdae61f26d76dc9ef3840..7727cf325a89b4892d2370a5616c4fa76fc88485 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -29,6 +29,7 @@ struct msm_dp {
->  	bool psr_supported;
->  };
->  
-> +int msm_dp_get_mst_max_stream(struct msm_dp *msm_dp_display);
->  int msm_dp_display_get_modes(struct msm_dp *msm_dp_display);
->  bool msm_dp_display_check_video_test(struct msm_dp *msm_dp_display);
->  int msm_dp_display_get_test_bpp(struct msm_dp *msm_dp_display);
+		port@2 {
+			endpoint {
+				remote-endpoint = <&mdss_dp0_out>;
+				data-lanes = <1>;
+			};
+		};
+	};
+};
+
+phy@cafecafe {
+	ports {
+		port@1 {
+			endpoint {
+				remote-endpoint = <&&usb_1_dwc3_ss>;
+				status = "disabled";
+			};
+		};
+
+		port@2 {
+			endpoint {
+				remote-endpoint = <&mdss_dp0_out>;
+				data-lanes = <2 3 0 1>;
+			};
+		};
+	};
+};
+
+
 > 
-> -- 
-> 2.34.1
+> Neil
+> 
+> > 
+> > 
+> > > +      The numbers corresponds to the PHY Type the lanes are connected to.
+> > > +      The possible combinations are
+> > > +        <0 0 0 0> when none are connected
+> > > +        <4 4 0 6> USB3 and DP single lane
+> > > +        <4 4 6 6> USB3 and DP
+> > > +        <6 6 4 4> DP and USB3
+> > > +        <6 0 4 4> DP and USB3 single lane
+> > > +        <4 4 0 0> USB3 Only
+> > > +        <0 0 4 4> USB3 Only
+> > > +        <6 0 0 0> DP single lane
+> > > +        <0 0 0 6> DP single lane
+> > > +        <6 6 0 0> DP 2 lanes
+> > > +        <0 0 6 6> DP 2 lanes
+> > > +        <6 6 6 6> DP 4 lanes
+> > > +
+> > >     ports:
+> > >       $ref: /schemas/graph.yaml#/properties/ports
+> > >       properties:
+> > > 
+> > > -- 
+> > > 2.34.1
+> > > 
+> > 
 > 
 
 -- 
