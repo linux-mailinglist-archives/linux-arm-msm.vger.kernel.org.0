@@ -1,234 +1,258 @@
-Return-Path: <linux-arm-msm+bounces-71674-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71675-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED204B40B49
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 18:57:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6293B40BCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 19:16:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 8EE437AC6E6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 16:55:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3442B160322
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 17:16:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52B3733CEB7;
-	Tue,  2 Sep 2025 16:56:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76F94321F46;
+	Tue,  2 Sep 2025 17:16:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=semtech.com header.i=@semtech.com header.b="R/HjUtPA";
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=SemtechCorp.onmicrosoft.com header.i=@SemtechCorp.onmicrosoft.com header.b="r8zUZGk8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="P2Ufg2iT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail1.bemta40.messagelabs.com (mail1.bemta40.messagelabs.com [67.219.247.1])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC8E33EAF3;
-	Tue,  2 Sep 2025 16:56:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.219.247.1
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756832218; cv=fail; b=N7AjcrMhpVt6mN9Nt4SFmhD8CLr7F/hxsWnzCRqR/mFUr4NFv755XApE/uuPL8+uC3LScrDeUa1jT12pE0Yzk6T5K9S1GAZJ/prb7ul8PNvqIqibWrw9FUib5XuZIF7Eqgch9JNxmw22qvmlo3ICs8+DPjJR9//R9I6wZ3vWpcM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756832218; c=relaxed/simple;
-	bh=UrzNuERjNIN4VPLLFJ1Sb7BMYWKze3yX1DMxfL7E1oc=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=o1WKvDvopzbn7u2xwHL0VDXxRNAhHGlbsaG06c03rsyp8dP7BVzuvu30kDLTdL7v6U3dDMAGp+rtQFe6s0UCUflrQ4dyYzd8QAZfZfXNS1CX9dyVzDiy+o39lzONTVPW+YFu1Y1R3pLzfWq4sSwMOhUy8ItP7SaQA8rs1rcp+lU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=semtech.com; spf=pass smtp.mailfrom=semtech.com; dkim=pass (2048-bit key) header.d=semtech.com header.i=@semtech.com header.b=R/HjUtPA; dkim=fail (1024-bit key) header.d=SemtechCorp.onmicrosoft.com header.i=@SemtechCorp.onmicrosoft.com header.b=r8zUZGk8 reason="signature verification failed"; arc=fail smtp.client-ip=67.219.247.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=semtech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=semtech.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=semtech.com; s=k1;
-	t=1756832214; i=@semtech.com;
-	bh=L1QUH3q5oKS00cIH4fmjxCiSFjCCQX/LfLnYyvCrInw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
-	 Content-Transfer-Encoding:Content-Type;
-	b=R/HjUtPArrtuA0CZbXaS7sx6Bba/iqSsYsx6R7PyHFNhuc+xXGzCCT3Mpl8qzw16d
-	 f2E6d/gYA5091sgY1vSrLANG2NJexfqV4yLelYdglGT5CjGXRybR+J75b637P/S1Su
-	 HdorsWFOUUeAngIUNgdHYZI/MmvmdpGsnX6gWA36Dp51d4Rye8tcYdqijWhaXmb4tH
-	 utrSJVX08qdccVw+IbNtZZUOrCw3I6Phs/vQ95tspsbBih9XqwIcg3Yaz0bnhhJuvY
-	 G6fCjWZShnnalNdHkVL5lvcU7UosLSWah9YzIsVHtUIhOFJ9jLaq7HPINWeSMKoaSm
-	 nHfro0U4KTCiQ==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFprHJsWRWlGSWpSXmKPExsWikR3frntNcXu
-  GwcfpzBYT959lt7i8aw6bA5PH501yAYxRrJl5SfkVCawZGzYdZS34zFPxf9NZlgbGL1xdjFwc
-  jALLmCUWzZ3EBuEsZpW4sP0fC4QzjUnicdNZJhCHRWA7s8TL6wsYQRwhgcVMErP3fmCFcFYyS
-  XzY+R+sTELgKKPEpc8TWSAyZxklbjX/Z4dwbjFKPDo0E8qZxCgxfcE5oAGcHGwCihKtX06D9Y
-  sIXGKUOP5uKRNIgllAS+Ln45uMILawQKBE598NbCA2i4CqxJVFO8GaeQVMJR5NfgkWlxCQl1i
-  8YzkzRFxQ4uTMJywQc+QlmrfOBosLCchKrJjQC1UfLPH40Fd2CFtS4trNC1C2rMTRs3NYIGxn
-  ia8nVkLdIyFx8MULoDkcQHFfiUXvwiFK5CRO9Z5jgjlh58bbUK0hEv3LuqFG3uGX6P9RDAmjZ
-  4wS8x9eZIRIyEi0X17AOoFRYxaSs2chOXsWktULGJlXMZoWpxaVpRbpGhroJRVlpmeU5CZm5u
-  glVukm6ZUW66YmFpcY6qUnF+ilFhfrFVfmJuek6OWllmxiBCYVrg8RU3YwPj7RrH+IUZKDSUm
-  UV+LKtgwhvqT8lMqMxOKM+KLSnNTiQ4wyHBxKEry2ctszhASLUtNTK9Iyc4AJDiYtwcGjJMLL
-  dASolbe4IDG3ODMdInWKUZfj+8GTe5mFWPLy81KlxHmZFIBmCIAUZZTmwY2AJdtLjLJSwryMD
-  AwMQjwFqUW5mSWo8q8YxTkYlYR5H4NM4cnMK4Hb9AroCCagIxa+3wxyREkiQkqqgUlrjfenyJ
-  Tk63uLJET+9hZ+3xz+3i5t+9YcDq5La/OUxKfV5Fw7Mn9qWtIMEZNvwZPFd+5dl9eZfzeBafu
-  aNLd7nRdyd3TX9BQvlNxlJO1yQjHrsK26++wTn86aTLf7HdR5Neq6IXu0FI+orrTyR32dbysv
-  nAn9I7XLZkvBm3O8B1lVnL99vcXtuSToCZPsnjnK1/5qJIlcmbIh29eSQ1R4Ru48nuVsLU6tm
-  wLuv5+6d6HXVv6iKDMhob+/GI4ceOi7ur3y6a4N0bOt/ir81Crw7/rTMnnRyj1G05OfHlQzku
-  EuXbxt9f9721/YHQjbarDEyb/8pJSia/2Sia6/FEKeNvz1epV6Wsq2oqzbTVGJpTgj0VCLuag
-  4EQCq4s4nMQQAAA==
-X-Env-Sender: zxue@semtech.com
-X-Msg-Ref: server-3.tower-929.messagelabs.com!1756832213!32125!1
-X-SYMC-ESS-Client-Auth: mailfrom-relay-check=pass
-X-StarScan-Received:
-X-StarScan-Version: 9.118.2; banners=semtech.com,-,-
-X-VirusChecked: Checked
-Received: (qmail 20836 invoked from network); 2 Sep 2025 16:56:53 -0000
-Received: from mail-dm3nam02on2135.outbound.protection.outlook.com (HELO NAM02-DM3-obe.outbound.protection.outlook.com) (40.107.95.135)
-  by server-3.tower-929.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP; 2 Sep 2025 16:56:53 -0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=zCIZtZlxRegDNFDHblXEXeOLCk2kFSYoSbHk6p8Ho/sAaS7BALcy/WV3dENaqCGo6uBE5yHalbDzjlSBTdfQ7bXRqSdzwvYqiNMFRiw6fWJtWogw0aGrbj8PAArtLH6cM7Bc6FqX9+TXncYKHT6EoViDMdkKJ2GOVluJspS+7Md4Zfj9tC7Do8c8K8FD47nndrJobLjgSU4JpcJsvRaEQhG13arGO8NY9s1UeB3/qm0PeCB450aDScKqEobgpaGyBJlhz/y/6RUt9mNNXxmiBG0jW0zJ53EgL6NB0wjOXLJ5SqXZS7KYP/u7dIKuDcSC+3nWPobDGhUl2wnb5+boxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hAIwUHMkEY4dp7YAVO/829FOMZlx+2CU9KcYXh2MonM=;
- b=JQC5InJtTgj8/JS4f9xr7UElj7pWf85pPwyTctTa3zNjoB2KlZ5pdPJmZzfnzRZOPJyTZUia//VaJX+bGspJO//cryO6q+pQbvB1NoaUmfg3bZ1yUK6bqDViNqOr549L7J+/qc13S/HA8ZWkXRVmixVyD62xRXyNA+rm/lhPLt7r0MTNqqsG5DtxlZ5o88hI59wuEAEe44BxDgSfBjjvd1BcNXIee6EL2yR0ST6VQ7keJd2BJyqfJOyj0BQ/tRjywGp6L3sdfIWPPHZ6Zi8EqQMZq+0StlRS5ID9dtF6G1GESIhBa/1IsHBWnU0NdqmnacD47oyMfsYXLMCo9mlUVA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 38.104.251.66) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=semtech.com;
- dmarc=pass (p=quarantine sp=none pct=100) action=none
- header.from=semtech.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=SemtechCorp.onmicrosoft.com; s=selector1-SemtechCorp-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hAIwUHMkEY4dp7YAVO/829FOMZlx+2CU9KcYXh2MonM=;
- b=r8zUZGk8ZO64PsX1hf4AVtAa5DmXHs5Ix6LC7vAINqbnuifswZPL+FPXsTjbcMGtsJMxO9FDIAZIUaITpFX1WUFs8GmtiHwZ6hH2AhYYQYP9c/3dQI8D5hHUvyI82Hm1bzTCU/xMoOK7VaauUBdKiu1ZwOkSJLx2YHT4TscYcxY=
-Received: from MW4PR03CA0125.namprd03.prod.outlook.com (2603:10b6:303:8c::10)
- by CH1PPF7119C8A35.namprd20.prod.outlook.com (2603:10b6:61f:fc00::694) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.29; Tue, 2 Sep
- 2025 16:56:51 +0000
-Received: from CO1PEPF000042A9.namprd03.prod.outlook.com
- (2603:10b6:303:8c:cafe::a2) by MW4PR03CA0125.outlook.office365.com
- (2603:10b6:303:8c::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9073.27 via Frontend Transport; Tue,
- 2 Sep 2025 16:56:50 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 38.104.251.66)
- smtp.mailfrom=semtech.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=semtech.com;
-Received-SPF: Pass (protection.outlook.com: domain of semtech.com designates
- 38.104.251.66 as permitted sender) receiver=protection.outlook.com;
- client-ip=38.104.251.66; helo=CA07RELAY1.semtech.com; pr=C
-Received: from CA07RELAY1.semtech.com (38.104.251.66) by
- CO1PEPF000042A9.mail.protection.outlook.com (10.167.243.38) with Microsoft
- SMTP Server id 15.20.9094.14 via Frontend Transport; Tue, 2 Sep 2025 16:56:50
- +0000
-Received: from ca08gitmail.local ([10.23.50.249]) by CA07RELAY1.semtech.com with Microsoft SMTPSVC(10.0.20348.1);
-	 Tue, 2 Sep 2025 12:56:49 -0400
-From: Adam Xue <zxue@semtech.com>
-To: mani@kernel.org,
-	jeff.hugo@oss.qualcomm.com,
-	quic_yabdulra@quicinc.com,
-	chentao@kylinos.cn,
-	quic_mattleun@quicinc.com,
-	mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: zxue@semtech.com,
-	imocanu@semtech.com
-Subject: [PATCH v1] bus: mhi: host: Fix potential kernel panic by calling dev_err
-Date: Tue,  2 Sep 2025 09:56:35 -0700
-Message-ID: <20250902165635.18951-1-zxue@semtech.com>
-X-Mailer: git-send-email 2.43.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC642205E25
+	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 17:16:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1756833372; cv=none; b=DuBuBn/HAwPTSkQ+VkN5i1GRvurxLN/0/mIGM0wgkAs/j7HGkZqpQY4Qw1rJZHgBOdhtd8752WVf7S2fUtA1kEVC+mNVPacSoLQRsrqRQz5iwzfFQD86hObI/7BViCsoOeO0LrLD8hdonJRg4qfPfgTvdtRl4oQ1gv1BZDMX2b4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1756833372; c=relaxed/simple;
+	bh=GGixmQHMnuiRSS06dnefK9PTyJsBbkjIHfLjT8VKwlA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lyecmmNdRnYLHyUQf/PwAPCXlVLt4vSSH6ThBrf7hfnKcJjjHWtym7w67afiPcm9wV+S2EVGAQ9o/k/Gn+fvGoXesuVr/ravr+1k2qrQshpRR6yzGnxycp3gNjIywiIQjNXdnRsMZbey1smUQEAe4tkWScO//S10luuZ1bQhtPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=P2Ufg2iT; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqAbQ023421
+	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 17:16:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=3YLUXsBb+H2fMN/x6xB9KreQ
+	sLQVf3Bz8PIfMA43Cqs=; b=P2Ufg2iTd5xoqKvZgqUNWwwNog0r3wJv3SJ2a0/3
+	rcX2pW9xuf5I8vFAOdMTE8gRP2zn1KI5KW4IXo8yg1sXJHdHPmHUoDoLtTDhs5Is
+	bsTufpY0YUItHxmYiElD+6IP+VYLjqKLIQNFK+sXghAwUP82iFKpMXIO4hadr/dY
+	FyvOAYfGplOytGn4F3Cf+yDc7Dm56udzaU0eTGLuJ4g5mCBKbqkK2l3DDWPt1OVf
+	a5L9DKpX76jrIA3L+8HgGQuFotoyxrRo+lNF6f2TglXr4bef9qhrkVkTdtQ3nDGo
+	QlsySFGVNG3O99OfRSbORBb7ouZxi0EM2hFYRxEYu4rpXw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnp8uuc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 17:16:09 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-720408622c3so16308526d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 10:16:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756833368; x=1757438168;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3YLUXsBb+H2fMN/x6xB9KreQsLQVf3Bz8PIfMA43Cqs=;
+        b=IES8wic7di03sFtxL5s+Jh2eHUf4GRS6eok1jw704yQepUmZ8SUTCWv/VMxtTZMYfD
+         yByNiFFWmIXOHO+NmF+rl1rg4kf2yJQhJefLZGa5PSMUWBVW0PCprh3CFVJDn30S2FYO
+         sIvO0drInoNlxagksak9kGDyjAQKjY+bOc5iMg3z2TR5riVpoSTUYxKplzqy3/ZDurNX
+         pH/Orddvej2Ght4Ng7BaHKrV2/rVgVTaCg6njxKhX+wlrk/sw8xTK+l6iJWsjghwDDnj
+         QQQR/NwEecXqVEmM5P7PvyvPQlEdv6WeXKHL/D5okpK1Y0RtDEGW6O0E6e7poekDYulQ
+         nXaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXghGD9GCr5Qu0qpVfvB38fxJl0rN7u3j7IrquoVgI5xlUVPifs6JCk4FOaxSc86HKf30N2zp6Rze7sx8l4@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIQPfQst+hUXOi3Tu1LbhVVG1WhThaybhIzTmAgKLex0e3pl59
+	h07FCdsnzmKk92j09xCGsXJVOwheQS+W2xJu36AY9B3eMjJcL3l6QM736epzOftc8C41hHllti+
+	/n0OqXYl04Za8Y3PyYMefMz1EKF6tLYsRxCgrxXY64VVYBMIhEStPDunrHFEe5Fnmdy/kJmcjRs
+	fc
+X-Gm-Gg: ASbGnctzimhLzSDbGiwZRZhqNOSVWF3m7NTbMo+HFMpq2rgK4s6GAJL5SJ8ZURRrkTg
+	7KIHVxo+bdvB5M3uErHqWxQAWvJwDqTByqn3P1WNQr0ZUGqM2pqC+Vwtjbb7dH6Q64lSS6yJ9vJ
+	+IPVDdO1/gNRzdO+JVfyUNlRH/aHz/NuRnlwzI3495l7lQizdNb8UKRZZRtOFXAnFON3CjbvDKu
+	Eoz7AyglBlBuR7d3K2GCsWhbxydtmuK6btUZ8jJrYA4KQ1BUTmQpYIAfgba0XJAxIrq3O26OPcJ
+	gMUESZJd40nMwF9au9SblxHPfk9soGijQjXBk1PUVjKyLOA6ihANin44b3XqaHzJGAZ3Sq529yH
+	X06w4OGoJPpY84LyX9zrkYUHAOUf3n2vlImhvyt3juxv21+SN2B9+
+X-Received: by 2002:a05:622a:2615:b0:4b3:19c5:68ec with SMTP id d75a77b69052e-4b31d80cb69mr138409651cf.12.1756833368168;
+        Tue, 02 Sep 2025 10:16:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5rotFg1jBTAZEAuapDecKRJQB2mz3OMz0pGfo5EL0QAG3I96gAKcj9HSKzh0OrRoUDRSojw==
+X-Received: by 2002:a05:622a:2615:b0:4b3:19c5:68ec with SMTP id d75a77b69052e-4b31d80cb69mr138408861cf.12.1756833367575;
+        Tue, 02 Sep 2025 10:16:07 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-560827aa987sm810618e87.135.2025.09.02.10.16.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 Sep 2025 10:16:06 -0700 (PDT)
+Date: Tue, 2 Sep 2025 20:16:04 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Krishna Kurapati PSSNV <krishna.kurapati@oss.qualcomm.com>
+Cc: Monish Chunara <quic_mchunara@quicinc.com>,
+        Sushrut Shree Trivedi <quic_sushruts@quicinc.com>,
+        Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>, kernel@oss.qualcomm.com,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org,
+        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+        Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>,
+        Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Vishal Kumar Pal <quic_vispal@quicinc.com>
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: lemans-evk: Extend peripheral and
+ subsystem support
+Message-ID: <ctwvrrkomc3n6gginw2dp5vip7xh5jhwbi5joyr64gocsm2esb@4zfpbvvziv5i>
+References: <20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com>
+ <20250826-lemans-evk-bu-v1-3-08016e0d3ce5@oss.qualcomm.com>
+ <kycmxk3qag7uigoiitzcxcak22cewdv253fazgaidjcnzgzlkz@htrh22msxteq>
+ <3f94ccc8-ac8a-4c62-8ac6-93dd603dcd36@quicinc.com>
+ <zys26seraohh3gv2kl3eb3rd5pdo3y5vpfw6yxv6a7y55hpaux@myzhufokyorh>
+ <aLG3SbD1JNULED20@hu-mchunara-hyd.qualcomm.com>
+ <ozkebjk6gfgnootoyqklu5tqj7a7lgrm34xbag7yhdwn5xfpcj@zpwr6leefs3l>
+ <ed3a79e0-516e-42f4-b3c6-a78ca6c01d86@oss.qualcomm.com>
+ <ly5j2eodrajifosz34nokia4zckfftakz5253d2h6kd2cxjoq3@yrquqgpnvhp6>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-OriginalArrivalTime: 02 Sep 2025 16:56:50.0055 (UTC) FILETIME=[9358D970:01DC1C2A]
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000042A9:EE_|CH1PPF7119C8A35:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 8e90619e-7852-4b0e-7f3c-08ddea41b629
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|82310400026|36860700013;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?a1DEtnVs3HUbRr2svf2+wgCI3mUwvESztP3CLHwQflII53K4Ez4vnhHI9Tu5?=
- =?us-ascii?Q?tp0nrb1iwZKjfh1OUsuRkcaHhAyZIUgd4z+byYIeLIHEgwfuuKyXtkAvzdUt?=
- =?us-ascii?Q?VThDkiu4DX3diFHK7i2Cof99VwD4Ew8rdiSuaQkQOUdUkrQB9NJMx3gg1qG6?=
- =?us-ascii?Q?c/xPBdnk7fG3u34ah4CPZsOd4FJmP5nQ72iTaB+a5ieHCkGR28n1kkW76zn8?=
- =?us-ascii?Q?qVKVn9SPHzlfWNwyMhYRLUE3cyknEqZODhkqWaAPy7eIyRXR+3UKlhzFW588?=
- =?us-ascii?Q?1sr7nVuHgEj9IQmyGURzE2s+adjZdZ+0RvrHykbkAe5PPibx10cNIUeRrvHO?=
- =?us-ascii?Q?skAgbchw1gM3SCf90BR0znWX73m4EbYofrZr/Xzoy4aja0lQrwQEyGahqoaD?=
- =?us-ascii?Q?iQC15wVw4MeeC0yIS1QkCOcwoglncv0pv1zgBOxd2vbV2D2x2R0/378ZS4zb?=
- =?us-ascii?Q?q042t1404qmrfTNBRx1hW6cQ7OhKzdsELSpWkZZZPiU6SvU2fLhDqJnwIY3d?=
- =?us-ascii?Q?/+oiZnvySXwmScwfFW8ydmW8Nq7eYgWaErXE4buCYl1OAzrdDsraf9dOxudT?=
- =?us-ascii?Q?tc7XrrLe7weU5bfeT/1RpMgWFXeozOXbk/je4R1mn9+xYX7yTYV7m6JQNXRF?=
- =?us-ascii?Q?0KXRziVpm9239z7etnqCEnC1XPHhh6J9HT0Zb4By3Hh5+OMirjvG0SofuOG/?=
- =?us-ascii?Q?3MBGI6cfUtHec2s9/en41rKUohKjZWJw6LoQQEtrR7AnRm2dhRM9+TC+uaWB?=
- =?us-ascii?Q?vFjm9Td+XuoFa1Sb0+/4d38j4nUjuF6h2DXOYyXhr2QhbVdD770EPcG3C50J?=
- =?us-ascii?Q?05FWifOavD0Jmd+NV6jhHHdbblSc4z9Hjii1ajm6rgtUMDujKcbVhVzP9ZL/?=
- =?us-ascii?Q?EFwbwYjE8El17XaxeofVWfbM0K7RstD+vzLz7Ps2UeNFKO9bh1r9Rja9Ew+X?=
- =?us-ascii?Q?oU0NzqGBFJSAkjFY1o2Ah4XUN/GAeLOb0YEN4pTCcUxa6LdOZ1StBkskOZI6?=
- =?us-ascii?Q?WPdF1uY3hNdbYhIOkCb1JbLR+NvLVerqcyJ2iQKQ5LQLZj9NvT0Ll8m3sLpc?=
- =?us-ascii?Q?wJw1Pm70rR41MWot0Ldwspxgta1x5kUDIUHtNh59TmQUSt84E7p6e3jdhfpl?=
- =?us-ascii?Q?Nrb5fRQYh44DC2Q7g5Gpt9xZwn3387/Ci8+EOm1O31+8096NwmbDJeNOgSCL?=
- =?us-ascii?Q?7I1OADuuJ01EHMnARAIV9WtqiU085k2AVe0JMUxDtO48tyYDwnlSQA+j5q3F?=
- =?us-ascii?Q?W+uK5w2ObYJk5cjxsGQcfj5mJp8ck2nR1k2/F1mLfPrUWwFEaFYqy+wqWzn1?=
- =?us-ascii?Q?vmNOsQE8voWiFC2AGN1RNLsy1p9yy+ymDQe8HTKSeMmHzbPYXa30Ja3y5adK?=
- =?us-ascii?Q?wLKSzs1K4cxuMcpfJJdKAmkXHW9vmEdpIyLCC9NWFelE3ooEUFTWAxX2KM7O?=
- =?us-ascii?Q?WfjTVo9b0mEiDpV8L6jV46p2/jEcQHfaaKHPK2idLzlhF67Jb4eMPaFMpzjJ?=
- =?us-ascii?Q?5BjxTVNCTGKiNpBGpPwK4/KS+5dFBWExpLsx?=
-X-Forefront-Antispam-Report:
-	CIP:38.104.251.66;CTRY:CA;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CA07RELAY1.semtech.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(376014)(82310400026)(36860700013);DIR:OUT;SFP:1102;
-X-OriginatorOrg: semtech.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Sep 2025 16:56:50.4152
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8e90619e-7852-4b0e-7f3c-08ddea41b629
-X-MS-Exchange-CrossTenant-Id: b105310d-dc1a-4d6e-bf0d-b11c10c47b0f
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=b105310d-dc1a-4d6e-bf0d-b11c10c47b0f;Ip=[38.104.251.66];Helo=[CA07RELAY1.semtech.com]
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-CO1PEPF000042A9.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPF7119C8A35
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ly5j2eodrajifosz34nokia4zckfftakz5253d2h6kd2cxjoq3@yrquqgpnvhp6>
+X-Proofpoint-GUID: umwnjMZTDSOhPh17GNt7mgtAy60hByyT
+X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b72659 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8 a=-eXanXclA7daHIafeBEA:9
+ a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: umwnjMZTDSOhPh17GNt7mgtAy60hByyT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfXwLA3h/WTKe/P
+ Jj2YbgOFn5//EVPDkpyG/qdv+42xWmCxPNP2VBXRu4oS20yJs7gwBOdcUoSCsCsXkg4uWb2SqgM
+ trXC3LujpzCgjsfbdANG4N1cGqZ7aXW3ltcRVgqIpS/lxjk3xqY3TeOKRi6R59IeZ9FxzWyOkyq
+ IkGOd28z3vQMzWJxrjgN4NSpYwx1j8ln4nxfuyrRQwijKJReqALFmYkWp5NJrkbHFHe/9q1dEz6
+ x8KyqMVIL1Hy6jUXCCHdovevJtPfXv9dpt7XGUNLsi+F6/pQj9UyUdNtJh0IQ3fE0mzAmUh7niN
+ 6v3cl4M18fyxiuIyS1CCEKWjMzjG8EOVX28rzGS35t4EJhDiH5jA/3YFOLgTiO4YF/h7SHQEkxG
+ aop67j6s
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-02_06,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
+ spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300001
 
-In mhi_init_irq_setup, the device pointer used for dev_err
-was not initialized. Use the pointer from pci_dev instead.
+On Tue, Sep 02, 2025 at 05:34:27AM +0300, Dmitry Baryshkov wrote:
+> On Mon, Sep 01, 2025 at 01:02:15PM +0530, Krishna Kurapati PSSNV wrote:
+> > 
+> > 
+> > On 8/29/2025 9:54 PM, Dmitry Baryshkov wrote:
+> > > On Fri, Aug 29, 2025 at 07:50:57PM +0530, Monish Chunara wrote:
+> > > > On Thu, Aug 28, 2025 at 04:30:00PM +0300, Dmitry Baryshkov wrote:
+> > > > > On Thu, Aug 28, 2025 at 06:38:03PM +0530, Sushrut Shree Trivedi wrote:
+> > > > > > 
+> > > > > > On 8/27/2025 7:05 AM, Dmitry Baryshkov wrote:
+> > > > > > > On Tue, Aug 26, 2025 at 11:51:02PM +0530, Wasim Nazir wrote:
+> > > > > > > > Enhance the Qualcomm Lemans EVK board file to support essential
+> > > > > > > > peripherals and improve overall hardware capabilities, as
+> > > > > > > > outlined below:
+> > > > > > > >     - Enable GPI (Generic Peripheral Interface) DMA-0/1/2 and QUPv3-0/2
+> > > > > > > >       controllers to facilitate DMA and peripheral communication.
+> > > > > > > >     - Add support for PCIe-0/1, including required regulators and PHYs,
+> > > > > > > >       to enable high-speed external device connectivity.
+> > > > > > > >     - Integrate the TCA9534 I/O expander via I2C to provide 8 additional
+> > > > > > > >       GPIO lines for extended I/O functionality.
+> > > > > > > >     - Enable the USB0 controller in device mode to support USB peripheral
+> > > > > > > >       operations.
+> > > > > > > >     - Activate remoteproc subsystems for supported DSPs such as Audio DSP,
+> > > > > > > >       Compute DSP-0/1 and Generic DSP-0/1, along with their corresponding
+> > > > > > > >       firmware.
+> > > > > > > >     - Configure nvmem-layout on the I2C EEPROM to store data for Ethernet
+> > > > > > > >       and other consumers.
+> > > > > > > >     - Enable the QCA8081 2.5G Ethernet PHY on port-0 and expose the
+> > > > > > > >       Ethernet MAC address via nvmem for network configuration.
+> > > > > > > >       It depends on CONFIG_QCA808X_PHY to use QCA8081 PHY.
+> > > > > > > >     - Add support for the Iris video decoder, including the required
+> > > > > > > >       firmware, to enable video decoding capabilities.
+> > > > > > > >     - Enable SD-card slot on SDHC.
+> > > > > > > > 
+> > > > > > > > Co-developed-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> > > > > > > > Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> > > > > > > > Co-developed-by: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
+> > > > > > > > Signed-off-by: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
+> > > > > > > > Co-developed-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
+> > > > > > > > Signed-off-by: Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>
+> > > > > > > > Co-developed-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> > > > > > > > Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
+> > > > > > > > Co-developed-by: Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>
+> > > > > > > > Signed-off-by: Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>
+> > > > > > > > Co-developed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> > > > > > > > Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> > > > > > > > Co-developed-by: Monish Chunara <quic_mchunara@quicinc.com>
+> > > > > > > > Signed-off-by: Monish Chunara <quic_mchunara@quicinc.com>
+> > > > > > > > Co-developed-by: Vishal Kumar Pal <quic_vispal@quicinc.com>
+> > > > > > > > Signed-off-by: Vishal Kumar Pal <quic_vispal@quicinc.com>
+> > > > > > > > Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> > > > > > > > ---
+> > > > > > > >    arch/arm64/boot/dts/qcom/lemans-evk.dts | 387 ++++++++++++++++++++++++++++++++
+> > > > > > > >    1 file changed, 387 insertions(+)
+> > > > > > > > 
+> > > > > > > 
+> > > > > > > > @@ -356,6 +720,29 @@ &ufs_mem_phy {
+> > > > > > > >    	status = "okay";
+> > > > > > > >    };
+> > > > > > > > +&usb_0 {
+> > > > > > > > +	status = "okay";
+> > > > > > > > +};
+> > > > > > > > +
+> > > > > > > > +&usb_0_dwc3 {
+> > > > > > > > +	dr_mode = "peripheral";
+> > > > > > > Is it actually peripheral-only?
+> > > > > > 
+> > > > > > Hi Dmitry,
+> > > > > > 
+> > > > > > HW supports OTG mode also, but for enabling OTG we need below mentioned
+> > > > > > driver changes in dwc3-qcom.c :
+> > > > > 
+> > > > > Is it the USB-C port? If so, then you should likely be using some form
+> > > > > of the Type-C port manager (in software or in hardware). These platforms
+> > > > > usually use pmic-glink in order to handle USB-C.
+> > > > > 
+> > > > > Or is it micro-USB-OTG port?
+> > > > > 
+> > > > 
+> > > > Yes, it is a USB Type-C port for usb0 and we are using a 3rd party Type-C port
+> > > > controller for the same. Will be enabling relevant dts node as part of OTG
+> > > > enablement once driver changes are in place.
+> > > 
+> > > Which controller are you using? In the existing designs USB-C works
+> > > without extra patches for the DWC3 controller.
+> > > 
+> > 
+> > Hi Dmitry,
+> > 
+> >  On EVK Platform, the VBUS is controlled by a GPIO from expander. Unlike in
+> > other platforms like SA8295 ADP, QCS8300 Ride, instead of keeping vbus
+> > always on for dr_mode as host mode, we wanted to implement vbus control in
+> > dwc3-qcom.c based on top of [1]. In this patch, there is set_role callback
+> > present to turn off/on the vbus. So after this patch is merged, we wanted to
+> > implement vbus control and then flatten DT node and then add vbus supply to
+> > glue node. Hence made peripheral only dr_mode now.
+> 
+> In such a case VBUS should be controlled by the USB-C controller rather
+> than DWC3. The reason is pretty simple: the power direction and data
+> direction are not 1:1 related anymore. The Type-C port manager decides
+> whether to supply power over USB-C / Vbus or not and (if supported)
+> which voltage to use. See TCPM's tcpc_dev::set_vbus().
 
-Signed-off-by: Adam Xue <zxue@semtech.com>
----
- drivers/bus/mhi/host/init.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Okay, your Type-C manager is HD3SS3220. It drives ID pin low if the VBUS
+supply should be enabled. Please enhance the driver with this
+functionality. You cann't use the USB role status since it doesn't
+perform VSafe0V checks.
 
-diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-index 13e7a55f54ff..93eddf302a49 100644
---- a/drivers/bus/mhi/host/init.c
-+++ b/drivers/bus/mhi/host/init.c
-@@ -18,6 +18,7 @@
- #include <linux/slab.h>
- #include <linux/vmalloc.h>
- #include <linux/wait.h>
-+#include <linux/pci.h>
- #include "internal.h"
- 
- #define CREATE_TRACE_POINTS
-@@ -194,7 +195,7 @@ void mhi_deinit_free_irq(struct mhi_controller *mhi_cntrl)
- int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
- {
- 	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
--	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-+	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
- 	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
- 	int i, ret;
- 
-@@ -221,7 +222,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
- 			continue;
- 
- 		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
--			dev_err(dev, "irq %d not available for event ring\n",
-+			dev_err(&pdev->dev, "irq %d not available for event ring\n",
- 				mhi_event->irq);
- 			ret = -EINVAL;
- 			goto error_request;
-@@ -232,7 +233,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
- 				  irq_flags,
- 				  "mhi", mhi_event);
- 		if (ret) {
--			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
-+			dev_err(&pdev->dev, "Error requesting irq:%d for ev:%d\n",
- 				mhi_cntrl->irq[mhi_event->irq], i);
- 			goto error_request;
- 		}
 -- 
-2.43.0
-
-
-To view our privacy policy, including the types of personal information we collect, process and share, and the rights and options you have in this respect, see www.semtech.com/legal.
+With best wishes
+Dmitry
 
