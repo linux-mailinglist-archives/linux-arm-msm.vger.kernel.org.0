@@ -1,210 +1,422 @@
-Return-Path: <linux-arm-msm+bounces-71681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71682-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42FBAB40CC6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 20:07:02 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37832B40EA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 22:43:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B4A5020423A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 18:07:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 29EB81B281D9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 20:43:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B400C33CEB9;
-	Tue,  2 Sep 2025 18:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1A242E8892;
+	Tue,  2 Sep 2025 20:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oUJUzb/F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SgproB6E"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803EC2FD1DC;
-	Tue,  2 Sep 2025 18:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74992E0402;
+	Tue,  2 Sep 2025 20:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756836418; cv=none; b=KIJSBQ23OrEzJhv1dVuLV+Jw1xjpNgKeh5kW0IEyBFiB/+23agTzKIeUpwlGff5SMGDoHNT8sK85CapftAe9iJjjG2FlyvSxbYSg/EluQqhuANrgG3HruVaGuqAG8drwt+0bC5aTDZCBo1zqDobzJr1EtAvpQW5+iNl6Goqdcak=
+	t=1756845806; cv=none; b=SxBpEwV5DfakiuN5EoV7Qju/wtD37vb8xSubpwcYtmZU/VX7/d+TWemWHc/x1f6g4Q5beq7efyi4KtdbMguXGK08Cz7glx5e2vu9VqVSQ/JjvYYzXzXf0GUgt6ZXRs6Hekwf9/Fr+HckJ7JQTyt9KWOXnUf5qkR1hVjIagOpz5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756836418; c=relaxed/simple;
-	bh=gHqutckRXz5XP4RgC8sLZI2+EMilxv4s1+VahX0x4KQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=O2vK1uGDMGS+ase08GM4RpRp9Kp91dcEFRWt6XQtK1h16wmTCw851SZ3As3spqY0vWV7B5//lrji54HGTXJkqnhWzPtIa+PHfvOPUGyeymrNakfRpRuK+mtxDhOzsfpdNbHQ/Ig5Nx0GDSNihpbdP+Pf8WllVtdYCKGvZdcbK78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oUJUzb/F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD5BC4CEED;
-	Tue,  2 Sep 2025 18:06:57 +0000 (UTC)
+	s=arc-20240116; t=1756845806; c=relaxed/simple;
+	bh=VWJy9oXdSsPNonk5uP1RqiyRsskQb+AQE29QT14dV4M=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=I48Qz2avJ+gqQE9V2MyMOPK5v2eb6uLS5+6SMz1eG3VW0OBk1tyI75oF/ekFNQvXci/JNBsLcDNCxkw+YexEOUtX5QGHnXwWMT02Gt1DRYS3wMFfnLJ5WxTTYMWGnixoxxIluINs+8MdJ4K4xNpXoZtwzod5ZbL2hnjWnatbjAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SgproB6E; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63445C4CEED;
+	Tue,  2 Sep 2025 20:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756836418;
-	bh=gHqutckRXz5XP4RgC8sLZI2+EMilxv4s1+VahX0x4KQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=oUJUzb/FCp7NMEMYs7VrpnjLkQ4z3xyyxo0dFDOlkccenX3RYl+IjxI6ZrfoPzpmb
-	 o3t7H7+LF+M5QWFZbWBjtREhH/ttv7QweXoz7ucvQ6jH15IElwi1u+MnpZn9y4Zlkm
-	 NnqrxijmeZelPHcqMtV0fEAat5SSKrTAPlYvDofyYf/fakv7h0PWcuLC7IB4Ty8Gp0
-	 qPHxHaXT8pfXbKj6V9XvRnxWCvyq0WXViZ6Ymt6Xp31vL/zpTKgU2nlss3Lm8lapEP
-	 UTmDxT+ybdxll8FHpizGh8N5C0+jFYyqoOCByleDes9gcVPFLDmyUqNG8fin5TmUQJ
-	 s5gCqTYfkaVtA==
-Date: Tue, 2 Sep 2025 20:06:54 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Daniel Stone <daniel@fooishbar.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
-	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
- driver capabilities
-Message-ID: <st6wob5hden6ypxt2emzokfhl3ezpbuypv2kdtf5zdrdhlyjfw@l2neflb4uupo>
-References: <20250830-drm-limit-infoframes-v3-0-32fcbec4634e@oss.qualcomm.com>
- <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com>
- <57ekub6uba7iee34sviadareqxv234zbmkr7avqofxes4mqnru@vgkppexnj6cb>
- <20250901-voracious-classy-hedgehog-ee28ef@houat>
- <voknqdv3zte2jzue5yxmysdiixxkogvpblvrccp5gu55x5ycca@srrcscly4ch4>
+	s=k20201202; t=1756845806;
+	bh=VWJy9oXdSsPNonk5uP1RqiyRsskQb+AQE29QT14dV4M=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=SgproB6EyYfyUGrIJwxxLwZq25D+1xB+iBfliZaJrko7Cz2r5L/He8w+UERmmv6Ls
+	 Bdr+NcJ0nROQR2J20QqIS8ZfbfjapJPemEz7uzof2u75efzDxmUKM+hey3Qtj8bz+3
+	 PHSkTyDJnjuz13G04Pmys9luXEiUyTnvjuGQZBi6ZxI7AasANe8+kHVCJDfWDJzyIF
+	 Fe4ADbuaNG9qAzo15wfwiv1w7W7EaX31Vp0ojnFOeJtDZPQ99DuFl/nMmmyie1L32M
+	 0PZLp/QnkFL5y3n5NjN2uK0jOBCpSjqqOWiWaqE34kBUeFZJmOvsYYVLt7UySbJe4A
+	 htitZ8xyvcXog==
+Date: Tue, 02 Sep 2025 15:43:25 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="w4agiwtkcjwsgz6j"
-Content-Disposition: inline
-In-Reply-To: <voknqdv3zte2jzue5yxmysdiixxkogvpblvrccp5gu55x5ycca@srrcscly4ch4>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250902140018.247209-2-krzysztof.kozlowski@linaro.org>
+References: <20250902140018.247209-2-krzysztof.kozlowski@linaro.org>
+Message-Id: <175684520410.1142456.8051196817978410057.robh@kernel.org>
+Subject: Re: [RESEND PATCH v3] arm64: dts: qcom: sm8750-mtp: Add WiFi and
+ Bluetooth
 
 
---w4agiwtkcjwsgz6j
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
- driver capabilities
-MIME-Version: 1.0
+On Tue, 02 Sep 2025 16:00:19 +0200, Krzysztof Kozlowski wrote:
+> MTP8750 rev 2.0 (power grid v8) boards come as two different variants
+> with different WiFi chips: WCN7850 and WCN786x.  WCN7850 is already
+> supported by the kernel, but WCN786x is not.  Both of the board variants
+> are considered newest revisions and the difference is only in MCN
+> numbers and internal codenames.
+> 
+> Add WCN7850 WiFi and Bluetooth to the MTP8750, stating that this DTS
+> represents the WCN7850 variant.  The S4D and S5F regulators should
+> operate at 0.85 V, thus adjust lower constraint and regulator name.
+> 
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> 
+> ---
+> 
+> Changes in v3:
+> 1. Add also PCIe nodes, because they were not planned to be sent
+>    separately.
+> 2. Drop pieces of comments as discussed with Dmitry.
+> v2: https://lore.kernel.org/all/20250811131055.154233-2-krzysztof.kozlowski@linaro.org/
+> 
+> Changes in v2:
+> 1. Add missing &qupv3_2 enable, so Bluetooth works.
+> 2. Adjust also S4D regulator constraint.
+> 
+> No dependencies, can be merged.
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 147 +++++++++++++++++++++++-
+>  1 file changed, 143 insertions(+), 4 deletions(-)
+> 
 
-On Tue, Sep 02, 2025 at 06:45:44AM +0300, Dmitry Baryshkov wrote:
-> On Mon, Sep 01, 2025 at 09:07:02AM +0200, Maxime Ripard wrote:
-> > On Sun, Aug 31, 2025 at 01:29:13AM +0300, Dmitry Baryshkov wrote:
-> > > On Sat, Aug 30, 2025 at 09:30:01AM +0200, Daniel Stone wrote:
-> > > > Hi Dmitry,
-> > > >=20
-> > > > On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
-> > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > > > > It's not uncommon for the particular device to support only a sub=
-set of
-> > > > > HDMI InfoFrames. It's not a big problem for the kernel, since we =
-adopted
-> > > > > a model of ignoring the unsupported Infoframes, but it's a bigger
-> > > > > problem for the userspace: we end up having files in debugfs whic=
-h do
-> > > > > mot match what is being sent on the wire.
-> > > > >
-> > > > > Sort that out, making sure that all interfaces are consistent.
-> > > >=20
-> > > > Thanks for the series, it's a really good cleanup.
-> > > >=20
-> > > > I know that dw-hdmi-qp can support _any_ infoframe, by manually
-> > > > packing it into the two GHDMI banks. So the supported set there is
-> > > > 'all of the currently well-known ones, plus any two others, but only
-> > > > two and not more'. I wonder if that has any effect on the interface
-> > > > you were thinking about for userspace?
-> > >=20
-> > > I was mostly concerned with the existing debugfs interface (as it is
-> > > also used e.g. for edid-decode, etc).
-> > >=20
-> > > It seems "everything + 2 spare" is more or less common (ADV7511, MSM
-> > > HDMI also have those. I don't have at hand the proper datasheet for
-> > > LT9611 (non-UXC one), but I think its InfoFrames are also more or less
-> > > generic).  Maybe we should change debugfs integration to register the
-> > > file when the frame is being enabled and removing it when it gets uns=
-et.
-> >=20
-> > But, like, for what benefit?
-> >=20
-> > It's a debugfs interface for userspace to consume. The current setup
-> > works fine with edid-decode already. Why should we complicate the design
-> > that much and create fun races like "I'm running edid-decode in parallel
-> > to a modeset that would remove the file I just opened, what is the file
-> > now?".
->=20
-> Aren't we trading that with the 'I'm running edid-decode in paralle with
-> to a modeset and the file suddenly becomes empty'?
 
-In that case, you know what the file is going to be: empty. And you went
-=66rom a racy, straightforward, design to a racy, complicated, design.
+My bot found new DTB warnings on the .dts files added or changed in this
+series.
 
-It was my question before, but I still don't really see what benefits it
-would have, and why we need to care about it in the core, when it could
-be dealt with in the drivers just fine on a case by case basis.
+Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+are fixed by another series. Ultimately, it is up to the platform
+maintainer whether these warnings are acceptable or not. No need to reply
+unless the platform maintainer has comments.
 
-> > > Then in the long run we can add 'slots' and allocate some of the fram=
-es
-> > > to the slots. E.g. ADV7511 would get 'software AVI', 'software SPD',
-> > > 'auto AUDIO' + 2 generic slots (and MPEG InfoFrame which can probably=
- be
-> > > salvaged as another generic one)). MSM HDMI would get 'software AVI',
-> > > 'software AUDIO' + 2 generic slots (+MPEG + obsucre HDMI which I don't
-> > > want to use). Then the framework might be able to prioritize whether =
-to
-> > > use generic slots for important data (as DRM HDR, HDMI) or less impor=
-tant
-> > > (SPD).
-> >=20
-> > Why is it something for the framework to deal with? If you want to have
-> > extra infoframes in there, just go ahead and create additional debugfs
-> > files in your driver.
-> >=20
-> > If you want to have the slot mechanism, check in your atomic_check that
-> > only $NUM_SLOT at most infoframes are set.
->=20
-> The driver can only decide that 'we have VSI, SPD and DRM InfoFrames
-> which is -ETOOMUCH for 2 generic slots'. The framework should be able to
-> decide 'the device has 2 generic slots, we have HDR data, use VSI and
-> DRM InfoFrames and disable SPD for now'.
+If you already ran DT checks and didn't see these error(s), then
+make sure dt-schema is up to date:
 
-I mean... the spec does? The spec says when a particular feature
-requires to send a particular infoframe. If your device cannot support
-to have more than two "features" enabled at the same time, so be it. It
-something that should be checked in that driver atomic_check.
+  pip3 install dtschema --upgrade
 
-Or just don't register the SPD debugfs file, ignore it, put a comment
-there, and we're done too.
 
-> But... We are not there yet and I don't have clear usecase (we support
-> HDR neither on ADV7511 nor on MSM HDMI, after carefully reading the
-> guide I realised that ADV7511 has normal audio infoframes). Maybe I
-> should drop all the 'auto' features, simplifying this series and land
-> [1] for LT9611UXC as I wanted origianlly.
->=20
-> [1] https://lore.kernel.org/dri-devel/20250803-lt9611uxc-hdmi-v1-2-cb9ce1=
-793acf@oss.qualcomm.com/
+This patch series was applied (using b4) to base:
+ Base: attempting to guess base-commit...
+ Base: tags/next-20250829 (exact match)
 
-Looking back at that series, I think it still has value to rely on the
-HDMI infrastructure at the very least for the atomic_check sanitization.
+If this is not the correct base, please add 'base-commit' tag
+(or use b4 which does this automatically)
 
-But since you wouldn't use the generated infoframes, just skip the
-debugfs files registration. You're not lying to userspace anymore, and
-you get the benefits of the HDMI framework.
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250902140018.247209-2-krzysztof.kozlowski@linaro.org:
 
-Maxime
+Error: arch/arm64/boot/dts/qcom/sm8750-mtp.dts:962.1-7 Label or path pcie0 not found
+Error: arch/arm64/boot/dts/qcom/sm8750-mtp.dts:972.1-11 Label or path pcie0_phy not found
+Error: arch/arm64/boot/dts/qcom/sm8750-mtp.dts:979.1-11 Label or path pcieport0 not found
+FATAL ERROR: Syntax error parsing input tree
+make[3]: *** [scripts/Makefile.dtbs:132: arch/arm64/boot/dts/qcom/sm8750-mtp.dtb] Error 1
+make[2]: *** [scripts/Makefile.build:556: arch/arm64/boot/dts/qcom] Error 2
+make[2]: Target 'arch/arm64/boot/dts/qcom/sm8750-mtp.dtb' not remade because of errors.
+make[1]: *** [/home/rob/proj/linux-dt-testing/Makefile:1478: qcom/sm8750-mtp.dtb] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+make: Target 'qcom/apq8096-ifc6640.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-j3ltetw.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-fxtec-pro1.dtb' not remade because of errors.
+make: Target 'qcom/sm7325-nothing-spacewar.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-asus-zenbook-a14.dtb' not remade because of errors.
+make: Target 'qcom/sm7125-xiaomi-curtana.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-dell-xps13-9345.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-mtp.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-a5u-eur.dtb' not remade because of errors.
+make: Target 'qcom/sc8280xp-lenovo-thinkpad-x13s.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r3-lte.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-crd-pro.dtb' not remade because of errors.
+make: Target 'qcom/sm6115p-lenovo-j606f.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-sony-xperia-yoshino-maple.dtb' not remade because of errors.
+make: Target 'qcom/ipq9574-rdp454.dtb' not remade because of errors.
+make: Target 'qcom/qcs6490-rb3gen2.dtb' not remade because of errors.
+make: Target 'qcom/msm8992-xiaomi-libra.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-limozeen-r4.dtb' not remade because of errors.
+make: Target 'qcom/sdm450-motorola-ali.dtb' not remade because of errors.
+make: Target 'qcom/x1e78100-lenovo-thinkpad-t14s-oled.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-quackingstick-r0.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pazquel360-wifi.dtb' not remade because of errors.
+make: Target 'qcom/sdm630-sony-xperia-ganges-kirin.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-coachz-r1-lte.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-lg-judyp.dtb' not remade because of errors.
+make: Target 'qcom/msm8939-wingtech-wt82918.dtb' not remade because of errors.
+make: Target 'qcom/qrb2210-rb1.dtb' not remade because of errors.
+make: Target 'qcom/msm8996-mtp.dtb' not remade because of errors.
+make: Target 'qcom/sm8750-mtp.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-zombie.dtb' not remade because of errors.
+make: Target 'qcom/msm8992-lg-bullhead-rev-10.dtb' not remade because of errors.
+make: Target 'qcom/qrb5165-rb5.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-lenovo-yoga-slim7x.dtb' not remade because of errors.
+make: Target 'qcom/sm8550-qrd.dtb' not remade because of errors.
+make: Target 'qcom/sdm630-sony-xperia-nile-discovery.dtb' not remade because of errors.
+make: Target 'qcom/sm8550-sony-xperia-yodo-pdx234.dtb' not remade because of errors.
+make: Target 'qcom/msm8939-huawei-kiwi.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-inx.dtb' not remade because of errors.
+make: Target 'qcom/sc8280xp-microsoft-arcata.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-oneplus-fajita.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r4.dtb' not remade because of errors.
+make: Target 'qcom/sdm660-xiaomi-lavender.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-coachz-r1.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r10.dtb' not remade because of errors.
+make: Target 'qcom/msm8939-wingtech-wt82918hd.dtb' not remade because of errors.
+make: Target 'qcom/ipq6018-cp01-c1.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-motorola-surnia.dtb' not remade because of errors.
+make: Target 'qcom/sm8350-microsoft-surface-duo2.dtb' not remade because of errors.
+make: Target 'qcom/qcm6490-idp.dtb' not remade because of errors.
+make: Target 'qcom/sm8550-mtp.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-a3u-eur.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-sony-xperia-tama-akari.dtb' not remade because of errors.
+make: Target 'qcom/x1p42100-crd.dtb' not remade because of errors.
+make: Target 'qcom/sm8250-mtp.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r9.dtb' not remade because of errors.
+make: Target 'qcom/sm8250-xiaomi-elish-csot.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-wingtech-wt88047.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-thwc-ufi001c.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-xiaomi-sagit.dtb' not remade because of errors.
+make: Target 'qcom/qcs8550-aim300-aiot.dtb' not remade because of errors.
+make: Target 'qcom/sdm450-lenovo-tbx605f.dtb' not remade because of errors.
+make: Target 'qcom/sm8250-xiaomi-elish-boe.dtb' not remade because of errors.
+make: Target 'qcom/qcs404-evb-4000.dtb' not remade because of errors.
+make: Target 'qcom/qcs9100-ride.dtb' not remade because of errors.
+make: Target 'qcom/msm8996-sony-xperia-tone-kagura.dtb' not remade because of errors.
+make: Target 'qcom/sm8150-sony-xperia-kumano-griffin.dtb' not remade because of errors.
+make: Target 'qcom/sdm670-google-sargo.dtb' not remade because of errors.
+make: Target 'qcom/x1e001de-devkit.dtb' not remade because of errors.
+make: Target 'qcom/sa8775p-ride.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-crd.dtb' not remade because of errors.
+make: Target 'qcom/ipq5424-rdp466.dtb' not remade because of errors.
+make: Target 'qcom/sc8180x-lenovo-flex-5g.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-lg-judyln.dtb' not remade because of errors.
+make: Target 'qcom/sm6125-xiaomi-ginkgo.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r3-kb.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-motorola-osprey.dtb' not remade because of errors.
+make: Target 'qcom/sm8250-xiaomi-pipa.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-oneplus-enchilada.dtb' not remade because of errors.
+make: Target 'qcom/msm8956-sony-xperia-loire-suzu.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-idp.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-evoker-lte.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-homestar-r4.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-rossa.dtb' not remade because of errors.
+make: Target 'qcom/apq8039-t2.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-motorola-harpia.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-e5.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-idp2.dtb' not remade because of errors.
+make: Target 'qcom/msm8939-sony-xperia-kanuti-tulip.dtb' not remade because of errors.
+make: Target 'qcom/ipq8074-hk01.dtb' not remade because of errors.
+make: Target 'qcom/sm8150-mtp.dtb' not remade because of errors.
+make: Target 'qcom/ipq9574-rdp433.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-sony-xperia-tama-apollo.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-lenovo-miix-630.dtb' not remade because of errors.
+make: Target 'qcom/msm8994-sony-xperia-kitakami-karin.dtb' not remade because of errors.
+make: Target 'qcom/sdm630-sony-xperia-nile-pioneer.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-grandmax.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-alcatel-idol347.dtb' not remade because of errors.
+make: Target 'qcom/ipq9574-rdp453.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-acer-aspire1.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-r1.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-e7.dtb' not remade because of errors.
+make: Target 'qcom/ipq5018-rdp432-c2.dtb' not remade because of errors.
+make: Target 'qcom/apq8016-schneider-hmibsc.dtb' not remade because of errors.
+make: Target 'qcom/qrb4210-rb2.dtb' not remade because of errors.
+make: Target 'qcom/ipq5018-tplink-archer-ax55-v1.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-evoker.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-kingoftown.dtb' not remade because of errors.
+make: Target 'qcom/sm4450-qrd.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-j5.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-asus-novago-tp370ql.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pompom-r2-lte.dtb' not remade because of errors.
+make: Target 'qcom/msm8992-lg-h815.dtb' not remade because of errors.
+make: Target 'qcom/sdx75-idp.dtb' not remade because of errors.
+make: Target 'qcom/sm8350-sony-xperia-sagami-pdx215.dtb' not remade because of errors.
+make: Target 'qcom/apq8096-db820c.dtb' not remade because of errors.
+make: Target 'qcom/msm8996-sony-xperia-tone-keyaki.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-longcheer-l8150.dtb' not remade because of errors.
+make: Target 'qcom/msm8994-sony-xperia-kitakami-suzuran.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-mtp.dtb' not remade because of errors.
+make: Target 'qcom/sm6375-sony-xperia-murray-pdx225.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-yiming-uz801v3.dtb' not remade because of errors.
+make: Target 'qcom/qcs9100-ride-r3.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-hp-omnibook-x14.dtb' not remade because of errors.
+make: Target 'qcom/msm8953-xiaomi-vince.dtb' not remade because of errors.
+make: Target 'qcom/ipq5332-rdp441.dtb' not remade because of errors.
+make: Target 'qcom/msm8992-lg-bullhead-rev-101.dtb' not remade because of errors.
+make: Target 'qcom/msm8917-xiaomi-riva.dtb' not remade because of errors.
+make: Target 'qcom/msm8996-xiaomi-gemini.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-limozeen-r9.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-sony-xperia-yoshino-lilac.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-gprimeltecan.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pazquel360-lte.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-shift-axolotl.dtb' not remade because of errors.
+make: Target 'qcom/msm8996-oneplus3t.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-zombie-lte.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r3.dtb' not remade because of errors.
+make: Target 'qcom/sar2130p-qar2130p.dtb' not remade because of errors.
+make: Target 'qcom/sm8650-hdk.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-herobrine-r1.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-longcheer-l8910.dtb' not remade because of errors.
+make: Target 'qcom/sdm630-sony-xperia-nile-voyager.dtb' not remade because of errors.
+make: Target 'qcom/sm8450-hdk.dtb' not remade because of errors.
+make: Target 'qcom/msm8929-wingtech-wt82918hd.dtb' not remade because of errors.
+make: Target 'qcom/sm8250-sony-xperia-edo-pdx203.dtb' not remade because of errors.
+make: Target 'qcom/sm8350-hdk.dtb' not remade because of errors.
+make: Target 'qcom/ipq8074-hk10-c1.dtb' not remade because of errors.
+make: Target 'qcom/sm8450-qrd.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-lg-c50.dtb' not remade because of errors.
+make: Target 'qcom/sm8250-sony-xperia-edo-pdx206.dtb' not remade because of errors.
+make: Target 'qcom/sm7225-fairphone-fp4.dtb' not remade because of errors.
+make: Target 'qcom/sa8155p-adp.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-qcp.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r1-kb.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-grandprimelte.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-zombie-nvme-lte.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-homestar-r3.dtb' not remade because of errors.
+make: Target 'qcom/ipq5332-rdp474.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-asus-vivobook-s15.dtb' not remade because of errors.
+make: Target 'qcom/sm8150-microsoft-surface-duo.dtb' not remade because of errors.
+make: Target 'qcom/msm8996pro-xiaomi-scorpio.dtb' not remade because of errors.
+make: Target 'qcom/x1e78100-lenovo-thinkpad-t14s.dtb' not remade because of errors.
+make: Target 'qcom/sm8150-hdk.dtb' not remade because of errors.
+make: Target 'qcom/sc8180x-primus.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r10-lte.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-j5x.dtb' not remade because of errors.
+make: Target 'qcom/x1p42100-asus-zenbook-a14.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-idp.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-mtp.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-hp-elitebook-ultra-g1q.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-limozeen-r10.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-zombie-nvme.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-microsoft-romulus15.dtb' not remade because of errors.
+make: Target 'qcom/qru1000-idp.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-hp-envy-x2.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-boe-rt5682s.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pazquel-parade.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r9-kb.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-boe.dtb' not remade because of errors.
+make: Target 'qcom/qcs615-ride.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-coachz-r3-lte.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-crd-r3.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-gt58.dtb' not remade because of errors.
+make: Target 'qcom/sa8775p-ride-r3.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-villager-r1.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pazquel-ti.dtb' not remade because of errors.
+make: Target 'qcom/qcm6490-shift-otter.dtb' not remade because of errors.
+make: Target 'qcom/qcs8300-ride.dtb' not remade because of errors.
+make: Target 'qcom/apq8016-sbc.dtb' not remade because of errors.
+make: Target 'qcom/msm8996pro-xiaomi-natrium.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-samsung-starqltechn.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pompom-r1-lte.dtb' not remade because of errors.
+make: Target 'qcom/msm8953-xiaomi-tissot.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r9.dtb' not remade because of errors.
+make: Target 'qcom/sm6125-xiaomi-laurel-sprout.dtb' not remade because of errors.
+make: Target 'qcom/msm8994-sony-xperia-kitakami-sumire.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-serranove.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-coachz-r3.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-sony-xperia-tama-akatsuki.dtb' not remade because of errors.
+make: Target 'qcom/ipq9574-rdp449.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-r1-lte.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-lg-m216.dtb' not remade because of errors.
+make: Target 'qcom/lemans-evk.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-crd.dtb' not remade because of errors.
+make: Target 'qcom/apq8094-sony-xperia-kitakami-karin_windy.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r9-lte.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pazquel-lte-ti.dtb' not remade because of errors.
+make: Target 'qcom/msm8996-sony-xperia-tone-dora.dtb' not remade because of errors.
+make: Target 'qcom/sa8295p-adp.dtb' not remade because of errors.
+make: Target 'qcom/msm8994-sony-xperia-kitakami-ivy.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-xiaomi-beryllium-ebbg.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pompom-r3.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-oneplus-dumpling.dtb' not remade because of errors.
+make: Target 'qcom/sm8650-mtp.dtb' not remade because of errors.
+make: Target 'qcom/msm8996-oneplus3.dtb' not remade because of errors.
+make: Target 'qcom/sm8550-hdk.dtb' not remade because of errors.
+make: Target 'qcom/x1e80100-microsoft-romulus13.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r1-lte.dtb' not remade because of errors.
+make: Target 'qcom/msm8939-samsung-a7.dtb' not remade because of errors.
+make: Target 'qcom/qcm6490-fairphone-fp5.dtb' not remade because of errors.
+make: Target 'qcom/sc8280xp-huawei-gaokun3.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-wormdingler-rev1-inx-rt5682s.dtb' not remade because of errors.
+make: Target 'qcom/msm8953-xiaomi-mido.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-asus-z00l.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pompom-r2.dtb' not remade because of errors.
+make: Target 'qcom/sm6350-sony-xperia-lena-pdx213.dtb' not remade because of errors.
+make: Target 'qcom/sdm632-fairphone-fp3.dtb' not remade because of errors.
+make: Target 'qcom/msm8953-motorola-potter.dtb' not remade because of errors.
+make: Target 'qcom/sda660-inforce-ifc6560.dtb' not remade because of errors.
+make: Target 'qcom/sm8150-sony-xperia-kumano-bahamut.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pazquel-lte-parade.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-homestar-r2.dtb' not remade because of errors.
+make: Target 'qcom/sm8250-hdk.dtb' not remade because of errors.
+make: Target 'qcom/sm8650-qrd.dtb' not remade because of errors.
+make: Target 'qcom/sc8280xp-microsoft-blackrock.dtb' not remade because of errors.
+make: Target 'qcom/ipq8074-hk10-c2.dtb' not remade because of errors.
+make: Target 'qcom/msm8953-xiaomi-daisy.dtb' not remade because of errors.
+make: Target 'qcom/sc8280xp-crd.dtb' not remade because of errors.
+make: Target 'qcom/sdm850-samsung-w737.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r5.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-samsung-gt510.dtb' not remade because of errors.
+make: Target 'qcom/sdm850-lenovo-yoga-c630.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-thwc-uf896.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r10-kb.dtb' not remade because of errors.
+make: Target 'qcom/msm8994-sony-xperia-kitakami-satsuki.dtb' not remade because of errors.
+make: Target 'qcom/sdm632-motorola-ocean.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-villager-r1-lte.dtb' not remade because of errors.
+make: Target 'qcom/sm6115-fxtec-pro1x.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pompom-r3-lte.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-sony-xperia-yoshino-poplar.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-huawei-g7.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-wingtech-wt86518.dtb' not remade because of errors.
+make: Target 'qcom/sm8350-sony-xperia-sagami-pdx214.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-wingtech-wt86528.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-db845c.dtb' not remade because of errors.
+make: Target 'qcom/sa8540p-ride.dtb' not remade because of errors.
+make: Target 'qcom/msm8939-longcheer-l9100.dtb' not remade because of errors.
+make: Target 'qcom/qdu1000-idp.dtb' not remade because of errors.
+make: Target 'qcom/sm8550-samsung-q5q.dtb' not remade because of errors.
+make: Target 'qcom/msm8992-msft-lumia-octagon-talkman.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-gplus-fl8005a.dtb' not remade because of errors.
+make: Target 'qcom/sm8350-mtp.dtb' not remade because of errors.
+make: Target 'qcom/msm8956-sony-xperia-loire-kugo.dtb' not remade because of errors.
+make: Target 'qcom/msm8976-longcheer-l9360.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-r1.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-pompom-r1.dtb' not remade because of errors.
+make: Target 'qcom/msm8998-oneplus-cheeseburger.dtb' not remade because of errors.
+make: Target 'qcom/sc7280-herobrine-villager-r0.dtb' not remade because of errors.
+make: Target 'qcom/sm8750-qrd.dtb' not remade because of errors.
+make: Target 'qcom/sm4250-oneplus-billie2.dtb' not remade because of errors.
+make: Target 'qcom/sdm636-sony-xperia-ganges-mermaid.dtb' not remade because of errors.
+make: Target 'qcom/qcs404-evb-1000.dtb' not remade because of errors.
+make: Target 'qcom/ipq5332-rdp442.dtb' not remade because of errors.
+make: Target 'qcom/msm8994-msft-lumia-octagon-cityman.dtb' not remade because of errors.
+make: Target 'qcom/msm8916-acer-a1-724.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-xiaomi-beryllium-tianma.dtb' not remade because of errors.
+make: Target 'qcom/sm6125-sony-xperia-seine-pdx201.dtb' not remade because of errors.
+make: Target 'qcom/sdm845-xiaomi-polaris.dtb' not remade because of errors.
+make: Target 'qcom/ipq9574-rdp418.dtb' not remade because of errors.
+make: Target 'qcom/msm8216-samsung-fortuna3g.dtb' not remade because of errors.
+make: Target 'qcom/sm8450-sony-xperia-nagara-pdx223.dtb' not remade because of errors.
+make: Target 'qcom/sm8450-sony-xperia-nagara-pdx224.dtb' not remade because of errors.
+make: Target 'qcom/sm7125-xiaomi-joyeuse.dtb' not remade because of errors.
+make: Target 'qcom/msm8994-huawei-angler-rev-101.dtb' not remade because of errors.
+make: Target 'qcom/ipq5332-rdp468.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-lazor-limozeen-nots-r10.dtb' not remade because of errors.
+make: Target 'qcom/sc7180-trogdor-quackingstick-r0-lte.dtb' not remade because of errors.
 
---w4agiwtkcjwsgz6j
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
 
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaLcyPgAKCRAnX84Zoj2+
-doX0AX93Q4zANj52tF9dUYikkKhfOnVgebYAQL9Lxom3OCpl8W6kZ2Ik+VcbTiyU
-1tDN4eoBgIeHZ7m/7ekMpxpStDQ1y4lq8smmLkNZ3KMveJKiM0MD3WjPNuxmmLEZ
-63+ZOyFlqA==
-=5/yk
------END PGP SIGNATURE-----
 
---w4agiwtkcjwsgz6j--
+
 
