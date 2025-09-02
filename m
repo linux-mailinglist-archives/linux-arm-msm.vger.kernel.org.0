@@ -1,88 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-71649-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71650-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 55B3EB40879
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 17:06:17 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A558FB408A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 17:12:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E81573B0DE1
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:06:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 617F43A49DA
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  2 Sep 2025 15:12:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0A9F312821;
-	Tue,  2 Sep 2025 15:06:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A3FB03148D5;
+	Tue,  2 Sep 2025 15:12:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YdC/jkh8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fha+upIT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CECDB2EDD6B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  2 Sep 2025 15:06:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55EF5279DDD;
+	Tue,  2 Sep 2025 15:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756825572; cv=none; b=bv6/EPUmkLhfWVbRIdmGUDV2myveWNg37TrN+MgMdG8wWWLJ7bjxoV0xRBYimOr/1XXySmcdNk92kPfRYAQdq8pXFfbRrucZCRhucg/uO++tEYTEFygtrwkSKL/Dywzbjm/l9c08mQ6YTxeyYvNWG5PeH8ZxU8BqtUojx2ZfPt4=
+	t=1756825958; cv=none; b=Ptvdn4z4sQPZiX2tp1Ei8QeYtQWL1jG4SVt+DvAWX6GAnHL4Nr/f3xr5EYnethHE0ia/u1dO3oTarYTXDmfdNtiO7Hy/XbtmgEEVgUeFIAoeVV716F5WWsQ4R0G/jpAw+8X/Xwelq8G4YJ1CnSjdtsgdH40iFLowVBMW4z7WpV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756825572; c=relaxed/simple;
-	bh=l3BLA3/dBJVYy/VCCZYs268vZUNYued4TlQKRzoOoN8=;
+	s=arc-20240116; t=1756825958; c=relaxed/simple;
+	bh=Qm0MENDGoBpJreb7usssnkk4Erhkc9mDyI1kYmenU/k=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=So4Js4CqGn6fDm4uK/gFNBhzKTHi8k0FHqRCwkT/BWw0Ej1KIeTiZlZTXomAG8hFeRiWnI8KgY/9G+INlCC7RVQNDROWMWzZnGhKMR/pMcpH1NbCftb5HsvfIZtC0lubRw+IZLAAG6i69B8R4sW1frUFBkJy643WmcnZEdVWoxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YdC/jkh8; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqFeo032378
-	for <linux-arm-msm@vger.kernel.org>; Tue, 2 Sep 2025 15:06:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	r1SOQ46E/29ii7NOe0dMseenbNXVTPfB9cR3qwZszXE=; b=YdC/jkh8xvXAp9wu
-	CKDzkCFExpg00v8hlSfM2NnTxpUffrIb2CxhRu/Tp85TV98nCHfTT5zxx/ak2dr8
-	fmVm06mpEff/tLeEc60kwVpX4rna7EewkYbwzUWPFW2Ml2zpwAy+2Sp1aYyaP5cI
-	u+fFVUPHVRNTs3LsMttiNcXZkb/cM4ys5KQZJI9Pd9yPt7Pp9uDWFQ0dpDbosjDN
-	kZq16JV+eU0p8GZeZIs+2B7HCHO3M/mLWSgCaCRJYdp4xbSkvnfjYGpYDi2Mg+SP
-	swQ9VBJ3zpK3VkPXM/qRpoZIEJ5zpTkZYBQpCvGBRTgNRd36hiCDNrV0iBAi9hf4
-	3X2pYg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8r6kw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 15:06:09 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-32b51b26802so130268a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 08:06:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756825568; x=1757430368;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r1SOQ46E/29ii7NOe0dMseenbNXVTPfB9cR3qwZszXE=;
-        b=vN1hStswmrmdWs7c+I9C7gns8wXDDc07KFK74HgOHczFYAiSh+d0d2eELSAlmxmnd4
-         LgbMFy9/HJiwl86mQtGcJYdEud/g6lT+lQx5uaqwLvG5goXQ+poC9QJQVwh7vzZnfFXd
-         lKplMDACK77Yltj48iWVTF5stOeqoHQ8pDchLjvgIbzFCLr+CTx6o2Qq/RjOjiSGcoNR
-         JythK4XxNhyucW6k8y0Tcb6XNzDlZDjrE2n+I4Io47CT1mv8D5HTyE5CNc9JeVHxqbQx
-         AgVLjZUpso+FmFBKZ84qXS3mAffTmS+r4q3Ni8eGfu/OEzyeeJNhcdV4KSPhT/NVKTUQ
-         Kc7A==
-X-Forwarded-Encrypted: i=1; AJvYcCU5PdNCxDiLI3bq5wN7pCyfsuDb3DWk6HDjXSH1MaFCXrDIdoLafIvv4IN1mFNBXu7gCvO4qE6L2tbG5w02@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfTlG2fXyNZaymX5rBAUH3lkiD/l0l0mQnJS5Z0LnKndb6CUH/
-	a8+ASWUYgQEITAnRnf+ghVGqPTU0IilpMCM0MO2XWHAYFn19jJCyLQ0TW9FAdR76Ghc2EKtmYOA
-	BYuvdla1WCivH1MkRZgbu5pp7Stf6HAn/pS7DHU/ny4+EIqI0lr9GYO9z6+kSYozgY+7w
-X-Gm-Gg: ASbGncu1/dRJGtpQxP/DLIo1eoZZR0iNIO0T+NUuPoM10/B+v8CN7hW8ESX5oNswSFQ
-	qi2t8RrT7JF9S2HWFf1Wwx4g605wR4aW2dsgNv1CnFBmXZvbKGqWBqQ/ApKAXQeoMJzepsJswyq
-	XnuCGmoEMxT2pwFXBUSjYzJa3Z7nZOpLZKwLhX+M0W0geX8uQBO9E3fw5ZczxKR07+QB69XAghY
-	niIqeSa3n/5HUMa6yDamarkdA94xL4GHN0JcthIV/vBhRGp56bkVywbGTIcXP2PoojQS/o65hbC
-	RNKu7ACkzM95PQ5SFlaZAAoNLkhEYr8Gi/8cEWEOSJq18tGRl07estB60Ci1oi40p7k6N1MbuzN
-	ySvB48A==
-X-Received: by 2002:a17:90b:3fc3:b0:325:1548:f0f with SMTP id 98e67ed59e1d1-32815452baamr14929685a91.14.1756825568022;
-        Tue, 02 Sep 2025 08:06:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFJe+SAiP+/Rz1UolPPoJ/b1VYRXTQmZzDKLHgwcUU5CG0sTmKazqPtSbReEIm7ZQdOuOTLLw==
-X-Received: by 2002:a17:90b:3fc3:b0:325:1548:f0f with SMTP id 98e67ed59e1d1-32815452baamr14929597a91.14.1756825567148;
-        Tue, 02 Sep 2025 08:06:07 -0700 (PDT)
-Received: from [10.74.205.70] ([27.61.53.99])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327d9347189sm14704647a91.9.2025.09.02.08.05.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Sep 2025 08:06:06 -0700 (PDT)
-Message-ID: <cd5d26a6-cf60-48b4-8c52-d7eae531e9c0@oss.qualcomm.com>
-Date: Tue, 2 Sep 2025 20:35:53 +0530
+	 In-Reply-To:Content-Type; b=fnVME+YCRqmN9/6VQiCXCg2/43LkAZbCdrolclxuurwliIcPlUX68uPQp0qMZAo8nbvK9BRQ/Dz3wT8m/lQpwVgnl7B16ZTK/ufYJi6+JBXTcLQInZqvfjjeWj78WYE95xyF/+K7v3ngCGX2egeJnIHfqg/02gQAYEgN54C8IXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fha+upIT; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB76CC4CEED;
+	Tue,  2 Sep 2025 15:12:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756825957;
+	bh=Qm0MENDGoBpJreb7usssnkk4Erhkc9mDyI1kYmenU/k=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fha+upITUjR1W0/UPbGo5pqDEYYHq2VFch/hzfP45Cc4DUFZMu/U1HZBKmEZDtzCu
+	 iBDx0UtAvG1Se/1xc+9eCfwZyjV/3B8QlHOzcSsDpxMRslOobnPh84NMMkD/x0Dv/g
+	 xRaeCkokcz/HiStL81OWybnmfeke8xbUFORD+3qh2QF881mhkN4aMXU+IZJA96/1Sp
+	 GT7K7ZaoP9kdQDHPvQM6s9ZrnoBcNhmkS02rGDVOVe7xI1V4vOYoP+D+XPHVNyGzze
+	 eB8+jAUjKEOBQZvHIRChGOBN8u5j/+qtdlLin+slLI13vbKI95OGhjjit3j4/QyXxt
+	 xBDYlmqE/1jCA==
+Message-ID: <1034c70a-da67-4914-b23c-8d006b7611bf@kernel.org>
+Date: Tue, 2 Sep 2025 17:12:24 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,231 +50,116 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v14 00/10] Implement vendor resets for PSCI SYSTEM_RESET2
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>,
-        Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Souvik Chakravarty <Souvik.Chakravarty@arm.com>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Andy Yan <andy.yan@rock-chips.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>, Konrad Dybcio <konradybcio@kernel.org>,
-        cros-qcom-dts-watchers@chromium.org, Vinod Koul <vkoul@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>,
-        Florian Fainelli <florian.fainelli@broadcom.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andre Draszik
- <andre.draszik@linaro.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        Elliot Berman <quic_eberman@quicinc.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Elliot Berman <elliot.berman@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250815-arm-psci-system_reset2-vendor-reboots-v14-0-37d29f59ac9a@oss.qualcomm.com>
- <b08aa8f4-7283-40d5-9f5e-ed8697f882a9@oss.qualcomm.com>
- <7941da77-06bb-a2d3-c2fa-ad2fba54b4a1@oss.qualcomm.com>
+Subject: Re: [PATCH v7 12/16] pinctrl: qcom: use generic pin function helpers
+To: Andy Shevchenko <andriy.shevchenko@intel.com>,
+ Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Linus Walleij <linus.walleij@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Alexey Klimov <alexey.klimov@linaro.org>,
+ Lorenzo Bianconi <lorenzo@kernel.org>, Sean Wang <sean.wang@kernel.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>,
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+ Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
+ Andy Shevchenko <andy@kernel.org>, Andrew Morton
+ <akpm@linux-foundation.org>, David Hildenbrand <david@redhat.com>,
+ Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+ "Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka
+ <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
+ Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>,
+ Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>,
+ Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ NXP S32 Linux Team <s32@nxp.com>, Sascha Hauer <s.hauer@pengutronix.de>,
+ Tony Lindgren <tony@atomide.com>, Haojian Zhuang
+ <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ "Rafael J. Wysocki" <rafael@kernel.org>, Danilo Krummrich <dakr@kernel.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Mark Brown <broonie@kernel.org>,
+ linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mediatek@lists.infradead.org,
+ linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+ linux-hardening@vger.kernel.org, linux-mm@kvack.org, imx@lists.linux.dev,
+ linux-omap@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+References: <20250902-pinctrl-gpio-pinfuncs-v7-0-bb091daedc52@linaro.org>
+ <20250902-pinctrl-gpio-pinfuncs-v7-12-bb091daedc52@linaro.org>
+ <aLbt2euqYQM5xXuZ@smile.fi.intel.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>
-In-Reply-To: <7941da77-06bb-a2d3-c2fa-ad2fba54b4a1@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: BDNZmax8MFM30lXkwzDbQvO1N8aAFjuO
-X-Proofpoint-GUID: BDNZmax8MFM30lXkwzDbQvO1N8aAFjuO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfX+RSECE0Uaibd
- HK/xbGbXW1t/I8TUbCqtucSS9TNnT8ZHYjpQakPO2XUK3cAYWVGtBms3Ss+eUIgpCaqffy3RXB6
- CeTD5xWC0M45tnPorjE/o1KjckITP+rqBa14JjejM7DofqGHn0xcP74Eb282z2tTqSes4JzYd50
- qJJiUhFA7O84pG1jnPEONXr14Pob0M/zgh/BevehlhLPP1HOHH6UK1ChI6vFKV9RFnO+OyloJJI
- zwVb/PrNmV1UNiQeIDdD6pmQjpX1UvVW83p95wro2AOTzeYuxqfxK7qrp20AEzOZDonVn8qcQ1L
- PmqvBdrbRyIGMzv+jA7KeAvz5bTK0FBi+UIhKw0IgRhjHzYFAklsTWYVnHCNkKQw9mZt+/LsiZ/
- YdrmNuSc
-X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b707e1 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fw+wMC9hJO9cSnC0spttlA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=FYkGx2FOHYfMPCDhCJAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-02_05,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aLbt2euqYQM5xXuZ@smile.fi.intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-
-On 9/2/2025 6:40 PM, Shivendra Pratap wrote:
->
-> On 8/28/2025 1:35 PM, Kathiravan Thirumoorthy wrote:
->> On 8/15/2025 8:05 PM, Shivendra Pratap wrote:
->>> The PSCI SYSTEM_RESET2 call allows vendor firmware to define
->>> additional reset types which could be mapped to the reboot
->>> argument.
->>>
->>> User-space should be able to reboot a device into different
->>> operational boot-states supported by underlying bootloader and
->>> firmware. Generally, some HW registers need to be written, based
->>> on which the bootloader and firmware decide the next boot state
->>> of device, after the reset. For example, a requirement on
->>> Qualcomm platforms may state that reboot with "bootloader"
->>> command, should reboot the device into bootloader flashing mode
->>> and reboot with “edl” command, should reboot the device into an
->>> Emergency flashing mode.  Setting up such reboots on Qualcomm
->>> devices can be inconsistent across SoC platforms and may require
->>> setting different HW registers, where some of these registers may
->>> not be accessible to HLOS. These knobs evolve over product
->>> generations and require more drivers.  PSCI defines a
->>> vendor-specific reset in SYSTEM_RESET2 spec, which enables the
->>> firmware to take care of underlying setting for any such
->>> supported vendor-specific reboot. Qualcomm firmwares are
->>> beginning to support and expose PSCI SYSTEM_RESET2
->>> vendor-specific reset types to simplify driver requirements from
->>> Linux. With such support added in the firmware, we now need a
->>> Linux interface which can make use of the firmware calls for PSCI
->>> vendor-specific resets. This will align such reboot requirement
->>> across platforms and vendors.
->>>
->>> The current psci driver supports two types of resets –
->>> SYSTEM_RESET2 Arch warm-reset and SYSTEM_RESET cold-reset. The
->>> patchset introduces the PSCI SYSTEM_RESET2 vendor-specific reset
->>> into the reset path of the psci driver and aligns it to work with
->>> reboot system call - LINUX_REBOOT_CMD_RESTART2, when used along
->>> with a supported string-based command in “*arg”.
->>>
->>> The patchset uses reboot-mode based commands, to define the
->>> supported vendor reset-types commands in psci device tree node
->>> and registers these commands with the reboot-mode framework.
->>>
->>> The PSCI vendor-specific reset takes two arguments, being,
->>> reset_type and cookie as defined by the spec. To accommodate this
->>> requirement, enhance the reboot-mode framework to support two
->>> 32-bit arguments by switching to 64-bit magic values.
->>>
->>> Along this line, the patchset also extends the reboot-mode
->>> framework to add a non-device-based registration function, which
->>> will allow drivers to register using device tree node, while
->>> keeping backward compatibility for existing users of reboot-mode.
->>> This will enable psci driver to register for reboot-mode and
->>> implement a write function, which will save the magic and then
->>> use it in psci reset path to make a vendor-specific reset call
->>> into the firmware. In addition, the patchset will expose a sysfs
->>> entry interface within reboot-mode which can be used by userspace
->>> to view the supported reboot-mode commands.
->>>
->>> The list of vendor-specific reset commands remains open due to
->>> divergent requirements across vendors, but this can be
->>> streamlined and standardized through dedicated device tree
->>> bindings.
->>>
->>> Currently three drivers register with reboot-mode framework -
->>> syscon-reboot-mode, nvmem-reboot-mode and qcom-pon. Consolidated
->>> list of commands currently added across various vendor DTs:
->>>    mode-loader
->>>    mode-normal
->>>    mode-bootloader
->>>    mode-charge
->>>    mode-fastboot
->>>    mode-reboot-ab-update
->>>    mode-recovery
->>>    mode-rescue
->>>    mode-shutdown-thermal
->>>    mode-shutdown-thermal-battery
->>>
->>> On gs101 we also pass kernel-generated modes from kernel_restart()
->>> or panic(), specifically DM verity's 'dm-verity device corrupted':
->>>      mode-dm-verity-device-corrupted = <0x50>;
->>>
->>> - thanks Andre' for providing this.
->>>
->>> Detailed list of commands being used by syscon-reboot-mode:
->>>       arm64/boot/dts/exynos/exynosautov9.dtsi:
->>>      mode-bootloader = <EXYNOSAUTOV9_BOOT_BOOTLOADER>;
->>>      mode-fastboot = <EXYNOSAUTOV9_BOOT_FASTBOOT>;
->>>      mode-recovery = <EXYNOSAUTOV9_BOOT_RECOVERY>;
->>>
->>>       arm64/boot/dts/exynos/google/gs101.dtsi:
->>>           mode-bootloader = <0xfc>;
->>>           mode-charge = <0x0a>;
->>>           mode-fastboot = <0xfa>;
->>>           mode-reboot-ab-update = <0x52>;
->>>           mode-recovery = <0xff>;
->>>           mode-rescue = <0xf9>;
->>>           mode-shutdown-thermal = <0x51>;
->>>           mode-shutdown-thermal-battery = <0x51>;
->>>
->>>       arm64/boot/dts/hisilicon/hi3660-hikey960.dts:
->>>           mode-normal = <0x77665501>;
->>>           mode-bootloader = <0x77665500>;
->>>           mode-recovery = <0x77665502>;
->>>
->>>       arm64/boot/dts/hisilicon/hi6220-hikey.dts:
->>>           mode-normal = <0x77665501>;
->>>           mode-bootloader = <0x77665500>;
->>>           mode-recovery = <0x77665502>;
->>>
->>>       arm64/boot/dts/rockchip/px30.dtsi:
->>>           mode-bootloader = <BOOT_BL_DOWNLOAD>;
->>>           mode-fastboot = <BOOT_FASTBOOT>;
->>>           mode-loader = <BOOT_BL_DOWNLOAD>;
->>>           mode-normal = <BOOT_NORMAL>;
->>>           mode-recovery = <BOOT_RECOVERY>;
->>>
->>>       arm64/boot/dts/rockchip/rk3308.dtsi:
->>>           mode-bootloader = <BOOT_BL_DOWNLOAD>;
->>>           mode-loader = <BOOT_BL_DOWNLOAD>;
->>>           mode-normal = <BOOT_NORMAL>;
->>>           mode-recovery = <BOOT_RECOVERY>;
->>>           mode-fastboot = <BOOT_FASTBOOT>;
->>>
->>>       arm64/boot/dts/rockchip/rk3566-lckfb-tspi.dts:
->>>           mode-normal = <BOOT_NORMAL>;
->>>           mode-loader = <BOOT_BL_DOWNLOAD>;
->>>              mode-recovery = <BOOT_RECOVERY>;
->>>              mode-bootloader = <BOOT_FASTBOOT>;
->>>
->>> Detailed list of commands being used by nvmem-reboot-mode:
->>>       arm64/boot/dts/qcom/pmXXXX.dtsi:(multiple qcom DTs)
->>>              mode-recovery = <0x01>;
->>>              mode-bootloader = <0x02>;
->>>
->>> Previous discussions around SYSTEM_RESET2:
->>> -https://lore.kernel.org/lkml/20230724223057.1208122-2-quic_eberman@quicinc.com/T/
->>> -https://lore.kernel.org/all/4a679542-b48d-7e11-f33a-63535a5c68cb@quicinc.com/
->>>
->>> Signed-off-by: Elliot Berman<quic_eberman@quicinc.com>
->>> Signed-off-by: Shivendra Pratap<shivendra.pratap@oss.qualcomm.com>
+On 02/09/2025 15:15, Andy Shevchenko wrote:
+> On Tue, Sep 02, 2025 at 01:59:21PM +0200, Bartosz Golaszewski wrote:
 >>
->> With this series, 'edl' mode is working fine in QCOM's IPQ5424 SoC. So
->>
->> Tested-by: Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com> # IPQ5424-RDP466
->>
-> Thanks for giving time for testing this series for IPQ5424. So we have PSCI SYS reset2 support for
-> IPQ5424 firmware?
+>> With the pinmux core no longer duplicating memory used to store the
+>> struct pinfunction objects in .rodata, we can now use the existing
+>> infrastructure for storing and looking up pin functions in qualcomm
+>> drivers. Remove hand-crafted callbacks.
+> 
+> ...
+> 
+>> +	for (i = 0; i < soc_data->nfunctions; i++) {
+>> +		func = &soc_data->functions[i];
+>> +
+>> +		ret = pinmux_generic_add_pinfunction(pctrl->pctrl, func, NULL);
+>> +		if (ret < 0)
+> 
+> Why not simply
+> 
+> 		if (ret)
 
 
-Yeah, the latest IPQ5424 firmware (To be specific - 
-TZ.WIN_WC.1.0-00043-IPQ5424MAPAANAZT-1 onwards) supports PSCI SYS RESET2.
+Because existing code is as readable? This is just some serious
+nitpicking which is not actually helping at all at v7.
 
+Best regards,
+Krzysztof
 
-> and did we make any extra changes in DT for edl mode?
-
-
-Yes, I submitted the DTS patch[1] for this similar to the other platforms.
-
-[1] [PATCH] arm64: dts: qcom: ipq5424: Add support for emergency 
-download mode - Kathiravan Thirumoorthy 
-<https://lore.kernel.org/linux-arm-msm/20250828-ipq5424-edl-v1-1-d6a403800023@oss.qualcomm.com/>.
-
-
->
-> thanks,
-> Shivendra
 
