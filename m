@@ -1,166 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-71864-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADA58B420A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 15:14:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7EAEDB420C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 15:18:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 00D6958047D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:14:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4BC601BC0970
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:18:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6BC86301032;
-	Wed,  3 Sep 2025 13:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1225D2DA774;
+	Wed,  3 Sep 2025 13:18:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mrPTe9PE"
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="qwZaEznn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB74301013
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 13:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C021A0BF1
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 13:17:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756905061; cv=none; b=iDy+yGWsmle5h/wbiSOmErSKDnAKvfn79MbbJcfr+xl6xSr7LzH4uUXU26ksv9lKNaHuVUX4qjQIRusMp9MR5fzsopBF7A3v6HMdgGaSb+dQm4BYhGRsMmWnuc1US838jZ/jfqMHBdsqu0IVPpcs0QpaIIPeKm8EGSBkLLvRbrg=
+	t=1756905480; cv=none; b=Z0B2bMgjnhV3ujpSLi4ekLNrROhhiULujdIplh8xzG9QptCTZ/t1WpylbJEoKK5xixyEQvGOsniC5wUM/4Pd1UyLo1ChIh9A7++VRlXIE0NAT4KFyVHvEdMkLd1B3SUlmaTtMhd8TlEinAVwEXjF7tcAv61+R4euxNlRRqw8CEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756905061; c=relaxed/simple;
-	bh=W4WCBxQvaUYibDVSr+aUaJpoOgC+JIgx9GXzLqZgHeg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C/aXTysSUeqXvs/iwOZVa4fmGTXDX+hQq028rmQs+LuijAUYOh64lx1KVbLjCoZcSLE4KK9iDEyLBmkkq8bcjL99SxBp+aBhqRiggOUsR6n9g5ChC0Q/HrWEP86rFg0Jn+x9utpjg8F0KbIzj2ohJaDMz0ZuVNFQmVlXT97wbhg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mrPTe9PE; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583BF5Ho002391
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 13:10:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aY1HJAFmHMKDRbWr8GRd/t9G74v0xkZNHeYMb6/rGks=; b=mrPTe9PEaGy6DzLS
-	9fSmuqz9PMF9rTCLTiGZvaaDz7w8eC3xYRiw082XJV6Z8hgbqtm3iyLPYpj5jbAB
-	+jBryTIJF0X6NXQxDyIqCwSVbjYfnlbS/HTO7iGskh4ExGNbESoeaa375AHCrwNR
-	R+bPCxAlD1oF6BBpGGC0R7DwLK6/5r9+qeXMrkg4YqBsdXgijQehkyVEPLM3GeHr
-	RAj8nke/okN1tZJxcyxjydYBwNlFvLkcURlgn/4aYpYDUgzPhi7wGbNwsuGhp8DC
-	Aezt6w6kxgxe5Zl5JWeMdLbiSfJYHv6zKdFniEoSUdPdUflCXu+FsSPipJb0ignV
-	CAu0NQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ush33mu8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 13:10:58 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b307e1bef2so17590491cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 06:10:58 -0700 (PDT)
+	s=arc-20240116; t=1756905480; c=relaxed/simple;
+	bh=o2R6EH8vVq8X64twREcl5yX+6UbYAOvw2Vop10923lI=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=W0NdqcMeveFRwinfI7ft6bUaAOix64Zd/3uSwJEZ0a30+i76LiRQeRQp/3ZW/Vr8DmKJrY848yRsxcxw3AEVnv94otI105ks3kTCQyp86stn3ZFhXyeE/emibMYeH5WMFbej3sgdpIGMjKDodc9zhVe+ce20hv/0bIKGoRZcjD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=qwZaEznn; arc=none smtp.client-ip=209.85.160.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
+Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-4b3289ed834so39514391cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 06:17:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1756905477; x=1757510277; darn=vger.kernel.org;
+        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+         :from:subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VvvntKQFWg167uBf7XgNWPpBloVxjgYOfN9r2LJ5PDA=;
+        b=qwZaEznnPmy22VcZrNaQ6y4LCsddK50qDoA23YX9JKNdAQUijrLw+JvpcEng7YXnF2
+         NwWoZkcZg7p3+Fg7ISTzyLlYhfdtLpo7+dfhH+uOoUOhjcFJiUc2BRIUfGoLdB87xisu
+         vRnapFeFVcCr4P+eYV8gOF8lrME0fvLUTsEI1xo8SRxH7J+wn1VbXcXI2OBNILfbD390
+         SCReF+POScrtv5LmUlGylVX5RJCSxhY76EPp+0evwLt6lTK8PxR+cb2GLZqMPJsOYakS
+         u6VKYAA/0n7eaZArumviZi7ygIgvNIYqhWEX/7sralHv7x54rlKI6WjfF81jND6sfv2a
+         +aNQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756905057; x=1757509857;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aY1HJAFmHMKDRbWr8GRd/t9G74v0xkZNHeYMb6/rGks=;
-        b=L116uSPtDJpEF8ndX40AuVPmatFfs6MGPxP4C3R/GvqXgahKArHcN7AjL479wf+7N2
-         UD0stMnCYttjBAFY83DMNDZH5PZj5cD9jvp4iQHBWd1cl0xYacX8fdKzhcI+NGLRZSyZ
-         M9liGD5Cj2Mhbj4dP+l+d9MKnB7wHvYH3XWAancj/cboZcZMOtb3rvjf9Zqa16pPVixA
-         Wks+wVavhK/o/AgMxswtExuZrasDY0t1pRVY5tjDDaVUVJ29Ltxx8LzbLH6frRjOzeyc
-         G6tz2AX6vFg9gUr+Y3o7WOi/z2JEcecIBcLp3d/RdkmwBqLWkQRNpUoYpHg1IiFZQIeu
-         OVfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVkXqf4qHzbGlpZGx42cdvh+3DmZ4kUXsNJ1w4y2NppTLw3DMMM2Gq/wUe0/soYVrDbLMe88LvWdCRWmjPJ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyhtkh+OY3tyKkoeYa2H/h/kX9CPBGVAbzlToZDsSYtVnJ/XIe5
-	NWAinPaljrraBdLUzQqKFztoAysNVWCG/TXvm5F8OHHXzlkkF1L8KRlTF6RQDoKLYQ445dupIky
-	QfWc1Bf2SBm31vnK5UCSyVXa1fNO+3sScqvfVTc36PHjrmGL7PFhh/vai5PU9wJ6vRZ+X
-X-Gm-Gg: ASbGnctCMiYG2+L6zX7qRMkNZeJaLw8qyJKH2UUzPxjGh247MwVgSsYkeha+x7a66v0
-	ib9UBJMRvqVoEpmGrquiFnzbmuYtplKkQlQb/qj3ZFaHmINYQZ7+DSesgaxRgAJFMpuwsllEAJU
-	Stn2YhHIZICNwVpn7L/BJoKYkzNshcjYAL1+Te6YrJ3m5l23M/kIuysU3x8j87/pUf1rrTS7oM3
-	JsKLqWfoz/ngQ3ORAAHkmSOyxeiJRkmXdYnIJ3B+jt7Lv99h4uZx8f84QLoS2kNXfE0V3FaG9gK
-	W/GSDSsYuE/rF62T71MDwMNDF/MvoKrbYvE2wnzees8n7ukA3fX5bHfp7t3AtAvw7iw59KdVNcz
-	hrQ+U2NU72KbrUs/hf6qqoA==
-X-Received: by 2002:a05:622a:15d4:b0:4b2:d8e5:b6e3 with SMTP id d75a77b69052e-4b313dfd74dmr144315191cf.1.1756905057274;
-        Wed, 03 Sep 2025 06:10:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHlbX86OkDHQrtRozUIs6RfA1kZEBTsuPTQJYPGvCUDsHeOmLvCYNbgn6D4FeDhxE4MBDNULg==
-X-Received: by 2002:a05:622a:15d4:b0:4b2:d8e5:b6e3 with SMTP id d75a77b69052e-4b313dfd74dmr144314681cf.1.1756905056546;
-        Wed, 03 Sep 2025 06:10:56 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0474be5e99sm30772166b.94.2025.09.03.06.10.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Sep 2025 06:10:56 -0700 (PDT)
-Message-ID: <99820dc6-942a-4aca-911e-cc68834e41f0@oss.qualcomm.com>
-Date: Wed, 3 Sep 2025 15:10:52 +0200
+        d=1e100.net; s=20230601; t=1756905477; x=1757510277;
+        h=mime-version:user-agent:autocrypt:references:in-reply-to:date:cc:to
+         :from:subject:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VvvntKQFWg167uBf7XgNWPpBloVxjgYOfN9r2LJ5PDA=;
+        b=TTH6ASa0US8yLU8lU2AuToQx2fS8lsnD4lPFxxO+FrEE2smW2vuFC4GZufPDbfiBDX
+         ht51MFj1xn0zO4Z7k00qQkhRSsDI6RDyvVRF+dVkcw2JS32V4a5G3J2IB8ORlPJjv4uo
+         9fd4wkiAKVQTdTf8krsMar6rIY9fngwlIgps4D3UZn5B+cH3cdKqH1jveUlWGpMjYfIk
+         bKBNWqMmDc7oN7/HQFSOqabXFGVvQh4ESod6wq66dL0tz/62usf/ySiFeH+ga+kHNPnY
+         t+PpXxvf+MbxmO69FugRo1cAA7BrL+cSbshsj+abAVR83U8syE71I4JxcwyJ2hqEDYkX
+         1Yew==
+X-Forwarded-Encrypted: i=1; AJvYcCU5thXk+mNN2beKQrCVJaFAfyO4fFaVxdVgv2UDzsWRZ+g8wMbJgYBRnjO/nZqdvI25CmCd08oEgmc7Dje2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxWskosDpQi6D+LwMJW9GH0IHqZ112u1nGtVjAdAdA7wIydbhUZ
+	iDHXADv4/JIGio0619L0bzTCcVTuHhhjaIcMAd5JyqG0P34aJoOnrU1Th7T3zcYBVuY=
+X-Gm-Gg: ASbGncvad7IH+ULCqMe44qw2zGB7s7IhK5nnF5InNgXvkV5urkXtVt7Vg7MlPd2hZXO
+	nhQ8fHMMvpzJvitGWX2J6MSyIpcY5dFXL8iLaNdJvTZixXdwG5IMO4pSbdePs+qK94uxl19OkNa
+	NpXEq37Ku7HszpatwGhNFxIVyNjf0ogpjflRNl47lIq09u+n5GGxTyP8wr8PhHVYrgVrRcQsBkg
+	1Kd/LTUhAAdCFrDQvyncb24B6htLsBDBQC9byhMFjWZHSxaFkfIkJrTjr3qrXWe+91n7vh2ISv8
+	AvBzvLuaYvB4viTQmC7EaV28rWTBB5S2u8MIMm62zHTYPPCaRoWDON1q6qStAHBlbhQfNvP8GPx
+	pVb0eQRjymCEkjPQWqPE6RSqpa/c=
+X-Google-Smtp-Source: AGHT+IGvqixI2JJ9vMEi9zexOfvg59/aFmfGuKseEK7+mWZiCf6UPKvrAFywYKNIMyyJLkPSZvlDfw==
+X-Received: by 2002:ac8:5ac9:0:b0:4b2:fd60:61e7 with SMTP id d75a77b69052e-4b31d875830mr147326121cf.37.1756905477391;
+        Wed, 03 Sep 2025 06:17:57 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:11:5a76::5ac? ([2606:6d00:11:5a76::5ac])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-80aaacfe7e1sm105779585a.44.2025.09.03.06.17.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Sep 2025 06:17:56 -0700 (PDT)
+Message-ID: <35ec43df37131904dae9a0c10502348461269af0.camel@ndufresne.ca>
+Subject: Re: [PATCH RFC 1/5] media: uapi: videodev2: Add support for AV1
+ stateful decoder
+From: Nicolas Dufresne <nicolas@ndufresne.ca>
+To: DEEPA GUTHYAPPA MADIVALARA <deepa.madivalara@oss.qualcomm.com>, Mauro
+ Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia
+ <quic_vgarodia@quicinc.com>, Dikshita Agarwal	 <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue
+ <bryan.odonoghue@linaro.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Date: Wed, 03 Sep 2025 09:17:55 -0400
+In-Reply-To: <20250902-rfc_split-v1-1-47307a70c061@oss.qualcomm.com>
+References: <20250902-rfc_split-v1-0-47307a70c061@oss.qualcomm.com>
+	 <20250902-rfc_split-v1-1-47307a70c061@oss.qualcomm.com>
+Autocrypt: addr=nicolas@ndufresne.ca; prefer-encrypt=mutual;
+ keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
+ /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
+ cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
+ CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
+ abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
+ nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
+ AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
+ smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
+ AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
+ iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
+ ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
+ bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-yYZtNSI9AXNjeG3trwZC"
+User-Agent: Evolution 3.56.2 (3.56.2-1.fc42) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] media: dt-bindings: qcom,sm8550-iris: Do not reference
- legacy venus properties
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Vikash Garodia <quic_vgarodia@quicinc.com>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250823155349.22344-2-krzysztof.kozlowski@linaro.org>
- <20250825113734.iekrgyvctamhb5y7@hu-mojha-hyd.qualcomm.com>
- <a3325bf1-2a3f-416a-ba2a-4fb1e9f85e61@linaro.org>
- <05d40a3b-cc13-b704-cac7-0ecbeea0e59d@quicinc.com>
- <46f5d11d-8bed-4d01-9151-35a24cdacfa5@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <46f5d11d-8bed-4d01-9151-35a24cdacfa5@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMiBTYWx0ZWRfX1V/Q14340kNm
- 8m9IVI3CnldK6nfpw0cLY++NT7//E5thXw67REgTAzS5uGIt/3roAggWaC5rmTrvuPriBufDWoe
- HQeR7gL+uMGyJePALSbGg1XzWqcRaAvHafvZPw9hy6gS13rfqqxWOV1sqYj4OZm0DlG/5Fmg11X
- KquE3v46CTFZoXzB15c4h9Dxgd7nT7PwutW9ttLZUFsZjOMiIgyolCmQx8jYcHudGCIhzAREYB/
- EbPQS1dQ0vsLr1f5kruPLjq+iJ/wIIfUKuDQHk6p2irPwJuEmu/LXLiB9TdRHHeBCR5WG2+TR/5
- hD6u6sbEl9rSZRdP6KPRIuFRUsjqLlQI7do6Efn2gmsADf+f6DyVmdbWRiYLuNPr4Ij1XdDSAX4
- ypB3PLFw
-X-Proofpoint-ORIG-GUID: SfMZOtelgIVot2a23-SvbgiApHXh8t5q
-X-Proofpoint-GUID: SfMZOtelgIVot2a23-SvbgiApHXh8t5q
-X-Authority-Analysis: v=2.4 cv=M9NNKzws c=1 sm=1 tr=0 ts=68b83e63 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=PnLdOiXTK5e15ukaaVEA:9
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-03_07,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 suspectscore=0 phishscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300032
 
-On 8/28/25 3:57 PM, Krzysztof Kozlowski wrote:
-> On 28/08/2025 15:49, Vikash Garodia wrote:
->>>>
->>>> Whether removing will not break any ABI as initial binding enables the IRIS
->>>> related code to use video-firmware, now we are removing it.
->>>> I believe, removing binding always break ABI ? or is it depend on driver
->>>> code not using it ?
->>>
->>> There is no single user of this, out of tree (I briefly checked) and
->>> in-tree, so there is no ABI impact. I am changing the documentation of
->>> the ABI, but there is no actual ABI break because impact is 0.
->>>
->>
->> My understanding here is that the interface "video-firmware" is already defined
->> in the binding. There could be possible out-of-tree users of it, might not be
-> 
-> There are no such.
 
-I believe the confusion here comes from the requirement that was set out
-for the iris driver to support existing (venus-supported) platforms without
-binding alterations
+--=-yYZtNSI9AXNjeG3trwZC
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Bindings for SM8550 Iris (as in, the hardware block) only came out with the
-iris driver, so there was no legacy to support in this case
+Le mardi 02 septembre 2025 =C3=A0 16:00 -0700, DEEPA GUTHYAPPA MADIVALARA a=
+ =C3=A9crit=C2=A0:
+> Introduce a new pixel format, V4L2_PIX_FMT_AV1, to the
+> Video4Linux2(V4L2) API. This format is intended for AV1
+> bitstreams in stateful decoding/encoding workflows.
+> The fourcc code 'AV10' is used to distinguish
+> this format from the existing V4L2_PIX_FMT_AV1_FRAME,
+> which is used for stateless AV1 decoder implementation.
+>=20
+> Signed-off-by: DEEPA GUTHYAPPA MADIVALARA <deepa.madivalara@oss.qualcomm.=
+com>
+> ---
+> =C2=A0include/uapi/linux/videodev2.h | 1 +
+> =C2=A01 file changed, 1 insertion(+)
+>=20
+> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev=
+2.h
+> index 3dd9fa45dde1066d52a68581625a39e7ec92c9b7..bff42a71c67b3f4b570dd6f3d=
+250f1bb482ec8ae 100644
+> --- a/include/uapi/linux/videodev2.h
+> +++ b/include/uapi/linux/videodev2.h
+> @@ -775,6 +775,7 @@ struct v4l2_pix_format {
+> =C2=A0#define V4L2_PIX_FMT_H264_SLICE v4l2_fourcc('S', '2', '6', '4') /* =
+H264 parsed slices */
+> =C2=A0#define V4L2_PIX_FMT_HEVC_SLICE v4l2_fourcc('S', '2', '6', '5') /* =
+HEVC parsed slices */
+> =C2=A0#define V4L2_PIX_FMT_AV1_FRAME v4l2_fourcc('A', 'V', '1', 'F') /* A=
+V1 parsed frame */
+> +#define V4L2_PIX_FMT_AV1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('A', =
+'V', '1', '0') /* AV1 (stateful) */
 
-Konrad
+You also need to update Documentation/userspace-api/media/v4l/pixfmt-
+compressed.rst. Mistakes were made in the past leading to great confusion, =
+AV1
+can be wrapped in different forms and with different alignments. Here's few
+question that should be answered in the RST documentation:
+
+- Should we pass complete time units to the decoder ?
+- If not
+   - How is the timestamp going to be interpreted and transferred ?
+   - Should userspace pass complete frame (with leading headers) ? or can i=
+t=20
+     pass OBUs ?
+- Is that format meant to be OBU streams or Annex B (not to confused with H=
+.264
+annex B, it groups the TUs for faster skipping) ? (I bet the first :-D)
+
+cheers,
+Nicolas
+
+> =C2=A0#define V4L2_PIX_FMT_SPK=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc(=
+'S', 'P', 'K', '0') /* Sorenson Spark */
+> =C2=A0#define V4L2_PIX_FMT_RV30=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('R', =
+'V', '3', '0') /* RealVideo 8 */
+> =C2=A0#define V4L2_PIX_FMT_RV40=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('R', =
+'V', '4', '0') /* RealVideo 9 & 10 */
+
+--=-yYZtNSI9AXNjeG3trwZC
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaLhAAwAKCRDZQZRRKWBy
+9CvuAPsEUt+GPSGe3xTULuQEsO/qPdCGqiqWNEXf61UR09ODYgD+KVKmXTUYkoNO
+OJpzALKdYRe5jhV5QzQ44fqbkTjIQw8=
+=u4SA
+-----END PGP SIGNATURE-----
+
+--=-yYZtNSI9AXNjeG3trwZC--
 
