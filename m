@@ -1,519 +1,233 @@
-Return-Path: <linux-arm-msm+bounces-71928-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71929-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B8CAB429FE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 21:34:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 79BDEB42A5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 21:57:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 099A21675FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 19:34:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 373CC580CF9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 19:57:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A03C9369349;
-	Wed,  3 Sep 2025 19:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7BC87369356;
+	Wed,  3 Sep 2025 19:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q7Y6IA9U"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JunaL4It"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707112D5939;
-	Wed,  3 Sep 2025 19:34:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F3E2E7BD5;
+	Wed,  3 Sep 2025 19:57:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756928067; cv=none; b=bPxVP33G3dXVH4qV589ksar/BBDZ3xhQe+mBeKw17Ey2EfBP60dUdcbtYVRkmfmsShLmVzEmgXJ86XPpH64aEOz8mOAGxyCEyWB1GIgD+uxzSqBkoHrX1gB8OBUdJ8DY0QwhPH6jtZQodJacvrqXVMW480Y6YbDi6nrZaxfeWZU=
+	t=1756929443; cv=none; b=c5MMSab503lF4hw/DXkq78JKxwiMY68iOFXKPffle+qG6cfOXwyJ78Pdm+IkYZ8mk5KKNMXRFY6RIMpuDVXNZs9FimUg+IAw6mz4mimL2ogvl4yIXdl/9lN8F+iddFPhzSrcz0+3eBPtOpRbSY0FDBi2Vls20jJW9ikt3uGYA9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756928067; c=relaxed/simple;
-	bh=o81YVSKeW3tvRGfMaHMEjAaj2OsPMPNGBmri6Xmj9Xs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Qmd9FpzOAd9EBAGFcRMbhC+VJ5yBNJbuy5iBoLgYan5mHt5nmRRheo/VIoyp0Q0yzgodXZ5Cp8PhF24zeZ1tSmAJabiykiCbudHTj9++/7UFoLnOFa2QW20wYbENvJumqzqLDT113+mqM4cBUkr8yI4zkjgza3SGLMxYn7y/XV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q7Y6IA9U; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 20A37C4CEFA;
-	Wed,  3 Sep 2025 19:34:27 +0000 (UTC)
+	s=arc-20240116; t=1756929443; c=relaxed/simple;
+	bh=ohA12tMB5fUzkVZ6OsqwdCKuH+KnWiYf9iOwDnvv1D8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=I/Ai/9DEJ/grRH0kZe2qBw4xE6EMVvlni6mdvhBIfs1rlZItAqQHSocaEDrHxFiPRMEkWOUAEp2zyATzzzGWFIXEYJSRIaBFejVwpefaTd+3gfAAnaU3dzrmPfv4EbXiimvp7zzhx2hmu1Yfxn/IgtcXgylIXOfj3oUGcFHWkHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JunaL4It; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2864C4CEE7;
+	Wed,  3 Sep 2025 19:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756928067;
-	bh=o81YVSKeW3tvRGfMaHMEjAaj2OsPMPNGBmri6Xmj9Xs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=q7Y6IA9UiiGW5hx2AK8szv6rpZ8bAxToc2xHDAUbtkuiqBkoJmtESFS2Dn0lYwfQ7
-	 g1xii8/L70M4fHPT1Bv+35iPIzg9iDSUo9kR7NDihNitMLQYss1V+TKu6+CQn7/pUn
-	 FcNdEeNFdCJSqhQ7+WNO7gzblYdfcUoeiovRM1Tmf59vtgXmfy6inHxTpiFTnrxX1o
-	 GQ1GLUyqBTfai+VPDOCW9LuhqV+KI9Nmch9bhY7yhIpPgWjPIJX6ENCyGiZfzbBsUK
-	 R9x0CjJK+ms62LMtdEvbJ7cZSVB+R05+K0l5lPcRadPRCG59BqdwlrPhyO+GrxNGxL
-	 eSwMULXfwgSDQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 07031CA1012;
-	Wed,  3 Sep 2025 19:34:27 +0000 (UTC)
-From: Hrishabh Rajput via B4 Relay <devnull+hrishabh.rajput.oss.qualcomm.com@kernel.org>
-Date: Wed, 03 Sep 2025 19:34:00 +0000
-Subject: [PATCH 2/2] watchdog: Add driver for Gunyah Watchdog
+	s=k20201202; t=1756929442;
+	bh=ohA12tMB5fUzkVZ6OsqwdCKuH+KnWiYf9iOwDnvv1D8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=JunaL4It4HiL9glFls/R5P3JeBNZRBgQ8PoyG8QL8/YgDrZHxHTR9JQ48qH715Y5J
+	 rJMmQb1OFJmtQe9Sh8AKRcPJ/zzTnjhhZ7F+MWFRD+Sls8Gmr3+4sUhB7oyv5cLf/l
+	 1pYnBPEGxB2AQkdsm9zKoq91QyJVC3mzv9NrO5tKMASo0hsLYX7m3l6DgL8eNFIrlR
+	 KIIMfh2PzKruHFF9ke618ezP1jrXbQ5XFwWGgeoLZWjuX5R+jKzPSOVb0WGY/Dph2p
+	 1Aee1u0/OBspwG7fupQjZhZPT50dpn1aFZ4IEDaKyGQrWVILXaMhv8MLxj2icfdbEf
+	 Lxdk7MyAG8rIw==
+Date: Wed, 3 Sep 2025 14:57:21 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com, quic_vpernami@quicinc.com,
+	mmareddy@quicinc.com
+Subject: Re: [PATCH v8 5/5] PCI: qcom: Add support for ECAM feature
+Message-ID: <20250903195721.GA1216663@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250903-gunyah_watchdog-v1-2-3ae690530e4b@oss.qualcomm.com>
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
-In-Reply-To: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Wim Van Sebroeck <wim@linux-watchdog.org>, 
- Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-X-Mailer: b4 0.13.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756928065; l=12454;
- i=hrishabh.rajput@oss.qualcomm.com; s=20250903; h=from:subject:message-id;
- bh=Xtt4m7Jt8ZJRdeUJz96dYVKzAz7zEp5pMNor8sqoRL8=;
- b=u9n/ecpjD38B0naKtMZ0ZPbRwB1zUgJaaUYIViBsSpNYmtWkt6UH/P1cGnC2XXZpToEiN2cje
- ZdpULZCJl7yCvVX2WAaPG36O/r/pVH4UIPCQK5KviFlLtkesaW5DDam
-X-Developer-Key: i=hrishabh.rajput@oss.qualcomm.com; a=ed25519;
- pk=syafMitrjr3b/OYAtA2Im06AUb3fxZY2vJ/t4iCPmgw=
-X-Endpoint-Received: by B4 Relay for
- hrishabh.rajput@oss.qualcomm.com/20250903 with auth_id=509
-X-Original-From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-Reply-To: hrishabh.rajput@oss.qualcomm.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250828-ecam_v4-v8-5-92a30e0fa02d@oss.qualcomm.com>
 
-From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+On Thu, Aug 28, 2025 at 01:04:26PM +0530, Krishna Chaitanya Chundru wrote:
+> The ELBI registers falls after the DBI space, PARF_SLV_DBI_ELBI register
+> gives us the offset from which ELBI starts. So override ELBI with the
+> offset from PARF_SLV_DBI_ELBI and cfg win to map these regions.
+> 
+> On root bus, we have only the root port. Any access other than that
+> should not go out of the link and should return all F's. Since the iATU
+> is configured for the buses which starts after root bus, block the
+> transactions starting from function 1 of the root bus to the end of
+> the root bus (i.e from dbi_base + 4kb to dbi_base + 1MB) from going
+> outside the link through ECAM blocker through PARF registers.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 70 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 70 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 5092752de23866ef95036bb3f8fae9bb06e8ea1e..8f3c86c77e2604fd7826083f63b66b4cb62a341d 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -55,6 +55,7 @@
+>  #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
+>  #define PARF_Q2A_FLUSH				0x1ac
+>  #define PARF_LTSSM				0x1b0
+> +#define PARF_SLV_DBI_ELBI			0x1b4
+>  #define PARF_INT_ALL_STATUS			0x224
+>  #define PARF_INT_ALL_CLEAR			0x228
+>  #define PARF_INT_ALL_MASK			0x22c
+> @@ -64,6 +65,16 @@
+>  #define PARF_DBI_BASE_ADDR_V2_HI		0x354
+>  #define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
+>  #define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35c
+> +#define PARF_BLOCK_SLV_AXI_WR_BASE		0x360
+> +#define PARF_BLOCK_SLV_AXI_WR_BASE_HI		0x364
+> +#define PARF_BLOCK_SLV_AXI_WR_LIMIT		0x368
+> +#define PARF_BLOCK_SLV_AXI_WR_LIMIT_HI		0x36c
+> +#define PARF_BLOCK_SLV_AXI_RD_BASE		0x370
+> +#define PARF_BLOCK_SLV_AXI_RD_BASE_HI		0x374
+> +#define PARF_BLOCK_SLV_AXI_RD_LIMIT		0x378
+> +#define PARF_BLOCK_SLV_AXI_RD_LIMIT_HI		0x37c
+> +#define PARF_ECAM_BASE				0x380
+> +#define PARF_ECAM_BASE_HI			0x384
+>  #define PARF_NO_SNOOP_OVERRIDE			0x3d4
+>  #define PARF_ATU_BASE_ADDR			0x634
+>  #define PARF_ATU_BASE_ADDR_HI			0x638
+> @@ -87,6 +98,7 @@
+>  
+>  /* PARF_SYS_CTRL register fields */
+>  #define MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN	BIT(29)
+> +#define PCIE_ECAM_BLOCKER_EN			BIT(26)
+>  #define MST_WAKEUP_EN				BIT(13)
+>  #define SLV_WAKEUP_EN				BIT(12)
+>  #define MSTR_ACLK_CGC_DIS			BIT(10)
+> @@ -134,6 +146,9 @@
+>  /* PARF_LTSSM register fields */
+>  #define LTSSM_EN				BIT(8)
+>  
+> +/* PARF_SLV_DBI_ELBI */
+> +#define SLV_DBI_ELBI_ADDR_BASE			GENMASK(11, 0)
+> +
+>  /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
+>  #define PARF_INT_ALL_LINK_UP			BIT(13)
+>  #define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
+> @@ -317,6 +332,48 @@ static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
+>  	qcom_perst_assert(pcie, false);
+>  }
+>  
+> +static void qcom_pci_config_ecam(struct dw_pcie_rp *pp)
+> +{
+> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +	u64 addr, addr_end;
+> +	u32 val;
+> +
+> +	/* Set the ECAM base */
+> +	writel_relaxed(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
+> +	writel_relaxed(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
+> +
+> +	/*
+> +	 * The only device on root bus is the Root Port. Any access to the PCIe
+> +	 * region will go outside the PCIe link. As part of enumeration the PCI
+> +	 * sw can try to read to vendor ID & device ID with different device
+> +	 * number and function number under root bus. As any access other than
+> +	 * root bus, device 0, function 0, should not go out of the link and
+> +	 * should return all F's. Since the iATU is configured for the buses
+> +	 * which starts after root bus, block the transactions starting from
+> +	 * function 1 of the root bus to the end of the root bus (i.e from
+> +	 * dbi_base + 4kb to dbi_base + 1MB) from going outside the link.
+> +	 */
+> +	addr = pci->dbi_phys_addr + SZ_4K;
+> +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE);
+> +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE_HI);
+> +
+> +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE);
+> +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE_HI);
+> +
+> +	addr_end = pci->dbi_phys_addr + SZ_1M - 1;
 
-Add driver to support the SMC-based watchdog timer provided by the
-Gunyah Hypervisor.
+I guess this is an implicit restriction to a single Root Port on the
+root bus at bb:00.0, right?  So when the qcom IP eventually supports
+multiple Root Ports or even a single Root Port at a different
+device/function number, this would have to be updated somehow?
 
-On Qualcomm SoCs running under the Gunyah hypervisor, access to watchdog
-through MMIO is not available. Depending on the hypervisor
-configuration, the watchdog is either fully emulated or exposed via
-ARM's SMC Calling Conventions (SMCCC) through the Vendor Specific
-Hypervisor Service Calls space.
+No need to change anything here; just making sure I understand what's
+going on.
 
-When the SMC-based interface is enabled, a device tree overlay is used
-to provide the pretimeout interrupt configuration.
-
-Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
----
- MAINTAINERS                   |   2 +
- drivers/watchdog/Kconfig      |  13 ++
- drivers/watchdog/Makefile     |   1 +
- drivers/watchdog/gunyah_wdt.c | 268 ++++++++++++++++++++++++++++++++++++++++++
- include/linux/gunyah_errno.h  |  77 ++++++++++++
- 5 files changed, 361 insertions(+)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 03b74513e4ac..5e491211d96c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3084,10 +3084,12 @@ F:	arch/arm64/boot/dts/qcom/
- F:	drivers/bus/qcom*
- F:	drivers/firmware/qcom/
- F:	drivers/soc/qcom/
-+F:	drivers/watchdog/gunyah_wdt.c
- F:	include/dt-bindings/arm/qcom,ids.h
- F:	include/dt-bindings/firmware/qcom,scm.h
- F:	include/dt-bindings/soc/qcom*
- F:	include/linux/firmware/qcom
-+F:	include/linux/gunyah_errno.h
- F:	include/linux/soc/qcom/
- F:	include/soc/qcom/
- 
-diff --git a/drivers/watchdog/Kconfig b/drivers/watchdog/Kconfig
-index 0c25b2ed44eb..2fed83e06990 100644
---- a/drivers/watchdog/Kconfig
-+++ b/drivers/watchdog/Kconfig
-@@ -2343,4 +2343,17 @@ config KEEMBAY_WATCHDOG
- 	  To compile this driver as a module, choose M here: the
- 	  module will be called keembay_wdt.
- 
-+config GUNYAH_WATCHDOG
-+	tristate "Qualcomm Gunyah Watchdog"
-+	depends on ARCH_QCOM || COMPILE_TEST
-+	depends on HAVE_ARM_SMCCC
-+	select WATCHDOG_CORE
-+	help
-+	  Say Y here to include support for watchdog timer provided by the
-+	  Gunyah hypervisor. The driver uses ARM SMC Calling Convention (SMCCC)
-+	  to interact with Gunyah Watchdog.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called gh_wdt.
-+
- endif # WATCHDOG
-diff --git a/drivers/watchdog/Makefile b/drivers/watchdog/Makefile
-index bbd4d62d2cc3..308379782bc3 100644
---- a/drivers/watchdog/Makefile
-+++ b/drivers/watchdog/Makefile
-@@ -102,6 +102,7 @@ obj-$(CONFIG_MSC313E_WATCHDOG) += msc313e_wdt.o
- obj-$(CONFIG_APPLE_WATCHDOG) += apple_wdt.o
- obj-$(CONFIG_SUNPLUS_WATCHDOG) += sunplus_wdt.o
- obj-$(CONFIG_MARVELL_GTI_WDT) += marvell_gti_wdt.o
-+obj-$(CONFIG_GUNYAH_WATCHDOG) += gunyah_wdt.o
- 
- # X86 (i386 + ia64 + x86_64) Architecture
- obj-$(CONFIG_ACQUIRE_WDT) += acquirewdt.o
-diff --git a/drivers/watchdog/gunyah_wdt.c b/drivers/watchdog/gunyah_wdt.c
-new file mode 100644
-index 000000000000..56e8e21510d3
---- /dev/null
-+++ b/drivers/watchdog/gunyah_wdt.c
-@@ -0,0 +1,268 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+#include <linux/arm-smccc.h>
-+#include <linux/delay.h>
-+#include <linux/gunyah_errno.h>
-+#include <linux/interrupt.h>
-+#include <linux/io.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/watchdog.h>
-+
-+#define GUNYAH_WDT_SMCCC_CALL_VAL(func_id) \
-+	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_32,\
-+			   ARM_SMCCC_OWNER_VENDOR_HYP, func_id)
-+
-+/* SMCCC function IDs for watchdog operations */
-+#define GUNYAH_WDT_CONTROL   GUNYAH_WDT_SMCCC_CALL_VAL(0x0005)
-+#define GUNYAH_WDT_STATUS    GUNYAH_WDT_SMCCC_CALL_VAL(0x0006)
-+#define GUNYAH_WDT_PING       GUNYAH_WDT_SMCCC_CALL_VAL(0x0007)
-+#define GUNYAH_WDT_SET_TIME  GUNYAH_WDT_SMCCC_CALL_VAL(0x0008)
-+
-+/*
-+ * Control values for GUNYAH_WDT_CONTROL.
-+ * Bit 0 is used to enable or disable the watchdog. If this bit is set,
-+ * then the watchdog is enabled and vice versa.
-+ * Bit 1 should always be set to 1 as this bit is reserved in Gunyah and
-+ * it's expected to be 1.
-+ */
-+#define WDT_CTRL_ENABLE  (BIT(1) | BIT(0))
-+#define WDT_CTRL_DISABLE BIT(1)
-+
-+struct gunyah_wdt {
-+	unsigned int pretimeout_irq;
-+	struct watchdog_device wdd;
-+};
-+
-+static int gunyah_wdt_call(unsigned long func_id, unsigned long arg1,
-+			   unsigned long arg2, struct arm_smccc_res *res)
-+{
-+	arm_smccc_1_1_smc(func_id, arg1, arg2, res);
-+	return gunyah_error_remap(res->a0);
-+}
-+
-+static int gunyah_wdt_start(struct watchdog_device *wdd)
-+{
-+	struct arm_smccc_res res;
-+	unsigned int timeout_ms;
-+	unsigned int pretimeout_ms;
-+	int ret;
-+
-+	ret = gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0, &res);
-+	if (ret)
-+		return ret;
-+
-+	timeout_ms = wdd->timeout * 1000;
-+	pretimeout_ms = wdd->pretimeout * 1000;
-+	ret = gunyah_wdt_call(GUNYAH_WDT_SET_TIME,
-+			      pretimeout_ms, timeout_ms, &res);
-+	if (ret)
-+		return ret;
-+
-+	return gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_ENABLE, 0, &res);
-+}
-+
-+static int gunyah_wdt_stop(struct watchdog_device *wdd)
-+{
-+	struct arm_smccc_res res;
-+
-+	return gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0, &res);
-+}
-+
-+static int gunyah_wdt_ping(struct watchdog_device *wdd)
-+{
-+	struct arm_smccc_res res;
-+
-+	return gunyah_wdt_call(GUNYAH_WDT_PING, 0, 0, &res);
-+}
-+
-+static int gunyah_wdt_set_timeout(struct watchdog_device *wdd,
-+		     unsigned int timeout_sec)
-+{
-+	wdd->timeout = timeout_sec;
-+
-+	if (watchdog_active(wdd))
-+		return gunyah_wdt_start(wdd);
-+
-+	return 0;
-+}
-+
-+static int gunyah_wdt_set_pretimeout(struct watchdog_device *wdd,
-+				     unsigned int pretimeout_sec)
-+{
-+	wdd->pretimeout = pretimeout_sec;
-+
-+	if (watchdog_active(wdd))
-+		return gunyah_wdt_start(wdd);
-+
-+	return 0;
-+}
-+
-+static unsigned int gunyah_wdt_get_timeleft(struct watchdog_device *wdd)
-+{
-+	struct arm_smccc_res res;
-+	unsigned int seconds_since_last_ping;
-+	int ret;
-+
-+	ret = gunyah_wdt_call(GUNYAH_WDT_STATUS, 0, 0, &res);
-+	if (ret)
-+		return 0;
-+
-+	seconds_since_last_ping = res.a2 / 1000;
-+	if (seconds_since_last_ping > wdd->timeout)
-+		return 0;
-+
-+	return wdd->timeout - seconds_since_last_ping;
-+}
-+
-+static int gunyah_wdt_restart(struct watchdog_device *wdd,
-+			      unsigned long action, void *data)
-+{
-+	struct arm_smccc_res res;
-+
-+	/* Set timeout and pretimeout to 1ms and send a ping */
-+	gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_ENABLE, 0, &res);
-+	gunyah_wdt_call(GUNYAH_WDT_SET_TIME, 1, 1, &res);
-+	gunyah_wdt_call(GUNYAH_WDT_PING, 0, 0, &res);
-+
-+	/* Wait to make sure reset occurs */
-+	mdelay(100);
-+
-+	return 0;
-+}
-+
-+static const struct watchdog_info gunyah_wdt_info = {
-+	.identity = "Gunyah Watchdog",
-+	.firmware_version = 0,
-+	.options = WDIOF_SETTIMEOUT
-+		 | WDIOF_PRETIMEOUT
-+		 | WDIOF_KEEPALIVEPING
-+		 | WDIOF_MAGICCLOSE,
-+};
-+
-+static const struct watchdog_ops gunyah_wdt_ops = {
-+	.owner = THIS_MODULE,
-+	.start = gunyah_wdt_start,
-+	.stop = gunyah_wdt_stop,
-+	.ping = gunyah_wdt_ping,
-+	.set_timeout = gunyah_wdt_set_timeout,
-+	.set_pretimeout = gunyah_wdt_set_pretimeout,
-+	.get_timeleft = gunyah_wdt_get_timeleft,
-+	.restart = gunyah_wdt_restart
-+};
-+
-+static irqreturn_t gunyah_wdt_pretimeout_handler(int irq, void *arg)
-+{
-+	struct watchdog_device *wdd = arg;
-+
-+	watchdog_notify_pretimeout(wdd);
-+
-+	return IRQ_HANDLED;
-+}
-+
-+static int gunyah_wdt_probe(struct platform_device *pdev)
-+{
-+	struct gunyah_wdt *wdt;
-+	struct device *dev = &pdev->dev;
-+	int ret;
-+
-+	wdt = devm_kzalloc(dev, sizeof(*wdt), GFP_KERNEL);
-+	if (!wdt)
-+		return -ENOMEM;
-+
-+	wdt->wdd.info = &gunyah_wdt_info;
-+	wdt->wdd.ops = &gunyah_wdt_ops;
-+	wdt->wdd.parent = dev;
-+
-+	/*
-+	 * Although Gunyah expects 16-bit unsigned int values as timeout values
-+	 * in milliseconds, values above 0x8000 are reserved. This limits the
-+	 * max timeout value to 32 seconds.
-+	 */
-+	wdt->wdd.max_timeout = 32; /* seconds */
-+	wdt->wdd.min_timeout = 1; /* seconds */
-+	wdt->wdd.timeout = wdt->wdd.max_timeout;
-+	wdt->wdd.pretimeout = wdt->wdd.timeout - 2;
-+
-+	gunyah_wdt_stop(&wdt->wdd);
-+	watchdog_init_timeout(&wdt->wdd, 0, dev);
-+
-+	platform_set_drvdata(pdev, wdt);
-+
-+	watchdog_set_restart_priority(&wdt->wdd, 0);
-+	ret = devm_watchdog_register_device(dev, &wdt->wdd);
-+	if (ret) {
-+		dev_err(dev, "Failed to register watchdog device: %d\n", ret);
-+		return ret;
-+	}
-+
-+	/*
-+	 * Register the pretimeout irq as rising edge triggered irrespective of
-+	 * the irqflags passed by Gunyah to make the driver compatible with
-+	 * pretimeout governors like noop.
-+	 */
-+	wdt->pretimeout_irq = platform_get_irq(pdev, 0);
-+	ret = devm_request_irq(dev, wdt->pretimeout_irq,
-+			       gunyah_wdt_pretimeout_handler,
-+			       IRQF_TRIGGER_RISING,
-+			       "wdt_pretimeout", &wdt->wdd);
-+	if (ret) {
-+		dev_err(dev, "Failed to register pretimeout irq: %d\n", ret);
-+		return ret;
-+	}
-+
-+	dev_dbg(dev, "Gunyah watchdog registered\n");
-+	return 0;
-+}
-+
-+static int __maybe_unused gunyah_wdt_suspend(struct device *dev)
-+{
-+	struct gunyah_wdt *wdt = dev_get_drvdata(dev);
-+
-+	if (watchdog_active(&wdt->wdd))
-+		gunyah_wdt_stop(&wdt->wdd);
-+
-+	return 0;
-+}
-+
-+static int __maybe_unused gunyah_wdt_resume(struct device *dev)
-+{
-+	struct gunyah_wdt *wdt = dev_get_drvdata(dev);
-+
-+	if (watchdog_active(&wdt->wdd))
-+		gunyah_wdt_start(&wdt->wdd);
-+
-+	return 0;
-+}
-+
-+static DEFINE_SIMPLE_DEV_PM_OPS(gunyah_wdt_pm_ops, gunyah_wdt_suspend, gunyah_wdt_resume);
-+
-+static const struct of_device_id gunyah_wdt_of_match[] = {
-+	{ .compatible = "qcom,gh-watchdog" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, gunyah_wdt_of_match);
-+
-+static struct platform_driver gunyah_wdt_driver = {
-+	.probe = gunyah_wdt_probe,
-+	.driver = {
-+		.name = "gunyah-wdt",
-+		.of_match_table = gunyah_wdt_of_match,
-+		.pm = pm_sleep_ptr(&gunyah_wdt_pm_ops),
-+	},
-+};
-+
-+static int __init gunyah_wdt_init(void)
-+{
-+	return platform_driver_register(&gunyah_wdt_driver);
-+}
-+
-+module_init(gunyah_wdt_init);
-+
-+MODULE_DESCRIPTION("Gunyah Watchdog Driver");
-+MODULE_LICENSE("GPL");
-diff --git a/include/linux/gunyah_errno.h b/include/linux/gunyah_errno.h
-new file mode 100644
-index 000000000000..518228e333bd
---- /dev/null
-+++ b/include/linux/gunyah_errno.h
-@@ -0,0 +1,77 @@
-+/* SPDX-License-Identifier: GPL-2.0-only */
-+/*
-+ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-+ */
-+
-+#ifndef _LINUX_GUNYAH_ERRNO_H
-+#define _LINUX_GUNYAH_ERRNO_H
-+
-+#include <linux/errno.h>
-+
-+enum gunyah_error {
-+	GUNYAH_ERROR_OK				= 0,
-+	GUNYAH_ERROR_UNIMPLEMENTED		= -1,
-+	GUNYAH_ERROR_RETRY			= -2,
-+
-+	GUNYAH_ERROR_ARG_INVAL			= 1,
-+	GUNYAH_ERROR_ARG_SIZE			= 2,
-+	GUNYAH_ERROR_ARG_ALIGN			= 3,
-+
-+	GUNYAH_ERROR_NOMEM			= 10,
-+
-+	GUNYAH_ERROR_ADDR_OVFL			= 20,
-+	GUNYAH_ERROR_ADDR_UNFL			= 21,
-+	GUNYAH_ERROR_ADDR_INVAL			= 22,
-+
-+	GUNYAH_ERROR_DENIED			= 30,
-+	GUNYAH_ERROR_BUSY			= 31,
-+	GUNYAH_ERROR_IDLE			= 32,
-+
-+	GUNYAH_ERROR_IRQ_BOUND			= 40,
-+	GUNYAH_ERROR_IRQ_UNBOUND		= 41,
-+
-+	GUNYAH_ERROR_CSPACE_CAP_NULL		= 50,
-+	GUNYAH_ERROR_CSPACE_CAP_REVOKED		= 51,
-+	GUNYAH_ERROR_CSPACE_WRONG_OBJ_TYPE	= 52,
-+	GUNYAH_ERROR_CSPACE_INSUF_RIGHTS	= 53,
-+	GUNYAH_ERROR_CSPACE_FULL		= 54,
-+
-+	GUNYAH_ERROR_MSGQUEUE_EMPTY		= 60,
-+	GUNYAH_ERROR_MSGQUEUE_FULL		= 61,
-+};
-+
-+/**
-+ * gunyah_error_remap() - Remap Gunyah hypervisor errors into a Linux error code
-+ * @gunyah_error: Gunyah hypercall return value
-+ */
-+static inline int gunyah_error_remap(enum gunyah_error gunyah_error)
-+{
-+	switch (gunyah_error) {
-+	case GUNYAH_ERROR_OK:
-+		return 0;
-+	case GUNYAH_ERROR_NOMEM:
-+		return -ENOMEM;
-+	case GUNYAH_ERROR_DENIED:
-+	case GUNYAH_ERROR_CSPACE_CAP_NULL:
-+	case GUNYAH_ERROR_CSPACE_CAP_REVOKED:
-+	case GUNYAH_ERROR_CSPACE_WRONG_OBJ_TYPE:
-+	case GUNYAH_ERROR_CSPACE_INSUF_RIGHTS:
-+	case GUNYAH_ERROR_CSPACE_FULL:
-+		return -EACCES;
-+	case GUNYAH_ERROR_BUSY:
-+	case GUNYAH_ERROR_IDLE:
-+		return -EBUSY;
-+	case GUNYAH_ERROR_IRQ_BOUND:
-+	case GUNYAH_ERROR_IRQ_UNBOUND:
-+	case GUNYAH_ERROR_MSGQUEUE_FULL:
-+	case GUNYAH_ERROR_MSGQUEUE_EMPTY:
-+		return -EIO;
-+	case GUNYAH_ERROR_UNIMPLEMENTED:
-+	case GUNYAH_ERROR_RETRY:
-+		return -EOPNOTSUPP;
-+	default:
-+		return -EINVAL;
-+	}
-+}
-+
-+#endif
-
--- 
-2.43.0
-
-
+> +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT);
+> +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT_HI);
+> +
+> +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT);
+> +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT_HI);
+> +
+> +	val = readl_relaxed(pcie->parf + PARF_SYS_CTRL);
+> +	val |= PCIE_ECAM_BLOCKER_EN;
+> +	writel_relaxed(val, pcie->parf + PARF_SYS_CTRL);
+> +}
+> +
+>  static int qcom_pcie_start_link(struct dw_pcie *pci)
+>  {
+>  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> @@ -326,6 +383,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
+>  		qcom_pcie_common_set_16gt_lane_margining(pci);
+>  	}
+>  
+> +	if (pci->pp.ecam_enabled)
+> +		qcom_pci_config_ecam(&pci->pp);
+> +
+>  	/* Enable Link Training state machine */
+>  	if (pcie->cfg->ops->ltssm_enable)
+>  		pcie->cfg->ops->ltssm_enable(pcie);
+> @@ -1314,6 +1374,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+>  {
+>  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+>  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
+> +	u16 offset;
+>  	int ret;
+>  
+>  	qcom_ep_reset_assert(pcie);
+> @@ -1322,6 +1383,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+>  	if (ret)
+>  		return ret;
+>  
+> +	if (pp->ecam_enabled) {
+> +		/*
+> +		 * Override ELBI when ECAM is enabled, as when ECAM
+> +		 * is enabled ELBI moves along with the dbi config space.
+> +		 */
+> +		offset = FIELD_GET(SLV_DBI_ELBI_ADDR_BASE, readl(pcie->parf + PARF_SLV_DBI_ELBI));
+> +		pci->elbi_base = pci->dbi_base + offset;
+> +	}
+> +
+>  	ret = qcom_pcie_phy_power_on(pcie);
+>  	if (ret)
+>  		goto err_deinit;
+> 
+> -- 
+> 2.34.1
+> 
 
