@@ -1,53 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-71724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71725-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id B76F2B41603
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:14:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2D3BB41634
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:20:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 741AA540AEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 07:14:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF82D5483E9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 07:20:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CABFB2DCBF3;
-	Wed,  3 Sep 2025 07:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1749E2D9EEC;
+	Wed,  3 Sep 2025 07:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oGePKTdd"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N+J36IrV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647DC2DAFA7;
-	Wed,  3 Sep 2025 07:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E942D9497
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 07:20:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756883614; cv=none; b=cklVAN4bID6qhFNzf0wWg6gzhDPlKeQ1+ZJZNaSBF2rloAPkUa2fh4yvbkfGaa5CyprvC901rrpqHmaug82UVYJJkD/mHXTDEx8kfmnh5Io938jXr41s8sK9eChvELR4jwa/9Qdrv0591TY0yz+TEhXMTRdgUbQ9EwOjXcGxz0w=
+	t=1756884019; cv=none; b=Hw/nJ8yR5ndcU1/TrKf8e1DVZvbH14knCtbZtRgxKnLv5xUzHDZebTTh0l9WlkkMubeuFt4MQu97y2Qe4t6kkOGnTOL7M4QIf3nL6+hH7BBFMCXX4HDAApzS2vEhgQuhzU54QPxRuK4NVZKvQ/7u/DUL86wmyrjxNAjm8s70dN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756883614; c=relaxed/simple;
-	bh=SEiEmAY+lH8Mf391yVOd+WIcOj17/HO94xc8TJDgA8U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uscwqpeYnJmah+h3j24/nBQD8OvRC4IPljPzOmkca0b2/gSYxmPKPpHz5uDP+v4QgbSdCpFdIwmbnGMrdfDES0cbnJLu+iU1PKH1V8LpUaQ01FZCdgwr5Oyv2KH7TDHiUU/pCbiJs5E9IZeCfmgQEHpEpNTzqu1klXCdjUKRPhY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oGePKTdd; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id D43FEC116C6;
-	Wed,  3 Sep 2025 07:13:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756883613;
-	bh=SEiEmAY+lH8Mf391yVOd+WIcOj17/HO94xc8TJDgA8U=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=oGePKTdd9YjwGLUj4uhbLoine6v5vhIFy3485IDWy/ebzcGmcAJ0Q9UHen9QVTXps
-	 5hmim1NuBFSCIsiUfZGcyePJZzmxnm3McGno4NcAj0P1NQYTtrVC41PNETh18IPMp7
-	 i69hWtoYMkOs9Wdgj3S7/xVpDcUjDyDy8HRugvP9Z5PVm9tjcvLserOg0YqiXp1RD1
-	 gBgQ7njZY7AqyF8RmpTrXoLty1Sp67uDYWaXhSChdGakLj7mr259HPpjU+V4ZxcRIS
-	 FhLhwkTiJaKqJH8yYxePApaZkdzXFln4U/GpqE5Sno4u60neUV+DBoLaMCsz4aXJ0D
-	 y/dDiaXWh3YfA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id C73D4CA1011;
-	Wed,  3 Sep 2025 07:13:33 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Wed, 03 Sep 2025 12:43:27 +0530
-Subject: [PATCH v2 5/5] PCI: qcom: Allow pwrctrl core to toggle PERST# for
- new DT binding
+	s=arc-20240116; t=1756884019; c=relaxed/simple;
+	bh=iEHHNOUp5Zf9Seli7wZfoQELliaGPiDXzU/94llyCSk=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=b6aax4kh3m4FHLYSCy8qDcHIYbOQ21BP7KoqdbIUf4QtIY9LvXeyExDyJvv52Tvx+X24Oj6GRNwf1l1itQbOjjY8EuEul3IKUx11FSgCAtVYZJaOEc4QjKAMoEyz6lMYlwnmVXmuQJT4dB6cfDk6VEcxDzk6gbgkQJmaKcQ1olA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N+J36IrV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58324FBK012188
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 07:20:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=2JoLFn5sP4ZLLO5SjGpvmt
+	sl7bGVvId7x0Y1lR5LUNY=; b=N+J36IrVFKzU/FNiGjYeNS4nZgyrAAgd6Ru6RR
+	CxtKRKWGOk898kEB/GFhgzx1NssteKCliuUJ3kWWekQ2DbjUu3RJ+Q4WAIZRjmVk
+	dRTEmh8VpC+4/8kH1Da1beCI0ZVs4jiJ9ok1GznVeaJi969pLBDgNnyYkrT8Db54
+	5pel4QkC8d93b6ZWFRLDxMWA09788tGUwmvSg5wL9RK8ExBv32xZAk4Oz6D5/wZI
+	QOOpf3a1hwnL0qspsPRxnE40G5GPxX7m8FU4al339t6QzVhRnncYJPegIJIK2eHU
+	/qslFTt+qaAsFQFH0iWcARhBYNFD7aQpYOwg6zGBYAzrz77A==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2fjfwy-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 07:20:16 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-7725a76dcb4so531381b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 00:20:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756884010; x=1757488810;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=2JoLFn5sP4ZLLO5SjGpvmtsl7bGVvId7x0Y1lR5LUNY=;
+        b=YgTIF33gOUAAgtD06qJesAWw5AD6oPgCHGuQIgBD2jbEr9uKTGCvJar+Ee+3O7hy4l
+         6MLvvi2AWTlHjNvjqz1uQ14iW3Ze7lBGbMepyQEhG8DKBE7gRMG0CtU08/Xl29Vnm2Rz
+         NLQDAKcPJS4QtuEXB+BI4+DS6M6HSKWhR7+JsVL93HXZ20IivxOLO6Rp3mZE64kkvrJd
+         GNWErIQXeX4EiYBkfM3lLLH+pjncou1mr9DD+dqBllKb3prAR8w6BUg5k5TISGDgYhFQ
+         b8DV4BcpYur/0LHRWmx8zLgm+raMBtJq8g0p2XcTH2QuxDRlsa9XntnCUWAQ0e7koqaA
+         dNpw==
+X-Gm-Message-State: AOJu0YxFyeC+H7R7ZhYeaKfvxbXypvXLU23Dc3Ko8bysp6iizVzUfqoy
+	eUlLiLCq5EcRQa3zLpVdfxviH/tEv1fbMLxYw/JTDJ3KIoknqGnkPXDjsglfuo21IlJ3DlkRQW+
+	T7AnnMJklmvQ3XjPDwFmwgsbg2ISDfuF3UsR+pcjteOWbh0/eFBAvmE/cxt35+IzjKuLk
+X-Gm-Gg: ASbGncv0rXCjGEGNGu2Fmbg+aL8XngOZ/TMk6JMAllf4w/IVGI5dI/bvXHlf++F9P1a
+	W2DFi38iJ1f5uMdMEoo4/nZ+DmEVTARfy/PAqGlsee+tbX1Y+PEgpVd/GhF9bMYfKthGptQ9B6p
+	ziwTR/cjIzHoKfQS//l6YCXolCMFjqpadH/mKkBW82mHTPTbmgTP4/545LoOlKoOzQxiROTRqJS
+	8pG6Ek84RILKSXO9NWIUeNT5ZI4xam1VbXjTfJnQBkOJvRbor//yIuKOzm68EuDVx8q+i7nLMdO
+	CpAvX1GzEziz6RGK+UW6XkGRS6peZsUxEmNxJS836NyGKw5K4OUayBdIBhsl9ilX
+X-Received: by 2002:a05:6a20:938c:b0:246:5be:ca90 with SMTP id adf61e73a8af0-24605becdb2mr3661991637.10.1756884010467;
+        Wed, 03 Sep 2025 00:20:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1UGA8r0cWsBWyAEbAPAOFFKu4QhQwB/Mj3xz8LLJJb2d9gBhwrpWd+rEMCxpJXlx3TTV7UQ==
+X-Received: by 2002:a05:6a20:938c:b0:246:5be:ca90 with SMTP id adf61e73a8af0-24605becdb2mr3661943637.10.1756884009888;
+        Wed, 03 Sep 2025 00:20:09 -0700 (PDT)
+Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7722a2b78d7sm15816191b3a.30.2025.09.03.00.20.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Sep 2025 00:20:09 -0700 (PDT)
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Subject: [PATCH v5 0/5] Support for Adreno 623 GPU
+Date: Wed, 03 Sep 2025 12:49:51 +0530
+Message-Id: <20250903-a623-gpu-support-v5-0-5398585e2981@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -56,245 +89,130 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061@oss.qualcomm.com>
-References: <20250903-pci-pwrctrl-perst-v2-0-2d461ed0e061@oss.qualcomm.com>
-In-Reply-To: <20250903-pci-pwrctrl-perst-v2-0-2d461ed0e061@oss.qualcomm.com>
-To: Manivannan Sadhasivam <mani@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, Saravana Kannan <saravanak@google.com>
-Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
- Brian Norris <briannorris@chromium.org>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIABjst2gC/3XP207EIBAG4FdpuJYNMMCWxhjfwxhDgXaJ9iC0j
+ WbTd5eyF9ZsvWPIzPfPXFF0wbuIquKKglt89EOfCvFQIHPRfeuwt6lGjDBBGAWsJQPcjjOO8zg
+ OYcKNlKqUBJq6FCiNjcE1/iuTL6+3OrjPOcnT7RPVOjpshq7zU1Us8kTPOBjYZjsXo86ZVfGYI
+ 0vGCGdAty7JqABMccLMW/s+XD788/b2vTkl7gltcRcfpyF854MWmvP+332hmGClwEhhQDWW7b3
+ MLWxHsPKAYInQTkvBnTHUwj0Bv0Q66ICARICpgZ6Vspy7e4LvCXVA8ERYbjXlkqQW+pdY1/UHI
+ DzEf+oBAAA=
+X-Change-ID: 20250213-a623-gpu-support-f6698603fb85
+To: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Gaurav Kohli <quic_gkohli@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Jie Zhang <quic_jiezh@quicinc.com>,
+        Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6596;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=jE6WYZa4c9ydpNf35QrLmvbRouO2QM2tzBO/q32DEJQ=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBot+qbrxLuzhIzbFJu6Ak/dMgK/aqGgbOTZbDrX
- G5u68sXRS2JATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaLfqmwAKCRBVnxHm/pHO
- 9ZcFB/9yBkxFGLHK5AWr+zXcKlifi+99vBPZBRrUD0HFdcJnwnEu+7SSpp1HYpDchst7DV4Mnri
- CiPFFkjkOiEmePyT9KK0bbj/gt+tr6k93kOqD8HK0UV9X08LkvR3F0ZvtJ3jHADCKDJSvqTaLwz
- YTh1x1F7yD+4ok8PFwNDIS1V3c4CdaYWqFBCG8FjdUuIkDSpgPbTd1emMZQNASkAX2n0y+G14/9
- gADrQgL3xPEUp4C7a7Uo0csD867v9OIuueOLd8qB3gXYGSEqvyPYpKZr4+1gz3sk+c5xHXMQs/6
- 2iuSliSEzJ3oo8oLh1pOcEe4IsdxjJQUWJ8zMmW7lapCioV2
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756884002; l=2608;
+ i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
+ bh=iEHHNOUp5Zf9Seli7wZfoQELliaGPiDXzU/94llyCSk=;
+ b=D0JWR6w+bg4ZVSlHnoj/IzLyKrc0jTOe9GyPVcMLL8tw94rswzmMkSbALYa9b5Tj3z5ADZg6H
+ TNU9SKJAV4CBarOQJNW0/WI0wUmCkHbNmH2JLNRpWTEmVIV3wwzu2yg
+X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
+ pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfX67oTw2UxYF8Q
+ bRLmcv/mrzRWDWMq7lD2Hpab/06/Po7OIkXYGVoWr1vWSnkDpoOSVH3Vxrw1kxm3Xe6X4JODuQy
+ /WcjxGHeLS8zA0JP5QskT08FScm1RuV0kERi6ROuWBmPErdLTd+njUSh3LkPXbNBYr6ARGqpvOi
+ JPXj0nHujcWGjab8PeZOXuG1/et04C3jFNSJ3QtmHTSB9B4bsCxpNrw4ZHtPU4K7f85gIpb9MPd
+ VPad2rIfXDCvw3eL9srNkYdipNgcecyLp6NbElt7fHdIfEEO6ap2X+wphXUt3uxHx9fOwU858OG
+ jzUQ8b3pQuQMwFFXOj76che7ttnERGdP4B+3x2Qv9u9811s/gn18sb6PqgQd+0ddnslL3O6ApjU
+ X3vBpdAb
+X-Proofpoint-ORIG-GUID: tNv3M7QTDo1W-YhMa65R4Lm68i95r4aJ
+X-Proofpoint-GUID: tNv3M7QTDo1W-YhMa65R4Lm68i95r4aJ
+X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b7ec30 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=EUspDBNiAAAA:8 a=xbU8ZoTWYswB9xRdz4sA:9 a=QEXdDO2ut3YA:10
+ a=zc0IvFSfCIW2DFIPzwfm:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-03_04,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+This series adds support for A623 GPU found in QCS8300 (internal codename - Monaco)
+chipsets. This GPU IP is very similar to A621 GPU, except for the UBWC configuration
+and the GMU firmware.
 
-If the platform is using the new DT binding, let the pwrctrl core toggle
-PERST# for the device. This is achieved by populating the
-'pci_host_bridge::toggle_perst' callback with qcom_pcie_toggle_perst().
+Since the last revision, there is a new board support (monaco-evk) in the mailing
+list. But I am skipping support for it in this series due to the heavy code churn
+happening in that file at the moment. For Bjorn's convenience, I will share a
+separate DT patch for gpu support for that board later.
 
-qcom_pcie_toggle_perst() will find the PERST# GPIO descriptor associated
-with the supplied 'device_node' and toggles PERST#. If PERST# is not found
-in the supplied node, the function will look for PERST# in the parent node
-as a fallback. This is needed since PERST# won't be available in the
-endpoint node as per the DT binding.
+First 2 patches are for Rob Clark and the rest are for Bjorn to pick up.
 
-Note that the driver still asserts PERST# during the controller
-initialization as it is needed as per the hardware documentation. Apart
-from that, the driver wouldn't touch PERST# for the new binding.
-
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
- drivers/pci/controller/dwc/pcie-qcom.c | 89 +++++++++++++++++++++++++++++-----
- 1 file changed, 78 insertions(+), 11 deletions(-)
+Changes in v5:
+- Rebased on top of v6.17-rc3
+- Added new patches for SKU detection and passive cooling support for GPU
+- Link to v4: https://lore.kernel.org/r/20250509-a623-gpu-support-v4-0-d4da14600501@quicinc.com
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 78355d12f10d263a0bb052e24c1e2d5e8f68603d..3c5c65d7d97cac186e1b671f80ba7296ad226d68 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -276,6 +276,7 @@ struct qcom_pcie_port {
- struct qcom_pcie_perst {
- 	struct list_head list;
- 	struct gpio_desc *desc;
-+	struct device_node *np;
- };
- 
- struct qcom_pcie {
-@@ -298,11 +299,50 @@ struct qcom_pcie {
- 
- #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
- 
--static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
-+static struct gpio_desc *qcom_find_perst(struct qcom_pcie *pcie, struct device_node *np)
-+{
-+	struct qcom_pcie_perst *perst;
-+
-+	list_for_each_entry(perst, &pcie->perst, list) {
-+		if (np == perst->np)
-+			return perst->desc;
-+	}
-+
-+	return NULL;
-+}
-+
-+static void qcom_toggle_perst_per_device(struct qcom_pcie *pcie,
-+					 struct device_node *np, bool assert)
-+{
-+	int val = assert ? 1 : 0;
-+	struct gpio_desc *perst;
-+
-+	perst = qcom_find_perst(pcie, np);
-+	if (perst)
-+		goto toggle_perst;
-+
-+	/*
-+	 * If PERST# is not available in the current node, try the parent. This
-+	 * fallback is needed if the current node belongs to an endpoint or
-+	 * switch upstream port.
-+	 */
-+	if (np->parent)
-+		perst = qcom_find_perst(pcie, np->parent);
-+
-+toggle_perst:
-+	/* gpiod* APIs handle NULL gpio_desc gracefully. So no need to check. */
-+	gpiod_set_value_cansleep(perst, val);
-+}
-+
-+static void qcom_perst_reset(struct qcom_pcie *pcie, struct device_node *np,
-+			      bool assert)
- {
- 	struct qcom_pcie_perst *perst;
- 	int val = assert ? 1 : 0;
- 
-+	if (np)
-+		return qcom_toggle_perst_per_device(pcie, np, assert);
-+
- 	if (list_empty(&pcie->perst))
- 		gpiod_set_value_cansleep(pcie->reset, val);
- 
-@@ -310,22 +350,34 @@ static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
- 		gpiod_set_value_cansleep(perst->desc, val);
- }
- 
--static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
-+static void qcom_ep_reset_assert(struct qcom_pcie *pcie, struct device_node *np)
- {
--	qcom_perst_assert(pcie, true);
-+	qcom_perst_reset(pcie, np, true);
- 	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
- }
- 
--static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
-+static void qcom_ep_reset_deassert(struct qcom_pcie *pcie,
-+				   struct device_node *np)
- {
- 	struct dw_pcie_rp *pp = &pcie->pci->pp;
- 
- 	msleep(PCIE_T_PVPERL_MS);
--	qcom_perst_assert(pcie, false);
-+	qcom_perst_reset(pcie, np, false);
- 	if (!pp->use_linkup_irq)
- 		msleep(PCIE_RESET_CONFIG_WAIT_MS);
- }
- 
-+static void qcom_pcie_toggle_perst(struct pci_host_bridge *bridge,
-+				    struct device_node *np, bool assert)
-+{
-+	struct qcom_pcie *pcie = dev_get_drvdata(bridge->dev.parent);
-+
-+	if (assert)
-+		qcom_ep_reset_assert(pcie, np);
-+	else
-+		qcom_ep_reset_deassert(pcie, np);
-+}
-+
- static int qcom_pcie_start_link(struct dw_pcie *pci)
- {
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-@@ -1320,7 +1372,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 	int ret;
- 
--	qcom_ep_reset_assert(pcie);
-+	qcom_ep_reset_assert(pcie, NULL);
- 
- 	ret = pcie->cfg->ops->init(pcie);
- 	if (ret)
-@@ -1336,7 +1388,13 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_disable_phy;
- 	}
- 
--	qcom_ep_reset_deassert(pcie);
-+	/*
-+	 * Only deassert PERST# for all devices here if legacy binding is used.
-+	 * For the new binding, pwrctrl driver is expected to toggle PERST# for
-+	 * individual devices.
-+	 */
-+	if (list_empty(&pcie->perst))
-+		qcom_ep_reset_deassert(pcie, NULL);
- 
- 	if (pcie->cfg->ops->config_sid) {
- 		ret = pcie->cfg->ops->config_sid(pcie);
-@@ -1344,10 +1402,12 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 			goto err_assert_reset;
- 	}
- 
-+	pci->pp.bridge->toggle_perst = qcom_pcie_toggle_perst;
-+
- 	return 0;
- 
- err_assert_reset:
--	qcom_ep_reset_assert(pcie);
-+	qcom_ep_reset_assert(pcie, NULL);
- err_disable_phy:
- 	qcom_pcie_phy_power_off(pcie);
- err_deinit:
-@@ -1361,7 +1421,7 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
- 	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
- 	struct qcom_pcie *pcie = to_qcom_pcie(pci);
- 
--	qcom_ep_reset_assert(pcie);
-+	qcom_ep_reset_assert(pcie, NULL);
- 	qcom_pcie_phy_power_off(pcie);
- 	pcie->cfg->ops->deinit(pcie);
- }
-@@ -1740,6 +1800,9 @@ static int qcom_pcie_parse_perst(struct qcom_pcie *pcie,
- 		return -ENOMEM;
- 
- 	perst->desc = reset;
-+	/* Increase the refcount to make sure 'np' is valid till it is stored */
-+	of_node_get(np);
-+	perst->np = np;
- 	list_add_tail(&perst->list, &pcie->perst);
- 
- parse_child_node:
-@@ -1803,8 +1866,10 @@ static int qcom_pcie_parse_ports(struct qcom_pcie *pcie)
- 		list_del(&port->list);
- 	}
- 
--	list_for_each_entry_safe(perst, tmp_perst, &pcie->perst, list)
-+	list_for_each_entry_safe(perst, tmp_perst, &pcie->perst, list) {
-+		of_node_put(perst->np);
- 		list_del(&perst->list);
-+	}
- 
- 	return ret;
- }
-@@ -2044,8 +2109,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
- 	qcom_pcie_phy_exit(pcie);
- 	list_for_each_entry_safe(port, tmp_port, &pcie->ports, list)
- 		list_del(&port->list);
--	list_for_each_entry_safe(perst, tmp_perst, &pcie->perst, list)
-+	list_for_each_entry_safe(perst, tmp_perst, &pcie->perst, list) {
-+		of_node_put(perst->np);
- 		list_del(&perst->list);
-+	}
- err_pm_runtime_put:
- 	pm_runtime_put(dev);
- 	pm_runtime_disable(dev);
+Changes in v4:
+- Correct the commit text for the new patch#1 added in v3 and drop the
+incorrect R-b tag
+- Link to v3: https://lore.kernel.org/r/20250508-a623-gpu-support-v3-0-3cb31799d44e@quicinc.com
 
+Changes in v3:
+- Rebased on top of v6.15-rc5
+- Dropped drm-msm patches since they are merged in v6.15
+- Correct GMU opp table in dt (Konrad)
+- Remove smmu_clk from gmu clock list (Konrad)
+- Update dt-bindings yaml with a new patch#1
+- Link to v2: https://lore.kernel.org/r/20250228-a623-gpu-support-v2-0-aea654ecc1d3@quicinc.com
+
+Changes in v2:
+- Fix hwcg config (Konrad)
+- Split gpucc reg list patch (Rob)
+- Rebase on msm-next tip
+- Link to v1: https://lore.kernel.org/r/20250213-a623-gpu-support-v1-0-993c65c39fd2@quicinc.com
+
+---
+Akhil P Oommen (1):
+      drm/msm/adreno: Add speedbin data for A623 GPU
+
+Gaurav Kohli (1):
+      arm64: dts: qcom: qcs8300: Add GPU cooling
+
+Jie Zhang (3):
+      dt-bindings: display/msm/gmu: Update Adreno 623 bindings
+      arm64: dts: qcom: qcs8300: Add gpu and gmu nodes
+      arm64: dts: qcom: qcs8300-ride: Enable Adreno 623 GPU
+
+ .../devicetree/bindings/display/msm/gmu.yaml       |  34 ++++++
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts          |   8 ++
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi              | 132 ++++++++++++++++++++-
+ drivers/gpu/drm/msm/adreno/a6xx_catalog.c          |   5 +
+ 4 files changed, 178 insertions(+), 1 deletion(-)
+---
+base-commit: 89d926fa53d0a6c257c4e8ac1c00c3d9a194ef31
+change-id: 20250213-a623-gpu-support-f6698603fb85
+prerequisite-message-id: <20250822042316.1762153-1-quic_gkohli@quicinc.com>
+prerequisite-patch-id: d7777838f03a79704af190f43063f99334e58e53
+prerequisite-patch-id: e3228ae5f83ed408ee59404be165498bc6a3e183
+
+Best regards,
 -- 
-2.45.2
-
+Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
 
