@@ -1,111 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-71951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71952-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 768CFB42D5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 01:27:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 905C5B42D98
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 01:46:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA4E27B99D8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 23:26:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5B879561A8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 23:46:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 092BA2EBDD0;
-	Wed,  3 Sep 2025 23:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5A3091DE4FB;
+	Wed,  3 Sep 2025 23:46:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ldlah4M3"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Xx0yNjCW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58731459F7;
-	Wed,  3 Sep 2025 23:27:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBF0DF76
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 23:46:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756942064; cv=none; b=pxh/C4ogpp/TQEzAFown9/9HsbDqaveH0GkMo66d6ZwLWDLBFFt7TgkTbqJGrWgCiaaY7sM91fowMgB1JGHqMDgSG4z9W9OirMu7hGcasOPCLvZb4aOWxlUSlLvqmE0qiETDrm5mtlw0q39pWptRxhh5FZg1C1xfl2OYIvwbk3E=
+	t=1756943165; cv=none; b=rvr01IZtga9X+yqgzCKEoaHU/Mce8SfpBlYB/TO3xShWGTocfhqJxlfA1ULt3Zgdc+D86mv+QiJTaXu5U8/W63MaCKVxfbs+S7npdug9HwZEWZlHoFswQjshveTwRMz3PYBxSUeeR21R/xn7nvakWLyKIlqs1bXnvmfLuJitjF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756942064; c=relaxed/simple;
-	bh=AEj1ut4nnqnWq24GOBtJDcvtfSaWbvakcSXdhfDlddc=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=sqW20m9uOUWDwJLgHFLg+toC4Kl9OMv0P2oCPf4bMFbt6jamrFzYiaQ+gxR1Awwc20/cpbAvfRt8jQUx+snLIssk2rJEOBe9NOVErv+jaq1oO3/wQO+jXx34Mk1QEoyHsFK0ddLXQ3nqcXSFE9L1Ed8XhUAZT4KH05SR7QljNd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ldlah4M3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FE8C4CEE7;
-	Wed,  3 Sep 2025 23:27:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756942064;
-	bh=AEj1ut4nnqnWq24GOBtJDcvtfSaWbvakcSXdhfDlddc=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Ldlah4M3xYRMQ13HGwDjqjTnbdq1rH2Hf83aVgmMBJE2e8SBpBNadUH74xRZY+n2Q
-	 naR8MdrqP1CJVqRxVjpaPUC+zz3b5qovCMnK8sC1Rh2LgjoVSuEcfOd+0bk8lvE4ir
-	 IkMSbVk+DoWBx8Si/PCGMy8mfXyVKclVwdASCUvZgZcy3LStrtBOtEZwv0Ewoq3r4H
-	 VMhHkGCmIz3qFTZcdN1yenEcvyW/M6mTjUpTsrO2IaITxcsUiHygyI6dCSoCJ17s2X
-	 mnPFQQLu+hdhlYQVZ4G/59Llwy+MHfG+V/djLSD45qIVp3iCNAXQ8vOhSsrl/HA1m/
-	 ppZf8LnETO2yQ==
-Date: Wed, 03 Sep 2025 18:27:42 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1756943165; c=relaxed/simple;
+	bh=bKafahgtjgSdUvTRQ8tQoB1hM0RhKnBI179S/IxZw/o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=hlpARzUxCHImg3j2hWWXm6LRka9LwOn7y7lpRwrTd9acxM0gwmolTvb+ywgScyV3Cgq2MAHsDnN2WFTgTDzNn01XHu72c34yAi0Bqify53sUhCaxkWM1pZJ56CgX56nfgCb5FRS9KQnXk9GRkvf61DbEZUbBl4kA+d2qcG0d8OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Xx0yNjCW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583DxJXw004166
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 23:46:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=YkAb+BdBtP58KIf9+ez4rCZs
+	0vp9S2izMGPKnDHcn8s=; b=Xx0yNjCWc23/jxyl1eg4ByuqjbHai1cBJFdKW3Q5
+	KvdNa7vyj3JWHPxkffq/lRpP7fXMPDknOw6cGXnM/+uk9KGlm8r89byL/v9JMlUO
+	QJoLrscT7vDB+w02w0XPUZ79Q9hnk7dw1AXzTZkW34JR85y6bk8kPQMLVv9MbOUP
+	pxOFxEUeZYgV6bPNI+dUzwEzod8JbekD7jK/WiPbKj/3MSSy+oJqWZhmdoahRzxY
+	vDMStYZ2i2Ckf5Ghux+rqoiqbg6kPdyGa/bdQ4MQgCUqh4mQ63XZXhqVmXktDw+4
+	6X0kTnxdAalkzZHB0sN+ObWTIiDOqBESgoBEf845xGPr5Q==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8we24-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 23:46:02 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-725d32eaa99so9342586d6.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 16:46:02 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756943162; x=1757547962;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YkAb+BdBtP58KIf9+ez4rCZs0vp9S2izMGPKnDHcn8s=;
+        b=Ss+WC2DRAMYcF7vvYvSFQnWpj1ICzG9mluYKLjuQV4tfvUrfo3uYPDDvL8D4MLywJc
+         hMl8K7ZcdJZC3Wuhp15qypctw99fDDA7BfaAIa8L1jLahc2yk0zQTAI7mW8BVdhq7O/O
+         YvpAiS3fDwQHcf5MPQdZdugvuZHPGK/WXtpW9O+eIEoRsdBl7qv9NmyamQFiQCZWJ8Zs
+         dFo0p+aWGemvTg+QcLPf38Q6xDm5h5TL/MvKSESkij4Nv2cqmJC7KlOfOHvNqYH6jvuz
+         6bnOGFqvM86bvOl0eDAuqz+lVVqKZPvPsaKHbTFJ6LWONGBXfSFePw2cStiHhMs/cmP6
+         XmFg==
+X-Forwarded-Encrypted: i=1; AJvYcCXUZeVsdC8CoGVEcWl2wf1nLIsWX5EcZjYgZsSGStpJ2uRVMc+mS/Z4sksc3xf2fToiPaqU+FSL0mD4o3wf@vger.kernel.org
+X-Gm-Message-State: AOJu0YwTxEDvYFGm+lzYQKInsx65ELnrm7wTY35CLCJzwxilqGxT9sIb
+	vDQqpdUkTF9IVMPcQpexEqAJhEpAIphk7hr3zwJOEdPA5kCdiv00I5PXtmkq6W1Jfm3SxBo0OHc
+	xhPPd7mzHZa96mNVN9NnW05uK9oNg9TFc4tT7F+igpZeNtWzXTxfXZ3zdPAIpYpDHi/Tr
+X-Gm-Gg: ASbGncsCO7PocG7XiyfpBI91PG5p2j4X3PaClJeUV3EcaCpa03aBXQtxe5+9qNGqKIv
+	Ewj3xSJRmWM5cR5wqZEULswP8o3tEi8wc+kuqUvmtxVraGCCll3cOdRBSy3a+avUo1zJAnkWK8c
+	1Ww2Ihj4srCreKtwfjTtL4xYrr3QH8d++Gsm1JAcPt9Cgd6GsqG3pA/KcSJLk1jh5wUUmMxU0NG
+	IrjFKL36XOEeZ/JOQTmw7ssjeKPJQlaVIfpfCbLzsz+dXfcAo+wvPO0mZRfXqMhc3f7IYrBkwja
+	jAxpvkmb3ip5E1MlEsefYy6TirliwLkzV1V1fiQ+rX11PCa1D5QQAfMQm5UADleEeWeTYvHEOZo
+	YRVe69PnNF7PphdaDIEZt0RoY9ELqUsZCsbeCVB5fO6jePqFoXvTn
+X-Received: by 2002:a05:6214:5199:b0:718:a53c:d5ea with SMTP id 6a1803df08f44-718a53cd8b4mr134396446d6.41.1756943161679;
+        Wed, 03 Sep 2025 16:46:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEeKw8/l+JU/+w+pUW5gWTeEM0B3lNbyMq4ZaRy2csjRNAmkpAtPFYULmhJ/idZ8VM17Hpkeg==
+X-Received: by 2002:a05:6214:5199:b0:718:a53c:d5ea with SMTP id 6a1803df08f44-718a53cd8b4mr134396226d6.41.1756943161076;
+        Wed, 03 Sep 2025 16:46:01 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608acfbb87sm827119e87.105.2025.09.03.16.45.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Sep 2025 16:46:00 -0700 (PDT)
+Date: Thu, 4 Sep 2025 02:45:58 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v10 2/6] dt-bindings: display/msm: dp-controller:
+ document QCS8300 compatible
+Message-ID: <j7whxaqfeyz6fqwg54h2mivobbvo3plvxxzor7whmwjkhavndw@ulqfidkwwn6j>
+References: <20250901-qcs8300_mdss-v10-0-87cab7e48479@oss.qualcomm.com>
+ <20250901-qcs8300_mdss-v10-2-87cab7e48479@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, 
- Guenter Roeck <linux@roeck-us.net>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
- Wim Van Sebroeck <wim@linux-watchdog.org>
-To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-In-Reply-To: <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
- <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
-Message-Id: <175694204303.3260042.16528672909501752752.robh@kernel.org>
-Subject: Re: [PATCH 1/2] dt-bindings: Add binding for gunyah watchdog
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250901-qcs8300_mdss-v10-2-87cab7e48479@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: tjR0yhtlzdTgdqnqq1ActUm5urr6U8KQ
+X-Proofpoint-GUID: tjR0yhtlzdTgdqnqq1ActUm5urr6U8KQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfX9xHxQTHqXLtJ
+ Ze25zehpf7IUEcxIdE8P/HP2J/ivgOFrFlq+35sXrNnchrfsvksnkBryba/S7rWltyKlM7j3TcU
+ qKYjSgH5smdiop6+wVL9QcAWJnTawbElS7BJOCh5DIzYv3bdTmbr8YOSwVPnPzPe95yZHaRAryw
+ /x78TBbnKaKZo59Y7K3OTcBIDgOLqxONgrofOhlh5HEQ8kN+W6Z2DJ4WX7butjQ299DWoDX4C8V
+ 2719/fLKCOR6GhXXfDA3RasgYHevsxWpIcddWYj3/Jn68u0jLeQiB1Imoeqo4jPHzOWPDxu6XQ2
+ SjpprNq06UxsTC0DxYOWlEeIo+Q4jx59SiseWfHoQx2lKTiEuza2vcjJ3nGKqF53FKJV7wHvNbR
+ kSBTJZbx
+X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b8d33a cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=EZgLUtVhDPKl7mjbVu8A:9 a=CjuIK1q_8ugA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-03_11,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
 
-
-On Wed, 03 Sep 2025 19:33:59 +0000, Hrishabh Rajput wrote:
-> The Gunyah Hypervisor applies a devicetree overlay providing the
-> pretimeout interrupt for the Gunyah Watchdog that it will be using to
-> notify watchdog's pretimeout event. Add the DT bindings that Gunyah
-> adheres to for the hypervisor and watchdog.
+On Mon, Sep 01, 2025 at 05:57:30PM +0800, Yongxing Mou wrote:
+> Add compatible string for the DisplayPort controller found on the
+> Qualcomm QCS8300 SoC.
 > 
-> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+> The Qualcomm QCS8300 platform comes with one DisplayPort controller
+> that supports 4 MST streams.
+> 
+> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
 > ---
->  .../bindings/watchdog/qcom,gh-watchdog.yaml        | 76 ++++++++++++++++++++++
->  MAINTAINERS                                        |  1 +
->  2 files changed, 77 insertions(+)
-> 
+>  .../bindings/display/msm/dp-controller.yaml           | 19 +++++++++++++++++++
+>  1 file changed, 19 insertions(+)
 
-My bot found errors running 'make dt_binding_check' on your patch:
+I've picked up the last version of the DP MST patchset. Could you please
+rebase this patchset on top of it, hopefully making it finally
+mergeable.
 
-yamllint warnings/errors:
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/watchdog/qcom,gh-watchdog.example.dts:37.3-38.1 syntax error
-FATAL ERROR: Unable to parse input tree
-make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/watchdog/qcom,gh-watchdog.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1519: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
-
+-- 
+With best wishes
+Dmitry
 
