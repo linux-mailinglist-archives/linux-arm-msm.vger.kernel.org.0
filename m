@@ -1,112 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-71950-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD72DB42CA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 00:13:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 768CFB42D5F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 01:27:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 56BBB1BC75B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 22:13:56 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id CA4E27B99D8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 23:26:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 948352EC090;
-	Wed,  3 Sep 2025 22:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 092BA2EBDD0;
+	Wed,  3 Sep 2025 23:27:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GWOlTwZ1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ldlah4M3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C38217F33;
-	Wed,  3 Sep 2025 22:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58731459F7;
+	Wed,  3 Sep 2025 23:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756937610; cv=none; b=iNaCwPWdfhHXeHcDx67tNAGfPeWGtvY/3LlOa9y/FqMGlbEIYBn6BQZeizPqTdTuPZBrxe786DjgCmDqWQSdYkoHRAwQl2IQhchAQUHVnD6uEasFNGuPvLJpi4H34v90flKtq7beUBxXQhyymcC5PMN8k69dz7hAkuukDVfEPg8=
+	t=1756942064; cv=none; b=pxh/C4ogpp/TQEzAFown9/9HsbDqaveH0GkMo66d6ZwLWDLBFFt7TgkTbqJGrWgCiaaY7sM91fowMgB1JGHqMDgSG4z9W9OirMu7hGcasOPCLvZb4aOWxlUSlLvqmE0qiETDrm5mtlw0q39pWptRxhh5FZg1C1xfl2OYIvwbk3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756937610; c=relaxed/simple;
-	bh=oV2NWXl85j6kRtt65I+kwlkxl12a07d3zCpp3cY0u7U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hvVUMOW4RoonsbH1em9fIcyQORrRPHOt5cYSiaWaliRwQxMIIkpfgV6M/xoPrAuo7lZb5IhaEisCCJoFcxqKXboQ4VLyjsGt+KTkVD5b9BLhTA3SfMnM1ZgaXnYmGQpO6/CfzIkwNbCA1zlYqOZBzRgmZ05uyBlzDbTsW7bDmJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GWOlTwZ1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1C4C4CEE7;
-	Wed,  3 Sep 2025 22:13:29 +0000 (UTC)
+	s=arc-20240116; t=1756942064; c=relaxed/simple;
+	bh=AEj1ut4nnqnWq24GOBtJDcvtfSaWbvakcSXdhfDlddc=;
+	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
+	 Message-Id:Subject; b=sqW20m9uOUWDwJLgHFLg+toC4Kl9OMv0P2oCPf4bMFbt6jamrFzYiaQ+gxR1Awwc20/cpbAvfRt8jQUx+snLIssk2rJEOBe9NOVErv+jaq1oO3/wQO+jXx34Mk1QEoyHsFK0ddLXQ3nqcXSFE9L1Ed8XhUAZT4KH05SR7QljNd0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ldlah4M3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18FE8C4CEE7;
+	Wed,  3 Sep 2025 23:27:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756937609;
-	bh=oV2NWXl85j6kRtt65I+kwlkxl12a07d3zCpp3cY0u7U=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GWOlTwZ1nTSfXLuD5gd526C34LTRvNISuCXTEx6tJGQsTrY+bYTIDnBwXiBaONTFz
-	 Mm6Xw3oE28KZV0wQ2qEAOF4LS8+5+vnFEqbQhgnfA4vBW83Yqf5YVeK8OtTk6w9ghD
-	 yUetGzl+tu00FFwz2oagXV0MiKAUffyLgoSStzFGrJp/eme/5quFSWJ2dX1asSgbEW
-	 o3FGYkpZJJrRjpw9rxUmHrF0e4ZIxA8+IA6C27uWpy9Ds1URWBO3TCbtwMgGMtmWBi
-	 HsLKgXhlzQazYjJuOQqqNfG9XcFFBDTsNf/B/i11ZoeI5NMTpB6TaooCId1NdGna5h
-	 yDcpNVWuPsFpg==
-Date: Wed, 3 Sep 2025 17:13:27 -0500
-From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, Thomas Zimmermann <tzimmermann@suse.de>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	David Airlie <airlied@gmail.com>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>, Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	freedreno@lists.freedesktop.org, Mahadevan <quic_mahap@quicinc.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abel Vesa <abel.vesa@linaro.org>, Simona Vetter <simona@ffwll.ch>,
-	devicetree@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>
-Subject: Re: [PATCH v8 7/9] dt-bindings: display/msm: expand to support MST
-Message-ID: <175693760715.2953637.17179173729112460922.robh@kernel.org>
-References: <20250903-dp_mst_bindings-v8-0-7526f0311eaa@oss.qualcomm.com>
- <20250903-dp_mst_bindings-v8-7-7526f0311eaa@oss.qualcomm.com>
+	s=k20201202; t=1756942064;
+	bh=AEj1ut4nnqnWq24GOBtJDcvtfSaWbvakcSXdhfDlddc=;
+	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
+	b=Ldlah4M3xYRMQ13HGwDjqjTnbdq1rH2Hf83aVgmMBJE2e8SBpBNadUH74xRZY+n2Q
+	 naR8MdrqP1CJVqRxVjpaPUC+zz3b5qovCMnK8sC1Rh2LgjoVSuEcfOd+0bk8lvE4ir
+	 IkMSbVk+DoWBx8Si/PCGMy8mfXyVKclVwdASCUvZgZcy3LStrtBOtEZwv0Ewoq3r4H
+	 VMhHkGCmIz3qFTZcdN1yenEcvyW/M6mTjUpTsrO2IaITxcsUiHygyI6dCSoCJ17s2X
+	 mnPFQQLu+hdhlYQVZ4G/59Llwy+MHfG+V/djLSD45qIVp3iCNAXQ8vOhSsrl/HA1m/
+	 ppZf8LnETO2yQ==
+Date: Wed, 03 Sep 2025 18:27:42 -0500
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250903-dp_mst_bindings-v8-7-7526f0311eaa@oss.qualcomm.com>
+From: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, 
+ Guenter Roeck <linux@roeck-us.net>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ Wim Van Sebroeck <wim@linux-watchdog.org>
+To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+In-Reply-To: <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
+References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
+ <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
+Message-Id: <175694204303.3260042.16528672909501752752.robh@kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: Add binding for gunyah watchdog
 
 
-On Wed, 03 Sep 2025 14:58:18 +0300, Dmitry Baryshkov wrote:
-> From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+On Wed, 03 Sep 2025 19:33:59 +0000, Hrishabh Rajput wrote:
+> The Gunyah Hypervisor applies a devicetree overlay providing the
+> pretimeout interrupt for the Gunyah Watchdog that it will be using to
+> notify watchdog's pretimeout event. Add the DT bindings that Gunyah
+> adheres to for the hypervisor and watchdog.
 > 
-> On a vast majority of Qualcomm chipsets DisplayPort controller can
-> support several MST streams (up to 4x). To support MST these chipsets
-> use up to 4 stream pixel clocks for the DisplayPort controller and
-> several extra register regions. Expand corresponding region and clock
-> bindings for these platforms and fix example schema files to follow
-> updated bindings.
-> 
-> Note: On chipsets that support MST, the number of streams supported
-> can vary between controllers. For example, SA8775P supports 4 MST
-> streams on mdss_dp0 but only 2 streams on mdss_dp1.
-> 
-> Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-> Signed-off-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
 > ---
->  .../bindings/display/msm/dp-controller.yaml        | 103 ++++++++++++++++++++-
->  .../bindings/display/msm/qcom,sa8775p-mdss.yaml    |  26 +++++-
->  .../bindings/display/msm/qcom,sar2130p-mdss.yaml   |  10 +-
->  .../bindings/display/msm/qcom,sc7280-mdss.yaml     |   3 +-
->  .../bindings/display/msm/qcom,sm7150-mdss.yaml     |  10 +-
->  .../bindings/display/msm/qcom,sm8750-mdss.yaml     |  10 +-
->  .../bindings/display/msm/qcom,x1e80100-mdss.yaml   |  10 +-
->  7 files changed, 150 insertions(+), 22 deletions(-)
+>  .../bindings/watchdog/qcom,gh-watchdog.yaml        | 76 ++++++++++++++++++++++
+>  MAINTAINERS                                        |  1 +
+>  2 files changed, 77 insertions(+)
 > 
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+My bot found errors running 'make dt_binding_check' on your patch:
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/watchdog/qcom,gh-watchdog.example.dts:37.3-38.1 syntax error
+FATAL ERROR: Unable to parse input tree
+make[2]: *** [scripts/Makefile.dtbs:131: Documentation/devicetree/bindings/watchdog/qcom,gh-watchdog.example.dtb] Error 1
+make[2]: *** Waiting for unfinished jobs....
+make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1519: dt_binding_check] Error 2
+make: *** [Makefile:248: __sub-make] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com
+
+The base for the series is generally the latest rc1. A different dependency
+should be noted in *this* patch.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command yourself. Note
+that DT_SCHEMA_FILES can be set to your schema file to speed up checking
+your schema. However, it must be unset to test all examples with your schema.
 
 
