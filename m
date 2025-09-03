@@ -1,81 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-71868-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E1E2B421CD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 15:35:00 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA5F2B421CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 15:35:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 18C3B16CF63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:32:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF7F4188750F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:35:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A1583090FA;
-	Wed,  3 Sep 2025 13:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 281A93093D8;
+	Wed,  3 Sep 2025 13:34:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zK1y7ofR"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Oq5EYdPk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A38308F0E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 13:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D391EE7C6;
+	Wed,  3 Sep 2025 13:34:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756906322; cv=none; b=i48C7dsUeb/sZl0BwUCN4ak/6G+v0w4cP5q3mzrOtZPYi7LpwNVKWSdt61J6GH+rGHK7wrZIQF+SUcsb86KhSrvcpDzNJEdRt4QDXC7GmAYO7c+BVLl8V8oqGhStes7NBXXh3b6hhYfxAygQOHt1VaKAsnmrmCx4LsiEaDV7GT4=
+	t=1756906487; cv=none; b=gT2R5fWynBKUWC6uhKnfB5PNCdfkk9MTlqhIw4iRAG70aNIgsLShVvL1o79zIAObkRbzljOV4hk+H68sWfLYe+8CXLOeP7FZtl9pjMshJBc47fKcDegwmZ8SABCc3tlDhHsTswNInnMMKP/yNcCwRN8GP7jdN3aLot4glhsaT4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756906322; c=relaxed/simple;
-	bh=HMyrqafZWVvnCp8l3xl9EjMdbJHyX9qnKtyEFsPn8dE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=krBDDfeCUYkNyH0dihPJ8PCLL2XipzpmLeIFcaA5ZSEPeTVIj8nSuVnlTCL6vQe/cDCdHX84J6xhhpbAz7nl8tBhp0vIfJSu30J9XjHhIEWkyF2aEPPA/5FeUaKjSZUH6K6FO4g0By6atR3cKZEGr4u+c/h20nEVPW0f6fnIiSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zK1y7ofR; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45cb6180b60so3856685e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 06:32:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756906319; x=1757511119; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=jV/+kNQU+fID5A7W7F8ncUimxdPkwRhQZObi8KDWFN4=;
-        b=zK1y7ofRkabpTVTCK72t1pu/W63oE1k9cWiQ7iCp8g6fJ56OmbzmKaB+VGNKqm+k74
-         RstJas+QJu2w5nvLmF4MwLl0M/Q8ETcXt5DSXHJlcW4W03dhGsfoD6IXKgqZlFKhWY3q
-         9TIyKEBiFY2RcJ+cyPlpUKB65IimGqbZ0ejuUyM9VKd03F5oY69T623wErhxaflnw48V
-         7EXfQNnsDwkd0uTwHR+4MV/NCMoctN5+HfVYyFcq8nd2AfPhs+IX5A3yCEt0AR6hhWuo
-         +tuf/SgYnGUzpfUKlDUTC7NmZUD9xSS3co5ihP6W2kj5CmIEknNA1owGStToRsNoVs0Z
-         8Hlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756906319; x=1757511119;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jV/+kNQU+fID5A7W7F8ncUimxdPkwRhQZObi8KDWFN4=;
-        b=hZOJqob4TsjKEg6eE52MAn0AVLa4uWFH/L9KDbZZFGk0Bu7HE10aOhWiHrUwdsqzV+
-         c4X5UOxhaQXGHL8jj8cQoPUfDJECSBIN2bD3lICND4pdCLTY5JHHXF4U00hYVBwNXTOv
-         xiWle1BHhbJ0BfQwAYo+8bVXfx/ElUFE3ZmrHg/vthkCnc7zh8huo3rxmCiqTub3SmP0
-         R562Qv52lMDyO40YeJykLxuYrohpHCgQWgq6I+kcnzNizHdPpWwk1yeOVN8fy5flYQGi
-         TH6HSU4H7hVivpyYFCILi2FqgDiPgd4kktR/HO6SqPHEZc7F6+5FFU7k4yfs2wqCZeoq
-         CR5A==
-X-Forwarded-Encrypted: i=1; AJvYcCX0KjkAgvM+a97J1zwGbQpZhZB5qmZ29lAsT6N2cnmuwSJ5qqVCFTiOxRhsmE2yrf81/cbRQNN9avneuqr+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx+NH9bmlUEsWjHp7O5OPqitraTItJSH9YiuXUuCVLPTi4TBrxf
-	AngdVTTtAEmbNmHbRLYTN+Vwr0KYMDvKfU/CCWMf+Fq4F2WwDFrbWUHtZ3LjqWed9IY=
-X-Gm-Gg: ASbGncvKenGeu77ebdpoPvMCpP9Vj5AGZ7fB6yRY2Y2A8dZQCZrpmiRGQNYPqa0oxLU
-	M4XSyxTB59nsYubMymi0ST2WzG7NEJdE5jV+1lhr7QWsPu1n2J//C2Cx9wIAKWkYbSAvV+7dCsL
-	pvu5Kbn3HI5P3p29yK/FACDR5LR+NdpsCuIV4rBCV6dIQJFwsYcBCskTypppg4f0PhuLEJWXw9n
-	/JbNmrcZTDtk7/HzTbmpgPkdhTRbHKY/J23VJi7IW+KJmudxOjAun4sm4bl6gRBrhZGqCFiFcDm
-	h2vgN2G40R8cDTqGj6mUfTI6knfvfqsXAIltx4qadry77qexMvHxo1mEwygwJZ8g03Ti9Y3FjQR
-	9Io3GwOP1RQv6QfBlHMOLDpdXfgMPb75L0xgzOvTPKNfYUY0oLxc8L5j00fLoiO9On5dHmeYMWX
-	zxIRKxBedAuBPKv2Mj6s7+W28oUGAV5tjKm4mAfdgI
-X-Google-Smtp-Source: AGHT+IHgsBA9rledeTVeo8KQley7QFRDXyCYgnqMKEv7MzsQIBH95kbaAiwwLJ8XXVf/C9Q9lEUUqQ==
-X-Received: by 2002:a05:600c:46c8:b0:450:d386:1afb with SMTP id 5b1f17b1804b1-45b85532ec8mr134876395e9.9.1756906318707;
-        Wed, 03 Sep 2025 06:31:58 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f306c22sm327450385e9.13.2025.09.03.06.31.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Sep 2025 06:31:58 -0700 (PDT)
-Message-ID: <b5a0ad0d-ceba-40d3-a111-0831c4538cea@linaro.org>
-Date: Wed, 3 Sep 2025 14:31:55 +0100
+	s=arc-20240116; t=1756906487; c=relaxed/simple;
+	bh=EAV9G1NZWwYcTtYDpNYP0qYxFjeoE9satkLlJGdZv8g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SZzo1K/ipSSZi81TTI3ZLn3iRiNDI4YnFya4ig8Ykn2I/N6spLgqwWkgVXHwRhLqZ89xfSBC70M6NYL/3eoDaXRYhs8dVLVgJjWl8e4NZXRjUkW3YQXdhQlubMXuRWV/ITQRJ3uswo1neRMC9kPpe39BDg3o4Jg3oTevdZNef+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Oq5EYdPk; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583BEuOs004906;
+	Wed, 3 Sep 2025 13:34:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	h5XQrsEBVWNvjygVqAdOwnAkCvxaBE49RrGWGcaTm+Y=; b=Oq5EYdPkCNFVocka
+	u6prd+u9gJVgqxDSt+gtYT/4Y7DXfF0oA7UAvUws8B2OueiDHqKSAaTrr+65OvLB
+	9C9jOFSw0qWJeWYfOZH3I6s6aw+9MRRItb+kkoOEqjvDX5jGKv8pxPf+33FwBixQ
+	CSbQQ3JQUl1yoXKMr/Z6XU+QcYFOb+Eg7N63o8KJaMBAKQ0p9Hpp66ezBA/wUFUO
+	k0Acgcfa8nE+alKkruHn0iPPGlYHGrPb9VXDB5qUroUctPnDI0zq59+PxhYqKsuO
+	UMYqo1HBLocyFD0ShWK1nZB3xDl/LJn6C/mbLKjddgay69bk1db5UmMV/WNQ63lz
+	BRJfbw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s3wsx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Sep 2025 13:34:39 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 583DYcoZ001709
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Sep 2025 13:34:38 GMT
+Received: from [10.216.0.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 3 Sep
+ 2025 06:34:34 -0700
+Message-ID: <89c85f63-4432-4779-b3e4-fcc7812f555e@quicinc.com>
+Date: Wed, 3 Sep 2025 19:04:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,48 +65,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] Peripheral Image Loader support for Qualcomm
- SoCs running Linux host at EL2
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- linux-remoteproc@vger.kernel.org
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <660c2594-9a93-450e-9a2e-17ef6b4c696d@linaro.org>
- <20250820112242.usd4sdd3avxdlcas@hu-mojha-hyd.qualcomm.com>
- <f5582304-8f55-4c3b-b752-9cefa1e4df96@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH V3 3/5] scsi: ufs: core: Remove unused ufshcd_res_info
+ structure
+To: Manivannan Sadhasivam <mani@kernel.org>
+CC: Krzysztof Kozlowski <krzk@kernel.org>,
+        Ram Kumar Dwivedi
+	<quic_rdwivedi@quicinc.com>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <James.Bottomley@hansenpartnership.com>,
+        <martin.petersen@oracle.com>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-scsi@vger.kernel.org>
+References: <20250821112403.12078-1-quic_rdwivedi@quicinc.com>
+ <20250821112403.12078-4-quic_rdwivedi@quicinc.com>
+ <1ccecf69-0bd8-4156-945d-e5876b6dea01@kernel.org>
+ <1efa429d-7576-49da-a769-b1eba9345958@quicinc.com>
+ <jzxvodlzamuta5cgupp7upkh2wjmi4n6gdvj5vceawhvw2kquc@hm4kz2qt5u2k>
 Content-Language: en-US
-In-Reply-To: <f5582304-8f55-4c3b-b752-9cefa1e4df96@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+From: Nitin Rawat <quic_nitirawa@quicinc.com>
+In-Reply-To: <jzxvodlzamuta5cgupp7upkh2wjmi4n6gdvj5vceawhvw2kquc@hm4kz2qt5u2k>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX9XNAfMHvLRfz
+ 3QLUUYdpd3y6VTPdJZTdq3xjvyI3cBr5lt9tyuIPCRAoIx5jKHTVOXcv2GkbaYtdyyfe8HeDLgv
+ ea6iCW2nyN00HkbDILmb4uBPJePHvuarF/HkwoR8JuuvOZelCBDpUasVyqf7LIr/PAmpjrPBdyg
+ VJxGadpfxqs4rJnW//yJj6WxluQ4VZTn8//1IloeOsOfIPgPhwEwr66lcnn13sDW/9wJc5uwSDm
+ UfQ0pEbtPuO6w2oSPYAhdk4T+ZZwevzuAy1/VeV7AsjK8yKHT2sBWWYcCljZbEiPhj/fHYjqL6S
+ hCXxg29L38NB7cfXdDT36GxhqPxkXZ9vKunLSfhtXhKZm1aNp4p+H4XpOqiFYCGll3VpSXKQRVg
+ BqZKS3MD
+X-Proofpoint-GUID: ZDVZf4fZr7deGWKxI1Yc1PFeo8jWD2V4
+X-Proofpoint-ORIG-GUID: ZDVZf4fZr7deGWKxI1Yc1PFeo8jWD2V4
+X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b843ef cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8
+ a=4E0j1FCiVcJF2q5ArJcA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-03_07,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
 
-On 03/09/2025 12:56, Konrad Dybcio wrote:
->> Can you try with this next-20250814 tag ?
-> You sent it on the 19th, so it's in your best interest to run a quick
+
+
+On 9/3/2025 6:58 PM, Manivannan Sadhasivam wrote:
+> On Mon, Sep 01, 2025 at 09:38:25PM GMT, Nitin Rawat wrote:
+>>
+>>
+>> On 8/21/2025 5:18 PM, Krzysztof Kozlowski wrote:
+>>> On 21/08/2025 13:24, Ram Kumar Dwivedi wrote:
+>>>> From: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>>
+>>>> Remove the ufshcd_res_info structure and associated enum ufshcd_res
+>>>> definitions from the UFS host controller header. These were previously
+>>>> used for MCQ resource mapping but are no longer needed following recent
+>>>> refactoring to use direct base addresses instead of multiple separate
+>>>> resource regions
+>>>>
+>>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+>>>
+>>> Incomplete SoB chain.
+>>>
+>>> But anyway this makes no sense as independent patch. First you remove
+>>> users of it making it redundant... and then you remove it? No.
+>>
+>> Hi Krzysztof,
+>>
+>> The driver changes are in the UFS Qualcomm platform driver, which uses the
+>> definitions, while ufshcd.h is part of the UFS core driver. Hence kept in 2
+>> separate patch.
+>>
 > 
-> git rebase --onto linux-next/master $(git describe --abbrev=0)
+> No, that is not a logical split. When the users are removed, the unused
+> definitions also have to be removed even if the definitions are in a different
+> file.
 > 
-> and giving the series a prompt re-test before sending, because there might have
-> been incompatible changes, whether ones that would prevent applying, or break
-> things functionally
+> So I believe you need to remove 'ufshcd_res_info' in patch 1 and 'ufshcd_res' in
+> patch 2.
 
-I can't even find that tag next-20250814 closets thing is
+Agree with this. Hence I have taken care of this in v4.
 
-| * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \   00062ea01d35e - Merge 
-tag 'drm-xe-fixes-2025-08-14' of 
-https://gitlab.freedesktop.org/drm/xe/kernel into drm-fixes (3 weeks ago)
 
-but patch #9 in this series stubbornly won't apply to any SHA I've tried.
+> 
+> - Mani
+> 
 
-meh
-
----
-bod
 
