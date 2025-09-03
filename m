@@ -1,152 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-71925-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71927-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1004B429B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 21:20:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4194B42A01
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 21:34:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 08C357B1A75
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 19:19:11 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id F00B07A7160
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 19:32:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FC0F3629AC;
-	Wed,  3 Sep 2025 19:20:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F91A369333;
+	Wed,  3 Sep 2025 19:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b="Z0xvlH/E"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l5N2FwVO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from aposti.net (aposti.net [185.119.170.32])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B252D8DB7;
-	Wed,  3 Sep 2025 19:20:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.119.170.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707782D94A2;
+	Wed,  3 Sep 2025 19:34:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756927239; cv=none; b=nnqO3evFtIt+5VADF09bwF1HgonZNMZillNczluLDofxUAWprcMKcB3MdaKNC+G0yELSvAYyYWM3/1r+mHdbbEoLXb7qMi7RBU8lxS3GpD98h1u6h1kE/4CciP8JiEDCIr/IjT1lvNreIGsnSmpOoLD4eRqew7GLb5kZRiy+w5k=
+	t=1756928067; cv=none; b=ROcFcBjTHpkFmNtyBcuZTx7i2cic3QC9MsRUUxS9ox59zKeeaml335sbCLGWobiiBM+ra2I2MkSsM1LuUDmh6IAnVgXTc0q6m28PhfF+5lX/FXjWXArfBxKfvVRwD4NaR5CmCkO7aSoKww1jFa9zKPt9aLMKSGK62Xk3PVBDQLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756927239; c=relaxed/simple;
-	bh=kRSOTd5XrHRhOT4S3xBCr2B49OtJoj5AOBsWHzaGwXc=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=SW+LUlAyNFUKkbFyzCxAYsYgo7L+nQuD32k9quKV7nNvIckun8/7uC9smO8/k11vLnjyJWuLQKX2aCUZb0RiJH/JcUVPfuX2TAQMP1cCZZc+D2cOXPLtqO/LitGtaZxxc/aCcHa4xkpwXJSHAhiPxOP7n8xuIdSf3MHE4y5H0Es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net; spf=pass smtp.mailfrom=crapouillou.net; dkim=pass (1024-bit key) header.d=crapouillou.net header.i=@crapouillou.net header.b=Z0xvlH/E; arc=none smtp.client-ip=185.119.170.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=crapouillou.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crapouillou.net
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
-	s=mail; t=1756927235;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=c+ZgGU/Y7ymCGJS4a8iBSCEwRU68y0Cdd3gwtYGpdv4=;
-	b=Z0xvlH/ECfsC59swm4ATc7moQPplDnhXIzmBF4X35r6pJmnBDDeoU1Ie5Ab1yxhe+1ln8W
-	GcUQb2ZLGdW9NnPudS1kvJ3oXxwi39axE8bJQYRDLCQpq4QuYcwKIMP6MOFv74jzcnlQqN
-	tMc5uO4lOOAAr/7RBg88uyXzuq33+zQ=
-Message-ID: <f19aa842d210bf4cd3d7abf03ea7323f9e52df75.camel@crapouillou.net>
-Subject: Re: [PATCH 024/114] clk: ingenic: x1000-cgu: convert from
- round_rate() to determine_rate()
-From: Paul Cercueil <paul@crapouillou.net>
-To: bmasney@redhat.com, Michael Turquette <mturquette@baylibre.com>, Stephen
- Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	sophgo@lists.linux.dev, linux-mips@vger.kernel.org, imx@lists.linux.dev, 
-	linux-riscv@lists.infradead.org, spacemit@lists.linux.dev, 
-	linux-stm32@st-md-mailman.stormreply.com, patches@opensource.cirrus.com, 
-	linux-actions@lists.infradead.org, asahi@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org, 
-	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
-Date: Wed, 03 Sep 2025 21:20:32 +0200
-In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-24-b3bf97b038dc@redhat.com>
-References: 
-	<20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
-	 <20250811-clk-for-stephen-round-rate-v1-24-b3bf97b038dc@redhat.com>
-Autocrypt: addr=paul@crapouillou.net; prefer-encrypt=mutual;
- keydata=mQENBF0KhcEBCADkfmrzdTOp/gFOMQX0QwKE2WgeCJiHPWkpEuPH81/HB2dpjPZNW03ZM
- LQfECbbaEkdbN4YnPfXgcc1uBe5mwOAPV1MBlaZcEt4M67iYQwSNrP7maPS3IaQJ18ES8JJ5Uf5Uz
- FZaUawgH+oipYGW+v31cX6L3k+dGsPRM0Pyo0sQt52fsopNPZ9iag0iY7dGNuKenaEqkYNjwEgTtN
- z8dt6s3hMpHIKZFL3OhAGi88wF/21isv0zkF4J0wlf9gYUTEEY3Eulx80PTVqGIcHZzfavlWIdzhe
- +rxHTDGVwseR2Y1WjgFGQ2F+vXetAB8NEeygXee+i9nY5qt9c07m8mzjABEBAAG0JFBhdWwgQ2VyY
- 3VlaWwgPHBhdWxAY3JhcG91aWxsb3UubmV0PokBTgQTAQoAOBYhBNdHYd8OeCBwpMuVxnPua9InSr
- 1BBQJdCoXBAhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEHPua9InSr1BgvIH/0kLyrI3V0f
- 33a6D3BJwc1grbygPVYGuC5l5eMnAI+rDmLR19E2yvibRpgUc87NmPEQPpbbtAZt8On/2WZoE5OIP
- dlId/AHNpdgAtGXo0ZX4LGeVPjxjdkbrKVHxbcdcnY+zzaFglpbVSvp76pxqgVg8PgxkAAeeJV+ET
- 4t0823Gz2HzCL/6JZhvKAEtHVulOWoBh368SYdolp1TSfORWmHzvQiCCCA+j0cMkYVGzIQzEQhX7U
- rf9N/nhU5/SGLFEi9DcBfXoGzhyQyLXflhJtKm3XGB1K/pPulbKaPcKAl6rIDWPuFpHkSbmZ9r4KF
- lBwgAhlGy6nqP7O3u7q23hRU=
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+	s=arc-20240116; t=1756928067; c=relaxed/simple;
+	bh=DnLt/SBMSfTZBgk5JWHNT9RMOyUX2bInZRqm44ui51g=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=W6uHaDFjJmXQ/hfS0xjbLz4C+iNXf/gXS0p+z9saWN8UISFp88QxTJ/8Yldms2jIfIM853Hfz/XUbpWN6yCcP5CzEP5jbpRn6sr1m05hPuBzff5ZDJMMLu+LXAob4LMkQ5GjVxmCQFdSfH8ym6CnyzD/yBcugDed97Zd1EA2/AY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l5N2FwVO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 0148BC4CEE7;
+	Wed,  3 Sep 2025 19:34:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756928067;
+	bh=DnLt/SBMSfTZBgk5JWHNT9RMOyUX2bInZRqm44ui51g=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=l5N2FwVOOx4Ag7agp4LqOUzyk/gvZqe7/JMHLHMnLp4QQjwZkbO783EpsFXxZ2u8n
+	 iSUPrj0o2osvU31x2H8sTyCq+oIwwPqk7cdvOcS3u/kK3VDkkwHW8liCsAoraoKX3f
+	 Lcs5ahLhDWdjgdnFJScbvfI3prEPPzsZyMILIVy9BBYo8yZBPXv5KNocgSkBXs5i2z
+	 u6nOpMV0hslZoSA0wr8KGiFoauXT7uetF5GIqT4Okxg33RzfwTHTJnzvAie8D5daon
+	 GFGmA8xRReT3TdK9U+wQNo7Hb6VAkj9yhhx36MWdYsqZe3ME3o3ZyAgeY1IPYtdJB1
+	 LSBhHT4BrZTZw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id DB8BFCA1014;
+	Wed,  3 Sep 2025 19:34:26 +0000 (UTC)
+From: Hrishabh Rajput via B4 Relay <devnull+hrishabh.rajput.oss.qualcomm.com@kernel.org>
+Subject: [PATCH 0/2] Add support for Gunyah Watchdog
+Date: Wed, 03 Sep 2025 19:33:58 +0000
+Message-Id: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACaYuGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDSwNj3fTSvMrEjPjyxJLkjJT8dF2jFCMzE0sTY4tUI0sloK6CotS0zAq
+ widGxtbUAB4BPbWEAAAA=
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Wim Van Sebroeck <wim@linux-watchdog.org>, 
+ Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+X-Mailer: b4 0.13.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1756928065; l=1783;
+ i=hrishabh.rajput@oss.qualcomm.com; s=20250903; h=from:subject:message-id;
+ bh=DnLt/SBMSfTZBgk5JWHNT9RMOyUX2bInZRqm44ui51g=;
+ b=XfShsxJHzpWyLh8U+wdwsMZp+lUR39UftpyXcbGXlJCSLDWuRvECb2OHQJI4v/e7bkdo904ft
+ opn6k/cpcYBBAwwkPc/Ntqekh16g1Xcy97UMuJnKkeYuFAOMfxuEqYv
+X-Developer-Key: i=hrishabh.rajput@oss.qualcomm.com; a=ed25519;
+ pk=syafMitrjr3b/OYAtA2Im06AUb3fxZY2vJ/t4iCPmgw=
+X-Endpoint-Received: by B4 Relay for
+ hrishabh.rajput@oss.qualcomm.com/20250903 with auth_id=509
+X-Original-From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+Reply-To: hrishabh.rajput@oss.qualcomm.com
 
-Le lundi 11 ao=C3=BBt 2025 =C3=A0 11:18 -0400, Brian Masney via B4 Relay a
-=C3=A9crit=C2=A0:
-> From: Brian Masney <bmasney@redhat.com>
->=20
-> The round_rate() clk ops is deprecated, so migrate this driver from
-> round_rate() to determine_rate() using the Coccinelle semantic patch
-> on the cover letter of this series.
->=20
-> Signed-off-by: Brian Masney <bmasney@redhat.com>
+Gunyah is a Type-I hypervisor which was introduced in the patch series
+[1]. It is an open source hypervisor. The source repo is available at
+[2].
 
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
+The Gunyah Hypervisor doesn't allow its Virtual Machines to directly
+access the MMIO watchdog. It either provides the fully emulated MMIO
+based watchdog interface or the SMC-based watchdog interface depending
+on the hypervisor configuration.
+The SMC-based watchdog follows ARM's SMC Calling Convention (SMCCC)
+version 1.1 and uses Vendor Specific Hypervisor Service Calls space.
 
-Cheers,
--Paul
+This patch series adds support for the SMC-based watchdog interface
+provided by the Gunyah Hypervisor. The driver supports start/stop
+operations, timeout and pretimeout configuration, pretimeout interrupt
+handling and system restart via watchdog.
 
-> ---
-> =C2=A0drivers/clk/ingenic/x1000-cgu.c | 19 ++++++++++---------
-> =C2=A01 file changed, 10 insertions(+), 9 deletions(-)
->=20
-> diff --git a/drivers/clk/ingenic/x1000-cgu.c
-> b/drivers/clk/ingenic/x1000-cgu.c
-> index
-> feb03eed4fe8c8f617ef98254a522d72d452ac17..d80886caf393309a0c908c06fb5
-> aa8b59aced127 100644
-> --- a/drivers/clk/ingenic/x1000-cgu.c
-> +++ b/drivers/clk/ingenic/x1000-cgu.c
-> @@ -84,16 +84,17 @@ static unsigned long
-> x1000_otg_phy_recalc_rate(struct clk_hw *hw,
-> =C2=A0	return parent_rate;
-> =C2=A0}
-> =C2=A0
-> -static long x1000_otg_phy_round_rate(struct clk_hw *hw, unsigned
-> long req_rate,
-> -				=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 unsigned long *parent_rate)
-> +static int x1000_otg_phy_determine_rate(struct clk_hw *hw,
-> +					struct clk_rate_request
-> *req)
-> =C2=A0{
-> -	if (req_rate < 18000000)
-> -		return 12000000;
-> -
-> -	if (req_rate < 36000000)
-> -		return 24000000;
-> +	if (req->rate < 18000000)
-> +		req->rate =3D 12000000;
-> +	else if (req->rate < 36000000)
-> +		req->rate =3D 24000000;
-> +	else
-> +		req->rate =3D 48000000;
-> =C2=A0
-> -	return 48000000;
-> +	return 0;
-> =C2=A0}
-> =C2=A0
-> =C2=A0static int x1000_otg_phy_set_rate(struct clk_hw *hw, unsigned long
-> req_rate,
-> @@ -161,7 +162,7 @@ static int x1000_usb_phy_is_enabled(struct clk_hw
-> *hw)
-> =C2=A0
-> =C2=A0static const struct clk_ops x1000_otg_phy_ops =3D {
-> =C2=A0	.recalc_rate =3D x1000_otg_phy_recalc_rate,
-> -	.round_rate =3D x1000_otg_phy_round_rate,
-> +	.determine_rate =3D x1000_otg_phy_determine_rate,
-> =C2=A0	.set_rate =3D x1000_otg_phy_set_rate,
-> =C2=A0
-> =C2=A0	.enable		=3D x1000_usb_phy_enable,
+This series is tested on SM8750 platform.
+
+[1]
+https://lore.kernel.org/all/20240222-gunyah-v17-0-1e9da6763d38@quicinc.com/
+
+[2]
+https://github.com/quic/gunyah-hypervisor
+
+Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+---
+Hrishabh Rajput (2):
+      dt-bindings: Add binding for gunyah watchdog
+      watchdog: Add driver for Gunyah Watchdog
+
+ .../bindings/watchdog/qcom,gh-watchdog.yaml        |  76 ++++++
+ MAINTAINERS                                        |   3 +
+ drivers/watchdog/Kconfig                           |  13 +
+ drivers/watchdog/Makefile                          |   1 +
+ drivers/watchdog/gunyah_wdt.c                      | 268 +++++++++++++++++++++
+ include/linux/gunyah_errno.h                       |  77 ++++++
+ 6 files changed, 438 insertions(+)
+---
+base-commit: 038d61fd642278bab63ee8ef722c50d10ab01e8f
+change-id: 20250903-gunyah_watchdog-2d2649438e29
+
+Best regards,
+-- 
+Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+
+
 
