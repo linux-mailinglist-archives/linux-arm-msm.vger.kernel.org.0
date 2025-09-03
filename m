@@ -1,63 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-71869-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA5F2B421CE
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 15:35:29 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEFDCB421E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 15:37:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id AF7F4188750F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:35:24 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6D9B77BB6F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:35:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 281A93093D8;
-	Wed,  3 Sep 2025 13:34:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4010730AACE;
+	Wed,  3 Sep 2025 13:36:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Oq5EYdPk"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="C7fAWz/r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63D391EE7C6;
-	Wed,  3 Sep 2025 13:34:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D4463093D2
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 13:36:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756906487; cv=none; b=gT2R5fWynBKUWC6uhKnfB5PNCdfkk9MTlqhIw4iRAG70aNIgsLShVvL1o79zIAObkRbzljOV4hk+H68sWfLYe+8CXLOeP7FZtl9pjMshJBc47fKcDegwmZ8SABCc3tlDhHsTswNInnMMKP/yNcCwRN8GP7jdN3aLot4glhsaT4A=
+	t=1756906607; cv=none; b=TRwvQciIkUtyuYEuixrpTrFB9pxUDTbqTmraDkSaatG0fPKWLRhcNJqlx0bP1/Ow6X1ynYLyxn0nZ7mdwpNXF4uDRgBV2L0WfkZ9wAX2HMmlVT3paPIbPUK8VYmVVQV7+VsUkmrvEPGfb8kHXJ0jpUBigWGaMC6qC/uk1d7iXmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756906487; c=relaxed/simple;
-	bh=EAV9G1NZWwYcTtYDpNYP0qYxFjeoE9satkLlJGdZv8g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SZzo1K/ipSSZi81TTI3ZLn3iRiNDI4YnFya4ig8Ykn2I/N6spLgqwWkgVXHwRhLqZ89xfSBC70M6NYL/3eoDaXRYhs8dVLVgJjWl8e4NZXRjUkW3YQXdhQlubMXuRWV/ITQRJ3uswo1neRMC9kPpe39BDg3o4Jg3oTevdZNef+s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Oq5EYdPk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583BEuOs004906;
-	Wed, 3 Sep 2025 13:34:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1756906607; c=relaxed/simple;
+	bh=hNsS2uc9yOMQ2NSuhnYTKcplUu66M1ylThnjBJY/bbQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=lOuyKyqag1wt84w8+s4WgE4exWzLFlb1LWbroQD3s/V8lv19RiFlfdlep2xgVMHoye0eX8EIKoNPiRL2fOcyW1S8UOCnR0HCG3H1VPynWeDh6lJaCoMf8YmdiebMvAxcsPbY7aDmq5IFVqVoXOSKuLLwuImnDeI5Sm8lm5WoqsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=C7fAWz/r; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583BEqoX009341
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 13:36:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	h5XQrsEBVWNvjygVqAdOwnAkCvxaBE49RrGWGcaTm+Y=; b=Oq5EYdPkCNFVocka
-	u6prd+u9gJVgqxDSt+gtYT/4Y7DXfF0oA7UAvUws8B2OueiDHqKSAaTrr+65OvLB
-	9C9jOFSw0qWJeWYfOZH3I6s6aw+9MRRItb+kkoOEqjvDX5jGKv8pxPf+33FwBixQ
-	CSbQQ3JQUl1yoXKMr/Z6XU+QcYFOb+Eg7N63o8KJaMBAKQ0p9Hpp66ezBA/wUFUO
-	k0Acgcfa8nE+alKkruHn0iPPGlYHGrPb9VXDB5qUroUctPnDI0zq59+PxhYqKsuO
-	UMYqo1HBLocyFD0ShWK1nZB3xDl/LJn6C/mbLKjddgay69bk1db5UmMV/WNQ63lz
-	BRJfbw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s3wsx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Sep 2025 13:34:39 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 583DYcoZ001709
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 3 Sep 2025 13:34:38 GMT
-Received: from [10.216.0.245] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 3 Sep
- 2025 06:34:34 -0700
-Message-ID: <89c85f63-4432-4779-b3e4-fcc7812f555e@quicinc.com>
-Date: Wed, 3 Sep 2025 19:04:30 +0530
+	lN8gdknZMrOiQok/7MvQU3sHMt/V6D5KvcciwLonHIE=; b=C7fAWz/rbvK32/ph
+	nAkHjns/kz0KodePUhe9V5KmdHJ5AEnJnJyqRlkMQpyXEMZ6OS1uP0tb9jcmByBh
+	iv4TAlYU1/i3LW8nUal8SkvnEvJK7aqhA4umZZ4DYWdO5/3Kc+fEC0E+sx1pzLwR
+	sIGqboGIVun+G4ER13ZhrKdVqZlcuiBEAmbcRPzm1LW8bJ2pOAxmTq910/s1TnOx
+	Rqmdv3ezfaWdGo2bHT1yPXUm62Qfbo3KbJ1AUFA/enB/5xmPOJje+njoYDPF3W+D
+	D6dCkoOwRbBB2GWqs/KbMQFGvodjMJnFxcAjycmVk72zQB0N4JXjyJb0TXI1yAKa
+	bz6OMw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8us0d-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 13:36:44 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b32dfb5c6fso15861691cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 06:36:43 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756906603; x=1757511403;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lN8gdknZMrOiQok/7MvQU3sHMt/V6D5KvcciwLonHIE=;
+        b=jiO/6FjwAoT8ItUFdSSS2SDfV04wJfhAm1SnuAryfkDiAvafm6QMZiL77W79W9FnMO
+         rVjPHGZYWEXbmW6mK2GpFxsw78ujkyvMkIKgRW9QHrQAlqkXnQfMu2mAoC4GCR7MemWF
+         jXF9pCzvJwXvMaHmBc2StiHOtCO7BDx6iLZXmk7VB6S4WwRlSij4LHSZtXUSgXaTf/2F
+         ZkZ/h2iKP/B19koisS//cdOq6++OUA2AghVFWHVPnsM7qpN/f3lthBpXj9fWeQMlI8HM
+         uQ5pOR5hTuJPMxFYkVmPNSddhjaetQ3tofu2yY0dArkOOHEOKiGibpbqyveRVoRrcNSv
+         T60A==
+X-Forwarded-Encrypted: i=1; AJvYcCVvwh/0PAdigDYmzTq9JEvD4OzvBrgmWiQr2RGNWHJ26VNYIKZwMN1PMQlKlagM6vLOmA0w3l0DVNtavBJq@vger.kernel.org
+X-Gm-Message-State: AOJu0YywQ9nm3TVx5sSk5TwTPoS3rbraN12nl+uVLzlzIUTRRt7t101q
+	7IfjH/vHtGMLQfEo4HG72kt5jUhd8lRthaISBu+Cv7iUeZZjcSiwTg1TQaJPDZL2IjSUnLPiiLQ
+	ehQG/bn6MDX3HReMWLtcE5HclOvqka3Kw1j2ffUGgPMtUA0JNWFeuJc1tU9tr2kKDoeGy
+X-Gm-Gg: ASbGncvOREhdxHh+cXR8U/oopE2H+sOQIoWiicSdTnAViQMePl/YJrXnJjv+DywBYSI
+	gx5bIdDBTcZIcssKf5G1XW5Vf4JfmjbgNxWSsHf+Sz/PszMhLIDcAlqUyuGKuw8mtIVzLDgn7tl
+	8MfH9cNuFe2rz99+1DtTXiMjQeB5UDhed+8NWfX1OeUYveneADt8zRXgV5BLFTgg0wCcCxF232U
+	VpbucikkP0YFk0evVJvJuuOt+aGx+kpL6T2arSzE6GKGhRFfVgkkn/2eT6aODqV9u7EjwqmyCpb
+	9+K15/2tj9Mn+zS2t8PuOn/nwlOW7KTCMO/TYqOnCWyCRZDC7ZjxRD2piNvsaP1yLuR677bEeor
+	Aebb5dveQMtDuGX/x7NT7YA==
+X-Received: by 2002:a05:622a:4506:b0:4b3:4590:ab74 with SMTP id d75a77b69052e-4b34590ba5bmr55006811cf.13.1756906603087;
+        Wed, 03 Sep 2025 06:36:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IErXOAvUamYTNZwdXsoIgSgCVJyJNUAEhsmG6GIw8r9rMGaKeXaF6CVWYD77CBPNPOt2y9/Dg==
+X-Received: by 2002:a05:622a:4506:b0:4b3:4590:ab74 with SMTP id d75a77b69052e-4b34590ba5bmr55006561cf.13.1756906602636;
+        Wed, 03 Sep 2025 06:36:42 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0423ed35e4sm805734266b.25.2025.09.03.06.36.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Sep 2025 06:36:42 -0700 (PDT)
+Message-ID: <f169be5a-faa5-4824-861e-27bd2083b9cf@oss.qualcomm.com>
+Date: Wed, 3 Sep 2025 15:36:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,95 +90,101 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V3 3/5] scsi: ufs: core: Remove unused ufshcd_res_info
- structure
-To: Manivannan Sadhasivam <mani@kernel.org>
-CC: Krzysztof Kozlowski <krzk@kernel.org>,
-        Ram Kumar Dwivedi
-	<quic_rdwivedi@quicinc.com>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <James.Bottomley@hansenpartnership.com>,
-        <martin.petersen@oracle.com>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-scsi@vger.kernel.org>
-References: <20250821112403.12078-1-quic_rdwivedi@quicinc.com>
- <20250821112403.12078-4-quic_rdwivedi@quicinc.com>
- <1ccecf69-0bd8-4156-945d-e5876b6dea01@kernel.org>
- <1efa429d-7576-49da-a769-b1eba9345958@quicinc.com>
- <jzxvodlzamuta5cgupp7upkh2wjmi4n6gdvj5vceawhvw2kquc@hm4kz2qt5u2k>
+Subject: Re: [PATCH v4 3/6] arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Gaurav Kohli <quic_gkohli@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+References: <20250822-a663-gpu-support-v4-0-97d26bb2144e@oss.qualcomm.com>
+ <20250822-a663-gpu-support-v4-3-97d26bb2144e@oss.qualcomm.com>
+ <f11b778d-eba1-4712-81c7-b83f2cb38b46@oss.qualcomm.com>
+ <exkrgx6rdotfrrsnklsd7zk4ydehsk5vaoevibpqisyq2dwbd4@sa4kgnuexlna>
 Content-Language: en-US
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
-In-Reply-To: <jzxvodlzamuta5cgupp7upkh2wjmi4n6gdvj5vceawhvw2kquc@hm4kz2qt5u2k>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <exkrgx6rdotfrrsnklsd7zk4ydehsk5vaoevibpqisyq2dwbd4@sa4kgnuexlna>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX9XNAfMHvLRfz
- 3QLUUYdpd3y6VTPdJZTdq3xjvyI3cBr5lt9tyuIPCRAoIx5jKHTVOXcv2GkbaYtdyyfe8HeDLgv
- ea6iCW2nyN00HkbDILmb4uBPJePHvuarF/HkwoR8JuuvOZelCBDpUasVyqf7LIr/PAmpjrPBdyg
- VJxGadpfxqs4rJnW//yJj6WxluQ4VZTn8//1IloeOsOfIPgPhwEwr66lcnn13sDW/9wJc5uwSDm
- UfQ0pEbtPuO6w2oSPYAhdk4T+ZZwevzuAy1/VeV7AsjK8yKHT2sBWWYcCljZbEiPhj/fHYjqL6S
- hCXxg29L38NB7cfXdDT36GxhqPxkXZ9vKunLSfhtXhKZm1aNp4p+H4XpOqiFYCGll3VpSXKQRVg
- BqZKS3MD
-X-Proofpoint-GUID: ZDVZf4fZr7deGWKxI1Yc1PFeo8jWD2V4
-X-Proofpoint-ORIG-GUID: ZDVZf4fZr7deGWKxI1Yc1PFeo8jWD2V4
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b843ef cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8
- a=4E0j1FCiVcJF2q5ArJcA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: 5hWywF1aRNaCW4IclxG1l2Ny6Z-T8xsY
+X-Proofpoint-GUID: 5hWywF1aRNaCW4IclxG1l2Ny6Z-T8xsY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfX5MpCl9XZmAqr
+ JN6v5QjgE9wwekGDKEw7m2aKwvDjAR7lg/nGD50f7PM2b5QniWPQx6xPVPKb3MN56C8Vm2LDulV
+ Lxu0H10+PcMZXuBLr1kAYyY0f8kmyMDPJjdrtUsZ+oNrbpEITSSEBhmaMO0LPOLNBOKzgUO9cVc
+ c6+7v4HfRMO/OwFyeZQ095lXB1rrTz/JevTux6qHfhvw6XFSYDDy9/zF2eTe5vRN8CrWfcv4Ar0
+ nVNT1tCA3ZqiW7/nngWio4fqVID6yVkPRbqKLfp82RahWitvbE0O3JTNGag2zMpUkcyGYHZtkgr
+ EvU9rOhn6MZpmEnNZCL2rhZzmvCZKwiWYYK6WlKSzLmkhWLFvRnI88ySqUnGOY9dLZceeSBLPTG
+ viIziTX5
+X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b8446c cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=KKAkSRfTAAAA:8 a=azIdKaGB62pXRnNptYYA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-03_07,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
 
-
-
-On 9/3/2025 6:58 PM, Manivannan Sadhasivam wrote:
-> On Mon, Sep 01, 2025 at 09:38:25PM GMT, Nitin Rawat wrote:
->>
->>
->> On 8/21/2025 5:18 PM, Krzysztof Kozlowski wrote:
->>> On 21/08/2025 13:24, Ram Kumar Dwivedi wrote:
->>>> From: Nitin Rawat <quic_nitirawa@quicinc.com>
->>>>
->>>> Remove the ufshcd_res_info structure and associated enum ufshcd_res
->>>> definitions from the UFS host controller header. These were previously
->>>> used for MCQ resource mapping but are no longer needed following recent
->>>> refactoring to use direct base addresses instead of multiple separate
->>>> resource regions
->>>>
->>>> Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
+On 9/3/25 2:39 PM, Dmitry Baryshkov wrote:
+> On Wed, Sep 03, 2025 at 02:26:30PM +0200, Konrad Dybcio wrote:
+>> On 8/21/25 8:55 PM, Akhil P Oommen wrote:
+>>> From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
 >>>
->>> Incomplete SoB chain.
+>>> Add gpu and gmu nodes for sa8775p chipset. As of now all
+>>> SKUs have the same GPU fmax, so there is no requirement of
+>>> speed bin support.
 >>>
->>> But anyway this makes no sense as independent patch. First you remove
->>> users of it making it redundant... and then you remove it? No.
+>>> Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>> ---
+>>>  arch/arm64/boot/dts/qcom/lemans.dtsi | 116 +++++++++++++++++++++++++++++++++++
+>>>  1 file changed, 116 insertions(+)
+>>>
+>>> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+>>> index 8ceb59742a9fc6562b2c38731ddabe3a549f7f35..8eac8d4719db9230105ad93ac22287850b6b007c 100644
+>>> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
+>>> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+>>> @@ -1097,6 +1097,18 @@ ipcc: mailbox@408000 {
+>>>  			#mbox-cells = <2>;
+>>>  		};
+>>>  
+>>> +		qfprom: efuse@784000 {
+>>> +			compatible = "qcom,sa8775p-qfprom", "qcom,qfprom";
+>>> +			reg = <0x0 0x00784000 0x0 0x2410>;
 >>
->> Hi Krzysztof,
+>> len = 0x3000
 >>
->> The driver changes are in the UFS Qualcomm platform driver, which uses the
->> definitions, while ufshcd.h is part of the UFS core driver. Hence kept in 2
->> separate patch.
+>> [...]
 >>
+>>> +		gmu: gmu@3d6a000 {
+>>> +			compatible = "qcom,adreno-gmu-663.0", "qcom,adreno-gmu";
+>>> +			reg = <0x0 0x03d6a000 0x0 0x34000>,
+>>
+>> This bleeds into GPU_CC, len should be 0x26000
 > 
-> No, that is not a logical split. When the users are removed, the unused
-> definitions also have to be removed even if the definitions are in a different
-> file.
-> 
-> So I believe you need to remove 'ufshcd_res_info' in patch 1 and 'ufshcd_res' in
-> patch 2.
+> gpucc is in the middle of GMU, see other platforms.
 
-Agree with this. Hence I have taken care of this in v4.
+This is not the case here
 
-
-> 
-> - Mani
-> 
-
+Konrad
 
