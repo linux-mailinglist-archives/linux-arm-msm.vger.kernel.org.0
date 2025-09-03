@@ -1,260 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-71832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B885B41D93
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:53:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E34EB41DB5
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:55:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF1783B3007
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:53:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC5A25489B4
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:54:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 76641303C83;
-	Wed,  3 Sep 2025 11:48:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4003E2FC86A;
+	Wed,  3 Sep 2025 11:51:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Ce4un2Nb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="WwwQj+ZQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1653302CCD
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 11:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82CF82FC874;
+	Wed,  3 Sep 2025 11:51:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756900118; cv=none; b=Z4+kZNvhF7U9P+jmYkyeUjmcKgZulBMavuVbFo61zk6mgL4V4ejAYUR3kjuMhyCKTrwPoNbIc1ukGf4uxw5Ta0HHFYzCrxquvdy86yy7eg4Dx5skQfKawgnKMebG1+G3Zbe17wfv5s6a05sOVAPgl22BL0urIvPv24TLMuvNS+4=
+	t=1756900283; cv=none; b=TS9ygs5naXv2AyojqHIm3c3pbx17u3eRNasTbQ5ENMMaNeq+hzizAJH1RuKlgx2lswhqoM2YsWlXVoMki0onOhZWjzuXcnCjG4IYSeMw4dNpsijJU1jvrifHqWvxylbfhLeTzgXIeXqTh7PtMrUqfUx3ZOQrluAdvXrrh5BUqJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756900118; c=relaxed/simple;
-	bh=JsB/vM+vDg1pqrgFnPVYbAfiodJ6g4Ketnyr07QLJjg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qtZVTRFCeQcX+8i8jFr9Ss6qHE8OZEAoP7+sXkirlbwXMG5bHt0FPboyPrjlj97wmZdTyU5Q4MF+qF/FhuLDO/iWVT2W5KWhR3FjGZMdzDtAdBSv4D45h6BYi+eRrVD/DPQkBNv4afqVCjsV4hwqa+KQShHHhH+9V3XrR+3Nj8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Ce4un2Nb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583BF44R004619
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 11:48:35 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QI9++NezeeQHxyb4K/k5RMtpPMwIn4t3wPgvkRjOclg=; b=Ce4un2Nbz2f7tBH8
-	A+oBYYn+QMFrrQv3kWkzxsoAJF0d2GatqTa+QXX4OLtjw8Kq8exbf+1vYgknz54R
-	ZmriU7M1cRin5gY5Sko7jAWkQACCiY1BrekIHa0kUNIA0y+gi3UpXgFxnIRzZFqY
-	9uCyjqLcDiQr3heu9v1+Jy1JucpRm5aPG5GT6YZOlSpWIVUxGB8DoBmtf1v63Hn8
-	J/oIoD+lCzG5L/jRkJgt4BMNaPxEr/CTUtGQjDqP3OjqdNB3R4VJrrbDgou26dkl
-	objG50RllRq/06DWS4hoRPFe0Jm2Qz8AlFX6sxc+BOd6aUQCtp2xp2qVR8jh2Jai
-	Zp1eIg==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnpbnv6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 11:48:35 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b4e1675ba95so791945a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 04:48:35 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756900114; x=1757504914;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QI9++NezeeQHxyb4K/k5RMtpPMwIn4t3wPgvkRjOclg=;
-        b=PPnVlxs1lieOnp81paZ5RMzYIoIeAKVeMrr0kzdCsKcj0qu4KLqCUUqWZb0hoW6P1P
-         LsxJu8XEBJWSojYHJNV37yngS9A3Fv+QIDQs0tv14cBUz7iaMuOpk0b7XAo0WJ3xmsmD
-         p6MsaZ6nTudT9vvMHHdiNggXjiBAthk4btAt1ScGpQbtf06QNzWH0422OkNhKYQu8gtL
-         jlZqrRtQY1RPCfpCB5jTkrWRePtcRYa2LRKQLFDV/euinP+XiPf+F3NrL64IayMr/xZu
-         66sbvF2tW21DyC1Z+ZJkB1+36HiF8Af71xGiyM3Bhcvvdhgoy8KQnuG5qJCY4oVQusrl
-         eXsw==
-X-Forwarded-Encrypted: i=1; AJvYcCUt+aDd2x0pawuCPMvNkDslDJlonQsnTUaJi854hTI+8vG27vGIGW658N/kduwVbUn0fLE8OkfqBjM/TLNw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzddhto3gRygI+/EeysgNTsJLDc4V3MiIJ5lpIsgydl0aRJ4I1a
-	YKllIEfvPmMYV1UbS2L+jWx8ZwRTbUSpxWeQrwuG9219MxCZiEU11f0ZhvJ1pzXE9giVXccKsiN
-	cU2Twa6LD1oJ9GvUxG1lh+ckMCoRAw8kXn3H2pbyawg2kOcMQaVa8NE7SnkFVtXGwBl6B
-X-Gm-Gg: ASbGncsQtvzZ9JnzLveh9Kvv0I3k7iHSR54WlAKG3vyzdaXrUcKNFxDkdrJW8yHANpW
-	x6xM2+AKnTUwzL6lCdRw0H5zGW+oFFWr50+smI072P5uT+e0E+yVPcFQsY9Rm6RA75avGEwMwPy
-	7CzckI3/uz8AZOJXzn2qGDVOreWDowNFM78TM2j4l72p/GuiKq7/Oaih30J3f9qLetbAwU/ytII
-	MjFAB/7mB2/LF6sK3widE76RQCVC2wrQHDwT/PYfbDlUkdxTw419Gz4p+Uh6T9prNoInGCDNvl/
-	hNmKg2aHFl0ogzS95LbLhKnHGziWNn3HD7t6qbcmxit+GqTerPmCVf8knjVcSCXKr/pq
-X-Received: by 2002:a05:6a21:32a6:b0:247:55a7:695a with SMTP id adf61e73a8af0-24755a77066mr3480284637.15.1756900114349;
-        Wed, 03 Sep 2025 04:48:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF3NjxqXFYsOho+XHvlskDWQdVStPAKzQQGePA4tis9XWfYdQEn5D+B3PKJy3PtGYOByW+HNA==
-X-Received: by 2002:a05:6a21:32a6:b0:247:55a7:695a with SMTP id adf61e73a8af0-24755a77066mr3480224637.15.1756900113649;
-        Wed, 03 Sep 2025 04:48:33 -0700 (PDT)
-Received: from hu-wasimn-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4f8a0a2851sm6584074a12.37.2025.09.03.04.48.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 04:48:33 -0700 (PDT)
-From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-Date: Wed, 03 Sep 2025 17:17:14 +0530
-Subject: [PATCH v2 13/13] arm64: dts: qcom: lemans-evk: Add sound card
+	s=arc-20240116; t=1756900283; c=relaxed/simple;
+	bh=nDvbAiY6rHd3SKV/DYo7HnX4lUjAZdHwuJei+GGsRW8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u1DbPP2WGFUSLNSDO6h4efG+WSOfOc7mKqEz1pflQFtyieGV0H4KPDUaNCp4Y3WyHssX2GRESmTRyzHGT7s35YiOs/Zs9qUvtmyi6/DPFTpuoCwvK3HyK6MJW4HDm6Mupvk3H7bTI1qwXUinGscMm4AOij/6fJP/FXXbXrQpd74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=WwwQj+ZQ; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1756900281; x=1788436281;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=nDvbAiY6rHd3SKV/DYo7HnX4lUjAZdHwuJei+GGsRW8=;
+  b=WwwQj+ZQYt/6BqYvYcHz7lWjbLg26wheztfaS2gTmdYfpxM5/MgwvfII
+   BmBMFbCNBcsh5Kaz8VDNYj0d6DKUYdeoTgPIJF59OT97w0hNdf6OJCy+W
+   Pm3y1faZw5lyBEJNILax+qF7ro175aFBhLXz3Xiq4j+hik6TNgODxwJCR
+   v1tEek+nGSDaFEq73+53KqX9N/TV/bCocuy+74h+pIcloDSoU/uOc1zSe
+   J2xfobxUZr6sjyb8IVIz/m622/2hadnvpNc+D9ZSuDiHC5ghUXlhrZqjt
+   /e631TOHFuerOOohDB/7jIdZxxzlOJ1Q2l6ZGLnqsDYZe+IMmXz1TcwiE
+   g==;
+X-CSE-ConnectionGUID: cpzLltgHSHCTGRqOo9j6CQ==
+X-CSE-MsgGUID: Sqg7Ly4pR+awcUjJMbSaIA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11541"; a="69822588"
+X-IronPort-AV: E=Sophos;i="6.18,235,1751266800"; 
+   d="scan'208";a="69822588"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2025 04:51:19 -0700
+X-CSE-ConnectionGUID: IwmxuAerSUCIeLGnj4/KSA==
+X-CSE-MsgGUID: exSghXJzT32WBa3jKCspRQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,235,1751266800"; 
+   d="scan'208";a="195199401"
+Received: from smile.fi.intel.com ([10.237.72.52])
+  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2025 04:51:09 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1utm13-0000000AyQC-2iW1;
+	Wed, 03 Sep 2025 14:51:05 +0300
+Date: Wed, 3 Sep 2025 14:51:05 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Alexey Klimov <alexey.klimov@linaro.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Sean Wang <sean.wang@kernel.org>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	David Hildenbrand <david@redhat.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>, Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Michal Hocko <mhocko@suse.com>, Dong Aisheng <aisheng.dong@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>, Shawn Guo <shawnguo@kernel.org>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	NXP S32 Linux Team <s32@nxp.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Tony Lindgren <tony@atomide.com>,
+	Haojian Zhuang <haojian.zhuang@linaro.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Danilo Krummrich <dakr@kernel.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Mark Brown <broonie@kernel.org>, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	linux-mediatek@lists.infradead.org,
+	linux-arm-kernel@lists.infradead.org, linux-mips@vger.kernel.org,
+	linux-hardening@vger.kernel.org, linux-mm@kvack.org,
+	imx@lists.linux.dev, linux-omap@vger.kernel.org,
+	linux-renesas-soc@vger.kernel.org,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v7 16/16] pinctrl: qcom: make the pinmuxing strict
+Message-ID: <aLgrqZETNLmuMHhv@smile.fi.intel.com>
+References: <aLcBcjvMbrxoDYoC@smile.fi.intel.com>
+ <CAMRc=MfcFMgkNqWNZV5o0NxkAvxBTjC3vv56Cr98n0R2CkxuPw@mail.gmail.com>
+ <CAHp75VcgaqnDrPH27wxfgyK6zz4RAKJQB0r7G2vbTONTxkEzTw@mail.gmail.com>
+ <CAMRc=MfhhX2NJ0fhhX8u+7=sdyUy0G27n7caGf9=TpHxUDJVxg@mail.gmail.com>
+ <aLgW7J-j4nn0u8uo@smile.fi.intel.com>
+ <CAMRc=MdA21fwnamymG6YhqBjKDso_nJs_4xefPNONQNfEcPHXA@mail.gmail.com>
+ <aLgaoivmBUgoeO6B@smile.fi.intel.com>
+ <CAMRc=Me84OX=UEmAXxmwE8oOH=1UBsyHe-7XmU0c8a2gG9JnCA@mail.gmail.com>
+ <aLgeDNLABpmkShIU@smile.fi.intel.com>
+ <CAMRc=MdD9g4WiBCP0qYGuy5e3pnQf5MUHTqkUOnrUvcWUYK27A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250903-lemans-evk-bu-v2-13-bfa381bf8ba2@oss.qualcomm.com>
-References: <20250903-lemans-evk-bu-v2-0-bfa381bf8ba2@oss.qualcomm.com>
-In-Reply-To: <20250903-lemans-evk-bu-v2-0-bfa381bf8ba2@oss.qualcomm.com>
-To: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Cc: kernel@oss.qualcomm.com, linux-mmc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
-        Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-X-Mailer: b4 0.15-dev-e44bb
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1756900050; l=3115;
- i=wasim.nazir@oss.qualcomm.com; s=20250807; h=from:subject:message-id;
- bh=rsQ70XuuzikTEL//lunyv8DprTTtt6yK/Y2Nh5U3LqY=;
- b=Bi1icvmEuhZPp4acn7G3T11pofXg0hfMgKG2V8vfOCqLQ3al20o4FihRTpNycjFQw0mE2l+mq
- v0HawdkxcZBAzqiiRqxbue21LsgiJbQRXaPmfeZK6370Qm18IuGpWJq
-X-Developer-Key: i=wasim.nazir@oss.qualcomm.com; a=ed25519;
- pk=4ymqwKogZUOQnbcvSUHyO19kcEVTLEk3Qc4u795hiZM=
-X-Proofpoint-GUID: FQ8CbWDeQKn42H2sQAJAaczs0nkzI_Gw
-X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b82b13 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=WTMWP25ZRELiBA-utRQA:9
- a=QEXdDO2ut3YA:10 a=bFCP_H2QrGi7Okbo017w:22
-X-Proofpoint-ORIG-GUID: FQ8CbWDeQKn42H2sQAJAaczs0nkzI_Gw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfXy7NXcjtQAXws
- hrg+rf5DPvlufR3n3UsapVZJsLEZD6MyUEhPUnaefel+lkLPb8xQQJWBArNi0dD5xQvCjvxJlRz
- Z6YCN3dmNVQp7UQPo+pBb71RjXd2czwoYp8mR6ajROJa9NUfBNvYmqdAyXEkxLTql4V/LTh/sKr
- riosdaJ7KwEw8S1mDqb8iJAA8yyAVGUnLzKYNbTZL6WZwAueKriilNTBinf/mJ24ZGErR279RG6
- jKr8uYv5M3WsyQ/AgyFI4FnffFViXHV0AdfvLAx7ZDe7IzoqCq6NSHqguRk99kW9ffKsIyFcI8V
- 7y0kcYHNY1b2tj8Wp/0OXgWU9DZpqQq+s6KAQ/+pIE5C3gOx2Owtl3WnKDeWw+N2TI0Dhtk6UF4
- iaciItCU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-03_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300001
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMRc=MdD9g4WiBCP0qYGuy5e3pnQf5MUHTqkUOnrUvcWUYK27A@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+On Wed, Sep 03, 2025 at 01:05:27PM +0200, Bartosz Golaszewski wrote:
+> On Wed, Sep 3, 2025 at 12:53 PM Andy Shevchenko
+> <andriy.shevchenko@intel.com> wrote:
+> > On Wed, Sep 03, 2025 at 12:41:48PM +0200, Bartosz Golaszewski wrote:
+> > > On Wed, Sep 3, 2025 at 12:38 PM Andy Shevchenko
+> > > <andriy.shevchenko@intel.com> wrote:
+> > > > On Wed, Sep 03, 2025 at 12:34:00PM +0200, Bartosz Golaszewski wrote:
+> > > > > On Wed, Sep 3, 2025 at 12:22 PM Andy Shevchenko
+> > > > > <andriy.shevchenko@intel.com> wrote:
+> > > > > > On Wed, Sep 03, 2025 at 09:33:34AM +0200, Bartosz Golaszewski wrote:
+> > > > > > > On Tue, Sep 2, 2025 at 10:46 PM Andy Shevchenko
+> > > > > > > <andy.shevchenko@gmail.com> wrote:
+> > > > > > > > On Tue, Sep 2, 2025 at 8:42 PM Bartosz Golaszewski <brgl@bgdev.pl> wrote:
+> > > > > > > > > On Tue, Sep 2, 2025 at 4:38 PM Andy Shevchenko
+> > > > > > > > > <andriy.shevchenko@intel.com> wrote:
+> > > > > > > > > > On Tue, Sep 02, 2025 at 01:59:25PM +0200, Bartosz Golaszewski wrote:
 
-Add the sound card for Lemans-Evk board and verified playback
-functionality using the max98357a I2S speaker amplifier and I2S
-microphones. The max98357a speaker amplifier is connected via
-High-Speed MI2S HS0 interface, while the microphones utilize the
-HS2 interface. This patch also introduces pin control support
-for the High-Speed I2S interfaces.
+...
 
-Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/lemans-evk.dts | 52 +++++++++++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/lemans.dtsi    | 14 +++++++++
- 2 files changed, 66 insertions(+)
+> > > > > > > > > > > The strict flag in struct pinmux_ops disallows the usage of the same pin
+> > > > > > > > > > > as a GPIO and for another function. Without it, a rouge user-space
+> > > > > > > > > > > process with enough privileges (or even a buggy driver) can request a
+> > > > > > > > > > > used pin as GPIO and drive it, potentially confusing devices or even
+> > > > > > > > > > > crashing the system. Set it globally for all pinctrl-msm users.
+> > > > > > > > > >
+> > > > > > > > > > How does this keep (or allow) I²C generic recovery mechanism to work?
+> > > > > > >
+> > > > > > > Anyway, what is your point? I don't think it has any impact on this.
+> > > > > >
+> > > > > > If we have a group of pins that are marked as I²C, and we want to use recovery
+> > > > > > via GPIOs, would it be still possible to request as GPIO when controller driver
+> > > > > > is in the strict mode?
+> > > > >
+> > > > > Yes, if you mark that function as a "GPIO" function in the pin
+> > > > > controller driver.
+> > > >
+> > > > How would it prevent from requesting from user space?
+> > >
+> > > It wouldn't, we don't discriminate between user-space and in-kernel
+> > > GPIO users. A function either is a GPIO or isn't. Can you point me to
+> > > the driver you're thinking about or is this a purely speculative
+> > > question?
+> >
+> > The recovery mechanism is in I²C core and many drivers use that.
+> > I'm not aware of Qualcomm drivers in particular. But mechanism is
+> > in use in I²C DesignWare which is distributed a lot among platforms,
+> > so using word 'purely' is incorrect, and word 'speculative' is a bit
+> > strong, but you can think of the issue coming later on when somebody
+> > does something like this.
+> >
+> > The same applies to the in-band wakeup UART mechanism.
+> >
+> > Which means that with this series we will relax it back anyway for
+> > the above mentioned cases.
+> >
+> > (Not sure, but SPI DesignWare requires programming SPI native chip selects even
+> >  if the GPIO is used for that, this might have also some implications, but here
+> >  it's for real 'purely speculative'.)
+> 
+> The high-level answer is: yes, a pin that will be used by GPIOLIB
+> needs the function it's muxed to, to be marked as "GPIOable" in its
+> parent pin controller if it's strict. That's still better than the
+> current situation.
+> 
+> I can imagine we could differentiate between in-kernel and user-space
+> users of GPIOs and then make it impossible for the latter to request
+> certain pins while they could still be requested in the kernel but
+> that's outside of the scope of this series.
+> 
+> I don't see why this would stop these patches though, as they don't
+> break anything unless you decide to make your pin controller strict in
+> which situation you'd need to verify which functions can GPIOs anyway.
 
-diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-index 69ce6a60361a..7802fd830aa0 100644
---- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
-+++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
-@@ -7,6 +7,7 @@
- 
- #include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
- 
- #include "lemans.dtsi"
- #include "lemans-pmics.dtsi"
-@@ -25,6 +26,17 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	dmic: audio-codec-0 {
-+		compatible = "dmic-codec";
-+		#sound-dai-cells = <0>;
-+		num-channels = <1>;
-+	};
-+
-+	max98357a: audio-codec-1 {
-+		compatible = "maxim,max98357a";
-+		#sound-dai-cells = <0>;
-+	};
-+
- 	edp0-connector {
- 		compatible = "dp-connector";
- 		label = "EDP0";
-@@ -70,6 +82,46 @@ vreg_sdc: regulator-vreg-sdc {
- 
- 		startup-delay-us = <100>;
- 	};
-+
-+	sound {
-+		compatible = "qcom,qcs9100-sndcard";
-+		model = "LEMANS-EVK";
-+
-+		pinctrl-0 = <&hs0_mi2s_active>, <&hs2_mi2s_active>;
-+		pinctrl-names = "default";
-+
-+		hs0-mi2s-playback-dai-link {
-+			link-name = "HS0 MI2S Playback";
-+
-+			codec {
-+				sound-dai = <&max98357a>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai PRIMARY_MI2S_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+
-+		hs2-mi2s-capture-dai-link {
-+			link-name = "HS2 MI2S Capture";
-+
-+			codec {
-+				sound-dai = <&dmic>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6apmbedai TERTIARY_MI2S_TX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6apm>;
-+			};
-+		};
-+	};
- };
- 
- &apps_rsc {
-diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-index 41003d8878f0..de8f5d78d0d2 100644
---- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-+++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-@@ -5068,6 +5068,20 @@ dp1_hot_plug_det: dp1-hot-plug-det-state {
- 				bias-disable;
- 			};
- 
-+			hs0_mi2s_active: hs0-mi2s-active-state {
-+				pins = "gpio114", "gpio115", "gpio116", "gpio117";
-+				function = "hs0_mi2s";
-+				drive-strength = <8>;
-+				bias-disable;
-+			};
-+
-+			hs2_mi2s_active: hs2-mi2s-active-state {
-+				pins = "gpio122", "gpio123", "gpio124", "gpio125";
-+				function = "hs2_mi2s";
-+				drive-strength = <8>;
-+				bias-disable;
-+			};
-+
- 			qup_i2c0_default: qup-i2c0-state {
- 				pins = "gpio20", "gpio21";
- 				function = "qup0_se0";
+It can't anyway, Linus already applied :-)
 
 -- 
-2.51.0
+With Best Regards,
+Andy Shevchenko
+
 
 
