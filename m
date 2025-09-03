@@ -1,245 +1,157 @@
-Return-Path: <linux-arm-msm+bounces-71770-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71771-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9C69B419D9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:25:52 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E155BB419DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:26:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A51FF680F4F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:25:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 637DC1894F06
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:26:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA9B02F0C69;
-	Wed,  3 Sep 2025 09:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CAFD2F069D;
+	Wed,  3 Sep 2025 09:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jqWMLX4t"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VsczgInH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42FF9279DA3
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 09:25:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB3F92EFDB5
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 09:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756891545; cv=none; b=DU8Oes1IFHcYH6TbFSNpOPnWzlXNbIhGM3Yp8a1FkM7FNC6bjj9au9/3khmCXWtdk2VoufzSQ+2E9BBL/oeNt2TpqrLbM7tLz9L9Jji1IxPbyuZ4KiK5G0rPdDBUPiG3SgH6UpDbsQl/SeIqfNDtkfr1pJ2QcQYg/30GQOV5zGQ=
+	t=1756891557; cv=none; b=KOxihIy0ejuvtkJm9awaP19AoaU4C9MHvSUsH3EQKhtdifm8IUapFFXXZ775YaPUweXTTJ0qw5W5Cct/zRZJLW4GsBCZ0gOPqGueGzY+Y4aTTh6vOJ0ZhPeipM0+339KgA00lsn2g/V32dKAWHLsEe68iJ82PAexFNb+I5Fz/N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756891545; c=relaxed/simple;
-	bh=G3KruQfuGQZbnwyFFVg7lnm/oURLCwtkXpoaHPhMKhA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CsF6+sPmEaaA3GBBsSVQXfHja1uVgvLV/LT9XiZzqhVg9OnwMmtCez+f6eJSZ/m/+XfeOUK/CAYG5yPCz25O+X7YUT9PLhQvKFEylRJTt7zkrXPDvZ7JN0CZ+6FET83muGjOSAS9SPy/9dDk38eqBdlctViZQP6yChAnawhCjbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jqWMLX4t; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1756891557; c=relaxed/simple;
+	bh=tQi2QB0QE+ylzKAWeOhCAaWxxpDIYV9un1Qgsckd9hQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ae+K44rFWlml5w5P9mvXXVGVYK1UGz9taFe748UuexXE/vT0CWiinMTfM67NWw8IA3YPq3293kL2THpP4soAA+ol2iynYISZ5d32spGgIqcE4DcKPaxAdURnfmHabeGU0ILYtCjRzO4ANfL+XQVUvUJ+Z6Xi+jtBmNCbnDVtZHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VsczgInH; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5832ZH25012309
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 09:25:42 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5831xlrH012685
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 09:25:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=qiSfzdg4mC017dQavh2saF3D
-	nvq/ylNZxxXLO3pOk3Y=; b=jqWMLX4t8mAWThwfHqlfOQL+5UkXlSPfUK0Ti7YJ
-	tJunk2I2Xg/w5+Yt0BgvCAwhKQjj06lSKt3AbovqMDZO1m5oLvhz92QXlUo3H7ij
-	0+kNYH/Kb6FMq5eC7zb2vwuzi8hmt4pcDYZJYZmE7dXBncAIzmeKDfEM0IG8TB8A
-	E8zm9Cu5t7QBGI3nkXenmXc7jXQrCobgopq7Zha5M18tJBtQLbzgtBBEzIs/koyo
-	4QHBicW8kV0eXtsvi9pNlrJ9AK8c73cW63kA9GfqVExDCgmegkq8BTQmHnuC2jtv
-	ZqYQovft3xMcTrVZpK+CPabjifkiu/Z8fmsZn8XyB7WxOw==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2fjwn1-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	V8xcTnmvm8vaCs5GzeHhTc9j2HG7qNwDmT3oTLQQlSE=; b=VsczgInHphxWEvck
+	od5TCtrl9ghVLbLTHWdb0twQmaBhz6ybE47LtAXoOdfY9++I8DJYxKsiud5Xn55O
+	vfkjfXP7jf/+n9Q6rxnluj9I9cPujwDFDSC0Pr171/rktCL7xfvGMvZpEUv/qEyo
+	6Lh6EcvbFpcbMqwoCfAJRc8kPR22oA2yUuu9MYDEwZ8f90Py1i3848QbbqgrXSF/
+	QjcPKVSflYpDj++vKFOvi467eEmg2eoISAXepz9skJQrqWPgB4+pLHDTLqQecBuL
+	fYY4Ha8IpO7bvph/u9CawZB0Z9dbRZaG0m97e6Y77SVYnikut8A7jZ3m9sORz9FJ
+	ISXUSA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48utk92tac-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 09:25:42 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-71fe8dd89c6so34433066d6.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 02:25:42 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 09:25:55 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b32dfb5c6fso14949001cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 02:25:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756891541; x=1757496341;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qiSfzdg4mC017dQavh2saF3Dnvq/ylNZxxXLO3pOk3Y=;
-        b=dZI7F09HO8m/qIIvV/2WutqPGFx/kvdTBr/ls+oKysUNEw17SPcZwiVaVVdPn3CwCG
-         CF0ySKvm9o/GBeXkZmsiPtoXjBJmG/YDmxDKgRnUh4h7eKzV/u/nuTm4D6rVYM3ZIwcI
-         F4Bxxbt2gEDwC7tZ0MgOeh2HrexXIwyzEP8Z5/eVWhTjDiW/y+cDDEpOrLDCTe5HWWJX
-         e3C6uOniz6nKnEsu13BjRCJVwRxkRRHUwtCG5Q++X2HMA7rQUZUjHYUltO2VIw1Ag8IH
-         s+MYWHIo8Ptq3kZnDHjlpx+DDXE8/Fsl8PNGegyTwt31H5Y/kXBGzcsoMOsqzObOwf4b
-         qqWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWpzm5y68YSOZhDwiXydk/+G+Rngn73OtsZusGZLuOax5ca3UBxm7KO648cKlkjm35G5Ilx5GTrZr84Ewu3@vger.kernel.org
-X-Gm-Message-State: AOJu0YxneERQdXJUwe1qUKjdnhvEuXmaq/YTsQPYksLRvdoitQ6o0DuK
-	URhNuvk8AZsycY9ntHpD6HglK7SKxmtVLD7ygaDyDCWGH9UZYKe1gf53rzLqYZZ/jW0wFlW5UPn
-	s6/scIs7YkEpotAM1+PLLOi3OKf0eQr8YukPtnVJTD3re3vMavbRIKYvq3zv75P+5A6Lp
-X-Gm-Gg: ASbGncuY2qhBxTlQuW7Qt6pePNp6QE/WAS6dmlBtaimaUAYYihGZ2lHeuvkDCI1QBwp
-	rZpUU5U8MQRXamZGjdWJf+ngQwm93/vSCaj10RYDxWZv1wUr6YjjDmFouXmI+8JT5Kq82kRrOEH
-	SREVnb8M7vp1gOOWkR9Cxy7iN48oV39ZNMlfW9D9WeBTG29FJtqV6dJ0TPYqDf7GxBPyqm7toAc
-	kFtJb+4Qq5WedQlHGRf0CSVPEGS+CGwF1a5IQHEWkXn/KBI5c2ya8F2vsmUiNXQPr9XcBDIki6S
-	o6O7/GTHnQPrE4NZeQuwL/M3nhdT6oosOavbFy+3jAEjPQ7P/ayljUOa+FTC+PrQql3Wx1nAx2h
-	gJoxPgCHXsMzud0UtBBIX+mmodZeOl7o0O83qmhcejSo2KAII9dtr
-X-Received: by 2002:a05:6214:29cd:b0:71c:53c0:564f with SMTP id 6a1803df08f44-71c53c05df2mr85543076d6.6.1756891541038;
-        Wed, 03 Sep 2025 02:25:41 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEffBRG/vxF0pIEnmq/bDAD2fvhoCl8Yhqv0aQxeuHDILYhYTHgkBcj5YQbmS8/TtFPfMC5A==
-X-Received: by 2002:a05:6214:29cd:b0:71c:53c0:564f with SMTP id 6a1803df08f44-71c53c05df2mr85542856d6.6.1756891540533;
-        Wed, 03 Sep 2025 02:25:40 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608ace9c7esm390417e87.65.2025.09.03.02.25.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 02:25:39 -0700 (PDT)
-Date: Wed, 3 Sep 2025 12:25:37 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>,
-        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
-        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
-        Andi Shyti <andi.shyti@kernel.org>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
-Subject: Re: [PATCH v7 1/2] dmaengine: qcom: gpi: Add GPI Block event
- interrupt support
-Message-ID: <xy2jgnearfsoln7tmjbb7l6zuwm7sq74wohsxj77eeval5wig5@kisng4ufgbuo>
-References: <20250903073059.2151837-1-quic_jseerapu@quicinc.com>
- <20250903073059.2151837-2-quic_jseerapu@quicinc.com>
+        d=1e100.net; s=20230601; t=1756891554; x=1757496354;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=V8xcTnmvm8vaCs5GzeHhTc9j2HG7qNwDmT3oTLQQlSE=;
+        b=udGgqKIYf15byR/+9qxV7/t0OFatJ1N8O+nyj7maw5DMSSAenOXsTrJoiPJPl/rXne
+         DzwmMRZ/DeQIYWDOoeX/ldA4jn1XolXgAB04CbakLwbhT0BL0n3koBrUUmi99er6Y735
+         /YOB97DZUt9Y2NvR9Gwlgapph23VB+o6bllfnHtS5Wr7wraJbIC+SsJdC6A7MyWdzuP3
+         jlL7t7GPulmXk/GRQeiL1orOv6BWZR/AMzeHXxMweS6F6rZD6BgiE+FdzVy7e1JISMll
+         EPp6MCDg1SI180qzAYcph1iKdzOOtKMFTirChY8Ob2ExE4HUeB3RjfXFyYHdmVwtfCed
+         HDmw==
+X-Forwarded-Encrypted: i=1; AJvYcCV6Gu/XcGKBmOQhMviJlAyip5skgehQ/KgbhQ9pDfe0YO8YJxeGpTo4DQ4cz41HIXYr5uRsrnhyaTN7JEP0@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTDvOBPIlXp2Vhdbc5mCuVt0nKRBYHz9xbh59h++AB8W6MpmrI
+	jmnrC2sSCOlpdpcti0zQZ4wPIguoOF09KhKV6sPOFybsMUqKrlAJn3e/HfuXwBT6Qdv4AOMmTn7
+	Iq4mHkxPgBpWuXtYn51xdls/xOUi4lrrY7lqmhDAepnh7kIdisDJ9p1wl/QYEAhJtC2E2
+X-Gm-Gg: ASbGncvGlPjDSfi1fj2Ss+h5sqXmoXiItqgTADVX1yH706tW40QCLaSAQeFLimlpQQg
+	y81isyw+ryU2bOZ1qKg2TPctren0q7xmLz2kBcbKaWWVoK0hQt/8yNQp4rZ+K0v/fimzbXqgPui
+	oALc7B8Z+rkTe3OpWmeaiGMoO2PxooyjS3bI7ykMrdcUEdTsG1eRxs7QpnRzmftqPJu1UgKWjI4
+	4J50enHwBqG/leMfN/85PLOFCRjCeiZsyF92uAD826wiDAwe6ll7jyaJeEH0HdO5bBruNZQu69c
+	jgYq4XSDCU7JBSXwtG8/uSodwCSyhspTQIqy+kBvlqg/W7yoHDUKTHoHjGS4q3ENdZwtbVt8hi4
+	D+DDENh4YJBLqUbURcC35wg==
+X-Received: by 2002:a05:622a:15d4:b0:4b2:d8e5:b6e3 with SMTP id d75a77b69052e-4b313dfd74dmr139717871cf.1.1756891553760;
+        Wed, 03 Sep 2025 02:25:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFtzVlVNKODIar3OKV1Dpdt4jlT/5/HUDsUa/mjebH6AoF7OB+QsQV0PuV0R4ZhtiSsPcI5mg==
+X-Received: by 2002:a05:622a:15d4:b0:4b2:d8e5:b6e3 with SMTP id d75a77b69052e-4b313dfd74dmr139717631cf.1.1756891553148;
+        Wed, 03 Sep 2025 02:25:53 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b046af12536sm102654566b.100.2025.09.03.02.25.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Sep 2025 02:25:52 -0700 (PDT)
+Message-ID: <b7a1b89b-54dd-4d02-afcd-0144df5a6d57@oss.qualcomm.com>
+Date: Wed, 3 Sep 2025 11:25:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250903073059.2151837-2-quic_jseerapu@quicinc.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfX8SzRtCgCIITz
- ilObbQlVFYV5UtESa/l9i32WDuBUR7V4WfD5aDQ5u3gxCbW0dpoV4d+S0GyNa1/kSvkdD0rN5Lm
- wORE5LHKJ6VtUJ2IZ5w0qphm5SN+7Sdqb+rwR+awVE3igNAQSmmLxXLEb2hsP/Nw67QgNf7VIe/
- NvcXHVvSBVG9oZ3gZ7SD2Pg9GeJ8KVespOt5ujRj2dEfKKAp/7P4kEHusVjl1y98NA5x/9tfxk+
- N2bxs8pMy4ouWwsZN+O2XvqLRwf9V80lOrngM+/qOuXVu5dLo5SmIr2AzsEof2jdnrKl6JSi0Vk
- XhVoLndhfGL2KcQD4vMq1rt61gsZT1lnFSQoETOxJBE4Rf1HPz+xp414JNsFvrCr3DIkULEWVOc
- MzMkGOjp
-X-Proofpoint-ORIG-GUID: SXKrz7aU4sOmdx1qcYCP9Y8NKtDqZFbV
-X-Proofpoint-GUID: SXKrz7aU4sOmdx1qcYCP9Y8NKtDqZFbV
-X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b80996 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=JXAtfvraFxK_IdIfcZsA:9 a=CjuIK1q_8ugA:10
- a=iYH6xdkBrDN1Jqds4HTS:22 a=TjNXssC_j7lpFel5tvFf:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] drm/msm/adreno: Add a modparam to skip GPU
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek
+ <jonathan@marek.ca>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+References: <20250902-assorted-sept-1-v1-0-f3ec9baed513@oss.qualcomm.com>
+ <20250902-assorted-sept-1-v1-3-f3ec9baed513@oss.qualcomm.com>
+ <a701e4f9-57b7-46cc-b42f-f1a4a902fbbb@oss.qualcomm.com>
+ <zmaphb3douzah5m447naluu7cjrwieb36uznjb7uamblxduira@xhtklqmy22tu>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <zmaphb3douzah5m447naluu7cjrwieb36uznjb7uamblxduira@xhtklqmy22tu>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: SX8OZlPzvR0ee5mJU1olFNyMtFfwVhaw
+X-Proofpoint-ORIG-GUID: SX8OZlPzvR0ee5mJU1olFNyMtFfwVhaw
+X-Authority-Analysis: v=2.4 cv=ccnSrmDM c=1 sm=1 tr=0 ts=68b809a3 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=q_ebNChVWJ_O0X_IP0EA:9
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDA0MiBTYWx0ZWRfX3UmH3r9E04IO
+ IbdDp9iAvyWItNYyFD913SMuiHFh96Gsu6sPF5UG6i/w2GU9lO73oKahkseZp8mbhTvDyZBs4tP
+ QXIj+q6qxh46BbQMmqGAM8fj6mBGTBCrKZAX1gYacRFXAfQL8moc/s1eFAjxateQLqprRl3Qxui
+ HoCrzCGOb/A8H4+MOShxkQo8GS1MPBC7pK7GwDIL/d5gi9SEzDS/pB+G3TdxOPV9/vStA2G2h3k
+ MPWcFSsOeJMfUP/TrwIjGjQNIE4MiTRbNzycR5oUcQF+88oJt9cb9C04hhcchPG2TgLGJrAoher
+ UbLTCcc37goWdQRdHMpjqH0qOryBjymBaig/plbnLbcqVPt5sEHf/k++E7ztZ1VyKes3iPamMZN
+ ZIc71MoS
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-03_05,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
+ adultscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ clxscore=1015 suspectscore=0 spamscore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300042
 
-On Wed, Sep 03, 2025 at 01:00:58PM +0530, Jyothi Kumar Seerapu wrote:
-> GSI hardware generates an interrupt for each transfer completion.
-> For multiple messages within a single transfer, this results in
-> N interrupts for N messages, leading to significant software
-> interrupt latency.
+On 9/2/25 3:02 PM, Dmitry Baryshkov wrote:
+> On Tue, Sep 02, 2025 at 02:30:48PM +0200, Konrad Dybcio wrote:
+>> On 9/2/25 1:50 PM, Akhil P Oommen wrote:
+>>> During bringup of a new GPU support, it is convenient to have knob to
+>>> quickly disable GPU, but keep the display support. This helps to
+>>> fallback to 'kms_swrast' in case of bootup issues due to GPU. Add a
+>>> modparam to support this.
+>>
+>> I'm not entirely opposed, but slapping a // in front of the compatible
+>> in the dt works just as well
 > 
-> To mitigate this latency, utilize Block Event Interrupt (BEI) mechanism.
-> Enabling BEI instructs the GSI hardware to prevent interrupt generation
-> and BEI is disabled when an interrupt is necessary.
-> 
-> Large I2C transfer can be divided into chunks of messages internally.
-> Interrupts are not expected for the messages for which BEI bit set,
-> only the last message triggers an interrupt, indicating the completion of
-> N messages. This BEI mechanism enhances overall transfer efficiency.
-> 
-> This BEI mechanism enhances overall transfer efficiency.
+> Which requires rebuilding and reprovisioning
 
-Duplicate phrase.
+Fair
 
-> 
-> Signed-off-by: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
-> ---
-> 
-> v6 -> v7:
->    - The design has been modified to configure BEI for interrupt
->      generation either:
->      After the last I2C message, if sufficient TREs are available, or
->      After a specific I2C message, when no further TREs are available.
->    - In the GPI driver, passed the flags argumnetr to the gpi_create_i2c_tre function
->      and so avoided using external variables for DMA_PREP_INTERRUPT status.
-> 
-> v5 ->v6:
->   - For updating the block event interrupt bit, instead of relying on
->     bei_flag, decision check is moved with DMA_PREP_INTERRUPT flag.
-> 
-> v4 -> v5:
->   - BEI flag naming changed from flags to bei_flag.
->   - QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
->     file, and Block event interrupt support is checked with bei_flag.
-> 
-> v3 -> v4:
->   - API's added for Block event interrupt with multi descriptor support for
->     I2C is moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
->   - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
->     I2C driver.
-> 
-> v2-> v3:
->    - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
->    - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
->    - Added documentation for newly added changes in "qcom-gpi-dma.h" file
->    - Updated commit description.
-> 
-> v1 -> v2:
->    - Changed dma_addr type from array of pointers to array.
->    - To support BEI functionality with the TRE size of 64 defined in GPI driver,
->      updated QCOM_GPI_MAX_NUM_MSGS to 16 and NUM_MSGS_PER_IRQ to 4.
-> 
->  drivers/dma/qcom/gpi.c | 11 +++++++++--
->  1 file changed, 9 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/dma/qcom/gpi.c b/drivers/dma/qcom/gpi.c
-> index 8e87738086b2..66bfea1f156d 100644
-> --- a/drivers/dma/qcom/gpi.c
-> +++ b/drivers/dma/qcom/gpi.c
-> @@ -1619,7 +1619,8 @@ gpi_peripheral_config(struct dma_chan *chan, struct dma_slave_config *config)
->  }
->  
->  static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
-> -			      struct scatterlist *sgl, enum dma_transfer_direction direction)
-> +			      struct scatterlist *sgl, enum dma_transfer_direction direction,
-> +			      unsigned long flags)
->  {
->  	struct gpi_i2c_config *i2c = chan->config;
->  	struct device *dev = chan->gpii->gpi_dev->dev;
-> @@ -1684,6 +1685,9 @@ static int gpi_create_i2c_tre(struct gchan *chan, struct gpi_desc *desc,
->  
->  		tre->dword[3] = u32_encode_bits(TRE_TYPE_DMA, TRE_FLAGS_TYPE);
->  		tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_IEOT);
-> +
-> +		if (!(flags & DMA_PREP_INTERRUPT))
-> +			tre->dword[3] |= u32_encode_bits(1, TRE_FLAGS_BEI);
->  	}
->  
->  	for (i = 0; i < tre_idx; i++)
-> @@ -1827,6 +1831,9 @@ gpi_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
->  		return NULL;
->  	}
->  
-> +	if (!(flags & DMA_PREP_INTERRUPT) && (nr - nr_tre < 2))
-> +		return NULL;
-
-Comment in the source file.
-
-> +
->  	gpi_desc = kzalloc(sizeof(*gpi_desc), GFP_NOWAIT);
->  	if (!gpi_desc)
->  		return NULL;
-> @@ -1835,7 +1842,7 @@ gpi_prep_slave_sg(struct dma_chan *chan, struct scatterlist *sgl,
->  	if (gchan->protocol == QCOM_GPI_SPI) {
->  		i = gpi_create_spi_tre(gchan, gpi_desc, sgl, direction);
->  	} else if (gchan->protocol == QCOM_GPI_I2C) {
-> -		i = gpi_create_i2c_tre(gchan, gpi_desc, sgl, direction);
-> +		i = gpi_create_i2c_tre(gchan, gpi_desc, sgl, direction, flags);
->  	} else {
->  		dev_err(dev, "invalid peripheral: %d\n", gchan->protocol);
->  		kfree(gpi_desc);
-> -- 
-> 2.34.1
-> 
-
--- 
-With best wishes
-Dmitry
+Konrad
 
