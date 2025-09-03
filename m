@@ -1,432 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-71708-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71709-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AED7DB4128C
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 04:48:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC465B41360
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 06:06:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2761A7A370D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 02:46:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F43A481C07
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 04:06:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC4FE19F461;
-	Wed,  3 Sep 2025 02:47:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0059C2D0C67;
+	Wed,  3 Sep 2025 04:06:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="md2rXUYj"
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="C5VJWHil"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB87191F66
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 02:47:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80FF02D0637
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 04:06:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756867674; cv=none; b=TBZdTQ8ZgotWWIEHXIWVYAyeR9ze+3qnchMeLmdUIpU8qZrXjtIQ/uA/AUY9UsIq3r721hySaWXIuGIXIkl23Rup5A1AqHJ7s2ZdkLiflWk9PkuV7fBRSYKpJZMC40N/TwlsNARyfguyygPBqyr1qu++Ahg1tnNdMyWvsgocIC0=
+	t=1756872401; cv=none; b=pnCBeRY2nGbZJewKUY0OZuJjAeroKsVH2IfK23oEnQuiUqiKHyjHyEhz1mv1C+K6XQ/hHjEQAEQoCsK5C+yPyUuL9HHschgeH0Oyh/LoCu95bWl6/23ysD792xPzZEtoou5st3JgL6zo3oZuvo/3IGBfzyZhM9CGsA0agMDUfwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756867674; c=relaxed/simple;
-	bh=bDay9Mb+vLOifItB0nmhRJN4skjtbZAPiZreWnN3X0c=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=hlinlNoG+y9x7ECrUOuCOAHRZqwjj/3E/aogHxWQgpLaFHRsL6Jj2Oq5sZqSBMhtjrDgnpdYKg/lnV2W15JU11fTGxQSqk+lgUBsbs97VXImEbA8LK+az8PMTxlb9o/jnCEVGYwYSEcKmGtrTf51xQFY8VRgo4MH0ssGnKBuXZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=md2rXUYj; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 582EqRnf012509
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 02:47:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	MR4kOjYGWE+3dtlgB4cQLtnV0AU3BFNkg+7eBEnx9Uk=; b=md2rXUYjLn7pvb5o
-	QRnLxFk7VUDgATnzM7VFIxeHLiv62syDGG7jSg/vRL0Nhv0R3b1oGLBTYT3+eE9M
-	YvCRchozMgSJq0D19sqPCMXRvVPtpX0bF54FU1wKk513xRi0DOw1tjwDLJ1w0bIq
-	2S8+M7UtRBB8I4UrP5L/8v/QsWpR30IlesAXxJTAGaYO1Qt507YzHUEopGw00RLP
-	DvWj8KXMpZSkrOPwmEWMRIKYSWx1iGpmCnNmxNPHH1nN+X6esaQJG/VRUBi2iWCr
-	CGbQ08bFcCPBUmuXJnjqqatayB+iaU45K/Qwadx6v6/1KQhwZYxuWqsn754Y+Rcb
-	QdGwog==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2fhtsc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 02:47:51 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-76e2e60221fso9950993b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 02 Sep 2025 19:47:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756867671; x=1757472471;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MR4kOjYGWE+3dtlgB4cQLtnV0AU3BFNkg+7eBEnx9Uk=;
-        b=FOTucjJWwySfnzAAs7DAVJ9roBQfqti12DuRU+AAKQ34MddbsB+peDRGbhkRcORt/K
-         K2K/VWaoWbASIStfd0+VMSoKUnT2wunTfgWNm+LAyF0ZnLvMKgponYX7KstV8+50giE+
-         jWwlQ8RHl8vcnsKkoe1ouVFvq4WumKP/ueKhvd3mlT24sR0Ci6tg55/J/0qSLwHA2/XX
-         lt7D4JlkANA9mhmKlRZW+EVyW4iICq/voyK9u035DVYTuCItMCJF1NZFVhasLhMQIJCO
-         HXwcA6bWAvyMZzTVLaoF6AxsPmyfdIlU6y5Dv/6XxcGJecX6uYNm+EgXoBttizP1MR6F
-         C2rg==
-X-Gm-Message-State: AOJu0YzMf0Qiw/ad6z2kut7BnavJpuXNosNJxIhktzKnDwZKUjSSPqyA
-	tAF1Om9aqwYxYKqxAFGHBVAiOMbb6EebIx+JwsauOSVVI9VAQ2BvzVNWxnb5N7PEzn580aw9Kqp
-	r+1sxP93k1VrhQvQgQ6LV2V+xla68zqpKF/V/2iTLs2x5r2El8Hly/hLXT73dVk1dWVjp
-X-Gm-Gg: ASbGncu5NqkZ2pKxAUzhclGmaFjTxvwsOki2nfYG8lz3Uz6yd6T8UD5Hf4wPwZE3zMu
-	klRmOQCqh+IXrSFrHZ1orcDhO24f/iRJ/UXKYzHzSE39+y4JWxrTrz6q7maWZ56DVU7S0FG/x9k
-	2YAX6sQBKliI2uc2ApEgunr7+nN56TwgZhaozbYGL/qllSoAjP6whM17rgVuZ/DpwU5sJunawd/
-	VVvTRce5FwI31hvfJ5put9ZdSQQgmEd0uDkyg8B3BdzRyn582QtC3ADboExeOS4XVvEs35EaeAJ
-	LfPBD/mFG+yHnACgR1dcEMHaBMAUU6hho41TGyfwBxozAkEo6qmmTEiNcNnDnW6r14U3V8c/pIT
-	MJ/bvpG8MNVILM/KP0CEWjX7rL9uJ
-X-Received: by 2002:a05:6a00:39a0:b0:757:ca2b:48a3 with SMTP id d2e1a72fcca58-7723e259561mr15595217b3a.9.1756867670479;
-        Tue, 02 Sep 2025 19:47:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDO7sTee57O3KQCsZo26R1EkKcAn2uGXwp7NsC8REemaNjEc7JaagReOo8ixwYY9UtqoAwbg==
-X-Received: by 2002:a05:6a00:39a0:b0:757:ca2b:48a3 with SMTP id d2e1a72fcca58-7723e259561mr15595192b3a.9.1756867669946;
-        Tue, 02 Sep 2025 19:47:49 -0700 (PDT)
-Received: from [10.133.33.16] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7725d5b90fasm6884902b3a.100.2025.09.02.19.47.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 02 Sep 2025 19:47:49 -0700 (PDT)
-Message-ID: <67e3d491-0af3-4fd7-87f9-5ece1521174d@oss.qualcomm.com>
-Date: Wed, 3 Sep 2025 10:47:43 +0800
+	s=arc-20240116; t=1756872401; c=relaxed/simple;
+	bh=kII2ZAad1eEm551IWkEqDnKbBmwiyhsU3D/ajxKTL+U=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
+	 Content-Type:References; b=TxffFqTZylpJW6ETX0IuaoiQJHp/ygPG4awh4+EKtqe4c1meyQNeuV9fgvA9f+MP07UdBKrSMZwM0b17fun5gqqosku+Pdw7alc9wCa/YNtopo8QuQ5owPa/byOCqKtp59B8QCWiPk0d21sNgXGg3/9GEdkxStYEin5wBSVW6Xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=C5VJWHil; arc=none smtp.client-ip=203.254.224.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
+	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250903040637epoutp03bae76767da27060f678ebb933230b2ca~hqiMZlU-O2692626926epoutp03J
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 04:06:37 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250903040637epoutp03bae76767da27060f678ebb933230b2ca~hqiMZlU-O2692626926epoutp03J
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+	s=mail20170921; t=1756872397;
+	bh=kII2ZAad1eEm551IWkEqDnKbBmwiyhsU3D/ajxKTL+U=;
+	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
+	b=C5VJWHil8oVqZEYJ+DArtLd06gbQ8qfStQzMwsIAQGp563b3A8cid5oPd3rWKOSYN
+	 1FqHCS7JWmXVyMSwhLFPymMBM01PKApjvnhLT4PvrYS6PBOMP/IJUssEzcDFcjqUQF
+	 mmdqdVSmPhuSS+dvKpqJ2ZZoQfdM8kqAkeu7wgno=
+Received: from epsnrtp04.localdomain (unknown [182.195.42.156]) by
+	epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+	20250903040636epcas5p2b9f11d156e8391b8e77ffcfc22707a72~hqiLrQEjs1472614726epcas5p2w;
+	Wed,  3 Sep 2025 04:06:36 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.92]) by
+	epsnrtp04.localdomain (Postfix) with ESMTP id 4cGpvb6Lngz6B9mG; Wed,  3 Sep
+	2025 04:06:35 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+	epcas5p3.samsung.com (KnoxPortal) with ESMTPA id
+	20250903040635epcas5p333aa12e3a607d72bb027166b00a242d8~hqiKZ9T0U1719917199epcas5p3t;
+	Wed,  3 Sep 2025 04:06:35 +0000 (GMT)
+Received: from INBRO002756 (unknown [107.122.3.168]) by epsmtip2.samsung.com
+	(KnoxPortal) with ESMTPA id
+	20250903040632epsmtip28a860a282dae40d1a0ffd8f60b641ba6~hqiIFtFas3046730467epsmtip2R;
+	Wed,  3 Sep 2025 04:06:32 +0000 (GMT)
+From: "Alim Akhtar" <alim.akhtar@samsung.com>
+To: "'Nitin Rawat'" <quic_nitirawa@quicinc.com>, "'Manivannan Sadhasivam'"
+	<mani@kernel.org>
+Cc: "'Konrad Dybcio'" <konrad.dybcio@oss.qualcomm.com>, "'Krzysztof
+ Kozlowski'" <krzk@kernel.org>, "'Ram Kumar Dwivedi'"
+	<quic_rdwivedi@quicinc.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
+	<robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+	<andersson@kernel.org>, <konradybcio@kernel.org>,
+	<James.Bottomley@hansenpartnership.com>, <martin.petersen@oracle.com>,
+	<agross@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>
+In-Reply-To: <f5b4580c-4e68-405f-95fb-21fa1b105711@quicinc.com>
+Subject: RE: [PATCH 2/3] arm64: dts: qcom: sa8155: Add gear and rate limit
+ properties to UFS
+Date: Wed, 3 Sep 2025 09:36:31 +0530
+Message-ID: <3a8a01dc1c88$23734880$6a59d980$@samsung.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/3] coresight: tpdm: add static tpdm support
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-To: Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-        Mao Jinlong <jinlmao.mao@oss.qualcomm.com>,
-        Tao Zhang <quic_taozha@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250822103008.1029-1-jie.gan@oss.qualcomm.com>
- <20250822103008.1029-3-jie.gan@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20250822103008.1029-3-jie.gan@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfX3aKhqnLSbjI/
- JlfT5Uddh26WwX5tI7K8p9YrNhbhC6XjhcukaMF9VHXLMXQLhTDGyaBP8OFBjleQeA7uWCjpAvs
- txl4uzvFOb/N9H4tb7Bwmjcy4NL936slA3k9O3oN9PrwGrlb0OXnp4g+m4fX1OXYvRozzPh++cI
- cb4awj8bLvf85wX3qYZff2ieuVAPmD94RdL46GvPfW0d2OYi47hlGsJZK3f/rS8IHMqwAhD3+k+
- ha7u5dZL30da6ixRuoVrJSQbS2qPO2hcZC4+o7cwO3hqcBf2DrASVGrZD+yQKW+dwkf9GyhtwBx
- ZqVbQuTC2MrSn3UT4yRRHPedzc8wcU3RwM6Sck2vmcSVURxAMiDWG4QcGHDGuHqHTXg8iNcOyHu
- cRZsPzS4
-X-Proofpoint-ORIG-GUID: kXdJYTEiN0fUn-ygcvEkEJLTFa2vjDXL
-X-Proofpoint-GUID: kXdJYTEiN0fUn-ygcvEkEJLTFa2vjDXL
-X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68b7ac57 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=DS5xQBhA3tpC-DeSMgwA:9 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-03_01,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGnpjwRT6EYpkeInvmjX4F0QHyKRAJl+KeTAfd+obYC4dUGiwETzsdEAg+4PAsBhUBs+QD6zayoAmaAkKoBhVchmwEE4NNAAwOStYK0QwdQkA==
+Content-Language: en-us
+X-CMS-MailID: 20250903040635epcas5p333aa12e3a607d72bb027166b00a242d8
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250806112542epcas5p15f2fdea9b635a43c54885dbdffa03b60
+References: <06d201dc0689$9f438200$ddca8600$@samsung.com>
+	<wpfchmssbrfhcxnoe37agonyc5s7e2onark77dxrlt5jrxxzo2@g57mdqrgj7uk>
+	<06f301dc0695$6bf25690$43d703b0$@samsung.com>
+	<CGME20250806112542epcas5p15f2fdea9b635a43c54885dbdffa03b60@epcas5p1.samsung.com>
+	<nkefidnifmbnhvamjjyl7sq7hspdkhyoc3we7cvjby3qd7sgho@ddmuyngsomzu>
+	<0d6801dc07b9$b869adf0$293d09d0$@samsung.com>
+	<fh7y7stt5jm65zlpyhssc7dfmmejh3jzmt75smkz5uirbv6ktf@zyd2qmm2spjs>
+	<0f8c01dc0876$427cf1c0$c776d540$@samsung.com>
+	<xqynlabahvaw4cznbofkkqjr4oh7tf6crlnxoivhpadlymxg5v@a4b5fgf55nqw>
+	<10ae01dc08c9$022d8aa0$06889fe0$@samsung.com>
+	<o2lnzaxurshoyyxtdcyiyphprumisggd6m2qvcoeptvnkvh4ap@dm2nc4krinja>
+	<f5b4580c-4e68-405f-95fb-21fa1b105711@quicinc.com>
 
 
 
-On 8/22/2025 6:30 PM, Jie Gan wrote:
-> The static TPDM function as a dummy source, however, it is essential
-> to enable the port connected to the TPDA and configure the element size.
-> Without this, the TPDA cannot correctly receive trace data from the
-> static TPDM. Since the static TPDM does not require MMIO mapping to
-> access its registers, a clock controller is not mandatory for its
-> operation.
-
-Gentle ping.
-
-Can you please help to review the patch?
-This patch has a dependency:
-https://lore.kernel.org/all/20250806080931.14322-1-jie.gan@oss.qualcomm.com/
-
-Thanks,
-Jie
-
-> 
-> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
-> ---
->   drivers/hwtracing/coresight/coresight-tpda.c |   9 ++
->   drivers/hwtracing/coresight/coresight-tpdm.c | 148 ++++++++++++++-----
->   drivers/hwtracing/coresight/coresight-tpdm.h |   8 +
->   3 files changed, 131 insertions(+), 34 deletions(-)
-> 
-> diff --git a/drivers/hwtracing/coresight/coresight-tpda.c b/drivers/hwtracing/coresight/coresight-tpda.c
-> index 333b3cb23685..4e93fa5bace4 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpda.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpda.c
-> @@ -68,6 +68,15 @@ static int tpdm_read_element_size(struct tpda_drvdata *drvdata,
->   	int rc = -EINVAL;
->   	struct tpdm_drvdata *tpdm_data = dev_get_drvdata(csdev->dev.parent);
->   
-> +	if (coresight_is_static_tpdm(csdev)) {
-> +		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
-> +					      "qcom,dsb-element-bits", &drvdata->dsb_esize);
-> +		rc &= fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
-> +					       "qcom,cmb-element-bits", &drvdata->cmb_esize);
-> +
-> +		goto out;
-> +	}
-> +
->   	if (tpdm_data->dsb) {
->   		rc = fwnode_property_read_u32(dev_fwnode(csdev->dev.parent),
->   				"qcom,dsb-element-bits", &drvdata->dsb_esize);
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.c b/drivers/hwtracing/coresight/coresight-tpdm.c
-> index 7214e65097ec..1766b0182819 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.c
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.c
-> @@ -495,7 +495,9 @@ static int tpdm_enable(struct coresight_device *csdev, struct perf_event *event,
->   		return -EBUSY;
->   	}
->   
-> -	__tpdm_enable(drvdata);
-> +	if (!coresight_is_static_tpdm(csdev))
-> +		__tpdm_enable(drvdata);
-> +
->   	drvdata->enable = true;
->   	spin_unlock(&drvdata->spinlock);
->   
-> @@ -551,7 +553,9 @@ static void tpdm_disable(struct coresight_device *csdev,
->   		return;
->   	}
->   
-> -	__tpdm_disable(drvdata);
-> +	if (!coresight_is_static_tpdm(csdev))
-> +		__tpdm_disable(drvdata);
-> +
->   	coresight_set_mode(csdev, CS_MODE_DISABLED);
->   	drvdata->enable = false;
->   	spin_unlock(&drvdata->spinlock);
-> @@ -1342,10 +1346,9 @@ static const struct attribute_group *tpdm_attr_grps[] = {
->   	NULL,
->   };
->   
-> -static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
-> +static int tpdm_probe(struct device *dev, struct resource *res)
->   {
->   	void __iomem *base;
-> -	struct device *dev = &adev->dev;
->   	struct coresight_platform_data *pdata;
->   	struct tpdm_drvdata *drvdata;
->   	struct coresight_desc desc = { 0 };
-> @@ -1354,32 +1357,33 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->   	pdata = coresight_get_platform_data(dev);
->   	if (IS_ERR(pdata))
->   		return PTR_ERR(pdata);
-> -	adev->dev.platform_data = pdata;
-> +	dev->platform_data = pdata;
->   
->   	/* driver data*/
->   	drvdata = devm_kzalloc(dev, sizeof(*drvdata), GFP_KERNEL);
->   	if (!drvdata)
->   		return -ENOMEM;
-> -	drvdata->dev = &adev->dev;
-> +	drvdata->dev = dev;
->   	dev_set_drvdata(dev, drvdata);
->   
-> -	base = devm_ioremap_resource(dev, &adev->res);
-> -	if (IS_ERR(base))
-> -		return PTR_ERR(base);
-> +	if (res) {
-> +		base = devm_ioremap_resource(dev, res);
-> +		if (IS_ERR(base))
-> +			return PTR_ERR(base);
->   
-> -	drvdata->base = base;
-> +		drvdata->base = base;
-> +		ret = tpdm_datasets_setup(drvdata);
-> +		if (ret)
-> +			return ret;
->   
-> -	ret = tpdm_datasets_setup(drvdata);
-> -	if (ret)
-> -		return ret;
-> +		if (drvdata && tpdm_has_dsb_dataset(drvdata))
-> +			of_property_read_u32(drvdata->dev->of_node,
-> +					     "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
->   
-> -	if (drvdata && tpdm_has_dsb_dataset(drvdata))
-> -		of_property_read_u32(drvdata->dev->of_node,
-> -			   "qcom,dsb-msrs-num", &drvdata->dsb_msr_num);
-> -
-> -	if (drvdata && tpdm_has_cmb_dataset(drvdata))
-> -		of_property_read_u32(drvdata->dev->of_node,
-> -			   "qcom,cmb-msrs-num", &drvdata->cmb_msr_num);
-> +		if (drvdata && tpdm_has_cmb_dataset(drvdata))
-> +			of_property_read_u32(drvdata->dev->of_node,
-> +					     "qcom,cmb-msrs-num", &drvdata->cmb_msr_num);
-> +	}
->   
->   	/* Set up coresight component description */
->   	desc.name = coresight_alloc_device_name(&tpdm_devs, dev);
-> @@ -1388,34 +1392,51 @@ static int tpdm_probe(struct amba_device *adev, const struct amba_id *id)
->   	desc.type = CORESIGHT_DEV_TYPE_SOURCE;
->   	desc.subtype.source_subtype = CORESIGHT_DEV_SUBTYPE_SOURCE_TPDM;
->   	desc.ops = &tpdm_cs_ops;
-> -	desc.pdata = adev->dev.platform_data;
-> -	desc.dev = &adev->dev;
-> +	desc.pdata = dev->platform_data;
-> +	desc.dev = dev;
->   	desc.access = CSDEV_ACCESS_IOMEM(base);
-> -	desc.groups = tpdm_attr_grps;
-> +	if (res)
-> +		desc.groups = tpdm_attr_grps;
->   	drvdata->csdev = coresight_register(&desc);
->   	if (IS_ERR(drvdata->csdev))
->   		return PTR_ERR(drvdata->csdev);
->   
->   	spin_lock_init(&drvdata->spinlock);
->   
-> -	/* Decrease pm refcount when probe is done.*/
-> -	pm_runtime_put(&adev->dev);
-> -
->   	return 0;
->   }
->   
-> -static void tpdm_remove(struct amba_device *adev)
-> +static int tpdm_remove(struct device *dev)
->   {
-> -	struct tpdm_drvdata *drvdata = dev_get_drvdata(&adev->dev);
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(dev);
->   
->   	coresight_unregister(drvdata->csdev);
-> +
-> +	return 0;
-> +}
-> +
-> +static int dynamic_tpdm_probe(struct amba_device *adev,
-> +			      const struct amba_id *id)
-> +{
-> +	int ret;
-> +
-> +	ret = tpdm_probe(&adev->dev, &adev->res);
-> +	if (!ret)
-> +		pm_runtime_put(&adev->dev);
-> +
-> +	return ret;
-> +}
-> +
-> +static void dynamic_tpdm_remove(struct amba_device *adev)
-> +{
-> +	tpdm_remove(&adev->dev);
->   }
->   
->   /*
->    * Different TPDM has different periph id.
->    * The difference is 0-7 bits' value. So ignore 0-7 bits.
->    */
-> -static const struct amba_id tpdm_ids[] = {
-> +static const struct amba_id dynamic_tpdm_ids[] = {
->   	{
->   		.id	= 0x001f0e00,
->   		.mask	= 0x00ffff00,
-> @@ -1423,17 +1444,76 @@ static const struct amba_id tpdm_ids[] = {
->   	{ 0, 0, NULL },
->   };
->   
-> -static struct amba_driver tpdm_driver = {
-> +MODULE_DEVICE_TABLE(amba, dynamic_tpdm_ids);
-> +
-> +static struct amba_driver dynamic_tpdm_driver = {
->   	.drv = {
->   		.name   = "coresight-tpdm",
->   		.suppress_bind_attrs = true,
->   	},
-> -	.probe          = tpdm_probe,
-> -	.id_table	= tpdm_ids,
-> -	.remove		= tpdm_remove,
-> +	.probe          = dynamic_tpdm_probe,
-> +	.id_table	= dynamic_tpdm_ids,
-> +	.remove		= dynamic_tpdm_remove,
->   };
->   
-> -module_amba_driver(tpdm_driver);
-> +static int tpdm_platform_probe(struct platform_device *pdev)
-> +{
-> +	struct resource *res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	int ret;
-> +
-> +	pm_runtime_get_noresume(&pdev->dev);
-> +	pm_runtime_set_active(&pdev->dev);
-> +	pm_runtime_enable(&pdev->dev);
-> +
-> +	ret = tpdm_probe(&pdev->dev, res);
-> +	pm_runtime_put(&pdev->dev);
-> +	if (ret)
-> +		pm_runtime_disable(&pdev->dev);
-> +
-> +	return ret;
-> +}
-> +
-> +static void tpdm_platform_remove(struct platform_device *pdev)
-> +{
-> +	struct tpdm_drvdata *drvdata = dev_get_drvdata(&pdev->dev);
-> +
-> +	if (WARN_ON(!drvdata))
-> +		return;
-> +
-> +	tpdm_remove(&pdev->dev);
-> +	pm_runtime_disable(&pdev->dev);
-> +}
-> +
-> +static const struct of_device_id static_tpdm_match[] = {
-> +	{.compatible = "qcom,coresight-static-tpdm"},
-> +	{}
-> +};
-> +
-> +MODULE_DEVICE_TABLE(of, static_tpdm_match);
-> +
-> +static struct platform_driver static_tpdm_driver = {
-> +	.probe		= tpdm_platform_probe,
-> +	.remove		= tpdm_platform_remove,
-> +	.driver		= {
-> +		.name	= "coresight-static-tpdm",
-> +		.of_match_table = static_tpdm_match,
-> +		.suppress_bind_attrs = true,
-> +	},
-> +};
-> +
-> +static int __init tpdm_init(void)
-> +{
-> +	return coresight_init_driver("tpdm", &dynamic_tpdm_driver, &static_tpdm_driver,
-> +				     THIS_MODULE);
-> +}
-> +
-> +static void __exit tpdm_exit(void)
-> +{
-> +	coresight_remove_driver(&dynamic_tpdm_driver, &static_tpdm_driver);
-> +}
-> +
-> +module_init(tpdm_init);
-> +module_exit(tpdm_exit);
->   
->   MODULE_LICENSE("GPL");
->   MODULE_DESCRIPTION("Trace, Profiling & Diagnostic Monitor driver");
-> diff --git a/drivers/hwtracing/coresight/coresight-tpdm.h b/drivers/hwtracing/coresight/coresight-tpdm.h
-> index b11754389734..9f52c88ce5c1 100644
-> --- a/drivers/hwtracing/coresight/coresight-tpdm.h
-> +++ b/drivers/hwtracing/coresight/coresight-tpdm.h
-> @@ -343,4 +343,12 @@ struct tpdm_dataset_attribute {
->   	enum dataset_mem mem;
->   	u32 idx;
->   };
-> +
-> +static inline bool coresight_is_static_tpdm(struct coresight_device *csdev)
-> +{
-> +	struct device_node *node = csdev->dev.parent->of_node;
-> +
-> +	return (csdev &&
-> +		of_device_is_compatible(node, "qcom,coresight-static-tpdm"));
-> +}
->   #endif  /* _CORESIGHT_CORESIGHT_TPDM_H */
-
+> -----Original Message-----
+> From: Nitin Rawat <quic_nitirawa=40quicinc.com>
+> Sent: Tuesday, August 12, 2025 3:16 AM
+> To: 'Manivannan Sadhasivam' <mani=40kernel.org>; Alim Akhtar
+> <alim.akhtar=40samsung.com>
+> Cc: 'Konrad Dybcio' <konrad.dybcio=40oss.qualcomm.com>; 'Krzysztof
+> Kozlowski' <krzk=40kernel.org>; 'Ram Kumar Dwivedi'
+> <quic_rdwivedi=40quicinc.com>; avri.altman=40wdc.com;
+> bvanassche=40acm.org; robh=40kernel.org; krzk+dt=40kernel.org;
+> conor+dt=40kernel.org; andersson=40kernel.org; konradybcio=40kernel.org;
+> James.Bottomley=40hansenpartnership.com; martin.petersen=40oracle.com;
+> agross=40kernel.org; linux-arm-msm=40vger.kernel.org; linux-
+> scsi=40vger.kernel.org; devicetree=40vger.kernel.org; linux-
+> kernel=40vger.kernel.org
+> Subject: Re: =5BPATCH 2/3=5D arm64: dts: qcom: sa8155: Add gear and rate =
+limit
+> properties to UFS
+>=20
+>=20
+>=20
+> On 8/9/2025 4:43 PM, 'Manivannan Sadhasivam' wrote:
+> > On Sat, Aug 09, 2025 at 06:30:29AM GMT, Alim Akhtar wrote:
+> >
+> > =5B...=5D
+> >
+> >>>>>>>>>> I understand that this is a static configuration, where it is
+> >>>>>>>>>> already known
+> >>>>>>>>> that board is broken for higher Gear.
+> >>>>>>>>>> Can this be achieved by limiting the clock? If not, can we
+> >>>>>>>>>> add a board
+> >>>>>>>>> specific _quirk_ and let the _quirk_ to be enabled from vendor
+> >>>>>>>>> specific hooks?
+> >>>>>>>>>>
+> >>>>>>>>>
+> >>>>>>>>> How can we limit the clock without limiting the gears? When we
+> >>>>>>>>> limit the gear/mode, both clock and power are implicitly
+> >>> limited.
+> >>>>>>>>>
+> >>>>>>>> Possibly someone need to check with designer of the SoC if that
+> >>>>>>>> is possible
+> >>>>>>> or not.
+> >>>>>>>
+> >>>>>>> It's not just clock. We need to consider reducing regulator,
+> >>>>>>> interconnect votes also. But as I said above, limiting the
+> >>>>>>> gear/mode will take care of all these parameters.
+> >>>>>>>
+> >>>>>>>> Did we already tried _quirk_? If not, why not?
+> >>>>>>>> If the board is so poorly designed and can't take care of the
+> >>>>>>>> channel loses or heat dissipation etc, Then I assumed the gear
+> >>>>>>>> negotiation between host and device should fail for the higher
+> >>>>>>>> gear and driver can have
+> >>>>>>> a re-try logic to re-init / re-try =22power mode change=22 at the
+> >>>>>>> lower gear. Is that not possible / feasible?
+> >>>>>>>>
+> >>>>>>>
+> >>>>>>> I don't see why we need to add extra logic in the UFS driver if
+> >>>>>>> we can extract that information from DT.
+> >>>>>>>
+> >>>>>> You didn=E2=80=99t=20answer=20my=20question=20entirely,=20I=20am=
+=20still=20not=20able=20to=0D=0A>=20>>>>>>=20visualised=20how=20come=20Link=
+up=20is=20happening=20in=20higher=20gear=20and=20then=0D=0A>=20>>>>>>=20Sud=
+denly=0D=0A>=20>>>>>=20it=20is=20failing=20and=20we=20need=20to=20reduce=20=
+the=20gear=20to=20solve=20that?=0D=0A>=20>>>>>=0D=0A>=20>>>>>=20Oh=20well,=
+=20this=20is=20the=20source=20of=20confusion=20here.=20I=20didn't=20(also=
+=20the=0D=0A>=20>>>>>=20patch)=20claim=20that=20the=20link=20up=20will=20ha=
+ppen=20with=20higher=20speed.=20It=0D=0A>=20>>>>>=20will=20most=20likely=20=
+fail=20if=20it=20couldn't=20operate=20at=20the=20higher=20speed=0D=0A>=20>>=
+>>>=20and=20that's=20why=20we=20need=20to=20limit=20it=20to=20lower=20gear/=
+mode=20*before*=0D=0A>=20>>>>>=20bringing=20the=0D=0A>=20>>>=20link=20up.=
+=0D=0A>=20>>>>>=0D=0A>=20>>>>=20Right,=20that's=20why=20a=20re-try=20logic=
+=20to=20negotiate=20a=20__working__=20power=0D=0A>=20>>>>=20mode=0D=0A>=20>=
+>>=20change=20can=20help,=20instead=20of=20introducing=20new=20binding=20fo=
+r=20this=20case.=0D=0A>=20>>>=0D=0A>=20>>>=20Retry=20logic=20is=20already=
+=20in=20place=20in=20the=20ufshcd=20core,=20but=20with=20this=0D=0A>=20>>>=
+=20kind=20of=20signal=20integrity=20issue,=20we=20cannot=20guarantee=20that=
+=20it=20will=0D=0A>=20>>>=20gracefully=20fail=20and=20then=20we=20could=20r=
+etry.=20The=20link=20up=20*may*=20succeed,=0D=0A>=20>>>=20then=20it=20could=
+=20blow=20up=20later=20also=20(when=20doing=20heavy=20I/O=20operations=0D=
+=0A>=20>>>=20etc...).=20So=20with=20this=20non-deterministic=20behavior,=20=
+we=20cannot=20rely=20on=20this=0D=0A>=20logic.=0D=0A>=20>>>=0D=0A>=20>>=20I=
+=20would=20image=20in=20that=20case=20,=20PHY=20tuning=20/=20programming=20=
+is=20not=20proper.=0D=0A>=20>=0D=0A>=20>=20I=20don't=20have=20the=20insight=
+=20into=20the=20PHY=20tuning=20to=20avoid=20this=20issue.=0D=0A>=20>=20Mayb=
+e=20Nitin=20or=20Ram=20can=20comment=20here.=20But=20PHY=20tuning=20is=20mo=
+stly=20SoC=0D=0A>=20specific=20in=20the=20PHY=20driver.=0D=0A>=20>=20We=20d=
+on't=20have=20board=20level=20tuning=20sequence=20AFIAK.=0D=0A>=20=0D=0A>=
+=20Hi=20Alim=20and=20Mani,=0D=0A>=20=0D=0A>=20Here's=20my=20take:=0D=0A>=20=
+=0D=0A>=20There=20can=20be=20multiple=20reasons=20for=20limiting=20the=20ge=
+ar/rate=20on=20a=20customer=20board=0D=0A>=20beyond=20PHY=20tuning=20issues=
+:=0D=0A>=20=0D=0A>=201.=20Board-level=20signal=20integrity=20concerns=202.=
+=20Channel=20or=20reference=20clock=0D=0A>=20configuration=20issues=203.=20=
+Customer=20board=20layout=20not=20meeting=20layout=20design=0D=0A>=20guidel=
+ines=0D=0A>=20=0D=0A>=20This=20becomes=20especially=20critical=20in=20autom=
+otive=20platforms=20like=20the=20SA8155,=20as=0D=0A>=20mentioned=20by=20Ram=
+.=20In=20such=20safety-critical=20applications,=20customer=20prioritize=0D=
+=0A>=20reliability=20over=20peak=20performance,=20and=20hence=20customers=
+=20are=20generally=0D=0A>=20comfortable=20operating=20at=20lower=20gears=20=
+if=20stability=20is=20ensured.=0D=0A>=20=0D=0ASorry=20for=20delay=20in=20re=
+ply=20(lost=20this=20email=20in=20my=20inbox),=20Thanks=20Nitin=20for=20det=
+ailed=20explanations=20=0D=0ALooks=20like=20board=20has=20too=20many=20issu=
+es=20for=20=22safety-critical=20applications=22=0D=0AAnyway,=20looks=20like=
+=20there=20is=20consensus=20to=20have=20this=20property=20in,=20as=20adopte=
+d=20by=20PCIe=20and=20other=20subsystem.=0D=0A=0D=0A=0D=0A
 
