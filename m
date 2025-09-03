@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-71784-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71785-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42F3AB41A5F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:46:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9609DB41A7C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:48:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 03599487A23
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:45:59 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 56D723BC3D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:48:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC034231832;
-	Wed,  3 Sep 2025 09:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7313E26B95B;
+	Wed,  3 Sep 2025 09:48:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NsTCTzxV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ukCtmWii"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F752AE66;
-	Wed,  3 Sep 2025 09:45:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F9421A425;
+	Wed,  3 Sep 2025 09:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756892755; cv=none; b=cmBrSlcsnXVly/XWrQ0g/Ul/oWKB3k42kmIArkLH0cQkvZPA0/BK4TJvbSrLdqeW3lskeGHHo4UTwNQyeJ6mT/rocZ02Vt1FoNTmHHMxGnFhovkQ0ePnuwd/BRwNTaMxKc8rDaOPZNyMcYsKYJq6G/g7nl9gGsx1N+AVjETF+/A=
+	t=1756892919; cv=none; b=A0Qfm8RMOZe+54cyXUhJLdIR3nixUX9lzynM3Qyx8ExfDeLnK+dMXv8caCCqhvldakswTUiCuNzqRpjOp/yiZfvDZ/pqIzFu3qKGv7diNIIWMgiOL4W5OQ58aR37Wq0+9DFIhKxwoKi3nA/jDU0O1zETRt985IQPckotOyfD9hw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756892755; c=relaxed/simple;
-	bh=Rjte23Xt6hHHtiSIn06InkHOdJhF2Y0YYwJIxf/yyxw=;
+	s=arc-20240116; t=1756892919; c=relaxed/simple;
+	bh=+ed/dJSYvBNttB1YXH5+Dx5Mb0K6Uf7RIbFi2PpJ8OQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dc/Cy2Dh0pZROb377AMuBlQ56Ys4XBL2hgN6o2+uBse1+chb9Tj3IOH7XahRm2AXeBiR+hzDPlxbfDPA61SCFhLDml516WZDbkj91bcja7PJ6eCx1mhsjmJh2wb7fWKz8HiC+7ilFGp2LlR703oDWaDoqlcSDQlFjhyjzrXweo4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NsTCTzxV; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39DA5C4CEF1;
-	Wed,  3 Sep 2025 09:45:52 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Byqoj4d0ZKZXzFOT4P3Fd+E2OFPIuRWwIUOTXYWGb1JHyot0qgprufhpbIJnB/8MrqVRq4vP7pCHZg8HKfONn42z5DeTVOV5lyIqp6Pb79MWu1j6ctEnBaq0gkd+1jrv5wfn1sy8SVOQrsRg9e5t/i1aa9+fLvNhbrcZTodn7HM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ukCtmWii; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15309C4CEF1;
+	Wed,  3 Sep 2025 09:48:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756892755;
-	bh=Rjte23Xt6hHHtiSIn06InkHOdJhF2Y0YYwJIxf/yyxw=;
+	s=k20201202; t=1756892918;
+	bh=+ed/dJSYvBNttB1YXH5+Dx5Mb0K6Uf7RIbFi2PpJ8OQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=NsTCTzxV4sMp2iqCbe8WVpMsFOr2vyqYEwKXAqEGPTIRne8O6IPkfpYHz4QLE60yB
-	 Aiq0iO1ZOgEZfvQ7wXv6hfyMEL1XxuaL1JpeTqwYYSdCfXUmUdDYPIqT0kO6CSrE82
-	 y3LZMoanpnrpFEMSq6qHDuZUg7PD1eGbt0eUzUp207/MtMlhdu1S+f+fI8gT6YpEzz
-	 23fn9qxq3YuEriGS2UFA0Z+dnEZPTkI9HmVVeXeHr7h2IjZ2CV8f36nXYVqqnR16Yk
-	 LgjsDVSbNehO0nAE3jWR4XhhV8k9RVH54Ej+nv1U4kRxuGHbl9czg34sqktjgI20SR
-	 YwBvVpC8euo6g==
-Message-ID: <3117196e-782d-4ee3-b5a7-f0a87ae43bda@kernel.org>
-Date: Wed, 3 Sep 2025 11:45:50 +0200
+	b=ukCtmWiiRSoDX3lMFtM5OnASsCEsi1m8qs65hiSTW4FxsupWI76vmynHxiKgYWhYv
+	 rkZiYjYnpy8O8Jy0rUAaxPIXRzOHZ0EDRnJrrPW44NCkQcW+ifmhAli1C1KhuSXBXA
+	 NNIMNvMlU0aV85Bf0DnlGhj7obZ1DbN1Y0GmdamWxnyRFUb+//zj/Gi5Ou8iHWCBQN
+	 GyKqWU7EnKne4W5PpcNSZokWk/y/JjVVxfFoj5JonwrokrWfTTYVZwBTRBKEU7eq7k
+	 rCCf5WCo3aGjhMpdYBtZLS4FAWMFqpO2FTrJF0Da6YKkGsLLXAsw+y/re7pGfN/Jqb
+	 x+KJXi5SYQpeA==
+Message-ID: <fbf6708e-a902-451e-94a4-9f100f7b61a4@kernel.org>
+Date: Wed, 3 Sep 2025 11:48:34 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] arm64: dts: qcom: x1e80100: add video node
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: hamoa-iot-evk: enable video
 To: Wangao Wang <quic_wangaow@quicinc.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -61,7 +61,7 @@ To: Wangao Wang <quic_wangaow@quicinc.com>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
 References: <20250903-add_iris_for_x1e80100-v1-0-410e9e6c79f0@quicinc.com>
- <20250903-add_iris_for_x1e80100-v1-1-410e9e6c79f0@quicinc.com>
+ <20250903-add_iris_for_x1e80100-v1-3-410e9e6c79f0@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,41 +107,24 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250903-add_iris_for_x1e80100-v1-1-410e9e6c79f0@quicinc.com>
+In-Reply-To: <20250903-add_iris_for_x1e80100-v1-3-410e9e6c79f0@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 03/09/2025 10:27, Wangao Wang wrote:
-> Add the IRIS video-codec node on X1E80100 platform to support video
-> functionality.
+> Enable Iris video codec on the hamoa-iot-evk board.
 > 
 > Signed-off-by: Wangao Wang <quic_wangaow@quicinc.com>
 > ---
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 82 ++++++++++++++++++++++++++++++++++
->  1 file changed, 82 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/x1e80100.dtsi b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> index 737c5dbd1c808300041cc8897ca1f7450e16e019..aac40875e583fd49db85e1c5d0ca416cc02d0e5d 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/x1e80100.dtsi
-> @@ -5186,6 +5186,88 @@ usb_1_ss1_dwc3_ss: endpoint {
->  			};
->  		};
->  
-> +		iris: video-codec@aa00000 {
-> +			compatible = "qcom,x1e80100-iris", "qcom,sm8550-iris";
+>  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 4 ++++
+>  1 file changed, 4 insertions(+)
 
-It does not look like you tested the DTS against bindings. Please run
-`make dtbs_check W=1` (see
-Documentation/devicetree/bindings/writing-schema.rst or
-https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
-for instructions).
-Maybe you need to update your dtschema and yamllint. Don't rely on
-distro packages for dtschema and be sure you are using the latest
-released dtschema.
+There is no such file!
 
-> 
+Really, again you send something completely out of the blue, untestable,
+unmergeable, without ANY explanation in cover letter.
 
+We already gave feedback on this two weeks ago!
 
 Best regards,
 Krzysztof
