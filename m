@@ -1,248 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-71740-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86E4DB41721
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:48:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CACCB41732
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 09:50:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 518D717A07F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 07:48:32 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2A46917AD16
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 07:50:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB3C92DA777;
-	Wed,  3 Sep 2025 07:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C5522D8385;
+	Wed,  3 Sep 2025 07:49:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ocF+Vy1/"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Kz5u3PbT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220512D4818;
-	Wed,  3 Sep 2025 07:48:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151CD2D8387
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 07:49:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756885708; cv=none; b=Uv5jFOp8cRN/ikq7GB2msj3TqI9PILAI8CnSXYgmQ4cxZmeb/xLC9unJ6OQXXHOn+JqZHskjLXnhMmOHrIZip8luL87wSHeyTtOTp+R/C4aO3P0JuXi8/PJF03iQuEPN0OvZspHvtd8ciQfN6Cg53wQhHkoRIT3zI7aPukwvlrA=
+	t=1756885797; cv=none; b=htqqeWlzsMp9TSflJ0GGWYunvwSAip8xkuKlmMuzfUYOyjfCj3ttvExwfxZgwyanm5jM4qc64u3NdDUFpbxzy3AYVdWFzxtm2C1RcJ2izENcuzyM48nyT5k4LvmzqC+r5brDCf/tdvDuefJc6h64hE7COBUPVi0gYHZ4tg5WtJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756885708; c=relaxed/simple;
-	bh=bzrfZszG4bWxM9GMkcwDsX81/KwgJq05nciWmAOqocU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VEvoOQHt3NuSW6lisKkxgWXDYIyBAcyr9ZNKuonRf9SSuR01azEglIcewfHANkK+R/nWkQ0hc/SMqLeOLtbMLlYjSop2YfmAKHDW3AcaosEZHvljzxw9NZYqPhgaU4mHC37IsbuDfrzJZrkWBFi1dsBp1wGuSmXe2V1ADMBC8BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ocF+Vy1/; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5832BE58023692;
-	Wed, 3 Sep 2025 07:48:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=e2Vs5uZsc+1
-	8PkOfpN7x032DmlsrIqdtYfMxYXx5G14=; b=ocF+Vy1/UiogLxacmrBJYL6kFPO
-	St7cW6isTQn/Vw7do0X6JYXFON+k0s7s6ce1VxW85/tCAscI7kH4NdPjkAxSUAUY
-	n06oxu8RfmJME68mpaqCYVJdGz8TVwQzapN6mDE4378vfH8W+iKUqedDGqpUtfSU
-	ooZz/G6/Jbli74oaK1VBb2eND7oMc59U+BJY3vh2AI1/l9A5GD8/VgYUT67GUwQ5
-	6bGUUCXElcTIUGAE7Svo/s0QliZhrdFbl8AzTvoL0g8XGZaTNOsGVIIp8BIKwgAb
-	Bruybk3m28ZPRYYvC09N7KOT5zIrpdFxgmc+jckCI2Oun7t0zOpZOzjsrcQ==
-Received: from apblrppmta01.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnpaun0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 03 Sep 2025 07:48:22 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5837mIGd002102;
-	Wed, 3 Sep 2025 07:48:18 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 48utcm5cy7-1;
-	Wed, 03 Sep 2025 07:48:18 +0000
-Received: from APBLRPPMTA01.qualcomm.com (APBLRPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5837mIFR002094;
-	Wed, 3 Sep 2025 07:48:18 GMT
-Received: from hu-maiyas-hyd.qualcomm.com (hu-nitirawa-hyd.qualcomm.com [10.213.109.152])
-	by APBLRPPMTA01.qualcomm.com (PPS) with ESMTP id 5837mI0Z002087;
-	Wed, 03 Sep 2025 07:48:18 +0000
-Received: by hu-maiyas-hyd.qualcomm.com (Postfix, from userid 2342877)
-	id CAFE861B87A; Wed,  3 Sep 2025 13:18:17 +0530 (+0530)
-From: Nitin Rawat <nitin.rawat@oss.qualcomm.com>
-To: mani@kernel.org, James.Bottomley@HansenPartnership.com,
-        martin.petersen@oracle.com
-Cc: krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Nitin Rawat <quic_nitirawa@quicinc.com>
-Subject: [PATCH V4 2/2] ufs: ufs-qcom: Refactor MCQ register dump logic
-Date: Wed,  3 Sep 2025 13:18:15 +0530
-Message-ID: <20250903074815.8176-3-nitin.rawat@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250903074815.8176-1-nitin.rawat@oss.qualcomm.com>
-References: <20250903074815.8176-1-nitin.rawat@oss.qualcomm.com>
+	s=arc-20240116; t=1756885797; c=relaxed/simple;
+	bh=EJfrYL5HJI0QUtaBffL6WlEbo2xIumV+JPls7FbJoTI=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ol75Li+Vi3aw+bIbWVAmfTjP3iVDZyHEt1UtR2hNQWrOGh3fyWBWlVouh9r/yLAKP8KUPCIhZC2zelglLBEBBSPhn0pbZajWSpXjRa5SxzjOoIrsLECPIO381z0wLupcWJofTDAtRxa6TVDhFcc8sbBfOeKWl1/HTxCtecdSm3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Kz5u3PbT; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3cf48ec9fa4so3384547f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 00:49:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756885793; x=1757490593; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=PioyJaDS8ksrS/yIYTZans1q2zfR8i6mk/EV1gul67A=;
+        b=Kz5u3PbTnXQhIla15B4QrJUgKE/Bq1kyHRsyWJerX6SjoDavyhzSkYNT4/0Eg5DVZG
+         jvEpKAgQA3QLS3cYCOGFAnNZ4UYFILGxCREqAJ/XK6dVFFKcWCYrj60aqUB8AXgmnymZ
+         vBjEsl6ck9coPHCxJWJ2gwyPkwpqC688+XlJcptZ6ycs+uc1wWiSK07Z9IxzwHBV9b5j
+         gMTbxRjCZcReV/u9JI7u8WyxgKtZ16r/tJrBxdt53QlKcezTwLdXx47ucZXdt0YLxDFa
+         HTIEnPizgqEzbjxa/LK1LkUqBPfwHfwUvHnfW8vgT7azl4TRbYJaWZBl5g1mQN7C8Dri
+         XlQg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756885793; x=1757490593;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=PioyJaDS8ksrS/yIYTZans1q2zfR8i6mk/EV1gul67A=;
+        b=XDT6Nh9rQX4l16qTStUTnDSYmaw+D1ADlxoiAzFZALtiVPcQQFuCSvaKVa+fKGrUOX
+         FDL6OgUlqwcUIYqDAcDpQRuza6zk7bdm5MJ7uJnv3N2JfMjMvMtJMSJ9AFtycWbJ9JlV
+         fdwEgVivlgrOFwXu3RfLNEmPvcms8sAxxpLBr+Ef2RVLpfgZpUMcNKWqd2Wi4rjwCP3k
+         iHlxMAzN1GKEkO6lSYnoDc1n/agMxUY8gKlRRkuQ5AHO33md69zjLv/xHSlneIq3vKp5
+         2JeFrAX+qzJ7E9ua27IOXUapg9TH2qjTlouqjM2EVH6yrWUt8vU8M6rO6Rc6vTsqGAEv
+         p5Ww==
+X-Forwarded-Encrypted: i=1; AJvYcCXpqhQBTLKyFWR9eFpvxiMeXuzvAN2x29kSX9JkiFWV4i0I9C+W6Zx3ld8j18Xz2phUk+QWfz9MkPkXzXA/@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHqs4wd/F14l4sqifeXG4gyXT/GlPcKZrwpgEDQ8m7xhyTlHa1
+	VBhPrmmJJv9/9Cdvf7/1ayb0eBazRJOAuzOMHRNVqX/YCi9kZFmrilj4auMDh+fwWNQ=
+X-Gm-Gg: ASbGncsxlwPZAdJ9bpDAQEkz7lHLNp3xGI2Mn2YXHg8iGcxodMvQJ0MyZoayINS4AHJ
+	LEX8j8HDBExVtuaIMV2BpWUAOpIwA2oVpXg+Ap6cbX0cU/BOXObiiuNi87Xqo3icDYOIcuuPMHX
+	ew6SnlKgHKixo0toZEdmjJirKdIJFBf8XJZkNz5Fzen4VqFPe43BGWPlc2L1sPf7BIPE+p4P82S
+	Hw0TutHK3XpActfUoNOI02eogaFR18MTTXL0d+52TtLNLcZeu77bLMeJhYhBhgsgV7oV9Hg+DJy
+	pVxj40zJhi2tiZeMr18dLnCc7rD33dvSMRiShTyOSlvbaa0cQKfaHcWF7nPjqttJBAOwtoJ0Stp
+	x5YSVPqT9P7E30xfxTnXcNiV73+1icT4YdE2s0cOCFjZOTGFdX3TqP6EeeSlPZV2VUFOr1LtpVH
+	7SvHAvDdWhdru+LCIoJA==
+X-Google-Smtp-Source: AGHT+IGNcwf7dquah88p3kbUCZQzfg4W/YTjPdyhyrclopN+udAN3w1xt+8R2YdXZebjRcfFI3x01g==
+X-Received: by 2002:a05:6000:2011:b0:3c9:3f46:70eb with SMTP id ffacd0b85a97d-3d1def69bc3mr8693458f8f.52.1756885793260;
+        Wed, 03 Sep 2025 00:49:53 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:431c:dad5:266c:f97? ([2a01:e0a:3d9:2080:431c:dad5:266c:f97])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b93fae643sm75085675e9.3.2025.09.03.00.49.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 03 Sep 2025 00:49:52 -0700 (PDT)
+Message-ID: <418ba924-7e3d-474f-ab1e-084ca8ad313d@linaro.org>
+Date: Wed, 3 Sep 2025 09:49:51 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: dV84zc8pQasd9xpi6LB0IBOuRog45g8V
-X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68b7f2c6 cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=Vs7wVDfjhEDCw-gDrcsA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: dV84zc8pQasd9xpi6LB0IBOuRog45g8V
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfXxvPHC9AdlVCv
- 4HeDLkiDYI0Xb8YdLesIiBmN/K4RcAwK46BkXFWqpa6/Q1nZiAAGpNjCx+cKhtnTWV/AOnS7iAT
- axcXV6tSyFNqbS4CILtdKFznIjuKyvyqW7ckRRSIrhMItOKj1CgMl9cFzNzzEyDVzuni86uDvY2
- RgrEePUMf0gwbwcR+Fztpd/oP7QfUO7pE7of3/vUFj4FFn3fD9ln/Xw+PZxefoigyRjfmyTSfZJ
- 5myPVFdiHlvCSxWiLUMIoXXT9KDDr9rvOoUUtFklnEIYYFSNHTJC0BQkI8WwM37TAHXyQ8sVE6m
- 6j9XfvzphxOjVTr4h80qH/UP2TKpdGojUE88KmBuG78MZY7dS0JbOV7PlsRvsiuhZYcR2yFFnw3
- wkEWFVkf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-03_04,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 clxscore=1011 bulkscore=0 impostorscore=0
- spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300001
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v2 3/5] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy:
+ Document static lanes mapping
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+ Kishon Vijay Abraham I <kishon@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+References: <20250902-topic-x1e80100-hdmi-v2-0-f4ccf0ef79ab@linaro.org>
+ <20250902-topic-x1e80100-hdmi-v2-3-f4ccf0ef79ab@linaro.org>
+ <20250903-amaranth-rhino-of-wind-3b8850@kuoka>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250903-amaranth-rhino-of-wind-3b8850@kuoka>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Nitin Rawat <quic_nitirawa@quicinc.com>
+On 03/09/2025 09:07, Krzysztof Kozlowski wrote:
+> On Tue, Sep 02, 2025 at 11:00:30AM +0200, Neil Armstrong wrote:
+>> The QMP USB3/DP Combo PHY hosts an USB3 phy and a DP PHY on top
+>> of a combo glue to route either lanes to the 4 shared physical lanes.
+>>
+>> The routing of the lanes can be:
+>> - 2 DP + 2 USB3
+>> - 4 DP
+>> - 2 USB3
+>>
+>> The layout of the lanes was designed to be mapped and swapped
+>> related to the USB-C Power Delivery negociation, so it supports
+>> a finite set of mappings inherited by the USB-C Altmode layouts.
+>>
+>> Nevertheless those QMP Comby PHY can be statically used to
+>> drive a DisplayPort connector, DP->HDMI bridge, USB3 A Connector,
+>> etc... without an USB-C connector and no PD events.
+> 
+> What is the use case for static mapping? Embedded HDMI port on T14s
+> laptop?
+> 
+>>
+>> Add a property that documents the static lanes mapping to
+>> each underlying PHY to allow supporting boards directly
+>> connecting USB3 and DisplayPort lanes to the QMP Combo
+>> lanes.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+>> ---
+>>   .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         | 29 ++++++++++++++++++++++
+>>   1 file changed, 29 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+>> index c8bc512df08b5694c8599f475de78679a4438449..12511a462bc6245e0b82726d053d8605148c5047 100644
+>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
+>> @@ -76,6 +76,35 @@ properties:
+>>     mode-switch: true
+>>     orientation-switch: true
+>>   
+>> +  qcom,static-lanes-mapping:
+>> +    $ref: /schemas/types.yaml#/definitions/uint32-array
+>> +    minItems: 4
+>> +    items:
+>> +      enum:
+>> +        - 0 # Unconnected (PHY_NONE)
+>> +        - 4 # USB3 (PHY_TYPE_USB3)
+>> +        - 6 # DisplayPort (PHY_TYPE_DP)
+>> +    description:
+>> +      Describes the static mapping of the Combo PHY lanes, when not used
+>> +      a in a Type-C dynamic setup using USB-C PD Events to change the mapping.
+>> +      The 4 lanes can either routed to the underlying DP PHY or the USB3 PHY.
+>> +      Only 2 of the lanes can be connected to the USB3 PHY, but the 4 lanes can
+>> +      be connected to the DP PHY.
+>> +      The numbers corresponds to the PHY Type the lanes are connected to.
+>> +      The possible combinations are
+>> +        <0 0 0 0> when none are connected
+>> +        <4 4 0 6> USB3 and DP single lane
+>> +        <4 4 6 6> USB3 and DP
+>> +        <6 6 4 4> DP and USB3
+>> +        <6 0 4 4> DP and USB3 single lane
+> 
+>> +        <4 4 0 0> USB3 Only
+>> +        <0 0 4 4> USB3 Only
+> 
+> Why do you need to handle here and in few other places mirrored case?
+> Isn't enough to just say you only want USB3? Maybe my first question
+> (what is usecase for this) answers this, though.
 
-Refactor MCQ register dump to align with the new resource mapping.
-As part of refactor, below changes are done:
+Usecase is larger than the HDMI on the T14s, we must handle boards directly
+connected some USB-A and DP stuff directly on the combo lanes.
 
-- Update ufs_qcom_dump_regs() function signature to accept direct
-  base address instead of resource ID enum
-- Modify ufs_qcom_dump_mcq_hci_regs() to use hba->mcq_base and
-  calculated addresses from MCQ operation info
-- Replace enum ufshcd_res with direct memory-mapped I/O addresses
+See https://lore.kernel.org/all/8A7C126C22789C9B+f30def47-302a-45ee-8f76-64ef277f773f@radxa.com/
 
-Additionally Remove the ufshcd_res_info structure and associated
-enum ufshcd_res definitions from the UFS host controller header.
-These were previously used for MCQ resource mapping but are no
-longer needed following recent refactoring to use direct base
-addresses instead of multiple separate resource regions.
+> 
+> This looks similar to rockchip,dp-lane-mux, from the objective point of
+> view. Please look there and if it is really similar concept this would
+> warrant having it as generic property in video-interfaces for example.
 
-Signed-off-by: Nitin Rawat <quic_nitirawa@quicinc.com>
----
- drivers/ufs/host/ufs-qcom.c | 34 +++++++++++++++++++---------------
- include/ufs/ufshcd.h        | 25 -------------------------
- 2 files changed, 19 insertions(+), 40 deletions(-)
+Yes it's quite the same
 
-diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-index 1383538b1ed8..52625b49029e 100644
---- a/drivers/ufs/host/ufs-qcom.c
-+++ b/drivers/ufs/host/ufs-qcom.c
-@@ -1742,7 +1742,7 @@ static void ufs_qcom_dump_testbus(struct ufs_hba *hba)
- }
+> 
+> I also wonder if this should not be stored in the endpoint.
 
- static int ufs_qcom_dump_regs(struct ufs_hba *hba, size_t offset, size_t len,
--			      const char *prefix, enum ufshcd_res id)
-+			      const char *prefix, void __iomem *base)
- {
- 	u32 *regs __free(kfree) = NULL;
- 	size_t pos;
-@@ -1755,7 +1755,7 @@ static int ufs_qcom_dump_regs(struct ufs_hba *hba, size_t offset, size_t len,
- 		return -ENOMEM;
+But I'm trying to store this in the endpoint as [1], the Bindings & DT part looks fine,
+but the driver part looks horrible...
 
- 	for (pos = 0; pos < len; pos += 4)
--		regs[pos / 4] = readl(hba->res[id].base + offset + pos);
-+		regs[pos / 4] = readl(base + offset + pos);
+I'll probably post an RFC of that shortly
 
- 	print_hex_dump(KERN_ERR, prefix,
- 		       len > 4 ? DUMP_PREFIX_OFFSET : DUMP_PREFIX_NONE,
-@@ -1766,30 +1766,34 @@ static int ufs_qcom_dump_regs(struct ufs_hba *hba, size_t offset, size_t len,
+[1] https://lore.kernel.org/all/14f334fc-35de-4f21-8eb1-f6b41ac24704@linaro.org/
 
- static void ufs_qcom_dump_mcq_hci_regs(struct ufs_hba *hba)
- {
-+	struct ufshcd_mcq_opr_info_t *opr = &hba->mcq_opr[0];
-+	void __iomem *mcq_vs_base = hba->mcq_base + UFS_MEM_VS_BASE;
-+
- 	struct dump_info {
-+		void __iomem *base;
- 		size_t offset;
- 		size_t len;
- 		const char *prefix;
--		enum ufshcd_res id;
- 	};
+Neil
 
- 	struct dump_info mcq_dumps[] = {
--		{0x0, 256 * 4, "MCQ HCI-0 ", RES_MCQ},
--		{0x400, 256 * 4, "MCQ HCI-1 ", RES_MCQ},
--		{0x0, 5 * 4, "MCQ VS-0 ", RES_MCQ_VS},
--		{0x0, 256 * 4, "MCQ SQD-0 ", RES_MCQ_SQD},
--		{0x400, 256 * 4, "MCQ SQD-1 ", RES_MCQ_SQD},
--		{0x800, 256 * 4, "MCQ SQD-2 ", RES_MCQ_SQD},
--		{0xc00, 256 * 4, "MCQ SQD-3 ", RES_MCQ_SQD},
--		{0x1000, 256 * 4, "MCQ SQD-4 ", RES_MCQ_SQD},
--		{0x1400, 256 * 4, "MCQ SQD-5 ", RES_MCQ_SQD},
--		{0x1800, 256 * 4, "MCQ SQD-6 ", RES_MCQ_SQD},
--		{0x1c00, 256 * 4, "MCQ SQD-7 ", RES_MCQ_SQD},
-+		{hba->mcq_base, 0x0, 256 * 4, "MCQ HCI-0 "},
-+		{hba->mcq_base, 0x400, 256 * 4, "MCQ HCI-1 "},
-+		{mcq_vs_base, 0x0, 5 * 4, "MCQ VS-0 "},
-+		{opr->base, 0x0, 256 * 4, "MCQ SQD-0 "},
-+		{opr->base, 0x400, 256 * 4, "MCQ SQD-1 "},
-+		{opr->base, 0x800, 256 * 4, "MCQ SQD-2 "},
-+		{opr->base, 0xc00, 256 * 4, "MCQ SQD-3 "},
-+		{opr->base, 0x1000, 256 * 4, "MCQ SQD-4 "},
-+		{opr->base, 0x1400, 256 * 4, "MCQ SQD-5 "},
-+		{opr->base, 0x1800, 256 * 4, "MCQ SQD-6 "},
-+		{opr->base, 0x1c00, 256 * 4, "MCQ SQD-7 "},
-+
- 	};
-
- 	for (int i = 0; i < ARRAY_SIZE(mcq_dumps); i++) {
- 		ufs_qcom_dump_regs(hba, mcq_dumps[i].offset, mcq_dumps[i].len,
--				   mcq_dumps[i].prefix, mcq_dumps[i].id);
-+				   mcq_dumps[i].prefix, mcq_dumps[i].base);
- 		cond_resched();
- 	}
- }
-diff --git a/include/ufs/ufshcd.h b/include/ufs/ufshcd.h
-index 30ff169878dc..2f0bbb196577 100644
---- a/include/ufs/ufshcd.h
-+++ b/include/ufs/ufshcd.h
-@@ -793,30 +793,6 @@ struct ufs_hba_monitor {
- 	bool enabled;
- };
-
--/**
-- * struct ufshcd_res_info_t - MCQ related resource regions
-- *
-- * @name: resource name
-- * @resource: pointer to resource region
-- * @base: register base address
-- */
--struct ufshcd_res_info {
--	const char *name;
--	struct resource *resource;
--	void __iomem *base;
--};
--
--enum ufshcd_res {
--	RES_UFS,
--	RES_MCQ,
--	RES_MCQ_SQD,
--	RES_MCQ_SQIS,
--	RES_MCQ_CQD,
--	RES_MCQ_CQIS,
--	RES_MCQ_VS,
--	RES_MAX,
--};
--
- /**
-  * struct ufshcd_mcq_opr_info_t - Operation and Runtime registers
-  *
-@@ -1126,7 +1102,6 @@ struct ufs_hba {
- 	bool lsdb_sup;
- 	bool mcq_enabled;
- 	bool mcq_esi_enabled;
--	struct ufshcd_res_info res[RES_MAX];
- 	void __iomem *mcq_base;
- 	struct ufs_hw_queue *uhq;
- 	struct ufs_hw_queue *dev_cmd_queue;
---
-2.50.1
+> 
+> Best regards,
+> Krzysztof
+> 
 
 
