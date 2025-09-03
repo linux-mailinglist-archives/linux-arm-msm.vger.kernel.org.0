@@ -1,170 +1,465 @@
-Return-Path: <linux-arm-msm+bounces-71787-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71789-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC20AB41AFF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 12:04:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63813B41B22
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 12:06:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 686005E41C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 10:04:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DAA3F1894848
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 10:06:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9B1D2E62A6;
-	Wed,  3 Sep 2025 10:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B233284662;
+	Wed,  3 Sep 2025 10:06:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="xqrXNDbo"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="FsdMXoJp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FAF928727F
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 10:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6FC2AE66;
+	Wed,  3 Sep 2025 10:06:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756893840; cv=none; b=XDAT/ZURk9pKV5zdps6hg2NdQj34Z0kc3Vn3ldaWHcVtk/M3A6+I9+NDtw+DbjGcqu1KsVqAAFLNuCORU/OvP7l89hNxDtvcrFK3/S9QLLdpg6JIqVzsY9bCb/2dthZ9H1ZpSNP1wpIxMEbVnjtleTkXw36aOabYeTCZnxzw19k=
+	t=1756893992; cv=none; b=H/XyhomJYX1DV/3d2GttNaTqW+CiBhEvNP6pa01LstH4MFWGcUyUG0f7B++hSN879z1Rmsnm1poQ0GYeKi43kgyIm8PeLU938aaftwGoiWj3qoBiUq9LqC0CcgXAj88uBU4jKw3jM/ORc0km+sdpPl+iPLe8uu13AFd4F6qxfac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756893840; c=relaxed/simple;
-	bh=zWxl9Sr6da0F+FgQYgftZKubZiEg6j5Exk0NZN4j1b4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=Q5oF4lVZkJxtDIn/JA+RGzxvIJwHOFTMijC5F1t2Hjymx2NBM2tgRRwQGaNAKVzi0gEKRPzPDx4ESrJm7ZXMJYMMuDECtBFwU6bxPvIqwlvvCC1leyalPTgicvdgYwWNQwUgjiPmSGsMYrzqO1XijlAjxPh/YZaFwaCmYrG79qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=xqrXNDbo; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b046d1cd1fdso6549766b.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 03:03:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756893836; x=1757498636; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Nq2yI35kD6p+VHyKDMeG5P0SE7VILz4NHeh1edAL9LY=;
-        b=xqrXNDboAe/FHL0SsmD9bjgd4csmB9eIjYvWlxxvXLRKVMGMNd0JdcH436WvwA4IT4
-         i9WgqJhoddAnhnA2XOvBwyN+4LBQNpoQrZjBGQ075t7SDx32SXdXUzvdc86xkOXEEkys
-         r2/GYkvX/7D4RtHwdThO+kS9XY+pr9INZh8/WZP3enDu+KlZ7FjuWWNP0n0d038t4ZzV
-         kR3Nnm/4yfRwzS2z58vhFpZTJqdvyaqyaBW+1wGRQ+0kFpslp3LZlAzOiI0aqUFoj0m5
-         6/f2HMSiVVwZnn5LtE5H/un71E+G9lUKVjQhp90LBOGrpBiTyeMfbOw1YPDE6l3Kyxlo
-         5uXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756893836; x=1757498636;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Nq2yI35kD6p+VHyKDMeG5P0SE7VILz4NHeh1edAL9LY=;
-        b=og0xKvUHz9w1DjTFu5iHbvDN8/kzZUhraTQ8du2QtHXpfvwlNidf9ycmPwWUzFnio7
-         FbjqYxgAZfw+3UjkVgUszREuz+p6eg0DMwUnCGcHfVwEe8j1iJFWYm111ikIMzfgJOI/
-         L4FuIF6BH071pvWDTHkjiWctpi1qEkILweT9hYFXFxqWbqth92SSUb3ajPi4uC58/z1S
-         htr4sF2K/LEGp+r1ZYxvaX03rdJWZrxnI8a01hnZMKwzjsUy2SChiG3fWM5ePvdXEktn
-         +d+XEey9MGPDsux63hsgHufV0m5QjeQ/sO0NWPZuuRieMEcRehyaupzGgGCz2DwSj2AU
-         51gA==
-X-Forwarded-Encrypted: i=1; AJvYcCXVXXqw+AlCyHyVVyDMBYLuRL3S1GVjFOobh86OVWA0lJTsFj6Jj/Q5xTW/B7d8/RH9AQzkt0RNeRWZy5G5@vger.kernel.org
-X-Gm-Message-State: AOJu0YxM31Pv4lcqhCWBtWY7ViHZBx0gAKZLVA2c0sgJTxjasb24N413
-	MkFG0RIEb01RcaSikCCGhJpHCLMFmR0A2pTJ+VG+9y90ZfAsXioiPcf1UC2t7Sas2Tc=
-X-Gm-Gg: ASbGncs7rywWp3o/vVEHY3GfB9mcBaXGx0Ngfvr3pQUE3l5/R9sgBsmnxB8kUf2XgIa
-	mV/g4WFisxOpnTc+hDHaFkDtvhmxe35yMLzYkeZ0cEdFBkSB3Xa2tIkfj2xdMsNIH4ZEk0msYWE
-	B3NCGPlT+xI+xJ94yTOTE95nRKQV/5rQ/XYC85g3xyzwvbpsgnR6KH8cOp11FQKSXAksXhqf+An
-	HtJGZvAcZHUXttUh5EVX2EXiHglJcQSXxhe2O7thLIQokvDvAn+xYK2WjHHfO/Uz97FOQ6vVQal
-	9O7XSoKUkZsdqUvSsTwD+HrSpNlkqA/26RwNxXp+lLGmdbBP0G38IgLc5aK6/LNjqcUX8oMi/TW
-	6I51uT5+ioLA+q0jfKmOTNg9SDCKtHz0ucFdfaRpl6Dflsc209hinrw==
-X-Google-Smtp-Source: AGHT+IHwwLrkuoIbCE3SevCtSLBrMSxsijMwNty5Zrfr9laq8AP328QMNjXpn4aVHwbkdv5gDR+qyQ==
-X-Received: by 2002:a17:907:e8d:b0:afe:d218:3d21 with SMTP id a640c23a62f3a-aff040b2788mr957125666b.4.1756893836256;
-        Wed, 03 Sep 2025 03:03:56 -0700 (PDT)
-Received: from [192.168.1.29] ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b045e576edbsm255447266b.75.2025.09.03.03.03.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Sep 2025 03:03:55 -0700 (PDT)
-Message-ID: <94ade558-90db-4076-92a7-ec9ffd709b71@linaro.org>
-Date: Wed, 3 Sep 2025 12:03:54 +0200
+	s=arc-20240116; t=1756893992; c=relaxed/simple;
+	bh=BFx8u1TPCmyaJV2ApccXZcWZPkBaGamkU4QcZBpeLUM=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=erPVB+tCVjkEQUgpzyDrtyBdzDAmeoBPK9lpTq4Mh6SZDvrdbEwCPXVvMlZ//rUlWyQZs/sedfmTfFocGuwCCSv3xT47zwE4XDpdth0nbzwrRqaVqKum/8wrMmiX2WyO/duTorSpFS+m3Z12TUSB0cCYMHlimzT4MsuLLDAIr7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=FsdMXoJp; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58322TYb019738;
+	Wed, 3 Sep 2025 10:06:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	gR4bFFz7DXhzcsWA7MQiQDawz6VXV7VQGrrDugScKnE=; b=FsdMXoJpydmzn4hf
+	/GZ1h7WvaxQ7h4V9FTyrjbqwvPNMsrDjWYVbwvcCGTKglftAYqsImSjRuJK/uwMJ
+	F/mMPyadoPZosz1Y8nGLuQoOL3zddAe/QuDr8nhReNc0WtxGWDXr36NTe+tl55ss
+	7EPYVTudvHM5PF7me/cWxeBx7F9ecGp6AvYUPZSvi1F0bBafnl7CGJVyYrxc6TZz
+	ZBiFZj+8kbpOGt7oDs5QSUkosAG3oTjMpKjxX2yfUPykXV2bkq6mIeQMDuhfW8An
+	wvZNpEhoDmKbaYMlnJ9D2xAG8ppqwwyGos09M4sS9l9Xf7sHQlM4fr0w8EnN62in
+	l0g+VQ==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urw03722-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 03 Sep 2025 10:06:17 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 583A6Gmp024118
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 3 Sep 2025 10:06:16 GMT
+Received: from hu-dikshita-hyd.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Wed, 3 Sep 2025 03:06:10 -0700
+From: Dikshita Agarwal <quic_dikshita@quicinc.com>
+To: <quic_vgarodia@quicinc.com>, <abhinav.kumar@linux.dev>,
+        <bryan.odonoghue@linaro.org>, <mchehab@kernel.org>,
+        <stefan.schmidt@linaro.org>, <quic_vnagar@quicinc.com>,
+        <hverkuil@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <quic_renjiang@quicinc.com>,
+        <quic_wangaow@quicinc.com>, <neil.armstrong@linaro.org>,
+        Dikshita Agarwal
+	<quic_dikshita@quicinc.com>
+Subject: [PATCH v4.1 20/26] media: iris: Add support for G/S_PARM for encoder video device
+Date: Wed, 3 Sep 2025 15:35:40 +0530
+Message-ID: <20250903100540.1963414-1-quic_dikshita@quicinc.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250825-iris-video-encoder-v4-20-84aa2bc0a46b@quicinc.com>
+References: <20250825-iris-video-encoder-v4-20-84aa2bc0a46b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] ASoC: qcom: audioreach: Add support for Speaker
- Protection module
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250821141625.131990-3-krzysztof.kozlowski@linaro.org>
- <d2d01b40-677c-4ad7-9742-29a40082f40a@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
- 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
- 2+47PN9NZAOyb771QoVr8A==
-In-Reply-To: <d2d01b40-677c-4ad7-9742-29a40082f40a@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: NtXBdSySEFl_f0lddPNxTqgzYCxO2SsS
+X-Proofpoint-ORIG-GUID: NtXBdSySEFl_f0lddPNxTqgzYCxO2SsS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX8zGlIXlONUYB
+ V+YtzqP9HijRKvUAtnMNNA1kxfjST5P2k7XdyTUojJTyr8FeCmSX7XF8BlgDQTc6Fc5xz3EWYfV
+ ECpaAglh2qqf0Y6a0UIueleWgihxKRFQpTiqY5Hazli3gGCAVKmNnv9dgU2AoFaOcBwVSg7oz59
+ RnU46UG9cp80MiROLIyE2S4iLFxog7yGHwwvro7gg7BIN4kkUjHZlLO3EzvicyjnmWMV22IrgPV
+ QhRwWlI4bKh518mAx5/GOD/wyFqXBy1FSdkJG70f6+HzK82HNxtaufofuWH9FPlwox2bItMbaFq
+ bZOBkhSqphVDK8hEPGuOpT8O6YCzpeas4fz4a6VtrJMWoL0qqrCuxXP4nHODCNYL1hQJj5ASYw+
+ E5hIAJGh
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b81319 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=KKAkSRfTAAAA:8
+ a=oW_SD1oTPVrhALOFHK4A:9 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-03_05,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300027
 
-On 03/09/2025 11:31, Konrad Dybcio wrote:
-> On 8/21/25 4:16 PM, Krzysztof Kozlowski wrote:
->> Speaker Protection is capability of ADSP to adjust the gain during
->> playback to different speakers and their temperature.  This allows good
->> playback without blowing the speakers up.
-> 
-> exciting!
->>
->> Implement parsing MODULE_ID_SPEAKER_PROTECTION from Audioreach topology
->> and sending it as command to the ADSP.
->>
->> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
->> ---
-> 
-> [...]
-> 
->> +struct param_id_sp_op_mode {
->> +	uint32_t operation_mode;
-> 
-> "u32"
+Add supports for the G/S_PARM V4L2 ioctls for encoder video device with
+necessary hooks. This allows userspace to query the current streaming
+parameters such as frame intervals and set desired streaming parameters
+primarily the frame rate.
 
-This will be quite inconsistent. See coding style: "you should conform
-to the existing choices in that code".
+Tested-by: Vikash Garodia <quic_vgarodia@quicinc.com> # X1E80100
+Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com>
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8550-HDK
+Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+Signed-off-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+---
+changes since v4:
+- fix incorrect retrieval of the iris_inst structure in iris_g/s_parm.
 
-Best regards,
-Krzysztof
+ .../media/platform/qcom/iris/iris_instance.h  |  5 +
+ .../platform/qcom/iris/iris_platform_common.h |  2 +
+ .../platform/qcom/iris/iris_platform_gen2.c   |  2 +
+ .../qcom/iris/iris_platform_qcs8300.h         |  2 +
+ .../platform/qcom/iris/iris_platform_sm8250.c |  2 +
+ drivers/media/platform/qcom/iris/iris_utils.c | 36 +++++++
+ drivers/media/platform/qcom/iris/iris_utils.h |  2 +
+ drivers/media/platform/qcom/iris/iris_vb2.c   | 17 ----
+ drivers/media/platform/qcom/iris/iris_venc.c  | 94 +++++++++++++++++++
+ drivers/media/platform/qcom/iris/iris_venc.h  |  2 +
+ drivers/media/platform/qcom/iris/iris_vidc.c  | 30 ++++++
+ 11 files changed, 177 insertions(+), 17 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
+index 55cf97021118..b75549718df3 100644
+--- a/drivers/media/platform/qcom/iris/iris_instance.h
++++ b/drivers/media/platform/qcom/iris/iris_instance.h
+@@ -61,6 +61,9 @@ struct iris_fmt {
+  * @metadata_idx: index for metadata buffer
+  * @codec: codec type
+  * @last_buffer_dequeued: a flag to indicate that last buffer is sent by driver
++ * @frame_rate: frame rate of current instance
++ * @operating_rate: operating rate of current instance
++
+  */
+ 
+ struct iris_inst {
+@@ -96,6 +99,8 @@ struct iris_inst {
+ 	u32				metadata_idx;
+ 	u32				codec;
+ 	bool				last_buffer_dequeued;
++	u32				frame_rate;
++	u32				operating_rate;
+ };
+ 
+ #endif
+diff --git a/drivers/media/platform/qcom/iris/iris_platform_common.h b/drivers/media/platform/qcom/iris/iris_platform_common.h
+index 792f46e2e34f..d0b84c93aef4 100644
+--- a/drivers/media/platform/qcom/iris/iris_platform_common.h
++++ b/drivers/media/platform/qcom/iris/iris_platform_common.h
+@@ -79,6 +79,8 @@ struct platform_inst_caps {
+ 	u32 mb_cycles_fw;
+ 	u32 mb_cycles_fw_vpp;
+ 	u32 num_comv;
++	u32 max_frame_rate;
++	u32 max_operating_rate;
+ };
+ 
+ enum platform_inst_fw_cap_type {
+diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+index d5f7eb904569..a245fce04b3a 100644
+--- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
++++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+@@ -209,6 +209,8 @@ static struct platform_inst_caps platform_inst_cap_sm8550 = {
+ 	.mb_cycles_fw = 489583,
+ 	.mb_cycles_fw_vpp = 66234,
+ 	.num_comv = 0,
++	.max_frame_rate = MAXIMUM_FPS,
++	.max_operating_rate = MAXIMUM_FPS,
+ };
+ 
+ static void iris_set_sm8550_preset_registers(struct iris_core *core)
+diff --git a/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h b/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
+index a8d66ed388a3..64331b705fca 100644
+--- a/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
++++ b/drivers/media/platform/qcom/iris/iris_platform_qcs8300.h
+@@ -197,4 +197,6 @@ static struct platform_inst_caps platform_inst_cap_qcs8300 = {
+ 	.mb_cycles_fw = 326389,
+ 	.mb_cycles_fw_vpp = 44156,
+ 	.num_comv = 0,
++	.max_frame_rate = MAXIMUM_FPS,
++	.max_operating_rate = MAXIMUM_FPS,
+ };
+diff --git a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+index 2a3cbe1f2d4b..4ff72109c600 100644
+--- a/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
++++ b/drivers/media/platform/qcom/iris/iris_platform_sm8250.c
+@@ -40,6 +40,8 @@ static struct platform_inst_caps platform_inst_cap_sm8250 = {
+ 	.max_mbpf = 138240,
+ 	.mb_cycles_vsp = 25,
+ 	.mb_cycles_vpp = 200,
++	.max_frame_rate = MAXIMUM_FPS,
++	.max_operating_rate = MAXIMUM_FPS,
+ };
+ 
+ static void iris_set_sm8250_preset_registers(struct iris_core *core)
+diff --git a/drivers/media/platform/qcom/iris/iris_utils.c b/drivers/media/platform/qcom/iris/iris_utils.c
+index 83c70d6a2d90..85c70a62b1fd 100644
+--- a/drivers/media/platform/qcom/iris/iris_utils.c
++++ b/drivers/media/platform/qcom/iris/iris_utils.c
+@@ -88,3 +88,39 @@ struct iris_inst *iris_get_instance(struct iris_core *core, u32 session_id)
+ 	mutex_unlock(&core->lock);
+ 	return NULL;
+ }
++
++int iris_check_core_mbpf(struct iris_inst *inst)
++{
++	struct iris_core *core = inst->core;
++	struct iris_inst *instance;
++	u32 total_mbpf = 0;
++
++	mutex_lock(&core->lock);
++	list_for_each_entry(instance, &core->instances, list)
++		total_mbpf += iris_get_mbpf(instance);
++	mutex_unlock(&core->lock);
++
++	if (total_mbpf > core->iris_platform_data->max_core_mbpf)
++		return -ENOMEM;
++
++	return 0;
++}
++
++int iris_check_core_mbps(struct iris_inst *inst)
++{
++	struct iris_core *core = inst->core;
++	struct iris_inst *instance;
++	u32 total_mbps = 0, fps = 0;
++
++	mutex_lock(&core->lock);
++	list_for_each_entry(instance, &core->instances, list) {
++		fps = max(instance->frame_rate, instance->operating_rate);
++		total_mbps += iris_get_mbpf(instance) * fps;
++	}
++	mutex_unlock(&core->lock);
++
++	if (total_mbps > core->iris_platform_data->max_core_mbps)
++		return -ENOMEM;
++
++	return 0;
++}
+diff --git a/drivers/media/platform/qcom/iris/iris_utils.h b/drivers/media/platform/qcom/iris/iris_utils.h
+index 49869cf7a376..75740181122f 100644
+--- a/drivers/media/platform/qcom/iris/iris_utils.h
++++ b/drivers/media/platform/qcom/iris/iris_utils.h
+@@ -49,5 +49,7 @@ struct iris_inst *iris_get_instance(struct iris_core *core, u32 session_id);
+ void iris_helper_buffers_done(struct iris_inst *inst, unsigned int type,
+ 			      enum vb2_buffer_state state);
+ int iris_wait_for_session_response(struct iris_inst *inst, bool is_flush);
++int iris_check_core_mbpf(struct iris_inst *inst);
++int iris_check_core_mbps(struct iris_inst *inst);
+ 
+ #endif
+diff --git a/drivers/media/platform/qcom/iris/iris_vb2.c b/drivers/media/platform/qcom/iris/iris_vb2.c
+index e62ed7a57df2..e32f7e1f0072 100644
+--- a/drivers/media/platform/qcom/iris/iris_vb2.c
++++ b/drivers/media/platform/qcom/iris/iris_vb2.c
+@@ -12,23 +12,6 @@
+ #include "iris_vdec.h"
+ #include "iris_power.h"
+ 
+-static int iris_check_core_mbpf(struct iris_inst *inst)
+-{
+-	struct iris_core *core = inst->core;
+-	struct iris_inst *instance;
+-	u32 total_mbpf = 0;
+-
+-	mutex_lock(&core->lock);
+-	list_for_each_entry(instance, &core->instances, list)
+-		total_mbpf += iris_get_mbpf(instance);
+-	mutex_unlock(&core->lock);
+-
+-	if (total_mbpf > core->iris_platform_data->max_core_mbpf)
+-		return -ENOMEM;
+-
+-	return 0;
+-}
+-
+ static int iris_check_inst_mbpf(struct iris_inst *inst)
+ {
+ 	struct platform_inst_caps *caps;
+diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
+index 71960a0e903d..967db02ed27f 100644
+--- a/drivers/media/platform/qcom/iris/iris_venc.c
++++ b/drivers/media/platform/qcom/iris/iris_venc.c
+@@ -61,6 +61,9 @@ int iris_venc_inst_init(struct iris_inst *inst)
+ 	inst->crop.width = f->fmt.pix_mp.width;
+ 	inst->crop.height = f->fmt.pix_mp.height;
+ 
++	inst->operating_rate = DEFAULT_FPS;
++	inst->frame_rate = DEFAULT_FPS;
++
+ 	return 0;
+ }
+ 
+@@ -326,3 +329,94 @@ int iris_venc_s_selection(struct iris_inst *inst, struct v4l2_selection *s)
+ 		return -EINVAL;
+ 	}
+ }
++
++int iris_venc_s_param(struct iris_inst *inst, struct v4l2_streamparm *s_parm)
++{
++	struct platform_inst_caps *caps = inst->core->iris_platform_data->inst_caps;
++	struct vb2_queue *src_q = v4l2_m2m_get_src_vq(inst->m2m_ctx);
++	struct vb2_queue *dst_q = v4l2_m2m_get_dst_vq(inst->m2m_ctx);
++	struct v4l2_fract *timeperframe = NULL;
++	u32 default_rate = DEFAULT_FPS;
++	bool is_frame_rate = false;
++	u64 us_per_frame, fps;
++	u32 max_rate;
++
++	int ret = 0;
++
++	if (s_parm->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
++		timeperframe = &s_parm->parm.output.timeperframe;
++		max_rate = caps->max_operating_rate;
++		s_parm->parm.output.capability = V4L2_CAP_TIMEPERFRAME;
++	} else {
++		timeperframe = &s_parm->parm.capture.timeperframe;
++		is_frame_rate = true;
++		max_rate = caps->max_frame_rate;
++		s_parm->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
++	}
++
++	if (!timeperframe->denominator || !timeperframe->numerator) {
++		if (!timeperframe->numerator)
++			timeperframe->numerator = 1;
++		if (!timeperframe->denominator)
++			timeperframe->denominator = default_rate;
++	}
++
++	us_per_frame = timeperframe->numerator * (u64)USEC_PER_SEC;
++	do_div(us_per_frame, timeperframe->denominator);
++
++	if (!us_per_frame)
++		return -EINVAL;
++
++	fps = (u64)USEC_PER_SEC;
++	do_div(fps, us_per_frame);
++	if (fps > max_rate) {
++		ret = -ENOMEM;
++		goto reset_rate;
++	}
++
++	if (is_frame_rate)
++		inst->frame_rate = (u32)fps;
++	else
++		inst->operating_rate = (u32)fps;
++
++	if ((s_parm->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE && vb2_is_streaming(src_q)) ||
++	    (s_parm->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE && vb2_is_streaming(dst_q))) {
++		ret = iris_check_core_mbpf(inst);
++		if (ret)
++			goto reset_rate;
++		ret = iris_check_core_mbps(inst);
++		if (ret)
++			goto reset_rate;
++	}
++
++	return 0;
++
++reset_rate:
++	if (ret) {
++		if (is_frame_rate)
++			inst->frame_rate = default_rate;
++		else
++			inst->operating_rate = default_rate;
++	}
++
++	return ret;
++}
++
++int iris_venc_g_param(struct iris_inst *inst, struct v4l2_streamparm *s_parm)
++{
++	struct v4l2_fract *timeperframe = NULL;
++
++	if (s_parm->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE) {
++		timeperframe = &s_parm->parm.output.timeperframe;
++		timeperframe->numerator = 1;
++		timeperframe->denominator = inst->operating_rate;
++		s_parm->parm.output.capability = V4L2_CAP_TIMEPERFRAME;
++	} else {
++		timeperframe = &s_parm->parm.capture.timeperframe;
++		timeperframe->numerator = 1;
++		timeperframe->denominator = inst->frame_rate;
++		s_parm->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
++	}
++
++	return 0;
++}
+diff --git a/drivers/media/platform/qcom/iris/iris_venc.h b/drivers/media/platform/qcom/iris/iris_venc.h
+index 72c6e25d8711..0d566b7fc89b 100644
+--- a/drivers/media/platform/qcom/iris/iris_venc.h
++++ b/drivers/media/platform/qcom/iris/iris_venc.h
+@@ -16,5 +16,7 @@ int iris_venc_s_fmt(struct iris_inst *inst, struct v4l2_format *f);
+ int iris_venc_validate_format(struct iris_inst *inst, u32 pixelformat);
+ int iris_venc_subscribe_event(struct iris_inst *inst, const struct v4l2_event_subscription *sub);
+ int iris_venc_s_selection(struct iris_inst *inst, struct v4l2_selection *s);
++int iris_venc_g_param(struct iris_inst *inst, struct v4l2_streamparm *s_parm);
++int iris_venc_s_param(struct iris_inst *inst, struct v4l2_streamparm *s_parm);
+ 
+ #endif
+diff --git a/drivers/media/platform/qcom/iris/iris_vidc.c b/drivers/media/platform/qcom/iris/iris_vidc.c
+index b134ae710d9e..1fd0c87e2075 100644
+--- a/drivers/media/platform/qcom/iris/iris_vidc.c
++++ b/drivers/media/platform/qcom/iris/iris_vidc.c
+@@ -530,6 +530,34 @@ static int iris_subscribe_event(struct v4l2_fh *fh, const struct v4l2_event_subs
+ 	return -EINVAL;
+ }
+ 
++static int iris_s_parm(struct file *filp, void *fh, struct v4l2_streamparm *a)
++{
++	struct iris_inst *inst = iris_get_inst(filp);
++
++	if (a->type != V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
++	    a->type != V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
++		return -EINVAL;
++
++	if (inst->domain == ENCODER)
++		return iris_venc_s_param(inst, a);
++	else
++		return -EINVAL;
++}
++
++static int iris_g_parm(struct file *filp, void *fh, struct v4l2_streamparm *a)
++{
++	struct iris_inst *inst = iris_get_inst(filp);
++
++	if (a->type != V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
++	    a->type != V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
++		return -EINVAL;
++
++	if (inst->domain == ENCODER)
++		return iris_venc_g_param(inst, a);
++	else
++		return -EINVAL;
++}
++
+ static int iris_dec_cmd(struct file *filp, void *fh,
+ 			struct v4l2_decoder_cmd *dec)
+ {
+@@ -626,6 +654,8 @@ static const struct v4l2_ioctl_ops iris_v4l2_ioctl_ops_enc = {
+ 	.vidioc_unsubscribe_event       = v4l2_event_unsubscribe,
+ 	.vidioc_g_selection             = iris_g_selection,
+ 	.vidioc_s_selection             = iris_s_selection,
++	.vidioc_s_parm                  = iris_s_parm,
++	.vidioc_g_parm                  = iris_g_parm,
+ };
+ 
+ void iris_init_ops(struct iris_core *core)
+-- 
+2.34.1
+
 
