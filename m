@@ -1,149 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-71883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71884-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EAD5B42320
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 16:08:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D7FA2B42325
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 16:09:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3055A7BE6A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 14:04:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C4EF3A7253
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 14:09:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 50D0030FF01;
-	Wed,  3 Sep 2025 14:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4B39C30E829;
+	Wed,  3 Sep 2025 14:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="s6A0lRSQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bwncmWqY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F41E30EF77
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 14:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0EC530274B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 14:09:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756908316; cv=none; b=cU8MtGP6txSEDVMK61vhJk/fZAldA7UuyC5abKY5BGQc2KRxZytkNLACiuTe0t9+SoHhldwi0j1HLYAzzrujfWGdvy8eKLhBVw94KmmP+jKW4fwuwv/CTIgIXK9MkUeo0q2f+8laI0flW30K0DOzzSKGwCYtn38OvekXx26a5Ak=
+	t=1756908582; cv=none; b=tv9Y60o7zKpMaX/impvsd3U6OhJYetHrwnxcrxS2irS512ZYSod16JJSllnQgr7P20BkzTpYCVTQhZnxOPheCNChh4YWkS95Z0yYKZ9SpzEESb20Ghicg5t/VBNftLrlYnbNn9lMjByoEbRf3kupexu2cfrDRr/A1cSrHsfmOks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756908316; c=relaxed/simple;
-	bh=p1lxtpJ7TjvFoHPJ/hZ3029ZCfEe68+gdc5pXFuSGH8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PXyTsoK8BH/vZqHrNfSOXgmcm4jqkieSIPOLcKSmdbgStQhCalas/2VlL10Ka8Sz5xrQCGx0pc6zCrlrwwZtaEaE9ugqUkcN2CehfB3dDK51QNSRJs3ZXllzjEsyLKn3UJK86gFmnWxd1reXiMYmFPjhkeAcKb4ExeKXDtTFLfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=s6A0lRSQ; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3dae49b117bso1579865f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 07:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756908312; x=1757513112; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=QK1Plguf59MohKiPDL9B9tJ9p4M4VouT3+3TgzQ44t8=;
-        b=s6A0lRSQEJ90tneUCy4zUGJz3L2E5jUu9WsMzIfv6g50o0+H8hjACes/xhJphVACrJ
-         wY1XRLApmYh3RopjnhuBLvNY3qAYVViMH8S4T2lxPJTesKnZsjZiSxvGQlqw6MOLlZAd
-         spHHgGYKFIqxBJXUa814BPmEowiwB6LyLnJmS5ReefQgeKwgRzD8qZY3cALUKn3qHYc1
-         fBwZboS/iNUwRVy51FHS0tecA5Tr0p5Fi/fZEynI2SpJpN940MLe/WzIso3NlGan5fXc
-         yPpYUIvYfnSNLVtFdXcWmJv1TshOwEhfJDkJobAuuFhJkRNvIxBDQSqsMlkOBGZnZn7s
-         RHzQ==
+	s=arc-20240116; t=1756908582; c=relaxed/simple;
+	bh=TvnSEky+I/hcCDfjzKx/iJPx3TmGanCVAOkD79HsY14=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=obLyNntKg0J6uqTn+exQpO0vB4zoxkKzao2pwin9FA/1v+kyVe2RVYOiWorh0k8xSTCCBvAei0fKLtlD1jPW/4tCkJH8DSLWkJIK1xyAVZPUajroqyWXAR91C4AYTB4ekYcw2qbmzPzhVBIT7LsfIsJFGjB6HbanZvMGxzMU+Tk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bwncmWqY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583Dwx9P007619
+	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 14:09:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=CMWxv5xRO7vQNpmuNbCUfyRE
+	hvMOz75QP9nDPESq41M=; b=bwncmWqYNQsU6rkPu7jyksrByM4wFj7kl/eOW5y9
+	jljBgfv9NvGc7ttpZ3VPkOv4HGgyG4uw6kN3KNnysY1RihGlBnIbxhLj98YLjJcW
+	S0T8l5UDgsG4rbenyYaVVTyRaEvbdnedIFqhNmK33WSOSuo2f3AubjSBH0M297iJ
+	CmYIhPY0yTeIYcroFY9BELHFDLqQsQJw2tG0M0emh7ZY2jKq6T1Mgp3O9x9OVoqk
+	PCAKRvYbDezFsaayReRfkMgQp3iVT2lQ9jVq0oOP1TWVA+WBr3tsgFnanR+l5ipU
+	FPp1uGZOrq66oPtcG7t+YjAgVnuhGeX7+eDf9XAcyZPP8Q==
+Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uscv42g3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 14:09:39 +0000 (GMT)
+Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-77260b29516so5453935b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 07:09:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756908312; x=1757513112;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QK1Plguf59MohKiPDL9B9tJ9p4M4VouT3+3TgzQ44t8=;
-        b=rgbxPSGVCqsnmAF2f8TwyQSep7L7VZbvnzuyG4onIKdR7uCRDtUJxg+fDubLaZHMzd
-         zhcRF5IDO/iVMg/5lye1eJSliVHmlxplfP5k5zRDpwgLG35jCJmt+FkTcy9Zc7SLMLDP
-         EwDCYcXbuCAQDlDQ/fjqR8lbqSCTmUDNC18uSs0rzzWd84Ns+6GyMpDAsIOPX4CRx8vE
-         tbVV9r4Pgp9ML2NhHuaSQFhcaBcYahnPpH3AJvqqDltj7oC+bp8TrpY8HwEd2KFH+Xb9
-         H6CQGD2DEvaA77Mva4vsf4239D7xzdiO50/C//ikez0j624g6CjzsMSqvlmG8Db8isUX
-         tfEw==
-X-Forwarded-Encrypted: i=1; AJvYcCUh/gVS357tZ3nVdUGk23WMy9PP48dMhuXCCYEP8nUguqIJrQ+9Ca5APdGfkmSZfhbWntDo97XEcChZ6C9H@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzt5FrdPZ9TOR4QhUud4mE2MwS1wiqsTVQKm4CwMTazAUOsDpGi
-	CiYvk/dbVN6GHZQQT5lNUGD6GkoCIWNjbJjSf+FaVYQQgUeff/NLoCz6FV81euV44Sw=
-X-Gm-Gg: ASbGnctqIhIPy6Gib9cZUAWTg08CT1rQrpoR3OlDLJa/rOOcg/1ssdpLcjlGUvPPoaW
-	l3XM1cpDldGxtWy9bMD31emExPIL1AjHmXegaY7t/wpY0VNvdT6fKi108hk7RfSOk27e9x3cX9J
-	iQdBSsAkWl0LLtFpwHIgGRJE70a22EsuK3oBLr6i+lqT18CtX+Tia929J0HU7hlmZ/e9eCIjapy
-	dwFsMp/1WbmXKhDPtb5amLlMjUuT1kXK6hj8mKdZ/PnMzPkyblf6DZ7RJ8n458JfdSm5MP9whyS
-	vSjkQOk6dbYTlmfe1OLBg/xEyre7OOPYu+vjtLONFTucc6LFc8rnysIBaR8mVLAVS6PcNvTXG5G
-	89EC2OzmHe2zUGamIvv68Pt/Js+b2KGmzrRRA9af9uJy4aB94W27NIc7qneJeh7MACk8XS5n27x
-	Odgn2zR0VbfitzzzbkQ0nkcyUkgASubA==
-X-Google-Smtp-Source: AGHT+IEZMZforlja2xX6xreLhIbpAVhCSknwT4/G7zI8fcA9TDR7jhhzcqogfHqvrdx3U1dTW1cIhg==
-X-Received: by 2002:a5d:5887:0:b0:3db:f9f7:df86 with SMTP id ffacd0b85a97d-3dbf9f7e8d7mr2886230f8f.61.1756908312422;
-        Wed, 03 Sep 2025 07:05:12 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b6f0c6fe5sm323422865e9.5.2025.09.03.07.05.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Sep 2025 07:05:11 -0700 (PDT)
-Message-ID: <680de02a-6592-40a6-b25c-4d8fa85c4e81@linaro.org>
-Date: Wed, 3 Sep 2025 15:05:09 +0100
+        d=1e100.net; s=20230601; t=1756908578; x=1757513378;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CMWxv5xRO7vQNpmuNbCUfyREhvMOz75QP9nDPESq41M=;
+        b=dQWqH9yuCu/17C1vJbnnkuvPdd73FCGBFQy0osxZL9626EkF6NRZHVpbC2fE/rbyzl
+         YqEHGYtJrurwuR5hLaRCfCWL58NmJk1ofz5GStFnxpcU8GWMQGodIlNUsMdatp9enrKS
+         CHDiGqzLg+4FKoYVzuJD0H+CkfDEzW8Ri+LytD5e3nCAB7i1PMa0jNgPBC1WiaEljaH4
+         dFPue1dlsRrTLj+/+U3w7SUJR9wb18Wa2HK4D3lBdlheLx0iU1QldN5MxNMAEcCss+v0
+         oyYYjveIRF3jhHd+Aaa0Peawl6Px/Z9SaHRyHqcG8Mn7uFtC3c1CWdCJY0pDxOPH7zKo
+         FXeA==
+X-Forwarded-Encrypted: i=1; AJvYcCW3C7d24Kd5xVOg//xwRxTR5z99TDgQEUFIBWrfvmS7skgqdJK/n+db9bj4wUXn1ab/+cGzTqKNhFGew5TQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzq7YoFiJreYPfs2F4NYlOGA0ArRFqhxAkagKCnZ+daOTwtvFmy
+	EvGijthuuqgwJHKsvCqFhTw6vRsg9r72o3kPzpk7nHqCT+DFXBiOK+c8GrY8im6H7pnP59wXDPH
+	1hVZ5J4GBbDBx+ZR2qcdSqtk4mVsKMag9fcQBXiiOfWJebJ04YMosT6u2aS897J1IOqkM
+X-Gm-Gg: ASbGncsuoNIE/rKVIsobM6bBjESBz3BAZ2kC2t/muJSJCvUU/WkthRxNvoQFj7IiMQa
+	sj3EDWDQrpaHZMFemugKxGYfcR2ybjwas5R6qhZVKCSUCruGgKoCDrFzUt95NA7nU5MHJqYB+s4
+	lD6zc+JWUeN//qhACqQGdh27116de3vdbIq3JxooU8Olp/UsMYGmu6D5SXcyYW8tG+LlGhDJLNg
+	bfwjRRSRNAmitZ3MuV2JplGh+WsSnQUhyQRarfC0qEuoFbruDOshWNum0Xyx6DhYsMLhDa8DK8Q
+	vlrgfSeEGinkhoCDyTUivwNkPXI+cFnP/L4JHMkifSAM9evJLOiNIAV2MA2yqsrozzyt
+X-Received: by 2002:a05:6a20:394b:b0:243:15b9:765b with SMTP id adf61e73a8af0-243d6f88224mr20614969637.53.1756908578230;
+        Wed, 03 Sep 2025 07:09:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnCp+vvKKkuvuED7wTrQo1zor2bNpm9NFlssvs7m5xnjpf+qEF4sVjkIPphK8md3x/czILLg==
+X-Received: by 2002:a05:6a20:394b:b0:243:15b9:765b with SMTP id adf61e73a8af0-243d6f88224mr20614902637.53.1756908577686;
+        Wed, 03 Sep 2025 07:09:37 -0700 (PDT)
+Received: from hu-wasimn-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4cd2ea3a04sm14652518a12.38.2025.09.03.07.09.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 03 Sep 2025 07:09:37 -0700 (PDT)
+Date: Wed, 3 Sep 2025 19:39:30 +0530
+From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>, kernel@oss.qualcomm.com,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org,
+        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Subject: Re: [PATCH v2 05/13] arm64: dts: qcom: lemans-evk: Enable GPI DMA
+ and QUPv3 controllers
+Message-ID: <aLhMGqYGzabIoyjS@hu-wasimn-hyd.qualcomm.com>
+References: <20250903-lemans-evk-bu-v2-0-bfa381bf8ba2@oss.qualcomm.com>
+ <20250903-lemans-evk-bu-v2-5-bfa381bf8ba2@oss.qualcomm.com>
+ <olv66qntttvpj7iinsug7accikhexxrjgtqvd5eijhxouokxgy@un3q7mkzs7yj>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/11] Peripheral Image Loader support for Qualcomm
- SoCs running Linux host at EL2
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- linux-remoteproc@vger.kernel.org
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <660c2594-9a93-450e-9a2e-17ef6b4c696d@linaro.org>
- <20250820112242.usd4sdd3avxdlcas@hu-mojha-hyd.qualcomm.com>
- <f5582304-8f55-4c3b-b752-9cefa1e4df96@oss.qualcomm.com>
- <b5a0ad0d-ceba-40d3-a111-0831c4538cea@linaro.org>
- <2g3iwc2en6wh2ucrsth5ontzdwqr7tr6oplxjnfdjsy3lwyyfe@l76frwiadgru>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <2g3iwc2en6wh2ucrsth5ontzdwqr7tr6oplxjnfdjsy3lwyyfe@l76frwiadgru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <olv66qntttvpj7iinsug7accikhexxrjgtqvd5eijhxouokxgy@un3q7mkzs7yj>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMSBTYWx0ZWRfXzcz3Myr3l6ny
+ JtGM9hKoaLF1U1I/+7T3JZdaMg344sjKOT341DKKHDCgz6O08B/3TcJ0fbfW3IJMFg0h1LgMn+V
+ grXyGoH5quQplOLo9qo2mhShtCDDNOyhS0ZxhIEK1vLISbW9tDTjHcKTDiYLb+G3gw43gTzlzVa
+ DccJea6jKK3toZqeYv/B/g57c522GK6O32omGbjPdDHxrGW0hc4ZHsHKvrobS3bp/vThA4AqiGE
+ e/Go1TCRiFudRVAQFuwvKWz77N+QbZx0Cu8+xvhPqGiDuwPCnBZx2qWO+U+NNQaX8OGmkPcubaP
+ aYc0RiuiRqAh5NRT8umpl/V7y26Gi+FFv64qU4xXdgggeG2z6lJmqG+/mXDdOfYRDs/bNR2FK5s
+ b1ylZdhr
+X-Authority-Analysis: v=2.4 cv=A8xsP7WG c=1 sm=1 tr=0 ts=68b84c23 cx=c_pps
+ a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=kj9zAlcOel0A:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=s9hxLQQvB0vJ1QCIATsA:9
+ a=CjuIK1q_8ugA:10 a=zc0IvFSfCIW2DFIPzwfm:22
+X-Proofpoint-ORIG-GUID: NmXJmYr45x80ctGEwhvO2Dqypa0Pyl0W
+X-Proofpoint-GUID: NmXJmYr45x80ctGEwhvO2Dqypa0Pyl0W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-03_07,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300031
 
-On 03/09/2025 15:02, Dmitry Baryshkov wrote:
-> On Wed, Sep 03, 2025 at 02:31:55PM +0100, Bryan O'Donoghue wrote:
->> On 03/09/2025 12:56, Konrad Dybcio wrote:
->>>> Can you try with this next-20250814 tag ?
->>> You sent it on the 19th, so it's in your best interest to run a quick
->>>
->>> git rebase --onto linux-next/master $(git describe --abbrev=0)
->>>
->>> and giving the series a prompt re-test before sending, because there might have
->>> been incompatible changes, whether ones that would prevent applying, or break
->>> things functionally
->>
->> I can't even find that tag next-20250814 closets thing is
+On Wed, Sep 03, 2025 at 03:16:55PM +0300, Dmitry Baryshkov wrote:
+> On Wed, Sep 03, 2025 at 05:17:06PM +0530, Wasim Nazir wrote:
+> > From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> > 
+> > Enable GPI DMA controllers (gpi_dma0, gpi_dma1, gpi_dma2) and QUPv3
+> > interfaces (qupv3_id_0, qupv3_id_2) in the device tree to support
+> > DMA and peripheral communication on the Lemans EVK platform.
+> > 
+> > Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+> > Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/lemans-evk.dts | 20 ++++++++++++++++++++
+> >  1 file changed, 20 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > index c60629c3369e..196c5ee0dd34 100644
+> > --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> > @@ -277,6 +277,18 @@ vreg_l8e: ldo8 {
+> >  	};
+> >  };
+> >  
+> > +&gpi_dma0 {
+> > +	status = "okay";
+> > +};
+> > +
+> > +&gpi_dma1 {
+> > +	status = "okay";
+> > +};
+> > +
+> > +&gpi_dma2 {
+> > +	status = "okay";
+> > +};
+> > +
+> >  &i2c18 {
+> >  	status = "okay";
+> >  
+> > @@ -367,10 +379,18 @@ &mdss0_dp1_phy {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&qupv3_id_0 {
+> > +	status = "okay";
+> > +};
+> > +
+> >  &qupv3_id_1 {
+> >  	status = "okay";
+> >  };
+> >  
+> > +&qupv3_id_2 {
+> > +	status = "okay";
+> > +};
 > 
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tag/?h=next-20250814
+> You've added i2c18 device in patch 1, but it could not be enabled before
+> this one because it's a part of QUP2.
+
+Thanks for pointing this, I will update it in next series.
+
 > 
->>
->> | * \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \   00062ea01d35e - Merge tag
->> 'drm-xe-fixes-2025-08-14' of https://gitlab.freedesktop.org/drm/xe/kernel
->> into drm-fixes (3 weeks ago)
->>
->> but patch #9 in this series stubbornly won't apply to any SHA I've tried.
->>
->> meh
->>
->> ---
->> bod
+> > +
+> >  &sleep_clk {
+> >  	clock-frequency = <32768>;
+> >  };
+> > 
+> > -- 
+> > 2.51.0
+> > 
 > 
+> -- 
+> With best wishes
+> Dmitry
 
-ah..
-
-I fetched -stable
-
----
-bod
-
-
-
+-- 
+Regards,
+Wasim
 
