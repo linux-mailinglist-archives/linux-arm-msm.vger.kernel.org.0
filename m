@@ -1,189 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-71810-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71811-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 275E8B41C8F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:03:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7209EB41CA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 13:05:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C31913A8D7E
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:03:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3067A5624B6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 11:05:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E68A2F3C18;
-	Wed,  3 Sep 2025 11:03:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B201A2F5305;
+	Wed,  3 Sep 2025 11:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UkA9kHsU"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="uxtdTPXC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1862F3C0A
-	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 11:03:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F8132F3616
+	for <linux-arm-msm@vger.kernel.org>; Wed,  3 Sep 2025 11:05:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756897431; cv=none; b=mwSaBGKbolQd2Bw3oavCS8Mr7pPd4lmjBnmrVS+D0JIS55sfss70N2vKYM4Uxm/PzYev/pH0O1ONh6dSUY9XHcz7cn1VvB3djW6ExFVajReZZ1KDiI/nEc3KKPyASFwkkiagXAS6HpIu09vTHm7XNqcRNmdL6wxYE1KG7ofDMKM=
+	t=1756897542; cv=none; b=uWGsxvvUBDz6wgWsB+5A6ZEAOp3NIi5YFzO/2SZCr3bfCgeqM+lnvnhmuHHXMfxEnfM0jwZ2WuhP0e4TU5QKMtMMSZrxxoNpu+tUtvJyfNii/iEdUcOtAQyczup2cfeqo5Dp8BMJT3q/Vxo9MJEunHAKdXnuuWoPDifOccHDczk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756897431; c=relaxed/simple;
-	bh=e3kvP4gdtHKiyeq6Finn3R34MTwK60sAoTGCUeSBPwM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IYMuKaOsxjcKMLVuqg0GvxHDvfKv2R1bKxyUjhbsLZXF+4AoK7qvRtyNSy684l3Tlbe5fksriRLhEMw5tlnuUzkpkKc7cNRm/IwsHow428qTqoM+UevSsukJf2IBXsHnDFX4vepy7O5Z1fKjIeew9jQM56iFujU1hbrPZX4xJIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UkA9kHsU; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 583ASG0g032190
-	for <linux-arm-msm@vger.kernel.org>; Wed, 3 Sep 2025 11:03:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aWkbYNfRZoXmhvAvUwbU9hVkBMShIQECRKoeyXEKUmI=; b=UkA9kHsUizEZ6BVg
-	ucsNJ0iEwynVFRjgxRkxc7L0EfeoM4SJWpRaS5lE4im9NDKbIv2IByd44G39bXdC
-	ctgCqk8jQzE0IKvp0tiLX4fy66pcKC6nnZN0TiaRtxKzvs6lXa9zCPaNLjqGgGKZ
-	0kyy1zxrsUxl4mx/lHOIDv9W1HsiG+eUB/k/fuE93s68BTCShjb2xviE9H8i1fUt
-	kuf6anquzhlZMCKtK2NgBjvEFcjCvkqfYJCUeFyFNzHiIXXDoflQ2/PWmGkNytMR
-	SEwSJpDcuBK6Qx7aYa3aRf9czE9Jq1tpVC1KDTByTzgw7X4CGr3iTmfPaqOXjzy+
-	cdrtyA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8ub2s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 11:03:48 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-70dfd87a763so72378706d6.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 04:03:48 -0700 (PDT)
+	s=arc-20240116; t=1756897542; c=relaxed/simple;
+	bh=Hz4Ww0n5ndOPZ5lTF42At7O5rnM+5Mbm8JKoATPAMNQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oPgEefAZCGeAVLTX4fqSCVCg8KT6sR5f7bjWEiOxUWhsbq+dNJobDjIBBYjgz1y9kKz+bJm7NnvYu+5wVBeh1Ay/C4Cnok4vApBtWnumHDT+5wcrQl4nhVs65pq4TQnYkssVTws/XkmRgII3U+R+6vn5amZ4cWYpUBaAZEo+xJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=uxtdTPXC; arc=none smtp.client-ip=209.85.167.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-55f7039aa1eso4085553e87.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 04:05:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1756897539; x=1757502339; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TY99cVzo51RXHn+Vw+SAL0C6lDtANRsUUB+6t6UiVNI=;
+        b=uxtdTPXCeVHlw4sN35+9NbLtRyf6LzijynUIVC9RLmHMva6hJ3Ov/cM/iPM1oaZauC
+         pbTliyruv/w+0QuGJHPtYr9cRyZvE/M6C8lOxnTYF2gxQcEunKpoGx18pq6vKJA8BuMV
+         8xWjcgkqV2CkahyNRWXVuyFO/KmIhr6yzRqZ+8UV38LWUnLbPUdHB+rf4PUS9PyO2jlO
+         Zv4Ct7/LhL/QFZm5z3qbk65iwSqxBO6yvcYHLjhRIj+5DxWQq6EnOI3bPO6YSqFVzIRi
+         hZrjrCaFGrQO4RKLZ2QP3jwmqiT9BzoR2MleNvkUCA7OlmmvePPdz65p25d9PO7AiaxH
+         1tKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756897428; x=1757502228;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aWkbYNfRZoXmhvAvUwbU9hVkBMShIQECRKoeyXEKUmI=;
-        b=WjoEle6VzlIpXNai8Mmg427Co2DcBW4ZvaJ6R3uiPSWh+q8TThnvtXVOQr5QRxXoue
-         wfM/+3r1AZ5O4cXCA/QRptqM3ulK3CPQM6Jf1Hrz8tBWz+iQCQ4iTnf0E4Fuvw20Bh7X
-         qMCQtlPKrZtqmF9b2MoQ+b1a3btfCveH1VN9NCiThvR+hjW2eDUrd7WKDKBs2vjv4Che
-         Nc/kLp1ailk9Iw3TaysLbKqsKiqzHQOGeZaOke+tp0Wr2mq3rEi3JSHEOJYVoVhQRiA5
-         TvJ++hSfLIlw/26l49mQnNMyHCJ9up//FDUrr0trMhPNapUADlnLX2OZJZqdhUHmGEHi
-         qCNA==
-X-Forwarded-Encrypted: i=1; AJvYcCUYn1nfFX/mU8ziLV3DjnnqDVy7ZWNbPHSfa5a9K9Dz5xSqrzjTvSZ3M8UpMLyoxOeXkvC+wVSfsAarcySV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxRAb52VwkRMuO0E5VCfvKJ5GrDw4JfOcA3/uNYwsFbzE27J2EK
-	P40qDSnZZsXLzraifpaQ2QVv9KPJyitvSUM0v/WTIjVAN7YT1s+fOANZ3bCWeNv/IDb/S+rKrJE
-	U3cRFsfQKJh3Q3Slpojrih5daJeHywOxChgKypyKvOE5sUjyYGvJ+xPmKRSxCow/pR6QG
-X-Gm-Gg: ASbGnctaI2HZhXX6V/WofkrXlG7EZvK+eT1lNFvOS9mCE/CZvgwM69vhOV+L/gq9q/B
-	P4zI1K6UOc0AOjYopgVFkaNsl6p6Hk25z7KiwfpiHYFpx7vF/nZx+sPvH57xdsEnRpxiX7qhufX
-	uh+1n2WYPo+dJdUnnyoZSDYoB0TCs5ExZCVbymfSLqE5z+gprpeUIfjH3+aGV+TL3Y3K0sjAgSt
-	dnQ7L7XyVu5ZTNXt/t0R0lW85QlTKUvEhyiMpSRqSFyHkAqv00V62cUPh/yvN2a1XLHuBl5U9oa
-	x05+hSp8zkDYH/LCq2iXCajY0Ixw2WLSKlcPNURib5b+kHFJWOrWvdFjjS0MfKPM9ujuG20RCJB
-	Jpepc2LZEuezO+8msIx+gTa6WezkjIpJbS6WyDpOXfiigRS9uaylX
-X-Received: by 2002:a05:6214:5281:b0:71a:ccf0:7201 with SMTP id 6a1803df08f44-71accf07438mr104249756d6.38.1756897427643;
-        Wed, 03 Sep 2025 04:03:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRXBlO/ViruyIDsyGwPbK7fDiqcvgmS/bmjq2OzaOcbs3BncKqSX1fHhqPQuIsQopHv2mdzQ==
-X-Received: by 2002:a05:6214:5281:b0:71a:ccf0:7201 with SMTP id 6a1803df08f44-71accf07438mr104248966d6.38.1756897426985;
-        Wed, 03 Sep 2025 04:03:46 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608ad4e680sm436636e87.150.2025.09.03.04.03.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 04:03:46 -0700 (PDT)
-Date: Wed, 3 Sep 2025 14:03:44 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Vikash Garodia <quic_vgarodia@quicinc.com>
-Cc: Umang Chheda <umang.chheda@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rakesh Kota <rakesh.kota@oss.qualcomm.com>,
-        Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>,
-        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
-        Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>,
-        Arun Khannna <quic_arkhanna@quicinc.com>,
-        Monish Chunara <quic_mchunara@quicinc.com>,
-        Swati Agarwal <swati.agarwal@oss.qualcomm.com>
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: Add Monaco EVK initial board
- support
-Message-ID: <j3kuygqqymh5pbujdum4tc275fbd5xrhejry4c5spuivxloon4@zrqfuqtydvyf>
-References: <20250826181506.3698370-1-umang.chheda@oss.qualcomm.com>
- <20250826181506.3698370-3-umang.chheda@oss.qualcomm.com>
- <ao3nb3xkeutqetqx7amlfbqtvhuyojfvzm4prsze2mhgb2rpnc@s2bsigcrlxzo>
- <26faedb2-63ca-e2e0-aad6-49575a8c49bf@quicinc.com>
+        d=1e100.net; s=20230601; t=1756897539; x=1757502339;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TY99cVzo51RXHn+Vw+SAL0C6lDtANRsUUB+6t6UiVNI=;
+        b=Oyqtk75Ss+8YLuIBFCkhW6RnLH/1VkdcdEf3t7wgNDn47gvc8LUjnOsVq07a9pMw57
+         bfTRziw8es9Ga4ucbVF+Dho7CrD/M1VRpAqSmeDnGnZRAu6GDrcxWB/Ha44hc6SERUty
+         1zR0+SCb7AmXzb9F7yWQltrNcJvpbHIqpCMS02QBXYA73cYjqk1+UOrec3F9f/vmk0dz
+         /tLUP9rSncUjoC43DvocifEdfeLh4cmlkZeFJs7ku0739PoYAk9vkj88pgynxJ2VnNqN
+         gjfbNs1RY4zRempAEnDKnN/F0l+cpQEIAVE38BegBdQTpoDAg1INF9v80OeUsmNP7hw4
+         tcuw==
+X-Forwarded-Encrypted: i=1; AJvYcCWHQfygQ5sIieDoFDq7K9mwN4Y2E6CBmw4cbwYy3K7+vBRAmMoEfDp12onI1gvDwNpO8ZIj70YbeZJlfCTa@vger.kernel.org
+X-Gm-Message-State: AOJu0YwYlYtYKf/wFvYke9Rz2qAW7DlwdzZkeW3J2BpZQ5BE+k/q2Ifd
+	S0UWf3RS3/mkcQ7GcYA9IuOyihSxpUWqxqtZaVORPaMjAzAovGnMfrlnPXmwmjI1vyxZCJE7srz
+	AN89wqhdVpM5s1UJttcu2o2dAP3xWVbzhCEN8xXeKjw==
+X-Gm-Gg: ASbGncvcRARCwXXOlsjpwvY3T+uvm42oSjqeOJyIg60dfSYJGkg50uGjTkebadsRoqe
+	hN+lBdVd1rUzmllX5KEe9VENyjjY5pcd5e1c8joFPB+t1WhP4rBGYJjKzIYFHKEPzs6f0kWYgKv
+	hCoHloznBMnm7qGypZTFvX2jWHkg3YEpvRfQtkPuW+ZUrFp9w0BVjfNCtuE1Cu9tCviOPPJu0ao
+	kh/hbc8QX+c9DX98v78g9dy8WvD/MRebobmMzWli9itXZZlFg==
+X-Google-Smtp-Source: AGHT+IGaO6jKgae4Bb0nnUY/KIMNPM9fcQrt4rcPCJpxbytVdpNy16Q2X9IuotKVynxw9JndtWotWpVme+DKGbgxexI=
+X-Received: by 2002:a05:6512:b8a:b0:55f:62f9:cad2 with SMTP id
+ 2adb3069b0e04-55f7093e564mr3786208e87.26.1756897538646; Wed, 03 Sep 2025
+ 04:05:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <26faedb2-63ca-e2e0-aad6-49575a8c49bf@quicinc.com>
-X-Proofpoint-ORIG-GUID: Ocytl1HJLQsRzId8i2DsQrlKPQq2fDmu
-X-Proofpoint-GUID: Ocytl1HJLQsRzId8i2DsQrlKPQq2fDmu
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfX1MdnsIjU29AJ
- rFoJ0/cZfMNcWzrt3DplMEbrRz7qjUR5WEwmvDQ8czOfcKgHG/JF3TPvTur4gaLu/BFnbrOL4wp
- zuGZ11vaYgO7BUcPa8jscZKKCmwlyp42G5H6mEy6BZ8yp9c79emnSPiaTfyIDblnJArB1GONBaL
- U9k6jWiYhaKjgYnU8PZUG2u02Jy/fSA15czyda8JAV0E55Z8FC5KcFjTvsjZ6EUPeJy72Wma7le
- LHf33UBZiRL55KWiuvoecEFZMplEq39B1KB4e4JbUtsvb4+ZOLqAdmWD9ZkZIck5khqQ52WIurM
- xlfh7jqjQWLiZ+xHDpBLHKrPXezm0rJBEyhBdJVt45s/6e4kS5l9A1EVciWKxSXyL4mZ6roxiCI
- OjfOe6nT
-X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b82094 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
- a=yJojWOMRYYMA:10 a=3BAVvXf_q9qCSfg946IA:9 a=3ZKOabzyN94A:10
- a=wPNLvfGTeEIA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-03_06,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
+References: <20250902-pinctrl-gpio-pinfuncs-v7-0-bb091daedc52@linaro.org>
+ <20250902-pinctrl-gpio-pinfuncs-v7-16-bb091daedc52@linaro.org>
+ <aLcBcjvMbrxoDYoC@smile.fi.intel.com> <CAMRc=MfcFMgkNqWNZV5o0NxkAvxBTjC3vv56Cr98n0R2CkxuPw@mail.gmail.com>
+ <CAHp75VcgaqnDrPH27wxfgyK6zz4RAKJQB0r7G2vbTONTxkEzTw@mail.gmail.com>
+ <CAMRc=MfhhX2NJ0fhhX8u+7=sdyUy0G27n7caGf9=TpHxUDJVxg@mail.gmail.com>
+ <aLgW7J-j4nn0u8uo@smile.fi.intel.com> <CAMRc=MdA21fwnamymG6YhqBjKDso_nJs_4xefPNONQNfEcPHXA@mail.gmail.com>
+ <aLgaoivmBUgoeO6B@smile.fi.intel.com> <CAMRc=Me84OX=UEmAXxmwE8oOH=1UBsyHe-7XmU0c8a2gG9JnCA@mail.gmail.com>
+ <aLgeDNLABpmkShIU@smile.fi.intel.com>
+In-Reply-To: <aLgeDNLABpmkShIU@smile.fi.intel.com>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Wed, 3 Sep 2025 13:05:27 +0200
+X-Gm-Features: Ac12FXyayAu5ynqkVYj2uRlegQC_XlF19483EKV3MWs-LYc9T7mcvfMXmn9zXkQ
+Message-ID: <CAMRc=MdD9g4WiBCP0qYGuy5e3pnQf5MUHTqkUOnrUvcWUYK27A@mail.gmail.com>
+Subject: Re: [PATCH v7 16/16] pinctrl: qcom: make the pinmuxing strict
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>, Linus Walleij <linus.walleij@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Alexey Klimov <alexey.klimov@linaro.org>, Lorenzo Bianconi <lorenzo@kernel.org>, 
+	Sean Wang <sean.wang@kernel.org>, Matthias Brugger <matthias.bgg@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+	Paul Cercueil <paul@crapouillou.net>, Kees Cook <kees@kernel.org>, 
+	Andy Shevchenko <andy@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	David Hildenbrand <david@redhat.com>, Lorenzo Stoakes <lorenzo.stoakes@oracle.com>, 
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>, Vlastimil Babka <vbabka@suse.cz>, 
+	Mike Rapoport <rppt@kernel.org>, Suren Baghdasaryan <surenb@google.com>, Michal Hocko <mhocko@suse.com>, 
+	Dong Aisheng <aisheng.dong@nxp.com>, Fabio Estevam <festevam@gmail.com>, 
+	Shawn Guo <shawnguo@kernel.org>, Jacky Bai <ping.bai@nxp.com>, 
+	Pengutronix Kernel Team <kernel@pengutronix.de>, NXP S32 Linux Team <s32@nxp.com>, 
+	Sascha Hauer <s.hauer@pengutronix.de>, Tony Lindgren <tony@atomide.com>, 
+	Haojian Zhuang <haojian.zhuang@linaro.org>, Geert Uytterhoeven <geert+renesas@glider.be>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
+	Danilo Krummrich <dakr@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Mark Brown <broonie@kernel.org>, linux-gpio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-mediatek@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	linux-mips@vger.kernel.org, linux-hardening@vger.kernel.org, 
+	linux-mm@kvack.org, imx@lists.linux.dev, linux-omap@vger.kernel.org, 
+	linux-renesas-soc@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 03, 2025 at 03:35:54PM +0530, Vikash Garodia wrote:
-> 
-> On 8/27/2025 7:12 AM, Dmitry Baryshkov wrote:
-> > On Tue, Aug 26, 2025 at 11:45:06PM +0530, Umang Chheda wrote:
-> >> Add initial device tree support for Monaco EVK board, based on
-> >> Qualcomm's QCS8300 SoC.
-> >>
-> >> Monaco EVK is single board supporting these peripherals:
-> >>   - Storage: 1 × 128 GB UFS, micro-SD card, EEPROMs for MACs,
-> >>     and eMMC.
-> >>   - Audio/Video, Camera & Display ports.
-> >>   - Connectivity: RJ45 2.5GbE, WLAN/Bluetooth, CAN/CAN-FD.
-> >>   - PCIe ports.
-> >>   - USB & UART ports.
-> >>
-> >> On top of Monaco EVK board additional mezzanine boards can be
-> >> stacked in future.
-> >>
-> >> Add support for the following components :
-> >>   - GPI (Generic Peripheral Interface) and QUPv3-0/1
-> >>     controllers to facilitate DMA and peripheral communication.
-> >>   - TCA9534 I/O expander via I2C to provide 8 additional GPIO
-> >>     lines for extended I/O functionality.
-> >>   - USB1 controller in device mode to support USB peripheral
-> >>     operations.
-> > 
-> > Is it actually peripheral-only?
-> > 
-> >>   - Remoteproc subsystems for supported DSPs such as Audio DSP,
-> >>     Compute DSP and Generic DSP, along with their corresponding
-> >>     firmware.
-> >>   - Configure nvmem-layout on the I2C EEPROM to store data for Ethernet
-> >>     and other consumers.
-> >>   - QCA8081 2.5G Ethernet PHY on port-0 and expose the
-> >>     Ethernet MAC address via nvmem for network configuration.
-> >>     It depends on CONFIG_QCA808X_PHY to use QCA8081 PHY.
-> >>   - Support for the Iris video decoder, including the required
-> >>     firmware, to enable video decoding capabilities.
-> > 
-> > I don't see firmware being declared here.
-> 
-> It would pick the default firmware from driver monaco platform data.
+On Wed, Sep 3, 2025 at 12:53=E2=80=AFPM Andy Shevchenko
+<andriy.shevchenko@intel.com> wrote:
+>
+> On Wed, Sep 03, 2025 at 12:41:48PM +0200, Bartosz Golaszewski wrote:
+> > On Wed, Sep 3, 2025 at 12:38=E2=80=AFPM Andy Shevchenko
+> > <andriy.shevchenko@intel.com> wrote:
+> > > On Wed, Sep 03, 2025 at 12:34:00PM +0200, Bartosz Golaszewski wrote:
+> > > > On Wed, Sep 3, 2025 at 12:22=E2=80=AFPM Andy Shevchenko
+> > > > <andriy.shevchenko@intel.com> wrote:
+> > > > > On Wed, Sep 03, 2025 at 09:33:34AM +0200, Bartosz Golaszewski wro=
+te:
+> > > > > > On Tue, Sep 2, 2025 at 10:46=E2=80=AFPM Andy Shevchenko
+> > > > > > <andy.shevchenko@gmail.com> wrote:
+> > > > > > > On Tue, Sep 2, 2025 at 8:42=E2=80=AFPM Bartosz Golaszewski <b=
+rgl@bgdev.pl> wrote:
+> > > > > > > > On Tue, Sep 2, 2025 at 4:38=E2=80=AFPM Andy Shevchenko
+> > > > > > > > <andriy.shevchenko@intel.com> wrote:
+> > > > > > > > > On Tue, Sep 02, 2025 at 01:59:25PM +0200, Bartosz Golasze=
+wski wrote:
+>
+> ...
+>
+> > > > > > > > > > The strict flag in struct pinmux_ops disallows the usag=
+e of the same pin
+> > > > > > > > > > as a GPIO and for another function. Without it, a rouge=
+ user-space
+> > > > > > > > > > process with enough privileges (or even a buggy driver)=
+ can request a
+> > > > > > > > > > used pin as GPIO and drive it, potentially confusing de=
+vices or even
+> > > > > > > > > > crashing the system. Set it globally for all pinctrl-ms=
+m users.
+> > > > > > > > >
+> > > > > > > > > How does this keep (or allow) I=C2=B2C generic recovery m=
+echanism to work?
+> > > > > >
+> > > > > > Anyway, what is your point? I don't think it has any impact on =
+this.
+> > > > >
+> > > > > If we have a group of pins that are marked as I=C2=B2C, and we wa=
+nt to use recovery
+> > > > > via GPIOs, would it be still possible to request as GPIO when con=
+troller driver
+> > > > > is in the strict mode?
+> > > >
+> > > > Yes, if you mark that function as a "GPIO" function in the pin
+> > > > controller driver.
+> > >
+> > > How would it prevent from requesting from user space?
+> >
+> > It wouldn't, we don't discriminate between user-space and in-kernel
+> > GPIO users. A function either is a GPIO or isn't. Can you point me to
+> > the driver you're thinking about or is this a purely speculative
+> > question?
+>
+> The recovery mechanism is in I=C2=B2C core and many drivers use that.
+> I'm not aware of Qualcomm drivers in particular. But mechanism is
+> in use in I=C2=B2C DesignWare which is distributed a lot among platforms,
+> so using word 'purely' is incorrect, and word 'speculative' is a bit
+> strong, but you can think of the issue coming later on when somebody
+> does something like this.
+>
+> The same applies to the in-band wakeup UART mechanism.
+>
+> Which means that with this series we will relax it back anyway for
+> the above mentioned cases.
+>
+> (Not sure, but SPI DesignWare requires programming SPI native chip select=
+s even
+>  if the GPIO is used for that, this might have also some implications, bu=
+t here
+>  it's for real 'purely speculative'.)
+>
 
-Yes, but the commit message says something different.
+The high-level answer is: yes, a pin that will be used by GPIOLIB
+needs the function it's muxed to, to be marked as "GPIOable" in its
+parent pin controller if it's strict. That's still better than the
+current situation.
 
--- 
-With best wishes
-Dmitry
+I can imagine we could differentiate between in-kernel and user-space
+users of GPIOs and then make it impossible for the latter to request
+certain pins while they could still be requested in the kernel but
+that's outside of the scope of this series.
+
+I don't see why this would stop these patches though, as they don't
+break anything unless you decide to make your pin controller strict in
+which situation you'd need to verify which functions can GPIOs anyway.
+
+Bartosz
 
