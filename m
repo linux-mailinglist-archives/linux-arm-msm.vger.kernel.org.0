@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-72023-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57E74B43939
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:49:54 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 25640B4393E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:51:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B492C188E087
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:50:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B632717794F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:51:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 750D82F90E2;
-	Thu,  4 Sep 2025 10:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1832ECEB9;
+	Thu,  4 Sep 2025 10:51:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UvqNmPed"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plRPWOMs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1B74F5E0;
-	Thu,  4 Sep 2025 10:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE42413B5AE;
+	Thu,  4 Sep 2025 10:51:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756982988; cv=none; b=fYwL2GDOazJ7+ERIPawhpISvnRpO/Cou3HasdfqEGBJatBAYKL7d5mN5xxYrVNj+64QnVz19eKqCIlZMhezhJd5CO1nfOlq+x9z/8agAibOb3EfrKu93Juqr3OX8avgo4qaUcGV+Pj58eMcxpsv4qMlyle3HFzugKD37I7hbswY=
+	t=1756983112; cv=none; b=K9qGoavHwLV2SQPVCWnjQWgu75tCwhiEJA0lmzlXHse6+zAWVW2vC311oRny4GoViOEFwKITJkzxmm+cX43cDVismkg+3WA5hVN4buMwNquWUJHM9fznD8RYsm5KW/yKgDn0DMy/WeI1l/rcmkg/e2iS3Gfxk0owkAqVSadpjnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756982988; c=relaxed/simple;
-	bh=Gl6OL1RNFpRxsFNOGB7pB+WYtnIaBKbAZ8SZITMItgE=;
+	s=arc-20240116; t=1756983112; c=relaxed/simple;
+	bh=k3JO0YMSUDIJiNpBqK85iJurfOt+0WojMFvUvMYqVGo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gA4o1Ri6wKMaMKigsg8i8WdkDvWXZgGMkMNPgNncf1GRvjzhNQgz+Crd3A4yjif4VE+k77QtZnWsFZa8MnCsc0RGHwNqdj6YIGCOeqN85Q6e79PjKUx7s3T2ZGgDElTNG8il52DwkVm4Z55kYPCoW2lBYRiAbwO4GClCca9y7bg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UvqNmPed; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B794DC4CEF0;
-	Thu,  4 Sep 2025 10:49:44 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=CTqesIvAYmvPAQhy6Zsg2f6D5X/Dofy3cR+wkrpkxq45sNJUmdjn+jMLOUvQlF379VIls34QOyGSQq2mW1gmIFMjtu6FSdyRFbL03M3ecsNvDGSVH1EuHXa3YbIc//mHpaixXoL0k11y++x4vA9utQDaeioGrZQR6lI6Dt3rQzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plRPWOMs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CF5C4CEF0;
+	Thu,  4 Sep 2025 10:51:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756982987;
-	bh=Gl6OL1RNFpRxsFNOGB7pB+WYtnIaBKbAZ8SZITMItgE=;
+	s=k20201202; t=1756983111;
+	bh=k3JO0YMSUDIJiNpBqK85iJurfOt+0WojMFvUvMYqVGo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=UvqNmPedIbst1EEzcBjcWmHEXtynOIsuV+drtbmEUxEHY2kpKZfuV0gbTrKHG+jIJ
-	 Yz6RRW0ZJE5OkV/TtNUjbkeWdcAQWV2pj8so8fTq+diEWX6jj7hlajzofEps73ugvF
-	 pMgDwOXBSVCKQJGulQUSAvXvF7LhTnAHB0rwfb2XEy5+KpudMjw4PJKwrOpLXtFB+1
-	 dOTcBUllHFLEXw+3gHy74l3T1s3egZue1m0MkFklU8Zf1VeGMfsO34ngwEdXMURaUu
-	 B6n5rLMwLHxCr7l637GaMz8lcCQYjxMEeVHXPlS9fYm/ISN3PiqQK+8Cs+wLII4g2S
-	 eK2Kr9bBOUC4g==
-Message-ID: <af074048-1999-435c-9405-6ffa09eef6dd@kernel.org>
-Date: Thu, 4 Sep 2025 12:49:42 +0200
+	b=plRPWOMsPby6bHYo0eQzVWSxAkHlw9+lEUPJop5FniuaFXZOEoCEXSK8/3dtMmRQi
+	 zk1y0AySoOzAOQY8UafBd/UA5sBc1oVfdISDhe02khtgnpQhNgdTCc7bIu0jl3oJHE
+	 ly3Sq3Sg5APvbd50OCoJCfFv57EHcEhqEujlgwA0/lhqilNPwBWXminOGrEavU2Uc5
+	 IXkBo6505omNsVb20PFlHGvJZvxAOKb/5gupoGQ4yt9h5Hm+nPXCT08YtSRLbF/H75
+	 Y4/4dwrdB+PQ4Lz3s4bmyOplhZQeExSUbItO9TAtyi9A0XUBvDYYjCjllG44JmwkN5
+	 4qNZi5gcdsUpg==
+Message-ID: <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
+Date: Thu, 4 Sep 2025 12:51:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: Add binding for gunyah watchdog
-To: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
-Cc: hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH V5 4/4] arm64: dts: qcom: sm8550: Add max-sd-hs-hz
+ property
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Sarthak Garg <quic_sartgarg@quicinc.com>,
+ Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
- <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
- <ea295ff6-5395-4470-afc2-76e5e2dc9fb5@kernel.org>
- <5210a5e2-0d75-4532-b3ca-1cbdf8ea2a9e@quicinc.com>
+ <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
+ quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+ quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
+References: <20250903080404.3260135-1-quic_sartgarg@quicinc.com>
+ <20250903080404.3260135-5-quic_sartgarg@quicinc.com>
+ <6deac56f-e21a-4447-bfa7-a414084676b8@kernel.org>
+ <be87fb2f-7036-4039-8ba2-63d54a9ae732@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,46 +113,52 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <5210a5e2-0d75-4532-b3ca-1cbdf8ea2a9e@quicinc.com>
+In-Reply-To: <be87fb2f-7036-4039-8ba2-63d54a9ae732@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/09/2025 12:16, Pavan Kondeti wrote:
->>> +  compatible:
->>> +    allOf:
->>> +      - const: gunyah-hypervisor
->>> +      - const: simple-bus
+On 04/09/2025 10:36, Konrad Dybcio wrote:
+> On 9/3/25 10:21 AM, 'Krzysztof Kozlowski' via kernel wrote:
+>> On 03/09/2025 10:04, Sarthak Garg wrote:
+>>> Due to board-specific hardware constraints particularly related
+>>> to level shifter in this case the maximum frequency for SD High-Speed
+>>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
+>>> card in HS mode.
+>>>
+>>> This is achieved by introducing the `max-sd-hs-hz` property in the
+>>> device tree, allowing the controller to operate within safe frequency
+>>> limits for HS mode.
+>>>
 >>
->> What? No.
+>> Probably we will now replicate the same discussion... And it will be
+>> happening every time you send the same and not reflect it in commit msg.
 >>
->> Don't create patches with AI.
->>
-> I am next to Hrishabh when he is writing this patch. I can confirm he
-> did not use AI :-) not sure what tool Krzysztof is using to catch
-
-My brain?
-
-> patches being written with AI, that tool needs some improvement for
-> sure. 
-
-Heh? Seriously, instead replying something like this think from how is
-it possible to come with such syntax?
-
-It does not exist. NOWHERE.
-
-It had to be completely hallucinated by AI because I cannot imagine
-coming with code which is completely different then EVERYTHING else.
-There is no single code looking like that.
-
-
+>> Bindings say board setup, this commit msg says board config, but the
+>> patch says SoC. This is not correct.
 > 
-> I will let Hrishabh share why he put simple-bus here.
+> Both are correct, looking at the problem from two perspectives.
+> 
+> The bindings description mentions board-specific limitations (e.g. because
+> "the board's electrical design does not allow one to achieve the full rated
+> frequency that the SoC can otherwise do, in a stable way")
+> 
+> Here the author tries to argue that almost all SM8550 boards are broken
+> in this sense, because the reference design did not feature the required
+> passive components, making most (derivative) designs sort of "broken by
+> default" - and only some (if any?) vendors decided to go with the
+> additional components required to lift this limitation.
+> 
+> This in turn makes it fair to assume the developer experience would benefit
+> from having the SD card high speed modes always work (with the slight speed
+> cap which may not be required for the 1 or 2 designs that took the extra
+> step) without each board DT creator having to track down this property
+> separately.
 
+And then if you send same v3, I will ask the same. Can the author
+finally write commit msgs reflecting discussions and previous disagreements?
 
-It is not about simple-bus!
-
-
-
+Reviewers questions happen for a reason, so sending the same means
+person ignored that reason.
 
 Best regards,
 Krzysztof
