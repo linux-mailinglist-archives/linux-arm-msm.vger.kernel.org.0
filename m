@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-72011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F0FCB43723
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 11:31:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 56CB1B43728
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 11:31:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE6695A202F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 09:31:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B1C82160629
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 09:31:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF0E2F744D;
-	Thu,  4 Sep 2025 09:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54A8F2F7456;
+	Thu,  4 Sep 2025 09:31:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EIH6VLj7"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="duc11Pck"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E4A2F28F7
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 09:31:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9914B2C08A8
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 09:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756978263; cv=none; b=q1TEKyJHDNRWxdhcHtVdso3YfT5QcEuhkrlQnmTEEb9JFZYYA862gVLDlVlGz3rus0wLwuziPaQ//R36buTR729svr2VilzPLKMLue9lQIcODwhX7tDA2J/SOEfV3YD2GvK2p88Fdkx37Apae6Y1qio8KLlYUQ/Ng6YhZm9ZJFs=
+	t=1756978277; cv=none; b=qY/hmfY9cr9tqA10UniZfcq1YPXQi/u8cDtgSDAd5mwIO4BdJOnFtz/8Qdt9+1RJHlxkEu1efoA1EUXaw0wJDxsF66MenTPdJR0AFrERzXQNgnAY0Wy3H60TSaaU+G1wu/M/pb7IdUd/E+wRWKpYHBdaW+dQM2cS00GG1vrwNfQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756978263; c=relaxed/simple;
-	bh=/3akGTP1lkxwZtcmtPRlyFMRA5KFJLoGC10m6yCNL/Q=;
+	s=arc-20240116; t=1756978277; c=relaxed/simple;
+	bh=z/QwrrZNxjwcrb7wvaaTbtnsQUrZSsz13LHcHnVObQE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=srZ4PZHQm8c8dzl81zUC5l/oI+oSzANqD2MpMZw+WRinP+sRuvboAnhQtMrKQRN55q3CCbay5MxEFfW/EweBE/0F3X+LRjIkIO7saTM4yWXw0f5b0W5PhI9SHq46Y5lPM962m8y2FBPPCSGjd0GP+Ec0jgLI3o8K3QODeoq/at8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EIH6VLj7; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=rS+EQkrceeoWQVe2HnivvPNxyULol/kDAnuBrJxYNpGuZRC/pzrjRZohWWRnfqrPOFlASEOZ0MnrKdAJVhDo+0wTNSYaHnPtUXMecpkFkvGtpX5IgmIk0+9SlP6nQnBcNRve8cyPt6qJJ3WrNwqp4G20uXk8zscwEGbHruJUMO8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=duc11Pck; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849Tk2X024888
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 09:31:00 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849TlXf029940
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 09:31:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	gjaZTDZ/aDD7rrhljwAWbgjgue+W9I7isKzXGnJxcQs=; b=EIH6VLj7d4SEajTq
-	Q4X2BCIDmfej9ZKbihG5UfoQ6T6Qljw99MgWVr8Kv5msP8BpjpATcPTOjhNR4x0g
-	EF1zSe9lqXSRQWLbDh2tdyx/XBW02e3AfdBzf7a+HPRbet7305Kyz6YidM+WxJjC
-	J0VI1fb2ozPMUxq6XA2I/x2CVlQsjtG4DUUoGZkO0U5tPhyBe3j/lJizJxkd/GNk
-	DS+1ZFG8bFGURb0bje4xsGJd6JYfNlH/nk9S78LckBEAvbIOgJ4eCZn4PNd2b+hP
-	EvNGcyLDYTeirOH/ZcN83xOW7swxZGv9HHRQ2fwV0tWQNIAp9Hx/EsPWmSvcYSX1
-	9DHXXQ==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urw0713t-1
+	CKdQw7nAUXkvTJEDO9CicrkX772HD7M0hMjIZAdWS6g=; b=duc11PckvO8lTbgz
+	+DHAnYcHTO7AtFvAQptbH+2WcwKpwuk0jCjKUV1SEaKkr45M+5mGn6ZZutnQspKJ
+	GRBVji1rT79Z/ic1+qtYrE9CoqnLmzJ37hOLnbhhPl2PdCSOqAmdnEHEzp+sYh4E
+	6toM5Zc+qD0SVLsFKM1NmOpO7a20w7v8tobc8+qh+dRBYsKqmkqtNsvaVFezum2a
+	wPdTIenWdYD6jD4yTQM8511Jnr0VIVVIgvBYAr1tqQnBOyWJyLKGGfDMbJmtaqqj
+	mvnupBd4Giy4/PryLz5eZXa1gTU6WAuI6XgjLGWCEDnJ8OuAl4M+/PiFyRHecU5t
+	gHRVqw==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s71t0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 09:30:59 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b47156acca5so739846a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 02:30:59 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 09:31:13 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7724877cd7cso971598b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 02:31:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756978258; x=1757583058;
+        d=1e100.net; s=20230601; t=1756978271; x=1757583071;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=gjaZTDZ/aDD7rrhljwAWbgjgue+W9I7isKzXGnJxcQs=;
-        b=ZuVXZI3/FOWDkjrCAxAWif03KA6L/GTL2yymxj8jfInf1kmumtS9f5ZW3kOaPh/3zu
-         JtD3z4o3hRF85ZP5XN5VbpzfmD6NTkS2EpgrPNvxD67ugX/bL1yc28QbJ2D9x1DMzmj5
-         FBuKeFwzt1wa+7b295ppPywtTchJLMH1Vzq10NpAx20+fDm8Z0VbUP8Ur30vH41G8VfY
-         pE1OhkTpnCOAhfGotkldnXRlg5Cnh6Tw8XLiMpkaSm7yYRq42ay6qHFBVU2VnNu0WrKd
-         t6Jz8u3dymFYTBkE01Q5g496kRvf2+jgwmgV9YXGl0gkP3bd1abxqz/riJVDiXyt51nl
-         QvYw==
-X-Forwarded-Encrypted: i=1; AJvYcCWplcRurC6iTV28WLONbvOz4Bvlowt2ANU2AQN8HVEDRy0D1eOy14SXDrediZp3Jc8hxBoiY9XzCFdD5C4U@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8HRjDzJC9/ySVG1mJPR9fntYXw85hxuxBhlJf2/SSYltPzHxe
-	Zc330z6XGNVXGc9NJmWmnu3n7NHo7lUTtio0IXavJ9rj3AqVMcBWxWj2ZUtz+ZZE+NHUjgit2B7
-	XD0SV0jVDawVAIK2zM1CegGQ+IKNOFMJm4PeQcEKiHtsLjudx23Sj/Tj4gV1Z1XnIcY4a
-X-Gm-Gg: ASbGnctRAxb/QlpMRGPy1AolhfJ+JRGkFLctVYQ0+DqWEhe5I5u59BdXJcTyki4R6wG
-	HZCJ4tDT1lIbrfkq3X4Rrj6/PKDS+WuGTqNTLbobNzzZ9OVpfYZTNLpuzg2CKAy8d6JFaKv0Pv8
-	lOg/twEBvNURLttrfULesqayWVSpl/7hBXeyL4k9+iRFvjYChUyAjJGD2CcynusLNP8Frw8m+Ue
-	bLpwgOOISNjbnFafYa8mIwFWR9R9rh/qsdqRGYVqdIxdqhNMEyv0RC3lJlOQNhPVu5xk9aC452I
-	hG4Bg4UB9jOtGabq85nMUMj4s47a1gA9DUKYGHmN+0PjjhxUkRGqNBGnPRilbek1bbc44kht
-X-Received: by 2002:a05:6a20:430c:b0:243:a7f1:ffd9 with SMTP id adf61e73a8af0-243d6f03220mr25742558637.14.1756978258536;
-        Thu, 04 Sep 2025 02:30:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMkvfv7QM1gNoAVHNThaAcgLHPGgeMYdHu4pMt4ULdHgTWcrUFnW10134ZoHlO5C/MUQvZQg==
-X-Received: by 2002:a05:6a20:430c:b0:243:a7f1:ffd9 with SMTP id adf61e73a8af0-243d6f03220mr25742533637.14.1756978258059;
-        Thu, 04 Sep 2025 02:30:58 -0700 (PDT)
-Received: from [10.92.206.21] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4f2c990296sm12110931a12.39.2025.09.04.02.30.54
+        bh=CKdQw7nAUXkvTJEDO9CicrkX772HD7M0hMjIZAdWS6g=;
+        b=kDxtaCcd2a7UEs52QHJ5kxXRsoYu9cHtzhtqLdRiVE5YYgVDf7MEYITmmKJ+PT/VjS
+         52Rg+NQI7T2p5ekDcSl427BuKjrp/5mxzLwIw3ySGZAW718t1nUL8D84TjOxgPh7fqd/
+         5UgjBlW3zXpKS24koXwrqWb9mM4TYXWo0gc85qy0IFWrWRd4TIJUqLax57JakKVCiquH
+         929qOEJ2gO+HgF+wGJpF6J8AaBm5RzwA5pACJfbqh2n+xbMMe0cQ4d5HT3DkrsmJCU7N
+         flexlQBKUafu0D3VqjyV0X+ivLVCc2UoymK9TXZjhbzbsEfrIWjITIBBkZXQ94x9Vk9p
+         v0Ig==
+X-Gm-Message-State: AOJu0YwUVKL278PtnNSigryUx3zInXP4jGDIlTKaVWbNlqGiWFIe2Uxo
+	rgfPEk32tjh5ZtLBPvcCmM56JrccIugAC5LFJY741w1Arai7Ofbhw/QW5tVq814OUZtBfM9aycF
+	DwJZenkVNliabbMtQJ4e04qg4EhWaUyMaT2lRDzHXIIt8WB1rKHxiu9QNCmrfUIrwWSQc
+X-Gm-Gg: ASbGncsX5zoyr8aJEon1RjEdL80IUXJ9M+0FRoYRw0ESwvdiW25XFqwqHzTseN7qQAB
+	pCK8cQwHeYjyHpzFohBPVtuGU7+sxam6l1+IbgK37ih6Oro337gr/Ef+JtxHIzmufzuFr7IYD6a
+	Ik1UonB1MD01VG2vaVNaDkIBFrusqlmUO+/gZhgDAAHubeuWPbqUsNY1huGfu2y2rNk6uun5YbZ
+	tM9UiA0rlysHQBJwlEyyoUyTsh9qsMBSYJpEriJoaTHiYlNu679NsdIq1LZK4yhr9mwg1NRqcgW
+	05sOF+LpaiOb4waXi3HGhmzlhuD81TXMIiuWiNNPwHhvz0wtkmcY1aNlth3dvXWvk/vXU3SavPp
+	Z0GMe4Gql8aOGDr1lh3P1Sq9x1rFHmQ==
+X-Received: by 2002:a05:6a20:6a06:b0:249:d3d:a4ea with SMTP id adf61e73a8af0-2490d3db2d4mr7632554637.39.1756978270883;
+        Thu, 04 Sep 2025 02:31:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGKMm8Afbwr7ngOp8CqIU5ydDUE32QQZhbVM/77fYeYZoBOBBxuC9/YkYIeukJQNNNmOv0Z0Q==
+X-Received: by 2002:a05:6a20:6a06:b0:249:d3d:a4ea with SMTP id adf61e73a8af0-2490d3db2d4mr7632502637.39.1756978270285;
+        Thu, 04 Sep 2025 02:31:10 -0700 (PDT)
+Received: from [10.133.33.41] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-329b3e28a10sm10862807a91.18.2025.09.04.02.31.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 02:30:57 -0700 (PDT)
-Message-ID: <3202167b-9403-4b68-9b99-55be190f7e2c@oss.qualcomm.com>
-Date: Thu, 4 Sep 2025 15:00:52 +0530
+        Thu, 04 Sep 2025 02:31:09 -0700 (PDT)
+Message-ID: <f3aa35bb-5ac7-4fe3-904e-2dd97b9c034a@oss.qualcomm.com>
+Date: Thu, 4 Sep 2025 17:31:01 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,95 +89,209 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] bus: mhi: host: Fix potential kernel panic by calling
- dev_err
-To: Adam Xue <zxue@semtech.com>, mani@kernel.org, jeff.hugo@oss.qualcomm.com,
-        quic_yabdulra@quicinc.com, chentao@kylinos.cn,
-        quic_mattleun@quicinc.com, mhi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc: imocanu@semtech.com
-References: <20250902165635.18951-1-zxue@semtech.com>
+Subject: Re: [PATCH v11 0/6] Display enablement changes for Qualcomm QCS8300
+ platform
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+References: <20250904-qcs8300_mdss-v11-0-bc8761964d76@oss.qualcomm.com>
+ <5bc0203c-21a1-4948-96ff-8eae844bfb93@oss.qualcomm.com>
+ <d2940186-7baf-41d3-80dd-fbc860ac5acb@oss.qualcomm.com>
 Content-Language: en-US
-From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-In-Reply-To: <20250902165635.18951-1-zxue@semtech.com>
+From: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+In-Reply-To: <d2940186-7baf-41d3-80dd-fbc860ac5acb@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 4zpeQaeLEqeo_CzGOTMubvevOtQBjkqP
-X-Proofpoint-ORIG-GUID: 4zpeQaeLEqeo_CzGOTMubvevOtQBjkqP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfXzvyyEYxEzKC5
- ANCKxbr8t0epELww5+pA7ZEARDs+eAf5T8d9UKxJE2qdN/u5YzxlSRHK/50ecrukWhpGsNXuwYC
- DMnneQxg635WMlljTnrXzDlYcNjvdBlX6z1Vhx3bZSQz4gxlj7G8w/MzHFniC0OiTC0KxXsXs/v
- tvaUM+bcdAec+h8/SlBURaW31T81RFywyRivxV8L+V6q34VteDA43Kv04MNdb1VMgcCmv2WFiDQ
- PU0IGm0F2OD/wHAdtzK8g2gyqA5adJvBB/8GD+EjYxu9ScjtEmoiGmsF+125xVm/RD/HoyqjWbh
- jiToT4TO7EqHHQDKE+M0PIEv54gEjcamWYkQshA6K3VYe+0QY7zu9NXFGIzp3E8syJ6fHCDqw9s
- Y5SaTTPF
-X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b95c53 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=SfXQzQb2AAAA:8 a=xogcm1YOMVM3hb4W_dUA:9
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22 a=187EmVsF5pRpP46aC3wK:22
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX7ruTYa0ll6Bq
+ hdJvcTHMI91J89dxY2Yo78Iq7xziMjyKQEEYqq9p/Ne69j2bgKaf9m/WYiQJOgHDEfXeCUbGBpf
+ GrWOzQw3DwC7fbDqDHJ7jFNmjiav3qF8DMfRapqEOpiIVS5UTSekr9IOAg+G+ccu1Xom/VkkHgA
+ ZWLfnhrvaMtQf5zc/jEppv222tWAGaEl+tbGSYgXVQlF225Qm6B93T9+hkaMQ0Q32TEQex9Q9+S
+ 0wzPlhvC6JfZBUoyMpj91s1elTdSAN21F5j+/EhZMiqVYN/5dxsJCFjDBHus2Otklu+Et+KcInF
+ 8rqOiVKe5bETseI+avsRc0HA1agky8YPhjy12lLJb1cLLZiQEeL9X9EbBgdinAHo34sB9OsENu5
+ sAE3HRd0
+X-Proofpoint-GUID: RxmesMwaHLAknD67H2nDCXT1A87BOZY_
+X-Proofpoint-ORIG-GUID: RxmesMwaHLAknD67H2nDCXT1A87BOZY_
+X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b95c61 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=COk6AnOGAAAA:8 a=1XWaLZrsAAAA:8 a=KKAkSRfTAAAA:8 a=0yE2TYaOs8xmGIxx25QA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_03,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
- impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300027
+ spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
 
 
 
-On 9/2/2025 10:26 PM, Adam Xue wrote:
-> In mhi_init_irq_setup, the device pointer used for dev_err
-> was not initialized. Use the pointer from pci_dev instead.
+On 9/4/2025 4:21 PM, Konrad Dybcio wrote:
+> On 9/4/25 9:55 AM, Yongxing Mou wrote:
+>>
+>>
+>> On 9/4/2025 3:22 PM, Yongxing Mou wrote:
+>>> This series introduces support to enable the Mobile Display Subsystem (MDSS)
+>>> , Display Processing Unit (DPU), DisplayPort controller for the Qualcomm
+>>> QCS8300 target. It includes the addition of the hardware catalog, compatible
+>>> string, and their YAML bindings.
+>>>
+>>> Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+>>> ---
+>>> Changes in v11: Fixed review comments from Dmitry.
+>>> - Rebase to MST bindings V8.
+>>> - Update the clocks-name for QCS8300 in dp-controller.
+>>> - Link to v10: https://lore.kernel.org/r/20250901-qcs8300_mdss-v10-0-87cab7e48479@oss.qualcomm.com
+>>>
+>>> Changes in v10:
+>>> - Rebase to MST bindings V7.
+>>> - Update the P2/P3/MST2LINK/MST3LINK regions in MDSS yaml.
+>>> - Link to v9: https://lore.kernel.org/r/20250825-qcs8300_mdss-v9-0-ebda1de80ca0@oss.qualcomm.com
+>>>
+>>> Changes in v9: Fixed review comments from Dmitry.
+>>> - Updated the description of dp-controller DT binding.
+>>> - Add new clause only work for QCS8300(one DP controller with 4 streams).
+>>> - Link to v8: https://lore.kernel.org/r/20250821-qcs8300_mdss-v8-0-e9be853938f9@oss.qualcomm.com
+>>>
+>>> Changes in v8: Fixed review comments from Krzysztof, Dmitry.
+>>> - Fixed incorrect description for dp-controller in driver/dt-binding.[Krzysztof][Dmitry]
+>>> - Fixed incorrect description for ubwc change.[Dmitry]
+>>> - Link to v7: https://lore.kernel.org/r/20250819-qcs8300_mdss-v7-0-49775ef134f4@oss.qualcomm.com
+>>>
+>>> Changes in v7: Fixed review comments from Dmitry.
+>>> - Rebase to next-20250818 and 4 pixel stream series V6.
+>>> - Add more description for the dp-controller dt-bingding change.[Dmitry]
+>>> - Reorder the MDSS change and UBWC change.[Dmitry]
+>>> - Switch to the OSS email.
+>>> - Link to v6: https://lore.kernel.org/r/20250806-mdssdt_qcs8300-v6-0-dbc17a8b86af@quicinc.com
+>>>
+>>> Changes in v6: Fixed review comments from Konrad, Dmitry.
+>>> - Rewrite commit msg in dp-controller dt-binding change.[Dmitry]
+>>> - Optimize the description in MDSS dt-binding.[Dmitry]
+>>> - Pass the sc8280xp_data as fallback in the UBWC change.[Konrad]
+>>> - Add the DP controller driver change.
+>>> - Link to v5: https://lore.kernel.org/r/20250730-mdssdt_qcs8300-v5-0-bc8ea35bbed6@quicinc.com
+>>>
+>>> Changes in v5:Fixed review comments from Krzysztof, Dmitry.
+>>> - Rebase to next-20250717.
+>>> - Change DP compatible to qcs8300-dp due to add 4 streams support.
+>>> - Add QCS8300 UBWC config change due to rebase.
+>>> - Add 4 streams clk and phy in the mdss yaml.
+>>> - Link to v4: https://lore.kernel.org/r/20250120-mdssdt_qcs8300-v4-0-1687e7842125@quicinc.com
+>>>
+>>> Changes in v4:Fixed review comments from Krzysztof, Dmitry.
+>>> - Use the common style for the dt-bindings commits.[Dmitry]
+>>> - Update the commits msg for the mdss binding patch, explain why they
+>>>     reuse different platform drivers.[Krzysztof]
+>>> - Link to v3: https://lore.kernel.org/r/20250113-mdssdt_qcs8300-v3-0-6c8e93459600@quicinc.com
+>>>
+>>> Changes in v3:Fixed review comments from Krzysztof, Dmitry.
+>>> - Fix the missing space issue in commit message.[Krzysztof]
+>>> - Separate the patch for the phy from this series.[Dmitry]
+>>> - Remove unused dependencies and update in the cover letter.[Dmitry][Krzysztof]
+>>> - Link to v2: https://lore.kernel.org/r/20241226-mdssdt_qcs8300-v2-0-acba0db533ce@quicinc.com
+>>>
+>>> Changes in v2:Fixed review comments from Krzysztof, Dmitry, Rob.
+>>> - Decouple the devicetree changes from this series.[Dmitry][Krzysztof]
+>>> - Drop the dpu driver changes and reuse SA8775P DPU driver.[Dmitry]
+>>> - Fix compilation issues in MDSS bindings.[Rob][Krzysztof]
+>>> - Correct formatting errors and remove unnecessary status in MDSS
+>>>     bindings.[Krzysztof]
+>>> - Add the the necessary information in MDSS changes commit msg.[Dmitry]
+>>> - Rebase MDSS driver changes to https://lore.kernel.org/dri-devel/
+>>>     20241127-msm-mdss-ubwc-v3-0-9782a7c2b023@linaro.org/.[Dmitry]
+>>> - Package the DisplayPort controller and eDP PHY bindings document to
+>>>     this patch series.
+>>> - Collecting MDSS changes reviewd-by Dmitry.
+>>> - Reuse the sa8775p eDP PHY as a fallback compat.[Dmitry]
+>>> - Reuse the sm8650 DP controller as a fallback compat.[Dmitry]
+>>> - Link to v1: https://lore.kernel.org/r/20241127-mdss_qcs8300-v1-0-29b2c3ee95b8@quicinc.com
+>>> ---
+>>> This series depend on 4 pixel streams dt-binding series:
+>>> https://lore.kernel.org/all/20250903-dp_mst_bindings-v8-0-7526f0311eaa@oss.qualcomm.com/
+>>>
+>>> and separate eDP PHY binding:
+>>> https://lore.kernel.org/all/20250730072725.1433360-1-quic_yongmou@quicinc.com/
+>>>
+>>> ---
+>>> Yongxing Mou (6):
+>>>         dt-bindings: display/msm: Document the DPU for QCS8300
+>>>         dt-bindings: display/msm: dp-controller: document QCS8300 compatible
+>>>         dt-bindings: display/msm: Document MDSS on QCS8300
+>>>         soc: qcom: ubwc: Add QCS8300 UBWC cfg
+>>>         drm/msm: mdss: Add QCS8300 support
+>>>         drm/msm/dp: Add DisplayPort controller for QCS8300
+>>>
+>>>    .../bindings/display/msm/dp-controller.yaml        |  22 ++
+>>>    .../bindings/display/msm/qcom,qcs8300-mdss.yaml    | 286 +++++++++++++++++++++
+>>>    .../bindings/display/msm/qcom,sm8650-dpu.yaml      |  15 +-
+>>>    drivers/gpu/drm/msm/dp/dp_display.c                |   1 +
+>>>    drivers/gpu/drm/msm/msm_mdss.c                     |   1 +
+>>>    drivers/soc/qcom/ubwc_config.c                     |   1 +
+>>>    6 files changed, 321 insertions(+), 5 deletions(-)
+>>> ---
+>>> base-commit: 3ac864c2d9bb8608ee236e89bf561811613abfce
+>>> change-id: 20250818-qcs8300_mdss-a363f0d0ba0b
+>>> prerequisite-message-id: <20250903-dp_mst_bindings-v8-0-7526f0311eaa@oss.qualcomm.com>
+>>> prerequisite-patch-id: ffeeb0739a4b3d310912f4bb6c0bd17802818879
+>>> prerequisite-patch-id: cdc3f4515ab23a8b2ce719bbdbcb56043803d03f
+>>> prerequisite-patch-id: 048b11765f49af4a728db1525fef1eb8ad48bf88
+>>> prerequisite-patch-id: f0f92109d1bfffa6a1142f2aaecbd72a29b858c0
+>>> prerequisite-patch-id: a8185cf3ddd85b9058691500b8dc0c57c8226e97
+>>> prerequisite-patch-id: a389a2e4eca44bf62bb2c861c96596368be7a021
+>>> prerequisite-patch-id: 09ec7f51de0a65c68c2c781750177017f32747ba
+>>> prerequisite-patch-id: f76ab0ae189df14acc851fa52f8f8e8faed9a505
+>>> prerequisite-patch-id: 983fc8a7bea459505c5b27db1a1ef7581936555c
+>>> prerequisite-message-id: <20250730072725.1433360-1-quic_yongmou@quicinc.com>
+>>> prerequisite-patch-id: 2ea89bba3c9c6ba37250ebd947c1d4acedc78a5d
+>>>
+>>> Best regards,
+>>
+>> Hi, maintainers:
+>> sorry for the inconvenience caused. This series is missing patch 5 and patch 6 due to network issues. May I resend it? The missed two changes are identical to V10.
 > 
-> Signed-off-by: Adam Xue <zxue@semtech.com>
-> ---
->   drivers/bus/mhi/host/init.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+> You can fix that manually by sending them both through
 > 
-> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
-> index 13e7a55f54ff..93eddf302a49 100644
-> --- a/drivers/bus/mhi/host/init.c
-> +++ b/drivers/bus/mhi/host/init.c
-> @@ -18,6 +18,7 @@
->   #include <linux/slab.h>
->   #include <linux/vmalloc.h>
->   #include <linux/wait.h>
-> +#include <linux/pci.h>
->   #include "internal.h"
->   
->   #define CREATE_TRACE_POINTS
-> @@ -194,7 +195,7 @@ void mhi_deinit_free_irq(struct mhi_controller *mhi_cntrl)
->   int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->   {
->   	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
-> -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
-> +	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
->   	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
->   	int i, ret;
->   
-> @@ -221,7 +222,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->   			continue;
->   
->   		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
-> -			dev_err(dev, "irq %d not available for event ring\n",
-> +			dev_err(&pdev->dev, "irq %d not available for event ring\n",
->   				mhi_event->irq);
-Don't use pci_dev in mhi as mhi agnostic of the underlying transfer
-protocol like PCIe.
-
-Use dev_err(mhi_cntrl->cntrl_dev, here.
-
-- Krishna Chaitanya.
->   			ret = -EINVAL;
->   			goto error_request;
-> @@ -232,7 +233,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
->   				  irq_flags,
->   				  "mhi", mhi_event);
->   		if (ret) {
-> -			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
-> +			dev_err(&pdev->dev, "Error requesting irq:%d for ev:%d\n",
->   				mhi_cntrl->irq[mhi_event->irq], i);
->   			goto error_request;
->   		}
+> b4 send -o /tmp/
+> git send-email --in-reply-to=<cover letter msgid> /tmp/0005-xyz-abc.patch
+> git send-email --in-reply-to=<cover letter msgid> /tmp/0006-xyz-abc.patch
+> 
+> Konrad
+Thanks for guide, when i use cmd  "git send-email 
+--in-reply-to="20250904-qcs8300_mdss-v11-0-bc8761964d76@oss.qualcomm.com" 
+~/tmpyongmou/0005-drm-msm-mdss-add-qcs8300-support.eml", seems something 
+wrong, error log:
+mou@oss.qualcomm.com>,  Dmitry Baryshkov 
+<dmitry.baryshkov@oss.qualcomm.com>'
+(body) Adding cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> 
+from line 'Reviewed-by: Dmitry Baryshkov 
+<dmitry.baryshkov@oss.qualcomm.com>'
+5.1.3 The recipient address <y> is not a valid RFC 5321 address. For more
+5.1.3 information, go to
+5.1.3  https://support.google.com/a/answer/3221692 and review RFC 5321
+5.1.3 specifications. d9443c01a7336-24b1ba1718bsm64512315ad.39 - 
+gsmtpWould you mind sharing some suggestions for this? Thanks~~
 
