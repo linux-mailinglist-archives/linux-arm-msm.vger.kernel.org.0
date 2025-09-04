@@ -1,177 +1,202 @@
-Return-Path: <linux-arm-msm+bounces-71959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EFFEB43073
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 05:23:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72A28B4307C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 05:34:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F16C45660CD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 03:23:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 087EC1B2086A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 03:34:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7235293B73;
-	Thu,  4 Sep 2025 03:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3253C2741DA;
+	Thu,  4 Sep 2025 03:33:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nW/g39gI"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="eJJlnZZB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955632877E3;
-	Thu,  4 Sep 2025 03:22:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108C8227EAA;
+	Thu,  4 Sep 2025 03:33:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756956157; cv=none; b=hkN1OBYLi0YD/5tGf5db9zeZGA56iVPLJM3vXrkmEL1Y3+lMv96pn1fiAXOvEkd4Scgt6yCpr2ws2nBECaZI+/LI4ZJQ87HvDuipMO2KPgfV75LroNAanPwlyZ9kITbfSUcqMZLX6k4QF+1tgS+LbhUWrRN3lSlh01Wm0NFagZw=
+	t=1756956836; cv=none; b=QafNBVpRUtAVKfqaooqPLcByzOzcG+wbk15UOd3TeCtR4vmULMm7UjFU1FV6em81ELsedbVRtF3kEDmkDsn+8oGDbhT9eSgjijrkttAm49izsLYcPRdd/kJBEbf5YKKfthrJl6Ez6ph1ROeob+V+S45AUQZqEzO4fDy81uGFnCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756956157; c=relaxed/simple;
-	bh=bNSAahrLsh5lIaRJtRcrZ2VrezcQXtPhuB+zZ94/O9Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BkNZWFdPt1o4Nbr0ktpwPaoxVn4IpcUhU6b1rsQcdJUZ066F4T8P8/gJhAgoXSRyTb0+o0cA//pKXdL8ldCSNjsCZNzwjIf3kfVuSBoPZOc4S4myW12gIuH50/OaOwuOfyu64ABDNievEk/L5IBPmULaq5/9H41K03bdpVIshx8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nW/g39gI; arc=none smtp.client-ip=192.198.163.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1756956156; x=1788492156;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=bNSAahrLsh5lIaRJtRcrZ2VrezcQXtPhuB+zZ94/O9Q=;
-  b=nW/g39gI6GK2t0cLfd2hQg4s+31u2Nm0nLHA27HdUYSWozlntN7n9seN
-   ajeyO2b6W2fs4aY9ESQAYoze4pYF2+cSsG6C1/2RmTihON1NmK3bKCB9L
-   XQmhZtDZxfn0vDXzvPivDtYVc0GbCp6ub/BWEQR0HSSyBNNDBaPPf/rpQ
-   4vjN0MJ9erj0CvO1+rJRfoisBsWDhgZV+qytfAfoDtq4HdW6apObWB0Er
-   XKNy+/PN9z+wvAtzrFOsEkrNNbcWHa/g0Ctb/TXbHvZMMx/mgyt1+UxZ0
-   0+2992AKu9yMe2+uDFvSEM3LPNj9+eomFlf1l/i2laRI7Kw9glHUpvi+Y
-   Q==;
-X-CSE-ConnectionGUID: W05EzdIMR9OWrDpDlxtI/w==
-X-CSE-MsgGUID: P8HsuEztSSCEME/G9pnarQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11542"; a="76888141"
-X-IronPort-AV: E=Sophos;i="6.18,237,1751266800"; 
-   d="scan'208";a="76888141"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2025 20:22:35 -0700
-X-CSE-ConnectionGUID: 5lDAPx0BTNOEIpwwL2WBRA==
-X-CSE-MsgGUID: oUclYMeDRJiAetZVddROEg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,237,1751266800"; 
-   d="scan'208";a="171056164"
-Received: from lkp-server02.sh.intel.com (HELO 06ba48ef64e9) ([10.239.97.151])
-  by orviesa010.jf.intel.com with ESMTP; 03 Sep 2025 20:22:31 -0700
-Received: from kbuild by 06ba48ef64e9 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uu0YO-0004hL-2j;
-	Thu, 04 Sep 2025 03:22:28 +0000
-Date: Thu, 4 Sep 2025 11:19:30 +0800
-From: kernel test robot <lkp@intel.com>
-To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>
-Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH v2 5/5] PCI: qcom: Allow pwrctrl core to toggle PERST#
- for new DT binding
-Message-ID: <202509041110.4DgQKyf1-lkp@intel.com>
-References: <20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061@oss.qualcomm.com>
+	s=arc-20240116; t=1756956836; c=relaxed/simple;
+	bh=TaYJEHe192jCRVqCPO+HLiKPyJywO/tW0Y+b4kvyOH0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=FDFK1tQZgTAfG5GRSqMg4tHVImSA2Llmy4P9HMppOmALC8s3H+8aaMCO2QLK6Dylc/ikHceRns1nyvRA9i9KfHdHSJ4XKwX8UjBt+x5Zfb2F3BY3miSEE7BJsGDe0oIpDfYpD++Yx+RJKNrefatEnUTQv/HDL2umT7dc9MwlXZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=eJJlnZZB; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5841Fw2s005260;
+	Thu, 4 Sep 2025 03:33:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ueTbf1bkRqFDb1lBeKEaIYecqBgTZcgygdtEDvtw/WA=; b=eJJlnZZB0KPl3Hof
+	Gsmc/Wufu1Q/B25FzZG3zw5tHgy2ZtLHdjI6YPJC2H0ykHqsmwGeMHj0KxSrUwev
+	fmiE84ZNAFBzB2NHWfVs9yeH4isI75/AwpY9h17cpwRQGwvtyIoi4PEtLZ7vT8FQ
+	D42FFzup5kbcjEkFT+06fn0qToeC711P0WHIJ6ShIPqL3iXoeQmj/IlrvBBZQfG7
+	y7CqnvmGfqGMH8kznai9+vxqeBtl8pNkXBg1uy4ebPlMmKbfUehdoluEwF6tBSOV
+	+9hz8CpP8BwT0qHE7ksFYqaS+fg+vdQJGyOxykfU51sjh+3//QTx8cduyqcdZEuk
+	TU9Jqw==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjnyeg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 04 Sep 2025 03:33:50 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5843XnQK001291
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 4 Sep 2025 03:33:49 GMT
+Received: from [10.231.216.119] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 3 Sep
+ 2025 20:33:46 -0700
+Message-ID: <b19ff26f-7dc7-4022-aec7-49922ab521cf@quicinc.com>
+Date: Thu, 4 Sep 2025 11:33:43 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] media: venus: pm_helpers: add fallback for the
+ opp-table
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, <quic_qiweil@quicinc.com>,
+        <quic_wangaow@quicinc.com>, Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Mauro Carvalho Chehab
+	<mchehab@kernel.org>
+CC: <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>,
+        Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>
+References: <20250724-fallback_of_opp_table-v2-1-2fc61f2407dc@quicinc.com>
+ <6dc33f02-6691-4ad8-b04f-423e4e5caea8@linaro.org>
+Content-Language: en-US
+From: Renjiang Han <quic_renjiang@quicinc.com>
+In-Reply-To: <6dc33f02-6691-4ad8-b04f-423e4e5caea8@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68b9089e cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8
+ a=ypURPpTzfF91ioEp2gAA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: URZt8tGUo6M7WipheIl2-PJCoMRBsjsL
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfX9eRWyYhO1DBw
+ U05j2W7awKstGxqM0GMW1Xs44gI5oxpqZmcNYlQ6LFtyzOlmve950stmGc9xhpOcPociNjGMpwz
+ Ac7aGRnBbmk/uuz6+A38qh9KYZBk6UuxhQJN+d2dIPDDLkPnWv/zPQoUAYNTreTUKFvlJnsyND1
+ ETVrGjFnBShDxmctFCEVC2jS2CNx4tKXKgIMHUTO8Pa3YTUXBhRBXlI/Xfe6exrR305FPYkdLyQ
+ Zu1XcOKOcp2tF0Znf0yqsMvzaL3HGZeLNFiyt4JZPELUBDTqlfj6p0uQ7K+uyCJsoNMF8NISzPE
+ LfGfmG5T6yJx5LhARPK0U+YUCiQUrk23OUozztmCKJBBjcGk22xsRjY+mJnOvAvpxSdu4qHKpSo
+ dYt+QcCu
+X-Proofpoint-ORIG-GUID: URZt8tGUo6M7WipheIl2-PJCoMRBsjsL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-04_01,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
 
-Hi Manivannan,
 
-kernel test robot noticed the following build errors:
+On 7/28/2025 11:20 PM, Bryan O'Donoghue wrote:
+> On 24/07/2025 08:53, Renjiang Han wrote:
+>> Since the device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX
+>> do not include an opp-table and have not configured opp-pmdomain, they
+>> still need to use the frequencies defined in the driver's freq_tbl.
+>>
+>> Both core_power_v1 and core_power_v4 functions require core_clks_enable
+>> function during POWER_ON. Therefore, in the core_clks_enable function,
+>> if calling dev_pm_opp_find_freq_ceil to obtain the frequency fails,
+>> it needs to fall back to the freq_tbl to retrieve the frequency.
+>>
+>> Fixes: b179234b5e59 ("media: venus: pm_helpers: use opp-table for the 
+>> frequency")
+>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
+>> ---
+>> Since device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX do not
+>> contain an opp-table and have not configured opp-pmdomain, they still
+>> need to use the frequencies defined in the driver's freq_tbl.
+>>
+>> Therefore, if calling dev_pm_opp_find_freq_ceil to obtain the frequency
+>> fails in the core_clks_enable, it needs to fall back to the freq_tbl to
+>> retrieve the frequency.
+>>
+>> Validated this series on QCS615 and msm8916.
+>> ---
+>> Changes in v2:
+>> - 1. Update the returned error value as per the feedback.
+>> - Link to v1: 
+>> https://lore.kernel.org/r/20250723-fallback_of_opp_table-v1-1-20a6277fdded@quicinc.com
+>> ---
+>>   drivers/media/platform/qcom/venus/pm_helpers.c | 11 ++++++++++-
+>>   1 file changed, 10 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c 
+>> b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> index 
+>> 8dd5a9b0d060cddfeafd4da477ade0c7aeb6c390..77c12273dbb9505244e260fc8fa635e4fe045236 
+>> 100644
+>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+>> @@ -40,6 +40,8 @@ static int core_clks_get(struct venus_core *core)
+>>     static int core_clks_enable(struct venus_core *core)
+>>   {
+>> +    const struct freq_tbl *freq_tbl = core->res->freq_tbl;
+>> +    unsigned int freq_tbl_size = core->res->freq_tbl_size;
+>>       const struct venus_resources *res = core->res;
+>>       struct device *dev = core->dev;
+>>       unsigned long freq = 0;
+>> @@ -48,7 +50,14 @@ static int core_clks_enable(struct venus_core *core)
+>>       int ret;
+>>         opp = dev_pm_opp_find_freq_ceil(dev, &freq);
+>> -    dev_pm_opp_put(opp);
+>> +    if (IS_ERR(opp)) {
+>> +        if (!freq_tbl)
+>> +            return -ENODEV;
+>> +        freq = freq_tbl[freq_tbl_size - 1].freq;
+>> +    } else {
+>> +        dev_pm_opp_put(opp);
+>> +    }
+>> +
+>>         for (i = 0; i < res->clks_num; i++) {
+>>           if (IS_V6(core)) {
+>>
+>> ---
+>> base-commit: d086c886ceb9f59dea6c3a9dae7eb89e780a20c9
+>> change-id: 20250721-fallback_of_opp_table-4ea39376f617
+>>
+>> Best regards,
+>
+> Note to self add a
+>
+> Closes: CA+G9fYu5=3n84VY+vTbCAcfFKOq7Us5vgBZgpypY4MveM=eVwg@mail.gmail.com
+Thanks for helping review this patch. But I'm sorry, may I ask how to
+understand this comment?
 
-[auto build test ERROR on 8f5ae30d69d7543eee0d70083daf4de8fe15d585]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-Wait-for-PCIE_RESET_CONFIG_WAIT_MS-after-PERST-deassert/20250903-151623
-base:   8f5ae30d69d7543eee0d70083daf4de8fe15d585
-patch link:    https://lore.kernel.org/r/20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061%40oss.qualcomm.com
-patch subject: [PATCH v2 5/5] PCI: qcom: Allow pwrctrl core to toggle PERST# for new DT binding
-config: i386-buildonly-randconfig-002-20250904 (https://download.01.org/0day-ci/archive/20250904/202509041110.4DgQKyf1-lkp@intel.com/config)
-compiler: gcc-12 (Debian 12.4.0-5) 12.4.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250904/202509041110.4DgQKyf1-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509041110.4DgQKyf1-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/pci/controller/dwc/pcie-qcom.c: In function 'qcom_pcie_host_init':
->> drivers/pci/controller/dwc/pcie-qcom.c:1405:23: error: 'struct pci_host_bridge' has no member named 'toggle_perst'
-    1405 |         pci->pp.bridge->toggle_perst = qcom_pcie_toggle_perst;
-         |                       ^~
-
-
-vim +1405 drivers/pci/controller/dwc/pcie-qcom.c
-
-  1368	
-  1369	static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-  1370	{
-  1371		struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-  1372		struct qcom_pcie *pcie = to_qcom_pcie(pci);
-  1373		int ret;
-  1374	
-  1375		qcom_ep_reset_assert(pcie, NULL);
-  1376	
-  1377		ret = pcie->cfg->ops->init(pcie);
-  1378		if (ret)
-  1379			return ret;
-  1380	
-  1381		ret = qcom_pcie_phy_power_on(pcie);
-  1382		if (ret)
-  1383			goto err_deinit;
-  1384	
-  1385		if (pcie->cfg->ops->post_init) {
-  1386			ret = pcie->cfg->ops->post_init(pcie);
-  1387			if (ret)
-  1388				goto err_disable_phy;
-  1389		}
-  1390	
-  1391		/*
-  1392		 * Only deassert PERST# for all devices here if legacy binding is used.
-  1393		 * For the new binding, pwrctrl driver is expected to toggle PERST# for
-  1394		 * individual devices.
-  1395		 */
-  1396		if (list_empty(&pcie->perst))
-  1397			qcom_ep_reset_deassert(pcie, NULL);
-  1398	
-  1399		if (pcie->cfg->ops->config_sid) {
-  1400			ret = pcie->cfg->ops->config_sid(pcie);
-  1401			if (ret)
-  1402				goto err_assert_reset;
-  1403		}
-  1404	
-> 1405		pci->pp.bridge->toggle_perst = qcom_pcie_toggle_perst;
-  1406	
-  1407		return 0;
-  1408	
-  1409	err_assert_reset:
-  1410		qcom_ep_reset_assert(pcie, NULL);
-  1411	err_disable_phy:
-  1412		qcom_pcie_phy_power_off(pcie);
-  1413	err_deinit:
-  1414		pcie->cfg->ops->deinit(pcie);
-  1415	
-  1416		return ret;
-  1417	}
-  1418	
+This patch has not been picked yet.Is there anything else I need to do?
+>
+>
+> ---
+> bod
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Best Regards,
+Renjiang
+
 
