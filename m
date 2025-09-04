@@ -1,52 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-72079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5FADB43F53
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 16:43:13 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86A1EB43F5A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 16:43:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D47B188758C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 14:40:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42C50188EB76
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 14:40:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFF5A3375BA;
-	Thu,  4 Sep 2025 14:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4F5B34166A;
+	Thu,  4 Sep 2025 14:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BzLs1jLZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sb79g85H"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809CD335BC8;
-	Thu,  4 Sep 2025 14:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CC534165B;
+	Thu,  4 Sep 2025 14:35:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756996544; cv=none; b=TlzPLM6kQgHO6M0TyHmME3kbBbk/jqaM0T11CXyxsrdGMe5JAyT7AnCKfxuGK4gOJtv8UKhZx2tkyP5JXq9VoS53ssgwMI9UbUzywpomjZyi5C+OMrMXrQGEUR4XquTGboc5stW4o+RWGQadcCEthFu21LR7S5+9WH39J9O2Spo=
+	t=1756996545; cv=none; b=Hys1lHaBI1Rp8vy6tJK6s53PSVh+M1xD04+3mjACDo2GcG5zyKnsGt79mcKs59r60VVub4l/+zb5FrKxVSXR5LEZADDr83LUSogEoe/btSg084vvOeO7Pqm9QdcSmZ5w5qYte8A453t3c4/OZ4/s0bSTze/mxLeMiwHM0/UW19k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756996544; c=relaxed/simple;
-	bh=JHSvbJN9XyO7iXA7BkLL03mfNXZPxjof/6gragZbhAE=;
+	s=arc-20240116; t=1756996545; c=relaxed/simple;
+	bh=JMDqKW4dIOsCfKCm5QFxM4QxJl4y71tZE8rr++qsLhQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PHgWLT3+kX86Nqu4BHEt4H/ItDOpXd703If8N+F0Cyayk65Fx6vaoWtog4sZZW681iePa7hwMdz/sKJxvg+lYcxyVJ4DIyAporQp7vODoppEt6mntuoSL2AOgh/xkugbf3XgAW+oBsdNEteCzWLOepZWH9LpGYoe26XthlCCUEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BzLs1jLZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A61DC4CEFA;
-	Thu,  4 Sep 2025 14:35:43 +0000 (UTC)
+	 MIME-Version:Content-Type; b=TEM4zY1kiM6D7EuBAom34NxkUao7NnkkjxdHtO8/XPowxjcJjLBUyWcjU7PFbpfDnRfSGKOz1d8llblTzjjpg9KoIB3myH6cl8O7LdI+dHNb3AHmjQRnAhvstvAgdMRLSerKOBaxDVpu2ozjYzRJtbd49UzgeZXRlbAhZovj6h4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sb79g85H; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 575BDC4CEF1;
+	Thu,  4 Sep 2025 14:35:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756996544;
-	bh=JHSvbJN9XyO7iXA7BkLL03mfNXZPxjof/6gragZbhAE=;
+	s=k20201202; t=1756996545;
+	bh=JMDqKW4dIOsCfKCm5QFxM4QxJl4y71tZE8rr++qsLhQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzLs1jLZB0047pCneh/THFDnUvUx0qgo22u5C1M2PqLYEFTGgXgp3J6am7+L7aycn
-	 Qjp6kh8RNqZpvL2WNAFRVMSdY2ZYZW1Xfu4hlXAfgwGUkk1Tq917XyffuGv9hFYZmd
-	 zPKZP9dTOogXQ48Q9Ib5NXe73YdfgbbPT5Tn7/dJDVnFhbbTDAzcQXI6kmkWSjY4GJ
-	 DVKu7StTXJiBYtc931B/sD2KCisSC0NwsjQjDPZ+d5gwhMfRpatI0SGIIlaTDv7Cun
-	 rLHaFtp7HlO94oCawfqAUn3TsdfHF+4p6UVeAeuLZh+YJnyKv4slU9YOrClGokBg82
-	 54vfXnpb6rohA==
+	b=sb79g85HOthvPgQlTjcsYfsLdwd6ccLws5ZCTvjQB1o0mM71mClcQfMxAuj0FDB7r
+	 vYz00uHX7TWRvbyF0rdaiD7rltoj1+UvxYfpKw2WkrlYHAXfJNZJZ3BULmbpAj9/ik
+	 jQsy3B5/UC2H+QDqnvSyl/swR+C3D6jvQJigRUBtc9EGEHG4u2kgA1zJbqAmOytXY6
+	 0oOUqqmEzKKC+BBF9zh6ZnWhcMo0ZjbG5ALl34d6ADfKyJdaePM3wzQk++Xgrq1CA3
+	 u/k0QbTy3C0Y8fWWGjygekMjKsbTV9vUkpjjQNDmOx2Z/vpFEV5gbXhbzxVHWDgW6G
+	 YPvn2LFbcQI9g==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Michael Turquette <mturquette@baylibre.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Taniya Das <quic_tdas@quicinc.com>,
 	Taniya Das <taniya.das@oss.qualcomm.com>
 Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
 	Imran Shaik <quic_imrashai@quicinc.com>,
@@ -54,13 +55,17 @@ Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
 	linux-arm-msm@vger.kernel.org,
 	linux-clk@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: (subset) [PATCH 0/2] Add support for Display clock controllers for Glymur SoC
-Date: Thu,  4 Sep 2025 09:35:36 -0500
-Message-ID: <175699653015.2182903.5847736371433718879.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v5 0/7] Add support for Clock controllers for Glymur SoC
+Date: Thu,  4 Sep 2025 09:35:37 -0500
+Message-ID: <175699653018.2182903.17957472526259857581.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250829-glymur-disp-clock-controllers-v1-0-0ce6fabd837c@oss.qualcomm.com>
-References: <20250829-glymur-disp-clock-controllers-v1-0-0ce6fabd837c@oss.qualcomm.com>
+In-Reply-To: <20250825-glymur-clock-controller-v5-v5-0-01b8c8681bcd@oss.qualcomm.com>
+References: <20250825-glymur-clock-controller-v5-v5-0-01b8c8681bcd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -71,8 +76,8 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 29 Aug 2025 13:28:02 +0530, Taniya Das wrote:
-> Introduce the support for Display clock controller(DISPCC) for
+On Mon, 25 Aug 2025 23:49:07 +0530, Taniya Das wrote:
+> Introduce the support for Global clock controller(GCC), TCSR and the RPMH clock controller for
 > 
 > Qualcomm's next gen compute SoC - Glymur.
 > 
@@ -83,8 +88,20 @@ On Fri, 29 Aug 2025 13:28:02 +0530, Taniya Das wrote:
 
 Applied, thanks!
 
-[2/2] clk: qcom: dispcc-glymur: Add support for Display Clock Controller
-      commit: b4d15211c4086a8a6d670cdba9649112fed67f86
+[1/7] dt-bindings: clock: qcom-rpmhcc: Add support for Glymur SoCs
+      commit: f9b007a96a89567372a77cbddd24d5ca4be71523
+[2/7] dt-bindings: clock: qcom: Document the Glymur SoC TCSR Clock Controller
+      commit: ae5b84788e5a7876a67f64761b7265529cb5a39a
+[3/7] clk: qcom: Add TCSR clock driver for Glymur SoC
+      commit: 2c1d6ce4f3da622773a7a6be570e4dfbf2cefbb7
+[4/7] clk: qcom: rpmh: Add support for Glymur rpmh clocks
+      commit: ebcb9db98bdab8b7490421355e6705e964b99675
+[5/7] clk: qcom: clk-alpha-pll: Add support for Taycan EKO_T PLL
+      commit: 2c7a7fe4ec3fc6eddd25b013b6210dbf1f98e5fc
+[6/7] dt-bindings: clock: qcom: document the Glymur Global Clock Controller
+      commit: ee2d967030fee156ceb2de80ef63ddeb80d60779
+[7/7] clk: qcom: gcc: Add support for Global Clock Controller
+      commit: efe504300a1705b71a69382ade4dbe44bea9d457
 
 Best regards,
 -- 
