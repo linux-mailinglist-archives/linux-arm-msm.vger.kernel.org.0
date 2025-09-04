@@ -1,46 +1,46 @@
-Return-Path: <linux-arm-msm+bounces-72123-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72124-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D7E9B4456D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 20:31:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6F67BB4456F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 20:31:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 26B4E3B20C8
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 18:31:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 52D5D542C10
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 18:31:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B95C8242D62;
-	Thu,  4 Sep 2025 18:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84120341AD6;
+	Thu,  4 Sep 2025 18:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ClFTyuNk"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pdSFiJfK"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB171A23A9;
-	Thu,  4 Sep 2025 18:31:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDAD3314C2;
+	Thu,  4 Sep 2025 18:31:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757010694; cv=none; b=Sdh+Mal2IDYOCJuQ34z9yuCbJY9+5YVMaoBJ1178JYiq08fxA7xrsLLlK2GeESqhCV4Xy3qrlaiC7J4Jy1TsGkXUBwS83gcfoIYZaAppAfoQpnAILMgLiDVcbEH5VSX1zgU+bUZIhSAI4bBKtEt2NXMVzCQ7wG1tAQbhplJuYVU=
+	t=1757010697; cv=none; b=OSfmCiDa1d2PyQrFEBCnHF0DLBCS+JrWiCA6vBW9FbTJROJf5Ync80hjjhVUI297iYt9xiqv0XSVlTYbxpvOBAm9rRQ1H02y0GUlPHAjSpwNuvC8RFH86Xqegq7ST7U+tZVoUyHw0nP6TiDzTAr2L+sNtCiBunFoXmkzPWe0nZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757010694; c=relaxed/simple;
-	bh=WcXnrHTlhu8va0dzmb4X75sfdCpkS+gzjv7ugnNZtYs=;
+	s=arc-20240116; t=1757010697; c=relaxed/simple;
+	bh=7u/e3klwmqFzyMK45jgmJVmWPGp7rvMzKooOqb/X5zs=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=iyhfqwcPzuK3zqdhEnu/oN0HQMC5N+iTkRKUABuNFv2iHr+dKjx0hOHhDB3VNDR+9gIWl8PmamtOWsdtVWo8FZX9rxqlKG9HVgtb2xMrQ+MZ2iCuKREC64oB8D5N6Jgz56IYZO93ys7pvxd4ZWpQ+HwVM6uefe5jdqC3d8+3Ih4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ClFTyuNk; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 325A4C4CEF1;
-	Thu,  4 Sep 2025 18:31:32 +0000 (UTC)
+	 MIME-Version:Content-Type; b=fdH2ykK8a2rJ0fw3FufCHAkpM6YztkGdW/tQDxOJzaM0C4+z0FFU8tgXM/v1XQlVmMkRcxJ4yFWA9Yz/TiCfYu1Xqc0/Hz294abAPSooCn8ignwYtOOQCioFcHpwAzYLwZ6OLTBEoLvxgDcnwV2J1TTOOLrAUENnrsylye/nZDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pdSFiJfK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8F9C4CEF1;
+	Thu,  4 Sep 2025 18:31:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757010694;
-	bh=WcXnrHTlhu8va0dzmb4X75sfdCpkS+gzjv7ugnNZtYs=;
+	s=k20201202; t=1757010696;
+	bh=7u/e3klwmqFzyMK45jgmJVmWPGp7rvMzKooOqb/X5zs=;
 	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=ClFTyuNkLDOoieldp8WPV/7FGD3JLXmqVcRt70H8j0xolLq0SqPMHJUdSx88c5w2X
-	 qQ8W3WfJm7vHTVZbfExpfF/kv9JB71UrK2NJ48ok2a5c6JICodzzRO2MBl8Weni1vp
-	 vQcP+Au1Xi24Whit9VZHe3vUSOVpe2TVYQhzerCo5U4pTIHZlMcYRr+Wmg39A6aAzR
-	 7Pm8Pz8GOUELNDkGliXnoQE2L3ugbK3KaGu5aBHL43pykszqoCImwvZX3TG2HrTPPK
-	 RWeFZ5wqycdnYc8Ea1srAR6tyvJA63eZiLyeNqaFBvTgPkcGu6p17OwRxrMbX6RWuc
-	 8Xl30TVlpqEEA==
+	b=pdSFiJfKA13JZFs0TMj9TgPe8jY+bziwsfKzPmJZ6GS/WapWXFzUzpKR6QVgKx7ZY
+	 hDwbBLlYFNK6qdMQLboQP2FEk2qmgwqhQt9GrusYZYbHeDCnkX4uWyztFEUiFvmp27
+	 TUO1bxJ0THPG+dxQrD4ohei2SKYOk3kdPgBxjMRQ3xoGfYBIj8/K/KBAXIWqgcUy6b
+	 +XX6dYfYqbh3agnBwzIRE+4BHgwEhAuUar4XJXrjLtri5MqFysklaR/idb9jBOMFyu
+	 zmwHlL33ODk3Yn964Wm8JDdjJdKsAXrletjnNlwVI6I/GG/G+uE5eXkI+MqBPB90k2
+	 WJc8i3y3HBhfw==
 From: Mark Brown <broonie@kernel.org>
 To: Srinivas Kandagatla <srini@kernel.org>, 
  Liam Girdwood <lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, 
@@ -48,12 +48,12 @@ To: Srinivas Kandagatla <srini@kernel.org>,
  linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
  Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Cc: Alexey Klimov <alexey.klimov@linaro.org>
-In-Reply-To: <20250831151401.30897-2-krzysztof.kozlowski@linaro.org>
-References: <20250831151401.30897-2-krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] ASoC: codecs: lpass-wsa-macro: Fix speaker quality
+In-Reply-To: <20250901074403.137263-2-krzysztof.kozlowski@linaro.org>
+References: <20250901074403.137263-2-krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] ASoC: codecs: lpass-rx-macro: Fix playback quality
  distortion
-Message-Id: <175701069186.126195.4295379119424857942.b4-ty@kernel.org>
-Date: Thu, 04 Sep 2025 19:31:31 +0100
+Message-Id: <175701069431.126195.14104429101124802886.b4-ty@kernel.org>
+Date: Thu, 04 Sep 2025 19:31:34 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -64,13 +64,13 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-Mailer: b4 0.15-dev-dfb17
 
-On Sun, 31 Aug 2025 17:14:02 +0200, Krzysztof Kozlowski wrote:
+On Mon, 01 Sep 2025 09:44:04 +0200, Krzysztof Kozlowski wrote:
 > Commit bb4a0f497bc1 ("ASoC: codecs: lpass: Drop unused
 > AIF_INVALID first DAI identifier") removed first entry in enum with DAI
 > identifiers, because it looked unused.  Turns out that there is a
-> relation between DAI ID and "WSA RX0 Mux"-like kcontrols (which use
-> "rx_mux_text" array).  That "rx_mux_text" array used first three entries
-> of DAI IDs enum, with value '0' being invalid.
+> relation between DAI ID and "RX_MACRO RX0 MUX"-like kcontrols which use
+> "rx_macro_mux_text" array.  That "rx_macro_mux_text" array used first
+> three entries of DAI IDs enum, with value '0' being invalid.
 > 
 > [...]
 
@@ -80,8 +80,8 @@ Applied to
 
 Thanks!
 
-[1/1] ASoC: codecs: lpass-wsa-macro: Fix speaker quality distortion
-      commit: 9004a450fccbeb40a71cc173747da37a459fd4dc
+[1/1] ASoC: codecs: lpass-rx-macro: Fix playback quality distortion
+      commit: d0f61658db58583b3acd1ada70a5352c39cd0388
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
