@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-72051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D45F7B43C92
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 15:07:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97174B43CE1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 15:18:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 631143A814B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 13:07:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 28E141C20771
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 13:18:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BBB13002A8;
-	Thu,  4 Sep 2025 13:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 146E12C11D9;
+	Thu,  4 Sep 2025 13:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tRNUGzUc"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CwVFousB"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05BD62FE05F;
-	Thu,  4 Sep 2025 13:07:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D938A198851;
+	Thu,  4 Sep 2025 13:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756991271; cv=none; b=BLDJidbMVoBX0U49NtB8ARRSziRw97PoSU0J0sbAdZeApz1w9f6Wz4pNwh+O+MZs899cANEcWDRWXs8AME0k3Q6hVm3AFAbeV8L/pPdY6gcLlrOk0ybKMjau5Bv4R5L120GmWJSCJBII6VBpebI+DWsi6gbDa+XN8bTwE7LzJZk=
+	t=1756991880; cv=none; b=Ht7LgSIk6NbkbJlvAmngneuvEGQ323s2O9dDea7xSmkgEnY9C7WYVK39LXSaPEfOWgIZvUZNyKRkrWKlveuasNZxWGktvCSw9I8X4jdqc6CEavy/AVSsWfhjDfK7sfI0EE3nxb5IuEDX8q+g6AWwU3bZYVMyquK3po/0R1AT5Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756991271; c=relaxed/simple;
-	bh=6e+AetaFHn7UAgXhVVTChTNxV2XEqTlGmei0BMQcBOs=;
+	s=arc-20240116; t=1756991880; c=relaxed/simple;
+	bh=WxaD6gphkJ2Gk/Jf0nfE5M7L6/fiMPCyPbZwunINGek=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LrVfuWzApiVaZ0dVnL46F2hARe2IaO98MPR8BvicjZUGNPeuk+1zs0gDOBD5GcUc2WnDTJIyT+OhDlwyudhuUOHJ/yAcwezTJDPT/opq3oun2sjlO8MwWmpebYWY6i86RDTU0R9DAzte2zQtwclU/mE4j8aOYxQtdKNL8GaG3rA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tRNUGzUc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F47C4CEF0;
-	Thu,  4 Sep 2025 13:07:45 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=nL+QZsplbjgjorEO6kP1TDgbHwub8KFq4c/SsvAbDuxLsy96lpX5h7Wp/gpnBCrYRVjiDCmBawSe3suds3h/tqNGv9LCj3WxF8VBazHu81mJeM0wYTgfI1oGNmcRm/VNTCXRv3yCZNCG2pcrM9V6paE+vHY7mGlGARyyBcVccyg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CwVFousB; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CAAC4CEF0;
+	Thu,  4 Sep 2025 13:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756991270;
-	bh=6e+AetaFHn7UAgXhVVTChTNxV2XEqTlGmei0BMQcBOs=;
+	s=k20201202; t=1756991879;
+	bh=WxaD6gphkJ2Gk/Jf0nfE5M7L6/fiMPCyPbZwunINGek=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tRNUGzUciG9NuAXROKA+v9Qk3LDdSy6u7pRZOn0HHdrhlXfdKwlm6sooxnS8dDYYi
-	 HZ2EBCiXnOSNmIJifI3un82iOQ67WKJva5dBf+CDGrLFhlj2hAFiVBWIcIP0LeZUYI
-	 GqrBT+hUSiXDQwqrwnaMlSnwemWmW2suw1Bu7Q1H6J/h8LbKIXxXSum6mpvAAZtqSD
-	 vwRAN3okhUGHHZG04i3RFPDU7vfSnkDucAMXFFSFGvbS52tV9OAz78+AbyOR2p3mql
-	 YwR5Aab7PTFzWygxULG2q/pHwQ2E4z1niAd/IdZ60QUe/OeLDwYeByhLJJEfXWhS1q
-	 kIUarmrNmSQQg==
-Message-ID: <d2d9d5fc-27c4-4a5c-8ece-0f2e8b7030e2@kernel.org>
-Date: Thu, 4 Sep 2025 15:07:44 +0200
+	b=CwVFousBcrdbNKei8QUIwVjeqiVm/FHgN3lSpNE0OWBvxkiLb7JPZh9S3DvUrggva
+	 9IJEromdZCrdwMI3zLk6PCQfRt3OoPdsH5Kz6pLxLD7CvlKf3xEk2HlNMl/SUNSaYK
+	 NWZI73AXgi7V0x1dyxQhs2plRNOZcZvfrf85ho5166BZqN5tag0YATIj1LXkS0lIDx
+	 Bq9JvKh6pzxJHWZz8orVT/jS0TVUe0Xw0oX73quG8ZPwjJjI114f23b94q5UPP+OzS
+	 MxjXIE+aimWLVNiRSgTtm5PNPWYRoDltG+w5gx2q3nFh/ACUgJZF6BgHmJChqE/Uy8
+	 Wudd3C/BIu0pg==
+Message-ID: <29a91114-d862-452e-b7bf-1b659ad7d831@kernel.org>
+Date: Thu, 4 Sep 2025 15:17:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,27 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 4/4] arm64: dts: qcom: sm8550: Add max-sd-hs-hz
- property
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Sarthak Garg <quic_sartgarg@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH 1/2] dt-bindings: Add binding for gunyah watchdog
+To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
- Adrian Hunter <adrian.hunter@intel.com>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
- quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
- quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
-References: <20250903080404.3260135-1-quic_sartgarg@quicinc.com>
- <20250903080404.3260135-5-quic_sartgarg@quicinc.com>
- <6deac56f-e21a-4447-bfa7-a414084676b8@kernel.org>
- <be87fb2f-7036-4039-8ba2-63d54a9ae732@oss.qualcomm.com>
- <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
- <a304ec1c-7364-4926-8763-8c731e461eb9@kernel.org>
- <d12957f0-f8b5-4b29-967c-576dadd565de@oss.qualcomm.com>
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
+ <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
+ <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
+ <ea295ff6-5395-4470-afc2-76e5e2dc9fb5@kernel.org>
+ <099a7c48-c447-40d4-9076-570f5a5058a2@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -116,71 +108,54 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <d12957f0-f8b5-4b29-967c-576dadd565de@oss.qualcomm.com>
+In-Reply-To: <099a7c48-c447-40d4-9076-570f5a5058a2@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/09/2025 14:27, Konrad Dybcio wrote:
-> On 9/4/25 12:52 PM, Krzysztof Kozlowski wrote:
->> On 04/09/2025 12:51, Krzysztof Kozlowski wrote:
->>> On 04/09/2025 10:36, Konrad Dybcio wrote:
->>>> On 9/3/25 10:21 AM, 'Krzysztof Kozlowski' via kernel wrote:
->>>>> On 03/09/2025 10:04, Sarthak Garg wrote:
->>>>>> Due to board-specific hardware constraints particularly related
->>>>>> to level shifter in this case the maximum frequency for SD High-Speed
->>>>>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
->>>>>> card in HS mode.
->>>>>>
->>>>>> This is achieved by introducing the `max-sd-hs-hz` property in the
->>>>>> device tree, allowing the controller to operate within safe frequency
->>>>>> limits for HS mode.
->>>>>>
->>>>>
->>>>> Probably we will now replicate the same discussion... And it will be
->>>>> happening every time you send the same and not reflect it in commit msg.
+On 04/09/2025 15:07, Hrishabh Rajput wrote:
+>>> +properties:
+>>> +  compatible:
+>>> +    allOf:
+>>> +      - const: gunyah-hypervisor
+>>> +      - const: simple-bus
+>> What? No.
 >>
->> Just to emphasize this - it will happen EVERY time.
->>
->>>>>
->>>>> Bindings say board setup, this commit msg says board config, but the
->>>>> patch says SoC. This is not correct.
->>>>
->>>> Both are correct, looking at the problem from two perspectives.
->>>>
->>>> The bindings description mentions board-specific limitations (e.g. because
->>>> "the board's electrical design does not allow one to achieve the full rated
->>>> frequency that the SoC can otherwise do, in a stable way")
->>>>
->>>> Here the author tries to argue that almost all SM8550 boards are broken
->>>> in this sense, because the reference design did not feature the required
->>>> passive components, making most (derivative) designs sort of "broken by
->>>> default" - and only some (if any?) vendors decided to go with the
->>>> additional components required to lift this limitation.
->>>>
->>>> This in turn makes it fair to assume the developer experience would benefit
->>>> from having the SD card high speed modes always work (with the slight speed
->>>> cap which may not be required for the 1 or 2 designs that took the extra
->>>> step) without each board DT creator having to track down this property
->>>> separately.
->>>
->>> And then if you send same v3, I will ask the same. Can the author
->>
->> v3 -> v6
+>> Don't create patches with AI.
 > 
-> So, would you be accepting of this patch if the commit message was:
+> This patch was not created with AI. Reference was taken from the patch [1].
+
+There is no such syntax like allOf in [1]. Nowhere in Linux kernel, btw,
+that's some total invention, thus my gut told me - it must be made with
+poor AI tools.
+
 > 
-> arm64: dts: qcom: sm8550: Limit max SD HS mode frequency by default
+> That being said, I see your point about the mistakes which were made 
+> while adding the compatible "simple-bus".
+> I apologize for the same.
 > 
-> Due to an implementation detail in this SoC, additional passive
-> electrical components are required to achieve the maximum rated speed
-> of the SD controller when paired with a High-Speed SD Card. Without them,
-> the clock frequency must be limited to 37.5 MHz for link stability.
-> 
-> Because the reference design does not contain these components, most
-> (derivative) boards do not have them either. To accommodate for that,
-> apply the frequency limit by default and delegate lifting it to the
-> odd boards that do contain the necessary onboard hardware.
-Yes, it is an excellent explanation.
+> I will make sure `make dt_binding_check` passes with latest versions of 
+> dtschema and yamllint as pointed out by Rob and as should have been done 
+> with this patch as well.
+
+No, that's not enough.
+
+You should ask for internal review. I did an extra effort, I checked
+that and:
+
+1. You did post it for internal review, BUT:
+
+2. Your internal testing system pointed out errors (schema failure) or
+failed itself,
+
+3. You did not ask your internal testing system to RETEST the patch, in
+case this was a system failure. That's your mistake. If this was true
+failure of schema, then you obviously should not send it, but
+investigate why schema fails on your patch.
+
+4. You did not receive review (at least no track of it) but decided to
+post it on mailing list. That's also your mistake, because lack of
+internal review does not mean you can post it to the mailing lists. Talk
+with your managers or colleagues about missing review, for example.
 
 Best regards,
 Krzysztof
