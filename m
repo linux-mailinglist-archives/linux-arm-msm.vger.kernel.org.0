@@ -1,163 +1,177 @@
-Return-Path: <linux-arm-msm+bounces-71958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 450FCB43003
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 04:49:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3EFFEB43073
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 05:23:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EDE043B8548
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 02:49:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F16C45660CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 03:23:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A83E221CC79;
-	Thu,  4 Sep 2025 02:49:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D7235293B73;
+	Thu,  4 Sep 2025 03:22:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Dq/qDeOX"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nW/g39gI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E29DC21638D
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 02:49:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 955632877E3;
+	Thu,  4 Sep 2025 03:22:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756954148; cv=none; b=la6lFvZQYY46g2UW1KD+IFeNk6+ESusD8rJWi1CABfjtFgiGUCYF7kpk8rFsc0UbKdEtKk/4UKVRdlYp6sKIUDz+v8oCHKbis/gv7MS6KOnemx2iOsjz5PnPQfRSNle4v8eY+mSvHkBvnsJjDRmC1FRZtu3NJLwxY4ysOI1ksxU=
+	t=1756956157; cv=none; b=hkN1OBYLi0YD/5tGf5db9zeZGA56iVPLJM3vXrkmEL1Y3+lMv96pn1fiAXOvEkd4Scgt6yCpr2ws2nBECaZI+/LI4ZJQ87HvDuipMO2KPgfV75LroNAanPwlyZ9kITbfSUcqMZLX6k4QF+1tgS+LbhUWrRN3lSlh01Wm0NFagZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756954148; c=relaxed/simple;
-	bh=svZaVELrPVpKpzX9SUjpuPRjMgUFepubeojy8bDHPck=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oJ7ShFnrvA/U0WEIvuWoUXzfgW03CDVXO/6X4YPQfjKPRJ3iaohPqwd9XUfW4oiopG3wq83whwqM+sjrhk2g+Ol2jwkGNB0UQ1G43DcdAsYsy5cMJhcWj2qp/LE6FZ/tJf4ltQZEDwG1iMc9Mc2jZbgnzOJChk1XONBoyp6YEbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Dq/qDeOX; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58404A7T005224
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 02:49:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lKt0S7ecs0CtAy+/PB8DTyVHpUERySp0ZgXkiv6AF1k=; b=Dq/qDeOXkgKTS0FC
-	qmIXOjDFHE1NV8mvTG3DxpBs20sDbb7ZFcJTIFbgwediO8jHxivwJ5dnGKIWngJn
-	1vhgGoAahs8fO4l4KyQ66J29BHPXxMeCsTa7YWzrnYIMoxQAk6Xmm1nGAHw3JIWk
-	e2UD1pKHD9hGHsYtu+DhBjg69t2oMtZjaqz0xgFYE/0yNKvcl8yJvP0xRAngt/GN
-	VuigZDbo1xyWo5YkpMWTqJGpN1my4YDgdBBscQHgLyZ2CAvFiJOIdlSF5q4qkL3/
-	6ufdUiYLnKCCYCaS+LBj+63RN6yQFd5zs7UIoHZLL6wo53A1qc53dCc1kNWE0gTx
-	3HCmNQ==
-Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjnuth-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 02:49:04 +0000 (GMT)
-Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-329e0a8337bso592838a91.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 19:49:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756954143; x=1757558943;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lKt0S7ecs0CtAy+/PB8DTyVHpUERySp0ZgXkiv6AF1k=;
-        b=Vl0tkz7gR2gBAcLbN3L6BZBZd2zNjaBHEI3pUR4pZJxpVo5uJ3at6NDJ7iwpzHkViw
-         ec9OAH6KLSiAv1gt7LAVOe+LWSay69uNjNnnypqtcM4RAqLgKn7MfAt6rL04kJQWI6yr
-         kwkED63A6j/jIbGYty5r9VvSA46IOsexroOlAbP+OL3VYZHMqp9wuDKVtuE3Q1RC8lpl
-         pclLHQ21WsPteC91w3BgelolSJMWInQe9qdYEUgplsn60LvZ2IAj5cBsZL+Jrq4/tGk8
-         XixFel80/HU+/USmkN1BBnVA2+0gB+rTKgrQkU5+5sGcmSTL3racGf7jdPZn9unByAko
-         izWA==
-X-Gm-Message-State: AOJu0Yx8rtBb9WO9QhPBkC6taQ2AkL6wK5J/VEgBgjT49CFrhkwc+nw9
-	iGgFF/vhCnsbJznzruhz4TqXSsmjPSX9tf+ASEGjdwZmXtSZwGVdwQSK4WqalZqJbXJ+rSxatX8
-	MkdRkepuNcngn7FHLVJis/j2Jt5fEnVh3G2xi3YN/fxaUDahEMmuUuRo7M5rMwi+b76CV
-X-Gm-Gg: ASbGnctM74GppGenlCTHLdz6aW9oRewIfz1sEm27fs0TYJtZzuccrw/+3foHCDrXDF9
-	DHVDAy13AwASG1bLSD5jmXWpz+FJ9yN83JG+h8dLECLSMLL99yXu407JHbZlmxcBSgGaquHh1ci
-	w+ZGTtbWOKv7Xh9DOHp8nmTuQKsksDP0kJcGDg4jliGzgp+HrZPLxUZmBFFu1By8Jy4LJrhYHXv
-	ou9tMBttxzkvtkpG24MgDEsbinhRmfqNuBIJ38tSGSRcUmh/9CRu/zWtc1Vvy6EGSBX82KlHn4U
-	7zIBUTwFDMCcms8kBwNlad5cGcsUmWv48t/rvnMiFoyUqTjSZt/9PzeEk9mdf7H+yeN0EWIaRAt
-	sXLlVDbzVvdFokKxzDFcTY8b89eyj
-X-Received: by 2002:a17:90b:1d48:b0:328:bfc:ed81 with SMTP id 98e67ed59e1d1-328156f9a2emr23377033a91.36.1756954143505;
-        Wed, 03 Sep 2025 19:49:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELJFGledcyj5orxusevvJh0NdR70AZnkQGjekJR1JcPW2asraw1wJ1eMDCJtOKT1CpY2VcfA==
-X-Received: by 2002:a17:90b:1d48:b0:328:bfc:ed81 with SMTP id 98e67ed59e1d1-328156f9a2emr23377004a91.36.1756954143000;
-        Wed, 03 Sep 2025 19:49:03 -0700 (PDT)
-Received: from [10.133.33.16] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32b92a28a67sm298195a91.4.2025.09.03.19.48.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 03 Sep 2025 19:49:02 -0700 (PDT)
-Message-ID: <d7cd5d3e-3010-4b6e-bcf7-d0ce599f473f@oss.qualcomm.com>
-Date: Thu, 4 Sep 2025 10:48:56 +0800
+	s=arc-20240116; t=1756956157; c=relaxed/simple;
+	bh=bNSAahrLsh5lIaRJtRcrZ2VrezcQXtPhuB+zZ94/O9Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BkNZWFdPt1o4Nbr0ktpwPaoxVn4IpcUhU6b1rsQcdJUZ066F4T8P8/gJhAgoXSRyTb0+o0cA//pKXdL8ldCSNjsCZNzwjIf3kfVuSBoPZOc4S4myW12gIuH50/OaOwuOfyu64ABDNievEk/L5IBPmULaq5/9H41K03bdpVIshx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nW/g39gI; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1756956156; x=1788492156;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=bNSAahrLsh5lIaRJtRcrZ2VrezcQXtPhuB+zZ94/O9Q=;
+  b=nW/g39gI6GK2t0cLfd2hQg4s+31u2Nm0nLHA27HdUYSWozlntN7n9seN
+   ajeyO2b6W2fs4aY9ESQAYoze4pYF2+cSsG6C1/2RmTihON1NmK3bKCB9L
+   XQmhZtDZxfn0vDXzvPivDtYVc0GbCp6ub/BWEQR0HSSyBNNDBaPPf/rpQ
+   4vjN0MJ9erj0CvO1+rJRfoisBsWDhgZV+qytfAfoDtq4HdW6apObWB0Er
+   XKNy+/PN9z+wvAtzrFOsEkrNNbcWHa/g0Ctb/TXbHvZMMx/mgyt1+UxZ0
+   0+2992AKu9yMe2+uDFvSEM3LPNj9+eomFlf1l/i2laRI7Kw9glHUpvi+Y
+   Q==;
+X-CSE-ConnectionGUID: W05EzdIMR9OWrDpDlxtI/w==
+X-CSE-MsgGUID: P8HsuEztSSCEME/G9pnarQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11542"; a="76888141"
+X-IronPort-AV: E=Sophos;i="6.18,237,1751266800"; 
+   d="scan'208";a="76888141"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Sep 2025 20:22:35 -0700
+X-CSE-ConnectionGUID: 5lDAPx0BTNOEIpwwL2WBRA==
+X-CSE-MsgGUID: oUclYMeDRJiAetZVddROEg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,237,1751266800"; 
+   d="scan'208";a="171056164"
+Received: from lkp-server02.sh.intel.com (HELO 06ba48ef64e9) ([10.239.97.151])
+  by orviesa010.jf.intel.com with ESMTP; 03 Sep 2025 20:22:31 -0700
+Received: from kbuild by 06ba48ef64e9 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uu0YO-0004hL-2j;
+	Thu, 04 Sep 2025 03:22:28 +0000
+Date: Thu, 4 Sep 2025 11:19:30 +0800
+From: kernel test robot <lkp@intel.com>
+To: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <helgaas@kernel.org>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Saravana Kannan <saravanak@google.com>
+Cc: oe-kbuild-all@lists.linux.dev, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Brian Norris <briannorris@chromium.org>
+Subject: Re: [PATCH v2 5/5] PCI: qcom: Allow pwrctrl core to toggle PERST#
+ for new DT binding
+Message-ID: <202509041110.4DgQKyf1-lkp@intel.com>
+References: <20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] arm64: dts: qcom: lemans: enable static TPDM
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Suzuki K Poulose <suzuki.poulose@arm.com>,
-        Mike Leach
- <mike.leach@linaro.org>,
-        James Clark <james.clark@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-        Tingwei Zhang <tingwei.zhang@oss.qualcomm.com>,
-        Mao Jinlong <jinlmao.mao@oss.qualcomm.com>,
-        Tao Zhang <quic_taozha@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org, coresight@lists.linaro.org,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250822103008.1029-1-jie.gan@oss.qualcomm.com>
- <20250822103008.1029-4-jie.gan@oss.qualcomm.com>
- <a53c6bae-710e-4939-990f-5974346f6c75@oss.qualcomm.com>
-Content-Language: en-US
-From: Jie Gan <jie.gan@oss.qualcomm.com>
-In-Reply-To: <a53c6bae-710e-4939-990f-5974346f6c75@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68b8fe20 cx=c_pps
- a=RP+M6JBNLl+fLTcSJhASfg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=vFb9WTq5DyKq8J-f9BEA:9
- a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
-X-Proofpoint-GUID: eS_1iQFgKbJwdyW6H8qg93OSokWqi69-
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfX89BZ+y0mNV13
- 2fhlsEtOANrAaADo3DUFt9guvRNG171D5tt7gC7Qw9r24xv3pvWQ4nEB/qBedji0EGNCwHAO2kQ
- 6If0Jsh64K5cjNMKHYexg3GGJD6bVeM+PGiRSSfZbxVXWNHB+P4HIk3lN3Ksz53m2vNwoEJVGsf
- Rm1AiIk8Ob8dZXR6QMOmgip8RhT0rRnQUBuCwaXEvJju2KWpxFsd/ktsazAJM5vqa6D/oeHExTq
- 91PB/urGR/RAWsbwbAnRapDozA75cXCCbHx1pYNqIZHuIJ2L32ozD1wmZ6htHZ23BR+doZznnpd
- WRKYFtQckcLBagma5jUU3rkAd0zd9ri/F/HTKiWfkwwDjSSwh9bQKUaeQfuFkvY3usza8/+Rq5V
- ExOXyb2/
-X-Proofpoint-ORIG-GUID: eS_1iQFgKbJwdyW6H8qg93OSokWqi69-
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-04_01,2025-08-28_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061@oss.qualcomm.com>
+
+Hi Manivannan,
+
+kernel test robot noticed the following build errors:
+
+[auto build test ERROR on 8f5ae30d69d7543eee0d70083daf4de8fe15d585]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Manivannan-Sadhasivam-via-B4-Relay/PCI-qcom-Wait-for-PCIE_RESET_CONFIG_WAIT_MS-after-PERST-deassert/20250903-151623
+base:   8f5ae30d69d7543eee0d70083daf4de8fe15d585
+patch link:    https://lore.kernel.org/r/20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061%40oss.qualcomm.com
+patch subject: [PATCH v2 5/5] PCI: qcom: Allow pwrctrl core to toggle PERST# for new DT binding
+config: i386-buildonly-randconfig-002-20250904 (https://download.01.org/0day-ci/archive/20250904/202509041110.4DgQKyf1-lkp@intel.com/config)
+compiler: gcc-12 (Debian 12.4.0-5) 12.4.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250904/202509041110.4DgQKyf1-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202509041110.4DgQKyf1-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/pci/controller/dwc/pcie-qcom.c: In function 'qcom_pcie_host_init':
+>> drivers/pci/controller/dwc/pcie-qcom.c:1405:23: error: 'struct pci_host_bridge' has no member named 'toggle_perst'
+    1405 |         pci->pp.bridge->toggle_perst = qcom_pcie_toggle_perst;
+         |                       ^~
 
 
+vim +1405 drivers/pci/controller/dwc/pcie-qcom.c
 
-On 9/3/2025 11:59 PM, Konrad Dybcio wrote:
-> On 8/22/25 12:30 PM, Jie Gan wrote:
->> Enable static TPDM device for lemans.
->>
->> Signed-off-by: Jie Gan <jie.gan@oss.qualcomm.com>
->> ---
-> 
-> perhaps renaming 'turing' to 'cdsp' would make things easier to
-> comprehend
-> 
+  1368	
+  1369	static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+  1370	{
+  1371		struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+  1372		struct qcom_pcie *pcie = to_qcom_pcie(pci);
+  1373		int ret;
+  1374	
+  1375		qcom_ep_reset_assert(pcie, NULL);
+  1376	
+  1377		ret = pcie->cfg->ops->init(pcie);
+  1378		if (ret)
+  1379			return ret;
+  1380	
+  1381		ret = qcom_pcie_phy_power_on(pcie);
+  1382		if (ret)
+  1383			goto err_deinit;
+  1384	
+  1385		if (pcie->cfg->ops->post_init) {
+  1386			ret = pcie->cfg->ops->post_init(pcie);
+  1387			if (ret)
+  1388				goto err_disable_phy;
+  1389		}
+  1390	
+  1391		/*
+  1392		 * Only deassert PERST# for all devices here if legacy binding is used.
+  1393		 * For the new binding, pwrctrl driver is expected to toggle PERST# for
+  1394		 * individual devices.
+  1395		 */
+  1396		if (list_empty(&pcie->perst))
+  1397			qcom_ep_reset_deassert(pcie, NULL);
+  1398	
+  1399		if (pcie->cfg->ops->config_sid) {
+  1400			ret = pcie->cfg->ops->config_sid(pcie);
+  1401			if (ret)
+  1402				goto err_assert_reset;
+  1403		}
+  1404	
+> 1405		pci->pp.bridge->toggle_perst = qcom_pcie_toggle_perst;
+  1406	
+  1407		return 0;
+  1408	
+  1409	err_assert_reset:
+  1410		qcom_ep_reset_assert(pcie, NULL);
+  1411	err_disable_phy:
+  1412		qcom_pcie_phy_power_off(pcie);
+  1413	err_deinit:
+  1414		pcie->cfg->ops->deinit(pcie);
+  1415	
+  1416		return ret;
+  1417	}
+  1418	
 
-We are following the legacy naming rule for the device.
-
-Will consider the suggestion.
-
-Thanks,
-Jie
-
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> 
-> Konrad
-
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
