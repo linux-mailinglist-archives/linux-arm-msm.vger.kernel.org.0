@@ -1,227 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-72119-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72121-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51640B44464
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 19:32:19 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79313B4449D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 19:43:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 16D44547CE5
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 17:32:19 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 35EF94E3538
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 17:43:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 331E422A4FE;
-	Thu,  4 Sep 2025 17:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B420312803;
+	Thu,  4 Sep 2025 17:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SyQqNY4M"
+	dkim=pass (2048-bit key) header.d=semtech.com header.i=@semtech.com header.b="J6XyTE7U";
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=SemtechCorp.onmicrosoft.com header.i=@SemtechCorp.onmicrosoft.com header.b="fdr99s9O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail1.bemta44.messagelabs.com (mail1.bemta44.messagelabs.com [67.219.246.113])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD32523D7C7
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 17:32:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757007132; cv=none; b=roQeOcGJgxcHwUIkQWBTMdRKIarmBLqd+tBS5MhvqDoSLGn6kdPR2KJ0jZX0G39O1R41tq9oHTSSMwEbnQKnjANe/JGsdHgKCNM4fUV+m8TONqEfabPiRM2miK4FBJq2kcx6X4+IZJFRbPw2gdz3BsfhvQezT3XPo8iEPhj5lNQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757007132; c=relaxed/simple;
-	bh=S6K7ZuuI9Bt+Smd+P1c+fd+/jUyGt2Lk9wkEvGESl70=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U6q+uOTxeqMVRDoTKW2x32SQfcmMF9pwXlQqjtFgPeNqv1kXRf9gIqnAsyRd11uPRAMlOrdWNhC8E8M6giv/bJDgpwclHNHWvi8UFSnikKhZyftCyfyiNXXts31yar0B7pFy8FYBcNDYlPcebtY7xYLVzRzQ6Eaia32RAWkQZ6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SyQqNY4M; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849X8XA003803
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 17:32:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Da73JYrU/YH6aVt86oA5anWyeFztGpATifsoe84jD5s=; b=SyQqNY4MUimxvb2E
-	dphFdMl8HZnvD9gFoeUmBK78RINJHp4EvPzSR/kBUwREEKvdIgZ69XaIXfiAskS0
-	kstFiRXXynOQDO/+Bhf7eG3rMYPBQoTBVh/uj8rhfxcQdjKNCaQVP9RAbQizEJOI
-	xJ+XeQ1mgH8r2Lr+YpmR65BvGf00qbzFtgrzxAtC86q6uCMA4RYT3/X7XeeqEPc+
-	Ueooe7YQhng4pqWkdkYL890YuD5u3eC7RjgTzQEt9DRsi1XSHFTqc61HkL7iMvRT
-	BIJbvAEmb04Qebhdh+6JJxPXWDRN7xe39AXYJ6KAOtXHSwsLvA25RqDwWhU3aRz7
-	Wn5rfw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s8e1y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 17:32:09 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b31bea5896so14428711cf.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 10:32:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757007128; x=1757611928;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Da73JYrU/YH6aVt86oA5anWyeFztGpATifsoe84jD5s=;
-        b=H5fp3EAwvKPj/9EOpZRtQuPc5RqgeF5P7mmqtDtq9wr65ACRfT6E/SCBoXSsTZaT5d
-         soCOsdMZCKMa+gn4TMqSgjkPJsfvgyD9/vfi2Z4eMilYyQ246i8JGv9DH1DDDUbuKXJG
-         ZqmWCBa8lcrkHbR9DrpZg7aau522PHMt5Ry2AJmmzjGv8+AKEc+i6RiJ2ixufyca7XzF
-         1UOFywajOedDANY+GjreyX7i45vgNUd0HO50n37ePvWhfacXb8l0ySgF/ecPNCYrpyGk
-         rO61rEG91tOUB9hbLU7yNGaauqPIPshmr75skU7+tXSesqqBdSWcunt97TYuwJ5cIjXf
-         lMiQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUL5dWEBRY4EZYhQgL1ZfjDdYiHOE2DbF7K5u5MxG1ney6XG0/AWAgSTeGlhOvyIu6Atec5+tk61fPUBWCu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwfsxlAKAN9MHuycv2ZkRYeTl0KMQDPMo6ubU9JiTf+qR4kawBE
-	430Ez/uz/hj9/4OFRQhZ4W5Y1z5w3eSQCe9Y4gtwmEWT3LyT5QypdnlBPeUDQnZLVpxseubBHjX
-	pDi0UGDuNZ9j3/dySo1c+pt+3XSF2RLk/O79SLDZ7Turx1JO6HVkYATgngLa1IPyPPjBE
-X-Gm-Gg: ASbGncuGot1Myw3pPwTfCZ547qK5GBtmv37E2Q1ZYzEA+2VGtrGjY382S/lejru46TD
-	PJJvom/s3e3C4QTaZNUn7UQ6jG1U80pCvk2QxPptlL9UF8XfqsWhRssKQ6Bl6VviZy/dxg9g+a5
-	mX8TjPY3AGJyXlTpwPy/xw8Auph0d49NU8et9evr1If04qCyeTd57Og4J7vrxOKW9Ti6uktCjO/
-	qVkrVjg9pO+PtvDC0F3rPSx0/cPw9/0pK+Wk5ErAVQRadyzCKncHxuFBzAEwm6b6+XYKhtzAqYZ
-	x9dHjkwNIJFrQjcBK5MA0LhsJ+4ypIBwl5D15ReUbHPuySQxCSfEXHmQEv1Sa+u7NSTt0r4wGpn
-	i5p6NAH8ADnAcjCBmWCswjD9TdbVi/ge8zEoiSX8eX/2p06VU1bWu
-X-Received: by 2002:a05:622a:5809:b0:4b2:ed1b:c4ef with SMTP id d75a77b69052e-4b31dce5334mr232514591cf.82.1757007128106;
-        Thu, 04 Sep 2025 10:32:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHzY46Xf0yuYtNJopahgPntF+57SdK24XGBjq5que+6q55hgL1+myrBZjHkcDslthTY8AGG6A==
-X-Received: by 2002:a05:622a:5809:b0:4b2:ed1b:c4ef with SMTP id d75a77b69052e-4b31dce5334mr232514251cf.82.1757007127542;
-        Thu, 04 Sep 2025 10:32:07 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608ace9fd1sm1316585e87.83.2025.09.04.10.32.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 10:32:06 -0700 (PDT)
-Date: Thu, 4 Sep 2025 20:32:04 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Wasim Nazir <wasim.nazir@oss.qualcomm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>, kernel@oss.qualcomm.com,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, Monish Chunara <quic_mchunara@quicinc.com>
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: lemans: Add SDHC controller and
- SDC pin configuration
-Message-ID: <zofmya5h3yrz7wfcl4gozsmfjdeaixoir3zrk5kqpymbz5mkha@qxhj26jow5eh>
-References: <20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com>
- <20250826-lemans-evk-bu-v1-2-08016e0d3ce5@oss.qualcomm.com>
- <rxd4js6hb5ccejge2i2fp2syqlzdghqs75hb5ufqrhvpwubjyz@zwumzc7wphjx>
- <c82d44af-d107-4e84-b5ae-eeb624bc03af@oss.qualcomm.com>
- <aLhssUQa7tvUfu2j@hu-wasimn-hyd.qualcomm.com>
- <tqm4sxoya3hue7mof3uqo4nu2b77ionmxi65ewfxtjouvn5xlt@d6ala2j2msbn>
- <3b691f3a-633c-4a7f-bc38-a9c464d83fe1@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5B41D63C2;
+	Thu,  4 Sep 2025 17:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=67.219.246.113
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757007818; cv=fail; b=ZZ0QRFNLGrs/iitczYr2ddNFVF3PL3Ys+3ZHQLmZsJueCHcpABZ5NpX/oA5xIA0VtGJua5+jRC3RUPKWVsrws/1uQ5j8pg6x/6HKmNWhZqjl7tAAvp+QYYyxLt/QgUxiYTxA8X4Uagdwsnwqha0UkK93Hvwo+y9KRfoSTaxc3N0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757007818; c=relaxed/simple;
+	bh=lIriZ1Kidl92kQAKYsHaZXENkgobFTq9gMobzMhrNNo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=R77W1ft9e1nWd5RDpOASd1PoooLDX14CEDErY9ixD3YmyUiOF1aV1SqGdJMhZqwXWenAs51td/O57PYI7XTB3ISVeAXQfSHSWRvL+e/2uVhP08n5aa72O47OzCG3Zo7puhDt2ksV5BKttKH2/H7NM7eoWVRYOB8M22EcHzqtxp8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=semtech.com; spf=pass smtp.mailfrom=semtech.com; dkim=pass (2048-bit key) header.d=semtech.com header.i=@semtech.com header.b=J6XyTE7U; dkim=fail (1024-bit key) header.d=SemtechCorp.onmicrosoft.com header.i=@SemtechCorp.onmicrosoft.com header.b=fdr99s9O reason="signature verification failed"; arc=fail smtp.client-ip=67.219.246.113
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=semtech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=semtech.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=semtech.com; s=k1;
+	t=1757007815; i=@semtech.com;
+	bh=y60seZusasOldV5mK6mCQCPNcFmAKgpcljtCgut8a/U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:
+	 Content-Transfer-Encoding:Content-Type;
+	b=J6XyTE7ULkjojUAa3ZF9kUAjTb7e3m0uk0T4wrxJSVkM53QAXd7Gn4CIU2VE5OaUK
+	 pkaLR8qYB3KihT5zTkBoKJL1Ff7k2+xak7MoxWvLIAaEMcJZbeQyE2G6SoYXmQ9Yvq
+	 9q/O88fB1iJJnWetNxSFJOBIE170WQQCtCs5W6GoJNa3t2dQqL136woD5ojnwej/pe
+	 jthXNRPHR9gkVAxaKylpHsqQMwOlmbPLmEyNQ77F+jUdlmbtXVXNKvidGyLL2itmdF
+	 pDdSvpZQyuAWvLUHO/I8MX/wU4Lr06b83/GqkKmKqcn2MdMXG31oKZisyS2xdQ6e6Z
+	 2lt5OPpXwVLNg==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrAJsWRWlGSWpSXmKPExsWikf22SvfY+Z0
+  ZBlM3G1tM3H+W3eLyrjlsDkwenzfJBTBGsWbmJeVXJLBmXG7fzlawjbti1vxVrA2MVzi7GLk4
+  GAWWMUvca/vBDOEsZpW4s2g+E4QzjUnicdNZMIdFYDuzxOGemWBlQgLzmSRe7vnJBuGsZpJ4O
+  +clI4gjIXCUUeLS54ksEJmzjBK3mv+zQzi3GSW2rV7KCuFMYpTY230AqIeTg01AUaL1y2kmEF
+  tE4CujxOKrSSA2s4CWxM/HN8FqhAUcJV5sWAJkcwCdoirRczUMJMwrYCqxecEcdhBbQkBeYvG
+  O5cwQcUGJkzOfsECMkZdo3jobLC4kICuxYkIvG0R9sETLxD1MELakxLWbF6DmyEocPTuHBcJ2
+  lDj19TkbxBwJiYMvXjBDxH0lFryYxgphy0mc6j3HBHPDzo23oXpDJK7sfAwNljv8Ei0rPjJDO
+  M8YJX5saIXaJiPRfnkB6wRGjVlIDp+F5PBZSJYvYGRexWhenFpUllqka6qXVJSZnlGSm5iZo5
+  dYpZuoV1qsm5yaV1KUmGOol55coJdaXKxXXJmbnJOil5dasokRmFi4PlRK7WA8c6JZ/xCjJAe
+  Tkihv5YGdGUJ8SfkplRmJxRnxRaU5qcWHGGU4OJQkeF+fAsoJFqWmp1akZeYAkxxMWoKDR0mE
+  90Q9UJq3uCAxtzgzHSJ1ilGX4/vBk3uZhVjy8vNSpcR5Nc4BFQmAFGWU5sGNgCXcS4yyUsK8j
+  AwMDEI8BalFuZklqPKvGMU5GJWEeblApvBk5pXAbXoFdAQT0BEuT7aDHFGSiJCSamAq+Jboz/
+  Xx+QbZLF3lty/jZOPcAzPFzBI93f+X/pZnvtd0WXnLzK1+ilvtn3KLzHO041hcU75B2MqkXmn
+  htehTC5rsSudOnOBe/+GXjfI8pcaVSedKM1b+yC6b+v08X/CqI9Upq98vfP22v94reMtP2WPT
+  Lk5Ob7f++/7ouTDv/PW/9lrJlsxZsPvWq673n3NdVHezPEk9FWD00l1GaKbNDHPx7qDt+eZ/p
+  Y/8VtUw7i0NXp8hw7V5W9Cb3zkyO8qL/i86NHmjzMRyFTeOLWlvNSwtVjK0eP8Ka/rlu4u94g
+  zH/e0an3w7Zk1UD4kwqimTslmxffOOdZdmP3kye3pq5uOXhcETJ5uZ7zLLfeyrxFKckWioxVx
+  UnAgAQj7GpTMEAAA=
+X-Env-Sender: zxue@semtech.com
+X-Msg-Ref: server-21.tower-904.messagelabs.com!1757007814!137287!1
+X-SYMC-ESS-Client-Auth: mailfrom-relay-check=pass
+X-StarScan-Received:
+X-StarScan-Version: 9.118.3; banners=semtech.com,-,-
+X-VirusChecked: Checked
+Received: (qmail 989 invoked from network); 4 Sep 2025 17:43:34 -0000
+Received: from mail-bn8nam12on2122.outbound.protection.outlook.com (HELO NAM12-BN8-obe.outbound.protection.outlook.com) (40.107.237.122)
+  by server-21.tower-904.messagelabs.com with ECDHE-RSA-AES256-GCM-SHA384 encrypted SMTP; 4 Sep 2025 17:43:34 -0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TuD3RcbMjPz/AYaEX7oUWvovPafLUfuCjaVFXP834KOcoF4RyDpoLv5ed9Z1P0CxugfSyZnzghxx+MqX9nGpvJPkJ71a5jqyAFA4qJkN/Bs0lEh2+THrmecwHoKZJ5I1gFkne2iKPuJgaxTMyLdYzv/Lpa+UcUsIbHRDqkOztqk+YIXMGy6GMEMvCQzZSFBpJcY2nzE1Q+j0+xh6//rbqzxRrujS6HrKPn8zKV/+8GkiSWp9KoUMydp3FCTx8EHUXz1PmfTYQih2we8r8W+Ao96ed7drojRbGhkuC/MCSN77xiFLWeEGcdFCTpLBE2UGnVgPoCiZJ5RNtoeGEIaS3g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HWBZcHmfWBRFE6d0dtrAdDCMMaL0CU3bgrw3k/qekwY=;
+ b=XWXNh4UcnvYmjiQeiHqcTaKWqsHwWnlfykEXPVf0VjVHvnfV1TraZw7axnIZ3OmUrfk6PaGJfQPAIodELEFCeCL+TctVXXZL8/wWWW4hY07w/T/8+r3COABhYmniYN7bf+zPS/LBwXSHnsCTk/pWifaYgRli3Ch039uQ5CR+RILbGNLqzZKPqWL1xRFLlfJ9ZxlN/C2/KuNDiZtQHnE+RHo/H4Z8AwGDQuGdOEoj5K937WVyh/6CHbPEkZv/q8e1AgLhGUd5G3G6OwGPhYib/ROoFCteNCXBC7xNXVF/9expJmGmxz50SfaIKJjAIU1aqBIcDZTbzGPOOv2mYA/azA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 38.104.251.66) smtp.rcpttodomain=vger.kernel.org smtp.mailfrom=semtech.com;
+ dmarc=pass (p=quarantine sp=none pct=100) action=none
+ header.from=semtech.com; dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=SemtechCorp.onmicrosoft.com; s=selector1-SemtechCorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HWBZcHmfWBRFE6d0dtrAdDCMMaL0CU3bgrw3k/qekwY=;
+ b=fdr99s9OU8nby9U0C2NK5x9EuMNZMFqJ/ezUl5ecMWiX1X81EtxtTy2mbcPPocFsjTAfXT6lxXsZR37RoYSuA+YD/JNgiS9altnYrqEeS1dfBp9QwynNTH50JXbfymOwMDpktFegW2NFb9/2J7QFMTldGasf3s56gqjDKGCvuLw=
+Received: from BY1P220CA0004.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:59d::15)
+ by SA1PR20MB4467.namprd20.prod.outlook.com (2603:10b6:806:23e::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9052.29; Thu, 4 Sep
+ 2025 17:43:30 +0000
+Received: from SJ1PEPF000026C6.namprd04.prod.outlook.com
+ (2603:10b6:a03:59d:cafe::95) by BY1P220CA0004.outlook.office365.com
+ (2603:10b6:a03:59d::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9094.19 via Frontend Transport; Thu,
+ 4 Sep 2025 17:43:29 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 38.104.251.66)
+ smtp.mailfrom=semtech.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=semtech.com;
+Received-SPF: Pass (protection.outlook.com: domain of semtech.com designates
+ 38.104.251.66 as permitted sender) receiver=protection.outlook.com;
+ client-ip=38.104.251.66; helo=CA07RELAY1.semtech.com; pr=C
+Received: from CA07RELAY1.semtech.com (38.104.251.66) by
+ SJ1PEPF000026C6.mail.protection.outlook.com (10.167.244.103) with Microsoft
+ SMTP Server id 15.20.9094.14 via Frontend Transport; Thu, 4 Sep 2025 17:43:29
+ +0000
+Received: from ca08gitmail.local ([10.23.50.249]) by CA07RELAY1.semtech.com with Microsoft SMTPSVC(10.0.20348.1);
+	 Thu, 4 Sep 2025 13:43:28 -0400
+From: Adam Xue <zxue@semtech.com>
+To: mani@kernel.org,
+	jeff.hugo@oss.qualcomm.com,
+	quic_yabdulra@quicinc.com,
+	chentao@kylinos.cn,
+	quic_mattleun@quicinc.com,
+	krishna.chundru@oss.qualcomm.com,
+	mhi@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: zxue@semtech.com,
+	imocanu@semtech.com
+Subject: [PATCH v2] Fix potential kernel panic by calling dev_err
+Date: Thu,  4 Sep 2025 10:42:57 -0700
+Message-ID: <20250904174257.32371-1-zxue@semtech.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <3b691f3a-633c-4a7f-bc38-a9c464d83fe1@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX5nFlyBiKJMFL
- 46+lWaFas+lJyLGz0Xw7kEVVhZWeCaGSkRPOURNbSOd+NyXIvcwj+WiTINnM9JxNdsFpwy3k5HC
- 7HkAqEYduwadwsJNXpPnLTbM48UY14Vss8VJHQrr2JNo+IXaVO82wHYixb8XGvDEzgBrTo2Axqf
- 4DO5npZo/6TQopJcCH0WGX5X7+xnLzepwzgd41mb93Q/aO++erZKQceeXb1gTapu/EsN/kIhg9u
- aONYkUn92DfV9ncWrae/HJlEs3nIEJb49UHQNr5sjMdJ9p5ZQcb+8Xi16t99g1hk4wAY28ZrMUy
- aPNf8sVZwBuiCk4DuENQxBO95VrKBy9X9lsZbm92/ZtLEOwCECla+BCp3+ls7C38bZHSZoUcmYb
- 5FSUv6lz
-X-Proofpoint-GUID: Lm3stoqNOFAduvBvj8ovY2wJFBC4iPV1
-X-Proofpoint-ORIG-GUID: Lm3stoqNOFAduvBvj8ovY2wJFBC4iPV1
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b9cd19 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=7jlciowUQMUDIi_Z8n8A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-04_06,2025-09-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
+X-OriginalArrivalTime: 04 Sep 2025 17:43:28.0791 (UTC) FILETIME=[6C599270:01DC1DC3]
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000026C6:EE_|SA1PR20MB4467:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 11d6f7de-0786-4493-c7db-08ddebda8f65
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|82310400026|376014|36860700013;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?CEa7vPYgTCWYUTdsBiDoY45Z3S0FBTa316lUfVoV1fi1x2rgL6KP05qOhe+j?=
+ =?us-ascii?Q?btPZJVv+4SUq6J1yhpBH5AAxW/XK3N2A9juz0fZE9HBynLhQT42u775RvBod?=
+ =?us-ascii?Q?eG3mc+qtnCFF1demPSxyPf+/eFtRD2fTEVFCwHOE2qxi9Y/57kiA4jEwZMcJ?=
+ =?us-ascii?Q?vH+T/xkPHUuXe8M93nq+CjMgllgcdGvJMIcdNe/ItIJYTO36PbTaVuQiTfh+?=
+ =?us-ascii?Q?VD9Npa13Zl1g6nDTUp6oTujO8vOS3QEkbDQJ20rPKgylt8OFRAnW2KykCs4r?=
+ =?us-ascii?Q?gVEYvSf7ZVxE6QWPzWN/MZf01XjDzQFgSJTZK1ErgTTcOZa7irBb1l3OKv72?=
+ =?us-ascii?Q?N89+sctngS05xh79XqDclK7piuTMilwdbXqM4rNp4+QPOTFZ2rWxIxeypRPl?=
+ =?us-ascii?Q?djupNqXkjXOn2MN4EKkO5s/Ocwe2jazcK6iKkzjLv+0SO1BHApTIlsdoUJd1?=
+ =?us-ascii?Q?0DY7DXFg6EVogjR3sr9qmcfd5L3bTnonr/MXvaj4V2PrYQorW2vaHIomz+3G?=
+ =?us-ascii?Q?i0t048M15N+oyFCRBko5rRUDuZJ1e83GnVKg6LUqjrQVU314OUZrfHprVlbK?=
+ =?us-ascii?Q?69IM0JoyndzqCWCyez17yajcaxpyw4iRK9VOQgeNR6MrTjaFefZXD/ehQnj8?=
+ =?us-ascii?Q?FWvxfpGZ86fk7F+WYiWajgF242AY0zDEsl+XNOdj1Rq0B/AZ/d8CLf1yvkK0?=
+ =?us-ascii?Q?85vm2k10gfLOq1tEzLdhdjFO2AMJVP5lMd7dmnkjwV8yo6bsxv6KbOwU1dyE?=
+ =?us-ascii?Q?y7sBbzY2zMqLRvAoIilohPNazS1zxQ4fQYiZF/R6wrdO7SUAFRnZ04FAvPJh?=
+ =?us-ascii?Q?oAhtWXYargDe1Ddw6fl6PIYGHABRfdcd7P1kVc9jrdcZsSUkQL04M5yMGZcn?=
+ =?us-ascii?Q?3Tn3qhqRVnU6KHZOyKx+UhN2aIdgpqBCdXNClYz0O/iBZaTu06pS4qG1OeRs?=
+ =?us-ascii?Q?YMthHi9hn6ijzsCuozqaWmfPsurWCocfD/vy/DpNi20jDfUzgqxRtCrNXCEW?=
+ =?us-ascii?Q?vN6OUMm0anhPIzYRAiwffVjAieWsKafxiDCd7WYlK5+j6kegHKfm1qzTiMaM?=
+ =?us-ascii?Q?bLTmMbY3tl6eM5mZHEmA2lSulLR/zrMkAIwRprG5GPxXdb1qmrgTXbtbXA8h?=
+ =?us-ascii?Q?bCNLDCsQB8FVRqQK6/npv9NWb8ySPTDZHFwRfP64jGdbzIgI+qs6dxl+FrKi?=
+ =?us-ascii?Q?E3wM2Z6unAmeYDvTdiEMLjUvzj1tP0NWXdn9Ta9LuiXi94Psndw16uF4zWHi?=
+ =?us-ascii?Q?OPaX4p1TAF9wcuwwG3DU8ULIWrTorllWZ81Jget34Lt2PfqbuE5LXGG25cRY?=
+ =?us-ascii?Q?gsqp4/62XSzXcrg//0RKtK+KYB+D1kircjp3HZx/Xn2YGvDGgFz5WzuokjQ8?=
+ =?us-ascii?Q?7bJiL0H/ygc3XS/YYtnr3DYArKbL95MdHGrA1lsV7RmqaRn/ukgWA7DhgEMF?=
+ =?us-ascii?Q?SQJ8wM512cRFjfBwm9ltQLd2W3JnMf/vRe2+BW6a+2fQZ8er1HeV5kHsJrJ7?=
+ =?us-ascii?Q?F7NQ3Gh/v3rcYsZML+eX1E9kpk6Uv0V10s4e?=
+X-Forefront-Antispam-Report:
+	CIP:38.104.251.66;CTRY:CA;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CA07RELAY1.semtech.com;PTR:InfoDomainNonexistent;CAT:NONE;SFS:(13230040)(1800799024)(82310400026)(376014)(36860700013);DIR:OUT;SFP:1102;
+X-OriginatorOrg: semtech.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Sep 2025 17:43:29.3474
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11d6f7de-0786-4493-c7db-08ddebda8f65
+X-MS-Exchange-CrossTenant-Id: b105310d-dc1a-4d6e-bf0d-b11c10c47b0f
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=b105310d-dc1a-4d6e-bf0d-b11c10c47b0f;Ip=[38.104.251.66];Helo=[CA07RELAY1.semtech.com]
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TreatMessagesAsInternal-SJ1PEPF000026C6.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR20MB4467
 
-On Thu, Sep 04, 2025 at 04:34:05PM +0200, Konrad Dybcio wrote:
-> On 9/4/25 3:35 PM, Dmitry Baryshkov wrote:
-> > On Wed, Sep 03, 2025 at 09:58:33PM +0530, Wasim Nazir wrote:
-> >> On Wed, Sep 03, 2025 at 06:12:59PM +0200, Konrad Dybcio wrote:
-> >>> On 8/27/25 3:20 AM, Dmitry Baryshkov wrote:
-> >>>> On Tue, Aug 26, 2025 at 11:51:01PM +0530, Wasim Nazir wrote:
-> >>>>> From: Monish Chunara <quic_mchunara@quicinc.com>
-> >>>>>
-> >>>>> Introduce the SDHC v5 controller node for the Lemans platform.
-> >>>>> This controller supports either eMMC or SD-card, but only one
-> >>>>> can be active at a time. SD-card is the preferred configuration
-> >>>>> on Lemans targets, so describe this controller.
-> >>>>>
-> >>>>> Define the SDC interface pins including clk, cmd, and data lines
-> >>>>> to enable proper communication with the SDHC controller.
-> >>>>>
-> >>>>> Signed-off-by: Monish Chunara <quic_mchunara@quicinc.com>
-> >>>>> Co-developed-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> >>>>> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> >>>>> ---
-> >>>>>  arch/arm64/boot/dts/qcom/lemans.dtsi | 70 ++++++++++++++++++++++++++++++++++++
-> >>>>>  1 file changed, 70 insertions(+)
-> >>>>>
-> >>>>> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-> >>>>> index 99a566b42ef2..a5a3cdba47f3 100644
-> >>>>> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-> >>>>> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-> >>>>> @@ -3834,6 +3834,36 @@ apss_tpdm2_out: endpoint {
-> >>>>>  			};
-> >>>>>  		};
-> >>>>>  
-> >>>>> +		sdhc: mmc@87c4000 {
-> >>>>> +			compatible = "qcom,sa8775p-sdhci", "qcom,sdhci-msm-v5";
-> >>>>> +			reg = <0x0 0x087c4000 0x0 0x1000>;
-> >>>>> +
-> >>>>> +			interrupts = <GIC_SPI 383 IRQ_TYPE_LEVEL_HIGH>,
-> >>>>> +				     <GIC_SPI 521 IRQ_TYPE_LEVEL_HIGH>;
-> >>>>> +			interrupt-names = "hc_irq", "pwr_irq";
-> >>>>> +
-> >>>>> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> >>>>> +				 <&gcc GCC_SDCC1_APPS_CLK>;
-> >>>>> +			clock-names = "iface", "core";
-> >>>>> +
-> >>>>> +			interconnects = <&aggre1_noc MASTER_SDC 0 &mc_virt SLAVE_EBI1 0>,
-> >>>>> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDC1 0>;
-> >>>>> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
-> >>>>> +
-> >>>>> +			iommus = <&apps_smmu 0x0 0x0>;
-> >>>>> +			dma-coherent;
-> >>>>> +
-> >>>>> +			resets = <&gcc GCC_SDCC1_BCR>;
-> >>>>> +
-> >>>>> +			no-sdio;
-> >>>>> +			no-mmc;
-> >>>>> +			bus-width = <4>;
-> >>>>
-> >>>> This is the board configuration, it should be defined in the EVK DTS.
-> >>>
-> >>> Unless the controller is actually incapable of doing non-SDCards
-> >>>
-> >>> But from the limited information I can find, this one should be able
-> >>> to do both
-> >>>
-> >>
-> >> It’s doable, but the bus width differs when this controller is used for
-> >> eMMC, which is supported on the Mezz board. So, it’s cleaner to define
-> >> only what’s needed for each specific usecase on the board.
-> > 
-> > `git grep no-sdio arch/arm64/boot/dts/qcom/` shows that we have those
-> > properties inside the board DT. I don't see a reason to deviate.
-> 
-> Just to make sure we're clear
-> 
-> I want the author to keep bus-width in SoC dt and move the other
-> properties to the board dt
+In mhi_init_irq_setup, the device pointer used for dev_err
+was not initialized. Use the pointer from mhi_cntrl instead.
 
-I think bus-width is also a property of the board. In the end, it's a
-question of schematics whether we route 1 wire or all 4 wires. git-log
-shows that bus-width is being sent in both files (and probalby we should
-sort that out).
+Signed-off-by: Adam Xue <zxue@semtech.com>
+---
+ drivers/bus/mhi/host/init.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-> 
-> Konrad
-
+diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+index 93eddf302a49..987dfde4b7e7 100644
+--- a/drivers/bus/mhi/host/init.c
++++ b/drivers/bus/mhi/host/init.c
+@@ -195,7 +195,6 @@ void mhi_deinit_free_irq(struct mhi_controller *mhi_cntrl)
+ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ {
+ 	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
+-	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
+ 	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
+ 	int i, ret;
+ 
+@@ -222,7 +221,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ 			continue;
+ 
+ 		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
+-			dev_err(&pdev->dev, "irq %d not available for event ring\n",
++			dev_err(mhi_cntrl->cntrl_dev, "irq %d not available for event ring\n",
+ 				mhi_event->irq);
+ 			ret = -EINVAL;
+ 			goto error_request;
+@@ -233,7 +232,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+ 				  irq_flags,
+ 				  "mhi", mhi_event);
+ 		if (ret) {
+-			dev_err(&pdev->dev, "Error requesting irq:%d for ev:%d\n",
++			dev_err(mhi_cntrl->cntrl_dev, "Error requesting irq:%d for ev:%d\n",
+ 				mhi_cntrl->irq[mhi_event->irq], i);
+ 			goto error_request;
+ 		}
 -- 
-With best wishes
-Dmitry
+2.43.0
+
+
+To view our privacy policy, including the types of personal information we collect, process and share, and the rights and options you have in this respect, see www.semtech.com/legal.
 
