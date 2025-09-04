@@ -1,517 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-71977-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71978-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39E48B4333C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 09:03:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB984B4337F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 09:13:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 406763ABF8B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 07:01:39 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7A63A1BC613E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 07:13:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 510B4288C2D;
-	Thu,  4 Sep 2025 06:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5DEEC289811;
+	Thu,  4 Sep 2025 07:13:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="PHuKQ1Ud"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KhgggBwm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA60B288C25
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 06:56:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B6028980A
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 07:13:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756968990; cv=none; b=IE8eFUqnGM/kPgqSyJPxgQiNIvjATWG7eplkQ/3IST4mVwJgp8d9v2DVXm2q2djfkd1Wi5aihOwNMTrTSVPc2E21zQWL9o8/b2gl6YmZMxZjueXw0byRic3KCTzAKBfwmfz5rSruaO2lRDZUiI/SdBxFxVg47PRAps3OUfzyflI=
+	t=1756970008; cv=none; b=EFNp8HMIwmg3TsT67QUw0aunnJyRkTA3BbTbIxnMoBVdZW5ACcnf/Ld7AT5HjsB74P7eLjUq/rFTjWP2wwQncWYvFW/bwxmHBNKWiw9nWOjl9rRGPsWE20OUxexYVBtFaOUownKiTBEI8bfcz8bIasHub0dgeAR+FD6CnWDkr74=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756968990; c=relaxed/simple;
-	bh=srebaxDv3eZJ3Yn5QEdqdMvmUTaVbZloO57dCUSYXak=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ef2kfZq0XrRzFgry82e3K/MIUaxoVRVei0MirqgyUCiPf4+EsNnIow2DVSqkQh6RmhuFVAAQbOyEZMrI6VhmRdHoyo57S3p7nm9VVwDPFZrNW6o7xRW9brz7j4F8DGWfyYvlUKdn1oVZ/+x7kn7L9D5iRhVl5ubG27NysQcN6LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=PHuKQ1Ud; arc=none smtp.client-ip=209.85.221.49
+	s=arc-20240116; t=1756970008; c=relaxed/simple;
+	bh=Z6oVMvamvALbeWSeiu3YA/SgCjbLhboLt7zCNcJbNrI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gIw6W63g4knlEmaml4/uCJWiRExLlMWijDEypuZew7lA9DrmmIo6PTedcI/JVNDobuCDsrRanUCb2cHLWg08c6zCUWCi2bKauRii41WyN77mEI3slbDXr2g3d7JxFkN5umM/dVsyg1e41RDCjcZZIgV5kNBx3uiMAZ2mog/s4E4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KhgggBwm; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3e2055ce973so27815f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 03 Sep 2025 23:56:27 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45b804ed966so1861355e9.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 00:13:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1756968986; x=1757573786; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1756970005; x=1757574805; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=iuWa/TU+jCKequWuceGeCu2kioVsaALaGs2DgkR7OiI=;
-        b=PHuKQ1Ud/7Nf26cpdr0/i2FPotSJrTJM6AeVrArKIZSJUXENMnkKYerOLBQeASOtf2
-         nrkxXDx7hJ+12fKe0QhPzV5yzTTUIuNOspS+1LNMZkM3nvRTx/6JN1UPX0WVtqIPs3jT
-         hMEf6DVvBTlHmd/C9/WDTHoNoU2ChGSq+ZSHVJICGGHS2xuRBcZ4HrSo5ygjRqk2qZiR
-         qGJrGgeT5YQeAXV+H9HLZN4hqJZnw7Mr/c0nRSkXh9/BeDWUXrtvd1s7VMqjT0aeVL3G
-         rc3mk04NmPHUVpSJ0+MmjE5QagqoJFPBreuGMd3o5JSiE2b3mNbSdFxJT9Hlmxv1ySL/
-         XyvQ==
+        bh=fenp/X6RqR1DwQ+CRZ8K7U4zGb71u1QKHuWPuUkXtC4=;
+        b=KhgggBwm2Fpi8KcxFt/0kk7XrDYXJJJlLby4/SJ1RubniOglZhUYwGNPFoTr3qAoKV
+         lNPh6efabpAOGlTddDGetP975XKygSAF2AvzaAgApjchkykRoBVKhW86wyz8WoG+3Lcw
+         IGhmyF6EMyb34aYi+4X3efJJF8KKaB8jnl56uEgKAXhM/KCyy2SYodonXA5S2LODgcnS
+         OAQvmzwDUsEXV++jyNJG24sfEYwBx1thawDmkCxkD/Xz9760jh/8+eJhR2Y3kvZaUaOE
+         PKgDoi2tXznz8559p5amKbd7OcDbZynuQYMbf063Z62gmdL0dfv5dax7kLnUdYyKHSwV
+         1pcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756968986; x=1757573786;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iuWa/TU+jCKequWuceGeCu2kioVsaALaGs2DgkR7OiI=;
-        b=Du8HCCiLbmWt+nRt+pIkHbF0aWyJxLvsVeQnrl6h2dRVrngBtseti2YVe6nA4F35gn
-         Y8gS8PXtflzW03zPw73mo5wNEQuCq6ctFaXksaQGyRCqnR/uB067HdWbHpzHfe+foNDE
-         /cRZOOAwFaMEjRt81V5xqzJO1R4n7fC2A7gUxgZprYKamz5bLIvYdxc9bHahLfamdmM5
-         mwa+cFDI1O+eIlDSkUaKudDlIAut13o2F/nF+k1gt4hbZkSZOv7+2hDd87jFasd5/W64
-         1h9knjyjs5BU8Xaa9S3KxoL9RzufW2e8wRVecbH5T3zhA8c1DuZC4EOgSpqC/nDrOmaL
-         gxKA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRT8xxU8TfkgiahYIvPrhAayFzM/49cwYXxYnYuxdJfNt9BYNO2qAUZ1EXmhhsm0ZGYslvka5hzC5FrSMs@vger.kernel.org
-X-Gm-Message-State: AOJu0YwJ0yPqWiEX7TTijiP+sBQ+fS1MWHr6bUnr/QfRxhwoJZb+84Oy
-	310rqBX+JMaA5OU0S/41Mzv0O4YZyxp9EqWgTncjHL6Jh7biPk/0Sc63MiBBJuWIQe8=
-X-Gm-Gg: ASbGncvNt8jqDsdG9yYqV1mxk6AXlOBhUOy2nrZtQrnEQvUMIvtEksE6luoHGi8yMqS
-	tN35B82FSs7NIFCFF7v9r3csSfdUsw4IM2fubJpiTW5KHnR7YDqqq0DoxcsAzITWwWCQL44muhE
-	83D2nF3CcMiK7OZ2nNpS+rYQHKFZZQ0d/NZxs4ejOk/S8KJuTekG34z5liWnZsbRsVtrxO72A8n
-	VqfDoTBNl6yaP7pQMSA03yzD2pvGLWyMNJJHnBkgMcTWuxm0LZihE2RLf4T+FI6ci5nsZ2QhL1e
-	4ZQZByvxLwR3fKyYBPcMcKYXRxTaNx7IoKeR8GxIJEvOTzUmJhZxsYqEGfIJzjumeKEF2eK7875
-	r/wDFY4bzXfjeaBz6HH7VqUnq31/Q9e70Bg==
-X-Google-Smtp-Source: AGHT+IGZcOQmL7QDDiQf5uiqGROnu/ur6py/GIqo6bRLjxu/5sY/Q4fqFg8GKpIxdF5jT/ziSXFakQ==
-X-Received: by 2002:a05:6000:2384:b0:3cd:ac2b:7f0 with SMTP id ffacd0b85a97d-3d1def61f55mr11300684f8f.49.1756968986068;
-        Wed, 03 Sep 2025 23:56:26 -0700 (PDT)
-Received: from hackbox.lan ([86.121.170.194])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d701622b92sm15256075f8f.58.2025.09.03.23.56.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 03 Sep 2025 23:56:25 -0700 (PDT)
-From: Abel Vesa <abel.vesa@linaro.org>
-Date: Thu, 04 Sep 2025 09:55:53 +0300
-Subject: [PATCH 3/3] phy: qcom: edp: Add Glymur platform support
+        d=1e100.net; s=20230601; t=1756970005; x=1757574805;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:from:references:cc:to:subject:reply-to:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=fenp/X6RqR1DwQ+CRZ8K7U4zGb71u1QKHuWPuUkXtC4=;
+        b=Ytsab2FBqZoyb6fGeSBOYckW+bbZWzcr7GlDDIbvZMm2b6KCymdJ3v6NugYbidRtJz
+         I68LrNdIAiZbmU/7X928jhuT2JM1uRWydZPvUW/mxVXHz0dKPEn+Hapi91ZIAmLwIPjS
+         mD+ob2SK0sAaZVeJQMFuHBdumYQboV15P1xCr7KKvlzfCHTrfP6McLyBaw9J+eFfdVti
+         ZXDrtDGnqqbymNy1Glj5RY/5ZUWiyqrDu8FeO/0e81gPX2ey49pS6ZalwQ8Wlrah/BuY
+         8ReNzjlt63GG59Jk4HYam+ItRxozCVd0EyhrH5kmWJrO6Np8QgEcINGkgqSnVS6Ihr7q
+         VEIA==
+X-Gm-Message-State: AOJu0YyQGVzPGEYPmEyFO/kZQ1zpftsK7vQ0BARDVQw2z/GZ7pZoPMNA
+	euOk+zjCJdH7XpfYg7MvAfaGQCw8qzChTawM1+LzXfaC1+VTJTjxV11j3nS9Y9r9j8I=
+X-Gm-Gg: ASbGncss8lo/cwQe/2uLkPipCLuq1F3s5Y68B54r02yW7iKpTajyfO+fkfGRFjwKTRZ
+	bgdiX6h+7M1guU80VNIEIgwCXZQ4kcuJ+OFgiMIHqQDB1f2kH7Ho5p0EkBl/mv/nBwuDO4GH2W1
+	3+Q+iNQrdsb42McQsg56lOJtfjwMqs5z+Cd0qzoxHi2YpFXws7+mxOQRltmkS67aMWdEvcEiUUO
+	o8nmj5/mGAoWWNT/LRrX1nAJZzqBufQDzMDpsoXciOygvMgv5tDxqDtrAExYMLd7ctnSMK89Fwe
+	V799Ule1V5jSdDl2MSEZySz0A0+KZ49MPcOUpGocCLySoyUKDe2l6Oh+835tSqQKwfmhDFiFQSg
+	YttwUNzOZT53Ni0U7dfKt1nP/lfcrif4CDsj6pQPWiWee02pfQSno/0+OOJ3PI3ILYh6gRXSqAe
+	ILrFVMZ22NYA==
+X-Google-Smtp-Source: AGHT+IHu1KVv6buqQsAeYyC+dtdchIYeBk2biQaH2Sq8CbqeIix4PZZ4xQr9UmtL7cObG1OaNDoI0w==
+X-Received: by 2002:a05:600c:45ce:b0:45b:8d8d:58b5 with SMTP id 5b1f17b1804b1-45b9ab8a216mr76402875e9.15.1756970004660;
+        Thu, 04 Sep 2025 00:13:24 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:8c14:335d:24b1:fa98? ([2a01:e0a:3d9:2080:8c14:335d:24b1:fa98])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b93fae643sm117882305e9.3.2025.09.04.00.13.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Sep 2025 00:13:24 -0700 (PDT)
+Message-ID: <a3af076b-ca0b-4d5e-8294-2bf5a9814959@linaro.org>
+Date: Thu, 4 Sep 2025 09:13:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 0/2] Add support for Gunyah Watchdog
+To: hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
+ <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250904-phy-qcom-edp-add-glymur-support-v1-3-e83c6b9a145b@linaro.org>
-References: <20250904-phy-qcom-edp-add-glymur-support-v1-0-e83c6b9a145b@linaro.org>
-In-Reply-To: <20250904-phy-qcom-edp-add-glymur-support-v1-0-e83c6b9a145b@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, 
- Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- Dmitry Baryshkov <lumag@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>
-Cc: Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, 
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
-X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=13462; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=srebaxDv3eZJ3Yn5QEdqdMvmUTaVbZloO57dCUSYXak=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBouTgRgAN4hAbV4ZOmc33+OmGfaLXBmYCk+Kvd+
- RiIB5LGl8KJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaLk4EQAKCRAbX0TJAJUV
- VovpD/9OvHlxnwtUWXo367Losskrr81TZQxUS7pGnkp5abwlhIRkQf3B65I6ti5Y535Vyl7XWIy
- uJtOiOstGYLS4P09KbsK0cSWnsqBkT6CkkMs2LeQFnBXxWi7oqQadMxh+Bgppd7VFAT51BPwerm
- kzBGvidicXT+UpUMAD0YZpqUPFOmEwlVfayYT1y1HpdAKEfXt1VPlKLMWsnwK/vEFe7Zj4VXltE
- tAFXtClNYrChgDm5WGfmCAPozHkTrt/cVp2HFsuNdHp7Biof/WC3JwHHXqkgWltqXxcN3frgAtU
- kTk6UwORgyk/Yi9TyEEI9p+gfmLLkii6tFSTq5HhlCpntjlw6lkoco6cGgOelcSOW4RhZDqWh4U
- CNEPcP94yF+Qm7YjBOp27PtjhqniZRruhTeDI+XJxzDxQf/PmJRL+BDMBstYiSe2A9WNy/ad+8R
- dPgs01QqO/vLeFticouvsBp4/QzF9eezlaFSUla5pJD4irnPvEYqXCyuiSvr9Qi+4WqLAEzKc5V
- Km3IdwDY6nhLlQHSZVM2vG2nd8lgfxSryTCMtC9GaIfUld5RYbG9v5Sv6nz3JDjNsDqksWSPR9A
- hg+stA+UgbbPxuIomRXsLtdFim9+HuTed9+nhg/vNfskzdJtMRXiLfm4CawdbdCly9uEwI0Fz7J
- 1/t9WYM6TnsmggQ==
-X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
- fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-The Qualcomm Glymur platform has the new v8 version
-of the eDP/DP PHY. So rework the driver to support this
-new version and add the platform specific configuration data.
+On 03/09/2025 21:33, Hrishabh Rajput via B4 Relay wrote:
+> Gunyah is a Type-I hypervisor which was introduced in the patch series
+> [1]. It is an open source hypervisor. The source repo is available at
+> [2].
+> 
+> The Gunyah Hypervisor doesn't allow its Virtual Machines to directly
+> access the MMIO watchdog. It either provides the fully emulated MMIO
+> based watchdog interface or the SMC-based watchdog interface depending
+> on the hypervisor configuration.
+> The SMC-based watchdog follows ARM's SMC Calling Convention (SMCCC)
+> version 1.1 and uses Vendor Specific Hypervisor Service Calls space.
+> 
+> This patch series adds support for the SMC-based watchdog interface
+> provided by the Gunyah Hypervisor. The driver supports start/stop
+> operations, timeout and pretimeout configuration, pretimeout interrupt
+> handling and system restart via watchdog.
+> 
+> This series is tested on SM8750 platform.
 
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-edp.c | 239 ++++++++++++++++++++++++++++++++++--
- 1 file changed, 232 insertions(+), 7 deletions(-)
+Would this driver work on older platforms like SM8550 & SM8650 ?
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-index 116b7f7b4f8be93e5128c3cc6f382ce7576accbc..26af8d8db4d765ce35132a0fd092f8c8634e43d6 100644
---- a/drivers/phy/qualcomm/phy-qcom-edp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-@@ -25,6 +25,7 @@
- #include "phy-qcom-qmp-dp-phy.h"
- #include "phy-qcom-qmp-qserdes-com-v4.h"
- #include "phy-qcom-qmp-qserdes-com-v6.h"
-+#include "phy-qcom-qmp-qserdes-com-v8.h"
- 
- /* EDP_PHY registers */
- #define DP_PHY_CFG                              0x0010
-@@ -32,7 +33,7 @@
- #define DP_PHY_PD_CTL                           0x001c
- #define DP_PHY_MODE                             0x0020
- 
--#define DP_AUX_CFG_SIZE                         10
-+#define DP_AUX_CFG_SIZE                         13
- #define DP_PHY_AUX_CFG(n)                       (0x24 + (0x04 * (n)))
- 
- #define DP_PHY_AUX_INTERRUPT_MASK		0x0058
-@@ -76,6 +77,7 @@ struct phy_ver_ops {
- 	int (*com_power_on)(const struct qcom_edp *edp);
- 	int (*com_resetsm_cntrl)(const struct qcom_edp *edp);
- 	int (*com_bias_en_clkbuflr)(const struct qcom_edp *edp);
-+	int (*com_clk_fwd_cfg)(const struct qcom_edp *edp);
- 	int (*com_configure_pll)(const struct qcom_edp *edp);
- 	int (*com_configure_ssc)(const struct qcom_edp *edp);
- };
-@@ -83,6 +85,8 @@ struct phy_ver_ops {
- struct qcom_edp_phy_cfg {
- 	bool is_edp;
- 	const u8 *aux_cfg;
-+	int aux_cfg_size;
-+	const u8 *vco_div_cfg;
- 	const struct qcom_edp_swing_pre_emph_cfg *swing_pre_emph_cfg;
- 	const struct phy_ver_ops *ver_ops;
- };
-@@ -185,6 +189,10 @@ static const u8 edp_phy_aux_cfg_v4[10] = {
- 	0x00, 0x13, 0x24, 0x00, 0x0a, 0x26, 0x0a, 0x03, 0x37, 0x03
- };
- 
-+static const u8 edp_phy_vco_div_cfg_v4[4] = {
-+	0x1, 0x1, 0x2, 0x0,
-+};
-+
- static const u8 edp_pre_emp_hbr_rbr_v5[4][4] = {
- 	{ 0x05, 0x11, 0x17, 0x1d },
- 	{ 0x05, 0x11, 0x18, 0xff },
-@@ -199,6 +207,14 @@ static const u8 edp_pre_emp_hbr2_hbr3_v5[4][4] = {
- 	{ 0x0d, 0xff, 0xff, 0xff }
- };
- 
-+static const u8 edp_phy_aux_cfg_v8[13] = {
-+	0x00, 0x00, 0xa0, 0x00, 0x0a, 0x26, 0x0a, 0x03, 0x37, 0x03, 0x02, 0x02, 0x4,
-+};
-+
-+static const u8 edp_phy_vco_div_cfg_v8[4] = {
-+	0x1, 0x1, 0x1, 0x1,
-+};
-+
- static const struct qcom_edp_swing_pre_emph_cfg edp_phy_swing_pre_emph_cfg_v5 = {
- 	.swing_hbr_rbr = &edp_swing_hbr_rbr,
- 	.swing_hbr3_hbr2 = &edp_swing_hbr2_hbr3,
-@@ -224,7 +240,11 @@ static int qcom_edp_phy_init(struct phy *phy)
- 	if (ret)
- 		goto out_disable_supplies;
- 
--	memcpy(aux_cfg, edp->cfg->aux_cfg, sizeof(aux_cfg));
-+	memcpy(aux_cfg, edp->cfg->aux_cfg, edp->cfg->aux_cfg_size);
-+
-+	ret = edp->cfg->ver_ops->com_clk_fwd_cfg(edp);
-+	if (ret)
-+		return ret;
- 
- 	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
- 	       DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN,
-@@ -252,7 +272,7 @@ static int qcom_edp_phy_init(struct phy *phy)
- 
- 	writel(0xfc, edp->edp + DP_PHY_MODE);
- 
--	for (int i = 0; i < DP_AUX_CFG_SIZE; i++)
-+	for (int i = 0; i < edp->cfg->aux_cfg_size; i++)
- 		writel(aux_cfg[i], edp->edp + DP_PHY_AUX_CFG(i));
- 
- 	writel(PHY_AUX_STOP_ERR_MASK | PHY_AUX_DEC_ERR_MASK |
-@@ -345,22 +365,22 @@ static int qcom_edp_set_vco_div(const struct qcom_edp *edp, unsigned long *pixel
- 
- 	switch (dp_opts->link_rate) {
- 	case 1620:
--		vco_div = 0x1;
-+		vco_div = edp->cfg->vco_div_cfg[0];
- 		*pixel_freq = 1620000000UL / 2;
- 		break;
- 
- 	case 2700:
--		vco_div = 0x1;
-+		vco_div = edp->cfg->vco_div_cfg[1];
- 		*pixel_freq = 2700000000UL / 2;
- 		break;
- 
- 	case 5400:
--		vco_div = 0x2;
-+		vco_div = edp->cfg->vco_div_cfg[2];
- 		*pixel_freq = 5400000000UL / 4;
- 		break;
- 
- 	case 8100:
--		vco_div = 0x0;
-+		vco_div = edp->cfg->vco_div_cfg[3];
- 		*pixel_freq = 8100000000UL / 6;
- 		break;
- 
-@@ -398,6 +418,11 @@ static int qcom_edp_phy_com_resetsm_cntrl_v4(const struct qcom_edp *edp)
- 				     val, val & BIT(0), 500, 10000);
- }
- 
-+static int qcom_edp_com_clk_fwd_cfg_v4(const struct qcom_edp *edp)
-+{
-+	return 0;
-+}
-+
- static int qcom_edp_com_bias_en_clkbuflr_v4(const struct qcom_edp *edp)
- {
- 	/* Turn on BIAS current for PHY/PLL */
-@@ -530,6 +555,7 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v4 = {
- 	.com_power_on		= qcom_edp_phy_power_on_v4,
- 	.com_resetsm_cntrl	= qcom_edp_phy_com_resetsm_cntrl_v4,
- 	.com_bias_en_clkbuflr	= qcom_edp_com_bias_en_clkbuflr_v4,
-+	.com_clk_fwd_cfg	= qcom_edp_com_clk_fwd_cfg_v4,
- 	.com_configure_pll	= qcom_edp_com_configure_pll_v4,
- 	.com_configure_ssc	= qcom_edp_com_configure_ssc_v4,
- };
-@@ -538,16 +564,21 @@ static const struct qcom_edp_phy_cfg sa8775p_dp_phy_cfg = {
- 	.is_edp = false,
- 	.aux_cfg = edp_phy_aux_cfg_v5,
- 	.swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg_v5,
-+	.vco_div_cfg = edp_phy_vco_div_cfg_v4,
- 	.ver_ops = &qcom_edp_phy_ops_v4,
- };
- 
- static const struct qcom_edp_phy_cfg sc7280_dp_phy_cfg = {
- 	.aux_cfg = edp_phy_aux_cfg_v4,
-+	.aux_cfg_size = ARRAY_SIZE(edp_phy_aux_cfg_v4),
-+	.vco_div_cfg = edp_phy_vco_div_cfg_v4,
- 	.ver_ops = &qcom_edp_phy_ops_v4,
- };
- 
- static const struct qcom_edp_phy_cfg sc8280xp_dp_phy_cfg = {
- 	.aux_cfg = edp_phy_aux_cfg_v4,
-+	.aux_cfg_size = ARRAY_SIZE(edp_phy_aux_cfg_v4),
-+	.vco_div_cfg = edp_phy_vco_div_cfg_v4,
- 	.swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
- 	.ver_ops = &qcom_edp_phy_ops_v4,
- };
-@@ -555,10 +586,37 @@ static const struct qcom_edp_phy_cfg sc8280xp_dp_phy_cfg = {
- static const struct qcom_edp_phy_cfg sc8280xp_edp_phy_cfg = {
- 	.is_edp = true,
- 	.aux_cfg = edp_phy_aux_cfg_v4,
-+	.aux_cfg_size = ARRAY_SIZE(edp_phy_aux_cfg_v4),
-+	.vco_div_cfg = edp_phy_vco_div_cfg_v4,
- 	.swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg,
- 	.ver_ops = &qcom_edp_phy_ops_v4,
- };
- 
-+static int qcom_edp_phy_com_resetsm_cntrl_v8(const struct qcom_edp *edp)
-+{
-+	u32 val;
-+
-+	writel(0x20, edp->pll + QSERDES_V8_COM_RESETSM_CNTRL);
-+
-+	return readl_poll_timeout(edp->pll + QSERDES_V8_COM_C_READY_STATUS,
-+				     val, val & BIT(0), 500, 10000);
-+}
-+
-+static int qcom_edp_com_clk_fwd_cfg_v8(const struct qcom_edp *edp)
-+{
-+	writel(0x3f, edp->pll + QSERDES_V8_COM_CLK_FWD_CONFIG_1);
-+
-+	return 0;
-+}
-+
-+static int qcom_edp_com_bias_en_clkbuflr_v8(const struct qcom_edp *edp)
-+{
-+	/* Turn on BIAS current for PHY/PLL */
-+	writel(0x1f, edp->pll + QSERDES_V8_COM_BIAS_EN_CLKBUFLR_EN);
-+
-+	return 0;
-+}
-+
- static int qcom_edp_phy_power_on_v6(const struct qcom_edp *edp)
- {
- 	u32 val;
-@@ -724,6 +782,139 @@ static int qcom_edp_com_configure_pll_v6(const struct qcom_edp *edp)
- 	return 0;
- }
- 
-+static int qcom_edp_com_configure_ssc_v8(const struct qcom_edp *edp)
-+{
-+	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
-+	u32 step1;
-+	u32 step2;
-+
-+	switch (dp_opts->link_rate) {
-+	case 1620:
-+	case 2700:
-+	case 8100:
-+		step1 = 0x5b;
-+		step2 = 0x02;
-+		break;
-+
-+	case 5400:
-+		step1 = 0x5b;
-+		step2 = 0x02;
-+		break;
-+
-+	default:
-+		/* Other link rates aren't supported */
-+		return -EINVAL;
-+	}
-+
-+	writel(0x01, edp->pll + QSERDES_V8_COM_SSC_EN_CENTER);
-+	writel(0x00, edp->pll + QSERDES_V8_COM_SSC_ADJ_PER1);
-+	writel(0x6b, edp->pll + QSERDES_V8_COM_SSC_PER1);
-+	writel(0x02, edp->pll + QSERDES_V8_COM_SSC_PER2);
-+	writel(step1, edp->pll + QSERDES_V8_COM_SSC_STEP_SIZE1_MODE0);
-+	writel(step2, edp->pll + QSERDES_V8_COM_SSC_STEP_SIZE2_MODE0);
-+
-+	return 0;
-+}
-+
-+static int qcom_edp_com_configure_pll_v8(const struct qcom_edp *edp)
-+{
-+	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
-+	u32 div_frac_start2_mode0;
-+	u32 div_frac_start3_mode0;
-+	u32 dec_start_mode0;
-+	u32 lock_cmp1_mode0;
-+	u32 lock_cmp2_mode0;
-+	u32 code1_mode0;
-+	u32 code2_mode0;
-+	u32 hsclk_sel;
-+
-+	switch (dp_opts->link_rate) {
-+	case 1620:
-+		hsclk_sel = 0x5;
-+		dec_start_mode0 = 0x34;
-+		div_frac_start2_mode0 = 0xc0;
-+		div_frac_start3_mode0 = 0x0b;
-+		lock_cmp1_mode0 = 0x37;
-+		lock_cmp2_mode0 = 0x04;
-+		code1_mode0 = 0x71;
-+		code2_mode0 = 0x0c;
-+		break;
-+
-+	case 2700:
-+		hsclk_sel = 0x3;
-+		dec_start_mode0 = 0x34;
-+		div_frac_start2_mode0 = 0xc0;
-+		div_frac_start3_mode0 = 0x0b;
-+		lock_cmp1_mode0 = 0x07;
-+		lock_cmp2_mode0 = 0x07;
-+		code1_mode0 = 0x71;
-+		code2_mode0 = 0x0c;
-+		break;
-+
-+	case 5400:
-+		hsclk_sel = 0x2;
-+		dec_start_mode0 = 0x4f;
-+		div_frac_start2_mode0 = 0xa0;
-+		div_frac_start3_mode0 = 0x01;
-+		lock_cmp1_mode0 = 0x18;
-+		lock_cmp2_mode0 = 0x15;
-+		code1_mode0 = 0x14;
-+		code2_mode0 = 0x25;
-+		break;
-+
-+	case 8100:
-+		hsclk_sel = 0x2;
-+		dec_start_mode0 = 0x4f;
-+		div_frac_start2_mode0 = 0xa0;
-+		div_frac_start3_mode0 = 0x01;
-+		lock_cmp1_mode0 = 0x18;
-+		lock_cmp2_mode0 = 0x15;
-+		code1_mode0 = 0x14;
-+		code2_mode0 = 0x25;
-+		break;
-+
-+	default:
-+		/* Other link rates aren't supported */
-+		return -EINVAL;
-+	}
-+
-+	writel(0x01, edp->pll + QSERDES_V8_COM_SVS_MODE_CLK_SEL);
-+	writel(0x3b, edp->pll + QSERDES_V8_COM_SYSCLK_EN_SEL);
-+	writel(0x02, edp->pll + QSERDES_V8_COM_SYS_CLK_CTRL);
-+	writel(0x0c, edp->pll + QSERDES_V8_COM_CLK_ENABLE1);
-+	writel(0x06, edp->pll + QSERDES_V8_COM_SYSCLK_BUF_ENABLE);
-+	writel(0x30, edp->pll + QSERDES_V8_COM_CLK_SELECT);
-+	writel(hsclk_sel, edp->pll + QSERDES_V8_COM_HSCLK_SEL_1);
-+	writel(0x07, edp->pll + QSERDES_V8_COM_PLL_IVCO);
-+	writel(0x00, edp->pll + QSERDES_V8_COM_LOCK_CMP_EN);
-+	writel(0x36, edp->pll + QSERDES_V8_COM_PLL_CCTRL_MODE0);
-+	writel(0x16, edp->pll + QSERDES_V8_COM_PLL_RCTRL_MODE0);
-+	writel(0x06, edp->pll + QSERDES_V8_COM_CP_CTRL_MODE0);
-+	writel(dec_start_mode0, edp->pll + QSERDES_V8_COM_DEC_START_MODE0);
-+	writel(0x00, edp->pll + QSERDES_V8_COM_DIV_FRAC_START1_MODE0);
-+	writel(div_frac_start2_mode0, edp->pll + QSERDES_V8_COM_DIV_FRAC_START2_MODE0);
-+	writel(div_frac_start3_mode0, edp->pll + QSERDES_V8_COM_DIV_FRAC_START3_MODE0);
-+	writel(0x96, edp->pll + QSERDES_V8_COM_CMN_CONFIG_1);
-+	writel(0x3f, edp->pll + QSERDES_V8_COM_INTEGLOOP_GAIN0_MODE0);
-+	writel(0x00, edp->pll + QSERDES_V8_COM_INTEGLOOP_GAIN1_MODE0);
-+	writel(0x00, edp->pll + QSERDES_V8_COM_VCO_TUNE_MAP);
-+	writel(lock_cmp1_mode0, edp->pll + QSERDES_V8_COM_LOCK_CMP1_MODE0);
-+	writel(lock_cmp2_mode0, edp->pll + QSERDES_V8_COM_LOCK_CMP2_MODE0);
-+
-+	writel(0x0a, edp->pll + QSERDES_V8_COM_BG_TIMER);
-+	writel(0x0a, edp->pll + QSERDES_V8_COM_CORECLK_DIV_MODE0);
-+	writel(0x00, edp->pll + QSERDES_V8_COM_VCO_TUNE_CTRL);
-+	writel(0x1f, edp->pll + QSERDES_V8_COM_BIAS_EN_CLKBUFLR_EN);
-+	writel(0x00, edp->pll + QSERDES_V8_COM_CORE_CLK_EN);
-+	writel(0xa0, edp->pll + QSERDES_V8_COM_VCO_TUNE1_MODE0);
-+	writel(0x01, edp->pll + QSERDES_V8_COM_VCO_TUNE2_MODE0);
-+
-+	writel(code1_mode0, edp->pll + QSERDES_V8_COM_BIN_VCOCAL_CMP_CODE1_MODE0);
-+	writel(code2_mode0, edp->pll + QSERDES_V8_COM_BIN_VCOCAL_CMP_CODE2_MODE0);
-+
-+	return 0;
-+}
-+
- static const struct phy_ver_ops qcom_edp_phy_ops_v6 = {
- 	.com_power_on		= qcom_edp_phy_power_on_v6,
- 	.com_resetsm_cntrl	= qcom_edp_phy_com_resetsm_cntrl_v6,
-@@ -732,12 +923,45 @@ static const struct phy_ver_ops qcom_edp_phy_ops_v6 = {
- 	.com_configure_ssc	= qcom_edp_com_configure_ssc_v6,
- };
- 
-+static int qcom_edp_phy_power_on_v8(const struct qcom_edp *edp)
-+{
-+	u32 val;
-+
-+	writel(DP_PHY_PD_CTL_PWRDN | DP_PHY_PD_CTL_AUX_PWRDN |
-+	       DP_PHY_PD_CTL_LANE_0_1_PWRDN | DP_PHY_PD_CTL_LANE_2_3_PWRDN |
-+	       DP_PHY_PD_CTL_PLL_PWRDN | DP_PHY_PD_CTL_DP_CLAMP_EN,
-+	       edp->edp + DP_PHY_PD_CTL);
-+	writel(0xfc, edp->edp + DP_PHY_MODE);
-+
-+	return readl_poll_timeout(edp->pll + QSERDES_V8_COM_CMN_STATUS,
-+				     val, val & BIT(7), 5, 200);
-+}
-+
-+static const struct phy_ver_ops qcom_edp_phy_ops_v8 = {
-+	.com_power_on		= qcom_edp_phy_power_on_v8,
-+	.com_resetsm_cntrl	= qcom_edp_phy_com_resetsm_cntrl_v8,
-+	.com_bias_en_clkbuflr	= qcom_edp_com_bias_en_clkbuflr_v8,
-+	.com_clk_fwd_cfg	= qcom_edp_com_clk_fwd_cfg_v8,
-+	.com_configure_pll	= qcom_edp_com_configure_pll_v8,
-+	.com_configure_ssc	= qcom_edp_com_configure_ssc_v8,
-+};
-+
- static struct qcom_edp_phy_cfg x1e80100_phy_cfg = {
- 	.aux_cfg = edp_phy_aux_cfg_v4,
-+	.aux_cfg_size = ARRAY_SIZE(edp_phy_aux_cfg_v4),
-+	.vco_div_cfg = edp_phy_vco_div_cfg_v4,
- 	.swing_pre_emph_cfg = &dp_phy_swing_pre_emph_cfg,
- 	.ver_ops = &qcom_edp_phy_ops_v6,
- };
- 
-+static struct qcom_edp_phy_cfg glymur_phy_cfg = {
-+	.aux_cfg = edp_phy_aux_cfg_v8,
-+	.aux_cfg_size = ARRAY_SIZE(edp_phy_aux_cfg_v8),
-+	.vco_div_cfg = edp_phy_vco_div_cfg_v8,
-+	.swing_pre_emph_cfg = &edp_phy_swing_pre_emph_cfg_v5,
-+	.ver_ops = &qcom_edp_phy_ops_v8,
-+};
-+
- static int qcom_edp_phy_power_on(struct phy *phy)
- {
- 	const struct qcom_edp *edp = phy_get_drvdata(phy);
-@@ -1141,6 +1365,7 @@ static const struct of_device_id qcom_edp_phy_match_table[] = {
- 	{ .compatible = "qcom,sc8280xp-dp-phy", .data = &sc8280xp_dp_phy_cfg, },
- 	{ .compatible = "qcom,sc8280xp-edp-phy", .data = &sc8280xp_edp_phy_cfg, },
- 	{ .compatible = "qcom,x1e80100-dp-phy", .data = &x1e80100_phy_cfg, },
-+	{ .compatible = "qcom,glymur-dp-phy", .data = &glymur_phy_cfg, },
- 	{ }
- };
- MODULE_DEVICE_TABLE(of, qcom_edp_phy_match_table);
+Thanks,
+Neil
 
--- 
-2.45.2
+> 
+> [1]
+> https://lore.kernel.org/all/20240222-gunyah-v17-0-1e9da6763d38@quicinc.com/
+> 
+> [2]
+> https://github.com/quic/gunyah-hypervisor
+> 
+> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+> ---
+> Hrishabh Rajput (2):
+>        dt-bindings: Add binding for gunyah watchdog
+>        watchdog: Add driver for Gunyah Watchdog
+> 
+>   .../bindings/watchdog/qcom,gh-watchdog.yaml        |  76 ++++++
+>   MAINTAINERS                                        |   3 +
+>   drivers/watchdog/Kconfig                           |  13 +
+>   drivers/watchdog/Makefile                          |   1 +
+>   drivers/watchdog/gunyah_wdt.c                      | 268 +++++++++++++++++++++
+>   include/linux/gunyah_errno.h                       |  77 ++++++
+>   6 files changed, 438 insertions(+)
+> ---
+> base-commit: 038d61fd642278bab63ee8ef722c50d10ab01e8f
+> change-id: 20250903-gunyah_watchdog-2d2649438e29
+> 
+> Best regards,
 
 
