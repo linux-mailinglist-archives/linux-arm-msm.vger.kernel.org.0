@@ -1,102 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-72134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56AF3B44723
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 22:17:33 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D9C8B44727
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 22:19:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6707C1C87101
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 20:17:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9866F17D09C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 20:19:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D41E27EFE9;
-	Thu,  4 Sep 2025 20:17:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFEDC277C87;
+	Thu,  4 Sep 2025 20:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fhAtwS7s"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LlUmau70"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCFD27E05B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 20:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502841C5496
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 20:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757017036; cv=none; b=ZKUf2LwJNXQ1fbydbkW3qync+vXw3umsQs3DFkVUnDs2o+zNSe1t6LKdEQ9mQeWs6HlarpWEMJ94IPxtkOzVSBBNa6zupG5kBY8/oH8kT0HdW476lR/18tECGk2u+gOZpB+KCvKLQZAhYz2EwcLBu4usunl5Yt2kfyA382GZxoE=
+	t=1757017163; cv=none; b=GD6XcS8fUB40wHsgoQVmdT+bPHf7bALAA5JqYwwC5V8pJDIsSU0nb8t3EtemWZ2udccf5pLCCptNLcMwrTmobW2dbCjocSRgeZlLytV0v2j1X0rXoo746QVgM4nwuU+lQeZDzjWXOgQJW7y0VWGBdEdGepAxowEvRQDKpQL9yK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757017036; c=relaxed/simple;
-	bh=A1bBxKE+UbQNERGerOt9UWUgvARgsLszTLRBIrhR7to=;
+	s=arc-20240116; t=1757017163; c=relaxed/simple;
+	bh=wyZL0V100TmfNRkX1sfGVrcXY9LrAk2QjOM3w5dQ/E0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=i+gCeIry2Ba2ZLB5IrGmhDkBn0P9L932NCo2Lf/uvCGstA/Q85iveJ5RKWoo1KGFk/MiGVxyzhMoJZWPckSEtCoGappYmq3zI/B2oht6mTtRzG9WUo0pCxNNIqzZr7N7hMG1PhlGhMXNTP3uXXNkMP6xJFg2s8sxnRNDfBdVqmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fhAtwS7s; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=IriPn0/3I3FFeBJIEqwY6PaZgqIv/7GbnjQKtAhRyk/mXW3TbuijAaiqhhw7d+gKFUbaLZWZjMLbaOA/EmY3QazZVY9VL5VaSXjeDaN0Y1o4tExDzEo2La7V5eqQYNMtMNLIcWhxsLd0YDgr9AVllzrpJQqNBwzvaf4Kf+yjXy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LlUmau70; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584IB5lf003768
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 20:17:14 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584DZteh004158
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 20:19:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=PMWsb19CFWkEFXMKXc91+DwP
-	kgTTzLo12RNKo1X1z00=; b=fhAtwS7syQ0VSyDDcpV3BZ/XMzkmlE+qVRx5ha5F
-	voGoo+DD/f0BwGuK1Us/JxoQHT8Lc6RCvHXCqK9L17jCxzRexrnDufHASEn7bT1l
-	eRjTmJBiMpirUEtuG3h6TuIng9J7AqejBud+rPNjHoINtGyh9tjVOn8MppA57fSK
-	y/+4taAwE833kmPIFP0St7KpdRNdsr6dvTSSYDuUGQYQLmSPLLoeZStnYB0XmDF2
-	4SHjCgp3k1NUpRVZnov2acNsAYEViiMzsCyHfqL+xgyvCTbU7P7a05bK9s2SynFn
-	wheqWy2CGl3MdDsW1xpfqI/7TFrhSUU5BrnLSvXB+sJM8Q==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s8uam-1
+	:references:subject:to; s=qcppdkim1; bh=jWUNPuAEFI7JhvBCvnX55AlM
+	FNdm2ykDPTbZ1bebaeI=; b=LlUmau709APIAZJv07SIRxbrcWaOjAIlpCqDCpOL
+	UkS8iDsrKpDMR1yQRPuZMMZXSbNIoKg2U7KiKjdZHNSWhuJc/nQLAN2AQHt4Dz7Z
+	FJh9XZxqrb2RFVz7xetDKWowFWiT3EqhWFJpfM4PfF2GQig0AhIxeTfAR/OH8egS
+	XA5k40IT+eIOAj4lfpLsd2sy6SDIyb7o0oxeoyFW3xdzGXLjxQ4e7qU/YCr72wer
+	RbFB2sABL+DQYIZDdPViNiUBLT0swhIVax9eB3/Gj+JKWg0vwqWpwdiLRTD/DQWr
+	bp27CjFNyaPBg1hmXlE5wHuqpxuLX4o/iHUtUK4jtHgmuA==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0erx1v-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 20:17:14 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-729751964dcso17986836d6.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 13:17:14 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 20:19:21 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b30cb3c705so36641041cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 13:19:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757017033; x=1757621833;
+        d=1e100.net; s=20230601; t=1757017160; x=1757621960;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PMWsb19CFWkEFXMKXc91+DwPkgTTzLo12RNKo1X1z00=;
-        b=HTUn0mMhJubnGIug9dJxeih+HyxDtn1kOaZslh+YO+Rt9F5RnM5R3Vis56X2eagb5a
-         hDj9GYgZR8Aip0Yqf2PayIvifDibLWgA+K+GS99rLV2VffgV2mlBSfExT5Q7B9tOKVOU
-         sWe04REL/0/8T3KEoA3al6ptIXjj5XaiQzG+5b9C68V9NYFALxYJmbLwY+hFUZRRHJTQ
-         ynvAmEct6mIg/g+ib/H0oVatjMBj5PsbuL4D5WB7F8wIvANoGA8DX6PqQx4aZAUb4JlE
-         CJ5lwej1jtGUmxyx/Lh2qc8jrli0gdBF51nohENN8F3lyQk/jwFmT/f4WlqUoTuQcX8I
-         Td4A==
-X-Forwarded-Encrypted: i=1; AJvYcCUOyBePr6koncfgRQVM1eNXzpevHpf89sXUAPKOP+RhYv5uYaC+3O+NGJPijKP3cW7kNU0z7fxbAEv42r+e@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz/21sqoIilqwD51qTIWLb17RQjoWjUnMkWY4qHSxxvLXFQD84+
-	B/GJf8Yiz0dP/LMII+YgUsGKe6fjuJDW8ykIG+Anln0Mdk+uviKJdcgCCF1qju6F0iCDjUYd+hi
-	D7+cD2rW+IaFlRFp8p3Zw6G0ZJ0iY7wQf64lPOhpDw/iLpvsHSSdMRRIILyZY68kBzMZu
-X-Gm-Gg: ASbGncsFmTD47vywCJ0Uck4eG4tVmmKMtYsvYQtWHBBENnYhN5zP8S4tFSXHNAIAPB0
-	anYDCXgqOBHn9RXxgnIIL0U5xwCk3E6vN3ZrSlH/14XJ6HQtpWzvj9g2O+K2xJzn7lk0QdjvJDn
-	WRFz5d6B4ZeT4ZeHk3cLfumuFej3pdQqOYj1pWNxi4z4BxwKMjw5OzBVtB7WhPug9HLQSnpU++w
-	Yrf12UllcakdmxLVc+G/211UUZuiqEKhNNmFfDnVPlyBKX437x9U9m2CIBDL6irrpPIhrrZQVJ7
-	Zo5hM0hCQmdzjKjIz+Ru5ASFKN95ZfQP0nbAwB6GnXeHm0uyrrx+oiuuAz5fDMizq8hd5WkaxF1
-	vpcKTwY/bi+EYbe8pUbUG/EWUCRsoH/vgMkT3gvm238MSpZNrRGhS
-X-Received: by 2002:ad4:5ecc:0:b0:719:9ea2:6668 with SMTP id 6a1803df08f44-7199ea293camr222119876d6.19.1757017032792;
-        Thu, 04 Sep 2025 13:17:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFg1IxBgYRYFnQ7iNADg67T9sGhou8A8S+BUQKTwHq4BE1x8wrT4GrfsEGqgPZwXCBKxDIy0g==
-X-Received: by 2002:ad4:5ecc:0:b0:719:9ea2:6668 with SMTP id 6a1803df08f44-7199ea293camr222119396d6.19.1757017032135;
-        Thu, 04 Sep 2025 13:17:12 -0700 (PDT)
+        bh=jWUNPuAEFI7JhvBCvnX55AlMFNdm2ykDPTbZ1bebaeI=;
+        b=P7dIqzGdMs7qMJ8gYQKrsrhkt7O3sfevGS4Vijap5DIy69GZNI0ZgnYzN7kX+wE/qu
+         Ecl9OWz07zUdx8r2gaCzBORjw7VWxNUJVwGTnmXos92okqwpgy88BTcEadv0c2YZGoeq
+         hZfs0wwq2QF8zWpxUkYIAfXXxAyk4HfXvV1QJW8+GZLXM9CSsk/mmTe0Jrvj+JCR0SYV
+         TzaTaZ8UqtDXJ6Ew9IDD3jbw+qgx3x8TiFp49oWX6FbuNYWFcNFzS8KuHtpZ+4dRejvn
+         4U5Pf7U5Jf0eu/EZjkd50K4H1aIXufA9Q9t6HRQaFphrSM0TYEYAG0Sd9jdcKuxt0CZ9
+         B/OA==
+X-Forwarded-Encrypted: i=1; AJvYcCU73nh9eH7Exg1NmHYhCEDYkNoWlxIcVpJ7JKLqzScE6wiW5UZIINpYMItJs1lArQKcBJvpBhHo48iHQogK@vger.kernel.org
+X-Gm-Message-State: AOJu0YzoupwwZv4Al+bpNhFRYJcuMc9fZ+7bAEQDrLCRrr3z3IF1vkN4
+	WwFjK8HoiY2M67Siv1aIS2WwDkxcCLenMbTCHcTF+nlN9rwW8+Ff1qqHE/tbMYYGNFDVbCmBkKE
+	1b7OSWDG4qJUzVPA0PfaF90PbLBTFn94oK5rO00RLNhgI1scYKmzKDZ8olgnbAsscHubW
+X-Gm-Gg: ASbGncuYwB+zPWgSXGM6ijkbYRGgZ9NkgwmmHuC6fHe1QQYnNpunD6b0JknKsvSwWfu
+	jQNovIK1rL3Zw7WCKYljI5maAuTTwoHeFF0OwfacDxTQGxNhWaFvASraO12YjzeubkzD57H5b+m
+	hqCjHP0VhLxmH33jmKvsRtxxilCXSO4bq6drXMYkGDJW1UzKCm6uUS9HJ0BgVINpHDM6/EAKNlK
+	Bly8jAD7vuW7oOLCgT7HClq+Hh6V5H1cZJVtLOhXuKmGHIMrT4eR1u/6LQ8dE4uMc+2lsRmf1jS
+	Y21ViSKkGIfw+tS3DywMRoaSxi1vywINnK1UY//O846nwZoBCpYcgayCLrePKDBN/0Ndbjyd1jg
+	ltGMbL99Xbf2q7S8JTSWYQnfXy0Rj2DCNmc5dfnUXq/FUpfhG8gRQ
+X-Received: by 2002:a05:622a:2518:b0:4b5:d7e3:14a9 with SMTP id d75a77b69052e-4b5d7e31a96mr37976211cf.17.1757017160062;
+        Thu, 04 Sep 2025 13:19:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJcRQsxcgT+uSNce80CLe8CYyvhDKUkldf2jsGuUpffbpj69zWEbc4KJJjbhdYWm1raJiMhA==
+X-Received: by 2002:a05:622a:2518:b0:4b5:d7e3:14a9 with SMTP id d75a77b69052e-4b5d7e31a96mr37975871cf.17.1757017159540;
+        Thu, 04 Sep 2025 13:19:19 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608acfc24fsm1389024e87.104.2025.09.04.13.17.11
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-337f4c90eb9sm16137861fa.22.2025.09.04.13.19.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 13:17:11 -0700 (PDT)
-Date: Thu, 4 Sep 2025 23:17:09 +0300
+        Thu, 04 Sep 2025 13:19:17 -0700 (PDT)
+Date: Thu, 4 Sep 2025 23:19:14 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: "Jayaraman, Venkat" <venkat.jayaraman@intel.com>
-Cc: Neil Armstrong <neil.armstrong@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-        PSE Type-C Linux <pse.type-c.linux@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL
- command
-Message-ID: <d7nbjyz27pcvsic2gsho6ft6pjubmq2x4she5kvcd57i6dirns@bte5b5aap3wb>
-References: <20250814163028.18058-1-venkat.jayaraman@intel.com>
- <91cb0acb-73c4-4d3a-9aa8-1056f367d82e@linaro.org>
- <aKbI4DnIDD9fD_Gz@kuha.fi.intel.com>
- <b897d082-0d74-46fc-a0e4-7745347ba597@linaro.org>
- <CH0PR11MB5300AD8DD6BE6CBC799B49DD8000A@CH0PR11MB5300.namprd11.prod.outlook.com>
+To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 12/12] drm/msm/dpu: use standard functions in
+ _dpu_format_populate_plane_sizes_ubwc()
+Message-ID: <k7vorukb6rockoanjdebfjw3iio4l5nu3u6hdqyi4ke4cp3h66@omwo5bjxbt4t>
+References: <20250705-dpu-formats-v1-0-40f0bb31b8c8@oss.qualcomm.com>
+ <20250705-dpu-formats-v1-12-40f0bb31b8c8@oss.qualcomm.com>
+ <c2d810bc-bdba-464b-9a05-49ca2e1c773b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -105,125 +105,165 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CH0PR11MB5300AD8DD6BE6CBC799B49DD8000A@CH0PR11MB5300.namprd11.prod.outlook.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX2cimDQ21/Fqp
- SNwCy4HBYFVO9YfIoypi4qaZQX4UILqOlxLjVHKubY4YtgM/kg22J2kjODBcqOPPWFAAIamd2cb
- BLI/coy1dqJI5Yecc1QOPjPHMc5XwG6dfwl5XsQBj6HaOLZLzVMU3vCej8FWdPQZh5tUvqEtyKs
- WsB0h5Z9RyvIvJnzu10YRLb/gDfvKr+BoSXe3kKzvzTAZQMSEd7PiZz5mb+ZlOXiztJ4siNJCGB
- m3g5CRRRVfboL1q0309+pVxeOcJ9f7budonm1sGHshlkCOeWeYdVcdQxS2Mm/ALdq2t5qlexnCB
- NWZdpSouEefUdIKCI/2OKtH7UGOJ5JQkreMtK5qlKGV6nMWKpi8SUdLvoLT6XcYlioDsie/L8oq
- KS2BIj8T
-X-Proofpoint-GUID: ldGvMB6wChDb9DM8L8vtZg0jE0-kucDy
-X-Proofpoint-ORIG-GUID: ldGvMB6wChDb9DM8L8vtZg0jE0-kucDy
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b9f3ca cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=qC_FGOx9AAAA:8 a=KKAkSRfTAAAA:8 a=QyXUC8HyAAAA:8
- a=VwQbUJbxAAAA:8 a=ag1SF4gXAAAA:8 a=fbkPUmDYxqMCz1gZWXUA:9 a=CjuIK1q_8ugA:10
- a=1HOtulTD9v-eNWfpl4qZ:22 a=fsdK_YakeE02zTmptMdW:22 a=cvBusfyB2V15izCimMoJ:22
- a=Yupwre4RP9_Eg_Bd0iYG:22
+In-Reply-To: <c2d810bc-bdba-464b-9a05-49ca2e1c773b@oss.qualcomm.com>
+X-Proofpoint-GUID: NJ9GMWnYkhDt6uwdK9qenopqPWss0k9o
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfX0yrTt9ha6QeJ
+ qNhP8SswleojZXXeNaFLByk9tVTc5pAvvhPtYFPduoniOa1fa1mTCnZHw22VTSyjziUkvHOuCEu
+ 07w9TwiVGSmBCvp/gvgVTVR+hFwt/GfkniMNTZvsjTiFFUf+p6El+NWzjEZux8xID3W7Aj+XVVC
+ 2rwRrudUaIgef1URCutQJvadjMV14aR3r3kVw7dBdBVgVCvugyIOBnItz6CMqj6+orliclKZ8ab
+ fQpPiwc8X1rvfVyJWl1yX7KbAK1P+hQCD1uUG07mL/9zzBeF4ONAZvgmCzpdiSM4S7aMNHwPsck
+ DyE1/AihaQ0RoSfRaPPRvuizLH4MtueHMrk2asMdLZIP1mBO++Ab+oZpLH7GUdxrq0Uux9tjlmD
+ d7AOHaiw
+X-Proofpoint-ORIG-GUID: NJ9GMWnYkhDt6uwdK9qenopqPWss0k9o
+X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68b9f449 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=ncykOhDuLf7TmHMgJ_oA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_06,2025-09-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
- suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
+ impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
 
-On Thu, Sep 04, 2025 at 07:14:59PM +0000, Jayaraman, Venkat wrote:
-> Hi Neil, 
+On Thu, Sep 04, 2025 at 11:38:16AM -0700, Jessica Zhang wrote:
 > 
-> > -----Original Message-----
-> > From: Neil Armstrong <neil.armstrong@linaro.org>
-> > Sent: Monday, September 1, 2025 12:50 AM
-> > To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > Cc: Jayaraman, Venkat <venkat.jayaraman@intel.com>; linux-usb@vger.kernel.org; gregkh@linuxfoundation.org; PSE Type-C Linux
-> > <pse.type-c.linux@intel.com>; linux-arm-msm <linux-arm-msm@vger.kernel.org>
-> > Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL command
-> > 
-> > Hi,
-> > 
-> > On 21/08/2025 09:21, Heikki Krogerus wrote:
-> > > On Tue, Aug 19, 2025 at 11:47:58AM +0200, Neil Armstrong wrote:
-> > >> Hi,
-> > >>
-> > >> On 14/08/2025 18:30, Venkat Jayaraman wrote:
-> > >>> Add support for UCSI READ_POWER_LEVEL command as per
-> > >>> UCSI specification v2.1 and above to debugfs.
-> > >>>
-> > >>> Following power related fields will be exposed as files in debugfs:-
-> > >>> peak_current (Peak current),
-> > >>> avg_current (Average current) and
-> > >>> vbus_voltage (VBUS voltage)
-> > >>>
-> > >>> These files will be updated either when a READ_POWER_LEVEL
-> > >>> command is sent from OS or when a device is connected.
-> > >>>
-> > >>> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-> > >>> Signed-off-by: Venkat Jayaraman <venkat.jayaraman@intel.com>
-> > >>> ---
-> > >>> Changelog v3:
-> > >>> - Rebased to kernel 6.17-rc1
-> > >>>
-> > >>> Changelog v2:
-> > >>> - Removed extra space in declaration
-> > >>> - Made the call to debugfs_create_file single line for clarity
-> > >>>
-> > >>>    drivers/usb/typec/ucsi/debugfs.c | 31 +++++++++++++++++++++++++++++++
-> > >>>    drivers/usb/typec/ucsi/ucsi.c    | 16 ++++++++++++++++
-> > >>>    drivers/usb/typec/ucsi/ucsi.h    | 13 +++++++++++++
-> > >>>    3 files changed, 60 insertions(+)
-> > >>>
-> > >>
-> > >> This commit causes the following warning:
-> > >> [    8.646179] ------------[ cut here ]------------
-> > >> [    8.650986] Access to unsupported field at offset 0x59 (need version 0210)
-> > >> [    8.651044] WARNING: drivers/usb/typec/ucsi/ucsi.c:1296 at ucsi_handle_connector_change+0x380/0x414 [typec_ucsi], CPU#0:
-> > kworker/0:0/9
-> > >> <snip>
-> > >> [    8.832491] Hardware name: Qualcomm Technologies, Inc. SM8550 HDK (DT)
-> > >> [    8.839228] Workqueue: events ucsi_handle_connector_change [typec_ucsi]
-> > >> [    8.846084] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
-> > >> [    8.853277] pc : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
-> > >> [    8.860031] lr : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
-> > >> <snip>
-> > >> [    8.944023] Call trace:
-> > >> [    8.946570]  ucsi_handle_connector_change+0x380/0x414 [typec_ucsi] (P)
-> > >> [    8.953328]  process_one_work+0x148/0x28c
-> > >> [    8.957502]  worker_thread+0x2c8/0x3d0
-> > >> [    8.961401]  kthread+0x12c/0x204
-> > >> [    8.964759]  ret_from_fork+0x10/0x20
-> > >> [    8.968474] ---[ end trace 0000000000000000 ]---
-> > >>
-> > >> on:
-> > >> 8550-hdk:
-> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253312#L1418
-> > >> 8550-qrd:
-> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253306#L1560
-> > >> 8650-hdk:
-> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253308#L1494
-> > >> 8650-qrd:
-> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253309#L1594
-> > >> x1-crd:
-> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253311#L2226
-> > >> x1-qcp:
-> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253310#L2160
-> > >>
-> > >> I guess the version should be checked.
-> > >
-> > > Venkat, can you be prepare the fix for this?
-> > >
-> > > thanks,
-> > >
-> > 
-> > Gentle ping, can this be fixed ? Should I send a revert patch ?
-> > 
-> > Neil
 > 
-> The Fix patch, for this warning, is ready and approved, can submit once the initial patch is merged.
+> On 7/4/2025 7:47 PM, Dmitry Baryshkov wrote:
+> > The _dpu_format_populate_plane_sizes_ubwc() used MSM_MEDIA_ALIGN() and
+> > MSM_MEDIA_ROUNDUP(), macros inherited from the previous implementation,
+> > msm_media_info.h. Replace them with the standard Linux macros,
+> > round_up() and DIV_ROUND_UP() respectively.
+> > 
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 62 ++++++++++++-----------------
+> >   1 file changed, 26 insertions(+), 36 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> > index 67bc5a6eeb43dcf113dea9eccdb778cd52b1ad40..6a0426ed1460c5af4822844d7a7b0c51739df875 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
+> > @@ -10,16 +10,6 @@
+> >   #include "dpu_kms.h"
+> >   #include "dpu_formats.h"
+> > -#ifndef MSM_MEDIA_ALIGN
+> > -#define MSM_MEDIA_ALIGN(__sz, __align) (((__align) & ((__align) - 1)) ?\
+> > -	((((__sz) + (__align) - 1) / (__align)) * (__align)) :\
+> > -	(((__sz) + (__align) - 1) & (~((__align) - 1))))
+> > -#endif
+> > -
+> > -#ifndef MSM_MEDIA_ROUNDUP
+> > -#define MSM_MEDIA_ROUNDUP(__sz, __r) (((__sz) + ((__r) - 1)) / (__r))
+> > -#endif
+> > -
+> >   #define DPU_UBWC_PLANE_SIZE_ALIGNMENT	4096
+> >   /*
+> > @@ -80,57 +70,57 @@ static int _dpu_format_populate_plane_sizes_ubwc(
+> >   		    fmt->pixel_format == DRM_FORMAT_P010) {
+> >   			if (MSM_FORMAT_IS_DX(fmt)) {
+> >   				if (fmt->flags & MSM_FORMAT_FLAG_UNPACK_TIGHT) {
+> > -					stride = MSM_MEDIA_ALIGN(fb->width, 192);
+> > -					stride = MSM_MEDIA_ALIGN(stride * 4 / 3, 256);
+> > +					stride = round_up(fb->width, 192);
+> 
+> Hi Dmitry,
+> 
+> It seems like the usage of round_up() here might be incorrect -- the docs
+> say "round up to next specified power of 2".
+> 
+> Maybe we should use roundup() instead here?
 
-Can't you submit the fixed patch instead? It would be much better than
-merging the known-broken patch.
+
+Indeed, two macros with very simlar names. Thanks for spotting it!
+
+> 
+> The rest of the patch LGTM.
+> 
+> Thanks,
+> 
+> Jessica Zhang
+> 
+> > +					stride = round_up(stride * 4 / 3, 256);
+> >   					y_tile_width = 48;
+> >   				} else {
+> > -					stride = MSM_MEDIA_ALIGN(fb->width * 2, 256);
+> > +					stride = round_up(fb->width * 2, 256);
+> >   					y_tile_width = 32;
+> >   				}
+> > -				sclines = MSM_MEDIA_ALIGN(fb->height, 16);
+> > +				sclines = round_up(fb->height, 16);
+> >   				y_tile_height = 4;
+> >   			} else {
+> > -				stride = MSM_MEDIA_ALIGN(fb->width, 128);
+> > +				stride = round_up(fb->width, 128);
+> >   				y_tile_width = 32;
+> > -				sclines = MSM_MEDIA_ALIGN(fb->height, 32);
+> > +				sclines = round_up(fb->height, 32);
+> >   				y_tile_height = 8;
+> >   			}
+> >   		}
+> >   		layout->plane_pitch[0] = stride;
+> > -		layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
+> > +		layout->plane_size[0] = round_up(layout->plane_pitch[0] *
+> >   			sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+> >   		layout->plane_pitch[1] = stride;
+> > -		layout->plane_size[1] = MSM_MEDIA_ALIGN(layout->plane_pitch[1] *
+> > +		layout->plane_size[1] = round_up(layout->plane_pitch[1] *
+> >   			sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+> >   		if (!meta)
+> >   			return 0;
+> > -		y_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, y_tile_width);
+> > -		layout->plane_pitch[2] = MSM_MEDIA_ALIGN(y_meta_stride, 64);
+> > +		y_meta_stride = DIV_ROUND_UP(fb->width, y_tile_width);
+> > +		layout->plane_pitch[2] = round_up(y_meta_stride, 64);
+> > -		y_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, y_tile_height);
+> > -		y_meta_scanlines = MSM_MEDIA_ALIGN(y_meta_scanlines, 16);
+> > -		layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
+> > +		y_meta_scanlines = DIV_ROUND_UP(fb->height, y_tile_height);
+> > +		y_meta_scanlines = round_up(y_meta_scanlines, 16);
+> > +		layout->plane_size[2] = round_up(layout->plane_pitch[2] *
+> >   			y_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+> > -		uv_meta_stride = MSM_MEDIA_ROUNDUP((fb->width+1)>>1, y_tile_width / 2);
+> > -		layout->plane_pitch[3] = MSM_MEDIA_ALIGN(uv_meta_stride, 64);
+> > +		uv_meta_stride = DIV_ROUND_UP((fb->width+1)>>1, y_tile_width / 2);
+> > +		layout->plane_pitch[3] = round_up(uv_meta_stride, 64);
+> > -		uv_meta_scanlines = MSM_MEDIA_ROUNDUP((fb->height+1)>>1, y_tile_height);
+> > -		uv_meta_scanlines = MSM_MEDIA_ALIGN(uv_meta_scanlines, 16);
+> > -		layout->plane_size[3] = MSM_MEDIA_ALIGN(layout->plane_pitch[3] *
+> > +		uv_meta_scanlines = DIV_ROUND_UP((fb->height+1)>>1, y_tile_height);
+> > +		uv_meta_scanlines = round_up(uv_meta_scanlines, 16);
+> > +		layout->plane_size[3] = round_up(layout->plane_pitch[3] *
+> >   			uv_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+> >   	} else {
+> >   		unsigned int rgb_scanlines, rgb_meta_scanlines, rgb_meta_stride;
+> > -		layout->plane_pitch[0] = MSM_MEDIA_ALIGN(fb->width * fmt->bpp, 256);
+> > -		rgb_scanlines = MSM_MEDIA_ALIGN(fb->height, 16);
+> > -		layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
+> > +		layout->plane_pitch[0] = round_up(fb->width * fmt->bpp, 256);
+> > +		rgb_scanlines = round_up(fb->height, 16);
+> > +		layout->plane_size[0] = round_up(layout->plane_pitch[0] *
+> >   			rgb_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+> >   		if (!meta)
+> > @@ -139,13 +129,13 @@ static int _dpu_format_populate_plane_sizes_ubwc(
+> >   		/* uAPI leaves plane[1] empty and plane[2] as meta */
+> >   		layout->num_planes += 1;
+> > -		rgb_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, 16);
+> > -		layout->plane_pitch[2] = MSM_MEDIA_ALIGN(rgb_meta_stride, 64);
+> > +		rgb_meta_stride = DIV_ROUND_UP(fb->width, 16);
+> > +		layout->plane_pitch[2] = round_up(rgb_meta_stride, 64);
+> > -		rgb_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, 4);
+> > -		rgb_meta_scanlines = MSM_MEDIA_ALIGN(rgb_meta_scanlines, 16);
+> > +		rgb_meta_scanlines = DIV_ROUND_UP(fb->height, 4);
+> > +		rgb_meta_scanlines = round_up(rgb_meta_scanlines, 16);
+> > -		layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
+> > +		layout->plane_size[2] = round_up(layout->plane_pitch[2] *
+> >   			rgb_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
+> >   	}
+> > 
+> 
 
 -- 
 With best wishes
