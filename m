@@ -1,162 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-72053-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72054-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97174B43CE1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 15:18:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BDB0B43D55
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 15:35:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 28E141C20771
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 13:18:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0CDED1897B86
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 13:35:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 146E12C11D9;
-	Thu,  4 Sep 2025 13:18:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 006CB303C9B;
+	Thu,  4 Sep 2025 13:35:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CwVFousB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Sw1j+vVA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D938A198851;
-	Thu,  4 Sep 2025 13:17:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5126E2FF15B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 13:35:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756991880; cv=none; b=Ht7LgSIk6NbkbJlvAmngneuvEGQ323s2O9dDea7xSmkgEnY9C7WYVK39LXSaPEfOWgIZvUZNyKRkrWKlveuasNZxWGktvCSw9I8X4jdqc6CEavy/AVSsWfhjDfK7sfI0EE3nxb5IuEDX8q+g6AWwU3bZYVMyquK3po/0R1AT5Go=
+	t=1756992911; cv=none; b=dZgNA/HDJeCB9FhX+ajN73Ve8Rh4IDAl1HGnyleMfe8jWDN4Rnex5mhei+AgwqAZVPuwE7UGtamXgySugpyNsSdQudtOBb6Qbhsb/vmRBNnHIPQEAvHBI0PoFrf/wKs1+GuUEiWkExAn+ZFXxY8n4gSX7g1SLs3vBIjfUcMRZ/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756991880; c=relaxed/simple;
-	bh=WxaD6gphkJ2Gk/Jf0nfE5M7L6/fiMPCyPbZwunINGek=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nL+QZsplbjgjorEO6kP1TDgbHwub8KFq4c/SsvAbDuxLsy96lpX5h7Wp/gpnBCrYRVjiDCmBawSe3suds3h/tqNGv9LCj3WxF8VBazHu81mJeM0wYTgfI1oGNmcRm/VNTCXRv3yCZNCG2pcrM9V6paE+vHY7mGlGARyyBcVccyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CwVFousB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1CAAC4CEF0;
-	Thu,  4 Sep 2025 13:17:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756991879;
-	bh=WxaD6gphkJ2Gk/Jf0nfE5M7L6/fiMPCyPbZwunINGek=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=CwVFousBcrdbNKei8QUIwVjeqiVm/FHgN3lSpNE0OWBvxkiLb7JPZh9S3DvUrggva
-	 9IJEromdZCrdwMI3zLk6PCQfRt3OoPdsH5Kz6pLxLD7CvlKf3xEk2HlNMl/SUNSaYK
-	 NWZI73AXgi7V0x1dyxQhs2plRNOZcZvfrf85ho5166BZqN5tag0YATIj1LXkS0lIDx
-	 Bq9JvKh6pzxJHWZz8orVT/jS0TVUe0Xw0oX73quG8ZPwjJjI114f23b94q5UPP+OzS
-	 MxjXIE+aimWLVNiRSgTtm5PNPWYRoDltG+w5gx2q3nFh/ACUgJZF6BgHmJChqE/Uy8
-	 Wudd3C/BIu0pg==
-Message-ID: <29a91114-d862-452e-b7bf-1b659ad7d831@kernel.org>
-Date: Thu, 4 Sep 2025 15:17:55 +0200
+	s=arc-20240116; t=1756992911; c=relaxed/simple;
+	bh=mNw4NPJv7jfExJEaKhRJuxPTUkc0hirhY7JArHV4h90=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iDdaJZHq258a24698qB0fp5mDQtsKqcTww+6nijh6fP4Pj/hzj8KemqkpzkbYOaE0ypndr4waIlDu6feW2oHxUEUBsuSC7TmyB4KYXMPKu/ko45YRvYRhjvjjH63xeflTjdOuzJEIuE04J76Qfi+KOxVjXPeLkUHTOxSgWzhyxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Sw1j+vVA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849X7Ub013973
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 13:35:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	OPxYfslCOHAID8SwXwG5fuaFBZwwpSGhUdIFauIo1JE=; b=Sw1j+vVAiPFzQ5kk
+	VZ6QxScya+uHCTspldly+ltI7VOtyAO+fwpG/mfGEfNBIngjzlf4BKj9IUK1D9WP
+	c77xC+M6IVj9SRNrNi4O/chNKqy3lQ2pEZnrNmTYfqN7NFTM2Z49+nBq5cMoaky0
+	nSHf+u8W9h/1Woavt+BZ8WI7xrstxuudIBigaaMGixM2z9SZMn9Qj3pe6tI2Jk2E
+	dzuzKc8aZVOhvPJjsFCqUQade9bqJbJEokDZu2BgS+Wodgh49KiXqk189L4bPCs4
+	0JJrAPvTp9pJ5M8jnotkLAsFsaxHD3aO4sN0s04DQwwBguUW4E25DrKSUmEmXbLZ
+	R2YHUA==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uscv7s6b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 13:35:08 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-7222232866aso18118356d6.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 06:35:08 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756992908; x=1757597708;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OPxYfslCOHAID8SwXwG5fuaFBZwwpSGhUdIFauIo1JE=;
+        b=HWcLWJsgwvO13h5Tb/c1YJBPXDo4zw+xBmzsOm9g0C29azyKmXPvUIODQHs/BS9NMT
+         dqBcaOfUJD2G2Vu7v99MxnuwCfVADt6QYCgj9tJSlFrjRxremspB/jbjAFS29k8RUFDd
+         wsVeYL/ESJSaquBkmUgW2KrWccKIejMI0c6Sep7WDugTDT5euKOuP4bnMlSTwDMczNks
+         dRqBbb8SS0xLHhAgAwwNwMpVY7BPMQpPZXQj67XD1uD0ITRfragKnYy2JW0mIBdbC/jR
+         uBTKV5v/kv0lb9PSc3D5oAJZi4iFq7okDqGvZFFU/yfdLt3HMEUmbnJPioYEQpVjMS8f
+         3FWQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUi2AYigRD/irYVYRu9Vh2DziEi4Kqa1Na1flmQQ5/jLjXOZCwEBxANZ5qvLQ/G0KVJx1pl4Tu/qzaOaDYL@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3tinVlye4xe4D7NDycbPd1aBlypG+NW/72pvS9XhN0qxblZ4j
+	9lYI8n3mAxD+1xuD55XWvNemo38P5eAXdHO0r3dOjfDryq4u1qF4PoV9oXXpbgZakT0PBHO9bL/
+	j9uYTt4GHe6vF9HnAfdZt7ixYQ9w2BxA79fIYdE0rlrMtu2AjWMaX+ZRdVOdgvXWHgrXC
+X-Gm-Gg: ASbGncuUIwm7/lZwoHv/NQUJHhAx6UlEWTMu7TOD9xqUxST68mVvnzBZBezwD22Ehla
+	UWv2k/rLauld6z/mldB7RBD27hWsvhXRi+coHCw3cZCqg9EzeHGNvJvrXpuhIZuiheZWlefGa8U
+	BXTDZVMRgoGaivICO92z60LyKfTDuOWcFqYuxLIwPwa9sWUyA/vQ97S4z9lZMw78oCw5TpkXdSi
+	PugrHr/0RYspBLNJEGrA6VP/3h4fF/fllmvjoKeN03whHPH2hr2wYiM8aZJ++/ceYVEDhr6+QnF
+	wuC8vZJMZ5wnD16MmC6sprx6abheG16bI6rw0HbE8XwY3EjmvPWj08znx3EYLYCKD9B7D4ZSAxM
+	Iqc4PeZ39oTJfeu4+EHBAjSlEVOIRgqOPDvUDcq+o/b42E1yXfNmP
+X-Received: by 2002:ad4:5b88:0:b0:70d:f64e:d49e with SMTP id 6a1803df08f44-70fa99538d7mr217622406d6.23.1756992907761;
+        Thu, 04 Sep 2025 06:35:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF/pjp1F9a67cZt9KewNwhTZVwINluKfADfpH0CCTf4H3LNZ9T9PTZyP8kwGKz/Y999D34yNQ==
+X-Received: by 2002:ad4:5b88:0:b0:70d:f64e:d49e with SMTP id 6a1803df08f44-70fa99538d7mr217621666d6.23.1756992907150;
+        Thu, 04 Sep 2025 06:35:07 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608acfaae4sm1239147e87.99.2025.09.04.06.35.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 06:35:06 -0700 (PDT)
+Date: Thu, 4 Sep 2025 16:35:04 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>, kernel@oss.qualcomm.com,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, Monish Chunara <quic_mchunara@quicinc.com>
+Subject: Re: [PATCH 2/5] arm64: dts: qcom: lemans: Add SDHC controller and
+ SDC pin configuration
+Message-ID: <tqm4sxoya3hue7mof3uqo4nu2b77ionmxi65ewfxtjouvn5xlt@d6ala2j2msbn>
+References: <20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com>
+ <20250826-lemans-evk-bu-v1-2-08016e0d3ce5@oss.qualcomm.com>
+ <rxd4js6hb5ccejge2i2fp2syqlzdghqs75hb5ufqrhvpwubjyz@zwumzc7wphjx>
+ <c82d44af-d107-4e84-b5ae-eeb624bc03af@oss.qualcomm.com>
+ <aLhssUQa7tvUfu2j@hu-wasimn-hyd.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: Add binding for gunyah watchdog
-To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
- <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
- <ea295ff6-5395-4470-afc2-76e5e2dc9fb5@kernel.org>
- <099a7c48-c447-40d4-9076-570f5a5058a2@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <099a7c48-c447-40d4-9076-570f5a5058a2@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aLhssUQa7tvUfu2j@hu-wasimn-hyd.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMSBTYWx0ZWRfX05FINomwTxqH
+ 2N8h69cIUNQAvX65/JMniYA+gRkJl+yTcM1Q4x3ncBdurRIHxNfsc+Rzu1bS1gA4ucpViJm1IiG
+ urxIkKlOvgnd3OZW0Ec2CPO9/SfjUiYgtae51PUwb5cQZJ+gmSA4IbmWatXzodPBOrAix9LNBDL
+ LERMU3m2AIl3kK5D4zBfst1uUWhHwucAL5ofXiGH3UZtCL+p4dNaL9tGoIOUMMTz6jgOrpaTLZG
+ YbQYIOkW8S7CCG/iuKK6LIHACe1df3oTHpDae32JlYrdpKjR+9F6oV8FwC3Pn4wlciO259f7wEv
+ GQcWmwtbUdgjd4XF0ouveh8o4+jo5einVV+TJa08J6ZNrE2UoSikS7UpSvOsqyN5XvGq8gTxXRC
+ F7pNWAlu
+X-Authority-Analysis: v=2.4 cv=A8xsP7WG c=1 sm=1 tr=0 ts=68b9958c cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=QCn0C3cCROmBCoviGrEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: F5MD3LRnuH8wkLYhcmN6bQqr2i4lCUrz
+X-Proofpoint-GUID: F5MD3LRnuH8wkLYhcmN6bQqr2i4lCUrz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-04_04,2025-09-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
+ suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300031
 
-On 04/09/2025 15:07, Hrishabh Rajput wrote:
->>> +properties:
->>> +  compatible:
->>> +    allOf:
->>> +      - const: gunyah-hypervisor
->>> +      - const: simple-bus
->> What? No.
->>
->> Don't create patches with AI.
+On Wed, Sep 03, 2025 at 09:58:33PM +0530, Wasim Nazir wrote:
+> On Wed, Sep 03, 2025 at 06:12:59PM +0200, Konrad Dybcio wrote:
+> > On 8/27/25 3:20 AM, Dmitry Baryshkov wrote:
+> > > On Tue, Aug 26, 2025 at 11:51:01PM +0530, Wasim Nazir wrote:
+> > >> From: Monish Chunara <quic_mchunara@quicinc.com>
+> > >>
+> > >> Introduce the SDHC v5 controller node for the Lemans platform.
+> > >> This controller supports either eMMC or SD-card, but only one
+> > >> can be active at a time. SD-card is the preferred configuration
+> > >> on Lemans targets, so describe this controller.
+> > >>
+> > >> Define the SDC interface pins including clk, cmd, and data lines
+> > >> to enable proper communication with the SDHC controller.
+> > >>
+> > >> Signed-off-by: Monish Chunara <quic_mchunara@quicinc.com>
+> > >> Co-developed-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> > >> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> > >> ---
+> > >>  arch/arm64/boot/dts/qcom/lemans.dtsi | 70 ++++++++++++++++++++++++++++++++++++
+> > >>  1 file changed, 70 insertions(+)
+> > >>
+> > >> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+> > >> index 99a566b42ef2..a5a3cdba47f3 100644
+> > >> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
+> > >> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+> > >> @@ -3834,6 +3834,36 @@ apss_tpdm2_out: endpoint {
+> > >>  			};
+> > >>  		};
+> > >>  
+> > >> +		sdhc: mmc@87c4000 {
+> > >> +			compatible = "qcom,sa8775p-sdhci", "qcom,sdhci-msm-v5";
+> > >> +			reg = <0x0 0x087c4000 0x0 0x1000>;
+> > >> +
+> > >> +			interrupts = <GIC_SPI 383 IRQ_TYPE_LEVEL_HIGH>,
+> > >> +				     <GIC_SPI 521 IRQ_TYPE_LEVEL_HIGH>;
+> > >> +			interrupt-names = "hc_irq", "pwr_irq";
+> > >> +
+> > >> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
+> > >> +				 <&gcc GCC_SDCC1_APPS_CLK>;
+> > >> +			clock-names = "iface", "core";
+> > >> +
+> > >> +			interconnects = <&aggre1_noc MASTER_SDC 0 &mc_virt SLAVE_EBI1 0>,
+> > >> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDC1 0>;
+> > >> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
+> > >> +
+> > >> +			iommus = <&apps_smmu 0x0 0x0>;
+> > >> +			dma-coherent;
+> > >> +
+> > >> +			resets = <&gcc GCC_SDCC1_BCR>;
+> > >> +
+> > >> +			no-sdio;
+> > >> +			no-mmc;
+> > >> +			bus-width = <4>;
+> > > 
+> > > This is the board configuration, it should be defined in the EVK DTS.
+> > 
+> > Unless the controller is actually incapable of doing non-SDCards
+> > 
+> > But from the limited information I can find, this one should be able
+> > to do both
+> > 
 > 
-> This patch was not created with AI. Reference was taken from the patch [1].
+> It’s doable, but the bus width differs when this controller is used for
+> eMMC, which is supported on the Mezz board. So, it’s cleaner to define
+> only what’s needed for each specific usecase on the board.
 
-There is no such syntax like allOf in [1]. Nowhere in Linux kernel, btw,
-that's some total invention, thus my gut told me - it must be made with
-poor AI tools.
+`git grep no-sdio arch/arm64/boot/dts/qcom/` shows that we have those
+properties inside the board DT. I don't see a reason to deviate.
 
-> 
-> That being said, I see your point about the mistakes which were made 
-> while adding the compatible "simple-bus".
-> I apologize for the same.
-> 
-> I will make sure `make dt_binding_check` passes with latest versions of 
-> dtschema and yamllint as pointed out by Rob and as should have been done 
-> with this patch as well.
-
-No, that's not enough.
-
-You should ask for internal review. I did an extra effort, I checked
-that and:
-
-1. You did post it for internal review, BUT:
-
-2. Your internal testing system pointed out errors (schema failure) or
-failed itself,
-
-3. You did not ask your internal testing system to RETEST the patch, in
-case this was a system failure. That's your mistake. If this was true
-failure of schema, then you obviously should not send it, but
-investigate why schema fails on your patch.
-
-4. You did not receive review (at least no track of it) but decided to
-post it on mailing list. That's also your mistake, because lack of
-internal review does not mean you can post it to the mailing lists. Talk
-with your managers or colleagues about missing review, for example.
-
-Best regards,
-Krzysztof
+-- 
+With best wishes
+Dmitry
 
