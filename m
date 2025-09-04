@@ -1,87 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-72045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18841B43B65
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 14:20:40 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C801B43B85
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 14:27:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E77CA7A6679
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:19:01 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DC621894DB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:27:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80F9A2E1C6F;
-	Thu,  4 Sep 2025 12:20:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E13632F1FC7;
+	Thu,  4 Sep 2025 12:27:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lF7F4rPW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HnH2Meh/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF542E8B69
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 12:20:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52BC12EE263
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 12:27:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756988427; cv=none; b=Nu/qOGAiff2HfH5w1uPtp9ezR80Fpufeaej+Bd9cr4T4t9KURoAKmfguZfbuTe4Yemro+4fimLy8qUlhg2CfQqzBTJ2zNVKEI6RZEmm+aINE77gGwrld2cQx/PidfBSrH46+ohobDyNhH3Ol1BaveJDX55TjDm9T3PxixSvjoy4=
+	t=1756988832; cv=none; b=CV4Fhkzy4tfltyPvntYiyai/uip1ijfQtC1AQ20dxKVUK38lerZgUBB/afl4OrPgiTTB+Y4RO9Fwaun38IW8X4McwGDCNAFzsVrkyN5ayl8aOPD2Udcy4OOzKk5vm9VhCbE5mWOPk8R995z/ww8B76sFs1YAYgzk5XDcA58Lnqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756988427; c=relaxed/simple;
-	bh=WSevKUXT8Sd3MNuHsHxr6/qElbPatDgVFUDgAsLQo28=;
+	s=arc-20240116; t=1756988832; c=relaxed/simple;
+	bh=f4BEDTpaIFxgOxQCFGxUUhEky18+3IyRDrYj23UF1v8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZsB/vQEGQSB3K7w831ZtQ1gWcgj2Z4u6wyxKngrPFAsBDPgaaMMkW6VbE97xj+hFAyPgxHsuKoLdfW3gieKlyQe6Mx/pwE388gUGBsDoeQkPlh95AtIvmto2gDSQUJtfYCebHnayI3L2NMqU25nesBN1BWhrVsRLfJRFI+80Z/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lF7F4rPW; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=SgW0DKqx6zsv3LJ1mlWcuoJPiAzcDZecytcEzuK2pyu5TIPEp1Y2ONt7dE9YM9VzxKfU3pgTIaGzeVDs919j2IozVQkhmaFENHNVWJ/7NEjSs4FWrD/19Ocva/qDwmjY/QTQJ0zHnxN0TQORtdyhqiaE6j4pCfW+E5k2X5ZE904=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HnH2Meh/; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849X6EX013960
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 12:20:25 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584CG0Sp029357
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 12:27:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5K9lLVQuDJ+jtHy71mkQmBdSNzf+tzhKMiiJck53fBU=; b=lF7F4rPWrOffjepL
-	rsGbLMBcrr/o0u1vA79M2CB/+mfH5wIj83TWwnJh+F+QRnx3WlwOJGXmt9JB1Zkd
-	2P0xkeVRT2bFXFmBFSZKTH/UYUJUyn4x+bOy/okVY6d17h5B0U06b2zJC8zA37uA
-	UBNmqU84QUn7dS6Bxqo0Gf8grPibg8Qt6jBVhF+gx7y1LLByeFw6AMM2BECys6zA
-	TeJAqx3wbGlenM4lv4pmV8mWVWjT0CArCYPUy73HXYM1jiM9QjdbLWZnQW2bccaT
-	bOFOk/lOnxPTxp6ipcWk1m3AWB10fildxvoYY14Q+N2zlJbD8v4AoACNSLqIR64Y
-	EPePRA==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uscv7jk8-1
+	6/8bBRQQfSsfRGQAqYBd7sJUcBVC/hns4We20/YRtIY=; b=HnH2Meh/0Ulpkx62
+	sbUWp5L0yXnt6vtFSgMk1l4jfGQy3S9u+q722SZ9shJeGOStOTAoyHNWSIfyw2zd
+	qvoTRJKM7DKvBlzOWCNolNzyNU/pALkyt3Jdu31MOJskjtKbnPZLCSIzaukl5Yxo
+	5wIR7nh35jbjSD/HSL1/35w09hJ2Vi5018Vj4SteG06IKw1+/3kvT6DzlAoSegDE
+	yn3MeJFyCexFNeaYcl4AWIHmRuba7ueWRCPNtcLtG3nTkP32qT5YWGLedGoT/Xj6
+	+rffLJP8ScZmmDH1iYc1bc3ntkRzZ03LxXfdAxs2ebLy6ER5b27N8CCSR9xOp68L
+	48IZyQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s7gmb-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 12:20:24 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b3037bd983so4337941cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 05:20:24 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 12:27:10 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b32dfb5c6fso3323001cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 05:27:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756988423; x=1757593223;
+        d=1e100.net; s=20230601; t=1756988829; x=1757593629;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5K9lLVQuDJ+jtHy71mkQmBdSNzf+tzhKMiiJck53fBU=;
-        b=M8BWe6peCXaDSqSUpY0PG54v+pMDUGQCT/OCZGuFipOcFjqFIDT2zZZiUK0ePhKE/v
-         2yvAq23xiFc5gUANRyZs3IottDrkgi5I9PiEqW5vX3iXE5zq8mlYV0hrG6zmVYVgLWCi
-         f3+RmBKlpFqtRoeVpvw7X2xQYUmAUxLHCFRQ7LwqHS8QY2vyfrPFSw/VKiRGhW6t3Zej
-         KDx2XO4vT+cYQZiMHJpUKK86wNby02tpIrI/ET8rv0YsHPrq89GuQfoGNuxZ1yk91sDX
-         iuwNepQ/m0uvwVfhKuBNEkstx/JhWC3InUHFcG8Wd2jmepxTX8Yz9eIHGFUo0k6d01VP
-         yFDA==
-X-Gm-Message-State: AOJu0YyuuuFrKpFr5JDFeW7+MZcjoHmE7NdmnKLDJavDXk6vlJpcKCvy
-	GME4oH0j1y1Qk3jw3ExsSiSsxGMKd3zIlwV2ApNn8WQ/zxodGRa+8u634sHJZvl3Yg8xk5vqU+3
-	0Otn9e5YCSE71tAVyRBkRiDjIJ48QC4s5PgzEFHIH1eeCcI1KY4lT4ewD3ftKu3DeXTby
-X-Gm-Gg: ASbGncsoSkSBgSQCv8WzhdrUmdxPJUXt2xODzdFHtlyhbXk6DxLzXKY864d25ND6bfO
-	RPgmW9ffSkH26vweEt4F9sINS+kjfkmXkrHWF24BUj+X3Nljw7amz5Coo3IV6XaGoQCkRoPG5+z
-	g2W65cmYYDqxHWapImbekwsiljKBFpyamg56QhiLMEIhrHR2h46oX1C5hK62T/R3hwCen5ceVNH
-	61ACHpr/Ltkr4SQXBYzw+oahVqot8Dc3TFIugJ+oM28iKo+wj8CwkaislcVsKuFVOY+29QMtX7O
-	aSfplLEGirqpV1mmRcJfsxR5+HPLuoeSILhG739geI8GHz9nhkBAELIChi2fDXKbp0YJHAT/nSI
-	baYB3pgx4wHmKahbF4GWkUQ==
-X-Received: by 2002:a05:622a:148:b0:4b5:dfdc:1f0c with SMTP id d75a77b69052e-4b5dfdc2c5amr6767161cf.12.1756988423045;
-        Thu, 04 Sep 2025 05:20:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEq92zIM2PJ5tnKQijo/OGWPykJlP80988PfhS9zLD8jSYpTvRaC1PomVJTiMQsaS8+adW20A==
-X-Received: by 2002:a05:622a:148:b0:4b5:dfdc:1f0c with SMTP id d75a77b69052e-4b5dfdc2c5amr6766811cf.12.1756988422416;
-        Thu, 04 Sep 2025 05:20:22 -0700 (PDT)
+        bh=6/8bBRQQfSsfRGQAqYBd7sJUcBVC/hns4We20/YRtIY=;
+        b=NaAiY7he1WtoPa+Fwuaksf70LUIgbmTWcirX1n6azL/ikLqdTkuOZ9uIPAhvTszSxw
+         AOjVEPz76YdS8tW8saOuwJLDmymyXeJZ2zZei6UY22VT92q3N/bh55jUWIFQpUolnhZ1
+         fkvviOQQJSgcAwCh4X6Rlj1mKBdCz81WQF2GCGl7Tzr8YOvrKj1ZYem5ocr2IIljoBGx
+         YUeqyvCF5rNc7d+h0//SF0jCcgxlUpz+OPzI0N+A1CfQjjiOWegUG7+rfB+p07UkOFb1
+         ll9rA2rN+Mxos1Z9F0Fkpp2vEDgY1ptaDufwIBpGolFsovPwBf2VOomsTEdd7p4C6CzT
+         ILSA==
+X-Forwarded-Encrypted: i=1; AJvYcCXzO7KhRcbBKhjYTrQ9nqAq+P7h0fA1f3WoqsIvGEmR5RKTr8sMpV2QUAkauiirvqBo28ftXXKOfA3uENHf@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywn5oKAD9G8RAgCX+bLocuiqOyK5UrrGlhLhJmc0X5aWyGdyVsT
+	9GHEz9ydWyLh4KijirfHMM1Dlc/D2tHuLo73PcQAogb5VcAp6+9yx+VnJ1+CvywL1EQ9dbkMI2A
+	+P3iT7zAIewrMFr97fcKS7kpafYW4JDeTRWaNG6L1jclCZpSJ0xuQtKizzuzgjQ3a8wCN
+X-Gm-Gg: ASbGncv4PfeqKHiqgGSS0U48HeeIS0BtaTJsRJilQEfpslM+oV198oWJU+CA5OJkOiZ
+	eL/Zo/urL8VrWhlKctsDIbcmiVnknW61ORK8x/dGhVBtJfLBCBGxkZqeb8exfKtHcWFjb/BXbtW
+	kziAL0B7oSZlVs+VtRr4EqPnN+5D7WhoDVpjQ4JPh9Cyqa/ZHfOkz0VazkAF372DeQVUTDvEBH6
+	DIGj2vIuvyiG5ARroni3v4JqnqMyQDzRoZCCXJYqPtOMZlspqAWIzvVd6UyPPa7INTLEK9W4xFA
+	jIhyeM2PUo/tJ5Mjf3fg34LvBqJ+6MQU3JTlU4bg8WdlAeZlHEdBOKWjgbBMSxsDkRp6zFLpjUW
+	1fIw1cHGFgPoUGjsFySMQwg==
+X-Received: by 2002:ac8:5a8d:0:b0:4b4:907a:f4dc with SMTP id d75a77b69052e-4b4907aff6amr44513151cf.8.1756988829035;
+        Thu, 04 Sep 2025 05:27:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7fByTNFwWLSt3Qdv4UjF2X7GxBRz0W/fUi7b1qegd+l6kiz0+neLeqvIjx1M7JKz/RF8LlA==
+X-Received: by 2002:ac8:5a8d:0:b0:4b4:907a:f4dc with SMTP id d75a77b69052e-4b4907aff6amr44512881cf.8.1756988828400;
+        Thu, 04 Sep 2025 05:27:08 -0700 (PDT)
 Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0413ee67a3sm1164960266b.24.2025.09.04.05.20.17
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b009ae4f2ddsm1374396066b.82.2025.09.04.05.27.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 05:20:21 -0700 (PDT)
-Message-ID: <95b40735-367d-4702-b2e6-01c9c5604e5e@oss.qualcomm.com>
-Date: Thu, 4 Sep 2025 14:20:16 +0200
+        Thu, 04 Sep 2025 05:27:07 -0700 (PDT)
+Message-ID: <d12957f0-f8b5-4b29-967c-576dadd565de@oss.qualcomm.com>
+Date: Thu, 4 Sep 2025 14:27:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,88 +90,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v9 5/7] arm64: dts: qcom: Add initial support for MSM8937
-To: =?UTF-8?B?QmFybmFiw6FzIEN6w6ltw6Fu?= <barnabas.czeman@mainlining.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH V5 4/4] arm64: dts: qcom: sm8550: Add max-sd-hs-hz
+ property
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+        Sarthak Garg <quic_sartgarg@quicinc.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Conor Dooley
  <conor+dt@kernel.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>,
-        Linus Walleij <linus.walleij@linaro.org>, Lee Jones <lee@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Rob Clark
- <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Robert Marko <robimarko@gmail.com>,
-        Adam Skladowski
- <a_skl39@protonmail.com>,
-        Sireesh Kodali <sireeshkodali@protonmail.com>,
-        Das Srinagesh <quic_gurus@quicinc.com>,
-        Srinivas Kandagatla <srini@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-gpio@vger.kernel.org, iommu@lists.linux.dev,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        linux@mainlining.org, Dang Huynh <danct12@riseup.net>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20250903-msm8937-v9-0-a097c91c5801@mainlining.org>
- <20250903-msm8937-v9-5-a097c91c5801@mainlining.org>
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Adrian Hunter <adrian.hunter@intel.com>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
+        kernel@oss.qualcomm.com
+References: <20250903080404.3260135-1-quic_sartgarg@quicinc.com>
+ <20250903080404.3260135-5-quic_sartgarg@quicinc.com>
+ <6deac56f-e21a-4447-bfa7-a414084676b8@kernel.org>
+ <be87fb2f-7036-4039-8ba2-63d54a9ae732@oss.qualcomm.com>
+ <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
+ <a304ec1c-7364-4926-8763-8c731e461eb9@kernel.org>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250903-msm8937-v9-5-a097c91c5801@mainlining.org>
+In-Reply-To: <a304ec1c-7364-4926-8763-8c731e461eb9@kernel.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMSBTYWx0ZWRfX2SW65PlT6uqM
- c+0K+w5wnEvgIVcTgUQz0CTe53HjAWPrXuEExl5YMZG38YM0ZCCeoMa8mJMBo3fKZ9Ovz/bhBNt
- HUpPFkSVKcqk141UBPC10dh6WrJH1GOJKyMTamKtxWErinASYl4PUhdhlVQ99uvLCPQPoNIIspO
- R04AOrgei/cGIIcllJXSiLH7cKRqO9mr3OpMjrM8j3Z4+xi9UAuLgfISUIL7EPFkE9309dwpkQY
- Za4CWTAV39EZq65W2MG9jh3IN0dZ7mKB8f/OBItV5F/sIvKaP8Vpc2GHlvF6R1xe46SprUonkMb
- gxQk6l2uhuUPYuuBMff2XtDlV0Xq2DAqok4RccYkcoSbOyiiEzSBCvnKV8kp1i012fkOo2S3SiK
- Ye/xutSj
-X-Authority-Analysis: v=2.4 cv=A8xsP7WG c=1 sm=1 tr=0 ts=68b98408 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=bBqXziUQAAAA:8 a=EUspDBNiAAAA:8
- a=OuZLqq7tAAAA:8 a=9HHfay7fNgEZ8udxRwkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=BjKv_IHbNJvPKzgot4uq:22 a=AKGiAy9iJ-JzxKVHQNES:22
-X-Proofpoint-ORIG-GUID: 1OOCaMSNH6aZ50WX7WN9BVxMdcRmSUgA
-X-Proofpoint-GUID: 1OOCaMSNH6aZ50WX7WN9BVxMdcRmSUgA
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX/7RffYSabJtE
+ pjEpQUowKtbTN8B8xD6d0v3KqimsGxm9V+WkI0y8iNbB1/Nb3PNOg1dXgJsf15x+/wQ0hbxFIs7
+ YMfNWWOjNQwq+BEgtN28lBadXBUNlcJAtmMRbt/uw/QS/xrtxAsGk9h848LBsg5G2hHRySnzzIv
+ 9XEqMGfJWcl/pyASy1kBg+E3eIucEisAW8FQORjshzz1nuYIuTTRHn1qjtFhb2/ouW1iu3ZV73J
+ g0YvrA+kWBRc7wdnnKsK+fgURrjBRti7HnxoofItlnYvJqHvCFJ2fKktnGsSuNXQ/+G4MAnCkRH
+ /zUxPSwIqwFbdIoV77HnNBRYSg2B+w0aGHI+VWNSGGMJKM0RDbZCUQIa/hvxApZFbN6ec2wzODf
+ xlgaZDnP
+X-Proofpoint-GUID: UKc6Hx9PJUTnsQWLg6wvNroaj74zMHAo
+X-Proofpoint-ORIG-GUID: UKc6Hx9PJUTnsQWLg6wvNroaj74zMHAo
+X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b9859e cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=noZB7YPBI9-alL1Zr8wA:9
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_04,2025-09-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
- suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015
+ suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300031
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
 
-On 9/3/25 11:08 PM, Barnabás Czémán wrote:
-> From: Dang Huynh <danct12@riseup.net>
+On 9/4/25 12:52 PM, Krzysztof Kozlowski wrote:
+> On 04/09/2025 12:51, Krzysztof Kozlowski wrote:
+>> On 04/09/2025 10:36, Konrad Dybcio wrote:
+>>> On 9/3/25 10:21 AM, 'Krzysztof Kozlowski' via kernel wrote:
+>>>> On 03/09/2025 10:04, Sarthak Garg wrote:
+>>>>> Due to board-specific hardware constraints particularly related
+>>>>> to level shifter in this case the maximum frequency for SD High-Speed
+>>>>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
+>>>>> card in HS mode.
+>>>>>
+>>>>> This is achieved by introducing the `max-sd-hs-hz` property in the
+>>>>> device tree, allowing the controller to operate within safe frequency
+>>>>> limits for HS mode.
+>>>>>
+>>>>
+>>>> Probably we will now replicate the same discussion... And it will be
+>>>> happening every time you send the same and not reflect it in commit msg.
 > 
-> Add initial support for MSM8937 SoC.
+> Just to emphasize this - it will happen EVERY time.
 > 
-> Signed-off-by: Dang Huynh <danct12@riseup.net>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> Co-developed-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> Signed-off-by: Barnabás Czémán <barnabas.czeman@mainlining.org>
-> ---
+>>>>
+>>>> Bindings say board setup, this commit msg says board config, but the
+>>>> patch says SoC. This is not correct.
+>>>
+>>> Both are correct, looking at the problem from two perspectives.
+>>>
+>>> The bindings description mentions board-specific limitations (e.g. because
+>>> "the board's electrical design does not allow one to achieve the full rated
+>>> frequency that the SoC can otherwise do, in a stable way")
+>>>
+>>> Here the author tries to argue that almost all SM8550 boards are broken
+>>> in this sense, because the reference design did not feature the required
+>>> passive components, making most (derivative) designs sort of "broken by
+>>> default" - and only some (if any?) vendors decided to go with the
+>>> additional components required to lift this limitation.
+>>>
+>>> This in turn makes it fair to assume the developer experience would benefit
+>>> from having the SD card high speed modes always work (with the slight speed
+>>> cap which may not be required for the 1 or 2 designs that took the extra
+>>> step) without each board DT creator having to track down this property
+>>> separately.
+>>
+>> And then if you send same v3, I will ask the same. Can the author
+> 
+> v3 -> v6
 
-If the bindings checker is happy, I'm generally happy as well
+So, would you be accepting of this patch if the commit message was:
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+arm64: dts: qcom: sm8550: Limit max SD HS mode frequency by default
+
+Due to an implementation detail in this SoC, additional passive
+electrical components are required to achieve the maximum rated speed
+of the SD controller when paired with a High-Speed SD Card. Without them,
+the clock frequency must be limited to 37.5 MHz for link stability.
+
+Because the reference design does not contain these components, most
+(derivative) boards do not have them either. To accommodate for that,
+apply the frequency limit by default and delegate lifting it to the
+odd boards that do contain the necessary onboard hardware.
 
 Konrad
 
