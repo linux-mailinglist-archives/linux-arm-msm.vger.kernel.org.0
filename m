@@ -1,63 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-72010-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EE74B436E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 11:19:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F0FCB43723
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 11:31:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E19735A0DD4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 09:19:10 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CE6695A202F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 09:31:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BBFB2EE61D;
-	Thu,  4 Sep 2025 09:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF0E2F744D;
+	Thu,  4 Sep 2025 09:31:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l/96Upit"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EIH6VLj7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C53D42DFA26;
-	Thu,  4 Sep 2025 09:19:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E4A2F28F7
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 09:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756977546; cv=none; b=Da/60sUpwTYp++I7AcQu8HC7l9LG9empx+8a68TX00oA+COIOsbgaJoePWAZMJHN9LGGRRlwNS6To39T3gxt1tLTFy4dZt7Naz1F6d3rXaJHnp8HVCAQqGooy4ryvYf02kHD3CprXy17kvoyQR4wHNMhMaEZHNqI5rjfbKS85g4=
+	t=1756978263; cv=none; b=q1TEKyJHDNRWxdhcHtVdso3YfT5QcEuhkrlQnmTEEb9JFZYYA862gVLDlVlGz3rus0wLwuziPaQ//R36buTR729svr2VilzPLKMLue9lQIcODwhX7tDA2J/SOEfV3YD2GvK2p88Fdkx37Apae6Y1qio8KLlYUQ/Ng6YhZm9ZJFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756977546; c=relaxed/simple;
-	bh=pOtCgn/R5R30ybiZxFxw8oEKZ031yya84xjSg0TOgrc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=Owa0vnDagDwBvJIdgHz7JzFEaU6bxpvbltZgw184LG6mG2+yMRQGphCqTDu+kv3Svv8khFTbejqRw06KiRurg1tSjthpp6JkVondqMmUthJVTlW3fwIJGrlS5qB4zjQIjLEAHZ6+Nrtk30WKz/n2bRrvMfuZZu4A6qeaVyyczf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l/96Upit; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5841mNP9004991;
-	Thu, 4 Sep 2025 09:18:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	s=arc-20240116; t=1756978263; c=relaxed/simple;
+	bh=/3akGTP1lkxwZtcmtPRlyFMRA5KFJLoGC10m6yCNL/Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=srZ4PZHQm8c8dzl81zUC5l/oI+oSzANqD2MpMZw+WRinP+sRuvboAnhQtMrKQRN55q3CCbay5MxEFfW/EweBE/0F3X+LRjIkIO7saTM4yWXw0f5b0W5PhI9SHq46Y5lPM962m8y2FBPPCSGjd0GP+Ec0jgLI3o8K3QODeoq/at8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EIH6VLj7; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849Tk2X024888
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 09:31:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	baoKJWLvfk5vZCL5Lo+mCicXEHDPlRdfFPrnWUAdlV8=; b=l/96UpitUBFhZyhu
-	aw9nTg3a5tN8qH0YwcQHjKZu5AuvtFHioKyDDbBu6kHMWP18sLliM6/cajbslDOH
-	Ink3RWSKdSKo9vqF3QJiFWxrj29Xf54Iy/+UiUGIKa9WyVfHbcCQef0oYha2kMol
-	L9j1YStjZdTam9QURNCR80scnOaGabMkb3E2JK5LMG5q1Os1BB25/phFBn57mQh2
-	WolMINnCW7vP2jERgYWQZ/QDyexRgsYK+BmvKrvDXF4AjIB1MW6McV9VGQU5+yqT
-	54i3dL5GWPks4Fro2tjJmKQvZezB+pQvICG12XQZG4MwJ4mAdlrYa/YxlvqSqlZy
-	4LpohA==
-Received: from nasanppmta03.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s70h7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 04 Sep 2025 09:18:51 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 5849Ioqj027240
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 4 Sep 2025 09:18:50 GMT
-Received: from [10.217.199.111] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Thu, 4 Sep
- 2025 02:18:43 -0700
-Message-ID: <2735afb0-96ba-4efb-818d-0a7b342b7145@quicinc.com>
-Date: Thu, 4 Sep 2025 14:48:39 +0530
+	gjaZTDZ/aDD7rrhljwAWbgjgue+W9I7isKzXGnJxcQs=; b=EIH6VLj7d4SEajTq
+	Q4X2BCIDmfej9ZKbihG5UfoQ6T6Qljw99MgWVr8Kv5msP8BpjpATcPTOjhNR4x0g
+	EF1zSe9lqXSRQWLbDh2tdyx/XBW02e3AfdBzf7a+HPRbet7305Kyz6YidM+WxJjC
+	J0VI1fb2ozPMUxq6XA2I/x2CVlQsjtG4DUUoGZkO0U5tPhyBe3j/lJizJxkd/GNk
+	DS+1ZFG8bFGURb0bje4xsGJd6JYfNlH/nk9S78LckBEAvbIOgJ4eCZn4PNd2b+hP
+	EvNGcyLDYTeirOH/ZcN83xOW7swxZGv9HHRQ2fwV0tWQNIAp9Hx/EsPWmSvcYSX1
+	9DHXXQ==
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urw0713t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 09:30:59 +0000 (GMT)
+Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b47156acca5so739846a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 02:30:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756978258; x=1757583058;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gjaZTDZ/aDD7rrhljwAWbgjgue+W9I7isKzXGnJxcQs=;
+        b=ZuVXZI3/FOWDkjrCAxAWif03KA6L/GTL2yymxj8jfInf1kmumtS9f5ZW3kOaPh/3zu
+         JtD3z4o3hRF85ZP5XN5VbpzfmD6NTkS2EpgrPNvxD67ugX/bL1yc28QbJ2D9x1DMzmj5
+         FBuKeFwzt1wa+7b295ppPywtTchJLMH1Vzq10NpAx20+fDm8Z0VbUP8Ur30vH41G8VfY
+         pE1OhkTpnCOAhfGotkldnXRlg5Cnh6Tw8XLiMpkaSm7yYRq42ay6qHFBVU2VnNu0WrKd
+         t6Jz8u3dymFYTBkE01Q5g496kRvf2+jgwmgV9YXGl0gkP3bd1abxqz/riJVDiXyt51nl
+         QvYw==
+X-Forwarded-Encrypted: i=1; AJvYcCWplcRurC6iTV28WLONbvOz4Bvlowt2ANU2AQN8HVEDRy0D1eOy14SXDrediZp3Jc8hxBoiY9XzCFdD5C4U@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8HRjDzJC9/ySVG1mJPR9fntYXw85hxuxBhlJf2/SSYltPzHxe
+	Zc330z6XGNVXGc9NJmWmnu3n7NHo7lUTtio0IXavJ9rj3AqVMcBWxWj2ZUtz+ZZE+NHUjgit2B7
+	XD0SV0jVDawVAIK2zM1CegGQ+IKNOFMJm4PeQcEKiHtsLjudx23Sj/Tj4gV1Z1XnIcY4a
+X-Gm-Gg: ASbGnctRAxb/QlpMRGPy1AolhfJ+JRGkFLctVYQ0+DqWEhe5I5u59BdXJcTyki4R6wG
+	HZCJ4tDT1lIbrfkq3X4Rrj6/PKDS+WuGTqNTLbobNzzZ9OVpfYZTNLpuzg2CKAy8d6JFaKv0Pv8
+	lOg/twEBvNURLttrfULesqayWVSpl/7hBXeyL4k9+iRFvjYChUyAjJGD2CcynusLNP8Frw8m+Ue
+	bLpwgOOISNjbnFafYa8mIwFWR9R9rh/qsdqRGYVqdIxdqhNMEyv0RC3lJlOQNhPVu5xk9aC452I
+	hG4Bg4UB9jOtGabq85nMUMj4s47a1gA9DUKYGHmN+0PjjhxUkRGqNBGnPRilbek1bbc44kht
+X-Received: by 2002:a05:6a20:430c:b0:243:a7f1:ffd9 with SMTP id adf61e73a8af0-243d6f03220mr25742558637.14.1756978258536;
+        Thu, 04 Sep 2025 02:30:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFMkvfv7QM1gNoAVHNThaAcgLHPGgeMYdHu4pMt4ULdHgTWcrUFnW10134ZoHlO5C/MUQvZQg==
+X-Received: by 2002:a05:6a20:430c:b0:243:a7f1:ffd9 with SMTP id adf61e73a8af0-243d6f03220mr25742533637.14.1756978258059;
+        Thu, 04 Sep 2025 02:30:58 -0700 (PDT)
+Received: from [10.92.206.21] ([202.46.23.19])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4f2c990296sm12110931a12.39.2025.09.04.02.30.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Sep 2025 02:30:57 -0700 (PDT)
+Message-ID: <3202167b-9403-4b68-9b99-55be190f7e2c@oss.qualcomm.com>
+Date: Thu, 4 Sep 2025 15:00:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,109 +89,95 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/6] arm64: dts: qcom: lemans: Add GPU cooling
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Akhil P Oommen
-	<akhilpo@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>, Konrad Dybcio
-	<konradybcio@kernel.org>,
-        Abhinav Kumar <quic_abhinavk@quicinc.com>,
-        "Marijn
- Suijten" <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst
-	<maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Connor Abbott <cwabbott0@gmail.com>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Rob Clark
-	<robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>
-CC: <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        <devicetree@vger.kernel.org>
-References: <20250822-a663-gpu-support-v4-0-97d26bb2144e@oss.qualcomm.com>
- <20250822-a663-gpu-support-v4-4-97d26bb2144e@oss.qualcomm.com>
- <4ac0ff3d-38db-44cc-9e36-44f9e819e96d@oss.qualcomm.com>
+Subject: Re: [PATCH v1] bus: mhi: host: Fix potential kernel panic by calling
+ dev_err
+To: Adam Xue <zxue@semtech.com>, mani@kernel.org, jeff.hugo@oss.qualcomm.com,
+        quic_yabdulra@quicinc.com, chentao@kylinos.cn,
+        quic_mattleun@quicinc.com, mhi@lists.linux.dev,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: imocanu@semtech.com
+References: <20250902165635.18951-1-zxue@semtech.com>
 Content-Language: en-US
-From: Gaurav Kohli <quic_gkohli@quicinc.com>
-In-Reply-To: <4ac0ff3d-38db-44cc-9e36-44f9e819e96d@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX5EQpLzs7wFrs
- cC5KQJ/Qgxtm76RRZlGCjb7joFFWqqziKCj97/71EtxV6YEvyO4/fflEM3ezJ6fuUoZdDn+scDV
- dZ7EMTKicO27xWqtZ/4PSv297cVonRUL/gacBiT3JrCtn/8p7XlKkIlLOSZzvxwGz3h7mr7g3br
- Ft+XyX7KcMtsYS+hf1JjfELonjGEVAEv/sqDCpnM6kBtIDijuMjQOtQKH2CgTrq6aS5he0D3jtx
- MhGeU0uav+igxOMnY8CZKSBq0PrIWXooInxpBbVILGLUSgW/4+skPn2xSFoq1P0i4iQu0pSnqmu
- L06t4ZiGIFVi7+5oVMUJT32X8oZ0rBxoTx75a4kDupgtBu44m4om8qSwaI6zZ3VC3F6RxKORmI5
- kItkk8dC
-X-Proofpoint-GUID: r3AiJCyyTwPoA44C1DZF2D46RO5W0qtj
-X-Proofpoint-ORIG-GUID: r3AiJCyyTwPoA44C1DZF2D46RO5W0qtj
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b9597b cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=Tnv4r2qD--CattBqy9UA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22
+From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+In-Reply-To: <20250902165635.18951-1-zxue@semtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 4zpeQaeLEqeo_CzGOTMubvevOtQBjkqP
+X-Proofpoint-ORIG-GUID: 4zpeQaeLEqeo_CzGOTMubvevOtQBjkqP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfXzvyyEYxEzKC5
+ ANCKxbr8t0epELww5+pA7ZEARDs+eAf5T8d9UKxJE2qdN/u5YzxlSRHK/50ecrukWhpGsNXuwYC
+ DMnneQxg635WMlljTnrXzDlYcNjvdBlX6z1Vhx3bZSQz4gxlj7G8w/MzHFniC0OiTC0KxXsXs/v
+ tvaUM+bcdAec+h8/SlBURaW31T81RFywyRivxV8L+V6q34VteDA43Kv04MNdb1VMgcCmv2WFiDQ
+ PU0IGm0F2OD/wHAdtzK8g2gyqA5adJvBB/8GD+EjYxu9ScjtEmoiGmsF+125xVm/RD/HoyqjWbh
+ jiToT4TO7EqHHQDKE+M0PIEv54gEjcamWYkQshA6K3VYe+0QY7zu9NXFGIzp3E8syJ6fHCDqw9s
+ Y5SaTTPF
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b95c53 cx=c_pps
+ a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=SfXQzQb2AAAA:8 a=xogcm1YOMVM3hb4W_dUA:9
+ a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22 a=187EmVsF5pRpP46aC3wK:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_03,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1011
- suspectscore=0 adultscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300027
 
 
 
-On 9/3/2025 5:48 PM, Konrad Dybcio wrote:
-> On 8/21/25 8:55 PM, Akhil P Oommen wrote:
->> From: Gaurav Kohli <quic_gkohli@quicinc.com>
->>
->> Unlike the CPU, the GPU does not throttle its speed automatically when it
->> reaches high temperatures.
->>
->> Set up GPU cooling by throttling the GPU speed
->> when reaching 105°C.
->>
->> Signed-off-by: Gaurav Kohli <quic_gkohli@quicinc.com>
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/lemans.dtsi | 67 +++++++++++++++++++++++++++++-------
->>   1 file changed, 55 insertions(+), 12 deletions(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
->> index 8eac8d4719db9230105ad93ac22287850b6b007c..b5d4d07b2fd9c14a6f1cc462c695e864394cade2 100644
->> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
->> @@ -20,6 +20,7 @@
->>   #include <dt-bindings/power/qcom,rpmhpd.h>
->>   #include <dt-bindings/power/qcom-rpmpd.h>
->>   #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->> +#include <dt-bindings/thermal/thermal.h>
->>   
->>   / {
->>   	interrupt-parent = <&intc>;
->> @@ -6816,13 +6817,20 @@ trip-point1 {
->>   			};
->>   		};
->>   
->> -		gpuss-0-thermal {
->> +		gpuss0_thermal: gpuss-0-thermal {
+On 9/2/2025 10:26 PM, Adam Xue wrote:
+> In mhi_init_irq_setup, the device pointer used for dev_err
+> was not initialized. Use the pointer from pci_dev instead.
 > 
-> You don't need labels for the thermal zones, just the trip points below
-
-Sure, will update.
-
+> Signed-off-by: Adam Xue <zxue@semtech.com>
+> ---
+>   drivers/bus/mhi/host/init.c | 7 ++++---
+>   1 file changed, 4 insertions(+), 3 deletions(-)
 > 
-> Konrad
-> 
+> diff --git a/drivers/bus/mhi/host/init.c b/drivers/bus/mhi/host/init.c
+> index 13e7a55f54ff..93eddf302a49 100644
+> --- a/drivers/bus/mhi/host/init.c
+> +++ b/drivers/bus/mhi/host/init.c
+> @@ -18,6 +18,7 @@
+>   #include <linux/slab.h>
+>   #include <linux/vmalloc.h>
+>   #include <linux/wait.h>
+> +#include <linux/pci.h>
+>   #include "internal.h"
+>   
+>   #define CREATE_TRACE_POINTS
+> @@ -194,7 +195,7 @@ void mhi_deinit_free_irq(struct mhi_controller *mhi_cntrl)
+>   int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+>   {
+>   	struct mhi_event *mhi_event = mhi_cntrl->mhi_event;
+> -	struct device *dev = &mhi_cntrl->mhi_dev->dev;
+> +	struct pci_dev *pdev = to_pci_dev(mhi_cntrl->cntrl_dev);
+>   	unsigned long irq_flags = IRQF_SHARED | IRQF_NO_SUSPEND;
+>   	int i, ret;
+>   
+> @@ -221,7 +222,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+>   			continue;
+>   
+>   		if (mhi_event->irq >= mhi_cntrl->nr_irqs) {
+> -			dev_err(dev, "irq %d not available for event ring\n",
+> +			dev_err(&pdev->dev, "irq %d not available for event ring\n",
+>   				mhi_event->irq);
+Don't use pci_dev in mhi as mhi agnostic of the underlying transfer
+protocol like PCIe.
 
+Use dev_err(mhi_cntrl->cntrl_dev, here.
+
+- Krishna Chaitanya.
+>   			ret = -EINVAL;
+>   			goto error_request;
+> @@ -232,7 +233,7 @@ int mhi_init_irq_setup(struct mhi_controller *mhi_cntrl)
+>   				  irq_flags,
+>   				  "mhi", mhi_event);
+>   		if (ret) {
+> -			dev_err(dev, "Error requesting irq:%d for ev:%d\n",
+> +			dev_err(&pdev->dev, "Error requesting irq:%d for ev:%d\n",
+>   				mhi_cntrl->irq[mhi_event->irq], i);
+>   			goto error_request;
+>   		}
 
