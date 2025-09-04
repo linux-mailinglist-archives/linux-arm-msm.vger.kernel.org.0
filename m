@@ -1,224 +1,137 @@
-Return-Path: <linux-arm-msm+bounces-72091-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72092-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E3E5B4409E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 17:29:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B538AB4424E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 18:10:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7EAD67A5FD3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 15:27:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7CA50167407
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 16:10:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AEBBB23D7EE;
-	Thu,  4 Sep 2025 15:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 28C712DD60E;
+	Thu,  4 Sep 2025 16:10:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JykgU5gr"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Wa4jLwVi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84F6134A8
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 15:29:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9700B2367DC
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 16:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756999761; cv=none; b=FPb6BtSmeDosWQD8BK2QxoKmxjmVmwF5QnbEZ/U270qShmKOBsfOedtBgSbEoD1RiL1dASVjpkge+uLNnWumaOEKppR0sl1xAhug94BXXztYE3/zCE17IQpkkA400bMvhlv6vKhzJoe836MsgI6ge5wQp9OvLC3eofFswQxWBKU=
+	t=1757002208; cv=none; b=iQDjA4GZbNLY22hbdPqfR6MczvM7GtqinWwhmaW0knCmLwoDFAv9IlwjDOx4hIk6jbtj4RNRptw/qzq1a7GfpHO5eGh1VaQtY3pwHBiqoL4z/f096pv0gc0iF+Bya62Hyruw0bAyhoR/T8mq9RMviIWub04z3B2aYfTGLACqoCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756999761; c=relaxed/simple;
-	bh=EUUOJm8+pqfJE0C02BV4F6cE3SBmlMX62RiOmXxnlyg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RL+nh+seVAVkziSJC3CRb4lP42+mb7PDM0igW9UZgqLdNmxyLCQHItLW8YgA3SNTlTNI3mo5cZQyS1vNaouHNFF1xMDtYvExZYWRub64c67+qoQyWK4a+7jN92dodQR4gZl9dnnotGWWtzRrUo+QBsxu+p/sGGkAIXEMWwe3N+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JykgU5gr; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849XBwR014013
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 15:29:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	aCKrmPJEFXGT0WYbXHZg3VTYOIhYkJFe7iTrbDkI7Yg=; b=JykgU5grP0LzChRS
-	jo5fMTmzga1W8yeVxF9tViRBvkFXCJtHR7aVYgmLnoqxhr9ttxNTxlGbZsS4LdRN
-	kpsDb53P3r3X5KkbWDFxac815aVm1cUa1fLkD+NMSL3FOGhM9YAkXrkyeUJ6g3r3
-	go9383tqDVDZUo6MbK/JJTuRcmNg1ikvHWaGxgVpgdiWVZtxFlqnPTviuC+i6zOb
-	orDfQhNzgKA3FudfFzcbgNh+zFlz7oubp3DMwkUV0jJ773Z7HdaX0J8xPyo1ow8k
-	K3nxAlgQPa+EMv+QseXkgHtUGVQYJJTg5oHDfA744/Dzy+cff7TLAMoZHK2yoRJS
-	uYvHtQ==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uscv843q-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 15:29:18 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-24ce3e62946so4003365ad.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 08:29:18 -0700 (PDT)
+	s=arc-20240116; t=1757002208; c=relaxed/simple;
+	bh=4B1WDqfUq2D6wUhHvf0RYUUm0YDiTX9CuzgLwCT63hg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XNOpPSd9U36iC+z8wsqWj+z/oZeKCm8k2rVfQSGM3Vq22UdGTGTyZ6+UywNBXOYiKqpPXvwP/5qAIZoXxvAVzWFtXYI7rPwMydcBgQ5sKQKYoUyEN5zu1g7pufPtvoKMuNUw7vgyrAPl/rGP1LNVGt5uY3yRwEXwZN4r2jXxFbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Wa4jLwVi; arc=none smtp.client-ip=209.85.128.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-723ae0bb4e4so14246617b3.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 09:10:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757002204; x=1757607004; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=R0WjAIlRtq73jqXFwWJ/YWFSrK/kill+F6JVs0WrJkQ=;
+        b=Wa4jLwVipnWtcJ3cPVPE5Obr3BZVxjTHMugwXYlJfJ5r4++RKsRhiUj31KICutrVST
+         AVxREnuSidurkqNhC+JyHFP6V8qLHKxb7jZfufIthRZB3xhYd0Pjqtxmifby4NVlx7el
+         ctUffwp8fusc8+XbcbqMmB5/5DMIUVdshNv00IBq3IMl7L8NQTci3Tcy1XrUgEbFHtpr
+         JHvZ6zXO6YF0tzkoOfEuAu+vwj4twZ1PmeFZXxv+EYs3FBP3G9PJnVjQ8Sif9B3YW0Nw
+         Q7HL0Bpm/qCKkMdrGs0AIIHCr8WmZtVZ0kac/fariYB4wWHYdYGRtB0KVn844Yx205Cy
+         Wm8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756999757; x=1757604557;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aCKrmPJEFXGT0WYbXHZg3VTYOIhYkJFe7iTrbDkI7Yg=;
-        b=cStNL3mxpaXeu/GiiSfjz8FQ94/9UrHUxrCHLKSmwLml5gdQLimXBTMC164Cpveh0u
-         um/OU2aF7yE/wDBrwl+VyGZ3FtYD8YCyDEPyThID3IWMdwcqCT+k5l2ycOC4+6fHvcRE
-         t1Ip+rN7kKtD9xrPuT2PX3hoKuyoLyzGHb8Ne3AKZiQuuLQf7D3RlgISTnK3YoUx3cJF
-         ZEwfpR8ngKF8XZV1S18NbIYLSwgtM7/YTreCElbyOQk2O4ul+UOnRGgHz/eOaWvUBUf1
-         pL88qs2aQY6mhCxk0POiNwdxO7rnc3lI+sk8FY8++qd5VHC8P1DNKGh2x0yN6Bznpm1m
-         OTIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUUfP0ZIvIHz3ubFuxNmpJuWul3fjdEM3EgVGXi6mrtyC9r4ZLYao9bqwu86IgK7Q5y0Js/tj92YeTNlFvB@vger.kernel.org
-X-Gm-Message-State: AOJu0YyrwcQts/kXc9VURyaN6Rqf/XJ5vAMMqpUxV8QW0E6QoScanpCD
-	JSEwVRANW3RqgPLXne2VzmXkXd0pjWwkXGtH9H3ccQ5z+RDa91NgiF17Xg0YUce4Wp+XgXAs31z
-	hYe0BNuoaYPymz/jbYUsHnbW/WmDyuInvVXVks27qLMLo0kNHy2anPBkVMHaOMZ0uxE2E
-X-Gm-Gg: ASbGncv421NV7MHLWCfrE3xi95BD/HpjwLQMx0dWjIbdbCMsZ1DomM5iBtPc7vv3kXw
-	0W3f/h8zQA5OsVHCy1kBfCmpJXJewLaeTc8If84cQOVWKTUQnOJRHGOwh+VmNF/QKmsReCFaPpl
-	nsEFslat0Bkwuu9i+2KKVIUWYINEeXHoSQaRndZ/MQzHJddE5sxEMfs4rBCGWyY6A2N3ioJ+GCv
-	MS1/g0r6kHdzBxCPtC1MB8GWhP1OHmNIfacftqWxmt+ti1Foz9rRXTAeHTrrbThqYWRYOFA3bzZ
-	M2xAqZy0HRI7jhWZLLJWS8GmlktC1SilpHE7gUYjxLMpALVXnnCkZUqQvbqHDhi4WCgn
-X-Received: by 2002:a17:902:d4c1:b0:24c:92b5:2175 with SMTP id d9443c01a7336-24c92b5262fmr76676055ad.24.1756999757449;
-        Thu, 04 Sep 2025 08:29:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4JhBNWdG2V+TxgIDesrLMeTY0t0q4ahoJ30jB1TKaWOy2/eOV1xvyNkelIVpDUVQxYmrVWg==
-X-Received: by 2002:a17:902:d4c1:b0:24c:92b5:2175 with SMTP id d9443c01a7336-24c92b5262fmr76675745ad.24.1756999756970;
-        Thu, 04 Sep 2025 08:29:16 -0700 (PDT)
-Received: from hu-wasimn-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327c5fc5055sm22049502a91.14.2025.09.04.08.29.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 08:29:16 -0700 (PDT)
-Date: Thu, 4 Sep 2025 20:59:09 +0530
-From: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>, kernel@oss.qualcomm.com,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, Monish Chunara <quic_mchunara@quicinc.com>
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: lemans: Add SDHC controller and
- SDC pin configuration
-Message-ID: <aLmwRSROlgXxw3bI@hu-wasimn-hyd.qualcomm.com>
-References: <20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com>
- <20250826-lemans-evk-bu-v1-2-08016e0d3ce5@oss.qualcomm.com>
- <rxd4js6hb5ccejge2i2fp2syqlzdghqs75hb5ufqrhvpwubjyz@zwumzc7wphjx>
- <c82d44af-d107-4e84-b5ae-eeb624bc03af@oss.qualcomm.com>
- <aLhssUQa7tvUfu2j@hu-wasimn-hyd.qualcomm.com>
- <tqm4sxoya3hue7mof3uqo4nu2b77ionmxi65ewfxtjouvn5xlt@d6ala2j2msbn>
- <3b691f3a-633c-4a7f-bc38-a9c464d83fe1@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1757002204; x=1757607004;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R0WjAIlRtq73jqXFwWJ/YWFSrK/kill+F6JVs0WrJkQ=;
+        b=Zl1DMJr5W4tAPWgjkQFDTgNOgUoHk+T4I6E4Knd0W4MwQqjqBwL8i3hKt2ME+Frdf/
+         XvkU1QoCRd4UuhDORWmSpF9jLNd3KnrkKzws/HxKG3VHHLzQ9XNxIxc7DrExgxp0bvJf
+         Ga/1pXG+32hRvANt9pkbnoKDd5fx1UBImy7gH9qzZpePy4CRdWFVSX9zElC/+/Hfv9w7
+         5RQZlwQL43rrVeb5ZovB5VAL0UrbZr0iNLiu81KNnLVdIzjmRaEyYKQmrsOEz+jdUUoY
+         P8LRDOC5jQnAOZFv1qEqLgIg2GvZPl3EjVFTG7zu88oz7hLIS20iB7wP57tctxF+EcMz
+         rm+A==
+X-Forwarded-Encrypted: i=1; AJvYcCVjY5c9hg3/9YxjsZMb4umnGEMSe8ADYMiCH/5W95obF9GXtg7k7HEliWPe/CxbYUpF+dU3V+7idXFg+B9c@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6wxnh1srZtKKAsLBlgu0f+fXS7qmXE6jg9pslll2hNjFGf3O8
+	Xt1UjNfg2DEw0c35j0LRTLnmkbXWnhfpjjH+1wMNKIm9SgxrDn+/As9ytWML6uk4SdIGzgGqARv
+	LUAqzJRvpXShsU0qBaE9VY0b/SZzOT/N1oKmexhJ4oA==
+X-Gm-Gg: ASbGncsYbP7KDbZ7/BCrGc3dxRZ4lNctWhuo2y5mgg0O33IkVpx6dAPi6UV1Kz1fqpQ
+	02+Bo6ccTGXI7Wy1FwoTaZ8Gjp+HgvmH4e2HXIzvJELVzTWFg6CDaq7izs9oPry3oNXL6HIecH+
+	f6pAnMyIuE9szqBLZNpqpuEaNKI7Nq3+YQzEuzwjeMavpEAKnQRcmU62EFd5pmKdr87ALBm4uPm
+	dyVOBt49tTWMc3u7LH45JCQ1wfY/w==
+X-Google-Smtp-Source: AGHT+IEkDrp/iAHP7LO1Blxb93ohjQvbbpujHX05sJO9KR7HZ0IPMJaCz6DrlDT+Kc+vE46+lITVA2uee5pwGcRyfs0=
+X-Received: by 2002:a05:690c:7446:b0:723:b0e1:af82 with SMTP id
+ 00721157ae682-723b0e1b035mr107641407b3.30.1757002203809; Thu, 04 Sep 2025
+ 09:10:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3b691f3a-633c-4a7f-bc38-a9c464d83fe1@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMSBTYWx0ZWRfX51avA9eviDCq
- pHEC/Ifboh2IEA0AqTy+KE3iXM5Gtl4iLFfHBYfAvWXytAvflAwiQypawzt6YPChz2k0ehD/mfB
- 8D5RNcCvRZVAQ3hPSAcwypnsWKdISlRAGLgRukTprAhj2HxP8uu7Vy0EVRVkBqeKVMeP2Ax+0Vq
- OOiNofVPcChjeT9GkQn+NwuFzWmQSxF7W9R2NcEkZv+5m8OZ3jPIv6ntASNLBcmfaOHZNLyhj4d
- BcLp3cEaG4S+f3iUpV3SBgskQDEG85FY0R/Gyy5FeHhmhZho8YY81Ao81Xthy8UhcgTMPh8Pp+K
- nU6+zyXrE9kOrqjrGhfNakDDvmf2eybCqSCjgjIPKWxaZxpv7HGuOdTPw2PZR3Kx5oxwyL4221J
- 20gyXLRq
-X-Authority-Analysis: v=2.4 cv=A8xsP7WG c=1 sm=1 tr=0 ts=68b9b04e cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=7jlciowUQMUDIi_Z8n8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: b2F9oZx4d_HwwSsrGQxjtkhHcJR-UvH2
-X-Proofpoint-GUID: b2F9oZx4d_HwwSsrGQxjtkhHcJR-UvH2
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-04_05,2025-09-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 impostorscore=0 bulkscore=0 clxscore=1015
- suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300031
+References: <20250819-v6-16-rc2-quad-pipe-upstream-v15-0-2c7a85089db8@linaro.org>
+ <20250819-v6-16-rc2-quad-pipe-upstream-v15-12-2c7a85089db8@linaro.org> <xcq25wmw7roelcmoljypn3ozt7kqvylgibz2cloxghaeurcwvs@jjay7hton6md>
+In-Reply-To: <xcq25wmw7roelcmoljypn3ozt7kqvylgibz2cloxghaeurcwvs@jjay7hton6md>
+From: Jun Nie <jun.nie@linaro.org>
+Date: Fri, 5 Sep 2025 00:09:52 +0800
+X-Gm-Features: Ac12FXxuR9VMKn0d2kpIG3AfgErZjwj23I8v-YMzsr0ZIo5YsvdKfiRaZSKyFmA
+Message-ID: <CABymUCNXVfZyhCbkiqzJ-K2zGe=bofD82OD20d-CG+a-KkgN5Q@mail.gmail.com>
+Subject: Re: [PATCH v15 12/13] drm/msm/dpu: support plane splitting in
+ quad-pipe case
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robdclark@gmail.com>, Abhinav Kumar <quic_abhinavk@quicinc.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
+	linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 04, 2025 at 04:34:05PM +0200, Konrad Dybcio wrote:
-> On 9/4/25 3:35 PM, Dmitry Baryshkov wrote:
-> > On Wed, Sep 03, 2025 at 09:58:33PM +0530, Wasim Nazir wrote:
-> >> On Wed, Sep 03, 2025 at 06:12:59PM +0200, Konrad Dybcio wrote:
-> >>> On 8/27/25 3:20 AM, Dmitry Baryshkov wrote:
-> >>>> On Tue, Aug 26, 2025 at 11:51:01PM +0530, Wasim Nazir wrote:
-> >>>>> From: Monish Chunara <quic_mchunara@quicinc.com>
-> >>>>>
-> >>>>> Introduce the SDHC v5 controller node for the Lemans platform.
-> >>>>> This controller supports either eMMC or SD-card, but only one
-> >>>>> can be active at a time. SD-card is the preferred configuration
-> >>>>> on Lemans targets, so describe this controller.
-> >>>>>
-> >>>>> Define the SDC interface pins including clk, cmd, and data lines
-> >>>>> to enable proper communication with the SDHC controller.
-> >>>>>
-> >>>>> Signed-off-by: Monish Chunara <quic_mchunara@quicinc.com>
-> >>>>> Co-developed-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> >>>>> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> >>>>> ---
-> >>>>>  arch/arm64/boot/dts/qcom/lemans.dtsi | 70 ++++++++++++++++++++++++++++++++++++
-> >>>>>  1 file changed, 70 insertions(+)
-> >>>>>
-> >>>>> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
-> >>>>> index 99a566b42ef2..a5a3cdba47f3 100644
-> >>>>> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
-> >>>>> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
-> >>>>> @@ -3834,6 +3834,36 @@ apss_tpdm2_out: endpoint {
-> >>>>>  			};
-> >>>>>  		};
-> >>>>>  
-> >>>>> +		sdhc: mmc@87c4000 {
-> >>>>> +			compatible = "qcom,sa8775p-sdhci", "qcom,sdhci-msm-v5";
-> >>>>> +			reg = <0x0 0x087c4000 0x0 0x1000>;
-> >>>>> +
-> >>>>> +			interrupts = <GIC_SPI 383 IRQ_TYPE_LEVEL_HIGH>,
-> >>>>> +				     <GIC_SPI 521 IRQ_TYPE_LEVEL_HIGH>;
-> >>>>> +			interrupt-names = "hc_irq", "pwr_irq";
-> >>>>> +
-> >>>>> +			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-> >>>>> +				 <&gcc GCC_SDCC1_APPS_CLK>;
-> >>>>> +			clock-names = "iface", "core";
-> >>>>> +
-> >>>>> +			interconnects = <&aggre1_noc MASTER_SDC 0 &mc_virt SLAVE_EBI1 0>,
-> >>>>> +					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_SDC1 0>;
-> >>>>> +			interconnect-names = "sdhc-ddr", "cpu-sdhc";
-> >>>>> +
-> >>>>> +			iommus = <&apps_smmu 0x0 0x0>;
-> >>>>> +			dma-coherent;
-> >>>>> +
-> >>>>> +			resets = <&gcc GCC_SDCC1_BCR>;
-> >>>>> +
-> >>>>> +			no-sdio;
-> >>>>> +			no-mmc;
-> >>>>> +			bus-width = <4>;
-> >>>>
-> >>>> This is the board configuration, it should be defined in the EVK DTS.
-> >>>
-> >>> Unless the controller is actually incapable of doing non-SDCards
-> >>>
-> >>> But from the limited information I can find, this one should be able
-> >>> to do both
-> >>>
-> >>
-> >> It’s doable, but the bus width differs when this controller is used for
-> >> eMMC, which is supported on the Mezz board. So, it’s cleaner to define
-> >> only what’s needed for each specific usecase on the board.
-> > 
-> > `git grep no-sdio arch/arm64/boot/dts/qcom/` shows that we have those
-> > properties inside the board DT. I don't see a reason to deviate.
-> 
-> Just to make sure we're clear
-> 
-> I want the author to keep bus-width in SoC dt and move the other
-> properties to the board dt
-> 
+Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> =E4=BA=8E2025=E5=B9=B4=
+9=E6=9C=883=E6=97=A5=E5=91=A8=E4=B8=89 17:39=E5=86=99=E9=81=93=EF=BC=9A
+>
+> On Tue, Aug 19, 2025 at 09:31:06AM +0800, Jun Nie wrote:
+> > The content of every half of screen is sent out via one interface in
+> > dual-DSI case. The content for every interface is blended by a LM
+> > pair in quad-pipe case, thus a LM pair should not blend any content
+> > that cross the half of screen in this case. Clip plane into pipes per
+> > left and right half screen ROI if topology is quad pipe case.
+> >
+> > The clipped rectangle on every half of screen is futher handled by two
+> > pipes if its width exceeds a limit for a single pipe.
+> >
+> > Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> I've run several CI workloads. This is the first commit which breaks IGT
+> tests. See https://gitlab.freedesktop.org/drm/msm/-/pipelines/1503075
 
-I'll move the no-sdio and no-mmc properties to the board-specific device
-tree file, and keep the bus-width configuration in the SoC-level file.
+Thanks for the work! I did test locally with all my patch set on sm8650 and
+did not reproduce the issue. The baseline is not aligned with msm-next-luma=
+g
+yet because I need to port my platform patches to it. I will do it tomorrow=
+.
+ Do you think this issue is related to difference of sm8650 and sm8350?
+Regarding all failure cases are write back related.
 
+- Jun
 
--- 
-Regards,
-Wasim
+>
+> > ---
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  |  11 +++
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h  |   2 +
+> >  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 137 +++++++++++++++++++++-=
+--------
+> >  3 files changed, 110 insertions(+), 40 deletions(-)
+>
+> --
+> With best wishes
+> Dmitry
 
