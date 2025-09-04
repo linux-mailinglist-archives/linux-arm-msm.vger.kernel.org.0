@@ -1,142 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-72140-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72141-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB19EB449EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 00:51:41 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7B13B44A18
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 01:04:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CE333B8B3E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 22:51:40 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7C3FB4E19EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 23:04:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 148772ED869;
-	Thu,  4 Sep 2025 22:51:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDEDC2EBDC8;
+	Thu,  4 Sep 2025 23:04:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gA2lXBAZ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ndKRIeWU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBDF273D6C;
-	Thu,  4 Sep 2025 22:51:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4837E2E3B07
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 23:04:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757026298; cv=none; b=HgeulfPwwFiE2lLZXBjujuxHu5CCI2mVyDLHmuDOi5GS4HU2zpmLsRjjlqtCCVPzD6ocIJVa2GPHo0ux4xVLHWHg7X1CcdkYo53hLmpIsEbGWGyU8x4dFY/QOA1fuZ0l1XQOjMUWJIgLw2CpRKUtt2jvrf9ls2OPoRWkEcHvtQw=
+	t=1757027081; cv=none; b=AmGfa4sFnoe4WtVhP+ZkmFBY/gpGUl5RpT3Qk8gGScO75uPBco3rOHLhSU/57bjSP/0Q+5aZSQ9vET8CnFqz+Q2cIMl8ebUUAKHbpvZHi8U98i94aXpJ6PElt5isrT+pfkmsnrPT6YiogGSvwEIuYkDtV2Xoh49Vv/esJOqZDhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757026298; c=relaxed/simple;
-	bh=rZxlIRFhfwXJ8Ey0B89TYPM99pCpKry9h4aA8gtZwaI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Dl+5VEqSoC6BB2trRKkDT4s1tFrN5XkRRc0wxXL27BRZRFKL8vs+6pcmSDZHjlvWAIZ+XcPqCn6cmTQEYGIl7D4iVe2TWZDpNVt9oyqNm0ARPkI3LSf7RWl1QfKiH8JyqrpdZcBIDsDPQL/Sg4w1t/0CcOp0c2WDHpyk9Mfp/9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gA2lXBAZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E616C4CEF8;
-	Thu,  4 Sep 2025 22:51:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757026297;
-	bh=rZxlIRFhfwXJ8Ey0B89TYPM99pCpKry9h4aA8gtZwaI=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=gA2lXBAZQ1c6we6EDVbvHv6Tj3+Hfno0ZMz/zM2ejt3eJ5dEaaTZoHJFmVacOx93F
-	 7wvqVuFpmAQ0afNQh2bjNmZe4VhY0yx8zOKy0LNN/+l3vF42zYRxq9YIJuN1TQhL0p
-	 B0O+EjG6SdOj6xMkvGympx4RwRwkoI8e6c8T4ZGGWiLK2gm1ZQxT0sLSjankSumcPH
-	 RHxLXMe8vdBNBAwVQ3QvR5gSZLadOrg30fNzKVwCXOCAhV0qPE/mYYKnIwei4/NiEj
-	 o0ZBIOkxnDPSbr/RkQlft3p8stLtSsvLMWRknu5WRAXNfykxjX0GeNq2XvViAn+mBC
-	 Dea3uXCMNXr2g==
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-61a8c134533so2765660a12.3;
-        Thu, 04 Sep 2025 15:51:37 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCVpxYeeQqTj7Ccw+hsY0iZxGBCsn2qog/RcqtuNx7lXN2yY8fnVs8Kce4l/T586fwus3rvqXA2AKUYo@vger.kernel.org, AJvYcCVsxyfoFkmM+8nWCiIjWtKASqs+fU40hdqvWqzrF5C85wksISUJ31Pao3p48t1esVxICXP3krn9PkIlCfo73Jg=@vger.kernel.org, AJvYcCWFU2J1uVzD3Xk3dqeyEbZWx3hZc2dQSWoEEknagl2ICRdpMmlL59r5kYb1UVBjU0bQCc80RvcpROlihRp22w==@vger.kernel.org, AJvYcCWWy9/JcyyoJnwjzsJ4INUbGDjEUyTRjrp8JerRxXLYTILU7X50nwpxSMkaHMr6ySRY+SBCawsCmIUexswi@vger.kernel.org
-X-Gm-Message-State: AOJu0YzE1WOkBcuT9gH/aDYeUYSedDrO39W3YPB285S3fYVlnXFUS3Q+
-	0LK5mFkre3KKRQz9Wxt+wFBQub9Qs7RbSoEXxRV47kkWEhxqj5M76vGCdZwXv1EfRF7lW41Y78s
-	l2I7FYcIF0mVYACTV0KajGvRHCjuUmQ==
-X-Google-Smtp-Source: AGHT+IGaxOtL7PADVJ97dEblpUi1tzP0d34qEZbRrN12oBJr/y3CK4z9uDffSlyNPCZutOvejrHGmEfss/I3Efw3GWs=
-X-Received: by 2002:a05:6402:3589:b0:620:a0ff:36b3 with SMTP id
- 4fb4d7f45d1cf-620a0ff38d0mr2021228a12.8.1757026296065; Thu, 04 Sep 2025
- 15:51:36 -0700 (PDT)
+	s=arc-20240116; t=1757027081; c=relaxed/simple;
+	bh=CaZoi7xlGTITN03Rjj7zYchtrmw8+uuybVBMH6eekaI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Yi95kqEZmHQfDNNTm7r59aZA8OqMWRI0m6wIf+Yr7YivLvTN78oU5ckqRMMbPNvCaozeRcVjw9tRQT6jZGSTSJ32a/20NoXGNfJsFe+8LRj+8Hy0G75vSblq+ZYzHL3jHOS/tzG3ePk+bVvpcY3HhoA07xdmMmkoclR4lIux4yQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ndKRIeWU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584I3JEh008120
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 23:04:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	JTGAHvO3dzWq+EoS5uNJA1yAwMH+0tq3Qa7fTg/qeOs=; b=ndKRIeWUxsKm4r9B
+	fkR9Vy4opdUjNOAoEUZCVRmZlDZuAKklzixJtOmrH8fKyqYbXmyPWsPHQTY4SUu8
+	MT+ksulpUrWVX40qXOYEKmL8Uw65PveiomSAnElpPjGbMaIfpwYpkEQpNB/6usos
+	Z5G7xCR+qq/3q4LOhnUrSWMzF2GX8243GvuRAQaRe+UTYI/JohHQaXBWOw92Fazw
+	YyeTL8VcvQnIPFKZoNSd8lAw3mJ3sS475UXikkpgQGiiExFkGvH99JKsOCwrdDMF
+	ktZxVHPlcAl96ALRYvdQ78+GwROlQzZlxiCbmFg6dM376m/I/KTwlsk7IMzEqw8T
+	u0UWyw==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjs3ux-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 23:04:39 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-772642f9fa3so2479346b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 16:04:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757027078; x=1757631878;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JTGAHvO3dzWq+EoS5uNJA1yAwMH+0tq3Qa7fTg/qeOs=;
+        b=cvwjgP4/nH3PZjUy2cJTwGYKIzyxwwhApGvtcF01FrBVqRDp+X9/t58fjyHSybAzN9
+         g7eZJMrI8k9o7f1eDjJmfB0e82pBLSuoDT2jd/7SuzF+jFwve36x9jCthwLeyWku6T4u
+         VebynY3UlZiE/gyT+TWWe19rWPUwkefnkfUUxEsK+95t4t95mrLVTMnW6ev+35mEK4Lo
+         K9eZhvU2MOY+oHcSyCwvERbyByiyZaUYqfgr4aMhb0ftLMXAA2od9eVDX6+9i9uhT/ue
+         cxUP2cDRg+2to/NiLdApwyR/qPdjWvm0neKEw+ZVHqWIeDhKL/fYqcZsHVbUcLdBZBz8
+         UkRA==
+X-Gm-Message-State: AOJu0Yz3URt5Hf/BgxR5wd9O2u1xMa1CIKwDFnbkcrYLd5XBHXz1kSjR
+	cwO/fsLZe8nKvP5yPyYrMcm+Q9r3y7H5mM5BPRHNOSmB1w/+pe6KNxiG0Gpuxa8tSeQNfsg/y/+
+	CVtmbTRLGeDb9+xtPfy+euZMftY20oNmVXV4PnwzVyjQzUdLqP0Z3IlwdmstLhy6DFPim
+X-Gm-Gg: ASbGnctFmB/FqTt/z0zXVaukbgI4Uieb7g8qD8j1ZnjIDrMKF+LBI/FBZvdx13SL1wQ
+	ebLRLV4VhWmcsZbZz6pw6Z0CVFbgxjoLs2aVzJdnmJFEYOw7/5LRICI/SKCA647V3/th8s+CfvO
+	frltDOhsoqkU8ShcbnCmzu9yMRagrvMvvwYyO7/m7LW2kO+87jB8uCZa/dzCkzHoM7ym8zU9V6Y
+	xdRCDBJl89gfz8pZSDcfAywQx2sjYbZlk7slMgafSmoskq1YQdKScQxxQLQETdBaDGQ4zAIgLEx
+	jggX9u5xXV1qi+fCl8Z2mQKjtygr03uPfEglE0FzoXAsmg+eE+5S5/jwKF5ugEtOPBWHJ1t65iT
+	7JqXBQ8lC7TLxLezaDSyDDA==
+X-Received: by 2002:a05:6a20:2585:b0:24e:3021:dbca with SMTP id adf61e73a8af0-24e7cc21f79mr1728270637.4.1757027077748;
+        Thu, 04 Sep 2025 16:04:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+iA5dJCDJ6EKl6d9KKQ/arjY5Bfhgn5AoMxnI2wmHjrjJTPiDNbZX78JO/uNCpw5DqrwAAA==
+X-Received: by 2002:a05:6a20:2585:b0:24e:3021:dbca with SMTP id adf61e73a8af0-24e7cc21f79mr1728238637.4.1757027077247;
+        Thu, 04 Sep 2025 16:04:37 -0700 (PDT)
+Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4edf7ed519sm14309145a12.28.2025.09.04.16.04.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Sep 2025 16:04:36 -0700 (PDT)
+Message-ID: <7ac0c9f2-754c-4ba3-bde1-fbde9f3aab33@oss.qualcomm.com>
+Date: Thu, 4 Sep 2025 16:04:36 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
- <20250904001014.GA3405605-robh@kernel.org> <a547ecce-31c7-4627-ac6f-aeeef81bd0ff@oss.qualcomm.com>
-In-Reply-To: <a547ecce-31c7-4627-ac6f-aeeef81bd0ff@oss.qualcomm.com>
-From: Rob Herring <robh@kernel.org>
-Date: Thu, 4 Sep 2025 17:51:24 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqKuoJrkActpLXVUW9e9=R1FESUbD_rwBd5NGX2_Yv2ASw@mail.gmail.com>
-X-Gm-Features: Ac12FXzkfB2c0iRpvpGj-xHclRNDJptX4X0vzi65Szyc16ZA5DCfpUwJ2Dn7HNY
-Message-ID: <CAL_JsqKuoJrkActpLXVUW9e9=R1FESUbD_rwBd5NGX2_Yv2ASw@mail.gmail.com>
-Subject: Re: [PATCH 0/2] Add support for Gunyah Watchdog
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/12] drm/msm/disp: drop PSEUDO_YUV_FMT_LOOSE_TILED
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250705-dpu-formats-v1-0-40f0bb31b8c8@oss.qualcomm.com>
+ <20250705-dpu-formats-v1-8-40f0bb31b8c8@oss.qualcomm.com>
+Content-Language: en-US
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+In-Reply-To: <20250705-dpu-formats-v1-8-40f0bb31b8c8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68ba1b07 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=djW4e6U6kngvZURYzKAA:9
+ a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-GUID: pl_derGW5KWyXMnIfcgakP4HbHj1Qifw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfXznV8AeAkgGPw
+ zZVSl3Pc/mFTLzzBLQ7O14ZsaV97j2/E58uSnTH8PKj/4NUoAAcMN6Wp1eqvgE9iybnXj+enU35
+ WYhxcZgdBM2vY62iy4dCyr5firVjZoMA0riCFsJilBf0Qh3zDkQgSjEd7l6axDzOEDEnSZTYG7X
+ ZV79Q31mza15snK2c/6kxVlBsrogHWDsBbOBQcskushJVC1vT+sW6h8ijYh+wCy5mouqGMUvTLS
+ bC1sQHpfSiiV6tRBnsQjaXp6leN6Bk+kWGJBZ98BeHRcyg5XPTjrIgONFqCpJpsbS4RRToHN1Qp
+ v7L/PyBJtFAmEncR0LC9WoYqVkvaDNnDkPllvrnGDA9ypuIiUI4tD5OhpHT2UHFAwQRQqjGzV94
+ GMxtR+Hi
+X-Proofpoint-ORIG-GUID: pl_derGW5KWyXMnIfcgakP4HbHj1Qifw
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-04_08,2025-09-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
 
-On Thu, Sep 4, 2025 at 6:31=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 9/4/25 2:10 AM, Rob Herring wrote:
-> > On Wed, Sep 03, 2025 at 07:33:58PM +0000, Hrishabh Rajput wrote:
-> >> Gunyah is a Type-I hypervisor which was introduced in the patch series
-> >> [1]. It is an open source hypervisor. The source repo is available at
-> >> [2].
-> >>
-> >> The Gunyah Hypervisor doesn't allow its Virtual Machines to directly
-> >> access the MMIO watchdog. It either provides the fully emulated MMIO
-> >> based watchdog interface or the SMC-based watchdog interface depending
-> >> on the hypervisor configuration.
-> >
-> > EFI provides a standard watchdog interface. Why can't you use that?
->
-> The use of UEFI at Qualcomm is not exactly what you would expect..
->
-> >
-> >> The SMC-based watchdog follows ARM's SMC Calling Convention (SMCCC)
-> >> version 1.1 and uses Vendor Specific Hypervisor Service Calls space.
-> >
-> > Is a watchdog really a hypervisor service? Couldn't a non-virtualized
-> > OS want to call a watchdog (in secure mode) as well? But I don't know
-> > how the SMCCC call space is divided up...
->
-> Gunyah traps SMC calls and acts on a subset of them, passing others
-> to TZ
 
-My question was just whether it's the right call space to use. I would
-think hypervisor calls would be things like "vm start" or "vm stop",
-not something which in theory could be implemented without a
-hypervisor in the middle.
 
-> >> This patch series adds support for the SMC-based watchdog interface
-> >> provided by the Gunyah Hypervisor. The driver supports start/stop
-> >> operations, timeout and pretimeout configuration, pretimeout interrupt
-> >> handling and system restart via watchdog.
-> >
-> > Shouldn't system restart be handled by PSCI?
->
-> I believe the author is trying to say that the watchdog is not
-> configurable from Linux at present, and if the platform hangs, there
-> are some indeterminate default settings in place
->
-> >
-> > Why can't you probe by trying to see if watchdog smc call succeeds to
-> > see if there is a watchdog? Then you don't need DT for it.
->
-> There apparently isn't a good way to tell from a running system whether
-> Gunyah is present, unless you make a smc call (which could in theory be
-> parsed by something else, say a different hypervisor..), but then this
-> patch only introduces the watchdog interface, without all the cruft that
-> would actually let us identify the hypervisor, get its version ID and
-> perform sanity checks..
+On 7/4/2025 7:47 PM, Dmitry Baryshkov wrote:
+> Drop PSEUDO_YUV_FMT_LOOSE_TILED(), the macro is unused.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-IIRC, last time we got just a gunyah node. Now it's that plus a
-watchdog. What's next? I'm not really a fan of $soc_vendor hypervisor
-interfaces. I doubt anyone else is either. We have all sorts of
-standard interfaces already between virtio, vfio, EFI, SCMI, PSCI,
-etc. Can we please not abuse DT with $soc_vendor hypervisor devices.
+Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 
-Rob
+> ---
+>   drivers/gpu/drm/msm/disp/mdp_format.c | 20 --------------------
+>   1 file changed, 20 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
+> index 6f5af26d4e2d43414281197bf541e1ea3fe211f5..f949810567d83c5924f9dd127261e7d523921724 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp_format.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp_format.c
+> @@ -326,26 +326,6 @@ static struct csc_cfg csc_convert[CSC_MAX] = {
+>   	.tile_height = MDP_TILE_HEIGHT_DEFAULT                            \
+>   }
+>   
+> -#define PSEUDO_YUV_FMT_LOOSE_TILED(fmt, a, r, g, b, e0, e1, chroma,       \
+> -flg, fm, np, th)                                                          \
+> -{                                                                         \
+> -	.pixel_format = DRM_FORMAT_ ## fmt,                               \
+> -	.fetch_type = MDP_PLANE_PSEUDO_PLANAR,                            \
+> -	.alpha_enable = 0,                                                \
+> -	.element = { (e0), (e1), 0, 0 },                                  \
+> -	.bpc_g_y = g,                                                     \
+> -	.bpc_b_cb = b,                                                    \
+> -	.bpc_r_cr = r,                                                    \
+> -	.bpc_a = a,                                                       \
+> -	.chroma_sample = chroma,                                          \
+> -	.unpack_count = 2,                                                \
+> -	.bpp = 2,                                                         \
+> -	.fetch_mode = fm,                                                 \
+> -	.flags = MSM_FORMAT_FLAG_UNPACK_ALIGN_MSB | flg,                  \
+> -	.num_planes = np,                                                 \
+> -	.tile_height = th                                                 \
+> -}
+> -
+>   #define PLANAR_YUV_FMT(fmt, bp, r, g, b, e0, e1, e2, chroma)              \
+>   {                                                                         \
+>   	.pixel_format = DRM_FORMAT_ ## fmt,                               \
+> 
+
 
