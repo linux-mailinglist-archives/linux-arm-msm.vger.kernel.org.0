@@ -1,93 +1,94 @@
-Return-Path: <linux-arm-msm+bounces-72027-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72028-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C2FCB43955
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:56:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5353B43958
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:56:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 87E177C0592
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:56:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4FEA91C80215
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:57:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 598132FB968;
-	Thu,  4 Sep 2025 10:56:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 686072FC005;
+	Thu,  4 Sep 2025 10:56:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pGLY5wks"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="JDgdoIht"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59182FAC05
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 10:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B332FB63B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 10:56:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756983409; cv=none; b=Kuw5E2Lhdd9FfIaU537VgzhTfQc/CJ7o71bsJezKhF9GvYo2ScB/coZQPXDXH5mBSh8jU5zGnBLnaqjPYvHELI1TpcoiNDF8tM0uocd3Lr+gidpntouqyHBPUarEfBYEzvg645+MLugod4WG1z3uAvHdO2cFY0GDMlwaCg3NPYs=
+	t=1756983410; cv=none; b=A/Z2xEG8HgJh363EELNH2ciyTuaHGUuaBNA5rfU6/DK1QwkXVzuqpSL8KKFGz7+eKi7LRiXHRaEDT7VFzNzuqdXViVQZ+Y1tFBccNw01w6V/6iB0yP58Y7kweEbeP5lhNMMYxRrsmVDfrlRMtJKU1qXckFX/8vAAyV7wOGXPNEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756983409; c=relaxed/simple;
-	bh=6dzcJu5beHXFPE2ysDUwBwwBtBpB4yJJYn3tCF46Fow=;
+	s=arc-20240116; t=1756983410; c=relaxed/simple;
+	bh=v5ysVI2U/oh21lZONgkiOffTVAxpv7ka1beglSqt7zs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CwKkuY1ZeXAJuLwqZvRB6YSHGomv1z35CbpxW+W7AgZmrWcsaED7aht9xRLVOZwQ1kTWV5RgTeP2i4zgmSS+tV901Y0Cl6K5rDYtOi/12jJt3q2IYVjkvxGbUcHwwykTR9EVr5mktrhfbcJkE0ugZqgTH/ICMvQR5Xs+2PSgSLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pGLY5wks; arc=none smtp.client-ip=205.220.180.131
+	 MIME-Version; b=B1xrkXNzNdHV18oOSmUd/6oE6sq2ja5RniqCy4LuS1UdMkLEKVuhljtFB7WTi9pzLnyX/8x4uuQDwNBGkN6Bh1cxxEHDFlLdgeiIKjb1gcoYdgQlPNoWOSeQGTDhHK93uso8fi2+Ms57KGdRL0AF1GnW/xik/dsUwEbEupN5Sf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=JDgdoIht; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849XAhO008141
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 10:56:46 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849X9bN007616
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 10:56:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=B6VI6rYD+l1
-	gAQRdPHYZqiU7gvDzWifBcr0RacDOpag=; b=pGLY5wks0rpbFWhMhfWy8+K4MYV
-	EXMP2eg57SyA94om775L3BkUc4FnSVmxlrjfD6xTnd3bS0ioeR+IB+UOQMdEAEgY
-	kTE2cmWTjbxobF0FTKVNVCcq5t8AxH0dbFNOiwOkK63LbXs3N8V0xagMkAkEhMqp
-	dLsFfvN0onfYsnE6CVh95KRiyft0FfKHWvDjMR6IQd57b49vWHcwKN48VGGx+vYx
-	cuJN2UhJWd4etuQE2YxQGmDLwazkvdciFnROm7OcLfJhzwai0qEhZlStvWXNFejS
-	TIZU8nlKdva5XTk7YrRncOkwGxgw1Ah+B+sOe4diHymTB0uCvtqK3SqqHlQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjq5tx-1
+	:mime-version:references:subject:to; s=qcppdkim1; bh=FBClr38gw2V
+	NN9TJfggNIGizEzrQ3dx3VKp0vsyukpM=; b=JDgdoIht852f1DRcyC5/eUmn9yU
+	UYPvJmlfgn6eQcugiTitE5kIUHqqqeiJ88SJOnIChZTqqnjQ5nE4y90SD6ReGuvO
+	Z1ZTha83+L23c9Vb53h+GPgvt3BTINzsjxOaFoSkFrOIQ+WKLwq4QAuMJyzRhSC8
+	s0ftWWrH5No/YdaCek7oX4NNd1zW8YqJ9mXIw5+dm5Sxc002tIYS/cWkRW+I+BDb
+	v6aqnjbFiMMeCrx+3MzvryduApQVJB5mqMdZR8cOBgBXwpUXFFfl96IoGpvKma8e
+	pxqou72B1nGWtWNOF57skT2cFidZCUyR+qS+ShD8ll0xfH5Gx9EuYaF18aQ==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ura8y44k-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 10:56:46 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b31ba1392fso20797721cf.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 03:56:46 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 10:56:47 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-72023d1be83so21278076d6.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 03:56:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756983405; x=1757588205;
+        d=1e100.net; s=20230601; t=1756983406; x=1757588206;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=B6VI6rYD+l1gAQRdPHYZqiU7gvDzWifBcr0RacDOpag=;
-        b=FGoLCpczYF5aXE7+YMsskr4f7q4ogaZhBieqSfp9ay8VrMCWCSraLGxAxp8l70w1pL
-         Hh3ho7Hq2dCkyS2Ux0hfU2TbExmpnP6E0J1AlVCJaGxQHy9bvrYLslqg9vKMm77//kIe
-         iTalfDkMQMybqTEMVRhnviNXF2OfGezQSiDbG5KobtDDG8VLpPnbLVrr6X81Zbtg7rU9
-         Xja/DOmvqo2JcOvH/+wPAAcr4KuTvEdjoGa44pdhguezKssvKkdvgi/UZij+3HyO4M94
-         NFQcrufnMXMMbs1PB0aVj88miErp3OUQqKRu+9vPr1PpdZEpel/o6lVNXCGzx4prFf8x
-         Th+g==
-X-Forwarded-Encrypted: i=1; AJvYcCWDr6JnQPDHC8dVmTS0FCqHabLyuNq4a3axbh9+HIkthS6CV7V/sB7+7Irz81cHTpPzNL4BL0Su6zvFufW0@vger.kernel.org
-X-Gm-Message-State: AOJu0YzC94x+cI8e1LmGEyCY0lCQriuO7dTUagqaCGSLT8fhh3YwUMX6
-	DE0q5j5kBpwvWanqJQEmITy+lYjSEFOZzaVoqigR9hBWvG8Euc4LXO68S5TGhQ4kOAkStypmBym
-	ZBhfaJcXO9S27r9bafc4Lr/i7na0CUytKewNJagrxKftVUvMLE1UMN+PNOYABA1jw3i+h
-X-Gm-Gg: ASbGncvuQ75TRWGRDmx4GKSKOJQphJ8JS8hzCWzN9TLLYsdaeVY5syrViUAwMixQpb2
-	VuaNqB0NlGnTZTEJ1kWw+6zHx3PC2cr9KoJbXQtqPKA7wZbMz7d7jNOoSlzZmWX3P14sXmhznx5
-	AJl1nnirtETNUXPP7qu6EE1avEbA6ElxGs+s0GDvIsRq59jZtu2lVhaZLlgf0b1rJKxdRQmVZvM
-	6i354NIcZ5goPjA0GXVDv2lbrYzyS3537lBJU03zoycYuW/NQ7MccZBvuQVMiLC21BY5OQxG1+F
-	TgxZ0MVWNU/5t633ZsyxqCiZNerpRyrpLboVpGg6fSzuRpP0WhJaDA==
-X-Received: by 2002:a05:622a:4ccc:b0:4b3:4b6d:ec52 with SMTP id d75a77b69052e-4b34b6def70mr106821101cf.32.1756983405216;
+        bh=FBClr38gw2VNN9TJfggNIGizEzrQ3dx3VKp0vsyukpM=;
+        b=UiMgRYCu2SwU6SX65g/c9JjiqJeLoxkLlwz4xv9PRnEVacIcN2ktQx/5CAotoNi9gK
+         Ql5pvXv04mKiOXzJ9VCmvcRt+UyhmQ5OGwy2RyIJpEaa2rsQcQKmD6tcYOZOrgdYhMtf
+         MaDzzvqdKsXND7s2HSFc8Vkwz2LbvjjYSo/o60BQ/Tb35Qqy/Kqwcxz+Hjh7ct1FX9/j
+         A5xoej44JJC5JC82IYjhTbEWLnTcngnUEMM0Iei7eJPfzyJh6HufmLJm7kT5iap/pJTZ
+         0QL/aYoMygp+dFREN+uRNDmFSoF4eNsdgFIIEJbYTDpMAWu9OtmzIcno6hdGb0ncw5tt
+         uomw==
+X-Forwarded-Encrypted: i=1; AJvYcCXzsNrvjz5h94+5xOJYwt95bJ/0v+po1qhccFalSMm/h/7wd3+Z8yUvVrJDMkBZFEYQZtxDL83eQIjKYi4A@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw/RzL8ogCIFf1OApi1701DgFy4pbhVzFYUwuyjHmh+qgBb+1fj
+	x9Dq2obUgs3DHx/XZCo4+9cfIZ6p9c2t71h8i7yFN0L9GCmyUjyalhYgX47s789W0wj8HZdgN7y
+	lfSWCzGiYZrI+kuStxD5eaGcMvMCtd3BdS59gzQG0LRW2akA43EE2AoSd3E0c72G75Gz9
+X-Gm-Gg: ASbGncvl5H+QhnW5CkBZP+MJh0I9Mi1Zxq/M0u2N9PHObHNbb+5LNQDtaWRWbtdC67r
+	6SdPRZ5UpGVRGKy2EmE6pSqLYBw6TE7mZxyxIbOAjNCQWLl/X55/+IeQb3mIlj1vKlMi92R6Vya
+	yCnK0gpehBtOC8ulaSo8Hwyfboe7d+M/ty8ALNni5WL2uFd48C8lOwXHxOfBQH+GssQ/spP3iG7
+	68FLNntzJg2JYqhEgKq215jawojfFbPRYq+qcdhvl3NtN9CblNFm3DJQiD5Sa5f8MCL11c/xKtC
+	lzHRGm5v2VbmrLCfI+YmpIIp1p7kqclR/uo82t7xDAC3K1zMwIeNUA==
+X-Received: by 2002:a05:622a:1a82:b0:4b3:3b2:2b4b with SMTP id d75a77b69052e-4b31d54719bmr224577121cf.0.1756983406029;
+        Thu, 04 Sep 2025 03:56:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE9Eq+sTL0nIIar6oejvztAYlvZM7LWk+ERntFJ4ZL09Ftyz1SA9hlVs92DGAObdcdb4gdjMw==
+X-Received: by 2002:a05:622a:1a82:b0:4b3:3b2:2b4b with SMTP id d75a77b69052e-4b31d54719bmr224576881cf.0.1756983405617;
         Thu, 04 Sep 2025 03:56:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFeuvQIN33UNWZHR2JNqlGv2Ymka3KFXoG4mGjXaHF/nLj8DLUeHm4vu+6a1XjysVDhdguSUw==
-X-Received: by 2002:a05:622a:4ccc:b0:4b3:4b6d:ec52 with SMTP id d75a77b69052e-4b34b6def70mr106820901cf.32.1756983404715;
-        Thu, 04 Sep 2025 03:56:44 -0700 (PDT)
 Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d0a1f807f9sm26462334f8f.38.2025.09.04.03.56.43
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d0a1f807f9sm26462334f8f.38.2025.09.04.03.56.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 03:56:44 -0700 (PDT)
+        Thu, 04 Sep 2025 03:56:45 -0700 (PDT)
 From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 To: robh@kernel.org, krzk+dt@kernel.org, vkoul@kernel.org
 Cc: conor+dt@kernel.org, srini@kernel.org, yung-chuan.liao@linux.intel.com,
         pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH v3 1/7] of: base: Add of_property_read_u8_index
-Date: Thu,  4 Sep 2025 11:56:10 +0100
-Message-ID: <20250904105616.39178-2-srinivas.kandagatla@oss.qualcomm.com>
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: [PATCH v3 2/7] soundwire: qcom: remove unused rd_fifo_depth
+Date: Thu,  4 Sep 2025 11:56:11 +0100
+Message-ID: <20250904105616.39178-3-srinivas.kandagatla@oss.qualcomm.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250904105616.39178-1-srinivas.kandagatla@oss.qualcomm.com>
 References: <20250904105616.39178-1-srinivas.kandagatla@oss.qualcomm.com>
@@ -98,111 +99,60 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68b9706e cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8 a=3hxEEigdzuJGYQGY9uYA:9
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: AeUBO5VRqkxhxum-2l-jgu6g1FSY25W_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfX5a4TCCewcG0l
- jdD/Ca/CAuTptP0Io03ZhmIMrArt3KndvVD5ScCPSpqAiFZVt19oLZgaQHpOmrwTdKjo6HqmRYn
- gZGTxjYPkxmeSM+zGM/aln+bkNSoFUyjrnNN/QOMNG4zGP0RisECKMcxd6qoYvvojIOCGrMuKyZ
- vjaBs6Rxvvf6m9/cBpXnbnbkNe89uYuf6qBIMu9s3H7FMrdg3Q48elHlbprYqzj8ZM/nKs85Vtf
- 1bRrafaWvoP/O8wSydnGyQ8kJPyp3k6K1QBFW8M3z1J/H/nSzEQuWI1Yr2okGNW7LUpy/KnbIWD
- M8qRQJlFzDmRYhYQKVBmSvT7bYaQSLgD3D3hOPZC8yhhOXUIZ9pjoTTreIZviK5EvetZRAVy2SE
- DDmypGv0
-X-Proofpoint-ORIG-GUID: AeUBO5VRqkxhxum-2l-jgu6g1FSY25W_
+X-Proofpoint-ORIG-GUID: mF9HOXvhnmx_eauyrN6JOmH4RLc8LEeq
+X-Proofpoint-GUID: mF9HOXvhnmx_eauyrN6JOmH4RLc8LEeq
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyMCBTYWx0ZWRfXy8iGW5K8vsRX
+ w7aEy/BC628rs3J/oS2mkfpQCZhHABn4pilMhu/pqzQsDSK6xVho06JtbF0swmUqd7w4GZtgdYR
+ 7IUuDt6e/HUNr/jxRDP+AgO0Ym1Cks9P+KecxHxB1aV/ucL4lE3UWa0su8yodHUsjkUc6p6huUT
+ nImmcS41+q23VGyHAHSikRuwv9W2Wy+frbZPxkWa3xlNo4ytE4KgthqGEti6MtIBbuQbhbMp19Y
+ fvF96rvDQIynUgCt4owacfSAbr2snEN5r7w6Zz/pI+AbX9cjsDT/S1OXbNkSibgYyIouOAK/7TK
+ pvK1S13v2j8Cn8O7QA+RleZq45gmYYvsiWzEXWrLUTKbi03aOYjpKKu+8pX2I0DUqQy0avA/G+8
+ LxADDsVg
+X-Authority-Analysis: v=2.4 cv=VNndn8PX c=1 sm=1 tr=0 ts=68b97070 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=15vvQeE90rD5c5FzQNIA:9
+ a=iYH6xdkBrDN1Jqds4HTS:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_04,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ suspectscore=0 spamscore=0 impostorscore=0 malwarescore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300020
 
-Add support for of_property_read_u8_index(), simillar to others
-u16 and u32 variants. Having this helper makes the code more tidy in
-isome cases, specially when we are parsing multiple of these into
-data structures.
+remove read fifo depth field parsing logic, as rd_fifo_depth is never
+used in the driver. Cleaning this up would benefit when adding new
+variant support which includes adding variant fields for rd_fifo_depth.
+
+ex: Glymur has this rd_fifo_depth register fields changed from v2.x
 
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 ---
- drivers/of/property.c | 33 +++++++++++++++++++++++++++++++++
- include/linux/of.h    |  9 +++++++++
- 2 files changed, 42 insertions(+)
+ drivers/soundwire/qcom.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/of/property.c b/drivers/of/property.c
-index c1feb631e383..4e3524227720 100644
---- a/drivers/of/property.c
-+++ b/drivers/of/property.c
-@@ -147,6 +147,39 @@ static void *of_find_property_value_of_size(const struct device_node *np,
- 	return prop->value;
- }
+diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
+index 5b3078220189..f3ad53ec6e76 100644
+--- a/drivers/soundwire/qcom.c
++++ b/drivers/soundwire/qcom.c
+@@ -209,7 +209,6 @@ struct qcom_swrm_ctrl {
+ 	int (*reg_write)(struct qcom_swrm_ctrl *ctrl, int reg, int val);
+ 	u32 slave_status;
+ 	u32 wr_fifo_depth;
+-	u32 rd_fifo_depth;
+ 	bool clock_stop_not_supported;
+ };
  
-+/**
-+ * of_property_read_u8_index - Find and read a u8 from a multi-value property.
-+ *
-+ * @np:		device node from which the property value is to be read.
-+ * @propname:	name of the property to be searched.
-+ * @index:	index of the u8 in the list of values
-+ * @out_value:	pointer to return value, modified only if no error.
-+ *
-+ * Search for a property in a device node and read nth 8-bit value from
-+ * it.
-+ *
-+ * Return: 0 on success, -EINVAL if the property does not exist,
-+ * -ENODATA if property does not have a value, and -EOVERFLOW if the
-+ * property data isn't large enough.
-+ *
-+ * The out_value is modified only if a valid u8 value can be decoded.
-+ */
-+int of_property_read_u8_index(const struct device_node *np,
-+				       const char *propname,
-+				       u32 index, u8 *out_value)
-+{
-+	const u8 *val = of_find_property_value_of_size(np, propname,
-+					((index + 1) * sizeof(*out_value)),
-+					0, NULL);
-+
-+	if (IS_ERR(val))
-+		return PTR_ERR(val);
-+
-+	*out_value = val[index];
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(of_property_read_u8_index);
-+
- /**
-  * of_property_read_u16_index - Find and read a u16 from a multi-value property.
-  *
-diff --git a/include/linux/of.h b/include/linux/of.h
-index a62154aeda1b..0c95e26c7191 100644
---- a/include/linux/of.h
-+++ b/include/linux/of.h
-@@ -316,6 +316,9 @@ extern struct property *of_find_property(const struct device_node *np,
- extern bool of_property_read_bool(const struct device_node *np, const char *propname);
- extern int of_property_count_elems_of_size(const struct device_node *np,
- 				const char *propname, int elem_size);
-+extern int of_property_read_u8_index(const struct device_node *np,
-+				       const char *propname,
-+				       u32 index, u8 *out_value);
- extern int of_property_read_u16_index(const struct device_node *np,
- 				       const char *propname,
- 				       u32 index, u16 *out_value);
-@@ -639,6 +642,12 @@ static inline int of_property_count_elems_of_size(const struct device_node *np,
- 	return -ENOSYS;
- }
+@@ -898,7 +897,6 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
+ 	swrm_wait_for_frame_gen_enabled(ctrl);
+ 	ctrl->slave_status = 0;
+ 	ctrl->reg_read(ctrl, SWRM_COMP_PARAMS, &val);
+-	ctrl->rd_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_RD_FIFO_DEPTH, val);
+ 	ctrl->wr_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_WR_FIFO_DEPTH, val);
  
-+static inline int of_property_read_u8_index(const struct device_node *np,
-+			const char *propname, u32 index, u8 *out_value)
-+{
-+	return -ENOSYS;
-+}
-+
- static inline int of_property_read_u16_index(const struct device_node *np,
- 			const char *propname, u32 index, u16 *out_value)
- {
+ 	return 0;
 -- 
 2.50.0
 
