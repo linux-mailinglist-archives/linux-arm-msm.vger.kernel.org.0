@@ -1,48 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-72015-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72016-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3847AB437A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 11:52:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id C24E0B43869
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:18:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 2A5357B3B51
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 09:51:20 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5A0691C81B17
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:18:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4698D2F9980;
-	Thu,  4 Sep 2025 09:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C7F62FC003;
+	Thu,  4 Sep 2025 10:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j7bsG31Y"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="WV+yoPqS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CAF82F3C00;
-	Thu,  4 Sep 2025 09:52:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6344A289E08
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 10:15:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756979558; cv=none; b=h9Lq5PSoszJTXj4Gpr1sw4eH3f5dpbnjbw/e9GkXabRiMd90lXzG/Di9MUvr/BtykA5jApsQ4vnlGeJGlzB0qCRvw0Vuluvnaenk5lpi8fWt/MDl/xQkw9DCfNHh90g9VydjbPe0bdDlYmlKgxZqpU5gNyZ/HAPPG3IaW/FW+Nk=
+	t=1756980936; cv=none; b=qp8Zq4DC6hZLNc1QCj2Vd97rc74BJzrmRGbwrsmqp39UguRDEinO13gzq2AUFdCpJf4CL2s44elmftB1g9mnJvys5q+2KQBR7wr0YoOkaWEvRwKJpkmkFmrx93308NpCWmLcNjaFzNAoSxcopeIdll+BmO3fanhhSjIHtdzO7+I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756979558; c=relaxed/simple;
-	bh=u0vsfvciDH8S0kKhdJA/qY4vOXIKYKoouJXTmgxB7jo=;
+	s=arc-20240116; t=1756980936; c=relaxed/simple;
+	bh=02YS+hRybT7AYqzhQAWsNOqiFU614c1kM6JJq7QCT0Q=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j4K0et97zmLLVxzP9mz4e9z0ra2tS0x+ll+R53ZvNVPzCifjuPL+9jaqNsFAiIrj3a3CidKwYva158t09weQdsGcznVTWvTSKcGoor+X/WUw9aMn+OonFOMPVwLKVUiJWckHXq5oAOw/IAWRmE9Yvg5r7wPeksV5kK++Soy1qdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j7bsG31Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99CE1C4CEF0;
-	Thu,  4 Sep 2025 09:52:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756979557;
-	bh=u0vsfvciDH8S0kKhdJA/qY4vOXIKYKoouJXTmgxB7jo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=j7bsG31Ya4wtH/YIInKQFPgA8PYrPFpecivOzOrK6dCyyV7/cwC4s0U96kvLHcKZ/
-	 6892MP82c4VxsvCoHwurX7fXd8UEGEeXn4vQo77+qRA3FkKoCVhQs5zGU1ikgJvH6N
-	 +xtB4LWpHwR+QQwbDI9MlrFlXHwb5juKXX/K1/a0abuQC6Rr/4cFmUTr69RetohUMV
-	 VQCwM8mJxCBI1hXImf8d7V5OrAeY85Hio8bs7Vosq1UsgeLg7flYmEAUqUvU3+fhKJ
-	 qsAOPKDdiZrT3rw2bcxZzRvF16MijhEO5Bk++eDPzP7CyMYZ2FKHA7h5vlUpsXEJfA
-	 Rsa7msDfzW87Q==
-Message-ID: <ea295ff6-5395-4470-afc2-76e5e2dc9fb5@kernel.org>
-Date: Thu, 4 Sep 2025 11:52:32 +0200
+	 In-Reply-To:Content-Type; b=IcxlQZBKT16ZDqi4Cag55Is88fwF/f4tXBtaye9UOqIhNSu57wM8XxDL5JDWDkQis2IuUbCn3mh7SuaveccEp7XnxEN2URK6a+unuY1eKZSQauIIE7k9Ng6qr/WZ3jZkUM6oeooYANldBbXaoybiIMZA8VpCPDYYTg/Kmzf4l4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=WV+yoPqS; arc=none smtp.client-ip=209.85.221.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3e2055ce973so206236f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 03:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1756980933; x=1757585733; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=ITTyrcjLlcY8/CcZ1bPQJZjvz7X9rDFNo6l00OOhKdM=;
+        b=WV+yoPqS60xk0I/piZS1i+p49G2TEReiEaB/x1gL4RFBqnaDX0opfpvFt5QPecLeEl
+         jIqdRyQCaBfHM/jQHLb3Sc4AaJErVNpvGRFu9w0b2OgfimTMOY5gUHB9JCiJwkzeoDdx
+         OG6bxAkSbHF2YNlWVYOGRkxNS2+pIZRnZkmXgLCfDBzziqteIqhJ/hsEZsLGFA4VX8qo
+         UeBs+c1WhDUXX6rJfESsyFgn4ublXrYm2pwpi+NrX3p91fWuw+Q7pN1r0UGUGvrycTrR
+         IduUPP+B709hmBc3Q3QOpFEaapV6RLlHAdyBDqLxAwG1CxUgB5QOVFTmcIEXW9BcZkMy
+         MoPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756980933; x=1757585733;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ITTyrcjLlcY8/CcZ1bPQJZjvz7X9rDFNo6l00OOhKdM=;
+        b=ql7TZjlJvE0gXk1yldSnv1otYmyRb//oNHdaqddqvCR8PpgsYlZz0EQJeSSYW4vgWN
+         z4MtYO3xqFiPe7CTQAwu4B6noWoQhCX97jiugyDpjnDk7GmzJ87c1hfbvNmdC39P0OM0
+         lvf6lAeb1oVlQ0/+WzYPJD89rEJp+IcK0EWTYJNhxO5v5W7yjGZme0P0pjvLJYeVAcmp
+         xqu3m5jnvziLG3SCGxO7VKH8cevK4A3qjMHA9NdK8athF9H4dVrMqTb2CETDcJDkfZgE
+         S4z9wjz7fqM6T/6uItBxE/msP6FH1vgF9D/6ebIVA4kPoXEqpaG9xcLw+XbcltuBFgc9
+         EXWg==
+X-Forwarded-Encrypted: i=1; AJvYcCUzYIyXZVY8JAvnBdFND46eohWVhkz1KgMSR56WBJPoF9YyzeLiUZL1zACFrQHD85Igf+xAbG8LMjOwWisa@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAwhOOwRVke8Rh93EqX8zPW7vVEE7HPwCzTy2cU3ey65nmeu7r
+	PZMxm2Re1XGt+mUJ5FSqu/97ai6OM89PWd0Qzj4ez9j/CvnFwX5KPCtXcuBAET6j0vI=
+X-Gm-Gg: ASbGncsNfUaPFAFlotR7jQYvd7kBfXqyzZ4QIcC7PwrujZMq/pMFaLYXSHLNrmtF1kR
+	6efyiom0fuK++I7wH2nvkRGu2aWn3C/8XVIvoesA5RbK8FI73UPxiaWwv8mDo+jE6G+Nopyw6nQ
+	8z397yCdOGySuqIpzmRVrg8hIcsxf3D0v2jw1dMI8p7xnA6pxWDfg9zHY+3Ba0xRHbrjhv8I653
+	rxZ0qNGi8YciAs0cd7jPyCdHSO09JgUFLwz7Y+nEwf0XAfOC1Zmk0UnHmDLMnFutY8+xBIRXn0v
+	GnnO2qmZj8vbLkm/JJpFl5WR6ZnYFrL0RE7K4EfFDaLYNq3Cy3fVW7JqZ6JOqgyPRxrYWPnAxTM
+	z8BBmgvrrmelDbq8qsgimpIALfz0PVAw1GhlFL6H1j56a2dBnImjk0pY7A5jZVZSh+os1KIhbni
+	hlldQWnOkXAsP+wL45v4s=
+X-Google-Smtp-Source: AGHT+IHN3+S37G8tZIj+/ejyO1j55iGkRMCn39gBM1gwQQqKT5FKmj84TFJBcgmeeHOEkPQvZICy+g==
+X-Received: by 2002:a05:6000:1449:b0:3df:c5e3:560e with SMTP id ffacd0b85a97d-3dfc5e36062mr2281362f8f.7.1756980932655;
+        Thu, 04 Sep 2025 03:15:32 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d21a32dbc5sm24323510f8f.11.2025.09.04.03.15.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Sep 2025 03:15:32 -0700 (PDT)
+Message-ID: <a793c2ff-3f06-4ed4-90f4-4b2a11e714e0@linaro.org>
+Date: Thu, 4 Sep 2025 11:15:29 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,149 +83,85 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: Add binding for gunyah watchdog
-To: hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v2 02/11] soc: qcom: mdtloader: Add context aware
+ qcom_mdt_pas_load() helper
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
- <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ linux-remoteproc@vger.kernel.org
+References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
+ <20250819165447.4149674-3-mukesh.ojha@oss.qualcomm.com>
+ <0b4472cb-0c73-4eb8-a360-22b40aae44f5@linaro.org>
+ <20250904095215.ekkhrt5ql65ap74k@hu-mojha-hyd.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250903-gunyah_watchdog-v1-1-3ae690530e4b@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20250904095215.ekkhrt5ql65ap74k@hu-mojha-hyd.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 03/09/2025 21:33, Hrishabh Rajput via B4 Relay wrote:
-> From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+On 04/09/2025 10:52, Mukesh Ojha wrote:
+>> So is it really the intention of this patch to change the callsites where
+>> qcom_mdt_pas_load() away from the init version to the no_init version ?
+>>
+>> Maybe its a symptom of patch collision but hmm, having a hard time
+>> cherry-picking this to test.
+> My intention is to unify all subsystems whether it's remoteproc, video,
+> or others using Secure PIL, so that they all use the same set of APIs
+> via context (cxt).
 > 
-> The Gunyah Hypervisor applies a devicetree overlay providing the
-> pretimeout interrupt for the Gunyah Watchdog that it will be using to
-> notify watchdog's pretimeout event. Add the DT bindings that Gunyah
-> adheres to for the hypervisor and watchdog.
-
-Wasn't tested, so limited review.
-
-Please use subject prefixes matching the subsystem. You can get them for
-example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-your patch is touching. For bindings, the preferred subjects are
-explained here:
-https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-
-A nit, subject: drop second/last, redundant "bindings". The
-"dt-bindings" prefix is already stating that these are bindings.
-See also:
-https://elixir.bootlin.com/linux/v6.17-rc3/source/Documentation/devicetree/bindings/submitting-patches.rst#L18
-
-
+> Like, we first initialize the context, and then use it for other PIL-related
+> SMC calls such as pas_init, mem_setup, auth_and_reset, or even for the
+> new rsc_table SMC call. This way, everything is connected, and it
+> becomes clear which functions need to be called and it will also be
+> extensible via a small handling for SHMbridge on gunyah absence. Similar
+> changes would also apply to the MDT loader APIs.
 > 
-> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-> ---
->  .../bindings/watchdog/qcom,gh-watchdog.yaml        | 76 ++++++++++++++++++++++
->  MAINTAINERS                                        |  1 +
->  2 files changed, 77 insertions(+)
+> That's why I asked here after "---" in this patch if this approach is
+> preferred, I will apply it consistently and eliminate redundant APIs.
 > 
-> diff --git a/Documentation/devicetree/bindings/watchdog/qcom,gh-watchdog.yaml b/Documentation/devicetree/bindings/watchdog/qcom,gh-watchdog.yaml
-> new file mode 100644
-> index 000000000000..bde8438c6242
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/watchdog/qcom,gh-watchdog.yaml
-> @@ -0,0 +1,76 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/watchdog/qcom,gh-watchdog.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Gunyah Virtual Watchdog
-> +
-> +maintainers:
-> +  - Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-> +
-> +description: |+
-> +  The Gunyah Hypervisor provides an SMC-based watchdog interface for its virtual
-> +  machines. The virtual machines use this information to determine the
-> +  pretimeout IRQ which the hypervisor will be using to communicate pretimeout
-> +  event.
-> +  See also: [1]
-> +
-> +  [1]: https://github.com/quic/gunyah-resource-manager/blob/1b23ceb0dfa010b3b6b5a5f7a4ec1e95b93ab99d/src/vm_creation/dto_construct.c#L519
-> +
-> +properties:
-> +  compatible:
-> +    allOf:
-> +      - const: gunyah-hypervisor
-> +      - const: simple-bus
+> Let me know your thought.
 
-What? No.
+For me its a question of digesting the change.
 
-Don't create patches with AI.
+Your series says "Add context aware qcom_mdt_pas_load()" but, it does 
+more than add - it changes logic.
 
-> +
-> +  "#address-cells":
-> +    description: Number of cells needed to represent 64-bit capability IDs.
-> +    const: 2
-> +
-> +  "#size-cells":
-> +    description: must be 0, because capability IDs are not memory address
-> +                  ranges and do not have a size.
-> +    const: 0
-> +
-> +patternProperties:
-> +  "^gh-watchdog":
+At a minimum I'd suggest splitting the addition of the function from the 
+changing of the existing logic so that the two could be disambiguated.
 
+The other comment I have is, is this change really required to enable 
+pil loading @ EL2 ?
 
-I could not express more: NAK. Does not match any DT style. Please do
-some internal reviews first. This patch does not meet minimum quality
-criteria for public posting.
+You could for example structure this series to implement the changes you 
+need for EL2 - and then have a last patch at the end to make the code 
+"more beautiful" or even a second series to do that.
 
+So I'd suggest one of
 
-Best regards,
-Krzysztof
+1. Splitting the addition of the new helper and its use into
+    separate patches in the same series.
+
+or
+
+2. Doing the full EL2 conversion and then applying the
+    "make the code look nice" patch last.
+    So that we could for example take 11 of 13 patches
+
+or
+
+3. Making the EL2 conversion and the posting a second series
+    with your proposed tidy up
+
+Either way for me splicing both the addition and the usage here is a bit 
+hard to parse, especially since I can't seem to find a public SHA where 
+this series cleanly applies.
+
+---
+bod
 
