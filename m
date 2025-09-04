@@ -1,221 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-72120-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40D77B44480
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 19:36:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F87DB443E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 19:06:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 897451C82F06
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 17:36:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1116148790E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 17:06:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 12A8323A564;
-	Thu,  4 Sep 2025 17:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52B5A2F618B;
+	Thu,  4 Sep 2025 17:06:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=viasat.com header.i=@viasat.com header.b="KfbEeRm0"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DElUdKsm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0e-0085b301.gpphosted.com (mx0e-0085b301.gpphosted.com [67.231.147.199])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A79C42FB99E;
-	Thu,  4 Sep 2025 17:35:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.147.199
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B587021D011
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 17:06:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757007326; cv=none; b=rb8wWn2oy67GSEdQCMicfD1462jKDv3HbZzaSPXvs48wlxP7nd4ky+i7cjZtrfC5Jsq8k1c6oM4Rfp+1M69orf5EloZBRYt6YI/qEVA/9ag5w90RJ52asyJymKjAEXkkGaDi0gjMm+rAe3th0JaL+dAYqdQrSfljrQSh3Yr3R4U=
+	t=1757005568; cv=none; b=HWjIrTVEgbg+dUqyZT4Qt0BXgYlRfvaCyuFcdgIvpeFdk3HsUK7aIe9LcgnyOX8f3po1rm4+ncg+c95oKmjvWqQ5e2vVi1f3aqqdWr8tdBUhz8bBAfLJF/rBgsVuabfV6hBgN8JUkh1wB4NZzup/EOkGpSrDMEm0kvTOkvhyPl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757007326; c=relaxed/simple;
-	bh=rmDJLXJWdrLz+T7dlLWIk3MLNmKL5Uk56E1y4/s8u8Q=;
-	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=eqYHaKNWLeCHULBhkXtsEqa9v2+EJqiNwAY5jcjk0xQvkP0C7KmNnXz4dkYp9BPCDiiruaCHpI14IuLsxhNqFEFlUq1p8xzbynEWyPOmw9xelSRIDdLlDBtCQJpiXZcWElgbYe+0XXEv0XFrXHToAJcXRP1bFTr7sLNAuQM2ddU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=viasat.com; spf=pass smtp.mailfrom=viasat.com; dkim=pass (2048-bit key) header.d=viasat.com header.i=@viasat.com header.b=KfbEeRm0; arc=none smtp.client-ip=67.231.147.199
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=viasat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=viasat.com
-Received: from pps.filterd (m0351329.ppops.net [127.0.0.1])
-	by mx0e-0085b301.gpphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584CIbAa016382;
-	Thu, 4 Sep 2025 17:06:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=viasat.com; h=from : to : cc :
- subject : date : message-id : mime-version : content-transfer-encoding :
- content-type; s=pp1; bh=cTwM2EAj/wFu9sEQp/YMF/SkeWLZXAes3xgx2G9UV58=;
- b=KfbEeRm0PhoAc4KBDwGGs15CGJLxClqC0+WythzfXTmvm/I+XtE4L56S3MUzj9PJokl6
- ebLqaxejkxqzEmw4NXIHUaTMhwGeRJ1xRwedVFnFyjA2LnKGHlEAa2qncHDVYDqO+fd2
- gZhdI7d2bzS+VNafHRzj8dCtHmS17xL5eq2up5auKAxDlLhmqugbjL9TbJCuMWJBLUD9
- etajgVFCeOeyc63VtgsUHQvmyGz6pV65Y/7ve3j4SbJhAKPpRQxsB5UOFuYb2w+7mWGY
- hjcXGL9u50WONa5+W3PjmL5b09ogxXndp18s5mW5IelznFNI7zox8p5qytQZzt63BTWX 3w== 
-Received: from naw02exchp03.hq.corp.viasat.com ([8.37.108.42])
-	by mx0e-0085b301.gpphosted.com (PPS) with ESMTPS id 48yannj9yf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT);
-	Thu, 04 Sep 2025 17:06:58 +0000
-Received: from C02CG2N7MD6P.hq.corp.viasat.com (10.228.130.2) by
- NAW02EXCHP03.hq.corp.viasat.com (10.228.7.173) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.55; Thu, 4 Sep 2025 10:06:57 -0700
-From: Sean Parker <sean.parker@viasat.com>
-To: <andersson@kernel.org>, <linus.walleij@linaro.org>
-CC: <linux-arm-msm@vger.kernel.org>, <linux-gpio@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <sean.parker@viasat.com>
-Subject: [PATCH] pinctrl: qcom: sm8250: Add egpio support
-Date: Thu, 4 Sep 2025 10:04:26 -0700
-Message-ID: <20250904170613.68855-1-sean.parker@viasat.com>
-X-Mailer: git-send-email 2.50.0
+	s=arc-20240116; t=1757005568; c=relaxed/simple;
+	bh=kex9c5ksWfEy4HCkCcEs7BW59/eVjTYWD+ai1fAWMMA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WSYR35DpOM/ZYJBpaLD6AEUgebpGo7Tmoj1fL0a6KAbIlvdsXy2Hc2rP/HmJcjj9gAo+1D46u5gbAllyC1b4f4i8nMDp2W6Q59loBHko+WczhrgBJpTh/WmtNPtVDTwCRRsSc638Lad+sVgED5+8BILnD6dUeTqfoE8MVZ/jnRk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DElUdKsm; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849XEnX031930
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 17:06:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=3TzY0hMaxnKfqA1+sr6FktM0
+	GXuI/kkBpqMcqTX1ICw=; b=DElUdKsmHvnopTMyaZF3Di+MG2ZJ4rZMh1DSoVVL
+	sP4nkXD6wVBujv8ed0Ov8YPMOpf3/Rzj/MbsbDRdfQrkVhO4EeD4UNyhT7j8JZrL
+	BYamhpU98BRZqL2uYMoJyazUwD6lb2zcqpHqXRu6bCeBUDYJEfmGqaPDn8HXVKTN
+	JdURNvl/qezicwLXXxbTuczXMj1uYVqbw1uRk+bJfFjfTzaFZaUvTQGVDDrU5pmP
+	SYRe+5nTutwPbr3B7+14ADvFI34GkbaqzUDP7ZvhFKXFJGNquibQJ4+ExuCHNvxe
+	7vQUCe23lhY3muyTM9tvrDYBj504fHQt53gqVpCDuOwhFQ==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urw08bxw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 17:06:05 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7725b77b795so1403366b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 10:06:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757005564; x=1757610364;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3TzY0hMaxnKfqA1+sr6FktM0GXuI/kkBpqMcqTX1ICw=;
+        b=ekkJzyWtB8x2cHx9HGPAWmK/AZXZF5ho7ycR33tpQvvoFTIR4RDAXWkSRcdGTn83P6
+         eKRigl+g6D8xhYHrI1WcyaBmvHxN3nWLoQvDCGixDeJsosGXx+owSkrT48ZUY+FBPfRR
+         HizWjcfMkEph81tot3pqAfmsdrLF8F6OVvajHmUo5IBDQXGGeai3lMrz976bHMT5i3fQ
+         Ti7rE2HOGvMW79ANia87n0aSqg0DEEbCITr0dveQO9o5xOTTQxSXtscqx3qdDzVNrUhV
+         cWqumoUwillBsKjWTle/VeJBBXsDDVDo09JmNU9qFSUekO4sU7+NW0N6tiJO+S4WB7qL
+         RJXw==
+X-Forwarded-Encrypted: i=1; AJvYcCUxS74hGYq8yqPxoErirGum9AAOAidwTRgPFF49wKotajjDA5u8RaOR7+ikhr3Bu29UN8J8kO8Gu1euw7Hl@vger.kernel.org
+X-Gm-Message-State: AOJu0YzWvqA3KDgbMcvzcWIykloV3zi68wQ4FGfyBdC3dQ9wsTEqICAM
+	MjUtOM9iMZl/jWTrnuHC5KLJOj5lAfKxz3waXsQOkitEhsRydvw/Ouno1djjBhHVUlSoGTfyzbM
+	c7JlGyQjTTUopv1wTYJcA4hqHBPug6TeNCRaQCGGEmJTXBVWODlPlC1Snw82UYaoC4xsl
+X-Gm-Gg: ASbGncv2AjEYGcJQtWOdOqZnApe0k6ivHdpUcyseGq2momSle3QW/pkYE/g1ECq+Dpc
+	W4gGvw9vUh91gk4IWkGBS1mRrLGMABIEUaRv4NqqCDelcvmGM2PDWA3QzyUH4YmdUmA7H8KWPCK
+	ZvJUCdQTs4SvFKfNmjEPJHhoqHDxILILf/7IpWY56568HjzMSHh+WY1/0Sb3VoDlMzeDhtO4wnu
+	wuFVGTCcTliBRYwb7MWSLCpiqJKcxgbNKGJ+pJTZJsCJKhzeWRiXbb8zzXvuWpS3uAgIQ9Dglw1
+	t3253jjaXsmROS72u2km9koRKZPF1YxyZKHTyDQxU40F8h8YQCd9pbRh2WHyIKSeZAAOMT88AQ=
+	=
+X-Received: by 2002:a05:6a20:5493:b0:243:d1bd:fbc9 with SMTP id adf61e73a8af0-243d6f7ef68mr28359327637.56.1757005564000;
+        Thu, 04 Sep 2025 10:06:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjvSHSjScVhR0qGM4Bgt7y43u2+FjqX3ZFKJAbEdvUCzRzNDRc6FFqe8gLPFasv7ahFh/NAw==
+X-Received: by 2002:a05:6a20:5493:b0:243:d1bd:fbc9 with SMTP id adf61e73a8af0-243d6f7ef68mr28359260637.56.1757005563354;
+        Thu, 04 Sep 2025 10:06:03 -0700 (PDT)
+Received: from hu-pkondeti-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-772396d2b97sm17564167b3a.67.2025.09.04.10.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 10:06:03 -0700 (PDT)
+Date: Thu, 4 Sep 2025 22:35:57 +0530
+From: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        hrishabh.rajput@oss.qualcomm.com,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Wim Van Sebroeck <wim@linux-watchdog.org>,
+        Guenter Roeck <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Add support for Gunyah Watchdog
+Message-ID: <91002189-9d9e-48a2-8424-c42705fed3f8@quicinc.com>
+References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
+ <a3af076b-ca0b-4d5e-8294-2bf5a9814959@linaro.org>
+ <ec0dc13a-30f7-44a0-9a4a-5f44eccd3933@quicinc.com>
+ <qd22epqcu7sdza6jrl3tj7pceohqh3clsywv44uau5bvszux54@ajqseswmwf6x>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: NAW02EXCHP04.hq.corp.viasat.com (10.228.7.174) To
- NAW02EXCHP03.hq.corp.viasat.com (10.228.7.173)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA0MDE2OCBTYWx0ZWRfX3YDH/12w3ojC g3RPgJZUwUTQaqeHk+aV3iYoJWQWy7wJQaNE0zoP04CW/bomPUWrCsl3Au7GWuX1uuBA6TOj/a2 mHoroTTrV2SjJ9AP/TmVABps3lR3WIshtqmhbP6fVi+sLJuGmSiEkIvqgdE2Ex6LUtw7DTCc0aV
- m50qQjlgXi0bDldDbiY7EzX9nxwY1tWnl7OOrfGdEsUre0n/5TLngBDjof91d31TdJNfaCVLYf2 /8vK2tam8nWed81HwuGaFFTqpAenkYvTiJPdtt2UOyE8KVmh+RbIqKNXF7zOhiDrRiyg4/H0DGQ FcI1KszSeUt1cAD7CDrnZYmNrwcSQANASMrN9N+ll0Li6WtMztnogKecNY2Fb1IQ5ZhRBy2h1z0 l027Yn5z
-X-Proofpoint-GUID: -4PME17N9hj7N2t-XXJzycKQU59kb9Em
-X-Proofpoint-ORIG-GUID: -4PME17N9hj7N2t-XXJzycKQU59kb9Em
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <qd22epqcu7sdza6jrl3tj7pceohqh3clsywv44uau5bvszux54@ajqseswmwf6x>
+X-Proofpoint-GUID: j9Iw5g2t2Q0PrDkRv-tLBnuc76afUpPd
+X-Proofpoint-ORIG-GUID: j9Iw5g2t2Q0PrDkRv-tLBnuc76afUpPd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX68ucIbeUcmJr
+ a8pa91wScJT8DOlKvHwj825EwxtS+cmKeVMtyND0yfHGn9J0o35oGOyNQZI3ETuIn3bapDzpXmk
+ ExTJMBkYKQZuAVoOW4lBrn4OBZ+Savaz3CVbeIm1jbxpTopwsnSfXlYyJZspEeefpYW/Y8HmWaw
+ qCow3AUnt0nffK79vCs1p+6ga2CXVYx9bcsIwRTWmuYvLOwcvt+R1QfQtQEl21obVzoSD3gP4X5
+ Dk43aN9E/8cn59DkFLB96pes9dbozw4+vlUNOr6VOp0q79PiWRKwHMOPnDz0cRdxusU46ZfO2UZ
+ Mm3ERgyH7YaAeOYl/hVSCEBdWkokRBq0diZUUGbzp+60I+nc2vxB+s8VDLEw4wWiBOQa4ZMMMbm
+ pMBpr6HG
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68b9c6fd cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=kj9zAlcOel0A:10 a=yJojWOMRYYMA:10 a=GWRR-jdfUFecq8Rc7ecA:9
+ a=CjuIK1q_8ugA:10 a=2VI0MkxyNR6bbpdq8BZq:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_06,2025-09-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 bulkscore=0
- spamscore=0 impostorscore=0 lowpriorityscore=0 mlxlogscore=925 mlxscore=0
- malwarescore=0 phishscore=0 priorityscore=1501 adultscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2508110000
- definitions=main-2509040168
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300027
 
-This mirrors the egpio support added to sc7280/sm8450/etc. This change
-is necessary for GPIOs 146 - 180 (34 GPIOs) to be used as normal GPIOs.
+On Thu, Sep 04, 2025 at 08:53:14AM -0500, Bjorn Andersson wrote:
+> On Thu, Sep 04, 2025 at 02:48:03PM +0530, Pavan Kondeti wrote:
+> > On Thu, Sep 04, 2025 at 09:13:23AM +0200, Neil Armstrong wrote:
+> > > On 03/09/2025 21:33, Hrishabh Rajput via B4 Relay wrote:
+> > > > Gunyah is a Type-I hypervisor which was introduced in the patch series
+> > > > [1]. It is an open source hypervisor. The source repo is available at
+> > > > [2].
+> > > > 
+> > > > The Gunyah Hypervisor doesn't allow its Virtual Machines to directly
+> > > > access the MMIO watchdog. It either provides the fully emulated MMIO
+> > > > based watchdog interface or the SMC-based watchdog interface depending
+> > > > on the hypervisor configuration.
+> > > > The SMC-based watchdog follows ARM's SMC Calling Convention (SMCCC)
+> > > > version 1.1 and uses Vendor Specific Hypervisor Service Calls space.
+> > > > 
+> > > > This patch series adds support for the SMC-based watchdog interface
+> > > > provided by the Gunyah Hypervisor. The driver supports start/stop
+> > > > operations, timeout and pretimeout configuration, pretimeout interrupt
+> > > > handling and system restart via watchdog.
+> > > > 
+> > > > This series is tested on SM8750 platform.
+> > > 
+> > > Would this driver work on older platforms like SM8550 & SM8650 ?
+> > > 
+> > 
+> > This driver should work on 8550 and 8650 too as long as the hypervisor
+> > overlay is applied to the device tree which happens in the bootloader.
+> > 
+> 
+> You have easy access to 8550 and 8650 MTP/QRD devices, please give us a
+> definitive answer.
+> 
 
-Signed-off-by: Sean Parker <sean.parker@viasat.com>
----
- drivers/pinctrl/qcom/pinctrl-sm8250.c | 81 ++++++++++++++++-----------
- 1 file changed, 47 insertions(+), 34 deletions(-)
+Thanks for asking this question. I believe the overlay part needs some
+discussion here.
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-index fb6f005d64f5..ee31182be68b 100644
---- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
-+++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-@@ -49,6 +49,8 @@ enum {
- 		.mux_bit = 2,				\
- 		.pull_bit = 0,				\
- 		.drv_bit = 6,				\
-+		.egpio_enable = 12,			\
-+		.egpio_present = 11,			\
- 		.oe_bit = 9,				\
- 		.in_bit = 0,				\
- 		.out_bit = 1,				\
-@@ -511,6 +513,7 @@ enum sm8250_functions {
- 	msm_mux_ddr_pxi2,
- 	msm_mux_ddr_pxi3,
- 	msm_mux_dp_hot,
-+	msm_mux_egpio,
- 	msm_mux_dp_lcd,
- 	msm_mux_gcc_gp1,
- 	msm_mux_gcc_gp2,
-@@ -830,6 +833,14 @@ static const char * const gpio_groups[] = {
- 	"gpio171", "gpio172", "gpio173", "gpio174", "gpio175", "gpio176",
- 	"gpio177", "gpio178", "gpio179",
- };
-+static const char * const egpio_groups[] = {
-+	"gpio146", "gpio147", "gpio148", "gpio149", "gpio150", "gpio151",
-+	"gpio152", "gpio153", "gpio154", "gpio155", "gpio156", "gpio157",
-+	"gpio158", "gpio159", "gpio160", "gpio161", "gpio162", "gpio163",
-+	"gpio164", "gpio165", "gpio166", "gpio167", "gpio168", "gpio169",
-+	"gpio170", "gpio171", "gpio172", "gpio173", "gpio174", "gpio175",
-+	"gpio176", "gpio177", "gpio178", "gpio179",
-+};
- static const char * const qdss_cti_groups[] = {
- 	"gpio0", "gpio2", "gpio2", "gpio44", "gpio45", "gpio46", "gpio92",
- 	"gpio93",
-@@ -1018,6 +1029,7 @@ static const struct pinfunction sm8250_functions[] = {
- 	MSM_PIN_FUNCTION(ddr_pxi3),
- 	MSM_PIN_FUNCTION(dp_hot),
- 	MSM_PIN_FUNCTION(dp_lcd),
-+	MSM_PIN_FUNCTION(egpio),
- 	MSM_PIN_FUNCTION(gcc_gp1),
- 	MSM_PIN_FUNCTION(gcc_gp2),
- 	MSM_PIN_FUNCTION(gcc_gp3),
-@@ -1265,40 +1277,40 @@ static const struct msm_pingroup sm8250_groups[] = {
- 	[143] = PINGROUP(143, WEST, lpass_slimbus, mi2s1_data0, ddr_bist, _, _, _, _, _, _),
- 	[144] = PINGROUP(144, WEST, lpass_slimbus, mi2s1_data1, ddr_bist, _, _, _, _, _, _),
- 	[145] = PINGROUP(145, WEST, lpass_slimbus, mi2s1_ws, _, _, _, _, _, _, _),
--	[146] = PINGROUP(146, WEST, _, _, _, _, _, _, _, _, _),
--	[147] = PINGROUP(147, WEST, _, _, _, _, _, _, _, _, _),
--	[148] = PINGROUP(148, WEST, _, _, _, _, _, _, _, _, _),
--	[149] = PINGROUP(149, WEST, _, _, _, _, _, _, _, _, _),
--	[150] = PINGROUP(150, WEST, _, _, _, _, _, _, _, _, _),
--	[151] = PINGROUP(151, WEST, _, _, _, _, _, _, _, _, _),
--	[152] = PINGROUP(152, WEST, _, _, _, _, _, _, _, _, _),
--	[153] = PINGROUP(153, WEST, _, _, _, _, _, _, _, _, _),
--	[154] = PINGROUP(154, WEST, _, _, _, _, _, _, _, _, _),
--	[155] = PINGROUP(155, WEST, _, _, _, _, _, _, _, _, _),
--	[156] = PINGROUP(156, WEST, _, _, _, _, _, _, _, _, _),
--	[157] = PINGROUP(157, WEST, _, _, _, _, _, _, _, _, _),
--	[158] = PINGROUP(158, WEST, _, _, _, _, _, _, _, _, _),
--	[159] = PINGROUP(159, WEST, cri_trng0, _, _, _, _, _, _, _, _),
--	[160] = PINGROUP(160, WEST, cri_trng1, qdss_gpio, _, _, _, _, _, _, _),
--	[161] = PINGROUP(161, WEST, cri_trng, qdss_gpio, _, _, _, _, _, _, _),
--	[162] = PINGROUP(162, WEST, sp_cmu, qdss_gpio, _, _, _, _, _, _, _),
--	[163] = PINGROUP(163, WEST, prng_rosc, qdss_gpio, _, _, _, _, _, _, _),
--	[164] = PINGROUP(164, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[165] = PINGROUP(165, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[166] = PINGROUP(166, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[167] = PINGROUP(167, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[168] = PINGROUP(168, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[169] = PINGROUP(169, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[170] = PINGROUP(170, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[171] = PINGROUP(171, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[172] = PINGROUP(172, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[173] = PINGROUP(173, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[174] = PINGROUP(174, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[175] = PINGROUP(175, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[176] = PINGROUP(176, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[177] = PINGROUP(177, WEST, qdss_gpio, _, _, _, _, _, _, _, _),
--	[178] = PINGROUP(178, WEST, _, _, _, _, _, _, _, _, _),
--	[179] = PINGROUP(179, WEST, _, _, _, _, _, _, _, _, _),
-+	[146] = PINGROUP(146, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[147] = PINGROUP(147, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[148] = PINGROUP(148, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[149] = PINGROUP(149, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[150] = PINGROUP(150, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[151] = PINGROUP(151, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[152] = PINGROUP(152, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[153] = PINGROUP(153, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[154] = PINGROUP(154, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[155] = PINGROUP(155, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[156] = PINGROUP(156, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[157] = PINGROUP(157, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[158] = PINGROUP(158, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[159] = PINGROUP(159, WEST, cri_trng0, _, _, _, _, _, _, _, egpio),
-+	[160] = PINGROUP(160, WEST, cri_trng1, qdss_gpio, _, _, _, _, _, _, egpio),
-+	[161] = PINGROUP(161, WEST, cri_trng, qdss_gpio, _, _, _, _, _, _, egpio),
-+	[162] = PINGROUP(162, WEST, sp_cmu, qdss_gpio, _, _, _, _, _, _, egpio),
-+	[163] = PINGROUP(163, WEST, prng_rosc, qdss_gpio, _, _, _, _, _, _, egpio),
-+	[164] = PINGROUP(164, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[165] = PINGROUP(165, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[166] = PINGROUP(166, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[167] = PINGROUP(167, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[168] = PINGROUP(168, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[169] = PINGROUP(169, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[170] = PINGROUP(170, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[171] = PINGROUP(171, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[172] = PINGROUP(172, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[173] = PINGROUP(173, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[174] = PINGROUP(174, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[175] = PINGROUP(175, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[176] = PINGROUP(176, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[177] = PINGROUP(177, WEST, qdss_gpio, _, _, _, _, _, _, _, egpio),
-+	[178] = PINGROUP(178, WEST, _, _, _, _, _, _, _, _, egpio),
-+	[179] = PINGROUP(179, WEST, _, _, _, _, _, _, _, _, egpio),
- 	[180] = UFS_RESET(ufs_reset, 0xb8000),
- 	[181] = SDC_PINGROUP(sdc2_clk, 0xb7000, 14, 6),
- 	[182] = SDC_PINGROUP(sdc2_cmd, 0xb7000, 11, 3),
-@@ -1333,6 +1345,7 @@ static const struct msm_pinctrl_soc_data sm8250_pinctrl = {
- 	.ntiles = ARRAY_SIZE(sm8250_tiles),
- 	.wakeirq_map = sm8250_pdc_map,
- 	.nwakeirq_map = ARRAY_SIZE(sm8250_pdc_map),
-+	.egpio_func = 9,
- };
+I have tried this series on 8550 MTP. The overlay failed, so watchdog
+device did not probe. same is the case with 8750 too. It works only
+after applying this patch. I will test and report my observation on 8650
+later.
+
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 140b0b2abfb5..b200e8faa6df 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -1,4 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0
++DTC_FLAGS := -@
+ dtb-$(CONFIG_ARCH_QCOM)	+= apq8016-sbc.dtb
  
- static int sm8250_pinctrl_probe(struct platform_device *pdev)
--- 
-2.25.1
+ apq8016-sbc-usb-host-dtbs	:= apq8016-sbc.dtb apq8016-sbc-usb-host.dtbo
+diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+index eac8de4005d8..7536b1a4ec97 100644
+--- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+@@ -328,7 +328,7 @@ cluster_sleep_1: cluster-sleep-1 {
+ 	};
+ 
+ 	firmware {
+-		scm: scm {
++		scm: qcom_scm {
+ 			compatible = "qcom,scm-sm8550", "qcom,scm";
+ 			qcom,dload-mode = <&tcsr 0x19000>;
+ 			interconnects = <&aggre2_noc MASTER_CRYPTO 0 &mc_virt SLAVE_EBI1 0>;
+@@ -4855,6 +4855,9 @@ compute-cb@8 {
+ 				};
+ 			};
+ 		};
++
++		qcom_tzlog: tz-log {
++		};
+ 	};
+ 
+ 	thermal-zones {
+@@ -5913,7 +5916,7 @@ trip-point2 {
+ 		};
+ 	};
+ 
+-	timer {
++	arch_timer: timer {
+ 		compatible = "arm,armv8-timer";
+ 		interrupts = <GIC_PPI 13 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 14 (GIC_CPU_MASK_SIMPLE(8) | IRQ_TYPE_LEVEL_LOW)>,
 
+
+Thanks,
+Pavan
 
