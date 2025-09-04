@@ -1,105 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-72133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86C25B44719
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 22:16:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56AF3B44723
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 22:17:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B025CA41E9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 20:16:51 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6707C1C87101
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 20:17:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 253B727FD76;
-	Thu,  4 Sep 2025 20:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D41E27EFE9;
+	Thu,  4 Sep 2025 20:17:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GStfmUu1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fhAtwS7s"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9407327FB26
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 20:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCFD27E05B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 20:17:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757016993; cv=none; b=K6S1kozXemXJtwfSPNUROnzRCL3IxRCQ/6JxAlFml6/mtqJr8Ja6lJgaO8/oDD/nf5E5FZOcXA55FI7WWH1waJPUytjlvNcWlKfNnxyvAyMhy/QDUNTEu51IWFt8D5R1EFqhn6j1r+g3JU0i2ZshwXBTDVz4GurlCpzN42By5ls=
+	t=1757017036; cv=none; b=ZKUf2LwJNXQ1fbydbkW3qync+vXw3umsQs3DFkVUnDs2o+zNSe1t6LKdEQ9mQeWs6HlarpWEMJ94IPxtkOzVSBBNa6zupG5kBY8/oH8kT0HdW476lR/18tECGk2u+gOZpB+KCvKLQZAhYz2EwcLBu4usunl5Yt2kfyA382GZxoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757016993; c=relaxed/simple;
-	bh=wsHd20AsJfMa6Wx3AXg6obGKYV4i2kU1t40Rvld7cXs=;
+	s=arc-20240116; t=1757017036; c=relaxed/simple;
+	bh=A1bBxKE+UbQNERGerOt9UWUgvARgsLszTLRBIrhR7to=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mPmXARvcF1/pYqfOYfG5q6SpCBwMYw4O0Ssm84i3XfjVpyFseMBieqZRN5d003oqsOqf68sej/r3cw+IWqojO7XkLqrWLG17GpzhpVxb96hL/C49l5WWZlftlXsM96BwSTyQ/fIGm1ksw8UanW3Yb/8wphrCKVgvRiYH4UIAtB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GStfmUu1; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=i+gCeIry2Ba2ZLB5IrGmhDkBn0P9L932NCo2Lf/uvCGstA/Q85iveJ5RKWoo1KGFk/MiGVxyzhMoJZWPckSEtCoGappYmq3zI/B2oht6mTtRzG9WUo0pCxNNIqzZr7N7hMG1PhlGhMXNTP3uXXNkMP6xJFg2s8sxnRNDfBdVqmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fhAtwS7s; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584ISJLV005051
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 20:16:30 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584IB5lf003768
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 20:17:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=xOnQOwS+L47eJqdD2xfoBQRC
-	L3cjvg9aVuPwvzZvFpc=; b=GStfmUu1CrqwzWdKY7Agp7+Uzmd0qtGHDw4NUVYC
-	MVcWrDzMS6HJONHQZEbkOc1UB5oXYafzqviDkUY7K5m+wkbOElxM/kxi/zUvBlRn
-	CKQl57xbcP5wYydUNyv2JJjp+T7DtL07vAMQV4mmghTYfz/avXx2loISPf8hxJwx
-	cJcu5dbQpKUP/yyFVILniN/BfFTywgX2tTwajQ6pdWL8GOcyPqti5EPyvlqgxtOt
-	4nnx4XncqRZF27YeNlD4816PWjUHS8MVkYAhhCJk+KvOth6nGuGHLP0mRztd0xk+
-	+RXZ4T2R8xy2eyxaniRNefn3uvYgkzSGBVPALAcurDFXDQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s8u8g-1
+	:references:subject:to; s=qcppdkim1; bh=PMWsb19CFWkEFXMKXc91+DwP
+	kgTTzLo12RNKo1X1z00=; b=fhAtwS7syQ0VSyDDcpV3BZ/XMzkmlE+qVRx5ha5F
+	voGoo+DD/f0BwGuK1Us/JxoQHT8Lc6RCvHXCqK9L17jCxzRexrnDufHASEn7bT1l
+	eRjTmJBiMpirUEtuG3h6TuIng9J7AqejBud+rPNjHoINtGyh9tjVOn8MppA57fSK
+	y/+4taAwE833kmPIFP0St7KpdRNdsr6dvTSSYDuUGQYQLmSPLLoeZStnYB0XmDF2
+	4SHjCgp3k1NUpRVZnov2acNsAYEViiMzsCyHfqL+xgyvCTbU7P7a05bK9s2SynFn
+	wheqWy2CGl3MdDsW1xpfqI/7TFrhSUU5BrnLSvXB+sJM8Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ur8s8uam-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 20:16:30 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-7296c012e7dso16380346d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 13:16:30 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 20:17:14 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-729751964dcso17986836d6.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 13:17:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757016989; x=1757621789;
+        d=1e100.net; s=20230601; t=1757017033; x=1757621833;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xOnQOwS+L47eJqdD2xfoBQRCL3cjvg9aVuPwvzZvFpc=;
-        b=v1uPCvPPRYrRnKjHa7YyB1TXcEMGxxlbR1SJlLZaxJ4sTJ3rO+KY5Vh7u8PzH9AQeb
-         1l+SJWofUe61Tzw5DoTITyvJeDXbMQMQM7HH5eCECzO/qxh9dEDmSJVrvzbSxp0JrF77
-         G/r7ygkhs0Potxv1f9XuDOWt358rNMTbCHCIyt7d4GsD5HelkiGPvw/wNJhrJh4e9bC1
-         wDs2Fy3K6twBZODQWuf9rkGejKXRg5C+jz5TDQQk4lEEKLDJgh9HbAg4v5F/3/HK0gdJ
-         IhgT2TlSK8hjhqMg5zrPio2BIJ7Pjl5Cc/6VFU97ESHYhbKJorIDeNmIPE5G8PQcVoBK
-         ae2A==
-X-Forwarded-Encrypted: i=1; AJvYcCUYUd7zLM35etVv/6eq+hKHE+insgcL/eM/rZM6qVa2VXSwzvy3x9Ou1tvMFXNPH9zp4CYmQkdf7+m3u7Np@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvF2fRQy1jE0I/Zyzx2xg2unvwnzj7grZ0S+RZ6sWKw7aZjTwG
-	2OTf1t4R5DkVsmEvUwIRubcWJtmQLAIIYWR2YenutfkrBLtmGTuUeK49hFCVnfuiQzAz/bPvuH9
-	+eAugG7v9vrQqK2hnAgZB4qqppjUT02RXbbiqlc2yRAMCnb1094ELb1Mu23BwOybtN4jY
-X-Gm-Gg: ASbGnctx6u++riBjQm3313dkmK/k35bIcrs+1nbEDxO/TMSS1/tIW/Zxn4T7EkSSmnP
-	agGrwXwwgPSC5YUVqM9RQdTOl4GN/J11akKSK9wr+gyoObGUpsxRupmL5AQ8Uw1KFz9ozYaO0Yt
-	35fJQBBg5sMHrfepPKdHXnwB4XQhHfAZcADAKuAaZbTnPbaw0tDt1zELGXEs/V95HOVwU3B5fl5
-	LkLkGrPZ0QH5B2gyRZf+Dqo9cOudpGu12AA1PW6UYxUpFrpbvQJ7rxPaSSVRtXSDNuw9BMBsKpi
-	TaX9fl2rudObhBZ1z7fm/JNynnSPrv0F85oO5Qca1krznk2OXdsyWUuyCslX0kY3psVesN0AwiS
-	EulvHOP7i81+dAuYL1afj/MuT9w09L9BgRsupqxdHT2EaC9iyqKnI
-X-Received: by 2002:ad4:5f06:0:b0:729:d2cc:9443 with SMTP id 6a1803df08f44-729d2cc947cmr38070646d6.39.1757016988750;
-        Thu, 04 Sep 2025 13:16:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6ZBkThlXqQk+QXlZrohvU7MoDDoi4EYRmpkHcRkJ3x4qqQmgMU68HV5l9Kryo0ZsRp4157A==
-X-Received: by 2002:ad4:5f06:0:b0:729:d2cc:9443 with SMTP id 6a1803df08f44-729d2cc947cmr38070086d6.39.1757016988093;
-        Thu, 04 Sep 2025 13:16:28 -0700 (PDT)
+        bh=PMWsb19CFWkEFXMKXc91+DwPkgTTzLo12RNKo1X1z00=;
+        b=HTUn0mMhJubnGIug9dJxeih+HyxDtn1kOaZslh+YO+Rt9F5RnM5R3Vis56X2eagb5a
+         hDj9GYgZR8Aip0Yqf2PayIvifDibLWgA+K+GS99rLV2VffgV2mlBSfExT5Q7B9tOKVOU
+         sWe04REL/0/8T3KEoA3al6ptIXjj5XaiQzG+5b9C68V9NYFALxYJmbLwY+hFUZRRHJTQ
+         ynvAmEct6mIg/g+ib/H0oVatjMBj5PsbuL4D5WB7F8wIvANoGA8DX6PqQx4aZAUb4JlE
+         CJ5lwej1jtGUmxyx/Lh2qc8jrli0gdBF51nohENN8F3lyQk/jwFmT/f4WlqUoTuQcX8I
+         Td4A==
+X-Forwarded-Encrypted: i=1; AJvYcCUOyBePr6koncfgRQVM1eNXzpevHpf89sXUAPKOP+RhYv5uYaC+3O+NGJPijKP3cW7kNU0z7fxbAEv42r+e@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/21sqoIilqwD51qTIWLb17RQjoWjUnMkWY4qHSxxvLXFQD84+
+	B/GJf8Yiz0dP/LMII+YgUsGKe6fjuJDW8ykIG+Anln0Mdk+uviKJdcgCCF1qju6F0iCDjUYd+hi
+	D7+cD2rW+IaFlRFp8p3Zw6G0ZJ0iY7wQf64lPOhpDw/iLpvsHSSdMRRIILyZY68kBzMZu
+X-Gm-Gg: ASbGncsFmTD47vywCJ0Uck4eG4tVmmKMtYsvYQtWHBBENnYhN5zP8S4tFSXHNAIAPB0
+	anYDCXgqOBHn9RXxgnIIL0U5xwCk3E6vN3ZrSlH/14XJ6HQtpWzvj9g2O+K2xJzn7lk0QdjvJDn
+	WRFz5d6B4ZeT4ZeHk3cLfumuFej3pdQqOYj1pWNxi4z4BxwKMjw5OzBVtB7WhPug9HLQSnpU++w
+	Yrf12UllcakdmxLVc+G/211UUZuiqEKhNNmFfDnVPlyBKX437x9U9m2CIBDL6irrpPIhrrZQVJ7
+	Zo5hM0hCQmdzjKjIz+Ru5ASFKN95ZfQP0nbAwB6GnXeHm0uyrrx+oiuuAz5fDMizq8hd5WkaxF1
+	vpcKTwY/bi+EYbe8pUbUG/EWUCRsoH/vgMkT3gvm238MSpZNrRGhS
+X-Received: by 2002:ad4:5ecc:0:b0:719:9ea2:6668 with SMTP id 6a1803df08f44-7199ea293camr222119876d6.19.1757017032792;
+        Thu, 04 Sep 2025 13:17:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFg1IxBgYRYFnQ7iNADg67T9sGhou8A8S+BUQKTwHq4BE1x8wrT4GrfsEGqgPZwXCBKxDIy0g==
+X-Received: by 2002:ad4:5ecc:0:b0:719:9ea2:6668 with SMTP id 6a1803df08f44-7199ea293camr222119396d6.19.1757017032135;
+        Thu, 04 Sep 2025 13:17:12 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608ad4e2e3sm1393356e87.147.2025.09.04.13.16.26
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608acfc24fsm1389024e87.104.2025.09.04.13.17.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 13:16:27 -0700 (PDT)
-Date: Thu, 4 Sep 2025 23:16:25 +0300
+        Thu, 04 Sep 2025 13:17:11 -0700 (PDT)
+Date: Thu, 4 Sep 2025 23:17:09 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        Bartosz Golaszewski <brgl@bgdev.pl>, kernel@oss.qualcomm.com,
-        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH v3 05/14] dt-bindings: eeprom: at24: Add compatible for
- Giantec GT24C256C
-Message-ID: <zedyu77se67b3s4zmuqcx2zslaasemllmtr6ua3k2p53cdspcc@ikpf7np6ugfy>
-References: <20250904-lemans-evk-bu-v3-0-8bbaac1f25e8@oss.qualcomm.com>
- <20250904-lemans-evk-bu-v3-5-8bbaac1f25e8@oss.qualcomm.com>
- <qya226icirpzue4k2nh6rwcdoalipdtvrxw6esdz4wdyzwhcur@c2bmdwnekmlv>
- <aLnqZktduc/aT05R@hu-wasimn-hyd.qualcomm.com>
+To: "Jayaraman, Venkat" <venkat.jayaraman@intel.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        PSE Type-C Linux <pse.type-c.linux@intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL
+ command
+Message-ID: <d7nbjyz27pcvsic2gsho6ft6pjubmq2x4she5kvcd57i6dirns@bte5b5aap3wb>
+References: <20250814163028.18058-1-venkat.jayaraman@intel.com>
+ <91cb0acb-73c4-4d3a-9aa8-1056f367d82e@linaro.org>
+ <aKbI4DnIDD9fD_Gz@kuha.fi.intel.com>
+ <b897d082-0d74-46fc-a0e4-7745347ba597@linaro.org>
+ <CH0PR11MB5300AD8DD6BE6CBC799B49DD8000A@CH0PR11MB5300.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -108,20 +105,22 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aLnqZktduc/aT05R@hu-wasimn-hyd.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfXx+zG/po12QUX
- ZSjHHvwv848DfQ3f6n5rdobqGkvqiHtFBuTcN+6c+ic71cS8rQDL86yEmB9Dx6LtSRu1fW9YkDv
- tIgh+ivkxXsaMTCvPQhtFO0tkjWEzdfKrq2kuLDBv+ftxBqY2b+mgwDcl8WvI7ObNEcNOPdbg13
- mPF2GLyw2M6cw/xQJXQFAZFyND+sl+37J7mDezlfwHb6vtTwCBF5YhGkZkoIabi1ieQKcGdRtoj
- VtQJOv3zn6ZFnJbl7BOdjvuRzrE6UjsknUIrxfgZ5z9y2HeHP/bw5CUTdylKjnIxVjyFrdnDv/U
- 4tc/V03Gdw9V736em+RyFLTIa7MckHLm8uLcqWTUZtTsQmgw1MF4yeAE5OLVE8sZVCvhADMNp/G
- eU6WwBrZ
-X-Proofpoint-GUID: WDMotoFZ8jB_MyCMYftfDnp6rQi_gMef
-X-Proofpoint-ORIG-GUID: WDMotoFZ8jB_MyCMYftfDnp6rQi_gMef
-X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b9f39e cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=q5DPIbX8LfODaG0eNlsA:9 a=CjuIK1q_8ugA:10
- a=OIgjcC2v60KrkQgK7BGD:22
+In-Reply-To: <CH0PR11MB5300AD8DD6BE6CBC799B49DD8000A@CH0PR11MB5300.namprd11.prod.outlook.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAxOSBTYWx0ZWRfX2cimDQ21/Fqp
+ SNwCy4HBYFVO9YfIoypi4qaZQX4UILqOlxLjVHKubY4YtgM/kg22J2kjODBcqOPPWFAAIamd2cb
+ BLI/coy1dqJI5Yecc1QOPjPHMc5XwG6dfwl5XsQBj6HaOLZLzVMU3vCej8FWdPQZh5tUvqEtyKs
+ WsB0h5Z9RyvIvJnzu10YRLb/gDfvKr+BoSXe3kKzvzTAZQMSEd7PiZz5mb+ZlOXiztJ4siNJCGB
+ m3g5CRRRVfboL1q0309+pVxeOcJ9f7budonm1sGHshlkCOeWeYdVcdQxS2Mm/ALdq2t5qlexnCB
+ NWZdpSouEefUdIKCI/2OKtH7UGOJ5JQkreMtK5qlKGV6nMWKpi8SUdLvoLT6XcYlioDsie/L8oq
+ KS2BIj8T
+X-Proofpoint-GUID: ldGvMB6wChDb9DM8L8vtZg0jE0-kucDy
+X-Proofpoint-ORIG-GUID: ldGvMB6wChDb9DM8L8vtZg0jE0-kucDy
+X-Authority-Analysis: v=2.4 cv=PNkP+eqC c=1 sm=1 tr=0 ts=68b9f3ca cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=qC_FGOx9AAAA:8 a=KKAkSRfTAAAA:8 a=QyXUC8HyAAAA:8
+ a=VwQbUJbxAAAA:8 a=ag1SF4gXAAAA:8 a=fbkPUmDYxqMCz1gZWXUA:9 a=CjuIK1q_8ugA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=fsdK_YakeE02zTmptMdW:22 a=cvBusfyB2V15izCimMoJ:22
+ a=Yupwre4RP9_Eg_Bd0iYG:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_06,2025-09-04_01,2025-03-28_01
@@ -131,58 +130,100 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300019
 
-On Fri, Sep 05, 2025 at 01:07:10AM +0530, Wasim Nazir wrote:
-> On Thu, Sep 04, 2025 at 07:43:27PM +0300, Dmitry Baryshkov wrote:
-> > On Thu, Sep 04, 2025 at 10:09:01PM +0530, Wasim Nazir wrote:
-> > > Add the compatible for 256Kb EEPROM from Giantec.
+On Thu, Sep 04, 2025 at 07:14:59PM +0000, Jayaraman, Venkat wrote:
+> Hi Neil, 
+> 
+> > -----Original Message-----
+> > From: Neil Armstrong <neil.armstrong@linaro.org>
+> > Sent: Monday, September 1, 2025 12:50 AM
+> > To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> > Cc: Jayaraman, Venkat <venkat.jayaraman@intel.com>; linux-usb@vger.kernel.org; gregkh@linuxfoundation.org; PSE Type-C Linux
+> > <pse.type-c.linux@intel.com>; linux-arm-msm <linux-arm-msm@vger.kernel.org>
+> > Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL command
 > > 
-> > Why? Don't describe the change, describe the reason for the change.
+> > Hi,
 > > 
+> > On 21/08/2025 09:21, Heikki Krogerus wrote:
+> > > On Tue, Aug 19, 2025 at 11:47:58AM +0200, Neil Armstrong wrote:
+> > >> Hi,
+> > >>
+> > >> On 14/08/2025 18:30, Venkat Jayaraman wrote:
+> > >>> Add support for UCSI READ_POWER_LEVEL command as per
+> > >>> UCSI specification v2.1 and above to debugfs.
+> > >>>
+> > >>> Following power related fields will be exposed as files in debugfs:-
+> > >>> peak_current (Peak current),
+> > >>> avg_current (Average current) and
+> > >>> vbus_voltage (VBUS voltage)
+> > >>>
+> > >>> These files will be updated either when a READ_POWER_LEVEL
+> > >>> command is sent from OS or when a device is connected.
+> > >>>
+> > >>> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> > >>> Signed-off-by: Venkat Jayaraman <venkat.jayaraman@intel.com>
+> > >>> ---
+> > >>> Changelog v3:
+> > >>> - Rebased to kernel 6.17-rc1
+> > >>>
+> > >>> Changelog v2:
+> > >>> - Removed extra space in declaration
+> > >>> - Made the call to debugfs_create_file single line for clarity
+> > >>>
+> > >>>    drivers/usb/typec/ucsi/debugfs.c | 31 +++++++++++++++++++++++++++++++
+> > >>>    drivers/usb/typec/ucsi/ucsi.c    | 16 ++++++++++++++++
+> > >>>    drivers/usb/typec/ucsi/ucsi.h    | 13 +++++++++++++
+> > >>>    3 files changed, 60 insertions(+)
+> > >>>
+> > >>
+> > >> This commit causes the following warning:
+> > >> [    8.646179] ------------[ cut here ]------------
+> > >> [    8.650986] Access to unsupported field at offset 0x59 (need version 0210)
+> > >> [    8.651044] WARNING: drivers/usb/typec/ucsi/ucsi.c:1296 at ucsi_handle_connector_change+0x380/0x414 [typec_ucsi], CPU#0:
+> > kworker/0:0/9
+> > >> <snip>
+> > >> [    8.832491] Hardware name: Qualcomm Technologies, Inc. SM8550 HDK (DT)
+> > >> [    8.839228] Workqueue: events ucsi_handle_connector_change [typec_ucsi]
+> > >> [    8.846084] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+> > >> [    8.853277] pc : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
+> > >> [    8.860031] lr : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
+> > >> <snip>
+> > >> [    8.944023] Call trace:
+> > >> [    8.946570]  ucsi_handle_connector_change+0x380/0x414 [typec_ucsi] (P)
+> > >> [    8.953328]  process_one_work+0x148/0x28c
+> > >> [    8.957502]  worker_thread+0x2c8/0x3d0
+> > >> [    8.961401]  kthread+0x12c/0x204
+> > >> [    8.964759]  ret_from_fork+0x10/0x20
+> > >> [    8.968474] ---[ end trace 0000000000000000 ]---
+> > >>
+> > >> on:
+> > >> 8550-hdk:
+> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253312#L1418
+> > >> 8550-qrd:
+> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253306#L1560
+> > >> 8650-hdk:
+> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253308#L1494
+> > >> 8650-qrd:
+> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253309#L1594
+> > >> x1-crd:
+> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253311#L2226
+> > >> x1-qcp:
+> > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253310#L2160
+> > >>
+> > >> I guess the version should be checked.
+> > >
+> > > Venkat, can you be prepare the fix for this?
+> > >
+> > > thanks,
+> > >
+> > 
+> > Gentle ping, can this be fixed ? Should I send a revert patch ?
+> > 
+> > Neil
 > 
-> Let me know if this properly describe the reason:
-> 
-> ---
-> dt-bindings: eeprom: at24: Add compatible for Giantec GT24C256C
-> 
-> The gt24c256c is another 24c256 compatible EEPROM, and does not
-> follow the generic name matching, so add a separate compatible for it.
-> This ensures accurate device-tree representation and enables proper
-> kernel support for systems using this part.
+> The Fix patch, for this warning, is ready and approved, can submit once the initial patch is merged.
 
-LGTM
-
-> ---
-> 
-> > > 
-> > > Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> > > ---
-> > >  Documentation/devicetree/bindings/eeprom/at24.yaml | 1 +
-> > >  1 file changed, 1 insertion(+)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/eeprom/at24.yaml b/Documentation/devicetree/bindings/eeprom/at24.yaml
-> > > index 0ac68646c077..50af7ccf6e21 100644
-> > > --- a/Documentation/devicetree/bindings/eeprom/at24.yaml
-> > > +++ b/Documentation/devicetree/bindings/eeprom/at24.yaml
-> > > @@ -143,6 +143,7 @@ properties:
-> > >            - const: atmel,24c128
-> > >        - items:
-> > >            - enum:
-> > > +              - giantec,gt24c256c
-> > >                - puya,p24c256c
-> > >            - const: atmel,24c256
-> > >        - items:
-> > > 
-> > > -- 
-> > > 2.51.0
-> > > 
-> > 
-> > -- 
-> > With best wishes
-> > Dmitry
-> 
-> -- 
-> Regards,
-> Wasim
+Can't you submit the fixed patch instead? It would be much better than
+merging the known-broken patch.
 
 -- 
 With best wishes
