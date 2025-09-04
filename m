@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-72024-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25640B4393E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:51:56 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46DFEB43946
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:52:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B632717794F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:51:55 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59F7E7A56BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:51:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E1832ECEB9;
-	Thu,  4 Sep 2025 10:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 467E32EDD7D;
+	Thu,  4 Sep 2025 10:52:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="plRPWOMs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EgNR0Fi8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE42413B5AE;
-	Thu,  4 Sep 2025 10:51:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177C513B5AE;
+	Thu,  4 Sep 2025 10:52:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756983112; cv=none; b=K9qGoavHwLV2SQPVCWnjQWgu75tCwhiEJA0lmzlXHse6+zAWVW2vC311oRny4GoViOEFwKITJkzxmm+cX43cDVismkg+3WA5hVN4buMwNquWUJHM9fznD8RYsm5KW/yKgDn0DMy/WeI1l/rcmkg/e2iS3Gfxk0owkAqVSadpjnk=
+	t=1756983159; cv=none; b=dYK9o2VFrLcwXSFo+6Z82ZgK8bH6OqJOz/kBNkSJPDs2nPOaFIoPxMm23wUL4jZ2rHjbzbkmtyDezZgOEfYcbMugWnTm8OT3um7dFuAgcWku5h5k4swuP6UrXSgi4B+NHblQMf6G4GUbNlnWkYDht1kOqohkaJ0WaH1Oi1dDIMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756983112; c=relaxed/simple;
-	bh=k3JO0YMSUDIJiNpBqK85iJurfOt+0WojMFvUvMYqVGo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=CTqesIvAYmvPAQhy6Zsg2f6D5X/Dofy3cR+wkrpkxq45sNJUmdjn+jMLOUvQlF379VIls34QOyGSQq2mW1gmIFMjtu6FSdyRFbL03M3ecsNvDGSVH1EuHXa3YbIc//mHpaixXoL0k11y++x4vA9utQDaeioGrZQR6lI6Dt3rQzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=plRPWOMs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CF5C4CEF0;
-	Thu,  4 Sep 2025 10:51:46 +0000 (UTC)
+	s=arc-20240116; t=1756983159; c=relaxed/simple;
+	bh=fPSzaYPHDd4U6MvAxZMgMGqvIF5RPAY1fAbmBTOMZwQ=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=anNnJNtA48ds92ueuRZ9KMBaUTD5JjUdmi+mV3/FEbFP2jrFpNfcWviA5boSTphrfso9ZNkv/Y34lzMOlfB3zzcO9OMrc8Fbu1QO80vg/58ERmjP0bDJ0SiOo9gqY1OyRDACqcDHEMGrb3ubNa+GAtRSepyL5NvKhVVS3fEjFKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EgNR0Fi8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125BFC4CEF0;
+	Thu,  4 Sep 2025 10:52:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756983111;
-	bh=k3JO0YMSUDIJiNpBqK85iJurfOt+0WojMFvUvMYqVGo=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=plRPWOMsPby6bHYo0eQzVWSxAkHlw9+lEUPJop5FniuaFXZOEoCEXSK8/3dtMmRQi
-	 zk1y0AySoOzAOQY8UafBd/UA5sBc1oVfdISDhe02khtgnpQhNgdTCc7bIu0jl3oJHE
-	 ly3Sq3Sg5APvbd50OCoJCfFv57EHcEhqEujlgwA0/lhqilNPwBWXminOGrEavU2Uc5
-	 IXkBo6505omNsVb20PFlHGvJZvxAOKb/5gupoGQ4yt9h5Hm+nPXCT08YtSRLbF/H75
-	 Y4/4dwrdB+PQ4Lz3s4bmyOplhZQeExSUbItO9TAtyi9A0XUBvDYYjCjllG44JmwkN5
-	 4qNZi5gcdsUpg==
-Message-ID: <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
-Date: Thu, 4 Sep 2025 12:51:45 +0200
+	s=k20201202; t=1756983158;
+	bh=fPSzaYPHDd4U6MvAxZMgMGqvIF5RPAY1fAbmBTOMZwQ=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=EgNR0Fi8fJYCJG7nNpB52rwDSdg5uk1Ri+dZKhTmC4IrCfwzo2QnvPjr6f/1dTSmD
+	 e1lG4j/YKiJ2DcMuF3lD0x0OKo9fh3AgDvY29gYrTJsJcb3CXnwgxOqM658nB26IyH
+	 pbQmEmCWMJrrvD7pLKb4PuBYWjpUsFKwZzkA0jIxkcXoOLwCAP8SGrYfCKCWZYCcXG
+	 jvEfIOIQFcLtyCPjTEhWAnG2kaNMgoJZcS34MIR9cie6ocijWrlI+A/3uDp/TUahPX
+	 hHSchwbGkiwlgo4pkDdH/ac2yCoQh+WMMaFB1VoyAhxYeqFNhdRR/LCiQZrUtAwkBZ
+	 LDtxRS1BlVB0Q==
+Message-ID: <a304ec1c-7364-4926-8763-8c731e461eb9@kernel.org>
+Date: Thu, 4 Sep 2025 12:52:32 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,6 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH V5 4/4] arm64: dts: qcom: sm8550: Add max-sd-hs-hz
  property
+From: Krzysztof Kozlowski <krzk@kernel.org>
 To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
  Sarthak Garg <quic_sartgarg@quicinc.com>,
  Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
@@ -68,7 +69,7 @@ References: <20250903080404.3260135-1-quic_sartgarg@quicinc.com>
  <20250903080404.3260135-5-quic_sartgarg@quicinc.com>
  <6deac56f-e21a-4447-bfa7-a414084676b8@kernel.org>
  <be87fb2f-7036-4039-8ba2-63d54a9ae732@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -113,52 +114,56 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <be87fb2f-7036-4039-8ba2-63d54a9ae732@oss.qualcomm.com>
+In-Reply-To: <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 04/09/2025 10:36, Konrad Dybcio wrote:
-> On 9/3/25 10:21 AM, 'Krzysztof Kozlowski' via kernel wrote:
->> On 03/09/2025 10:04, Sarthak Garg wrote:
->>> Due to board-specific hardware constraints particularly related
->>> to level shifter in this case the maximum frequency for SD High-Speed
->>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
->>> card in HS mode.
+On 04/09/2025 12:51, Krzysztof Kozlowski wrote:
+> On 04/09/2025 10:36, Konrad Dybcio wrote:
+>> On 9/3/25 10:21 AM, 'Krzysztof Kozlowski' via kernel wrote:
+>>> On 03/09/2025 10:04, Sarthak Garg wrote:
+>>>> Due to board-specific hardware constraints particularly related
+>>>> to level shifter in this case the maximum frequency for SD High-Speed
+>>>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
+>>>> card in HS mode.
+>>>>
+>>>> This is achieved by introducing the `max-sd-hs-hz` property in the
+>>>> device tree, allowing the controller to operate within safe frequency
+>>>> limits for HS mode.
+>>>>
 >>>
->>> This is achieved by introducing the `max-sd-hs-hz` property in the
->>> device tree, allowing the controller to operate within safe frequency
->>> limits for HS mode.
+>>> Probably we will now replicate the same discussion... And it will be
+>>> happening every time you send the same and not reflect it in commit msg.
+
+Just to emphasize this - it will happen EVERY time.
+
 >>>
+>>> Bindings say board setup, this commit msg says board config, but the
+>>> patch says SoC. This is not correct.
 >>
->> Probably we will now replicate the same discussion... And it will be
->> happening every time you send the same and not reflect it in commit msg.
+>> Both are correct, looking at the problem from two perspectives.
 >>
->> Bindings say board setup, this commit msg says board config, but the
->> patch says SoC. This is not correct.
+>> The bindings description mentions board-specific limitations (e.g. because
+>> "the board's electrical design does not allow one to achieve the full rated
+>> frequency that the SoC can otherwise do, in a stable way")
+>>
+>> Here the author tries to argue that almost all SM8550 boards are broken
+>> in this sense, because the reference design did not feature the required
+>> passive components, making most (derivative) designs sort of "broken by
+>> default" - and only some (if any?) vendors decided to go with the
+>> additional components required to lift this limitation.
+>>
+>> This in turn makes it fair to assume the developer experience would benefit
+>> from having the SD card high speed modes always work (with the slight speed
+>> cap which may not be required for the 1 or 2 designs that took the extra
+>> step) without each board DT creator having to track down this property
+>> separately.
 > 
-> Both are correct, looking at the problem from two perspectives.
-> 
-> The bindings description mentions board-specific limitations (e.g. because
-> "the board's electrical design does not allow one to achieve the full rated
-> frequency that the SoC can otherwise do, in a stable way")
-> 
-> Here the author tries to argue that almost all SM8550 boards are broken
-> in this sense, because the reference design did not feature the required
-> passive components, making most (derivative) designs sort of "broken by
-> default" - and only some (if any?) vendors decided to go with the
-> additional components required to lift this limitation.
-> 
-> This in turn makes it fair to assume the developer experience would benefit
-> from having the SD card high speed modes always work (with the slight speed
-> cap which may not be required for the 1 or 2 designs that took the extra
-> step) without each board DT creator having to track down this property
-> separately.
+> And then if you send same v3, I will ask the same. Can the author
 
-And then if you send same v3, I will ask the same. Can the author
-finally write commit msgs reflecting discussions and previous disagreements?
+v3 -> v6
 
-Reviewers questions happen for a reason, so sending the same means
-person ignored that reason.
+> finally write commit msgs reflecting discussions and previous disagreements?
 
 Best regards,
 Krzysztof
