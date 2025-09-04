@@ -1,69 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-71953-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-71954-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7A39B42DB0
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 01:52:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97207B42DEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 02:10:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 642E53B71FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  3 Sep 2025 23:51:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6126E581836
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 00:10:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCF622FC009;
-	Wed,  3 Sep 2025 23:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D21FFBA34;
+	Thu,  4 Sep 2025 00:10:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="djuAXn5V"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pr8ooTkp"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA452ECD1C;
-	Wed,  3 Sep 2025 23:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF39749C;
+	Thu,  4 Sep 2025 00:10:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756943501; cv=none; b=tjXgkKD5E2ilhYfSx1RrJRomzkcdIw8YCJvUkqpRyFXYvXynD1JPbDV3ZLCF+c+gKElrNyl96B9fGvLxv1zCbmF3+MsiKqzuSBlSspsjUaVkSSLEtwurZ2WSULqFiWDaNbb1jzwIn+EuCEyMWItyndiLt1RbLeKZ1/d3Dey+8xM=
+	t=1756944621; cv=none; b=jMjyGFww3nhMakrpMX/xB1w/KypTI0kWh8nHbWDcfCg+hs7JcGxkQ1IUMWmacvic3ULOdbTvwRoqJbXM9bZMk0M1yFe2jCB942fp5dXSk+cxuQf4zYXeTSSM/RjI9KZbw6telkB8s2opEAaj1h77PPe6CSerhdEFCbch5gLPDXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756943501; c=relaxed/simple;
-	bh=jIL8HMWY74/M006Uey55mR2tjICrYWUq/L0Z06cYtog=;
+	s=arc-20240116; t=1756944621; c=relaxed/simple;
+	bh=xLTUgYpzyJUGQC8iGmNCWf2tluEEgft6La/4Blouoww=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OQtg4YxqC57mW5C2z5OxptRUmoNeIiHysZBqmZ1ULfd8mC/rdJh3Lpe1KmEMVGnf+0tJ737nWL18ksTaWv39wfGBg5YGgRrkbpMpiU67zzRrFKTmkCVW4k7gGPLmKBI4ZsNlQaPNVCHrgLjdtihMlUR5VoJo14uGq7trd3IxQkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=djuAXn5V; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672BBC4CEF4;
-	Wed,  3 Sep 2025 23:51:40 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=iO28/Ndp46KaCVHOy9HLJ+Tb11SXyUEo2mKqgphcZxW8Q9ZM6IM0zGXxw4CLOVPAS6I7vPcpJ5ylgFUq79P8Ct7Y/4o2lVKC3LYa5Q+Ogljgz4atkzbFqZmRD9R5Bqf088DD89lwDpgarleUEVBgQ4wHJ/NyhpH1RI+1HxJinpo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pr8ooTkp; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD611C4CEE7;
+	Thu,  4 Sep 2025 00:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756943501;
-	bh=jIL8HMWY74/M006Uey55mR2tjICrYWUq/L0Z06cYtog=;
+	s=k20201202; t=1756944620;
+	bh=xLTUgYpzyJUGQC8iGmNCWf2tluEEgft6La/4Blouoww=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=djuAXn5VMQ2y8yvgwfyLrjCfR0TOF/VhEJFie2YmnDBAgTJfdhGOjeuRbcxYx904B
-	 u8Tc2QDnzzxNnEVjJQJGw33t1B8PaE6UrAdHpk1Q6msSjjQi2+pbCEPx23xZ/dvQVl
-	 xcBUC3z51wgl7Zt3W2618KrCm0pzg4s/QIlfh2lazmDsBvci0kTlQ4lIqX43ipS2Rd
-	 A8A8vZHxFSUQTShZrZuZ3g0k9HTmxjPzO6xfcAJHOPXZsK0kYyfhhNnnoLidGnpG2A
-	 csByR51yJjs4O/EaFr4JeOHOX+Y4WgHN4oSFXZWLVg4aKURLRvnwC1gkYSGygApklV
-	 8HI4j6rXSdTSA==
-Date: Wed, 3 Sep 2025 18:51:38 -0500
+	b=Pr8ooTkp5X63oq60GYII6ufmf73Tu/V4wMy5FfBKW3enutpe21ce9NSZ9r/9+BIa1
+	 QNmdc8QYmWEvlYACtm5vQBlmmQa/7R7TuwUjoq1NqXNG/iDyQcBkrz+A6mCPhnA0Bm
+	 KaUAXelCuIWHuT5Bunwq6+1t4VKF3tIvpYCEuQ3sK5juz62hYLTbdhL2rzY0MHQgIr
+	 Qd43UvP6ORpkbhcWf8nycewvgqOH8U8EyQOrTQBlhBLdOGNdQugD2nN0foJJoQNM63
+	 7JcIA7/yGfCiVe2BKoGCT1x/Mh36Cf4T2EXGhnNc7t0hJ7wH0D/yKI/HRSf27sUHhy
+	 x32cVoiNHYA1A==
+Date: Wed, 3 Sep 2025 19:10:14 -0500
 From: Rob Herring <robh@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Dmitry Baryshkov <lumag@kernel.org>,
+To: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Rajendra Nayak <quic_rjendra@quicinc.com>,
-	Johan Hovold <johan@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: phy: qcom-edp: Add missing clock for
- X Elite
-Message-ID: <20250903235138.GA3348310-robh@kernel.org>
-References: <20250903-phy-qcom-edp-add-missing-refclk-v2-0-d88c1b0cdc1b@linaro.org>
- <20250903-phy-qcom-edp-add-missing-refclk-v2-1-d88c1b0cdc1b@linaro.org>
- <11155d6c-cc11-4c5b-839b-2456e88fbb7f@oss.qualcomm.com>
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/2] Add support for Gunyah Watchdog
+Message-ID: <20250904001014.GA3405605-robh@kernel.org>
+References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,40 +63,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <11155d6c-cc11-4c5b-839b-2456e88fbb7f@oss.qualcomm.com>
+In-Reply-To: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
 
-On Wed, Sep 03, 2025 at 03:37:25PM +0200, Konrad Dybcio wrote:
-> On 9/3/25 2:37 PM, Abel Vesa wrote:
-> > On X Elite platform, the eDP PHY uses one more clock called
-> > refclk. Add it to the schema.
-> > 
-> > Cc: stable@vger.kernel.org # v6.10
-> > Fixes: 5d5607861350 ("dt-bindings: phy: qcom-edp: Add X1E80100 PHY compatibles")
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  .../devicetree/bindings/phy/qcom,edp-phy.yaml      | 28 +++++++++++++++++++++-
-> >  1 file changed, 27 insertions(+), 1 deletion(-)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-> > index eb97181cbb9579893b4ee26a39c3559ad87b2fba..a8ba0aa9ff9d83f317bd897a7d564f7e13f6a1e2 100644
-> > --- a/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-> > +++ b/Documentation/devicetree/bindings/phy/qcom,edp-phy.yaml
-> > @@ -37,12 +37,15 @@ properties:
-> >        - description: PLL register block
-> >  
-> >    clocks:
-> > -    maxItems: 2
-> > +    minItems: 2
-> > +    maxItems: 3
-> >  
-> >    clock-names:
-> > +    minItems: 2
-> >      items:
-> >        - const: aux
-> >        - const: cfg_ahb
-> > +      - const: refclk
+On Wed, Sep 03, 2025 at 07:33:58PM +0000, Hrishabh Rajput wrote:
+> Gunyah is a Type-I hypervisor which was introduced in the patch series
+> [1]. It is an open source hypervisor. The source repo is available at
+> [2].
 > 
-> "ref"?
+> The Gunyah Hypervisor doesn't allow its Virtual Machines to directly
+> access the MMIO watchdog. It either provides the fully emulated MMIO
+> based watchdog interface or the SMC-based watchdog interface depending
+> on the hypervisor configuration.
 
-Certainly more consistent with other QCom phy bindings.
+EFI provides a standard watchdog interface. Why can't you use that?
+
+> The SMC-based watchdog follows ARM's SMC Calling Convention (SMCCC)
+> version 1.1 and uses Vendor Specific Hypervisor Service Calls space.
+
+Is a watchdog really a hypervisor service? Couldn't a non-virtualized 
+OS want to call a watchdog (in secure mode) as well? But I don't know 
+how the SMCCC call space is divided up...
+
+> This patch series adds support for the SMC-based watchdog interface
+> provided by the Gunyah Hypervisor. The driver supports start/stop
+> operations, timeout and pretimeout configuration, pretimeout interrupt
+> handling and system restart via watchdog.
+
+Shouldn't system restart be handled by PSCI?
+
+Why can't you probe by trying to see if watchdog smc call succeeds to 
+see if there is a watchdog? Then you don't need DT for it.
+ 
+Rob
 
