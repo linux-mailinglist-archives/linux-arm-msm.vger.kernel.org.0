@@ -1,326 +1,212 @@
-Return-Path: <linux-arm-msm+bounces-72042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72043-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18495B43A62
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 13:40:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71213B43A91
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 13:45:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BE1AE3B2F9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 11:40:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 56E83582FCF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 11:45:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3CA212D3A6D;
-	Thu,  4 Sep 2025 11:40:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1ACD42FDC58;
+	Thu,  4 Sep 2025 11:43:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RAXXm/pt"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Eu/aciE+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A675A74040
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 11:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7272FDC30
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 11:43:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756986049; cv=none; b=mBihmruta0HTWKk9iC9f24yKgtZCOT6DjtRBUeLpq5KUd1l/qwiG3vbt6x1GbtkRwxmvtsksz3Eko7P4KcW1JQQLsMMKdwciv4imtA7b3HHwhKhZjr+fw4s0njf3LkJqOviyyWanzKdo5rqKYWIvRJSkxMOQYbKEgNT9rl9+Egs=
+	t=1756986218; cv=none; b=MgJmQ1AaJ2fOu7EN1s1Se62jFk91Pgcyq8O3s7Ye3ZjjpL3husg0aHjD4DmqMQuK3hSWkgvJQyBOMFSvku8tQWhWmd8kdOaYCcqTtUtaQRFk6lF+nrkEvqak7ep7/9YEe/j81Mg2zpean+VlQP5IGTMYYNP0TxmgeCDiN/NxiPk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756986049; c=relaxed/simple;
-	bh=y4uU4DStFdyRet9AcYiazndrVi6RmdR0kimclhECy6o=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=CeQMNqaGeAKuUjoSJhxMgvqcJNQDop8VCE8qyKf57geeVXU9AVqf13O1u6Yz0nqpIOeGS7DEjsnlt+XO0cWdP3Gp4fOt6Po957H6hLzk6nZg3In2crc3WVKp9cA5eMEXhZa1GvPuTCJcJybXXdrDpVTWsOdgQjt2lC0ykNU4D2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RAXXm/pt; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1756986218; c=relaxed/simple;
+	bh=8/IakGCw46hrazl3aA4VwfOOwE8rVlBce2R/a6e/u2M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ehW1uQzc2NMojdmrPUGG1YLrfPCYu+cCso8Wyivf0a8vOWCtIcwvEY3pSttIUBt0+jjfmN+4xoggs0eTKv2g0SX9I4kN/yHX1rPdf2lQ/ZFnpZEzH7kmNMAg/H9icsKswT4NjkNsq7sleSxgFIkW7o7v+deNUoIqns2Ohl7+Xsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Eu/aciE+; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849X72Z022973
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 11:40:46 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849X8gm008117
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 11:43:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	1z7m0o38hbU9AqKGZ4FuuaCFFD5bgtOtsvABF1Bvah8=; b=RAXXm/ptWnxJyvcX
-	v1eBBSbyN/JTB0EL5QKFWzGqGItY7pmBvsDlLg+iuYeTUuUOvttWODcbwJAH7VV8
-	vICORRep524tmcvJ38tE07nTLbhTEG+y45DG1b2YKPFIivx2qp8uhGG3MwBycPDK
-	BoUJZV1EelCu8Hkf9L2XXyBqzdAtgwv6ax5hQpFrNiv8Ps3hUehg1PYSniO+6UtC
-	Rmyt2Qjlh2RcrOApnmeMBXYkHVcMq8MH733QDU8TAdYs+B6z+NJGiT2U6JM7m6ig
-	EFszQO1+lKdlqwlfdT1MgU7/0we9d98qxfLhQ4PztgdqEjfPoa09muQa07GvpQVD
-	zbgDEA==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0eqf5k-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=JlHa+bLNOlllt7+sjrqxahbi
+	SpEqBtvYmevS8IxN37c=; b=Eu/aciE+0JBxEsh8nSfm0b0bLNMSXdcHMa/txli2
+	5lV6psm5FjnQ7Kvdsqr0/hoGUejlrcGPoUHxb6Y/TByvPdnN6gxFHL2Dk9WdcxxK
+	5ScCKgXwDzgjrH8IJ8GAxaNxEcEWInDNQWpv92uVXWyNzePC1Vop0Bya3nTaOyxL
+	YJ+htRBBxHB0kNi/PV90T3VdbUpYbGpI2mV+R/A0Kdg6PXoNrmszC5SokIhid7Yh
+	Fuyho9ALog4Yn8XY5t3pgjeWBBUdjKHJ2AQpneA9An1JD7C9gbqdxioBBq0q1b2W
+	cruSwL+pyxDtD00zHI8a8fzIQGMFFDk1XsRVHo2I45R2jA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjq9mc-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 11:40:46 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-329e3db861eso899545a91.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 04:40:46 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 11:43:34 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-24cc19f830fso14882425ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 04:43:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756986045; x=1757590845;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=1z7m0o38hbU9AqKGZ4FuuaCFFD5bgtOtsvABF1Bvah8=;
-        b=saVz7w4qbtcIRLcY2sWpNWwO8f5quTstDwiNHlzxJH5/vfnU1WKYvM4/jNS+lND2l/
-         eE7IZVkoyYgqNECdlVB0pST3oaR+13IqH6AUfGUdzb4fZTok9OvODXAOx16YCpBw1L7M
-         CLH4ApEZIQfnwfPhX6ksMyQUiV+RDmpxiQaBYdisX8l+LgikZRcASRTYLxSiA37Ac7oL
-         crXlq6TlhvkOQhMFLBjwS1EOFHyZnbMEfRSfpvh3/YRAWjLo/RO3/ohI8Ao9dQLCl18L
-         vhOLChcl+5WcNcOquGPMWwT79Fc6cCyA5YYEaTpcl68w3USV6mNlG0YpdqL7xGFAwRbq
-         /Sng==
-X-Forwarded-Encrypted: i=1; AJvYcCWPTGtHxZQzPkgEsQoQKDl0VkvgXCM1AUC3+S0BIPXWmpx8X/3R8rUmAGvAdNErqt+K88xX/HMqN+S2VH7r@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3HRoIdRjFjeNacusNN2L9saRl3U86z6fewlC8hFFxMuwn7Wwo
-	ZlTkgjTUkInurq3e6FUgP72q1FfQZMe7bjXSr1WRlp+zjOIQWNhpl7kAanZSMJxtYfBm7uO4e6s
-	AAY6fusmg798a8I0vAyAt/GE4bdqO6Im9dD6+QYJ4mWJ0v0vEfdYm6EDTtW6u8TEUKv2Q
-X-Gm-Gg: ASbGncsBL0hH1RlTiXb5rUcopDyLdKkRWda6/ROkuiMycuM2C2bvSB8JsyZ/Z3dZDgK
-	q/gcV+M6NMhomQLXvyCT9IBhV9WjBPLi9xzSONMUFU88Bi0RvQ5Exhut4Uz7ZaLNLWSwflf8a9n
-	k3tKb1gKvL95EBdJsdtY4poAXtglIv/dqszXThbPfhuiqq/fCmNHGZBd+Po+5UYw+e7YZnGzsNo
-	GMbKSRTVgQW60UcaNupdfz2iNM4qDQMTU53YQuRI1gL3txtKdPvYW+BAMukp6ItayyKdenhpd2O
-	etQkjC4rwCt2o5LkBRyETHbVg3VjI42zZganCnUaJRU4AxNSgQef4mshbKAi5jqWCUfrOvYnUBe
-	8UfcSUyc=
-X-Received: by 2002:a17:90b:39cd:b0:32b:b26e:1576 with SMTP id 98e67ed59e1d1-32bb26e2980mr285567a91.37.1756986045395;
-        Thu, 04 Sep 2025 04:40:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMFNOMLLYtgWEqcqOq6EVf91r655xof1zYJbYaf62p1HLzxciYIZxP4GW3srcr5KRaLqcL0Q==
-X-Received: by 2002:a17:90b:39cd:b0:32b:b26e:1576 with SMTP id 98e67ed59e1d1-32bb26e2980mr285519a91.37.1756986044844;
-        Thu, 04 Sep 2025 04:40:44 -0700 (PDT)
-Received: from [192.168.215.112] ([152.57.118.202])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b4fa7484ec5sm4065312a12.49.2025.09.04.04.40.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 04:40:44 -0700 (PDT)
-Message-ID: <7276d39b-a514-4265-a125-7e08f364f979@oss.qualcomm.com>
-Date: Thu, 4 Sep 2025 17:10:33 +0530
+        d=1e100.net; s=20230601; t=1756986213; x=1757591013;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JlHa+bLNOlllt7+sjrqxahbiSpEqBtvYmevS8IxN37c=;
+        b=j8+HpgKCjxjrrHUhEfphxLMB04CBDxnErS1T4iHjEcEYxuvQGmiLIrZI3aQhv0fNvt
+         vfMXsHSp8QEdnhtnYc9LvIBBloYpK7W8zGd0oDK32UEJK/f7CBMBVoSnbYyXurq5QzRw
+         ir9jEJZIIDMsgLO6m6NdM6KEiUUQC9NEMQsWlaQ232WNz8WL9a67oaONj8SwlxElMM8A
+         6dv32j7vCHMF1sf27owdsY7U+7amsQ3pZaBYCiE/6X6HduAt6CDAeC7/awTK3FkhJcsd
+         N5y+8Lsb7qje+CnFL1m88SkPvzqk5J4cPiCNKixG5e1Ne/5toqJGnd2j7PFXg7LmHbgd
+         9JGA==
+X-Forwarded-Encrypted: i=1; AJvYcCV81W26s40tpSWvoJJTkOduG00E3vrOum0vqVsIRs+sI0zki+oWMcdEc2XgE/Zx4/UmbtEvkqSVJqYBACCL@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMOi5RNW/u8R1/KICL8PcplMney4PYPCrSa5rB9jL3OOSZaX3U
+	K8EsrkHIi3HCoFfkRDiWlGjn2wxmNryH+FzHEKSIikAJy9AkOVbaIsdJgL10vaOysQA2xWzvlwJ
+	/rhd1XHVCb4jGPTz5Kk3VgSSf2NkoqFhnNOkndpC7Tg+5kOLcdbN+JMnqmIVCnHFw86zR
+X-Gm-Gg: ASbGncvBI+C9SRpra8c8+ELcyPaeyWMMJ6MDB/o6woHAxATfTnWWWgbMWxTCDDlZFYL
+	FW3ZgZ/y9B+JMalVNHBGI7qw28QqCcxlcNQtlZx8c5kunMlSSFAkgmUGFCxy+UKWyYMciGCXLM0
+	rzZQ0pONjTVjQwqi7bTb2Kpo2c7am09NtFRgD0AzWHCzJRLl9+1WA6T4dy3+scw6r6FAQJrgvdu
+	YeLoB1ZUejYMjAP1N0X+EKWshpFTZoLdk2oJc78Mh1AdU864HVm1tyIKYcIGUCSt7kBYf77Bejl
+	vQcpGWl1l+fNSqhBa+TSYywGdzCxxw2KPVo/mODdcLFQNAWWvINfW2IpIRbEfQ0FcDM=
+X-Received: by 2002:a17:902:e543:b0:24a:9b12:5248 with SMTP id d9443c01a7336-24a9b125499mr224992375ad.54.1756986213334;
+        Thu, 04 Sep 2025 04:43:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGeyBcM+HOUTvrl7j0Vv8OyjKVeRmkSlcU//DcGS2QbTxlYo7fNmNHEzUkkEEXJtkjRK88Cmw==
+X-Received: by 2002:a17:902:e543:b0:24a:9b12:5248 with SMTP id d9443c01a7336-24a9b125499mr224992055ad.54.1756986212899;
+        Thu, 04 Sep 2025 04:43:32 -0700 (PDT)
+Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-249037223d7sm182353305ad.32.2025.09.04.04.43.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 04:43:31 -0700 (PDT)
+Date: Thu, 4 Sep 2025 17:13:24 +0530
+From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Vikash Garodia <quic_vgarodia@quicinc.com>,
+        Dikshita Agarwal <quic_dikshita@quicinc.com>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH v2 02/11] soc: qcom: mdtloader: Add context aware
+ qcom_mdt_pas_load() helper
+Message-ID: <20250904114324.qtizk6wm44xa4ryj@hu-mojha-hyd.qualcomm.com>
+References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
+ <20250819165447.4149674-3-mukesh.ojha@oss.qualcomm.com>
+ <0b4472cb-0c73-4eb8-a360-22b40aae44f5@linaro.org>
+ <20250904095215.ekkhrt5ql65ap74k@hu-mojha-hyd.qualcomm.com>
+ <a793c2ff-3f06-4ed4-90f4-4b2a11e714e0@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] watchdog: Add driver for Gunyah Watchdog
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
- <20250903-gunyah_watchdog-v1-2-3ae690530e4b@oss.qualcomm.com>
- <mfvuoslj27mbayypzr3wuagrq3p5wzelklgveedhwrxiaavwxy@7ipv2tup6oou>
-Content-Language: en-US
-In-Reply-To: <mfvuoslj27mbayypzr3wuagrq3p5wzelklgveedhwrxiaavwxy@7ipv2tup6oou>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: alTJmqy9Q4UB-6hBgBFf5NsoFyC7QOzI
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfX3kzrSGVCXwxl
- aQQu4ZzSJFQXEas/UIj2ZluZ+eb6B4lnEr7BpJAT8q9Nj7Msi6ekU76k1phLOcTRmOOOjowfoDi
- jZ86WLOdk+aCO/TwMUmb3hwjHNdrMHAxBJZFNMJd1fNBTX9gr/1Ertlht3UIQNeHV7f7nIDWtnu
- aAVZewpvha5Dufx5PLtQBZCd53TzpbY9hi7OtCGxJTnLGX7xTRv0z43R/+xta1BeLpLb4F/S9Nd
- jxot87bvu2gsZvf+JpBbiWtoeRTwXwzvLSHG5XivcB3RwZlCAbzbg6W956pxjsVyw3RP7jPHIZC
- jkyvYSKu/bPWW90IegHjxOH9C2F7ps+6eRxIAyo/yTSNqDlxTfHwaeCviQzxXs5X/vHbvOKj0iK
- u0qRCO49
-X-Proofpoint-ORIG-GUID: alTJmqy9Q4UB-6hBgBFf5NsoFyC7QOzI
-X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68b97abe cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=EtPCCmwehmAcwtUnapKH4g==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=Y2IgW4ZSIErcYl4phlAA:9 a=QEXdDO2ut3YA:10
- a=rl5im9kqc5Lf4LNbBjHf:22 a=TjNXssC_j7lpFel5tvFf:22
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a793c2ff-3f06-4ed4-90f4-4b2a11e714e0@linaro.org>
+X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68b97b66 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=kj9zAlcOel0A:10 a=yJojWOMRYYMA:10 a=KyAPywjRas_nfg25bTcA:9
+ a=CjuIK1q_8ugA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-GUID: tsRjarbsVBckge4m32jOggOYMczkGsg6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfX7+nt+5MsT/i9
+ 9yI9jwSfumpScB3feVtTxXMzQLfOGNnZch9CSVhKnAHaRmPYk6O8V2RCB49c3W4tmx85zlf21JZ
+ 2a/zzgTfvILWFXyr58bCNp+R2LAqmjwiu30UmdEG4ua4733iXjrW7fJPe16fUVc3BAFUSabeStb
+ QKdOPgf9lb6rxyHDAbJHj6jS37ePpsq4t2/oN8PoFnRzEsi7Y0j9h7vhTUXkSW+PFwwQYvJsGog
+ wz8V/vaIENpiV0uc1pMvivxvmcfZnanASP60nM7Fnzp2Gv0YmeqCQa8mxyYYKMS5whMWP3LQpkx
+ sW7Z1zOLBuoZce8s3xVvm1844X/H60J76Hgk4RfYb13ZX1spaM4KyVtkC4zu9feUIlbUCx5c5/e
+ soEEISfl
+X-Proofpoint-ORIG-GUID: tsRjarbsVBckge4m32jOggOYMczkGsg6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_04,2025-08-28_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1011 malwarescore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
 
+On Thu, Sep 04, 2025 at 11:15:29AM +0100, Bryan O'Donoghue wrote:
+> On 04/09/2025 10:52, Mukesh Ojha wrote:
+> > > So is it really the intention of this patch to change the callsites where
+> > > qcom_mdt_pas_load() away from the init version to the no_init version ?
+> > > 
+> > > Maybe its a symptom of patch collision but hmm, having a hard time
+> > > cherry-picking this to test.
+> > My intention is to unify all subsystems whether it's remoteproc, video,
+> > or others using Secure PIL, so that they all use the same set of APIs
+> > via context (cxt).
+> > 
+> > Like, we first initialize the context, and then use it for other PIL-related
+> > SMC calls such as pas_init, mem_setup, auth_and_reset, or even for the
+> > new rsc_table SMC call. This way, everything is connected, and it
+> > becomes clear which functions need to be called and it will also be
+> > extensible via a small handling for SHMbridge on gunyah absence. Similar
+> > changes would also apply to the MDT loader APIs.
+> > 
+> > That's why I asked here after "---" in this patch if this approach is
+> > preferred, I will apply it consistently and eliminate redundant APIs.
+> > 
+> > Let me know your thought.
+> 
+> For me its a question of digesting the change.
+> 
+> Your series says "Add context aware qcom_mdt_pas_load()" but, it does more
+> than add - it changes logic.
+> 
+> At a minimum I'd suggest splitting the addition of the function from the
+> changing of the existing logic so that the two could be disambiguated.
 
-On 9/4/2025 1:43 AM, Bjorn Andersson wrote:
-> On Wed, Sep 03, 2025 at 07:34:00PM +0000, Hrishabh Rajput via B4 Relay wrote:
->> From: Hrishabh Rajput<hrishabh.rajput@oss.qualcomm.com>
->>
->> Add driver to support the SMC-based watchdog timer provided by the
->> Gunyah Hypervisor.
->>
-> Start the commit message with a problem description, end with a
-> technical description of the solution. I.e. move this paragraph down.
+I agree, I did more than just add even used in current patch itself.
+Will split it.
 
+> 
+> The other comment I have is, is this change really required to enable pil
+> loading @ EL2 ?
 
-Thanks, that would make more sense. Will rearrange this.
+Not exactly, but to looks things cleaner..
 
->> On Qualcomm SoCs running under the Gunyah hypervisor, access to watchdog
->> through MMIO is not available. Depending on the hypervisor
->> configuration, the watchdog is either fully emulated or exposed via
->> ARM's SMC Calling Conventions (SMCCC) through the Vendor Specific
->> Hypervisor Service Calls space.
->>
->> When the SMC-based interface is enabled, a device tree overlay is used
->> to provide the pretimeout interrupt configuration.
->>
->> Signed-off-by: Hrishabh Rajput<hrishabh.rajput@oss.qualcomm.com>
-> [..]
->> diff --git a/drivers/watchdog/gunyah_wdt.c b/drivers/watchdog/gunyah_wdt.c
-> [..]
->> +#define GUNYAH_WDT_SMCCC_CALL_VAL(func_id) \
->> +	ARM_SMCCC_CALL_VAL(ARM_SMCCC_FAST_CALL, ARM_SMCCC_SMC_32,\
->> +			   ARM_SMCCC_OWNER_VENDOR_HYP, func_id)
->> +
->> +/* SMCCC function IDs for watchdog operations */
->> +#define GUNYAH_WDT_CONTROL   GUNYAH_WDT_SMCCC_CALL_VAL(0x0005)
->> +#define GUNYAH_WDT_STATUS    GUNYAH_WDT_SMCCC_CALL_VAL(0x0006)
->> +#define GUNYAH_WDT_PING       GUNYAH_WDT_SMCCC_CALL_VAL(0x0007)
-> Uneven indentation.
+As the other way was carry extra boolean "rproc->has_iommu" in qcom_mdt_pas_init() 
+for rproc and qcom_mdt_load() for video and other smc function to tell what needs
+to be done extra when Linux at EL2.
 
+> 
+> You could for example structure this series to implement the changes you
+> need for EL2 - and then have a last patch at the end to make the code "more
+> beautiful" or even a second series to do that.
+> 
+> So I'd suggest one of
+> 
+> 1. Splitting the addition of the new helper and its use into
+>    separate patches in the same series.
+> 
+> or
+> 
+> 2. Doing the full EL2 conversion and then applying the
+>    "make the code look nice" patch last.
+>    So that we could for example take 11 of 13 patches
+> 
+> or
+> 
+> 3. Making the EL2 conversion and the posting a second series
+>    with your proposed tidy up
+> 
+> Either way for me splicing both the addition and the usage here is a bit
+> hard to parse, especially since I can't seem to find a public SHA where this
+> series cleanly applies.
 
-This crept in somehow. Will fix it. Thanks.
+I'm fine with 2 and 3 as well only if non-cleaner way with EL2
+enablement gets accepted which may look ugly with lots of if's
+in the code or just do 1 for now.
 
->> +#define GUNYAH_WDT_SET_TIME  GUNYAH_WDT_SMCCC_CALL_VAL(0x0008)
->> +
->> +/*
->> + * Control values for GUNYAH_WDT_CONTROL.
->> + * Bit 0 is used to enable or disable the watchdog. If this bit is set,
->> + * then the watchdog is enabled and vice versa.
->> + * Bit 1 should always be set to 1 as this bit is reserved in Gunyah and
->> + * it's expected to be 1.
->> + */
->> +#define WDT_CTRL_ENABLE  (BIT(1) | BIT(0))
->> +#define WDT_CTRL_DISABLE BIT(1)
->> +
->> +struct gunyah_wdt {
->> +	unsigned int pretimeout_irq;
-> This is only used momentarily in gunyah_wdt_probe(), make it a local
-> variable.
->> +	struct watchdog_device wdd;
-> Which means that gunyah_wdt is just watchdog_device, so you can drop
-> gunyah_wdt completely, and put wdd directly in drvdata.
+> 
+> ---
+> bod
 
-
-That would definitely be a better way to do it. Thanks.
-
->> +};
->> +
-> [..]
->> +static int __init gunyah_wdt_init(void)
->> +{
->> +	return platform_driver_register(&gunyah_wdt_driver);
->> +}
->> +
->> +module_init(gunyah_wdt_init);
-> module_platform_driver(gunyah_wdt_driver);
-
-
-This is intentional. I intend to keep this module persistent. No 
-module_exit(gunyah_wdt_exit).
-
->> +
->> +MODULE_DESCRIPTION("Gunyah Watchdog Driver");
->> +MODULE_LICENSE("GPL");
->> diff --git a/include/linux/gunyah_errno.h b/include/linux/gunyah_errno.h
->> new file mode 100644
->> index 000000000000..518228e333bd
->> --- /dev/null
->> +++ b/include/linux/gunyah_errno.h
->> @@ -0,0 +1,77 @@
->> +/* SPDX-License-Identifier: GPL-2.0-only */
->> +/*
->> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->> + */
-> Isn't this content solely used from within gunyah_wdt.c? Why is it a
-> separate header file? Just move it into the c-file.
-> Regards,
-> Bjorn
-
-
-This header file is partially taken from [1] and I have only renamed it 
-to gh_errno.h.
-
-The error codes are not specific to watchdog and we have other drivers 
-in the patch series [2] (which [1] is a part of) that would be using this.
-
-[1] 
-https://lore.kernel.org/all/20240222-gunyah-v17-3-1e9da6763d38@quicinc.com/
-
-[2] 
-https://lore.kernel.org/all/20240222-gunyah-v17-0-1e9da6763d38@quicinc.com/
-
-Thanks,
-
-Hrishabh
-
->> +
->> +#ifndef _LINUX_GUNYAH_ERRNO_H
->> +#define _LINUX_GUNYAH_ERRNO_H
->> +
->> +#include <linux/errno.h>
->> +
->> +enum gunyah_error {
->> +	GUNYAH_ERROR_OK				= 0,
->> +	GUNYAH_ERROR_UNIMPLEMENTED		= -1,
->> +	GUNYAH_ERROR_RETRY			= -2,
->> +
->> +	GUNYAH_ERROR_ARG_INVAL			= 1,
->> +	GUNYAH_ERROR_ARG_SIZE			= 2,
->> +	GUNYAH_ERROR_ARG_ALIGN			= 3,
->> +
->> +	GUNYAH_ERROR_NOMEM			= 10,
->> +
->> +	GUNYAH_ERROR_ADDR_OVFL			= 20,
->> +	GUNYAH_ERROR_ADDR_UNFL			= 21,
->> +	GUNYAH_ERROR_ADDR_INVAL			= 22,
->> +
->> +	GUNYAH_ERROR_DENIED			= 30,
->> +	GUNYAH_ERROR_BUSY			= 31,
->> +	GUNYAH_ERROR_IDLE			= 32,
->> +
->> +	GUNYAH_ERROR_IRQ_BOUND			= 40,
->> +	GUNYAH_ERROR_IRQ_UNBOUND		= 41,
->> +
->> +	GUNYAH_ERROR_CSPACE_CAP_NULL		= 50,
->> +	GUNYAH_ERROR_CSPACE_CAP_REVOKED		= 51,
->> +	GUNYAH_ERROR_CSPACE_WRONG_OBJ_TYPE	= 52,
->> +	GUNYAH_ERROR_CSPACE_INSUF_RIGHTS	= 53,
->> +	GUNYAH_ERROR_CSPACE_FULL		= 54,
->> +
->> +	GUNYAH_ERROR_MSGQUEUE_EMPTY		= 60,
->> +	GUNYAH_ERROR_MSGQUEUE_FULL		= 61,
->> +};
->> +
->> +/**
->> + * gunyah_error_remap() - Remap Gunyah hypervisor errors into a Linux error code
->> + * @gunyah_error: Gunyah hypercall return value
->> + */
->> +static inline int gunyah_error_remap(enum gunyah_error gunyah_error)
->> +{
->> +	switch (gunyah_error) {
->> +	case GUNYAH_ERROR_OK:
->> +		return 0;
->> +	case GUNYAH_ERROR_NOMEM:
->> +		return -ENOMEM;
->> +	case GUNYAH_ERROR_DENIED:
->> +	case GUNYAH_ERROR_CSPACE_CAP_NULL:
->> +	case GUNYAH_ERROR_CSPACE_CAP_REVOKED:
->> +	case GUNYAH_ERROR_CSPACE_WRONG_OBJ_TYPE:
->> +	case GUNYAH_ERROR_CSPACE_INSUF_RIGHTS:
->> +	case GUNYAH_ERROR_CSPACE_FULL:
->> +		return -EACCES;
->> +	case GUNYAH_ERROR_BUSY:
->> +	case GUNYAH_ERROR_IDLE:
->> +		return -EBUSY;
->> +	case GUNYAH_ERROR_IRQ_BOUND:
->> +	case GUNYAH_ERROR_IRQ_UNBOUND:
->> +	case GUNYAH_ERROR_MSGQUEUE_FULL:
->> +	case GUNYAH_ERROR_MSGQUEUE_EMPTY:
->> +		return -EIO;
->> +	case GUNYAH_ERROR_UNIMPLEMENTED:
->> +	case GUNYAH_ERROR_RETRY:
->> +		return -EOPNOTSUPP;
->> +	default:
->> +		return -EINVAL;
->> +	}
->> +}
->> +
->> +#endif
->>
->> -- 
->> 2.43.0
->>
->>
+-- 
+-Mukesh Ojha
 
