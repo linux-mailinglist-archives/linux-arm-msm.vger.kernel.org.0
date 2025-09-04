@@ -1,141 +1,271 @@
-Return-Path: <linux-arm-msm+bounces-72064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34694B43DF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 16:03:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BD370B43DF8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 16:03:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CBB901C21F81
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 14:04:02 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 786705A5AFC
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 14:03:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED2E6306497;
-	Thu,  4 Sep 2025 14:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AE693054C0;
+	Thu,  4 Sep 2025 14:03:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HvZD2U9R"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QC/MO2Y2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874E12FD7A0
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 14:03:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD8D730275B;
+	Thu,  4 Sep 2025 14:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756994613; cv=none; b=rzLsmkv+GDRlD9eB1PudRwKaek7y2z/xAfiom5B3CZjFEmeTdsoa1VleTfRwKesJIGZ9335F2bVgi/VZPZce8AqAvU3cpehknXtHqGum8E/qvruNDjhHB1Lt8fbtgiFwMTj0PgyUuGnZ7n3QPhcvVVZDIfgxKdWkAftVk+xN/RE=
+	t=1756994627; cv=none; b=u90LgSubbWPWGjRD22FLIFo7R/y7hMyHl6R13Kj3bX6IwFI++zAxFygcAacNnQGENGpPGRFcS+z0XADpp1azW1O+6xtgLBh6MsdF+3YUF4u/+3NSikt+1sReQ7qKuCos+KTG4kw3rRX75FFkG5FGn5unSwPsCWTGna+FJh1F8oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756994613; c=relaxed/simple;
-	bh=ArO34LFWAHT6cgbIIgrLmpPjzc7jkLJhhCwhm9njkJg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dHad09pPuKIwf+/1WUvSWHXO2p+VP66hendXxTaittNsAbeWRE+edema2gg3X7PvTZdjq7xKeM6n1yvd1WWaWas4ud1b9TyMF9yAExT+DCp90Vf5aoJf3O4YIF97TCs76c3QqaueM7U4FWixoCE8echp/G+qNZO+A/ijfXEXjRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HvZD2U9R; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849XDQS003172
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 14:03:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YWpJrvw9vwWJVOBOCwWHiQEXh4D7P2GkFtskOHhXN7Y=; b=HvZD2U9R+UWFBATU
-	91D05jhpzqp6KNdXE7VUfdWfkq4yof3ZGyKHqzdB0+LNdIQiaIUn0Hel4LsbAc8X
-	wzH5F5WZFsmmB8W7sCXmF+GIpiJetOBAsigKfR44f6Ps5XN8d8DOjw3mqX5vqXd+
-	IWlCXfrhw4+15tMhAVRmOhCdCoFjGgLyCXnPY2YseUL73dbEZNI9oyLQu51UX4pS
-	8XfI5pNBsqMp2vym9bISUg2YH9AMmk/ZTWvOmrh9YqtA3LMb9BiEws8fsIGcoyyj
-	dTKdWI5DHaGx5PYXjxAS8gBVcatA/18h+Y07O69Scy2mxFL9dHiDMKlYhK8XEkEA
-	qGWCkA==
-Received: from mail-vs1-f70.google.com (mail-vs1-f70.google.com [209.85.217.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ush37js9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 14:03:31 +0000 (GMT)
-Received: by mail-vs1-f70.google.com with SMTP id ada2fe7eead31-5369be2e7e2so29027137.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 07:03:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1756994610; x=1757599410;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YWpJrvw9vwWJVOBOCwWHiQEXh4D7P2GkFtskOHhXN7Y=;
-        b=E1k3+36G4VLX+VRY5Bqlej/EP6ox/sfqKhvAhUC1V6GXRRDN5oKjoNt2p1xn/8XwV8
-         XtB0N4Z+b3PCYos9qZOh+h0ZA3kw+0JqnuEMH4PRhiYdwSaT5HdkMBkeAO8UGFYVb4dJ
-         T97iNAu8IkoKGGSwYR1xKLeRPpPZslAG3zV75V54LtRBCwIv/scRK9HH9j+Jotn+Yqil
-         st2MxY/tYYzm9rT4YlctDUYDXaFCqssQ/kkYEyWrsivBpDss+PTWkHltmtXAz8sHfQ6b
-         ngp7zcaDudmbnnidntJuCDt8Mea4Hbx1vUMoEF8+BZG+VaWGgQ4edEM73kM294whQf6r
-         yFKA==
-X-Gm-Message-State: AOJu0Yyva7LMQ/g18hcXMXSPAFGfanYGPX7AfxZQwUJ/xxq8TdclORV4
-	O/OJKqTRL4VDFGoRv0fZPt/UW8F2/iQOAYF6OpW0KrEhB7xc4p92Vwo1Zewx1ptRsS1l8USeZ/f
-	HYmAir3CYQXcdYHFVxf8G8Np7MGvEff6a9oo0TPuhg8BINyZ51Vfd8pSNv0cdN+FeVCH2
-X-Gm-Gg: ASbGncuxmdUUO151uQqVZf+xlHAkpDvENQHNBDClbRLOX56ju8C4YPln/atkKqQGKks
-	8ORHjRRVavdoPeZ5Xe+ASeKA1jd9K8c44Dggg/zVnqu6A6K4VmrDgMyClZiBwA1PgxzoH1fUEgU
-	13kmu0YbP33ZFLrKJ0zziSsTIbSyEAP5h6Y1ytUe4G6IvlNrQbLj3oi/hX1qeCHJlRmmVqekACd
-	Uzmlpo/Po/nC6ImPM+LTFcqDdLxVP1RrKWEQPYehX43OGRC8YigvfzmrEAgW7V0qbnZn2biMDeO
-	8rFnsh/1Q4+ZhaIUOw9kaBcD599pJztXn9/Wtj/5Em98goJcm1bRDgrHiZtnZNnFZ9v0aX+iEqd
-	k1zfAGqlcep1yjc+HTaOY0A==
-X-Received: by 2002:a05:6122:530d:10b0:545:eb6c:c6cd with SMTP id 71dfb90a1353d-545eb6ccd07mr149565e0c.0.1756994608509;
-        Thu, 04 Sep 2025 07:03:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEemEW1KVZ+XfsmWOhxU5sZGSGNKVct6j7eGnjkrqmieGlIosDSRswoXL29fuGAJkdSjSxbYg==
-X-Received: by 2002:a05:6122:530d:10b0:545:eb6c:c6cd with SMTP id 71dfb90a1353d-545eb6ccd07mr149338e0c.0.1756994605943;
-        Thu, 04 Sep 2025 07:03:25 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-62069b79e1asm848778a12.26.2025.09.04.07.03.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 04 Sep 2025 07:03:24 -0700 (PDT)
-Message-ID: <2c5d97b4-762a-4bbc-b85e-53bc59aaa4c9@oss.qualcomm.com>
-Date: Thu, 4 Sep 2025 16:03:23 +0200
+	s=arc-20240116; t=1756994627; c=relaxed/simple;
+	bh=R15ptoc9ZlyJDelkbhGWd7+PsXr/DbQC7TFvXfTYnKA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b/I0Yq89UoL9FazBbHYFkHmlRO/eelNZNXhBp1GZ8HLGEA+Huc9pWhn9hYQqDeAr5V5ipR3C5zU3NHya7YzkuQyl3Jf+UKGM3kFq+zvGfCvDFmSluyQZsgK16XiXbOXMYYif5PdBZ+f50rB4x1UGfZU3EXUOz/ja83hMuFROxFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QC/MO2Y2; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 879F7C4CEF5;
+	Thu,  4 Sep 2025 14:03:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1756994626;
+	bh=R15ptoc9ZlyJDelkbhGWd7+PsXr/DbQC7TFvXfTYnKA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QC/MO2Y21Nvl8IUs+sKbBsur180b4DnqC1iRGs4cDEmtA2dB/F/DnTrHtME+ejmVt
+	 Luw0G/b7TvS7mgqn4/WGSz4oN0IxJL4Qp4DYbP1QiYIZ6dJC+aYOy016xPny2cLPdp
+	 qXCYd3SoXMaiy6V8e+4y/EWctLTx89eNUWbPQlzkcICrdqPWKjBZ5cM+cm2gN0i5to
+	 2uHoLd86exMI9vMi6Eaz9JWEuNZ+hMpteDcLawe2q2LzBrnzIqS75vGOlEqBd9cdCI
+	 5172NQ1AECfMvUm+FZS/Svpc+N9NQOhz7vDTOR9r2AfIE9ewQk1UYNlx+Ffe+LAe7R
+	 1esFMTJP1dR+Q==
+Date: Thu, 4 Sep 2025 16:03:39 +0200
+From: Niklas Cassel <cassel@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+	Oliver O'Halloran <oohall@gmail.com>, Will Deacon <will@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Heiko Stuebner <heiko@sntech.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	Wilfred Mallawa <wilfred.mallawa@wdc.com>,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: Re: [PATCH v6 0/4] PCI: Add support for resetting the Root Ports in
+ a platform specific way
+Message-ID: <aLmcO8ukT-CDZMuT@ryzen>
+References: <20250715-pci-port-reset-v6-0-6f9cce94e7bb@oss.qualcomm.com>
+ <aHoh1XfhR8EB_5yY@ryzen>
+ <aHokdhpJUhSZ5FSp@ryzen>
+ <tujurux64if24z7w7h6wjxhrnh4owkgiv33u2fftp7zr5ucv2m@2ijo5ok5jhfk>
+ <aJ743hJw-T9y3waX@ryzen>
+ <lakgphb7ym3cybwmpdqyipzi4tlkwbfijzhd4r6hvhho3pc7iu@6ludgw6wqkjh>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] arm64: dts: qcom: sdm845-enchilada: Add notification LED
-To: David Heidelberg <david@ixit.cz>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Antonio Rische <nt8r@protonmail.com>
-References: <20250904-enchilada-led-v1-1-dcf936ea7795@ixit.cz>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250904-enchilada-led-v1-1-dcf936ea7795@ixit.cz>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzMiBTYWx0ZWRfX+Xwbq5B1eGyj
- PKgExf5Ktq6cO9BLNT+g0Ga5rjPp2fXke6ykX89VPVuuWLdxcvCqkjNCrNDmYYHC346qIJxvTg/
- Qpp6iOTlCGwGRphGXpokVSspCl0s7YQMAuPAf/Hv+yotRrmfVJwAWfc5aX9bVqE6uQaf9xxJo0D
- Z877/hWpX/iFES7vyXPRtIu8TTu8c0XNt6ZfEFx2mijm7TE2bHwn7cshQa8rDRBhTLy/idPY1uz
- BIMnBGG54oXmpZBwANi83dsMK5TN2z3QcK/30J/c9hronl6UBkha6kq3x0YdiHY1dlIgh7dpR8x
- iqiFALsamjkO2L2n4kewKXqtAjVV6BUsXdnnxSVxNzJXSjoLEa5SP+oB+AFyTuOQDHtchMYhsd0
- bXvKbmhc
-X-Proofpoint-ORIG-GUID: XuKdL-zftc6hf4Dg5dhZmXr4qn5BenVO
-X-Proofpoint-GUID: XuKdL-zftc6hf4Dg5dhZmXr4qn5BenVO
-X-Authority-Analysis: v=2.4 cv=M9NNKzws c=1 sm=1 tr=0 ts=68b99c33 cx=c_pps
- a=N1BjEkVkxJi3uNfLdpvX3g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=sfOm8-O8AAAA:8 a=EUspDBNiAAAA:8
- a=sMes0nJH1TucWEBAg2MA:9 a=QEXdDO2ut3YA:10 a=crWF4MFLhNY0qMRaF8an:22
- a=TvTJqdcANYtsRzA46cdi:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-04_05,2025-09-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 adultscore=0 spamscore=0 priorityscore=1501 malwarescore=0
- clxscore=1015 suspectscore=0 phishscore=0 bulkscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2508300032
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <lakgphb7ym3cybwmpdqyipzi4tlkwbfijzhd4r6hvhho3pc7iu@6ludgw6wqkjh>
 
-On 9/4/25 3:54 PM, David Heidelberg wrote:
-> From: Antonio Rische <nt8r@protonmail.com>
+Hello Mani,
+
+On Fri, Aug 29, 2025 at 09:44:08PM +0530, Manivannan Sadhasivam wrote:
+> On Fri, Aug 15, 2025 at 11:07:42AM GMT, Niklas Cassel wrote:
+
+(snip)
+
+> > > > > ## On EP side:
+> > > > > # echo 0 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start && \
+> > > > >   sleep 0.1 && echo 1 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start
+> > > > > 
+> > > > > Basically all tests timeout
+> > > > > # FAILED: 1 / 16 tests passed.
+> > > > > 
+> > > > > Which is the same as before this patch series.
+> > > 
+> > > This is kind of expected since the pci_endpoint_test driver doesn't have the AER
+> > > err_handlers defined.
+> > 
+> > I see.
+> > Would be nice if we could add them then, so that we can verify that this
+> > series is working as intended.
+
+(snip)
+
+> Ok, thanks for the logs. I guess what is happening here is that we are not
+> saving/restoring the config space of the devices under the Root Port if linkdown
+> is happens. TBH, we cannot do that from the PCI core since once linkdown
+> happens, we cannot access any devices underneath the Root Port. But if
+> err_handlers are available for drivers for all devices, they could do something
+> smart like below:
 > 
-> Add the notification LED for the device.
-> The R/G/B channels are controlled by the PMI8998 LPG.
+> diff --git a/drivers/misc/pci_endpoint_test.c b/drivers/misc/pci_endpoint_test.c
+> index c4e5e2c977be..9aabf1fe902e 100644
+> --- a/drivers/misc/pci_endpoint_test.c
+> +++ b/drivers/misc/pci_endpoint_test.c
+> @@ -989,6 +989,8 @@ static int pci_endpoint_test_probe(struct pci_dev *pdev,
+>  
+>         pci_set_drvdata(pdev, test);
+>  
+> +       pci_save_state(pdev);
+> +
+>         id = ida_alloc(&pci_endpoint_test_ida, GFP_KERNEL);
+>         if (id < 0) {
+>                 ret = id;
+> @@ -1140,12 +1142,31 @@ static const struct pci_device_id pci_endpoint_test_tbl[] = {
+>  };
+>  MODULE_DEVICE_TABLE(pci, pci_endpoint_test_tbl);
+>  
+> +static pci_ers_result_t pci_endpoint_test_error_detected(struct pci_dev *pdev,
+> +                                              pci_channel_state_t state)
+> +{
+> +       return PCI_ERS_RESULT_NEED_RESET;
+> +}
+> +
+> +static pci_ers_result_t pci_endpoint_test_slot_reset(struct pci_dev *pdev)
+> +{
+> +       pci_restore_state(pdev);
+> +
+> +       return PCI_ERS_RESULT_RECOVERED;
+> +}
+> +
+> +static const struct pci_error_handlers pci_endpoint_test_err_handler = {
+> +       .error_detected = pci_endpoint_test_error_detected,
+> +       .slot_reset = pci_endpoint_test_slot_reset,
+> +};
+> +
+>  static struct pci_driver pci_endpoint_test_driver = {
+>         .name           = DRV_MODULE_NAME,
+>         .id_table       = pci_endpoint_test_tbl,
+>         .probe          = pci_endpoint_test_probe,
+>         .remove         = pci_endpoint_test_remove,
+>         .sriov_configure = pci_sriov_configure_simple,
+> +       .err_handler    = &pci_endpoint_test_err_handler,
+>  };
+>  module_pci_driver(pci_endpoint_test_driver);
 > 
-> Signed-off-by: Antonio Rische <nt8r@protonmail.com>
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
+> This essentially saves the good known config space during probe and restores it
+> during the slot_reset callback. Ofc, the state would've been overwritten if
+> suspend/resume happens in-between, but the point I'm making is that unless all
+> device drivers restore their known config space, devices cannot be resumed
+> properly post linkdown recovery.
+> 
+> I can add a patch based on the above diff in next revision if that helps. Right
+> now, I do not have access to my endpoint test setup. So can't test anything.
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+I tested your patch series + your suggested change above, and after a:
 
-Konrad
+## On EP side:
+# echo 0 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start && \
+  sleep 0.1 && echo 1 > /sys/kernel/config/pci_ep/controllers/a40000000.pcie-ep/start
+
+Instead of:
+
+# FAILED: 1 / 16 tests passed.
+
+I now get:
+# FAILED: 7 / 16 tests passed.
+
+Test cases 1-7 now passes (the test cases related to BARs),
+all other test cases still fail:
+
+# /pcitest 
+TAP version 13
+1..16
+# Starting 16 tests from 9 test cases.
+#  RUN           pci_ep_bar.BAR0.BAR_TEST ...
+#            OK  pci_ep_bar.BAR0.BAR_TEST
+ok 1 pci_ep_bar.BAR0.BAR_TEST
+#  RUN           pci_ep_bar.BAR1.BAR_TEST ...
+#            OK  pci_ep_bar.BAR1.BAR_TEST
+ok 2 pci_ep_bar.BAR1.BAR_TEST
+#  RUN           pci_ep_bar.BAR2.BAR_TEST ...
+#            OK  pci_ep_bar.BAR2.BAR_TEST
+ok 3 pci_ep_bar.BAR2.BAR_TEST
+#  RUN           pci_ep_bar.BAR3.BAR_TEST ...
+#            OK  pci_ep_bar.BAR3.BAR_TEST
+ok 4 pci_ep_bar.BAR3.BAR_TEST
+#  RUN           pci_ep_bar.BAR4.BAR_TEST ...
+#      SKIP      BAR is disabled
+#            OK  pci_ep_bar.BAR4.BAR_TEST
+ok 5 pci_ep_bar.BAR4.BAR_TEST # SKIP BAR is disabled
+#  RUN           pci_ep_bar.BAR5.BAR_TEST ...
+#            OK  pci_ep_bar.BAR5.BAR_TEST
+ok 6 pci_ep_bar.BAR5.BAR_TEST
+#  RUN           pci_ep_basic.CONSECUTIVE_BAR_TEST ...
+#            OK  pci_ep_basic.CONSECUTIVE_BAR_TEST
+ok 7 pci_ep_basic.CONSECUTIVE_BAR_TEST
+#  RUN           pci_ep_basic.LEGACY_IRQ_TEST ...
+# pci_endpoint_test.c:106:LEGACY_IRQ_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:106:LEGACY_IRQ_TEST:Test failed for Legacy IRQ
+# LEGACY_IRQ_TEST: Test failed
+#          FAIL  pci_ep_basic.LEGACY_IRQ_TEST
+not ok 8 pci_ep_basic.LEGACY_IRQ_TEST
+#  RUN           pci_ep_basic.MSI_TEST ...
+# pci_endpoint_test.c:118:MSI_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:118:MSI_TEST:Test failed for MSI1
+# pci_endpoint_test.c:118:MSI_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:118:MSI_TEST:Test failed for MSI2
+# pci_endpoint_test.c:118:MSI_TEST:Expected 0 (0) == ret (-110)
+# pci_endpoint_test.c:118:MSI_TEST:Test failed for MSI3
+...
+
+
+I think I know the reason.. you save the state before the IRQs have been allocated.
+
+Perhaps we need to save the state after enabling IRQs?
+
+I tried this patch on top of your patch:
+--- a/drivers/misc/pci_endpoint_test.c
++++ b/drivers/misc/pci_endpoint_test.c
+@@ -851,6 +851,8 @@ static int pci_endpoint_test_set_irq(struct pci_endpoint_test *test,
+                return ret;
+        }
+ 
++       pci_save_state(pdev);
++
+        return 0;
+ }
+
+
+But still:
+# FAILED: 7 / 16 tests passed.
+
+So... apparently that did not help...
+
+I tried with the following change as well (on top of my patch above):
+
++static pci_ers_result_t pci_endpoint_test_slot_reset(struct pci_dev *pdev)
++{
++       struct pci_endpoint_test *test = pci_get_drvdata(pdev);
++       int irq_type = test->irq_type;
++
++       pci_restore_state(pdev);
++
++       if (irq_type != PCITEST_IRQ_TYPE_UNDEFINED) {
++               pci_endpoint_test_clear_irq(test);
++               pci_endpoint_test_set_irq(test, irq_type);
++       }
++
++       return PCI_ERS_RESULT_RECOVERED;
++}
+
+But still only:
+# FAILED: 7 / 16 tests passed.
+
+Do you have any suggestions?
+
+
+Kind regards,
+Niklas
 
