@@ -1,170 +1,164 @@
-Return-Path: <linux-arm-msm+bounces-72025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46DFEB43946
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:52:46 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id C2729B43953
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 12:56:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 59F7E7A56BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:51:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 64FBF177626
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 10:56:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 467E32EDD7D;
-	Thu,  4 Sep 2025 10:52:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CBA0C2FAC10;
+	Thu,  4 Sep 2025 10:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EgNR0Fi8"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cHxejNhQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177C513B5AE;
-	Thu,  4 Sep 2025 10:52:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5032B2EE294
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 10:56:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1756983159; cv=none; b=dYK9o2VFrLcwXSFo+6Z82ZgK8bH6OqJOz/kBNkSJPDs2nPOaFIoPxMm23wUL4jZ2rHjbzbkmtyDezZgOEfYcbMugWnTm8OT3um7dFuAgcWku5h5k4swuP6UrXSgi4B+NHblQMf6G4GUbNlnWkYDht1kOqohkaJ0WaH1Oi1dDIMQ=
+	t=1756983407; cv=none; b=LFh+urtWSMzGxQCfdbAbrydLWCXi5NRkY/+H5ppLLm8BKwGk9NpvZjmzjiU6nvDPMO3rZzNhYGbfQUg5V9gh4AXjWS86dKP4swcMiPaL0MYMmD42SBBriboHjiZlYQacPRYPiRJOf//kzl1VsraUkqP0gJqaVaAMtp9wgkq0jKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1756983159; c=relaxed/simple;
-	bh=fPSzaYPHDd4U6MvAxZMgMGqvIF5RPAY1fAbmBTOMZwQ=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=anNnJNtA48ds92ueuRZ9KMBaUTD5JjUdmi+mV3/FEbFP2jrFpNfcWviA5boSTphrfso9ZNkv/Y34lzMOlfB3zzcO9OMrc8Fbu1QO80vg/58ERmjP0bDJ0SiOo9gqY1OyRDACqcDHEMGrb3ubNa+GAtRSepyL5NvKhVVS3fEjFKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EgNR0Fi8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125BFC4CEF0;
-	Thu,  4 Sep 2025 10:52:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1756983158;
-	bh=fPSzaYPHDd4U6MvAxZMgMGqvIF5RPAY1fAbmBTOMZwQ=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=EgNR0Fi8fJYCJG7nNpB52rwDSdg5uk1Ri+dZKhTmC4IrCfwzo2QnvPjr6f/1dTSmD
-	 e1lG4j/YKiJ2DcMuF3lD0x0OKo9fh3AgDvY29gYrTJsJcb3CXnwgxOqM658nB26IyH
-	 pbQmEmCWMJrrvD7pLKb4PuBYWjpUsFKwZzkA0jIxkcXoOLwCAP8SGrYfCKCWZYCcXG
-	 jvEfIOIQFcLtyCPjTEhWAnG2kaNMgoJZcS34MIR9cie6ocijWrlI+A/3uDp/TUahPX
-	 hHSchwbGkiwlgo4pkDdH/ac2yCoQh+WMMaFB1VoyAhxYeqFNhdRR/LCiQZrUtAwkBZ
-	 LDtxRS1BlVB0Q==
-Message-ID: <a304ec1c-7364-4926-8763-8c731e461eb9@kernel.org>
-Date: Thu, 4 Sep 2025 12:52:32 +0200
+	s=arc-20240116; t=1756983407; c=relaxed/simple;
+	bh=ZJI+yu3kb9pKBhFXII4xHvYnh1LrQ0VBRlmlVCuUT2s=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=souGpOZtmsJE4jzqq9hM6deDjWd1oYaqIE9xKOfujVCslMxHj3T9QFmkxBebUSYpIgiOfSvtZx1ivlRxD6IcrDPp9m2b4CjzywkKTtBZfIu+T6N6Bhabem/9h5dRNgSoC3HWcLvx/aOXrnw6m8BgrCV2FHAUjhTvvpDV9pp++vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cHxejNhQ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5849XBcM013631
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 10:56:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=JrOHsVLgG7Xc8r3NOkyT0zafNDJIi5as62e
+	4i26U5Ok=; b=cHxejNhQD786Sn2xrL0HtH+k1/yWMLzFZqVWafuUHPWLe5P1dG0
+	IzqGnJEteqyT9fzzHFYrKG68E5v7QSH4/aGV0nKj9mQXHpioOMYtE2VAW4okJQht
+	7kN7RqSHex9RAwKe8SH4CHjnJRvkkJFDg9zqbfRxN5elX4Ndz+EK9C+LVqpjMlYz
+	iyUhw5F9q/u8oNBpp37CWB7KAmoIQMWqVNSSpS2zp1sgb5QYarCUI4DZmcTdbnqz
+	bdZoISna4ssldB+0DSi72FtUjlB876gPjL4PvUi5S3DREchPZmpXFe8I4Uxzlcl1
+	Jjn6mIbpQPcpnNzUSisCuaAGHs3lgDBUTYA==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48w8wyb46x-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 10:56:45 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-725d32eaa99so19685546d6.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 03:56:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1756983404; x=1757588204;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JrOHsVLgG7Xc8r3NOkyT0zafNDJIi5as62e4i26U5Ok=;
+        b=k8SITMYI9JIg4edfg49012hb6P86HShd/o9nHzXa1kh0LlfU1E3GkisMcvl0AlhkPy
+         MtdIl6PLtGZZtlLhPfQjl+AhQ6dIk27zqb0I31WzGwio7Qs8wmjy+9+CVsJhOsqxZk9s
+         WBe10pgFAtotf8Q2pzt2YgbJTZ5i3RD19odMy5nKcJNCooUD2Z0FMp/86Dr6l6USsRGb
+         G+l6IdyttrGLZm3gyRR4EhaxIbbNaFnSdpTAxZQq2b5S9GrEGNebQth7YppWNXjcfSkQ
+         VZ8jbSSB2DqN/XzUjOVqQZczatDmFMV7vjy5kVVRT4CJS9ojWiWk5Ig2Fo9br2lN5emP
+         oiRw==
+X-Forwarded-Encrypted: i=1; AJvYcCUQ/VQ4InROweaBhgbeLE4/zQCIammy3GIRDAZklW5Kr42y6figlozcy0wAVLMf9KrXOb/vy3hNqHAQOjuV@vger.kernel.org
+X-Gm-Message-State: AOJu0YzQE6FXOoaLoXjbTZ+4VB0g3+rZS1mUIHluTypdsYWPmRSUq7iq
+	GbFopuVA1C5gdW8K9CFpGBqxupx6BjbMcTcaUa394LHlqmSd0ceb445HJnOeR5FT5qGT0xmUbon
+	Jg4RzprFXKJkLuvX7UKclWDcNBluYwRKXkpwQND7nrNAvysgbND4rH2m2OZ1DyuJwV7HO
+X-Gm-Gg: ASbGncvypkkSvPCf8CAq4z5C5KqgvYXVJoklhSD7ByXFWl+cqj+ZEYer97d0TmogmL9
+	GXQKyrK4w8dY3/ZqgXvaO07oP1mNmiqmDu1QV7FbTDF1QH7VsYcKIhpkus9J3HBbcPgsPHQStoI
+	yOD+9ouwX8hgqR6AC70wUEjTKQLWx//54kkAGPDKezQqPmhdIWgc14i6+doJ/wXkq4BPqHEoblb
+	be2XNMKXHRKTJSFuKzPT4Afc0Pe7He5LnaGGozFTJx0t1Jr/KB97WpmN+DcWoTM5ydfKQfVwJnj
+	gTzZN8rY5yZKU2uMWrW7728wmta8SPHdrSZEDBOjednUOkeGTo30wA==
+X-Received: by 2002:ad4:5c63:0:b0:716:856c:4a5 with SMTP id 6a1803df08f44-716856c0613mr178623966d6.43.1756983404187;
+        Thu, 04 Sep 2025 03:56:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEETHs6hBI1fqkOKuJVgfies5p/ujrhSYMuRzN1b+j0JOrWTlVQdXIxWN3WRoiEoZZ1+Lc2hQ==
+X-Received: by 2002:ad4:5c63:0:b0:716:856c:4a5 with SMTP id 6a1803df08f44-716856c0613mr178618556d6.43.1756983392680;
+        Thu, 04 Sep 2025 03:56:32 -0700 (PDT)
+Received: from debian ([5.133.47.210])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d0a1f807f9sm26462334f8f.38.2025.09.04.03.56.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 03:56:32 -0700 (PDT)
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+To: robh@kernel.org, krzk+dt@kernel.org, vkoul@kernel.org
+Cc: conor+dt@kernel.org, srini@kernel.org, yung-chuan.liao@linux.intel.com,
+        pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-sound@vger.kernel.org,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Subject: [PATCH v3 0/7] soundwire: qcom: add support for v3.1.0
+Date: Thu,  4 Sep 2025 11:56:09 +0100
+Message-ID: <20250904105616.39178-1-srinivas.kandagatla@oss.qualcomm.com>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 4/4] arm64: dts: qcom: sm8550: Add max-sd-hs-hz
- property
-From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Sarthak Garg <quic_sartgarg@quicinc.com>,
- Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Adrian Hunter <adrian.hunter@intel.com>
-Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
- quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
- quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com, kernel@oss.qualcomm.com
-References: <20250903080404.3260135-1-quic_sartgarg@quicinc.com>
- <20250903080404.3260135-5-quic_sartgarg@quicinc.com>
- <6deac56f-e21a-4447-bfa7-a414084676b8@kernel.org>
- <be87fb2f-7036-4039-8ba2-63d54a9ae732@oss.qualcomm.com>
- <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <23c29fb7-c0a4-4519-9b8d-e68255b83a10@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=Ycq95xRf c=1 sm=1 tr=0 ts=68b9706d cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=yJojWOMRYYMA:10 a=plMaQY1jPcDNhxvH7e0A:9 a=1HOtulTD9v-eNWfpl4qZ:22
+X-Proofpoint-GUID: ZgzH3z7kRrSCrO-wlN5WSFxDQ0liAyQb
+X-Proofpoint-ORIG-GUID: ZgzH3z7kRrSCrO-wlN5WSFxDQ0liAyQb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAxMDEwMSBTYWx0ZWRfX/UiGO5HFxd83
+ vReksTB+AFprjL5hP9THcVSWVMn+930ofFkR7sPsv2i5ttt2IYaTGfz2+r2sRahwxXG5UYg7kye
+ s8bXW11mFhgN8oRF4O9nK7RvHVe/CfidNxwxwK4qwn4ApufThLTk5D8ZPh1AR0GOhsZnxg6qBqY
+ BqfxZarTvBPwz25hO25pOuPZhF9U7LbcTOdrQ8iy662UL5GBAAE8dDNSX/R44cIpNOqF3PExjFT
+ JIjNY+KVot8hccXqKU92hCu+Nz143PVLnqCDG46YeIwNlndi0sYS7LvuAwrZ/nlI1A0jeC5kPsV
+ snkQPL/6zVgOgG3JqNnKt240PZBnfF/I8bXH69Vno8KFU2PnE9zDWbZjFTi1fyQRiNug9yxZYsu
+ eSKp11ri
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-04_04,2025-08-28_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 adultscore=0 phishscore=0 malwarescore=0
+ bulkscore=0 suspectscore=0 impostorscore=0 spamscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509010101
 
-On 04/09/2025 12:51, Krzysztof Kozlowski wrote:
-> On 04/09/2025 10:36, Konrad Dybcio wrote:
->> On 9/3/25 10:21 AM, 'Krzysztof Kozlowski' via kernel wrote:
->>> On 03/09/2025 10:04, Sarthak Garg wrote:
->>>> Due to board-specific hardware constraints particularly related
->>>> to level shifter in this case the maximum frequency for SD High-Speed
->>>> (HS) mode must be limited to 37.5 MHz to ensure reliable operation of SD
->>>> card in HS mode.
->>>>
->>>> This is achieved by introducing the `max-sd-hs-hz` property in the
->>>> device tree, allowing the controller to operate within safe frequency
->>>> limits for HS mode.
->>>>
->>>
->>> Probably we will now replicate the same discussion... And it will be
->>> happening every time you send the same and not reflect it in commit msg.
+This patch series adds support for Qualcomm Soundwire Controller
+version v3.1.0.
+As part for adding this support, a new macro of_property_read_u8_index()
+is added so that we can remove the qcom,din-ports and qcom,dout-ports.
+As v3.1.0 supports more than 17 soundwire ports. Also due to change in
+the register offsets, new entries are added to the variant data.
 
-Just to emphasize this - it will happen EVERY time.
+Tested this patchset on X14s and Glymur reference platform.
 
->>>
->>> Bindings say board setup, this commit msg says board config, but the
->>> patch says SoC. This is not correct.
->>
->> Both are correct, looking at the problem from two perspectives.
->>
->> The bindings description mentions board-specific limitations (e.g. because
->> "the board's electrical design does not allow one to achieve the full rated
->> frequency that the SoC can otherwise do, in a stable way")
->>
->> Here the author tries to argue that almost all SM8550 boards are broken
->> in this sense, because the reference design did not feature the required
->> passive components, making most (derivative) designs sort of "broken by
->> default" - and only some (if any?) vendors decided to go with the
->> additional components required to lift this limitation.
->>
->> This in turn makes it fair to assume the developer experience would benefit
->> from having the SD card high speed modes always work (with the slight speed
->> cap which may not be required for the 1 or 2 designs that took the extra
->> step) without each board DT creator having to track down this property
->> separately.
-> 
-> And then if you send same v3, I will ask the same. Can the author
+Merge strategy:
 
-v3 -> v6
+I think the patches can go via soundwire tree given that Rob has
+provided Reviewed-by on the of_property patch.
+Vinod are you okay with this?
 
-> finally write commit msgs reflecting discussions and previous disagreements?
 
-Best regards,
-Krzysztof
+Thanks,
+Srini
+
+Changes since v2:
+	- updated of_property_read_u8_index to use index of u8 array
+	  instead of pointer as suggested by Rob H.
+Changes since v1:
+	- fixed typo in non OF config of of_property_read_u8_index
+	- adjusted scoped-based cleanup initalization.
+	- remove unused macros.
+
+Srinivas Kandagatla (7):
+  of: base: Add of_property_read_u8_index
+  soundwire: qcom: remove unused rd_fifo_depth
+  dt-bindings: soundwire: qcom: deprecate qcom,din/out-ports
+  soundwire: qcom: deprecate qcom,din/out-ports
+  soundwire: qcom: prepare for v3.x
+  dt-bindings: soundwire: qcom: Document v3.1.0 version of IP block
+  soundwire: qcom: adding support for v3.1.0
+
+ .../bindings/soundwire/qcom,soundwire.yaml    |   8 +-
+ drivers/of/property.c                         |  33 +++
+ drivers/soundwire/qcom.c                      | 249 ++++++++++--------
+ include/linux/of.h                            |   9 +
+ 4 files changed, 185 insertions(+), 114 deletions(-)
+
+-- 
+2.50.0
+
 
