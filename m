@@ -1,271 +1,430 @@
-Return-Path: <linux-arm-msm+bounces-72135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D9C8B44727
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 22:19:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CBB4B448A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 23:35:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9866F17D09C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 20:19:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C8C9D17F0CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  4 Sep 2025 21:35:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EFEDC277C87;
-	Thu,  4 Sep 2025 20:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2EF0D2C158F;
+	Thu,  4 Sep 2025 21:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LlUmau70"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mdqixAeo"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 502841C5496
-	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 20:19:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B36B2C0289
+	for <linux-arm-msm@vger.kernel.org>; Thu,  4 Sep 2025 21:35:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757017163; cv=none; b=GD6XcS8fUB40wHsgoQVmdT+bPHf7bALAA5JqYwwC5V8pJDIsSU0nb8t3EtemWZ2udccf5pLCCptNLcMwrTmobW2dbCjocSRgeZlLytV0v2j1X0rXoo746QVgM4nwuU+lQeZDzjWXOgQJW7y0VWGBdEdGepAxowEvRQDKpQL9yK8=
+	t=1757021725; cv=none; b=KYyA5i6xPcHohvv110JLqLPz5XD73XA9FULaXQ39z7cuIKG30VNIqdvrUynxbIhWYdTIznwIn4tQsgi0YqCkD9OeBrQMKvqMVlS2Y7yYthE9Twl7J5jcWXr3akN5NGT5HSMee1LXPre6FL/WSVN3aS9BT5G6IBLxgeoT+QpXVaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757017163; c=relaxed/simple;
-	bh=wyZL0V100TmfNRkX1sfGVrcXY9LrAk2QjOM3w5dQ/E0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=IriPn0/3I3FFeBJIEqwY6PaZgqIv/7GbnjQKtAhRyk/mXW3TbuijAaiqhhw7d+gKFUbaLZWZjMLbaOA/EmY3QazZVY9VL5VaSXjeDaN0Y1o4tExDzEo2La7V5eqQYNMtMNLIcWhxsLd0YDgr9AVllzrpJQqNBwzvaf4Kf+yjXy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LlUmau70; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1757021725; c=relaxed/simple;
+	bh=p5azPGRp8fKE0V5AF13q31U7ZbgOwVv7U572k0NlXhM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Ix/HXH1aae3fEjswUHYb/5voGObMNnb0eRLSl+qNfyb93ztVoVgtUiw2jd3ovblLcLEurst4rBlH0d5dwDVNNH0rrDkARSCslLeKb65hdvSbK79epKxK0f1tmh8XRsVaNMFLrjVDXDoO/J2kdJ6Xz+L7/2NcdLwSmAe5wiFCX28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mdqixAeo; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584DZteh004158
-	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 20:19:21 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584HfSrJ032388
+	for <linux-arm-msm@vger.kernel.org>; Thu, 4 Sep 2025 21:35:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=jWUNPuAEFI7JhvBCvnX55AlM
-	FNdm2ykDPTbZ1bebaeI=; b=LlUmau709APIAZJv07SIRxbrcWaOjAIlpCqDCpOL
-	UkS8iDsrKpDMR1yQRPuZMMZXSbNIoKg2U7KiKjdZHNSWhuJc/nQLAN2AQHt4Dz7Z
-	FJh9XZxqrb2RFVz7xetDKWowFWiT3EqhWFJpfM4PfF2GQig0AhIxeTfAR/OH8egS
-	XA5k40IT+eIOAj4lfpLsd2sy6SDIyb7o0oxeoyFW3xdzGXLjxQ4e7qU/YCr72wer
-	RbFB2sABL+DQYIZDdPViNiUBLT0swhIVax9eB3/Gj+JKWg0vwqWpwdiLRTD/DQWr
-	bp27CjFNyaPBg1hmXlE5wHuqpxuLX4o/iHUtUK4jtHgmuA==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0erx1v-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	1XSGHjK5H5x+hvh6MnHParrtMNDsdad7xw0PkjMbZ+g=; b=mdqixAeoCJkWbooj
+	iV81lDSVcjKJFNLnue60LYvsuNufsVhkyrkaHuZjCQ6xdYNP0O0KXjdv9VSrg0/Y
+	2U46AT+05RG7V4DeTZRgeoss2aKXORmiJ4Apy79wl7F1DhF1jUfQLRjU5aiN8+EY
+	8iOhu7ngq99teEifZeWsPCbYCe/Ow7tt710HQu6FDbfMfV6htbPCgfNXasAwRtYZ
+	OEa4srooUnaggtqJ+z6gYfZHNtB7slNFqhoA2PL2fVx5SYXD6fniBIyhfbIesPX+
+	SYYWl3K4zlwSwj0RUJWjJzlu6Q8biP0dNmLR2tUn4FF1+45ELwPLftvheg1mu9Od
+	/9Nlsg==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48upnph4p7-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 20:19:21 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b30cb3c705so36641041cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 13:19:21 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 21:35:21 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-24caf28cce0so30650485ad.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 14:35:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757017160; x=1757621960;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jWUNPuAEFI7JhvBCvnX55AlMFNdm2ykDPTbZ1bebaeI=;
-        b=P7dIqzGdMs7qMJ8gYQKrsrhkt7O3sfevGS4Vijap5DIy69GZNI0ZgnYzN7kX+wE/qu
-         Ecl9OWz07zUdx8r2gaCzBORjw7VWxNUJVwGTnmXos92okqwpgy88BTcEadv0c2YZGoeq
-         hZfs0wwq2QF8zWpxUkYIAfXXxAyk4HfXvV1QJW8+GZLXM9CSsk/mmTe0Jrvj+JCR0SYV
-         TzaTaZ8UqtDXJ6Ew9IDD3jbw+qgx3x8TiFp49oWX6FbuNYWFcNFzS8KuHtpZ+4dRejvn
-         4U5Pf7U5Jf0eu/EZjkd50K4H1aIXufA9Q9t6HRQaFphrSM0TYEYAG0Sd9jdcKuxt0CZ9
-         B/OA==
-X-Forwarded-Encrypted: i=1; AJvYcCU73nh9eH7Exg1NmHYhCEDYkNoWlxIcVpJ7JKLqzScE6wiW5UZIINpYMItJs1lArQKcBJvpBhHo48iHQogK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoupwwZv4Al+bpNhFRYJcuMc9fZ+7bAEQDrLCRrr3z3IF1vkN4
-	WwFjK8HoiY2M67Siv1aIS2WwDkxcCLenMbTCHcTF+nlN9rwW8+Ff1qqHE/tbMYYGNFDVbCmBkKE
-	1b7OSWDG4qJUzVPA0PfaF90PbLBTFn94oK5rO00RLNhgI1scYKmzKDZ8olgnbAsscHubW
-X-Gm-Gg: ASbGncuYwB+zPWgSXGM6ijkbYRGgZ9NkgwmmHuC6fHe1QQYnNpunD6b0JknKsvSwWfu
-	jQNovIK1rL3Zw7WCKYljI5maAuTTwoHeFF0OwfacDxTQGxNhWaFvASraO12YjzeubkzD57H5b+m
-	hqCjHP0VhLxmH33jmKvsRtxxilCXSO4bq6drXMYkGDJW1UzKCm6uUS9HJ0BgVINpHDM6/EAKNlK
-	Bly8jAD7vuW7oOLCgT7HClq+Hh6V5H1cZJVtLOhXuKmGHIMrT4eR1u/6LQ8dE4uMc+2lsRmf1jS
-	Y21ViSKkGIfw+tS3DywMRoaSxi1vywINnK1UY//O846nwZoBCpYcgayCLrePKDBN/0Ndbjyd1jg
-	ltGMbL99Xbf2q7S8JTSWYQnfXy0Rj2DCNmc5dfnUXq/FUpfhG8gRQ
-X-Received: by 2002:a05:622a:2518:b0:4b5:d7e3:14a9 with SMTP id d75a77b69052e-4b5d7e31a96mr37976211cf.17.1757017160062;
-        Thu, 04 Sep 2025 13:19:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHJcRQsxcgT+uSNce80CLe8CYyvhDKUkldf2jsGuUpffbpj69zWEbc4KJJjbhdYWm1raJiMhA==
-X-Received: by 2002:a05:622a:2518:b0:4b5:d7e3:14a9 with SMTP id d75a77b69052e-4b5d7e31a96mr37975871cf.17.1757017159540;
-        Thu, 04 Sep 2025 13:19:19 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-337f4c90eb9sm16137861fa.22.2025.09.04.13.19.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 13:19:17 -0700 (PDT)
-Date: Thu, 4 Sep 2025 23:19:14 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 12/12] drm/msm/dpu: use standard functions in
- _dpu_format_populate_plane_sizes_ubwc()
-Message-ID: <k7vorukb6rockoanjdebfjw3iio4l5nu3u6hdqyi4ke4cp3h66@omwo5bjxbt4t>
-References: <20250705-dpu-formats-v1-0-40f0bb31b8c8@oss.qualcomm.com>
- <20250705-dpu-formats-v1-12-40f0bb31b8c8@oss.qualcomm.com>
- <c2d810bc-bdba-464b-9a05-49ca2e1c773b@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1757021715; x=1757626515;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=1XSGHjK5H5x+hvh6MnHParrtMNDsdad7xw0PkjMbZ+g=;
+        b=w7YAlTrsBMuVCnra9m5qysqxFyNky4Dq19v+WAtRxpAeoDbp9/UdplFAxkLW+2AoKn
+         b44aC/nDnrg82q025zsPmZrzmoj0PBLrm/UQP415sk/oEmktfCjmpDkKJftNR6On3TrA
+         zHsgRC+V7f9gYoZg0M199+fLFiGUh6OvZSpDMtUYKnXocWVKmXGY2CkfUPvdx50/5B/N
+         HBBrJw/vw0PSPj25zhdtRR8gPUc/xt4NQgV/c4ysSwOHOM2HJ1tLfaqAwYOjZdZGu73z
+         BGqm1okxbdyhTR2x1qaRxhClLPhae3VmyuLMCcNBnds+nif5YFKqpBio39Q9lisD5wei
+         M5VQ==
+X-Gm-Message-State: AOJu0YyZ/Cj7Lz4HJYwLhiTlqWzbHR1VI5wvlX3lIXCh6MyxrgC66vqZ
+	J2HDuuOlvZwFRK+hjxqsaf74CbgFVDj8iw0wb27aTEZlm+irZuKvU/+uD4wFfUTq/1ggTl3RXBb
+	COFhlX+L4KeTN36K2RDr5qKIDWoMnyNXjQ8qPeK1v86/vuR4QDE670VswBdlWHIq+g14e
+X-Gm-Gg: ASbGnctqoq0sXVjYswWiYmI6aEsrcPFJbi8q0248BDUqGNkZg0S1qcxyPY5YSvsYJAj
+	4fGlyJMkS6eowsty66//ATYrIq3R8L3wz2QqyJiO0EKuTTbXFA4JWNDILm/1qE/h4cg5kgvE8Pb
+	7O5GlqxH6Qrav93UCNQ8EcanwjZBcgHeLypXXVxvoojI0Jccjas6GRFksrqDN6Ck2H8rbyrTXLR
+	lXnpjj9l/i9s+ezFNdvWK35fi3zxyljmRZCr+fKepjX2JurtmXTR3GDSzGP9jxqNoECw+IQgrh5
+	JZcxVU/JXIWPvcSl5AvkvcsWgU458nijNNaV7scCi5oLvhn6j+hxTslA1KD8xAz5XL54Q9KRFo5
+	ZaUlmFVsIahcUEjvYSnHRag==
+X-Received: by 2002:a17:903:2383:b0:246:570:2d9a with SMTP id d9443c01a7336-24944b1fc6emr283192335ad.59.1757021714798;
+        Thu, 04 Sep 2025 14:35:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEp3igpntYcHLO4XqweUiLyIuxXfhO1KED/bu92vbMqGflTJz2eGcJkzb2pbmcEUuUIo7WMCQ==
+X-Received: by 2002:a17:903:2383:b0:246:570:2d9a with SMTP id d9443c01a7336-24944b1fc6emr283191985ad.59.1757021714309;
+        Thu, 04 Sep 2025 14:35:14 -0700 (PDT)
+Received: from [10.134.71.99] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-24ccd76e157sm22652365ad.107.2025.09.04.14.35.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 04 Sep 2025 14:35:13 -0700 (PDT)
+Message-ID: <c80e6933-8985-4da4-8498-66cedaa87b1f@oss.qualcomm.com>
+Date: Thu, 4 Sep 2025 14:35:14 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <c2d810bc-bdba-464b-9a05-49ca2e1c773b@oss.qualcomm.com>
-X-Proofpoint-GUID: NJ9GMWnYkhDt6uwdK9qenopqPWss0k9o
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfX0yrTt9ha6QeJ
- qNhP8SswleojZXXeNaFLByk9tVTc5pAvvhPtYFPduoniOa1fa1mTCnZHw22VTSyjziUkvHOuCEu
- 07w9TwiVGSmBCvp/gvgVTVR+hFwt/GfkniMNTZvsjTiFFUf+p6El+NWzjEZux8xID3W7Aj+XVVC
- 2rwRrudUaIgef1URCutQJvadjMV14aR3r3kVw7dBdBVgVCvugyIOBnItz6CMqj6+orliclKZ8ab
- fQpPiwc8X1rvfVyJWl1yX7KbAK1P+hQCD1uUG07mL/9zzBeF4ONAZvgmCzpdiSM4S7aMNHwPsck
- DyE1/AihaQ0RoSfRaPPRvuizLH4MtueHMrk2asMdLZIP1mBO++Ab+oZpLH7GUdxrq0Uux9tjlmD
- d7AOHaiw
-X-Proofpoint-ORIG-GUID: NJ9GMWnYkhDt6uwdK9qenopqPWss0k9o
-X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68b9f449 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=ncykOhDuLf7TmHMgJ_oA:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/12] drm/msm/disp: set num_planes and fetch_mode in
+ INTERLEAVED_RGB_FMT
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov
+ <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250705-dpu-formats-v1-0-40f0bb31b8c8@oss.qualcomm.com>
+ <20250705-dpu-formats-v1-2-40f0bb31b8c8@oss.qualcomm.com>
+Content-Language: en-US
+From: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+In-Reply-To: <20250705-dpu-formats-v1-2-40f0bb31b8c8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: i-T55sC4D084dp3H0XavUhrD50dyIyD-
+X-Authority-Analysis: v=2.4 cv=Jt/xrN4C c=1 sm=1 tr=0 ts=68ba061a cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=2YQhiLfsl84BKudLmi8A:9
+ a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: i-T55sC4D084dp3H0XavUhrD50dyIyD-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwMSBTYWx0ZWRfX4sU59Yvt1QSM
+ djMtDQYOOfvIeO2UpMmkvGoKMDrWA/OnP/tbOSQaxbnLrPbeavYSf4MaaH5O7YxNIQrE4CaTu08
+ EHt+sghzGBhNVa9aBnJcV2SlCvUjuLZUphkaCR+ZcMJBR3EEfdXRn/lkyztX228EkZcXVbEk4o3
+ c/6SgIUxWMHaw2vL3Z8unpYd7TNTLt/5lyeBIN8H0U/PDbuheW5QCUmxZEg4zqHvuVyhR4clehq
+ MJUfzkiM4o7nhV0FSW2PMcyhBF6sI2EUuoMDGfEPaw1HWDF6bLbB40nHMhD3c6xFg0h75RXw+Ez
+ k0f8a7Z0GqRUqUQwop9bYvVkHZX+/egkK6Dso1zX/JpErRJL8NuAEwEUADJZMfR3ZBvVjQCQ9Bf
+ +TEZLb9W
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-04_06,2025-09-04_01,2025-03-28_01
+ definitions=2025-09-04_07,2025-09-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
-
-On Thu, Sep 04, 2025 at 11:38:16AM -0700, Jessica Zhang wrote:
-> 
-> 
-> On 7/4/2025 7:47 PM, Dmitry Baryshkov wrote:
-> > The _dpu_format_populate_plane_sizes_ubwc() used MSM_MEDIA_ALIGN() and
-> > MSM_MEDIA_ROUNDUP(), macros inherited from the previous implementation,
-> > msm_media_info.h. Replace them with the standard Linux macros,
-> > round_up() and DIV_ROUND_UP() respectively.
-> > 
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> > ---
-> >   drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c | 62 ++++++++++++-----------------
-> >   1 file changed, 26 insertions(+), 36 deletions(-)
-> > 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > index 67bc5a6eeb43dcf113dea9eccdb778cd52b1ad40..6a0426ed1460c5af4822844d7a7b0c51739df875 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c
-> > @@ -10,16 +10,6 @@
-> >   #include "dpu_kms.h"
-> >   #include "dpu_formats.h"
-> > -#ifndef MSM_MEDIA_ALIGN
-> > -#define MSM_MEDIA_ALIGN(__sz, __align) (((__align) & ((__align) - 1)) ?\
-> > -	((((__sz) + (__align) - 1) / (__align)) * (__align)) :\
-> > -	(((__sz) + (__align) - 1) & (~((__align) - 1))))
-> > -#endif
-> > -
-> > -#ifndef MSM_MEDIA_ROUNDUP
-> > -#define MSM_MEDIA_ROUNDUP(__sz, __r) (((__sz) + ((__r) - 1)) / (__r))
-> > -#endif
-> > -
-> >   #define DPU_UBWC_PLANE_SIZE_ALIGNMENT	4096
-> >   /*
-> > @@ -80,57 +70,57 @@ static int _dpu_format_populate_plane_sizes_ubwc(
-> >   		    fmt->pixel_format == DRM_FORMAT_P010) {
-> >   			if (MSM_FORMAT_IS_DX(fmt)) {
-> >   				if (fmt->flags & MSM_FORMAT_FLAG_UNPACK_TIGHT) {
-> > -					stride = MSM_MEDIA_ALIGN(fb->width, 192);
-> > -					stride = MSM_MEDIA_ALIGN(stride * 4 / 3, 256);
-> > +					stride = round_up(fb->width, 192);
-> 
-> Hi Dmitry,
-> 
-> It seems like the usage of round_up() here might be incorrect -- the docs
-> say "round up to next specified power of 2".
-> 
-> Maybe we should use roundup() instead here?
+ adultscore=0 priorityscore=1501 clxscore=1015 bulkscore=0 impostorscore=0
+ spamscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300001
 
 
-Indeed, two macros with very simlar names. Thanks for spotting it!
 
+On 7/4/2025 7:47 PM, Dmitry Baryshkov wrote:
+> All interleaved RGB formats use only 1 plane and MDP_FETCH_LINEAR.
+> Specify num_planes and fetch_mode directly in the macro and remove
+> unused parameters.
 > 
-> The rest of the patch LGTM.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+
+> ---
+>   drivers/gpu/drm/msm/disp/mdp_format.c | 114 ++++++++++++----------------------
+>   1 file changed, 39 insertions(+), 75 deletions(-)
 > 
-> Thanks,
-> 
-> Jessica Zhang
-> 
-> > +					stride = round_up(stride * 4 / 3, 256);
-> >   					y_tile_width = 48;
-> >   				} else {
-> > -					stride = MSM_MEDIA_ALIGN(fb->width * 2, 256);
-> > +					stride = round_up(fb->width * 2, 256);
-> >   					y_tile_width = 32;
-> >   				}
-> > -				sclines = MSM_MEDIA_ALIGN(fb->height, 16);
-> > +				sclines = round_up(fb->height, 16);
-> >   				y_tile_height = 4;
-> >   			} else {
-> > -				stride = MSM_MEDIA_ALIGN(fb->width, 128);
-> > +				stride = round_up(fb->width, 128);
-> >   				y_tile_width = 32;
-> > -				sclines = MSM_MEDIA_ALIGN(fb->height, 32);
-> > +				sclines = round_up(fb->height, 32);
-> >   				y_tile_height = 8;
-> >   			}
-> >   		}
-> >   		layout->plane_pitch[0] = stride;
-> > -		layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
-> > +		layout->plane_size[0] = round_up(layout->plane_pitch[0] *
-> >   			sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-> >   		layout->plane_pitch[1] = stride;
-> > -		layout->plane_size[1] = MSM_MEDIA_ALIGN(layout->plane_pitch[1] *
-> > +		layout->plane_size[1] = round_up(layout->plane_pitch[1] *
-> >   			sclines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-> >   		if (!meta)
-> >   			return 0;
-> > -		y_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, y_tile_width);
-> > -		layout->plane_pitch[2] = MSM_MEDIA_ALIGN(y_meta_stride, 64);
-> > +		y_meta_stride = DIV_ROUND_UP(fb->width, y_tile_width);
-> > +		layout->plane_pitch[2] = round_up(y_meta_stride, 64);
-> > -		y_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, y_tile_height);
-> > -		y_meta_scanlines = MSM_MEDIA_ALIGN(y_meta_scanlines, 16);
-> > -		layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
-> > +		y_meta_scanlines = DIV_ROUND_UP(fb->height, y_tile_height);
-> > +		y_meta_scanlines = round_up(y_meta_scanlines, 16);
-> > +		layout->plane_size[2] = round_up(layout->plane_pitch[2] *
-> >   			y_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-> > -		uv_meta_stride = MSM_MEDIA_ROUNDUP((fb->width+1)>>1, y_tile_width / 2);
-> > -		layout->plane_pitch[3] = MSM_MEDIA_ALIGN(uv_meta_stride, 64);
-> > +		uv_meta_stride = DIV_ROUND_UP((fb->width+1)>>1, y_tile_width / 2);
-> > +		layout->plane_pitch[3] = round_up(uv_meta_stride, 64);
-> > -		uv_meta_scanlines = MSM_MEDIA_ROUNDUP((fb->height+1)>>1, y_tile_height);
-> > -		uv_meta_scanlines = MSM_MEDIA_ALIGN(uv_meta_scanlines, 16);
-> > -		layout->plane_size[3] = MSM_MEDIA_ALIGN(layout->plane_pitch[3] *
-> > +		uv_meta_scanlines = DIV_ROUND_UP((fb->height+1)>>1, y_tile_height);
-> > +		uv_meta_scanlines = round_up(uv_meta_scanlines, 16);
-> > +		layout->plane_size[3] = round_up(layout->plane_pitch[3] *
-> >   			uv_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-> >   	} else {
-> >   		unsigned int rgb_scanlines, rgb_meta_scanlines, rgb_meta_stride;
-> > -		layout->plane_pitch[0] = MSM_MEDIA_ALIGN(fb->width * fmt->bpp, 256);
-> > -		rgb_scanlines = MSM_MEDIA_ALIGN(fb->height, 16);
-> > -		layout->plane_size[0] = MSM_MEDIA_ALIGN(layout->plane_pitch[0] *
-> > +		layout->plane_pitch[0] = round_up(fb->width * fmt->bpp, 256);
-> > +		rgb_scanlines = round_up(fb->height, 16);
-> > +		layout->plane_size[0] = round_up(layout->plane_pitch[0] *
-> >   			rgb_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-> >   		if (!meta)
-> > @@ -139,13 +129,13 @@ static int _dpu_format_populate_plane_sizes_ubwc(
-> >   		/* uAPI leaves plane[1] empty and plane[2] as meta */
-> >   		layout->num_planes += 1;
-> > -		rgb_meta_stride = MSM_MEDIA_ROUNDUP(fb->width, 16);
-> > -		layout->plane_pitch[2] = MSM_MEDIA_ALIGN(rgb_meta_stride, 64);
-> > +		rgb_meta_stride = DIV_ROUND_UP(fb->width, 16);
-> > +		layout->plane_pitch[2] = round_up(rgb_meta_stride, 64);
-> > -		rgb_meta_scanlines = MSM_MEDIA_ROUNDUP(fb->height, 4);
-> > -		rgb_meta_scanlines = MSM_MEDIA_ALIGN(rgb_meta_scanlines, 16);
-> > +		rgb_meta_scanlines = DIV_ROUND_UP(fb->height, 4);
-> > +		rgb_meta_scanlines = round_up(rgb_meta_scanlines, 16);
-> > -		layout->plane_size[2] = MSM_MEDIA_ALIGN(layout->plane_pitch[2] *
-> > +		layout->plane_size[2] = round_up(layout->plane_pitch[2] *
-> >   			rgb_meta_scanlines, DPU_UBWC_PLANE_SIZE_ALIGNMENT);
-> >   	}
-> > 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
+> index eebedb1a2636e76996cf82847b7d391cb67b0941..26be35572fd2ee7456401aa525cc36025bc52ee4 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp_format.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp_format.c
+> @@ -67,7 +67,7 @@ static struct csc_cfg csc_convert[CSC_MAX] = {
+>   #define MDP_TILE_HEIGHT_NV12	8
+>   
+>   #define INTERLEAVED_RGB_FMT(fmt, a, r, g, b, e0, e1, e2, e3, uc, alpha,   \
+> -bp, flg, fm, np)                                                          \
+> +bp, flg)                                                                  \
+>   {                                                                         \
+>   	.pixel_format = DRM_FORMAT_ ## fmt,                               \
+>   	.fetch_type = MDP_PLANE_INTERLEAVED,                              \
+> @@ -80,9 +80,9 @@ bp, flg, fm, np)                                                          \
+>   	.chroma_sample = CHROMA_FULL,                                     \
+>   	.unpack_count = uc,                                               \
+>   	.bpp = bp,                                                        \
+> -	.fetch_mode = fm,                                                 \
+> +	.fetch_mode = MDP_FETCH_LINEAR,                                   \
+>   	.flags = MSM_FORMAT_FLAG_UNPACK_TIGHT | flg,                      \
+> -	.num_planes = np,                                                 \
+> +	.num_planes = 1,                                                  \
+>   	.tile_height = MDP_TILE_HEIGHT_DEFAULT                            \
+>   }
+>   
+> @@ -228,218 +228,182 @@ static const struct msm_format mdp_formats[] = {
+>   	INTERLEAVED_RGB_FMT(ARGB8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		true, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(ABGR8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		true, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(XBGR8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		false, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBA8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		true, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRA8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		true, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRX8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		false, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(XRGB8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		false, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBX8888,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		false, 4, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGB888,
+>   		0, BPC8, BPC8, BPC8,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, 0, 3,
+> -		false, 3, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 3, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGR888,
+>   		0, BPC8, BPC8, BPC8,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, 0, 3,
+> -		false, 3, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 3, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGB565,
+>   		0, BPC5, BPC6, BPC5,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, 0, 3,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGR565,
+>   		0, BPC5, BPC6, BPC5,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, 0, 3,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(ARGB1555,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(ABGR1555,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBA5551,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRA5551,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(XRGB1555,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(XBGR1555,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBX5551,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRX5551,
+>   		BPC1A, BPC5, BPC5, BPC5,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(ARGB4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(ABGR4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBA4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRA4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		true, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(XRGB4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(XBGR4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBX4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRX4444,
+>   		BPC4A, BPC4, BPC4, BPC4,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		false, 2, 0,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 2, 0),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRA1010102,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		true, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBA1010102,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		true, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	INTERLEAVED_RGB_FMT(ABGR2101010,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		true, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	INTERLEAVED_RGB_FMT(ARGB2101010,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		true, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		true, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	INTERLEAVED_RGB_FMT(XRGB2101010,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C1_B_Cb, C0_G_Y, C2_R_Cr, C3_ALPHA, 4,
+> -		false, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	INTERLEAVED_RGB_FMT(BGRX1010102,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C2_R_Cr, C0_G_Y, C1_B_Cb, 4,
+> -		false, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	INTERLEAVED_RGB_FMT(XBGR2101010,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA, 4,
+> -		false, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	INTERLEAVED_RGB_FMT(RGBX1010102,
+>   		BPC8A, BPC8, BPC8, BPC8,
+>   		C3_ALPHA, C1_B_Cb, C0_G_Y, C2_R_Cr, 4,
+> -		false, 4, MSM_FORMAT_FLAG_DX,
+> -		MDP_FETCH_LINEAR, 1),
+> +		false, 4, MSM_FORMAT_FLAG_DX),
+>   
+>   	/* --- RGB formats above / YUV formats below this line --- */
+>   
 > 
 
--- 
-With best wishes
-Dmitry
 
