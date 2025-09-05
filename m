@@ -1,247 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-72209-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72210-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AB58B44FF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:35:44 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A6F68B44FE3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:33:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 392A0B62060
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 07:31:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 343581895806
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 07:33:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA639259C98;
-	Fri,  5 Sep 2025 07:30:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 873692459E5;
+	Fri,  5 Sep 2025 07:32:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="dMLm/gmD"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="l9B1z/vP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11012011.outbound.protection.outlook.com [40.107.75.11])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D2821A420;
-	Fri,  5 Sep 2025 07:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.75.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757057439; cv=fail; b=RYNNdwfvw+nEZGNwKSA1wXT38O9QzyskT75lPRyEZ7IIjXCiJon2GKxVY9slCEsQAtVhCrSEMcTXN8AGzn7aAgorCJoTSyICGKPpvVvShCGDkvpLuNXF/UeaJpoSBiPQ1WwmLwm2ADuI5OalavV8llkPHDDodVb8fySIFW2XgYk=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757057439; c=relaxed/simple;
-	bh=zHaMHeIJpCQ1qDfq0UURHsc5zuudUW13uIfWY9R9bEM=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=qr0jOa8gV1YOlU4A4JBMc/YDaKEu1LVBhg36vnJSm5gy9yfjlYzeeggARQOOg5z45NtvcOKefTPA3BligXrB7ybyfazRHKXoyI3pjWO0aEtdzAcxE1koRTepTZOhy+B3wcjIWnxo+fCpeBDEFwfANsvN5HgMZGHAYpI/eXydDX4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=dMLm/gmD; arc=fail smtp.client-ip=40.107.75.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xvPM0zBN3b4LcUByyJcRSlIe3kYjAlGRGKogUUNQou0pmPtGLdo7Hbprf6X8PSX8n0CBzhgS7DJl9an2TWNBulz6dtbgRjKffhM/Bhjyhe8bo6Ayxf2Xwwh37VVWDzzj5Y3WZwCan8R7yi5E5i9SNTv+8mnaJheTxTaThG3Mx16MzGir+tJurYWWjVSQPdh1REuLEXq9r4rgADwSczIMJIIKfqpZla8VG9G3mhnywStLaY3NfdLV5wJIya1ZTimNOjkL9qxDOHVdhPmsTELLwgHq0hxjsfW2pGJTjByPXk+yJCU/tTd40lQQ080tq9c1Q+vSnOs6Vt0rwRIcZ65Bsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M+z+FBSYFBJ3GvWe4VVDnS660/Npl4eDZTbKMxj8duI=;
- b=selS3o6Xzb/GIlGioJkfeZAto7bRDeNAWggoUprt+5csJo8ymXnNoWFVZkdtxyA0HBLJzKRKdWEOf/vUXKvbf4AR+hC6FtZ7tm2Pmw3JDEkPJXtn7lwbhBr+YJ64aLomHQCUlvTSL1e5zhZuNRU3DFE2KPe/aRH8CJs28Y/e9ejWtq0OXzY4D/A6rdqn7XVhrzVoFtgApi4IF9J2T5vg44dhzHlx4wvInHyN5F+gjiMVt/PcSbXA43jsmWr3zl2vP4SaMVJdL836ya1fQwV0sJ51mTP4wQEvbwNy3cVzelPyr0KsODauC9RSgt8RYMN8134W+2Xwqb7fZ21/fWSM+Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
- dkim=pass header.d=vivo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M+z+FBSYFBJ3GvWe4VVDnS660/Npl4eDZTbKMxj8duI=;
- b=dMLm/gmD9+XJAOp1WazDhH6bsd5bMk8GDZw8/O9yQcVHc1u0VndS3hOywqUfCw5crJQYVyiDSR+IVCObeyVaP6VKezCsoWQ2a8odFVvwP0iCQK4+5y15WOYlk0pczT6nPIXGCEirDk19sOxaRCSoZipQ5eyUMnvpokg8D88+FHcrJ5pbQr0HW4MXQB6g2HgKOqYhRs6mugv3yVZxR1lqdykYRTpeoXbDiNkXUkRXDbQrbDHvNj+ucGTlTYKyGCYLjXvnA0KMKLxhVJBd+BbpLmlMJaKuqOPFXO8bs+6A6+xBoGBhb7mSMwaEBcA14yZT7/5rcJhbUGEvmz5xwfZVbw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=vivo.com;
-Received: from KL1PR06MB7330.apcprd06.prod.outlook.com (2603:1096:820:146::7)
- by TY2PPF4DD1DCAD3.apcprd06.prod.outlook.com (2603:1096:408::78d) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9094.19; Fri, 5 Sep
- 2025 07:30:34 +0000
-Received: from KL1PR06MB7330.apcprd06.prod.outlook.com
- ([fe80::d1d3:916:af43:55f5]) by KL1PR06MB7330.apcprd06.prod.outlook.com
- ([fe80::d1d3:916:af43:55f5%4]) with mapi id 15.20.9094.018; Fri, 5 Sep 2025
- 07:30:34 +0000
-From: Xichao Zhao <zhao.xichao@vivo.com>
-To: Jean Delvare <jdelvare@suse.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Jonathan Cameron <jic23@kernel.org>,
-	David Lechner <dlechner@baylibre.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Lukasz Luba <lukasz.luba@arm.com>,
-	Guillaume La Roque <glaroque@baylibre.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Ray Jui <rjui@broadcom.com>,
-	Scott Branden <sbranden@broadcom.com>,
-	Markus Mayer <mmayer@broadcom.com>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	zhanghongchen <zhanghongchen@loongson.cn>,
-	Yinbo Zhu <zhuyinbo@loongson.cn>,
-	Amit Kucheria <amitk@kernel.org>,
-	Thara Gopinath <thara.gopinath@gmail.com>,
-	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund@ragnatech.se>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Bartlomiej Zolnierkiewicz <bzolnier@gmail.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Orson Zhai <orsonzhai@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Chunyan Zhang <zhang.lyra@gmail.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Jonathan Hunter <jonathanh@nvidia.com>,
-	Talel Shenhar <talel@amazon.com>,
-	Eduardo Valentin <edubezval@gmail.com>,
-	Keerthy <j-keerthy@ti.com>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	linux-hwmon@vger.kernel.org (open list:HARDWARE MONITORING),
-	linux-kernel@vger.kernel.org (open list),
-	linux-iio@vger.kernel.org (open list:IIO SUBSYSTEM AND DRIVERS),
-	linux-arm-kernel@lists.infradead.org (moderated list:ARM/Allwinner sunXi SoC support),
-	linux-sunxi@lists.linux.dev (open list:ARM/Allwinner sunXi SoC support),
-	linux-pm@vger.kernel.org (open list:THERMAL),
-	linux-amlogic@lists.infradead.org (open list:THERMAL DRIVER FOR AMLOGIC SOCS),
-	linux-rpi-kernel@lists.infradead.org (moderated list:BROADCOM BCM2711/BCM2835 ARM ARCHITECTURE),
-	imx@lists.linux.dev (open list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE),
-	linux-arm-msm@vger.kernel.org (open list:QUALCOMM TSENS THERMAL DRIVER),
-	linux-renesas-soc@vger.kernel.org (open list:RENESAS R-CAR THERMAL DRIVERS),
-	linux-rockchip@lists.infradead.org (open list:ARM/Rockchip SoC support),
-	linux-samsung-soc@vger.kernel.org (open list:SAMSUNG THERMAL DRIVER),
-	linux-stm32@st-md-mailman.stormreply.com (moderated list:ARM/STM32 ARCHITECTURE),
-	linux-tegra@vger.kernel.org (open list:TEGRA ARCHITECTURE SUPPORT),
-	linux-omap@vger.kernel.org (open list:TI BANDGAP AND THERMAL DRIVER)
-Cc: Xichao Zhao <zhao.xichao@vivo.com>
-Subject: [PATCH 12/12] thermal: ti-soc-thermal: Remove redundant error log  prints
-Date: Fri,  5 Sep 2025 15:24:04 +0800
-Message-Id: <20250905072423.368123-13-zhao.xichao@vivo.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250905072423.368123-1-zhao.xichao@vivo.com>
-References: <20250905072423.368123-1-zhao.xichao@vivo.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: TYCP286CA0075.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:31a::16) To KL1PR06MB7330.apcprd06.prod.outlook.com
- (2603:1096:820:146::7)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86D101DDC37;
+	Fri,  5 Sep 2025 07:32:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757057523; cv=none; b=chitmZVuTtmEIieeIzKPppKAduQFoSCAs3IO4PjVZwEN0Lfa1w3owJ/CtDeDVQmzzIsEdxeKFV/S2Eu2sz5OKaE8NfsO/N9BelDBqv5ju1ZG8bzMjLT5Ha96dC2bgKcfQGFABv3QCxQHBbrYVkWvSK3dD3BGWLKnq6zuS2hUo6Q=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757057523; c=relaxed/simple;
+	bh=hT9AxadC5iAK+JNW21MjSBtwwyo1LI3n1xgeNnxspHE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KwWzIIZhYcgYKapEEkXLvZC5CpcxsXcvE5wUb3VbMVlDB8qJhKkrH8qNhx9N+vO5SR+0NPS05y0ojHo+o5NKtxg8uuDgZRI7Vt6hbEgSHWK/ovnPSNEYy/lAYD8+o3gsW9XjLgBeCNbWmb9+Rd+labOt9t1zwLk4vNxP5nYEXDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=l9B1z/vP; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757057522; x=1788593522;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=hT9AxadC5iAK+JNW21MjSBtwwyo1LI3n1xgeNnxspHE=;
+  b=l9B1z/vP0n5sGGvJOw3agwBoVNGyPjsrgQUSX91lrpfE9UEPHSLz3jRN
+   mZfmR+w4GFBB4El3r2AvV7ebQp6A4+HBjdB3DU5Lt6mc4C8NdmP4W5Zo9
+   qp8mg8ozaPz3NUtz8ztofqtXv61KiaSAJqi+QH/TXQIHU+fGrTD2E4uNG
+   q6GTjx/fERh16euXwXxvzpD0PUxh5tafmqSi/goULj/+28Mr3dIHXsGlH
+   JVvl6J9xdf2OEcgloJ42l2pXgbiOrj6510dn7FMPSlfgZYfGkBZCyV50k
+   3JoE6LelHaR6FLU4YhnmjgDK9SrohlPfOQ/xh6NXKKz5pQK7dCypr5iXx
+   A==;
+X-CSE-ConnectionGUID: 6X6djPZETs+JeVBdjcGQ/g==
+X-CSE-MsgGUID: IPrY3Ph1Tu6rMUoUhYXlUA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11543"; a="63047296"
+X-IronPort-AV: E=Sophos;i="6.18,240,1751266800"; 
+   d="scan'208";a="63047296"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2025 00:32:02 -0700
+X-CSE-ConnectionGUID: wK34IIBTTkm5b+TvUQ45dg==
+X-CSE-MsgGUID: N4k6vEQgQie6WHUbCQT8BQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,240,1751266800"; 
+   d="scan'208";a="172540025"
+Received: from kuha.fi.intel.com ([10.237.72.152])
+  by fmviesa009.fm.intel.com with SMTP; 05 Sep 2025 00:31:58 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Fri, 05 Sep 2025 10:31:56 +0300
+Date: Fri, 5 Sep 2025 10:31:56 +0300
+From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: "Jayaraman, Venkat" <venkat.jayaraman@intel.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	"linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+	"gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+	PSE Type-C Linux <pse.type-c.linux@intel.com>,
+	linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL
+ command
+Message-ID: <aLqR7ECma5JFojcU@kuha.fi.intel.com>
+References: <20250814163028.18058-1-venkat.jayaraman@intel.com>
+ <91cb0acb-73c4-4d3a-9aa8-1056f367d82e@linaro.org>
+ <aKbI4DnIDD9fD_Gz@kuha.fi.intel.com>
+ <b897d082-0d74-46fc-a0e4-7745347ba597@linaro.org>
+ <CH0PR11MB5300AD8DD6BE6CBC799B49DD8000A@CH0PR11MB5300.namprd11.prod.outlook.com>
+ <d7nbjyz27pcvsic2gsho6ft6pjubmq2x4she5kvcd57i6dirns@bte5b5aap3wb>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR06MB7330:EE_|TY2PPF4DD1DCAD3:EE_
-X-MS-Office365-Filtering-Correlation-Id: 76c168d6-2e18-4db4-2cdf-08ddec4e19f4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|52116014|7416014|1800799024|921020|38350700014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?5nXJQxQPjs9P76NYDhhy84I3XzpXvClH5hiYyVG4b5kv05qYWRbEwOHPvtNf?=
- =?us-ascii?Q?OOE/VGO2jsxpcaKGDcZoH6NbdzTJAc3TQG0MiQKHRHLrH2pgnoam1T5WNb1w?=
- =?us-ascii?Q?KP7EicWy5GXcWKF58HTfy7VA/Oehptmy7GoS/pzN2/fTHWc558gX3e16SPua?=
- =?us-ascii?Q?O72hoH4tEinAkFW5lOs0R2pXs03p8Ih4JVcBwy53O1/srmqTxxHHUwi2bL4x?=
- =?us-ascii?Q?IvbFRw45/YS2Kc8IWMrLD+4T+TYhn7hRYX6wjIOx3A9Hhf6zyKLV2YGsq71A?=
- =?us-ascii?Q?Q0oMw/NezZUIJ3WQdL12Ww1Fxcu6hM1Nc3mNu732jVx8L7pkHvb6ZO7P5JsE?=
- =?us-ascii?Q?Ay5jXCIH0B+3nuCWQq6HiOMJEUR08NzcY3YZUn3rh57uQ1Tw4UP9CNgqApfR?=
- =?us-ascii?Q?w+ttjgWe83wHOKLIs8o9ZgGfw4RO2J5XLAt4SUmRtkGpMRcEUg+Q0axN4VL0?=
- =?us-ascii?Q?EFGKjY+MzcVGDUkI/hA+RiOAZc4UW9UM1GM5x3CNiFNWaNsBn8FeZpSB7Bh3?=
- =?us-ascii?Q?4NMNOoOWA4mLzg3Wttv8LHEgD3jd+nIqqjDejwcOpI/Vn5fT8OSQ5mFmcRsM?=
- =?us-ascii?Q?U0GR4y2LK1rH/7qShgIiRDlHJRspUfuZnb9QxYfBeDa3yglNs32rBgQkKZF3?=
- =?us-ascii?Q?s/3X2lI4ZjIjnWhOsRUgLFkPr2CD3ZfZKzg/fPWIXKEpBA2GnIBB1anZjf1R?=
- =?us-ascii?Q?77NXSVklvovGp8iDa4EeWFgg8NeSTmjEAZ82ExkfpVcIIaTfreSNACD7+lMn?=
- =?us-ascii?Q?Llqd+O5iOBUfGyC2G9k7FDhupOwsh4fmr90GdIJe6i+8uRVp994OFkKRZ9n1?=
- =?us-ascii?Q?3nHMu340ehYzGBUgQjkGF9uv5ht7g2DktGGT3ND8aSdwhDxHxIH7KURWaMNM?=
- =?us-ascii?Q?GQhYKzqOuO+qKmFgGi5mCnC8nww9lsyeDcpyRoX7BoQteXVsAttXcBZ05u8R?=
- =?us-ascii?Q?lkGtl0jD9hxGBcdCREjC11q1s7HF7sytJjRdtn3gOmYNHoF7b6rAt8bgazD9?=
- =?us-ascii?Q?YEhfCybbXj7D4uPI9Nx46N+f1qF1TJ6mOQl7lf61VmvNhJVx03woY4dhUa0A?=
- =?us-ascii?Q?imCdK//RB8VQBOHRWmIZrLz+5y9XtV9ZHbecP11P739nBLPjSg/8CYpNIinq?=
- =?us-ascii?Q?Auoe8jzxDv0nw6MQO48BH4/RhlP93o2HxqDhECJ97wMr/ZfCfI+xioSjyGBa?=
- =?us-ascii?Q?LhcUi+NRJ4PV+mHY0LMUkyoPYVSsEL65Md6IXNeBmGNGtIYuXXlOMI7cqbWk?=
- =?us-ascii?Q?le1QymsaXQqcYSqyDnZ0X/hZeunQtCn2EoyE9aTQBr16R0IqDOpizTi9H35o?=
- =?us-ascii?Q?DxQV0CoGX5eAAykkXnlr4RANGCCfuoSVOxygyGizIkcgVXoBRQeIWjQ3sBgL?=
- =?us-ascii?Q?YMUR9uGSTheiWFrV6wUMfKgKDCVPUbSn4Tth5r5iqU6MfxVTFsDuwSXNj1Ny?=
- =?us-ascii?Q?nns/e4UJ1DOqYiafXnqwbtt3K9sJCgAkZn291au5uDbduskIdxzQv4LPSh2U?=
- =?us-ascii?Q?rgmUZ9sM3c3WabY=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR06MB7330.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(52116014)(7416014)(1800799024)(921020)(38350700014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?/15ACXZ8Uf0PG30wmG8WU7MEjaZRKT8pd8x/yNmb4YMjJ9MNtyr7kxa3ChVR?=
- =?us-ascii?Q?pp4z0tSPwi1dYhLBPaTDZgsB4FLb0VvQPifuyzPerXEk7GNs0tH910pWqi/Q?=
- =?us-ascii?Q?MdZQAW2h30qVosC9OAKNBkCCTZsuPZ6L+6B8H2DsP7fQIuaJK7g56VN7i9Kt?=
- =?us-ascii?Q?ye4uBNEQ5Z1f4zOZ3uxq8V+ECA6Nt8BsK6yIXsZAQofBZo4BO5TsHa6tNks4?=
- =?us-ascii?Q?+g87GT7chosj5QpUyDZY/QtNFd45hH8xSDEyK6H7/YmnagYzmEMNOx9G/9Cz?=
- =?us-ascii?Q?Y8tfbBz7hYa+wKHXBalYd6kRXJOkHIY/0Nsomn723e0H8zFqm+ItHYO0o0gk?=
- =?us-ascii?Q?TCwdzkY5RJVNLJM1gaTwdXTdO4Wt8GBQtse8yCh3dyd/vkrg9f8fLhRWBLAS?=
- =?us-ascii?Q?9Om+phBbe/uuNIyE5qq0nvsfNH4GLLKM2DQV3G77/b6q6RMNJDn7SGAVEirR?=
- =?us-ascii?Q?snwwJh3gsNsFShdmMkl+C8vsX4TZTl8hdq2T1ZcxrhOd9F+XDALxYzykfPAG?=
- =?us-ascii?Q?ovbYuyZ4B3SEvkCAt5t2gaNeR9n9HT6NH8YH+HmqdiGpUbD1URaB6laPgRIR?=
- =?us-ascii?Q?h4O91zEN0WuS+3IHE2jDKhAfqCy/qdZ9l6jkjaj48LvsDEPYIPHT5CAGztTc?=
- =?us-ascii?Q?ZJuC49deARzTX7RmRY8XyXiu+rlNwiMSCezJ02eRXcXGlJPcCU5+RyQTzXfV?=
- =?us-ascii?Q?19X7TOnwo6Ts1ZfTHGTHsK4Ag1aWYW9gRHtYv7068STpGb1RhZ+F2fsf+Gqj?=
- =?us-ascii?Q?itqk4k/5JG/UxTokKvWn3aJzqTBT9WOzKqhD1OxL5pR/VoSqXOkcVKROxvRb?=
- =?us-ascii?Q?tuxAzjIfVqwM7kw47eDIKXNgu/HJkloSNUXtO3tGalWOKY/l+lF2yGuieGx+?=
- =?us-ascii?Q?dDCgC1Vm9e9NVl1rPf4tNjMcQGj82SBZSYQPrsZPr+gBxFbf152Hf5/BH0Ui?=
- =?us-ascii?Q?0hNUexZDgS5aCY1KBZM3YzvVfg3blmEV+wRi6+wtr1YaP1QLPsUdQE/EqqTa?=
- =?us-ascii?Q?NDjvn1C/fTJ7K3kAK+aSdFeI0Gbhff/L9XSYQjzypFlEIWgh0HRkICGIpaib?=
- =?us-ascii?Q?r2wYvEVemo0uOtwFLdH3WDhUytgs6JWZxFyJzs5VFBYjBIUds0Y8p5h7By1q?=
- =?us-ascii?Q?AoxBQ+AhWyUOv4o4gSedT0DAUITQJylgzIz0EhWKSzvLCH4M/pKcq+gC/loO?=
- =?us-ascii?Q?vLNPBm6qE8D+v86evSsqFliKlx0nlZU4fUqWOEgizi/zoxkqug7i31I1/oqE?=
- =?us-ascii?Q?UtpXzL1Jlns9mLlPFhZSggEOl3KyC+ihozg0t8HuwP5YiCPr95dcgTeOQ4k6?=
- =?us-ascii?Q?WYW+3wC/wIZ5rsjJSKXKUGS52XtXPZMa6kL7iWN85awKD8zc+VjSTnMBdc8N?=
- =?us-ascii?Q?DdOZ90XAFpisj0dxx7qzODworKsmkU0HOf7xfSB37UiQsrqQBbzqbmx3oPG7?=
- =?us-ascii?Q?4H0ZJKGcvbjZdgo4WJj4lFYQAIl7AOyl3pEpdk2N2+ngjJ/qIahs+qMmhgDj?=
- =?us-ascii?Q?g2AFGVdLDGOiEfNZisQGrdSUZmnRcXNHShJvvxDtC3PGpqI12WRgWM0CI0Qt?=
- =?us-ascii?Q?dLKbcMZWO/2I+8OPH4pg4QeDmKrOr4NIPqoMzooM?=
-X-OriginatorOrg: vivo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 76c168d6-2e18-4db4-2cdf-08ddec4e19f4
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR06MB7330.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2025 07:30:34.6127
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: KH9EQYEqhhJ9DqL2OKMQ/mm1pTNM2efGsKzyUdjeuxE8gV8zMOsN8dF65QyAEf7gMJ1GC4SCqMHdXoNy5VeumQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY2PPF4DD1DCAD3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d7nbjyz27pcvsic2gsho6ft6pjubmq2x4she5kvcd57i6dirns@bte5b5aap3wb>
 
-devm_thermal_of_zone_register() prints error log messages when
-it fails, so there is no need to print error log messages again.
+On Thu, Sep 04, 2025 at 11:17:09PM +0300, Dmitry Baryshkov wrote:
+> On Thu, Sep 04, 2025 at 07:14:59PM +0000, Jayaraman, Venkat wrote:
+> > Hi Neil, 
+> > 
+> > > -----Original Message-----
+> > > From: Neil Armstrong <neil.armstrong@linaro.org>
+> > > Sent: Monday, September 1, 2025 12:50 AM
+> > > To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> > > Cc: Jayaraman, Venkat <venkat.jayaraman@intel.com>; linux-usb@vger.kernel.org; gregkh@linuxfoundation.org; PSE Type-C Linux
+> > > <pse.type-c.linux@intel.com>; linux-arm-msm <linux-arm-msm@vger.kernel.org>
+> > > Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL command
+> > > 
+> > > Hi,
+> > > 
+> > > On 21/08/2025 09:21, Heikki Krogerus wrote:
+> > > > On Tue, Aug 19, 2025 at 11:47:58AM +0200, Neil Armstrong wrote:
+> > > >> Hi,
+> > > >>
+> > > >> On 14/08/2025 18:30, Venkat Jayaraman wrote:
+> > > >>> Add support for UCSI READ_POWER_LEVEL command as per
+> > > >>> UCSI specification v2.1 and above to debugfs.
+> > > >>>
+> > > >>> Following power related fields will be exposed as files in debugfs:-
+> > > >>> peak_current (Peak current),
+> > > >>> avg_current (Average current) and
+> > > >>> vbus_voltage (VBUS voltage)
+> > > >>>
+> > > >>> These files will be updated either when a READ_POWER_LEVEL
+> > > >>> command is sent from OS or when a device is connected.
+> > > >>>
+> > > >>> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+> > > >>> Signed-off-by: Venkat Jayaraman <venkat.jayaraman@intel.com>
+> > > >>> ---
+> > > >>> Changelog v3:
+> > > >>> - Rebased to kernel 6.17-rc1
+> > > >>>
+> > > >>> Changelog v2:
+> > > >>> - Removed extra space in declaration
+> > > >>> - Made the call to debugfs_create_file single line for clarity
+> > > >>>
+> > > >>>    drivers/usb/typec/ucsi/debugfs.c | 31 +++++++++++++++++++++++++++++++
+> > > >>>    drivers/usb/typec/ucsi/ucsi.c    | 16 ++++++++++++++++
+> > > >>>    drivers/usb/typec/ucsi/ucsi.h    | 13 +++++++++++++
+> > > >>>    3 files changed, 60 insertions(+)
+> > > >>>
+> > > >>
+> > > >> This commit causes the following warning:
+> > > >> [    8.646179] ------------[ cut here ]------------
+> > > >> [    8.650986] Access to unsupported field at offset 0x59 (need version 0210)
+> > > >> [    8.651044] WARNING: drivers/usb/typec/ucsi/ucsi.c:1296 at ucsi_handle_connector_change+0x380/0x414 [typec_ucsi], CPU#0:
+> > > kworker/0:0/9
+> > > >> <snip>
+> > > >> [    8.832491] Hardware name: Qualcomm Technologies, Inc. SM8550 HDK (DT)
+> > > >> [    8.839228] Workqueue: events ucsi_handle_connector_change [typec_ucsi]
+> > > >> [    8.846084] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+> > > >> [    8.853277] pc : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
+> > > >> [    8.860031] lr : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
+> > > >> <snip>
+> > > >> [    8.944023] Call trace:
+> > > >> [    8.946570]  ucsi_handle_connector_change+0x380/0x414 [typec_ucsi] (P)
+> > > >> [    8.953328]  process_one_work+0x148/0x28c
+> > > >> [    8.957502]  worker_thread+0x2c8/0x3d0
+> > > >> [    8.961401]  kthread+0x12c/0x204
+> > > >> [    8.964759]  ret_from_fork+0x10/0x20
+> > > >> [    8.968474] ---[ end trace 0000000000000000 ]---
+> > > >>
+> > > >> on:
+> > > >> 8550-hdk:
+> > > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253312#L1418
+> > > >> 8550-qrd:
+> > > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253306#L1560
+> > > >> 8650-hdk:
+> > > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253308#L1494
+> > > >> 8650-qrd:
+> > > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253309#L1594
+> > > >> x1-crd:
+> > > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253311#L2226
+> > > >> x1-qcp:
+> > > >> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253310#L2160
+> > > >>
+> > > >> I guess the version should be checked.
+> > > >
+> > > > Venkat, can you be prepare the fix for this?
+> > > >
+> > > > thanks,
+> > > >
+> > > 
+> > > Gentle ping, can this be fixed ? Should I send a revert patch ?
+> > > 
+> > > Neil
+> > 
+> > The Fix patch, for this warning, is ready and approved, can submit once the initial patch is merged.
+> 
+> Can't you submit the fixed patch instead? It would be much better than
+> merging the known-broken patch.
 
-Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
----
- drivers/thermal/ti-soc-thermal/ti-thermal-common.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+The patch is already in Greg's usb-next and he likes to keep it
+immutable.
 
-diff --git a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-index 0cf0826b805a..e07a82eb8c3b 100644
---- a/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-+++ b/drivers/thermal/ti-soc-thermal/ti-thermal-common.c
-@@ -175,10 +175,8 @@ int ti_thermal_expose_sensor(struct ti_bandgap *bgp, int id,
- 	/* in case this is specified by DT */
- 	data->ti_thermal = devm_thermal_of_zone_register(bgp->dev, id,
- 					data, &ti_of_thermal_ops);
--	if (IS_ERR(data->ti_thermal)) {
--		dev_err(bgp->dev, "thermal zone device is NULL\n");
-+	if (IS_ERR(data->ti_thermal))
- 		return PTR_ERR(data->ti_thermal);
--	}
- 
- 	ti_bandgap_set_sensor_data(bgp, id, data);
- 	ti_bandgap_write_update_interval(bgp, data->sensor_id,
+Venkat, please send the fix.
+
+thansks,
+
 -- 
-2.34.1
-
+heikki
 
