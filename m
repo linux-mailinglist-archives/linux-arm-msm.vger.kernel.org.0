@@ -1,70 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-72324-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72325-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 817CCB45C6F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 17:24:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 179C7B45C8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 17:27:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CDDF11889788
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 15:24:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 186C556636D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 15:26:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DC7123BF96;
-	Fri,  5 Sep 2025 15:24:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A6962F7ADF;
+	Fri,  5 Sep 2025 15:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cU1LdeyZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ccCQGv8S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7B8E1F418F;
-	Fri,  5 Sep 2025 15:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B94C231845;
+	Fri,  5 Sep 2025 15:26:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757085846; cv=none; b=fs708CsDnWukVVLBC53GOuDzJe4yUMN+JZw9bzrMt+f04Q764tj5lv0TKcJgN5rJ8xiYATx5RtNfb8oaGw3qOS6T0uoe45ISgbuaYxEGR5/sltS/WNp3MmpOfY5fGrQMfSzprddxZFLa8xDk6mrtYgIxaSD/wuDogZrCtnXDB4o=
+	t=1757085970; cv=none; b=qmu/LPtEj3sRXeeuy/MQD3UtZMZhP1dNCylbc3Xwq3oa66Jnl8B2xKpn28Kd3f1c78PxGgkY8dye56sdzg/4EAzZ5IKpMr+48ozgxsHni2/+pz3sgsxRL9kGAGwDREBMpWXX0ZmQaOExrFMo/Q5Mhik2p/O1nJPpvofcAPtqtdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757085846; c=relaxed/simple;
-	bh=/sijmUFm8G1WuzkQRTlfJtp+FcF4TiggUXmpwxx+kZ4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Sx1LZqYqjtqAckN2B2Ch3OpjKiim3Xh7lnRhlC2Zyd1UJbyrmxIqDAu82nvn+0X3ulu3dSXJ+v515nCq5U96JrLIllk2N6y1wfiaIyvA/P7wHCE6m8IpJIePWYYK9vKhArsDGN3lRmx6LNPCbKjTRMJbPQNxp9z8qfhXhiIyZSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cU1LdeyZ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53D72C4CEF1;
-	Fri,  5 Sep 2025 15:24:05 +0000 (UTC)
+	s=arc-20240116; t=1757085970; c=relaxed/simple;
+	bh=d84qHJOKae+uQlsSzi8MeOLR+fbLmJB9FdZwQLaJoN8=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=u6rLb73GlbVSExsTKwZqGNIDcROAv5Crhq07ffTTy44x1RoQh1SQIX7W3hetsd5jRpt2JhcXWPfdFrUBiWFFrwqcUPTPJWiihYCnO5DuuIxS7ikvHRDmYrEhiG+dSpf1ZqPQRZORL291yv63J9hGMKkhrYQmoMAi+J7PN4KW9T4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ccCQGv8S; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1649FC4CEF1;
+	Fri,  5 Sep 2025 15:26:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757085845;
-	bh=/sijmUFm8G1WuzkQRTlfJtp+FcF4TiggUXmpwxx+kZ4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=cU1LdeyZHfSl8xPbV0PfPKf2H6X03lfzr9p7BGn64aj3TO3vWSpgavdh0jZ0TYYcG
-	 7W8gTd9zWsGyUo+YnUjuqCLYHdEMzuvldIsOtHSqI9hK4RNUbDXBZBILkQqZmLs9ra
-	 LZDDogWSLKkB7CffL+LJE5IVzia1XjoSP36mbjB+rL7qd41CN34KZACl730DSxPeJ2
-	 BBPGQC/ZZGN8/J0o49JB6K/ogxFJjkbi4gCoNGulbwRuW2Zx7McAVD5/qZTtYaVIa2
-	 n4JnTnS6BxBlm1URVpSqFgAry6btlZSt8UhIZue/BewKUO4wKOGYwzEOjMhoco4ABy
-	 6enOQBwivzAiw==
-Date: Fri, 5 Sep 2025 10:24:04 -0500
-From: Rob Herring <robh@kernel.org>
-To: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Hans de Goede <hansg@kernel.org>, Lee Jones <lee@kernel.org>,
-	Pavel Machek <pavel@kernel.org>,
+	s=k20201202; t=1757085970;
+	bh=d84qHJOKae+uQlsSzi8MeOLR+fbLmJB9FdZwQLaJoN8=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=ccCQGv8SBYYUdxV2oW25sTbpCs4xUYzFu5kokr6HhIMR+8+38U7MfvcSdqzKnuo0V
+	 Kz55FmdR4VH9Z9e6Q0BpJrN2CGIvZKA2oHm+iRJsSQsjppWLaP5+Rk/rWL378I88a8
+	 BMqbZMkzxrbw7d2JWBCIt4ZWvUxT5EzQ3BNDNAiVwsylscYKzJfdiqZfVXnQmtFCoU
+	 37kCeF7MZReusr5rj2+upd8ucYpHLPGwyOAfIIZ8hwLw4uwMGBemOy1ibLVppkxlHq
+	 ++LVuIP5tjOZkuGgBhonnOTcc6h2D6tqzYEdQLjayc2O7eG4Z+cE2kiKq2wf7vDAkH
+	 C4Zzh7yfy5lZA==
+Date: Fri, 5 Sep 2025 10:26:08 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: cros-qcom-dts-watchers@chromium.org,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Daniel Thompson <danielt@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
-	Jacopo Mondi <jacopo@jmondi.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-leds@vger.kernel.org,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jingoo Han <jingoohan1@gmail.com>, linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] dt-bindings: leds: commonize leds property
-Message-ID: <20250905152404.GB953718-robh@kernel.org>
-References: <20250905-leds-v2-0-ed8f66f56da8@vinarskis.com>
- <20250905-leds-v2-2-ed8f66f56da8@vinarskis.com>
+	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com, quic_vpernami@quicinc.com,
+	mmareddy@quicinc.com
+Subject: Re: [PATCH v8 5/5] PCI: qcom: Add support for ECAM feature
+Message-ID: <20250905152608.GA1305931@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -73,102 +69,56 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250905-leds-v2-2-ed8f66f56da8@vinarskis.com>
+In-Reply-To: <79d44c24-d853-4128-b966-8a25aaefad73@oss.qualcomm.com>
 
-On Fri, Sep 05, 2025 at 09:59:30AM +0200, Aleksandrs Vinarskis wrote:
-> A number of existing schemas use 'leds' property to provide
-> phandle-array of LED(s) to the consumer. Additionally, with the
-> upcoming privacy-led support in device-tree, v4l2 subnode could be a
-> LED consumer, meaning that all camera sensors should support 'leds'
-> and 'led-names' property via common 'video-interface-devices.yaml'.
-> 
-> To avoid dublication, commonize 'leds' property from existing schemas
-> to newly introduced 'led-consumer.yaml'.
-> 
-> Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
-> ---
->  .../devicetree/bindings/leds/backlight/led-backlight.yaml          | 7 +------
->  Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml  | 6 +-----
->  .../devicetree/bindings/media/video-interface-devices.yaml         | 3 +++
->  3 files changed, 5 insertions(+), 11 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
-> index f5554da6bc6c73e94c4a2c32b150b28351b25f16..5e19b4376715eeb05cb789255db209ed27f8822f 100644
-> --- a/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
-> +++ b/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
-> @@ -18,17 +18,12 @@ description:
->  
->  allOf:
->    - $ref: common.yaml#
-> +  - $ref: /schemas/leds/leds-consumer.yaml#
+On Fri, Sep 05, 2025 at 10:47:42AM +0530, Krishna Chaitanya Chundru wrote:
+> On 9/4/2025 1:42 AM, Bjorn Helgaas wrote:
+> > On Thu, Aug 28, 2025 at 01:04:26PM +0530, Krishna Chaitanya Chundru wrote:
+> > > The ELBI registers falls after the DBI space, PARF_SLV_DBI_ELBI register
+> > > gives us the offset from which ELBI starts. So override ELBI with the
+> > > offset from PARF_SLV_DBI_ELBI and cfg win to map these regions.
+> > > 
+> > > On root bus, we have only the root port. Any access other than that
+> > > should not go out of the link and should return all F's. Since the iATU
+> > > is configured for the buses which starts after root bus, block the
+> > > transactions starting from function 1 of the root bus to the end of
+> > > the root bus (i.e from dbi_base + 4kb to dbi_base + 1MB) from going
+> > > outside the link through ECAM blocker through PARF registers.
 
-Drop.
+> > > @@ -1322,6 +1383,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+> > >   	if (ret)
+> > >   		return ret;
+> > > +	if (pp->ecam_enabled) {
+> > > +		/*
+> > > +		 * Override ELBI when ECAM is enabled, as when ECAM
+> > > +		 * is enabled ELBI moves along with the dbi config space.
+> > > +		 */
+> > > +		offset = FIELD_GET(SLV_DBI_ELBI_ADDR_BASE, readl(pcie->parf + PARF_SLV_DBI_ELBI));
+> > > +		pci->elbi_base = pci->dbi_base + offset;
+> > 
+> > This looks like there might be a bisection hole between this patch and
+> > the previous patch that enables ECAM in the DWC core?  Obviously I
+> > would want to avoid a bisection hole.
+> > 
+> > What happens to qcom ELBI accesses between these two patches?  It
+> > looks like they would go to the wrong address until this elbi_base
+> > update.
 
->  
->  properties:
->    compatible:
->      const: led-backlight
->  
-> -  leds:
-> -    description: A list of LED nodes
-> -    $ref: /schemas/types.yaml#/definitions/phandle-array
-> -    items:
-> -      maxItems: 1
+> > Is this connection between DBI and ELBI specific to qcom, or might
+> > other users of ELBI (only exynos, I guess) need a similar update to
+> > elbi_base?
+> > 
+> This is specific to QCOM only, with the commit 10ba0854c5e61 ("PCI:
+> qcom: Disable mirroring of DBI and iATU register space in BAR region")
+> The DBI address can moved to upper region of the PCIe region. When DBI
+> is moved ELBI also moves along with it. So if this patch is not present
+> elbi will not point to correct ELBI address.
 
-You need to keep the property here:
+So I think you're saying this [5/5] patch should be squashed into the
+[4/5] patch that changes the way pci->dbi_base is computed?
 
-leds: true
+After [4/5], pcie-qcom.c still uses pci->elbi_base, but apparently the
+value is wrong until this update in [5/5]?
 
-> -
->  required:
->    - compatible
->    - leds
-> diff --git a/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
-> index 8ed059a5a724f68389a1d0c4396c85b9ccb2d9af..b4f326e8822a3bf452b22f5b9fa7189696f760a4 100644
-> --- a/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
-> +++ b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
-> @@ -17,16 +17,12 @@ properties:
->    compatible:
->      const: leds-group-multicolor
->  
-> -  leds:
-> -    description:
-> -      An aray of monochromatic leds
-> -    $ref: /schemas/types.yaml#/definitions/phandle-array
-> -
->  required:
->    - leds
->  
->  allOf:
->    - $ref: leds-class-multicolor.yaml#
-> +  - $ref: /schemas/leds/leds-consumer.yaml#
-
-
-Same comments in this one.
-
->  
->  unevaluatedProperties: false
->  
-> diff --git a/Documentation/devicetree/bindings/media/video-interface-devices.yaml b/Documentation/devicetree/bindings/media/video-interface-devices.yaml
-> index cf7712ad297c01c946fa4dfdaf9a21646e125099..1e25cea0ff71da2cfd1c7c4642713199f3542c0a 100644
-> --- a/Documentation/devicetree/bindings/media/video-interface-devices.yaml
-> +++ b/Documentation/devicetree/bindings/media/video-interface-devices.yaml
-> @@ -10,6 +10,9 @@ maintainers:
->    - Jacopo Mondi <jacopo@jmondi.org>
->    - Sakari Ailus <sakari.ailus@linux.intel.com>
->  
-> +allOf:
-> +  - $ref: /schemas/leds/leds-consumer.yaml#
-
-This can be dropped. The user still has to define how many entries and 
-what the values of led-names are.
-
-> +
->  properties:
->    flash-leds:
->      $ref: /schemas/types.yaml#/definitions/phandle-array
-> 
-> -- 
-> 2.48.1
-> 
+Bjorn
 
