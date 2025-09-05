@@ -1,89 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-72158-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72159-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 500C9B44AE7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 02:40:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4B810B44AEA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 02:40:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B1E53AF857
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 00:40:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CFADC3BDB27
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 00:40:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F3CE61E22E9;
-	Fri,  5 Sep 2025 00:39:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 444711EBFF7;
+	Fri,  5 Sep 2025 00:39:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="UAlKFWoy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VE5ESYjl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6636D1DE4C9
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 00:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8849E1DE4FB
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 00:39:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757032740; cv=none; b=jPbLprfehDMH9SnVQoMpryX9L1xqK9LioeT3JNaQ4dEDgkB9BU4f1lsOPQdADWj6bZSRwyRyOENPeTlWE1lz3ufk1MVNtepjsvlXGxijOHBX7++8utghQ+gg43kXkJvJ9ry0biN4bW2pVuvMikmyC8eWAiooJwmcrCpZHqYiJyE=
+	t=1757032743; cv=none; b=UZpEfkgmc3xf4vu/nt/Xf0vZsHTlHx9c4IgioFcUSHmqAl6Uvd97vsAk2C9Q+nDxqibWeltcElmQAX9CBKyej4VSyQLA+ATB6yK3RgTdZIcffJ/RlkMvFQ905AChG5WA1+CUDb9bB+CT4KAvXQSnVcmNf3wHCWMLc7dwayyHz1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757032740; c=relaxed/simple;
-	bh=T764qGaUs1J9VFKtvepXHsiXpOOMX042xzB4mztK948=;
+	s=arc-20240116; t=1757032743; c=relaxed/simple;
+	bh=XLkwtyygZJdPj3GjkZgZ1aANtwazJqGOIEmkYbUxRwQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oWJ2iai+fwaUDv2Komofa+rru8f/Gf7hnsqMLrldXkxBBjjgvn6Y7q91+CnSoCDFRlncoI0R5zP6BJqBfHc/FNOAsdNOnUnXt7mnFbem7zx+oDz7WhFSt7sUJMN/9hvNC+SpVv6PNF7LlnspiHgza8tOPwAWsPT17lvmMNinnPY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=UAlKFWoy; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:To:Cc; b=J5Xt8lil2O+K4qK5ajpl6v/52V075w56omQsT+uABXiyfDghhFJt9o+IXuCqejOBxuIKYwTPUkgOAzYJOxLPvAEZA1Sk6dlZAxTSrdy2A44V+1JsyFQtbd8rpLOC4hyWMBij3tiVTI7sldoHiv7DhMeeGcqAzSyB+02pN2dQ61U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VE5ESYjl; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584IQqoJ012122
-	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Sep 2025 00:38:58 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584Hsaa7031741
+	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Sep 2025 00:39:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	9brpOFp+/3/6vV4g7EI38M1O3ti6c1WPwrR8J+VQwpE=; b=UAlKFWoyVvB7CyPE
-	Nlvg0Sg+fFeWVIeDfuo+4jbax5cJ7h8ZXtsS3+dHpihKgxWC93cU3ND5N663+4pI
-	xdqefPyl9lJDAWc+uSxHWmBBhHMfYe0INp37Wt+QagDegVmYi/KkQeRwB04Ol3a/
-	Yv0BIZy3oyEa+obXQ3SNSaQgqkN4kilIOcNjd75iZKUb+YTJT2JSBYSU3p2uW84o
-	1dZnAct7+Mg8vV8UXXzgFTRJX1IplwEE1lbnK+pPfrOWnrCeWWz9M51MoQ2XTpJb
-	iiDYbUSO12O066hWaa1Zap4o5GhR5AFpvXjbMkSXWhxCUiRR8VXnxjwu9faJG1MV
-	kv1kHg==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48xmxj5pyn-1
+	bLiIOtcLE7wWiaqufYm5bdrdybL14BNM8N/yFfbsTSY=; b=VE5ESYjllYEICnuR
+	D+Vcj5mbyBY0Ok7ERnQG2ZMTt6JiQzXKuJjGttNEr5NrumYFafTrlw9RxDz/QwzH
+	niqcWvxyiVSOFqgMCbLMKKRg3Txhb3AR26xlE+gkAre1HRTLCGfAJ8jQGZ/UQ02D
+	UszrjoReuu+sXBg6faQRIOajSLNQq0hJDz6Naopre4wXIzRNuDUF3n93PpO+tZ/4
+	SUkcwDUjHXx8eKpvV3ewQWyG/1AcihAmzIIFhsN+5AZsvFWjt8f2JhXO0b+sjonu
+	7fQo8cFEzg7DKzhnGeBf0LuYb0inQxZnb1wUTowSMB+4PtIjoniG3fIqhv4UgdwT
+	6yv1lA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urw09bx4-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 00:38:58 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-71ff3e1256cso30371776d6.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 17:38:58 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 00:39:00 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b5e178be7eso24175621cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 17:39:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757032737; x=1757637537;
+        d=1e100.net; s=20230601; t=1757032740; x=1757637540;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9brpOFp+/3/6vV4g7EI38M1O3ti6c1WPwrR8J+VQwpE=;
-        b=DZ/gMgVZomsuiE+LlOoFieHaLeODi+cVeJypwjZA6Ajrd5WdKJbnrMbAOARMN61rZX
-         /MAPyuZZwidg5PyDZLEsV+NdZFwtV/M6PWM0zO2fLiMIoU5yw+M4mPfenRdGbRvi/2lf
-         jw+aTsHEbIkqOjE42ykyz4qdPxTYJhMKIvgJtiEMgXJBFXxDy4EmQf1B+UbQ1gxNLb82
-         rrV8Fr9wS1dbBE6FFcCKuMjvFTEPPcQp38Fjsehl9NhcTeRE1KUacYrcbK87/quBwATA
-         dJcZtwN7PQubYEPQVQ+ORVj1XUvrm2G/YmKnp7mgNYUm4dGDy9pkw9N4GU1EzXblpR9J
-         s/+Q==
-X-Gm-Message-State: AOJu0YyayFFQ3DQ1lCh6aI0bx3bp6UZ3ikQFRu+BL6jV9JL0sfLx6HL7
-	l/NoZxKXqnhqrHlCRhJrNIWR0o0Mqv8MHVv8QUDq8SRiAFjulldDdg7KvrlBoPTJPPoSddSzSpe
-	55SJxVcDRY1VQ6FcgR7uZiM8wrQHh0KwFuvvq33JcAZlMlYbXanMK6nnF3cgqd+8WEBzd
-X-Gm-Gg: ASbGncuQDw0IsM+T+FR4us6S8PIz/gk/iKOFy7AfaxRArkv13rS6Q6zqLtgDuDfRGaB
-	HKygMMOobsDdUNhIUPUnjXuWgFdCRExwh9oIMdTXXl1DDeJmTY9ho2PXN0l1M4tx8gJEvk0gxHU
-	c5QDMrEzhOmrYvJY87u8nxSr+Z7K2g0WbvOdTSllL3cjKBz0sMRKRX4/0dBKguPojJT85vCDBy0
-	AoFDKc+jGMTczEGIxqyXhKHpBvfpd+t8aBU8yXkpAj4toFauwlr5XBz329jKcpXdeBoptsAG5cL
-	zjbDbdZ1tkvnCvpukEvCo5BVwbO+TKAsd/4Ve+Nwjt20EidY8VEyDtdzYDfQX1FXSgn0ODdyKLY
-	wV5vhxtrH0l/jpu1YEyY9bjjaYCkaQ6vPaLPs0n37CGYPxQyUBM50
-X-Received: by 2002:a05:6214:2469:b0:72c:cc04:c3a4 with SMTP id 6a1803df08f44-72ccc04c455mr9697076d6.8.1757032737082;
-        Thu, 04 Sep 2025 17:38:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGggptVB7yJzNpKmjyKL+r1E5aqNrdPD/lf2zm9l0aUlD3mzu8IDaTE/VSOjY55ioVtIEDZgQ==
-X-Received: by 2002:a05:6214:2469:b0:72c:cc04:c3a4 with SMTP id 6a1803df08f44-72ccc04c455mr9696816d6.8.1757032736562;
-        Thu, 04 Sep 2025 17:38:56 -0700 (PDT)
+        bh=bLiIOtcLE7wWiaqufYm5bdrdybL14BNM8N/yFfbsTSY=;
+        b=OndfpV1sqH/2JYDvTe842SOOgTY10quX3tiu7M301UUyjy5bjxRiQad/HpTJ9mAYsL
+         0prWw0mnxE5oW36yT8y7B2tuT+yrCElMf72Ssp71C/i5/vWW2F6hzbgkfZ9CWyXy1J1s
+         A5qkBZVTczjHVuYiE00Zk9ZPl9PQOmbKlPrq99/Uze+XMqlZVjblQvQ0VwxsKV584xO7
+         +AnKQjbG4tJn8NIawpYVp79rwf2edHNCn73anGzsS46MFnayUKaU6pUadoHgZTu8Qk58
+         lhbVKUh/KY4OGX9H/MIFSyPAJi+RfcQbdvOOTF8r9E0WqgLjx83O5Iz2FM7Cq2Jnthzb
+         UUBQ==
+X-Gm-Message-State: AOJu0YyRwEX8su7lmCVH8NjznHfLgiVdehMxyn8KAzmABLTa29Y//NIz
+	IxSm0I+hRNhcx6jthBj1yJsdzQfGyeNZz9UMrNRMQAaqdmHynqUe5y4ON1skLf3HcJqaYSalXZ+
+	8u3KLf73As5G38STwWkQ5kdKJJ95sqEw5bo9a8cEO/0678oFICVpQoEmJM+TZ1KXKZswp
+X-Gm-Gg: ASbGncthYJj9BJINYLbLzjiMhOpmkcmcGggBE9aG/i/YApPudWVNTXlSibG1+XQwUpi
+	nwK/u7GSNU8zaEBs8lGlXGRnFcZQTvallGtIJKy+na8iq6Da/f56HQF0usJa+s53k+8aMvrpzXW
+	cwzmBbq73tYfkh/1wxGjmlme2i+QqBLGgKB3h66V/mUEuinCgBPtsP3/75ly4Q9fbiOmn4CEJaA
+	NkOv42vWCE3SE5hspFCu6bC3b68uxjvtgyMGiWZHPG7kikIRoOcU2tr5F7efiKhZu9HS0+Yy0LT
+	5QdGpJWDT79KgzCfVpIi+12y0B9JNRaeTW29patowwy7AqrVozFPpkJbzn6yog6v6+wUqYx1jDb
+	z/Bs2N1BbQCWWCFv6qLlWu9A0hL1I97XgtRHBlmFQgUPhGz3nFdxs
+X-Received: by 2002:a05:622a:551:b0:4b3:61b:58f4 with SMTP id d75a77b69052e-4b5e18395b0mr40913371cf.53.1757032739643;
+        Thu, 04 Sep 2025 17:38:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEP0nB2Vt3LMYDBx118zsJ4giTEWN/hLJl0xD4HXyg7zzaWIFQByUuhZsTTOJxoycKJ8OS8WA==
+X-Received: by 2002:a05:622a:551:b0:4b3:61b:58f4 with SMTP id d75a77b69052e-4b5e18395b0mr40913091cf.53.1757032739088;
+        Thu, 04 Sep 2025 17:38:59 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608acfd938sm1510059e87.109.2025.09.04.17.38.55
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608acfd938sm1510059e87.109.2025.09.04.17.38.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 04 Sep 2025 17:38:55 -0700 (PDT)
+        Thu, 04 Sep 2025 17:38:58 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 05 Sep 2025 03:38:36 +0300
-Subject: [PATCH v2 07/12] drm/msm/disp: pull in common tiled YUV format
- parameters
+Date: Fri, 05 Sep 2025 03:38:37 +0300
+Subject: [PATCH v2 08/12] drm/msm/disp: drop PSEUDO_YUV_FMT_LOOSE_TILED
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -92,7 +91,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250905-dpu-formats-v2-7-7a674028c048@oss.qualcomm.com>
+Message-Id: <20250905-dpu-formats-v2-8-7a674028c048@oss.qualcomm.com>
 References: <20250905-dpu-formats-v2-0-7a674028c048@oss.qualcomm.com>
 In-Reply-To: <20250905-dpu-formats-v2-0-7a674028c048@oss.qualcomm.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>,
@@ -106,107 +105,79 @@ To: Rob Clark <robin.clark@oss.qualcomm.com>,
 Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3220;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2270;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=T764qGaUs1J9VFKtvepXHsiXpOOMX042xzB4mztK948=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoujEKmhozhM/+m0ojp5V0LfFbrvFkofA6W7eN2
- zog3jTw8leJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaLoxCgAKCRCLPIo+Aiko
- 1WBWCACkbqlPExGRCdiT0UZihOTCLMIN0u56fVd4JKEr4W83H1+sgCf0pawMxOGZCTHPFT5hvxM
- FujC3WWVbcsz1hnM2oRWtPtya6sCIPWKRskqGvJDUsGEa9mW4SP23z9y2AXAk5CgHNcFH9lu7g0
- IeaSCENfkEevQlYsG+m++UAQF+YBbwAI9gEmh2lcqlJG6LFBrkZQz6wPG4Ew9gynLcX5Gl7iSGg
- fQVzC2kJNG94q4D0gQV3mwBX1eqbvgxkfiqY9Ww+ao6uTJBM1ZBucWHIsfj/Ad3oe0m9FbpDFYD
- YIQo8lZLTi8QTq24/iy09Ml0oFMwtxweD1VrgixjGOcT8icP
+ bh=XLkwtyygZJdPj3GjkZgZ1aANtwazJqGOIEmkYbUxRwQ=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoujEK71uU2bZ8JQXFBGN1IDBH5OYQyC9Xm8v8v
+ tnUi8qYOuOJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaLoxCgAKCRCLPIo+Aiko
+ 1b2yB/wKB4v8Bk2zFkuQDoVspBPY3bca3px+IzVDe5SyzF0FfBVY/9ca/uty+7qgAX9i8dVh8NV
+ LdCBJWXW7Wfb6sEB9hw323dwH4NlMLa8gY1KW5GQiOVPehuK5Pwc8yCxUOs+oG1gD9zkpY3crTj
+ HvtY8KdCmsZZcOKPOGb5b1apoatF0mT/b3xWXFicKF/NQ7Tb80KTtgvQsZkQTzvDn0gbyk7bzLD
+ gWxUFA9aIalzlrIfuxodQxpj5zPC/dCyc9LKMSgC8Zm+tco4YF6FhId2X3J1vDIKPmNfidpAC7J
+ /RBiA+aOsGY62ro7QEhoCaSHJla3hJbN+kFDytWN6VvHG/SP
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTAzMDExNyBTYWx0ZWRfXzA6BdLPG3nTx
- d/mpDIOpqZs3mExOuE+Yp81ijStcEPM1nVmLemmDWq8hP4RlmPpzFO/Inl38G4vhM6vkAMOqPb7
- WJeSyl4ZWnnklt05NRSbjpRBvNcoiEKutOEVW/GVoK7Pemvb2ZRxrYzYGQHP4LU1ixbLnGYAszx
- Z760VPgA7e5Wyi3cb08c2XQ9K5Z+xHBu6zjV938k46PeaeE5hICqwyW7pXIk1AO1LQoGsLTc88e
- HpEJMYqwdTRtKaX0/A7i/32V5ywYlY/J8CLSYFQ5E2VmD0UIYo5VfDelCd97HcxQ563fJJ0Hgo8
- Pw5RHBPSDEPTu38OU7q5tMzmQgrmQbzZ5uNv7fQ1xeWK2cnDy2rrewFDrdHVyfoz43tWZ0bMbgh
- EDChCWD8
-X-Authority-Analysis: v=2.4 cv=a5cw9VSF c=1 sm=1 tr=0 ts=68ba3122 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=FCw1dLDEiFPyt24oSuoA:9 a=QEXdDO2ut3YA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-GUID: kLB3I9rvwoBAK7-D7rSXfMX6vJ99Xvgc
-X-Proofpoint-ORIG-GUID: kLB3I9rvwoBAK7-D7rSXfMX6vJ99Xvgc
+X-Proofpoint-GUID: heSS_5Yodo9jUqDOQlh7e_Qz5f6bLpu5
+X-Proofpoint-ORIG-GUID: heSS_5Yodo9jUqDOQlh7e_Qz5f6bLpu5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX0wuqV37l/FQT
+ eJdYM8bYYvwBjBBXjACpXhXzFQt6+QESYH+NQq5i64D7D+Ua4nTjWTQelpxmFc28mwK5JzQCmmd
+ PA4uSNNRVQYGGEsIn0udm7dqXMyrdvSL/5uRjAwFJAowM46xofFrJieDgB5q8UX+NNZdZkXRh6E
+ 6ayoxtqLytXPe9Dq4AS5+FKWTdAitZ2r/rL7aZTgjSLPGQgvPf5hSJXP3iQdRzwe7kI2GUViqSW
+ w4vZUrJAYKD8ISdyVA5iyIdc40FduaHXavCxQYfbd53W2ay+zubSba9HEg8RaBbn96v9oF+i+qg
+ yOkvDAuuhp1K8b4BWKUOWfcfZ1rmRKzf/ChgEv/WlyNQKeg6ElHY0UlcRccYMSlMdf6wy0gyllE
+ peXaxx4G
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68ba3124 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=iz29p33r4uX7jxN-whAA:9 a=QEXdDO2ut3YA:10
+ a=kacYvNCVWA4VmyqE58fU:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-04_08,2025-09-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 clxscore=1015 bulkscore=0 priorityscore=1501
- phishscore=0 impostorscore=0 adultscore=0 spamscore=0 classifier=typeunknown
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509030117
+ engine=8.19.0-2507300000 definitions=main-2508300027
 
-Pull common params of tiled YUV formats into corresponding macro
-definitions, simplifying format table.
+Drop PSEUDO_YUV_FMT_LOOSE_TILED(), the macro is unused.
 
+Reviewed-by: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/disp/mdp_format.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp_format.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
 diff --git a/drivers/gpu/drm/msm/disp/mdp_format.c b/drivers/gpu/drm/msm/disp/mdp_format.c
-index 900b2de252a6eb2eac3d0670f1aaa77f7520fd77..79f7f973dbf348acf2c06e66afedeb8f22e7a8ca 100644
+index 79f7f973dbf348acf2c06e66afedeb8f22e7a8ca..35c443f006bbbde446cfcc0862c49d06a8e10bb4 100644
 --- a/drivers/gpu/drm/msm/disp/mdp_format.c
 +++ b/drivers/gpu/drm/msm/disp/mdp_format.c
-@@ -284,8 +284,7 @@ static struct csc_cfg csc_convert[CSC_MAX] = {
+@@ -325,26 +325,6 @@ static struct csc_cfg csc_convert[CSC_MAX] = {
  	.tile_height = MDP_TILE_HEIGHT_DEFAULT                            \
  }
  
--#define PSEUDO_YUV_FMT_TILED(fmt, a, r, g, b, e0, e1, chroma,             \
+-#define PSEUDO_YUV_FMT_LOOSE_TILED(fmt, a, r, g, b, e0, e1, chroma,       \
 -flg, fm, np, th)                                                          \
-+#define PSEUDO_YUV_FMT_TILED(fmt, r, g, b, e0, e1, chroma, flg, th)       \
+-{                                                                         \
+-	.pixel_format = DRM_FORMAT_ ## fmt,                               \
+-	.fetch_type = MDP_PLANE_PSEUDO_PLANAR,                            \
+-	.alpha_enable = 0,                                                \
+-	.element = { (e0), (e1), 0, 0 },                                  \
+-	.bpc_g_y = g,                                                     \
+-	.bpc_b_cb = b,                                                    \
+-	.bpc_r_cr = r,                                                    \
+-	.bpc_a = a,                                                       \
+-	.chroma_sample = chroma,                                          \
+-	.unpack_count = 2,                                                \
+-	.bpp = 2,                                                         \
+-	.fetch_mode = fm,                                                 \
+-	.flags = MSM_FORMAT_FLAG_UNPACK_ALIGN_MSB | flg,                  \
+-	.num_planes = np,                                                 \
+-	.tile_height = th                                                 \
+-}
+-
+ #define PLANAR_YUV_FMT(fmt, bp, r, g, b, e0, e1, e2, chroma)              \
  {                                                                         \
  	.pixel_format = DRM_FORMAT_ ## fmt,                               \
- 	.fetch_type = MDP_PLANE_PSEUDO_PLANAR,                            \
-@@ -294,13 +293,14 @@ flg, fm, np, th)                                                          \
- 	.bpc_g_y = g,                                                     \
- 	.bpc_b_cb = b,                                                    \
- 	.bpc_r_cr = r,                                                    \
--	.bpc_a = a,                                                       \
-+	.bpc_a = 0,                                                       \
- 	.chroma_sample = chroma,                                          \
- 	.unpack_count = 2,                                                \
- 	.bpp = 2,                                                         \
--	.fetch_mode = fm,                                                 \
--	.flags = MSM_FORMAT_FLAG_UNPACK_TIGHT | flg,                      \
--	.num_planes = np,                                                 \
-+	.fetch_mode = MDP_FETCH_UBWC,                                     \
-+	.flags = MSM_FORMAT_FLAG_UNPACK_TIGHT |                           \
-+		 MSM_FORMAT_FLAG_COMPRESSED | flg,                        \
-+	.num_planes = 4,                                                  \
- 	.tile_height = th                                                 \
- }
- 
-@@ -623,19 +623,16 @@ static const struct msm_format mdp_formats_ubwc[] = {
- 		C2_R_Cr, C0_G_Y, C1_B_Cb, C3_ALPHA),
- 
- 	PSEUDO_YUV_FMT_TILED(NV12,
--		0, BPC8, BPC8, BPC8,
-+		BPC8, BPC8, BPC8,
- 		C1_B_Cb, C2_R_Cr,
--		CHROMA_420, MSM_FORMAT_FLAG_YUV |
--				MSM_FORMAT_FLAG_COMPRESSED,
--		MDP_FETCH_UBWC, 4, MDP_TILE_HEIGHT_NV12),
-+		CHROMA_420, 0,
-+		MDP_TILE_HEIGHT_NV12),
- 
- 	PSEUDO_YUV_FMT_TILED(P010,
--		0, BPC8, BPC8, BPC8,
-+		BPC8, BPC8, BPC8,
- 		C1_B_Cb, C2_R_Cr,
--		CHROMA_420, MSM_FORMAT_FLAG_DX |
--				MSM_FORMAT_FLAG_YUV |
--				MSM_FORMAT_FLAG_COMPRESSED,
--		MDP_FETCH_UBWC, 4, MDP_TILE_HEIGHT_UBWC),
-+		CHROMA_420, MSM_FORMAT_FLAG_DX,
-+		MDP_TILE_HEIGHT_UBWC),
- };
- 
- const struct msm_format *mdp_get_format(struct msm_kms *kms, uint32_t format,
 
 -- 
 2.47.2
