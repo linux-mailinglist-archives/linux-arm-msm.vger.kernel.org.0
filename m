@@ -1,203 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-72382-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DEA5B466C7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 00:44:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5078B466F6
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 01:02:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 0282F4E1E1A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 22:44:42 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69B3E5A2DFB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 23:02:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4052F29D277;
-	Fri,  5 Sep 2025 22:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 783BF29D29D;
+	Fri,  5 Sep 2025 23:02:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="j91+qH+F"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gJR8Peuy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084C5225761;
-	Fri,  5 Sep 2025 22:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B6527CB04;
+	Fri,  5 Sep 2025 23:02:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757112274; cv=none; b=ic/157qgV2IVJ72Ge5bv44WVTpAmtQgjvsdx4VfJ/Ca6uEhd6+I1OaN8yt3xsITb0/H2tRsBrGm8j3iVD8P6l2oCDt8EnnoGgVsP3lLakPOG0dxtXYTNPItpINm/9cbXxYHXqGmGEkr9yOnKMNa0eEvgc46rbTTJQJ4hN/hJJFo=
+	t=1757113330; cv=none; b=NXpGzVTo03OQLBQcldKTRq+hrymUwURxlYzzDErNNRAkvr8Efx2TYs2Id50T4e0vX37j9jQNu1/J19pPVmHYLkiYv56kjehx8QKj20pdSNNFHAcLIAQa9bebvK6oUo30pMmZJ7nXrFyBVGjf+LkZaJP3um/O26dziLklAC1Zn6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757112274; c=relaxed/simple;
-	bh=ecdRr8yDz4LhdbWsw8D/b4SVpMQdJT71OK6gvoVHdrE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=JGzBmzYiw1z7U7Gvmc2vkXfPWYO3Nq6iL+e1g2GQBiSNPC5yB1eQZpAG28rKV4mctZ/wVhZupj4C04g5TfHT07gTybvEbJuEfo+7QSTO11iMFE+Hs6NTNhqwPZlwuACW78YJxEjl2OUoVmHe2q9Ba4WyMh0o1XkTruPLzTpjq/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=j91+qH+F; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 479A1C4CEF1;
-	Fri,  5 Sep 2025 22:44:32 +0000 (UTC)
+	s=arc-20240116; t=1757113330; c=relaxed/simple;
+	bh=A+4/RdKySax+tzp4GDPn4PRAlrr/cIuU7Wohf04Emrs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NfTO/eTsZcUbsnG/I53y9cFlhIaD4zfZs5vMZFxar1gtjx3oYmhoVaCLnQjSUHLDuZpHivIQBGO5W8MwDYJcHh17CndMgMUE1Tbl1LALpjVPDnL6WmJlzjhTa6pjc1MQ9AwD8pEP0b763HfDd3TyVJk5TIREua9FSVsrF+SS2TI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gJR8Peuy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E75C4CEF1;
+	Fri,  5 Sep 2025 23:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757112272;
-	bh=ecdRr8yDz4LhdbWsw8D/b4SVpMQdJT71OK6gvoVHdrE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=j91+qH+F+7zrhgPA7QmOREMjCCY9jtWORQ1GQgSLE3gNhaZ3EpcULfXyQskbKzPq7
-	 Bc79AGYEReaJ5iPsPpaUTcUE6bkoJnidMz/2KoE1upgmW73yrZpisxEtFHnGd5Mtq+
-	 O5cVz/EZOipDCa0Bt+O1SdlU8+6aeMbTxyALo7LZDo5dperTV9qRvAqc5041zQXgxI
-	 X9+xyXQgUyyfWGPNocJQp/IxBpzyq+8d3H+zzmP6dyR4lDh+C8KlMxxaWHdDXhA+et
-	 KxhhVX5wGOk/qLJhXRNS4y3Y5RPF4tO67RFV/RuIh+V5M8lKmJPfsxHJ/KY8+8G8OT
-	 nCzrZrxp/DyhQ==
-Date: Fri, 5 Sep 2025 17:44:30 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Brian Norris <briannorris@chromium.org>,
-	stable+noautosel@kernel.org
-Subject: Re: [PATCH v2 1/5] PCI: qcom: Wait for PCIE_RESET_CONFIG_WAIT_MS
- after PERST# deassert
-Message-ID: <20250905224430.GA1325412@bhelgaas>
+	s=k20201202; t=1757113329;
+	bh=A+4/RdKySax+tzp4GDPn4PRAlrr/cIuU7Wohf04Emrs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gJR8Peuy40MtGwzANFz9PbLYWO6HTL+KwUXl8BCSi3g9DFIXW1L3UKNH1X+545mdM
+	 DP18sjIqbsM+dpCD7qMLBv2lsN1pwS7Xr/aMDqEGbEM6zrWV+fedBKT1WlBcE/Tq0u
+	 14NyYaGYukxn9wgLr7ImvCh8+xLcOBn+WIhQjg0JpENWRqzEOaxb2lhwNWB2WgSU9X
+	 6L+Nm8e65pDvfx3wXoDhOjGp0KodUbF9kV9y+RPjs8lTVA8e6SN3r4yQoON+DeBqpT
+	 Wsc4tjSK5EMpUwxbzyS/TLQ+RMqybcObpGQECFOpyVU/v4+KbjMmMBpnosefcpaF8f
+	 PP4fAYdYBqsxg==
+Date: Fri, 5 Sep 2025 18:02:09 -0500
+From: Rob Herring <robh@kernel.org>
+To: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Hans de Goede <hansg@kernel.org>, Lee Jones <lee@kernel.org>,
+	Pavel Machek <pavel@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Daniel Thompson <danielt@kernel.org>,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
+	Jacopo Mondi <jacopo@jmondi.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, linux-leds@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Daniel Thompson <daniel.thompson@linaro.org>,
+	dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: leds: commonize leds property
+Message-ID: <20250905230209.GA1423697-robh@kernel.org>
+References: <20250905-leds-v2-0-ed8f66f56da8@vinarskis.com>
+ <20250905-leds-v2-2-ed8f66f56da8@vinarskis.com>
+ <20250905152404.GB953718-robh@kernel.org>
+ <Lm6PLaup84KHzhxYTbsrQIbEeQpc6dj65aLkLFvOx7QwvuXS9ON53Csa2v6LBp4hd9iIQilvGhXqx4kXv4cfqgYUeA49vrVdWJw-fNMLu2Y=@vinarskis.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250903-pci-pwrctrl-perst-v2-1-2d461ed0e061@oss.qualcomm.com>
+In-Reply-To: <Lm6PLaup84KHzhxYTbsrQIbEeQpc6dj65aLkLFvOx7QwvuXS9ON53Csa2v6LBp4hd9iIQilvGhXqx4kXv4cfqgYUeA49vrVdWJw-fNMLu2Y=@vinarskis.com>
 
-On Wed, Sep 03, 2025 at 12:43:23PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> PCIe spec r6.0, sec 6.6.1 mandates waiting for 100ms before deasserting
-> PERST# if the downstream port does not support Link speeds greater than
-> 5.0 GT/s.
-
-I guess you mean we need to wait 100ms *after* deasserting PERST#?
-
-I.e., this wait before sending config requests to a downstream device:
-
-  ◦ With a Downstream Port that does not support Link speeds greater
-    than 5.0 GT/s, software must wait a minimum of 100 ms following
-    exit from a Conventional Reset before sending a Configuration
-    Request to the device immediately below that Port.
-
-> But in practice, this delay seem to be required irrespective of
-> the supported link speed as it gives the endpoints enough time to
-> initialize.
-
-Saying "but in practice ... seems to be required" suggests that the
-spec requirement isn't actually enough.  But the spec does say the
-100ms delay before config requests is required for all link speeds.
-The difference is when we start that timer: for 5 GT/s or slower it
-starts at exit from Conventional Reset; for faster than 5 GT/s it
-starts when link training completes.
-
-> Hence, add the delay by reusing the PCIE_RESET_CONFIG_WAIT_MS definition if
-> the linkup_irq is not supported. If the linkup_irq is supported, the driver
-> already waits for 100ms in the IRQ handler post link up.
-
-I didn't look into this, but I wondered whether it's possible to miss
-the interrupt, especially the first time during probe.
-
-> Also, remove the redundant comment for PCIE_T_PVPERL_MS. Finally, the
-> PERST_DELAY_US sleep can be moved to PERST# assert where it should be.
-
-Unless this PERST_DELAY_US move is logically part of the
-PCIE_RESET_CONFIG_WAIT_MS change, putting it in a separate patch would
-make *this* patch easier to read.
-
-> Cc: stable+noautosel@kernel.org # non-trivial dependency
-> Fixes: 82a823833f4e ("PCI: qcom: Add Qualcomm PCIe controller driver")
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+On Fri, Sep 05, 2025 at 04:48:52PM +0000, Aleksandrs Vinarskis wrote:
+> On Friday, September 5th, 2025 at 17:24, Rob Herring <robh@kernel.org> wrote:
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 294babe1816e4d0c2b2343fe22d89af72afcd6cd..bcd080315d70e64eafdefd852740fe07df3dbe75 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -302,20 +302,22 @@ static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
->  	else
->  		list_for_each_entry(port, &pcie->ports, list)
->  			gpiod_set_value_cansleep(port->reset, val);
-> -
-> -	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
->  }
->  
->  static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
->  {
->  	qcom_perst_assert(pcie, true);
-> +	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
->  }
->  
->  static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
->  {
-> -	/* Ensure that PERST has been asserted for at least 100 ms */
-> +	struct dw_pcie_rp *pp = &pcie->pci->pp;
-> +
->  	msleep(PCIE_T_PVPERL_MS);
->  	qcom_perst_assert(pcie, false);
-> +	if (!pp->use_linkup_irq)
-> +		msleep(PCIE_RESET_CONFIG_WAIT_MS);
+> > 
+> > 
+> > On Fri, Sep 05, 2025 at 09:59:30AM +0200, Aleksandrs Vinarskis wrote:
+> > 
+> > > A number of existing schemas use 'leds' property to provide
+> > > phandle-array of LED(s) to the consumer. Additionally, with the
+> > > upcoming privacy-led support in device-tree, v4l2 subnode could be a
+> > > LED consumer, meaning that all camera sensors should support 'leds'
+> > > and 'led-names' property via common 'video-interface-devices.yaml'.
+> > > 
+> > > To avoid dublication, commonize 'leds' property from existing schemas
+> > > to newly introduced 'led-consumer.yaml'.
+> > > 
+> > > Signed-off-by: Aleksandrs Vinarskis alex@vinarskis.com
+> > > ---
+> > > .../devicetree/bindings/leds/backlight/led-backlight.yaml | 7 +------
+> > > Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml | 6 +-----
+> > > .../devicetree/bindings/media/video-interface-devices.yaml | 3 +++
+> > > 3 files changed, 5 insertions(+), 11 deletions(-)
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
+> > > index f5554da6bc6c73e94c4a2c32b150b28351b25f16..5e19b4376715eeb05cb789255db209ed27f8822f 100644
+> > > --- a/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
+> > > +++ b/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
+> > > @@ -18,17 +18,12 @@ description:
+> > > 
+> > > allOf:
+> > > - $ref: common.yaml#
+> > > + - $ref: /schemas/leds/leds-consumer.yaml#
+> > 
+> > 
+> > Drop.
+> > 
+> > > properties:
+> > > compatible:
+> > > const: led-backlight
+> > > 
+> > > - leds:
+> > > - description: A list of LED nodes
+> > > - $ref: /schemas/types.yaml#/definitions/phandle-array
+> > > - items:
+> > > - maxItems: 1
+> > 
+> > 
+> > You need to keep the property here:
+> > 
+> > leds: true
+> > 
+> > > -
+> > > required:
+> > > - compatible
+> > > - leds
+> > > diff --git a/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
+> > > index 8ed059a5a724f68389a1d0c4396c85b9ccb2d9af..b4f326e8822a3bf452b22f5b9fa7189696f760a4 100644
+> > > --- a/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
+> > > +++ b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
+> > > @@ -17,16 +17,12 @@ properties:
+> > > compatible:
+> > > const: leds-group-multicolor
+> > > 
+> > > - leds:
+> > > - description:
+> > > - An aray of monochromatic leds
+> > > - $ref: /schemas/types.yaml#/definitions/phandle-array
+> > > -
+> > > required:
+> > > - leds
+> > > 
+> > > allOf:
+> > > - $ref: leds-class-multicolor.yaml#
+> > > + - $ref: /schemas/leds/leds-consumer.yaml#
+> > 
+> > 
+> > 
+> > Same comments in this one.
+> > 
+> > > unevaluatedProperties: false
+> > > 
+> > > diff --git a/Documentation/devicetree/bindings/media/video-interface-devices.yaml b/Documentation/devicetree/bindings/media/video-interface-devices.yaml
+> > > index cf7712ad297c01c946fa4dfdaf9a21646e125099..1e25cea0ff71da2cfd1c7c4642713199f3542c0a 100644
+> > > --- a/Documentation/devicetree/bindings/media/video-interface-devices.yaml
+> > > +++ b/Documentation/devicetree/bindings/media/video-interface-devices.yaml
+> > > @@ -10,6 +10,9 @@ maintainers:
+> > > - Jacopo Mondi jacopo@jmondi.org
+> > > - Sakari Ailus sakari.ailus@linux.intel.com
+> > > 
+> > > +allOf:
+> > > + - $ref: /schemas/leds/leds-consumer.yaml#
+> > 
+> > 
+> > This can be dropped. The user still has to define how many entries and
+> > what the values of led-names are.
+> 
+> Hmm, but where should it be added then? If I just drop it, MIPI 
+> camera schemas which are based on 'video-interface-devices.yaml' and 
+> have 'unevaluatedProperties: false' throw warnings because 'leds' was 
+> not expected. Including the example in 'led-consumer.yaml' as found 
+> by your bot (because of patch order your bot only run on 1/4, adding 
+> this very change fixes it).
 
-I'm a little confused about why you test pp->use_linkup_irq here
-instead of testing the max supported link speed.  And I'm not positive
-that this is the right place, at least at this point in the series.
+> In this case, v4l2 subnode is the LED user, which is some camera. It 
+> seems most/all of these cameras are based on this binding, so instead 
+> of adding new led related properties to all of them, I thought this 
+> is a good common place for it... Shall I add #entries and available 
+> options for 'led-names' here to make it complete?
 
-At this point, qcom_ep_reset_deassert() is only used by
-qcom_pcie_host_init(), so the flow is like this:
+Every camera doesn't have the same LEDs, so you have to define exactly 
+what's there for each one. If you want to do it in 
+video-interface-devices.yanl, then you are standardizing it for 
+everyone. Maybe that's fine? If so, you need something like:
 
-  qcom_pcie_probe
-    irq = platform_get_irq_byname_optional(pdev, "global")
-    if (irq > 0)
-      pp->use_linkup_irq = true
-    dw_pcie_host_init
-      pp->ops->init
-        qcom_pcie_host_init                         # .init
-          qcom_ep_reset_deassert                    # <--
- +          if (!pp->use_linkup_irq)
- +            msleep(PCIE_RESET_CONFIG_WAIT_MS)     # 100ms
-      if (!dw_pcie_link_up(pci))
-        dw_pcie_start_link
-      if (!pp->use_linkup_irq)
-        dw_pcie_wait_for_link
-          for (retries = 0; retries < PCIE_LINK_WAIT_MAX_RETRIES; retries++)
-            if (dw_pcie_link_up(pci))
-              break
-            msleep(PCIE_LINK_WAIT_SLEEP_MS)         # 90ms
-          if (pci->max_link_speed > 2)              # > 5.0 GT/s
-            msleep(PCIE_RESET_CONFIG_WAIT_MS)       # 100ms
+leds:
+  minItems: 1
+  maxItems: 2
 
-For slow links (<= 5 GT/s), it's possible that the link comes up
-before we even call dw_pcie_link_up() the first time, which would mean
-we really don't wait at all.
+led-names:
+  items:
+    enum:
+      - flash
+      - privacy
 
-My guess is that most links wouldn't come up that fast but *would*
-come up within 90ms.  Even in that case, we wouldn't quite meet the
-spec 100ms requirement.
-
-I wonder if dw_pcie_wait_for_link() should look more like this:
-
-  dw_pcie_wait_for_link
-    if (pci->max_link_speed <= 2)                   # <= 5.0 GT/s
-      msleep(PCIE_RESET_CONFIG_WAIT_MS)             # 100ms
-
-    for (retries = 0; retries < PCIE_LINK_WAIT_MAX_RETRIES; retries++)
-      if (dw_pcie_link_up(pci))
-        break;
-      msleep(...)
-
-    if (pci->max_link_speed > 2)                    # > 5.0 GT/s
-      msleep(PCIE_RESET_CONFIG_WAIT_MS)             # 100ms
-
-Then we'd definitely wait the required 100ms even for the slow links.
-The retry loop could start with a much shorter interval and back off.
-
-I wish the max_link_speed checks used some kind of #define to make
-them readable.
-
-Bjorn
+Rob
 
