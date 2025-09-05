@@ -1,237 +1,194 @@
-Return-Path: <linux-arm-msm+bounces-72231-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98309B452E7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 11:19:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2D43B452E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 11:19:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 83D6FA65839
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:17:31 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A037A653B1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:17:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 053EC313521;
-	Fri,  5 Sep 2025 09:13:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 834DD30FF1C;
+	Fri,  5 Sep 2025 09:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="qIrU7gYy"
+	dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b="kvMnUfE4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f74.google.com (mail-wr1-f74.google.com [209.85.221.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from OS8PR02CU002.outbound.protection.outlook.com (mail-japanwestazon11012058.outbound.protection.outlook.com [40.107.75.58])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 748C430F946
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 09:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.74
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757063618; cv=none; b=dMxTZQ/G7cXEIXpoLnZd4dZyrXagFoah5N3KOGIT8B8/T4rEJl+l+COlBArxTCOE86kFlfMwV91Xz99jTATC1lTwkbwx33iVggBr7keVaHQiNmItjbYq7TqyVg507Cems6nutsgzlthu+w+J+Ge7KcFBfLBJwrF9NMMSGVDjphU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757063618; c=relaxed/simple;
-	bh=WzkaNV8OtrI5d68Jyxcv4C4JfQgfogIX2PIoGse17I0=;
-	h=Date:In-Reply-To:Mime-Version:References:Message-ID:Subject:From:
-	 To:Cc:Content-Type; b=BQFLedVLMQzBuDTXY+h2S2wI5laXsx7RKQ1xq7vEK4uzQ6hLgyVw8J8PMRi9ehk9pgAXkLVJgYnxFDwkGPGpzNWdDwHEouQGCFZRKMjb2cOMJpmZcJZQjgu1fDOReUEqT/E/LD0fuUuzg9SxeD2svAkPTj9saGbdckTGmO6CLuE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=qIrU7gYy; arc=none smtp.client-ip=209.85.221.74
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flex--verhaegen.bounces.google.com
-Received: by mail-wr1-f74.google.com with SMTP id ffacd0b85a97d-3df19a545c2so1216551f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 02:13:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1757063615; x=1757668415; darn=vger.kernel.org;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qe+QtpliqDAu4G9UaaRGSX2jMJxjWrnOYF63McD9Po4=;
-        b=qIrU7gYyNNJ3tpKRwGAJeqkQYbwA+bY9+PXet7mxAAiBImV5JJc7PNm1KCD9Npzlzp
-         d1hdxvqacJfeOyi4uS9QWoLChUAfWjBMa6vCNaP7Cr5wltKEThb5FnJUNNB71cNbC4Od
-         WeLzBkSeyHcdrMz7B1+tmXluhL/R3ijrx/Pm099qQ8QOzt68CpzVjqyZCg9rwuKN/9Tk
-         kTuYpqxJ7xn2twPH/ioE2Tvlqp96oeeDejWIjLExJnLPiLBRLlK8lhWPhF5AKdTzwH0j
-         ezK8lJR3l6+UhfsdI2aynuDLVlfSH28YqNSripattjfHPzzXd2DWwy/jxqM9B7U1kfMa
-         9MUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757063615; x=1757668415;
-        h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qe+QtpliqDAu4G9UaaRGSX2jMJxjWrnOYF63McD9Po4=;
-        b=xD6T9RumfW/qAfY2qcU6xuqPRz3KohfR+1PP/fXfKQ87f4Y67AmAPunQGdEcxYt4Z1
-         4R1I7SDujXDCkZTnUWvcJlX8mkl6jjFpWuGiK0hHdUtMpCKp3iqd265fjX/2F9XIq9Tw
-         UpfDaQOiWfL4AIQURRO7v8LGNH9xDiD/d3OYRFXYjEgF8N7D6IA9Piutl/zr+2Z56o+T
-         YpcUmiw0EH2NEPYzVQHXrk54ydMcdsu3fSonppizL6voCyjZ+44sUcaxIqh9xDE3APuP
-         ppaTv+ElVNZkGXGZS1msBEkKARgeG8wS0GtIp0BPiSpSIxGgAWiv8s7xJo+1ujqpaWIa
-         o+Zw==
-X-Forwarded-Encrypted: i=1; AJvYcCXMnxJPIjYe8jpZQBxdDa3+Tm9KKgmTE1Q9W8bgbD0uyu6ufdQXG/G8GOt/lCJT2OzgiF9IfURAq3Zp0415@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHGnbUMmkomzgtJmYTIPHui+TZJL62ZHeruoE+ZZPPeE6H0dev
-	g7deN6BJc64C5luYrIxOlXX9A3sXTM7CtAfNsw2vZLKZw5KvjYeP4g+T3iPuSxJFTn43F7WZhfi
-	qEXpAS11yjjV3Rsp7OA==
-X-Google-Smtp-Source: AGHT+IH6GdtZv6WB+m8+2uS3LHU1bwHgtnfflqQnjRCwjq5u4fTUKo/2dMs3/H7tVXLO84nhyhg5xInyYI4bI6o=
-X-Received: from wmbhg18.prod.google.com ([2002:a05:600c:5392:b0:45d:cfd2:c531])
- (user=verhaegen job=prod-delivery.src-stubby-dispatcher) by
- 2002:adf:a3da:0:b0:3d2:2989:224 with SMTP id ffacd0b85a97d-3d229892c7dmr11529562f8f.7.1757063614797;
- Fri, 05 Sep 2025 02:13:34 -0700 (PDT)
-Date: Fri,  5 Sep 2025 10:12:56 +0100
-In-Reply-To: <20250905091301.2711705-1-verhaegen@google.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DE430F541;
+	Fri,  5 Sep 2025 09:13:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.75.58
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757063617; cv=fail; b=WQ/8KjZSKzf+wLO/kJh7JDj81STRC9qc+VhKBTbGePWSCpwRJ6McTQUD6zeAT9C/iT5PgIMW/+Ds2yI/4QBwWvxZVeNF77+Sj/A93KUlBBVnItB4CXzN2nhGUAu53y3o7L+jq+jmmidbmOtlGCp7rYbDuvCszpPupGxqLhyn5Og=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757063617; c=relaxed/simple;
+	bh=UO6oCV021M/ZESWd0HSAkwrp/iEj/3sET3HBFkHiqYg=;
+	h=From:To:Cc:Subject:Date:Message-Id:Content-Type:MIME-Version; b=DzWLNOSo/FKAEaltYwKnK3p8PXp99ZeYlgg5xnza2wauB9ibp2e7DxvmmRIs0s5u3Bn/M8DrQo6VnEgzAdxsdT5Ypzp0vdY1DZ7pbtwF1uRcfVEWRoB6i9K28TcJ8MNC4Pkbpo2ktCqlZYvTVBcEL6EVVpxHxKrM5Ge3yyBG9NU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com; spf=pass smtp.mailfrom=vivo.com; dkim=pass (2048-bit key) header.d=vivo.com header.i=@vivo.com header.b=kvMnUfE4; arc=fail smtp.client-ip=40.107.75.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vivo.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vivo.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Q8bAks6mZMjsoCrUOR9I8i+kg91uw3Z9lfZGJj4UZsZSb8yPsSVQqiflQTPI4/fUVMrpUzmLROCc4FVZCHgObWGLLFiYn5dG8A+902J8+wt9/SZYTuYmX8RQRAPgjvI7EnuOsGTyAj2dLMD/xH6QX0Cbnbf1PkcCVe+LzOgYD2n/e0Zqe0ZzFQf38FXAguFLZWsMOliO/jv207YzgiVcEbVNksja70adQ2usiMvhsYJUN3ISX9whMasXqP6XdRbZGgPGlhP4TkogoTn/LuvROx5wpYj+/4fhGSPV23wF7+IV+jaLQ8bcaQVV4ZYHDdE8X+aMw08svtYqqE7jt1+Zfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WgjxX+RyvozPBzUvY2PA/ambW/o0dcYBhvDlRYhlBuI=;
+ b=tPU9WmoTjmLIY/Pq2ihEnnqQCfOpv0bJGVghTi5EMXXoo4XD5KDcnuvnp/j6OBVqas7Gv8y1ZRIwfR9yVdiIlb6G2Xg5ngcNCXDkw0bs3KmDvgvg1ZRDEbBNS4QFXoXms51z7wHDKjq7ZW8JCW36EZcwGVzpnDlpNjNVde75LQ4ezaxnDq1VGTuH5AIiMXGefM/qs2uWehbIBesOKiMEdNrk1YkEGR7hqskjP54LFnn+fBs0SZ9XhzTbBK3NogVk7+Yqw7YCIWGSLMXCwqRhS49rN0s8TPgg06R0RJPPi8eIDjq9Rfe00xED9hBEx6LEhdCixlGAFL5ac8lt4lQQ5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WgjxX+RyvozPBzUvY2PA/ambW/o0dcYBhvDlRYhlBuI=;
+ b=kvMnUfE4oLT8php1baZlwMmyecd3VZhW9dlYgirfGbGCzwxaYlsLT4i+UiREk8RNP8+BVZFmOBTXcPwOz5dmxTsYyZ6yglKH2PAYodh52wYZF3KI1lONwbMmggPPMD3WRV+rZ5+t1lzGhUf3m2mLHVGxGuguLL9Esz4KUZp3ZnqbzMKbM6dLBDsB2zSCw6J6Ndn4P8Lbdim4ql38/2DRI4FrumM8CNst9srQOHhtbgWmRHzBLd77ReAJpTRMegDprcuCayQn1MJslrW+ID5s706DyVEza+naXDM+5O0hUAYZ2+dlbBiprbbJMgfLMd0VACmktwtt3JPWQYRhZwPtzQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=vivo.com;
+Received: from KL1PR06MB7330.apcprd06.prod.outlook.com (2603:1096:820:146::7)
+ by PUZPR06MB5518.apcprd06.prod.outlook.com (2603:1096:301:fd::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9073.27; Fri, 5 Sep
+ 2025 09:13:32 +0000
+Received: from KL1PR06MB7330.apcprd06.prod.outlook.com
+ ([fe80::d1d3:916:af43:55f5]) by KL1PR06MB7330.apcprd06.prod.outlook.com
+ ([fe80::d1d3:916:af43:55f5%4]) with mapi id 15.20.9094.018; Fri, 5 Sep 2025
+ 09:13:31 +0000
+From: Xichao Zhao <zhao.xichao@vivo.com>
+To: gregkh@linuxfoundation.org,
+	jirislaby@kernel.org
+Cc: linuxppc-dev@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	Xichao Zhao <zhao.xichao@vivo.com>
+Subject: [PATCH] tty: remove redundant condition checks
+Date: Fri,  5 Sep 2025 17:13:21 +0800
+Message-Id: <20250905091321.437476-1-zhao.xichao@vivo.com>
+X-Mailer: git-send-email 2.34.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: TYCP301CA0032.JPNP301.PROD.OUTLOOK.COM
+ (2603:1096:400:380::15) To KL1PR06MB7330.apcprd06.prod.outlook.com
+ (2603:1096:820:146::7)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-References: <20250905091301.2711705-1-verhaegen@google.com>
-X-Mailer: git-send-email 2.51.0.355.g5224444f11-goog
-Message-ID: <20250905091301.2711705-4-verhaegen@google.com>
-Subject: [PATCH v5 3/3] ALSA: compress_offload: Add SNDRV_COMPRESS_AVAIL64 ioctl
-From: Joris Verhaegen <verhaegen@google.com>
-To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, 
-	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Cezary Rojewski <cezary.rojewski@intel.com>, Peter Ujfalusi <peter.ujfalusi@linux.intel.com>, 
-	Bard Liao <yung-chuan.liao@linux.intel.com>, 
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>, 
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>, 
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>, Srinivas Kandagatla <srini@kernel.org>, 
-	Daniel Baluta <daniel.baluta@nxp.com>, Orson Zhai <orsonzhai@gmail.com>, 
-	Baolin Wang <baolin.wang@linux.alibaba.com>, Chunyan Zhang <zhang.lyra@gmail.com>, 
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>, Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Joris Verhaegen <verhaegen@google.com>, kernel-team@android.com, 
-	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@opensource.cirrus.com, linux-arm-msm@vger.kernel.org, 
-	sound-open-firmware@alsa-project.org, linux-arm-kernel@lists.infradead.org, 
-	Miller Liang <millerliang@google.com>
-Content-Type: text/plain; charset="UTF-8"
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: KL1PR06MB7330:EE_|PUZPR06MB5518:EE_
+X-MS-Office365-Filtering-Correlation-Id: 51f887f6-47ff-46a7-6c21-08ddec5c7baf
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|52116014|366016|376014|38350700014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?kfP2usrRUGzQbQPQlFMpb9nRKZRFqA00SZguNreXVgmiavT1rM7wLlko8wvp?=
+ =?us-ascii?Q?eAk0GfKempYmSeQgA3yR6PxkFrhLKAcwiBNlKaNYAyE2XDitGIdcQbw+l5U8?=
+ =?us-ascii?Q?0Qp+g1iIGVQJc5sD4xtwBJfeWAWAAHhX5+hPT3tPhBj6QbBWCvkGZFZy6gTG?=
+ =?us-ascii?Q?Ha63SKL8Kk+5ji98gVlAQyf1ttygeK9FJQL0uv35BXBit+pF0NhMPf3IXxtj?=
+ =?us-ascii?Q?k7+CAS+fTmtbpWzRFeqTdgGca482E/usCPbr8ba39Bf7p+Umz/ZIm9AVMT6T?=
+ =?us-ascii?Q?oAhsJ4T5GPBDRYkGVGucvGZKRbEdHpavSJ4LS9f1wNRVhknMSwvBV0oJhWti?=
+ =?us-ascii?Q?ffUbCqy1qZoMdzvAESwpJ/oEHjbs7W6VR2nzGRMwR0fMD23hzdQrXoNeLFOS?=
+ =?us-ascii?Q?Rf1FVMWu7B6HNRBiTfLr3KQyjWbDI0jQo3jdDexJoPiNRhT96FZ4zR0/ykXh?=
+ =?us-ascii?Q?YwABXWxvDq5faSN771ciZIScmuhug+3gEN/S1I2HjQgxLBxecyy+5X56KXGb?=
+ =?us-ascii?Q?t2043E1lUVt5fyF8mDrDY+xb/3x7/vzccA2E7UEZdT6pxgthixJrJA5gpe7h?=
+ =?us-ascii?Q?ZyeWq7nAQQrtzW2M/J0jshdho9FGSCrjvjOPt/JCdz6WV47bcEJVi9KZnlwm?=
+ =?us-ascii?Q?gWWKRDuxsUpP+MsYMzoVdhjzkU2Rpiapptz96FXIVTwbu2c8H7tV7sFeHCn0?=
+ =?us-ascii?Q?nkgAfzoc1Iho6MzAyleJuLstBNx4jEoPYxMrbiwqSF1ftYrlrbZQ2HrMpDwU?=
+ =?us-ascii?Q?U0agq8Kt//0/6cB/O9tQzjIBwQqsFf6cBP5JLBiBj9ZdYLc6N0S6eT2A0Y1N?=
+ =?us-ascii?Q?yADP+N5NpkOy+a/xNPXZYCwzfzFgv7UvQH9nHK6iF/b/OZSxfSNcQ8p6cKkm?=
+ =?us-ascii?Q?uEXDnLCOTRVpPufIseK7z251y/T/OW+SiR6AiAxaE4iVT3+IIJ/oP+EeIzhw?=
+ =?us-ascii?Q?3rnpAzHZgIq8WVHkS6s2pKSmqIVnnIF1owm8MolxccG9RvshwmsVEH0jySfA?=
+ =?us-ascii?Q?zl0iYQIuHVl+4LHpBIbQ8QpOAkBhIgCKw3V2aZ6f9Qepyltax1GkriSBF6L4?=
+ =?us-ascii?Q?Hq8iGftExe6ShOAUqSBtg/zZ8tC43zj3FjYWQyLPEWkoilciTsadUR+SBixD?=
+ =?us-ascii?Q?VeHZqDKNjGrcjYXMwaO4eaXwypBARElewbzgnpRdrw7LbH4DKf59R7DNnUtR?=
+ =?us-ascii?Q?YpM2L0aYdF9Ota0u6yM0cNYjXAEdT+cZTosJoEbwgN0AyKAPMF/YXpuj6KGV?=
+ =?us-ascii?Q?JdlAKMkJ4Gi2Ws43EEVji3TVhyTAaKzzr2UKZsTRwW2IexYg6Q1hv369phZk?=
+ =?us-ascii?Q?n23yRBMLp2kXfa2cujFiXBDPKPUatFa3bQxd/IatnP86+hICqu931iiIDVk/?=
+ =?us-ascii?Q?/Q2L6yaFU/uBwjOpVouVcq2H3d0BI4rK9p9ylx7qhWmW5AJ8yHW0XBnl1Sch?=
+ =?us-ascii?Q?/0Z2Zb6n8D8HKQ6KDARuWXelBtiTIQVs6rAMuRM697g8aU1uVhsLag=3D=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR06MB7330.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(52116014)(366016)(376014)(38350700014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?ZV2dkX+dwm0Z8Sw18mGt/gieWdyAzoh+Q29l5pc3rogEtCLi5e/DjwOwyzKy?=
+ =?us-ascii?Q?VGpvrhcSAucXj3IRS3/LVVwWOv+KLj6bmqLGywTderYixxv6pWIhfKMLYRrj?=
+ =?us-ascii?Q?5hcoJzQLiiNAy46goKiiJCXhvLyxOiXxTJ9uOJODhhgXN4ATR7NiaLB+66RA?=
+ =?us-ascii?Q?qkey1QTsdWUswsUQI7SZH07yN9JHqBwbeeGafroITnDxm4mlI/dMZysBI2fq?=
+ =?us-ascii?Q?aDIJ7th96QQhNBiIJ0hiIeucCFcgwzqhjrWTOGO67RoPzgQJgn2iN91cTPVa?=
+ =?us-ascii?Q?sStUKCWDBOgbXpTm1ObysPr0RrgnP4awSBwu+NkMU+WVF8XzzGJ4J+CD1hUS?=
+ =?us-ascii?Q?gpu9umuR9GFBloeMPA22GQbJ2W918OkHitmnk/ilnBvspbqPzvZ3OHtkEtlC?=
+ =?us-ascii?Q?ibJ9iXZKcpwqtOES1UnLLkAc72MUNrEYaDI2mHQYW41r7syQUeAxpH0qImcb?=
+ =?us-ascii?Q?CpNFU0ZHdiouMmEC80XACo4ZL8/dJaFYkegU1L3+coqsA8yNsDFKDLVYWpuK?=
+ =?us-ascii?Q?RhA0ovx24fpY3iQ75mDVlWH2MlXK3OFplgyVmrhhTn/+R+fekPWe/1OdozVo?=
+ =?us-ascii?Q?2fR4yRn1W9mfclOZJrCq3qDm6GkjL5OOuVjfkC1lMWcbX+WSIcr6yZxZeG4Y?=
+ =?us-ascii?Q?ts9P7VwwA9EerbAQyKdm26ExpLEwmxyl5RHz6eQ0u2jNByRRmwawXmeERb1r?=
+ =?us-ascii?Q?OvG8PzYo/4A5IQE/5KLebKRFkM/chaXgfQbGf1oBwImsRF28l2O32Mx7LqgH?=
+ =?us-ascii?Q?EPBous8OgvEe5c4u5mCUyPVVIiwaisvxeqz9RG7hzMR7HOmnsRpJYKhvsgIw?=
+ =?us-ascii?Q?hcf75c1Iihi8cL2ul8W1uGjNReSdIqTuZsXFfm5wEA5EG8WhMvOJ+8OBMtfm?=
+ =?us-ascii?Q?FOTrkmra9tm6Sf0quz49BTq0SWRJF/47bNYZsY1ZSgRR4+iOfNsW4yTqJOlQ?=
+ =?us-ascii?Q?eoYolFd0R0KGTdcFLrQhMmfJSWfKO6Rdrehge3x9KcrfEFMostJucfu0KHsQ?=
+ =?us-ascii?Q?9C15F6kAnUYWPZ4aubxCVDtNgtdQbwta4GpoBKBoR2FPlDfzUCHTfvjTxxsX?=
+ =?us-ascii?Q?40gPw15f/+nyN4BT8Zox3noPetp3oMDm3q2wXl5L4XZjm3360aSu/LPPCY8S?=
+ =?us-ascii?Q?uFoYe/CzyjS8EtpreDmIHFJgTWoST2BixHAlrPDCNxtdSGx2OjHmIbvCZeX0?=
+ =?us-ascii?Q?0X0dY/GG7NakCETUGIMy8Fp8vvUZJechpTnFfJ/H6iqNvaFNQ3LgPWCXYT2L?=
+ =?us-ascii?Q?IdfWJRgAnICvO0a1mNMEgOScLxgpl06Z1PPtmOXiblfOD6H8ulkX0NK82jID?=
+ =?us-ascii?Q?dVXVSoF1w5cg8cqwGIh0iFrwg4dO+jTdmR9M2fdvJNAnuz4OyCvKhlWt2Nh0?=
+ =?us-ascii?Q?Oav0t0JH2OP+fWY3ene2QQCtdW+4Niy8TRuojNDVJTTe8RfolLY9qyRYMSO/?=
+ =?us-ascii?Q?nob8AS/Cu5K1xMkHHE/AcQZw/cpPJDYKrZTBLq9bhS/s8qSs1g2kNTh1OBeA?=
+ =?us-ascii?Q?eYJONtWZPhAxUcnT9SnpzBbGVAbi3PKm9G7QkO/JiNfmNDh7bodAHI+171U9?=
+ =?us-ascii?Q?aBz/slMFgQinnxkuT18iVPBg+iTcr3vricJjpibu?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51f887f6-47ff-46a7-6c21-08ddec5c7baf
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR06MB7330.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2025 09:13:31.5233
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: d03RVGeyqR46pAVJAno3G/eW/NYjD6WlANvFRg5BnIhfnXlXKsbBn70UAsSkdMK7RHetr9RZwCnHvUUKNnmZfg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5518
 
-The previous patch introduced a 64-bit timestamp ioctl
-(SNDRV_COMPRESS_TSTAMP64). To provide a consistent API, this patch
-adds a corresponding 64-bit version of the SNDRV_COMPRESS_AVAIL ioctl.
+Remove redundant condition checks and replace else if with else.
 
-A new struct snd_compr_avail64 is added to the UAPI, which includes
-the 64-bit timestamp. The existing ioctl implementation is refactored
-to handle both the 32-bit and 64-bit variants.
-
-Reviewed-by: Miller Liang <millerliang@google.com>
-Tested-by: Joris Verhaegen <verhaegen@google.com>
-Signed-off-by: Joris Verhaegen <verhaegen@google.com>
+Signed-off-by: Xichao Zhao <zhao.xichao@vivo.com>
 ---
- include/uapi/sound/compress_offload.h | 11 +++++++
- sound/core/compress_offload.c         | 43 +++++++++++++++++----------
- 2 files changed, 39 insertions(+), 15 deletions(-)
+ drivers/tty/hvc/hvc_console.c   | 2 +-
+ drivers/tty/serial/msm_serial.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/sound/compress_offload.h b/include/uapi/sound/compress_offload.h
-index 70b8921601f9..26f756cc2e62 100644
---- a/include/uapi/sound/compress_offload.h
-+++ b/include/uapi/sound/compress_offload.h
-@@ -84,6 +84,16 @@ struct snd_compr_avail {
- 	struct snd_compr_tstamp tstamp;
- } __attribute__((packed, aligned(4)));
+diff --git a/drivers/tty/hvc/hvc_console.c b/drivers/tty/hvc/hvc_console.c
+index cd1f657f782d..fffc30b9ea54 100644
+--- a/drivers/tty/hvc/hvc_console.c
++++ b/drivers/tty/hvc/hvc_console.c
+@@ -184,7 +184,7 @@ static void hvc_console_print(struct console *co, const char *b,
+ 					hvc_console_flush(cons_ops[index],
+ 						      vtermnos[index]);
+ 				}
+-			} else if (r > 0) {
++			} else {
+ 				i -= r;
+ 				if (i > 0)
+ 					memmove(c, c+r, i);
+diff --git a/drivers/tty/serial/msm_serial.c b/drivers/tty/serial/msm_serial.c
+index 3449945493ce..2e999cb9c974 100644
+--- a/drivers/tty/serial/msm_serial.c
++++ b/drivers/tty/serial/msm_serial.c
+@@ -1102,7 +1102,7 @@ msm_find_best_baud(struct uart_port *port, unsigned int baud,
  
-+/**
-+ * struct snd_compr_avail64 - avail descriptor with tstamp in 64 bit format
-+ * @avail: Number of bytes available in ring buffer for writing/reading
-+ * @tstamp: timestamp information
-+ */
-+struct snd_compr_avail64 {
-+	__u64 avail;
-+	struct snd_compr_tstamp64 tstamp;
-+} __attribute__((packed, aligned(4)));
-+
- enum snd_compr_direction {
- 	SND_COMPRESS_PLAYBACK = 0,
- 	SND_COMPRESS_CAPTURE,
-@@ -231,6 +241,7 @@ struct snd_compr_task_status {
- #define SNDRV_COMPRESS_TSTAMP		_IOR('C', 0x20, struct snd_compr_tstamp)
- #define SNDRV_COMPRESS_AVAIL		_IOR('C', 0x21, struct snd_compr_avail)
- #define SNDRV_COMPRESS_TSTAMP64		_IOR('C', 0x22, struct snd_compr_tstamp64)
-+#define SNDRV_COMPRESS_AVAIL64		_IOR('C', 0x23, struct snd_compr_avail64)
- #define SNDRV_COMPRESS_PAUSE		_IO('C', 0x30)
- #define SNDRV_COMPRESS_RESUME		_IO('C', 0x31)
- #define SNDRV_COMPRESS_START		_IO('C', 0x32)
-diff --git a/sound/core/compress_offload.c b/sound/core/compress_offload.c
-index 445220fdb6a0..da514fef45bc 100644
---- a/sound/core/compress_offload.c
-+++ b/sound/core/compress_offload.c
-@@ -203,13 +203,10 @@ static int snd_compr_update_tstamp(struct snd_compr_stream *stream,
- }
- 
- static size_t snd_compr_calc_avail(struct snd_compr_stream *stream,
--		struct snd_compr_avail *avail)
-+				   struct snd_compr_avail64 *avail)
- {
--	struct snd_compr_tstamp64 tstamp64 = { 0 };
--
- 	memset(avail, 0, sizeof(*avail));
--	snd_compr_update_tstamp(stream, &tstamp64);
--	snd_compr_tstamp32_from_64(&avail->tstamp, &tstamp64);
-+	snd_compr_update_tstamp(stream, &avail->tstamp);
- 	/* Still need to return avail even if tstamp can't be filled in */
- 
- 	if (stream->runtime->total_bytes_available == 0 &&
-@@ -237,28 +234,43 @@ static size_t snd_compr_calc_avail(struct snd_compr_stream *stream,
- 	if (stream->direction == SND_COMPRESS_PLAYBACK)
- 		avail->avail = stream->runtime->buffer_size - avail->avail;
- 
--	pr_debug("ret avail as %llu\n", avail->avail);
-+	pr_debug("ret avail as %zu\n", (size_t)avail->avail);
- 	return avail->avail;
- }
- 
- static inline size_t snd_compr_get_avail(struct snd_compr_stream *stream)
- {
--	struct snd_compr_avail avail;
-+	struct snd_compr_avail64 avail;
- 
- 	return snd_compr_calc_avail(stream, &avail);
- }
- 
--static int
--snd_compr_ioctl_avail(struct snd_compr_stream *stream, unsigned long arg)
-+static void snd_compr_avail32_from_64(struct snd_compr_avail *avail32,
-+				      const struct snd_compr_avail64 *avail64)
- {
--	struct snd_compr_avail ioctl_avail;
-+	avail32->avail = avail64->avail;
-+	snd_compr_tstamp32_from_64(&avail32->tstamp, &avail64->tstamp);
-+}
-+
-+static int snd_compr_ioctl_avail(struct snd_compr_stream *stream,
-+				 unsigned long arg, bool is_32bit)
-+{
-+	struct snd_compr_avail64 ioctl_avail64;
-+	struct snd_compr_avail ioctl_avail32;
- 	size_t avail;
-+	const void *copy_from = &ioctl_avail64;
-+	size_t copy_size = sizeof(ioctl_avail64);
- 
- 	if (stream->direction == SND_COMPRESS_ACCEL)
- 		return -EBADFD;
- 
--	avail = snd_compr_calc_avail(stream, &ioctl_avail);
--	ioctl_avail.avail = avail;
-+	avail = snd_compr_calc_avail(stream, &ioctl_avail64);
-+	ioctl_avail64.avail = avail;
-+	if (is_32bit) {
-+		snd_compr_avail32_from_64(&ioctl_avail32, &ioctl_avail64);
-+		copy_from = &ioctl_avail32;
-+		copy_size = sizeof(ioctl_avail32);
-+	}
- 
- 	switch (stream->runtime->state) {
- 	case SNDRV_PCM_STATE_OPEN:
-@@ -269,8 +281,7 @@ snd_compr_ioctl_avail(struct snd_compr_stream *stream, unsigned long arg)
- 		break;
- 	}
- 
--	if (copy_to_user((__u64 __user *)arg,
--				&ioctl_avail, sizeof(ioctl_avail)))
-+	if (copy_to_user((__u64 __user *)arg, copy_from, copy_size))
- 		return -EFAULT;
- 	return 0;
- }
-@@ -1336,7 +1347,9 @@ static long snd_compr_ioctl(struct file *f, unsigned int cmd, unsigned long arg)
- 	case SNDRV_COMPRESS_TSTAMP64:
- 		return snd_compr_tstamp(stream, arg, false);
- 	case SNDRV_COMPRESS_AVAIL:
--		return snd_compr_ioctl_avail(stream, arg);
-+		return snd_compr_ioctl_avail(stream, arg, true);
-+	case SNDRV_COMPRESS_AVAIL64:
-+		return snd_compr_ioctl_avail(stream, arg, false);
- 	case SNDRV_COMPRESS_PAUSE:
- 		return snd_compr_pause(stream);
- 	case SNDRV_COMPRESS_RESUME:
+ 			if (result == baud)
+ 				break;
+-		} else if (entry->divisor > divisor) {
++		} else {
+ 			old = target;
+ 			target = clk_round_rate(msm_port->clk, old + 1);
+ 			/*
 -- 
-2.51.0.355.g5224444f11-goog
+2.34.1
 
 
