@@ -1,132 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-72367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72368-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3532B463EA
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 21:47:50 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 00821B4650D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 22:58:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B9DD61B27B0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 19:48:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AE7F35C6626
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 20:58:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1550A1096F;
-	Fri,  5 Sep 2025 19:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 77FE62E888A;
+	Fri,  5 Sep 2025 20:58:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PhPukp9w"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="J/6afEi2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E18B1BA42;
-	Fri,  5 Sep 2025 19:47:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2470E2E9EA0
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 20:58:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757101666; cv=none; b=OhwQSIscNnXmoajlbi/YAViUzReoMkwSAnLJR0kFF2OEnYZBSQIQyYEYH5tpd9eOa/ovP0VPGisd7SN4a2+oLH1wRB9M3SOejjyE3TYNxdjYQYfQPXHs8+FSiwf5TswU7gI+E/+3OyK7pEehYj+9DJmtZ1TE1I6CMnMvvHo/Ugc=
+	t=1757105899; cv=none; b=PfB+wphjCQEGV2h8ZTnq/AGFVMbnF04lxqi1V4dol6yeCJfgScKZYgRw/sbOINDIe7jlav0gd8WPMzagz6mlmqFJUJd0SnJ3xPIM3Kia5o5rHenhdDLcDCvW/LHLUdUUdeJ15gVdiUByTYjObXm6m10nD5tLnUQDs385G00TQcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757101666; c=relaxed/simple;
-	bh=cx6/CPIGyA61osR31aBMtV68j0uHciyN4n8/YHwijxM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UKPgaFOgMdeaJefJ0PG8yxWExSOPL0lYf7EnV7eThNFmfD7U9rOoqpvAdzRN/CYKLhPlySGWeijSWVrDniy4/n73exXZXbJTGb6CAWU0NUS4Hfrpb/RZBswqkgXChOetRIUvB70wIWjj7f3VF05J3p1lDa4Db4hnxsPAkeGVIdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PhPukp9w; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E10D6C4CEF1;
-	Fri,  5 Sep 2025 19:47:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757101665;
-	bh=cx6/CPIGyA61osR31aBMtV68j0uHciyN4n8/YHwijxM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PhPukp9wqFMmK54Ys/i8mi0gMYUym3eMdN0inVJLZ4MpsouRFNwkM9cievyBDfZcm
-	 eGxazwzI5Np4kX/6gAgiAEdukrYDO2aWN1KLLEAjrZy5Vckor/TWiTExZwIcSx020v
-	 t6G2k3rf/0M4DRt5Yv79/AcMTgTlruVOJDYMtdrlukxA0DSVs34JhuLQHk2rmvyrlX
-	 3e5Z7U/s3+mNpKwX/1YEpamD1n9vgDlo4B7+Cq8EuEmd3qPFf1HdFA1OQGgwQtzkea
-	 E2XXhjR1i/h2TJPlYdf6Zdv2/vvhMzCYmdKGFEda0p0J4KXsI2Yu7cYAPnmSL6Uaah
-	 ql5afQ/6hS4cw==
-Date: Fri, 5 Sep 2025 14:47:43 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Pushpendra Singh <quic_pussin@quicinc.com>
-Cc: quic_bjorande@quicinc.com, krzysztof.kozlowski@linaro.org, 
-	konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	quic_rgottimu@quicinc.com, Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Subject: Re: [PATCH V2] soc: qcom: icc-bwmon: Update zone1_thres_count to 3
-Message-ID: <zywvspwty3be4eadssi6sylqkhgsioramuamvvoui5tfmml2i6@zsl2nuuos377>
-References: <20250905113923.3944347-1-quic_pussin@quicinc.com>
+	s=arc-20240116; t=1757105899; c=relaxed/simple;
+	bh=eDVxUt+gPNYYTgjO9whiH30MM2CcFo3Y9sMKQYw+8a0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=enYpzOGXIq/r0KZbXY9wpnToTfwqihzLEUVke3eAb3axj96E7OIjHXaO0aMuy4J9OLOCuM+5z5CQl9oiJN3GhogxW6kgMTZ4NWu9TfOsXd8Bu/z4I1k2M4PLwjoFqrZd+TuJzbp+ONgzl/HmcfA5Ggv/Q6DtJC1UUTegc70igbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=J/6afEi2; arc=none smtp.client-ip=185.171.202.116
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
+Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
+	by smtpout-04.galae.net (Postfix) with ESMTPS id BA2F1C6B3A0;
+	Fri,  5 Sep 2025 20:57:57 +0000 (UTC)
+Received: from mail.galae.net (mail.galae.net [212.83.136.155])
+	by smtpout-01.galae.net (Postfix) with ESMTPS id DDA0F6060B;
+	Fri,  5 Sep 2025 20:58:12 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 2BB64102F1C84;
+	Fri,  5 Sep 2025 22:57:46 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
+	t=1757105891; h=from:subject:date:message-id:to:cc:mime-version:content-type:
+	 content-transfer-encoding:content-language:in-reply-to:references:autocrypt;
+	bh=CXOJmH8o5Y2K44CEV/UVJmY5m3bChX0jwiI1W9AUJAo=;
+	b=J/6afEi2bHNULLFhuT2tta9wf/V570JY4L81okAmR6RQnLZX13nJ00LwIfYjkeehcTRmq/
+	HY3c5Equ3ugMMc7N+tU3OgAjjfbFVMpekUISSmqon05BjG96mQxK2QZ0KsDh6iWuakpX/y
+	JkIK49N/+mBRM4GoECp8P/hD55C4419F4xBqkc4su9p5tI3yWqb5Nsxbrkf1wTVEXPDkkA
+	SvvQzMRj6qft4ip3sN+sdez4N3oBpgItwyYm0F7gTu038QqJixCWPefRf7xeiVFaatMBmc
+	QkdLkASIXe7ZPKHcR/f4ChjALZ0uiX5JGKr4Ai2xhKTPKX6V13yn8i24KmAhFA==
+Message-ID: <f3e1cb1f-4691-4c1b-9b67-feed0c687ff2@bootlin.com>
+Date: Fri, 5 Sep 2025 22:57:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250905113923.3944347-1-quic_pussin@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 07/58] dyndbg: tweak pr_fmt to avoid expansion
+ conflicts
+To: Jim Cromie <jim.cromie@gmail.com>, linux-kernel@vger.kernel.org,
+ jbaron@akamai.com, gregkh@linuxfoundation.org, ukaszb@chromium.org
+Cc: dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+ intel-gvt-dev@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+ daniel.vetter@ffwll.ch, tvrtko.ursulin@linux.intel.com,
+ jani.nikula@intel.com, ville.syrjala@linux.intel.com, seanpaul@chromium.org,
+ robdclark@gmail.com, groeck@google.com, yanivt@google.com,
+ bleung@google.com, quic_saipraka@quicinc.com, will@kernel.org,
+ catalin.marinas@arm.com, quic_psodagud@quicinc.com, maz@kernel.org,
+ arnd@arndb.de, linux-arm-kernel@lists.infradead.org,
+ linux-arm-msm@vger.kernel.org, mingo@redhat.com
+References: <20250803035816.603405-1-jim.cromie@gmail.com>
+ <20250803035816.603405-8-jim.cromie@gmail.com>
+Content-Language: en-US
+From: Louis Chauvet <louis.chauvet@bootlin.com>
+Autocrypt: addr=louis.chauvet@bootlin.com; keydata=
+ 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
+In-Reply-To: <20250803035816.603405-8-jim.cromie@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Last-TLS-Session-Version: TLSv1.3
 
-On Fri, Sep 05, 2025 at 05:09:23PM +0530, Pushpendra Singh wrote:
-> From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+
+
+Le 03/08/2025 à 05:57, Jim Cromie a écrit :
+> Disambiguate pr_fmt(fmt) arg, by changing it to _FMT_, to avoid naming
+> confusion with many later macros also using that argname.
 > 
-> Update zone1_thres_count to 3 from 16 so that
-> driver can reduce bus vote in 3 sample windows instead
-> of waiting for 16 windows.
+> no functional change
 > 
+> Signed-off-by: Jim Cromie <jim.cromie@gmail.com>
 
-Please start your commit message by describing the problem.
+Reviewed-by: Louis Chauvet <louis.chauvet@bootlin.com>
 
-> The 16-window (64 ms) waiting time is too long to reduce the
-> bus vote. At higher FPS, there will be multiple frames in 64ms
-> e.g. 4 frames at 60FPS in 64ms. Hence, delay of 64ms in decision
-> making will lead to higher power regression. We tested across
-> multiple usecases, and observed significant power savings.
-> 
-
-I asked in v1 what the tradeoff is here. Is lower number better in all
-cases? What are we loosing by making it 3?
-
-And why 3, why not 2 or 4, or 7?
-
-
-I'm not saying that 3 is wrong, just saying that the commit message
-needs to sufficiently explain why 3 is the "best" number.
-
-Regards,
-Bjorn
-
-> USECASE				zone1_thres_count=16     zone1_thres_count=3
-> 4K video playback       236.15 mA                  203.15 mA
-> Sleep					   7mA			   			6.9mA
-> Display (dle display)    71.95mA			       67.11mA
-> 
-> Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-> Signed-off-by: Pushpendra Singh <quic_pussin@quicinc.com>
 > ---
-> Changes in v2:
-> -Update commit message
-> -Link to v1:https://lore.kernel.org/lkml/463eb7c8-00fc-4441-91d1-6e48f6b052c8@quicinc.com
+>   lib/dynamic_debug.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->  drivers/soc/qcom/icc-bwmon.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-> index 3dfa448bf8cf..a245a8b2cfef 100644
-> --- a/drivers/soc/qcom/icc-bwmon.c
-> +++ b/drivers/soc/qcom/icc-bwmon.c
-> @@ -827,7 +827,7 @@ static const struct icc_bwmon_data msm8998_bwmon_data = {
->  static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 64,
-> -	.zone1_thres_count = 16,
-> +	.zone1_thres_count = 3,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_HAS_GLOBAL_IRQ,
->  	.regmap_fields = sdm845_cpu_bwmon_reg_fields,
-> @@ -846,7 +846,7 @@ static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
->  static const struct icc_bwmon_data sc7280_llcc_bwmon_data = {
->  	.sample_ms = 4,
->  	.count_unit_kb = 64,
-> -	.zone1_thres_count = 16,
-> +	.zone1_thres_count = 3,
->  	.zone3_thres_count = 1,
->  	.quirks = BWMON_NEEDS_FORCE_CLEAR,
->  	.regmap_fields = sdm845_llcc_bwmon_reg_fields,
-> -- 
-> 2.34.1
-> 
+> diff --git a/lib/dynamic_debug.c b/lib/dynamic_debug.c
+> index 55df35df093b0..2751056a5240d 100644
+> --- a/lib/dynamic_debug.c
+> +++ b/lib/dynamic_debug.c
+> @@ -11,7 +11,7 @@
+>    * Copyright (C) 2013 Du, Changbin <changbin.du@gmail.com>
+>    */
+>   
+> -#define pr_fmt(fmt) "dyndbg: " fmt
+> +#define pr_fmt(_FMT_) "dyndbg: " _FMT_
+>   
+>   #include <linux/kernel.h>
+>   #include <linux/module.h>
+
+-- 
+Louis Chauvet, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
+
 
