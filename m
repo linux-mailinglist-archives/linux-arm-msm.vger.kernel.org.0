@@ -1,175 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-72349-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72350-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0C78B45E98
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 18:48:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B4194B45EAA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 18:49:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 675F27B5ECB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 16:46:28 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 61A1F7B75FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 16:47:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F99613D521;
-	Fri,  5 Sep 2025 16:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 783E72F7ACE;
+	Fri,  5 Sep 2025 16:49:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PdAciHQ2"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="ZDtmlhPR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mail-4323.protonmail.ch (mail-4323.protonmail.ch [185.70.43.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B878306B2B
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 16:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E3A13D521;
+	Fri,  5 Sep 2025 16:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757090873; cv=none; b=EH+lkFEr9fCaurlrZ879gK5ivAdtOT0dE+bw9RynBbylYXopLFQ495sreQLib4hRhobxU0yHE5/TkgxV2MJnYCBQkjH4+Lz+B1D6L5OP933W9XaR1VORy1kcb9O/7uwfR+xukHggZGGl1RIH4WepYeCOn0mOeMpNDqfvO3/B1gQ=
+	t=1757090943; cv=none; b=mYzeUXVenddgRHJEl3M+pg6SioC5/00AeakzpFEgqRJZBWla45CsIA4xdA6198DoNnGwvJlsMcX0p7T4v5gqWzuBvxlnyuENErDcjj5XOOjSu9tim+3vfmTKxF8n0UHfB23L1q5eljmI6TT81phNuKFbT5nmqmMzmfyUsNYFuvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757090873; c=relaxed/simple;
-	bh=TkfY89RKRXEALwgB2aNVJLpg692JYnKY4FfUhrmhjUM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=u0Dfb5G+oG8ukb545U7A0rzBsA8ELrgOxGVLTz0Ownxjpbp3bq+1XC5vkjFDvGHnxjWWVd/aDIEpbchlMCoT/ym6LhLhThrowW3Lv0+Q+m1xyOlnSO6izrIpbY1Z1BiyG594VLHKWPgFIGIXojqSSO6uKuomA2xJI2kHe03LX3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PdAciHQ2; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5859wQci004158
-	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Sep 2025 16:47:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	UUdgNg/39urdaUGy5tuNL+v9wjA5hMimn7UR8IzRX/Q=; b=PdAciHQ2LJAlN3lz
-	mhfyemdXnUhAmCxtsYv54lZFu/YK+QqDMz9kGCQys1dPqVHD/b2muwcqnzvC4RaO
-	nkW0KBEzjPRZ7o8UL/I/qrEQCG4soGkbi6y3GUpCev3WtEY//5mc32yEInyBXeFe
-	hcjDPgfoaHE/j92vUC1xCyRznE7QMlR/3VDlzq/dsowpB4D0/Ojf6phUR90hGkSy
-	q/1w+aQ0L5hGwBSU4E7SFZEiZq++32A/Ys+XvNs0A+Kzi48Vs11OCKA8+ZTeDHyg
-	WV0KqaxhM/YrHWwFqbkZfYeJ/KjBl1/E+b8intGJlkacHB1gEEhBcm6hI/9ENAWx
-	47RKIA==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48uq0ev15m-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 16:47:46 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-718c2590e94so65199206d6.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 09:47:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757090865; x=1757695665;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UUdgNg/39urdaUGy5tuNL+v9wjA5hMimn7UR8IzRX/Q=;
-        b=vsFp89T/rVEpA9i50bLiiWOrO/fUyqVd/Qs6dijSUeIW72tMhF+Evp6VFIBexmcgwf
-         WxYd16/1nsk/3J9wwrP+kN9K3aVBDqhv6ZYfeRVac+npYrYPoDdLsqLVDrKHXu6lllcr
-         1OJX+nVgjmG56dqkDhm6j3yvTRRqTzWkQwlP/sXuxrUeGc2KU3dJtMuqtlhr4zjcvBh8
-         Wxuo5G4djf9SsWZajM0LQ/TnllMGdcTuz+FT2EgV7hQcZYMQclPZMr1LksX93pIeYK/y
-         vxhhVyp9WOoEo0J+xyt247VWf/ybdNZdJCx1RtSF5TaDMOp/H/7av25Bb0YEXlUrnZ/h
-         V3lQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVK+0Uds7Si+nqLwNQqZ8K5OHhtGiSzbB9xDuU94w06JG3VKyRZq9kZI5h8xaJlR1WS78I3FLwN/bfLKZtH@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKqhyMlRurkUnVnlN5I6fv6YqbdqKItgz3bPvK+L+VW5au8www
-	jOmDjOVYQ2I3GvYrOWKrzmWWjj2T3ryZZAr8zbYwJmMtRPlEVVHoSYiWrT50HPDf5FbgG4S6zju
-	jLB5PSm4vB7fTHpbt9jzioZv0Az+DqcAkhg2PHgAM5Yi1DoBUxnmgeRaYTvQgcPCqCPLW
-X-Gm-Gg: ASbGncvu8j1SLmVA+ze8PlUQGZacJ7Ed++KP3viQVWNHrYoTZ9PI1zT1gTRLp6T7cgv
-	0WvFjNEkPYqn3Q6miDG9wuHc/myXItr1as02rRZag3qFA5rt/kurfu7EPFOfihkwYe7gF61lmCp
-	jts/BFmHHud4YZU1ZTS8jEloBx1hEjt1QAhlUxrwbYyJXr3bM5qAS6Sd4QbyJlWokfr0r5u5lD2
-	82B4Do5dkfT4GK5v4TTZ3bDK5IS8k7vlwGYb5kMOu+KUWwDMDt2GFOn+8MJQzkrhwxHCM5tFtrJ
-	zbAipv1LznlsJtGcFu3Gk8pW5VzJCoWhUwhKFmaTG20UaqpKBVwUqVXZkZXDJlENP/I=
-X-Received: by 2002:ad4:5fc5:0:b0:707:6cf8:5963 with SMTP id 6a1803df08f44-72bbf3fb0b1mr43965596d6.9.1757090864940;
-        Fri, 05 Sep 2025 09:47:44 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZ8+8+MxEUmtiGkpVpKbOO3CIojnpVHP4pNFKV12I5SozNXXmspK50f6RKTZrWEioefG8OdQ==
-X-Received: by 2002:ad4:5fc5:0:b0:707:6cf8:5963 with SMTP id 6a1803df08f44-72bbf3fb0b1mr43965196d6.9.1757090864286;
-        Fri, 05 Sep 2025 09:47:44 -0700 (PDT)
-Received: from [192.168.68.119] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3d66b013b7dsm20987137f8f.28.2025.09.05.09.47.43
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Sep 2025 09:47:43 -0700 (PDT)
-Message-ID: <08afe342-e108-4f0c-9903-fb4df4eb860e@oss.qualcomm.com>
-Date: Fri, 5 Sep 2025 17:47:42 +0100
+	s=arc-20240116; t=1757090943; c=relaxed/simple;
+	bh=diSf69d2oQ1dS0WKoCbUPJHHMv6KOh1u+FVVXuJwOm4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ShN71A+ChJ4BIYVa+Q8gl0DJF9XpSzuO/ZkJlHk6fLDx+TAScs3jm0gdM8De+JuPuH2MvqLu/IKTm7LIk6OqWEEU1//BNtQyGr0tcE80sLIX7U+PILVFi6HBahbNngCURswEXjCsJBwVBdRcTzwDDAmReWoAtoQddd02hXzrFKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=ZDtmlhPR; arc=none smtp.client-ip=185.70.43.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail; t=1757090938; x=1757350138;
+	bh=diSf69d2oQ1dS0WKoCbUPJHHMv6KOh1u+FVVXuJwOm4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=ZDtmlhPROSqmOV/mM031irz4iMovwT/6c7BOlqR8Ko2upeeW6TEn7SntMw6fDzaw8
+	 qufJU7PvggauiQcOyjOrAzI3yS0QA+BYNuhcttRDGzTEZYXgriOgCZFO9/CrS7NmZ+
+	 vXeKW9lqxZ+c3FpKAnk5Rma4s0PIGZiCMtfP6yX3xK1uF2N500A8YyW6RI/xmeQJdf
+	 qzNR9dUL01iA1IZweZBwvtK64Ut0sdcFweynzR2gYabOjj/aXkPKVwdTEnqmnE/PVX
+	 Ztjcj1wPNky8uIsZSli6Y15XQYQXj9yTb8wy3xxlafgksyozXDcE7IVGZPqEJ4Z7PX
+	 I+EfDtxPPFVJQ==
+Date: Fri, 05 Sep 2025 16:48:52 +0000
+To: Rob Herring <robh@kernel.org>
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Hans de Goede <hansg@kernel.org>, Lee Jones <lee@kernel.org>, Pavel Machek <pavel@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Daniel Thompson <danielt@kernel.org>, Jingoo Han <jingoohan1@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Jean-Jacques Hiblot <jjhiblot@traphandler.com>, Jacopo Mondi <jacopo@jmondi.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, linux-leds@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Daniel Thompson <daniel.thompson@linaro.org>, dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/4] dt-bindings: leds: commonize leds property
+Message-ID: <Lm6PLaup84KHzhxYTbsrQIbEeQpc6dj65aLkLFvOx7QwvuXS9ON53Csa2v6LBp4hd9iIQilvGhXqx4kXv4cfqgYUeA49vrVdWJw-fNMLu2Y=@vinarskis.com>
+In-Reply-To: <20250905152404.GB953718-robh@kernel.org>
+References: <20250905-leds-v2-0-ed8f66f56da8@vinarskis.com> <20250905-leds-v2-2-ed8f66f56da8@vinarskis.com> <20250905152404.GB953718-robh@kernel.org>
+Feedback-ID: 158356072:user:proton
+X-Pm-Message-ID: 8506bc237e49fba276022028e967299c197ecd38
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/12] ASoC: codecs: wcd937x: set the comp soundwire
- port correctly
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: broonie@kernel.org, lgirdwood@gmail.com, tiwai@suse.com, vkoul@kernel.org,
-        srini@kernel.org, yung-chuan.liao@linux.intel.com,
-        pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, neil.armstrong@linaro.org,
-        krzysztof.kozlowski@linaro.org, linux-sound@vger.kernel.org,
-        Stable@vger.kernel.org
-References: <20250905154430.12268-1-srinivas.kandagatla@oss.qualcomm.com>
- <20250905154430.12268-2-srinivas.kandagatla@oss.qualcomm.com>
- <as3wxoths3rgy2qpbqwyys6zydhjo3lbueu7ibrwbinxt3sffw@wyprroihsjs7>
-Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <as3wxoths3rgy2qpbqwyys6zydhjo3lbueu7ibrwbinxt3sffw@wyprroihsjs7>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: w-zsTgPdagLwiKv0LTK_XKZul2zMfT-D
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAwNCBTYWx0ZWRfX4rkbQTMfKuIK
- E1qdqcsFAWtSHzGXWACYA+EkdsFhQJS3VwbHIJUivit3oe/9uPONsYVA0x7ts3bk7EaKVQfSBHe
- X5A1mdcDmnW4EuxIl5lTwDzXYwrrDRSKcdkDRr9l5PTXkVg0iVT5ZkwC3Zl/5zdUPu1+fEAJWGm
- rPc1+iwhWV/KmX1c7OumqzvhzBTCslNRp7pBY7r/kqxelDN5m9EotXXf7g9DoV1b5yITYZ/W/uc
- bdJgFRkISAEYXqQaCZPiqUkAwbDF/g/ZmEoTQ6sTnp6TcKAuOJxxIklriPhm6JeePg1PeTWhQGB
- OtJ2eMby+aDBtNLjWH/1qzWI4Eti3L5MiCCdFkDPk0sE7GCDgP0B1TvzRsf0jiM1KeYCVJJweMA
- 8EW3sZbx
-X-Proofpoint-ORIG-GUID: w-zsTgPdagLwiKv0LTK_XKZul2zMfT-D
-X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68bb1432 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=OWw5mONqTAKyzQI3keYA:9 a=QEXdDO2ut3YA:10 a=OIgjcC2v60KrkQgK7BGD:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-05_05,2025-09-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 suspectscore=0 clxscore=1015 malwarescore=0 phishscore=0
- bulkscore=0 spamscore=0 priorityscore=1501 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300004
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 9/5/25 5:14 PM, Dmitry Baryshkov wrote:
-> On Fri, Sep 05, 2025 at 04:44:19PM +0100, Srinivas Kandagatla wrote:
->> For some reason we endup with setting soundwire port for
->> HPHL_COMP and HPHR_COMP as zero, this can potentially result
->> in a memory corruption due to accessing and setting -1 th element of
->> port_map array.
-> 
-> Nit: if passing 0 here might result in a memory corrution, then
-> corresponding code should be fixed to warn loudly and ignore that 0.
 
-Agreed, This is something that should be fixed at source am on it.
 
---srini
 
-> 
->>
->> Fixes: 82be8c62a38c ("ASoC: codecs: wcd937x: add basic controls")
->> Cc: <Stable@vger.kernel.org>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
->> ---
->>  sound/soc/codecs/wcd937x.c | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
->> index 3b0a8cc314e0..de2dff3c56d3 100644
->> --- a/sound/soc/codecs/wcd937x.c
->> +++ b/sound/soc/codecs/wcd937x.c
->> @@ -2046,9 +2046,9 @@ static const struct snd_kcontrol_new wcd937x_snd_controls[] = {
->>  	SOC_ENUM_EXT("RX HPH Mode", rx_hph_mode_mux_enum,
->>  		     wcd937x_rx_hph_mode_get, wcd937x_rx_hph_mode_put),
->>  
->> -	SOC_SINGLE_EXT("HPHL_COMP Switch", SND_SOC_NOPM, 0, 1, 0,
->> +	SOC_SINGLE_EXT("HPHL_COMP Switch", WCD937X_COMP_L, 0, 1, 0,
->>  		       wcd937x_get_compander, wcd937x_set_compander),
->> -	SOC_SINGLE_EXT("HPHR_COMP Switch", SND_SOC_NOPM, 1, 1, 0,
->> +	SOC_SINGLE_EXT("HPHR_COMP Switch", WCD937X_COMP_R, 1, 1, 0,
->>  		       wcd937x_get_compander, wcd937x_set_compander),
->>  
->>  	SOC_SINGLE_TLV("HPHL Volume", WCD937X_HPH_L_EN, 0, 20, 1, line_gain),
->> -- 
->> 2.50.0
->>
-> 
 
+
+On Friday, September 5th, 2025 at 17:24, Rob Herring <robh@kernel.org> wrot=
+e:
+
+>=20
+>=20
+> On Fri, Sep 05, 2025 at 09:59:30AM +0200, Aleksandrs Vinarskis wrote:
+>=20
+> > A number of existing schemas use 'leds' property to provide
+> > phandle-array of LED(s) to the consumer. Additionally, with the
+> > upcoming privacy-led support in device-tree, v4l2 subnode could be a
+> > LED consumer, meaning that all camera sensors should support 'leds'
+> > and 'led-names' property via common 'video-interface-devices.yaml'.
+> >=20
+> > To avoid dublication, commonize 'leds' property from existing schemas
+> > to newly introduced 'led-consumer.yaml'.
+> >=20
+> > Signed-off-by: Aleksandrs Vinarskis alex@vinarskis.com
+> > ---
+> > .../devicetree/bindings/leds/backlight/led-backlight.yaml | 7 +------
+> > Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml | 6 +=
+-----
+> > .../devicetree/bindings/media/video-interface-devices.yaml | 3 +++
+> > 3 files changed, 5 insertions(+), 11 deletions(-)
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/leds/backlight/led-backl=
+ight.yaml b/Documentation/devicetree/bindings/leds/backlight/led-backlight.=
+yaml
+> > index f5554da6bc6c73e94c4a2c32b150b28351b25f16..5e19b4376715eeb05cb7892=
+55db209ed27f8822f 100644
+> > --- a/Documentation/devicetree/bindings/leds/backlight/led-backlight.ya=
+ml
+> > +++ b/Documentation/devicetree/bindings/leds/backlight/led-backlight.ya=
+ml
+> > @@ -18,17 +18,12 @@ description:
+> >=20
+> > allOf:
+> > - $ref: common.yaml#
+> > + - $ref: /schemas/leds/leds-consumer.yaml#
+>=20
+>=20
+> Drop.
+>=20
+> > properties:
+> > compatible:
+> > const: led-backlight
+> >=20
+> > - leds:
+> > - description: A list of LED nodes
+> > - $ref: /schemas/types.yaml#/definitions/phandle-array
+> > - items:
+> > - maxItems: 1
+>=20
+>=20
+> You need to keep the property here:
+>=20
+> leds: true
+>=20
+> > -
+> > required:
+> > - compatible
+> > - leds
+> > diff --git a/Documentation/devicetree/bindings/leds/leds-group-multicol=
+or.yaml b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
+> > index 8ed059a5a724f68389a1d0c4396c85b9ccb2d9af..b4f326e8822a3bf452b22f5=
+b9fa7189696f760a4 100644
+> > --- a/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
+> > +++ b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
+> > @@ -17,16 +17,12 @@ properties:
+> > compatible:
+> > const: leds-group-multicolor
+> >=20
+> > - leds:
+> > - description:
+> > - An aray of monochromatic leds
+> > - $ref: /schemas/types.yaml#/definitions/phandle-array
+> > -
+> > required:
+> > - leds
+> >=20
+> > allOf:
+> > - $ref: leds-class-multicolor.yaml#
+> > + - $ref: /schemas/leds/leds-consumer.yaml#
+>=20
+>=20
+>=20
+> Same comments in this one.
+>=20
+> > unevaluatedProperties: false
+> >=20
+> > diff --git a/Documentation/devicetree/bindings/media/video-interface-de=
+vices.yaml b/Documentation/devicetree/bindings/media/video-interface-device=
+s.yaml
+> > index cf7712ad297c01c946fa4dfdaf9a21646e125099..1e25cea0ff71da2cfd1c7c4=
+642713199f3542c0a 100644
+> > --- a/Documentation/devicetree/bindings/media/video-interface-devices.y=
+aml
+> > +++ b/Documentation/devicetree/bindings/media/video-interface-devices.y=
+aml
+> > @@ -10,6 +10,9 @@ maintainers:
+> > - Jacopo Mondi jacopo@jmondi.org
+> > - Sakari Ailus sakari.ailus@linux.intel.com
+> >=20
+> > +allOf:
+> > + - $ref: /schemas/leds/leds-consumer.yaml#
+>=20
+>=20
+> This can be dropped. The user still has to define how many entries and
+> what the values of led-names are.
+
+Hmm, but where should it be added then? If I just drop it, MIPI camera sche=
+mas which are based on 'video-interface-devices.yaml' and have 'unevaluated=
+Properties: false' throw warnings because 'leds' was not expected. Includin=
+g the example in 'led-consumer.yaml' as found by your bot (because of patch=
+ order your bot only run on 1/4, adding this very change fixes it).
+In this case, v4l2 subnode is the LED user, which is some camera. It seems =
+most/all of these cameras are based on this binding, so instead of adding n=
+ew led related properties to all of them, I thought this is a good common p=
+lace for it... Shall I add #entries and available options for 'led-names' h=
+ere to make it complete?
+
+Thanks,
+Alex
+
+>=20
+> > +
+> > properties:
+> > flash-leds:
+> > $ref: /schemas/types.yaml#/definitions/phandle-array
+> >=20
+> > --
+> > 2.48.1
 
