@@ -1,72 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-72383-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72384-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5078B466F6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 01:02:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4F47BB4670F
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 01:18:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69B3E5A2DFB
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 23:02:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C46193BAA12
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 23:18:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 783BF29D29D;
-	Fri,  5 Sep 2025 23:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3E74217F36;
+	Fri,  5 Sep 2025 23:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gJR8Peuy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Sly972OZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B6527CB04;
-	Fri,  5 Sep 2025 23:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8711F4622;
+	Fri,  5 Sep 2025 23:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757113330; cv=none; b=NXpGzVTo03OQLBQcldKTRq+hrymUwURxlYzzDErNNRAkvr8Efx2TYs2Id50T4e0vX37j9jQNu1/J19pPVmHYLkiYv56kjehx8QKj20pdSNNFHAcLIAQa9bebvK6oUo30pMmZJ7nXrFyBVGjf+LkZaJP3um/O26dziLklAC1Zn6Y=
+	t=1757114300; cv=none; b=cndM3bATkV5kMpgUg1v76BSuowKrJxTq4Tq3SmhST17/g9r9tOdQy7oQ+yIPXGwen3I86dZrodMmIF30d4Si2Ngf+8GlyI9QY5dIVi24bpbXyKVxzUdGwhxOgQfDkrgKgoX4u4X+QYZu5AQXLQc3b8xEYNEbqTP16g/yLV0BOPA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757113330; c=relaxed/simple;
-	bh=A+4/RdKySax+tzp4GDPn4PRAlrr/cIuU7Wohf04Emrs=;
+	s=arc-20240116; t=1757114300; c=relaxed/simple;
+	bh=J9WEIa+VV0+QVsnt8Ym5PX6MCPZuNTIbHrVfBa7z+wY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NfTO/eTsZcUbsnG/I53y9cFlhIaD4zfZs5vMZFxar1gtjx3oYmhoVaCLnQjSUHLDuZpHivIQBGO5W8MwDYJcHh17CndMgMUE1Tbl1LALpjVPDnL6WmJlzjhTa6pjc1MQ9AwD8pEP0b763HfDd3TyVJk5TIREua9FSVsrF+SS2TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gJR8Peuy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0E75C4CEF1;
-	Fri,  5 Sep 2025 23:02:09 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y6k4eNtEGyuj5DXdj3QH1iEbTe3i4w4Zy3nrcjrHvOGiQ96F/t3pf0WRj4KzYtRbBn3acsAm9nAh+G7R/5khUvVJw80zX2q8yrhDoj4u/6WpK2/BmvI+XPPgMzqwLwjjDRKBT5fXK5PLantAEpVNCVoXLmGmltcjI4Dgt+DGCZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Sly972OZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38E6C4CEF1;
+	Fri,  5 Sep 2025 23:18:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757113329;
-	bh=A+4/RdKySax+tzp4GDPn4PRAlrr/cIuU7Wohf04Emrs=;
+	s=k20201202; t=1757114300;
+	bh=J9WEIa+VV0+QVsnt8Ym5PX6MCPZuNTIbHrVfBa7z+wY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gJR8Peuy40MtGwzANFz9PbLYWO6HTL+KwUXl8BCSi3g9DFIXW1L3UKNH1X+545mdM
-	 DP18sjIqbsM+dpCD7qMLBv2lsN1pwS7Xr/aMDqEGbEM6zrWV+fedBKT1WlBcE/Tq0u
-	 14NyYaGYukxn9wgLr7ImvCh8+xLcOBn+WIhQjg0JpENWRqzEOaxb2lhwNWB2WgSU9X
-	 6L+Nm8e65pDvfx3wXoDhOjGp0KodUbF9kV9y+RPjs8lTVA8e6SN3r4yQoON+DeBqpT
-	 Wsc4tjSK5EMpUwxbzyS/TLQ+RMqybcObpGQECFOpyVU/v4+KbjMmMBpnosefcpaF8f
-	 PP4fAYdYBqsxg==
-Date: Fri, 5 Sep 2025 18:02:09 -0500
+	b=Sly972OZKjGVPtM0/0oy4e80y36ZqOj9wlbDQWxdlzl6I0e/OsuQd5q/ULITS8SLv
+	 +6CzeXIOFhWm5Jc4NrGuwofQx2+fVFlVKUZ0UB/lcR3VjxLWRhPT+IoeQ5hvV2k2om
+	 Wi2GQqnLE9OnMo2o0vnU/c0YTZOln7K1IC2sHqTR9LecmffgcUeu1LXaNySGkuIs1q
+	 dPLQ78Mp0VrIpk7inTNgfWvRWyqYzX0EMqJq9ikhftdDFa7Dwscl3ZKZwQc3jQ5Miv
+	 McNRvtIUQaWxYr4Hsee6wIPEOR3atfQ5+FSDTOmSV8YDtcvHhMz5gvnRW0j2V13Kxk
+	 hUTS4wWQSdttQ==
+Date: Fri, 5 Sep 2025 18:18:19 -0500
 From: Rob Herring <robh@kernel.org>
-To: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Hans de Goede <hansg@kernel.org>, Lee Jones <lee@kernel.org>,
-	Pavel Machek <pavel@kernel.org>,
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Daniel Thompson <danielt@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
-	Jacopo Mondi <jacopo@jmondi.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-leds@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Daniel Thompson <daniel.thompson@linaro.org>,
-	dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/4] dt-bindings: leds: commonize leds property
-Message-ID: <20250905230209.GA1423697-robh@kernel.org>
-References: <20250905-leds-v2-0-ed8f66f56da8@vinarskis.com>
- <20250905-leds-v2-2-ed8f66f56da8@vinarskis.com>
- <20250905152404.GB953718-robh@kernel.org>
- <Lm6PLaup84KHzhxYTbsrQIbEeQpc6dj65aLkLFvOx7QwvuXS9ON53Csa2v6LBp4hd9iIQilvGhXqx4kXv4cfqgYUeA49vrVdWJw-fNMLu2Y=@vinarskis.com>
+	Manivannan Sadhasivam <mani@kernel.org>,
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 1/2] dt-bindings: remoteproc: qcom,milos-pas: Document
+ remoteprocs
+Message-ID: <20250905231819.GA1484997-robh@kernel.org>
+References: <20250905-sm7635-remoteprocs-v4-0-9e24febcb246@fairphone.com>
+ <20250905-sm7635-remoteprocs-v4-1-9e24febcb246@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,131 +65,235 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Lm6PLaup84KHzhxYTbsrQIbEeQpc6dj65aLkLFvOx7QwvuXS9ON53Csa2v6LBp4hd9iIQilvGhXqx4kXv4cfqgYUeA49vrVdWJw-fNMLu2Y=@vinarskis.com>
+In-Reply-To: <20250905-sm7635-remoteprocs-v4-1-9e24febcb246@fairphone.com>
 
-On Fri, Sep 05, 2025 at 04:48:52PM +0000, Aleksandrs Vinarskis wrote:
-> On Friday, September 5th, 2025 at 17:24, Rob Herring <robh@kernel.org> wrote:
+On Fri, Sep 05, 2025 at 11:37:04AM +0200, Luca Weiss wrote:
+> Document the bindings for the ADSP, CDSP, MPSS and WPSS PAS on the Milos
+> (e.g. SM7635) SoC.
 > 
-> > 
-> > 
-> > On Fri, Sep 05, 2025 at 09:59:30AM +0200, Aleksandrs Vinarskis wrote:
-> > 
-> > > A number of existing schemas use 'leds' property to provide
-> > > phandle-array of LED(s) to the consumer. Additionally, with the
-> > > upcoming privacy-led support in device-tree, v4l2 subnode could be a
-> > > LED consumer, meaning that all camera sensors should support 'leds'
-> > > and 'led-names' property via common 'video-interface-devices.yaml'.
-> > > 
-> > > To avoid dublication, commonize 'leds' property from existing schemas
-> > > to newly introduced 'led-consumer.yaml'.
-> > > 
-> > > Signed-off-by: Aleksandrs Vinarskis alex@vinarskis.com
-> > > ---
-> > > .../devicetree/bindings/leds/backlight/led-backlight.yaml | 7 +------
-> > > Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml | 6 +-----
-> > > .../devicetree/bindings/media/video-interface-devices.yaml | 3 +++
-> > > 3 files changed, 5 insertions(+), 11 deletions(-)
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml b/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
-> > > index f5554da6bc6c73e94c4a2c32b150b28351b25f16..5e19b4376715eeb05cb789255db209ed27f8822f 100644
-> > > --- a/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
-> > > +++ b/Documentation/devicetree/bindings/leds/backlight/led-backlight.yaml
-> > > @@ -18,17 +18,12 @@ description:
-> > > 
-> > > allOf:
-> > > - $ref: common.yaml#
-> > > + - $ref: /schemas/leds/leds-consumer.yaml#
-> > 
-> > 
-> > Drop.
-> > 
-> > > properties:
-> > > compatible:
-> > > const: led-backlight
-> > > 
-> > > - leds:
-> > > - description: A list of LED nodes
-> > > - $ref: /schemas/types.yaml#/definitions/phandle-array
-> > > - items:
-> > > - maxItems: 1
-> > 
-> > 
-> > You need to keep the property here:
-> > 
-> > leds: true
-> > 
-> > > -
-> > > required:
-> > > - compatible
-> > > - leds
-> > > diff --git a/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
-> > > index 8ed059a5a724f68389a1d0c4396c85b9ccb2d9af..b4f326e8822a3bf452b22f5b9fa7189696f760a4 100644
-> > > --- a/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
-> > > +++ b/Documentation/devicetree/bindings/leds/leds-group-multicolor.yaml
-> > > @@ -17,16 +17,12 @@ properties:
-> > > compatible:
-> > > const: leds-group-multicolor
-> > > 
-> > > - leds:
-> > > - description:
-> > > - An aray of monochromatic leds
-> > > - $ref: /schemas/types.yaml#/definitions/phandle-array
-> > > -
-> > > required:
-> > > - leds
-> > > 
-> > > allOf:
-> > > - $ref: leds-class-multicolor.yaml#
-> > > + - $ref: /schemas/leds/leds-consumer.yaml#
-> > 
-> > 
-> > 
-> > Same comments in this one.
-> > 
-> > > unevaluatedProperties: false
-> > > 
-> > > diff --git a/Documentation/devicetree/bindings/media/video-interface-devices.yaml b/Documentation/devicetree/bindings/media/video-interface-devices.yaml
-> > > index cf7712ad297c01c946fa4dfdaf9a21646e125099..1e25cea0ff71da2cfd1c7c4642713199f3542c0a 100644
-> > > --- a/Documentation/devicetree/bindings/media/video-interface-devices.yaml
-> > > +++ b/Documentation/devicetree/bindings/media/video-interface-devices.yaml
-> > > @@ -10,6 +10,9 @@ maintainers:
-> > > - Jacopo Mondi jacopo@jmondi.org
-> > > - Sakari Ailus sakari.ailus@linux.intel.com
-> > > 
-> > > +allOf:
-> > > + - $ref: /schemas/leds/leds-consumer.yaml#
-> > 
-> > 
-> > This can be dropped. The user still has to define how many entries and
-> > what the values of led-names are.
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  .../bindings/remoteproc/qcom,milos-pas.yaml        | 201 +++++++++++++++++++++
+>  1 file changed, 201 insertions(+)
 > 
-> Hmm, but where should it be added then? If I just drop it, MIPI 
-> camera schemas which are based on 'video-interface-devices.yaml' and 
-> have 'unevaluatedProperties: false' throw warnings because 'leds' was 
-> not expected. Including the example in 'led-consumer.yaml' as found 
-> by your bot (because of patch order your bot only run on 1/4, adding 
-> this very change fixes it).
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,milos-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,milos-pas.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..790ad38a0330bf81f6333e887522ddb97690edbc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,milos-pas.yaml
+> @@ -0,0 +1,201 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/remoteproc/qcom,milos-pas.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Milos SoC Peripheral Authentication Service
+> +
+> +maintainers:
+> +  - Luca Weiss <luca.weiss@fairphone.com>
+> +
+> +description:
+> +  Qualcomm Milos SoC Peripheral Authentication Service loads and boots firmware
+> +  on the Qualcomm DSP Hexagon cores.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,milos-adsp-pas
+> +      - qcom,milos-cdsp-pas
+> +      - qcom,milos-mpss-pas
+> +      - qcom,milos-wpss-pas
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: XO clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: xo
+> +
+> +  interrupts:
+> +    minItems: 6
+> +    maxItems: 6
+> +
+> +  interrupt-names:
+> +    minItems: 6
+> +    maxItems: 6
+> +
+> +  qcom,qmp:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: Reference to the AOSS side-channel message RAM.
+> +
+> +  smd-edge: false
+> +
+> +  firmware-name:
+> +    $ref: /schemas/types.yaml#/definitions/string-array
 
-> In this case, v4l2 subnode is the LED user, which is some camera. It 
-> seems most/all of these cameras are based on this binding, so instead 
-> of adding new led related properties to all of them, I thought this 
-> is a good common place for it... Shall I add #entries and available 
-> options for 'led-names' here to make it complete?
+Drop. Already has a type.
 
-Every camera doesn't have the same LEDs, so you have to define exactly 
-what's there for each one. If you want to do it in 
-video-interface-devices.yanl, then you are standardizing it for 
-everyone. Maybe that's fine? If so, you need something like:
+> +    minItems: 1
+> +    items:
+> +      - description: Firmware name of the Hexagon core
+> +      - description: Firmware name of the Hexagon Devicetree
+> +
+> +  memory-region:
+> +    minItems: 1
+> +    items:
+> +      - description: Memory region for core Firmware authentication
+> +      - description: Memory region for Devicetree Firmware authentication
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - memory-region
+> +
+> +allOf:
+> +  - $ref: /schemas/remoteproc/qcom,pas-common.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,milos-adsp-pas
+> +            - qcom,milos-cdsp-pas
+> +    then:
+> +      properties:
+> +        memory-region:
+> +          minItems: 2
+> +          maxItems: 2
 
-leds:
-  minItems: 1
-  maxItems: 2
+Max is already 2. Drop.
 
-led-names:
-  items:
-    enum:
-      - flash
-      - privacy
+> +        firmware-name:
+> +          minItems: 2
+> +          maxItems: 2
 
-Rob
+Max is already 2. Drop.
+
+> +    else:
+> +      properties:
+> +        memory-region:
+> +          maxItems: 1
+> +        firmware-name:
+> +          maxItems: 1
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,milos-adsp-pas
+> +    then:
+> +      properties:
+> +        power-domains:
+> +          items:
+> +            - description: LCX power domain
+> +            - description: LMX power domain
+> +        power-domain-names:
+> +          items:
+> +            - const: lcx
+> +            - const: lmx
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,milos-cdsp-pas
+> +            - qcom,milos-wpss-pas
+> +    then:
+> +      properties:
+> +        power-domains:
+> +          items:
+> +            - description: CX power domain
+> +            - description: MX power domain
+> +        power-domain-names:
+> +          items:
+> +            - const: cx
+> +            - const: mx
+> +
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          enum:
+> +            - qcom,milos-mpss-pas
+> +    then:
+> +      properties:
+> +        power-domains:
+> +          items:
+> +            - description: CX power domain
+> +            - description: MSS power domain
+> +        power-domain-names:
+> +          items:
+> +            - const: cx
+> +            - const: mss
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,rpmh.h>
+> +    #include <dt-bindings/interconnect/qcom,icc.h>
+> +    #include <dt-bindings/interconnect/qcom,milos-rpmh.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/mailbox/qcom-ipcc.h>
+> +    #include <dt-bindings/power/qcom,rpmhpd.h>
+> +
+> +    remoteproc@3000000 {
+> +        compatible = "qcom,milos-adsp-pas";
+> +        reg = <0x03000000 0x10000>;
+> +
+> +        interrupts-extended = <&pdc 6 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>,
+> +                              <&smp2p_adsp_in 7 IRQ_TYPE_EDGE_RISING>;
+> +        interrupt-names = "wdog",
+> +                          "fatal",
+> +                          "ready",
+> +                          "handover",
+> +                          "stop-ack",
+> +                          "shutdown-ack";
+> +
+> +        clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +        clock-names = "xo";
+> +
+> +        power-domains = <&rpmhpd RPMHPD_LCX>,
+> +                        <&rpmhpd RPMHPD_LMX>;
+> +        power-domain-names = "lcx",
+> +                             "lmx";
+> +
+> +        interconnects = <&lpass_ag_noc MASTER_LPASS_PROC QCOM_ICC_TAG_ALWAYS
+> +                         &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
+> +
+> +        memory-region = <&adspslpi_mem>, <&q6_adsp_dtb_mem>;
+> +
+> +        firmware-name = "qcom/milos/vendor/device/adsp.mbn",
+> +                        "qcom/milos/vendor/device/adsp_dtb.mbn";
+> +
+> +        qcom,qmp = <&aoss_qmp>;
+> +
+> +        qcom,smem-states = <&smp2p_adsp_out 0>;
+> +        qcom,smem-state-names = "stop";
+> +
+> +        glink-edge {
+> +            interrupts-extended = <&ipcc IPCC_CLIENT_LPASS
+> +                                         IPCC_MPROC_SIGNAL_GLINK_QMP
+> +                                         IRQ_TYPE_EDGE_RISING>;
+> +            mboxes = <&ipcc IPCC_CLIENT_LPASS
+> +                            IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +
+> +            label = "lpass";
+> +            qcom,remote-pid = <2>;
+> +
+> +            /* ... */
+> +        };
+> +    };
+> 
+> -- 
+> 2.51.0
+> 
 
