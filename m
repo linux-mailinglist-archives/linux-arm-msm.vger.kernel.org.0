@@ -1,233 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-72189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09A96B44ECE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:13:47 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DA17B44EE1
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:16:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A46E7188CE38
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 07:14:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D93E4859CB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 07:16:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1F0C2D46B2;
-	Fri,  5 Sep 2025 07:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 132D42DCF5F;
+	Fri,  5 Sep 2025 07:15:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="peJi7NKG"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="C2mJYHgM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC50332F76C
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 07:13:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4959F2DAFBA;
+	Fri,  5 Sep 2025 07:15:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757056421; cv=none; b=SpBmlt3QWAEx1Ye7T4qF+J86sCXfKGK4BSWPUiNdDVdahWTEFGmaZ85Wt8TTE1/CNGueEr0Dq60Liow68I/kkVdMM5f/jXAlmL9oaAzXKgO4CR51cTc5lB2HqBNZyhJXLfA/URykuOH+0foy8/iDWzXq1c+LanlytJuXQbVwp9s=
+	t=1757056517; cv=none; b=vGbVmsQ95cte4OKSpCwUgA4+Go/RHGqjhSZ84X8Hs85BonOdOg11E6jo2vSCoR3ERFDx+o6hyX0gxPQ+oqwPi/SXeLV6F5UiSMobMrxnCMtqg7QqGuXALh4YQVgG8Vc0eDYmJyN04NO8lHDzv+Y/nZn3VsyTGWbXHi5J7VchNPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757056421; c=relaxed/simple;
-	bh=4Cfy4iuqk9/dPVlDVB5HT1Idv3NxiI7cRgHqe7XBxkY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=VwVwx7KAsbN/CtLi9DMrY0JVGqyny34nboMdLakNMvN18Sz+3joCJ61ja5cCE8brnYWBQCC2oAzlG5y1VSTqKZcfCFkE7JEatNI7ZsbMZ4b9jek4YGH7u+V2oNIChVRarNRtgvEE0p0UUJSvLi2A3Fd80RolmYgikPaBJYPqX2c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=peJi7NKG; arc=none smtp.client-ip=209.85.218.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b042ec947e4so248171366b.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 00:13:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757056418; x=1757661218; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i7O8opwGpl1ITqT1mc56YpuAnvk0uxi1IiKUdTq+yIE=;
-        b=peJi7NKGJKgb1DTeam2jpmO5geQVd6u6fofp/5M4IRrsGVZ1Z5WX0hT+j42mXDRfT8
-         OxpZrQUHBYGSarYfm5E/twe+7oYqpRcMH47wV2toTK26vINQolFl2DOZvtq3kOF9L3Ht
-         EsVF2iLvfa9gJR/lc5AuBcsNNbKMTZNkdxa65bjVKxf1DuKNdefsxzShQwQwrMzoOXKY
-         Bn2MUm71YKXRmAbn+G4eO98U95/7tLDv4kg2Srb8qZTTvUVMEIHOWr4NNMdl2xPPBco4
-         S+a0R38NLXBXa3/HA547h9hIYqVNkQNwk7G4PzvnEQVJHtXA6tx9MhjBAw1A9nbjNqJO
-         ihsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757056418; x=1757661218;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=i7O8opwGpl1ITqT1mc56YpuAnvk0uxi1IiKUdTq+yIE=;
-        b=manV+lDUdfQ6ZTJbNyY7Znw4D9CzJHhkEqRTNUFI2W8QLgsdgtXCUa1BY2vgxSM7sP
-         O5L6mdF4xXV3ydPBK4TzYL08J7JiKr7xI2SyGbRf7gMdM9QXidJmz8ND+xC0I3gThEqH
-         fnNabx4KQcWgNLew7hd18yGufOoFBkS8+izSWesER1SGw4idY0ZCk/B7tgbxSF6eIjqH
-         dZwR5NIS+x/Wn2q5CEM3a1VT2lFAcelQhAWs5tVMg/k99Dx3z6ECaHHapyytZRXqD9Ht
-         XherY7OOUVV7228uMpFrlC93KpYBo4317hFWs0fonQKFwewrA55sLEu/xbIXaRtXWtNC
-         z4aw==
-X-Forwarded-Encrypted: i=1; AJvYcCUKCsCRf/wDxQpVxJZNpPIqrOjYI/XHpyZ8I4R93dJtfwZW4fx1DzKGZL4zbVlbVszLdejf5ESWlf6IGA96@vger.kernel.org
-X-Gm-Message-State: AOJu0YyDTUqJgK++jY3U4Me/4UBlch2mfglTtSc7uTY9QoWP9ZHnn0Dx
-	bBQ4yzLkgE0RADXeX0OnLsnddTchlGE9SccUzeyujY6Xs2KassrhDxHr7x91O448uMA=
-X-Gm-Gg: ASbGnct7vL2ZFoQgtRZh10EMNHBvEiBuY7edbvesMJYVjmTwRRyMyjJqEdxgPxE/SV6
-	OEIw/5UGteYyZ/RjLf2rlE5t57Op4PmIxYTC54TEOkKtIGas9iLL6mb8ptaj+nv4y2DdNdxboAU
-	haCSZgRit3LinyiP11drgH+75hzc1otaM7FdErgrVZNUQQruyy28nS5ldKLWp5X/cFpbwy/U6Sy
-	rEMGemT2bVqaU2FQZ1UkoloYosKrB8SKmSQfHozmdjjQNVsK2h314LFJyDqK7yCBtb0Tmz2KmXX
-	GZmMnyV4cSb7G+xLKjuUhwY+v9dwkJEDMpXfuC0Gr5w7mPDaT4fO9DA5U0zt8udMDHr5K7tLQkW
-	3lVDny58CfdkqdzuolsbGF2WwSKxS7hHuM1UIlmbaMdfdExiuMAWoI50=
-X-Google-Smtp-Source: AGHT+IGN10OuJQqOIsP8A72As17WV08I9Wcr3BGqorIsHUoOAy4v9RonEadxj5JXcGpFlvCOlFsSQg==
-X-Received: by 2002:a17:907:170c:b0:b04:1f42:5de1 with SMTP id a640c23a62f3a-b041f42615emr1607531466b.42.1757056417790;
-        Fri, 05 Sep 2025 00:13:37 -0700 (PDT)
-Received: from [192.168.7.190] ([212.114.21.58])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0416e878a2sm1316704366b.95.2025.09.05.00.13.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Sep 2025 00:13:37 -0700 (PDT)
-Message-ID: <199d5ced-e7ef-4109-8b1c-b3374db3e368@linaro.org>
-Date: Fri, 5 Sep 2025 09:13:35 +0200
+	s=arc-20240116; t=1757056517; c=relaxed/simple;
+	bh=l0LgmoVu57gmmqkxJRv6F9Ot+jdWHsty8iJFi6rkzxo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OhpcfbgUpQ4j+BEP85Dvc8BK4s41HmISCJ5NKnWJI4VYl7BgobitUlaCi/TOa+sHdRJIQYgP87FsgvdaZdl5/GDQEguix1ISNRrK1k7ZZUYLWx9kxXXe7jlr2bpPuDrgm3p4pJDzlN0BQHxGcXp80XZSGPFyiMCWWyEmzzDP7oQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=C2mJYHgM; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5854SeO2018638;
+	Fri, 5 Sep 2025 07:14:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=YJ6zDa0XJUo6OqEUZAiADROj3jEN4WSc4hw
+	qt8M0CD4=; b=C2mJYHgM6g3GqzfC/ZKiE5sPDipdh6ad9Cf6LJ1sr1uDrMPrQd6
+	0eOS1HCBJu0pcxuzpEMcg66c2sE9b51lcL+irxSDXtP0y6kaAw8FVnc2VO4drqQk
+	6CZ6HZK7dtkgjE9Xb2dS0WWorc34VaRYuJaZe5YEpvKALTbb++SxqHPf4Jk6egwZ
+	jWh+OZ35cBNSfnB+0VlMmmT+9U1MNt7zllAVntXlCsKKVcagVHd8fLn0GYz8I8V6
+	5RbjrRhJDHinEBxrMBM/yLt3aB/vVt8mbsqtyofc4dZfkJtkhDQ3cY+SI+V8vBZd
+	/JWTcUyuJfS0HHJXRMbMLoihBTfgYnQ/Y0w==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48yebut367-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Sep 2025 07:14:58 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5857EtRm016434;
+	Fri, 5 Sep 2025 07:14:55 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 48utcmrhs3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Sep 2025 07:14:55 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5857EtGx016424;
+	Fri, 5 Sep 2025 07:14:55 GMT
+Received: from ziyuzhan-gv.ap.qualcomm.com (ziyuzhan-gv.qualcomm.com [10.64.66.102])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 5857EsKJ016420
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 Sep 2025 07:14:55 +0000
+Received: by ziyuzhan-gv.ap.qualcomm.com (Postfix, from userid 4438065)
+	id A8D20522; Fri,  5 Sep 2025 15:14:53 +0800 (CST)
+From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>,
+        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Subject: [PATCH v12 0/5] pci: qcom: Add QCS8300 PCIe support
+Date: Fri,  5 Sep 2025 15:14:43 +0800
+Message-ID: <20250905071448.2034594-1-ziyue.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL
- command
-To: "Jayaraman, Venkat" <venkat.jayaraman@intel.com>,
- Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
- "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
- PSE Type-C Linux <pse.type-c.linux@intel.com>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20250814163028.18058-1-venkat.jayaraman@intel.com>
- <91cb0acb-73c4-4d3a-9aa8-1056f367d82e@linaro.org>
- <aKbI4DnIDD9fD_Gz@kuha.fi.intel.com>
- <b897d082-0d74-46fc-a0e4-7745347ba597@linaro.org>
- <CH0PR11MB5300AD8DD6BE6CBC799B49DD8000A@CH0PR11MB5300.namprd11.prod.outlook.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <CH0PR11MB5300AD8DD6BE6CBC799B49DD8000A@CH0PR11MB5300.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: F8CcoH5iPPSokcYbbB7M9mXrL7Bz9ofZ
+X-Authority-Analysis: v=2.4 cv=X+ZSKHTe c=1 sm=1 tr=0 ts=68ba8df3 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=QyXUC8HyAAAA:8 a=MByrn4WnkjAl5ObW7ywA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA0MDE2MyBTYWx0ZWRfX8WmAfvP8WHte
+ xLgGWm1v9paNtIv5oPmep6jNOQw5tOR00979rY2ybfZyO4Y54RVduI38H26Tz+Z9LlLnQQgDqwH
+ iFxGtdpTsPBR0whAfAIudENExEHJdXCTK+WDtE97d6Apo7dyFv8EFNSqsV+xtOeOOu4YgWzk+/V
+ gaeP8IRv5Kkilz7KS9PCF20RzYfG/c3sHjSx5OShOjxffBOoLxtAH7j6jSaEL9R42KXJvRWJ/cz
+ hoye7s9cGOi7NlLIKLt4qCrC8N69NQ+HOQuGD0W41/WkWk+aVIfSv7G/E5O1C7VtvVpJmV/sEBO
+ HArvqMJvVTsXH7Wx8Fi3hf4WR7zmdX+rvUQGkTn6wIwNhh+AfBtJUdeTflcvFctt/bgh0gb7vRo
+ /MS35nEL
+X-Proofpoint-ORIG-GUID: F8CcoH5iPPSokcYbbB7M9mXrL7Bz9ofZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-05_02,2025-09-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 bulkscore=0 clxscore=1015 impostorscore=0 phishscore=0
+ malwarescore=0 adultscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509040163
 
-On 04/09/2025 21:14, Jayaraman, Venkat wrote:
-> Hi Neil,
-> 
->> -----Original Message-----
->> From: Neil Armstrong <neil.armstrong@linaro.org>
->> Sent: Monday, September 1, 2025 12:50 AM
->> To: Heikki Krogerus <heikki.krogerus@linux.intel.com>
->> Cc: Jayaraman, Venkat <venkat.jayaraman@intel.com>; linux-usb@vger.kernel.org; gregkh@linuxfoundation.org; PSE Type-C Linux
->> <pse.type-c.linux@intel.com>; linux-arm-msm <linux-arm-msm@vger.kernel.org>
->> Subject: Re: [PATCH v3] usb: typec: ucsi: Add support for READ_POWER_LEVEL command
->>
->> Hi,
->>
->> On 21/08/2025 09:21, Heikki Krogerus wrote:
->>> On Tue, Aug 19, 2025 at 11:47:58AM +0200, Neil Armstrong wrote:
->>>> Hi,
->>>>
->>>> On 14/08/2025 18:30, Venkat Jayaraman wrote:
->>>>> Add support for UCSI READ_POWER_LEVEL command as per
->>>>> UCSI specification v2.1 and above to debugfs.
->>>>>
->>>>> Following power related fields will be exposed as files in debugfs:-
->>>>> peak_current (Peak current),
->>>>> avg_current (Average current) and
->>>>> vbus_voltage (VBUS voltage)
->>>>>
->>>>> These files will be updated either when a READ_POWER_LEVEL
->>>>> command is sent from OS or when a device is connected.
->>>>>
->>>>> Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
->>>>> Signed-off-by: Venkat Jayaraman <venkat.jayaraman@intel.com>
->>>>> ---
->>>>> Changelog v3:
->>>>> - Rebased to kernel 6.17-rc1
->>>>>
->>>>> Changelog v2:
->>>>> - Removed extra space in declaration
->>>>> - Made the call to debugfs_create_file single line for clarity
->>>>>
->>>>>     drivers/usb/typec/ucsi/debugfs.c | 31 +++++++++++++++++++++++++++++++
->>>>>     drivers/usb/typec/ucsi/ucsi.c    | 16 ++++++++++++++++
->>>>>     drivers/usb/typec/ucsi/ucsi.h    | 13 +++++++++++++
->>>>>     3 files changed, 60 insertions(+)
->>>>>
->>>>
->>>> This commit causes the following warning:
->>>> [    8.646179] ------------[ cut here ]------------
->>>> [    8.650986] Access to unsupported field at offset 0x59 (need version 0210)
->>>> [    8.651044] WARNING: drivers/usb/typec/ucsi/ucsi.c:1296 at ucsi_handle_connector_change+0x380/0x414 [typec_ucsi], CPU#0:
->> kworker/0:0/9
->>>> <snip>
->>>> [    8.832491] Hardware name: Qualcomm Technologies, Inc. SM8550 HDK (DT)
->>>> [    8.839228] Workqueue: events ucsi_handle_connector_change [typec_ucsi]
->>>> [    8.846084] pstate: 63400005 (nZCv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
->>>> [    8.853277] pc : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
->>>> [    8.860031] lr : ucsi_handle_connector_change+0x380/0x414 [typec_ucsi]
->>>> <snip>
->>>> [    8.944023] Call trace:
->>>> [    8.946570]  ucsi_handle_connector_change+0x380/0x414 [typec_ucsi] (P)
->>>> [    8.953328]  process_one_work+0x148/0x28c
->>>> [    8.957502]  worker_thread+0x2c8/0x3d0
->>>> [    8.961401]  kthread+0x12c/0x204
->>>> [    8.964759]  ret_from_fork+0x10/0x20
->>>> [    8.968474] ---[ end trace 0000000000000000 ]---
->>>>
->>>> on:
->>>> 8550-hdk:
->>>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253312#L1418
->>>> 8550-qrd:
->>>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253306#L1560
->>>> 8650-hdk:
->>>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253308#L1494
->>>> 8650-qrd:
->>>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253309#L1594
->>>> x1-crd:
->>>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253311#L2226
->>>> x1-qcp:
->>>> https://git.codelinaro.org/linaro/qcomlt/ci/staging/cdba-tester/-/jobs/253310#L2160
->>>>
->>>> I guess the version should be checked.
->>>
->>> Venkat, can you be prepare the fix for this?
->>>
->>> thanks,
->>>
->>
->> Gentle ping, can this be fixed ? Should I send a revert patch ?
->>
->> Neil
-> 
-> The Fix patch, for this warning, is ready and approved, can submit once the initial patch is merged.
+This series depend on this patch
+https://lore.kernel.org/all/20250826-pakala-v2-3-74f1f60676c6@oss.qualcomm.com/
 
-Please post the fix, this broken patch is already on linux-next since Sun Aug 17:
-https://kernel.googlesource.com/pub/scm/linux/kernel/git/next/linux-next/+/c851b71fd6cdbf3000bf0a2354592a0f09db3ba3
+This series adds document, phy, configs support for PCIe in QCS8300.
+It also adds 'link_down' reset for sa8775p.
 
-Neil
+Have follwing changes:
+	- Add dedicated schema for the PCIe controllers found on QCS8300.
+	- Add compatible for qcs8300 platform.
+	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
+	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
 
-> 
-> Venkat
-> 
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+---
+Changes in v12:
+- rebased pcie phy bindings
+- Link to v11: https://lore.kernel.org/all/20250826091205.3625138-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v11:
+- move phy/perst/wake to pcie bridge node (Mani)
+- Link to v10: https://lore.kernel.org/all/20250811071131.982983-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v10:
+- Update PHY max_items (Johan)
+- Link to v9: https://lore.kernel.org/all/20250725104037.4054070-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v9:
+- Fix DTB error (Vinod)
+- Link to v8: https://lore.kernel.org/all/20250714081529.3847385-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v8:
+- rebase sc8280xp-qmp-pcie-phy change to solve conflicts.
+- Add Fixes tag to phy change (Johan)
+- Link to v7: https://lore.kernel.org/all/20250625092539.762075-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v7:
+- rebase qcs8300-ride.dtsi change to solve conflicts.
+- Link to v6: https://lore.kernel.org/all/20250529035635.4162149-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v6:
+- move the qcs8300 and sa8775p phy compatibility entry into the list of PHYs that require six clocks
+- Update QCS8300 and sa8775p phy dt, remove aux clock.
+- Fixed compile error found by kernel test robot
+- Link to v5: https://lore.kernel.org/all/20250507031019.4080541-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v5:
+- Add QCOM PCIe controller version in commit msg (Mani)
+- Modify platform dts change subject (Dmitry)
+- Fixed compile error found by kernel test robot
+- Link to v4: https://lore.kernel.org/linux-phy/20241220055239.2744024-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v4:
+- Add received tag
+- Fixed compile error found by kernel test robot
+- Link to v3: https://lore.kernel.org/lkml/202412211301.bQO6vXpo-lkp@intel.com/T/#mdd63e5be39acbf879218aef91c87b12d4540e0f7
+
+Changes in v3:
+- Add received tag(Rob & Dmitry)
+- Update pcie_phy in gcc node to soc dtsi(Dmitry & Konrad)
+- remove pcieprot0 node(Konrad & Mani)
+- Fix format comments(Konrad)
+- Update base-commit to tag: next-20241213(Bjorn)
+- Corrected of_device_id.data from 1.9.0 to 1.34.0.
+- Link to v2: https://lore.kernel.org/all/20241128081056.1361739-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v2:
+- Fix some format comments and match the style in x1e80100(Konrad)
+- Add global interrupt for PCIe0 and PCIe1(Konrad)
+- split the soc dtsi and the platform dts into two changes(Konrad)
+- Link to v1: https://lore.kernel.org/all/20241114095409.2682558-1-quic_ziyuzhan@quicinc.com/
+
+Ziyue Zhang (5):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+    for qcs8300
+  arm64: dts: qcom: qcs8300: enable pcie0
+  arm64: dts: qcom: qcs8300-ride: enable pcie0 interface
+  arm64: dts: qcom: qcs8300: enable pcie1
+  arm64: dts: qcom: qcs8300-ride: enable pcie1 interface
+
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |   5 +-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts     |  84 +++++
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 310 +++++++++++++++++-
+ 3 files changed, 394 insertions(+), 5 deletions(-)
+
+
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+-- 
+2.43.0
 
 
