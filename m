@@ -1,211 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-72150-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72151-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6E88B44AB4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 02:15:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62008B44AC3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 02:38:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7C14D54759D
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 00:15:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 20450586037
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 00:38:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A5BB413B293;
-	Fri,  5 Sep 2025 00:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E926B188000;
+	Fri,  5 Sep 2025 00:38:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jY/QQlXW"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gJ0Gktzc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8158F85260
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 00:15:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3D2156F20
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 00:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757031312; cv=none; b=tOWQf/FfCFKGhnpJnEpJ5np/3w40mwhajNOlYJdl33t7P3xVL4O356nqgEw69lZzKCyC9ubRR3c+2isk9sHVIaPxltlERKYftFt0ebDcJuCRYa9naJwGLM+EuaYC+x5Yfu6i4NjZo9Iwni770Nji/w4Q+ydTg6z0qVxArVKJl18=
+	t=1757032722; cv=none; b=iogWiii8Lvjg5Gt+XUNvNDJto7SF2wPHfHiBNYmNoYQUCwcRsOfrT8rkm/QSuy3mX/7+WYh54Za9d4wRYgz0eZ8LCtCdNihjWnDmOynOru6w0W2wxeDwoLDkrtDWmhOLGPGNz1zckO3cKdBBKdrsBfO8jDose6VCM85ua64l14s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757031312; c=relaxed/simple;
-	bh=Nq0tYidYcWS7UH25GXS90yDlOI6V78+FMA1zNge1d5M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sJ/S3UTJ/9xBK+Ui8RCKxMrR5TecqsDd/uwv6mQ+khQxvhj1910UV24yFr0uBaHyyiRYCC0cnExFxyZzy+yvcl/rFAkiXYyx2sgXb9Etso4fEuGBfvMR9A07HPOr8kCvBIzr4WKScZ7CBbeSrKgCXeklsbOZdyLheC6bGWCuQUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jY/QQlXW; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45b8b7ac427so12434515e9.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 17:15:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757031309; x=1757636109; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1n/rQnUEn7GyoDZq+ztDxxjMsob+AoSXhZdfC132cBM=;
-        b=jY/QQlXW+u68hBDecsKP+XYKy00bhXjjQHeBt18e0JUeqhlLcEtM1K023F8DYbq4hc
-         HA2az4zSd7QeLuVCbypOT/SrkbSkRot5cngY5Vti4rbVYmEGlpf18PlhV0BdNkiH879f
-         ws6j2bB8G75JN74+SKVbyUF12Tjd7ZQH7WfLnydPmgtmf4Lm4eMj2fbIX754DVfmnw3n
-         KxtL7Wth7cZW6oGjyKBlLi4YjxBUg6tv1Ks4FCEmpBiUl/Mq3Nw20+wxEpnA0mr4R4FX
-         DQNAt/WRFY9MOBhMAaYssvKPUhxJ7wyvZ8CKbCq/Li6/imzxLwCf/2FW5O+mD0pSC2No
-         7s7w==
+	s=arc-20240116; t=1757032722; c=relaxed/simple;
+	bh=qW6/eOo9LKWtLOPcjncf4diY+DYlgQ8HDpWPicvkcCc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=HNV8tQErSs7fXL4X3yY2c36sL1kLgqSk2XCkv0uVpI+uVfPoImrN0YkkSzkA46RUnXVUwkUpoYNNdhDo4w0Kx7ERmr/P1ZyTbHx258UKWLq/yYoinqTmItwwowH8r7ftr6mx2fHBUMHt8+YUnrzagdDyhYTQ92SiC4o9JPCoyHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gJ0Gktzc; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 584HqExf031853
+	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Sep 2025 00:38:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=ZQ1S7RqBfWQLYYMNG1n1QH
+	bTBVxy2xoCDvsUe2ZNd+8=; b=gJ0GktzcYf4HvI+MGTT4gqAMCiYFFojtqKgU9l
+	y25gPSfo9ocuoB/gzNafYTZAKkl406vvvTGawoU5LNIiYrWzOnVnBFk0etWfe6z4
+	sHi5jnHZsVh36WkbqroVwAuhDhqzSt+TBhLvSROD1O2lVj2uLmbnEDIl0rMUHkBm
+	OO0g6IFgiSea+1ZY/uW8PRLcmP8NKCofbmFAQEL7RzMESdvhFDwXxdIlkf/5iyS4
+	f87MVIqYvEYN77qW2fWmAa9PlFxGqHLrulGLoYacbuHP50DrGuVwhbFb1BuKmjBJ
+	p3AkeeEr/lVdIydTae/qc5yFyCDO1Rx3pfyuX57wglqj2/ww==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urw09bw2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 00:38:40 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-80acebb7cb7so369160485a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 04 Sep 2025 17:38:40 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757031309; x=1757636109;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1757032719; x=1757637519;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=1n/rQnUEn7GyoDZq+ztDxxjMsob+AoSXhZdfC132cBM=;
-        b=oaHdO2o7XEhx8przR62VdBfykRg9Imx0i0bkRLuAhqaHul3zfJ5d/eaAEOrXEj4q/C
-         UJswhvBLwMHBf8WXYCblfU/+7E2OtwkSs7YX3oXlukV2FGlh+u06HFLnieaRiCtQWOvM
-         EyTaXwKKSgF/SpVZo7mjGI6rXCQIOH52tgcBApZADjp21KlJzhy0BBEYnUAa5xU7YfKV
-         oZMY/8kgt7zf29iDx/j/g9jBNI5IT5pHkpS3tKfSITYjkCJSEIOdHPJx86rLw+N0bcok
-         i+VuW04l6d+Uie/6SMV4tUuTOkBBQyMuU8qX7TqJreyk7clzb+95u5vwREme6W5QX9yv
-         4V6Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWITgknQHbuNiHWquc+uC7A997jjc1jEeQvuiPNzi70M2BhsVNo/tBCDG3JDEw5+8T7exS+6dgeopl+NT0R@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRYhDm/OhirwjJvuir8nqTtj63PvZFrFsW2GIYDOHcXqw5liXp
-	FFxJ/B1ux0XRPgiISm1rVNjxRbkWz04j62Ftm+29ERXIkeDvOUf3iVBCIr7zwo59y0Jetg/nDkx
-	PFUxiVylIbr/7AdMH4Ii+mSO/pV+gTPkQgynpEo6t2g==
-X-Gm-Gg: ASbGncv/7JAkYdkMDiZVPxG/eDjoHgBCUfLf65cCZvCm3BMb+KiK4p9seJEaiXNDKMB
-	y+B0wPiY5i1Ugw9s8yW1dVY5jPk+XB7AW4oGnd0+iMb3JdVWyzFOINqaB13GSOeAcbM0ENf/WF3
-	a0U358Qvp4zWzEVmRlaGHXoZhg3Ah/BdgnbrsTyzknxa2hVnc2NWwhz3qxsRRQNC0Uf2xmlBgDp
-	EG3bQ==
-X-Google-Smtp-Source: AGHT+IGj15U2Ts3kcu6tXtZt1/h5FIY/A1yk077GAC+Jyg1MndthZQ2lQpMOj8u6CbNn4gsvAMKWNZ1fsXJvpx9WBYE=
-X-Received: by 2002:a5d:5f46:0:b0:3d5:6551:4016 with SMTP id
- ffacd0b85a97d-3d565515fe6mr13823174f8f.14.1757031308792; Thu, 04 Sep 2025
- 17:15:08 -0700 (PDT)
+        bh=ZQ1S7RqBfWQLYYMNG1n1QHbTBVxy2xoCDvsUe2ZNd+8=;
+        b=aT0BlVBpXugqLlmlqQcJO+b573/6J4mH6nU7G8d6g4bIAresEOjavGZNLkdLgoAt0I
+         mNj0vRTF19KXKXRLT1rRw6yipPmzsRrlvjpR+rrNnv3RobVMaIBgafAtWaz8EvEK+V5j
+         /gxLjsGOICAB8g16CQBLSw4sjCh9gzRNbayvH3zEpEaW3YRX1/6RBhfMJ26uj/nMmhQz
+         ygGxOh0+2OmZBZ8gSMYdLV62OL016Ic0XAMVJ7Za5WtXlONqbq/ndCMH88DpQPCbFm7P
+         gK/gHEa/1QV1zcWKRHO6/OUs1NrUUSlhyCUcT2y0qjvrcWjVQiOVhRjsxK5ESnV0HYuj
+         gnlg==
+X-Gm-Message-State: AOJu0YwdN2zMqVznjknBy5IT3vPK/jqAxq9AnhkYzbZksjmvps8dMkNA
+	AHlpJl9V34BvzYmN/6/QOKMQgapXrAmdRv2Kg5Sf4Y1uMZ5w5DvH5dubP/dLCqp+LFP9qvD6V+l
+	uIJXHvzBxcCHXrcs1t59xBJBwz6jwPsoyk7ZbEqNorRYQdrphUtxvxJJMiwgMQQo/npnu
+X-Gm-Gg: ASbGnctG7fRK0vmGZZLDMjwcPLe0pnHFO29/iUgGWb1ExN2NbfYoet03/gYNpyXKUwP
+	ov2eFf0x08SM3rKGmJv6sjXu9dI/z8mFxGI/Nv5qU8Gpvu2dcKFSQf/4Ye2lOzwSx9Rgdo6rMG5
+	DWs0I5s8B2m88ewklAB1waKf3UxlSRlU3EJOthSmGTw/bv0NRDJQI1GDmfSKMKfAw3W+jZwdBt4
+	+4rh3/B/WUnB/BMEqqeK1Pti92JHpyLpSC9ixJ5ED7J8tWU3ep2hLJK+qf43Omuk/oD6DDVoikD
+	8CphG/qjf+HPL+YiB6nT6+TXkPrAN4zr081fLC7QcVPvB/vBNHXZ3A2c9uOoumgfSEVPUzTG7jV
+	6WrsFboaOM7zuu5Mgf/1F2IZiUcMa/ciEJacTKzV6VUuQ06971QCB
+X-Received: by 2002:a05:6214:19cc:b0:716:ba73:8b72 with SMTP id 6a1803df08f44-716ba738bf2mr270613986d6.19.1757032719214;
+        Thu, 04 Sep 2025 17:38:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH78jS1CC6gp64q9CeCchmxo9IKoMvJ1QZpZ/tTHVE199OLsf88wLnqSYWQo27SKv7RW7GqeQ==
+X-Received: by 2002:a05:6214:19cc:b0:716:ba73:8b72 with SMTP id 6a1803df08f44-716ba738bf2mr270613576d6.19.1757032718742;
+        Thu, 04 Sep 2025 17:38:38 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5608acfd938sm1510059e87.109.2025.09.04.17.38.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 04 Sep 2025 17:38:36 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH v2 00/12] drm/msm/dpu: rework format handling code
+Date: Fri, 05 Sep 2025 03:38:29 +0300
+Message-Id: <20250905-dpu-formats-v2-0-7a674028c048@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250814-wip-obbardc-qcom-t14s-oled-panel-v7-1-89966ae886a3@linaro.org>
-In-Reply-To: <20250814-wip-obbardc-qcom-t14s-oled-panel-v7-1-89966ae886a3@linaro.org>
-From: Christopher Obbard <christopher.obbard@linaro.org>
-Date: Fri, 5 Sep 2025 01:14:57 +0100
-X-Gm-Features: Ac12FXzgGD8FfSa_WME3qIhlvvQzp0tW_Hx2PtWKp2ZbsjrohS1FvpsYw3rDPSs
-Message-ID: <CACr-zFCjrQAM0W9NnWJTwGYc=MnR8ODawW-DK+LJjRJYJznaEQ@mail.gmail.com>
-Subject: Re: [PATCH v7] arm64: dts: qcom: x1e78100-t14s-oled: Add eDP panel
-To: Bjorn Andersson <andersson@kernel.org>
-Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, Johan Hovold <johan@kernel.org>, 
-	Rui Miguel Silva <rui.silva@linaro.org>, Abel Vesa <abel.vesa@linaro.org>, devicetree@vger.kernel.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Konrad Dybcio <quic_kdybcio@quicinc.com>, 
-	Douglas Anderson <dianders@chromium.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Jessica Zhang <quic_jesszhan@quicinc.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Maxime Ripard <mripard@kernel.org>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Aleksandrs Vinarskis <alex.vinarskis@gmail.com>, Sibi Sankar <quic_sibis@quicinc.com>, 
-	Rajendra Nayak <quic_rjendra@quicinc.com>, Xilin Wu <wuxilin123@gmail.com>, 
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>, Srinivas Kandagatla <srini@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAUxumgC/22MQQ6CMBBFr0JmbckUIaIr72FYtHQqTSyFDhAN6
+ d2trN385P3kvR2YoiOGW7FDpM2xC2OG6lRAP6jxScKZzFBh1eAFG2GmVdgQvVpYoGkU1UYqqa+
+ QjSmSde+j9ugyD46XED9HfJO/939nkwJFjRa1Pkvd9u09MJfzql598L7MA11K6Qv9ISfSrQAAA
+ A==
+X-Change-ID: 20250705-dpu-formats-0d5ae4d1a1b9
+To: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1940;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=qW6/eOo9LKWtLOPcjncf4diY+DYlgQ8HDpWPicvkcCc=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBoujEI34ZWt8/uxOCCrSdZPDQoLW0OQwNEl574P
+ Bda+7JrzIuJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaLoxCAAKCRCLPIo+Aiko
+ 1e3fB/sGKF68MD3l94OTzkHkplbqwsQrimwI8MrePyZDA0gRkuJ0n9rx+IjpmfrO6IfDDzUqKJa
+ FAuZpjx9SdSP2qmXlwDXCwww4iSqrnFngy/BEiaY0RvhqeAFN7fY7pgmwBE8Jds1qzVyFexPbzn
+ 9CoNJ1J8JxNRWaeJ1t7HdF6oqTCH2yqYFkR9U2a4h5LhnNRIHXUtdHFX4wI1EMrb9NOjGphlTxO
+ nS+YWShKQ+31Eqw1NDyUxyia5j/P2ewl4dS8WuqM8b0jcIPEmBRjXQb5QIZ53IYHBwxh8Z2/TlK
+ U5CP94rpkwYGshLBdhDtsPIZ3EyA4siwQFts1f2UyO5toXTw
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-GUID: tlaCOIDG7hECVQ4SrvdiVTaXWZpKAcHT
+X-Proofpoint-ORIG-GUID: tlaCOIDG7hECVQ4SrvdiVTaXWZpKAcHT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNyBTYWx0ZWRfX7CXHiY9nMeXd
+ LfoFcHyeEAHaWm6TpcYdi+5abhpIlmz2EiDp2bOsmaWagr7lA+H7Mo/buSVVWN8hIY6H3kGnVWQ
+ UzvpZjo/+zUvm0GBbEb21qJMxeHNqIgraiJkXZwS/nPZ+QvCRYlmZO87DogcaOOcvg7g56O2aM2
+ ceKC7BpgRQ1kLvKXtZFO23noOqoNjG3yW/BEXnFoTWxqpJCZCnOHpuhVFxvnZK7rOcgeyMHy1UG
+ wPr7fEYn153SHtNCyXBnXjymi8NTR0htleOkr4hLt5X6fZrj5KNhBcGA/34+ZPXEqek5gr3OEmW
+ WVbQRV6gKiXoGOWMajefHMxQiknwcQ6E5dTc0AFzaes+DT+F01nrcR3LRhaL8WNybrxYXuSqWI0
+ hHkz36kJ
+X-Authority-Analysis: v=2.4 cv=NrDRc9dJ c=1 sm=1 tr=0 ts=68ba3110 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=ilABv6Z8GYNuw7svrMYA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-04_08,2025-09-04_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 malwarescore=0 priorityscore=1501 phishscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2508300027
 
-Hi Bjorn,
+- Rework mdp_format.c in order to make format table manageable
+- Rework layout population for UBWC formats in DPU driver
 
-Any feedback on this patch ?
-I'd love it if you could consider it for inclusion in your next qcom
-pull request.
-Or if there is any issues, I can send another version quickly. Let me know !
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+Changes in v2:
+- Dropped DX flag from the tiled NV12 format structure (Jessica)
+- Changed round_up(foo, 192) to the roundup() as the former one is
+  supposed to be used with power of 2 argument (Jessica)
+- Fixed undefined varuables warning in
+  _dpu_format_populate_plane_sizes_ubwc() by dropping the always-true
+  condition (LKP)
+- Link to v1: https://lore.kernel.org/r/20250705-dpu-formats-v1-0-40f0bb31b8c8@oss.qualcomm.com
 
-Cheers!
+---
+Dmitry Baryshkov (12):
+      drm/msm/disp: set num_planes to 1 for interleaved YUV formats
+      drm/msm/disp: set num_planes and fetch_mode in INTERLEAVED_RGB_FMT
+      drm/msm/disp: set num_planes, fetch_mode and tile_height in INTERLEAVED_RGB_FMT_TILED
+      drm/msm/disp: simplify RGB{,A,X} formats definitions
+      drm/msm/disp: simplify tiled RGB{,A,X} formats definitions
+      drm/msm/disp: pull in common YUV format parameters
+      drm/msm/disp: pull in common tiled YUV format parameters
+      drm/msm/disp: drop PSEUDO_YUV_FMT_LOOSE_TILED
+      drm/msm/dpu: simplify _dpu_format_populate_plane_sizes_*
+      drm/msm/dpu: drop redundant num_planes assignment in _dpu_format_populate_plane_sizes*()
+      drm/msm/dpu: rewrite _dpu_format_populate_plane_sizes_ubwc()
+      drm/msm/dpu: use standard functions in _dpu_format_populate_plane_sizes_ubwc()
 
-Chris
+ drivers/gpu/drm/msm/disp/dpu1/dpu_formats.c    |  174 ++--
+ drivers/gpu/drm/msm/disp/dpu1/msm_media_info.h | 1155 ------------------------
+ drivers/gpu/drm/msm/disp/mdp_format.c          |  613 +++++++------
+ 3 files changed, 390 insertions(+), 1552 deletions(-)
+---
+base-commit: 9be5c47908e669db4934ef9c129b28bbc879a8be
+change-id: 20250705-dpu-formats-0d5ae4d1a1b9
 
+Best regards,
+-- 
+With best wishes
+Dmitry
 
-On Thu, 14 Aug 2025 at 21:16, Christopher Obbard
-<christopher.obbard@linaro.org> wrote:
->
-> Add the Samsung ATNA40YK20 eDP panel to the device tree for the
-> Snapdragon T14s OLED model.
->
-> Signed-off-by: Christopher Obbard <christopher.obbard@linaro.org>
-> ---
-> The Snapdragon Lenovo T14s Gen6 can be bought with a number of different
-> panels. This patch series adds support for the OLED model which has a
-> Samsung ATNA40YK20 panel.
->
-> This series depends on [0] which adds the edp_hpd_active pinctrl node.
->
-> With this patch series the backlight of the OLED eDP panel does not
-> illuminate since the brightness is incorrectly read from the eDP panel
-> as (to be clear this is not a regression). This is fixed in [1].
->
-> [0]: https://lore.kernel.org/linux-arm-msm/20250814-x1e80100-add-edp-hpd-v1-0-a52804db53f6@linaro.org/
-> [1]: https://lore.kernel.org/all/20250814-topic-x1e80100-t14s-oled-dp-brightness-v7-1-b3d7b4dfe8c5@linaro.org/
-> ---
-> Changes in v7:
-> - Remove patch adding edp_hpd_active since now handled in Stephan's series [0].
-> - Properly add OLED brighness patch as dependency [1].
-> - Link to v6: https://lore.kernel.org/r/20250731-wip-obbardc-qcom-t14s-oled-panel-v6-0-4782074104d1@linaro.org
->
-> Changes in v6:
-> - Squash patches adding "edp_hpd_active" node & its user (Johan).
-> - Sort new pinctrl node correctly by name (Johan).
-> - Use correct function "edp0_hot" instead of "edp_hot" (Johan).
-> - Drop review tags.
-> - Link to v5: https://lore.kernel.org/r/20250402-wip-obbardc-qcom-t14s-oled-panel-v5-0-ff33f4d0020f@linaro.org
->
-> Changes in v5:
-> - Move edp_hpd_active from T14s DTS into SoC DTSI (Dmitry).
-> - Link to v4: https://lore.kernel.org/r/20250402-wip-obbardc-qcom-t14s-oled-panel-v4-0-41ba3f3739d0@linaro.org
->
-> Changes in v4:
-> - Rework HPD GPIO into eDP device rather than panel (Johan).
-> - Drop review tags for HPD GPIO patch.
-> - Link to v3: https://lore.kernel.org/r/20250327-wip-obbardc-qcom-t14s-oled-panel-v3-0-45d5f2747398@linaro.org
->
-> Changes in v3:
-> - Added review trailers from v2.
-> - Dropped dt-binding documentation patch (applied by Douglas Anderson into
->   drm-misc-next).
-> - Dropped eDP maximum brightness patch (will be sent in separate
->   series).
-> - Removed duplicate nodes in T14s OLED device tree.
-> - Reworked WIP comments from commit messages.
-> - Link to v2: https://lore.kernel.org/r/20250325-wip-obbardc-qcom-t14s-oled-panel-v2-0-e9bc7c9d30cc@linaro.org
->
-> Changes in v2:
-> - Use the existing atna33xc20 driver rather than panel-edp.
-> - Add eDP panel into OLED devicetree.
-> - Add patch to read the correct maximum brightness from the eDP panel.
-> - Link to v1: https://lore.kernel.org/r/20250320-wip-obbardc-qcom-t14s-oled-panel-v1-1-05bc4bdcd82a@linaro.org
-> ---
->  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts | 8 ++++++++
->  1 file changed, 8 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
-> index be65fafafa736a0401a5872c40f69cb20cfbbd90..d524afa12d19b2a6f22a24b9bed6b6b40248375f 100644
-> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
-> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s-oled.dts
-> @@ -10,3 +10,11 @@ / {
->         compatible = "lenovo,thinkpad-t14s-oled", "lenovo,thinkpad-t14s",
->                      "qcom,x1e78100", "qcom,x1e80100";
->  };
-> +
-> +&panel {
-> +       compatible = "samsung,atna40yk20", "samsung,atna33xc20";
-> +       enable-gpios = <&pmc8380_3_gpios 4 GPIO_ACTIVE_HIGH>;
-> +
-> +       pinctrl-0 = <&edp_bl_en>;
-> +       pinctrl-names = "default";
-> +};
->
-> ---
-> base-commit: 33a21dab19b31540dfeb06dde02e55129a10aec4
-> change-id: 20250320-wip-obbardc-qcom-t14s-oled-panel-b74fed21d600
-> prerequisite-message-id: <20250814-x1e80100-add-edp-hpd-v1-0-a52804db53f6@linaro.org>
-> prerequisite-patch-id: 658fd45e0cb953e3c667a30f2cf78cfd3582d552
-> prerequisite-patch-id: fc665d8cdd099464e6fa4401489fde70b65bed30
-> prerequisite-patch-id: 13ff38b40f2dcb283be82485e88ca4efc249599b
-> prerequisite-patch-id: 7d02075f074ad8f32eeaf5ee8833d0c6a230cea8
-> prerequisite-patch-id: 380fed6c07ca1ecdb73768054454e47c984d00e9
-> prerequisite-patch-id: 1f8b24fc983fa23abc97512e15626394ce760ffe
-> prerequisite-patch-id: 7d29e2fee2b19cf2d12d54cca052b1c1fb808c9d
-> prerequisite-patch-id: c5bf1706ecf4df7782707bbf0d18a0568842b562
-> prerequisite-patch-id: 34889448fd92cdc916e7e19eac8446710d2a646a
-> prerequisite-message-id: <20250814-topic-x1e80100-t14s-oled-dp-brightness-v7-1-b3d7b4dfe8c5@linaro.org>
-> prerequisite-patch-id: ceed93f46ae27c7980c5b57022068daaad8dc8c9
->
-> Best regards,
-> --
-> Christopher Obbard <christopher.obbard@linaro.org>
->
 
