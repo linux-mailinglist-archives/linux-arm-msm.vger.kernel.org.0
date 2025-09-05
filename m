@@ -1,161 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-72272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47272B4569F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 13:40:15 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76D75B456BB
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 13:43:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EB9F01C82361
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 11:40:31 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 43D037A5D35
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 11:42:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 18EAF345738;
-	Fri,  5 Sep 2025 11:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D34283451DC;
+	Fri,  5 Sep 2025 11:43:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Nftj2L7o"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gVAAp2p5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 528893431E7;
-	Fri,  5 Sep 2025 11:39:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E42334320C;
+	Fri,  5 Sep 2025 11:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757072387; cv=none; b=B/ukRtqeEqCWldY7bABmUXfrcp+vnoteJRBA8HwLXOTrJMBRWTgVu/NOSvY3C/9rb5AGCkCBdaqN7TQDcIVC1lP+EnPyWIEgNn8AHgoQwQ5HFQrBgoPJdJZAxMU4vISkAZFj+Zt2vqxh4hWrge+8rZT15bLJcWm57L65DttLpGs=
+	t=1757072623; cv=none; b=l7FEe+mMZd8SiajPrMJWNL6Sgd98NEbkqzxm7mZG5NrqGVw0H3VkJkzLu1sSutC1AdajjeW9qZZw++KY3g3UOi5IcQ2DSMrmjp++A+ud+PQ/8DVqrycNDY409akGC3v72u3nNFMc2dzFyuOwj2+sYUwQRs5jmt1xTRYn6SK6Dzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757072387; c=relaxed/simple;
-	bh=sA1Qa9eAFu4jKg9STm99bgdrKQUviZF2tsq0paX7kxI=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=CfzIIF7oCdf3KPSkeV0kAaEsrCIfc9dg2FJCEingNxht3byUd0Z0zNz5pFOLy0CfhzurXcb8aLixo3IlcxRdv8/3Zk+qc78kbBK6Q2fgo5SKu1wShtCtgwQa0fJmvajXC/Cdujc87tcFanEMWF89NdImI2tBcEq8lL6uaLv0P8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Nftj2L7o; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5856lapW024267;
-	Fri, 5 Sep 2025 11:39:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=JO0ByhWMlXZgHRV2oIb9njmZj8dDlepqv38
-	U0FSCO30=; b=Nftj2L7odX9NX42BG+L6n5x4I98RLIWUQ+YtGJAJfCluZs1EIeL
-	ZIoo4PXKmtFGQyd49E1/pdtDM9D5zEwpIMOQRtub8EgdqsCruLe8k/YCwY8PKzhF
-	qkpkJcyjsIVCNQOR+xdzW+6WS959acnyVu4aZRWvOfv0UeZmWH6IXUz6WwhsT12i
-	pdVgsIEP+cx8wgq31MsG1ZF6FSqm2niiNiyuFyLlmtGWwAOho0RgHgkOP5BXQtgF
-	GzTtsMbohIEvTbUt/LDo2jCeJJvcizVEXrs5ro/pruny9RdoUJ0knWO7IGG8MbY3
-	EKgPgCoizSnpqvDr5Et9BsCw0l9qEiW1sRw==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48ut2ftu45-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Sep 2025 11:39:41 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 585BdcqF029947;
-	Fri, 5 Sep 2025 11:39:38 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 48utcmfs6b-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Sep 2025 11:39:38 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 585BdcVK029937;
-	Fri, 5 Sep 2025 11:39:38 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-pussin-hyd.qualcomm.com [10.147.247.182])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 585Bdbfu029934
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 05 Sep 2025 11:39:38 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4706513)
-	id 7095253B; Fri,  5 Sep 2025 17:09:36 +0530 (+0530)
-From: Pushpendra Singh <quic_pussin@quicinc.com>
-To: quic_bjorande@quicinc.com
-Cc: andersson@kernel.org, krzysztof.kozlowski@linaro.org,
-        konradybcio@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, quic_rgottimu@quicinc.com,
-        Shivnandan Kumar <quic_kshivnan@quicinc.com>,
-        Pushpendra Singh <quic_pussin@quicinc.com>
-Subject: [PATCH V2] soc: qcom: icc-bwmon: Update zone1_thres_count to 3
-Date: Fri,  5 Sep 2025 17:09:23 +0530
-Message-Id: <20250905113923.3944347-1-quic_pussin@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1757072623; c=relaxed/simple;
+	bh=NLML2PKuwuj+OYNgyIRQX3jQ9i3GAYhKH/CptvLMsng=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=shs882tuPaKcNAorrmjVvvUHBk8AH4L5vFRLrATnPv+/1/bwq2JocrjQRU4xCPZauRulN/Krm3A2smRXUP30S9SVx/oMRRCR8/Gu8VFOw8qbu7bVJV/nYMaDbTo/CjCNRDrrUmnRqpacp3dVkAxFbVBX+DNKe6BnS2n4UCrDV/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gVAAp2p5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F9BFC4CEF1;
+	Fri,  5 Sep 2025 11:43:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757072623;
+	bh=NLML2PKuwuj+OYNgyIRQX3jQ9i3GAYhKH/CptvLMsng=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gVAAp2p5/E4CwAUtDQOLmC0Gc6y8NUeC9WK4IOPuAgfHEZGqaOwEdx5Ns+KcST7/F
+	 PEiLR4ES6kjCMJyP6JUoVYMTwauVS/C7EN+6JOLI8e72dxBRpxFsC670XT1tosCbIV
+	 +j2RxEFGc6BShuQ1ucZEqIo+44s6Kht+owFiJHJjxVDsCtrAa7o/EPQJr/P0ngV6p8
+	 CepXm6zV9tHmjLVHYf7uNmY7a1AB+gCUry6uzhfAh48NzCuj2RIyu3bpBa64JvnL5v
+	 4xNb3pI81ElcUK7Wg2+2tOA7IY5h/8L4hQrj8mjFDE6JML/QZG1ahsZRhqJGKGIU8k
+	 N0S/XtwEcZzZg==
+Date: Fri, 5 Sep 2025 17:13:31 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	cros-qcom-dts-watchers@chromium.org, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Bjorn Helgaas <bhelgaas@google.com>, Jingoo Han <jingoohan1@gmail.com>, linux-arm-msm@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org, 
+	quic_vbadigan@quicinc.com, quic_mrana@quicinc.com, quic_vpernami@quicinc.com, 
+	mmareddy@quicinc.com, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v8 3/5] PCI: dwc: qcom: Switch to dwc ELBI resource
+ mapping
+Message-ID: <xzzyhcuwfva6vqzmxkdqt5x7f7vxpkkyqnml6vjclb75f4ozwa@gugsrqfsbuor>
+References: <20250828-ecam_v4-v8-3-92a30e0fa02d@oss.qualcomm.com>
+ <20250903191459.GA1214624@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAzOCBTYWx0ZWRfXzHII4DoBvFSn
- CV6jPfqaHDLZdrpFaT7APr1p9uu8XfcaFdLG6eshh4ePkbR1sv90v/WeIhnCgjnidaP516HP8Ww
- ++FxBGV3fSzM+ac/9BfnSU2KBrSNVhoTVnMwe4VpbJQ1V1RVcJGcXKFBmc3XOyGbxgo+wgEki4+
- l1zzXcPtf+u35CHSVAJ/Hiw5nMYoGDbzwEGUfbDqs3ofY70Xge0J1aIbdq0mxsKj+sCAtGU2aNf
- VVcxk2LiBcoipsbLx9wXWuHYjZQV0Y3QO4OpvrDoSXuQyT537s12hOzlgNSK4hpl4YGcnSHt6MO
- 859umM+wavFTEkyA9A5UnJ4YkzpJNl1H/X4rDAlJ4dzrs3Z6QAKTrRBKox5Bh9oMhdOvc/NvzvQ
- LeMtSJ2H
-X-Proofpoint-ORIG-GUID: nfseTv96nNwb-Qd6i1edfjJO_wKGC9hf
-X-Proofpoint-GUID: nfseTv96nNwb-Qd6i1edfjJO_wKGC9hf
-X-Authority-Analysis: v=2.4 cv=U7iSDfru c=1 sm=1 tr=0 ts=68bacbfd cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8 a=O-FpyXNYiwpG-GJNJQQA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-05_03,2025-09-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- malwarescore=0 priorityscore=1501 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300038
+In-Reply-To: <20250903191459.GA1214624@bhelgaas>
 
-From: Shivnandan Kumar <quic_kshivnan@quicinc.com>
+On Wed, Sep 03, 2025 at 02:14:59PM GMT, Bjorn Helgaas wrote:
+> On Thu, Aug 28, 2025 at 01:04:24PM +0530, Krishna Chaitanya Chundru wrote:
+> > Instead of using qcom ELBI resources mapping let the DWC core map it
+> > ELBI is DWC specific.
+> 
+> This seems like basically the same change you (Mani) added to the
+> "[PATCH v8 2/5] PCI: dwc: Add support for ELBI resource mapping"
+> patch?  (The patch with Mani's additions is at
+> https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/commit/?h=controller/dwc-ecam&id=d39e0103e38f9889271a77a837b6179b42d6730d)
+> 
 
-Update zone1_thres_count to 3 from 16 so that
-driver can reduce bus vote in 3 sample windows instead
-of waiting for 16 windows.
+Doh! This should've been squashed to patch 2/5 as we cannot split the conversion
+patches. The reason is, we cannot ioremap() the same region twice.
 
-The 16-window (64 ms) waiting time is too long to reduce the
-bus vote. At higher FPS, there will be multiple frames in 64ms
-e.g. 4 frames at 60FPS in 64ms. Hence, delay of 64ms in decision
-making will lead to higher power regression. We tested across
-multiple usecases, and observed significant power savings.
+This is now taken care in the branch.
 
-USECASE				zone1_thres_count=16     zone1_thres_count=3
-4K video playback       236.15 mA                  203.15 mA
-Sleep					   7mA			   			6.9mA
-Display (dle display)    71.95mA			       67.11mA
+- Mani
 
-Signed-off-by: Shivnandan Kumar <quic_kshivnan@quicinc.com>
-Signed-off-by: Pushpendra Singh <quic_pussin@quicinc.com>
----
-Changes in v2:
--Update commit message
--Link to v1:https://lore.kernel.org/lkml/463eb7c8-00fc-4441-91d1-6e48f6b052c8@quicinc.com
+> If this qcom change is separated out, why can't the exynos and qcom-ep
+> changes from patch 2/5 be separated out?  If we ever had to bisect
+> and/or revert parts of this, it seems like it would be simpler to do
+> them consistently like this:
+> 
+>   - PCI: dwc: Add ELBI resource mapping
+>   - PCI: exynos: Switch to dwc ELBI resource mapping
+>   - PCI: qcom: Switch to dwc ELBI resource mapping
+>   - PCI: qcom-ep: Switch to dwc ELBI resource mapping
+> 
+> > Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > ---
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 16 +++++++---------
+> >  1 file changed, 7 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> > index 294babe1816e4d0c2b2343fe22d89af72afcd6cd..5092752de23866ef95036bb3f8fae9bb06e8ea1e 100644
+> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > @@ -276,7 +276,6 @@ struct qcom_pcie_port {
+> >  struct qcom_pcie {
+> >  	struct dw_pcie *pci;
+> >  	void __iomem *parf;			/* DT parf */
+> > -	void __iomem *elbi;			/* DT elbi */
+> >  	void __iomem *mhi;
+> >  	union qcom_pcie_resources res;
+> >  	struct phy *phy;
+> > @@ -414,12 +413,17 @@ static void qcom_pcie_configure_dbi_atu_base(struct qcom_pcie *pcie)
+> >  
+> >  static void qcom_pcie_2_1_0_ltssm_enable(struct qcom_pcie *pcie)
+> >  {
+> > +	struct dw_pcie *pci = pcie->pci;
+> >  	u32 val;
+> >  
+> > +	if (!pci->elbi_base) {
+> > +		dev_err(pci->dev, "ELBI is not present\n");
+> > +		return;
+> > +	}
+> >  	/* enable link training */
+> > -	val = readl(pcie->elbi + ELBI_SYS_CTRL);
+> > +	val = readl(pci->elbi_base + ELBI_SYS_CTRL);
+> >  	val |= ELBI_SYS_CTRL_LT_ENABLE;
+> > -	writel(val, pcie->elbi + ELBI_SYS_CTRL);
+> > +	writel(val, pci->elbi_base + ELBI_SYS_CTRL);
+> >  }
+> >  
+> >  static int qcom_pcie_get_resources_2_1_0(struct qcom_pcie *pcie)
+> > @@ -1861,12 +1865,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+> >  		goto err_pm_runtime_put;
+> >  	}
+> >  
+> > -	pcie->elbi = devm_platform_ioremap_resource_byname(pdev, "elbi");
+> > -	if (IS_ERR(pcie->elbi)) {
+> > -		ret = PTR_ERR(pcie->elbi);
+> > -		goto err_pm_runtime_put;
+> > -	}
+> > -
+> >  	/* MHI region is optional */
+> >  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "mhi");
+> >  	if (res) {
+> > 
+> > -- 
+> > 2.34.1
+> > 
 
- drivers/soc/qcom/icc-bwmon.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/soc/qcom/icc-bwmon.c b/drivers/soc/qcom/icc-bwmon.c
-index 3dfa448bf8cf..a245a8b2cfef 100644
---- a/drivers/soc/qcom/icc-bwmon.c
-+++ b/drivers/soc/qcom/icc-bwmon.c
-@@ -827,7 +827,7 @@ static const struct icc_bwmon_data msm8998_bwmon_data = {
- static const struct icc_bwmon_data sdm845_cpu_bwmon_data = {
- 	.sample_ms = 4,
- 	.count_unit_kb = 64,
--	.zone1_thres_count = 16,
-+	.zone1_thres_count = 3,
- 	.zone3_thres_count = 1,
- 	.quirks = BWMON_HAS_GLOBAL_IRQ,
- 	.regmap_fields = sdm845_cpu_bwmon_reg_fields,
-@@ -846,7 +846,7 @@ static const struct icc_bwmon_data sdm845_llcc_bwmon_data = {
- static const struct icc_bwmon_data sc7280_llcc_bwmon_data = {
- 	.sample_ms = 4,
- 	.count_unit_kb = 64,
--	.zone1_thres_count = 16,
-+	.zone1_thres_count = 3,
- 	.zone3_thres_count = 1,
- 	.quirks = BWMON_NEEDS_FORCE_CLEAR,
- 	.regmap_fields = sdm845_llcc_bwmon_reg_fields,
 -- 
-2.34.1
-
+மணிவண்ணன் சதாசிவம்
 
