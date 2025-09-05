@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-72360-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72361-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4A63B46340
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 21:11:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE57DB46346
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 21:11:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5BA577C510E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 19:11:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCDC31D225B8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 19:11:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49FC72798FD;
-	Fri,  5 Sep 2025 19:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDC7027B323;
+	Fri,  5 Sep 2025 19:10:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AxySlwBV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K+6OnVnL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7722279780;
-	Fri,  5 Sep 2025 19:10:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DB4427B351;
+	Fri,  5 Sep 2025 19:10:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757099455; cv=none; b=jxl39JZ5LMAi4zLhqfnY9nikD9S+zODx4LODPn8cBLAsPc54JciAPANTKaD2avlPsNN8FbWUNbri6tvx6jXSCmt5DRmhnljggUEC8+bQCbrFDQ7nUOhTXWbaHAd83U3g3SP+BaXhEdPGJ1T0Uyn/5RS9S+Ydh9A3nuJxx19PMcA=
+	t=1757099458; cv=none; b=ktKRiE7COwvjz5UItEDGwjHUrfe3U9aoVzvjnfX5JRt673gpGPYuN0PtWGM0ae2dcDXhTrjQuVO3u+dpqxNbde9Gi+RP5DuWJfiu1kXtID2/DM/yo1/xETftpehB/xH1o/spwQkYjpBmmPZlJmjZtLzlUWIfIA7ZtiP3g0ZF688=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757099455; c=relaxed/simple;
-	bh=Nk5zP2DO34VSwnYJv0kbGdIuifvpafYcMEKA/jnTQG0=;
+	s=arc-20240116; t=1757099458; c=relaxed/simple;
+	bh=xgccCFezDjIRILPmUWGPLV4M4lcd8ai8YYELr9nCyTU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pPeDn+6D74o/3A68/02TaH1xbYRHFNCZgBAy2WuUlvQzm9sEnULCoJgwNVUHIYcOKYwXkdpNsr5mLRbJej/IOrVOkoVSyOC3eDfVojiy+xUu2+fzPnQUD3b9AnSlG8A7GsrqkDBGzczFkjOyF2S1w4uRc0+sCYXv0YBl2G86mUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AxySlwBV; arc=none smtp.client-ip=209.85.210.170
+	 MIME-Version:Content-Type; b=KalnvrBMlvtVyybuBHYcmcvWy/gPzaigryqn13gQ4lZ56+xFhCq/xURkhVHdFczzzlnYFHS4MSwz6j3WfhpiBRSWsDNxW2RP7yadRtTFPjmmbGBsWDdDsBO8Yp/iDkpn2GwrdaoH8FN8c4UNYui5z//Or9QjGTHCX5pIKPP2JYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K+6OnVnL; arc=none smtp.client-ip=209.85.210.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7741991159bso1767846b3a.0;
-        Fri, 05 Sep 2025 12:10:53 -0700 (PDT)
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7704f3c46ceso1997571b3a.2;
+        Fri, 05 Sep 2025 12:10:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757099453; x=1757704253; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1757099457; x=1757704257; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=alhHR+QtptRnRvwvatlC5lh2g9SYK7bPKYa9zS8Ojyw=;
-        b=AxySlwBVFKChLNTRrajfAJOiDfDhW3nZ+yb6lwXO45TVIPAF4+4dtkNVvIaaTB1jQh
-         aqX97EFLUijDhHq5tz2hfmWCZaySUF54ubv8wkfGLx0L642CwjtJo+4QqA+6M3bi9ck2
-         cTiFAOq0btW+A87FABle7vCg894idBWzhwkKhhz7UoJyiKwh5DWfInEbWCNd3PeSORj+
-         ehCDSUHzrZYO+MKwR551XUDEQ1v+lm3lCgLh1V85t+TX8e5KYtkBXENK1nx5sJZvg9oa
-         KA+dlnDOpsx1tsW9LX01pwl49K31xSRBP1CmEfkypJWYwjkApGaILxCh1PcsPvC8sbBt
-         sNHA==
+        bh=szg0jedw/yL/ET3KgP858FRz33Dd/TukZs0cjRb62YU=;
+        b=K+6OnVnLla5m8N5q2GkPdxQfHZTpfEe/4o2YVVnvVRxhVEKm/EIB2S9YN07uyKrxZr
+         d5L4y6EzNkkr1IjjJRbha0a9EkZk+9Y3i5kK0OReh5oFUuDp0iJdwWQogbZeO4r74bNW
+         VfI2CN4EUXOW3A9XHDpEEz0N5UYiKkKLu4uvJSL8t4miC/KqI4e6Lc2alOxTfEnVqf8+
+         oLxP0EZ0AePQpbm/JGr2vWWcfYyyiNODRDce10xUyUCw3d+f4F+syWifdch8CZge3QIE
+         0LD3zFAhjqVEAmhzPYf5KhBw1JdgvSyA/jhe5XV8WlsE2RqahcbtEBMJThg0prs0I5/w
+         gbMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757099453; x=1757704253;
+        d=1e100.net; s=20230601; t=1757099457; x=1757704257;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=alhHR+QtptRnRvwvatlC5lh2g9SYK7bPKYa9zS8Ojyw=;
-        b=SIh+fflF0Ga4Vkcb4VWAvAm5IN9D+CsnPgn5MzpXjg6ZLVsPN2hWiJq2Yln7FY2DVb
-         Vwt/H0ynNs9y3l9zvhLf4jQps/y2DooX8oq2AWStv4AQg7QyaIqlXYy1gyYMwrGLBl69
-         ifz4/wMwtA3PCXVgQ7RcPjH6/q3q1WvAIDJyPI2PT85fCrQiXMnL+YzYaqHOy5qQaHI8
-         D8cFJGyXMlECjGqx+RXxkgJSv8Q/MkxqXmrj27c9KdAWPGqasdNSYkKBTkwzdzgWBBZW
-         Gg3ArM+4QOsnc+S1DIfNjTA24bHZdV8kGsFF5PDVpinzhywzihtmcmzDnBuNNc4/xJ6Q
-         BBBg==
-X-Forwarded-Encrypted: i=1; AJvYcCV+JuMAYF8w8lMdML7a81v5/ZOJWDUjwmCWFFw2a9Tao7wnIicWjRfbqkOyyoVMKkBjXjQrTHEDRE2B@vger.kernel.org, AJvYcCXN1izu5FeR6jckyUH6S2RLU3mCq6UL0czMDJHrOEXfdOVgUqToOEJtjKi0Z5iQc9OgvXcrEGpdUwxxcpVD@vger.kernel.org
-X-Gm-Message-State: AOJu0YyR10fr45xEFbNSo0a3vzjA1GrI7vZdQXJx8psrD+4cFvcoF4bI
-	ab2ks4PjqrWviOpP+WPZslbxaE70kH+B59hIdObSTJF09A1L5/LAI1c2CZEWY2qpVGo=
-X-Gm-Gg: ASbGncsMFt192vw1jp7eRrK1If9ttTzNdrECWQ4d/Lela2nzF7W2gf0oCG4yv8i7xeg
-	Llk/ghve2yVdJxphZC3vkG9Mwt7TTSrU/DZw72ljcFrJd6OqIFAhHe1G1abPn9s15oWpNUVVq/X
-	wznUmTFsAczScPrlJECZpMhuxmQBRYjiEzPQlFBg3MC8JY9v8+Z94Vr9mj5XssD0VgmHjXC6iQi
-	mv8IefqCAGAs/3wF3RvRXfVezPo26Hxem0AdoXGdhbGf6+K3y5B5/WeooUkJ1qHoNv7DZeCQu+Q
-	iGG/wR05e5UcScrg9TaLMIJ4bcWLhFR9nyseOVGqJOplPrs6F2TeMbO6c8c/ZgjwrmgjysxbAq0
-	ut+0Z2QWEUwiDCfW85y6Vp4QEXIh7QPbe
-X-Google-Smtp-Source: AGHT+IFUiKnNl30GdhfNxCYOAiZ9HGU/4iYryq74d+ZObbR4A7zt7xbgxw9f42g/yPzCzD/j9KBG2Q==
-X-Received: by 2002:a05:6a00:848:b0:772:5d0f:6c9b with SMTP id d2e1a72fcca58-7725d0f6f0cmr23208889b3a.1.1757099452854;
-        Fri, 05 Sep 2025 12:10:52 -0700 (PDT)
+        bh=szg0jedw/yL/ET3KgP858FRz33Dd/TukZs0cjRb62YU=;
+        b=oBVCB1K1qjvC683XMmIqoG7gcQV/j5TD1+Yt2aagRMcNg99BmWDJnhyYJMggO34civ
+         KVzANeb0T13zHbq+wqz2fdUeMKf6nwMjJVsomt0lrsohGgh60IESl23yWm1BxSXjFXI2
+         gZlRPwteJH+NfPc1/Ndzo9LzfEAfgkGFGFqVqyGB8gLg3I1dpD18pyvRPWUQMCewnO7X
+         NSvdrcMXmbbyjoHo5bKb7Ag89JyXM1R/FebFMLv3nqDa9UvHsAnnSS60879GDHfPBp94
+         7Sc1V7EzMlWNz55GKeNzMQFBddVuz0ztkiz9Sw/yeE072No8Zp900MZZue5hcNoqpDcl
+         RaxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU5E94SKhlSMRuaXFgjuVgU09/o28EJGnzd4Xit14jNfwcisW8z6dozAESOxy0ecglff7LRPCkiG143@vger.kernel.org, AJvYcCXyWiHJV4I/qk/M9vxJIdcyVaEatRh6TaEWSxVBzC1KWGuGH3S9oSuF047J0qucjacSLQiS0GJAxfCKq1jH@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy9X+q+9CBtG9u06jJtVndaIEwN0wfVTI+qpRCnMgupgQuHmSCY
+	6TTLByssRH8fTvczC9UGhSYd9fdT1OSYQj0mYt0xRRiYUuX5fwsvV0Fs67zlcWklrUc=
+X-Gm-Gg: ASbGncuSKM4fixPw5edIDQEAhvuVnoNHaOBjQBiSWa9x4qdDoqD5G72vNzXMAEjBRDz
+	Vj4vqHzyy25jp9jHYB0foTzSEFK2Y+PEIsDfUT1aZ8uq6dnd70P8mWDjCX+alVe5qAjLgBfGnSy
+	Z2JxUc/FbWpOTbe+wYiMjRxQ29npSPo0KVSjr9NYAuY736SjG6SKc2s+7xEKZVnUxWjg0Sr+t2F
+	XFlhHPg37xh7rGzJolLKtoX7tFYqjFJCGH9pWJBARZMOZVJtjwk6iASUqyWEBMLstaFU7VhRkXc
+	RO3MOuSbOoUQ+DMHocwxp0Cm2WRxzfR0c7XmAMVGg4nrebo+NWC5d6Y0IYlwt8pcr1cbDH6JSRL
+	7CgceNNDoRIxQ5N/PB3AGCNxAKGHiycPK
+X-Google-Smtp-Source: AGHT+IE6hOexaBAzeYuqOsxDXJ8o2JljO8GjQp/pp4ayQEBPxMdspJWyCESP0KxGrglWhczf7wtPVQ==
+X-Received: by 2002:a05:6a00:7450:b0:772:f60:75b0 with SMTP id d2e1a72fcca58-7723e3b1c5fmr28389161b3a.24.1757099456595;
+        Fri, 05 Sep 2025 12:10:56 -0700 (PDT)
 Received: from archlinux ([179.110.125.220])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7727bce1b58sm9102326b3a.9.2025.09.05.12.10.50
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7727bce1b58sm9102326b3a.9.2025.09.05.12.10.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 Sep 2025 12:10:52 -0700 (PDT)
+        Fri, 05 Sep 2025 12:10:56 -0700 (PDT)
 From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -83,9 +83,9 @@ Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	=?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-Subject: [PATCH v1 2/3] dt-bindings: arm: qcom: document x1q board binding
-Date: Fri,  5 Sep 2025 19:09:30 +0000
-Message-ID: <20250905190931.27481-3-ghatto404@gmail.com>
+Subject: [PATCH v1 3/3] arm64: dts: qcom: add initial support for Samsung Galaxy S20
+Date: Fri,  5 Sep 2025 19:09:31 +0000
+Message-ID: <20250905190931.27481-4-ghatto404@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250905190931.27481-1-ghatto404@gmail.com>
 References: <20250905190931.27481-1-ghatto404@gmail.com>
@@ -98,26 +98,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add binding for the Samsung Galaxy S20 board, codenamed X1Q,
-which is based on the Qualcomm Snapdragon 865 SoC.
+Add new device support for the Samsung Galaxy S20 phone
+
+What works (common dtsi):
+- SimpleFB
+- Pstore/ramoops
+- GPIO keys
+- UFS
+- USB
 
 Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/Makefile             |  1 +
+ .../boot/dts/qcom/sm8250-samsung-x1q.dts      | 26 +++++++++++++++++++
+ 2 files changed, 27 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250-samsung-x1q.dts
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 607eee7a1794..335e93a02604 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1077,6 +1077,7 @@ properties:
-               - qcom,sm8250-hdk
-               - qcom,sm8250-mtp
-               - samsung,r8q
-+              - samsung,x1q
-               - sony,pdx203-generic
-               - sony,pdx206-generic
-               - xiaomi,elish
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 8f305c1ddac1..2d250c3d65cf 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -276,6 +276,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-sony-xperia-kumano-griffin.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-hdk.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-samsung-r8q.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-samsung-x1q.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx203.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-sony-xperia-edo-pdx206.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8250-xiaomi-elish-boe.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-samsung-x1q.dts b/arch/arm64/boot/dts/qcom/sm8250-samsung-x1q.dts
+new file mode 100644
+index 000000000000..325f94cf755e
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sm8250-samsung-x1q.dts
+@@ -0,0 +1,26 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++/dts-v1/;
++
++#include "sm8250-samsung-common.dtsi"
++
++/ {
++	model = "Samsung Galaxy S20";
++	compatible = "samsung,x1q", "qcom,sm8250";
++	chassis-type = "handset";
++};
++
++&adsp {
++	firmware-name = "qcom/sm8250/Samsung/x1q/adsp.mbn";
++	status = "okay";
++};
++
++&cdsp {
++	firmware-name = "qcom/sm8250/Samsung/x1q/cdsp.mbn";
++	status = "okay";
++};
++
++&slpi {
++	firmware-name = "qcom/sm8250/Samsung/x1q/slpi.mbn";
++	status = "okay";
++};
 -- 
 2.50.1
 
