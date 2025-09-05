@@ -1,232 +1,122 @@
-Return-Path: <linux-arm-msm+bounces-72357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82A44B46333
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 21:08:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07919B4633C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 21:10:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 332E31C24A20
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 19:09:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AE4757C028D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 19:10:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2512D315D54;
-	Fri,  5 Sep 2025 19:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE1971DA60F;
+	Fri,  5 Sep 2025 19:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A7N8h4My"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BRfKfjhP"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E63A4315D22;
-	Fri,  5 Sep 2025 19:08:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51DBA315D5C;
+	Fri,  5 Sep 2025 19:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757099323; cv=none; b=FDCAaiau56RGY+5wAp53KmcOAW0E9b4I6wTj70aVvOicLpx0AX+qNDG7pZw4NIVmb8LJjdqPqqRcdYYbNzg5PNhs4tVdCfnDhl5UJ/f+x8cUoQpPoesT4WdchQL0FhmLCgtvQouRtFirnN73390fN2R93yvkLtINAAOieKs1PqE=
+	t=1757099445; cv=none; b=iyfA679sjMNerMvtUfmWfzRTI/dTMJfTZz3hQxQ/q+V+3pH3XAXN0H86yfWGHNl3KBhYcLJdaekBC/0hxYLzt4oMemjuFWu5/Yldg+hn5VkVNfkH638HoyC+oM+TLUR3p1hlMOM1pRIi8JZvQF73KgOEe+rDtg3y/bqjy5QDrmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757099323; c=relaxed/simple;
-	bh=2QZ1aUC6v2Bk9UWUc2KWtsBZRzERC1eNroBBEihneJ0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=f4f2cLmCCo556GYnzneLUDPdRyIgCGCBiQ1aezokHFKEZ8YaXG1YySfdqBFn61Gy9h0eVp6e5/8UX6sTt4zy/C/CHRPAZ7zAvTB39Depm9U3TLZjkkiDbfqpjxcfMk/U/DN/vo4xfH+ilUj9+qeOz2nQh0DQcX36L16MKfyXpPM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A7N8h4My; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57832C4CEF1;
-	Fri,  5 Sep 2025 19:08:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757099322;
-	bh=2QZ1aUC6v2Bk9UWUc2KWtsBZRzERC1eNroBBEihneJ0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=A7N8h4MyWl5boMQzfWQal2WavPKOWECLXTgPzm+rYkU3PBr19kBJ2zff/930/KJBR
-	 XzscaP9xYzCdRpF49RZhsfLIazZXyEQlsB4BBg204ir2LP8/k4VCjl+KhKyypXQazD
-	 rWjD7HYWUYAdUHLYsLinFbFQrPXm84tNi68CNZfxdWc5iMRfX+fmx3ini27g5q9xQA
-	 EYRNWXgj7r2sEZeQrSdBgbPL4ccx6tkSwgKklT6Aq2OoYxdB5wdzVPRNb1ekBT7udS
-	 o8hz4oIf4uuk2gjZM5amlgvijt1otc3vhYNYS0OxTWhBlSYR2axSTclGp5JnFWymQx
-	 Ljveg+wlXiYzA==
-Date: Fri, 5 Sep 2025 14:08:40 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	cros-qcom-dts-watchers@chromium.org,
-	Bjorn Andersson <andersson@kernel.org>,
+	s=arc-20240116; t=1757099445; c=relaxed/simple;
+	bh=YHVu/jUGZxgSiqSqO4Pj4BM0V0F6I3r2IY96SZY3aPw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=qIsi5AQjZChg8wbH4ILHVhvXso/Z+8tSXI/wor5mpYAl1/z2XkWdgyFsFAwVt29UTBB7SnxTigRKM/AE0oQ2aGZTDCCpzAA2r4RieePpM7aDTZq6ugMFVl5SLATGuiVphbs+OhlGEgmIQXxoOLK77um0TbdajDgLbS5AFhScKlo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BRfKfjhP; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-7723bf02181so2025023b3a.1;
+        Fri, 05 Sep 2025 12:10:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757099443; x=1757704243; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YXbWoXxG5ku8P1RSUujuBETizixV/jyJYTD/OXJqAGc=;
+        b=BRfKfjhPkq9eVzupvkSlMZv+RaKHOfTPXuLvxUlzn7UGtA36qjKnffktuTI+xzmMz6
+         H/RyG5w45OoiyrZS0FsZB6JmY6BkjjOxxg8EuUFE6XsGL4EG/myOyoD4zS6svHKav2S1
+         xV2qg/xGNFDSm7HurLq1aa7QGj74YUXX4fXCn4BkqImLhpLxZ9BJu8lJn2rHDM/WaslP
+         4KVCIIyQASyqMkRfGx6+x+GAeQWlNfHb+F+9U0IBtqh542yPngoVTprpLSK1hrAKBnz9
+         NrvAZgCwz8drVsDC0DZgXtH5IXlyaSdFRNwB2DAQylnorMp876tAtvYC8MFN7IAPHjsc
+         r/Mg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757099443; x=1757704243;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=YXbWoXxG5ku8P1RSUujuBETizixV/jyJYTD/OXJqAGc=;
+        b=FrS9YMPymYtXf7o4tL+8p02twMY0MWD3o43Anr/9k6hJQQhSo/1gLdjMkz15gDu4+R
+         eL1CykG0xbqVl0GKwqsLAg+mPZUGozgLdciabLbr6s1skaRkt4pmZ4gPjj3RBk29n8TF
+         woapZoiF0if5VZNwHtH3De/s9dQkacqj6MrB2chB/zvV3/VozgXq9WbJQs02iU+NvIuP
+         YjGoksVNrfv0eV50JjM+on9Ji+aQRCHOLDwLs5Xi3QmPKMyxM8g7+PtCKzuSGhhE9kpM
+         zZLwg5bU09Asq9No8/gBMZGzNUziKw2aJ/wVnhUf5gzbU6BExmgpHgE4MdwBBuX88yKg
+         rRWg==
+X-Forwarded-Encrypted: i=1; AJvYcCWrcUaeyGY+pffUtjLH4UNzZisLgfA4aG3I7G7n0LSQvywye/B+mNMcF8V6fU/VGacqYeN1R1MPMbOPuTK0@vger.kernel.org, AJvYcCXVLU7AWfT7QNQwrzgv9OKpHHa7S7Xy9GwDJrytz7wPnDNNeCU1A61+DTR09hi95FOA2+wlPhUtrbyT@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5vF5hVqCtQw2qjE/aF9Gw47Gag50b2vj+FzrkSWzfz2pkP8Zm
+	esDFO0+40Z8b8mX7+fbAMx7kxFH2783Jhe3jOUauVHSU+yb5RQmcWjgR
+X-Gm-Gg: ASbGncsmKhsIXRV9L/XzhGnYUHFxJ2UJcm67+D2O6QmgTmN28LuWqXujShF2jD1B0Nf
+	NIxR8etZxatUqKIIyJDy1m6JPFRbkgw1yWbUjPbHsBxw8GnS6lcxbf19zMk4bs2wJNp1ielpY1A
+	DFyAVlLwhwdHXvZmkZxSGb3B48XWkDLlgcNB/h9xvlfOFTrhqMMmWYog5+xQp+BJODoCK5/O8Xg
+	vnG7D7nhQgNRzqHD7lOecYHrnXucfP9CB2o1sIdo2cjXj/DCGxtv2WY7un8ljdS2qb5N775YVxC
+	mFZK2OKHJMGL8U4fZAW2stZOAalFPfn+aJiPSIsABVgP9b5FQ3bKwdsFDAQb4DORoJ8btFHxAhL
+	zmbU5Ix8Z2Y5CKyH0/xIS5w==
+X-Google-Smtp-Source: AGHT+IHjtoifj+Jijbld8eb9svDOqGQ481RQZFceJHNTfCNJVFvwbC5SrP8L4ZtpAPjdBolP4u3IRQ==
+X-Received: by 2002:a05:6a00:4193:b0:772:45ee:9ba6 with SMTP id d2e1a72fcca58-77245eea0cemr24213236b3a.8.1757099443436;
+        Fri, 05 Sep 2025 12:10:43 -0700 (PDT)
+Received: from archlinux ([179.110.125.220])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7727bce1b58sm9102326b3a.9.2025.09.05.12.10.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Sep 2025 12:10:42 -0700 (PDT)
+From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jingoo Han <jingoohan1@gmail.com>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_mrana@quicinc.com, quic_vpernami@quicinc.com,
-	mmareddy@quicinc.com
-Subject: Re: [PATCH v8 5/5] PCI: qcom: Add support for ECAM feature
-Message-ID: <20250905190840.GA1318549@bhelgaas>
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	=?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
+Subject: [PATCH v1 0/3] arm64: dts: qcom: add initial support for Samsung Galaxy S20
+Date: Fri,  5 Sep 2025 19:09:28 +0000
+Message-ID: <20250905190931.27481-1-ghatto404@gmail.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <gwaz7563akxeai4gar7etf4jp3c775fphkipn37alzjcjy6t66@2pa3ykv6kejp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 05, 2025 at 10:08:54PM +0530, Manivannan Sadhasivam wrote:
-> On Fri, Sep 05, 2025 at 10:47:42AM GMT, Krishna Chaitanya Chundru wrote:
-> > On 9/4/2025 1:42 AM, Bjorn Helgaas wrote:
-> > > On Thu, Aug 28, 2025 at 01:04:26PM +0530, Krishna Chaitanya Chundru wrote:
-> > > > The ELBI registers falls after the DBI space, PARF_SLV_DBI_ELBI register
-> > > > gives us the offset from which ELBI starts. So override ELBI with the
-> > > > offset from PARF_SLV_DBI_ELBI and cfg win to map these regions.
-> > > > 
-> > > > On root bus, we have only the root port. Any access other than that
-> > > > should not go out of the link and should return all F's. Since the iATU
-> > > > is configured for the buses which starts after root bus, block the
-> > > > transactions starting from function 1 of the root bus to the end of
-> > > > the root bus (i.e from dbi_base + 4kb to dbi_base + 1MB) from going
-> > > > outside the link through ECAM blocker through PARF registers.
-> > > > 
-> > > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > > > ---
-> > > >   drivers/pci/controller/dwc/pcie-qcom.c | 70 ++++++++++++++++++++++++++++++++++
-> > > >   1 file changed, 70 insertions(+)
-> > > > 
-> > > > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > index 5092752de23866ef95036bb3f8fae9bb06e8ea1e..8f3c86c77e2604fd7826083f63b66b4cb62a341d 100644
-> > > > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > @@ -55,6 +55,7 @@
-> > > >   #define PARF_AXI_MSTR_WR_ADDR_HALT_V2		0x1a8
-> > > >   #define PARF_Q2A_FLUSH				0x1ac
-> > > >   #define PARF_LTSSM				0x1b0
-> > > > +#define PARF_SLV_DBI_ELBI			0x1b4
-> > > >   #define PARF_INT_ALL_STATUS			0x224
-> > > >   #define PARF_INT_ALL_CLEAR			0x228
-> > > >   #define PARF_INT_ALL_MASK			0x22c
-> > > > @@ -64,6 +65,16 @@
-> > > >   #define PARF_DBI_BASE_ADDR_V2_HI		0x354
-> > > >   #define PARF_SLV_ADDR_SPACE_SIZE_V2		0x358
-> > > >   #define PARF_SLV_ADDR_SPACE_SIZE_V2_HI		0x35c
-> > > > +#define PARF_BLOCK_SLV_AXI_WR_BASE		0x360
-> > > > +#define PARF_BLOCK_SLV_AXI_WR_BASE_HI		0x364
-> > > > +#define PARF_BLOCK_SLV_AXI_WR_LIMIT		0x368
-> > > > +#define PARF_BLOCK_SLV_AXI_WR_LIMIT_HI		0x36c
-> > > > +#define PARF_BLOCK_SLV_AXI_RD_BASE		0x370
-> > > > +#define PARF_BLOCK_SLV_AXI_RD_BASE_HI		0x374
-> > > > +#define PARF_BLOCK_SLV_AXI_RD_LIMIT		0x378
-> > > > +#define PARF_BLOCK_SLV_AXI_RD_LIMIT_HI		0x37c
-> > > > +#define PARF_ECAM_BASE				0x380
-> > > > +#define PARF_ECAM_BASE_HI			0x384
-> > > >   #define PARF_NO_SNOOP_OVERRIDE			0x3d4
-> > > >   #define PARF_ATU_BASE_ADDR			0x634
-> > > >   #define PARF_ATU_BASE_ADDR_HI			0x638
-> > > > @@ -87,6 +98,7 @@
-> > > >   /* PARF_SYS_CTRL register fields */
-> > > >   #define MAC_PHY_POWERDOWN_IN_P2_D_MUX_EN	BIT(29)
-> > > > +#define PCIE_ECAM_BLOCKER_EN			BIT(26)
-> > > >   #define MST_WAKEUP_EN				BIT(13)
-> > > >   #define SLV_WAKEUP_EN				BIT(12)
-> > > >   #define MSTR_ACLK_CGC_DIS			BIT(10)
-> > > > @@ -134,6 +146,9 @@
-> > > >   /* PARF_LTSSM register fields */
-> > > >   #define LTSSM_EN				BIT(8)
-> > > > +/* PARF_SLV_DBI_ELBI */
-> > > > +#define SLV_DBI_ELBI_ADDR_BASE			GENMASK(11, 0)
-> > > > +
-> > > >   /* PARF_INT_ALL_{STATUS/CLEAR/MASK} register fields */
-> > > >   #define PARF_INT_ALL_LINK_UP			BIT(13)
-> > > >   #define PARF_INT_MSI_DEV_0_7			GENMASK(30, 23)
-> > > > @@ -317,6 +332,48 @@ static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
-> > > >   	qcom_perst_assert(pcie, false);
-> > > >   }
-> > > > +static void qcom_pci_config_ecam(struct dw_pcie_rp *pp)
-> > > > +{
-> > > > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > > > +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> > > > +	u64 addr, addr_end;
-> > > > +	u32 val;
-> > > > +
-> > > > +	/* Set the ECAM base */
-> > > > +	writel_relaxed(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
-> > > > +	writel_relaxed(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
-> > > > +
-> > > > +	/*
-> > > > +	 * The only device on root bus is the Root Port. Any access to the PCIe
-> > > > +	 * region will go outside the PCIe link. As part of enumeration the PCI
-> > > > +	 * sw can try to read to vendor ID & device ID with different device
-> > > > +	 * number and function number under root bus. As any access other than
-> > > > +	 * root bus, device 0, function 0, should not go out of the link and
-> > > > +	 * should return all F's. Since the iATU is configured for the buses
-> > > > +	 * which starts after root bus, block the transactions starting from
-> > > > +	 * function 1 of the root bus to the end of the root bus (i.e from
-> > > > +	 * dbi_base + 4kb to dbi_base + 1MB) from going outside the link.
-> > > > +	 */
-> > > > +	addr = pci->dbi_phys_addr + SZ_4K;
-> > > > +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE);
-> > > > +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE_HI);
-> > > > +
-> > > > +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE);
-> > > > +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE_HI);
-> > > > +
-> > > > +	addr_end = pci->dbi_phys_addr + SZ_1M - 1;
-> > > > +
-> > > > +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT);
-> > > > +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT_HI);
-> > > > +
-> > > > +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT);
-> > > > +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT_HI);
-> > > > +
-> > > > +	val = readl_relaxed(pcie->parf + PARF_SYS_CTRL);
-> > > > +	val |= PCIE_ECAM_BLOCKER_EN;
-> > > > +	writel_relaxed(val, pcie->parf + PARF_SYS_CTRL);
-> > > > +}
-> > > > +
-> > > >   static int qcom_pcie_start_link(struct dw_pcie *pci)
-> > > >   {
-> > > >   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> > > > @@ -326,6 +383,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
-> > > >   		qcom_pcie_common_set_16gt_lane_margining(pci);
-> > > >   	}
-> > > > +	if (pci->pp.ecam_enabled)
-> > > > +		qcom_pci_config_ecam(&pci->pp);
-> > > > +
-> > > >   	/* Enable Link Training state machine */
-> > > >   	if (pcie->cfg->ops->ltssm_enable)
-> > > >   		pcie->cfg->ops->ltssm_enable(pcie);
-> > > > @@ -1314,6 +1374,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> > > >   {
-> > > >   	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > > >   	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> > > > +	u16 offset;
-> > > >   	int ret;
-> > > >   	qcom_ep_reset_assert(pcie);
-> > > > @@ -1322,6 +1383,15 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> > > >   	if (ret)
-> > > >   		return ret;
-> > > > +	if (pp->ecam_enabled) {
-> > > > +		/*
-> > > > +		 * Override ELBI when ECAM is enabled, as when ECAM
-> > > > +		 * is enabled ELBI moves along with the dbi config space.
-> > > > +		 */
-> > > > +		offset = FIELD_GET(SLV_DBI_ELBI_ADDR_BASE, readl(pcie->parf + PARF_SLV_DBI_ELBI));
-> > > > +		pci->elbi_base = pci->dbi_base + offset;
-> > > 
-> > > This looks like there might be a bisection hole between this
-> > > patch and the previous patch that enables ECAM in the DWC core?
-> > > Obviously I would want to avoid a bisection hole.
-> 
-> Theoretically there is a hole, but practically there isn't. ELBI
-> register is only used by legacy Qcom SoCs and they do not support
-> ECAM. So they will continue to use the valid ELBI register region
-> from DT.
+This patchset splits sm8250-samsung-r8q.dts and adds
+sm8250-samsung-common.dtsi, which contains common definitions for Samsung
+devices that use the same SoC - the S20, Tab S7 and Note 20 series. With
+that, also add a DTS for x1q board, which is the Samsung Galaxy S20.
 
-That's a real pain to figure out from code analysis, so I would prefer
-to squash them to avoid even the appearance of a bisection hole.
+Thanks,
+Eric
 
-> > > What happens to qcom ELBI accesses between these two patches?
-> > > It looks like they would go to the wrong address until this
-> > > elbi_base update.
-> 
-> Though there is no practical issue, it still makes sense to set
-> 'elbi_base' to a valid region before enabling ECAM.
+Eric Gonçalves (3):
+  arm64: dts: qcom: sm8250-samsung-r8q: Move common parts to dtsi
+  dt-bindings: arm: qcom: document x1q board binding
+  arm64: dts: qcom: add initial support for Samsung Galaxy S20
+
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../boot/dts/qcom/sm8250-samsung-common.dtsi  | 204 ++++++++++++++++++
+ .../boot/dts/qcom/sm8250-samsung-r8q.dts      |  42 ++--
+ .../boot/dts/qcom/sm8250-samsung-x1q.dts      |  26 +++
+ 5 files changed, 245 insertions(+), 29 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sm8250-samsung-x1q.dts
+
+-- 
+2.50.1
+
 
