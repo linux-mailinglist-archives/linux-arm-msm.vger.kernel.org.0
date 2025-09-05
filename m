@@ -1,88 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-72233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6377B45306
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 11:22:25 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CA08B4531E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 11:26:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5B4E1893E90
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:21:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C32CB18897AF
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  5 Sep 2025 09:26:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 54FF0283686;
-	Fri,  5 Sep 2025 09:19:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 389CB285C8A;
+	Fri,  5 Sep 2025 09:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="m7aPbkrB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gzn44bLQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973B0283FF5
-	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 09:19:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49963283FF5
+	for <linux-arm-msm@vger.kernel.org>; Fri,  5 Sep 2025 09:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757063968; cv=none; b=aRH8CoqQSXJDbzY3QxrmhOR6v6KUBSU2PPRYwm+2W0Qqi2idne+CdmIJQxk1bNRaoGBcSkCceiR97s2i0t1H5Y003YUMe4Vax3VeOdtQGlSjKGEOQKw85ua4Kw8RJvGNEXJYYqPHmNlyorokclq4cTh+dN8qOU8yYwDzMQtkBTU=
+	t=1757064368; cv=none; b=L7axxK33rtGcew+sk5kd7BIjL3qZJ0u5w5V8w6NvvuQqroZEzqwkDMqZuxU1mnsWwDSuUMb2mmuokINWg3Xcfq/1KtdtfWWnBVwi5s/+8lc6j9b6NgcxNrIb15VVail08V65YUaODRYPPyCVHQLHs/lK0rcgLklpH2NG13AtS7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757063968; c=relaxed/simple;
-	bh=KIj4LNw/kvQGZYEBaGiUgR6MDjNc8MxHxSzTe1N9i3Q=;
+	s=arc-20240116; t=1757064368; c=relaxed/simple;
+	bh=MEed7gqF7d7fWHQmdGpJUnqCT33bvVFLPAKdB2LPFeQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=t7R8tnPa4azI8xkR8YXhHtge/ihVxo7BWPA8PatBerg+/dCXrbhrBCwY+yJ5OFVJTsaxXGN7Gl6/9kaUKfBO8Z07A6FuVTbmbeDBx085fZMpOI8qyw+p2wE1b1+MBlQf9rTQNYlCwZi910zsR14jAddg6w5gSHgJbFtXy8KQQ5Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=m7aPbkrB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5857aerJ008316
-	for <linux-arm-msm@vger.kernel.org>; Fri, 5 Sep 2025 09:19:25 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	5mheuVheNi86mdpcqpjAPrD0yOrcM0zmpE+Wh+IoKbM=; b=m7aPbkrBXZwIq3aD
-	hOlXKrq0gqd9wvMNwbiJ//VYC+sWooDqXsbnyiYT443kmT533F4SAMcAB0ay5ah4
-	NADhLw8Q0F53Oquj4L9a0RLEGMQJ/ZB9C3+fcb9MQRuC6ldkyUl5eJgBKt9yiDJ8
-	NxR5sqv6b4XpjCF52O7XIIkek2/ZqCBrysp/z463BV+HrGs24xPsOETTNt5tV/ux
-	TIUsIMBlmvxuW30HleGCIW1fqF5VPRosqFlj9JMZbvwbD4EUcooPIArBMSFCThHg
-	rdQ49sx7S4MIwkgoPV6v3gWkCslUZfELzjo51s9ROF7XwDqDz4/Wn5Bw3kP7rvT5
-	KWdP3Q==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 48urmjthja-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 09:19:25 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b4bcb1e32dso8895691cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 02:19:25 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=PyhmAGmQ/UMCvB0d1AyyIhDZPSDVdPn5SUHyd2PEfl5UcTOeyOEQnQd+CuBXveW2Re5Gw9e7Gpq7fI7NqBXgeW6RYkTBtOWee3Z4hjtMbFJ95B1rgXDm33pdeRlIhsdBDabJEPVxblYKhr6ZWoBoS6UGr9pZlgn1j/bQPaXcNaY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gzn44bLQ; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3da4c14a5f9so1902840f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 05 Sep 2025 02:26:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757064365; x=1757669165; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Y1b4J3UsQ3netqUZNC1BP1Y1aZDxDf+RWzn/Hk/C+pw=;
+        b=gzn44bLQ32e7vf/erJdOQL/HLt+H0ABMbNBR0cQCSoh2+fCHO7dLmR18g63WBd4/Kv
+         Cd3NOlBrGTir3N84gGgjgivjqYmQIB9JUs+PzVYQfqABxlMIhl829WPgosviGZ1tnrwG
+         X8u8P+f7fsmjDqcB6Bs2MxyftD/9GrOTGk1LH2ZHcr8m8pmnhpIeEK6ORlWEP+G4nJ25
+         T2N2reD+fpEDXJhZiV+b9zj8IBo24bpwAvCh/X2iMCMJltDr2XQtOAAk4LzSLbKpNDkc
+         8Xjx2dE7FQDp6OKwALpdsG509oXgl1cWVzHzENuhCcyfZ8BHHSyh58E6KTrBV/jSNOGP
+         ABeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757063965; x=1757668765;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1757064365; x=1757669165;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5mheuVheNi86mdpcqpjAPrD0yOrcM0zmpE+Wh+IoKbM=;
-        b=gh8iqpvCyk5DQyf9SqVstGLKjttDGL80cli1rdHK+3Xp69t8zfNHjGnloDdd/dT72y
-         w1Y864zlQWq4/aqJ1SL6TXc24eJug30CucP9Vdooz99y3aQMz/2RvEx2PabQRb4yGrfm
-         oHLXt1i425u+dhTgBUUEL0F618gt8Hn4aTbDsNm6e6Wr53Cmcak4p63uGjX8qZ4vTGIR
-         x6UElws+ZE8WF11ur+LYlZRG/Bk9xsoEl2/UACh1dxwzDwMl8qJGASTjYCp3zYwxngg7
-         JTHy+boJmQA4aHaW6gOn4+t3Rkskw+XDYeTAw5NCm4yg3DRpvhqDeDDjeCJskm/AOBGM
-         8gtw==
-X-Forwarded-Encrypted: i=1; AJvYcCW+Jbm2R7k2ClMez4awtbggzk87Upeto46XuV3weqKbcG2lm2yt+WCvdi3Jii4ptWXAAlLlS3mrrlTHzoUz@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZ9svCZt/mZToQMVYc4AiyKNdLSrUU32BbumobJA25T/K9xUsO
-	kbai5Y9qa1KyfFBUelXb6Xc5yBbBm3l59YJNJRnmcCRlWBoh+kDNmQ17WsomGsZOy/dfI9rdkCw
-	H3mP3oQXAj03SOm3eLkGRaglCv5uwzr4uqKZnY3Ah6hENke5KsAfdeIBm72O0JpaItSyq
-X-Gm-Gg: ASbGncv1YGPEJzJ2Pn5zS+MM690qE7BWMDr02AQXnjGYv0W2sUZQ9rvTIqH9GiGHEZ/
-	sD1z9gx6BW4WgczghvqFGz0decEILgadaUEUJb9KlKljfLVjfFMW3MGM9TARe5nsNN2MMG9H9wj
-	kyV4J8HSk0IVL85GKl+413//tsMu6qdGE/7u0G0a2YU+i8aiVIghADHxiP80GKKG3R9JOBA8A0b
-	Y/ApaNrobTWo38xG/DmNIP5wyYOfFTDAXqXZgCt69kBr2gJmrVkn+PEAt5yyJeP3qkimcrsPxNR
-	qjpsfA5T7fsj9xpt7Ov+GtnzBYVc3PhOq7LhIlBUgJ8+i3chiY0MlLyW0P5HpiTNstSYAqp+VHv
-	W4o9RpwvlFjTUF+HFrGQQAg==
-X-Received: by 2002:ac8:5ac3:0:b0:4b5:e391:e3e0 with SMTP id d75a77b69052e-4b5e391eb76mr29836381cf.0.1757063964592;
-        Fri, 05 Sep 2025 02:19:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3F9vSGXSxcO4h54j2pqoF+PplowVt51lj9Vy7KzWudaCZVbxujLAhE+/saQeA+isoTjlbXg==
-X-Received: by 2002:ac8:5ac3:0:b0:4b5:e391:e3e0 with SMTP id d75a77b69052e-4b5e391eb76mr29836081cf.0.1757063963994;
-        Fri, 05 Sep 2025 02:19:23 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-61cfc22b594sm16732909a12.21.2025.09.05.02.19.22
+        bh=Y1b4J3UsQ3netqUZNC1BP1Y1aZDxDf+RWzn/Hk/C+pw=;
+        b=ixOgF5CE06ItTx7kC5aFZWYL69G/gAmfyU6RjOAAWzCnRIlEl+GKLBceRP6Ndawzi8
+         fqw/5E/c6H7qKt5PcIUbWjC8kUALl3YvBNJvu0eywNieTBogEbdUnSsoY8U0uPndJ5ws
+         iOZbeJHYPUa9mKaL90Bbx8ivDDYzfrH6PSTbZqMNkvyQm9G0yvB4hxk4ebntTs1UlaJx
+         ynxti1kUHKw+dZ/LiTStChKyApDRwx3WU6rA45KHLPv1OsC3DZS/YFIhl0k4W96iKmMS
+         XMzu4tvpuEPFPbxGShR4Y5dUNZuNXQWV4vNon3OoI9LsaUEV2FUENGSDyQd248HKJba5
+         ZnDA==
+X-Forwarded-Encrypted: i=1; AJvYcCXvJPUHQnKfj2EgGPs1PGbuZYhdlAe5Hp7Jv8EJMJRrfyMd49jIryE4yXq5XAAIPmP74llbFxFGP3DdqlQG@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywp0E+1kYslry/1tznGKYnJMNEKpmMA3Yd5hZhleoqghfzu1qNm
+	5hNZYKmn5jMQJFoxbQCEqR8PvSKouUjwu+3enghKxnEeo7Y6jDSXb1VjYqAJC7b22DM=
+X-Gm-Gg: ASbGncu3rO9KpNRgfU/syNvjJK6Fwu2Nn/WNZAYYXQQR/U+XszEXxvIc5oRwdNHgeU+
+	mNyEbELLIKpeGkvwZcGrop4l/X2dRjvLzexbN5u8YiszRvU5nLxOjjdN5ECQUcq85Fk8LEL5Dz/
+	ixF1EC2BqnFvWwmgdO9DQqWqZMIH/ZaAzo2ENILIthgiGNySWb/oFMNd7gM4tM+ReVPtQxn5+Sh
+	43I9gE3JRRsymT3wh8yppNlokzS9Dw2ZdI1i1gEU/VckQLvRntQKt+Mel4c+PqNBLy+/eVgOMex
+	HpgeM787yAFjaoWqLQ2sdNdOrg8gtLYnlKiRODIzgCym64PUmccX0WBuEwUyuSI3KMl0hlt6Et7
+	BT81AswR96wq7Yjk6kKnnMJd5GyqeXy/K29fBXsdtEtt1Qcpu7HbI06N81Nx3a0/rtB311kvIyb
+	fGsvvIkIqzeGQpSYrrvk+hncBPPzbiVg==
+X-Google-Smtp-Source: AGHT+IHf2bP4rvj7gdEbkjOaPluyqyvNYQTBLFp/W2bKEoetxcByY2bWU0nZ7KXQEoy+tTKeNkxMLQ==
+X-Received: by 2002:a05:6000:22c4:b0:3ce:7673:bb30 with SMTP id ffacd0b85a97d-3e3048266c8mr2128415f8f.14.1757064364653;
+        Fri, 05 Sep 2025 02:26:04 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b940bbc0dsm167696195e9.2.2025.09.05.02.26.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 05 Sep 2025 02:19:23 -0700 (PDT)
-Message-ID: <4007710b-9e0c-499e-bbf7-246133ca9f21@oss.qualcomm.com>
-Date: Fri, 5 Sep 2025 11:19:21 +0200
+        Fri, 05 Sep 2025 02:26:03 -0700 (PDT)
+Message-ID: <df705089-0554-4044-87c8-d2bd16da3ee8@linaro.org>
+Date: Fri, 5 Sep 2025 10:26:00 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,76 +83,80 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] watchdog: Add driver for Gunyah Watchdog
-To: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
-        hrishabh.rajput@oss.qualcomm.com
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Guenter Roeck
- <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250903-gunyah_watchdog-v1-0-3ae690530e4b@oss.qualcomm.com>
- <20250903-gunyah_watchdog-v1-2-3ae690530e4b@oss.qualcomm.com>
- <eaa2bd28-ed98-456a-b374-3183e54123fa@quicinc.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: x1e80100-t14s: add EC
+To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
+ =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Mark Pearson <mpearson-lenovo@squebb.ca>
+Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>,
+ Henrique de Moraes Holschuh <hmh@hmh.eng.br>,
+ Neil Armstrong <neil.armstrong@linaro.org>, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250905-thinkpad-t14s-ec-v2-0-7da5d70aa423@collabora.com>
+ <20250905-thinkpad-t14s-ec-v2-3-7da5d70aa423@collabora.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <eaa2bd28-ed98-456a-b374-3183e54123fa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20250905-thinkpad-t14s-ec-v2-3-7da5d70aa423@collabora.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=OemYDgTY c=1 sm=1 tr=0 ts=68baab1d cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=v9T48ajA7Nf6lPuJmEUA:9
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-GUID: JrjmuP2Si7vZ8KKuHbZBBK0uN9UhinFY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwODMwMDAyNCBTYWx0ZWRfXwKXcO5+GXjBQ
- SMmO1xUHFvKSO4VAJ5CZALGzURBT58JTWhvf0t9kpaWLpRrbbxQNZsESr/g0Gi+/P7+solNnAaC
- Y2djUnpDOdxm94lvKuzj+wnuD1daPLEMyZ2NMzvEmAk1gI+UjsogajPgr4axqEYm56LQOagLPW5
- GW2/XoDCvNEifbgwoRle0//YHTCqwoyFgua0H99z76Q3o/n33kfN29RBPki7fNG+Wd6QPAJl00b
- g524zUY5nJxJ31MVtRp9rVx6ENRC101Y2ITi+TtUg8XJwyv37kGfsw530eCk2mNrpJFCGlnGftQ
- tadcmw0elT2HsPGW/j3qBabU//e0Vlw4ldqfhiv0YOyZqGTDrNCwpLhMP7ZUZxRW4jZGCWNnB03
- XWIuvvWw
-X-Proofpoint-ORIG-GUID: JrjmuP2Si7vZ8KKuHbZBBK0uN9UhinFY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-05_02,2025-09-04_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2508300024
 
-On 9/4/25 7:11 PM, Pavan Kondeti wrote:
-> On Wed, Sep 03, 2025 at 07:34:00PM +0000, Hrishabh Rajput via B4 Relay wrote:
->> +static int gunyah_wdt_call(unsigned long func_id, unsigned long arg1,
->> +			   unsigned long arg2, struct arm_smccc_res *res)
->> +{
->> +	arm_smccc_1_1_smc(func_id, arg1, arg2, res);
->> +	return gunyah_error_remap(res->a0);
->> +}
->> +
->> +static int gunyah_wdt_start(struct watchdog_device *wdd)
->> +{
->> +	struct arm_smccc_res res;
->> +	unsigned int timeout_ms;
->> +	unsigned int pretimeout_ms;
->> +	int ret;
->> +
->> +	ret = gunyah_wdt_call(GUNYAH_WDT_CONTROL, WDT_CTRL_DISABLE, 0, &res);
->> +	if (ret)
->> +		return ret;
+On 05/09/2025 02:09, Sebastian Reichel wrote:
+> Describe ThinkPad Embedded Controller in the T14s device tree,
+> which adds LED and special key support.
 > 
-> When I ran a simple echo test, it failed here on SM8650 with -EINVAL. May be Gunyah
-> does not allow disabling watchdog when it is not enabled in the first
-> place. May be something you can check if this is a difference between
-> 8750 vs 8650.
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S OLED
+> Signed-off-by: Sebastian Reichel <sre@kernel.org>
+> ---
+>   .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    | 24 ++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> index ac1dddf27da30e6a9f7e1d1ecbd5192bf2d0671e..f70489aba870289edbcf84ec22fdb004e010868b 100644
+> --- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
+> @@ -887,6 +887,24 @@ eusb6_repeater: redriver@4f {
+>   	};
+>   };
+>   
+> +&i2c6 {
+> +	clock-frequency = <400000>;
+> +
+> +	status = "okay";
+> +
+> +	embedded-controller@28 {
+> +		compatible = "lenovo,thinkpad-t14s-ec";
+> +		reg = <0x28>;
+> +
+> +		interrupts-extended = <&tlmm 66 IRQ_TYPE_LEVEL_LOW>;
+> +
+> +		pinctrl-0 = <&ec_int_n_default>;
+> +		pinctrl-names = "default";
+> +
+> +		wakeup-source;
+> +	};
+> +};
+> +
+>   &i2c7 {
+>   	clock-frequency = <400000>;
+>   
+> @@ -1267,6 +1285,12 @@ &tlmm {
+>   			       <72 2>, /* Secure EC I2C connection (?) */
+>   			       <238 1>; /* UFS Reset */
+>   
+> +	ec_int_n_default: ec-int-n-state {
+> +		pins = "gpio66";
+> +		function = "gpio";
+> +		bias-disable;
+> +	};
+> +
+>   	eusb3_reset_n: eusb3-reset-n-state {
+>   		pins = "gpio6";
+>   		function = "gpio";
+> 
 
-Hm, makes one wonder if the opposite (won't enable when already enabled)
-is true..
-
-Konrad
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
