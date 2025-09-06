@@ -1,81 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-72402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B9EDB4769C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 21:00:19 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77150B476D0
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 21:16:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F3BC25A43E1
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 19:00:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 217EB7C0543
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  6 Sep 2025 19:16:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98B682848AB;
-	Sat,  6 Sep 2025 19:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CC0621ABD5;
+	Sat,  6 Sep 2025 19:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d5y61xJo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mi6iQuEh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E33126A1A8;
-	Sat,  6 Sep 2025 19:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5BBC19924D;
+	Sat,  6 Sep 2025 19:16:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757185214; cv=none; b=mjOho6C9LQzspXhwef+2RATxjGbL8oMnaPicTdgYPKILKbNDttbBm7o9tj50bFb11yb2D9DPC5GQii1to5ha6BHVKIg2/yB+Jiy37mb43usNL6/kR4Gtc8AWDAHAWOpgpJyY/QUKQCpTJoG7D4xscfNbjT1mCu7mUP/KGnoOFvM=
+	t=1757186200; cv=none; b=hPsxNYIsTuXId+1R1XKiDU3xcV8Df1ff4L5nHhkS8GGCIVyH6vi4a7TRDIrGR2KIVIqYEQ4erM4rZavEJKCl0W89YnvgPOr+GWoGAsPnhOxnRqi5Kc1E6HmEO50RzievXVADX+zOlIgItH55TnEzgzR/Opa4PfP+mI094kovHx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757185214; c=relaxed/simple;
-	bh=CcV57OvdgwUpKL1hzOguejWbAFsaeT5MKm3AdLQYygs=;
+	s=arc-20240116; t=1757186200; c=relaxed/simple;
+	bh=uIDKj7ZXFbKOs9ax3//A63tNRR3uLcMYrOEG5/rAKkA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uXc+Nisdp6svMfbHhTy27KlhnPfwpU8gJz4zjErf45NGWTwVZtBFPaa+iSWC+zdIp1k7mHw+dzWTbxLAtx234/5m6RPbZVMX2jNKoDz3kYv+6sg02UWRwpZ6uGQqj5RVTKggnnF5+elrFo1yBpS/c1rrFCmzo9xRsnOh7kXeQjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d5y61xJo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBF2C4CEE7;
-	Sat,  6 Sep 2025 19:00:13 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=n1qCoMr5H2Q1KzRHBDMxhuBgzRV4zo5VsA2Rg94K6Ycv5IhfFY5FAXxNto1Wavysr2ujD5MjL3puOJRM4dTSwMoqouFLjt2fpnAP7Q91cBPI0DEIUBQp1WyiKQFnnllNKnBGZcGN480nAot6nGObbQY/T1ggZNrKrAErELOB3Yw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mi6iQuEh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33C60C4CEE7;
+	Sat,  6 Sep 2025 19:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757185213;
-	bh=CcV57OvdgwUpKL1hzOguejWbAFsaeT5MKm3AdLQYygs=;
+	s=k20201202; t=1757186200;
+	bh=uIDKj7ZXFbKOs9ax3//A63tNRR3uLcMYrOEG5/rAKkA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=d5y61xJowrV1fBEemh9CqGiLJEKGgOc2WPzK/N2x6xprkJJrOZqoXDM7o24LZcFjj
-	 hcQxWzJJ2Gpk/I8dCbX2kx6xnUUCUzAG/lKpnhDnQ4KDmnVSfBWXwN45+qunYSGMZe
-	 O9aqcXyATpTyhXzjUR/Gi8+F+9beR0jhTs6u240oWXHQhzvYaHtoDdlMf+UqLYbb4g
-	 v0CqEHRI40H65gc/tPKQaG55xmRM69v/JQMYulUIcinHcQJZk3pvfNIi4VtZBv/8R+
-	 sO4lblBeXulRMklXl9HY+TWepXpxsfKzEiufWyjWLD9XUL4XvyeYBvw0lwVG65/XVb
-	 FFVcMTgTOggQw==
-Date: Sat, 6 Sep 2025 14:00:13 -0500
+	b=mi6iQuEhgnp5tOmxJ3oM9cYaw3FAxxc9SikcLPTGy1PskwNcVE0bxvSYQNFM7xRzj
+	 tYi5Cq6/K9Un2+exi59cpu/7GBNPoL8YKkwPFEyviQpXwTTkL7/cU6nO3U3dp87nOA
+	 OCXuo1X3BypFInFYVbZD7RDyNY3B1jEO37uMG0QArQSuipIx8NGRLC9zS4SKzdeyiN
+	 z6C8IRP9qQKC7LfjDb2/Jo8Kjw0C18GkV1QhchFMPnEOTwhGTH1ObjyFBuHRYvxZAj
+	 BPNWQbVEOple9+sbhzm/uYoMwC+cQVpwJQvuC6vSIN4O8NzFqddsYkO+OhOr+Rd9L2
+	 plLAARE/wxZ0Q==
+Date: Sat, 6 Sep 2025 14:16:39 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, Mark Brown <broonie@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, kernel@oss.qualcomm.com,
-	prasad.kumpatla@oss.qualcomm.com, devicetree@vger.kernel.org,
-	ajay.nandam@oss.qualcomm.com,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	linux-sound@vger.kernel.org, linux-kernel@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>
-Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS8300 sound
- card
-Message-ID: <175718521242.1621347.30475789277054307.robh@kernel.org>
-References: <20250905142647.2566951-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250905142647.2566951-2-mohammad.rafi.shaik@oss.qualcomm.com>
+To: Eric =?iso-8859-1?Q?Gon=E7alves?= <ghatto404@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v1 2/3] dt-bindings: arm: qcom: document x1q board binding
+Message-ID: <175718619242.1639538.7036385000984278430.robh@kernel.org>
+References: <20250905190931.27481-1-ghatto404@gmail.com>
+ <20250905190931.27481-3-ghatto404@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250905142647.2566951-2-mohammad.rafi.shaik@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250905190931.27481-3-ghatto404@gmail.com>
 
 
-On Fri, 05 Sep 2025 19:56:46 +0530, Mohammad Rafi Shaik wrote:
-> Add bindings for QCS8300 sound card, which looks fully
-> compatible with existing SM8250.
+On Fri, 05 Sep 2025 19:09:30 +0000, Eric Gonçalves wrote:
+> Add binding for the Samsung Galaxy S20 board, codenamed X1Q,
+> which is based on the Qualcomm Snapdragon 865 SoC.
 > 
-> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+> Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
 > ---
->  Documentation/devicetree/bindings/sound/qcom,sm8250.yaml | 1 +
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
 
