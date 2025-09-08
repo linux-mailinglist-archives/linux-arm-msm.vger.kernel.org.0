@@ -1,363 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-72542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72543-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 143CFB48909
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 11:50:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 03D0FB4890A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 11:50:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 915B6188ADFA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 09:50:22 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D74D47A3B48
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 09:48:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB3351A5BBE;
-	Mon,  8 Sep 2025 09:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47FF42F069E;
+	Mon,  8 Sep 2025 09:49:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HfgKHn/J"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wo59aM0q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F572EBB80
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 09:49:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D312EC555
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 09:49:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757324998; cv=none; b=iiXjQXiFE0L4Kt039Gz/sSjDq3glczWl8dqLWUcLMH+lLLXzGuTXLuh/75io5/7saibewBiCOtbFwWOF3L7q3PWSc2raAR6NFrBI8lItYkobrvfF0MQAQc2MhPWJawUv/ov5HCHViQREwlaQvuIXNyvmMSqKNNGq20dZz0cOJQg=
+	t=1757324999; cv=none; b=eONHOgUQBwS/kuYyrvyKokCT9ND5J01/uOQTyramVS4eZyZxXL6/Gg7v5VTbK7wRDCk542mIVmNx575jy/xR0bU/ez9mSqRx6e86XTQPaexjk953YDAMh1WU2NOvsv9XDbgA7Rw5hcRVpwukOanWoF86wJrPM9AfLxGtSDbYBtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757324998; c=relaxed/simple;
-	bh=GUJCx3UkD3Z3oOzZnWZKmtntiKH4pYmS6nnwX4e6kdA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ks9kGYwB/NzX3l7dnhz/q5mXlHVOuw3AFDo31jQJSJjpOTTG49V4RSCkcRwmr3bw5UrKWmlbjLKzsJe7kvCmCmgHY7MMDUh/AD9jlASmTpo99DICu4IQjipw0DsHgNuuzZopNZMvEe+Z53Lg9NDj94uLcPoiUbGgmhD9/BogHt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HfgKHn/J; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-45de5246dc4so1041425e9.0
+	s=arc-20240116; t=1757324999; c=relaxed/simple;
+	bh=/1qeyyrYEEifT3QeM8Q+fXPgtyXCmu+JFWWL/hFWG90=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=o+he5jEOUuumZrrTc1dA/KaNtu3xc9WC67PIC1nWKbaT6fdAA5rVY17iWZ3M+jG1CLQsFXzvghrBrWrortjByEeMs/tkkOqd6U7Nz7JrD+iZHIK6sQjW6bFGrbCX8yu2vdWMDD6tRybcMn+y0Ysbm7gdqTavSWg42i5RGboOKp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wo59aM0q; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5889BR3T027051
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 09:49:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lD6KEG3zwEbdfYQAGN1f+cGXwCANVO3gniDOdrVcexg=; b=Wo59aM0qVggtWo45
+	OryuIuaLthROh7vzp7ABJDOVBTbdnTH4LypIyCpBja0d0eWvlm8ynTKJyEvKm5y6
+	EPBIvGGMcTdakg3EsMsDJ8QC3cw1bF9+Rx3Vmc7pE5xogHvfdla0mPVn8vnU8m+A
+	rxZE1M/yZ9hOzn1MAllTUtGYMujI7VMDId8WSFYgVGpG9qsSmB+u2WYNQ2eU7lz0
+	wAAoeEPL4JUVippz1QcFzC/kyZvejSVl8E7/6DVJZhD/41ntvnirXGiAaSpjxU5K
+	sospCPmYw2HcNNt8fPkye+0b/bQXNPd8PwJQHy1C0Je4NQcSP9L37ilbasB2AncH
+	m+nQ0w==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490aapcbme-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 09:49:56 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b601ceb41cso8136301cf.1
         for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 02:49:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757324995; x=1757929795; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=6HPp+d+DYl6tBX7CkBMoeTNF2OX9txbgZ+0e0Y0cpiM=;
-        b=HfgKHn/JlakQPEBljk6DiiQjtPuAmFBIZaE8TCRa1j/B5kukRH+nrK6uNeFHPSvkpc
-         Y5BjGRWJn5Y7aHvqommtXfJHe6x7sLGsKZgi1OfGL2u28aYiFJR+1ecvMOfTC0Hq2XgA
-         MktjrQ09Gozvkcg8EjXJDxCeiGKQ4x54NK3CGwPSQrXPA0pudNDScWt1O6YT4OzB7Vk2
-         Byj4xrdcOOxGrSkRDL1ads76L0KD6RHegP6A8bSiQvJ2tyjcaYBBOuA77HpkCAVge/9m
-         toCROFF3SsA1c8LFAf4QtheqIiiyEzk+9YB9JtJkUTOCHp2JhV6g0TaacavLN/5rbvWq
-         ctJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757324995; x=1757929795;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6HPp+d+DYl6tBX7CkBMoeTNF2OX9txbgZ+0e0Y0cpiM=;
-        b=CEXdzQr38vC9Geh4tY9aVDqOrRYxYhRsyraSc/kQL6ddx2NJrUWQVAmX23qlEdEbkA
-         Ibgec54SmM8PjvKKS27xPkWpcwK1rZs8y8CIPacuO9a0nWPdfbalWQHLSXcaDejAQJTM
-         PE7lPGXvqCDQh2d6D8P5hOPFkNpgTdpGKKTEWHusPEpQvuaUfYvzP/sXBv+cylgzzDDW
-         0STo98mzeUU6yVKwbWb0Tr9fuOgFg3aS6mu2x7qmYZmOmDxr4A1a3Rq/iF0e9s50zOLN
-         ABuggxNiTm6x61lr6DHuAupJ5rUUPYM2936S8IIxPH1B42tdzz+sLryYH5uCovMv3RqR
-         duMw==
-X-Forwarded-Encrypted: i=1; AJvYcCWuugcC2TQPDs24UvxjWa5jAz8SbVX3ES80sU031AYm8XKo+q4pWCkXhGZMzVrGW54UaCLtLW+pdXCv5jQ2@vger.kernel.org
-X-Gm-Message-State: AOJu0YyuCEp5lV0ufiUQQ2KChru/FNSeY2v1ADqzgwFfhfPwPp5q6+JR
-	ypHqfSbK8RHDFbN5dlFqLhghm1DLTeUkHEXvNSXACeoBIEahof+rd0hBwoO4yWjCB5U=
-X-Gm-Gg: ASbGnctOpItUzw5aB80WZtQWoqDUhnm4kQnEVuJjYiqapNaT7DQ0mfOI+aEcNh1kvZj
-	blOr0gTNyuyEIP8fEqr0PwY5PEKBR3OVjzp3IUlH4c9JlHnV7XOdtpitMOv4Ci1V6Dqx00bneMi
-	GhSJluvb2OUxWOnsErUVB1aTokJ0RN5g9sUsxbjhJKAAD9UhajKOXLCyZSAt7g9JgkRfXzRyJNm
-	Z/S1NzrX7jJPFJmK6ZcSnRQ7vRlpC0BtCsSobBhTVN6BImXDOY2iRgNjIDCmm51SJP21/LPOy10
-	onlYQmhi5j67E40wQ6VmXhYvbjqIqcjHxePqTAYBQyOTg2rBNCRkuASXe1eLBBdEZ2aQFlommsU
-	sqWT2YljjoXWEvxEuF5z+lRCtPZceIPLiV/p8GCPL1/UN
-X-Google-Smtp-Source: AGHT+IH9yq+f/Gif5hHI2ymerMAbld+HQll0KYCEenPnZuVt/ftZDGbpRCGUuo/9Dn+MUTlWJrxLcg==
-X-Received: by 2002:a05:600c:8509:b0:45b:84e6:129a with SMTP id 5b1f17b1804b1-45dddec5fa4mr32855945e9.4.1757324994767;
+        d=1e100.net; s=20230601; t=1757324996; x=1757929796;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lD6KEG3zwEbdfYQAGN1f+cGXwCANVO3gniDOdrVcexg=;
+        b=AZAcaVvqGeR3JC/5mzAP2NGhXS7ZaswJiw8AImskV0cubxiNtRMG1zPvv2yGX16xxR
+         xXFYWAYnWma3qoMLt7bFYce6GtDcepuiTc4bos9Ah4TsRezBBhWeWrjO2sIxXvV5sUvH
+         DdPG4W7y+MM0ZSy8M1qGg7VZ6gwsx9jvWi6/iex4+V/PkhF7xMM27ciPOznK9qTY5R2A
+         yl7NkCT9D4B7tDoRdZeoPxC4b2opLjbB27QSwVN3wqcAfFkzUf0Ma6MlpGagyNpGKvpV
+         Di/qyHBYdrE7ebazderjnFy5fpvk07AxYkMR5/HcJaFLqxBJjupJ+nmevMN86RfsBiL+
+         358w==
+X-Forwarded-Encrypted: i=1; AJvYcCXAdwtMYyEzQbW3rxttkhTEm+U+pqpQVRwa+YcKVYmYqX6GTjAkV7FMw5MX/OyddOZyt/GFkM3hsuULNfPi@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy2ciu71SCEzkM1L3wbF96am4LnwEJzv9pN1C9yCEBBLhvg5NRj
+	jTtnlXY7CwIEUwroReAqdMxgisVjBZfV0PffVnmGl37SkU/LnWgxv2v+GKLDGL5w9WUecTjIOS4
+	S9bjI0jBEUGjwAoW10NiPRmWYa6ezt9F6ZmgUSQ6M1YestB6tZqKz3hxubXJ+PjCDlc1d
+X-Gm-Gg: ASbGncuWUXNbOGiga27H3R1xErx6Gyun3scDD3+R01BGf1mCveA2hWAAwrM8YqYngeT
+	e4oWzS51EhTYs/xmwAWPdbkM63airX2jRIjRCVfTLEB1gpyk8Flp5PwzjQr1TduMvoX+WKhRnn6
+	PPK2UDv8eIV0POR33D46J2pS83mzeU1842RBXOI95WN7WB2CIrCLOQcsCVpLrSYal4SbhN7v3Ok
+	xSp7yzyxW5l9JLO+joXtNcbf18j1DSPgOhKKscyxHmn/X2XznNo0LT4WVO8P/LIu0BpAs6j8SoN
+	6x9/vF0TzOX6lKxrdX74U4tyAvo4KCgdrJhJT7Vw1pm1nyFOwfYzXwpRfdS40o3kmJX4obvM6z3
+	8Dnr/ZKoTij97RfmohSOfkQ==
+X-Received: by 2002:ac8:5981:0:b0:4b3:4d20:2f9 with SMTP id d75a77b69052e-4b5f83a513fmr54659811cf.4.1757324995630;
+        Mon, 08 Sep 2025 02:49:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG0Nr1cvJLpayhWkgcnt8UH3czXMtnD+kOQ5FfN3g+uja3rrF4K07g61R9UqbF9Dwg7GRukAA==
+X-Received: by 2002:ac8:5981:0:b0:4b3:4d20:2f9 with SMTP id d75a77b69052e-4b5f83a513fmr54659661cf.4.1757324994936;
         Mon, 08 Sep 2025 02:49:54 -0700 (PDT)
-Received: from kuoka.. ([178.197.219.123])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45b7e8879cesm438321075e9.12.2025.09.08.02.49.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b046f2dda22sm1231244666b.40.2025.09.08.02.49.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
         Mon, 08 Sep 2025 02:49:54 -0700 (PDT)
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>,
-	Simona Vetter <simona@ffwll.ch>,
-	linux-arm-msm@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	freedreno@lists.freedesktop.org,
-	linux-kernel@vger.kernel.org
-Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: [PATCH v7] drm/msm/dsi/phy: Fix reading zero as PLL rates when unprepared
-Date: Mon,  8 Sep 2025 11:49:51 +0200
-Message-ID: <20250908094950.72877-2-krzysztof.kozlowski@linaro.org>
-X-Mailer: git-send-email 2.48.1
+Message-ID: <5178a6b1-1b5a-40d9-af40-68ee13975509@oss.qualcomm.com>
+Date: Mon, 8 Sep 2025 11:49:52 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9020; i=krzysztof.kozlowski@linaro.org;
- h=from:subject; bh=GUJCx3UkD3Z3oOzZnWZKmtntiKH4pYmS6nnwX4e6kdA=;
- b=owEBbQKS/ZANAwAKAcE3ZuaGi4PXAcsmYgBovqa+61PJEHKEUpujaVvs0syf6Uoj1VZ7bi/0q
- WmKBMgmnhyJAjMEAAEKAB0WIQTd0mIoPREbIztuuKjBN2bmhouD1wUCaL6mvgAKCRDBN2bmhouD
- 13WzD/4x/IIPuwNjsrmNC0LUxZGIhDIEc7dC5/TTJ64E6ftivKaBqEfcFw9WPjGLEhVzHWIWKPo
- E95btmitQzt0IvzpyE/PZw1AjTr8EdH3JP7XGnt3UvnV+EyEDxC7wMzErXX56Yf6GAKljFOFqDU
- qM9lla0rcVhm+hNtCC/a4fIAzu8RbgWW7Yjp8ossoR2R8QNh85/mesEp4DFnbgJr6Qfs9mQVIpu
- 3xx4f2zTB3fkzQnAWhjUis7/G5delvvCIAaMF6CUdK2JQyEmWE4cy7pi9rPd3ituMUtsjdYfSNF
- GfEKghUGEDhzA7J5At3oLTs2/BkZbZ5arYBTN55zFwOxxBnvbgT69gay6f9MRQCT7M68vPwAHAK
- +6ykPX57IPkbGdLd6PWzCIce+EM0i7yb+4jMZm7p7SAhGwji0uw1goN4/+TAMlCk3vrUObFLIjm
- MnIPasj2/L/rrX6qyzVvon85e/TOBTTzSYJ5WYjM7kqfT49oU+lt7zvEKekfpppnZS0A9dV9OVv
- nP8VGP+4carGKhZb2a2WO7w9i3UgxD5NbZMoKuhZdg6SV45Nhq6E3ow7CjPdgapL5GZ+syR2kVU
- ENs6FHoS/w1/Fu8u4mgW9cub/Kts+eoPqQmAuxHpv68YgnErJdESfvdzvus1/ulq7fWE0nxhqUn jJKsiA7KdOWxuTg==
-X-Developer-Key: i=krzysztof.kozlowski@linaro.org; a=openpgp; fpr=9BD07E0E0C51F8D59677B7541B93437D3B41629B
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] i2c: qcom-cci: Add OPP table support and enforce
+ FAST_PLUS requirements
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
+References: <20250904-topic-cci_updates-v1-0-d38559692703@oss.qualcomm.com>
+ <20250904-topic-cci_updates-v1-4-d38559692703@oss.qualcomm.com>
+ <aL6Vp-3er71AJPJd@linaro.org>
+ <f508bf92-a513-467a-a946-17c41e1d72d1@oss.qualcomm.com>
+ <aL6X-RiCyPVbHlYN@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <aL6X-RiCyPVbHlYN@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=eMETjGp1 c=1 sm=1 tr=0 ts=68bea6c4 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=1skEbHYOOoY0r-gFCEEA:9
+ a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: le3OdgrLagSXeZfUd9ztfXifJPlQBAwT
+X-Proofpoint-ORIG-GUID: le3OdgrLagSXeZfUd9ztfXifJPlQBAwT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAwMCBTYWx0ZWRfX23LvpzNf81Zl
+ QV6FTMayhXqLPAJ7G9oWnl5xNJspesyP+Ztr/lyIrh0ZqpylLbdFyAC4KjTvIHQukkgdgajlNlD
+ Oeo511vYBKYMlcglrfTzOsr/M9VN7pq5dewOUmaBFdvJCQLEvIa5/G/GFThQsdZxPoP1IVWfpMR
+ QlfMjJrMqvwGjCdRJ9ypfblHZTLkZG0YNo7k8okQyheK4t9QDJdjVCckAvwM5PWF1WEE/QS/RZ/
+ sB8HZxjzj6qObcgLVqgCjsdFYLEVK0gMKzlsXKAESI1AOH0IiIzPMO9lnwPYv+HrVOy5NRyrlu8
+ HxrtpQ9RSNbSwoz3aEBbCiVDYiEjb1qhxZG6A3XO32uomKc3OCjMVq5QpDcYdYLEY2d6sE6Q+hg
+ zHyUoiYE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-08_03,2025-09-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 priorityscore=1501 malwarescore=0 clxscore=1015 adultscore=0
+ bulkscore=0 phishscore=0 spamscore=0 suspectscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509060000
 
-Hardware Programming Guide for DSI PHY says that PLL_SHUTDOWNB and
-DIGTOP_PWRDN_B have to be asserted for any PLL register access.
-Whenever dsi_pll_7nm_vco_recalc_rate() or dsi_pll_7nm_vco_set_rate()
-were called on unprepared PLL, driver read values of zero leading to all
-sort of further troubles, like failing to set pixel and byte clock
-rates.
+On 9/8/25 10:46 AM, Stephan Gerhold wrote:
+> On Mon, Sep 08, 2025 at 10:43:50AM +0200, Konrad Dybcio wrote:
+>> On 9/8/25 10:36 AM, Stephan Gerhold wrote:
+>>> On Thu, Sep 04, 2025 at 04:31:23PM +0200, Konrad Dybcio wrote:
+>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>
+>>>> The CCI clock has voltage requirements, which need to be described
+>>>> through an OPP table.
+>>>>
+>>>> The 1 MHz FAST_PLUS mode requires the CCI core clock runs at 37,5 MHz
+>>>> (which is a value common across all SoCs), since it's not possible to
+>>>> reach the required timings with the default 19.2 MHz rate.
+>>>>
+>>>> Address both issues by introducing an OPP table and using it to vote
+>>>> for the faster rate.
+>>>>
+>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>
+>>> Using an OPP table for a single static rate that remains the same over
+>>> the whole lifetime of the driver feels like overkill to me. Couldn't you
+>>> just put the "required-opps" directly into the device node so that it is
+>>> automatically applied when the device goes in/out of runtime suspend?
+>>>
+>>> And since you need to make DT additions anyway, couldn't you just use
+>>> "assigned-clock-rates" to avoid the need for a driver patch entirely? We
+>>> use that for e.g. USB clocks as well.
+>>
+>> This is futureproofing, in case someone invents FastMode++ with a higher
+>> dvfs requirement or for when the driver adds presets for a 19.2 MHz CCI
+>> clock which would (marginally) decrease power consumption
+>>
+> 
+> If 19.2 MHz CCI clock is feasible and has lower voltage requirements,
+> then I would expect a separate entry for 19.2 MHz in the OPP table of
+> PATCH 5/5? The DT is unrelated to what functionality you implement in
+> the driver, and that would make the OPP table look less useless. :-)
 
-Asserting the PLL shutdown bit is done by dsi_pll_enable_pll_bias() (and
-corresponding dsi_pll_disable_pll_bias()) which are called through the
-code, including from PLL .prepare() and .unprepare() callbacks.
+The frequency plan for 8280 does not recommend any rate != 37.5 MHz
 
-The .set_rate() and .recalc_rate() can be called almost anytime from
-external users including times when PLL is or is not prepared, thus
-driver should not interfere with the prepare status.
+For x1e80100 however, the lovsvs_d1 corner is recommended to be 30
+(yes, thirty) MHz, sourced from CAM_PLL8 for $reasons
 
-Implement simple reference counting for the PLL bias, so
-set_rate/recalc_rate will not change the status of prepared PLL.
-
-Issue of reading 0 in .recalc_rate() did not show up on existing
-devices, but only after re-ordering the code for SM8750.
-
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
----
-
-Continuing changelog from "drm/msm: Add support for SM8750" where this
-was part of.
-
-Changes in v7:
-- Rebase
-- I did not remove ndelay(250) as discussed with Dmitry, because:
-  1. Indeed the HPG does not mention any delay needed, unlike PHY 10 nm.
-  2. However downstream source code for PHY 3+4+5 nm has exactly these
-     delays. This could be copy-paste or could be intentional workaround
-     for some issue about which I have no clue. Timings are tricky and
-     I don't think I should be introducing changes without actually
-     knowing them.
-- Add Rb tags
-- Link to v6: https://lore.kernel.org/r/20250610-b4-sm8750-display-v6-0-ee633e3ddbff@linaro.org
-
-Changes in v6:
-1. Print error on pll bias enable/disable imbalance refcnt
-
-Changes in v5:
-1. New patch
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 53 +++++++++++++++++++++++
- 2 files changed, 54 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-index 3cbf08231492..e391505fdaf0 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-@@ -109,6 +109,7 @@ struct msm_dsi_phy {
- 	struct msm_dsi_dphy_timing timing;
- 	const struct msm_dsi_phy_cfg *cfg;
- 	void *tuning_cfg;
-+	void *pll_data;
- 
- 	enum msm_dsi_phy_usecase usecase;
- 	bool regulator_ldo_mode;
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-index 2c2bbda46c78..32f06edd21a9 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-@@ -90,6 +90,13 @@ struct dsi_pll_7nm {
- 	/* protects REG_DSI_7nm_PHY_CMN_CLK_CFG1 register */
- 	spinlock_t pclk_mux_lock;
- 
-+	/*
-+	 * protects REG_DSI_7nm_PHY_CMN_CTRL_0 register and pll_enable_cnt
-+	 * member
-+	 */
-+	spinlock_t pll_enable_lock;
-+	int pll_enable_cnt;
-+
- 	struct pll_7nm_cached_state cached_state;
- 
- 	struct dsi_pll_7nm *slave;
-@@ -103,6 +110,9 @@ struct dsi_pll_7nm {
-  */
- static struct dsi_pll_7nm *pll_7nm_list[DSI_MAX];
- 
-+static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll);
-+static void dsi_pll_disable_pll_bias(struct dsi_pll_7nm *pll);
-+
- static void dsi_pll_setup_config(struct dsi_pll_config *config)
- {
- 	config->ssc_freq = 31500;
-@@ -340,6 +350,7 @@ static int dsi_pll_7nm_vco_set_rate(struct clk_hw *hw, unsigned long rate,
- 	struct dsi_pll_7nm *pll_7nm = to_pll_7nm(hw);
- 	struct dsi_pll_config config;
- 
-+	dsi_pll_enable_pll_bias(pll_7nm);
- 	DBG("DSI PLL%d rate=%lu, parent's=%lu", pll_7nm->phy->id, rate,
- 	    parent_rate);
- 
-@@ -357,6 +368,7 @@ static int dsi_pll_7nm_vco_set_rate(struct clk_hw *hw, unsigned long rate,
- 
- 	dsi_pll_ssc_commit(pll_7nm, &config);
- 
-+	dsi_pll_disable_pll_bias(pll_7nm);
- 	/* flush, ensure all register writes are done*/
- 	wmb();
- 
-@@ -385,24 +397,47 @@ static int dsi_pll_7nm_lock_status(struct dsi_pll_7nm *pll)
- 
- static void dsi_pll_disable_pll_bias(struct dsi_pll_7nm *pll)
- {
-+	unsigned long flags;
- 	u32 data;
- 
-+	spin_lock_irqsave(&pll->pll_enable_lock, flags);
-+	--pll->pll_enable_cnt;
-+	if (pll->pll_enable_cnt < 0) {
-+		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
-+		DRM_DEV_ERROR_RATELIMITED(&pll->phy->pdev->dev,
-+					  "bug: imbalance in disabling PLL bias\n");
-+		return;
-+	} else if (pll->pll_enable_cnt > 0) {
-+		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
-+		return;
-+	} /* else: == 0 */
-+
- 	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
- 	data &= ~DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
- 	writel(0, pll->phy->pll_base + REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES);
- 	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
-+	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
- 	ndelay(250);
- }
- 
- static void dsi_pll_enable_pll_bias(struct dsi_pll_7nm *pll)
- {
-+	unsigned long flags;
- 	u32 data;
- 
-+	spin_lock_irqsave(&pll->pll_enable_lock, flags);
-+	if (pll->pll_enable_cnt++) {
-+		spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
-+		WARN_ON(pll->pll_enable_cnt == INT_MAX);
-+		return;
-+	}
-+
- 	data = readl(pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
- 	data |= DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
- 	writel(data, pll->phy->base + REG_DSI_7nm_PHY_CMN_CTRL_0);
- 
- 	writel(0xc0, pll->phy->pll_base + REG_DSI_7nm_PHY_PLL_SYSTEM_MUXES);
-+	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
- 	ndelay(250);
- }
- 
-@@ -543,6 +578,7 @@ static unsigned long dsi_pll_7nm_vco_recalc_rate(struct clk_hw *hw,
- 	u32 dec;
- 	u64 pll_freq, tmp64;
- 
-+	dsi_pll_enable_pll_bias(pll_7nm);
- 	dec = readl(base + REG_DSI_7nm_PHY_PLL_DECIMAL_DIV_START_1);
- 	dec &= 0xff;
- 
-@@ -567,6 +603,8 @@ static unsigned long dsi_pll_7nm_vco_recalc_rate(struct clk_hw *hw,
- 	DBG("DSI PLL%d returning vco rate = %lu, dec = %x, frac = %x",
- 	    pll_7nm->phy->id, (unsigned long)vco_rate, dec, frac);
- 
-+	dsi_pll_disable_pll_bias(pll_7nm);
-+
- 	return (unsigned long)vco_rate;
- }
- 
-@@ -600,6 +638,7 @@ static void dsi_7nm_pll_save_state(struct msm_dsi_phy *phy)
- 	void __iomem *phy_base = pll_7nm->phy->base;
- 	u32 cmn_clk_cfg0, cmn_clk_cfg1;
- 
-+	dsi_pll_enable_pll_bias(pll_7nm);
- 	cached->pll_out_div = readl(pll_7nm->phy->pll_base +
- 			REG_DSI_7nm_PHY_PLL_PLL_OUTDIV_RATE);
- 	cached->pll_out_div &= 0x3;
-@@ -611,6 +650,7 @@ static void dsi_7nm_pll_save_state(struct msm_dsi_phy *phy)
- 	cmn_clk_cfg1 = readl(phy_base + REG_DSI_7nm_PHY_CMN_CLK_CFG1);
- 	cached->pll_mux = FIELD_GET(DSI_7nm_PHY_CMN_CLK_CFG1_DSICLK_SEL__MASK, cmn_clk_cfg1);
- 
-+	dsi_pll_disable_pll_bias(pll_7nm);
- 	DBG("DSI PLL%d outdiv %x bit_clk_div %x pix_clk_div %x pll_mux %x",
- 	    pll_7nm->phy->id, cached->pll_out_div, cached->bit_clk_div,
- 	    cached->pix_clk_div, cached->pll_mux);
-@@ -833,8 +873,10 @@ static int dsi_pll_7nm_init(struct msm_dsi_phy *phy)
- 
- 	spin_lock_init(&pll_7nm->postdiv_lock);
- 	spin_lock_init(&pll_7nm->pclk_mux_lock);
-+	spin_lock_init(&pll_7nm->pll_enable_lock);
- 
- 	pll_7nm->phy = phy;
-+	phy->pll_data = pll_7nm;
- 
- 	ret = pll_7nm_register(pll_7nm, phy->provided_clocks->hws);
- 	if (ret) {
-@@ -923,8 +965,10 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 	u32 const delay_us = 5;
- 	u32 const timeout_us = 1000;
- 	struct msm_dsi_dphy_timing *timing = &phy->timing;
-+	struct dsi_pll_7nm *pll = phy->pll_data;
- 	void __iomem *base = phy->base;
- 	bool less_than_1500_mhz;
-+	unsigned long flags;
- 	u32 vreg_ctrl_0, vreg_ctrl_1, lane_ctrl0;
- 	u32 glbl_pemph_ctrl_0;
- 	u32 glbl_str_swi_cal_sel_ctrl, glbl_hstx_str_ctrl_0;
-@@ -1046,10 +1090,13 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy *phy,
- 		glbl_rescode_bot_ctrl = 0x3c;
- 	}
- 
-+	spin_lock_irqsave(&pll->pll_enable_lock, flags);
-+	pll->pll_enable_cnt = 1;
- 	/* de-assert digital and pll power down */
- 	data = DSI_7nm_PHY_CMN_CTRL_0_DIGTOP_PWRDN_B |
- 	       DSI_7nm_PHY_CMN_CTRL_0_PLL_SHUTDOWNB;
- 	writel(data, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
-+	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
- 
- 	/* Assert PLL core reset */
- 	writel(0x00, base + REG_DSI_7nm_PHY_CMN_PLL_CNTRL);
-@@ -1162,7 +1209,9 @@ static bool dsi_7nm_set_continuous_clock(struct msm_dsi_phy *phy, bool enable)
- 
- static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
- {
-+	struct dsi_pll_7nm *pll = phy->pll_data;
- 	void __iomem *base = phy->base;
-+	unsigned long flags;
- 	u32 data;
- 
- 	DBG("");
-@@ -1189,8 +1238,12 @@ static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
- 	writel(data, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
- 	writel(0, base + REG_DSI_7nm_PHY_CMN_LANE_CTRL0);
- 
-+	spin_lock_irqsave(&pll->pll_enable_lock, flags);
-+	pll->pll_enable_cnt = 0;
- 	/* Turn off all PHY blocks */
- 	writel(0x00, base + REG_DSI_7nm_PHY_CMN_CTRL_0);
-+	spin_unlock_irqrestore(&pll->pll_enable_lock, flags);
-+
- 	/* make sure phy is turned off */
- 	wmb();
- 
--- 
-2.48.1
-
+Konrad
 
