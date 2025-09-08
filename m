@@ -1,165 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-72544-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72545-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D60C2B48939
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 11:57:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0502AB4894A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 12:00:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A62F6189610A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 09:57:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A5C803AEE80
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:00:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0FB82EFD8A;
-	Mon,  8 Sep 2025 09:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3038D2F2910;
+	Mon,  8 Sep 2025 10:00:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="BXiHg55P"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eG4sBqPT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E2D2EC555
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 09:57:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9351F09B3
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 10:00:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757325436; cv=none; b=bmVLBfUMuQCH05/Q30a9EispfyC2RttzcNoMqcHuG9QkO3Va+nCCQfj0KPgUc3baURumWZsz7gKFKMQsx24JT6Wrbrw5bl9oHIlYoRK1Cs7a761UvF6ZXXz066nXXkEm6Gem6WZJUu4VMlJEGFvBZ52konZG3b1R5m/LjCX/tlY=
+	t=1757325621; cv=none; b=Qx6yVVbe91pgLAdevnKvFw71kH/0OBsiWt+tFTTOnCfyXfPts7IkYtL1ZOzofqLXZfU/RIG8PL1qkkgIY25w/zkL9pOV4zBu1SwrtPdPMleD3AzuASTkwwoRSuZBB7BRcIVbPmKI2Ov82T+GYoRC4Ntc0iqovqi1RAEUxayhI20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757325436; c=relaxed/simple;
-	bh=ykDwW2zeFPOxeLSt8zP2A70oe7r13xxaM+2jTS0GedI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l+NISsw8RReJuaKpF7WFkZzO4nYUmvK4SixSSC2H5wSfgCHXb78kArqZTKPFDPqLMNKIKZ6KWlFz1L1UucLHiQrD+ZsJZ1J98e0gHgEU+8FdlKA0Ue0O0KGV5Ueu+K2fBZ/qgVSh3wlUxYPK8VU2/8RIreL7TqcEAfemP/th5hY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=BXiHg55P; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b0428b537e5so683159466b.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 02:57:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757325433; x=1757930233; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=haIepL/P0jz30Rbxjb0+O92cxvQz/NbDyzEigt7PcCU=;
-        b=BXiHg55PXsd7pKl2UP/uL6qEdKOPNWomPgRlOWdq2sS0g9aXM2fTiSn0EVHCrFIjuT
-         TKX9YtprnB4Zi1G7REEYpu+RoJMlguPrKiWZb0E2zUHQR3mwEpLOsglb4Fu9slNugeba
-         nIH6SZJ/1aiw8pM1ZDda6ofh5RrFs1mFXsk+AdNnisyllcnx2uDngEwDQYnvsdL5AoJ8
-         iSuNnVpnSSRqjnJZDo0mfPuEAOAjB6xXKuxB6oQ7WifUVnvD4ZOLH0gDpERWr1Z4uPqm
-         2Bg84/j9cidiKwf/Rzk5yOUTbKt6HR4bh6oeT6Y87OoVaRR6Tin4bCS5Hbl+iYHyLTq4
-         tYQA==
+	s=arc-20240116; t=1757325621; c=relaxed/simple;
+	bh=r/waWgH8iFc4NM8oyhtNDxdNdtdlFuFW9vf2HRoSosM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=uTtxppv4O4EnDsrUHuGKjqmgFDBrMXkkqSnzb88UrjERPCu3tYkuDvsnSdJrtdUZqyFA6E85FRyaUovWTJ7XysDVAi386niO2Nzq+b08keVVvwArDM2HyN1kBsoAebVgl2uE6+rX431Tk4+VvV3+GmnKXSd/Qc8Dps2watIpSxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eG4sBqPT; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5886gQ3C006157
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 10:00:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RtUukMnNWAAQi+BBVchgSoNXaZOrt4o1HkYE4SHkE2I=; b=eG4sBqPTWzYBRCbA
+	dDNrzwa9pRYTxloO5rahsbNAwP660TgzsnSZaZLET4gW7JQPwMUEqtVV+4w38AEq
+	EN4TgJdoh7QL7cBvX/mp15qeQUbhO8QT2FxCbe9CArGaKEJqQbvZ9W+zvSBlPZjW
+	XpJyzgGJn2fQ+CB1HLkiI1lNKZ0cCp6EFdSD+rLN2owA00pc7LEQIm5UH1akDbEP
+	fTxnrw6ikvhZD8YSUrx1FbgmJg/J0Ji7gbXYqZ+HjbzILgaCcKGaU0rLVacH+l/q
+	sobvTLDsEvii8hf8z4jnf5q80o8gJGssdB/4CURXlUkOrlfhA0OIAcI/3svA8BX3
+	NSlXLA==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491t37rn7n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 10:00:18 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-70a9f5a43b6so12005046d6.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 03:00:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757325433; x=1757930233;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=haIepL/P0jz30Rbxjb0+O92cxvQz/NbDyzEigt7PcCU=;
-        b=IblfkmMS0d0DMOOAwJK7bgIYU7MCo6tc8dzsIgCKqQO6nKb/iFqsDTyJ0nalYHpQZa
-         AjFk///tAtT6Qx1YY/MbxeosNG2dfmcQjygf9rDV7rZwnY52T7LHD1KOR1B7AQndo001
-         +2oQu9WrK5ftWzTSrPZ8xj/ZiSpDdIN7oQsqBjDh3RTChHQD6/UWrK2HKckDkuxQsCrV
-         LP9M7BMRIY4ePmEIaTD/0LF2x2fmCySmMa03U1rm7qyMTT2P3l8XgqFZ2wjzbY4E/at0
-         32qBzJm2i/k2caXksfjHa2Ip3EKyLCxZY4kPudjR+1JGEC+HbO0iSxIs34m6QCeztMKp
-         9Ltg==
-X-Forwarded-Encrypted: i=1; AJvYcCXPGHoM94hm4rsfkmFdQKGbbFYDTZKEJiGschqxKctJAO3Dx2OUaSk4Tkp7q7J1xuAT7EVz8nlyp1Bk9eKZ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1haKJhwnq4jYNKzPjXTMEqPD6F3LArvrnfwkkRMbCJQkjQ2h2
-	HqENUP7L6+sYKcNLMPPNM/x1dImWaMdRBZtc0j/sqpUMv5twEFC49m55iYd2PDnj09E=
-X-Gm-Gg: ASbGncs0FjuaCdNGE/Kvw9zY5OHQU0RCQPKnXi1D9F9RTGk89M8TuelXOZd272Nz9MN
-	v4sQo1ZSgQ2gxvD5p/gwsO4p7NPY3kKxGMrAuqZL4ORgHaz4dUcsz82ar3WXpxPI+N+Ezt6IlB9
-	Je0kDNoow8BG5geoxMRqjlah342wu5R4uGk9+vQHKnvvljeDEhAXgJtOPhH1jO2qkpRHJshi45n
-	yIweYiNTOAmMlnCBSk5r8ZH+VMGaBIe1QTRfo/7j8sRXTkZFij1JS0KtbKEHxy0mn7bTXpW+F83
-	DNJe9e2xZGtdZSJiozX8mGnRU3iLj10wUsLE/m0XoAFPtfoVlTn3e0cEXjF2Su6646fGmFEyEmE
-	OEXtahMI+ikt9olH3OVWt0dnGyEWjdUo/
-X-Google-Smtp-Source: AGHT+IFYq6V5J5rXx5QgUvWRFIgmg8psdjbRgWhuE+b5PuhIMU45skzaKalA52LZGkVjQ1Apw2J66A==
-X-Received: by 2002:a17:906:d554:b0:b04:48c5:340 with SMTP id a640c23a62f3a-b04b13cd56amr710023166b.9.1757325432564;
-        Mon, 08 Sep 2025 02:57:12 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:30:1f60:42e1:1e1b:d240])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b042523ee7bsm1959154266b.109.2025.09.08.02.57.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Sep 2025 02:57:12 -0700 (PDT)
-Date: Mon, 8 Sep 2025 11:57:07 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH 4/5] i2c: qcom-cci: Add OPP table support and enforce
- FAST_PLUS requirements
-Message-ID: <aL6nZdJCKmnWcswB@linaro.org>
-References: <20250904-topic-cci_updates-v1-0-d38559692703@oss.qualcomm.com>
- <20250904-topic-cci_updates-v1-4-d38559692703@oss.qualcomm.com>
- <aL6Vp-3er71AJPJd@linaro.org>
- <f508bf92-a513-467a-a946-17c41e1d72d1@oss.qualcomm.com>
- <aL6X-RiCyPVbHlYN@linaro.org>
- <5178a6b1-1b5a-40d9-af40-68ee13975509@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1757325617; x=1757930417;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RtUukMnNWAAQi+BBVchgSoNXaZOrt4o1HkYE4SHkE2I=;
+        b=D4QgcfEOgwprIEUVoOUgIgM2Hlrt3No/Lh+85+QFtMpxb8YzMw47SrRqhC5D5kXOpz
+         6aiFK0CEGtjprDIgzsSJg8iMuZzynAjMAvrSLQC0ZVZ4uSUODdMphoiFA7ihs4/8R03h
+         PwIWoSEomQUun2cs3tuRBUh25aconWkl9FQy58MFXna2OwsW5tPbs+8D/gquHuoFgykj
+         Wk3tF58xwcpUfRHTxERTp8E22m4nW6f3Vob/NyKmZBTGTip0IW+mrMZNdHLgG4sPreYF
+         ZATdI4LejwhJ8+THpxlb4y9yQ+SS2zRo9OcJ+HLVwrslUM6hax6NDxxThNjzxRbkR//u
+         yt8w==
+X-Forwarded-Encrypted: i=1; AJvYcCVK+ZHmW5D5iI/p73gB5/5L7OqmII/a9CZ5robQVVox/kF2py7zgD8XH8C5BKPDbiAEA0nvNSS5J5NqGAMR@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTbYlXX0CzM8iMvu6xBU/7O2SD8TayBqBcI6iDyM0JZUJC8DvF
+	roEFiijLq8Hm6W/zQN+hPq9865PI7V9paip6IH9/fOADOgb4AsNT5jxcv58tdlorjzm9gDUy+9C
+	xPbbUbELK/iTuTpx9WPE6/fusZcIrz4WR3Pbhx6Q3hC4++sTJRQnHjSF8cK11rserAMnb
+X-Gm-Gg: ASbGncsq/ZSzYYASslA5hGqS119LlG1LPAjnGwHhPO6KHBAjbd95vGSxyg+W5fkXvDo
+	43AsxGjJST182/BnHP2krVag/TciUNnjhy3JUVE4xbYb34z9sk6w40z/ynGFU2E38kVFMa1K5eh
+	BKifWTDmACsYhCrerelxHzfthCgZ6SXRBtIN1n9VKQGOc7AfKm4LruTcqkHxjKpqnnT5LFPes4+
+	5mAhJAjhFM5NlbAuefs7ufM2oA0MoAmSwt1N85gWR6vE3Riysnmt07fi51XDexvsDfE7n8J58GE
+	rci8ECmM9jbQNBe98uefHR78TmyNZ4yS4fFy4J5SDadU1wlAxKpHiXN1tInyjjCWMQSi//i2j08
+	wq6vFQ2OVzUqHm8xdKf270g==
+X-Received: by 2002:a05:6214:2627:b0:70d:bcbe:4e79 with SMTP id 6a1803df08f44-739464ee140mr51773686d6.6.1757325616685;
+        Mon, 08 Sep 2025 03:00:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE47Hk/U9dhX2DbPG1Fqipq+98Vftq1E+WXGEt5z7yn0rJYJRaa3YNN05gx4rx6HhQF6gkiSQ==
+X-Received: by 2002:a05:6214:2627:b0:70d:bcbe:4e79 with SMTP id 6a1803df08f44-739464ee140mr51773366d6.6.1757325616007;
+        Mon, 08 Sep 2025 03:00:16 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b01af44a01fsm2168466866b.23.2025.09.08.03.00.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 08 Sep 2025 03:00:15 -0700 (PDT)
+Message-ID: <1899862b-530b-4a75-93fa-c70c90d98016@oss.qualcomm.com>
+Date: Mon, 8 Sep 2025 12:00:13 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5178a6b1-1b5a-40d9-af40-68ee13975509@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] i2c: qcom-cci: Add OPP table support and enforce
+ FAST_PLUS requirements
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss
+ <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
+References: <20250904-topic-cci_updates-v1-0-d38559692703@oss.qualcomm.com>
+ <20250904-topic-cci_updates-v1-4-d38559692703@oss.qualcomm.com>
+ <aL6Vp-3er71AJPJd@linaro.org>
+ <f508bf92-a513-467a-a946-17c41e1d72d1@oss.qualcomm.com>
+ <aL6X-RiCyPVbHlYN@linaro.org>
+ <5178a6b1-1b5a-40d9-af40-68ee13975509@oss.qualcomm.com>
+ <aL6nZdJCKmnWcswB@linaro.org>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <aL6nZdJCKmnWcswB@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: syqQvxth9oKNKETOS2B7Y65kGd8PDxI8
+X-Proofpoint-GUID: syqQvxth9oKNKETOS2B7Y65kGd8PDxI8
+X-Authority-Analysis: v=2.4 cv=NdLm13D4 c=1 sm=1 tr=0 ts=68bea932 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=dID3koFHavZth2WqiVAA:9
+ a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDA2NiBTYWx0ZWRfXylRql668ZoGD
+ OoCkORIm5bZKNaGcNkuHgrukb+GEFXjb3a22tv9MQfUdG8yctCu3THDMOmu/jkG0No6jyXRD1wv
+ 1CfKP/ur670n9nqadZQEikmVY7/WXU2oEkHn6IQLoagTRR8Sp1lMeGuQH3UNIEvdaamAdbWepSL
+ rLhZnOS62f2moph2W/i25CoMdfRa0AlyUtMB8tEhL0WGBcLCLa/v406qoOwan7ph6aHiOr7Aeyu
+ MgMi/XtwFvxLI73pzPyS/7liShlvavJ/NtRpEruDwgyuL9VdE0j0TRYOqy/7X5MJZA66zNPxWjg
+ AWo2r72peQju2cWfJPEfqxhdCFyMyC5QFsd28sVyF31QCBCjyhMDDdCwKpIwoDpxGwgY7Y4J7po
+ eoOCCZQ+
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-08_03,2025-09-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080066
 
-On Mon, Sep 08, 2025 at 11:49:52AM +0200, Konrad Dybcio wrote:
-> On 9/8/25 10:46 AM, Stephan Gerhold wrote:
-> > On Mon, Sep 08, 2025 at 10:43:50AM +0200, Konrad Dybcio wrote:
-> >> On 9/8/25 10:36 AM, Stephan Gerhold wrote:
-> >>> On Thu, Sep 04, 2025 at 04:31:23PM +0200, Konrad Dybcio wrote:
-> >>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >>>>
-> >>>> The CCI clock has voltage requirements, which need to be described
-> >>>> through an OPP table.
-> >>>>
-> >>>> The 1 MHz FAST_PLUS mode requires the CCI core clock runs at 37,5 MHz
-> >>>> (which is a value common across all SoCs), since it's not possible to
-> >>>> reach the required timings with the default 19.2 MHz rate.
-> >>>>
-> >>>> Address both issues by introducing an OPP table and using it to vote
-> >>>> for the faster rate.
-> >>>>
-> >>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >>>
-> >>> Using an OPP table for a single static rate that remains the same over
-> >>> the whole lifetime of the driver feels like overkill to me. Couldn't you
-> >>> just put the "required-opps" directly into the device node so that it is
-> >>> automatically applied when the device goes in/out of runtime suspend?
-> >>>
-> >>> And since you need to make DT additions anyway, couldn't you just use
-> >>> "assigned-clock-rates" to avoid the need for a driver patch entirely? We
-> >>> use that for e.g. USB clocks as well.
-> >>
-> >> This is futureproofing, in case someone invents FastMode++ with a higher
-> >> dvfs requirement or for when the driver adds presets for a 19.2 MHz CCI
-> >> clock which would (marginally) decrease power consumption
-> >>
-> > 
-> > If 19.2 MHz CCI clock is feasible and has lower voltage requirements,
-> > then I would expect a separate entry for 19.2 MHz in the OPP table of
-> > PATCH 5/5? The DT is unrelated to what functionality you implement in
-> > the driver, and that would make the OPP table look less useless. :-)
+On 9/8/25 11:57 AM, Stephan Gerhold wrote:
+> On Mon, Sep 08, 2025 at 11:49:52AM +0200, Konrad Dybcio wrote:
+>> On 9/8/25 10:46 AM, Stephan Gerhold wrote:
+>>> On Mon, Sep 08, 2025 at 10:43:50AM +0200, Konrad Dybcio wrote:
+>>>> On 9/8/25 10:36 AM, Stephan Gerhold wrote:
+>>>>> On Thu, Sep 04, 2025 at 04:31:23PM +0200, Konrad Dybcio wrote:
+>>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>>>
+>>>>>> The CCI clock has voltage requirements, which need to be described
+>>>>>> through an OPP table.
+>>>>>>
+>>>>>> The 1 MHz FAST_PLUS mode requires the CCI core clock runs at 37,5 MHz
+>>>>>> (which is a value common across all SoCs), since it's not possible to
+>>>>>> reach the required timings with the default 19.2 MHz rate.
+>>>>>>
+>>>>>> Address both issues by introducing an OPP table and using it to vote
+>>>>>> for the faster rate.
+>>>>>>
+>>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>>>>>
+>>>>> Using an OPP table for a single static rate that remains the same over
+>>>>> the whole lifetime of the driver feels like overkill to me. Couldn't you
+>>>>> just put the "required-opps" directly into the device node so that it is
+>>>>> automatically applied when the device goes in/out of runtime suspend?
+>>>>>
+>>>>> And since you need to make DT additions anyway, couldn't you just use
+>>>>> "assigned-clock-rates" to avoid the need for a driver patch entirely? We
+>>>>> use that for e.g. USB clocks as well.
+>>>>
+>>>> This is futureproofing, in case someone invents FastMode++ with a higher
+>>>> dvfs requirement or for when the driver adds presets for a 19.2 MHz CCI
+>>>> clock which would (marginally) decrease power consumption
+>>>>
+>>>
+>>> If 19.2 MHz CCI clock is feasible and has lower voltage requirements,
+>>> then I would expect a separate entry for 19.2 MHz in the OPP table of
+>>> PATCH 5/5? The DT is unrelated to what functionality you implement in
+>>> the driver, and that would make the OPP table look less useless. :-)
+>>
+>> The frequency plan for 8280 does not recommend any rate != 37.5 MHz
+>>
+>> For x1e80100 however, the lovsvs_d1 corner is recommended to be 30
+>> (yes, thirty) MHz, sourced from CAM_PLL8 for $reasons
+>>
 > 
-> The frequency plan for 8280 does not recommend any rate != 37.5 MHz
+> The 37.5 MHz rate still exists on X1E I presume, or are you saying we
+> need more changes to support those odd 30 MHz?
+
+Yes, any corner over lowsvs_d1 is 37.5, sourced from cam_pll0
+
+> Personally, I'm not fully convinced there is ever going to be a use case
+> of someone using a "non-standard" frequency. Even if "FastMode++" is
+> invented most devices will probably want to use it.
+
+Not really, there's no reason to make your i2c bus go fastfastfast if
+the devices on the other end can't cope with it
+
+> And the voltage
+> requirements we're currently talking about here like "low svs" during
+> camera use cases are kind of negligible compared to others too.
+
+Again, this is an I2C controller that seems to be associated with
+cameras.. No image data has to actually be processed for the
+communications to take place and you can attach any odd device
+
+Konrad
+
 > 
-> For x1e80100 however, the lovsvs_d1 corner is recommended to be 30
-> (yes, thirty) MHz, sourced from CAM_PLL8 for $reasons
+> But I'm fine with either solution, just wanted to mention it. :D
 > 
-
-The 37.5 MHz rate still exists on X1E I presume, or are you saying we
-need more changes to support those odd 30 MHz?
-
-Personally, I'm not fully convinced there is ever going to be a use case
-of someone using a "non-standard" frequency. Even if "FastMode++" is
-invented most devices will probably want to use it. And the voltage
-requirements we're currently talking about here like "low svs" during
-camera use cases are kind of negligible compared to others too.
-
-But I'm fine with either solution, just wanted to mention it. :D
-
-Thanks,
-Stephan
+> Thanks,
+> Stephan
 
