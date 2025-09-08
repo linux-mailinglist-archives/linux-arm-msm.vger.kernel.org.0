@@ -1,194 +1,209 @@
-Return-Path: <linux-arm-msm+bounces-72485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72490-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82E50B48591
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 09:38:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AD99B485CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 09:41:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 32FA91B218F7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 07:39:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6DE63188380E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 07:41:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00B262EDD4A;
-	Mon,  8 Sep 2025 07:36:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EE9FD2EE5FE;
+	Mon,  8 Sep 2025 07:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oqUr7NDg"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U1663RnO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F172ED17B
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 07:36:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CB72EB858;
+	Mon,  8 Sep 2025 07:39:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757317007; cv=none; b=pLVC93zuUJxmr4PdxoRil4lZY15aFNP3kjqF6hEn98fCci+XO6r27PD0uaFKWkrFR2V2d3bWYIncOgD8bq5kkfJ1tdRpbjCg6Bi7fc1tnptJJv7RIheCV7qI/WNt5HyDViln6Wm0CQP327/4wpYiQrcdLmflU7YhDZOv40Ln09Q=
+	t=1757317148; cv=none; b=TYxsjzO5Avlq8edr0RGpDgMG2+lIb7P1Ze9Tna+pDtb8xAkMcEATyrvRvVxeDirsYzq5fwe01LxaxV0vSeipi8iE4FT4AoqRAgeKMbWHdLBbWvFfac3K047zqEIF+HMrJFAnsYNGd51lM3ktuKhCALhxhdQmOof+oy19Ts1QjaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757317007; c=relaxed/simple;
-	bh=zXHMUEdWc0BlUDHaEPySSzugxui2LIQJINaYGqG6S28=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jsyji9jwSwK93dEOLjdFN/te5HnPzLgnpY725vfKvGDpdU9I5wsVN321+Tsh0/ZEA6xhGaJ4VorJpnVR+1HxyUZyjTOqPN7hROihlhWc2UGMd1P3xOrj/6vSZDClhVW1mpbmylJ7KheFRewOwSIwrvsfLIMNVKD0Gvkka61UBzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oqUr7NDg; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1757317148; c=relaxed/simple;
+	bh=G6EmXpJInmGVgGyBfLJDrNcHRGW+W2VKqEYEjWenZPE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bmAU53FDiT4JAJQePL2RQNAwI4OXEJMLpxMUHk1nfzHYkF+1jvSq7AUEKdWDtMgJxvl/+u13Wc5/g7mBEWmMpMVABDxGjNmmO7N6mLokKA0d9HzHSG9zK0QVXDpjzVvgQG8NVkbEJ2mxNob0QhBgGZwc7UMQCTAF8hvx66b4Oaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U1663RnO; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 587HNN0D016206
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 07:36:45 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5880Ts3w004353;
+	Mon, 8 Sep 2025 07:38:54 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	QNHN7kPRAWt4JfWXRnbbHXUE90qzcsGnkDRXHKAjBCg=; b=oqUr7NDgdpeIBem0
-	aVox1B+2FjDGu1UOiC+yVMM1C7o+lWzGABi2XQTC6PuSwD1aa2x84C/Up62MXDgr
-	84rDBjaseTB2FQmtL/pQZ4Etmaeum3x6jPtyIdbZnuDBZEnSSzTbbulP6R1BhBtw
-	wanMFBO495a7SYeTSOUdp4N55V5C9eXS6Ey8VxvFoNVlTkmTb+8Aqss7G8fg9i7T
-	o/98QkYuf0veFhKAcVDsQ3qNubCwoAbDG+pYXqh+PKjhg4E5JqK7S39sy7fQ8y3L
-	xrS7OIB+9K/2IzmKuRLpDdSIXe0WN9CxSoPjSiXvL4uS7YOZaa4YimVzrR8yC/up
-	raSUUQ==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490dqfuk6w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 07:36:45 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b612061144so1831021cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 00:36:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757317004; x=1757921804;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QNHN7kPRAWt4JfWXRnbbHXUE90qzcsGnkDRXHKAjBCg=;
-        b=aBTDERgzEF9XsZ7xAPbAortBq6+FdhxhLD7DuhliURqSgMKU0/WVAd8VJnsEFmRtAn
-         VPIYE1Di09c0aDcJKfKB8AKCWQF8lBSrWKm6Nco9QPDAIJ91yEYRissDTZZne372vPgY
-         QOKFgRXNs6BxQCOZXTiGgPAj4ocRuxGCG+k0pLM9Vx1Ps2OhnQVTC1pZ/frKWRD4HLSp
-         rlhgEWkJDJeS0+HYLXNb8S2GAiNruaZC6XSIqM4mpC28QDzyR2aW5oIeK5pvg3N8owdm
-         bUjlg1h85ClNph8Jq5j/Py+emCWO9FxJAXFMoIAIQw2dljLEmQOHjiuN/jSjnpoBb/0b
-         5V4A==
-X-Forwarded-Encrypted: i=1; AJvYcCXOS8qP0GmhfsVAVfFCOu3RUt0kMmnAXraWKmJccA1V+DXkdcGwyiJVV6szekIcqCKlYcbEYWSo1tU1NW4R@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRqmx5iP+Cc9eyQRfLNfHChU2KswToBdtH79JXgETawmAP6wom
-	rM381ZuVn2uigHY6gV4ooR6z2OqBKLQoHX8cBPMlL2wSyztrgCQAC2D5jFdg4JJ+6LUu7iWmYPx
-	OxBs60J/khrjEpwq40z/bWCkStvBiStm4lUbOJc/zFc5aoe/sOb7APgHjDRvsybVGLYAQ
-X-Gm-Gg: ASbGnct+xueVcPtBg5H5M3w6DWkTVs1VWU067E7yHu5f9fK6WCOSF540aaGN/9lhL5B
-	pwbOtoAXWZ3grvi/F90JEQ4pxOpK0XjR6B91+r7Wpexif+d+LaRqypZ+FR5MyL1NJCoTGqw22jF
-	XLxWDedUHmJdPi66XMC3sSavRHNXMJknMP1DbFqod2fFOUbX0raFzswwFgDQj6Va9IuLli8kg5H
-	CAverId9ZhK1XKi58crhYLoXKsk91cziqA8LnAYWCw/Jd5tPPVJ0i/TBQo8vnRx11cZdaTZo7jr
-	/ZBdi24FChujlolE4eUd96iWJAqqyonHUuNS1XciCyFzCP5CW/XVnNvsIZ/5rAi2KYaOhV2fHSW
-	X5i+FqRNrgaaIKqaIv9dVuQ==
-X-Received: by 2002:a05:622a:1787:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4b5f848d05bmr48274301cf.7.1757317003673;
-        Mon, 08 Sep 2025 00:36:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IElIxN4NWUvxQroVKmxTi8+UW7BRi0pLtgjjPwqySqL6k7dbcrx49kS4O8YknoB23Bc/E9voA==
-X-Received: by 2002:a05:622a:1787:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4b5f848d05bmr48273961cf.7.1757317002960;
-        Mon, 08 Sep 2025 00:36:42 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0484e8a4a1sm1001949866b.83.2025.09.08.00.36.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 00:36:42 -0700 (PDT)
-Message-ID: <39b955b9-a152-458a-8e09-908efebaaccd@oss.qualcomm.com>
-Date: Mon, 8 Sep 2025 09:36:39 +0200
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=IVmBwetbAjXPjKL8kM+55RprCeMxMJVCTnX
+	d2WVqnaI=; b=U1663RnOuj5KtOOsIpnS5fXlkmuOo0ozx/oTLNfCsaLiE4s1Izl
+	gBFHAMoWnSyY0GWuQLg1K5ILQrs3oyYb9zmA8T2u4cUSUTHTtAgAkc2gxeWvC0BX
+	ucdbhuIwpzbmdeEnNB9Ou9a+LxjS9n/KJZgdnHWIR+f+EsczjmVN3JC0QqgCur0t
+	SEnRfDWGHP8CZG+vVq5BqmmDA7OhB7hmL8EmJfK6cUonlT2ZJsCXY0b3OODmdImX
+	dMcLmjhLqSGsAIhMk7F2sFenHglZq8//e/0KFf9Fhxc2RnOD+nXR6/JgWf7N4hOS
+	ymhnPKtVCFYfvJGEtCR+Q3HwzWa4Eid9Pbw==
+Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e4kukb9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Sep 2025 07:38:54 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 5887cqRW026229;
+	Mon, 8 Sep 2025 07:38:52 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 490e1m83db-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Sep 2025 07:38:52 +0000
+Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 5887cqGU026212;
+	Mon, 8 Sep 2025 07:38:52 GMT
+Received: from ziyuzhan-gv.ap.qualcomm.com (ziyuzhan-gv.qualcomm.com [10.64.66.102])
+	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 5887cpIA026207
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Sep 2025 07:38:52 +0000
+Received: by ziyuzhan-gv.ap.qualcomm.com (Postfix, from userid 4438065)
+	id 488B751C; Mon,  8 Sep 2025 15:38:50 +0800 (CST)
+From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>,
+        Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Subject: [PATCH v13 0/5]  pci: qcom: Add QCS8300 PCIe support
+Date: Mon,  8 Sep 2025 15:38:42 +0800
+Message-ID: <20250908073848.3045957-1-ziyue.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] dt-bindings: leds: commonize leds property
-To: Hans de Goede <hansg@kernel.org>,
-        Aleksandrs Vinarskis <alex@vinarskis.com>, Lee Jones <lee@kernel.org>,
-        Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Daniel Thompson <danielt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
-        Jacopo Mondi <jacopo@jmondi.org>,
-        Sakari Ailus
- <sakari.ailus@linux.intel.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20250908-leds-v3-0-5944dc400668@vinarskis.com>
- <20250908-leds-v3-2-5944dc400668@vinarskis.com>
- <0e030e7d-0a1a-4a00-ba18-ed26107d07fa@oss.qualcomm.com>
- <046b289d-b6a5-45f9-88b1-090e2ab7c95d@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <046b289d-b6a5-45f9-88b1-090e2ab7c95d@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: S6ZTva1T93sQ8Hn7gW2Iw4qo9CEVpOQf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzNSBTYWx0ZWRfXz8eHhRkCMgN9
- wX1SpnP66nrn8k7ocCdM4ngeRTo/OVisCmE9f4iFzKb6lGuYWit9zga44NFY9VSvQZfZ3BbzrQG
- WkxRYFmKieBDKMSxEZBFZ7GXxw7TOhIvtWOUfXWcdWJnGuVPogtZoOcIPt1OBcUEm1UpVlyeYO5
- kxGTjCOyfOnVQDP0oPfHoLsobqVlmW1tMMarRipauGaMAqErEgPZJvNrjTyH/e6swhAqY1QksYj
- SGcaHNsSskxgY4Y8ea7e2ukLL5hqd8+uDhS26xuP/nAjJBHW+xGwhIpj9vpwXlB8zM0A6dN86xc
- pYs+bZu+BMxTo+aCtKKmWTvN2Lc3DeXbiPRAJYeaMY8Fb7ayv+KSIl0ZBQpS9b3P7CcvH4P3CcQ
- 4xFc/8F8
-X-Proofpoint-GUID: S6ZTva1T93sQ8Hn7gW2Iw4qo9CEVpOQf
-X-Authority-Analysis: v=2.4 cv=N8UpF39B c=1 sm=1 tr=0 ts=68be878d cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=I76Qk8w-AAAA:8 a=wJ-R-PlTzkls_HvLT0IA:9
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=vUPM0Wvl0xcrLs4nqPIT:22
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOCBTYWx0ZWRfXx9NNXK+V2lwa
+ GwgizV4BJ8wSMebabP6vgS4djOQplaJ9+20nluZk3zrklWlCu7ay6NFOflv+6nu4edGJ+sMVexY
+ 9ojnDP97sra0V9P1q8TTt5yzJwsFj/4uUjIxYUehIJJlYJxKl1l+yhj94WVSqTP04kn+G/BCMhL
+ 529f6ZGp9d409+qWtWfNcc1LaG0Bki8EQjOUMV126yj4j2IjZctVxbbRriIcPQ2S9AHfaN0cZQ3
+ lqIaVx54oupGA40uBJYxx/J757aqlGL/tfXnJSL0FI3IDcKUlSAfOuTqggH017GNGniXgG/Mdfd
+ gljkUTJ0wiG2urILUc2lq4O8NTCpJpyApPgSkoeieIxY6DL2iCYUj+xCcbeZRKrlwYl98f7cgtV
+ 0pp9kTyS
+X-Authority-Analysis: v=2.4 cv=J66q7BnS c=1 sm=1 tr=0 ts=68be880e cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=QyXUC8HyAAAA:8 a=MByrn4WnkjAl5ObW7ywA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: lYzWUJAH3I8JmqH-vPrN5HQAaVv3Iia7
+X-Proofpoint-ORIG-GUID: lYzWUJAH3I8JmqH-vPrN5HQAaVv3Iia7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-08_02,2025-09-04_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 malwarescore=0 clxscore=1015 bulkscore=0
- suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060035
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060038
 
-On 9/8/25 9:33 AM, Hans de Goede wrote:
-> Hi,
-> 
-> On 8-Sep-25 09:20, Konrad Dybcio wrote:
->> On 9/8/25 1:18 AM, Aleksandrs Vinarskis wrote:
->>> A number of existing schemas use 'leds' property to provide
->>> phandle-array of LED(s) to the consumer. Additionally, with the
->>> upcoming privacy-led support in device-tree, v4l2 subnode could be a
->>> LED consumer, meaning that all camera sensors should support 'leds'
->>> and 'led-names' property via common 'video-interface-devices.yaml'.
->>>
->>> To avoid dublication, commonize 'leds' property from existing schemas
->>> to newly introduced 'led-consumer.yaml'.
->>>
->>> Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
->>> ---
->>
->> [...]
->>
->>>  
->>> +  leds:
->>> +    minItems: 1
->>> +    maxItems: 1
->>
->> My brain compiler suggests this will throw a warning (minItems should
->> be redundant in this case)
->>> +
->>> +  led-names:
->>> +    enum:
->>> +      - privacy-led
->>
->> Nit: "privacy" makes more sense without the suffix, as we inherently
->> know this is supposed to be an LED
-> 
-> Note "privacy-led" as name is already used on the x86/ACPI side and
-> the code consuming this will be shared.
-> 
-> With that said if there is a strong preference for going with just
-> "privacy" the x86 side can be adjusted since the provider-info is
-> generated through a LED lookup table on the x86/ACPI side. So we can
-> just modify both the lookup table generation as well as the already
-> existing led_get(dev, "privacy-led") call to use just "privacy"
-> without problems.
+This series depend on this patch
+https://lore.kernel.org/all/20250826-pakala-v2-3-74f1f60676c6@oss.qualcomm.com/
 
-In that case, it may be cleaner to just go with what we have today
-(unless the dt maintainers have stronger opinions)
+This series adds document, phy, configs support for PCIe in QCS8300.
+It also adds 'link_down' reset for sa8775p.
 
-Konrad
+Have follwing changes:
+	- Add dedicated schema for the PCIe controllers found on QCS8300.
+	- Add compatible for qcs8300 platform.
+	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
+	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
+
+Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+---
+Changes in v13:
+- Fix dtb error
+- Link to v12: https://lore.kernel.org/all/20250905071448.2034594-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v12:
+- rebased pcie phy bindings
+- Link to v11: https://lore.kernel.org/all/20250826091205.3625138-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v11:
+- move phy/perst/wake to pcie bridge node (Mani)
+- Link to v10: https://lore.kernel.org/all/20250811071131.982983-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v10:
+- Update PHY max_items (Johan)
+- Link to v9: https://lore.kernel.org/all/20250725104037.4054070-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v9:
+- Fix DTB error (Vinod)
+- Link to v8: https://lore.kernel.org/all/20250714081529.3847385-1-ziyue.zhang@oss.qualcomm.com/
+
+Changes in v8:
+- rebase sc8280xp-qmp-pcie-phy change to solve conflicts.
+- Add Fixes tag to phy change (Johan)
+- Link to v7: https://lore.kernel.org/all/20250625092539.762075-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v7:
+- rebase qcs8300-ride.dtsi change to solve conflicts.
+- Link to v6: https://lore.kernel.org/all/20250529035635.4162149-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v6:
+- move the qcs8300 and sa8775p phy compatibility entry into the list of PHYs that require six clocks
+- Update QCS8300 and sa8775p phy dt, remove aux clock.
+- Fixed compile error found by kernel test robot
+- Link to v5: https://lore.kernel.org/all/20250507031019.4080541-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v5:
+- Add QCOM PCIe controller version in commit msg (Mani)
+- Modify platform dts change subject (Dmitry)
+- Fixed compile error found by kernel test robot
+- Link to v4: https://lore.kernel.org/linux-phy/20241220055239.2744024-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v4:
+- Add received tag
+- Fixed compile error found by kernel test robot
+- Link to v3: https://lore.kernel.org/lkml/202412211301.bQO6vXpo-lkp@intel.com/T/#mdd63e5be39acbf879218aef91c87b12d4540e0f7
+
+Changes in v3:
+- Add received tag(Rob & Dmitry)
+- Update pcie_phy in gcc node to soc dtsi(Dmitry & Konrad)
+- remove pcieprot0 node(Konrad & Mani)
+- Fix format comments(Konrad)
+- Update base-commit to tag: next-20241213(Bjorn)
+- Corrected of_device_id.data from 1.9.0 to 1.34.0.
+- Link to v2: https://lore.kernel.org/all/20241128081056.1361739-1-quic_ziyuzhan@quicinc.com/
+
+Changes in v2:
+- Fix some format comments and match the style in x1e80100(Konrad)
+- Add global interrupt for PCIe0 and PCIe1(Konrad)
+- split the soc dtsi and the platform dts into two changes(Konrad)
+- Link to v1: https://lore.kernel.org/all/20241114095409.2682558-1-quic_ziyuzhan@quicinc.com/
+
+Ziyue Zhang (5):
+  dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+    for qcs8300
+  arm64: dts: qcom: qcs8300: enable pcie0
+  arm64: dts: qcom: qcs8300-ride: enable pcie0 interface
+  arm64: dts: qcom: qcs8300: enable pcie1
+  arm64: dts: qcom: qcs8300-ride: enable pcie1 interface
+
+ .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  17 +-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts     |  84 +++++
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 310 +++++++++++++++++-
+ 3 files changed, 394 insertions(+), 17 deletions(-)
+
+
+base-commit: be5d4872e528796df9d7425f2bd9b3893eb3a42c
+-- 
+2.43.0
+
 
