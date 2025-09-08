@@ -1,188 +1,148 @@
-Return-Path: <linux-arm-msm+bounces-72548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABAB8B48A1B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 12:24:51 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68810B48A28
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 12:27:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 526743425BF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:24:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 386B43A6B57
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:27:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFF172F3C32;
-	Mon,  8 Sep 2025 10:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626242F60A2;
+	Mon,  8 Sep 2025 10:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LHz1ADtk"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l2YmdzA8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4C7136358;
-	Mon,  8 Sep 2025 10:24:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952692E9EA1;
+	Mon,  8 Sep 2025 10:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757327088; cv=none; b=g6nk/L7da9ONahI+RUYqhh4zyjk0bTIW+3JzO13ak8xw3KsBq2GDaxCyzlgitkdAl0Q/YvOlFkG3TjXWNztRHZ9P5YHotbRHN31A+TR5TTm//mH+5qPh1El/BnIHooaFL7MffM6gptckg8o1JSBfc4+V0VPRXjZyb8oLpM65C7E=
+	t=1757327225; cv=none; b=UezH1MLBN2eu0Dd67A3zQtDikLLshzRBJtfZTrzvwn0w6AdpnWsD0GQHRqWgVRkhtbcotREgCN4qFaY9mFUU1t3pjJqSxrgix/zHEuBxxz43YX69w2GV3ybVcYgPo3IB4avdHb9ZX7TXxdCByE1QStpd+vKvGptHfuGGvPbrmPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757327088; c=relaxed/simple;
-	bh=3c4d46dbwYhFkAIji9CnButKaWApe47Fg8Mn2cBmfHg=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=UMvkLUy3Eg9sbJLEMp/shZyhOO2ejNs3crBbDNQ1z0mInqbEYhiJMI1a7qG8d3GqnfeqjI27ek/1aNzJJq4FSkHpIbUta9QXxi9Z5M21YblMEdrZGrEHUHGgy0FDcZ6RT/MjKO0coprbir9LKo4TzU2eVxl7drL0VZH4vv3Ovns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LHz1ADtk; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1757327087; x=1788863087;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=3c4d46dbwYhFkAIji9CnButKaWApe47Fg8Mn2cBmfHg=;
-  b=LHz1ADtkFSQu+lucmUA3HCQo1eo6Ic71+5h7B4LJwTB2CF8yM/KqL2kB
-   KS70hCtzBb4TFGRqC67flVKbnU9+ewrXkzNW5KhNvK7ArivurHSrQWPZ1
-   B3rpoLASCvC1SMoCjCg9+3lGsH1enCwx1/lkVIS8GySzEYg0+UE7fFRoP
-   QfPdb4vha8r5FlVGE9ZijOUvNII8InTI/k+/1+05Nq/EQVwzkcsEOjiRY
-   lRY9Wp0qHGeimhUXbY4cccuOIY/EZShAtmAlpStN8KaG0qSq3fKS5USQ9
-   yagOmWc1lSb0snymmZgL2gcbfZPRuVmoBvbtw4joiRpQ9far7qfWyTi5x
-   Q==;
-X-CSE-ConnectionGUID: LFYvIZzwRoaJ0WV6dyV7aw==
-X-CSE-MsgGUID: qJ6cFAkTQ/G7bCex7kiDHA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11546"; a="69832941"
-X-IronPort-AV: E=Sophos;i="6.18,248,1751266800"; 
-   d="scan'208";a="69832941"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2025 03:24:46 -0700
-X-CSE-ConnectionGUID: whEKi/v8TFudb7tIU+AjHA==
-X-CSE-MsgGUID: U/YpIi0KRGSt2P0AfeFMvQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,248,1751266800"; 
-   d="scan'208";a="172875576"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.11])
-  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2025 03:24:40 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Mon, 8 Sep 2025 13:24:35 +0300 (EEST)
-To: Manivannan Sadhasivam <mani@kernel.org>
-cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
-    David Box <david.e.box@linux.intel.com>, 
-    Bjorn Helgaas <bhelgaas@google.com>, 
-    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
-    Rob Herring <robh@kernel.org>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
-    Jonathan Derrick <jonathan.derrick@linux.dev>, 
-    Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org, 
-    LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
-    linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
-    ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
-    Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-    "Rafael J. Wysocki" <rafael@kernel.org>
-Subject: Re: [PATCH v2 2/8] PCI/ASPM: Fix the behavior of pci_enable_link_state*()
- APIs
-In-Reply-To: <67274gnjp4qy4h3bcawey2edmjiuufdbm262q2qxgcc76dwlic@hdjxqczr54nt>
-Message-ID: <df354ae2-03bd-d17c-4e3a-9e62b248cc2a@linux.intel.com>
-References: <20250825-ath-aspm-fix-v2-0-61b2f2db7d89@oss.qualcomm.com> <20250825-ath-aspm-fix-v2-2-61b2f2db7d89@oss.qualcomm.com> <f644fc83-31cc-1f0e-58cf-7c007e6173e4@linux.intel.com> <67274gnjp4qy4h3bcawey2edmjiuufdbm262q2qxgcc76dwlic@hdjxqczr54nt>
+	s=arc-20240116; t=1757327225; c=relaxed/simple;
+	bh=2ZzxvSBShoA/30DwcDt+e5oqEhOfb6AXkUiZp46YYJY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=SHrpHWYDpBoDXNKFeLX5k9CCvZ5D5iSpcrNK57CMne0YDH1fey712ujESuXFVM5OyXuOiB9G7/G6M5VUQ2L2L2Ywl2bUJFfwIIugWj8oOTeUxgSC/HcPbh8buQfRCZtHlusqQF61TFJvFuBMueuZ7exKqLET1A8Opf+DlT/heFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l2YmdzA8; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58893GZf030332;
+	Mon, 8 Sep 2025 10:27:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+nKFbcMCJHuaQHg+i0ynE26tRayp8+zze2zH/yBa7K0=; b=l2YmdzA80yGl1OH3
+	jUyHKDHjHvm/tRdTbVezCkGCI9gpWl7jaW4KDzNxoZDqpBzPBYtn37mDebhHZl4I
+	zidPV/2cSAGfG7/ZBNKYN8KDTb7j94JtiGE6FXzEPtpcWvXoQrSS4WEapqLrPwCh
+	MTyW9bSo6MSueYPJFTEXHNBBeqHnBAQwFWJqM20j0RdPIVqSX6LBzArAAUKC7Wke
+	RYwiI9XNA2cANW12ju5MLMkieJCVo7wruF+B+m03ITjr78Tk2PuZvzmGFscoABoG
+	S8bBle3p3JyQpp1hBQvw+yOohBBaaqdLDBMX6WuD54R2tbdOdrJQKAWJvaLfduOb
+	K05F+w==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e8a44wf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 08 Sep 2025 10:27:00 +0000 (GMT)
+Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 588AR0UD008036
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 8 Sep 2025 10:27:00 GMT
+Received: from [10.151.36.85] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 8 Sep
+ 2025 03:26:55 -0700
+Message-ID: <99c42878-2b77-4ca1-8fe5-8d51ead618cf@quicinc.com>
+Date: Mon, 8 Sep 2025 15:56:52 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1505528149-1757327075=:938"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] i2c: qcom-geni: add OPP table support
+To: Andi Shyti <andi.shyti@kernel.org>
+CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
+        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <quic_msavaliy@quicinc.com>, <quic_vdadhani@quicinc.com>,
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
+        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
+        <kathiravan.thirumoorthy@oss.qualcomm.com>
+References: <20250903080948.3898671-1-quic_mmanikan@quicinc.com>
+ <20250903080948.3898671-2-quic_mmanikan@quicinc.com>
+ <iixfu6y43vh4ymgqbpo72oooowyxmbpz7wprfkkei67jutkj4d@dbinauujzapx>
+Content-Language: en-US
+From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
+In-Reply-To: <iixfu6y43vh4ymgqbpo72oooowyxmbpz7wprfkkei67jutkj4d@dbinauujzapx>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=H7Dbw/Yi c=1 sm=1 tr=0 ts=68beaf74 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
+ a=Cyh4iyD3QBNivaBo-lIA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: YEeVbWL3DnAOXasCFA6RcEFXrnHYPzXY
+X-Proofpoint-ORIG-GUID: YEeVbWL3DnAOXasCFA6RcEFXrnHYPzXY
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOSBTYWx0ZWRfX9BmCTDsarv02
+ 6M+6masPp+gcX8gkMdsDlOabBdFLkw5I5gYrWFOubhCTsgYUKEo9udWPYf7KJmKbnuImgFsK6+9
+ ElaJiyIFIxInwe79jjgr9njQ5VwBZH58Ml8LBFcHye4onUvuJnSfrma0tCqFxarpg3QGF60ASbR
+ ZRHHs+LVJJ1kTC+PjClhFdtlgO1vXaEtY576bw18XRazEee7p2PES5ZwQuryARmvk7n69DMzsI3
+ o4oyWLnURiaVA47fwIiS2k16l/bz9ghlorLpYaUmjunaTdnNKHRLgBUej8cepJI/3npD+q30VRw
+ ESbOTmsmAp2y7bPRthiO1j5MuhWP8DIBNVD2+Bco541ByNTGWUeR65EGo3tt5bRApqr/82FyQna
+ sEt4aTyr
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-08_04,2025-09-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
+ clxscore=1015 suspectscore=0 priorityscore=1501 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060039
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-1505528149-1757327075=:938
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-On Sat, 6 Sep 2025, Manivannan Sadhasivam wrote:
+On 9/5/2025 3:57 AM, Andi Shyti wrote:
+>> @@ -814,6 +817,24 @@ static int geni_i2c_probe(struct platform_device *pdev)
+>>  		gi2c->clk_freq_out = I2C_MAX_STANDARD_MODE_FREQ;
+>>  	}
+>>  
+>> +	ret = devm_pm_opp_set_clkname(&pdev->dev, "se");
+> 
+> /&pdev->dev/dev/
+> 
 
-> On Tue, Aug 26, 2025 at 03:55:42PM GMT, Ilpo J=C3=A4rvinen wrote:
-> > +David
-> >=20
-> > On Mon, 25 Aug 2025, Manivannan Sadhasivam via B4 Relay wrote:
-> >=20
-> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > >=20
-> > > pci_enable_link_state() and pci_enable_link_state_locked() APIs are
-> > > supposed to be symmectric with pci_disable_link_state() and
-> > > pci_disable_link_state_locked() APIs.
-> > >=20
-> > > But unfortunately, they are not symmetric. This behavior was mentione=
-d in
-> > > the kernel-doc of these APIs:
-> > >=20
-> > > " Clear and set the default device link state..."
-> > >=20
-> > > and
-> > >=20
-> > > "Also note that this does not enable states disabled by
-> > > pci_disable_link_state()"
-> > >=20
-> > > These APIs won't enable all the states specified by the 'state' param=
-eter,
-> > > but only enable the ones not previously disabled by the
-> > > pci_disable_link_state*() APIs. But this behavior doesn't align with =
-the
-> > > naming of these APIs, as they give the impression that these APIs wil=
-l
-> > > enable all the specified states.
-> > >=20
-> > > To resolve this ambiguity, allow these APIs to enable the specified s=
-tates,
-> > > regardeless of whether they were previously disabled or not. This is
-> > > accomplished by clearing the previously disabled states from the
-> > > 'link::aspm_disable' parameter in __pci_enable_link_state() helper. A=
-lso,
-> > > reword the kernel-doc to reflect this behavior.
-> > >=20
-> > > The current callers of pci_enable_link_state_locked() APIs (vmd and
-> > > pcie-qcom) did not disable the ASPM states before calling this API. S=
-o it
-> > > is evident that they do not depend on the previous behavior of this A=
-PI and
-> > > intend to enable all the specified states.
-> >=20
-> > While it might be "safe" in the sense that ->aspm_disable is not set by=
-=20
-> > anything, I'm still not sure if overloading this function for two=20
-> > different use cases is a good idea.
-> >=20
->=20
-> Why? I thought your concern was with the callers of this API. Since that =
-is
-> taken care, do you have any other concerns?
+Hi Andi,
 
-I don't think it really matters anymore as it looks the vmd one is going=20
-to be removed by the David's patch and the qcom one is removed by your patc=
-h
-so no users remain.
+Okay, sure. I will update in the next version.
 
-> > I'd like to hear David's opinion on this as he grasps the ->aspm_defaul=
-t=20
-> > vs ->aspm_disable thing much better than I do.
-> >=20
-> > > And the other API, pci_enable_link_state() doesn't have a caller for =
-now,
-> > > but will be used by the 'atheros' WLAN drivers in the subsequent comm=
-its.
-> > >=20
-> > > Suggested-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
-> >=20
-> > This tag sound like I'm endorsing this approach which is not the case. =
-I'd=20
-> > prefer separate functions for each use case, setting aspm_default and=
-=20
-> > another for the enable state.
-> >=20
->=20
-> Sorry, I misunderstood then. I'll drop this tag.
->=20
-> - Mani
->=20
->=20
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	/* OPP table is optional */
+>> +	ret = devm_pm_opp_of_add_table(dev);
+>> +	if (!ret) {
+>> +		opp = dev_pm_opp_find_freq_floor(dev, &freq);
+>> +		if (IS_ERR(opp))
+>> +			return dev_err_probe(dev, PTR_ERR(opp), "failed to find the frequency\n");
+>> +		dev_pm_opp_put(opp);
+>> +		ret = dev_pm_opp_set_rate(dev, freq);
+>> +		if (ret)
+>> +			return dev_err_probe(dev, ret, "failed to set the rate=%ld\n", freq);
+> 
+> %lu
+> 
 
---=20
- i.
+Okay, sure. I will update in the next version.
 
---8323328-1505528149-1757327075=:938--
+Thanks & Regards,
+Manikanta.
 
