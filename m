@@ -1,87 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-72597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72598-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97D64B493B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:38:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45D25B493BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:39:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 476D23AADF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:38:13 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F0D7E3B755D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:39:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C60EC30C616;
-	Mon,  8 Sep 2025 15:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8525730ACEF;
+	Mon,  8 Sep 2025 15:39:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GFIdD8hN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Kr2tOBst"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236AE1E130F
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 15:38:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011FD2FE05D
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 15:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757345887; cv=none; b=q2+HlqPObs5bY+qoL4Qn1U0p9xyl5hQ69zLTJJecMBAWaY44INB27xsQRVpDz7nrCc7lSpB5AUzEC6g/ZpRTl1O6C0Yx/gyZRN0dZAwnO5OL9rgwZW0gRdS+pbw1a6Ivt17YYr9DRvulb6KoSYA5wW1wkomMLu9PHyFaool3DRM=
+	t=1757345953; cv=none; b=I6O+7w1P0lpBUMqlgKBimM2lZcPz5EZ2DgdtSwlEvqr2PGzfxCHuYiklvBlNtWlSFCEKgrDZVj8XQOVyExoHPxp2mnx6nrEUjlXwbtEusZbYgexPT4POe94kyLIDwOpOH30TgQwrT2XlGONTFoPmPDv5YQ4W59Qaj+3o16L+39M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757345887; c=relaxed/simple;
-	bh=qE4t/JphJuE6tOWkF9SSkebo1CiAgeSUWHmJQwKOopk=;
+	s=arc-20240116; t=1757345953; c=relaxed/simple;
+	bh=hmxNwUU2zcaMmfH9+5ewG2jsk0T1GNdeIH4b++rXjvM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S1HCc3oyq3i1zS96mC/ejWzUkrWA9Ly3M3oejx0TzDdKgHnmvgE/JZN5mpuK6nvF5724E/YiU2/KrB23Vr82zOWlcKeUqQWvBEHXiP4BtR7yyaD2ugdYEu3tJbX2ET/Go6g/j5kJB+bOhB+iy0FQiXem+utDA47J4pGLiJfmBng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GFIdD8hN; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=cKdkGK+5E/9ec7RIDzarURVSQDR8oVUzdLFs6hj3DHo5BpuGD5CRLbZXOWmYITlSnHcyuGbBC4qNjmlphuyEqERp9pvXKudTjL4OhbMl8StVKPzXNpriFmqCC2PB+K9IgawjUdDzENqrMa6yvFjaitxWuO2ueehJj+T1oayOOGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Kr2tOBst; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5888xWrC007791
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 15:38:05 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 588BDnXs013595
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 15:39:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	7VfDo+K2YxkxcNLtYJDXPL/1mkJcb89EfTCTUVk46hQ=; b=GFIdD8hN8FyF4bNq
-	dhcqYmW+iPIZ8TBq67UlEy0/8yzA3wwwpTrRyxIPuKOEergP7gnMI0zpbK/dn29f
-	XRqI7AbVN8X2shw6sNLMD/hNfk/37wp2yktw8PqpDnEJ+CHz+tAX+NK9hKxUE/iX
-	Kr+pkHyJSI6G7+xZ0d9oljO+hlnTjrVP3RZJdx+KAHb5Wy0Qoo5PvDrYBP1CjupA
-	SsTpnwpGbRKas8Ag+0PqeB+SX/1deC9XXir53r5AfC1C3MEhkFeKQBffcu9Ydqv0
-	gcS5sXoIN5Op9wOfZIvAEuhjF+sMleHovORE50aHAyTAUXWIR1EO+MLGC7xvkljz
-	dQJwjg==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490db8d2n9-1
+	9ix8Lxn9DP2aA0chOL91fW2+iXcks/DUCOCWwGLcOgI=; b=Kr2tOBstZ6FlTNhO
+	h+ImuNoASmfh+AhJM9R4LNr1x87C5DPsXFQIwrrXGYlGj9O9/ECKXyEg0g84gRev
+	7L8F/8LVRbJuOUv591x2ewQLznBtxspvcp7r2Edaq9Z3xNBLvwhxkc0nupfHMCFW
+	NZiLN+Zj2nhn+cqfK1/1+OFhXHokjCmM3a522MndM8IqbRJ2RZcSXwiOlFQmkPva
+	VnV05oxNXhw157PBFwTgUbys/c7ixabSE8pE0GzmFLDlAxGyRByhgBvNFY+otpbW
+	uuZGfw/DqxL6PyYQ4sSDtCybmI4OxX3CFcfyxZCixulNEAGa3stSv1+HAsRWJRuj
+	hFsnpw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491qhdsvjy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 15:38:04 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b33e296278so7736351cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:38:04 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 15:39:11 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b601ceb41cso9453151cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:39:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757345884; x=1757950684;
+        d=1e100.net; s=20230601; t=1757345950; x=1757950750;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7VfDo+K2YxkxcNLtYJDXPL/1mkJcb89EfTCTUVk46hQ=;
-        b=filyD81qRimxD12L/wcPmf6kMtOtRvOzD29DIosKJyHj3gVRZpmvMwPxQ3kYL0uq4f
-         G/VqWeKLmolO1t7V1N7/nl+yG7ULGGmIrnYIiS0V4a0U5H+Q/DIcZfKmu1AqS63p6+LU
-         3W/qLK51dgqI/H1Z1NVUgwnOmiDdwQqMgGUKP74Jy8UlRKvsS9IR9jBZXFFL8ml24Qgq
-         7VvbetK4QP0RGYmoQHiaj72EPzmOH0Thjn5xx3sSiRkM9mvJ9dEkzVRfNpaXO9yIzbZ6
-         8PD/liOevbT11vNe0NJykaWRVIdApwA/g7pQ8H5u1j7JjMNEEXYvbXtOb7dofkbPkMOb
-         ZFGg==
-X-Gm-Message-State: AOJu0YymkMq4IRLpNmrwsyc8u8xQA1/0VUMb7E1bk7qxQCJ4yko+WqM/
-	BGh6iwaNBM/bzYGN5ROxFW8p0L2WSfRGHZVEkDWEb8w/B6GKkT0QtNzK8pow6imSiwC3lAttcW8
-	l44k2rM9zGIADjP2CC4c6cKX3PJ59fIART+864dRrHWdMmniZNYSbVZL/TAqTujJFXAvT
-X-Gm-Gg: ASbGncslaTlOn069NwgjDkieycd+P9jQyI8spTffStVGmPbBP/RQYy9G1MF8AG9Fbsm
-	+sOyUo/vjl8AES9G7HtLSkKWH0jDMXhqn2tqhunrhFvojSexlEdK+TzDgkZSWiwhAWcOTdn31D7
-	gew7TSV4w0zccUrcGnwW2sU5wdurBfAeIcx94sKRCsDaSYleyVPJdMvnclhcoP6RvmEgiStdwpZ
-	H17loCVbC9EvIes2ZvoWWOXGNAfjEbIA/7T5ROMu1gYvE9v82jmDTLK64ZUVomb8d7hfISufVO3
-	mEXCUQjmkKSIb2brxNwCFOMFbPHPdwXMkRugOmQc0QT9yqi9wwgqUpK3mi5M5njZzaqjm8m/OcJ
-	QKplJJ1nlvxogfWtaNJZRmw==
-X-Received: by 2002:a05:622a:1787:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4b5f848d05bmr58304611cf.7.1757345883535;
-        Mon, 08 Sep 2025 08:38:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFcsvpKBaQ4jCcWP5NtvuePywTOTY5oNYfv92gdyrYQkqbJJAvrzNLEIVI6ZIbznl8lDhI5wA==
-X-Received: by 2002:a05:622a:1787:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4b5f848d05bmr58304161cf.7.1757345882765;
-        Mon, 08 Sep 2025 08:38:02 -0700 (PDT)
+        bh=9ix8Lxn9DP2aA0chOL91fW2+iXcks/DUCOCWwGLcOgI=;
+        b=Ah4khUbNLDKTNNgkv1XYan6e1w5zck9EStHZ0NA+B0nSjvKv5I46XR8Ak4R9u798xj
+         7RmSyMNorly0ZkQn7ju959LPaKMA0fyxKGZVH7+G1sLFMkdAA8BFN102ROTEl2Y8Eusl
+         DaTozOva1n9FMTcZ5SNxB8DHFdke2wS4/s70/y8jcX4aALpAXR1ARITlprkGymQuBt5C
+         uPKvk5gZcELtBXPvq2ppuJBvUcAqxg63p1GvnxU6xrg0orSzg/c4fYfGUloZ4bNODYzJ
+         Bj7Rx5kDtW3h9NjPmmwN4t4G3/Fu+SDcaGnOsNH23hKWVh7Ktw1ImWmALJV/rOzzxLkq
+         MI/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCX6UHW00mPOvXkEWTjskfYwSrDwV/1vPFCvFY/te43HYVDl+FCMTTm0rM6/8F8UhE54OnYk2Q4nQmRoxEDX@vger.kernel.org
+X-Gm-Message-State: AOJu0YxDnUfilsHKefFQyhHcSI2o/FW4KYMBOoUgc0K6d6gEDVZdNz8y
+	t7iUjcKObTqCZBHEhOtLw8cYsTJnV8bzTnXqCUHUN3/lB21Lj3x1nQIjNfTW3gewI/Hm/EdtRYQ
+	qlL/6B1eTZAJcInJtouHVvzuulIKTv/u0UPArPkv49h/VZlTB+Z5OvDFyuvB7MuSSezKs
+X-Gm-Gg: ASbGncuLVj8n/9j9f21uHThkoAdARJcEyz1MjlZsRif7HA1/sV0El/aJp+CJrROHKaG
+	mPf/uYmTOIeUPJpGr5kCG4OULlxT7T3xBjH/id+q3DSbbMFmjJBIOSjqGZVwidE79Q4wfDHtEXx
+	xnSvCQjssqeCz1Sg7rCm1vkZPe3DQpDFpFctMAdq5WRd3PegD4Z7rGEvzgTgNxu0eFSBFfrfIhV
+	eg//LkML3N/HMcgpiD1F2tlaJouoVZGwaWIyaDtnbmMnhwvCNZ9jnwLt4rZ/Ltm9tH93jM2dodM
+	tNs72Yj/XU7g+MKlYjxPh7P0R1kJvgQMBVZA0KzC0njzEr7SRrkQe02XqK48+IiriUoZRmiMITC
+	MlhFSj6WCHmw/b738QluMww==
+X-Received: by 2002:a05:622a:19a7:b0:4b4:9070:f27e with SMTP id d75a77b69052e-4b5f826059cmr55449021cf.0.1757345949571;
+        Mon, 08 Sep 2025 08:39:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFSjAuw3MqqByPMWEwcaVGXJrt8t0L5vdGx6BjurjDCr+ZzKHljYEOvuS1tfcYm8a1jnOKGwQ==
+X-Received: by 2002:a05:622a:19a7:b0:4b4:9070:f27e with SMTP id d75a77b69052e-4b5f826059cmr55448481cf.0.1757345948792;
+        Mon, 08 Sep 2025 08:39:08 -0700 (PDT)
 Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aff0d9b1b53sm2408307666b.96.2025.09.08.08.38.00
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0423ed35e4sm1961096966b.25.2025.09.08.08.39.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 08:38:02 -0700 (PDT)
-Message-ID: <59ac7827-6258-4268-8b71-4cbcbad859db@oss.qualcomm.com>
-Date: Mon, 8 Sep 2025 17:37:59 +0200
+        Mon, 08 Sep 2025 08:39:08 -0700 (PDT)
+Message-ID: <5bbe77f0-185f-4905-8097-8769f0d5f518@oss.qualcomm.com>
+Date: Mon, 8 Sep 2025 17:39:04 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,113 +90,135 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/16] drm/msm/adreno: Add fenced regwrite support
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+Subject: Re: [PATCH v4 3/6] arm64: dts: qcom: sa8775p: Add gpu and gmu nodes
+To: rob.clark@oss.qualcomm.com, Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>, Konrad Dybcio <konradybcio@kernel.org>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
         Marijn Suijten <marijn.suijten@somainline.org>,
         David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Antonino Maniscalco <antomani103@gmail.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com>
- <20250908-ifpc-support-v2-7-631b1080bf91@oss.qualcomm.com>
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Connor Abbott <cwabbott0@gmail.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Gaurav Kohli <quic_gkohli@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+References: <20250822-a663-gpu-support-v4-0-97d26bb2144e@oss.qualcomm.com>
+ <20250822-a663-gpu-support-v4-3-97d26bb2144e@oss.qualcomm.com>
+ <f11b778d-eba1-4712-81c7-b83f2cb38b46@oss.qualcomm.com>
+ <exkrgx6rdotfrrsnklsd7zk4ydehsk5vaoevibpqisyq2dwbd4@sa4kgnuexlna>
+ <f169be5a-faa5-4824-861e-27bd2083b9cf@oss.qualcomm.com>
+ <t5pxum74q3fwf6wgcbaeaginjvtjfn357pkfswvafsggtmvxfv@jl5qjfhpmmow>
+ <c3de911c-e80a-429d-8a5c-c693546d4abf@oss.qualcomm.com>
+ <14b5db9f-8b31-4baa-a03d-12112425fbbe@oss.qualcomm.com>
+ <CACSVV02h8AUX8WtEuu5w-g2XnfBkfozHQQ15zGK6+LVX_w=d1g@mail.gmail.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250908-ifpc-support-v2-7-631b1080bf91@oss.qualcomm.com>
+In-Reply-To: <CACSVV02h8AUX8WtEuu5w-g2XnfBkfozHQQ15zGK6+LVX_w=d1g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzMSBTYWx0ZWRfX9T0ZsBQjf8d5
- agBLFV8DcsK+X8OWfjb2TTHdtHzOX8nua76kG5dypgqWZEa8kgSZsygA9zI0s0k//DbnAMCMNst
- gEbC9v6pEd7UgRPiitvhLWycG7bCw6bePHH8CuczEd/2WjiddqpqliAOWapT6LBY1Bkr7Y/yC4g
- 5c07wMQ4YlxMhY9KUsesxbEjb5CTIDHucFxFwDWEhuEh/0cNY+FCksp8LOrggqRy3bIhV1EsJtJ
- sQC8NkXZCUWKOIs6nJPrtuqeqROhL9ZrG+d1rT1liju+7oInlW2bsPSeU0W8hL+/Xj1ktJb6KIH
- ke69fA8KBaot4skjntZcBTzjHkw9jYrwKoKrZGTpqPOr0pROa0zFmsV3ubmumZNIQACLBtIAjk9
- /oZQdgwR
-X-Proofpoint-ORIG-GUID: kruDpEhtObDQxFaM8W7bKkYOpLmwiT90
-X-Proofpoint-GUID: kruDpEhtObDQxFaM8W7bKkYOpLmwiT90
-X-Authority-Analysis: v=2.4 cv=VIDdn8PX c=1 sm=1 tr=0 ts=68bef85c cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=sRrLox2IjJLVq2cxUxUA:9
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: agcaT8Fab9XpX5PrcRwsZiNPuHfC_FTy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDAzNCBTYWx0ZWRfXw4NnXcx6bG89
+ GSGEcDS/2SnqDUY47r94Ma2aGBevL6XEu5lnqXR9LiBhfBYMTKOX2lGiMsgogE7MrHhi/SFP5eJ
+ C2+w+TMcBQONubIFm7R8GMndz7d+v/s4KYuEAhUUt6gr4j7fqXipgUCUZmNIWGyMozTArpzMVLr
+ LxT1sBdK6EmfVcBgke+NcBBvTohS0Dh/4AmPRi/B4eNo/iNtPv8SXaDkXysbpaPPSMTGVGvipfk
+ M4LV6ojaxr4B1TJHYMPHZROJh+YiiGZr096TI8wnqMkVT8ODMb5xuLWsYDoD34iymgrwUeb35QW
+ PwEb1TOta9ohIAbAa2WFlMNLIkdJsBkpetM2aZfBDgklvfBjw8mUAemZmB0UDjMSuoairntTzBP
+ n09coKEt
+X-Authority-Analysis: v=2.4 cv=YOCfyQGx c=1 sm=1 tr=0 ts=68bef89f cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=COk6AnOGAAAA:8
+ a=KKAkSRfTAAAA:8 a=am1a1fgwjgo6KoPeU6gA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22 a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: agcaT8Fab9XpX5PrcRwsZiNPuHfC_FTy
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-08_05,2025-09-08_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
- phishscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ malwarescore=0 phishscore=0 clxscore=1015 adultscore=0 impostorscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060031
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080034
 
-On 9/8/25 10:27 AM, Akhil P Oommen wrote:
-> There are some special registers which are accessible even when GX power
-> domain is collapsed during an IFPC sleep. Accessing these registers
-> wakes up GPU from power collapse and allow programming these registers
-> without additional handshake with GMU. This patch adds support for this
-> special register write sequence.
+On 9/7/25 1:02 AM, Rob Clark wrote:
+> On Sat, Sep 6, 2025 at 1:56 PM Akhil P Oommen <akhilpo@oss.qualcomm.com> wrote:
+>>
+>> On 9/3/2025 8:44 PM, Konrad Dybcio wrote:
+>>> On 9/3/25 4:00 PM, Dmitry Baryshkov wrote:
+>>>> On Wed, Sep 03, 2025 at 03:36:34PM +0200, Konrad Dybcio wrote:
+>>>>> On 9/3/25 2:39 PM, Dmitry Baryshkov wrote:
+>>>>>> On Wed, Sep 03, 2025 at 02:26:30PM +0200, Konrad Dybcio wrote:
+>>>>>>> On 8/21/25 8:55 PM, Akhil P Oommen wrote:
+>>>>>>>> From: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+>>>>>>>>
+>>>>>>>> Add gpu and gmu nodes for sa8775p chipset. As of now all
+>>>>>>>> SKUs have the same GPU fmax, so there is no requirement of
+>>>>>>>> speed bin support.
+>>>>>>>>
+>>>>>>>> Signed-off-by: Puranam V G Tejaswi <quic_pvgtejas@quicinc.com>
+>>>>>>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>>>>>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>>>>>>>> ---
+>>>>>>>>  arch/arm64/boot/dts/qcom/lemans.dtsi | 116 +++++++++++++++++++++++++++++++++++
+>>>>>>>>  1 file changed, 116 insertions(+)
+>>>>>>>>
+>>>>>>>> diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+>>>>>>>> index 8ceb59742a9fc6562b2c38731ddabe3a549f7f35..8eac8d4719db9230105ad93ac22287850b6b007c 100644
+>>>>>>>> --- a/arch/arm64/boot/dts/qcom/lemans.dtsi
+>>>>>>>> +++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+>>>>>>>> @@ -1097,6 +1097,18 @@ ipcc: mailbox@408000 {
+>>>>>>>>                          #mbox-cells = <2>;
+>>>>>>>>                  };
+>>>>>>>>
+>>>>>>>> +                qfprom: efuse@784000 {
+>>>>>>>> +                        compatible = "qcom,sa8775p-qfprom", "qcom,qfprom";
+>>>>>>>> +                        reg = <0x0 0x00784000 0x0 0x2410>;
+>>>>>>>
+>>>>>>> len = 0x3000
+>>>>>>>
+>>>>>>> [...]
+>>>>>>>
+>>>>>>>> +                gmu: gmu@3d6a000 {
+>>>>>>>> +                        compatible = "qcom,adreno-gmu-663.0", "qcom,adreno-gmu";
+>>>>>>>> +                        reg = <0x0 0x03d6a000 0x0 0x34000>,
+>>>>>>>
+>>>>>>> This bleeds into GPU_CC, len should be 0x26000
+>>>>>>
+>>>>>> gpucc is in the middle of GMU, see other platforms.
+>>>>>
+>>>>> This is not the case here
+>>>>
+>>>> Why? I think GPU CC is a part of the GMU by design: GMU accesses GPU CC
+>>>> registers directly from the firmware.
+>>>
+>>> Correct, however this is only a similarly sounding argument - the DT
+>>> describes the hardware from the main Arm cluster POV. The GMU Cortex-M
+>>> core has its own address map etc.
 > 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 80 ++++++++++++++++++++++++++++++-
->  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
->  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 ++++----
->  3 files changed, 90 insertions(+), 11 deletions(-)
+> but the firmware is part of how the hardware appears to the main arm cluster
 > 
-> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> index 45dd5fd1c2bfcb0a01b71a326c7d95b0f9496d99..a63dad80ef461da45d5c41a042ed4f19d8282ef5 100644
-> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-> @@ -16,6 +16,84 @@
->  
->  #define GPU_PAS_ID 13
->  
-> +static bool fence_status_check(struct msm_gpu *gpu, u32 offset, u32 value, u32 status, u32 mask)
-> +{
-> +	/* Success if !writedropped0/1 */
-> +	if (!(status & mask))
-> +		return true;
-> +
-> +	udelay(10);
-> +
-> +	/* Try to update fenced register again */
-> +	gpu_write(gpu, offset, value);
-> +
-> +	/* We can't do a posted write here because the power domain could be
-> +	 * in collapse state. So use the heaviest barrier instead
-> +	 */
-> +	mb();
-> +	return false;
-> +}
-> +
-> +static int fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u32 value, u32 mask)
-> +{
-> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
-> +	struct msm_gpu *gpu = &adreno_gpu->base;
-> +	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
-> +	u32 status;
-> +
-> +	gpu_write(gpu, offset, value);
-> +
-> +	/* Nothing else to be done in the case of no-GMU */
-> +	if (adreno_has_gmu_wrapper(adreno_gpu))
-> +		return 0;
-> +
-> +	/* We can't do a posted write here because the power domain could be
-> +	 * in collapse state. So use the heaviest barrier instead
-> +	 */
+>> We have been keeping GPUCC region in the GMU's reg range in all chipsets
+>> for the purpose of coredump.
+>>
+>> Can we leave this as is until we have a mechanism to dump these into gpu
+>> coredump (via gpucc driver??)? I recall you proposed something similar
+>> sometime back.
+> 
+> IMO we should keep this in the GMU range.. if in the future we have
+> some other mechanism to dump gpucc state, then for future platforms we
+> can start using that (ie. new dt but old kernel should be a thing we
+> at least pretend to try to keep working), but for current/past
+> platforms we should stick with keeping this in the GMU's range
 
-I'm not sure I follow - what's the relationship between the write being
-posted and the power domain being collapsed (i.e. the hw not being
-powered on)?
-
-Are you trying to get rid of the delay that could happen between this
-write leaving the CPU and arriving at the GPU (which would then be
-woken up), so that the 1ms poll below has greater chance to succeed
-because of how these "special registers" work?
+Eh, right, sorry, we discussed this with I think x1e, let's keep it
+as-is until more infra is in place
 
 Konrad
 
