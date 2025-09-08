@@ -1,148 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-72549-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72550-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68810B48A28
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 12:27:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id D720BB48A5D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 12:41:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 386B43A6B57
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:27:13 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9075416AFF8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:41:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 626242F60A2;
-	Mon,  8 Sep 2025 10:27:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E38A82F99AA;
+	Mon,  8 Sep 2025 10:41:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="l2YmdzA8"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="APkbeUll"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 952692E9EA1;
-	Mon,  8 Sep 2025 10:27:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFC02F90CE;
+	Mon,  8 Sep 2025 10:41:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757327225; cv=none; b=UezH1MLBN2eu0Dd67A3zQtDikLLshzRBJtfZTrzvwn0w6AdpnWsD0GQHRqWgVRkhtbcotREgCN4qFaY9mFUU1t3pjJqSxrgix/zHEuBxxz43YX69w2GV3ybVcYgPo3IB4avdHb9ZX7TXxdCByE1QStpd+vKvGptHfuGGvPbrmPE=
+	t=1757328089; cv=none; b=V2VfDaaXNW0aKemLr8qHDrP+vLAGPM78p7rN1TuqJV3NorNXBQ75NecyVGn5JbmliZ7V9/C3hJa24Bwpse5odrzZ0c6zLlExsxIVkISD25pIVGiFjZ9QMDdUtouTbgpF/23816ogQGEKH98zpweV6Vpu47jVW06E682wENlXj3c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757327225; c=relaxed/simple;
-	bh=2ZzxvSBShoA/30DwcDt+e5oqEhOfb6AXkUiZp46YYJY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=SHrpHWYDpBoDXNKFeLX5k9CCvZ5D5iSpcrNK57CMne0YDH1fey712ujESuXFVM5OyXuOiB9G7/G6M5VUQ2L2L2Ywl2bUJFfwIIugWj8oOTeUxgSC/HcPbh8buQfRCZtHlusqQF61TFJvFuBMueuZ7exKqLET1A8Opf+DlT/heFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=l2YmdzA8; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58893GZf030332;
-	Mon, 8 Sep 2025 10:27:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	+nKFbcMCJHuaQHg+i0ynE26tRayp8+zze2zH/yBa7K0=; b=l2YmdzA80yGl1OH3
-	jUyHKDHjHvm/tRdTbVezCkGCI9gpWl7jaW4KDzNxoZDqpBzPBYtn37mDebhHZl4I
-	zidPV/2cSAGfG7/ZBNKYN8KDTb7j94JtiGE6FXzEPtpcWvXoQrSS4WEapqLrPwCh
-	MTyW9bSo6MSueYPJFTEXHNBBeqHnBAQwFWJqM20j0RdPIVqSX6LBzArAAUKC7Wke
-	RYwiI9XNA2cANW12ju5MLMkieJCVo7wruF+B+m03ITjr78Tk2PuZvzmGFscoABoG
-	S8bBle3p3JyQpp1hBQvw+yOohBBaaqdLDBMX6WuD54R2tbdOdrJQKAWJvaLfduOb
-	K05F+w==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e8a44wf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 08 Sep 2025 10:27:00 +0000 (GMT)
-Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 588AR0UD008036
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 8 Sep 2025 10:27:00 GMT
-Received: from [10.151.36.85] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Mon, 8 Sep
- 2025 03:26:55 -0700
-Message-ID: <99c42878-2b77-4ca1-8fe5-8d51ead618cf@quicinc.com>
-Date: Mon, 8 Sep 2025 15:56:52 +0530
+	s=arc-20240116; t=1757328089; c=relaxed/simple;
+	bh=nOUtFuHlk/j0pOjb0/mvPkxl+LtCujwsXtiWGXGRNxU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MZ2RL7XYcdQW3OH4Wke34xvsEc1LQDCvhDE/f9vzateG03lU2bYryoUet+XDDEaH+CwZeCgnafZ2wTVg+Xe17VYDjAnfidmAWGv3glfqrpaMVMsoo9YrKjouAEI57dQCxZsvn5VIBW10vggc4UfxV34rx7ni/Uqw/hql6enVkZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=APkbeUll; arc=none smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757328088; x=1788864088;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=nOUtFuHlk/j0pOjb0/mvPkxl+LtCujwsXtiWGXGRNxU=;
+  b=APkbeUllhan/TbjOK0/mWR39SWK5LOOeurfljJK9WUzagVgwMv/CYW/p
+   sf+GPbDGWhgN11zIh3KFRSmNUa7kQdmXdJe4yMx+LYVwyvLED/j57y1nq
+   jKY7TaMj9e2AvOLQz1dOhAwuXRd7klVmjUI3UdakHhsSv494o17NaFbMA
+   dUH+WOIsrbrBXPDgp/E9+a6wgirsiez0M1xqQLb/Hlx8sKOT0V1iV2rNj
+   Fp5BgcdJUqCbK1JTcxBUqcvz/kJ4hVnNG51L+gagWEuq6VOESUB/q/bqP
+   szqo2ur+DLzpiQBtQVHOtgGvzSf33l3pWmCJLTJfhnx4sPHbQRmL1Sr5X
+   w==;
+X-CSE-ConnectionGUID: xFPNKKtNRsayXokBfDohYg==
+X-CSE-MsgGUID: ubMXzGk5T8iUfarNPFW9Og==
+X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="63408374"
+X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
+   d="scan'208";a="63408374"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2025 03:41:27 -0700
+X-CSE-ConnectionGUID: T17NMXmqTBa4QL/Py/YsOw==
+X-CSE-MsgGUID: y6i9kVS8SauaAWkYwxatGg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,248,1751266800"; 
+   d="scan'208";a="172344801"
+Received: from lkp-server01.sh.intel.com (HELO 114d98da2b6c) ([10.239.97.150])
+  by fmviesa007.fm.intel.com with ESMTP; 08 Sep 2025 03:41:24 -0700
+Received: from kbuild by 114d98da2b6c with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1uvZJK-0003jr-20;
+	Mon, 08 Sep 2025 10:41:22 +0000
+Date: Mon, 8 Sep 2025 18:40:36 +0800
+From: kernel test robot <lkp@intel.com>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	broonie@kernel.org
+Cc: oe-kbuild-all@lists.linux.dev, lgirdwood@gmail.com, tiwai@suse.com,
+	vkoul@kernel.org, yung-chuan.liao@linux.intel.com,
+	pierre-louis.bossart@linux.dev, srini@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-sound@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v4 07/13] ASoC: codecs: wcd: add common helper for wcd
+ codecs
+Message-ID: <202509081839.R4vv3FST-lkp@intel.com>
+References: <20250907112201.259405-8-srinivas.kandagatla@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] i2c: qcom-geni: add OPP table support
-To: Andi Shyti <andi.shyti@kernel.org>
-CC: <andersson@kernel.org>, <konradybcio@kernel.org>, <robh@kernel.org>,
-        <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
-        <quic_msavaliy@quicinc.com>, <quic_vdadhani@quicinc.com>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-i2c@vger.kernel.org>,
-        <quic_srichara@quicinc.com>, <quic_varada@quicinc.com>,
-        <kathiravan.thirumoorthy@oss.qualcomm.com>
-References: <20250903080948.3898671-1-quic_mmanikan@quicinc.com>
- <20250903080948.3898671-2-quic_mmanikan@quicinc.com>
- <iixfu6y43vh4ymgqbpo72oooowyxmbpz7wprfkkei67jutkj4d@dbinauujzapx>
-Content-Language: en-US
-From: Manikanta Mylavarapu <quic_mmanikan@quicinc.com>
-In-Reply-To: <iixfu6y43vh4ymgqbpo72oooowyxmbpz7wprfkkei67jutkj4d@dbinauujzapx>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=H7Dbw/Yi c=1 sm=1 tr=0 ts=68beaf74 cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
- a=Cyh4iyD3QBNivaBo-lIA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: YEeVbWL3DnAOXasCFA6RcEFXrnHYPzXY
-X-Proofpoint-ORIG-GUID: YEeVbWL3DnAOXasCFA6RcEFXrnHYPzXY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOSBTYWx0ZWRfX9BmCTDsarv02
- 6M+6masPp+gcX8gkMdsDlOabBdFLkw5I5gYrWFOubhCTsgYUKEo9udWPYf7KJmKbnuImgFsK6+9
- ElaJiyIFIxInwe79jjgr9njQ5VwBZH58Ml8LBFcHye4onUvuJnSfrma0tCqFxarpg3QGF60ASbR
- ZRHHs+LVJJ1kTC+PjClhFdtlgO1vXaEtY576bw18XRazEee7p2PES5ZwQuryARmvk7n69DMzsI3
- o4oyWLnURiaVA47fwIiS2k16l/bz9ghlorLpYaUmjunaTdnNKHRLgBUej8cepJI/3npD+q30VRw
- ESbOTmsmAp2y7bPRthiO1j5MuhWP8DIBNVD2+Bco541ByNTGWUeR65EGo3tt5bRApqr/82FyQna
- sEt4aTyr
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-08_04,2025-09-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
- clxscore=1015 suspectscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060039
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250907112201.259405-8-srinivas.kandagatla@oss.qualcomm.com>
+
+Hi Srinivas,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on broonie-sound/for-next]
+[also build test WARNING on linus/master v6.17-rc5 next-20250905]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Srinivas-Kandagatla/ASoC-codecs-wcd937x-set-the-comp-soundwire-port-correctly/20250907-192533
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+patch link:    https://lore.kernel.org/r/20250907112201.259405-8-srinivas.kandagatla%40oss.qualcomm.com
+patch subject: [PATCH v4 07/13] ASoC: codecs: wcd: add common helper for wcd codecs
+config: openrisc-allyesconfig (https://download.01.org/0day-ci/archive/20250908/202509081839.R4vv3FST-lkp@intel.com/config)
+compiler: or1k-linux-gcc (GCC) 15.1.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250908/202509081839.R4vv3FST-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202509081839.R4vv3FST-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+   sound/soc/codecs/wcd-common.c: In function 'wcd_dt_parse_micbias_info':
+>> sound/soc/codecs/wcd-common.c:34:51: warning: 'sprintf' may write a terminating nul past the end of the destination [-Wformat-overflow=]
+      34 |         sprintf(micbias, "qcom,micbias%d-microvolt", micb_num);
+         |                                                   ^
+   In function 'wcd_get_micbias_val',
+       inlined from 'wcd_dt_parse_micbias_info' at sound/soc/codecs/wcd-common.c:61:26:
+   sound/soc/codecs/wcd-common.c:34:9: note: 'sprintf' output between 24 and 33 bytes into a destination of size 32
+      34 |         sprintf(micbias, "qcom,micbias%d-microvolt", micb_num);
+         |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
+vim +/sprintf +34 sound/soc/codecs/wcd-common.c
 
-On 9/5/2025 3:57 AM, Andi Shyti wrote:
->> @@ -814,6 +817,24 @@ static int geni_i2c_probe(struct platform_device *pdev)
->>  		gi2c->clk_freq_out = I2C_MAX_STANDARD_MODE_FREQ;
->>  	}
->>  
->> +	ret = devm_pm_opp_set_clkname(&pdev->dev, "se");
-> 
-> /&pdev->dev/dev/
-> 
+    28	
+    29	static int wcd_get_micbias_val(struct device *dev, int micb_num, u32 *micb_mv)
+    30	{
+    31		char micbias[32];
+    32		int mv;
+    33	
+  > 34		sprintf(micbias, "qcom,micbias%d-microvolt", micb_num);
+    35	
+    36		if (of_property_read_u32(dev->of_node, micbias, &mv)) {
+    37			dev_err(dev, "%s value not found, using default\n", micbias);
+    38			mv = WCD_DEF_MICBIAS_MV;
+    39		} else {
+    40			/* convert it to milli volts */
+    41			mv = mv/1000;
+    42		}
+    43		if (micb_mv)
+    44			*micb_mv = mv;
+    45	
+    46		mv = wcd_get_micb_vout_ctl_val(dev, mv);
+    47		if (mv < 0) {
+    48			dev_err(dev, "Unsupported %s voltage (%d mV), falling back to default (%d mV)\n",
+    49					micbias, mv, WCD_DEF_MICBIAS_MV);
+    50			return wcd_get_micb_vout_ctl_val(dev, WCD_DEF_MICBIAS_MV);
+    51		}
+    52	
+    53		return mv;
+    54	}
+    55	
 
-Hi Andi,
-
-Okay, sure. I will update in the next version.
-
->> +	if (ret)
->> +		return ret;
->> +
->> +	/* OPP table is optional */
->> +	ret = devm_pm_opp_of_add_table(dev);
->> +	if (!ret) {
->> +		opp = dev_pm_opp_find_freq_floor(dev, &freq);
->> +		if (IS_ERR(opp))
->> +			return dev_err_probe(dev, PTR_ERR(opp), "failed to find the frequency\n");
->> +		dev_pm_opp_put(opp);
->> +		ret = dev_pm_opp_set_rate(dev, freq);
->> +		if (ret)
->> +			return dev_err_probe(dev, ret, "failed to set the rate=%ld\n", freq);
-> 
-> %lu
-> 
-
-Okay, sure. I will update in the next version.
-
-Thanks & Regards,
-Manikanta.
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
