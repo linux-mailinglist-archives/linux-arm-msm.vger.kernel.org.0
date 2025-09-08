@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-72522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AFE8B4872D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:31:58 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id C24BBB4872C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:31:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5F6F818928A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 08:31:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 7A7BA7ACF22
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 08:29:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 39F632F99A5;
-	Mon,  8 Sep 2025 08:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8AD482EC543;
+	Mon,  8 Sep 2025 08:28:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bkQ0U1k/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="FlxAKuTa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 911FF2EACF3
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 08:28:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B302EB5A2
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 08:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757320094; cv=none; b=XoxV9hkGn+qqb1VX6/5jW1Qi2ETC2+0vCNSipepfqCSpHJeckNZc/nB5B86Waif4Py5maPotTzJFFgFUDiLaIymjpvyEOOgv09V9MxJ5YjUmamYKIUcR73Nplp6Evv4Fnz6MM1XEie9HePSK3b4o2780jzgwfymwsHB59uwvGHM=
+	t=1757320097; cv=none; b=PfDuEh5aRSeDoIcYB0Hagr/itXsOz2Vvm9+4XMm2sGN9n5oGvnOBftF0A7neK74S6gZekRkpHkhK9GUk1KETD9NhqQHnlUpBMqyRVNrgTs95YTfThRUM7a6Dy9jtLQaLkidpsBfIT7xzBueIQ1iasrb/a1JxJDoNq4NTiMOyBCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757320094; c=relaxed/simple;
-	bh=hcHfihbqCnMNLjvYKeukB8x/8H4c4Vf9wDORLxifp3c=;
+	s=arc-20240116; t=1757320097; c=relaxed/simple;
+	bh=/iBCcOjQRFAJtVUwHHvMO3maSUVXqEkyAINnqw7b6JY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZlBSTpo00wGaaX3Rrg0f5Le9VqeL5K+9ch2a5OFpla0tFtUc22rdqn5vMvsnZvavDMO866Yry/XwIlYskxCQ+ZDuAsUG2/yxqBxNmzV9+vp54GbeQ2Qod5kI0LHPNVXJm70ktr0TZmjllnpmFoFPFCkHgYb87519JOnw9VwLVQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bkQ0U1k/; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:To:Cc; b=G4K05eujc8WHjt2+IqJSFU3pcl+pT5sTFg5ODlcUEow2cxm6QyTf64lfcDZ0Gpr5yEjAIIELzkMGN55Zy3fdfLI54AM3nj5C5WIllc5D/R7HxLm74y/V+xlD0UgALIDXUxteS8oUSYXRzbPP8P6/jxoOq9hk7CFQcbQdmm8v9wI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=FlxAKuTa; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 587LN3Qp014574
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 08:28:11 GMT
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5886gQf8006157
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 08:28:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	A0C4E7Nw7YzjCUNPjzfc7hGVXIhBZt+qciFyEW/6v7I=; b=bkQ0U1k/oSGFwyCO
-	7bKvvgQDYYSGUqbaV9ebliIN33m4XHXaidp6cBUW94/UW+e8X/1Me81NFcJXKm2T
-	RU+O9W6CsQUwsMQSkc/CEk/dM7tM7ihgVQMmghC7nudPoXL4lUmQOA6J9iEcplFH
-	N7yLI4XLV8XioMG0N5rk8EJ6Nx0bs2msNu2KyqlpGuYDrl/vk8OTv17jsqFejwXW
-	uxoXT3uCTeAMFjpsBzsjPy4ki4HFabsCqCCgbY+OdCGugrbuyHG5ZIBevR7eFFf9
-	5VT5dWfvVUw8k9PCdO2Vtmj28CUQuArjvDy9hCGEFo0OMEqytflnWoELskI76X0J
-	o6RhNQ==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490c9j3vf8-1
+	vz6TxjIbrwRntYK8rL5nZ8VrVI87LAGFTolpn+41CWI=; b=FlxAKuTa4YQFL5i3
+	Lr1Sg7Eoigr2sQIO0vLqBg6mSj9SZXCxpr/kMckJKu7W0BZK6ctCa6C85KyWZacR
+	rf03JNWe8WzFItsNSKuoNCzHh/ciZ0kBGRe0GHIUoAzoFLBj4WhT+Pr9u6p0r9Io
+	18DeaKNYB4uUnuOUVHk+yrGYIDgUDq+COqXit9AIdR172Nr8WQUL43/0WE9r9SMm
+	w2PaRBk/E/DBqSP/6w96J46tmcP2uKwkdaBMkZemLtne++fOHhte15IVSacR14ol
+	3QZ2bRbB1cFlLiQgdebwR6Ioow68/e9tu+5DGsbCRhGFMTXZFcgOUCZrTr0eUZiX
+	SM1pFA==
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com [209.85.216.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491t37r9wf-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:28:11 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b4c928089fdso6615375a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 01:28:11 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:28:15 +0000 (GMT)
+Received: by mail-pj1-f71.google.com with SMTP id 98e67ed59e1d1-329dbf4476cso3782758a91.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 01:28:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757320090; x=1757924890;
+        d=1e100.net; s=20230601; t=1757320095; x=1757924895;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A0C4E7Nw7YzjCUNPjzfc7hGVXIhBZt+qciFyEW/6v7I=;
-        b=bGCGjiDEHv5J5uZiKGXyxb9XtBcPha/wPwIDRRkhuTqIF9nzbI1BkcaOmpwyNVFRyS
-         RXEDY6jXD8LXWQUQSnt8QDbPztHwZUUySg2kuSVdtJK6GlDhr1WRXe/2LWssjsjtuu5x
-         zD6mzzJ8BbfEl6RTX/rV7OvFMJ3mbr8/oX0YbH/IfWZrGDHurRtBcLU7tLmUaSoX/0nd
-         SlXttXIONSa/pM+9YcsHgKHOvKdUOfIWO7/vIPJhG84/bpSjoFCVGlVibkmijLr/Vulu
-         DwnYGWXpCLlheU89K1XBSknaRbAofiCG9xztaD/9mngW4zAwqIbUlCCBWWbM5bQb/kIx
-         GwTg==
-X-Gm-Message-State: AOJu0YyfhL55TJzHK/2xnplaa3KkJzZGYZ8g9btmVCH5wh6cm7uDBVMV
-	Ar7+q4oO/mo88BwS8SRRc98OM80kP9pxfo+6E1TjXe+YFhFFOEkNraLq9WO7WdwvUBnMlg3gfgg
-	G3ehHh1Sy3UqF4tmdjDSQO+SqeMITtxbHQiKbtGM5Y+83XiubdaHBIK+dp21fgFVwtG4S
-X-Gm-Gg: ASbGncvUy9mBNgbLGNegTkmI+rpWDPnGvfi/dEUBoYb9sTDpq1jOwHUHnWpqX8b35er
-	ly56HjxNfVDZ9kXMM+rXqdUEOt73k2IV6ydLoWRQ50uI34KOV/1s+CezlXzBM5oTxwCRJhSTFrh
-	2laRQ/26W5inBYS4Op+NRoMlRnS9Fj6ASZRSBSEFo8XDuVT0/B+RvioUsJbAK2SGko3O9g79wIC
-	dKRBuPiNLHcUHm/DbzCML5QL5DkFNOCseyYXsmun5gdjI8S+SnzcHOF0HFzeFTJ6ic2OkeoSr7f
-	/fKN2mF2vLZze7wpGrCZuoUKYzIBYoaIpGymB3nMuXnd2EpJz1yh1eI3tu3T76R2
-X-Received: by 2002:a05:6a21:998d:b0:246:2c:113 with SMTP id adf61e73a8af0-2533e573539mr9966582637.4.1757320090109;
-        Mon, 08 Sep 2025 01:28:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9eglLLYqQpIkbqR7FguLgctxfLEBzAKKqAMxb/nL1fgIXdEAQROcNKw3dgjcDi4rjeIiPMA==
-X-Received: by 2002:a05:6a21:998d:b0:246:2c:113 with SMTP id adf61e73a8af0-2533e573539mr9966553637.4.1757320089627;
-        Mon, 08 Sep 2025 01:28:09 -0700 (PDT)
+        bh=vz6TxjIbrwRntYK8rL5nZ8VrVI87LAGFTolpn+41CWI=;
+        b=Kjcf77cFIV/ZuMA4cpASnEU6ICoVF24KA5vsQlmD4jbK/YyhUjNcsX/4DxXyMpnQtX
+         MabKfZ54MqrKqxK5gVrQkz3bec79+PBMVe3fQb5RwMk/8bTiByYRI42LwErbtJ0YyZDR
+         cOAzrm/oZt6WpGxsNBrRsagtUx06R74RxOOe+yBmNIYsxkUuBmmJmz+xwsTR0SWKF7zr
+         mHFNQoyo/WDB5jkHDI0/eXQCzFH8E52zO4qPJ+FBlr66TuMlBDYHMbC+gJ1WrfDLFTHR
+         PK8/wrkoUPpvirfbs4qpGZtil8GGBnJb2vhm9Hk5IBRsLD3DQWAd4MokghS/d1Uoxy1+
+         ZgPA==
+X-Gm-Message-State: AOJu0YzL+fYJ5IpsMVk3iPnP8sFRBq5xahiI8j4uBS31sh+UWa8pcwZ0
+	XoTiy61g+VdrrU3mflLPo6+EB1sj/18sXpXQ2bVVTmjB3Zg00Q9PZCtYTwQLC8HEzWGoFLBi/dm
+	vBiISq8jDDRLKCBRhvCUPmxoyNCYd5TI+VAschY/PbY1GkS3wM6w5ZNXMHJcKLX8v5DTB
+X-Gm-Gg: ASbGnctjTASYkEAzlPypAfjYW7nIgPFJP5HdjaOP9GrjkPuzNbj0MuMptJafDqubGC+
+	CnxI1nWmw2TUViR7xdy7lrI4MPB6RCmG9/FQixtM2vYWmQHxGO0HBKp+JEQo9OU/xyBLm2Df2PB
+	TjeZkaMQg0YNelhoN296xKA8eKAN8UbrcXFJh7Z7gqS3imL8jmFeBujhxhJMp5o8HZCMlS4ym3t
+	aIY+C8WEZW0CjGBsQvXcjVqmRHzREJg/WdVBI5+I4KQY8UyJDXjBn2WNdxfteV/GnC3cErcRzQX
+	JGEQSAiBsXdoKLqxmSiyiWggdptxkeeoMosZPz/naXJMQ9J7Xn5d7qspm290Y0mf
+X-Received: by 2002:a17:90a:5186:b0:329:f7fe:19a5 with SMTP id 98e67ed59e1d1-32d43f98f05mr6293829a91.29.1757320094455;
+        Mon, 08 Sep 2025 01:28:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGdVtgX0M/N/rY2LTPdVh7osZsGoVH4LY/vXWFtabGHHLKji5snSpH3SYJgpihN+vwguCSC2A==
+X-Received: by 2002:a17:90a:5186:b0:329:f7fe:19a5 with SMTP id 98e67ed59e1d1-32d43f98f05mr6293799a91.29.1757320093944;
+        Mon, 08 Sep 2025 01:28:13 -0700 (PDT)
 Received: from hu-akhilpo-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7722a26bc9csm29157523b3a.18.2025.09.08.01.28.05
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7722a26bc9csm29157523b3a.18.2025.09.08.01.28.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Sep 2025 01:28:09 -0700 (PDT)
+        Mon, 08 Sep 2025 01:28:13 -0700 (PDT)
 From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Date: Mon, 08 Sep 2025 13:57:04 +0530
-Subject: [PATCH v2 11/16] drm/msm: Add support for IFPC
+Date: Mon, 08 Sep 2025 13:57:05 +0530
+Subject: [PATCH v2 12/16] drm/msm/a6xx: Fix hangcheck for IFPC
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,7 +90,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250908-ifpc-support-v2-11-631b1080bf91@oss.qualcomm.com>
+Message-Id: <20250908-ifpc-support-v2-12-631b1080bf91@oss.qualcomm.com>
 References: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com>
 In-Reply-To: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
@@ -106,144 +106,77 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
         Akhil P Oommen <akhilpo@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757320036; l=3943;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757320036; l=1733;
  i=akhilpo@oss.qualcomm.com; s=20240726; h=from:subject:message-id;
- bh=hcHfihbqCnMNLjvYKeukB8x/8H4c4Vf9wDORLxifp3c=;
- b=zetP+yadiCZUchc7jrkjvEtlnEQLCrAdJRJ9OKW+7RAA2wjN8liFMXKKKEZUWHObTkaKk2Ca8
- MK+E5Cj5o6FCtx2/8H6Jur1dX2zKxzqN72jjx1EOQ+/Q0RiOe5BPvNn
+ bh=/iBCcOjQRFAJtVUwHHvMO3maSUVXqEkyAINnqw7b6JY=;
+ b=Yc3JK87kaA/kMtzrzX+y6eNZdaAWw7k+Obs994LrA1qoz1b8udhNxiU9ISGaVPNd52mdKns7W
+ Z0IwaVVAB7HCHJIaFZwWBSBsREqhcuWIDUiL/aTaxmzWKwQtskHSNn2
 X-Developer-Key: i=akhilpo@oss.qualcomm.com; a=ed25519;
  pk=lmVtttSHmAUYFnJsQHX80IIRmYmXA4+CzpGcWOOsfKA=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAyMiBTYWx0ZWRfX/fFztX4WkjhM
- 5h1S+r4PnFZ9kWDhE1NTwdANSWkmKXhxSSWuMmUqeKOHWEn1cplxYIZJ3L0QrJOFke5rSxl5ihp
- lkR3RYVkWImpZn+L2QaJbeACAgL6mXXef0a5UKwmm9R1ezFmPu8Jmv/rbS6IfZgQl7N0jXmitFl
- Zq+g5d49lclhvHhD+Gy3I8CwA7lHZ8aNlJRTtLwEItvTldQLIOAzl4EmmF81IN6OviXPRKO5uZM
- TJL1AIpyNSNoM09dl3ayYyqdA/lXRtlkLBvQ0uwaLTJ3V/sM4+T7v1xIBZiyyeNK58Ed+cuoAQe
- rVzKIHuFwCGO309glASztYPCRcjtXqYJqVNhp7nBxbfgwOQ+60jk99gn4dd0r0f355d0CpCJUsg
- Ztw/eNa/
-X-Proofpoint-ORIG-GUID: j-is5jg5atEd5aDQp6yY0NCksdM0IFfM
-X-Authority-Analysis: v=2.4 cv=PpOTbxM3 c=1 sm=1 tr=0 ts=68be939b cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=P3MwbOLga73G8009EeoA:9
- a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: j-is5jg5atEd5aDQp6yY0NCksdM0IFfM
+X-Proofpoint-ORIG-GUID: wh6Uxmow3ZzYc89qqpguHDMvvha6O9Uy
+X-Proofpoint-GUID: wh6Uxmow3ZzYc89qqpguHDMvvha6O9Uy
+X-Authority-Analysis: v=2.4 cv=NdLm13D4 c=1 sm=1 tr=0 ts=68be939f cx=c_pps
+ a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=DHE891H7Gske2VlohvUA:9
+ a=QEXdDO2ut3YA:10 a=uKXjsCUrEbL0IQVhDsJ9:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDA2NiBTYWx0ZWRfXw40WlKkJSalp
+ x1isypeiqNTSXY2SbA5ShgZFqBrNmzrCd/o9hu/uGR9C3T9Q5+gg1c9E/6AmhLNV9DnG3N2P3u5
+ V0pKfslWX0gdIDD/3rTKgqZWwFqkGM9+OoJEJ7L56Mpn1Lt1k7WBEwDya6DyCr9/b1E44TemQNZ
+ fkwnS/ZYYNrslwTWPJm2WfK9YUI3kAiXcO5Sr0IUezHclLLiJ+E0iZotfy1IS+bvWtZ/BPacGJF
+ egwmY6QMehaA1eXJyZAFAhnfAFDHxppMnFTNP1rLN1MGuTg0qpAzUqZSpruee42IEGIu1rWqUzD
+ s4kI1GkLKWXqaThGVp8wANHHuzWaGODGKOGFqVJuXXzIwg73WqzdtmD5l4cEb8UB1kwfztV1qu/
+ 3E3PXMMe
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-08_02,2025-09-08_01,2025-03-28_01
+ definitions=2025-09-08_03,2025-09-08_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 phishscore=0 spamscore=0 bulkscore=0 clxscore=1015
- malwarescore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060022
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080066
 
-Add a new quirk to denote IFPC (Inter-Frame Power Collapse) support
-for a gpu. Based on this flag send the feature ctrl hfi message to
-GMU to enable IFPC support.
+From the hangcheck handler, KMD checks a few registers in GX
+domain to see if the GPU made any progress. But it cannot access
+those registers when IFPC is enabled. Since HW based hang detection
+is pretty decent, lets rely on it instead of these registers when
+IFPC is enabled.
 
 Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c   |  5 +++--
- drivers/gpu/drm/msm/adreno/a6xx_hfi.c   | 34 +++++++++++++++++++++++++++------
- drivers/gpu/drm/msm/adreno/adreno_gpu.h |  1 +
- 3 files changed, 32 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-index 18f5fc2c28e33d81ccc248216cc018300c81eb77..d6297cc7fe664a74224c441e877050612714a3e4 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
-@@ -1961,8 +1961,9 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index bba09c02f9809ed24b4a9c30b1eb993ce01c7ec0..61538b6912883a0e7ec7802cf5f5cfc8649ece2b 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -2417,13 +2417,24 @@ static uint32_t a6xx_get_rptr(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
  
--	/* Fow now, don't do anything fancy until we get our feet under us */
--	gmu->idle_level = GMU_IDLE_STATE_ACTIVE;
-+	/* Set GMU idle level */
-+	gmu->idle_level = (adreno_gpu->info->quirks & ADRENO_QUIRK_IFPC) ?
-+		GMU_IDLE_STATE_IFPC : GMU_IDLE_STATE_ACTIVE;
- 
- 	pm_runtime_enable(gmu->dev);
- 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-index 8e69b1e8465711837151725c8f70e7b4b16a368e..550de6ad68effacaea09751891c2528464bdfcc5 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
-@@ -21,6 +21,7 @@ static const char * const a6xx_hfi_msg_id[] = {
- 	HFI_MSG_ID(HFI_H2F_MSG_PERF_TABLE),
- 	HFI_MSG_ID(HFI_H2F_MSG_TEST),
- 	HFI_MSG_ID(HFI_H2F_MSG_START),
-+	HFI_MSG_ID(HFI_H2F_FEATURE_CTRL),
- 	HFI_MSG_ID(HFI_H2F_MSG_CORE_FW_START),
- 	HFI_MSG_ID(HFI_H2F_MSG_GX_BW_PERF_VOTE),
- 	HFI_MSG_ID(HFI_H2F_MSG_PREPARE_SLUMBER),
-@@ -765,23 +766,40 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
- 		NULL, 0);
- }
- 
-+static int a6xx_hfi_feature_ctrl_msg(struct a6xx_gmu *gmu, u32 feature, u32 enable, u32 data)
-+{
-+	struct a6xx_hfi_msg_feature_ctrl msg = {
-+		.feature = feature,
-+		.enable = enable,
-+		.data = data,
-+	};
-+
-+	return a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg, sizeof(msg), NULL, 0);
-+}
-+
-+#define HFI_FEATURE_IFPC 9
-+#define IFPC_LONG_HYST 0x1680
-+
-+static int a6xx_hfi_enable_ifpc(struct a6xx_gmu *gmu)
-+{
-+	if (gmu->idle_level != GMU_IDLE_STATE_IFPC)
-+		return 0;
-+
-+	return a6xx_hfi_feature_ctrl_msg(gmu, HFI_FEATURE_IFPC, 1, IFPC_LONG_HYST);
-+}
-+
- #define HFI_FEATURE_ACD 12
- 
- static int a6xx_hfi_enable_acd(struct a6xx_gmu *gmu)
+ static bool a6xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
  {
- 	struct a6xx_hfi_acd_table *acd_table = &gmu->acd_table;
--	struct a6xx_hfi_msg_feature_ctrl msg = {
--		.feature = HFI_FEATURE_ACD,
--		.enable = 1,
--		.data = 0,
--	};
- 	int ret;
- 
- 	if (!acd_table->enable_by_level)
- 		return 0;
- 
- 	/* Enable ACD feature at GMU */
--	ret = a6xx_hfi_send_msg(gmu, HFI_H2F_FEATURE_CTRL, &msg, sizeof(msg), NULL, 0);
-+	ret = a6xx_hfi_feature_ctrl_msg(gmu, HFI_FEATURE_ACD, 1, 0);
- 	if (ret) {
- 		DRM_DEV_ERROR(gmu->dev, "Unable to enable ACD (%d)\n", ret);
- 		return ret;
-@@ -898,6 +916,10 @@ int a6xx_hfi_start(struct a6xx_gmu *gmu, int boot_state)
- 	if (ret)
- 		return ret;
- 
-+	ret = a6xx_hfi_enable_ifpc(gmu);
-+	if (ret)
-+		return ret;
+-	struct msm_cp_state cp_state = {
++	struct msm_cp_state cp_state;
++	bool progress;
 +
- 	ret = a6xx_hfi_send_core_fw_start(gmu);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-index 9dc93c247196d5b8b3659157f7aeea81809d4056..390fa6720d9b096f4fa7d1639645d453d43b153a 100644
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -59,6 +59,7 @@ enum adreno_family {
- #define ADRENO_QUIRK_HAS_CACHED_COHERENT	BIT(4)
- #define ADRENO_QUIRK_PREEMPTION			BIT(5)
- #define ADRENO_QUIRK_4GB_VA			BIT(6)
-+#define ADRENO_QUIRK_IFPC			BIT(7)
++	/*
++	 * With IFPC, KMD doesn't know whether GX power domain is collapsed
++	 * or not. So, we can't blindly read the below registers in GX domain.
++	 * Lets trust the hang detection in HW and lie to the caller that
++	 * there was progress.
++	 */
++	if (to_adreno_gpu(gpu)->info->quirks & ADRENO_QUIRK_IFPC)
++		return true;
++
++	cp_state = (struct msm_cp_state) {
+ 		.ib1_base = gpu_read64(gpu, REG_A6XX_CP_IB1_BASE),
+ 		.ib2_base = gpu_read64(gpu, REG_A6XX_CP_IB2_BASE),
+ 		.ib1_rem  = gpu_read(gpu, REG_A6XX_CP_IB1_REM_SIZE),
+ 		.ib2_rem  = gpu_read(gpu, REG_A6XX_CP_IB2_REM_SIZE),
+ 	};
+-	bool progress;
  
- /* Helper for formating the chip_id in the way that userspace tools like
-  * crashdec expect.
+ 	/*
+ 	 * Adjust the remaining data to account for what has already been
 
 -- 
 2.50.1
