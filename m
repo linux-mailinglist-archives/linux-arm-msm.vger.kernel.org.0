@@ -1,187 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-72547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3238B4899F
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 12:09:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id ABAB8B48A1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 12:24:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 69D3E164A40
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:09:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 526743425BF
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 10:24:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3940C2F6162;
-	Mon,  8 Sep 2025 10:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFF172F3C32;
+	Mon,  8 Sep 2025 10:24:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ofx8qPL1"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LHz1ADtk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64D4F2E3B19
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 10:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4C7136358;
+	Mon,  8 Sep 2025 10:24:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757326187; cv=none; b=FZN4Gi4JqJz/VfeIzkWtHW9HquhmQ/pAoQUzJJ0W62NFamXXpDSvYB1wujaLYbTNUFg3GkUV+rfJdDTqQ3FZsKIjO+vNJeozVze/W1UvTmnullyfr2J1WppAw0DZ7RcTSEgufmmE/iOU20JTvtNJ60wOFCM5yGxQcetaPh9x1bc=
+	t=1757327088; cv=none; b=g6nk/L7da9ONahI+RUYqhh4zyjk0bTIW+3JzO13ak8xw3KsBq2GDaxCyzlgitkdAl0Q/YvOlFkG3TjXWNztRHZ9P5YHotbRHN31A+TR5TTm//mH+5qPh1El/BnIHooaFL7MffM6gptckg8o1JSBfc4+V0VPRXjZyb8oLpM65C7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757326187; c=relaxed/simple;
-	bh=fB0j1knneymsQb6zW3oZLg20Ti2gTC3sDQkEwCRnNb8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UHDFsxuFB1fisyXEAzXCD629gOeR5bSTLgoXVGoPF/0EACqZQw/sbZcaQNw4ABN0ZcHvKEK1uYwDRAhqdwICUWFt29z7vKwphgg0oxJUycjUXPvOiwKke1KDLA0dl5SOyEEwQkpCs5wlSXzJmy0OdDrg3ZuTvickzJewyLsagOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ofx8qPL1; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-6228de281baso3653738a12.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 03:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757326184; x=1757930984; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=HmnKeVv8YY/fXGQA22sRQfhv2+yYeWQAe73fa2iIOM0=;
-        b=ofx8qPL1OqEDNEXZbdmvX/BAEfCQYAafCrNhcCjU/DbxHtOmkTRRWImAn2Rpr/ccOx
-         A56VpwSWiucH1+xMdV0Nj0fwexK5LQ84j9FFNVgoPV/yYru5Td7b+gV7h6xcWiQ4oajX
-         8DjoFVkeNOBr8eH5lWhFeyopgI/Gv9TkR1hXicuYdHNgxwUh5pWZ79wcOCfnKqBjgh7I
-         X5DvNJfEXJoZ+jTlIrIhxgbxPVId0dhmEbFfFaGw+UMVrdiNGHxZLoRTWLe/1NTp7wrn
-         9pjv+HR06bgx8QFzYZIx/PuEjxo4ZZdto/++av7MiHUXykthmQZcE6VycnlGD2V84gj8
-         7kiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757326184; x=1757930984;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HmnKeVv8YY/fXGQA22sRQfhv2+yYeWQAe73fa2iIOM0=;
-        b=nohjbvI3IcR3FowugwZb/HhzkxdWJUsKkrIKA7XYby9jj5dYo+ubUV9wF7FFblMQKw
-         OF/RgSg48f9UdrvNs5JjwGZZR7CkteND4fj8OONgYSiiZhqjHUfodtXE3fTdekqJp70j
-         ekCVM49CfHGtDywL4IIO0UuZzSMZzGyn4uy09wm3TeXnOalSr3ITI9x3U2lRzRBMum/d
-         U9O5Pg9cU+Bubrg8amYyFRakSNU1nUEJwKdSQDMwZKP/F2XWUdbdmUTBij1kyfG5xDo0
-         uHNq4HyJ7nXIB94fIFszruRH71U8wp5jIj5jEOOYLg2kU6+75MXBtUN0vbilcgGlIuXf
-         GZQA==
-X-Forwarded-Encrypted: i=1; AJvYcCVRQDQ9E0LxiKGegD/4HHiS1Z2VI+1k/zpB22A3NzQ4zwYQ5/bAmhblNAM1SzFyhcdXQEpzzB3erdthUAMP@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw92uggM/A8qGMbVoXBUawxSXb1rFcfXm/VNrRO/XRMhmqCAaOJ
-	KuRTZv2iBAOfrmqUaqd5Z2pgEM57UuVovCFQcB++LPPYp6xvoWJ+srEQE31yB2a06WI=
-X-Gm-Gg: ASbGnctYCicDolXl85xTvDI4JMn0nojYZHFXgKXmWFA+MHbO267HzfMLqvAT19mvzMM
-	8tBbubMfFopdnunsNlnvgm096It/CvvBtmiR0V7bHZlKTHSu6HfKDMavFJbmfNX8sYrP8PB1AE8
-	UQmkwWpkgA61rJLs5N8FtQrjtYl42U5xdU1yhGuJlPaPUZeSnypWFOK9iBjhMFKNEEEptzAjv11
-	LEilD9xJhL0m/TmJyA6020TxXjCem9pQ2C8sGdmNRYwSA2Bg5qzWojyI11m3kzDp3I5pifUE3nR
-	VvE1perIz6XXoapI81sO3NkeBZyU8MbcWUkCyx5kTJXK8iLpSdUHz0zngF11pq4tf0JCDNlsgGR
-	eXHdu/EbxwzalEEOt34tJJyc4wEDictTY
-X-Google-Smtp-Source: AGHT+IHT9tblAzVu5lhgCq0ztZJTqFIki97fYAjqSfcc3xjXv/tUZI241Ra1XOnBVaFhW1VRKrKEng==
-X-Received: by 2002:a05:6402:3550:b0:62a:c9b9:cddd with SMTP id 4fb4d7f45d1cf-62ac9b9d0e2mr609155a12.38.1757326183688;
-        Mon, 08 Sep 2025 03:09:43 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:30:1f60:42e1:1e1b:d240])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-625ef80347asm4229469a12.1.2025.09.08.03.09.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Sep 2025 03:09:43 -0700 (PDT)
-Date: Mon, 8 Sep 2025 12:09:38 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org
-Subject: Re: [PATCH 4/5] i2c: qcom-cci: Add OPP table support and enforce
- FAST_PLUS requirements
-Message-ID: <aL6rYq5gmX8CdeE-@linaro.org>
-References: <20250904-topic-cci_updates-v1-0-d38559692703@oss.qualcomm.com>
- <20250904-topic-cci_updates-v1-4-d38559692703@oss.qualcomm.com>
- <aL6Vp-3er71AJPJd@linaro.org>
- <f508bf92-a513-467a-a946-17c41e1d72d1@oss.qualcomm.com>
- <aL6X-RiCyPVbHlYN@linaro.org>
- <5178a6b1-1b5a-40d9-af40-68ee13975509@oss.qualcomm.com>
- <aL6nZdJCKmnWcswB@linaro.org>
- <1899862b-530b-4a75-93fa-c70c90d98016@oss.qualcomm.com>
+	s=arc-20240116; t=1757327088; c=relaxed/simple;
+	bh=3c4d46dbwYhFkAIji9CnButKaWApe47Fg8Mn2cBmfHg=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=UMvkLUy3Eg9sbJLEMp/shZyhOO2ejNs3crBbDNQ1z0mInqbEYhiJMI1a7qG8d3GqnfeqjI27ek/1aNzJJq4FSkHpIbUta9QXxi9Z5M21YblMEdrZGrEHUHGgy0FDcZ6RT/MjKO0coprbir9LKo4TzU2eVxl7drL0VZH4vv3Ovns=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LHz1ADtk; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757327087; x=1788863087;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=3c4d46dbwYhFkAIji9CnButKaWApe47Fg8Mn2cBmfHg=;
+  b=LHz1ADtkFSQu+lucmUA3HCQo1eo6Ic71+5h7B4LJwTB2CF8yM/KqL2kB
+   KS70hCtzBb4TFGRqC67flVKbnU9+ewrXkzNW5KhNvK7ArivurHSrQWPZ1
+   B3rpoLASCvC1SMoCjCg9+3lGsH1enCwx1/lkVIS8GySzEYg0+UE7fFRoP
+   QfPdb4vha8r5FlVGE9ZijOUvNII8InTI/k+/1+05Nq/EQVwzkcsEOjiRY
+   lRY9Wp0qHGeimhUXbY4cccuOIY/EZShAtmAlpStN8KaG0qSq3fKS5USQ9
+   yagOmWc1lSb0snymmZgL2gcbfZPRuVmoBvbtw4joiRpQ9far7qfWyTi5x
+   Q==;
+X-CSE-ConnectionGUID: LFYvIZzwRoaJ0WV6dyV7aw==
+X-CSE-MsgGUID: qJ6cFAkTQ/G7bCex7kiDHA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11546"; a="69832941"
+X-IronPort-AV: E=Sophos;i="6.18,248,1751266800"; 
+   d="scan'208";a="69832941"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2025 03:24:46 -0700
+X-CSE-ConnectionGUID: whEKi/v8TFudb7tIU+AjHA==
+X-CSE-MsgGUID: U/YpIi0KRGSt2P0AfeFMvQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,248,1751266800"; 
+   d="scan'208";a="172875576"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.11])
+  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2025 03:24:40 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Mon, 8 Sep 2025 13:24:35 +0300 (EEST)
+To: Manivannan Sadhasivam <mani@kernel.org>
+cc: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+    David Box <david.e.box@linux.intel.com>, 
+    Bjorn Helgaas <bhelgaas@google.com>, 
+    Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+    =?ISO-8859-2?Q?Krzysztof_Wilczy=F1ski?= <kwilczynski@kernel.org>, 
+    Rob Herring <robh@kernel.org>, Nirmal Patel <nirmal.patel@linux.intel.com>, 
+    Jonathan Derrick <jonathan.derrick@linux.dev>, 
+    Jeff Johnson <jjohnson@kernel.org>, linux-pci@vger.kernel.org, 
+    LKML <linux-kernel@vger.kernel.org>, linux-arm-msm@vger.kernel.org, 
+    linux-wireless@vger.kernel.org, ath12k@lists.infradead.org, 
+    ath11k@lists.infradead.org, ath10k@lists.infradead.org, 
+    Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+    "Rafael J. Wysocki" <rafael@kernel.org>
+Subject: Re: [PATCH v2 2/8] PCI/ASPM: Fix the behavior of pci_enable_link_state*()
+ APIs
+In-Reply-To: <67274gnjp4qy4h3bcawey2edmjiuufdbm262q2qxgcc76dwlic@hdjxqczr54nt>
+Message-ID: <df354ae2-03bd-d17c-4e3a-9e62b248cc2a@linux.intel.com>
+References: <20250825-ath-aspm-fix-v2-0-61b2f2db7d89@oss.qualcomm.com> <20250825-ath-aspm-fix-v2-2-61b2f2db7d89@oss.qualcomm.com> <f644fc83-31cc-1f0e-58cf-7c007e6173e4@linux.intel.com> <67274gnjp4qy4h3bcawey2edmjiuufdbm262q2qxgcc76dwlic@hdjxqczr54nt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1899862b-530b-4a75-93fa-c70c90d98016@oss.qualcomm.com>
+Content-Type: multipart/mixed; boundary="8323328-1505528149-1757327075=:938"
 
-On Mon, Sep 08, 2025 at 12:00:13PM +0200, Konrad Dybcio wrote:
-> On 9/8/25 11:57 AM, Stephan Gerhold wrote:
-> > On Mon, Sep 08, 2025 at 11:49:52AM +0200, Konrad Dybcio wrote:
-> >> On 9/8/25 10:46 AM, Stephan Gerhold wrote:
-> >>> On Mon, Sep 08, 2025 at 10:43:50AM +0200, Konrad Dybcio wrote:
-> >>>> On 9/8/25 10:36 AM, Stephan Gerhold wrote:
-> >>>>> On Thu, Sep 04, 2025 at 04:31:23PM +0200, Konrad Dybcio wrote:
-> >>>>>> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >>>>>>
-> >>>>>> The CCI clock has voltage requirements, which need to be described
-> >>>>>> through an OPP table.
-> >>>>>>
-> >>>>>> The 1 MHz FAST_PLUS mode requires the CCI core clock runs at 37,5 MHz
-> >>>>>> (which is a value common across all SoCs), since it's not possible to
-> >>>>>> reach the required timings with the default 19.2 MHz rate.
-> >>>>>>
-> >>>>>> Address both issues by introducing an OPP table and using it to vote
-> >>>>>> for the faster rate.
-> >>>>>>
-> >>>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> >>>>>
-> >>>>> Using an OPP table for a single static rate that remains the same over
-> >>>>> the whole lifetime of the driver feels like overkill to me. Couldn't you
-> >>>>> just put the "required-opps" directly into the device node so that it is
-> >>>>> automatically applied when the device goes in/out of runtime suspend?
-> >>>>>
-> >>>>> And since you need to make DT additions anyway, couldn't you just use
-> >>>>> "assigned-clock-rates" to avoid the need for a driver patch entirely? We
-> >>>>> use that for e.g. USB clocks as well.
-> >>>>
-> >>>> This is futureproofing, in case someone invents FastMode++ with a higher
-> >>>> dvfs requirement or for when the driver adds presets for a 19.2 MHz CCI
-> >>>> clock which would (marginally) decrease power consumption
-> >>>>
-> >>>
-> >>> If 19.2 MHz CCI clock is feasible and has lower voltage requirements,
-> >>> then I would expect a separate entry for 19.2 MHz in the OPP table of
-> >>> PATCH 5/5? The DT is unrelated to what functionality you implement in
-> >>> the driver, and that would make the OPP table look less useless. :-)
-> >>
-> >> The frequency plan for 8280 does not recommend any rate != 37.5 MHz
-> >>
-> >> For x1e80100 however, the lovsvs_d1 corner is recommended to be 30
-> >> (yes, thirty) MHz, sourced from CAM_PLL8 for $reasons
-> >>
-> > 
-> > The 37.5 MHz rate still exists on X1E I presume, or are you saying we
-> > need more changes to support those odd 30 MHz?
-> 
-> Yes, any corner over lowsvs_d1 is 37.5, sourced from cam_pll0
-> 
-> > Personally, I'm not fully convinced there is ever going to be a use case
-> > of someone using a "non-standard" frequency. Even if "FastMode++" is
-> > invented most devices will probably want to use it.
-> 
-> Not really, there's no reason to make your i2c bus go fastfastfast if
-> the devices on the other end can't cope with it
-> 
-> > And the voltage
-> > requirements we're currently talking about here like "low svs" during
-> > camera use cases are kind of negligible compared to others too.
-> 
-> Again, this is an I2C controller that seems to be associated with
-> cameras.. No image data has to actually be processed for the
-> communications to take place and you can attach any odd device
-> 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-My point is: In the unlikely case that support for faster I2C speeds is
-added in newer SoCs, I think you'd just get a new "standard" base clock
-frequency, add a new cci_data struct with adjusted timings and everyone
-will use that (even for the lower I2C speeds). I doubt anyone will
-bother adjusting and validating this for just one "corner"/voltage level
-less. There are much more effective targets for power optimization than
-the few bytes of I2C communication. :-)
+--8323328-1505528149-1757327075=:938
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-Thanks,
-Stephan
+On Sat, 6 Sep 2025, Manivannan Sadhasivam wrote:
+
+> On Tue, Aug 26, 2025 at 03:55:42PM GMT, Ilpo J=C3=A4rvinen wrote:
+> > +David
+> >=20
+> > On Mon, 25 Aug 2025, Manivannan Sadhasivam via B4 Relay wrote:
+> >=20
+> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > >=20
+> > > pci_enable_link_state() and pci_enable_link_state_locked() APIs are
+> > > supposed to be symmectric with pci_disable_link_state() and
+> > > pci_disable_link_state_locked() APIs.
+> > >=20
+> > > But unfortunately, they are not symmetric. This behavior was mentione=
+d in
+> > > the kernel-doc of these APIs:
+> > >=20
+> > > " Clear and set the default device link state..."
+> > >=20
+> > > and
+> > >=20
+> > > "Also note that this does not enable states disabled by
+> > > pci_disable_link_state()"
+> > >=20
+> > > These APIs won't enable all the states specified by the 'state' param=
+eter,
+> > > but only enable the ones not previously disabled by the
+> > > pci_disable_link_state*() APIs. But this behavior doesn't align with =
+the
+> > > naming of these APIs, as they give the impression that these APIs wil=
+l
+> > > enable all the specified states.
+> > >=20
+> > > To resolve this ambiguity, allow these APIs to enable the specified s=
+tates,
+> > > regardeless of whether they were previously disabled or not. This is
+> > > accomplished by clearing the previously disabled states from the
+> > > 'link::aspm_disable' parameter in __pci_enable_link_state() helper. A=
+lso,
+> > > reword the kernel-doc to reflect this behavior.
+> > >=20
+> > > The current callers of pci_enable_link_state_locked() APIs (vmd and
+> > > pcie-qcom) did not disable the ASPM states before calling this API. S=
+o it
+> > > is evident that they do not depend on the previous behavior of this A=
+PI and
+> > > intend to enable all the specified states.
+> >=20
+> > While it might be "safe" in the sense that ->aspm_disable is not set by=
+=20
+> > anything, I'm still not sure if overloading this function for two=20
+> > different use cases is a good idea.
+> >=20
+>=20
+> Why? I thought your concern was with the callers of this API. Since that =
+is
+> taken care, do you have any other concerns?
+
+I don't think it really matters anymore as it looks the vmd one is going=20
+to be removed by the David's patch and the qcom one is removed by your patc=
+h
+so no users remain.
+
+> > I'd like to hear David's opinion on this as he grasps the ->aspm_defaul=
+t=20
+> > vs ->aspm_disable thing much better than I do.
+> >=20
+> > > And the other API, pci_enable_link_state() doesn't have a caller for =
+now,
+> > > but will be used by the 'atheros' WLAN drivers in the subsequent comm=
+its.
+> > >=20
+> > > Suggested-by: Ilpo J=C3=A4rvinen <ilpo.jarvinen@linux.intel.com>
+> >=20
+> > This tag sound like I'm endorsing this approach which is not the case. =
+I'd=20
+> > prefer separate functions for each use case, setting aspm_default and=
+=20
+> > another for the enable state.
+> >=20
+>=20
+> Sorry, I misunderstood then. I'll drop this tag.
+>=20
+> - Mani
+>=20
+>=20
+
+--=20
+ i.
+
+--8323328-1505528149-1757327075=:938--
 
