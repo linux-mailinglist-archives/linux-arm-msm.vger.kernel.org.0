@@ -1,400 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-72596-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72597-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3B447B49331
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:27:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 97D64B493B5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:38:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2EC0F3AEE93
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:26:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 476D23AADF7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:38:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 038AB30DD1E;
-	Mon,  8 Sep 2025 15:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C60EC30C616;
+	Mon,  8 Sep 2025 15:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ba92znfh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GFIdD8hN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A8330AD0A
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 15:26:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 236AE1E130F
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 15:38:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757345214; cv=none; b=XJ+13fAM8LGvPoCky6mqzFIxeRhAEC3PSTnhDoV7p2TsmWEprZWfhKJNlXemGStahqNVvSZHZBDruhAg6OLH9SKK1HGWtfhQCbxwtQ0r35LyWiM5CWc9xaPuas15SrIqKgkaPZ+KxH3ocZVLEbPF5YNP86zl6N9ciSVjApn6NlM=
+	t=1757345887; cv=none; b=q2+HlqPObs5bY+qoL4Qn1U0p9xyl5hQ69zLTJJecMBAWaY44INB27xsQRVpDz7nrCc7lSpB5AUzEC6g/ZpRTl1O6C0Yx/gyZRN0dZAwnO5OL9rgwZW0gRdS+pbw1a6Ivt17YYr9DRvulb6KoSYA5wW1wkomMLu9PHyFaool3DRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757345214; c=relaxed/simple;
-	bh=c2bbXfddnnTPZ2N//WN5BYLOJywpqTytk4ukua322jU=;
-	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
-	 References:In-Reply-To; b=DUQXT4HZ9z3fb43VZC3k64oOj43Gxfrsw88CcRfGWwC9nSk37ilzMB4ivxu12dMdt5eft9g0+AzenRMNbQbeBaEPpY/mhnpn9okJ4aNej9w84PoiTY4UWPae7tQProCzGzEdTtGTsXVpnTv7CqjztZcBPt9XD5JDHAgLwxrMsog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ba92znfh; arc=none smtp.client-ip=209.85.221.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3dce6eed889so3716331f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:26:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757345211; x=1757950011; darn=vger.kernel.org;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yPiCYXc69M4SjfK5MFCW/PjpWwaPVtI+vQRtDqy3mEc=;
-        b=Ba92znfh8xQshvqw0rAgAanbm+jLMpfVBYvLu+MiCcc43/xEclB5Hc7yc/h5aX5xW/
-         /y6dtVhOdalvID+pfop2wq5dOXSyjVFo00WJGXucogdMLjktzelWMc3oYLg2YOnGjQTE
-         EWlMM/swdcJ8Y57/sQrA+sez+D5Xzejo9e04Yt4HMnE/cBA8sJWSwlvASrOu4O0/r2CU
-         LuTrPXorF7hQvoNFvlnAlrNCmYENcPlBStnseA4M+WOQk3FspzPZKobSMHrqiTkHeT0A
-         B1RRRkxrGVkAkKiQ1pDWEpWiYjOXXYFostQtzJcpHPUddPu+auUd6GPFzlux7/2CxUsi
-         0OBg==
+	s=arc-20240116; t=1757345887; c=relaxed/simple;
+	bh=qE4t/JphJuE6tOWkF9SSkebo1CiAgeSUWHmJQwKOopk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=S1HCc3oyq3i1zS96mC/ejWzUkrWA9Ly3M3oejx0TzDdKgHnmvgE/JZN5mpuK6nvF5724E/YiU2/KrB23Vr82zOWlcKeUqQWvBEHXiP4BtR7yyaD2ugdYEu3tJbX2ET/Go6g/j5kJB+bOhB+iy0FQiXem+utDA47J4pGLiJfmBng=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GFIdD8hN; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5888xWrC007791
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 15:38:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	7VfDo+K2YxkxcNLtYJDXPL/1mkJcb89EfTCTUVk46hQ=; b=GFIdD8hN8FyF4bNq
+	dhcqYmW+iPIZ8TBq67UlEy0/8yzA3wwwpTrRyxIPuKOEergP7gnMI0zpbK/dn29f
+	XRqI7AbVN8X2shw6sNLMD/hNfk/37wp2yktw8PqpDnEJ+CHz+tAX+NK9hKxUE/iX
+	Kr+pkHyJSI6G7+xZ0d9oljO+hlnTjrVP3RZJdx+KAHb5Wy0Qoo5PvDrYBP1CjupA
+	SsTpnwpGbRKas8Ag+0PqeB+SX/1deC9XXir53r5AfC1C3MEhkFeKQBffcu9Ydqv0
+	gcS5sXoIN5Op9wOfZIvAEuhjF+sMleHovORE50aHAyTAUXWIR1EO+MLGC7xvkljz
+	dQJwjg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490db8d2n9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 15:38:04 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b33e296278so7736351cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:38:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757345211; x=1757950011;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=yPiCYXc69M4SjfK5MFCW/PjpWwaPVtI+vQRtDqy3mEc=;
-        b=okUVNJG1SUG7UqG136KfMKX2jeaI9P4xMNCy2O7+rlrWvG2NoW7UW62yqotda25tM2
-         mLCF/mPZu5BZbITn6EHiyEmlMrPtxTsznDXByRbGtBQzzUPYDxNB1SbHc/p6RbG+b9Fz
-         Pm0zU4FtXNhZaNqw6V0h6wd0TIBWCRQA49d0Wqea9cf+LE6kiTyP4oyqWUAiBWRzb9AM
-         +fLIGIyZLFzGKufWJzn6rUc0LKzc/RDLJHrWkVUpMZEIMbFsjReHxLPZ7Dm1mWoKbwXH
-         m8RlgnBe/OVeVo5TBtOwc00ag0ly+MTTs6uQ6EZ+Ys0zmbXI1UDXh/4+VOFYp8KJHNH+
-         /Pcw==
-X-Forwarded-Encrypted: i=1; AJvYcCUR9kf5n1MhihxVWsJXycbaVWureUMmXQsj74XyiKWmteX/sGjB/Vk2Wy1fgoaFVfjvAB0hchueHujSi3Im@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz6DwpPbz/gG4ujK/HOmHe40YtmJRx+OeRgt2qTQ9Re2qZ62JjI
-	xmA1KQCEb8654Y11+ariYx648va0JssF/HsqhcWA/4FFPSKouvTU3X2a0zIqX8XLVOs=
-X-Gm-Gg: ASbGncspXVmYaDBAuCmNRw7neYdffJiuWwUJhqkWOnhOJKcQDScjVkbjyEH0lFiJPPl
-	mb466TOdlN3SemPUCZMN5up2n/zt2Bo5OJ0AII5lEaBeCD0hdSHnIq4MW3EMSJdUP5X+g38hu3/
-	NYsMK0GU7jnDxRQMajVMYA7sjqAtlRnfns4eegY90m/PuPT54ksCjNvx0k6IwnNg7xfp1HpGTmw
-	O0C7zOk89zaqKeq57bdF89SI5UPxJc4ujQ0/yWlgyvF8tXlEjrtoX53lDtgIRpc2qtWMBmoYZmL
-	IXUvXX9Ps/pwaWKDMmyItpysDPwdL2CpkVXPzkpQy4pLJ1zamgpwenT3PGEFYEgnSwC625Oys8c
-	Xb2D5PrY5vmHQ4uSgRyEErfzc25+XzcxFQ59D6kCFs8SdJdnw
-X-Google-Smtp-Source: AGHT+IHyT1kvUh0D0uxOlH1UOjqnYhuFKux5DQV7Wqv9yZfJ69T3JfIzMfV8HzGez+9kUbOha0nGkw==
-X-Received: by 2002:a5d:64c3:0:b0:3ce:f9b7:4db with SMTP id ffacd0b85a97d-3e642f92844mr5597472f8f.24.1757345210937;
-        Mon, 08 Sep 2025 08:26:50 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:1299:47dd:d3d7:b7cf])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3d978ab6fc7sm26976124f8f.45.2025.09.08.08.26.50
+        d=1e100.net; s=20230601; t=1757345884; x=1757950684;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7VfDo+K2YxkxcNLtYJDXPL/1mkJcb89EfTCTUVk46hQ=;
+        b=filyD81qRimxD12L/wcPmf6kMtOtRvOzD29DIosKJyHj3gVRZpmvMwPxQ3kYL0uq4f
+         G/VqWeKLmolO1t7V1N7/nl+yG7ULGGmIrnYIiS0V4a0U5H+Q/DIcZfKmu1AqS63p6+LU
+         3W/qLK51dgqI/H1Z1NVUgwnOmiDdwQqMgGUKP74Jy8UlRKvsS9IR9jBZXFFL8ml24Qgq
+         7VvbetK4QP0RGYmoQHiaj72EPzmOH0Thjn5xx3sSiRkM9mvJ9dEkzVRfNpaXO9yIzbZ6
+         8PD/liOevbT11vNe0NJykaWRVIdApwA/g7pQ8H5u1j7JjMNEEXYvbXtOb7dofkbPkMOb
+         ZFGg==
+X-Gm-Message-State: AOJu0YymkMq4IRLpNmrwsyc8u8xQA1/0VUMb7E1bk7qxQCJ4yko+WqM/
+	BGh6iwaNBM/bzYGN5ROxFW8p0L2WSfRGHZVEkDWEb8w/B6GKkT0QtNzK8pow6imSiwC3lAttcW8
+	l44k2rM9zGIADjP2CC4c6cKX3PJ59fIART+864dRrHWdMmniZNYSbVZL/TAqTujJFXAvT
+X-Gm-Gg: ASbGncslaTlOn069NwgjDkieycd+P9jQyI8spTffStVGmPbBP/RQYy9G1MF8AG9Fbsm
+	+sOyUo/vjl8AES9G7HtLSkKWH0jDMXhqn2tqhunrhFvojSexlEdK+TzDgkZSWiwhAWcOTdn31D7
+	gew7TSV4w0zccUrcGnwW2sU5wdurBfAeIcx94sKRCsDaSYleyVPJdMvnclhcoP6RvmEgiStdwpZ
+	H17loCVbC9EvIes2ZvoWWOXGNAfjEbIA/7T5ROMu1gYvE9v82jmDTLK64ZUVomb8d7hfISufVO3
+	mEXCUQjmkKSIb2brxNwCFOMFbPHPdwXMkRugOmQc0QT9yqi9wwgqUpK3mi5M5njZzaqjm8m/OcJ
+	QKplJJ1nlvxogfWtaNJZRmw==
+X-Received: by 2002:a05:622a:1787:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4b5f848d05bmr58304611cf.7.1757345883535;
+        Mon, 08 Sep 2025 08:38:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFcsvpKBaQ4jCcWP5NtvuePywTOTY5oNYfv92gdyrYQkqbJJAvrzNLEIVI6ZIbznl8lDhI5wA==
+X-Received: by 2002:a05:622a:1787:b0:4b3:4590:ab6d with SMTP id d75a77b69052e-4b5f848d05bmr58304161cf.7.1757345882765;
+        Mon, 08 Sep 2025 08:38:02 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-aff0d9b1b53sm2408307666b.96.2025.09.08.08.38.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 08:26:50 -0700 (PDT)
+        Mon, 08 Sep 2025 08:38:02 -0700 (PDT)
+Message-ID: <59ac7827-6258-4268-8b71-4cbcbad859db@oss.qualcomm.com>
+Date: Mon, 8 Sep 2025 17:37:59 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 07/16] drm/msm/adreno: Add fenced regwrite support
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Antonino Maniscalco <antomani103@gmail.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com>
+ <20250908-ifpc-support-v2-7-631b1080bf91@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250908-ifpc-support-v2-7-631b1080bf91@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Mon, 08 Sep 2025 16:26:49 +0100
-Message-Id: <DCNIVW9XSSY3.3H7TSNFDH7TKT@linaro.org>
-To: "Srinivas Kandagatla" <srini@kernel.org>
-Cc: "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
- <broonie@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- "Stephen Boyd" <sboyd@kernel.org>, "Lee Jones" <lee@kernel.org>, "Jaroslav
- Kysela" <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
- <linux-arm-msm@vger.kernel.org>, <linux-sound@vger.kernel.org>,
- <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>, "Dmitry
- Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Srinivas Kandagatla"
- <srinivas.kandagatla@oss.qualcomm.com>, <christophe.jaillet@wanadoo.fr>
-Subject: Re: [PATCH v3 2/3] ASoC: codecs: add new pm4125 audio codec driver
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-X-Mailer: aerc 0.20.0
-References: <20250814-pm4125_audio_codec_v1-v3-0-31a6ea0b368b@linaro.org>
- <20250814-pm4125_audio_codec_v1-v3-2-31a6ea0b368b@linaro.org>
- <df884334-c850-4ae9-b5e8-63cb834ae259@kernel.org>
-In-Reply-To: <df884334-c850-4ae9-b5e8-63cb834ae259@kernel.org>
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzMSBTYWx0ZWRfX9T0ZsBQjf8d5
+ agBLFV8DcsK+X8OWfjb2TTHdtHzOX8nua76kG5dypgqWZEa8kgSZsygA9zI0s0k//DbnAMCMNst
+ gEbC9v6pEd7UgRPiitvhLWycG7bCw6bePHH8CuczEd/2WjiddqpqliAOWapT6LBY1Bkr7Y/yC4g
+ 5c07wMQ4YlxMhY9KUsesxbEjb5CTIDHucFxFwDWEhuEh/0cNY+FCksp8LOrggqRy3bIhV1EsJtJ
+ sQC8NkXZCUWKOIs6nJPrtuqeqROhL9ZrG+d1rT1liju+7oInlW2bsPSeU0W8hL+/Xj1ktJb6KIH
+ ke69fA8KBaot4skjntZcBTzjHkw9jYrwKoKrZGTpqPOr0pROa0zFmsV3ubmumZNIQACLBtIAjk9
+ /oZQdgwR
+X-Proofpoint-ORIG-GUID: kruDpEhtObDQxFaM8W7bKkYOpLmwiT90
+X-Proofpoint-GUID: kruDpEhtObDQxFaM8W7bKkYOpLmwiT90
+X-Authority-Analysis: v=2.4 cv=VIDdn8PX c=1 sm=1 tr=0 ts=68bef85c cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=sRrLox2IjJLVq2cxUxUA:9
+ a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-08_05,2025-09-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ phishscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060031
 
-Hi Srini,
+On 9/8/25 10:27 AM, Akhil P Oommen wrote:
+> There are some special registers which are accessible even when GX power
+> domain is collapsed during an IFPC sleep. Accessing these registers
+> wakes up GPU from power collapse and allow programming these registers
+> without additional handshake with GMU. This patch adds support for this
+> special register write sequence.
+> 
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 80 ++++++++++++++++++++++++++++++-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 ++++----
+>  3 files changed, 90 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 45dd5fd1c2bfcb0a01b71a326c7d95b0f9496d99..a63dad80ef461da45d5c41a042ed4f19d8282ef5 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -16,6 +16,84 @@
+>  
+>  #define GPU_PAS_ID 13
+>  
+> +static bool fence_status_check(struct msm_gpu *gpu, u32 offset, u32 value, u32 status, u32 mask)
+> +{
+> +	/* Success if !writedropped0/1 */
+> +	if (!(status & mask))
+> +		return true;
+> +
+> +	udelay(10);
+> +
+> +	/* Try to update fenced register again */
+> +	gpu_write(gpu, offset, value);
+> +
+> +	/* We can't do a posted write here because the power domain could be
+> +	 * in collapse state. So use the heaviest barrier instead
+> +	 */
+> +	mb();
+> +	return false;
+> +}
+> +
+> +static int fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u32 value, u32 mask)
+> +{
+> +	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+> +	struct msm_gpu *gpu = &adreno_gpu->base;
+> +	struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+> +	u32 status;
+> +
+> +	gpu_write(gpu, offset, value);
+> +
+> +	/* Nothing else to be done in the case of no-GMU */
+> +	if (adreno_has_gmu_wrapper(adreno_gpu))
+> +		return 0;
+> +
+> +	/* We can't do a posted write here because the power domain could be
+> +	 * in collapse state. So use the heaviest barrier instead
+> +	 */
 
-On Fri Aug 15, 2025 at 4:36 PM BST, Srinivas Kandagatla wrote:
->
+I'm not sure I follow - what's the relationship between the write being
+posted and the power domain being collapsed (i.e. the hw not being
+powered on)?
 
-[..]
+Are you trying to get rid of the delay that could happen between this
+write leaving the CPU and arriving at the GPU (which would then be
+woken up), so that the 1ms poll below has greater chance to succeed
+because of how these "special registers" work?
 
-> I manged to test this one, found 2 issues.
->
-> 1. incorrect mic bias handling, results in recording stop working.
-> 2. memory corruption leading to kernel crash.
->
-> More details below..
->
->> Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.c=
-om>
->> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com=
->
->> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->> ---
->>  sound/soc/codecs/Kconfig      |   18 +
->>  sound/soc/codecs/Makefile     |    8 +
->>  sound/soc/codecs/pm4125-sdw.c |  547 +++++++++++++
->>  sound/soc/codecs/pm4125.c     | 1793 ++++++++++++++++++++++++++++++++++=
-+++++++
->>  sound/soc/codecs/pm4125.h     |  313 +++++++
->>  5 files changed, 2679 insertions(+)
-
->> --- /dev/null
->> +++ b/sound/soc/codecs/pm4125-sdw.c
->> @@ -0,0 +1,547 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +// Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights =
-reserved.
->> +// Copyright, 2025 Linaro Ltd
->
->
->> +
->> +static struct pm4125_sdw_ch_info pm4125_sdw_rx_ch_info[] =3D {
->> +	WCD_SDW_CH(PM4125_HPH_L, PM4125_HPH_PORT, BIT(0)),
->> +	WCD_SDW_CH(PM4125_HPH_R, PM4125_HPH_PORT, BIT(1)),
->> +	WCD_SDW_CH(PM4125_COMP_L, PM4125_COMP_PORT, BIT(0)),
->> +	WCD_SDW_CH(PM4125_COMP_R, PM4125_COMP_PORT, BIT(1)),
-> Issue 1: we are adding only 4 channels here however the mixer Switches
-> that lookup this table is more than 4.
->> +};
->> +
->> +static struct pm4125_sdw_ch_info pm4125_sdw_tx_ch_info[] =3D {
->> +	WCD_SDW_CH(PM4125_ADC1, PM4125_ADC_1_2_DMIC1L_BCS_PORT, BIT(0)),
->> +	WCD_SDW_CH(PM4125_ADC2, PM4125_ADC_1_2_DMIC1L_BCS_PORT, BIT(1)),
->
-> Same issue here,
->> +};
->> +
-
-Okay. Let's fix it as you suggested.
-
-
->> diff --git a/sound/soc/codecs/pm4125.c b/sound/soc/codecs/pm4125.c
->> new file mode 100644
->> index 0000000000000000000000000000000000000000..fc320152b9254e4412cbf593=
-cdc456ee159d071f
->> --- /dev/null
->> +++ b/sound/soc/codecs/pm4125.c
->> @@ -0,0 +1,1793 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +// Copyright (c) 2023-2024 Qualcomm Innovation Center, Inc. All rights =
-reserved.
->> +// Copyright (c) 2025, Linaro Ltd
->> +
->
->> +static int pm4125_rx_clk_enable(struct snd_soc_component *component)
->> +{
->> +	struct pm4125_priv *pm4125 =3D snd_soc_component_get_drvdata(component=
-);
->> +
->> +	if (atomic_read(&pm4125->rx_clk_cnt))
->> +		return 0;
->> +
->> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL=
-,
->> +				      PM4125_DIG_SWR_ANA_RX_CLK_EN_MASK,
->> +				      PM4125_DIG_SWR_RX_CLK_ENABLE);
->> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL=
-,
->> +				      PM4125_DIG_SWR_ANA_RX_DIV2_CLK_EN_MASK,
->> +				      PM4125_DIG_SWR_RX_CLK_ENABLE);
->> +	usleep_range(5000, 5100);
->> +
->> +	pm4125_global_mbias_enable(component);
->
-> Please remove handing of mbias calls directly this is racing, Please
-> handle it via dapm widgets directly. If not we will endup with switching
-> off micbias off while recording is in progress or recording will
-> continue assuming that micbias is on, but some path can switch it off.
-
-Please see below, there are problems with playback without pm4125_global_mb=
-ias_enable().
-
->> +
->> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
->> +				      PM4125_ANA_HPHPA_FSM_DIV_RATIO_MASK,
->> +				      PM4125_ANA_HPHPA_FSM_DIV_RATIO_68);
->> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
->> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_EN_MASK,
->> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_ENABLE);
->> +	snd_soc_component_update_bits(component, PM4125_ANA_NCP_VCTRL, 0x07, 0=
-x06);
->> +	snd_soc_component_write_field(component, PM4125_ANA_NCP_EN,
->> +				      PM4125_ANA_NCP_ENABLE_MASK,
->> +				      PM4125_ANA_NCP_ENABLE);
->> +	usleep_range(500, 510);
->> +
->> +	atomic_inc(&pm4125->rx_clk_cnt);
->> +
->> +	return 0;
->> +}
->> +
->> +static int pm4125_rx_clk_disable(struct snd_soc_component *component)
->> +{
->> +	struct pm4125_priv *pm4125 =3D snd_soc_component_get_drvdata(component=
-);
->> +
->> +	if (!atomic_read(&pm4125->rx_clk_cnt)) {
->> +		dev_err(component->dev, "clk already disabled\n");
->> +		return 0;
->> +	}
->> +
->> +	atomic_dec(&pm4125->rx_clk_cnt);
->> +
->> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
->> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_EN_MASK,
->> +				      PM4125_ANA_HPHPA_FSM_CLK_DIV_DISABLE);
->> +	snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK,
->> +				      PM4125_ANA_HPHPA_FSM_DIV_RATIO_MASK,
->> +				      0x00);
->> +	snd_soc_component_write_field(component, PM4125_ANA_NCP_EN,
->> +				      PM4125_ANA_NCP_ENABLE_MASK,
->> +				      PM4125_ANA_NCP_DISABLE);
->> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL=
-,
->> +				      PM4125_DIG_SWR_ANA_RX_DIV2_CLK_EN_MASK,
->> +				      PM4125_DIG_SWR_RX_CLK_DISABLE);
->> +	snd_soc_component_write_field(component, PM4125_DIG_SWR_CDC_RX_CLK_CTL=
-,
->> +				      PM4125_DIG_SWR_ANA_RX_CLK_EN_MASK,
->> +				      PM4125_DIG_SWR_RX_CLK_DISABLE);
->> +	pm4125_global_mbias_disable(component);
->> +
->> +	return 0;
->> +}
->> +
->> +
->
-> %s/^\n\n/\r/
-
-s/^/Ok\n/
-
->> +static int pm4125_codec_enable_rxclk(struct snd_soc_dapm_widget *w, str=
-uct snd_kcontrol *kcontrol,
->> +				     int event)
->> +{
->> +	struct snd_soc_component *component =3D snd_soc_dapm_to_component(w->d=
-apm);
->> +
->> +	switch (event) {
->> +	case SND_SOC_DAPM_PRE_PMU:
->>=20
->> +static const struct snd_kcontrol_new pm4125_snd_controls[] =3D {
->> +	SOC_SINGLE_EXT("HPHL_COMP Switch", SND_SOC_NOPM, 0, 1, 0,
->
->     SOC_SINGLE_EXT("HPHL_COMP Switch", PM4125_COMP_L, 0, 1, 0, ?
->
->> +		       pm4125_get_compander, pm4125_set_compander),
->> +	SOC_SINGLE_EXT("HPHR_COMP Switch", SND_SOC_NOPM, 1, 1, 0,
->
->        SOC_SINGLE_EXT("HPHR_COMP Switch", PM4125_COMP_R, 1, 1, 0,?
->
->> +		       pm4125_get_compander, pm4125_set_compander),
->
-> This is same issue in one of the WCD codec, which am going to send fixes
-> along with my original wcd fixes series.
-
-So this was in other codecs for years, right?
-
->> +
->> +	SOC_SINGLE_TLV("HPHL Volume", PM4125_ANA_HPHPA_L_GAIN, 0, 20, 1,
->> +		       line_gain),
->> +	SOC_SINGLE_TLV("HPHR Volume", PM4125_ANA_HPHPA_R_GAIN, 0, 20, 1,
->> +		       line_gain),
->> +	SOC_SINGLE_TLV("ADC1 Volume", PM4125_ANA_TX_AMIC1, 0, 8, 0,
->> +		       analog_gain),
->> +	SOC_SINGLE_TLV("ADC2 Volume", PM4125_ANA_TX_AMIC2, 0, 8, 0,
->> +		       analog_gain),
->> +
->> +	SOC_SINGLE_EXT("HPHL Switch", PM4125_HPH_L, 0, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
->> +	SOC_SINGLE_EXT("HPHR Switch", PM4125_HPH_R, 0, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
->
-> <---
->> +	SOC_SINGLE_EXT("LO Switch", PM4125_LO, 0, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),--->
->
->> +
->> +	SOC_SINGLE_EXT("ADC1 Switch", PM4125_ADC1, 1, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
->> +	SOC_SINGLE_EXT("ADC2 Switch", PM4125_ADC2, 1, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
-> <-----------------
->> +	SOC_SINGLE_EXT("DMIC0 Switch", PM4125_DMIC0, 1, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
->> +	SOC_SINGLE_EXT("DMIC1 Switch", PM4125_DMIC1, 1, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
->> +	SOC_SINGLE_EXT("MBHC Switch", PM4125_MBHC, 1, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
->> +	SOC_SINGLE_EXT("DMIC2 Switch", PM4125_DMIC2, 1, 1, 0,
->> +		       pm4125_get_swr_port, pm4125_set_swr_port),
-> -------------->
-> Please delete these entires as there are no entires for any of this
-> channels in pm4125_sdw_rx_ch_info or pm4125_sdw_tx_ch_info.
->
-> Side effect of this out of boundary array access is memory corruption as
-> we will set port_config values based on port index which could be
-> negative in this cases resulting in writing to othe members of
-> pm4125_sdw_priv struct.
-
-
-Ack. I applied your changes that you suggested.
-
-
->> +};
->> +
->> +static const struct snd_kcontrol_new adc1_switch[] =3D {
->> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
->> +};
->> +
->> +static const struct snd_kcontrol_new adc2_switch[] =3D {
->> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
->> +};
->> +
->> +static const struct snd_kcontrol_new dmic1_switch[] =3D {
->> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
->> +};
->> +
->> +static const struct snd_kcontrol_new dmic2_switch[] =3D {
->> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
->> +};
->> +
->> +static const struct snd_kcontrol_new ear_rdac_switch[] =3D {
->> +	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
->> +};
->> +
->
-> during my test i had to do below code changes to get things working.
-> Please feel free to wrap it into your next version.
->
-> ----------------------->cut<----------------------------------
-> diff --git a/sound/soc/codecs/pm4125.c b/sound/soc/codecs/pm4125.c
-> index fc320152b925..12d4be1f7149 100644
-> --- a/sound/soc/codecs/pm4125.c
-> +++ b/sound/soc/codecs/pm4125.c
-> @@ -264,8 +264,6 @@ static int pm4125_rx_clk_enable(struct
-> snd_soc_component *component)
->                                       PM4125_DIG_SWR_RX_CLK_ENABLE);
->         usleep_range(5000, 5100);
->
-> -       pm4125_global_mbias_enable(component);
-> -
->         snd_soc_component_write_field(component, PM4125_ANA_HPHPA_FSM_CLK=
-,
->                                       PM4125_ANA_HPHPA_FSM_DIV_RATIO_MASK=
-,
->                                       PM4125_ANA_HPHPA_FSM_DIV_RATIO_68);
-> @@ -309,8 +307,6 @@ static int pm4125_rx_clk_disable(struct
-> snd_soc_component *component)
->         snd_soc_component_write_field(component,
-> PM4125_DIG_SWR_CDC_RX_CLK_CTL,
->                                       PM4125_DIG_SWR_ANA_RX_CLK_EN_MASK,
->                                       PM4125_DIG_SWR_RX_CLK_DISABLE);
-> -       pm4125_global_mbias_disable(component);
-> -
->         return 0;
->  }
-
-This doesn't work. Playback has two issues: 1) volume is very low and proba=
-bly
-not adjustable and 2) sound during playback dies after a couple of seconds.
-
-Returning these global_mbias() calls restores the good behaviour.
-
-Maybe let's make a widget out of it? In such case I am not sure about
-routing meaning that I not sure which paths do require mbias enable.
-
-Best regards,
-Alexey
+Konrad
 
