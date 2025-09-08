@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-72479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4B154B484FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 09:20:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2ADBAB48530
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 09:28:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 105917AD819
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 07:18:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 184811B206B6
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 07:29:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69783293C4E;
-	Mon,  8 Sep 2025 07:20:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 343CA2E8DEF;
+	Mon,  8 Sep 2025 07:28:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IZfEPaaI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eozoCN0Q"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A955C2E54B2
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 07:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73882E8B73
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 07:28:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757316008; cv=none; b=BjI+jDMB104h+hpk4UPAhsl/2YhOIC8jZNVvtBm2q2ZfF8CHguEvkfufj5Slu+EBEPpMhGT+rQ7JrF2hwXLaeIIBiC5zv7qzSLOeLWGs1En9OfNzLQj39Rb0PYJkEPFuiu6T2BCZ5PzlZ8Bx8SD02HkoZWl5YrYyurph/PgTgrc=
+	t=1757316500; cv=none; b=a3XI8v5w0qYOJ/GAKllORuokRjDpHl//ZTR8EPLG8YMB963J1F1vrTUKENtfc9r8Sy3J6NhzWLHCUFnQENLYzB3juwkBYx7SKwL14aZUZs6Rx9RXKmyZC9DE+r/Q7grJpGmUnsh3WXOLhpGwA4HEM8QVTw+j8corOCEL7b/733g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757316008; c=relaxed/simple;
-	bh=PqMyOblKEfOraVWVRyMOSW5G4N5oZyOPcmEHnteK9jU=;
+	s=arc-20240116; t=1757316500; c=relaxed/simple;
+	bh=qbzdEVIeV69/mmAKbuz9lop8NzAL+wErgvl0Fl2CZ2I=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j1W6WqVIQpoo0nAYdghq6KeQA41q6Br0FHYZFfgtuGHSEeAyC5OGLQdM2D03IFntsrEwbQKHk+W+h0TkaXkfPXdOKtZlA+nR6UhonuY6ASSnZlLI/tdjB7kbbHUwsx7p+tPJitqB4Ee3P/gnuCIIT9iZVgv3/gvhgkGTOnMEhf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IZfEPaaI; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=o40MOCIIQbx+k5ffzEZ8Ca4dJIxiqcPtW+5B43D/KVDKTKzOVRzBppsjxAEBRTa7SqPfnq3ACGS7qisfnDi/nWC9RU3mp2PQsBA+2RUJBw61z09g59wWPQFpu7hk7ciVyJbKaxidNpHcrMHvPPEiT1vM8cSFum0XPfcmgk5syFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eozoCN0Q; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5880K32A018961
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 07:20:06 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 587MbD17030332
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 07:28:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	VWcKtvk8mFvfLmI00zGKSgzDw0tbzl3o6sU4GJfPEyg=; b=IZfEPaaIDN1l1x7T
-	TnF1MTF+bRDRHQxbUua0ygSd0wlAkRtC3j1WrZRPaExv+OwbqMdE64KkYmn+QCQs
-	RC8rVme6YhJB1Hsy68yssndvDzHpyAbOSHNpkcueZqfCvgAp1TCD6aebERni0Vez
-	zWkLr6RkuDPBvmWRSah/ywQzw+d8Q4/IXKDBhwuyan4zzz9L38g1ImRJNbFjJP0R
-	JdXCKEHEAxF0011/Igk+GEy0NopfLO5xRLSi+2te9Gk+E5pXGakkpxQVMkYaLuf4
-	4jjhtJ4wLrzgfXVQB26W8Ftgje8vJJ3UEpFTKgPRpKudOlUI31Skz60BoDTdUcho
-	ll7Dgw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e8a3gqk-1
+	ERLf/ncv7o04qbtewCDq3K9ys9j1usVy2WEVFXE0/HM=; b=eozoCN0QzM4MqTN0
+	oAUlUWFjDBGVTzSNld5ige4n+UtQK7ecqJS+f11o3jTUqtOliXC2DwWmNpKIjfoj
+	nn+mRfGiqv3B9bekNuzLXtV4EU3a+FwNIXL8dK8EFjjSYnXmYZWDBZdTkqOvZWE+
+	ObfJ5P0AXapQxq4fkh2QvRYFQAp+Ipwh/dtyhDXVxCZil9c/TYr19Zq8xD15D84B
+	CffZ7ZSl/PzaUgugo+CDWZ9aE4VfrzK7XHa7E0yHz/jxtIufe0janLjiZ6Xql5Vq
+	lUVFRkqU2LqX0lvKGCrGPcNeA/tD0HJUmcjz9WVaJUICgWPVOqpSd+gPicvFhR8Q
+	OCvmWw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e8a3hg6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 07:20:05 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b6023952f6so6345921cf.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 00:20:05 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 07:28:17 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b604c02383so6907541cf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 00:28:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757316004; x=1757920804;
+        d=1e100.net; s=20230601; t=1757316497; x=1757921297;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VWcKtvk8mFvfLmI00zGKSgzDw0tbzl3o6sU4GJfPEyg=;
-        b=RpTn3glwluWcdtcvtOGT4mTOIswIAguIEOV0UbBxK68q5P+Tr0mP80Qvy0azCoje2w
-         90a8ZYgyHjtJrG9hq0avgA3mzdmDZ0WtokDZEnC/wCgApROmOfY038aheKycRf4n36ht
-         hRdT7rWGxvJzimJSyWAIXEAuZxGbDiUeITeiW2qJmUWOf/sW2ISJ5P32fozrCENL99kD
-         1DpNujtEDSWj2PFo0evb/sIk39Iwz/7sBwobYlmKy1xkOXnJfw3EDg0YQzLz/EUHK+zI
-         /ZigKfhAcj2jj8+M++MrCg+cs0V5ZHADh7DcI8F549KZqQzeIyLRLdRjSbb4rP5G0jbc
-         N3PQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVR1IKxJienQRsKlICek4FBMPXaRejdvVWHgeoM4h942Tdjn0LWywM1WRqUYpCLxlBk72IzvDHZI4vG7ke3@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwHD9a8H6c8HL4h+m8c9Ole4Sqdz+w6C6J9FH6jPKky7fGhTPo
-	aWZg+eb/RlZRCRBtN4RnAQz4vX6UwrWWnSZjTm29Q+4kuLDY53iKrd5NAWRcWEsSQrQIGpCvXLK
-	Eg20zaF+oTwl4le0gpU5Po7AWsmC4q4iFuU7qH3wGEgMXLgkw7AK9zeGwQrCyYxAkmz7g
-X-Gm-Gg: ASbGncuCsANsYhcN1xSkBva51mRTeP8JZ+2wOlxIywNKQIWSgY3ickQXynl8pP5rVkV
-	Bo3rFo5za0vXYvVFbFX+oKJkpGUw4jY32wAvQlIyjpxrOTI0ff8y6xOQEi0VRTgfSECGdVrCT5q
-	8Faq3ze53NkVRGf5zK/XS9jek1nnbPjLwOdt9rPclcRSIOEA8fdMhUiopcm6eCREiGb8cRhmHva
-	t4N/L8vZrNGllbhfr7oO5N9IEvquBFObxhN6VCqQPYk7reBIIL3cZXwZsl97k1w9sOJXz0vx/m1
-	IVn4yivpCtkFnsaM2sD+KyepCOss7jw14H3iKttPaQvTeNOXyCA5ps/n1v7VJEmKfKPXvTCfoNg
-	yOpQc7pW+v9ZpfeBx9ZDRcg==
-X-Received: by 2002:ac8:5dd1:0:b0:4b2:d8e5:b6e3 with SMTP id d75a77b69052e-4b5f8445af1mr48142211cf.1.1757316004492;
-        Mon, 08 Sep 2025 00:20:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH4+QiJyueOpHGD01U7ZGb5pGulY2uWYz7NY7jH/9d6NejQbnMKqPQkDJBKht2O5pECh1Hjng==
-X-Received: by 2002:ac8:5dd1:0:b0:4b2:d8e5:b6e3 with SMTP id d75a77b69052e-4b5f8445af1mr48141961cf.1.1757316003978;
-        Mon, 08 Sep 2025 00:20:03 -0700 (PDT)
+        bh=ERLf/ncv7o04qbtewCDq3K9ys9j1usVy2WEVFXE0/HM=;
+        b=Hhpf3gBm+dPQJWrOQWknfEI2dhN1ggpTsJzko3c6iMifvgCWIja3q6x1kuB545p4AM
+         3dJdRTU6YTauaaO6ATIFBjPQOD2ye5xlKpY+/VibG0kMXD+xqRlONlWLv9LPCdPLIkyJ
+         Arq5g1kNnn7cR2qMkLh+ccGO+K9PaCe7+cj1VVMYkLdND/ydJfDMimB/0hh5RaSNP3py
+         eFk2piW2cTHQpB/tDJg5bu2Cs0iDHCqnRj4hcvYNWvERaFPeH3LMZAcUJitEOtGYZFSC
+         TRRLUkuin0lLnHAuxfnHsaJHpPZQRnaTxx8IiqAVZV16DHFoCLzJZcmM5KYx4noPdb+Y
+         JlCw==
+X-Forwarded-Encrypted: i=1; AJvYcCUamW4uzITdQzWbwe7WEiQXn5lzl4ODLu7qHcQrA2qf9H7mv1xsP5FMimy9BHrRRo6z5H0BTLQ1NTkZW305@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnYGN9cmQ/8D7MN/k89qG90WU431rJcDMDQJbNLRRl1aG3e/Dj
+	immlbQ6+6saa7IIu3XKeea7arQUzUcVS+ub+Fl2piwHoQPb2/Z2nfgZajeUnN9/0CNmWcy+F9Gk
+	1MrJp0G00r7eKlbTp7qYsJHvtIhhQ47MJR1UB+jDtowU+3bwtN6CdFdZu/taCBxOUwlPq
+X-Gm-Gg: ASbGncuYyKsJWaGWZYDseLDO/bNa10gxLoKdy8Zmk1MoyzKAbsyd08zv2O8adOwMCBd
+	S3OuEgsyxhVatZijSQ19xA2mmTWUteagD3uzf9VNkM7+rl9+8mf09v5QUY+wHYzsqT6gchX/GHU
+	fzfu5q9SsVHTajhCiBRtfSlguG5VN1FZbCP8qZhVdm4eBujk11f7kmt9dl2Fn2sJ1WI6qiaTsd1
+	yi1a47gOCBRvGiGp8mFc4DeF5UK3yTt7BpulbxVWNwc5Gsv9BIzHSVB7gSFFhPIRgn2/c1CqZDq
+	Ly0OSiBrBkSvZ8J9yYSROKiiTfQLWzFxOlj8a4FQi0xXlEJkcPnbPPKWwRm9R74A3gJ1JVFLuAH
+	KFeA/Rg0NjHa3yxNKAxEx1Q==
+X-Received: by 2002:ac8:5e09:0:b0:4b5:f68b:86a0 with SMTP id d75a77b69052e-4b5f83aa98fmr49543201cf.5.1757316496573;
+        Mon, 08 Sep 2025 00:28:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEGAgl00GaYehU+zuRCAg7V4DAYv8tb/FWR4y4Uvtjs+MAr65Vw5x+XLudGsUA/GY92sb/oiQ==
+X-Received: by 2002:ac8:5e09:0:b0:4b5:f68b:86a0 with SMTP id d75a77b69052e-4b5f83aa98fmr49543111cf.5.1757316496019;
+        Mon, 08 Sep 2025 00:28:16 -0700 (PDT)
 Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b0409bf055esm2172292466b.85.2025.09.08.00.20.00
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b01902d0e99sm2167090466b.12.2025.09.08.00.28.13
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 00:20:03 -0700 (PDT)
-Message-ID: <0e030e7d-0a1a-4a00-ba18-ed26107d07fa@oss.qualcomm.com>
-Date: Mon, 8 Sep 2025 09:20:00 +0200
+        Mon, 08 Sep 2025 00:28:15 -0700 (PDT)
+Message-ID: <f16a858d-fb41-4cc9-a138-7bfe5ee2800f@oss.qualcomm.com>
+Date: Mon, 8 Sep 2025 09:28:12 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,49 +90,41 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] dt-bindings: leds: commonize leds property
-To: Aleksandrs Vinarskis <alex@vinarskis.com>,
-        Hans de Goede <hansg@kernel.org>, Lee Jones <lee@kernel.org>,
-        Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 2/3] platform: arm64: thinkpad-t14s-ec: new driver
+To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Conor Dooley
- <conor+dt@kernel.org>,
+ <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>,
+        =?UTF-8?Q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
         Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Daniel Thompson <danielt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
-        Jacopo Mondi <jacopo@jmondi.org>,
-        Sakari Ailus
- <sakari.ailus@linux.intel.com>,
         Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Mark Pearson <mpearson-lenovo@squebb.ca>
+Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>,
+        Henrique de Moraes Holschuh <hmh@hmh.eng.br>,
+        Neil Armstrong <neil.armstrong@linaro.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-References: <20250908-leds-v3-0-5944dc400668@vinarskis.com>
- <20250908-leds-v3-2-5944dc400668@vinarskis.com>
+References: <20250906-thinkpad-t14s-ec-v3-0-3ce6ec21ae89@collabora.com>
+ <20250906-thinkpad-t14s-ec-v3-2-3ce6ec21ae89@collabora.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250908-leds-v3-2-5944dc400668@vinarskis.com>
+In-Reply-To: <20250906-thinkpad-t14s-ec-v3-2-3ce6ec21ae89@collabora.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=H7Dbw/Yi c=1 sm=1 tr=0 ts=68be83a5 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=I76Qk8w-AAAA:8 a=zDPauhyOtcwAXlC7rdQA:9
- a=QEXdDO2ut3YA:10 a=zZCYzV9kfG8A:10 a=dawVfQjAaf238kedN5IG:22
- a=vUPM0Wvl0xcrLs4nqPIT:22
-X-Proofpoint-GUID: 1sUGeSkLI_GZMI_6L-bbRww-TihgFlIj
-X-Proofpoint-ORIG-GUID: 1sUGeSkLI_GZMI_6L-bbRww-TihgFlIj
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOSBTYWx0ZWRfX8aGBNXkskgCM
- 8zRSkB1r319XGL657pyymjGwOIOKNrVR7nl+rlnA9ew6swDL7i13U+0fpDu5p6/wf8w+pJQSy/y
- vpKGZlVYXx2FeT7KK7zGKBKnvTsYN+QO+gMF9SfHWMFbzEut4sngyWoUufBe+rsP+H4WWjcG6nV
- rDw/255qOsvpT8qr0ZSdOPNCxDNc0ES8Yilbq6IMstXYpYOIFdaQu83pA0buAm9Fn4gatUKOouo
- GsZOJfPGQ41YjlZDkotndno/1wgHzPVdQU4KEQaOCTT90Fpyx8d39GS9oILLq+yN/BMeMR4NuHn
- F8DMwWXQAJ/ZP+EZSpOpKD4w51YMKpGneLDOk3N0MQjtGqL/nIoqclg+eZcM+rjLhs0IQZhd1sK
- VN6DdZ94
+X-Authority-Analysis: v=2.4 cv=H7Dbw/Yi c=1 sm=1 tr=0 ts=68be8592 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=l0D_vPNz536yW1AJoQEA:9
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
+X-Proofpoint-GUID: zZTdLhFkPGwbSOfEhIQJuwGEPqGKwSlW
+X-Proofpoint-ORIG-GUID: zZTdLhFkPGwbSOfEhIQJuwGEPqGKwSlW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOSBTYWx0ZWRfXyXMYo6gRKXn/
+ eWurzfi5H0s+GzEusYVy/Tg0DUFotsKIoXYVoKbw3F8yIEz0Kzc6cect+WeJVjGUS8Z2Bd6Kkn7
+ FdEMOv2Jr6vquza16EzQnnVyEEKoIu0dpSpxJxM20Ws7Y4KfIDFiFYU/3bKNsSbI2zwIPZVuCut
+ WN+jzpGxpaKGSnCQC7YEEn3ADZcD71W8dLh6oyNj73B6jDHYI61uDHGMQ4Ys6n2mkkYBUG4cwQv
+ rPuC9y06RHnDKpNIllnncsE03Wy/+eCmvoT+dlNBgHbmstar+9T3enBszlarnSkrnZuCINQ4fO4
+ +7cwhPp2sEQwbtw33iN2e9ka/IJG6xsEnmqd1xCmpV4LjpTGPGd/h97FKh8pwBYIOKJv3O40cGP
+ /8duCgF6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-08_02,2025-09-04_01,2025-03-28_01
@@ -142,35 +134,83 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060039
 
-On 9/8/25 1:18 AM, Aleksandrs Vinarskis wrote:
-> A number of existing schemas use 'leds' property to provide
-> phandle-array of LED(s) to the consumer. Additionally, with the
-> upcoming privacy-led support in device-tree, v4l2 subnode could be a
-> LED consumer, meaning that all camera sensors should support 'leds'
-> and 'led-names' property via common 'video-interface-devices.yaml'.
-> 
-> To avoid dublication, commonize 'leds' property from existing schemas
-> to newly introduced 'led-consumer.yaml'.
-> 
-> Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
-> ---
+On 9/6/25 3:12 AM, Sebastian Reichel wrote:
+> Introduce EC driver for the ThinkPad T14s Gen6 Snapdragon, which is in
+> theory compatible with ThinkPad ACPI. On Linux the system is booted with
+> device tree, which is not supported by the ThinkPad ACPI driver
+> (drivers/platform/x86/lenovo/thinkpad_acpi.c). Also most of the hardware
+> compatibility is handled via ACPI tables, which are obviously not used
+> when booting via device tree. Thus adding DT compatibility to the
+> existing driver is not worth it as there is almost no code sharing.
 
 [...]
 
->  
-> +  leds:
-> +    minItems: 1
-> +    maxItems: 1
 
-My brain compiler suggests this will throw a warning (minItems should
-be redundant in this case)
+couple nits, feel free to ignore
+
+> +#define T14S_EC_EVT_NONE			0x00
+> +#define T14S_EC_EVT_KEY_FN_4			0x13
+> +#define T14S_EC_EVT_KEY_FN_F7			0x16
+> +#define T14S_EC_EVT_KEY_FN_SPACE		0x1F
+> +#define T14S_EC_EVT_KEY_TP_DOUBLE_TAP		0x20
+> +#define T14S_EC_EVT_AC_CONNECTED		0x26
+> +#define T14S_EC_EVT_AC_DISCONNECTED		0x27
+> +#define T14S_EC_EVT_KEY_POWER			0x28
+> +#define T14S_EC_EVT_LID_OPEN			0x2A
+> +#define T14S_EC_EVT_LID_CLOSED			0x2B
+> +#define T14S_EC_EVT_KEY_FN_F12			0x62
+> +#define T14S_EC_EVT_KEY_FN_TAB			0x63
+> +#define T14S_EC_EVT_KEY_FN_F8			0x64
+> +#define T14S_EC_EVT_KEY_FN_F10			0x65
+> +#define T14S_EC_EVT_KEY_FN_F4			0x6A
+> +#define T14S_EC_EVT_KEY_FN_D			0x6B
+> +#define T14S_EC_EVT_KEY_FN_T			0x6C
+> +#define T14S_EC_EVT_KEY_FN_H			0x6D
+> +#define T14S_EC_EVT_KEY_FN_M			0x6E
+> +#define T14S_EC_EVT_KEY_FN_L			0x6F
+> +#define T14S_EC_EVT_KEY_FN_RIGHT_SHIFT		0x71
+> +#define T14S_EC_EVT_KEY_FN_ESC			0x74
+> +#define T14S_EC_EVT_KEY_FN_N			0x79
+> +#define T14S_EC_EVT_KEY_FN_F11			0x7A
+> +#define T14S_EC_EVT_KEY_FN_G			0x7E
+
+Please use lowercase hex consistently across the file
+
+[...]
+
+> +enum thinkpad_t14s_ec_led_status_t {
+> +	T14S_EC_LED_OFF =	0x00,
+> +	T14S_EC_LED_ON =	0x80,
+> +	T14S_EC_LED_BLINK =	0xc0,
+
+These conveniently translate to: BIT(7) and BIT(6)|BIT(7), meaning
+BIT(7) could mean "ON" and BIT(6) could mean "pulse" (can you pulse
+a disabled LED? arcane secrets..)
+
+[...]
+
+> +	if (brightness == LED_OFF)
+> +		new_state = T14S_EC_LED_OFF;
+> +	else if (led->cache != T14S_EC_LED_BLINK)
+
+==s are easier to logically follow than !=, but this is totally
+potayto/potahto
+
+[...]
+
+> +static int thinkpad_t14s_led_blink_set(struct led_classdev *led_cdev,
+> +				       unsigned long *delay_on,
+> +				       unsigned long *delay_off)
+> +{
+> +	struct thinkpad_t14s_ec_led_classdev *led = container_of(led_cdev,
+> +			struct thinkpad_t14s_ec_led_classdev, led_classdev);
 > +
-> +  led-names:
-> +    enum:
-> +      - privacy-led
+> +	if (*delay_on == 0 && *delay_off == 0) {
+> +		/* We can choose the blink rate */
 
-Nit: "privacy" makes more sense without the suffix, as we inherently
-know this is supposed to be an LED
+"can't"?
+
+Needless to say, amazing work on piecing all this together, Sebastian!
 
 Konrad
 
