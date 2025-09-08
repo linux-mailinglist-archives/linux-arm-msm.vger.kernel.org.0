@@ -1,177 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-72582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEBD7B48FDF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:39:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id EEFC5B4900B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:47:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 604563C5C99
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 13:38:47 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D06927ADCCD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 13:44:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 483C33054D9;
-	Mon,  8 Sep 2025 13:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 47E1C30C374;
+	Mon,  8 Sep 2025 13:45:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b="DKXGzQ4J"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZAYTtaB9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from lelvem-ot01.ext.ti.com (lelvem-ot01.ext.ti.com [198.47.23.234])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E433B30B516;
-	Mon,  8 Sep 2025 13:38:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.47.23.234
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1B177111
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 13:45:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757338701; cv=none; b=hc0/V7ojZRZ4h7/WJEiO5cbA0QxxAXlII5ior8ABLw7zW0UOM2WemZXl4ylRlEngaNnT9gwXTGH0Y+RTh0ZlWvxHsiDJHtBAAn0XpuHBz2Q+fKLCYOfU3tPYzLgnmxWBJ7iplNfhHW9om42wD4yk7gM7ZUR0+VX60RuQhJpu1/s=
+	t=1757339133; cv=none; b=nc12OYofo1CEigXt6VOop+ga/QiktYomRanOKghTUGyDTTaHIarj3fmgfF7DWN6AmE8dV5T8xHJXLWIHRwzx29gvTayWaW7Ewow8U3ygq0Yc9kV9+23sCtB0yWROKgJXie+rV/ALh0mu05OWqH2lIj62uO/vdotUbnhnI+eO+Yk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757338701; c=relaxed/simple;
-	bh=Njcv7gHM3V9OCqG5pc6g7OHK3U+MJbP/tiUHrVN20s0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=GDKbovTbYnJzAk8jLBXCB/zVD3X90QXj9UsSq/IZfy+l2GU4XzyLgo2dLlNeNoO7X0aoFuNAE12vi7+Z4p55Ux2RwAjo/h9zjWXitOtQbZzQKyarPBRcRKZzRHks/Q8YUY5m3su3B5RL9OXpD63XKpdwbByz8AGiDmzbl9CJYQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com; spf=pass smtp.mailfrom=ti.com; dkim=pass (1024-bit key) header.d=ti.com header.i=@ti.com header.b=DKXGzQ4J; arc=none smtp.client-ip=198.47.23.234
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ti.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ti.com
-Received: from fllvem-sh04.itg.ti.com ([10.64.41.54])
-	by lelvem-ot01.ext.ti.com (8.15.2/8.15.2) with ESMTP id 588Dc8Qw3874616;
-	Mon, 8 Sep 2025 08:38:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1757338688;
-	bh=awQQu3rGBPmoT6Z/hGfapL01e4DEGu0HstmwbMkPvLU=;
-	h=Date:Subject:To:CC:References:From:In-Reply-To;
-	b=DKXGzQ4JZXj5nh9aw1efczKmxuluwqOTnBdNNu1xswTJAuf+9OdClDg6tBuz6yiuP
-	 ipsnzqWWCdbPDcHiEqX9hSKo7jNzc5uFA3ghINlV3d+5/58NXWd5D5jKVQ9FoI2e3L
-	 037rlkYGHHWE4lyXMzCAIL3CHQz56skk9ZQdXtic=
-Received: from DLEE105.ent.ti.com (dlee105.ent.ti.com [157.170.170.35])
-	by fllvem-sh04.itg.ti.com (8.18.1/8.18.1) with ESMTPS id 588Dc7r93806024
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-SHA256 bits=128 verify=FAIL);
-	Mon, 8 Sep 2025 08:38:07 -0500
-Received: from DLEE211.ent.ti.com (157.170.170.113) by DLEE105.ent.ti.com
- (157.170.170.35) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.55; Mon, 8
- Sep 2025 08:38:07 -0500
-Received: from DLEE101.ent.ti.com (157.170.170.31) by DLEE211.ent.ti.com
- (157.170.170.113) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.2.2562.20; Mon, 8 Sep
- 2025 08:38:07 -0500
-Received: from lelvem-mr05.itg.ti.com (10.180.75.9) by DLEE101.ent.ti.com
- (157.170.170.31) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.55 via
- Frontend Transport; Mon, 8 Sep 2025 08:38:07 -0500
-Received: from [128.247.81.40] (dtmz023nlv.dhcp.ti.com [128.247.81.40])
-	by lelvem-mr05.itg.ti.com (8.18.1/8.18.1) with ESMTP id 588Dc7Ch973710;
-	Mon, 8 Sep 2025 08:38:07 -0500
-Message-ID: <51cdf832-95a2-47bf-bc27-d43097883701@ti.com>
-Date: Mon, 8 Sep 2025 08:38:07 -0500
+	s=arc-20240116; t=1757339133; c=relaxed/simple;
+	bh=hIc4P2K07XlvYmHQkfI0woteLpw/ikjw7KN9mYvCRiI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lW2Tmxq2sn5W//NgMXOg59KT4cFCmXEuFyDca9f5zB/Ji8UpGn8Z33CIFEr8PTVUws+OWmsY9u3Gbs7oWy8obafh/Hw22JQmzI93E2+lNIYBVUjA7rMLrRiFGlbKZVwHkXpUoLLfX0Kocxy9/IUMu07xBYFimWc4AabSTusSzyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZAYTtaB9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5889BlXx022735
+	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 13:45:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=esqnV4GgtEbrquLS/zK5rW3W
+	tt7Z1gs3taNjcse55BA=; b=ZAYTtaB9Y7SMyW3MEsYa9Jw4FcBylLtuUJgggnT1
+	ggSBjKQSPM0bXafiZrmUzWnhTeDn/elXOFafxMai3AEAY/kDCKHX+MBKB8G3DTBX
+	6L3JeQM9UJFDd8i9sHQc5H5BnSv/a35X3UP8bEwN63u8E9Ci+V12IaNx3mmrhCNv
+	cM0IA7wrC+tWa/DrMDlLdScyBmtmsSlRQjLjNSMjc1GCmXrwxmM7uKbXVkuoVEbE
+	CxU30u7LffSpJh+V7iKVEVU0tZWX79nGews7Bfu4qQnMA04l4zl+P3SfICmk14uE
+	hv0GFp4UNlNkeuLjD5Ui40WyB+CPsZn+nTG1unjwpxj0jA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e4kvmur-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 13:45:28 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b5e303fe1cso86577301cf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 06:45:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757339127; x=1757943927;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=esqnV4GgtEbrquLS/zK5rW3Wtt7Z1gs3taNjcse55BA=;
+        b=KSmHQr7WldZulUiIINxTH3/sjmVYpNqsJGPl5Q3ZZfbIe5Z4Z4R5NbCoS4aSlYZyug
+         +r6hwQi8s+TN1htafcE/MoBo3/1ssHmiAn7ZqmajE2dqrlJv0q4Fk2AYANOS/3lw7UTN
+         jjo+qdstpReswpraBVgPfZfbbSjTxwpqoRu1abfbvTE872jldGFq7iqT2xs/ulrRYLVf
+         WNFMeXJgi+tSfdQNrotjPz+aEtdi4hTR1wTD572lvbXeO8q8NmalurymC+oKVQlxa7ag
+         /Fj1QxPH6FL5KOS0Nx1QOeuIHswE5cH/T7MJs5ACMme7t+eVbjqfOyGml7FrtVKGPPc8
+         /7mw==
+X-Forwarded-Encrypted: i=1; AJvYcCWKNtupcFP9JoOE1+GGPqJuGkx++VLz64kX2JBKkRdCUufoHpNvp2bGbWY3kcPhhTLiE1kGASI5Pm3YgaMo@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPwaS87FutvCYu/YF9PyZI9hHqf6mRQMzt7JSKwjzXIeilqS37
+	QojJdpwmi+x1OdZrQshPewHrXes64GztY3S5gAQWrAHFB6cHEFVg3oH5bT7KGVprwLXbQZXbb5z
+	6yH8+5Znm6L+5HtUu3u5PXZULxsD/r+Hs3fSzOHW01fqLx/iY8bAgswRDDaFVYtYe6Vre
+X-Gm-Gg: ASbGncv2jdQ/L0S+P9WZoTpkHlLe/3gU6HciVu/+r7NnQ3kQ8PLUKvyoSUG8O8kBmkS
+	0RbB2mfagqif2YgeB0E9Vo7uGKVIVEHBtJhm5xNmL0bk6+oSBEMx0S+sJNnK6VVR12T+5xRFh1j
+	XLYi8XxY6pMS8lnnmWXXGO8McXtla299AeHeQPazMAhthCfuKWx07aMhFT5R3ZVFL2iO1OQ+fin
+	8Kly96ys3P/GEZFKEVQJ9dagoEnd4RE3qrsyMxovQmL8o8vIcxuCQFawzPHkF/Tw5v1ojhYpW/E
+	8x1Gfp9KTVrc5F8lP0hmpF3Rx5lLs9Dbuqw0bzup3VF/+0zvI+uB/rqRxBVbjEsAy8EMxHi14sl
+	YplSwRMoGRE1KOyq+ObN8NB9RcCw/8vgjNmaW6lw4ufj574hn3Xgg
+X-Received: by 2002:a05:622a:289:b0:4b5:e9bb:846e with SMTP id d75a77b69052e-4b5f83a51d3mr96781721cf.21.1757339126997;
+        Mon, 08 Sep 2025 06:45:26 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH6pGd+MdXBZbW1TIlirM87MxAFCUjEO+5IJdJhKbmEgdqD6cBDX43lwroMqHuWkohubp2b/Q==
+X-Received: by 2002:a05:622a:289:b0:4b5:e9bb:846e with SMTP id d75a77b69052e-4b5f83a51d3mr96781021cf.21.1757339126299;
+        Mon, 08 Sep 2025 06:45:26 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-337f5032aaesm32757861fa.37.2025.09.08.06.45.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Sep 2025 06:45:25 -0700 (PDT)
+Date: Mon, 8 Sep 2025 16:45:23 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Maud Spierings <maud_spierings@hotmail.com>
+Cc: neil.armstrong@linaro.org, Laurent.pinchart@ideasonboard.com,
+        airlied@gmail.com, andersson@kernel.org, andrzej.hajda@intel.com,
+        conor+dt@kernel.org, devicetree@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, jernej.skrabec@gmail.com,
+        jonas@kwiboo.se, kishon@kernel.org, konradybcio@kernel.org,
+        krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+        rfoss@kernel.org, robh@kernel.org, simona@ffwll.ch,
+        tzimmermann@suse.de, vkoul@kernel.org
+Subject: Re: [PATCH v3 2/5] drm/bridge: simple: add Realtek RTD2171
+ DP-to-HDMI bridge
+Message-ID: <u3qwrzwcr4knq7ueinws3siz2frugbkj75r5zp6i7qmkhnyauf@lrmiqhtbgzfj>
+References: <20250908-topic-x1e80100-hdmi-v3-2-c53b0f2bc2fb@linaro.org>
+ <AM7P189MB100924E3244B953F0EA6D462E30CA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drivers: gpu: drm: msm: registers: improve
- reproducibility
-To: Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>
-CC: Viswanath Kraleti <viswanath.kraleti@oss.qualcomm.com>,
-        Abhinav Kumar
-	<quic_abhinavk@quicinc.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten
-	<marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, "Simona
- Vetter" <simona@ffwll.ch>,
-        <linux-arm-msm@vger.kernel.org>, <dri-devel@lists.freedesktop.org>,
-        <freedreno@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
-        Bruce Ashfield <bruce.ashfield@gmail.com>
-References: <20250524-binrep-v2-1-09040177218e@oss.qualcomm.com>
- <6mgmrqmixjdftpjz2hvwjnsyh3wwylxuaih7yez2mdgjpcp3l2@zjr4ai6kkjxn>
- <CAF6AEGvJnSiyUJvBPusBZ+mriiP_vRiAgZnTyLSseu8Sdf9PXA@mail.gmail.com>
-Content-Language: en-US
-From: Ryan Eatmon <reatmon@ti.com>
-In-Reply-To: <CAF6AEGvJnSiyUJvBPusBZ+mriiP_vRiAgZnTyLSseu8Sdf9PXA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-C2ProcessedOrg: 333ef613-75bf-4e12-a4b1-8e3623f5dcea
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <AM7P189MB100924E3244B953F0EA6D462E30CA@AM7P189MB1009.EURP189.PROD.OUTLOOK.COM>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOCBTYWx0ZWRfXw0BDtjOecxO5
+ l/67+q5dKK9iFVXOxh/BarxJ82NmsX/wdBTCMZrQqCGeWcxlLEKvTfosaCA4Og99i1lV0LKxUSc
+ TAuYD2ZxPi4pIsrls66gPHTdSr2PC8tmOtEhe7+ZKTMaZ94EVpSXycJ4vHV+yJVbC5n2KBwxm1a
+ VSUQv3P68Ix+0SpeMvON85cdZiCRV7jEVA7LJjgcJmLKJzrb8WVMQ60hFLPkRnrSjCCturgDbSh
+ 1ChILKgXo+SttKvJLdmh/Ko35+d9E+jA5gbKx0F3jtH/E4u7OodqB2A9kV3OXr6dJ9HpK/a0DJf
+ OTo2CJKenNrYs5T7I6aU2dx2n75jR/9z5r67EXRNDtXBz7V0ppkOEh1QmZ3mIMdhn8WlEbTs7dy
+ lvb/kZ72
+X-Authority-Analysis: v=2.4 cv=J66q7BnS c=1 sm=1 tr=0 ts=68beddf8 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=XwVbCjRl897ke_8r9AsA:9
+ a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: EWpcuqzVuc3_FQuZ1vIvTeXJG-HK0spE
+X-Proofpoint-ORIG-GUID: EWpcuqzVuc3_FQuZ1vIvTeXJG-HK0spE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-08_04,2025-09-08_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060038
 
-
-
-On 9/6/2025 6:24 PM, Rob Clark wrote:
-> On Sat, May 24, 2025 at 10:15 AM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>
->> On Sat, May 24, 2025 at 09:25:37PM +0530, Viswanath Kraleti wrote:
->>> From: Ryan Eatmon <reatmon@ti.com>
->>>
->>> The files generated by gen_header.py capture the source path to the
->>> input files and the date.  While that can be informative, it varies
->>> based on where and when the kernel was built as the full path is
->>> captured.
->>>
->>> Since all of the files that this tool is run on is under the drivers
->>> directory, this modifies the application to strip all of the path before
->>> drivers.  Additionally it prints <stripped> instead of the date.
->>>
->>> Signed-off-by: Ryan Eatmon <reatmon@ti.com>
->>> Signed-off-by: Bruce Ashfield <bruce.ashfield@gmail.com>
->>> Signed-off-by: Viswanath Kraleti <viswanath.kraleti@oss.qualcomm.com>
->>> ---
->>> The files generated by gen_header.py include the source path to the
->>> input files and the build date. While this information can be useful,
->>> it inadvertently exposes build system configuration details in the
->>> binaries. This hinders binary reproducibility, as the output will
->>> vary if the build environment changes.
->>>
->>> This change was originally submitted to the linux-yocto-dev kernel [1]
->>> to address binary reproducibility QA errors. However, the fix is generic
->>> enough to be applicable to the mainline kernel and would benefit other
->>> distributions as well. So proposing it here for broader inclusion.
->>>
->>> [1] https://git.yoctoproject.org/linux-yocto-dev/commit/?id=f36faf0f9f8d8f5b4c43a68e5c6bd83a62253140
->>> ---
->>> Changes in v2:
->>> - Corrected author id
->>> - Link to v1: https://lore.kernel.org/r/20250523-binrep-v1-1-c3a446518847@oss.qualcomm.com
->>> ---
->>>   drivers/gpu/drm/msm/registers/gen_header.py | 8 +++++---
->>>   1 file changed, 5 insertions(+), 3 deletions(-)
->>>
->>
->> Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>
->> Rob, WDYT?
+On Mon, Sep 08, 2025 at 03:35:23PM +0200, Maud Spierings wrote:
+> Hello Neil,
 > 
-> I'm revisiting this one, in the context of trying to re-sync
-> gen_header.py with mesa.. but it is only changing the contents of
-> comments, so it's not quite clear to me how this ends up mattering for
-> binary reproducibility.
-
-The reason it matters is that for Yocto, the generated header file is 
-identified as a file that needs to be installed into the sysroot.  All 
-files going into the sysroot are checked to make sure they do not 
-contain dates and/or paths to the build directory contained within. 
-Since this is a generated header file that is included in the sysroot we 
-needed to strip out the path and date.
-
-The idea for the reproducible builds are that the same files on a 
-different a machine at a different time should produce 100% identical 
-files.  Including paths and dates violates that tenet.
-
-Hope that helps explain why we needed this.  So long as the 
-gen_header.py is being called to generate header files then we need to 
-maintain the reproducible aspect.
-
-
-> That said, since the generated files are no longer checked in to mesa
-> or the kernel, we could probably just drop all of this if it mattered.
+> > Add support for the transparent Realtek RTD2171 DP-to-HDMI bridge.
+> > 
+> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> > ---
+> >  drivers/gpu/drm/bridge/simple-bridge.c | 5 +++++
+> >  1 file changed, 5 insertions(+)
+> > 
+> > diff --git a/drivers/gpu/drm/bridge/simple-bridge.c b/drivers/gpu/drm/bridge/simple-bridge.c
+> > index 1f16d568bcc4e0fb56c763244389e6fecbcb2231..e4d0bc2200f8632bcc883102c89c270a17c68d0c 100644
+> > --- a/drivers/gpu/drm/bridge/simple-bridge.c
+> > +++ b/drivers/gpu/drm/bridge/simple-bridge.c
+> > @@ -266,6 +266,11 @@ static const struct of_device_id simple_bridge_match[] = {
+> >  		.data = &(const struct simple_bridge_info) {
+> >  			.connector_type = DRM_MODE_CONNECTOR_HDMIA,
+> >  		},
+> > +	}, {
+> > +		.compatible = "realtek,rtd2171",
+> > +		.data = &(const struct simple_bridge_info) {
+> > +			.connector_type = DRM_MODE_CONNECTOR_HDMIA,
+> > +		},
+> >  	}, {
+> >  		.compatible = "ti,opa362",
+> >  		.data = &(const struct simple_bridge_info) {
+> > 
+> > -- 
+> > 2.34.1
 > 
-> BR,
-> -R
+> I would like to ask again if it may not be a better idea to introduce a
+> fallback compatible, once this patchseries lands I will be adding the
+
+I'd say, that's not a good idea. We usually don't have fully datasheets
+for those bridges, so we can't be sure that there are no strapping pins
+/ other GPIO controls.
+
+> parade,ps185hdm. I don't know how many other variants there are that are
+> just simple dp->hdmi bridges that don't require anything other than the
+> connector type set to HDMIA. The Thinkbook 16 and zenbook a14 both have HDMI
+> connectors, likely with simple bridges too.
+> 
+> Kind regards,
+> Maud
 
 -- 
-Ryan Eatmon                reatmon@ti.com
------------------------------------------
-Texas Instruments, Inc.  -  LCPD  -  MGTS
-
+With best wishes
+Dmitry
 
