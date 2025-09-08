@@ -1,148 +1,338 @@
-Return-Path: <linux-arm-msm+bounces-72605-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72606-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0087B49450
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:54:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 383ECB49459
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:55:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 97C2C175FBF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:54:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2D711188BB7C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:55:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 450743054ED;
-	Mon,  8 Sep 2025 15:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 84D7A30AD0F;
+	Mon,  8 Sep 2025 15:55:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jtmoeSZW"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fjkpK71S"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1A52E8E12
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 15:54:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA97B2E8E11
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 15:55:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757346872; cv=none; b=e4oHTUMK4mYeHrMt0HcPWT/VPcIIOUz1gGzUYAT4GdEL7L1WXWMuZtVuB4PI7dAVKPfjGvPPEfOl/1uEsi4HVOFL6dW3a4TBZrdLemdmb41FSuCjf9VQR7ypAECsGsatlPhYny7WEBfL708FjQiDrl3tJpqKZyOBjX4s0uDHa4Q=
+	t=1757346904; cv=none; b=Ay+oQMQrrbgmynKN7vpaDx3+LOQMvfS02JduKt0H9LkKlDlJQs+r/wMDmxaLK0BtkfLzpA25TbB1Nghhe5DTXu6vdd+TfsRkjUz6IfHtreyGMQnvnMakXafJZ17JjqFJuiMbLA8ueNUAJVdG2K3WNUmifpevZ33yeGC/Me1NW/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757346872; c=relaxed/simple;
-	bh=I98L7wVl2WaiGNwfnBzveMZ8tRbwqAhF8X/Pp9rmIF0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kz+ISNtGcPdMHVAGRZTM6us9PriPDmB8EuIZKPLMfR6tuN0Qo6ACD/DjNqHbOYfzta4rE9sU4+JeOgIFAenMSGnSRCjxrFj28bnGsD6slLQ6UImny2ETMaRrL6wKZ9l8jkM+E61HrswkwmfBOSAREpmc/sW/y1oaxjA+sXogwp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jtmoeSZW; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58892tOi008905
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 15:54:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	FZVyFRJMgNXCoEzFRk37j1p5sKIJje8nIrgLumMu8yU=; b=jtmoeSZWhFE6gdOK
-	qO9tzHqRQtL89IX12UOsmkbd+MG9E5yEARYlV6iWmPkcVRWbHeRi3dKGrRd+0crZ
-	TOv0c7c1TPqZ4MPjsbsDAvp50RBP1QKrdzbvNhUdwVE9iSl5kh2ycVcdVjh3BShZ
-	xji30gA9AQM7AqNtBzzOByEi++k7cawsNp+it+Em61eiJ316Lqh7W1QwUJfjx1Yb
-	8Fx543+0sDDwxk+rIj0qmQqArO2nh5o6wxQ6N4m8wTao8cZstHUf+/iUQv/Dnqjq
-	5DyGR/YYICGdt+iiTGBfUim6pN54dOMRx2suHpF17U7O/JjD8x/e48RC9UfIIzRw
-	4lapwA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490by8w5v9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 15:54:29 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b5f92a6936so10077591cf.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:54:29 -0700 (PDT)
+	s=arc-20240116; t=1757346904; c=relaxed/simple;
+	bh=CS00lYhJ/JI5qKzMwFjNeQzKhbAph8tswKHiCA52zAE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HjJOj8PL9PoEt8/uPupUEl2ZtOX3G/lQVD723UORNQQ8S5dOxrxExXsMt5kXg6nUWCkH2lnkXt4xUoB4hTkcvvTF8KRRGBDstU6ZiVs17s4eyMSUCBxG8XMiFE7SKiPtnDAZVstUT8C9X+mvMnIqqS3It+0Nh6Ik+H4/184NU3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fjkpK71S; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b47174b335bso458887a12.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 08:55:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757346901; x=1757951701; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ncy8rMYMPoo6qD4OwV7z755Sx/k/Cp6xU0Sc/P4F2ss=;
+        b=fjkpK71S5DpGykTtYh46fZWOtKhteNpBsB/2ZbDV+am94wZv+K4a1/Vz5gi3AtPBpd
+         O862qxZxrGSDKXqkS8XPIDALQVzGJ+kKyePqOeBofP9X5sAKcpDKiuDuClmvX4SglQWw
+         +Bhf32QhtV8/L9XmI02RNBN1LM3xbqivCfxLxWjhD6VsXIAr8MvC4ToruMsdYY2MJ9jQ
+         Gvsnj/DfCu1NkXbxDbQ8M9X3kfisVDh6gmpt68FOYcCOWQt8Qf+NknR2zpLabqyvFV+e
+         OS6N/matF2P7E/OvvwQTIwa4tit0sKOyTWxGIoHWVGHzwMRqtsWOV+7yq2W1hXxcLNdk
+         +ZBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757346869; x=1757951669;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FZVyFRJMgNXCoEzFRk37j1p5sKIJje8nIrgLumMu8yU=;
-        b=sLML22lELHbclWC+6hEYbPingK9aGpU/UaNlwoZrXhdHWGiErq3P8lAu3zn87gOpeT
-         mDXqPPogzewd+3PESbsH9w1SO0/5Sa2nHgyfYfvKL+mU9EM3y2GNiPjEhD1w7m4AFA+n
-         JketOMv2/ZkNBWXlJu7XCY2d//yRnzD1yDeXTsC5sAXVPj0XKFq9s6GW9vFIvK/+JmkE
-         kMbOMejh+Yp32kpOQXk2RbTOlS57HVgWwqR0B5gqZNyMZYGn9XjPpJubnB27ZxPQ9K8G
-         0W2LqwSe5cX+l+69Sa2HuivSAF1O4WSyFaoHsIomo70yyipU2fCU/WiV/XExZGOXy/jW
-         NKWg==
-X-Gm-Message-State: AOJu0YxB1S0SqjUXk4jQJSv+bQ6NWcZ38ChxYUm8kgheXIWadOkgSp5/
-	n2+SvAMD4U0B2g6IKFY5ra3WZS5l1gwwN+dgV7x/5sS90Oxi2Sb1QaSAvZ/B8yGv2LxzNMnBVcd
-	X+pPzjULuovE3fkN90DQTe/BsPiAuVvsuiWECoV6HL43yEbPlftNnjCqbRDLvn+YEhhfG
-X-Gm-Gg: ASbGnct9cxqwnGHvOJRdraXS3KC+DwpL6vXDuJNKp3Cv5RxcxFa4cfr2ZNQkInLLY9W
-	TDDevifes8lHDaGnxemh8KqpgnLhUUY0Dqf+mAoZ3GYT9bS3LzoZXMCvJZUy5fO4ZmaIyt7dSxc
-	+YGOzSPhLMEA07NckTDT3ZMV/z1YpFS1lKUMJChKc3HUNGttYB1M035vHMc6dy/EQY0mFRXDK4q
-	FGte37RIqu6XAdUPOQrpjWjrwu6rVWInoZduRDj5wOQy68I1QO5P019kFGRj17iBif12xVLOYql
-	t5tdgd6vVdr87lwVSlaE8ecHKW7r1hYcCnih29MWZyXIVc7FpfS2nz0ihORBpJTeoOYj24G9QJf
-	O2UBZ1aVh/t07Enm5rNc+6w==
-X-Received: by 2002:a05:622a:587:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4b5f837c266mr64007151cf.2.1757346868476;
-        Mon, 08 Sep 2025 08:54:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEmj+R2u4FLhqzfyki/3z/8FBeF6ho/daOftyM/uI5DeD4o//Or/s9QM8aLr6Cq2JdI0BWMFw==
-X-Received: by 2002:a05:622a:587:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4b5f837c266mr64006971cf.2.1757346867969;
-        Mon, 08 Sep 2025 08:54:27 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b040d44c9adsm2200245966b.9.2025.09.08.08.54.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 08:54:27 -0700 (PDT)
-Message-ID: <66e99113-6a53-48da-b775-9044e4269344@oss.qualcomm.com>
-Date: Mon, 8 Sep 2025 17:54:25 +0200
+        d=1e100.net; s=20230601; t=1757346901; x=1757951701;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ncy8rMYMPoo6qD4OwV7z755Sx/k/Cp6xU0Sc/P4F2ss=;
+        b=afjh7UbJgQsyiM2pGjxQadPUQ45lpurAWmA2KmcPnQ/76InqQqeYw2pNSvSJTKWlP3
+         Ct+b2Mor/f2sElTtDm4IAOgrUH4Aik3PrNw6LyUuUWnu6fkSfYO03tgMYfJIeWuGE7l4
+         Pu440pjwDvVmom2m488QGQs9ugyCFJqDCBI3yEY6jVboz70pqgnBHatqix5Kt1a+OaQh
+         TAP1f2xfPp5cdljsyUhxyqqI4xqujxuPUXpu/fEjIeMB2GxbVDHoo/cSBP9PF04sTk6F
+         7RPLjR9G+lYROSvM21kNdRR97/p7UXNZ6awFXtRqkS2jBoJhrwNRMzFY1wK3IV7r+PMf
+         w/lQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUdLYLjStbr5WBEtKqRwTypymkiE63xhD/z6gDFCiE/wB0y8aX77YALUMpoj45DY4CtpGYKv7Uj8PdO9Xnx@vger.kernel.org
+X-Gm-Message-State: AOJu0YzF1j8fyVxIzhfmtFeAP6fnNLsb+AHLejSUewyXVboGVlaA0U0P
+	dsTsb1MLLsq48VDRJCksUaPXIuBvWOQRfGAszJtWGB9WDeRVEXQHiMGKdZmlScCN3Hnv32Jw6u0
+	kBE5HoxZ2SY7Yu/+XgG5UUb11HSHPUjU=
+X-Gm-Gg: ASbGnctaHfiCdzBHIpoBrf5NvjkZ+pyC/d6w6utnJljRPdX5svBWsCWuwfd54lS2MB+
+	b4XJF2UhlMTOHF7JvCQetc5tyPDwrvNGkE5sc7gX8M63kf7wMo1fyrlMc2W5oNg9PZfTA60Z6uP
+	zseQOawvb0wywFa9lqIFh2qi7lY0Y2grIAeFRUC5zjqXgleaMepM1S7f6RVLdbP0rsLXLHURXFj
+	QsNP3hYXvOVUrIidw==
+X-Google-Smtp-Source: AGHT+IGZSQ5JJVv+TntNrNjXPczNaBQa/rBlW+/B4duhLKucX8M6mTF04KFFT56z8aAM798hVCMz9iyyyiTT/FE7BWQ=
+X-Received: by 2002:a17:90b:38cb:b0:32b:dcef:f65f with SMTP id
+ 98e67ed59e1d1-32d43f772e8mr6052003a91.3.1757346901055; Mon, 08 Sep 2025
+ 08:55:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/4] arm64: dts: qcom: qcs8300: Add gpr node
-To: Umang Chheda <umang.chheda@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250905192350.1223812-1-umang.chheda@oss.qualcomm.com>
- <20250905192350.1223812-4-umang.chheda@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250905192350.1223812-4-umang.chheda@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Yv8PR5YX c=1 sm=1 tr=0 ts=68befc35 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=0KPPPQ53LOdx7guq9hsA:9
- a=QEXdDO2ut3YA:10 a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: G-SbW28TpPnbvd_JBKr-4H_mSiuWlSWz
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAxOCBTYWx0ZWRfX9r5neN4qL/M6
- E6e7cspNDOItXNQiTQ4b3rxJY5HBUIUCx1xcA+kqD0iSyWZwKkTdY3Nq7bqLGPow/FP3cpf3wvq
- dAlmN35M9Jxy1d7PH5/xwk+DZunBxFtSxm76IlwNFAaUZvHhfHE2evLqIrslD/ya+kShA5Lz/cC
- ul4C5FTcu961Gblx5BU0TRuulDPDxu4RX2RB6EoIMCWCmRI8FzvKcr3TWQZYlUrKiAyOr5c9Rt0
- QQPPRGSUg9rnqGUtMMNPfmsqJscJSRK55wrN4VIOdFMWicvE7GBOO8HUlxp0PjTDvgaiua/HqMh
- Imf01mFYd+7gt9c4HBkLsGkrUxIwhLyR0mT19PVB9ACvLKBQDByNxVPIrUzlrHXuc4oHxFdYq4y
- WnTmhABs
-X-Proofpoint-ORIG-GUID: G-SbW28TpPnbvd_JBKr-4H_mSiuWlSWz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-08_05,2025-09-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 malwarescore=0 suspectscore=0 phishscore=0 clxscore=1015
- spamscore=0 priorityscore=1501 impostorscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060018
+References: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com> <20250908-ifpc-support-v2-7-631b1080bf91@oss.qualcomm.com>
+In-Reply-To: <20250908-ifpc-support-v2-7-631b1080bf91@oss.qualcomm.com>
+From: Connor Abbott <cwabbott0@gmail.com>
+Date: Mon, 8 Sep 2025 11:54:49 -0400
+X-Gm-Features: Ac12FXwZh4Knfa5C5jRkwC4PMADG3bi9JxMMu92KfaQYtzGrloYElebo2U4Ct24
+Message-ID: <CACu1E7H_K0WbWsHDqD44YfyMvc9bfZon-Tx75LkBFqWdG2YZ=Q@mail.gmail.com>
+Subject: Re: [PATCH v2 07/16] drm/msm/adreno: Add fenced regwrite support
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Abhinav Kumar <abhinav.kumar@linux.dev>, Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Antonino Maniscalco <antomani103@gmail.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org, 
+	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org, 
+	linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 9/5/25 9:23 PM, Umang Chheda wrote:
-> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-> 
-> Add GPR(Generic Pack router) node along with
-
-Packet*
-
-> APM(Audio Process Manager) and PRM(Proxy resource
-> Manager) audio services.
-> 
-> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-> Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
+On Mon, Sep 8, 2025 at 4:27=E2=80=AFAM Akhil P Oommen <akhilpo@oss.qualcomm=
+.com> wrote:
+>
+> There are some special registers which are accessible even when GX power
+> domain is collapsed during an IFPC sleep. Accessing these registers
+> wakes up GPU from power collapse and allow programming these registers
+> without additional handshake with GMU. This patch adds support for this
+> special register write sequence.
+>
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 > ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c     | 80 +++++++++++++++++++++++++=
++++++-
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h     |  1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_preempt.c | 20 ++++----
+>  3 files changed, 90 insertions(+), 11 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/=
+adreno/a6xx_gpu.c
+> index 45dd5fd1c2bfcb0a01b71a326c7d95b0f9496d99..a63dad80ef461da45d5c41a04=
+2ed4f19d8282ef5 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -16,6 +16,84 @@
+>
+>  #define GPU_PAS_ID 13
+>
+> +static bool fence_status_check(struct msm_gpu *gpu, u32 offset, u32 valu=
+e, u32 status, u32 mask)
+> +{
+> +       /* Success if !writedropped0/1 */
+> +       if (!(status & mask))
+> +               return true;
+> +
+> +       udelay(10);
+> +
+> +       /* Try to update fenced register again */
+> +       gpu_write(gpu, offset, value);
+> +
+> +       /* We can't do a posted write here because the power domain could=
+ be
+> +        * in collapse state. So use the heaviest barrier instead
+> +        */
+> +       mb();
+> +       return false;
+> +}
+> +
+> +static int fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u32 value=
+, u32 mask)
+> +{
+> +       struct adreno_gpu *adreno_gpu =3D &a6xx_gpu->base;
+> +       struct msm_gpu *gpu =3D &adreno_gpu->base;
+> +       struct a6xx_gmu *gmu =3D &a6xx_gpu->gmu;
+> +       u32 status;
+> +
+> +       gpu_write(gpu, offset, value);
+> +
+> +       /* Nothing else to be done in the case of no-GMU */
+> +       if (adreno_has_gmu_wrapper(adreno_gpu))
+> +               return 0;
+> +
+> +       /* We can't do a posted write here because the power domain could=
+ be
+> +        * in collapse state. So use the heaviest barrier instead
+> +        */
+> +       mb();
+> +
+> +       if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
+> +                       fence_status_check(gpu, offset, value, status, ma=
+sk), 0, 1000))
+> +               return 0;
+> +
+> +       /* Try again for another 1ms before failing */
+> +       gpu_write(gpu, offset, value);
+> +       mb();
+> +
+> +       if (!gmu_poll_timeout(gmu, REG_A6XX_GMU_AHB_FENCE_STATUS, status,
+> +                       fence_status_check(gpu, offset, value, status, ma=
+sk), 0, 1000)) {
+> +               /*
+> +                * The 'delay' warning is here because the pause to print=
+ this
+> +                * warning will allow gpu to move to power collapse which
+> +                * defeats the purpose of continuous polling for 2 ms
+> +                */
+> +               dev_err_ratelimited(gmu->dev, "delay in fenced register w=
+rite (0x%x)\n",
+> +                               offset);
+> +               return 0;
+> +       }
+> +
+> +       dev_err_ratelimited(gmu->dev, "fenced register write (0x%x) fail\=
+n",
+> +                       offset);
+> +
+> +       return -ETIMEDOUT;
+> +}
+> +
+> +int a6xx_fenced_write(struct a6xx_gpu *a6xx_gpu, u32 offset, u64 value, =
+u32 mask, bool is_64b)
+> +{
+> +       int ret;
+> +
+> +       ret =3D fenced_write(a6xx_gpu, offset, lower_32_bits(value), mask=
+);
+> +       if (ret)
+> +               return ret;
+> +
+> +       if (!is_64b)
+> +               return 0;
+> +
+> +       ret =3D fenced_write(a6xx_gpu, offset + 1, upper_32_bits(value), =
+mask);
+> +
+> +       return ret;
+> +}
+> +
+>  static inline bool _a6xx_check_idle(struct msm_gpu *gpu)
+>  {
+>         struct adreno_gpu *adreno_gpu =3D to_adreno_gpu(gpu);
+> @@ -86,7 +164,7 @@ static void a6xx_flush(struct msm_gpu *gpu, struct msm=
+_ringbuffer *ring)
+>         /* Update HW if this is the current ring and we are not in preemp=
+t*/
+>         if (!a6xx_in_preempt(a6xx_gpu)) {
+>                 if (a6xx_gpu->cur_ring =3D=3D ring)
+> -                       gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
+> +                       a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, =
+wptr, BIT(0), false);
+>                 else
+>                         ring->restore_wptr =3D true;
+>         } else {
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/=
+adreno/a6xx_gpu.h
+> index 6e71f617fc3d0d564e51650dfed63a18f31042ac..e736c59d566b3fcf8c62a2124=
+94e3b110c09caa9 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+> @@ -295,5 +295,6 @@ int a6xx_gpu_state_put(struct msm_gpu_state *state);
+>
+>  void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, =
+bool gx_off);
+>  void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert);
+> +int a6xx_fenced_write(struct a6xx_gpu *gpu, u32 offset, u64 value, u32 m=
+ask, bool is_64b);
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+"mask" makes it sound like it's the mask for a masked write, which it
+isn't. At least in the public API I'd name it something more explicit
+like "fence_status_mask". Also it would be nice to add defines like
+GMU_FENCE_STATUS_WPTR/CONTEXT_SWITCH to make the parameter values in
+callsites less magical. Finally, this might be personal preference,
+but it's not immediately obvious what the "true"/"false" in callsites
+mean, so it would make users clearer to add a separate
+"a6xx_fenced_write64" and make 64-bit reg writes use that instead of
+is_64b.
 
-Konrad
+Connor
+
+>
+>  #endif /* __A6XX_GPU_H__ */
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c b/drivers/gpu/drm/=
+msm/adreno/a6xx_preempt.c
+> index 6a12a35dabff1e64aae8440c2a8c88f5feb4803e..10625ffbc4cfc26edc36efcf1=
+1dbb4efd55ab3e0 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_preempt.c
+> @@ -41,7 +41,7 @@ static inline void set_preempt_state(struct a6xx_gpu *g=
+pu,
+>  }
+>
+>  /* Write the most recent wptr for the given ring into the hardware */
+> -static inline void update_wptr(struct msm_gpu *gpu, struct msm_ringbuffe=
+r *ring)
+> +static inline void update_wptr(struct a6xx_gpu *a6xx_gpu, struct msm_rin=
+gbuffer *ring)
+>  {
+>         unsigned long flags;
+>         uint32_t wptr;
+> @@ -51,7 +51,7 @@ static inline void update_wptr(struct msm_gpu *gpu, str=
+uct msm_ringbuffer *ring)
+>         if (ring->restore_wptr) {
+>                 wptr =3D get_wptr(ring);
+>
+> -               gpu_write(gpu, REG_A6XX_CP_RB_WPTR, wptr);
+> +               a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_RB_WPTR, wptr, BI=
+T(0), false);
+>
+>                 ring->restore_wptr =3D false;
+>         }
+> @@ -172,7 +172,7 @@ void a6xx_preempt_irq(struct msm_gpu *gpu)
+>
+>         set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
+>
+> -       update_wptr(gpu, a6xx_gpu->cur_ring);
+> +       update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
+>
+>         set_preempt_state(a6xx_gpu, PREEMPT_NONE);
+>
+> @@ -268,7 +268,7 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
+>          */
+>         if (!ring || (a6xx_gpu->cur_ring =3D=3D ring)) {
+>                 set_preempt_state(a6xx_gpu, PREEMPT_FINISH);
+> -               update_wptr(gpu, a6xx_gpu->cur_ring);
+> +               update_wptr(a6xx_gpu, a6xx_gpu->cur_ring);
+>                 set_preempt_state(a6xx_gpu, PREEMPT_NONE);
+>                 spin_unlock_irqrestore(&a6xx_gpu->eval_lock, flags);
+>                 return;
+> @@ -302,13 +302,13 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
+>
+>         spin_unlock_irqrestore(&ring->preempt_lock, flags);
+>
+> -       gpu_write64(gpu,
+> -               REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO,
+> -               a6xx_gpu->preempt_smmu_iova[ring->id]);
+> +       a6xx_fenced_write(a6xx_gpu,
+> +               REG_A6XX_CP_CONTEXT_SWITCH_SMMU_INFO, a6xx_gpu->preempt_s=
+mmu_iova[ring->id],
+> +               BIT(1), true);
+>
+> -       gpu_write64(gpu,
+> +       a6xx_fenced_write(a6xx_gpu,
+>                 REG_A6XX_CP_CONTEXT_SWITCH_PRIV_NON_SECURE_RESTORE_ADDR,
+> -               a6xx_gpu->preempt_iova[ring->id]);
+> +               a6xx_gpu->preempt_iova[ring->id], BIT(1), true);
+>
+>         a6xx_gpu->next_ring =3D ring;
+>
+> @@ -328,7 +328,7 @@ void a6xx_preempt_trigger(struct msm_gpu *gpu)
+>         set_preempt_state(a6xx_gpu, PREEMPT_TRIGGERED);
+>
+>         /* Trigger the preemption */
+> -       gpu_write(gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL, cntl);
+> +       a6xx_fenced_write(a6xx_gpu, REG_A6XX_CP_CONTEXT_SWITCH_CNTL, cntl=
+, BIT(1), false);
+>  }
+>
+>  static int preempt_init_ring(struct a6xx_gpu *a6xx_gpu,
+>
+> --
+> 2.50.1
+>
 
