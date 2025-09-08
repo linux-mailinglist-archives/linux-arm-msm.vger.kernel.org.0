@@ -1,82 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-72573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72574-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2912DB48E8B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:04:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AD08BB48E90
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 15:04:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 13E821895881
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 13:04:55 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A4C501896B23
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 13:04:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 368E0309F15;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AF6C83081B2;
 	Mon,  8 Sep 2025 13:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Fk+IPlEA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bG/9Fv2T"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29803081B2
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 13:04:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCFA5307AFC
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 13:04:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757336669; cv=none; b=X17uTS5FMtyIQVSkm7PwZS7VY7PD6iVIUuc6cYWkz/LXkQhKbJf0xaBbNbDHlL/f5aGuf9p9sZrxnc4t4SV6v/UWMFghAOoDWYrtXmTBCpmOEMPQ1ZIEFzVhzPyn4+mLAHQz7CxqI2y5xJ4rEpB/ecLX3q+m7HyuxTNCrWG2a50=
+	t=1757336669; cv=none; b=DiF8NpXKKDuxSG8nwFEDu/Y2YeEeU1PJjNHdsppVbFuyaMiEmUm6ndqiDdsCuCIbhljcgTfytbP9DfJtYX5PE4NauLXwQ47iCA2bKWtkakdLBWprblG/uRaetaLvuXzWTg0rxRI4kJlNXNV5x0i46tc1t2oSEOywGMRvc2+bVbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1757336669; c=relaxed/simple;
-	bh=GJhPHTORzQeMZdAUCocINlbQeRuM3KT1od1O9w0/Xmo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OwCMznr241fTONR+3m2GQmBcGn8WG0Eh+I4iRtNTt3sJiSoCSCfSx2I0wZ3EiyZauFdDOp9R3j7pyLlhdoIWg4vm3w7e4gfet3mryJsVZ9Ddrj+W9dwlpvA8yRtIW8JengYWdqrAVO3GltzzO89LOsCyLENTOSUpOTDHiz4HTYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Fk+IPlEA; arc=none smtp.client-ip=209.85.128.44
+	bh=z7PAuGtYNvNlORz36aPmSnF79TimixozQax/x4u5xJA=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=lCyBZv5uPSTIio06pN4MtqXK2PMHhmbmtu2TU+mxAsklwT8iPtgp1/NppNkqnM/RUbyn3xEuwwta5iGyaPMxb/Xr/xH6ULQr/4okH/CRcE33aE3NCLTE0SZ+mXoi5W+888++MlSdWkIK1C1nlegdYNbPMdJHFN7YRFIq+Aw8nUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bG/9Fv2T; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45de56a042dso7370865e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 06:04:26 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45de1e6d76fso14171435e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 06:04:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757336665; x=1757941465; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=F+BmpLQdceYRG7RY6FfRDG60NShGiPldYqA/h5za8sM=;
-        b=Fk+IPlEATsY0Hu1YlVRA9GsS7BBAkVWexpkvGxHP40I6lv4825TkAshKKVkd2i8bLb
-         fnZMa2esbGmMXnV2XtFZ04yzTa7Kb0NioZl/7Cb5RJeRoxeUil6M7JubPAnK9p/tB4u3
-         trfw4YEQqI2J1YVC6nHLIf0nV7MnYbjNL3CsaGudzU9Qo2kYJBEcpNRuKdx33NSzVC/b
-         ScSukhs8t8yNRi9+gBOlaBhPILVLT+AF/+BqLfUl3oOcKgMMIFBLHALhGjeClVatHsVw
-         p4c7efKskYni6gcvsus71t5xr7wZL50wpCmr2E5g8XV2iZAJeNgeOBy1ZEkdTlLk/UAU
-         VkBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757336665; x=1757941465;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=linaro.org; s=google; t=1757336666; x=1757941466; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=F+BmpLQdceYRG7RY6FfRDG60NShGiPldYqA/h5za8sM=;
-        b=X99TD5x9FBWa8kuSz9pzf0hGBz91qqeWQw3Xd+5LMjvKCjnR5AM/hc9UC9m1lsZOlD
-         oAQ+vCZPdWfT0wpuNC3ypI4wVyBFYsY25DWZDoy1owFb8erQMviU9l6O3ulgZeY/Fqsm
-         B/RtKaQhC/9FLLGf4px3S2C6jkY2/Y7XiFDavZEIydoSQN1ArjFmcUk8JFKp8cCgHdqQ
-         wU8DAa14DDJVwhHqbvkUZH284fChwesxDLaBG1Cq2yf3UC/G3haGZxrNhY+qgPsASSBO
-         +8hxzdlO5woZjJVZ8TTyCGz9mMffkJdPUQEJLDwZEI6OEq9VSoLZuVipQqyTxmlW2Zld
-         FX2g==
-X-Forwarded-Encrypted: i=1; AJvYcCWhCSjFDvsOosoNse0mil2CVhyh2jReHB7RjIszUsd3kV3ahbGEDRhvha+Oo/Rfhxo0/jhBl76n82Ie/B50@vger.kernel.org
-X-Gm-Message-State: AOJu0YzxttXwwgevQz5bMiEKMeMh3lDdN797qRxXblLqO0L4Yp4eRURk
-	y+YNivxhU8cmJbBzV7/+qmbLZYoDBE1OoFAhxAUpqU4B3YyXinF8Oe1ZiUVR3VIFg5LgNXw/wcy
-	qlSyO2bg=
-X-Gm-Gg: ASbGncuPIulAjDeWZTWO1DXdHaHyM2GewmLgXQbHx6pPHSZ1ID4pfuQ5ptwcceXffj6
-	Inxt5C21oS3CVea9fP0zJfV3z0aD0M1D8g7a9tGVRhUL+H0TfnbZKlpokAmcqZwPTdd/wm+vrJf
-	mCjUWsJ5Y8+suAR87xvEDujlcfHop01B48zaERcr95IqlSLSZb2yFllF0/HOUh+TTFRqlJb/q/q
-	e/lMbZ4KCo6l9pHMAlcMcBTUMkPV72tgs+07CzOYE2mf0Rv0pGeiXTfV9QnH4akW/ChlkyC5PgQ
-	FY9eU+BAll7RIDTsSnQskE94Dn683PWC18OuPDbvWbJTt2VFzKlImIxMPjoX0oGer6KnExREf3Q
-	G87en/lwz5j1sqWhwD+NVqixTPsjesh4azQgexY0/WkojUih3+TP+rA==
-X-Google-Smtp-Source: AGHT+IGTXRp8nBogkgIlcEf9RUlMXZE1MYZ7qwfcb5uuGBnjJTSjf3Iluna5GLbfmKKFomw1sOdvFQ==
-X-Received: by 2002:a05:600c:3b25:b0:45b:9a41:5d58 with SMTP id 5b1f17b1804b1-45dddea60cbmr64611275e9.4.1757336665015;
+        bh=2GDdn26faX8+Rd19RRlHwI66hY8ZBEzdxwGwtCXn4n8=;
+        b=bG/9Fv2TdfglV5SHJL4gjz8uAX/FRQ4VwzG+PQv0aTkPo+dRKax97L7DA6VTyMEMda
+         huEVNBD+tB71SSDIWDkqkBWVY+dh23wAXeY0MmJCOHUoy+BUt48iuvXeoP3by0M6Jwol
+         PYNBm16uhCczklLEomPcmzcprR794WT5hNL9awTexviMJC5q7zjBa1mJjPqu2910c9Mr
+         k7CIewXY0VSZJYyAdDVWeuvvqfIEeUbnIyyQAYB21Z7QnnYb6NsEvZ4Hr/+VpfDMjbux
+         V4sS2c+Q0iJ1C1RTcsjmiaovG2R0TC8I1mOdFZzD3tqfnwMSVTYWR7MMtcrD8nAsiDIH
+         RQ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757336666; x=1757941466;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=2GDdn26faX8+Rd19RRlHwI66hY8ZBEzdxwGwtCXn4n8=;
+        b=fTTSerwNShNhC3pJluBX/Pt06yBY0Hhhkek49TeuICOC85GcphWlbz6mc9vlXgRKm3
+         SZhnXFT77ukTJYStxCvtzPxr+zAq955g/dIjHxpqV9UySTkLHriVWJ60f2nYqnngT3w8
+         2r/HdMWOHlGg+Di1GVkFfdSf+z50Sk7jK7oAtKUC+Bpagt8iwrZJcNP448k/rB5BQra8
+         igV24cSaFccY/5Er/ESeCTDAejOXttPO27PZEouChEWVdOoPqMaSBdBwv1foH0XiEXO7
+         YTyMtPhmpAtHiWiRbmp6ZxnRrS0DRMcmrYysOb11swc76GQkFAd5nLQem12m/pfHWdOC
+         nH0A==
+X-Forwarded-Encrypted: i=1; AJvYcCW+0X2KWXJNUVaR6Uv9S1/f2XEYRN3aNOY7/siketWvINPmDXfNYscLrejpAMaiYkOAIT7Y8zhlduQRSRxn@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLzODbNJmPddh7f7LJbI67LMtMdufzm+tBosF6pJNRwn2/w1qf
+	X/EZXWcfgPW5r0bvuGWdsqvk1J5HR8IgPhKTBPjNlEdUtjYO1m99mQ42MqhJMExFU819OQePu4S
+	ev88RlUQ=
+X-Gm-Gg: ASbGncsoJX1Rb6WFWn+juHR4r3R2IleNt07GpB3kgtZgOyZsKf9jPN4ES1I3jFBpaQm
+	DyI1wscPs/Ik28bG3dOSU4P2EIh8iZNaHZ1DxiEs1XOn4tUtZa33vyrUC8TDEuQEGQmekJ+4or8
+	F9jUgj+i9qi2vUkUgjRUtf/aa0XdzUOoyjwFEy9iRdpKSBhoRI7TYVZ9HYxmOcYTuAHgcPqVmkA
+	H/K4WO9v18Ur6xrieLd5TZ8Nt4LWZLTzD37qsKdBaIkloUgLip0PSgxufguG2ly75AoMMrh8yWI
+	vhi5qix1dxI3LmxTmWjUkwbRueVU+Lnb9o17SdxbdAIZxQjmociP7oBmAAU3aJp6+bkeN7Fey5i
+	nJmoNtDT2wj7OedC5M3IXylcrpzX/n2A6NlJG5x7pm5xcwLYFPemfiw==
+X-Google-Smtp-Source: AGHT+IE+QQMsvXfniwarXtFZkCcmmT2rZk6Fee10DBHIU433hV2b4Xz5UNo3Gvh1D6s/nDMeM1UWiQ==
+X-Received: by 2002:a05:600c:4f03:b0:45d:e54b:fa29 with SMTP id 5b1f17b1804b1-45de8e21be6mr18156375e9.14.1757336665980;
         Mon, 08 Sep 2025 06:04:25 -0700 (PDT)
 Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:52eb:f6ff:feb3:451a])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45dd6891d23sm145632475e9.4.2025.09.08.06.04.24
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45dd6891d23sm145632475e9.4.2025.09.08.06.04.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 08 Sep 2025 06:04:24 -0700 (PDT)
+        Mon, 08 Sep 2025 06:04:25 -0700 (PDT)
 From: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v3 0/5] arm64: qcom: x1e78100-lenovo-thinkpad-t14s: add
- support for HDMI output
-Date: Mon, 08 Sep 2025 15:04:17 +0200
-Message-Id: <20250908-topic-x1e80100-hdmi-v3-0-c53b0f2bc2fb@linaro.org>
+Date: Mon, 08 Sep 2025 15:04:18 +0200
+Subject: [PATCH v3 1/5] dt-bindings: display: bridge: simple: document the
+ Realtek RTD2171 DP-to-HDMI bridge
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,11 +86,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAFHUvmgC/33NTQrCMBCG4auUrI1M0lYTV95DXOS3HdCmJCVUS
- u9u2o0I4vL9YJ5ZSHIRXSKXaiHRZUwYhhL1oSKmV0PnKNrShANvQXBGpzCioTNzAhgA7e0Taa1
- tq1ttuZUnUi7H6DzOu3q7l+4xTSG+9ieZbet/LzMK1LNGWdnU4IS4PnBQMRxD7MgGZv5BJPDfC
- N+QxhgPzp+l0l/Iuq5vVuxBq/wAAAA=
-X-Change-ID: 20250821-topic-x1e80100-hdmi-3bd5b5bd2d96
+Message-Id: <20250908-topic-x1e80100-hdmi-v3-1-c53b0f2bc2fb@linaro.org>
+References: <20250908-topic-x1e80100-hdmi-v3-0-c53b0f2bc2fb@linaro.org>
+In-Reply-To: <20250908-topic-x1e80100-hdmi-v3-0-c53b0f2bc2fb@linaro.org>
 To: Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>, 
  Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
  Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
@@ -104,89 +103,51 @@ To: Andrzej Hajda <andrzej.hajda@intel.com>, Robert Foss <rfoss@kernel.org>,
 Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  linux-phy@lists.infradead.org, Neil Armstrong <neil.armstrong@linaro.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2716;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1066;
  i=neil.armstrong@linaro.org; h=from:subject:message-id;
- bh=GJhPHTORzQeMZdAUCocINlbQeRuM3KT1od1O9w0/Xmo=;
- b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBovtRVDMVGgxHzLejb7eBbyoFwp6E4YEQMRKPg72/U
- Rwjh/ruJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaL7UVQAKCRB33NvayMhJ0VxID/
- 4wFkdgfYu9J7loTdKrRz5TqNDd63WB1xnl/W4hVSu2QdX9wb2jyH6rUY37phQY9rtVycGyJTzy4cnd
- bi2OjtCN2t5VD8MJF2QB6RTWRYeGqRu4Rturr3w/3WcTHwlJ854MSYrHL2hppI1f8bZyB6wqswekus
- xYvmd2waH5jU0iXp1rLwrCdBphUPyvJylV8oSUb3kyIcZjNbgmjUpIuBSZIkBekeYsesIh8s3Il5zg
- oRiIcBFWFJA8XLfk4Q+Rva2EWkGskG1obCzljpnJDspCLDirzii4iD19ShH59aTy7dJu36GdP7/Qsa
- ISdwycHc7lETEQ7dzSF14MzvjAzSB5fDCqhA7eny3MpxBperELbkHibfuDBClM4cT7u7wT4H0jwh0U
- EHwpwuOgpCH7CM4z4nqMmOKlwUy8hZursraRsi2sFYghdAKSJKOK95FakAnAYIcTDPRNDcNNdACV4j
- mMhQ4hD3ZW0YNJbhQ+PVu+9XT7Qw+eBcueBCBbTZJVj5Za25jgprIzt8y85t6nv6yz3nAkUAM8dNC0
- ACpUhXWFsEKTVcFO+3wmtS5pPNqWOww0dSqma3wv4kx1s0LeU/ZKSbdWR9fPnVjnLXQno4onht+nvJ
- f9JXE2dW/js9wgGCRf5Z3Ca4GV19HstrNjpQYFXQ7mQtwZDhH+hhVM9dOVCg==
+ bh=z7PAuGtYNvNlORz36aPmSnF79TimixozQax/x4u5xJA=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBovtRV0EWZ3GTngV+VZoqNOfxTMbRfZ7L5uMzyt+BQ
+ Gcxw7xWJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaL7UVQAKCRB33NvayMhJ0bWGD/
+ 9FmFWdexA2fU+CtWIWKbFIwMNtPEpiwf9clzEvPTLk1asoldTXFdDdKzIqNt2UImqiqUFDoOcmXw9t
+ gIsk4GdSeV+bFCJgNSDKS+ThVbkQ27MBqv1iG8vZLattjMV4QG6Gc3XTPr5CDWOzg1p4BcXzKz5m5T
+ Z73ct5hdeSi9ZQEaoehnuS3RC2+0P1MwQtKOR9mvUb/Nv6PcNjr6QR7ITS6hNczvmuPJQlF7iWuW5p
+ Wu+KIBDIiMOwtM9ShXzTLo5gRbY9Q3VsC/LXusa6s2qolctz4pQLoiE61Gn8RxbMpQA2Gl5DPwrloU
+ 0Nu1bbUVlgKrGwSEQ7YN/MqzWV0nN/8su7VChcF26g6yhxcTfibRYw7O3+bOzob6IAQz2JMco8dLTS
+ knda27GBDE3ODLhBmsMBvfdPcDIVrdunRQzXUY0wbp0lPiI2FguqNxUUQHEEIu+vWyC4uEEYjDhw0W
+ 3deHkxjR5FZdpZNuKxBCkVSMhXGiZ7NBe/eY4LP62g6fuCjtLqkMA9F/CCq3RlV1scYO9UMI/a1RMW
+ 0JaH5uUXxE91HoAeVxZAv+v85t7ibs02J9/7oR+FAcLYp51VBgFuhV4TEEn+4jHhKJLKU/pKJaa9jj
+ 4Ozwu1O+JQcG7aMdmLl9jqU/yt1XqxL0uKfgeLrHYxygloky0Zp2auM7SE1A==
 X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
  fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-The Thinkpad T14s embeds a transparent 4lanes DP->HDMI transceiver
-connected to the third QMP Combo PHY 4 lanes.
+The Realtek RTD2171 chipset is a transparent DisplayPort 1.4 to
+HDMI 2.0 bridge.
 
-The QMP USB3/DP Combo PHY hosts an USB3 phy and a DP PHY on top
-of a combo glue to route either lanes to the 4 shared physical lanes.
+This chipset is usually found in USB-C To HDMI Adapters and Docks,
+or laptops to provide HDMI display output.
 
-The routing of the lanes can be:
-- 2 DP + 2 USB3
-- 4 DP
-- 2 USB3
-
-We need be able to specify the lanes mapping to DisplayPort
-and/or USB3 peripherals when not connected to a Type-C complex.
-
-Add the documentation for data-lanes in the out endpoints amd
-use those in the driver to setup the right PHY mode and
-orientation.
-
-Finally Add all the data routing in DT, disable mode switching and specify
-the QMP Combo PHY should be in DP-Only mode to route the 4 lanes to
-the underlying DP phy.
-
-Depends on:
-- [1] https://lore.kernel.org/all/20250902-topic-sm8x50-fix-qmp-usb43dp-usb-switch-v1-1-5b4a51c8c5a8@linaro.org/
-- [2] https://lore.kernel.org/all/20250807-topic-4ln_dp_respin-v4-0-43272d6eca92@oss.qualcomm.com/
-- [3] https://lore.kernel.org/all/20250822-topic-x1e80100-4lanes-v3-0-5363acad9e32@linaro.org/
-
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
-Changes in v3:
-- Move the static lanes mapping in data-lanes in the out endpoints
-	- new bindings
-	- new drivewr implementation
-	- new DT layout
-- rebased on next, fixed simple bridge rebase
-- added link frequencies for dp2
-- Link to v2: https://lore.kernel.org/r/20250902-topic-x1e80100-hdmi-v2-0-f4ccf0ef79ab@linaro.org
+ Documentation/devicetree/bindings/display/bridge/simple-bridge.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes in v2:
-- Model the HDMI transceiver as a simple bridge
-- Switch to a static lanes mapping property
-- Link to v1: https://lore.kernel.org/r/20250821-topic-x1e80100-hdmi-v1-0-f14ad9430e88@linaro.org
+diff --git a/Documentation/devicetree/bindings/display/bridge/simple-bridge.yaml b/Documentation/devicetree/bindings/display/bridge/simple-bridge.yaml
+index 421f99ca42d9b75ba1963493d36fc89fa9d8252c..9ef587d4650602699efac634c5466eb2e8aafecd 100644
+--- a/Documentation/devicetree/bindings/display/bridge/simple-bridge.yaml
++++ b/Documentation/devicetree/bindings/display/bridge/simple-bridge.yaml
+@@ -29,6 +29,7 @@ properties:
+           - adi,adv7123
+           - dumb-vga-dac
+           - radxa,ra620
++          - realtek,rtd2171
+           - ti,opa362
+           - ti,ths8134
+           - ti,ths8135
 
----
-Neil Armstrong (5):
-      dt-bindings: display: bridge: simple: document the Realtek RTD2171 DP-to-HDMI bridge
-      drm/bridge: simple: add Realtek RTD2171 DP-to-HDMI bridge
-      dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy: Document lanes mapping when not using in USB-C complex
-      phy: qcom: qmp-combo: get the USB3 & DisplayPort lanes mapping from DT
-      arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: add HDMI nodes
-
- .../bindings/display/bridge/simple-bridge.yaml     |   1 +
- .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml         |  59 ++++++++-
- .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    |  82 +++++++++++++
- drivers/gpu/drm/bridge/simple-bridge.c             |   5 +
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c          | 132 +++++++++++++++++++--
- 5 files changed, 270 insertions(+), 9 deletions(-)
----
-base-commit: 947efd54a86984b5f7dee9cf18c1ee82ec0361a2
-change-id: 20250821-topic-x1e80100-hdmi-3bd5b5bd2d96
-
-Best regards,
 -- 
-Neil Armstrong <neil.armstrong@linaro.org>
+2.34.1
 
 
