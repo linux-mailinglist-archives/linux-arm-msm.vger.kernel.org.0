@@ -1,222 +1,184 @@
-Return-Path: <linux-arm-msm+bounces-72622-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72623-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3899B4969A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 19:11:29 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2A8BB496A4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 19:12:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7095E165535
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:11:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A60031C22C74
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D53FA3126AF;
-	Mon,  8 Sep 2025 17:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 889A831280C;
+	Mon,  8 Sep 2025 17:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="IsTeU0Pm"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="ZuHq0bgQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E146130E0D1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 17:11:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1133126CF
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 17:12:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757351485; cv=none; b=KyYby4ZLVCnEXCkzHabd7g6MoUvDVzWVFuxGwzjxiTZxVXF/IyuGQN+I5LfH/HmOHxqSNLD1JqivoDWSFLaAZ0h+d/oRWNxh4ZiVTuEGijjmRQmH/oUmo6Qv1vI/UzX9NxY2rRnt/0WDcpF1byYAn7swfyrOnlk7RRAC/NuA2oA=
+	t=1757351530; cv=none; b=CCJygcHjOxx4S0jtfgOrEBZbCXFAwQ59tb5dWQkD+YYxDGnXCvXeWQ/0R2Jr2i5foAkQr4+m1LC03GodNZzFO6BEORk13RXTcQ6m+941NhKTlqfBDthbvNZk8dNN3m5RCUSdrL8zP5ENBMVLUNJHE0WkkQc4792oPTf6FLX9A4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757351485; c=relaxed/simple;
-	bh=DavoxOhjLPcLDMahL3Y9U/VbM03JitHAgDMsWBFVdO0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=tZB2iFzWAYFmtMPMv2ygO8Yi/ZYo7sfW4O116O9uccybMWcNu49cMID5wK1IKvOchcxt3e+/ITzMInfDb55vF/laY0MZSVueuU5mbE8UfkC8a1V/j+BHnYIVpfMcuGi6OVgj2u9A1C7hAbGl5mPIfSYipzPMMMPoGljyTMKyQtA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=IsTeU0Pm; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3db9641b725so4735789f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 10:11:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757351482; x=1757956282; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=JXRt87N5KcbZYpVffvCLbSJic16B7wGhz6E/yGN+Uxg=;
-        b=IsTeU0PmzwSYDbg3EIr3zQLnnf0NAyu84FP2kNyCbJvnuGT0pWQN0tYhfZesdCK+jJ
-         owCDBZ5MrzTyU7GtP65hf7XsbgZD5bzLZAJTDl4OYpCAWyPHy027Uo9hEL644atQMG46
-         JjOYuYgVBhvBh86fcyS80xnKbQsAdr5K+hLiZQr7Uw4rdVBXiLdnHlo2KAINc14viD60
-         1gAxsy15XxGLJy4HB5apgJR/CpJU6DG5ss4to+aPE/YZFeMEURMJvQAWbTBYLX9ACk0J
-         JqLHOv3a7G0WRBYJrHPgaQYwYoAkEzBItr5H+MZ+Th6AodrwBBq47TsZhFg7LnJ4G3Pj
-         FaCQ==
+	s=arc-20240116; t=1757351530; c=relaxed/simple;
+	bh=N0Ew5uLxMWlX2hxvzxeMznJDWzQfwf1IVExLfD9g+8c=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RqjgFy0SZa8iHlY+6Hmxzu7Q7zdqykOtceAXyQtsG9f6Qm9p3ndoshGQzM2k4DHk5IQNewKNSWfAitscMptRSTLW3lSa0QTp2rKvKPMZhysGMamjwjOrwEMG+mrgUJemTlgkcanPRrHR5q3IKcJVBcmqlt6yZ/lQIG59pTkB9Rc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=ZuHq0bgQ; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1757351527;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=N0Ew5uLxMWlX2hxvzxeMznJDWzQfwf1IVExLfD9g+8c=;
+	b=ZuHq0bgQveon6kp40mnKKhpBoBWJdfWnY67qlHPz9++SQVij9nh/gwl/t2W/HG+saDFKCf
+	nvUu2YmR1+yWvLYAD9GVp8F/2TrLvwdYw19ooinDxC9ot27Edcn566GZjiykKj8LSVundK
+	qnXN8C67pACLu9F+Y4Rld4u7G6QuGtc=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-608-yZX2N6DQNOSr6RqyH5x03g-1; Mon, 08 Sep 2025 13:12:06 -0400
+X-MC-Unique: yZX2N6DQNOSr6RqyH5x03g-1
+X-Mimecast-MFC-AGG-ID: yZX2N6DQNOSr6RqyH5x03g_1757351526
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b60dd9634dso34031311cf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 10:12:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757351482; x=1757956282;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=JXRt87N5KcbZYpVffvCLbSJic16B7wGhz6E/yGN+Uxg=;
-        b=WDQUIyPOBjwRc9/d71LiUOhQ60FP+Y681CLOgoxXQiGq9Ig+zGyyE1y4ZMs72PP46K
-         tyfKP+3UszdWduFhs+f7eLkRHdlmR34IR00Nxxtv9t+gVYYMnOXO6gs2x/rjOnxU45Q+
-         +V4ZdZ1RcB3h/2ZO0bx8s3l0eg0oB9M1Vu5MFl0821VVjbKVG4vxGIvvd+GEXw2AM34x
-         r55gglmWI/71z/BzT9yd9bo1T+yRVe4xZO7jK+rm7nGIGzwcHONcKQ+OiMNI45Y9nbiY
-         1uKmDiak4jRZv36v6d4F3EHCKIYSmIRpaCjKzocbIYMQNGL0C6fWhf1wW9Af1lJ2gtU1
-         kIOg==
-X-Gm-Message-State: AOJu0YwdxBijHtEuexptbj/t1XBjIKPZTDg+1GzJGKgDOyu4Noc6QNpv
-	SNwnEgItU/M8IhwjgSB0336EwKGYZcO57NkXCQIcv3/whPSrwIitLaiMd+m6e/Pb4Hc=
-X-Gm-Gg: ASbGncvWPe5nmwWJOe2Uo+SW2mwVb3Mb0defYtkGgNl0ESWcNPwpWp04GArlK3vyW4J
-	nEX6tuDdbafv3DQG/UaZpW0U3VBbNW8w2PcaTbazI/Ak7dUFGVNbGyE7K6/RGLPvLSIHwTZ7EfZ
-	ej3fHBeNjN95lHTd6ZLeEB026AxZZe6NTKD6B7KYefmbEbiM/pNM+bKObRaqfzQW+yIAPOVhCfM
-	6AO0QdMrh9dzcqlSMxuCG5X7jMMy+0jfEMqsB8JrjXKRanp5qJdIhwyRrIfbbiaZsRkushrqh1R
-	8XX7WzocYXbIubxddrqbtr132AZl8b6VU7MsVPoicpPne998a3pxr/Nnr/p2s0xF80akiYCgQfe
-	omKfZfnE2h3WzkVxOMfmhBoiBrspfG+mk973rUXRy5HAz225gh9hvaKIhdazESS8wrytpCjLGlw
-	I=
-X-Google-Smtp-Source: AGHT+IEg/f9S1DLAfQQk3JRLZENFZPwKbjav2YVjwZU30nhH+LDJfuSBQA045+uH1/8zST8dM70ckw==
-X-Received: by 2002:a05:6000:230e:b0:3ca:3206:29f with SMTP id ffacd0b85a97d-3e642f91891mr7571829f8f.40.1757351482100;
-        Mon, 08 Sep 2025 10:11:22 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:61c1:5d31:4427:381b? ([2a01:e0a:3d9:2080:61c1:5d31:4427:381b])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3cf33add504sm41829503f8f.30.2025.09.08.10.11.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 10:11:21 -0700 (PDT)
-Message-ID: <6fe68880-44a4-4b7e-a978-2c65d50f018c@linaro.org>
-Date: Mon, 8 Sep 2025 19:11:21 +0200
+        d=1e100.net; s=20230601; t=1757351526; x=1757956326;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=N0Ew5uLxMWlX2hxvzxeMznJDWzQfwf1IVExLfD9g+8c=;
+        b=mMKT6N40WtshhWMEp7ksoyPTYlSyTuRjQf9qycV3/YOOxA9V5AvB9j/PDhPlBo4pL3
+         O36xBCYi5GvT0L5hyVt5uDduP73MwrbluPqZ4ZDHjhgp5Ej9UQOAb6W7IB/l6PRTc5gi
+         6CARlqwIL3iUsOB9aDNlfagauBYaTvQjlSZ9TbFzMS+JONTBIjE+Sj+cgZxVlFFoH4jC
+         e+ITbw/ROWqchp584nfsGzrhkRG2WErbcmvv5gr2x4ofPW8RZ6krrQS9gxtfQk4l3BGn
+         u7h4okoNd4ZNZVFy0DcEG0XZkExjFhuOoy2OJR94oMuIo0s8Fnyvqo3jKnFMFKFQM+yO
+         lM9g==
+X-Forwarded-Encrypted: i=1; AJvYcCXlR9XG3nLozh7+Q9ka/wVsB+1TpAx5npKSwudJ8JdQhCxNAw/RWFreWh0SXZLjvVkU1M5gWx4wzwqSY93R@vger.kernel.org
+X-Gm-Message-State: AOJu0YzU62N152W6TtjQkyHTbgsHmMLH1t8s3wxHYdUL/9/QJtpge59T
+	wyb6/q80t49daJ8fvdt5cIuJYgHpVamICiid0OHHpHYPwL9YkW4i8fEu67Tl5fVyDnow+sT8XYw
+	tBYZxfImL5v14Bs4Ul/Fyfur2R0EYVTPkhHl1A5/3OL3u/Fm1j2KnOZ9ngy/WiXx1sKw=
+X-Gm-Gg: ASbGncuxv9E7EhzfffRduwA9w/EqHrKjr5Ft1MKM73Xpr0O0KFvzU4upOOPTYYO9xlK
+	otNDkWecEeVhSFO1cQWcfdIEh6qk/W3IbtlWK0WJ3MGpAqA3PQYe5kESQeMrDmtDZOaOoajNFMs
+	vLuegVaRcTgzmRi4liWNHtbtdwnEJzneVBXxyX2zSS3gOHPBFwxpi/j0v7Tqqtr0F6DDyl+2OYe
+	zX6Y03mkV2g9awHTISOf8dtUpAGxWsL45HpmAevfSUD1dXk+ZnUbaoFlxquHsjqjOY3ZZzDFl+e
+	YMIedYfKji6hkvLySeWHsxwmmsnrZltCiUW2cZ4puayMIaYuVnA69yIP/tY=
+X-Received: by 2002:ac8:5a12:0:b0:4b5:d739:6273 with SMTP id d75a77b69052e-4b5f8490345mr93489601cf.75.1757351525448;
+        Mon, 08 Sep 2025 10:12:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFVez0JttMWAhr/EpA5S3LWdvkJoIrJRGLs+fJ0AEeH7TgyS1UoHb0txwN7TUYVZQswHIwQlA==
+X-Received: by 2002:ac8:5a12:0:b0:4b5:d739:6273 with SMTP id d75a77b69052e-4b5f8490345mr93488361cf.75.1757351524739;
+        Mon, 08 Sep 2025 10:12:04 -0700 (PDT)
+Received: from x1 ([2600:382:8507:870e:b6f8:ee72:4f09:a16a])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-80aab5a062fsm1122872785a.48.2025.09.08.10.11.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 08 Sep 2025 10:12:04 -0700 (PDT)
+Date: Mon, 8 Sep 2025 13:11:57 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Chen Wang <unicorn_wang@outlook.com>,
+	Inochi Amaoto <inochiama@gmail.com>,
+	Nicolas Ferre <nicolas.ferre@microchip.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Paul Cercueil <paul@crapouillou.net>,
+	Keguang Zhang <keguang.zhang@gmail.com>,
+	Taichi Sugaya <sugaya.taichi@socionext.com>,
+	Takao Orito <orito.takao@socionext.com>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Pengutronix Kernel Team <kernel@pengutronix.de>,
+	Fabio Estevam <festevam@gmail.com>,
+	Jacky Huang <ychuang3@nuvoton.com>,
+	Shan-Chun Hung <schung@nuvoton.com>,
+	Vladimir Zapolskiy <vz@mleia.com>,
+	Piotr Wojtaszczyk <piotr.wojtaszczyk@timesys.com>,
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Samuel Holland <samuel.holland@sifive.com>,
+	Yixun Lan <dlan@gentoo.org>,
+	Steen Hegelund <Steen.Hegelund@microchip.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	UNGLinuxDriver@microchip.com, Orson Zhai <orsonzhai@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Chunyan Zhang <zhang.lyra@gmail.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Michal Simek <michal.simek@amd.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Andreas =?iso-8859-1?Q?F=E4rber?= <afaerber@suse.de>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Sven Peter <sven@kernel.org>, Janne Grunau <j@jannau.net>,
+	Alyssa Rosenzweig <alyssa@rosenzweig.io>,
+	Neal Gompa <neal@gompa.dev>,
+	Eugeniy Paltsev <Eugeniy.Paltsev@synopsys.com>,
+	Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>,
+	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Palmer <daniel@thingy.jp>,
+	Romain Perier <romain.perier@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory Clement <gregory.clement@bootlin.com>,
+	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Andrea della Porta <andrea.porta@suse.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Sylwester Nawrocki <s.nawrocki@samsung.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Qin Jian <qinjian@cqplus1.com>, Viresh Kumar <vireshk@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Alex Helms <alexander.helms.jy@renesas.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Liviu Dudau <liviu.dudau@arm.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Cc: linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+	arm-scmi@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	sophgo@lists.linux.dev, linux-mips@vger.kernel.org,
+	imx@lists.linux.dev, linux-riscv@lists.infradead.org,
+	spacemit@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com,
+	patches@opensource.cirrus.com, linux-actions@lists.infradead.org,
+	asahi@lists.linux.dev, linux-mediatek@lists.infradead.org,
+	linux-arm-msm@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+	linux-rockchip@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org, soc@lists.linux.dev
+Subject: Re: [PATCH 000/114] clk: convert drivers from deprecated
+ round_rate() to determine_rate()
+Message-ID: <aL8OXeFC4N-J_kvC@x1>
+References: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v2 00/16] drm/msm: Support for Inter Frame Power Collapse
- (IFPC) feature
-To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
- Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
- Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Marijn Suijten <marijn.suijten@somainline.org>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Antonino Maniscalco <antomani103@gmail.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, stable@vger.kernel.org
-References: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250908-ifpc-support-v2-0-631b1080bf91@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250811-clk-for-stephen-round-rate-v1-0-b3bf97b038dc@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 
-On 08/09/2025 10:26, Akhil P Oommen wrote:
-> This patch series introduces the IFPC feature to the DRM-MSM driver for
-> Adreno GPUs. IFPC enables GMU to quickly transition GPU into a low power
-> state when idle and quickly resume gpu to active state upon workload
-> submission, hence the name 'Inter Frame Power Collapse'. Since the KMD is
-> unaware of these transitions, it must perform a handshake with the
-> hardware (eg: fenced_write, OOB signaling etc) before accessing registers
-> in the GX power domain.
-> 
-> Initial patches address a few existing issues that were not exposed in the
-> absence of IFPC. Rest of the patches are additional changes required for
-> IFPC. This series adds the necessary restore register list for X1-85/A750
-> GPUs and enables IFPC support for them.
-> 
-> To: Rob Clark <robin.clark@oss.qualcomm.com>
-> To: Sean Paul <sean@poorly.run>
-> To: Konrad Dybcio <konradybcio@kernel.org>
-> To: Dmitry Baryshkov <lumag@kernel.org>
-> To: Abhinav Kumar <abhinav.kumar@linux.dev>
-> To: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-> To: Marijn Suijten <marijn.suijten@somainline.org>
-> To: David Airlie <airlied@gmail.com>
-> To: Simona Vetter <simona@ffwll.ch>
-> To: Antonino Maniscalco <antomani103@gmail.com>
-> To: Neil Armstrong <neil.armstrong@linaro.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: linux-kernel@vger.kernel.org
-> Cc: Antonino Maniscalco <antomani103@gmail.com>
-> Cc: Neil Armstrong <neil.armstrong@linaro.org>
-> 
-> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-> ---
-> Changes in v2:
-> - Elaborate commit text and add Fixes tags (Dmitry/Konrad)
-> - Document GMU_IDLE_STATE_RESERVED (Konrad)
-> - Add a memory barrier in fenced_write
-> - Move an error print in fenced_write to after polling
-> - %s/set_keepalive_vote/a6xx[gpu|preempt]_keepalive_vote (Dmitry)
-> - Add an "unlikely()" to read_gmu_ao_counter() (Konrad/Rob)
-> - Define IFPC_LONG_HYST to document a magic number
-> - Add a new patch to enable IFPC on A750 GPU (Neil/Antonino)
-> - Drop patch 12 & 17 from v1 revision
-> - Link to v1: https://lore.kernel.org/r/20250720-ifpc-support-v1-0-9347aa5bcbd6@oss.qualcomm.com
-> 
-> ---
-> Akhil P Oommen (16):
->        drm/msm: Update GMU register xml
->        drm/msm: a6xx: Fix gx_is_on check for a7x family
->        drm/msm/a6xx: Poll additional DRV status
->        drm/msm/a6xx: Fix PDC sleep sequence
->        drm/msm: a6xx: Refactor a6xx_sptprac_enable()
->        drm/msm: Add an ftrace for gpu register access
->        drm/msm/adreno: Add fenced regwrite support
->        drm/msm/a6xx: Set Keep-alive votes to block IFPC
->        drm/msm/a6xx: Switch to GMU AO counter
->        drm/msm/a6xx: Poll AHB fence status in GPU IRQ handler
->        drm/msm: Add support for IFPC
->        drm/msm/a6xx: Fix hangcheck for IFPC
->        drm/msm/adreno: Disable IFPC when sysprof is active
->        drm/msm/a6xx: Make crashstate capture IFPC safe
->        drm/msm/a6xx: Enable IFPC on Adreno X1-85
->        drm/msm/a6xx: Enable IFPC on A750 GPU
-> 
->   drivers/gpu/drm/msm/adreno/a6xx_catalog.c         |  71 ++++++-
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.c             | 105 ++++++++--
->   drivers/gpu/drm/msm/adreno/a6xx_gmu.h             |  14 ++
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.c             | 221 ++++++++++++++++++----
->   drivers/gpu/drm/msm/adreno/a6xx_gpu.h             |   3 +
->   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c       |  10 +-
->   drivers/gpu/drm/msm/adreno/a6xx_hfi.c             |  34 +++-
->   drivers/gpu/drm/msm/adreno/a6xx_preempt.c         |  40 +++-
->   drivers/gpu/drm/msm/adreno/adreno_gpu.h           |   1 +
->   drivers/gpu/drm/msm/msm_gpu.h                     |   9 +
->   drivers/gpu/drm/msm/msm_gpu_trace.h               |  12 ++
->   drivers/gpu/drm/msm/msm_submitqueue.c             |   4 +
->   drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml |  11 ++
->   13 files changed, 459 insertions(+), 76 deletions(-)
-> ---
-> base-commit: 5cc61f86dff464a63b6a6e4758f26557fda4d494
-> change-id: 20241216-ifpc-support-3b80167b3532
-> 
-> Best regards,
+On Mon, Aug 11, 2025 at 11:17:52AM -0400, Brian Masney wrote:
+> The round_rate() clk ops is deprecated in the clk framework in favor
+> of the determine_rate() clk ops, so let's go ahead and convert the
+> various clk drivers using the Coccinelle semantic patch posted below.
+> I did a few minor cosmetic cleanups of the code in a few cases.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-HDK
+I included a subset of these patches in this pull request to Stephen:
+https://lore.kernel.org/linux-clk/aL8MXYrR5uoBa4cB@x1/T/#u
 
-Thanks,
-Neil
+Brian
+
 
