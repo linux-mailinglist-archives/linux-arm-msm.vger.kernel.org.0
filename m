@@ -1,235 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-72625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B47C5B496DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 19:21:14 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CBD2B4976F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 19:43:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 96DD81891024
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:21:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 218323A76A8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 17:43:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A988731197B;
-	Mon,  8 Sep 2025 17:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E8F173126B7;
+	Mon,  8 Sep 2025 17:43:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bq0l7xzn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jbC2l8nS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA0E312826
-	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 17:21:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2490430F52C
+	for <linux-arm-msm@vger.kernel.org>; Mon,  8 Sep 2025 17:43:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757352069; cv=none; b=GAeRfC6G/PcMNR6vXYxyBZKYbwjDKjl8S2Br/UDy9QkSMmdf5VXpiSSElUukJX5wVG8KobdncdijIjKPRzQEwawm4CJXK6LNTX70fiJpR0wgWl6qfd2ooQdb74ZGykvCHSToEwk+9xTvFN0HoIoVPAXuGxMhv3j4lc1iBbpZXf0=
+	t=1757353406; cv=none; b=YHTGAt6p81w1a6XPeVPDJv8TdG+2jEzqf7ITSutU38Dfr+yvySbbd1uIQSAk5SwUvUWd/W2+ND8W88ZruL8CN1U4Y3mjxFOMGNhEzjyg9ilso2+0zLStyeBDxksX9Aom0VcN7NpgkrCpgDOUmDvmBMsuxwkF2iWv6QA4xIo65/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757352069; c=relaxed/simple;
-	bh=G4BrLvgleWaxxht72XKMAEEw2IxbTnc795ofruBpdCc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AjpPjb5KaqFGop8BLoKBD2Euv/QRew9TAofAKkimpgk5wq/VR+XAne7tXfCMvoQziurUiroke0UlKmBW38hPZ/6wl2oujKwWOGvxN0Q/ikjlK0rTMKVJGp+46df3KWMo0OYKaRlBa4TrHuxa9gaWRyWcyOBv7Br6V+hYc5rozXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bq0l7xzn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 588GcfK8014776
-	for <linux-arm-msm@vger.kernel.org>; Mon, 8 Sep 2025 17:21:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	ODZs9h0J4Tt9rKYM/lsBJZbKSKYYe/vF4vwiFuP4OVE=; b=bq0l7xznvGgqX4MF
-	xG4StxRIL4s8AdMobbe01/TBgehMgPWm23PWSnnPksEcTPbDIQFf/rmLzlyhETcB
-	DTS+nrNeSyEhrBMiV6d/baQyRKZ/qCg+nAjW/kf++s2qwAOnuO/G06zGWeqhSg7m
-	MzEDCgoV/4CpWFqoOPW6lJ9ESFo7jX7N/tqoNqLqihEFaNVp6inuirYb+mF9IVAP
-	RzbmuU9DPCep9rAdJU9xu456VsY7NwIvQ+ZK1MtKuwUuhGPVpyyEkz1cQsNcekeW
-	t+W2TmHpPAt8z0v0HDU15WClPOhiOFmyrFVfJzRTkEw8vDcXDfNzv5gZDBQ5CbCz
-	+K92Pw==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490bws5huk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 17:21:06 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-24b0e137484so39244955ad.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 10:21:06 -0700 (PDT)
+	s=arc-20240116; t=1757353406; c=relaxed/simple;
+	bh=uNe7xwF+09czpp1zvAQmHWliffYX9vJgmJ7NMWFNsBk=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=NkssWMl5s3UsoSOivko4g25sZCkK0kLs40W7U1FchqrmJkWHUn9h/VCVHJINrbdCypsjc+obvBcwmDZ3P8LNgmeWhkdaooWJkrcAigzIlyDzNdcoGFXETl8kehpj+q9yzUe1ASyXNxRCpfGuAdi/RqtgxPv8ixbAx9BNLoCFBjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jbC2l8nS; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45dda7d87faso21742955e9.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 08 Sep 2025 10:43:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757353403; x=1757958203; darn=vger.kernel.org;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i9xqB3OJYnbhkKTLmD064zHurp1hR8d4tN/toD2idgE=;
+        b=jbC2l8nSDYoJj8OtuOa04UBLNTDC5YLxQwRAmjM3q6OVLjMzS5eaOTdKa8QiqruWoj
+         /VV6gFuzsYKCf0JdNoH/Z1mDjY3vodHPQb6xD78oVxkH0dnPd0vk2/ChCvR7erGmdUSw
+         CelL8gzo+jj5NTh1+L1T6A9iNY0DGev6XKZBqXjlcEeXq1zfB3Vcn24iu9zphALwjXoF
+         lG3eQCKHbc6A/yC4Ol1C0uG1aToL4O0pTQfYS/8senpDOncOKSpoQcqRBIH0MA1Rvp4u
+         ysMHHZkqmHeYjm6qYiPh1pMkK57XmXmH/ES0VxrChYo5bUe4etxd4HwIbDk2IH4YmK2W
+         FIHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757352066; x=1757956866;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ODZs9h0J4Tt9rKYM/lsBJZbKSKYYe/vF4vwiFuP4OVE=;
-        b=I/ELbTaaTZ0x5/M2HzhemtYELKYv/yw3z8bqJ8JGdL4/eV3ObAO4xF71txyBVT5JR0
-         ZgFqry9DRnwaWPSNaeGotm/ZnNF+krHws2kp5BmsgdI4lUkZr0TviXjsGIGNFo3PXQZ1
-         yZz9W76eOeFfFWfhxdv1kDj/y/deUb+0hlWtN7/V5YucWhKJi4VdjulHAicaigs+WR5d
-         t141+ptcUks5taL4BSt36axtNYMge6fPyp+MNjQ9Q4ctK00Sb1+TrVX5IbohwSD9tJaf
-         2ViaCMD3Opcoe10xj8FKymMwbw3LER/S6EFDgMcda/JsVK9mhRPZPH5fykbr465w/5Hm
-         1K7w==
-X-Forwarded-Encrypted: i=1; AJvYcCWxZtenhgz7OBSG/lSX5GLgu89gSCJsVWGGbt1yC44tI/4D9xTDD4tSphkNRAA/2eA5b6ObGBrwekEAjWKs@vger.kernel.org
-X-Gm-Message-State: AOJu0YwwaXAbtHnzVXHThu+8fJZaVkyE1J4oHVDVkYm0lJPScG/Cy9fk
-	hAqrnwhoK0ygRhl3qN4vZCOYa1ukuQONVQC5NTk6Ef/Us1qbesD4nQ6A79kfiqvEPUEJk+jfk9v
-	j6muQVlWqAooFgmOYomqwEnUvAQJATrKTjw1St2BprLlk6m/NXMCKXh8ohVuSuG5NlvFn
-X-Gm-Gg: ASbGncvWmicbtKHDJFJk+2E4b/wLn5CQ1q9yOB2ww8lPUXIBdaJQlWYT26CyojAlsfA
-	5qclvKV4ZJsWlDQV52kRwb+L0hXqOWRrI4QrJKd82NONIIy+wakg2WRUqLbLHdbnT0AwR0L2yiM
-	MV2fRrQy0HYeDEGYJpnU46JNCCsUizbPMjYUoSMA3emP35wiLY176A9/jA4sBZtIWnrSfF+oP34
-	WkkIQWvAKdspRdtR7ewSF84AbAC46Uf/pQqbaldgBBmIMozh/2vNI7sMYUtdanoNGUYYCQNA2JW
-	i5OUO9IPTn8y1wyX5f0+g5m4zEfPnHcgTeakdSq3PsQPTJ1ygYOaleHpagd1RrC4hsk3Cis5AvO
-	OL3A=
-X-Received: by 2002:a17:902:f545:b0:250:6d0e:1e4d with SMTP id d9443c01a7336-2516dbf1ec0mr110154045ad.4.1757352065872;
-        Mon, 08 Sep 2025 10:21:05 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGQkPNfzkAlHEBiLtjeXJpfUmFQcP93l7F9njp/9qBA4losfZNr9ZSj7Wz9mErmHUlusFnO5A==
-X-Received: by 2002:a17:902:f545:b0:250:6d0e:1e4d with SMTP id d9443c01a7336-2516dbf1ec0mr110153605ad.4.1757352065134;
-        Mon, 08 Sep 2025 10:21:05 -0700 (PDT)
-Received: from [192.168.1.5] ([223.184.71.210])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-327da8e71a8sm31147628a91.15.2025.09.08.10.21.01
+        d=1e100.net; s=20230601; t=1757353403; x=1757958203;
+        h=in-reply-to:references:from:subject:cc:to:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=i9xqB3OJYnbhkKTLmD064zHurp1hR8d4tN/toD2idgE=;
+        b=nTPBXIQ7aSHKv1b72yQINIX8bwylYDV2qMj1TyTS+/knBm9A7Pyxg/e6kkaWKLbBZ+
+         fdhIAffKcwNiJTBU8ng2w7GbtTyF7Dei2gkcv9gy5IVw6j+a7grPkdg2cTDY+5nj9R00
+         y0NIIDGsuMfJGNiIX/rXsdGd0+LgYW0dakUpVETbiuSDMShXf217KfJaIE6cgQH1ATmx
+         1J4BuaDIt/2cAn2SplEYOQIY1/WCCiQ6TZsyP2SToWE0bR7N0kmILIF3qPUhJxucrZYJ
+         /eLfGmjOOO0NOGSuadk/W5s6Vmya7+3XYGJCbrftTSlrJrZQqu95+UhqIkvjWUmnibst
+         4y5A==
+X-Forwarded-Encrypted: i=1; AJvYcCUOHmXesGESEjSYjk8fT27dWT+uWNe3QCYAto8W602Jx8Us+M1LW07QzwZv1DzDUdN2px7ONaUuvstt77Bh@vger.kernel.org
+X-Gm-Message-State: AOJu0YylwjfIPMVjUNxLo4rZdjYTYWVgA3UQdqhT7hOvt++1yDbFGeLn
+	3o1u/s4bLFwApJYCP9bPZ9b+1fi1hwqXEb8QKbAM7Ws1Mw2ByjhQ5HItdzWiSgf5n98=
+X-Gm-Gg: ASbGncui+6Jt+4ioAOQzLikiJ3/LmMBJcLFRyDyyLCUZckR9uOlhXvj1BwNmA7xOzb0
+	H+qHPi4PBXKGmA5yG6KJ2ZzUvvDkz2lzitKYwyaRzhcMMFROncb/KjK+z0sZk/lpDMXRL2Ay4LD
+	3vMQP5yV680GYoEMn5jpEJrHYqCER3btctrBNDSG0xOH0nVJNLO+a7GHlqnaFhal+8XPEX5vhg5
+	Jn+LwxTdChTWnoZOKtcinNQ5o6fb9AAVRmz4YFSrTtrF+xkTktDcRT9TzCGrIpOP8nv+TJLfgpc
+	HE06q5xT60Mk8wj3qYiv8ksWbxnJBG3V0lpsOeL+kZ/Fx4tepZuYvcXeWn6t74dBnMl56XJ6uee
+	RVB8+IvNh8Dl1D25efMNqx3cyBR0G7RO2S6YfeA==
+X-Google-Smtp-Source: AGHT+IE091C8zwFMRw0Jlkq9rgizmdT1JXnkZiZtb71fLUbeqCOaZbrCKUF+l7CPSQcBUn2jxocBYA==
+X-Received: by 2002:a05:600c:468a:b0:45d:d19c:32fc with SMTP id 5b1f17b1804b1-45dddeb7e1cmr82645915e9.10.1757353403512;
+        Mon, 08 Sep 2025 10:43:23 -0700 (PDT)
+Received: from localhost ([2a02:c7c:7259:a00:1299:47dd:d3d7:b7cf])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45ddb779eb6sm136589595e9.8.2025.09.08.10.43.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 08 Sep 2025 10:21:04 -0700 (PDT)
-Message-ID: <2f29addf-881a-4aae-9f3c-d8f20f8fbad4@oss.qualcomm.com>
-Date: Mon, 8 Sep 2025 22:50:59 +0530
+        Mon, 08 Sep 2025 10:43:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/4] arm64: dts: qcom: monaco-evk: Add sound card
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Umang Chheda <umang.chheda@oss.qualcomm.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Richard Cochran <richardcochran@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250905192350.1223812-1-umang.chheda@oss.qualcomm.com>
- <20250905192350.1223812-5-umang.chheda@oss.qualcomm.com>
- <7bzlof2wyqqorhh4xck46wd43zlehm4vhej2oaxajo4dxn5p7p@oc3vikzxcwke>
- <nphea3rtl3z2tgpyn4g4hf7ticbg4kyhgv4ht25etfxspsgkv6@dm67wp7x4mdt>
- <5bbe50f6-5fa3-4685-8f2c-67986c5171ab@oss.qualcomm.com>
-Content-Language: en-US
-From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-In-Reply-To: <5bbe50f6-5fa3-4685-8f2c-67986c5171ab@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: HiAXxFxXPwRJUiqPezuH34X0-OTli0-K
-X-Proofpoint-GUID: HiAXxFxXPwRJUiqPezuH34X0-OTli0-K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAxOCBTYWx0ZWRfXwdB7DVfyNWqy
- sMUU+QGwMdNEOeZHL2DZgO94MgVb3QBg2IpZAeihFVUePb3ty/XAcVWG9DvYk0rvPOUff1Znu6P
- r8pjOeZd2faruzxUtbU0LKy+4NF0KaSz7uqlJdS7M6ByjKNMA1CozqaSF9+OZ/Wnyvqa3kTtJ9k
- +4U/8pf2+IIaWbmXyV7Eb7DXPu0LXEX4l3VODRniKNDClNxWpOEDu+7A+GoY87fL55MMAmmbb/U
- 7psV3i9HhGvkbVBwmDfgVi0jkhuOvwdvxYPc4qy8hwrwdHUd5r7ZovpfXPbkCyXgOFwCKzauzn2
- 4McNF9ht/G3TcjirMy+B7AgeL2Q2pUNdN7/D7ZfROawaqv4mjsrajXG+hJymzyaEoEZxnFsKXQn
- e+MlpgAJ
-X-Authority-Analysis: v=2.4 cv=G4kcE8k5 c=1 sm=1 tr=0 ts=68bf1082 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=xi+emkTUnFkL6NAgZCPIgw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=lD4_i0t_BDgHsDeZWuoA:9
- a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-08_06,2025-09-08_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- malwarescore=0 adultscore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060018
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 08 Sep 2025 18:43:22 +0100
+Message-Id: <DCNLSFVPCKMV.K1UE3J3K6JQD@linaro.org>
+To: "Praveen Talari" <praveen.talari@oss.qualcomm.com>, "Greg Kroah-Hartman"
+ <gregkh@linuxfoundation.org>, "Jiri Slaby" <jirislaby@kernel.org>, "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>, "Praveen Talari"
+ <quic_ptalari@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>
+Cc: <psodagud@quicinc.com>, <djaggi@quicinc.com>,
+ <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
+ <quic_arandive@quicinc.com>, <quic_mnaresh@quicinc.com>,
+ <quic_shazhuss@quicinc.com>
+Subject: Re: [PATCH v1] serial: qcom-geni: Fix pinctrl deadlock on runtime
+ resume
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+X-Mailer: aerc 0.20.0
+References: <20250908164532.2365969-1-praveen.talari@oss.qualcomm.com>
+In-Reply-To: <20250908164532.2365969-1-praveen.talari@oss.qualcomm.com>
 
-
-
-On 9/8/2025 9:25 PM, Konrad Dybcio wrote:
-> On 9/8/25 4:55 PM, Bjorn Andersson wrote:
->> On Sat, Sep 06, 2025 at 10:26:23PM +0300, Dmitry Baryshkov wrote:
->>> On Sat, Sep 06, 2025 at 12:53:50AM +0530, Umang Chheda wrote:
->>>> From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
->>>>
->>>> Add the sound card for monaco-evk board and verified playback
->>>> functionality using the max98357a I2S speaker amplifier and I2S
->>>> microphones. The max98357a speaker amplifier is connected via
->>>> High-Speed MI2S HS0 interface, while the microphones utilize the
->>>> Secondary MI2S interface and also enable required pin controller
->>>> gpios for audio.
->>>>
->>>> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
->>>> Signed-off-by: Umang Chheda <umang.chheda@oss.qualcomm.com>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/monaco-evk.dts | 52 +++++++++++++++++++++++++
->>>>   arch/arm64/boot/dts/qcom/qcs8300.dtsi   | 37 ++++++++++++++++++
->>>>   2 files changed, 89 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/monaco-evk.dts b/arch/arm64/boot/dts/qcom/monaco-evk.dts
->>>> index 93e9e5322a39..f3c5d363921e 100644
->>>> --- a/arch/arm64/boot/dts/qcom/monaco-evk.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/monaco-evk.dts
->>>> @@ -6,6 +6,7 @@
->>>>   /dts-v1/;
->>>>
->>>>   #include <dt-bindings/gpio/gpio.h>
->>>> +#include <dt-bindings/sound/qcom,q6afe.h>
->>>>   #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
->>>>
->>>>   #include "qcs8300.dtsi"
->>>> @@ -24,6 +25,57 @@ aliases {
->>>>   	chosen {
->>>>   		stdout-path = "serial0:115200n8";
->>>>   	};
->>>> +
->>>> +	dmic: audio-codec-0 {
->>>> +		compatible = "dmic-codec";
->>>> +		#sound-dai-cells = <0>;
->>>> +		num-channels = <1>;
->>>> +	};
->>>> +
->>>> +	max98357a: audio-codec-1 {
->>>> +		compatible = "maxim,max98357a";
->>>> +		#sound-dai-cells = <0>;
->>>> +	};
->>>> +
->>>> +	sound {
->>>> +		compatible = "qcom,qcs8275-sndcard";
->>>
->>> qcs8300
->>>
-
-ACK,
-
->>
->> If the Monaco EVK actually is QCS8300... But, I presume qcs8275 and
->> qcs8300 are identical when it comes to sound?
->>
->> @Mohammad, if this is the case can't we just support the
->> qcom,monaco-sndcard instead to avoid this confusion?
+On Mon Sep 8, 2025 at 5:45 PM BST, Praveen Talari wrote:
+> A deadlock is observed in the qcom_geni_serial driver during runtime
+> resume. This occurs when the pinctrl subsystem reconfigures device pins
+> via msm_pinmux_set_mux() while the serial device's interrupt is an
+> active wakeup source. msm_pinmux_set_mux() calls disable_irq() or
+> __synchronize_irq(), conflicting with the active wakeup state and
+> causing the IRQ thread to enter an uninterruptible (D-state) sleep,
+> leading to system instability.
 >
+> The critical call trace leading to the deadlock is:
+>
+>     Call trace:
+>     __switch_to+0xe0/0x120
+>     __schedule+0x39c/0x978
+>     schedule+0x5c/0xf8
+>     __synchronize_irq+0x88/0xb4
+>     disable_irq+0x3c/0x4c
+>     msm_pinmux_set_mux+0x508/0x644
+>     pinmux_enable_setting+0x190/0x2dc
+>     pinctrl_commit_state+0x13c/0x208
+>     pinctrl_pm_select_default_state+0x4c/0xa4
+>     geni_se_resources_on+0xe8/0x154
+>     qcom_geni_serial_runtime_resume+0x4c/0x88
+>     pm_generic_runtime_resume+0x2c/0x44
+>     __genpd_runtime_resume+0x30/0x80
+>     genpd_runtime_resume+0x114/0x29c
+>     __rpm_callback+0x48/0x1d8
+>     rpm_callback+0x6c/0x78
+>     rpm_resume+0x530/0x750
+>     __pm_runtime_resume+0x50/0x94
+>     handle_threaded_wake_irq+0x30/0x94
+>     irq_thread_fn+0x2c/xa8
+>     irq_thread+0x160/x248
+>     kthread+0x110/x114
+>     ret_from_fork+0x10/x20
+>
+> To resolve this, explicitly manage the wakeup IRQ state within the
+> runtime suspend/resume callbacks. In the runtime resume callback, call
+> disable_irq_wake() before enabling resources. This preemptively
+> removes the "wakeup" capability from the IRQ, allowing subsequent
+> interrupt management calls to proceed without conflict. An error path
+> re-enables the wakeup IRQ if resource enablement fails.
+>
+> Conversely, in runtime suspend, call enable_irq_wake() after resources
+> are disabled. This ensures the interrupt is configured as a wakeup
+> source only once the device has fully entered its low-power state. An
+> error path handles disabling the wakeup IRQ if the suspend operation
+> fails.
+>
+> Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial dri=
+ver")
+> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
 
-The Monaco-EVK board is based on Qualcomm's QCS8300 SoC.
+You forgot:
 
-Although the Monaco-EVK platform was previously associated with the 
-QCS8275 sound card, the QCS8275 re-use was based on existing coverage. 
-However, according to the naming guidelines, sound card compatibility 
-should be based on the SoC rather than the board.
+Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
 
-Therefore, it's necessary to use the SoC name in the sound card 
-compatible string. I will update the DTS to use qcom,qcs8300-sndcard to 
-align with the convention and avoid confusion.
+Also, not sure where this change will go, via Greg or Jiri, but ideally
+this should be picked for current -rc cycle since regression is
+introduced during latest merge window.
 
+I also would like to test it on qrb2210 rb1 where this regression is
+reproduciable.
 
-> Commit 34d340d48e59 ("ASoC: qcom: sc8280xp: Add support for QCS8275")
-> 
-> Unless we choose to ignore that compatible and add "monaco", but I don't
-> think dt maintainers will love that
-> 
+Thanks,
+Alexey
 
-Agree. We used the existing qcom,qcs8275-sndcard compatible string 
-instead of adding a new one, but this needs to be changed.
-
-The sound card compatible should be SoC specific in this case, qcs8300.
-
-I will update the patch with qcom,qcs8300-sndcard.
-
-
-Thanks & Regards,
-Rafi.
-
-
-> Konrad
-
+[..]
 
