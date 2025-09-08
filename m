@@ -1,173 +1,120 @@
-Return-Path: <linux-arm-msm+bounces-72630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DF80BB49860
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 20:33:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1838B49899
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 20:46:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F11BF1B26CF4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 18:34:07 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id D00B57A424F
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 18:45:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1063E31B122;
-	Mon,  8 Sep 2025 18:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AF9731CA42;
+	Mon,  8 Sep 2025 18:46:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hQjBvLjK"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="JJ7/j/sx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail-244108.protonmail.ch (mail-244108.protonmail.ch [109.224.244.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39C331AF10;
-	Mon,  8 Sep 2025 18:33:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C608F31C58B;
+	Mon,  8 Sep 2025 18:46:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=109.224.244.108
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757356409; cv=none; b=OhjSihkzTJ525fIoWqpaIurW96CGNKuKoF8kclrlsR+JSySn1aMuMldgt3DBsEl2hi2p0T5N4HJzTZ6lT7WtKo7+8XmbErqb0DUfkGtoWIOycEU3Nv4QQGXeZaEqAZ0yIhfWqAbcLy2kVJX4AqAWGsLH6VChkwnXAtuvBwwEOeE=
+	t=1757357194; cv=none; b=drW6kbzhk9xnszLSWXnOOcu62v1n1iyOq0JbalWVjJWHkoQCfVVrk3Wr86Xl1cHyY5cxgNNxKJtFiOw923KGswwNUyDSlpyMOIm3v7gQs6zShLjJeZc0QUxga0c0tcpYfc3U/I+q6QH2jqIr7pdat1ZMuE/Hjls/pg00F6hbJOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757356409; c=relaxed/simple;
-	bh=ejH/GOe9Mp+BMNiV+zRI9hMfPJDA9yQMvdvKWLFHIu4=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=mTWGPYGiIIlF0nxnkUt3k6OFBOWxpp6g81QWFRN55gSL4Qt8aNGWK2MRSWK9x9YOwSgDmXzI0utN5atQAVr5rM0iYCFswDRXhYguc3K7uzLFJ1qY0vKJPgCoChYEerFY3oVZFDxHLPGyfhQwsISLD6LYIGJzS+WoPXZFHqKoZsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hQjBvLjK; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B61AC4CEFA;
-	Mon,  8 Sep 2025 18:33:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757356407;
-	bh=ejH/GOe9Mp+BMNiV+zRI9hMfPJDA9yQMvdvKWLFHIu4=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=hQjBvLjKN/9OeE0fQURd4qFcWwXmB8JZ1u9xc224NcPx9FpTzpuEhqxV0vs1B3dA7
-	 gh5pVA2TmHTva9sC+gfDXVFKYTjhn7y3zSR8ufDN5GibKQzAdJ6LwvcLiEmSu8j3Ze
-	 N/x1jgF2OJ1O1occFYIh7TyD9h8E9gF0XZNA4iqEBxm/MM/hGfzeHQ3OWSxlXkXpWR
-	 D/yqCZsqZS/OlX4D72JrVcLJhIWABSAjeBJs4dXgUoVUDbzZYbHf2KpK3ncPjZHI7Q
-	 R3bkvMM25FB34Zf5S/qHhbhzdmAwAkshfYRbe0JqDvc16tx9JK1B9/bylkRp+KsthO
-	 LxGMqKqyr2pYw==
-Date: Mon, 8 Sep 2025 13:33:25 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
-	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
-	quic_mrana@quicinc.com
-Subject: Re: [PATCH v5 2/2] PCI: qcom: Add support for multi-root port
-Message-ID: <20250908183325.GA1450728@bhelgaas>
+	s=arc-20240116; t=1757357194; c=relaxed/simple;
+	bh=P0Faj80sRK7sTe75N6OS0zqQYV5haDySqE9JOh5yoWY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=kxLwFOlrXhlPbHJVX7+QhGV5HMQ0rtXRc8prgDlAlO3vhJnt8gQpH+N5pkMrdKJwHApNBLyp7WpjRNGJSB8uPwKbtj4LJCudVjtpHHK3HzfMomkLmJ6QQJD88P0i9DDJwKe/XrUMIbNEvs1+TXtjXXPUUCw8gpCfO/gfKVJu/jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=JJ7/j/sx; arc=none smtp.client-ip=109.224.244.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail; t=1757357187; x=1757616387;
+	bh=meaZ0rdIKuJL9vmUg7Nj6Px+Q4a3GEkns2WLKMdlXkw=;
+	h=From:Subject:Date:Message-Id:To:Cc:From:To:Cc:Date:Subject:
+	 Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+	b=JJ7/j/sxXUHAmp+QwwEstrtxo1+h3Tx7GOAAL+RQ6v+AxjCII32D0rar3zR1KgR4p
+	 yD67B84/ZYbBuq17sciwOI3fXX/pPdvuKcIvTiqT/LYBwuqIiK3RxE8xQYrKtN1Z1Z
+	 QN6kZjxpXvo2TTWpcaqlaCAixIkoNSSdpPAkvDWWN+Pj5iOiLwAZzTixH1/USXwb/W
+	 i1m3PGSnT+aVFiQF33Jhc0cRg5Y+V9nvUc2OZ1efQL6FMHTZpcGiavgxsK7gydngeR
+	 coTp0e0HOGJ5fXDXiBxoYRW8a7pD7PqTZN/CMq8v/dP/LxFiqL6LRAb+nhqytMzRBk
+	 aqDYSNKfOngPA==
+X-Pm-Submission-Id: 4cLGBT5n8Cz1DDL6
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Subject: [PATCH 0/3] arm64: dts: qcom: x1-asus-zenbook-a14: LCD, WiFi for
+ X1E support
+Date: Mon, 08 Sep 2025 20:45:44 +0200
+Message-Id: <20250908-zenbook-improvements-v1-0-43ecbbf39c60@vinarskis.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250702-perst-v5-2-920b3d1f6ee1@qti.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFgkv2gC/x3MQQqAIBBA0avErBPUiqyrRIusqYZQQ0Oi8O5Jy
+ 7f4/4WAnjBAX7zgMVIgZzNEWcC8T3ZDRks2SC4b3nHFHrTauYOROb2LaNBegQkl6lZXSlZKQ05
+ Pjyvd/3YYU/oAP2sllmYAAAA=
+X-Change-ID: 20250908-zenbook-improvements-18147b38238b
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
+ Aleksandrs Vinarskis <alex@vinarskis.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1984; i=alex@vinarskis.com;
+ h=from:subject:message-id; bh=P0Faj80sRK7sTe75N6OS0zqQYV5haDySqE9JOh5yoWY=;
+ b=owGbwMvMwCX2dl3hIv4AZgHG02pJDBn7VWpEVHgeim9tOjGvZGFGqCDfZOn7O7ec+7vIJrlVb
+ cH9qzP2dJSyMIhxMciKKbJ0//ma1rVo7lqG6xrfYOawMoEMYeDiFICJ7JVm+O9XwhP/Omu+wMyL
+ Ya1zVHbIqDin8j02enX75sXXdaFrbgkw/I9vtTy39WTKxYopv8L/+kzb65lw939DuvXyzJ87VFa
+ XpDECAA==
+X-Developer-Key: i=alex@vinarskis.com; a=openpgp;
+ fpr=8E21FAE2D2967BB123303E8C684FD4BA28133815
 
-On Wed, Jul 02, 2025 at 04:50:42PM +0530, Krishna Chaitanya Chundru wrote:
-> Move phy, PERST# handling to root port and provide a way to have multi-port
-> logic.
-> 
-> Currently, QCOM controllers only support single port, and all properties
-> are present in the host bridge node itself. This is incorrect, as
-> properties like phys, perst-gpios, etc.. can vary per port and should be
-> present in the root port node.
-> 
-> To maintain DT backwards compatibility, fallback to the legacy method of
-> parsing the host bridge node if the port parsing fails.
-> 
-> pci-bus-common.yaml uses reset-gpios property for representing PERST#, use
-> same property instead of perst-gpios.
-> 
-> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 178 ++++++++++++++++++++++++++++-----
->  1 file changed, 151 insertions(+), 27 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index f7ed1e010eb6607b2e98a42f0051c47e4de2af93..56d04a15edf8f99f6d3b9bfaa037ff922b521888 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -267,6 +267,12 @@ struct qcom_pcie_cfg {
->  	bool no_l0s;
->  };
->  
-> +struct qcom_pcie_port {
-> +	struct list_head list;
-> +	struct gpio_desc *reset;
-> +	struct phy *phy;
+Round of improvements for Asus Zenbook A14, two changes:
+1. Support LCD option on X1 (UX3407QA) variant. Until now, 'edp-panel'
+   was used for both X1/X1E models, for both OLED panels. The lower end
+   model also comes with IPS, which unfortunately needs PWM brightness
+   controls. Follow example of Lenovo t14s - create a dedicated DT with
+   dedicated 'compatible'. To maintain backward compatibility, do not
+   rename current devicetree nor the 'model'.
 
-This change is already upstream (a2fbecdbbb9d ("PCI: qcom: Add support
-for parsing the new Root Port binding")), but it seems wrong to me to
-have "phy" and "reset" in both struct qcom_pcie and struct
-qcom_pcie_port.  
+   As this results in 3 DTs for 3 variants of the laptop, change
+   OLED variants from 'edp-panel' to respective drivers (it appears both
+   panels happily work both in old and new setup). Compatible for the
+   panels were added to linux-next some weeks ago.
 
-I know we need *find* those things in different places (either a
-per-Root Port DT stanza or the top-level qcom host bridge), but why
-can't we always put them in struct qcom_pcie_port and drop them from
-struct qcom_pcie?
+2. Add WiFi nodes for X1E (UX3407RA) variant. Almost identical to
+   UX3407QA but uses ath12k instead of ath11k. Was not addded during
+   initial bring-up due to lack of hardware to verify WiFi's operation.
 
-Having them in both places means all the users need to worry about
-that DT difference and look in both places instead of always looking
-at qcom_pcie_port.
+Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+---
+Aleksandrs Vinarskis (3):
+      dt-bindings: arm: qcom: Add Asus Zenbook A14 UX3407QA LCD/OLED variants
+      arm64: dts: qcom: Rework X1-based Asus Zenbook A14's displays
+      arm64: dts: qcom: x1e80100-asus-zenbook-a14: Enable WiFi, Bluetooth
 
-> +};
-> +
->  struct qcom_pcie {
->  	struct dw_pcie *pci;
->  	void __iomem *parf;			/* DT parf */
-> @@ -279,24 +285,37 @@ struct qcom_pcie {
->  	struct icc_path *icc_cpu;
->  	const struct qcom_pcie_cfg *cfg;
->  	struct dentry *debugfs;
-> +	struct list_head ports;
->  	bool suspended;
->  	bool use_pm_opp;
->  };
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   8 +-
+ arch/arm64/boot/dts/qcom/Makefile                  |   2 +
+ arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi  |   6 +-
+ .../boot/dts/qcom/x1e80100-asus-zenbook-a14.dts    | 102 +++++++++++++++
+ .../dts/qcom/x1p42100-asus-zenbook-a14-lcd.dts     |  62 +++++++++
+ .../boot/dts/qcom/x1p42100-asus-zenbook-a14.dts    | 133 +------------------
+ .../boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi   | 141 +++++++++++++++++++++
+ 7 files changed, 322 insertions(+), 132 deletions(-)
+---
+base-commit: 3e8e5822146bc396d2a7e5fbb7be13271665522a
+change-id: 20250908-zenbook-improvements-18147b38238b
 
-> +static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
->  {
-> -	gpiod_set_value_cansleep(pcie->reset, 1);
-> +	struct qcom_pcie_port *port;
-> +	int val = assert ? 1 : 0;
-> +
-> +	if (list_empty(&pcie->ports))
-> +		gpiod_set_value_cansleep(pcie->reset, val);
-> +	else
-> +		list_for_each_entry(port, &pcie->ports, list)
-> +			gpiod_set_value_cansleep(port->reset, val);
+Best regards,
+-- 
+Aleksandrs Vinarskis <alex@vinarskis.com>
 
-This is the kind of complication I think we should avoid.
-
-> +static void qcom_pcie_phy_exit(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_port *port;
-> +
-> +	if (list_empty(&pcie->ports))
-> +		phy_exit(pcie->phy);
-> +	else
-> +		list_for_each_entry(port, &pcie->ports, list)
-> +			phy_exit(port->phy);
-
-And this.
-
-> +}
-> +
-> +static void qcom_pcie_phy_power_off(struct qcom_pcie *pcie)
-> +{
-> +	struct qcom_pcie_port *port;
-> +
-> +	if (list_empty(&pcie->ports)) {
-> +		phy_power_off(pcie->phy);
-> +	} else {
-> +		list_for_each_entry(port, &pcie->ports, list)
-> +			phy_power_off(port->phy);
-
-And this.  And there's more.
-
-Bjorn
 
