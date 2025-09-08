@@ -1,80 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-72629-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72630-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B68C7B49845
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 20:26:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF80BB49860
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 20:33:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DA8853ABB68
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 18:26:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F11BF1B26CF4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  8 Sep 2025 18:34:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 846AD31B81F;
-	Mon,  8 Sep 2025 18:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1063E31B122;
+	Mon,  8 Sep 2025 18:33:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="E7dR2oSh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hQjBvLjK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.21])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE5873A8F7;
-	Mon,  8 Sep 2025 18:26:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39C331AF10;
+	Mon,  8 Sep 2025 18:33:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757355996; cv=none; b=A0OwjV1YWLQvNF5a2qvbjDJ5JkhEriWRGLweq4/mWy2z41hJOo+2vI/FsjDPUDlRgm/FQOJgLx8ZBW22WoxhF8ov6qZp3PfYRXOmoNjzUFSTBE9gttLyY+INipCSuPo4LEbno+AZT+xxYkbBRTokg452JDiSWFh2YvlU8PLZLVk=
+	t=1757356409; cv=none; b=OhjSihkzTJ525fIoWqpaIurW96CGNKuKoF8kclrlsR+JSySn1aMuMldgt3DBsEl2hi2p0T5N4HJzTZ6lT7WtKo7+8XmbErqb0DUfkGtoWIOycEU3Nv4QQGXeZaEqAZ0yIhfWqAbcLy2kVJX4AqAWGsLH6VChkwnXAtuvBwwEOeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757355996; c=relaxed/simple;
-	bh=1FS5scoih1u+HaSjmztbMQ4nC1lS+/D7jKLkfmmmHTk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ftEJDjsJgrsuQKGX/w5vv55f4DMeOsQdZxfytTs5X842jSV+ztsWZGMwfxvtfk2qnpdmq5Rm5KoClGjsWuM91Ih3zsF7lP7Gh0SjeRIrFWUNVAPafgFdD19wB0ta4aHsulvbmlJZ3zxoj/4oSyrQ7Z+w3Csfxp5/5HMMSaGAF28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=E7dR2oSh; arc=none smtp.client-ip=198.175.65.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1757355995; x=1788891995;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=1FS5scoih1u+HaSjmztbMQ4nC1lS+/D7jKLkfmmmHTk=;
-  b=E7dR2oShvIRbMdX48aNu4vYiNVTxnf4Zhdkx7Oe63PacVbBRsEN7iM0f
-   MmqdfpJwHTOzfwnsUgjGJbt/HABnDL/4YaytliVLqv01PF0B1WOHalJ8F
-   KX/67kC2nVJTRYpdyxS7CM2FHl/0/ccj99Lg8mhWN2qwzjjzIjIAxlr9U
-   9RVGPeAkK25VSNsirTWJjWFDd4p3hs8KDnjra5zFCqMcsPaPAWRCGMlGz
-   vvAKRCU4gLj1R8T1yR7x/YjStphwJ7pdv3zuiRKBPnaOLT+CedAQdh1zh
-   nRS9yJu11HyQrzZadJxE1cUFLhFVdGkIy5jBgO9SAK4wiTIke+PtIZLkO
-   g==;
-X-CSE-ConnectionGUID: ybG6PPmCR4+Sd6Gf9q0s/w==
-X-CSE-MsgGUID: DG5ukmaPTumnXUF+ehjW1w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11531"; a="59550948"
-X-IronPort-AV: E=Sophos;i="6.17,312,1747724400"; 
-   d="scan'208";a="59550948"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2025 11:26:34 -0700
-X-CSE-ConnectionGUID: MllgzNCGQFq6WgvL3jDGrQ==
-X-CSE-MsgGUID: HekVWCbyQaKYkp2vSYwe/A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,249,1751266800"; 
-   d="scan'208";a="177201647"
-Received: from lkp-server01.sh.intel.com (HELO 114d98da2b6c) ([10.239.97.150])
-  by fmviesa005.fm.intel.com with ESMTP; 08 Sep 2025 11:26:31 -0700
-Received: from kbuild by 114d98da2b6c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1uvgZR-00044h-2P;
-	Mon, 08 Sep 2025 18:26:29 +0000
-Date: Tue, 9 Sep 2025 02:25:52 +0800
-From: kernel test robot <lkp@intel.com>
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-arm-msm@vger.kernel.org,
-	linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-	dmitry.baryshkov@oss.qualcomm.com, konrad.dybcio@oss.qualcomm.com,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Subject: Re: [PATCH v5 2/2] usb: dwc3: qcom: Implement glue callbacks to
- facilitate runtime suspend
-Message-ID: <202509090115.dVhd78BE-lkp@intel.com>
-References: <20250907181412.2174616-3-krishna.kurapati@oss.qualcomm.com>
+	s=arc-20240116; t=1757356409; c=relaxed/simple;
+	bh=ejH/GOe9Mp+BMNiV+zRI9hMfPJDA9yQMvdvKWLFHIu4=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=mTWGPYGiIIlF0nxnkUt3k6OFBOWxpp6g81QWFRN55gSL4Qt8aNGWK2MRSWK9x9YOwSgDmXzI0utN5atQAVr5rM0iYCFswDRXhYguc3K7uzLFJ1qY0vKJPgCoChYEerFY3oVZFDxHLPGyfhQwsISLD6LYIGJzS+WoPXZFHqKoZsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hQjBvLjK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B61AC4CEFA;
+	Mon,  8 Sep 2025 18:33:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757356407;
+	bh=ejH/GOe9Mp+BMNiV+zRI9hMfPJDA9yQMvdvKWLFHIu4=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=hQjBvLjKN/9OeE0fQURd4qFcWwXmB8JZ1u9xc224NcPx9FpTzpuEhqxV0vs1B3dA7
+	 gh5pVA2TmHTva9sC+gfDXVFKYTjhn7y3zSR8ufDN5GibKQzAdJ6LwvcLiEmSu8j3Ze
+	 N/x1jgF2OJ1O1occFYIh7TyD9h8E9gF0XZNA4iqEBxm/MM/hGfzeHQ3OWSxlXkXpWR
+	 D/yqCZsqZS/OlX4D72JrVcLJhIWABSAjeBJs4dXgUoVUDbzZYbHf2KpK3ncPjZHI7Q
+	 R3bkvMM25FB34Zf5S/qHhbhzdmAwAkshfYRbe0JqDvc16tx9JK1B9/bylkRp+KsthO
+	 LxGMqKqyr2pYw==
+Date: Mon, 8 Sep 2025 13:33:25 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org, linux-arm-msm@vger.kernel.org,
+	linux-pci@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, quic_vbadigan@quicinc.com,
+	quic_mrana@quicinc.com
+Subject: Re: [PATCH v5 2/2] PCI: qcom: Add support for multi-root port
+Message-ID: <20250908183325.GA1450728@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,45 +66,108 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250907181412.2174616-3-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250702-perst-v5-2-920b3d1f6ee1@qti.qualcomm.com>
 
-Hi Krishna,
+On Wed, Jul 02, 2025 at 04:50:42PM +0530, Krishna Chaitanya Chundru wrote:
+> Move phy, PERST# handling to root port and provide a way to have multi-port
+> logic.
+> 
+> Currently, QCOM controllers only support single port, and all properties
+> are present in the host bridge node itself. This is incorrect, as
+> properties like phys, perst-gpios, etc.. can vary per port and should be
+> present in the root port node.
+> 
+> To maintain DT backwards compatibility, fallback to the legacy method of
+> parsing the host bridge node if the port parsing fails.
+> 
+> pci-bus-common.yaml uses reset-gpios property for representing PERST#, use
+> same property instead of perst-gpios.
+> 
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 178 ++++++++++++++++++++++++++++-----
+>  1 file changed, 151 insertions(+), 27 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index f7ed1e010eb6607b2e98a42f0051c47e4de2af93..56d04a15edf8f99f6d3b9bfaa037ff922b521888 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -267,6 +267,12 @@ struct qcom_pcie_cfg {
+>  	bool no_l0s;
+>  };
+>  
+> +struct qcom_pcie_port {
+> +	struct list_head list;
+> +	struct gpio_desc *reset;
+> +	struct phy *phy;
 
-kernel test robot noticed the following build warnings:
+This change is already upstream (a2fbecdbbb9d ("PCI: qcom: Add support
+for parsing the new Root Port binding")), but it seems wrong to me to
+have "phy" and "reset" in both struct qcom_pcie and struct
+qcom_pcie_port.  
 
-[auto build test WARNING on usb/usb-testing]
-[also build test WARNING on usb/usb-next next-20250908]
-[cannot apply to usb/usb-linus linus/master v6.17-rc5]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+I know we need *find* those things in different places (either a
+per-Root Port DT stanza or the top-level qcom host bridge), but why
+can't we always put them in struct qcom_pcie_port and drop them from
+struct qcom_pcie?
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Krishna-Kurapati/usb-dwc3-core-Introduce-glue-callbacks-for-flattened-implementations/20250908-021710
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb.git usb-testing
-patch link:    https://lore.kernel.org/r/20250907181412.2174616-3-krishna.kurapati%40oss.qualcomm.com
-patch subject: [PATCH v5 2/2] usb: dwc3: qcom: Implement glue callbacks to facilitate runtime suspend
-config: hexagon-randconfig-r132-20250908 (https://download.01.org/0day-ci/archive/20250909/202509090115.dVhd78BE-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce: (https://download.01.org/0day-ci/archive/20250909/202509090115.dVhd78BE-lkp@intel.com/reproduce)
+Having them in both places means all the users need to worry about
+that DT difference and look in both places instead of always looking
+at qcom_pcie_port.
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509090115.dVhd78BE-lkp@intel.com/
+> +};
+> +
+>  struct qcom_pcie {
+>  	struct dw_pcie *pci;
+>  	void __iomem *parf;			/* DT parf */
+> @@ -279,24 +285,37 @@ struct qcom_pcie {
+>  	struct icc_path *icc_cpu;
+>  	const struct qcom_pcie_cfg *cfg;
+>  	struct dentry *debugfs;
+> +	struct list_head ports;
+>  	bool suspended;
+>  	bool use_pm_opp;
+>  };
 
-sparse warnings: (new ones prefixed by >>)
->> drivers/usb/dwc3/dwc3-qcom.c:605:22: sparse: sparse: symbol 'dwc3_qcom_glue_ops' was not declared. Should it be static?
+> +static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
+>  {
+> -	gpiod_set_value_cansleep(pcie->reset, 1);
+> +	struct qcom_pcie_port *port;
+> +	int val = assert ? 1 : 0;
+> +
+> +	if (list_empty(&pcie->ports))
+> +		gpiod_set_value_cansleep(pcie->reset, val);
+> +	else
+> +		list_for_each_entry(port, &pcie->ports, list)
+> +			gpiod_set_value_cansleep(port->reset, val);
 
-vim +/dwc3_qcom_glue_ops +605 drivers/usb/dwc3/dwc3-qcom.c
+This is the kind of complication I think we should avoid.
 
-   604	
- > 605	struct dwc3_glue_ops dwc3_qcom_glue_ops = {
-   606		.pre_set_role	= dwc3_qcom_set_role_notifier,
-   607		.pre_run_stop	= dwc3_qcom_run_stop_notifier,
-   608	};
-   609	
+> +static void qcom_pcie_phy_exit(struct qcom_pcie *pcie)
+> +{
+> +	struct qcom_pcie_port *port;
+> +
+> +	if (list_empty(&pcie->ports))
+> +		phy_exit(pcie->phy);
+> +	else
+> +		list_for_each_entry(port, &pcie->ports, list)
+> +			phy_exit(port->phy);
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+And this.
+
+> +}
+> +
+> +static void qcom_pcie_phy_power_off(struct qcom_pcie *pcie)
+> +{
+> +	struct qcom_pcie_port *port;
+> +
+> +	if (list_empty(&pcie->ports)) {
+> +		phy_power_off(pcie->phy);
+> +	} else {
+> +		list_for_each_entry(port, &pcie->ports, list)
+> +			phy_power_off(port->phy);
+
+And this.  And there's more.
+
+Bjorn
 
