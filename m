@@ -1,172 +1,251 @@
-Return-Path: <linux-arm-msm+bounces-72865-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4CA0B503FE
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 19:09:47 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 16E77B50465
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 19:26:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 26F001C24B50
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 17:06:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E13827A1BD0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 17:24:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 855CA368082;
-	Tue,  9 Sep 2025 17:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F53033EAF1;
+	Tue,  9 Sep 2025 17:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b/87GPao"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gGRZdjwx"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44CC7353346;
-	Tue,  9 Sep 2025 17:02:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7004B25DD1E
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 17:26:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757437361; cv=none; b=n87DqnxBMNDRtRktUChO30nVcrDvfef91gJFBVjxFsJ5UAPsKzW1Lbp3yzhHjhXr5+aO2eW1yt8omteGtxBVTLTuUktE2ddKFqhREYsNf7EHgP9QorMIJiWotujwCo5OcrsYDv3ub6Ccy2XMB3udkIO19iisUjMuhMINOf3Cot0=
+	t=1757438768; cv=none; b=fL4qQ6grXfah7lerKQqlM9bHBbjTCTShyFdPJ7kidigO2C8mnXntBSIsyJTX4dKMdXPUp29sreMjLzB7Z7/ZOx/sThLzUDTjGJY1JW4HXbuTxp1/wF6g3a9SiJRXA9nKodc+6JofM1VJnG/qi/UhHlnmRCIEVFh0XSzcSobOIHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757437361; c=relaxed/simple;
-	bh=xcp+tKNjmqCe8/fUJkftuyIP1q4+ZYkFesPzKaHhOnU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SqyrtYC2hGEzpELLkK4ohfvOoBQoA/q0Yf5aoIW8quVNMCXMYbGPaiU0Mc+TQ2Qs7zuupjLNV/O7mmrG/QT0i2QCfZtYflKYlzaFTiTnWILBuhtDnV5Hr8uXAkFE5rnc5seSQkcVy98X5uYGW0gzL+2eSA3EV4MP2XKNAibyNOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b/87GPao; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id C74ADC4CEFB;
-	Tue,  9 Sep 2025 17:02:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757437360;
-	bh=xcp+tKNjmqCe8/fUJkftuyIP1q4+ZYkFesPzKaHhOnU=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=b/87GPao64Iwz6PtBlMUonoSrnvJYg3SvRS2xSB1zHvjbf7V/8TUh+0+KxtXef2gO
-	 6kzV7SIMcm/SQNPtpwUIoWfcNCEoPl/a95wZVffiwyHaKqmJd29yIjGNv/gzgoAD9x
-	 dTFDkqi+0zv5pormnBtvUF2/qVnjD/Hr2UkpPxzXHsJ62R7aKhnkAgS0pijag/uJZ+
-	 pZkax4ti5pcZ9D1JVrpjo8Wu6BE6uYHJRF/Fw9rIetmhTRQPv0WlAyeSV6dBCMH3HU
-	 1b4xu1tz7+VfUe5TzwbQMcrDiTjdEyIE+Kq6suzAo9cFaG+XJ7mLwEKT6WcFkEsl56
-	 YfFcfIIbaEeyA==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id B89C8CAC58C;
-	Tue,  9 Sep 2025 17:02:40 +0000 (UTC)
-From: Jens Glathe via B4 Relay <devnull+jens.glathe.oldschoolsolutions.biz@kernel.org>
-Date: Tue, 09 Sep 2025 19:02:35 +0200
-Subject: [PATCH v8 3/3] arm64: dts: qcom: x1-hp-x14: Add support for
- X1P42100 HP Omnibook X14
+	s=arc-20240116; t=1757438768; c=relaxed/simple;
+	bh=g2TDfAzEPepkY7lH8+YLMqR1ZWGnDSlKffZhVJl4KSE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dqhr2FTYAGVST5ngVMaqPM6ZgcKaCUJ/vBHGrbP4AdmzZuBEQMgSao3SwEcdel6jFp2pbSNEuj1xcJ+2uCBLgpcqcc3HrWRSzfU5ekLbx7NFO40vWIAKPOJ1ySKLOgtY7fGY7XvmIPNyAUxQtNuxVNrlj64p1iVWpqOIt3zvKqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gGRZdjwx; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5899LSe9029824
+	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Sep 2025 17:26:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:to; s=
+	qcppdkim1; bh=dI/tFVPWYxe3gtmKF2QC5qw2SP3z6Sb2TYW/w+Ytjms=; b=gG
+	RZdjwxnWNCA5VDqdfrskH+jGqlzP6dMUz5fY1zsBAKKt+50fLGGNIChDbmTspua/
+	HGOkRlkbsdfdFVH8vAkQbO3VZ1oCOCWUUMwvoS9RC6gpxnpoigwSHi24Uta70GfV
+	4i4FH1aDbSfea/mmmriK/Ex+TVHYr+cEO8+Zo01X67cJh9mKKyfgQrY09S3G4DHV
+	s+9hMwnPnisVBtAb/4k2xktb8iGw831cfA8I9SCTl2jGFbcZnDoEOWTqdl9d68Z/
+	sNfq2SY5L3wDjUcVOTd2J8UT9QK8TnuFw2ZlZwvXLKNlC2mY6U2NzsbaDCEXq/Gj
+	lju1Evql542lEw1s06Gw==
+Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com [209.85.161.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491t37wjxr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 17:26:05 +0000 (GMT)
+Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-62189a9fb92so1755020eaf.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 10:26:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757438764; x=1758043564;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dI/tFVPWYxe3gtmKF2QC5qw2SP3z6Sb2TYW/w+Ytjms=;
+        b=ds048ZlVf5LURuHFwLcZxnhJ3qOn+wkuhywwDpKzPW2oRHETVBHhHQD+8PlyoyaOT5
+         l1PrOXxZgpnrhjCd5UWHWfidF5eTP5jR0vXCcUaqvrERo5ir/QQ1+OdJ5UGl66G54aIq
+         KmCgXpJ8cti2X2fBE+RcSNe7DzEhLYFSqPHqjyDOJpXeTfJFFybVtMgqoAZ/FI21usSa
+         Vj1P4nu0TH2WjS416Vu2M6ooOk0VxGcDZgthQd8n0McVAyWcL3PMdWIoyeAA2rfz+0OC
+         FyAblBE9d8nVp5SGbA/OEkoBj+jDH0szjy9K/CuN94UE7pq2DlaZU7ST6ypEg4qeua6d
+         Sl3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXGD+/JwnAHESP9Z5m2Nj2n9o20EXuUU7TD0trm/vmeLRJTKSbczSsScP0LgU28FnKswZIhEJIxfCnwKJKW@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvfQyaY46I2KYn5Por8MSR/T6mrj0uGdZx1J9KXb5kLz5yRsMs
+	h3SlwEqSdOb207mQr/PxPnc7yRk29ZU2udEj3uMYN7ieXqvM7jOmV/g2oattmFIdTJIreqzeGS5
+	6MffoQ3p95ySyTXiclb4qFrjtLGYx6pFikmOV5k8EfwXhiMntm536BSiRGxN1fTEL2sx4SJ/LNz
+	D9x0V6WTn7dq7Dxo9W47VvdtNqtVeCPWO1RvYzrE4Z/V4=
+X-Gm-Gg: ASbGncvepvNPv3WW5/VQLNFlHz6Cc433cd1TUjLx2q94wDdEvG/oFdHVm80Yxjicvw0
+	ARgRG7xsws49coxeDr3HbKtSVprDb8HSTZUUjBUMF+17uMsCjrlw5HbQsAw9SNJ4Uj1DLvp5WAm
+	ChiVSwPI+JGeFPHJ31oreWNLPv0kY1UX72FIgs1CpticrWrw6zt5hP
+X-Received: by 2002:a05:6871:7827:b0:315:60a6:c27b with SMTP id 586e51a60fabf-3226533837cmr6671386fac.10.1757438764226;
+        Tue, 09 Sep 2025 10:26:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHn4AlsT86NdKgN9yHhRkxhjC25mI5BT+6nw4b3oMpLzg3EwapWIo1tkqNKsOWdNothIW6wabluGL0au0IHDWk=
+X-Received: by 2002:a05:6871:7827:b0:315:60a6:c27b with SMTP id
+ 586e51a60fabf-3226533837cmr6671367fac.10.1757438763757; Tue, 09 Sep 2025
+ 10:26:03 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250909-hp-x14-x1p-v8-3-8082ab069911@oldschoolsolutions.biz>
-References: <20250909-hp-x14-x1p-v8-0-8082ab069911@oldschoolsolutions.biz>
-In-Reply-To: <20250909-hp-x14-x1p-v8-0-8082ab069911@oldschoolsolutions.biz>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Jens Glathe <jens.glathe@oldschoolsolutions.biz>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757437358; l=3070;
- i=jens.glathe@oldschoolsolutions.biz; s=20240919;
- h=from:subject:message-id;
- bh=gkE50asqfUsj7CUt5FI+dEtY0Mkl8MW0/zY71Nx6hkE=;
- b=+AGEavGtPiQPEa9/a7wcWa1bN1OD/OdGtIP+Rlrz6+WG9uDb3zWSDN3lRfn8wae5PLPFt/eHc
- gKZdaPXXh//AfpoTttayScbEJKbmEevicr8t8kGq+HGKnrfB5eR7X5k
-X-Developer-Key: i=jens.glathe@oldschoolsolutions.biz; a=ed25519;
- pk=JcRJqJc/y8LsxOlPakALD3juGfOKmFBWtO+GfELMJVg=
-X-Endpoint-Received: by B4 Relay for
- jens.glathe@oldschoolsolutions.biz/20240919 with auth_id=216
-X-Original-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-Reply-To: jens.glathe@oldschoolsolutions.biz
+References: <20250908193021.605012-1-robin.clark@oss.qualcomm.com>
+ <20250908193021.605012-2-robin.clark@oss.qualcomm.com> <o25axq4soxjluqnxjad2f3blhezuglsvex6k3aav5v65ynn7qd@5i3wm2lryr7q>
+In-Reply-To: <o25axq4soxjluqnxjad2f3blhezuglsvex6k3aav5v65ynn7qd@5i3wm2lryr7q>
+Reply-To: rob.clark@oss.qualcomm.com
+From: Rob Clark <rob.clark@oss.qualcomm.com>
+Date: Tue, 9 Sep 2025 10:25:52 -0700
+X-Gm-Features: Ac12FXxGRIubVyoobxwaPjC26ZhWg4pW-b_VwL3AjiQCcFrkrFqBbJ9eqYgvU-w
+Message-ID: <CACSVV02Zym2hC-fFcJsP4M9T4mYGXsMtGrmnux6Eva0C7PHdfA@mail.gmail.com>
+Subject: Re: [PATCH 1/5] drm/msm/registers: Remove license/etc from generated headers
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-ORIG-GUID: tTtUKTHfp46ddv0quvZHztLn1A7eE7ES
+X-Proofpoint-GUID: tTtUKTHfp46ddv0quvZHztLn1A7eE7ES
+X-Authority-Analysis: v=2.4 cv=NdLm13D4 c=1 sm=1 tr=0 ts=68c0632d cx=c_pps
+ a=lkkFf9KBb43tY3aOjL++dA==:117 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
+ a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=w4XaYH8Cdj-KDOQYXpsA:9 a=QEXdDO2ut3YA:10
+ a=k4UEASGLJojhI9HsvVT1:22 a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDA2NiBTYWx0ZWRfX2KnYEWX5xtM7
+ +g4iDOUt1fmEj32YTrJdd9YtnurBri2lbHAa1darS2r3N3dy4UcR7+4xHUoqvny9SFCBibqJu7d
+ /EHPDuHY0jKee2xI0yI2+rFTZ2zS+E8E24uTfP4zRptDc/tZGsCAWFsQ6fpqCjYJ+3oSp17hEAz
+ ZsIErbrjS5ttmN+41WRM/El2M1ZORAeZ6KIVquNCEKAH72p6zlzN0yXmHr1ERDrs0hR7+obWwp2
+ xPZQxdWGe0uagOFZiTZAUj3FuFN5/VF2G9s7wZjx6QkwKZBooVrTxzZFOPmxFfCfZLcp8SsE8Ov
+ PPepA8uevqqSlvIxefmXuIWU2OjgOpfMjPEkhsU+wHgGCKhZmsiyvNM71uigVg1nuLcWCy5R7lC
+ 4GfG9xI5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-09_03,2025-09-08_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080066
 
-From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+On Tue, Sep 9, 2025 at 8:01=E2=80=AFAM Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Mon, Sep 08, 2025 at 12:30:04PM -0700, Rob Clark wrote:
+> > Since these generated files are no longer checked in, either in mesa or
+> > in the linux kernel, simplify things by dropping the verbose generated
+> > comment.
+> >
+> > These were semi-nerf'd on the kernel side, in the name of build
+> > reproducibility, by commit ba64c6737f86 ("drivers: gpu: drm: msm:
+> > registers: improve reproducibility"), but in a way that was semi-
+> > kernel specific.  We can just reduce the divergence between kernel
+> > and mesa by just dropping all of this.
+> >
+> > Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/registers/gen_header.py | 37 +--------------------
+> >  1 file changed, 1 insertion(+), 36 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/=
+drm/msm/registers/gen_header.py
+> > index a409404627c7..56273a810c1d 100644
+> > --- a/drivers/gpu/drm/msm/registers/gen_header.py
+> > +++ b/drivers/gpu/drm/msm/registers/gen_header.py
+> > @@ -444,9 +444,6 @@ class Parser(object):
+> >               self.variants =3D set()
+> >               self.file =3D []
+> >               self.xml_files =3D []
+> > -             self.copyright_year =3D None
+> > -             self.authors =3D []
+> > -             self.license =3D None
+> >
+> >       def error(self, message):
+> >               parser, filename =3D self.stack[-1]
+> > @@ -686,10 +683,6 @@ class Parser(object):
+> >                       self.parse_field(attrs["name"], attrs)
+> >               elif name =3D=3D "database":
+> >                       self.do_validate(attrs["xsi:schemaLocation"])
+> > -             elif name =3D=3D "copyright":
+> > -                     self.copyright_year =3D attrs["year"]
+> > -             elif name =3D=3D "author":
+> > -                     self.authors.append(attrs["name"] + " <" + attrs[=
+"email"] + "> " + attrs["name"])
+> >
+> >       def end_element(self, name):
+> >               if name =3D=3D "domain":
+> > @@ -706,8 +699,6 @@ class Parser(object):
+> >                       self.current_array =3D self.current_array.parent
+> >               elif name =3D=3D "enum":
+> >                       self.current_enum =3D None
+> > -             elif name =3D=3D "license":
+> > -                     self.license =3D self.cdata
+> >
+> >       def character_data(self, data):
+> >               self.cdata +=3D data
+> > @@ -868,33 +859,7 @@ def dump_c(args, guard, func):
+> >
+> >       print("#ifndef %s\n#define %s\n" % (guard, guard))
+> >
+> > -     print("""/* Autogenerated file, DO NOT EDIT manually!
+> > -
+> > -This file was generated by the rules-ng-ng gen_header.py tool in this =
+git repository:
+> > -http://gitlab.freedesktop.org/mesa/mesa/
+> > -git clone https://gitlab.freedesktop.org/mesa/mesa.git
+> > -
+> > -The rules-ng-ng source files this header was generated from are:
+> > -""")
+> > -     maxlen =3D 0
+> > -     for filepath in p.xml_files:
+> > -             new_filepath =3D re.sub("^.+drivers","drivers",filepath)
+> > -             maxlen =3D max(maxlen, len(new_filepath))
+> > -     for filepath in p.xml_files:
+> > -             pad =3D " " * (maxlen - len(new_filepath))
+> > -             filesize =3D str(os.path.getsize(filepath))
+> > -             filesize =3D " " * (7 - len(filesize)) + filesize
+> > -             filetime =3D time.ctime(os.path.getmtime(filepath))
+> > -             print("- " + new_filepath + pad + " (" + filesize + " byt=
+es, from <stripped>)")
+> > -     if p.copyright_year:
+> > -             current_year =3D str(datetime.date.today().year)
+> > -             print()
+> > -             print("Copyright (C) %s-%s by the following authors:" % (=
+p.copyright_year, current_year))
+> > -             for author in p.authors:
+> > -                     print("- " + author)
+> > -     if p.license:
+> > -             print(p.license)
+>
+> IANAL, but I as the generated files contain C/C++ functions, I think we
+> need to have a corresponding licence in the file.
 
-These laptops are the same as the already known 14-fe0xxx models, but
-with a Purwa SoC, SKU number 14-fe1xxx. [1]
+I can't find anything that indicates a difference depending on the
+contents of the generated file (ie. whether it be
+functions/tables/prototypes/etc).  And AFAICT it is implicit that the
+license of the generated file is inherited from the input to the
+generator.
 
-The supported features are the same as for the original Omnibook X14:
+Some other points:
+- the various *.mod.c files generated for each kernel module do not
+contain a license
+- various files generated by asn1_compiler do not contain a license
+- other generated .c/.h files are a mixed bag, some contain a license
+header and some do not
 
-- Keyboard (no function keys though)
-- Display
-- PWM brightness control
-- Touchpad
-- Touchscreen
-- PCIe ports (pcie4, pcie6a)
-- USB type-c, type-a
-- WCN6855 Wifi-6E
-- WCN6855 Bluetooth
-- ADSP and CDSP
-- X1 GPU
-- GPIO Keys (Lid switch)
-- Audio definition (works via USB and with internal speakers)
+(In all of the cases the generated files should not be distributed,
+IMHO.  Yocto should fix this.)
 
-[1]: https://www.hp.com/us-en/shop/pdp/hp-omnibook-x-laptop-next-gen-ai-pc-14-fe100-14-a4nd1av-1#techSpecs
+BR,
+-R
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
----
- arch/arm64/boot/dts/qcom/Makefile                  |  2 ++
- .../boot/dts/qcom/x1p42100-hp-omnibook-x14.dts     | 33 ++++++++++++++++++++++
- 2 files changed, 35 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 0e4e0e0b833bbc62026c37875974a89b303e3b8e..c1471b5a8530fb1d788fcd75c4ccfed8fa03e6a1 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -338,5 +338,7 @@ x1p42100-asus-zenbook-a14-el2-dtbs	:= x1p42100-asus-zenbook-a14.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-asus-zenbook-a14.dtb x1p42100-asus-zenbook-a14-el2.dtb
- x1p42100-crd-el2-dtbs	:= x1p42100-crd.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-crd.dtb x1p42100-crd-el2.dtb
-+x1p42100-hp-omnibook-x14-el2-dtbs := x1p42100-hp-omnibook-x14.dtb x1-el2.dtbo
-+dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-hp-omnibook-x14.dtb x1p42100-hp-omnibook-x14-el2.dtb
- x1p42100-lenovo-thinkbook-16-el2-dtbs	:= x1p42100-lenovo-thinkbook-16.dtb x1-el2.dtbo
- dtb-$(CONFIG_ARCH_QCOM)	+= x1p42100-lenovo-thinkbook-16.dtb x1p42100-lenovo-thinkbook-16-el2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-new file mode 100644
-index 0000000000000000000000000000000000000000..6696cab2de3ec899d7ae5498f2f4b75e2131a19c
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts
-@@ -0,0 +1,33 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+
-+/dts-v1/;
-+
-+#include "x1p42100.dtsi"
-+#include "x1e80100-pmics.dtsi"
-+#include "x1-hp-omnibook-x14.dtsi"
-+/delete-node/ &pmc8380_6;
-+/delete-node/ &pmc8380_6_thermal;
-+
-+/ {
-+	model = "HP Omnibook X 14-fe1";
-+	compatible = "hp,omnibook-x14-fe1", "qcom,x1p42100";
-+	chassis-type = "laptop";
-+};
-+
-+&gpu_zap_shader {
-+	firmware-name = "qcom/x1p42100/hp/omnibook-x14/qcdxkmsucpurwa.mbn";
-+};
-+
-+&remoteproc_adsp {
-+	firmware-name = "qcom/x1p42100/hp/omnibook-x14/qcadsp8380.mbn",
-+			"qcom/x1p42100/hp/omnibook-x14/adsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-+
-+&remoteproc_cdsp {
-+	firmware-name = "qcom/x1p42100/hp/omnibook-x14/qccdsp8380.mbn",
-+			"qcom/x1p42100/hp/omnibook-x14/cdsp_dtbs.elf";
-+
-+	status = "okay";
-+};
-
--- 
-2.48.1
-
-
+>
+> > -     print("*/")
+> > +     print("/* Autogenerated file, DO NOT EDIT manually! */")
+> >
+> >       print()
+> >       print("#ifdef __KERNEL__")
+> > --
+> > 2.51.0
+> >
+>
+> --
+> With best wishes
+> Dmitry
 
