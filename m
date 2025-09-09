@@ -1,63 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-72854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72855-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 339B0B50367
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 18:57:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C01EB5036A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 18:58:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC384446BDF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:57:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F0891C667E6
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:57:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 69FD135FC20;
-	Tue,  9 Sep 2025 16:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 999FD362073;
+	Tue,  9 Sep 2025 16:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uIU2Bh1Y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cjs/xV6G"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BD0035FC16;
-	Tue,  9 Sep 2025 16:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6943735E4E7;
+	Tue,  9 Sep 2025 16:56:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757437005; cv=none; b=PxPQOyvDOFHTN7+pwVhhTWlZMf/SyGJTTYKwjGwgmR8ML6MJMBknzr2K2kCBuTYnW+4Hc0uUVYRrSLVMTqv9W+anZe+EHfC188bnp9+g84ILnvDyvf2cv2pz69r8HeaPZRFEaCuru+FFPA2HA8/hGQiYe2O1ZahG3TlEtIIcgz0=
+	t=1757437006; cv=none; b=gs12KDEUyHo0Vsgm+8yHU0PXAuhvD6h+xEnfp3foYiN2/7PhtVprmvty1+LQyajcxO5RQxY0oWCsSpEshlUA45+lVEaBWwCJgjDnecME6UwKmGt2dGcvZl9iDCxu/3JU6offV2iRcbAEI2A6I6cPtcq9mhC6pMe2CqC8lsIp05Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757437005; c=relaxed/simple;
-	bh=NDBYSCYbtRCm4phNag8K2MQGByUHik360jxAXcazG+w=;
+	s=arc-20240116; t=1757437006; c=relaxed/simple;
+	bh=RiKOVFGpK1szfWEAtc7JbhdCdxn05Y3EsK1eMenFX2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OW5l6VKo9Rh2T0mAHiCckunjld1mk5K0+AF4j3Xld2scncSpv0QeqqPvwp9XfsGeyYmeZFunfM6gF5gw+Hn8MNFQFLELrfn0JqkxhSGoo+G/O/6pKwr+qGSzpTI/dUmYQOLdySOo/+G2M5wTLdopWaUzyqoKryzCtuITxMs2n/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uIU2Bh1Y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17380C4CEF8;
+	 MIME-Version:Content-Type; b=mUikxN8Xog/lGUgyJnLPgiwy1Oa1EMPF603jPPd3dxgjSsmscOv0U9cwoWbP+o/ngKzqgPdfQiryUsqkTM0QPgAvLSbGYchVhvjdBFVpoS+KgjHJjeabc7xcvDavjnFNq6CK72oRoyumgC8PAbaXzZnmIxJ6v6lwWRlHD5vzjg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cjs/xV6G; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 084D9C4CEF9;
 	Tue,  9 Sep 2025 16:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757437004;
-	bh=NDBYSCYbtRCm4phNag8K2MQGByUHik360jxAXcazG+w=;
+	s=k20201202; t=1757437005;
+	bh=RiKOVFGpK1szfWEAtc7JbhdCdxn05Y3EsK1eMenFX2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uIU2Bh1YgjFUCFsAX68lYI4IIVfIBbiepz/DNP1EorTkQ5f8rHiBpCZKR2pc8Zk2N
-	 HuLrEvsjH4oM1J3B4Ycijnnx6zGc0Cji7xvmVHFI/8RT68K033pROaXKETB98Y65vT
-	 VITJcSwDq2MTziqHHoWFzppALEeD8Qlro0Ao7jV5D+Sq51IiTEsxzsxmojAloQ+LAm
-	 uHBehz1cAmmYpPBJ/GOlBXoljS7c3WDsMTjp+TQW1qbubqKxogKfRSFWbQYgD+i8Uv
-	 rboo+SrL2OcnhHJpVldEULIdyqi6at0WIQAq7oNapXx/12sUncyM0pMACmPCxMnlhU
-	 S2yIT20AojPLw==
+	b=cjs/xV6G6lX45VZaokOrrb7EpYoAi7FuMKEAMrQNfaGm40vnyYkFt+q+zhhKYSTRu
+	 u2woFL4A3V2Cvh1VOdzcJNl32uo/UgHlz9REfhft04/kmpq2uaZpuEfbRAgefi3DBw
+	 nyYkaMtiplAVeI0RTIieGTR/iFCF7Ly96yDItiour2BDwGsXg/8vUklwRu0z2fhBD5
+	 AY7oidfIPaF9APt7zabfSDanXzYwX1q2VBq+1K5OTw5pNIGYbbZ0gOsFjtDQfoFshz
+	 ELPQ/vQC3TcewTNsGYvUPNaQq+RLmXhMXoy9gaOXvEHMhHbcUO5eZC/WKimBEQPrPQ
+	 ShU/FCdCYkVXw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Imran Shaik <imran.shaik@oss.qualcomm.com>
-Cc: Jagadeesh Kona <quic_jkona@quicinc.com>,
+To: quic_vgarodia@quicinc.com,
+	quic_dikshita@quicinc.com,
+	bryan.odonoghue@linaro.org,
+	mchehab@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	konradybcio@kernel.org,
+	Jorge Ramirez-Ortiz <jorge.ramirez@oss.qualcomm.com>
+Cc: linux-media@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	linux-clk@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Ajit Pandey <quic_ajipan@quicinc.com>,
-	Taniya Das <taniya.das@oss.qualcomm.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH] clk: qcom: dispcc-glymur: Constify 'struct qcom_cc_desc'
-Date: Tue,  9 Sep 2025 11:56:32 -0500
-Message-ID: <175743699537.2735486.10308266027746150259.b4-ty@kernel.org>
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: (subset) [PATCH v10 0/8] media: venus: Add QCM2290 support with AR50_LITE core
+Date: Tue,  9 Sep 2025 11:56:33 -0500
+Message-ID: <175743699534.2735486.2572380919626505786.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250909-constify-dispcc-glymur-desc-fix-v1-1-6cb59730863f@oss.qualcomm.com>
-References: <20250909-constify-dispcc-glymur-desc-fix-v1-1-6cb59730863f@oss.qualcomm.com>
+In-Reply-To: <20250814085248.2371130-1-jorge.ramirez@oss.qualcomm.com>
+References: <20250814085248.2371130-1-jorge.ramirez@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,17 +71,34 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 09 Sep 2025 15:17:59 +0530, Imran Shaik wrote:
-> 'struct qcom_cc_desc' is passed to qcom_cc_map() and
-> qcom_cc_really_probe() only as pointer to const, so make the memory
-> const for safety.
+On Thu, 14 Aug 2025 10:52:40 +0200, Jorge Ramirez-Ortiz wrote:
+> Changes since v9:
+>   v9: https://lore.kernel.org/all/20250808085300.1403570-2-jorge.ramirez@oss.qualcomm.com/#r
 > 
+> - Note: rebased and tested on RB1 using media-commmiters/next:
+>   078f1a7eb48e ("media: staging: Rename second ioctl  handlers argument to 'void *priv'")
+> - patch 2/8: media: venus: Define minimum valid firmware version
+>   core_init only synchronizes on sys_init response. If the firmware version needs to be validated
+>   initialization should complete on version retrieved instead (also removed reviewed-by from the
+>   previous patch).
+> - patch 3/8: Add framework to support for AR50 LITE video core
+>   - Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> - patch 4/8: HFI platform V4 capabilities
+>   - Reviewed by Dikshita Agarwal <quic_dikshita@quicinc.com>
+> - patch 5/8: Sort dt_match alphabetically
+>   - Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+>   - Reviewed by Dikshita Agarwal <quic_dikshita@quicinc.com>
+> - patch 8/8: Enable Venus on 2210 RB1 board
+>   - Reviewed by Dikshita Agarwal <quic_dikshita@quicinc.com>
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] clk: qcom: dispcc-glymur: Constify 'struct qcom_cc_desc'
-      commit: 9ff39b0468c3e04fee05d4e005d2fc03d28b1538
+[7/8] arm64: dts: qcom: qcm2290: Add Venus video node
+      commit: 7a37bf31e3a736d86c3c801ec2116fde4fb395ce
+[8/8] arm64: dts: qcom: qrb2210-rb1: Enable Venus
+      commit: 9a45e985d4e8dae4226af5a8eddea4c48c62e2ea
 
 Best regards,
 -- 
