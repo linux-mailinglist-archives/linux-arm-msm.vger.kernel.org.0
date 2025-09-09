@@ -1,251 +1,152 @@
-Return-Path: <linux-arm-msm+bounces-72866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16E77B50465
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 19:26:14 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08BD0B50655
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 21:22:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E13827A1BD0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 17:24:34 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9EBAA541DCD
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 19:22:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F53033EAF1;
-	Tue,  9 Sep 2025 17:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 149A334F497;
+	Tue,  9 Sep 2025 19:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gGRZdjwx"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VdJ79Am2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7004B25DD1E
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 17:26:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8E62DE715;
+	Tue,  9 Sep 2025 19:22:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757438768; cv=none; b=fL4qQ6grXfah7lerKQqlM9bHBbjTCTShyFdPJ7kidigO2C8mnXntBSIsyJTX4dKMdXPUp29sreMjLzB7Z7/ZOx/sThLzUDTjGJY1JW4HXbuTxp1/wF6g3a9SiJRXA9nKodc+6JofM1VJnG/qi/UhHlnmRCIEVFh0XSzcSobOIHE=
+	t=1757445730; cv=none; b=IPxhFMbDBzJNi1SR5aBiuco5Id/uXidBRV8Oit6ny2HRysngE5AL/sQjSjr+3ErOUcSHBn+HU+v/zunpKwE5JJxCCkUhsndvOgRXkLMtv1UBcR1mbex4VXWk8xnHes/CR3JEvMuOyuF35FuYmPMXJ27VUoQSwcHJYdfIIATCyjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757438768; c=relaxed/simple;
-	bh=g2TDfAzEPepkY7lH8+YLMqR1ZWGnDSlKffZhVJl4KSE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dqhr2FTYAGVST5ngVMaqPM6ZgcKaCUJ/vBHGrbP4AdmzZuBEQMgSao3SwEcdel6jFp2pbSNEuj1xcJ+2uCBLgpcqcc3HrWRSzfU5ekLbx7NFO40vWIAKPOJ1ySKLOgtY7fGY7XvmIPNyAUxQtNuxVNrlj64p1iVWpqOIt3zvKqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gGRZdjwx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5899LSe9029824
-	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Sep 2025 17:26:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:to; s=
-	qcppdkim1; bh=dI/tFVPWYxe3gtmKF2QC5qw2SP3z6Sb2TYW/w+Ytjms=; b=gG
-	RZdjwxnWNCA5VDqdfrskH+jGqlzP6dMUz5fY1zsBAKKt+50fLGGNIChDbmTspua/
-	HGOkRlkbsdfdFVH8vAkQbO3VZ1oCOCWUUMwvoS9RC6gpxnpoigwSHi24Uta70GfV
-	4i4FH1aDbSfea/mmmriK/Ex+TVHYr+cEO8+Zo01X67cJh9mKKyfgQrY09S3G4DHV
-	s+9hMwnPnisVBtAb/4k2xktb8iGw831cfA8I9SCTl2jGFbcZnDoEOWTqdl9d68Z/
-	sNfq2SY5L3wDjUcVOTd2J8UT9QK8TnuFw2ZlZwvXLKNlC2mY6U2NzsbaDCEXq/Gj
-	lju1Evql542lEw1s06Gw==
-Received: from mail-oo1-f70.google.com (mail-oo1-f70.google.com [209.85.161.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491t37wjxr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 17:26:05 +0000 (GMT)
-Received: by mail-oo1-f70.google.com with SMTP id 006d021491bc7-62189a9fb92so1755020eaf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 10:26:05 -0700 (PDT)
+	s=arc-20240116; t=1757445730; c=relaxed/simple;
+	bh=Q5QpLMKuG98x6OxTFrFdeeark0xreCQr1lQs5ENXKeU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UKG2BtU5JyuBze0pYv0MIyHC2lGtZhOWX2lOWLhq1AmpY/HUhzTLye/eiQyY+66lKU7S1OA4dhKnGYhLExjGPMq5TWDNKmHxOHFdIPK5/bPElUSEXkFoOzFZq1bGqa+NupD7D8RVtcPHs+I0uLVfQFsm31ZT8rlHa7k03YhL0a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VdJ79Am2; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-625e1ef08eeso6690407a12.1;
+        Tue, 09 Sep 2025 12:22:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757445726; x=1758050526; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=yflQyxEc1T9Y3WrQFfO9sDGa6EOwcXTzNdDwj6cExFk=;
+        b=VdJ79Am2mTjwUQ62wOqQDion5rIgyb7Ee172A+BUYKpygAUc9hEXNEN/NYvrK24Zj5
+         qB8z5sJ0pO8lP1QkxS4CShZH/eBTwkB/QV6Utn5KIbg/+nxM/XSvqTfC8HmwDdT50ePa
+         LJPJWvwqFlYadWs69i88QWSdNhJ+H9ebBEd8CMneY/MNr2Qywknv7QN9HcPksz4JLiij
+         10oszfSz64icF+7Zna43Xeyy5tAvJivxLHUAARK8AolKGEfSK7BVPRpi4YQDba3lOZxu
+         hTmm1Uug/2aejJQt/yVNY0fsnGzZzTl2Tn508dN4Ilq7XIbY2ec8eCsnINof1aHgPa7G
+         0lUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757438764; x=1758043564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :reply-to:in-reply-to:references:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=dI/tFVPWYxe3gtmKF2QC5qw2SP3z6Sb2TYW/w+Ytjms=;
-        b=ds048ZlVf5LURuHFwLcZxnhJ3qOn+wkuhywwDpKzPW2oRHETVBHhHQD+8PlyoyaOT5
-         l1PrOXxZgpnrhjCd5UWHWfidF5eTP5jR0vXCcUaqvrERo5ir/QQ1+OdJ5UGl66G54aIq
-         KmCgXpJ8cti2X2fBE+RcSNe7DzEhLYFSqPHqjyDOJpXeTfJFFybVtMgqoAZ/FI21usSa
-         Vj1P4nu0TH2WjS416Vu2M6ooOk0VxGcDZgthQd8n0McVAyWcL3PMdWIoyeAA2rfz+0OC
-         FyAblBE9d8nVp5SGbA/OEkoBj+jDH0szjy9K/CuN94UE7pq2DlaZU7ST6ypEg4qeua6d
-         Sl3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXGD+/JwnAHESP9Z5m2Nj2n9o20EXuUU7TD0trm/vmeLRJTKSbczSsScP0LgU28FnKswZIhEJIxfCnwKJKW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvfQyaY46I2KYn5Por8MSR/T6mrj0uGdZx1J9KXb5kLz5yRsMs
-	h3SlwEqSdOb207mQr/PxPnc7yRk29ZU2udEj3uMYN7ieXqvM7jOmV/g2oattmFIdTJIreqzeGS5
-	6MffoQ3p95ySyTXiclb4qFrjtLGYx6pFikmOV5k8EfwXhiMntm536BSiRGxN1fTEL2sx4SJ/LNz
-	D9x0V6WTn7dq7Dxo9W47VvdtNqtVeCPWO1RvYzrE4Z/V4=
-X-Gm-Gg: ASbGncvepvNPv3WW5/VQLNFlHz6Cc433cd1TUjLx2q94wDdEvG/oFdHVm80Yxjicvw0
-	ARgRG7xsws49coxeDr3HbKtSVprDb8HSTZUUjBUMF+17uMsCjrlw5HbQsAw9SNJ4Uj1DLvp5WAm
-	ChiVSwPI+JGeFPHJ31oreWNLPv0kY1UX72FIgs1CpticrWrw6zt5hP
-X-Received: by 2002:a05:6871:7827:b0:315:60a6:c27b with SMTP id 586e51a60fabf-3226533837cmr6671386fac.10.1757438764226;
-        Tue, 09 Sep 2025 10:26:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHn4AlsT86NdKgN9yHhRkxhjC25mI5BT+6nw4b3oMpLzg3EwapWIo1tkqNKsOWdNothIW6wabluGL0au0IHDWk=
-X-Received: by 2002:a05:6871:7827:b0:315:60a6:c27b with SMTP id
- 586e51a60fabf-3226533837cmr6671367fac.10.1757438763757; Tue, 09 Sep 2025
- 10:26:03 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757445726; x=1758050526;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yflQyxEc1T9Y3WrQFfO9sDGa6EOwcXTzNdDwj6cExFk=;
+        b=JKBNKzEffujaCyE3Pf37LCGAram8XJgN18xsGoy57F/C3VUoDkU4cJyK4EGNuUAfCu
+         LpC/FgQ8grBf/uZwVLchK6FGOgE2JKv/EKJL1slgmGZdXCOd4/co9xtupru9lU6aTlE7
+         Rsbnw04uMWvx/ez9rrlEnSwlhPN9WPrAeR7j9Xox2ieu+E6d6WuSQRMru6t7FoPCLM5M
+         h2bgPQxju4sXPnf30D8QNxEdLqXAJroVH5A9dyfcK1EDEthuNvO2oH6T+uvJJN86NV23
+         dlkU1a+zmJEZBdflzzgyguRpEX6hdtZCu6is8PSJ36+5TWfjK1gHV2Bbu8mejECTc79i
+         Pnfg==
+X-Forwarded-Encrypted: i=1; AJvYcCVe4N4nVQxH6jIG2HRw7ZzhqZ5ZF7jHnNowksIPe7m8/O4Lv86dNn0ZTLp2xeV7o+RZddCifdLpE8C9@vger.kernel.org, AJvYcCXa73wOxlbHupP7Xf+gSSIBlWjCbQrodduYXfjWukX7pCRnrKbWyQMiyznIhJaIYMpX/3zcf2kApxOY6Tl4xw==@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfbPO1K/eO0OLqK+xbgik8NHEDQ37zPvuqPfXY/VMew5g5aW+E
+	VArTuLRohuDPMx4pWDEzprqZlSBa+tiiu3J4z48HnX5VBo0iSGPlForUuHhG5Q==
+X-Gm-Gg: ASbGncuXK2BBcrSrkGfy5xiUdF+POyVxcwVWxBSYqQogpcm3sWaaduWAT3PRIARZsgA
+	cOKck8kUIr+3eC+PWwB1JwqYLcizHHRrOdtNXL7T/Fjhh2EyCOeggxLp5V5ncHl4PUQcka21V/a
+	ydNhPmlI/YKBTBuABaumMyvlyKkvI//k0dDeJHko4e7d/5IJugON7l5YKDhs0DOlwOSDCLkF1eq
+	jHN2TBCA6IVg1Duy+XtNrfggw36t9M+dZQx+08q9EMUCXOhdqyHiEkJ5IjgVfw70QCKaz2vbJ15
+	DeY1u9TPTj5b32PLLFBN0Cnl/w6RKjWkWGlLxjBhhYu9sCku5YZahgL6VhlANjJrhRmL+WA/Z/+
+	PcbQ68cI8rvrYyVqQUCT3BKErn4ToUwI=
+X-Google-Smtp-Source: AGHT+IG5KSxnJMO5PMScPv+jlBGBlCaMFuTpg0hk96B5oJG6y0HgEUUQvyR+vdcGyqyROm/RzB535g==
+X-Received: by 2002:a05:6402:518f:b0:628:a4fb:3b44 with SMTP id 4fb4d7f45d1cf-628a4fb3d21mr7307419a12.1.1757445726428;
+        Tue, 09 Sep 2025 12:22:06 -0700 (PDT)
+Received: from [127.0.1.1] ([46.53.240.27])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-62c01ae5f75sm1847142a12.46.2025.09.09.12.22.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Sep 2025 12:22:06 -0700 (PDT)
+From: Dzmitry Sankouski <dsankouski@gmail.com>
+Subject: [PATCH v2 0/3] starqltechn: fix max77705 device irqs
+Date: Tue, 09 Sep 2025 22:22:02 +0300
+Message-Id: <20250909-starqltechn-correct_max77705_nodes-v2-0-e4174d374074@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908193021.605012-1-robin.clark@oss.qualcomm.com>
- <20250908193021.605012-2-robin.clark@oss.qualcomm.com> <o25axq4soxjluqnxjad2f3blhezuglsvex6k3aav5v65ynn7qd@5i3wm2lryr7q>
-In-Reply-To: <o25axq4soxjluqnxjad2f3blhezuglsvex6k3aav5v65ynn7qd@5i3wm2lryr7q>
-Reply-To: rob.clark@oss.qualcomm.com
-From: Rob Clark <rob.clark@oss.qualcomm.com>
-Date: Tue, 9 Sep 2025 10:25:52 -0700
-X-Gm-Features: Ac12FXxGRIubVyoobxwaPjC26ZhWg4pW-b_VwL3AjiQCcFrkrFqBbJ9eqYgvU-w
-Message-ID: <CACSVV02Zym2hC-fFcJsP4M9T4mYGXsMtGrmnux6Eva0C7PHdfA@mail.gmail.com>
-Subject: Re: [PATCH 1/5] drm/msm/registers: Remove license/etc from generated headers
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: tTtUKTHfp46ddv0quvZHztLn1A7eE7ES
-X-Proofpoint-GUID: tTtUKTHfp46ddv0quvZHztLn1A7eE7ES
-X-Authority-Analysis: v=2.4 cv=NdLm13D4 c=1 sm=1 tr=0 ts=68c0632d cx=c_pps
- a=lkkFf9KBb43tY3aOjL++dA==:117 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
- a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=w4XaYH8Cdj-KDOQYXpsA:9 a=QEXdDO2ut3YA:10
- a=k4UEASGLJojhI9HsvVT1:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDA2NiBTYWx0ZWRfX2KnYEWX5xtM7
- +g4iDOUt1fmEj32YTrJdd9YtnurBri2lbHAa1darS2r3N3dy4UcR7+4xHUoqvny9SFCBibqJu7d
- /EHPDuHY0jKee2xI0yI2+rFTZ2zS+E8E24uTfP4zRptDc/tZGsCAWFsQ6fpqCjYJ+3oSp17hEAz
- ZsIErbrjS5ttmN+41WRM/El2M1ZORAeZ6KIVquNCEKAH72p6zlzN0yXmHr1ERDrs0hR7+obWwp2
- xPZQxdWGe0uagOFZiTZAUj3FuFN5/VF2G9s7wZjx6QkwKZBooVrTxzZFOPmxFfCfZLcp8SsE8Ov
- PPepA8uevqqSlvIxefmXuIWU2OjgOpfMjPEkhsU+wHgGCKhZmsiyvNM71uigVg1nuLcWCy5R7lC
- 4GfG9xI5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-09_03,2025-09-08_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0 phishscore=0
- clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080066
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFp+wGgC/42Q0W6EIBBFf8XwXFrBKupT/6PZEBZGJRF0BzQ2G
+ /+9rJvaPvbxTu7cM3fuJABaCKTN7gRhtcFOPgn+khE9KN8DtSZpwnNe5nWR0xAV3sYIevBUT4i
+ go3RqE0LkpfSTgUAZq7jR3DQdCJKCZoTObgfk8/LUCLclseJz+ItK5B/QGSpEIyqZLNgDSutmn
+ FZw4COFontn4topVVbtysnfo88kdibRdIW0PgLiMkeZnGa0vqd5XTcaoGqKyrRr8Yi5qgCpnnM
+ 2tlkyLRv1sMU3p0JaJ48Wgw1xwq/jcys7apzEfzxpZTSnZcdV1xhWGGU+eqfs+Jqg5LLv+zekr
+ UeGmgEAAA==
+To: Chanwoo Choi <cw00.choi@samsung.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dzmitry Sankouski <dsankouski@gmail.com>
+X-Mailer: b4 0.14.0
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757445725; l=1901;
+ i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
+ bh=Q5QpLMKuG98x6OxTFrFdeeark0xreCQr1lQs5ENXKeU=;
+ b=rVnp+GNhFskyI4xHF4FLDqIOjL+OuR20RhqMEEx/dMMBw//I0YGMw+YMf2Z+PghCDws0mnFLI
+ 69/y0QhSuSlALZqq32Fz0r+eFL2ycEKLoHqeM68e2igA/j48ykRU3u3
+X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
+ pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
 
-On Tue, Sep 9, 2025 at 8:01=E2=80=AFAM Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Mon, Sep 08, 2025 at 12:30:04PM -0700, Rob Clark wrote:
-> > Since these generated files are no longer checked in, either in mesa or
-> > in the linux kernel, simplify things by dropping the verbose generated
-> > comment.
-> >
-> > These were semi-nerf'd on the kernel side, in the name of build
-> > reproducibility, by commit ba64c6737f86 ("drivers: gpu: drm: msm:
-> > registers: improve reproducibility"), but in a way that was semi-
-> > kernel specific.  We can just reduce the divergence between kernel
-> > and mesa by just dropping all of this.
-> >
-> > Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
-> > ---
-> >  drivers/gpu/drm/msm/registers/gen_header.py | 37 +--------------------
-> >  1 file changed, 1 insertion(+), 36 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/=
-drm/msm/registers/gen_header.py
-> > index a409404627c7..56273a810c1d 100644
-> > --- a/drivers/gpu/drm/msm/registers/gen_header.py
-> > +++ b/drivers/gpu/drm/msm/registers/gen_header.py
-> > @@ -444,9 +444,6 @@ class Parser(object):
-> >               self.variants =3D set()
-> >               self.file =3D []
-> >               self.xml_files =3D []
-> > -             self.copyright_year =3D None
-> > -             self.authors =3D []
-> > -             self.license =3D None
-> >
-> >       def error(self, message):
-> >               parser, filename =3D self.stack[-1]
-> > @@ -686,10 +683,6 @@ class Parser(object):
-> >                       self.parse_field(attrs["name"], attrs)
-> >               elif name =3D=3D "database":
-> >                       self.do_validate(attrs["xsi:schemaLocation"])
-> > -             elif name =3D=3D "copyright":
-> > -                     self.copyright_year =3D attrs["year"]
-> > -             elif name =3D=3D "author":
-> > -                     self.authors.append(attrs["name"] + " <" + attrs[=
-"email"] + "> " + attrs["name"])
-> >
-> >       def end_element(self, name):
-> >               if name =3D=3D "domain":
-> > @@ -706,8 +699,6 @@ class Parser(object):
-> >                       self.current_array =3D self.current_array.parent
-> >               elif name =3D=3D "enum":
-> >                       self.current_enum =3D None
-> > -             elif name =3D=3D "license":
-> > -                     self.license =3D self.cdata
-> >
-> >       def character_data(self, data):
-> >               self.cdata +=3D data
-> > @@ -868,33 +859,7 @@ def dump_c(args, guard, func):
-> >
-> >       print("#ifndef %s\n#define %s\n" % (guard, guard))
-> >
-> > -     print("""/* Autogenerated file, DO NOT EDIT manually!
-> > -
-> > -This file was generated by the rules-ng-ng gen_header.py tool in this =
-git repository:
-> > -http://gitlab.freedesktop.org/mesa/mesa/
-> > -git clone https://gitlab.freedesktop.org/mesa/mesa.git
-> > -
-> > -The rules-ng-ng source files this header was generated from are:
-> > -""")
-> > -     maxlen =3D 0
-> > -     for filepath in p.xml_files:
-> > -             new_filepath =3D re.sub("^.+drivers","drivers",filepath)
-> > -             maxlen =3D max(maxlen, len(new_filepath))
-> > -     for filepath in p.xml_files:
-> > -             pad =3D " " * (maxlen - len(new_filepath))
-> > -             filesize =3D str(os.path.getsize(filepath))
-> > -             filesize =3D " " * (7 - len(filesize)) + filesize
-> > -             filetime =3D time.ctime(os.path.getmtime(filepath))
-> > -             print("- " + new_filepath + pad + " (" + filesize + " byt=
-es, from <stripped>)")
-> > -     if p.copyright_year:
-> > -             current_year =3D str(datetime.date.today().year)
-> > -             print()
-> > -             print("Copyright (C) %s-%s by the following authors:" % (=
-p.copyright_year, current_year))
-> > -             for author in p.authors:
-> > -                     print("- " + author)
-> > -     if p.license:
-> > -             print(p.license)
->
-> IANAL, but I as the generated files contain C/C++ functions, I think we
-> need to have a corresponding licence in the file.
+For max77705 charger and fuelgauge subdevice, use max77705 interrupt
+controller.
 
-I can't find anything that indicates a difference depending on the
-contents of the generated file (ie. whether it be
-functions/tables/prototypes/etc).  And AFAICT it is implicit that the
-license of the generated file is inherited from the input to the
-generator.
+Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+---
+Changes in v2:
+- run dt_binding_check, dtbs_check
+- make interrupt-cells 1
+- add patch to delete unused address-cells and size-cells
+- add binding patch for interrupt-cells
+- Link to v1: https://lore.kernel.org/r/20250831-starqltechn-correct_max77705_nodes-v1-0-5f2af9d13dad@gmail.com
 
-Some other points:
-- the various *.mod.c files generated for each kernel module do not
-contain a license
-- various files generated by asn1_compiler do not contain a license
-- other generated .c/.h files are a mixed bag, some contain a license
-header and some do not
+---
+Dzmitry Sankouski (3):
+      dt-bindings: max77705: add interrupt-controller node
+      arm64: dts: qcom: sdm845-starqltechn: remove (address|size)-cells
+      arch: arm64: dts: qcom: sdm845-starqltechn: fix max77705 interrupts
 
-(In all of the cases the generated files should not be distributed,
-IMHO.  Yocto should fix this.)
+ Documentation/devicetree/bindings/mfd/maxim,max77705.yaml | 14 ++++++++++++++
+ arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts   | 14 +++++++-------
+ 2 files changed, 21 insertions(+), 7 deletions(-)
+---
+base-commit: be5d4872e528796df9d7425f2bd9b3893eb3a42c
+change-id: 20250830-starqltechn-correct_max77705_nodes-1162dc2d9fe7
+prerequisite-change-id: 20250830-max77705_77976_charger_improvement-e3f417bfaa56:v2
+prerequisite-patch-id: 534eff3c30a7b998f90f7be9537ff54c7f68543b
+prerequisite-patch-id: 60362587901a812e50ab0e9a2cf25eeea769ef9c
+prerequisite-patch-id: 9692af6383d95fca0c8030b9110d4b06aa0631e2
+prerequisite-patch-id: e1b7fc49030ad771c3fae33dc59595cbfecfd17b
+prerequisite-patch-id: efdf7936ffca1f97fc550118ae9a2a0795828f88
+prerequisite-patch-id: bc2ce3683ecab7a91fe2ca00d35798d0f4ea5f80
+prerequisite-patch-id: 2547b245dce99798d36835b1d729b21b6d1906e5
+prerequisite-patch-id: 30d3ca50e1b09abd360ddf33982223cce24c6859
+prerequisite-patch-id: deac1d76b95764903b7b6c937d7d4b43ed9f74ed
+prerequisite-change-id: 20250831-max77705-fix_interrupt_handling-0889cee6936d:v3
+prerequisite-patch-id: 4c30e8bca26067f7b96f7571086398cc86c6f71d
 
-BR,
--R
+Best regards,
+-- 
+Dzmitry Sankouski <dsankouski@gmail.com>
 
->
-> > -     print("*/")
-> > +     print("/* Autogenerated file, DO NOT EDIT manually! */")
-> >
-> >       print()
-> >       print("#ifdef __KERNEL__")
-> > --
-> > 2.51.0
-> >
->
-> --
-> With best wishes
-> Dmitry
 
