@@ -1,283 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-72820-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72821-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD780B50069
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:58:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C779B5006F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:59:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id C254E7AD2CB
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 14:56:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 00A257A83A0
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 14:57:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80D71338F32;
-	Tue,  9 Sep 2025 14:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D40E3350822;
+	Tue,  9 Sep 2025 14:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CyBnTsH3"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="L7eij+so"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DC4255E27;
-	Tue,  9 Sep 2025 14:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD762D12EF;
+	Tue,  9 Sep 2025 14:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757429884; cv=none; b=cVcJkYK4wjRY2PFWYJ9NTGjcNOUzh24LYJ8TS3UOBs/NnJkKZoaKR6a1wtDGKX5GpkfUVlneJgOemXXJgetZXSFJ4dQPavvIle/99cEbwLvzGrPJxHout5XlrbbKO5Z2O7CxFr9HXqGllZ0tnZi3YW0G9cwWvJr+2EvH/150j3c=
+	t=1757429940; cv=none; b=GZlwEfI4iQRGu/ukpzDZbY05T1+3cuSfMLSsebAdLAq+0eXAVzFxckG9tSZ7AE0A9LGMHYRg5d7ysiAdhLiPEeE/pSvbvguGOeUYl6KhOslWY/mEaJp/Atdv6E9DloDkaR9MbCEG1djIyakdXNAJ76WEfO1oZmmhyzGmPQN/VkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757429884; c=relaxed/simple;
-	bh=AhYS1yMvT6UZY4gb3lSyTd7YEFXttTdUlw02kjzCzS8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ip9A31ulW3us8exbqzvhE7rx0IjNd84cgMXnEV6t+WM9DgeECGzP0eu/QLlr+QZezKZAJ4M9w2PO5taxc+K3cK4S87PleKJki2GTFs+xzp3agnbtELrwEpwL5I5E7rgiNR48DfzLDrdOAtXgiFQueeyXc2BOOh88LDfzfsqR/Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CyBnTsH3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76645C4CEF4;
-	Tue,  9 Sep 2025 14:58:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757429883;
-	bh=AhYS1yMvT6UZY4gb3lSyTd7YEFXttTdUlw02kjzCzS8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CyBnTsH3dRriP5kf2uS4+LiBcDagW9pxeN1obzP2gB0inxfxry/Tr2XjeGKUW34To
-	 T99k4lgGErOmGZ+5GPVORAWpL1vSJxJzxC80p4snLHbce4fxgizBofDswGSn5old7D
-	 gsiKG/wfauBHy+4x1ZIExll1W9M82wPu3zCrUo+lfQAd3CcPj5c6dr1Nx9ben30pVO
-	 sOLnRlunffd1xDbIzaJA6scW5bDrqNTizK5Nh2kNnJnjpJwmtDzYqVpXtlsjVarJFb
-	 YR8rsjMrb/2ZA1eH63dxmDTji8CxLgKB1K7qXwXE8HrAo/lfm1Lyf9HQ3Km/dHirQA
-	 rOZ2YeIhs9v1w==
-Date: Tue, 9 Sep 2025 09:58:00 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-Cc: Jens Wiklander <jens.wiklander@linaro.org>, 
-	Sumit Garg <sumit.garg@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Apurupa Pattapu <quic_apurupa@quicinc.com>, 
-	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
-	Sumit Semwal <sumit.semwal@linaro.org>, Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>, 
-	Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org, op-tee@lists.trustedfirmware.org, 
-	linux-kernel@vger.kernel.org, linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
-	linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org, 
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v9 06/11] firmware: qcom: scm: add support for object
- invocation
-Message-ID: <67c676glro2asxtavghtvczdjcvtxlb5yd6rg2y5ln7ahj2gfq@yqtkle5tnal6>
-References: <20250901-qcom-tee-using-tee-ss-without-mem-obj-v9-0-a2af23f132d5@oss.qualcomm.com>
- <20250901-qcom-tee-using-tee-ss-without-mem-obj-v9-6-a2af23f132d5@oss.qualcomm.com>
+	s=arc-20240116; t=1757429940; c=relaxed/simple;
+	bh=cjdn7VbZxOpdQpAZR63R9vFc/Xn9IYqx8CPE3BnXKHU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=E4yhYiD6m8KKHRuuFDIu2VqICHYQr12GVzKsAgJ4vgD8HNECPrJUNj3tygIR+SC+tC84eTKVCCtycHqUZ9AxbzPuhfc0qWIGDqS6cHaEZPmD3vkQj1Ze0L67FzBIDJikDmLX+gUqKKlM+vCicz2okrMcNowqOwpJmjS40M00ZOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=L7eij+so; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5899LetS030639;
+	Tue, 9 Sep 2025 14:58:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	geacO2rPMEn/m7/+s5Y2GL28fQ02JCyDJCoYffayuu4=; b=L7eij+soiWlAsj0L
+	HvIOvAhux894xkFmVBXtMVbIxGvS+qzwOXbZ+vZOdGd+cusSGH11Eb2QAXRuJD2a
+	KF7K/1PFcs/E8YDttU1F5OhHaAG3wmx1HAGguUaFl1PVeISlatETUSlRcGD8VLq7
+	wJkarSTlg9yVCM1G7++9GGfGA7hKhgtNyoMCPkSvLWsJichyv4rdR2Hg3xzpOXOJ
+	tZc1jK+UPObsdwncx7OnirwVYmfhSH72qtcpexoiOKfiKc2zozv5X7gKFI1uOfN6
+	u9BWaVxu7PTrdN+AcIwv13wnjeTmMR06XTrvS/NF27y+mcnCt8i1quNTMKaVubCA
+	X6giig==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490c9j8p73-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 09 Sep 2025 14:58:47 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 589EwkFc021976
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 9 Sep 2025 14:58:46 GMT
+Received: from [10.218.4.141] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 9 Sep
+ 2025 07:58:41 -0700
+Message-ID: <2360f9f8-470d-46dc-be9e-660bb1580428@quicinc.com>
+Date: Tue, 9 Sep 2025 20:28:38 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250901-qcom-tee-using-tee-ss-without-mem-obj-v9-6-a2af23f132d5@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 1/4] ufs: dt-bindings: Document gear and rate limit
+ properties
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <mani@kernel.org>, <James.Bottomley@hansenpartnership.com>,
+        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20250902164900.21685-1-quic_rdwivedi@quicinc.com>
+ <20250902164900.21685-2-quic_rdwivedi@quicinc.com>
+ <20250903-sincere-brass-rhino-19f61a@kuoka>
+Content-Language: en-US
+From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+In-Reply-To: <20250903-sincere-brass-rhino-19f61a@kuoka>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAyMiBTYWx0ZWRfX4hP+jPTA37Jz
+ WODU7frHFtzpgHtBYZqabRhz0mDI77w8Z7aBKoSu801PisT74N2/FIqrUVgPPcJU14jIn3FitJR
+ blabdiiD/J/APcwtll/HktrW9jpov8IEwink7iCX86m/MT3GHeF+5Op0+jh0rThv5lYWsnD/Lvz
+ IQKgBlQwKn3ntMZYqCOl8WMaeCEaV4xwf8oCiDc4pXx6Cu58z+bkgv1gnupwalphvwwuZy/x/FI
+ yYpazHwOV0/MaErZyMRDulFvgTqFebtroghBkINkhIUmj8EcOFpnGwYPm9PJlhlMN/DowvqHAsM
+ iacC4zrFAqyQ+83b2SDYC1PQ7wJ+9v+QCwILsnAscCyzU1G77LNyrSyHDj30BeK4bRI9tV5pucb
+ T6J2BeAX
+X-Proofpoint-ORIG-GUID: zhUyxCYwt_RT7yLPirI7rWbfXMwv5TaD
+X-Authority-Analysis: v=2.4 cv=PpOTbxM3 c=1 sm=1 tr=0 ts=68c040a7 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8
+ a=KKAkSRfTAAAA:8 a=hsxNhXGD_D1a_R53JcAA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: zhUyxCYwt_RT7yLPirI7rWbfXMwv5TaD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-09_02,2025-09-08_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 phishscore=0 spamscore=0 bulkscore=0 clxscore=1015
+ malwarescore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060022
 
-On Mon, Sep 01, 2025 at 09:55:53PM -0700, Amirreza Zarrabi wrote:
-> Qualcomm TEE (QTEE) hosts Trusted Applications (TAs) and services in
-> the secure world, accessed via objects. A QTEE client can invoke these
-> objects to request services. Similarly, QTEE can request services from
-> the nonsecure world using objects exported to the secure world.
-> 
-> Add low-level primitives to facilitate the invocation of objects hosted
-> in QTEE, as well as those hosted in the nonsecure world.
-> 
-> If support for object invocation is available, the qcom_scm allocates
-> a dedicated child platform device. The driver for this device communicates
-> with QTEE using low-level primitives.
-> 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Tested-by: Harshal Dev <quic_hdev@quicinc.com>
-> Signed-off-by: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
-> ---
->  drivers/firmware/qcom/qcom_scm.c       | 124 +++++++++++++++++++++++++++++++++
->  drivers/firmware/qcom/qcom_scm.h       |   7 ++
->  include/linux/firmware/qcom/qcom_scm.h |   6 ++
->  3 files changed, 137 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index edeae6cdcf31..739ee9819549 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -2094,6 +2094,127 @@ static int qcom_scm_qseecom_init(struct qcom_scm *scm)
->  
->  #endif /* CONFIG_QCOM_QSEECOM */
->  
-> +/**
-> + * qcom_scm_qtee_invoke_smc() - Invoke a QTEE object.
-> + * @inbuf: start address of memory area used for inbound buffer.
-> + * @inbuf_size: size of the memory area used for inbound buffer.
-> + * @outbuf: start address of memory area used for outbound buffer.
-> + * @outbuf_size: size of the memory area used for outbound buffer.
-> + * @result: result of QTEE object invocation.
-> + * @response_type: response type returned by QTEE.
-> + *
-> + * @response_type determines how the contents of @inbuf and @outbuf
-> + * should be processed.
-> + *
-> + * Return: On success, return 0 or <0 on failure.
-> + */
-> +int qcom_scm_qtee_invoke_smc(phys_addr_t inbuf, size_t inbuf_size,
-> +			     phys_addr_t outbuf, size_t outbuf_size,
-> +			     u64 *result, u64 *response_type)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_SMCINVOKE,
-> +		.cmd = QCOM_SCM_SMCINVOKE_INVOKE,
-> +		.owner = ARM_SMCCC_OWNER_TRUSTED_OS,
-> +		.args[0] = inbuf,
-> +		.args[1] = inbuf_size,
-> +		.args[2] = outbuf,
-> +		.args[3] = outbuf_size,
-> +		.arginfo = QCOM_SCM_ARGS(4, QCOM_SCM_RW, QCOM_SCM_VAL,
-> +					 QCOM_SCM_RW, QCOM_SCM_VAL),
-> +	};
-> +	struct qcom_scm_res res;
-> +	int ret;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (response_type)
-> +		*response_type = res.result[0];
-> +
-> +	if (result)
-> +		*result = res.result[1];
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL(qcom_scm_qtee_invoke_smc);
-> +
-> +/**
-> + * qcom_scm_qtee_callback_response() - Submit response for callback request.
-> + * @buf: start address of memory area used for outbound buffer.
-> + * @buf_size: size of the memory area used for outbound buffer.
-> + * @result: Result of QTEE object invocation.
-> + * @response_type: Response type returned by QTEE.
-> + *
-> + * @response_type determines how the contents of @buf should be processed.
-> + *
-> + * Return: On success, return 0 or <0 on failure.
-> + */
-> +int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
-> +				    u64 *result, u64 *response_type)
-> +{
-> +	struct qcom_scm_desc desc = {
-> +		.svc = QCOM_SCM_SVC_SMCINVOKE,
-> +		.cmd = QCOM_SCM_SMCINVOKE_CB_RSP,
-> +		.owner = ARM_SMCCC_OWNER_TRUSTED_OS,
-> +		.args[0] = buf,
-> +		.args[1] = buf_size,
-> +		.arginfo = QCOM_SCM_ARGS(2, QCOM_SCM_RW, QCOM_SCM_VAL),
-> +	};
-> +	struct qcom_scm_res res;
-> +	int ret;
-> +
-> +	ret = qcom_scm_call(__scm->dev, &desc, &res);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (response_type)
-> +		*response_type = res.result[0];
-> +
-> +	if (result)
-> +		*result = res.result[1];
-> +
-> +	return 0;
-> +}
-> +EXPORT_SYMBOL(qcom_scm_qtee_callback_response);
-> +
-> +static void qcom_scm_qtee_free(void *data)
-> +{
-> +	struct platform_device *qtee_dev = data;
-> +
-> +	platform_device_unregister(qtee_dev);
-> +}
-> +
-> +static void qcom_scm_qtee_init(struct qcom_scm *scm)
-> +{
-> +	struct platform_device *qtee_dev;
-> +	u64 result, response_type;
-> +	int ret;
-> +
-> +	/*
-> +	 * Probe for smcinvoke support. This will fail due to invalid buffers,
-> +	 * but first, it checks whether the call is supported in QTEE syscall
-> +	 * handler. If it is not supported, -EIO is returned.
-> +	 */
-> +	ret = qcom_scm_qtee_invoke_smc(0, 0, 0, 0, &result, &response_type);
-> +	if (ret == -EIO)
-> +		return;
-> +
-> +	/* Setup QTEE interface device. */
-> +	qtee_dev = platform_device_register_data(scm->dev, "qcomtee",
-> +						 PLATFORM_DEVID_NONE, NULL, 0);
-> +	if (IS_ERR(qtee_dev)) {
-> +		dev_err(scm->dev, "qcomtee: register failed: %d\n",
-> +			PTR_ERR(qtee_dev));
 
-This isn't going to fail, and all expected paths that it would fail will
-be -ENOMEM which already printed a warning. So, I'd suggest that you
-resolve the LKP build warning by dropping the print.
 
-> +		return;
-> +	}
-> +
-> +	ret = devm_add_action_or_reset(scm->dev, qcom_scm_qtee_free, qtee_dev);
-> +	if (ret)
-> +		dev_err(scm->dev, "qcomtee: add action failed: %d\n", ret);
-
-The only possible error here is -ENOMEM, so you can skip the print.
-
-Regards,
-Bjorn
-
-> +}
-> +
->  /**
->   * qcom_scm_is_available() - Checks if SCM is available
->   */
-> @@ -2326,6 +2447,9 @@ static int qcom_scm_probe(struct platform_device *pdev)
->  	ret = qcom_scm_qseecom_init(scm);
->  	WARN(ret < 0, "failed to initialize qseecom: %d\n", ret);
->  
-> +	/* Initialize the QTEE object interface. */
-> +	qcom_scm_qtee_init(scm);
-> +
->  	return 0;
->  }
->  
-> diff --git a/drivers/firmware/qcom/qcom_scm.h b/drivers/firmware/qcom/qcom_scm.h
-> index 0e8dd838099e..a56c8212cc0c 100644
-> --- a/drivers/firmware/qcom/qcom_scm.h
-> +++ b/drivers/firmware/qcom/qcom_scm.h
-> @@ -156,6 +156,13 @@ int qcom_scm_shm_bridge_enable(struct device *scm_dev);
->  #define QCOM_SCM_SVC_GPU			0x28
->  #define QCOM_SCM_SVC_GPU_INIT_REGS		0x01
->  
-> +/* ARM_SMCCC_OWNER_TRUSTED_OS calls */
-> +
-> +#define QCOM_SCM_SVC_SMCINVOKE			0x06
-> +#define QCOM_SCM_SMCINVOKE_INVOKE_LEGACY	0x00
-> +#define QCOM_SCM_SMCINVOKE_CB_RSP		0x01
-> +#define QCOM_SCM_SMCINVOKE_INVOKE		0x02
-> +
->  /* common error codes */
->  #define QCOM_SCM_V2_EBUSY	-12
->  #define QCOM_SCM_ENOMEM		-5
-> diff --git a/include/linux/firmware/qcom/qcom_scm.h b/include/linux/firmware/qcom/qcom_scm.h
-> index 0f667bf1d4d9..a55ca771286b 100644
-> --- a/include/linux/firmware/qcom/qcom_scm.h
-> +++ b/include/linux/firmware/qcom/qcom_scm.h
-> @@ -175,4 +175,10 @@ static inline int qcom_scm_qseecom_app_send(u32 app_id,
->  
->  #endif /* CONFIG_QCOM_QSEECOM */
->  
-> +int qcom_scm_qtee_invoke_smc(phys_addr_t inbuf, size_t inbuf_size,
-> +			     phys_addr_t outbuf, size_t outbuf_size,
-> +			     u64 *result, u64 *response_type);
-> +int qcom_scm_qtee_callback_response(phys_addr_t buf, size_t buf_size,
-> +				    u64 *result, u64 *response_type);
-> +
->  #endif
+On 03-Sep-25 12:14 PM, Krzysztof Kozlowski wrote:
+> On Tue, Sep 02, 2025 at 10:18:57PM +0530, Ram Kumar Dwivedi wrote:
+>> Add optional "limit-hs-gear" and "limit-rate" properties to the
+>> UFS controller common binding. These properties allow limiting
+>> the maximum HS gear and rate.
+>>
+>> This is useful in cases where the customer board may have signal
+>> integrity, clock configuration or layout issues that prevent reliable
+>> operation at higher gears. Such limitations are especially critical in
+>> those platforms, where stability is prioritized over peak performance.
+>>
+>> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+>> ---
+>>  .../devicetree/bindings/ufs/ufs-common.yaml      | 16 ++++++++++++++++
+>>  1 file changed, 16 insertions(+)
 > 
-> -- 
-> 2.34.1
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
+Hi Krzysztof,
+
+Alim has recommended renaming the "limit-rate" property to "limit-gear-rate".
+Please let me know if you have any concerns.
+
+Also, may I retain your "Reviewed-by" tag in the next patchset?
+
+Thanks,
+Ram.> 
+> Best regards,
+> Krzysztof
 > 
+
 
