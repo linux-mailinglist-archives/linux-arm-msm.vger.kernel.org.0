@@ -1,62 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-72856-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72857-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4EEB2B5036F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 18:58:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3340B5036E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 18:58:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2B1BF1C669ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:58:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C34E6360F6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:57:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B68736298A;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EF6BF3629B1;
 	Tue,  9 Sep 2025 16:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="adon6VqR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bFBt3qqs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5021B36209C;
-	Tue,  9 Sep 2025 16:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21143629A5;
+	Tue,  9 Sep 2025 16:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757437007; cv=none; b=BMskJM9EbG3JMVpn/z5WN2csfOd80Wu7D5SzRRzP7AZaG0Ywet21Ovqk19CyeZVsQG7iu6W3qz3ihzQm/7vVDu92zWO9ph18mWBCii3MrAzGUPP0Im5WyB4JTq2l66PNT6e662lRkXRrBtDGnBWgmw8gMEEJWylXyzN0jNXUHkw=
+	t=1757437007; cv=none; b=eRnL9aMJ1CmX+KgJSAlqERSD+WskZRJbyuIpfHe8PeBXQs6gta5IU5aTC5LBZqB44JsEpSJdwYqswLFMq4dZGot2Q9+Ko9eWRBTi5n29F1QOZTRv6TbCaWbLr9Gv11LOevjO2EnZFB05MbBQckbQssM2HiZSdA5DorR4prsswPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1757437007; c=relaxed/simple;
-	bh=zytzlqMbxEdF92RBbFU5sLbfxKEMFtNch/Ro1HOAnHE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uxyck27bWptnuIqWlt+u44EaaFlBsH0vTe0stPcmw4UaDwIKmi3IUqpXswX4wRXQpfMVhuBWTKVLmB2tF0G1SAlbHMCfpIL27RKMd94PPoD84eLBzMUwpgZdJ356NsizcpWVL17mCGeLsPUnrxBpoGnyEbxVcAUq0cNo6rJSA/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=adon6VqR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B55AC4CEFD;
-	Tue,  9 Sep 2025 16:56:46 +0000 (UTC)
+	bh=FReHiVM1MCdEGWk46H2+ByCbhpaLYp97Kox1znfUkjU=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Vwq5kv/uR7kQt8+XykUxTKNiEFRnociTBETJjNcld6+/V39F4MsPeNH7FxuJuLguld3eqwqvzMVNnR32YyS1iqxyRxfRKbztT+tnEIODyiuqbgQexMQi5D+V/7bfaFuwOLVxXC61nVXZ0CuDCNIttiznQMLZphCpWoMqmiqYGZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bFBt3qqs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FFD1C4CEF8;
+	Tue,  9 Sep 2025 16:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757437006;
-	bh=zytzlqMbxEdF92RBbFU5sLbfxKEMFtNch/Ro1HOAnHE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=adon6VqRxPFZ1IbnUwHtFMl6VFB18VPUSL+W4iNCIP28mSxQGkV6PyiB3Oqb3r7+q
-	 wvFO0iRMQ7sc54iJ6FmoZBElHZA451f3uYfO0gAWXDU87ao2l3vldX2zNsqpVWSxVo
-	 IRIXH9ftV/BdVT6HtdV/6veKwLPC8g3cPyyYbzQBHlLsjBirrJ5g8duje4q2B65Eb2
-	 MjdPRVVQ5gN1cbJXA29q1z77xB1ORU+T7ShKSqM9Qx82PNxyBpyHsHdBtPgC2fpo3n
-	 pW3O2ji0OH9AZfBYnD+v1CyH5s+CpmHzIUsjtbvEzcvqQvghmnlzV+0i3BGzRX4j3a
-	 1lkSVKUKn+8Zw==
+	s=k20201202; t=1757437007;
+	bh=FReHiVM1MCdEGWk46H2+ByCbhpaLYp97Kox1znfUkjU=;
+	h=From:To:Subject:Date:In-Reply-To:References:From;
+	b=bFBt3qqsasnvGBjRKp5NCEeJJ+sbXRrHeH5ukGLkZpqzlur/PO8BkzXeqKKLSiDNV
+	 jN9rOk9mrGpU0cK+K9wK37i7ZRimdFtleuOxoqMtzBib7ek1mKeDR2YpcUDNXWYkA9
+	 olvxCP8BR87Wke14Oxsj2oN/tJ+Mgj8f3ahYGrMO0NcmRMd161Cp2P93yG6nfmJgct
+	 SbfAINyzTKaYJiQytMY77uYHReOYdp6wBxVN+iQDcqvoCgkW5nZkgN1vwAhE9qBDAU
+	 tjKzM1RV+ZrVpxAiZfOpdAajWIiSxBykU+pxKb5uZ8n/IuVvtEYRp6cB24mmW6O7tp
+	 tTZNDJQNVZ+bw==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Rob Herring <robh@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: x1e80100-romulus: Add WCN7850 Wi-Fi/BT
-Date: Tue,  9 Sep 2025 11:56:34 -0500
-Message-ID: <175743699538.2735486.1288022540614498775.b4-ty@kernel.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8650: Drop redundant status from PMK8550 RTC
+Date: Tue,  9 Sep 2025 11:56:35 -0500
+Message-ID: <175743699549.2735486.15809929363689390983.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250909-topic-romulus_wifi_pci-v2-1-3dc495d5559f@oss.qualcomm.com>
-References: <20250909-topic-romulus_wifi_pci-v2-1-3dc495d5559f@oss.qualcomm.com>
+In-Reply-To: <20250908085331.56478-2-krzysztof.kozlowski@linaro.org>
+References: <20250908085331.56478-2-krzysztof.kozlowski@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -67,20 +66,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Tue, 09 Sep 2025 10:24:07 +0200, Konrad Dybcio wrote:
-> It comes soldered onboard, just like on the QCP.
-> 
-> Unfortunately, the rfkill pin is triggered by default, so a workaround
-> is needed to convince the Linux driver to enable the hw, after which it
-> works just fine.
+On Mon, 08 Sep 2025 10:53:32 +0200, Krzysztof Kozlowski wrote:
+> The PMK8550 RTC is always enabled in its DTSI file since
+> commit a791fc19965e ("arm64: dts: qcom: pmk8550: always enable RTC PMIC
+> device"), so drop redundant status=okay in SM8650 boards.
 > 
 > 
-> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: x1e80100-romulus: Add WCN7850 Wi-Fi/BT
-      commit: fc8089535425897b6efacc8531e4b5b63b85b435
+[1/1] arm64: dts: qcom: sm8650: Drop redundant status from PMK8550 RTC
+      commit: 318d441dfe6f40002dedb163f7d0fa493e225f67
 
 Best regards,
 -- 
