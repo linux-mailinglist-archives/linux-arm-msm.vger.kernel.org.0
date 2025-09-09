@@ -1,254 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-72847-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72828-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B87B6B5016E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 17:34:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42B3BB50111
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 17:26:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 732E73A6FBC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 15:34:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3B9511884F8D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 15:26:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9E78371E8D;
-	Tue,  9 Sep 2025 15:28:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B4BC935085E;
+	Tue,  9 Sep 2025 15:26:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="UyQ3/5EG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Chw176oq"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D451536CE1C;
-	Tue,  9 Sep 2025 15:28:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CF5E2EC566;
+	Tue,  9 Sep 2025 15:26:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757431705; cv=none; b=Jtkqb29MkbtWKVnQpVwRHI4cvoKybRkV97vhw6q4uMsl+fkjg+LC6/zaIoGtkpdI5yxg/K6T18/HvA56S8Wbs7MK2XZUrNjwq+fGsRv94CTiAjpG/5PyPsF/sVYbKQprKkF8bUR1N20NeYt+Rl5GsF69BFscJh9RWHSUn71fFgY=
+	t=1757431581; cv=none; b=hdZ368AwcP26futxlAE5OWnNHYVm7wdqX1AC7wZxLZhii3/VU1lSKiqYN3Pzr+IR8YZm9GD6NFYICmmKqQE2OtqTKYTLL2osydfIRCPBMJj78qwgsLfkywYjbHiL++UMCHHvgsZJwBz1VLZvrYz1guIjjT2mUGRylAnot+dSmGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757431705; c=relaxed/simple;
-	bh=iEge4bjlYp9qPy7RxJWOkif1xtGCW23M7V+rOHM4rgc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eZJjns8IEXGXdQ0xZ6oqi4/kuZvuJIr8G/lKkVr9+e6J8PhxYARYuZNulux6K4EdqcJM5w+QUDRCfacdKD+RJyYFfS0nLFtWRs3XKjvAcdv8NTd4TesQsDujbFu6b3yWMdf+lH1bnhOl3Cnghr68Dfsd8FEFkvuj0fGshgYYY/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=UyQ3/5EG; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 85C021A0CCC;
-	Tue,  9 Sep 2025 15:28:22 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 5B10D60630;
-	Tue,  9 Sep 2025 15:28:22 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 84E57102F26A4;
-	Tue,  9 Sep 2025 17:28:18 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1757431701; h=from:subject:date:message-id:to:cc:mime-version:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=+olRoEgX3HlrRX56jjhR0fg9dg8bH9fKzbpKGiLV6HI=;
-	b=UyQ3/5EGbJPvok/KuWOAR6wQ+gA5rOYHZWr5CJ3PrDYJsSfXH90fUwuQ3K4a9ACNquiIDI
-	GZxjUaTPeD0b476KRfeTWQ0vi2URXRDKAbX9Nw2ud85atFOSMIzRglgQf0vJ5m0RSaEdIl
-	Xwvw51u16rkUfdrB89r+oojGLLRQ195QpjVpFY3fdKGToWdH94QHkKLtOtvhXskFBfVx4U
-	+Ecz9Y9i4eASx/S7aUHFpCUmMsVR+d2efYX6bLJmA+Ne5hYl8q3NbIT55ImIWTx87El/xi
-	1TKXXcT0bv0NNiIkXb5vU4Hx4AWwhX42fWTaeG6JYKA7g2cEUELUY1vuTfwarA==
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: davem@davemloft.net
-Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	thomas.petazzoni@bootlin.com,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?UTF-8?q?Nicol=C3=B2=20Veronese?= <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>,
-	devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-Subject: [PATCH net-next v12 18/18] Documentation: networking: Document the phy_port infrastructure
-Date: Tue,  9 Sep 2025 17:26:14 +0200
-Message-ID: <20250909152617.119554-19-maxime.chevallier@bootlin.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250909152617.119554-1-maxime.chevallier@bootlin.com>
-References: <20250909152617.119554-1-maxime.chevallier@bootlin.com>
+	s=arc-20240116; t=1757431581; c=relaxed/simple;
+	bh=hYUpB0xDXo+q9NrfRMCdveiJ6tEPqlcUWGAKcZB4/ZU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eY6tT5X7CyYqzaFLg7OIoEGOolxCvpCdrrdgpSV7AwKuMb0n408CVe2gtyWkIXJGLR2f7f4NqMsIOQX+Gu4dWDvmxXXkxhlD3+OS6PgipTn0N/yOliK5QLv0ubRsl+urhzVBijHrC+mh2oeDnpxtkrGP0belMPQkR1GgWUFszoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Chw176oq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1014C4CEF4;
+	Tue,  9 Sep 2025 15:26:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757431581;
+	bh=hYUpB0xDXo+q9NrfRMCdveiJ6tEPqlcUWGAKcZB4/ZU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Chw176oqM8gaI/W6GW5hwRUOJX7frGBeyG01E61mzX4wanPIftAaICtDY5Bkl0D6J
+	 AEd8plEjQDRE/ELv+agdA3WM//tbdjrpeGrTtbHC9IQ1XFETAq2IdxYK4w/Sg3Q3mQ
+	 h5jZlxMQEpJ4ELxLhv1pBJJPkr8uIwjEl5bsS2wg7/EhIkFKqM5fHqKf+Rx3iwcuup
+	 +RGT5mPF/Zh+X6ZH1Q50ZGKUas6KeoSgPkhosjbn3waNIQsZ/h0pSzySXIIOOPNeTa
+	 B+yrEHEbGwZIgpxGkwjABKwl5B43duv4Y553pLUUnUaJ1Qo+DHZQssIc6M7eYekLL1
+	 fXA4CKEjqhbQA==
+Date: Tue, 9 Sep 2025 10:26:18 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+Cc: konradybcio@kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: pmic_glink: Add support for SOCCP remoteproc
+ channels
+Message-ID: <y3jxi3xmm4lkvgud5keuu4qv7enqfe3z2y76gho6eal32k7cnk@zv2lat4mjqhi>
+References: <20250902214544.543038-1-anjelique.melendez@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250902214544.543038-1-anjelique.melendez@oss.qualcomm.com>
 
-This documentation aims at describing the main goal of the phy_port
-infrastructure.
+On Tue, Sep 02, 2025 at 02:45:44PM -0700, Anjelique Melendez wrote:
+> Add support for charger FW running on SOCCP by adding the
+> "PMIC_RTR_SOCCP_APPS" channel name to the rpmsg_match list and
+> updating notify_clients logic.
+> 
+> SOCCP does not have multiple PDs and hence PDR is not supported. So, if
+> the subsystem comes up/down, rpmsg driver would be probed or removed.
+> Use that for notifiying clients of pmic_glink for PDR events.
 
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
----
- Documentation/networking/index.rst    |   1 +
- Documentation/networking/phy-port.rst | 111 ++++++++++++++++++++++++++
- MAINTAINERS                           |   1 +
- 3 files changed, 113 insertions(+)
- create mode 100644 Documentation/networking/phy-port.rst
+Swap these two paragraphs, so that your commit message starts with a
+problem description and then you talk about the solution to the problem.
 
-diff --git a/Documentation/networking/index.rst b/Documentation/networking/index.rst
-index b7a4969e9bc9..84d88607ee7d 100644
---- a/Documentation/networking/index.rst
-+++ b/Documentation/networking/index.rst
-@@ -96,6 +96,7 @@ Contents:
-    packet_mmap
-    phonet
-    phy-link-topology
-+   phy-port
-    pktgen
-    plip
-    ppp_generic
-diff --git a/Documentation/networking/phy-port.rst b/Documentation/networking/phy-port.rst
-new file mode 100644
-index 000000000000..6d9d46ebe438
---- /dev/null
-+++ b/Documentation/networking/phy-port.rst
-@@ -0,0 +1,111 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+.. _phy_port:
-+
-+=================
-+Ethernet ports
-+=================
-+
-+This document is a basic description of the phy_port infrastructure,
-+introduced to represent physical interfaces of Ethernet devices.
-+
-+Without phy_port, we already have quite a lot of information about what the
-+media-facing interface of a NIC can do and looks like, through the
-+:c:type:`struct ethtool_link_ksettings <ethtool_link_ksettings>` attributes,
-+which includes :
-+
-+ - What the NIC can do through the :c:member:`supported` field
-+ - What the Link Partner advertises through :c:member:`lp_advertising`
-+ - Which features we're advertising through :c:member:`advertising`
-+
-+We also have info about the number of lanes and the PORT type. These settings
-+are built by aggregating together information reported by various devices that
-+are sitting on the link :
-+
-+  - The NIC itself, through the :c:member:`get_link_ksettings` callback
-+  - Precise information from the MAC and PCS by using phylink in the MAC driver
-+  - Information reported by the PHY device
-+  - Information reported by an SFP module (which can itself include a PHY)
-+
-+This model however starts showing its limitations when we consider devices that
-+have more than one media interface. In such a case, only information about the
-+actively used interface is reported, and it's not possible to know what the
-+other interfaces can do. In fact, we have very few information about whether or
-+not there are any other media interfaces.
-+
-+The goal of the phy_port representation is to provide a way of representing a
-+physical interface of a NIC, regardless of what is driving the port (NIC through
-+a firmware, SFP module, Ethernet PHY).
-+
-+Multi-port interfaces examples
-+==============================
-+
-+Several cases of multi-interface NICs have been observed so far :
-+
-+Internal MII Mux::
-+
-+  +------------------+
-+  | SoC              |
-+  |          +-----+ |           +-----+
-+  | +-----+  |     |-------------| PHY |
-+  | | MAC |--| Mux | |   +-----+ +-----+
-+  | +-----+  |     |-----| SFP |
-+  |          +-----+ |   +-----+
-+  +------------------+
-+
-+Internal Mux with internal PHY::
-+
-+  +------------------------+
-+  | SoC                    |
-+  |          +-----+ +-----+
-+  | +-----+  |     |-| PHY |
-+  | | MAC |--| Mux | +-----+   +-----+
-+  | +-----+  |     |-----------| SFP |
-+  |          +-----+       |   +-----+
-+  +------------------------+
-+
-+External Mux::
-+
-+  +---------+
-+  | SoC     |  +-----+  +-----+
-+  |         |  |     |--| PHY |
-+  | +-----+ |  |     |  +-----+
-+  | | MAC |----| Mux |  +-----+
-+  | +-----+ |  |     |--| PHY |
-+  |         |  +-----+  +-----+
-+  |         |     |
-+  |    GPIO-------+
-+  +---------+
-+
-+Double-port PHY::
-+
-+  +---------+
-+  | SoC     | +-----+
-+  |         | |     |--- RJ45
-+  | +-----+ | |     |
-+  | | MAC |---| PHY |   +-----+
-+  | +-----+ | |     |---| SFP |
-+  +---------+ +-----+   +-----+
-+
-+phy_port aims at providing a path to support all the above topologies, by
-+representing the media interfaces in a way that's agnostic to what's driving
-+the interface. the struct phy_port object has its own set of callback ops, and
-+will eventually be able to report its own ksettings::
-+
-+             _____      +------+
-+            (     )-----| Port |
-+ +-----+   (       )    +------+
-+ | MAC |--(   ???   )
-+ +-----+   (       )    +------+
-+            (_____)-----| Port |
-+                        +------+
-+
-+Next steps
-+==========
-+
-+As of writing this documentation, only ports controlled by PHY devices are
-+supported. The next steps will be to add the Netlink API to expose these
-+to userspace and add support for raw ports (controlled by some firmware, and directly
-+managed by the NIC driver).
-+
-+Another parallel task is the introduction of a MII muxing framework to allow the
-+control of non-PHY driver multi-port setups.
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 31e5293df595..9680dced1d02 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -9111,6 +9111,7 @@ F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
- F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
- F:	Documentation/devicetree/bindings/net/mdio*
- F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
-+F:	Documentation/networking/phy-port.rst
- F:	Documentation/networking/phy.rst
- F:	drivers/net/mdio/
- F:	drivers/net/mdio/acpi_mdio.c
--- 
-2.49.0
+Regards,
+Bjorn
 
+> 
+> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+> ---
+>  drivers/soc/qcom/pmic_glink.c | 28 +++++++++++++++++++++-------
+>  1 file changed, 21 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
+> index c0a4be5df926..bcd17fc05544 100644
+> --- a/drivers/soc/qcom/pmic_glink.c
+> +++ b/drivers/soc/qcom/pmic_glink.c
+> @@ -17,6 +17,11 @@
+>  
+>  #define PMIC_GLINK_SEND_TIMEOUT (5 * HZ)
+>  
+> +enum {
+> +	PMIC_GLINK_PDR_UNAVAIL = 0,
+> +	PMIC_GLINK_PDR_AVAIL,
+> +};
+> +
+>  enum {
+>  	PMIC_GLINK_CLIENT_BATT = 0,
+>  	PMIC_GLINK_CLIENT_ALTMODE,
+> @@ -39,6 +44,7 @@ struct pmic_glink {
+>  	struct mutex state_lock;
+>  	unsigned int client_state;
+>  	unsigned int pdr_state;
+> +	bool pdr_available;
+>  
+>  	/* serializing clients list updates */
+>  	spinlock_t client_lock;
+> @@ -203,17 +209,17 @@ static void pmic_glink_del_aux_device(struct pmic_glink *pg,
+>  	auxiliary_device_uninit(aux);
+>  }
+>  
+> -static void pmic_glink_state_notify_clients(struct pmic_glink *pg)
+> +static void pmic_glink_state_notify_clients(struct pmic_glink *pg, unsigned int state)
+>  {
+>  	struct pmic_glink_client *client;
+>  	unsigned int new_state = pg->client_state;
+>  	unsigned long flags;
+>  
+>  	if (pg->client_state != SERVREG_SERVICE_STATE_UP) {
+> -		if (pg->pdr_state == SERVREG_SERVICE_STATE_UP && pg->ept)
+> +		if (state == SERVREG_SERVICE_STATE_UP && pg->ept)
+>  			new_state = SERVREG_SERVICE_STATE_UP;
+>  	} else {
+> -		if (pg->pdr_state == SERVREG_SERVICE_STATE_DOWN || !pg->ept)
+> +		if (state == SERVREG_SERVICE_STATE_DOWN || !pg->ept)
+>  			new_state = SERVREG_SERVICE_STATE_DOWN;
+>  	}
+>  
+> @@ -233,7 +239,7 @@ static void pmic_glink_pdr_callback(int state, char *svc_path, void *priv)
+>  	guard(mutex)(&pg->state_lock);
+>  	pg->pdr_state = state;
+>  
+> -	pmic_glink_state_notify_clients(pg);
+> +	pmic_glink_state_notify_clients(pg, state);
+>  }
+>  
+>  static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
+> @@ -246,10 +252,14 @@ static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
+>  		return dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
+>  
+>  	dev_set_drvdata(&rpdev->dev, pg);
+> +	pg->pdr_available = rpdev->id.driver_data;
+>  
+>  	guard(mutex)(&pg->state_lock);
+>  	pg->ept = rpdev->ept;
+> -	pmic_glink_state_notify_clients(pg);
+> +	if (pg->pdr_available)
+> +		pmic_glink_state_notify_clients(pg, pg->pdr_state);
+> +	else
+> +		pmic_glink_state_notify_clients(pg, SERVREG_SERVICE_STATE_UP);
+>  
+>  	return 0;
+>  }
+> @@ -265,11 +275,15 @@ static void pmic_glink_rpmsg_remove(struct rpmsg_device *rpdev)
+>  
+>  	guard(mutex)(&pg->state_lock);
+>  	pg->ept = NULL;
+> -	pmic_glink_state_notify_clients(pg);
+> +	if (pg->pdr_available)
+> +		pmic_glink_state_notify_clients(pg, pg->pdr_state);
+> +	else
+> +		pmic_glink_state_notify_clients(pg, SERVREG_SERVICE_STATE_DOWN);
+>  }
+>  
+>  static const struct rpmsg_device_id pmic_glink_rpmsg_id_match[] = {
+> -	{ "PMIC_RTR_ADSP_APPS" },
+> +	{.name = "PMIC_RTR_ADSP_APPS", .driver_data = PMIC_GLINK_PDR_AVAIL },
+> +	{.name = "PMIC_RTR_SOCCP_APPS", .driver_data = PMIC_GLINK_PDR_UNAVAIL },
+>  	{}
+>  };
+>  
+> -- 
+> 2.34.1
+> 
 
