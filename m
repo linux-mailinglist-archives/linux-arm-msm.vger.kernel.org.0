@@ -1,173 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-72870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97718B5065E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 21:22:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B199B5068B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 21:46:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 92A4A1BC898C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 19:23:07 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D6CE61C63DB8
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 19:47:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4FDD736207D;
-	Tue,  9 Sep 2025 19:22:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C96230DD01;
+	Tue,  9 Sep 2025 19:46:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HwHXtEpJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="S3NHo08h"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66B33352FDC;
-	Tue,  9 Sep 2025 19:22:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56BF304973
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 19:46:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757445734; cv=none; b=AeyucgOxtaiqGfPNpaUy35O08Rz/6RbgwbDMM6kLegXNPfWEHRokbDkeD3/iGSUL2qHwC/YMdyPERZ8wIJkodoP11TlOW5KoFHfH3U81Whuhg9G+tHrQwJ1ApVtgDcx5dc+kiNB48MurPt1bcur/xuSnxknLZS+wyqLMSMqf9YQ=
+	t=1757447207; cv=none; b=iplszoAWD5kPNX9IPRrrpNJeSL0dkSEhy+GuvqVnoAgysLHpiIMEcxCgnkWh/zqKnWbRV6go9tH6f1XMecJnOZKBaT1yAl/nFJa1pD6v4iPlKJm9x2PGjk6kAp9qVJHi/JZf4vJPiK63oDRulqqWCQxK5ue/YhYoDKxsYpGJMig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757445734; c=relaxed/simple;
-	bh=qdLV6/3+/lrDARwwF4gML3gh+ae10lFxH70/A3U06Tw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oo2mnEyBh27PS3obWL17bRuza9uLpSr8nHZ/aP7rozm27NzsGZYuJB9Y4XP5luiIA64i9X2PqY9gCjhmzsg6mcCzRcGa6IhnnwP0hVFJXv4y/I48WqWxqcyId0nJGKkDBTUkR/0mitv1JAdvca0NDUsCQQsnbTY0ILWiyuAdW9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HwHXtEpJ; arc=none smtp.client-ip=209.85.208.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-62bec18abe6so2425016a12.3;
-        Tue, 09 Sep 2025 12:22:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757445731; x=1758050531; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aV7GXnC31a6+Cg+cxmDgtlX37//JD5ZC5/oqghxN6v4=;
-        b=HwHXtEpJPSY4EOQHoRnD1nybjUnx5C3hRRt2rRyXwk45vEhExol2K0DvU3dhYmotoZ
-         edHdwuXkR7T5GNDsspmoiNxB5NoSXFgRbAodxZ4CJzULF0b2V1vqPbyDLTr6YHSN2O7Z
-         Q3V5ZgWBWC2g7TiPZeu+xKygLMrnyiayvFQ59HKVfhjZamdi/n8EuF8mCWnD+pC4AxON
-         R3lNHXmm2As9XnJuejAQGPKAZyNr8pWE/xrARlNd6JmRYbaosjCFCNY4AZv+hYrl5TRK
-         DRf4QcJ8od9Lz95B8KRZUgcxLNjho5J4TktK89MYdiVUnfz12K6mi5yfimKd94KYExDL
-         1q8A==
+	s=arc-20240116; t=1757447207; c=relaxed/simple;
+	bh=bxllsDf1Lp5l4wjG0+72sWfLlBUmHJTnSL+neH2MmYE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b4L04eiNRTLvJ9HcLFLrnjPuqCQnqCnXGBi9NHAc2V5QhkSqOGVkT02f2RrzqOFLTn+F6U+H3U/5FB5aJTKLqa7coCGgISSxj8PemM/D+BdmvONdWprnAfnIDIPH/dvlsPwSMwpl8p4AJ1DoSqVD8V3u9C8PyawI6z1SyluaJLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=S3NHo08h; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 589HKcPg029371
+	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Sep 2025 19:46:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=5steLRplPiLvefWuDpnbGIk+jjoaaF/CqJG
+	o3p0Oykg=; b=S3NHo08hi5lyx5mDsSx3B7xaaTgM7tPKMem0kGKIsnoA1mpmZOx
+	2wgTlDZeC0P/fckpfQ5i+cZkT49P24l0w0ciAWLyxV0HOefBY3TKrXoSW5wWJ9aB
+	0W7pdUka6RDxsgB/K6iEIfCi2pdDCd92mL8JBrOzq9ed4P5HcbzCPgHZ3uuZdVsx
+	5i56ZWFFtBcWIFH9tv18waP4QBQaAAI9ezzHX90s++mH7gNUQRiOse862IQTamaz
+	A59peSJpaQRpZo5UXMswFV+BZbOykcya9AmntZaNZ7L8dNOcQK+w9SNDiiyXBFgo
+	KsZtUvTZUkUSw31UMlvsOrrV76yPvkEJbdA==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490db8hgxg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 19:46:44 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-72023d1be83so208119996d6.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 12:46:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757445731; x=1758050531;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aV7GXnC31a6+Cg+cxmDgtlX37//JD5ZC5/oqghxN6v4=;
-        b=gf2G9OvwhcqAILIkSiUSBJTvoIsCGbhWCLKaMxBX7qYjKNKIM9t2c8bUjFPp4d9DFJ
-         xbZCWKQ6wilMMBubP2o2F/0FiBn9wuSdJ+Wy1+dnM6FiJqmbjvMS8f9S7i8/8eSjtI/Q
-         6S6Z2cw23ZUDJI8/sT9iNiQeokB+oHESh6bW3g0VgM8LO5QN7GnnmZlBza+EOMHHMh9p
-         N1r2DF+Yyim1iCVp0Ph5f5bjUHfHL4wE4LncArmjnv2OmbKl09jRDguVRdoU6yDjD7Jz
-         24XcRNjaQ5PPEbEkTVtZpXo+WJ+We4vtMgzeoJleExb8xyaytyeiv4SNIHVBfEOLnvEg
-         owJw==
-X-Forwarded-Encrypted: i=1; AJvYcCVesJi4+UmKTDgnea8Hctx+B4yYVceIGybL3d/lQjCYqMi6Mxx4fyAiH1D4xA0tznvTXYns2n7jwkKD@vger.kernel.org, AJvYcCWu6BWwsGNalxi9d6tKkhgG13AqQLMke99MUljVAOVuyJFG2eu+MXsBh0ZyIeC4ipdzWaGDkM9bBQhmCCVQDA==@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRdMQF9XS4PaEty5BGs6eVkw0p2gQev3PV520yQrDNeuwyNF72
-	1jBhxk4Z0G417YwnDS6MLQDGmWiHjwUZC17aK5xnofIorTYzQN82dnI2
-X-Gm-Gg: ASbGncugfcS8a+65fyvbY+3qllFmxtH0X1NXAYhNKCSV5ZhQ406qfrppRnNp7JE4sJv
-	xqcrobhXfKWppv3US161gBfPotw1G4wNW4vU1ekk4HompYOL3YXH1bI9roUYJLEjJqTyILY81Mc
-	CCBv0UZekgLtJBtJaw0XT996yN4si9t3T/jUk0jr8o40u1IZVMX3GUwOrUCzlzaGpeu1gIT0C+W
-	Vusird3O/2nkk8kd1/9ruvHw/Hajbau26Qbh2I/9CZwCsqgitCiGjPRdfUcUWZN3aIncwYqng8T
-	6DoNIi7ZsdNV2KrbmpHptZ9wNpe4eRimoJ5veaXFZq1Y/An2VGZVDtqlUVwU1UJeHzsxY1vUkZJ
-	aPJMv2IGV3shMmoSHfegr
-X-Google-Smtp-Source: AGHT+IHrwxd77+1kRRdC9c95ipF2nTEJD6C6mWuCBmBnUTAJkbFqzDSJGw7t//aVeZcq2XkrSAq53A==
-X-Received: by 2002:a05:6402:26cb:b0:627:c107:842d with SMTP id 4fb4d7f45d1cf-627c1080d8emr8345248a12.4.1757445730676;
-        Tue, 09 Sep 2025 12:22:10 -0700 (PDT)
-Received: from [127.0.1.1] ([46.53.240.27])
-        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-62c01ae5f75sm1847142a12.46.2025.09.09.12.22.09
+        d=1e100.net; s=20230601; t=1757447204; x=1758052004;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5steLRplPiLvefWuDpnbGIk+jjoaaF/CqJGo3p0Oykg=;
+        b=NVKiIiJaQulrY+UWcDj9ozmmoOoj4ImlEtD0e6nbOfzTFWkMhEWN/QT5V+RyDwJ1qH
+         GLU3C5uOgNaqmQM+Cfu0lnGPJegB5uht4flJpeapl3XoQx/sjlw59iYGoCHcN/VACcTs
+         t+uAt4MAhephjhWLMdXOyk2iAsKvryztPSoiFb4vmiXTzv9ncKFb62eh0Hw8B8FJjjFA
+         Da1Lbb4F5e42Z0up/v8NhrGi1+wJdGl0Y9oEXo8ULodb+DpbogT7BhQHja7VEQjm4fsO
+         XY+iH89JCMI6XTVQ3L9ZlqwE/EYwxt8WzIOkhi/pkNJcRGKqV/A5D1BjBjal6Fa4Vhzq
+         v5sw==
+X-Forwarded-Encrypted: i=1; AJvYcCVoce3PfBtK13Oq4sGmTZLNgSoCUgsnksxQ7xqNdxh3yTiaBVyuhclyWuSmpvuLsUZMMKrQf7ogJ+46isUa@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdnQouMquN9kVb5NFr4t58JYCZo27px5ZMyhnJmeHMjc/nHv4w
+	RUPhkFKuocVRfYpHLv1m1Z92cb/zV+T84Jj5X7mQ0037IbeAbBUP5bclDkmYIlKtICCCfUf2F/t
+	Pt/NWqyCEcUyizU2WHzf4mvw41+J24EL3B6fLkHimkKAjA9mpjkwmw62i7TK1epXUxF2fy1chEo
+	AmUpE=
+X-Gm-Gg: ASbGncv3f+ShJzV8AL4TajX1DEHtglcxZM1FRzc3xJkE+dP8N7MR4zEeRr3Wj28CbIn
+	arU3q6sarL0OpcpcX3fZlwGHb6qWc+diDuYPv2HuzVNOxR3m8EqBG6bZ8mreNk76lLtRxrALajn
+	EvDLh2jNcqAncqMIcrrJZo8GHiDfbFPJ8HAGWwRk4AEfJZuWj4zWzqCikn2h7l9uTPWdv8v2rYh
+	B89BZzjNShUdMkvLnjoKmnBZUX1UeC1uKycHcoPT/82RqGMTN1y/4gpsu31ZAuZxM1qUsv0kJuI
+	oFd9w3J5qzUigxztHioRdOf4OxBignvAHtJT0E10w6MBtzf2r2wrGeG0UmHovosfi0x66AfWYlA
+	=
+X-Received: by 2002:a05:6214:2262:b0:72d:8061:93f9 with SMTP id 6a1803df08f44-7393ec168a2mr106215046d6.37.1757447203580;
+        Tue, 09 Sep 2025 12:46:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHicJvN6Ujucn2Isb8qJ82mIwVum40z8rVje70UXWdGxfkdDyrQ4DkGVKF4ygrOam+Eb1NvNA==
+X-Received: by 2002:a05:6214:2262:b0:72d:8061:93f9 with SMTP id 6a1803df08f44-7393ec168a2mr106214806d6.37.1757447203103;
+        Tue, 09 Sep 2025 12:46:43 -0700 (PDT)
+Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:15ba:6482:f5ef:4039])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-62bfef68a44sm1743963a12.21.2025.09.09.12.46.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Sep 2025 12:22:10 -0700 (PDT)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Tue, 09 Sep 2025 22:22:05 +0300
-Subject: [PATCH v2 3/3] arch: arm64: dts: qcom: sdm845-starqltechn: fix
- max77705 interrupts
+        Tue, 09 Sep 2025 12:46:42 -0700 (PDT)
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+To: bryan.odonoghue@linaro.org
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hans@jjverkuil.nl, Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        kernel test robot <lkp@intel.com>
+Subject: [PATCH] media: qcom: camss: Add missing header bitfield.h
+Date: Tue,  9 Sep 2025 21:46:36 +0200
+Message-Id: <20250909194636.2243539-1-loic.poulain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250909-starqltechn-correct_max77705_nodes-v2-3-e4174d374074@gmail.com>
-References: <20250909-starqltechn-correct_max77705_nodes-v2-0-e4174d374074@gmail.com>
-In-Reply-To: <20250909-starqltechn-correct_max77705_nodes-v2-0-e4174d374074@gmail.com>
-To: Chanwoo Choi <cw00.choi@samsung.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dzmitry Sankouski <dsankouski@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757445725; l=1935;
- i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=qdLV6/3+/lrDARwwF4gML3gh+ae10lFxH70/A3U06Tw=;
- b=OhmJ8WCY0i8ipcbuRaw8IQURN7oYyvqeB9f5BsKdQd8TqvmpZ8O3eDcVib3zPb0KWOVe51/jg
- IJWs1c9x1QzC8agpQnu7sGDSpYLGrOAWVz7ABpXbCsucQ6/joNZbJQt
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzMSBTYWx0ZWRfXynQg+9ayCiDK
+ 62shsiUNRqpxE+c3kRu53FYVIa8FZFcbfY9PIERaDzM0oenSrr3OBWVx+ClP+NctGbjxHEXhJzh
+ l5Tl1gdefiw9uqiF2U/ROUTgPNQZCVeLc2BKvyinXFKa2RWm+5CMijAMMzKwxRtKcHW4t+oER7p
+ /C5fEOnRrXVHH8e24T/oEx51Y9d0Y3ftuMWjD67Wt6KDVcbK3BoMSn/nk37lEARMrotr51YX74l
+ ioogwZr8CGOekKYuaxgyggGRyrrJeD+8QgubXdWgLlNLZpi9gDod8TR5+idNOqQcc2QDqByrwGn
+ iuN21ia6zzDXB1np6VODxWOSrLtuR6EB0dlO2Mi5+iIxkhZ+r7kZqIPYhQglyjLgWXENMMzQfbW
+ 8oiTeQOx
+X-Proofpoint-ORIG-GUID: 3lShVr3GuEE4Nap63E4pm8_fCTM4esak
+X-Proofpoint-GUID: 3lShVr3GuEE4Nap63E4pm8_fCTM4esak
+X-Authority-Analysis: v=2.4 cv=VIDdn8PX c=1 sm=1 tr=0 ts=68c08424 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=yJojWOMRYYMA:10
+ a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8 a=EUspDBNiAAAA:8 a=d6NsCnqxkaT3_V1LjFAA:9
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-09_03,2025-09-08_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ phishscore=0 adultscore=0 clxscore=1015 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060031
 
-Since max77705 has a register, which indicates interrupt source, it acts
-as an interrupt controller.
+Add the <linux/bitfield.h> header to prevent erros:
+>> drivers/media/platform/qcom/camss/camss-vfe-340.c:186:21: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+     186 |                         if (bus_status & TFE_BUS_IRQ_MASK_RUP_DONE(i))
+         |                                          ^
+   drivers/media/platform/qcom/camss/camss-vfe-340.c:36:40: note: expanded from macro 'TFE_BUS_IRQ_MASK_RUP_DONE'
+      36 | #define         TFE_BUS_IRQ_MASK_RUP_DONE(sc)   FIELD_PREP(TFE_BUS_IRQ_MASK_RUP_DONE_MASK, BIT(sc))
+         |                                                 ^
+   drivers/media/platform/qcom/camss/camss-vfe-340.c:191:21: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+     191 |                         if (bus_status & TFE_BUS_IRQ_MASK_BUF_DONE(i))
+         |                                          ^
+   drivers/media/platform/qcom/camss/camss-vfe-340.c:38:40: note: expanded from macro 'TFE_BUS_IRQ_MASK_BUF_DONE'
+      38 | #define         TFE_BUS_IRQ_MASK_BUF_DONE(sg)   FIELD_PREP(TFE_BUS_IRQ_MASK_BUF_DONE_MASK, BIT(sg))
+         |                                                 ^
+   2 errors generated.
 
-Use max77705 as an interrupt controller for charger and fuelgauge
-subdevices.
-
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202509100228.xLeeYzpG-lkp@intel.com/
+Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 ---
-Changes for v2:
-- fix commit msg header prefix to 'arm64: dts: qcom: sdm845-starqltechn:'
-- remove binding header for interrupt numbers
-- make interrupt-cells 1, because irq trigger type is not used
----
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/media/platform/qcom/camss/camss-csid-340.c | 1 +
+ drivers/media/platform/qcom/camss/camss-vfe-340.c  | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 8a1e4c76914c..597e25d27d76 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -584,13 +584,15 @@ &uart9 {
- &i2c14 {
- 	status = "okay";
+diff --git a/drivers/media/platform/qcom/camss/camss-csid-340.c b/drivers/media/platform/qcom/camss/camss-csid-340.c
+index 7a8fbae3009b..22a30510fb79 100644
+--- a/drivers/media/platform/qcom/camss/camss-csid-340.c
++++ b/drivers/media/platform/qcom/camss/camss-csid-340.c
+@@ -6,6 +6,7 @@
+  */
  
--	pmic@66 {
-+	max77705: pmic@66 {
- 		compatible = "maxim,max77705";
- 		reg = <0x66>;
- 		interrupt-parent = <&pm8998_gpios>;
- 		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
- 		pinctrl-0 = <&pmic_int_default>;
- 		pinctrl-names = "default";
-+		#interrupt-cells = <1>;
+ #include <linux/completion.h>
++#include <linux/bitfield.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/kernel.h>
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+index 55f24eb06758..30d7630b3e8b 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-340.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+@@ -6,6 +6,7 @@
+  */
  
- 		leds {
- 			compatible = "maxim,max77705-rgb";
-@@ -629,8 +631,8 @@ max77705_charger: charger@69 {
- 		reg = <0x69>;
- 		compatible = "maxim,max77705-charger";
- 		monitored-battery = <&battery>;
--		interrupt-parent = <&pm8998_gpios>;
--		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&max77705>;
-+		interrupts = <0>;
- 	};
- 
- 	fuel-gauge@36 {
-@@ -638,8 +640,8 @@ fuel-gauge@36 {
- 		compatible = "maxim,max77705-battery";
- 		power-supplies = <&max77705_charger>;
- 		maxim,rsns-microohm = <5000>;
--		interrupt-parent = <&pm8998_gpios>;
--		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&max77705>;
-+		interrupts = <2>;
- 	};
- };
- 
-
+ #include <linux/delay.h>
++#include <linux/bitfield.h>
+ #include <linux/interrupt.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
 -- 
-2.39.5
+2.34.1
 
 
