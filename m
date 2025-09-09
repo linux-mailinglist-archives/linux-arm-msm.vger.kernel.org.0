@@ -1,143 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-72743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E8011B4ABF4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 13:29:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B730B4AC5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 13:41:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A44284436AC
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 11:29:23 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4340B440BE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 11:40:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BB399321F35;
-	Tue,  9 Sep 2025 11:29:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91C1F32253D;
+	Tue,  9 Sep 2025 11:40:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k2Dw1p/A"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LcWLajU7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C0E285071
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 11:29:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9043218D7
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 11:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757417340; cv=none; b=gdt9uykv8WvoLSgivZjkUOygPTS9iN7F5JN741Zl0J6AVUIZ2MGbWQ8ihRratSS5o+efZCktLsSG+HObpdITEjRTXgw+n3fGIsDYSdlzqsGpVqRoBP7qly5Fil1IE8mil2WF+PJwr1pReXplZmVh844fQAVGs+bGP5f9MLhVkVM=
+	t=1757418032; cv=none; b=P3Sihq8zMywZypW4H52beVyaMtved8a9eoXEbhhxyjfFvx7dXiq6cJrI3+tqC1l8Eq9Y+sQBcShLdfPg/WYYs4ONXx0K/VEuoMDR9t04h9i9teEfpruU9KbMf+wi8S9pLghq4tMZTHHsTlBwgHWdSof/csgKSbh0jByfZdGOi08=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757417340; c=relaxed/simple;
-	bh=hm0tnipoDHHszNsEnA1Tr51B4Yy6srxE7cfH3UWZfeQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=JKazS3jBTZGez1sRkEvP6/65LQOR3dLVb5qnWmB1GiVPYDpK6Ire8ei+hbcMIGYhJtuCapMUfaUxF8uFNSw6oOEIzHQSBh8l/kcK146MvMyC4ES4+X94r0373OyD41KV8armSWuA9a9sRtIh3rRJuT4EOtOzsrSATJ35eUOH2y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k2Dw1p/A; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5B5C4CEFA;
-	Tue,  9 Sep 2025 11:28:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757417340;
-	bh=hm0tnipoDHHszNsEnA1Tr51B4Yy6srxE7cfH3UWZfeQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=k2Dw1p/A/OrMqgN+FOPCrXanU/V1sDNUva/XlUOFd2t5IC87HDQL+qd0NTJ4KA9eU
-	 irkueP9eeBWqnJLEvJurDaffzPZsxC3ETSypX/1/d5ojeHKKE2ncxw5luhhb10wM9i
-	 82hH+2GxNMjASQWSXs2xNz4kwcJWCBcvPe4SCvf/8lfyG0tPxIUcbVS92CapA0qu9M
-	 jUSTsBi7kaNpjH/CERfA+MGMsrEoJML50fSl4pz5Y8DAnFTh6JI1ju00zVr4B9T+rh
-	 Un+hbRkJE3Xdt++xmjtyjr7yIwH28AxvaRFVgcN9/sR1UXsy7eydrvXCduJJfIgc09
-	 A0Co0b4kQ5o8A==
-From: Maxime Ripard <mripard@kernel.org>
-Date: Tue, 09 Sep 2025 13:27:44 +0200
-Subject: [PATCH v3 25/39] drm/msm/mdp5: Switch to
- drm_atomic_get_new_crtc_state()
+	s=arc-20240116; t=1757418032; c=relaxed/simple;
+	bh=BOU4atm98zqe0exxJvBZhUOhA+KpqHaqcfoeWJi/b+I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sPMHjGZcp9C9kHVgKRlHzw3hczjRptr+hQHBCDCmJIWci2bVeltfz+fj2hV6EtERn1GQsUvQqUPJ2BH1rgMu6ekjHNBO2OB6AvVfwTS/l2xRY4hV3pTL4miryhZ5nOK9RQWHkcbkwUxEd+qARQhQKf9IP3AX9RDofY/Z0KhU7pU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LcWLajU7; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5899LSiv032346
+	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Sep 2025 11:40:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=WkBZK4nX8r8AkRcyHEfLR0jL
+	z865vmuc1R3ut1MxHM0=; b=LcWLajU7pmng9f5CC2hU8jnbi4VfEWJPLitPJqRq
+	tVziE2UTN/VxVg5lJ0ZAtXP8Jf8K7mD34WvQcRwyxy/lCr/YKXaS449RDKOxhMoT
+	ZeLbpGk4rCwv+leG6flx5+K7DT8VbvZg5gg2sdnEpsdl69IgnsG7aQFTKuWHMWja
+	jqhy8pvG4MpwsjBkDQP5R98660muQp6JMZRy+1sowuJk/YOXYhMmHHuRFthLNMqP
+	4XaD9UaJDYGdVTn4c0AXPMt45rZe0XOURiTjN9nh79hrEMzEepz24Jdqo9Iuj0Kc
+	GHDXpdyjt/q5STE0wBgywjqv1KUuDjAbyUARZLPJLIye3w==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e4kyxf9-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 11:40:28 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-70edbfb260fso117035256d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 04:40:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757418027; x=1758022827;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WkBZK4nX8r8AkRcyHEfLR0jLz865vmuc1R3ut1MxHM0=;
+        b=b2NwAyOFlYrh/35vSLwBtKp37QSBgpF91b3j6EwqYbqNd66OkcHe+m3zGXT9uv+Xm9
+         bqN/rU6A010fktcKppdoFrdC11kVGN2xqIKadqY0nZtVeQolNUX2M+EfIlkN6wSEfh5X
+         kOCKNKkeFMn/svTtjrUAQDPMv5KjYGawXrRLMRGbytX1YTXI5X5SxhrAgN9nzJJ+0zX/
+         9B5P3ZbPUze4WwMOiJGyjQkYXjkTRZKIv7dDJ7yk6idV8XNX/QXv9GdNLRfLiGxNAle8
+         qFheZmKmydknz05dTi2CS0ApDrTTWpS11dkXdq95N5AfywmlNfWSkgWvqX+Bf2XiE4Mm
+         npqQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVLt/5YK9vxYbFPTPO1Pwz9WHbBQfybCmA3q8+nwKUS6BPWqZCtLT7rStzH2jZF4qVdrHO1Bm2yytYgVhkz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzjt29ZbGDo1VNNMmF4Iok6XCbtxRHMS7X+R4xipuovW0J5YbpJ
+	dg0mb7d9sdxeU6NRKZ9WCbMslbcZTJTBwnVrHmWVPxDe6n5X6uKZzLIdbgdJ7Is0TSmncWjAv8c
+	Tu8pfBtAF0PzQ6b+izdez/AJm87UjI4R4HNdEIouBuW4p1jI6UDPZNOczRD/nTZUpb8pF
+X-Gm-Gg: ASbGnct1hgabN+iQcUQcuk0OVRBNWlSFxpklDe2xwpgAqI9SSqlDR+bx9ZuzjPezrNd
+	G+uRqTcKxC1l4CgqKaTI7GIpJh1ZNgKHLdj5S/q2ojQX5ZBzT+8v0Yd8BZUXec2RhdTlHE9aVPm
+	DnQ3W90yhmOmGxq/5bfv/eq+E1HH9eh2/ssrOXmJ2l8h6a7RvaD3BEhc3RYXLRoBYS3ZjmCXEbN
+	ukEp9VElXa4q+WgZ2j4FtgJqvkzpFMlqs0dhg7Il8HRAPtStf3dVtz0v36k+pfW+z3N8TBJsL8G
+	tQuF3DMwRCtQwUL5MN2k5AhyjbzTkMW9NYmnCG+DVNoVTvk4LDmIviHdPS3yFtIB3HyDusjfqus
+	z4033JfMLgPz8M9X7JPQ1Bfwf8Q6hNxSI/aeg2zWrGA1+NuFZvxPC
+X-Received: by 2002:a05:6214:5287:b0:734:c868:fb4c with SMTP id 6a1803df08f44-73944249693mr115542056d6.62.1757418027265;
+        Tue, 09 Sep 2025 04:40:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF1x5yuvHnnOA+bErPR7PqGkCxp1J6nz/QL7NqI2NRrDi1/NlaUQaX5MIKLRDoOyGf3VbZlEA==
+X-Received: by 2002:a05:6214:5287:b0:734:c868:fb4c with SMTP id 6a1803df08f44-73944249693mr115541686d6.62.1757418026714;
+        Tue, 09 Sep 2025 04:40:26 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-568180679a6sm474574e87.105.2025.09.09.04.40.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 09 Sep 2025 04:40:24 -0700 (PDT)
+Date: Tue, 9 Sep 2025 14:40:22 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Abel Vesa <abel.vesa@linaro.org>, Vinod Koul <vkoul@kernel.org>,
+        Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] phy: qcom-qmp: qserdes-com: Add v8 DP-specific
+ qserdes register offsets
+Message-ID: <dq6hg2l6mseov3koisg5vsrkhifiwutlfy2phwaehvwzxxfgug@vgtcptgcopmw>
+References: <20250909-phy-qcom-edp-add-glymur-support-v2-0-02553381e47d@linaro.org>
+ <20250909-phy-qcom-edp-add-glymur-support-v2-2-02553381e47d@linaro.org>
+ <3xw54kzk36u7zrfhgva4p577nzle3ctzi3lyhcxapczv2bhceo@23zcaylkqoff>
+ <12ae186b-9816-4269-ab3a-7aacdc7cb954@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250909-drm-no-more-existing-state-v3-25-1c7a7d960c33@kernel.org>
-References: <20250909-drm-no-more-existing-state-v3-0-1c7a7d960c33@kernel.org>
-In-Reply-To: <20250909-drm-no-more-existing-state-v3-0-1c7a7d960c33@kernel.org>
-To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
- Simona Vetter <simona@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org, Maxime Ripard <mripard@kernel.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- =?utf-8?q?Ville_Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Dmitry Baryshkov <lumag@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2354; i=mripard@kernel.org;
- h=from:subject:message-id; bh=hm0tnipoDHHszNsEnA1Tr51B4Yy6srxE7cfH3UWZfeQ=;
- b=owGbwMvMwCmsHn9OcpHtvjLG02pJDBkH+HW95CXXqpv+zRd58MyWO7Pl4VOrdwpuh3qudzlXT
- ItKPuzWMZWFQZiTQVZMkeWJTNjp5e2LqxzsV/6AmcPKBDKEgYtTACYyvZuxzvR9aJhK/KWErOwn
- ezam/v2W/45zh05WkMOHxas9A0LmmxUIux+0OnbTmNfrgkdbbbALY53S5jv9H4/NemQnqXKJ5cx
- 1pkfNd9eY/p7R5M90lb9zQttchhdqxa4ZiX5ZKXe3m1v5XgEA
-X-Developer-Key: i=mripard@kernel.org; a=openpgp;
- fpr=BE5675C37E818C8B5764241C254BCFC56BF6CE8D
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <12ae186b-9816-4269-ab3a-7aacdc7cb954@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOCBTYWx0ZWRfX5oAJjvojJm4p
+ Knmz7RoQQZyofFHlJEKQFJrTHlE8x6oYvCuStNaU6kU8G8tV2cfomO5Xl1eglXc3HGMpb5xiqR5
+ tk9Jh5uYB5xk4dTHyIpFrjUxf96ph18783L/BIOIYIjiqZJkUu4TvRakFSb93+wQmH/CkIGPNc9
+ AJjIqi5XwORirBzUtZrXQjD8nE3AhWJsMB2zDFGaQ0ppVsKchLa3zfXHLWiDDMfV+1njUVO7kHL
+ yJhb63G74gvOFw9FE6fJ9+tO9bU8N4WbEe7yNR+VRdJYZds8zgilo6elmJHAmVQNziW4rUoDT6b
+ MPVLobywkI4lwdNouKE3NkNExlzC8q1/MilSWPT5GaTfyjvxQdWGsMTy+khUg2OEpL9mD+H2aOg
+ lk5jENeT
+X-Authority-Analysis: v=2.4 cv=J66q7BnS c=1 sm=1 tr=0 ts=68c0122c cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=pQyaD6lL6sn_3oYIr7sA:9
+ a=CjuIK1q_8ugA:10 a=OIgjcC2v60KrkQgK7BGD:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: 6f9-dpU-XdaJk2af5Oy8xZCe_5tOOV6t
+X-Proofpoint-ORIG-GUID: 6f9-dpU-XdaJk2af5Oy8xZCe_5tOOV6t
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-09_01,2025-09-08_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
+ adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060038
 
-The msm atomic_check implementation uses the deprecated
-drm_atomic_get_existing_crtc_state() helper.
+On Tue, Sep 09, 2025 at 01:24:02PM +0200, Konrad Dybcio wrote:
+> On 9/9/25 1:19 PM, Dmitry Baryshkov wrote:
+> > On Tue, Sep 09, 2025 at 01:07:27PM +0300, Abel Vesa wrote:
+> >> Starting with Glymur, the PCIe and DP PHYs qserdes register offsets differ
+> >> for the same version number. So in order to be able to differentiate
+> >> between them, add these ones with DP prefix.
+> >>
+> >> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> >> ---
+> >>  .../phy/qualcomm/phy-qcom-qmp-dp-qserdes-com-v8.h  | 52 ++++++++++++++++++++++
+> >>  1 file changed, 52 insertions(+)
+> >>
+> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-dp-qserdes-com-v8.h b/drivers/phy/qualcomm/phy-qcom-qmp-dp-qserdes-com-v8.h
+> >> new file mode 100644
+> >> index 0000000000000000000000000000000000000000..2bef1eecdc56a75e954ebdbcd168ab7306be1302
+> >> --- /dev/null
+> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-dp-qserdes-com-v8.h
+> >> @@ -0,0 +1,52 @@
+> >> +/* SPDX-License-Identifier: GPL-2.0 */
+> >> +/*
+> >> + * Copyright (C) 2025 Linaro Ltd.
+> >> + */
+> >> +
+> >> +#ifndef QCOM_PHY_QMP_DP_QSERDES_COM_V8_H_
+> >> +#define QCOM_PHY_QMP_DP_QSERDES_COM_V8_H_
+> >> +
+> >> +/* Only for DP QMP V8 PHY - QSERDES COM registers */
+> >> +#define DP_QSERDES_V8_COM_HSCLK_SEL_1			0x03c
+> >> +#define DP_QSERDES_V8_COM_BIN_VCOCAL_CMP_CODE1_MODE0	0x058
+> >> +#define DP_QSERDES_V8_COM_BIN_VCOCAL_CMP_CODE2_MODE0	0x05c
+> >> +#define DP_QSERDES_V8_COM_SSC_STEP_SIZE1_MODE0		0x060
+> >> +#define DP_QSERDES_V8_COM_SSC_STEP_SIZE2_MODE0		0x064
+> >> +#define DP_QSERDES_V8_COM_CP_CTRL_MODE0			0x070
+> >> +#define DP_QSERDES_V8_COM_PLL_RCTRL_MODE0		0x074
+> >> +#define DP_QSERDES_V8_COM_PLL_CCTRL_MODE0		0x078
+> >> +#define DP_QSERDES_V8_COM_CORECLK_DIV_MODE0		0x07c
+> >> +#define DP_QSERDES_V8_COM_LOCK_CMP1_MODE0		0x080
+> >> +#define DP_QSERDES_V8_COM_LOCK_CMP2_MODE0		0x084
+> >> +#define DP_QSERDES_V8_COM_DEC_START_MODE0		0x088
+> >> +#define DP_QSERDES_V8_COM_DIV_FRAC_START1_MODE0		0x090
+> >> +#define DP_QSERDES_V8_COM_DIV_FRAC_START2_MODE0		0x094
+> >> +#define DP_QSERDES_V8_COM_DIV_FRAC_START3_MODE0		0x098
+> >> +#define DP_QSERDES_V8_COM_INTEGLOOP_GAIN0_MODE0		0x0a0
+> >> +#define DP_QSERDES_V8_COM_VCO_TUNE1_MODE0		0x0a8
+> >> +#define DP_QSERDES_V8_COM_INTEGLOOP_GAIN1_MODE0		0x0a4
+> >> +#define DP_QSERDES_V8_COM_VCO_TUNE2_MODE0		0x0ac
+> >> +#define DP_QSERDES_V8_COM_BG_TIMER			0x0bc
+> >> +#define DP_QSERDES_V8_COM_SSC_EN_CENTER			0x0c0
+> >> +#define DP_QSERDES_V8_COM_SSC_ADJ_PER1			0x0c4
+> >> +#define DP_QSERDES_V8_COM_SSC_PER1			0x0cc
+> >> +#define DP_QSERDES_V8_COM_SSC_PER2			0x0d0
+> >> +#define DP_QSERDES_V8_COM_BIAS_EN_CLKBUFLR_EN		0x0dc
+> >> +#define DP_QSERDES_V8_COM_CLK_ENABLE1			0x0e0
+> >> +#define DP_QSERDES_V8_COM_SYS_CLK_CTRL			0x0e4
+> >> +#define DP_QSERDES_V8_COM_SYSCLK_BUF_ENABLE		0x0e8
+> >> +#define DP_QSERDES_V8_COM_PLL_IVCO			0x0f4
+> >> +#define DP_QSERDES_V8_COM_SYSCLK_EN_SEL			0x110
+> >> +#define DP_QSERDES_V8_COM_RESETSM_CNTRL			0x118
+> >> +#define DP_QSERDES_V8_COM_LOCK_CMP_EN			0x120
+> >> +#define DP_QSERDES_V8_COM_VCO_TUNE_CTRL			0x13c
+> >> +#define DP_QSERDES_V8_COM_VCO_TUNE_MAP			0x140
+> >> +#define DP_QSERDES_V8_COM_CLK_SELECT			0x164
+> >> +#define DP_QSERDES_V8_COM_CORE_CLK_EN			0x170
+> >> +#define DP_QSERDES_V8_COM_CMN_CONFIG_1			0x174
+> > 
+> > The registers are the same at least up to this point. Would it make
+> > sense to keep common part in the same header and define only those bits
+> > that actually differ between DP and PCIe parts? (Is it really about PCIe
+> > or is it eDP vs everything else?)
+> 
+> No, there's a wild amount of variation between various "v8" PHYs and this
+> is impossible to catch by eye
 
-This hook is called as part of the global atomic_check, thus before the
-states are swapped. The existing state thus points to the new state, and
-we can use drm_atomic_get_new_crtc_state() instead.
+I see. Let's see how it will surface later. For now:
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Maxime Ripard <mripard@kernel.org>
----
-To: Rob Clark <robin.clark@oss.qualcomm.com>
-To: Dmitry Baryshkov <lumag@kernel.org>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>
-Cc: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
----
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-index 7c790406d533fbabb330c438419efb18204cc4b7..4ca183fb61a95af60ef5a2c011ae6b2a0df963f0 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
-@@ -334,12 +334,11 @@ static int mdp5_plane_atomic_check(struct drm_plane *plane,
- 
- 	crtc = new_plane_state->crtc ? new_plane_state->crtc : old_plane_state->crtc;
- 	if (!crtc)
- 		return 0;
- 
--	crtc_state = drm_atomic_get_existing_crtc_state(state,
--							crtc);
-+	crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
- 	if (WARN_ON(!crtc_state))
- 		return -EINVAL;
- 
- 	return mdp5_plane_atomic_check_with_state(crtc_state, new_plane_state);
- }
-@@ -371,12 +370,12 @@ static int mdp5_plane_atomic_async_check(struct drm_plane *plane,
- 	struct mdp5_plane_state *mdp5_state = to_mdp5_plane_state(new_plane_state);
- 	struct drm_crtc_state *crtc_state;
- 	int min_scale, max_scale;
- 	int ret;
- 
--	crtc_state = drm_atomic_get_existing_crtc_state(state,
--							new_plane_state->crtc);
-+	crtc_state = drm_atomic_get_new_crtc_state(state,
-+						   new_plane_state->crtc);
- 	if (WARN_ON(!crtc_state))
- 		return -EINVAL;
- 
- 	if (!crtc_state->active)
- 		return -EINVAL;
 
 -- 
-2.50.1
-
+With best wishes
+Dmitry
 
