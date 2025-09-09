@@ -1,108 +1,175 @@
-Return-Path: <linux-arm-msm+bounces-72805-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2BDAB4FFB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:41:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7361AB50000
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 16:49:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AC8B13ABE46
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 14:41:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 943B01C619CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 14:49:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 662503451A3;
-	Tue,  9 Sep 2025 14:41:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7351734AB10;
+	Tue,  9 Sep 2025 14:48:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b="G+TRLIk/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n/G8ON7X"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ahti.lucaweiss.eu (ahti.lucaweiss.eu [128.199.32.197])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6828D322DBA;
-	Tue,  9 Sep 2025 14:41:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=128.199.32.197
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FB02DA75F;
+	Tue,  9 Sep 2025 14:48:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757428890; cv=none; b=at5PBucH/nvCAsqJgS6P6R3CkOufX+RPOU81cW+cxH0IoUoHytBTy8a2tLC0RFXuws0u+vzgr2pvcg0Ch67zxm1pPRJp3v0DUxxARG6MxLejEMt7mk5bcmtqKRBXnF+ELP7AzN3KIxu0aqgJwAvtTioXjdRfBtOmWCH6F/ABY9U=
+	t=1757429334; cv=none; b=jGY+JLdFP0uhXo8xBdv4S86IZOqHkp4984rF19yPx7s8TqBcvDa/kHuPxax+WswDfWioGQIpDLDecNI2ksk8Cra9fIz/YgRDcVmrfR6ee05MmInRiLRVj/9FUmd65H11Y78zc7hzzhxa4S6SvrfYKlDfndRIET+r3BkyXfc+9Bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757428890; c=relaxed/simple;
-	bh=d7Pz/yjrt/tNNpQPMW+9CxclgrWORNrhLXdA1kRna+A=;
-	h=MIME-Version:Date:From:To:Cc:Subject:In-Reply-To:References:
-	 Message-ID:Content-Type; b=HI7dYd76AMorPcFJU2XuFJUuYDCOXyb7eMWff+uXsuCa0IiEpBsmQz9BVM+4kykzPK8RMKYxVkVRtlJXSamgjWTFOc959znZn4JwGAofYzpLF/IbX+KVjU/aQnE4UpgEUMHTX8fUIKSlhWtnKr3aDT6nQlqiuFlc86Z3q/Vi4kQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu; spf=pass smtp.mailfrom=lucaweiss.eu; dkim=pass (1024-bit key) header.d=lucaweiss.eu header.i=@lucaweiss.eu header.b=G+TRLIk/; arc=none smtp.client-ip=128.199.32.197
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=lucaweiss.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lucaweiss.eu
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=lucaweiss.eu; s=s1;
-	t=1757428886; bh=d7Pz/yjrt/tNNpQPMW+9CxclgrWORNrhLXdA1kRna+A=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References;
-	b=G+TRLIk/nPV0lXA8LXXdLf0O+/zIfOnYlz9qkda0YylidJIm4TFtz2ziFg4079FMn
-	 W+51shb8OkjPZnW9l/VARK6xuTAzae1TiIqBhJh1t4XCcYCFxFSVAurDn1UXxJkUir
-	 714d8AVYEc/MzIzUiEpot6VJnWHxpyH8bLvmqv7k=
+	s=arc-20240116; t=1757429334; c=relaxed/simple;
+	bh=1he5lMmIOrXZENUj3C6Qi6jYmJXZHpJnlEqP8eH+yPI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h3qf4D+ITn6wFOWXt7FQYkaCTBlfuEHmOzdKd2/LEsFQ0kGIH2wd1rmvIQEYhqnwTjpAT8tpnWX5rdwP2jQ5vNqiM9cYEwAr17MTe53pTrdFvxDCbwANOkrtkjB/7ARdNjKwpK57nFr73ihHzaP0ZxiDT4bARtGkUOxnSpqwefI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n/G8ON7X; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDF0C4CEF4;
+	Tue,  9 Sep 2025 14:48:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757429333;
+	bh=1he5lMmIOrXZENUj3C6Qi6jYmJXZHpJnlEqP8eH+yPI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=n/G8ON7Xphogw9Re/idOK/s7hKXy6Pccbg6YNNRt+QtGRjfXXXk0Xngr6n4kJe/1r
+	 roN4gY1rMKWn9abC8c+f0Us4jfY6cs53mlYujoCVvyr/SH8GAE1thsM8BttdEEQ83K
+	 aA/Hk4YVZQJGoNIvTmWv8O2HqnxZZLN0EXD+cygdRam3NQ71n0dJU06igHIHL5aMW5
+	 UdQGMGRWDvN6u09WZXmRlLEl0NTI4w7vhbwb3Q5hc6gJ1dISYU6st0kivhUbbONaZG
+	 tVdfN7kMrVGJtO7azs7MeVWqGmuZFAqfKoROgLifrg9xsdMcipYtV0Fhwb4XP2VvOu
+	 2npaUWmc+U3oQ==
+Message-ID: <bcdeb20c-3f4c-4eec-8f92-a098c4529778@kernel.org>
+Date: Tue, 9 Sep 2025 16:48:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 09 Sep 2025 16:41:26 +0200
-From: Luca Weiss <luca@lucaweiss.eu>
-To: Krzysztof Kozlowski <krzk@kernel.org>, Dmitry Torokhov
- <dmitry.torokhov@gmail.com>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Courtney Cavin
- <courtney.cavin@sonymobile.com>, Vinod Koul <vkoul@kernel.org>, Bhushan Shah
- <bshah@kde.org>, ~postmarketos/upstreaming@lists.sr.ht,
- phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-input@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: input: pm8941-pwrkey: Document
- wakeup-source property
-In-Reply-To: <9e39f1b4-63b2-4c6a-8b31-6360be1952e6@kernel.org>
-References: <20250909-resin-wakeup-v1-0-46159940e02b@lucaweiss.eu>
- <20250909-resin-wakeup-v1-1-46159940e02b@lucaweiss.eu>
- <efb03993-0481-45ed-8f7e-8b65519a55cb@kernel.org>
- <phctwoxml7hscwcgaipl233lotnrkgcpe7rxvhm5syoiadu3lv@ibgeib4kjyhs>
- <9e39f1b4-63b2-4c6a-8b31-6360be1952e6@kernel.org>
-Message-ID: <dcdbc6424db6953dfc39fc05e0e050ab@lucaweiss.eu>
-X-Sender: luca@lucaweiss.eu
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] dt-bindings: leds: commonize leds property
+To: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Rob Herring <robh@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Lee Jones <lee@kernel.org>,
+ Pavel Machek <pavel@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Daniel Thompson <danielt@kernel.org>, Jingoo Han <jingoohan1@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
+ Jacopo Mondi <jacopo@jmondi.org>, Sakari Ailus
+ <sakari.ailus@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-leds@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Daniel Thompson <daniel.thompson@linaro.org>,
+ dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org
+References: <20250908-leds-v3-0-5944dc400668@vinarskis.com>
+ <20250908-leds-v3-2-5944dc400668@vinarskis.com>
+ <0e030e7d-0a1a-4a00-ba18-ed26107d07fa@oss.qualcomm.com>
+ <046b289d-b6a5-45f9-88b1-090e2ab7c95d@kernel.org>
+ <39b955b9-a152-458a-8e09-908efebaaccd@oss.qualcomm.com>
+ <20250908222247.GA1943768-robh@kernel.org>
+ <bde582df-9522-48ae-9d84-fa3751c4a06d@kernel.org>
+ <FVT6YHf1Lshr9lndhkSNVDowe3ZXPE31ULuotmmZ-brY_kmVRVj8oONZfWqE41lBIJyx4joIVRoqxdv1B_xvfGByECvOtQVS0G8xXQuDrwY=@vinarskis.com>
+From: Hans de Goede <hansg@kernel.org>
+Content-Language: en-US, nl
+In-Reply-To: <FVT6YHf1Lshr9lndhkSNVDowe3ZXPE31ULuotmmZ-brY_kmVRVj8oONZfWqE41lBIJyx4joIVRoqxdv1B_xvfGByECvOtQVS0G8xXQuDrwY=@vinarskis.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 2025-09-09 16:33, Krzysztof Kozlowski wrote:
-> On 09/09/2025 16:08, Dmitry Torokhov wrote:
->>>>    compatible:
->>>>      enum:
->>>> @@ -36,6 +33,11 @@ properties:
->>>>             pin should be configured for pull up.
->>>>      $ref: /schemas/types.yaml#/definitions/flag
->>>> 
->>>> +  wakeup-source:
->>>> +    description: |
->>>> +           Button can wake-up the system. Only applicable for 
->>>> 'resin',
->>>> +           'pwrkey' always wakes the system by default.
->>> 
->>> 
->>> I'll fix existing code, so don't repeat that style.
->> 
->> If you ack I can reformat on my side to match the patch you just sent.
+Hi,
+
+On 9-Sep-25 11:28 AM, Aleksandrs Vinarskis wrote:
 > 
-> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Thanks for fixing that up Krzysztof! I noticed but didn't want to 
-deviate
-from the style just for this description. Of course better to fix the
-formatting in the first place.
-
-@Dmitry: Maybe give this patch some time (1-2 weeks?) to gather more 
-feedback,
-given the reasons outlined in the cover letter. Also on the driver 
-patch.
-
-Regards
-Luca
-
 > 
-> Best regards,
-> Krzysztof
+> 
+> 
+> 
+> On Tuesday, September 9th, 2025 at 11:21, Hans de Goede <hansg@kernel.org> wrote:
+> 
+>>
+>>
+>> Hi All,
+>>
+>> On 9-Sep-25 12:22 AM, Rob Herring wrote:
+>>
+>>> On Mon, Sep 08, 2025 at 09:36:39AM +0200, Konrad Dybcio wrote:
+>>>
+>>>> On 9/8/25 9:33 AM, Hans de Goede wrote:
+>>>>
+>>>>> Hi,
+>>>>>
+>>>>> On 8-Sep-25 09:20, Konrad Dybcio wrote:
+>>>>>
+>>>>>> On 9/8/25 1:18 AM, Aleksandrs Vinarskis wrote:
+>>>>>>
+>>>>>>> A number of existing schemas use 'leds' property to provide
+>>>>>>> phandle-array of LED(s) to the consumer. Additionally, with the
+>>>>>>> upcoming privacy-led support in device-tree, v4l2 subnode could be a
+>>>>>>> LED consumer, meaning that all camera sensors should support 'leds'
+>>>>>>> and 'led-names' property via common 'video-interface-devices.yaml'.
+>>>>>>>
+>>>>>>> To avoid dublication, commonize 'leds' property from existing schemas
+>>>>>>> to newly introduced 'led-consumer.yaml'.
+>>>>>>>
+>>>>>>> Signed-off-by: Aleksandrs Vinarskis alex@vinarskis.com
+>>>>>>> ---
+>>>>>>
+>>>>>> [...]
+>>>>>>
+>>>>>>> + leds:
+>>>>>>> + minItems: 1
+>>>>>>> + maxItems: 1
+>>>>>>
+>>>>>> My brain compiler suggests this will throw a warning (minItems should
+>>>>>> be redundant in this case)
+>>>>>>
+>>>>>>> +
+>>>>>>> + led-names:
+>>>>>>> + enum:
+>>>>>>> + - privacy-led
+>>>>>>
+>>>>>> Nit: "privacy" makes more sense without the suffix, as we inherently
+>>>>>> know this is supposed to be an LED
+>>>>>
+>>>>> Note "privacy-led" as name is already used on the x86/ACPI side and
+>>>>> the code consuming this will be shared.
+>>>>>
+>>>>> With that said if there is a strong preference for going with just
+>>>>> "privacy" the x86 side can be adjusted since the provider-info is
+>>>>> generated through a LED lookup table on the x86/ACPI side. So we can
+>>>>> just modify both the lookup table generation as well as the already
+>>>>> existing led_get(dev, "privacy-led") call to use just "privacy"
+>>>>> without problems.
+>>>>
+>>>> In that case, it may be cleaner to just go with what we have today
+>>>> (unless the dt maintainers have stronger opinions)
+>>>
+>>> Well, I do, but I guess it's fine. Please don't add the suffix on the
+>>> rest and add a comment for why it's there.
+>>
+>>
+>> As mentioned dropping the "-led" suffix is no big deal for the ACPI
+>> side and if we don't want the suffix then IMHO we should just drop
+>> it rather then making an exception here.
+>>
+>> Attached are 2 patches which drop the suffix on the ACPI side.
+>>
+>> If people agree with dropping the suffix I'll officially submit these
+>> upstream.
+> 
+> Sounds like this is the preferred way. Could you please CC me when you
+> submit it? I will then respin this series and indicate yours as
+> dependency.
+
+Done, including adding you to the Cc.
+
+Regards,
+
+Hans
+
 
