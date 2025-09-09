@@ -1,120 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-72877-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72878-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78B5DB50965
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 01:56:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A586FB50967
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 01:56:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 383075E517E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 23:56:07 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 622D55E5693
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 23:56:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BBB8628CF6D;
-	Tue,  9 Sep 2025 23:56:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 390652949E0;
+	Tue,  9 Sep 2025 23:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RDbYYtC9"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mXAAWBXj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f178.google.com (mail-lj1-f178.google.com [209.85.208.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E359C266EFC
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 23:56:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9675328CF41
+	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 23:56:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757462165; cv=none; b=tPEwPPVE9+dnWWNz6fA8t7Iy2bq9J3ZK0SMm6Njk5do2oEqwDpMq7/Z9UecS2N7xhG2WxIYFw1h+nhv8UeaR1MhreDCJB4EAwaUkkxTB2zkeeCtpX0e9YlrS74ERmTPU8xVuYFNUUSiUywP6kKsJkygymWkZsc2w149rT9DdTMo=
+	t=1757462166; cv=none; b=YGB/OH4Sdci6t5wRn2Adel6zfgIur4I6BPWUCN3fRLiongO3r6TXvM7cOSmyLYixqO9ciFvZr44HMLxuzwu0rnqjudPRnELG1kYs0olI6oTD7iOI5fVmB72FM23ETPr9tGfm1ZE9kIpHDhv65mrJZowAs+lgFkFI4vgwn6IFRYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757462165; c=relaxed/simple;
-	bh=V/4bySwnQHyMs3ISIH9yIpaRt7bcIxL4U2GAC/rhWHs=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OyPz5xG9I6qgzbM2KXhDN68+NDoDWApVRjaPpQrbZLFUxNykjdbT+195AO7Vgvwb2RKtntefXMp1qzGebtCLeH++RWEEyj8lK3BTPo7PiaKDzqH9+yXfYf3aFRPzwr2SqrggawEp/0y5r6dUfmAddccRAt1iS2oYvOFSLVqubJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RDbYYtC9; arc=none smtp.client-ip=209.85.208.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f178.google.com with SMTP id 38308e7fff4ca-337e43f9c20so5040091fa.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 16:56:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757462161; x=1758066961; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=7wut2N6v7MXaS7iMDatzIHHoOrLQhmLH2PYx5ZEyzN4=;
-        b=RDbYYtC9MgYN+9CBqpEq3e0f6wHM5brpundGbvY3sT6Tyd/x+nfJzfdaagnkUDSWw3
-         qpuyldzO1ewP/+XEga2fVWCwoSX0uw7i5E4N1nNLqHnxDzgMkbu9yPq+AlNVVUBCK3LL
-         7xQ7cUgIC8PsJlg/Cv6UZ0omn3ALn1xLfuYFLcuTgSygVFEkh1Iht0jBksuTc69P3gHv
-         Ecz8eEQ6j7prON5Zl0R6BPYj9RBVQR5ey7J1MyV31JAK8afBBOu80gY66RJIXjhsX/5s
-         x3IkJavdpuRVbN66PwOElhiRZW5v3oBhkY/iNLub2LEDsEL/KMlJ6gdPD/QykBelVMtp
-         GtMA==
+	s=arc-20240116; t=1757462166; c=relaxed/simple;
+	bh=icD9gdWPAJJWeEBQEpTeScQSiYNChrtZNid4ligZQ7Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JhlrhQ+sEmi6NghThkaTGj6krw7kZNfdsCyE2QjL0IstsyMXGofliudGB90ygzBwlIC/VbkKDnFa32Oq0jGMLB2Mvobif5cJtGm3EFHSnX1mFj+yxEJ2OUyIfwa+tGj4Crl+1/VkRu8Xyp3JGmeY08Y7K0/5voXccswXTngQgr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mXAAWBXj; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 589I3nlv002294
+	for <linux-arm-msm@vger.kernel.org>; Tue, 9 Sep 2025 23:55:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=DOgS6PiQ/hnHybpp7vuDXCDS
+	oK5LCMPR9NyO/JUnO1I=; b=mXAAWBXjLX1HxJ54WRna3AxQJL7zH/dZiqOT6/Wi
+	rAFtu8RwDTdyNpY+FNLbMAIbgcqykd5u4egWc11FoTpNo3ShwkbT3JZ+/cDnmOUc
+	qmg+yBuPjxNnrbrNwz0uLTuTNASiaBQVqbkqUkNWYGH2kF9CwI75178tFkuVQ2C8
+	IuoZ99dxZRlcJE+hSx3q6Srx2qVtGNvCbnmgIoKkPfoxVvuj2AV8mhT8dfcV/UdP
+	5q7RusnOqQ0OVP9nCMW9m0g0yZF+IKJMk0qek+t3v1haUBSRgESgPb5enGx2UmdS
+	kZI5r6jbUfDTt3H6JmPXHRT48RaOB1HVQ2wyPCUoHkUG/Q==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490dqg1tj8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 23:55:57 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-72e83eb8cafso99874126d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 16:55:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757462161; x=1758066961;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7wut2N6v7MXaS7iMDatzIHHoOrLQhmLH2PYx5ZEyzN4=;
-        b=MY5EIk4Dc7CmsZL9wRqX9bOoLM99QQsdxhQY1cO1ry7YRjfggkQgQwbUNqBrd5nYIN
-         EHYqlbT7SjZLUD1PkHsItPHDwFO1aMzmPxkfEnf5OvH/7v/nEluJGdbCDYWy8yV24oio
-         NzrPdPjA95sIxBQqRIAlZRlGp1/yZQ82KlvSThBTqfigwrGy0CAwZD4APBF1bvQYZUgW
-         9ZQkInWc44q1Tb0DKchiYq1jYf0+JCLRsBnBS0gelF+1JnHLxtxYtFS69s+TwG+HfjKr
-         gvH8Jl7NS0RngsU/pqCfGtmNT5e2uPLHPbyiB/MbyrTXrsyvU32X9sFnxzjjDpzdln4H
-         /MPA==
-X-Forwarded-Encrypted: i=1; AJvYcCV7MW0vkApryz0Gv7iM7kmPyvYbHiugXB6zoK+uYIJcTEo+MS9dobOj537nJwindwDMax9VZJUAcbVo8XIs@vger.kernel.org
-X-Gm-Message-State: AOJu0YzmMf3x1t/iIlvl4JLRh0nMdv/vILu7yZOk/XxcJJyvqc+KJwDq
-	WoqZTvMf1eFHOesGJvq8XY2MFL8Wr3RG6sgX9L5r1vivyDciPyTJBCGdpIAnzMWicMqLh9kmk9b
-	8lH2f
-X-Gm-Gg: ASbGncsjOwkn9bEfgQ9SbGEUtlVsBvykS6Yohd/RhFVRVS4ACPV1HF4t4svUZgtVTcf
-	LRYwHqkz2Z/POGMJcmHzWmVUSKBk7Eowikw/Zu/sTF53N0LTNIGolBcgBapTRvKCiaftDuNlw73
-	tqPsxXbjW4cYnvO28opWEYtWERal+A1EhqhiZS7U4PVO/s4pnMipT8a344timg7/BFRFgX7PEB4
-	Oq//ah0df0cBVy3gLlnDOkvrm3gGfMg732+XNlQ+E+UYya73ojlh4dwqsnOlHbMGmlNRxp3d2C/
-	a19h2Yt6/TkOroEIvNcrOdcdbfR40FipZcAIsH325O9XxButyAg01Ub7Jcpm6A7PZFkitN8BHFq
-	5KwXhLFYtzPLOLAsQ2ikd82XDkz1qN5JGG68G+VYEkH9DefPJ15by7ER8r2X2fzdGQKzAnoA=
-X-Google-Smtp-Source: AGHT+IGbUmd3BnTOAfvqhxqaxM6jeYhQvHJR1zvOluF6st0Se5DPt6WufPTIfT4AHhc7z45LT5rx+w==
-X-Received: by 2002:a2e:a9a0:0:b0:336:d8e5:8dd2 with SMTP id 38308e7fff4ca-33b4b230a64mr18040141fa.2.1757462161060;
-        Tue, 09 Sep 2025 16:56:01 -0700 (PDT)
-Received: from thyme.local (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-337f4c905d6sm44112571fa.20.2025.09.09.16.55.58
+        d=1e100.net; s=20230601; t=1757462156; x=1758066956;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DOgS6PiQ/hnHybpp7vuDXCDSoK5LCMPR9NyO/JUnO1I=;
+        b=pR+CJfTne0swC31TMKfZRILkOmtExdEhTojJeyeKH2nvNTDHi71h7oVSJ4MlbB+40z
+         ZJqJVomYkytPRdYqYI+9/lSL69pdOSvkDtXn6ReXR5tkGpwK+KnIy1niDoPWY+knxR3e
+         Hew3KXg2q0z52EMa3o9KFWjrzG8zf5sG44oGPMwL4qQuktl5SzpOo83Ql4thcgTmGqb6
+         fFZT85MEyi9vudRHXTecFRR3X4vxVD74N8tGqTvYCgXigGk09SNi1HewdM3XOzStm66E
+         ketAMB0ouhJyd7BUVd/G2PH9Zz0prp7VYbQH4n+l493e+fPCyGAVCRSmZHKgvrU7OS9V
+         zmBA==
+X-Forwarded-Encrypted: i=1; AJvYcCVD5bSJ5Pd+hjPOl+snPVkRz/fS80gcG6GtM/MTSQHSJhaqn2aia0oZpya4QZe61gTlgvsjhZ1As4qv/0HN@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywf+JR5XxsM/6o4466OweezeEQ5EQg621XSNjp2U/YA8RUKI2nk
+	M2gPZ8uozIpj+F0ZPRL90vMdHIfXnAJCiAh/I8W0bs662+aDXZ21g7+n7LiqupHsQ07LiwWbPOu
+	qTQulBvYUyQch8cuN0UXnsTkgcAtWkN3b+HhqAmr7BC6y3/DLd3+iyDQ9VV9G49bvukTC
+X-Gm-Gg: ASbGncuqJU18uJi2S74qFS6NAtwnr7D3NbHgRAWLBeEwLCXC3ZNgu+k2Yyz2e1VJHxb
+	gtIgY9JGnoZlkD9WERsG+CB/ACdO+uEfa/SIONAWnv8CkKHLYbYJqMn+0OqVGqyNxEHuDnbBeqE
+	NEuJ6YENhCz+NeF3zTmHS5/cHGgApwFpIe8V/3MPNVwUOTbelhS0G+szNs30IXSkZHuCwBJ3pm8
+	/6bQmb7EM21TynY+AIid2GyyvZBnP99/klg5GP9Hd9pRNsr5tQI+Bny5RSyKd7eiHCrIFgRkIeu
+	n0dk2hYdwezCMycmXrX8MlIYts0ffK94nY514lEJjW0FhuXwIef0764L/I2wEiQgPhqfSQAImoj
+	GCcuHL0erbn504YmfgDF8aP0pDdfWGU6FiMR9fCQbEZATRZ38nYsH
+X-Received: by 2002:ad4:5d63:0:b0:70f:a874:9838 with SMTP id 6a1803df08f44-738fd44e4c7mr123779856d6.0.1757462156569;
+        Tue, 09 Sep 2025 16:55:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/+l4IAg1ke/qBgFq88M1rFWuCS6rIGDcnBc+blOxvMw+WiXtyVyRKy/O3bA1dxeMZYgKWSA==
+X-Received: by 2002:ad4:5d63:0:b0:70f:a874:9838 with SMTP id 6a1803df08f44-738fd44e4c7mr123779656d6.0.1757462156128;
+        Tue, 09 Sep 2025 16:55:56 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-56818a11806sm831373e87.129.2025.09.09.16.55.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Sep 2025 16:55:59 -0700 (PDT)
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8450: enable camera clock controller by default
-Date: Wed, 10 Sep 2025 02:55:47 +0300
-Message-ID: <20250909235547.787396-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.49.0
+        Tue, 09 Sep 2025 16:55:55 -0700 (PDT)
+Date: Wed, 10 Sep 2025 02:55:53 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Sean Parker <sean.parker@viasat.com>
+Cc: andersson@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] pinctrl: qcom: sm8250: Add egpio support
+Message-ID: <don2dkb6wfi2g6o2lwwjk7khnptiauvzpnxie4qzt7bfy4xona@sf33md4bqqwj>
+References: <20250904170613.68855-1-sean.parker@viasat.com>
+ <20250909205248.16169-1-sean.parker@viasat.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250909205248.16169-1-sean.parker@viasat.com>
+X-Proofpoint-ORIG-GUID: ODcSqeMEMY8xoNvQOKWhPPMlr4JKr__m
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzNSBTYWx0ZWRfX4ayJwZuDVdZd
+ 5acuPgpK9oR6ysaRE97WdudfImxLy2u94VwV/YtRHVz4yAedprHO10mfS6ob6Xkh/SuB7bU74Wx
+ yJh53Is5WjVyJ8xGZUGG5RLRsn420DPJZ2bz6TSqixalWQnUyRV5iu1QSwVTBxn8L/hGpZbStdR
+ abKTyAY/1BFPPAfJ1MnZz4gXKCeq31/1EXfTqdbzHwwT894qLN90Vi0jiFNwZJeohgmclobIh9J
+ 4g6pY0NVJQE6Geg1SuxK4pt8CJQEncjodhhDQ1l9Vk/zDosqpo3q5o+2xT8lCi+qBD9js8UvHVQ
+ rZfSZJ+HIii1SURNfEsGws8UI1x6jB+RAEfVHpFzJ1X0pWEvv82yVq6eupqDs130/O5AWANPFom
+ lm2iNIYs
+X-Proofpoint-GUID: ODcSqeMEMY8xoNvQOKWhPPMlr4JKr__m
+X-Authority-Analysis: v=2.4 cv=N8UpF39B c=1 sm=1 tr=0 ts=68c0be8e cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=B2zXoFvHAAAA:8 a=EUspDBNiAAAA:8 a=HbEANjnKo7ABX2ZL8B8A:9
+ a=CjuIK1q_8ugA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=VYVPV9JAioCtC5HZRjjr:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-09_03,2025-09-08_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 spamscore=0 malwarescore=0 clxscore=1015 bulkscore=0
+ suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060035
 
-Enable camera clock controller on Qualcomm SM8450 boards by default
-due to a reasonable agreement of having all clock controllers enabled.
+On Tue, Sep 09, 2025 at 01:52:48PM -0700, Sean Parker wrote:
+> This mirrors the egpio support added to sc7280/sm8450/etc. This change
+> is necessary for GPIOs 146 - 179 (34 GPIOs) to be used as normal GPIOs.
+> 
+> Signed-off-by: Sean Parker <sean.parker@viasat.com>
+> ---
+>  drivers/pinctrl/qcom/pinctrl-sm8250.c | 81 ++++++++++++++++-----------
+>  1 file changed, 47 insertions(+), 34 deletions(-)
+> 
 
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
-The change is based on Bjorn's qcom/arm64-for-6.18 branch.
+In future, please don't send new versions as a reply to the old one.
+This messes up reviewing and can confuse some of the tools.
 
- arch/arm64/boot/dts/qcom/sm8450.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+Nevertheless:
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-index 9ebf2b8700d2..e9ffa0af3cb3 100644
---- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
-@@ -3300,7 +3300,6 @@ camcc: clock-controller@ade0000 {
- 			#clock-cells = <1>;
- 			#reset-cells = <1>;
- 			#power-domain-cells = <1>;
--			status = "disabled";
- 		};
- 
- 		mdss: display-subsystem@ae00000 {
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+
+
 -- 
-2.49.0
-
+With best wishes
+Dmitry
 
