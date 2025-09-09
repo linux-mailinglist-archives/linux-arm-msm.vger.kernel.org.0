@@ -1,133 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-72711-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 70225B4A700
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 11:13:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 897DFB4A704
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 11:13:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0932A188CA54
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 09:11:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2016A188F33F
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  9 Sep 2025 09:11:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 724DA27F198;
-	Tue,  9 Sep 2025 09:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0160E27F728;
+	Tue,  9 Sep 2025 09:10:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aZXUjAh5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sqnTK/cQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695E924338F
-	for <linux-arm-msm@vger.kernel.org>; Tue,  9 Sep 2025 09:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5FA1279DDB;
+	Tue,  9 Sep 2025 09:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757409016; cv=none; b=BwH2kqcTU3Ca9Lj0NH8tC/5EIR0CXf/s//mJe1tAWOMOi+oK3XZT+dbnXBrAlyGOhRzaSPTQjp/7Q7Gg4Mqi630fBNK9HYuYLdIsGFWP0uz5EzLKfj2Ts3Ion1VPo+KWZtevtRAMAQYbKAr2LQRRBntWMuAh90YkUtOAW4HFlyk=
+	t=1757409026; cv=none; b=XWrf+efwoAnPoekz2Ujqcs1toObbzgwNCfLKCLFRAOnWPZY6Kw9Z5Ye+Hyh7hCXDv7j4yVFzuzx4/V53lKnyOQ+l4r8kbNJxTOfdJQBJVgL7D41AyCgiGUi1Aa0M6eAQGu4SAFf9ZO6Y1XTNdUsIpV5bMUW/vwlDp9En0JHUHnk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757409016; c=relaxed/simple;
-	bh=VLE9FplhQ6lDitRlXymWZCJ8Fc4/CeLS2ID2UGtqpbk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aWOvrXP5fnGWiZwN6L1C5/QxWGvoPVAf+16lbpx/3zQy3sIoNweEJfJxbOkWmhzooyXZsm5Fj4OcKCeGIGSPzk210qwH5+BFQi7Axiw1OjeR2i+n7umzr6Yjn4wMTW21imxP3PSU/aFGl1epv+Crli+I++eKn0W1zQOtXc5GGCY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aZXUjAh5; arc=none smtp.client-ip=209.85.167.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f49.google.com with SMTP id 2adb3069b0e04-55f7be09db9so1193920e87.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 09 Sep 2025 02:10:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757409012; x=1758013812; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=I2qd2T+JXYNAvNRWDPsoxIO3KI39MwSeylvIiluAMGU=;
-        b=aZXUjAh5FH5e9XxyeJZnfHVMHl+5VgVGeLwitoHPIFOwXHEvwkcxmK7twFu90q/3eG
-         0erTUKgTqEtFpv4Neac+RGmlkbR6Xdt6GaD0p7B9uUrDOh5WTqERudS0tAQh15vEL59J
-         iDsfoIEoTfy/AXZtqWHC61FYeBBjq81Guy68BU43TbPZ7BIEfCgjN6lsXl2gLkENHBAZ
-         suJOQb1mdEodFgL8oczFZKtgafJfpojeQncRKtYVEUSDQwHz2aUTlKf/bGzrlwPlQo2K
-         z+yD4SuryN4d9QU9JuW63BcBLhlMuGIpEwqwxDEDFGkogo+tHBf45FP3/7f6YafmKbZ4
-         iOfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757409012; x=1758013812;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=I2qd2T+JXYNAvNRWDPsoxIO3KI39MwSeylvIiluAMGU=;
-        b=gGnUSXM18FWzJk+pA4aV7BDxgbK7BR8Ww48CSrjtfJb5joGghZHZt6RxPfersxMp3a
-         pPTaIfMjE4sF+FumnHINXbdF0GQ/nglKYT+o9k7BNsRQrZUrpxAAUnDE2FDtQloDEPIw
-         9b2Fq5HZEjN0A8oEC3+Pz0i1s06JgXOE48/3IqvAxBFMYcs/G3pcr4FEf1wXK4oqH3y9
-         vKHzM847LrLsRk46g6uRNDPaQ8XSaQH11PR/5E+GlUcDFtd4nPT87y71fWyoD1lpdkRk
-         hqlxbSDFtEcF7yp3d+gihTKLkOP6RE/9TmpAT3m0aE2gtkTx3Ft64c4XKXpiXoYTifgC
-         hxvQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU4Tz7kMSl+6eyW/JImZ32RDRZRhuGtr2mOYo1ggMNXNG5BIMIj17GFqudghwe/iPwKdF4L2Jw4SNhSdfaW@vger.kernel.org
-X-Gm-Message-State: AOJu0YxQUCut49lKZtj2JYRk/RCt4Yr0CPRMk2VHiYh+FM0vRFnL0tMb
-	7BEI2fCQ5Wz+ayHSL+BrGsLe1+kiLhxiWnAxL3hJic8MOsQuNgcqjkcS550UEoZOm5M=
-X-Gm-Gg: ASbGncsTM3HVuIgks7l5RUbXYumtaCOvXH1Ng1gdwOI+pnSBdGdP0ObL4ZPVIwgBzj4
-	7OyzwKwmGr8/vU/qNqWoe1boIlLQXrHEY5dT0jgtxIZUvNZV0AE00uTbXwLFomIIhr35ufAaTtH
-	wnFkmoR3wzXGcGcVq358Ws5TvwTctZHOn9auoTc5RGnFrvCzmy164zRglYdIstDR/99c4o71QrW
-	X31nuvXXWvX+apcLG+BTyjat8rJmRpRdOHAaPhlbl7ccBc0o2b8I5vsoIHj1VyCaTtESXre346R
-	YynKE1HaV3QIF57LrHKsjXUuB0//dKcqjXSPNyfhtiUjIsr/54HTFW/15vniAmRMFgErsfhJbUq
-	zHlIQBJfPuFyecUvtN4GYjBP7d6Z2M99rXUjFs3DsTFfAFaQKhN+p5gIFOouRdcVfQ/Iz0d25ua
-	cbx+upgpUyIZ0=
-X-Google-Smtp-Source: AGHT+IFKp0e6rYFkPuP5GOUGQG9IaL/DYm2C2+J//H0beXwbIEHVqSkMcbQxgd+CI1PI/N1zvlwtiA==
-X-Received: by 2002:a05:6512:3f18:b0:55f:612b:b350 with SMTP id 2adb3069b0e04-56260e42abcmr1454991e87.3.1757409012532;
-        Tue, 09 Sep 2025 02:10:12 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-568188224d7sm387477e87.120.2025.09.09.02.10.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 09 Sep 2025 02:10:12 -0700 (PDT)
-Message-ID: <5ea25a21-2379-455d-aec3-9a559e54d577@linaro.org>
-Date: Tue, 9 Sep 2025 12:10:10 +0300
+	s=arc-20240116; t=1757409026; c=relaxed/simple;
+	bh=lT+TBUjr1IEMc1JW6nEbwDuFgBshtFR0gCTlV9HCcAA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RlDlNC3nUG5rHncDt2n9cklVJvu8NJJ9my7rd8YNhpflSoVa8PFCZrzxyJKHL2frqxP7Lk8XrL3DCq2ARw8dYfIlHNZLtmTFgzFvPjkqObeUh1bNBc8mDq0N7fx0C+wN+kTq+scBfUjgRz4zUgIyMJZWq9Tg6de9g01Vk3wxrUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sqnTK/cQ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43510C4CEF4;
+	Tue,  9 Sep 2025 09:10:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757409026;
+	bh=lT+TBUjr1IEMc1JW6nEbwDuFgBshtFR0gCTlV9HCcAA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=sqnTK/cQWndHfSbaZ2pd+a8nhIRu+tbohS1rrIgk8ZqUso4jSwt+Q6kgDxI3V0Cax
+	 a+tAVcn1i3O7VoeQJTEEKjI3K1RHY5XVe5LhHSNWeYzkG/Dizq57kSOjbA0vM22gmX
+	 DK24Tv47CPb0Ft0wzPzByQbEFRyGBKvB7JPOt9+xjJ9mj9eGVVXHQLbXrG+YSPzT91
+	 RcjvjQYkaEpz2Sr9HVOrCGUbvmJIV9xaN5On4vBHLsHKzBjFZdrbRxovF8eA/VVeXL
+	 13S8LxoWwanJQ0QzCs7PBuWp9zy/n89K+beE1y7d9P7UWSz+D9QNTdWuvTq1eDJ5fT
+	 y5J9ebFR0BbXw==
+Date: Tue, 9 Sep 2025 14:40:18 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+	Bartosz Golaszewski <brgl@bgdev.pl>, Saravana Kannan <saravanak@google.com>, 
+	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	devicetree@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+	Brian Norris <briannorris@chromium.org>
+Subject: Re: [PATCH v2 3/5] PCI/pwrctrl: Add support for toggling PERST#
+Message-ID: <ijb6xnd5cl6v4cw5lfx5srjtzionx3iyxxg32xhljyylmplciz@dgizpuhv3c4u>
+References: <20250903-pci-pwrctrl-perst-v2-3-2d461ed0e061@oss.qualcomm.com>
+ <20250908193529.GA1439341@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/5] media: qcom: camss: change internals of endpoint
- parsing to fwnode handling
-Content-Language: ru-RU
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Robert Foss <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hans Verkuil <hans.verkuil@cisco.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org
-References: <20250903002255.346026-1-vladimir.zapolskiy@linaro.org>
- <20250903002255.346026-5-vladimir.zapolskiy@linaro.org>
- <1d72c06a-1a44-4364-bde1-afc4514520a1@linaro.org>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <1d72c06a-1a44-4364-bde1-afc4514520a1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250908193529.GA1439341@bhelgaas>
 
-On 9/8/25 15:38, Bryan O'Donoghue wrote:
-> On 03/09/2025 01:22, Vladimir Zapolskiy wrote:
->> Since a few called V4L2 functions operate with fwnode arguments the change
->> from OF device nodes to fwnodes brings a simplification to the code.
->>
->> The camss_parse_endpoint_node() function is called once by camss_probe(),
->> and there is no use of knowing a number of asynchronously registered
->> remote devices, so it makes sense to remove the related computation from
->> the function.
->>
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> I think we should keep the code as is here until after merging csiphy
-> changes.
+On Mon, Sep 08, 2025 at 02:35:29PM GMT, Bjorn Helgaas wrote:
+> On Wed, Sep 03, 2025 at 12:43:25PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > As per PCIe spec r6.0, sec 6.6.1, PERST# is an auxiliary signal provided by
+> > the system to a component as a Fundamental Reset. This signal if available,
+> > should conform to the rules defined by the electromechanical form factor
+> > specifications like PCIe CEM spec r4.0, sec 2.2.
+> > 
+> > Since pwrctrl driver is meant to control the power supplies, it should also
+> > control the PERST# signal if available.
+> 
+> Why?  Probably obvious to hardware folks, but a sentence about the
+> necessary connection between power supply and reset would help me.
+> 
+> > But traditionally, the host bridge
+> > (controller) drivers are the ones parsing and controlling the PERST#
+> > signal. They also sometimes need to assert PERST# during their own hardware
+> > initialization. So it is not possible to move the PERST# control away from
+> > the controller drivers and it must be shared logically.
+> > 
+> > Hence, add a new callback 'pci_host_bridge::toggle_perst', that allows the
+> > pwrctrl core to toggle PERST# with the help of the controller drivers. But
+> > care must be taken care by the controller drivers to not deassert the
+> > PERST# signal if this callback is populated.
+> > 
+> > This callback if available, will be called by the pwrctrl core during the
+> > device power up and power down scenarios. Controller drivers should
+> > identify the device using the 'struct device_node' passed during the
+> > callback and toggle PERST# accordingly.
+> 
+> "Toggle" isn't my favorite description because it implies that you
+> don't need to supply the new state; you're just switching from the
+> current state to the other state, and you wouldn't need to pass a
+> state.  Maybe something like "set_perst" or "set_perst_state" like we
+> do for set_cpu_online(), *_set_power_state(), etc?
 > 
 
-The logic above is inverted, a status of changes intended for the mainline
-Linux shall not depend on some out-of-tree project with no defined merge
-date.
+Since the spec mentions the state change as 'assertion' and 'deassertion', how
+about:
 
-The change shown is this changeset does not contradict "csiphy changes"
-added to arm64-laptops/linux, merging of these light changes to upstream
-can be done immediately, and in a very unexpected case of a mess with
-arm64-laptops/linux project you may revert/update any mainline changes.
+	 pci_host_bridge::perst_assert(struct pci_pwrctrl *pwrctrl, bool assert)
 
-The mainline Linux kernel should gain a priority over its forks IMO.
+- Mani
 
 -- 
-Best wishes,
-Vladimir
+மணிவண்ணன் சதாசிவம்
 
