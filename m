@@ -1,98 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-72971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3821B515E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:36:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 908DFB515EF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:38:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 467CA1C84129
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:36:53 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46C3E3B6ACC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:38:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1B2D284B26;
-	Wed, 10 Sep 2025 11:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80B8B2D192B;
+	Wed, 10 Sep 2025 11:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZBs1aXtG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FfPZQfsN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D37828469C
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 11:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B39B1C5D46;
+	Wed, 10 Sep 2025 11:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757504187; cv=none; b=p5IOL04bhFxLUsP7idbC6p/F8UDwhDyfdk0kLUljzwU/2ixSoaCmzP0pJyGuAIXsTFGzp4tq6m1XZMVUYzvxTRXTJZTeCdMReXvfB0RJ8kP8f9nCIE3EwVuKMN99PECUpDoEV6JlzH2lCvInBUfhls2m/3QSLT3C3HLM+YtLnAE=
+	t=1757504287; cv=none; b=hI8ScG/1bYNh+nb5eoIwJrhgkGX8r+bHv/jSTvV2rMkMSRUpfgg6qeVHivQUn/807wKDkvRr5ghkF3NA3j+JBI6NYFt95UmZHTVHzUV2OAnAnRiq64+f+ok6Iml10WFnKycYvyGnSjUQ1e5WXMj9rx/3cPGNNFPbdBrfMNVTkBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757504187; c=relaxed/simple;
-	bh=sx745xYWNlQTz7IJ+l5XW0LtbZ4FRTEwu33ThUwCe7A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eQDnA6sVRg8aryatRLH8hObaPXeHPagYhEM0ANvoIx2rs3fofBRW5DoIuXaS1IoxA9hvzyOXjYZvTRQpg7pfjxZrkzGrRzIs7hLNaEvuFdSSow4nFc1OG6VN/4lbo1flXuJAvSmPHkHJ1I2Un48Qyv56wsFCKuee50cjBJB5aJc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZBs1aXtG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5C8C4CEFA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 11:36:27 +0000 (UTC)
+	s=arc-20240116; t=1757504287; c=relaxed/simple;
+	bh=H+cpuJnEjkESdTqGIDVuWl00VkrtTa/nkD9qbFllBCI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rzWPZglL5KoWXqiuQLGiWsOy7ZiDUdmN8EYNgnXbRfo/K7/sI0E0ndbtC341JXORYElkBfKdi3nTyGaIvpHFBFH2HHXV76/4VP7tOPEZBtRoOwTfYl1iCjYHC67ztMu62Y7Lxu03sDCKpt5UpoFtM/naoUsshImbIfi2YERfmoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FfPZQfsN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4748C4CEF0;
+	Wed, 10 Sep 2025 11:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757504187;
-	bh=sx745xYWNlQTz7IJ+l5XW0LtbZ4FRTEwu33ThUwCe7A=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=ZBs1aXtGGaTI80cS1mtr5ixOzUetamUriresW3xxwkeg8VrJTP9LT6Jn7fV/uI7eD
-	 xjt0xmHdar4Ms63ZReN1V0QuXXcTFAOfOQUz4R2efyP2+RGMheRhEFmASqwE4jTDqG
-	 8GfWNhxLe59jDRMQZFCsx6GyOKR2EJF48Xhqu4RwRARWWeEy7eWh+kjHxm3GZWuBH0
-	 GemGuOZYs4ecvVGb/golSDZ4tHozfGi0Sb2XHytYskB9rdUi5gwbGhMjUx6fWtbT8i
-	 Px9XrXpJ7FqNfYJ+ATWuysKAAPB878Yyx6/I46AcuWPpLCEn1dIyF6jU9rkD+MIbT7
-	 th0uX/KeTun0Q==
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-621a79a580bso123298eaf.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 04:36:27 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWEsXR/CP5FXnXtwhCIB+YCGMq+fPIU04QWwqzkPRhsh8bzRPVQebjesM0G8CBfZm0CWxPTNKGcJetr/cgx@vger.kernel.org
-X-Gm-Message-State: AOJu0YwYMHTuahsns+VUgsor/k3OxqSwW1CSt5ClkohiZCD542QBckxM
-	YwVfYzY2pIuz5GnttLgyOrtaGxPHlU/eOSyryx3iz76S1KVlZdXtRR6nwfo3QGBwWyR7O9yQy4n
-	wTG7drkQwLr1Mwx1N7Et0VMSDzlh7mz8=
-X-Google-Smtp-Source: AGHT+IEJO7lV7IxQ2LoalC1HeIn3RsvWclTAZHN7seU9U5SjUk6ilxWC/Yd7dP9gyeE3b0ua+DJCzPKBOUc8oYM21NI=
-X-Received: by 2002:a05:6820:828:b0:620:7998:64aa with SMTP id
- 006d021491bc7-621789fd31cmr7072039eaf.1.1757504186425; Wed, 10 Sep 2025
- 04:36:26 -0700 (PDT)
+	s=k20201202; t=1757504286;
+	bh=H+cpuJnEjkESdTqGIDVuWl00VkrtTa/nkD9qbFllBCI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=FfPZQfsNXbXv6y35pYDhWX+5Zjk64AvkcpYSkIifD/Y2Xl2DrCrXWLuhlUoAVfzsk
+	 1a3o9EMT/Mp/91wHt2Gkz99nxzAxtTTvytDGKJPGqJ4V9WqPpPF/eUunT+rdgTRf6e
+	 HqC4rx1qjv4qLNksGXNbaIfwlsaBVJ4X9tuNIG0xmSP1n+0hwLq1fyLcjl7c7vmKJe
+	 jcC5TzvYFfeaSDFefbX4b0sh3Z11dfclRfVyYnSiRWAcfmSHdBLz/GiOB/LWJBTxFj
+	 ErerGqEP3NGVQuwzeWDdUvRoI7/b/AMpIO846ZJg+0PGDHxVZnu20PrYZ/G01y1tIj
+	 7di2CT2XKxWIA==
+Message-ID: <5a087d08-273e-4740-b47d-fc25be952ebd@kernel.org>
+Date: Wed, 10 Sep 2025 13:38:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250908152213.30621-1-johan@kernel.org> <20250908152213.30621-2-johan@kernel.org>
- <6a00646c-2b25-4193-8db2-157669817d61@oss.qualcomm.com>
-In-Reply-To: <6a00646c-2b25-4193-8db2-157669817d61@oss.qualcomm.com>
-From: "Rafael J. Wysocki" <rafael@kernel.org>
-Date: Wed, 10 Sep 2025 13:36:15 +0200
-X-Gmail-Original-Message-ID: <CAJZ5v0gXY-QRFonw1fU7ok5k0ieNXo99gmQhXTbXQ8icDwEhCg@mail.gmail.com>
-X-Gm-Features: Ac12FXyVqN9IGLh7O7_astg1sdoDIW3e_DesBVTeINM0sGt0jkF6qY4MvvkCO_0
-Message-ID: <CAJZ5v0gXY-QRFonw1fU7ok5k0ieNXo99gmQhXTbXQ8icDwEhCg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] cpuidle: qcom-spm: fix device and OF node leaks at probe
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Johan Hovold <johan@kernel.org>, "Rafael J. Wysocki" <rafael@kernel.org>, 
-	Daniel Lezcano <daniel.lezcano@linaro.org>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>, linux-arm-msm@vger.kernel.org, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3.1] media: dt-bindings: Add qcom,qcs8300-camss
+ compatible
+To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
+ mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
+ hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
+ catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+References: <20250813053724.232494-2-quic_vikramsa@quicinc.com>
+ <20250910104915.1444669-1-quic_vikramsa@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <20250910104915.1444669-1-quic_vikramsa@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Sep 8, 2025 at 5:40=E2=80=AFPM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 9/8/25 5:22 PM, Johan Hovold wrote:
-> > Make sure to drop the reference to the saw device taken by
-> > of_find_device_by_node() after retrieving its driver data during
-> > probe().
-> >
-> > Also drop the reference to the CPU node sooner to avoid leaking it in
-> > case there is no saw node or device.
-> >
-> > Fixes: 60f3692b5f0b ("cpuidle: qcom_spm: Detach state machine from main=
- SPM handling")
-> > Cc: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.or=
-g>
-> > Signed-off-by: Johan Hovold <johan@kernel.org>
-> > ---
->
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 10/09/2025 12:49, Vikram Sharma wrote:
+> Add the compatible string "qcom,qcs8300-camss" to support the
+> Camera Subsystem (CAMSS) on the Qualcomm QCS8300 platform.
+> 
+> The QCS8300 platform provides:
+> - 2 x VFE (version 690), each with 3 RDI
+> - 5 x VFE Lite (version 690), each with 6 RDI
+> - 2 x CSID (version 690)
+> - 5 x CSID Lite (version 690)
+> - 3 x CSIPHY (version 690)
+> - 3 x TPG
+> 
+> Co-developed-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
 
-Applied as 6.18 material along with the [2/2], thanks!
+Do not attach (thread) your patchsets to some other threads (unrelated
+or older versions). This buries them deep in the mailbox and might
+interfere with applying entire sets. See also:
+https://elixir.bootlin.com/linux/v6.16-rc2/source/Documentation/process/submitting-patches.rst#L830
+
+Please version your patches correctly, e.g. use b4 or git format-patch
+-vX, and add changelog in cover letter or under '---' of individual
+patches describing changes from previous version.
+
+What is v3.1? How to compare it? Try yourself:
+
+b4 diff '<20250910104915.1444669-1-quic_vikramsa@quicinc.com>'
+Grabbing thread from
+lore.kernel.org/all/20250910104915.1444669-1-quic_vikramsa@quicinc.com/t.mbox.gz
+Breaking thread to remove parents of
+20250910104915.1444669-1-quic_vikramsa@quicinc.com
+---
+Analyzing 2 messages in the thread
+Could not find lower series to compare against.
+
+Best regards,
+Krzysztof
 
