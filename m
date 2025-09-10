@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-72908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72909-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4669B50FA2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 09:39:32 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAB6FB50FC9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 09:42:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D903D1C81BC5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 07:39:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3522D7B0CFE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 07:41:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E67C30BF54;
-	Wed, 10 Sep 2025 07:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A005830C616;
+	Wed, 10 Sep 2025 07:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uBVrLRSO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vAJUqusD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D7F35961;
-	Wed, 10 Sep 2025 07:39:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6FC30BB81;
+	Wed, 10 Sep 2025 07:42:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757489968; cv=none; b=PjxCyXK/YihKokd/A7m3kZN5vQka76/5xELn4zUcNia0kr7OleedezObcYlpOPVSuiRpMMyqvSBNQPLSLPcmKr/oF+xY33XDA/kyxLN9i/c0k8woY2twsmR6EC6bssrjcDnXvCXxVe0uPD1dTgBJjM/yAyWm/zFI9kAy5u2tOCs=
+	t=1757490167; cv=none; b=Xgs/XGh1/8vaxCJj3TLt5WInHZDODU0fWHZcogbPoL1+mnASrAC/OAX2JmgzyZ3mPCkjzO8pCG4Pi74ONfeAKnMD/hi/is3/xn80LjRzqSSuwN62gUZKYRjbKtSk47psO56qQKjWSUwq8Gum9xAoCHtjlqqUPNBtmsrwTmPKMH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757489968; c=relaxed/simple;
-	bh=qcFOMwBPivb9litkeo7VOk61nrVY3bbAuM8EK+eTT5Y=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=uqoSh4Pgg6fAUr+SCWLSjKFZPxRxLTLRjLJ1In5hKArwDAnjWeY5odb12hSJ8dFjiRpMV0AeBQWfH7yUwAoAjkpEx2QAbQsnng6EQZHZYXbaaWHZ/coV8bH1tS5hWmA4ql+lyfd94URAe6T1VbbRhxwqWG4Kq+WkBY628YS6QSo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uBVrLRSO; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF29C4CEF5;
-	Wed, 10 Sep 2025 07:39:23 +0000 (UTC)
+	s=arc-20240116; t=1757490167; c=relaxed/simple;
+	bh=+4M6tsS1noq3CdhW7Sll0jWiqizEr50fsdQiGPuss64=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ZXqoaNWTK/SCM1Q6u1HMrLK78FEIGw8EVW8Cio78A3R4jCPUYvtuecbblD8cjougSnoEP871pWDCwN9ZEn5+gbXzJydqP9YgEyOQeTeIbbk9ZWtvokxwsuVq7SDXDXceg1dknAFSRFbpcIzHgrgxpDNlHu5ed5wbcnkz2xSXbWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vAJUqusD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55FF1C4CEF0;
+	Wed, 10 Sep 2025 07:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757489967;
-	bh=qcFOMwBPivb9litkeo7VOk61nrVY3bbAuM8EK+eTT5Y=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=uBVrLRSOZk2/da0u0ZDRVe0IQc1frxeDju3x7zwFE59Omx0J/LpuKjh//yznqG2eb
-	 UAqkYFENtSVAxofheMp8ZXSvos/ngXvEz25IoISB54fHP/t/+PG2A/QlOKWW+m9Nkq
-	 lTeL0ekkuOF8HZo9VWzidohMdOxA4/9Elz9GUsKs9NTVYMGQbp0uO5YQABUoPS3hyw
-	 TfxsBcj0FWw++nmsA+fGolMsI09OzXRVkE22iLj1iK6eZL6jBp+5eOO3Yxzl2xxD42
-	 YMd0kBqYHqkNzTnpDcxtQLHkiEQAUBkhOr24jWi5E7nleRe2LXsRZ0QE+vpDpZGi+O
-	 N4EnbMGiGn6iw==
-Message-ID: <a9507045-b900-49ee-8841-0f8fd30816ba@kernel.org>
-Date: Wed, 10 Sep 2025 09:39:21 +0200
+	s=k20201202; t=1757490166;
+	bh=+4M6tsS1noq3CdhW7Sll0jWiqizEr50fsdQiGPuss64=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=vAJUqusDyMsHxoK8/VpNOPxDfF73Vsb5zgcHKHvT1CcG3cK5iVZnu8lkO/Qa2YuH3
+	 NWn8HkwuCZZ2hJZ3wVIFuJ5kaPKNWOITD8oZyeeU0kShMhymQngMwsN6coIH9ZoEYP
+	 is6HvqnlJrCFcbUUdYeqdOcADhFeGv/8eVljf7nJ8Mb+vDzmOrASFHLcToG2jK6bNE
+	 w94+SBOG+jH8E7QBQeTtHF1QQUQB3DeEZLfdL/0DOUQgc9tsDSfhHzmbuXL/9QBcwy
+	 5JdHI1DUdQtUzGcAMq9fwGR+D3AeWkZ28a9K/OuhTDezF9E86ioO8jsDQyWjo3dbKR
+	 rLBOzcWnlZNbA==
+Message-ID: <8c1163ad-6e65-450b-ae44-c9a71a045333@kernel.org>
+Date: Wed, 10 Sep 2025 09:42:40 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,22 +50,22 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS8300 sound
- card
+Subject: Re: [PATCH v3 1/7] media: dt-bindings: Add qcom,qcs8300-camss
+ compatible
+To: Vikram Sharma <quic_vikramsa@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, rfoss@kernel.org,
+ todor.too@gmail.com, bryan.odonoghue@linaro.org, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
+Cc: linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250813053724.232494-1-quic_vikramsa@quicinc.com>
+ <20250813053724.232494-2-quic_vikramsa@quicinc.com>
+ <f1e3c3a9-9929-477a-b1ad-e485c059cbc2@linaro.org>
+ <d16d40ab-8a35-4886-b11f-2eee15849e1c@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- kernel@oss.qualcomm.com, prasad.kumpatla@oss.qualcomm.com,
- ajay.nandam@oss.qualcomm.com
-References: <20250905142647.2566951-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250905142647.2566951-2-mohammad.rafi.shaik@oss.qualcomm.com>
- <43090acb-ea36-4015-b14f-78d44d789d42@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -110,33 +110,52 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <43090acb-ea36-4015-b14f-78d44d789d42@kernel.org>
+In-Reply-To: <d16d40ab-8a35-4886-b11f-2eee15849e1c@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/09/2025 09:26, Krzysztof Kozlowski wrote:
->> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->> index 8ac91625dce5..eebf80c1d79a 100644
->> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->> @@ -35,6 +35,7 @@ properties:
->>            - qcom,qcm6490-idp-sndcard
->>            - qcom,qcs6490-rb3gen2-sndcard
->>            - qcom,qcs8275-sndcard
+On 10/09/2025 09:26, Vikram Sharma wrote:
 > 
-> So what is the point of this compatible? There is no user of it and I
-> think you added QCS8275 for this case exactly...
+> On 9/10/2025 12:35 PM, Krzysztof Kozlowski wrote:
+>> On 13/08/2025 07:37, Vikram Sharma wrote:
+>>> Add the compatible string "qcom,qcs8300-camss" to support the
+>>> Camera Subsystem (CAMSS) on the Qualcomm QCS8300 platform.
+>>>
+>>> The QCS8300 platform provides:
+>>> - 2 x VFE (version 690), each with 3 RDI
+>>> - 5 x VFE Lite (version 690), each with 6 RDI
+>>> - 2 x CSID (version 690)
+>>> - 5 x CSID Lite (version 690)
+>>> - 3 x CSIPHY (version 690)
+>>> - 3 x TPG
+>>>
+>>> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>> ---
+>>>   .../bindings/media/qcom,qcs8300-camss.yaml    | 336 ++++++++++++++++++
+>>>   1 file changed, 336 insertions(+)
+>> So it turns out this code is wrong and you already sent fixes for it.
 > 
-> Shall I start reverting commits from Qualcomm because you post patches
-> "just in case" and turns out they are completely not needed? No single
-> user of such code?
+> Hi Krzysztof,
+> Thanks for your comments. These bindings are tested with TPG (Test Pattern Generator), As camera sensor testing was not possible at that point.
 
+You cannot test bindings with TPG. It's impossible.
 
-@Mark,
+> This is because Monaco-evk kit was not ready which can be used to enable sensor.
+> 
+> These Bindings are complete in its own, If someone want to use TPG.
 
-In case it wasn't obvious, please do not merge the patch till we get
-some clarification. For sure it is wrong one way or another: either
-incomplete or just duplicated.
+No. You do not understand - they are not complete if you add new
+properties to them!
+
+How bindings could be complete if you add now supplies!?!?
+
+> 
+> My latest update in these bindings are for camera sensor enablement which needs supplies too.
+> 
+> Please let me know if this justification works to accept these bindings it its current form and add supplies as a separate patch.
+
+NAK. Read writing bindings doc. Or internal docs.
 
 Best regards,
 Krzysztof
