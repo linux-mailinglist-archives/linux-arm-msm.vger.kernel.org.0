@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-72938-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72939-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59ADBB512F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:44:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D610B51311
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:46:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30D397BA353
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 09:41:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 84E921648BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 09:46:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EEA73148B5;
-	Wed, 10 Sep 2025 09:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 99DA831770E;
+	Wed, 10 Sep 2025 09:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H4072pDR"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UEurMkih"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49C0A3115B8;
-	Wed, 10 Sep 2025 09:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 691CA317707;
+	Wed, 10 Sep 2025 09:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757497397; cv=none; b=A6LombGBNHgVfI6wR5Zp0hjjWBSBVAf2eBWPjrx0IgokHN4caWFoWgB48AzndQdtNVA15PPOrWV62IBwvVNyS8jFbkYLJEiTKSotd1y7rai6DS7oEDvVxp82aw4nBcSmyVJNonrYT8RgqTaIw3A/b86goUB0oM/S6D23Nl0ys3o=
+	t=1757497521; cv=none; b=Wk3DOdbCcs+gJxLxWjHDyVwmBYgoGiW3RokFxYw+zcGvp2DM94j6K0w8LNdtVwlZaWuzfRWFIEwlO0uBxe3cvm3JBG7eSGaGRzYLtvel+vt0fcqdc8S49Xqc6ZqN7MuE+7/8QHlfEIPxbpMFjIviSeObo8/dSA01AJbmXjCj8/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757497397; c=relaxed/simple;
-	bh=S+aQbFX9hu/DKfI431C7M1rHrzo8lXM2Z2qWlgAtuNU=;
+	s=arc-20240116; t=1757497521; c=relaxed/simple;
+	bh=K+4k5KDchq+kd7GGd1r9dnpNzsZ6Y5j7WjYZyZJsAZw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=hwrM1uCUbxtdOgp0TussNfX4enHeePmj/J3qAOw2Yq8TPPn72uOtolhjesprUGn5TicsIf0z9QKi353LD25vjKdHEbWqCK3bF4ZeCzv25FS0wVQ89CpG38GgoQJu+wji82ORJFEER2swqWd5rzq681Mx299kMBUmC02nKImjjZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H4072pDR; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 438AEC4CEF0;
-	Wed, 10 Sep 2025 09:43:13 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=boPs4lrLQR16pJatrj1MsaQ4HTHP8Qk20gi6HbGalezr07wcQJME9jv3A0RuvD/q5OpASOgPkKFAQeeBUvJRSCfdkdcoeHUQ8LsicS640SwGlhR++O73JLDDqTwIL7UicmMdkYbCfTM9VEAP517UUoItxu886T4y9XwTUvmvk44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UEurMkih; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB2B6C4CEFB;
+	Wed, 10 Sep 2025 09:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757497396;
-	bh=S+aQbFX9hu/DKfI431C7M1rHrzo8lXM2Z2qWlgAtuNU=;
+	s=k20201202; t=1757497520;
+	bh=K+4k5KDchq+kd7GGd1r9dnpNzsZ6Y5j7WjYZyZJsAZw=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=H4072pDRHr6l5lHaFv/4xDl6o8R2z7n/Lp+zEBYoPrpxoitzdLaoQxiSTM+ciqDlw
-	 L9R7CS0TwD5cF6B3iOX6YMEkv+SgUQbwGte8f+E6XB7KKBKo1b/Uj0wwWNpAM/E4h0
-	 Ttvqmmk260dyEqp5D4JCSTtmM8gvwahuU1uvrmnXoEjKZ972wWwRHzlZplrb01krMV
-	 Rt9eeSR8FyYc3njUME7vwyRrFbSg1LhMQjwrY70cPr8x9tf6VpPH0y35/L3tliE9bL
-	 wXsYOxr56Xq9500NbTRT9h9p31NSvVGD6e4Tc4c6I6adNokCEJjdIvRzt+u7NXmm2I
-	 ZK731WSjFPlAQ==
-Message-ID: <a8dcffa4-c578-46d7-8fdf-cd4f5a29a2a6@kernel.org>
-Date: Wed, 10 Sep 2025 11:43:11 +0200
+	b=UEurMkihwHyIo3de5Ku6Ho8a2DHEf2WX8MifMXFKsOccm5S93RGzG+sTzcsn3HgLa
+	 psIqroDAHmq3RAe9q6fpnHTzGdkaxrQf4GSQqQuj0N9taCraBe3XT/nS3GeaFlvjbw
+	 prSqJ/SOs7UJxp8zBdncc2gHXKt09RBMPOl/IMPDFnelFdtDwHhbfY2KHqE79JzVBp
+	 nq6Qv/sgOA3t6Tq90R4ZbVdSfZHaI04LqYrOi5phBKPWMe5HQ23mtwr5AU7Tu7VODs
+	 AQ5Iw0M3fZPGW+k8QirqEWPqsz9U0v1KYgQsBn7uDcHPph9DThi7H3ErBjoDxbU70c
+	 Fl5HYvlYPciCw==
+Message-ID: <3a884a4e-4e2a-47ce-b128-ae987bb6d3dd@kernel.org>
+Date: Wed, 10 Sep 2025 11:45:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,23 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS8300 sound
- card
+Subject: Re: [PATCH v1] arm64: dts: qcom: monaco-evk: Use correct sound card
+ compatible to match SoC
 To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, stable@vger.kernel.org,
  kernel@oss.qualcomm.com, prasad.kumpatla@oss.qualcomm.com,
  ajay.nandam@oss.qualcomm.com
-References: <20250905142647.2566951-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250905142647.2566951-2-mohammad.rafi.shaik@oss.qualcomm.com>
- <43090acb-ea36-4015-b14f-78d44d789d42@kernel.org>
- <a9507045-b900-49ee-8841-0f8fd30816ba@kernel.org>
- <abc66798-dc91-4860-b0b4-de39a58b5745@oss.qualcomm.com>
+References: <20250910044512.1369640-1-mohammad.rafi.shaik@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -112,61 +106,45 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <abc66798-dc91-4860-b0b4-de39a58b5745@oss.qualcomm.com>
+In-Reply-To: <20250910044512.1369640-1-mohammad.rafi.shaik@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/09/2025 10:05, Mohammad Rafi Shaik wrote:
+On 10/09/2025 06:45, Mohammad Rafi Shaik wrote:
+> The Monaco-EVK board is based on Qualcomm's QCS8300 SoC. The DTS
+> previously reused the sound card compatible as "qcom,qcs8275-sndcard",
+> which is based on existing coverage. To maintain clarity and consistency,
+> the naming conventions for the compatible should reflect actual SoC
+> rather than the board. Therefore, update the sound card compatible as
+> "qcom,qcs8300-sndcard" to avoid potential confusion.
 > 
+> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+> ---
+> This patch series depends on patch series:
+> https://lore.kernel.org/linux-sound/20250905142647.2566951-1-mohammad.rafi.shaik@oss.qualcomm.com/
+> ---
+>  arch/arm64/boot/dts/qcom/monaco-evk.dts | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> On 9/10/2025 1:09 PM, Krzysztof Kozlowski wrote:
->> On 10/09/2025 09:26, Krzysztof Kozlowski wrote:
->>>> diff --git a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>>> index 8ac91625dce5..eebf80c1d79a 100644
->>>> --- a/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>>> +++ b/Documentation/devicetree/bindings/sound/qcom,sm8250.yaml
->>>> @@ -35,6 +35,7 @@ properties:
->>>>             - qcom,qcm6490-idp-sndcard
->>>>             - qcom,qcs6490-rb3gen2-sndcard
->>>>             - qcom,qcs8275-sndcard
->>>
->>> So what is the point of this compatible? There is no user of it and I
->>> think you added QCS8275 for this case exactly...
->>>
->>> Shall I start reverting commits from Qualcomm because you post patches
->>> "just in case" and turns out they are completely not needed? No single
->>> user of such code?
->>
->>
->> @Mark,
->>
->> In case it wasn't obvious, please do not merge the patch till we get
->> some clarification. For sure it is wrong one way or another: either
->> incomplete or just duplicated.
->>
-> 
-> The device tree currently uses qcs8275 as the sound compatible, and
-> the corresponding Device tree changes have already been applied and merged.
-> 
-> Reverting this now would break the ABI.
+> diff --git a/arch/arm64/boot/dts/qcom/monaco-evk.dts b/arch/arm64/boot/dts/qcom/monaco-evk.dts
+> index f3c5d363921e..7187c1760ef5 100644
+> --- a/arch/arm64/boot/dts/qcom/monaco-evk.dts
+> +++ b/arch/arm64/boot/dts/qcom/monaco-evk.dts
+> @@ -38,7 +38,7 @@ max98357a: audio-codec-1 {
+>  	};
+>  
+>  	sound {
+> -		compatible = "qcom,qcs8275-sndcard";
+> +		compatible = "qcom,qcs8300-sndcard";
 
-If reverting would break ABI then:
+The other patch claims that changing binding would be ABI break, so
+obviously here is actual impact on users.
 
-> 
-> A new device tree patch with qcs8300 is currently under review:
-> 
-> https://lore.kernel.org/linux-arm-msm/20250910044512.1369640-1-mohammad.rafi.shaik@oss.qualcomm.com/
+Also, the other patch explains that it is the same hardware, so we are
+back at previous discussions (sc8380xp, sa8775p etc): we do not rename
+compatibles just because your prefer something else now.
 
-This is ABI break thus NAK.
-
-> 
-> Once the machine driver and device tree patch with qcs8300 are accepted 
-> and merged,
-> 
-> I will promptly submit a cleanup patch to remove of discontinued 
-> compatibles from the machine driver.
-
-So this is the same hardware? Then no, we do not rename compatibles.
+That's a NAK.
 
 Best regards,
 Krzysztof
