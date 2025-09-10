@@ -1,134 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-72955-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEB1FB514F9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:09:40 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3D34AB51503
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:10:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9561E5E0D32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:09:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C3732463968
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:10:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 56F3D31CA46;
-	Wed, 10 Sep 2025 11:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCAE531AF23;
+	Wed, 10 Sep 2025 11:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="eWzpltn8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GZg4a9Pz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-43170.protonmail.ch (mail-43170.protonmail.ch [185.70.43.170])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3FA31C57E;
-	Wed, 10 Sep 2025 11:08:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9069B31690C;
+	Wed, 10 Sep 2025 11:08:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757502488; cv=none; b=cH3bfVKel+u2pjZtvVscAoJ86Uu+XQDRxf4faHolapa8YSxIIkg4AhYue0SUGImnXk6C0q3oBFj+ZmZQ5SvJzSScU/WsBdn1Yqpm6SizXj0+obYcmkFaONg+vJi4QxqhYiZ/3NJ7yrk4RCtS5Z4N4efx5nTLkErHBtvf1XzxZkA=
+	t=1757502513; cv=none; b=b7javr6P1pol3gm1pgZ9/LmEcpSUjMwedHGcIqawsLtQ28hns0dC9D/LCXPL+RiCWarbHa0BrWvBQlNDNMLHONHYXVkwLzjvCpRUKTz71v0T6QMjwZSLk9An57VxLPj7Ya/8GvcCS/yhR0ZRqxi6xRYsQ81iWQfXukpd9VhM+9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757502488; c=relaxed/simple;
-	bh=MrJ75K5TTGWsUdBgpB6wcSaOrHL0GEx8YvZLO6OHvZk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QZW8V7vU1nKj3BSFOfZv5PI6BJtKBrUWEGtKvEbQSc2eUjTEn6FYWY7pD8sf1ZEPp4WZFGJEAxQE+PkZAM4k+U9zNKXA3bU35HqDEAigHpoYTtgaTgcIrI11kT6PEzEDJXa7cGSC5kgbgeO8W2W+Ivmk3dfdYYMTev5bZcJVjeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=eWzpltn8; arc=none smtp.client-ip=185.70.43.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
-	s=protonmail; t=1757502484; x=1757761684;
-	bh=WVAZkSDamM6pxbj/GVHH3PYvdQm8SxrqzkK9f4jXnr4=;
-	h=From:Date:Subject:Message-Id:References:In-Reply-To:To:Cc:From:To:
-	 Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=eWzpltn87rCiyyQBJUp7vRnPZXNyU3H0OzGMPb6LPJkb61q32Zrteoq/uwCgjzwfa
-	 uVFd3PYwEuFIIq7atpigf46P8ZL2pTBrlfQvwdcKGL4xYZ8QKm2AV05op6kbqSU7WY
-	 N+OAWNaPM4rI/6QFVtjhczhUW9L3stNPuBFxhe3gjoJ1Ik5APcaXhQubQ7A4CTbM8W
-	 BQgdjDmdE+MAbdWIIg3eNOd40fba6CDtAMHZJ1SSH/iALN5t8lLpd/fWy8RUN3kQyH
-	 vW1qk9FOsHwcVVJzKkzGkMyBI5+CPtdYdu0o08c88q1HQD6BSb6knnqifYiXhFX4HL
-	 g3/TtFNTlANew==
-X-Pm-Submission-Id: 4cMHwc5yG7z2ScCt
-From: Aleksandrs Vinarskis <alex@vinarskis.com>
-Date: Wed, 10 Sep 2025 13:07:40 +0200
-Subject: [PATCH v4 4/4] arm64: dts: qcom: sc8280xp-x13s: enable camera
- privacy indicator
+	s=arc-20240116; t=1757502513; c=relaxed/simple;
+	bh=eT+fM0/l96U9E80CByHY3UpL1VMyoPh2jRe5J041drA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VdYeI9I81ny6eawsHXL4gHusrdFcfqWdahyddvQuidDG4SYN5qzD7lIJwoi1qmxVI/bPq9M4tNVOTaYIhpjruubHtxaGlXkGF/IliGTVLb8e7lF26cjTF0fBUqFKn+kPPnG+/zfoKDwUhYDSBwOtgOibfeAl/7NO9OOeswO/YGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GZg4a9Pz; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D442C4CEF8;
+	Wed, 10 Sep 2025 11:08:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757502513;
+	bh=eT+fM0/l96U9E80CByHY3UpL1VMyoPh2jRe5J041drA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GZg4a9PzOThwfZJWjmmg1do+BJcK6fKqRVNE1sq+YdWBDlnHaURSjrRlxZ7+9DH4N
+	 Db+CuYerpenQhklpoGj+sHRilAxDRpInKvZJFpf3X1NCOLLQCBlcF189fa3pyP4fw4
+	 ufx5Lufwft1vqYQ0u4pu16D0r5dE6FepR8/Y2m7Bl1iWB50ud8cl9nr4fE/W1LSLys
+	 FYy4EKSZ0zBJNrEh6t7tmcyrIUrM+yDEihmZQ6+XVKFqbhMuCNH5+DEntCodxdQULf
+	 ZowH6/I7RWxU+6aGkzICbmkk9ffdQk6E6ckIxF6EdRydu3MVPbheSr9BgPt07IhG8H
+	 9PwdxdvRijCMA==
+Date: Wed, 10 Sep 2025 13:08:30 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Sandy Huang <hjc@rock-chips.com>, 
+	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	Daniel Stone <daniels@collabora.com>
+Subject: Re: [PATCH v4 09/10] drm/connector: verify that HDMI connectors
+ support necessary InfoFrames
+Message-ID: <20250910-courageous-warthog-of-refinement-aced6f@houat>
+References: <20250909-drm-limit-infoframes-v4-0-53fd0a65a4a2@oss.qualcomm.com>
+ <20250909-drm-limit-infoframes-v4-9-53fd0a65a4a2@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250910-leds-v4-4-1fc320488233@vinarskis.com>
-References: <20250910-leds-v4-0-1fc320488233@vinarskis.com>
-In-Reply-To: <20250910-leds-v4-0-1fc320488233@vinarskis.com>
-To: Hans de Goede <hansg@kernel.org>, Lee Jones <lee@kernel.org>, 
- Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Jingoo Han <jingoohan1@gmail.com>, 
- Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Jean-Jacques Hiblot <jjhiblot@traphandler.com>, 
- Jacopo Mondi <jacopo@jmondi.org>, 
- Sakari Ailus <sakari.ailus@linux.intel.com>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Daniel Thompson <danielt@kernel.org>
-Cc: linux-leds@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- threeway@gmail.com, Andy Shevchenko <andy.shevchenko@gmail.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1659; i=alex@vinarskis.com;
- h=from:subject:message-id; bh=MrJ75K5TTGWsUdBgpB6wcSaOrHL0GEx8YvZLO6OHvZk=;
- b=owGbwMvMwCX2dl3hIv4AZgHG02pJDBkHY1i7Dd/wNV2TMgp7/s+PfduOR475Z84UuM//ueLxT
- d1eAx/9jlIWBjEuBlkxRZbuP1/TuhbNXctwXeMbzBxWJpAhDFycAjAR5wxGhvPensm6/BOZRP7q
- VEmGWNl0lk05mCiwiCHnGiNjTn+eBCPD7uPXChdOn3RV9nVGJEe93F+JWe/vX1q67/aZa6Zv77V
- GsAEA
-X-Developer-Key: i=alex@vinarskis.com; a=openpgp;
- fpr=8E21FAE2D2967BB123303E8C684FD4BA28133815
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="xkhodzl7phtwfggk"
+Content-Disposition: inline
+In-Reply-To: <20250909-drm-limit-infoframes-v4-9-53fd0a65a4a2@oss.qualcomm.com>
 
-Leverage newly introduced 'leds' and 'led-names' properties to pass
-indicator's phandle and function to v4l2 subnode. The latter supports
-privacy led since couple of years ago under 'privacy-led' designation.
-Unlike initially proposed trigger-source based approach, this solution
-cannot be easily bypassed from userspace, thus reducing privacy
-concerns.
 
-Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
----
- arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+--xkhodzl7phtwfggk
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 09/10] drm/connector: verify that HDMI connectors
+ support necessary InfoFrames
+MIME-Version: 1.0
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-index 637430719e6d7d3c0eeb4abf2b80eea1f8289530..3b3f7137689a6fa292ffe4fec8c1d1f20ee525bc 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts
-@@ -83,14 +83,11 @@ leds {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&cam_indicator_en>;
- 
--		led-camera-indicator {
--			label = "white:camera-indicator";
-+		privacy_led: privacy-led {
- 			function = LED_FUNCTION_INDICATOR;
- 			color = <LED_COLOR_ID_WHITE>;
- 			gpios = <&tlmm 28 GPIO_ACTIVE_HIGH>;
--			linux,default-trigger = "none";
- 			default-state = "off";
--			/* Reuse as a panic indicator until we get a "camera on" trigger */
- 			panic-indicator;
- 		};
- 	};
-@@ -685,6 +682,9 @@ camera@10 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&cam_rgb_default>;
- 
-+		leds = <&privacy_led>;
-+		led-names = "privacy";
-+
- 		clocks = <&camcc CAMCC_MCLK3_CLK>;
- 
- 		orientation = <0>;	/* Front facing */
+On Tue, Sep 09, 2025 at 05:52:07PM +0300, Dmitry Baryshkov wrote:
+> Check that connector initialized by drmm_connector_hdmi_init() supports
+> AVI InfoFrames and warn if it doesn't support Vendor-Specific
+> InfofRames (HDMI InfoFrames are more or less required).
+>=20
+> Suggested-by: Maxime Ripard <mripard@kernel.org>
+> Acked-by: Daniel Stone <daniels@collabora.com>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/drm_connector.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>=20
+> diff --git a/drivers/gpu/drm/drm_connector.c b/drivers/gpu/drm/drm_connec=
+tor.c
+> index 92a75684a0f7375d3a94e8c666cb71064ecc8035..222a0ef66d9fdbdb56108ceeb=
+40e7f369d810350 100644
+> --- a/drivers/gpu/drm/drm_connector.c
+> +++ b/drivers/gpu/drm/drm_connector.c
+> @@ -602,6 +602,13 @@ int drmm_connector_hdmi_init(struct drm_device *dev,
+>  	if (!(max_bpc =3D=3D 8 || max_bpc =3D=3D 10 || max_bpc =3D=3D 12))
+>  		return -EINVAL;
+> =20
+> +	/* AVI is required */
+> +	if (!(supported_infoframes & DRM_CONNECTOR_INFOFRAME_AVI))
+> +		return -EINVAL;
+> +
+> +	if (!(supported_infoframes & DRM_CONNECTOR_INFOFRAME_VENDOR))
+> +		drm_info(dev, "HDMI connector with no support for Vendor-Specific Info=
+Frame\n");
+> +
 
--- 
-2.48.1
+Same remark than on patch 10. It's not something we can check at init
+time, and we should check (and document!) that if we expect an infoframe
+to be written but the write_infoframe hook doesn't support it, it's an
+error.
 
+Maxime
+
+--xkhodzl7phtwfggk
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaMFcLgAKCRAnX84Zoj2+
+do1pAXoDY9Dzn6G/ClMn6Qt9h6baw0nSCc1SPEDOnOlKYoD9BSE05V70x5Sqi0rR
+wJwIv2ABgME+k6f+wI13qd1Ah1huLB0li8xpIpRZTte9l8GEmuSdXIv2pGQJKmjF
+/tLAINKY3g==
+=JQzw
+-----END PGP SIGNATURE-----
+
+--xkhodzl7phtwfggk--
 
