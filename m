@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-72920-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A635FB510BA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 10:12:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B7ECDB510CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 10:13:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A71761C82985
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 08:12:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id BCC7D1C82A7A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 08:13:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 678FF314B92;
-	Wed, 10 Sep 2025 08:08:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3F80E2C026F;
+	Wed, 10 Sep 2025 08:11:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Ht8muMr6"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XoWGGI3l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A465313529
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 08:08:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A965730EF8F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 08:11:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757491693; cv=none; b=H08kWV8+lZpEAbBoihCVLfFQ682bL0S2/HoMaTM+RXotQuLQPfc4+2Ex6GWvH17NhCaY7OevcFf64MN13kSRpUXrhdo943mIGax5/Z5IO/E9w/xxhLZTO257uQSpgNYNJuoA0uxHrtsUfdOuETKNSs57ql7PLBjnyiapWtDScms=
+	t=1757491911; cv=none; b=Jh+A+/wupWanlDFhtNS8qhgix7x5Skz34dfnfkBcv5oQzwLpQZAd0FhEEIvOA/dCJY4vktcaML9+dMvdMWNwzlb0mbJDNTcxbQp7sTVJeC+Pu40JzEW24qwYpMhMh7MKqP1Jzrh9mHFiLuwu4iJWFXzeHArwveR7mQu8XhWvICA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757491693; c=relaxed/simple;
-	bh=oWXfa3SvJwwCEKqzllHDlbCszXa1p/f/sbqZPJo4AjM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jvVNhBx/QoUrmGiPdfPeDOup1hL4+CItCkOpN38xEFHti5aRaqt43Q445+gCuWhJR+AHJxoOU/2xbadwIqecQhtCnI3W2uYaae/DatrtnBplMGqdKBpi0HNUjlcEG5qHaRaHzruNeHZi6cDLDvg6BiL5xicuZjRO7NjJOhYYhWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Ht8muMr6; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45dcfecdc0fso56217735e9.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 01:08:09 -0700 (PDT)
+	s=arc-20240116; t=1757491911; c=relaxed/simple;
+	bh=zV6UIzKpC2XSiOBKmnRX5bxOtaKg0EgMOEBzfFrZUB8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WtbzlIZoKJM0ePqN2Y51e4IzG5tVc8QJ6bRm3vacjWRA7Nfos3o+s7jgPfbMTX1nKXYIc9m4HnxtB+b4JkNmJ5Jm+uYwSSO3xNdP4xVz6TsEjcb5xp9DQ2RPp3h4o7g9KJBmTIDyGgh+AATz6J7XcE521jiYP2S/HjAQmztJj9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XoWGGI3l; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45ddc7d5731so27260205e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 01:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1757491688; x=1758096488; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TVw9UEkU6CM7T/P7hDMj+CzXogm3wRYsQn+ddAlTT/k=;
-        b=Ht8muMr6bxXWi2/TQxbRKLxYxV5d0qZ+Ul3zt3erJOGkXfQLUaOLd20mYYxYtlFdSU
-         ihL9tWSxiysYEUElVln6W1hEehFAP5YECmox1aFE3IO357eVepaB/k0yi54QbSiY8a2d
-         6VE9h/ehHynrbdlxjRVNGdmDBGIsVqZaVGBZ2JpGR8ypoRdDUXRJ1myW1Lzri+OwoyCG
-         j9TLQ+jEyWcI2VSwkSHpJ5eihrg/C+oWKMo599Il6xbuAXP17knm6KSXuoeAZzBZUKP8
-         mHp3WMIrpL/H9RHbxvCB8vfvwNl0zC9WJSqU5HYN4UnrktDnEjJjL8fHvhOCIFeHfSFh
-         CrzQ==
+        d=linaro.org; s=google; t=1757491907; x=1758096707; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=68YOxZzKrnQTKmgz7fSU1hdvIBDa3DAXw0GY+gLPr3Q=;
+        b=XoWGGI3lOuZ424fI37chCp4TPDueSOGIWyN3/Jvjp/zhgJ7B1ZM/KCiTsmTOkV+lw4
+         Jr/vMTxDAm65xOw7aL8g7Fl2kYT+cR6+5KqT+EeHSHbTMLscSkdqeUkt8UMs8re1FBwt
+         Zrx68FKghGOXyjsVxZroYZq+d1auQmS0WXGOawBM0V1XqwgOU29smHKjLzAT4WO26X5c
+         KsYHCEdowMMsclseZM7ACJVm6KnLR8Zp4ByMSk4YpoLyOcYCPd51M92OeUVaZTdKRsCU
+         wW8iAVLEhtTK7n8V+PKpMjcsDAq6e8zSPffnlMW1BfvYKWN6RaQ51JsrHUqIDJZgxPFw
+         Uu6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757491688; x=1758096488;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TVw9UEkU6CM7T/P7hDMj+CzXogm3wRYsQn+ddAlTT/k=;
-        b=sgXkhVbqt0jX9fALSpYCL8xHzJtOD9nYkPbJFok7oI6lxFPZnuHyt+VdodrtxrfQBl
-         afL5/DFhQL473mSxwIPTC+CwU8BhmMYoVpoHBDfntt8fRCUFIa9Ol/E9oqss4vrfaFot
-         Mla9n0Px/hVq8+JWOhUMWWSRpVSyMYvwVy9nPsA9QtEQ6VNq5Bd2PS9SxKkL2W/KfKjT
-         ps/yFn76It2zjMtdybKSoxHcFbfV705+VWKUT6T3HohssRq8gUkHT1eLvAmeBR46PLuo
-         w4hdvtiXR4SouVr033gXLi/39rrmG3RKYBpjWFwy5xlEkpPMNG+UdZhBN6lqgizsYMIM
-         RgKw==
-X-Gm-Message-State: AOJu0YwuO9fB71BX8EMkXjKAP1W03Jk1zlfgojEWLCnRv5t6nAkaex0S
-	9PIg7ev6DQclJtB2OodwcfinqFIu0XN3WErGqU2Nb3YmxOSqxb9dVbw8KRApjSafBB4=
-X-Gm-Gg: ASbGncuLs7naW0sTFxluDH4t7Ak6/0uJ6+zWWiGZL+ds0R+OoPCswdEvDySvm84J4RC
-	peWOskJh5Czb7qu4R0Zx9xEFoV6R05Q2rhsouwMmh96qmLp68cMkwJtROqTRa70fb4GWLhCHw8u
-	wydCPu9L34DWvi0cR9X2DwlRGDEHXFz8KxOhNqhXotkYLp2+cupigtMVgW+BmlaeqeCHWjXUuqQ
-	CXp4/nucB9tygjObDeGwvza+a/wulHNFIkA4QT6l5I0xCKLN4C3p3jCdofUizKEHevq9skQ3yc5
-	ROQJMFPvLWHnTYY89hB4RME0FW5A2QK1aJTay2vuc5M+XTPMb1qj8RLjRxIokYidHDUvKL3yXE7
-	gIBzN8FAZjIcJXHJpgDqg+Pg4u/eT
-X-Google-Smtp-Source: AGHT+IG56XJwGZpZ4GrwEXPPYhCBa6sqkrTUyBxMNLpvWbgdc36pNT5Jlm5ghMOSQ92DQFQleNNYHw==
-X-Received: by 2002:a05:600c:350a:b0:45d:dbf4:8880 with SMTP id 5b1f17b1804b1-45dddef7b71mr122974055e9.27.1757491688342;
-        Wed, 10 Sep 2025 01:08:08 -0700 (PDT)
-Received: from [127.0.1.1] ([2a01:cb1d:dc:7e00:3936:709a:82c4:3e38])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df8247cc6sm17813605e9.12.2025.09.10.01.08.04
+        d=1e100.net; s=20230601; t=1757491907; x=1758096707;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=68YOxZzKrnQTKmgz7fSU1hdvIBDa3DAXw0GY+gLPr3Q=;
+        b=uxg4zVrsKk4iUuPJxke8BnqYRxOKGbk5bFKwA3/G0ljJDDAixazM5pjxk4NQ78wCQC
+         ca7fuW5CutgN9uMQExm5PZVs1hBQ828lPhnebext2KqCD7S8jayX8rObHI7WL6NHVqE2
+         pzwZT+LJ1Mt/gdK/sUCQmC7NLKxoeFJuR70tp4vTp++IEaVEmNJCP2c9WTUEm0m3RJIy
+         tcn3HxbWpZDU58dkGqN6dcMARCMz1DjqueZJqX+TmDv8CL3g21IDeJP+dUUT0CjclUJK
+         fhxMBEdZAtHc6ZpwCg/zAmj5UHwkgs3+GyhnmRvIP15Q8L/76MK6uNB8Po3G0VBQL3ew
+         e/lA==
+X-Forwarded-Encrypted: i=1; AJvYcCX+sgIWD6Yhyd7RBg4KbjdcDmZyPzfaxZE1UPaqtfNrMSYOqyYwTnmEIuQUaVh6glA3b6J5loBOun2axe/C@vger.kernel.org
+X-Gm-Message-State: AOJu0YwKLbjk0OKfAvtWe0pINC01M3HoW3n/F6fZcQl7513edxnLk7pm
+	lsk2BnIqJHjwIqXt9FKE70nFvh96puhdhFc/uG7+UWXax5z1bdVD4NyrjYscXXySrPU=
+X-Gm-Gg: ASbGncuQNm8u1L9k31QlY7XnsPA5G/ALywhYerYDsTBaSC/ELaRD895ZInGsrsk0bo2
+	Wvi+8DPJZ3YJwr2dd77OoB8IY+22xzzf+jJRFgr02caGabr7ZN+gDaUUp3kc4EvRgRqhM8JKGUR
+	FRYlDwrUtNg8d4jOzYnd1GYLYGabksmXB25OcyaYxrTAfnnw05XXOVbgZ3EymRQ+/Y8v+pvz0GW
+	kj3X3NjO6tcapwT8KsA3Y1zbiPToAlkjX0dUso+cmfVvh+OGIBymTRLnwGHpHS5itRPMB0vl9Q7
+	YXSH26alanpZghvonAUQRE8gafAaGgLNszhK+06sRoFqreVFjZGlWvEszZ0Yy9b84KSLECDDm4t
+	ujKTqkF7ah3DedYp/etp1j4wW3LlS
+X-Google-Smtp-Source: AGHT+IF+aey3zIQg5GKYJoXPwVZLDSMaAarObf04DoKusKxuuPB1FlhE5Skl6HLSQ58yxneD1ofyrA==
+X-Received: by 2002:a05:6000:26c1:b0:3df:f7d1:f8ae with SMTP id ffacd0b85a97d-3e636d8ffadmr11307892f8f.4.1757491906862;
+        Wed, 10 Sep 2025 01:11:46 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7259:a00:a727:6a46:52e3:cac2])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df8218944sm18119995e9.12.2025.09.10.01.11.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Sep 2025 01:08:05 -0700 (PDT)
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Wed, 10 Sep 2025 10:07:46 +0200
-Subject: [PATCH 9/9] net: stmmac: qcom-ethqos: add support for sa8255p
+        Wed, 10 Sep 2025 01:11:46 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH v2 0/2] Add raw OPUS codec support for compress offload
+Date: Wed, 10 Sep 2025 09:11:40 +0100
+Message-Id: <20250910-opus_codec_rfc_v1-v2-0-35fb6536df6b@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,397 +83,100 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250910-qcom-sa8255p-emac-v1-9-32a79cf1e668@linaro.org>
-References: <20250910-qcom-sa8255p-emac-v1-0-32a79cf1e668@linaro.org>
-In-Reply-To: <20250910-qcom-sa8255p-emac-v1-0-32a79cf1e668@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Richard Cochran <richardcochran@gmail.com>, 
- Andrew Lunn <andrew+netdev@lunn.ch>, 
- "David S. Miller" <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, 
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, 
- Maxime Coquelin <mcoquelin.stm32@gmail.com>, 
- Alexandre Torgue <alexandre.torgue@foss.st.com>, 
- Vinod Koul <vkoul@kernel.org>, Giuseppe Cavallaro <peppe.cavallaro@st.com>, 
- Jose Abreu <joabreu@synopsys.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org, 
- linux-stm32@st-md-mailman.stormreply.com, 
- linux-arm-kernel@lists.infradead.org, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+X-B4-Tracking: v=1; b=H4sIALwywWgC/32NzQqDMBAGX0Vybsommph66nsUkfypC8VI0kqL+
+ O6NnnppYS/zwcyuJPmIPpGmWEn0CyYMUwZ+Kogd9TR4ii4z4cAFSCZpmJ+ps8F528XedgujRoJ
+ xJSh1KQ3J3hx9j6+jeWszj5geIb6PFwvb13+1fEBZX4MBXTFdw/WOk47hHOKw1w9VcfilisoJW
+ wsJSshvtd227QMv20AZ7gAAAA==
+X-Change-ID: 20250616-opus_codec_rfc_v1-b60bd308893b
+To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
+Cc: Patrick Lai <plai@qti.qualcomm.com>, 
+ Annemarie Porter <annemari@quicinc.com>, 
+ srinivas.kandagatla@oss.qualcomm.com, linux-sound@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ kernel@oss.qualcomm.com, Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, 
+ Alexey Klimov <alexey.klimov@linaro.org>, 
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=11041;
- i=bartosz.golaszewski@linaro.org; h=from:subject:message-id;
- bh=LTwoONxJf6sm0sg7eKQaSo0lKsmMiPsYLDmqFKmz5Bc=;
- b=owEBbQKS/ZANAwAKARGnLqAUcddyAcsmYgBowTHOVfIA1Wwhqxc+2Pag26471J1TJM+1FKP0n
- XKraEnGk+qJAjMEAAEKAB0WIQQWnetsC8PEYBPSx58Rpy6gFHHXcgUCaMExzgAKCRARpy6gFHHX
- ckj2D/9L8Z7yDBDgU+bsZvWM1EWHrRTZ7XgOJyKsWZ9i4EN8YqUnfe+Qz1ydQA6L6niDqqgSLca
- j9gpRn0pMsn8P7HKO3LRvEeltVHYFOo+NPyCBZvvaL4tl+pT9GTYYTsHeNhh74pyWzfaBSAEycp
- fMmBb19nHJpLKqKvKU4E5wie8flibPuwjuLDnKboUV6snLuBSRB7/aN5yTdWwCqMcTu24nkySwJ
- MGqrfaCD8pUKfUcbfy2cADMepZDeoXa8jP/nLdGyRf09cjtGQfgMKJ3CADdZolb6Ul6Rfod/QYN
- kF+XmFjZ7o1qRR9dOMQ2k5NUDcNuOdhmpXAihqpgcZR23FWqFskaoQV6BGeXDuzy6Lb4jrHNKw4
- EnaaRaEMocSIrfIe+L0aIpnK7vTh5+rgrknlsgKUO3oGBAxb8v3yWW43gXuNUnHrbHKV0eLRYUF
- 8M9+5rC0ccDSf4aNUD975R1tS3cRlJAAVGuisa1Utwuo3DDUX6ZX5U1so4BlUY6suxM8+fJyWcR
- 6Cqn/cQb6HFJO3rJ7+IDymVA/ZEfEJymEnbFXqUXoFGFJWT/W9COhfMubiSVFjPBZC2O06gGbdF
- h7lC9wpcYuIBZLbUtEof0XKYzbRBOT/2m9ozroGmt8hWvdCWvwycJwDdycr2znSAUX7FeOQ1jIA
- qeazTiTh0oJm0aA==
-X-Developer-Key: i=bartosz.golaszewski@linaro.org; a=openpgp;
- fpr=169DEB6C0BC3C46013D2C79F11A72EA01471D772
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+This series adds support in kernel to recognise raw (or plain) OPUS
+codec playback for compress offloading. At this point this series
+doesn't deal with OPUS packets packed in any kind of containers (OGG or
+others) and focuses on adding missing bits for pure OPUS packets.
 
-Extend the driver to support a new model - sa8255p. Unlike the
-previously supported variants, this one's power management is done in
-the firmware using SCMI. This is modeled in linux using power domains so
-add support for them.
+The second patch adds its usage in Qualcomm Audio DSP code. To correctly
+recognise raw OPUS packets by qdsp6, each packets needs to be prepended
+with 4-bytes field that contains length of a raw OPUS packet.
+It is expected to be useful for usecases when OPUS packets are streamed
+over network and they are not encapsulated in a container. Userspace
+application that will use the compress API has to manually add such
+4-bytes long field to each OPUS packet.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+This is tested on sm8750-mtp. It is expected that next hardware revisions
+will also support raw OPUS codec offloading.
+
+Dependencies are:
+-- hardware with DSP that supports decoding OPUS packets (>=sm8750);
+-- adsp fastrpc;
+-- explicitly setting format in sm8750 soundcard driver;
+-- running adsprpcd tool with support for Audio PD and DSP libraries
+loading support (or its alternative);
+-- tinycompress fcplay tool that will prepare raw opus packets and
+do the required addition of length field;
+-- mfc module in topology compress-playback path, that module is
+expected to parse channel mapping and do the required things to
+map streams/channels to physically-present output channels on backend.
+
+The userspace tinycompress tool with support for raw OPUS compress
+playback is located here:
+https://github.com/laklimov/tinycompress_opus
+branch: opus_v3_workinprogress
+
+The userspace tool is not expected that it is ready and still needs
+some work, for instance recognition that it runs on Qualcomm hardware.
+More like working PoC.
+
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 ---
- .../ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c    | 231 ++++++++++++++++++---
- 1 file changed, 201 insertions(+), 30 deletions(-)
+Changes since RFC (mostly as suggetsed by Srini):
+- added struct snd_dec_opus_ch_map to struct snd_dec_opus;
+- changed tags;
+- reworked comments for struct snd_dec_opus;
+In qcom audioreach patch:
+- corrected how {stream_count,coupled_count} is ejected from mcfg->codec;
+- stopped dealing with channel mapping parsing (this is internal struct for
+  decoder on audio DSP side);
+- used sizeof(*opus_cfg) for payload size;
+Tinycompress/fcplay:
+- small updates to match kernel structs.
+- Link to RFC: https://lore.kernel.org/r/20250616-opus_codec_rfc_v1-v1-0-1f70b0a41a70@linaro.org
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 2a6136a663268ed40f99b47c9f0694f30053b94a..e1620d724e18dd824ae9615dfef122836e5140fd 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -7,6 +7,8 @@
- #include <linux/platform_device.h>
- #include <linux/phy.h>
- #include <linux/phy/phy.h>
-+#include <linux/pm_opp.h>
-+#include <linux/pm_domain.h>
- 
- #include "stmmac.h"
- #include "stmmac_platform.h"
-@@ -85,6 +87,13 @@
- 
- #define SGMII_10M_RX_CLK_DVDR			0x31
- 
-+enum ethqos_pd_selector {
-+	ETHQOS_PD_CORE = 0,
-+	ETHQOS_PD_MDIO,
-+	ETHQOS_PD_SERDES,
-+	ETHQOS_NUM_PDS,
-+};
-+
- struct ethqos_emac_por {
- 	unsigned int offset;
- 	unsigned int value;
-@@ -103,6 +112,9 @@ struct ethqos_emac_driver_data {
- 
- struct ethqos_emac_pm_data {
- 	const char *link_clk_name;
-+	bool use_domains;
-+	struct dev_pm_domain_attach_data pd;
-+	unsigned int clk_ptp_rate;
- };
- 
- struct ethqos_emac_match_data {
-@@ -116,13 +128,20 @@ struct ethqos_emac_pm_ctx {
- 	struct phy *serdes_phy;
- };
- 
-+struct ethqos_emac_pd_ctx {
-+	struct dev_pm_domain_list *pd_list;
-+};
-+
- struct qcom_ethqos {
- 	struct platform_device *pdev;
- 	void __iomem *rgmii_base;
- 	void __iomem *mac_base;
- 	int (*configure_func)(struct qcom_ethqos *ethqos, int speed);
- 
--	struct ethqos_emac_pm_ctx pm;
-+	union {
-+		struct ethqos_emac_pm_ctx pm;
-+		struct ethqos_emac_pd_ctx pd;
-+	};
- 	phy_interface_t phy_mode;
- 	int serdes_speed;
- 	int (*set_serdes_speed)(struct qcom_ethqos *ethqos);
-@@ -336,6 +355,25 @@ static const struct ethqos_emac_match_data emac_sa8775p_data = {
- 	.pm_data = &emac_sa8775p_pm_data,
- };
- 
-+static const char * const emac_sa8255p_pd_names[] = {
-+	"power_core", "power_mdio", "perf_serdes"
-+};
-+
-+static const struct ethqos_emac_pm_data emac_sa8255p_pm_data = {
-+	.pd = {
-+		.pd_flags = PD_FLAG_NO_DEV_LINK,
-+		.pd_names = emac_sa8255p_pd_names,
-+		.num_pd_names = ETHQOS_NUM_PDS,
-+	},
-+	.use_domains = true,
-+	.clk_ptp_rate = 230400000,
-+};
-+
-+static const struct ethqos_emac_match_data emac_sa8255p_data = {
-+	.drv_data = &emac_v4_0_0_data,
-+	.pm_data = &emac_sa8255p_pm_data,
-+};
-+
- static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- {
- 	struct device *dev = &ethqos->pdev->dev;
-@@ -417,6 +455,28 @@ static int ethqos_dll_configure(struct qcom_ethqos *ethqos)
- 	return 0;
- }
- 
-+static int qcom_ethqos_domain_on(struct qcom_ethqos *ethqos,
-+				 enum ethqos_pd_selector sel)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[sel];
-+	int ret;
-+
-+	ret = pm_runtime_resume_and_get(dev);
-+	if (ret < 0)
-+		dev_err(&ethqos->pdev->dev,
-+			"Failed to enable the power domain for %s\n",
-+			dev_name(dev));
-+	return ret;
-+}
-+
-+static void qcom_ethqos_domain_off(struct qcom_ethqos *ethqos,
-+				   enum ethqos_pd_selector sel)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[sel];
-+
-+	pm_runtime_put_sync(dev);
-+}
-+
- static int ethqos_rgmii_macro_init(struct qcom_ethqos *ethqos, int speed)
- {
- 	struct device *dev = &ethqos->pdev->dev;
-@@ -652,6 +712,13 @@ static int ethqos_set_serdes_speed_phy(struct qcom_ethqos *ethqos)
- 	return phy_set_speed(ethqos->pm.serdes_phy, ethqos->serdes_speed);
- }
- 
-+static int ethqos_set_serdes_speed_pd(struct qcom_ethqos *ethqos)
-+{
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[ETHQOS_PD_SERDES];
-+
-+	return dev_pm_opp_set_level(dev, ethqos->serdes_speed);
-+}
-+
- static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
- {
- 	if (ethqos->serdes_speed != speed) {
-@@ -753,6 +820,27 @@ static void qcom_ethqos_serdes_powerdown(struct net_device *ndev, void *priv)
- 	phy_exit(ethqos->pm.serdes_phy);
- }
- 
-+static int qcom_ethqos_pd_serdes_powerup(struct net_device *ndev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	struct device *dev = ethqos->pd.pd_list->pd_devs[ETHQOS_PD_SERDES];
-+	int ret;
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
-+	if (ret < 0)
-+		return ret;
-+
-+	return dev_pm_opp_set_level(dev, ethqos->serdes_speed);
-+}
-+
-+static void qcom_ethqos_pd_serdes_powerdown(struct net_device *ndev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+
-+	/* TODO set level */
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_SERDES);
-+}
-+
- static int ethqos_clks_config(void *priv, bool enabled)
- {
- 	struct qcom_ethqos *ethqos = priv;
-@@ -785,6 +873,61 @@ static void ethqos_clks_disable(void *data)
- 	ethqos_clks_config(ethqos, false);
- }
- 
-+static int ethqos_pd_clks_config(void *priv, bool enabled)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	int ret = 0;
-+
-+	if (enabled) {
-+		ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
-+		if (ret < 0) {
-+			dev_err(&ethqos->pdev->dev,
-+				"Failed to enable the MDIO power domain\n");
-+			return ret;
-+		}
-+
-+		ethqos_set_func_clk_en(ethqos);
-+	} else {
-+		qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
-+	}
-+
-+	return ret;
-+}
-+
-+static int qcom_ethqos_pd_init(struct platform_device *pdev, void *priv)
-+{
-+	struct qcom_ethqos *ethqos = priv;
-+	int ret;
-+
-+	/*
-+	 * Enable functional clock to prevent DMA reset after timeout due
-+	 * to no PHY clock being enabled after the hardware block has been
-+	 * power cycled. The actual configuration will be adjusted once
-+	 * ethqos_fix_mac_speed() is called.
-+	 */
-+	ethqos_set_func_clk_en(ethqos);
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_CORE);
-+	if (ret)
-+		return ret;
-+
-+	ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_MDIO);
-+	if (ret) {
-+		qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static void qcom_ethqos_pd_exit(struct platform_device *pdev, void *data)
-+{
-+	struct qcom_ethqos *ethqos = data;
-+
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_MDIO);
-+	qcom_ethqos_domain_off(ethqos, ETHQOS_PD_CORE);
-+}
-+
- static void ethqos_ptp_clk_freq_config(struct stmmac_priv *priv)
- {
- 	struct plat_stmmacenet_data *plat_dat = priv->plat;
-@@ -825,8 +968,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 				     "dt configuration failed\n");
- 	}
- 
--	plat_dat->clks_config = ethqos_clks_config;
--
- 	ethqos = devm_kzalloc(dev, sizeof(*ethqos), GFP_KERNEL);
- 	if (!ethqos)
- 		return -ENOMEM;
-@@ -868,34 +1009,68 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	ethqos->rgmii_config_loopback_en = drv_data->rgmii_config_loopback_en;
- 	ethqos->has_emac_ge_3 = drv_data->has_emac_ge_3;
- 	ethqos->needs_sgmii_loopback = drv_data->needs_sgmii_loopback;
--
--	ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
--	if (IS_ERR(ethqos->pm.link_clk))
--		return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
--				     "Failed to get link_clk\n");
--
--	ret = ethqos_clks_config(ethqos, true);
--	if (ret)
--		return ret;
--
--	ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
--	if (ret)
--		return ret;
--
--	ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
--	if (IS_ERR(ethqos->pm.serdes_phy))
--		return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
--				     "Failed to get serdes phy\n");
--
--	ethqos->set_serdes_speed = ethqos_set_serdes_speed_phy;
- 	ethqos->serdes_speed = SPEED_1000;
--	ethqos_update_link_clk(ethqos, SPEED_1000);
-+
-+	if (pm_data && pm_data->use_domains) {
-+		ethqos->set_serdes_speed = ethqos_set_serdes_speed_pd;
-+
-+		ret = devm_pm_domain_attach_list(dev, &pm_data->pd,
-+						 &ethqos->pd.pd_list);
-+		if (ret < 0)
-+			return dev_err_probe(dev, ret, "Failed to attach power domains\n");
-+
-+		plat_dat->clks_config = ethqos_pd_clks_config;
-+		plat_dat->serdes_powerup = qcom_ethqos_pd_serdes_powerup;
-+		plat_dat->serdes_powerdown = qcom_ethqos_pd_serdes_powerdown;
-+		plat_dat->exit = qcom_ethqos_pd_exit;
-+		plat_dat->init = qcom_ethqos_pd_init;
-+		plat_dat->clk_ptp_rate = pm_data->clk_ptp_rate;
-+
-+		ret = qcom_ethqos_pd_init(pdev, ethqos);
-+		if (ret)
-+			return ret;
-+
-+		ret = qcom_ethqos_domain_on(ethqos, ETHQOS_PD_SERDES);
-+		if (ret)
-+			return dev_err_probe(dev, ret,
-+					     "Failed to enable the serdes power domain\n");
-+	} else {
-+		ethqos->set_serdes_speed = ethqos_set_serdes_speed_phy;
-+
-+		ethqos->pm.link_clk = devm_clk_get(dev, clk_name);
-+		if (IS_ERR(ethqos->pm.link_clk))
-+			return dev_err_probe(dev, PTR_ERR(ethqos->pm.link_clk),
-+					     "Failed to get link_clk\n");
-+
-+		ret = ethqos_clks_config(ethqos, true);
-+		if (ret)
-+			return ret;
-+
-+		ret = devm_add_action_or_reset(dev, ethqos_clks_disable, ethqos);
-+		if (ret)
-+			return ret;
-+
-+		ethqos->pm.serdes_phy = devm_phy_optional_get(dev, "serdes");
-+		if (IS_ERR(ethqos->pm.serdes_phy))
-+			return dev_err_probe(dev, PTR_ERR(ethqos->pm.serdes_phy),
-+					     "Failed to get serdes phy\n");
-+
-+		ethqos_update_link_clk(ethqos, SPEED_1000);
-+
-+		plat_dat->clks_config = ethqos_clks_config;
-+		plat_dat->ptp_clk_freq_config = ethqos_ptp_clk_freq_config;
-+
-+		if (ethqos->pm.serdes_phy) {
-+			plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
-+			plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
-+		}
-+	}
-+
- 	ethqos_set_func_clk_en(ethqos);
- 
- 	plat_dat->bsp_priv = ethqos;
- 	plat_dat->fix_mac_speed = ethqos_fix_mac_speed;
- 	plat_dat->dump_debug_regs = rgmii_dump;
--	plat_dat->ptp_clk_freq_config = ethqos_ptp_clk_freq_config;
- 	plat_dat->has_gmac4 = 1;
- 	if (ethqos->has_emac_ge_3)
- 		plat_dat->dwmac4_addrs = &drv_data->dwmac4_addrs;
-@@ -909,11 +1084,6 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	if (drv_data->dma_addr_width)
- 		plat_dat->host_dma_width = drv_data->dma_addr_width;
- 
--	if (ethqos->pm.serdes_phy) {
--		plat_dat->serdes_powerup = qcom_ethqos_serdes_powerup;
--		plat_dat->serdes_powerdown  = qcom_ethqos_serdes_powerdown;
--	}
--
- 	/* Enable TSO on queue0 and enable TBS on rest of the queues */
- 	for (i = 1; i < plat_dat->tx_queues_to_use; i++)
- 		plat_dat->tx_queues_cfg[i].tbs_en = 1;
-@@ -923,6 +1093,7 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 
- static const struct of_device_id qcom_ethqos_match[] = {
- 	{ .compatible = "qcom,qcs404-ethqos", .data = &emac_qcs404_data},
-+	{ .compatible = "qcom,sa8255p-ethqos", .data = &emac_sa8255p_data},
- 	{ .compatible = "qcom,sa8775p-ethqos", .data = &emac_sa8775p_data},
- 	{ .compatible = "qcom,sc8280xp-ethqos", .data = &emac_sc8280xp_data},
- 	{ .compatible = "qcom,sm8150-ethqos", .data = &emac_sm8150_data},
+---
+Changes in v2 (as suggested by Vinod):
+- opus decoder struct: switch version memeber to be union to allow reading it
+ as a byte or two 4-bits fields;
+- audioreach_set_compr_media_format: read version byte.
+- Link to v1: https://lore.kernel.org/r/20250820-opus_codec_rfc_v1-v1-0-54d5c7560856@linaro.org
 
+---
+Alexey Klimov (2):
+      ALSA: compress: add raw opus codec define and opus decoder structs
+      ASoC: qcom: qdsp6/audioreach: add support for offloading raw opus playback
+
+ include/uapi/sound/compress_params.h | 49 +++++++++++++++++++++++++++++++++++-
+ sound/soc/qcom/qdsp6/audioreach.c    | 27 ++++++++++++++++++++
+ sound/soc/qcom/qdsp6/audioreach.h    | 17 +++++++++++++
+ sound/soc/qcom/qdsp6/q6apm-dai.c     |  3 ++-
+ sound/soc/qcom/qdsp6/q6apm.c         |  3 +++
+ 5 files changed, 97 insertions(+), 2 deletions(-)
+---
+base-commit: 65dd046ef55861190ecde44c6d9fcde54b9fb77d
+change-id: 20250616-opus_codec_rfc_v1-b60bd308893b
+
+Best regards,
 -- 
-2.48.1
+Alexey Klimov <alexey.klimov@linaro.org>
 
 
