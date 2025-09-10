@@ -1,88 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-72944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92F4B514A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 12:57:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B763DB514B8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:03:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8F0313AE47E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 10:57:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 65DAC171C3E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:03:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C69B73164B4;
-	Wed, 10 Sep 2025 10:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0CBA92DCF55;
+	Wed, 10 Sep 2025 11:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="lvFPZhWa"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="tIfZ8ai6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5702B18FC97
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 10:57:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DD627876A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 11:03:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757501851; cv=none; b=cftHwd3suGDv9kkwWnzEp5R2P203Em403uTFyPN6hJSxj1aC0hEaXfJHfKBstXKHfHEaEUOkh4YmOiW6HcRy+t9JRlFPjOrbsseL09cRtVLMfc3IGvBOaxKaVbo4AX6p6Zjbn2TFuK2upL465xexIHOKrVcApLlThFxZOGZlEEI=
+	t=1757502227; cv=none; b=o5OMyO5bOBjpfd+PUe22Ih6qsPFe94sXdb8zCO4g4xEXvoASyGblLsBopZwH8699dSS/P64CwOTG+WZG/mFjAIUJXlIWPUql6zoi4UdkAoKXa1IGKSyFwQFtPUF/sEC+G3TNq1McMRXQaYR6kthhMQDRpkVhY1cKUF3e+OpG7Ag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757501851; c=relaxed/simple;
-	bh=ETY73F/1juZbW7WCW2HFqawiQ2oZ4Ab2w9qPn8AUR8c=;
+	s=arc-20240116; t=1757502227; c=relaxed/simple;
+	bh=MfAeM0+0+NqP6YlpR00RfgrfzwhHRE8FnwOIXHbqs0U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VXm00LVaUKG0kN7ro5priTn6fdKVSS1a9DFjvAO2OFlzMvrs9C47VZK9VOHOGhNJVsxRyMfYtCPSzptDaNgBoKxHkWJQkinUgdVBmBSsRWdQt/tUEYcJkiUdz/VULsOYF7sjRjLcFtpipXOrqFYQNBhCr4IVCvKRkr5DvoN9RV0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=lvFPZhWa; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58AAFUkK032208
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 10:57:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	lcfYeUt7GVAfg53FE5BnAJF8/ug/A2SYlkIbbEr5UUU=; b=lvFPZhWaUOLfnZ/6
-	iXAPHSGtZbqd76CGVBAtm3Yj1JFF3XoM1WbVrSaOw325d+hiqQjQzDHyDGkxl6f0
-	gv8ONfdqlwc6qcPagsY8wwE4n8pNrbuQlHGrXO8o0QAzQB3KZiVRWn5xPvg86rsn
-	SE3kUFztYTqpkEYlnG+zQpV5Cc8PRJaw5oTTpT8pmvntYKsU8Rt26H5jErGI0W+R
-	nx2HTm7W8ex0O7DXMNQZU7BvmLlMEgvzj5/77SfZkCHocB9YU78Jqj5v9hD7BtLz
-	Xz3r3MAIIdkRzVqAbgM1/257bA5Y9GYCvF9vUzzHrY58u0r61XbMm+2R5H1uqLEG
-	iaxESA==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e4m3em7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 10:57:29 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-772537d9f4aso6095491b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 03:57:29 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=tBzo3zsvfHDMtZxVCQ5SbeWi7Smb43Vw/xvcd8UJ9TluYq4C2NXOAB1cmtEqSxP94zFI0EjPJXuvES8bZsvTZg1Z7+GiOU3cKA70RUtfTgp96Udx/rllZVI+NaCEfg4lUGozWHu42Mi6jN4UPVT9/APHBuI2qoqfteQ8dfpreR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=tIfZ8ai6; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-45cb5e1adf7so55369605e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 04:03:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757502224; x=1758107024; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=r08hJahlcSXpf9x/oPCPGF0O7nA9xLQykiFQq47vLr4=;
+        b=tIfZ8ai6lkOeQzEbCfQL3MSu8S2WbIvPue2SElYnmYTWVC0aNILMgmjEMZ+vY6ccHX
+         LTRzpE/Jf8N8McAJfITqeJgy7dS8bkGMccufEhuM3GPAbBD/Qe6yAMFYoZjih/xMAfFt
+         u7C/ksonyUcGI3iVLXW85vEwxWpmxriUsAM8xDtmoN5RnCzdhF+SBILkRX5zMHbqOmxP
+         jWFF7XG7Jt+/QoQlQ/dJXNUgTsEbaTsoRS3k1UXWTGwu067tAJkfzVufUGDCL3H+dsN4
+         awETZ7iIFrPOO55bl+jbVoelqQKdvSBH6T+ckseVlUlpNYA1VVDjpZd3i/SqNmjs4lN+
+         YejA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757501848; x=1758106648;
-        h=content-transfer-encoding:in-reply-to:from:content-language
+        d=1e100.net; s=20230601; t=1757502224; x=1758107024;
+        h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lcfYeUt7GVAfg53FE5BnAJF8/ug/A2SYlkIbbEr5UUU=;
-        b=ow/+y0t+QtB9NeAnaJFCJtJRnEE7EM1A1iaU5bxwnLVcFJNrjEgkjzoR/n6/qVFK7U
-         xu/6WmWN/NM1PIHwSp1E3EuqAF4ArSRrfNLLGaGj2P5c32Z80fa0z85JYfpzTOAwFcQm
-         EJVECyfrsQTrLW/vcc4Sc4ud+AmS1oTw0kZa9MTDWBYKySOG210VwR8rsG9j+a4Y7cqN
-         PjFRpsZxhsb+AQZ7I9gS8hmwxilIlqpepyW2SzaeZ/5vBB/6KtIg7SHDMssylO+TxoLx
-         dDLasxS+4BMjz3cfIhEzw51DGiX5nqJYx5ALMl+afC71sQVin07s/YaRNP878Dx3mzQm
-         a/yw==
-X-Forwarded-Encrypted: i=1; AJvYcCWXzjzbhe6//XvW9WwnrtccYYpl8Jd9MdRAW22XOo2xlWx7dJTiKssnoSO0lXalfIVm0eVN2i6RxtNgKc8I@vger.kernel.org
-X-Gm-Message-State: AOJu0YwREcZzEDrffwnz/0Qe3O0OmHclOpYN8YnaP09++8s3guLNlBg8
-	5I7LKS6EWh3+UtTeLFwJk8j2Lq1DnUmS0geYvKc+N8BiwzIvhiv9WlHGGDPyHjSFYEXw4/Z5FJk
-	g6cqN+p77xqGyztyC6I6BXVj/dqDz1/ebhRlpU7nBsvFgcSDpHC59ZGUuTPhFH6gwt59l
-X-Gm-Gg: ASbGnctXwqGVTMLvdau125nKdaLwe+QEoXeS1FAyhPfHwrRH0s32XSQTpFcUcEIkZzI
-	LPiw/BArpKsPmOVD9uxGpbVjrcZgbWFzDSfBq4rzBZjjDGjVERMUSNs4YfuqhWVq6JubEy6xLP7
-	DaYw6zqqNb03wtpZowcUUGtzsWjHSZ7c/PzEurZcWABGtMH7H8Ow7JPOsxs4/ck5IMB8XamxUQr
-	C7YJReWVGcHcBIpGeRgKNkt/AmiU35EgCfqOU0mOaTlV3xB9GmQyF8WLystdTixVQfPRkj9Nj05
-	9uJdg8hFCu+M13lUw1qvsj35Saz5XiBOO9pDgKN/g/ti5WLafsFLY0cdb3pH9p03/GoP3awXg9A
-	=
-X-Received: by 2002:a05:6a21:6d9e:b0:253:2fae:5287 with SMTP id adf61e73a8af0-2533e18d170mr20798156637.26.1757501848591;
-        Wed, 10 Sep 2025 03:57:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEAd+1N4v2AfeNoYwFOl+bjuiXGrs3u3rlBpUd9S2XvNr6uBsVx1PO/O6R0zKylE+mie5ldNw==
-X-Received: by 2002:a05:6a21:6d9e:b0:253:2fae:5287 with SMTP id adf61e73a8af0-2533e18d170mr20798121637.26.1757501848153;
-        Wed, 10 Sep 2025 03:57:28 -0700 (PDT)
-Received: from [10.217.219.207] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-775f4976bcasm2333665b3a.100.2025.09.10.03.57.23
+        bh=r08hJahlcSXpf9x/oPCPGF0O7nA9xLQykiFQq47vLr4=;
+        b=plqSfQ/zhaN4l2qOPNJx2NajxDN28yQ6YYBrkN8C83H9Cl0hYOhTsjDPbLgljdXEvi
+         vKJntfdqt3+GjkR1MgMrtp5PK1AL/I/2nOxHWn/nfxjN3kT8qWwzmfwz6TDWGdkRC6HK
+         6nhIvsW8HlfX+Q4//uBaMs6RrcoYKwMh1QNnPFqgyM9u5NdWL+XQYRsu2QRwQgwottVC
+         StLc+tCA0k6iyzUE51nkGJ4Qzh2auFhqki8WDkh32G9UEcw0M14s4Njy7OUiJs6SBaLr
+         irf2+3b7j/ORkcOFO4buRoXb7jgMIVl+G6qcVb7+0C6icAeRIWuVWMBCXxpPP/2xYTxm
+         DXjg==
+X-Forwarded-Encrypted: i=1; AJvYcCWEWmjnfhOhQL6Td/tpmx9xc7QYH1MFNiMMZMMH/JLF2NqJo8QRcmwQyPmBACNMslxaMhifKoBUFPOIMCwS@vger.kernel.org
+X-Gm-Message-State: AOJu0YzfTezHR/8HDxWnK7ULuBajclnUuBKLuEn+ZZ42Q74xI9Hj/hfw
+	rYRz/elRRJqEJVHIsfbXdtIiyem+PxMO8kV6FeuMybU5O9DJrgSy+CRvG31s+SCY6HpqeN/INFC
+	bpmA2yAE=
+X-Gm-Gg: ASbGncvnAbfkfeyEvTmpR/xK+F5N/O4s9WuM+I53Bf8uQDzZ4X9s06jerQ+BodJxh4r
+	ExdXoMGygvdFXtZwENC3ph3bmlgyFpgzTKsBpdeL/Ch1fps3EVmUOEyTZSXsIySF5CuMPjrid+Y
+	3c7Ku3dMqUq6cpWPpOdX8EKkKkg4ww5Funv7Q09wo19beTgvVmaxFD7bxhVOcauLM/qiJzNR3a1
+	qeLqKQ12z5YU7je9MTenaTJKMHhUjH11Z9WmNmFb5jRyloZdSDXLI3lztVyYNcEgFGQx9w4+8y8
+	qN0Bh73Cf1tpoo4gMim6zB+3sEOFYU6gPLY2M2REEJERh84yV8XQE5lS17BerFv5zdbZ1hMYDw6
+	Xux1JbqJ8821sm3t+PvuUG4x9YMlXFNSal6ERpoQhamS31OCEgF3NIcsA1/XsNvKyna1/ftcQrV
+	TDzqECKDVdinX2dAer8IA=
+X-Google-Smtp-Source: AGHT+IGSSsTUb8kO2rPV79368muMuGos8vtiUCTfNP+AFDQ9kg7kknopl6w9E+whw5uTL/w+rEfQ7A==
+X-Received: by 2002:a05:600c:8b34:b0:45d:e110:e673 with SMTP id 5b1f17b1804b1-45de110e71emr135337115e9.4.1757502224302;
+        Wed, 10 Sep 2025 04:03:44 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df16070bdsm28197275e9.3.2025.09.10.04.03.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 03:57:27 -0700 (PDT)
-Message-ID: <d37765f8-2cef-4c15-8423-b82a0fba3b54@oss.qualcomm.com>
-Date: Wed, 10 Sep 2025 16:27:23 +0530
+        Wed, 10 Sep 2025 04:03:43 -0700 (PDT)
+Message-ID: <1d9287ac-1c6d-4f83-b95c-b69bbeb63147@linaro.org>
+Date: Wed, 10 Sep 2025 12:03:42 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,67 +84,64 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/5] i2c: qcom-cci: Add OPP table support and enforce
- FAST_PLUS requirements
-To: Konrad Dybcio <konradybcio@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>
-Cc: Marijn Suijten <marijn.suijten@somainline.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-References: <20250904-topic-cci_updates-v1-0-d38559692703@oss.qualcomm.com>
- <20250904-topic-cci_updates-v1-4-d38559692703@oss.qualcomm.com>
+Subject: Re: [PATCH] media: qcom: camss: Add missing header bitfield.h
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ hans@jjverkuil.nl, kernel test robot <lkp@intel.com>
+References: <20250909194636.2243539-1-loic.poulain@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-From: Mukesh Savaliya <mukesh.savaliya@oss.qualcomm.com>
-In-Reply-To: <20250904-topic-cci_updates-v1-4-d38559692703@oss.qualcomm.com>
+In-Reply-To: <20250909194636.2243539-1-loic.poulain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOCBTYWx0ZWRfX3djD4C8lJZ8m
- wASADT8a92a8fzQK/7MUFPkSqqVvxIXRLZIi6ORWy40qL167bjltMroJnp2agRcz92tTwtW9fh1
- 98/3w3tYnq8bTUPhoPv41aq/jPa1cmoSM/+9RJeAdSN+ROyR3B6WUy5bQmDv8AffbN9py7wiLL8
- gn6oxE/Q762BBWuaKWoRvXjRV/8wIKwQ+ODnAzQan4yJoSgDoHxqxeTPEKVmbkYpZkEViNnqw5x
- TRuIuMld6iPF+Xfq4F093wMHb/uTmlwD6Y/teH861DUZtgut+OTNV/Nlhws2Uiy+wJ1jGIzO73J
- 9FDwwSWt0tXtm0ZLe8WnbJ12u35axL/hzWAByLLUBq5+BPxXXRMPMapbc/WBPViNrG/a0hDTzhT
- unRxa/Ww
-X-Authority-Analysis: v=2.4 cv=J66q7BnS c=1 sm=1 tr=0 ts=68c15999 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=x1LqVQa0TBYraXIDtAYA:9
- a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-GUID: Jobb7J19qxWULKwXmi5quZJFaQRu7-_7
-X-Proofpoint-ORIG-GUID: Jobb7J19qxWULKwXmi5quZJFaQRu7-_7
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-09_03,2025-09-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 clxscore=1015 spamscore=0 phishscore=0
- adultscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060038
 
-
-
-On 9/4/2025 8:01 PM, Konrad Dybcio wrote:
-> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+On 09/09/2025 20:46, Loic Poulain wrote:
+> Add the <linux/bitfield.h> header to prevent erros:
+>>> drivers/media/platform/qcom/camss/camss-vfe-340.c:186:21: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>       186 |                         if (bus_status & TFE_BUS_IRQ_MASK_RUP_DONE(i))
+>           |                                          ^
+>     drivers/media/platform/qcom/camss/camss-vfe-340.c:36:40: note: expanded from macro 'TFE_BUS_IRQ_MASK_RUP_DONE'
+>        36 | #define         TFE_BUS_IRQ_MASK_RUP_DONE(sc)   FIELD_PREP(TFE_BUS_IRQ_MASK_RUP_DONE_MASK, BIT(sc))
+>           |                                                 ^
+>     drivers/media/platform/qcom/camss/camss-vfe-340.c:191:21: error: call to undeclared function 'FIELD_PREP'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>       191 |                         if (bus_status & TFE_BUS_IRQ_MASK_BUF_DONE(i))
+>           |                                          ^
+>     drivers/media/platform/qcom/camss/camss-vfe-340.c:38:40: note: expanded from macro 'TFE_BUS_IRQ_MASK_BUF_DONE'
+>        38 | #define         TFE_BUS_IRQ_MASK_BUF_DONE(sg)   FIELD_PREP(TFE_BUS_IRQ_MASK_BUF_DONE_MASK, BIT(sg))
+>           |                                                 ^
+>     2 errors generated.
 > 
-> The CCI clock has voltage requirements, which need to be described
-> through an OPP table.
-> 
-> The 1 MHz FAST_PLUS mode requires the CCI core clock runs at 37,5 MHz
-Typo: 37.5 MHz> (which is a value common across all SoCs), since it's 
-not possible to
-> reach the required timings with the default 19.2 MHz rate.
-> 
-> Address both issues by introducing an OPP table and using it to vote
-> for the faster rate.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Reported-by: kernel test robot <lkp@intel.com>
+> Closes: https://lore.kernel.org/oe-kbuild-all/202509100228.xLeeYzpG-lkp@intel.com/
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
 > ---
-[...]
+>   drivers/media/platform/qcom/camss/camss-csid-340.c | 1 +
+>   drivers/media/platform/qcom/camss/camss-vfe-340.c  | 1 +
+>   2 files changed, 2 insertions(+)
+> 
+> diff --git a/drivers/media/platform/qcom/camss/camss-csid-340.c b/drivers/media/platform/qcom/camss/camss-csid-340.c
+> index 7a8fbae3009b..22a30510fb79 100644
+> --- a/drivers/media/platform/qcom/camss/camss-csid-340.c
+> +++ b/drivers/media/platform/qcom/camss/camss-csid-340.c
+> @@ -6,6 +6,7 @@
+>    */
+>   
+>   #include <linux/completion.h>
+> +#include <linux/bitfield.h>
+>   #include <linux/interrupt.h>
+>   #include <linux/io.h>
+>   #include <linux/kernel.h>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-340.c b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> index 55f24eb06758..30d7630b3e8b 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-340.c
+> @@ -6,6 +6,7 @@
+>    */
+>   
+>   #include <linux/delay.h>
+> +#include <linux/bitfield.h>
+>   #include <linux/interrupt.h>
+>   #include <linux/io.h>
+>   #include <linux/iopoll.h>
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
