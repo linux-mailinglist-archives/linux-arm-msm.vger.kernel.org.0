@@ -1,48 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-72972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 908DFB515EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:38:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 87210B51602
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:42:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 46C3E3B6ACC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:38:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 423A03BB5C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:42:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80B8B2D192B;
-	Wed, 10 Sep 2025 11:38:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C75E7317712;
+	Wed, 10 Sep 2025 11:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FfPZQfsN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NxVDaAsh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B39B1C5D46;
-	Wed, 10 Sep 2025 11:38:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882D330EF96
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 11:41:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757504287; cv=none; b=hI8ScG/1bYNh+nb5eoIwJrhgkGX8r+bHv/jSTvV2rMkMSRUpfgg6qeVHivQUn/807wKDkvRr5ghkF3NA3j+JBI6NYFt95UmZHTVHzUV2OAnAnRiq64+f+ok6Iml10WFnKycYvyGnSjUQ1e5WXMj9rx/3cPGNNFPbdBrfMNVTkBM=
+	t=1757504517; cv=none; b=Hw66LMzChMYfoxj9B1oEtNeWIXtsQUNBT8TOHRzSIkHJPtvWrS5dzqf5tTUHMV/ANMbPECbTZ0DFmr4IpR8RLM7aszp8qK4ALAs3FG/2QDT8AOJD5pisru0r40rlIQ772ISEhuxSLdjXWY+70TCXPFb2RJUsNtlxBw+q7dIahAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757504287; c=relaxed/simple;
-	bh=H+cpuJnEjkESdTqGIDVuWl00VkrtTa/nkD9qbFllBCI=;
+	s=arc-20240116; t=1757504517; c=relaxed/simple;
+	bh=R80lrQS1hQJF0roYzz0DTf0dlLu6IexIel/iumK3y4A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rzWPZglL5KoWXqiuQLGiWsOy7ZiDUdmN8EYNgnXbRfo/K7/sI0E0ndbtC341JXORYElkBfKdi3nTyGaIvpHFBFH2HHXV76/4VP7tOPEZBtRoOwTfYl1iCjYHC67ztMu62Y7Lxu03sDCKpt5UpoFtM/naoUsshImbIfi2YERfmoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FfPZQfsN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4748C4CEF0;
-	Wed, 10 Sep 2025 11:38:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757504286;
-	bh=H+cpuJnEjkESdTqGIDVuWl00VkrtTa/nkD9qbFllBCI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FfPZQfsNXbXv6y35pYDhWX+5Zjk64AvkcpYSkIifD/Y2Xl2DrCrXWLuhlUoAVfzsk
-	 1a3o9EMT/Mp/91wHt2Gkz99nxzAxtTTvytDGKJPGqJ4V9WqPpPF/eUunT+rdgTRf6e
-	 HqC4rx1qjv4qLNksGXNbaIfwlsaBVJ4X9tuNIG0xmSP1n+0hwLq1fyLcjl7c7vmKJe
-	 jcC5TzvYFfeaSDFefbX4b0sh3Z11dfclRfVyYnSiRWAcfmSHdBLz/GiOB/LWJBTxFj
-	 ErerGqEP3NGVQuwzeWDdUvRoI7/b/AMpIO846ZJg+0PGDHxVZnu20PrYZ/G01y1tIj
-	 7di2CT2XKxWIA==
-Message-ID: <5a087d08-273e-4740-b47d-fc25be952ebd@kernel.org>
-Date: Wed, 10 Sep 2025 13:38:01 +0200
+	 In-Reply-To:Content-Type; b=do3QTFtpr4pRFTjPqxoye4UU4U8pEf+WDmswub4xYJcSpoH/7QysRdAiwB7YWqssGjfW1ucTW1mdYpZLJwKdgWhHX5BtU/PruSp0XlE2llpTmySY1cQMhMyyGqSUR2oLtMTQo/HhJarB51+rG/7s+Bs5ITbMxMM+hRwEG/ghWmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NxVDaAsh; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45cb5492350so44360845e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 04:41:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757504513; x=1758109313; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=shZJxLtW9iAiaEf/F/KUNA4WoMg1VvumYYY6r6PZJkc=;
+        b=NxVDaAshFsgaAK4X7xC9jxYSWMowcAJt7SLKmBRMmhNAQEr1YYAECr02V3Iewd3s2h
+         S6X4FWxwRYoTbwwBqfC7M7+nc4QtEHfoE1qDena3ps3yUqC5QMZeNSVakbzDUUxbdUmd
+         AHW5VBPcc5wTkG75SFllmTawOnCnrcKf8sPQJwIKgE5w7z8jWurQ3ULvVjTcfubU7ysT
+         4ARK2gNFwpwSJo4dOHrTJq4Ch8J5JmKLlVY71tZT23h+Uj69vC5mNavLWLSHxuYp4Bz5
+         +LFDsuFnMyQi0Zz9bjJ0AK0T8kBqCYc1TsgYbNVmUYoDCIrNyfKKflltQcHH30G8MX5F
+         q02A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757504513; x=1758109313;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=shZJxLtW9iAiaEf/F/KUNA4WoMg1VvumYYY6r6PZJkc=;
+        b=OUd9ym0HqVXAXXHTaVeWyEARimABs9RemvMEnpyqDgfUoYrW7fMq0DkjHp8mrcjTjW
+         kl1UedGbaamigc0At9c2jbtIquBKIUEJLYbHeNKcr2nF4Ucag5gXzXRXUfJvPjzvJfbH
+         0erJiYj932gjE57257QOtIuFPk2N9dPV+Q1khRIjKN6RhqGqmUH6BnBDc1WW6o7JbeAS
+         Bb0scbNhY2sNFz260m8q+qAR3I8USkc/fNpu8iBk7CnJzaMJkJW5Ne/4aWYSEo1lECtG
+         uNErZY2fkTvQai2l1zI06UOYYRS9QLM85Mj2xU3mywldRsUSr2kAHMa52djokOwkFF/q
+         znMw==
+X-Forwarded-Encrypted: i=1; AJvYcCV41IGPqcKgkD4lM+WUsq6/jyNE8G3LGNtt9NVHB4TTHbPoEjrRqwK3jZCue4rAuuzG4bpGDoRDPClqGS77@vger.kernel.org
+X-Gm-Message-State: AOJu0YxlYRrfszurRUEBLsUpY4q8yaxiwB5LuZq9g9OrwjMbGFwwVhkM
+	hE35UAVj6Cmu93lWZWjFNIB0ews0IfNf64zV0051ZjLL7LzK6dHmeOnaIk4WP1hFVDI=
+X-Gm-Gg: ASbGncvLC6vMcl1MtHGDtmbCGMYBkwj4BOdXgC2E/2orUMhyv2jJUTjJ4wkq/esq66J
+	/Taw8l4NH3xDjpS64FoanIwARlR5HsTIOUhyWQeT5bfr1HUiw+oOniKq3agokNfr+etbkrC/tTL
+	VO4bVuy6UxkDqAu3edHLByIKN5HnMOVbunSBZEeRHPcyea2qWV31westGMaK6E9p35lCvarhc/U
+	ukd99G6e9EtasEXD4CNRFdjEBpIJVyzJnVBQMAq6E9rxorq/hg56YB6ZtRAp5wOkFr+isa+/yX4
+	YffBXMzT5af+fMRZU0Su1DuZHua9mIz49nP5vOCO6hiTCgpo4OPuLM5jhfLV2xp3HeO3/7tu5CL
+	x408KpzBfDj6RDKQ/JJE0Yd4g6cDV0c4PJ+x9ep4hWFdzYhjKKsSTAmpVdS7giQZ8q6n8G4yLxj
+	piDtT9mofvshvkDYYroko=
+X-Google-Smtp-Source: AGHT+IGlxSt/xs7I3D7ZMakn9Gr+X1/Zuc0c5vvYIA/kLFFFxTaanjZmiqDr4kYOYkKHuiNeNUlj3A==
+X-Received: by 2002:a05:600c:4453:b0:45b:9c37:6c92 with SMTP id 5b1f17b1804b1-45dddef02f7mr145102055e9.31.1757504512855;
+        Wed, 10 Sep 2025 04:41:52 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df8259524sm24547495e9.21.2025.09.10.04.41.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 10 Sep 2025 04:41:52 -0700 (PDT)
+Message-ID: <61b562ad-eb67-4917-a449-f5556c43ceef@linaro.org>
+Date: Wed, 10 Sep 2025 12:41:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,104 +83,47 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3.1] media: dt-bindings: Add qcom,qcs8300-camss
- compatible
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, bryan.odonoghue@linaro.org,
- mchehab@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
- conor+dt@kernel.org, andersson@kernel.org, konradybcio@kernel.org,
- hverkuil-cisco@xs4all.nl, cros-qcom-dts-watchers@chromium.org,
- catalin.marinas@arm.com, will@kernel.org
+Subject: Re: [PATCH 4/4] dt-bindings: media: camss: Add qcs8300 supplies
+ binding
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Vikram Sharma <quic_vikramsa@quicinc.com>, mchehab@kernel.org,
+ robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+ andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
+ cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
 Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
  linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-References: <20250813053724.232494-2-quic_vikramsa@quicinc.com>
- <20250910104915.1444669-1-quic_vikramsa@quicinc.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250909114241.840842-1-quic_vikramsa@quicinc.com>
+ <20250909114241.840842-5-quic_vikramsa@quicinc.com>
+ <e4d3c2a3-e395-4f60-8cff-fbb9a1611ec2@kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250910104915.1444669-1-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <e4d3c2a3-e395-4f60-8cff-fbb9a1611ec2@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 10/09/2025 12:49, Vikram Sharma wrote:
-> Add the compatible string "qcom,qcs8300-camss" to support the
-> Camera Subsystem (CAMSS) on the Qualcomm QCS8300 platform.
+On 10/09/2025 08:02, Krzysztof Kozlowski wrote:
+> On 09/09/2025 13:42, Vikram Sharma wrote:
+>> From: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+>>
+>> Add vdda-phy-supply and vdda-pll-supply to the qcom,qcs8300-camss binding.
+>>
+>> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+>> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+>> ---
+>>   .../bindings/media/qcom,qcs8300-camss.yaml          | 13 +++++++++++++
 > 
-> The QCS8300 platform provides:
-> - 2 x VFE (version 690), each with 3 RDI
-> - 5 x VFE Lite (version 690), each with 6 RDI
-> - 2 x CSID (version 690)
-> - 5 x CSID Lite (version 690)
-> - 3 x CSIPHY (version 690)
-> - 3 x TPG
+> There is no such file. Why are you not fixing the patches on the list?
 > 
-> Co-developed-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+> 
+> Best regards,
+> Krzysztof
 
-Do not attach (thread) your patchsets to some other threads (unrelated
-or older versions). This buries them deep in the mailbox and might
-interfere with applying entire sets. See also:
-https://elixir.bootlin.com/linux/v6.16-rc2/source/Documentation/process/submitting-patches.rst#L830
+The easiest thing for me to do here is to take this patch and send out 
+another PR.
 
-Please version your patches correctly, e.g. use b4 or git format-patch
--vX, and add changelog in cover letter or under '---' of individual
-patches describing changes from previous version.
+I can fix the commit log too.
 
-What is v3.1? How to compare it? Try yourself:
-
-b4 diff '<20250910104915.1444669-1-quic_vikramsa@quicinc.com>'
-Grabbing thread from
-lore.kernel.org/all/20250910104915.1444669-1-quic_vikramsa@quicinc.com/t.mbox.gz
-Breaking thread to remove parents of
-20250910104915.1444669-1-quic_vikramsa@quicinc.com
 ---
-Analyzing 2 messages in the thread
-Could not find lower series to compare against.
-
-Best regards,
-Krzysztof
+bod
 
