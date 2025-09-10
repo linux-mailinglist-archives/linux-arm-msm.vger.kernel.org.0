@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-72961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E1A4B51560
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:23:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3B75CB51570
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:25:09 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CEA13563486
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:23:28 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9B1823A3BBE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:25:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F28127B4E5;
-	Wed, 10 Sep 2025 11:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFAFF3191DE;
+	Wed, 10 Sep 2025 11:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lTfcYx8M"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FL/dj5me"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B742475C8;
-	Wed, 10 Sep 2025 11:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6AE27B343;
+	Wed, 10 Sep 2025 11:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757503397; cv=none; b=tVoJ0oUJEpYdf3posPDo+3s97KjqA+INUGgtnAMWh46aRsuUzLGuTi/KTbaqX5lkhaIzqeJAopPL29N14wCtJTQm6tue21RqrK709nNS+xMya4mwZk0wr7EQ4ELQBGVqMDpP98EK5kxD0wFO5r3Edshsajzpg830taHcYp1SGD4=
+	t=1757503460; cv=none; b=iEiyZ056nNztb4xFtmWdsyC7zP0L2c8ezw65fWNgffuhwSzg/bgIo6aAeT3dq5RC5U/BBvJv5d7WDG/NEBiUVUJSvyEsAHv2wJOfr+s+TzO1egC6rb+u40HyYeaoN80eUZfayTzaMqOKihHCPRZAliF5RmmkSqXAxtfAbsTbyI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757503397; c=relaxed/simple;
-	bh=Gwa5t8VUZsrfVtQx50cZow74a84fJ+Ue6y7aWzEdtM4=;
+	s=arc-20240116; t=1757503460; c=relaxed/simple;
+	bh=CoSMwZcgIoslrmBoSGqaGNgWs2/5Mw7JyzF+gXEqWtg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uRydYyeZAqHM4AwQds7arfppRxY4/GHHscFjq2KhEzvHNRWjYIlDWvcCVwwYYSO2xpFGtsxHgsAoCDGGhRKtx20gePlkUFtIx9zlUHWcGK0qa/D2Tnd0qKnazHWEKryE94wZtOONB3GLY1P7AstbC5eJ8zjUTxnkWf2f3+ntwX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lTfcYx8M; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBACFC4CEF0;
-	Wed, 10 Sep 2025 11:23:11 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=P2k5VFi1p0ig8CkeewxjHf6TnrCQ5w4VYmNtEvK3UIARbrsROMLCtiUzZ3sz6hDNU/R5lcrMoqOMXa+o0yYCrS8FCyk+QdjwntB4NZ8Fe88MtYdwk+0IaDXWFC193rHxDqxReYZDalMRjc1JXhisfRW4EaYp5NMfBnPeU4iGb24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FL/dj5me; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5974DC4CEF0;
+	Wed, 10 Sep 2025 11:24:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757503395;
-	bh=Gwa5t8VUZsrfVtQx50cZow74a84fJ+Ue6y7aWzEdtM4=;
+	s=k20201202; t=1757503460;
+	bh=CoSMwZcgIoslrmBoSGqaGNgWs2/5Mw7JyzF+gXEqWtg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lTfcYx8MIx7hjWRoaMrAQ3jChcUQFThU+LknUmF2U7C91IUulxIqnVNWGl+jx9ls/
-	 wvua9aXqM694AyOZpn7ebxlFeS9bBXP78br29Y7WG+mAs/4xWjuHU944elObgKhRG4
-	 RYpkttw1W8zgV7NY6rcFw5pLHL1y+IQ9/xV2SWkcVB3YsDG67D2hV0zzJTiqck/rLD
-	 oFmT/BPvh7JE2rvfZaKbfo+sWD1peL9dHbBc0F3TBYGrfGSTbkFeP6LIIIWK3qd/NB
-	 cI+MN3Ym6rFrZk1Dux7S37e8c5vvxFT8BE8JpKLjzpkqtvBxOgU/YNcUMm0G4G+dTa
-	 /uMD8FOqu1IiQ==
-Message-ID: <6725e8af-624b-4b78-9b67-62b63e46b38c@kernel.org>
-Date: Wed, 10 Sep 2025 13:23:10 +0200
+	b=FL/dj5menRiOl+NR5GfZHb6iwp+vkn53WgsdTkxmdpzGC3JikS9wOUwUofZJcPgka
+	 I7b3+KvCQlzqFdENbc1LyyzPyve+UTt6RrHly+huBYzmYSyIdDdk0BkExnBC3YFeCU
+	 SioZJFQ7ACJUjOJIekdTYZeZuIaAbREWpv/BizYOimkJdzDVCRgXavfw/ydraDQW1l
+	 +16iu90ooYyxOISK7sKoYnE1PnWe2jd4FzEglEcfoXlWowBd4ec71ysm3zSRydA5YE
+	 vT+7FLXT2fpLexhr4RY3wM1AHf9Mog2bx/zjbH/HNxwqks37B+3UCiislcAqbhzaHv
+	 zLR1UCKvbxuVw==
+Message-ID: <ad8fbd0c-4e94-4edd-abb3-84ee9563fac3@kernel.org>
+Date: Wed, 10 Sep 2025 13:24:14 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,8 +52,7 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS8300 sound
  card
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
  Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
  Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
@@ -69,7 +68,7 @@ References: <20250905142647.2566951-1-mohammad.rafi.shaik@oss.qualcomm.com>
  <a9507045-b900-49ee-8841-0f8fd30816ba@kernel.org>
  <abc66798-dc91-4860-b0b4-de39a58b5745@oss.qualcomm.com>
  <a8dcffa4-c578-46d7-8fdf-cd4f5a29a2a6@kernel.org>
- <136ad3f0-c4a9-47dc-9c62-682a830da823@oss.qualcomm.com>
+ <4c6e7e6b-2ef4-4ea8-8bf2-26c7aa8c94b8@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -115,25 +114,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <136ad3f0-c4a9-47dc-9c62-682a830da823@oss.qualcomm.com>
+In-Reply-To: <4c6e7e6b-2ef4-4ea8-8bf2-26c7aa8c94b8@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/09/2025 12:20, Konrad Dybcio wrote:
-> That said.. I'm a little confused why we're accepting SoC-compatibles
-> as well as board-compatibles for soundcards (e.g. rb2, rb3gen2,
-> 6940idp) in parallel.. is it with an intention that the SoC one is
-> present in reference designs and therefore will be common?
+On 10/09/2025 13:17, Mohammad Rafi Shaik wrote:
+>>
+>> So this is the same hardware? Then no, we do not rename compatibles.
+>>
+> 
+> Agree, the existing compatible is discontinued naming convention,
+> will remove existing qcs8275 and go with qcs8300.
+> 
 
-"Sound card" here is partially a software or architectural construct.
-Basically bindings for the sound machine driver. There is no such thing
-as sound card on the device, there is bunch of audio-related components.
+That would be a rename, so again "no, we do not rename compatibles".
 
-That's why we assume that many boards of given SoC will use same sound
-card driver. Some boards might be also different so they have their own
-compatible... or they were added in different time.
-
-I don't have particular guidelines here, for me it is a bit blurry.
+You are stuck with qcs8275.
 
 Best regards,
 Krzysztof
