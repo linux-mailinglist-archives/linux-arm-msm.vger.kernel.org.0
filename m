@@ -1,122 +1,105 @@
-Return-Path: <linux-arm-msm+bounces-73000-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73001-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 475B6B51B35
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 17:16:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C4FEB51B81
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 17:24:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 97DF04E1D29
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 15:16:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57B9E1C25E9C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 15:24:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 849512571D7;
-	Wed, 10 Sep 2025 15:16:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 24AB13203A4;
+	Wed, 10 Sep 2025 15:23:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="p5Fq26fY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z9EHScQQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3042F879
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:16:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5C1D30C359
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:23:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757517393; cv=none; b=EHClG6CXIgVBrTeEC40w/EatRM4vQcAR3MrQnItXdmWLd5cKzIRvd5Q98/B0elF8/N3mxcjG8F7V6+pTcHLp9BIeznvc+YS9cwyDKHASLXPtZrBIjalwmsKjp01A6CXGD1DlWvgVN8C2b6f/GGmqojxOgVEiGUHlxLuxaUqWjts=
+	t=1757517812; cv=none; b=iTablmM8L4QbL4subN6inVvET18aheyN5lfIf8Lqw2R2YJ7ZtRINMqPT4oAjwj6wbyzBEzXbMXyOLbwLnnDvKGjU1tPjqxXYQHWB6a6JHrItQm41Zlmq4VAGODuUtI4HmhrKSOGpF0px9YTvOTiE0Tgq5x1MqRcUKHXUa0idBG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757517393; c=relaxed/simple;
-	bh=CMr+Yyb64ouHjg8enQXwO9zPKrjmmn+0fLcun1xcNsI=;
+	s=arc-20240116; t=1757517812; c=relaxed/simple;
+	bh=mMvHiXaIqdEztb0GmfYYTzoj1IAJtybwAgKmLEN3GaA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jSAzrNbgWJKxrUudINn6lTPxIV8k+01f3UC2/2dhRqFPUKTIIF3LggEfYidgUnGjpA6BVC4TEEUtEL96KcZuxAwoOb1tXbZ2U8wWRuUOzExvJBCRisXABQoIQeL7tJ4soa/Ns3gW09/Bapf/kwFdHguc84RXeeVcaBrakJxzxl8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=p5Fq26fY; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=pwzVMw9eY9DySRkbmBGodTPXnDRwESy4z1M9XP2s6qVxv7G1s3lpO4nuoHQNm7XRV3n7ti16sBtD/QADQEYWGcUXFmy7cb7Fdl0Ed/AF5+sT3SSB8bSLVbXkCfp/b2QJkOLMruk3vcXp5QKjjOvkfW8XVgyvWUHpmzKivYwgBJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z9EHScQQ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58ACgOGd003808
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:16:31 GMT
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58ACgV9U024627
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:23:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=kKm0FaL1IsnsJ1lRYNU+N3Fz
-	JdUYvVMh5dXRjU0QCk8=; b=p5Fq26fYWFQBv4jsqwoICAN3BPzWKiJ1nDETM99M
-	qYaJAlGyDaaHmKO1z93fcVW5AWkmOt1ObtdBYRcfscs2Dt3fBbzvs/SnkRo7Ifc7
-	7qQs49X1iUmV7tciI/bLswt8v/1P0apmUMCxq2pWlPemmfz0K+EN1BqxZmDlcNZl
-	bLdSmNTQrd3J1EQJDwspX2Q9ESFL4yeilX8M+0j6cs5FnriK3LpIIxOF/IS2qvFW
-	h2XMguo7EqCiriV+JKtDR6nQZ029MA6bgpufcFu2wyf6OrdEfBOOq63E4qNt7jkc
-	OXyLqkyUxTB3D9koO2CbE2l2L4cEK+a9ar/TSU1vg9bq9Q==
-Received: from mail-vk1-f197.google.com (mail-vk1-f197.google.com [209.85.221.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490dqg42ss-1
+	:references:subject:to; s=qcppdkim1; bh=ANxLOXFlXZv8uHlajIytN7Il
+	IseSzgePw1DqeOok1Tw=; b=Z9EHScQQ8u48V6RehaDG80Rspv46gWZrPHxFKP4H
+	h+78pWwiD8YrKeNSRBLttlTHqj9gcG+ythablH1KncaIH6pzrHQNkNQS+D95Zle5
+	/D9oGIV5kWlHx/zslms9JyZKu+lxnHeh0+0KSzh9EdEnT15yUlZ4i4e6nXKNx0cF
+	FsQ9ETcGGgmS2rKUmx0uxaVJtkZFkM3ECGeTya56s9sPBFQqWxbeDDeJFm3aFDbN
+	8Xt3tIkG7DudJ5RyuZ+U0NfvQ9ZItpvbBeWDllwdSn7d0V+PKDIbJuMSW62Cuw+u
+	SN4Xy/wJM8xzwrNFEhY/wOG2aMWHyQeAUy23C3wwmUeeDw==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490db8mact-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:16:30 +0000 (GMT)
-Received: by mail-vk1-f197.google.com with SMTP id 71dfb90a1353d-5449f6cacd1so10144611e0c.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 08:16:30 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:23:28 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-7296c012ec9so72835376d6.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 08:23:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757517389; x=1758122189;
+        d=1e100.net; s=20230601; t=1757517808; x=1758122608;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=kKm0FaL1IsnsJ1lRYNU+N3FzJdUYvVMh5dXRjU0QCk8=;
-        b=qqbJ+0g2p/b86O/HImvsjfxbyULf512yhfdvE5gVjJwOrK/uDVGKaTh1VHpsAWQ9MJ
-         YjOLT+BuCT4iZ+Y1jGYFnIdCmE7aQOCOHlrv3cghdHSdYhlyC1D0xJnxYHvMnplEnYjf
-         NYPb057bEbJCAiz5V15MxzNYeXAx0ktgmYrZTojVovWO+txNLZnTyz8fXj0mbch7GHsP
-         fPqHJ0fecN5AeR/NTHgj5KV09VcAVs3n0TkQ7TyITbesdxFgRlJtddgIACpVUYUn7a9t
-         TcVUjCKrf3W1p7AEqqATl6K+SYULexC404K5kfLbb4qNQ2Ce3+tYS1kVO1WfFk8NxXuZ
-         u9lw==
-X-Forwarded-Encrypted: i=1; AJvYcCUypY9ARRJ6tz91LGGoW3ipz5CHfxjbHnh3cIKA1FokzwxeE/QzAET1r1J7SVw1JgptDpVS6BZs50rVGtVV@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYw3BMCps2iuC81ZgDLo2pVuIsBbz2sNGYlhKWeV7C9PvGuYmg
-	pNX/nvs3XFck4ica+5ykOajffSwtA8qZ5kbU/jRF6D/DtCIbXhA7OdPpcmrc7UsOJgTeGk4U1kv
-	rCmQp6HzUoEEumBGY1C4ikn2LanOEEBxDwIQaCA188S5hyJD2M4ovQfs7DVZbikHsaLz4
-X-Gm-Gg: ASbGncvaCZtLZqV79DHFSTwvaXOM36VuRNbfQt+ru2GX7+69c/MI0OV4cSP2BZMv0ND
-	jissAe7rwqwd37T4lGR1XSLs0vJafr9yOh5cu48XcA7mYJiMJ7bZ29o4npYuHEhmgEbLzaDnz+U
-	eTTtvWWoRfo1nHUxWMe2cVdVuK3l9A1tUegu/Hlg/jQ0eQg+bi2OVS6Q+o8D77az7nE+uR8vBpq
-	jFuUIsE2vljQjE9rWd8ueufinYuqS2qBCksB7kuyY7usILy63XE+vzHajcLRgQ67biqdHvQvfl+
-	UxnLk6DWxnvJ6Ev52FhZoMT6LqQsSYam0TQ7NngKQtZMfPcJh9CyFAsu9F60wA70vtP7N8EpXRK
-	GRFi0p0XLiQSlsl99I3dHKsuKElGCPj8LepjLnHkI2HUE8XvnJ0AY
-X-Received: by 2002:a05:6122:2a42:b0:543:6ff8:d6d7 with SMTP id 71dfb90a1353d-5472a0088bfmr5155427e0c.1.1757517388931;
-        Wed, 10 Sep 2025 08:16:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEV+Ok0B9ImEfUJn+5MDsBCd0a1EnbrepGzoV/kCIfMR/JnpVKik3JbAUvvY8M2wWHlz+5tjQ==
-X-Received: by 2002:a05:6122:2a42:b0:543:6ff8:d6d7 with SMTP id 71dfb90a1353d-5472a0088bfmr5155361e0c.1.1757517388194;
-        Wed, 10 Sep 2025 08:16:28 -0700 (PDT)
+        bh=ANxLOXFlXZv8uHlajIytN7IlIseSzgePw1DqeOok1Tw=;
+        b=K0p8g3Zyl6YVYgxvcDNUp7sJ2B7p7bjSJBqHfLFHszwNHpDtU8AmMihZ2kKY6cIWc+
+         h4Ld4lm6jinGQycBDkxMAUjS68eD6EkGw4uXsgc77GmNiWXWMll804a8KeBmoKqHTy5v
+         hsl3wKADHXYFsksrZTwkp/DdxBN7iKNlY44vNHbyTWjT9pnb8vBheMOVXnNJh/A73WzE
+         1MhI2rro8wjHnJOEGj0yROhnAlX1aTWDwGUf59W8652jybOUlrD1KhEj0/AffsJC54rK
+         XHDCRQEaDfKwGH4I38rU9rVPL7QW4HJbsg/sPlaLzR3A9qwTVkZl5/e26PnO8dIEZzDJ
+         BcRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWTZzIupzmfvmgka9DfSLGSbYxqqb79SlErXo5p9jQW7pxJ3v2mmZqCpzioAQ/swtdbxsC2CpZ2mZg+ERH6@vger.kernel.org
+X-Gm-Message-State: AOJu0YyuWRg8CYhTgrFFaBPqTyeQf+tl8O9u2Et5jkvGmjpjtph/Mxma
+	DTa+ku2KzUT2xEzJ5eZtQGL8FRpKdIDNul8sLBL6p1bsGYyY2sKCVEFKKPnnQmPCoGTUiyonECK
+	usG61OL7Pbg3D5K5OhNjAjZf5guNTuGMnqhL9kgjwFTt2dXSYDr2DFZysTkh37rGVaHY7
+X-Gm-Gg: ASbGncuGJf37CmUvFXLXuIO4Fc5sR1AyqUEzSSGzBAaDk2Gdm4XgfHGH/7eVIPkxp3R
+	wzOBzAy3D77T2uooOphhlK+RPEbuK5rawlnJZVl1K5gGEtf2rjchiV73YBWXQNh7FnpE6KM/dj2
+	a9mZfbm5By17SKolbhE5sphmNH0bgv9z0AOVccA2+rsnLZTNkwqMpQMiPj5yoSH2LL6nZ+TeKR2
+	+DU6m2GcaYxlMnHjZuoMIHUVrG+qM2ZsY5kRW0ZoNU1O/zJBjo4j/GmHrj43cE/MS2tKr3Kmv6I
+	+p1ftzoWQ1u0Dhji+unX/7VDGzNrhIFaQS0vs2CRmY1zP8DuTsQbV+gb74/wledFGoWAGWt3XEN
+	WWXx/KKhYTw19bGSHMNvMUJAd6UDk3FuxmQQWGj53deXzpkaWWfe+
+X-Received: by 2002:ad4:5bc1:0:b0:70d:749f:177 with SMTP id 6a1803df08f44-73940035cdamr172628496d6.33.1757517807536;
+        Wed, 10 Sep 2025 08:23:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5Lb/Gj9Uty38HJPbt60WosvULTHdWQ65OW86uLHRn17q5V3PGeS08NkMbbeRO2k/y5Nlcug==
+X-Received: by 2002:ad4:5bc1:0:b0:70d:749f:177 with SMTP id 6a1803df08f44-73940035cdamr172627696d6.33.1757517806697;
+        Wed, 10 Sep 2025 08:23:26 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5680c4246c2sm1301330e87.17.2025.09.10.08.16.26
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5681795eabasm1293007e87.91.2025.09.10.08.23.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Sep 2025 08:16:27 -0700 (PDT)
-Date: Wed, 10 Sep 2025 18:16:25 +0300
+        Wed, 10 Sep 2025 08:23:24 -0700 (PDT)
+Date: Wed, 10 Sep 2025 18:23:22 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Maxime Ripard <mripard@kernel.org>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Robert Foss <rfoss@kernel.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Sandy Huang <hjc@rock-chips.com>,
-        Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>,
-        Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>,
-        Samuel Holland <samuel@sholland.org>,
-        Dave Stevenson <dave.stevenson@raspberrypi.com>,
-        =?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>,
-        Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>,
-        Liu Ying <victor.liu@nxp.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        Daniel Stone <daniels@collabora.com>
-Subject: Re: [PATCH v4 01/10] drm/connector: let drivers declare infoframes
- as unsupported
-Message-ID: <z333ysst5ifakomo35jtbpydj44epqwwn4da76rcnsq4are62m@32gsmgx2pcdi>
-References: <20250909-drm-limit-infoframes-v4-0-53fd0a65a4a2@oss.qualcomm.com>
- <20250909-drm-limit-infoframes-v4-1-53fd0a65a4a2@oss.qualcomm.com>
- <20250910-furry-singing-axolotl-9aceac@houat>
+To: Wenmeng Liu <quic_wenmliu@qualcomm.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+        Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, todor.too@gmail.com,
+        bryan.odonoghue@linaro.org, vladimir.zapolskiy@linaro.org,
+        linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH v4 3/3] arm64: dts: qcom: lemans-evk-camera: Add DT
+ overlay
+Message-ID: <u437qomhok4yg6pef4xttd3a6zibuybzaeys33gxu5frbyp2kp@mgmym6c5dr72>
+References: <20250910-camss_rb8-v4-0-28f44e1880b8@oss.qualcomm.com>
+ <20250910-camss_rb8-v4-3-28f44e1880b8@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -125,109 +108,81 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250910-furry-singing-axolotl-9aceac@houat>
-X-Proofpoint-ORIG-GUID: hk3v1vTHAj53M_aUDkba9G24lu7fEUj1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzNSBTYWx0ZWRfX3mcxvowcPx1N
- YgjkuF048Gx385wxdJLy4PHhk5ESoPLCMMrUTR7dyrQcKasdV6y0ayoFnNxT5Y3nAN85+Zqgi1g
- dZysx1ZPupi4RsyMxuDbX1GJ+0C5/qLgTciSAdH+JYpw2ljZEKTwPQzIevbhYfOp9mbnV58W2UD
- /mGQg/E2PxShuVfRT3tfmCROmYgJF+L0malMoA2jsqrEMSuQlROQyuq92ZltFwYID5elRiS3gX/
- 5VtJiZXp/x1EHGcFE5yWngBH7zzIsLyCvqdVoPYMZSoekAJeMT4pyWORamU7UZLxczPHFN5D4Xk
- Hq7GctjcKgbVPOOM1UcfTnfAtNFwopGZftPtCZ69gOHMazhDu0yK7qAaulOgUkkbWs2PgQNUU+X
- thRJuJU8
-X-Proofpoint-GUID: hk3v1vTHAj53M_aUDkba9G24lu7fEUj1
-X-Authority-Analysis: v=2.4 cv=N8UpF39B c=1 sm=1 tr=0 ts=68c1964e cx=c_pps
- a=JIY1xp/sjQ9K5JH4t62bdg==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=8AirrxEcAAAA:8 a=QX4gbG5DAAAA:8 a=EUspDBNiAAAA:8
- a=Hspkq7dj2dKET-HI0ioA:9 a=CjuIK1q_8ugA:10 a=tNoRWFLymzeba-QzToBc:22
- a=ST-jHhOKWsTCqRlWije3:22 a=AbAUZ8qAyYyZVLSsDulk:22
+In-Reply-To: <20250910-camss_rb8-v4-3-28f44e1880b8@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzMSBTYWx0ZWRfX/huzflUgkMAp
+ DkhD2hZPM5HEmg5+JV2pCN1D2mCkFT/AMlUxlVsKLTkGFkF0jJDRX295daLNiUoFGGlg8sCurj6
+ X1jv0zaLcGt+lczEufQxonNMhq15ot4RnXE30prBV57KZCOlsrIv2i1r431TSfOpOoXjb0yMb6G
+ 71VhFaLNfpfnWuXV6ASw1+XzCLvi+UwK2M9bz2lTHLHsLKKOPXiJxTqB7QtM9ZbZM0kb6wa99ph
+ XAoatjRmUzva0yzN0K0JE/H0ZyGy7PUVsj/mgkbkFTc5rWWq2vOQipHKYDH6KtCfWpvKhhQTaaQ
+ qrEmsHHFnoVdQ6mKOAZ/GyOsoBqxJiyiCp5IuiFuWltWoMZjVYu5qaeumNA6x2813zb5yTpPmpH
+ 3GzqanMs
+X-Proofpoint-ORIG-GUID: W5v7rWnPrlAqt6ca-9WqoFmqnt9RB47_
+X-Proofpoint-GUID: W5v7rWnPrlAqt6ca-9WqoFmqnt9RB47_
+X-Authority-Analysis: v=2.4 cv=VIDdn8PX c=1 sm=1 tr=0 ts=68c197f0 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=AXas6eWRmEekrqqxQa4A:9
+ a=CjuIK1q_8ugA:10 a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-10_02,2025-09-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 malwarescore=0 clxscore=1015 bulkscore=0
- suspectscore=0 priorityscore=1501 impostorscore=0 phishscore=0
+ priorityscore=1501 malwarescore=0 spamscore=0 suspectscore=0 bulkscore=0
+ phishscore=0 adultscore=0 clxscore=1015 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060035
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060031
 
-On Wed, Sep 10, 2025 at 01:03:47PM +0200, Maxime Ripard wrote:
-> On Tue, Sep 09, 2025 at 05:51:59PM +0300, Dmitry Baryshkov wrote:
-> > Currently DRM framework expects that the HDMI connector driver supports
-> > all infoframe types: it generates the data as required and calls into
-> > the driver to program all of them, letting the driver to soft-fail if
-> > the infoframe is unsupported. This has a major drawback on userspace
-> > API: the framework also registers debugfs files for all Infoframe types,
-> > possibly surprising the users when infoframe is visible in the debugfs
-> > file, but it is not visible on the wire. Drivers are also expected to
-> > return success even for unsuppoted InfoFrame types.
-> > 
-> > Let drivers declare that they support only a subset of infoframes,
-> > creating a more consistent interface. Make the affected drivers return
-> > -EOPNOTSUPP if they are asked to program (or clear) InfoFrames which are
-> > not supported.
-> > 
-> > Acked-by: Liu Ying <victor.liu@nxp.com>
-> > Acked-by: Daniel Stone <daniels@collabora.com>
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> 
-> Again, I still believe that it's a bad idea, goes against what the spec
-> states, and the framework was meant to be.
+On Wed, Sep 10, 2025 at 07:06:23PM +0800, Wenmeng Liu wrote:
+> Enable IMX577 via CCI1 on LeMans EVK Core Kit.
 
-Please correct me if I'm wrong. The specs (HDMI & CEA) define several
-infoframes and whether we should be sending them. If I'm reading it
-correctrly, CEA spec explicitly says 'If the Source supports the
-transmission of [foo] InfoFrame..." (6.4 - AVI, 6.6 - Audio, 6.7 MPEG,
-6.9 - DRM). For other InfoFrames (6.5 SPD, 6.8 NTSC VBI) it just defines
-that sending those frames is optional.
-
-We can't even infer support for InfoFrames from the Source features.
-E.g. CEA 6.6.1 defines a case when digital audio is allowed to be sent,
-without sending Audio InfoFrame.
-
-As we will be getting more and more features, some of the InfoFrames
-or data packets will be 'good to have, but not required'.
+Is it a part of the Core Kit? Is it a part of some kind of mezzanine
+board? Why is it being enabled as an overlay instead of being a part of
+lemans-evk.dts?
 
 > 
-> So, no, sorry. That's still a no for me. Please stop sending that patch
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Wenmeng Liu <quic_wenmliu@qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/Makefile               |   4 +
+>  arch/arm64/boot/dts/qcom/lemans-evk-camera.dtso | 101 ++++++++++++++++++++++++
+>  2 files changed, 105 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 0a7c308dec365263bbb7aa5f5cd306dbeacfd3f1..b27f60fbd527146027eebd4bb7b1f8a0a82b3af2 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -30,6 +30,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp449.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp453.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= ipq9574-rdp454.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk.dtb
+> +
+> +lemans-evk-camera-dtbs	:= lemans-evk.dtb lemans-evk-camera.dtbo
+> +
+> +dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-alcatel-idol347.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk-camera.dtso b/arch/arm64/boot/dts/qcom/lemans-evk-camera.dtso
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..629992ced9b13b23505fc20562929a0ed17a9566
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/lemans-evk-camera.dtso
+> @@ -0,0 +1,101 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) 2024-2025 Qualcomm Innovation Center, Inc. All rights reserved.
+> + */
+> +
+> +/*
+> + * Camera Sensor overlay on top of LeMans EVK Core Kit.
 
-Oops :-)
+This is pretty obvious from the file itself.
 
-> unless we have a discussion about it and you convince me that it's
-> actually something that we'd need.
-
-My main concern is that the drivers should not opt-out of the features.
-E.g. if we start supporting ISRC packets or MPEG or NTSC VBI InfoFrames
-(yes, stupid examples), it should not be required to go through all the
-drivers, making sure that they disable those. Instead the DRM framework
-should be able to make decisions like:
-
-- The driver supports SPD and the VSDB defines SPD, enable this
-  InfoFrame (BTW, this needs to be done anyway, we should not be sending
-  SPD if it's not defined in VSDB, if I read it correctly).
-
-- The driver hints that the pixel data has only 10 meaninful bits of
-  data per component (e.g. out of 12 for DeepColor 36), the Sink has
-  HF-VSDB, send HF-VSIF.
-
-- The driver has enabled 3D stereo mode, but it doesn't declare support
-  for HF-VSIF. Send only H14b-VSIF.
-
-Similarly (no, I don't have these on my TODO list, these are just
-examples):
-- The driver defines support for NTSC VBI, register a VBI device.
-
-- The driver defines support for ISRC packets, register ISRC-related
-  properties.
-
-- The driver defines support for MPEG Source InfoFrame, provide a way
-  for media players to report frame type and bit rate.
-
-- The driver provides limited support for Extended HDR DM InfoFrames,
-  select the correct frame type according to driver capabilities.
-
-Without the 'supported' information we should change atomic_check()
-functions to set infoframe->set to false for all unsupported InfoFrames
-_and_ go through all the drivers again each time we add support for a
-feature (e.g. after adding HF-VSIF support).
+> + */
+> +
+> +/dts-v1/;
+> +/plugin/;
+> +
 
 -- 
 With best wishes
