@@ -1,489 +1,828 @@
-Return-Path: <linux-arm-msm+bounces-72958-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-72959-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8BBFBB5150F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:11:04 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6DF8B51517
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 13:11:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 728415E1725
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:10:36 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AD6AF7B563B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 11:09:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D054731A056;
-	Wed, 10 Sep 2025 11:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AFBA2318142;
+	Wed, 10 Sep 2025 11:11:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="MvSdtWYE"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="d28qSwiQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA3C31987A
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 11:09:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 423BD3176F2;
+	Wed, 10 Sep 2025 11:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757502566; cv=none; b=sImDHSmx8QQ7nHxWv2E6oCez/FSO0uLjijHAWnsA2wMluZo/YrvLHb3mrqUGfpQQxATKCqXznH9p6jyyDBX+2zW54PdOp6500+qeojicZa4qrKuXamCd6AhKKxUaYi95TXFVDqfS+ffTmhFLv/A+JypNnRU+NGbscPNeUYS+4kk=
+	t=1757502666; cv=none; b=LQs3Msh1AMpbpZU02ev1MyPm1Vce1BDeOntmbYlFyhOJKw3RfWtd9ASq0XTQ0v/jwO+OME2A4eknPqQtn0IzrUGJzaJ4b8sSjslZxdQmqUXSdx55Oh3/lt4Qg9rH7yd38ue3sb4sTJZtyr7808phq8riTo+Vv0E09z/+AIsLiOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757502566; c=relaxed/simple;
-	bh=LFxsKrv7w0XeDMi0IXILemHLMp0psNWxyEhzq5JWm5c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RpxrUPeRMDOjY81nS4U7AmwnJiiYIomJAoh60b7LK/im5xN+K+v4vkkZAV2nuXB4wy6oexEwnsw/LO7S+1xr5BGiyFs+CaKCKWTK82aUl258mSlNTIceTTu9aUAKswFdcaVj6a+P4Q9xzNBn4PVdHP76u7tZmaZVWXoh6SPxg1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=MvSdtWYE; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45dd5e24d16so48731095e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 04:09:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757502562; x=1758107362; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=if7M7RKUKGcoaoiSFxqVOJi3gDv8Oj4Mq2vP44awa+0=;
-        b=MvSdtWYEs9SELHbfYkNcvY8AI9ZZnMKIA/tYqMByD2eRS+QUYXprFNLOh22gkou0iA
-         +vsOkouHpOPHiqzq0rvK6UKwqweqeiWPhbUYYeA14ZpQOcJwMQoXX96wtHn93XToPFmk
-         FkKVaCVvitbiu/y54TRFeC47yDW9UWmRRWhms0acWXJgWSfvKxTtoQKOEn17TkKvUw7C
-         A0k89x9zHwnQEHCW6DADkrHS39RLZ5oDHkagwzMms6O/CcfNwGkJw1KRFTPmbMamY8kG
-         /a4/NOYVs0aagp3CmHFoBeY6YOVbScgSUngDY6Rtea8ivFPnvb9KNjNbNxDYWpe7+HqW
-         X7Kg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757502562; x=1758107362;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=if7M7RKUKGcoaoiSFxqVOJi3gDv8Oj4Mq2vP44awa+0=;
-        b=RwQIFF3/9tmeRm+xMFD4bVXp479RebU+8F2ercXXAT/1XZ/3pYbyqn857G/2JR2XM0
-         jxHTvGFp1z4v05nXLe62eTEgyXokmINK2CSjEqlh2286ae+UDKEclU3qEo3e+W7N06l8
-         VN7GTe5JMGcp+3/nHP0EzCanGWKHRRTgLx+I0zAyoJLDeeDUNtsCo6Qmo/xcQZaBm+ah
-         QP9khUdFvun8j0xC8xTwL1iajp2T4TKPWVbdbntGJsLNJcc8KqRaVUuo5CYJU5hMTwTq
-         UmvwRiqirqInfyiyx0VpnI5xOikV/b4SV0sRqm1thI+JC4VKQuavUxUoZKbk3WBUUmIX
-         T4+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUXVLZfeu7mLzElOs32e2lrX8v6ovfrH5NiiSPOm9nv03OfGRSqjqnShXCP27f1lQ8o59PPk1+80Hlasn+B@vger.kernel.org
-X-Gm-Message-State: AOJu0YyX/azsQbTSwdmZeOQ/dI08wgC99XYogQndgWSLl3u/J3ortFgc
-	owcRiM9ptGXpuTNuMW719HKYkdtF2BvIQzM7VzNS6VVbDSNwPQ9X/oSluLWu4r1uVHE=
-X-Gm-Gg: ASbGncudUswaNowCM8c2qtXFKWVdo1MqLNHwIbYe9BzWWHFR7COTP6Uns5IG2LvKrx6
-	+IBvJvJKFF/bYQTlzOrv37jwe5hN3MSkARmETIPW4ZlKyt/Hb9EDzW8PsENpHzx1ChnO//NBF2A
-	ta5urM2BCidELwyo8WLEOA+BQDBCwqTJdQmcqXVbRN3YlQOC3OoYD3USM2S4mB0BYD7QxgEDwyn
-	5lkMuVhFvNDWbEtmETvF5iXvq9k1+i1rsW29NYO2HYuyUy3GtiLAdm7nhgX3WQ6E1AqPFlzGWXZ
-	/ObmoVUfDTiJNf7meS6wOUD5ojK9C2FfPbFqzxK08ZrQhlEqSr6zUu11q23KLcMN5N+6wi2zfZ/
-	yIwpcr9X9Qn9RV80gTmUrMNmJ8+NGz9Th1rJW6RU4c4RHifJuX7H00FPDxuYW0dmg3vHWEVC8lw
-	/rFAeKCRArzKVGNeqI7sE=
-X-Google-Smtp-Source: AGHT+IGg0t7NqCuRxCIOdvsDJR8ASoSstEqT+u0u8z4qPedmjk9nJEjwqQ+1EZp6Z/+hH33LOU4yJA==
-X-Received: by 2002:a05:600c:4592:b0:45c:b575:1aa4 with SMTP id 5b1f17b1804b1-45dddeef4admr144185385e9.19.1757502562339;
-        Wed, 10 Sep 2025 04:09:22 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45df16b11b6sm26494715e9.6.2025.09.10.04.09.21
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 04:09:21 -0700 (PDT)
-Message-ID: <0ac2c3f4-d71d-48eb-ac0f-8e736e7acace@linaro.org>
-Date: Wed, 10 Sep 2025 12:09:20 +0100
+	s=arc-20240116; t=1757502666; c=relaxed/simple;
+	bh=2jX8psXUjQWTBykG89Zh5pee1iFxy1xlbnRQThYTJMw=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=aBnxaMx98vNaopvkCCfwRpYGZnmphzyOjVsVntzCv59PyOt6x3WN4s7mmLgRyTiWTXwQ22YgCFxiCDL5Glg+OMt0M2HaeLfLYoYsfOaeUQv1CsexZpyjaoVsXJROnjw7vOa7SbfYgQdUmY+RlbTYwe5G6rXPSgpUuMRZzl6wZr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=none smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=d28qSwiQ; arc=none smtp.client-ip=198.175.65.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1757502664; x=1789038664;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=2jX8psXUjQWTBykG89Zh5pee1iFxy1xlbnRQThYTJMw=;
+  b=d28qSwiQ7a7wujeikxjmSRHsfSQub0JZ8lKH8FXI5xdra38uUvC9v5c2
+   iZ4J2vzo/opZ2IMXQzL0e7AO6CFF1wjaGMAyjZBacv3nDaulNpjwpgGqG
+   f/EDCdzIzMcsC0huYzfFEAEjkA0vjHVu6e84FH4iYgmMl2kOggEXKNuZq
+   iyEuO29onxxjcW//qB6SdZHf4K87gwqoLEATBj346SHe7vKdG6vgSLc0h
+   zR3qAaSUn02b3ltKOJoxN9ubDOudH3yjX3i1a+kfJjJj7v3KnZeA8D4JT
+   ut+RPbbss4c3dAs62iaOsCGYdkcVkqT80bWDlGH/BYBOsLSH7nSy7pSlp
+   Q==;
+X-CSE-ConnectionGUID: nARhUgpHSQSK12jpoj81rw==
+X-CSE-MsgGUID: 2oxPyGdERDGb+eY66qDnKw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11548"; a="59502562"
+X-IronPort-AV: E=Sophos;i="6.18,254,1751266800"; 
+   d="scan'208";a="59502562"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2025 04:11:03 -0700
+X-CSE-ConnectionGUID: L4OkQX4aRtC/qm+oSK8B0w==
+X-CSE-MsgGUID: LH7wEUwlQ56GAHlRdiZtFw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,254,1751266800"; 
+   d="scan'208";a="172956784"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.245.59])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Sep 2025 04:10:57 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Wed, 10 Sep 2025 14:10:54 +0300 (EEST)
+To: Sebastian Reichel <sre@kernel.org>
+cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+    Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>, 
+    Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+    Bjorn Andersson <andersson@kernel.org>, 
+    Konrad Dybcio <konradybcio@kernel.org>, 
+    Mark Pearson <mpearson-lenovo@squebb.ca>, 
+    "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+    Henrique de Moraes Holschuh <hmh@hmh.eng.br>, 
+    Neil Armstrong <neil.armstrong@linaro.org>, devicetree@vger.kernel.org, 
+    LKML <linux-kernel@vger.kernel.org>, platform-driver-x86@vger.kernel.org, 
+    linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v4 2/3] platform: arm64: thinkpad-t14s-ec: new driver
+In-Reply-To: <20250909-thinkpad-t14s-ec-v4-2-caf6159daaee@collabora.com>
+Message-ID: <cf4f87e0-b749-5bc0-27b3-bd254c29c483@linux.intel.com>
+References: <20250909-thinkpad-t14s-ec-v4-0-caf6159daaee@collabora.com> <20250909-thinkpad-t14s-ec-v4-2-caf6159daaee@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3.1] media: dt-bindings: Add qcom,qcs8300-camss
- compatible
-To: Vikram Sharma <quic_vikramsa@quicinc.com>, mchehab@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- andersson@kernel.org, konradybcio@kernel.org, hverkuil-cisco@xs4all.nl,
- cros-qcom-dts-watchers@chromium.org, catalin.marinas@arm.com, will@kernel.org
-Cc: linux-arm-kernel@lists.infradead.org, quic_svankada@quicinc.com,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-References: <20250813053724.232494-2-quic_vikramsa@quicinc.com>
- <20250910104915.1444669-1-quic_vikramsa@quicinc.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250910104915.1444669-1-quic_vikramsa@quicinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
 
-On 10/09/2025 11:49, Vikram Sharma wrote:
-> Add the compatible string "qcom,qcs8300-camss" to support the
-> Camera Subsystem (CAMSS) on the Qualcomm QCS8300 platform.
+On Tue, 9 Sep 2025, Sebastian Reichel wrote:
+
+> Introduce EC driver for the ThinkPad T14s Gen6 Snapdragon, which is in
+> theory compatible with ThinkPad ACPI. On Linux the system is booted with
+> device tree, which is not supported by the ThinkPad ACPI driver
+> (drivers/platform/x86/lenovo/thinkpad_acpi.c). Also most of the hardware
+> compatibility is handled via ACPI tables, which are obviously not used
+> when booting via device tree. Thus adding DT compatibility to the
+> existing driver is not worth it as there is almost no code sharing.
 > 
-> The QCS8300 platform provides:
-> - 2 x VFE (version 690), each with 3 RDI
-> - 5 x VFE Lite (version 690), each with 6 RDI
-> - 2 x CSID (version 690)
-> - 5 x CSID Lite (version 690)
-> - 3 x CSIPHY (version 690)
-> - 3 x TPG
+> The driver currently exposes features, which are not available
+> via other means:
 > 
-> Co-developed-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
-> Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+>  * Extra Keys
+>  * System LEDs
+>  * Keyboard Backlight Control
+> 
+> The driver has been developed by reading the ACPI DSDT. There
+> are some more features around thermal control, which are not
+> yet supported by the driver.
+> 
+> The speaker mute and mic mute LEDs need some additional changes
+> in the ALSA UCM to be set automatically.
+> 
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S OLED
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Sebastian Reichel <sre@kernel.org>
 > ---
-> changes since v3:
-> - Adding supplies to enable camera sensor imx577 on monaco-evk.
->    link for camera sensor enablement chagges:
->    https://lore.kernel.org/all/20250909114241.840842-1-quic_vikramsa@quicinc.com/
-> - Dropped RB from Bryan and Krzysztof to review again.
-> ---
->   .../bindings/media/qcom,qcs8300-camss.yaml    | 349 ++++++++++++++++++
->   1 file changed, 349 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
+>  MAINTAINERS                                   |   6 +
+>  drivers/platform/arm64/Kconfig                |  20 +
+>  drivers/platform/arm64/Makefile               |   1 +
+>  drivers/platform/arm64/lenovo-thinkpad-t14s.c | 619 ++++++++++++++++++++++++++
+>  4 files changed, 646 insertions(+)
 > 
-> diff --git a/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml b/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index cd7ff55b5d321752ac44c91d2d7e74de28e08960..73a685a75d7a15b75bbc97c25ae0428bdf21e2ef 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -25100,6 +25100,12 @@ W:	http://thinkwiki.org/wiki/Ibm-acpi
+>  T:	git git://repo.or.cz/linux-2.6/linux-acpi-2.6/ibm-acpi-2.6.git
+>  F:	drivers/platform/x86/lenovo/thinkpad_acpi.c
+>  
+> +THINKPAD T14S EMBEDDED CONTROLLER DRIVER
+> +M:	Sebastian Reichel <sre@kernel.org>
+> +S:	Maintained
+> +F:	Documentation/devicetree/bindings/platform/lenovo,thinkpad-t14s-ec.yaml
+> +F:	drivers/platform/arm64/lenovo-thinkpad-t14s.c
+> +
+>  THINKPAD LMI DRIVER
+>  M:	Mark Pearson <mpearson-lenovo@squebb.ca>
+>  L:	platform-driver-x86@vger.kernel.org
+> diff --git a/drivers/platform/arm64/Kconfig b/drivers/platform/arm64/Kconfig
+> index 06288aebc5599435065a37f8dacd046b5def80bd..10f905d7d6bfa5fad30a0689d3a20481268c781e 100644
+> --- a/drivers/platform/arm64/Kconfig
+> +++ b/drivers/platform/arm64/Kconfig
+> @@ -70,4 +70,24 @@ config EC_LENOVO_YOGA_C630
+>  
+>  	  Say M or Y here to include this support.
+>  
+> +config EC_LENOVO_THINKPAD_T14S
+> +	tristate "Lenovo Thinkpad T14s Embedded Controller driver"
+> +	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on I2C
+> +	depends on INPUT
+> +	select INPUT_SPARSEKMAP
+> +	select LEDS_CLASS
+> +	select NEW_LEDS
+> +	select SND_CTL_LED if SND
+> +	help
+> +	  Driver for the Embedded Controller in the Qualcomm Snapdragon-based
+> +	  Lenovo Thinkpad T14s, which provides access to keyboard backlight
+> +	  and status LEDs.
+> +
+> +	  This driver provides support for the mentioned laptop where this
+> +	  information is not properly exposed via the standard Qualcomm
+> +	  devices.
+> +
+> +	  Say M or Y here to include this support.
+> +
+>  endif # ARM64_PLATFORM_DEVICES
+> diff --git a/drivers/platform/arm64/Makefile b/drivers/platform/arm64/Makefile
+> index 46a99eba3264cc40e812567d1533bb86031a6af3..60c131cff6a15bb51a49c9edab95badf513ee0f6 100644
+> --- a/drivers/platform/arm64/Makefile
+> +++ b/drivers/platform/arm64/Makefile
+> @@ -8,3 +8,4 @@
+>  obj-$(CONFIG_EC_ACER_ASPIRE1)	+= acer-aspire1-ec.o
+>  obj-$(CONFIG_EC_HUAWEI_GAOKUN)	+= huawei-gaokun-ec.o
+>  obj-$(CONFIG_EC_LENOVO_YOGA_C630) += lenovo-yoga-c630.o
+> +obj-$(CONFIG_EC_LENOVO_THINKPAD_T14S) += lenovo-thinkpad-t14s.o
+> diff --git a/drivers/platform/arm64/lenovo-thinkpad-t14s.c b/drivers/platform/arm64/lenovo-thinkpad-t14s.c
 > new file mode 100644
-> index 000000000000..559db6d67f06
+> index 0000000000000000000000000000000000000000..7f355f749c012cfc7013fd07c94b389317f75fba
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/media/qcom,qcs8300-camss.yaml
-> @@ -0,0 +1,349 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/media/qcom,qcs8300-camss.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +++ b/drivers/platform/arm64/lenovo-thinkpad-t14s.c
+> @@ -0,0 +1,619 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2025, Sebastian Reichel
+> + */
 > +
-> +title: Qualcomm QCS8300 CAMSS ISP
+> +#include <linux/bitfield.h>
+> +#include <linux/bits.h>
+> +#include <linux/cleanup.h>
+> +#include <linux/container_of.h>
+> +#include <linux/device.h>
+> +#include <linux/delay.h>
+> +#include <linux/dev_printk.h>
+> +#include <linux/err.h>
+> +#include <linux/i2c.h>
+> +#include <linux/input.h>
+> +#include <linux/input/sparse-keymap.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/leds.h>
+> +#include <linux/lockdep.h>
+> +#include <linux/module.h>
+> +#include <linux/regmap.h>
+> +#include <linux/slab.h>
 > +
-> +maintainers:
-> +  - Vikram Sharma <quic_vikramsa@quicinc.com>
+> +#define T14S_EC_CMD_ECRD	0x02
+> +#define T14S_EC_CMD_ECWR	0x03
+> +#define T14S_EC_CMD_EVT		0xf0
 > +
-> +description:
-> +  The CAMSS IP is a CSI decoder and ISP present on Qualcomm platforms.
+> +#define T14S_EC_REG_LED		0x0c
+> +#define T14S_EC_REG_KBD_BL1	0x0d
+> +#define T14S_EC_REG_KBD_BL2	0xe1
+> +#define T14S_EC_KBD_BL1_MASK	GENMASK_U8(7, 6)
+> +#define T14S_EC_KBD_BL2_MASK	GENMASK_U8(3, 2)
+> +#define T14S_EC_REG_AUD		0x30
+> +#define T14S_EC_MIC_MUTE_LED	BIT(5)
+> +#define T14S_EC_SPK_MUTE_LED	BIT(6)
 > +
-> +properties:
-> +  compatible:
-> +    const: qcom,qcs8300-camss
+> +#define T14S_EC_EVT_NONE			0x00
+> +#define T14S_EC_EVT_KEY_FN_4			0x13
+> +#define T14S_EC_EVT_KEY_FN_F7			0x16
+> +#define T14S_EC_EVT_KEY_FN_SPACE		0x1f
+> +#define T14S_EC_EVT_KEY_TP_DOUBLE_TAP		0x20
+> +#define T14S_EC_EVT_AC_CONNECTED		0x26
+> +#define T14S_EC_EVT_AC_DISCONNECTED		0x27
+> +#define T14S_EC_EVT_KEY_POWER			0x28
+> +#define T14S_EC_EVT_LID_OPEN			0x2a
+> +#define T14S_EC_EVT_LID_CLOSED			0x2b
+> +#define T14S_EC_EVT_THERMAL_TZ40		0x5c
+> +#define T14S_EC_EVT_THERMAL_TZ42		0x5d
+> +#define T14S_EC_EVT_THERMAL_TZ39		0x5e
+> +#define T14S_EC_EVT_KEY_FN_F12			0x62
+> +#define T14S_EC_EVT_KEY_FN_TAB			0x63
+> +#define T14S_EC_EVT_KEY_FN_F8			0x64
+> +#define T14S_EC_EVT_KEY_FN_F10			0x65
+> +#define T14S_EC_EVT_KEY_FN_F4			0x6a
+> +#define T14S_EC_EVT_KEY_FN_D			0x6b
+> +#define T14S_EC_EVT_KEY_FN_T			0x6c
+> +#define T14S_EC_EVT_KEY_FN_H			0x6d
+> +#define T14S_EC_EVT_KEY_FN_M			0x6e
+> +#define T14S_EC_EVT_KEY_FN_L			0x6f
+> +#define T14S_EC_EVT_KEY_FN_RIGHT_SHIFT		0x71
+> +#define T14S_EC_EVT_KEY_FN_ESC			0x74
+> +#define T14S_EC_EVT_KEY_FN_N			0x79
+> +#define T14S_EC_EVT_KEY_FN_F11			0x7a
+> +#define T14S_EC_EVT_KEY_FN_G			0x7e
 > +
-> +  reg:
-> +    maxItems: 21
+> +/* Hardware LED blink rate is 1 Hz (500ms off, 500ms on) */
+> +#define T14S_EC_BLINK_RATE_ON_OFF_MS		500
 > +
-> +  reg-names:
-> +    items:
-> +      - const: csid_wrapper
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid_lite0
-> +      - const: csid_lite1
-> +      - const: csid_lite2
-> +      - const: csid_lite3
-> +      - const: csid_lite4
-> +      - const: csiphy0
-> +      - const: csiphy1
-> +      - const: csiphy2
-> +      - const: tpg0
-> +      - const: tpg1
-> +      - const: tpg2
-> +      - const: vfe0
-> +      - const: vfe1
-> +      - const: vfe_lite0
-> +      - const: vfe_lite1
-> +      - const: vfe_lite2
-> +      - const: vfe_lite3
-> +      - const: vfe_lite4
+> +/*
+> + * Add a virtual offset on all key event codes for sparse keymap handling,
+> + * since the sparse keymap infrastructure does not map some raw key event
+> + * codes used by the EC. For example 0x16 (T14S_EC_EVT_KEY_FN_F7) is mapped
+> + * to KEY_MUTE if no offset is applied.
+> + */
+> +#define T14S_EC_KEY_EVT_OFFSET			0x1000
+> +#define T14S_EC_KEY_ENTRY(key, value) \
+> +	{ KE_KEY, T14S_EC_KEY_EVT_OFFSET + T14S_EC_EVT_KEY_##key, { value } }
 > +
-> +  clocks:
-> +    maxItems: 26
+> +enum thinkpad_t14s_ec_led_status_t {
+> +	T14S_EC_LED_OFF =	0x00,
+> +	T14S_EC_LED_ON =	0x80,
+> +	T14S_EC_LED_BLINK =	0xc0,
+> +};
 > +
-> +  clock-names:
-> +    items:
-> +      - const: camnoc_axi
-> +      - const: core_ahb
-> +      - const: cpas_ahb
-> +      - const: cpas_fast_ahb_clk
-> +      - const: cpas_vfe_lite
-> +      - const: cpas_vfe0
-> +      - const: cpas_vfe1
-> +      - const: csid
-> +      - const: csiphy0
-> +      - const: csiphy0_timer
-> +      - const: csiphy1
-> +      - const: csiphy1_timer
-> +      - const: csiphy2
-> +      - const: csiphy2_timer
-> +      - const: csiphy_rx
-> +      - const: gcc_axi_hf
-> +      - const: gcc_axi_sf
-> +      - const: icp_ahb
-> +      - const: vfe0
-> +      - const: vfe0_fast_ahb
-> +      - const: vfe1
-> +      - const: vfe1_fast_ahb
-> +      - const: vfe_lite
-> +      - const: vfe_lite_ahb
-> +      - const: vfe_lite_cphy_rx
-> +      - const: vfe_lite_csid
+> +struct thinkpad_t14s_ec_led_classdev {
+> +	struct led_classdev led_classdev;
+> +	int led;
+> +	enum thinkpad_t14s_ec_led_status_t cache;
+> +	struct thinkpad_t14s_ec *ec;
+> +};
 > +
-> +  interrupts:
-> +    maxItems: 20
+> +struct thinkpad_t14s_ec {
+> +	struct regmap *regmap;
+> +	struct device *dev;
+> +	struct thinkpad_t14s_ec_led_classdev led_pwr_btn;
+> +	struct thinkpad_t14s_ec_led_classdev led_chrg_orange;
+> +	struct thinkpad_t14s_ec_led_classdev led_chrg_white;
+> +	struct thinkpad_t14s_ec_led_classdev led_lid_logo_dot;
+> +	struct led_classdev kbd_backlight;
+> +	struct led_classdev led_mic_mute;
+> +	struct led_classdev led_spk_mute;
+> +	struct input_dev *inputdev;
+> +};
 > +
-> +  interrupt-names:
-> +    items:
-> +      - const: csid0
-> +      - const: csid1
-> +      - const: csid_lite0
-> +      - const: csid_lite1
-> +      - const: csid_lite2
-> +      - const: csid_lite3
-> +      - const: csid_lite4
-> +      - const: csiphy0
-> +      - const: csiphy1
-> +      - const: csiphy2
-> +      - const: tpg0
-> +      - const: tpg1
-> +      - const: tpg2
-> +      - const: vfe0
-> +      - const: vfe1
-> +      - const: vfe_lite0
-> +      - const: vfe_lite1
-> +      - const: vfe_lite2
-> +      - const: vfe_lite3
-> +      - const: vfe_lite4
+> +static const struct regmap_config thinkpad_t14s_ec_regmap_config = {
+> +	.reg_bits = 8,
+> +	.val_bits = 8,
+> +	.max_register = 0xff,
+> +};
 > +
-> +  interconnects:
-> +    maxItems: 2
-> +
-> +  interconnect-names:
-> +    items:
-> +      - const: ahb
-> +      - const: hf_0
-> +
-> +  iommus:
-> +    maxItems: 1
-> +
-> +  power-domains:
-> +    items:
-> +      - description: Titan GDSC - Titan ISP Block, Global Distributed Switch Controller.
-> +
-> +  power-domain-names:
-> +    items:
-> +      - const: top
-> +
-> +  vdda-phy-supply:
-> +    description:
-> +      Phandle to a regulator supply to PHY core block.
-> +
-> +  vdda-pll-supply:
-> +    description:
-> +      Phandle to 1.8V regulator supply to PHY refclk pll block.
-> +
-> +  ports:
-> +    $ref: /schemas/graph.yaml#/properties/ports
-> +
-> +    description:
-> +      CSI input ports.
-> +
-> +    patternProperties:
-> +      "^port@[0-2]+$":
-> +        $ref: /schemas/graph.yaml#/$defs/port-base
-> +        unevaluatedProperties: false
-> +        description:
-> +          Input port for receiving CSI data on CSIPHY 0-2.
-> +
-> +        properties:
-> +          endpoint:
-> +            $ref: video-interfaces.yaml#
-> +            unevaluatedProperties: false
-> +
-> +            properties:
-> +              data-lanes:
-> +                minItems: 1
-> +                maxItems: 4
-> +
-> +            required:
-> +              - data-lanes
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - reg-names
-> +  - clocks
-> +  - clock-names
-> +  - interrupts
-> +  - interrupt-names
-> +  - interconnects
-> +  - interconnect-names
-> +  - iommus
-> +  - power-domains
-> +  - vdda-phy-supply
-> +  - vdda-pll-supply
-> +  - power-domain-names
-> +  - ports
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,sa8775p-camcc.h>
-> +    #include <dt-bindings/clock/qcom,sa8775p-gcc.h>
-> +    #include <dt-bindings/interconnect/qcom,sa8775p-rpmh.h>
-> +    #include <dt-bindings/interconnect/qcom,icc.h>
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/power/qcom-rpmpd.h>
-> +
-> +    soc {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +
-> +        isp@ac78000 {
-> +            compatible = "qcom,qcs8300-camss";
-> +
-> +            reg = <0x0 0xac78000 0x0 0x1000>,
-> +                  <0x0 0xac7a000 0x0 0x0f00>,
-> +                  <0x0 0xac7c000 0x0 0x0f00>,
-> +                  <0x0 0xac84000 0x0 0x0f00>,
-> +                  <0x0 0xac88000 0x0 0x0f00>,
-> +                  <0x0 0xac8c000 0x0 0x0f00>,
-> +                  <0x0 0xac90000 0x0 0x0f00>,
-> +                  <0x0 0xac94000 0x0 0x0f00>,
-> +                  <0x0 0xac9c000 0x0 0x2000>,
-> +                  <0x0 0xac9e000 0x0 0x2000>,
-> +                  <0x0 0xaca0000 0x0 0x2000>,
-> +                  <0x0 0xacac000 0x0 0x0400>,
-> +                  <0x0 0xacad000 0x0 0x0400>,
-> +                  <0x0 0xacae000 0x0 0x0400>,
-> +                  <0x0 0xac4d000 0x0 0xd000>,
-> +                  <0x0 0xac60000 0x0 0xd000>,
-> +                  <0x0 0xac85000 0x0 0x0d00>,
-> +                  <0x0 0xac89000 0x0 0x0d00>,
-> +                  <0x0 0xac8d000 0x0 0x0d00>,
-> +                  <0x0 0xac91000 0x0 0x0d00>,
-> +                  <0x0 0xac95000 0x0 0x0d00>;
-> +            reg-names = "csid_wrapper",
-> +                        "csid0",
-> +                        "csid1",
-> +                        "csid_lite0",
-> +                        "csid_lite1",
-> +                        "csid_lite2",
-> +                        "csid_lite3",
-> +                        "csid_lite4",
-> +                        "csiphy0",
-> +                        "csiphy1",
-> +                        "csiphy2",
-> +                        "tpg0",
-> +                        "tpg1",
-> +                        "tpg2",
-> +                        "vfe0",
-> +                        "vfe1",
-> +                        "vfe_lite0",
-> +                        "vfe_lite1",
-> +                        "vfe_lite2",
-> +                        "vfe_lite3",
-> +                        "vfe_lite4";
-> +
-> +            clocks = <&camcc CAM_CC_CAMNOC_AXI_CLK>,
-> +                     <&camcc CAM_CC_CORE_AHB_CLK>,
-> +                     <&camcc CAM_CC_CPAS_AHB_CLK>,
-> +                     <&camcc CAM_CC_CPAS_FAST_AHB_CLK>,
-> +                     <&camcc CAM_CC_CPAS_IFE_LITE_CLK>,
-> +                     <&camcc CAM_CC_CPAS_IFE_0_CLK>,
-> +                     <&camcc CAM_CC_CPAS_IFE_1_CLK>,
-> +                     <&camcc CAM_CC_CSID_CLK>,
-> +                     <&camcc CAM_CC_CSIPHY0_CLK>,
-> +                     <&camcc CAM_CC_CSI0PHYTIMER_CLK>,
-> +                     <&camcc CAM_CC_CSIPHY1_CLK>,
-> +                     <&camcc CAM_CC_CSI1PHYTIMER_CLK>,
-> +                     <&camcc CAM_CC_CSIPHY2_CLK>,
-> +                     <&camcc CAM_CC_CSI2PHYTIMER_CLK>,
-> +                     <&camcc CAM_CC_CSID_CSIPHY_RX_CLK>,
-> +                     <&gcc GCC_CAMERA_HF_AXI_CLK>,
-> +                     <&gcc GCC_CAMERA_SF_AXI_CLK>,
-> +                     <&camcc CAM_CC_ICP_AHB_CLK>,
-> +                     <&camcc CAM_CC_IFE_0_CLK>,
-> +                     <&camcc CAM_CC_IFE_0_FAST_AHB_CLK>,
-> +                     <&camcc CAM_CC_IFE_1_CLK>,
-> +                     <&camcc CAM_CC_IFE_1_FAST_AHB_CLK>,
-> +                     <&camcc CAM_CC_IFE_LITE_CLK>,
-> +                     <&camcc CAM_CC_IFE_LITE_AHB_CLK>,
-> +                     <&camcc CAM_CC_IFE_LITE_CPHY_RX_CLK>,
-> +                     <&camcc CAM_CC_IFE_LITE_CSID_CLK>;
-> +            clock-names = "camnoc_axi",
-> +                          "core_ahb",
-> +                          "cpas_ahb",
-> +                          "cpas_fast_ahb_clk",
-> +                          "cpas_vfe_lite",
-> +                          "cpas_vfe0",
-> +                          "cpas_vfe1",
-> +                          "csid",
-> +                          "csiphy0",
-> +                          "csiphy0_timer",
-> +                          "csiphy1",
-> +                          "csiphy1_timer",
-> +                          "csiphy2",
-> +                          "csiphy2_timer",
-> +                          "csiphy_rx",
-> +                          "gcc_axi_hf",
-> +                          "gcc_axi_sf",
-> +                          "icp_ahb",
-> +                          "vfe0",
-> +                          "vfe0_fast_ahb",
-> +                          "vfe1",
-> +                          "vfe1_fast_ahb",
-> +                          "vfe_lite",
-> +                          "vfe_lite_ahb",
-> +                          "vfe_lite_cphy_rx",
-> +                          "vfe_lite_csid";
-> +
-> +            interrupts = <GIC_SPI 565 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 564 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 468 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 359 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 759 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 758 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 604 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 477 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 478 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 479 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 545 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 546 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 547 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 465 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 467 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 469 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 360 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 761 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 760 IRQ_TYPE_EDGE_RISING>,
-> +                         <GIC_SPI 605 IRQ_TYPE_EDGE_RISING>;
-> +            interrupt-names = "csid0",
-> +                              "csid1",
-> +                              "csid_lite0",
-> +                              "csid_lite1",
-> +                              "csid_lite2",
-> +                              "csid_lite3",
-> +                              "csid_lite4",
-> +                              "csiphy0",
-> +                              "csiphy1",
-> +                              "csiphy2",
-> +                              "tpg0",
-> +                              "tpg1",
-> +                              "tpg2",
-> +                              "vfe0",
-> +                              "vfe1",
-> +                              "vfe_lite0",
-> +                              "vfe_lite1",
-> +                              "vfe_lite2",
-> +                              "vfe_lite3",
-> +                              "vfe_lite4";
-> +
-> +            interconnects = <&gem_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
-> +                             &config_noc SLAVE_CAMERA_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
-> +                            <&mmss_noc MASTER_CAMNOC_HF QCOM_ICC_TAG_ALWAYS
-> +                             &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>;
-> +            interconnect-names = "ahb",
-> +                                 "hf_0";
-> +
-> +            iommus = <&apps_smmu 0x2400 0x20>;
-> +
-> +            power-domains = <&camcc CAM_CC_TITAN_TOP_GDSC>;
-> +            power-domain-names = "top";
-> +
-> +            vdda-phy-supply = <&vreg_l4a_0p88>;
-> +            vdda-pll-supply = <&vreg_l1c_1p2>;
-> +
-> +            ports {
-> +                #address-cells = <1>;
-> +                #size-cells = <0>;
-> +            };
-> +        };
-> +    };
+> +static int thinkpad_t14s_ec_write(void *context, unsigned int reg,
 
-OK LGTM thanks for your update.
+Does the thinkpad_ part of the prefix provide some real value? To me it 
+looks that similar to the define change you've already made, t14s prefix 
+alone would be enough to avoid namespace collisions, the rest just seems 
+extra letters and line length (or even extra lines here and there).
 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> +				  unsigned int val)
+> +{
+> +	u8 buf[5] = {T14S_EC_CMD_ECWR, reg, 0x00, 0x01, val};
+> +	struct thinkpad_t14s_ec *ec = context;
+> +	struct i2c_client *client = to_i2c_client(ec->dev);
+
+I'd move u8 buf here, these struct initialization/type conversions are 
+mostly uninteresting boilerplate so having them first is better (normally 
+it usually mostly follows from reverse-xmas tree order but here the 
+command was slightly too long for that to happen naturally).
+
+It also matches the order in the functions below after making them 
+reverse-xmas tree as closely as possible.
+
+> +	int ret;
+> +
+> +	ret = i2c_master_send(client, buf, sizeof(buf));
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +static int thinkpad_t14s_ec_read(void *context, unsigned int reg,
+> +				 unsigned int *val)
+> +{
+> +	u8 buf[4] = {T14S_EC_CMD_ECRD, reg, 0x00, 0x01};
+> +	struct thinkpad_t14s_ec *ec = context;
+> +	struct i2c_client *client = to_i2c_client(ec->dev);
+
+Move u8 buf here. It's the closest we can get to the reverse xmas-tree 
+order.
+
+> +	struct i2c_msg request, response;
+> +	u8 result;
+> +	int ret;
+> +
+> +	request.addr = client->addr;
+> +	request.flags = I2C_M_STOP;
+> +	request.len = sizeof(buf);
+> +	request.buf = buf;
+> +	response.addr = client->addr;
+> +	response.flags = I2C_M_RD;
+> +	response.len = 1;
+> +	response.buf = &result;
+> +
+> +	i2c_lock_bus(client->adapter, I2C_LOCK_SEGMENT);
+> +
+> +	ret = __i2c_transfer(client->adapter, &request, 1);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	ret = __i2c_transfer(client->adapter, &response, 1);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	*val = result;
+> +	ret = 0;
+> +
+> +out:
+> +	i2c_unlock_bus(client->adapter, I2C_LOCK_SEGMENT);
+> +	return ret;
+> +}
+> +
+> +static const struct regmap_bus thinkpad_t14s_ec_regmap_bus = {
+> +	.reg_write = thinkpad_t14s_ec_write,
+> +	.reg_read = thinkpad_t14s_ec_read,
+> +};
+> +
+> +static int thinkpad_t14s_ec_read_evt(struct thinkpad_t14s_ec *ec, u8 *val)
+> +{
+> +	u8 buf[4] = {T14S_EC_CMD_EVT, 0x00, 0x00, 0x01};
+> +	struct i2c_client *client = to_i2c_client(ec->dev);
+
+reverse xmas-tree order.
+
+-- 
+ i.
+
+> +	struct i2c_msg request, response;
+> +	int ret;
+> +
+> +	request.addr = client->addr;
+> +	request.flags = I2C_M_STOP;
+> +	request.len = sizeof(buf);
+> +	request.buf = buf;
+> +	response.addr = client->addr;
+> +	response.flags = I2C_M_RD;
+> +	response.len = 1;
+> +	response.buf = val;
+> +
+> +	i2c_lock_bus(client->adapter, I2C_LOCK_SEGMENT);
+> +
+> +	ret = __i2c_transfer(client->adapter, &request, 1);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	ret = __i2c_transfer(client->adapter, &response, 1);
+> +	if (ret < 0)
+> +		goto out;
+> +
+> +	ret = 0;
+> +
+> +out:
+> +	i2c_unlock_bus(client->adapter, I2C_LOCK_SEGMENT);
+> +	return ret;
+> +}
+> +
+> +static int thinkpad_t14s_led_set_status(struct thinkpad_t14s_ec *ec,
+> +			struct thinkpad_t14s_ec_led_classdev *led,
+> +			const enum thinkpad_t14s_ec_led_status_t ledstatus)
+> +{
+> +	int ret;
+> +
+> +	ret = regmap_write(ec->regmap, T14S_EC_REG_LED,
+> +			   led->led | ledstatus);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	led->cache = ledstatus;
+> +	return 0;
+> +}
+> +
+> +static int thinkpad_t14s_led_brightness_set(struct led_classdev *led_cdev,
+> +					    enum led_brightness brightness)
+> +{
+> +	struct thinkpad_t14s_ec_led_classdev *led = container_of(led_cdev,
+> +			struct thinkpad_t14s_ec_led_classdev, led_classdev);
+> +	enum thinkpad_t14s_ec_led_status_t new_state;
+> +
+> +	if (brightness == LED_OFF)
+> +		new_state = T14S_EC_LED_OFF;
+> +	else if (led->cache == T14S_EC_LED_BLINK)
+> +		new_state = T14S_EC_LED_BLINK;
+> +	else
+> +		new_state = T14S_EC_LED_ON;
+> +
+> +	return thinkpad_t14s_led_set_status(led->ec, led, new_state);
+> +}
+> +
+> +static int thinkpad_t14s_led_blink_set(struct led_classdev *led_cdev,
+> +				       unsigned long *delay_on,
+> +				       unsigned long *delay_off)
+> +{
+> +	struct thinkpad_t14s_ec_led_classdev *led = container_of(led_cdev,
+> +			struct thinkpad_t14s_ec_led_classdev, led_classdev);
+> +
+> +	if (*delay_on == 0 && *delay_off == 0) {
+> +		/* Userspace does not provide a blink rate; we can choose it */
+> +		*delay_on = T14S_EC_BLINK_RATE_ON_OFF_MS;
+> +		*delay_off = T14S_EC_BLINK_RATE_ON_OFF_MS;
+> +	} else if ((*delay_on != T14S_EC_BLINK_RATE_ON_OFF_MS) ||
+> +		   (*delay_off != T14S_EC_BLINK_RATE_ON_OFF_MS))
+> +		return -EINVAL;
+> +
+> +	return thinkpad_t14s_led_set_status(led->ec, led, T14S_EC_LED_BLINK);
+> +}
+> +
+> +static int thinkpad_t14s_init_led(struct thinkpad_t14s_ec *ec,
+> +				  struct thinkpad_t14s_ec_led_classdev *led,
+> +				  u8 id, const char *name)
+> +{
+> +	led->led_classdev.name = name;
+> +	led->led_classdev.flags = LED_RETAIN_AT_SHUTDOWN;
+> +	led->led_classdev.max_brightness = 1;
+> +	led->led_classdev.brightness_set_blocking = thinkpad_t14s_led_brightness_set;
+> +	led->led_classdev.blink_set = thinkpad_t14s_led_blink_set;
+> +	led->ec = ec;
+> +	led->led = id;
+> +
+> +	return devm_led_classdev_register(ec->dev, &led->led_classdev);
+> +}
+> +
+> +static int thinkpad_t14s_leds_probe(struct thinkpad_t14s_ec *ec)
+> +{
+> +	int ret;
+> +
+> +	ret = thinkpad_t14s_init_led(ec, &ec->led_pwr_btn, 0,
+> +				     "platform::power");
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = thinkpad_t14s_init_led(ec, &ec->led_chrg_orange, 1,
+> +				     "platform:amber:battery-charging");
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = thinkpad_t14s_init_led(ec, &ec->led_chrg_white, 2,
+> +				     "platform:white:battery-full");
+> +	if (ret)
+> +		return ret;
+> +
+> +	ret = thinkpad_t14s_init_led(ec, &ec->led_lid_logo_dot, 10,
+> +				     "platform::lid_logo_dot");
+> +	if (ret)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +static int thinkpad_t14s_kbd_bl_set(struct led_classdev *led_cdev,
+> +				    enum led_brightness brightness)
+> +{
+> +	struct thinkpad_t14s_ec *ec = container_of(led_cdev,
+> +					struct thinkpad_t14s_ec, kbd_backlight);
+> +	int ret;
+> +	u8 val;
+> +
+> +	val = FIELD_PREP(T14S_EC_KBD_BL1_MASK, brightness);
+> +	ret = regmap_update_bits(ec->regmap, T14S_EC_REG_KBD_BL1,
+> +				 T14S_EC_KBD_BL1_MASK, val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	val = FIELD_PREP(T14S_EC_KBD_BL2_MASK, brightness);
+> +	ret = regmap_update_bits(ec->regmap, T14S_EC_REG_KBD_BL2,
+> +				 T14S_EC_KBD_BL2_MASK, val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +static enum led_brightness thinkpad_t14s_kbd_bl_get(struct led_classdev *led_cdev)
+> +{
+> +	struct thinkpad_t14s_ec *ec = container_of(led_cdev,
+> +					struct thinkpad_t14s_ec, kbd_backlight);
+> +	unsigned int val;
+> +	int ret;
+> +
+> +	ret = regmap_read(ec->regmap, T14S_EC_REG_KBD_BL1, &val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return FIELD_GET(T14S_EC_KBD_BL1_MASK, val);
+> +}
+> +
+> +static void thinkpad_t14s_kbd_bl_update(struct thinkpad_t14s_ec *ec)
+> +{
+> +	enum led_brightness brightness = thinkpad_t14s_kbd_bl_get(&ec->kbd_backlight);
+> +
+> +	led_classdev_notify_brightness_hw_changed(&ec->kbd_backlight, brightness);
+> +}
+> +
+> +static int thinkpad_t14s_kbd_backlight_probe(struct thinkpad_t14s_ec *ec)
+> +{
+> +	ec->kbd_backlight.name = "platform::kbd_backlight";
+> +	ec->kbd_backlight.flags = LED_BRIGHT_HW_CHANGED;
+> +	ec->kbd_backlight.max_brightness = 2;
+> +	ec->kbd_backlight.brightness_set_blocking = thinkpad_t14s_kbd_bl_set;
+> +	ec->kbd_backlight.brightness_get = thinkpad_t14s_kbd_bl_get;
+> +
+> +	return devm_led_classdev_register(ec->dev, &ec->kbd_backlight);
+> +}
+> +
+> +static enum led_brightness thinkpad_t14s_audio_led_get(struct thinkpad_t14s_ec *ec,
+> +						       u8 led_bit)
+> +{
+> +	unsigned int val;
+> +	int ret;
+> +
+> +	ret = regmap_read(ec->regmap, T14S_EC_REG_AUD, &val);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return !!(val & led_bit) ? LED_ON : LED_OFF;
+> +}
+> +
+> +static enum led_brightness thinkpad_t14s_audio_led_set(struct thinkpad_t14s_ec *ec,
+> +						       u8 led_mask,
+> +						       enum led_brightness brightness)
+> +{
+> +	return regmap_assign_bits(ec->regmap, T14S_EC_REG_AUD, led_mask, brightness > 0);
+> +}
+> +
+> +static enum led_brightness thinkpad_t14s_mic_mute_led_get(struct led_classdev *led_cdev)
+> +{
+> +	struct thinkpad_t14s_ec *ec = container_of(led_cdev,
+> +					struct thinkpad_t14s_ec, led_mic_mute);
+> +
+> +	return thinkpad_t14s_audio_led_get(ec, T14S_EC_MIC_MUTE_LED);
+> +}
+> +
+> +static int thinkpad_t14s_mic_mute_led_set(struct led_classdev *led_cdev,
+> +					  enum led_brightness brightness)
+> +{
+> +	struct thinkpad_t14s_ec *ec = container_of(led_cdev,
+> +					struct thinkpad_t14s_ec, led_mic_mute);
+> +
+> +	return thinkpad_t14s_audio_led_set(ec, T14S_EC_MIC_MUTE_LED, brightness);
+> +}
+> +
+> +static enum led_brightness thinkpad_t14s_spk_mute_led_get(struct led_classdev *led_cdev)
+> +{
+> +	struct thinkpad_t14s_ec *ec = container_of(led_cdev,
+> +					struct thinkpad_t14s_ec, led_spk_mute);
+> +
+> +	return thinkpad_t14s_audio_led_get(ec, T14S_EC_SPK_MUTE_LED);
+> +}
+> +
+> +static int thinkpad_t14s_spk_mute_led_set(struct led_classdev *led_cdev,
+> +					  enum led_brightness brightness)
+> +{
+> +	struct thinkpad_t14s_ec *ec = container_of(led_cdev,
+> +					struct thinkpad_t14s_ec, led_spk_mute);
+> +
+> +	return thinkpad_t14s_audio_led_set(ec, T14S_EC_SPK_MUTE_LED, brightness);
+> +}
+> +
+> +static int thinkpad_t14s_kbd_audio_led_probe(struct thinkpad_t14s_ec *ec)
+> +{
+> +	int ret;
+> +
+> +	ec->led_mic_mute.name = "platform::micmute";
+> +	ec->led_mic_mute.max_brightness = 1,
+> +	ec->led_mic_mute.default_trigger = "audio-micmute",
+> +	ec->led_mic_mute.brightness_set_blocking = thinkpad_t14s_mic_mute_led_set;
+> +	ec->led_mic_mute.brightness_get = thinkpad_t14s_mic_mute_led_get;
+> +
+> +	ec->led_spk_mute.name = "platform::mute";
+> +	ec->led_spk_mute.max_brightness = 1,
+> +	ec->led_spk_mute.default_trigger = "audio-mute",
+> +	ec->led_spk_mute.brightness_set_blocking = thinkpad_t14s_spk_mute_led_set;
+> +	ec->led_spk_mute.brightness_get = thinkpad_t14s_spk_mute_led_get;
+> +
+> +	ret = devm_led_classdev_register(ec->dev, &ec->led_mic_mute);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return devm_led_classdev_register(ec->dev, &ec->led_spk_mute);
+> +}
+> +
+> +static const struct key_entry thinkpad_t14s_keymap[] = {
+> +	T14S_EC_KEY_ENTRY(FN_4, KEY_SLEEP),
+> +	T14S_EC_KEY_ENTRY(FN_N, KEY_VENDOR),
+> +	T14S_EC_KEY_ENTRY(FN_F4, KEY_MICMUTE),
+> +	T14S_EC_KEY_ENTRY(FN_F7, KEY_SWITCHVIDEOMODE),
+> +	T14S_EC_KEY_ENTRY(FN_F8, KEY_PERFORMANCE),
+> +	T14S_EC_KEY_ENTRY(FN_F10, KEY_SELECTIVE_SCREENSHOT),
+> +	T14S_EC_KEY_ENTRY(FN_F11, KEY_LINK_PHONE),
+> +	T14S_EC_KEY_ENTRY(FN_F12, KEY_BOOKMARKS),
+> +	T14S_EC_KEY_ENTRY(FN_SPACE, KEY_KBDILLUMTOGGLE),
+> +	T14S_EC_KEY_ENTRY(FN_ESC, KEY_FN_ESC),
+> +	T14S_EC_KEY_ENTRY(FN_TAB, KEY_ZOOM),
+> +	T14S_EC_KEY_ENTRY(FN_RIGHT_SHIFT, KEY_FN_RIGHT_SHIFT),
+> +	T14S_EC_KEY_ENTRY(TP_DOUBLE_TAP, KEY_PROG4),
+> +	{ KE_END }
+> +};
+> +
+> +static int thinkpad_t14s_input_probe(struct thinkpad_t14s_ec *ec)
+> +{
+> +	int ret;
+> +
+> +	ec->inputdev = devm_input_allocate_device(ec->dev);
+> +	if (!ec->inputdev)
+> +		return -ENOMEM;
+> +
+> +	ec->inputdev->name = "ThinkPad Extra Buttons";
+> +	ec->inputdev->phys = "thinkpad/input0";
+> +	ec->inputdev->id.bustype = BUS_HOST;
+> +	ec->inputdev->dev.parent = ec->dev;
+> +
+> +	ret = sparse_keymap_setup(ec->inputdev, thinkpad_t14s_keymap, NULL);
+> +	if (ret)
+> +		return ret;
+> +
+> +	return input_register_device(ec->inputdev);
+> +}
+> +
+> +static irqreturn_t thinkpad_t14s_ec_irq_handler(int irq, void *data)
+> +{
+> +	struct thinkpad_t14s_ec *ec = data;
+> +	int ret;
+> +	u8 val;
+> +
+> +	ret = thinkpad_t14s_ec_read_evt(ec, &val);
+> +	if (ret < 0) {
+> +		dev_err(ec->dev, "Failed to read event\n");
+> +		return IRQ_HANDLED;
+> +	}
+> +
+> +	switch (val) {
+> +	case T14S_EC_EVT_NONE:
+> +		break;
+> +	case T14S_EC_EVT_KEY_FN_SPACE:
+> +		thinkpad_t14s_kbd_bl_update(ec);
+> +		fallthrough;
+> +	case T14S_EC_EVT_KEY_FN_F4:
+> +	case T14S_EC_EVT_KEY_FN_F7:
+> +	case T14S_EC_EVT_KEY_FN_4:
+> +	case T14S_EC_EVT_KEY_FN_F8:
+> +	case T14S_EC_EVT_KEY_FN_F12:
+> +	case T14S_EC_EVT_KEY_FN_TAB:
+> +	case T14S_EC_EVT_KEY_FN_F10:
+> +	case T14S_EC_EVT_KEY_FN_N:
+> +	case T14S_EC_EVT_KEY_FN_F11:
+> +	case T14S_EC_EVT_KEY_FN_ESC:
+> +	case T14S_EC_EVT_KEY_FN_RIGHT_SHIFT:
+> +	case T14S_EC_EVT_KEY_TP_DOUBLE_TAP:
+> +		sparse_keymap_report_event(ec->inputdev,
+> +				T14S_EC_KEY_EVT_OFFSET + val, 1, true);
+> +		break;
+> +	case T14S_EC_EVT_AC_CONNECTED:
+> +		dev_dbg(ec->dev, "AC connected\n");
+> +		break;
+> +	case T14S_EC_EVT_AC_DISCONNECTED:
+> +		dev_dbg(ec->dev, "AC disconnected\n");
+> +		break;
+> +	case T14S_EC_EVT_KEY_POWER:
+> +		dev_dbg(ec->dev, "power button\n");
+> +		break;
+> +	case T14S_EC_EVT_LID_OPEN:
+> +		dev_dbg(ec->dev, "LID open\n");
+> +		break;
+> +	case T14S_EC_EVT_LID_CLOSED:
+> +		dev_dbg(ec->dev, "LID closed\n");
+> +		break;
+> +	case T14S_EC_EVT_THERMAL_TZ40:
+> +		dev_dbg(ec->dev, "Thermal Zone 40 Status Change Event (CPU/GPU)\n");
+> +		break;
+> +	case T14S_EC_EVT_THERMAL_TZ42:
+> +		dev_dbg(ec->dev, "Thermal Zone 42 Status Change Event (Battery)\n");
+> +		break;
+> +	case T14S_EC_EVT_THERMAL_TZ39:
+> +		dev_dbg(ec->dev, "Thermal Zone 39 Status Change Event (CPU/GPU)\n");
+> +		break;
+> +	case T14S_EC_EVT_KEY_FN_G:
+> +		dev_dbg(ec->dev, "FN + G - toggle double-tapping\n");
+> +		break;
+> +	case T14S_EC_EVT_KEY_FN_L:
+> +		dev_dbg(ec->dev, "FN + L - low performance mode\n");
+> +		break;
+> +	case T14S_EC_EVT_KEY_FN_M:
+> +		dev_dbg(ec->dev, "FN + M - medium performance mode\n");
+> +		break;
+> +	case T14S_EC_EVT_KEY_FN_H:
+> +		dev_dbg(ec->dev, "FN + H - high performance mode\n");
+> +		break;
+> +	case T14S_EC_EVT_KEY_FN_T:
+> +		dev_dbg(ec->dev, "FN + T - toggle intelligent cooling mode\n");
+> +		break;
+> +	case T14S_EC_EVT_KEY_FN_D:
+> +		dev_dbg(ec->dev, "FN + D - toggle privacy guard mode\n");
+> +		break;
+> +	default:
+> +		dev_info(ec->dev, "Unknown EC event: 0x%02x\n", val);
+> +		break;
+> +	}
+> +
+> +	return IRQ_HANDLED;
+> +}
+> +
+> +static int thinkpad_t14s_ec_probe(struct i2c_client *client)
+> +{
+> +	struct device *dev = &client->dev;
+> +	struct thinkpad_t14s_ec *ec;
+> +	int ret;
+> +
+> +	ec = devm_kzalloc(dev, sizeof(*ec), GFP_KERNEL);
+> +	if (!ec)
+> +		return -ENOMEM;
+> +
+> +	ec->dev = dev;
+> +
+> +	ec->regmap = devm_regmap_init(dev, &thinkpad_t14s_ec_regmap_bus,
+> +				      ec, &thinkpad_t14s_ec_regmap_config);
+> +	if (IS_ERR(ec->regmap))
+> +		return dev_err_probe(dev, PTR_ERR(ec->regmap),
+> +				     "Failed to init regmap\n");
+> +
+> +	ret = devm_request_threaded_irq(dev, client->irq, NULL,
+> +					thinkpad_t14s_ec_irq_handler,
+> +					IRQF_ONESHOT, dev_name(dev), ec);
+> +	if (ret < 0)
+> +		return dev_err_probe(dev, ret, "Failed to get IRQ\n");
+> +
+> +	ret = thinkpad_t14s_leds_probe(ec);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = thinkpad_t14s_kbd_backlight_probe(ec);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = thinkpad_t14s_kbd_audio_led_probe(ec);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = thinkpad_t14s_input_probe(ec);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	/*
+> +	 * Disable wakeup support by default, because the driver currently does
+> +	 * not support masking any events and the laptop should not wake up when
+> +	 * the LID is closed.
+> +	 */
+> +	device_wakeup_disable(dev);
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct of_device_id thinkpad_t14s_ec_of_match[] = {
+> +	{ .compatible = "lenovo,thinkpad-t14s-ec" },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(of, thinkpad_t14s_ec_of_match);
+> +
+> +static const struct i2c_device_id thinkpad_t14s_ec_i2c_id_table[] = {
+> +	{ "thinkpad-t14s-ec", },
+> +	{}
+> +};
+> +MODULE_DEVICE_TABLE(i2c, thinkpad_t14s_ec_i2c_id_table);
+> +
+> +static struct i2c_driver thinkpad_t14s_ec_i2c_driver = {
+> +	.driver = {
+> +		.name = "thinkpad-t14s-ec",
+> +		.of_match_table = thinkpad_t14s_ec_of_match,
+> +	},
+> +	.probe = thinkpad_t14s_ec_probe,
+> +	.id_table = thinkpad_t14s_ec_i2c_id_table,
+> +};
+> +module_i2c_driver(thinkpad_t14s_ec_i2c_driver);
+> +
+> +MODULE_AUTHOR("Sebastian Reichel <sre@kernel.org>");
+> +MODULE_DESCRIPTION("Lenovo Thinkpad T14s Embedded Controller");
+> +MODULE_LICENSE("GPL");
+> 
+> 
 
