@@ -1,263 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-73021-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73022-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A656B52429
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 00:20:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0CAE8B5245B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 01:00:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2A1F31885724
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 22:20:17 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id F25491C27662
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 10 Sep 2025 23:01:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A25830C350;
-	Wed, 10 Sep 2025 22:19:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1F6322CBC0;
+	Wed, 10 Sep 2025 23:00:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="hYBgkz/q"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="EF0GJc53"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-il1-f227.google.com (mail-il1-f227.google.com [209.85.166.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BA22F1FFE
-	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 22:19:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06F5F1FF1B4
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 23:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757542777; cv=none; b=UnvfKtmkB8GEm70PjQJK4W7d14hXSqQryVyjcz5sgnDBYf0bUcObpHkQulNtZ/IPZ+xnzVLkL4QgrAzDq2xmQrQNxUMeqcnK+k/HPqOMGoTa1Lr4o4+2jcppAVSL5zCeYlCxoKNtt28lgcv6xiBW/wWrd7U2YpOwgSHf2iWCgn4=
+	t=1757545240; cv=none; b=AhwKYTpNpuS6GAL2MlBnrFMlc85VmKryoMB4rCu5NrGAjIS5yO8jVV6MP3LhwW3z+4yMtVmiUK52WsumSJSiob1kj6LwPW4M49M2GDFLfSmBiwN7QQ7jCQKseOxwQngzrhX1MevBsVt/vuAK6PqpMsMxNV2EyDrGDvY46qkYExo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757542777; c=relaxed/simple;
-	bh=qryd9d3EcpC0AlezfGs+ybYlxKIarlPyMa63kBcjQPg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TASXfJzDxdAMzQ8bQ4z5MaUrb4MI1/mt2ptbMbAW5lUu1wy9/tVhUMPBfyUb+XvLJWoTBWJpcje51x2ORcqPiF6z0mPdoxiv+c3+MlcCNhth6nXX1kBjuHtv8n+fMRxlymouZsLSSsCJcjntBJ7Bn6rzOUDM69qdUa/JV6oa65M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=hYBgkz/q; arc=none smtp.client-ip=209.85.166.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
-Received: by mail-il1-f227.google.com with SMTP id e9e14a558f8ab-3fe48646d40so6315915ab.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:19:35 -0700 (PDT)
+	s=arc-20240116; t=1757545240; c=relaxed/simple;
+	bh=ucXfFbNH2X8B/nNstnYWBoJfH27PzDClqTCOlwEoX5M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QPbhNYl6QaPwJzsEiCqgIfkAlNIN9jnORBuA9SkK/XcpetsI/2h+DxDMLvGtxcy9satXpNMSJzSFpfnlMj5xJi6kFnRSLU20HD0aYMYNN7YZDe5isD+6r//D/0rZM0O/dppPn0oxUer53MWGDvg19hrUlfZLjEA4z5yY9dvSAtg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=EF0GJc53; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58AJ5sZt023984
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 23:00:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	914LeQkfu91jt/QVv1f92X+tdyI3Azz2Mw7FuL1awk4=; b=EF0GJc53cljJtvMe
+	R2BH6enz+nyMqRYvbksIFcSwujVTVOzDla/rFJi4opnSJwOxmSbHbxti4ss4hbcp
+	bKbhToYFuRsdHcf5KYFuxej/iyupeqsf3liI+1aCE4lzPppGb6rC0+jdvlfkAW+n
+	MgS6LMSSwKQhbJqx1YMYXcCwdK0gbKv+O0ljOlsrgG5XcxVSpaK/RtKeYEjP2pWL
+	pQUbxOxxHsYyiZCvd6UjK+FHFhNEzuDWbO5jDtfYeutzIPR2DqPBQ2AveBU7oZT4
+	jmlN0081RK1pO1fLLwJ2qrWRG/cGOGjHnFOf/mjR+RsJuaiOe6ZVs8eTRDxyER7N
+	2neTgw==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 493f6h0h77-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 23:00:37 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-70edbfb260fso2124316d6.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 16:00:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757542775; x=1758147575;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:dkim-signature:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DYkMluAXoUU9ziRsn/K2ST3c55WCNeely9VEl19vgTc=;
-        b=B67Re1D5XJaTWTlMPacUQSe+1RQomeN1Z9ICCHq23AFFS2gnQzUNCgVIRT0QmBPOpv
-         Evw0tx17v0EabLwl1tT4A3gkRLDlmGCQnIfYTqRc163jZyxIs8PFwq/prRQgG6mUXelD
-         9G4lm7+73i4shvE5xZsQSSpkAT30txq5cbNPU9soemzwpXmVQkleVdD6EvSLbqCycnRg
-         43eBSXnPOyxvC3UqaDbveU8HS52e463WmQ/fBrDVJtndwZPh0UTHvdpmHxpd8PYjbdjN
-         Dq8mU0pMDcFAXUw54motwNT5W4jLaTmPa6Y4eRCpAdbjRctifOHea5LF9TXpw+8v+Gq9
-         rY/A==
-X-Forwarded-Encrypted: i=1; AJvYcCWzn6Y8DR3ZFIYlhNeDIeQXWORC0hEWdgFn7zV/slQlij7WJudMl3lF/VYgo2YnXGgQbmlxxepx3D8Vyb5K@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKUQc2UqNXZEQYdBTPNJp8YWneAjQM3kfxAtW+nrc0iGb5vTeT
-	83m3gryLjRKtSSsCgevEXiIkwbg/C3aNqFSV0u53PX3mX/3j6lNPxG1FLniLz48nvL5mirpNGpj
-	D77WF3bGgCMTPEuqpnTBGkYhh+BXlMHZtFDZYt4zZ0ldJ5ptdpwy4cHis9nnHWntGxO45pvDHcD
-	GRD3wCZFk5O4ycuazSbrcfoSTf5WFTqkjxMhn/mB2rLOjc1x4/Qhat1VWu9F4CIqPKbcK4wtMcu
-	ZW/vbiLO8OqyIlr5MoZ0LACBg==
-X-Gm-Gg: ASbGncsubqHMXqSTVSATNsvAPqJaA+gWRaHhhKl/m6kEtDF1Bk/wfSieR7BghEAofIq
-	De+yzUxSLbpqq4zJsgln/2lU9lGrzS/X+wtgLgPOP8Te0XB8C8G4yuyPw5IsQYHvOnsRo93JOMf
-	l2k8VjEqJJ0eqFKEo1XKFbz2xxV97g5ZNpded4KgN7y6uJ5zn02g3Da43eeFJ/SryTfL3SNP/Mn
-	1HtE+MDAJ5PJMF6w+NnwULqpZE9iVdVj+HgrugCOiObNV4K89n1WjsxnR7FwZuffKLJQ21uX5Dv
-	OozKXrYlylotqbaEA2vhpIP4bVEYRpA5M5HMukpNpYYv5efPTeTjjsH4gviPznYVGJK+cnr9q0I
-	BFmdLzFj7MJSvFFQtXbsttWSK0z4+55jezV9EfpeTcuCE/x2Ym4/FMUA+aBI4/uGg7HpezfASVZ
-	W3QZRG
-X-Google-Smtp-Source: AGHT+IGBRVrpPhTfhINKVmKMjLzOhfmAPKUNeQYrTBSVjJWmFyWNXMuKEKiNVVfMsO0l41ULZIIz+FCcX3DH
-X-Received: by 2002:a05:6e02:9d:b0:3e5:8344:49ed with SMTP id e9e14a558f8ab-41be61c4d65mr19849485ab.1.1757542774863;
-        Wed, 10 Sep 2025 15:19:34 -0700 (PDT)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-10.dlp.protect.broadcom.com. [144.49.247.10])
-        by smtp-relay.gmail.com with ESMTPS id e9e14a558f8ab-41c89d28cd0sm466875ab.8.2025.09.10.15.19.34
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 10 Sep 2025 15:19:34 -0700 (PDT)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-qk1-f199.google.com with SMTP id af79cd13be357-7e86f8f27e1so30648085a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 15:19:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1757542774; x=1758147574; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:autocrypt:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=DYkMluAXoUU9ziRsn/K2ST3c55WCNeely9VEl19vgTc=;
-        b=hYBgkz/qJ4SVNEXbhuTCeoahZ303YQomicntRSwuzndbwenlnScgpsJ04SIg2Tyx7h
-         DnWUmNhxzOR7UCZyXjBp1Rmg1Lplfncc9X8ti3cYfUotaoY5ABW4VXroUnraRuuJKPQ3
-         oLtww6njyvqCM3RTg3XC6EGyspx2xukWZTbMY=
-X-Forwarded-Encrypted: i=1; AJvYcCWNGFXo/h3TZejfyMRB0cfJ07nBuMI7RFhtshCCYW+M4qfjnQkbPm3enXPGJMB1v2nxeGtPTciW1YCRnQG/@vger.kernel.org
-X-Received: by 2002:a05:620a:1984:b0:804:4a23:38e0 with SMTP id af79cd13be357-81ff3a4feefmr183982385a.4.1757542773827;
-        Wed, 10 Sep 2025 15:19:33 -0700 (PDT)
-X-Received: by 2002:a05:620a:1984:b0:804:4a23:38e0 with SMTP id af79cd13be357-81ff3a4feefmr183977285a.4.1757542773297;
-        Wed, 10 Sep 2025 15:19:33 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-81b59f8786fsm364672285a.29.2025.09.10.15.19.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 15:19:32 -0700 (PDT)
-Message-ID: <8015ec3f-778f-43e9-b91d-fe76b814157f@broadcom.com>
-Date: Wed, 10 Sep 2025 15:19:28 -0700
+        d=1e100.net; s=20230601; t=1757545236; x=1758150036;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=914LeQkfu91jt/QVv1f92X+tdyI3Azz2Mw7FuL1awk4=;
+        b=MsO4VtRlBqGxvfAmuehmqIKxYhzdolyjXmQ70Eur88yMlCD4xphbq8bgpv1yScbkTK
+         HVAe6HUrA2Z5wmIDa/bZFv3mdq5+zMy6fDlAAG+i7Cet3cLs3IPM2QgN4EFDMBUrGIgb
+         juKCF4xo6J2SVMOf1C53mvrLBimh9/8AeNjxvJLwWOF+edySfnB2Soomvq+1MDuaFZFN
+         +tmHdHf1xHicBJK67UyKM7+/+gJZlXDdYwIznppqvUNF2RCSd5GIdwakZGuLEz44nHun
+         PuwyVWPK8xu8EQ58ChkvqIFnTeMnSAuz6yIUsxwOSpx4fh+aSDvAHI1FZWGxoFfgBHPY
+         bBxw==
+X-Forwarded-Encrypted: i=1; AJvYcCXCMWbMI5CCUYlGpYOoPUZ24DfQqYNWGmw/Ia3N7Dyv8KnXbhGzAYAoHQHS/eKf+Fmv9YVPe8UCPKs4vCa+@vger.kernel.org
+X-Gm-Message-State: AOJu0YyWhqTjH1KVqHsBJUuA6eENOvXBgQNA2xS9L4h+wbTGve0XwTiL
+	7jvYEB7c4HfEi+Hv26CLD2HT9qisv9lx1/+YoI+8uD0Xa8cPsAAt1A8aLrOAmVrGEyXnGZKwbjR
+	GP0oatXrn5VddoCK/8B6FaoT3HTatWLQbsW7ep5Jv1xD8zvZ2rdf4lwble8gQrRwKWqiO
+X-Gm-Gg: ASbGncvaZuYzIcpa8EMfKKsKvmXIoCzOIfIgBksgTCE8qr8Rxr/m2RmMvT/fjJNjbZQ
+	TAsIKNVcEIggECaz1MuUEoaoE9h2nGO+p4N6HnZj9hATaSRmZyLVYxN6ynZlbxUIVf0ESw4NI/W
+	Bu0UwLQaJqplb+YOJVOLktt/XCCXwcpBIz6yX3K/zVlXo1bCSpzuY+n9wxGTZd73iJcxby2yK6S
+	sS09RuirexvPo2snjcrdCaYL+6cK1jhDZfBU3Gp97QiO796oeOiQYlDMtmUFCHKDv6Lh4CKGcjX
+	mLi8MbjhUAAPrZrzONUTyaSBgGUIjSRZ54sbLftIorLcG3N/o/iPgw70Yd1IDlxA15W4bo7beGj
+	u5/Nmj93sC1qnKTVnPj6+ZTRu+D/HO2mDaFrKSXT84f2sdR80Qllf
+X-Received: by 2002:ad4:4eea:0:b0:726:32d9:db53 with SMTP id 6a1803df08f44-739435ce873mr188465526d6.59.1757545235822;
+        Wed, 10 Sep 2025 16:00:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGTuLLuSD/z2qmLIK+/TJNlWplJfbykOm3sp1ZCoFT1OChV63M7ij3BfD+2/tdI+tmyoqG+rA==
+X-Received: by 2002:ad4:4eea:0:b0:726:32d9:db53 with SMTP id 6a1803df08f44-739435ce873mr188464496d6.59.1757545234954;
+        Wed, 10 Sep 2025 16:00:34 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-56e1d9e2919sm54322e87.9.2025.09.10.16.00.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 Sep 2025 16:00:34 -0700 (PDT)
+Date: Thu, 11 Sep 2025 02:00:31 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/5] drm/msm/registers: Remove license/etc from generated
+ headers
+Message-ID: <vuuvxw6dehbaxicrrirhfiyvic4ybts74gt6grtcrx42yhpm6w@n4xfc3iy42lf>
+References: <20250908193021.605012-1-robin.clark@oss.qualcomm.com>
+ <20250908193021.605012-2-robin.clark@oss.qualcomm.com>
+ <o25axq4soxjluqnxjad2f3blhezuglsvex6k3aav5v65ynn7qd@5i3wm2lryr7q>
+ <CACSVV02Zym2hC-fFcJsP4M9T4mYGXsMtGrmnux6Eva0C7PHdfA@mail.gmail.com>
+ <sydyej7hrw6tryx5lnidqucx3bcw34dkinj5c2u6szbv2wgnuo@utrlq5q5pt6n>
+ <CACSVV02=+=PXtW-MrZVBKkFpadbMC_twKyRDPBb+YSJDX7dqTQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird Beta
-Subject: Re: [PATCH net-next v12 00/18] net: phy: Introduce PHY ports
- representation
-To: Maxime Chevallier <maxime.chevallier@bootlin.com>, davem@davemloft.net
-Cc: netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, thomas.petazzoni@bootlin.com,
- Andrew Lunn <andrew@lunn.ch>, Jakub Kicinski <kuba@kernel.org>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>
-References: <20250909152617.119554-1-maxime.chevallier@bootlin.com>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <florian.fainelli@broadcom.com>
-Autocrypt: addr=florian.fainelli@broadcom.com; keydata=
- xsBNBFPAG8ABCAC3EO02urEwipgbUNJ1r6oI2Vr/+uE389lSEShN2PmL3MVnzhViSAtrYxeT
- M0Txqn1tOWoIc4QUl6Ggqf5KP6FoRkCrgMMTnUAINsINYXK+3OLe7HjP10h2jDRX4Ajs4Ghs
- JrZOBru6rH0YrgAhr6O5gG7NE1jhly+EsOa2MpwOiXO4DE/YKZGuVe6Bh87WqmILs9KvnNrQ
- PcycQnYKTVpqE95d4M824M5cuRB6D1GrYovCsjA9uxo22kPdOoQRAu5gBBn3AdtALFyQj9DQ
- KQuc39/i/Kt6XLZ/RsBc6qLs+p+JnEuPJngTSfWvzGjpx0nkwCMi4yBb+xk7Hki4kEslABEB
- AAHNMEZsb3JpYW4gRmFpbmVsbGkgPGZsb3JpYW4uZmFpbmVsbGlAYnJvYWRjb20uY29tPsLB
- IQQQAQgAywUCZWl41AUJI+Jo+hcKAAG/SMv+fS3xUQWa0NryPuoRGjsA3SAUAAAAAAAWAAFr
- ZXktdXNhZ2UtbWFza0BwZ3AuY29tjDAUgAAAAAAgAAdwcmVmZXJyZWQtZW1haWwtZW5jb2Rp
- bmdAcGdwLmNvbXBncG1pbWUICwkIBwMCAQoFF4AAAAAZGGxkYXA6Ly9rZXlzLmJyb2FkY29t
- Lm5ldAUbAwAAAAMWAgEFHgEAAAAEFQgJChYhBNXZKpfnkVze1+R8aIExtcQpvGagAAoJEIEx
- tcQpvGagWPEH/2l0DNr9QkTwJUxOoP9wgHfmVhqc0ZlDsBFv91I3BbhGKI5UATbipKNqG13Z
- TsBrJHcrnCqnTRS+8n9/myOF0ng2A4YT0EJnayzHugXm+hrkO5O9UEPJ8a+0553VqyoFhHqA
- zjxj8fUu1px5cbb4R9G4UAySqyeLLeqnYLCKb4+GklGSBGsLMYvLmIDNYlkhMdnnzsSUAS61
- WJYW6jjnzMwuKJ0ZHv7xZvSHyhIsFRiYiEs44kiYjbUUMcXor/uLEuTIazGrE3MahuGdjpT2
- IOjoMiTsbMc0yfhHp6G/2E769oDXMVxCCbMVpA+LUtVIQEA+8Zr6mX0Yk4nDS7OiBlvOwE0E
- U8AbwQEIAKxr71oqe+0+MYCc7WafWEcpQHFUwvYLcdBoOnmJPxDwDRpvU5LhqSPvk/yJdh9k
- 4xUDQu3rm1qIW2I9Puk5n/Jz/lZsqGw8T13DKyu8eMcvaA/irm9lX9El27DPHy/0qsxmxVmU
- pu9y9S+BmaMb2CM9IuyxMWEl9ruWFS2jAWh/R8CrdnL6+zLk60R7XGzmSJqF09vYNlJ6Bdbs
- MWDXkYWWP5Ub1ZJGNJQ4qT7g8IN0qXxzLQsmz6tbgLMEHYBGx80bBF8AkdThd6SLhreCN7Uh
- IR/5NXGqotAZao2xlDpJLuOMQtoH9WVNuuxQQZHVd8if+yp6yRJ5DAmIUt5CCPcAEQEAAcLB
- gQQYAQIBKwUCU8AbwgUbDAAAAMBdIAQZAQgABgUCU8AbwQAKCRCTYAaomC8PVQ0VCACWk3n+
- obFABEp5Rg6Qvspi9kWXcwCcfZV41OIYWhXMoc57ssjCand5noZi8bKg0bxw4qsg+9cNgZ3P
- N/DFWcNKcAT3Z2/4fTnJqdJS//YcEhlr8uGs+ZWFcqAPbteFCM4dGDRruo69IrHfyyQGx16s
- CcFlrN8vD066RKevFepb/ml7eYEdN5SRALyEdQMKeCSf3mectdoECEqdF/MWpfWIYQ1hEfdm
- C2Kztm+h3Nkt9ZQLqc3wsPJZmbD9T0c9Rphfypgw/SfTf2/CHoYVkKqwUIzI59itl5Lze+R5
- wDByhWHx2Ud2R7SudmT9XK1e0x7W7a5z11Q6vrzuED5nQvkhAAoJEIExtcQpvGagugcIAJd5
- EYe6KM6Y6RvI6TvHp+QgbU5dxvjqSiSvam0Ms3QrLidCtantcGT2Wz/2PlbZqkoJxMQc40rb
- fXa4xQSvJYj0GWpadrDJUvUu3LEsunDCxdWrmbmwGRKqZraV2oG7YEddmDqOe0Xm/NxeSobc
- MIlnaE6V0U8f5zNHB7Y46yJjjYT/Ds1TJo3pvwevDWPvv6rdBeV07D9s43frUS6xYd1uFxHC
- 7dZYWJjZmyUf5evr1W1gCgwLXG0PEi9n3qmz1lelQ8lSocmvxBKtMbX/OKhAfuP/iIwnTsww
- 95A2SaPiQZA51NywV8OFgsN0ITl2PlZ4Tp9hHERDe6nQCsNI/Us=
-In-Reply-To: <20250909152617.119554-1-maxime.chevallier@bootlin.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACSVV02=+=PXtW-MrZVBKkFpadbMC_twKyRDPBb+YSJDX7dqTQ@mail.gmail.com>
+X-Proofpoint-ORIG-GUID: Pi1MxyTpyCsAjmY5gjitVUbpiXlIZ39N
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEwMDE3NyBTYWx0ZWRfX8CqRWHatCy0P
+ NdLRN+eUIHrutolUrCUjhIPD0rREh96qVNeCviAlNSEGTqQzD+0yeDGy+SaGhvtRwkqR7II3mjf
+ TEyN/xCu0nhsjCs+LDF4/AlUDDyHaupHx19EKXqmxvcwMKI8jbQT3v0oR9ku+6YZt9htfs4KplC
+ JWqkt7S4D0eRT6cdyIoI3TfmsMFXkS6kIKHmOtCYx3emkgwwLwzpKJB84eghP7solbfMckIOzoG
+ h4B6z4owIJWyBxaokETSKgsR7V3aWwk/4HcqYvPefKDyo1X3YHmSa4ef48zy0dxsbJWdaW0wgbc
+ lUHQ+pdUeq9HLOEz0vtc6Q/Qwb4oLtHTLHHxGeb6uFFIdNpF+abrwOffo0RmhIOJCcKNK5+ZB/M
+ 5drdJlPZ
+X-Authority-Analysis: v=2.4 cv=WPB/XmsR c=1 sm=1 tr=0 ts=68c20316 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8 a=kcwbHBCksZcoAycTYWwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
+ a=Vxmtnl_E_bksehYqCbjh:22
+X-Proofpoint-GUID: Pi1MxyTpyCsAjmY5gjitVUbpiXlIZ39N
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-10_04,2025-09-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509100177
 
-On 9/9/25 08:25, Maxime Chevallier wrote:
-> Hi everyone,
+On Wed, Sep 10, 2025 at 02:44:54PM -0700, Rob Clark wrote:
+> On Wed, Sep 10, 2025 at 12:38 PM Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >
+> > On Tue, Sep 09, 2025 at 10:25:52AM -0700, Rob Clark wrote:
+> > > On Tue, Sep 9, 2025 at 8:01 AM Dmitry Baryshkov
+> > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > >
+> > > > On Mon, Sep 08, 2025 at 12:30:04PM -0700, Rob Clark wrote:
+> > > > > Since these generated files are no longer checked in, either in mesa or
+> > > > > in the linux kernel, simplify things by dropping the verbose generated
+> > > > > comment.
+> > > > >
+> > > > > These were semi-nerf'd on the kernel side, in the name of build
+> > > > > reproducibility, by commit ba64c6737f86 ("drivers: gpu: drm: msm:
+> > > > > registers: improve reproducibility"), but in a way that was semi-
+> > > > > kernel specific.  We can just reduce the divergence between kernel
+> > > > > and mesa by just dropping all of this.
+> > > > >
+> > > > > Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
+> > > > > ---
+> > > > >  drivers/gpu/drm/msm/registers/gen_header.py | 37 +--------------------
+> > > > >  1 file changed, 1 insertion(+), 36 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/gpu/drm/msm/registers/gen_header.py b/drivers/gpu/drm/msm/registers/gen_header.py
+> > > > > index a409404627c7..56273a810c1d 100644
+> > > > > --- a/drivers/gpu/drm/msm/registers/gen_header.py
+> > > > > +++ b/drivers/gpu/drm/msm/registers/gen_header.py
+> > > > > @@ -444,9 +444,6 @@ class Parser(object):
+> > > > >               self.variants = set()
+> > > > >               self.file = []
+> > > > >               self.xml_files = []
+> > > > > -             self.copyright_year = None
+> > > > > -             self.authors = []
+> > > > > -             self.license = None
+> > > > >
+> > > > >       def error(self, message):
+> > > > >               parser, filename = self.stack[-1]
+> > > > > @@ -686,10 +683,6 @@ class Parser(object):
+> > > > >                       self.parse_field(attrs["name"], attrs)
+> > > > >               elif name == "database":
+> > > > >                       self.do_validate(attrs["xsi:schemaLocation"])
+> > > > > -             elif name == "copyright":
+> > > > > -                     self.copyright_year = attrs["year"]
+> > > > > -             elif name == "author":
+> > > > > -                     self.authors.append(attrs["name"] + " <" + attrs["email"] + "> " + attrs["name"])
+> > > > >
+> > > > >       def end_element(self, name):
+> > > > >               if name == "domain":
+> > > > > @@ -706,8 +699,6 @@ class Parser(object):
+> > > > >                       self.current_array = self.current_array.parent
+> > > > >               elif name == "enum":
+> > > > >                       self.current_enum = None
+> > > > > -             elif name == "license":
+> > > > > -                     self.license = self.cdata
+> > > > >
+> > > > >       def character_data(self, data):
+> > > > >               self.cdata += data
+> > > > > @@ -868,33 +859,7 @@ def dump_c(args, guard, func):
+> > > > >
+> > > > >       print("#ifndef %s\n#define %s\n" % (guard, guard))
+> > > > >
+> > > > > -     print("""/* Autogenerated file, DO NOT EDIT manually!
+> > > > > -
+> > > > > -This file was generated by the rules-ng-ng gen_header.py tool in this git repository:
+> > > > > -http://gitlab.freedesktop.org/mesa/mesa/
+> > > > > -git clone https://gitlab.freedesktop.org/mesa/mesa.git
+> > > > > -
+> > > > > -The rules-ng-ng source files this header was generated from are:
+> > > > > -""")
+> > > > > -     maxlen = 0
+> > > > > -     for filepath in p.xml_files:
+> > > > > -             new_filepath = re.sub("^.+drivers","drivers",filepath)
+> > > > > -             maxlen = max(maxlen, len(new_filepath))
+> > > > > -     for filepath in p.xml_files:
+> > > > > -             pad = " " * (maxlen - len(new_filepath))
+> > > > > -             filesize = str(os.path.getsize(filepath))
+> > > > > -             filesize = " " * (7 - len(filesize)) + filesize
+> > > > > -             filetime = time.ctime(os.path.getmtime(filepath))
+> > > > > -             print("- " + new_filepath + pad + " (" + filesize + " bytes, from <stripped>)")
+> > > > > -     if p.copyright_year:
+> > > > > -             current_year = str(datetime.date.today().year)
+> > > > > -             print()
+> > > > > -             print("Copyright (C) %s-%s by the following authors:" % (p.copyright_year, current_year))
+> > > > > -             for author in p.authors:
+> > > > > -                     print("- " + author)
+> > > > > -     if p.license:
+> > > > > -             print(p.license)
+> > > >
+> > > > IANAL, but I as the generated files contain C/C++ functions, I think we
+> > > > need to have a corresponding licence in the file.
+> > >
+> > > I can't find anything that indicates a difference depending on the
+> > > contents of the generated file (ie. whether it be
+> > > functions/tables/prototypes/etc).  And AFAICT it is implicit that the
+> > > license of the generated file is inherited from the input to the
+> > > generator.
+> > >
+> > > Some other points:
+> > > - the various *.mod.c files generated for each kernel module do not
+> > > contain a license
+> > > - various files generated by asn1_compiler do not contain a license
+> > > - other generated .c/.h files are a mixed bag, some contain a license
+> > > header and some do not
+> > >
+> > > (In all of the cases the generated files should not be distributed,
+> > > IMHO.  Yocto should fix this.)
+> >
+> > It's a bit funny. Normally you use something like linux-headers-foo,
+> > which contains just include/*, arch/foo/include/ and some other files.
+> > Yocto has adopted a way of building the modules against a full-kernel
+> > source & binaries dirs. As such, those two directories are parts of the
+> > cache aka 'shared state', which gets shared, etc.
 > 
-> Here is a V12 for the phy_port work, aiming at representing the
-> connectors and outputs of PHY devices.
-> 
-> Last round was 16 patches, and now 18, if needed I can split some
-> patches out such as the 2 phylink ones.
-> 
-> this V12 address the SFP interface selection for PHY driver SFPs, as
-> commented by Russell on v10.
-> 
-> This and Rob's review on the dp83822 patch are the only changes.
-> 
-> As a remainder, a few important notes :
-> 
->   - This is only a first phase. It instantiates the port, and leverage
->     that to make the MAC <-> PHY <-> SFP usecase simpler.
-> 
->   - Next phase will deal with controlling the port state, as well as the
->     netlink uAPI for that.
-> 
->   - The end-goal is to enable support for complex port MUX. This
->     preliminary work focuses on PHY-driven ports, but this will be
->     extended to support muxing at the MII level (Multi-phy, or compo PHY
->     + SFP as found on Turris Omnia for example).
-> 
->   - The naming is definitely not set in stone. I named that "phy_port",
->     but this may convey the false sense that this is phylib-specific.
->     Even the word "port" is not that great, as it already has several
->     different meanings in the net world (switch port, devlink port,
->     etc.). I used the term "connector" in the binding.
-> 
-> A bit of history on that work :
-> 
-> The end goal that I personnaly want to achieve is :
-> 
->              + PHY - RJ45
->              |
->   MAC - MUX -+ PHY - RJ45
-> 
-> After many discussions here on netdev@, but also at netdevconf[1] and
-> LPC[2], there appears to be several analoguous designs that exist out
-> there.
-> 
-> [1] : https://netdevconf.info/0x17/sessions/talk/improving-multi-phy-and-multi-port-interfaces.html
-> [2] : https://lpc.events/event/18/contributions/1964/ (video isn't the
-> right one)
-> 
-> Take the MAchiatobin, it has 2 interfaces that looks like this :
-> 
->   MAC - PHY -+ RJ45
->              |
-> 	    + SFP - Whatever the module does
-> 
-> Now, looking at the Turris Omnia, we have :
-> 
-> 
->   MAC - MUX -+ PHY - RJ45
->              |
-> 	    + SFP - Whatever the module does
-> 
-> We can find more example of this kind of designs, the common part is
-> that we expose multiple front-facing media ports. This is what this
-> current work aims at supporting. As of right now, it does'nt add any
-> support for muxing, but this will come later on.
-> 
-> This first phase focuses on phy-driven ports only, but there are already
-> quite some challenges already. For one, we can't really autodetect how
-> many ports are sitting behind a PHY. That's why this series introduces a
-> new binding. Describing ports in DT should however be a last-resort
-> thing when we need to clear some ambiguity about the PHY media-side.
-> 
-> The only use-cases that we have today for multi-port PHYs are combo PHYs
-> that drive both a Copper port and an SFP (the Macchiatobin case). This
-> in itself is challenging and this series only addresses part of this
-> support, by registering a phy_port for the PHY <-> SFP connection. The
-> SFP module should in the end be considered as a port as well, but that's
-> not yet the case.
-> 
-> However, because now PHYs can register phy_ports for every media-side
-> interface they have, they can register the capabilities of their ports,
-> which allows making the PHY-driver SFP case much more generic.
-> 
-> Let me know what you think, I'm all in for discussions :)
-> 
-> Regards,
+> So _all_ generated files get shared?  Is this about building
+> out-of-tree modules?  (Which even in that case, they shouldn't need
+> these generated files.)
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Yes. 
 
-Tested with bcmgenet which is single MAC + PHY using phylib.
-
-Tested with bcm_sf2 which uses phylink and has a combination of internal 
-and external PHYs.
---
-Florian
 -- 
-Florian
-
+With best wishes
+Dmitry
 
