@@ -1,282 +1,179 @@
-Return-Path: <linux-arm-msm+bounces-73076-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F61DB52C75
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 11:01:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC7FDB52C7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 11:01:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2FE1A3B49FA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 09:00:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7B761C82DA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 09:01:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8039D2E7165;
-	Thu, 11 Sep 2025 09:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C9652E7BCE;
+	Thu, 11 Sep 2025 09:01:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="zUlU2w2s"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rDeasZne"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497421D8DFB
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 09:00:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098042E6CA8;
+	Thu, 11 Sep 2025 09:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757581234; cv=none; b=bp969Z9LeAmeM1HcFMDo05XReySVnmShAicNhQzPhvWUpY4GURNHJlG85T3Q6jTMr0aCvoLr/uuNCdCnKDCO/yfS+20F3BlbPFgYemFG0hWWlTjSfRLzGfmQ6GHq+rhn1v5wcUKLdr0+oPZ9oG1YDb0Wr3RXtkQ3wLZHWaIh3/0=
+	t=1757581268; cv=none; b=XoKMMo/XXSdvP2JXAlrb21QFnDW6iAjtnBe27zjOBS3r9GLD26pXjNu/HJtI1bcf05sxU9kEfQhhHGmLDzJTyjtJmCHBWgvNir+GkJ2VNXtyiu8Jjj8klOwNKQTEUKgJr4ELrH+3yePLUd/JFeZOcagn/Li2yU3NjjXTZAhlYMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757581234; c=relaxed/simple;
-	bh=J6JRpUa9Jqmrc9CHAa6uRObdOcP9b5K+xnoxoo1FkLc=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=dstCTjVkV8n4CdcuzBj6LE6HnwkEBGzePhYhGvIzjqgRx8O/7uze/S7iMjik5H+McAE4FVbNWAL2ixMssryaO3ehmw+187fR8hgWKgW3Zk/5nfDC2OCaeFzJzRRRUiDvcqy1a1ODCRjrXASGR+zFV6oPAjo7rGaIuaUmaV5sDsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=zUlU2w2s; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3e07ffffb87so234874f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 02:00:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757581230; x=1758186030; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z7ZvTScnMNr1AH24k1ntK2IoMlTzS54Np2T1I7lMRD8=;
-        b=zUlU2w2suIbqKwAYEKBSlpv/+pjNpZNVXZJVgdnyGxrEhu47LOv7cExdJC+04ze8Ww
-         Ykkm9rP/dCmov0VBkEhhNOczf2lZH1ZulDBqx0OrixrLleBj1jFr9DHWsvTBVwg+ZtGW
-         Wz2Oy/0S6fJidlTOsOrZ46d+kvtI9dhMM0H5SjRdktJPIG9RnYaODbjWC1r+/gXR2L/k
-         oxuQBmm2slkSGSk+L5iPIpT1UI5srkcfKDcsILxW1I/8zcOVvEpzoqmsVdycK06H7R66
-         S9To+/53KIU4I0gpwcDa0H43tWljknFTEzaYWAdGs8MPiK86vRHIgGQLAxpZetqAFvTk
-         NA7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757581230; x=1758186030;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=z7ZvTScnMNr1AH24k1ntK2IoMlTzS54Np2T1I7lMRD8=;
-        b=g0AxMVFXfhbTMCPXzij9S81WKQRJLgxjldH9iyy6y5tbrqwicC4aqBEBKXcWDZX3RY
-         jIQTRpJQD9cb0AQAPP3EGgrxhuAcrz00eAEUKY0OzD/OUNksZM0F9I7oXIfePXMKFGf1
-         PtUrN6jFQ46B23NLf0As++WZfZT6lY6nqYoxoFNoiAtvZTn8Mt9cGWNQTs1H+8OMsyIW
-         sqve3MGbCs9SGTAVuciO11MkDwOTCiTDlIgsa6u8lgwHQRihQ4CS5KA2faOiBw0D3NUy
-         yFVyW5sKCENTBGXQjQT2uaxnnYq2C/h7wubZja6f2gqTPOEhOR3R2x8caxcPkTZ4/WI9
-         EYYw==
-X-Forwarded-Encrypted: i=1; AJvYcCV8Sklgn50jqPK6FcqxqBvBX5s0ftGrYuVFyAwp+QmBo/y0zmyDYp4r6LeHtcd2hXhMu93zu6rjNCQqrAob@vger.kernel.org
-X-Gm-Message-State: AOJu0YwNWX+EQZ2DBMvM1TQKCfuIsPxyYdZILes23plPIwqRfDbFrrP9
-	PRaWZLi11kxbDgYsdi//+df4VAsQEHFT3zBdCNZY192pYizhwDrzAcrnqMbYQ/O45Uk=
-X-Gm-Gg: ASbGncuDQoDDmhlQZweg+lyVJTfISfVam6GGo9D0v+3I52GrpPCYGoB07SYWFu3PuR3
-	+IX1h6/nP/TKFW7hA5WD3ZkogdQdMdtIQ8sFQuWypMsVwpMnjYSxifZzWUPft1Qa/ssHo71ROgh
-	K2vCK9f8YXA3agqLOvHMKrfwDr9wOMLXwf8xo+pFYCjS/ihQybXrbOjy+MiVMbKJGe5lDv/Vk5l
-	FVl7nCUAd4/JG3T68Imue/vQUDWzsD8j6wlzZDvFautTFEXfb0Yrx/KHf8q3Y3Rewbd4YQ2i09j
-	R2cRsfmenx8cXGSs76esDsj/I7nyGECOD3zFXzVa2ec05d3H62EZJIconW7tWPiYamRErjv+t6g
-	D6Ka9i86PJfOdU0bJ+Z2kfIe/dfc8DicwQmrw4A==
-X-Google-Smtp-Source: AGHT+IEda48Vss7lyCEE2CSJvlNkx7dZSmRvauNmjJVS6GUI4lzbwbGCwGqB58JM6Y7mIk1wW74mpQ==
-X-Received: by 2002:a05:6000:3101:b0:3e4:f194:2886 with SMTP id ffacd0b85a97d-3e642cadca2mr15196494f8f.19.1757581229312;
-        Thu, 11 Sep 2025 02:00:29 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:8a3c:25ae:f06c:6781])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607cd9fasm1619656f8f.35.2025.09.11.02.00.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 11 Sep 2025 02:00:28 -0700 (PDT)
+	s=arc-20240116; t=1757581268; c=relaxed/simple;
+	bh=pNuKdyLfyUYn/bu1we4l5xlt7uUHJk0oo7gXbZsMMNI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=aViUzZliWVUgwzW7+7PdGiRrgz9cfKdZdkqEbHtGXEJ6JZPJ1fyoioVPKY7dyFYrKgiz+HCyJS12a1Z0nPgvIGXCD+UbOq0Pgcr7j5WFCPufjNXtJWWnxnnE43cL0EyUeA8BP8wk7kpo1kd/lYkNJ9VYU2/xLadrgixTWhC4WGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rDeasZne; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E701EC4CEF1;
+	Thu, 11 Sep 2025 09:01:02 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757581267;
+	bh=pNuKdyLfyUYn/bu1we4l5xlt7uUHJk0oo7gXbZsMMNI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=rDeasZneKS1p3vaalewyHV/LvlnRzBuGKLoBgRN2ZKMYsHggGpTBAsTC3zH8PZuen
+	 Qb4ct0SLpt1K+TTsLlUZJBC5RGCBJO8VEfnDDw/3reXrpPcESrNKNudsTKEw5ymZ0t
+	 myJwztJA3bU/mhyWhagGzXGrJux53hMaEOex9zSawJExxT9fvmJ/aZFvyCncTmha+4
+	 Dv6wWBb/UctP/RjjZYI/rWYJXv7KtFzo8TigwS5YvZZfdAEBcoMB7lDdLKVujgVP6b
+	 k6+bXrmIW4kQflN05eB0dCFofMs3ZyKhdicfCnfcU6WBL/Np6i6z0YAlz7lrAyK6vp
+	 aRmj75i/dd3sQ==
+Message-ID: <b875f811-6371-4ff4-9cc2-a0a2c82a569c@kernel.org>
+Date: Thu, 11 Sep 2025 11:01:00 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/4] leds: led-class: Add devicetree support to
+ led_get()
+To: Lee Jones <lee@kernel.org>, Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Jingoo Han <jingoohan1@gmail.com>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>, Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
+ Jacopo Mondi <jacopo@jmondi.org>, Sakari Ailus
+ <sakari.ailus@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Daniel Thompson
+ <danielt@kernel.org>, linux-leds@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, threeway@gmail.com,
+ Andy Shevchenko <andy.shevchenko@gmail.com>,
+ Linus Walleij <linus.walleij@linaro.org>
+References: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com>
+ <20250910-leds-v5-3-bb90a0f897d5@vinarskis.com>
+ <20250911081540.GD9224@google.com>
+From: Hans de Goede <hansg@kernel.org>
+Content-Language: en-US, nl
+In-Reply-To: <20250911081540.GD9224@google.com>
 Content-Type: text/plain; charset=UTF-8
-Date: Thu, 11 Sep 2025 10:00:27 +0100
-Message-Id: <DCPUJPHR8NUB.1SRB4D7ONSRBY@linaro.org>
-Cc: <psodagud@quicinc.com>, <djaggi@quicinc.com>,
- <quic_msavaliy@quicinc.com>, <quic_vtanuku@quicinc.com>,
- <quic_arandive@quicinc.com>, <quic_mnaresh@quicinc.com>,
- <quic_shazhuss@quicinc.com>, <krzk@kernel.org>
-Subject: Re: [PATCH v1] serial: qcom-geni: Fix pinctrl deadlock on runtime
- resume
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Praveen Talari" <praveen.talari@oss.qualcomm.com>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Jiri Slaby" <jirislaby@kernel.org>, "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>, "Praveen Talari"
- <quic_ptalari@quicinc.com>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>
-X-Mailer: aerc 0.20.0
-References: <20250908164532.2365969-1-praveen.talari@oss.qualcomm.com>
- <DCNLSFVPCKMV.K1UE3J3K6JQD@linaro.org>
- <DCOJFRU8KNFL.14VPXK9QZC9T4@linaro.org>
- <5b7b8c9f-48c5-45cd-8366-c8c048eaa757@oss.qualcomm.com>
-In-Reply-To: <5b7b8c9f-48c5-45cd-8366-c8c048eaa757@oss.qualcomm.com>
+Content-Transfer-Encoding: 7bit
 
-Hi Praveen,
+Hi Lee,
 
-On Thu Sep 11, 2025 at 9:34 AM BST, Praveen Talari wrote:
-> Hi Alexy,
->
-> Thank you for update.
->
-> On 9/10/2025 1:35 AM, Alexey Klimov wrote:
->>=20
->> (adding Krzysztof to c/c)
->>=20
->> On Mon Sep 8, 2025 at 6:43 PM BST, Alexey Klimov wrote:
->>> On Mon Sep 8, 2025 at 5:45 PM BST, Praveen Talari wrote:
->>>> A deadlock is observed in the qcom_geni_serial driver during runtime
->>>> resume. This occurs when the pinctrl subsystem reconfigures device pin=
-s
->>>> via msm_pinmux_set_mux() while the serial device's interrupt is an
->>>> active wakeup source. msm_pinmux_set_mux() calls disable_irq() or
->>>> __synchronize_irq(), conflicting with the active wakeup state and
->>>> causing the IRQ thread to enter an uninterruptible (D-state) sleep,
->>>> leading to system instability.
->>>>
->>>> The critical call trace leading to the deadlock is:
->>>>
->>>>      Call trace:
->>>>      __switch_to+0xe0/0x120
->>>>      __schedule+0x39c/0x978
->>>>      schedule+0x5c/0xf8
->>>>      __synchronize_irq+0x88/0xb4
->>>>      disable_irq+0x3c/0x4c
->>>>      msm_pinmux_set_mux+0x508/0x644
->>>>      pinmux_enable_setting+0x190/0x2dc
->>>>      pinctrl_commit_state+0x13c/0x208
->>>>      pinctrl_pm_select_default_state+0x4c/0xa4
->>>>      geni_se_resources_on+0xe8/0x154
->>>>      qcom_geni_serial_runtime_resume+0x4c/0x88
->>>>      pm_generic_runtime_resume+0x2c/0x44
->>>>      __genpd_runtime_resume+0x30/0x80
->>>>      genpd_runtime_resume+0x114/0x29c
->>>>      __rpm_callback+0x48/0x1d8
->>>>      rpm_callback+0x6c/0x78
->>>>      rpm_resume+0x530/0x750
->>>>      __pm_runtime_resume+0x50/0x94
->>>>      handle_threaded_wake_irq+0x30/0x94
->>>>      irq_thread_fn+0x2c/xa8
->>>>      irq_thread+0x160/x248
->>>>      kthread+0x110/x114
->>>>      ret_from_fork+0x10/x20
->>>>
->>>> To resolve this, explicitly manage the wakeup IRQ state within the
->>>> runtime suspend/resume callbacks. In the runtime resume callback, call
->>>> disable_irq_wake() before enabling resources. This preemptively
->>>> removes the "wakeup" capability from the IRQ, allowing subsequent
->>>> interrupt management calls to proceed without conflict. An error path
->>>> re-enables the wakeup IRQ if resource enablement fails.
->>>>
->>>> Conversely, in runtime suspend, call enable_irq_wake() after resources
->>>> are disabled. This ensures the interrupt is configured as a wakeup
->>>> source only once the device has fully entered its low-power state. An
->>>> error path handles disabling the wakeup IRQ if the suspend operation
->>>> fails.
->>>>
->>>> Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial =
-driver")
->>>> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
->>>
->>> You forgot:
->>>
->>> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
->>>
->>> Also, not sure where this change will go, via Greg or Jiri, but ideally
->>> this should be picked for current -rc cycle since regression is
->>> introduced during latest merge window.
->>>
->>> I also would like to test it on qrb2210 rb1 where this regression is
->>> reproduciable.
->>=20
->> It doesn't seem that it fixes the regression on RB1 board:
->>=20
->>   INFO: task kworker/u16:3:50 blocked for more than 120 seconds.
->>         Not tainted 6.17.0-rc5-00018-g9dd1835ecda5-dirty #13
->>   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this messa=
-ge.
->>   task:kworker/u16:3   state:D stack:0     pid:50    tgid:50    ppid:2  =
-    task_flags:0x4208060 flags:0x00000010
->>   Workqueue: async async_run_entry_fn
->>   Call trace:
->>    __switch_to+0xf0/0x1c0 (T)
->>    __schedule+0x358/0x99c
->>    schedule+0x34/0x11c
->>    rpm_resume+0x17c/0x6a0
->>    rpm_resume+0x2c4/0x6a0
->>    rpm_resume+0x2c4/0x6a0
->>    rpm_resume+0x2c4/0x6a0
->>    __pm_runtime_resume+0x50/0x9c
->>    __driver_probe_device+0x58/0x120
->>    driver_probe_device+0x3c/0x154
->>    __driver_attach_async_helper+0x4c/0xc0
->>    async_run_entry_fn+0x34/0xe0
->>    process_one_work+0x148/0x284
->>    worker_thread+0x2c4/0x3e0
->>    kthread+0x12c/0x210
->>    ret_from_fork+0x10/0x20
->>   INFO: task irq/92-4a8c000.:79 blocked for more than 120 seconds.
->>         Not tainted 6.17.0-rc5-00018-g9dd1835ecda5-dirty #13
->>   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this messa=
-ge.
->>   task:irq/92-4a8c000. state:D stack:0     pid:79    tgid:79    ppid:2  =
-    task_flags:0x208040 flags:0x00000010
->>   Call trace:
->>    __switch_to+0xf0/0x1c0 (T)
->>    __schedule+0x358/0x99c
->>    schedule+0x34/0x11c
->>    __synchronize_irq+0x90/0xcc
->>    disable_irq+0x3c/0x4c
->>    msm_pinmux_set_mux+0x3b4/0x45c
->>    pinmux_enable_setting+0x1fc/0x2d8
->>    pinctrl_commit_state+0xa0/0x260
->>    pinctrl_pm_select_default_state+0x4c/0xa0
->>    geni_se_resources_on+0xe8/0x154
->>    geni_serial_resource_state+0x8c/0xbc
->>    qcom_geni_serial_runtime_resume+0x3c/0x88
->>    pm_generic_runtime_resume+0x2c/0x44
->>    __rpm_callback+0x48/0x1e0
->>    rpm_callback+0x74/0x80
->>    rpm_resume+0x3bc/0x6a0
->>    __pm_runtime_resume+0x50/0x9c
->>    handle_threaded_wake_irq+0x30/0x80
->>    irq_thread_fn+0x2c/0xb0
->>    irq_thread+0x170/0x334
->>    kthread+0x12c/0x210
->>    ret_from_fork+0x10/0x20
->
-> I can see call stack is mostly similar for yours and mine but not=20
-> completely at initial calls.
->
-> Yours dump:
->  >    qcom_geni_serial_runtime_resume+0x3c/0x88
->  >    pm_generic_runtime_resume+0x2c/0x44
->  >    __rpm_callback+0x48/0x1e0
->  >    rpm_callback+0x74/0x80
->  >    rpm_resume+0x3bc/0x6a0
->  >    __pm_runtime_resume+0x50/0x9c
->  >    handle_threaded_wake_irq+0x30/0x80
->
-> Mine:
->  >>>      qcom_geni_serial_runtime_resume+0x4c/0x88
->  >>>      pm_generic_runtime_resume+0x2c/0x44
->  >>>      __genpd_runtime_resume+0x30/0x80
->  >>>      genpd_runtime_resume+0x114/0x29c
->  >>>      __rpm_callback+0x48/0x1d8
->  >>>      rpm_callback+0x6c/0x78
->  >>>      rpm_resume+0x530/0x750
->
->
-> Can you please share what is DT file for this Board if possible?
-> is there any usecase enabled on this SE instance?
+On 11-Sep-25 10:15 AM, Lee Jones wrote:
+> On Wed, 10 Sep 2025, Aleksandrs Vinarskis wrote:
+> 
+>> From: Hans de Goede <hansg@kernel.org>
+>>
+>> Add 'name' argument to of_led_get() such that it can lookup LEDs in
+>> devicetree by either name or index.
+>>
+>> And use this modified function to add devicetree support to the generic
+>> (non devicetree specific) [devm_]led_get() function.
+>>
+>> This uses the standard devicetree pattern of adding a -names string array
+>> to map names to the indexes for an array of resources.
+>>
+>> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+>> Reviewed-by: Lee Jones <lee@kernel.org>
+> 
+> Remind me why this can't go in through LED again?
 
-Well, yeah, sorry, I didn't really compared backtraces line to line and
-behaviour was exactly the same. I thought that the purpose was to fix
-the regression reported earlier.
+I don't think anyone has discussed how to merge this yet.
 
-RB1 main dts files are qrb2210-rb1.dts and qcm2290.dtsi.
+I believe that the LED tree is the correct tree to merge this
+entire series through, once the DT bits have been reviewed.
 
-The similar board RB2 uses qrb4210-rb2.dts and sm4250.dtsi+sm6115.dtsi,
-it is worth checking it as well.
-For testing here I didn't use anything extra (the only change was wifi fix
-from Loic); I tested -master and linux-next usually.
+Regards,
 
-If you can tell me what is SE instance I may be able to answer. But
-as far as I know it is not a part of any infrastructure or CI machinery.
-I just boot the board and see if it works, if it does then I rebuild and
-test my changes (audio).
+Hans
 
-Best regards,
-Alexey
+
+
+
+>> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+>> Signed-off-by: Hans de Goede <hansg@kernel.org>
+>> Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+>> ---
+>>  drivers/leds/led-class.c | 17 +++++++++++++++--
+>>  1 file changed, 15 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+>> index 15633fbf3c166aa4f521774d245f6399a642bced..f3faf37f9a08ac762ed87b91cb3cab5faa8eacb0 100644
+>> --- a/drivers/leds/led-class.c
+>> +++ b/drivers/leds/led-class.c
+>> @@ -252,15 +252,23 @@ static const struct class leds_class = {
+>>   * of_led_get() - request a LED device via the LED framework
+>>   * @np: device node to get the LED device from
+>>   * @index: the index of the LED
+>> + * @name: the name of the LED used to map it to its function, if present
+>>   *
+>>   * Returns the LED device parsed from the phandle specified in the "leds"
+>>   * property of a device tree node or a negative error-code on failure.
+>>   */
+>> -static struct led_classdev *of_led_get(struct device_node *np, int index)
+>> +static struct led_classdev *of_led_get(struct device_node *np, int index,
+>> +				       const char *name)
+>>  {
+>>  	struct device *led_dev;
+>>  	struct device_node *led_node;
+>>  
+>> +	/*
+>> +	 * For named LEDs, first look up the name in the "led-names" property.
+>> +	 * If it cannot be found, then of_parse_phandle() will propagate the error.
+>> +	 */
+>> +	if (name)
+>> +		index = of_property_match_string(np, "led-names", name);
+>>  	led_node = of_parse_phandle(np, "leds", index);
+>>  	if (!led_node)
+>>  		return ERR_PTR(-ENOENT);
+>> @@ -324,7 +332,7 @@ struct led_classdev *__must_check devm_of_led_get(struct device *dev,
+>>  	if (!dev)
+>>  		return ERR_PTR(-EINVAL);
+>>  
+>> -	led = of_led_get(dev->of_node, index);
+>> +	led = of_led_get(dev->of_node, index, NULL);
+>>  	if (IS_ERR(led))
+>>  		return led;
+>>  
+>> @@ -342,9 +350,14 @@ EXPORT_SYMBOL_GPL(devm_of_led_get);
+>>  struct led_classdev *led_get(struct device *dev, char *con_id)
+>>  {
+>>  	struct led_lookup_data *lookup;
+>> +	struct led_classdev *led_cdev;
+>>  	const char *provider = NULL;
+>>  	struct device *led_dev;
+>>  
+>> +	led_cdev = of_led_get(dev->of_node, -1, con_id);
+>> +	if (!IS_ERR(led_cdev) || PTR_ERR(led_cdev) != -ENOENT)
+>> +		return led_cdev;
+>> +
+>>  	mutex_lock(&leds_lookup_lock);
+>>  	list_for_each_entry(lookup, &leds_lookup_list, list) {
+>>  		if (!strcmp(lookup->dev_id, dev_name(dev)) &&
+>>
+>> -- 
+>> 2.48.1
+>>
+>>
+> 
 
 
