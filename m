@@ -1,179 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-73077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC7FDB52C7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 11:01:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C6B1B52C8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 11:03:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D7B761C82DA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 09:01:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 49F323A7DF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 09:02:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C9652E7BCE;
-	Thu, 11 Sep 2025 09:01:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A9F92E718E;
+	Thu, 11 Sep 2025 09:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rDeasZne"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hkqDh4DI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098042E6CA8;
-	Thu, 11 Sep 2025 09:01:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90F11D8DFB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 09:02:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757581268; cv=none; b=XoKMMo/XXSdvP2JXAlrb21QFnDW6iAjtnBe27zjOBS3r9GLD26pXjNu/HJtI1bcf05sxU9kEfQhhHGmLDzJTyjtJmCHBWgvNir+GkJ2VNXtyiu8Jjj8klOwNKQTEUKgJr4ELrH+3yePLUd/JFeZOcagn/Li2yU3NjjXTZAhlYMk=
+	t=1757581358; cv=none; b=twyHuY8EZu4FVAm+8wEsGUQxLBJ1XgK85IqqLxbo0LqPNScsFsnWPCpd8mgBuUwZiW3Km9FFFJ2XaS+DsOv3sC4ufZpnoZYhzNra7830BitQH216nIGHr5MnYXcWgWzEfheDioc6RU3kpJXhklKzhZcxJFKK6+uePAMUCBPob5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757581268; c=relaxed/simple;
-	bh=pNuKdyLfyUYn/bu1we4l5xlt7uUHJk0oo7gXbZsMMNI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aViUzZliWVUgwzW7+7PdGiRrgz9cfKdZdkqEbHtGXEJ6JZPJ1fyoioVPKY7dyFYrKgiz+HCyJS12a1Z0nPgvIGXCD+UbOq0Pgcr7j5WFCPufjNXtJWWnxnnE43cL0EyUeA8BP8wk7kpo1kd/lYkNJ9VYU2/xLadrgixTWhC4WGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rDeasZne; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E701EC4CEF1;
-	Thu, 11 Sep 2025 09:01:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757581267;
-	bh=pNuKdyLfyUYn/bu1we4l5xlt7uUHJk0oo7gXbZsMMNI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=rDeasZneKS1p3vaalewyHV/LvlnRzBuGKLoBgRN2ZKMYsHggGpTBAsTC3zH8PZuen
-	 Qb4ct0SLpt1K+TTsLlUZJBC5RGCBJO8VEfnDDw/3reXrpPcESrNKNudsTKEw5ymZ0t
-	 myJwztJA3bU/mhyWhagGzXGrJux53hMaEOex9zSawJExxT9fvmJ/aZFvyCncTmha+4
-	 Dv6wWBb/UctP/RjjZYI/rWYJXv7KtFzo8TigwS5YvZZfdAEBcoMB7lDdLKVujgVP6b
-	 k6+bXrmIW4kQflN05eB0dCFofMs3ZyKhdicfCnfcU6WBL/Np6i6z0YAlz7lrAyK6vp
-	 aRmj75i/dd3sQ==
-Message-ID: <b875f811-6371-4ff4-9cc2-a0a2c82a569c@kernel.org>
-Date: Thu, 11 Sep 2025 11:01:00 +0200
+	s=arc-20240116; t=1757581358; c=relaxed/simple;
+	bh=UzTJmRwSuBGTfGbVMCEkyvO+DHGhYaptU6WgQxWrQTA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eXXrS3v91+xH2vPYffxh14yXC0gwCT7d+a3ZPF+myu9Q13j15LjVi7QKX2wn2l//zom6FIOr+4OPnNQk5C5FYl8kW+U24zNfKurZck8LlmfcFV4lNb1V4r2Hx9NuJZAlNTjNK6BUxNp3g+IAcz8IweCLHweuz5MeY0o2LSZwVeg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hkqDh4DI; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3e5190bca95so365996f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 02:02:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757581355; x=1758186155; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/zaq74E/O3TMzVibuqo9ZKl9wzf7cmcYOC6wFsi2v7Q=;
+        b=hkqDh4DISaB7oAIHe4HglXgyLYqEFnawP4hhExdDMqktLmUn5k7fUjy8b0aVhaVPcW
+         UYNRJjDTVBPn5lzwxe03Y/cEw17or3OwbQlAyaJOfyGl0Y2OpPLLMqlvqry647pQTNNW
+         8jOYGy0e8d6b+J5HjOmcFAtWgyrhmKRhR4xipyolOfDOZ7+w3O+lN+TVTPjpT/d5oSrz
+         w/YhXrWxFztXum5Ptgg5nrn01UzRIxs/7xPAiLkzmzoIprMpoP94+4Y4c+6nAcdYaLa+
+         6EYhTGzjC3jZVOFdoCzwANKN1aV/WbGnniA15fH8eRAlPPQlu2xiKr6Sjp6Ahnhe4yjo
+         Ncqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757581355; x=1758186155;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/zaq74E/O3TMzVibuqo9ZKl9wzf7cmcYOC6wFsi2v7Q=;
+        b=kUmlvIJXCgoCFK0cloQLMA2a4+ICBKpFGrqAIB382rjgNPMg3aHfr+BBGR3ic+adET
+         S2cl7/FLpiDcZMb0AU33epyDdmbKz7kRU7qN6/+j93Sa12I+ZBm7cTlKDIuy06QV199a
+         ++y+9ES1QE3VLZx4JPQltQGIP2rESdufbAyGvOmcUVUE7ZTV0Si4aH5NeIUBFQdE7E7X
+         svuIOr92RPrbj6LF7xF/MOS5kbV2uNrF1rzVGhw6SD6UQJNslb6gz/Q25eRDgDjbfWkW
+         7owsNtyL5nDyuf5V5WCGJ7UuMA3BblfCr+tmtuGgdaCEvh4RNNhuJJu2MqqmPcBqj7fO
+         4sWw==
+X-Forwarded-Encrypted: i=1; AJvYcCW4/FGj85uDk82XPjwfFU2JVl7eFrWsMaIByNIryAcg/Nqpk3RQU0RxRfc95ZNaxFzPRQ3DbqJe/UV/anIe@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/EW7gQANIdVEJ5p8+5NXO+anweVhTeLWD/ALF4gtE+PXxWi+0
+	DfIm4/K9e2GoJ2agGXKhOtekBlKsovE3fw62VF6F6dE2wmiETI7S0K9eb4KGb8u38u8=
+X-Gm-Gg: ASbGncuDvnJ5m6xgw4SEQfMkN0sbXlhFykTcFphGdah879pF7VQ2iCcibjHrHmo8s2o
+	jmZd1/HuswBe/LClEukvsL2gJW2UK9W4cmDCxV9MJzeaGyTn90j3IVjKtazfqtqkAc3uHL2LyQu
+	TDkW+9Eqn4HQG7IUpabe/QIv4IsSh6HpiXteR/bm8AhVsyTtMguMThaIyBZOFdAL6HDkq1cM/HA
+	82wm8MkCmsp1vkPyI83QUDdCY2yohhvv6UZQ+XA4rwuEPz+MaWV7X4uclAtco8vB+r0ppEdE/KF
+	RxwfqPX8+lDTcyDKeTetX697fdwWY4qDhoV0+Q4FsM3PSBuVJNohniyA5mh5BS+GhH5MbNDWQAp
+	+/WFHImC9A6XsitS2fTRDFizmsOWGHQkJLEsYfPj0ics=
+X-Google-Smtp-Source: AGHT+IEpmqZKqS9hAWz+1L1aJGWyXbmn5CbSirxedo3gzH/80b0RJpaQWoe7+bkeQmLZvMcrOVYvMA==
+X-Received: by 2002:a05:6000:25ca:b0:3e7:5f26:f1e8 with SMTP id ffacd0b85a97d-3e75f26f670mr1923478f8f.5.1757581355207;
+        Thu, 11 Sep 2025 02:02:35 -0700 (PDT)
+Received: from linaro.org ([86.121.170.194])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607e13f4sm1606771f8f.57.2025.09.11.02.02.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 11 Sep 2025 02:02:34 -0700 (PDT)
+Date: Thu, 11 Sep 2025 12:02:32 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/3] dt-bindings: phy: Add DP PHY compatible for Glymur
+Message-ID: <i7ckqu325thggaw3qms2ofoklh6r5rhthdwkuko2uzbaqnryhg@qrjsc5yh3dnb>
+References: <20250909-phy-qcom-edp-add-glymur-support-v2-0-02553381e47d@linaro.org>
+ <20250909-phy-qcom-edp-add-glymur-support-v2-1-02553381e47d@linaro.org>
+ <20250910-obedient-ambitious-oyster-5efa6e@kuoka>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/4] leds: led-class: Add devicetree support to
- led_get()
-To: Lee Jones <lee@kernel.org>, Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Jingoo Han <jingoohan1@gmail.com>, Mauro Carvalho Chehab
- <mchehab@kernel.org>, Jean-Jacques Hiblot <jjhiblot@traphandler.com>,
- Jacopo Mondi <jacopo@jmondi.org>, Sakari Ailus
- <sakari.ailus@linux.intel.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Daniel Thompson
- <danielt@kernel.org>, linux-leds@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, threeway@gmail.com,
- Andy Shevchenko <andy.shevchenko@gmail.com>,
- Linus Walleij <linus.walleij@linaro.org>
-References: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com>
- <20250910-leds-v5-3-bb90a0f897d5@vinarskis.com>
- <20250911081540.GD9224@google.com>
-From: Hans de Goede <hansg@kernel.org>
-Content-Language: en-US, nl
-In-Reply-To: <20250911081540.GD9224@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250910-obedient-ambitious-oyster-5efa6e@kuoka>
 
-Hi Lee,
-
-On 11-Sep-25 10:15 AM, Lee Jones wrote:
-> On Wed, 10 Sep 2025, Aleksandrs Vinarskis wrote:
+On 25-09-10 13:32:04, Krzysztof Kozlowski wrote:
+> On Tue, Sep 09, 2025 at 01:07:26PM +0300, Abel Vesa wrote:
+> > Document the compatible for the Glymur platform.
 > 
->> From: Hans de Goede <hansg@kernel.org>
->>
->> Add 'name' argument to of_led_get() such that it can lookup LEDs in
->> devicetree by either name or index.
->>
->> And use this modified function to add devicetree support to the generic
->> (non devicetree specific) [devm_]led_get() function.
->>
->> This uses the standard devicetree pattern of adding a -names string array
->> to map names to the indexes for an array of resources.
->>
->> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
->> Reviewed-by: Lee Jones <lee@kernel.org>
-> 
-> Remind me why this can't go in through LED again?
-
-I don't think anyone has discussed how to merge this yet.
-
-I believe that the LED tree is the correct tree to merge this
-entire series through, once the DT bits have been reviewed.
-
-Regards,
-
-Hans
-
-
-
-
->> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
->> Signed-off-by: Hans de Goede <hansg@kernel.org>
->> Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
->> ---
->>  drivers/leds/led-class.c | 17 +++++++++++++++--
->>  1 file changed, 15 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
->> index 15633fbf3c166aa4f521774d245f6399a642bced..f3faf37f9a08ac762ed87b91cb3cab5faa8eacb0 100644
->> --- a/drivers/leds/led-class.c
->> +++ b/drivers/leds/led-class.c
->> @@ -252,15 +252,23 @@ static const struct class leds_class = {
->>   * of_led_get() - request a LED device via the LED framework
->>   * @np: device node to get the LED device from
->>   * @index: the index of the LED
->> + * @name: the name of the LED used to map it to its function, if present
->>   *
->>   * Returns the LED device parsed from the phandle specified in the "leds"
->>   * property of a device tree node or a negative error-code on failure.
->>   */
->> -static struct led_classdev *of_led_get(struct device_node *np, int index)
->> +static struct led_classdev *of_led_get(struct device_node *np, int index,
->> +				       const char *name)
->>  {
->>  	struct device *led_dev;
->>  	struct device_node *led_node;
->>  
->> +	/*
->> +	 * For named LEDs, first look up the name in the "led-names" property.
->> +	 * If it cannot be found, then of_parse_phandle() will propagate the error.
->> +	 */
->> +	if (name)
->> +		index = of_property_match_string(np, "led-names", name);
->>  	led_node = of_parse_phandle(np, "leds", index);
->>  	if (!led_node)
->>  		return ERR_PTR(-ENOENT);
->> @@ -324,7 +332,7 @@ struct led_classdev *__must_check devm_of_led_get(struct device *dev,
->>  	if (!dev)
->>  		return ERR_PTR(-EINVAL);
->>  
->> -	led = of_led_get(dev->of_node, index);
->> +	led = of_led_get(dev->of_node, index, NULL);
->>  	if (IS_ERR(led))
->>  		return led;
->>  
->> @@ -342,9 +350,14 @@ EXPORT_SYMBOL_GPL(devm_of_led_get);
->>  struct led_classdev *led_get(struct device *dev, char *con_id)
->>  {
->>  	struct led_lookup_data *lookup;
->> +	struct led_classdev *led_cdev;
->>  	const char *provider = NULL;
->>  	struct device *led_dev;
->>  
->> +	led_cdev = of_led_get(dev->of_node, -1, con_id);
->> +	if (!IS_ERR(led_cdev) || PTR_ERR(led_cdev) != -ENOENT)
->> +		return led_cdev;
->> +
->>  	mutex_lock(&leds_lookup_lock);
->>  	list_for_each_entry(lookup, &leds_lookup_list, list) {
->>  		if (!strcmp(lookup->dev_id, dev_name(dev)) &&
->>
->> -- 
->> 2.48.1
->>
->>
+> And it is not compatible with X1E? Say something useful in the commit
+> msg, instead of what we see from the patch contents.
 > 
 
+It's definitely not compatible with X1E since there is a new version (v8
+compared to v6).
+
+Will update the commit message and mention the new version.
+
+Thanks for reviewing.
 
