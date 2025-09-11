@@ -1,208 +1,253 @@
-Return-Path: <linux-arm-msm+bounces-73185-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73186-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9C3ADB53DA3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 23:21:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA173B53DBD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 23:28:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 299B6AC1047
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 21:21:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 00C661BC5EF0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 21:28:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F36EE2DEA86;
-	Thu, 11 Sep 2025 21:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 253262DE71B;
+	Thu, 11 Sep 2025 21:28:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Hr4NFg7j"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CZdqbf2u"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C0562C15BA
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 21:21:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFC02D3228
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 21:28:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757625670; cv=none; b=dIjtRKyIEal964bGABQt0gYWRnx+qGODNOfA3HXp1Qm5E+e5pOZE8UAITcNh6+1bt8EG41v92aEIQxjTPvhypjhiS1t7urfbfQdJniRN3fjIzEj2JL9scB+zW92YjUWJvDJAmjoQPq5HIE8xf90FjysAQwOr6pSZupa+6RrVEUw=
+	t=1757626109; cv=none; b=APKE6rAkKtLiFv25+P/c8lAsFDJCbT89UaiQR72Xfgc2rBRkaAwQIcO2OnSkKusLWalWJl4OsxPmuOOj5ngAuc9B0/8yLxDVy6T7CpOubxYth0FBQ8B5cagB5IS6Qmh9+5QbaGdWXg+VeGxSZ5WzBlb3bBQ8jgEK23gWMVTCM2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757625670; c=relaxed/simple;
-	bh=s06lMSgFUbsQsftyLPOCIcILNY+VCV8h/628COtxgqY=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Khpa3+H7tk/hj2e+Z94MvvAiCHVM2KDqZevNR+h3kkn6dBMtcyVcVOq3wC7w9wRAJBIkX+VFqy7Yu3rpvbSGsy1T943rCiYUIfYN4kmh44K0UnzzFyI0iuBf6n3uMT7rHFATN5ZamUWPai98nEFpYd4EFGcVUwe1aAeKTZdHpAA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Hr4NFg7j; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58BDhM7H019116
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 21:21:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=PT1gCayuGIF
-	IlQqnQzKpVckx59blbv/GdiBq89GHfVw=; b=Hr4NFg7jJaPF9xvZayufZfl/xG6
-	UzrUzg7xLNWUBf4a629PsR0H2DEo0xHoDFDKFWGbdSLeneoo1YuEnXQcU3tBgcG1
-	kK0/iFNVaRIZM7pBGSzA87JGpWcp3wGmiHMHe73NLnrZgA5HuiC5qp6HkgfhZWkP
-	U9Yr8E/JysRHVlXg83GzXE+dHG74J27Jl5ZwQ4OaG4A1PYjQmb1p2A2Fu1TLxh5y
-	fMOAv7W0zo098msvLqWB9RF2exmG87Hg+PTcmCE7JZ7NvvUTxoaKv2L/9tydYo4Y
-	/+yPnJJYvbXlohuzBGreEByVw+vjWPimd52gLAPpYtOr32VoJjNldG3qarQ==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 493qphu1wc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 21:21:08 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4b47b4d296eso30363301cf.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 14:21:07 -0700 (PDT)
+	s=arc-20240116; t=1757626109; c=relaxed/simple;
+	bh=/cCjXZtrqpy7VHvisyVa/Rdug0JeWOd0noi/GFcDP60=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=mJc8REXkrQNBz0XUAW759uuxc1l73M4mrovCw+4aBPcqxRKpN5zUaUSBZs8q3NP5pxAuURSFZLfb6n0aCwW4lXd0GtpqrvYz9zxC4dFe/y8VvY/EC82f/5k+zYoBttfevT2Om9l/uMqc7JOtYaZCohmCC5P3R+CPS0I0J5l0Q4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CZdqbf2u; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3dce6eed889so1141831f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 14:28:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757626105; x=1758230905; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0XmPWjwHkYZP0cjDM6/TOrZ9Pu7V+x53nqGWgCRHLe0=;
+        b=CZdqbf2uY+SU4AcG1d8n+8VIfH4drOsltEU2WTGL8JvA/6oyTiy3lPBlzjHvszyjUN
+         Vjs8qAbsauZLLnuBxN23lhLiD7/P4uVb/bK/UK9eOPZpCjEHFnLMi2ctwCrDePk2xwT+
+         sgMrlkcCw251UD+e0c5bd+FGp4ng8kd+UD8czo0zTCNExXoocF90LHw3/6RH/5ssNv0h
+         UFan73gJPfS/OzczJ6lNeBto5kxPOIE7uMh7bu6+MUHG4gGZRvZCGGUUZA5a0ceo1lOm
+         YCGyMghGPRREceTAAAUXyOD7e9osGfrXMq1UE9byncoR52Wzk3naCELIv6/VRTeHAyZR
+         tVjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757625667; x=1758230467;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PT1gCayuGIFIlQqnQzKpVckx59blbv/GdiBq89GHfVw=;
-        b=M4C5bprhm4lTNn5Blb2H2dEky7/RiyCc/I0R8XBUSL2q/dHaulF5k/vOMKfhlJRvFG
-         okNmHG4FvqaDXYgCk3QwBLKiWIh3zF8tB6IjByG8q7V+sO1bx20oOoZAHmtstk8pcu+H
-         qvguj9onqFrL7PEDn8D71K5vzo6LpmgjXEhw+EC6UClYM11rkvcNe2OPi+NL+NX5rdQC
-         9fHThs84hhHy1qp1ci34qcFHE3xmgWHgsaHelIblSyDPH/IuaNbfsUYcsfYPPNcp6B5G
-         SoFLoUJ0nUN73waFpceAqmcs3QtqhmPQU+PyfrYATW/8buO4ZUkZnQ2jQoSHDz1ikpkx
-         acPA==
-X-Forwarded-Encrypted: i=1; AJvYcCWIuZEc3wjCZplYw4Kqlf1k/ey71LTetgSE0p5DMNSUQvDB34UWZ8NUqjU1ahWHxGsO0ffOZrw3JN1DauOo@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywnw45lnBnLMMJqEQjCG3cXboK5aJnNVGP8NQllMlqZGlLLGC37
-	LgnIFm5+L3WELbiQ84h2/d8wMz/F5xIm1JyNZZ1bHnvQBA6mP7Ej86sqorwhPEKeKC0ljjv/o8R
-	jive7Js/zKcs22/g0aFeZ9fSn8oxpYhJ+VhuBbfjS56CMpy8Shbk5uLHS1+f9hLFwBkrl
-X-Gm-Gg: ASbGncvmk127z2bRQb1IEFMh6dmOkbnOGJYRmnmmg3t7OLzT01lbQaBiXfudcf3naex
-	k5d5YsYq8560GqR0bAAfrhx2NkXOhjNXybRz5SP/mUUM0lcfqsZwEgZaKeJlCaQk6C6Uojlbw0l
-	NuSdSC7BhgQXa4b7YnGzSLf1++fF661HnP77xQVT+0nDAi0iwNsk3lHcxAvfphB5DLLMhmQawV5
-	82gJlF6tBTff4YdEpUvagJp92OsyEhmir4XMMQgwC8mDaAwpGeTrbdwYdizdT+pNND8laSM2EJK
-	SfNNYrYDaJndTb1y/Qt7iYCIEnQbjwiKGQ3HeYmHrx5wtETZC/ZzCrTe1mZdcKIatIgsNxpuGGQ
-	=
-X-Received: by 2002:a05:622a:5449:b0:4b4:8ed1:2241 with SMTP id d75a77b69052e-4b77cfc2330mr8536461cf.15.1757625667189;
-        Thu, 11 Sep 2025 14:21:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrO2PLPKA2mCIyBGV7Kqv20BSBqgWRCXp2pmuFmfOEs/8og5PKPIxRUT9YJrGxkW7UhKbLEA==
-X-Received: by 2002:a05:622a:5449:b0:4b4:8ed1:2241 with SMTP id d75a77b69052e-4b77cfc2330mr8536161cf.15.1757625666685;
-        Thu, 11 Sep 2025 14:21:06 -0700 (PDT)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:3c22:d6b4:15f8:475e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0187f0a7sm21843935e9.3.2025.09.11.14.21.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Sep 2025 14:21:06 -0700 (PDT)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: andi.shyti@kernel.org, robh@kernel.org, conor+dt@kernel.org,
-        andersson@kernel.org, konradybcio@kernel.org
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH RESEND v5 2/2] arm64: dts: qcom: qcm2290: Add CCI node
-Date: Thu, 11 Sep 2025 23:21:02 +0200
-Message-Id: <20250911212102.470886-2-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250911212102.470886-1-loic.poulain@oss.qualcomm.com>
-References: <20250911212102.470886-1-loic.poulain@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1757626105; x=1758230905;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=0XmPWjwHkYZP0cjDM6/TOrZ9Pu7V+x53nqGWgCRHLe0=;
+        b=DBFE2Lk9FEZVj/5JS6PiAcIgC4j3AMvT4LYKdGpMP35VnB+LHe5o8CLtit75Gta1me
+         oM2wEleNDfSi/GfZHvDbgqBHtz5UysK65P44rRYWze3EpVzOOAqZ9SGbKA72SgBxf6IJ
+         DE5IERq/jUhVdr/ks8W+LDYOoqzaHX4F/sPMzEVdnHeE8atdy41HLRmFyzXj/6QkpZbs
+         xdHSGj6cEiM8JR1QssdNeXPqZdEPSTh6BceBIkdzEIfXoUW/ovP1MKiiOtsASy5VX3X3
+         IUi6H/aycyitr/sLFcN1NJvKVJLvQTt2YlLLAu63ZFdCbGYpy5c+j7XTDYdXqf0a+A0x
+         3bPg==
+X-Forwarded-Encrypted: i=1; AJvYcCXxzHom39RdZaccBUPvWmNsHkTXVedEZqAWWqsxxG7MJdk1QAi2W88mwmwpyOTGDrOB2q3q0xjXu2eUKjEd@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxd78d0P8mQ9vCmugmJfOGfakwCuqevyTyb0lf87Fcih03i7e4l
+	ihGsZrkWS7lrTy57BdvKa/vdNdPXNqjKZQKlHBXJ6VZ6lxMqkyjiSImVdpyh6m1x0yQ=
+X-Gm-Gg: ASbGncv6LxgF0jc9BVBh7Yz2tq5HhIB6gNnGiOjLtpcLvD5YEjRmvQoORd/T437XhyE
+	ko9ht8p3EP+UVZGxG4XE7XjFWWrAtqHkJiNmjFvFip6px5hRA7pSo/HJ0CL81VpXrpsv4BmI8/9
+	4hDeHWbLaVXmK8eQbdRRV8VwUc2lY8nfwGIg05pItXizMwrABN28wkZWbiCORERk4oJNXZf8kJW
+	TwGz+JNqAIHD0CIZO+x0YA2h3W9DDV5vLcQ06kFqbfLdT8N+/rKqGY7raoCCFbmwMAuHizP4mTi
+	F9Uf6v90YePX6w6O46sv7BzT0QfZmsnWLc109k2yIfzokH5xjUOKxvNKgbN4AoqpJF8pl0yUwRz
+	09BR29wToHmhXT4e6UY1qN0uDjisrYhZ2LC8=
+X-Google-Smtp-Source: AGHT+IGTc0rcdmQ0qqcNXcSMBd6YBfVvs/8+uIuw4BgL2H05vO3tLXTMHz7QbjVlp6IDwRn3LlLQ6Q==
+X-Received: by 2002:a05:6000:230c:b0:3dc:1473:18bc with SMTP id ffacd0b85a97d-3e765530b01mr725312f8f.0.1757626105382;
+        Thu, 11 Sep 2025 14:28:25 -0700 (PDT)
+Received: from localhost ([2.223.125.77])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0372ae57sm36200245e9.8.2025.09.11.14.28.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 11 Sep 2025 14:28:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=aPDwqa9m c=1 sm=1 tr=0 ts=68c33d44 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=yJojWOMRYYMA:10
- a=EUspDBNiAAAA:8 a=7004nz7suiqLHAzt4fYA:9 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-GUID: qXJR2h5ZRFn0wTVZgQG00w4MbVJUV6YV
-X-Proofpoint-ORIG-GUID: qXJR2h5ZRFn0wTVZgQG00w4MbVJUV6YV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTExMDA0MCBTYWx0ZWRfXyShqbZUNCgea
- 9P3p5MUonyXz1DyYt+r91BUpbblgioyWJicH6lDrFExEpV+6YylWurSUuDp5wJKm1Gvgnom2MYW
- rjFjtw0+KjLqSv8QGeVkV14MmhajmNH0MEdid9kBsqzOFsqWS/ftAmO0geTjSLb+XAzMsdy3Z0d
- e2kip/sjxT5E6MjHsj3uB6xcbY1QYxP3HinKrtjhVY13hM7soDqoh8mGtg8D/CCrNJEOFkE96Je
- kF2MWmzaaiovZb36SwnsPk51eGaKttIXTbONRghAY48vMBEkh4FMyzB+LiSrD4qcYlol0rWK017
- ZJnR0QSJSP44csbtjEH6R92WouITwMrSXKLn28GbjF03JY3WwU+9eaZTp+OvutQr0ZY6SABl4hw
- okFkEb1T
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-11_03,2025-09-11_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 impostorscore=0 malwarescore=0 bulkscore=0
- clxscore=1015 spamscore=0 suspectscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509110040
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 11 Sep 2025 22:28:24 +0100
+Message-Id: <DCQAGDC63M8X.3DVH6I9FA0IZD@linaro.org>
+Cc: "Johan Hovold" <johan@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-phy@lists.infradead.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v3 4/4] phy: qcom: edp: Add Glymur platform support
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Abel Vesa" <abel.vesa@linaro.org>, "Vinod Koul" <vkoul@kernel.org>,
+ "Kishon Vijay Abraham I" <kishon@kernel.org>, "Rob Herring"
+ <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
+ Dooley" <conor+dt@kernel.org>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Dmitry Baryshkov" <lumag@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Neil Armstrong" <neil.armstrong@linaro.org>
+X-Mailer: aerc 0.20.1
+References: <20250911-phy-qcom-edp-add-glymur-support-v3-0-1c8514313a16@linaro.org> <20250911-phy-qcom-edp-add-glymur-support-v3-4-1c8514313a16@linaro.org>
+In-Reply-To: <20250911-phy-qcom-edp-add-glymur-support-v3-4-1c8514313a16@linaro.org>
 
-Add Camera Control Interface (CCI), supporting two I2C masters.
+On Thu Sep 11, 2025 at 3:45 PM BST, Abel Vesa wrote:
+> The Qualcomm Glymur platform has the new v8 version
+> of the eDP/DP PHY. So rework the driver to support this
+> new version and add the platform specific configuration data.
 
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
----
- v2: Reorder commits; Update dts properties order and style
- v3: No change for this patch
- v4: change AHB clock name from camss_top_ahb to ahb
- v5: No change; Resent with missing recipients
+It is a bit confusing. Subject suggests that it is an addition
+of a new platform but patch itself and description looks more like a
+rework rather than new platform addition.
 
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 50 +++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+The ->aux_cfg_size() rework here reminds me
+913463587d52 phy: qcom: edp: Introduce aux_cfg array for version specific a=
+ux settings
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index 527705c7d212..08141b41de24 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -566,6 +566,20 @@ qup_uart4_default: qup-uart4-default-state {
- 				bias-disable;
- 			};
- 
-+			cci0_default: cci0-default-state {
-+				pins = "gpio22", "gpio23";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
-+			cci1_default: cci1-default-state {
-+				pins = "gpio29", "gpio30";
-+				function = "cci_i2c";
-+				drive-strength = <2>;
-+				bias-disable;
-+			};
-+
- 			sdc1_state_on: sdc1-on-state {
- 				clk-pins {
- 					pins = "sdc1_clk";
-@@ -1635,6 +1649,42 @@ adreno_smmu: iommu@59a0000 {
- 			#iommu-cells = <2>;
- 		};
- 
-+		cci: cci@5c1b000 {
-+			compatible = "qcom,qcm2290-cci", "qcom,msm8996-cci";
-+			reg = <0x0 0x5c1b000 0x0 0x1000>;
-+
-+			interrupts = <GIC_SPI 206 IRQ_TYPE_EDGE_RISING>;
-+
-+			clocks = <&gcc GCC_CAMSS_TOP_AHB_CLK>, <&gcc GCC_CAMSS_CCI_0_CLK>;
-+			clock-names = "ahb", "cci";
-+			assigned-clocks = <&gcc GCC_CAMSS_CCI_0_CLK>;
-+			assigned-clock-rates = <37500000>;
-+
-+			power-domains = <&gcc GCC_CAMSS_TOP_GDSC>;
-+
-+			pinctrl-0 = <&cci0_default &cci1_default>;
-+			pinctrl-names = "default";
-+
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			status = "disabled";
-+
-+			cci_i2c0: i2c-bus@0 {
-+				reg = <0>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+
-+			cci_i2c1: i2c-bus@1 {
-+				reg = <1>;
-+				clock-frequency = <400000>;
-+				#address-cells = <1>;
-+				#size-cells = <0>;
-+			};
-+		};
-+
- 		camss: camss@5c6e000 {
- 			compatible = "qcom,qcm2290-camss";
- 
--- 
-2.34.1
+Ideally this should be split into rework and adding support for a
+new platform. Or please update the commit desc and subject to explain
+why this is the way.
+
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-edp.c | 240 ++++++++++++++++++++++++++++++=
++++++-
+>  1 file changed, 234 insertions(+), 6 deletions(-)
+>
+> diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/p=
+hy-qcom-edp.c
+> index 7b642742412e63149442e4befeb095307ec38173..b670cda0fa066d3ff45c66b73=
+cc67e165e55b79a 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+
+[..]
+
+>  static int qcom_edp_phy_init(struct phy *phy)
+>  {
+>  	struct qcom_edp *edp =3D phy_get_drvdata(phy);
+> @@ -224,7 +241,11 @@ static int qcom_edp_phy_init(struct phy *phy)
+>  	if (ret)
+>  		goto out_disable_supplies;
+> =20
+> -	memcpy(aux_cfg, edp->cfg->aux_cfg, sizeof(aux_cfg));
+> +	memcpy(aux_cfg, edp->cfg->aux_cfg, edp->cfg->aux_cfg_size);
+
+So, if I understand this correctly, when or if init sequence will
+span beyond DP_PHY_AUX_CFG9 and DP_AUX_CFG_SIZE won't be updated,
+then we might end up doing something fishy here?
+
+Maybe add an if-check or even
+BUILD_BUG_ON(edp->cfg->aux_cfg_size > sizeof(aux_cfg))
+or something like this? Or kmalloc aux_cfg eventually at least,
+however it seems to overcomplicate things.
+
+[..]
+
+> +static int qcom_edp_com_configure_ssc_v8(const struct qcom_edp *edp)
+> +{
+> +	const struct phy_configure_opts_dp *dp_opts =3D &edp->dp_opts;
+> +	u32 step1;
+> +	u32 step2;
+> +
+> +	switch (dp_opts->link_rate) {
+> +	case 1620:
+> +	case 2700:
+> +	case 8100:
+> +		step1 =3D 0x5b;
+> +		step2 =3D 0x02;
+> +		break;
+> +
+> +	case 5400:
+> +		step1 =3D 0x5b;
+> +		step2 =3D 0x02;
+> +		break;
+> +
+> +	default:
+> +		/* Other link rates aren't supported */
+> +		return -EINVAL;
+> +	}
+> +
+> +	writel(0x01, edp->pll + DP_QSERDES_V8_COM_SSC_EN_CENTER);
+> +	writel(0x00, edp->pll + DP_QSERDES_V8_COM_SSC_ADJ_PER1);
+> +	writel(0x6b, edp->pll + DP_QSERDES_V8_COM_SSC_PER1);
+> +	writel(0x02, edp->pll + DP_QSERDES_V8_COM_SSC_PER2);
+> +	writel(step1, edp->pll + DP_QSERDES_V8_COM_SSC_STEP_SIZE1_MODE0);
+> +	writel(step2, edp->pll + DP_QSERDES_V8_COM_SSC_STEP_SIZE2_MODE0);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_edp_com_configure_pll_v8(const struct qcom_edp *edp)
+> +{
+> +	const struct phy_configure_opts_dp *dp_opts =3D &edp->dp_opts;
+> +	u32 div_frac_start2_mode0;
+> +	u32 div_frac_start3_mode0;
+> +	u32 dec_start_mode0;
+> +	u32 lock_cmp1_mode0;
+> +	u32 lock_cmp2_mode0;
+> +	u32 code1_mode0;
+> +	u32 code2_mode0;
+> +	u32 hsclk_sel;
+> +
+> +	switch (dp_opts->link_rate) {
+> +	case 1620:
+> +		hsclk_sel =3D 0x5;
+> +		dec_start_mode0 =3D 0x34;
+> +		div_frac_start2_mode0 =3D 0xc0;
+> +		div_frac_start3_mode0 =3D 0x0b;
+> +		lock_cmp1_mode0 =3D 0x37;
+> +		lock_cmp2_mode0 =3D 0x04;
+> +		code1_mode0 =3D 0x71;
+> +		code2_mode0 =3D 0x0c;
+> +		break;
+> +
+> +	case 2700:
+> +		hsclk_sel =3D 0x3;
+> +		dec_start_mode0 =3D 0x34;
+> +		div_frac_start2_mode0 =3D 0xc0;
+> +		div_frac_start3_mode0 =3D 0x0b;
+> +		lock_cmp1_mode0 =3D 0x07;
+> +		lock_cmp2_mode0 =3D 0x07;
+> +		code1_mode0 =3D 0x71;
+> +		code2_mode0 =3D 0x0c;
+> +		break;
+> +
+> +	case 5400:
+> +		hsclk_sel =3D 0x2;
+> +		dec_start_mode0 =3D 0x4f;
+> +		div_frac_start2_mode0 =3D 0xa0;
+> +		div_frac_start3_mode0 =3D 0x01;
+> +		lock_cmp1_mode0 =3D 0x18;
+> +		lock_cmp2_mode0 =3D 0x15;
+> +		code1_mode0 =3D 0x14;
+> +		code2_mode0 =3D 0x25;
+> +		break;
+> +
+> +	case 8100:
+> +		hsclk_sel =3D 0x2;
+> +		dec_start_mode0 =3D 0x4f;
+> +		div_frac_start2_mode0 =3D 0xa0;
+> +		div_frac_start3_mode0 =3D 0x01;
+> +		lock_cmp1_mode0 =3D 0x18;
+> +		lock_cmp2_mode0 =3D 0x15;
+> +		code1_mode0 =3D 0x14;
+> +		code2_mode0 =3D 0x25;
+> +		break;
+
+These sections for 5400 and 8100 rates seem to be the same. Is it correct?
+If yes, then maybe join them together and drop duplicating lines?
+
+There is probably similar thingy in qcom_edp_com_configure_ssc_v8() above.
+
+Best regards,
+Alexey
 
 
