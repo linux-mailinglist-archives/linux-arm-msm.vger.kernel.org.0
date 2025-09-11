@@ -1,132 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-73165-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40639B53814
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 17:43:56 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE46BB539D4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 19:02:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F38BE16C94E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 15:43:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA6971735AE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 17:02:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 36F41352072;
-	Thu, 11 Sep 2025 15:43:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FFE43568E9;
+	Thu, 11 Sep 2025 17:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="meVHTyeE"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WbgY6OLf"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 598FA2D97A8
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 15:43:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE8E22AE45
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 17:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757605426; cv=none; b=aK82z/E0DAwLUpSHTH45NwqPsI9gXRRQYzXXrjz3eY+ZuKmCt58H2q5G7h54wheuj0ghv+4h0YK9nldDu+7yyEDtyeKaLE3jtF/cqgdbRdvUlJOIgdm0odv3HnpJg1qQy1GxKqWW204mGsxOVZmczTYaf6svSljf+EIpvcvMt18=
+	t=1757610140; cv=none; b=NkpudEpiRx721qNlYEkJkHZ9YUWpyw4mgWb7MiOKVxHO1SVIldaJL5ikh3JSOLPagjESBqRxsySJiQMG1iKk222XpdNsaBSs0cKYQZfnTvljxrsvYf+VqV+ZgYAO31Imr8wnffLsL1hKbqNr3hVAMgNpWjgUhUO16+goULLt49c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757605426; c=relaxed/simple;
-	bh=mtYEVqFfYfhoSwbzEKp/cEepkdVMf6SyvuyKmyLLU8Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=eiPXF8aS2QNGn3eaqt830U/ZhAHP+nKLOWDw5+fxDxvOtthLnfAaNLJFVB0TYTsE+U0WF0FM5fgiHDUSrC0hYfC2ykL9rcym2a5r6PX7UxF+UrR804/FcPtxSe9bq+w2TSNUyhaOz+MCxEv1YcgR698+CA8Q56XPktwgn+IPw0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=meVHTyeE; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3da4c14a5f9so1216156f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 08:43:43 -0700 (PDT)
+	s=arc-20240116; t=1757610140; c=relaxed/simple;
+	bh=8R6+RH+mErEiPPdYOOstKc0iqhFv59uOICnzE3FZ1Uc=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=p59yjPR7EnPofUE2HJT/fEWFbCv9T7QF3Btue6uoCeteG1VspLHFHZ2lMAg6PWm18bONS/HPq89ut/x0w9F0Y03XulPRiOMuGwdB52s9RWqc03mhrpQ721snkfJc43nfbyrHspDWOjUhuk11D5h5moJJxm0FMlDSdkjCAymcXws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WbgY6OLf; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-628caee5ba2so3830485a12.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 10:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757605422; x=1758210222; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=z0oQTNxrqqvW11nhsresLiX6PlYtqN+ZQ8oB9MyzMxA=;
-        b=meVHTyeEELUoRUkVauw8teFM+wZQpnAa3NNlzlLfsB18EAfiNVETE7IepV7imAoV+0
-         ujNYdcrqwXLOGiC2zgpCoHB1f9Q/Oeu/+QRCdosJ7B4/CoICarCezHgzW7wR3PnYXKzQ
-         IzprcfLw9q39xGfkgKbHsRU9wQGcn2OV9qshdCUWsVKiMbTrRb15bSnU2fAf47HjyUYY
-         FDMJz2Bv17XTkmyf7EIkAQ5QXFcBbhEvEaj3yci9GBoSrNArfjvBOHNRWUUrdjIhCDNm
-         D2AmtoGy/xIcY4jK8MBURSQgpujsTJJwqHjt3/rQ7O8e+lPj6IJ85uneUL4jL2fBOS+G
-         Gfvg==
+        d=gmail.com; s=20230601; t=1757610137; x=1758214937; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RSnllEdABgmRcLsHtfpUL8gI7RsqTdIWFArVq050vuk=;
+        b=WbgY6OLfqLdDd/PnqcGDOegxagDsMiHcHjMBhJlpHjO+Ax0+3ftUJBazdAKaGwOKiV
+         3ubcTV3tgojFNWTV5xnJyydkgjncU1iR+UK1Ggv4CUK7j8J0ir5vw4p8WLQtphKIGI+c
+         wlJ/JKZuGUOJCggvN7FULGK+/BJ7GDdQeO+5tbN5fsM8SygOyh+FzoddCbJuDwWiniU2
+         5LGeH86H2rZpaJxNgIWqJ4AgWrvxLBIrtUg/Z4DxuIVS6w/33RjmnI8REZdluDz0Or1J
+         rUhYwOb/VbLoEThZsdMZfex985ybyhXn5UGt0DaT7JB80ssWcpqsKd1dmPXvQ25FBbpx
+         k7eQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757605422; x=1758210222;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1757610137; x=1758214937;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=z0oQTNxrqqvW11nhsresLiX6PlYtqN+ZQ8oB9MyzMxA=;
-        b=GAO+gsRJkLoI3p6iTC4gohRvXyx01GVPnivdiUtlHUtG4v2wxrIFZgemHsTj17HI2Y
-         v/wNTuS/pnEaSQVqPeHJXm0Xx6bsaMui4lVCKRt2/3lN/sNkdd4TCXcIrdMob7D4Id9Y
-         qzEU2D7P4HGLF+CXhjqZK8HEQcAShZBeZxyQK+TvaHteNJAJabG1wNXAzKhJluwVc/mb
-         CT241BGgkN4PY+eMGDzaTI6Z0ER4rUbxIhRDeQd5rXsZ5JirgwHqgG2H5wq1XXW07XT4
-         1hSLdImf8ZoaXG59TdbSdCripwkj6g9UBP4JJua6GEqgoTULqMLff2u1URr9w43IUqth
-         tFHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW+Ov8axAZbONzjF/4Am7PeULU02V12bhHCliSKkZYg22vk3CUR3DpgOzRMg65UWNQDmzHevlNsCSPGUBMd@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzqj1MZjkJnBcWmfcgyjZS8FPyt1C2926PXb86pnpo4EDnWghkW
-	oxAeXJ2TtJePPMzsy+Skouh5/DzbwHdRLdwyzwr8dT+r4mKUzT3rF0if14geTIFzons=
-X-Gm-Gg: ASbGncv67X+70kku+8y2DZrNf/eYpwlIT9Ui4NOMftdk/KSpOQABW99rKwHAuEV5AqP
-	lsnfc6jbnshGMwj4lCWbr0pEfBghUpoPJnbLNUNVzoAT85BQdzlxOpR59H5Jx/YfNwtIwr92oub
-	tMVgic11hdgf8kL0KyVDAKVagHQVSrluDjz+TOIsy8NGw1dk5CnHxCxHTioO7m2g4/BTRSA1H60
-	fbdhn/Mb6v463ecFz7V/oJAncg/OToPsqPjDyizqW+SWMep3qmlAwDLcwALo+VsrUiuymz92QK0
-	eo+iERdnD3xpZPC21vO9m4D2313RvDtlLLQn+2T56cb3aqUrKmjN04CkNHvKyta3SbG8G/eRJqK
-	7yqYhciQY0Fd7qkh1MIoR6yl+QXVt5fBlDKvW1pE=
-X-Google-Smtp-Source: AGHT+IFh15zztkJ1zOO4/RN3ASTtgLJC2rMLFG5k5RSkaslNY3P4anVKOXAQFo82PonNF26Qn1N8Xw==
-X-Received: by 2002:a5d:5d06:0:b0:3bd:13d6:6c21 with SMTP id ffacd0b85a97d-3e75de70d33mr4111569f8f.0.1757605421647;
-        Thu, 11 Sep 2025 08:43:41 -0700 (PDT)
-Received: from orion.home ([2a02:c7c:7259:a00:8a3c:25ae:f06c:6781])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e0185be34sm16847985e9.4.2025.09.11.08.43.40
+        bh=RSnllEdABgmRcLsHtfpUL8gI7RsqTdIWFArVq050vuk=;
+        b=d+q/i3NOvbBHE6dbi6EJpPnAeKgcHdi2JsQm1qhHGsj9FJ/6b3w3wzr4oh59mRNVnb
+         m1jgc2WLu4baEkpL/IDxv2XSwYlwMDTwQ49YDdesu+OWBddiniDrw14/3A2tdTuAEDOt
+         /WKtWIPb22RJAsPvPQ+Gwpd6w+zh2+yBEEmJcY47m50B+oUtoijCd1xWJ+sridlkTWAu
+         r+9v7JRc7QtgKu66BPA3yiFG+bqXwFUy/5Hykv/t8DZaZwgns4ak52CwxPiIP58S82/U
+         NiZlkFtDdk1KSqv3iiPE+mcevdibSY3x8nroBk5UF2SqYc7vy7QgW8p8Tpp+Vn1mOee9
+         wxvQ==
+X-Gm-Message-State: AOJu0YwxKutptYty5bd+fPbUArm2b7vdV0QJWwDp9zYCE0PvfpoiVfqo
+	C7HvtXizLusMdPy3xdg2YkCglqLdJThxL/XPyWCnePp/db2QCsKu1Cg=
+X-Gm-Gg: ASbGncsnClKj1DEGhQTKbnTdemJbDmqk2lngXocJfRAZdv9eCJFPMYH50snnSaRmsDl
+	uvQFhwBkVC7E68LwGnYBcNSAMZhONaefd7m2QYnidMQ8F9W0C+XgqquHzC11WHX95CVF3OjBvC5
+	iiwosL+rhGM5XmSTAzpyeKmN+rF6NeDu0LGVquCdu2iR55ePFKLLu2e1rMVxh4PFe5I5AgUOyoL
+	IzeqamlQmNIekyTWXUk1kCyrb9qWbJnT9ROk4Dll1DGh6ON3/wK8l0jH378VAFR/2Ue6gC+uCXB
+	qcRePsRFFHzJYuq45LnQOtzDg52JAzuIU5B58CUtzy7Gz569ca1x9jbvdfuYMQihEAYMwe/0ZVc
+	sDstOTA1ncxD5rn+8lD0nvS6S1K+QC2JfkllsxIHVOB4gn6dv0El5ppZbfqqsIIsJKx0Z0G1Tsp
+	6XqiQXMxqgpTcU4FLugJ6i
+X-Google-Smtp-Source: AGHT+IGVr9IIEZr+8Z2efkcqBDn+wu417ZpSCDs1Qv8LcIf/zr0I3mWUWCQKBCdz8daDEq9iNNIPEg==
+X-Received: by 2002:a17:907:9623:b0:afa:1d2c:bbd1 with SMTP id a640c23a62f3a-b07c25b5bf1mr8227066b.30.1757610136353;
+        Thu, 11 Sep 2025 10:02:16 -0700 (PDT)
+Received: from [192.168.1.17] (host-79-12-163-148.retail.telecomitalia.it. [79.12.163.148])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b30da43esm166632966b.14.2025.09.11.10.02.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Sep 2025 08:43:41 -0700 (PDT)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-To: srini@kernel.org,
-	broonie@kernel.org,
-	lgirdwood@gmail.com
-Cc: perex@perex.cz,
-	tiwai@suse.com,
-	srinivas.kandagatla@oss.qualcomm.com,
-	neil.armstrong@linaro.org,
-	krzysztof.kozlowski@linaro.org,
-	linux-sound@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] ASoC: qcom: sc8280xp: explicitly set S16LE format in sc8280xp_be_hw_params_fixup()
-Date: Thu, 11 Sep 2025 16:43:40 +0100
-Message-ID: <20250911154340.2798304-1-alexey.klimov@linaro.org>
-X-Mailer: git-send-email 2.47.2
+        Thu, 11 Sep 2025 10:02:15 -0700 (PDT)
+From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
+Subject: [PATCH 0/2] Make hang check aware of preemption
+Date: Thu, 11 Sep 2025 19:01:03 +0200
+Message-Id: <20250911-preemption_aware_hangcheck-v1-0-974819876819@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAE8Aw2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDS0ND3YKi1NTcghKgsvjE8sSi1HiQquSM1ORsXYskyyRjcwOL1LTkZCW
+ gAUClaZkVYMOjY2trAfxZh5lsAAAA
+X-Change-ID: 20250911-preemption_aware_hangcheck-8b9b3708efcc
+To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
+Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+ freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ Anna Maniscalco <anna.maniscalco2000@gmail.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757610134; l=1269;
+ i=anna.maniscalco2000@gmail.com; s=20240815; h=from:subject:message-id;
+ bh=8R6+RH+mErEiPPdYOOstKc0iqhFv59uOICnzE3FZ1Uc=;
+ b=pxPb5b9aCV51Le4kGnwLMyZIQhK3o8Ug+ZnmnU6U5fkPwQolNF6qcJjTKzmy8b1c8ePzdfTmi
+ FM4IB/E95smA3LI7KRo9fVl+MPFLaG0croAd8N0tJ33O723VIYSQ2nd
+X-Developer-Key: i=anna.maniscalco2000@gmail.com; a=ed25519;
+ pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-Setting format to s16le is required for compressed playback on compatible
-soundcards.
+Ever since we added support for preemption hangcheck has been somewhat
+broken as it is not aware of multiple rings.
 
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+In some cases it might not recognize that one ring is stuck if the gpu
+switches in and out of it.
+
+Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 ---
- sound/soc/qcom/sc8280xp.c | 3 +++
- 1 file changed, 3 insertions(+)
+Anna Maniscalco (2):
+      drm/msm/registers: Sync GPU registers from mesa
+      drm/msm: preemption aware hangcheck
 
-diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-index 73f9f82c4e25..5d10b1c5909e 100644
---- a/sound/soc/qcom/sc8280xp.c
-+++ b/sound/soc/qcom/sc8280xp.c
-@@ -7,6 +7,7 @@
- #include <sound/soc.h>
- #include <sound/soc-dapm.h>
- #include <sound/pcm.h>
-+#include <sound/pcm_params.h>
- #include <linux/soundwire/sdw.h>
- #include <sound/jack.h>
- #include <linux/input-event-codes.h>
-@@ -82,8 +83,10 @@ static int sc8280xp_be_hw_params_fixup(struct snd_soc_pcm_runtime *rtd,
- 					SNDRV_PCM_HW_PARAM_RATE);
- 	struct snd_interval *channels = hw_param_interval(params,
- 					SNDRV_PCM_HW_PARAM_CHANNELS);
-+	struct snd_mask *fmt = hw_param_mask(params, SNDRV_PCM_HW_PARAM_FORMAT);
- 
- 	rate->min = rate->max = 48000;
-+	snd_mask_set_format(fmt, SNDRV_PCM_FORMAT_S16_LE);
- 	channels->min = 2;
- 	channels->max = 2;
- 	switch (cpu_dai->id) {
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  3 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |  3 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c         | 28 +++++++++++++--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h         |  1 +
+ drivers/gpu/drm/msm/adreno/a6xx_preempt.c     | 25 +++++++++----
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  3 +-
+ drivers/gpu/drm/msm/msm_gpu.c                 | 51 +++++++++++++++++++++------
+ drivers/gpu/drm/msm/msm_gpu.h                 |  3 ++
+ drivers/gpu/drm/msm/msm_ringbuffer.h          |  6 ++++
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml |  1 +
+ 10 files changed, 103 insertions(+), 21 deletions(-)
+---
+base-commit: b5bad77e1e3c7249e4c0c88f98477e1ee7669b63
+change-id: 20250911-preemption_aware_hangcheck-8b9b3708efcc
+
+Best regards,
 -- 
-2.47.2
+Anna Maniscalco <anna.maniscalco2000@gmail.com>
 
 
