@@ -1,80 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-73032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73033-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32432B52591
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 03:12:36 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id E1A61B52594
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 03:12:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E019E3B485C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 01:12:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 18A9C1C26DCC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 01:13:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 88D764A04;
-	Thu, 11 Sep 2025 01:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BCE82212FB9;
+	Thu, 11 Sep 2025 01:12:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ndx/kEeU"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="INvzT7TR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA5591DEFE0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 01:12:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBA4A1F4CBB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 01:12:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757553147; cv=none; b=iZyliS6Rza6iVi4haTmpThO1Bu/HrItaV7/ixDnyxr06z23jaoeX6CLDafTOmdNdGx8rtBu30kiM6r36V2R48wqghsm/iIaIS2S8z2y94WxOdplZNAcycXVcTOkOEx6hfFIByZZUNO14ucecSVYzgw/8+6hKghNgd6u6bdf8rJI=
+	t=1757553148; cv=none; b=ttpMkANq10bQhvhEx1Ix7DiPAaUmV1HrEopvRFWoXH/GwWv1B+5PwbLNT0iVK3xAe08AK4GIBeyCVIymGu3PgKdkeSPSjGC7KJWjkzguaRit5LUhSXhjm6YE5Z2lamV1jaUue7MwVqF+ZowYJnGDWda4QgmXPkqcFI8WWC6XLoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757553147; c=relaxed/simple;
-	bh=lny+i6/yVgFizIpIJrlHz0PaIRuaWNazlMaLqYSMAMo=;
+	s=arc-20240116; t=1757553148; c=relaxed/simple;
+	bh=cyqsY+2iBPm0Fr2O/qXayL/1CH7MKN4erIyrBOIDDU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G7oW+uY0t0GG9FgLiUuczhG73kW88shXyBLtT7qLa3JQgLn5WZYL1M5NipEsP5VgBCM4eByGscAnfGHA+DvvZReypzt1JimFJaDyuaQbsqFgwQ1YgcAn4XfWTbqZay7eu1aZ5vB04eB27FyDefPBqQiqz5J+Mt+5j/whcNQyht4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ndx/kEeU; arc=none smtp.client-ip=209.85.167.48
+	 MIME-Version; b=qJ2RojesTjEdjckdo8vHbdOMK6ZcEnmqHL++WJi7MO2+2sRKTAdCoqisuz5/yNnhCPkdVfG5wqxsW1d5QdjRnFlvbKy1svH5bUJTV65nzmbrwdIlr4qtseJ60XOv0ntpPsci37K2K6WHUXSHAtLslTXG5SSHgKhoBuaPHpX2Pgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=INvzT7TR; arc=none smtp.client-ip=209.85.208.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-55fc2236ce0so25080e87.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 18:12:25 -0700 (PDT)
+Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-3381af2736dso399661fa.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 18:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757553144; x=1758157944; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1757553145; x=1758157945; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=02MT83MiCKx+KYBmaRTv8ahirZdU8YNNjP3slDfY1Pk=;
-        b=ndx/kEeUWtlJ7VjVoyGJtaF23GG4pYs7CaBnmp0TkrmUi8ZwW+1Jp7hJqs54p+O9rV
-         oUl00G9Yxq8PQ0bzQqIU8wlQH2ksuzaoLUA8Bv189Syq21ez+THMrSrM0RUEyI3NeV2/
-         tD/aW8EF9QyMgiXeqt38ZP/CEkpr95DOWG5Q8/oNHQ+kAffwZM2pOxUx/pTBBwgC4ifG
-         FxGGE1efQSv+TEw0qm2yw9lnUEBHJCvMgm0VJQ4lv6zZwenaZBuGiIVeQtp6lrNG1n8R
-         0ekE7Q/PTrHbujvq7uuHKO3edUrNY7cdqRgYhNGzhJSk1AxyeVi3UMg3gUdTJg0hmdKS
-         D5Ww==
+        bh=PGYOgwO4nhCryouhrLQk1idBdFzw9ZworlUETk2rTwI=;
+        b=INvzT7TROXd6oju1Le4cDOGG3ksLjjG4h5JZ2vDZHffGoMuKd+buNXR5QCx4nFpblV
+         BQ9SR6aZMLv12GiWdlJMQo8yT02KFMFhgGsX8KAD4Ax3D6kah8SsBjz+ARaVW76nhIav
+         aBSyptq+mwXYOqtzr1CjNMWiK+oBPXt133PpRbdF6zqXXOkMX2f8wOJl0gmzrNlwmAl9
+         ju4ssGt6sI4LoJO8nIHCtjSNdZyxkWLVFmYBF4ev4YcTTYGt1rZS1y8sQlKMzMvj2KuL
+         RTq8W15gps4JUgcGls6SNOfCH7IkZonD5B5Ci+QJh75RmXnQL6Fp/rzajrP9yOCgWCda
+         IjVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757553144; x=1758157944;
+        d=1e100.net; s=20230601; t=1757553145; x=1758157945;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=02MT83MiCKx+KYBmaRTv8ahirZdU8YNNjP3slDfY1Pk=;
-        b=j5bKM08GTjBdRd5ooxhtqhoy+ItTMP1lqIm6JYlpUM8dijNnNcsomNRS8JyGq9dtAN
-         vhxPOrtohhhXWp4fGhj75B1XJNsI/wXdlWPIegFktd6VPJhvN6BUZDFIuRHsNtiyLO+E
-         WLLBGxNOmma4BIcYrOdmc9BMuWzpSleK8vzQxXIYdMdNvliqt5d4xO8t2fiNTNMvKhjQ
-         7GQh8cHmEfii/05iUQ+q0ZaM2dFfNGYy/fsyKEQeMdeA35MgPRqD3VbXqvw5uHRSFj/5
-         USMOMHvpceQfOLrUE0mg799qApt7U5gnnXpx9cKayg0GdqRPsQeZC60M9z+bLGRWqvPv
-         ncoA==
-X-Forwarded-Encrypted: i=1; AJvYcCW9klRjaR2Z8QwkFcfzMsWWXZyVqNIfNA9/0TEqxkZdjFSL02S/9VOkxubrFlNXdnkUl0eOcpItm/reAlAl@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy3fdTWH0Dbqqy3sI9w7pJFkZLjjJSI/bBqsdjDyYgyWk06iMts
-	Y0UO5QUXJzUnYPA5y87lClNzPVoZk1pkczqjATHxcA3nqG5Sz3lnwyVCninCYNWIAT5SUtqWHxt
-	vpH53
-X-Gm-Gg: ASbGncsDRxsg9U1bkvgRcXym66ZpVjOM/FokHrZnch0R8ri0CMIRZXdlh9XtJUWku9G
-	kgen1sQh7MyYWgFvkPanpyXGtJg1RNjWvTSQW0DoI41KcpE921XpZQaFoNr6/blraX/s9g3mtPw
-	f9gtAZgiwvrRh+xfJ1wxtdGtCaGcuxirYOjghRJ1sQFB9ftOE6I9ORyytrX/rQSCSYmqfOf621N
-	1pOlDBQahAko3luAc3rH9yPtFBdMeZzNroWqqr8q+z0B0j+C+c9IdwJ1VpMt3dc8kEi+E/19G6d
-	pEkj5/Twvs0y+2IklJ5/KnnTCiw6LUxt6SZGX1nEYFAOsIWdGcLQ/+pz+2AYf4Puz1WzQczsPwe
-	2ZKBBkdxZvHWiRZZaVsK2wvAWBpS8XWSwC3+7KUKDmcmxMObNftThCaCWvgTTABI05wp21wCgXV
-	KrXlRhGA==
-X-Google-Smtp-Source: AGHT+IEdI44g1/3JRS/obgEgFRR8e6UwS94D2kroflQQNBo7gfc3dUszd3E81tYEoGgE5krDED79bw==
-X-Received: by 2002:a19:6417:0:b0:564:7824:7771 with SMTP id 2adb3069b0e04-56478247976mr1746672e87.11.1757553143851;
-        Wed, 10 Sep 2025 18:12:23 -0700 (PDT)
+        bh=PGYOgwO4nhCryouhrLQk1idBdFzw9ZworlUETk2rTwI=;
+        b=YgN0ZB726r0QEARF3OZkrXo9AafkguAEVef04grcnr562PE9HloLTeGVmzrpqjlF3C
+         5I5Ep489uTzqkb3rv7lwah0yetp1IOHE0ej4jWpbw65VpnQPtb8ilmvsnFCtkrlLcL2i
+         z7Nff7lWFksydsdX68MQQLmGiC6S4edETiw1B/6DUOCtcyRWEuNIFMxhSxo+ax9Vuw63
+         jWqUovMDv/eDZYmEdPf7z8LMX7pDNc5pzCh8KtE0MLjQkly7642k6ph2wbgYcizhVODE
+         PfTQhWKG7LABJ8OkY3K/G7kzg0WeuF6OKkON8MBl7zNaZtcCzEzYUTIB5KqzfmmQA5tM
+         1+qQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX1bcqpocUJSe+2xzJ9UUY0Hb+tzaVl8KReg9LFytQ3ELQrxn2OZ4cDv4M60tybgGGeYU6yP+7zPzb95V+U@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxJhzuLvrNxt4aEZXoApIvz2ORuL2iJoBDIpqrfJxMAM3v96g8
+	dA75CFIHvEjX19fXIBwWZ+ZJH8YudHKQ4STRETdBTPUNNmANbNUGTXa/To9YY4O6jLg=
+X-Gm-Gg: ASbGncuYWpNtNd6Tv7jw2JcsvVcrn+u7P0G0cwVtym2xN1d6MNpdk2lSoWCqW4WmwsV
+	ISu5tkPf2QqKo95u3uN3NsxTAdaEOLUSQFA10xrBrkKqMWdkxQAmWdzWB5EcpWKcgaVFPs/GnFV
+	SIOD3q0tWisFrJenSzDKhZ1XLFWF8J7ScCfjfFa6Z4kdW34+2qTZEeWzkH95b+jFUALZzKJo3Jo
+	YdK3C0D4anMuNMa6O8Q+fnaMw7NBUNJpz9Lb93pEseX2eNmGVvc2SQP33HiMSamcOdvh1rtUNbJ
+	yz5f5Kbaiu+iLwjjZ3JPmCL0iiC/ypoEyPb3YKUkJRISJ4g+lGmmi6eCMzQBQkVhPkX5XQcJdXd
+	HxpKKhUkSQJMNMxHtI8PmAc1Amtrb3GAunJWB4FUex4Fy2iProC1N18oFYerVpGVqhQqj+Dw40G
+	VfAImgKg==
+X-Google-Smtp-Source: AGHT+IG9b66M0O/XbAvWJOlbcI1Gv1Aqc3qD4A/jWD08WCUA86lnswuNJ6w9zUDcQRoHVhLSmPBvrg==
+X-Received: by 2002:a05:6512:6185:b0:553:252f:adf4 with SMTP id 2adb3069b0e04-56263e840e5mr3094976e87.10.1757553144970;
+        Wed, 10 Sep 2025 18:12:24 -0700 (PDT)
 Received: from thyme.local (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-56e63c63f3esm45786e87.67.2025.09.10.18.12.22
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-56e63c63f3esm45786e87.67.2025.09.10.18.12.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 Sep 2025 18:12:23 -0700 (PDT)
+        Wed, 10 Sep 2025 18:12:24 -0700 (PDT)
 From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Michael Turquette <mturquette@baylibre.com>,
@@ -85,9 +84,9 @@ Cc: Taniya Das <quic_tdas@quicinc.com>,
 	Jagadeesh Kona <quic_jkona@quicinc.com>,
 	linux-clk@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org
-Subject: [PATCH 1/6] clk: qcom: camcc-sm8550: Specify Titan GDSC power domain as a parent to other
-Date: Thu, 11 Sep 2025 04:12:13 +0300
-Message-ID: <20250911011218.861322-2-vladimir.zapolskiy@linaro.org>
+Subject: [PATCH 2/6] clk: qcom: camcc-sm6350: Specify Titan GDSC power domain as a parent to other
+Date: Thu, 11 Sep 2025 04:12:14 +0300
+Message-ID: <20250911011218.861322-3-vladimir.zapolskiy@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250911011218.861322-1-vladimir.zapolskiy@linaro.org>
 References: <20250911011218.861322-1-vladimir.zapolskiy@linaro.org>
@@ -100,92 +99,68 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
 Make Titan GDSC power domain as a parent of all other GDSC power domains
-provided by the SM8550 camera clock controller to enforce a correct
+provided by the SM6350 camera clock controller to enforce a correct
 sequence of enabling and disabling power domains by the consumers.
 
-Fixes: ccc4e6a061a2 ("clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550")
+Fixes: 80f5451d9a7c ("clk: qcom: Add camera clock controller driver for SM6350")
 Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
- drivers/clk/qcom/camcc-sm8550.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/clk/qcom/camcc-sm6350.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
-index 63aed9e4c362..b8ece8a57a8a 100644
---- a/drivers/clk/qcom/camcc-sm8550.c
-+++ b/drivers/clk/qcom/camcc-sm8550.c
-@@ -3204,6 +3204,8 @@ static struct clk_branch cam_cc_sfe_1_fast_ahb_clk = {
+diff --git a/drivers/clk/qcom/camcc-sm6350.c b/drivers/clk/qcom/camcc-sm6350.c
+index 8aac97d29ce3..6c272f7b0721 100644
+--- a/drivers/clk/qcom/camcc-sm6350.c
++++ b/drivers/clk/qcom/camcc-sm6350.c
+@@ -1693,6 +1693,8 @@ static struct clk_branch camcc_sys_tmr_clk = {
  	},
  };
  
-+static struct gdsc cam_cc_titan_top_gdsc;
++static struct gdsc titan_top_gdsc;
 +
- static struct gdsc cam_cc_bps_gdsc = {
- 	.gdscr = 0x10004,
+ static struct gdsc bps_gdsc = {
+ 	.gdscr = 0x6004,
  	.en_rest_wait_val = 0x2,
-@@ -3213,6 +3215,7 @@ static struct gdsc cam_cc_bps_gdsc = {
- 		.name = "cam_cc_bps_gdsc",
+@@ -1702,6 +1704,7 @@ static struct gdsc bps_gdsc = {
+ 		.name = "bps_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.parent = &titan_top_gdsc.pd,
+ 	.flags = VOTABLE,
  };
  
-@@ -3225,6 +3228,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
- 		.name = "cam_cc_ife_0_gdsc",
+@@ -1714,6 +1717,7 @@ static struct gdsc ipe_0_gdsc = {
+ 		.name = "ipe_0_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.parent = &titan_top_gdsc.pd,
+ 	.flags = VOTABLE,
  };
  
-@@ -3237,6 +3241,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
- 		.name = "cam_cc_ife_1_gdsc",
+@@ -1726,6 +1730,7 @@ static struct gdsc ife_0_gdsc = {
+ 		.name = "ife_0_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.parent = &titan_top_gdsc.pd,
  };
  
-@@ -3249,6 +3254,7 @@ static struct gdsc cam_cc_ife_2_gdsc = {
- 		.name = "cam_cc_ife_2_gdsc",
+ static struct gdsc ife_1_gdsc = {
+@@ -1737,6 +1742,7 @@ static struct gdsc ife_1_gdsc = {
+ 		.name = "ife_1_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.parent = &titan_top_gdsc.pd,
  };
  
-@@ -3261,6 +3267,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
- 		.name = "cam_cc_ipe_0_gdsc",
+ static struct gdsc ife_2_gdsc = {
+@@ -1748,6 +1754,7 @@ static struct gdsc ife_2_gdsc = {
+ 		.name = "ife_2_gdsc",
  	},
  	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
++	.parent = &titan_top_gdsc.pd,
  };
  
-@@ -3273,6 +3280,7 @@ static struct gdsc cam_cc_sbi_gdsc = {
- 		.name = "cam_cc_sbi_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -3285,6 +3293,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
- 		.name = "cam_cc_sfe_0_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
-@@ -3297,6 +3306,7 @@ static struct gdsc cam_cc_sfe_1_gdsc = {
- 		.name = "cam_cc_sfe_1_gdsc",
- 	},
- 	.pwrsts = PWRSTS_OFF_ON,
-+	.parent = &cam_cc_titan_top_gdsc.pd,
- 	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
- };
- 
+ static struct gdsc titan_top_gdsc = {
 -- 
 2.49.0
 
