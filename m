@@ -1,154 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-73176-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73177-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E88BB53C11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 21:03:04 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2082B53C2E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 21:19:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3B7673B43F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 19:03:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B26D75A6524
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 19:19:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E98B5242927;
-	Thu, 11 Sep 2025 19:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A2E8625A322;
+	Thu, 11 Sep 2025 19:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="UeFzjKXa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uGJFroi+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE132DC77C;
-	Thu, 11 Sep 2025 19:02:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7627C257437;
+	Thu, 11 Sep 2025 19:19:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757617381; cv=none; b=V4aQ+WPGhgy1uPPGWVYzGdCajbwSuF3B3gnA/sj9Y0RQHDb/cZb1uXqUwoXA4O5mgM3vaFJOqigLUZcM8KyDIkzgX56QDaadigR/6apbYjOzNdc2M+ioPb4yXwwZaIMVxNa5w2Zedf8W71y0FaV4KYQPtr87IKEmL7PbpD0rWh4=
+	t=1757618382; cv=none; b=Xo2klAyGSJ7jTSTYzdxZTJ7/8hhX70td4CaTp5A/swgi+3tI0Jet4Cci446WVpMeu39F7j9wC9nmb24VnMsan7PHyC5e2F4hfhu9xkXRIKJQqYvzevn3gKLhsHAfnv5z4xt9KYwybKowjWsIbhaNyEWYmXTOhpjYFX350+nuh9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757617381; c=relaxed/simple;
-	bh=pkxJEvD9oHck9UgN12PpVFUBvVOlUSiUpDQ2JqkUolw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=I8oBy+kDZDtKrMXfs29JFomX6dvr0TB8eN1V0N3lxOfuwS4ax1EjRppan5S/8Kh7S65SUgCYYkNthVt+Z4OX9mGk41C/K7NTksVrfdskw0+st69VkqNx3qFCA0eSp203ybsv3h5Z2yAkD1URq+eZC0SY1Dc/SPBZG/Fiif0Eb+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=UeFzjKXa; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58BB8wCC006691;
-	Thu, 11 Sep 2025 19:02:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	YBMq/kQPD507cJcIsE32kLWWx91RqZvJnUcZVgxldy0=; b=UeFzjKXaXxMHTu+R
-	/dDkqKcyfzDP2fDFuRajFy+1jnHiTj4aDDvOSERrufeJ7BNMirJxvJg0AXHOewIG
-	hgSzos46ekSIWx+R+SJDsfZqmNbPnmFMlupGEZAG7LB4v3TR30gkJNeMCFTCJVno
-	ttbfIv6+ud4F0Lmapk+e9FWzrPQkDmxJHOlj1iDIT+wtAUCK3bGZK3V2LagKsihN
-	ErAaN2ShhprwoS321xaKDZswLXPkOkBBy2g60pHY07WjG5+IO4LRTq8PFe4OsUIG
-	0zkzJjKG10qq/QzlsNHKTAV+b29E4tnwsE8lbOrqcpKM6mJeCyh+3C3dzCBmUGKk
-	W4vYSA==
-Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490e8ah0d7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Sep 2025 19:02:56 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58BJ2tdS023791
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 11 Sep 2025 19:02:55 GMT
-Received: from [10.110.119.34] (10.80.80.8) by nasanex01a.na.qualcomm.com
- (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Thu, 11 Sep
- 2025 12:02:54 -0700
-Message-ID: <6a7bc6b1-7eb6-40a4-82bf-c547b4c07b51@quicinc.com>
-Date: Thu, 11 Sep 2025 12:02:54 -0700
+	s=arc-20240116; t=1757618382; c=relaxed/simple;
+	bh=yoLms4BJJ8dwb0l5dNqi3cVT2240JlTbGu0y3gjZuqM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QtuGHRDpVFnWO/DwWD8uhTWkHS4Vp4sYjq3EZNE8cTGH8WiFGp2m0qJtFrn5OkKNvI93HNWz6SwlcgABI1k0650F5jSiSsAjIHaOpcJ0CNbmRBFXfysrBpKMQ9GVHKDnidtta7m8F4XersIEvCYwjRHfCwIOcirPlUc1gvqvKvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uGJFroi+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5376FC4CEF0;
+	Thu, 11 Sep 2025 19:19:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757618382;
+	bh=yoLms4BJJ8dwb0l5dNqi3cVT2240JlTbGu0y3gjZuqM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uGJFroi+WRT9fNMHfYIgY1tCeeLecECwMzjb1jKbsydWjHgSqCBhnthcOyPL4LFzO
+	 htASV+CM4T93E13qknjQUyAvDwENN+Ssrp9GPJ0570jnL8MeNq7egnnbXH+RzjgnSO
+	 /WmLtAyevYSIkmQUMdU4yMbaepFkk/m/bSf5uicbvb0if9xM+KZ4KOu5cE0f3D4XTk
+	 HFVLuWyVoKUk/HKncO8yfBwcm9S/cPRilPuU/CyxnomiPq5DO4l08soc6JzGoIoto+
+	 xfb4RS2g+v0YTMNg7douSem+u/HdXoSBbO+Q/OFH+jlwjm5scgwBWGT94tqzenrmi0
+	 dGKu8aLWVtNYw==
+Date: Thu, 11 Sep 2025 14:19:39 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: qcm6490: Introduce Particle Tachyon
+Message-ID: <nweaxuma3dkhzcc46ztfhmxxrchgidxjprc2tz5eahle6sxsuy@qvczmexs4qnn>
+References: <20250910-tachyon-v1-0-5090bfd133e0@oss.qualcomm.com>
+ <2tnzsjw3xy5jct4bcmahcwhjbzlmyxgcx6fzlz5qrzxume2uoy@phpcz6mnydlt>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] arm64: dts: qcom: x1e80100: Add IRIS video codec
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Dikshita
- Agarwal" <dikshita.agarwal@oss.qualcomm.com>,
-        Vikash Garodia
-	<vikash.garodia@oss.qualcomm.com>,
-        Bryan O'Donoghue
-	<bryan.odonoghue@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20250911-x1e-iris-dt-v1-0-63caf0fd202c@linaro.org>
-Content-Language: en-US
-From: Trilok Soni <quic_tsoni@quicinc.com>
-In-Reply-To: <20250911-x1e-iris-dt-v1-0-63caf0fd202c@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=H7Dbw/Yi c=1 sm=1 tr=0 ts=68c31ce0 cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=KKAkSRfTAAAA:8
- a=wr40s-WhVdFOp0t4KT0A:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: xC-FY3M2P3zEvi9nImD0SjHfT6BvorZk
-X-Proofpoint-ORIG-GUID: xC-FY3M2P3zEvi9nImD0SjHfT6BvorZk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAzOSBTYWx0ZWRfX7XL/cs737wu/
- keer3JJPlXFSl71M7OR94zcZRqThjL/0/6+BfNTSr8p2WCuxVNZ/ipqFT3XNJTOR7nFR8m5hGz4
- 7tmI3RqkApGWRoYK3qW5BI1BFfprl3Zq8sTPmlWlYAWSQiQs4GlLtHtqfC0cxASt3Wmsfp9vIFk
- eiBfaFjeuF+78ZPg2zb7ZwHMvdlvtcSSOqxuYy/1mQDD0nbhi41t6KvYj2Ve8LZ1eme7M9KGaL0
- gZrEVuhQ1frknA+ZX5AamNike9+pfTxKwCVKXVfaa6nBidOzjXO3QOxTbZtGzqeNPV+lKDeqDx5
- JJxNmwQwYiDJPMkRmKqKiWcDvUO9LfdqqtGsYIlhnIOPann5DizVJEnGJuXfwM82oZWZMaoObsv
- Ycfayg0o
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-11_03,2025-09-11_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 bulkscore=0 impostorscore=0 adultscore=0 phishscore=0
- clxscore=1011 suspectscore=0 priorityscore=1501 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060039
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2tnzsjw3xy5jct4bcmahcwhjbzlmyxgcx6fzlz5qrzxume2uoy@phpcz6mnydlt>
 
-On 9/11/2025 11:38 AM, Stephan Gerhold wrote:
-> Add the necessary definitions to enable the IRIS video codec for
-> accelerated video decoding on the X1E CRD and Lenovo ThinkPad T14s. The
-> additions are largely copied as-is from sm8550.dtsi with some minor changes
-> necessary for X1E.
+On Thu, Sep 11, 2025 at 03:01:35AM +0300, Dmitry Baryshkov wrote:
+> On Wed, Sep 10, 2025 at 06:05:36PM -0500, Bjorn Andersson wrote:
+> > Introduce the Particle Tachyon board (https://www.particle.io/tachyon/),
+> > a single board compute with 5G connectivity and AI accelerator.
+> > 
+> > The boards currently ships with the Android Boot Loader, but replacing
+> > this with abl2esp allows writing a EFI System Parition and OS partitions
+> > to all of LUN0, and a more UEFI boot experience. A prebuilt version of
+> > abl2esp is provided at [1], as abl2esp-v6.elf.
+> > 
+> > With a (very) recent version of QDL, a flash programmer from a Tachyon
+> > software release, and a full distro image, this can be achieved with:
+> > 
+> >   qdl prog_firehose_ddr.elf write abl_a abl2esp-v6.elf write abl_b abl2esp-v6.elf write 0 image.raw
+> > 
+> > The following firmware files are currently used, on top of what's in
+> > linux-firmware already:
+> >   qcom/qcm6490/particle/tachyon/a660_zap.mbn
+> >   qcom/qcm6490/particle/tachyon/adsp.mbn
+> >   qcom/qcm6490/particle/tachyon/cdsp.mbn
+> >   qcom/qcm6490/particle/tachyon/ipa_fws.mbn
+> >   qcom/qcm6490/particle/tachyon/modem.mbn
 > 
-> The PAS interface used to boot the IRIS firmware is not functional in EL2.
+> Is it locked?
 
-Just to confirm my understanding of above statement. The patches below
-works w/ the Gunyah and Linux running at NS-EL1 and "not functional in
-EL2" means Video working w/ the KVM Hypervisor on X1E right? 
+It doesn't look that way.
 
-> The code to start it without using PAS exists already in the Venus driver,
-> but was not ported over to IRIS yet. Discussions how to model the
-> video-firmware IOMMU are still ongoing, so disable IRIS in x1-el2.dtso for
-> now to avoid regressions when running in EL2.
+> Would it be possible to Particle-signed firmware into linux-firmware?
+
+That is something that would have to be discussed...
+
+Regards,
+Bjorn
+
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
-> Stephan Gerhold (4):
->       arm64: dts: qcom: x1e80100: Add IRIS video codec
->       arm64: dts: qcom: x1-el2: Disable IRIS for now
->       arm64: dts: qcom: x1e80100-crd: Enable IRIS video codec
->       arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: Enable IRIS
+> > 
+> > In addition to bug fixes that has landed in v6.17-rc this depends on
+> > [2], which is available in linux-next.
+> > 
+> > [1] https://github.com/qualcomm/abl2esp/releases/tag/v1.0
+> > [2] https://lore.kernel.org/all/20250811-sc7280-mdss-reset-v1-0-83ceff1d48de@oss.qualcomm.com/
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> > ---
+> > Bjorn Andersson (3):
+> >       dt-bindings: vendor-prefixes: Add Particle Industries
+> >       dt-bindings: arm: qcom: Add Particle Tachyon
+> >       arm64: dts: qcom: qcm6490: Introduce the Particle Tachyon
+> > 
+> >  Documentation/devicetree/bindings/arm/qcom.yaml    |   1 +
+> >  .../devicetree/bindings/vendor-prefixes.yaml       |   2 +
+> >  arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+> >  .../boot/dts/qcom/qcm6490-particle-tachyon.dts     | 877 +++++++++++++++++++++
+> >  4 files changed, 881 insertions(+)
+> > ---
+> > base-commit: 5f540c4aade9f1d58fb7b9490b4b7d5214ec9746
+> > change-id: 20250910-tachyon-e3548941397d
+> > 
+> > Best regards,
+> > -- 
+> > Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> > 
 > 
->  arch/arm64/boot/dts/qcom/x1-el2.dtso               |  5 ++
->  .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    |  5 ++
->  arch/arm64/boot/dts/qcom/x1e80100-crd.dts          |  4 +
->  arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 87 ++++++++++++++++++++++
->  4 files changed, 101 insertions(+)
-> ---
-> base-commit: 8f21d9da46702c4d6951ba60ca8a05f42870fe8f
-> change-id: 20250909-x1e-iris-dt-eb0494a130ca
-> 
-> Best regards,
-
-
--- 
----Trilok Soni
+> -- 
+> With best wishes
+> Dmitry
 
