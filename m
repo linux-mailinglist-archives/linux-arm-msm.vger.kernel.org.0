@@ -1,80 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-73166-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73167-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE46BB539D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 19:02:24 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3588B539D7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 19:02:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA6971735AE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 17:02:21 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C911A1CC23FB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 17:02:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FFE43568E9;
-	Thu, 11 Sep 2025 17:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57BC735FC33;
+	Thu, 11 Sep 2025 17:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WbgY6OLf"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KwgNdkGX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE8E22AE45
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 17:02:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A398835E4FF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 17:02:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757610140; cv=none; b=NkpudEpiRx721qNlYEkJkHZ9YUWpyw4mgWb7MiOKVxHO1SVIldaJL5ikh3JSOLPagjESBqRxsySJiQMG1iKk222XpdNsaBSs0cKYQZfnTvljxrsvYf+VqV+ZgYAO31Imr8wnffLsL1hKbqNr3hVAMgNpWjgUhUO16+goULLt49c=
+	t=1757610142; cv=none; b=HJqJqy2tDnbS9MoZQetq2xymUH8QA4vf8uawFlfrzv4T4R5XYjdkXcvAENV1FDCZqYP2UzxMPeqEBB5xu4IzU+1gwseqOoiu0HmD39MYmmjDlIJuVLh609NuHgwSxw0jKhWT7diLqs5UW30BZ4LP5RNEjyvlPk6pEu9pjx7r2Ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757610140; c=relaxed/simple;
-	bh=8R6+RH+mErEiPPdYOOstKc0iqhFv59uOICnzE3FZ1Uc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=p59yjPR7EnPofUE2HJT/fEWFbCv9T7QF3Btue6uoCeteG1VspLHFHZ2lMAg6PWm18bONS/HPq89ut/x0w9F0Y03XulPRiOMuGwdB52s9RWqc03mhrpQ721snkfJc43nfbyrHspDWOjUhuk11D5h5moJJxm0FMlDSdkjCAymcXws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WbgY6OLf; arc=none smtp.client-ip=209.85.208.51
+	s=arc-20240116; t=1757610142; c=relaxed/simple;
+	bh=zJg6XHeseMqyVJBkLEj26VisHJUB1RXdwSibXem5MNs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=FGzZy1kBi84Yu6bvD2bMFAh+86qbe02aXpqKTQfTctAx7r/Rc4xBAUf11givImVMmkhtN4EGEAv/mzQtUi/9/6AtRuomj9g6IohjqVMJrVnm/xzIpuaaoEGlbhj/8pKaWFnFn6wGnOIVctyYkBsb9cAcFPncrusfqR/w36wrskA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KwgNdkGX; arc=none smtp.client-ip=209.85.208.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-628caee5ba2so3830485a12.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 10:02:18 -0700 (PDT)
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-628f29d68ecso1971928a12.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 10:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757610137; x=1758214937; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RSnllEdABgmRcLsHtfpUL8gI7RsqTdIWFArVq050vuk=;
-        b=WbgY6OLfqLdDd/PnqcGDOegxagDsMiHcHjMBhJlpHjO+Ax0+3ftUJBazdAKaGwOKiV
-         3ubcTV3tgojFNWTV5xnJyydkgjncU1iR+UK1Ggv4CUK7j8J0ir5vw4p8WLQtphKIGI+c
-         wlJ/JKZuGUOJCggvN7FULGK+/BJ7GDdQeO+5tbN5fsM8SygOyh+FzoddCbJuDwWiniU2
-         5LGeH86H2rZpaJxNgIWqJ4AgWrvxLBIrtUg/Z4DxuIVS6w/33RjmnI8REZdluDz0Or1J
-         rUhYwOb/VbLoEThZsdMZfex985ybyhXn5UGt0DaT7JB80ssWcpqsKd1dmPXvQ25FBbpx
-         k7eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757610137; x=1758214937;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1757610138; x=1758214938; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RSnllEdABgmRcLsHtfpUL8gI7RsqTdIWFArVq050vuk=;
-        b=d+q/i3NOvbBHE6dbi6EJpPnAeKgcHdi2JsQm1qhHGsj9FJ/6b3w3wzr4oh59mRNVnb
-         m1jgc2WLu4baEkpL/IDxv2XSwYlwMDTwQ49YDdesu+OWBddiniDrw14/3A2tdTuAEDOt
-         /WKtWIPb22RJAsPvPQ+Gwpd6w+zh2+yBEEmJcY47m50B+oUtoijCd1xWJ+sridlkTWAu
-         r+9v7JRc7QtgKu66BPA3yiFG+bqXwFUy/5Hykv/t8DZaZwgns4ak52CwxPiIP58S82/U
-         NiZlkFtDdk1KSqv3iiPE+mcevdibSY3x8nroBk5UF2SqYc7vy7QgW8p8Tpp+Vn1mOee9
-         wxvQ==
-X-Gm-Message-State: AOJu0YwxKutptYty5bd+fPbUArm2b7vdV0QJWwDp9zYCE0PvfpoiVfqo
-	C7HvtXizLusMdPy3xdg2YkCglqLdJThxL/XPyWCnePp/db2QCsKu1Cg=
-X-Gm-Gg: ASbGncsnClKj1DEGhQTKbnTdemJbDmqk2lngXocJfRAZdv9eCJFPMYH50snnSaRmsDl
-	uvQFhwBkVC7E68LwGnYBcNSAMZhONaefd7m2QYnidMQ8F9W0C+XgqquHzC11WHX95CVF3OjBvC5
-	iiwosL+rhGM5XmSTAzpyeKmN+rF6NeDu0LGVquCdu2iR55ePFKLLu2e1rMVxh4PFe5I5AgUOyoL
-	IzeqamlQmNIekyTWXUk1kCyrb9qWbJnT9ROk4Dll1DGh6ON3/wK8l0jH378VAFR/2Ue6gC+uCXB
-	qcRePsRFFHzJYuq45LnQOtzDg52JAzuIU5B58CUtzy7Gz569ca1x9jbvdfuYMQihEAYMwe/0ZVc
-	sDstOTA1ncxD5rn+8lD0nvS6S1K+QC2JfkllsxIHVOB4gn6dv0El5ppZbfqqsIIsJKx0Z0G1Tsp
-	6XqiQXMxqgpTcU4FLugJ6i
-X-Google-Smtp-Source: AGHT+IGVr9IIEZr+8Z2efkcqBDn+wu417ZpSCDs1Qv8LcIf/zr0I3mWUWCQKBCdz8daDEq9iNNIPEg==
-X-Received: by 2002:a17:907:9623:b0:afa:1d2c:bbd1 with SMTP id a640c23a62f3a-b07c25b5bf1mr8227066b.30.1757610136353;
-        Thu, 11 Sep 2025 10:02:16 -0700 (PDT)
+        bh=FJk0hVL26JapxqBeuQwzrSE0cPApYyqFtLP73ac9uj4=;
+        b=KwgNdkGXUWRaQ6bHaRpjg2s0MH3Lbt5Q7M3uM4+OW/FshYbUCyuz+0kBxfr8ElXL45
+         61X9aGMj6E7K4MMN4xP4bVNFmg0H30qQGPUZl+BZoYVlPPwU3VcUIO9KRVu2SemzUzV6
+         ErxYkGtcFiE4AWdW0tqeYvn+lowQU4VpqSjJ8QK0Wc2eF0T5EXJokX3pg8zjcx6cgxc0
+         keXbhmsy4bfOu4pr8a9LK6Z0Kf7JmI4v+TrkOV0O8Nvb5MwLe8oN87pREp3sWwmbqMrS
+         xorQhk/25uWBoHf0kWB2roWWDwlWEx2S6VF+Ql8ptM1vlhjyPxMbVLQwZQ3xfqygFfju
+         ACEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757610138; x=1758214938;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FJk0hVL26JapxqBeuQwzrSE0cPApYyqFtLP73ac9uj4=;
+        b=daAJj8ZzyZcNuW4En43oOlhHjDchHprNBBuUSZJKATqBJYk9taXFuUqshGwHJn0BOT
+         GsShEVkbVY0QuyIY5JQ6R1y8q/l0GnGuTdsCyO+DU+5reEy1qxSE8r3Oe0bu/XNDnyYa
+         pO4qM3oOC+vRZCf0iyOpE8jyrATcbkBAd1oo/lG1qGx4qQmlI74iuLZLpczHwntYL0ME
+         AhJfPH1YL2/MwyaITumkMjD4Xo6vXvJthXMyVAZtT3RSF6x7b+20TMmn2xTnxrL7dxmv
+         k8KtkrZ8aBKheezt5jIlz5dTp4e7RTQupJGxRRvtUyLsRLQAeJw6QRKq8ObhC09whN3T
+         Y9sA==
+X-Gm-Message-State: AOJu0Yx5KN33Aj56JCFOSybiGsHtly/Kuig/en3o0mZpUzrBoxEcjg+p
+	i2W6FJWaQ9pCC5Jt2z9W0HuyEsn6kVcXBg/bBA1w4nxhhq5jjv4FM+w=
+X-Gm-Gg: ASbGnctl+tRQTXFgHsEXLphXezmZK/9jCR39eyeCiZFqabytDhWXdUMeBjjGTAZLB10
+	op7B2JOBQyPfmnYbb4QqxQu1ecQq+MUsOG5/eKJx8qog6JV6CPiTCLyIgsSpNr3uoKPBg0MDmfI
+	DZKClX92yZohtgfJhIpOnl/hXiRr2FzL+EMJW7OOJ5HE6/IzJDUdCTBhWewk70bWDk8yXai/fUP
+	fSCyItJ49pTUQkqq8qdu3q7L7y/CraLe2/I/bfUkR/Y/6//mkNW0KuiB4HJL+C4OJZvhyG3J3FX
+	X+OPN3ObFFfC/FyjoTkkq2e/LLYJMXuIFQu3ZWyNTv1L8Az1+N0stouSiw66bTIiEvjux7Xd8w4
+	kcR0J/kKvyTmPiiRZ1ycLajxmOGow9zPnQNAAAZD0d+XX3rAJrXyUaQpNd3ZlB8tqBAfQxTzUTW
+	AK3ISbLvJwdzNpKe1MLiIDthD/K3nO460=
+X-Google-Smtp-Source: AGHT+IHx2KcsYmCWeBeWcnkZxEbDJE1L/17SMXH4yrK85mCe32s1OPDe2bxpZe+SNwy+ZLdoE3wGEg==
+X-Received: by 2002:a17:907:3f92:b0:b07:a76e:db6e with SMTP id a640c23a62f3a-b07a76edcecmr394044366b.21.1757610137790;
+        Thu, 11 Sep 2025 10:02:17 -0700 (PDT)
 Received: from [192.168.1.17] (host-79-12-163-148.retail.telecomitalia.it. [79.12.163.148])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b30da43esm166632966b.14.2025.09.11.10.02.15
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b30da43esm166632966b.14.2025.09.11.10.02.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 11 Sep 2025 10:02:15 -0700 (PDT)
+        Thu, 11 Sep 2025 10:02:17 -0700 (PDT)
 From: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-Subject: [PATCH 0/2] Make hang check aware of preemption
-Date: Thu, 11 Sep 2025 19:01:03 +0200
-Message-Id: <20250911-preemption_aware_hangcheck-v1-0-974819876819@gmail.com>
+Date: Thu, 11 Sep 2025 19:01:04 +0200
+Subject: [PATCH 1/2] drm/msm/registers: Sync GPU registers from mesa
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,10 +84,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAE8Aw2gC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDS0ND3YKi1NTcghKgsvjE8sSi1HiQquSM1ORsXYskyyRjcwOL1LTkZCW
- gAUClaZkVYMOjY2trAfxZh5lsAAAA
-X-Change-ID: 20250911-preemption_aware_hangcheck-8b9b3708efcc
+Message-Id: <20250911-preemption_aware_hangcheck-v1-1-974819876819@gmail.com>
+References: <20250911-preemption_aware_hangcheck-v1-0-974819876819@gmail.com>
+In-Reply-To: <20250911-preemption_aware_hangcheck-v1-0-974819876819@gmail.com>
 To: Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
  Konrad Dybcio <konradybcio@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
  Abhinav Kumar <abhinav.kumar@linux.dev>, 
@@ -97,43 +97,35 @@ Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
  freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
  Anna Maniscalco <anna.maniscalco2000@gmail.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757610134; l=1269;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757610134; l=980;
  i=anna.maniscalco2000@gmail.com; s=20240815; h=from:subject:message-id;
- bh=8R6+RH+mErEiPPdYOOstKc0iqhFv59uOICnzE3FZ1Uc=;
- b=pxPb5b9aCV51Le4kGnwLMyZIQhK3o8Ug+ZnmnU6U5fkPwQolNF6qcJjTKzmy8b1c8ePzdfTmi
- FM4IB/E95smA3LI7KRo9fVl+MPFLaG0croAd8N0tJ33O723VIYSQ2nd
+ bh=zJg6XHeseMqyVJBkLEj26VisHJUB1RXdwSibXem5MNs=;
+ b=6yDKz4TF8Fm0al2rGgmBcFOPLrGluHEtzD0SQuvnW97plvnBs59JWWYiRVtR2tY23untSlWyE
+ w3opJ7KenRxCmtic1o7RGJPWob1R6omI5Jfn4+0zw1wZKsTDtm+q/1+
 X-Developer-Key: i=anna.maniscalco2000@gmail.com; a=ed25519;
  pk=0zicFb38tVla+iHRo4kWpOMsmtUrpGBEa7LkFF81lyY=
 
-Ever since we added support for preemption hangcheck has been somewhat
-broken as it is not aware of multiple rings.
-
-In some cases it might not recognize that one ring is stuck if the gpu
-switches in and out of it.
+In particular bring in `CP_ALWAYS_ON_CONTEXT`
 
 Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
 ---
-Anna Maniscalco (2):
-      drm/msm/registers: Sync GPU registers from mesa
-      drm/msm: preemption aware hangcheck
+ drivers/gpu/drm/msm/registers/adreno/a6xx.xml | 1 +
+ 1 file changed, 1 insertion(+)
 
- drivers/gpu/drm/msm/adreno/a5xx_gpu.c         |  3 +-
- drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |  3 +-
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c         | 28 +++++++++++++--
- drivers/gpu/drm/msm/adreno/a6xx_gpu.h         |  1 +
- drivers/gpu/drm/msm/adreno/a6xx_preempt.c     | 25 +++++++++----
- drivers/gpu/drm/msm/adreno/adreno_gpu.c       |  3 +-
- drivers/gpu/drm/msm/msm_gpu.c                 | 51 +++++++++++++++++++++------
- drivers/gpu/drm/msm/msm_gpu.h                 |  3 ++
- drivers/gpu/drm/msm/msm_ringbuffer.h          |  6 ++++
- drivers/gpu/drm/msm/registers/adreno/a6xx.xml |  1 +
- 10 files changed, 103 insertions(+), 21 deletions(-)
----
-base-commit: b5bad77e1e3c7249e4c0c88f98477e1ee7669b63
-change-id: 20250911-preemption_aware_hangcheck-8b9b3708efcc
+diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+index 9459b603821711a1a7ed44f0f1a567cf989b749b..6ea5479670970cc610ca25e71aa41af5f328f560 100644
+--- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
++++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
+@@ -254,6 +254,7 @@ by a particular renderpass/blit.
+ 		<bitfield name="CONTEXT" low="4" high="5"/>
+ 	</bitset>
+ 	<reg64 offset="0x0980" name="CP_ALWAYS_ON_COUNTER"/>
++	<reg64 offset="0x0982" name="CP_ALWAYS_ON_CONTEXT"/>
+ 	<reg32 offset="0x098D" name="CP_AHB_CNTL"/>
+ 	<reg32 offset="0x0A00" name="CP_APERTURE_CNTL_HOST" variants="A6XX"/>
+ 	<reg32 offset="0x0A00" name="CP_APERTURE_CNTL_HOST" type="a7xx_aperture_cntl" variants="A7XX-"/>
 
-Best regards,
 -- 
-Anna Maniscalco <anna.maniscalco2000@gmail.com>
+2.51.0
 
 
