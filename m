@@ -1,68 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-73187-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88534B53E13
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 23:50:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CADAAB53E88
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 00:09:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C04C43AC23D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 21:50:21 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 8B8BF17EC24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 22:09:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0615226E70D;
-	Thu, 11 Sep 2025 21:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 024C4342C88;
+	Thu, 11 Sep 2025 22:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XWFvVGZa"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GrEVPAX+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D625625A2C3
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 21:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D177D341ACA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 22:09:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757627419; cv=none; b=utDvz9C2XgH3TpTxwG1VWKWM5BHhi/gtxwbpsK2t0X/JkFn178AfbXZqg/PCEdaQqQwmn1arVY1IfT9TJDyFwh7/e5DjeaKTepvJgy1DJZZY13BhR9ZZmez/si3on8v55vlP2BoUzNAklURa3tGti5leeLmgsMRSSZCoByZkPpU=
+	t=1757628582; cv=none; b=AHJ860nq1SaVySIexXPsAfo4VhJww1XUE06XFjMMI6JCa79MLzUdZTfFQvLPxqsg78HpHJbopIurWxzx6OLF8Z3xe0QHtG+MYOUr/Hgy0BuOQVXAnwA10AMoZSGVhRljDy0Tz5snP1xKcunnecukF1oMGDGoF8NgydpDXC241+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757627419; c=relaxed/simple;
-	bh=glxC6FwjQ8JowbY1TETO4EMaJ5BNVOWlNBc74WQK45Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=YGTOOB4cGfRKt+yrGU3o/PouRQMyCQh79Aysq1N5FTwNi1x/hwSOqVurSE8/A9hwUM2ljvxmPs5Pt7o69EH5BlleN1tMWfqWd5u9MJNj0w+ZJg7fqAZOnNMB+0RCxedG0vgEvVrUiHv4ADEaToHFMFwjyRD2qC45SOY38mzPJRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XWFvVGZa; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D919C4CEF0;
-	Thu, 11 Sep 2025 21:50:18 +0000 (UTC)
+	s=arc-20240116; t=1757628582; c=relaxed/simple;
+	bh=hK/6ySfwQ46/Rl9FEdZ2FVCEJGm+bWyf0/UFMaVoSKM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ioscY9PF0WKV1VH6ml47WYcn7hzyzNOm6YfFJLpElMwzvN+eZtKLrfHU6lLx4C8XigjW5qPqKxs54MJhBxAmknVbJB3u+7pKQK1y7fiH+uwURaB1aHZHZcmFeSipvC05vNx2DjBxRLtxex1tdsQ+gPwzHmkQ/CfYRo1V8UX3FJ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GrEVPAX+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC75EC4CEF0;
+	Thu, 11 Sep 2025 22:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757627419;
-	bh=glxC6FwjQ8JowbY1TETO4EMaJ5BNVOWlNBc74WQK45Y=;
+	s=k20201202; t=1757628582;
+	bh=hK/6ySfwQ46/Rl9FEdZ2FVCEJGm+bWyf0/UFMaVoSKM=;
 	h=From:To:Cc:Subject:Date:From;
-	b=XWFvVGZa7KfyHd1L/fK35DZOQarnm6Zde3N5nm+oF9PC0RuMIM4U3NmoeJcT8m4i5
-	 AFnJDd96IROPso4j9qaDwXaeMat4pwMBGhJxmKf6txgMLFOFNz/TTyb2icN68SxnIE
-	 9UbHbHiM5jeZFgfNcT8e4AFvOSGDMAItqMRhrTQ2/cXljvpwyigduPLpSARVqxwgku
-	 7b3v1VRLiG6aiuwpU2LIcOW0s3YDDQh9I0aIteyPA58smVwTElXQUXqTiNWSsm+M/U
-	 j/OLVdn0mYpKvNc5hvtjwfXNUAxQuiXQx4lAwCAS2BlQ8rnxxDsag5mzcrfqh/rABT
-	 GLIRhuClqFS1g==
+	b=GrEVPAX+LE3r3grr6VPwoZjvP5XHq+gVEgHdZu+C2snhHoQlR7gzS3s4T0M9M1ewU
+	 npHjd7DUl+vA0feqMN//bwoctsa+hO2WVpQvIaxNpEIkD09yaQRcPlpQgAiPaT8/ar
+	 +5LJ3fvP8UJ2YV2dD9yeCPC/TzatdYjY3rcGBeq6fApuoC4WGNLE/zdZ1qbC0Xr9Vz
+	 EH3rs5ZDZTQ7awRbVdnGSmokEGH6MulrHT2YE69mYEzlfZZGP6ahoR5CnGu1Qd3vUB
+	 HiQNnotyc3ilAVUbynKKZ8g8cW5rjL94cX2rRKG6VvA1Zej5kV7yMJqPCCjIbHrB72
+	 SAAEvF3mVGwPw==
 From: Bjorn Andersson <andersson@kernel.org>
 To: arm@kernel.org,
 	soc@kernel.org
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org,
 	Arnd Bergmann <arnd@arndb.de>,
-	Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>,
-	Jens Glathe <jens.glathe@oldschoolsolutions.biz>,
-	Jens Reidel <adrian@mainlining.org>,
-	Kathiravan Thirumoorthy <kathiravan.thirumoorthy@oss.qualcomm.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Nikita Travkin <nikita@trvn.ru>,
-	Prasad Kumpatla <quic_pkumpatl@quicinc.com>,
-	Qianfeng Rong <rongqianfeng@vivo.com>,
-	Sneh Mankad <sneh.mankad@oss.qualcomm.com>,
-	Val Packett <val@packett.cool>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Yijie Yang <yijie.yang@oss.qualcomm.com>
-Subject: [GIT PULL] Qualcomm driver updates for v6.18
-Date: Thu, 11 Sep 2025 16:50:14 -0500
-Message-ID: <20250911215017.3020481-1-andersson@kernel.org>
+	Antony Kurniawan Soemardi <linux@smankusors.com>,
+	Adam Honse <calcprogrammer1@gmail.com>,
+	Raymond Hackley <raymondhackley@protonmail.com>,
+	Shinjo Park <peremen@gmail.com>
+Subject: [GIT PULL] Qualcomm Arm32 DeviceTree updates for v6.18
+Date: Thu, 11 Sep 2025 17:09:39 -0500
+Message-ID: <20250911220940.3023575-1-andersson@kernel.org>
 X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
@@ -70,7 +61,6 @@ List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 
@@ -80,93 +70,61 @@ The following changes since commit 8f5ae30d69d7543eee0d70083daf4de8fe15d585:
 
 are available in the Git repository at:
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-6.18
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm32-for-6.18
 
-for you to fetch changes up to 3cc9a8cadaf66e1a53e5fee48f8bcdb0a3fd5075:
+for you to fetch changes up to ba1045c76be299896528ac48021501fc9de78512:
 
-  firmware: qcom: tzmem: disable sc7180 platform (2025-09-11 16:38:33 -0500)
-
-----------------------------------------------------------------
-Qualcomm driver updates for v6.18
-
-Allowlist the uefisec application, to provide UEFI variable access on
-Dell Inspiron 7441 and Latitude 7455, the Hamoa EVK, and the Lenovo
-Thinkbook 16.
-
-Disable tzmem on the SC7180 platform, as this causes problems with
-rmtfs.
-
-Clean up unused, lingering, parameters in the MDT loader API.
-
-Unconditinally clear TCS trigger bit, to avoid false completion IRQs in
-the RPMh/RSC driver. Fix endianess issue in SMEM driver.
-
-Add pd-mapper support for SM8750.
+  ARM: dts: qcom: Use GIC_SPI for interrupt-map for readability (2025-09-01 11:18:03 -0500)
 
 ----------------------------------------------------------------
-Barnabás Czémán (1):
-      dt-bindings: firmware: qcom,scm: Add MSM8937
+Qualcomm Arm32 DeviceTree updates for v6.18
 
-Jens Glathe (1):
-      firmware: qcom: scm: Allow QSEECOM on Lenovo Thinkbook 16
+Bring a few updates to the MSM8960 platform and add support for the Sony
+Xperia SP.
 
-Jens Reidel (1):
-      soc: qcom: smem: Fix endian-unaware access of num_entries
+Touch keys support is added to the Samsung Galaxy Grand 2.
 
-Kathiravan Thirumoorthy (1):
-      dt-bindings: sram: qcom,imem: Document IPQ5424 compatible
+A number of DeviceTree cleanups.
 
-Krzysztof Kozlowski (1):
-      soc: qcom: icc-bwmon: Fix handling dev_pm_opp_find_bw_*() errors
+----------------------------------------------------------------
+Adam Honse (1):
+      ARM: dts: qcom: msm8974-samsung-hlte: Add touchkey support
 
-Luca Weiss (1):
-      dt-bindings: soc: qcom,rpmh-rsc: Remove double colon from description
+Antony Kurniawan Soemardi (5):
+      ARM: dts: qcom: msm8960: add sdcc3 pinctrl states
+      ARM: dts: qcom: msm8960: add gsbi8 and its serial configuration
+      ARM: dts: qcom: msm8960: disable gsbi1 and gsbi5 nodes in msm8960 dtsi
+      dt-bindings: arm: qcom: add Sony Xperia SP
+      ARM: dts: qcom: add device tree for Sony Xperia SP
 
-Mukesh Ojha (4):
-      firmware: qcom: scm: preserve assign_mem() error return value
-      soc: qcom: mdt_loader: Remove unused parameter
-      soc: qcom: mdt_loader: Remove pas id parameter
-      soc: qcom: mdt_loader: Remove unused parameter
+Krzysztof Kozlowski (6):
+      ARM: dts: qcom: apq8064-mako: Minor whitespace cleanup
+      ARM: dts: qcom: ipq4019: Add default GIC address cells
+      ARM: dts: qcom: apq8064: Add default GIC address cells
+      ARM: dts: qcom: ipq8064: Add default GIC address cells
+      ARM: dts: qcom: sdx55: Add default GIC address cells
+      ARM: dts: qcom: Use GIC_SPI for interrupt-map for readability
 
-Nikita Travkin (1):
-      firmware: qcom: tzmem: disable sc7180 platform
+Raymond Hackley (1):
+      ARM: dts: qcom: msm8226-samsung-ms013g: Add touch keys
 
-Prasad Kumpatla (1):
-      soc: qcom: pd-mapper: Add SM8750 compatible
+Shinjo Park (1):
+      ARM: dts: qcom: pm8921: add vibrator device node
 
-Qianfeng Rong (1):
-      soc: qcom: use devm_kcalloc() for array space allocation
-
-Sneh Mankad (1):
-      soc: qcom: rpmh-rsc: Unconditionally clear _TRIGGER bit for TCS
-
-Val Packett (1):
-      firmware: qcom: scm: Allow QSEECOM on Dell Inspiron 7441 / Latitude 7455
-
-Wolfram Sang (1):
-      soc: remove unneeded 'fast_io' parameter in regmap_config
-
-Yijie Yang (1):
-      firmware: qcom: scm: Allow QSEECOM on HAMOA-IOT-EVK
-
- .../devicetree/bindings/firmware/qcom,scm.yaml       |  3 +++
- .../devicetree/bindings/soc/qcom/qcom,rpmh-rsc.yaml  |  2 +-
- .../devicetree/bindings/sram/qcom,imem.yaml          |  1 +
- drivers/firmware/qcom/qcom_scm.c                     |  6 +++++-
- drivers/firmware/qcom/qcom_tzmem.c                   |  1 +
- drivers/media/platform/qcom/venus/firmware.c         |  4 ++--
- drivers/net/wireless/ath/ath12k/ahb.c                |  2 +-
- drivers/remoteproc/qcom_q6v5_adsp.c                  |  2 +-
- drivers/remoteproc/qcom_q6v5_pas.c                   |  7 +++----
- drivers/remoteproc/qcom_q6v5_wcss.c                  |  2 +-
- drivers/soc/qcom/icc-bwmon.c                         |  3 +++
- drivers/soc/qcom/llcc-qcom.c                         |  1 -
- drivers/soc/qcom/mdt_loader.c                        | 20 +++++++++-----------
- drivers/soc/qcom/qcom_pd_mapper.c                    |  1 +
- drivers/soc/qcom/ramp_controller.c                   |  1 -
- drivers/soc/qcom/rpm_master_stats.c                  |  2 +-
- drivers/soc/qcom/rpmh-rsc.c                          |  7 ++-----
- drivers/soc/qcom/smem.c                              |  2 +-
- include/linux/soc/qcom/mdt_loader.h                  |  7 +++----
- 19 files changed, 39 insertions(+), 35 deletions(-)
+ Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
+ arch/arm/boot/dts/qcom/Makefile                    |   1 +
+ arch/arm/boot/dts/qcom/pm8921.dtsi                 |   6 +
+ .../boot/dts/qcom/qcom-apq8064-lg-nexus4-mako.dts  |   6 +-
+ arch/arm/boot/dts/qcom/qcom-apq8064.dtsi           |   9 +-
+ arch/arm/boot/dts/qcom/qcom-ipq4019.dtsi           |   9 +-
+ arch/arm/boot/dts/qcom/qcom-ipq8064.dtsi           |  25 +-
+ .../boot/dts/qcom/qcom-msm8226-samsung-ms013g.dts  |   2 +
+ arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi      |  40 +++
+ .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   |   5 +
+ .../boot/dts/qcom/qcom-msm8960-sony-huashan.dts    | 361 +++++++++++++++++++++
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           |  32 ++
+ .../boot/dts/qcom/qcom-msm8974-samsung-hlte.dts    |  45 +++
+ arch/arm/boot/dts/qcom/qcom-sdx55.dtsi             |   9 +-
+ 14 files changed, 529 insertions(+), 27 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom/qcom-msm8960-sony-huashan.dts
 
