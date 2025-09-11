@@ -1,88 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-73063-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6CEFB5289A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 08:17:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADC6DB528AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 08:23:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C751B1C27E11
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 06:17:32 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3FD517BB217
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 11 Sep 2025 06:21:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 174D7257444;
-	Thu, 11 Sep 2025 06:17:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32F37201278;
+	Thu, 11 Sep 2025 06:23:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cbUarncB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OFa9Qw0+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550A62571C7
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 06:16:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406F8258EC8
+	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 06:23:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757571421; cv=none; b=qTHM7+64mSuKNSIakBzn1763Am/UtjwOEiB3iptbG0W3vnySsFdaqYMj+Vqq7ms5pTExlfuy8HpnTTyotWmPkoF6fRgor9c9B5QNHOh6X/zZWsHqjHkFsPox7si+hQIKPmjlfAJgLiUylPIdnGBToKxUg5i8vS/tiJFTUkw9NMQ=
+	t=1757571806; cv=none; b=crtKbDbrWx9FeMciiQniBnC0nfy/+zw1iIry01t4OALwTmXjAJw2GJaenZi86Xc/lUnsn/J0GUFwQemhIj51eyA/pXvVVPXsCTUBIWznL5RonRM6MznsZQskK510t5DVEH50TaFQZkEC76EWvH0GgPg/jfT7KhAjq+sps880Qgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757571421; c=relaxed/simple;
-	bh=tp9gIEhkm3nPQ5lAX6WNJ7qKAMdj7t76MyO8kgCsjIk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jH0uaFKukZKDZ9J+4w85vr+Xy0tK6nflPqMV80k/+iqURxhGM8TyybDdOGhB/ngV0YBNd/lE/Xm+TZf/8DESu1j/tHF9Y6Wbq4q8IQca+uxtbuiH3rfI+TFy/eNCwNBhuZTNyURUT5+HFWOeImzSsmN5WHdVo0dHe4T4FXofZ2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cbUarncB; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58B2IkP5005569
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 06:16:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	xUKV4tzeMZk7PUXMYsNdlnlxveYGyatPAuyxc4rrGtk=; b=cbUarncBVC5HY7uG
-	b/p73x8K0vfbV3NpesiEFwEmVMGNc0LwifZ0Jfp/g5n3vq9N/qhlbKElqJtJtmWU
-	oCQoRb6RhbZ3S1E4J+ITBx6uUSR/XWwmI/Xrj7fmKXFfCwP2oghmhxsj4JcZE2Tj
-	3jwgc6q1gN8ob+QEWJeQmGxdFPBgGejCj/09cNYF0xSTaWPF5HXo2Lg4i674n3Z1
-	l8EG7mNl1wtloNpoWbZg4u5mZmlUkIZ1eNZ7hAO3G1v9Ja2swHjEfla/tQjwoX6t
-	YmTn7dKqTqDvgF+jX6l8cUK/5VukpUHmaPEkSNX3wcM127/Ao2sboTOPCJPWmC/f
-	kNS9oA==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491vc2ahfy-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 11 Sep 2025 06:16:58 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-720408622c3so6903366d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 23:16:58 -0700 (PDT)
+	s=arc-20240116; t=1757571806; c=relaxed/simple;
+	bh=rHr7FvJMHid/017FiYHUBGprb/Lqg7Kg3w8M/8S4xTY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=O3wYxA6jNXW4+Bs7InYkO8k8mW2ta97qAlnetWbvUWCEaaAz3KjcVBPMv0r56xjptfMshZEbNd2zKj6NaEe4L1mKjSgZXgEni5ASxfjUVdAp+nwnIR9SowkZXmTFBQxDUc7PgWC50eNGiTe52jdLfNb6is2VzIs5+nafPsf0sxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OFa9Qw0+; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45de5246dc4so510335e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 10 Sep 2025 23:23:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757571803; x=1758176603; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wg4ExbZFlSVxsqzRRKRc3ecOdjgPd8wu5LFpbr1o7eg=;
+        b=OFa9Qw0+nUDn/AmP+noVeoDJBbqXFpfG3raaK3BEVciRyuDcnlRF83lx/QOvPJnWVh
+         vHIVCeTR6zw2ZONJ5UcCIiL6g5wBrJAwganK+HmW4h9LkdDmSDMzjsziXxavKsBlFuVL
+         qO0UDmcYQTrDZ1DR+VmvfNNlqtRB0453GCwjjj6w1N70GddSCCMJMR0Bv58M1GvixZq2
+         y0XsUA/BQ/+LXG4a/4QvKRN1nJQmjhdF4Fr+Yn2ByIOFz5hXrjFmGw/jnDB/OO8klYpJ
+         NMkuKcS3xMeKpU+GJjLQ7Z9Fz57DWNWQSNr/v9DJd7ERpwRddAjJ7ZjYqI7z77XGeVi9
+         2gcQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757571417; x=1758176217;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1757571803; x=1758176603;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xUKV4tzeMZk7PUXMYsNdlnlxveYGyatPAuyxc4rrGtk=;
-        b=h2qSzi1pcbkQVRW+K+HqUDpRvp5N9m4r2c3tTBXL0JGGtCXxsBWaz7+XMbR1WZCNzU
-         aDKKvYBjUTwc+IUcp+yRD/ThbylthROfagxYi2F0Sjbw6d9oMY5sW6gzh0s0An7eXi67
-         +0BT4lr6rRXJN8Vzml7pYlziI9DRSVGQdIhgYtSM1AtUDuvrrfdXJ2jYfcmGnI01ii5a
-         pNWnJCBlpjzsFZkXHSHoTMt6hiqcl4RTISgGU0bi0D8FJgn0XYMGCy7bDubWSjh8eKkK
-         zUkP+j2dEJvaNqpRk+r4SJ/2Uejgu/vHWH5+1GMhGSG4TlJ7sI9YEM0jgbaQKzg8XavC
-         Q2+A==
-X-Forwarded-Encrypted: i=1; AJvYcCVB733sZlxXoFEWCjMZWEprWnoZwJvoicaycZZJNmmjeuwGxh1EZeasopEGV5ixseKwmJ262+SLvob3C9eL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/bcYp0neuAiEaq/tEiEvEIZx6EiMkZy75bDRUTWEHbOVI9z2g
-	bU1s7oQJ8rxG3Z2qGrdCTDHuraz90O6SIQN0tsO3X4sWjhfEqrmVyJ7736EhLouL7Lco2H3jA12
-	UdbclKJQS9RcNPsb13wuLhnUHtzZYipLwnCdd9Ohfdk3g9rG6JKoubBWMLnivVWt03RiQL9WuQY
-	XJ
-X-Gm-Gg: ASbGncuBh4ERrlTnJu4jXVNZELhudjizWU446K7VhqC6zmvaC86QgCbyc2lIpRD+SH2
-	i+udiQDQ6OKLjXZfb5bgF4CcraqjUXFXkPRgeHAMDnwpxiihyeNxlpVrZRRuAB3UbIwpsT0WCyB
-	i8Yt8lmZUU/hF/CmyY30/UqpO1Pllv+/hIkyC0iiXRF5wpT4/skxA4Z/0xSuQa1/GoTFa/HiDP0
-	FunFW8KLCM+7+YqO+1dCz/E9yqYEqRhYEGviAcWhdvOjDjiDVeEBlsnetwartVaSdguOxijtjhI
-	z6KcHs/fDvkfuQXgAueWgUV+c5dR5TNqAOAAoSMCdoefMQPQ086hJrd/bHXi/CEHGJc=
-X-Received: by 2002:a05:6214:485:b0:712:8b65:d37a with SMTP id 6a1803df08f44-7393d42bbcbmr202002706d6.43.1757571417143;
-        Wed, 10 Sep 2025 23:16:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEHSNw8Su7OR12obsrdfm5Y2WPxrkPUqoNEP+Q/mONDJZD/GLYsP/1z0hTN+IDLz+fH4C089w==
-X-Received: by 2002:a05:6214:485:b0:712:8b65:d37a with SMTP id 6a1803df08f44-7393d42bbcbmr202002486d6.43.1757571416658;
-        Wed, 10 Sep 2025 23:16:56 -0700 (PDT)
-Received: from [192.168.68.120] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id 5b1f17b1804b1-45e037b922csm10587475e9.15.2025.09.10.23.16.55
+        bh=wg4ExbZFlSVxsqzRRKRc3ecOdjgPd8wu5LFpbr1o7eg=;
+        b=rHzVygDTwiuLAxDish0MzXqaEir+gt+opn+EmcLsKS8+q94nGoga0vqxrMLSbNBGAM
+         4TBc0ROt0KuUpco0YoNpzW0ALumip6a+gsQziJLB/sgXI3ZmKfd1P/A/AVpgq2EEo9C9
+         2rovzmjZQ/l9Ofh9qFB+/y1U/2yJHLK/lygTwFtImvfT9HbV5xuhBG3yabH3D2tz0p+z
+         F2dPWJutSisWHl1SAVOOsqYxeRLidZ7CLDAMtNxHcz85faQ3ToeK9TFcn4SmO5+4Yr8n
+         IdaVe6lT93ll5hoeoM5gbJ1DKjGEX9kIaOgRiSGnnGPOaqWqDbQN8Nj032H/7QDxEpEH
+         sC+Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVMoPtKfefdE4vPRFUzqNM//fcGdyokbYp2sDIQ7D/1PyLA2akKxNLuvUoNimwNvvq5MSHrD6Jz17JtAClS@vger.kernel.org
+X-Gm-Message-State: AOJu0YxNsrjO6AtVC1sKqHLxYBj9XbQtS9FQ9cf26cj80BPm8RyuUB0V
+	eDmjowZcVirLLwQW78tSZlfaVnf1thtYkgCbskle2sC0oxXeEjrwO33qgQfAf0RvX68=
+X-Gm-Gg: ASbGncu0+nhPuRy4ux5sFgveo4KFALF1gZTKNPdLZIZZ2rW5pGresX4iDOGzNN/hzir
+	Ouj3UPNH1422md6mOMOuSnQHBmG5WHfsciYqCLQmFmz6HUde9KtxlQXPaK3bGhZmhW9s1kaQDqk
+	n9jj88hzCjhhN2HNjzgNasUlxi7wY7J8/qp3SRA0F9jMcF0zPRos3tcNU7DdeKYGZkxkSR9VT2R
+	kAClRBZKvADG9VcEW6BZzsMn/1AMxM6gQuZehjtH/OPZWmDC4/9YkjPO1C4gkKk/tzblY8Spczs
+	V1cSh9+XVNdOc9Bmt4p+5nhawUocCQ4o7eOatq1ZHgKmKOEmeS4vbt/7/a9GrUkdNE51QsQ9qgk
+	HMk0zSFoWYotsxXsabBi7nePo8csrClR4dY92LnW2Iqc=
+X-Google-Smtp-Source: AGHT+IHzBt5hdqBctHz4x9S5F/NdBCGMXBgK0ytEDf+klfhGJCbW7H8wptMemYdfhxTy5YEqDCSS8g==
+X-Received: by 2002:a05:600c:37c4:b0:45d:da63:cb09 with SMTP id 5b1f17b1804b1-45ddde81392mr91200965e9.2.1757571802617;
+        Wed, 10 Sep 2025 23:23:22 -0700 (PDT)
+Received: from [192.168.1.29] ([178.197.219.123])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607d822fsm1140443f8f.53.2025.09.10.23.23.21
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 10 Sep 2025 23:16:56 -0700 (PDT)
-Message-ID: <b7a637d1-8868-40f3-8f82-8f5ab0684d52@oss.qualcomm.com>
-Date: Thu, 11 Sep 2025 07:16:55 +0100
+        Wed, 10 Sep 2025 23:23:22 -0700 (PDT)
+Message-ID: <a52f809d-c8ae-411a-b305-46fd4233e2a0@linaro.org>
+Date: Thu, 11 Sep 2025 08:23:20 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,131 +82,91 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] soundwire: qcom: add support for v3.1.0
+Subject: Re: [PATCH] ASoC: codecs: lpass-wsa-macro: Fix speaker quality
+ distortion
 To: Alexey Klimov <alexey.klimov@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        vkoul@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, srini@kernel.org,
-        yung-chuan.liao@linux.intel.com, pierre-louis.bossart@linux.dev,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-sound@vger.kernel.org
-References: <20250904105616.39178-1-srinivas.kandagatla@oss.qualcomm.com>
- <DCPK67SQ5DEI.2AFDVRKZSEWTS@linaro.org>
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250831151401.30897-2-krzysztof.kozlowski@linaro.org>
+ <DCPKY2GED44G.I2DSV6ZBXYAQ@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <DCPK67SQ5DEI.2AFDVRKZSEWTS@linaro.org>
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <DCPKY2GED44G.I2DSV6ZBXYAQ@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=FN4bx/os c=1 sm=1 tr=0 ts=68c2695a cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=ctXafwwC4ABjd9pVO5wA:9
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-ORIG-GUID: QRnRnJZbBF3O0JP4tAS_AUKi9owu77Rf
-X-Proofpoint-GUID: QRnRnJZbBF3O0JP4tAS_AUKi9owu77Rf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDA5NCBTYWx0ZWRfX04248KGDlplV
- vwu+TSGdyt2qmikz3dgFzy/U2C4VlJZcC+kO7zxwJVE5M1cNlD6wKuP4GAowtUmjEOnFaAyV/AO
- SJjGSR1AallTj+xXhUI55donkh8C5k29AeTmUqhwCtC2nGfl+BXzcJgxHvsdpb9ANdNmEKAk8cu
- RLK80AtktrhmdNr+WRoZR+ijAytPtdKyBa46obNsfXmnhBbHGOQMbfysZja9FTwDiiOz+7cKaOn
- Rk44gPZRzKPx1FMaPHQwIGgYvTkN8Gd3DuT5NfahS2HLgZPr3hja4hiGJ0Z6wW+dEMmMM8jXnAG
- 5j/K8MGXvOlkLVGVW7EoOR0SrZ+xuJ9jk7VRO+pAi6ef05l5XIMwNiqVv4/iyXHPyGNSYiGW/Fr
- 8VyJ5l18
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-10_04,2025-09-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080094
 
-Thanks Alexey,
-
-On 9/11/25 1:52 AM, Alexey Klimov wrote:
-> On Thu Sep 4, 2025 at 11:56 AM BST, Srinivas Kandagatla wrote:
->> This patch series adds support for Qualcomm Soundwire Controller
->> version v3.1.0.
->> As part for adding this support, a new macro of_property_read_u8_index()
->> is added so that we can remove the qcom,din-ports and qcom,dout-ports.
->> As v3.1.0 supports more than 17 soundwire ports. Also due to change in
->> the register offsets, new entries are added to the variant data.
+On 11/09/2025 03:29, Alexey Klimov wrote:
+> On Sun Aug 31, 2025 at 4:14 PM BST, Krzysztof Kozlowski wrote:
+>> After removal of first AIF_INVALID DAI identifier, this kcontrol was
+>> updating wrong entries in active channel count and mask arrays which was
+>> visible in reduced quality (distortions) during speaker playback on
+>> several boards like Lenovo T14s laptop and Qualcomm SM8550-based boards.
 >>
->> Tested this patchset on X14s and Glymur reference platform.
+>> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+>> Fixes: bb4a0f497bc1 ("ASoC: codecs: lpass: Drop unused AIF_INVALID first DAI identifier")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> ---
+>>
+>> Reported via IRC.
+>> Fix for current v6.17-RC cycle.
+>>
+>> I will be investigating rest of lpass macro codecs a bit later.
 > 
-> Well, I don't have any Glymur devices and no idea what is
-> x14s (I guess some laptop), but I picked the series locally to test
-> on sm8550, it seems there are some generic changes, and
-> qcom-soundwire probe failed:
-> 
->  remoteproc remoteproc1: powering up adsp
->  remoteproc remoteproc1: Booting fw image qcom/sm8550/adsp.mbn, size 8364
->  remoteproc remoteproc1: remote processor adsp is now up
->  qcom,fastrpc 6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1: no reserved DMA memory for FASTRPC
->  PDR: Indication received from msm/adsp/audio_pd, state: 0x1fffffff, trans-id: 1
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@3: Adding to iommu group 12
->  qcom,apr 6800000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:1
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@4: Adding to iommu group 13
->  qcom,apr 6800000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:2
->  PDR: Indication received from msm/adsp/charger_pd, state: 0x1fffffff, trans-id: 1
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@5: Adding to iommu group 14
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@6: Adding to iommu group 15
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@7: Adding to iommu group 16
->  qcom-apm gprsvc:service:2:1: CMD timeout for [1001021] opcode
->  platform 6800000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 17
->  va_macro 6d44000.codec: qcom,dmic-sample-rate dt entry missing
->  qcom-soundwire 6d30000.soundwire: probe with driver qcom-soundwire failed with error -75
->  sched: DL replenish lagged too much
->  platform sound: deferred probe pending: snd-sc8280xp: WCD Playback: codec dai not found
-> 
-> Are there any dependencies I am missing?
-
-Can you pl try this change an see if it helps,
-
----------------------->cut<----------------------------------
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index a7b6d9ecc3ba..622cc6c31264 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1426,6 +1426,26 @@ static int qcom_swrm_get_port_config(struct
-qcom_swrm_ctrl *ctrl)
-        ctrl->num_dout_ports =
-FIELD_GET(SWRM_COMP_PARAMS_DOUT_PORTS_MASK, val);
-        ctrl->num_din_ports = FIELD_GET(SWRM_COMP_PARAMS_DIN_PORTS_MASK,
-val);
-
-+       ret = of_property_read_u32(np, "qcom,din-ports", &val);
-+       if (!ret) { /* only if present */
-+               if (val != ctrl->num_din_ports) {
-+                       dev_err(ctrl->dev, "din-ports (%d) miss match
-with controller (%d)",
-+                               val, ctrl->num_din_ports);
-+               }
-+
-+               ctrl->num_din_ports = val;
-+       }
-+
-+       ret = of_property_read_u32(np, "qcom,dout-ports", &val);
-+       if (!ret) { /* only if present */
-+               if (val != ctrl->num_dout_ports) {
-+                       dev_err(ctrl->dev, "dout-ports (%d) miss match
-with controller (%d)",
-+                               val, ctrl->num_dout_ports);
-+               }
-+
-+               ctrl->num_dout_ports = val;
-+       }
-+
-        ctrl->nports = ctrl->num_dout_ports + ctrl->num_din_ports;
-
-        ctrl->pconfig = devm_kcalloc(ctrl->dev, ctrl->nports + 1,
+> Any updates on other lpass macro codecs? Is something still broken there
+> or are they fine? So I guess the changes for wsa and rx macro were applied.
+> va, tx?
 
 
----------------------->cut<----------------------------------
+The remaining two - VA and TX - are fine, I checked them.
 
---srini
-> 
-> When I reverted the series the audio started to work again.
-> 
-> Best regards,
-> Alexey
 
+Best regards,
+Krzysztof
 
