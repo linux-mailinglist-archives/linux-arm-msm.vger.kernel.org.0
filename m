@@ -1,242 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-73245-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73246-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1070B54554
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:28:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD0AAB5456C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:31:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7D6931CC2B32
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:28:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93C903B8065
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:31:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 226752D63E2;
-	Fri, 12 Sep 2025 08:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89FAD26F2B2;
+	Fri, 12 Sep 2025 08:31:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A4QQCTls"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CK7g8QAB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f65.google.com (mail-ej1-f65.google.com [209.85.218.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E252C2DC780;
-	Fri, 12 Sep 2025 08:27:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC41C2AD13
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 08:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757665662; cv=none; b=SpzHSuWqXaPDEjnAemhQEfQGuBtZ2RlyCAdmteta6I2K8zGgNXpgIkRrFhSJ59OoOpF19QhPaMm2vHyI7UGx9gYgqVwFMQGlpcQ+WNDJpEur8rfsRCYXLAflrLNcYNlb1HDoW9EHoM1v0UTzjVuLq1NrdHbLPgJULwLn6ispjJQ=
+	t=1757665890; cv=none; b=dm2jeQ2cD79DaLwOmKx+mt5PXVhNSp2kp2ehJYtPxEEz0x5vOv/aEXdNfnmvhMHAWst6K3zYJfahoNi/xTcvSjCJX6CgCFpvF/4XOWuocG1Lpvt7g7rGbna8vO9FtRs/m5vabApsM7jORQ4PmN37WnIPaA0Iv7wlrsIv8qhYIQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757665662; c=relaxed/simple;
-	bh=6xxzzd/ernId8OPpo0sEQcfNMw1jhcfLCa6q7kv32EU=;
+	s=arc-20240116; t=1757665890; c=relaxed/simple;
+	bh=qxDPXfu0D2buR+RRbIJYhumpNTYZbGUZbNv5xeDdGtU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JiJT0yhbJ61UWMK32e/d0rogI8uLsI0Jpwc4yUrQ5IU40D0wRcQ9VanggiqkZYmEb8NfwDEwYuPnY0ztkUU6paqRI1qOW4pdOGdRz5boZp3uPTsMRAntEydSNXGIfpLTYbMH23TSrObIzzJ/KuVvqutDbvmQjelD5ax/lBtXsyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A4QQCTls; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB056C4CEF4;
-	Fri, 12 Sep 2025 08:27:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757665661;
-	bh=6xxzzd/ernId8OPpo0sEQcfNMw1jhcfLCa6q7kv32EU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=A4QQCTls3hEVEbvxLogVWLsmPwqUlMAuTpTowWWWXM/+qphMfQKBOABU+yM5dMtWj
-	 ae84y6BbOT/fovVXR+wZlIPtLKXys/5Jhqb5DHlw13M69uyAZroR0mrIZ6n0iarwIl
-	 +t2ixIcdZy6kDp5rBgjXoCJDdTRgh6ifdEhruEA7uh2536m5HYeIhGb5dW4Mqg/eTP
-	 qO7sqZCBXwBv/0KIzwufRxRpyDncba3zabmcbwlc8yca8UmcDNOFSYyEQ55u58wbTt
-	 Pavc5brh/OnI0vsO/0+quZs+20Ydj1FxAs/5gFTcSofITixZF+zHsrW+r3WimXMm1a
-	 HENDyOFg6iDzg==
-Date: Fri, 12 Sep 2025 13:57:34 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Saravana Kannan <saravanak@google.com>, 
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH v2 5/5] PCI: qcom: Allow pwrctrl core to toggle PERST#
- for new DT binding
-Message-ID: <r7cpjk2jun3h4xnfncqldeyfov4ad3bpq5kcfcxcx3eyg6g2hj@rcajqn7snemy>
-References: <20250903-pci-pwrctrl-perst-v2-5-2d461ed0e061@oss.qualcomm.com>
- <20250908193428.GA1437972@bhelgaas>
+	 Content-Type:Content-Disposition:In-Reply-To; b=pIbTmlVzKoHEpfJKZlD+6hn7zhJjA2ECc24b222QVP1J/6E2PWLbe02CWehXpe4RgUkX1oT6t6py2cWk/nT8nAqNnss85+F2Mtkmze8vHSaO9YeC8j/QLDkP3Zxao3yrKDHaXgsblINo5kXOtMY80YJzNazJzU/v7YnJ8JqWsIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CK7g8QAB; arc=none smtp.client-ip=209.85.218.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f65.google.com with SMTP id a640c23a62f3a-b0415e03e25so208528466b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 01:31:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757665886; x=1758270686; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ppyqoh+Iw0PqJAwUNY4Ho0HDTTkAPt60vzkSPtE9aMY=;
+        b=CK7g8QABQj2cvFfH+iBCciCe6r77uFwU/Ta/PYwD0y0dFTYaAio6PDdAAsve5zjkWq
+         hwlTvm2RgPmK1BrcSHJCPV7JCadzMwtYGLhrrSf4bFI14MGAL6kUIk2Wt5Qtx6FgtOJN
+         algt32Q4GwwvdUqCIn0tzIcC+Ch6v1Pm7txApJjnaLfb7nmryGgRzpGwHOondEIy06sf
+         gm6HTpkgWVVKbceJvEH56LOYZZknT8xgeUn2U5L0yYjur/UrhMfGpESFH8fJ3eflwZmb
+         XIqi2z5uOCUiFq8NGxJLU8jkHuy1eLunaVc+vc8y2+oMgu6xOXYynC5XZkT8bDQW0pQP
+         7pwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757665886; x=1758270686;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ppyqoh+Iw0PqJAwUNY4Ho0HDTTkAPt60vzkSPtE9aMY=;
+        b=JbX58hbH9eC6U7LyP9vkwwzm1EEtIGvKKBvKreR1ach1oZZO98S7hH2FEmlxWjb0Cx
+         2Or5Jkw3hxBzZjDeoZjbwT/vFnEchK5bqZQqqeUZySKyNbwf2u5vMiWTZYbVuuIrRGff
+         y/np48Ei7ojUG0QSdXrDLFMrOK92lmTNj5zlzGEYJO1r1t0H9S9Bta7bmhhYjj1cHfZX
+         rLw3pyyE+OCMfKCk1lCzXreAfrqXYPPOeDyaL4qWDkex27yqXcW6CfXe5iN5PSRNOCPZ
+         t/fsscJgzDVY8TqYWPwjSepf8Dr7nkv5wcn8DinMhl09WpaeFoxOLoikXcI83Kw4MYCG
+         nBhg==
+X-Forwarded-Encrypted: i=1; AJvYcCUfP/04nU70kERLxhzFYk5BWFt0xfroLkvI1af4ImLSttjhWYb2CDG0KAdSQ2V60iQG2wJVgNUehPeIaOBz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyMidM5KymsAShYI/5TvjLrssTY7X3xxG+VhST6mMAD5rrQOFKB
+	Z6sbghjE+dNuC1bzIRTYA9kRPNMRA8vvduAR1xaXsuHy7Y7yUFRBJPpUZePXVxo414s=
+X-Gm-Gg: ASbGnctwL57loIQFg0vPcnuFfIYdwDTeKwdFX5ClEWE2sTXMvrIezMIi6obxAjQMU8g
+	0Cm+xzMk/lHbrOp8Htl20ukVa9uEspkLheZ6Ft1kC8513ChLshnh4XCULdzZMFlRPYrJtkvg7yq
+	KWq+hF1XTfb29iRKq/lgNNOjBCqlAJRaiJyhMORNfR8TWhtkDQJw7u+Nj0wsF7VbU2on9KEKUM/
+	MY/YDGy9D5OrvQcJJjSpBaeEydnSJjBKMtsOMpbTZ9RbYl8GyQq2jlthpnCNybOUofE9/DGk9cY
+	vUMJM8XC7lOPkLMmetVC5DkNUjBIDfjLFQ6t1VSnF3GfCbiaHkB9n8cb/3uJAmnD85UKD249XJ+
+	riHhO1tLq4YxxDzw2pgWCtTwSxeE90k2Kgn13tJX7E/c=
+X-Google-Smtp-Source: AGHT+IGK4F+WV3rm3atyzmeXXAtBgSxVX6KmGkgnNVbx+PqUaJlvPMOJRphX7MOVOAdtjlZGKPWKlw==
+X-Received: by 2002:a17:906:9f84:b0:b04:ba4:8610 with SMTP id a640c23a62f3a-b07c3ab96damr205770166b.62.1757665886221;
+        Fri, 12 Sep 2025 01:31:26 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:30:5fc2:ee41:2050:2d49])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b32f20dcsm318941966b.90.2025.09.12.01.31.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Sep 2025 01:31:25 -0700 (PDT)
+Date: Fri, 12 Sep 2025 10:31:21 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: x1e80100: Add IRIS video codec
+Message-ID: <aMPaWSN8EXCEOuoz@linaro.org>
+References: <20250911-x1e-iris-dt-v1-0-63caf0fd202c@linaro.org>
+ <20250911-x1e-iris-dt-v1-1-63caf0fd202c@linaro.org>
+ <1beb1e15-cafd-408a-96bf-7f749b3499fd@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250908193428.GA1437972@bhelgaas>
+In-Reply-To: <1beb1e15-cafd-408a-96bf-7f749b3499fd@kernel.org>
 
-On Mon, Sep 08, 2025 at 02:34:28PM GMT, Bjorn Helgaas wrote:
-> On Wed, Sep 03, 2025 at 12:43:27PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > If the platform is using the new DT binding, let the pwrctrl core toggle
-> > PERST# for the device. This is achieved by populating the
-> > 'pci_host_bridge::toggle_perst' callback with qcom_pcie_toggle_perst().
-> 
-> Can we say something here about how to identify a "new DT binding"?
-> I assume there is a DT property or something that makes it "new"?
-
-This is taken care now.
-
-> 
-> > qcom_pcie_toggle_perst() will find the PERST# GPIO descriptor associated
-> > with the supplied 'device_node' and toggles PERST#. If PERST# is not found
-> > in the supplied node, the function will look for PERST# in the parent node
-> > as a fallback. This is needed since PERST# won't be available in the
-> > endpoint node as per the DT binding.
+On Fri, Sep 12, 2025 at 09:23:45AM +0200, Krzysztof Kozlowski wrote:
+> On 11/09/2025 20:38, Stephan Gerhold wrote:
+> > Add the IRIS video codec to accelerate video decoding/encoding. Copied
+> > mostly from sm8550.dtsi, only the opp-table is slightly different for X1E.
+> > For opp-240000000, we need to vote for a higher OPP on one of the power
+> > domains, because the voltage requirements for the PLL and the derived
+> > clocks differ (sm8550.dtsi has the same).
 > > 
-> > Note that the driver still asserts PERST# during the controller
-> > initialization as it is needed as per the hardware documentation. Apart
-> > from that, the driver wouldn't touch PERST# for the new binding.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 > > ---
-> >  drivers/pci/controller/dwc/pcie-qcom.c | 89 +++++++++++++++++++++++++++++-----
-> >  1 file changed, 78 insertions(+), 11 deletions(-)
-> > 
-> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> > index 78355d12f10d263a0bb052e24c1e2d5e8f68603d..3c5c65d7d97cac186e1b671f80ba7296ad226d68 100644
-> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > @@ -276,6 +276,7 @@ struct qcom_pcie_port {
-> >  struct qcom_pcie_perst {
-> >  	struct list_head list;
-> >  	struct gpio_desc *desc;
-> > +	struct device_node *np;
-> >  };
-> >  
-> >  struct qcom_pcie {
-> > @@ -298,11 +299,50 @@ struct qcom_pcie {
-> >  
-> >  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> >  
-> > -static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
-> > +static struct gpio_desc *qcom_find_perst(struct qcom_pcie *pcie, struct device_node *np)
-> > +{
-> > +	struct qcom_pcie_perst *perst;
-> > +
-> > +	list_for_each_entry(perst, &pcie->perst, list) {
-> > +		if (np == perst->np)
-> > +			return perst->desc;
-> > +	}
-> > +
-> > +	return NULL;
-> > +}
-> > +
-> > +static void qcom_toggle_perst_per_device(struct qcom_pcie *pcie,
-> > +					 struct device_node *np, bool assert)
-> > +{
-> > +	int val = assert ? 1 : 0;
-> > +	struct gpio_desc *perst;
-> > +
-> > +	perst = qcom_find_perst(pcie, np);
-> > +	if (perst)
-> > +		goto toggle_perst;
-> > +
-> > +	/*
-> > +	 * If PERST# is not available in the current node, try the parent. This
-> > +	 * fallback is needed if the current node belongs to an endpoint or
-> > +	 * switch upstream port.
-> > +	 */
-> > +	if (np->parent)
-> > +		perst = qcom_find_perst(pcie, np->parent);
+> >  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 87 ++++++++++++++++++++++++++++++++++
+> >  1 file changed, 87 insertions(+)
 > 
-> Ugh.  I think we need to fix the data structures here before we go
-> much farther.  We should be able to search for PERST# once at probe of
-> the Qcom controller.  Hopefully we don't need lists of things.
+> Feels like duplicating this:
 > 
-> See https://lore.kernel.org/r/20250908183325.GA1450728@bhelgaas.
+> https://lore.kernel.org/all/20250910-hamoa_initial-v11-2-38ed7f2015f7@oss.qualcomm.com/
 > 
 
-I've added a patch to fix in the next version of this series.
+Oh, yeah you're right. I haven't looked at that patch series for a while
+because it went through so many revisions. Wouldn't have expected to
+find that patch in there, especially without an indication in the cover
+title...
 
-> > +toggle_perst:
-> > +	/* gpiod* APIs handle NULL gpio_desc gracefully. So no need to check. */
-> > +	gpiod_set_value_cansleep(perst, val);
-> > +}
-> > +
-> > +static void qcom_perst_reset(struct qcom_pcie *pcie, struct device_node *np,
-> > +			      bool assert)
-> >  {
-> >  	struct qcom_pcie_perst *perst;
-> >  	int val = assert ? 1 : 0;
-> >  
-> > +	if (np)
-> > +		return qcom_toggle_perst_per_device(pcie, np, assert);
-> > +
-> >  	if (list_empty(&pcie->perst))
-> >  		gpiod_set_value_cansleep(pcie->reset, val);
-> >  
-> > @@ -310,22 +350,34 @@ static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
-> >  		gpiod_set_value_cansleep(perst->desc, val);
-> >  }
-> >  
-> > -static void qcom_ep_reset_assert(struct qcom_pcie *pcie)
-> > +static void qcom_ep_reset_assert(struct qcom_pcie *pcie, struct device_node *np)
-> >  {
-> > -	qcom_perst_assert(pcie, true);
-> > +	qcom_perst_reset(pcie, np, true);
-> >  	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
-> >  }
-> >  
-> > -static void qcom_ep_reset_deassert(struct qcom_pcie *pcie)
-> > +static void qcom_ep_reset_deassert(struct qcom_pcie *pcie,
-> > +				   struct device_node *np)
-> >  {
-> >  	struct dw_pcie_rp *pp = &pcie->pci->pp;
-> >  
-> >  	msleep(PCIE_T_PVPERL_MS);
-> > -	qcom_perst_assert(pcie, false);
-> > +	qcom_perst_reset(pcie, np, false);
-> >  	if (!pp->use_linkup_irq)
-> >  		msleep(PCIE_RESET_CONFIG_WAIT_MS);
-> >  }
-> >  
-> > +static void qcom_pcie_toggle_perst(struct pci_host_bridge *bridge,
-> > +				    struct device_node *np, bool assert)
-> > +{
-> > +	struct qcom_pcie *pcie = dev_get_drvdata(bridge->dev.parent);
-> > +
-> > +	if (assert)
-> > +		qcom_ep_reset_assert(pcie, np);
-> > +	else
-> > +		qcom_ep_reset_deassert(pcie, np);
-> > +}
-> > +
-> >  static int qcom_pcie_start_link(struct dw_pcie *pci)
-> >  {
-> >  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> > @@ -1320,7 +1372,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> >  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> >  	int ret;
-> >  
-> > -	qcom_ep_reset_assert(pcie);
-> > +	qcom_ep_reset_assert(pcie, NULL);
-> >  
-> >  	ret = pcie->cfg->ops->init(pcie);
-> >  	if (ret)
-> > @@ -1336,7 +1388,13 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> >  			goto err_disable_phy;
-> >  	}
-> >  
-> > -	qcom_ep_reset_deassert(pcie);
-> > +	/*
-> > +	 * Only deassert PERST# for all devices here if legacy binding is used.
-> > +	 * For the new binding, pwrctrl driver is expected to toggle PERST# for
-> > +	 * individual devices.
-> 
-> Can we replace "new binding" with something explicit?  In a few
-> months, "new binding" won't mean anything.
-> 
+But we can keep this short: The opp-table in that patch is wrong, they
+don't have the correct required-opps for opp-240000000 like I described
+in the commit message above. They could have easily known that if they
+had asked the video team internally for review, because we had a pretty
+long discussion with them if this is also needed for X1E. :-(
 
-So I've introduced a new flag, qcom_pcie::legacy_binding, which gets set if the
-driver uses qcom_pcie_parse_legacy_binding(). Based on this flag, PERST# will be
-deasserted in this driver.
+I'll comment there.
 
-And I've removed references to 'new binding' term.
-
-- Mani
-
--- 
-மணிவண்ணன் சதாசிவம்
+Thanks,
+Stephan
 
