@@ -1,177 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-73379-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73380-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFEC0B554F0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 18:47:54 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B05EB55518
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 18:53:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2A1F5C4D62
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 16:47:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 077DD7A041A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 16:51:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C036F322C63;
-	Fri, 12 Sep 2025 16:47:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 052173218BF;
+	Fri, 12 Sep 2025 16:53:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KQ+rVbXf"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="DudG8Bzi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4323.protonmail.ch (mail-4323.protonmail.ch [185.70.43.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9EB2320A28
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 16:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8AAA30E83D;
+	Fri, 12 Sep 2025 16:53:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757695634; cv=none; b=c20EaCpibd6mI+AmtINR3GkORBRmoVvMLejaKttN7YUVTIgIJbr8FggyDKirvj1p3OxT0v/GxrlcEy85AgJ5Qtd4ZOwArH7EAY1w1VzQ86fJH599sx5JlVXDD77gQbv4ySBNhPfp1alzameP9egpW3dIjnB53HmT8/CQoKaddCM=
+	t=1757695993; cv=none; b=roNls7Wt2Z6H7VeuYIhasAObHvS/h/1uEA94hpy6TbFj05ImIHKPCRqvmSS0TVVWcc2LguCVPfd9KKIIldMKGNpKp2HjzsED0rP5hAQUZwo9gUBSVkjIac74KbWFSOpQeaQlljBa9c/wKlOd+78VsKZapwuDtpSlqzYQw9U8SO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757695634; c=relaxed/simple;
-	bh=Wdm08EMxHowe+0+mJzP63NKr1uwq70hOA6Ki2Hqxf6o=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uxOfeqYuQezVFm6fsFeOg+oZcAbGVLIk/4mMhg1bYSODlklNt8Jfkly7WS15EpLOfdbGYwriHdvYVI3j3lnb6/zO4xxYwV47G6NZfmGhr+75spAa/10UMBAgXGQioGN6iD2VUoNMOTbPhq5c8XO0OQ7LzfitIq02a9W9qJJM3sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KQ+rVbXf; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b07e081d852so7959766b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 09:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757695631; x=1758300431; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yCrSKGvrSXO/1u+T49T9VdCRelfEs5H7YngBK1sc9bQ=;
-        b=KQ+rVbXf1sFo5QxHET9dAKm4t6JuUCFgFChTn5xHufWoWfTacOOoGbYDzJ0wRIryCO
-         eKTsnXE4O2T0Q5aVcFyXs4mV5ScsXyQqz5NYkvMreVmjo89Q9NtmBUqJ9oRDB+OneedQ
-         dTl+ikRtsG1HunB2yY6aTCbcxQ1yzdI6VmbVJuLzcXmTlkv7M6kMmSngGvHcBLhe6pg5
-         aJv+JpsDjr67oOLteR6iDnRvIPlTh8uz7fY7ukX7ZRUfJUnnF7KEIyoMpVwXf2pFA3hg
-         6zEStMaQ4UAVHz1i17swDV5q7latgszhOcfiubDb3TZZFDqN/KnBC1DHmT6VUudY18uT
-         POcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757695631; x=1758300431;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yCrSKGvrSXO/1u+T49T9VdCRelfEs5H7YngBK1sc9bQ=;
-        b=SiLyaWMCd6ay9o46j7bDN0gFE54pbOwXj6yb4+Jvgof1OjfdT31ry8+uBNLSu02XOe
-         UpxWhHhwRI2ijX2CLggpy2gFwBaEARWksOa6W0Na9eaC6w250CEMExT77DDM/7ijvD4O
-         YyGvXDQpYDpb/w21E3MKtwXsNUcYWprCTwdZmqZ4rSNKDlFCNlHmWoKT7ZNfJq5NU+ko
-         qHUaS6VyDeca69IPjJyC8Aut6cqcEwyGcjVxa35WpaesvkJrlrTpbHqeNs9gPI44TEc4
-         t0I18l994maDUDxmFTOMb6cO3gNZDBOUgbU5NiKaQhn61zzqBqHI0ac1a8hkj05xNDpk
-         O/0A==
-X-Forwarded-Encrypted: i=1; AJvYcCUm09AyMBdqqoSn94Gv+u7jkfQsZUM2EeFVfSTgEjWheHa/dS7HDwGrkuKEkZQv723YwGTDSDhwwRhTqoKP@vger.kernel.org
-X-Gm-Message-State: AOJu0YwR8eJwuDU2B5Q0BWdGz7RoTMQMsn/icgw47of+iHMd945B9v+Z
-	VzGnq+di3ertdKiFmdfng1tNuaRlZKyLgn2gUrW0TukIOT+7RgFe0YCl
-X-Gm-Gg: ASbGncvTZeBYog04VCpMEJzCbk1fC52vcepzxN2eB5x8xa5VoaGB+BaPbc/ktGU9fpk
-	HpEhFRzZImnZSTs00pyr9g2/lKjH7BZKiArIMNE0OoWrPE7T7yubBl2pc1XlrBd7xEB7J7xgYU/
-	sQSwBH+Bd1G8w56OOq0w68jFdIuakRIx6NWtO4DdHhUxhtxZe29bhgpY20NW+qiyWIgbpMaJuQC
-	1hr7vvCyVlZAzAozCr17QWP4sHB6Sl9UKdaUSFKVS4qBCZYxO67p/eORoaI2n0YVMmXcSSYoYA3
-	7kKD5D7ia7jjxH+46HnyqCdDmtAiMmcxKwsuc00YgRV1/PPoaZJKsmY7bNoQm4pCa8c6OOnGG+i
-	VqFXQ+poUNB11CcOsqwpI
-X-Google-Smtp-Source: AGHT+IH73PoZ9AsNM7yN3WLzZHMfT8u8MH3s4/O9P15wmePlr1s/VAEZRYPX6YG/6Qb7831rsSTCjA==
-X-Received: by 2002:a17:907:6e8b:b0:b04:2452:e267 with SMTP id a640c23a62f3a-b07c3a76f4emr385412166b.56.1757695631157;
-        Fri, 12 Sep 2025 09:47:11 -0700 (PDT)
-Received: from [127.0.1.1] ([46.53.240.27])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-b07c337e785sm229786066b.25.2025.09.12.09.47.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 09:47:10 -0700 (PDT)
-From: Dzmitry Sankouski <dsankouski@gmail.com>
-Date: Fri, 12 Sep 2025 19:47:03 +0300
-Subject: [PATCH v3 3/3] arch: arm64: dts: qcom: sdm845-starqltechn: fix
- max77705 interrupts
+	s=arc-20240116; t=1757695993; c=relaxed/simple;
+	bh=OJzKMO4M3OZL6xdTQzFPddTwXMHAhwvQ9Md14axgm+c=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=swYFWSTtaBWIMfqUTUdqQ8dzg9sytkhb2CKGqU2AsgSmtSYDip5aDb4Ph4MfcXQx2p/fydrDHWkNHWHXzaHoC7QYfxk62MVUgAewZ46zAK6M8iYJuz3XBfAlTGL7Ngr8WUGA8XjEbtlDbLR/C/IK8MmtMo00ZrjR6O10vdygO/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=DudG8Bzi; arc=none smtp.client-ip=185.70.43.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail; t=1757695984; x=1757955184;
+	bh=OJzKMO4M3OZL6xdTQzFPddTwXMHAhwvQ9Md14axgm+c=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=DudG8BziyZ8prGUD9z1Cd6mtqkrDrQUHCP9yr3FNhHe6U6rHTMlA1WEpBFzJwWS7O
+	 fF3wY0KsOaUq9Le2rWTMBwufLivwfCg82G6eNkUwAvXixLdYO9x9S+R5VOla0BRr8+
+	 TbAFhF9nkaMBZrKe0RjgAOHxjoov6OmcT1VC4BDQGPrkdochVqGv5QA0OLV2Pb6m7r
+	 fFVJ6nIIivyzpuq0wDvOkLWSjqhZKUYrpxLtegoR/0JiY+XzRiLS43MVD+OKt7duRU
+	 F9F6vmIrr4GsVr2TcD+kqPvs1rGQr16Tb+55dApD43pEmwwdSSY501WyUJ6kj/9STx
+	 LC2H3jZJlXzrA==
+Date: Fri, 12 Sep 2025 16:52:59 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: Rework X1-based Asus Zenbook A14's displays
+Message-ID: <X5l7eScrcspQe6JfPyx8VCIZXmCmq-VBlAoNmIuAAmwfp1z-yNAG5GyIEnp4ByyPOEfJHEtewC0uOgrc0GiLlaz433Gheubseb-pXH1ZfUw=@vinarskis.com>
+In-Reply-To: <e54daa39-ffb1-4f0e-82c6-42e45efe5044@oss.qualcomm.com>
+References: <20250908-zenbook-improvements-v1-0-43ecbbf39c60@vinarskis.com> <20250908-zenbook-improvements-v1-2-43ecbbf39c60@vinarskis.com> <e54daa39-ffb1-4f0e-82c6-42e45efe5044@oss.qualcomm.com>
+Feedback-ID: 158356072:user:proton
+X-Pm-Message-ID: 14966570c28e2628550240d24913a984a7bcc3dc
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250912-starqltechn-correct_max77705_nodes-v3-3-4ce9f694ecd9@gmail.com>
-References: <20250912-starqltechn-correct_max77705_nodes-v3-0-4ce9f694ecd9@gmail.com>
-In-Reply-To: <20250912-starqltechn-correct_max77705_nodes-v3-0-4ce9f694ecd9@gmail.com>
-To: Chanwoo Choi <cw00.choi@samsung.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>, 
- Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Dzmitry Sankouski <dsankouski@gmail.com>
-X-Mailer: b4 0.14.0
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757695624; l=2075;
- i=dsankouski@gmail.com; s=20240619; h=from:subject:message-id;
- bh=Wdm08EMxHowe+0+mJzP63NKr1uwq70hOA6Ki2Hqxf6o=;
- b=hS4I7dnxRbG+ysuZp6N+mtNFzY53m0BYtow1zdjEfzBBPBfwa+tB2dc4pGnbdHjShwDLHhT1x
- ZaELJes2HjNB6ft/Y/pHGx5raoRUYJNMuLxrQ4uajCAYMsrE3AdMjNI
-X-Developer-Key: i=dsankouski@gmail.com; a=ed25519;
- pk=YJcXFcN1EWrzBYuiE2yi5Mn6WLn6L1H71J+f7X8fMag=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Since max77705 has a register, which indicates interrupt source, it acts
-as an interrupt controller.
 
-Direct MAX77705's subdevices to use the IC's internal interrupt
-controller, instead of listening to every interrupt fired by the
-chip towards the host device.
 
-Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
----
-Changes for v2:
-- fix commit message to be more clear
 
-Changes for v2:
-- fix commit msg header prefix to 'arm64: dts: qcom: sdm845-starqltechn:'
-- remove binding header for interrupt numbers
-- make interrupt-cells 1, because irq trigger type is not used
----
- arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-index 8a1e4c76914c..597e25d27d76 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-samsung-starqltechn.dts
-@@ -584,13 +584,15 @@ &uart9 {
- &i2c14 {
- 	status = "okay";
- 
--	pmic@66 {
-+	max77705: pmic@66 {
- 		compatible = "maxim,max77705";
- 		reg = <0x66>;
- 		interrupt-parent = <&pm8998_gpios>;
- 		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-controller;
- 		pinctrl-0 = <&pmic_int_default>;
- 		pinctrl-names = "default";
-+		#interrupt-cells = <1>;
- 
- 		leds {
- 			compatible = "maxim,max77705-rgb";
-@@ -629,8 +631,8 @@ max77705_charger: charger@69 {
- 		reg = <0x69>;
- 		compatible = "maxim,max77705-charger";
- 		monitored-battery = <&battery>;
--		interrupt-parent = <&pm8998_gpios>;
--		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&max77705>;
-+		interrupts = <0>;
- 	};
- 
- 	fuel-gauge@36 {
-@@ -638,8 +640,8 @@ fuel-gauge@36 {
- 		compatible = "maxim,max77705-battery";
- 		power-supplies = <&max77705_charger>;
- 		maxim,rsns-microohm = <5000>;
--		interrupt-parent = <&pm8998_gpios>;
--		interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-+		interrupt-parent = <&max77705>;
-+		interrupts = <2>;
- 	};
- };
- 
 
--- 
-2.39.5
+On Friday, September 12th, 2025 at 12:44, Konrad Dybcio <konrad.dybcio@oss.=
+qualcomm.com> wrote:
 
+>=20
+>=20
+> On 9/8/25 8:45 PM, Aleksandrs Vinarskis wrote:
+>=20
+> > The laptop comes in two variants:
+> >=20
+> > * UX3407RA, higher end, FHD+ OLED or WOXGA+ OLED panels
+> > * UX3407QA, lower end, FHD+ OLED or FHD+ LCD panels
+> >=20
+> > Even though all three panels work with "edp-panel", unfortunately the
+> > brightness adjustmenet of LCD panel is PWM based, requiring a dedicated
+> > device-tree. Convert "x1p42100-asus-zenbook-a14.dts" into ".dtsi" to
+> > allow for this split, introduce new LCD variant. Leave current variant
+> > without postfix and with the unchanged model name, as some distros
+> > (eg. Ubuntu) rely on this for automatic device-tree detection during
+> > kernel installation/upgrade.
+> >=20
+> > As dedicated device-tree is required, update compatibles of OLED
+> > variants to correct ones. Keep "edp-panel" as fallback, since it is
+> > enough to make the panels work.
+> >=20
+> > Signed-off-by: Aleksandrs Vinarskis alex@vinarskis.com
+> > Co-developed-by: Jens Glathe jens.glathe@oldschoolsolutions.biz
+> > Signed-off-by: Jens Glathe jens.glathe@oldschoolsolutions.biz
+> > ---
+>=20
+>=20
+> [...]
+>=20
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
+> > @@ -0,0 +1,141 @@
+> > +// SPDX-License-Identifier: BSD-3-Clause
+> > +/*
+> > + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights rese=
+rved.
+> > + * Copyright (c) 2025 Aleksandrs Vinarskis alex@vinarskis.com
+> > + */
+> > +
+> > +/dts-v1/;
+> > +
+> > +#include "x1p42100.dtsi"
+> > +#include "x1-asus-zenbook-a14.dtsi"
+> > +
+> > +/delete-node/ &pmc8380_6;
+> > +/delete-node/ &pmc8380_6_thermal;
+> > +
+> > +/ {
+> > + model =3D "ASUS Zenbook A14 (UX3407QA)";
+>=20
+>=20
+> 'model' in .dtsi is 'eeeeh'
+
+Followed example of Thinkpad t14s and CRD, as they set it to
+'default' in .dtsi, and overwrite in .dts. Could fix it starting
+with Zenbook here, but in this case probably makes sense to also
+drop 'model' from higher level 'x1-asus-zenbook-a14.dtsi' as well?
+
+>=20
+> [...]
+>=20
+> > +&remoteproc_adsp {
+> > + firmware-name =3D "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn",
+> > + "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf";
+> > +
+>=20
+>=20
+> are both of the aforementioned variants' firmwares the same?
+
+Yes, Asus doesn't distinguish BSP packages between options (displays
+in this case) but only X1E (UX3407RA) vs X1(P) (UX3407QA).
+
+>=20
+> Konrad
 
