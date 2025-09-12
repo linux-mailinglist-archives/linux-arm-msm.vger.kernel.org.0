@@ -1,176 +1,291 @@
-Return-Path: <linux-arm-msm+bounces-73233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 803FDB5440D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:38:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59085B54418
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:43:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B782E6874C7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:38:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 041EF3A5FEB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:43:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80B14261393;
-	Fri, 12 Sep 2025 07:38:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF4A2D0C60;
+	Fri, 12 Sep 2025 07:43:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Z3YDGEpv"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gDdotHWi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99A52472B0
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 07:38:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F2D2C11C2
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 07:43:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757662697; cv=none; b=LDPgJwAFDcvjFdK/zRelRmCu5O2x0Tk7KC8W+RcUAXUsm6TXpMia88DcECC/6lUunrMKzg0A/ef1TR2Nook/G5vNaq0GZKLOhG8ttHMjVe4TN1U+JK4NsaOTxf6Ccht/e1BXlhfTlpyi7NGjyLdT4xPxxFCVLGYM+OZWf2nqmik=
+	t=1757663013; cv=none; b=rCS6QWfqBaLHDPcdP52uh84NvyVexVJmYNL7q2P0rlzqiOvf8G7dUWQXANUe1pO3v5TM+MN956RnyCO57z5DDYr0r6qlGms1xN3TUbKbHKkCD2z2WvnMcHZ20eZ14loQnstjGFAIGCnV5FWdFSXBofZQW++GGA47xO2vXrTtxoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757662697; c=relaxed/simple;
-	bh=PxSU16uE+Ej2HzCtdrXRq8+sKeMpJU7IORy3bAXH488=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kBmgbFhm/1MBZZFb22XOiwBZWKUReivOwNnl4AMNbeMYiqW8ejIRqDgIFD81vFB8o6f0jr6wnawJT3Z6zLe61i17iMLqHZ791rVIACW05AT4LPGuxKEuKK8vrADpGcaTbioVMKFgk6a2pPVqyytJKJ7/ncv7jnXVKsYyK08Mlww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Z3YDGEpv; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58C7SKTV026727
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 07:38:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	6LFu0Fh4zfdsz13Tuo1my+OP1x2vo1Q+dpLEWcRgmcg=; b=Z3YDGEpve9wTTVnP
-	3c1zqQnKAXKzqGNZXSnJ693OYIyrVZp8NPFtvdrcKyuPALjtGKxx5tBPCkVrMswT
-	SzEevKd08SRnmGYzjsP4APYJ1JpbEn03YSQugATr/BB3Dg4K4P0PkzEOLwnrPNXK
-	KeHmKQR3pGalKL/a3xA1gADA0CQqQ8MkWDc/XUQ2O1hUuwoBTzRKzlJe3hzCTaM9
-	BazOSeb+tChzsZWuDUkW79RPBo97/3T2djMJROXX4EYpHvUmMJzv/qy8YOhxnnpp
-	DSFb/bEDvPT4Vhu5HMdmWm6wS9dloeGzGpU+o2MsAaC1GLYjq0TLqyFpageF2cEm
-	6bh+Ww==
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 493f6h5p0w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 07:38:13 +0000 (GMT)
-Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-244582bc5e4so19110495ad.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 00:38:13 -0700 (PDT)
+	s=arc-20240116; t=1757663013; c=relaxed/simple;
+	bh=QbQ+D0lj0zyGSWQXCzBrA6FK9SMcdNAf9ABEcq+D/4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yi8B6f04FJVyugbQ2anhQdh+7E9ieyTXWS+Sl+wWa20jQ0IDfNsJoGW55Z6zxC2UT9oepTGO9CdCdCzuAgiaAEKYx6E5yz+IDsAjD2yf/wjNaYMH84RO2YBnn1lUcR5NNNjf9MS20jgd15oVfhv819ExRc1Y/p3v/pWbFlYU5e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gDdotHWi; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3dce6eed889so1498399f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 00:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757663010; x=1758267810; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=/tlrqWaDX6PzrBsN1xgSiYWgH8yIXX+vr7eFeQ9eV+s=;
+        b=gDdotHWiXd59YjG9AmILsyGVbq1w0Tq/Orl6/qeqqKAg3MKv8iKkGviUGNl/p2+05K
+         ls0oBIonrkoVu7i4Gnzv5GhBdJZBn+JXiuZctSAYbqiXLyfjqrMWYwtsfuaZqefaPEhr
+         y1loyZzRDD/1t+q1+DUlaPpE7Fw/0o9DsZUPlakU8XsXVBmrKfohRdfnNdMsDhDwP6Oq
+         bRjEpoW24guhWwi7E0kzavb1JHWHBxxyWd/cVjBpAsPytfjl4YmYaoiuRsKuUUQPJ+3C
+         TgRfzgd2rUZB3CJevrHYQxti5Uit6d2Z1ZWQG7rTei1Ox4sH1M/WDZYeFtZ//Q5vnz6A
+         t0QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757662693; x=1758267493;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6LFu0Fh4zfdsz13Tuo1my+OP1x2vo1Q+dpLEWcRgmcg=;
-        b=iN2V7fRY9jH70Fgl24/8L88nuUgPJ+rDFBUA0XsuIZHHi4iTtyTYX4OJrUMFjSPUH6
-         5FE59jQ+3o4sXNopzdmVVcjRQV0y21wdUxK82/dBTyC0cVlDzOSUw+ZymRL8Yv1W4HP3
-         PMR2biOTj7TIhL1r7K64+qwkXPO8x7E3zRF5ArBO4XR9oV5uHUOaOuoqJqTxkKYgPbSs
-         pqFyw9IA48b4uLPb2bXBm2nL93+AuNgHlRQqlIT0nPLR9nAA6qY+Zpe7kbBxnUkUcOC7
-         08vZHboJBr2LGC2jb743pKqJkZ2k2T9AsBhGripBrCmebybi/+oTlQvDDE99X+betOz6
-         F1Lw==
-X-Gm-Message-State: AOJu0YzWEky+W9WRuhwmgVBYztkzH5+gQ6Oa2KLF7rGk/Bdoph+oTvW3
-	PUYG4Z476R6P4ZJr038Niv9KXfuQBSkuIDA3g45eSTBdsk4tx/i6nM/AMRP5nsAyvPtUmfS8U4S
-	JT3U1Af681kSN/8uA6HDOs2uRp79knqiuPxU7FdP6q4j6tyrtNPprhob0vBQuK405ltDt
-X-Gm-Gg: ASbGnctO0XeDtTmcDXEUK53ROR+OTQPkbA0H6cf+MlVN0QAbCgGAL6ObGwenuyUjXrr
-	iYOFKXZiqN1vzdaPnLFwq4TMpI4wRYrgNiHoZbDN5Nf0apwJefm7qgYNrjegSmsTUXRf706XFAc
-	nSPpSwB+0SNwf6zJd5EhikwmuYcVt0Y99GJCXpEAKssFtijA638VyIADUNX4F97f36JQ6rMvK0i
-	D0XXXiz+UgTeQTaYVfI/oIYPzmyhRhlFuFXPIVU6PzPXDok9gHQOc773SlJtBwFQOzuEQYgGWze
-	r56tClMuKs+hyWXcQ9dNMjQ+5m4gNCCa1oECIYYN/I1hyNiEwIQg/4QZ2SO/PQE/UbI71JxZ6nC
-	9XA==
-X-Received: by 2002:a17:902:cece:b0:248:f653:538f with SMTP id d9443c01a7336-25d25193c98mr24576055ad.27.1757662692847;
-        Fri, 12 Sep 2025 00:38:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE8mnmJxdmy5GnWW3mwOkJg1f+1p4sXZ2EfwMYb/qI4p3TOyTx6eLJBt84nq1qMYnMbR5hhtQ==
-X-Received: by 2002:a17:902:cece:b0:248:f653:538f with SMTP id d9443c01a7336-25d25193c98mr24575825ad.27.1757662692288;
-        Fri, 12 Sep 2025 00:38:12 -0700 (PDT)
-Received: from [10.218.21.68] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25c36cc5890sm41341715ad.4.2025.09.12.00.38.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Sep 2025 00:38:11 -0700 (PDT)
-Message-ID: <b8a3211b-6d85-4949-9de1-54614dd8d769@oss.qualcomm.com>
-Date: Fri, 12 Sep 2025 13:08:06 +0530
+        d=1e100.net; s=20230601; t=1757663010; x=1758267810;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/tlrqWaDX6PzrBsN1xgSiYWgH8yIXX+vr7eFeQ9eV+s=;
+        b=uyQiZQuBvis6Dodrpdsjt66Z30+VCNcXqCm6SS7KGQRaCcSQp3tnUbAk/P61mKjv4u
+         sDtrDTYTjptbKzRcv6CSFEfZrdox74KJgOnf14h9ZTTLlWnw+zKHVC4KholpShGIjBnF
+         790xdfiP63YrVse50NgPbDMTLd5qCnQFrEB66LJrBffVPHR5UVjz4Sj+2pgRf/EJnZuK
+         WWknjLxTz97L6SvfgGAyS1JcxJQxerJf8BeoR9UId8SNipCOApEEOR1itXwg1gv10xdE
+         L37/4skHo8ekWmUR+fqLgcZ9hRKomuUK2C2sKXd6+GOvf9mpjSGq+KnwVYvaGltWwJ72
+         QcqA==
+X-Forwarded-Encrypted: i=1; AJvYcCXaNpNd45U2clWMVwh9qlLF/MVYc6dTXD0nGWans4SaKDw6FoI4ElR/RDcMglnCgp1QzpgiJG2pcnPCKNqf@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy10qwZ0j2lfNdE1q7p+IfUC8bl2gWXvvtxenmuQFAJIAmL6V8X
+	h0ikt1au0Tb58xVCRvlboUhJRRM2qUogX3eXN5ncZTLuC+8OQxCPBaNjleevT3oCQg0=
+X-Gm-Gg: ASbGncu08qij09+kYu5hCx0Dytal1iKLGUtTRAo2Ptj0Uzk+VxFkz2edc6Qn1UbfUz4
+	UQckfhQzRdFCl2f7xtevdCX1HivVv41wE6jKGdjqwP7MOAxxk6ULdHL2Ni3UXLjxrPQ4EbN13we
+	5LKbT46k34p/2+p62rnGxtheoSL5Vh8XQSu7rTv785qKrmAFLD4NQtVqzAaNrUlaRUY55ZAcbFC
+	JKY4eCIF8LhFKe7Y549ymnN3pwzPGPLA1pCykdSMbeoZQCZCOUavGrvF4AChPao8zs6f+xSwldV
+	I+985l+V0fqZIkq+3NiDnUmvd1/MYMYiTnAX8uJZutwADj0v16GMcFm2zixWf2bE2l28OmXKXCV
+	UQ5vqY++xe25p64JtE0jbFg==
+X-Google-Smtp-Source: AGHT+IEZAiE1f9boxOUWUwCm6QWtzQinPI/QYY7rsGgyorpzn3871kCxtIjCpGOMwKr6zoccKgtOdA==
+X-Received: by 2002:a05:6000:230f:b0:3e7:4071:188c with SMTP id ffacd0b85a97d-3e765a04970mr1862367f8f.60.1757663010049;
+        Fri, 12 Sep 2025 00:43:30 -0700 (PDT)
+Received: from linaro.org ([86.121.170.194])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e760786cddsm5695898f8f.14.2025.09.12.00.43.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Sep 2025 00:43:29 -0700 (PDT)
+Date: Fri, 12 Sep 2025 10:43:27 +0300
+From: Abel Vesa <abel.vesa@linaro.org>
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, 
+	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 4/4] phy: qcom: edp: Add Glymur platform support
+Message-ID: <4a5brcec3knsjtowyju33drs2twq72mtpiwo54dtshsvs22d6v@e7rztm64nmlo>
+References: <20250911-phy-qcom-edp-add-glymur-support-v3-0-1c8514313a16@linaro.org>
+ <20250911-phy-qcom-edp-add-glymur-support-v3-4-1c8514313a16@linaro.org>
+ <DCQAGDC63M8X.3DVH6I9FA0IZD@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS8300 sound
- card
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
-        Takashi Iwai <tiwai@suse.com>
-Cc: linux-arm-msm@vger.kernel.org, linux-sound@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kernel@oss.qualcomm.com, prasad.kumpatla@oss.qualcomm.com,
-        ajay.nandam@oss.qualcomm.com
-References: <20250905142647.2566951-1-mohammad.rafi.shaik@oss.qualcomm.com>
- <20250905142647.2566951-2-mohammad.rafi.shaik@oss.qualcomm.com>
- <43090acb-ea36-4015-b14f-78d44d789d42@kernel.org>
- <a9507045-b900-49ee-8841-0f8fd30816ba@kernel.org>
- <abc66798-dc91-4860-b0b4-de39a58b5745@oss.qualcomm.com>
- <a8dcffa4-c578-46d7-8fdf-cd4f5a29a2a6@kernel.org>
- <4c6e7e6b-2ef4-4ea8-8bf2-26c7aa8c94b8@oss.qualcomm.com>
- <ad8fbd0c-4e94-4edd-abb3-84ee9563fac3@kernel.org>
-Content-Language: en-US
-From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
-In-Reply-To: <ad8fbd0c-4e94-4edd-abb3-84ee9563fac3@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: BkhWcx5uhALBH7wFldzRUUYdz3lBa8OZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEwMDE3NyBTYWx0ZWRfX/NgJ4W2kjnlK
- KKtHKYciF8tZFlgJHRAXWHeN51YLfpNJDZvtHU2ygbvVMDDk3d4kwK/u9S5nhrq6kq5hKjS1+bP
- HmheeIaTNu7lcRqCTyS/3J9ej/LNwyapr3qEjMPCHeLIQolONagKWCjvsZ2Z+we3ksd0ZOMcnC1
- zL0HuLgsxXNp9VAyYuPfWSaS3/zH1znuHnOhz6AqqUl/vUmzrdpAsHxoGHrJeeJmNc2yTRNopup
- /JA9qDDCTTVuxTcheT3F7w6YSREM7sr+W56FbOWk9QiVKXzqpaMvIXuBLSISoC/Rz6YnY39Q0Ns
- oC6mSlCTUgRwAZEGtFkWAEu1dzMkYHtUY9FMKaEsCwtEiux03vi8nL89vNbDr0+Gak3KV8UNyZV
- fO08CgcU
-X-Authority-Analysis: v=2.4 cv=WPB/XmsR c=1 sm=1 tr=0 ts=68c3cde5 cx=c_pps
- a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=d966o2na1F7DTwhL2BsA:9
- a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
-X-Proofpoint-GUID: BkhWcx5uhALBH7wFldzRUUYdz3lBa8OZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-12_02,2025-09-11_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 clxscore=1015 priorityscore=1501 adultscore=0
- bulkscore=0 phishscore=0 suspectscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509100177
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DCQAGDC63M8X.3DVH6I9FA0IZD@linaro.org>
 
-
-
-On 9/10/2025 4:54 PM, Krzysztof Kozlowski wrote:
-> On 10/09/2025 13:17, Mohammad Rafi Shaik wrote:
->>>
->>> So this is the same hardware? Then no, we do not rename compatibles.
->>>
->>
->> Agree, the existing compatible is discontinued naming convention,
->> will remove existing qcs8275 and go with qcs8300.
->>
+On 25-09-11 22:28:24, Alexey Klimov wrote:
+> On Thu Sep 11, 2025 at 3:45 PM BST, Abel Vesa wrote:
+> > The Qualcomm Glymur platform has the new v8 version
+> > of the eDP/DP PHY. So rework the driver to support this
+> > new version and add the platform specific configuration data.
 > 
-> That would be a rename, so again "no, we do not rename compatibles".
+> It is a bit confusing. Subject suggests that it is an addition
+> of a new platform but patch itself and description looks more like a
+> rework rather than new platform addition.
+
+The larger part of this patch is actually the addition of v8 specific bits,
+which is only used on Glymur, AFAICT. So here, new platform means new init
+sequence (at least), but new init sequence requires addition of v8 bits.
+The rework is rather minor in comparison with the v8 addition.
+
 > 
-> You are stuck with qcs8275.
+> The ->aux_cfg_size() rework here reminds me
+> 913463587d52 phy: qcom: edp: Introduce aux_cfg array for version specific aux settings
 > 
-ACK,
+> Ideally this should be split into rework and adding support for a
+> new platform. Or please update the commit desc and subject to explain
+> why this is the way.
 
-will drop the Renaming compatible string change.
+Splitting out the rework could be an option, however, it would not add
+any value. Seeing the changes needed by the new v8 version alongside
+with the addition of the v8 version makes the patch more intuitive to
+read, IMO, specially since, again, the rework pretty is minor.
 
-Instead of renaming the compatible string, will go with the existing 
-compatible and fix the driver match data by updating the driver name. 
-This approach allows us to continue using the same compatible as 
-"qcs8275-sndcard".
+If anything, maybe I could add to the existing commit what exactly needs
+to be reworked for the v8 version addition, but IMHO the rework code is
+quite self-explanatory, and we should only describe in the commit
+message what the patch does not how the code works.
 
-will update the driver match data name to QCS8300 to load the correct 
-sound topology and ALSA UCM configuration files, which are added under 
-the actual SoC QCS8300 directory in linux-firmware.
+> 
+> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+> > ---
+> >  drivers/phy/qualcomm/phy-qcom-edp.c | 240 +++++++++++++++++++++++++++++++++++-
+> >  1 file changed, 234 insertions(+), 6 deletions(-)
+> >
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
+> > index 7b642742412e63149442e4befeb095307ec38173..b670cda0fa066d3ff45c66b73cc67e165e55b79a 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-edp.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
+> 
+> [..]
+> 
+> >  static int qcom_edp_phy_init(struct phy *phy)
+> >  {
+> >  	struct qcom_edp *edp = phy_get_drvdata(phy);
+> > @@ -224,7 +241,11 @@ static int qcom_edp_phy_init(struct phy *phy)
+> >  	if (ret)
+> >  		goto out_disable_supplies;
+> >  
+> > -	memcpy(aux_cfg, edp->cfg->aux_cfg, sizeof(aux_cfg));
+> > +	memcpy(aux_cfg, edp->cfg->aux_cfg, edp->cfg->aux_cfg_size);
+> 
+> So, if I understand this correctly, when or if init sequence will
+> span beyond DP_PHY_AUX_CFG9 and DP_AUX_CFG_SIZE won't be updated,
+> then we might end up doing something fishy here?
 
-Thanks & regards,
-Rafi.
+So, usually you get an init sequence that gives you register names and
+registers value. This means will never get anything beyond the AUX_CFG12
+as part of the AUX_CFG array. At least not on the currently available
+platforms. In case a new platform will come around with AUX_CFG13 and
+beyond, then this whole thing will need to be reworked heavily due to
+variation in size of the AUX_CFG register layout, not because of the
+variation in size of the AUX CFG init sequence, as it is the case now.
+But this fits into the 'future problem' bucket.
 
+> 
+> Maybe add an if-check or even
+> BUILD_BUG_ON(edp->cfg->aux_cfg_size > sizeof(aux_cfg))
+> or something like this? Or kmalloc aux_cfg eventually at least,
+> however it seems to overcomplicate things.
+
+Definitely not BUILD_BUG_ON !
+
+And adding a check for the size it's pretty pointless since we currently
+hardcode the size of the array when defining it.
+
+But maybe I'll outvoted here ...
+
+> 
+> [..]
+> 
+> > +static int qcom_edp_com_configure_ssc_v8(const struct qcom_edp *edp)
+> > +{
+> > +	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
+> > +	u32 step1;
+> > +	u32 step2;
+> > +
+> > +	switch (dp_opts->link_rate) {
+> > +	case 1620:
+> > +	case 2700:
+> > +	case 8100:
+> > +		step1 = 0x5b;
+> > +		step2 = 0x02;
+> > +		break;
+> > +
+> > +	case 5400:
+> > +		step1 = 0x5b;
+> > +		step2 = 0x02;
+> > +		break;
+> > +
+> > +	default:
+> > +		/* Other link rates aren't supported */
+> > +		return -EINVAL;
+> > +	}
+> > +
+> > +	writel(0x01, edp->pll + DP_QSERDES_V8_COM_SSC_EN_CENTER);
+> > +	writel(0x00, edp->pll + DP_QSERDES_V8_COM_SSC_ADJ_PER1);
+> > +	writel(0x6b, edp->pll + DP_QSERDES_V8_COM_SSC_PER1);
+> > +	writel(0x02, edp->pll + DP_QSERDES_V8_COM_SSC_PER2);
+> > +	writel(step1, edp->pll + DP_QSERDES_V8_COM_SSC_STEP_SIZE1_MODE0);
+> > +	writel(step2, edp->pll + DP_QSERDES_V8_COM_SSC_STEP_SIZE2_MODE0);
+> > +
+> > +	return 0;
+> > +}
+> > +
+> > +static int qcom_edp_com_configure_pll_v8(const struct qcom_edp *edp)
+> > +{
+> > +	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
+> > +	u32 div_frac_start2_mode0;
+> > +	u32 div_frac_start3_mode0;
+> > +	u32 dec_start_mode0;
+> > +	u32 lock_cmp1_mode0;
+> > +	u32 lock_cmp2_mode0;
+> > +	u32 code1_mode0;
+> > +	u32 code2_mode0;
+> > +	u32 hsclk_sel;
+> > +
+> > +	switch (dp_opts->link_rate) {
+> > +	case 1620:
+> > +		hsclk_sel = 0x5;
+> > +		dec_start_mode0 = 0x34;
+> > +		div_frac_start2_mode0 = 0xc0;
+> > +		div_frac_start3_mode0 = 0x0b;
+> > +		lock_cmp1_mode0 = 0x37;
+> > +		lock_cmp2_mode0 = 0x04;
+> > +		code1_mode0 = 0x71;
+> > +		code2_mode0 = 0x0c;
+> > +		break;
+> > +
+> > +	case 2700:
+> > +		hsclk_sel = 0x3;
+> > +		dec_start_mode0 = 0x34;
+> > +		div_frac_start2_mode0 = 0xc0;
+> > +		div_frac_start3_mode0 = 0x0b;
+> > +		lock_cmp1_mode0 = 0x07;
+> > +		lock_cmp2_mode0 = 0x07;
+> > +		code1_mode0 = 0x71;
+> > +		code2_mode0 = 0x0c;
+> > +		break;
+> > +
+> > +	case 5400:
+> > +		hsclk_sel = 0x2;
+> > +		dec_start_mode0 = 0x4f;
+> > +		div_frac_start2_mode0 = 0xa0;
+> > +		div_frac_start3_mode0 = 0x01;
+> > +		lock_cmp1_mode0 = 0x18;
+> > +		lock_cmp2_mode0 = 0x15;
+> > +		code1_mode0 = 0x14;
+> > +		code2_mode0 = 0x25;
+> > +		break;
+> > +
+> > +	case 8100:
+> > +		hsclk_sel = 0x2;
+> > +		dec_start_mode0 = 0x4f;
+> > +		div_frac_start2_mode0 = 0xa0;
+> > +		div_frac_start3_mode0 = 0x01;
+> > +		lock_cmp1_mode0 = 0x18;
+> > +		lock_cmp2_mode0 = 0x15;
+> > +		code1_mode0 = 0x14;
+> > +		code2_mode0 = 0x25;
+> > +		break;
+> 
+> These sections for 5400 and 8100 rates seem to be the same. Is it correct?
+> If yes, then maybe join them together and drop duplicating lines?
+> 
+> There is probably similar thingy in qcom_edp_com_configure_ssc_v8() above.
+
+I agree. This is a good point. I'll do fallthrough instead. In the
+_configure_ssc_v8() above as well.
+
+> 
 > Best regards,
-> Krzysztof
+> Alexey
+> 
+
+Thanks for reviewing.
 
 
