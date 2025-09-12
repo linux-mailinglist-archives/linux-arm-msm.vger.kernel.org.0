@@ -1,119 +1,198 @@
-Return-Path: <linux-arm-msm+bounces-73386-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6375BB556FB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 21:37:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D724B5578C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 22:21:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 6066D7B5AD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 19:36:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id EF233AA1DD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 20:21:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC5B429BD96;
-	Fri, 12 Sep 2025 19:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5485EE555;
+	Fri, 12 Sep 2025 20:21:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="kFpbx6+c"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dpFzoYMZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EBAA28725A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 19:37:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9541A2C0285
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 20:21:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757705851; cv=none; b=ZWPHal+IeaQHfGr/wZ7IeOdqKTYltYtQ8l4dqqZ4oeW8JeFN2UHhe2fhHNQEzKWlMlZ0PC84+YzXZbR428wMfcgDgbF7ZPqmihU2oQfXjYmM2yo1xSeE5Jt8sqUzL27gtOFFkWYX33nL1ugAslWVzU048o+Y/t7AB4Iw1dP24Ww=
+	t=1757708467; cv=none; b=mR9FQ3hqy7s89uepXzmwJ8LEEx/rdlu7t4MvZHZCRkLqpXA/j2+oaoxIIM30WLa4G8wqy7BH5YeBUeUrLbuGPFtzETUGkRTuDysmzu3hrNS2oiQ0KgMnBX+sYx4FGI5tAS8P3BtG7utUS/cye5QWpWPGIrTrGM41saFHHOi2WL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757705851; c=relaxed/simple;
-	bh=jA4wqu8GiEeHtdnCeD5CK5KRYYjCmySD2Ig7LvqbLvg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lt4o30jMd/MLVjRkV6ldCQezOFjPQUdQgHdQDQj7R67ndigerrch4KgtyjFJns/KX2hfKv5Ay0liARLjsfi1BLt5fszkCJsEQjAg2f30dT25sI4Zz0tQq1lRu8bMgZJPu7Ed9uQN5Hx0w4pozEfNDLqj7hjPXZrHcsgbFweQC4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=kFpbx6+c; arc=none smtp.client-ip=209.85.216.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-32326e8005bso2049207a91.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 12:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1757705849; x=1758310649; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MG8qheklqH90QoillqEWtKlvYUOtiPcMmtaoD7S73Y0=;
-        b=kFpbx6+cfRDl6zH/qqtuWqnqkT8z/4hnFljcCzE79tCabjdui23SUJLdYodCFlQSX2
-         kz9mIeAJCHRcU64pWFatcJDddWtC6z4b7uluZ3K9kfhSmxqgvHdEfTGrAyKPXKWk0qM2
-         yMg4450bEnmdaFAOAEl9/oh/icjMTKy+fpHzg=
+	s=arc-20240116; t=1757708467; c=relaxed/simple;
+	bh=ha5sACqI+T93S9hNt+6tg8vEBhnD3jRHwOofYElvPzs=;
+	h=Message-ID:Date:MIME-Version:Subject:From:References:To:Cc:
+	 In-Reply-To:Content-Type; b=fEr5ErZWrDkAwLOJ+MXHeMQscXM07TwweTEoo+KnK2LyOgNnebUsMbbFxUpjzd/Qd5y4qrZD6JCiImN7ta2pxUVJQtfaeR1Tt2Ay6WFj0qSR8Jrpnt5tUfHTzaXFOF67X82AEx9tsWJtmHWtmuCOn4H2l4nDazyq892Am9kuhiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dpFzoYMZ; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58CHjFaD009081
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 20:21:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	uh8HWFGgvQRh4YRN3fk73qzhec8r9FEUaHUe0C5PvU0=; b=dpFzoYMZG1v/fuZZ
+	2RiOHciNexepsOY2/E+q6hirgSIhID69Ou8BV9gf506j3uZg5Eyg1aOZTn3HJATt
+	izsRV0N8KIa63NihYzi/wdKIsjrvo3Q9Mstv6cveN0mG9y+W5uIkQAuk5nZ7SffF
+	SCpZcWhk1ehi5VrtLFFghTgdwVZiKX9kSYL7uICiT22ybmcz6YAkKtxsSRmAe46V
+	WsgpfZhH7ssf6RKCR/Cv3ITFT9Djgj10pxJzXJdkSQCZfcpynUiSJu1TjunZY4Tn
+	gHQFfBhtAm14Oyd3GlqhuFqV543caaNYYs6ltXn6svrV/nHakTrpOIqeRsCGuK+w
+	BSNxYw==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490cj14r3r-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 20:21:04 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-772537d9f4aso2004416b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 13:21:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757705849; x=1758310649;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MG8qheklqH90QoillqEWtKlvYUOtiPcMmtaoD7S73Y0=;
-        b=pWgWiR0zlLGow1w1jM6xInpftyvZuujXd7oJxg26djx+wjEorkyArDULtp+pdjPqS+
-         i47I59uGZEmbhHMffQe2wfk0wei7d/mCBK7tZdea8ji3Y9YNj+A8ssk721Uqzof92zbM
-         SXRfxzvkGt/taJ5qfCzWXjt9PFJhdUUjbGG6P9ehtxEXEPU8pZNI9w9nvichRY0UNl/c
-         xTv7+M0xBJVNw2H79wSnqva0Jd8eZ4Hhdp3Jg1soQxmBD9d/4kXAC7EtF7XIxfktYfdG
-         Tag71+3X9b/3ti7enjSNquNl2OgAXNT7Mfbw343dKDtxEQqZM8A3Cu5SrIVEkUKgQOGQ
-         7/Ww==
-X-Forwarded-Encrypted: i=1; AJvYcCXBSO0RGYKEzjTGO+c7VUxMVd7Jg1VQoU3O1qkYzCi67hsSuG/P5jaSBrXWpSkCP6D0EREDZeI1dKY97jLw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0ne4rjJaeW2eZClIdC0bLEoxU/umDPHTHhj4N0uQrbYqkKbJQ
-	e5/g6m+W+BhxFcc8x3xcaKIQolJA/rzTAlihkijuYKdx6sPYFkKLjai/i1wDsRHX/w==
-X-Gm-Gg: ASbGncuzyaIYBUzbqJSC+XZ3gwMZ5oLaxRSz/tL4XDrFtpQ7kGFOcPGlXCACDX1hzGb
-	5iSdROCG/jb+NPRJCjoGHVSm07sCa/71fGaMPBmyOsyWP9r2A2V1lj1pFpnlgeKunqeVNPUNLSn
-	ygHCO8yEQOh39OETRXheBZ2XyOPnsh1q++uglrsmPoQBAXjv2wEj+kHenfowiFosCT1HYafXUwV
-	LFdLL662uclyiNzSdebWhIsxhfvYzWKs+34LYk2XBuleOFePso/fciRhaTHQN/Q2iiXh+5+lcrX
-	C6bI5UwmLDiLalR0VOCjE+Nv6in6ly/DwpqtRXspXkzqsDKtvkY6k0sDec+vRusiEvGikiMTxI4
-	rPped9KaKoYOw3FQ3xf7G8DuPEQqO+l3GyBYQD3Mt4wCq5lZmSuQZaE/QPwSbrXP4cveWgQ==
-X-Google-Smtp-Source: AGHT+IEJWqu2QUfygF3YV1YBp/hXP59cBcFdW/VqJblCIvlUJMZ2WVhUCTFyXUdCNveV/J1mClgmeg==
-X-Received: by 2002:a17:90b:1c87:b0:32b:623d:ee91 with SMTP id 98e67ed59e1d1-32de4fa205bmr4591160a91.27.1757705849658;
-        Fri, 12 Sep 2025 12:37:29 -0700 (PDT)
-Received: from localhost ([2a00:79e0:2e14:7:e464:c3f:39d8:1bab])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-32dd61eaa27sm6985775a91.1.2025.09.12.12.37.28
+        d=1e100.net; s=20230601; t=1757708463; x=1758313263;
+        h=content-transfer-encoding:in-reply-to:cc:to:content-language
+         :references:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=uh8HWFGgvQRh4YRN3fk73qzhec8r9FEUaHUe0C5PvU0=;
+        b=hq3JLVT6QHIXCviTSPMwqCgeNtNLoLaJcMfSsfOetX9RbihG7cGrCq50qKdWQRj/Hr
+         gyVccuLvY45Zk6qCCQ1Nc2ZwV3gf9PCg690ZckzoA+RMk0+iRgoKAsfKcTm5AZNdbp4U
+         1Syi+wfBpcbmzubgzDE1f1pZ22JavUj+5CkfpLI1/ADQMH9YHya+TUEtEupkyQRMPEE5
+         gBm8YGpOPaBMFiSTaxCZ5JLUNYC+atFWLreTzZHW9Ey1XofZaQEVMacffrXEFYv23GyR
+         3D55XSitnKYP4M6x4to5ayaQfqsPjLSBtUDTs+VkkvRx+DCJltj2bezg1H5NGpqanf+1
+         Ao8A==
+X-Gm-Message-State: AOJu0Yw0TIhMVMTqOACSpmMYim29dTfBdbeyUtq3TfIRDKzhSg9pIbDR
+	CRwM4N2AtinPlmufD/QwKT6vnKqY/iqdw+acmS9msrayQJ7bJQ2YnYjDusbqMCxHeoj4PnR8eUy
+	QmaCqKYJP3QzFylCP42BSpwcf4FP6nP7UUZuknusK0bQX7dSFQqcwBE9DZ+nvCKgY5sS8
+X-Gm-Gg: ASbGnctfdmXWFRA6uyC+WrNzwj7ZMcilQjWh9LpkOpeEhyfzr+KNbsEKP0j55NNh5gG
+	9cGAI6Zqy7L88SO0gsV8FVnRG4P65eCgDKE7YgV5VTMq6e9Befvsj6AzGvNrbC5WsCjio6zCjgD
+	Rm1Kct6ec9IGZKFhePyRGksOY6Yj/N9Wty37aU5MzwdG5VJdonQpLmBtnVqRLjD5L/GQbZI1WDg
+	y6BGCd2uOwJ1Vf9lZy6bAKd6WSImXpHu6mxlyB0wFQNwJKbFNxNd4rH/76haBecp/Bhz1/rhouT
+	UrwZUPiF/IzK8+FVXFR3cuYZTY/MU9L5OYpZf/cQbIiRVzud0Q7+j1TQymULcvjOa+uH1Hbr0JT
+	LwZs9395kvYlFl5RvpkqtVDw=
+X-Received: by 2002:a05:6a00:181e:b0:772:48c5:c75a with SMTP id d2e1a72fcca58-77612091649mr5033557b3a.13.1757708463022;
+        Fri, 12 Sep 2025 13:21:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFy9rA89rMg5iy1ZfZgFDowhXAj7A+YF9TJ6xmj3kp84CbPWPd2rihyHVZcOIc16agMz/VevA==
+X-Received: by 2002:a05:6a00:181e:b0:772:48c5:c75a with SMTP id d2e1a72fcca58-77612091649mr5033517b3a.13.1757708462327;
+        Fri, 12 Sep 2025 13:21:02 -0700 (PDT)
+Received: from [10.110.61.161] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77607a46eedsm6317156b3a.30.2025.09.12.13.21.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Sep 2025 12:37:28 -0700 (PDT)
-Date: Fri, 12 Sep 2025 12:37:26 -0700
-From: Brian Norris <briannorris@chromium.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Georgi Djakov <djakov@kernel.org>,
-	Odelu Kukatla <quic_okukatla@quicinc.com>,
-	cros-qcom-dts-watchers@chromium.org,
-	Conor Dooley <conor+dt@kernel.org>, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sc7280: Drop aggre{1,2}_noc QOS
- clocks on Herobrine
-Message-ID: <aMR2diG8zwvPRSXR@google.com>
-References: <20250825155557.v2.1.I018984907c1e6322cf4710bd1ce805580ed33261@changeid>
- <20250825155557.v2.2.Idebf1d8bd8ff507462fef9dc1ff47e84c01e9b60@changeid>
- <90b13660-1844-4701-8e63-7fde2f093db0@oss.qualcomm.com>
- <aMMcNn82AmSavJYf@google.com>
- <b51e1230-d366-4d0f-adc8-fac01b5de655@oss.qualcomm.com>
+        Fri, 12 Sep 2025 13:21:02 -0700 (PDT)
+Message-ID: <86bbc54c-3fc9-4c6d-9f93-b684634121bb@oss.qualcomm.com>
+Date: Fri, 12 Sep 2025 13:21:00 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b51e1230-d366-4d0f-adc8-fac01b5de655@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: [RFC] PatchWise: Unified Static Analysis for Kernel Development
+From: David Gantman <david.gantman@oss.qualcomm.com>
+References: <3aa87758-1899-4f7c-aa17-2330e656a467@oss.qualcomm.com>
+Content-Language: en-US
+To: workflows@vger.kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-kernel@vger.kernel.org
+In-Reply-To: <3aa87758-1899-4f7c-aa17-2330e656a467@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: cMHmUXivf9-DSwKzbzpQLt6lE5LIXiIR
+X-Proofpoint-GUID: cMHmUXivf9-DSwKzbzpQLt6lE5LIXiIR
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAyNCBTYWx0ZWRfX/C9Xw5pfMpok
+ 3EePS6G6jYi/t7Ht8vNun7KwqtTJFsxRba4aZ24QFlox7zF0fWnK+EOhq/n7d+ix1rb0ejUeMTP
+ GfzYXVx/8uvA6MX23BXLzxBuTr4gr+BW/y+YiIXWCiMIBNbkxI3KwBes1AYwOj3BlmfY/BHXpB2
+ Qur3qcSfMjO5cz1BsM9BzZR5JOZwc2jkQ1fr6xP4vpE2J4suR3m1PydcjFTzmbtDC1AxnZKuT+o
+ o42Je+2jQhPPeKBtgGKg3rXWY7HpLMc34FrIsRXtukHwYFI5UlIWZSdgDAOl6StvBNijJ8n2Bck
+ KxqCc86GJgp8drgkrXrUaxOBUqNRJCygaZ/fSzG6j++mTmUkDXInP610dZr37sFDjgzo0e0aPvH
+ 3GtUiMjU
+X-Authority-Analysis: v=2.4 cv=QeFmvtbv c=1 sm=1 tr=0 ts=68c480b0 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=_2PzejVuNbwBRFFAgkYA:9
+ a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-12_07,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 clxscore=1011 spamscore=0 impostorscore=0
+ bulkscore=0 suspectscore=0 adultscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509060024
 
-On Fri, Sep 12, 2025 at 03:10:16PM +0200, Konrad Dybcio wrote:
-> As I attempt to find a board that would boot with your sw stack,
-> could I ask you to check if commenting any of the three writes in
-> 
-> drivers/interconnect/qcom/icc-rpmh.c : qcom_icc_set_qos()
-> 
-> specifically causes the crash?
-> 
-> FWIW they're supposed to be independent so you don't have to test
-> all possible combinations
+Kernel developers and maintainers often need to manually run
+multiple static analysis tools (checkpatch, coccicheck, sparse,
+dt_binding_check, dtbs_check, etc.) and create custom scripts to
+consolidate results. This leads to:
 
-It seems as if any one of them will cause the crash. I had to comment
-out all 3 to avoid crashing.
+- Inconsistent testing environments across different developers
+- Time spent writing and maintaining custom integration scripts
+- Missed issues due to incomplete tool coverage
+- Difficulty in reproducing analysis results
 
-Brian
+I'd like to introduce PatchWise, a tool designed to address this
+fragmentation and manual orchestration of static analysis tools. I'm
+seeking feedback from the community on this approach and suggestions for
+how it could better serve kernel developers and maintainers.
+
+Key features (All Optional and Configurable):
+- Unified interface for checkpatch, coccicheck, sparse,
+dt_binding_check, dtbs_check
+- Docker-based execution for consistent, reproducible environments
+- Simple installation and usage: `$ pip install patchwise` then `$
+patchwise` in your kernel tree root
+- Allows selective review execution (e.g., `$ patchwise --reviews
+checkpatch sparse`)
+- Supports both individual commits and commit ranges
+
+Optional AI-Powered Review Features:
+PatchWise also includes optional AI-based code review capabilities that
+aim to overcome a key limitation in automated patch review: limited
+context. When enabled, the tool uses Language Server Protocol (LSP)
+integration with clangd to:
+
+- Generate compile_commands.json for accurate code understanding
+- Fetch relevant function definitions, struct declarations, and related code
+- Provide context-aware feedback rather than superficial pattern matching
+- Support multiple LLM providers (OpenAI, etc.)
+
+Important note: All features including AI code review can be selectively
+enabled and disabled based on user preference.
+
+Technical Architecture:
+- Python 3.10+ with pip installation
+- Docker-based isolation for tool execution
+- LSP integration for deep AI code understanding
+- YAML-based configuration
+- Rich logging and debugging support
+
+Source code and current status: https://github.com/qualcomm/PatchWise
+
+Upcoming improvements include patch series support and Docker-based
+dependency management for each tool. Open tasks and planned features are
+documented in the GitHub issues for visibility and collaboration/
+
+Feedback Requested:
+- Tool Integration: Are there other static analysis tools you'd
+like to see supported?
+- Workflow Integration: How could PatchWise better fit into your
+existing development and review workflows?
+- Output Format: What formats would be most useful for your use
+cases?
+- AI Features: For those interested, how else can AI code review and
+commit text analysis be improved?
+
+Try it out:
+$ pip install patchwise
+$ cd /path/to/your/kernel/tree
+$ patchwise  # Analyzes HEAD commit with all available tools
+$ patchwise --reviews checkpatch sparse  # Runs only specific tools
+
+The goal is to eliminate the need for custom scripts to consolidate
+kernel test tools, while offering optional advanced features for those
+who want them.
+
+Thanks,
+David
 
