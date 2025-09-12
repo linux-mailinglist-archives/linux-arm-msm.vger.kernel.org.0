@@ -1,86 +1,86 @@
-Return-Path: <linux-arm-msm+bounces-73329-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE557B54CFC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 14:16:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FADBB54D5D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 14:23:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6174D4E307F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 12:16:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 7B9C51741E1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 12:18:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A6173043AB;
-	Fri, 12 Sep 2025 12:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DBEA30AD14;
+	Fri, 12 Sep 2025 12:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GUQtzCm+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="N4qudoHJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7A53043D1
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 12:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AC130146E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 12:09:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757678922; cv=none; b=htBb+gULGSRJlrRAzlZN8j0MtcwHCYLYEHyVcIb009LQ9fxmq7wYn6QVHNQ4VtojYDZO2OB9S5ehfJQOmT3NXPS5lqY6qwhGOAjRHUVkNqEKizA629TQebmIKszVfswahzExHmoBJyVFwBfM907MgXt0cOmQp/Ag6muJXJ9UO2I=
+	t=1757678965; cv=none; b=TkduoxMqWOiwCrFlp7yNIGZk065qtzVUghoCOATY1kzT21eolKC87mq4RSsxVL7xmBz6ID9pb4a2MnLnilvbBudXvgixClSeIGjr6JObaQr4d4I0tqjMIdchgGCB4DAKACz+0m9025NL/b2iSTE+vnFvqmsPkq+iaKhA4fJcB/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757678922; c=relaxed/simple;
-	bh=FDrzboKdlEXI9O5b3TBxPT7jVn+E3IRmj5Bgaf1vbIA=;
+	s=arc-20240116; t=1757678965; c=relaxed/simple;
+	bh=fts+Hs5q4CqZXfPujRbJyGAxy42t96v29pQ9JjRsBII=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dwHXPIWjnNB6CPYOAZR5RM4nL6uTktK5nohy59DJrOgsevuCbgX3cMVmR4WdYvpuipUuTZfkfiQlyjro08c0NSN/KWtxa7RY2sRh+TuK669+33wLSM0/5tA966l58MPFPBoHQ4lmnuX898YQ5O+YlNkWz7USeseb7hPCRxzWp/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GUQtzCm+; arc=none smtp.client-ip=205.220.168.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=DDoBQ4BShS3j/SfS3/tqYrRkMUcDHeQtQI5GQq+j9ZJE10FOh6tYQeYNF8FRnLBm5Vvxvs7kp2DKEBdFaLo5KXrtiE6w0OoLksqwaMRQCQ3HzkWNxzIJ8RS3Sx0yZF6Df9Y49Cil8Tc9oHwWXd30MQAK2X2C1fKn21ZoehrK6Cs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=N4qudoHJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58C9fKE3017564
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 12:08:39 GMT
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58CBBI5Y017441
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 12:09:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=0oXXG099vonYe458jI6+jdyn
-	M6kqgEhK5y0kr8AEekM=; b=GUQtzCm+Kv1oabrFCrcTZ/2JCOVDQrrbOkzuzAdX
-	Vc05f31dhWQ/A9c4jyVLi99kBWMUgeFlDlJXrKaMmoLhASOqubcxAYKFSf1eSp/G
-	OnyuEm/hR4RBM+tGYNrAVVtAa4G+N6OhSsS2nu5kCt4wYdBQychp2RoYKWxcSNa0
-	QwKMP/667CTpNdz0uubf6Fy4enrnCQazxr2AtdE/brdzEqjF76s8NBN6ITqc7N+y
-	mzR4CmmfOs2kwTF13/59iv8hs+NYJLYJZWGW+FyiCyWISiCnTahez1UcriM1L4Fd
-	loPvoaUNnYizfdsK+kyTx5lPFc/WD/szKKwKOjarAFdV4A==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 490bwskq7c-1
+	:references:subject:to; s=qcppdkim1; bh=AWecxXQ1HoSKQokJLzYb6tbb
+	rzkT4uWaDcoy5VKKVeg=; b=N4qudoHJb3LgJAVQziaNCtZl0F7NfM5kABN0udgc
+	AwnPkhRGctPPhNtrEqLj1TzlUOG7nqOcWGSmqBVNjTg6DCl2lMUA2s0tfzfC0MZc
+	Fxi2T88hQ9TmuN2Ii1EiknR4CbDaDKab5CbHdp4w/UTqpA+DLbERlyEL6wN4Q68/
+	9mBcuHp2OYC0JTRzDzirqGh0PLA2h1x8mt2KCFlWij0Wi3AQPDBYO0lKID6iXfw+
+	BCDg27FiO+Fc+Uej1F+ZvbLM7+d8T92gEbNwOmwMQZ7uN2y8hE1PqR4BgFYIG/jP
+	qf9YitCAwwqbtQ4uQqbX3SL1vs7PQMsE2V1rqc6ePsawUg==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 494jdx04va-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 12:08:39 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-76d3633c86dso7250176d6.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 05:08:39 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 12:09:21 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b5e9b60ce6so50618471cf.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 05:09:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757678918; x=1758283718;
+        d=1e100.net; s=20230601; t=1757678961; x=1758283761;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0oXXG099vonYe458jI6+jdynM6kqgEhK5y0kr8AEekM=;
-        b=rMKy+dt081YNqWo/r03BDtQLW0V3kuKOVkYn2VGeT6320y/vxd6eJOtna0xIp/AMaw
-         Bwl99NCma/Az3RmyE5b9edA95nbZj4ZQgzcA06EI7xNWfDtHAz3xGoK9Psq8u+jEENS3
-         zDtKCFgF58zjrxL2Q7DDbCTOTx626sfDfb1OAyKMdURL0yKOISwgsCkk2kVmidHTIWiN
-         jjjCLT9hSqjt8nJ8lIg3fe3CdmbAziaMG3R/tX9O4s2XQd0pXIv7mlO5qFH1meBRPFjh
-         +/Qp3vAF7OSdZ1/1CVpQOaYPQH+tOkCYuCoWcSGuKb4356JoNTt06+LmwlqClNcfT+k2
-         a7VQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX4JMHkkjakCiSdV+QZ1SJ7/ivDvAF29hAuirf5y0utk/54dbXHunwtCySfpUg6900s6zsf037WB2Zvk/Sr@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnYwrbEa0CRnFAcTY7bukpe8ad6yAr+VJRS/G+MHxNJrm8zOsb
-	rJFqigV6U7KcUTobYtr5fiM3xH7E+kxg6PbHRPIGGcK8rPfT8KUb5IqV5m9LU1GbO+KeB9mA7ot
-	RF4Du9soEyo6tbNtqiUqXVXyD41Ey5GJkjSAMR7gi2Wr7sCqDjGcPwWY/3c+RrPakbdey
-X-Gm-Gg: ASbGnctv/apidnpkgiNzjbneth1bzBYmpa7Zn/hc3lIVAMCfbyViozEKpVt9wbVPKhl
-	uFk5bdVddtrHKpd3KE33oXfhBJRBtmJBeUVWNNtO0ZHPVeQlFqp1GEXllMNBwHTxWn0363/3x0I
-	rCeS+DYlVXIWEobQjc/3uhWjYPkAE5CggbHFD2YwI5eYnCbAGuSFWhMbPhoDzkZ1do3FHowjo5l
-	H/IRz4cw4gUXtJHxw7kuNxsCL9L9cZMShE/fVzHuPbOq7I8pqqF3HSSrcaCsxnDyuVdd8nMMXFK
-	JVB/PJlOm12pC8hJfaHMoyTnY1QpPlVvakRXqCJeqyyP8DnrQZM6PkvYwVHdmotQG1JicIu7Luw
-	CcqNhZVYUf5OPGWNV0aKJkgIq7QZqG0xWV2vUmezCV2khlagL4Rzo
-X-Received: by 2002:a05:6214:3018:b0:765:fe8f:13df with SMTP id 6a1803df08f44-767c50643a1mr31418686d6.63.1757678917624;
-        Fri, 12 Sep 2025 05:08:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHM2i4nwyWJB0E+QBu+zEM9C2hMOxGjTWUuESDMwXmBg9KEJdV9S8YjsKklNga/yVnrgK5IRg==
-X-Received: by 2002:a05:6214:3018:b0:765:fe8f:13df with SMTP id 6a1803df08f44-767c50643a1mr31417486d6.63.1757678916750;
-        Fri, 12 Sep 2025 05:08:36 -0700 (PDT)
+        bh=AWecxXQ1HoSKQokJLzYb6tbbrzkT4uWaDcoy5VKKVeg=;
+        b=enEx/Peu0uj2Llp4dH50BZf5qQF5IjZQ18lm18ipVqlZz+tHjvtMks6aUnFeCVawbf
+         vUf6wMKBoKyN2mxg4dSwXbv0HEdhuCSw8TKH18ze2KFduqbkDrpiUAGr95lF3np+3tph
+         1sc5C8jTv37KPnLoEbVOpun6b7IIHSexvGS4UmtlM+Em5vyMZK+HGYHNiaDt2kgr/WGT
+         rtSv7bu5CyVvXe3c5sreqN5UT/2olxvy3Q8Qj10Hqquzdx3I9CpT8EaosnO+P1dc7grL
+         bDw06EKDuGZzqZ9l64vTNTLs/gnDUDO+V/CFl5Jh3udW0Y9HSXGSXYI9L4wH+bk1Rhlk
+         k0ww==
+X-Forwarded-Encrypted: i=1; AJvYcCU/oWrZG5OJ6hnSOtDi5FN9Ah4cQqd/XN4YaDBjaEnMuql0pd3dJclvLj8fvd/bCqgVuD9yfaZacrX2u3/m@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaH6IlbwVccpMHMrpetp117X0SDg6bGZ3U2PGpZc+eY6nP1F7f
+	pmrvJ4aEly6zT3K5sgZN2rjfkbFSVVcPBh9tBjHSKPTcT0xyHcru7D/HV/yxd0uIADOQoljGDkG
+	+RHp3Ja29gKX0SlKg67in2E39o/it3gMKry3vmqb6wuEgKR7FUD6KKZTo76wOMBWXeUzB
+X-Gm-Gg: ASbGncvpPOv5+vVpg6ja7syxOfYzgXyCfrOoSHsNeKKnxE0d+nU0Jx+ar0IPtdstqcL
+	2wh3cx5WyV773etvwWP1+gqLsLqUfXeHfw3zV2HuOszqNDSja36AsD/mHkO9dKTscQ25z2F9rRB
+	8Qtw503FvW2lPd4GqPtNih+FO88UKkQNWbp3zV1OfoJ0SJyLGpzk5YpHVn0OKMqDpvJxECwqlgB
+	/7K49qVTU+VC0zAo/BCfx2S7mDNttET4FNu2bqZdYymJx/CCdObNcRu0gFldOiRzgm/70/ZjJDs
+	vh7MFL37uUwu+PQ2gbNL4HbW4g6dFjkN9KeGaH4TXsLhkM4ysrUCseodjkX/XQpkUas8/QQu1ab
+	PDS1ULTg7lSCxDBN89SBc5eGmpcdfDyqwTS7LYQ+LLFHRfGZ89VOF
+X-Received: by 2002:a05:622a:2b45:b0:4b3:12f7:8baa with SMTP id d75a77b69052e-4b77d044455mr32331391cf.51.1757678960470;
+        Fri, 12 Sep 2025 05:09:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHBlHDLz23zA5O+/vEKCN91ortJnwiUYeDorqJurL/VJ4hd/jMETJMt2eSQJiBv4Cvs1e54jQ==
+X-Received: by 2002:a05:622a:2b45:b0:4b3:12f7:8baa with SMTP id d75a77b69052e-4b77d044455mr32330571cf.51.1757678959880;
+        Fri, 12 Sep 2025 05:09:19 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-571a0fd0825sm170007e87.125.2025.09.12.05.08.35
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-35062c8da78sm5874761fa.0.2025.09.12.05.09.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 05:08:35 -0700 (PDT)
-Date: Fri, 12 Sep 2025 15:08:33 +0300
+        Fri, 12 Sep 2025 05:09:19 -0700 (PDT)
+Date: Fri, 12 Sep 2025 15:09:17 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
@@ -102,13 +102,12 @@ Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
         li.liu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>
-Subject: Re: [PATCH v4 08/13] phy: qcom: qmp-usbc: Add USB/DP switchable PHY
- clk register
-Message-ID: <7ozv3u7xuvtz2x5q3pp5kdeydtsu5jlrgwjnxpxxiuh7przr2z@35uo7t3b4ze2>
+Subject: Re: [PATCH v4 11/13] phy: qcom: qmp-usbc: Add USB/DP mutex handling
+Message-ID: <q4dplt6fq3cneludcuhxevklaj6omeio3cjxw2owt4h3wistd6@arv23ri4cl75>
 References: <20250911-add-displayport-support-for-qcs615-platform-v4-0-2702bdda14ed@oss.qualcomm.com>
- <20250911-add-displayport-support-for-qcs615-platform-v4-8-2702bdda14ed@oss.qualcomm.com>
- <6p43oxn57kke5eotoqtt5gqtmhmgeteoymewqm3ko5q5veyegs@krkh4dwdno5i>
- <335ffce5-19c6-409d-8386-686fe9e5dea5@oss.qualcomm.com>
+ <20250911-add-displayport-support-for-qcs615-platform-v4-11-2702bdda14ed@oss.qualcomm.com>
+ <nfugwwknnlxls75yo5rex6ggu5nzpq6enyx6e6nfnfei3icxjg@t7dnzcfcjw4o>
+ <cf6c2c2f-9878-4181-a3c8-9692423308bd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -117,223 +116,81 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <335ffce5-19c6-409d-8386-686fe9e5dea5@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: SvS1EoTv8GRghyXyzQSYDuGRZ2YloheR
-X-Proofpoint-GUID: SvS1EoTv8GRghyXyzQSYDuGRZ2YloheR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA2MDAxOCBTYWx0ZWRfX7Kh8DapuNQdb
- 6OsHcq3B3oKKQTYkikK2C4iukynNdIGdZgztlXYffrErdqujK29NCUvY0lRkIDjmeWpW3j4NvWz
- Dqlrc761ZDDgAoW2mG1dR4KJpw/SccXUscWYqYbN3Wu25ivv/UP9PU0J45yBq2U6PKzq95IUa5f
- jqoIQAa+j74UkzmENxzprh5XYg6Du29FGJ7Of+LLOJ5Whs3ZD8734WgwLqeFY4neHTxNcV5KSr6
- nIIhIEolIDqXvBWRlswEkfp7RQ3zMcFm7nEvEOloCCA+ZBLprNn18z7cZpabJsEAe0r6ZCVNgRc
- IgvuAwoNn3xJFU85JJ+CqblgeffTMsRnbGBy/OISr4qQAZhT65cml0TuatvMxoLj4g2w7UXsTou
- vWQPx7Zh
-X-Authority-Analysis: v=2.4 cv=G4kcE8k5 c=1 sm=1 tr=0 ts=68c40d47 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=bQXPqPv9zJb0mhjPT90A:9 a=CjuIK1q_8ugA:10
- a=iYH6xdkBrDN1Jqds4HTS:22
+In-Reply-To: <cf6c2c2f-9878-4181-a3c8-9692423308bd@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEyMDEwNiBTYWx0ZWRfXwgamWxVh66PF
+ hnhuaBoU9CjX+6MvUwOKpSQndKz9nGqdnmcVZhOue9mWvzP99hyGWtQtzWprZCipknan4ajalVz
+ Zm2XHw/p0mHGdmUPn5azCLdVlsCxXe6HAceLxoucghzE6hyQVkhW/l/KE4etSwH+zywa6rfFfjT
+ 8MOqFWGPSIafp63JhsHjLDPBlI9dyovFktiAswhX8inh8OzqH8/P99qitkU5UKY5wNZvQIl7mUM
+ N84659IjgogqsAipdocepOWq4eeLM7crInWjtHzhmrBuZ8unXL/Ul1oiCQZmnPe5ebmNsKa6vS1
+ D5WSIpFUVNWEOG0dbdOktp+g69VFTJSrLpjPdsN5LGvVZwBlnUQx5f0m1knAl/qiBmbvaxz8tRS
+ HFOJr/aR
+X-Proofpoint-GUID: c5bFksOd1PYWnvO4OtM55CZb_luwK7sE
+X-Authority-Analysis: v=2.4 cv=JMM7s9Kb c=1 sm=1 tr=0 ts=68c40d71 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=h6lld2rfrDIzuLPEmGQA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-ORIG-GUID: c5bFksOd1PYWnvO4OtM55CZb_luwK7sE
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-12_04,2025-09-11_02,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- malwarescore=0 adultscore=0 impostorscore=0 spamscore=0
+ phishscore=0 bulkscore=0 clxscore=1015 suspectscore=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 spamscore=0 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509060018
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509120106
 
-On Fri, Sep 12, 2025 at 08:00:14PM +0800, Xiangxu Yin wrote:
+On Fri, Sep 12, 2025 at 08:03:01PM +0800, Xiangxu Yin wrote:
 > 
-> On 9/12/2025 6:19 PM, Dmitry Baryshkov wrote:
-> > On Thu, Sep 11, 2025 at 10:55:05PM +0800, Xiangxu Yin wrote:
-> >> Add USB/DP switchable PHY clock registration and DT parsing for DP offsets.
-> >> Extend qmp_usbc_register_clocks and clock provider logic to support both
-> >> USB and DP instances.
-> >>
+> On 9/12/2025 6:32 PM, Dmitry Baryshkov wrote:
+> > On Thu, Sep 11, 2025 at 10:55:08PM +0800, Xiangxu Yin wrote:
+> >> Introduce mutual exclusion between USB and DP PHY modes to prevent
+> >> simultaneous activation.
+> > Describe the problem that you are trying to solve first.
+> 
+> 
+> Ok.
+> 
+> 
 > >> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
 > >> ---
-> >>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 208 +++++++++++++++++++++++++++++--
-> >>  1 file changed, 195 insertions(+), 13 deletions(-)
+> >>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 21 +++++++++++++++++++++
+> >>  1 file changed, 21 insertions(+)
 > >>
-> >> @@ -1276,8 +1291,11 @@ static int phy_pipe_clk_register(struct qmp_usbc *qmp, struct device_node *np)
-> >>  
-> >>  	ret = of_property_read_string(np, "clock-output-names", &init.name);
-> >>  	if (ret) {
-> >> -		dev_err(qmp->dev, "%pOFn: No clock-output-names\n", np);
-> >> -		return ret;
-> >> +		char name[64];
-> >> +
-> >> +		/* Clock name is not mandatory. */
-> >> +		snprintf(name, sizeof(name), "%s::pipe_clk", dev_name(qmp->dev));
-> >> +		init.name = name;
-> >>  	}
-> > Do we have any guarantees that memory for 'name' exists beyond this point?
-> 
-> 
-> If the previous of_property_read_string() call succeeded, could 'name'
-> still be empty? or you means 'char name[64]' will be release after '}'?
-> 
-> From local verification, I can see 88e8000.phy::pipe_clk node from clk_summary.
-
-char name[64] belong to a stack frame that is not guaranteed to exist
-after you've close this bracked. So it can be easily overwritten with
-other values.
-
-> 
-> 
-> >>  
-> >>  	init.ops = &clk_fixed_rate_ops;
-> >> @@ -1286,19 +1304,176 @@ static int phy_pipe_clk_register(struct qmp_usbc *qmp, struct device_node *np)
-> >>  	fixed->fixed_rate = 125000000;
-> >>  	fixed->hw.init = &init;
-> >>  
-> >> -	ret = devm_clk_hw_register(qmp->dev, &fixed->hw);
-> >> -	if (ret)
-> >> +	return devm_clk_hw_register(qmp->dev, &fixed->hw);
-> >> +}
-> >> +
-> >> +
-> >> +/*
-> >> + * Display Port PLL driver block diagram for branch clocks
-> >> + *
-> >> + *              +------------------------------+
-> >> + *              |         DP_VCO_CLK           |
-> >> + *              |                              |
-> >> + *              |    +-------------------+     |
-> >> + *              |    |   (DP PLL/VCO)    |     |
-> >> + *              |    +---------+---------+     |
-> >> + *              |              v               |
-> >> + *              |   +----------+-----------+   |
-> >> + *              |   | hsclk_divsel_clk_src |   |
-> >> + *              |   +----------+-----------+   |
-> >> + *              +------------------------------+
-> >> + *                              |
-> >> + *          +---------<---------v------------>----------+
-> >> + *          |                                           |
-> >> + * +--------v----------------+                          |
-> >> + * |    dp_phy_pll_link_clk  |                          |
-> >> + * |     link_clk            |                          |
-> >> + * +--------+----------------+                          |
-> >> + *          |                                           |
-> >> + *          |                                           |
-> >> + *          v                                           v
-> >> + * Input to DISPCC block                                |
-> >> + * for link clk, crypto clk                             |
-> >> + * and interface clock                                  |
-> >> + *                                                      |
-> >> + *                                                      |
-> >> + *      +--------<------------+-----------------+---<---+
-> >> + *      |                     |                 |
-> >> + * +----v---------+  +--------v-----+  +--------v------+
-> >> + * | vco_divided  |  | vco_divided  |  | vco_divided   |
-> >> + * |    _clk_src  |  |    _clk_src  |  |    _clk_src   |
-> >> + * |              |  |              |  |               |
-> >> + * |divsel_six    |  |  divsel_two  |  |  divsel_four  |
-> >> + * +-------+------+  +-----+--------+  +--------+------+
-> >> + *         |                 |                  |
-> >> + *         v---->----------v-------------<------v
-> >> + *                         |
-> >> + *              +----------+-----------------+
-> >> + *              |   dp_phy_pll_vco_div_clk   |
-> >> + *              +---------+------------------+
-> >> + *                        |
-> >> + *                        v
-> >> + *              Input to DISPCC block
-> >> + *              for DP pixel clock
-> >> + *
-> >> + */
-> >> +static int qmp_dp_pixel_clk_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
-> >> +{
-> >> +	switch (req->rate) {
-> >> +	case 1620000000UL / 2:
-> >> +	case 2700000000UL / 2:
-> >> +	/* 5.4 and 8.1 GHz are same link rate as 2.7GHz, i.e. div 4 and div 6 */
-> >> +		return 0;
-> >> +	default:
-> >> +		return -EINVAL;
-> >> +	}
-> >> +}
-> >> +
-> >> +static unsigned long qmp_dp_pixel_clk_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-> >> +{
-> >> +	const struct qmp_usbc *qmp;
-> >> +	const struct phy_configure_opts_dp *dp_opts;
-> >> +
-> >> +	qmp = container_of(hw, struct qmp_usbc, dp_pixel_hw);
-> >> +
-> >> +	dp_opts = &qmp->dp_opts;
-> >> +
-> >> +	switch (dp_opts->link_rate) {
-> >> +	case 1620:
-> >> +		return 1620000000UL / 2;
-> >> +	case 2700:
-> >> +		return 2700000000UL / 2;
-> >> +	case 5400:
-> >> +		return 5400000000UL / 4;
-> > No HBR3 support? Then why was it mentioned few lines above?
-> >
-> >> +	default:
-> >> +		return 0;
-> >> +	}
-> >> +}
-> >> +
-> >
-> >> +static int qmp_usbc_register_clocks(struct qmp_usbc *qmp, struct device_node *np)
-> >> +{
-> >> +	int ret;
-> >>  
-> >> -	ret = of_clk_add_hw_provider(np, of_clk_hw_simple_get, &fixed->hw);
-> >> +	ret = phy_pipe_clk_register(qmp, np);
-> >>  	if (ret)
-> >>  		return ret;
-> >>  
-> >> -	/*
-> >> -	 * Roll a devm action because the clock provider is the child node, but
-> >> -	 * the child node is not actually a device.
-> >> -	 */
-> >> -	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
-> >> +	if (qmp->dp_serdes != 0) {
-> >> +		ret = phy_dp_clks_register(qmp, np);
-> >> +		if (ret)
-> >> +			return ret;
-> >> +	}
-> >> +
-> >> +	return devm_of_clk_add_hw_provider(qmp->dev, qmp_usbc_clks_hw_get, qmp);
-> > Do you understand what did the comment (that you've removed) say? And
-> > why?
-
-
-And this was ignored :-(
-
-> >
+> >> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> >> index 613239d15a6a3bba47a647db4e663713f127c93e..866277036089c588cf0c63204efb91bbec5430ae 100644
+> >> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> >> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> >> @@ -1061,6 +1061,19 @@ static int qmp_usbc_usb_power_off(struct phy *phy)
+> >>  	return 0;
 > >>  }
 > >>  
-> >>  #if IS_ENABLED(CONFIG_TYPEC)
-> >> @@ -1429,6 +1604,13 @@ static int qmp_usbc_parse_dt(struct qmp_usbc *qmp)
-> >>  	if (IS_ERR(base))
-> >>  		return PTR_ERR(base);
-> >>  
-> >> +	if (offs->dp_serdes != 0) {
-> >> +		qmp->dp_serdes = base + offs->dp_serdes;
-> >> +		qmp->dp_tx = base + offs->dp_txa;
-> >> +		qmp->dp_tx2 = base + offs->dp_txb;
-> >> +		qmp->dp_dp_phy = base + offs->dp_dp_phy;
+> >> +static int qmp_check_mutex_phy(struct qmp_usbc *qmp, bool is_dp)
+> > mutex has a very well defined use case - a sleeping lock. Please find
+> > some ofther name.
+> 
+> 
+> Then how about 'qmp_check_exclude_phy'?
+
+
+qmp_usbc_check_phy_status()?
+
+> 
+> 
+> >> +{
+> >> +	if ((is_dp && qmp->usb_init_count) ||
+> >> +	    (!is_dp && qmp->dp_init_count)) {
+> >> +		dev_err(qmp->dev,
+> >> +			"PHY is configured for %s, can not enable %s\n",
+> >> +			is_dp ? "USB" : "DP", is_dp ? "DP" : "USB");
+> >> +		return -EBUSY;
 > >> +	}
 > >> +
-> >>  	qmp->serdes = base + offs->serdes;
-> >>  	qmp->pcs = base + offs->pcs;
-> >>  	if (offs->pcs_misc)
-> >> @@ -1537,7 +1719,7 @@ static int qmp_usbc_probe(struct platform_device *pdev)
-> >>  	 */
-> >>  	pm_runtime_forbid(dev);
-> >>  
-> >> -	ret = phy_pipe_clk_register(qmp, np);
-> >> +	ret = qmp_usbc_register_clocks(qmp, np);
-> >>  	if (ret)
-> >>  		goto err_node_put;
-> >>  
-> >>
-> >> -- 
-> >> 2.34.1
-> >>
+> >> +	return 0;
+> >> +}
+> >> +
+> >>  static int qmp_usbc_usb_enable(struct phy *phy)
+> >>  {
+> >>  	struct qmp_usbc *qmp = phy_get_drvdata(phy);
 
 -- 
 With best wishes
