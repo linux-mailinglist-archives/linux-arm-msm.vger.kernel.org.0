@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73238-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73239-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C928B544DC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:15:00 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B6400B544EC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:16:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3DE74585CDF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:14:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DAFB1A01981
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:15:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B41112D6E55;
-	Fri, 12 Sep 2025 08:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71F912D4B7A;
+	Fri, 12 Sep 2025 08:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tG578Haf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mU4WHPvP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E802D5939;
-	Fri, 12 Sep 2025 08:12:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435822652B2;
+	Fri, 12 Sep 2025 08:15:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757664779; cv=none; b=coNOQBepZtgG4hpAj0LF7VAvtPdw4+uBqwvMNL9VKJeAoPus8ycatDj10qSpmf3yUwfV0ZkPj5sblD4EFkgUCsSBpYzay1EFscLMO64VD7wQFNU9TX5I6uijC2gzsZOoVpXsrD3VYFxqMPWEqg79b7ws42YjOcVrhTdYObN4gzA=
+	t=1757664952; cv=none; b=klSUrs72cuS1lf0o80TRV4DyEZbq8xZUG8uMea4c0aqjo+2KTVadsUHs8t6Z4GPO8sNBUzeBnWEU159NTx9vQnvfcR2/HgBsc2YuaWdeLZSeIpqlfCVqiBS9Nucxp3+TOmeA6QwtpbxoeZBZ5j6yM25Z1vdMYCXaq4vej0imGbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757664779; c=relaxed/simple;
-	bh=1YXaq1nN0C1mkrs4l+X+iDaEmkziyurmHSqm/mdsR88=;
+	s=arc-20240116; t=1757664952; c=relaxed/simple;
+	bh=795r10vUNt86hQRu20rEOVbgig19W9FCDxRJ1IEhbqA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YJGfrhmKO+j557WQ7F+3mHB+jwCa+y7F9HzqNHLJZwu5iDsMQ0iRuM0ObF3Yd1gEwFLAimowsaCTyJI3lj3hasb8kti2QRwB8sf2HobEhUiBKG0ZwGqpGC5QiDYWdEfnqr/NpmukMSVwZPNoHSbkoKJyaComNbWLc8G9trgeQG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tG578Haf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4FBC4CEF4;
-	Fri, 12 Sep 2025 08:12:56 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=gkw1E7gXJk5u2ARpS6PnacQB7rvKTYOqECMwdydeYJ3BGKhnCQHsSOmflzjZFFn48EhP+SwuBwOr5WjN6a+Y0/wlgQZlv7A5xfoii63HD+SdkiaDERyHzFMgWZV97KHxJw9Abv/8MsbFIc0wRFWy15J9hkRK91GEowPEaY3tcNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mU4WHPvP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEC01C4CEF4;
+	Fri, 12 Sep 2025 08:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757664779;
-	bh=1YXaq1nN0C1mkrs4l+X+iDaEmkziyurmHSqm/mdsR88=;
+	s=k20201202; t=1757664951;
+	bh=795r10vUNt86hQRu20rEOVbgig19W9FCDxRJ1IEhbqA=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tG578HafK/kqN607Msenik1HML69EimJOcYnZxDN9p+jsMdHwJS7YkE41zAJdRuUy
-	 KV2e5na+cZhEiDRrpK/1lzuZ/+h0DZCXWjxwi8ceYlDUs8qn8otYaM+SylANnnkWo6
-	 agC9KNuuegqC5FaS+PagYgNdfmDuQ3TvyDUlZB7immT8nBo1UDRB2Hob9prto+FQWx
-	 WFYLYG5ZqOz30ZmMbHAAcTiyMbxsaW6r/TsBlPpIPQuyi5pmn2vM13u4gTCskXSEQx
-	 by6BfnjOlq9XGUpgDJLbPnqRnl1JeQoY9T16eOtqVb5FcYBEzXIA5zq7GKI7Duvtzz
-	 Om3NA0RYynYig==
-Message-ID: <1ae48740-1788-4304-be86-455251a02ce3@kernel.org>
-Date: Fri, 12 Sep 2025 10:12:54 +0200
+	b=mU4WHPvPMqEDJz0yWlpV0GSItQLPGQ1pFr/Sp9woiF1JXLlGc4c8D4HeUo/tvg4mq
+	 UQnF+EdN0mlzMSO3/U+NtWTT/hba85Y2GRk5eR44WqbZISMOuRjvWhcAPjM7drc3lF
+	 pQuvT1F3ob6da8uOEBACH8UGfXvNESDZSqnJ2X5RECpuCxp+mi9onCO9vu9VpZY9ac
+	 1Np02u3hHGYSBwXKMIpiJibL9OTOiY6XOYyPJ2XSFqD3Nppm/HKzbELyQnqinXPDV7
+	 bTwx2qSjEK0FWVeB6rbLV0UhWCdpvF1HxYuoD1xepKfp5Hnl+h9QFYRbunMqT+dJIc
+	 VjaIidT812c/g==
+Message-ID: <156176d8-9b5c-49e4-9c17-c201255f50d4@kernel.org>
+Date: Fri, 12 Sep 2025 10:15:47 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
+Subject: Re: [PATCH RFC 2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
  Q6A
 To: Xilin Wu <sophon@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,6 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
  Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 References: <20250912-radxa-dragon-q6a-v1-0-8ccdbf9cd19b@radxa.com>
+ <20250912-radxa-dragon-q6a-v1-2-8ccdbf9cd19b@radxa.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,32 +106,56 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250912-radxa-dragon-q6a-v1-0-8ccdbf9cd19b@radxa.com>
+In-Reply-To: <20250912-radxa-dragon-q6a-v1-2-8ccdbf9cd19b@radxa.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 12/09/2025 10:03, Xilin Wu wrote:
-> base-commit: 51095600e8c19d53729a7fbd273abc4435a25e9b
-> change-id: 20250912-radxa-dragon-q6a-eedcdeaf3e66
-> prerequisite-message-id: <20250902164900.21685-1-quic_rdwivedi@quicinc.com>
-> prerequisite-patch-id: 257564b609217fda19c9f3424fcd9f6e2ce3ef3c
-> prerequisite-patch-id: a8f21781f3bff140260100b74041752000c06000
-> prerequisite-patch-id: b46127e2433ede17cc5e1a012f58041c6ef97b13
-> prerequisite-patch-id: e8978c5a30373c3ff312b2c8720f586c389f18f8
-> prerequisite-message-id: <20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com>
-> prerequisite-patch-id: c7a057030b78afbbb231280de3765294c006c6f8
-> prerequisite-patch-id: 56011305aa35e4c64fc7d63950764807cb81cc4d
-> prerequisite-patch-id: c3d3b313ac6abe4ec10fd820b6a9bbc63fdbdb82
-> prerequisite-patch-id: 63ee94d0ccd40f60a98b0004d627ad2e7b440d25
-> prerequisite-patch-id: 392e8f1902571e5035d5af72e40dc474b5f1b274
-> prerequisite-patch-id: e38fba722bdabc02ba09d2dc51df7010dbe28168
-> prerequisite-patch-id: a3ca5dba8def5769ffb4b95df2963da60a736f96
-> prerequisite-patch-id: 4c0fe8d677d73aaf1b5b842e072246d84729d1c4
-So the RFC is because it cannot be yet merged? Please always add such
-note in the cover letter.
+> Radxa Dragon Q6A is a single board computer, based on the Qualcomm
+> QCS6490 platform.
+> 
+> This is currently posted as RFC. More details are in the cover letter.
 
-Also, are you sure these are real dependencies? Like REALLY real
-dependencies?
+Please drop this sentence. If this is applied, then commit would be just
+misleading.
+
+> 
+> Signed-off-by: Xilin Wu <sophon@radxa.com>
+> ---
+
+
+...
+
+
+> +&sound {
+> +	compatible = "qcom,qcs6490-rb3gen2-sndcard";
+> +	model = "QCS6490-Radxa-Dragon-Q6A";
+> +
+> +	audio-routing =
+> +		"IN1_HPHL", "HPHL_OUT",
+> +		"IN2_HPHR", "HPHR_OUT",
+> +		"AMIC2", "MIC BIAS2",
+> +		"TX SWR_ADC1", "ADC2_OUTPUT";
+> +
+> +	wcd-playback-dai-link {
+> +		link-name = "WCD Playback";
+> +
+> +		cpu {
+> +			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
+> +		};
+> +
+> +		codec {
+
+If there is going to be new version, then codec before cpu (o < p, order
+by name). But don't resend just for that.
+
+
+> +			sound-dai = <&wcd938x 0>, <&swr0 0>, <&lpass_rx_macro 0>;
+> +		};
+> +
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+
 
 Best regards,
 Krzysztof
