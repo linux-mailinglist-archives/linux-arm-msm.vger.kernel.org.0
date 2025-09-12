@@ -1,130 +1,128 @@
-Return-Path: <linux-arm-msm+bounces-73225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73227-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84CEEB542CB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:24:01 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4B11B54375
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:05:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 78C201C2667A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 06:24:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A338F17725C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:05:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D349C283FDC;
-	Fri, 12 Sep 2025 06:23:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C39A1C1F13;
+	Fri, 12 Sep 2025 07:05:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K+tUT9Ui"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IRX327If"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99FCC28313F;
-	Fri, 12 Sep 2025 06:23:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BE402857FA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 07:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757658229; cv=none; b=N6r5WxcnYAnChbpBaT2j6t+c+GUO75oi97xTPT0QOWXesjcFrNEyan+zQJna0zETUIUa6cqrvpGRTEj5R9TPQA59c94UBiQ7oV/o3133G8ftICcaMJbXaicLhhr5qFl14CEdSMg0vscCY9MT65OBcxLNWKJkDpSzo53DEhR0n1k=
+	t=1757660718; cv=none; b=oBt+CMOb3b4+P6bv2WcXlIS8AV1Y5LAQZnN5aLYmpH8aii/nT8s4R15UjQOQn3QV0eFtDQVgijAiWQMt0bLxSRRW1+sXUhgiAHEk4PmHZDCaIeLS7idRHikXySGZTkayx9rdU1dLAcxWA5AR4Tu56kLqrgoNzXhg6EFpYyl/vws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757658229; c=relaxed/simple;
-	bh=9T73VS9+o4Zoo6JQMDrxwkWyCcTGJSPu9bJ/JLxGhoI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=XVQ44RrsQJ/rc5vcw5zCE3o71e247DhZ959G5xDqdHlBaWSe0NeXB3QDJ/wPhZ8fp6xakf2R9rXk99hOgze0Q4gh/ZqEjnDv7ejn8qEDQoqBiVSWDQ3WDj8PrVp+dDBIK6DnAadXHylgRP78cxIwmYgkqA6iEhW0nnRF8lVfCkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K+tUT9Ui; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5749EC4CEF4;
-	Fri, 12 Sep 2025 06:23:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757658229;
-	bh=9T73VS9+o4Zoo6JQMDrxwkWyCcTGJSPu9bJ/JLxGhoI=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=K+tUT9Ui0Lj0qetX4V8f8hxvGPJsm/BKTf0HW7pE5h0z0YOzKPHtIxQhImX/f+n88
-	 gIuNPwW4DTVun4DprE4qf5t+qx5He/qG+pETHjCT3CATCAXmMzjZ1vWuw+ac99zdfm
-	 +0aVzmrQL52bl6DV3bmQq+0IRUqRkRMDEuBcnmXuYaPcRJHCkC+i31tQKa7A3TQ56D
-	 n7cx6at6JYpOJZbx3fVBPZli50U6g2ppn8f3IMad24G4Qk3PIFAOv0b3LedhAUosuY
-	 IGi+43ynLvyWq4ea6CVaNvuE7ALbHzlh+dAhb+JmPcQZnJO83RCRsGrJ+lGYixbAwm
-	 91fKGAvuN2fkg==
-Message-ID: <295aa861-8e5c-4146-a137-20dcfc24e1c0@kernel.org>
-Date: Fri, 12 Sep 2025 08:23:43 +0200
+	s=arc-20240116; t=1757660718; c=relaxed/simple;
+	bh=572DFU9jfopt+pPd0GVuZvfPHZV7rjdAPyzKWts76qY=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=P3vTy/wtE8BEaKahpamVaxD5k9SoyW9nmzFQbN+DxwukSp4lR6j60mR8J2zCtmHZxqvh0It/m0UY69EYjZv8GdgMbSeWoJ1QgoheFWZHxhBFIR4gKepfdSkVM2e6OuO6zeMukDJePSbSVccIwMqaZCfEPPsKza9IF2s+lye2KGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IRX327If; arc=none smtp.client-ip=209.85.210.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-76e4fc419a9so1398535b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 00:05:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757660714; x=1758265514; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=CrCZ/4lfkyLu6sbBLzuKM2Dvm81cgTRaZ1Y0I7OWBd8=;
+        b=IRX327If0r7Wk7XC0bdTEumhTg7YG8Y++fjWyt96DaPU+8Eo7uWd+pTLDmANcjvv8s
+         D1Q/M9mE3yQliaLg+7qOIkTmGbYiDt5MkMh8T5lF80ppl6qO4Is8OnKHw5CUSIwfECEw
+         1YmOB+RFxElIn+f6YH/0XWXJ9zs1eQYDd5vhG3fLGNRSM54M0iK6DMgksfpj+72jSLJf
+         MhYDvMKunrVLdd0yEwctXrhgO7c+kV7Pox7KvQHiGzcb76w+Nk6krXffsePXIzYI3UfT
+         Fc5cI4BNiQRg/40wP7bRKCuzUolMbN7wP3NKTgaRz/vca33DGeyTiD2N5z63aaX8YYR3
+         DIGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757660714; x=1758265514;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=CrCZ/4lfkyLu6sbBLzuKM2Dvm81cgTRaZ1Y0I7OWBd8=;
+        b=UFzk0kROlaM5sovlG7RKQsvJWSkDpqBn7QQV76usmbiNVofwsjgZ7dwz/1oJqU+UUG
+         bKMv6NKq0P/7vkp3oOF2Cbw735qFH5dUw+yNbYaImqlVYflkp0FFcdZISsxAinuQ8/6V
+         F/UyLwbaPLM2y5LAwEmXe9EBHYofZVeFzsNK4RbPHxVd6NpOdyCpHZcoZOVrYqr9HkBn
+         0CWSg06OMQalT9LsN4qIPUqF8f+VEohqyCTtFVhOtAVy0vQHANoCmkEdJV7tL+sw/nwe
+         kyMBkN+gsZBPgB+o+KwkAoqSFLPtuQGdBBlVrL2TbxMajS3w1KFfvedLlKzjcpS17OM4
+         Avpw==
+X-Gm-Message-State: AOJu0Yx0vKsV/7vAP6XKWwF6qHPyv/ldLjxAE5gIxoY/7eT10pGGju+B
+	+Xsj2fltYMn6/0w16KbGUiuCY1ja7OUD9PvD4XXANAD38WmcDTW+hKaWPKjhcsTG
+X-Gm-Gg: ASbGncsypGUwXh6QN+xNllYC4qV9vkMKJ52iSpj5hvzZfWG1ouerpUr/Cv2rHU/TtkR
+	Kq60Ia4ADyjZNXdD/O3eEZSBVaixHHb2pXXR4HTeMlEwSICSxW8cpRp/1BrYoZkLcn/bMUz5Z0G
+	xq/IX9dODpBkyfDhH0Uu9Idp8kOFYODCltqtfhkvpIcvWv9Rpc1qzSfLPuTPpCi2wYcaONiRTxL
+	dePDuUVcLbglYcRzUKuaB0HkdmKB+l+XIrMNiF49Iw8hn2ReaxooqARzXw0HOMlIOwOUP6J7ZxK
+	Z0sjvsu9+myTPJrSpohjMxBGJLZ8ieOcpjSZHP0DivDD4EpW+pAwqiLip+x9k2Nz0TVE1aMC4YU
+	4lGsMl/Nh6L8ZrS8g7UFeI19wPi2FFFO60GwjPtunwZp63gB3ZHC71G6errATUYoS3g==
+X-Google-Smtp-Source: AGHT+IEWEFpoL5MC+MBgCE4p1Z3kBFGvdcN5KhhxsYEkiO1s5V7LSIfR5KPmte2LyppCMRUnCfAeYg==
+X-Received: by 2002:a05:6a21:33a0:b0:24d:b11b:e908 with SMTP id adf61e73a8af0-2602a3a4a37mr2268661637.11.1757660714251;
+        Fri, 12 Sep 2025 00:05:14 -0700 (PDT)
+Received: from af623941f5e9 (ai200241.d.west.v6connect.net. [138.64.200.241])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77607a47d7fsm4412620b3a.31.2025.09.12.00.05.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Sep 2025 00:05:13 -0700 (PDT)
+From: Tamura Dai <kirinode0@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Tamura Dai <kirinode0@gmail.com>,
+	stable@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sdm845-shift-axolotl: Fix typo of compatible
+Date: Fri, 12 Sep 2025 07:01:46 +0000
+Message-Id: <20250912070145.54312-1-kirinode0@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <38c24430-16ce-4d9a-8641-3340cc9364cf@kernel.org>
+References: <38c24430-16ce-4d9a-8641-3340cc9364cf@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] defconfig: cleanup orphaned CONFIG_SCHED_DEBUG
-To: Trevor Woerner <twoerner@gmail.com>, linux-snps-arc@lists.infradead.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-arm-msm@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-hexagon@vger.kernel.org, loongarch@lists.linux.dev,
- linux-m68k@lists.linux-m68k.org, linux-stm32@st-md-mailman.stormreply.com,
- linux-mips@vger.kernel.org, linux-parisc@vger.kernel.org,
- linuxppc-dev@lists.ozlabs.org, linux-riscv@lists.infradead.org,
- linux-sh@vger.kernel.org, sparclinux@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250828103828.33255-1-twoerner@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20250828103828.33255-1-twoerner@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 28/08/2025 12:38, Trevor Woerner wrote:
-> In commit b52173065e0a ("sched/debug: Remove CONFIG_SCHED_DEBUG") this
-> Kconfig option was removed since CONFIG_SCHED_DEBUG was made unconditional
-> by patches preceding it.
-> 
-> Signed-off-by: Trevor Woerner <twoerner@gmail.com>
+The bug is a typo in the compatible string for the touchscreen node.
+According to Documentation/devicetree/bindings/input/touchscreen/edt-ft5x06.yaml,
+the correct compatible is "focaltech,ft8719", but the device tree used
+"focaltech,fts8719".
 
-I doubt anyone will pick up such patch touching all possible
-architectures. I would suggest to split it per arch.
+Fixes: 45882459159de (arm64: dts: qcom: sdm845: add device tree for SHIFT6mq)
+Cc: stable@vger.kernel.org
+Signed-off-by: Tamura Dai <kirinode0@gmail.com>
+---
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-If you want to keep it like that, there is a chance soc@ would pick it
-up if you send it to them.
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index 2cf7b5e1243c..a0b288d6162f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -432,7 +432,7 @@ &i2c5 {
+ 	status = "okay";
+ 
+ 	touchscreen@38 {
+-		compatible = "focaltech,fts8719";
++		compatible = "focaltech,ft8719";
+ 		reg = <0x38>;
+ 		wakeup-source;
+ 		interrupt-parent = <&tlmm>;
+-- 
+2.34.1
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-
-Best regards,
-Krzysztof
 
