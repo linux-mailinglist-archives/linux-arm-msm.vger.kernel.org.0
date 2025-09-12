@@ -1,85 +1,133 @@
-Return-Path: <linux-arm-msm+bounces-73229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73230-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56E4AB54385
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 772F9B543C1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:23:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2C8A3B3182
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:08:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 32593683A34
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:23:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEAC12BCF6A;
-	Fri, 12 Sep 2025 07:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3630D2BF3DF;
+	Fri, 12 Sep 2025 07:23:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EHzPOqEc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF01D29AB12;
-	Fri, 12 Sep 2025 07:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 076D02BEFE5;
+	Fri, 12 Sep 2025 07:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757660900; cv=none; b=qhKgLzTmY9PdQkAhYZsZ38BchpDH7stnqibf7evE6kPxf3oR89mqm5VbeBJS0j23DMND63c3DJPofEaZNXohfIJIPrAFFQBJETXyOZWLa9mCSLoK3RyaHQVVoUJODsLkJ2cbsgn7b/krkY7uWqbSyYdnvTE5gqUQRVTtIy5fxk4=
+	t=1757661832; cv=none; b=gI+SeLsTxPq8f7NLCWoCkRMnwef5ihjJdT0pLrzabrvaNgNYHJKVxx3WPeNXi671zK2/u9CvneWcYCVyG/IHZx4Zl+FOgtJjPFpJwVzl9hJcoqHeVm2yGbo8TUvrilgUOw0NDU42BONroFFphmjbZpZfXwI+eGPM9/5srm5muG8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757660900; c=relaxed/simple;
-	bh=RRtUOZThdqYvD2gGCk5TTsXRXY57iVZQgC/XXqZA+jA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e8JxdViJ6fo10PBJgpAf8TURO+w/Fhv8YR/EpXHmkNX2wMi0fEYjpwEXMuLsRfsWjJgr8/vSa2KDIikfdaXMkWy+VtS5eLgeT6N0QnXghQFh/w123UfcGDG2LDFeU9U1tttNs4iacHjsqUzs0oKAMywBfCaGg8xGzfrgfdUbR38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BAAC4CEF4;
-	Fri, 12 Sep 2025 07:08:20 +0000 (UTC)
-Date: Fri, 12 Sep 2025 09:08:18 +0200
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-To: Luo Jie <quic_luoj@quicinc.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
-	Varadarajan Narayanan <quic_varada@quicinc.com>, Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Anusha Rao <quic_anusha@quicinc.com>, Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, 
-	Devi Priya <quic_devipriy@quicinc.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
-	Richard Cochran <richardcochran@gmail.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
-	devicetree@vger.kernel.org, netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
-	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com, quic_leiwei@quicinc.com, 
-	quic_pavir@quicinc.com, quic_suruchia@quicinc.com
-Subject: Re: [PATCH v5 07/10] dt-bindings: clock: qcom: Add NSS clock
- controller for IPQ5424 SoC
-Message-ID: <20250912-chowchow-of-famous-art-8fcd7e@kuoka>
-References: <20250909-qcom_ipq5424_nsscc-v5-0-332c49a8512b@quicinc.com>
- <20250909-qcom_ipq5424_nsscc-v5-7-332c49a8512b@quicinc.com>
+	s=arc-20240116; t=1757661832; c=relaxed/simple;
+	bh=lgswvGmaOM92orFcIk7ELFqc1CnpJ5duXFyCDPrJDro=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=s3vetVyWBXKm4/IyeHwAzc3/ZIl+6k/lL+hHVbDPJKjTEDZpHl971xVXyFeLY80KvnpbEFRuR6lBhENBbgN2AdqVHHxjpfqmG5Mzqj3lJcTKBRSLdcv+WLu3EVTP1P7UtI/03J6elrQR2vghhtwTpnWaIoLUs+i5Jm+baWuhRDk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EHzPOqEc; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE16C4CEF4;
+	Fri, 12 Sep 2025 07:23:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757661829;
+	bh=lgswvGmaOM92orFcIk7ELFqc1CnpJ5duXFyCDPrJDro=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=EHzPOqEcibhYmiN/YOzZJ5d6Vb4pEU/u1WpYCJGcx650Vrm/fSYfow6g2WPK9n2pK
+	 8f/IjkWDpt81Ts3sG7kK6kt6pQWNzJxyH58+j49WibGOQZJuzNSv/y+QzrjC5MN9vD
+	 8zT2FlX/wzqtuVX/v499iWFRr7zmVvPrKk6Fk8QwXvMWhvUEuniZgmRbecVs5oDY6E
+	 v6D25+SOBDnefPIEevDc7fpyyvZmnm9RRdia1v0RxUGiJBywGh25uZzotSkoujMCfx
+	 SIgHImpCbXMq66SLkuhQnOrb+lgAlgWYi1Ya9N97vG3/Vgw8Ore8R8Vj9EfHkIdiIA
+	 8rbrWuQxdxqQQ==
+Message-ID: <1beb1e15-cafd-408a-96bf-7f749b3499fd@kernel.org>
+Date: Fri, 12 Sep 2025 09:23:45 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250909-qcom_ipq5424_nsscc-v5-7-332c49a8512b@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: x1e80100: Add IRIS video codec
+To: Stephan Gerhold <stephan.gerhold@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Neil Armstrong <neil.armstrong@linaro.org>
+References: <20250911-x1e-iris-dt-v1-0-63caf0fd202c@linaro.org>
+ <20250911-x1e-iris-dt-v1-1-63caf0fd202c@linaro.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250911-x1e-iris-dt-v1-1-63caf0fd202c@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Sep 09, 2025 at 09:39:16PM +0800, Luo Jie wrote:
-> NSS clock controller provides the clocks and resets to the networking
-> blocks such as PPE (Packet Process Engine) and UNIPHY (PCS) on IPQ5424
-> devices.
+On 11/09/2025 20:38, Stephan Gerhold wrote:
+> Add the IRIS video codec to accelerate video decoding/encoding. Copied
+> mostly from sm8550.dtsi, only the opp-table is slightly different for X1E.
+> For opp-240000000, we need to vote for a higher OPP on one of the power
+> domains, because the voltage requirements for the PLL and the derived
+> clocks differ (sm8550.dtsi has the same).
 > 
-> Add support for the compatible string "qcom,ipq5424-nsscc" based on the
-> existing IPQ9574 NSS clock controller Device Tree binding. Additionally,
-> update the clock names for PPE and NSS for newer SoC additions like
-> IPQ5424 to use generic and reusable identifiers "nss" and "ppe" without
-> the clock rate suffix.
-> 
-> Also add master/slave ids for IPQ5424 networking interfaces, which is
-> used by nss-ipq5424 driver for providing interconnect services using
-> icc-clk framework.
-> 
-> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 > ---
+>  arch/arm64/boot/dts/qcom/x1e80100.dtsi | 87 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 87 insertions(+)
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Feels like duplicating this:
+
+https://lore.kernel.org/all/20250910-hamoa_initial-v11-2-38ed7f2015f7@oss.qualcomm.com/
 
 Best regards,
 Krzysztof
-
 
