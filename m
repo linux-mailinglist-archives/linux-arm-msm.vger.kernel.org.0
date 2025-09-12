@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-73392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93AC8B55890
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 23:44:48 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C7C3B558A0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 23:51:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id B8E841CC2DC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 21:45:09 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 99EBA7BBD58
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 21:49:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45AA3324B38;
-	Fri, 12 Sep 2025 21:44:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A15126E701;
+	Fri, 12 Sep 2025 21:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hZNnGh5P"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPkiIYGN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15BF931E10D;
-	Fri, 12 Sep 2025 21:44:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4906E4C81;
+	Fri, 12 Sep 2025 21:50:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757713474; cv=none; b=aTNEVyeB0YLnTTHu/CYTEs/qZRn5PZg483YtczsFD9DsKV3U4qyZdVEELOnoqPGES7iSn0zkOaJmGSN7m0wCMDP/JGPOj+pQ30GBou1zZHZftDldlPu2qkg4fS15CmQTJqoLYPJyHCwGaFc7Oda9P9gIJxutMvZ0lJ/fy73H7PI=
+	t=1757713855; cv=none; b=jZVXjYjgNKFXd8+CyJNxMq1qGWihoR5EvAmaj9RoQKVFz/muM8rVkHuK4hqBkN8gyfvELy+Cowlh5jNI3W+zdUSOu3Mk14VxPE46MIncX6fC9FtcBNXp1nqKZWls1rkLbL5sXq4WJJaj5UqKgeG2APIph0OuND8duUxrwLFAEuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757713474; c=relaxed/simple;
-	bh=6UKL5HC+zU7YTOzkHx8luGmERQO7nrAOzQQrNjTkAJk=;
+	s=arc-20240116; t=1757713855; c=relaxed/simple;
+	bh=I32UvaadbaJ72Eaidbhmruy+XECfJJW6sIgil2cnjeo=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=uBfmvHKU9ONmxQ8Fagcmpd/CaOhWA9jlpQ1WMRwvhO4KnSnFRY3Xln70viq+5i3CvMjMM1WNUweHSBPWIY4ps45CWRVLszwZA+sL3eHivKq8sP88HrpEuzlObxO+PYeu+b2iM4JzReG930edm7w5l5QKyavqzfa9N5LCfIgJxZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hZNnGh5P; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E1A8C4CEF1;
-	Fri, 12 Sep 2025 21:44:33 +0000 (UTC)
+	 Content-Disposition:In-Reply-To; b=GfWJ0pGm5u9Fv5faIowM+5ZBVP+9fUakGnr2SvYIAZc4V7SSbx3+zibANYA8OGmtjeZXPXWISJotToiE0CiKsGP2iKgLtKoBnhnQDjCBmv7VJRsBHFsmf4ceM7CY66tx/mymh0MOZS1ETSlxPWQ7aBgGR6RYCJETWvt5EfiiOiY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPkiIYGN; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD397C4CEF1;
+	Fri, 12 Sep 2025 21:50:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757713473;
-	bh=6UKL5HC+zU7YTOzkHx8luGmERQO7nrAOzQQrNjTkAJk=;
+	s=k20201202; t=1757713855;
+	bh=I32UvaadbaJ72Eaidbhmruy+XECfJJW6sIgil2cnjeo=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=hZNnGh5Pn06b2AoeIWYn4VmJHdZU4hvJ3EcLY0ki9vPN5xFvR6VyhIXQCqM41ApNT
-	 Zed+cf/ZelcW9juAhbwF7aMgXsJDoeAESfDBfm2Ed75qXD4DLILzYqyB0lsY4adviy
-	 v4+zLmcyEcrsimYdIAznAclnxu33/TSHic1p3xgvlcHEBz2I2e21o7xniruc1K678V
-	 Qh3+llXJq93ZXz1ypZeGaNKnadnxt6NNeF7XgYTgGKYtP04g2XU0wUKA5j2HKkbVEM
-	 Y3RgJHdupJArCAQC6nTvTnDfEw1wqAC5+1KHv4ohRyAtrW0F/jx0Po9kL/omv8HPTU
-	 /VOC52wgsnC6A==
-Date: Fri, 12 Sep 2025 16:44:32 -0500
+	b=gPkiIYGNsVnzkGKHbxxmFqBsyIMcycgphKoCmbj8GCCYzxsWhQT3JRMOfmPyMqODQ
+	 uzGBxRZL3dghbATykaG2tSVEML0iOTtx1CmufOncToMeAUNzYK2GbPG/9ADADC+F/q
+	 TKmW6+PwUvNMEyFhDRectkEsWwFj/rqtvzT1GiBIYYRZCkQb4m7EIcd0r84ohOvsyX
+	 kjCilPYUg+ek55S/3MfjHoUcR1urIuTIDrF77z1T80tQRtaDG24SkwPg3MJqH6AB70
+	 j+3h6uxILGb51saPCUzDZhSfNo5dZOf3HZM7qqTPv4f62lHTAklzyMKeHXrb1gsQKW
+	 XbM9D3n5jJQ/w==
+Date: Fri, 12 Sep 2025 16:50:53 -0500
 From: Bjorn Helgaas <helgaas@kernel.org>
 To: Manivannan Sadhasivam <mani@kernel.org>
 Cc: Jingoo Han <jingoohan1@gmail.com>,
@@ -56,7 +56,7 @@ Cc: Jingoo Han <jingoohan1@gmail.com>,
 	linux-arm-msm@vger.kernel.org,
 	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 Subject: Re: [PATCH v9 3/4] PCI: qcom: Prepare for the DWC ECAM enablement
-Message-ID: <20250912214432.GA1643354@bhelgaas>
+Message-ID: <20250912215053.GA1643809@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,13 +66,6 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20250909-controller-dwc-ecam-v9-3-7d5b651840dd@kernel.org>
-
-Sorry, I missed your repost of this series, Mani.  I'll reiterate my
-questions here.
-
-I also deleted the pci/controller/dwc-ecam branch, where Krishna's v8
-series was queued up, to avoid confusion (it looked like that branch
-was ready to be included in linux-next, but it's not).
 
 On Tue, Sep 09, 2025 at 12:37:52PM +0530, Manivannan Sadhasivam wrote:
 > From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
@@ -88,89 +81,44 @@ On Tue, Sep 09, 2025 at 12:37:52PM +0530, Manivannan Sadhasivam wrote:
 >      Port on the root bus to return all F's. This is required when the 'CFG
 >      Shift Feature' of iATU is enabled.
 
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+FWIW, before I noticed your v9, I had updated the comments here to fix
+a few inconsistencies.  Here's the diff:
 
-> +static void qcom_pci_config_ecam(struct dw_pcie_rp *pp)
-> +{
-> +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> +	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> +	u64 addr, addr_end;
-> +	u32 val;
-> +
-> +	writel_relaxed(lower_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE);
-> +	writel_relaxed(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
-> +
-> +	/*
-> +	 * The only device on root bus is a single Root Port. So if PCI core
-> +	 * tries to access any devices other than Device/Function (0.0) in Bus
-> +	 * 0, the TLP will go outside of the controller to the PCI bus. But with
-> +	 * CFG Shift Feature (ECAM) enabled in iATU, there is no guarantee that
-> +	 * the response is going to be all F's. Hence, to make sure that the
-> +	 * requester gets all F's response for accesses other than the Root
-> +	 * Port, configure iATU to block the transactions starting from function
-> +	 * 1 of the root bus to the end of the root bus (i.e from dbi_base + 4kb
-> +	 * to dbi_base + 1MB).
-> +	 */
-> +	addr = pci->dbi_phys_addr + SZ_4K;
-> +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE);
-> +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE_HI);
-> +
-> +	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE);
-> +	writel_relaxed(upper_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_RD_BASE_HI);
-> +
-> +	addr_end = pci->dbi_phys_addr + SZ_1M - 1;
-> +
-> +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT);
-> +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_WR_LIMIT_HI);
-> +
-> +	writel_relaxed(lower_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT);
-> +	writel_relaxed(upper_32_bits(addr_end), pcie->parf + PARF_BLOCK_SLV_AXI_RD_LIMIT_HI);
-> +
-> +	val = readl_relaxed(pcie->parf + PARF_SYS_CTRL);
-> +	val |= PCIE_ECAM_BLOCKER_EN;
-> +	writel_relaxed(val, pcie->parf + PARF_SYS_CTRL);
-
-The driver already supported ECAM in the existing "firmware_managed"
-path (which looks untouched by this series and doesn't do any of this
-iATU configuration).
-
-And IIUC, this series adds support for ECAM whenever the DT 'config'
-range is sufficiently aligned.  In this new ECAM support, it looks
-like we look for and pay attention to 'bus-range' in this path:
-
-  qcom_pcie_probe
-    dw_pcie_host_init
-      devm_pci_alloc_host_bridge
-        devm_of_pci_bridge_init
-          pci_parse_request_of_pci_ranges
-            devm_of_pci_get_host_bridge_resources
-              of_pci_parse_bus_range
-                of_property_read_u32_array(node, "bus-range", ...)
-      dw_pcie_host_get_resources
-        res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "config")
-        pp->ecam_enabled = dw_pcie_ecam_enabled(pp, res)
-
-Since qcom_pci_config_ecam() doesn't look at the root bus number at
-all, is this also an implicit restriction that the root bus must be
-bus 0?  Does qcom support root buses other than 0?
-
-> +}
-> +
->  static int qcom_pcie_start_link(struct dw_pcie *pci)
->  {
->  	struct qcom_pcie *pcie = to_qcom_pcie(pci);
-> @@ -326,6 +382,9 @@ static int qcom_pcie_start_link(struct dw_pcie *pci)
->  		qcom_pcie_common_set_16gt_lane_margining(pci);
->  	}
->  
-> +	if (pci->pp.ecam_enabled)
-> +		qcom_pci_config_ecam(&pci->pp);
-
-qcom_pcie_start_link() seems like a strange place to do this
-ECAM-related iATU configuration.  ECAM is a function of the host
-bridge, not of any particular Root Port or link.
-
->  	/* Enable Link Training state machine */
->  	if (pcie->cfg->ops->ltssm_enable)
->  		pcie->cfg->ops->ltssm_enable(pcie);
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 7c2b2c8c61c2..962f0311a23a 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -343,15 +343,15 @@ static void qcom_pci_config_ecam(struct dw_pcie_rp *pp)
+ 	writel_relaxed(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
+ 
+ 	/*
+-	 * The only device on root bus is a single Root Port. So if PCI core
+-	 * tries to access any devices other than Device/Function (0.0) in Bus
+-	 * 0, the TLP will go outside of the controller to the PCI bus. But with
+-	 * CFG Shift Feature (ECAM) enabled in iATU, there is no guarantee that
+-	 * the response is going to be all F's. Hence, to make sure that the
++	 * The only device on the root bus is a single Root Port. If we try to
++	 * access any devices other than Device/Function 00.0 on Bus 0, the TLP
++	 * will go outside of the controller to the PCI bus. But with CFG Shift
++	 * Feature (ECAM) enabled in iATU, there is no guarantee that the
++	 * response is going to be all F's. Hence, to make sure that the
+ 	 * requester gets all F's response for accesses other than the Root
+-	 * Port, configure iATU to block the transactions starting from function
+-	 * 1 of the root bus to the end of the root bus (i.e from dbi_base + 4kb
+-	 * to dbi_base + 1MB).
++	 * Port, configure iATU to block the transactions starting from
++	 * function 1 of the root bus to the end of the root bus (i.e., from
++	 * dbi_base + 4KB to dbi_base + 1MB).
+ 	 */
+ 	addr = pci->dbi_phys_addr + SZ_4K;
+ 	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE);
+@@ -1385,7 +1385,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
+ 	if (pp->ecam_enabled) {
+ 		/*
+ 		 * Override ELBI when ECAM is enabled, as when ECAM
+-		 * is enabled ELBI moves along with the dbi config space.
++		 * is enabled ELBI moves along with the DBI config space.
+ 		 */
+ 		offset = FIELD_GET(SLV_DBI_ELBI_ADDR_BASE, readl(pcie->parf + PARF_SLV_DBI_ELBI));
+ 		pci->elbi_base = pci->dbi_base + offset;
 
