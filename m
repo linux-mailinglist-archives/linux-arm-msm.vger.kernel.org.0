@@ -1,166 +1,85 @@
-Return-Path: <linux-arm-msm+bounces-73228-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73229-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C93B6B54378
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:05:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56E4AB54385
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:08:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DFF8E1890579
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:06:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A2C8A3B3182
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:08:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D0D41C1F13;
-	Fri, 12 Sep 2025 07:05:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="fXt/yalM"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EEAC12BCF6A;
+	Fri, 12 Sep 2025 07:08:20 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36DF270EC3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 07:05:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF01D29AB12;
+	Fri, 12 Sep 2025 07:08:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757660744; cv=none; b=joVGS8ZF4DLXd8V04Ej3nhLC6n9cJQzEfrJEMn34rGjGPZd6sY2dno70EjtvNpEm70jvLo18SrmjQqvSS/fRqV5nNUGp38fcEarHFlxE/Jb9W/1KT4Dgk+qb8lUDphgjoOHPGL3krNBF12GT842LT993kB98YRgzcQsYuDz5R3Q=
+	t=1757660900; cv=none; b=qhKgLzTmY9PdQkAhYZsZ38BchpDH7stnqibf7evE6kPxf3oR89mqm5VbeBJS0j23DMND63c3DJPofEaZNXohfIJIPrAFFQBJETXyOZWLa9mCSLoK3RyaHQVVoUJODsLkJ2cbsgn7b/krkY7uWqbSyYdnvTE5gqUQRVTtIy5fxk4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757660744; c=relaxed/simple;
-	bh=MSqfKpQxC59e9W+Wm881SqsMQBaGuxrnl4dVvzErtS0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=PZTRZNxJEv8C4FhTT2PyMCLA15lvHAZzkKnszKX0eaKFu6l9ZwI3UXmAlDRz70TexTzepAm/l3NX7eb6gyg04mhPcp+Xr5lqIv8xXhF3eqcFdN/XFO1U2VpB7dzBNDNh0mF3lZ9zgyufvQQ/VdvrJxMMeRqpay1loQ5gRsSPGG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=fXt/yalM; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45dcff2f313so11225125e9.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 00:05:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757660740; x=1758265540; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KCj8FPMD6tHCY0hrfwP7BeJsW8lye+3YpeZhQSMCT6w=;
-        b=fXt/yalMGQaxNtRbzStqmLe3KM5eZtFrNo3iQzjYlDH9ywYD+IRK6OqGw9cnbH6Io7
-         tzGtolq+hbJEMvSAQNBkVrH5AbwAt05JyTAY8AMWYa4YP58QNjJoZ/kd0T+a5DkXqXhJ
-         RUwJYrDKWOqFvCLwaxfi/6Jwkf8VOhVYCF8R85kqqrBFi8UpDLGFH+tKCZ0Of6W2nxMt
-         VOvfbzCxlp2dZDAlGD7GhzOpS5IBtopYXEjOg2DiE6DuL5ZhzijTKyG5AB9eb68ZBcIR
-         mzwJIQdB/pbrOCJ5iI5HoGteK4HSHb5iW+C/G1yD3QNTKkKScaAvX5lt7I3ZcQP3bjHO
-         wURg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757660740; x=1758265540;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KCj8FPMD6tHCY0hrfwP7BeJsW8lye+3YpeZhQSMCT6w=;
-        b=vecRF85XMbRgBqBUO3CwidubfFcoroPdTiVtSRM8baLnwAwGnu06kry3as8mLgn5fx
-         5GP3EgJMCMjob7o9ruve9xI5YpSoC5sFjuCYEsA8b29gbyAmfql7ptAT+QmQ0ThIYmKm
-         JnrYGBNmhbFxdwxmtqipcfrFFXg3zRVnOFmXQepqvXWQaxaSqsH0F2IZncFb+KDj2iE1
-         mDg8yLmc0btpwPdVcRdHS/qz+uK5NoulWyVaND4QkY7D62jn0hUfAcuN2mzl1pctx24A
-         tJnuo/JwCHJEqIxIp0nrRw89xleoRJi1f9jIM14z8sYBOsYQD/nPgl5PpcQL+BN2cU1L
-         QIpA==
-X-Forwarded-Encrypted: i=1; AJvYcCXm+MV8Q9+nEskTPl4/47SLLQfpj9V2TUrSYsNai64MYly2+XkxjCbogR5KjSbg3jAnLphrDCmjgwxPmu1O@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywh0wrkH+1liN9XB35HUHjkSq4OfKMAc7/WjGQPLbbF5JQeiUt/
-	XGDmha88WSI5VGqzQbGFIuEhdQE2Q1k++fWwxeQfUHKuCj4qDNPTTQSwgL9wqF3OcOk=
-X-Gm-Gg: ASbGncuv6kJoov2dsQ6oYvyLvi4sZLj7kxLKf/eti+djhh+xF+aSDudYyzDLHuTpgtV
-	xQB0BOuhB/eE5YALGfcPyBMTpHafIBUmwj0MkfnfshM3S83mamKGaNuNkYNsGb2o7B8jdu7nkK/
-	Y+CQzBSYKuUrtfK69HpL7D4lW8IniL0kYBxYiGGJ2F8ZrOmmZqhY5sYu5m0BwhN36lqLmcRoyQL
-	tIfAfxzRE4StimqdSJh4tva798l4Y/al7iTOlNR5ApbKj/65alONP9H8gkCLJOrbaUXV3JyDMl+
-	o9zrGKVsiCnbsupxIiB/oODq/3YkugmjU5i8mAL48hTnnoMxVEqvgK84Od4ZOyJnpExqtC3QO2Z
-	Kku1wTvVXbquUWNlN7HycQAWzT5HASJTSpnc9q+s+fjWHxjRlwrYEV/IH73kMbbz5s8QjPvH/Cm
-	lkkJfYWkQ0AA==
-X-Google-Smtp-Source: AGHT+IGoaBBXEvlzDTsU1C03GV4YLPpPCLc3caF+CAlRHDL62IC2h9RN1444RdSjA5EQjkfLng46dg==
-X-Received: by 2002:a05:600c:c04b:10b0:45d:f7e4:7a9e with SMTP id 5b1f17b1804b1-45f211caa00mr17292745e9.5.1757660739962;
-        Fri, 12 Sep 2025 00:05:39 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:3242:9953:dff6:b6d7? ([2a01:e0a:3d9:2080:3242:9953:dff6:b6d7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e037d638dsm49017565e9.22.2025.09.12.00.05.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Sep 2025 00:05:39 -0700 (PDT)
-Message-ID: <54dbbb39-436b-4ef2-9eef-0c9676340cb0@linaro.org>
-Date: Fri, 12 Sep 2025 09:05:38 +0200
+	s=arc-20240116; t=1757660900; c=relaxed/simple;
+	bh=RRtUOZThdqYvD2gGCk5TTsXRXY57iVZQgC/XXqZA+jA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e8JxdViJ6fo10PBJgpAf8TURO+w/Fhv8YR/EpXHmkNX2wMi0fEYjpwEXMuLsRfsWjJgr8/vSa2KDIikfdaXMkWy+VtS5eLgeT6N0QnXghQFh/w123UfcGDG2LDFeU9U1tttNs4iacHjsqUzs0oKAMywBfCaGg8xGzfrgfdUbR38=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12BAAC4CEF4;
+	Fri, 12 Sep 2025 07:08:20 +0000 (UTC)
+Date: Fri, 12 Sep 2025 09:08:18 +0200
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Luo Jie <quic_luoj@quicinc.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, Stephen Boyd <sboyd@kernel.org>, 
+	Varadarajan Narayanan <quic_varada@quicinc.com>, Georgi Djakov <djakov@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Anusha Rao <quic_anusha@quicinc.com>, Manikanta Mylavarapu <quic_mmanikan@quicinc.com>, 
+	Devi Priya <quic_devipriy@quicinc.com>, Philipp Zabel <p.zabel@pengutronix.de>, 
+	Richard Cochran <richardcochran@gmail.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, linux-arm-msm@vger.kernel.org, 
+	linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, 
+	devicetree@vger.kernel.org, netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	quic_kkumarcs@quicinc.com, quic_linchen@quicinc.com, quic_leiwei@quicinc.com, 
+	quic_pavir@quicinc.com, quic_suruchia@quicinc.com
+Subject: Re: [PATCH v5 07/10] dt-bindings: clock: qcom: Add NSS clock
+ controller for IPQ5424 SoC
+Message-ID: <20250912-chowchow-of-famous-art-8fcd7e@kuoka>
+References: <20250909-qcom_ipq5424_nsscc-v5-0-332c49a8512b@quicinc.com>
+ <20250909-qcom_ipq5424_nsscc-v5-7-332c49a8512b@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH 0/4] arm64: dts: qcom: x1e80100: Add IRIS video codec
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-References: <20250911-x1e-iris-dt-v1-0-63caf0fd202c@linaro.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20250911-x1e-iris-dt-v1-0-63caf0fd202c@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250909-qcom_ipq5424_nsscc-v5-7-332c49a8512b@quicinc.com>
 
-On 11/09/2025 20:38, Stephan Gerhold wrote:
-> Add the necessary definitions to enable the IRIS video codec for
-> accelerated video decoding on the X1E CRD and Lenovo ThinkPad T14s. The
-> additions are largely copied as-is from sm8550.dtsi with some minor changes
-> necessary for X1E.
+On Tue, Sep 09, 2025 at 09:39:16PM +0800, Luo Jie wrote:
+> NSS clock controller provides the clocks and resets to the networking
+> blocks such as PPE (Packet Process Engine) and UNIPHY (PCS) on IPQ5424
+> devices.
 > 
-> The PAS interface used to boot the IRIS firmware is not functional in EL2.
-> The code to start it without using PAS exists already in the Venus driver,
-> but was not ported over to IRIS yet. Discussions how to model the
-> video-firmware IOMMU are still ongoing, so disable IRIS in x1-el2.dtso for
-> now to avoid regressions when running in EL2.
+> Add support for the compatible string "qcom,ipq5424-nsscc" based on the
+> existing IPQ9574 NSS clock controller Device Tree binding. Additionally,
+> update the clock names for PPE and NSS for newer SoC additions like
+> IPQ5424 to use generic and reusable identifiers "nss" and "ppe" without
+> the clock rate suffix.
 > 
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> Also add master/slave ids for IPQ5424 networking interfaces, which is
+> used by nss-ipq5424 driver for providing interconnect services using
+> icc-clk framework.
+> 
+> Signed-off-by: Luo Jie <quic_luoj@quicinc.com>
 > ---
-> Stephan Gerhold (4):
->        arm64: dts: qcom: x1e80100: Add IRIS video codec
->        arm64: dts: qcom: x1-el2: Disable IRIS for now
->        arm64: dts: qcom: x1e80100-crd: Enable IRIS video codec
->        arm64: dts: qcom: x1e78100-lenovo-thinkpad-t14s: Enable IRIS
-> 
->   arch/arm64/boot/dts/qcom/x1-el2.dtso               |  5 ++
->   .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    |  5 ++
->   arch/arm64/boot/dts/qcom/x1e80100-crd.dts          |  4 +
->   arch/arm64/boot/dts/qcom/x1e80100.dtsi             | 87 ++++++++++++++++++++++
->   4 files changed, 101 insertions(+)
-> ---
-> base-commit: 8f21d9da46702c4d6951ba60ca8a05f42870fe8f
-> change-id: 20250909-x1e-iris-dt-eb0494a130ca
-> 
-> Best regards,
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S OLED
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Thanks,
-Neil
+Best regards,
+Krzysztof
+
 
