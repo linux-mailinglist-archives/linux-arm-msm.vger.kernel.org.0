@@ -1,291 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-73234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59085B54418
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 09:43:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1181DB54470
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:05:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 041EF3A5FEB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 07:43:37 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 64EC01C84239
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:05:39 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDF4A2D0C60;
-	Fri, 12 Sep 2025 07:43:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="gDdotHWi"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 731EE2D5436;
+	Fri, 12 Sep 2025 08:04:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F2D2C11C2
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 07:43:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04982D4816;
+	Fri, 12 Sep 2025 08:04:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757663013; cv=none; b=rCS6QWfqBaLHDPcdP52uh84NvyVexVJmYNL7q2P0rlzqiOvf8G7dUWQXANUe1pO3v5TM+MN956RnyCO57z5DDYr0r6qlGms1xN3TUbKbHKkCD2z2WvnMcHZ20eZ14loQnstjGFAIGCnV5FWdFSXBofZQW++GGA47xO2vXrTtxoc=
+	t=1757664278; cv=none; b=P7PCSMirqpRHBvnHxs4E/ph/yQVXYnDm4xuzXBP4b+LwjjRym4n93RGnn9yY0K5kp+0SuNNNdSuwqBO5BIiXDKQ8bSUOaizcUfT059+5ew57BbgUi+5iuLRTlY8rkvifAGPlCH7/cyPQdtqMTiIfL71Jn4aUAoq8mxeKVLeXabg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757663013; c=relaxed/simple;
-	bh=QbQ+D0lj0zyGSWQXCzBrA6FK9SMcdNAf9ABEcq+D/4E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yi8B6f04FJVyugbQ2anhQdh+7E9ieyTXWS+Sl+wWa20jQ0IDfNsJoGW55Z6zxC2UT9oepTGO9CdCdCzuAgiaAEKYx6E5yz+IDsAjD2yf/wjNaYMH84RO2YBnn1lUcR5NNNjf9MS20jgd15oVfhv819ExRc1Y/p3v/pWbFlYU5e0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=gDdotHWi; arc=none smtp.client-ip=209.85.221.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3dce6eed889so1498399f8f.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 00:43:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757663010; x=1758267810; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/tlrqWaDX6PzrBsN1xgSiYWgH8yIXX+vr7eFeQ9eV+s=;
-        b=gDdotHWiXd59YjG9AmILsyGVbq1w0Tq/Orl6/qeqqKAg3MKv8iKkGviUGNl/p2+05K
-         ls0oBIonrkoVu7i4Gnzv5GhBdJZBn+JXiuZctSAYbqiXLyfjqrMWYwtsfuaZqefaPEhr
-         y1loyZzRDD/1t+q1+DUlaPpE7Fw/0o9DsZUPlakU8XsXVBmrKfohRdfnNdMsDhDwP6Oq
-         bRjEpoW24guhWwi7E0kzavb1JHWHBxxyWd/cVjBpAsPytfjl4YmYaoiuRsKuUUQPJ+3C
-         TgRfzgd2rUZB3CJevrHYQxti5Uit6d2Z1ZWQG7rTei1Ox4sH1M/WDZYeFtZ//Q5vnz6A
-         t0QQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757663010; x=1758267810;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/tlrqWaDX6PzrBsN1xgSiYWgH8yIXX+vr7eFeQ9eV+s=;
-        b=uyQiZQuBvis6Dodrpdsjt66Z30+VCNcXqCm6SS7KGQRaCcSQp3tnUbAk/P61mKjv4u
-         sDtrDTYTjptbKzRcv6CSFEfZrdox74KJgOnf14h9ZTTLlWnw+zKHVC4KholpShGIjBnF
-         790xdfiP63YrVse50NgPbDMTLd5qCnQFrEB66LJrBffVPHR5UVjz4Sj+2pgRf/EJnZuK
-         WWknjLxTz97L6SvfgGAyS1JcxJQxerJf8BeoR9UId8SNipCOApEEOR1itXwg1gv10xdE
-         L37/4skHo8ekWmUR+fqLgcZ9hRKomuUK2C2sKXd6+GOvf9mpjSGq+KnwVYvaGltWwJ72
-         QcqA==
-X-Forwarded-Encrypted: i=1; AJvYcCXaNpNd45U2clWMVwh9qlLF/MVYc6dTXD0nGWans4SaKDw6FoI4ElR/RDcMglnCgp1QzpgiJG2pcnPCKNqf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy10qwZ0j2lfNdE1q7p+IfUC8bl2gWXvvtxenmuQFAJIAmL6V8X
-	h0ikt1au0Tb58xVCRvlboUhJRRM2qUogX3eXN5ncZTLuC+8OQxCPBaNjleevT3oCQg0=
-X-Gm-Gg: ASbGncu08qij09+kYu5hCx0Dytal1iKLGUtTRAo2Ptj0Uzk+VxFkz2edc6Qn1UbfUz4
-	UQckfhQzRdFCl2f7xtevdCX1HivVv41wE6jKGdjqwP7MOAxxk6ULdHL2Ni3UXLjxrPQ4EbN13we
-	5LKbT46k34p/2+p62rnGxtheoSL5Vh8XQSu7rTv785qKrmAFLD4NQtVqzAaNrUlaRUY55ZAcbFC
-	JKY4eCIF8LhFKe7Y549ymnN3pwzPGPLA1pCykdSMbeoZQCZCOUavGrvF4AChPao8zs6f+xSwldV
-	I+985l+V0fqZIkq+3NiDnUmvd1/MYMYiTnAX8uJZutwADj0v16GMcFm2zixWf2bE2l28OmXKXCV
-	UQ5vqY++xe25p64JtE0jbFg==
-X-Google-Smtp-Source: AGHT+IEZAiE1f9boxOUWUwCm6QWtzQinPI/QYY7rsGgyorpzn3871kCxtIjCpGOMwKr6zoccKgtOdA==
-X-Received: by 2002:a05:6000:230f:b0:3e7:4071:188c with SMTP id ffacd0b85a97d-3e765a04970mr1862367f8f.60.1757663010049;
-        Fri, 12 Sep 2025 00:43:30 -0700 (PDT)
-Received: from linaro.org ([86.121.170.194])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e760786cddsm5695898f8f.14.2025.09.12.00.43.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 00:43:29 -0700 (PDT)
-Date: Fri, 12 Sep 2025 10:43:27 +0300
-From: Abel Vesa <abel.vesa@linaro.org>
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>, 
-	Kishon Vijay Abraham I <kishon@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Johan Hovold <johan@kernel.org>, linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 4/4] phy: qcom: edp: Add Glymur platform support
-Message-ID: <4a5brcec3knsjtowyju33drs2twq72mtpiwo54dtshsvs22d6v@e7rztm64nmlo>
-References: <20250911-phy-qcom-edp-add-glymur-support-v3-0-1c8514313a16@linaro.org>
- <20250911-phy-qcom-edp-add-glymur-support-v3-4-1c8514313a16@linaro.org>
- <DCQAGDC63M8X.3DVH6I9FA0IZD@linaro.org>
+	s=arc-20240116; t=1757664278; c=relaxed/simple;
+	bh=gKHmOFdjteVQekqifxHYJRIaWWSXQL0vXGjMWK55q9w=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=jfLxO7BOH2Gm6eVBwAaTSszEbVaewztPH9fUIgwn5BTGoHsTqvwQCSIzhQB3LoQtFm7Rie12cECP7n1EbNQP/+3td2CJ+UDHY52fFzsQ8Kr09O3o+D5qtExfSYrSIzfKCZVfxouyAyBxpFtZaEqXgfSv5vm4golz81C4b7OAANI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpip2t1757664229tfcf1c9f8
+X-QQ-Originating-IP: MOVI41uRyW5p5cEv7SezyJeQOa4kceDau5hySL1MHYQ=
+Received: from [192.168.30.36] ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 12 Sep 2025 16:03:45 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 9888739823542151369
+EX-QQ-RecipientCnt: 12
+From: Xilin Wu <sophon@radxa.com>
+Subject: [PATCH RFC 0/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
+ Q6A
+Date: Fri, 12 Sep 2025 16:03:28 +0800
+Message-Id: <20250912-radxa-dragon-q6a-v1-0-8ccdbf9cd19b@radxa.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <DCQAGDC63M8X.3DVH6I9FA0IZD@linaro.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIANDTw2gC/23Q30rDMBQG8FcpuTYl/9MOkYHgA3grQ05zTraga
+ 7emm5OxdzfdVBC8Cl/C9zucnFmmMVFmi+rMRjqmnIa+BHlXsbCBfk08YclMCWVFKxUfAU/AcYT
+ 10PO9A06EAQmiJudYqe1Giul0JV/Y89MjW90uR9ofCj99v2wpZ7jyi+r+pgslnWmFqMvZWC55K
+ YTXET/SkTAt55T6UIdh+zAP+keQUhitrKu1VVpYX4xjeqO+RsCyTfqE5ZBzvT/Ae1G2v9QOprC
+ 5QqADWOygQYrWuzbGznStxahapxGcAK9dbN3flgkiUoPOe/QaIMrOdo1RJLxSxmFjvGpRBjO3O
+ sjE5+lpWlQ9nSb+87dsdbl8AWIuIX2RAQAA
+X-Change-ID: 20250912-radxa-dragon-q6a-eedcdeaf3e66
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>, 
+ Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
+ Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, Xilin Wu <sophon@radxa.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757664226; l=3260;
+ i=sophon@radxa.com; s=20240424; h=from:subject:message-id;
+ bh=gKHmOFdjteVQekqifxHYJRIaWWSXQL0vXGjMWK55q9w=;
+ b=CvTQMWVHz7kIwgpbp6habsPrzjCjPBZUDfuKuoNsSVkv8TYXKlPNmdVEKDkxiQDqhVbT5mE1Y
+ VsGkzNUvbqIDxDfXSMZ9VCzn1x46/SoMQYrdH4B+zuZ3v07e25zeHA/
+X-Developer-Key: i=sophon@radxa.com; a=ed25519;
+ pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: ODcDgdcDagQKlwOBbCUbkvgXqPT2NjbXmXF+0hZXoTzv51XOElcsRywO
+	Anpo1Vh2AutDVTyEqLJ1Pl9yfpTz3NBZhHwWgw27oBFPczsTWVb9kCNnbvj9Z6bSAwNpz2G
+	+/WFrYjQrnvLLqqci8xOrKjvQSn0q9ea3lT6ldsQ65vUzDIKYWziOMbfc34Qu/EmvhjfkBt
+	d2Br759ChXWzRX3hqcUDxOliC8bACmTKw8ODFI7RZQFe2c0zfVoscQcQfpvr8pnF0LTgyUV
+	0tELI7Y6YOoyACVjhB+M4e+nGEF5MKgRGdcHdWlwmSd+sIwPv5qTisLpvlXoKVMadMn26WR
+	DKq9pTvpYmQsu1lWRUsc+U4XCSfnJLvidDWxANu56RsDyyEVf84fKGyOOZ3Hj/I7bVfLn2Q
+	kTt/5Dfolv8EHhdSSPdJ57qeCrE4I5mTbOowtVna408R2LY2YYM60DQQzDZxW1cuJT7H/3y
+	U4ig068s0EJQt/wmEmQuwzonGLa1NSOE7P4WVGMvviA39eOmg2OOVuHwUEGowwATFwOGrPD
+	C7HGhzDVkvJKXP8gAF/5261T2sKsi/DZrhzcFrNziDbKNPNuc+96twPiVP9hZrTs0b7yQ3s
+	jawwTswCMh8xl02sRF4awY6jNe8WRGmWIwK2p1AaCmVA551JcGl/0lyIudnlnzQlgLFHoZR
+	/7QHwqFa4jUeobqcvA72W/j/Sv+3ZJiUMEFOMUdCTDcdNbNpWrbx6KfmujywbKEudJfQuSH
+	FNmBA7jFtaooJQBb7BdLGJE7+az4Ffjd1dni00m1xCaWf34CoKxOm/INrhbUv5L62UBacHW
+	cdb7LaAKY73EoLqRm8cW8Trs+IiwyzN5CEnNnHlzzKjd1lY7aVs0pn4oRaEHeU/hmLbXG8e
+	XYQTG7n6Nmsx4mwS2C/p1Q7+Hf8jSAs3FyT5ATDrcEOdbw6wkzz2LuJmNap9nCWSDD8WwU8
+	QQfjjiuaYEJabbXgqpTjCjAdzkaT5QDOv/+twa/R7PoG2ZDCM7r9Ft3VGjr4Qna981WIIuT
+	1N+dTm4EbxewOQ1fDx
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
 
-On 25-09-11 22:28:24, Alexey Klimov wrote:
-> On Thu Sep 11, 2025 at 3:45 PM BST, Abel Vesa wrote:
-> > The Qualcomm Glymur platform has the new v8 version
-> > of the eDP/DP PHY. So rework the driver to support this
-> > new version and add the platform specific configuration data.
-> 
-> It is a bit confusing. Subject suggests that it is an addition
-> of a new platform but patch itself and description looks more like a
-> rework rather than new platform addition.
+Radxa Dragon Q6A (https://docs.radxa.com/en/dragon/q6a) is a single board
+computer, based on the Qualcomm QCS6490 platform.
 
-The larger part of this patch is actually the addition of v8 specific bits,
-which is only used on Glymur, AFAICT. So here, new platform means new init
-sequence (at least), but new init sequence requires addition of v8 bits.
-The rework is rather minor in comparison with the v8 addition.
+The board ships with a modified version of the Qualcomm Linux boot
+firmware, which is stored on the onboard SPI NOR flash. This allows
+booting standard EFI-based bootloaders from SD/eMMC/USB/UFS/NVMe. It
+supports replaceable UFS 3.1/eMMC modules for easy user upgrades.
 
-> 
-> The ->aux_cfg_size() rework here reminds me
-> 913463587d52 phy: qcom: edp: Introduce aux_cfg array for version specific aux settings
-> 
-> Ideally this should be split into rework and adding support for a
-> new platform. Or please update the commit desc and subject to explain
-> why this is the way.
+The board schematic is available at [1].
 
-Splitting out the rework could be an option, however, it would not add
-any value. Seeing the changes needed by the new v8 version alongside
-with the addition of the v8 version makes the patch more intuitive to
-read, IMO, specially since, again, the rework pretty is minor.
+Features enabled and working:
 
-If anything, maybe I could add to the existing commit what exactly needs
-to be reworked for the v8 version addition, but IMHO the rework code is
-quite self-explanatory, and we should only describe in the commit
-message what the patch does not how the code works.
+- USB-A 3.0 port (depends on [2])
+- Three USB-A 2.0 ports
+- RTL8111K Ethernet connected to PCIe0
+- UFS 3.1 module (depends on [3])
+- eMMC module
+- SD card
+- M.2 M-Key 2230 PCIe 3.0 x2
+- HDMI 2.0 port including audio (depends on [2])
+- Configurable I2C/SPI/UART from 40-Pin GPIO (depends on [4])
+- Headphone jack
+- Onboard thermal sensors
+- QSPI controller for updating boot firmware
+- ADSP remoteproc (Type-C and charging features disabled in firmware)
+- CDSP remoteproc (for AI applications using QNN)
+- Venus video encode and decode accelerator
 
-> 
-> > Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-> > ---
-> >  drivers/phy/qualcomm/phy-qcom-edp.c | 240 +++++++++++++++++++++++++++++++++++-
-> >  1 file changed, 234 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c b/drivers/phy/qualcomm/phy-qcom-edp.c
-> > index 7b642742412e63149442e4befeb095307ec38173..b670cda0fa066d3ff45c66b73cc67e165e55b79a 100644
-> > --- a/drivers/phy/qualcomm/phy-qcom-edp.c
-> > +++ b/drivers/phy/qualcomm/phy-qcom-edp.c
-> 
-> [..]
-> 
-> >  static int qcom_edp_phy_init(struct phy *phy)
-> >  {
-> >  	struct qcom_edp *edp = phy_get_drvdata(phy);
-> > @@ -224,7 +241,11 @@ static int qcom_edp_phy_init(struct phy *phy)
-> >  	if (ret)
-> >  		goto out_disable_supplies;
-> >  
-> > -	memcpy(aux_cfg, edp->cfg->aux_cfg, sizeof(aux_cfg));
-> > +	memcpy(aux_cfg, edp->cfg->aux_cfg, edp->cfg->aux_cfg_size);
-> 
-> So, if I understand this correctly, when or if init sequence will
-> span beyond DP_PHY_AUX_CFG9 and DP_AUX_CFG_SIZE won't be updated,
-> then we might end up doing something fishy here?
+Features available with additional DT overlays:
+- CSI cameras
+- DSI display
 
-So, usually you get an init sequence that gives you register names and
-registers value. This means will never get anything beyond the AUX_CFG12
-as part of the AUX_CFG array. At least not on the currently available
-platforms. In case a new platform will come around with AUX_CFG13 and
-beyond, then this whole thing will need to be reworked heavily due to
-variation in size of the AUX_CFG register layout, not because of the
-variation in size of the AUX CFG init sequence, as it is the case now.
-But this fits into the 'future problem' bucket.
+ALSA UCM and Audioreach topology patches are available at [5] and [6].
 
-> 
-> Maybe add an if-check or even
-> BUILD_BUG_ON(edp->cfg->aux_cfg_size > sizeof(aux_cfg))
-> or something like this? Or kmalloc aux_cfg eventually at least,
-> however it seems to overcomplicate things.
+This series is posted as an RFC because it depends on several other patch series.
 
-Definitely not BUILD_BUG_ON !
+[1]: https://docs.radxa.com/en/dragon/q6a/download
+[2]: https://lore.kernel.org/all/20250908-topic-x1e80100-hdmi-v3-4-c53b0f2bc2fb@linaro.org/
+[3]: https://lore.kernel.org/all/20250902164900.21685-1-quic_rdwivedi@quicinc.com/
+[4]: https://lore.kernel.org/all/20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com/
+[5]: https://github.com/alsa-project/alsa-ucm-conf/pull/601
+[6]: https://github.com/linux-msm/audioreach-topology/pull/24
 
-And adding a check for the size it's pretty pointless since we currently
-hardcode the size of the array when defining it.
+Signed-off-by: Xilin Wu <sophon@radxa.com>
+---
+Xilin Wu (2):
+      dt-bindings: arm: qcom: Add Radxa Dragon Q6A
+      arm64: dts: qcom: qcs6490: Introduce Radxa Dragon Q6A
 
-But maybe I'll outvoted here ...
+ Documentation/devicetree/bindings/arm/qcom.yaml    |    1 +
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 1208 ++++++++++++++++++++
+ 3 files changed, 1210 insertions(+)
+---
+base-commit: 51095600e8c19d53729a7fbd273abc4435a25e9b
+change-id: 20250912-radxa-dragon-q6a-eedcdeaf3e66
+prerequisite-message-id: <20250902164900.21685-1-quic_rdwivedi@quicinc.com>
+prerequisite-patch-id: 257564b609217fda19c9f3424fcd9f6e2ce3ef3c
+prerequisite-patch-id: a8f21781f3bff140260100b74041752000c06000
+prerequisite-patch-id: b46127e2433ede17cc5e1a012f58041c6ef97b13
+prerequisite-patch-id: e8978c5a30373c3ff312b2c8720f586c389f18f8
+prerequisite-message-id: <20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com>
+prerequisite-patch-id: c7a057030b78afbbb231280de3765294c006c6f8
+prerequisite-patch-id: 56011305aa35e4c64fc7d63950764807cb81cc4d
+prerequisite-patch-id: c3d3b313ac6abe4ec10fd820b6a9bbc63fdbdb82
+prerequisite-patch-id: 63ee94d0ccd40f60a98b0004d627ad2e7b440d25
+prerequisite-patch-id: 392e8f1902571e5035d5af72e40dc474b5f1b274
+prerequisite-patch-id: e38fba722bdabc02ba09d2dc51df7010dbe28168
+prerequisite-patch-id: a3ca5dba8def5769ffb4b95df2963da60a736f96
+prerequisite-patch-id: 4c0fe8d677d73aaf1b5b842e072246d84729d1c4
 
-> 
-> [..]
-> 
-> > +static int qcom_edp_com_configure_ssc_v8(const struct qcom_edp *edp)
-> > +{
-> > +	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
-> > +	u32 step1;
-> > +	u32 step2;
-> > +
-> > +	switch (dp_opts->link_rate) {
-> > +	case 1620:
-> > +	case 2700:
-> > +	case 8100:
-> > +		step1 = 0x5b;
-> > +		step2 = 0x02;
-> > +		break;
-> > +
-> > +	case 5400:
-> > +		step1 = 0x5b;
-> > +		step2 = 0x02;
-> > +		break;
-> > +
-> > +	default:
-> > +		/* Other link rates aren't supported */
-> > +		return -EINVAL;
-> > +	}
-> > +
-> > +	writel(0x01, edp->pll + DP_QSERDES_V8_COM_SSC_EN_CENTER);
-> > +	writel(0x00, edp->pll + DP_QSERDES_V8_COM_SSC_ADJ_PER1);
-> > +	writel(0x6b, edp->pll + DP_QSERDES_V8_COM_SSC_PER1);
-> > +	writel(0x02, edp->pll + DP_QSERDES_V8_COM_SSC_PER2);
-> > +	writel(step1, edp->pll + DP_QSERDES_V8_COM_SSC_STEP_SIZE1_MODE0);
-> > +	writel(step2, edp->pll + DP_QSERDES_V8_COM_SSC_STEP_SIZE2_MODE0);
-> > +
-> > +	return 0;
-> > +}
-> > +
-> > +static int qcom_edp_com_configure_pll_v8(const struct qcom_edp *edp)
-> > +{
-> > +	const struct phy_configure_opts_dp *dp_opts = &edp->dp_opts;
-> > +	u32 div_frac_start2_mode0;
-> > +	u32 div_frac_start3_mode0;
-> > +	u32 dec_start_mode0;
-> > +	u32 lock_cmp1_mode0;
-> > +	u32 lock_cmp2_mode0;
-> > +	u32 code1_mode0;
-> > +	u32 code2_mode0;
-> > +	u32 hsclk_sel;
-> > +
-> > +	switch (dp_opts->link_rate) {
-> > +	case 1620:
-> > +		hsclk_sel = 0x5;
-> > +		dec_start_mode0 = 0x34;
-> > +		div_frac_start2_mode0 = 0xc0;
-> > +		div_frac_start3_mode0 = 0x0b;
-> > +		lock_cmp1_mode0 = 0x37;
-> > +		lock_cmp2_mode0 = 0x04;
-> > +		code1_mode0 = 0x71;
-> > +		code2_mode0 = 0x0c;
-> > +		break;
-> > +
-> > +	case 2700:
-> > +		hsclk_sel = 0x3;
-> > +		dec_start_mode0 = 0x34;
-> > +		div_frac_start2_mode0 = 0xc0;
-> > +		div_frac_start3_mode0 = 0x0b;
-> > +		lock_cmp1_mode0 = 0x07;
-> > +		lock_cmp2_mode0 = 0x07;
-> > +		code1_mode0 = 0x71;
-> > +		code2_mode0 = 0x0c;
-> > +		break;
-> > +
-> > +	case 5400:
-> > +		hsclk_sel = 0x2;
-> > +		dec_start_mode0 = 0x4f;
-> > +		div_frac_start2_mode0 = 0xa0;
-> > +		div_frac_start3_mode0 = 0x01;
-> > +		lock_cmp1_mode0 = 0x18;
-> > +		lock_cmp2_mode0 = 0x15;
-> > +		code1_mode0 = 0x14;
-> > +		code2_mode0 = 0x25;
-> > +		break;
-> > +
-> > +	case 8100:
-> > +		hsclk_sel = 0x2;
-> > +		dec_start_mode0 = 0x4f;
-> > +		div_frac_start2_mode0 = 0xa0;
-> > +		div_frac_start3_mode0 = 0x01;
-> > +		lock_cmp1_mode0 = 0x18;
-> > +		lock_cmp2_mode0 = 0x15;
-> > +		code1_mode0 = 0x14;
-> > +		code2_mode0 = 0x25;
-> > +		break;
-> 
-> These sections for 5400 and 8100 rates seem to be the same. Is it correct?
-> If yes, then maybe join them together and drop duplicating lines?
-> 
-> There is probably similar thingy in qcom_edp_com_configure_ssc_v8() above.
-
-I agree. This is a good point. I'll do fallthrough instead. In the
-_configure_ssc_v8() above as well.
-
-> 
-> Best regards,
-> Alexey
-> 
-
-Thanks for reviewing.
+Best regards,
+-- 
+Xilin Wu <sophon@radxa.com>
 
 
