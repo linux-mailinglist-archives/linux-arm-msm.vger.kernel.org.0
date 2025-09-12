@@ -1,124 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-73393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C7C3B558A0
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 23:51:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68064B558A6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 23:52:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 99EBA7BBD58
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 21:49:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F229E5C3B57
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 21:52:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A15126E701;
-	Fri, 12 Sep 2025 21:50:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CBC62D29C7;
+	Fri, 12 Sep 2025 21:52:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gPkiIYGN"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="Yes8bdoN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4906E4C81;
-	Fri, 12 Sep 2025 21:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752F42C0F6E
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 21:52:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757713855; cv=none; b=jZVXjYjgNKFXd8+CyJNxMq1qGWihoR5EvAmaj9RoQKVFz/muM8rVkHuK4hqBkN8gyfvELy+Cowlh5jNI3W+zdUSOu3Mk14VxPE46MIncX6fC9FtcBNXp1nqKZWls1rkLbL5sXq4WJJaj5UqKgeG2APIph0OuND8duUxrwLFAEuU=
+	t=1757713943; cv=none; b=ZglpiI6K9iBgOgdELtiQfDKmSNcw37/FUzEIwshSqMNXCp7tS6gqqWV4mpB+RZ4gm282l+W6C2+P8OolZm3vTZMt1nsyiBFmpMwB39+qRM9W1iOtRPLQZuGxheEkQT5AiB+KMi4O4BK6XkKJKQZd/4HmAIkoOcnhn299crzyBfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757713855; c=relaxed/simple;
-	bh=I32UvaadbaJ72Eaidbhmruy+XECfJJW6sIgil2cnjeo=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=GfWJ0pGm5u9Fv5faIowM+5ZBVP+9fUakGnr2SvYIAZc4V7SSbx3+zibANYA8OGmtjeZXPXWISJotToiE0CiKsGP2iKgLtKoBnhnQDjCBmv7VJRsBHFsmf4ceM7CY66tx/mymh0MOZS1ETSlxPWQ7aBgGR6RYCJETWvt5EfiiOiY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gPkiIYGN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD397C4CEF1;
-	Fri, 12 Sep 2025 21:50:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757713855;
-	bh=I32UvaadbaJ72Eaidbhmruy+XECfJJW6sIgil2cnjeo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=gPkiIYGNsVnzkGKHbxxmFqBsyIMcycgphKoCmbj8GCCYzxsWhQT3JRMOfmPyMqODQ
-	 uzGBxRZL3dghbATykaG2tSVEML0iOTtx1CmufOncToMeAUNzYK2GbPG/9ADADC+F/q
-	 TKmW6+PwUvNMEyFhDRectkEsWwFj/rqtvzT1GiBIYYRZCkQb4m7EIcd0r84ohOvsyX
-	 kjCilPYUg+ek55S/3MfjHoUcR1urIuTIDrF77z1T80tQRtaDG24SkwPg3MJqH6AB70
-	 j+3h6uxILGb51saPCUzDZhSfNo5dZOf3HZM7qqTPv4f62lHTAklzyMKeHXrb1gsQKW
-	 XbM9D3n5jJQ/w==
-Date: Fri, 12 Sep 2025 16:50:53 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Jingoo Han <jingoohan1@gmail.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Jonathan Chocron <jonnyc@amazon.com>, linux-pci@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-samsung-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Subject: Re: [PATCH v9 3/4] PCI: qcom: Prepare for the DWC ECAM enablement
-Message-ID: <20250912215053.GA1643809@bhelgaas>
+	s=arc-20240116; t=1757713943; c=relaxed/simple;
+	bh=wPA97b6V//Ti8Do+nraSoCXvD5g+auNcs7NBBJoNq+E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=XS1wLv8D4tGBta2ULIz/V/3vN3VRXQT8mah6H3uvNk3iOyLkwulpbiO8rsTAlJnZ8K+mB2/f+UZe6ROZh0v5m1qch86lcC+NbAmbMzTqF06lIjOj0oTQmLfSV1wULATVqTTZO/yKOsK7wjx+pVW6LGcTC7QpjaPrAk/2wDDT4aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=Yes8bdoN; arc=none smtp.client-ip=194.117.254.33
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	sang-engineering.com; h=date:from:to:cc:subject:message-id
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=wPA9
+	7b6V//Ti8Do+nraSoCXvD5g+auNcs7NBBJoNq+E=; b=Yes8bdoNccyD5Ctik2hi
+	hrEzN+UCtctNOnL2M2KHpTs5Pmuj2/kuzWxQnRqFJ/7LzKtC7LKm0kblnykFL3Ji
+	+TVQ6kgH8aCUNAxLGnt8XcqzxpAr51tD7Q2NqgS1kUFl2ksR2jtcb2bc2eQB44WC
+	5DEtNH2idxxcHYh03dPvmp9We03gDuVPK3zh8BqcPgEHW0+vaB/LKEMFBYRGY5XK
+	BhxeAaw+GEiHREwgWXf/2fIUEzTkNAxSPREcT0KWt4O6fZhhikPfISfk0GSEN7jF
+	QDmQGGouNWEO+nBbV/fCPvbLmDhpMCrrOk2695pJ9xpOQi3aoHdNXPL5DikXcv4T
+	tQ==
+Received: (qmail 1496210 invoked from network); 12 Sep 2025 23:52:12 +0200
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 12 Sep 2025 23:52:12 +0200
+X-UD-Smtp-Session: l3s3148p1@kd6DqqE+nq0gAQnoAHJ8AC93OVDMgFWg
+Date: Fri, 12 Sep 2025 23:52:11 +0200
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>
+Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
+	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>, bryan.odonoghue@linaro.org,
+	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-media@vger.kernel.org,
+	Wenmeng Liu <quic_wenmliu@qualcomm.com>
+Subject: Re: [PATCH v6 1/3] dt-bindings: i2c: qcom-cci: Document sa8775p
+ compatible
+Message-ID: <aMSWCw3LI6Q9o4gr@shikoro>
+References: <20250912-camss_rb8-v6-0-c9a6c3d67392@oss.qualcomm.com>
+ <20250912-camss_rb8-v6-1-c9a6c3d67392@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sCEER0/hlgH7qpUm"
+Content-Disposition: inline
+In-Reply-To: <20250912-camss_rb8-v6-1-c9a6c3d67392@oss.qualcomm.com>
+
+
+--sCEER0/hlgH7qpUm
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250909-controller-dwc-ecam-v9-3-7d5b651840dd@kernel.org>
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 09, 2025 at 12:37:52PM +0530, Manivannan Sadhasivam wrote:
-> From: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> 
-> To support the DWC ECAM mechanism, prepare the driver by performing below
-> configurations:
-> 
->   1. Since the ELBI region will be covered by the ECAM 'config' space,
->      override the 'elbi_base' with the address derived from 'dbi_base' and
->      the offset from PARF_SLV_DBI_ELBI register.
-> 
->   2. Block the transactions from the host bridge to devices other than Root
->      Port on the root bus to return all F's. This is required when the 'CFG
->      Shift Feature' of iATU is enabled.
+On Fri, Sep 12, 2025 at 11:19:25PM +0800, Wenmeng Liu wrote:
+> From: Wenmeng Liu <quic_wenmliu@qualcomm.com>
+>=20
+> Add the sa8775p CCI device string compatible.
+>=20
+> Acked-by: Rob Herring (Arm) <robh@kernel.org>
+> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Signed-off-by: Wenmeng Liu <quic_wenmliu@qualcomm.com>
 
-FWIW, before I noticed your v9, I had updated the comments here to fix
-a few inconsistencies.  Here's the diff:
+Applied to for-next, thanks!
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 7c2b2c8c61c2..962f0311a23a 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -343,15 +343,15 @@ static void qcom_pci_config_ecam(struct dw_pcie_rp *pp)
- 	writel_relaxed(upper_32_bits(pci->dbi_phys_addr), pcie->parf + PARF_ECAM_BASE_HI);
- 
- 	/*
--	 * The only device on root bus is a single Root Port. So if PCI core
--	 * tries to access any devices other than Device/Function (0.0) in Bus
--	 * 0, the TLP will go outside of the controller to the PCI bus. But with
--	 * CFG Shift Feature (ECAM) enabled in iATU, there is no guarantee that
--	 * the response is going to be all F's. Hence, to make sure that the
-+	 * The only device on the root bus is a single Root Port. If we try to
-+	 * access any devices other than Device/Function 00.0 on Bus 0, the TLP
-+	 * will go outside of the controller to the PCI bus. But with CFG Shift
-+	 * Feature (ECAM) enabled in iATU, there is no guarantee that the
-+	 * response is going to be all F's. Hence, to make sure that the
- 	 * requester gets all F's response for accesses other than the Root
--	 * Port, configure iATU to block the transactions starting from function
--	 * 1 of the root bus to the end of the root bus (i.e from dbi_base + 4kb
--	 * to dbi_base + 1MB).
-+	 * Port, configure iATU to block the transactions starting from
-+	 * function 1 of the root bus to the end of the root bus (i.e., from
-+	 * dbi_base + 4KB to dbi_base + 1MB).
- 	 */
- 	addr = pci->dbi_phys_addr + SZ_4K;
- 	writel_relaxed(lower_32_bits(addr), pcie->parf + PARF_BLOCK_SLV_AXI_WR_BASE);
-@@ -1385,7 +1385,7 @@ static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
- 	if (pp->ecam_enabled) {
- 		/*
- 		 * Override ELBI when ECAM is enabled, as when ECAM
--		 * is enabled ELBI moves along with the dbi config space.
-+		 * is enabled ELBI moves along with the DBI config space.
- 		 */
- 		offset = FIELD_GET(SLV_DBI_ELBI_ADDR_BASE, readl(pcie->parf + PARF_SLV_DBI_ELBI));
- 		pci->elbi_base = pci->dbi_base + offset;
+
+--sCEER0/hlgH7qpUm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmjElgsACgkQFA3kzBSg
+KbZvmxAAjntXh3QhT7wW/5CITKV7K1xT5vhMhtTSjW+iA02PdhjJsv1mAxyVwAE0
+7tvE82O9P/5lOy8ez3BViXwyieZE9F5FzHQ69+dxsCN2B8SJjmu4EEsoqRUXgnQd
+1AI5fqQEWBPB+DIVtKcmJCx5bnW3KvuNAS4s2zTNsGkALE1eUCUCmJZ2DOOBZiav
+fMaa22Wf3ohLffkiyz9p+CnqN3J78TjEwH57hc6gK6+BpJt4/5E2yFhyXsxlw7WW
+AT8+gkXkanWonFgEfeZmfhqcwp94u1iKO2Zf2H/mp4lWlxEbeKbyzc3YEQZgmz0s
+e0o2EsCBK8fQAQGCy4bz3kSYhUk8vZa9SH7D8gXv/ny+Dl+KSyGnwKcEfnnd6ehM
+lgnQbg8+YlEMVN+m5x6LT4Ly/9qz7DYhyCXo+0lKzTZKJj5sOi1XDyvR3ohisrun
+yVKUl4PweaW5SoPNEC6fK2Fras2BxCK/XLD1bsDuSHWkZ+y7NGP7KcJoiCcyKsO1
+KhY7+K++xIfB7z+aknPsK5+ojAP3niWK/izB5kOIFPnUIrdiSxlyGfmPBUupBwVS
+dICWSzxG1zfcr26fGvDnAYC5nr83gu3y6Mp2919JwE8hnB4AnThy4s7pWBv0Qr4P
+hTeFF3yx5pIsHo6RQ03xTUGD+ITc90w0JM54oDE9V81vMtaU0EI=
+=5/Pv
+-----END PGP SIGNATURE-----
+
+--sCEER0/hlgH7qpUm--
 
