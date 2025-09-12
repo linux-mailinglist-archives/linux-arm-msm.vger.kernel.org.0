@@ -1,68 +1,61 @@
-Return-Path: <linux-arm-msm+bounces-73394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68064B558A6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 23:52:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E87D7B558AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 23:57:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id F229E5C3B57
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 21:52:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 17B9C3BD391
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 21:57:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CBC62D29C7;
-	Fri, 12 Sep 2025 21:52:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AAC0C2D238A;
+	Fri, 12 Sep 2025 21:57:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="Yes8bdoN"
+	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="CPwJDOaH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 752F42C0F6E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 21:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80B66266560
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 21:56:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757713943; cv=none; b=ZglpiI6K9iBgOgdELtiQfDKmSNcw37/FUzEIwshSqMNXCp7tS6gqqWV4mpB+RZ4gm282l+W6C2+P8OolZm3vTZMt1nsyiBFmpMwB39+qRM9W1iOtRPLQZuGxheEkQT5AiB+KMi4O4BK6XkKJKQZd/4HmAIkoOcnhn299crzyBfI=
+	t=1757714221; cv=none; b=QqG7ZaS/auF5MgtxYRPSADBtfbsEfa1UHmsX8hI6bzA0G4PkbSBrLpBPZgdXzt+zsLq76gdh1MSmrvslhRxsp/SevOsrHpBfFHPJ/WSCCC2kWkJUvQgQwzV2Q5CB3bxkFwro9rA+eqbCGjw7J/xgibsSQIluH7KJKXbHd/dgKmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757713943; c=relaxed/simple;
-	bh=wPA97b6V//Ti8Do+nraSoCXvD5g+auNcs7NBBJoNq+E=;
+	s=arc-20240116; t=1757714221; c=relaxed/simple;
+	bh=vgUHLh2WDG6vmvZXtQuwei+9BmWgXyLrwR8bmVuIg+s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XS1wLv8D4tGBta2ULIz/V/3vN3VRXQT8mah6H3uvNk3iOyLkwulpbiO8rsTAlJnZ8K+mB2/f+UZe6ROZh0v5m1qch86lcC+NbAmbMzTqF06lIjOj0oTQmLfSV1wULATVqTTZO/yKOsK7wjx+pVW6LGcTC7QpjaPrAk/2wDDT4aA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=Yes8bdoN; arc=none smtp.client-ip=194.117.254.33
+	 Content-Type:Content-Disposition:In-Reply-To; b=cmKStT6z1+Cv5Y4j/pvPljXNCfW8LTAo77YMnvFdIjArJH3YILLkJFYBKVgnnhv3Kjz2RUomJ0Ayk2O8/CP57YF67Rmpm+6aTx4vfe7+ZtyRlNxaMfC7EIjOsoOkGzmdt1G37efR6bmIDMkdfVYCEpIWgDznbc/1xqxSQIhQUN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=CPwJDOaH; arc=none smtp.client-ip=194.117.254.33
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=wPA9
-	7b6V//Ti8Do+nraSoCXvD5g+auNcs7NBBJoNq+E=; b=Yes8bdoNccyD5Ctik2hi
-	hrEzN+UCtctNOnL2M2KHpTs5Pmuj2/kuzWxQnRqFJ/7LzKtC7LKm0kblnykFL3Ji
-	+TVQ6kgH8aCUNAxLGnt8XcqzxpAr51tD7Q2NqgS1kUFl2ksR2jtcb2bc2eQB44WC
-	5DEtNH2idxxcHYh03dPvmp9We03gDuVPK3zh8BqcPgEHW0+vaB/LKEMFBYRGY5XK
-	BhxeAaw+GEiHREwgWXf/2fIUEzTkNAxSPREcT0KWt4O6fZhhikPfISfk0GSEN7jF
-	QDmQGGouNWEO+nBbV/fCPvbLmDhpMCrrOk2695pJ9xpOQi3aoHdNXPL5DikXcv4T
-	tQ==
-Received: (qmail 1496210 invoked from network); 12 Sep 2025 23:52:12 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 12 Sep 2025 23:52:12 +0200
-X-UD-Smtp-Session: l3s3148p1@kd6DqqE+nq0gAQnoAHJ8AC93OVDMgFWg
-Date: Fri, 12 Sep 2025 23:52:11 +0200
+	:references:mime-version:content-type:in-reply-to; s=k1; bh=vgUH
+	Lh2WDG6vmvZXtQuwei+9BmWgXyLrwR8bmVuIg+s=; b=CPwJDOaHBZNRm0ncDf1h
+	uffUWnSyt44H5Zv9qXPhkMcholFTYYBf3hF4QAIsf+F78e456kFSogVEIBe7a2zI
+	32UX8wUBslW5lHEpJghixhl94/rDhq4MUxQJaodxrXsh3XbH0pFy+ie2pZr8dd/S
+	xGkw8glIONU/ZrgISp0B77IDFzrCqb6gc0pi54qgLGNLcutBkeO47BMD2dglrIYx
+	zUKoTzKpnNP4xt2aFQKR7ygF6Kcxp5xS+pIDxuBojCBeAkkGwh5vy/Wf/IEmofhY
+	1k5YD/fpn9dVLAURbrWV+quAfNmYQ3FLhM2Cm4L7+mmmgUNKGRUNBJrxpP2mO+oF
+	PA==
+Received: (qmail 1497381 invoked from network); 12 Sep 2025 23:56:56 +0200
+Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 12 Sep 2025 23:56:56 +0200
+X-UD-Smtp-Session: l3s3148p1@rvd5u6E+eJkgAQnoAHJ8AC93OVDMgFWg
+Date: Fri, 12 Sep 2025 23:56:56 +0200
 From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Wenmeng Liu <quic_wenmliu@quicinc.com>
-Cc: Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, bryan.odonoghue@linaro.org,
+To: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: andi.shyti@kernel.org, robh@kernel.org, conor+dt@kernel.org,
+	andersson@kernel.org, konradybcio@kernel.org,
 	linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	Wenmeng Liu <quic_wenmliu@qualcomm.com>
-Subject: Re: [PATCH v6 1/3] dt-bindings: i2c: qcom-cci: Document sa8775p
- compatible
-Message-ID: <aMSWCw3LI6Q9o4gr@shikoro>
-References: <20250912-camss_rb8-v6-0-c9a6c3d67392@oss.qualcomm.com>
- <20250912-camss_rb8-v6-1-c9a6c3d67392@oss.qualcomm.com>
+	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RESEND v5 1/2] dt-bindings: i2c: qcom-cci: Document
+ QCM2290 compatible
+Message-ID: <aMSXKBO2lJkV1YC8@shikoro>
+References: <20250911212102.470886-1-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -70,47 +63,47 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sCEER0/hlgH7qpUm"
+	protocol="application/pgp-signature"; boundary="TwqxwFyp512nx4Nw"
 Content-Disposition: inline
-In-Reply-To: <20250912-camss_rb8-v6-1-c9a6c3d67392@oss.qualcomm.com>
+In-Reply-To: <20250911212102.470886-1-loic.poulain@oss.qualcomm.com>
 
 
---sCEER0/hlgH7qpUm
+--TwqxwFyp512nx4Nw
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 12, 2025 at 11:19:25PM +0800, Wenmeng Liu wrote:
-> From: Wenmeng Liu <quic_wenmliu@qualcomm.com>
+On Thu, Sep 11, 2025 at 11:21:01PM +0200, Loic Poulain wrote:
+> The CCI on QCM2290 is the interface for controlling camera sensor over I2=
+C.
+> It requires only two clocks.
 >=20
-> Add the sa8775p CCI device string compatible.
->=20
-> Acked-by: Rob Herring (Arm) <robh@kernel.org>
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-> Signed-off-by: Wenmeng Liu <quic_wenmliu@qualcomm.com>
+> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Bjorn Andersson <andersson@kernel.org>
 
 Applied to for-next, thanks!
 
 
---sCEER0/hlgH7qpUm
+--TwqxwFyp512nx4Nw
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmjElgsACgkQFA3kzBSg
-KbZvmxAAjntXh3QhT7wW/5CITKV7K1xT5vhMhtTSjW+iA02PdhjJsv1mAxyVwAE0
-7tvE82O9P/5lOy8ez3BViXwyieZE9F5FzHQ69+dxsCN2B8SJjmu4EEsoqRUXgnQd
-1AI5fqQEWBPB+DIVtKcmJCx5bnW3KvuNAS4s2zTNsGkALE1eUCUCmJZ2DOOBZiav
-fMaa22Wf3ohLffkiyz9p+CnqN3J78TjEwH57hc6gK6+BpJt4/5E2yFhyXsxlw7WW
-AT8+gkXkanWonFgEfeZmfhqcwp94u1iKO2Zf2H/mp4lWlxEbeKbyzc3YEQZgmz0s
-e0o2EsCBK8fQAQGCy4bz3kSYhUk8vZa9SH7D8gXv/ny+Dl+KSyGnwKcEfnnd6ehM
-lgnQbg8+YlEMVN+m5x6LT4Ly/9qz7DYhyCXo+0lKzTZKJj5sOi1XDyvR3ohisrun
-yVKUl4PweaW5SoPNEC6fK2Fras2BxCK/XLD1bsDuSHWkZ+y7NGP7KcJoiCcyKsO1
-KhY7+K++xIfB7z+aknPsK5+ojAP3niWK/izB5kOIFPnUIrdiSxlyGfmPBUupBwVS
-dICWSzxG1zfcr26fGvDnAYC5nr83gu3y6Mp2919JwE8hnB4AnThy4s7pWBv0Qr4P
-hTeFF3yx5pIsHo6RQ03xTUGD+ITc90w0JM54oDE9V81vMtaU0EI=
-=5/Pv
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmjElycACgkQFA3kzBSg
+Kbb52hAAh84yHSLR1P+kekpFCx+Lc6xyWCddGRbFA7rNbRc5jU+zpfwCnV4/rPYS
+aPc5XKDJMyL5I2q7Tfy6ZwKQktIEDUhNIW5PX1OlifgG8CnMnuls1NTAi5cfBU1N
+gcmHFxNo+gXyahQCIo8ISwusT25b/IoYF+kocfGWJPZGbVUliQABTozDLJLfzv9D
+VOrdFuA5N6jNkkcHX/bUkJ93jpH2LWkJ1DrDUUfZoCLblBhVgDs35RB2QjZSOOV8
+aUnduyJi2ql0KyxX1r6Ko+tGcwMNqy5POJUg0D/CywS9Er7vZBm9ODAims8n5RDo
++GQEi9HIWzrJKNq72RxHkoDL/RmtR5QcKeNepfATXtVBY4XN7HxQQlaITgHqursI
+CvYsjp87h0MEST8Z+37lOopfE3MfjY0RL9m2Olgavm6+l5WCPIeg7BClPDHYDLiJ
+kjj6Tdwp1JG7ybSG91MsxgXFzfa0CwMsmxOlauzqjpksv08Rzw9lUrWq4GKqbdPO
+xcR0mon33FezjBMVgP9aYF038oZiODYPX64Mlu3/7It0tdPIWIEWqMrLc5e8Ba/B
+RC/wQCqgXdBHXEfdrF8/xnxMq9KC14jjz/PZucUPazMY0Nll5OkRIpcHZAK3Hc1A
+U5AaBUOBIN71F4cP/Wj6gvVlCxA3bAXrT/zn8qSgPiXxzC9LtNs=
+=ZGzr
 -----END PGP SIGNATURE-----
 
---sCEER0/hlgH7qpUm--
+--TwqxwFyp512nx4Nw--
 
