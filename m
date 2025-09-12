@@ -1,211 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-73254-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73258-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C96DB5457E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:33:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38B15B54595
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:35:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 487A4AA2854
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:33:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id DB738178244
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:35:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C81D26F293;
-	Fri, 12 Sep 2025 08:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 563982D4B6F;
+	Fri, 12 Sep 2025 08:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HveAS/BL"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jFC4YKLZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E1B727055E
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 08:32:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1425927057B;
+	Fri, 12 Sep 2025 08:35:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757665964; cv=none; b=WM+OGcs1B+Yeah7mH9torw6kWpbqVrrkc3DflUPgqxyiK1fnVK/84Z+yLjWeaHxkOHiTzv7EURigmtgNp8Eh5Fm9GJYYiF/rb0bghExqbhkf4EHclMnS3NrVvypfM2MZ7HlkqbRbytXF4lpO1y/GzcqG1jkNHtSNi9mpP4GLBt4=
+	t=1757666122; cv=none; b=aZa9mpOHi8FjbMhUepgT/5JCTEF+FvccVomKF8xhfpMTDvZMzT0Ctlonwl9BKjYtYugyLiFWZXPiGhk94NrAU7wvsEppItyBIeZlcxHQ77++avDNxcwVL+kd9D2BrDbn1gd0vPEQ2WN4AeiCukZtjIz5hgkXUj6hmhSRcuEgC5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757665964; c=relaxed/simple;
-	bh=t66MAn3Nwvg/BgkzEKFhUiREcUiVPhCJxUavfb35i20=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jSzTXmkgMgPG+O6chmR43hbeLRRZQK/+WxCC6knsq6M2UZKxjYp+WZF2/9oMYPRdUu1ze39gnSfBrDTpYI+D4kO6B+RWQURbBl0EsbrOis8QArf2Lw3Jzeytga3uxq1Ez6doN8Yb/KpVWF1NRSZA/mswfomBx/m+HMJOSd9j8Ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HveAS/BL; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58BNCThj002450
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 08:32:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=tE9A84HrisC
-	i01MLhVRRDnJjMb3SqJek9fgYZmAL/Is=; b=HveAS/BL1UxPgA3ZICkYhLY6gMS
-	QZ8j0J6+BwIKOnKehm0FmeyfJcgSONFGrj/yzAyczZ3OLVBlFM4M7VMbOQPCqPN6
-	uZJKZvmtztE9rp797meVPMi2eKJaWVJN7lDpG/oHUm7yM7GlQcfDpSFVgw18g8Ik
-	733ZRK5aqGafvx/Bqj4pDsj7tJQe7ETrBVAyNn8QLhgPv1LwXkBoubGD1aT1X6SQ
-	2T5uxaZ5avl3pvHDiSJwr5lE1G+TYAosdPd/KoznGhIOBidiTCT4t4y9wBvL0Q2Z
-	fGutjmT7rFwWD2CSZmkXFJX0/bGrgxwEEHxUChGMSKn95hsVf2U2zYKrWvQ==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 493ydv30qc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 08:32:41 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-7585b6deccaso29794496d6.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 01:32:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757665960; x=1758270760;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tE9A84HrisCi01MLhVRRDnJjMb3SqJek9fgYZmAL/Is=;
-        b=Hbcm+URRJRUxJwNkG1R7rWl8GpQmJXP+MzH/4H0dFTUu+VmyelboW9GGJCd/tMjJzV
-         v8Bs0aYBGNdycEazANV9S+/NFveE4AjRnMtE/un/9CdKlMeTtJU7OyAy2gBLKnNLmE3R
-         QFvpB/Sjc+wY+UkCqomE25f7Fz8HnATsPZHwTZrxSSZNzwas7YlGXpK/Jgyt6/Wyfiux
-         R6A3jq6OyN4nxd//uIT2I3LrCuqQpf1lBS0hvPNQuoFb3c/L1olGyW5cGZTjAeGo85Er
-         23xoBVoPCMaMh5NXPHTVLeCtGBplc31a2JV5vOqjUz1DGKv278KAIGtxtwxj1T+88Plt
-         uDKg==
-X-Forwarded-Encrypted: i=1; AJvYcCWEA3x66JJDX734LU21o/SIMNLTy2JvKA+x5MyMK+8URv6tpnlbgYIvdPggRiZ2h6QKR8aDopSMPmylGNq6@vger.kernel.org
-X-Gm-Message-State: AOJu0YzERJqTHkweojDVyiOyIM6AcvRMY4loblVSozOd7tQSbHNLj9qq
-	Ish2Tjisi2xiT1WPcJJSdEhDGVDjiONd6+/7ST8lqEjUKakYh2GQiSY2ftERag8Yuf+CZuqTI8t
-	E7Uyo4Z8AhajEBpBxsWOcytZVJXiLCmCyNUXeuNxk63XYpVOkNj5jL0oAygoh0uaZ49MP
-X-Gm-Gg: ASbGncs8hwORdkYYnL0O1UpmHjEa81LNITgC0lrYQ5X/jrP7OdarJoj853Ti4aFol98
-	IfDfeGasM02pe8M+sqqbEZygp93evEd/a/dKrY4uaX8UzcPg86Dx2Gb+xdzsFNyorJoAXgkp/5F
-	wlMBCR4EYnVzB8ItHJzCQKnBuLMvZgRwGCXQytUVRcGmHkWHZxr2hzhibx6BT7rLSpz0WvF6gNZ
-	2esiYZS3k8n6qJEPyH6pF1yCtPCbSOwC9b0JVLUCaPWwPJxc4dw7yh/V6G1r1CVTrgn+CerEizP
-	Cs0KpvBQ7tIy5M1OtABjYulQ9L3hvIK71zIUbwNGJWrXPLEGFc8qvw==
-X-Received: by 2002:a05:6214:4102:b0:730:df1e:a99d with SMTP id 6a1803df08f44-767bcfa78e3mr24804036d6.17.1757665960298;
-        Fri, 12 Sep 2025 01:32:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGhdT74E29k2br0fqsuCFK/2Qpd+RB91i3IK7DqDnADWFd8rcV8unpUlG3DNZckWdx7yuUN5w==
-X-Received: by 2002:a05:6214:4102:b0:730:df1e:a99d with SMTP id 6a1803df08f44-767bcfa78e3mr24803856d6.17.1757665959871;
-        Fri, 12 Sep 2025 01:32:39 -0700 (PDT)
-Received: from debian ([5.133.47.210])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e017c1dd3sm31247265e9.2.2025.09.12.01.32.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 01:32:39 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-To: robh@kernel.org, krzk+dt@kernel.org, vkoul@kernel.org
-Cc: conor+dt@kernel.org, srini@kernel.org, yung-chuan.liao@linux.intel.com,
-        pierre-louis.bossart@linux.dev, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, alexey.klimov@linaro.org,
-        linux-sound@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Subject: [PATCH v4 7/7] soundwire: qcom: adding support for v3.1.0
-Date: Fri, 12 Sep 2025 09:32:25 +0100
-Message-ID: <20250912083225.228778-8-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250912083225.228778-1-srinivas.kandagatla@oss.qualcomm.com>
-References: <20250912083225.228778-1-srinivas.kandagatla@oss.qualcomm.com>
+	s=arc-20240116; t=1757666122; c=relaxed/simple;
+	bh=qyyu6lVr8aS+pwNpu2pxm2nQHlu6k5+BhoJaWT8jQsw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=h6iqRSz8cEic7orkTF+leGnrsO1zvKQWMfHLGRS/rMXnSeB6I8g3FYLAovAF/fd8FUYyKVbbXKN5m5YnZXZDDPZgkDCaCKS0qam4vjBf3CZH7juVyH0e0EjS2N1AbvOuCPSvRvskqF7+zAI/vi4mIRY9JapxM0OPrj7iTFBBnWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jFC4YKLZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 8EE7EC4CEF4;
+	Fri, 12 Sep 2025 08:35:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757666121;
+	bh=qyyu6lVr8aS+pwNpu2pxm2nQHlu6k5+BhoJaWT8jQsw=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=jFC4YKLZg4ZbsE9yxOXo4QhDWOqTv8tjEafMd+i7BqaLflOrs0ZXGxsYpGYHTtyWC
+	 mwMUQnyrKX7229cEkf8RUyTKdYzZIyxU/6PJ+tKrBGeBMNTVh5wKE3PDYI5Jx+ucyd
+	 HGrrG55jhnT7j44xjPy4VqnhLG54j6Z8YN4Imbqtr+Uh0bBjgPbPVRJxDYqDeebWqC
+	 wJt/yrnHmmilQIbwoMV5b0V0q9yAqBDkGozSwNSBqcC2qKUq65mS/sTC6Ks3mNtr7n
+	 0QSzgDDq7OKvVPaQm2Q0Df08yQkbuoWXezmczmnHzte787Yw82ebsipZu9jEeng7Sd
+	 hc/cof3RKZBAw==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 7DC0ECAC593;
+	Fri, 12 Sep 2025 08:35:21 +0000 (UTC)
+From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
+Subject: [PATCH v3 0/4] PCI/pwrctrl: Allow pwrctrl framework to control
+ PERST# if available
+Date: Fri, 12 Sep 2025 14:05:00 +0530
+Message-Id: <20250912-pci-pwrctrl-perst-v3-0-3c0ac62b032c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTExMDEyMCBTYWx0ZWRfX/birGUMG3hKz
- Ic+dnCHYUmgLqbYxGG0X7l2Iwuf2MVXLXbCAo4KEBMXg1Dro3iNXRh8DiMlNr4sAm+oo+/yF9o5
- YFE3AIil411nEUGR8Dm4I/PQ7lXhvKZqRm4ZVUTeQoS30JZui0zhXveC517mLvxheQEvu0czKP5
- woME6YQkyB/LYHnv1+yVI3za21QFmpehryEvfOsqGUE6K+IV/4ybYxkWhlAhihg9IMytCtFeuE/
- TRrRnyHF2hqX1GwPHEHS5lI5BiV4i4Yee8w01WHO4VD+/jn3ul9PLmUBM27obx/vIg5qQCuRiUF
- 9eS5cPdUoH+R/FLBMo2zBxJtm63o/HcV7LNW649BL3lkkDqtJPEFr9bTgz2kAujV61VSG9R14f9
- O8Ht9Q53
-X-Proofpoint-GUID: 4WYp5lODcsTYs-wc9sCOUj9hTugbjDW6
-X-Proofpoint-ORIG-GUID: 4WYp5lODcsTYs-wc9sCOUj9hTugbjDW6
-X-Authority-Analysis: v=2.4 cv=LoaSymdc c=1 sm=1 tr=0 ts=68c3daa9 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=2e052FzMMQUWBbw-z-wA:9
- a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-12_03,2025-09-11_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0 impostorscore=0 suspectscore=0 clxscore=1015
- malwarescore=0 phishscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509110120
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADTbw2gC/23NSw7CIBCA4as0rKUZKH258h7GRYHRkrSCUFHT9
+ O7SJsZNN5P8k8w3MwnoDQZyzGbiMZpg7D1FcciI6rv7DanRqQkHXkLDGuqUoe7l1eQH6tCHiYK
+ UtdYVl6XgJN05j1fz3szzJXVvwmT9Z3sR2br9ae2OFhkFKmQt2rrRHKA+2RDyx7MblB3HPA2yo
+ pH/oRaKPYgniGtRMdSAULEdaFmWL++6HykCAQAA
+X-Change-ID: 20250818-pci-pwrctrl-perst-0bb7dd62b542
+To: Manivannan Sadhasivam <mani@kernel.org>, 
+ Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+ =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, Saravana Kannan <saravanak@google.com>
+Cc: linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+ Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
+ Brian Norris <briannorris@chromium.org>, 
+ Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>, 
+ Bjorn Helgaas <helgaas@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6268;
+ i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
+ bh=qyyu6lVr8aS+pwNpu2pxm2nQHlu6k5+BhoJaWT8jQsw=;
+ b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBow9tH4sj+7abdCzaJm5sybCBQUIhypL2tNyEbN
+ DOK7mxLyjWJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaMPbRwAKCRBVnxHm/pHO
+ 9dCsCACOiqSBWO6U6Yc8SFQLOvnVQ+8M1S9l5b/fj1r/NKFeg1umUjpEaQW+4pxCu8xKBi2V15B
+ LVgYRfhENYTRYnftMMHhvZvKSYMifbzpaMyNkbhBhsGbM6lH/9/suD9U7pnrWB3wz007VRPzp/A
+ FO0+uc3TQbkFpyleK5h2AT5kghoW53an/ICC4v83CLIn+LZzOYxI5dmRzTpUNZL7XzUkOzTskcD
+ kNqT+R4gWzqWVry9V+bM6bCdkXYyONUsbJ9k4itKkfPGMnzQNQ4vPjLsEWpMUVazWN7Y4w2VpaO
+ RYIlt+lsmNhC3x44Z9VpxDuI6OWCoNEE2aGYJy6r5k/9Y6iD
+X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
+ fpr=C668AEC3C3188E4C611465E7488550E901166008
+X-Endpoint-Received: by B4 Relay for
+ manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
+X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+Reply-To: manivannan.sadhasivam@oss.qualcomm.com
 
-Add support for controller version v3.1.0, which has changes in
-register layout and some register fields compared to v2.0.
+Hi,
 
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+This series is the proper version for toggling PERST# from the pwrctrl
+framework after the initial RFC posted earlier [1].
+
+Problem statement
+=================
+
+Pwrctrl framework is intented to control the supplies to the components on the
+PCI bus. However, if the platform supports the PERST# signal, it should be
+toggled as per the requirements in the electromechanical specifications like
+PCIe CEM, Mini, and M.2. Since the pwrctrl framework is controlling the power
+supplies, it should also toggle PERST# as per the requirements in the above
+mentioned specifications. Right now, it is just controlling the power to the
+components and rely on controller drivers to toggle PERST#, which goes against
+the specs. For instance, controller drivers will deassert PERST# even before the
+pwrctrl driver enables the supplies. This causes the device to see PERST#
+deassert immediately after power on, thereby violating the delay requirements in
+the PCI Electromechanical specs.
+
+Proposal
+========
+
+To fix this issue, the pwrctrl framework has to control the PERST# signal. But
+unfortunately, it is not straightforward. This is mostly due to controller
+drivers still need to assert PERST# as a part of their own initialization
+sequence. The controller drivers will parse PERST# from the devicetree nodes
+even before the pwrctrl drivers get probed. So the PERST# control needs to be
+shared between both drivers in a logical manner.
+
+This is achieved by adding a new callback, 'pci_host_bridge::perst_assert'. This
+callback if available, will be called by the pwrctrl framework during the power
+on and power off scenarios. The callback implementation in the controller driver
+has to take care of asserting/deasserting PERST# in an implementation specific
+way i.e., if the PERST# signal is a GPIO, then it should be toggled using gpiod
+APIs, or if the signal is implemented as a CSR, then the relevant registers
+should be written.
+
+Ideally, the PERST# delay requirements should be implemented in the pwrctrl
+framework (before/after calling the callback), but some controller drivers
+perform some post-link_up operations requiring them to control the delay within
+the driver. Those drivers may use this callback to assert/deassert PERST# and
+perform post-link_up operations.
+
+For reference, I've implemented the callback in the Qcom RC driver where it just
+asserts/deasserts PERST# and handles delay. Since the Qcom driver supports both
+legacy DT binding (all Root Port properties in host bridge node) and new binding
+(Root Port properies in Root Port node), I've moved the PERST# handling to
+pwrctrl driver only if the newly introduced 'qcom_pcie::legacy_binding' flag is
+not set. This flag if set, implies that the platform is using the legacy DT
+binding, so the controller driver has to control PERST#. 
+
+DT binding requirement
+======================
+
+This series has some assumptions on the DT binding. But some of them are not
+enforced right now:
+
+1. Pwrctrl driver requires the PCIe device node to have atleast one -supply
+property. Those supplies are already documented in the dtschema [2], but they
+are optional. So if those supplies are not present, pwrctrl driver will not get
+probed. For platforms having a fixed power supply to the components, they should
+describe those fixed supplies in DT. Otherwise, they cannot use pwrctrl drivers.
+(NOT ENFROCED)
+
+2. Optional PERST# GPIO (reset-gpios property) is only allowed in the bridge
+node in the DT binding [3]. So for looking up the PERST# for an endpoint node,
+the controller driver has to look up the parent node where PERST# would be
+available. (ENFORCED)
+
+3. If shared PERST# is implemented, all the bridge nodes (Root port and switch
+downstream) should have the same 'reset-gpios' property. This way, the
+controller drivers parsing PERST# could know if it is shared and invoke relevant
+gpiod APIs/flags. (NOT ENFORCED)
+
+I don't know how we can make sure DT binding enforces option 1 and 3.
+
+Testing
+=======
+
+This series is tested on Qcom X1E based T14s laptop, SM8250 based RB5 board, and
+QCS6490 based RB3Gen2 board with DTS specifying Root Port properties in host
+bridge node and in Root Port node.
+
+[1] https://lore.kernel.org/linux-pci/20250707-pci-pwrctrl-perst-v1-0-c3c7e513e312@kernel.org/
+[2] https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/pci/pci-bus-common.yaml#L173
+[3] https://github.com/devicetree-org/dt-schema/blob/main/dtschema/schemas/pci/pci-bus-common.yaml#L141
+
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
 ---
- drivers/soundwire/qcom.c | 37 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 36 insertions(+), 1 deletion(-)
+Changes in v3:
+- Dropped the pci_pwrctrl_init() move patch as it is no longer required
+- Added a patch to cleanup the usage of 'phy' and 'reset' pointers
+- Renamed the callback from 'toggle_perst' to 'perst_assert'
+- Reworded the patch descriptions
+- Link to v2: https://lore.kernel.org/r/20250903-pci-pwrctrl-perst-v2-0-2d461ed0e061@oss.qualcomm.com
 
-diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-index 5baf831f49ab..17afc5aa8b44 100644
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -31,6 +31,7 @@
- #define SWRM_VERSION_1_5_1					0x01050001
- #define SWRM_VERSION_1_7_0					0x01070000
- #define SWRM_VERSION_2_0_0					0x02000000
-+#define SWRM_VERSION_3_1_0					0x03010000
- #define SWRM_COMP_HW_VERSION					0x00
- #define SWRM_COMP_CFG_ADDR					0x04
- #define SWRM_COMP_CFG_IRQ_LEVEL_OR_PULSE_MSK			BIT(1)
-@@ -40,6 +41,9 @@
- #define SWRM_COMP_PARAMS_RD_FIFO_DEPTH				GENMASK(19, 15)
- #define SWRM_COMP_PARAMS_DOUT_PORTS_MASK			GENMASK(4, 0)
- #define SWRM_COMP_PARAMS_DIN_PORTS_MASK				GENMASK(9, 5)
-+#define SWRM_V3_COMP_PARAMS_WR_FIFO_DEPTH			GENMASK(17, 10)
-+#define SWRM_V3_COMP_PARAMS_RD_FIFO_DEPTH			GENMASK(23, 18)
-+
- #define SWRM_COMP_MASTER_ID					0x104
- #define SWRM_V1_3_INTERRUPT_STATUS				0x200
- #define SWRM_V2_0_INTERRUPT_STATUS				0x5000
-@@ -296,6 +300,32 @@ static const struct qcom_swrm_data swrm_v2_0_data = {
- 	.reg_layout = swrm_v2_0_reg_layout,
- };
- 
-+static const unsigned int swrm_v3_0_reg_layout[] = {
-+	[SWRM_REG_FRAME_GEN_ENABLED] = SWRM_V2_0_LINK_STATUS,
-+	[SWRM_REG_INTERRUPT_STATUS] = SWRM_V2_0_INTERRUPT_STATUS,
-+	[SWRM_REG_INTERRUPT_MASK_ADDR] = 0, /* Not present */
-+	[SWRM_REG_INTERRUPT_CLEAR] = SWRM_V2_0_INTERRUPT_CLEAR,
-+	[SWRM_REG_INTERRUPT_CPU_EN] = SWRM_V2_0_INTERRUPT_CPU_EN,
-+	[SWRM_REG_CMD_FIFO_WR_CMD] = SWRM_V2_0_CMD_FIFO_WR_CMD,
-+	[SWRM_REG_CMD_FIFO_RD_CMD] = SWRM_V2_0_CMD_FIFO_RD_CMD,
-+	[SWRM_REG_CMD_FIFO_STATUS] = SWRM_V2_0_CMD_FIFO_STATUS,
-+	[SWRM_REG_CMD_FIFO_RD_FIFO_ADDR] = SWRM_V2_0_CMD_FIFO_RD_FIFO_ADDR,
-+	[SWRM_OFFSET_DP_PORT_CTRL_BANK]		= 0x1224,
-+	[SWRM_OFFSET_DP_PORT_CTRL_2_BANK]	= 0x1228,
-+	[SWRM_OFFSET_DP_BLOCK_CTRL_1]		= 0x122c,
-+	[SWRM_OFFSET_DP_BLOCK_CTRL2_BANK]	= 0x1230,
-+	[SWRM_OFFSET_DP_PORT_HCTRL_BANK]	= 0x1234,
-+	[SWRM_OFFSET_DP_BLOCK_CTRL3_BANK]	= 0x1238,
-+	[SWRM_OFFSET_DP_SAMPLECTRL2_BANK]	= 0x123c,
-+};
-+
-+static const struct qcom_swrm_data swrm_v3_0_data = {
-+	.default_rows = 50,
-+	.default_cols = 16,
-+	.sw_clk_gate_required = true,
-+	.max_reg = SWR_V2_0_MSTR_MAX_REG_ADDR,
-+	.reg_layout = swrm_v3_0_reg_layout,
-+};
- #define to_qcom_sdw(b)	container_of(b, struct qcom_swrm_ctrl, bus)
- 
- static int qcom_swrm_ahb_reg_read(struct qcom_swrm_ctrl *ctrl, int reg,
-@@ -919,7 +949,11 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
- 	swrm_wait_for_frame_gen_enabled(ctrl);
- 	ctrl->slave_status = 0;
- 	ctrl->reg_read(ctrl, SWRM_COMP_PARAMS, &val);
--	ctrl->wr_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_WR_FIFO_DEPTH, val);
-+
-+	if (ctrl->version >= SWRM_VERSION_3_1_0)
-+		ctrl->wr_fifo_depth = FIELD_GET(SWRM_V3_COMP_PARAMS_WR_FIFO_DEPTH, val);
-+	else
-+		ctrl->wr_fifo_depth = FIELD_GET(SWRM_COMP_PARAMS_WR_FIFO_DEPTH, val);
- 
- 	return 0;
- }
-@@ -1785,6 +1819,7 @@ static const struct of_device_id qcom_swrm_of_match[] = {
- 	{ .compatible = "qcom,soundwire-v1.6.0", .data = &swrm_v1_6_data },
- 	{ .compatible = "qcom,soundwire-v1.7.0", .data = &swrm_v1_5_data },
- 	{ .compatible = "qcom,soundwire-v2.0.0", .data = &swrm_v2_0_data },
-+	{ .compatible = "qcom,soundwire-v3.1.0", .data = &swrm_v3_0_data },
- 	{/* sentinel */},
- };
- 
+Changes in v2:
+- Reworked the PERST# lookup logic to use the node pointer instead of BDF
+- Added PWRCTRL guard to the toggle_perst callback
+- Link to v1: https://lore.kernel.org/r/20250819-pci-pwrctrl-perst-v1-0-4b74978d2007@oss.qualcomm.com
+
+Changes since RFC:
+* Implemented PERST# toggling using a callback since GPIO based PERST# is not
+  available on all platforms. This also moves all PERST# handling to the
+  controller drivers allowing them to add any additional post-link_up logic.
+
+---
+Manivannan Sadhasivam (4):
+      PCI/pwrctrl: Add support for asserting/deasserting PERST#
+      PCI: qcom: Move host bridge 'phy' and 'reset' pointers to struct qcom_pcie_port
+      PCI: qcom: Parse PERST# from all PCIe bridge nodes
+      PCI: qcom: Allow pwrctrl core to control PERST# if 'reset-gpios' property is available
+
+ drivers/pci/controller/dwc/pcie-qcom.c | 269 ++++++++++++++++++++++++---------
+ drivers/pci/pwrctrl/core.c             |  27 ++++
+ include/linux/pci.h                    |   3 +
+ 3 files changed, 227 insertions(+), 72 deletions(-)
+---
+base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+change-id: 20250818-pci-pwrctrl-perst-0bb7dd62b542
+
+Best regards,
 -- 
-2.50.0
+Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+
 
 
