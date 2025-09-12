@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73240-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73241-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C281CB544EE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:16:53 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FDB7B544F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:17:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7E0EDA03BED
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:16:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6EC16462146
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:17:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B072D286892;
-	Fri, 12 Sep 2025 08:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2CFD2D3735;
+	Fri, 12 Sep 2025 08:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D41uGx3x"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nys4mcEP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C26323E;
-	Fri, 12 Sep 2025 08:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E4C23ABB0;
+	Fri, 12 Sep 2025 08:16:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757665009; cv=none; b=DmHEeAtvUKXkT+Lx4nJ/2gFXxLQqEWdvLYA6zh1LNHpnR7OJyd3SkWW5sltlfcDTlYdSNxh9L4K5M8eUMAMar1dndEvKs6k06uIuHHpOcXsNjrgnRgCH4GVMFfq2bf1unGDKHCdxVt7fp2MJEFwZYJBcXsRarTFLePfY4RLb5og=
+	t=1757665016; cv=none; b=fpd/3buTy7HLCZDN1hjSTEOjIpI6Ol+dtRNSxpQXgex21aj65SdpqmEJfC5Zo72WK31vTTQq/XLsc2vaey4cRKlooYLu34nZWSoUgbLCjam/f0Ra8SRUMxdBHuKv7ykEPUKiwSXQVpA9g4XM5cRJOXi4EJQYs8DkqBws+o7Zoyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757665009; c=relaxed/simple;
-	bh=XJ2n9SmwjvxoSK9eBOvxgwgnG3+/Yy61BXcTx90j6cw=;
+	s=arc-20240116; t=1757665016; c=relaxed/simple;
+	bh=OA7uiQAHYjVBGxOPymVVw5kniAlBUw7k4eVOf6Otbek=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=OW+7+auQJ9eX34mym7oOINcYWg7fGC87epk7HINIn+bgAUhCqXYq/L/TLwUngL5jFqB/C/ehEXVwu2Cu0DMOOYsu6oiP8jfGZdefDL8XxY17MTxz3r5QzuyUWtpP092Z5b/dCKDihDUD4isATs1DSVjCEtYwkshnKHw+aAufkLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D41uGx3x; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB09C4CEF5;
-	Fri, 12 Sep 2025 08:16:45 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Bfx8RBLVJA2En8FncIBUkFhiyxRrOcr41w1q0aT7Yikc2k3gB5k2ZpTpccp3dfzYm6BoZ6nJTYhZFQZe4nc90anuMbp/uKd6el0TzRExYfO3VdS9/ni8UZR5hPfSCG0LMDNVGgc2ejg/hhEmibUOM6gBSsAnO+BcY6PrAaRkpLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nys4mcEP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDBBBC4CEF7;
+	Fri, 12 Sep 2025 08:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757665009;
-	bh=XJ2n9SmwjvxoSK9eBOvxgwgnG3+/Yy61BXcTx90j6cw=;
+	s=k20201202; t=1757665016;
+	bh=OA7uiQAHYjVBGxOPymVVw5kniAlBUw7k4eVOf6Otbek=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=D41uGx3xWn0IqTh19J9FD3V9xWCuN2GSmWFySBFB28ghYt0xJX0jfb22uPqam9X+W
-	 k8EjuY5V4lFwnrpsufbER1aHi5VI2FOgZ7OpukIXtbOT+TndkKfHeDFQol7pzwc13W
-	 VhG+N7/jX6qgK1yDgJ3aXFDAuRpM+YDAxcinuYs8yTdpgrKBAKJcGQOcI1aLUMNErv
-	 tWVdApyAkzM9WIWlhnwdLbo2m/yXMnxGWOgZmRaGAk1QOuVKwS4TxlGAq6ryADboYH
-	 ZYg0xEdvdQymnQwYRzURQKe7FEjs2a+6cEME3pLjbTyjGqINR7mBXLI5vvqgY2FQE9
-	 vVo2tkGFKl55Q==
-Message-ID: <1358ccb9-b8d3-4e5e-a2d9-eefc8be6b75e@kernel.org>
-Date: Fri, 12 Sep 2025 10:16:43 +0200
+	b=nys4mcEPGBNuRDsWBYpBoED1ChD5vHXHaO9CxXKsPkeMUtVLaSmv6GCSYp853ZkpB
+	 6uEd646CG1wjO/FMRI1GQeyI/M1uks7DIN13rpiA8/kf6aP84xYtM89yJ1QWT0Iyar
+	 Yk7kg9OCyX2Hc086vzyvlneTb7CP+9/H+77eTcH2VNW+8tmX2JhcxsRLcgYR+o8cPp
+	 88s7Ke1mHtsf6tI14tNwDZsPANn51YpZagzaPafBeHdsE/dTgVTkADN0BdH5jSpzyd
+	 Pd3sNkMwtmlVt/y7SEZmLZK6INFr83pkMBhBQphkCpz0G0jlWJaE4xbhSIZsUKWs2m
+	 qcKVfHljtXFzw==
+Message-ID: <bfa0396a-5773-428a-9f37-2ec7c2b60c0c@kernel.org>
+Date: Fri, 12 Sep 2025 10:16:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
- Q6A
+Subject: Re: [PATCH RFC 1/2] dt-bindings: arm: qcom: Add Radxa Dragon Q6A
 To: Xilin Wu <sophon@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -60,6 +59,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
  Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 References: <20250912-radxa-dragon-q6a-v1-0-8ccdbf9cd19b@radxa.com>
+ <20250912-radxa-dragon-q6a-v1-1-8ccdbf9cd19b@radxa.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -105,54 +105,17 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250912-radxa-dragon-q6a-v1-0-8ccdbf9cd19b@radxa.com>
+In-Reply-To: <20250912-radxa-dragon-q6a-v1-1-8ccdbf9cd19b@radxa.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 12/09/2025 10:03, Xilin Wu wrote:
-> Radxa Dragon Q6A (https://docs.radxa.com/en/dragon/q6a) is a single board
-> computer, based on the Qualcomm QCS6490 platform.
+> Radxa Dragon Q6A is a single board computer, based on the Qualcomm
+> QCS6490 platform.
 > 
-> The board ships with a modified version of the Qualcomm Linux boot
-> firmware, which is stored on the onboard SPI NOR flash. This allows
-> booting standard EFI-based bootloaders from SD/eMMC/USB/UFS/NVMe. It
-> supports replaceable UFS 3.1/eMMC modules for easy user upgrades.
-> 
-> The board schematic is available at [1].
-> 
-> Features enabled and working:
-> 
-> - USB-A 3.0 port (depends on [2])
-> - Three USB-A 2.0 ports
-> - RTL8111K Ethernet connected to PCIe0
-> - UFS 3.1 module (depends on [3])
-> - eMMC module
-> - SD card
-> - M.2 M-Key 2230 PCIe 3.0 x2
-> - HDMI 2.0 port including audio (depends on [2])
-> - Configurable I2C/SPI/UART from 40-Pin GPIO (depends on [4])
-> - Headphone jack
-> - Onboard thermal sensors
-> - QSPI controller for updating boot firmware
-> - ADSP remoteproc (Type-C and charging features disabled in firmware)
-> - CDSP remoteproc (for AI applications using QNN)
-> - Venus video encode and decode accelerator
-> 
-> Features available with additional DT overlays:
-> - CSI cameras
-> - DSI display
-> 
-> ALSA UCM and Audioreach topology patches are available at [5] and [6].
-> 
-> This series is posted as an RFC because it depends on several other patch series.
+> Document the top-level compatible for this board.
 
-
-Ah, here it is. That's the most important information, so should be
-placed at the top. You do not put the most important information hidden
-somewhere in the mail.
-
-
-Question about dependencies stays, though...
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
