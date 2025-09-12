@@ -1,87 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-73243-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73244-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94069B54534
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:24:55 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED573B54536
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 10:25:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 468495845C9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:24:55 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A1AA83B2C4F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 08:25:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A45A12D5938;
-	Fri, 12 Sep 2025 08:24:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dsBYbGeP"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB9032D3ED2;
+	Fri, 12 Sep 2025 08:25:31 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D36D02BD034
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 08:24:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F37648F5B;
+	Fri, 12 Sep 2025 08:25:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757665490; cv=none; b=iC/vUttJ1WPZYXdLsG0mKNuV8hwAgbu6h9Y4WRFmnCbFszcRQ5i1d9aSnxWLDMyV94W7jsZlkP5fu3JRb7SePH+nJx9557BfbB1MaKgksSSWb11GoV1duliTbMPgxg9MlG39FRhXVKLgakXkdf20zulZAFq0uj0ZakAlXSTzRc0=
+	t=1757665531; cv=none; b=tIG1JF1ZO7RkKQ968s862XQtuqPf3zaBqzIveluKIN25rR0YOD/geZ0Q6AL3Cteld0B1jdLR+ghwzJwAKdVBbzycRLvweGjRAyab2E2gQWpsCuan8pctAuvGNscauNkolZfHiTKRNNb9XgDSUhVdxUjDpm2b+GZzZM+O4dHEFkE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757665490; c=relaxed/simple;
-	bh=c7h9Q27UK5y6oTWNxiAxftK32pv1dy5kIKwvdxhl4+c=;
+	s=arc-20240116; t=1757665531; c=relaxed/simple;
+	bh=jHlaG8Rvrr89c3/jwlzVU9wBaMZ6AxQm70VM3ThbnXM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=WzHx7J2kacpTf2OX7Ydp1KLvx24T4I17TwVThiQ3Dm+mIFCRDBSr2IKM0QW/odA+tk5cYkrR8J7inR4GqK3ofqy7VuY/Q8fyGGyXnd2QrnBxushFFlaSYEe5Ccc0vwD9b2Uc1zAjfPnxZSI0EFv3Svpt0zAcHdugZca+X68flZI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dsBYbGeP; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58C7Fb4T005760
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 08:24:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4SH0XX3SgsxyMepXQCl5Yw/UL2nASzTn8GrajrDWYZo=; b=dsBYbGePNgHkuQPM
-	f7zUDwwRUVgYGuFZ4/e1DKDhPW2/bd9zesRy/Pw2LdaziWFFtZ03CKxkCaM62XHK
-	2prDK95B5XIEw8TJAkoPtYI+TC94O7BuTIp0oM1JdVKZzPpa0Z2TyeeoaNUsUmG2
-	ctvJI6uXq0Ed7bq8KYcbvR0LMdC3IxT36WR0Vbc5NH+Co7t7gW9At6BRCy3Woeze
-	H6V7IR97XIDtj2e99qBlYv/Xo1hotsz7WBQtyDiMM1HM4skiTVmkH96/e5yfzd7C
-	7BkZWHaqyHlASmvmb3igsjoUVIehP87VrPVFWhoJRE8rgD9/wm4btua2JFf52CDx
-	tNbLiQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 491vc2evp3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 08:24:47 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b5f9673e56so41549171cf.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 01:24:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757665486; x=1758270286;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4SH0XX3SgsxyMepXQCl5Yw/UL2nASzTn8GrajrDWYZo=;
-        b=Tow/YReigO1SMgjqVHv7cU9dq2tR9ICwln5S7lH8ADQSLJRSu7YIqTD+fJdTzbmnmo
-         B9pSbleo4LTVxegXi047bK2aZmXqmwKAZ6+F6OPV8QBkisfj1qIKucf61vOMF2q6y6ob
-         X3rZKZoquEkhrM7C0RudKNVOT7aG+bM4F7Pd7ESOcJLKC04qgNtbGlvglKASC+ucCdR3
-         Cyk+Uh19tLD/+hdrVFW3lOgPl6dZQiZth7DMosFwgEYk/jN2kWsnGcU3exZTH1dcW3Qf
-         65Eo4/v54gDF/a10D6CBPh6I8lJKLw+EQZNQpjtBUlBMNIWyqvT59SAY17j0Rvy5k1wE
-         WrVQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV9z07G9auSpLXjngnSWrj2bN8pOJ4TM1aQW75xCD9V2vckzo8oquHWRlOdsJPhQYY6YfjLfiY1st75u3qj@vger.kernel.org
-X-Gm-Message-State: AOJu0YyF+7/aTl4TonrcoZdo4qXs6Xoe+t1/rFRdcFefOKY2ZPJkuJGa
-	mlJG+U5Iy6K3wIrmY1xw7BrdNPZx6IElDNhTGNY+cj0iZaba7IzRO9OqmVcksGcd4USSWSmxlin
-	qFlQuVwNJL3ei/lLfUlx+fwp6awi0q+f77ZIznxArOXgTyZ8KcVGkr8qqwgLSH03MCBwT
-X-Gm-Gg: ASbGnct7JFPras6cUqe3kvueQZTgwDpxN+K4BLv/oKb3wtSoCOyfLe3HeZ1gUlbkzQ+
-	q1EwfgILqu1v4UDdjxd0C/ydULh0RWZavABFkE4UscbTMdzeKedubBflhs7aWjdMnr6AoGzlZAv
-	3j/RI9Orzsw32/5bV+ZVOjQPFxXgVQsxsyoBSKd+mXcDTsucIOTRcdizAgOsSDi/ed7gKQnCSe1
-	bWeqUR1fW+qDtYhYrQManeRK5gHGU0lhmUqNRT8Wq3oazlzTU0CoduckvcG8Dseqml2XfDxDxCh
-	LTMj31qpnWNx2DcEtAhh555okN2QHNY3xC5BfqGz/7KKZtPm76NfuoichpUyEo/UxIs=
-X-Received: by 2002:a05:622a:38e:b0:4b3:741:2e1f with SMTP id d75a77b69052e-4b77cffe1a9mr23797991cf.33.1757665486337;
-        Fri, 12 Sep 2025 01:24:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHLKAWYVzFXu0VdH8bA6tnAIFRvR1dTjyCMdu8Nq3rWmTeYzlGw2fKQER7HecLgzzIWTjTZCA==
-X-Received: by 2002:a05:622a:38e:b0:4b3:741:2e1f with SMTP id d75a77b69052e-4b77cffe1a9mr23797791cf.33.1757665485848;
-        Fri, 12 Sep 2025 01:24:45 -0700 (PDT)
-Received: from [192.168.68.120] ([5.133.47.210])
-        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3e760786c95sm5829984f8f.17.2025.09.12.01.24.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 12 Sep 2025 01:24:45 -0700 (PDT)
-Message-ID: <ca8d41c7-fcbd-4c99-a266-67b230ce0e9c@oss.qualcomm.com>
-Date: Fri, 12 Sep 2025 09:24:44 +0100
+	 In-Reply-To:Content-Type; b=TmUPO8a2uCwsvyhQCl6MDYea9kR0+j0AYk1Ai2sKFnujAkijna6S37loQGro/fXarrrjWCRgAUnpTPFS998ZaVbOK3GEV1ZhHjAfeD27H//EjRzfPuVQw9OKk3T/KcZdSFN2USwxYYO58M2s0+OU8ZCiyEiZgCi73E30Gvko3GI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpgz1t1757665514te2290d7d
+X-QQ-Originating-IP: Oy1QpcqzeLXgls4v6iC4lrcLJlW/95LBchnsiKAzef0=
+Received: from [127.0.0.1] ( [116.234.26.9])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 12 Sep 2025 16:25:12 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 1419117904616151380
+Message-ID: <A671BED7100C2766+849829a3-7da0-4d9d-817e-f8ce78daa56b@radxa.com>
+Date: Fri, 12 Sep 2025 16:25:12 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,168 +46,79 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/7] soundwire: qcom: add support for v3.1.0
-To: Alexey Klimov <alexey.klimov@linaro.org>, vkoul@kernel.org
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, srini@kernel.org,
-        yung-chuan.liao@linux.intel.com, pierre-louis.bossart@linux.dev,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-sound@vger.kernel.org
-References: <20250904105616.39178-1-srinivas.kandagatla@oss.qualcomm.com>
- <DCPK67SQ5DEI.2AFDVRKZSEWTS@linaro.org>
- <b7a637d1-8868-40f3-8f82-8f5ab0684d52@oss.qualcomm.com>
- <DCQLFI5WVIPR.192CD0VMBLD8Q@linaro.org>
+Subject: Re: [PATCH RFC 0/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
+ Q6A
+To: Krzysztof Kozlowski <krzk@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
+ Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+ Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+References: <20250912-radxa-dragon-q6a-v1-0-8ccdbf9cd19b@radxa.com>
+ <1ae48740-1788-4304-be86-455251a02ce3@kernel.org>
+From: Xilin Wu <sophon@radxa.com>
 Content-Language: en-US
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-In-Reply-To: <DCQLFI5WVIPR.192CD0VMBLD8Q@linaro.org>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <1ae48740-1788-4304-be86-455251a02ce3@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=FN4bx/os c=1 sm=1 tr=0 ts=68c3d8cf cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=OanP7MAFE5n8c4_CNIMA:9
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-ORIG-GUID: vqlsGZY_N8xMS_hBSgJWWp012465O08s
-X-Proofpoint-GUID: vqlsGZY_N8xMS_hBSgJWWp012465O08s
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTA4MDA5NCBTYWx0ZWRfX3cXuGhZaZQ5G
- TH+s9rro6Kb8eRzbGMWCEcwg1qP8Gv/Lr2a1y33N30+4yCBBS38RaoZaniVkoB4oYi5NmCHrrGW
- sXWliUfUrHWCojzRkbT+tR5X05CIoV+uu+6Mg5f1ebODyJsqPzYZqmnpzS9+AfUpVTGbiFIOT4m
- LFB2MUJdKt/NVzyvZqw4HIKeXu+4iWDqvHg8+g9Fnfi5AIViXkpRTy+rbWRD6F5ykhYokMclPDL
- NJ1ehGUUTXqRyltLu+OPjTldJdDmE4UYHMiZdun+7CUOn1xBUzU9e4E0cCjFmM15bFsQ6QyBRzR
- +KrLCuPH/Evjl+h/YycuHq5op0uDkIO6pnfjkwYaM7vTy04GgtE/o8SA6JrCxqnzuwPn3crndQX
- yVQcZetk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-12_03,2025-09-11_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 clxscore=1015 phishscore=0 adultscore=0
- bulkscore=0 impostorscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509080094
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: NL8LVyPxbWO0kNgjQuLRnZZ1+b/M9rvqqoCRJ8q9iPBATLUCvnpOmRUt
+	Wl2KRTbMuBlLowqXfg7MY4tQRoFRCTfGHUEcPszhchtgbZ6XSq0dKm/Z1rrER9J3aTe5MUg
+	wMDFnBzixyq1tzAXqhz9wYazE5QTPCcltZNp+radThbMmhA25kUAgFY3ECieCl7fqhv7J0q
+	3XQ3x6S5uzouh2RSuK+KzO/8HnepVtQKNWJxASyftyNAILohyCu7NAkSv2ufXTmlJDd6np0
+	j69dytnIqG5qPA0F5c8rpjv9qIdZDPG3kpJurlYi8Fsu4o1EppOZrsSZ2VxWh9ie8AkTBdh
+	Oy17FmtVXB5KpirR6OAd/jxa3VYmDpcg9MTNVZtpeUCC7Eh6CbVEYm0CdXdhdfunft35orr
+	Tx2wMUGH1dt+s26w6MeAP+w/qgkMr8vr9GPng0hdqIkTyJdMV8B4in3DC7XEQiPWEJJcfyp
+	Q87MiePvNeW5r8T7uVke49vOTRD4vwwr0WLUvZMGxr+nRJJn1uKzkLuTIaIilWVPPtcpX6m
+	IwjYiYiRGtnLIBFV7RIlPuuTgAQ3IUp2/tDMi7ykqkG4tkdla4MalAs4XKcYlbAufMjuiXB
+	Z/jQq+w5vLtVVhM+sk8pnJxsOZiCUZ0dEzaoIflHRI9qHpKpNTeyduGpr2Urx21tCFLOPva
+	Tg9T5BaAGHAY//HR6d5zXuRF4A/p4vAjLzy0uIQmot9jKVbyowH/ZLnaBveclytTP8d5yAd
+	ABZSDBaoTiWX6PT0ynIT2n5N9MvIrzSHaXEJjQukyeEdjj3+f0vukyC4uAEHogA+1FrKvn7
+	2BBkuwA6KTvAcKkJy9/V5ivhthsYOL10NrTN7ANIyubThHq2D/ck3VaX7szD737TScJBKNy
+	Qho+abTXuidGArVXiT3Sdm9aO+2rYEjZgI8uGxczh21UYUnV4rtA7RfKhF2eT01gKiTV0Ra
+	0P/sSqPgEkio1/t4uK373+m2ath/Bj2I4I5UV9AuttT+5JYWc/ccIVr1N9MWcD+VpzPB3FK
+	4ntjRrkAn2MNkeG2tB4FBt4dl1rLx4O4xuOsXcAw==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-On 9/12/25 7:04 AM, Alexey Klimov wrote:
-> On Thu Sep 11, 2025 at 7:16 AM BST, Srinivas Kandagatla wrote:
->> Thanks Alexey,
->>
->> On 9/11/25 1:52 AM, Alexey Klimov wrote:
->>> On Thu Sep 4, 2025 at 11:56 AM BST, Srinivas Kandagatla wrote:
->>>> This patch series adds support for Qualcomm Soundwire Controller
->>>> version v3.1.0.
->>>> As part for adding this support, a new macro of_property_read_u8_index()
->>>> is added so that we can remove the qcom,din-ports and qcom,dout-ports.
->>>> As v3.1.0 supports more than 17 soundwire ports. Also due to change in
->>>> the register offsets, new entries are added to the variant data.
->>>>
->>>> Tested this patchset on X14s and Glymur reference platform.
->>>
->>> Well, I don't have any Glymur devices and no idea what is
->>> x14s (I guess some laptop), but I picked the series locally to test
->>> on sm8550, it seems there are some generic changes, and
->>> qcom-soundwire probe failed:
->>>
->>>  remoteproc remoteproc1: powering up adsp
->>>  remoteproc remoteproc1: Booting fw image qcom/sm8550/adsp.mbn, size 8364
->>>  remoteproc remoteproc1: remote processor adsp is now up
->>>  qcom,fastrpc 6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1: no reserved DMA memory for FASTRPC
->>>  PDR: Indication received from msm/adsp/audio_pd, state: 0x1fffffff, trans-id: 1
->>>  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@3: Adding to iommu group 12
->>>  qcom,apr 6800000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:1
->>>  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@4: Adding to iommu group 13
->>>  qcom,apr 6800000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:2
->>>  PDR: Indication received from msm/adsp/charger_pd, state: 0x1fffffff, trans-id: 1
->>>  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@5: Adding to iommu group 14
->>>  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@6: Adding to iommu group 15
->>>  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@7: Adding to iommu group 16
->>>  qcom-apm gprsvc:service:2:1: CMD timeout for [1001021] opcode
->>>  platform 6800000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 17
->>>  va_macro 6d44000.codec: qcom,dmic-sample-rate dt entry missing
->>>  qcom-soundwire 6d30000.soundwire: probe with driver qcom-soundwire failed with error -75
->>>  sched: DL replenish lagged too much
->>>  platform sound: deferred probe pending: snd-sc8280xp: WCD Playback: codec dai not found
->>>
->>> Are there any dependencies I am missing?
->>
->> Can you pl try this change an see if it helps,
->>
->> ---------------------->cut<----------------------------------
->> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
->> index a7b6d9ecc3ba..622cc6c31264 100644
->> --- a/drivers/soundwire/qcom.c
->> +++ b/drivers/soundwire/qcom.c
->> @@ -1426,6 +1426,26 @@ static int qcom_swrm_get_port_config(struct
->> qcom_swrm_ctrl *ctrl)
->>         ctrl->num_dout_ports =
->> FIELD_GET(SWRM_COMP_PARAMS_DOUT_PORTS_MASK, val);
->>         ctrl->num_din_ports = FIELD_GET(SWRM_COMP_PARAMS_DIN_PORTS_MASK,
->> val);
->>
->> +       ret = of_property_read_u32(np, "qcom,din-ports", &val);
->> +       if (!ret) { /* only if present */
->> +               if (val != ctrl->num_din_ports) {
->> +                       dev_err(ctrl->dev, "din-ports (%d) miss match
->> with controller (%d)",
->> +                               val, ctrl->num_din_ports);
->> +               }
->> +
->> +               ctrl->num_din_ports = val;
->> +       }
->> +
->> +       ret = of_property_read_u32(np, "qcom,dout-ports", &val);
->> +       if (!ret) { /* only if present */
->> +               if (val != ctrl->num_dout_ports) {
->> +                       dev_err(ctrl->dev, "dout-ports (%d) miss match
->> with controller (%d)",
->> +                               val, ctrl->num_dout_ports);
->> +               }
->> +
->> +               ctrl->num_dout_ports = val;
->> +       }
->> +
->>         ctrl->nports = ctrl->num_dout_ports + ctrl->num_din_ports;
->>
->>         ctrl->pconfig = devm_kcalloc(ctrl->dev, ctrl->nports + 1,
->>
->>
->> ---------------------->cut<----------------------------------
+On 2025/9/12 16:12:54, Krzysztof Kozlowski wrote:
+> On 12/09/2025 10:03, Xilin Wu wrote:
+>> base-commit: 51095600e8c19d53729a7fbd273abc4435a25e9b
+>> change-id: 20250912-radxa-dragon-q6a-eedcdeaf3e66
+>> prerequisite-message-id: <20250902164900.21685-1-quic_rdwivedi@quicinc.com>
+>> prerequisite-patch-id: 257564b609217fda19c9f3424fcd9f6e2ce3ef3c
+>> prerequisite-patch-id: a8f21781f3bff140260100b74041752000c06000
+>> prerequisite-patch-id: b46127e2433ede17cc5e1a012f58041c6ef97b13
+>> prerequisite-patch-id: e8978c5a30373c3ff312b2c8720f586c389f18f8
+>> prerequisite-message-id: <20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com>
+>> prerequisite-patch-id: c7a057030b78afbbb231280de3765294c006c6f8
+>> prerequisite-patch-id: 56011305aa35e4c64fc7d63950764807cb81cc4d
+>> prerequisite-patch-id: c3d3b313ac6abe4ec10fd820b6a9bbc63fdbdb82
+>> prerequisite-patch-id: 63ee94d0ccd40f60a98b0004d627ad2e7b440d25
+>> prerequisite-patch-id: 392e8f1902571e5035d5af72e40dc474b5f1b274
+>> prerequisite-patch-id: e38fba722bdabc02ba09d2dc51df7010dbe28168
+>> prerequisite-patch-id: a3ca5dba8def5769ffb4b95df2963da60a736f96
+>> prerequisite-patch-id: 4c0fe8d677d73aaf1b5b842e072246d84729d1c4
+> So the RFC is because it cannot be yet merged? Please always add such
+> note in the cover letter.
 > 
-> Thanks. Yep, with that change it works/inits:
-> 
->  remoteproc remoteproc1: powering up adsp
->  remoteproc remoteproc1: Booting fw image qcom/sm8550/adsp.mbn, size 8364
->  remoteproc remoteproc1: remote processor adsp is now up
->  qcom,fastrpc 6800000.remoteproc:glink-edge.fastrpcglink-apps-dsp.-1.-1: no reserved DMA memory for FASTRPC
->  PDR: Indication received from msm/adsp/audio_pd, state: 0x1fffffff, trans-id: 1
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@3: Adding to iommu group 12
->  qcom,apr 6800000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:1
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@4: Adding to iommu group 13
->  qcom,apr 6800000.remoteproc:glink-edge.adsp_apps.-1.-1: Adding APR/GPR dev: gprsvc:service:2:2
->  PDR: Indication received from msm/adsp/charger_pd, state: 0x1fffffff, trans-id: 1
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@5: Adding to iommu group 14
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@6: Adding to iommu group 15
->  platform 6800000.remoteproc:glink-edge:fastrpc:compute-cb@7: Adding to iommu group 16
->  qcom-apm gprsvc:service:2:1: CMD timeout for [1001021] opcode
->  platform 6800000.remoteproc:glink-edge:gpr:service@1:dais: Adding to iommu group 17
->  va_macro 6d44000.codec: qcom,dmic-sample-rate dt entry missing
->  qcom-soundwire 6d30000.soundwire: dout-ports (0) miss match with controller (1)
+> Also, are you sure these are real dependencies? Like REALLY real
+> dependencies?
 
->  wcd938x_codec audio-codec: bound sdw:2:0:0217:010d:00:4 (ops wcd938x_sdw_component_ops [snd_soc_wcd938x_sdw])
->  wcd938x_codec audio-codec: bound sdw:3:0:0217:010d:00:3 (ops wcd938x_sdw_component_ops [snd_soc_wcd938x_sdw])
->  snd-sc8280xp sound: ASoC: Parent card not yet available, widget card binding deferred
->  va_macro 6d44000.codec: supply vdd-micb not found, using dummy regulator
->  ALSA: Control name 'stream0.vol_ctrl0 MultiMedia1 Playback Volume' truncated to 'stream0.vol_ctrl0 MultiMedia1 Playback Volu'
->  ALSA: Control name 'stream1.vol_ctrl1 MultiMedia2 Playback Volume' truncated to 'stream1.vol_ctrl1 MultiMedia2 Playback Volu'
->  ALSA: Control name 'stream4.vol_ctrl4 MultiMedia5 Playback Volume' truncated to 'stream4.vol_ctrl4 MultiMedia5 Playback Volu'
->  input: SM8550-QRD Headset Jack as /devices/platform/sound/sound/card0/input4
-> 
-> Playback works. Note the ports mismatch message ^^^
-Thanks for testing, I will fold in this change in this series.
+Well, I think these are indeed dependencies. The dtb does build without 
+them, but dtbs_check will fail. The board will also malfunction or 
+simple crash on boot without the DT and driver changes.
 
-This is very much the expected behavior.
-
-
---srini
 > 
-> Thanks,
-> Alexey
-> 
+> Best regards,
+> Krzysztof
 > 
 
+
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
