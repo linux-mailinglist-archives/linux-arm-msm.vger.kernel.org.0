@@ -1,75 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-73388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73389-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66936B55797
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 22:27:43 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 58CADB55799
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 22:27:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 897C11CC3ECB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 20:28:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 14B643BB115
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 20:27:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CC6022D12EC;
-	Fri, 12 Sep 2025 20:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 469692C236B;
+	Fri, 12 Sep 2025 20:27:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lZT/DteN"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQw90EGT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419612D0621
-	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 20:27:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B51305940
+	for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 20:27:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757708855; cv=none; b=ousmJ/A3fTjZMiL0M1xwgK1YMJCxEduVd3nnMW7MXU3M2yze9mWKjqyPU1nIId9bCR7JF6Ik1hzTyDkiTk25QHN1aWf9ylwRyaSp1+Jr3N9Ptac4MDld/3UtyEIYfiiuIG+ebG/iidDFy+xabCogjPg8Fp60Sp16IuA/qf0e2Uc=
+	t=1757708860; cv=none; b=Z4CsnOw3tlTo1jJ3J3JgiXff5ZXcNTsdlSvDjQ2jLwBxFLCi6o9JM4jd/ESt8S2LtbFA6cl6y0G2oc0J4tOL7BCVFb/gCgQLJimzkb/pEtL8HcfUSo3zwEeHdPCOtIeff/hK1T4fwlPVV09CeUrIoBfUlteR+KJTnHYqFDn2zgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757708855; c=relaxed/simple;
-	bh=dujsJO2u3jBI2Q1VgAxUbE/yO1TtRPjWotq8eGPgRXM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=liv2RJ74jhHwwlckCUfGg4JWraar8u13Se5xFZUCjtR6ddf78hv1VujRW7nqKsnm6Qz7vnFWpxAWebnfZbkoGvm8588ehbda9KAxhBTtUOMBSzctL/iyKoNU7fTxJW+DAWKq4kNm1d+XPv7sIMMU7/NLAMPb7BzyBKfGMp7Gcxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lZT/DteN; arc=none smtp.client-ip=209.85.210.173
+	s=arc-20240116; t=1757708860; c=relaxed/simple;
+	bh=KdBVnZAxu/f0jdaREIsPWjWbUPo+9pZ4VL2JdVmsAR8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=amvJy/Vk3z1X12NUunjVhOQA3gYYFdLeXzwGBDRzjyoTrC/eLdrJ29CbmFdunXf4t7u0z2YM/5ZgwkPsKA51mjgP5kzQuPHGqfm+efi4efIj2l6bDkoeyJdL3nBGD9MiG0zQwbVFuW+YjOt+mJKeXu2ZcLeU+M2flR4hP0ad4aQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQw90EGT; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-77256e75eacso2179788b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 13:27:33 -0700 (PDT)
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7723cf6e4b6so1983675b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 13:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757708853; x=1758313653; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=SwyolwhQDrgiO4NYVzDiwfA3KI0SBXDSnFTG9Vkn+vE=;
-        b=lZT/DteNf138LYyq0KULG1k+bYo3jjp+AzjRR/ytB3MTzQHoRk4bg9OZhFt8nSASni
-         tiJhOF6I+AggZn64ZCVYNHjOumBpgX78KleU40tuIyZqMr3HyUJCBvy/cn5o4+cEI414
-         +jaImcvq1u4AafMU4NUgjrt2rM94UCsP9/9SZx+Li6MrnaYvPuZM9o9fB2CzQlhGoVxB
-         KPXzJe2KYcOqKDNAp2xATSSxdmiB0yEA3+ox9Q8vDYGY3g1kF1Ac9NWWhs1qFf1vuM2d
-         FuwA3WrbfG4l22COcmWo0TPNG2vmj2+YgFDtSXt7KOKPBd+8bVKjYeOzLLJ772+Mh2+o
-         VMXw==
+        d=gmail.com; s=20230601; t=1757708858; x=1758313658; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YE3GYubdo1braKo3QL8VbxJmRniOCS+YTb/GoUUCFKU=;
+        b=nQw90EGT9todIan2zMOrfchq0m2ZAwSxEw50Sv6iwTBTyTo57pDGwWm4b9VwHRfXq3
+         7r9/A+Cd4+IdHdd7adVUH1HzB/Rbcfaxj7WrO5rEU6o1VZejXJJbfAm6+8i2YC2qoPg2
+         40rrRS0bhrrRckv682kQCl8ysrzy7gHMkKy9xHSa+HcqraahHWV0f8Gnu7U8VEZqVvpS
+         nfY/QiyFah1AdgkjJIU40f6wW0d2EtS1KSkUqVO6UdeE20DcFTTw+CXSpssDsRnLqxB+
+         2utTuOWDyMFrsdeLa1g3i/eQCL+lBljarhddfeneuGK9b3kdn7vwtigZUgRqLEhrsvQ2
+         47VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757708853; x=1758313653;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=SwyolwhQDrgiO4NYVzDiwfA3KI0SBXDSnFTG9Vkn+vE=;
-        b=pEiRsG8xymM/ZL8ISrYaPendUPgablxU1zq0jWXBq06fsRyB/kNRKKeOrHy2o8lMnj
-         LP0kK8FyA0Rwnbmh2xCdvHQxaHMeTDXD/PSnBiqV3f5lfRixTupE9albXNnnQzMgL73u
-         nnAduW7dvq/49gjm+qqMTe25SwrrSusuHJ2FfX+W9GTg5LWgYTHwudZYT5SUu1Y6y3qu
-         +ewKEU96iFQmJpMHB0cf6ydx+oMDpxxGtBcyNnuFDnB8/pN9NI6nND0oFTxAvBoaXICW
-         Kvn16npaEaCHN2upC0nkZdZyFna1L5AX39qg+0Yx5hDUFy5gzH8NbxFZu+YQYcbG0NQg
-         /t8Q==
-X-Gm-Message-State: AOJu0YzAiqQ9GhAB9ym+LIEEzPNVa6eXg2x/RlZnfsbKTdk2EjQoDD4n
-	3FdUYe8ExnGhmXK7rXof7NkIcg2vjwOFJM1huLqR70kteoaIsRd7w0AP
-X-Gm-Gg: ASbGnctAdzgIoawRFBurzIdSdQV7nyFy8ujvzqdtMwTmY6ID9VJ7QFPPIVFrRISlwC1
-	02yAAt+i8HwjSz0LTDCuU7Gy2ixgWUrnM1aAGOfl4mW5brfTFJjjG1u05qzCIV6igeNBO3/7pOk
-	bnMSLrq7QxjiiDYZ/94q8QAwhN9zNkcBBEdEHQXQlFkgsFafSYEdwftQga8M+shl3OHlwzp9fjc
-	iSG3HL6BI94naNToLVHLGpk427jRHdxBa5WwakRDMjl0JGyeGYMS+K5fraBKhCwWLYy3+Dk1zk4
-	xi88p4ovbw76LWwo/UjXhiCEYlvQoMe86VZ11xI9e1kAcLwA/oUziDjDJc1ddeXVb3oQhIqSsr5
-	ViABF/4jmaXhfKzv24ps=
-X-Google-Smtp-Source: AGHT+IFheXSdIhdPEt8rS6r+83Oefz7TiZIzXprM2ltNs7ZL4vZRxlqmCP33DNNES5cygvIkNHRs3w==
-X-Received: by 2002:a05:6a20:734c:b0:259:27fa:414e with SMTP id adf61e73a8af0-2602c050274mr5177410637.47.1757708853368;
-        Fri, 12 Sep 2025 13:27:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1757708858; x=1758313658;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YE3GYubdo1braKo3QL8VbxJmRniOCS+YTb/GoUUCFKU=;
+        b=opa6wu7Rezzf7GaJzjhNotQJWl0W8D2eTqwcy534z3zdzAGKULRvETveB4/ylhX87q
+         RRD2PNUTpdnyYlEiivydrT+xC1d07tBu8EgnRup66N40IXICxSP2Ihhnm6t+3MaU5R+u
+         k1E6ZKk6K3adhFBVTycbj/+1kDiAoJRUOHjX+osEQdsMWIv3zJoiYKCGNIYTpv/D+S2l
+         7yutKkg11AYAUO+NVDyxGWvI/pMSG2eb0c2FaCoUBoJTRqKo2KaNlfnoQEVZqiPd+P2D
+         y/S1vDhrRQ57rgkREv/dNRoPvRYjSOOOT4r2aopXWpYDBzd9T7lcuYFRftp1Zj6jsYnS
+         y1Cg==
+X-Gm-Message-State: AOJu0YxUVIK0749DXkB0LIDnRxLJbkReKt4nUHRniiaPqLDVzS5/f/FZ
+	5pE6ZZnzI5CtJ4GYUsqrNJWBr8VSwONvBcsMKO5vdLpJl724foTv8lmM2fmWREiC
+X-Gm-Gg: ASbGncsWnRSiIWRdYXJYUfzqpRDoAQU215HDs5jgM4Q3g4IcneHQ+UQZwn1+rRGkXMf
+	0a1HsWoGrBsppl4X7TkSvuSDLTEqJZqp7kGkSlP1H1GMUd8Ved7Z51UwSrLoc4t7JtFp/bWuaRK
+	t06mW3EwuXWDbscz2KTXK1OXutAjRzfxYfypnlDNE8tuLtwO5KONlKz+gDFoIo8f75rTBXmkOB9
+	yBNRHKTmHLBe0Zh4dsFRfJwtJXbMzT8XoxG9BzisIJ6imC1rKRgHV7npTFrpqt+aVIbXxl0mpOW
+	0ayhkfLLhshSkho8xQ1cgOFZ9ihY0ouMqMNLOrfQGfkKA4yyHKUATr2m1WQZRVeM2R2Ma9ruNCm
+	gfzaLvbwFOWbTZaMeW6CC+A078ZGwfg==
+X-Google-Smtp-Source: AGHT+IFvw6M81Uqea3q9MeDb/2jUwHTBlTDeDpS8zi1x5lzGzLpgoV9d8rW9kBVAsGB1U+PHiHpc5g==
+X-Received: by 2002:a05:6a20:42a3:b0:249:d3d:a50b with SMTP id adf61e73a8af0-2602cd277f6mr5318090637.59.1757708857959;
+        Fri, 12 Sep 2025 13:27:37 -0700 (PDT)
 Received: from archlinux ([152.245.61.23])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b54a32ea462sm5603995a12.0.2025.09.12.13.27.30
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b54a32ea462sm5603995a12.0.2025.09.12.13.27.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 12 Sep 2025 13:27:32 -0700 (PDT)
+        Fri, 12 Sep 2025 13:27:37 -0700 (PDT)
 From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
 To: Rob Herring <robh@kernel.org>,
 	Bjorn Andersson <andersson@kernel.org>,
@@ -80,10 +82,12 @@ Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	=?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-Subject: [PATCH v9 0/1] arm64: dts: qcom: add initial support for Samsung Galaxy S22
-Date: Fri, 12 Sep 2025 20:25:56 +0000
-Message-ID: <20250912202603.7312-1-ghatto404@gmail.com>
+Subject: [PATCH v9 1/1] arm64: dts: qcom: add initial support for Samsung Galaxy S22
+Date: Fri, 12 Sep 2025 20:25:57 +0000
+Message-ID: <20250912202603.7312-2-ghatto404@gmail.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20250912202603.7312-1-ghatto404@gmail.com>
+References: <20250912202603.7312-1-ghatto404@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -93,53 +97,182 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Changes in v9:
-- Change 'vph-pwr-regulator' to 'regulator-vph-pwr'
+Add new device support for the Samsung Galaxy S22 (SM-S901E) phone
 
-Changes in v8:
-- Rebase on 'arm64: dts: qcom: sm8450: Flatten usb controller node'
-- Use real name for sign-offs
-- Remove device tree binding patch as it's already in the tree, merged by
- Bjorn
+What works:
+- SimpleFB
+- USB
 
-Changes in v7:
-- Document the reserved GPIO pins, remove pin 50 as it does not
- need to be reserved
-- Clarify the phone isn't limited to USB 2.0 but rather USB 3.0
- isn't implemented yet
-- Add a newline before every 'status' node
-
-Changes in v6:
-- Remove debug features (bootargs, etc) that slipped in the v5 DTS
-- Format and organize nodes correctly based on existing DTS, 
- move "status = "okay";" to the bottom always
-- Solve "ddr_device_type" and "qcom,rmtfs-mem" warnings, the rest are
- from existing SoC .dtsi
-- Disable buttons, ufs and other features for later revision
-
-Changes in v5:
-- Properly format the thread
-
-Changes in v4:
-- Try to properly format the thread
-
-Changes in v3:
-- Removed unnecessary initrd start and end addresses
-- Make sure r0q is in right order on Makefile
-- Properly format memory addresses
-- Set r0q to the correct, alphabetical order in documents
-
-Changes in v2:
-- Attempt to format the patchset thread correctly
-
-Eric Gonçalves (1):
-  arm64: dts: qcom: add initial support for Samsung Galaxy S22
-
+Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
+---
  arch/arm64/boot/dts/qcom/Makefile             |   1 +
  .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 145 ++++++++++++++++++
  2 files changed, 146 insertions(+)
  create mode 100644 arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
 
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 94a84770b080..d311e637327e 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -285,6 +285,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx214.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8350-sony-xperia-sagami-pdx215.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-hdk.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-qrd.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-samsung-r0q.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx223.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8450-sony-xperia-nagara-pdx224.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= sm8550-hdk.dtb
+diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+new file mode 100644
+index 000000000000..b7533c2287b7
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+@@ -0,0 +1,145 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++/dts-v1/;
++
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++
++#include "sm8450.dtsi"
++#include "pm8350.dtsi"
++#include "pm8350c.dtsi"
++
++/ {
++	model = "Samsung Galaxy S22 5G";
++	compatible = "samsung,r0q", "qcom,sm8450";
++	chassis-type = "handset";
++
++	chosen {
++		#address-cells = <2>;
++		#size-cells = <2>;
++		ranges;
++
++		framebuffer: framebuffer@b8000000 {
++			compatible = "simple-framebuffer";
++			reg = <0x0 0xb8000000 0x0 0x2b00000>;
++			width = <1080>;
++			height = <2340>;
++			stride = <(1080 * 4)>;
++			format = "a8r8g8b8";
++		};
++	};
++
++	vph_pwr: regulator-vph-pwr {
++		compatible = "regulator-fixed";
++		regulator-name = "vph_pwr";
++		regulator-min-microvolt = <3700000>;
++		regulator-max-microvolt = <3700000>;
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
++	reserved-memory {
++		/*
++		 * The bootloader will only keep display hardware enabled
++		 * if this memory region is named exactly 'splash_region'
++		 */
++		splash-region@b8000000 {
++			reg = <0x0 0xb8000000 0x0 0x2b00000>;
++			no-map;
++		};
++	};
++};
++
++&apps_rsc {
++	regulators-0 {
++		compatible = "qcom,pm8350-rpmh-regulators";
++		qcom,pmic-id = "b";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++		vdd-s9-supply = <&vph_pwr>;
++		vdd-s10-supply = <&vph_pwr>;
++		vdd-s11-supply = <&vph_pwr>;
++		vdd-s12-supply = <&vph_pwr>;
++
++		vdd-l2-l7-supply = <&vreg_bob>;
++		vdd-l3-l5-supply = <&vreg_bob>;
++
++		vreg_l2b_3p07: ldo2 {
++			regulator-min-microvolt = <3072000>;
++			regulator-max-microvolt = <3072000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l5b_0p88: ldo5 {
++			regulator-min-microvolt = <880000>;
++			regulator-max-microvolt = <888000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	regulators-1 {
++		compatible = "qcom,pm8350c-rpmh-regulators";
++		qcom,pmic-id = "c";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++		vdd-s9-supply = <&vph_pwr>;
++		vdd-s10-supply = <&vph_pwr>;
++
++		vdd-l1-l12-supply = <&vreg_bob>;
++		vdd-l2-l8-supply = <&vreg_bob>;
++		vdd-l3-l4-l5-l7-l13-supply = <&vreg_bob>;
++		vdd-l6-l9-l11-supply = <&vreg_bob>;
++
++		vdd-bob-supply = <&vph_pwr>;
++
++		vreg_bob: bob {
++			regulator-min-microvolt = <3008000>;
++			regulator-max-microvolt = <3960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
++		};
++
++		vreg_l1c_1p8: ldo1 {
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1800000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++};
++
++&tlmm {
++	gpio-reserved-ranges = <36 4>; /* SPI (not linked to anything) */
++};
++
++&usb_1 {
++	/* Keep USB 2.0 only for now */
++	qcom,select-utmi-as-pipe-clk;
++
++	dr_mode = "peripheral";
++	maximum-speed = "high-speed";
++	/* Remove USB3 phy */
++	phys = <&usb_1_hsphy>;
++	phy-names = "usb2-phy";
++
++	status = "okay";
++};
++
++&usb_1_hsphy {
++	vdda-pll-supply = <&vreg_l5b_0p88>;
++	vdda18-supply = <&vreg_l1c_1p8>;
++	vdda33-supply = <&vreg_l2b_3p07>;
++
++	status = "okay";
++};
 -- 
 2.50.1
 
