@@ -1,126 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-73405-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73406-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52698B5628E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 20:30:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9622FB563C3
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 01:57:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 06C913AD57B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 18:30:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C589C17BEA5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 23:57:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7192A193077;
-	Sat, 13 Sep 2025 18:30:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3239A2C11C8;
+	Sat, 13 Sep 2025 23:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b="YDu11OzL"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="F1ZWOoN7"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-00069f02.pphosted.com (mx0b-00069f02.pphosted.com [205.220.177.32])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1D5347DD;
-	Sat, 13 Sep 2025 18:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.177.32
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 852351D5CC6
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Sep 2025 23:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757788228; cv=none; b=AzQqrro8jwQ8YFMDyO9ukXLOsZwLvwAsP3mKFAsYxYHETbNE+nNj6gMiHMV+AzVm5MnxZBqk0qIvIOYb6TeV9tMunOFbeqVNEF94ZADvNgN+JpE8I02HEz/4huWb71zaY9ksi1AAhK2GlEalGckr1d2DijGwsi1QQywZqLjSFNo=
+	t=1757807851; cv=none; b=eCBCuOauvA4j6EmIVD/o8hKJ3eVA1MuQGMmWgv5iHcKLD1e/M2U+FCouMWE5xesTWfmaKoSLCDtxTV2hKfZMWR3NGPMvdq+Fb101DwJ8vVRu7mnHH2AAW8XEDTH4y4WshJF6orHFQ0+YUkfG2vHM8X8CXeZaHNW+uxfiEsX5uc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757788228; c=relaxed/simple;
-	bh=wuvzFCkqli/0xf0TVmA/w1KTuF9CpGNz+KMcjEPOXnw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Hk/u+n1/SxK9QVEtKIDeeYprC49gn0A6QPavqTUEZxbVmr+r4I4WPLGOBVngu2b4CPlUJS8JiPzjAaSok5CaoM9O7eCl9Ccf8M2X2p+VKEZqMNJPf6R5XgWJM9g+XPMXB4ka4zv+M5sBd2x0qHpTn1WgTK9o6n+gDjsXnBErx+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com; spf=pass smtp.mailfrom=oracle.com; dkim=pass (2048-bit key) header.d=oracle.com header.i=@oracle.com header.b=YDu11OzL; arc=none smtp.client-ip=205.220.177.32
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oracle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oracle.com
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
-	by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58DHC3BM015943;
-	Sat, 13 Sep 2025 18:30:22 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
-	:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=corp-2025-04-25; bh=LKTzAdk2Stdh7zQ6jdVXsotbXpiw0
-	+yczyvNwKCQj6Y=; b=YDu11OzLi8tPRZyl0XxtKsdYpeMNl8DPOq8M+58ZGri4f
-	YGGc1oAFENakITtdB6RvayeuVkm+a0NFENrLVor3GYrsg9D32Ihywk4JSXLMYlt5
-	R8fQSdHK/qx+9zPgKLD1A0XuqRbI4qcEqaXSxxA7wBllIinS0+pF6o0umCoe+Bq5
-	+dU3BQcTgU/GY8aIE8AQ7Jo1Xu/jmP6uQZiA/YcTAgdOmNFZd+p6mKAYWi7s5x9g
-	5i2tCekZz0FgDY0zS0CSu1BiOnQJOlm4QfZCxVrguC/6L4eWyQesK4ivSRg6GlMm
-	79RaYryWovNOt2cdZJYj3GoVfzaGAIaHpkchLs48Q==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
-	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 494y1fgfgm-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 13 Sep 2025 18:30:22 +0000 (GMT)
-Received: from pps.filterd (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2) with ESMTP id 58DDEZSh019162;
-	Sat, 13 Sep 2025 18:30:21 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 494y29x687-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Sat, 13 Sep 2025 18:30:21 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58DIULld012055;
-	Sat, 13 Sep 2025 18:30:21 GMT
-Received: from ca-dev112.us.oracle.com (ca-dev112.us.oracle.com [10.129.136.47])
-	by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id 494y29x67y-1;
-	Sat, 13 Sep 2025 18:30:21 +0000
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
-To: konrad.dybcio@oss.qualcomm.com, andersson@kernel.org,
-        konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org,
-        conor+dt@kernel.org, devicetree@vger.kernel.org
-Cc: alok.a.tiwari@oracle.com, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm8150: Fix frame@17c27000 unit address
-Date: Sat, 13 Sep 2025 11:30:11 -0700
-Message-ID: <20250913183018.4017208-1-alok.a.tiwari@oracle.com>
-X-Mailer: git-send-email 2.50.1
+	s=arc-20240116; t=1757807851; c=relaxed/simple;
+	bh=U9L7Av1dGipaVCMuUJ1WoAF4Zwc+C5x5D0BSxA1MpYM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=p5A6JyHsGE6HWVtl1jvPncMhH3uhJthIVOtxI7ZDUaswMlS1FFsdI9l+jxVUSvCMVCvbyYtyGVRslR66E3PJSutHg8LMpZkGBbPCs1u/yucp6obFe2E+oWBMNNixt/2Mwkad6u73C+rmT0KTxVuiYqfV8jwx58opanl9xYCqW2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=F1ZWOoN7; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1757807842;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=IMss5r+w/R/pRKm1q2pYvSfr5zbK/SNjjO1apqATu/M=;
+	b=F1ZWOoN7PtnQH+7UnHB97+XMgBv/AMZn05aypOMEahLqXMhcOqT8MwTjfUvVYKMDcpbc+0
+	3ayO5FT4kkyb5PaLz9QQg0Xa76x+7RW/XMwusRJz8jn3gV+9fv877YncsLIpJbufJRJTVX
+	faVSuOVnKK0nNSZBzRUnOgzfT2j1/CzMg0TB3niqYtL60Hw7gA6X+2X5tjU8tfuiaOobBI
+	v1TF/fg+VsQFou5tqPmOqWpleMrm3RrFoBWxDYL+8cSs/QUL4Gea4bF5Icn4P+c7VDCdbp
+	2tgHXSk4XLJcDCTdyNbQhHj19u6oKczlwm4GNT/UmOXvPsu44X//HuQzo7TqIw==
+From: Paul Sajna <sajattack@postmarketos.org>
+Subject: [PATCH 00/11] arm64: dts: qcom: sdm845-lg-{common, judyln}:
+ Improve HW support in dts
+Date: Sat, 13 Sep 2025 16:56:33 -0700
+Message-Id: <20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-13_06,2025-09-12_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0 phishscore=0
- suspectscore=0 spamscore=0 mlxscore=0 adultscore=0 bulkscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2508110000 definitions=main-2509130177
-X-Proofpoint-ORIG-GUID: 9_uryYb1bhtW642eVHMZcrn8qktzit15
-X-Authority-Analysis: v=2.4 cv=KNpaDEFo c=1 sm=1 tr=0 ts=68c5b83e cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=yJojWOMRYYMA:10 a=yPCof4ZbAAAA:8 a=bWo_ig8JLHCbm4XOoeEA:9
-X-Proofpoint-GUID: 9_uryYb1bhtW642eVHMZcrn8qktzit15
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAxMiBTYWx0ZWRfX4uEd2+Xt6r7q
- hJyjKxiXEYItnW/f9cw3bLkvlBlA5k7QNyJhlDKK5+cMaqGqEcp49GDNxJ0wDO5TPpc8KvKEpnE
- xtZ3RQiaTNpAgWQ5vTNQk2XuIW2HqjJ/LfUOQH4LiyEdIS+atJeS098/OQHW/ckB8QXZu+IvugF
- hNIGDd6D9rkuxctIkp4UH/vLOzveKcvh/LAy9qmQf6QbFnNfxk+LDDrLl8c+9HkTd7GPsBSoiMY
- Y9NRNhJmFT6wx28febjsD0ofGUgPC8QEmOdKG3gmWyqQA27JhvGPhk/zL/+G3AbakSomPHWZ9nI
- pE5qyzinjbvN7ekpfivAJzmzPA1BXkWUjxCrYr4+SWBEcA+tzxGtXxzktmUDX57b9yQp0X2swa6
- mNY5/bNy
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIALEExmgC/zXMQQ6CMBCF4auQWVvTIgQxxngPw6K0A1ahxU4hG
+ sLdbUCX/0veNwOhN0hwSmbwOBkyzsYQuwTUXdoWmdGxIeVpzksh2GPUn84yHYiJQmUC81Ir3kA
+ 8DB4b816xW7W1x9cYzbCN0CORXM1Tcv6R/E8O0mLHJsEEO6a5KrKMH+q6vg6OQi/9E4OjvfPtB
+ apl+QKSbrYAuQAAAA==
+X-Change-ID: 20250911-judyln-dts-17c41e59dc0f
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>, 
+ Christopher Brown <crispybrown@gmail.com>, 
+ Paul Sajna <sajattack@postmarketos.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757807839; l=2159;
+ i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
+ bh=U9L7Av1dGipaVCMuUJ1WoAF4Zwc+C5x5D0BSxA1MpYM=;
+ b=f3ltBSJCuc/JcucUM6NJApPNipOb8NWLsJ8xH65H/8hs0Vn/Re3PIyL7L0EdewouxQ2XnMADk
+ cUbhjfxgEpGBY2dYNS+Ps+oUeFt+7kDAWzoIkW6DLlZAOMPrJGVwXfa
+X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
+ pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
+X-Migadu-Flow: FLOW_OUT
 
-The frame@17c27000 node has a reg property of <0x17c26000 0x1000>.
-According to Devicetree binding rules, the unit address in the node
-name must match the base address in reg property.
+Rollup of improved hardware support via devicetree for LG G7 ThinQ 
+(judyln) from sdm845-mainline kernel fork
 
-Update the node name to frame@17c26000 to match the reg property and
-align with other frame nodes.
+Notably, this patch-series enables full DRM acceleration and wifi,
+among other small improvements in individual commits
 
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+after this patch-series the main things that remain to be worked
+on include touchscreen, audio, and modem.
+
+Depends upon panel driver patch-series https://lore.kernel.org/all/20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org/T/#r9a976ca01e309b6c03100e984a26a0ffc2fe2002
+
+Co-authored-by: Amir Dahan <system64fumo@protonmail.com>
+Co-authored-by: Christopher Brown <crispybrown@gmail.com>
+Signed-off-by: Amir Dahan <system64fumo@protonmail.com>
+Signed-off-by: Christopher Brown <crispybrown@gmail.com>
+Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Paul Sajna (11):
+      arm64: dts: qcom: sdm845-lg-common: Add uarts and Bluetooth
+      arm64: dts: qcom sdm845-lg-judyln: Add battery and charger
+      arm64: dts: qcom: sdm845-lg-common: Add leds
+      arm64: dts: qcom: sdm845-lg-common: Add camera flash
+      arm64: dts: qcom: sdm845-lg-judyln: Add display panel
+      arm64: dts: qcom: sdm845-lg-common: Add wifi node
+      arm64: dts: qcom: sdm845-lg-judyln: Add firmware nodes
+      arm64: dts: qcom: sdm845-lg-common: Add qcom id
+      arm64: dts: qcom: sdm845-lg-common: Add chassis-type
+      arm64: dts: qcom: sdm845-lg-judyln: Sort and cleanup nodes
+      arm64: dts: qcom: sdm845-lg-common: Sort and cleanup nodes
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index abf12e10d33f..166326830cdb 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -4416,7 +4416,7 @@ frame@17c25000 {
- 				status = "disabled";
- 			};
- 
--			frame@17c27000 {
-+			frame@17c26000 {
- 				frame-number = <3>;
- 				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
- 				reg = <0x17c26000 0x1000>;
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 238 ++++++++++++++++++-------
+ arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 134 ++++++++++++++
+ 2 files changed, 310 insertions(+), 62 deletions(-)
+---
+base-commit: 590b221ed4256fd6c34d3dea77aa5bd6e741bbc1
+change-id: 20250911-judyln-dts-17c41e59dc0f
+prerequisite-message-id: <20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org>
+prerequisite-patch-id: e51151ea7f8fdad6ad7d90713febc5c6b6fc4f9c
+prerequisite-patch-id: b3dd44250da9cd12bc5b2d0d7e865dbe19ceed92
+prerequisite-patch-id: fd6c8077806cb03fcf37d0e0d730314c2760e334
+
+Best regards,
 -- 
-2.50.1
+Paul Sajna <sajattack@postmarketos.org>
 
 
