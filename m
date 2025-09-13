@@ -1,87 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-73398-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73399-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 177F4B55A4F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 01:36:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C8064B55EF8
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 08:41:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B5D65C4842
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 12 Sep 2025 23:36:01 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2CBCFAC7390
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 06:41:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80BDC2853F3;
-	Fri, 12 Sep 2025 23:28:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23CB62E7BB1;
+	Sat, 13 Sep 2025 06:41:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BR2z8lhq"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YJQZunZz"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 489842848B4;
-	Fri, 12 Sep 2025 23:28:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A41732E7BA0
+	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Sep 2025 06:41:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757719694; cv=none; b=Y6rMdzxGJzA6tEd9FlMC2RgSSYheGgJOkq4C0Zec/JzhAM7Pz5M0AMhAaKofyUcZqGTOjHcIcaovVFennMHbGDnvPGa75MVjFT0u8T3DiBUM9Jguq2WLTRIuQI93XX+zUYfZzNxtdgcectjSZV6EeA1Gmm/oVeFU05DdokJ4Tok=
+	t=1757745695; cv=none; b=nEb4qOJhOWfILb3YjgmbPTdLs8piX9x1QgAVMICbDstVQ3TPmM6iorPqIn6YN6zm4vhbL6mviw3qhJbtIuCeDOda+YnSQe6TC6Rbr7us+XYD4EP849ulyZZaLGqcsw8v1wHN7RNB3JhMJUcgO3czwXgaVWl28RqxjuGx2neGCVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757719694; c=relaxed/simple;
-	bh=8aays/36IMWxKFg+6HUicPJw3dVwhelQvKgnzcrf4y0=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=O4nSAEF7OHCIZ/paMQSL+04PtQnOeHQM3B/Fh/ySjcDDdt8jRAnq1T74/iXfAguQrCtojCLT6C0VPmeXInVR8pqIK1T+lxzOGg7j83WBjwNNrcZm3j9jESKGAvBNB3tRFJ+DtJLmU52evOho1dFJawdz1PMWFB1fxZ2KN826cTo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BR2z8lhq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1DBC4CEF1;
-	Fri, 12 Sep 2025 23:28:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757719692;
-	bh=8aays/36IMWxKFg+6HUicPJw3dVwhelQvKgnzcrf4y0=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=BR2z8lhq1OeLRpJmgnOWMrQwddzmPMCEtj7jooaxe5IMc/ASnSketFBj+4VIaQSS7
-	 pw/b91vEpSZ4w5XWe6h5M1LHFYXH8AqFSm7c6BF2b2NFY3MOj6Sk0Igrzi+4sbPON5
-	 kNH2sWzYjDZ+ahDK5cfn/UF70bkw5JyFzyWarE2bGEUos0g0HKdbwUIitMAgRCEU03
-	 EAiYT+eN269w0RfCCjisKYlZSyJJdm8h1bkk9q8P9GuMuFdtyQzPbBSC7oR55q7v9C
-	 WvbAdn1tHo6iDBtmc4hfTf0kEjlPjvYjVHneb+oiZa7qFsvkldubVRjo/3RrFrfN/+
-	 fediSzDgls5PA==
-Date: Fri, 12 Sep 2025 18:28:11 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	s=arc-20240116; t=1757745695; c=relaxed/simple;
+	bh=b4u/3r8EbbEWIWFxBt9+YcYVVzC+/qin113CQAU/g5A=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=Xgb5uMUlm+VprgCX4s+sYkJhaf4Gz7x6PkyiTegrgEbb792FOi0fnWMugyfLzWH/LuZ7hbCyVCS6AkXEHF1m+eLcaOk15mCb/0HEvyCXdU5nkJrVWQJ2F6Ax1QsAolL47Jl974sOigg0Dc+d5CLK7/r6NYYbgz0bxNQ+4WZjCfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YJQZunZz; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-24cb39fbd90so22941635ad.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 12 Sep 2025 23:41:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1757745693; x=1758350493; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I+9gSbQhTkyUKu4oc46FN0yP83tgnQ9EveENpBOiA0w=;
+        b=YJQZunZz+Z3KjLKM913jEadZLnOuK6XkCvNGtjDKJYuQvXCeWyAKlRceC/SYVcLBTC
+         ha4La7ce1PBvnhIYrt0puzT97DoAIE0VSdpsiXCH9swN+4qjCAseUl0boKlUPfZakSvT
+         6eD+cVH5PJQANKcq/55jWe4zGvhC5RwAisRKw/CcGt6YHkLmyFcrT03JGiPEsonvSS00
+         IqH7RnBkeua2QRM9ZElQ99/o6BOEj8joeMqL1zzeuCWY/qw5vQ1nTLVPnGPFqO6Dx8vX
+         7b1NQmlrqXQwDvNIa+3E8Gsyf/mC7jGn7FSdCipkLjyzJJJtxiRR16UIpANndrLHJBhC
+         vQGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757745693; x=1758350493;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=I+9gSbQhTkyUKu4oc46FN0yP83tgnQ9EveENpBOiA0w=;
+        b=g+Yx+FdGZ/jlEQtGMHVDhRVFDj+mKQRVklpMsQy48R5uScrD3JQV9m8K6w7VNFWyIh
+         5Si06pmlbp1rC9J4v/gsC+jPJPn0nQUTJ1EX+9GT1ft/E+7JqkeNCFl3HnDVYteZZs1u
+         c16+32L6Tv9/6aB7AaZz9scia8kcwemeRErmcqOTvpJQJhFG84AMvFPsE1rV0n+o1xAV
+         7/KIIzMtcc6noWk59153XCjR1/i1BmvUWH4eI8e/G1uROiwKxjYhHsJGNfYteEqCFCx5
+         VFy5YtUt19qyFIGSkb3I8iUOFzFiDInh4M3sMVj5XuTsB5zuaSHCO/T3BZMnnySnnc4V
+         0HMQ==
+X-Gm-Message-State: AOJu0YzAYnjWh8eOMsvYiScozmdAt4qVBb5LjyfrBTr8IxBthAN039ze
+	a5MTwslmNCciXD2Poy6zy6c1b+hY6lui6lpc/3hcsVG1ZTL0hI06q+p4
+X-Gm-Gg: ASbGncsEu1zEq8OijXKbO5XNCaQtMQscqyj6DzSvkaIP2ArmqD8PJilUPMT+7kCZkIz
+	1oMxAU3bllenZA92NCIUmRfImDgviDDNgrQOR7X6g5xrY07vfqgL6Y+ngZHeU0vJgyUTQ7TW7s3
+	wcoZQeWr4/cslQyspVLNOPVzSvzZHwZi5zL3UKCAl/pL83dFXeIC6oP02Nk2b5VA9dJidC4BepY
+	oIyaLYVgJ6+6L3TKu11l43Qre5aNfbuu9syc3djU07vI2rBZaFl6cVp0YyCYUFcShaXqTZOwifk
+	ec7F9X+d+fYlIUgOKaPIfKQc4rNIhAHWKG3cytOH6S2KcFAR/0P11Mb089DaqXGUtPzXBWZHhSh
+	vrKArzDbuDNz6L5XqEU/erz1TGlof0mT9xZ2ew8VThY+hOIFT/BFJmi7bQw6APxH5Dg==
+X-Google-Smtp-Source: AGHT+IEPMOXqhtSRG3ommkdDyK73YAd9aNroh5EmvYiCkuWeEel+Gu02hYUJwz3pnEOvbev7iIXNag==
+X-Received: by 2002:a17:903:1666:b0:261:cb35:5a0e with SMTP id d9443c01a7336-261cb355f8dmr13755645ad.57.1757745692902;
+        Fri, 12 Sep 2025 23:41:32 -0700 (PDT)
+Received: from fb990434ae75 (ai200241.d.west.v6connect.net. [138.64.200.241])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25c341aabafsm69525245ad.0.2025.09.12.23.41.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 Sep 2025 23:41:32 -0700 (PDT)
+From: Tamura Dai <kirinode0@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH v3 3/4] PCI: qcom: Parse PERST# from all PCIe bridge nodes
-Message-ID: <20250912232811.GA1653368@bhelgaas>
+	linux-kernel@vger.kernel.org,
+	Tamura Dai <kirinode0@gmail.com>,
+	stable@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH v3] arm64: dts: qcom: sdm845-shift-axolotl: Fix typo of compatible
+Date: Sat, 13 Sep 2025 06:39:59 +0000
+Message-Id: <20250913063958.149-1-kirinode0@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <Message-ID: <2d41c617-b7c7-43ae-aa90-7368e960e8a5@kernel.org>
+References: <Message-ID: <2d41c617-b7c7-43ae-aa90-7368e960e8a5@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250912-pci-pwrctrl-perst-v3-3-3c0ac62b032c@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
 
-On Fri, Sep 12, 2025 at 02:05:03PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> 
-> Devicetree schema allows the PERST# GPIO to be present in all PCIe bridge
-> nodes, not just in Root Port node. But the current logic parses PERST# only
-> from the Root Port nodes. Though it is not causing any issue on the current
-> platforms, the upcoming platforms will have PERST# in PCIe switch
-> downstream ports also. So this requires parsing all the PCIe bridge nodes
-> for the PERST# GPIO.
-> 
-> Hence, rework the parsing logic to extend to all PCIe bridge nodes starting
-> from the Root Port node. If the 'reset-gpios' property is found for a PCI
-> bridge node, the GPIO descriptor will be stored in qcom_pcie_perst::desc
-> and added to the qcom_pcie_port::perst list.
+Fix typo in the compatible string for the touchscreen node. According to
+Documentation/devicetree/bindings/input/touchscreen/edt-ft5x06.yaml,
+the correct compatible is "focaltech,ft8719", but the device tree used
+"focaltech,fts8719".
 
-The switch part doesn't seem qcom specific.  Aren't we going to end up
-with lots of drivers reimplementing something like the
-qcom_pcie_port.perst list?
+Fixes: 45882459159d ("arm64: dts: qcom: sdm845: add device tree for SHIFT6mq")
+Cc: stable@vger.kernel.org
+Signed-off-by: Tamura Dai <kirinode0@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index 2cf7b5e1243c..a0b288d6162f 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -432,7 +432,7 @@ &i2c5 {
+ 	status = "okay";
+ 
+ 	touchscreen@38 {
+-		compatible = "focaltech,fts8719";
++		compatible = "focaltech,ft8719";
+ 		reg = <0x38>;
+ 		wakeup-source;
+ 		interrupt-parent = <&tlmm>;
+-- 
+2.34.1
+
 
