@@ -1,160 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-73402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73403-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66351B561A9
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 16:54:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4C1AB56272
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 20:00:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 0D8A3AA191C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 14:54:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 630AE17DAA3
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 13 Sep 2025 18:00:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 302F12F068F;
-	Sat, 13 Sep 2025 14:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD7C120110B;
+	Sat, 13 Sep 2025 18:00:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I4/BJusI"
+	dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b="bT/7ZkIb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DC88460;
-	Sat, 13 Sep 2025 14:54:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D581DED53;
+	Sat, 13 Sep 2025 18:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.126.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757775273; cv=none; b=nwN7NBBkqWrd2XpBlC7LuC36GNr9fqieFY/dMhtgCN7h/ZKeu8kSvjgBvgOUSEvCGfy73nxfg/lzY9aoGciNpnGTkD7dqJzNbmcO7ot/Bvvlgnkd4RJelv5tVq0xRDAGVFooIcnnqWVU0ma04zJpsZtT5H5n5AAJijshGZRMnHU=
+	t=1757786415; cv=none; b=RBfcTbcAUvhixVxraAYI9SAaz9K+BWeGOq9X7KCVAJxCwy54okhxxnsppZMaNB/mdQ0bsZ1EgiK44Mfq4AfZ2fHMHgCBmdb+4rTuME83iTr0j4tK2IVyrq4qtYePdSnHA5rcu8JytmA1rzt0Amx9NUyqRTTjmHgduT9vlhzIxtE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757775273; c=relaxed/simple;
-	bh=deph2n7EsQq+rZQVBJI1J9VmYk8+NHBuBRjSCjvpYrc=;
+	s=arc-20240116; t=1757786415; c=relaxed/simple;
+	bh=TXw6I/kYsfBBG7IqtW2tmUt15VqqpsmrJknjg4yKz6s=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sA+os+UhSD9i2S1RmqJDtT6fBCVUn8hEREAmyF1oWzsBLRuijLgvkeOaQ+56+G7Wv5BPTnq0jerWb8CabiQyzUhLklGv0wBJVbFAfXw5zR/ZwRVyMQ/ub2++LIG+TKH+KYv3MtsPfepbk9oQdHbA/f6B+nLT4WaU098aXD0WupM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I4/BJusI; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD94C4CEEB;
-	Sat, 13 Sep 2025 14:54:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757775272;
-	bh=deph2n7EsQq+rZQVBJI1J9VmYk8+NHBuBRjSCjvpYrc=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=I4/BJusIJfB3pe8YGxSjg9oW/C9M4REAfsLM2Y8PJg8Q3yZJg3rAPKqiDeEuNM1/D
-	 I1TU8l0hH+njdNS0GK9mzJUgxT31dbgKs3xS2VmyybN1DA+z7GGdGbBRaksK2yY1Kx
-	 eymbFLKeePLkKeJ98oW47cKo+9F/D4AQouCoO0jaZfsRx4ym+MO+J0CVvcX0XEvAcd
-	 2/p7G0TgpXyl1fqkfe9jx3Sop+89zQJUOoaetPdT8CX1NIswz2IgwHY1bewV8a0kK4
-	 vD38TMlMLOe+BcB+9pxJwNqKmLEdIxEERzsqekI8bajBPfDthS1g59bYexnWaaZPyS
-	 3iQD+G6oQ2mJQ==
-Message-ID: <91181e2d-e595-42e7-a782-9ee654682036@kernel.org>
-Date: Sat, 13 Sep 2025 15:54:26 +0100
+	 In-Reply-To:Content-Type; b=Unu4x5SJnEeBkkQF+1zUUDueuwivjYznSQlOAacDEUYm1Es+MHHCgoTWo1DsGFhcbeJ33bFDXxhu92BTyY0I591rLOoXu5+iO29Sdfrml4lRl++JEV5sgU39pkICvUWndRhjyxbwT1GpcXxG7+RSWMbluTi+w0L0Oqu9RNFTtNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz; spf=pass smtp.mailfrom=oldschoolsolutions.biz; dkim=pass (2048-bit key) header.d=oldschoolsolutions.biz header.i=jens.glathe@oldschoolsolutions.biz header.b=bT/7ZkIb; arc=none smtp.client-ip=212.227.126.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=oldschoolsolutions.biz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oldschoolsolutions.biz
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=oldschoolsolutions.biz; s=s1-ionos; t=1757786405; x=1758391205;
+	i=jens.glathe@oldschoolsolutions.biz;
+	bh=TXw6I/kYsfBBG7IqtW2tmUt15VqqpsmrJknjg4yKz6s=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=bT/7ZkIbHSe5jb4DLq9rfWtm+V0lbUaqkKTfa0ZbRm49gRFVDqfhU2spbT+IU5R0
+	 PDFhzV3P/lnTm1t+n0AVMfbFcPKBfjb//RtsuD+xBsnmGBsqqvtStxmiSRBAgzSnU
+	 vJm5G2O64b1xzuZmeasJL8uc0Dpch222wWSuCg1kLci+xIxqxjg0Lm+anPxJ2584k
+	 FZSvcGUm0ilLzSvXsD2wT60DEmiHlwwIbx0daCZsUUU5HeynuuaivwdUDCCfvbeyy
+	 9ZcsG4IVC3AXrpRbiGrEfewet2owa8PTG5DdLpOUK9V7Xw9a3GPV7wf4Tqk1T4ftG
+	 NV0ZxjinvzCd7bkCGg==
+X-UI-Sender-Class: 55c96926-9e95-11ee-ae09-1f7a4046a0f6
+Received: from [192.168.0.174] ([91.64.235.193]) by mrelayeu.kundenserver.de
+ (mreue011 [212.227.15.167]) with ESMTPSA (Nemesis) id
+ 1MTRAS-1upoGa2AUG-00VKGy; Sat, 13 Sep 2025 19:46:32 +0200
+Message-ID: <e160c810-b481-465d-97b9-b2e1f3819905@oldschoolsolutions.biz>
+Date: Sat, 13 Sep 2025 19:46:31 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/11] firmware: qcom_scm: Introduce PAS context
- initialization helper
-To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Mathieu Poirier <mathieu.poirier@linaro.org>
-Cc: Abhinav Kumar <abhinav.kumar@linux.dev>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, linux-kernel@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
- linux-remoteproc@vger.kernel.org
-References: <20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com>
- <XZzG2CzCeL2c_o0VF9cgreULVU7nO6oDduio5EO50shVXg90DhDFECfckmvcrvT5ALpQb-UB5y9c-0KOT1VB0w==@protonmail.internalid>
- <20250819165447.4149674-2-mukesh.ojha@oss.qualcomm.com>
-From: Bryan O'Donoghue <bod@kernel.org>
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v7 2/3] arm64: dts: qcom: x1-hp-x14: Unify HP Omnibook X14
+ device tree structure
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250710-hp-x14-x1p-v7-0-19c10c81713a@oldschoolsolutions.biz>
+ <20250710-hp-x14-x1p-v7-2-19c10c81713a@oldschoolsolutions.biz>
+ <xmkbzqsiovvozudhcny7giovl5uvg236jjmu2pzkgberh32ywv@wrevolmrrkhu>
 Content-Language: en-US
-In-Reply-To: <20250819165447.4149674-2-mukesh.ojha@oss.qualcomm.com>
+From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+In-Reply-To: <xmkbzqsiovvozudhcny7giovl5uvg236jjmu2pzkgberh32ywv@wrevolmrrkhu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:dGdgkn3e7mSYEnSeu/Xxv1Xw9nETyoSHvz0cH5WmCCoKdxqzzbe
+ +i8KN/XPzYh7mBkX0ASDsfbQ2V29UkVAc505Fw9TYDW1Sj8RrNIK7hQlxCvlRFcxQfACqCz
+ XK39OOmbON5Rrk9RIA8oGbTcaL5FNYc6Kd8kSNv5inmVdb9Lg5k+0Kt3fwZZw+7bJOrM1ou
+ M5HAQLNHU7oQUNbtZzeBQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:nCqeY51JkmU=;pOMNys9FGOqXyHagrFfQAG0W1Yx
+ ea6sbo1v48oC5udt0L3M1JWHlWvy46yNprZWKYSsbBWE/8rPF4RRnv4e5cN1CqKVTCr8v5Qv/
+ aS13UZHZdMjenp4KcfFfcxW1zy9MYqssP31pEK5MYlMeulPujp4sF5dJyKT7M8/qZD06+0iJC
+ aOv5iaStjkzIt6yfRRzdWGO/ZtWxvFkZaD1LrDvFYZLSjYrcctdiH5EocOWGjHEePZ8fEo/e3
+ cBsM6Jgi1zGulX2EfK5Sc+Hpt4bBt14tI7scOqfFDkDEO7XLw4LowaWqLoOp6sdd6Pm2tJ8hF
+ zmnLHD6PR+H5v29QXjE/6tKUhBMW4sB1pR5IznLy21V3t/ltpoFys1hRluDVuup2ErD7GV+K2
+ HkwZixtmcG5yUHhxCfEKwpPmdBT1HXKapSPMuJhYnJUmwQoyqWr6RHIuHv6/i4QzCYTWV/yav
+ /alUCAOGF3I0CrHQb6jL40Qq7LoiLRSLAmwY/7+aL4HSqLVmVozOnzbKJBR5psifKNzHojqxs
+ +bYVyEof+ZPO15NB3yAcZvKtLP7yjj2zyziWmv9XZ5NjYEDjVxXOVoAzDoPQ/VeZXpO9ED10W
+ nokYqRJ3/GUyClSMkpyUZldP8QKptwGvWTw+WwAJutTHDFGiokn6v/XnNKF4mvtjg768aE7qo
+ Atb1u//LRjWMuK6xuhNmcrAOml+BxFUiZIxrNaX56F8QsS59X0FMTbsbRW9DB3yz1jUABMxyU
+ uZPcNZyDfWAtWuOqu8UWysvTRVV3t72g9ETsEDkhz6A6crptsJ7VAZq3OEwiQztAWmNpeRBta
+ h3gYNHhE9sswbuVPF9XECnxe4gk8Az8yO073y3whhvS7brLCFubs0DZeEoHMW8V4lQXhDxc0N
+ Tqxq2VxI2CEIeWYv1q1cGbZQ1/hW74wRALQwhlRGcSIWUHOLmIyfyIasQoqirn8YnwJyFnkZY
+ jGHhigA92aQwt8h0MtMQAj6Tus0S6hSI+f8jkbLGFUevbhAzpSPcmo5ZYvtEnff4fvoGRObnv
+ 3K5zaQOlmFsv8e2xRGQZZJYJVgWRAP1Y2PH28fiC3wwwRj86/HaRZHtdGND+U6GHcmhsZn6t7
+ MGakWk8BswhTPoAoHzfOgbUDnMsYtCNbfO/gIyI4lEzNQ/+RQ+IO53EXPrc15dCgtZmwqicIe
+ DFLuzlHNE2aCWUglt5ZRCK4aNl+a6WXeWUxQJiRe2TeH1KtiG8wLO/d4Q5fAIgraGH2ng4E/5
+ fqxFPGGdLQf5unj1uyGbcnBiHG7gnsKAzsvD8vh8O6CiPuM7whrhHbUIHt27t6QEPqATxVgCD
+ EatUC9RLtJfSQr7kxt+H6J/QDqHctgX4hYFciryImfpyLzcerxdd62w7e6ZH55RhOiOc2VFPf
+ AwmCyxl7jw2D0NrvB8u1jsIF1ez1Z00gdiu0IkY9w+bjQ1dr8jxSmpjWLNnZ+ry/Kg03x/v8V
+ 7ago4fS3/l9y0+uXIzSa1sSGrtSQ0eN8QkonixcPcgQ6OAOhqNgLHyax6KnDQm8mHzSat7pXS
+ 7XkpGaMD+25WFpkwDkT4VQ1jGpUor2HlTAx8XAl80tpuJrNXnigM6+sdVeko1zZEmgPYlm7uW
+ pQ/A0RxFix2if1+dHoah+hYLFkQHjPu1AT+8yzUH6B4SeDkxi3H3kACNWT4vr/FRtLXHCnxNl
+ BZbfF58Is96j7nI96U1cP+TgFPXNNTnUR2A4h4o/X3FuTcZ6hx+CCWYl+tpQYK/oFZtdNwUKQ
+ 0TTTmO8cGFXmfgB8cSJC1SLBkHeEqBHkRdwV7JOh1DOac7XsDqw3NW1Y=
 
-On 19/08/2025 17:54, Mukesh Ojha wrote:
-> Currently, remoteproc and non-remoteproc subsystems use different
-> variants of the MDT loader helper API, primarily due to the handling of
-> the metadata context. Remoteproc subsystems retain this context until
-> authentication and reset, while non-remoteproc subsystems (e.g., video,
-> graphics) do not require it.
-> 
-> Unify the metadata loading process for both remoteproc and
-> non-remoteproc subsystems by introducing a dedicated PAS context
-> initialization function.
-> 
-> By introducing qcom_scm_pas_ctx_init(), we can standardize the API usage
-> across subsystems and reduce the number of parameters passed to MDT
-> loader functions, improving code clarity and maintainability.
-> 
-> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> ---
->   drivers/firmware/qcom/qcom_scm.c       | 26 ++++++++++++++++++++++++++
->   include/linux/firmware/qcom/qcom_scm.h | 11 +++++++++++
->   2 files changed, 37 insertions(+)
-> 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 96d5cf40a74c..33187d4f4aef 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -558,6 +558,32 @@ static void qcom_scm_set_download_mode(u32 dload_mode)
->   		dev_err(__scm->dev, "failed to set download mode: %d\n", ret);
->   }
-> 
-> +void *qcom_scm_pas_ctx_init(struct device *dev, u32 peripheral, phys_addr_t mem_phys,
-> +			    size_t mem_size, bool save_mdt_ctx)
-> +{
-> +	struct qcom_scm_pas_ctx *ctx;
-> +
-> +	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-> +	if (!ctx)
-> +		return NULL;
-> +
-> +	ctx->dev = dev;
-> +	ctx->peripheral = peripheral;
+On 09.09.25 18:07, Bjorn Andersson wrote:
+> On Thu, Jul 10, 2025 at 12:50:34PM +0200, Jens Glathe via B4 Relay wrote=
+:
+>> From: Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+>>
+>> Extract common elements into a shared .dtsi file for HP Omnibook X14 to
+>> support both Hamoa (x1e*/x1p6*) and Purwa (x1p4*/x1*) variants.
+>> Required because the device trees are not compatible.
+>>
+> This got sitting in my inbox, as I confused it with the other similar
+> patches, and now it doesn't apply. Can you please rebase this for me?
 
-One things that is confusing here is renaming this variable to peripheral.
+Hi, its rebased. [1]
 
-It gets initialised from a thing called "pas_id" and then gets sent into 
-other functions which name the incoming variable as pas_id.
+with best regards
 
-i.e. you will want to do
--       ret = qcom_mdt_pas_init(pas->dev, pas->firmware, 
-rproc->firmware, pas->pas_id,
--                               pas->mem_phys, &pas->pas_metadata);
--       if (ret)
--               goto disable_px_supply;
--
--       ret = qcom_mdt_load_no_init(pas->dev, pas->firmware, 
-rproc->firmware, pas->pas_id,
--                                   pas->mem_region, pas->mem_phys, 
-pas->mem_size,
--                                   &pas->mem_reloc);
-+       ret = qcom_mdt_pas_load(pas->pas_ctx, pas->firmware, 
-rproc->firmware,
-  -                              pas->mem_region, &pas->dtb_mem_reloc);
-++                              pas->pas_id, pas->mem_region, 
-&pas->dtb_mem_reloc);
+Jens
 
-and
+[1]:=20
+https://lore.kernel.org/all/20250909-hp-x14-x1p-v8-0-8082ab069911@oldschoo=
+lsolutions.biz/
 
--       return __qcom_mdt_load(ctx->dev, fw, firmware, mem_region, 
-ctx->mem_phys,
-+       return __qcom_mdt_load(ctx->dev, fw, firmware, ctx->peripheral, 
-mem_region, ctx->mem_phys,
-                                ctx->mem_size, reloc_base);
-
-But it should be ctx->pas_id to be consistent and make it obvious what 
-data is being passed.
-
-Can you stick to the established naming convention and stick with pas_id 
-here ?
-
-Even if the above fixups on 6.17 aren't right the point is it only adds 
-confusion to randomly change variable names for no reason.
-
-Please stick to the established naming convention.
-
---
-bod
 
