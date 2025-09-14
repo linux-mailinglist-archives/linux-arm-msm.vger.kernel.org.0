@@ -1,130 +1,170 @@
-Return-Path: <linux-arm-msm+bounces-73437-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16D22B56B31
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 20:28:38 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46E40B56B42
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 20:35:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C752D179DDC
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 18:28:37 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 00961163FA6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 18:35:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E9CC2749C9;
-	Sun, 14 Sep 2025 18:28:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="OllDA8b/"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 341AA2DE202;
+	Sun, 14 Sep 2025 18:35:01 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from shrimp.cherry.relay.mailchannels.net (shrimp.cherry.relay.mailchannels.net [23.83.223.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D652DC79E;
-	Sun, 14 Sep 2025 18:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757874513; cv=none; b=pNM9QjHFnl8sAvC2I/r6f2O0e077sV/5Zh5FOJP+vY6CSPomQOWM6NQW/aqVkrNy1ONM2k4lqyCLc/1oF9O0bRcJG1IM1tshfEZjLplbn+3GU5Y7TjUBo/ScN1uaeq50kBJZN8TnSuetf7kmvICbApiu9wObZET2j9rOECGV2J8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757874513; c=relaxed/simple;
-	bh=FMEEigXnNLUuHyTRG4E2ahf0sM3UM6NSR/dYMYzQdWM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R07qsCz6Hr65+RiMRZYcZX2Q5O9+O36ax9R9wo9rUooPkGe5XTp/AlUiUxLlF9sXB3oAbRJwMiAwXSqslzefwjnszU+AVg05aFDRmV5ASEZ3dkjZ5hHyPP9fZ5cCp8GkUloVcFAx+Z3hXqlenD+iHCerUJkCc+W4y0Elp8dUJbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=OllDA8b/; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=e2z8oAXSxFAsYNQcZYcHsWLi1Z1vuoC4TahJrtKqHzs=; b=OllDA8b/kpmjCwSVVD3gTh9Rfi
-	mdxpSdsf5focEps3MZ6+uYQUQUePTie/7zIujok6jHNB5Wsr+tud6cOZptGUz8DbxQMELFJw+cwy7
-	/tCTYWxXydm2R4iGHU1BNtwU3V8Fg0cxGQveqmB1rdJiaZycYHBRv1AZ2AG5cRKOp/IIxguyk7oJ0
-	cTenWGCEg0GN1n53uq7uuSYdp4uKWkb21MLoA9MbxtZvFhHVGoG4Nr1iOmpVXvXqEnJ02kOe4M99k
-	lHgCn3RDCBkuGeVSxHssCZ4kZNe1urr4HrWX6zKXjc/WbjAzZJse7VU6G1ulaxYDCW1UxeSv1hhrp
-	wdi3uz0w==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:51050)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1uxrBQ-000000007H4-3KTb;
-	Sun, 14 Sep 2025 19:10:40 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1uxrBM-000000005pL-3oHg;
-	Sun, 14 Sep 2025 19:10:36 +0100
-Date: Sun, 14 Sep 2025 19:10:36 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] net: phy: qcom: qca808x: Add .get_rate_matching
- support
-Message-ID: <aMcFHGa1zNFyFUeh@shell.armlinux.org.uk>
-References: <20250914-qca808x_rate_match-v1-1-0f9e6a331c3b@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B0991F5842;
+	Sun, 14 Sep 2025 18:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.223.164
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757874901; cv=pass; b=UokkCn5Ch0F1dlJaPHK/e48xEJ535und1wbeVnYH8RuzWiWqNYd123i1+C84/uiurMM21fM5NHA63KzlEfCEQ+rpzPv2KQKOXjLfGvFCX9WFjpGWJN1F9z/IfBtQJb2vyb0i46Q7/4Jjh98zLZq3zsZVxiCwxNUoWt9uKRTYuRc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757874901; c=relaxed/simple;
+	bh=jwdJ57SPFeChMt3qLbsltswA6/cvWM94uNE0Q/m7Nmc=;
+	h=From:Subject:Message-Id:MIME-Version:Content-Type:To:Cc:Date; b=U0Bnm/pyOZDaVr6+fzhAMTS3KzgsCWcA6aNVxFY0maPOEGZ9+vy1z0qWFbovBUZbhuT+l+oYDqtl+DftfkWdCq97qdSi9vZ8L413Jcg1Ew6W5Yd2bB/aXWO+CItgEVXE8PrMkJDzroYESu5Lte+fE2jGK4ALNLpLOn6a5nMWwgA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com; spf=pass smtp.mailfrom=smankusors.com; arc=pass smtp.client-ip=23.83.223.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smankusors.com
+X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id E73546C0D51;
+	Sun, 14 Sep 2025 18:34:49 +0000 (UTC)
+Received: from uk-fast-smtpout10.hostinger.io (100-107-5-190.trex-nlb.outbound.svc.cluster.local [100.107.5.190])
+	(Authenticated sender: hostingeremail)
+	by relay.mailchannels.net (Postfix) with ESMTPA id C97FE6C0D20;
+	Sun, 14 Sep 2025 18:34:44 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1757874887; a=rsa-sha256;
+	cv=none;
+	b=13JhPclN37mXgfrnYhvcGJFkdeUPPbmJ8ys1WYjMW+haB3dddrJyQ+/jdWnS5MQjgWEspr
+	4sbv4XRU7k/TPmFHmvwXU+7zGfCKiXl0utfiRuIzavBH3W1OxEjo8e+349omKn+46KuN6m
+	R6iGKWEW3bL7yIsKxaMqJitiqAehM5Tz64ARenfjKGeiBYMSDlcE9wv00Cezaecssm94WA
+	xVK19qAzrpjIb77hifJt6m5h7Z1Le8GFUoAr+/eekAq3grVlOZ9N7iy28MI1w7KIftkekB
+	0L5c8sW/I2dO9U/Lu3x+IFXBlJhHU1rmnF17wNfK1AMV4w309QXkvFNaveZfoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1757874887;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=REfKBUMlwDoG5LT4Qmitt7dxpBlc/HPo7D6odawzDm8=;
+	b=uy0rvurB6uC+a//v6tOxeS8DSDYONBMcuQtcxe3QuJlsAnoMR59ZgZp3OT0JQXhuiY6Nl9
+	mTscyyhrGyVXYNCwjXFz3fKRK76HfzKLaTcHUGOGejQ0y74AoJIwApI/LyLc4r0HAZ3mmi
+	oyTZ5JXZUUIzVKp6Je49+ct37PdfMIItJ+sS2AYsDaC1b8XqbkSAJUDBvIyJQA8U0yV1Nd
+	nEECtNpM2neWXGlQk8c/oOe9J1isduKszkkkF20GVXkycTSa2Ad58Ucf2E+523lQZipTza
+	lPgczBXHI74OSZnqmLJhIYMV2yo0u+9QnLN42WFObRdodJg6h/pPKdPz0jVG6A==
+ARC-Authentication-Results: i=1;
+	rspamd-54bcd779b6-sqm4z;
+	auth=pass smtp.auth=hostingeremail smtp.mailfrom=linux@smankusors.com
+X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
+X-MC-Relay: Neutral
+X-MC-Copy: stored-urls
+X-MailChannels-SenderId: hostingeremail|x-authuser|linux@smankusors.com
+X-MailChannels-Auth-Id: hostingeremail
+X-Whimsical-Eyes: 6b96161a1abc02c0_1757874889625_1313890535
+X-MC-Loop-Signature: 1757874889625:1636616220
+X-MC-Ingress-Time: 1757874889625
+Received: from uk-fast-smtpout10.hostinger.io (uk-fast-smtpout10.hostinger.io
+ [145.14.155.68])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.107.5.190 (trex/7.1.3);
+	Sun, 14 Sep 2025 18:34:49 +0000
+Received: from [172.17.0.2] (unknown [110.138.220.153])
+	(Authenticated sender: linux@smankusors.com)
+	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4cPxf723bmzFK6mV;
+	Sun, 14 Sep 2025 18:34:38 +0000 (UTC)
+From: Antony Kurniawan Soemardi <linux@smankusors.com>
+Subject: [PATCH 0/6] ARM: dts: qcom: msm8960: cleanup and add missing I2C
+ nodes
+Message-Id: <20250915-msm8960-reorder-v1-0-84cadcd7c6e3@smankusors.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250914-qca808x_rate_match-v1-1-0f9e6a331c3b@oss.qualcomm.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHYKx2gC/x3MOwqAMBBF0a3I1AYS4ye6FbEQ89QpojIBESR7N
+ 1ie4t6XIoQRaSheEtwc+TwyTFnQss/HBsU+mypdNdpZo0IMrm+1EpziIcq4uveAdaZbKVeXYOX
+ nP45TSh9vOxzjYQAAAA==
+X-Change-ID: 20250831-msm8960-reorder-1849dee3817f
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Linus Walleij <linus.walleij@linaro.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ linux-gpio@vger.kernel.org, David Heidelberg <david@ixit.cz>, 
+ Max Shevchenko <wctrl@proton.me>, Rudraksha Gupta <guptarud@gmail.com>, 
+ Shinjo Park <peremen@gmail.com>, 
+ Antony Kurniawan Soemardi <linux@smankusors.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757874878; l=2340;
+ i=linux@smankusors.com; s=20250609; h=from:subject:message-id;
+ bh=jwdJ57SPFeChMt3qLbsltswA6/cvWM94uNE0Q/m7Nmc=;
+ b=aj83fKSEVrbAz5jLUJ+BWO2KgrjsHjAfOpKQblx0XkM7pa+WOygJQAGZO3DHqGVErAO/IZCvY
+ 8d7cWJ9QE8VCjQjK9wxrutVdH8lz1UMDVzx/bMlZ6XMFIeqaajJV9WU
+X-Developer-Key: i=linux@smankusors.com; a=ed25519;
+ pk=65wTy06fJl2/h/EJwjr704YG+yjHFhZObJBWzzK+N00=
+Date: Sun, 14 Sep 2025 18:34:38 +0000 (UTC)
+X-CM-Envelope: MS4xfHdV8pYgGT2KC9F9XckX976bcsuuN2D1O5znkT15m46YwZt8zbpFoniUu8z8gD8YyxzouGHItdWk6HkMCuVJXqGZwtbPFGO7cbLQ2A5ySllCMBYpJbbU SgpTje4ROyQN8c2ukKr9FLinurxC0+hZ+PigIZl6vyplozMgStHUaTYBhgM/uTahCC1fB7CwI+Er9A33eFloJili4VVghO+RhRHBJZpyrWJfa10Jr8fppiCJ uOfctqJ3d0hvuz45mzr/6nSFP9M8D6fENKiaYt1wG6vlpAMwyMH2YlS2EyIbXsEz63DqukyD4ZO5vPjUzeDKPBbr9HSgR1EwF552UBmU2eJxcybvHhqPyK8R TNOESYVP8EQeC15+QK7LQCVgGI/TgGZdJRPU57i8y0xPExr3tsuHnEjCZitqb9M8BmVoabPlwC3qNNTB4gVexavSy7gpR2WIfyuYDLBNb5SZkMhI7JXcvKAN 6kBxL/2OkawG0ILtM9aHKPCNZaY+ambJv9BP9VK9vLxEwdAYY4yXJMSbsny/eHVEogL4W+nhriSX4iTKOt4eFBkJFsgxHufqQvyaQMkUQpoPsA4sWimmaKvi 3mNM36yaUzLAEN0AKI5tLuL2kcVraYBw5YianLOPH+i655YpMOET2CPCqyvEgxwXUMOK1SFHkABCMv0V46/tu2VcbTgzuHbKwK/8ewNDugN1FA==
+X-CM-Analysis: v=2.4 cv=LvvAyWdc c=1 sm=1 tr=0 ts=68c70ac2 a=3tJJDl7MZm1GcYeSp/W8Jw==:117 a=3tJJDl7MZm1GcYeSp/W8Jw==:17 a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=wxLWbCv9AAAA:8 a=Fg_ZwnXJ7CBUc7Ulf-0A:9 a=QEXdDO2ut3YA:10 a=QJY96suAAestDpCc5Gi9:22
+X-AuthUser: linux@smankusors.com
 
-On Sun, Sep 14, 2025 at 08:36:48PM +0530, Mohd Ayaan Anwar wrote:
-> Add support for rate matching to the QCA8081 PHY driver to correctly
-> report its capabilities. Some boards[0][1] with this PHY currently
-> report support only for 2.5G.
-> 
-> Implement the .get_rate_matching callback to allow phylink to determine
-> the actual PHY capabilities and report them accurately.
+While working on adding support for the Sony Xperia SP (msm8960t), it
+was pointed out [1] that the msm8960 dtsi could use some general
+cleanup and reordering. This series applies those suggestions and also
+fills in missing I2C nodes that are required by several phones based on
+msm8960.
 
-Sorry, but this is incorrect.
+Changes included:
 
-The PHY does not support rate matching, but switches between SGMII
-and 2500BASE-X depending on the negotiated speed according to the code:
+1. Reorders nodes by unit address and sorts properties to comply with
+   the Devicetree style guide. Cosmetic only.
+2. Inlines qcom-msm8960-pins.dtsi into the main SoC dtsi. Most Qualcomm
+   SoCs embed their TLMM definitions directly, so this removes an
+   uncommon split file pattern. Cosmetic only.
+3. Adds I2C child nodes for GSBI10 and GSBI12, which are present on
+   MSM8960 and required by devices such as the Sony Xperia SP.
+4. Adds I2C child nodes for GSBI1 and GSBI8, which are present on
+   MSM8960 and required by devices such as the Casio G'zOne. This work
+   was contributed by Shinjo Park.
+5. Updates the binding documentation to rename the GPIO controller node
+   from "msmgpio" to "tlmm".
+5. Renames the GPIO controller node label from "msmgpio" to "tlmm" to
+   match the convention used by other Qualcomm SoCs. Cosmetic only.
 
-static void qca808x_fill_possible_interfaces(struct phy_device *phydev)
-{
-        unsigned long *possible = phydev->possible_interfaces;
+[1] https://lore.kernel.org/all/rcazqdcr747ujkba6z2j2oci27ajkqfi4hydgc2kiavm73y37x@g63jga2fcwmo/
 
-        __set_bit(PHY_INTERFACE_MODE_SGMII, possible);
+Thanks,
 
-        if (!qca808x_is_1g_only(phydev))
-                __set_bit(PHY_INTERFACE_MODE_2500BASEX, possible);
-}
+---
+Antony Kurniawan Soemardi (6):
+      ARM: dts: qcom: msm8960: reorder nodes and properties
+      ARM: dts: qcom: msm8960: inline qcom-msm8960-pins.dtsi
+      ARM: dts: qcom: msm8960: add I2C nodes for gsbi10 and gsbi12
+      ARM: dts: qcom: msm8960: add I2C nodes for gsbi1 and gsbi8
+      dt-bindings: pinctrl: qcom: msm8960: rename msmgpio node to tlmm
+      ARM: dts: qcom: msm8960: rename msmgpio node to tlmm
 
-static int qca808x_read_status(struct phy_device *phydev)
-{
-...
-        if (phydev->link) {
-                if (phydev->speed == SPEED_2500)
-                        phydev->interface = PHY_INTERFACE_MODE_2500BASEX;
-                else
-                        phydev->interface = PHY_INTERFACE_MODE_SGMII;
-        } else {
+ .../bindings/pinctrl/qcom,msm8960-pinctrl.yaml     |   4 +-
+ arch/arm/boot/dts/qcom/qcom-msm8960-cdp.dts        |  10 +-
+ arch/arm/boot/dts/qcom/qcom-msm8960-pins.dtsi      |  59 --
+ .../dts/qcom/qcom-msm8960-samsung-expressatt.dts   |  12 +-
+ .../boot/dts/qcom/qcom-msm8960-sony-huashan.dts    |   2 +-
+ arch/arm/boot/dts/qcom/qcom-msm8960.dtsi           | 727 ++++++++++++++-------
+ 6 files changed, 491 insertions(+), 323 deletions(-)
+---
+base-commit: 9e410f58e82ea0c0e865f688d84edad1da7824d2
+change-id: 20250831-msm8960-reorder-1849dee3817f
 
-The driver certainly does not support rate-matching, even if the PHY
-can support it, and even with your patch. All you are doing is making
-ethtool suggest that other speeds are supported, but I think you'll
-find that if the PHY negotiates those speeds, it won't work.
+Best regards,
+--
+Antony Kurniawan Soemardi <linux@smankusors.com>
 
-So, the bug is likely elsewhere, or your ethernet MAC doesn't support
-SGMII and you need to add complete support for  rate-matching to the
-driver.
-
-Please enable phylink debugging and send the kernel messages so I can
-see what's going on.
-
-Thanks.
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
