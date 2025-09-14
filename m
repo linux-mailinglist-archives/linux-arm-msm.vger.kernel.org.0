@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73433-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51EFDB56ADB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 19:36:48 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C5252B56ADF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 19:37:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 035723B8A76
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:36:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9203E1709A1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:37:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4C1C428A1E6;
-	Sun, 14 Sep 2025 17:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E321A2DA767;
+	Sun, 14 Sep 2025 17:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pQaheMG3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lFTizDTs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203992627EC;
-	Sun, 14 Sep 2025 17:36:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B684A2C325F;
+	Sun, 14 Sep 2025 17:37:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757871404; cv=none; b=OGuCujpjRxomxGctmoEVJ8PqxQ4YxvgdREZaekHeVmqQg5wXnMgwB8e+DXSJ0eIHQRV5vgB0ShuyILSm9EdcfbDeYxrjwGfr8lkGuVrdy0GmTF+aIUsxjLLVfxUzo154+W6GE7pkijBa1DWQx4WhI7FgcH0v8E89X+6RHJUBB4I=
+	t=1757871430; cv=none; b=uO6ZEi0mFIJok5BJoiatiAhcRBnGmOJ0J0FpZvnQRikYQ6PdWdCshNrn50cXXRkBSms0TnFDOMiv5DJrJ3fDUw01EgJedF4UmFfKTmFZkwyoLnmp137aGeAPd/Ydwxp2t3vU23aXARvVwOooywA2b6kuDgOyY0Le2M/SxVGNfl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757871404; c=relaxed/simple;
-	bh=chLCHQAK8H+A5xuSK39+4gpfILucvs7oZSFREWWB9aI=;
+	s=arc-20240116; t=1757871430; c=relaxed/simple;
+	bh=qm/L/xtHGOBynctlwVlThjVaLqLuYjNAMO6jzBu74mg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GEXc9VNhNcIbKqu/RptV92FtRHE+n/OF3c1emZiqjamDpYAxVBtHC2prUWKV26zGjIAbbN+wH9D6yI5PEDXNhdK0PFRzVXX3KkCrAy4tphR7vg7YWG+japUPLkbc1EJoDphVbUR5FatWloQYNmbXMs59PcPgMouHI4wGOWuUBqM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pQaheMG3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9066C4CEF0;
-	Sun, 14 Sep 2025 17:36:40 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=TrOJqD+Vdh5QwCEauFDTOoyQ7keMk/S7X9naELSMUoJ3Sz2YW5xvH1SagSwrRN3nhJ2E1QtWiYShbCpJsFyCsc7j2t6bMg30yvlwj+MipjGIvKx8/q7aZHXaQA7oVFZ9ulnk2d59uw9KKzC+CvrABRyWQtZfUMsl50XqFrHGm1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lFTizDTs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B47DC4CEF0;
+	Sun, 14 Sep 2025 17:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757871403;
-	bh=chLCHQAK8H+A5xuSK39+4gpfILucvs7oZSFREWWB9aI=;
+	s=k20201202; t=1757871430;
+	bh=qm/L/xtHGOBynctlwVlThjVaLqLuYjNAMO6jzBu74mg=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pQaheMG3266kOd8YFxZIObzVsUPj7U4LWaFW/Z8iY2PPsmOCa+8xv/PMCfg9X0uma
-	 Ba/h3G17+pW4CiYK91kdUhaMMLzR58fVCH46MMFm2T8nkXFQH4xyHOxJlEdDkp06GW
-	 euwlg9pR+UP2CnFmFQQ7xOTVbBPi0oujAbgtnxwchVcZ6dsMfmsQSE1f2D0mn7bmN0
-	 wKgZVoYmG2vqENONhC9PM2RDdL5rbZqodKR+sENuajrgtOTn+bGTOLgLue2R1CDa8b
-	 28fA78TlfIq17crTMAnVPzNFZ1I8zrefghwyyVIJ2zCI1zWazRRuwTcj19K7QXbJy3
-	 4woO+ZT+QwtEA==
-Message-ID: <0a766f8d-657d-42bc-b3b4-33997b919d7f@kernel.org>
-Date: Sun, 14 Sep 2025 19:36:38 +0200
+	b=lFTizDTs5L1SxhlfRU3/qwPFmDpslduEM6EnBXleQLt6klHMyCM1hvfWBPPs/9Ge0
+	 0turrquBDWp+7v49mhgOYrU93TGJLhDw/H8h19YJKYKoooJkuO31IflX57DWR80V5s
+	 ONqjKTYx6Bl/yzP1gPkrOl331sp+ni+6A0r6rPdkxb6QahWxKOE4MWGjvz7UaSioYF
+	 XZ5fFQfkn2LtKqY7ACO3/2nIDyQeNvqNMw/F2H3MbeS4pPzr075OioapkYZELW/rHY
+	 0CSCHp/r44vhcbylsJHycXODQWcgN3l8vfEfvD96vey+Eo61jYrKmburbWPhjsqqU2
+	 0NL1P8pBv2SQQ==
+Message-ID: <474c38a4-04be-402f-99b9-753299aa5fb0@kernel.org>
+Date: Sun, 14 Sep 2025 19:37:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH DNM v2 3/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
- Enable all available QUP SEs
+Subject: Re: [PATCH DNM v2 4/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
+ Enable UFS controller
 To: Xilin Wu <sophon@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -60,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
  Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 References: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
- <20250914-radxa-dragon-q6a-v2-3-045f7e92b3bb@radxa.com>
+ <20250914-radxa-dragon-q6a-v2-4-045f7e92b3bb@radxa.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,27 +106,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250914-radxa-dragon-q6a-v2-3-045f7e92b3bb@radxa.com>
+In-Reply-To: <20250914-radxa-dragon-q6a-v2-4-045f7e92b3bb@radxa.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 14/09/2025 17:57, Xilin Wu wrote:
-> Add and enable all available QUP SEs on this board, allowing I2C, SPI and
-> UART functions from the 40-Pin GPIO header to work.
+> Add and enable UFS related nodes for this board.
+> 
+> Note that UFS Gear-4 Rate-B is unstable due to board and UFS module design
+> limitations. UFS on this board is stable when working at Gear-4 Rate-A.
 > 
 > Signed-off-by: Xilin Wu <sophon@radxa.com>
 > 
 > ---
 > 
 > This change depends on the following patch series:
-> https://lore.kernel.org/all/20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com/
+> https://lore.kernel.org/all/20250902164900.21685-1-quic_rdwivedi@quicinc.com/
 
 
-No, why? It does not. If your DTS depends on drivers it's a mistake to fix.
-
-Fix dependency or squash the patches.
-
-
+Please don't add fake dependencies just to inflate the patchset.
 
 Best regards,
 Krzysztof
