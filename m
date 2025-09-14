@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BFC2B567BE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 12:21:03 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 848E0B567C1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 12:22:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C3F50189567F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 10:21:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30864172B40
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 10:22:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E532243376;
-	Sun, 14 Sep 2025 10:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B620023957D;
+	Sun, 14 Sep 2025 10:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IlSTxUtC"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jF4OoMf+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEF821019C;
-	Sun, 14 Sep 2025 10:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8945D1FBCA7;
+	Sun, 14 Sep 2025 10:22:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757845258; cv=none; b=dO0SHhByPplrBED3R0UUPZ+HTqiaScaiAPe/4CaM9vr/84hO5HwJmGgEJ30xjsFtUk21VnLtJJPOxdHGx4TqHjmVSfVsXHbWza1R85b9O/EZeXrUjRQIpgYW++Z95s9fQXgd3l71kg/tasOd0nU1pQAB0TUx/NVH+wvTPVlKvxQ=
+	t=1757845330; cv=none; b=HUQOEZKguJXhNFbs40grqk389lw+zcGVS9MkE6o1tF3ubxJFxA6Xi2UFfOnn5p4beP994WZ7yCJLReZNuCvJstlSiFxzoJfWCKrbL1hPwHGemnBeJpEH3otTTnR15EzlEZVgODmf39LGu1HJS25AAWdHMr72hS+P5gtez/gZ6wM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757845258; c=relaxed/simple;
-	bh=C2KL9fuDZE/PTluiVzqA+d0pWqPv4rSgdbyLnFt7NaA=;
+	s=arc-20240116; t=1757845330; c=relaxed/simple;
+	bh=iKzuTabaFIa0aFgVRvf6F8eQYycI7hNwmsGAh6Bkm+A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GUsZ/GpLiPqawxxso630WHjSP27J5UqHGPxeRJP5BIGhq0CexQVaJtR3TUv+tV5wOgxFcRV9e4gw+x6LDiKEr44Lzk+BKYwXdRCNK2GWE3NEPC6tHHogIV2eTlCqPI6LvFQPLV49Sf/GVC3td7R45cmkw79t1meD5zM6MckyCb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IlSTxUtC; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AFAC4CEF0;
-	Sun, 14 Sep 2025 10:20:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=d7eo2sUY/FKYnr3gj56VY/4LlTA4sGSOu94ZMWGHhfwBy5Y+yvZSukZ+5qAidSXj6LflgRf5I2IVS7sC/jq8RoR3/gmAgE0J2DwlmINQSdEtA7eHN/DqYVnzRBX2mjVKCvCtH8yoFMvWucaDAjmpF6d91cLB7mT7ECR6hjPkBQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jF4OoMf+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3133BC4CEF0;
+	Sun, 14 Sep 2025 10:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757845257;
-	bh=C2KL9fuDZE/PTluiVzqA+d0pWqPv4rSgdbyLnFt7NaA=;
+	s=k20201202; t=1757845330;
+	bh=iKzuTabaFIa0aFgVRvf6F8eQYycI7hNwmsGAh6Bkm+A=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=IlSTxUtC2VBk1afgwlCQTln5MCrw//8N2kNE4t8p0vJWzB4rYCA4/qQBrGA/YsPrQ
-	 bHSb9637Sto1GRQgVEtkGLMl1Y5lZaoHVoiuDpP4E4GhEeqMPvY7lkmi8EnzLup0Xb
-	 7i2ugqz8W42g3fgitHPAHSlQErAr2IF3kl/Y/sVDQdYb50BsYso4gxZ0RqkOd8nx0+
-	 aI9k8AdXrL9JeaucOzJ8PCb2EfbmmG3hPgKDvyh12ljJxFgy47tJFhFSsayDw2YD8v
-	 KSXUu/shOL7Eey45mYcGzDnMZ0AyTeBSX5RDkn3H5gvXAE3hNnh+/klB9VznJfuLLn
-	 AO1f+de3UXPQA==
-Message-ID: <0cebc7f0-0dce-4ce3-aa1a-9b4076150592@kernel.org>
-Date: Sun, 14 Sep 2025 12:20:53 +0200
+	b=jF4OoMf+YJvZ/zGLK1l2BgvvoYgRZFeeQUtbG50B4awvZQzuPnc7qGlrL6tcsMGqQ
+	 BqX96lpSm2y380gvbVuUlKWaaT0fLy6W4ikKEndzk94iUSWicp5EMuoXSUs3FZ5wHG
+	 6Uun2TANteqNa0lAxTOw93PJLYrb8T/z+DX+yotH22YoNAZ2u6p7FbJtgAs4ofvRHf
+	 mJ+xVtlnGlFiAg/LBW3RfqC2xdaGPrm7d4mXSPeAnksK0dTIUb6EU3/5Y2UFXzkV5l
+	 W1hMOUm8v3JRJByWvaTiWnKxFLB6e/Gn2muYrvVOPLms+uDaR5z+jNg6bt9l4D23ZR
+	 +E8VbFILwI9Kw==
+Message-ID: <166a4376-e082-4acf-9215-22cd46ce7467@kernel.org>
+Date: Sun, 14 Sep 2025 12:22:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,7 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/11] arm64: dts: qcom sdm845-lg-judyln: Add battery and
- charger
+Subject: Re: [PATCH 08/11] arm64: dts: qcom: sdm845-lg-common: Add qcom id
 To: Paul Sajna <sajattack@postmarketos.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -61,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>,
  Christopher Brown <crispybrown@gmail.com>
 References: <20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org>
- <20250913-judyln-dts-v1-2-23b4b7790dce@postmarketos.org>
+ <20250913-judyln-dts-v1-8-23b4b7790dce@postmarketos.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,30 +106,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250913-judyln-dts-v1-2-23b4b7790dce@postmarketos.org>
+In-Reply-To: <20250913-judyln-dts-v1-8-23b4b7790dce@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 14/09/2025 01:56, Paul Sajna wrote:
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> index 49225e4fa80e5f45a36964d5d733dc238e4413f8..da093b581c857c5acc9f0e72c9d3519977e13eab 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> @@ -37,6 +37,16 @@ key-thinq {
->  			interrupts = <89 IRQ_TYPE_LEVEL_LOW>;
->  		};
->  	};
-> +
-> +	battery: battery {
-> +		compatible = "simple-battery";
-> +
-> +		status = "okay";
+> SDM845 msm-id and board-id added
 
-Drop.
 
-> +
-> +		charge-full-design-microamp-hours = <3000000>;
+We see this from the diff. Don't repeat the diff in the commit msg,
+that's not its purpose. You need to explain why. Especially that these
+properties are deprecated and should not be used in general.
+
+
 Best regards,
 Krzysztof
 
