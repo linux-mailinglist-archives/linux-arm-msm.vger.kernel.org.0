@@ -1,424 +1,136 @@
-Return-Path: <linux-arm-msm+bounces-73417-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9812B563E5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 01:59:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BFC2B567BE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 12:21:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 47726189DF31
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 00:00:12 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C3F50189567F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 10:21:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 657CE2D3EE0;
-	Sat, 13 Sep 2025 23:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E532243376;
+	Sun, 14 Sep 2025 10:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="Z1dvkwvY"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IlSTxUtC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8994C2D3A94
-	for <linux-arm-msm@vger.kernel.org>; Sat, 13 Sep 2025 23:57:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EEF821019C;
+	Sun, 14 Sep 2025 10:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757807877; cv=none; b=rUh9IPlCZaprbfcNEs3SLXORjdBPikuHlkuF/C3kQ0EOc4HI9KQPODTWbBmiTH2PzCVTtO5o0mYsqHNAgTCyjQqrFTSYvk4KIXdRVvmTWU75O30knv4GRbV96R14WGuMRXTym/yd5/4CTxaN9k1w7MFPfbXLye0P7ecX02RlJdU=
+	t=1757845258; cv=none; b=dO0SHhByPplrBED3R0UUPZ+HTqiaScaiAPe/4CaM9vr/84hO5HwJmGgEJ30xjsFtUk21VnLtJJPOxdHGx4TqHjmVSfVsXHbWza1R85b9O/EZeXrUjRQIpgYW++Z95s9fQXgd3l71kg/tasOd0nU1pQAB0TUx/NVH+wvTPVlKvxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757807877; c=relaxed/simple;
-	bh=BbYvSPH0AlONATJmTolAqSy+0SP0XpK9hp2GJ/xoHic=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uGeANK/EiFqvIq1EzDFRyLsCtogyer0/W4/IsxntusHVFyXgETaO1imAXf39DLZ8I8Y+gpqCDrcmbAdZphTyP0wxjiOPfHUahdKepuQrzSXAGKr14Fepc2Ow/DoIYKBIbmpfxdA3Qy83bRZCv3BAmOTBTkH/3qsZKIWPfvx4e78=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=Z1dvkwvY; arc=none smtp.client-ip=95.215.58.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1757807873;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=qK+3BLcRPpf/yh+RsNuUAD0vtLv38tRJZ31nrO2Ikn0=;
-	b=Z1dvkwvYkdCgbtSM/53dIquFKo5rkrq2QM0Wj91NaMDEpC/WKJA70a2w6M+P+8x0C754jU
-	cfzDlxENX3xViT3mYh6kzDyFsYNZixmWinBKfDU0MIx1DLn7zmkHkKGilnME/uLEq8JLLR
-	OX3P7yau0Y7bNVtUVtLtpM3XYRFkqCenBHU9FoanWQMsB2wcsu/KItryeVt2V8BLAIln+3
-	sb4mPth1vqCsYgsoqMVGW9517PC7kMGZ+jrd7kO9NsVxKJ+fmQSige6htY+9reqk6B7vB7
-	Id/rcJ8LkVmghPaY0LZYDOisAdSwKNvEodcQ+h0maTEeDoezUUhITDUvQvbG/g==
-From: Paul Sajna <sajattack@postmarketos.org>
-Date: Sat, 13 Sep 2025 16:56:44 -0700
-Subject: [PATCH 11/11] arm64: dts: qcom: sdm845-lg-common: Sort and cleanup
- nodes
+	s=arc-20240116; t=1757845258; c=relaxed/simple;
+	bh=C2KL9fuDZE/PTluiVzqA+d0pWqPv4rSgdbyLnFt7NaA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=GUsZ/GpLiPqawxxso630WHjSP27J5UqHGPxeRJP5BIGhq0CexQVaJtR3TUv+tV5wOgxFcRV9e4gw+x6LDiKEr44Lzk+BKYwXdRCNK2GWE3NEPC6tHHogIV2eTlCqPI6LvFQPLV49Sf/GVC3td7R45cmkw79t1meD5zM6MckyCb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IlSTxUtC; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08AFAC4CEF0;
+	Sun, 14 Sep 2025 10:20:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757845257;
+	bh=C2KL9fuDZE/PTluiVzqA+d0pWqPv4rSgdbyLnFt7NaA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=IlSTxUtC2VBk1afgwlCQTln5MCrw//8N2kNE4t8p0vJWzB4rYCA4/qQBrGA/YsPrQ
+	 bHSb9637Sto1GRQgVEtkGLMl1Y5lZaoHVoiuDpP4E4GhEeqMPvY7lkmi8EnzLup0Xb
+	 7i2ugqz8W42g3fgitHPAHSlQErAr2IF3kl/Y/sVDQdYb50BsYso4gxZ0RqkOd8nx0+
+	 aI9k8AdXrL9JeaucOzJ8PCb2EfbmmG3hPgKDvyh12ljJxFgy47tJFhFSsayDw2YD8v
+	 KSXUu/shOL7Eey45mYcGzDnMZ0AyTeBSX5RDkn3H5gvXAE3hNnh+/klB9VznJfuLLn
+	 AO1f+de3UXPQA==
+Message-ID: <0cebc7f0-0dce-4ce3-aa1a-9b4076150592@kernel.org>
+Date: Sun, 14 Sep 2025 12:20:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250913-judyln-dts-v1-11-23b4b7790dce@postmarketos.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/11] arm64: dts: qcom sdm845-lg-judyln: Add battery and
+ charger
+To: Paul Sajna <sajattack@postmarketos.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>,
+ Christopher Brown <crispybrown@gmail.com>
 References: <20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org>
-In-Reply-To: <20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>, 
- Christopher Brown <crispybrown@gmail.com>, 
- Paul Sajna <sajattack@postmarketos.org>
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757807839; l=7280;
- i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
- bh=BbYvSPH0AlONATJmTolAqSy+0SP0XpK9hp2GJ/xoHic=;
- b=U1pvUYsHZhGswY0HS1HmLHxrCcf67FvIZN1fcNv8HQCPhk+kcOAJC32nUurh25x5cAX8Vo90S
- GLrxEdqEaLrC4PDMGq2mE7slA27610nGfRWIUcKE408liaMwlmrnegD
-X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
- pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
-X-Migadu-Flow: FLOW_OUT
+ <20250913-judyln-dts-v1-2-23b4b7790dce@postmarketos.org>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250913-judyln-dts-v1-2-23b4b7790dce@postmarketos.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Fix style issues and sort alphabetically
+On 14/09/2025 01:56, Paul Sajna wrote:
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> index 49225e4fa80e5f45a36964d5d733dc238e4413f8..da093b581c857c5acc9f0e72c9d3519977e13eab 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> @@ -37,6 +37,16 @@ key-thinq {
+>  			interrupts = <89 IRQ_TYPE_LEVEL_LOW>;
+>  		};
+>  	};
+> +
+> +	battery: battery {
+> +		compatible = "simple-battery";
+> +
+> +		status = "okay";
 
-Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
----
- arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 226 ++++++++++++-------------
- 1 file changed, 113 insertions(+), 113 deletions(-)
+Drop.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-index 1f4427194fddea238c1b97afd8494d08b006a40a..cbdd0c537a591a4c5365b0cb3a85d85e5c1269fa 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-@@ -45,8 +45,8 @@ reserved-memory {
- 		#size-cells = <2>;
- 		ranges;
- 
--		qseecom_mem: memory@b2000000 {
--			reg = <0 0xb2000000 0 0x1800000>;
-+		ipa_fw_mem: memory@8c400000 {
-+			reg = <0 0x8c400000 0 0x10000>;
- 			no-map;
- 		};
- 
-@@ -55,11 +55,6 @@ gpu_mem: memory@8c415000 {
- 			no-map;
- 		};
- 
--		ipa_fw_mem: memory@8c400000 {
--			reg = <0 0x8c400000 0 0x10000>;
--			no-map;
--		};
--
- 		adsp_mem: memory@8c500000 {
- 			reg = <0 0x8c500000 0 0x1e00000>;
- 			no-map;
-@@ -100,9 +95,8 @@ spss_mem: memory@99000000 {
- 			no-map;
- 		};
- 
--		/* Framebuffer region */
--		memory@9d400000 {
--			reg = <0x0 0x9d400000 0x0 0x2400000>;
-+		qseecom_mem: memory@b2000000 {
-+			reg = <0 0xb2000000 0 0x1800000>;
- 			no-map;
- 		};
- 
-@@ -465,11 +459,11 @@ vreg_s3c_0p6: smps3 {
- 	};
- };
- 
--&cdsp_pas {
-+&adsp_pas {
- 	status = "okay";
- };
- 
--&gmu {
-+&cdsp_pas {
- 	status = "okay";
- };
- 
-@@ -481,6 +475,10 @@ &gcc {
- 			   <GCC_LPASS_SWAY_CLK>;
- };
- 
-+&gmu {
-+	status = "okay";
-+};
-+
- &gpu {
- 	status = "okay";
- 
-@@ -500,74 +498,88 @@ &mss_pil {
- 	status = "okay";
- };
- 
-+&pm8998_gpios {
-+	vol_up_pin_a: vol-up-active-state {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+	};
-+};
-+
- &pm8998_resin {
- 	linux,code = <KEY_VOLUMEDOWN>;
--	status = "okay";
--};
- 
--&sdhc_2 {
- 	status = "okay";
-+};
- 
--	cd-gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
- 
--	pinctrl-names = "default";
--	pinctrl-0 = <&sdc2_clk &sdc2_cmd &sdc2_data &sd_card_det_n>;
-+&pmi8998_flash {
-+	status = "okay";
- 
--	vmmc-supply = <&vreg_l21a_2p95>;
--	vqmmc-supply = <&vddpx_2>;
-+	led-0 {
-+		label = "flash";
-+		function = LED_FUNCTION_FLASH;
-+		color = <LED_COLOR_ID_WHITE>;
-+		led-sources = <1>;
-+		led-max-microamp = <850000>;
-+		flash-max-microamp = <850000>;
-+		flash-max-timeout-us = <500000>;
-+	};
- };
- 
--/*
-- * UFS works partially and only with clk_ignore_unused.
-- * Sometimes it crashes with I/O errors.
-- */
--&ufs_mem_hc {
-+&pmi8998_wled {
- 	status = "okay";
--
--	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
--
--	vcc-supply = <&vreg_l20a_2p95>;
--	vcc-max-microamp = <600000>;
- };
- 
--&ufs_mem_phy {
-+&pmi8998_lpg {
- 	status = "okay";
- 
--	vdda-phy-supply = <&vdda_ufs1_core>;
--	vdda-pll-supply = <&vdda_ufs1_1p2>;
-+	led@0 {
-+		label = "blue";
-+		reg = <3>;
-+		color = <LED_COLOR_ID_BLUE>;
-+		default-state = "off";
-+	};
-+
-+	led@1 {
-+		label = "green";
-+		reg = <4>;
-+		color = <LED_COLOR_ID_GREEN>;
-+		default-state = "off";
-+	};
-+
-+	led@2 {
-+		label = "red";
-+		reg = <5>;
-+		color = <LED_COLOR_ID_RED>;
-+		default-state = "off";
-+	};
- };
- 
--&usb_1 {
--	status = "okay";
-+&qup_uart9_rx {
-+	drive-strength = <2>;
-+	bias-pull-up;
- };
- 
--&usb_1_dwc3 {
--	/* TODO: these devices have usb id pin */
--	dr_mode = "peripheral";
-+&qup_uart9_tx {
-+	drive-strength = <2>;
-+	bias-disable;
- };
- 
--&usb_1_hsphy {
--	status = "okay";
-+&sdhc_2 {
-+	cd-gpios = <&tlmm 126 GPIO_ACTIVE_LOW>;
- 
--	vdd-supply = <&vdda_usb1_ss_core>;
--	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
--	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&sdc2_clk &sdc2_cmd &sdc2_data &sd_card_det_n>;
- 
--	qcom,imp-res-offset-value = <8>;
--	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
--	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
--	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
--};
-+	vmmc-supply = <&vreg_l21a_2p95>;
-+	vqmmc-supply = <&vddpx_2>;
- 
--&usb_1_qmpphy {
- 	status = "okay";
--
--	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
--	vdda-pll-supply = <&vdda_usb1_ss_core>;
- };
- 
--/* PINCTRL - additions to nodes defined in sdm845.dtsi */
--
- &tlmm {
- 	gpio-reserved-ranges = <28 4>, <81 4>;
- 
-@@ -604,91 +616,79 @@ sd_card_det_n: sd-card-det-n-state {
- 	};
- };
- 
--&pm8998_gpios {
--	vol_up_pin_a: vol-up-active-state {
--		pins = "gpio6";
--		function = "normal";
--		input-enable;
--		bias-pull-up;
--		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
--	};
-+&qupv3_id_0 {
-+	status = "okay";
- };
- 
--&pmi8998_flash {
-+&qupv3_id_1 {
- 	status = "okay";
--
--	led-0 {
--		label = "flash";
--		function = LED_FUNCTION_FLASH;
--		color = <LED_COLOR_ID_WHITE>;
--		led-sources = <1>;
--		led-max-microamp = <850000>;
--		flash-max-microamp = <850000>;
--		flash-max-timeout-us = <500000>;
--	};
- };
- 
--&pmi8998_lpg {
-+&uart6 {
-+	pinctrl-0 = <&qup_uart6_4pin>;
-+
- 	status = "okay";
- 
--	led@0 {
--		label = "blue";
--		reg = <3>;
--		color = <LED_COLOR_ID_BLUE>;
--		default-state = "off";
-+	bluetooth {
-+		compatible = "qcom,wcn3990-bt";
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddxo-supply = <&vreg_l7a_1p8>;
-+		vddrf-supply = <&vreg_l17a_1p3>;
-+		vddch0-supply = <&vreg_l25a_3p3>;
-+		max-speed = <3200000>;
- 	};
-+};
- 
--	led@1 {
--		label = "green";
--		reg = <4>;
--		color = <LED_COLOR_ID_GREEN>;
--		default-state = "off";
--	};
-+&uart9 {
-+	label = "LS-UART1";
- 
--	led@2 {
--		label = "red";
--		reg = <5>;
--		color = <LED_COLOR_ID_RED>;
--		default-state = "off";
--	};
-+	status = "okay";
- };
- 
--&qupv3_id_0 {
-+/*
-+ * UFS works partially and only with clk_ignore_unused.
-+ * Sometimes it crashes with I/O errors.
-+ */
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
-+	vcc-supply = <&vreg_l20a_2p95>;
-+	vcc-max-microamp = <600000>;
-+
- 	status = "okay";
- };
- 
--&qupv3_id_1 {
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vdda_ufs1_core>;
-+	vdda-pll-supply = <&vdda_ufs1_1p2>;
-+
- 	status = "okay";
- };
- 
--&qup_uart9_rx {
--	drive-strength = <2>;
--	bias-pull-up;
-+&usb_1 {
-+	status = "okay";
- };
- 
--&qup_uart9_tx {
--	drive-strength = <2>;
--	bias-disable;
-+&usb_1_dwc3 {
-+	dr_mode = "peripheral";
-+	maximum-speed = "high-speed";
- };
- 
--&uart6 {
--	pinctrl-0 = <&qup_uart6_4pin>;
--
--	status = "okay";
-+&usb_1_hsphy {
-+	vdd-supply = <&vdda_usb1_ss_core>;
-+	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
-+	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
- 
--	bluetooth {
--		compatible = "qcom,wcn3990-bt";
-+	qcom,imp-res-offset-value = <8>;
-+	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-+	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-+	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
- 
--		vddio-supply = <&vreg_s4a_1p8>;
--		vddxo-supply = <&vreg_l7a_1p8>;
--		vddrf-supply = <&vreg_l17a_1p3>;
--		vddch0-supply = <&vreg_l25a_3p3>;
--		max-speed = <3200000>;
--	};
-+	status = "okay";
- };
- 
--&uart9 {
--	label = "LS-UART1";
-+&usb_1_qmpphy {
-+	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
-+	vdda-pll-supply = <&vdda_usb1_ss_core>;
- 
- 	status = "okay";
- };
-
--- 
-2.51.0
-
+> +
+> +		charge-full-design-microamp-hours = <3000000>;
+Best regards,
+Krzysztof
 
