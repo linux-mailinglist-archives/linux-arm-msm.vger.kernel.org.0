@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73434-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5252B56ADF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 19:37:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 97BE8B56AE1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 19:37:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 9203E1709A1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:37:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 031A91896267
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:37:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E321A2DA767;
-	Sun, 14 Sep 2025 17:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 164B62DCF4C;
+	Sun, 14 Sep 2025 17:37:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lFTizDTs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aow22E7D"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B684A2C325F;
-	Sun, 14 Sep 2025 17:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC23028C006;
+	Sun, 14 Sep 2025 17:37:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757871430; cv=none; b=uO6ZEi0mFIJok5BJoiatiAhcRBnGmOJ0J0FpZvnQRikYQ6PdWdCshNrn50cXXRkBSms0TnFDOMiv5DJrJ3fDUw01EgJedF4UmFfKTmFZkwyoLnmp137aGeAPd/Ydwxp2t3vU23aXARvVwOooywA2b6kuDgOyY0Le2M/SxVGNfl4=
+	t=1757871451; cv=none; b=Fn7/hAukRQTc+W/siz66YZtcS5qfCXd/pOsMYB4FfSPJRyzycWBFdVWF209SsuJNVS8VrEeKyofmey8fX7UISLaoh/eKAG/XYFnXHcDTdUWEbyKlPMUkfzi5bU6Io6KBshgC5eJ6I9OowfpciN7jjzb46N+72uquJTo/Q/Yg7mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757871430; c=relaxed/simple;
-	bh=qm/L/xtHGOBynctlwVlThjVaLqLuYjNAMO6jzBu74mg=;
+	s=arc-20240116; t=1757871451; c=relaxed/simple;
+	bh=oN8DDr7ql5dF0pI7ZdgtiO0o3QS2b8xkquX1UvGLFPU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TrOJqD+Vdh5QwCEauFDTOoyQ7keMk/S7X9naELSMUoJ3Sz2YW5xvH1SagSwrRN3nhJ2E1QtWiYShbCpJsFyCsc7j2t6bMg30yvlwj+MipjGIvKx8/q7aZHXaQA7oVFZ9ulnk2d59uw9KKzC+CvrABRyWQtZfUMsl50XqFrHGm1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lFTizDTs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B47DC4CEF0;
-	Sun, 14 Sep 2025 17:37:07 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=kyThhOeOVO4JmJnXsXOAzeWrLlc7DxBtxtAiWyvMwz7bPqvwtanH9+KspLOomCavsuli12umE3Ft1sV94qTh920RIYLsrsJRc3P/dKLGo6EwzkkYB/svRmCsYFNXYKOu7ivxPVtchUqGqMdNHH8XLD7kFjqp0hyh2JCn2EqiWK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aow22E7D; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C41C4CEF0;
+	Sun, 14 Sep 2025 17:37:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757871430;
-	bh=qm/L/xtHGOBynctlwVlThjVaLqLuYjNAMO6jzBu74mg=;
+	s=k20201202; t=1757871450;
+	bh=oN8DDr7ql5dF0pI7ZdgtiO0o3QS2b8xkquX1UvGLFPU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lFTizDTs5L1SxhlfRU3/qwPFmDpslduEM6EnBXleQLt6klHMyCM1hvfWBPPs/9Ge0
-	 0turrquBDWp+7v49mhgOYrU93TGJLhDw/H8h19YJKYKoooJkuO31IflX57DWR80V5s
-	 ONqjKTYx6Bl/yzP1gPkrOl331sp+ni+6A0r6rPdkxb6QahWxKOE4MWGjvz7UaSioYF
-	 XZ5fFQfkn2LtKqY7ACO3/2nIDyQeNvqNMw/F2H3MbeS4pPzr075OioapkYZELW/rHY
-	 0CSCHp/r44vhcbylsJHycXODQWcgN3l8vfEfvD96vey+Eo61jYrKmburbWPhjsqqU2
-	 0NL1P8pBv2SQQ==
-Message-ID: <474c38a4-04be-402f-99b9-753299aa5fb0@kernel.org>
-Date: Sun, 14 Sep 2025 19:37:05 +0200
+	b=Aow22E7D2ZNTi/zk+9s4SYR6gqIyW+M/2CiZ9fzTaz5np+UkWU4Rqwiwij2oZRS7N
+	 Or+HV6YJ9koMiTJP+q8UsC4gF2ZsUh5+DeKffm5IzOg0A7twL5J/GkZDn446xA8r2H
+	 hH+Q7fXQX6/zdViAKuV6yeyQX5yzhNIaPzLdk7UYmWNCaqvQeiKhgaqeuPhIO5LocA
+	 v9fJIEE42OrLh/0id50e1VE4KF+iVLsTmI4askrpRvQ2740g3NpJ4TAv2yeRsP5n1O
+	 4iem2YLvOhunxYiZTEWldpMPdFm3POgYWQfNhYiHf29B/J+8cPK3dz+MeNz9U0eTFG
+	 NU3mqNCK67t5w==
+Message-ID: <0baac0c8-3f10-4d0a-a4fb-ab7521702ef1@kernel.org>
+Date: Sun, 14 Sep 2025 19:37:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,8 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH DNM v2 4/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
- Enable UFS controller
+Subject: Re: [PATCH DNM v2 5/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
+ Enable USB 3.0 and HDMI ports
 To: Xilin Wu <sophon@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
@@ -60,7 +60,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
  Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
 References: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
- <20250914-radxa-dragon-q6a-v2-4-045f7e92b3bb@radxa.com>
+ <20250914-radxa-dragon-q6a-v2-5-045f7e92b3bb@radxa.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,25 +106,25 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250914-radxa-dragon-q6a-v2-4-045f7e92b3bb@radxa.com>
+In-Reply-To: <20250914-radxa-dragon-q6a-v2-5-045f7e92b3bb@radxa.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 14/09/2025 17:57, Xilin Wu wrote:
-> Add and enable UFS related nodes for this board.
+> This board doesn't feature a regular Type-C port. The usb_1_qmpphy's
+> RX1/TX1 pair is statically connected to the USB-A port, while its RX0/TX0
+> pair is connected to the RA620 DP-to-HDMI bridge.
 > 
-> Note that UFS Gear-4 Rate-B is unstable due to board and UFS module design
-> limitations. UFS on this board is stable when working at Gear-4 Rate-A.
+> Add and enable the nodes for the features to work.
 > 
 > Signed-off-by: Xilin Wu <sophon@radxa.com>
 > 
 > ---
 > 
 > This change depends on the following patch series:
-> https://lore.kernel.org/all/20250902164900.21685-1-quic_rdwivedi@quicinc.com/
+> https://lore.kernel.org/all/20250908-topic-x1e80100-hdmi-v3-4-c53b0f2bc2fb@linaro.org/
 
-
-Please don't add fake dependencies just to inflate the patchset.
+NAK, you cannot depend on drivers.
 
 Best regards,
 Krzysztof
