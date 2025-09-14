@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E5ECB567C5
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 12:24:33 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44674B5682B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 13:56:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 888B41895ED7
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 10:24:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7B0183B1734
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 11:56:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BC4A23C4FF;
-	Sun, 14 Sep 2025 10:24:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE2AE25A322;
+	Sun, 14 Sep 2025 11:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FwRG++5y"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ol+Jb1WD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA3D155A4E;
-	Sun, 14 Sep 2025 10:24:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83FBF2580ED;
+	Sun, 14 Sep 2025 11:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757845468; cv=none; b=Op5wzaFqKQTU9FmiX0cNwhwcj/VSmVOeKbCFWNXZeCdt80eu3bzD88gM0rWJxYutQkp68/8vZiwLER9KjqbEORAJIkAbcASPc5hdQjYpSP9SmsoO1EBN4r0LnlqzILqI02bRFNWdJJboYXvugA9p6+SlreUrg4HE1hBLEb2zScs=
+	t=1757850989; cv=none; b=gmwVRJY2oqz99KMgtB/7ErvrwcDjqBYYfYCeO87m37dOoVtMzZlhcO0+L5HeXu5HgujCExP4lZgRF4x02FAPP9TdyGQAhmVNL1gESh8kNtr9xRZA3Meh9CEIC9z+hXB/l7xPPTOty62EiuLtQwbrRf+OD8O0hHH5Y8qE+CppbHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757845468; c=relaxed/simple;
-	bh=sesq21UiJLG4cqQfF96KiW2WzyvunK/L2ENio1O4PhQ=;
+	s=arc-20240116; t=1757850989; c=relaxed/simple;
+	bh=72P1XeE7gCDZuUaE9HGq0KcOlPy2jCWwmfe+8Bijb1Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=dRTAzCaGojrCxCvuFEUIgYnF1+0chwB1RD+0MOGT8hkPYzMU6wXi1jaRjItn0AOsRY8R+YgENxVOA5z1CupSncQN/93dQdzLKsCI2NX2u9kuLdPmMWrHeu7SSeEE8MMgPRW5v9xpIJxcKu74i22Yet88/mOXDVKBigN4FldpK4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FwRG++5y; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E14C4CEF0;
-	Sun, 14 Sep 2025 10:24:24 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=LcJ8QnyiipowvZ9epvNovAmKiy4CKq5SBO3oOsQbPBB8Qda8zorIOqyo5yA1pUb6QbZLLiRhuNw+fMXoBCBtEGHVK7zk3IzV733CoO7ZpM7+XqjDSE3yuneusEc0zLzXIs1OiY7wSKGcrNtQysH3a2dHBn6A85S6Tsp4MdnxJYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ol+Jb1WD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCCDC4CEF0;
+	Sun, 14 Sep 2025 11:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757845467;
-	bh=sesq21UiJLG4cqQfF96KiW2WzyvunK/L2ENio1O4PhQ=;
+	s=k20201202; t=1757850989;
+	bh=72P1XeE7gCDZuUaE9HGq0KcOlPy2jCWwmfe+8Bijb1Y=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=FwRG++5y7DUhvTPXmCA3a3BfyN7/9Mo9+WIsvg6b7H3hRInfqkx7m1imnV9+sfJvO
-	 GakdHezYKOsC0E9zOU6yxl5RRPfuLPb3W97Aosh/aaqp8JMZyAAUybRlaaFwk7N8lr
-	 xWg6BLziGCoFVBwhGllUB8lsmzmvegFXXPBRT4w6HtCokcNYQQLuJs6OcSN9afTmD1
-	 Wk0Pz9r5zvF46e/xqVkeien1pZdO3/cNaZu+YXtsl3yTZjHaMVgtMGrB9MWJvSr2Na
-	 coDvtQDhhlbKbKcZEG3r2SrwsYqbBGmMYDTgmVNbQGJiUeBoswLWw48/ErskKOSyzM
-	 udpsYDyrfcH+A==
-Message-ID: <31e7e9c3-c8e9-4b93-86a1-7c65818bac86@kernel.org>
-Date: Sun, 14 Sep 2025 12:24:23 +0200
+	b=Ol+Jb1WDabHGqEYRRuzYJnuUlxI0TPcRedF4LOzhRwy8qt4x/RgCwK7skMLAwSCSh
+	 kZUkFrMXD36Md5U34jeUcfO8IsPsChQea4GO3wSj6dgx8rn0TDd0HQoUGmVtT5Jm7w
+	 4vbO2KEvBayBBL0avTBS1NNFdxwC06aRJ3zBRaFGXdgg59vBDvifFKbvWJV/W8zhJs
+	 h3JFikHNdItKWRo559a/vTFqgiVliY+2fJdgzM8XEPmEB2JiOHbpvs3YlcflCt+R/7
+	 XiqGeb2dS0XeZBx7XaJNdBDxXpg6OqUGJCvXInpFKLUIh1gsjUw2C7plVitmtAaXSt
+	 EMbSMqiD9WL/w==
+Message-ID: <21e78a0c-f1fd-4476-9553-c3890d05b635@kernel.org>
+Date: Sun, 14 Sep 2025 13:56:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,17 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] arm64: dts: qcom: sdm845-lg-common: Sort and
- cleanup nodes
-To: Paul Sajna <sajattack@postmarketos.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>,
- Christopher Brown <crispybrown@gmail.com>
-References: <20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org>
- <20250913-judyln-dts-v1-11-23b4b7790dce@postmarketos.org>
+Subject: Re: [RFC][PATCH v3 16/16] dt-bindings: Add Google Kinfo
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, tglx@linutronix.de,
+ andersson@kernel.org, pmladek@suse.com, rdunlap@infradead.org,
+ corbet@lwn.net, david@redhat.com, mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
+ <20250912150855.2901211-17-eugen.hristev@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,49 +106,44 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250913-judyln-dts-v1-11-23b4b7790dce@postmarketos.org>
+In-Reply-To: <20250912150855.2901211-17-eugen.hristev@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 14/09/2025 01:56, Paul Sajna wrote:
-> Fix style issues and sort alphabetically
-
-What style issues? Why are you re-sorting this? Answer to these in the
-commit msg.
-
-
+On 12/09/2025 17:08, Eugen Hristev wrote:
+> Add documentation for Google Kinfo kmemdump backend driver.
 > 
-> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+> Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+> ---
+>  .../bindings/misc/google,kinfo.yaml           | 36 +++++++++++++++++++
+>  MAINTAINERS                                   |  1 +
+>  2 files changed, 37 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/misc/google,kinfo.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/misc/google,kinfo.yaml b/Documentation/devicetree/bindings/misc/google,kinfo.yaml
+> new file mode 100644
+> index 000000000000..b1e4fac43586
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/misc/google,kinfo.yaml
+> @@ -0,0 +1,36 @@
+> +# SPDX-License-Identifier: GPL-2.0 OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/misc/google,kinfo.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Google Pixel Kinfo debug driver
+> +
+> +maintainers:
+> +  - Eugen Hristev <eugen.hristev@linaro.org>
+> +
+> +description:
+> +  The Google Pixel Kinfo debug driver uses a supplied reserved memory area
+> +  to save debugging information on the running kernel.
 
 
-
-
-> -&uart6 {
-> -	pinctrl-0 = <&qup_uart6_4pin>;
-> -
-> -	status = "okay";
-> +&usb_1_hsphy {
-> +	vdd-supply = <&vdda_usb1_ss_core>;
-> +	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
-> +	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
->  
-> -	bluetooth {
-> -		compatible = "qcom,wcn3990-bt";
-> +	qcom,imp-res-offset-value = <8>;
-> +	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-> +	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-> +	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
->  
-> -		vddio-supply = <&vreg_s4a_1p8>;
-> -		vddxo-supply = <&vreg_l7a_1p8>;
-> -		vddrf-supply = <&vreg_l17a_1p3>;
-> -		vddch0-supply = <&vreg_l25a_3p3>;
-> -		max-speed = <3200000>;
-
-You just added all these on other patch, no? Don't add code which is
-knowingly incorrect or have to be immediately adjusted. Probably you
-organized the patchset wrong and any sorting should be done earlier,
-assuming that we want this sorting in the first place?
+Bindings should be for hardware, not drivers, so this does not belong to
+DT. It might be a dedicated reserved memory node, though.
 
 
 Best regards,
