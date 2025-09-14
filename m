@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-73430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73432-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 730A9B56A5F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:59:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 61D1AB56A6B
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 18:00:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 450A47A33A0
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 15:57:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id AEC867A74FB
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 15:58:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E9E92DF3CC;
-	Sun, 14 Sep 2025 15:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFB352E0914;
+	Sun, 14 Sep 2025 15:58:08 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80D12DECC2;
-	Sun, 14 Sep 2025 15:57:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64EE42DE6F7;
+	Sun, 14 Sep 2025 15:58:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757865476; cv=none; b=LWpdcZ1EXA2uRZR9R6ScYIxnDdl7xD1XNSKkbkakOhkQbXVpm56B+g1xcYSA7/EmTgoOdqPNxGDzJeh2b/Q9w7sqBU9Qa1PXhgj5OVfH/TjghpW0vWVSAMblJoZHaaZpS9zUvHMgeoTePIfvbcbt3P7p6LtsO3Q9X2lx3ATxK4w=
+	t=1757865488; cv=none; b=NCByngDoCRdYhKC7C3P0Yqb0jI75NFW7L9FS/2spHcXcwx+WUM28AeZfLp0b47+7bKU0qq9RiapYkNWkU6TMiz68rBpkbgpw25caaB5xzXEocjupaePMN44nxku1jJhDsuIOjIpEHqwQeHXeI9iRF64wAVB7dKdPgfTIvwJ1HSA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757865476; c=relaxed/simple;
-	bh=EiMdQ56FSpoh+jezouVccupggQusRUgVW7KiFFuQ6YU=;
+	s=arc-20240116; t=1757865488; c=relaxed/simple;
+	bh=+hcwblRIBuQ+J9Yk8H60awXsSZXJkpOUptbXJftZtOQ=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ZXd3s0ti+ggaPBtQWLVTogsRCKS87GlSAP3Kmxb+7kiNqQi/MKf971aCBss6PML6bEta83c6FTqwKQKYvxWRYcDmuSpkk7h/NH3iQ3qRCu7V/o/b8pRN911IvYPrE3lsK+ALFfgbcNL5MzsrxOOVkPfbI2GTJUWzTxy47GCELe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=15.184.224.54
+	 In-Reply-To:To:Cc; b=Z9PMoqqKN9lBEp5zIZxMkw1Y1q7UyEx93gTDBYycQhOGzONY/Ael9B8rvQjxunPmz1q4MSDVHRV5uoIwNgb6QKVInWsEv8SognTJ8mDKUc9Mn+xx82a7ZXI5c3BvDrGxMW0Z9Oaq1wvfMkjUp9k8vprkfpAr2EpkZLd7VaIZRUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.207.22.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpip2t1757865439t8f0c438a
-X-QQ-Originating-IP: pLxyR+EOCK0wlpAMNCC3ZcyEEqs9dXvj/pHWXxrhJUc=
+X-QQ-mid: zesmtpip2t1757865441tc039d1b4
+X-QQ-Originating-IP: 8I3arhshC7WQ0J2PtaSXvrAMOpGU1NDEy3L0KufdMqk=
 Received: from [192.168.30.36] ( [localhost])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 14 Sep 2025 23:57:17 +0800 (CST)
+	id ; Sun, 14 Sep 2025 23:57:20 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 11041455606322930672
+X-BIZMAIL-ID: 11909047073940114166
 EX-QQ-RecipientCnt: 12
 From: Xilin Wu <sophon@radxa.com>
-Date: Sun, 14 Sep 2025 23:57:07 +0800
-Subject: [PATCH DNM v2 4/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
- Enable UFS controller
+Date: Sun, 14 Sep 2025 23:57:08 +0800
+Subject: [PATCH DNM v2 5/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
+ Enable USB 3.0 and HDMI ports
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250914-radxa-dragon-q6a-v2-4-045f7e92b3bb@radxa.com>
+Message-Id: <20250914-radxa-dragon-q6a-v2-5-045f7e92b3bb@radxa.com>
 References: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
 In-Reply-To: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -62,97 +62,242 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
  Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, Xilin Wu <sophon@radxa.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757865427; l=1799;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757865427; l=4169;
  i=sophon@radxa.com; s=20240424; h=from:subject:message-id;
- bh=EiMdQ56FSpoh+jezouVccupggQusRUgVW7KiFFuQ6YU=;
- b=fbUhLxQn5wBUDSAGSmNf3hIJN57m7niTXJBgwUIp19I/qzEeC1040BKNYAc6cYTIy9XbJEWtt
- IUo4oXqyqTzCSO1Ihz6qO5xqj7TLS0gKofkY6PpXdNb1yN8xoZvrywO
+ bh=+hcwblRIBuQ+J9Yk8H60awXsSZXJkpOUptbXJftZtOQ=;
+ b=siCeStVnL8gXcVL0AicvXdoc3c1XwFNtfzOSwSc0lPIEUMPgA/NGguQeVNQ7DrsV/pCn06Sx8
+ pDlq35z4XUYCNhI9SToIbpmQdj/4wxBeCRBFX8Hp7bI8F+ngLAy3Jjn
 X-Developer-Key: i=sophon@radxa.com; a=ed25519;
  pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpip:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: MrTVJ9obs/HIqW9ht9goa9kUk6A99LMhVKvYmtsErieUm2jp0ZqLwUbJ
-	Dfrq39pc9Nf35hOo2+jJ6gFi85vz7vCjzHhMtJ0KZbUdXarZA+BDqulN+/a9LlPTt5IoTz9
-	BMq8oeZyZ9sWGABCxOdwxQMC2CVgYBF3KYDLTfCGY8ZTQo2ynx+hcyPQxEE3g86qbg36eCn
-	bIiQw1fG0IHBNfU1PRbmLlokQkCGBjnxYjXKF/FD4KYfyS9Ex1CISSspHXMOfU0dAR48PsF
-	3hSEG7+e1qJTKRBeJBr1AEPamvTXAeSlnCPVzx7hIb9hGlB6jLq6c0Q4YtU1eItyKsRjoFv
-	Qze0uKXD+dXRnsE85Ntbx0OE/ryrDr/xPHNeGzatoDXwMeGR/yt9gXLmIdFFW0apen4f6IJ
-	3p75UiTIOZA8RfWwVBm69cUBSf+9XfL7S/1r92aqy67Ho9cqNGuuaOwvp9sLLSzPkp7x3SR
-	5vfDzhudS+bLg9/90GZV8diF6ziT/EQ/lTOEXx0Nk5pAgNUccGVr1HqwnsJ3lLo4LCilE+n
-	EL/V3Vo4mMsEEfETIDiJESliy6bV4KRWvEy0EbNzJZWWFBjnxdXydvGGygeCXAa7f4+afpm
-	M9yHZq/x6O1rmySIbIYHBa0hPntC/LbfwFgWRn/LVYoJJsKY4z3nnTZaxkVzdqUnIO24iLg
-	NMyTD/m7SjBNGmri6amsWyqWjiheKn7FM0h+sTc/QII2FohNzYHIdFNonxc4kwxAkw1Rh7S
-	2uc+nop//Hsb2KJfZ/dlFEMYSIqcicL/dloX8zwn3VH1guMMK6+8Jyb99dQtprT/dAWA8C9
-	w9D3TZ8J1G8btsTdVAG66GeSNUTfGDQFi+j6TdYPc6k9upfPR6AgcXg0rSbIz5AVZjIKhCM
-	zeLywDskeMGRLJEFLQfy7MiUDXDHk1obtRJdaDPY7Q1iStxVcdrtdui2czHzyfI1BMYFcl1
-	4zcEWjoiIJ4O3BSyPyNgN43y8mAzDxI/28ePlPEiqVJSYaFo3rOfcpGpYdt75Y5yeFYXsLR
-	Y2bXy5L2+YIhRuDi4w7DGs8LNRfEQrA0JyLNt0DDq6sBL9q/X2lCiBGr6HBAYHxBQmRH1rW
-	A==
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-QQ-XMAILINFO: OA34ehyuJLv3B/b1yloRGcb0+2xLYZFhICOqCK/4yUh4VpVVyJJt8MZ2
+	nj4cjqxtjd3XyexeeHNqtNekJLFyosywuO2PWCFVlAmb9zr50C0puu0ukH2qpuxyYvyqojK
+	5Zl3Cfy/hnN9+H+BlGg6CqpQlWH3t43Y92j86pDPpQ0uC8uamhIt378bFBGXexUuSBTKwSz
+	l/lNrFD4UwKKaQUeqhCCRhwIESUd/g8sh5S1ysVE+Hp0krySDPOuVamhaQnLondLdg1ZOv3
+	X8MBZfQAKl6ZPQ3Game6V9dQyQMMFHb7ECR2eqjlj/FSOj+eWKpxBRm2/OO9mZtg/Vycl7v
+	vBAS+JE8gSSl7VKLd91m0LBC0k5RDKwj/zS/OeIhdtSToOiySZ7XsfWmzlPUHPBnNufVEV0
+	cAwMWJFOIYDG33pGgsgso/vWk6Q7xBQR2lSPO38yzkZJrJFWdAk0IctK0mjBlPyHnbQ2GJt
+	wKirAA3hYiS3IWZENynQvJeKqR6ODPMNKQEUhHbK+fpqANAbTtYl6PmFdCaAPJa8dtD7w07
+	ujlBbEpaiG8A2Be5iG/DgjEdQoDe7OnBk5VBat6XY1zBIz0JtxSNakVrA3+6l1JHZzp1ixE
+	AdkO4W4QEBSGJX7P0bjAQjej9PXayiRUBMAgg/xOSb3aFAxVaBb5H6PWaJ/lSzsl8o12EYG
+	oMtZUkMPZeEv88jdhj0TRg6cZpFVJ+ITTI6joHnxHFK5rPkEItFq1/tcVE0EgtH0dhYJJ47
+	aoPUoHjb+1B9kXA+i76qYafNB9BJn8SaDr0ZakLMLS5vgjCe8rKZCxzOwISTQ357oLnGxsO
+	Kd9SCnnYCStKaDPdJoqMfX0DctDHIFE0sJdEhMDvXq4oO1XAQAa9sRxZmta2OlJtIw3NtCk
+	7vi4JEpMpIMlSpZtoTSqif76s9gzVSIsLydx8lGgcZ7thuTDVOUzTLNL00n+CHeXTrYjztC
+	J6l98fRfHLFSFMEW6phADoayiJXH3gSZtOEA8QWxq5mckmsZbRqHHE1rnYDtdniUO5u/6zu
+	hHtCn8/4eyiC2o3z1gP+jzxdBy8nS2av33qOPShPSu/zBM2KyhKnmdpm54dRtJVWOB4TZ6I
+	Q==
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
 X-QQ-RECHKSPAM: 0
 
-Add and enable UFS related nodes for this board.
+This board doesn't feature a regular Type-C port. The usb_1_qmpphy's
+RX1/TX1 pair is statically connected to the USB-A port, while its RX0/TX0
+pair is connected to the RA620 DP-to-HDMI bridge.
 
-Note that UFS Gear-4 Rate-B is unstable due to board and UFS module design
-limitations. UFS on this board is stable when working at Gear-4 Rate-A.
+Add and enable the nodes for the features to work.
 
 Signed-off-by: Xilin Wu <sophon@radxa.com>
 
 ---
 
 This change depends on the following patch series:
-https://lore.kernel.org/all/20250902164900.21685-1-quic_rdwivedi@quicinc.com/
+https://lore.kernel.org/all/20250908-topic-x1e80100-hdmi-v3-4-c53b0f2bc2fb@linaro.org/
 ---
- .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 29 ++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+ .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 152 +++++++++++++++++++++
+ 1 file changed, 152 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-index d30cddfc3eff07237c7e3480a5d42b29091d87d6..3bf85d68c97891db1f1f0b84fb5649803948e06f 100644
+index 3bf85d68c97891db1f1f0b84fb5649803948e06f..12bc9a0fcfbfeaabf6ede351f96c61193a8261c0 100644
 --- a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
 +++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-@@ -482,6 +482,11 @@ &i2c13 {
+@@ -78,6 +78,71 @@ chosen {
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
++	usb3_con: connector {
++		compatible = "usb-a-connector";
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				usb3_con_hs_in: endpoint {
++					remote-endpoint = <&usb_1_dwc3_hs>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				usb3_con_ss_in: endpoint {
++					remote-endpoint = <&usb_dp_qmpphy_out_usb>;
++				};
++			};
++		};
++	};
++
++	hdmi-bridge {
++		compatible = "radxa,ra620";
++
++		pinctrl-0 = <&dp_hot_plug_det>;
++		pinctrl-names = "default";
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++
++				hdmi_bridge_in: endpoint {
++					remote-endpoint = <&usb_dp_qmpphy_out_dp>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++
++				hdmi_bridge_out: endpoint {
++					remote-endpoint = <&hdmi_connector_in>;
++				};
++			};
++		};
++	};
++
++	hdmi-connector {
++		compatible = "hdmi-connector";
++		label = "hdmi";
++		type = "a";
++
++		port {
++			hdmi_connector_in: endpoint {
++				remote-endpoint = <&hdmi_bridge_out>;
++			};
++		};
++	};
++
+ 	leds {
+ 		compatible = "gpio-leds";
+ 
+@@ -504,6 +569,21 @@ &lpass_va_macro {
  	status = "okay";
  };
  
-+/* It takes a long time in ufshcd_init_crypto when enabled */
-+&ice {
-+	status = "disabled";
++&mdss {
++	status = "okay";
 +};
 +
- &lpass_audiocc {
- 	compatible = "qcom,qcm6490-lpassaudiocc";
- 	/delete-property/ power-domains;
-@@ -938,6 +943,30 @@ &uart5 {
- 	status = "okay";
- };
- 
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
-+	vcc-supply = <&vreg_l7b_2p96>;
-+	vcc-max-microamp = <800000>;
-+	vccq-supply = <&vreg_l9b_1p2>;
-+	vccq-max-microamp = <900000>;
-+	vccq2-supply = <&vreg_l9b_1p2>;
-+	vccq2-max-microamp = <1300000>;
-+
-+	/* Gear-4 Rate-B is unstable due to board */
-+	/* and UFS module design limitations */
-+	limit-rate = "rate-a";
-+	/delete-property/ qcom,ice;
++&mdss_dp {
++	sound-name-prefix = "Display Port0";
 +
 +	status = "okay";
 +};
 +
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vreg_l10c_0p88>;
-+	vdda-pll-supply = <&vreg_l6b_1p2>;
++&mdss_dp_out {
++	data-lanes = <0 1>;
++	remote-endpoint = <&usb_dp_qmpphy_dp_in>;
++};
++
+ &pcie0 {
+ 	perst-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
+ 	wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
+@@ -753,6 +833,22 @@ platform {
+ 			sound-dai = <&q6apm>;
+ 		};
+ 	};
++
++	dp0-dai-link {
++		link-name = "DP0 Playback";
++
++		codec {
++			sound-dai = <&mdss_dp>;
++		};
++
++		cpu {
++			sound-dai = <&q6apmbedai DISPLAY_PORT_RX_0>;
++		};
++
++		platform {
++			sound-dai = <&q6apm>;
++		};
++	};
+ };
+ 
+ /* Pin 11, 29, 31, 32 in GPIO header */
+@@ -967,6 +1063,58 @@ &ufs_mem_phy {
+ 	status = "okay";
+ };
+ 
++&usb_1 {
++	dr_mode = "host";
 +
 +	status = "okay";
++};
++
++&usb_1_dwc3_hs {
++	remote-endpoint = <&usb3_con_hs_in>;
++};
++
++&usb_1_hsphy {
++	vdda-pll-supply = <&vreg_l10c_0p88>;
++	vdda33-supply = <&vreg_l2b_3p072>;
++	vdda18-supply = <&vreg_l1c_1p8>;
++
++	status = "okay";
++};
++
++&usb_1_qmpphy {
++	vdda-phy-supply = <&vreg_l6b_1p2>;
++	vdda-pll-supply = <&vreg_l1b_0p912>;
++
++	/delete-property/ orientation-switch;
++
++	status = "okay";
++
++	ports {
++		port@0 {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			/delete-node/ endpoint;
++
++			/* RX1/TX1 is statically connected to USB-A port */
++			usb_dp_qmpphy_out_usb: endpoint@0 {
++				reg = <0>;
++
++				data-lanes = <2 3>;
++				remote-endpoint = <&usb3_con_ss_in>;
++			};
++
++			/* RX0/TX0 is statically connected to RA620 bridge */
++			usb_dp_qmpphy_out_dp: endpoint@1 {
++				reg = <1>;
++
++				data-lanes = <3 2>;
++				remote-endpoint = <&hdmi_bridge_in>;
++			};
++		};
++	};
 +};
 +
  &usb_2 {
  	dr_mode = "host";
  
+@@ -986,6 +1134,10 @@ &venus {
+ };
+ 
+ /* PINCTRL - additions to nodes defined in sc7280.dtsi */
++&dp_hot_plug_det {
++	bias-disable;
++};
++
+ &pcie0_clkreq_n {
+ 	bias-pull-up;
+ 	drive-strength = <2>;
 
 -- 
 2.51.0
