@@ -1,155 +1,159 @@
-Return-Path: <linux-arm-msm+bounces-73422-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73423-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79714B56856
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 14:08:51 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37C68B56929
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 15:16:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C8FB8189E0A9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 12:09:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D40141630A7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 13:16:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9CA292522B5;
-	Sun, 14 Sep 2025 12:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B3CFE19F130;
+	Sun, 14 Sep 2025 13:16:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="FUeAnkDJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PX3oYHsu"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F05DA261588
-	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Sep 2025 12:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B312C9D
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Sep 2025 13:16:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757851722; cv=none; b=Gl8kH4tcPOKzXN9bV19sgbE4otA66iG4euvbcWJLfUB+bUx1gfDSwXH3S+x7zh8JBQM+7OttQS6+ckhZOnC67QWrgNCDqwpicrt+ia21ienlPfThFS6qgHV7BwZtsJGZbzhcuQU1IXHhEHbqbTOs1CfZc6atzNhX//ABHEwkIxA=
+	t=1757855778; cv=none; b=fflkwAJhYwdJBKIKIKWagjLLu5w8rjPoJywoZM3WNlGFtH6E/rodo2i0pqCNancJ5gPMmShE6hewFR4C/s5dmseUfI4aa5jaAaAyg4L+9LpUg7z+ra8V+AI7h/OkpousA89s/jLSeXZGMJxM4YEPvD7THM/D0Gt5eeIpkvSWwio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757851722; c=relaxed/simple;
-	bh=/vAVhu/ngR4yHd05XqGLRzyRf/JzOKMB5L/10fK0Kk0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QivdxamIqZXfPEcZAl4DBoy4jbQ91Z/KQeVJ0unjgHe/h33bVOW49T86jPGrdF4CcnmK10koWhOkzcJUJyX3icrdhNcR5JyU9LoSJUd6qGE3eiQNZPXxJieO9P7doeAzFeVsOx7h171j4Ive1RWXYvJqo70jFTlVdRQEIN5SmmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=FUeAnkDJ; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1757851720;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=TGC4WoAJlpX9tdCXckzAZr5W3saj1ZSsINit3PsYuzA=;
-	b=FUeAnkDJW2mk8y1fOisF489Z0IOpfqgbpu9XulN49RNI288zmCFbSBfrEfRjRpKAZ5tK44
-	7S/gQlysYWIHns+MG2wcxt9+q3ixxGadaflWsIYiKMs7qVeMvsM0b8LrcdYK46TWPA8Mgn
-	GU8DJINiIk3yZCr1VyN3F7dsLXU/Lvs=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500-ST0-cId-PKmnpB3hRiRsuA-1; Sun, 14 Sep 2025 08:08:39 -0400
-X-MC-Unique: ST0-cId-PKmnpB3hRiRsuA-1
-X-Mimecast-MFC-AGG-ID: ST0-cId-PKmnpB3hRiRsuA_1757851718
-Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-81312a26ea3so906250585a.0
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Sep 2025 05:08:38 -0700 (PDT)
+	s=arc-20240116; t=1757855778; c=relaxed/simple;
+	bh=ASTRe5VOEhSFShtU7AUd8KiTkDSRQRHKvy7Cf4rPWBE=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=nIxPV2sqEEdKaWtO0EoiUZ8AfjISedrFZkp0NAwhV4m0clPjXbvx4puvmzTxwhWtoC0n8ZX+xSqiU6nPL7MIYEDjto4iTUHo14RvM+XEcQuPp5/ZfA9KebILDhbOkw2jsK37E7LD1y/Ri1M5C4fueUdvjlAzQuPNkqywdjNCMKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PX3oYHsu; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58EAx02X013417
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Sep 2025 13:16:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=cFsUhwbH3X0sd7hf9crCeGPj7gKsS7ptnZR
+	waiXgaJw=; b=PX3oYHsu8T4Z6xb2oqG3grWhQA4zLO3eQsKhLHqogZoHw5RWlT4
+	KI/zzo2H2Y/Tk7uZzv8lOiB2LutOJtU1MMXT0qQL5RmPPwa37zyVbCGPxRtFPJGT
+	kBqv8fXlaUPKluNVTQl4bWRUs7A9d3zI0WoAtTlZw1GZy4zR5tsJliT0LEMxaZIw
+	d8y0V5VyzbS3kSQk8jl4It+PywezVjrXyU5Wceyb47YYSp5nOKovHG6B8dnx60Tf
+	FlKo8YNBA/xUEk/jkKTrLComVq9SV2rFj8cPsvu+nUCTNF+iptPXszMeWSy+ai4l
+	43YJ5uTRBYrtW0h3cRMT9rTYOdS7NcWFjPA==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4951cha72b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sun, 14 Sep 2025 13:16:16 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-244581953b8so38464765ad.2
+        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Sep 2025 06:16:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757851718; x=1758456518;
-        h=user-agent:in-reply-to:content-disposition:mime-version:references
-         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TGC4WoAJlpX9tdCXckzAZr5W3saj1ZSsINit3PsYuzA=;
-        b=tEOxgFM1i3YPMiuox0cd1Jr2bdfNdxedcdTeWvLoCNR5HpFTckyBPT2oSGnrjGM0gA
-         8QKKsK5oSGM+iLArIPvsFNcHjeSuP0m20f3pQxbn2erwjNqFONN6JeDRE3PxeFgmXnqK
-         0NIETGeMumN2LtS4LsOKgQmxIIZuNTMHe2krsi/35O5fN7cl3sqStQVbHpout+esHd3C
-         l7UlvI4tFHP1rZ2p/v6P+vXXowexoHE6Nei0Hv7gBHJa4Sh6FqHdSjis2ZnatTVqg/Yh
-         nSzMcbFfUhM15WdcKBhyA0km5mmoPjrsXktKtk+Ei9SXyD3xZHVRvARsk4oW32FAJil3
-         qW/g==
-X-Forwarded-Encrypted: i=1; AJvYcCUBUUPnzv3S4kZCQaMS/KpjDVa0ENOYd29vKBVAzmP+fGnSUKVBWTd1PW8vja7hgvqqB9erFx59JbhDXB1q@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrJ1DUBD9lL88mhGvMnUJGbo/gcz6u5FlJWLmQgzefg8hSF7YE
-	VWw6VHFNhjGwOU3YP1Vr2XzfJynbkKylf6ieiOgQ6cCcSFU+O8mM8tLk7orGw5z9XIe2Rdw4LJu
-	UbABw9Cy9tE6i0p2mtXTIIxpCe+//cDHCQD2tkrQLSAvIOGRx+Eq1PB+vFAckrdKIcSw=
-X-Gm-Gg: ASbGnctf/nVz0WthIcmWxokkQW/QODSo10UGmv9WI9L5nBNXiq3j2h4tP6/nVG8YSO6
-	obr1kDVgDdR4YtuEdUHpVK4DRuAEt+dYBEikd5eIejYz+X6CiSBNV7ihT/nNNxLahiR86KcaMYy
-	jbUa8S6oRw/TH4a2fNniqq6x5xlIe+BB8hnfe7/ZtqVBygfXdxh6ZHoLkXqkRgWT0ekHTGcYSqy
-	D8UJOoFyMGmKlr8iBsQrFfDunHjQfVn2g4++7j0D2NlzX8NSHn7zO3FfqQDR5iBNRqkwLjEbEu9
-	rJkb6s/bqx+JtrWtQd2Ekcu/MXZROTni+lz+EKyVr+PIDZN2W/AtUiyytp/rXL67zyTTAzPUIBx
-	kx5jPUVAcdl/yDHi4OUcWhG4t0+y+M8o=
-X-Received: by 2002:a05:620a:c4f:b0:815:9bd3:72a4 with SMTP id af79cd13be357-82401a95c9bmr1036168985a.69.1757851718243;
-        Sun, 14 Sep 2025 05:08:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFRdCKGXPgtbhvJpUCdDwCaaC2B0DLna/CzbBAvfkLzYJU98qL9IvUSFcqawGBto49lPMPxgQ==
-X-Received: by 2002:a05:620a:c4f:b0:815:9bd3:72a4 with SMTP id af79cd13be357-82401a95c9bmr1036164085a.69.1757851717778;
-        Sun, 14 Sep 2025 05:08:37 -0700 (PDT)
-Received: from redhat.com (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-820cfcaca15sm580413985a.71.2025.09.14.05.08.35
+        d=1e100.net; s=20230601; t=1757855775; x=1758460575;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cFsUhwbH3X0sd7hf9crCeGPj7gKsS7ptnZRwaiXgaJw=;
+        b=leD7mDjfXYXbwJk45d0tb4ROhWB8+c92B7x8EW+9nVBMjBydeIfKHQ1+IM/SrsCJyl
+         5j5VygkMXieHFFXSZRz+Hao28DCzX+dkK4uddM6ZyqJ1tl2OFxHgPLOQQiqBX5qrJvPQ
+         1+rAKrMLD2EqFkFMPOZ/KzATYInq2dYDvQljWJtkBD5jMd2ZYyfrVd78OvPCz/Ziwn7l
+         uWOVIkoXgD3y2CHnGYxy9V0IOdgsnXFNX/VFBvhVpQxXQrQi6OIg/2QUJV3nnOuP2RWE
+         HDNN/eTiwKxjQQw/s2wh/K/UGeAXSptxVcyuulLUvrEORAFFpwuxpHRyiDnsK+cZx/lL
+         Y4QA==
+X-Forwarded-Encrypted: i=1; AJvYcCXBU4XvtWj5bPyzBrxX++/oYx2MUSz4TBZjojrSgjOxv4jSRq4SXC2ZwCx+q5jFEThkTCtFj+eXdTFWIcXq@vger.kernel.org
+X-Gm-Message-State: AOJu0YwycCBBx8yDtSgFt6wTTfw8Lww86KfzRDAJeMgWulBGt8KWtM9Z
+	fqv0dLVjbBpHt0k++qitgxvrG5bANLL/8VVUTkGCdfkxdFLIRbzIzTDFrhQLVSsAU32KOgBpZZw
+	qCyRgBmns7wGd5z1VwhDgFHY9kheBowxk+MtyCvsSgss2sG4/ka9t9KGNHdjB3unRvRYG
+X-Gm-Gg: ASbGncuvFkPJm73Sgu5EQcDPc2lAdOsedJ2zEenzmqFuxo5LMuNovEp4VJPmyFe7Je+
+	bDqvA0LKPAQNtyAKyzGFfyVN1Z0MVT9UeMT4vn9IrYz5CINbo6Y64IA7XPXo0xbqrfuC64cixou
+	EZm6TyP0kMo53u5ep6AoBgVM2HyElY5WBWMbpXH6eQCJQJ+Uz0TngN6fD/XYWfrNMfeU0F+bo76
+	mHGbzZsnobwNKd23o7hiFRWvU+TtKrbz0eYBqM61DiyEOGGDYMqh9Fmf9S9UuDcWsvhx3w3PJSZ
+	50WFuSHSQJbTe05EpP57Clc3l9oonvEcVYNWJCzovvAl8xsMVwovbvM6y19BEzHKAUFypEVKusp
+	B
+X-Received: by 2002:a17:902:d4c6:b0:25c:4902:7c0 with SMTP id d9443c01a7336-25d23d1bb3bmr118454025ad.3.1757855775135;
+        Sun, 14 Sep 2025 06:16:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJuy1SPEO/XjEKKhYEvmFIgN+JNIp7NY0Hu7kXU50Dz/94OCkRLrYzCtcat0KvAIgfcL9GgA==
+X-Received: by 2002:a17:902:d4c6:b0:25c:4902:7c0 with SMTP id d9443c01a7336-25d23d1bb3bmr118453725ad.3.1757855774712;
+        Sun, 14 Sep 2025 06:16:14 -0700 (PDT)
+Received: from hu-mohs-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25c3ad33ff0sm97871205ad.115.2025.09.14.06.16.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 14 Sep 2025 05:08:37 -0700 (PDT)
-Date: Sun, 14 Sep 2025 08:08:33 -0400
-From: Brian Masney <bmasney@redhat.com>
-To: Philipp Zabel <p.zabel@pengutronix.de>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Shawn Guo <shawnguo@kernel.org>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Pengutronix Kernel Team <kernel@pengutronix.de>,
-	Fabio Estevam <festevam@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Sean Paul <sean@poorly.run>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Yannick Fertre <yannick.fertre@foss.st.com>,
-	Raphael Gallais-Pou <raphael.gallais-pou@foss.st.com>,
-	Philippe Cornu <philippe.cornu@foss.st.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Cc: linux-clk@vger.kernel.org, dri-devel@lists.freedesktop.org,
-	imx@lists.linux.dev, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-sunxi@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v2 0/9] drm: convert from clk round_rate() to
- determine_rate()
-Message-ID: <aMawQYUIjPw9m4IO@redhat.com>
-References: <20250811-drm-clk-round-rate-v2-0-4a91ccf239cf@redhat.com>
+        Sun, 14 Sep 2025 06:16:14 -0700 (PDT)
+From: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+To: Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
+        prasad.kumpatla@oss.qualcomm.com, ajay.nandam@oss.qualcomm.com,
+        stable@vger.kernel.org
+Subject: [PATCH v1] ASoC: qcom: sc8280xp: Fix sound card driver name match data for QCS8275
+Date: Sun, 14 Sep 2025 18:45:49 +0530
+Message-Id: <20250914131549.1198740-1-mohammad.rafi.shaik@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250811-drm-clk-round-rate-v2-0-4a91ccf239cf@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=eeo9f6EH c=1 sm=1 tr=0 ts=68c6c020 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=687F3S6WDAOtLpWcfGQA:9
+ a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-ORIG-GUID: lo2UCqJHTVo8ugPPqGP5WX7JncKPQ-Wb
+X-Proofpoint-GUID: lo2UCqJHTVo8ugPPqGP5WX7JncKPQ-Wb
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAzNiBTYWx0ZWRfXxjO6bLok5Txs
+ yDdzWqOdwYS2yG8DmF9RyJ1RunD4Fk83EOj2jisS7uOCV0QIf0LU/jb7sd+KNpAC1QP5CNOEJzJ
+ 7L4hVpeHlvb68LquA4/VdaH2ImoXwP/DVJomUcCVTf8XMZa4xYJsrypHpM9EtYMgyeUGAtut/LV
+ LPL1I8++T8CV6cXOoag5o3ON/pd+ro+KhujjJQN/6t4eqJCVrxK9BYM6QMKAOIY5Ru86sERk1pr
+ 30pYurelGqi/YwU9WHJHg4TapDdUagKHFyTKziEGF1eOE5EZCLeLelEf7CiMOOKNICCt1Q/uRsS
+ 6pZ92RgkMm724f5WmcjIwY23Pm/pzT+mnfEaHNqZSvPdZgzmhMdW44BUXK34my28c51HLMcgKIk
+ Qxv2jPIX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-14_05,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 impostorscore=0 bulkscore=0 adultscore=0
+ priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509130036
 
-Hi all,
+The QCS8275 board is based on Qualcomm's QCS8300 SoC family, and all
+supported firmware files are located in the qcs8300 directory. The
+sound topology and ALSA UCM configuration files have also been migrated
+from the qcs8275 directory to the actual SoC qcs8300 directory in
+linux-firmware. With the current setup, the sound topology fails
+to load, resulting in sound card registration failure.
 
-On Mon, Aug 11, 2025 at 06:56:04AM -0400, Brian Masney wrote:
-> The round_rate() clk ops is deprecated in the clk framework in favor
-> of the determine_rate() clk ops, so let's go ahead and convert the
-> drivers in the drm subsystem using the Coccinelle semantic patch
-> posted below. I did a few minor cosmetic cleanups of the code in a
-> few cases.
-> 
-> Changes since v1:
-> - Drop space after the cast (Maxime)
-> - Added various Acked-by and Reviewed-by tags
+This patch updates the driver match data to use the correct driver name
+qcs8300 for the qcs8275-sndcard, ensuring that the sound card driver
+correctly loads the sound topology and ALSA UCM configuration files
+from the qcs8300 directory.
 
-Would it be possible to get this picked up for v6.18? I'd like to remove
-this API from drivers/clk in v6.19.
+Fixes: 34d340d48e595 ("ASoC: qcom: sc8280xp: Add support for QCS8275")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+---
+ sound/soc/qcom/sc8280xp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I'm not sure which tree(s) this should go through. All of the patches
-except patch 1 have at least one Acked-by or Reviewed-by.
-
-Thanks,
-
-Brian
+diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+index 73f9f82c4e25..db48168b7d3f 100644
+--- a/sound/soc/qcom/sc8280xp.c
++++ b/sound/soc/qcom/sc8280xp.c
+@@ -186,7 +186,7 @@ static int sc8280xp_platform_probe(struct platform_device *pdev)
+ static const struct of_device_id snd_sc8280xp_dt_match[] = {
+ 	{.compatible = "qcom,qcm6490-idp-sndcard", "qcm6490"},
+ 	{.compatible = "qcom,qcs6490-rb3gen2-sndcard", "qcs6490"},
+-	{.compatible = "qcom,qcs8275-sndcard", "qcs8275"},
++	{.compatible = "qcom,qcs8275-sndcard", "qcs8300"},
+ 	{.compatible = "qcom,qcs9075-sndcard", "qcs9075"},
+ 	{.compatible = "qcom,qcs9100-sndcard", "qcs9100"},
+ 	{.compatible = "qcom,sc8280xp-sndcard", "sc8280xp"},
+-- 
+2.34.1
 
 
