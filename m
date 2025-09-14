@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73435-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73436-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97BE8B56AE1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 19:37:35 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7396FB56AE7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 19:39:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 031A91896267
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:37:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 230083B8D21
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:39:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 164B62DCF4C;
-	Sun, 14 Sep 2025 17:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2E4DE28C006;
+	Sun, 14 Sep 2025 17:39:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Aow22E7D"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SNNYKFLD"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC23028C006;
-	Sun, 14 Sep 2025 17:37:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003E71A3A80;
+	Sun, 14 Sep 2025 17:39:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757871451; cv=none; b=Fn7/hAukRQTc+W/siz66YZtcS5qfCXd/pOsMYB4FfSPJRyzycWBFdVWF209SsuJNVS8VrEeKyofmey8fX7UISLaoh/eKAG/XYFnXHcDTdUWEbyKlPMUkfzi5bU6Io6KBshgC5eJ6I9OowfpciN7jjzb46N+72uquJTo/Q/Yg7mk=
+	t=1757871594; cv=none; b=JlFIb+nag5lFv2e689ZCpB8xsNA/rHO3q1B2NNibwFOJB+GRiFFeB14Kxdo1jWfFrfdpMF0W3DmXb7xBK7i5Pi4Hypdt3Mci1LPJMX0vEl2s5yI22s6V5JhX1R71BDtLs67ge1Q1bhvv7JUiVazTYEOOMEHTdkxHkSYFvxsgu9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757871451; c=relaxed/simple;
-	bh=oN8DDr7ql5dF0pI7ZdgtiO0o3QS2b8xkquX1UvGLFPU=;
+	s=arc-20240116; t=1757871594; c=relaxed/simple;
+	bh=bFJf/+5P070WZoLOmAR6ZA/DGcYViiYR282SeoeDpvs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kyThhOeOVO4JmJnXsXOAzeWrLlc7DxBtxtAiWyvMwz7bPqvwtanH9+KspLOomCavsuli12umE3Ft1sV94qTh920RIYLsrsJRc3P/dKLGo6EwzkkYB/svRmCsYFNXYKOu7ivxPVtchUqGqMdNHH8XLD7kFjqp0hyh2JCn2EqiWK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Aow22E7D; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C41C4CEF0;
-	Sun, 14 Sep 2025 17:37:27 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Ne4qO1VTwyQjdKT2+hq5tanOLzSPhN9a4MUSKMr74oew/mXHGgN/9HclK8Q2cl8ADmNtHl1wcnYAk2oX/ToCpwVtpiejImmuTHr4wFnBCjhMePMCskTgVzuAQwkkCO5N2o2Av2Qy4W9QnFOe7rzyPzwda3WLL5/pH49Iln+Ireg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SNNYKFLD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EDD0C4CEF0;
+	Sun, 14 Sep 2025 17:39:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757871450;
-	bh=oN8DDr7ql5dF0pI7ZdgtiO0o3QS2b8xkquX1UvGLFPU=;
+	s=k20201202; t=1757871593;
+	bh=bFJf/+5P070WZoLOmAR6ZA/DGcYViiYR282SeoeDpvs=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Aow22E7D2ZNTi/zk+9s4SYR6gqIyW+M/2CiZ9fzTaz5np+UkWU4Rqwiwij2oZRS7N
-	 Or+HV6YJ9koMiTJP+q8UsC4gF2ZsUh5+DeKffm5IzOg0A7twL5J/GkZDn446xA8r2H
-	 hH+Q7fXQX6/zdViAKuV6yeyQX5yzhNIaPzLdk7UYmWNCaqvQeiKhgaqeuPhIO5LocA
-	 v9fJIEE42OrLh/0id50e1VE4KF+iVLsTmI4askrpRvQ2740g3NpJ4TAv2yeRsP5n1O
-	 4iem2YLvOhunxYiZTEWldpMPdFm3POgYWQfNhYiHf29B/J+8cPK3dz+MeNz9U0eTFG
-	 NU3mqNCK67t5w==
-Message-ID: <0baac0c8-3f10-4d0a-a4fb-ab7521702ef1@kernel.org>
-Date: Sun, 14 Sep 2025 19:37:25 +0200
+	b=SNNYKFLDLriGXjvqnjV6LBgnQvOJKt8aGnCuofafUVsLM+FwezBL1krcycsslaAh+
+	 x4MfEEjIuJqYdPTltQJZIJDWlVooS82cQRChuj3LDQNX6uJ3OZ1Bxhnk3GD019eoQE
+	 W0Pv8cU7b0gpydtqflg4GlGJZ9U1fbM80QQupVbRNHzOe+JHkaqR0u0yCWadumw08f
+	 guZpK1WNsLHpf5iMEPlGcpd1UJsJ7IBx7BsNbeV4DUDtwToVNKYz+OcNYqKKML3B48
+	 8/C8DeDUwhZMolBZwanp5+okcuNRpxXLIBG4NMVFohvlcdzK4rM/VFZtAOOAhSEDQD
+	 r4yJZA1IIMjRw==
+Message-ID: <c9fad3b5-dc9e-425c-b48b-f6481eb14e90@kernel.org>
+Date: Sun, 14 Sep 2025 19:39:48 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,17 +50,18 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH DNM v2 5/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
- Enable USB 3.0 and HDMI ports
+Subject: Re: [PATCH v2 2/5] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
+ Q6A
 To: Xilin Wu <sophon@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>,
  Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
- Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+ Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 References: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
- <20250914-radxa-dragon-q6a-v2-5-045f7e92b3bb@radxa.com>
+ <20250914-radxa-dragon-q6a-v2-2-045f7e92b3bb@radxa.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,25 +107,37 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250914-radxa-dragon-q6a-v2-5-045f7e92b3bb@radxa.com>
+In-Reply-To: <20250914-radxa-dragon-q6a-v2-2-045f7e92b3bb@radxa.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 14/09/2025 17:57, Xilin Wu wrote:
-> This board doesn't feature a regular Type-C port. The usb_1_qmpphy's
-> RX1/TX1 pair is statically connected to the USB-A port, while its RX0/TX0
-> pair is connected to the RA620 DP-to-HDMI bridge.
+> Radxa Dragon Q6A is a single board computer, based on the Qualcomm
+> QCS6490 platform.
 > 
-> Add and enable the nodes for the features to work.
+> Features enabled and working:
 > 
-> Signed-off-by: Xilin Wu <sophon@radxa.com>
+> - Three USB-A 2.0 ports
+> - RTL8111K Ethernet connected to PCIe0
+> - eMMC module
+> - SD card
+> - M.2 M-Key 2230 PCIe 3.0 x2
+> - Headphone jack
+> - Onboard thermal sensors
+> - QSPI controller for updating boot firmware
+> - ADSP remoteproc (Type-C and charging features disabled in firmware)
+> - CDSP remoteproc (for AI applications using QNN)
+> - Venus video encode and decode accelerator
 > 
-> ---
-> 
-> This change depends on the following patch series:
-> https://lore.kernel.org/all/20250908-topic-x1e80100-hdmi-v3-4-c53b0f2bc2fb@linaro.org/
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-NAK, you cannot depend on drivers.
+I see huge diff, like 200-300 lines being changed against v1 and you
+claim that I reviewed this one?
+
+No, that's not true. Please read submitting patches - if you change
+significantly the patch, you must drop the tag and explain the reason.
+
+NAK, unreviewed.
 
 Best regards,
 Krzysztof
