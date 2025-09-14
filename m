@@ -1,62 +1,68 @@
-Return-Path: <linux-arm-msm+bounces-73442-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73446-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D55B2B56B52
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 20:37:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E3EF4B56CD9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 00:05:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93F023A3CBD
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 18:37:29 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7241918910E7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 22:06:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40EF02D12EE;
-	Sun, 14 Sep 2025 18:37:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B509C289E17;
+	Sun, 14 Sep 2025 22:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b="xoBBG0BI"
+	dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b="N4sjPjQB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Received: from mout-p-101.mailbox.org (mout-p-101.mailbox.org [80.241.56.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8151C5486;
-	Sun, 14 Sep 2025 18:37:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=156.67.10.101
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BE4221703;
+	Sun, 14 Sep 2025 22:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757875045; cv=none; b=g38CEWE8I7ho/BLNWii4mItknlUBsZuMMDd3utBIJRiY/JsMkaVUMuojgLelBn+hi4F7cmP5GZlNsY17FqAIkkdhUxvsu+rJyhWsRLiVB1EEKJoQypqC53wNVcuNQ0eYZd9FSOHpok2Ppeip2/AZj5GIUskv5qgktoAdib1g39w=
+	t=1757887547; cv=none; b=oo27Sdw8wOMEIH7BW+kcuyik+LGJxCZucztlYz951coXwKcAKcex7BTvFDc0VKNbosBiisK8FmUbvSj1k44ZwbQaOji9vd4kNim+krljq4OAOjyP39YxXwktgw/1uTKQ4GI5mgAg0RgtG9/Ab1ksisNB9lUVEEtwM2LOX2qSQpY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757875045; c=relaxed/simple;
-	bh=TymjcyE+B0pUrKS96jgP+V0xrVRKHsWFLUAPEo+0Svc=;
+	s=arc-20240116; t=1757887547; c=relaxed/simple;
+	bh=qFiPkWat8cdpZBzK/3FKHWpNrgeiJ1tBgvun827YDfg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OGMBkITxUiq7/5TB0Lqetn5ueS9D9yQZhp0RSIDLLj3O4IXZPI/VEypGw8VFgSw3m8j3zP5kalnS5W3FIgHbrXokG6/hMyHyAxgCJ4UVl5Hah0b/wMFnWw6IJ3AMvr7a7hptw5ayCyR53KS/CeFPyeb0+DThPzRdNsOvFyAsVTk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch; spf=pass smtp.mailfrom=lunn.ch; dkim=pass (1024-bit key) header.d=lunn.ch header.i=@lunn.ch header.b=xoBBG0BI; arc=none smtp.client-ip=156.67.10.101
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=lunn.ch
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=lunn.ch
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=0gOze54H4cQJFLKODkJQHJhLdjBQtWBsq6A59nmn/Ng=; b=xoBBG0BIK8GqAyPNyfLs7dThg2
-	ZQy3Kp7SHwTCOr6MUvGRR4ktfD+WsT3AMMbDh1Q/uyNASWvfPU2qfCZ7lubTTzngk6jGKImVpPNNU
-	3hBHYxg+HMb1yScmkULqsRT9xyaQdE0mW3CesuVJEOarbJ6zxIbhlY1+4UFaq0YZl/gA=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1uxrb2-008MT5-1x; Sun, 14 Sep 2025 20:37:08 +0200
-Date: Sun, 14 Sep 2025 20:37:08 +0200
-From: Andrew Lunn <andrew@lunn.ch>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] net: phy: qcom: qca808x: Add .get_rate_matching
- support
-Message-ID: <2f182073-5548-401c-a61c-45163c9a2948@lunn.ch>
-References: <20250914-qca808x_rate_match-v1-1-0f9e6a331c3b@oss.qualcomm.com>
- <aMcFHGa1zNFyFUeh@shell.armlinux.org.uk>
+	 Content-Type:Content-Disposition:In-Reply-To; b=IKI3VTyQAV89t42xpZ8R/Ndl16hXQFkQxn9EAcNaPqV3prkpUI+7CQa6wsRm29pCZQ0FCZz1mnSnwGCXBzZr48WRSrAmBje7G4azagihFjf/58oDuoFS6vX3AJpBzi6iKpDfAbbGkBxwTFIjgT5Bb4YoGBtceksCYh26Eg7oc+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org; spf=pass smtp.mailfrom=mailbox.org; dkim=pass (2048-bit key) header.d=mailbox.org header.i=@mailbox.org header.b=N4sjPjQB; arc=none smtp.client-ip=80.241.56.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mailbox.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mailbox.org
+Received: from smtp2.mailbox.org (smtp2.mailbox.org [IPv6:2001:67c:2050:b231:465::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-101.mailbox.org (Postfix) with ESMTPS id 4cQ2KX2zYmz9t26;
+	Mon, 15 Sep 2025 00:05:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mailbox.org; s=mail20150812;
+	t=1757887536;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=p2Lb0eDUU+reyEvRitOZ46ibWVAxjEfgUhYXpxgOT+0=;
+	b=N4sjPjQB47a78EErnipynxhPYj+1VWofg6sXGDISMZ9wEso32SmoVla1qIeUXdrTk03Dnw
+	8HoXJMh1o3y7gWaXJuohCX1ydePw7/jjjFQYRyhuihCjXwndrvg/jgtVz+LoKaQoQsUdMG
+	PHKFNkI9OjMMMjeTuU/3E4XfMgwr3jX/qY+41T/iTaNPOcMjU60Llns9zi25ZOc0I5mc8k
+	9QIUHH28T77jVuYUTL9aevQH30h7lwSLPoClr+oONn9Gu5auLamNN1ARzPawzQLOzqUuuQ
+	3O23ouqQ4vMXeQeC7GwQ/qGsHAYa0fgfGdxbbA4ElYktCJxMBUTJslaWWpqSbA==
+Date: Mon, 15 Sep 2025 00:05:32 +0200
+From: Anthony Ruhier <aruhier@mailbox.org>
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH 0/4] arm64: dts: qcom: x1e80100: Add IRIS video codec
+Message-ID: <yw7fr67vmkdrjovtrf6pmjqsbwhfft425krl2j46xmrlc3jkmn@m5iysnhq6m7f>
+References: <rPv92n3EVkoRrO1v7nlw_tPMn-nHUhpYhQP_FjmQsESL752mly20FWQqPHLs8JHGC4mklm9wfPABc5kd-x4LYg==@protonmail.internalid>
+ <20250911-x1e-iris-dt-v1-0-63caf0fd202c@linaro.org>
+ <980b7247-e8a5-40bd-ba20-c9c72c8a397a@linaro.org>
+ <aMQJ8Nb7TZNmD1Vq@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,40 +71,36 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aMcFHGa1zNFyFUeh@shell.armlinux.org.uk>
+In-Reply-To: <aMQJ8Nb7TZNmD1Vq@linaro.org>
+X-MBO-RS-ID: d0ba793f0241d45ddbe
+X-MBO-RS-META: opok1qnuq7hyfdss6hwcxo1gwwcs9zfi
 
-> So, the bug is likely elsewhere, or your ethernet MAC doesn't support
-> SGMII and you need to add complete support for  rate-matching to the
-> driver.
+Thanks Stephan!
 
-Russell beat me too it. Just adding:
+Tested-by: Anthony Ruhier <aruhier@mailbox.org>
 
-static int qca808x_get_features(struct phy_device *phydev)
-{
-        int ret;
+Here is the diff for the Slim 7x (with a Signed-off-by, not sure if it's necessary):
 
-        ret = genphy_c45_pma_read_abilities(phydev);
-        if (ret)
-                return ret;
+Signed-off-by: Anthony Ruhier <aruhier@mailbox.org>
+---
 
-        /* The autoneg ability is not existed in bit3 of MMD7.1,
-         * but it is supported by qca808x PHY, so we add it here
-         * manually.
-         */
-        linkmode_set_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, phydev->supported);
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+index b7dc436a99da..6fe93d0a05a4 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts
+@@ -1102,6 +1102,11 @@ touchscreen@14 {
+ 	};
+ };
 
-        /* As for the qca8081 1G version chip, the 2500baseT ability is also
-         * existed in the bit0 of MMD1.21, we need to remove it manually if
-         * it is the qca8081 1G chip according to the bit0 of MMD7.0x901d.
-         */
-        if (qca808x_is_1g_only(phydev))
-                linkmode_clear_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT, phydev->supported);
++&iris {
++	firmware-name = "qcom/x1e80100/LENOVO/83ED/qcvss8380.mbn";
++	status = "okay";
++};
++
+ &lpass_tlmm {
+ 	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+ 		pins = "gpio12";
 
-        return 0;
-}
-
-So it appears this PHY breaks the standard in a number of ways. Maybe
-it is broken in other ways which need additional workarounds.
-
-	Andrew
+--
+Anthony Ruhier
 
