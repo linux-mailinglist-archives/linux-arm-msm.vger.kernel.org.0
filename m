@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-73431-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73430-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41E3EB56A6E
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 18:00:18 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 730A9B56A5F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 17:59:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C92F63BDFC3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 15:59:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 450A47A33A0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 15:57:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E0C562E06C3;
-	Sun, 14 Sep 2025 15:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E9E92DF3CC;
+	Sun, 14 Sep 2025 15:57:56 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB7F2E03E8;
-	Sun, 14 Sep 2025 15:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80D12DECC2;
+	Sun, 14 Sep 2025 15:57:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757865487; cv=none; b=NzPYLEncNJyQj4TjDUBTOd128AtIWFTXtktY59ac7tmz1YAI3qyN+Z1aoP5KZVRs2X/XRAr898CMdaJ6mFJbyq4GVvG1GwPStFx20ai+TwLQLuXMQPByeXaLCUl4RSwdgfD13ibMUsG9CY8TJqcdOIH7mJWgzqlipjiCWfKj/ss=
+	t=1757865476; cv=none; b=LWpdcZ1EXA2uRZR9R6ScYIxnDdl7xD1XNSKkbkakOhkQbXVpm56B+g1xcYSA7/EmTgoOdqPNxGDzJeh2b/Q9w7sqBU9Qa1PXhgj5OVfH/TjghpW0vWVSAMblJoZHaaZpS9zUvHMgeoTePIfvbcbt3P7p6LtsO3Q9X2lx3ATxK4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757865487; c=relaxed/simple;
-	bh=1V85CMmb+/2qUjFLnDfCZdknLQA+oopxoMSIenFyMe8=;
+	s=arc-20240116; t=1757865476; c=relaxed/simple;
+	bh=EiMdQ56FSpoh+jezouVccupggQusRUgVW7KiFFuQ6YU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=O4UWTTJRsQ2rFp+I/paKGtkXbGKlsca2Q7cPN+Em1E/Nym+MtmnE4r3NtpXL+RFxlMNDv2DLmO+hLIXRYQLbL4ah9BZpnbZ4V8cvW15HbzF1M/X21q/10QuwBXfgfJui6lzOwOaBI0Tpz8TQd/jL0X5LuXgIDUSndQn4zgGYfEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=18.132.163.193
+	 In-Reply-To:To:Cc; b=ZXd3s0ti+ggaPBtQWLVTogsRCKS87GlSAP3Kmxb+7kiNqQi/MKf971aCBss6PML6bEta83c6FTqwKQKYvxWRYcDmuSpkk7h/NH3iQ3qRCu7V/o/b8pRN911IvYPrE3lsK+ALFfgbcNL5MzsrxOOVkPfbI2GTJUWzTxy47GCELe8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=15.184.224.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpip2t1757865436t268d2bd4
-X-QQ-Originating-IP: 2Q1cFhD5gOQXixb34p8OokNnhzwwe83d0wIr9TsTHJY=
+X-QQ-mid: zesmtpip2t1757865439t8f0c438a
+X-QQ-Originating-IP: pLxyR+EOCK0wlpAMNCC3ZcyEEqs9dXvj/pHWXxrhJUc=
 Received: from [192.168.30.36] ( [localhost])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 14 Sep 2025 23:57:15 +0800 (CST)
+	id ; Sun, 14 Sep 2025 23:57:17 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 14379417210709123630
+X-BIZMAIL-ID: 11041455606322930672
 EX-QQ-RecipientCnt: 12
 From: Xilin Wu <sophon@radxa.com>
-Date: Sun, 14 Sep 2025 23:57:06 +0800
-Subject: [PATCH DNM v2 3/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
- Enable all available QUP SEs
+Date: Sun, 14 Sep 2025 23:57:07 +0800
+Subject: [PATCH DNM v2 4/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
+ Enable UFS controller
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250914-radxa-dragon-q6a-v2-3-045f7e92b3bb@radxa.com>
+Message-Id: <20250914-radxa-dragon-q6a-v2-4-045f7e92b3bb@radxa.com>
 References: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
 In-Reply-To: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -62,144 +62,96 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
  Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>, Xilin Wu <sophon@radxa.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1757865427; l=2330;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757865427; l=1799;
  i=sophon@radxa.com; s=20240424; h=from:subject:message-id;
- bh=1V85CMmb+/2qUjFLnDfCZdknLQA+oopxoMSIenFyMe8=;
- b=TuFr0pwF+lxMqslNRC/5jwCyurLqwTBpmtsP9Cr0xeR6dCj+txxmdR3drRAjStdz2sTCkJRiw
- iG2Gz8jHapiDZh7r05lbakuRs7cAdbYdWyMPCbu+H6ndn0x0HGCKIMU
+ bh=EiMdQ56FSpoh+jezouVccupggQusRUgVW7KiFFuQ6YU=;
+ b=fbUhLxQn5wBUDSAGSmNf3hIJN57m7niTXJBgwUIp19I/qzEeC1040BKNYAc6cYTIy9XbJEWtt
+ IUo4oXqyqTzCSO1Ihz6qO5xqj7TLS0gKofkY6PpXdNb1yN8xoZvrywO
 X-Developer-Key: i=sophon@radxa.com; a=ed25519;
  pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpip:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: NoFe3wCY3jEyY/xnS7p9ZrFSFQHCt1CIGcmB3uC/fH/JjcSXU91sATZf
-	zPJSDpsrwMp6VWuichDHZanaA94Ow1UVe8GEgLfKkuVY43V1+5Nrb6l7XtDkGIbU9vE9/As
-	HmoCBDD4HVosucTvU6bSL5wpdqdegD3ioOeVJM4a6OQJQrmZJsokXTZ4t+E9UMs46TTJfzC
-	HzulvnbFdBrhlLqJ8+bIVighh3czAyma7RvbUrwGNfd5Nzgfl93TmXgp2emzvSVaX6LblV0
-	T0WlIjftnt1Z1t/CFI7ISjJ+Xy715IyJEdbi2oZ/zCiziUfR54Lpmjx89jRcI4FEfPCyg8h
-	ZRvA2ldgfN9JoIWPSyyPAm0MrCR6Ff04nlTnj9zAzV+jxTk2Io36pjGkKW23//XNezu6OSm
-	jennlG0goyDvPsDuAgtu0WLyrkmRZ0pwQVbF3W+GhNIdNboUAswuqkA7CgDe3kP8l0+UEz1
-	bD3ykzJF3QQc3g9zVbhy2LPTPWsaGoc9mLKUZXRERzfNwAhKvqelL+zxcZFUVBDMA8qxbpD
-	TrYaQCaqU2rEA7gPm+3nsZe7wZ5K5maeYk35UPBrV1VslKOPkK6cBMI2aKE9KuzBWGS6fv9
-	NOh5pq6x3K9j9u/USySTfF5TLX9Ioz4twxUHyJ3Ui/w43yxgGf+yU6fZJ4XXvO1AMm0ncv4
-	r650fQWPTXOj8h+1jzuJockR44BKLbkRLWEronTxaSfMX6sqAZhBLYMNVJxv/fYjQDtslJi
-	8sA1exVw2nTISSYRoFecNgGbfUVpYY/PhKGZFKY19I2lDZebWH9+vA/jf7zcgPSpnvtzFmn
-	Rd9Lg6zVR6cFJoNbQASkRxnswth+Ufnh4cKKm0t8sszLw2jrzlFExULrL4r00UipwF1KWae
-	Ss7KNTISJOD/gq00qcBwWJLy2/P2C9levfnvb5WhEvK+BmHef44GztZ2HrHePO9VihC9/3Z
-	6d7VV7CwAUpjoh+djeRKn7ED8DJX+xfoDmjDWkI8swC+pimDFSvI9gc+zi7kr1cClOHV4uO
-	bW1TxEEPXQ/8gQTUOVNytl1zbW7DtbXqkeupNNQFI72MS0b8doWaQ/exXw9U8=
-X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+X-QQ-XMAILINFO: MrTVJ9obs/HIqW9ht9goa9kUk6A99LMhVKvYmtsErieUm2jp0ZqLwUbJ
+	Dfrq39pc9Nf35hOo2+jJ6gFi85vz7vCjzHhMtJ0KZbUdXarZA+BDqulN+/a9LlPTt5IoTz9
+	BMq8oeZyZ9sWGABCxOdwxQMC2CVgYBF3KYDLTfCGY8ZTQo2ynx+hcyPQxEE3g86qbg36eCn
+	bIiQw1fG0IHBNfU1PRbmLlokQkCGBjnxYjXKF/FD4KYfyS9Ex1CISSspHXMOfU0dAR48PsF
+	3hSEG7+e1qJTKRBeJBr1AEPamvTXAeSlnCPVzx7hIb9hGlB6jLq6c0Q4YtU1eItyKsRjoFv
+	Qze0uKXD+dXRnsE85Ntbx0OE/ryrDr/xPHNeGzatoDXwMeGR/yt9gXLmIdFFW0apen4f6IJ
+	3p75UiTIOZA8RfWwVBm69cUBSf+9XfL7S/1r92aqy67Ho9cqNGuuaOwvp9sLLSzPkp7x3SR
+	5vfDzhudS+bLg9/90GZV8diF6ziT/EQ/lTOEXx0Nk5pAgNUccGVr1HqwnsJ3lLo4LCilE+n
+	EL/V3Vo4mMsEEfETIDiJESliy6bV4KRWvEy0EbNzJZWWFBjnxdXydvGGygeCXAa7f4+afpm
+	M9yHZq/x6O1rmySIbIYHBa0hPntC/LbfwFgWRn/LVYoJJsKY4z3nnTZaxkVzdqUnIO24iLg
+	NMyTD/m7SjBNGmri6amsWyqWjiheKn7FM0h+sTc/QII2FohNzYHIdFNonxc4kwxAkw1Rh7S
+	2uc+nop//Hsb2KJfZ/dlFEMYSIqcicL/dloX8zwn3VH1guMMK6+8Jyb99dQtprT/dAWA8C9
+	w9D3TZ8J1G8btsTdVAG66GeSNUTfGDQFi+j6TdYPc6k9upfPR6AgcXg0rSbIz5AVZjIKhCM
+	zeLywDskeMGRLJEFLQfy7MiUDXDHk1obtRJdaDPY7Q1iStxVcdrtdui2czHzyfI1BMYFcl1
+	4zcEWjoiIJ4O3BSyPyNgN43y8mAzDxI/28ePlPEiqVJSYaFo3rOfcpGpYdt75Y5yeFYXsLR
+	Y2bXy5L2+YIhRuDi4w7DGs8LNRfEQrA0JyLNt0DDq6sBL9q/X2lCiBGr6HBAYHxBQmRH1rW
+	A==
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
 X-QQ-RECHKSPAM: 0
 
-Add and enable all available QUP SEs on this board, allowing I2C, SPI and
-UART functions from the 40-Pin GPIO header to work.
+Add and enable UFS related nodes for this board.
+
+Note that UFS Gear-4 Rate-B is unstable due to board and UFS module design
+limitations. UFS on this board is stable when working at Gear-4 Rate-A.
 
 Signed-off-by: Xilin Wu <sophon@radxa.com>
 
 ---
 
 This change depends on the following patch series:
-https://lore.kernel.org/all/20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com/
+https://lore.kernel.org/all/20250902164900.21685-1-quic_rdwivedi@quicinc.com/
 ---
- .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 66 ++++++++++++++++++++++
- 1 file changed, 66 insertions(+)
+ .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 29 ++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-index 85465702279efb7ab324baea0663bdbdbd5fb5ac..d30cddfc3eff07237c7e3480a5d42b29091d87d6 100644
+index d30cddfc3eff07237c7e3480a5d42b29091d87d6..3bf85d68c97891db1f1f0b84fb5649803948e06f 100644
 --- a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
 +++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
-@@ -432,6 +432,14 @@ &gcc {
- 			   <GCC_WPSS_RSCP_CLK>;
- };
- 
-+&gpi_dma0 {
-+	status = "okay";
-+};
-+
-+&gpi_dma1 {
-+	status = "okay";
-+};
-+
- &gpu {
+@@ -482,6 +482,11 @@ &i2c13 {
  	status = "okay";
  };
-@@ -440,6 +448,40 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/qcs6490/a660_zap.mbn";
- };
  
-+/* Pin 13, 15 in GPIO header */
-+&i2c0 {
-+	qcom,enable-gsi-dma;
-+	status = "okay";
-+};
-+
-+/* Pin 27, 28 in GPIO header */
-+&i2c2 {
-+	qcom,enable-gsi-dma;
-+	status = "okay";
-+};
-+
-+/* Pin 3, 5 in GPIO header */
-+&i2c6 {
-+	qcom,enable-gsi-dma;
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	qcom,enable-gsi-dma;
-+	status = "okay";
-+
-+	rtc: rtc@68 {
-+		compatible = "st,m41t11";
-+		reg = <0x68>;
-+	};
-+};
-+
-+/* External touchscreen */
-+&i2c13 {
-+	qcom,enable-gsi-dma;
-+	status = "okay";
++/* It takes a long time in ufshcd_init_crypto when enabled */
++&ice {
++	status = "disabled";
 +};
 +
  &lpass_audiocc {
  	compatible = "qcom,qcm6490-lpassaudiocc";
  	/delete-property/ power-domains;
-@@ -624,6 +666,12 @@ spi_flash: flash@0 {
- };
- 
- &qupv3_id_0 {
-+	firmware-name = "qcom/qcm6490/qupv3fw.elf";
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	firmware-name = "qcom/qcm6490/qupv3fw.elf";
+@@ -938,6 +943,30 @@ &uart5 {
  	status = "okay";
  };
  
-@@ -702,6 +750,24 @@ platform {
- 	};
- };
- 
-+/* Pin 11, 29, 31, 32 in GPIO header */
-+&spi7 {
-+	qcom,enable-gsi-dma;
++&ufs_mem_hc {
++	reset-gpios = <&tlmm 175 GPIO_ACTIVE_LOW>;
++	vcc-supply = <&vreg_l7b_2p96>;
++	vcc-max-microamp = <800000>;
++	vccq-supply = <&vreg_l9b_1p2>;
++	vccq-max-microamp = <900000>;
++	vccq2-supply = <&vreg_l9b_1p2>;
++	vccq2-max-microamp = <1300000>;
++
++	/* Gear-4 Rate-B is unstable due to board */
++	/* and UFS module design limitations */
++	limit-rate = "rate-a";
++	/delete-property/ qcom,ice;
++
 +	status = "okay";
 +};
 +
-+/* Pin 19, 21, 23, 24, 26 in GPIO header */
-+&spi12 {
-+	qcom,enable-gsi-dma;
++&ufs_mem_phy {
++	vdda-phy-supply = <&vreg_l10c_0p88>;
++	vdda-pll-supply = <&vreg_l6b_1p2>;
++
 +	status = "okay";
 +};
 +
-+/* Pin 22, 33, 36, 37 in GPIO header */
-+&spi14 {
-+	qcom,enable-gsi-dma;
-+	status = "okay";
-+};
-+
- &swr0 {
- 	status = "okay";
+ &usb_2 {
+ 	dr_mode = "host";
  
 
 -- 
