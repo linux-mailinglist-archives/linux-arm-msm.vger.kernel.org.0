@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-73419-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 848E0B567C1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 12:22:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E5ECB567C5
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 12:24:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 30864172B40
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 10:22:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 888B41895ED7
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 14 Sep 2025 10:24:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B620023957D;
-	Sun, 14 Sep 2025 10:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BC4A23C4FF;
+	Sun, 14 Sep 2025 10:24:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jF4OoMf+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FwRG++5y"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8945D1FBCA7;
-	Sun, 14 Sep 2025 10:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA3D155A4E;
+	Sun, 14 Sep 2025 10:24:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757845330; cv=none; b=HUQOEZKguJXhNFbs40grqk389lw+zcGVS9MkE6o1tF3ubxJFxA6Xi2UFfOnn5p4beP994WZ7yCJLReZNuCvJstlSiFxzoJfWCKrbL1hPwHGemnBeJpEH3otTTnR15EzlEZVgODmf39LGu1HJS25AAWdHMr72hS+P5gtez/gZ6wM=
+	t=1757845468; cv=none; b=Op5wzaFqKQTU9FmiX0cNwhwcj/VSmVOeKbCFWNXZeCdt80eu3bzD88gM0rWJxYutQkp68/8vZiwLER9KjqbEORAJIkAbcASPc5hdQjYpSP9SmsoO1EBN4r0LnlqzILqI02bRFNWdJJboYXvugA9p6+SlreUrg4HE1hBLEb2zScs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757845330; c=relaxed/simple;
-	bh=iKzuTabaFIa0aFgVRvf6F8eQYycI7hNwmsGAh6Bkm+A=;
+	s=arc-20240116; t=1757845468; c=relaxed/simple;
+	bh=sesq21UiJLG4cqQfF96KiW2WzyvunK/L2ENio1O4PhQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=d7eo2sUY/FKYnr3gj56VY/4LlTA4sGSOu94ZMWGHhfwBy5Y+yvZSukZ+5qAidSXj6LflgRf5I2IVS7sC/jq8RoR3/gmAgE0J2DwlmINQSdEtA7eHN/DqYVnzRBX2mjVKCvCtH8yoFMvWucaDAjmpF6d91cLB7mT7ECR6hjPkBQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jF4OoMf+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3133BC4CEF0;
-	Sun, 14 Sep 2025 10:22:06 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=dRTAzCaGojrCxCvuFEUIgYnF1+0chwB1RD+0MOGT8hkPYzMU6wXi1jaRjItn0AOsRY8R+YgENxVOA5z1CupSncQN/93dQdzLKsCI2NX2u9kuLdPmMWrHeu7SSeEE8MMgPRW5v9xpIJxcKu74i22Yet88/mOXDVKBigN4FldpK4w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FwRG++5y; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0E14C4CEF0;
+	Sun, 14 Sep 2025 10:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757845330;
-	bh=iKzuTabaFIa0aFgVRvf6F8eQYycI7hNwmsGAh6Bkm+A=;
+	s=k20201202; t=1757845467;
+	bh=sesq21UiJLG4cqQfF96KiW2WzyvunK/L2ENio1O4PhQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jF4OoMf+YJvZ/zGLK1l2BgvvoYgRZFeeQUtbG50B4awvZQzuPnc7qGlrL6tcsMGqQ
-	 BqX96lpSm2y380gvbVuUlKWaaT0fLy6W4ikKEndzk94iUSWicp5EMuoXSUs3FZ5wHG
-	 6Uun2TANteqNa0lAxTOw93PJLYrb8T/z+DX+yotH22YoNAZ2u6p7FbJtgAs4ofvRHf
-	 mJ+xVtlnGlFiAg/LBW3RfqC2xdaGPrm7d4mXSPeAnksK0dTIUb6EU3/5Y2UFXzkV5l
-	 W1hMOUm8v3JRJByWvaTiWnKxFLB6e/Gn2muYrvVOPLms+uDaR5z+jNg6bt9l4D23ZR
-	 +E8VbFILwI9Kw==
-Message-ID: <166a4376-e082-4acf-9215-22cd46ce7467@kernel.org>
-Date: Sun, 14 Sep 2025 12:22:05 +0200
+	b=FwRG++5y7DUhvTPXmCA3a3BfyN7/9Mo9+WIsvg6b7H3hRInfqkx7m1imnV9+sfJvO
+	 GakdHezYKOsC0E9zOU6yxl5RRPfuLPb3W97Aosh/aaqp8JMZyAAUybRlaaFwk7N8lr
+	 xWg6BLziGCoFVBwhGllUB8lsmzmvegFXXPBRT4w6HtCokcNYQQLuJs6OcSN9afTmD1
+	 Wk0Pz9r5zvF46e/xqVkeien1pZdO3/cNaZu+YXtsl3yTZjHaMVgtMGrB9MWJvSr2Na
+	 coDvtQDhhlbKbKcZEG3r2SrwsYqbBGmMYDTgmVNbQGJiUeBoswLWw48/ErskKOSyzM
+	 udpsYDyrfcH+A==
+Message-ID: <31e7e9c3-c8e9-4b93-86a1-7c65818bac86@kernel.org>
+Date: Sun, 14 Sep 2025 12:24:23 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 08/11] arm64: dts: qcom: sdm845-lg-common: Add qcom id
+Subject: Re: [PATCH 11/11] arm64: dts: qcom: sdm845-lg-common: Sort and
+ cleanup nodes
 To: Paul Sajna <sajattack@postmarketos.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
@@ -60,7 +61,7 @@ Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>,
  Christopher Brown <crispybrown@gmail.com>
 References: <20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org>
- <20250913-judyln-dts-v1-8-23b4b7790dce@postmarketos.org>
+ <20250913-judyln-dts-v1-11-23b4b7790dce@postmarketos.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -106,17 +107,49 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250913-judyln-dts-v1-8-23b4b7790dce@postmarketos.org>
+In-Reply-To: <20250913-judyln-dts-v1-11-23b4b7790dce@postmarketos.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 14/09/2025 01:56, Paul Sajna wrote:
-> SDM845 msm-id and board-id added
+> Fix style issues and sort alphabetically
+
+What style issues? Why are you re-sorting this? Answer to these in the
+commit msg.
 
 
-We see this from the diff. Don't repeat the diff in the commit msg,
-that's not its purpose. You need to explain why. Especially that these
-properties are deprecated and should not be used in general.
+> 
+> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+
+
+
+
+> -&uart6 {
+> -	pinctrl-0 = <&qup_uart6_4pin>;
+> -
+> -	status = "okay";
+> +&usb_1_hsphy {
+> +	vdd-supply = <&vdda_usb1_ss_core>;
+> +	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+> +	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>  
+> -	bluetooth {
+> -		compatible = "qcom,wcn3990-bt";
+> +	qcom,imp-res-offset-value = <8>;
+> +	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
+> +	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
+> +	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
+>  
+> -		vddio-supply = <&vreg_s4a_1p8>;
+> -		vddxo-supply = <&vreg_l7a_1p8>;
+> -		vddrf-supply = <&vreg_l17a_1p3>;
+> -		vddch0-supply = <&vreg_l25a_3p3>;
+> -		max-speed = <3200000>;
+
+You just added all these on other patch, no? Don't add code which is
+knowingly incorrect or have to be immediately adjusted. Probably you
+organized the patchset wrong and any sorting should be done earlier,
+assuming that we want this sorting in the first place?
 
 
 Best regards,
