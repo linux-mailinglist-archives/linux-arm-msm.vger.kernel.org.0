@@ -1,166 +1,129 @@
-Return-Path: <linux-arm-msm+bounces-73519-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73520-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D1C7B5740A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:06:10 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 67500B574D4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:25:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 979AB4E18A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 09:06:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E91E617225F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 09:24:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 673B32F49EA;
-	Mon, 15 Sep 2025 09:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F9332F4A17;
+	Mon, 15 Sep 2025 09:24:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eg1VOmR7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XbapCBXD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75194283FF8
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 09:02:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4305E2F49FD;
+	Mon, 15 Sep 2025 09:24:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757926969; cv=none; b=J4a9rSi9mqh30NA4edmGPOZ2XWW+Kj5Rn6RDp1zaBkBFmIWeh9Fixk8rLX1qC+SYwt8L7dqP/XKO/eXuQ7YZoidSbFQ5qzBV7uE9twr49MWp4ZlOwsyGfWct47eCFEEnlU4Ts91M5LBSQn4MfnpSuVRw2FQfACe7U4YQjhrXMs8=
+	t=1757928277; cv=none; b=W4yjWHon01Sh2gBzP90ni3A/PWbNfjtSydk9zppsDHx/BPbANANjeMu4rhkRDwshIs4GuAEKBYZmGwGg0SnK/9N3ricPefdvF3PMI1VApzNpkksjRBlVeyccUbjx/+Y2/Oe/8cA1Oz4jQtocecxzE3CGh9+Kk9vqgpHa635Ky4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757926969; c=relaxed/simple;
-	bh=C0YkUmrHajMk+TIUliZWVchR3y+Q8yUcd/+iydBLkn4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JiQGZ6ZJy0dhCCU6n5b7LUmBn2dMmrNa9Q9JLhP3ciTAAGPDisQQLqY/TOm/WYQ7bW7SrTLYpIKV/JpE8Ioqnqj7A91zZ6MbBejN4vRvKJ6T7fXIiHjZX6VwMwkhKJVLLYa0c/c30XeBHBEhjDSrPnmK/4QhnzkOgvMqU6H5Jm4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eg1VOmR7; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-62f1987d4b2so2793311a12.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 02:02:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757926966; x=1758531766; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4ApShfXQF2Oi6G8dmAOghgnsvmVSLzQLwz5wXFZQiKw=;
-        b=eg1VOmR7zShmn+hHiqoCSBy9ccujENIgSGAfLe204EOGU+XnJDTA3uYY8umymARXlN
-         mJiY1n1EO+fP2t/Yv9+0vIPcSgNHdjRCF0a9bbhCFjuDH4rhR1sWlo30kRcfOH/R0OOI
-         ICqhmxH2Vt+03zkTpaeq9H2WkOO2S4PO2l3Y0MrGiBlSLkqn74zgfRTD9/M6DEXBNfmT
-         wEkZQ5AVpYlW77o1vaZxEo6SDDGHcAmb6wQ4JQ3BbUiWbFWqLJi7+KX48YYXrFQ8KKNL
-         xEM3y9sv2DBW6OBq+2WGpC8ujzyJuGSMaN7LbOZ5S+PgKMdbuFfsqbIVQZS5XOptyuG3
-         g7qQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757926966; x=1758531766;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4ApShfXQF2Oi6G8dmAOghgnsvmVSLzQLwz5wXFZQiKw=;
-        b=Lm1mTdX8BEbKhb+P71rnOFce+jGLrGZxMD6890Cz6R7NjYMLEaYP1jHTcMhgH9x8ch
-         UKMWLZ93YS5S2JSLY55FcODWMCECpnlyiNA8mhA5LKrCunIDz6VYl/Z0Rv31vDq/O19G
-         Waae8+zVXYMe04Gm+cajEWrs4pO30z58LO3grOxDYJnjozxcgAJOYKsvgNRx0NU+occT
-         AbT3m3ff0WRQkh/7sfjZGP9lcPSAJ9ebrSKJz4Ha+z30+0avEsOczfudQ8JZcxr1laMf
-         vn4EqW9khFFegkoCpgAzqVj5kmZnFfmBhaE7jaVM1ElyBMMH2FTIN/P5bbx8CAxZT/PP
-         4ipQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVgMtlmPkv9SvmhJV3oYPsZKNw1hb5iuV/KedeiPAE+fYEWu7mqsMM11KBg3CQ6l7UBnoKkvTUzOE0DQP5E@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxv6her/vRQfpyCIQCG59ne4lL75cj1ZRld0pRjF82pI47jAmbP
-	epQ8LHRPROLxmkIwdJtzS0veJgvj+D/KS5zPRhnRRbu+BH3q7uX2eeD0yaj7bFJ8Sk0=
-X-Gm-Gg: ASbGncsU+b6r5W/YnbrJfkmnZ2k2IFhNpgl8ndMerk74szJ7T//7SuQBhABrMSSWgGo
-	AtSc1ecPcYYF7H3kKqN5sJUG1grtsM7ayOinu1BUMJ1D+Wu9tfMvIhl/qptTce6yDxzJXTNdWsr
-	MYecvXy352oreyjR4wdPMTWr/3aCiNi4aeDhX28bZFJrIjgKPAd32OsKaimmKOxS1g65YnRDIcU
-	F8VFjKyhL4BDNneQsOMaBSIWyD3/f8dDi1st6Ld1OBrAoGSXJIVtu3q6Dcx4TVLhXNFoF54aV06
-	Cr54IKm7Uj9/o6SNrFuaz45MUyfcy1CRTErd980x7VhbsPrOo14uDVPMqa/gr+siUm9KEe5k9M+
-	aPlU0BxQWiMvmjeLLMfIsfk8/GKiXbrT1Hb09yx/5BTQ=
-X-Google-Smtp-Source: AGHT+IFJqW4ATs8hpOqhKur7nNuySu2I9qWO2KqW58kjbzZTek7UpaV471VVvj9InZNl3XX07WRoUQ==
-X-Received: by 2002:a17:907:86a0:b0:afc:a190:848a with SMTP id a640c23a62f3a-b07c3a78fb9mr1146716866b.60.1757926965242;
-        Mon, 15 Sep 2025 02:02:45 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:30:ab20:75dc:ab3e:bbb9])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07d2870da1sm574403366b.13.2025.09.15.02.02.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 02:02:44 -0700 (PDT)
-Date: Mon, 15 Sep 2025 11:02:34 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: fenglin.wu@oss.qualcomm.com
-Cc: Sebastian Reichel <sre@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
-	David Collins <david.collins@oss.qualcomm.com>,
-	=?iso-8859-1?Q?Gy=F6rgy?= Kurucz <me@kuruczgy.com>,
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com,
-	devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 5/8] power: supply: qcom_battmgr: update compats for
- SM8550 and X1E80100
-Message-ID: <aMfWKobwM5bhJEAd@linaro.org>
-References: <20250915-qcom_battmgr_update-v4-0-6f6464a41afe@oss.qualcomm.com>
- <20250915-qcom_battmgr_update-v4-5-6f6464a41afe@oss.qualcomm.com>
+	s=arc-20240116; t=1757928277; c=relaxed/simple;
+	bh=RgkgrwRypdT/518CgEj/V8LfEbAO8YRYx2xOm90hzPk=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=YM1Wxrnb67eDy0s8cezNXKJuM/Asp9L23eC7xAHqaosCV6mlayQFLEkibiqPvm1MRaNc/e2kOWU2I2cQMi88qUSuzlgK/veTaDHx5oePOCR/dZrkkC/bciWsT6CSiTbAbE9WOK2cuxGHzk2PQxCJaBBtFxN3Lg+Kar6d1TWv3Rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XbapCBXD; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D1D1EC4CEF1;
+	Mon, 15 Sep 2025 09:24:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1757928276;
+	bh=RgkgrwRypdT/518CgEj/V8LfEbAO8YRYx2xOm90hzPk=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=XbapCBXDF3N0JCGizjXEEnzD31MMXQC03i/+s2l2R0wZ8miOI4LMi5Gg4yH2GlKd+
+	 Q6p/IdLWuIk3O4m0FpZ5lI2pKF+5siZCyzECvT+Y9LHHb6fMbXp/FNJbrOak3mz8xy
+	 PVdw03eFO4Wj5bF3mCqyGd6HKakkfAR6ZDU9B05omFHE5FzakQMTWdHqjgi51gFOm9
+	 EMzWFnvH1U1qqsNEicMESHpGGGhWu6VHZugCgkGnOZtnELneHxFgJLjJbYkjfZNBUZ
+	 endu4HugvKFXwjcJFtv84yplTu3poxGqmKcC4DtURMjGwFa72IZgv6lJ1c/MXLajAx
+	 7/Y8KfWSDjnpQ==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id C31A1CAC598;
+	Mon, 15 Sep 2025 09:24:36 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Date: Mon, 15 Sep 2025 13:24:18 +0400
+Subject: [PATCH] arm64: dts: qcom: ipq5018: add QUP3 I2C node
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250915-qcom_battmgr_update-v4-5-6f6464a41afe@oss.qualcomm.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250915-ipq5018-i2c-v1-1-46bbf27396d6@outlook.com>
+X-B4-Tracking: v=1; b=H4sIAEHbx2gC/x3MQQqAIBBA0avIrBNmBMu6SrSQGms2ZQoRiHdPW
+ r7F/wUyJ+EMkyqQ+JEs19lAnYL18OfOWrZmMGgsjkRa4m2RnBazavQYPA29ceSgFTFxkPe/zUu
+ tH1sLzpNdAAAA
+X-Change-ID: 20250911-ipq5018-i2c-0a0fa1762818
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, 
+ Vandhiadevan Karunamoorthy <vkarunam@codeaurora.org>, 
+ George Moussalem <george.moussalem@outlook.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757928274; l=1420;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=5AMg7/oGtHNBWL+11z9Q/HGGQ9F6ll9nuoBPaZhI9aM=;
+ b=YRzjCtxRPYCTIZbfjE7Ch/iQgVk2FPQ2D3Z9XheAftOihKy/1/tmjGVVJNjCCP6dXt51fm4rq
+ wtSUjXqnECrAN3FPi6I7N+IBTc6A+E6Q/wpYazdNwaMdyxGBj0tyK4f
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
-On Mon, Sep 15, 2025 at 04:49:57PM +0800, Fenglin Wu via B4 Relay wrote:
-> From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-> 
-> Add variant definitions for SM8550 and X1E80100 platforms. Add a compat
-> for SM8550 and update match data for X1E80100 specifically so that they
-> could be handled differently in supporting charge control functionality.
-> 
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S OLED
-> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-> ---
->  drivers/power/supply/qcom_battmgr.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-> index 008e241e3eac3574a78459a2256e006e48c9f508..174d3f83ac2b070bb90c21a498686e91cc629ebe 100644
-> --- a/drivers/power/supply/qcom_battmgr.c
-> +++ b/drivers/power/supply/qcom_battmgr.c
-> @@ -19,8 +19,10 @@
->  #define BATTMGR_STRING_LEN	128
->  
->  enum qcom_battmgr_variant {
-> -	QCOM_BATTMGR_SM8350,
->  	QCOM_BATTMGR_SC8280XP,
-> +	QCOM_BATTMGR_SM8350,
-> +	QCOM_BATTMGR_SM8550,
-> +	QCOM_BATTMGR_X1E80100,
->  };
->  
->  #define BATTMGR_BAT_STATUS		0x1
-> @@ -1333,7 +1335,8 @@ static void qcom_battmgr_pdr_notify(void *priv, int state)
->  static const struct of_device_id qcom_battmgr_of_variants[] = {
->  	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
->  	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
-> -	{ .compatible = "qcom,x1e80100-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
-> +	{ .compatible = "qcom,sm8550-pmic-glink", .data = (void *)QCOM_BATTMGR_SM8550 },
-> +	{ .compatible = "qcom,x1e80100-pmic-glink", .data = (void *)QCOM_BATTMGR_X1E80100 },
->  	/* Unmatched devices falls back to QCOM_BATTMGR_SM8350 */
->  	{}
->  };
+From: Vandhiadevan Karunamoorthy <vkarunam@codeaurora.org>
 
-I think you need to squash this with "[PATCH 7/8] power: supply:
-qcom_battmgr: Add charge control support", or move the modified checks
-for
+Add node to support I2C bus inside of IPQ5018.
 
-	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
-	    battmgr->variant == QCOM_BATTMGR_X1E80100) {
+Signed-off-by: Vandhiadevan Karunamoorthy <vkarunam@codeaurora.org>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-into this patch.
+diff --git a/arch/arm64/boot/dts/qcom/ipq5018.dtsi b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+index e88b52006566fd39c0690e6fb53be743eb56d11b..5ba33255659e0a83562bd42048c7152bef04f1cd 100644
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -504,6 +504,21 @@ blsp1_spi1: spi@78b5000 {
+ 			status = "disabled";
+ 		};
+ 
++		blsp1_i2c3: i2c@78b7000 {
++			compatible = "qcom,i2c-qup-v2.2.1";
++			reg = <0x078b7000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			clock-frequency = <400000>;
++			dmas = <&blsp_dma 9>, <&blsp_dma 8>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
+ 		qpic_bam: dma-controller@7984000 {
+ 			compatible = "qcom,bam-v1.7.4", "qcom,bam-v1.7.0";
+ 			reg = <0x07984000 0x1c000>;
 
-With this patch right now, I would expect that your series is not
-bisectable: The wrong code paths are chosen if you only apply this patch
-because e.g. X1E doesn't use the QCOM_BATTMGR_SC8280XP code anymore.
+---
+base-commit: b0971d2008c644b9064d968d440fb9f44606d90c
+change-id: 20250911-ipq5018-i2c-0a0fa1762818
 
-Thanks,
-Stephan
+Best regards,
+-- 
+George Moussalem <george.moussalem@outlook.com>
+
+
 
