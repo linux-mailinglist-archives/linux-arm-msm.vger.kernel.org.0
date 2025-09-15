@@ -1,87 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-73483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42170B570C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 08:58:26 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1D984B570D5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 09:06:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EC75E1736CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 06:58:25 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 49F9A7A55BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 07:04:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E701B2C029D;
-	Mon, 15 Sep 2025 06:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CuWwz11g"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8499D1F542A;
+	Mon, 15 Sep 2025 07:05:54 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4053F27935A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 06:58:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80C72C08BE;
+	Mon, 15 Sep 2025 07:05:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757919499; cv=none; b=rcIXX7NoVCper/CnMiKBEoJikchcsVtOItzAjHv3hyagmdOkUns+zp8raBmLBdQLtDqFFMh5fpQFrPojBwXlPjFmInAF8kLTzyj4djzJzNiTMi3DW3UkwKKVfWmed+B2iF2xEgE7aC50gWH0PDdgxgmoPIzdqZyYey84z1tgf1Q=
+	t=1757919954; cv=none; b=lzV6HgTF0AChigLRRuUdsX2wPYf4Hefk8ZYkT9behHL2n9wEYDiIJBA9n0tJl3Jo1UnwsDvnyeZQMS1tKc+s1oPAV7ox/rDPc9EkOJsSMeT7EVQclRvRH0DkGdGysXRGpICxh3oJBVYjcHkB5TG8kJCEtNtKws+Dxup63r4GXmA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757919499; c=relaxed/simple;
-	bh=I5DfocrXkqJBf4D7+aHwpE8cy+dFLuiZG7A+YUuPsGY=;
+	s=arc-20240116; t=1757919954; c=relaxed/simple;
+	bh=EIMnJykjTERXw3Hp9tmJefnnn9xm1Sx8LbQbay9IOr8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AMB+iVFEHS/1w4zdGfOP0iogMSwwqUFdHrdX+e8Q3D+PLzpbB393kBwKfwuTUCq3yxZ8Bgh8gJjJi2lqBnWFjI1CAKoHJYoN9h1Squ23+rYHafbADHXF1ikSFFMbhdnCsKpKM0wASFdqUo4Lkxabev0tzadZJ5uRXsvf6sEgzl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CuWwz11g; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58EMWRe1022271
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 06:58:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	InJ3rHVr5UsjmSjw3cCHgxH6EbKDyWRISV/DMqHuDE4=; b=CuWwz11gnOQg8ieG
-	7LfJ0HZ1zhpSyPla5UyXIrZ+yPapujcud6dkWAijz5KiEo94zEzgSRTWhIu6lduK
-	l9O8OtgHodW9kUH/zI2gQt6sRNwOkDxA6gq3UL9E9P9BCoQ4aLswWfWZjysZGUcO
-	CDTde49mLssrJIL+lM66sjw8anJSuI60bmbTzc4IbvyZ/viN1LOIQ3onudbNV69F
-	Wmt6qjEbqFdqGifO47ZGzaX78/aO/Oa/GuiQy5Vurf4ex2TMmBV4eFDopMkldWMp
-	WeFaD5Y36MuVNIzzHucomThHbQzp/U9fsPRpDVKlpLa0RdPgSiKxlOvnlxmMn+hb
-	PD6EdQ==
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4950pv3t49-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 06:58:15 +0000 (GMT)
-Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b47630f9aa7so2799384a12.1
-        for <linux-arm-msm@vger.kernel.org>; Sun, 14 Sep 2025 23:58:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757919494; x=1758524294;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=InJ3rHVr5UsjmSjw3cCHgxH6EbKDyWRISV/DMqHuDE4=;
-        b=RCjh8wtEn67TSeMjcuICxUnmleKIu75oN613WfUX1C89aFmIPVz6yXNKWExUI2MouA
-         Yfu/3rDuAGo6tCunwqoxVP6lNBU2ixTG8fR6nVWmXj7MTeZNpt1ODIj1KtCEjuEwydqp
-         /NB3PWTn94ibq2T3hFjrQ4LP6eUEMEVCp8lMBaRIlG07OA3aXnhC8wxGd8C3CnjDisCS
-         +Syqh1uBcRz38RVjUs6nkDjI6z3n1Vn7hBpzkoKy2nMnxhyb+h/dsisvbpv9shN7VYq2
-         Bs54qrjtwei53TXNvJcjHJQLMzBkLHQnYOF5N+rZu1Ob1iVQwERwJC9VYngvbGqbXpRM
-         IGLw==
-X-Forwarded-Encrypted: i=1; AJvYcCWRlFTNXMwoG7M5OmkdbBxHSg4qcdqoYlU/PmmOhg+tA3d3S8k/rp3nWIt5o40EYBGBFDK99rvfaHDkAo68@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjdMph7C45DQMyNYI5yNIz0cuzC+i6ha4V7URg6uqArcjv5DmV
-	87EEI1X/ZSPex6vENzMSs/KDV0LHrV19Y+n8SclPrZLoZrDxUscvvucXJVisAIjJRTVVeTtz78K
-	0ak9HBAMUnnlDFGdaGSd1rtI749mbCEtoYGRktvAABGSLAqgDbqlek/qzdsGWNgN4SONu
-X-Gm-Gg: ASbGncv3nwhLdsJGRMxw9oplu21TZg7Fgrie+GQ+nM7Pp7LAG/eEJiD23eMvlZ9tkfk
-	ZoydJ/VtZ2xq2UAEZEBijW7ywP78oVc2X5qaRDy4W7H5oejow0iGCnqRjSbvS9c4akbyHqZReG5
-	iS2aZ/Yv10R8X1tDMMufckW3qf1tIUweRyikY4OYI7ocEF11ffMchdBKsGRPvOdrp2ZJP5QjRpR
-	WPg0vuz9SMbXUAA+VyBVe0stK0mAwwCKJ9dpafvTfMKHpnRBVW+zHplXYed41TjIDbpUzbPW+vN
-	ul44XYVha2sejjXhP2NFWa/eUdEYdLG+8dyj9OLm2rVTUFhlFV7BpIMQcjqJuzwOH5n7zTPM
-X-Received: by 2002:a05:6a20:4305:b0:24a:b9e:4a61 with SMTP id adf61e73a8af0-2602bb59c12mr14572662637.28.1757919493699;
-        Sun, 14 Sep 2025 23:58:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGtlBsH/SNWSTbTRxp/GrkpLtHOa25wQJSw2D0oPkqGDUwg2u6T5e/VET60376PZwGt1U6C7A==
-X-Received: by 2002:a05:6a20:4305:b0:24a:b9e:4a61 with SMTP id adf61e73a8af0-2602bb59c12mr14572628637.28.1757919493129;
-        Sun, 14 Sep 2025 23:58:13 -0700 (PDT)
-Received: from [10.218.32.171] ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32df315f9dfsm8836976a91.21.2025.09.14.23.58.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 14 Sep 2025 23:58:12 -0700 (PDT)
-Message-ID: <2c5fd01a-543b-4108-ac54-80d1d87b65a3@oss.qualcomm.com>
-Date: Mon, 15 Sep 2025 12:28:07 +0530
+	 In-Reply-To:Content-Type; b=b8CJw2UmEbK59JjQj1wYW7wxo6iW++7fRZZwEj4CpOUa/ZSFX/UKJARZJcYeucZxKnBoxpIDtIaOP//jNKeOjqPAcJ+Ig6WRLOXAbVqiq8bfzIcJnBFXBpX1xNiYHFBmgER5lgbidkQ6qpxI4ZxgKdHsEZXvL8RaQdwixolqJSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.254.200.128
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: esmtpsz11t1757919900tf5fda2a8
+X-QQ-Originating-IP: 6+GqocOLC8mSQxIhBFQwffJkEU+ZOBm+O1rQWd/KJes=
+Received: from [127.0.0.1] ( [116.234.26.9])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 15 Sep 2025 15:04:58 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 12997105335972763702
+Message-ID: <8C476C0AA53F638B+b640da5b-8e9f-4580-b0f7-5c22c4429855@radxa.com>
+Date: Mon, 15 Sep 2025 15:04:59 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,234 +46,352 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] serial: qcom-geni: Fix pinctrl deadlock on runtime
- resume
-To: Alexey Klimov <alexey.klimov@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Praveen Talari <quic_ptalari@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-serial@vger.kernel.org
-Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
-        quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
-        quic_mnaresh@quicinc.com, quic_shazhuss@quicinc.com, krzk@kernel.org
-References: <20250908164532.2365969-1-praveen.talari@oss.qualcomm.com>
- <DCNLSFVPCKMV.K1UE3J3K6JQD@linaro.org>
- <DCOJFRU8KNFL.14VPXK9QZC9T4@linaro.org>
- <5b7b8c9f-48c5-45cd-8366-c8c048eaa757@oss.qualcomm.com>
- <DCPUJPHR8NUB.1SRB4D7ONSRBY@linaro.org>
+Subject: Re: [PATCH DNM v2 5/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
+ Enable USB 3.0 and HDMI ports
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+ Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+References: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
+ <20250914-radxa-dragon-q6a-v2-5-045f7e92b3bb@radxa.com>
+ <3d9ce086-dbcb-4e55-850e-89977cb88978@linaro.org>
 Content-Language: en-US
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-In-Reply-To: <DCPUJPHR8NUB.1SRB4D7ONSRBY@linaro.org>
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <3d9ce086-dbcb-4e55-850e-89977cb88978@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: JcGshjDCb5C8fpn-bOABrkCZH7WmRoSn
-X-Authority-Analysis: v=2.4 cv=PsWTbxM3 c=1 sm=1 tr=0 ts=68c7b907 cx=c_pps
- a=rz3CxIlbcmazkYymdCej/Q==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8
- a=uZgilqiBXvIimX_9nf4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=bFCP_H2QrGi7Okbo017w:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: JcGshjDCb5C8fpn-bOABrkCZH7WmRoSn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAyOSBTYWx0ZWRfXyzbQnHuYHA7Y
- EX8o/2e9y1XEll7wNL/G2zAs/8x2Jy5WWjiorwCvta0vFNGvFQcttzyDktwf2+iYUcxK4eroebw
- fyHWDqsxh/83vz+alWzqtOdOm7q9fy9DReGp8vykYzu1PxY/h8mxiCDpCKdHtEQdG08u6QJaFwr
- t3Bcn0zoFmmyDMB2ovjRB/wSksucVFWWMeQVUVcikTzaaBYbQmmrcWuKl7OFNUUVGoB9hjDYFdD
- ZH7JgVwb4WeXzfI123cyfZRJAclHHf/WkT5zjkDIg0q23bi0DEQ5aOahHiaf8OTiTk1Epba32xf
- 3mhr+ghqQ9NlzdYklUtx0xYCvraVDU83FZy4rPEEk1yWTd5loo0K062CUHM0jKzxRxq99mcSZFs
- b//smPRC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-15_03,2025-09-12_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- spamscore=0 bulkscore=0 adultscore=0 impostorscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509130029
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: N+/GyfuFbcLim/CNP6aWVDzMd+VCmM/dqcM8k2SwC6oIXRCJVvLiIDBN
+	LsYpouR8KqK78FJqfTDrxk+F37pT/a+y2itBsl6/YYV7uPyVbjh5z2EZL5LLlYOO0iHwpn5
+	zQo99kSthu0EmaO9NthJTuLHFjRzmqQyZJxf1VshuUpT1IPTB8l/4qi3l1LfZ66jYBsxs1X
+	5Nz6FqLLrXnJKT9D6guUivJ/zuABIFerSNehiUvRfD+q5fn/g0LvYjQwi0nNF0byHCdBpjy
+	FXxdlfIdwCNjxb3giRLjoc/lF9mzWvezH/3eRH+/po3HQObDiTTenfS3FZKL3dUAoX6LpYG
+	1Zfzqz46HA7FG4yDX3Ja6adViYwOtUqWFA4gCyDETvWJzrVx6nQQq7AePPOgV2m/O0eYuyB
+	xlZHmKx4fqNs8n/zkkH8Dri7Z4DKp9Fl28Cl6j9z5lZxoX+ygmTinqpGl67H/6xjbv//ZF3
+	7P/58fl1D4orywnCDnMuHKMwZNAEe/XTzmVgdWvb1+taaU/d2BJSMS0Qy4Jl5+eT8BNSNXw
+	klj3WXfFX8020gdyQkjS3AHk2OehQU8L3JSbHJGfh1tSHRdduilXNroI69mHGO0B/L70GIV
+	Y5kpMEXgs5nd9c7Ay7Ffiky8TH55VSe7QdahQZp7+dsb5cnMUtb4Yvnug/Ie64Ox133YHTo
+	NV8ylGMh1FQQMPtp1ZHGNzswu9aaaZcFldZI0RBgllMNeJLQ/U0D8Q6bGjgJckMZ5uTVrpp
+	Ztvozjaxqd5B0evBac6xi9TfguOLS1Wjj0s3gSeLfqOnzimIL0qvjK4AJNBjdchqZDpbEfP
+	vEXhqK1kBAzn/OWsdmZ+ufFdAcYdti5qAnsw8jegNi1vtHUwaj3IiSXjGaq74RJ5DbZB5GL
+	q1YmgTsW/nH3GRPvGlkZjwXVMynX3ekbVad/vWGLxSRRy/DTGnlB3wRE3Sk8lP2itMxtlVD
+	okRk3y+5nXibVfuqHUKFQNB3rLgJOpFA9w+M+TGxIvJhNREbNC5knD05AymKHIFXESaU9g/
+	ZKOV4YCbGSYExs69GYOAHXGu7fDOJOWrumePnUq3qA3V6BWipGNG3Y4uN9ErI=
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+X-QQ-RECHKSPAM: 0
 
-Hi Alexey,
+On 9/15/2025 2:51 PM, Neil Armstrong wrote:
+> On 14/09/2025 17:57, Xilin Wu wrote:
+>> This board doesn't feature a regular Type-C port. The usb_1_qmpphy's
+>> RX1/TX1 pair is statically connected to the USB-A port, while its RX0/TX0
+>> pair is connected to the RA620 DP-to-HDMI bridge.
+>>
+>> Add and enable the nodes for the features to work.
+>>
+>> Signed-off-by: Xilin Wu <sophon@radxa.com>
+>>
+>> ---
+>>
+>> This change depends on the following patch series:
+>> https://lore.kernel.org/all/20250908-topic-x1e80100-hdmi-v3-4- 
+>> c53b0f2bc2fb@linaro.org/
+>> ---
+>>   .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 152 +++++++++++ 
+>> ++++++++++
+>>   1 file changed, 152 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/ 
+>> arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
+>> index 
+>> 3bf85d68c97891db1f1f0b84fb5649803948e06f..12bc9a0fcfbfeaabf6ede351f96c61193a8261c0 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
+>> @@ -78,6 +78,71 @@ chosen {
+>>           stdout-path = "serial0:115200n8";
+>>       };
+>> +    usb3_con: connector {
+>> +        compatible = "usb-a-connector";
+>> +
+>> +        ports {
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            port@0 {
+>> +                reg = <0>;
+>> +
+>> +                usb3_con_hs_in: endpoint {
+>> +                    remote-endpoint = <&usb_1_dwc3_hs>;
+>> +                };
+>> +            };
+>> +
+>> +            port@1 {
+>> +                reg = <1>;
+>> +
+>> +                usb3_con_ss_in: endpoint {
+>> +                    remote-endpoint = <&usb_dp_qmpphy_out_usb>;
+>> +                };
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +    hdmi-bridge {
+>> +        compatible = "radxa,ra620";
+>> +
+>> +        pinctrl-0 = <&dp_hot_plug_det>;
+>> +        pinctrl-names = "default";
+>> +
+>> +        ports {
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            port@0 {
+>> +                reg = <0>;
+>> +
+>> +                hdmi_bridge_in: endpoint {
+>> +                    remote-endpoint = <&usb_dp_qmpphy_out_dp>;
+>> +                };
+>> +            };
+>> +
+>> +            port@1 {
+>> +                reg = <1>;
+>> +
+>> +                hdmi_bridge_out: endpoint {
+>> +                    remote-endpoint = <&hdmi_connector_in>;
+>> +                };
+>> +            };
+>> +        };
+>> +    };
+>> +
+>> +    hdmi-connector {
+>> +        compatible = "hdmi-connector";
+>> +        label = "hdmi";
+>> +        type = "a";
+>> +
+>> +        port {
+>> +            hdmi_connector_in: endpoint {
+>> +                remote-endpoint = <&hdmi_bridge_out>;
+>> +            };
+>> +        };
+>> +    };
+>> +
+>>       leds {
+>>           compatible = "gpio-leds";
+>> @@ -504,6 +569,21 @@ &lpass_va_macro {
+>>       status = "okay";
+>>   };
+>> +&mdss {
+>> +    status = "okay";
+>> +};
+>> +
+>> +&mdss_dp {
+>> +    sound-name-prefix = "Display Port0";
+>> +
+>> +    status = "okay";
+>> +};
+>> +
+>> +&mdss_dp_out {
+>> +    data-lanes = <0 1>;
+>> +    remote-endpoint = <&usb_dp_qmpphy_dp_in>;
+>> +};
+>> +
+>>   &pcie0 {
+>>       perst-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
+>>       wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
+>> @@ -753,6 +833,22 @@ platform {
+>>               sound-dai = <&q6apm>;
+>>           };
+>>       };
+>> +
+>> +    dp0-dai-link {
+>> +        link-name = "DP0 Playback";
+>> +
+>> +        codec {
+>> +            sound-dai = <&mdss_dp>;
+>> +        };
+>> +
+>> +        cpu {
+>> +            sound-dai = <&q6apmbedai DISPLAY_PORT_RX_0>;
+>> +        };
+>> +
+>> +        platform {
+>> +            sound-dai = <&q6apm>;
+>> +        };
+>> +    };
+>>   };
+>>   /* Pin 11, 29, 31, 32 in GPIO header */
+>> @@ -967,6 +1063,58 @@ &ufs_mem_phy {
+>>       status = "okay";
+>>   };
+>> +&usb_1 {
+>> +    dr_mode = "host";
+>> +
+>> +    status = "okay";
+>> +};
+>> +
+>> +&usb_1_dwc3_hs {
+>> +    remote-endpoint = <&usb3_con_hs_in>;
+>> +};
+>> +
+>> +&usb_1_hsphy {
+>> +    vdda-pll-supply = <&vreg_l10c_0p88>;
+>> +    vdda33-supply = <&vreg_l2b_3p072>;
+>> +    vdda18-supply = <&vreg_l1c_1p8>;
+>> +
+>> +    status = "okay";
+>> +};
+>> +
+>> +&usb_1_qmpphy {
+>> +    vdda-phy-supply = <&vreg_l6b_1p2>;
+>> +    vdda-pll-supply = <&vreg_l1b_0p912>;
+>> +
+>> +    /delete-property/ orientation-switch;
+>> +
+>> +    status = "okay";
+>> +
+>> +    ports {
+>> +        port@0 {
+>> +            #address-cells = <1>;
+>> +            #size-cells = <0>;
+>> +
+>> +            /delete-node/ endpoint;
+>> +
+>> +            /* RX1/TX1 is statically connected to USB-A port */
+>> +            usb_dp_qmpphy_out_usb: endpoint@0 {
+>> +                reg = <0>;
+>> +
+>> +                data-lanes = <2 3>;
+>> +                remote-endpoint = <&usb3_con_ss_in>;
+>> +            };
+>> +
+>> +            /* RX0/TX0 is statically connected to RA620 bridge */
+>> +            usb_dp_qmpphy_out_dp: endpoint@1 {
+>> +                reg = <1>;
+>> +
+>> +                data-lanes = <3 2>;
+>> +                remote-endpoint = <&hdmi_bridge_in>;
+>> +            };
+> 
+> In this WiP patchset endpoint@0 is suposed to be DisplayPort, and 
+> endpoint@1 for USB3 lanes.
+> 
+> And you must not have colliding data-lanes, so it should be something like:
+> 
+>              /* DP0/DP1 is statically connected to a RA620 bridge*/
+>              usb_dp_qmpphy_out_dp: endpoint@0 {
+>                  reg = <0>;
+> 
+>                  data-lanes = <0 1>;
+>                  remote-endpoint = <&hdmi_bridge_in>;
+>              };
+> 
+>              /* RX0/TX0 is statically connected to an USB-A Connector */
+>              usb_dp_qmpphy_out_usb: endpoint@1 {
+>                  reg = <1>;
+> 
+>                  data-lanes = <2 3>;
+>                  remote-endpoint = <&usb3_con_ss_in>;
+>              };
+> 
+> But I just found out while reviewed my patchset is wrong... it should be:
+> 
+> +          endpoint@0:
+> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
+> +            description: Display Port Output lanes of the PHY when used 
+> with static mapping
+> +            unevaluatedProperties: false
+> +
+> +            properties:
+> +              data-lanes:
+> +                $ref: /schemas/types.yaml#/definitions/uint32-array
+> +                minItems: 2
+> +                maxItems: 4
+> +                oneOf:
+> +                  - items: # DisplayPort 2 lanes, normal orientation
+> +                      - const: 3
+> +                      - const: 2
+> +                  - items: # DisplayPort 2 lanes, flipped orientation
+> +                      - const: 0
+> +                      - const: 1
+> +                  - items: # DisplayPort 4 lanes, normal orientation
+> +                      - const: 0
+> +                      - const: 1
+> +                      - const: 2
+> +                      - const: 3
+> +                  - items: # DisplayPort 4 lanes, flipped orientation
+> +                      - const: 3
+> +                      - const: 2
+> +                      - const: 1
+> +                      - const: 0
+> 
+> and in driver:
+> +static const u32 dp_2_data_lanes_mapping[][2] = {
+> +    [TYPEC_ORIENTATION_NORMAL] = { 3, 2 },
+> +    [TYPEC_ORIENTATION_REVERSE] = { 0, 1 },
+> 
+> Neil
 
-Really appreciate you waiting!
+The driver change in the WIP patchset assumes endpoint@0 to be USB, I 
+forgot to mention that. Either the driver or the binding needs to be 
+fixed indeed.
 
-On 9/11/2025 2:30 PM, Alexey Klimov wrote:
-> Hi Praveen,
-> 
-> On Thu Sep 11, 2025 at 9:34 AM BST, Praveen Talari wrote:
->> Hi Alexy,
->>
->> Thank you for update.
->>
->> On 9/10/2025 1:35 AM, Alexey Klimov wrote:
->>>
->>> (adding Krzysztof to c/c)
->>>
->>> On Mon Sep 8, 2025 at 6:43 PM BST, Alexey Klimov wrote:
->>>> On Mon Sep 8, 2025 at 5:45 PM BST, Praveen Talari wrote:
->>>>> A deadlock is observed in the qcom_geni_serial driver during runtime
->>>>> resume. This occurs when the pinctrl subsystem reconfigures device pins
->>>>> via msm_pinmux_set_mux() while the serial device's interrupt is an
->>>>> active wakeup source. msm_pinmux_set_mux() calls disable_irq() or
->>>>> __synchronize_irq(), conflicting with the active wakeup state and
->>>>> causing the IRQ thread to enter an uninterruptible (D-state) sleep,
->>>>> leading to system instability.
->>>>>
->>>>> The critical call trace leading to the deadlock is:
->>>>>
->>>>>       Call trace:
->>>>>       __switch_to+0xe0/0x120
->>>>>       __schedule+0x39c/0x978
->>>>>       schedule+0x5c/0xf8
->>>>>       __synchronize_irq+0x88/0xb4
->>>>>       disable_irq+0x3c/0x4c
->>>>>       msm_pinmux_set_mux+0x508/0x644
->>>>>       pinmux_enable_setting+0x190/0x2dc
->>>>>       pinctrl_commit_state+0x13c/0x208
->>>>>       pinctrl_pm_select_default_state+0x4c/0xa4
->>>>>       geni_se_resources_on+0xe8/0x154
->>>>>       qcom_geni_serial_runtime_resume+0x4c/0x88
->>>>>       pm_generic_runtime_resume+0x2c/0x44
->>>>>       __genpd_runtime_resume+0x30/0x80
->>>>>       genpd_runtime_resume+0x114/0x29c
->>>>>       __rpm_callback+0x48/0x1d8
->>>>>       rpm_callback+0x6c/0x78
->>>>>       rpm_resume+0x530/0x750
->>>>>       __pm_runtime_resume+0x50/0x94
->>>>>       handle_threaded_wake_irq+0x30/0x94
->>>>>       irq_thread_fn+0x2c/xa8
->>>>>       irq_thread+0x160/x248
->>>>>       kthread+0x110/x114
->>>>>       ret_from_fork+0x10/x20
->>>>>
->>>>> To resolve this, explicitly manage the wakeup IRQ state within the
->>>>> runtime suspend/resume callbacks. In the runtime resume callback, call
->>>>> disable_irq_wake() before enabling resources. This preemptively
->>>>> removes the "wakeup" capability from the IRQ, allowing subsequent
->>>>> interrupt management calls to proceed without conflict. An error path
->>>>> re-enables the wakeup IRQ if resource enablement fails.
->>>>>
->>>>> Conversely, in runtime suspend, call enable_irq_wake() after resources
->>>>> are disabled. This ensures the interrupt is configured as a wakeup
->>>>> source only once the device has fully entered its low-power state. An
->>>>> error path handles disabling the wakeup IRQ if the suspend operation
->>>>> fails.
->>>>>
->>>>> Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial driver")
->>>>> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
->>>>
->>>> You forgot:
->>>>
->>>> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
->>>>
->>>> Also, not sure where this change will go, via Greg or Jiri, but ideally
->>>> this should be picked for current -rc cycle since regression is
->>>> introduced during latest merge window.
->>>>
->>>> I also would like to test it on qrb2210 rb1 where this regression is
->>>> reproduciable.
->>>
->>> It doesn't seem that it fixes the regression on RB1 board:
->>>
->>>    INFO: task kworker/u16:3:50 blocked for more than 120 seconds.
->>>          Not tainted 6.17.0-rc5-00018-g9dd1835ecda5-dirty #13
->>>    "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
->>>    task:kworker/u16:3   state:D stack:0     pid:50    tgid:50    ppid:2      task_flags:0x4208060 flags:0x00000010
->>>    Workqueue: async async_run_entry_fn
->>>    Call trace:
->>>     __switch_to+0xf0/0x1c0 (T)
->>>     __schedule+0x358/0x99c
->>>     schedule+0x34/0x11c
->>>     rpm_resume+0x17c/0x6a0
->>>     rpm_resume+0x2c4/0x6a0
->>>     rpm_resume+0x2c4/0x6a0
->>>     rpm_resume+0x2c4/0x6a0
->>>     __pm_runtime_resume+0x50/0x9c
->>>     __driver_probe_device+0x58/0x120
->>>     driver_probe_device+0x3c/0x154
->>>     __driver_attach_async_helper+0x4c/0xc0
->>>     async_run_entry_fn+0x34/0xe0
->>>     process_one_work+0x148/0x284
->>>     worker_thread+0x2c4/0x3e0
->>>     kthread+0x12c/0x210
->>>     ret_from_fork+0x10/0x20
->>>    INFO: task irq/92-4a8c000.:79 blocked for more than 120 seconds.
->>>          Not tainted 6.17.0-rc5-00018-g9dd1835ecda5-dirty #13
->>>    "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
->>>    task:irq/92-4a8c000. state:D stack:0     pid:79    tgid:79    ppid:2      task_flags:0x208040 flags:0x00000010
->>>    Call trace:
->>>     __switch_to+0xf0/0x1c0 (T)
->>>     __schedule+0x358/0x99c
->>>     schedule+0x34/0x11c
->>>     __synchronize_irq+0x90/0xcc
->>>     disable_irq+0x3c/0x4c
->>>     msm_pinmux_set_mux+0x3b4/0x45c
->>>     pinmux_enable_setting+0x1fc/0x2d8
->>>     pinctrl_commit_state+0xa0/0x260
->>>     pinctrl_pm_select_default_state+0x4c/0xa0
->>>     geni_se_resources_on+0xe8/0x154
->>>     geni_serial_resource_state+0x8c/0xbc
->>>     qcom_geni_serial_runtime_resume+0x3c/0x88
->>>     pm_generic_runtime_resume+0x2c/0x44
->>>     __rpm_callback+0x48/0x1e0
->>>     rpm_callback+0x74/0x80
->>>     rpm_resume+0x3bc/0x6a0
->>>     __pm_runtime_resume+0x50/0x9c
->>>     handle_threaded_wake_irq+0x30/0x80
->>>     irq_thread_fn+0x2c/0xb0
->>>     irq_thread+0x170/0x334
->>>     kthread+0x12c/0x210
->>>     ret_from_fork+0x10/0x20
->>
->> I can see call stack is mostly similar for yours and mine but not
->> completely at initial calls.
->>
->> Yours dump:
->>   >    qcom_geni_serial_runtime_resume+0x3c/0x88
->>   >    pm_generic_runtime_resume+0x2c/0x44
->>   >    __rpm_callback+0x48/0x1e0
->>   >    rpm_callback+0x74/0x80
->>   >    rpm_resume+0x3bc/0x6a0
->>   >    __pm_runtime_resume+0x50/0x9c
->>   >    handle_threaded_wake_irq+0x30/0x80
->>
->> Mine:
->>   >>>      qcom_geni_serial_runtime_resume+0x4c/0x88
->>   >>>      pm_generic_runtime_resume+0x2c/0x44
->>   >>>      __genpd_runtime_resume+0x30/0x80
->>   >>>      genpd_runtime_resume+0x114/0x29c
->>   >>>      __rpm_callback+0x48/0x1d8
->>   >>>      rpm_callback+0x6c/0x78
->>   >>>      rpm_resume+0x530/0x750
->>
->>
->> Can you please share what is DT file for this Board if possible?
->> is there any usecase enabled on this SE instance?
-> 
-> Well, yeah, sorry, I didn't really compared backtraces line to line and
-> behaviour was exactly the same. I thought that the purpose was to fix
-> the regression reported earlier.
-> 
-> RB1 main dts files are qrb2210-rb1.dts and qcm2290.dtsi.
-> 
-> The similar board RB2 uses qrb4210-rb2.dts and sm4250.dtsi+sm6115.dtsi,
-> it is worth checking it as well.
-> For testing here I didn't use anything extra (the only change was wifi fix
-> from Loic); I tested -master and linux-next usually.
-> 
-> If you can tell me what is SE instance I may be able to answer. But
-> as far as I know it is not a part of any infrastructure or CI machinery.
-> I just boot the board and see if it works, if it does then I rebuild and
-> test my changes (audio).
+And I think there's another mistake in the driver:
 
-I'm actively working on this and experimenting various scenarios with 
-wakeup. I’ll share the updated patch as soon as possible.
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -4221,7 +4221,7 @@ static int qmp_combo_probe(struct platform_device 
+*pdev)
+                                 if (!memcmp(data_lanes, 
+usb3_data_lane_mapping[i], sizeof(u32) * 2))
+                                         break;
 
-Should we include fix in V2 or new version(V1) if the fix originates 
-from a different subsystem(pinctrol)?
+-                       if (i >= TYPEC_ORIENTATION_REVERSE)
++                       if (i > TYPEC_ORIENTATION_REVERSE)
+                                 /* Property value is invalid, ignore 
+property */
+                                 goto usb3_mapping_done;
 
-Thanks,
-Praveen Talari
+@@ -4265,7 +4265,7 @@ static int qmp_combo_probe(struct platform_device 
+*pdev)
+                                         break;
+                         }
+
+-                       if (i >= TYPEC_ORIENTATION_REVERSE)
++                       if (i > TYPEC_ORIENTATION_REVERSE)
+                                 /* Property value is invalid, ignore 
+property */
+                                 goto dp_mapping_done;
+
+
+After fixing this, the driver works properly with my DT at least.
+
 > 
-> Best regards,
-> Alexey
+>   +        };
+>> +    };
+>> +};
+>> +
+>>   &usb_2 {
+>>       dr_mode = "host";
+>> @@ -986,6 +1134,10 @@ &venus {
+>>   };
+>>   /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+>> +&dp_hot_plug_det {
+>> +    bias-disable;
+>> +};
+>> +
+>>   &pcie0_clkreq_n {
+>>       bias-pull-up;
+>>       drive-strength = <2>;
+>>
 > 
+> 
+
+-- 
+Best regards,
+Xilin Wu <sophon@radxa.com>
+
 
