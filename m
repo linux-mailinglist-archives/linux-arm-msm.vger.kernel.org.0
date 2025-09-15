@@ -1,83 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-73503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DF02B5720A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 09:52:59 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2831EB57231
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 10:02:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 371E2189F73F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 07:52:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 74FE918946A3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 08:02:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E20312E9ED7;
-	Mon, 15 Sep 2025 07:52:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 258CD2E5B12;
+	Mon, 15 Sep 2025 08:02:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HaQgg7XI"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="E+Z3o74A"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 346F12E9EDA
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 07:52:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B98F2E54C8
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 08:02:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757922722; cv=none; b=j9b1t8Ql/CHC3PvYGSSRHSJONqeQt42qlyckTKtX4aQUDUiIJG7M8rBhKy9hqXRIaNSX5ybK8OFfHJVnjv1QoR9GmnyheFm/R4qmpABuDPh1fpqOh5ZXZ4tCSNSMBxcvAl50FZgJmG6WYuYisnabRaAJOSZeHSldS24ZAuCwseU=
+	t=1757923342; cv=none; b=PO7qP7yKFU/V82hn0dlHCf3z7SNTTA+KYxBrefCgL1SyfHHQXVGcQ5abBmhGEvEqrhtWEpcVjv6ILDHSyB9XH//G2SRwD9bI3lUMBfpHSqv6PCnC7JT6TWBv63bFEq13aliPSM39bOwKgaLlRSmI/QCESetejdmqnK78U5IaHKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757922722; c=relaxed/simple;
-	bh=dqbgPNUUODdWlNF32YT5WkrVZEMAS/GdRAb3D/xuDHM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=f40mTQOztV1TOoqJ8FzFQAjncrgdNknhvw9lNd1hnL17XvBNDWCDZjhJ2BFjQlNgI3iApblpB/TTaiQlWAI0nQDfG9UaM/ZI/Pm5rxX1F9xo5+udNzL1TcwvLPGnEkxef50viCa1TPRRYys4FfG5Dxi/uGoy3RPXMl3WCVgQvlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HaQgg7XI; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45f2acb5f42so6516305e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 00:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757922718; x=1758527518; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ivQ3sYLiqIZvE+kr/RfV/rtfJcYjpoyfjjoMZk6iJ7I=;
-        b=HaQgg7XI3G+1/0hu3sxhj27+uMqtGkcJ1gfF9H0MthEzV7w+fC+hXF++k1BBi2EBC0
-         xGmKnbAIbQ+vgUZF89kpIpneR0bJts1wAnKUS4GDfJ84/SoFFHA60NXzp/aiEnkUttKv
-         /zpDtsSZNonAopz/sjLx3kudnOScASk6YiVVurUY3Ytk/Y26J9wNRP8unFR5Zw/xmSOY
-         koofaXYWoWbsDI7l8KCQKgEtMQtKmCPzt5aUV/7AH7yqBp01tKGNpz+/trTyVaIdTwhg
-         1KPzXcFJf/r7kgqc9uLwxsCg5b9eQ77iNiQzlRw1BHuc9LlQnujgh8bNBTnE2JeObCFr
-         pGKg==
+	s=arc-20240116; t=1757923342; c=relaxed/simple;
+	bh=NxN20Gn0aHENTScrUN7kSeNIZDjx6Vfsg2GuEin00cI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=pEFeudZFy4pEzQTkZUBXqBYso2n5mZloecOtls1wKadQtX6HxlNTTHALea4aY+RDUgaPUKsJxzv9L10g/HRCpuPYJKMQXqaU/H+QSTqhE/rT2EWZzou0RpOA+9HuvaDKQZwsti+i/snmcyCivDyPyh3hkXJM+sKn2E6qE2tMFgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=E+Z3o74A; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58F7I0Cr004607
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 08:02:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZkqyB913YY3yMnVNUtYTJNCapGusGIc3uihCU//zesY=; b=E+Z3o74AcYrQCKfJ
+	q++aZsY3x5gkBr3fR2bN23BcfOK6+uSrLRIhdG5hmkc0vop4MqS0u6EVdS28qPoV
+	+eT3NYEddOpyIszr5MYllrQTXdzh0vkcORMBlE8tfl9aHQlbs+3InWCJjMnOmZFl
+	DKhB1USPR+ni34xj1RZB9RoKUN9xGoBp4j0beyNMwJolUSIfF7idDLiR1LcH2+ai
+	UC+19lTNnkzpVkzkRE5O6fuleOYJrceegAczVRj2NWSftphzWJ/zkebMejZ/E7Ws
+	ZVbqUR6OZcielbTxVxBdjMFVAZMqqpYPLKNfmwZt5/5tcfzS1Vvw4RQyCgxG4boi
+	K6oNpA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 495072kywj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 08:02:19 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b5f112dafeso105391041cf.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 01:02:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757922718; x=1758527518;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=ivQ3sYLiqIZvE+kr/RfV/rtfJcYjpoyfjjoMZk6iJ7I=;
-        b=o8sM4ErcQPuK/WBLCtwnNBpFeTscmkeKhcrUPSlS0QWJre8V6ZCx0fBGBPV8R04nZU
-         yob/dZ/5IWtQMfFoIUkB13m0UaZEAAltehhFKS4ddypxObkIQZmonoc9AzeaZLaj15OC
-         CuAChaiCtyZ29rD1yhjpRBsmWjR7hWyvcswJfYcMYtWOPOpf0AnUnKzR2yXAn+oWQWnD
-         qxTcqjw53HxVUj+s1sxPhndf4thB8UIAjIJIdi1S+tgkeIf77MtNe+jYbCxiKfO3Am54
-         exsJdAtN17WPgOdsSXZmzSSikFclm3tTZ+lbepfqmeFnIleKcvvm1aipJX7+pRcbRekK
-         FnCQ==
-X-Gm-Message-State: AOJu0YzlHrvT4WyHcWnm+1UCmxTPi0SokswT667hOEe03HSkk7gVcSLM
-	sVnMCHfuU6N72cKV0RUrxl+6I64Tm31/FdMURVpPbt4mlEyAic1eMNV5fqEDeXwMKSSyFwRnCa6
-	XopjFDmk=
-X-Gm-Gg: ASbGnctYG99rO78HcF85LnnS3v8By+lCisbkkx7XVn1r0qJfz6f0cR/44nqMS24fpny
-	cPhU2mCi+L9jgk52SG7NQyu45emFDpATgXV7cCLnunG9MKSoyVV5TLgXV7qsvBvtHX0q4srgRyj
-	hSybQOdnvGTmN3UQZ+gzDclMGamoJnuLzf3+wB8+n1QVjrPUtuzBAfkLfPkoma74XiB8WENQtXM
-	ccggEftD71PCqrrl07csA6Z4+NT2CWqbfR8Wo2yPTw95fadjQURXbpltsKO+l9EUnjPoA+b0Zf0
-	n5zK4H2PpLGXVb5eyYBY6hIERy9dWAbVvJiQf9WWcAsnT0s78M/0Y9/AIEfp6weoUKIZp9+cTRd
-	Bx08fIJHuX37YcCfJzaMr+DkLI7j3WQu46jctICaU7qG8UKIvc9iFvxtdNOIapf3yRW21UJ5dTE
-	kzZ9d8v6C33AB9Idl7Ng==
-X-Google-Smtp-Source: AGHT+IGtfkUrtSGhWq3GOrSRj59NcVYQV1TH+3sWnwUFzYBJkOw+6NIYczHYsa2Q4Pu+4v6KARlgzw==
-X-Received: by 2002:a05:600c:1993:b0:45d:dbf0:4831 with SMTP id 5b1f17b1804b1-45f2121c184mr99632595e9.0.1757922718401;
-        Mon, 15 Sep 2025 00:51:58 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:600a:60f:7208:24ed? ([2a01:e0a:3d9:2080:600a:60f:7208:24ed])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45f28c193f9sm85011825e9.2.2025.09.15.00.51.57
+        d=1e100.net; s=20230601; t=1757923338; x=1758528138;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZkqyB913YY3yMnVNUtYTJNCapGusGIc3uihCU//zesY=;
+        b=Pe5Kc86G9PIqGPcJDFC9wD7YieT1E73wIkJuJS/cpau4F2VudG+zT93EBoYVc7Stx4
+         ihKWLo5uTVdSXYmzgTi/X/QOno2/vHnCxHVpQdbu22GyCvA4hFRah7hcGjVFZKBd2iAi
+         4aqDy3LZdxJ/D4PWUhbdiz3cKjwUQsqMmWOMzt/CietFFNQsWu52hk7BpkfY0d1aN8Nm
+         yXAo0e48omyaEsJgIfTlBsgOaK9sd/7O1ntOyUlagvDU+JEGx/HPeZkg1V2MHIYxUGvD
+         AEVZ+nLmZClIUQA2896EeMbsyHzxfNNPQVmFYXbV7jh84t2EgPhMVZPCMFGg8ciSUFzX
+         Acsg==
+X-Forwarded-Encrypted: i=1; AJvYcCWuJnSJv5Kjqc2hJlTNyzOgP0YwyT33DCQIhsdKqKbDLnI0IoyZhACKWPw8Z1FEZMx8Vpi6AWb5eySF406c@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYBnwoWiqIngeOUgZxqC5RPSD4Kh3MbMY/N5Ym8VX3UdyKaMxo
+	fVgZ9ErrZOYhRI0A3I8F/xNd2HCo/5nSC/gU+U+/pHQTWRm5Bxo+A3U8Q588IAKr4MuBWRqRR6a
+	g7z9CyKcXsgmKeGQAqgPrYoHKnB/hKsP1r4EUMjQJ0/184y9P3AA2bel0ufIVApH4zQge
+X-Gm-Gg: ASbGnctUgTzzVXQ4JGvE0S/EbV7ZPOnaHDHbdPBS2c6VIMWAZqKrmAbww9NBjKS06hV
+	jP8G3KAhWjMYbuHGu+JPhgn0jFK4v/5hwKrdjMBRshEYF8IRWDJlCcsQkdywgxTeQkQue+Y4cC3
+	m8X7QeTljujLMwF72cTtJn35f982oP5cG0VGIXcebcqz0mDtyZuCv7DZJF4whxzFiL2LjuRhsiJ
+	Mwm7MW10U1M+pblEtKQG8u3x2B6bgaNuTlwGfoqYNvdDvfPRjJ2Gs+iAFwXjhI2YcQvn/ymNgcg
+	yeNFgiqDZPxYwbVccje6ZTI9yru44EeWwGEEaAhhChpo9prglqE9lP4hr6RD5rdCL3U=
+X-Received: by 2002:a05:622a:247:b0:4b6:3178:b253 with SMTP id d75a77b69052e-4b77d06a1f4mr163367761cf.58.1757923338408;
+        Mon, 15 Sep 2025 01:02:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNw31LJSCp0juE0c9doaAiFovtWcdc7NGc8wtk3ZUQMcSD0QCoI0uGjhTOyxUVgoOmvnfINA==
+X-Received: by 2002:a05:622a:247:b0:4b6:3178:b253 with SMTP id d75a77b69052e-4b77d06a1f4mr163367321cf.58.1757923337914;
+        Mon, 15 Sep 2025 01:02:17 -0700 (PDT)
+Received: from [192.168.68.120] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3e9fd89af70sm4863751f8f.43.2025.09.15.01.02.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 00:51:58 -0700 (PDT)
-Message-ID: <041b79cb-ca73-46b6-9477-0e735cc5f951@linaro.org>
-Date: Mon, 15 Sep 2025 09:51:57 +0200
+        Mon, 15 Sep 2025 01:02:17 -0700 (PDT)
+Message-ID: <f13c79a7-9595-4795-bd74-ea440f74a12f@oss.qualcomm.com>
+Date: Mon, 15 Sep 2025 09:02:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,352 +89,88 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH DNM v2 5/5] arm64: dts: qcom: qcs6490-radxa-dragon-q6a:
- Enable USB 3.0 and HDMI ports
-To: Xilin Wu <sophon@radxa.com>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
- Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-References: <20250914-radxa-dragon-q6a-v2-0-045f7e92b3bb@radxa.com>
- <20250914-radxa-dragon-q6a-v2-5-045f7e92b3bb@radxa.com>
- <3d9ce086-dbcb-4e55-850e-89977cb88978@linaro.org>
- <8C476C0AA53F638B+b640da5b-8e9f-4580-b0f7-5c22c4429855@radxa.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <8C476C0AA53F638B+b640da5b-8e9f-4580-b0f7-5c22c4429855@radxa.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-On 15/09/2025 09:04, Xilin Wu wrote:
-> On 9/15/2025 2:51 PM, Neil Armstrong wrote:
->> On 14/09/2025 17:57, Xilin Wu wrote:
->>> This board doesn't feature a regular Type-C port. The usb_1_qmpphy's
->>> RX1/TX1 pair is statically connected to the USB-A port, while its RX0/TX0
->>> pair is connected to the RA620 DP-to-HDMI bridge.
->>>
->>> Add and enable the nodes for the features to work.
->>>
->>> Signed-off-by: Xilin Wu <sophon@radxa.com>
->>>
->>> ---
->>>
->>> This change depends on the following patch series:
->>> https://lore.kernel.org/all/20250908-topic-x1e80100-hdmi-v3-4- c53b0f2bc2fb@linaro.org/
->>> ---
->>>   .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 152 +++++++++++ ++++++++++
->>>   1 file changed, 152 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/ arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
->>> index 3bf85d68c97891db1f1f0b84fb5649803948e06f..12bc9a0fcfbfeaabf6ede351f96c61193a8261c0 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
->>> +++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
->>> @@ -78,6 +78,71 @@ chosen {
->>>           stdout-path = "serial0:115200n8";
->>>       };
->>> +    usb3_con: connector {
->>> +        compatible = "usb-a-connector";
->>> +
->>> +        ports {
->>> +            #address-cells = <1>;
->>> +            #size-cells = <0>;
->>> +
->>> +            port@0 {
->>> +                reg = <0>;
->>> +
->>> +                usb3_con_hs_in: endpoint {
->>> +                    remote-endpoint = <&usb_1_dwc3_hs>;
->>> +                };
->>> +            };
->>> +
->>> +            port@1 {
->>> +                reg = <1>;
->>> +
->>> +                usb3_con_ss_in: endpoint {
->>> +                    remote-endpoint = <&usb_dp_qmpphy_out_usb>;
->>> +                };
->>> +            };
->>> +        };
->>> +    };
->>> +
->>> +    hdmi-bridge {
->>> +        compatible = "radxa,ra620";
->>> +
->>> +        pinctrl-0 = <&dp_hot_plug_det>;
->>> +        pinctrl-names = "default";
->>> +
->>> +        ports {
->>> +            #address-cells = <1>;
->>> +            #size-cells = <0>;
->>> +
->>> +            port@0 {
->>> +                reg = <0>;
->>> +
->>> +                hdmi_bridge_in: endpoint {
->>> +                    remote-endpoint = <&usb_dp_qmpphy_out_dp>;
->>> +                };
->>> +            };
->>> +
->>> +            port@1 {
->>> +                reg = <1>;
->>> +
->>> +                hdmi_bridge_out: endpoint {
->>> +                    remote-endpoint = <&hdmi_connector_in>;
->>> +                };
->>> +            };
->>> +        };
->>> +    };
->>> +
->>> +    hdmi-connector {
->>> +        compatible = "hdmi-connector";
->>> +        label = "hdmi";
->>> +        type = "a";
->>> +
->>> +        port {
->>> +            hdmi_connector_in: endpoint {
->>> +                remote-endpoint = <&hdmi_bridge_out>;
->>> +            };
->>> +        };
->>> +    };
->>> +
->>>       leds {
->>>           compatible = "gpio-leds";
->>> @@ -504,6 +569,21 @@ &lpass_va_macro {
->>>       status = "okay";
->>>   };
->>> +&mdss {
->>> +    status = "okay";
->>> +};
->>> +
->>> +&mdss_dp {
->>> +    sound-name-prefix = "Display Port0";
->>> +
->>> +    status = "okay";
->>> +};
->>> +
->>> +&mdss_dp_out {
->>> +    data-lanes = <0 1>;
->>> +    remote-endpoint = <&usb_dp_qmpphy_dp_in>;
->>> +};
->>> +
->>>   &pcie0 {
->>>       perst-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
->>>       wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
->>> @@ -753,6 +833,22 @@ platform {
->>>               sound-dai = <&q6apm>;
->>>           };
->>>       };
->>> +
->>> +    dp0-dai-link {
->>> +        link-name = "DP0 Playback";
->>> +
->>> +        codec {
->>> +            sound-dai = <&mdss_dp>;
->>> +        };
->>> +
->>> +        cpu {
->>> +            sound-dai = <&q6apmbedai DISPLAY_PORT_RX_0>;
->>> +        };
->>> +
->>> +        platform {
->>> +            sound-dai = <&q6apm>;
->>> +        };
->>> +    };
->>>   };
->>>   /* Pin 11, 29, 31, 32 in GPIO header */
->>> @@ -967,6 +1063,58 @@ &ufs_mem_phy {
->>>       status = "okay";
->>>   };
->>> +&usb_1 {
->>> +    dr_mode = "host";
->>> +
->>> +    status = "okay";
->>> +};
->>> +
->>> +&usb_1_dwc3_hs {
->>> +    remote-endpoint = <&usb3_con_hs_in>;
->>> +};
->>> +
->>> +&usb_1_hsphy {
->>> +    vdda-pll-supply = <&vreg_l10c_0p88>;
->>> +    vdda33-supply = <&vreg_l2b_3p072>;
->>> +    vdda18-supply = <&vreg_l1c_1p8>;
->>> +
->>> +    status = "okay";
->>> +};
->>> +
->>> +&usb_1_qmpphy {
->>> +    vdda-phy-supply = <&vreg_l6b_1p2>;
->>> +    vdda-pll-supply = <&vreg_l1b_0p912>;
->>> +
->>> +    /delete-property/ orientation-switch;
->>> +
->>> +    status = "okay";
->>> +
->>> +    ports {
->>> +        port@0 {
->>> +            #address-cells = <1>;
->>> +            #size-cells = <0>;
->>> +
->>> +            /delete-node/ endpoint;
->>> +
->>> +            /* RX1/TX1 is statically connected to USB-A port */
->>> +            usb_dp_qmpphy_out_usb: endpoint@0 {
->>> +                reg = <0>;
->>> +
->>> +                data-lanes = <2 3>;
->>> +                remote-endpoint = <&usb3_con_ss_in>;
->>> +            };
->>> +
->>> +            /* RX0/TX0 is statically connected to RA620 bridge */
->>> +            usb_dp_qmpphy_out_dp: endpoint@1 {
->>> +                reg = <1>;
->>> +
->>> +                data-lanes = <3 2>;
->>> +                remote-endpoint = <&hdmi_bridge_in>;
->>> +            };
->>
->> In this WiP patchset endpoint@0 is suposed to be DisplayPort, and endpoint@1 for USB3 lanes.
->>
->> And you must not have colliding data-lanes, so it should be something like:
->>
->>              /* DP0/DP1 is statically connected to a RA620 bridge*/
->>              usb_dp_qmpphy_out_dp: endpoint@0 {
->>                  reg = <0>;
->>
->>                  data-lanes = <0 1>;
->>                  remote-endpoint = <&hdmi_bridge_in>;
->>              };
->>
->>              /* RX0/TX0 is statically connected to an USB-A Connector */
->>              usb_dp_qmpphy_out_usb: endpoint@1 {
->>                  reg = <1>;
->>
->>                  data-lanes = <2 3>;
->>                  remote-endpoint = <&usb3_con_ss_in>;
->>              };
->>
->> But I just found out while reviewed my patchset is wrong... it should be:
->>
->> +          endpoint@0:
->> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
->> +            description: Display Port Output lanes of the PHY when used with static mapping
->> +            unevaluatedProperties: false
->> +
->> +            properties:
->> +              data-lanes:
->> +                $ref: /schemas/types.yaml#/definitions/uint32-array
->> +                minItems: 2
->> +                maxItems: 4
->> +                oneOf:
->> +                  - items: # DisplayPort 2 lanes, normal orientation
->> +                      - const: 3
->> +                      - const: 2
->> +                  - items: # DisplayPort 2 lanes, flipped orientation
->> +                      - const: 0
->> +                      - const: 1
->> +                  - items: # DisplayPort 4 lanes, normal orientation
->> +                      - const: 0
->> +                      - const: 1
->> +                      - const: 2
->> +                      - const: 3
->> +                  - items: # DisplayPort 4 lanes, flipped orientation
->> +                      - const: 3
->> +                      - const: 2
->> +                      - const: 1
->> +                      - const: 0
->>
->> and in driver:
->> +static const u32 dp_2_data_lanes_mapping[][2] = {
->> +    [TYPEC_ORIENTATION_NORMAL] = { 3, 2 },
->> +    [TYPEC_ORIENTATION_REVERSE] = { 0, 1 },
->>
->> Neil
-> 
-> The driver change in the WIP patchset assumes endpoint@0 to be USB, I forgot to mention that. Either the driver or the binding needs to be fixed indeed.
-
-Damn you're right, another thing to fix.
+Subject: Re: [PATCH v1] ASoC: qcom: sc8280xp: Fix sound card driver name match
+ data for QCS8275
+To: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Prasad Kumpatla <quic_pkumpatl@quicinc.com>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com,
+        prasad.kumpatla@oss.qualcomm.com, ajay.nandam@oss.qualcomm.com,
+        stable@vger.kernel.org
+References: <20250914131549.1198740-1-mohammad.rafi.shaik@oss.qualcomm.com>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20250914131549.1198740-1-mohammad.rafi.shaik@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAyNSBTYWx0ZWRfX8sKr6N8kPT69
+ gVm2m+NPrFSzKFA27ZcwTWTrFw4X9EnY/mupqiLWGCMxUILrIbQs6Mi6whsLeekCAtVkMe/p7qv
+ LNRVSa94bSVjA52a540VaFfm9thXOkU369ua+Uab+gkCRdEUG4xys3ZxfdSOQtHQkeCnBv4U9fW
+ 4LQ611hgrGQDXQrD0X0bDbVqlzwnNZjnNeVS0sqRUtrx8X86QzvQZ68F7eZUGWLHMIkxE72DoOj
+ 1v73QaBecO61cnOMhjFnTVcwWPdbvCm8enF2/PjiQzorDcw7edGtdpfZ8M41XUnrXZ+lj94LIUR
+ odE9Ww10Px0Te0C6MlE/MKrzU0ldWM2+gQby2hSnD1ff4ibchL7qNCyMyvMyOIs0J+U+GSGr52V
+ djWjfzF5
+X-Proofpoint-GUID: kErACwVL7kXYmls34rA5gMsINhSbnbtc
+X-Authority-Analysis: v=2.4 cv=WcsMa1hX c=1 sm=1 tr=0 ts=68c7c80b cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=3r9HinHMD_fb42oTSBcA:9 a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-ORIG-GUID: kErACwVL7kXYmls34rA5gMsINhSbnbtc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-15_03,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509130025
 
 
-> 
-> And I think there's another mistake in the driver:
-> 
-> --- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-> @@ -4221,7 +4221,7 @@ static int qmp_combo_probe(struct platform_device *pdev)
->                                  if (!memcmp(data_lanes, usb3_data_lane_mapping[i], sizeof(u32) * 2))
->                                          break;
-> 
-> -                       if (i >= TYPEC_ORIENTATION_REVERSE)
-> +                       if (i > TYPEC_ORIENTATION_REVERSE)
->                                  /* Property value is invalid, ignore property */
->                                  goto usb3_mapping_done;
-> 
-> @@ -4265,7 +4265,7 @@ static int qmp_combo_probe(struct platform_device *pdev)
->                                          break;
->                          }
-> 
-> -                       if (i >= TYPEC_ORIENTATION_REVERSE)
-> +                       if (i > TYPEC_ORIENTATION_REVERSE)
->                                  /* Property value is invalid, ignore property */
->                                  goto dp_mapping_done;
-> 
-> 
-> After fixing this, the driver works properly with my DT at least.
 
-Ack, thanks for the feedback, I'll post a new version ASAP with all fixed.
+On 9/14/25 2:15 PM, Mohammad Rafi Shaik wrote:
+> The QCS8275 board is based on Qualcomm's QCS8300 SoC family, and all
+I guess you meant SoC instead of board here.
 
-Neil
+> supported firmware files are located in the qcs8300 directory. The
+> sound topology and ALSA UCM configuration files have also been migrated
+> from the qcs8275 directory to the actual SoC qcs8300 directory in
+> linux-firmware. With the current setup, the sound topology fails
+> to load, resulting in sound card registration failure.
+> 
+> This patch updates the driver match data to use the correct driver name
+> qcs8300 for the qcs8275-sndcard, ensuring that the sound card driver
+> correctly loads the sound topology and ALSA UCM configuration files
+> from the qcs8300 directory.
+> 
+> Fixes: 34d340d48e595 ("ASoC: qcom: sc8280xp: Add support for QCS8275")
+> Cc: stable@vger.kernel.org
+> Signed-off-by: Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
 
+LGTM,
+
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+
+
+--srini
+> ---
+>  sound/soc/qcom/sc8280xp.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
->>
->>   +        };
->>> +    };
->>> +};
->>> +
->>>   &usb_2 {
->>>       dr_mode = "host";
->>> @@ -986,6 +1134,10 @@ &venus {
->>>   };
->>>   /* PINCTRL - additions to nodes defined in sc7280.dtsi */
->>> +&dp_hot_plug_det {
->>> +    bias-disable;
->>> +};
->>> +
->>>   &pcie0_clkreq_n {
->>>       bias-pull-up;
->>>       drive-strength = <2>;
->>>
->>
->>
-> 
+> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+> index 73f9f82c4e25..db48168b7d3f 100644
+> --- a/sound/soc/qcom/sc8280xp.c
+> +++ b/sound/soc/qcom/sc8280xp.c
+> @@ -186,7 +186,7 @@ static int sc8280xp_platform_probe(struct platform_device *pdev)
+>  static const struct of_device_id snd_sc8280xp_dt_match[] = {
+>  	{.compatible = "qcom,qcm6490-idp-sndcard", "qcm6490"},
+>  	{.compatible = "qcom,qcs6490-rb3gen2-sndcard", "qcs6490"},
+> -	{.compatible = "qcom,qcs8275-sndcard", "qcs8275"},
+> +	{.compatible = "qcom,qcs8275-sndcard", "qcs8300"},
+>  	{.compatible = "qcom,qcs9075-sndcard", "qcs9075"},
+>  	{.compatible = "qcom,qcs9100-sndcard", "qcs9100"},
+>  	{.compatible = "qcom,sc8280xp-sndcard", "sc8280xp"},
 
 
