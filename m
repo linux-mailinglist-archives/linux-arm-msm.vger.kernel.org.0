@@ -1,313 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-73522-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73523-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0BF3B57504
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:39:49 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36B11B57519
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:45:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8C26F3BB08E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 09:39:48 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6EEF4188F1D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 09:45:26 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0BB872F6170;
-	Mon, 15 Sep 2025 09:39:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA1942F9C29;
+	Mon, 15 Sep 2025 09:44:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aFnuMmDr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="YTPLKp+Z"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACDA52F8BC1
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 09:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242CF2F99B0
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 09:44:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757929185; cv=none; b=YtrO3HA5iMV1Qkee5eHG9GK4lKNyRFnx/ZOqv/BSWjeCFSv+RzBZUAydO8iQ9fZ3JZ0veyIKnLbKg0nwscye+ySdBT3MZb3kuGtD9+17gAsLjaNYn1DoxcvrfsJd+JDCt6YeO13GT9ZsfVyyEDfrn3jadZMF3LP9/dxqbQzip1Q=
+	t=1757929492; cv=none; b=ArXfL5/EClkSGDus/pvMedaYtmQBvVMdD85M6qb1gLPdI1aeG3Jp+yS9wkNInSr1mnGcclvm5+02/jPNZDm37zmYb87O8gVGzeo8xdaPhL4MsizSt8xm4T3D0aK373pfnofMjNg+UkZtCv9R8okmDN4UZLUmhzZ4CTR3gv1uhRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757929185; c=relaxed/simple;
-	bh=rLFJRG9raI9R5ZSmQyhmfgNEveNgusoJOK1TuQI/TpE=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=ITVzj94HRB1VLErLScFcbBNn7UuH+Vfq9znOb7mXx/msb3jgqxwBztPuX4G3dEr2pecn8fJsfYopr1nkw845gnVw5pMFOQpni902feEpTkE2TA6BRLt6is0r9xEy0018RvNgmTxJH0e/fQcLUOoEsMGCHSJWguX5B4oqH7PazYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aFnuMmDr; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45f29e5e89bso16006835e9.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 02:39:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757929182; x=1758533982; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QeBNoqwiRyTpHccFN0RYy9HMwB73BnSA3X0nN71V0/0=;
-        b=aFnuMmDrYoHXsQnN6KIP7K495nyt3p8zKJpU6mK89BHaMjzQqeascEdoFgd3N8jwEL
-         cF7X5LKE+xYpg1CM1s79L0kkXFvd9kRLQiH1pMmnbsENZbq12nOoaK0n0WA7mBf2IMZZ
-         0ccwCvWRd7mLHdJ4VVMA6tsD8y8Jo6UfC9sLNHDJ2m4UmjEGAluo9OVt/45Yz5Sx6la0
-         kmWx7o28IEDY8Gn18LPYg8QYJhPPCzp/kWFRZdrHSOMVxPHb4NwvIM4ohWDZCrLMqYvH
-         lGTkbgWqPfYQdfiy76SEsSDU8TkBCK+4zXkGBzEJ/K0UwMZw+NrQ6+0Tw8gq73B8SV+o
-         kK5g==
+	s=arc-20240116; t=1757929492; c=relaxed/simple;
+	bh=v3RG+UICPkrVnxWKbeqHLBZe1IIHqbLgB0YYfEB2ieY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Bck7Tv7VI1et4cpR26ak8/CQstx+5Ka2k4gvseRoaWWxZaR7LkuOP17uRy0IqHTiWRGrm+oy2/p/6uqHoVI6waIXCR3GFQ6szlpHMLYajTIFEgAvvN0itjfg60YBL2T4ctQQ+9f1QkH/Pf1f1C2CXvr8Fj01s8gKmWoU0Iz+dLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=YTPLKp+Z; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58F9QGdD021831
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 09:44:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	btUt09/JWFKx9VAylYCCOROw35FyhcxsxetmaKbojb8=; b=YTPLKp+ZUmN02Qpm
+	MghxcspLw2YbFDu6hU6ii4k1CwK7ncmt1QMSTkMI8DTr0529ix5yhvUGgr0GMoWX
+	9flipKVbHTiw0HVoPSHidwIc6np4RzvmP1kGgCOKxF4n7jJsCpLuPOcD2oKOr4Yp
+	FHl26H0Fj5fJzlV0h8YKme45jH34LA1/HQoxdzxOhoIGufGq8A1EG/4ioZGxvsa/
+	FmsS8WFHpJ48EVFbiwmSi7RNhztLFt2Vfh0lmHVlRI/VRDn6hQ6t/jjn0R8Mfv75
+	8M4BwleYkaTzJWkOhU+ANphqLOUZIbm6t1HGIVW9YgzeodzkW0JfBr4MOdzJx0L5
+	cEpIag==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 496g5n01ud-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 09:44:50 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-244570600a1so43425285ad.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 02:44:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757929182; x=1758533982;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QeBNoqwiRyTpHccFN0RYy9HMwB73BnSA3X0nN71V0/0=;
-        b=MEhjmczJBAvouZ65qaq8930NZBX4mwDl6WbGLDgHmQBf2hdm1ViLYzBVIDwK45984A
-         GcDU/575E+sTdJWPyDaD/sK8pLWmvcwz2N0e4z/44FHE/y42QsoDnNpX+PVZKoGJzrA+
-         /q5LLaJEu+kpBqd0m0myi9Eqa3eiKNfNfvjq63llA8MiqcsZzU1WI6Jij/qeUJqi8oMZ
-         aTeWdlrwQREPc4FGm3Or4fNtYNVcyYdhdouRX9PmY+oRxeLQ6ryUJVQBsG2fK7KMqJe1
-         snf3jG3inHOuU3oGnLmYRHlxRzGpgr77dAi+wrWNDukMjNxh7ypwhPF0yGGzHuNYW3qj
-         s/tA==
-X-Forwarded-Encrypted: i=1; AJvYcCUPfqjPqjBJCtfpUNfLRdRtE65eyYlzYbU6V+oUkLOxJyctZUmQKrO9EsO8FDukKlQ+CcNgQhJLVYPKibqy@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRNPX+v0KknS3aM8QW5WODdCIbHXd5S/ff0BbBkuy08nMY4WIG
-	mbRlORBdFM7+7ifNLebpiY4NP/i7k8Rw3sq0OE9QBjXy5FgLEqXIsPk1CxRIzU56JlE=
-X-Gm-Gg: ASbGncvfNIIXM+axJUXi/JYFfxVwmH6NYvl1cpLFij2HAqbQmWIAJsr1iFAcnuUFsg2
-	Mjft2U1Tt/a3EuLz3T9ZzWeqx5bHEiCmrPAayHy8jjzuO+NSAvc8Ik6zr/eEtSwIaGMgjEmIYEw
-	wyK4f43NQFnfHZu0Un4JsS2p4nyNFhKPMS+nf4hfMPdVGdmHO491Q3Oihrsy2Hue02eBNwav6W+
-	p2z2q+MJnvbcr2+D2vbgwtPd8tXaOptS326IeI7i+M18EKIbOGi7x7AG34qw+HK/CtOqGT2ugPe
-	x6vb+ETJ/Z73gZxfcqSj7nZ1Dpaev2oBeMTKvv8+2SndUjuC85XyxllombEr4iTnk5xn3R4eGRL
-	VhzEjB/oB/4GCUWP0Lib3qzrWASw=
-X-Google-Smtp-Source: AGHT+IE2F00YttfvBqUggbVpYmki5C8laTbOePF+mrqdJF7EUUCAKuMMZrRyuKp3HVj45rNTjX3vJQ==
-X-Received: by 2002:a05:600c:46ca:b0:458:a992:6f1e with SMTP id 5b1f17b1804b1-45f211c4c8bmr139781445e9.5.1757929181960;
-        Mon, 15 Sep 2025 02:39:41 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:e60f:4b6c:1734:808b])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607878c9sm17109021f8f.26.2025.09.15.02.39.40
+        d=1e100.net; s=20230601; t=1757929489; x=1758534289;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=btUt09/JWFKx9VAylYCCOROw35FyhcxsxetmaKbojb8=;
+        b=tj8MjMx+CvYDpScwzK0q5U7JqI3uAdv2UHgrp/6u7csdm8KRpc3oobBh8J0a0MkV0q
+         VcBr/8s85ODE9eoSbkV31TQM8kq5DNPnOr5Eea9VcdpJ6dVb/JNRaUaQLQI7kRn1eRC2
+         NMESysFob9abFjrymvTCChAbeKlfAZEVrXdvIp7kp2J12vPXCqo8kEp5fNAMZ0pmY1F7
+         6A0W8E3yhjkB1OjkzV6xGAaujMAJ0p1hE7rB3igm5/9t4oss045QYvCOgIaLYCeQwW66
+         ZgCtsG0saxm6AELGrXyzWWS6j2bVmAdqdLFCClRICqEUxkc244hdxTy/+97yzuDxR9bm
+         +oBQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUCPXhhOjORrSKGUfBLFUdRTOmNTPSbl5ZPaN2T+X58bqs3qNaTr/kDmAKeZzUKn5/TO9u99WxZahvY76qc@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLIhbzugJucEHyg8cYaaXYMqZlmYuwFu9IVb/lZk1aw7q6vSW9
+	GtSuHOGBfGsBxUMaDfrmDG0ra+p4x/ThOlsZsNKrX2cedoRBctP7Lzg0zmdq00NrtM6lCfJbpFp
+	ACNHnTvgTGU7c1A0RoEB7t3B9EaqrL0Zp92p+jfuqUOoRNyU4BL/ottTZ7cSvUUyvHQQg
+X-Gm-Gg: ASbGnctt/AhhQmhBal4EbNgoIbrat5AKKqMkU0iegdRJA0M8bmndrWO06o5wqfj7eUJ
+	kIJXsV6DaIYybB0M/lcnrJ52xUrHS0HUasjLB23UCrh76H9RBuBBemOJkp6AOlPmiCzkIa9JDyx
+	McnsRilcPmkCrKd4K4UsvP4QAG9SKNahWiGL0wycgrljgQ0heVbaQ9V56VdpAA9ZMLqhXjhAZgV
+	ly8/jsg24CHaEjnwYNDm5yFk7CD/H/EBrmgjXunW6C9mV3fjwHRJnvVkGy8f/Alu2cDwdDx5fb0
+	nYuW0sICJKqQ31zEZZJO4BxfwLj97AnnEg0iINRsXy3ojfWeRkWLurhYpxJSptUOVTjLPmiyMEF
+	2SVPkZU4unp6JOqV85hG2cDqsTNKyg9daeA==
+X-Received: by 2002:a17:903:185:b0:262:9ac8:6132 with SMTP id d9443c01a7336-2629ac88031mr71832145ad.19.1757929489319;
+        Mon, 15 Sep 2025 02:44:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHB82jOSYdcixCfESlUwNeTpTC1N6ixEj5+ZgwzGyCnR/7UvipAKq3xTaZw7ZjJWJzsrOwUtg==
+X-Received: by 2002:a17:903:185:b0:262:9ac8:6132 with SMTP id d9443c01a7336-2629ac88031mr71831745ad.19.1757929488787;
+        Mon, 15 Sep 2025 02:44:48 -0700 (PDT)
+Received: from [10.133.33.240] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2653fcb5b23sm34612035ad.56.2025.09.15.02.44.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 02:39:41 -0700 (PDT)
+        Mon, 15 Sep 2025 02:44:48 -0700 (PDT)
+Message-ID: <3559cbe4-b2e2-42d4-85ad-554258fc9dec@oss.qualcomm.com>
+Date: Mon, 15 Sep 2025 17:44:40 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 15 Sep 2025 10:39:40 +0100
-Message-Id: <DCT9VWQYD4VM.1NV5FJJCJG4PI@linaro.org>
-Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, "Jiri Slaby"
- <jirislaby@kernel.org>, "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
- <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-serial@vger.kernel.org>, <psodagud@quicinc.com>,
- <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
- <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
- <quic_shazhuss@quicinc.com>, <krzk@kernel.org>
-Subject: Re: [PATCH v1] serial: qcom-geni: Fix pinctrl deadlock on runtime
- resume
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Praveen Talari" <praveen.talari@oss.qualcomm.com>, "Praveen Talari"
- <quic_ptalari@quicinc.com>
-X-Mailer: aerc 0.20.0
-References: <20250908164532.2365969-1-praveen.talari@oss.qualcomm.com>
- <DCNLSFVPCKMV.K1UE3J3K6JQD@linaro.org>
- <DCOJFRU8KNFL.14VPXK9QZC9T4@linaro.org>
- <5b7b8c9f-48c5-45cd-8366-c8c048eaa757@oss.qualcomm.com>
- <DCPUJPHR8NUB.1SRB4D7ONSRBY@linaro.org>
- <2c5fd01a-543b-4108-ac54-80d1d87b65a3@oss.qualcomm.com>
-In-Reply-To: <2c5fd01a-543b-4108-ac54-80d1d87b65a3@oss.qualcomm.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 5/8] power: supply: qcom_battmgr: update compats for
+ SM8550 and X1E80100
+To: Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Sebastian Reichel <sre@kernel.org>,
+        Bjorn Andersson
+ <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+        Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>,
+        David Collins <david.collins@oss.qualcomm.com>,
+        =?UTF-8?Q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+        Neil Armstrong <neil.armstrong@linaro.org>
+References: <20250915-qcom_battmgr_update-v4-0-6f6464a41afe@oss.qualcomm.com>
+ <20250915-qcom_battmgr_update-v4-5-6f6464a41afe@oss.qualcomm.com>
+ <aMfWKobwM5bhJEAd@linaro.org>
+Content-Language: en-US
+From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+In-Reply-To: <aMfWKobwM5bhJEAd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: nLb5YNx7l_eVjhuudD1v8uQv_fiIY3xD
+X-Proofpoint-ORIG-GUID: nLb5YNx7l_eVjhuudD1v8uQv_fiIY3xD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE1MDA4NyBTYWx0ZWRfX59rOMMa3zJK9
+ M2ebJw3k/glpr5f0nEg22T+nNGj0uEbkSTOIZFthH5/+8UzPfzqTIFAY9mz0JnhVSigJWo3jJhn
+ pcfwKJl/0ropeSY7nluJ1B0w3WTAtVYh9FaDIT+fP9FXbjJayZ3qRejR0zy64BJZYAKpcIJKLw8
+ pvZgGvDki3OoERvMQf6pydF1wv6m/ZnRRgPcaGOAkZZB2WBFQQVLbf62KK1FEOI/28J7yiSDFzi
+ 5plLJjlIEduWc/zxl6CKJqBF/+2veDc5159ZPRF9uJ9ozfpSnlU+ph2Mp6w6d/Ch4+TJ0Xkq5b7
+ swS5c7Jqq9AbH5xp+onVOG2+6oUNuhHCzWPJDi4vnnEVj6CnUBigrFEAltdxOZv7zoBznBH2noX
+ HQujuZFh
+X-Authority-Analysis: v=2.4 cv=SaD3duRu c=1 sm=1 tr=0 ts=68c7e012 cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=j-CFaJrOc8d7PKyLKvMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=GvdueXVYPmCkWapjIL-Q:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-15_04,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 adultscore=0 malwarescore=0 phishscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509150087
 
-(removing <quic_mnaresh@quicinc.com> from c/c -- too many mail not delivere=
-d)
 
-Hi Praveen,
-
-On Mon Sep 15, 2025 at 7:58 AM BST, Praveen Talari wrote:
-> Hi Alexey,
+On 9/15/2025 5:02 PM, Stephan Gerhold wrote:
+> On Mon, Sep 15, 2025 at 04:49:57PM +0800, Fenglin Wu via B4 Relay wrote:
+>> From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+>>
+>> Add variant definitions for SM8550 and X1E80100 platforms. Add a compat
+>> for SM8550 and update match data for X1E80100 specifically so that they
+>> could be handled differently in supporting charge control functionality.
+>>
+>> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S OLED
+>> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
+>> ---
+>>   drivers/power/supply/qcom_battmgr.c | 7 +++++--
+>>   1 file changed, 5 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
+>> index 008e241e3eac3574a78459a2256e006e48c9f508..174d3f83ac2b070bb90c21a498686e91cc629ebe 100644
+>> --- a/drivers/power/supply/qcom_battmgr.c
+>> +++ b/drivers/power/supply/qcom_battmgr.c
+>> @@ -19,8 +19,10 @@
+>>   #define BATTMGR_STRING_LEN	128
+>>   
+>>   enum qcom_battmgr_variant {
+>> -	QCOM_BATTMGR_SM8350,
+>>   	QCOM_BATTMGR_SC8280XP,
+>> +	QCOM_BATTMGR_SM8350,
+>> +	QCOM_BATTMGR_SM8550,
+>> +	QCOM_BATTMGR_X1E80100,
+>>   };
+>>   
+>>   #define BATTMGR_BAT_STATUS		0x1
+>> @@ -1333,7 +1335,8 @@ static void qcom_battmgr_pdr_notify(void *priv, int state)
+>>   static const struct of_device_id qcom_battmgr_of_variants[] = {
+>>   	{ .compatible = "qcom,sc8180x-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
+>>   	{ .compatible = "qcom,sc8280xp-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
+>> -	{ .compatible = "qcom,x1e80100-pmic-glink", .data = (void *)QCOM_BATTMGR_SC8280XP },
+>> +	{ .compatible = "qcom,sm8550-pmic-glink", .data = (void *)QCOM_BATTMGR_SM8550 },
+>> +	{ .compatible = "qcom,x1e80100-pmic-glink", .data = (void *)QCOM_BATTMGR_X1E80100 },
+>>   	/* Unmatched devices falls back to QCOM_BATTMGR_SM8350 */
+>>   	{}
+>>   };
+> I think you need to squash this with "[PATCH 7/8] power: supply:
+> qcom_battmgr: Add charge control support", or move the modified checks
+> for
 >
-> Really appreciate you waiting!
+> 	if (battmgr->variant == QCOM_BATTMGR_SC8280XP ||
+> 	    battmgr->variant == QCOM_BATTMGR_X1E80100) {
 >
-> On 9/11/2025 2:30 PM, Alexey Klimov wrote:
->> Hi Praveen,
->>=20
->> On Thu Sep 11, 2025 at 9:34 AM BST, Praveen Talari wrote:
->>> Hi Alexy,
->>>
->>> Thank you for update.
->>>
->>> On 9/10/2025 1:35 AM, Alexey Klimov wrote:
->>>>
->>>> (adding Krzysztof to c/c)
->>>>
->>>> On Mon Sep 8, 2025 at 6:43 PM BST, Alexey Klimov wrote:
->>>>> On Mon Sep 8, 2025 at 5:45 PM BST, Praveen Talari wrote:
->>>>>> A deadlock is observed in the qcom_geni_serial driver during runtime
->>>>>> resume. This occurs when the pinctrl subsystem reconfigures device p=
-ins
->>>>>> via msm_pinmux_set_mux() while the serial device's interrupt is an
->>>>>> active wakeup source. msm_pinmux_set_mux() calls disable_irq() or
->>>>>> __synchronize_irq(), conflicting with the active wakeup state and
->>>>>> causing the IRQ thread to enter an uninterruptible (D-state) sleep,
->>>>>> leading to system instability.
->>>>>>
->>>>>> The critical call trace leading to the deadlock is:
->>>>>>
->>>>>>       Call trace:
->>>>>>       __switch_to+0xe0/0x120
->>>>>>       __schedule+0x39c/0x978
->>>>>>       schedule+0x5c/0xf8
->>>>>>       __synchronize_irq+0x88/0xb4
->>>>>>       disable_irq+0x3c/0x4c
->>>>>>       msm_pinmux_set_mux+0x508/0x644
->>>>>>       pinmux_enable_setting+0x190/0x2dc
->>>>>>       pinctrl_commit_state+0x13c/0x208
->>>>>>       pinctrl_pm_select_default_state+0x4c/0xa4
->>>>>>       geni_se_resources_on+0xe8/0x154
->>>>>>       qcom_geni_serial_runtime_resume+0x4c/0x88
->>>>>>       pm_generic_runtime_resume+0x2c/0x44
->>>>>>       __genpd_runtime_resume+0x30/0x80
->>>>>>       genpd_runtime_resume+0x114/0x29c
->>>>>>       __rpm_callback+0x48/0x1d8
->>>>>>       rpm_callback+0x6c/0x78
->>>>>>       rpm_resume+0x530/0x750
->>>>>>       __pm_runtime_resume+0x50/0x94
->>>>>>       handle_threaded_wake_irq+0x30/0x94
->>>>>>       irq_thread_fn+0x2c/xa8
->>>>>>       irq_thread+0x160/x248
->>>>>>       kthread+0x110/x114
->>>>>>       ret_from_fork+0x10/x20
->>>>>>
->>>>>> To resolve this, explicitly manage the wakeup IRQ state within the
->>>>>> runtime suspend/resume callbacks. In the runtime resume callback, ca=
-ll
->>>>>> disable_irq_wake() before enabling resources. This preemptively
->>>>>> removes the "wakeup" capability from the IRQ, allowing subsequent
->>>>>> interrupt management calls to proceed without conflict. An error pat=
-h
->>>>>> re-enables the wakeup IRQ if resource enablement fails.
->>>>>>
->>>>>> Conversely, in runtime suspend, call enable_irq_wake() after resourc=
-es
->>>>>> are disabled. This ensures the interrupt is configured as a wakeup
->>>>>> source only once the device has fully entered its low-power state. A=
-n
->>>>>> error path handles disabling the wakeup IRQ if the suspend operation
->>>>>> fails.
->>>>>>
->>>>>> Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for seria=
-l driver")
->>>>>> Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
->>>>>
->>>>> You forgot:
->>>>>
->>>>> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
->>>>>
->>>>> Also, not sure where this change will go, via Greg or Jiri, but ideal=
-ly
->>>>> this should be picked for current -rc cycle since regression is
->>>>> introduced during latest merge window.
->>>>>
->>>>> I also would like to test it on qrb2210 rb1 where this regression is
->>>>> reproduciable.
->>>>
->>>> It doesn't seem that it fixes the regression on RB1 board:
->>>>
->>>>    INFO: task kworker/u16:3:50 blocked for more than 120 seconds.
->>>>          Not tainted 6.17.0-rc5-00018-g9dd1835ecda5-dirty #13
->>>>    "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this me=
-ssage.
->>>>    task:kworker/u16:3   state:D stack:0     pid:50    tgid:50    ppid:=
-2      task_flags:0x4208060 flags:0x00000010
->>>>    Workqueue: async async_run_entry_fn
->>>>    Call trace:
->>>>     __switch_to+0xf0/0x1c0 (T)
->>>>     __schedule+0x358/0x99c
->>>>     schedule+0x34/0x11c
->>>>     rpm_resume+0x17c/0x6a0
->>>>     rpm_resume+0x2c4/0x6a0
->>>>     rpm_resume+0x2c4/0x6a0
->>>>     rpm_resume+0x2c4/0x6a0
->>>>     __pm_runtime_resume+0x50/0x9c
->>>>     __driver_probe_device+0x58/0x120
->>>>     driver_probe_device+0x3c/0x154
->>>>     __driver_attach_async_helper+0x4c/0xc0
->>>>     async_run_entry_fn+0x34/0xe0
->>>>     process_one_work+0x148/0x284
->>>>     worker_thread+0x2c4/0x3e0
->>>>     kthread+0x12c/0x210
->>>>     ret_from_fork+0x10/0x20
->>>>    INFO: task irq/92-4a8c000.:79 blocked for more than 120 seconds.
->>>>          Not tainted 6.17.0-rc5-00018-g9dd1835ecda5-dirty #13
->>>>    "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this me=
-ssage.
->>>>    task:irq/92-4a8c000. state:D stack:0     pid:79    tgid:79    ppid:=
-2      task_flags:0x208040 flags:0x00000010
->>>>    Call trace:
->>>>     __switch_to+0xf0/0x1c0 (T)
->>>>     __schedule+0x358/0x99c
->>>>     schedule+0x34/0x11c
->>>>     __synchronize_irq+0x90/0xcc
->>>>     disable_irq+0x3c/0x4c
->>>>     msm_pinmux_set_mux+0x3b4/0x45c
->>>>     pinmux_enable_setting+0x1fc/0x2d8
->>>>     pinctrl_commit_state+0xa0/0x260
->>>>     pinctrl_pm_select_default_state+0x4c/0xa0
->>>>     geni_se_resources_on+0xe8/0x154
->>>>     geni_serial_resource_state+0x8c/0xbc
->>>>     qcom_geni_serial_runtime_resume+0x3c/0x88
->>>>     pm_generic_runtime_resume+0x2c/0x44
->>>>     __rpm_callback+0x48/0x1e0
->>>>     rpm_callback+0x74/0x80
->>>>     rpm_resume+0x3bc/0x6a0
->>>>     __pm_runtime_resume+0x50/0x9c
->>>>     handle_threaded_wake_irq+0x30/0x80
->>>>     irq_thread_fn+0x2c/0xb0
->>>>     irq_thread+0x170/0x334
->>>>     kthread+0x12c/0x210
->>>>     ret_from_fork+0x10/0x20
->>>
->>> I can see call stack is mostly similar for yours and mine but not
->>> completely at initial calls.
->>>
->>> Yours dump:
->>>   >    qcom_geni_serial_runtime_resume+0x3c/0x88
->>>   >    pm_generic_runtime_resume+0x2c/0x44
->>>   >    __rpm_callback+0x48/0x1e0
->>>   >    rpm_callback+0x74/0x80
->>>   >    rpm_resume+0x3bc/0x6a0
->>>   >    __pm_runtime_resume+0x50/0x9c
->>>   >    handle_threaded_wake_irq+0x30/0x80
->>>
->>> Mine:
->>>   >>>      qcom_geni_serial_runtime_resume+0x4c/0x88
->>>   >>>      pm_generic_runtime_resume+0x2c/0x44
->>>   >>>      __genpd_runtime_resume+0x30/0x80
->>>   >>>      genpd_runtime_resume+0x114/0x29c
->>>   >>>      __rpm_callback+0x48/0x1d8
->>>   >>>      rpm_callback+0x6c/0x78
->>>   >>>      rpm_resume+0x530/0x750
->>>
->>>
->>> Can you please share what is DT file for this Board if possible?
->>> is there any usecase enabled on this SE instance?
->>=20
->> Well, yeah, sorry, I didn't really compared backtraces line to line and
->> behaviour was exactly the same. I thought that the purpose was to fix
->> the regression reported earlier.
->>=20
->> RB1 main dts files are qrb2210-rb1.dts and qcm2290.dtsi.
->>=20
->> The similar board RB2 uses qrb4210-rb2.dts and sm4250.dtsi+sm6115.dtsi,
->> it is worth checking it as well.
->> For testing here I didn't use anything extra (the only change was wifi f=
-ix
->> from Loic); I tested -master and linux-next usually.
->>=20
->> If you can tell me what is SE instance I may be able to answer. But
->> as far as I know it is not a part of any infrastructure or CI machinery.
->> I just boot the board and see if it works, if it does then I rebuild and
->> test my changes (audio).
+> into this patch.
 >
-> I'm actively working on this and experimenting various scenarios with=20
-> wakeup. I=E2=80=99ll share the updated patch as soon as possible.
+> With this patch right now, I would expect that your series is not
+> bisectable: The wrong code paths are chosen if you only apply this patch
+> because e.g. X1E doesn't use the QCOM_BATTMGR_SC8280XP code anymore.
 >
-> Should we include fix in V2 or new version(V1) if the fix originates=20
-> from a different subsystem(pinctrol)?
+> Thanks,
+> Stephan
 
-Wait, I am a bit lost. Are there two regresssions? And is this patch only
-targets one of the them?
-Are there two fixes now for different problems?
-If they are not related (independent) then I'd split it but it not somethin=
-g
-exceptional -- just standard rules should apply.
+I see.
 
-Thanks,
-Alexey
+I was making it this way to address the review comment from Bryan in 
+patch v2 about separating the compats change. See here: 
+https://lore.kernel.org/all/7f001134-e099-492d-8ce5-4122d83a3de3@linaro.org/
+
+If I revise it according to your 2nd suggestion, would it conflict with 
+Bryan's feedback?
+
 
