@@ -1,184 +1,283 @@
-Return-Path: <linux-arm-msm+bounces-73572-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73573-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1459B57ACD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 14:25:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C1A7B57B2B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 14:35:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CDB25176B0F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:24:35 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 971023AA2C2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:35:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0D6830B52C;
-	Mon, 15 Sep 2025 12:23:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AD3003093AC;
+	Mon, 15 Sep 2025 12:35:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d92NrA21"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="j6ABT3xB"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11010047.outbound.protection.outlook.com [52.101.193.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D98302758
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 12:23:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757938994; cv=none; b=Y7IbjCkzY43/WVC0kjLl5mO0mruFv2sYqGoP6eoRDEKai3zc8ogycj5dD/C/FsBX0HgEkh5gPXqmDUas0GNH4jEU+/bQKbqBAPJM+piFmb8VA04Ih+aDf2srbcI7uJgLczU+Nlk4Z3TCRBfnMOb2s4mgGVQ9p0wvY4BOXCAnjtg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757938994; c=relaxed/simple;
-	bh=5xrfPKBwasccncGpp1riHATGItrRFQA9e7fK5DOChWU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bf9KeMvEyNQa96Fz0mQ/IBvPbd2yDFUeTg/lUQagl4PXSn9ESQnsPZwuMaygHUWlS+96hFaMhHp23KzpjYQW0mosCXOkaWxuoOVFq24wSLV25qyY9Fn2GW6sr16W/rE4pS4brtN34u44Om4ByGhnNcLmFtOtk0yo7yRH6GUn6yg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d92NrA21; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-26058a9e3b5so14005625ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 05:23:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1757938992; x=1758543792; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=BLsV2Z+nUo8sMXEFFkNLHMe788HpOvgGfih/dxbv8/Q=;
-        b=d92NrA21wzXp3ih/7mn0bssucgDcPyelS4/1QZV7A5WQH0PTmiAvF/VjLvEyIrWxMj
-         Lll60/S1SO+dKKSdWKEMGMD+PRDJjas1f/lpuWOZDxJ4qmly5KUMcwx0Li0DS3EG9MBb
-         AV3dkyhxyWqRFBsFc39NNm6mE01aHlFJDoZ0YFW1+09PKIq4/dqGm7NABWa8esiG+Gsu
-         xIj7yM1BjOqS+AezjL7X5ldNHX724YvR6JDCOTdQxl4vsMu2I/pzvFsP0vgywnEWMooh
-         yYljsovinRclSbpmIiyOpscELrlZZsYwD/YqVxXPx85hwRNsnm4Jt3sA/lfgnAa812Hq
-         5JUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757938992; x=1758543792;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BLsV2Z+nUo8sMXEFFkNLHMe788HpOvgGfih/dxbv8/Q=;
-        b=L+nfZrp4gtaCmTd7WKJNgiuLbRYSwKy5km8oO4CFQcdfuql+HLckqW7hf5DOOzZCKF
-         GAoWx/cAMp8j6Ssmi4Xa79z/cxIfDxap4Db5OYQNx+MWd/8MhL6eaUA5TvpMXrLryeQN
-         KucXdcDHn/gx3+WK4Ha8KBdr6glK7eaTc1QMjS4f3tO3eX76/QyNBpOLI565OxU1uxiu
-         IGhQFnoPikVQmelMnvQMKAOMD6DsmQx3mrJ0EPIOqmMtf9ZopnBeu4JFEEuBwtQfVAAK
-         sF8PywEbOvQ5bZycUYrgLl7hcwPan5JNK4CEifwXbsDI5to2L/pWzT8kDl8IZwJKMPaj
-         BO5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVd8ghvLkFsJpBPSvNAyaAXly/cPI/cvWiM2D4h+SRsgZ6vFNROHpl0a91ZVNHv/hlrKIUYem6OvetnXe2B@vger.kernel.org
-X-Gm-Message-State: AOJu0YxtqkKKSilfOjgVTcrajpGFzQTJPDzTUKcF6Mc9a9FR2NS0WIMX
-	GxJlhYir8MCjeTowbXUX/ypUxXSo9obTrUZBO3VQxzHJnP/FH9eyVvWhGB0PHA==
-X-Gm-Gg: ASbGncsFRyDfzs9jnyk4aJfWOwO/EvfahaKRphR+OExRGIOZKi2KPZGxnEYUIqIJ2vK
-	oGhBVaS7eL3HnHQb9I+HEPS/cyvN2gAqq7eAkk3cq2Xxi2DOjyKYA0Ir6ME0JMaoqcq05qvd0hH
-	OgSEsLUbQVEQI/lxjUucJ378D5Yq/KRUCpb9xWRy3qUzAZi5WKUmJ6vULmHRcYOzaPcJDPrK/iv
-	Wj3lfFU4P7GcHxGYlNnw48/nlf8bFsb+0nZrO77+PGFh6AhpBbrONWDJcLkSehlGpXVTgDy+R+r
-	v5DsWCEau9uHTsEq8Hq7+OMnA5uN8D5kYFkILeTQdXyRC8CdwrX4ivSzmtHJYm4fkW3trr0HQRc
-	glvZ7ha+qbBdfXpVccsm+0siSaB3IQmVnMT+Y4wvDCqM=
-X-Google-Smtp-Source: AGHT+IHsgD4HtGNllz3TJgLmEZtL9+Q2yo+F+oIRA9Ql5MSTHWjzJksW/qpE9gNeCm4EfBk9gupLBA==
-X-Received: by 2002:a17:902:ced2:b0:25c:a9a0:ea60 with SMTP id d9443c01a7336-25d26d4cb18mr154813005ad.42.1757938992402;
-        Mon, 15 Sep 2025 05:23:12 -0700 (PDT)
-Received: from [172.17.44.75] ([49.249.92.90])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2623fd4d163sm63722225ad.80.2025.09.15.05.23.07
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 05:23:11 -0700 (PDT)
-Message-ID: <42b297e8-b7ab-4527-962d-7689f7efcbdf@gmail.com>
-Date: Mon, 15 Sep 2025 17:53:06 +0530
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B2D302CA4;
+	Mon, 15 Sep 2025 12:35:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.47
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1757939725; cv=fail; b=iThlJRficAXw2FaLEKFUiPtmCmKtmrpcLDUzuLI1Jtj3iXSkCtitv68BWq30xKj4yehlXXBiyLJSMwvmw4ZKq43v3+lPBd09gx/NeG5JKN8OwRwGOEHQFUMcw3rJhNgyxZ7YPYalAk/WIOEoCcKdsmqWDmz1cXsymvGLuktdlTI=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1757939725; c=relaxed/simple;
+	bh=mRyvjBN0VQXetX8UHOPdc/l8fQL4GIKNfTvf41Qvq7g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=W8SuFAipulZxOKzIRKQUuYTjRJGKB+Rn/DueezTl91Mf9f0gtToEwD3cAtqDolxyqvuyzaxuE5ur8XTzT8WLv8HQi7u8OD2wQi7IJxBihM4nLSRW1er3ywuqc1iUe5OlvLVUArYiSCkTYzxVjx2bbcmtOH8xR72mn+9cjYx7szY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=j6ABT3xB; arc=fail smtp.client-ip=52.101.193.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=AYY/OuchPJXSJ2CTP80xoV/axVMnv3m1d9wmYd1/T+AooPrVsv/251Acp98ede+j+9/N6XW+dtgUF2AGiTKGqWRLS1afgA7Ksp5WI1xV2Hmsae+r0jHZqhl+OBC6Yscl1EcUdityG5XSSqiVA22kphp+HMrjkIRCkRqejFYtmoq5jj2BAmIobcTV0AblwQK3hJoNqLv8Gq0l5HXJe4e2nP8ZpWRakqKckk6kRP0duPBTSRZ111QCwUPHAFN0tVkVeuD7N+aSQyPYNSKxGflRxAf968Q6gkN3LPiZ82qGwYHWFK/qUP8DOQB01Bg7MAUyV/EELp2PUrLWty8iQxHafQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=klqifleBECQUdCDdn7Emy4+VfUUVcqIR/du2xfFhkYs=;
+ b=trSJeVEHPXv208gr5INwLw7mgz3mVG1jCxTVT9fW+r8DPNiFoXyjUCAs79/00ErNIhyGYUpHJhUrxe7Liy0pncS2Xc9g5gWF5KDweTXVT2mFhTJg1uSSMaleRYzBu55NkNm+/yV5JjH5huEPpeXvVZEGPrgM5UMTox719lre3hGovbdfDoIvZ7dM3ZGTJ+iSmI10rfzaVIxvpmcddLEWogO47k0NAFBSjzZDUgjXl6ZhlZvkhKZ2r13uHIkMr/QRPYV2EOPKr17Om2GwLn7peEZZIdb7s1/sZcy8kRltWgJwrhUQqgIX5V4IwYJNCIJK6Py/Tm0BVvnZ41mqBczQ8w==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=klqifleBECQUdCDdn7Emy4+VfUUVcqIR/du2xfFhkYs=;
+ b=j6ABT3xByWSP6qwb7p3/3fif5TU84jolq/vhH7m0hIKjTsaHiW7DEFx+xQ8tke1Jbpb+55maMjcXPz8IJDSRxtwv3jR83yckzzPeMRU48V/vzNrui+YgMleQG2WsjOb1PuS5NkdKt8+y7hPR58iDwDnw3dtf7dZiHvH1Gnu9SOSv3nbWgAi3b9e2zvxoyNvm1A03Ne5IJqp9nJBd1CnSS8p5ksU2xNdNXUR7Ae9pV1ftw41Yc8n8PmkVGXRgyItBiddxyzel5nSCs0mUa6DmUR7TAxW8ZkhDfGqUFTt1BpXz+nIg9t8TvKz7R8D/hVcGIfWZupQzikl/b5R0zZy8DQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
+ by PH7PR12MB6660.namprd12.prod.outlook.com (2603:10b6:510:212::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.21; Mon, 15 Sep
+ 2025 12:35:17 +0000
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9115.020; Mon, 15 Sep 2025
+ 12:35:17 +0000
+Date: Mon, 15 Sep 2025 09:35:15 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: "Tian, Kevin" <kevin.tian@intel.com>
+Cc: Nicolin Chen <nicolinc@nvidia.com>, "joro@8bytes.org" <joro@8bytes.org>,
+	"bhelgaas@google.com" <bhelgaas@google.com>,
+	"suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
+	"will@kernel.org" <will@kernel.org>,
+	"robin.murphy@arm.com" <robin.murphy@arm.com>,
+	"sven@kernel.org" <sven@kernel.org>, "j@jannau.net" <j@jannau.net>,
+	"alyssa@rosenzweig.io" <alyssa@rosenzweig.io>,
+	"neal@gompa.dev" <neal@gompa.dev>,
+	"robin.clark@oss.qualcomm.com" <robin.clark@oss.qualcomm.com>,
+	"m.szyprowski@samsung.com" <m.szyprowski@samsung.com>,
+	"krzk@kernel.org" <krzk@kernel.org>,
+	"alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
+	"dwmw2@infradead.org" <dwmw2@infradead.org>,
+	"baolu.lu@linux.intel.com" <baolu.lu@linux.intel.com>,
+	"yong.wu@mediatek.com" <yong.wu@mediatek.com>,
+	"matthias.bgg@gmail.com" <matthias.bgg@gmail.com>,
+	"angelogioacchino.delregno@collabora.com" <angelogioacchino.delregno@collabora.com>,
+	"tjeznach@rivosinc.com" <tjeznach@rivosinc.com>,
+	"paul.walmsley@sifive.com" <paul.walmsley@sifive.com>,
+	"palmer@dabbelt.com" <palmer@dabbelt.com>,
+	"aou@eecs.berkeley.edu" <aou@eecs.berkeley.edu>,
+	"alex@ghiti.fr" <alex@ghiti.fr>,
+	"heiko@sntech.de" <heiko@sntech.de>,
+	"schnelle@linux.ibm.com" <schnelle@linux.ibm.com>,
+	"mjrosato@linux.ibm.com" <mjrosato@linux.ibm.com>,
+	"gerald.schaefer@linux.ibm.com" <gerald.schaefer@linux.ibm.com>,
+	"orsonzhai@gmail.com" <orsonzhai@gmail.com>,
+	"baolin.wang@linux.alibaba.com" <baolin.wang@linux.alibaba.com>,
+	"zhang.lyra@gmail.com" <zhang.lyra@gmail.com>,
+	"wens@csie.org" <wens@csie.org>,
+	"jernej.skrabec@gmail.com" <jernej.skrabec@gmail.com>,
+	"samuel@sholland.org" <samuel@sholland.org>,
+	"jean-philippe@linaro.org" <jean-philippe@linaro.org>,
+	"rafael@kernel.org" <rafael@kernel.org>,
+	"lenb@kernel.org" <lenb@kernel.org>,
+	"Liu, Yi L" <yi.l.liu@intel.com>,
+	"cwabbott0@gmail.com" <cwabbott0@gmail.com>,
+	"quic_pbrahma@quicinc.com" <quic_pbrahma@quicinc.com>,
+	"iommu@lists.linux.dev" <iommu@lists.linux.dev>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	"asahi@lists.linux.dev" <asahi@lists.linux.dev>,
+	"linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>,
+	"linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+	"linux-samsung-soc@vger.kernel.org" <linux-samsung-soc@vger.kernel.org>,
+	"linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>,
+	"linux-riscv@lists.infradead.org" <linux-riscv@lists.infradead.org>,
+	"linux-rockchip@lists.infradead.org" <linux-rockchip@lists.infradead.org>,
+	"linux-s390@vger.kernel.org" <linux-s390@vger.kernel.org>,
+	"linux-sunxi@lists.linux.dev" <linux-sunxi@lists.linux.dev>,
+	"linux-tegra@vger.kernel.org" <linux-tegra@vger.kernel.org>,
+	"virtualization@lists.linux.dev" <virtualization@lists.linux.dev>,
+	"linux-acpi@vger.kernel.org" <linux-acpi@vger.kernel.org>,
+	"linux-pci@vger.kernel.org" <linux-pci@vger.kernel.org>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>,
+	"Sethi, Vikram" <vsethi@nvidia.com>,
+	"helgaas@kernel.org" <helgaas@kernel.org>,
+	"etzhao1900@gmail.com" <etzhao1900@gmail.com>
+Subject: Re: [PATCH v4 1/7] iommu/arm-smmu-v3: Add release_domain to attach
+ prior to release_dev()
+Message-ID: <20250915123515.GE1024672@nvidia.com>
+References: <cover.1756682135.git.nicolinc@nvidia.com>
+ <c6bc114e438779129a891408af7d997bf6c28b5b.1756682135.git.nicolinc@nvidia.com>
+ <BL1PR11MB5271767F92289C1D1207D8188C08A@BL1PR11MB5271.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <BL1PR11MB5271767F92289C1D1207D8188C08A@BL1PR11MB5271.namprd11.prod.outlook.com>
+X-ClientProxiedBy: BLAPR03CA0060.namprd03.prod.outlook.com
+ (2603:10b6:208:32d::35) To PH7PR12MB5757.namprd12.prod.outlook.com
+ (2603:10b6:510:1d0::13)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add support for QCS615 talos evk
- board
-To: Krzysztof Kozlowski <krzk@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: konradybcio@kernel.org, andersson@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- tingweiz@qti.qualcomm.com
-References: <20250909125255.1124824-1-tessolveupstream@gmail.com>
- <20250909125255.1124824-2-tessolveupstream@gmail.com>
- <5oytapnerwmttc62q7s2vxlrtmcfg3bhiycpw4enak6zyaioyh@s4drz5x7hoi4>
- <45f1c0b9-d9be-4d95-b27f-e3a1a015d24f@kernel.org>
-Content-Language: en-US
-From: Tessolve Upstream <tessolveupstream@gmail.com>
-In-Reply-To: <45f1c0b9-d9be-4d95-b27f-e3a1a015d24f@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|PH7PR12MB6660:EE_
+X-MS-Office365-Filtering-Correlation-Id: 54ae7865-3ecf-4acf-1a0d-08ddf45453aa
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?wIo7fnoZItfogrWaHjNp2GIyUSiu0Cka5c8NEISfZeg2Wtb1ilEvhZHuieob?=
+ =?us-ascii?Q?XPTboQpMILa3ho8Y9a0qzNwJpFM/8MLJtjEL4gNIX8SsrgumlreyUR1jONam?=
+ =?us-ascii?Q?RXgS/0cQSowfJLwzFMHrZRqxwuXRraLkkj7AP51qBuGSzIuQYnVnLEgcQNbe?=
+ =?us-ascii?Q?pwz+pzY6lEC0uuvFSrY+ly8S9Y3Rd6l/Y84uy76MLp2XyJhFYiYr8mUU55Ni?=
+ =?us-ascii?Q?9LTDbsyeS5I17fbu0fnfhRdmi6YkcukM+NbcwYKlYu8L6xkyALHH9y2sk/4E?=
+ =?us-ascii?Q?ioIG9ATyG1v+x6pdFkF9Jffuz6JEIp26Vv5GXpI/HbAKR8vR4Ysmrta2KPc0?=
+ =?us-ascii?Q?Mid2pErBYYta/ZfLXSbArU3mDISuqCBtRfBsfBklCRbh/zDDJ/36L5UacM9R?=
+ =?us-ascii?Q?Dyvh5ZAIFxB8g8ehkrcj3FJ7wXSWH/AmAjEwDQQp+6N+826vpF/DfqsdUkhN?=
+ =?us-ascii?Q?groUf2SlfzYVKvMcOlFhzOT5jswnCW1d9KNM9Q8Tj2HXqPWwA1fiy2fu2hk4?=
+ =?us-ascii?Q?XnXFn8t8461Dtp4U4n01Vg16yEsbMIt4+HNbeqhuo3BYrYef99MAWR8cyw6m?=
+ =?us-ascii?Q?Njv2fEGUuaKlnb9vO0f/NqeRrWO0/5DrEQduIi+4ei5nWCLPc6T5NtmtK7+I?=
+ =?us-ascii?Q?bH7BaV9bv6qIb3LKoOEUByejTwODK4qQ2dp2ghUhQyS2uq79em0cM/shzZLZ?=
+ =?us-ascii?Q?/HG2KoWyqpzy2VdgbIgBUduI7mFCaquikN86gQAf//kMEd6m8KBqVM0AWPY6?=
+ =?us-ascii?Q?qKdn+bVxBSccnzcblDAaTxkjzwyWizGrRNG2+oYYoROVpozfjDuabVwrAzyX?=
+ =?us-ascii?Q?V1yPUs7POx4RA88Zo9NM6lZDGTdKHAHpNgGRJSCQj7nbBvN26r9wnF/OkVWv?=
+ =?us-ascii?Q?Bc1X/sX5dQU8tuWHQzvo/cEa7m3+i4GubXyF9lp4GLffSTjQ2EWF/TXv0rXZ?=
+ =?us-ascii?Q?kU8E24hatP8UskrFFg3/cfvXxGzVifkUEI+wv4Ppa/ZE5Cf/3sM5Ie8ffa9N?=
+ =?us-ascii?Q?wnd1f3OaOU/ZByWJVmDkVUs+2WIFXwmmtKYtr9ugIM8WZBFOZxY+ELGWsXPh?=
+ =?us-ascii?Q?Ee0BIM1ui7rt6FeNDEyW6X3LOSBfB4PQaFAfjFVx2CCxPxBhXANiZa/m/5/c?=
+ =?us-ascii?Q?D8I86+zz8Xw6FzS3mlp0/WQdUU36IwyxJGs4pHOSewUls5Dx5Q5x92t8j7Ix?=
+ =?us-ascii?Q?WPeCGxQyXdN0KEETb0+wXvNlmIrqqanZgP5pDE0ai/jtHTUldHLnnlz2fyHM?=
+ =?us-ascii?Q?O2opC6hU2kpDMilQp7WBdfLksZiPtgHyzDO+O8mKKvfAWtfJlUXEi0eNuk3w?=
+ =?us-ascii?Q?9cBlfZBiBzykg2DcKNc/vW6KqRKAmZCBWM6JPM9FiKC6TZ7eQE3O396BYw2C?=
+ =?us-ascii?Q?ZotklMpcFN5z6ZTGgZzXZJPRWnVOM1ncVm+N4AOKpySrmLAmFJRKjimK1GYs?=
+ =?us-ascii?Q?N9MmALdmdl4=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(7416014)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?1ekRfxFbavvkLPSAreurQzKDp1Wt7p9PGgNmmAlPq5gZVSplLawFesccSh0C?=
+ =?us-ascii?Q?d20Fl5dMxJfJkHbw+goEuQO+GOutWCSG69fddGEnjQbhKH4W2KXxE+Oeub2C?=
+ =?us-ascii?Q?gcOH6JCvevduRIepVJy1Qs8gUNMUIgIB9aqDqkh6uzoNI5gVAhXi7vE0OwYe?=
+ =?us-ascii?Q?v7bAUuooMazYKo3OsqHFV8xLn5XvOX2iFdv/V6u63zof7yLcOwPfi5N3KkBq?=
+ =?us-ascii?Q?yXzUsZcOe8AN5NdIqff+bgv/zlYFMy2hDz4OqEScDaLvUS3X8LJKo/wNlYRv?=
+ =?us-ascii?Q?SlgYoJ978lqubDaqVimKBJ+oPf1srHpa8ckU5dmOaqKETBRHRUJ4xwQO+hoX?=
+ =?us-ascii?Q?RO+ByhXT3O/CiUVCeSwWqrUtfcGVZ/qRVm08D1Dts7ootG45W2ZsP5TKIK4n?=
+ =?us-ascii?Q?ZojUhZm7MJh4PeUe6ndKzyhu6l11zw2XHxoWKLa5HYe4vSu7KLAmKq4oeNZP?=
+ =?us-ascii?Q?0fFwqvq1jtnsfEFPyDyor/uOwceEPzi4cvX/As6bavfuKy9+exNIpQG1Pjub?=
+ =?us-ascii?Q?8a4sUoiF1i1ZIfiP4RCDpiA3kWGDvGWN1OxoXIfbvsoS62mzNs/LHwf5Lbsy?=
+ =?us-ascii?Q?Pp+qxvghJdkHpIZUR0fwoByrJClMRsisWFq/zA441vxOFHE4s4nUQsJh2r1/?=
+ =?us-ascii?Q?aozDozYzBpUmjf7QD2SggfprIEvfjFgMDrAfWAOtTS4hQZDPr0JNRU4elyTR?=
+ =?us-ascii?Q?fflQowuEk7/IyTWJP11wjy1x2t5+26LVZNeMUEEeDipTdZXB7E7kWtzasQuk?=
+ =?us-ascii?Q?tUiSxWE0phCbf+xHnnykRSFe7cKHCAcODwoBTi/Zh4232P9/KAOLPgbmnza9?=
+ =?us-ascii?Q?gV4cVFuGQ8zfwqCMJ9RXssplzckXPT5rmS3HaJI8vZ1CZDjD4k/T6jbch26M?=
+ =?us-ascii?Q?Xz1uUoZGGNvr5I405ltNBTIy2jeV2AwpSfTP82scZ1g7DC8y1gpmp4V/yv1Q?=
+ =?us-ascii?Q?++u++7/KsVAPzif0c7YN1oTbXT3AdfdT3Mr0rhSG7iUg11bsaXZbJ/I1y2Jp?=
+ =?us-ascii?Q?jK4L4rvB8qS6R7D2E4iFWjFGU3os7bWhW6HGPi10tagJhVh5ucofC0jlisUe?=
+ =?us-ascii?Q?VNQHMr0e4hPkBufrzGv/1ZmJhdmEJgCPKEH4IMz6miWi/Yw+fcmtOxLS5eo1?=
+ =?us-ascii?Q?kT6JW9H6INwZA7KuJ40vazRRMvbbb2Vvu63Vq2Y+RGK8ZrNyJF1yIZrEj3ra?=
+ =?us-ascii?Q?24+TIlSlY2BtEpInhtFjxKJCKabDxCHnSPZTQ1ZnerUZ2TlPGIGLVOL20n4j?=
+ =?us-ascii?Q?ysgqHTVz+MSumM9rmYfinvthC6P8bK8UXg/Rpjq4BKu1V8sJPYZ3QruUk8aG?=
+ =?us-ascii?Q?HGw8qTRAD9EcZysOnU9o9AlJPO6WB0IhBASJijGEIzHJieXRfCGXtWWoqqwW?=
+ =?us-ascii?Q?hNhP7c68hCl9iR2CB+Sx8dLXwrJWboKNk/thFy4Vhq5uZ5Gfp05taP78rXvG?=
+ =?us-ascii?Q?wp0YZDaM3Wfnz9/uL+CXk2OYNcxs59VtKteFTvnfRvrri+nKeNflvFtAcMs3?=
+ =?us-ascii?Q?AT+sYS0ceW3YtfpanaHj376yxzhG8BP/k6eIiEfsbq1LJxyhl9Upoq/y3wfi?=
+ =?us-ascii?Q?z2gO91KVfWy4fpeetZ0=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 54ae7865-3ecf-4acf-1a0d-08ddf45453aa
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2025 12:35:17.7026
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: jcGCWApM/RV7KXsd84AZB1/pvXMIkooDcYjSudZW4ZszAhLNoDLAng9NYtHb5W/e
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6660
 
+On Fri, Sep 12, 2025 at 09:33:06AM +0000, Tian, Kevin wrote:
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> > Sent: Monday, September 1, 2025 7:32 AM
+> > 
+> > +static int arm_smmu_attach_dev_release(struct iommu_domain *domain,
+> > +				       struct device *dev)
+> > +{
+> > +	struct arm_smmu_master *master = dev_iommu_priv_get(dev);
+> > +
+> > +	WARN_ON(master->iopf_refcount);
 
+This doesn't look right anymore..
 
-On 09/09/25 19:35, Krzysztof Kozlowski wrote:
-> On 09/09/2025 16:02, Dmitry Baryshkov wrote:
->> On Tue, Sep 09, 2025 at 06:22:55PM +0530, Sudarshan Shetty wrote:
->>> Introduce the device tree support for the QCS615-based talos-evk
->>> platform, which follows the SMARC (Smart Mobility ARChitecture)
->>> standard. The platform is composed of two main hardware
->>> components: the IQ-QCS615-SOM and the talos-evk carrier board.
->>>
->>> The IQ-QCS615-SOM is a compact System on Module that integrates the
->>> QCS615 SoC, PMIC, and essential GPIO connectivity. It follows the
->>> SMARC standard, which defines a modular form factor allowing the SoM
->>> to be paired with different carrier boards for varied applications.
->>>
->>> The talos-evk is one such carrier board, designed for evaluation
->>> and development purposes. It provides additional peripherals
->>> such as UART, USB, and other interfaces to enable rapid
->>> prototyping and hardware bring-up.
->>>
->>> This initial device tree provides the basic configuration needed
->>> to boot the platform to a UART shell. Further patches will extend
->>> support for additional peripherals and subsystems.
->>>
->>> The initial device tree includes basic support for:
->>>
->>> - CPU and memory
->>>
->>> - UART
->>>
->>> - GPIOs
->>>
->>> - Regulators
->>>
->>> - PMIC
->>>
->>> - Early console
->>>
->>> - AT24MAC602 EEPROM
->>>
->>> - MCP2515 SPI to CAN
->>>
->>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
->>> ---
->>>
->>> This series depend on the below patch changes
->>> https://lore.kernel.org/linux-arm-msm/20250625063213.1416442-1-quic_ziyuzhan@quicinc.com/T/#t
->>> https://lore.kernel.org/all/20241224-fix-board-clocks-v3-0-e9b08fbeadd3@linaro.org/
->>> https://lore.kernel.org/linux-arm-msm/20250604-qcs615-sm6150-v1-0-2f01fd46c365@oss.qualcomm.com/T/#t
-> 
-> Huge dependency list... basically unmergeable. But some of these were
-> applied months ago, so you claiming there is dependency is just
-> misleading. Or you are working on some old, downstream fork... In such
-> case it would be NAK.
-Thanks — you’re right. I mistakenly listed patches as dependencies that are already merged. I’ll rebase
-this series on top of current upstream/qcom, remove merged entries from the cover letter, and resend
-a cleaned-up series.>>> ---
->>>  arch/arm64/boot/dts/qcom/Makefile        |   1 +
->>>  arch/arm64/boot/dts/qcom/qcs615-som.dtsi | 414 +++++++++++++++++++++++
->>>  arch/arm64/boot/dts/qcom/talos-evk.dts   |  42 +++
->>>  3 files changed, 457 insertions(+)
->>>  create mode 100644 arch/arm64/boot/dts/qcom/qcs615-som.dtsi
->>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>> index 4bfa926b6a08..588dc55995c5 100644
->>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>> @@ -117,6 +117,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs615-ride.dtb
->>> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
->>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
->>
->> BTW, 'talos' > 'qsc6490'. I think the list is expected to be sorted.
-> Yes it is.
-> 
-> Best regards,
-> Krzysztof
+Now that iopf is managed automatically it technically doesn't go to
+zero until the attaches below:
 
+> > +
+> > +	/* Put the STE back to what arm_smmu_init_strtab() sets */
+> > +	if (dev->iommu->require_direct)
+> > +
+> > 	arm_smmu_attach_dev_identity(&arm_smmu_identity_domain,
+> > dev);
+> > +	else
+> > +
+> > 	arm_smmu_attach_dev_blocked(&arm_smmu_blocked_domain,
+> > dev);
+
+And I'd argue the attaches internally should have the assertion. If no
+pasids and blocked/identity the iopf == 0.
+
+> it's a bit confusing that a BLOCKED domain type could turn to the
+> identity mode, though this movement doesn't change the original
+> behavior.
+
+That isn't what is happening here..
+
+If dev->iommu->require_direct is set we prevent attaching BLOCKING
+domains entirely:
+
+	if (dev->iommu->require_direct &&
+	    (new_domain->type == IOMMU_DOMAIN_BLOCKED ||
+	     new_domain == group->blocking_domain)) {
+		dev_warn(dev,
+			 "Firmware has requested this device have a 1:1 IOMMU mapping, rejecting configuring the device without a 1:1 mapping. Contact your platform vendor.\n");
+		return -EINVAL;
+	}
+
+So in most sane cases the above will never convert BLOCKING to
+IDENTITY. What it is doing is preserving the RMRs...
+
+Also, I don't think this should be in the smmu driver, every driver
+should have this same logic, it is part of the definition of RMR
+Let's put it in the core code:
+
+	if (!dev->iommu->attach_deferred && ops->release_domain) {
+		struct iommu_domain *release_domain = ops->release_domain;
+
+		/*
+		 * If the device requires direct mappings then it should not 
+		 * be parked on a BLOCKED domain during release as that would
+		 * break the direct mappings.
+		 */
+		if (dev->iommu->require_direct && ops->identity_domain &&
+		    release_domain == ops->blocked_domain)
+			release_domain = ops->identity_domain;
+
+		release_domain->ops->attach_dev(release_domain, dev);
+	}
+
+Jason
 
