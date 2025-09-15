@@ -1,95 +1,44 @@
-Return-Path: <linux-arm-msm+bounces-73547-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73548-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 696BFB57687
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:35:25 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D9DEAB576DF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:45:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEC71188F44F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 10:35:39 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 266314E03B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 10:44:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 562552FCBF1;
-	Mon, 15 Sep 2025 10:35:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="FPGp+DWn";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="jve2A073";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="FPGp+DWn";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="jve2A073"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CF7C2FD7A4;
+	Mon, 15 Sep 2025 10:44:35 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B722FC86B
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:35:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597642ED846;
+	Mon, 15 Sep 2025 10:44:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757932515; cv=none; b=SzbDHynR7srYTrnLowMGn9nZBkQfByung/eQQpzNnFenMJgoo3+ICg93KBQ2ExcFM0/vPCOsdpweUsvhYCNrz6gdTD+iMI5hHDZXUI7bkWE6uXubnRiJSP++M0Kx5h3GmHIQztzctI9QgB6CeMvKSs19UwC5JAuyuAkK+pT3bpE=
+	t=1757933075; cv=none; b=Nn/WL/GwSB5SI2DMtCWQzI8vl9qQZW1g39LtrtYxpu8s8dG3YSWiVCoyDAXeLKeKNopTE+n+K8RLrVeeNCT3YjHY4uyH7QfF+waxyn58eqiTVJ2vmB/9Qx93c3qJaS+K1La3WCD4TXwefzLM/1or4pnz/7lUaNzUv0ZsDaH/lXE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757932515; c=relaxed/simple;
-	bh=CKc+DNlrgV+o+WJYH3UjHRHwPzp2rEVizazZHzkbM5w=;
+	s=arc-20240116; t=1757933075; c=relaxed/simple;
+	bh=wa0cYI+ah+AvN0/sbzMdeoYPO/F+uIM6PMekhf9HdDo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=I1yvnS0fHGwkDOF43ryUBA6l/C3w+O4gp3liT0YXUkkwWcjae+YEcGU2Xo6C51lVj2+PHlrpqzjdBmISNX8DFvnhbv4xhLoPLdE++HcBlKQt7Kdx8VQdsminihVFkCotw77mV7yvWAXj7lbDZdbJEMa1kdm4DkXxCuH9bErFCPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=FPGp+DWn; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=jve2A073; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=FPGp+DWn; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=jve2A073; arc=none smtp.client-ip=195.135.223.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 70A1633722;
-	Mon, 15 Sep 2025 10:35:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1757932511; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=wyZ7R1j8ekVpPVWOeGovOVmplGZx5PoOUHolz+8mQ9A=;
-	b=FPGp+DWnjZ8cpc2VUqQoiyB/9LNHZYKvuORtYnVfZ/XHaMFtXUVkqBJcO7rAv1RFBFx8Wt
-	WO9vXmdo3ndVCRkwybC/JRSx7vg7aRbraBqaSL3pYejnsPSAS3V9zbavON3zPYoiuoyHq6
-	t30gZa8OHDAhmOgPfFIgs/KdUCYtpH0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1757932511;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=wyZ7R1j8ekVpPVWOeGovOVmplGZx5PoOUHolz+8mQ9A=;
-	b=jve2A0736Y5pKNdzRyUDlpuD78LkpAU4DSyrxIJjrTFvm/CDnns1c+0qAhYAGzGZhQpsjD
-	q17urp8vFAEgnsDA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1757932511; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=wyZ7R1j8ekVpPVWOeGovOVmplGZx5PoOUHolz+8mQ9A=;
-	b=FPGp+DWnjZ8cpc2VUqQoiyB/9LNHZYKvuORtYnVfZ/XHaMFtXUVkqBJcO7rAv1RFBFx8Wt
-	WO9vXmdo3ndVCRkwybC/JRSx7vg7aRbraBqaSL3pYejnsPSAS3V9zbavON3zPYoiuoyHq6
-	t30gZa8OHDAhmOgPfFIgs/KdUCYtpH0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1757932511;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=wyZ7R1j8ekVpPVWOeGovOVmplGZx5PoOUHolz+8mQ9A=;
-	b=jve2A0736Y5pKNdzRyUDlpuD78LkpAU4DSyrxIJjrTFvm/CDnns1c+0qAhYAGzGZhQpsjD
-	q17urp8vFAEgnsDA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D535D1368D;
-	Mon, 15 Sep 2025 10:35:10 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id WO5lMt7rx2hmEwAAD6G6ig
-	(envelope-from <tzimmermann@suse.de>); Mon, 15 Sep 2025 10:35:10 +0000
-Message-ID: <331c5105-481f-4776-943f-376b21ccc430@suse.de>
-Date: Mon, 15 Sep 2025 12:35:10 +0200
+	 In-Reply-To:Content-Type; b=R/AHqgBD742AKbznB3MlXIcXCg6dumZm2eIiH07of6CR7zq1RN6JeN55SAUsJzi9MKF2YEyMCUsM+6xXeuk4shaZWqNksQacq2YcK23Y2gjkB+UL/MJh/c7PWgB7tmsvqIOsXw1ZnqK0B05V0Ta+IzCCUjYCSGlte6OCFg736NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
+X-QQ-mid: zesmtpip2t1757933031t384558d8
+X-QQ-Originating-IP: ViO3qK2xPauEngfgGmycWiarTOARoV3EHoXmRla6+7M=
+Received: from [127.0.0.1] ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 15 Sep 2025 18:43:50 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 15059840297681885872
+Message-ID: <B3EFC6A5E09F74FB+a67c9b82-a7c5-4dbb-9486-90a6df55ed13@radxa.com>
+Date: Mon, 15 Sep 2025 18:43:50 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -97,183 +46,115 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 00/25] drm/dumb-buffers: Fix and improve buffer-size
- calculation
-To: simona@ffwll.ch, airlied@gmail.com, mripard@kernel.org,
- maarten.lankhorst@linux.intel.com, geert@linux-m68k.org,
- tomi.valkeinen@ideasonboard.com
-Cc: dri-devel@lists.freedesktop.org, linux-mediatek@lists.infradead.org,
- freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
- imx@lists.linux.dev, linux-samsung-soc@vger.kernel.org,
- nouveau@lists.freedesktop.org, virtualization@lists.linux.dev,
- spice-devel@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
- linux-rockchip@lists.infradead.org, linux-tegra@vger.kernel.org,
- intel-xe@lists.freedesktop.org, xen-devel@lists.xenproject.org
-References: <20250821081918.79786-1-tzimmermann@suse.de>
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
+ Q6A
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250915-radxa-dragon-q6a-v3-0-a6c32d988ed7@radxa.com>
+ <20250915-radxa-dragon-q6a-v3-2-a6c32d988ed7@radxa.com>
+ <33vm6uzxqbs5bukswpzdkrn3ronl7mp2q5d3j772t7lqcnvqvg@5or7jxglcynf>
 Content-Language: en-US
-From: Thomas Zimmermann <tzimmermann@suse.de>
-Autocrypt: addr=tzimmermann@suse.de; keydata=
- xsBNBFs50uABCADEHPidWt974CaxBVbrIBwqcq/WURinJ3+2WlIrKWspiP83vfZKaXhFYsdg
- XH47fDVbPPj+d6tQrw5lPQCyqjwrCPYnq3WlIBnGPJ4/jreTL6V+qfKRDlGLWFjZcsrPJGE0
- BeB5BbqP5erN1qylK9i3gPoQjXGhpBpQYwRrEyQyjuvk+Ev0K1Jc5tVDeJAuau3TGNgah4Yc
- hdHm3bkPjz9EErV85RwvImQ1dptvx6s7xzwXTgGAsaYZsL8WCwDaTuqFa1d1jjlaxg6+tZsB
- 9GluwvIhSezPgnEmimZDkGnZRRSFiGP8yjqTjjWuf0bSj5rUnTGiyLyRZRNGcXmu6hjlABEB
- AAHNJ1Rob21hcyBaaW1tZXJtYW5uIDx0emltbWVybWFubkBzdXNlLmRlPsLAjgQTAQgAOAIb
- AwULCQgHAgYVCgkICwIEFgIDAQIeAQIXgBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftODH
- AAoJEGgNwR1TC3ojx1wH/0hKGWugiqDgLNXLRD/4TfHBEKmxIrmfu9Z5t7vwUKfwhFL6hqvo
- lXPJJKQpQ2z8+X2vZm/slsLn7J1yjrOsoJhKABDi+3QWWSGkaGwRJAdPVVyJMfJRNNNIKwVb
- U6B1BkX2XDKDGffF4TxlOpSQzdtNI/9gleOoUA8+jy8knnDYzjBNOZqLG2FuTdicBXblz0Mf
- vg41gd9kCwYXDnD91rJU8tzylXv03E75NCaTxTM+FBXPmsAVYQ4GYhhgFt8S2UWMoaaABLDe
- 7l5FdnLdDEcbmd8uLU2CaG4W2cLrUaI4jz2XbkcPQkqTQ3EB67hYkjiEE6Zy3ggOitiQGcqp
- j//OwE0EWznS4AEIAMYmP4M/V+T5RY5at/g7rUdNsLhWv1APYrh9RQefODYHrNRHUE9eosYb
- T6XMryR9hT8XlGOYRwKWwiQBoWSDiTMo/Xi29jUnn4BXfI2px2DTXwc22LKtLAgTRjP+qbU6
- 3Y0xnQN29UGDbYgyyK51DW3H0If2a3JNsheAAK+Xc9baj0LGIc8T9uiEWHBnCH+RdhgATnWW
- GKdDegUR5BkDfDg5O/FISymJBHx2Dyoklv5g4BzkgqTqwmaYzsl8UxZKvbaxq0zbehDda8lv
- hFXodNFMAgTLJlLuDYOGLK2AwbrS3Sp0AEbkpdJBb44qVlGm5bApZouHeJ/+n+7r12+lqdsA
- EQEAAcLAdgQYAQgAIAIbDBYhBHIX+6yM6c9jRKFo5WgNwR1TC3ojBQJftOH6AAoJEGgNwR1T
- C3ojVSkIALpAPkIJPQoURPb1VWjh34l0HlglmYHvZszJWTXYwavHR8+k6Baa6H7ufXNQtThR
- yIxJrQLW6rV5lm7TjhffEhxVCn37+cg0zZ3j7zIsSS0rx/aMwi6VhFJA5hfn3T0TtrijKP4A
- SAQO9xD1Zk9/61JWk8OysuIh7MXkl0fxbRKWE93XeQBhIJHQfnc+YBLprdnxR446Sh8Wn/2D
- Ya8cavuWf2zrB6cZurs048xe0UbSW5AOSo4V9M0jzYI4nZqTmPxYyXbm30Kvmz0rYVRaitYJ
- 4kyYYMhuULvrJDMjZRvaNe52tkKAvMevcGdt38H4KSVXAylqyQOW5zvPc4/sq9c=
-In-Reply-To: <20250821081918.79786-1-tzimmermann@suse.de>
+From: Xilin Wu <sophon@radxa.com>
+In-Reply-To: <33vm6uzxqbs5bukswpzdkrn3ronl7mp2q5d3j772t7lqcnvqvg@5or7jxglcynf>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Spam-Level: 
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FREEMAIL_TO(0.00)[ffwll.ch,gmail.com,kernel.org,linux.intel.com,linux-m68k.org,ideasonboard.com];
-	ARC_NA(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	RCVD_TLS_ALL(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[20];
-	RCVD_COUNT_TWO(0.00)[2];
-	MID_RHS_MATCH_FROM(0.00)[];
-	TO_DN_NONE(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-X-Spam-Flag: NO
-X-Spam-Score: -2.80
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
+X-QQ-XMAILINFO: N+/GyfuFbcLi9vKdZlDTi25HexHBa35Ey17B5e5fSmkMASF/2oUDfY7O
+	2ok6oEMt8Xvgh8u8QEb6qfdXS300sjPJuznCEQd+tSkmNZkrOQwjYeIN6NiaQwR4jw+1gnt
+	ziQIYlvo6pznesj1xctEl6MuA5C3jnPOXSkuF6s+IPEh8SlO/mKcBwHecd3nu0D1FHWR7MH
+	XWqsDR2OJ2rTI1aSbCbnB00OF/gy5SNnJ5hAi0r3m+9h/ye3eh4wMdF0P/2HbI2h+Un1ouI
+	maDAAjL6hVHSxTw9EBSHEESw+KAMdYJ1AyxiHH3h+QWxFu/MO9NyvtkgTjboxw8WTsFsSaM
+	t4R5fRzjz1Zn1jNR9fTPXJDkGIRjsIIPFuIyiRLCHOMNfbi5pOGAN3R4pNXcNjVery1gEAc
+	GfkB7882YnvnOdF0v/CNIw1km1H5BN8+U+98T/NguQoM2KkpUQmDrVUuVzJIhZLzLhdv4wB
+	NPT320CPzR9vqb8xVDlRpgaEaii3F7g9K1jvmmmOPj/nT9xs5gCY16yccz9XdDyAdSykDuC
+	uqV9JBf7yvzFp7M9skNrJhkv5/DsgJDeDx8PEDqMJdMdJEfQFie0voik1GvPJ6gBP9b2Zde
+	FlTuhMSWhZBvmZskGU8W+fmiZU7fTNT4J6hZscD01J0unLN+4qrQkrMH1sFIv65nyZazrw4
+	+mCt9rrFmyt+7Zue69Z2L6VFjfdyBAaOjmq3rErB4ZD9UsgcksNqYn9W8m+DZi5tM1PLq/Y
+	xjDomGPaWacNdlp1bOdyHx8Yfgcx1NyLRDjwIBd////gTrLxIczvyTZFkV8TA9bsHXRs4OE
+	nvxcbVhXEhzERTyxNpqinAAuEgkiaG5CTl90jX480YXaV8m17N3Nbt3PBt85kTWKhqgsf9G
+	r0dUKu2oY4LJ1frJMW+Ai8KBWzfDLfRh8vPVaM85y5ZHtZkwDyESvcnz0ZxTGVyRAkfHiM/
+	23PkuPrbfE3eRfyBMftGFroxH4U5A+aw2CoHot1Ss3m1BaxxGrnXY9iL6b9eXnb4xUMueSl
+	J3cGJ/03S3k/6KZDc7
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-FYI, I significant number of these patches got a review already. I 
-intent to merge these and then send out the others for each driver 
-individually.
+On 9/15/2025 6:10 PM, Dmitry Baryshkov wrote:
+> On Mon, Sep 15, 2025 at 09:31:44AM +0800, Xilin Wu wrote:
+>> Radxa Dragon Q6A is a single board computer, based on the Qualcomm
+>> QCS6490 platform.
+>>
+>> Features enabled and working:
+>>
+>> - Three USB-A 2.0 ports
+>> - RTL8111K Ethernet connected to PCIe0
+>> - eMMC module
+>> - SD card
+>> - M.2 M-Key 2230 PCIe 3.0 x2
+>> - Headphone jack
+>> - Onboard thermal sensors
+>> - QSPI controller for updating boot firmware
+>> - ADSP remoteproc (Type-C and charging features disabled in firmware)
+>> - CDSP remoteproc (for AI applications using QNN)
+>> - Venus video encode and decode accelerator
+>>
+>> Signed-off-by: Xilin Wu <sophon@radxa.com>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+>>   .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 961 +++++++++++++++++++++
+>>   2 files changed, 962 insertions(+)
+>>
+> 
+>> +
+>> +&gpu_zap_shader {
+>> +	firmware-name = "qcom/qcs6490/a660_zap.mbn";
+> 
+> Is the device fused to reject standard qcs6490 firmware? If not, can we
+> point it to the existing files (maybe except the ADSP)? Anyway, could
+> you please submit the required set of files to the linux-firmware repo?
 
-Am 21.08.25 um 10:17 schrieb Thomas Zimmermann:
-> Dumb-buffer pitch and size is specified by width, height, bits-per-pixel
-> plus various hardware-specific alignments. The calculation of these
-> values is inconsistent and duplicated among drivers. The results for
-> formats with bpp < 8 are sometimes incorrect.
->
-> This series fixes this for most drivers. Default scanline pitch and
-> buffer size are now calculated with the existing 4CC helpers. There is
-> a new helper drm_mode_size_dumb() that calculates scanline pitch and
-> buffer size according to driver requirements.
->
-> The series fixes the common GEM implementations for DMA, SHMEM and
-> VRAM. It further changes most implementations of dumb_create to use
-> the new helper. A small number of drivers has more complicated
-> calculations and will be updated by a later patches.
->
-> v6:
-> - extend TODO item (Tomi)
-> - fix typos in documentation (Tomi)
-> v5:
-> - use check_mul_overflow() for overflow test (Tomi)
-> - imx: fix intermediate code (Tomi)
-> - rz-du: include dumb-buffers header
-> v4:
-> - improve UAPI documentation
-> - document bpp special cases
-> - use drm_warn_once()
-> - add TODO lists
-> - armada: fix pitch alignment
-> v3:
-> - document UAPI semantics
-> - fall back to bpp-based allocation for unknown color modes
-> - cleanups
-> v2:
-> - rewrite series
-> - convert many individual drivers besides the shared GEM helpers
->
-> Thomas Zimmermann (25):
->    drm/dumb-buffers: Sanitize output on errors
->    drm/dumb-buffers: Provide helper to set pitch and size
->    drm/gem-dma: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/gem-shmem: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/gem-vram: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/armada: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/exynos: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/gma500: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/hibmc: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/imx/ipuv3: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/loongson: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/mediatek: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/msm: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/nouveau: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/omapdrm: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/qxl: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/renesas/rcar-du: Compute dumb-buffer sizes with
->      drm_mode_size_dumb()
->    drm/renesas/rz-du: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/rockchip: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/tegra: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/virtio: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/vmwgfx: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/xe: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/xen: Compute dumb-buffer sizes with drm_mode_size_dumb()
->    drm/xlnx: Compute dumb-buffer sizes with drm_mode_size_dumb()
->
->   Documentation/gpu/todo.rst                    |  37 ++++
->   drivers/gpu/drm/armada/armada_gem.c           |  16 +-
->   drivers/gpu/drm/drm_dumb_buffers.c            | 170 ++++++++++++++++--
->   drivers/gpu/drm/drm_gem_dma_helper.c          |   7 +-
->   drivers/gpu/drm/drm_gem_shmem_helper.c        |  16 +-
->   drivers/gpu/drm/drm_gem_vram_helper.c         |  89 +++------
->   drivers/gpu/drm/exynos/exynos_drm_gem.c       |   8 +-
->   drivers/gpu/drm/gma500/gem.c                  |  21 +--
->   .../gpu/drm/hisilicon/hibmc/hibmc_drm_drv.c   |  25 ++-
->   drivers/gpu/drm/imx/ipuv3/imx-drm-core.c      |  29 ++-
->   drivers/gpu/drm/loongson/lsdc_gem.c           |  29 +--
->   drivers/gpu/drm/mediatek/mtk_gem.c            |  13 +-
->   drivers/gpu/drm/msm/msm_gem.c                 |  27 ++-
->   drivers/gpu/drm/nouveau/nouveau_display.c     |   7 +-
->   drivers/gpu/drm/omapdrm/omap_gem.c            |  15 +-
->   drivers/gpu/drm/qxl/qxl_dumb.c                |  17 +-
->   drivers/gpu/drm/renesas/rcar-du/rcar_du_kms.c |   7 +-
->   drivers/gpu/drm/renesas/rz-du/rzg2l_du_kms.c  |   8 +-
->   drivers/gpu/drm/rockchip/rockchip_drm_gem.c   |  12 +-
->   drivers/gpu/drm/tegra/gem.c                   |   8 +-
->   drivers/gpu/drm/virtio/virtgpu_gem.c          |  11 +-
->   drivers/gpu/drm/vmwgfx/vmwgfx_surface.c       |  21 +--
->   drivers/gpu/drm/xe/xe_bo.c                    |   8 +-
->   drivers/gpu/drm/xen/xen_drm_front.c           |   7 +-
->   drivers/gpu/drm/xlnx/zynqmp_kms.c             |   7 +-
->   include/drm/drm_dumb_buffers.h                |  14 ++
->   include/drm/drm_gem_vram_helper.h             |   6 -
->   include/uapi/drm/drm_mode.h                   |  50 +++++-
->   28 files changed, 457 insertions(+), 228 deletions(-)
->   create mode 100644 include/drm/drm_dumb_buffers.h
->
+No, the device is not fused. So it can use firmware from linux-firmware 
+repo, except ADSP and Audioreach topology.
+
+Sure, I can submit the ADSP firmware and Audioreach topology file to 
+linux-firmware.> >> +
+>> +&usb_2 {
+>> +	dr_mode = "host";
+> 
+> As Konrad has asked, please describe the onboard hub and the USB ports.
+> This will ensure that corresponding ports are correctly marked as
+> hotplug in sysfs.
+> 
+
+Sure, will describe them in v4.
+
+>> +
+>> +	status = "okay";
+>> +};
+>> +
+>> +&usb_2_hsphy {
+>> +	status = "okay";
+>> +
+>> +	vdda-pll-supply = <&vreg_l10c_0p88>;
+>> +	vdda33-supply = <&vreg_l2b_3p072>;
+>> +	vdda18-supply = <&vreg_l1c_1p8>;
+>> +};
+>> +
+>> +&venus {
+>> +	status = "okay";
+> 
+> No separate firmware?
+> 
+
+The one from linux-firmware works.>
+
 
 -- 
---
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Frankenstrasse 146, 90461 Nuernberg, Germany
-GF: Ivo Totev, Andrew Myers, Andrew McDonald, Boudien Moerman
-HRB 36809 (AG Nuernberg)
-
+Best regards,
+Xilin Wu <sophon@radxa.com>
 
 
