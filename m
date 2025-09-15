@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-73560-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C5E7B5778D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:03:51 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C9E6B57795
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:04:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 094D5189DD3A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:04:00 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C4C91884D23
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:04:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 87EA52FFDE8;
-	Mon, 15 Sep 2025 11:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC9E2FB96A;
+	Mon, 15 Sep 2025 11:04:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XZ4cQqEy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dJv2pUac"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A827D2FC013
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8392F290A
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:03:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757934159; cv=none; b=sudpzHNtzBqqJ89KQEjmC7/aRQKau9+dUbT/uIdKutfUPFIofOxxvCtbr6cfDxOM21SW4y3TvDT7dQ9q+8lM3pIzmCb4pQFg3//UOoMEqINDGFXwDpSWNfEb25QfP+Bt7cnEn3JvGiUuim6cNGSWbE3ClFZijA3/fsCO/sI9kCQ=
+	t=1757934241; cv=none; b=PSS2Ck0Dh7AFrhm9l35+5DQrxRSoBJsIbkSJ7QogvT9YoGzRWSUi/bzZTiH/bUllMXwhwaJScq+nzzJDkQnQxBQZIV2Z4u3xM9YeZmwgczbfD1jRYHlcKHaj4RoCF7WOz+eOSFR2J0sUxHjVnfll4m5UBEIsQiqYPsi3Ns2oWaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757934159; c=relaxed/simple;
-	bh=iKMAgW0jQTDxBTsxxTn3NzLbmR5UC1qx3JVqLTQyo7I=;
+	s=arc-20240116; t=1757934241; c=relaxed/simple;
+	bh=34abblfr+Cq/exkZvQCQiiND/Y4QtiTG+4oBGTqrOUQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kPUn10MA2TkOoy3Kez2dnU8Imk/c3Q1s1pnBC5xLgusKuyO5et89jdl0z5lCj83PiCTYZ3ZkpiALJag65ZakqhrSECXbTxpzNzGARf5DgXtvmAYWYeJnKHDcLvwqzbTimEmZcfqYuloQsm0HklCdzLt2xVNXSTDUFcaQj416jiA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XZ4cQqEy; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:Content-Type; b=fe2wuHHHfT7z/hnKoFUeiCzRQ9Fxl4EwkyAZ8q86924laZ2ZDZUhyswl3zu4iY9LwedIfOsfxddrgdElulh7QpxD1b/Qo/I98BE0nb3bxeOxOfbvzDj4FCaPKJyhFiLm6GrjdqKe/x9x9thPtxUkUDnc/r8U1cxnlLFEsw0wDm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dJv2pUac; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-45ed646b656so32209515e9.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 04:02:37 -0700 (PDT)
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45ddc7d5731so28882795e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 04:03:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757934156; x=1758538956; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1757934238; x=1758539038; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=GXVKXBL0yz+l6XWANTUIZ7DjyjmDmj0eECvduqIUxgA=;
-        b=XZ4cQqEyHD6x/t5/XpLJ1HnQFMrIlWoQUkHNrcm9EGLe9JlwsPergrwjPgM6caH/Qo
-         gpNHmGXsOWij6FKjwIhbe5BUxeQEGWwTiveDzUyCa8zP4L3tceBz1AudclNBiGkRydE5
-         kt698gaEZrbkX0mij9WX+nML1t5PVbPBatxRyazfZ7WRICd+6q7b7ca78Oiax/CvNAUy
-         G67bpaj91zIccIzoh0AXdeWQ86UQpYdKyC6oSlAE79YeEj6dtXJU8aMB+0GGitIf+3Js
-         nOGRfjuljdoXC4VbMseIw6CWfWNOoy+J8/x5ueAIB7/4vw1IE/Shhti+mIglDs11uCSa
-         ZRXA==
+        bh=qLDdkWbWxkCwNz68mLJDlA01YxH5FUpXjX8JHzk4w2g=;
+        b=dJv2pUacrKFUo+q85A25YEr6f4GlVlJRhPF8yPKjkkxxiIqpEshf2sAyq+SbVLxdVA
+         SNXS5NlOlM8UCqgehWroQC8ClQ+iQgl1HDav8YoCa2NbaRXNIRp15UGKaKaHQB9ZmYru
+         2eHm7v2bl8LE18oTDcMIBb84bgVNQU8KwOKg3G/Ld8SK2vEdYBelAa07l3b1tFRH8tAa
+         3EdPR5g1i/p3mS7E2eJIuev7VfUeXgalZOzDlqq0QbsPPIwAJWpWhzXALBhdyZZI7Zwz
+         DHVg1ze58iimaeQc/7yFr1ORl09CnTcGXHypvzpQlNih/twkjNpsyzX23e1A8ex7uEU6
+         Vp/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757934156; x=1758538956;
+        d=1e100.net; s=20230601; t=1757934238; x=1758539038;
         h=content-transfer-encoding:in-reply-to:content-language:from
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GXVKXBL0yz+l6XWANTUIZ7DjyjmDmj0eECvduqIUxgA=;
-        b=XAWitFzliaeKl5NWdYwci4/wwKPzmNDWO3HFsQ8JxKPBZJyz0nuoNRLK+XQhz2E3/N
-         S5G6wxH3gByIjp47XFlY2lZZGl5CvsKECzA7L/iuOgYTe6dqqN7Plw2FOmdVaQsGoudN
-         0XCw6D61qYIVpXrTsnicY4Tx5O4IjswfqEavy4CbqM41c9vjRX/jdQgdl9+znJVym5tu
-         4pUmvxetZNRHrB3YDmzZAUidAmuueNFJ3jtzToLKP/qq8GxRhzvVIUK8ZQhKKPphMRDy
-         q8BCHII+/80UfPMO7K9LJcj2pz7i5Org7kVuh+7/lwfAEeMVqvT5xFfXivTVlGldBoUU
-         OVjQ==
-X-Forwarded-Encrypted: i=1; AJvYcCX33WXtMTfi8eMdqnDrs4YJ73+nG0VS0gnWYcb/4+30LckL0ADMxLdboRK8zEcXNSGHYZtxBuQsghat7KuF@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxc5BPSy0BebaLMCogtjuWCZ22o7MLoNQlPKWLhFZaKlfPu+Rpi
-	CkJz4Exmr2Z3bF68lrjfTThuym2f8/av3p/gbzoauHiQfpgVh3TFkYXwoNDF1Dm2btU=
-X-Gm-Gg: ASbGncvoFU/ixT9JhXMSQ275J9yB21wPEI5Zu+l6ao+n0rWuqJQeyECtIxX1t0rZMUM
-	XzuLC74BTOdoLQFplS4i+IgAfFwo4IkvR1QaoF207ZZLj6yh3wtgMhd+ln3gT/cdKJebENKRDEf
-	XAbk17UmHcK3CFMYYdvTZBjD8mOW+iZ1bT4wKp/yAjVP0WiTp7kDnATX9JCRHvdtsgz5coBYcWs
-	LmesgnIG6QkN4B+dSbW5IaXS800HdD2ff/U/pU2OmtVv4j/a4RxFYRbzT4EjE6SBnM7Su6wIq7C
-	/Dp9v7MNY8vdrRxn5ThbkTrDq5dMlj2Pl2LBUJpUIU6gI8OzR2urWUJD8pndF9QxLnWhZPewGPg
-	lo46xtwihh/EppxcGgOQmCpDTUjyd1pSkhd6M/zalqqnMnIGmX0dB7tYZhr8rhs1o18fyoniAxD
-	ZHdyTFxa+szD6OgrtxZRo=
-X-Google-Smtp-Source: AGHT+IFJ2l0baeyUrazrw5RINbL47twbhaJDHL/xHhmxwbAzaNs77RYQey961ZxCrNsm4Oc2tjkp3A==
-X-Received: by 2002:a05:600c:8b4b:b0:45f:27fb:8017 with SMTP id 5b1f17b1804b1-45f284e67cdmr67539695e9.5.1757934156029;
-        Mon, 15 Sep 2025 04:02:36 -0700 (PDT)
+        bh=qLDdkWbWxkCwNz68mLJDlA01YxH5FUpXjX8JHzk4w2g=;
+        b=G4Trfwptq0XKMKBCDi5K1jX/RheSUHfaFy7KGOq/Gv9NCvbzeMmjralYJ/+dJOvyZ8
+         YIS2cOgBSFhiDz5xszJMLuoJayXWJO45cDbYRZepJZOB8e8ab8/xsUtqZkzcxZOo10Nx
+         un7Ad8pvTqW+aEVfm99Q6ruKuRZXWux0Jjh3uHBI3IRpWy0KsTGBEfii4H215YZLSgLK
+         Tm6newxJgOCZXmQqOk7QjbSGFei3kQeUCmLAdt7/DxG3O/rKwsRjUNZijMpj2WxwFZzJ
+         jw/0N+B0D630cpafGnLp19Ap2m7lJb3irEDTHdcfZuELjx2+AiwWAXmQ8Bmnmw6Qfq/B
+         gIcQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXcGIM11zouZ+c4wbX5uk6JC87jxd/cYy7k+Mev9yl5p8zSdp6Euq66vdyuZfPW4LFfmwuzb4TGW6eweBhu@vger.kernel.org
+X-Gm-Message-State: AOJu0YwO6rSbk03F97zeQ5ouLJS0kZ7muLkaaJcj8a++QwK6CpUMOOuZ
+	3PQ7uTCCLa0sIZ5ArznN8fdeli8xGXf/Cr0KvVxzKrongMXr/jxFOlKTj2m8FqYPYpY=
+X-Gm-Gg: ASbGnctq0NrWtAM+IPibdY1awTo3IFlORK3yTbR3+TQLKWmaj2/5EbB3Lkv541XYkjn
+	ffFpYPiVgdI2TzxVzu18SL3K8htyRHkLLCNaT3ePxq/8wtXF8ZWDqEzB2A99xdF/EQeP7R1w3rl
+	a1/ClLLNjMQXVC511j3NmVkcAPxT5Wk9EyGzmSgB2aEad6yHC4FHdHkEipHqnBXoYYu1Cs5xXp2
+	CACtuvnI0MdggNB1r5Bg9lGblRqAOYqGJ2IkYdGqXPpPGWvGCzOlxp5bJyqsfSzvimEc8PwWaTy
+	uR/q0sigEPVoolTpzV6TwsQYItLYHrCm87I92J+Halm+CcEaBXgRLsxQVq4PS955R4d0r8yZQg6
+	8ilDWRihzyQJCmSL7j/BfbUUJW/ouD1TNTioYPVDYtqKa7PorSLII1BELBVujoh14QDMFA5FArl
+	PvhOYrLAbD97yvb8u7PPc=
+X-Google-Smtp-Source: AGHT+IEfatrT6vGE4XLbLEtqxuV0qIfieqkuasWzeLgAmmCajyquSuLADIJxWxJbVx69zeQFs7V98w==
+X-Received: by 2002:a05:600c:354f:b0:45f:2c7c:c1ed with SMTP id 5b1f17b1804b1-45f2c7cc3dcmr28587995e9.2.1757934237555;
+        Mon, 15 Sep 2025 04:03:57 -0700 (PDT)
 Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e037d638dsm168083065e9.22.2025.09.15.04.02.32
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e017bfd14sm174479365e9.21.2025.09.15.04.03.52
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 04:02:35 -0700 (PDT)
-Message-ID: <85b6de36-4f0a-41f4-a803-77355d5da3af@linaro.org>
-Date: Mon, 15 Sep 2025 12:02:31 +0100
+        Mon, 15 Sep 2025 04:03:55 -0700 (PDT)
+Message-ID: <96840085-d3e8-44ef-b45b-44727bc03199@linaro.org>
+Date: Mon, 15 Sep 2025 12:03:51 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,7 +83,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/9] arm64: dts: qcom: x1-el2: Disable IRIS for now
+Subject: Re: [PATCH v2 1/9] arm64: dts: qcom: sm8550/sm8650: Fix typo in IRIS
+ comment
 To: Stephan Gerhold <stephan.gerhold@linaro.org>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>
@@ -97,53 +98,50 @@ Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
  Anthony Ruhier <aruhier@mailbox.org>,
  Stefan Schmidt <stefan.schmidt@linaro.org>
 References: <20250915-x1e-iris-dt-v2-0-1f928de08fd4@linaro.org>
- <20250915-x1e-iris-dt-v2-3-1f928de08fd4@linaro.org>
+ <20250915-x1e-iris-dt-v2-1-1f928de08fd4@linaro.org>
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20250915-x1e-iris-dt-v2-3-1f928de08fd4@linaro.org>
+In-Reply-To: <20250915-x1e-iris-dt-v2-1-1f928de08fd4@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 15/09/2025 11:06, Stephan Gerhold wrote:
-> The reset and IOMMU management for remoteprocs like IRIS is implemented in
-> the hypervisor for older targets such as X1E [1]. When booting Linux/KVM
-> directly in EL2, this functionality is missing and the PAS interface
-> normally used by IRIS to boot the video firmware is not working.
+> It should be "enable on boards", not "enable in boards".
 > 
-> The Venus driver supports starting the video firmware without using the PAS
-> interface. The same code also works for X1E when using KVM. However, for
-> the new IRIS dt-bindings it was decided to avoid using the dummy
-> "video-firmware" node in the device tree to describe the IOMMU [2].
-> Discussion is still ongoing how to describe this properly [3].
-> 
-> To avoid regressions when running using KVM, add a TODO in x1-el2.dtso for
-> now and disable IRIS even when it was enabled by the board.
-> 
-> [1]: https://resources.linaro.org/en/resource/sF8jXifdb9V1mUefdbfafa
-> [2]: https://lore.kernel.org/r/20250823155349.22344-2-krzysztof.kozlowski@linaro.org/
-> [3]: https://lore.kernel.org/r/20250819165447.4149674-12-mukesh.ojha@oss.qualcomm.com/
-> 
+> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+> Closes: https://lore.kernel.org/r/DCQ8G73ISXHC.3V03MOGB6NDZE@linaro.org/
 > Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 > ---
->   arch/arm64/boot/dts/qcom/x1-el2.dtso | 5 +++++
->   1 file changed, 5 insertions(+)
+>   arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
+>   arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/x1-el2.dtso b/arch/arm64/boot/dts/qcom/x1-el2.dtso
-> index 380441deca65d1b443962fbe6151f4aadd918383..2d1c9151cf1b4aca79f7ad67328ffc3c721b9dc3 100644
-> --- a/arch/arm64/boot/dts/qcom/x1-el2.dtso
-> +++ b/arch/arm64/boot/dts/qcom/x1-el2.dtso
-> @@ -12,6 +12,11 @@ &gpu_zap_shader {
->   	status = "disabled";
->   };
+> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> index 2df6ba05e0cddaebf3d35a4b4b8e5cbb9048dfb1..ec67efd64b78673352c4c6e3a4e7e504d4525b46 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
+> @@ -3262,7 +3262,7 @@ &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
 >   
-> +&iris {
-> +	/* TODO: Add video-firmware iommus to start IRIS from EL2 */
-> +	status = "disabled";
-> +};
-> +
->   /*
->    * When running under Gunyah, this IOMMU is controlled by the firmware,
->    * however when we take ownership of it in EL2, we need to configure
+>   			/*
+>   			 * IRIS firmware is signed by vendors, only
+> -			 * enable in boards where the proper signed firmware
+> +			 * enable on boards where the proper signed firmware
+>   			 * is available.
+>   			 */
+>   			status = "disabled";
+> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> index 367f448a743a306993b40f6c6b8a23a816744afb..e7582a19184b48de66d572d6e98fbf2f36a8c17f 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+> @@ -5186,7 +5186,7 @@ &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
+>   
+>   			/*
+>   			 * IRIS firmware is signed by vendors, only
+> -			 * enable in boards where the proper signed firmware
+> +			 * enable on boards where the proper signed firmware
+>   			 * is available.
+>   			 */
+>   			status = "disabled";
 > 
 Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
