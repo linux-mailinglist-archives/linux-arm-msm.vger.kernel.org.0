@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-73586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E4DBB57D3D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 15:33:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4882B57D54
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 15:34:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1785E486ED6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:32:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B220169CC3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:32:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1326A30E85E;
-	Mon, 15 Sep 2025 13:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EDF9313271;
+	Mon, 15 Sep 2025 13:32:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="sLwDyji0"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Npr+EvYu"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 558002FA0F1;
-	Mon, 15 Sep 2025 13:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41003128CB;
+	Mon, 15 Sep 2025 13:32:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757943122; cv=none; b=ObgjbUtty6zEc3KJFYo7M0b4VMekFC/bXv1qdEfmp4sJ7Gz/omLrr7nBwBIgRfAqZua0vYgw7RTOq1SlbtKrVt1IyBFZf7LwPPiDoNOX3blA24/jAH/kmJLIA+5AT3AyMskk4go/BlxT9ZBmYVwPK0rI0fLPXlI+kp6pj7Kw6nY=
+	t=1757943126; cv=none; b=XEj4QdjW4d2C9iYfTpZ5SDCvMzIMaGuz1YC8h76OQJbx5UgXNHbVZLi0kHQqjbbcZxQzjGxvIbsnt4COVh8iSB9QyUJtm7mLDi711WzxizKyBIsmbEmDNVXSgMtrQMJphAY/8VWd4nvZmbScgIK58g914vG2VKvZswDA55kKDRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757943122; c=relaxed/simple;
-	bh=e1rHcBVF+YZYuCQrxRhC/xrumTeIZvjbnhpiesTY4as=;
+	s=arc-20240116; t=1757943126; c=relaxed/simple;
+	bh=zrQicUNoo6UgynPyMyDCeR2T6ObaM+KXzOtK+UfCdqM=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=Z2jttC2f5DhNZTddH1K5ys0K3lBLKoaWaax2tlq5ZzjF9bcolCcRAcmyC62g+Eng1veqrDoAoiSQVbjPIe5jXqWSnGaQajoRo0gFAs25GT7fXB2oaAtdV9lecqzO2KEZ5z756EShnAuFccBf3GIABh7x5LoqfBhh2JAlQO9tWHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=sLwDyji0; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=UqwrsHQCTpG1uL1fhTrA4Jt8Pa70JKm4F+yHnm7ErY/3Lo41atB2CxSDD77P43owyr0qsJr+8JKt16Wl4speHL3tdPeQL0jG5z1xR1g3uk9RfF4WUc+zS8kAnvK1vrXjVtEI53X5CBhqJ1gDl4J6LxQx35T5ymibMzQuAoal35k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Npr+EvYu; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,22 +37,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=/3mdIQDysxeOAowQR35ts8iHS6O7ek0TyK8VO0v+2oI=; b=sLwDyji03xKkQw4hNADpTLT6ey
-	jhjnZzHndW6S/nFsESWIM8m88ufAPltQWdXn57UCYTwz8dEpMGQUGZBEtVGIrgN1EPpdD9h4GMEWZ
-	i90K/zJMA1faftEAqhgzwyzleGgM+rmjB5ACdpw6hv9tRTMTS98monyUifmhjY3ANEv9tfbQFlTgL
-	3Kazwspkj6kHn3ALLR+u3hurSFkgZvYtSvPy7E2HJjbzfDzoVi3vrLNvNKZsfzGQJXva7V8LeOsE6
-	Qfx3u0/GA9WtL4a1hoor/xy8366o1jVVnLU9LHuvR4QfsIlqpy2zpxaX23p06pXUaOrtn12f7uxqK
-	S+1QyTJA==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:46968 helo=rmk-PC.armlinux.org.uk)
+	bh=5BAGv8bXy6yGoJ0dUhvbeeGHyvCJ5y2qDB9qmmx7p1E=; b=Npr+EvYuelWGLsdmeVazKkEnO+
+	O3Uv7640Ocxrt3Cg2CtZt9EfHPf5gTHjyW4dFAqXG+OrH0eMYrGtDkxh5SprmJbtGYhnb75+Lh8N6
+	CsmGfQNXeFofqYYAT7P0f2Zmkn4uynSCzosmpmNc5ZN/0eLOrQBog7YDN5R/+wLmGs1/GfxRnT7vY
+	gJm7mjf99D1Y7xIV+ofHtlFZjnVMmd4kicY4E7+2g6DuHTmLieKQOo4SqK99MNrYKBkZKFVpZtRWG
+	4jysYgsMguVoiaYPPcYv1+nqli+DCkNl7B1tWs0w7hl+QVhG9idUHWM81vEus2l8FSX2Gd399psYQ
+	FPEf3KeA==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:56240 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1uy9JE-000000000Mc-1JBf;
-	Mon, 15 Sep 2025 14:31:56 +0100
+	id 1uy9JJ-000000000Mq-1kmY;
+	Mon, 15 Sep 2025 14:32:01 +0100
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1uy9JD-00000005jg7-2GBc;
-	Mon, 15 Sep 2025 14:31:55 +0100
+	id 1uy9JI-00000005ji1-30CX;
+	Mon, 15 Sep 2025 14:32:00 +0100
 In-Reply-To: <aMgRwdtmDPNqbx4n@shell.armlinux.org.uk>
 References: <aMgRwdtmDPNqbx4n@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -65,8 +65,7 @@ Cc: "David S. Miller" <davem@davemloft.net>,
 	"Marek Beh__n" <kabel@kernel.org>,
 	netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH net-next 3/7] net: sfp: convert sfp quirks to modify struct
- sfp_module_support
+Subject: [PATCH net-next 4/7] net: sfp: provide sfp_get_module_caps()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -76,154 +75,61 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1uy9JD-00000005jg7-2GBc@rmk-PC.armlinux.org.uk>
+Message-Id: <E1uy9JI-00000005ji1-30CX@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 15 Sep 2025 14:31:55 +0100
+Date: Mon, 15 Sep 2025 14:32:00 +0100
 
-In order to provide extensible module support properties, arrange for
-the SFP quirks to modify any member of the sfp_module_support struct,
-rather than just the ethtool link modes and interfaces.
+Provide a function to retrieve the current sfp_module_caps structure
+so that upstreams can get the entire module support in one go.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/net/phy/sfp-bus.c |  5 ++--
- drivers/net/phy/sfp.c     | 49 +++++++++++++++++++--------------------
- drivers/net/phy/sfp.h     |  4 ++--
- 3 files changed, 28 insertions(+), 30 deletions(-)
+ drivers/net/phy/sfp-bus.c | 6 ++++++
+ include/linux/sfp.h       | 7 +++++++
+ 2 files changed, 13 insertions(+)
 
 diff --git a/drivers/net/phy/sfp-bus.c b/drivers/net/phy/sfp-bus.c
-index 18e5d3de63a8..b7275ecdf19b 100644
+index b7275ecdf19b..f409943f1952 100644
 --- a/drivers/net/phy/sfp-bus.c
 +++ b/drivers/net/phy/sfp-bus.c
-@@ -373,9 +373,8 @@ static void sfp_init_module(struct sfp_bus *bus,
- 	sfp_module_parse_port(bus, id);
- 	sfp_module_may_have_phy(bus, id);
- 
--	if (quirk && quirk->modes)
--		quirk->modes(id, bus->caps.link_modes,
--			     bus->caps.interfaces);
-+	if (quirk && quirk->support)
-+		quirk->support(id, &bus->caps);
- }
- 
- /**
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 4cd1d6c51dc2..d49f91ac2e50 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -440,45 +440,44 @@ static void sfp_fixup_rollball_cc(struct sfp *sfp)
- }
- 
- static void sfp_quirk_2500basex(const struct sfp_eeprom_id *id,
--				unsigned long *modes,
--				unsigned long *interfaces)
-+				struct sfp_module_caps *caps)
- {
--	linkmode_set_bit(ETHTOOL_LINK_MODE_2500baseX_Full_BIT, modes);
--	__set_bit(PHY_INTERFACE_MODE_2500BASEX, interfaces);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_2500baseX_Full_BIT,
-+			 caps->link_modes);
-+	__set_bit(PHY_INTERFACE_MODE_2500BASEX, caps->interfaces);
- }
- 
- static void sfp_quirk_disable_autoneg(const struct sfp_eeprom_id *id,
--				      unsigned long *modes,
--				      unsigned long *interfaces)
-+				      struct sfp_module_caps *caps)
- {
--	linkmode_clear_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, modes);
-+	linkmode_clear_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, caps->link_modes);
- }
- 
- static void sfp_quirk_oem_2_5g(const struct sfp_eeprom_id *id,
--			       unsigned long *modes,
--			       unsigned long *interfaces)
-+			       struct sfp_module_caps *caps)
- {
- 	/* Copper 2.5G SFP */
--	linkmode_set_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT, modes);
--	__set_bit(PHY_INTERFACE_MODE_2500BASEX, interfaces);
--	sfp_quirk_disable_autoneg(id, modes, interfaces);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_2500baseT_Full_BIT,
-+			 caps->link_modes);
-+	__set_bit(PHY_INTERFACE_MODE_2500BASEX, caps->interfaces);
-+	sfp_quirk_disable_autoneg(id, caps);
- }
- 
- static void sfp_quirk_ubnt_uf_instant(const struct sfp_eeprom_id *id,
--				      unsigned long *modes,
--				      unsigned long *interfaces)
-+				      struct sfp_module_caps *caps)
- {
- 	/* Ubiquiti U-Fiber Instant module claims that support all transceiver
- 	 * types including 10G Ethernet which is not truth. So clear all claimed
- 	 * modes and set only one mode which module supports: 1000baseX_Full.
- 	 */
--	linkmode_zero(modes);
--	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT, modes);
-+	linkmode_zero(caps->link_modes);
-+	linkmode_set_bit(ETHTOOL_LINK_MODE_1000baseX_Full_BIT,
-+			 caps->link_modes);
- }
- 
--#define SFP_QUIRK(_v, _p, _m, _f) \
--	{ .vendor = _v, .part = _p, .modes = _m, .fixup = _f, }
--#define SFP_QUIRK_M(_v, _p, _m) SFP_QUIRK(_v, _p, _m, NULL)
-+#define SFP_QUIRK(_v, _p, _s, _f) \
-+	{ .vendor = _v, .part = _p, .support = _s, .fixup = _f, }
-+#define SFP_QUIRK_S(_v, _p, _s) SFP_QUIRK(_v, _p, _s, NULL)
- #define SFP_QUIRK_F(_v, _p, _f) SFP_QUIRK(_v, _p, NULL, _f)
- 
- static const struct sfp_quirk sfp_quirks[] = {
-@@ -514,7 +513,7 @@ static const struct sfp_quirk sfp_quirks[] = {
- 
- 	// HG MXPD-483II-F 2.5G supports 2500Base-X, but incorrectly reports
- 	// 2600MBd in their EERPOM
--	SFP_QUIRK_M("HG GENUINE", "MXPD-483II", sfp_quirk_2500basex),
-+	SFP_QUIRK_S("HG GENUINE", "MXPD-483II", sfp_quirk_2500basex),
- 
- 	// Huawei MA5671A can operate at 2500base-X, but report 1.2GBd NRZ in
- 	// their EEPROM
-@@ -523,9 +522,9 @@ static const struct sfp_quirk sfp_quirks[] = {
- 
- 	// Lantech 8330-262D-E can operate at 2500base-X, but incorrectly report
- 	// 2500MBd NRZ in their EEPROM
--	SFP_QUIRK_M("Lantech", "8330-262D-E", sfp_quirk_2500basex),
-+	SFP_QUIRK_S("Lantech", "8330-262D-E", sfp_quirk_2500basex),
- 
--	SFP_QUIRK_M("UBNT", "UF-INSTANT", sfp_quirk_ubnt_uf_instant),
-+	SFP_QUIRK_S("UBNT", "UF-INSTANT", sfp_quirk_ubnt_uf_instant),
- 
- 	// Walsun HXSX-ATR[CI]-1 don't identify as copper, and use the
- 	// Rollball protocol to talk to the PHY.
-@@ -538,9 +537,9 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
- 
- 	SFP_QUIRK_F("OEM", "SFP-10G-T", sfp_fixup_rollball_cc),
--	SFP_QUIRK_M("OEM", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
--	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-D", sfp_quirk_2500basex),
--	SFP_QUIRK_M("OEM", "SFP-2.5G-BX10-U", sfp_quirk_2500basex),
-+	SFP_QUIRK_S("OEM", "SFP-2.5G-T", sfp_quirk_oem_2_5g),
-+	SFP_QUIRK_S("OEM", "SFP-2.5G-BX10-D", sfp_quirk_2500basex),
-+	SFP_QUIRK_S("OEM", "SFP-2.5G-BX10-U", sfp_quirk_2500basex),
- 	SFP_QUIRK_F("OEM", "RTSFP-10", sfp_fixup_rollball_cc),
- 	SFP_QUIRK_F("OEM", "RTSFP-10G", sfp_fixup_rollball_cc),
- 	SFP_QUIRK_F("Turris", "RTSFP-2.5G", sfp_fixup_rollball),
-diff --git a/drivers/net/phy/sfp.h b/drivers/net/phy/sfp.h
-index 1fd097dccb9f..879dff7afe6a 100644
---- a/drivers/net/phy/sfp.h
-+++ b/drivers/net/phy/sfp.h
-@@ -9,8 +9,8 @@ struct sfp;
- struct sfp_quirk {
- 	const char *vendor;
- 	const char *part;
--	void (*modes)(const struct sfp_eeprom_id *id, unsigned long *modes,
--		      unsigned long *interfaces);
-+	void (*support)(const struct sfp_eeprom_id *id,
-+			struct sfp_module_caps *caps);
- 	void (*fixup)(struct sfp *sfp);
+@@ -33,6 +33,12 @@ struct sfp_bus {
+ 	struct sfp_module_caps caps;
  };
  
++const struct sfp_module_caps *sfp_get_module_caps(struct sfp_bus *bus)
++{
++	return &bus->caps;
++}
++EXPORT_SYMBOL_GPL(sfp_get_module_caps);
++
+ /**
+  * sfp_parse_port() - Parse the EEPROM base ID, setting the port type
+  * @bus: a pointer to the &struct sfp_bus structure for the sfp module
+diff --git a/include/linux/sfp.h b/include/linux/sfp.h
+index 5fb59cf49882..9f29fcad52be 100644
+--- a/include/linux/sfp.h
++++ b/include/linux/sfp.h
+@@ -576,6 +576,7 @@ struct sfp_upstream_ops {
+ };
+ 
+ #if IS_ENABLED(CONFIG_SFP)
++const struct sfp_module_caps *sfp_get_module_caps(struct sfp_bus *bus);
+ int sfp_parse_port(struct sfp_bus *bus, const struct sfp_eeprom_id *id,
+ 		   unsigned long *support);
+ bool sfp_may_have_phy(struct sfp_bus *bus, const struct sfp_eeprom_id *id);
+@@ -600,6 +601,12 @@ int sfp_bus_add_upstream(struct sfp_bus *bus, void *upstream,
+ void sfp_bus_del_upstream(struct sfp_bus *bus);
+ const char *sfp_get_name(struct sfp_bus *bus);
+ #else
++static inline const struct sfp_module_caps *
++sfp_get_module_caps(struct sfp_bus *bus)
++{
++	return NULL;
++}
++
+ static inline int sfp_parse_port(struct sfp_bus *bus,
+ 				 const struct sfp_eeprom_id *id,
+ 				 unsigned long *support)
 -- 
 2.47.3
 
