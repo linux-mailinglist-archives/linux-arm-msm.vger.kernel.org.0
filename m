@@ -1,135 +1,181 @@
-Return-Path: <linux-arm-msm+bounces-73538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73539-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4633B5759D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:08:30 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BA14B575AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:10:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A69B417C876
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 10:08:30 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3576A7A0596
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 10:08:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E535F2FD7BB;
-	Mon, 15 Sep 2025 10:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C91E82FABF2;
+	Mon, 15 Sep 2025 10:10:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mwVaMN+O"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bRi20XHi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9542FAC12
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434162FA0FB
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:10:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757930800; cv=none; b=ZVV9kKoV3CdMxfC5FzfF/1dUYQT+o9JkeNCE3MIUY2+R+i0SQmliWe1oTdzalKEMQFkMhsPvrfi7mAUG+KXOOnOYa4nJVPuzlc2nqReDM8MF4HrFej/E1u8U00M2TFBmj8vhAb7MJNj8JkA29ICRn4bDldHiYXx8Cj8xD04vtwk=
+	t=1757931007; cv=none; b=brgF2F5k/st30vISycvjSf+I0cg8ll4ROGCZAeTJBkfVZnK8AJbTzZOxOhsOR3pXvsWM4AFR6+Lq5v10ZQE/6mdLMmhDJ7Du/KN127NSmPs0/gn2nIlmB0JGf7jHZVxXv/Soq2ZU8fbxWR5e4VHGHZoEpUwyYR/VX7aIwqTCh0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757930800; c=relaxed/simple;
-	bh=8Enp+Mkl2UxqpACVzNToxnoA6OxpULssI+bvEQ0Nf4U=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=hT7QmfatLYGGDRcwv5qz5lTAOeC5GiQMUAOVRHhyBSe4tmnQV7/2Epmkz/awR6KIpOxSWCM88dLxltTCjULo6Vt8Ovb0DPclCI6pySRoa744A2J/TNrljQLpwTY7VS1gUQYSr2ZMnjL7OtCI9ZE+9IfhkdBJIAWth6KBJL2M9g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mwVaMN+O; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45f2c5ef00fso8637865e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 03:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757930796; x=1758535596; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aMJ/RBwT6mg+UjxGTL74eJG4QUt2rz+S26/sAVei4C0=;
-        b=mwVaMN+O7JQojI5YqTtmPbLUEgRTHwx7+kjEd4Hk26ECRuVMtOrUAwNtl23nqe7RZU
-         1hJ108f9SK0/8xqBaMN7vnA03bygmzYGVkOZl+dEgIZPgp1CpJjw9gR60pHJruSVjUkJ
-         6AnAUkcJcmKDMqh1/OAsNdsXDmxIM21IVgACFPzkU6aNcGokJO3PeHwjGmmUGSMbL0qa
-         +Y98Lf3dUAAcQZHPPq+bhvpmMKmqO5XLzeJ+ULPAmkxtdNUe1CmsSE1YVUY6E+FqBml+
-         +4H0TCRgnq3gaqNfLEJ4HX8BRRhL//svw3QCw3WFB6E8C0KlHAv7dgpHU8GOUGD1Zosy
-         V1+w==
+	s=arc-20240116; t=1757931007; c=relaxed/simple;
+	bh=oJqDS6EtytX/4EwWe7RLhEzC5GGSyQ3r5FauvRmpSDM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ankRHjmUNej5y7NiMftHpbLm9GXEN5fY2Dh/PhFTD4p89+CbUtbmQl3iyvDM7QrFwXtgaaXs8aVSSIHVEabUNkJvUVe7YYhneapG5m/xskEb3VcR4OsK2R7glsYjI+ALD4M2BkS3T8xKPrJxFG6ar5ha1fGBqQb2QTk5zsNr1NU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bRi20XHi; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58F8FwqM014464
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:10:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	oJqDS6EtytX/4EwWe7RLhEzC5GGSyQ3r5FauvRmpSDM=; b=bRi20XHiacZCWbyD
+	nnFhvTKCYKBcrF6pLVVEY/ILkKCb2u5bF6NaJll6ONizwWc5ANhK62NewCl44joo
+	eajx0d9CD72YWNjWaTDFmScq8uDJY1Jps2ZCSkg87U0JNvta5DeJ4lPF+jnzPGVz
+	KT2BtL2oLJJBlt7WyE7V0veIBLTpwQV2VRY3vsh6ZgU8PlaP5V2RTtmkTUOYpejL
+	Jt5oYmVCftVRI1ConQJrqSposZdQ9caCDCpeguEuH5KeJg8B70aKv/y/5YsidhBH
+	F1YN2ptpqvXsFzhMscvyrGoluMF7MRokDvrGpbfXl7YzixcZJajCETPRe6zwKB2T
+	AgDvMA==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 494wyr4qrc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:10:05 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b5228e3fee5so558802a12.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 03:10:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757930796; x=1758535596;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aMJ/RBwT6mg+UjxGTL74eJG4QUt2rz+S26/sAVei4C0=;
-        b=s+5QnwiubZ25zwrFcmgMZrD9CZOU/wzzjQL6a3jxh4zB0Re2cUStBvbM1FrpSeqgvy
-         qqgjCMB24S29ctSGpjSk+lBFeZFoeU242PSdLG4IspseddJIkz9JR7MFzX/6ZO32Y7IT
-         aNg/A7gdqzYX8gMrlQWU7JvUOJSdQlRnDn2UbouuOqLn9v4TSSpVeVusXccD/NusKde/
-         T4pCQQ6Qu/9ZDHOA2wsuKOsy2019UL709a14QBIzkEQ17Mk0OIjhpdWmsiixazzbCCdt
-         x3K5vDXEi4tqzhBNs5HOp5yKznBvv3LwwCtdGmGSc04yyxXzKYGVrr+KtCtUE/iOcJB3
-         cJCg==
-X-Forwarded-Encrypted: i=1; AJvYcCXiadvN6H8L4T+/GKkDmEH5Ef8x27W/WkhYJucKrtf9zuLFJBOrBjK1HLiSjTFYqQSUXccPlMVrHsmMTjbK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYPJFM+csGdx3qJm1kckMAen2lB7Iy7QkST/H8kNpVDYO13JRV
-	ISYwyerfFtbhqKZNR4HUS7PWlKX37isoZ/VqSzUBJfE/25eMYSMLqtljwKjXJOE5Y5g=
-X-Gm-Gg: ASbGncteZi2Rd46FUKM2uiWxJWK+c1EXupz8HYntpaP6KlnVkcocKP17zeJb+XOdDcm
-	jMYkl9YxqjjunnsYZU28qcKLQJt7ZBFZrviCrZ/FkhNS5kl8lkH6tX0ebRmYzispal01lbYHo4u
-	hVq3eiRLI6NnHz9x5pdxuZw5ITvFQAt8Wzaxt52JShUuh8vPNGXzJsINM80+GRpxHkciVuucGte
-	87F2csqJxOXV9r9AD0EOs6T4/FzMjDyJ6z36v8xD9qh099OlE6t6reoYZtOT3HVQQ6WYjywcvr6
-	hfFz/S70cSIbOD5hGeza6Iu/Jvx0nrKmgb58xRIbw7neVop0cUHoJy4obbLu9nbB/R9iGriYWAY
-	klrRnreIBrosMgMh9/ZqE5dPJSFtXI3Aa0G+NQUfOLh2Plg==
-X-Google-Smtp-Source: AGHT+IGAYfNbairUcoKCWSDsEU5WSecLpPfBO1ydBVHA7jvKLsoeowirgMHHx11PlHl8N8clREqLbQ==
-X-Received: by 2002:a05:6000:2509:b0:3e2:fd26:10f0 with SMTP id ffacd0b85a97d-3e765594128mr11920512f8f.11.1757930795969;
-        Mon, 15 Sep 2025 03:06:35 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2454:ff21:41:eee1:5042:e713:2e9a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607cd4cdsm17209127f8f.37.2025.09.15.03.06.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 03:06:35 -0700 (PDT)
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 15 Sep 2025 12:06:20 +0200
-Subject: [PATCH v2 9/9] arm64: dts: qcom: x1e80100-dell-xps13-9345: Enable
- IRIS
+        d=1e100.net; s=20230601; t=1757931004; x=1758535804;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=oJqDS6EtytX/4EwWe7RLhEzC5GGSyQ3r5FauvRmpSDM=;
+        b=jPsYYXIsUKtW5nXvmrkK7/UYL6igHnKi9W4qh3a38XCNT2IfEgIuGtX86P7SqUukMz
+         5OTCYlRzRvVWQ3scjguEXuKtqauvkQ+Usw70uQlFJK97rKb7+eAY1LG85oGAEnaVopV1
+         G4GjwLLtFl3k9F5Rbwpo9VzdNWNewxUOiKNiUmHQPpdNHv1JbQJTVCDFhePjnGfsX53H
+         fMNP1HS1U+b+4ypOu3l2gEJK7xqxUi8DABY9qq+y5cy9wFQxI/9VxXjd3LjtfjUIAHwv
+         t/q5QK470zHfyvqFuskHtyi44wXfhLE4PcANfRHX4K9S1fWGowWHwLollZ9d4G6aGgrP
+         S4Mw==
+X-Forwarded-Encrypted: i=1; AJvYcCXO+yJ1M4HV9+EcOqenOrXH+hxW5Nzs3OHYbwEnEiqMGZj4oXGvuXwnak5KS3beRrPThXYdQln/o5+Pc289@vger.kernel.org
+X-Gm-Message-State: AOJu0YzR0Gb2OCO9QRtBaWv+D6jbe8NlJ+FpCbRCwIk8AHP3Bt6QGsh1
+	NlCcWSdjfIQeIZTeVi/4BYYVF2mTK2FDahhUi/uaX4IxFHTYXhburpT7ZSGTIndvgbEGcO1s3XD
+	MCT+DRn/1QbebHRkYzZyAaM+TjDN80gxVO4ObnSy/t91BYzoq7ZFV/7p51mIYrK+7A+el
+X-Gm-Gg: ASbGncuWx6SBav6XjOAXUAjrkRg93KverusuuxN+gB6ax1MRa8LaqhfhpXTfuO6mEVy
+	slzoR7EEN1ESHjroTOVPnWfnLYVXS783avQa2hv7sOifjudWvjmXbSYrZHr/AabqjijAqi7Dsvy
+	0dsYlXBn6tH+EZYftHuNMfwEY0IPiaQaISLsP977Wv4zZP/QsBTkK2kaGmN7SQyjVQFXT/w/4Xz
+	XvTMqrnP1nbzOFKhFbt/XemkPWnfIYbBDeImfVqeTKfWk+CDVenJnTsNMEYx8yKlh0VYi3UN3zh
+	pX9GGQPwH1tQiPm9hUzeOC7/gF965Ug8nYe6rjvHQT7nauCG2VD5se2m8E8OeaC8SZFkiGIkuqm
+	33OwCgN3v8Rd/KGQdc5Nsvu9K4LmLcCQYE2c=
+X-Received: by 2002:a05:6a00:7608:b0:776:165d:e0df with SMTP id d2e1a72fcca58-776165de1e8mr5272817b3a.0.1757931003875;
+        Mon, 15 Sep 2025 03:10:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHL+aEaZbmtt8mkehB/0dhBi1/0r9uuMfBdz44WzDP2mKLR/7wRH7bmQR6ne33XUYpBhPwb1w==
+X-Received: by 2002:a05:6a00:7608:b0:776:165d:e0df with SMTP id d2e1a72fcca58-776165de1e8mr5272797b3a.0.1757931003421;
+        Mon, 15 Sep 2025 03:10:03 -0700 (PDT)
+Received: from [10.133.33.231] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7760793b5fasm13129962b3a.16.2025.09.15.03.09.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 15 Sep 2025 03:10:03 -0700 (PDT)
+Message-ID: <4dd37b1f-2175-4759-a250-fee4ed2bd39c@oss.qualcomm.com>
+Date: Mon, 15 Sep 2025 18:09:56 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250915-x1e-iris-dt-v2-9-1f928de08fd4@linaro.org>
-References: <20250915-x1e-iris-dt-v2-0-1f928de08fd4@linaro.org>
-In-Reply-To: <20250915-x1e-iris-dt-v2-0-1f928de08fd4@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>, 
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Neil Armstrong <neil.armstrong@linaro.org>, 
- Alexey Klimov <alexey.klimov@linaro.org>, 
- Anthony Ruhier <aruhier@mailbox.org>, 
- Stefan Schmidt <stefan.schmidt@linaro.org>
-X-Mailer: b4 0.14.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] dt-bindings: display/msm: dp-controller: Add SM6150
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Kuogee Hsieh <quic_khsieh@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com,
+        li.liu@oss.qualcomm.com
+References: <20250912-add-dp-controller-support-for-sm6150-v1-0-02b34b7b719d@oss.qualcomm.com>
+ <20250912-add-dp-controller-support-for-sm6150-v1-1-02b34b7b719d@oss.qualcomm.com>
+ <sx64y6vfov4yag46erckpbl7avwmqlsqt3siebckn76m6jqxjh@f5lueyih6n3q>
+ <d3743c52-4e84-4729-9f64-af856419d504@oss.qualcomm.com>
+ <droyp5atpjauyttqkwqzk64kkghg6jkkubvfz3zlbrodyzlvoe@fbns762o6vcq>
+ <6bb0cbd0-d3b2-4359-a2d0-6b757f66d0e0@oss.qualcomm.com>
+ <v3vuphn3n4w6ynpaqeosechjdcelomn53atwfotka7izqvjuid@nnvdwxqlelrp>
+From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+In-Reply-To: <v3vuphn3n4w6ynpaqeosechjdcelomn53atwfotka7izqvjuid@nnvdwxqlelrp>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: Q7Wseoq6zuJdYrOUwnQ1Jzl7xufsYKwD
+X-Authority-Analysis: v=2.4 cv=SouQ6OO0 c=1 sm=1 tr=0 ts=68c7e5fd cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=3s9BUBv2AkJYRnd1iEsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAwMCBTYWx0ZWRfX/m1oiFnXKdCi
+ M87ZLHqL4GbJ82tdJheFRLFVBD2ju7riYhzMahlQLeCZla0NcxRTmHZ/GzdqjNE6QdfSBCAEpAS
+ mqUQKtj/sHC0fzz0jFWyPMYhMig+1ISredE/moMjBxrL3Wi87YKr9HtBpmr/JZMIN5t7mafNe/O
+ mBH3WzrlnSG+t9VF6o2APguQdnRKsfahPpr12mj12eR+bZTwTinaOYNd2FDjFiJTEec4wvmnKQm
+ 5+UCc6mE7vE+0pNYGTWF1jtovLIv0GBzS9Krtdp3qoiR97+WBo4UhDiDoItT77vm6Jq0nCqByVD
+ rO/vfflT7j0xpYsUmtw1Y7kW0y8gT6c0wZ1lrHMGDofCVZiap8Pj6+fV0o0u9osRotlJKMoQqnu
+ h68XWTTC
+X-Proofpoint-GUID: Q7Wseoq6zuJdYrOUwnQ1Jzl7xufsYKwD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-15_04,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
+ priorityscore=1501 malwarescore=0 bulkscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509130000
 
-Enable IRIS to allow using the hardware-accelerated video codecs. The
-firmware is not upstream in linux-firmware yet, so users need to copy it
-from Windows to qcom/x1e80100/dell/xps13-9345/qcvss8380.mbn (just like
-GPU/ADSP/CDSP firmware).
 
-Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
----
- arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+On 9/15/2025 6:03 PM, Dmitry Baryshkov wrote:
+> On Mon, Sep 15, 2025 at 02:26:12PM +0800, Xiangxu Yin wrote:
+>> On 9/12/2025 8:10 PM, Dmitry Baryshkov wrote:
+>>> On Fri, Sep 12, 2025 at 07:54:31PM +0800, Xiangxu Yin wrote:
+>>>> On 9/12/2025 7:46 PM, Dmitry Baryshkov wrote:
+>>>>> On Fri, Sep 12, 2025 at 07:39:16PM +0800, Xiangxu Yin wrote:
+>>>>>> Add DisplayPort controller for Qualcomm SM6150 SoC.
+>>>>>> SM6150 shares the same configuration as SM8350, its hardware capabilities
+>>>>>> differ about HBR3. Explicitly listing it ensures clarity and avoids
+>>>>>> potential issues if SM8350 support evolves in the future.
+>>>>> The controller is exactly the same as the one present on SM8150. HBR3 is
+>>>>> a property of the PHY.
+>>>> Ok, will update commit msg.
+>>> Please red my response again. What does it says to you wrt bindings?
+>>>
+>> Yes, SM6150 uses the same DisplayPort controller IP as SM8150. I wasn’t
+>> previously familiar with how fallback compatibility is defined in the
+>> bindings. Since SM6150 will be declared as a fallback to sm8350-dp, is it
+>> fine to drop the driver patch ([2/2])?
+> Yes
+>
+>> Here’s the updated commit message for [1/2], does it match your expectation?
+>> 'SM6150 uses the same controller IP as SM8150. Declare SM6150 as a fallback
+>> compatible to sm8350-dp for consistency with existing bindings and to ensure
+>> correct matching and future clarity.'
+> I'd prefer if we have "qcom,sm6150-dp", "qcom-sm8150-dp",
+> "qcom-sm8350-dp".
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-index 19a2604038a88f37e6ab87129a6318db78345339..58f8caaa7258077d2c267048ca048279109ddb71 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
-@@ -875,6 +875,11 @@ touchpad@2c {
- 	};
- };
- 
-+&iris {
-+	firmware-name = "qcom/x1e80100/dell/xps13-9345/qcvss8380.mbn";
-+	status = "okay";
-+};
-+
- &mdss {
- 	status = "okay";
- };
 
--- 
-2.50.1
+Ok. will update next patch.
+'qcom,sm6150-dp' uses the same controller IP as 'qcom,sm8150-dp' ...
+fallback compatible to 'qcom-sm8350-dp' ...
+
 
 
