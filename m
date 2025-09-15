@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-73587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4882B57D54
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 15:34:39 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98ECFB57D64
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 15:35:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6B220169CC3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:32:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B04211709EB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:32:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EDF9313271;
-	Mon, 15 Sep 2025 13:32:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25350315D56;
+	Mon, 15 Sep 2025 13:32:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="Npr+EvYu"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="vJce4lqN"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41003128CB;
-	Mon, 15 Sep 2025 13:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7690C30FC17;
+	Mon, 15 Sep 2025 13:32:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757943126; cv=none; b=XEj4QdjW4d2C9iYfTpZ5SDCvMzIMaGuz1YC8h76OQJbx5UgXNHbVZLi0kHQqjbbcZxQzjGxvIbsnt4COVh8iSB9QyUJtm7mLDi711WzxizKyBIsmbEmDNVXSgMtrQMJphAY/8VWd4nvZmbScgIK58g914vG2VKvZswDA55kKDRY=
+	t=1757943132; cv=none; b=jEOiBlL6O0QW2EqGRGXoTg47L6g04UDw0ggVRyjDKCrIS+GQh5Zx3XBcq4Vn0eaFIFZN0elN/vADw2h4VARHyUG9wpLcG8pXn7V+StBNRp6oMUnUdd7WJhxX/YHxzs2ghWk8Q2rIPH5alqJEWq/1lCFhH420yQozHMplco+Faew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757943126; c=relaxed/simple;
-	bh=zrQicUNoo6UgynPyMyDCeR2T6ObaM+KXzOtK+UfCdqM=;
+	s=arc-20240116; t=1757943132; c=relaxed/simple;
+	bh=9dFDPFmtZ/9LGuBu1fnXanu7z5/nsogk7phMx3vrkpY=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=UqwrsHQCTpG1uL1fhTrA4Jt8Pa70JKm4F+yHnm7ErY/3Lo41atB2CxSDD77P43owyr0qsJr+8JKt16Wl4speHL3tdPeQL0jG5z1xR1g3uk9RfF4WUc+zS8kAnvK1vrXjVtEI53X5CBhqJ1gDl4J6LxQx35T5ymibMzQuAoal35k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=Npr+EvYu; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=XAli28iuCdLx8vuyXnkLyT0nIz4Z6v/9cbAK1Iy70qp6j3N9mQNXd8x3nPZJb6r50mn7aBWmNnnnUqqVlyXLek6tGePY5APGM8L6OGOJcChsgUV9inVa9oOYGAuU+kewEvL5c6cjDqV63MhBLHueLzN535ZoSuJxOvFVP+OezQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=vJce4lqN; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,22 +37,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=5BAGv8bXy6yGoJ0dUhvbeeGHyvCJ5y2qDB9qmmx7p1E=; b=Npr+EvYuelWGLsdmeVazKkEnO+
-	O3Uv7640Ocxrt3Cg2CtZt9EfHPf5gTHjyW4dFAqXG+OrH0eMYrGtDkxh5SprmJbtGYhnb75+Lh8N6
-	CsmGfQNXeFofqYYAT7P0f2Zmkn4uynSCzosmpmNc5ZN/0eLOrQBog7YDN5R/+wLmGs1/GfxRnT7vY
-	gJm7mjf99D1Y7xIV+ofHtlFZjnVMmd4kicY4E7+2g6DuHTmLieKQOo4SqK99MNrYKBkZKFVpZtRWG
-	4jysYgsMguVoiaYPPcYv1+nqli+DCkNl7B1tWs0w7hl+QVhG9idUHWM81vEus2l8FSX2Gd399psYQ
-	FPEf3KeA==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:56240 helo=rmk-PC.armlinux.org.uk)
+	bh=XrZQjeXWFXcPjV0BXPB31uzCMYyTCFRzpQL/v8AKa/4=; b=vJce4lqNlbNGDlzJMlEdmG7o9c
+	piqVfR1tWNSmeH6aHDzmrsOGfQ/Mw7bdn60/eqjchp5ccQUiNVJyZ6hgfCesAIVtOgYZBskwNIBNK
+	CnIzqnDptX83/8snbTD1sHmBn7Dp35Cp3q4OlDhqkgjd/1KiGLHH/Mu9wJmdVWAz/iNRmF2Cf9FBE
+	AOwsexP7nCntk3yFkMWb0Ups3sg8/SrrjRhk0OTTdjPOGHXnc8iHQLZcwj7cop92Tf1AJ/QkTrw2A
+	IlBGfjSdHklHHAnNR78qZL+0O+szd2gX3Ii2/DKvlwA3atIxcufWKcMLHRr2PxLO9NupDtBqCZRFX
+	jG3QIv9w==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:56256 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1uy9JJ-000000000Mq-1kmY;
-	Mon, 15 Sep 2025 14:32:01 +0100
+	id 1uy9JO-000000000N5-2EQi;
+	Mon, 15 Sep 2025 14:32:06 +0100
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1uy9JI-00000005ji1-30CX;
-	Mon, 15 Sep 2025 14:32:00 +0100
+	id 1uy9JN-00000005ji7-3TOB;
+	Mon, 15 Sep 2025 14:32:05 +0100
 In-Reply-To: <aMgRwdtmDPNqbx4n@shell.armlinux.org.uk>
 References: <aMgRwdtmDPNqbx4n@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -65,7 +65,7 @@ Cc: "David S. Miller" <davem@davemloft.net>,
 	"Marek Beh__n" <kabel@kernel.org>,
 	netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH net-next 4/7] net: sfp: provide sfp_get_module_caps()
+Subject: [PATCH net-next 5/7] net: phylink: use sfp_get_module_caps()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,61 +75,45 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1uy9JI-00000005ji1-30CX@rmk-PC.armlinux.org.uk>
+Message-Id: <E1uy9JN-00000005ji7-3TOB@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 15 Sep 2025 14:32:00 +0100
+Date: Mon, 15 Sep 2025 14:32:05 +0100
 
-Provide a function to retrieve the current sfp_module_caps structure
-so that upstreams can get the entire module support in one go.
+Use sfp_get_module_caps() to get SFP module's capabilities.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/net/phy/sfp-bus.c | 6 ++++++
- include/linux/sfp.h       | 7 +++++++
- 2 files changed, 13 insertions(+)
+ drivers/net/phy/phylink.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/phy/sfp-bus.c b/drivers/net/phy/sfp-bus.c
-index b7275ecdf19b..f409943f1952 100644
---- a/drivers/net/phy/sfp-bus.c
-+++ b/drivers/net/phy/sfp-bus.c
-@@ -33,6 +33,12 @@ struct sfp_bus {
- 	struct sfp_module_caps caps;
- };
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index 1988b7d2089a..0c2b7538e492 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -3747,17 +3747,18 @@ static int phylink_sfp_config_optical(struct phylink *pl)
+ static int phylink_sfp_module_insert(void *upstream,
+ 				     const struct sfp_eeprom_id *id)
+ {
++	const struct sfp_module_caps *caps;
+ 	struct phylink *pl = upstream;
  
-+const struct sfp_module_caps *sfp_get_module_caps(struct sfp_bus *bus)
-+{
-+	return &bus->caps;
-+}
-+EXPORT_SYMBOL_GPL(sfp_get_module_caps);
-+
- /**
-  * sfp_parse_port() - Parse the EEPROM base ID, setting the port type
-  * @bus: a pointer to the &struct sfp_bus structure for the sfp module
-diff --git a/include/linux/sfp.h b/include/linux/sfp.h
-index 5fb59cf49882..9f29fcad52be 100644
---- a/include/linux/sfp.h
-+++ b/include/linux/sfp.h
-@@ -576,6 +576,7 @@ struct sfp_upstream_ops {
- };
+ 	ASSERT_RTNL();
  
- #if IS_ENABLED(CONFIG_SFP)
-+const struct sfp_module_caps *sfp_get_module_caps(struct sfp_bus *bus);
- int sfp_parse_port(struct sfp_bus *bus, const struct sfp_eeprom_id *id,
- 		   unsigned long *support);
- bool sfp_may_have_phy(struct sfp_bus *bus, const struct sfp_eeprom_id *id);
-@@ -600,6 +601,12 @@ int sfp_bus_add_upstream(struct sfp_bus *bus, void *upstream,
- void sfp_bus_del_upstream(struct sfp_bus *bus);
- const char *sfp_get_name(struct sfp_bus *bus);
- #else
-+static inline const struct sfp_module_caps *
-+sfp_get_module_caps(struct sfp_bus *bus)
-+{
-+	return NULL;
-+}
-+
- static inline int sfp_parse_port(struct sfp_bus *bus,
- 				 const struct sfp_eeprom_id *id,
- 				 unsigned long *support)
+-	linkmode_zero(pl->sfp_support);
+-	phy_interface_zero(pl->sfp_interfaces);
+-	sfp_parse_support(pl->sfp_bus, id, pl->sfp_support, pl->sfp_interfaces);
+-	pl->sfp_port = sfp_parse_port(pl->sfp_bus, id, pl->sfp_support);
++	caps = sfp_get_module_caps(pl->sfp_bus);
++	phy_interface_copy(pl->sfp_interfaces, caps->interfaces);
++	linkmode_copy(pl->sfp_support, caps->link_modes);
++	pl->sfp_may_have_phy = caps->may_have_phy;
++	pl->sfp_port = caps->port;
+ 
+ 	/* If this module may have a PHY connecting later, defer until later */
+-	pl->sfp_may_have_phy = sfp_may_have_phy(pl->sfp_bus, id);
+ 	if (pl->sfp_may_have_phy)
+ 		return 0;
+ 
 -- 
 2.47.3
 
