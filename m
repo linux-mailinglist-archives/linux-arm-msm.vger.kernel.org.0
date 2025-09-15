@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-73588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98ECFB57D64
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 15:35:13 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DF176B57D49
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 15:33:55 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B04211709EB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:32:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AFD23A777C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:32:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25350315D56;
-	Mon, 15 Sep 2025 13:32:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1954C313276;
+	Mon, 15 Sep 2025 13:32:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="vJce4lqN"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="KDnINY4W"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7690C30FC17;
-	Mon, 15 Sep 2025 13:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E83D3191A6;
+	Mon, 15 Sep 2025 13:32:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757943132; cv=none; b=jEOiBlL6O0QW2EqGRGXoTg47L6g04UDw0ggVRyjDKCrIS+GQh5Zx3XBcq4Vn0eaFIFZN0elN/vADw2h4VARHyUG9wpLcG8pXn7V+StBNRp6oMUnUdd7WJhxX/YHxzs2ghWk8Q2rIPH5alqJEWq/1lCFhH420yQozHMplco+Faew=
+	t=1757943137; cv=none; b=DAX5FrlhTZ+0j8AksxoZvUQUhmFnYGi5J35hJHva0W2Q+FBPJrVli3XrqKB8AKMKHN2ulg0HDqSwiIaAnCBaXEtvKwsjjALuEVXl10oIUpiLRZILjDSgXFePdMmGEbI7hrsvRMbiOP+6iBzaKpgcX227YoHqhDxbPpIw18ITJkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757943132; c=relaxed/simple;
-	bh=9dFDPFmtZ/9LGuBu1fnXanu7z5/nsogk7phMx3vrkpY=;
+	s=arc-20240116; t=1757943137; c=relaxed/simple;
+	bh=Lmlk/cSh1K23kRvMuFUqbv/Qn0+tL37gTDo8AtKNwo0=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=XAli28iuCdLx8vuyXnkLyT0nIz4Z6v/9cbAK1Iy70qp6j3N9mQNXd8x3nPZJb6r50mn7aBWmNnnnUqqVlyXLek6tGePY5APGM8L6OGOJcChsgUV9inVa9oOYGAuU+kewEvL5c6cjDqV63MhBLHueLzN535ZoSuJxOvFVP+OezQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=vJce4lqN; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=DwfZcXFbG78UAi7URerAhu3Vuy8QkahlJLgo8TFC5iGnkU5TtVdQQEJl/od9B3fofeH0gGHB5saICEGBOgUeYYaAEObJ6refNOgQgEbQtN9q45hxrCvlIS8y5hNW9eqD4iEWIvdB9tI7UFlukMXAW+vmoMlFt9reKTtJXOfMR5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=KDnINY4W; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,22 +37,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=XrZQjeXWFXcPjV0BXPB31uzCMYyTCFRzpQL/v8AKa/4=; b=vJce4lqNlbNGDlzJMlEdmG7o9c
-	piqVfR1tWNSmeH6aHDzmrsOGfQ/Mw7bdn60/eqjchp5ccQUiNVJyZ6hgfCesAIVtOgYZBskwNIBNK
-	CnIzqnDptX83/8snbTD1sHmBn7Dp35Cp3q4OlDhqkgjd/1KiGLHH/Mu9wJmdVWAz/iNRmF2Cf9FBE
-	AOwsexP7nCntk3yFkMWb0Ups3sg8/SrrjRhk0OTTdjPOGHXnc8iHQLZcwj7cop92Tf1AJ/QkTrw2A
-	IlBGfjSdHklHHAnNR78qZL+0O+szd2gX3Ii2/DKvlwA3atIxcufWKcMLHRr2PxLO9NupDtBqCZRFX
-	jG3QIv9w==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:56256 helo=rmk-PC.armlinux.org.uk)
+	bh=mG7HVcrqW6ZMYulncZv3wpXhhyP3H4rqhSTgByg4Y9s=; b=KDnINY4W9abNFFY54dA84UhhbE
+	nUqt99wiGIeKUFl9KeJUv3uV1N1o+zvYpXNfyEW7fQ/140lnmAcVlNEcc6ByviE3fZyf7OpohJNWA
+	U7d1CjHjkQTAieGHRwWLnMFs+2ob7OfDVUBOn7xu7IvklTIdrU2YhopwCscm1HJ6DVKD55+YJLxnQ
+	E+aZHPdh/VKE7v66hsP9RaaI0cJ/VJ965KwXwmie/AKISiYWoaBv/v+Bsv/J+dW+1kS6w6Dqoh4+a
+	pw5LX71ALOWZHdYTpZXkgI1fNGcFmVL5eZFZwDhPM+JFWTJaWzk67IAwgzkBUXCKp+tssnh9vra0m
+	KmaiIbxQ==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:53114 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1uy9JO-000000000N5-2EQi;
-	Mon, 15 Sep 2025 14:32:06 +0100
+	id 1uy9JT-000000000NJ-2fx2;
+	Mon, 15 Sep 2025 14:32:11 +0100
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1uy9JN-00000005ji7-3TOB;
-	Mon, 15 Sep 2025 14:32:05 +0100
+	id 1uy9JS-00000005jiD-3thK;
+	Mon, 15 Sep 2025 14:32:10 +0100
 In-Reply-To: <aMgRwdtmDPNqbx4n@shell.armlinux.org.uk>
 References: <aMgRwdtmDPNqbx4n@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -65,7 +65,8 @@ Cc: "David S. Miller" <davem@davemloft.net>,
 	"Marek Beh__n" <kabel@kernel.org>,
 	netdev@vger.kernel.org,
 	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH net-next 5/7] net: phylink: use sfp_get_module_caps()
+Subject: [PATCH net-next 6/7] net: phy: update all PHYs to use
+ sfp_get_module_caps()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,44 +76,162 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1uy9JN-00000005ji7-3TOB@rmk-PC.armlinux.org.uk>
+Message-Id: <E1uy9JS-00000005jiD-3thK@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Mon, 15 Sep 2025 14:32:05 +0100
+Date: Mon, 15 Sep 2025 14:32:10 +0100
 
-Use sfp_get_module_caps() to get SFP module's capabilities.
+Update all PHYs to use sfp_get_module_caps() rather than the
+sfp_parse_*() family of functions.
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/net/phy/phylink.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/net/phy/marvell-88x2222.c | 13 ++++++-------
+ drivers/net/phy/marvell.c         |  8 +++-----
+ drivers/net/phy/marvell10g.c      |  7 +++----
+ drivers/net/phy/qcom/at803x.c     |  9 ++++-----
+ drivers/net/phy/qcom/qca807x.c    |  7 +++----
+ 5 files changed, 19 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
-index 1988b7d2089a..0c2b7538e492 100644
---- a/drivers/net/phy/phylink.c
-+++ b/drivers/net/phy/phylink.c
-@@ -3747,17 +3747,18 @@ static int phylink_sfp_config_optical(struct phylink *pl)
- static int phylink_sfp_module_insert(void *upstream,
- 				     const struct sfp_eeprom_id *id)
+diff --git a/drivers/net/phy/marvell-88x2222.c b/drivers/net/phy/marvell-88x2222.c
+index fad2f54c1eac..894bcee61e65 100644
+--- a/drivers/net/phy/marvell-88x2222.c
++++ b/drivers/net/phy/marvell-88x2222.c
+@@ -475,21 +475,20 @@ static int mv2222_config_init(struct phy_device *phydev)
+ 
+ static int mv2222_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
  {
+-	DECLARE_PHY_INTERFACE_MASK(interfaces);
+ 	struct phy_device *phydev = upstream;
 +	const struct sfp_module_caps *caps;
- 	struct phylink *pl = upstream;
+ 	phy_interface_t sfp_interface;
+ 	struct mv2222_data *priv;
+ 	struct device *dev;
+ 	int ret;
  
- 	ASSERT_RTNL();
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_supported) = { 0, };
+-
+ 	priv = phydev->priv;
+ 	dev = &phydev->mdio.dev;
  
--	linkmode_zero(pl->sfp_support);
--	phy_interface_zero(pl->sfp_interfaces);
--	sfp_parse_support(pl->sfp_bus, id, pl->sfp_support, pl->sfp_interfaces);
--	pl->sfp_port = sfp_parse_port(pl->sfp_bus, id, pl->sfp_support);
-+	caps = sfp_get_module_caps(pl->sfp_bus);
-+	phy_interface_copy(pl->sfp_interfaces, caps->interfaces);
-+	linkmode_copy(pl->sfp_support, caps->link_modes);
-+	pl->sfp_may_have_phy = caps->may_have_phy;
-+	pl->sfp_port = caps->port;
+-	sfp_parse_support(phydev->sfp_bus, id, sfp_supported, interfaces);
+-	phydev->port = sfp_parse_port(phydev->sfp_bus, id, sfp_supported);
+-	sfp_interface = sfp_select_interface(phydev->sfp_bus, sfp_supported);
++	caps = sfp_get_module_caps(phydev->sfp_bus);
++
++	phydev->port = caps->port;
++	sfp_interface = sfp_select_interface(phydev->sfp_bus, caps->link_modes);
  
- 	/* If this module may have a PHY connecting later, defer until later */
--	pl->sfp_may_have_phy = sfp_may_have_phy(pl->sfp_bus, id);
- 	if (pl->sfp_may_have_phy)
- 		return 0;
+ 	dev_info(dev, "%s SFP module inserted\n", phy_modes(sfp_interface));
+ 
+@@ -502,7 +501,7 @@ static int mv2222_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
+ 	}
+ 
+ 	priv->line_interface = sfp_interface;
+-	linkmode_and(priv->supported, phydev->supported, sfp_supported);
++	linkmode_and(priv->supported, phydev->supported, caps->link_modes);
+ 
+ 	ret = mv2222_config_line(phydev);
+ 	if (ret < 0)
+diff --git a/drivers/net/phy/marvell.c b/drivers/net/phy/marvell.c
+index 0ea366c1217e..c248c90510ae 100644
+--- a/drivers/net/phy/marvell.c
++++ b/drivers/net/phy/marvell.c
+@@ -3600,20 +3600,18 @@ static int marvell_probe(struct phy_device *phydev)
+ 
+ static int m88e1510_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
+ {
+-	DECLARE_PHY_INTERFACE_MASK(interfaces);
+ 	struct phy_device *phydev = upstream;
++	const struct sfp_module_caps *caps;
+ 	phy_interface_t interface;
+ 	struct device *dev;
+ 	int oldpage;
+ 	int ret = 0;
+ 	u16 mode;
+ 
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(supported) = { 0, };
+-
+ 	dev = &phydev->mdio.dev;
+ 
+-	sfp_parse_support(phydev->sfp_bus, id, supported, interfaces);
+-	interface = sfp_select_interface(phydev->sfp_bus, supported);
++	caps = sfp_get_module_caps(phydev->sfp_bus);
++	interface = sfp_select_interface(phydev->sfp_bus, caps->link_modes);
+ 
+ 	dev_info(dev, "%s SFP module inserted\n", phy_modes(interface));
+ 
+diff --git a/drivers/net/phy/marvell10g.c b/drivers/net/phy/marvell10g.c
+index 13e81dff42c1..8fd42131cdbf 100644
+--- a/drivers/net/phy/marvell10g.c
++++ b/drivers/net/phy/marvell10g.c
+@@ -466,12 +466,11 @@ static int mv3310_set_edpd(struct phy_device *phydev, u16 edpd)
+ static int mv3310_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
+ {
+ 	struct phy_device *phydev = upstream;
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(support) = { 0, };
+-	DECLARE_PHY_INTERFACE_MASK(interfaces);
++	const struct sfp_module_caps *caps;
+ 	phy_interface_t iface;
+ 
+-	sfp_parse_support(phydev->sfp_bus, id, support, interfaces);
+-	iface = sfp_select_interface(phydev->sfp_bus, support);
++	caps = sfp_get_module_caps(phydev->sfp_bus);
++	iface = sfp_select_interface(phydev->sfp_bus, caps->link_modes);
+ 
+ 	if (iface != PHY_INTERFACE_MODE_10GBASER) {
+ 		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
+diff --git a/drivers/net/phy/qcom/at803x.c b/drivers/net/phy/qcom/at803x.c
+index 51a132242462..338acd11a9b6 100644
+--- a/drivers/net/phy/qcom/at803x.c
++++ b/drivers/net/phy/qcom/at803x.c
+@@ -771,10 +771,10 @@ static int at8031_register_regulators(struct phy_device *phydev)
+ 
+ static int at8031_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
+ {
+-	struct phy_device *phydev = upstream;
+ 	__ETHTOOL_DECLARE_LINK_MODE_MASK(phy_support);
+ 	__ETHTOOL_DECLARE_LINK_MODE_MASK(sfp_support);
+-	DECLARE_PHY_INTERFACE_MASK(interfaces);
++	struct phy_device *phydev = upstream;
++	const struct sfp_module_caps *caps;
+ 	phy_interface_t iface;
+ 
+ 	linkmode_zero(phy_support);
+@@ -784,12 +784,11 @@ static int at8031_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
+ 	phylink_set(phy_support, Pause);
+ 	phylink_set(phy_support, Asym_Pause);
+ 
+-	linkmode_zero(sfp_support);
+-	sfp_parse_support(phydev->sfp_bus, id, sfp_support, interfaces);
++	caps = sfp_get_module_caps(phydev->sfp_bus);
+ 	/* Some modules support 10G modes as well as others we support.
+ 	 * Mask out non-supported modes so the correct interface is picked.
+ 	 */
+-	linkmode_and(sfp_support, phy_support, sfp_support);
++	linkmode_and(sfp_support, phy_support, caps->link_modes);
+ 
+ 	if (linkmode_empty(sfp_support)) {
+ 		dev_err(&phydev->mdio.dev, "incompatible SFP module inserted\n");
+diff --git a/drivers/net/phy/qcom/qca807x.c b/drivers/net/phy/qcom/qca807x.c
+index 070dc8c00835..1be8295a95cb 100644
+--- a/drivers/net/phy/qcom/qca807x.c
++++ b/drivers/net/phy/qcom/qca807x.c
+@@ -646,13 +646,12 @@ static int qca807x_phy_package_config_init_once(struct phy_device *phydev)
+ static int qca807x_sfp_insert(void *upstream, const struct sfp_eeprom_id *id)
+ {
+ 	struct phy_device *phydev = upstream;
+-	__ETHTOOL_DECLARE_LINK_MODE_MASK(support) = { 0, };
++	const struct sfp_module_caps *caps;
+ 	phy_interface_t iface;
+ 	int ret;
+-	DECLARE_PHY_INTERFACE_MASK(interfaces);
+ 
+-	sfp_parse_support(phydev->sfp_bus, id, support, interfaces);
+-	iface = sfp_select_interface(phydev->sfp_bus, support);
++	caps = sfp_get_module_caps(phydev->sfp_bus);
++	iface = sfp_select_interface(phydev->sfp_bus, caps->link_modes);
+ 
+ 	dev_info(&phydev->mdio.dev, "%s SFP module inserted\n", phy_modes(iface));
  
 -- 
 2.47.3
