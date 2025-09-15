@@ -1,215 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-73562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73563-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22CE8B577C9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:14:57 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66083B577D2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:15:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6601D3B5347
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:14:55 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 1EA732019B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:15:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EFA52FE581;
-	Mon, 15 Sep 2025 11:14:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 762722FF157;
+	Mon, 15 Sep 2025 11:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dJx7+62O"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="nsHYZiSD"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f66.google.com (mail-ej1-f66.google.com [209.85.218.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B942FE568
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:14:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE632FD1A6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:15:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757934884; cv=none; b=nl1XGiAFs6BlT1kIYbTRX5CmpPEUFZrascKYXlJWHBIHN7GT2IajSQAzNg7FZ4n8Fer7rJGE9vcK1TJMDacuH2J06Gg/xSGjGsuhJX/3Zz8rFG/NUjbvwIfEtZXAFmf22KOqVrehvP7TafWj1CtiDQwJBLp13cz+a9PsYaMT16g=
+	t=1757934939; cv=none; b=QfOErsf3qDAgv9YP6+qo7cVSKnpuhWT0JZUjhdVFg+Ns2PrkFwsv2CCu5HkZ7e9O+wNFC3hUuqBMj6wCX7k3k3hKCjhP1z/3HmfAD+rLTbTs4BMLVFN0mP6kUPIasOuvIZxzCy9uTHmTpJQ1zO8fY+/j3YzmW0TwwvAS7nroK0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757934884; c=relaxed/simple;
-	bh=NmQTuE6oktbowc1fE4SzF/Rv2PfEBusgZuNoSX/J7vY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lJSR7/8bxSf/nWtbsiyzJFfhORIcn8TWBhM4xksUUcdTZXyMtgqwa5xk0RuYo4wuhL+HckSy96wrczdYPbp7nqDw7i8Y0u79AhxatFji/fbuVTZjbxCchiACFCp0RDoHWE6+kN8RW5byzNaxLWy//T1VWnDyU5zH0yZdlkpJETQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dJx7+62O; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58F8Ff56027158
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:14:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=UE7EY6vJQIQpbunoS5He5lME
-	uax+fe4RHGemt1V3aWo=; b=dJx7+62OlQPI1RNydmN/4kCNITuoVFKlgH7f93wT
-	sJwd92efp6QuuQxKXaaB1K+mhBdXjcPlRHrDKMJz0tD44FLfV8KlHRsP1xMLzYeq
-	5K9B/+yIQG40ahukawsfKCwoJzUxunn4dj8EfXt4FR6KvZXcPDanmWgXF5RMstA8
-	8+RMKM/d3kyVx0zke/R6KHGclBd8Ch7rULj9Mpz+6vNh/0geV69a08IapsWXyIpu
-	1WlczUxwiQzYlxneXhStTydUrNTCT28nWvr46P/L7EYJh21lOwtZkgT3TkslfnDH
-	vRV2Fd5i85TWMZtNpZAk0/HtjLenS6kxetFOlEHlIeVeJw==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 495072mpk8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:14:41 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b5e9b60ce6so118350291cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 04:14:41 -0700 (PDT)
+	s=arc-20240116; t=1757934939; c=relaxed/simple;
+	bh=hyJFbE9CxuOjX45Et2d7t+4UbbjB8uE8hXZbBtpCcl4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=hk0LAA0QnNOXjbskV11JSsqoaOujp3rKtTfLQg7pJ3vXHrdjM2pMhUQDFHARijno7jHIg1eh+1XSYIod3hyBVFtsZ+2ZcZXuRhtfpriwx35gpeqozJLXqr/y0WZSV/isnICaSu9zXMVRVtPK7p97qOjCcXkLK8dJLai1k61Fwsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=nsHYZiSD; arc=none smtp.client-ip=209.85.218.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f66.google.com with SMTP id a640c23a62f3a-b0418f6fc27so688670766b.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 04:15:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1757934935; x=1758539735; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WSDSpRxe7vhx8m0cBW/hKeYQFhJF6BvlymOlPqDP5xE=;
+        b=nsHYZiSDMinw/quwYpCkR609GCnDiT+7h8Cjr5TkgBArIbWL1fm/fJSQZLJEqgYHeU
+         K/APOt2QHHp+NhCqafbO5GS+fGbISEJ4s90cZE7YAeFDVJSkHSAIgnH9Nv7k5VrjttXf
+         /sKXCKCUucmZx3AuJsTJitCcwLh77vzkLsHbe2YY068ftFsqDtB8sZ8LxgfSAmp+Kwgc
+         xwq/ZV+/V8nwwAyKpgk6GHBGRHDiqX3GN/kFeof+ZHCx4RNPyFTbAlXg9xscioGrwQCN
+         HRy/Fh5i5LNKs8l6YI5ktsSRDnZHVlZ/+2Dz7gWL9sM+foKQT+OmjEoBBlHib1ICI+WK
+         E/vQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757934881; x=1758539681;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UE7EY6vJQIQpbunoS5He5lMEuax+fe4RHGemt1V3aWo=;
-        b=o/RiE/4urDCAbLR5wqNy2qsv4ZiipqU8RokveJKIVtO4qrbK3ZS34fgPzqQfQND0Ai
-         rYRdROGflCuouoNEGdc2JVEUGHONFeO0HrFKNHWzbec06WUnzo4qlfUTK6G/dKh/Z6aP
-         gT6i42xycDr8afnP4eG8T59SS4uoFUuIzKScffIst/b9q72kEHO9mqt4TcAh7QUOlvc5
-         d/k/N2BMWOSQxuqNuR79nbIi1cDK64zUAYYRblWMuvB1LkJOnHv8GwSx1gwSFUyQjQjM
-         L54jkBqvgrdhBRiVg+BRLnZGhJu7XgMOuivCOrAoIO+iD1LER9xB5Bri+K3HAzVGaq86
-         RXXg==
-X-Forwarded-Encrypted: i=1; AJvYcCWS5UD8Zypp79eZiMXrE1GBSVB7qq+lSli4TZwgXydQI8BRSET80EuCu+PPCeL0xLqCBg69v/jPf5sZmbmY@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgF8zMwES8NmxSId/ug/Kw77cXN2YX6cP1htXnrZ6pDy/cnwxY
-	5uWg7HrBqqYeMXzyYGj/iHlzD1/wYMoNiNhNjxubuONcy0nZTGjdHUsfq0htpbF75oFCLPDUDZd
-	7zw2dKlIT6OcQ2HMNNMVM1fO1vdjDlWL7E0QTDWds5wunZ5u98pL5kylkeb8q4Iggy7RI
-X-Gm-Gg: ASbGnctZK4Lt1Y0JR4lfTfKxoKyFb7I6ObdAVZpceXhXv/VjVayfrx7hLNyqbkW20H3
-	lQ1qPi1bbPeBwXr2oHJNRkPD1J+I1ovtqccb5GbNLTstbEksNJXQvGku7Sq620WWpWuRqBjse0D
-	KnynXO4EGof9T8TjZcYSUPwRsR98vqCoF1n3SAGWlxoRn3p3f8HjA15eIo0QIt4eKDK59ypQP/K
-	nWpo3LSWIJwwOj2lCIpXmzdokt76+4xMIWh8RXZLujibIN27LtgbhWxPEP2t/8QfLcPXEJtnlV5
-	XjSWrn6IhNKn+cCEaSli7+lLckfXRykuZzlNmpzeXMN/c/MAy5CJLOqCy7gIRJ9YzJR6ti/dD9X
-	0caKpEGQNkHrqx9oQw4SIZIWC0bUMFAbdUAzjqMbHaDcINgph3Dsj
-X-Received: by 2002:a05:622a:1a29:b0:4b4:9773:5863 with SMTP id d75a77b69052e-4b77d0446cemr132550661cf.48.1757934880804;
-        Mon, 15 Sep 2025 04:14:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqyK3/SBERxfJelmharBzCPiOcF1a5b27+7+3enxQOwgbeFlfGbnEd2RvdA2OiZrdidoXpCw==
-X-Received: by 2002:a05:622a:1a29:b0:4b4:9773:5863 with SMTP id d75a77b69052e-4b77d0446cemr132550211cf.48.1757934880246;
-        Mon, 15 Sep 2025 04:14:40 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-57178b7e5fbsm2655981e87.22.2025.09.15.04.14.39
+        d=1e100.net; s=20230601; t=1757934935; x=1758539735;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WSDSpRxe7vhx8m0cBW/hKeYQFhJF6BvlymOlPqDP5xE=;
+        b=RzOcEG2Tdmv0UxYy6JsnKjCDtVqsA4Zm0lUIZgN9LVL9ijAu6xFC5rSEYJhfIUT8t+
+         JNKlLm9N46Dipyov7KrEXRDuDCfenVVwOSyoXJw/d/HJDDLqP1MTm10QhV76+VF3kRCb
+         rXUmJvyq6XPTyc7yHoV8M2f1MYT/Tk6kME4W3LZQnzuKbuMd9IV1pwDfeoy6CSiH2jnE
+         kp9yO8HOndMDLEuae/0wUMH4FqIX7WiyFelVcpea5TNKQ14NzxSbJpnWR4Jb8w0flvmf
+         2aJpM59W+YJ5OdRC/Fugz5V6wmlkWo5T9VRljwMwqfUob5tWCwVq5J22d3kWDs13lkmx
+         Eb4Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWUOhBNxI0JQ26IqbD2QZ43KBAcjmr6KL058uCoHI5CQaEz6ULpGWIBiGkTZkaedB4yo3+oBXDZJDvCM67x@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8HYLwskMsAVKmvnr+HuntS5ofImRe9MEFTEsBGGwL10NW7+Mw
+	gSnj+n2nMDrkYnDSbbjJX2hwluJnzbRJzVscF6pU4QHyvxkYvumm20NUPBAbhYShlB8=
+X-Gm-Gg: ASbGncsHTVUXuRyMF+2Trzs/rGLLHDc3mPvCK47EQeSTaGH2OzNZcSco/elmwomwj5R
+	ythT3lE+nJ2/YCjVaIKH/m6OSIin0YmWeD0wKYWPRCx7a39KS3qU9edq2tY9hW7bBqPb80gNwQS
+	t+hZmVgl6idLR4yiaKdF+MtUV3DV0oe1srw8BgVZdTV1kGtOc3eY+lfGZ/YqqNqg2mioC9WZvJe
+	oe3hsYrM22i14nGqcEdm1f6VQ5yvcS4Wz3omNfaCemtrufgDq7P4mJ0GfoG7/8heH54SpHjQ0te
+	Mi3/VmmdED947zyr8tUVtmUI5ATcC9s/sqVvCytixI3xjWDlfSoeAB+yVyMrdCduMwReL+rzvot
+	FoE0uSS3O3SS1OZe6MyMbwglmk3+8mxkldy6DkkcDM18YNGzbAow10+d7bH59t+TX+gcDtFk53h
+	n+5Qk1
+X-Google-Smtp-Source: AGHT+IGywulimHhQJlO4Rta/TnERJN68O5wo9pU23FIpHxPwMOlZqSlAaI08bgPpXbveZOPsK2ZKVg==
+X-Received: by 2002:a17:906:d554:b0:b04:5895:fe8e with SMTP id a640c23a62f3a-b07c35fb500mr1263150466b.36.1757934934697;
+        Mon, 15 Sep 2025 04:15:34 -0700 (PDT)
+Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07d9e18c24sm561851366b.61.2025.09.15.04.15.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 04:14:39 -0700 (PDT)
-Date: Mon, 15 Sep 2025 14:14:37 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Xilin Wu <sophon@radxa.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
- Q6A
-Message-ID: <2vpckcbl7biqaqtb2e22mhnorbiq3xqlsa4ys7x2grzrs67u6f@iixiq3xhfwzl>
-References: <20250915-radxa-dragon-q6a-v3-0-a6c32d988ed7@radxa.com>
- <20250915-radxa-dragon-q6a-v3-2-a6c32d988ed7@radxa.com>
- <33vm6uzxqbs5bukswpzdkrn3ronl7mp2q5d3j772t7lqcnvqvg@5or7jxglcynf>
- <B3EFC6A5E09F74FB+a67c9b82-a7c5-4dbb-9486-90a6df55ed13@radxa.com>
+        Mon, 15 Sep 2025 04:15:34 -0700 (PDT)
+From: Luca Weiss <luca.weiss@fairphone.com>
+Subject: [PATCH v5 0/2] Add support for remoteprocs on Milos SoC
+Date: Mon, 15 Sep 2025 13:15:17 +0200
+Message-Id: <20250915-sm7635-remoteprocs-v5-0-96526cac59c6@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <B3EFC6A5E09F74FB+a67c9b82-a7c5-4dbb-9486-90a6df55ed13@radxa.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAyNSBTYWx0ZWRfX+t1PdEhkJT6J
- q55m4PfjpRLwFFSyXgOrasLfkYTPsjntU0jKSf8vHgK0neCjIGOYPNXIiOColMv1Lp+PF1LGTni
- SMANOi1i1qJZ6p32j9Adwflii6ETBZFPiNxImeYiqCVgfDgtIRvzIl7ZqBDtqmMmDhs7QPLT7e6
- a9yks3qGBzfnv3fflk3NXNt2nFGQRJrD4RmBvHkDQON9RXfrvRYGmfJzWdkh/iP2hquwA35rePM
- kS2liorjHaGLpGKtJpqD6DBJCSwBat1BQiR6WnlN0ptR7ZT53D8xznnlnnqsBryWsZ+epYPQD7h
- Ihky2jt3MLH6La+jHVSPn8WjwSGbETxizHqBfnDzRTC5MkeMs6BtTV65nxDqYOPT7xmXZR2ztLk
- gpgPsJnh
-X-Proofpoint-GUID: jkXfqg4Ak4z1sz_hQwNg-Nk3R35EjHZ5
-X-Authority-Analysis: v=2.4 cv=WcsMa1hX c=1 sm=1 tr=0 ts=68c7f521 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=ksxQWNrZAAAA:8 a=foqy6ynOqZJRs6KxsBoA:9
- a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=l7WU34MJF0Z5EO9KEJC3:22
-X-Proofpoint-ORIG-GUID: jkXfqg4Ak4z1sz_hQwNg-Nk3R35EjHZ5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-15_04,2025-09-12_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 spamscore=0
- suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509130025
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEX1x2gC/23RS27DIBAG4KtYrEsFmGdWvUfVBeChZmHjALVSR
+ bl7SawqVcXyZzTfaIYrKpAjFHQarijDHktMawviZUB+tusn4Di1jBhhgkhGcFmUHAXOsKQKW06
+ +YMrNZCUnmjuNWuOWIcTLA33/aHmOpab8/Zix0/vrLyd63E4xwWokk3SCKgrwFmzM25xWePVpQ
+ XdyZ38Z1WVYY0iwguqgXZBTjxmfjCKmy4yN8YaPDoySVJMew5+MIf2leGMMMB7Aece4/M/cjsN
+ lOH+1T6jH9ZCzBXCrL7GehhUuFR9DKGsdtx8HjPknvgEAAA==
+X-Change-ID: 20250620-sm7635-remoteprocs-149da64084b8
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Mathieu Poirier <mathieu.poirier@linaro.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Manivannan Sadhasivam <mani@kernel.org>
+Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ Luca Weiss <luca.weiss@fairphone.com>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1757934933; l=1536;
+ i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
+ bh=hyJFbE9CxuOjX45Et2d7t+4UbbjB8uE8hXZbBtpCcl4=;
+ b=c9kaWiVTeM6gjqdm4+aAditUZF6OlBbcBbQU6dznmaG93q+yetGzBY6GLz/EwKawOeAs452re
+ KixgzXs73GxB0d6gfYIlWLzquRRv7+LJVBcBqc4HeWMmGYzlmGMt/0e
+X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
+ pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
 
-On Mon, Sep 15, 2025 at 06:43:50PM +0800, Xilin Wu wrote:
-> On 9/15/2025 6:10 PM, Dmitry Baryshkov wrote:
-> > On Mon, Sep 15, 2025 at 09:31:44AM +0800, Xilin Wu wrote:
-> > > Radxa Dragon Q6A is a single board computer, based on the Qualcomm
-> > > QCS6490 platform.
-> > > 
-> > > Features enabled and working:
-> > > 
-> > > - Three USB-A 2.0 ports
-> > > - RTL8111K Ethernet connected to PCIe0
-> > > - eMMC module
-> > > - SD card
-> > > - M.2 M-Key 2230 PCIe 3.0 x2
-> > > - Headphone jack
-> > > - Onboard thermal sensors
-> > > - QSPI controller for updating boot firmware
-> > > - ADSP remoteproc (Type-C and charging features disabled in firmware)
-> > > - CDSP remoteproc (for AI applications using QNN)
-> > > - Venus video encode and decode accelerator
-> > > 
-> > > Signed-off-by: Xilin Wu <sophon@radxa.com>
-> > > ---
-> > >   arch/arm64/boot/dts/qcom/Makefile                  |   1 +
-> > >   .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 961 +++++++++++++++++++++
-> > >   2 files changed, 962 insertions(+)
-> > > 
-> > 
-> > > +
-> > > +&gpu_zap_shader {
-> > > +	firmware-name = "qcom/qcs6490/a660_zap.mbn";
-> > 
-> > Is the device fused to reject standard qcs6490 firmware? If not, can we
-> > point it to the existing files (maybe except the ADSP)? Anyway, could
-> > you please submit the required set of files to the linux-firmware repo?
-> 
-> No, the device is not fused. So it can use firmware from linux-firmware
-> repo, except ADSP and Audioreach topology.
-> 
-> Sure, I can submit the ADSP firmware and Audioreach topology file to
-> linux-firmware.> >> +
+Add the bindings and driver for the ADSP, CDSP, MPSS and WPSS on the
+Milos SoC.
 
-Yes, please. Also please consider adding ADSP fastrpc shell and modules
-to https://github.com/linux-msm/hexagon-dsp-binaries/
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+---
+Changes in v5:
+- dt-bindings: Drop firmware-name ref, and maxItems for
+  memory-region & firmware-name
+- Pick up tags
+- Link to v4: https://lore.kernel.org/r/20250905-sm7635-remoteprocs-v4-0-9e24febcb246@fairphone.com
 
-> > > +&usb_2 {
-> > > +	dr_mode = "host";
-> > 
-> > As Konrad has asked, please describe the onboard hub and the USB ports.
-> > This will ensure that corresponding ports are correctly marked as
-> > hotplug in sysfs.
-> > 
-> 
-> Sure, will describe them in v4.
-> 
-> > > +
-> > > +	status = "okay";
-> > > +};
-> > > +
-> > > +&usb_2_hsphy {
-> > > +	status = "okay";
-> > > +
-> > > +	vdda-pll-supply = <&vreg_l10c_0p88>;
-> > > +	vdda33-supply = <&vreg_l2b_3p072>;
-> > > +	vdda18-supply = <&vreg_l1c_1p8>;
-> > > +};
-> > > +
-> > > +&venus {
-> > > +	status = "okay";
-> > 
-> > No separate firmware?
-> > 
-> 
-> The one from linux-firmware works.>
+Changes in v4:
+- Rebase on linux-next to fix conflicts
+- Link to v3: https://lore.kernel.org/r/20250709-sm7635-remoteprocs-v3-0-c943be976180@fairphone.com
 
-Great!
+Changes in v3:
+- Rebrand SM7635 to Milos as requested: https://lore.kernel.org/linux-arm-msm/aGMI1Zv6D+K+vWZL@hu-bjorande-lv.qualcomm.com/
+- Replace additions to two different bindings by one new binding yaml
+- Pick up tags
+- Link to v2: https://lore.kernel.org/r/20250627-sm7635-remoteprocs-v2-0-0fa518f8bf6d@fairphone.com
 
-> 
-> 
-> -- 
-> Best regards,
-> Xilin Wu <sophon@radxa.com>
-> 
+Changes in v2:
+- Update default firmware names from .mdt to .mbn
+- Link to v1: https://lore.kernel.org/r/20250625-sm7635-remoteprocs-v1-0-730d6b5171ee@fairphone.com
 
+---
+Luca Weiss (2):
+      dt-bindings: remoteproc: qcom,milos-pas: Document remoteprocs
+      remoteproc: qcom: pas: Add Milos remoteproc support
+
+ .../bindings/remoteproc/qcom,milos-pas.yaml        | 198 +++++++++++++++++++++
+ drivers/remoteproc/qcom_q6v5_pas.c                 |  24 +++
+ 2 files changed, 222 insertions(+)
+---
+base-commit: 51095600e8c19d53729a7fbd273abc4435a25e9b
+change-id: 20250620-sm7635-remoteprocs-149da64084b8
+
+Best regards,
 -- 
-With best wishes
-Dmitry
+Luca Weiss <luca.weiss@fairphone.com>
+
 
