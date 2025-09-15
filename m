@@ -1,147 +1,215 @@
-Return-Path: <linux-arm-msm+bounces-73561-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73562-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3C9E6B57795
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:04:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 22CE8B577C9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 13:14:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6C4C91884D23
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:04:48 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6601D3B5347
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 11:14:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EC9E2FB96A;
-	Mon, 15 Sep 2025 11:04:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EFA52FE581;
+	Mon, 15 Sep 2025 11:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dJv2pUac"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="dJx7+62O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A8392F290A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B942FE568
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757934241; cv=none; b=PSS2Ck0Dh7AFrhm9l35+5DQrxRSoBJsIbkSJ7QogvT9YoGzRWSUi/bzZTiH/bUllMXwhwaJScq+nzzJDkQnQxBQZIV2Z4u3xM9YeZmwgczbfD1jRYHlcKHaj4RoCF7WOz+eOSFR2J0sUxHjVnfll4m5UBEIsQiqYPsi3Ns2oWaw=
+	t=1757934884; cv=none; b=nl1XGiAFs6BlT1kIYbTRX5CmpPEUFZrascKYXlJWHBIHN7GT2IajSQAzNg7FZ4n8Fer7rJGE9vcK1TJMDacuH2J06Gg/xSGjGsuhJX/3Zz8rFG/NUjbvwIfEtZXAFmf22KOqVrehvP7TafWj1CtiDQwJBLp13cz+a9PsYaMT16g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757934241; c=relaxed/simple;
-	bh=34abblfr+Cq/exkZvQCQiiND/Y4QtiTG+4oBGTqrOUQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=fe2wuHHHfT7z/hnKoFUeiCzRQ9Fxl4EwkyAZ8q86924laZ2ZDZUhyswl3zu4iY9LwedIfOsfxddrgdElulh7QpxD1b/Qo/I98BE0nb3bxeOxOfbvzDj4FCaPKJyhFiLm6GrjdqKe/x9x9thPtxUkUDnc/r8U1cxnlLFEsw0wDm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dJv2pUac; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45ddc7d5731so28882795e9.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 04:03:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757934238; x=1758539038; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=qLDdkWbWxkCwNz68mLJDlA01YxH5FUpXjX8JHzk4w2g=;
-        b=dJv2pUacrKFUo+q85A25YEr6f4GlVlJRhPF8yPKjkkxxiIqpEshf2sAyq+SbVLxdVA
-         SNXS5NlOlM8UCqgehWroQC8ClQ+iQgl1HDav8YoCa2NbaRXNIRp15UGKaKaHQB9ZmYru
-         2eHm7v2bl8LE18oTDcMIBb84bgVNQU8KwOKg3G/Ld8SK2vEdYBelAa07l3b1tFRH8tAa
-         3EdPR5g1i/p3mS7E2eJIuev7VfUeXgalZOzDlqq0QbsPPIwAJWpWhzXALBhdyZZI7Zwz
-         DHVg1ze58iimaeQc/7yFr1ORl09CnTcGXHypvzpQlNih/twkjNpsyzX23e1A8ex7uEU6
-         Vp/A==
+	s=arc-20240116; t=1757934884; c=relaxed/simple;
+	bh=NmQTuE6oktbowc1fE4SzF/Rv2PfEBusgZuNoSX/J7vY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lJSR7/8bxSf/nWtbsiyzJFfhORIcn8TWBhM4xksUUcdTZXyMtgqwa5xk0RuYo4wuhL+HckSy96wrczdYPbp7nqDw7i8Y0u79AhxatFji/fbuVTZjbxCchiACFCp0RDoHWE6+kN8RW5byzNaxLWy//T1VWnDyU5zH0yZdlkpJETQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=dJx7+62O; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58F8Ff56027158
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:14:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=UE7EY6vJQIQpbunoS5He5lME
+	uax+fe4RHGemt1V3aWo=; b=dJx7+62OlQPI1RNydmN/4kCNITuoVFKlgH7f93wT
+	sJwd92efp6QuuQxKXaaB1K+mhBdXjcPlRHrDKMJz0tD44FLfV8KlHRsP1xMLzYeq
+	5K9B/+yIQG40ahukawsfKCwoJzUxunn4dj8EfXt4FR6KvZXcPDanmWgXF5RMstA8
+	8+RMKM/d3kyVx0zke/R6KHGclBd8Ch7rULj9Mpz+6vNh/0geV69a08IapsWXyIpu
+	1WlczUxwiQzYlxneXhStTydUrNTCT28nWvr46P/L7EYJh21lOwtZkgT3TkslfnDH
+	vRV2Fd5i85TWMZtNpZAk0/HtjLenS6kxetFOlEHlIeVeJw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 495072mpk8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 11:14:41 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b5e9b60ce6so118350291cf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 04:14:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757934238; x=1758539038;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=qLDdkWbWxkCwNz68mLJDlA01YxH5FUpXjX8JHzk4w2g=;
-        b=G4Trfwptq0XKMKBCDi5K1jX/RheSUHfaFy7KGOq/Gv9NCvbzeMmjralYJ/+dJOvyZ8
-         YIS2cOgBSFhiDz5xszJMLuoJayXWJO45cDbYRZepJZOB8e8ab8/xsUtqZkzcxZOo10Nx
-         un7Ad8pvTqW+aEVfm99Q6ruKuRZXWux0Jjh3uHBI3IRpWy0KsTGBEfii4H215YZLSgLK
-         Tm6newxJgOCZXmQqOk7QjbSGFei3kQeUCmLAdt7/DxG3O/rKwsRjUNZijMpj2WxwFZzJ
-         jw/0N+B0D630cpafGnLp19Ap2m7lJb3irEDTHdcfZuELjx2+AiwWAXmQ8Bmnmw6Qfq/B
-         gIcQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXcGIM11zouZ+c4wbX5uk6JC87jxd/cYy7k+Mev9yl5p8zSdp6Euq66vdyuZfPW4LFfmwuzb4TGW6eweBhu@vger.kernel.org
-X-Gm-Message-State: AOJu0YwO6rSbk03F97zeQ5ouLJS0kZ7muLkaaJcj8a++QwK6CpUMOOuZ
-	3PQ7uTCCLa0sIZ5ArznN8fdeli8xGXf/Cr0KvVxzKrongMXr/jxFOlKTj2m8FqYPYpY=
-X-Gm-Gg: ASbGnctq0NrWtAM+IPibdY1awTo3IFlORK3yTbR3+TQLKWmaj2/5EbB3Lkv541XYkjn
-	ffFpYPiVgdI2TzxVzu18SL3K8htyRHkLLCNaT3ePxq/8wtXF8ZWDqEzB2A99xdF/EQeP7R1w3rl
-	a1/ClLLNjMQXVC511j3NmVkcAPxT5Wk9EyGzmSgB2aEad6yHC4FHdHkEipHqnBXoYYu1Cs5xXp2
-	CACtuvnI0MdggNB1r5Bg9lGblRqAOYqGJ2IkYdGqXPpPGWvGCzOlxp5bJyqsfSzvimEc8PwWaTy
-	uR/q0sigEPVoolTpzV6TwsQYItLYHrCm87I92J+Halm+CcEaBXgRLsxQVq4PS955R4d0r8yZQg6
-	8ilDWRihzyQJCmSL7j/BfbUUJW/ouD1TNTioYPVDYtqKa7PorSLII1BELBVujoh14QDMFA5FArl
-	PvhOYrLAbD97yvb8u7PPc=
-X-Google-Smtp-Source: AGHT+IEfatrT6vGE4XLbLEtqxuV0qIfieqkuasWzeLgAmmCajyquSuLADIJxWxJbVx69zeQFs7V98w==
-X-Received: by 2002:a05:600c:354f:b0:45f:2c7c:c1ed with SMTP id 5b1f17b1804b1-45f2c7cc3dcmr28587995e9.2.1757934237555;
-        Mon, 15 Sep 2025 04:03:57 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e017bfd14sm174479365e9.21.2025.09.15.04.03.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 15 Sep 2025 04:03:55 -0700 (PDT)
-Message-ID: <96840085-d3e8-44ef-b45b-44727bc03199@linaro.org>
-Date: Mon, 15 Sep 2025 12:03:51 +0100
+        d=1e100.net; s=20230601; t=1757934881; x=1758539681;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=UE7EY6vJQIQpbunoS5He5lMEuax+fe4RHGemt1V3aWo=;
+        b=o/RiE/4urDCAbLR5wqNy2qsv4ZiipqU8RokveJKIVtO4qrbK3ZS34fgPzqQfQND0Ai
+         rYRdROGflCuouoNEGdc2JVEUGHONFeO0HrFKNHWzbec06WUnzo4qlfUTK6G/dKh/Z6aP
+         gT6i42xycDr8afnP4eG8T59SS4uoFUuIzKScffIst/b9q72kEHO9mqt4TcAh7QUOlvc5
+         d/k/N2BMWOSQxuqNuR79nbIi1cDK64zUAYYRblWMuvB1LkJOnHv8GwSx1gwSFUyQjQjM
+         L54jkBqvgrdhBRiVg+BRLnZGhJu7XgMOuivCOrAoIO+iD1LER9xB5Bri+K3HAzVGaq86
+         RXXg==
+X-Forwarded-Encrypted: i=1; AJvYcCWS5UD8Zypp79eZiMXrE1GBSVB7qq+lSli4TZwgXydQI8BRSET80EuCu+PPCeL0xLqCBg69v/jPf5sZmbmY@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgF8zMwES8NmxSId/ug/Kw77cXN2YX6cP1htXnrZ6pDy/cnwxY
+	5uWg7HrBqqYeMXzyYGj/iHlzD1/wYMoNiNhNjxubuONcy0nZTGjdHUsfq0htpbF75oFCLPDUDZd
+	7zw2dKlIT6OcQ2HMNNMVM1fO1vdjDlWL7E0QTDWds5wunZ5u98pL5kylkeb8q4Iggy7RI
+X-Gm-Gg: ASbGnctZK4Lt1Y0JR4lfTfKxoKyFb7I6ObdAVZpceXhXv/VjVayfrx7hLNyqbkW20H3
+	lQ1qPi1bbPeBwXr2oHJNRkPD1J+I1ovtqccb5GbNLTstbEksNJXQvGku7Sq620WWpWuRqBjse0D
+	KnynXO4EGof9T8TjZcYSUPwRsR98vqCoF1n3SAGWlxoRn3p3f8HjA15eIo0QIt4eKDK59ypQP/K
+	nWpo3LSWIJwwOj2lCIpXmzdokt76+4xMIWh8RXZLujibIN27LtgbhWxPEP2t/8QfLcPXEJtnlV5
+	XjSWrn6IhNKn+cCEaSli7+lLckfXRykuZzlNmpzeXMN/c/MAy5CJLOqCy7gIRJ9YzJR6ti/dD9X
+	0caKpEGQNkHrqx9oQw4SIZIWC0bUMFAbdUAzjqMbHaDcINgph3Dsj
+X-Received: by 2002:a05:622a:1a29:b0:4b4:9773:5863 with SMTP id d75a77b69052e-4b77d0446cemr132550661cf.48.1757934880804;
+        Mon, 15 Sep 2025 04:14:40 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHqyK3/SBERxfJelmharBzCPiOcF1a5b27+7+3enxQOwgbeFlfGbnEd2RvdA2OiZrdidoXpCw==
+X-Received: by 2002:a05:622a:1a29:b0:4b4:9773:5863 with SMTP id d75a77b69052e-4b77d0446cemr132550211cf.48.1757934880246;
+        Mon, 15 Sep 2025 04:14:40 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-57178b7e5fbsm2655981e87.22.2025.09.15.04.14.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 15 Sep 2025 04:14:39 -0700 (PDT)
+Date: Mon, 15 Sep 2025 14:14:37 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Xilin Wu <sophon@radxa.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
+ Q6A
+Message-ID: <2vpckcbl7biqaqtb2e22mhnorbiq3xqlsa4ys7x2grzrs67u6f@iixiq3xhfwzl>
+References: <20250915-radxa-dragon-q6a-v3-0-a6c32d988ed7@radxa.com>
+ <20250915-radxa-dragon-q6a-v3-2-a6c32d988ed7@radxa.com>
+ <33vm6uzxqbs5bukswpzdkrn3ronl7mp2q5d3j772t7lqcnvqvg@5or7jxglcynf>
+ <B3EFC6A5E09F74FB+a67c9b82-a7c5-4dbb-9486-90a6df55ed13@radxa.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] arm64: dts: qcom: sm8550/sm8650: Fix typo in IRIS
- comment
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Alexey Klimov <alexey.klimov@linaro.org>,
- Anthony Ruhier <aruhier@mailbox.org>,
- Stefan Schmidt <stefan.schmidt@linaro.org>
-References: <20250915-x1e-iris-dt-v2-0-1f928de08fd4@linaro.org>
- <20250915-x1e-iris-dt-v2-1-1f928de08fd4@linaro.org>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250915-x1e-iris-dt-v2-1-1f928de08fd4@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <B3EFC6A5E09F74FB+a67c9b82-a7c5-4dbb-9486-90a6df55ed13@radxa.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAyNSBTYWx0ZWRfX+t1PdEhkJT6J
+ q55m4PfjpRLwFFSyXgOrasLfkYTPsjntU0jKSf8vHgK0neCjIGOYPNXIiOColMv1Lp+PF1LGTni
+ SMANOi1i1qJZ6p32j9Adwflii6ETBZFPiNxImeYiqCVgfDgtIRvzIl7ZqBDtqmMmDhs7QPLT7e6
+ a9yks3qGBzfnv3fflk3NXNt2nFGQRJrD4RmBvHkDQON9RXfrvRYGmfJzWdkh/iP2hquwA35rePM
+ kS2liorjHaGLpGKtJpqD6DBJCSwBat1BQiR6WnlN0ptR7ZT53D8xznnlnnqsBryWsZ+epYPQD7h
+ Ihky2jt3MLH6La+jHVSPn8WjwSGbETxizHqBfnDzRTC5MkeMs6BtTV65nxDqYOPT7xmXZR2ztLk
+ gpgPsJnh
+X-Proofpoint-GUID: jkXfqg4Ak4z1sz_hQwNg-Nk3R35EjHZ5
+X-Authority-Analysis: v=2.4 cv=WcsMa1hX c=1 sm=1 tr=0 ts=68c7f521 cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=NEAV23lmAAAA:8 a=ksxQWNrZAAAA:8 a=foqy6ynOqZJRs6KxsBoA:9
+ a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=l7WU34MJF0Z5EO9KEJC3:22
+X-Proofpoint-ORIG-GUID: jkXfqg4Ak4z1sz_hQwNg-Nk3R35EjHZ5
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-15_04,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 adultscore=0 bulkscore=0 spamscore=0
+ suspectscore=0 phishscore=0 clxscore=1015 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509130025
 
-On 15/09/2025 11:06, Stephan Gerhold wrote:
-> It should be "enable on boards", not "enable in boards".
+On Mon, Sep 15, 2025 at 06:43:50PM +0800, Xilin Wu wrote:
+> On 9/15/2025 6:10 PM, Dmitry Baryshkov wrote:
+> > On Mon, Sep 15, 2025 at 09:31:44AM +0800, Xilin Wu wrote:
+> > > Radxa Dragon Q6A is a single board computer, based on the Qualcomm
+> > > QCS6490 platform.
+> > > 
+> > > Features enabled and working:
+> > > 
+> > > - Three USB-A 2.0 ports
+> > > - RTL8111K Ethernet connected to PCIe0
+> > > - eMMC module
+> > > - SD card
+> > > - M.2 M-Key 2230 PCIe 3.0 x2
+> > > - Headphone jack
+> > > - Onboard thermal sensors
+> > > - QSPI controller for updating boot firmware
+> > > - ADSP remoteproc (Type-C and charging features disabled in firmware)
+> > > - CDSP remoteproc (for AI applications using QNN)
+> > > - Venus video encode and decode accelerator
+> > > 
+> > > Signed-off-by: Xilin Wu <sophon@radxa.com>
+> > > ---
+> > >   arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+> > >   .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 961 +++++++++++++++++++++
+> > >   2 files changed, 962 insertions(+)
+> > > 
+> > 
+> > > +
+> > > +&gpu_zap_shader {
+> > > +	firmware-name = "qcom/qcs6490/a660_zap.mbn";
+> > 
+> > Is the device fused to reject standard qcs6490 firmware? If not, can we
+> > point it to the existing files (maybe except the ADSP)? Anyway, could
+> > you please submit the required set of files to the linux-firmware repo?
 > 
-> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
-> Closes: https://lore.kernel.org/r/DCQ8G73ISXHC.3V03MOGB6NDZE@linaro.org/
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
->   arch/arm64/boot/dts/qcom/sm8550.dtsi | 2 +-
->   arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+> No, the device is not fused. So it can use firmware from linux-firmware
+> repo, except ADSP and Audioreach topology.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8550.dtsi b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> index 2df6ba05e0cddaebf3d35a4b4b8e5cbb9048dfb1..ec67efd64b78673352c4c6e3a4e7e504d4525b46 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8550.dtsi
-> @@ -3262,7 +3262,7 @@ &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
->   
->   			/*
->   			 * IRIS firmware is signed by vendors, only
-> -			 * enable in boards where the proper signed firmware
-> +			 * enable on boards where the proper signed firmware
->   			 * is available.
->   			 */
->   			status = "disabled";
-> diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> index 367f448a743a306993b40f6c6b8a23a816744afb..e7582a19184b48de66d572d6e98fbf2f36a8c17f 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
-> @@ -5186,7 +5186,7 @@ &config_noc SLAVE_VENUS_CFG QCOM_ICC_TAG_ACTIVE_ONLY>,
->   
->   			/*
->   			 * IRIS firmware is signed by vendors, only
-> -			 * enable in boards where the proper signed firmware
-> +			 * enable on boards where the proper signed firmware
->   			 * is available.
->   			 */
->   			status = "disabled";
+> Sure, I can submit the ADSP firmware and Audioreach topology file to
+> linux-firmware.> >> +
+
+Yes, please. Also please consider adding ADSP fastrpc shell and modules
+to https://github.com/linux-msm/hexagon-dsp-binaries/
+
+> > > +&usb_2 {
+> > > +	dr_mode = "host";
+> > 
+> > As Konrad has asked, please describe the onboard hub and the USB ports.
+> > This will ensure that corresponding ports are correctly marked as
+> > hotplug in sysfs.
+> > 
 > 
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> Sure, will describe them in v4.
+> 
+> > > +
+> > > +	status = "okay";
+> > > +};
+> > > +
+> > > +&usb_2_hsphy {
+> > > +	status = "okay";
+> > > +
+> > > +	vdda-pll-supply = <&vreg_l10c_0p88>;
+> > > +	vdda33-supply = <&vreg_l2b_3p072>;
+> > > +	vdda18-supply = <&vreg_l1c_1p8>;
+> > > +};
+> > > +
+> > > +&venus {
+> > > +	status = "okay";
+> > 
+> > No separate firmware?
+> > 
+> 
+> The one from linux-firmware works.>
+
+Great!
+
+> 
+> 
+> -- 
+> Best regards,
+> Xilin Wu <sophon@radxa.com>
+> 
+
+-- 
+With best wishes
+Dmitry
 
