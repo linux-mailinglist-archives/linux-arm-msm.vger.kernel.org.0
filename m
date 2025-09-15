@@ -1,167 +1,219 @@
-Return-Path: <linux-arm-msm+bounces-73612-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 86CA7B58289
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 18:49:26 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBC24B583F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 19:49:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6B1781A21241
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 16:49:35 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 95D5716BD2F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 17:49:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 919FA27FD68;
-	Mon, 15 Sep 2025 16:48:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 66B44298CD7;
+	Mon, 15 Sep 2025 17:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IhGW/2bn"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jn6UXbtT"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0661B27A903
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 16:48:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7DE101F2
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 17:49:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757954935; cv=none; b=GqcO80bwSwfXjfYfs0ZUx4To+m21E6Jj2t5ZWGepXamMSN+W56lx2b6vfvlSWHf3r5j/ljMCG5613aObk2a5/4wfSjeV+4SD2ZbQZnQHbfTeMD346Dv5dm/6ni0IUw4ipfREixd7ztD0CXqtSYVJQEyX0ZWWSRwmqcwm2erzQkY=
+	t=1757958581; cv=none; b=n+wD1ufxSqvk34Q8xLc9Zx3LcKK994zNyleRx316h06zZVnpbSceTbwS0+R6GZWjqsBFdqGN7Vb0TlDtpU59qRK69i6IlV4EzDQsaeWlEaDtcGJHk+2YH0GngC7ROPPjtnZdJwygRKF4AwyOdQY6HfIQKzDrHomJgydJl8/QtFs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757954935; c=relaxed/simple;
-	bh=MBI1Pgkv5l9x8jWA6EGrPKnGTLF3QMSBlu5WNzLqQTs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BxiqzU5h7JcF/IicS96gI0Tih+olxWHzUXGcItTa/dh9ceKyrN9sArqlI3XIVwXWGNbT0ozZ622mhOgIGRFSX9CzaBtW1/Cus8qkxhonq1VQp4AgHnyZXbIJM6ghhmDOdTFEKmKB/R5yE1f9EzCW89bL1Gdholp/WaYHTgjun7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IhGW/2bn; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58FDck3q008257
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 16:48:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=CSy413Uoi4jbvjsJYcaYFgzu
-	g9PD3l/kNya0fvntQm8=; b=IhGW/2bnx1+GEWJ1Yri5iu6asXH9Ly+jI7brBn50
-	G7EjHqr2jfh9n2SkSIO01Id+zMZ49G7/Mk5e1Lf6K3wwMNTG4jWPbkVQ42lHyy72
-	l01lHWlrRxyfzrxBftS5y0YoV5s+DDh7rVQf5jegxLdIe6C97fauG7aeXThLgxfc
-	7Kb/luQL6RpDyUUrwOGU5u0Iy5aUYNdjIBZEGSJBy176ZgMk1bXtpFJkM5clN9Zx
-	WQMyULxRwwJ5KrbAena7XeZLOZfiFx7bSkd8LL+zUsVJBxMGcNa9iOdjPJuRR9Y4
-	TeNkXYbIlsJeDxaqhwuHVmfD5TM/PEdI7Pctkla8TSPIiQ==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 495eqpvnfr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 16:48:53 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-726a649957dso94920806d6.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 09:48:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757954932; x=1758559732;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+	s=arc-20240116; t=1757958581; c=relaxed/simple;
+	bh=rM8+608zDs9i7OpttILcMD6pNVDYn26GPqUJwRJwjTg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RUzQNd3lTccRL8+tQ3Udt/5HnonSQ+EixvqfA05tyOm+1fDysRQYMYaqcj5F6Hg2eOlo5O6GBSuJZi4Qxf4n9Q9ZmXTVCzfg/36dRjDYT7JJl5zVX6EnAtcAryw6JDWMglm3dvJonhGxtgOUTJTYS2tJdN10aqD59uXGcxJB4Jg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jn6UXbtT; arc=none smtp.client-ip=209.85.210.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ot1-f44.google.com with SMTP id 46e09a7af769-750b77699b4so3634825a34.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:49:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1757958577; x=1758563377; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CSy413Uoi4jbvjsJYcaYFgzug9PD3l/kNya0fvntQm8=;
-        b=QNs+/djo9R+MEHt63ClGo0jk1hxn+kX2g9kNNehnQssWWwZe745atIhlxTQwF8NQ0y
-         FF769nX4FE1Dm5qVKDn3qyC+xkuBmzWIX17Yr3tPZmlmXmTziCfbJx4iyoEJvh18jBqM
-         7fQkQN4BUkikTPe80dEvYHQ87HFRf0gCckqecTkm8EBnWz28CDDGEAAK7/e6nY5exi8W
-         R0fzNmn5JjODzOJIRLnXPdtkomhELK2wwcCGkPnpWGmXCdK3HJuzddAzOPd0O3xxgBHe
-         8H3fEP+GAcVHguP5GmSQVyTaGAz3Ibr4jJhc2g2pzK1kIUL3yKTju9VJsogO30sL03cF
-         qpNw==
-X-Forwarded-Encrypted: i=1; AJvYcCXYuqKxXtG43oo+N6tfVZMrwgeifipBDIikq8Bo0ocUE553lBJ7jmWgLDivZ6vLgbw1vy7Ad1F4dsWqjknL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz2lK3L33pdY/uaLN02/mKFCvsFylKyq5oUKpyUDlg1v7SK8xfx
-	N5p7vrFptts2P5aou+PathLgPYvY0hpuiDaaDj3EM/CFyZNUBEUlyA3ZsStwmN8WTn5dF3ZPuaZ
-	RG07Z50ACfQsdTnXOCAQT2bKn6RNqIXE1qludsOGtJNtxpw1tCQe+o6T89AodMUor59cJ
-X-Gm-Gg: ASbGnctEKCk5+w3TTgiidkrmFRlskj9wUZqkykMQqmDtGXjOBN6NIucrGgoc+w6NeFi
-	bCQo0wjAgVOFL5PILWdexCyVfGa2Q2E8ztrGnMYx72J6ZyOEjm+I9qgdsBCT0hJtUalthMbqyye
-	mXFKpFjU3VygBwwBpse3UHdVSn8Ulcx24QMtyfNMuO9Ht9WUweypK0XK7tKAlDTCBclPc/eff3T
-	ZVjeV20QHHtJKFOiKQL+tfIiseY/BwjL+Kge3UumbT06k8SLDZGcg1/K2c87+uofLBDc3FeIutH
-	5zI48JQTVaAiJDzw8h5gAJEL1e0qgN2NS+8kgnZbK/34XmEuVfAVnrZIPauKsrfIPGr7c3LAvxq
-	UIXdjEdHIXtLkrYSfPe8ohFEEVxIkWgw6La0RWz2ulTXYVkKmjD5m
-X-Received: by 2002:ad4:4eab:0:b0:72c:cc04:c3b6 with SMTP id 6a1803df08f44-767c215b586mr196847986d6.31.1757954931693;
-        Mon, 15 Sep 2025 09:48:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+cHbHprOXKl+GeOOLclQsZjcLydXUkO2rJ7c4SXlnRtTiEMz91VXMShb8HABaBZvJdzKOaQ==
-X-Received: by 2002:ad4:4eab:0:b0:72c:cc04:c3b6 with SMTP id 6a1803df08f44-767c215b586mr196847346d6.31.1757954930938;
-        Mon, 15 Sep 2025 09:48:50 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-34f1bf1a45csm29339611fa.60.2025.09.15.09.48.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 09:48:50 -0700 (PDT)
-Date: Mon, 15 Sep 2025 19:48:48 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Vincent Knecht <vincent.knecht@mailoo.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: msm8939: Add missing MDSS reset
-Message-ID: <dvm5l5vbbden6pbihpetlyrtcr5v7uuigroiiqzlhyk2jtdpkn@pkjoluu6hana>
-References: <20250915-msm8916-resets-v1-0-a5c705df0c45@linaro.org>
- <20250915-msm8916-resets-v1-2-a5c705df0c45@linaro.org>
+        bh=jAZioqHrTQ+AevT9cWxUPizrYYw+CkCC2DIwykw40jU=;
+        b=jn6UXbtTp+mEpa4UL9vp3/t9TPDAJOqPsP/ZGE7QhlkxvSvSbXhy6W/pdIPlnufS6s
+         lE9TgIH+mNNCQbdJg9/3iRXsb0f3U5X/RwPlVIrY/Gv2dPsyIBBVjDZI9vs3QqZAAKA9
+         EaBZ3MGE+2q0FuxRQjnUXEfL8kAFENsOEukEZS/huL7OxFfnrT8gDsw6PEBJf5AvQft6
+         8RVYVaFoMflG6lqC5a2BZaty8HfGubY963ifnj+N9DS5qId7DckeuR9IWkRGouMXnDvB
+         mWAHaKBvfnvHCnlTezZPZqNXA8p4a0jUn6aYcN/yzElU3CA3gFcNAu/Cyaka13jVPoMM
+         s+Ww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1757958577; x=1758563377;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jAZioqHrTQ+AevT9cWxUPizrYYw+CkCC2DIwykw40jU=;
+        b=QS2ZDvdFwcmU/+r1I9oI7HYCdjRc3j7tumnAaAZC7klpG1WnBi7E0we1RTDpItDNex
+         wFrrxHVrtgvVb9xpiD2FE/ktdnHe2uIvcTbrTaLvHakSWrLuytUbKHpOsKjlozuf8k1R
+         9OwEAl7F2h3wasPiYQB8X0uIpUMJyLYSkBEwgtvBndqdgFeokSh07YM6pfGYUOEWR18u
+         49CbTJuyxb5OzvGl5XJ2Zk9vB6cKlGdmOmQ3DI4lbSi8X5+FQ7i1iOujmAcxN7DArk3t
+         oUB7WP6O6I6tIXftZZpZx/h7T3Ef5vIXBMHPN+TJlsd0E0U65ENs3i+5mxfH58KQnXks
+         aUYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVOcHHA3je1lrILg86Ugin2FqYnkNhZfHDSLJJjWgV55qcxhDmghya3nsJKAwqHGRZrkPsXSQHAXdFX4O64@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy+p2vUp2KCp5ft3IKjrvbT1M8nNcLTJE5R5XVeLwrnI6KgG+my
+	rhtAkLdVvr3clH/FIJB4l3v9c5/YoIauVyQ3eUAo2eruCvK8upGLq9dOdCneDwphZaXhRk8oKUg
+	dWMvEUseHe/vmB38IiJ6OWbMubrs6V0TFXeoYOc3d0w==
+X-Gm-Gg: ASbGncuww2ULbRnEAk2/7u3wR0M/UxiaUobGZti56fVKgc4rgF6A8PAhxLmJCbXyyyp
+	mJBDxE+KI4R98Gq2OK2nsYKRpK8aAev7HUAaquUP2ickUGV7QjC151OSIZmlUd5PvUjS5HM/G4o
+	b03FIXzHjyILK7QInkztMDd/VPGJbmzbuCRxqVgMoNGvAWlsfrqaWiWRHVqqAxTwGUxonE1C4NL
+	xO00Bs/
+X-Google-Smtp-Source: AGHT+IFH2g34vEwZJetBbwvZ3SomF8yWsdtaRubWzROFmfV7fPJWquu4ln8JWGnCxhfWDa7z7TN6AkCfw2+pHb5lOKU=
+X-Received: by 2002:a05:6830:6ac2:b0:745:a1d8:9deb with SMTP id
+ 46e09a7af769-753529994cemr6368252a34.1.1757958577063; Mon, 15 Sep 2025
+ 10:49:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250915-msm8916-resets-v1-2-a5c705df0c45@linaro.org>
-X-Proofpoint-GUID: iui-OJciZUe1_aCrqXNP58BukQ5pZJEf
-X-Proofpoint-ORIG-GUID: iui-OJciZUe1_aCrqXNP58BukQ5pZJEf
-X-Authority-Analysis: v=2.4 cv=XJIwSRhE c=1 sm=1 tr=0 ts=68c84375 cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=M_eXORl3-W3UjsCHqzwA:9 a=CjuIK1q_8ugA:10 a=iYH6xdkBrDN1Jqds4HTS:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDE4NiBTYWx0ZWRfXy6HR4BEXqjhQ
- 9QA3WaBSeXNU02MAwzfeg9E+rOLrmbl8YCCEbWr1bOqS0hZ/tJThJ518qFSirRiNcovEFqJ5EUF
- MeFS7dsThdi9m2WNz8vKyPPChCTko8f2pCM7KvIkWMUKbCrzVlvhrpnXB2y8TRrnHjRMbTrvtxn
- m2PEPKcmbZv5jVwlHsjH/9adiTH3wAV5mux36kQ0JfPtUEJL/kJIc+SlLwX7feP1/xi1vt8D2NU
- 8oTTFA3LlZjxQhjm0vU3UETc/O8eIrY5D9PmAXfAvk8+tz92A24MC+P/3+MGgANuD7kbyi760Q+
- FoD51t/9Ek4Cp/aYWCcDIGLbGsDOfAZmFII7BLvJHmj/qxsXIboFzISOKugDRWYlIRYT8OVYOT9
- dreltTZP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-15_06,2025-09-12_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 priorityscore=1501 phishscore=0 impostorscore=0
- malwarescore=0 spamscore=0 bulkscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509130186
+References: <20250911-qcom-tee-using-tee-ss-without-mem-obj-v12-0-17f07a942b8d@oss.qualcomm.com>
+ <CAHUa44Fow6BhkdTki=rt2psOC=dq99cRgwXsVagmQU7fttXyCw@mail.gmail.com> <mir6lhkj456ra3i6w7def4rrtzw663f66l66cz4s3gxxvueeqk@ils2hjklbp4y>
+In-Reply-To: <mir6lhkj456ra3i6w7def4rrtzw663f66l66cz4s3gxxvueeqk@ils2hjklbp4y>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Mon, 15 Sep 2025 19:49:25 +0200
+X-Gm-Features: AS18NWAR-VBm4g9R0EH1G3hbl6PkG8dirAOCNZkRJpCTr8DYOgGvR9V6YWQJ574
+Message-ID: <CAHUa44Hb1NMCmqbquuQ=f=2kxPL5ik_2m_EiwvoRSew3niXBfg@mail.gmail.com>
+Subject: Re: [PATCH v12 00/11] Trusted Execution Environment (TEE) driver for
+ Qualcomm TEE (QTEE)
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>, Sumit Garg <sumit.garg@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Apurupa Pattapu <quic_apurupa@quicinc.com>, 
+	Kees Cook <kees@kernel.org>, "Gustavo A. R. Silva" <gustavoars@kernel.org>, 
+	Sumit Semwal <sumit.semwal@linaro.org>, =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
+	Harshal Dev <quic_hdev@quicinc.com>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
+	linux-hardening@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linaro-mm-sig@lists.linaro.org, linux-doc@vger.kernel.org, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Kuldeep Singh <quic_kuldsing@quicinc.com>, 
+	Sumit Garg <sumit.garg@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 15, 2025 at 03:28:31PM +0200, Stephan Gerhold wrote:
-> On most MSM8939 devices, the bootloader already initializes the display to
-> show the boot splash screen. In this situation, MDSS is already configured
-> and left running when starting Linux. To avoid side effects from the
-> bootloader configuration, the MDSS reset can be specified in the device
-> tree to start again with a clean hardware state.
-> 
-> The reset for MDSS is currently missing in msm8939.dtsi, which causes
-> errors when the MDSS driver tries to re-initialize the registers:
-> 
->  dsi_err_worker: status=6
->  dsi_err_worker: status=6
->  dsi_err_worker: status=6
->  ...
-> 
-> It turns out that we have always indirectly worked around this by building
-> the MDSS driver as a module. Before v6.17, the power domain was temporarily
-> turned off until the module was loaded, long enough to clear the register
-> contents. In v6.17, power domains are not turned off during boot until
-> sync_state() happens, so this is no longer working. Even before v6.17 this
-> resulted in broken behavior, but notably only when the MDSS driver was
-> built-in instead of a module.
-> 
-> Cc: stable@vger.kernel.org
-> Fixes: 61550c6c156c ("arm64: dts: qcom: Add msm8939 SoC")
-> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/msm8939.dtsi | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+Hi,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+On Mon, Sep 15, 2025 at 4:05=E2=80=AFPM Bjorn Andersson <andersson@kernel.o=
+rg> wrote:
+>
+> On Fri, Sep 12, 2025 at 10:21:55AM +0200, Jens Wiklander wrote:
+> > Hi,
+> >
+> > On Fri, Sep 12, 2025 at 6:07=E2=80=AFAM Amirreza Zarrabi
+> > <amirreza.zarrabi@oss.qualcomm.com> wrote:
+> > >
+> > > This patch series introduces a Trusted Execution Environment (TEE)
+> > > driver for Qualcomm TEE (QTEE). QTEE enables Trusted Applications (TA=
+s)
+> > > and services to run securely. It uses an object-based interface, wher=
+e
+> > > each service is an object with sets of operations. Clients can invoke
+> > > these operations on objects, which can generate results, including ot=
+her
+> > > objects. For example, an object can load a TA and return another obje=
+ct
+> > > that represents the loaded TA, allowing access to its services.
+> > >
+> > [snip]
+> >
+> > I'm OK with the TEE patches, Sumit and I have reviewed them.
+> >
+>
+> Happy to hear that.
+>
+> > There were some minor conflicts with other patches I have in the pipe
+> > for this merge window, so this patchset is on top of what I have to
+> > avoid merge conflicts.
+> >
+> > However, the firmware patches are for code maintained by Bj=C3=B6rn.
+> > Bj=C3=B6rn, how would you like to do this? Can I take them via my tree,=
+ or
+> > what do you suggest?
+> >
+>
+> Please pull:
+>
+> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git 20250911-q=
+com-tee-using-tee-ss-without-mem-obj-v12-2-17f07a942b8d@oss.qualcomm.com
 
+I've pulled from you're tree. I'm picking up the remaining patches
+from this patch set.
 
--- 
-With best wishes
-Dmitry
+Thanks,
+Jens
+
+>
+> Regards,
+> Bjorn
+>
+> > It's urgent to get this patchset into linux-next if it's to make it
+> > for the coming merge window. Ideally, I'd like to send my pull request
+> > to arm-soc during this week.
+> >
+> > Cheers,
+> > Jens
+> >
+> > >
+> > > ---
+> > > Amirreza Zarrabi (11):
+> > >       firmware: qcom: tzmem: export shm_bridge create/delete
+> > >       firmware: qcom: scm: add support for object invocation
+> > >       tee: allow a driver to allocate a tee_device without a pool
+> > >       tee: add close_context to TEE driver operation
+> > >       tee: add TEE_IOCTL_PARAM_ATTR_TYPE_UBUF
+> > >       tee: add TEE_IOCTL_PARAM_ATTR_TYPE_OBJREF
+> > >       tee: increase TEE_MAX_ARG_SIZE to 4096
+> > >       tee: add Qualcomm TEE driver
+> > >       tee: qcom: add primordial object
+> > >       tee: qcom: enable TEE_IOC_SHM_ALLOC ioctl
+> > >       Documentation: tee: Add Qualcomm TEE driver
+> > >
+> > >  Documentation/tee/index.rst              |   1 +
+> > >  Documentation/tee/qtee.rst               |  96 ++++
+> > >  MAINTAINERS                              |   7 +
+> > >  drivers/firmware/qcom/qcom_scm.c         | 119 ++++
+> > >  drivers/firmware/qcom/qcom_scm.h         |   7 +
+> > >  drivers/firmware/qcom/qcom_tzmem.c       |  63 ++-
+> > >  drivers/tee/Kconfig                      |   1 +
+> > >  drivers/tee/Makefile                     |   1 +
+> > >  drivers/tee/qcomtee/Kconfig              |  12 +
+> > >  drivers/tee/qcomtee/Makefile             |   9 +
+> > >  drivers/tee/qcomtee/async.c              | 182 ++++++
+> > >  drivers/tee/qcomtee/call.c               | 820 +++++++++++++++++++++=
+++++++
+> > >  drivers/tee/qcomtee/core.c               | 915 +++++++++++++++++++++=
+++++++++++
+> > >  drivers/tee/qcomtee/mem_obj.c            | 169 ++++++
+> > >  drivers/tee/qcomtee/primordial_obj.c     | 113 ++++
+> > >  drivers/tee/qcomtee/qcomtee.h            | 185 +++++++
+> > >  drivers/tee/qcomtee/qcomtee_msg.h        | 304 ++++++++++
+> > >  drivers/tee/qcomtee/qcomtee_object.h     | 316 +++++++++++
+> > >  drivers/tee/qcomtee/shm.c                | 150 +++++
+> > >  drivers/tee/qcomtee/user_obj.c           | 692 +++++++++++++++++++++=
+++
+> > >  drivers/tee/tee_core.c                   | 127 ++++-
+> > >  drivers/tee/tee_private.h                |   6 -
+> > >  include/linux/firmware/qcom/qcom_scm.h   |   6 +
+> > >  include/linux/firmware/qcom/qcom_tzmem.h |  15 +
+> > >  include/linux/tee_core.h                 |  54 +-
+> > >  include/linux/tee_drv.h                  |  12 +
+> > >  include/uapi/linux/tee.h                 |  56 +-
+> > >  27 files changed, 4410 insertions(+), 28 deletions(-)
+> > > ---
+> > > base-commit: 8b8aefa5a5c7d4a65883e5653cf12f94c0b68dbf
+> > > change-id: 20241202-qcom-tee-using-tee-ss-without-mem-obj-362c6634052=
+7
+> > >
+> > > Best regards,
+> > > --
+> > > Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+> > >
 
