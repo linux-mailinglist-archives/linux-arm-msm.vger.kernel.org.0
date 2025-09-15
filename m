@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-73537-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73538-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D7AEB57597
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:07:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4633B5759D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 12:08:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EE9361AA0A9F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 10:08:19 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A69B417C876
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 15 Sep 2025 10:08:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 10B402FCC06;
-	Mon, 15 Sep 2025 10:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E535F2FD7BB;
+	Mon, 15 Sep 2025 10:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hzF6fvmq"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mwVaMN+O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEEA82FC037
-	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:06:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F9542FAC12
+	for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 10:06:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757930798; cv=none; b=udPKynyzzItHtBJlQFtub+DDohz/QW+2y2n52M9sp/mT9cQ+zVQeFZFMmgIiuljRR4r/c1Zei0uXfoB6Y0rEREIcGVsJMuh9jpaqG4c43kim4KR5UsE7T2lNoo4BFDOEIWDlYD6cAREyV98AIft8Z2menx6ryqaZkc8jOIeyoW4=
+	t=1757930800; cv=none; b=ZVV9kKoV3CdMxfC5FzfF/1dUYQT+o9JkeNCE3MIUY2+R+i0SQmliWe1oTdzalKEMQFkMhsPvrfi7mAUG+KXOOnOYa4nJVPuzlc2nqReDM8MF4HrFej/E1u8U00M2TFBmj8vhAb7MJNj8JkA29ICRn4bDldHiYXx8Cj8xD04vtwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757930798; c=relaxed/simple;
-	bh=hJIwkiz9sypHEiHD79ZpOaAj0rAaVF4u0ldF0tcXL3c=;
+	s=arc-20240116; t=1757930800; c=relaxed/simple;
+	bh=8Enp+Mkl2UxqpACVzNToxnoA6OxpULssI+bvEQ0Nf4U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=S5WZQflZlUa0cfcwKjC6MAJ8L6TcGttkQAPkFQehSmEZWO8wEYVOLh2wpWm8zDiZAvUCHnevYxGhOsjcoyDw8CZM0avgPpHL579NMUx7h1f5zUKgCgoJuqQBJMO+3Xd7ySF4ivmPNGztNzOyYuAUXICe/MEufdv4ticHDmLLtm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hzF6fvmq; arc=none smtp.client-ip=209.85.221.48
+	 In-Reply-To:To:Cc; b=hT7QmfatLYGGDRcwv5qz5lTAOeC5GiQMUAOVRHhyBSe4tmnQV7/2Epmkz/awR6KIpOxSWCM88dLxltTCjULo6Vt8Ovb0DPclCI6pySRoa744A2J/TNrljQLpwTY7VS1gUQYSr2ZMnjL7OtCI9ZE+9IfhkdBJIAWth6KBJL2M9g4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mwVaMN+O; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3eb3f05c35bso356560f8f.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 03:06:36 -0700 (PDT)
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45f2c5ef00fso8637865e9.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 15 Sep 2025 03:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1757930795; x=1758535595; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1757930796; x=1758535596; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=eGHFxRjJDleNewjPVp65zuO30fhwOTH80zSHnSHmwac=;
-        b=hzF6fvmq27vDWGU1sWwnEn0bqwSoD/YumqTGOuCIbGO6ieR9iAe9mOITX16KuAdyZJ
-         S0pVS6WVzDm2dDoUJcJYyiAo+KLBYsRN4JsSnWuqrwDlOrh4CJzTBxPhSDK8xdOs6TcA
-         6Pr3aMQnzd9fBbTJJShAN7NIvbQIDn+inR5Pjg5Jotl2o/EFsSilnKrmfHyhX2vqoyPl
-         Jtlz0H7tKuBF4RcQruhXT3R7DRyeO5JAdlmwfSwGxC2BKjvXRhwb+Q2a8shblJ1uvKjC
-         hjgB76HRqnphp1NxtRUW5MLO03gMDDcq6CAEGNupPrK/NGuZukJdirfmrkHzJhd1upke
-         Fl4w==
+        bh=aMJ/RBwT6mg+UjxGTL74eJG4QUt2rz+S26/sAVei4C0=;
+        b=mwVaMN+O7JQojI5YqTtmPbLUEgRTHwx7+kjEd4Hk26ECRuVMtOrUAwNtl23nqe7RZU
+         1hJ108f9SK0/8xqBaMN7vnA03bygmzYGVkOZl+dEgIZPgp1CpJjw9gR60pHJruSVjUkJ
+         6AnAUkcJcmKDMqh1/OAsNdsXDmxIM21IVgACFPzkU6aNcGokJO3PeHwjGmmUGSMbL0qa
+         +Y98Lf3dUAAcQZHPPq+bhvpmMKmqO5XLzeJ+ULPAmkxtdNUe1CmsSE1YVUY6E+FqBml+
+         +4H0TCRgnq3gaqNfLEJ4HX8BRRhL//svw3QCw3WFB6E8C0KlHAv7dgpHU8GOUGD1Zosy
+         V1+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757930795; x=1758535595;
+        d=1e100.net; s=20230601; t=1757930796; x=1758535596;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eGHFxRjJDleNewjPVp65zuO30fhwOTH80zSHnSHmwac=;
-        b=w5/rTXDEGyFE7sMSHHhWUQI+Km7W2tjYN8e8960mmGXFBIL6KwtvWYFKLDDGxmiP0w
-         ryiEK8Pij1XVRgY79WMrDr1Lmje6JRi3OWLHJMiZ24cqiAmogPb/otvybZuea8VPx687
-         iTHaSwFiE25qzdSVdPXvP92OnxRUu+b1CiWcRhTL7blLCySiJzEtT4bDNkW4gYPiizRH
-         KgrIXxmzJvAMy5klHYr7v2p2fB2RS7SNR+vjSn0mETFXx2Nqe5URjSMrQvAXCKOdY/tz
-         ZHBRX6oM37bouiC/aY6BzMVzZ5oL2VS2AH2nJ6IVovlkD1B8hbeqjjNg/OB7b+t/e5Vu
-         /qaw==
-X-Forwarded-Encrypted: i=1; AJvYcCVBSj8htdF+0UR4nQC/mT254RHgsi4qmDJZJxggmi0gOcFP+YisaWbnpXuiawbhMF+BymJPvqrnxsBqfcfI@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6KVFPQFjgh6akf43fr/3QBXfje9UBOr++ZN0GNBcvA0pis7IO
-	HaGydzicf2yt14wIU5R/1X0THSY3qDyU/A/wEiGeNGBpPRBwAcWN90p/1TJoq5nv8q4=
-X-Gm-Gg: ASbGncvWMQUuGp9otSiGUwUoSHe/65j+6lH2mY9y71C9dMIObTTVOeguenQfiXsU2ze
-	RXqQ/+Gb2yJADbUfxoSvB2QqVpd1aBpdwA1EYeJpkTtcjxp8m9RGqv7FSzj7utO+dUzT3tClBwn
-	2/iSlt/nEDb5VsV/fsymy6eyFaKFoIceAJv7cnjD+H3fGpdiY0EIEcofA31H1mP44bPFdraCG7d
-	PRNoiHd9C2mEfRYDQpQDVc9qpjg1u+qVts2bZVVpTphHyxX4flPxBm0wUQ6ixdhZf09trJ96qp+
-	v0z/u/iQqSIMDLuAaL68cp5FKbboxuNIUKZ5skcLlCq/SFO5QKEwkPh6EYvWvhzbC2v6MHfo1B7
-	ELdmtRaOhy7gvie674iDDDxncVpx3p5VTWeY=
-X-Google-Smtp-Source: AGHT+IElgrSVID5upnr61Jr9QDLifzP3jmV2135LUHdvrrOdgcUm13X1jm52Z1V6i5ZQyQaHDlAhTA==
-X-Received: by 2002:a05:6000:1884:b0:3ea:9042:e69d with SMTP id ffacd0b85a97d-3ea9042ec43mr3268023f8f.17.1757930794918;
-        Mon, 15 Sep 2025 03:06:34 -0700 (PDT)
+        bh=aMJ/RBwT6mg+UjxGTL74eJG4QUt2rz+S26/sAVei4C0=;
+        b=s+5QnwiubZ25zwrFcmgMZrD9CZOU/wzzjQL6a3jxh4zB0Re2cUStBvbM1FrpSeqgvy
+         qqgjCMB24S29ctSGpjSk+lBFeZFoeU242PSdLG4IspseddJIkz9JR7MFzX/6ZO32Y7IT
+         aNg/A7gdqzYX8gMrlQWU7JvUOJSdQlRnDn2UbouuOqLn9v4TSSpVeVusXccD/NusKde/
+         T4pCQQ6Qu/9ZDHOA2wsuKOsy2019UL709a14QBIzkEQ17Mk0OIjhpdWmsiixazzbCCdt
+         x3K5vDXEi4tqzhBNs5HOp5yKznBvv3LwwCtdGmGSc04yyxXzKYGVrr+KtCtUE/iOcJB3
+         cJCg==
+X-Forwarded-Encrypted: i=1; AJvYcCXiadvN6H8L4T+/GKkDmEH5Ef8x27W/WkhYJucKrtf9zuLFJBOrBjK1HLiSjTFYqQSUXccPlMVrHsmMTjbK@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYPJFM+csGdx3qJm1kckMAen2lB7Iy7QkST/H8kNpVDYO13JRV
+	ISYwyerfFtbhqKZNR4HUS7PWlKX37isoZ/VqSzUBJfE/25eMYSMLqtljwKjXJOE5Y5g=
+X-Gm-Gg: ASbGncteZi2Rd46FUKM2uiWxJWK+c1EXupz8HYntpaP6KlnVkcocKP17zeJb+XOdDcm
+	jMYkl9YxqjjunnsYZU28qcKLQJt7ZBFZrviCrZ/FkhNS5kl8lkH6tX0ebRmYzispal01lbYHo4u
+	hVq3eiRLI6NnHz9x5pdxuZw5ITvFQAt8Wzaxt52JShUuh8vPNGXzJsINM80+GRpxHkciVuucGte
+	87F2csqJxOXV9r9AD0EOs6T4/FzMjDyJ6z36v8xD9qh099OlE6t6reoYZtOT3HVQQ6WYjywcvr6
+	hfFz/S70cSIbOD5hGeza6Iu/Jvx0nrKmgb58xRIbw7neVop0cUHoJy4obbLu9nbB/R9iGriYWAY
+	klrRnreIBrosMgMh9/ZqE5dPJSFtXI3Aa0G+NQUfOLh2Plg==
+X-Google-Smtp-Source: AGHT+IGAYfNbairUcoKCWSDsEU5WSecLpPfBO1ydBVHA7jvKLsoeowirgMHHx11PlHl8N8clREqLbQ==
+X-Received: by 2002:a05:6000:2509:b0:3e2:fd26:10f0 with SMTP id ffacd0b85a97d-3e765594128mr11920512f8f.11.1757930795969;
+        Mon, 15 Sep 2025 03:06:35 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2454:ff21:41:eee1:5042:e713:2e9a])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607cd4cdsm17209127f8f.37.2025.09.15.03.06.34
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607cd4cdsm17209127f8f.37.2025.09.15.03.06.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 15 Sep 2025 03:06:34 -0700 (PDT)
+        Mon, 15 Sep 2025 03:06:35 -0700 (PDT)
 From: Stephan Gerhold <stephan.gerhold@linaro.org>
-Date: Mon, 15 Sep 2025 12:06:19 +0200
-Subject: [PATCH v2 8/9] arm64: dts: qcom: x1e80100-dell-latitude-7455:
- Enable IRIS
+Date: Mon, 15 Sep 2025 12:06:20 +0200
+Subject: [PATCH v2 9/9] arm64: dts: qcom: x1e80100-dell-xps13-9345: Enable
+ IRIS
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250915-x1e-iris-dt-v2-8-1f928de08fd4@linaro.org>
+Message-Id: <20250915-x1e-iris-dt-v2-9-1f928de08fd4@linaro.org>
 References: <20250915-x1e-iris-dt-v2-0-1f928de08fd4@linaro.org>
 In-Reply-To: <20250915-x1e-iris-dt-v2-0-1f928de08fd4@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -104,30 +104,30 @@ X-Mailer: b4 0.14.2
 
 Enable IRIS to allow using the hardware-accelerated video codecs. The
 firmware is not upstream in linux-firmware yet, so users need to copy it
-from Windows to qcom/x1e80100/dell/latitude-7455/qcvss8380.mbn (just like
+from Windows to qcom/x1e80100/dell/xps13-9345/qcvss8380.mbn (just like
 GPU/ADSP/CDSP firmware).
 
 Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts | 5 +++++
+ arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
-index ace2a905e4430d6cd1db59e9a9fb7441f7fe0aa9..32ad9679550efce1fda1182bd874d6a3c53d8f03 100644
---- a/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
-+++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts
-@@ -38,6 +38,11 @@ touchscreen@9 {
+diff --git a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+index 19a2604038a88f37e6ab87129a6318db78345339..58f8caaa7258077d2c267048ca048279109ddb71 100644
+--- a/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
++++ b/arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts
+@@ -875,6 +875,11 @@ touchpad@2c {
  	};
  };
  
 +&iris {
-+	firmware-name = "qcom/x1e80100/dell/latitude-7455/qcvss8380.mbn";
++	firmware-name = "qcom/x1e80100/dell/xps13-9345/qcvss8380.mbn";
 +	status = "okay";
 +};
 +
- &remoteproc_adsp {
- 	firmware-name = "qcom/x1e80100/dell/latitude-7455/qcadsp8380.mbn",
- 			"qcom/x1e80100/dell/latitude-7455/adsp_dtbs.elf";
+ &mdss {
+ 	status = "okay";
+ };
 
 -- 
 2.50.1
