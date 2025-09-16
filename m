@@ -1,62 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-73800-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73801-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39B03B5A1DB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 22:08:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6F73B5A326
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 22:34:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 238647AF835
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 20:06:47 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C27D1522EEB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 20:33:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 16AE42DBF43;
-	Tue, 16 Sep 2025 20:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5D73A31BCA4;
+	Tue, 16 Sep 2025 20:25:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AmBLBF6K"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mak2OBqs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7BED2C0268;
-	Tue, 16 Sep 2025 20:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3314031BCA1;
+	Tue, 16 Sep 2025 20:25:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758053303; cv=none; b=XWJGXE52SKPyNiMH8WMgVKSebkyju8m28WCw3ErfjOxvFV3lmIWY+NCj29pJQL098cpQjfFu/dslDhHMdYGlscXbwCSBJNBT3kbCdyQyWN9ZFxLFwGSnVqqpb9LNkUMflhbm/gQfHB0a5lHhXeepGvhehnWXueDeb8DLpBdg5Cs=
+	t=1758054352; cv=none; b=snjImW+qmlT9HNpifl7PYE774WnzYA7H7vQsfRqVa2JEpt3jfLgBQRmnggq8qXgeO3NnHVogiKTlUCYhhzfI8Mmdj6DsxRhiFkcO88uU4asFlcD2MU5zDJc2tdcDlqN6NaKMGxJu4wdQeP8Rs4C/VEWzL6HAGIcMu21XyksbyBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758053303; c=relaxed/simple;
-	bh=c07+nrBCBVI2N9HmL41m7c9WRz3jG1BDnxKK1KtQgvM=;
+	s=arc-20240116; t=1758054352; c=relaxed/simple;
+	bh=m37YmQRRErQE/O0cGfIUVqjH/BwggCX8wBYw+TGhzww=;
 	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=PtaLnrF97W5NfpCPRdNtEMTLwReIOQLyh7TIMewNdFV66AJIsKv+D13WibTlDqngp2pcbKyFb5VT3z19f3upRF+VpniBtasogU2h33e+wFF3Seni7zz0Bqofi1MxPoK3Ec8BFj31BKJ04KMcO+7YOspBoFCK9rSWHq/ku2REI5Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AmBLBF6K; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57474C4CEEB;
-	Tue, 16 Sep 2025 20:08:19 +0000 (UTC)
+	 Content-Disposition:In-Reply-To; b=UvKp4le0udEU4tT/WLyaWNjjLeCrgMtOwF9SXZOHsqY4gICsQ/RILFojkZvh79gx0Ui0AOJUifemHW2wdPiedLju/NrEIIXFQ286YTHeuGhxfme9WI5K60mTDXODBh8Vc+lNvO1RjQzvzQVoi2bXuGtwGTUB6BN1zRnbtQxJQhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mak2OBqs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7672C4CEEB;
+	Tue, 16 Sep 2025 20:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758053299;
-	bh=c07+nrBCBVI2N9HmL41m7c9WRz3jG1BDnxKK1KtQgvM=;
+	s=k20201202; t=1758054351;
+	bh=m37YmQRRErQE/O0cGfIUVqjH/BwggCX8wBYw+TGhzww=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=AmBLBF6K7tgJv4FVjr4LpxbcDNRkTbEBo3oEptCsjCUKFoYDjPH9vQIGjKpR8ViTR
-	 oTnjDhybQhFR8jn08e7GesLk5GzC9WtJ8f5D/f+2D9/FHkbD1yczEMbZL+4OuUBGIh
-	 +9GcE26FkX6ptHyCTQpgNzjQjqpSd8Y78KCuCWDRiJuVSmU6DQlmC4bCVTNNVsm6v7
-	 6U993AgnvxQjfx+k9Pkyix+cEazqUyVOrDiqs5qW0eFGa+YifPAI6oq1RxgvuJyr51
-	 Ovr13gUIPixChWR0lvXqFf5IFQGR4DG7Fg7lddrEZqiG1IjdCmESTzm8c/5GcS06sh
-	 eX4g9LAjJT4Kw==
-Date: Tue, 16 Sep 2025 15:08:17 -0500
+	b=Mak2OBqsfdKvjlsa6J1UGVAwP2mvnFb8f2YKKNHSvSmtXLft8aK+e6MYl4Ra8sJVx
+	 +pjuL1GjriXMQ4JoVU2dV+jvN+9dlvsDvEVVWKzHaJ7VnDrNkKEBDNM6z2HVgeuX52
+	 bEoZebZs6II7O9qVWvOHc8af6Tw+miIRInx0HecUlWebCrjbw3I6DftewvGWOKh0iY
+	 T3jFujR9NkQ3auALHbI281uH6alVZULkxde9h9Xj0S+UASZU+HJqXpJH98Z+nlXVGl
+	 8ZokuMhEXa8eVD3WfY/NL7184Yq3WfJlIy3FVdQf1kiqEuo6IyEZ4jgCSlQ3yy9COX
+	 9JBMDOVfzEuOQ==
+Date: Tue, 16 Sep 2025 15:25:50 -0500
 From: Bjorn Helgaas <helgaas@kernel.org>
 To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Lorenzo Pieralisi <lpieralisi@kernel.org>,
 	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH v3 2/4] PCI: qcom: Move host bridge 'phy' and 'reset'
- pointers to struct qcom_pcie_port
-Message-ID: <20250916200817.GA1814336@bhelgaas>
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Chia-Lin Kao <acelan.kao@canonical.com>
+Subject: Re: [PATCH 0/2] PCI/ASPM: Enable ASPM and Clock PM by default on
+ devicetree platforms
+Message-ID: <20250916202550.GA1814752@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,200 +66,75 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250912-pci-pwrctrl-perst-v3-2-3c0ac62b032c@oss.qualcomm.com>
+In-Reply-To: <20250916172116.GA1808269@bhelgaas>
 
-On Fri, Sep 12, 2025 at 02:05:02PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> 
-> DT binding allows specifying 'phy' and 'reset' properties in both host
-> bridge and Root Port nodes, though specifying in the host bridge node is
-> marked as deprecated. Still, the pcie-qcom driver should support both
-> combinations for maintaining the DT backwards compatibility. For this
-> purpose, the driver is holding the relevant pointers of these properties in
-> two structs: struct qcom_pcie_port and struct qcom_pcie.
-> 
-> However, this causes confusion and increases the driver complexity. Hence,
-> move the pointers from struct qcom_pcie to struct qcom_pcie_port. As a
-> result, even if these properties are specified in the host bridge node,
-> the pointers will be stored in struct qcom_pcie_port as if the properties
-> are specified in a single Root Port node. This logic simplifies the driver
-> a lot.
-> 
-> Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+[+cc Heiner, AceLan in case it's of interest to you]
 
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com> 
-
-I would put this patch by itself on pci/controller/qcom immediately
-because it's not related to the rest of the series, and we should make
-sure it's in v6.18 regardless of the rest.
-
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 87 ++++++++++++++--------------------
->  1 file changed, 36 insertions(+), 51 deletions(-)
+On Tue, Sep 16, 2025 at 12:21:18PM -0500, Bjorn Helgaas wrote:
+> [+cc Kai-Heng, Rafael; thread at
+> https://lore.kernel.org/r/20250916-pci-dt-aspm-v1-0-778fe907c9ad@oss.qualcomm.com]
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 294babe1816e4d0c2b2343fe22d89af72afcd6cd..6170c86f465f43f980f5b2f88bd8799c3c152e68 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -279,8 +279,6 @@ struct qcom_pcie {
->  	void __iomem *elbi;			/* DT elbi */
->  	void __iomem *mhi;
->  	union qcom_pcie_resources res;
-> -	struct phy *phy;
-> -	struct gpio_desc *reset;
->  	struct icc_path *icc_mem;
->  	struct icc_path *icc_cpu;
->  	const struct qcom_pcie_cfg *cfg;
-> @@ -297,11 +295,8 @@ static void qcom_perst_assert(struct qcom_pcie *pcie, bool assert)
->  	struct qcom_pcie_port *port;
->  	int val = assert ? 1 : 0;
->  
-> -	if (list_empty(&pcie->ports))
-> -		gpiod_set_value_cansleep(pcie->reset, val);
-> -	else
-> -		list_for_each_entry(port, &pcie->ports, list)
-> -			gpiod_set_value_cansleep(port->reset, val);
-> +	list_for_each_entry(port, &pcie->ports, list)
-> +		gpiod_set_value_cansleep(port->reset, val);
->  
->  	usleep_range(PERST_DELAY_US, PERST_DELAY_US + 500);
->  }
-> @@ -1253,57 +1248,32 @@ static bool qcom_pcie_link_up(struct dw_pcie *pci)
->  	return val & PCI_EXP_LNKSTA_DLLLA;
->  }
->  
-> -static void qcom_pcie_phy_exit(struct qcom_pcie *pcie)
-> -{
-> -	struct qcom_pcie_port *port;
-> -
-> -	if (list_empty(&pcie->ports))
-> -		phy_exit(pcie->phy);
-> -	else
-> -		list_for_each_entry(port, &pcie->ports, list)
-> -			phy_exit(port->phy);
-> -}
-> -
->  static void qcom_pcie_phy_power_off(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_port *port;
->  
-> -	if (list_empty(&pcie->ports)) {
-> -		phy_power_off(pcie->phy);
-> -	} else {
-> -		list_for_each_entry(port, &pcie->ports, list)
-> -			phy_power_off(port->phy);
-> -	}
-> +	list_for_each_entry(port, &pcie->ports, list)
-> +		phy_power_off(port->phy);
->  }
->  
->  static int qcom_pcie_phy_power_on(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_port *port;
-> -	int ret = 0;
-> +	int ret;
->  
-> -	if (list_empty(&pcie->ports)) {
-> -		ret = phy_set_mode_ext(pcie->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-> +	list_for_each_entry(port, &pcie->ports, list) {
-> +		ret = phy_set_mode_ext(port->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
->  		if (ret)
->  			return ret;
->  
-> -		ret = phy_power_on(pcie->phy);
-> -		if (ret)
-> +		ret = phy_power_on(port->phy);
-> +		if (ret) {
-> +			qcom_pcie_phy_power_off(pcie);
->  			return ret;
-> -	} else {
-> -		list_for_each_entry(port, &pcie->ports, list) {
-> -			ret = phy_set_mode_ext(port->phy, PHY_MODE_PCIE, PHY_MODE_PCIE_RC);
-> -			if (ret)
-> -				return ret;
-> -
-> -			ret = phy_power_on(port->phy);
-> -			if (ret) {
-> -				qcom_pcie_phy_power_off(pcie);
-> -				return ret;
-> -			}
->  		}
->  	}
->  
-> -	return ret;
-> +	return 0;
->  }
->  
->  static int qcom_pcie_host_init(struct dw_pcie_rp *pp)
-> @@ -1748,8 +1718,10 @@ static int qcom_pcie_parse_ports(struct qcom_pcie *pcie)
->  	return ret;
->  
->  err_port_del:
-> -	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-> +	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-> +		phy_exit(port->phy);
->  		list_del(&port->list);
-> +	}
->  
->  	return ret;
->  }
-> @@ -1757,20 +1729,32 @@ static int qcom_pcie_parse_ports(struct qcom_pcie *pcie)
->  static int qcom_pcie_parse_legacy_binding(struct qcom_pcie *pcie)
->  {
->  	struct device *dev = pcie->pci->dev;
-> +	struct qcom_pcie_port *port;
-> +	struct gpio_desc *reset;
-> +	struct phy *phy;
->  	int ret;
->  
-> -	pcie->phy = devm_phy_optional_get(dev, "pciephy");
-> -	if (IS_ERR(pcie->phy))
-> -		return PTR_ERR(pcie->phy);
-> +	phy = devm_phy_optional_get(dev, "pciephy");
-> +	if (IS_ERR(phy))
-> +		return PTR_ERR(phy);
->  
-> -	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
-> -	if (IS_ERR(pcie->reset))
-> -		return PTR_ERR(pcie->reset);
-> +	reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
-> +	if (IS_ERR(reset))
-> +		return PTR_ERR(reset);
->  
-> -	ret = phy_init(pcie->phy);
-> +	ret = phy_init(phy);
->  	if (ret)
->  		return ret;
->  
-> +	port = devm_kzalloc(dev, sizeof(*port), GFP_KERNEL);
-> +	if (!port)
-> +		return -ENOMEM;
-> +
-> +	port->reset = reset;
-> +	port->phy = phy;
-> +	INIT_LIST_HEAD(&port->list);
-> +	list_add_tail(&port->list, &pcie->ports);
-> +
->  	return 0;
->  }
->  
-> @@ -1984,9 +1968,10 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  err_host_deinit:
->  	dw_pcie_host_deinit(pp);
->  err_phy_exit:
-> -	qcom_pcie_phy_exit(pcie);
-> -	list_for_each_entry_safe(port, tmp, &pcie->ports, list)
-> +	list_for_each_entry_safe(port, tmp, &pcie->ports, list) {
-> +		phy_exit(port->phy);
->  		list_del(&port->list);
-> +	}
->  err_pm_runtime_put:
->  	pm_runtime_put(dev);
->  	pm_runtime_disable(dev);
-> 
-> -- 
-> 2.45.2
-> 
-> 
+> On Tue, Sep 16, 2025 at 09:42:51PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > Hi,
+> > 
+> > This series is one of the 'let's bite the bullet' kind, where we have decided to
+> > enable all ASPM and Clock PM states by default on devicetree platforms [1]. The
+> > reason why devicetree platforms were chosen because, it will be of minimal
+> > impact compared to the ACPI platforms. So seemed ideal to test the waters.
+> > 
+> > Problem Statement
+> > =================
+> > 
+> > Historically, PCI subsystem relied on the BIOS to enable ASPM and Clock PM
+> > states for PCI devices before the kernel boot. This was done to avoid enabling
+> > ASPM for the buggy devices that are known to create issues with ASPM (even
+> > though they advertise the ASPM capability). But BIOS is not at all a thing on
+> > most of the non-x86 platforms. For instance, the majority of the Embedded and
+> > Compute ARM based platforms using devicetree have something called bootloader,
+> > which is not anyway near the standard BIOS used in x86 based platforms. And
+> > these bootloaders wouldn't touch PCIe at all, unless they boot using PCIe
+> > storage, even then there would be no guarantee that the ASPM states will get
+> > enabled. Another example is the Intel's VMD domain that is not at all configured
+> > by the BIOS. But, this series is not enabling ASPM/Clock PM for VMD domain. I
+> > hope it will be done similarly in the future patches.
+> > 
+> > Solution
+> > ========
+> > 
+> > So to avoid relying on BIOS, it was agreed [2] that the PCI subsystem has to
+> > enable ASPM and Clock PM states based on the device capability. If any devices
+> > misbehave, then they should be quirked accordingly.
+> > 
+> > First patch of this series introduces two helper functions to enable all ASPM
+> > and Clock PM states if CONFIG_OF is enabled. Second patch drops the custom ASPM
+> > enablement code from the pcie-qcom driver as it is no longer needed.
+> > 
+> > Testing
+> > =======
+> > 
+> > This series is tested on Lenovo Thinkpad T14s based on Snapdragon X1 SoC. All
+> > supported ASPM states are getting enabled for both the NVMe and WLAN devices by
+> > default.
+> > 
+> > [1] https://lore.kernel.org/linux-pci/a47sg5ahflhvzyzqnfxvpk3dw4clkhqlhznjxzwqpf4nyjx5dk@bcghz5o6zolk
+> > [2] https://lore.kernel.org/linux-pci/20250828204345.GA958461@bhelgaas
+> > 
+> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > ---
+> > Manivannan Sadhasivam (2):
+> >       PCI/ASPM: Override the ASPM and Clock PM states set by BIOS for devicetree platforms
+> >       PCI: qcom: Remove the custom ASPM enablement code
+> > 
+> >  drivers/pci/controller/dwc/pcie-qcom.c | 32 -----------------------
+> >  drivers/pci/pcie/aspm.c                | 48 ++++++++++++++++++++++++++++++----
+> >  2 files changed, 43 insertions(+), 37 deletions(-)
+> > ---
+> > base-commit: 8f5ae30d69d7543eee0d70083daf4de8fe15d585
+> > change-id: 20250916-pci-dt-aspm-8b3a7e8d2cf1
+> > 
+> > Best regards,
+> > -- 
+> > Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > 
+> > 
 
