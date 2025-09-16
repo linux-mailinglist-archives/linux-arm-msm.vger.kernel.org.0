@@ -1,191 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-73790-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EEC34B59FAB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:44:06 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 66ECEB5A00B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 20:04:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A50BA2A6404
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:44:06 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 161CB1C05876
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 18:04:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B79F2F5A39;
-	Tue, 16 Sep 2025 17:44:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75910279DC9;
+	Tue, 16 Sep 2025 18:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VXKiqZOr"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFXckyTF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65DA82F5A23
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 17:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0EA32D5BE
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 18:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758044641; cv=none; b=cznngiTODFGeAnabfEsAnybocBRawZCi7AoNJhNdtjp0EdLABs0eX+UttefEHeZLWmLNQ3PqcGjtZza4bD3voOvVCGv2+YhFNIeHLYlKXQ+th3csAyKGqBnO15c+ouX4ahvaepkiaS0iBA/8Rw+eWGbaf1MvWa71UJe0ToJ3ODQ=
+	t=1758045867; cv=none; b=s/R1tMkWixuEUsHLQw2ueEEu+XrzfPoUviOOGsSxp+acWTVO5nzNm9wH/KcMBtJknve6Yf2OT+lsiKgS9F7MKEMVQrIKXTJ/U4araUN5tPOvE8xqCwM5hUVCBlSLY1dWAyNq7D6u/9a+ycCI6SXDSYHodqSQVBg0DfobFwrgqiw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758044641; c=relaxed/simple;
-	bh=mKgs+n56LLSQMG9QE/M+UFcraHvC1S2nEabKpRewBlM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Vtu5FPcnBvEocJSEtTMsRfp78NSSgmNM+j4xHGIIdMq6GQTemRvAw2+Har/lu4cwnsgF5ODqCIuL8yD39t+TrTRLQ/Wmqb72cphlt0lnVn/zkKGkNdDmb3UNnakg36fo4zTIeB2vrianACgpTH+cFdQPpFSqKS2HKbhdmyBdeGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VXKiqZOr; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1758045867; c=relaxed/simple;
+	bh=PzcSQ8s7GfmxH7lt4N94QWfy7MnO8OSH0HGrI/uXssY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=N4WPlxau/+yXwHRS0jveFbhRCXlY134g5/Et9l+R5tLgFfAazaDqLGBA1X6ZpT9m3uOIw/4h4yrO9xJz4E2LZGiYHJ/xrJ33otKQyjdwNXROSDKOm9n4uc3/Ddlx2K75knnK/N1M1p6GoRgx1kqEJqUhzXyLEV04Hh5bHmW4hg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFXckyTF; arc=none smtp.client-ip=209.85.210.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-b04271cfc3eso726097166b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 10:43:59 -0700 (PDT)
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7742adc1f25so4012848b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 11:04:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758044638; x=1758649438; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Yb9yeYyn+7ficz6XHyvPVxnyEFz7ITRXLsOtF/kZ6LU=;
-        b=VXKiqZOrGkQK9w9h/pbxSGdEPVdHf7E8rwR09aaD+BwqiQdsoKxCXD7OtXGUUy1PRC
-         BQMFZx84ZsdBk+BUAeEUAWYs8jis4+e73ndT07mVuPV+wQx8wKNDe1akcdwu8osnj9Sk
-         ajbdAx7U2gEoAQDaw2Dkj23uR2EiZIAaNa6DSvZLHy82FTUzthLLJLuQdkkYwU83IEw/
-         TGF4oVTUKQOPC1L9lWlAaABNmah2my+kc1iSg271iDSBzyKkuSInu+J5Hd72auKUFW4F
-         rzWXGDP5JUiNvMAySMEFZ9rKsitnoXYRjop74WWxeu/8fp1VtviIRBUCCcnTj7s/venB
-         Etrg==
+        d=gmail.com; s=20230601; t=1758045865; x=1758650665; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KlMD9Q0JVitdbzhKoBVG9BxngG7xfjv+ACgNnBWgBr8=;
+        b=jFXckyTF2Joss6ICkOWP/E4pJDdtXhIA/G2BlkW5sPdHs2K/wVYIUM8GiaE/YM/fX8
+         YavV4Mw/Pa6HFFACKsgSyQQpKkDdy+XOpzsEtic8TPyDzH/TzGRAcyWp9g5HMnMaGMYn
+         IVMjJ07k6L1kzaBgY5YoUXqR6O3OfvcMb1CYLp1rWcMioDFlfbkOKMyZ2oKV4kZ+EVW9
+         IsJpYCszn98zDsQPacpdeK519NFOoxHq5kVr0PpENic3iMIpkPvrxe4IkcmVC821Br/8
+         5s0ttX5k2ctUNeSKESMvoSNY+1FzkLIOgbsm71CWRpgwPBFwoMhkSqivAkuQ8cCUuwbN
+         RF2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758044638; x=1758649438;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1758045865; x=1758650665;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Yb9yeYyn+7ficz6XHyvPVxnyEFz7ITRXLsOtF/kZ6LU=;
-        b=RWzmNMPHE9g7MSWQ8l/PAAaJmIwJRG0uLnVuPk4bY5BoPFryFF9lP7YKpvZS5qKN8k
-         k4HqwsBi4ggXqEa9hr9r7iuyUaFKxHhRbHQMFXvxcYyS7/NWP1NRsCKbu8r1ZNIiJnkq
-         SVm42aR0oJApM2a5cfiE5zvQdA8gDklYZHB+r1+s+nirWfwLaSJN/FwBjC4HNAqAJX5l
-         iDBfoHijXwsfPGuMUOKsPRRk+I2gTsDxx5iwIdmF+ESxDG3Nl/zUUAxh2uz5/ogVYIYM
-         dGp/sjKkW4Wq0yWeHwILxICpVdxLyAKW9SDdlejz/DIdJ0pPcToHk57weQbnmBPxG5th
-         IvIQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWtgQG6zEv4zOtOoPhjxu8tjDyEHNjEUuwsVqcggiOIvX9ewaDXeAxiSzkcW9t0MqE6blUr7gt8rAc1f8kB@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz3pOO8w4Mt/eeDuhUvktW5Kq3aPxP4VlZBMkixrjBNzk+lRBz3
-	EI1tK3mQmm4X9mkhwBJcN0s0jPUfLjWnU+NcOidzVl3vbqvUftWzYAghF6C/Tg==
-X-Gm-Gg: ASbGncv36m43ZIuT2YtWAfeO3ujNGIavXXZ8t2VcqycTn4x7DEPKj4BURO7ARpvUsH4
-	LMl8NrODZUG2TAUBXd0N7otoILyElC2vxBPHKJAeqY0NJojOiuhERXSpSu+LKtJh4XnLz8M9KFN
-	S7+Bb5uwnHInBrnCEF/Hd/xdsgNEzCncdkmpQb83LWI0+pDr67fAqbIW5+S1TMoaKT0QMZxum/r
-	TIusIdeW/MlW6djezvxUYmSwv2qI79Yb1j64pmnYWTWqJhgMl2TiDdW0UWyZyLyW4kjav83R8rN
-	Bc6UbuTFgdg/BCr9ok9MltpVKtsSqY8nkp+jobwCrNCFwWWJK7m5MjUy7Vfy+zoP4U3ACRrqff7
-	hJiLYNdpyp53DblDOFbZxxeIT4t7aFhrYPv0O3ykPshCXSFXOZSS/
-X-Google-Smtp-Source: AGHT+IH5l1Uw6AXpT3WeVxFHCThmWlH8lQJghDeYiJ7Wq3FJZCatyS/+o80jJ1zg9OagGHYLuLMNiw==
-X-Received: by 2002:a17:906:d185:b0:b07:de95:1c70 with SMTP id a640c23a62f3a-b07de9543bdmr1258795266b.31.1758044637559;
-        Tue, 16 Sep 2025 10:43:57 -0700 (PDT)
-Received: from [192.168.0.253] (5D59A51C.catv.pool.telekom.hu. [93.89.165.28])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-b07b30da327sm1212806366b.11.2025.09.16.10.43.56
+        bh=KlMD9Q0JVitdbzhKoBVG9BxngG7xfjv+ACgNnBWgBr8=;
+        b=Dmf2fTfWe0KRiZ+m4QJyRVWADadt4m6L+VETOjez5Qb3pSgfM09DgUlooe6s3heomy
+         t9ST4vXVn/GDfzge4QXndiq37yUj3F3aoRtysf0KrkN6Jwk4pVqWXhG8CXazoYNDCEZ1
+         JTQR5euFIuP6og8Fqp/+Ypx2A0eh6bKbdr7vv1KM4NJvFwtdvkJnMiJfO7CIKDCu3ddP
+         3IHApa/qMcLO0GW+ouSsh1Ocahvs8LEe/U9cyQmDWo/pcwTHboDVoP9ANNMh686vqbqW
+         4q8UHt+a1ERQbQy44CCRB2zwrFtwb7wcGcKekUIhHYywoLtnoA75QeTFWVF+rpovtKJL
+         Y6rQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU7fo+xW+xnUXuF/AHbpuqJsVG/GwQzIgE20zWJTPfr5m2DDGRi8ZF/R2LTKkxCcfeLVORfqsU/ED2VxZ/7@vger.kernel.org
+X-Gm-Message-State: AOJu0YyhnzRVcWxDDaaL0ytvJLUbjP72i2nFPKfW5q2TfP7utnJGupFc
+	5ougoleddvLl4+2DE9kxqwK10CzBSwtTgKA3sXSHi+2XN9HXulnQV/fx
+X-Gm-Gg: ASbGncsDzsnzYAjt4eR/iLsrML1Rl5V2ZR97uI4gX6WH9QnZnxnNZzyOMjikVZ8W2pn
+	EHN4q894Owwl52PP4PcJCh0bUl8Zr2KLXzQIRgmsuyGmBykggx9llw8E2hI/FDyzlxk2GFQitfo
+	6mdkyzs4xG6kl5jeQX7RumtaYXN2tX6h9TQYokBTMmUU8jX74LoJ5BWeMUwqTdhZIHtF0yL9dVM
+	Y936dKqD5rAfuKe6kUYSVWbIK1i+TE5OifDCMkLFhEMc8nvFYrH1bV9wTBRHhceCWYeEJCtlkZa
+	SJrP/VpvLe91TSCs8ORgWRcHjgMZVxoEZita13HQGH3r/b1YxeTG5ZwKRCQ7HPbIBa38t9/EOrO
+	pIDZa3uZad8wclt1xBs6IqC9HLoVbmA==
+X-Google-Smtp-Source: AGHT+IE64vEQGGYu0FHbritPemhJAwVBgkK+MK3Escq6TQXLMCHhie2Kq66Y/kds7nMxdc8J5lT6NA==
+X-Received: by 2002:a05:6a21:99a8:b0:243:d052:9833 with SMTP id adf61e73a8af0-2602aa809d1mr21763638637.25.1758045865256;
+        Tue, 16 Sep 2025 11:04:25 -0700 (PDT)
+Received: from archlinux ([152.245.61.22])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7760944a9a9sm16329819b3a.78.2025.09.16.11.04.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 10:43:57 -0700 (PDT)
-From: Gabor Juhos <j4g8y7@gmail.com>
-Date: Tue, 16 Sep 2025 19:43:46 +0200
-Subject: [PATCH] spi: spi-qpic-snand: simplify clock handling by using
- devm_clk_get_enabled()
+        Tue, 16 Sep 2025 11:04:23 -0700 (PDT)
+From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>
+Cc: devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH] dt-bindings: arm: qcom: sort sm8450 boards
+Date: Tue, 16 Sep 2025 18:04:08 +0000
+Message-ID: <20250916180409.157115-1-ghatto404@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250916-qpic-snand-devm_clk_get_enabled-v1-1-09953493b7f1@gmail.com>
-X-B4-Tracking: v=1; b=H4sIANGhyWgC/y3NQQrCMBCF4auUWTuQBKzUq4iEJDOtg3Vsk1qE0
- rsb1OX3Fu/foHAWLnBuNsi8SpGnVthDA+kWdGAUqgZn3NF01uA8ScKiQQmJ14dP490PvHjWEEc
- mbOPJho7a3sUI9WXK3Mv7W7hcf848v2po+Y/7/gGmNTmghgAAAA==
-X-Change-ID: 20250910-qpic-snand-devm_clk_get_enabled-6b71a9d6f2bb
-To: Mark Brown <broonie@kernel.org>
-Cc: Varadarajan Narayanan <quic_varada@quicinc.com>, 
- Sricharan Ramabadhran <quic_srichara@quicinc.com>, 
- Md Sadre Alam <quic_mdalam@quicinc.com>, linux-spi@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Gabor Juhos <j4g8y7@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The devm_clk_get_enabled() function prepares and enables the
-particular clock, which then automatically gets disabled and
-unprepared on probe failure and on device removal.
+The bindings had samsung,r0q before sony,pdx*, which is out of
+alphabetical order, solve this issue by moving samsung,r0q before
+the pdx boards.
 
-Use that function instead of devm_clk_get() and remove the
-clk_prepare_enable()/clk_disable_unprepare() calls in order
-to simplify the code.
-
-This also ensures that the clocks are handled in the correct
-order during device removal.
-
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
 ---
- drivers/spi/spi-qpic-snand.c | 29 +++--------------------------
- 1 file changed, 3 insertions(+), 26 deletions(-)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-qpic-snand.c b/drivers/spi/spi-qpic-snand.c
-index 28755dbce399d836ab6209e44f02f05532386344..58ceea1ea8fb4e02b4c9989a38d1ea38520d88b0 100644
---- a/drivers/spi/spi-qpic-snand.c
-+++ b/drivers/spi/spi-qpic-snand.c
-@@ -1542,15 +1542,15 @@ static int qcom_spi_probe(struct platform_device *pdev)
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 4f254922069e..640fae56f6ac 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -1097,9 +1097,9 @@ properties:
+           - enum:
+               - qcom,sm8450-hdk
+               - qcom,sm8450-qrd
++              - samsung,r0q
+               - sony,pdx223
+               - sony,pdx224
+-              - samsung,r0q
+           - const: qcom,sm8450
  
- 	snandc->props = dev_data;
- 
--	snandc->core_clk = devm_clk_get(dev, "core");
-+	snandc->core_clk = devm_clk_get_enabled(dev, "core");
- 	if (IS_ERR(snandc->core_clk))
- 		return PTR_ERR(snandc->core_clk);
- 
--	snandc->aon_clk = devm_clk_get(dev, "aon");
-+	snandc->aon_clk = devm_clk_get_enabled(dev, "aon");
- 	if (IS_ERR(snandc->aon_clk))
- 		return PTR_ERR(snandc->aon_clk);
- 
--	snandc->qspi->iomacro_clk = devm_clk_get(dev, "iom");
-+	snandc->qspi->iomacro_clk = devm_clk_get_enabled(dev, "iom");
- 	if (IS_ERR(snandc->qspi->iomacro_clk))
- 		return PTR_ERR(snandc->qspi->iomacro_clk);
- 
-@@ -1564,18 +1564,6 @@ static int qcom_spi_probe(struct platform_device *pdev)
- 	if (dma_mapping_error(dev, snandc->base_dma))
- 		return -ENXIO;
- 
--	ret = clk_prepare_enable(snandc->core_clk);
--	if (ret)
--		goto err_dis_core_clk;
--
--	ret = clk_prepare_enable(snandc->aon_clk);
--	if (ret)
--		goto err_dis_aon_clk;
--
--	ret = clk_prepare_enable(snandc->qspi->iomacro_clk);
--	if (ret)
--		goto err_dis_iom_clk;
--
- 	ret = qcom_nandc_alloc(snandc);
- 	if (ret)
- 		goto err_snand_alloc;
-@@ -1616,12 +1604,6 @@ static int qcom_spi_probe(struct platform_device *pdev)
- err_spi_init:
- 	qcom_nandc_unalloc(snandc);
- err_snand_alloc:
--	clk_disable_unprepare(snandc->qspi->iomacro_clk);
--err_dis_iom_clk:
--	clk_disable_unprepare(snandc->aon_clk);
--err_dis_aon_clk:
--	clk_disable_unprepare(snandc->core_clk);
--err_dis_core_clk:
- 	dma_unmap_resource(dev, res->start, resource_size(res),
- 			   DMA_BIDIRECTIONAL, 0);
- 	return ret;
-@@ -1636,11 +1618,6 @@ static void qcom_spi_remove(struct platform_device *pdev)
- 	spi_unregister_controller(ctlr);
- 	nand_ecc_unregister_on_host_hw_engine(&snandc->qspi->ecc_eng);
- 	qcom_nandc_unalloc(snandc);
--
--	clk_disable_unprepare(snandc->aon_clk);
--	clk_disable_unprepare(snandc->core_clk);
--	clk_disable_unprepare(snandc->qspi->iomacro_clk);
--
- 	dma_unmap_resource(&pdev->dev, snandc->base_dma, resource_size(res),
- 			   DMA_BIDIRECTIONAL, 0);
- }
-
----
-base-commit: b28a55db452edb1d997edee723d8dcbef7f065a3
-change-id: 20250910-qpic-snand-devm_clk_get_enabled-6b71a9d6f2bb
-
-Best regards,
+       - items:
 -- 
-Gabor Juhos <j4g8y7@gmail.com>
+2.51.0
 
 
