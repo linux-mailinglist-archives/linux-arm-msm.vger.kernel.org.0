@@ -1,291 +1,264 @@
-Return-Path: <linux-arm-msm+bounces-73782-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73783-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DC77B59EFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:12:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 39B08B59F08
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:15:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8DCA3ACBD1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:12:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DD2864E2984
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:15:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7515A2FFF93;
-	Tue, 16 Sep 2025 17:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B44A22356C9;
+	Tue, 16 Sep 2025 17:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="KBAt/bks"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R0lmxE5O"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 552232F5A1D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 17:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87459221DB6;
+	Tue, 16 Sep 2025 17:15:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758042766; cv=none; b=BDy0Va3wts1JIzokpfqZBSt+9JSfzzZMSBCuDkEWOwVbMNKeOKvdWV6F7NaPeQqMddmjptr4dlj92c8Nb4y7Vd3OXxwBmm3kTLOuToJNlOqmiVTeLbaQmfpfcCgmIgO7rSxuU7z4r9CeG4V/EpdEuFakS/9zr13aeE8rZYW7Eqo=
+	t=1758042948; cv=none; b=B15A4nVYZV4UfrAp/R1enehazQMw6cK7YpDeQHfBt93hxYvn3zXzdZ8+/EJNGCNqCElNHKI/oUR7ZrL/sfC2KyQ8UOFv5E4UmN60f7OVUMEfJCkU1TiKH/cvhl4gvDtfdGRkxV2Xc6hEWxEh+bLdJl9xT5okHfTWJ65A9JHnuQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758042766; c=relaxed/simple;
-	bh=Df+/LaMxpKWk0GPaLhm0ZV3PeANKFNnwG3l6SViBXok=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=UjHNt3Q3aNb+tSz7ZV8lZleZIA60/5FMNxD50IEckeLlvPOC/P8GAieb+bzMugIUmCRx7w6Itrvb7G+IpptB+AVCrY4ZVRdjqbMbKUxquJ439ucgbEPn2jyGNp9RsULcn+FwORY6xXnV/fbFOFOTitfJ5mfRJ6m9rORa5patUiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=KBAt/bks; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3eb0a50a4d6so1459544f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 10:12:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758042763; x=1758647563; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LqaF18q5/4RPXd/sNMBkEVcv6NngmKxTCLkka1/HN3A=;
-        b=KBAt/bksKE9Vtg4QSCj3YaQRNsLGZBaURip8+xCsDvXT+txeavqZMkA2U9d+YA0UCY
-         K+yqy5VdWBX5N3iG+OrOm1ccRtBTUqV59l2t59R84xD1ZyovZaruNwKq9weGCsYzzcX0
-         c+jYkwPOhTNV1N8593jPZlgy5zXRdye1iRe8zFbj2j1ddPVq4ju+JbLIX5q7boSGDxNj
-         JuNYSveJh1X3bc4uMvR9Z56S54V2QcFU5v00jg/9e177RROQXwbIh3EVre3UbZCBVdU/
-         OHs/12pIgzRsVeOGavBOflkUN/95i/sYooYzrFr1+BeXijXdlkSzR2TL4HWO2tnm8KgF
-         prBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758042763; x=1758647563;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=LqaF18q5/4RPXd/sNMBkEVcv6NngmKxTCLkka1/HN3A=;
-        b=bnv9Z4JhV/HokYxdkheWU7JfoENvANr2Q4gDFQM97WOdNKGtW8ctNp+a/vzHEcz+Gt
-         qbYmW0uqs4NN4llLS+Nz82/TRdHlxyWHcTOxkXaZdzG5iLMwcXP24/3O9gZl+KsDL4sd
-         a4GD69NRLbsemjWRNqxKxGHBS+qguO7oXm/s+N7qtdmSrdqQAL57hxRFtk9sSG32j5AB
-         OfqmVxKS5CazJjh+zNMnnpbyPtxO6koGCXw/RkmiCq9GWIiBcnc9F26/CziWSxv5wZuC
-         5u5PxkryXFO+4QIswpSvrJNAvxPnnJ5fExlIjyJ/ivyrvdU/q8hd56d+DANNvEEy+Eoa
-         tYjg==
-X-Forwarded-Encrypted: i=1; AJvYcCVxnCZsrHXRvPtTGQKcsOOW+tpeohYCOoD+EphbZvWg5xO6SlQAW5moG2K3zdg8j7XaXTo//MD60Eop1lnL@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyrz7iubghyTToBOKmBIt5XZn2ysawrQAHuofjtDlO5lAp7RXE/
-	GPdaVrcRFIFaiApH5w4IlReXe7uRGPLkLbQdf3QqW0SJ9llEZ466RDcST3MT0ybEOeM=
-X-Gm-Gg: ASbGncuJBmPjBsMaNZOIFz8K+1txX9EDIszcffqlBt8MxF3YeqjGUYQdCnNZ21FyTti
-	N/kgRmrmY9Cfk3V++3KY4lHTaYvoTPuvVqMsUUWdhS++7ud3LGQQ4Jd6aXJeLChkgfWrY6lSayb
-	5wV0rIal7nvow67PxyrSnJkbs2shYupNf/oDbK748onHObIh9J2ARp0e5M8WoZwnYlXVX4tLxrO
-	21A+css9fs1ZtUVNIopQtT2bTbtHUNuhno5QDG/NZ4U49rR/XysMS4KoXyDu8D7ZYjeiMuh3O5b
-	46bHOfpRRsBeRLX4LniCuaBSM1eKVIMmrTJrpS4dEDPSlxuOWRWAR5nFT7t+wTTx9cv/+Jug2Yl
-	pyVu8hh0VbswIoiSNUyTCqPkWED/acnUu5oL7fg==
-X-Google-Smtp-Source: AGHT+IEvkFgtWL+kn+C4oAbEu7W8XPOmrkC2CA2oPkt3zTFfSB2E6147xEPwjsNR2v12L4eZwv8+xQ==
-X-Received: by 2002:a05:6000:25c2:b0:3ec:1edb:97a9 with SMTP id ffacd0b85a97d-3ec1edb9a47mr4026382f8f.33.1758042762513;
-        Tue, 16 Sep 2025 10:12:42 -0700 (PDT)
-Received: from localhost ([2a02:c7c:7259:a00:75ac:2ea2:dfdc:89c7])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e7607cd43csm22183897f8f.29.2025.09.16.10.12.41
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Sep 2025 10:12:41 -0700 (PDT)
+	s=arc-20240116; t=1758042948; c=relaxed/simple;
+	bh=vRy+su+VX+xtMWbSqAx0H8SSt8pZJJ5h/1raCm0MN5g=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=pYISXH3lLSkGyIa9RjZ3ABRWzIf8g4xvK64ZUplcJnE51FpjVBjwhnr2t7vTMBh1mqY0Su8wtU2Bsk0kF4vMVTIv4H2EKZoyMPKK4Jqom6vTh82acxMWstkF49mbi/zEhNQxPWenMPvNAHh31lexoGkb/0WueUFJBPPkDfbe2aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R0lmxE5O; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 342C7C4CEEB;
+	Tue, 16 Sep 2025 17:15:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758042948;
+	bh=vRy+su+VX+xtMWbSqAx0H8SSt8pZJJ5h/1raCm0MN5g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=R0lmxE5OwNjMUtQvS/iKpZ5fatU2z/4PTZKaiUVZJWv6oIbJbIiBfraJrVWYwbNtU
+	 MFVDG1M5Ofiph9nEY9lGxLegQZW1OBTjWsW5hTGXL3tlyNs1Kv1PHGgwY8nYoLApNV
+	 fL6ofII02pjI93hV03hSHYtDmDrRFSO01qmbq1u2dSuZBGwEXiyO235y6izRRJ7wRo
+	 nYzBIvwfsfVp+3FFQfQBRoeBytuxxb5mvx4zoyhCB++KtwfmS2uRUajDQf1ovTttRx
+	 dOr3oaz8fne+JjYjvY3ZnZqrWZ1B5oKKe/v7XI6tzj+IgZYc4MpiwyZcPOfnTwEHWJ
+	 RWr0qLo9XSI3w==
+Date: Tue, 16 Sep 2025 12:15:46 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: manivannan.sadhasivam@oss.qualcomm.com
+Cc: Bjorn Helgaas <bhelgaas@google.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	"David E. Box" <david.e.box@linux.intel.com>
+Subject: Re: [PATCH 1/2] PCI/ASPM: Override the ASPM and Clock PM states set
+ by BIOS for devicetree platforms
+Message-ID: <20250916171546.GA1806498@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 16 Sep 2025 18:12:41 +0100
-Message-Id: <DCUE5AXJ99BG.150SRQMY7EJG6@linaro.org>
-Cc: "Jorge Ramirez" <jorge.ramirez@oss.qualcomm.com>, "Greg Kroah-Hartman"
- <gregkh@linuxfoundation.org>, "Jiri Slaby" <jirislaby@kernel.org>, "Bryan
- O'Donoghue" <bryan.odonoghue@linaro.org>, <linux-arm-msm@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>,
- <psodagud@quicinc.com>, <djaggi@quicinc.com>, <quic_msavaliy@quicinc.com>,
- <quic_vtanuku@quicinc.com>, <quic_arandive@quicinc.com>,
- <quic_shazhuss@quicinc.com>, <krzk@kernel.org>
-Subject: Re: [PATCH v1] serial: qcom-geni: Fix pinctrl deadlock on runtime
- resume
-From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Praveen Talari" <praveen.talari@oss.qualcomm.com>, "Praveen Talari"
- <quic_ptalari@quicinc.com>
-X-Mailer: aerc 0.20.0
-References: <20250908164532.2365969-1-praveen.talari@oss.qualcomm.com>
- <DCNLSFVPCKMV.K1UE3J3K6JQD@linaro.org>
- <DCOJFRU8KNFL.14VPXK9QZC9T4@linaro.org>
- <5b7b8c9f-48c5-45cd-8366-c8c048eaa757@oss.qualcomm.com>
- <DCPUJPHR8NUB.1SRB4D7ONSRBY@linaro.org>
- <2c5fd01a-543b-4108-ac54-80d1d87b65a3@oss.qualcomm.com>
- <DCT9VWQYD4VM.1NV5FJJCJG4PI@linaro.org>
- <cb96f3cd-7427-4644-b7ca-26b763867db4@oss.qualcomm.com>
- <df05da7e-fd9d-48a6-bffc-e84749cd8e96@oss.qualcomm.com>
- <aMl2hOYTjBuCo4AM@trex> <aMl9Fbuyq7hdXvQC@trex>
-In-Reply-To: <aMl9Fbuyq7hdXvQC@trex>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250916-pci-dt-aspm-v1-1-778fe907c9ad@oss.qualcomm.com>
 
-Hi Praveen,
+On Tue, Sep 16, 2025 at 09:42:52PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> So far, the PCI subsystem has honored the ASPM and Clock PM states set by
+> the BIOS (through LNKCTL) during device initialization. This was done
+> conservatively to avoid issues with the buggy devices that advertise
+> ASPM capabilities, but behave erratically if the ASPM states are enabled.
+> So the PCI subsystem ended up trusting the BIOS to enable only the ASPM
+> states that were known to work for the devices.
 
-On Tue Sep 16, 2025 at 4:07 PM BST, Jorge Ramirez wrote:
-> On 16/09/25 16:39:00, Jorge Ramirez wrote:
->> On 16/09/25 12:20:25, Praveen Talari wrote:
->> > Hi Alexey
->> >=20
->> > Thank you for your support.
->> >=20
->> > On 9/15/2025 7:55 PM, Praveen Talari wrote:
->> > > Hi Alexey,
->> > >=20
->> > > On 9/15/2025 3:09 PM, Alexey Klimov wrote:
->> > > > (removing <quic_mnaresh@quicinc.com> from c/c -- too many mail not
->> > > > delivered)
->> > > >=20
->> > > > Hi Praveen,
->> > > >=20
->> > > > On Mon Sep 15, 2025 at 7:58 AM BST, Praveen Talari wrote:
->> > > > > Hi Alexey,
->> > > > >=20
->> > > > > Really appreciate you waiting!
->> > > > >=20
->> > > > > On 9/11/2025 2:30 PM, Alexey Klimov wrote:
->> > > > > > Hi Praveen,
->> > > > > >=20
->> > > > > > On Thu Sep 11, 2025 at 9:34 AM BST, Praveen Talari wrote:
->> > > > > > > Hi Alexy,
->> > > > > > >=20
->> > > > > > > Thank you for update.
->> > > > > > >=20
->> > > > > > > On 9/10/2025 1:35 AM, Alexey Klimov wrote:
->> > > > > > > >=20
->> > > > > > > > (adding Krzysztof to c/c)
->> > > > > > > >=20
->> > > > > > > > On Mon Sep 8, 2025 at 6:43 PM BST, Alexey Klimov wrote:
->> > > > > > > > > On Mon Sep 8, 2025 at 5:45 PM BST, Praveen Talari wrote:
->> > > > > > > > > > A deadlock is observed in the
->> > > > > > > > > > qcom_geni_serial driver during runtime
->> > > > > > > > > > resume. This occurs when the pinctrl
->> > > > > > > > > > subsystem reconfigures device pins
->> > > > > > > > > > via msm_pinmux_set_mux() while the serial device's int=
-errupt is an
->> > > > > > > > > > active wakeup source. msm_pinmux_set_mux() calls disab=
-le_irq() or
->> > > > > > > > > > __synchronize_irq(), conflicting with the active wakeu=
-p state and
->> > > > > > > > > > causing the IRQ thread to enter an uninterruptible (D-=
-state) sleep,
->> > > > > > > > > > leading to system instability.
->> > > > > > > > > >=20
->> > > > > > > > > > The critical call trace leading to the deadlock is:
->> > > > > > > > > >=20
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Call trace:
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __switch_to+0xe0/=
-0x120
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __schedule+0x39c/=
-0x978
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 schedule+0x5c/0xf=
-8
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __synchronize_irq=
-+0x88/0xb4
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 disable_irq+0x3c/=
-0x4c
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 msm_pinmux_set_mu=
-x+0x508/0x644
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pinmux_enable_set=
-ting+0x190/0x2dc
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pinctrl_commit_st=
-ate+0x13c/0x208
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pinctrl_pm_select=
-_default_state+0x4c/0xa4
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 geni_se_resources=
-_on+0xe8/0x154
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 qcom_geni_serial_=
-runtime_resume+0x4c/0x88
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pm_generic_runtim=
-e_resume+0x2c/0x44
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __genpd_runtime_r=
-esume+0x30/0x80
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 genpd_runtime_res=
-ume+0x114/0x29c
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __rpm_callback+0x=
-48/0x1d8
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rpm_callback+0x6c=
-/0x78
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 rpm_resume+0x530/=
-0x750
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 __pm_runtime_resu=
-me+0x50/0x94
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 handle_threaded_w=
-ake_irq+0x30/0x94
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irq_thread_fn+0x2=
-c/xa8
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 irq_thread+0x160/=
-x248
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 kthread+0x110/x11=
-4
->> > > > > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret_from_fork+0x1=
-0/x20
->> > > > > > > > > >=20
->> > > > > > > > > > To resolve this, explicitly manage the wakeup IRQ stat=
-e within the
->> > > > > > > > > > runtime suspend/resume callbacks. In the
->> > > > > > > > > > runtime resume callback, call
->> > > > > > > > > > disable_irq_wake() before enabling resources. This pre=
-emptively
->> > > > > > > > > > removes the "wakeup" capability from the IRQ, allowing=
- subsequent
->> > > > > > > > > > interrupt management calls to proceed
->> > > > > > > > > > without conflict. An error path
->> > > > > > > > > > re-enables the wakeup IRQ if resource enablement fails=
-.
->> > > > > > > > > >=20
->> > > > > > > > > > Conversely, in runtime suspend, call
->> > > > > > > > > > enable_irq_wake() after resources
->> > > > > > > > > > are disabled. This ensures the interrupt is configured=
- as a wakeup
->> > > > > > > > > > source only once the device has fully
->> > > > > > > > > > entered its low-power state. An
->> > > > > > > > > > error path handles disabling the wakeup IRQ
->> > > > > > > > > > if the suspend operation
->> > > > > > > > > > fails.
->> > > > > > > > > >=20
->> > > > > > > > > > Fixes: 1afa70632c39 ("serial: qcom-geni:
->> > > > > > > > > > Enable PM runtime for serial driver")
->> > > > > > > > > > Signed-off-by: Praveen Talari <praveen.talari@oss.qual=
-comm.com>
->> > > > > > > > >=20
->> > > > > > > > > You forgot:
->> > > > > > > > >=20
->> > > > > > > > > Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
->> > > > > > > > >=20
->> > > > > > > > > Also, not sure where this change will go, via
->> > > > > > > > > Greg or Jiri, but ideally
->> > > > > > > > > this should be picked for current -rc cycle since regres=
-sion is
->> > > > > > > > > introduced during latest merge window.
->> > > > > > > > >=20
->> > > > > > > > > I also would like to test it on qrb2210 rb1 where this r=
-egression is
->> > > > > > > > > reproduciable.
->> >=20
->> > Since I don't have this board, could you kindly validate the new chang=
-e and
->> > run a quick test on your end?
->> >=20
->> > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c
->> > b/drivers/pinctrl/qcom/pinctrl-msm.c
->> > index 83eb075b6bfa..3d6601dc6fcc 100644
->> > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
->> > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
->> > @@ -215,7 +215,7 @@ static int msm_pinmux_set_mux(struct pinctrl_dev
->> > *pctldev,
->> >          */
->> >         if (d && i !=3D gpio_func &&
->> >             !test_and_set_bit(d->hwirq, pctrl->disabled_for_mux))
->> > -               disable_irq(irq);
->> > +               disable_irq_nosync(irq);
->> >=20
->> >         raw_spin_lock_irqsave(&pctrl->lock, flags);
->>=20
->>=20
->> sorry Praveen, didnt see this proposal. testing on my end as well.
->>=20
->
-> just tested on my end and all modules load - deadlocked before this
-> update so there is progress (now we can load the network driver)
+Questions about what exactly "honoring ASPM states set by BIOS" means:
 
-Is it supposed to be orginal patch here plus disable_irq_nosync()?
-Meaning changes for qcom_geni_serial_runtime_{suspend,resume}
-+ disable_irq_nosync() in msm_pinmux_set_mux()?
+  - I *think* honoring ASPM states set by BIOS means that Linux
+    doesn't change ASPM config at boot-time, and this only applies
+    when:
 
-It seems to work here but let me know few more runs.
+    * CONFIG_PCIEASPM_DEFAULT=y, or
+    * booting with "pcie_aspm=off", or
+    * FADT has ACPI_FADT_NO_ASPM set, or
+    * platform retained control of PCIe Capability via _OSC (I'm not
+      sure we enforce this today, but I think we should)
 
-Best regards,
-Alexey
+  - IIUC we always save the pre-Linux config in link->aspm_default,
+    but when CONFIG_PCIEASPM_POWERSAVE, CONFIG_PCIEASPM_POWER_SUPERSAVE,
+    or CONFIG_PCIEASPM_PERFORMANCE are set, Linux immediately
+    reconfigures ASPM.
 
+  - But I *think* the config option is not restrictive, and users can
+    do more aggressive ASPM configuration at run-time via sysfs, right?
+    (Assuming the platform hasn't prevented Linux from doing so)
 
+If users can configure ASPM differently than BIOS did, we're liable to
+trip over issues later even though we claim to honor ASPM states set
+by BIOS, so I think CONFIG_PCIEASPM_DEFAULT is kind of a fig leaf that
+only defers issues.
 
+I'd really like to get rid of all those CONFIG_PCIEASPM_* options
+because I don't think they have any business being build-time things,
+but I don't think that would have to be in this series.
+
+> But this turned out to be a problem for devicetree platforms, especially
+> the ARM based devicetree platforms powering Embedded and *some* Compute
+> devices as they tend to run without any standard BIOS. So the ASPM states
+> on these platforms were left disabled during boot and the PCI subsystem
+> never bothered to enable them, unless the user has forcefully enabled the
+> ASPM states through Kconfig, cmdline, and sysfs or the device drivers
+> themselves, enabling the ASPM states through pci_enable_link_state() APIs.
+> 
+> This caused runtime power issues on those platforms. So a couple of
+> approaches were tried to mitigate this BIOS dependency without user
+> intervention by enabling the ASPM states in the PCI controller drivers
+> after device enumeration, and overriding the ASPM/Clock PM states
+> by the PCI controller drivers through an API before enumeration.
+> 
+> But it has been concluded that none of these mitigations should really be
+> required and the PCI subsystem should enable the ASPM states advertised by
+> the devices without relying on BIOS or the PCI controller drivers. If any
+> device is found to be misbehaving after enabling ASPM states that they
+> advertised, then those devices should be quirked to disable the problematic
+> ASPM/Clock PM states.
+> 
+> In an effort to do so, start by overriding the ASPM and Clock PM states set
+> by the BIOS for devicetree platforms first. Separate helper functions are
+> introduced to set the default ASPM and Clock PM states and they will
+> override the BIOS set states by enabling all of them if CONFIG_OF is
+> enabled. To aid debugging, print the overridden ASPM and Clock PM states.
+> 
+> In the future, these helpers could be extended to allow other platforms
+> like VMD, newer ACPI systems with a cutoff year etc... to follow the path.
+> 
+> Link: https://lore.kernel.org/linux-pci/20250828204345.GA958461@bhelgaas
+> Suggested-by: Bjorn Helgaas <helgaas@kernel.org>
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> ---
+>  drivers/pci/pcie/aspm.c | 48 +++++++++++++++++++++++++++++++++++++++++++-----
+>  1 file changed, 43 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/pci/pcie/aspm.c b/drivers/pci/pcie/aspm.c
+> index 919a05b9764791c3cc469c9ada62ba5b2c405118..1e7218c5e9127699fdbf172c277aad3f847c43be 100644
+> --- a/drivers/pci/pcie/aspm.c
+> +++ b/drivers/pci/pcie/aspm.c
+> @@ -235,13 +235,15 @@ struct pcie_link_state {
+>  	u32 aspm_support:7;		/* Supported ASPM state */
+>  	u32 aspm_enabled:7;		/* Enabled ASPM state */
+>  	u32 aspm_capable:7;		/* Capable ASPM state with latency */
+> -	u32 aspm_default:7;		/* Default ASPM state by BIOS */
+> +	u32 aspm_default:7;		/* Default ASPM state by BIOS or
+> +					   override */
+>  	u32 aspm_disable:7;		/* Disabled ASPM state */
+>  
+>  	/* Clock PM state */
+>  	u32 clkpm_capable:1;		/* Clock PM capable? */
+>  	u32 clkpm_enabled:1;		/* Current Clock PM state */
+> -	u32 clkpm_default:1;		/* Default Clock PM state by BIOS */
+> +	u32 clkpm_default:1;		/* Default Clock PM state by BIOS or
+> +					   override */
+>  	u32 clkpm_disable:1;		/* Clock PM disabled */
+>  };
+>  
+> @@ -373,6 +375,20 @@ static void pcie_set_clkpm(struct pcie_link_state *link, int enable)
+>  	pcie_set_clkpm_nocheck(link, enable);
+>  }
+>  
+> +static void pcie_clkpm_set_default_link_state(struct pcie_link_state *link,
+> +					      int enabled)
+> +{
+> +	struct pci_dev *pdev = link->downstream;
+> +
+> +	link->clkpm_default = enabled;
+> +
+> +	/* Override the BIOS disabled Clock PM state for devicetree platforms */
+> +	if (IS_ENABLED(CONFIG_OF) && !enabled) {
+> +		link->clkpm_default = 1;
+> +		pci_info(pdev, "Clock PM state overridden\n");
+
+It's obvious from the code that this message means we're going to
+*enable* ClockPM, but I want to know from the message itself what the
+resulting state is, not just that it was overridden.
+
+Maybe "ClockPM+" or "ClockPM-" like lspci does?
+
+Maybe we should have a pci_dbg() for the current state?
+
+For debuggability, I wonder if we should have a pci_dbg() at the point
+where we actually update PCI_EXP_LNKCTL, PCI_L1SS_CTL1, etc?  I could
+even argue for pci_info() since this should be a low-frequency and
+relatively high-risk event.
+
+> +	}
+> +}
+> +
+>  static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+>  {
+>  	int capable = 1, enabled = 1;
+> @@ -394,7 +410,7 @@ static void pcie_clkpm_cap_init(struct pcie_link_state *link, int blacklist)
+>  			enabled = 0;
+>  	}
+>  	link->clkpm_enabled = enabled;
+> -	link->clkpm_default = enabled;
+
+I think both the patch and the resulting code would be easier to read
+if we preserved the link->clkpm_enabled here and simply added the call
+to pcie_clkpm_set_default_link_state().
+
+> +	pcie_clkpm_set_default_link_state(link, enabled);
+>  	link->clkpm_capable = capable;
+>  	link->clkpm_disable = blacklist ? 1 : 0;
+>  }
+> @@ -788,6 +804,29 @@ static void aspm_l1ss_init(struct pcie_link_state *link)
+>  		aspm_calc_l12_info(link, parent_l1ss_cap, child_l1ss_cap);
+>  }
+>  
+> +static void pcie_aspm_set_default_link_state(struct pcie_link_state *link)
+> +{
+> +	struct pci_dev *pdev = link->downstream;
+> +	u32 override;
+> +
+> +	/* Set BIOS enabled states as the default */
+> +	link->aspm_default = link->aspm_enabled;
+> +
+> +	/* Override the BIOS disabled ASPM states for devicetree platforms */
+> +	if (IS_ENABLED(CONFIG_OF)) {
+> +		link->aspm_default = PCIE_LINK_STATE_ASPM_ALL;
+> +		override = link->aspm_default & ~link->aspm_enabled;
+> +		if (override)
+> +			pci_info(pdev, "ASPM states overridden: %s%s%s%s%s%s\n",
+> +				 (override & PCIE_LINK_STATE_L0S) ? "L0s, " : "",
+> +				 (override & PCIE_LINK_STATE_L1) ? "L1, " : "",
+> +				 (override & PCIE_LINK_STATE_L1_1) ? "L1.1, " : "",
+> +				 (override & PCIE_LINK_STATE_L1_2) ? "L1.2, " : "",
+> +				 (override & PCIE_LINK_STATE_L1_1_PCIPM) ? "L1.1 PCI-PM, " : "",
+> +				 (override & PCIE_LINK_STATE_L1_2_PCIPM) ? "L1.2 PCI-PM" : "");
+
+Same here.
+
+> +	}
+> +}
+> +
+>  static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+>  {
+>  	struct pci_dev *child = link->downstream, *parent = link->pdev;
+> @@ -865,8 +904,7 @@ static void pcie_aspm_cap_init(struct pcie_link_state *link, int blacklist)
+>  		pcie_capability_write_word(child, PCI_EXP_LNKCTL, child_lnkctl);
+>  	}
+>  
+> -	/* Save default state */
+> -	link->aspm_default = link->aspm_enabled;
+
+Same here.
+
+> +	pcie_aspm_set_default_link_state(link);
+>  
+>  	/* Setup initial capable state. Will be updated later */
+>  	link->aspm_capable = link->aspm_support;
+> 
+> -- 
+> 2.45.2
+> 
+> 
 
