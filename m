@@ -1,173 +1,192 @@
-Return-Path: <linux-arm-msm+bounces-73713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBF6EB596CF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:01:32 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 723EAB5977F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:25:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CE5523B565B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 13:00:45 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E83791BC5DFF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 13:25:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9511F3112DF;
-	Tue, 16 Sep 2025 13:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01E4A307AEA;
+	Tue, 16 Sep 2025 13:25:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="DCKrlMsK"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="jeIYMd/q"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0DA3112B7
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:00:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1441D7E26
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758027618; cv=none; b=t6794unKJtiojDEU9O/8GTa8nlTTgeC6EEXjJDoigUglhUJRFrvvxFOd8KRf7AKoCxvhNxOUzbbQW85wUpctam88z7tgVo0ijI5zQkdZKqDjBByBENdauMcREGz5xOa0jrg/WsFMW45DvMbMsgcp3xkcBwjYvsBmwJSGLSYEF98=
+	t=1758029101; cv=none; b=sUDAFouG1fBzwsT6dWmOeIwherjnpggK49W3Q4WMpDyM4i17zPsPqi6fcQlKPuPK1zqsJbuHBOLE8FsLMn2Yjvr4PddyPEI3lPK520LZn1WAD1sjWLaWkstgMLzjObWIkb+rYDURaDIpxBltuRTvQXC1IidPqDYL6cagaGuehwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758027618; c=relaxed/simple;
-	bh=oURn0Fx+wSdAWTFWUBDWKfggMfG/xWAXZ0heza4f4z8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ZJnmhfaPkTjnLDCn3JuqciAkXfYcvUkydlkiMY8F6oWEaA7MwAPUvGRodvXNczxi6FdqSTb8KlUPeQU7zd8VHu8s5oegzEyf9gY7+jfKUSD3mjKoOMrlGf7s3VYodvNjJkVbroYyM8Nn1y4BNFXypaP1ImrAkS9EfxTQHlVco3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=DCKrlMsK; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-32ec2f001abso173415a91.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 06:00:16 -0700 (PDT)
+	s=arc-20240116; t=1758029101; c=relaxed/simple;
+	bh=s8ThdCXM5O9yyBHIfDFZ9OEayAHX03FFFGLLjXjF7XY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jGHvDDWSSrJvtmG1a6BbtfyMk3+jM+RZhp/sOnxu6rsr0V84jxJmaIFF6XwTvDpkBwtvZBF8pzVkQPGRxTJ62kKzkU7wsqG2wbnLC8+3e1peJ79MtyjrHaooh/pSIqRpCvRbXT3pfxBxK7ZKX/nMzaB2Y77h1rDHX8ypSZOMLc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=jeIYMd/q; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b03fa5c5a89so891740566b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 06:24:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758027615; x=1758632415; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=enWPnFF9uqlsgFFLjvBI4bv4xem3PSExDu33Ls8l+7g=;
-        b=DCKrlMsKWaRXnRTZJ53Gef6kxh5bs9RWW7pSjQhchoa/P1O1Lb9YieXragGIGCbbv2
-         PGOb6trVnLHgPNjoW+TwmCrRe18kRSA7iI1joFre8EXgNwxvOo2rTbiLeSflrrSC9afL
-         Bx1rdkpGisyVK4Cn96hmolDQVF1eXUVrZiOKlb91rmYeVdkmhwKaYZUNiSvM78/li3oV
-         xJR9Y1vUsKPcfsmXUtZZfS4mPfAvlPMDcyqDu1HmPdV0KpqY7ndr2tkef2cs6XKgn2cf
-         guXDMnwDl0PJngbHFN2UqeCOZ1L7wGgEP1o8dQ1uW1v9osN5FS5wnIVtlDdu7T6c8rNS
-         Ls8A==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758029098; x=1758633898; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=gwfKh8YcNEbswE2yYv8jHBhvIioj0iL2kRQaWZR7TS4=;
+        b=jeIYMd/qRHO+nPBNV5EseY3/4XkcyAp9gayRU5pCXHVJYBIhZMwzNpcKQEuDLXP+n0
+         hRv6WaRsqF6Ex0gQ0qpwcj64LW0uIrA8ciLh5U7qSFL8B1w/zkZnBTiXUCzyEZBjDurA
+         K6CR9IXZBnBFGym4LBqzhiLHAgJgfBnNoGae8Si//bWDUMWlcAY1EeHoQVodaONgiHa0
+         bxJO0hKeD1TWbAt5q6sAG5RvONO8mQGXGLAcjDAbl7uFwgx0MrTYOOuwmfJYj0dkOQxe
+         fpuXn0D4l7gsCNF31gjZFhGfIMV1dL6ARMSoTS295WLe/s0NQVrjR2TRHl7BFK0DKxUW
+         fbWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758027615; x=1758632415;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=enWPnFF9uqlsgFFLjvBI4bv4xem3PSExDu33Ls8l+7g=;
-        b=W58P0cDq4haqyByW97GBJzfL0sWQvyd1vevJtLKwBMCu80Bt2KMlLkaQFuvvCnfpzr
-         kCbZqlGYt2xb6CmDeCDTrG8RWRKz5Bl9AuoypKIhlUO5HaFwyTMR5DCX9Gj6sp4rfq0y
-         qzJkgWW0uDI6q+EpkaSsvYgRZigkKP1URNyy1Q2pM/nlCHeQtZiuvDt/xRVQlAsrAvYm
-         rx/56L2xlkGStv4LwyRfGX/67ncf3cDuaCS+Iuindiq9dLZeUMhrCK2JcAb1PJnEgX2a
-         RR9ZO/VwnyG2vLuGW+I8wjlHsQUk+7hOTIMRg2h2s/7RcMRz3uGG7LC9EoXBZMz5S4l9
-         wiaQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUe7QVbo984UXIUmU55wH8Ye9A+kqfisgWv3z3CNQcLafQxfGwbKij6c1aqV1hc+JN4Hmoeum+ce2iRGq+t@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyuEBSnJ2/+oGEXdxcyNimoezRdLxIn6o43uIwDUitQpVFeRqn
-	ZVtRthB6N5ma1iMYJ7kMNBc6WedDhpZP3ixBObwyuZsXykG2FRxdjvwX5f8aDhfY5951IgeJ+ZZ
-	j511KEK9/nEY/yLf8zii0/107mEHBtvhib75MXozoQg==
-X-Gm-Gg: ASbGncsLujnPOg5gYa673UlExd0reJ38L8BhjaKcn2BpGDisbFG1ekYL48sWt+IYtIf
-	2w+u4rceyp1K6NGIeMU1Rja1F3oq7mmP84o8I4yRJUgvjn324G3B7IN6vValKpiSyr/bpxD5pfr
-	10DJAmDadwXt8osHlOVllKPutW/AtL2W7aMuyIvoxhjqfjOIDFd7hd8+yshmx472etzAaWWTqj/
-	lte0yDS
-X-Google-Smtp-Source: AGHT+IGuQ/ohyWphuBlOtHx2+flX1KQCvCuCmbUoGGofMYdbPyzMKkQ4xeZzDRKvWShPxbaO2iXYgl4CZlPA5sTwbe0=
-X-Received: by 2002:a17:90b:2681:b0:32e:b87e:a961 with SMTP id
- 98e67ed59e1d1-32eb87eb05amr1186270a91.5.1758027615318; Tue, 16 Sep 2025
- 06:00:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758029098; x=1758633898;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gwfKh8YcNEbswE2yYv8jHBhvIioj0iL2kRQaWZR7TS4=;
+        b=QyRinCEBovlFdvf4ZR2s7O/9F4YxeXjkzI0ZQp+32+amuL9/a6AiuCRyggCEbindsn
+         r8PK0zrQYmEmb3lp+WlHA04OoaAvfMCbbO8l3YBZb1BTx3Y9Vpx50BPVkc1RYVwQ68MJ
+         VLSwuKFkS4UDcixrgZsRwEcwN8qy1AifmBxic+xNI+SsbJHqKmLDLnORE9K43qVRB89r
+         KaSD861vTstkK9+wuvrhGR8kYYomWMWPzGGrCCLr3o36FhycSb70ofHBYfhRS/MyRIk7
+         LBsyeReGldWnaV6r733UFEg9mP4zglcNu32jBqfjFUK8HM/upqaBVOoujcJRy/Rwbk7s
+         D9Nw==
+X-Forwarded-Encrypted: i=1; AJvYcCX7R96F89I6joZ/cSdpiPh/KhZmRMz6ReEJnyGVPQ1W/kT8lYRmxB3k5vNv+JMBJrXSQjVUEu5y7qLMxUX1@vger.kernel.org
+X-Gm-Message-State: AOJu0YwPvqoVT6ORSckVsPO96dG4wsDCP11UKa/gchTBcOM87IcQ/2+A
+	ZpVnxccziOjEher3eUTMht/1FwzwKCQf2cBQvh3PmCVdCydWnkaM6HopTpJTZBQ5y/M=
+X-Gm-Gg: ASbGncsZne6zvJ74Ff2uq/xqgW1LqpY4TLkkkUkFw/yK4BxTYg8sjMUor0UN/8VmEX8
+	w+GIqo/+65doDM/nhzSScGwaYdvp96Ua5IYwq0h8oZxLn05eB+yHqg6OFqkAjUyvV8rzCoAy95+
+	zT/wr5KqEplDOqO/+VUkaS/rsSbYMeS/NkzIOytOYJDZX4Ui6pf+xp0yw8ycwDL3DyEXpJ7dRio
+	YiTWmBLYKz+TGxZfn/hHbXXX1SUXmAnd7jiP9ls6Gk36IzoPx3pFV8cGcHaUYqDAgxst5NoTAsG
+	iN91qvCwF0Et5yUAj8rFXtiUpA9onSsM57zQ7Wq3xPYJPXij1D71GLjDaGrz+p8JXSoT1tB/qbW
+	e9LZp2vvwqh1D7a6Y4qKN9FnbwuKBUUQcf4tY2fJqnaGWwf+3hEXFwz74FhOzbaPU
+X-Google-Smtp-Source: AGHT+IE9kjhldcCIBvjPr9jo7lRPPHVqNSYEJDmsT9jH1F0DRGqPEBku/9BloIv9jKtuTpavenfoLw==
+X-Received: by 2002:a17:907:d16:b0:afe:c6a0:d116 with SMTP id a640c23a62f3a-b07c3572d31mr1812203466b.18.1758029098143;
+        Tue, 16 Sep 2025 06:24:58 -0700 (PDT)
+Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b07b32f202dsm1164355266b.84.2025.09.16.06.24.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Sep 2025 06:24:57 -0700 (PDT)
+Date: Tue, 16 Sep 2025 15:24:56 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com, 
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org, 
+	srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org, 
+	krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
+	kernel@collabora.com, wenst@chromium.org, casey.connolly@linaro.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
+References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250831-itnoc-v4-0-f0fb0ef822a5@oss.qualcomm.com> <f9d3b3ec-dcf1-42ce-b925-70e5543771ed@oss.qualcomm.com>
-In-Reply-To: <f9d3b3ec-dcf1-42ce-b925-70e5543771ed@oss.qualcomm.com>
-From: Mike Leach <mike.leach@linaro.org>
-Date: Tue, 16 Sep 2025 14:00:04 +0100
-X-Gm-Features: AS18NWBql9OifdFvQHUMyc5To4QvLJzN5-WAsAMzlnEGRTrG8ZguYOFhnqgDcCM
-Message-ID: <CAJ9a7Vivhrx2zss_8Ti+QS1dzakp+4CrAsDj00RKojUaL_t7Sg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] coresight-tnoc: Add support for Interconnect TNOC
-To: yuanfang zhang <yuanfang.zhang@oss.qualcomm.com>
-Cc: Suzuki K Poulose <suzuki.poulose@arm.com>, James Clark <james.clark@linaro.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>, kernel@oss.qualcomm.com, 
-	coresight@lists.linaro.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Leo Yan <leo.yan@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-
-Hi,
-
-I'm a little confused as to precisely what this component is.
-
-From the description in the DT - it appears to be very much like a
-static trace funnel - multiple inputs, and a single output.
-The DT describes the inputs as "Coresight Trace". What is meant here?
-- if this is ATB trace then this component is identical to the
-coresight trace funnel in functionality so should probably use the
-normal CS static funnel driver.
-
-However - if it does not appear on the AMBA bus - how are the
-coresight management registers read - these are a mandatory
-requirement in the CoreSight specification for any coresight
-compatible component?
-
-Thanks
-
-Mike
-
-On Tue, 16 Sept 2025 at 03:35, yuanfang zhang
-<yuanfang.zhang@oss.qualcomm.com> wrote:
->
-> Hi Suzuki,
->
-> Could this patch series be applied? Is there anything I need to update?
->
-> thanks,
-> yuanfang.
->
-> On 9/1/2025 2:58 PM, Yuanfang Zhang wrote:
-> > This patch series adds support for the Qualcomm CoreSight Interconnect TNOC
-> > (Trace Network On Chip) block, which acts as a CoreSight graph link forwarding
-> > trace data from subsystems to the Aggregator TNOC. Unlike the Aggregator TNOC,
-> > this block does not support aggregation or ATID assignment.
-> >
-> > Signed-off-by: Yuanfang Zhang <yuanfang.zhang@oss.qualcomm.com>
-> > ---
-> > Changes in v4:
-> > - Fix unintended blank line removals in trace_noc_enable_hw.
-> > - Link to v3: https://lore.kernel.org/r/20250828-itnoc-v3-0-f1b55dea7a27@oss.qualcomm.com
-> >
-> > Changes in v3:
-> > - Add detail for changes in V2.
-> > - Remove '#address-cells' and '#size-cells' properties from in-ports field.
-> > - Fix comment indentation for packet description.
-> > - Link to v2: https://lore.kernel.org/r/20250819-itnoc-v2-0-2d0e6be44e2f@oss.qualcomm.com
-> >
-> > Changes in v2:
-> > - Removed the trailing '|' after the description in qcom,coresight-itnoc.yaml.
-> > - Dropped the 'select' section from the YAML file.
-> > - Updated node name to use a more generic naming convention.
-> > - Removed the 'items' property from the compatible field.
-> > - Deleted the description for the reg property.
-> > - Dropped clock-names and adjusted the order of clock-names and clocks.
-> > - Moved additionalProperties to follow the $ref of out-ports.
-> > - Change "atid" type from u32 to int, set it as "-EOPNOTSUPP" for non-AMBA device.
-> > - Link to v1: https://lore.kernel.org/r/20250815-itnoc-v1-0-62c8e4f7ad32@oss.qualcomm.com
-> >
-> > ---
-> > Yuanfang Zhang (3):
-> >       dt-bindings: arm: qcom: Add Coresight Interconnect TNOC
-> >       coresight-tnoc: add platform driver to support Interconnect TNOC
-> >       coresight-tnoc: Add runtime PM support for Interconnect TNOC
-> >
-> >  .../bindings/arm/qcom,coresight-itnoc.yaml         |  90 ++++++++++++++
-> >  drivers/hwtracing/coresight/coresight-tnoc.c       | 136 +++++++++++++++++++--
-> >  2 files changed, 215 insertions(+), 11 deletions(-)
-> > ---
-> > base-commit: 2b52cf338d39d684a1c6af298e8204902c026aca
-> > change-id: 20250815-itnoc-460273d1b80c
-> >
-> > Best regards,
->
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="36zni4ukkwfibixi"
+Content-Disposition: inline
+In-Reply-To: <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
 
 
--- 
-Mike Leach
-Principal Engineer, ARM Ltd.
-Manchester Design Centre. UK
+--36zni4ukkwfibixi
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+MIME-Version: 1.0
+
+Hello,
+
+On Tue, Sep 16, 2025 at 10:44:40AM +0200, AngeloGioacchino Del Regno wrote:
+> @@ -119,19 +128,24 @@ static int sdam_probe(struct platform_device *pdev)
+>  	if (!sdam)
+>  		return -ENOMEM;
+> =20
+> -	sdam->regmap =3D dev_get_regmap(pdev->dev.parent, NULL);
+> -	if (!sdam->regmap) {
+> -		dev_err(&pdev->dev, "Failed to get regmap handle\n");
+> -		return -ENXIO;
+> -	}
+> +	sparent =3D to_spmi_device(dev->parent);
+> +	sub_sdev =3D devm_spmi_subdevice_alloc_and_add(dev, sparent);
+> +	if (IS_ERR(sub_sdev))
+> +		return PTR_ERR(sub_sdev);
+> =20
+> -	rc =3D of_property_read_u32(pdev->dev.of_node, "reg", &sdam->base);
+> +	rc =3D of_property_read_u32(dev->of_node, "reg", &sdam_regmap_config.re=
+g_base);
+
+It's a bit ugly that you pass the address of an unsigned int as u32*.
+But this isn't new, so fine for me. (Also for all Linux archs we have
+sizeof(unsigned int) =3D=3D 4, so AFAICT it's safe anyhow.)
+
+>  	if (rc < 0) {
+>  		dev_err(&pdev->dev, "Failed to get SDAM base, rc=3D%d\n", rc);
+>  		return -EINVAL;
+>  	}
+> =20
+> -	rc =3D regmap_read(sdam->regmap, sdam->base + SDAM_SIZE, &val);
+> +	sdam->regmap =3D devm_regmap_init_spmi_ext(&sub_sdev->sdev, &sdam_regma=
+p_config);
+> +	if (IS_ERR(sdam->regmap)) {
+> +		dev_err(&pdev->dev, "Failed to get regmap handle\n");
+
+dev_err_probe()
+
+> +		return PTR_ERR(sdam->regmap);
+> +	}
+> +
+> +	rc =3D regmap_read(sdam->regmap, SDAM_SIZE, &val);
+>  	if (rc < 0) {
+>  		dev_err(&pdev->dev, "Failed to read SDAM_SIZE rc=3D%d\n", rc);
+>  		return -EINVAL;
+> @@ -159,7 +173,7 @@ static int sdam_probe(struct platform_device *pdev)
+>  	}
+>  	dev_dbg(&pdev->dev,
+>  		"SDAM base=3D%#x size=3D%u registered successfully\n",
+> -		sdam->base, sdam->size);
+> +		sdam_regmap_config.reg_base, sdam->size);
+> =20
+>  	return 0;
+>  }
+> @@ -181,3 +195,4 @@ module_platform_driver(sdam_driver);
+> =20
+>  MODULE_DESCRIPTION("QCOM SPMI SDAM driver");
+>  MODULE_LICENSE("GPL v2");
+> +MODULE_IMPORT_NS("SPMI");
+
+If it's exactly the files that #include <linux/spmi.h> should have that
+namespace import, you can put the MODULE_IMPORT_NS into that header.
+
+Best regards
+Uwe
+
+--36zni4ukkwfibixi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjJZSUACgkQj4D7WH0S
+/k5X2gf8CPcy37sX+3TAvMselYC6a5KTw9qBUgRRRW2xU0jMLPVSugZd9i7RFBsX
+qcP6Xq/FcBLfEIdwT9uwud13CtVdV6qyNQaWgz+BnrTomiNrrr4wZTVrOOhNgSDi
+VElZSzvXwu+7EZQLmdGAwoXB3HnCHuShI5LiCUQ0zi4pYoMoAc4Tw6htJhjM7NJ2
+48eZomVZ2s+xwPA17EyHn9FaHiisgWV/tjxRtL9P5Kt79qZNel8MXHgWU4jFEUDm
+hqciH+VQhquuUhU/UfWhV0q4Q6aJ2acuI+AsHcWctTI1Whgdtm0Ddr8/iJmUjitw
+JNecAkD3czkJvfdQpE1uSbxMdDBrww==
+=Jcue
+-----END PGP SIGNATURE-----
+
+--36zni4ukkwfibixi--
 
