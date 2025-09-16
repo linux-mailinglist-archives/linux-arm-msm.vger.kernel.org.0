@@ -1,194 +1,265 @@
-Return-Path: <linux-arm-msm+bounces-73715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73716-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05AB4B5978B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:25:52 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id E5E98B597A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:28:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AADFE2A6E37
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 13:25:51 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16DE04E7618
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 13:28:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C87C43191C0;
-	Tue, 16 Sep 2025 13:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 524EE307AF9;
+	Tue, 16 Sep 2025 13:28:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="IVUJhPTX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oEUISKL4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE57315D30
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:25:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE1D31352A
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:28:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758029119; cv=none; b=U9GUxopnC/e/6YlA52nJAyefDW23wFNe6KMLuufljBdi6PeXJsOWe4R/W4Ae5FOPz6BP8p+vau/RKujXKRfUtAuughNf6PtKBhHzJQLmSLaQfc20pNUs35jkBXdw9wqhBVmoqHjIRXoH0Quqovobk7+VPpf2x1sc8CvH2t+fYm4=
+	t=1758029315; cv=none; b=OwObLCSaAIyBx1DrArx1oHYpp8z1kmICq10soyZf4lkUhhQhfVQ+ZIEzAk8USD1A64Gs40A7eopMfEsZAOueiRfTWuWWtYKneIdGMxX8YCD7L7o7Pdd9BUG47whuzKsXNgUyB71tfNhTRp81pwCJ5wz9fLR7KUC8j0nWrJPEEts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758029119; c=relaxed/simple;
-	bh=PRpXH+sZjdebPpC4rWrrnPimJkKolPv4aO3TWAccum0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tEFSoAD8kUmDCeJSSJx+y2tfuAnHRL4bGqrcL1ZoShH1tPQSB3SW3ABMBCAovH3iygE7yT96p0oosUuZ+TuUbeWExfhhaTK+thNOYdfMcligtGpUPqraZbHXd2PmipXuQLda8jBqfHsHVlHQkgqNIaYsabWPAE2FOzaOP0a8yrk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=IVUJhPTX; arc=none smtp.client-ip=209.85.218.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-afcb7ae6ed0so826489166b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 06:25:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758029116; x=1758633916; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cec1ryxoXhXjrqFSDj+/T+n/YhygzPX418Utr1UQ+9Q=;
-        b=IVUJhPTXbWR8QfUsBnQZUZsqv5OFAueWaiCO4FxXmaMFpwLs7Pn4IJfZI02C64cAwC
-         +RgPjPf/6I3Oinz0CfZfrNgP7pN061/hDfV7X9c9YjDJNJ3ZMEY73YBuR1O7zk2Eh+q+
-         PWWlULY8Z1Otvpz9z8SeD1zIryMmxf1/sOo/IY5drClwgKZwHO6GFxoe1kHpwzZhjccK
-         YvfRAHeYHblSiA0dTjjrXZ5VN9WoI3/KH+ADNaIBupDiMGgalOrgDpeTyLYRt//VNlPX
-         UXAuNW0mj1WnYYNdx1WB4K6sho7+aDhccOu5MqHlHEnHxdO9hQUctqvXimcR7o+I+9IH
-         08AA==
+	s=arc-20240116; t=1758029315; c=relaxed/simple;
+	bh=cNZmh6AjGmVuI6dqRdL9kt7zMECo7WrVHLth+4kAagU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y7xNCTC6eV3xjCDaxFzCj1o2cxRQVhKaiLajUR5MnOjd/l6bMHIf8sROAI2ETsmTfZE6I6R2YfRmnJofqspdWFPVnVlsTOAbfEH3Xd6F9Wc3H+eAE6ydOnrdPxX3sBQzN+HYZuI0uQJwdLsZPixATH8teVYqunJBVGOPnaeuf1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oEUISKL4; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58GAdHYA018476
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:28:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	qcPEY4Ke5nuiKZr0aJIk8Q1LmBCWPFe9PnpH5t+9CaA=; b=oEUISKL49KqfUR1U
+	8PCy5m5higQofpGx9VHECZMaj8nB+FJOkkuh31hJWM8XCRDmEFOlAibaqMvNWBTd
+	wmrILNTTL+odLqbQfbvloT28uqO//mJuwyRgZgIqjq+V3HCvScapRN3M16xYUGBj
+	ESp9IweAid/xSkHjYwfnLiV2c5nfs3kqwXel4uJgpZGNpIOVCrhf3Pr9XXUBA337
+	FKAyrOrGYihzujZeMp9ll1RYmOWkrowx88eICRN+WBmrtZjcJoDPGvrJdBDvFrhs
+	LbU4k+wyQ1sn7iJ2f+Ooyysy+tBfCpC6EbjOdUHcstwmcFtg179M+jc28kSsElCG
+	tIP8zQ==
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 496da9dc90-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:28:31 +0000 (GMT)
+Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-78e0ddd918aso3539936d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 06:28:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758029116; x=1758633916;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cec1ryxoXhXjrqFSDj+/T+n/YhygzPX418Utr1UQ+9Q=;
-        b=j6+9cz1ZyIq1EcBU4bED7YOBPuv+E2KFJLmf4XgFqowEmTQvFgiSKStIRzNVIh5Bbc
-         qXvn/xLR8WcezvdFFAjZYxTZTM02LZpR4qu768FutImCB5KP05itDabaj2Dji7LA6DDW
-         b2+81LCZxZo9RjiyeotzKBQs3uKBjE7ioRz8fujGvenIOFB3Fqc5/M9bUoDV1gJWXaMQ
-         VcMejA0O0JMTiNTp7LFY6YCXJxNSX0rMj/2yjxjW0JNd6dj2d6yCMzB65h75/x/iBYeJ
-         upi8KyRb3mjiOidGY2Q0lwrI5pgB2e3iMR62DZHtmSPwRY4ucG93lNsKJtmc+pVukwY/
-         O4SA==
-X-Forwarded-Encrypted: i=1; AJvYcCU89KeQO4jwlVMDWqMm+85WVYZ5kMsSACEcQLrEQBOFRtNv3gCTeVlE/BucQia9WeTvIrK1Ow2oStKVUzel@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxou/j1t3aQfzssDy+8hVtB7aqGMdp7OvoflW+EjSzfa2D84adK
-	fpxtD6v+QIIT+lJW2iAld98X9LLFjHrKhrHUoG8+Dw4t+yjBPSSkfU/xB//gQGm1XyI=
-X-Gm-Gg: ASbGncsU37MakRllwqtaRzb9AIUUkuEHK1t1/DVIGYOALxQSN2+OvXk1gPxgTCnTNnt
-	QVAgzTOqALvPlTVNT9cle03SbOe81RQFZHSBtJT6wEXDDrFEmAADt3SsiEryGTEkM/czlvAVT5H
-	2ZjkBbj/yqPmtV8pwmMQ0lYKhZLXt7d3ixKpi151Nv/b41GXDFSbYfg/TFH9FQsyuJ3Uh1O6gso
-	qIj7FhgokZqkhNKwhRsgIWRJdpKnObHwwN2h8M1jwfOEdZA8cofxzqAsqnjpo+gPgzY24+r13kE
-	K6zkz65IXnaZ+bdZJW+eE7BlxBmRK5mptnwLSXGcBbLTidclRpxLOpuQP4z0lm19mATXzTU8N3O
-	nnfVWMAv8GZ8Sqg+4V8ZU3kzf3xCxkk/vLOXVEZBdQK+A2/96zBOM4cq8TxmP+vFiuT/9MJWKm9
-	Y=
-X-Google-Smtp-Source: AGHT+IHULzH6kKOXUPbwiu6vHARKbboHWXDMpcq23vOfkgCUTSIFoBy+/FHZDfo4eSTeHnxRnGrBPQ==
-X-Received: by 2002:a17:906:eca2:b0:b12:3f5f:603b with SMTP id a640c23a62f3a-b123f5f70c4mr542368966b.3.1758029116046;
-        Tue, 16 Sep 2025 06:25:16 -0700 (PDT)
-Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b07b32f35cdsm1135878466b.92.2025.09.16.06.25.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 06:25:15 -0700 (PDT)
-Date: Tue, 16 Sep 2025 15:25:14 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com, 
-	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org, 
-	srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org, 
-	krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
-	kernel@collabora.com, wenst@chromium.org, casey.connolly@linaro.org, 
-	Jonathan Cameron <jonathan.cameron@huawei.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
- and devm variant
-Message-ID: <mr7gqhvom5soofn2oujzxtsuczsnx2yizkushar64cojwnvhd6@dt64ojgjqdxw>
-References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
- <20250916084445.96621-2-angelogioacchino.delregno@collabora.com>
+        d=1e100.net; s=20230601; t=1758029311; x=1758634111;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=qcPEY4Ke5nuiKZr0aJIk8Q1LmBCWPFe9PnpH5t+9CaA=;
+        b=V0ecxBcH6qnjUsxatCFPH3JK9p84/T34uxPWw7VD5NQl0u5dy3+Hbu4ymYB4YtJy6Z
+         GfUyfC3GjiG15QcKr7659UYS7fZmb531IuLfINiBj1WRKWdcr6SKpLJJRweNKlkfVSYq
+         bof7LMo+gRqRtkebavU6RBzSFuBaMDSdGRqqhBJ2DjpALumtIb0Cw5GRhqlHrKNGdJs9
+         kvb50xLV2ky0GHLEacsosAoXnXRUATsEbBU4u5JmbgdTOFPU73t3cPFHUySTeGvJd0Hk
+         5PPxlZjFJ6RD49z8D4p95U5EiZVSTsGsDjBLWvfD+JRR4FkqzqCPnCXmiZ87FQA9OoQt
+         tPZw==
+X-Forwarded-Encrypted: i=1; AJvYcCVq4TQaaBu9e+sk0lmBw2FvHmgbZX7oD5qkyUhzl5A58XXqn8lZYw7TvALlYj9RBD7ohE+1z+No+y/oOMqA@vger.kernel.org
+X-Gm-Message-State: AOJu0YwceH5PsgYGzVM2p52cDTT/x5gKstpdBNMh4TYYG+ChlbGPpuRL
+	xYV0D+xxbOdp7Nh5y290vicqeVdUfbuMWHNil+clZZ65LL5C9MDpSO0LSJLntPCF6CpTscYt/Hn
+	zLhKvd0cN/tko0Xjt3D5wGWqqva0r/T4XqagpGkvmFC8I7WyaCApRpXYqxhoyj3MFlVqW
+X-Gm-Gg: ASbGncsE3VyTOyXVf4csHdaDccmUPXcHDl6yNuAidY9voHFHXzjFIvDyQBkh/vxPbNj
+	ER54L6fl9dzW8mHqDA0Cvgiv8T8Ns3VqTOID7d5XyMLt+aW8LgD9IaCDxqHVDmLopNVXBUawqYt
+	TmDc9/HawvPcI0eqMypgyxHNk1PDW3n3ZqN3Gvh3yL5aS2N3cCp80vqQBnRCJzIhvWalC8z4FoP
+	VVF1u8ulyOVzC3RGHs22hxjJHhyGOMtJL78pr7AkXGOxGKbLRkKMr5uYtMwjNlLqiXl99mPPbLy
+	6inBytjq+H2MftY+O4EEGffzmQhMudWZlH803l+2zyFxLgJxWhZAGwwfFcyaaR+3ucM=
+X-Received: by 2002:ad4:5bc9:0:b0:70d:6df4:1b21 with SMTP id 6a1803df08f44-767c5fbea36mr184871806d6.62.1758029310778;
+        Tue, 16 Sep 2025 06:28:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4K6xfkI1Ksw/7b17XodhPiyVnLomocyJrvt2hEYJpdLNG4U0tk9auJ0DVkHvIe0632tInog==
+X-Received: by 2002:ad4:5bc9:0:b0:70d:6df4:1b21 with SMTP id 6a1803df08f44-767c5fbea36mr184871316d6.62.1758029310240;
+        Tue, 16 Sep 2025 06:28:30 -0700 (PDT)
+Received: from [192.168.68.121] ([5.133.47.210])
+        by smtp.googlemail.com with ESMTPSA id ffacd0b85a97d-3e9a591a41csm11531787f8f.7.2025.09.16.06.28.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Sep 2025 06:28:29 -0700 (PDT)
+Message-ID: <7f0c54a3-642a-4516-8f9a-3c10f5e3b8a6@oss.qualcomm.com>
+Date: Tue, 16 Sep 2025 14:28:28 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="j6v4vfa6gjhs5clj"
-Content-Disposition: inline
-In-Reply-To: <20250916084445.96621-2-angelogioacchino.delregno@collabora.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/4] Add PM4125 audio codec driver
+To: Alexey Klimov <alexey.klimov@linaro.org>,
+        Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+        Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+        linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        christophe.jaillet@wanadoo.fr
+References: <20250915-pm4125_audio_codec_v1-v4-0-b247b64eec52@linaro.org>
+Content-Language: en-US
+From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+In-Reply-To: <20250915-pm4125_audio_codec_v1-v4-0-b247b64eec52@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=M+5NKzws c=1 sm=1 tr=0 ts=68c965ff cx=c_pps
+ a=wEM5vcRIz55oU/E2lInRtA==:117 a=ZsC4DHZuhs/kKio7QBcDoQ==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=EUspDBNiAAAA:8 a=GUb2KgM1ivsW4YjGMDAA:9 a=QEXdDO2ut3YA:10
+ a=OIgjcC2v60KrkQgK7BGD:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: HOrcx6YDiNviY9v0QaK_jV0vyttlg3GQ
+X-Proofpoint-ORIG-GUID: HOrcx6YDiNviY9v0QaK_jV0vyttlg3GQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE1MDA1NiBTYWx0ZWRfX+2SdQrUViYUC
+ 0HSB5J+3Vp+pNnmP5bLWRxHO6v8rmZ/ooKWeV36iMNIM2ALwBlBA53NncQXCp/uhwdtQv1XgSYY
+ vwPnuhhBCbMTRzRAyEYfJ4LbxD9j64CJ/Xk2iUUvRamIMUz4BI1AfyoRsbqaJ8+B2146GxRVgGy
+ nVBk4JCxzAbdoe0SPaGVri11JKVlNsQO8l9aFP/Fbo0ufJ5CUKakNNAGY9jTTDcfwuLH+xT2Nc6
+ bQX8u380B3x0wMLCb5ASOm/AeY1Ug1CBlQssSME8A+vUHrqBFl44qMOFTDT1I29jX1/jFQx0DwL
+ 6s+3gHaQybFRA4fORIxUdlY+M/mvODzsQF4Z3Ft+D2n2GSxu5cKiH9n0BYK/QAlwqL/or/OeLJh
+ Il8x3dsg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-16_02,2025-09-12_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ phishscore=0 adultscore=0 bulkscore=0 impostorscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509150056
 
 
---j6v4vfa6gjhs5clj
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
- and devm variant
-MIME-Version: 1.0
 
-Hello AngeloGioacchino,
+On 9/15/25 5:27 PM, Alexey Klimov wrote:
+> PMICs like PM4125 have in-built audio codec IC. The series here
+> adds support for this codec driver: DT bindings and codec driver
+> itself that consists mainly of two parts: soundwire devices and
+> codec part itself.
+> 
+> This audio codec can be found on platforms like QCM2290 and
+> on Qualcomm QRB2210 RB1 board.
+> 
+> We are working on this together with Srini
+> (srinivas.kandagatla@oss.qualcomm.com or srini@kernel.org).
+> 
+> This driver also has a bit limited support for concurrent playback,
+> since line out path is connected to left input channel.
+> 
+> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+> 
+Thanks Alexey for these patches,
 
-On Tue, Sep 16, 2025 at 10:44:39AM +0200, AngeloGioacchino Del Regno wrote:
-> +/**
-> + * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
-> + * @sparent:	SPMI parent device with previously registered SPMI controller
-> + *
-> + * Returns:
-> + * Pointer to newly allocated SPMI sub-device for success or negative ERR_PTR.
-> + */
-> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
-> +{
-> +	struct spmi_subdevice *sub_sdev;
-> +	struct spmi_device *sdev;
-> +	int ret;
-> +
-> +	sub_sdev = kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
-> +	if (!sub_sdev)
-> +		return ERR_PTR(-ENOMEM);
-> +
-> +	ret = ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
-> +	if (ret < 0) {
-> +		kfree(sub_sdev);
-> +		return ERR_PTR(ret);
-> +	}
-> +
-> +	sdev = &sub_sdev->sdev;
-> +	sdev->ctrl = sparent->ctrl;
-> +	device_initialize(&sdev->dev);
-> +	sdev->dev.parent = &sparent->dev;
-> +	sdev->dev.bus = &spmi_bus_type;
-> +	sdev->dev.type = &spmi_subdev_type;
-> +
-> +	sub_sdev->devid = ret;
-> +	sdev->usid = sparent->usid;
-> +
-> +	ret = dev_set_name(&sdev->dev, "%d-%02x.%d.auto",
-> +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
+I have now tested this series for headset playback, record and lineout.
 
-If I understand correctly sub_sdev->devid is globally unique. I wonder
-if a namespace that is specific to the parent spmi device would be more
-sensible?!
 
-> +	if (ret)
-> +		goto err_put_dev;
-> +
-> +	ret = device_add(&sdev->dev);
-> +	if (ret) {
-> +		dev_err(&sdev->dev, "Can't add %s, status %d\n",
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Tested-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
 
-I'd use %pe instead of %d here.
 
-> +			dev_name(&sdev->dev), ret);
-> +		goto err_put_dev;
-> +	}
-> +
-> +	return sub_sdev;
-> +
-> +err_put_dev:
-> +	put_device(&sdev->dev);
-> +	return ERR_PTR(ret);
-> +}
-> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_alloc_and_add, "SPMI");
-> +
+--srini
 
-Best regards
-Uwe
+---
+> Changes in v4:
+> - clean SDW ports/channels as suggested by Srini;
+> - Srini implemented refcounting for global mbias (we didn't manage to make it proper DAPM widget);
+> - patch for qcom,spmi-pmic.yaml moved to separate commit
+> and "contains" is removed there;
+> - rx_clk_cnt removed;
+> - HPH{R,L}_COMP kcontrols fixed;
+> - removed unneeded kcontrols (LO Switch, DMIC Switches, MBHC Switch);
+> - removed "RDAC3", NULL, "RX1";
+> - pass dev pointer to pm4125_get_micb_vout_ctl_val();
+> - Link to v3: https://lore.kernel.org/r/20250814-pm4125_audio_codec_v1-v3-0-31a6ea0b368b@linaro.org
+> 
+> Changes in v3:
+> -- added qcom,pm4125-codec compatible to qcom,spmi-pmic.yaml
+>    as suggested by Krzysztof;
+> -- added braces around if-else branch in pm4125_probe, removed coma in
+>    pm4125_slave_id[] as suggested by Christophe Jaillet;
+> -- slightly re-ordered header files in pm4125.c;
+> -- reworked how driver deals with regulators after Christophe Jaillet
+>    noted that it is broken, devm_regulator_bulk_get_enable() is used,
+>    it looks like there is no need for regulator_bulk_{disable,free};
+> -- PDM watchdog irqs are moved to separate (new) widgets
+>    as suggested by Srini, therefore audio routing and events for
+>    HPH{L,R},LO and ERA PGAs are changed;
+> -- extended pr_err() msg in pm4125_get_micb_vout_ctl_val();
+> -- small styling code adjustment in pm4125_get_compander();
+> -- added/reworked pm4125_bind() to add error paths
+>    as suggested by Christophe Jaillet;
+> -- removed of_node_put() in pm4125_add_slave_components() after Krzysztof
+>    pointed out that of_node_put() is out of place, it looks like
+>    of_parse_phandle() gets the node and component_release_of() will
+>    do of_node_put() on dev release so no need for of_node_put();
+> -- Link to v2: https://lore.kernel.org/r/20250711-pm4125_audio_codec_v1-v2-0-13e6f835677a@linaro.org
+> 
+> Changes in v2:
+> 
+> -- added rxclk dapm widget, fixed/changed RX1/RX2 widgets;
+> -- added comment for pm4125_wd_handle_irq();
+> -- registers access permission routines have been reworked;
+> -- changed pm4125_sdw_* functions to static inline;
+> -- cleaned a bit pm4125_{rx,tx}_sdw_channels;
+> -- got rid of most of hardcoded magic numbers (for the remaining regs+values I don't have documentation);
+> -- updated commit messages;
+> -- pm4125_tx_sdw_ports has been updated;
+> -- removed of_match_ptr() and OF ifdef;
+> -- removed couple of pm_runtime_mark_last_busy() calls;
+> -- removed swap_gnd_mic;
+> -- removed __pm4125_codec_enable_micbias_pullup();
+> -- reordered sequence of calls in pm4125_probe() to make it a bit more logical;
+> -- removed excessive regulator_bulk_free() and in error path in _probe();
+> -- re-aligned for 100-chars length;
+> -- removed of_node_get(), replaced with of_node_put();
+> -- corrected some dev_err() messages;
+> -- corrected some comments;
+> -- removed legacy "WCD" from stream_name, replaced with "PM4125";
+> -- removed null callbacks from struct wcd_mbhc_cb;
+> -- removed "HPH Type" and "HPH{L,R} Impedance";
+> -- pm4125_codec_enable_micbias() has been updated;
+> -- pm4125_micbias_control() and pm4125_codec_enable_adc have been implemented;
+> -- pm4125_codec_enable_dmic() has been updated;
+> -- cleaned struct pm4125_priv;
+> -- some rework to pm4125_handle_post_irq() and pm4125_regmap_irq_chip;
+> -- updated Kconfig+Makefile (to make things be in sorting order);
+> -- new patch: adding new files to MAINTAINERS file;
+> 
+> For dt bindings:
+> -- I think all requested comments from Krzysztof were implemented;
+> -- squashed qcom,spmi-pmic change into previous patch to avoid warnings on dtbs check;
+> 
+> Not done:
+> -- Mark suggested to look at reimplementing this as a child mfd device from
+> MFD PMIC without device tree description.
+> 
+> - Link to v1: https://lore.kernel.org/r/20250626-pm4125_audio_codec_v1-v1-0-e52933c429a0@linaro.org
+> 
+> ---
+> Alexey Klimov (4):
+>       dt-bindings: sound: add bindings for pm4125 audio codec
+>       dt-bindings: mfd: qcom,spmi-pmic: add qcom,pm4125-codec compatible
+>       ASoC: codecs: add new pm4125 audio codec driver
+>       MAINTAINERS: add Qualcomm PM4125 audio codec to drivers list
+> 
+>  .../devicetree/bindings/mfd/qcom,spmi-pmic.yaml    |    6 +
+>  .../bindings/sound/qcom,pm4125-codec.yaml          |  134 ++
+>  .../devicetree/bindings/sound/qcom,pm4125-sdw.yaml |   79 +
+>  MAINTAINERS                                        |    2 +
+>  sound/soc/codecs/Kconfig                           |   18 +
+>  sound/soc/codecs/Makefile                          |    8 +
+>  sound/soc/codecs/pm4125-sdw.c                      |  545 ++++++
+>  sound/soc/codecs/pm4125.c                          | 1780 ++++++++++++++++++++
+>  sound/soc/codecs/pm4125.h                          |  307 ++++
+>  9 files changed, 2879 insertions(+)
+> ---
+> base-commit: 590b221ed4256fd6c34d3dea77aa5bd6e741bbc1
+> change-id: 20250626-pm4125_audio_codec_v1-02ca7a300ddc
+> 
+> Best regards,
 
---j6v4vfa6gjhs5clj
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjJZTcACgkQj4D7WH0S
-/k4DDQf9Fn1HPf8O4u3moGauabP4ZoOg+KJoOMMHiL4JAWvb+ihWLP7SpGDPBfiO
-DjMRfgEltRK7S1XHVZqjpkIAREqaRc6TQCYX7uafwyX9JXpUGPvjoVWeywhnWJU3
-5vE9b9lEeFfiRzBq8RQ0tr17GyPpmviyXdL6kimCDDWkKzCqU9mXskQiO/HYxzDV
-mJBLPPQQ6aRxVVBLLqdsggxptBQ+8BtkqUy9+yqjncsbYTwEgj4QY65d9yQXPTgL
-st+pYh7Ra8xceTMOExplwPHN/uSqPBTMTRomAsrtOz09tETIkR6mOuEOUO3fsy9q
-v/FjPX6SlBekOqw7TnPDq/t/204YwA==
-=j8SY
------END PGP SIGNATURE-----
-
---j6v4vfa6gjhs5clj--
 
