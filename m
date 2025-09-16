@@ -1,60 +1,77 @@
-Return-Path: <linux-arm-msm+bounces-73780-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73781-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03F54B59EB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:03:16 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80235B59EA9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:02:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C6F313B972C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:00:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6F0481C05031
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:01:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D3AC32B4AE;
-	Tue, 16 Sep 2025 16:58:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A17D93705BF;
+	Tue, 16 Sep 2025 16:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iAr9KmIX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ufGW4ipa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA18232B4A6;
-	Tue, 16 Sep 2025 16:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAB1329517;
+	Tue, 16 Sep 2025 16:58:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758041917; cv=none; b=dlXO2tK9Lycm7+fWVDrUDLL/HicBJP7XXIoRs9CP90VN0t2XLEpRK9yqiqyGp6EigDVw8jOjtcDE3KwSsr0hS3QHVUyGGbZd5yYYPQ8bkO8wRrc8V6SENoci0QhgXCPnd62D8RCAkZ3YwK4jN1AGY3lxRXqTVad/w+wVzPoTXUw=
+	t=1758041919; cv=none; b=DUXq8vthkEBxBGZPYTU3tHm+myshRgQN8K0CgXJZt6I+UbVgTCCbLgRxSmuhET2b6g1ohxjhPviWXSjxNytzxN3fIkaN4fVsrW2junZKcVkMgDumAphRZ1CPLX/6+9r7K3X3lL8d2ytlPUYNKG5b2KG+xi3moIuLDoCUuvmu0jY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758041917; c=relaxed/simple;
-	bh=LiYxK8nll0TpWm1ejg57wqhRd0MPVNxpvWalgJ0nXbs=;
+	s=arc-20240116; t=1758041919; c=relaxed/simple;
+	bh=cN2ZRIwpPuuTuFydKsuswQytPt7ZVYZueiDnIohjvxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WXOr81YpuUOBVEqP7VUnyYfqobXndwTePEkyDDeTq8+miTOB0cu6akUxmkku6ar0bpRyIZgZoBTwfu41BCVb82cvv+RzyvU4QaH28fl5ipabTYYnUdbHwnQ06ABO5v+sLCe9JJBN8KARsTYgM9rgEHdK0pJFcJ5SeXG5J/ASdUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iAr9KmIX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF005C4CEEB;
-	Tue, 16 Sep 2025 16:58:36 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Zia4YqMQgCEV9MFnkqQFQMpYvuZpLaDNbOwiXJmgItyd9Sz/Sgt/SBrqvYFAjJWoI+j7t61cdevfwmXyE+plCgzQFyq90dRQWFkHNCRdblWSrsKtgw5YoSoAEvbnUXft/vr8XRfOWXBGg1PUXae2Y6ggn2xbvmkGIjmzhE4eYgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ufGW4ipa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B765AC4CEF7;
+	Tue, 16 Sep 2025 16:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758041917;
-	bh=LiYxK8nll0TpWm1ejg57wqhRd0MPVNxpvWalgJ0nXbs=;
+	s=k20201202; t=1758041919;
+	bh=cN2ZRIwpPuuTuFydKsuswQytPt7ZVYZueiDnIohjvxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iAr9KmIXQwQTNyNRaYWafrtf3s/XzRc1qHGBzgcqaPMR0DvEj1ZdolARjM9Cq2jWw
-	 C4lwjlHkkQwRWP52FKTTEdG4auJ1e19GtqKFeynhtA4NYOI3sDxyiviFq2NAPG2xNr
-	 TwYTzepz3TTFbtCdjoGn8qwcRy4gaapjrX6wiQ5rTIHxxcp7A+rEhBh3vOmnSnhUZi
-	 E6vHuYy6TV7VfZ0HnAoWoxiqbblyinNSmhoK5K9XnugFctrgfRBK7PBxT7hL2tejdJ
-	 Vl7GZ2vjWfgwrir0glOYfJPCRWl6oPYPJyuRc4YxWt1cEfqgwCCTkw1MsL0Oz48la3
-	 XXiZF+LhK58dg==
+	b=ufGW4ipaBuqkZumNSbHozdOrPtbsJc8gOophMG/yqg6lu3A61SeJaSBfuxc/Rfoqz
+	 7HlzyPzelhOESnR9HvCdsZNEJSi0JGD8fNAsXzEEQIFoRTSAwhZcdWAv9sfxBiHIa+
+	 QsQOlGSghSU+nZNF2/mgsoKRKupQOzyAmoiHjNrT2lu9yNP/GsbWi/27oN/DI1AAfl
+	 zhkF9YltDSNt97izaa1CNRYiHmiKhHSE3sYTraXEXL+suTLKc3XHHn/EbzUMw00Lcm
+	 wpZyb0qfI6x5YGMxPsO/qMDVtdIuHtZCvSyscPc5RJV+CeIM+h3vbjB92oM0yZBh+Z
+	 f+0pQYAh9+jHA==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Rob Herring <robh@kernel.org>,
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Richard Cochran <richardcochran@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+Cc: kernel@oss.qualcomm.com,
+	linux-mmc@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sm8450: enable camera clock controller by default
-Date: Tue, 16 Sep 2025 11:58:20 -0500
-Message-ID: <175804189858.3983789.4710371695290345842.b4-ty@kernel.org>
+	netdev@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
+	Monish Chunara <quic_mchunara@quicinc.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>,
+	Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Sushrut Shree Trivedi <quic_sushruts@quicinc.com>,
+	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+	Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>,
+	Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Subject: Re: [PATCH v5 00/10] arm64: dts: qcom: lemans-evk: Extend board support for additional peripherals
+Date: Tue, 16 Sep 2025 11:58:21 -0500
+Message-ID: <175804189844.3983789.17270960228782770722.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250909235547.787396-1-vladimir.zapolskiy@linaro.org>
-References: <20250909235547.787396-1-vladimir.zapolskiy@linaro.org>
+In-Reply-To: <20250916-lemans-evk-bu-v5-0-53d7d206669d@oss.qualcomm.com>
+References: <20250916-lemans-evk-bu-v5-0-53d7d206669d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,16 +82,46 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 10 Sep 2025 02:55:47 +0300, Vladimir Zapolskiy wrote:
-> Enable camera clock controller on Qualcomm SM8450 boards by default
-> due to a reasonable agreement of having all clock controllers enabled.
+On Tue, 16 Sep 2025 16:16:48 +0530, Wasim Nazir wrote:
+> This series extend support for additional peripherals on the Qualcomm
+> Lemans EVK board to enhance overall hardware functionality.
 > 
+> It includes:
+>   - New peripherals like:
+>     - I2C based devices like GPIO I/O expander and EEPROM.
+>     - GPI (Generic Peripheral Interface) DMA controllers and QUPv3 controllers
+>       for peripheral communication.
+>     - PCIe HW with required regulators and PHYs.
+>     - Remoteproc subsystems for supported DSPs.
+>     - Iris video codec.
+>     - First USB controller in device mode.
+>     - SD card support on SDHC v5.
+>     - Qca8081 2.5G Ethernet PHY.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sm8450: enable camera clock controller by default
-      commit: 520f9fec5d6f5a23e7985140dc4dd9986f0ed140
+[01/10] arm64: dts: qcom: lemans: Add SDHC controller and SDC pin configuration
+        commit: dfdbe4bf6ff386d96c1dc8c7407201d882fc4113
+[02/10] arm64: dts: qcom: lemans-evk: Enable GPI DMA and QUPv3 controllers
+        commit: 5bc646aa0c7a444d4e81d8e3cae4baf463e1a018
+[03/10] arm64: dts: qcom: lemans-evk: Add TCA9534 I/O expander
+        commit: 6ae6381f871803246e9f655537999f163656de33
+[04/10] arm64: dts: qcom: lemans-evk: Add EEPROM and nvmem layout
+        commit: 81618ba3fe33017be5e1fce99891abd220a775b8
+[05/10] arm64: dts: qcom: lemans-evk: Enable PCIe support
+        commit: 94d7d37f6ac34bd683a93fbf1013736616fc3677
+[06/10] arm64: dts: qcom: lemans-evk: Enable remoteproc subsystems
+        commit: cac44c46970adb4553bab5c5aa528462a5fe98d0
+[07/10] arm64: dts: qcom: lemans-evk: Enable Iris video codec support
+        commit: fd32b5d586ac650ce1c6f58535ec79cd2632be09
+[08/10] arm64: dts: qcom: lemans-evk: Enable first USB controller in device mode
+        commit: 7bd68ef80661a9436120702e1300b56904fdd022
+[09/10] arm64: dts: qcom: lemans-evk: Enable SDHCI for SD Card
+        commit: c3f107b514c357cbc08ae70a69700222e7d1192d
+[10/10] arm64: dts: qcom: lemans-evk: Enable 2.5G Ethernet interface
+        commit: 71ee90ed1756724d62cb55873555e006372792c7
 
 Best regards,
 -- 
