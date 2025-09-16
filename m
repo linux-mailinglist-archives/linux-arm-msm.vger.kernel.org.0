@@ -1,60 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-73773-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73774-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27C1EB59E92
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 18:59:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D94BB59E96
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 18:59:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B3F1358036B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:59:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B1B41580F71
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:59:42 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 025FB313D42;
-	Tue, 16 Sep 2025 16:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07E9A313D71;
+	Tue, 16 Sep 2025 16:58:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MBXPQiFb"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Ngku2T5P"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09AB2F5A3F;
-	Tue, 16 Sep 2025 16:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF25313D66;
+	Tue, 16 Sep 2025 16:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758041909; cv=none; b=bibIauRcrzPXF9SJPCRo2HZSmOQ1BZMCSp82P+8NSBpReD3oMiJmF9DjtOk2/crt0LqQHRt84nbJDHcZwel0sQ58lquQmIMoPjuXI2CLdd2jjYerO8n1G/vlpGVwqN8gh3Vywbf5qX4Uohfmq2c92VWXxaCHRuNIaDvFgLnDRV0=
+	t=1758041910; cv=none; b=bz5E7JlndTfmRss0L93TFT4ouo46UCzuAPwai6YW2aG6FosLIY2AAEoHvEvf4HrIL5h7ytoHyqJzxkU4BQRwShvuqA/eCUo+bB37hecom3N+fN2wq1YQqlUJgXa87B6e5r1BATUZ0y0JqEOZBV6yssrTuxrcY5EVz5GUBVWMZZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758041909; c=relaxed/simple;
-	bh=WP0uiEmAqg9IllmwJSJMlOyy+20xYAlbwM76qzTXtMA=;
+	s=arc-20240116; t=1758041910; c=relaxed/simple;
+	bh=bKHcHuor+4bFUIlsOLdnuePweUwd6K2Id97nKLmzew4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=vEAq9zslGGH3sGciYVwLIMB5FHxzjD2Q0Dyijd1sDzZpD2seg+I9ZkwKNJcrwLPbQSSsN+i9K2Os7xH/3zDMwgPCr8kGtxV6WYCKZ2ltq+g7COOLfqlchXbhKdL4gmI3KiWZae2Ew8VlFmNG2zCeb6D/WtU6EXgfYNa5rhBtNhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MBXPQiFb; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29B8BC4CEEB;
+	 MIME-Version:Content-Type; b=WlmORczAbgEqakZiWZKcd+eC2nRT20ZWQHRKhH+dgrzLEES8MZxI6yCbTc79dpCzKkzHcQZ1SKA5/S+8/opiWgSQxFU0JMwUyRom3F/nugcHl+LrCDq3mbXOOq2fpsqNbLUcaBeohfcwlHNF+NMTd3LeaYBLnb000pZpuG32laY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Ngku2T5P; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB79AC4AF09;
 	Tue, 16 Sep 2025 16:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758041909;
-	bh=WP0uiEmAqg9IllmwJSJMlOyy+20xYAlbwM76qzTXtMA=;
+	s=k20201202; t=1758041910;
+	bh=bKHcHuor+4bFUIlsOLdnuePweUwd6K2Id97nKLmzew4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBXPQiFbVHXfrvzmXJjGWO/VcLs731PNU+c2b7v1BlcV8a5aYPtB97smea+qa3Rt3
-	 KnnlsW0gofTjtwj8ZqudbRX9XE5HIxMRCaIPGEHKXwonjq5F78BP/0wJZFMOtmL45L
-	 LIY/hQ2HpWKsYRzjVqwWIAOjqGcDUtpm7V5tsinjteloqPzGUR6r7AFcgupTIZcbzc
-	 XBNmAEmr9hS2XDrrFZIQDNYEakRlSCSeVg1YHw0eF94Yy1XVMHGUJ/rqKtgqMGAk86
-	 P0VFtURc8xo6j1Ykxm+iK+rAqTJxZvhlGS6FGHi12LtBMth6zZi8IKZLPfjgzT6HLi
-	 Mlq/NUCrHy+4g==
+	b=Ngku2T5PvAFs0MFTlqGT5N5hb9KLToKKyMDIxKqXeNeVL12CLI4316IFJjubpJizn
+	 3ZDxSkI8OpqKHJT0JPis3I2UnaTTVN+d5L93houVtdoY+/Slav+WHqO2bzCkvp4K0O
+	 gDDBKiDJJ4vzuV+yP5WBUn7EGfTrs1JGbNwBwCBgoMjIhRIVubt20GXz/+WfzU2Mdk
+	 rjIRM2n5i2L/OisXo2b+iowL0gKYdkNSBUHRR6OnQCovoC9EvMCNfSIaf1z1W0Y67B
+	 OemCpkKUwTALrXq8sdcpbL6TtshH6tXmWlp38YvekcEySXq+JtvAk4QtBhV5LeCttc
+	 CR9EZdBWdac9w==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: qcs8300: Flatten usb controller nodes
-Date: Tue, 16 Sep 2025 11:58:13 -0500
-Message-ID: <175804189851.3983789.872103790994368896.b4-ty@kernel.org>
+To: andi.shyti@kernel.org,
+	robh@kernel.org,
+	conor+dt@kernel.org,
+	konradybcio@kernel.org,
+	Loic Poulain <loic.poulain@oss.qualcomm.com>
+Cc: linux-i2c@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH RESEND v5 1/2] dt-bindings: i2c: qcom-cci: Document QCM2290 compatible
+Date: Tue, 16 Sep 2025 11:58:14 -0500
+Message-ID: <175804189858.3983789.17257692199206822662.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250913182318.3547789-1-krishna.kurapati@oss.qualcomm.com>
-References: <20250913182318.3547789-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250911212102.470886-1-loic.poulain@oss.qualcomm.com>
+References: <20250911212102.470886-1-loic.poulain@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -65,17 +68,18 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Sat, 13 Sep 2025 23:53:18 +0530, Krishna Kurapati wrote:
-> Flatten usb controller nodes and update to using latest bindings and
-> flattened driver approach. Enumeration of ADB has been tested on EVK
-> Platform.
+On Thu, 11 Sep 2025 23:21:01 +0200, Loic Poulain wrote:
+> The CCI on QCM2290 is the interface for controlling camera sensor over I2C.
+> It requires only two clocks.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: qcs8300: Flatten usb controller nodes
-      commit: ed32443efe2c044bad53309670e5b58473a620d1
+[1/2] dt-bindings: i2c: qcom-cci: Document QCM2290 compatible
+      (no commit info)
+[2/2] arm64: dts: qcom: qcm2290: Add CCI node
+      commit: e645096d1f6dadcead09c722a3fbc6c44a45fece
 
 Best regards,
 -- 
