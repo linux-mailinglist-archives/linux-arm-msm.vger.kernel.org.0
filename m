@@ -1,128 +1,91 @@
-Return-Path: <linux-arm-msm+bounces-73802-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73803-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D5F7B5A371
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 22:48:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 464D0B5A3AA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 23:10:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1CA191B27132
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 20:48:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 447E07AAE70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 21:09:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3BF6627A11A;
-	Tue, 16 Sep 2025 20:48:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40491285069;
+	Tue, 16 Sep 2025 21:10:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A5r05xWm"
+	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="rzggNwY2";
+	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="SDnxirkN"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DEB278156;
-	Tue, 16 Sep 2025 20:48:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5285C279788;
+	Tue, 16 Sep 2025 21:10:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758055693; cv=none; b=eSczvmpZpRZnM6k/UZrZDZ6VTPzcIvzGRQuEwBZgbI7RERt0maA0Mu0uRJLAahLP5HtwseFplEngq/WjqzlEK+MKpQh4w28SwS0jzwSc5vbwjzvWkUPJAe1+NYGpNHTusWz1qdFOGzpkGqwQErEHYZ3LrympZOnKnvNfX/hSR4Y=
+	t=1758057026; cv=none; b=MTtUU094xwRm2o62WM4w0pMI30YTd+d2Ryw0TClE/Piy+d7DXlT90abACJYG4880jZG/18AmZbqkMotznmhD708clAor1/zf5Bz7ZO6rXKvftqLSkwIsPqpTmg3hO/1rEOliJAm6ddJn+zPR9hCtrRwidNWceaXuaEzcek3Z950=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758055693; c=relaxed/simple;
-	bh=Y1IqRfSmlcIgYAclgwowutMBZed1+nhjdRTcYcMbupo=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=MLBVMQAb67jfS+UIbuXIiaxwEIGWqZvSyHp6pKEeJZ5XAHJX8kvi7mJ3mxl4yemFjX197iixkFOkvCYA+K5HVxBR9/xAFmobnbngBAgS/RmbXeeIg/jivH6cK5tCX6vrEVqDSIOLGImIRNffojqOGfLIbBUOmO8GWkrYN52NpXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A5r05xWm; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52273C4CEEB;
-	Tue, 16 Sep 2025 20:48:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758055692;
-	bh=Y1IqRfSmlcIgYAclgwowutMBZed1+nhjdRTcYcMbupo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=A5r05xWmYvjRRzvE92m3mH2/SmzKfmpjZuLwjCsCDgkybVbpSojkwZKz7L4frT/Rb
-	 PFFZM2QFsby8HiInnpUv4UwGzS02ekBSEuSEXajuzPhoqgHOvaqCBQOmvwO5RT7Eid
-	 s0zI9vRyZeJSmj1LYOL6HZEdDn82HExVNPCvgrMdnBzKbNisSvS/Xj5iDFpm4Pix5x
-	 yFu6APZisS6AYcgAVeFP7KUp8AO0xxLrR6io9vUZIuC6yqSiRvt5Xz81ODSCBN2TM2
-	 J6+XawPw3xi8uaY56TfHIyX4+yaDwaP2I9e242ffc9QDZcsQTR7WOscNFlDeAx4kfU
-	 U6G/IW1hDA9rw==
-Date: Tue, 16 Sep 2025 15:48:10 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: manivannan.sadhasivam@oss.qualcomm.com
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH v3 4/4] PCI: qcom: Allow pwrctrl core to control PERST#
- if 'reset-gpios' property is available
-Message-ID: <20250916204810.GA1814032@bhelgaas>
+	s=arc-20240116; t=1758057026; c=relaxed/simple;
+	bh=8cCmYW5hdWkzAHs68vgot2dAtZak/ByN7XZ37Qz//U0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=koceLGtvEVeFn7hx+U8cVEH+UM2OOMpPbXXCGgk25fOFEMzJXUIHozkl9haOhqOqklfxtUrVnU4gw3p4y6MmjPj22MmZeViPOk01U5RT+y8WmLBuCeALECezMh3iY1U8Wl2R9fFaxmHCJ2WHBsDGGWvpJiu5/2Epw8DG7FfeAGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=rzggNwY2; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=SDnxirkN; arc=none smtp.client-ip=193.142.43.55
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
+From: Thomas Gleixner <tglx@linutronix.de>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020; t=1758057022;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pj5Qf/1bxCFrPvhs0jRUa6YUBACyGl4rbZxu2Lu22Yo=;
+	b=rzggNwY2vNIxBIBWhIM2eNT5/Wfp/pOEx3vtX/gpirUkPKVvJ0xOMkn1gIzyLdOdcJM/AD
+	LJ2HK4ybwmU0mn9P3gCiw4KAwCnEtKWMS9Sb/0qKfySh8hUCPH70rJAg5Vq0oS1Etq5y9s
+	fWaUbCSElmQMt6NX3zClcf91wEMcC1oZuAdCi/5IRA+Ig27XqQiW9KvpUqkD9NqXkHLd/0
+	Gd0n3URf4LrYUw8JAffVYVHTmdNOaBv3i4kwOMJvXw8NmVIpVwwAtKoaJo94DrP41+tyCK
+	c1/lgsIXQKLPw28SqA5WCxffxdnDK3zoAfFJs9W+tYUbrCs6XWPUEcEbL4SF7g==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
+	s=2020e; t=1758057022;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=pj5Qf/1bxCFrPvhs0jRUa6YUBACyGl4rbZxu2Lu22Yo=;
+	b=SDnxirkNQwaVrfSM04srsZSWToQc90VpYlu25/LRFyplMb/H/OpA4GODTfBkYO63u2m+3S
+	JVN0QitkAjbE61Dw==
+To: Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
+ mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org, Eugen Hristev <eugen.hristev@linaro.org>
+Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
+In-Reply-To: <20250912150855.2901211-10-eugen.hristev@linaro.org>
+References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
+ <20250912150855.2901211-10-eugen.hristev@linaro.org>
+Date: Tue, 16 Sep 2025 23:10:21 +0200
+Message-ID: <87cy7q9k8y.ffs@tglx>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250912-pci-pwrctrl-perst-v3-4-3c0ac62b032c@oss.qualcomm.com>
+Content-Type: text/plain
 
-On Fri, Sep 12, 2025 at 02:05:04PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> 
-> For historic reasons, the pcie-qcom driver was controlling the power supply
-> and PERST# GPIO of the PCIe slot.
+On Fri, Sep 12 2025 at 18:08, Eugen Hristev wrote:
+> nr_irqs is required for debugging the kernel, and needs to be
+> accessible for kmemdump into vmcoreinfo.
 
-> This turned out to be an issue as the power supply requirements
-> differ between components. For instance, some of the WLAN chipsets
-> used in Qualcomm systems were connected to the Root Port in a
-> non-standard way using their own connectors.
+That's a patently bad idea.
 
-This is kind of hand-wavy.  I don't know what a non-standard connector
-has to do with this.  I assume there's still a PCIe link from Root
-Port to WLAN, and there's still a PERST# signal to the WLAN device and
-a Root Port GPIO that asserts/deasserts it.
+Care to grep how many instances of 'nr_irqs' variables are in the
+kernel?
 
-> This requires specific power sequencing mechanisms for controlling
-> the WLAN chipsets. So the pwrctrl framework (CONFIG_PWRCTRL) was
-> introduced to handle these custom and complex power supply
-> requirements for components.
-> 
-> Sooner, we realized that it would be best to let the pwrctrl driver control
-> the supplies to the PCIe slots also. As it will allow us to consolidate all
-> the power supply handling in one place instead of doing it in two. So the
-> CONFIG_PWRCTRL_SLOT driver was introduced, that just parses the Root Port
-> nodes representing slots and controls the standard power supplies like
-> 3.3v, 3.3VAux etc...
-> 
-> However, the control of the PERST# GPIOs was still within the controller
-> drivers like pcie-qcom. So the controller drivers continued to assert/
-> deassert PERST# GPIOs independent of the power supplies to the components.
-> This mostly went unnoticed as the components tolerated this non-standard
-> PERST# assertion/deassertion. But this behavior completely goes against the
-> PCIe Electromechanical specs like CEM, M.2, as these specs enforce strict
-> control of PERST# signal together with the power supplies.
-> 
-> So conform to these specs, allow the pwrctrl core to control PERST# for the
-> slots if the 'reset-gpios' property is specified in the DT bridge nodes.
-> This is achieved by populating the 'pci_host_bridge::perst_assert' callback
-> with qcom_pcie_perst_assert() function, so that the pwrctrl core can
-> control PERST# through this callback.
-> 
-> qcom_pcie_perst_assert() will find the PERST# GPIO descriptor associated
-> with the supplied 'device_node' of the component and asserts/deasserts
-> PERST# as requested by the 'assert' parameter. If PERST# is not found in
-> the supplied node of the component, the function will look for PERST# in
-> the parent node as a fallback. This is needed since PERST# won't be
-> available in the endpoint node as per the DT binding.
-> 
-> Note that the driver still asserts PERST# during the controller
-> initialization as it is needed as per the hardware documentation.
-> 
-> For preserving the backward compatibility with older DTs that still
-> specifies the Root Port resources in the host bridge DT node, the
-> controller driver still controls power supplies and PERST# for them. For
-> those cases, the 'qcom_pcie::legacy_binding' flag will be set and the
-> driver will continue to control PERST# exclusively. If this flag is not
-> set, then the pwrctrl driver will control PERST# through the callback.
+That name is way too generic to be made global.
+
+Thanks,
+
+        tglx
 
