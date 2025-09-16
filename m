@@ -1,127 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-73806-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73807-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D98D9B5A423
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 23:46:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64257B5A425
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 23:46:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8FC6C1BC16E8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 21:46:41 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 25C8A179FD7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 21:46:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 687C21F4701;
-	Tue, 16 Sep 2025 21:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2F80E284682;
+	Tue, 16 Sep 2025 21:46:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="WAJ8N01z"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="qiOK9+Pq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDA631BC88;
-	Tue, 16 Sep 2025 21:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E64D276022;
+	Tue, 16 Sep 2025 21:46:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758059175; cv=none; b=KspkDG6+jxTLd6X8YWEb9jPmzDyaqWQ1AIVlUl/7s6grvnzcO7IC7U+Y/obV1tbHMtIEirDxxgnV3bSZIHmvbryLjtbzpRgk3Ioe3cZJYxJfm0PO6YJp1SW04K3WCOY6HWntVIMofVHwhjF3RUSiva7IcmBDer2z9vFknKXOSw4=
+	t=1758059202; cv=none; b=k76UhafpyECepww5I2m+ijitoa6SJLWskFXbwBCj4hftQ/l4It+Liu5740e9EgYWu91VGJf/rjftF0gLwiP1zAiMixx7DANinB7x9/b2mhryuF1T27pbnrflIfSVZ5fkMzBt/Nh3+zZ35IR9cFy8UC/0kgPrIVUxJxqyIpvHsk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758059175; c=relaxed/simple;
-	bh=VeS7KFf+rHWJzTKhT4QtPJonbnt8KmLy5lWwTUzmGGA=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=Pvi0P5YMRbaBOmNMEPygd9JrTxU3P2GeCftPYTVWtqAYmOle0CbtTWiX4A41rSBUyreUmcO2ZrYOptqM0A/VjpsYwIasYBOAzwJltbwVJcr7eMXbadusu/OI3RSJX5fFEHzj1wWrtePfObfVoqvAvYVZXA6E2haLuc0Mia19Pek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=WAJ8N01z; arc=none smtp.client-ip=78.32.30.218
+	s=arc-20240116; t=1758059202; c=relaxed/simple;
+	bh=QWICg5RVnXhSbRYG4iXfUwfFl+tpCRmQRLXZSQ4AG0I=;
+	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
+	 Content-Disposition:Content-Type:Message-Id:Date; b=ggKJpFKJf9ks8v8sQloyxUSu3nQCddPUmT5aEQpE2oWedGL8OJZb3dTFvAdCNSTea3Itw+EGY+k352LgrdfTVlkQVQBiEiLss1etBbCmD8fzNJVyPoUitvARkkZJR4F/GVWjsPAiKGkGzocX5HAcLhBV5Fgh56DTHptx559Ph1c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=qiOK9+Pq; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:Cc:To:From:Date:Reply-To:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=144yI2r29gduOQHswHZUx+6arVcgoh3KDtsNCZtQmg4=; b=WAJ8N01z164GRtzHoCPtm4wzjk
-	CtCOrB0epqxtdVlrIJED10Gusfhpcm7zJaMaB9iVYD1c/33waZVMeFfWrjmUwr2Q2wCgDsoUVMFO3
-	FSP8iSPon8sjyf1isqyfIWurU6KUWbnZSQCJvdlY4BJvo89y59jHsxmELj/AJjq6TT09J8v17ZO98
-	uTR0IJ6WVhP1wUtjbgwhpi2QbkiHawIgoLHM7E62C/+CmoJpuuecxz+A9o9XBVsHsI1lZ8mRn4HWe
-	7UlOpAXYFWKwjQMPM4MaeJ1fkPkWbS/Nszo8JvL8FH4FFh6O6glDwXWpScw8K0Z2pyMTDAK6HCnic
-	NUq8SXDg==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:33128)
+	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
+	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
+	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=Psqhte2+r+HDH1rvUSq0d37pn295WyFHEQCg+KtNUV8=; b=qiOK9+Pq6xAZK1BoKOdUoQYNSJ
+	2c/UwjQtcZU8P3+0OrJWmsMzxKRR2vOZCsTX4WgBRdthQGfW9P8+10TYd4oDGRd9JPEI/V5+Tw5Qc
+	gj6bYdXTfcWD1Z6i78PuV0+z7KlaDAJswNje0xsmLRPnuS1YlkB69PPl5x4S2V2pwjEHyVlGhlzdD
+	0+rN7792TIpOyLBYKvRRAFn4g3HFKtgOPuYGyJHT94YSuaDga+JPGR4rBWzHX+qKcfA1ojdESP2pE
+	Cis9ALVqfBdVf/XPVicqfZ2J8FQMLUDXFacOSvIGzpGu70g6x1pJ3sx2gQ7hvZN/ostCNoufWG4qd
+	stsR3OvA==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:37470 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1uydV3-000000006Oj-2r6j;
-	Tue, 16 Sep 2025 22:46:09 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1uydV2-0000000081B-22fM;
-	Tue, 16 Sep 2025 22:46:08 +0100
-Date: Tue, 16 Sep 2025 22:46:08 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
+	(envelope-from <rmk@armlinux.org.uk>)
+	id 1uydVV-000000006P0-133I;
+	Tue, 16 Sep 2025 22:46:37 +0100
+Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
+	id 1uydVU-000000061W8-2IDT;
+	Tue, 16 Sep 2025 22:46:36 +0100
+In-Reply-To: <aMnaoPjIuzEAsESZ@shell.armlinux.org.uk>
+References: <aMnaoPjIuzEAsESZ@shell.armlinux.org.uk>
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+To: Andrew Lunn <andrew@lunn.ch>,
+	Heiner Kallweit <hkallweit1@gmail.com>
 Cc: "David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, linux-arm-msm@vger.kernel.org,
-	Marek =?iso-8859-1?Q?Beh=FAn?= <kabel@kernel.org>,
-	netdev@vger.kernel.org, Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH net-next v2 0/7] net: rework SFP capability parsing and quirks
-Message-ID: <aMnaoPjIuzEAsESZ@shell.armlinux.org.uk>
+	Jakub Kicinski <kuba@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	"Marek Beh__n" <kabel@kernel.org>,
+	netdev@vger.kernel.org,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH net-next 1/7] net: phy: add phy_interface_copy()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Message-Id: <E1uydVU-000000061W8-2IDT@rmk-PC.armlinux.org.uk>
+Sender: Russell King <rmk@armlinux.org.uk>
+Date: Tue, 16 Sep 2025 22:46:36 +0100
 
-The original SPF module parsing was implemented prior to gaining any
-quirks, and was designed such that the upstream calls the parsing
-functions to get the translated capabilities of the module.
+Add a helper for copying PHY interface bitmasks. This will be used by
+the SFP bus code, which will then be moved to phylink in the subsequent
+patches.
 
-SFP quirks were then added to cope with modules that didn't correctly
-fill out their ID EEPROM. The quirk function was called from
-sfp_parse_support() to allow quirks to modify the ethtool link mode
-masks.
-
-Using just ethtool link mode masks eventually lead to difficulties
-determining the correct phy_interface_t mode, so a bitmap of these
-modes were added - needing both the upstream API and quirks to be
-updated.
-
-We have had significantly more SFP module quirks added since, some
-which are modifying the ID EEPROM as a way of influencing the data
-we provide to the upstream - for example, sfp_fixup_10gbaset_30m()
-changes id.base.connector so we report PORT_TP. This could be done
-more cleanly if the quirks had access to the parsed SFP port.
-
-In order to improve flexibility, and to simplify some of the upstream
-code, we group all module capabilities into a single structure that
-the upstream can access via sfp_module_get_caps(). This will allow
-the module capabilities to be expanded if required without reworking
-all the infrastructure and upstreams again.
-
-In this series, we rework the SFP code to use the capability structure
-and then rework all the upstream implementations, finally removing the
-old kernel internal APIs.
-
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
-v2:
-- Add Andrew's r-b to patch 1
-- sfp_module_may_have_phy() -> sfp_module_parse_may_have_phy()
+ include/linux/phy.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
- drivers/net/phy/marvell-88x2222.c |  13 +++--
- drivers/net/phy/marvell.c         |   8 ++-
- drivers/net/phy/marvell10g.c      |   7 ++-
- drivers/net/phy/phylink.c         |  11 ++--
- drivers/net/phy/qcom/at803x.c     |   9 ++--
- drivers/net/phy/qcom/qca807x.c    |   7 ++-
- drivers/net/phy/sfp-bus.c         | 107 ++++++++++++++++----------------------
- drivers/net/phy/sfp.c             |  49 +++++++++--------
- drivers/net/phy/sfp.h             |   4 +-
- include/linux/phy.h               |   5 ++
- include/linux/sfp.h               |  48 +++++++++--------
- 11 files changed, 126 insertions(+), 142 deletions(-)
-
+diff --git a/include/linux/phy.h b/include/linux/phy.h
+index 6f3b25cb7f4e..ea7454763516 100644
+--- a/include/linux/phy.h
++++ b/include/linux/phy.h
+@@ -169,6 +169,11 @@ static inline bool phy_interface_empty(const unsigned long *intf)
+ 	return bitmap_empty(intf, PHY_INTERFACE_MODE_MAX);
+ }
+ 
++static inline void phy_interface_copy(unsigned long *d, const unsigned long *s)
++{
++	bitmap_copy(d, s, PHY_INTERFACE_MODE_MAX);
++}
++
+ static inline unsigned int phy_interface_weight(const unsigned long *intf)
+ {
+ 	return bitmap_weight(intf, PHY_INTERFACE_MODE_MAX);
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+2.47.3
+
 
