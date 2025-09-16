@@ -1,341 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-73658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA1A6B5912D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 10:46:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id C01A7B591C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 11:09:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 523842A819A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 08:46:18 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA7EB485783
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 09:08:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4476F2EDD69;
-	Tue, 16 Sep 2025 08:45:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73ECB292B2E;
+	Tue, 16 Sep 2025 09:07:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="de9h4Bvv"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="FT/W+ex6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822402EA49E;
-	Tue, 16 Sep 2025 08:45:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05B2C2857E9
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 09:07:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758012313; cv=none; b=fYGB5nZ2TFOX78iN3unof4eWvTch1GdL5KqFcMSDsGMcQstesgmTl1nn/cxy7vTNMUY4rlTUgCzqsqU6oNCyHgxHvv6NAsopylblbyCCVI1I+Tt6et2Qvx5IH0LQvPIYIo+yWoZoMRgvojHJ6Tr/nNdtxwYuoCAJ7+BFDs/j8wg=
+	t=1758013677; cv=none; b=u18kiAPYBxLdCpv+kahkfp7roEXxdzS5Lirfz+0J/6SGY/RK2DIM0ZK+OpqjnqnhFgGE+9We7OxehIp7bfi77FaVL6NZ2oGS0u1o4ztSL45XPPZ3s/uJ3uIzwUSikTTc+/WU3LZBNCeQ93HzRkl4Kesn3l+flgztz4nRbI9reMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758012313; c=relaxed/simple;
-	bh=Rq6TkIkSBADfLR9b6wNlQvCvpbW72EiJCDthDlZDdos=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ghzuFtZya2MgVuXQofqR3Fw3RJ5hCjqsWxQHPxmFjVGMUaqo7Yh3vvjkfzwyvSugd2ztRbzRgwfqIErIIOjWoEyq8dpUai0uIGBf+pykzhRZvk712qsAdumfEfK5HpvrH8cu0/aBs+kojBXBtLZSk+KojE8iI9l5KRF50NiC6Y8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=de9h4Bvv; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1758012305;
-	bh=Rq6TkIkSBADfLR9b6wNlQvCvpbW72EiJCDthDlZDdos=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=de9h4BvvOg8Et+aLWhbScThBOg5X84zB5Ji32DBvAvKm6louVzaVkFIaVYEt9+T4f
-	 5mHzwOK8Wt70M3TTYgWoppC3lyN5JzBOWRyjGCGWWlfcnrYdCyGN2SbL+DgGhkw+kl
-	 GdAO1/ieyGMZqdaJ3KmzULJumWqz/i+/l7jSGu4Mcb4LsWEzefrb5FhzFtNq30YPio
-	 UcazwWEKLIx7aWMeIrcTKu4u7NWfS9cpqzlYHZND6waLZGrMB5U0sNZfhhHfxyfPo1
-	 Cwfaar54FJbxCBzcgeQHGW5mkzqXXJCqr6CySogEfjDUdT+Hs608tccIq2Apk7z3Ya
-	 kSYd8aaDHIWpQ==
-Received: from IcarusMOD.eternityproject.eu (2-237-20-237.ip236.fastwebnet.it [2.237.20.237])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: kholk11)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id C23AD17E13B5;
-	Tue, 16 Sep 2025 10:45:04 +0200 (CEST)
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-To: sboyd@kernel.org
-Cc: jic23@kernel.org,
-	dlechner@baylibre.com,
-	nuno.sa@analog.com,
-	andy@kernel.org,
-	arnd@arndb.de,
-	gregkh@linuxfoundation.org,
-	srini@kernel.org,
-	vkoul@kernel.org,
-	kishon@kernel.org,
-	sre@kernel.org,
-	krzysztof.kozlowski@linaro.org,
-	u.kleine-koenig@baylibre.com,
-	angelogioacchino.delregno@collabora.com,
-	linux-arm-msm@vger.kernel.org,
-	linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org,
-	kernel@collabora.com,
-	wenst@chromium.org,
-	casey.connolly@linaro.org,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH v4 7/7] iio: adc: qcom-spmi-iadc: Remove regmap R/W wrapper functions
-Date: Tue, 16 Sep 2025 10:44:45 +0200
-Message-ID: <20250916084445.96621-8-angelogioacchino.delregno@collabora.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
-References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+	s=arc-20240116; t=1758013677; c=relaxed/simple;
+	bh=fM1QW+UFz5zHOwXNyLvYeTnh6QmXecM50gjhKcitTM4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=UYhqeURE/kYGDjO4AolWNFa7Jj9YFR5tbZ15iUeu1OwEvvtH9SkAmfkrBLiuEUAzlms+jfzgjHmpUu+wBle3vpGaX1COrhRV29UE1MOhgsrM9FYVTWWvh8/KDT5QALjaCsUgHSub7qdnWHbNQcQodZHXytF5yiOFwJrspvmbq00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=FT/W+ex6; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-afcb7a16441so778414766b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 02:07:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1758013673; x=1758618473; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wGPJfwEdnpfBh17k0uP4IdtgceOjAvM9dH/m5dD76YA=;
+        b=FT/W+ex663OkQapBdsdZfiqLbYPbkbzVnog3Xs3mpz4Xgconp9x/dpGRHaPDtPNLW9
+         ixh2cYtm4JWK60nHEFL7C90FMizD4O9NDpm0XgjKKbAKa6MQGVYIZKXtIyVNXEvXdPll
+         xO78MacI3EikAFs5oCbgOJss/QVWcWRQP37/48n+Z1+GtSUaCGDnsrnrlVrWG8si7O1r
+         94TOul6Ohbll7vJbAvAdeUmX/1lwebJ6Um7OcSVt28412nyHT+Czd6S3q0zXW3S+rlON
+         zm0+nbxhnU6V+vNzOee64mcGan0mFlRda++wgZ4vaBj70pcHlZQrlVQPf/U9b0edpf2T
+         khMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758013673; x=1758618473;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=wGPJfwEdnpfBh17k0uP4IdtgceOjAvM9dH/m5dD76YA=;
+        b=u3xdzSZnEnPfhoFScksss1kGE2wmo4hokqJS5S0oSctOzlSbwxUYb4lU/hcloltcvl
+         2QwK+QR1LYtco+G0G1ipQ7aBb+aB7RTypWB//VoPJpxCUNtuH+pe9fl/o54ONEJXQCgV
+         UeP/s04AujUDGPDpcWJQ5uH+1vRcFnQoQWalVfRgryxcTjSZduwERF8OCWOfyCVWVp6P
+         F89YW80xhPcJvCYJWxi2HP6cOTJjQlIYOyKPyTlPuMdZqHxB/tUW4KCeLIZi8PkfzXLF
+         iTcuPR3RkELvcWFwXrjl0T/A5wBblYACvpEoX69pjStuuRFKxRHSHCv6W2cimSzs7QJU
+         we8w==
+X-Forwarded-Encrypted: i=1; AJvYcCW1x5X/Wm/Il36DD82kk0pgNL1ftGGNVGQ0B7VJfR4jcEh4ENAw1Ko3Z140VGxVFKZIEdlUbtapaWOfHrxZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxuaWPLNjsONcrsM1YDDtpcVuUNapA6Yvti/Y3UMlG2menaT0KF
+	1h82k2s+BS3RrJ9gVZ3xfUp02Y6jjjX1OWoBSsNaO8elUHpgVDq6elvmT2aINukEF88=
+X-Gm-Gg: ASbGncuns6k4RKHyiSrv0//AwB381bpRPUgMxDrSr+6/mF+WYfnI13Ss2LnKl4a98Iw
+	FAIVV0MXQUeMt1L0dFGTTaAuIfDj6iggiSdSCnbFYr3WddC1hLVwuSPiSI5i7Dscixq6OtoDVXb
+	CBRYUVrgeDJKjhSJSsUkdsiTGZFNWT65ZUmlaYGTREqAQSvwy4JomyRWyY8R8hZVFmsSMhsq45j
+	g3iRda9znWHaxgc1QYjuqOCLlIF311bTtxMSpcvS0so8Dxp1tUplM3g9o8ia4yFnuP2FzaQ97VT
+	brnUQhccq8rq3y7oHoJtTHJDtkQDCX0vvMHNgofJBtj27rzD+BG2dlbQn3c4ADgUC63J45g2NiK
+	vZGMnfH2yadU36L6OjsbBF1ElQTkL2XPEgrLXv/Aq+qCOHRPEUR+3AD+8CS+udA7U3sTZ
+X-Google-Smtp-Source: AGHT+IEnV71DLjZiRWk5j6jXx0pnqls19vN1Qen2T1tQxSI6t57/t1s9FzfJ1We13UaEvDdr4m6msw==
+X-Received: by 2002:a17:906:6d13:b0:b09:c230:12dc with SMTP id a640c23a62f3a-b09c23013dbmr778396666b.8.1758013673277;
+        Tue, 16 Sep 2025 02:07:53 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07c7159e6csm899506666b.33.2025.09.16.02.07.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 16 Sep 2025 02:07:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Tue, 16 Sep 2025 11:07:52 +0200
+Message-Id: <DCU3U3SF3ZRT.ATK17JG93309@fairphone.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ "Krzysztof Kozlowski" <krzk@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+ <stable@vger.kernel.org>
+Subject: Re: [PATCH 0/3] Fixes/improvements for SM6350 UFS
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Luca Weiss" <luca.weiss@fairphone.com>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
+ Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
+ "Conor Dooley" <conor+dt@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20250314-sm6350-ufs-things-v1-0-3600362cc52c@fairphone.com>
+ <DBDAMGN9UQA0.J6KJJ48PLJ2L@fairphone.com>
+In-Reply-To: <DBDAMGN9UQA0.J6KJJ48PLJ2L@fairphone.com>
 
-This driver doesn't need to add any register base address to any
-regmap call anymore since it was migrated to register as a SPMI
-subdevice with its own regmap reg_base, which makes the regmap
-API to automatically add such base address internally.
+Hi Bjorn,
 
-Since the iadc_{read,write,read_result}() functions now only do
-call regmap_{read,write,bulk_read}() and nothing else, simplify
-the driver by removing them and by calling regmap APIs directly.
+On Wed Jul 16, 2025 at 9:15 AM CEST, Luca Weiss wrote:
+> Hi Bjorn,
+>
+> On Fri Mar 14, 2025 at 10:17 AM CET, Luca Weiss wrote:
+>> Fix the order of the freq-table-hz property, then convert to OPP tables
+>> and add interconnect support for UFS for the SM6350 SoC.
+>>
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>> Luca Weiss (3):
+>>       arm64: dts: qcom: sm6350: Fix wrong order of freq-table-hz for UFS
+>>       arm64: dts: qcom: sm6350: Add OPP table support to UFSHC
+>>       arm64: dts: qcom: sm6350: Add interconnect support to UFS
+>
+> Could you please pick up this series? Konrad already gave his R-b a
+> while ago.
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Link: https://lore.kernel.org/r/20250722101317.76729-8-angelogioacchino.delregno@collabora.com
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
-Link: https://lore.kernel.org/r/20250730112645.542179-8-angelogioacchino.delregno@collabora.com
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
----
- drivers/iio/adc/qcom-spmi-iadc.c | 83 ++++++++++++--------------------
- 1 file changed, 30 insertions(+), 53 deletions(-)
+Another ping on this series, haven't heard anything in the last 2 months
+on this.
 
-diff --git a/drivers/iio/adc/qcom-spmi-iadc.c b/drivers/iio/adc/qcom-spmi-iadc.c
-index 67096952b229..7d46ec2d1a30 100644
---- a/drivers/iio/adc/qcom-spmi-iadc.c
-+++ b/drivers/iio/adc/qcom-spmi-iadc.c
-@@ -113,77 +113,59 @@ struct iadc_chip {
- 	struct completion complete;
- };
- 
--static int iadc_read(struct iadc_chip *iadc, u16 offset, u8 *data)
--{
--	unsigned int val;
--	int ret;
--
--	ret = regmap_read(iadc->regmap, offset, &val);
--	if (ret < 0)
--		return ret;
--
--	*data = val;
--	return 0;
--}
--
--static int iadc_write(struct iadc_chip *iadc, u16 offset, u8 data)
--{
--	return regmap_write(iadc->regmap, offset, data);
--}
--
- static int iadc_reset(struct iadc_chip *iadc)
- {
--	u8 data;
-+	u32 data;
- 	int ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_read(iadc, IADC_PERH_RESET_CTL3, &data);
-+	ret = regmap_read(iadc->regmap, IADC_PERH_RESET_CTL3, &data);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
-+	ret = regmap_write(iadc->regmap, IADC_SEC_ACCESS, IADC_SEC_ACCESS_DATA);
- 	if (ret < 0)
- 		return ret;
- 
- 	data |= IADC_FOLLOW_WARM_RB;
- 
--	return iadc_write(iadc, IADC_PERH_RESET_CTL3, data);
-+	return regmap_write(iadc->regmap, IADC_PERH_RESET_CTL3, data);
- }
- 
- static int iadc_set_state(struct iadc_chip *iadc, bool state)
- {
--	return iadc_write(iadc, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
-+	return regmap_write(iadc->regmap, IADC_EN_CTL1, state ? IADC_EN_CTL1_SET : 0);
- }
- 
- static void iadc_status_show(struct iadc_chip *iadc)
- {
--	u8 mode, sta1, chan, dig, en, req;
-+	u32 mode, sta1, chan, dig, en, req;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_MODE_CTL, &mode);
-+	ret = regmap_read(iadc->regmap, IADC_MODE_CTL, &mode);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_DIG_PARAM, &dig);
-+	ret = regmap_read(iadc->regmap, IADC_DIG_PARAM, &dig);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CH_SEL_CTL, &chan);
-+	ret = regmap_read(iadc->regmap, IADC_CH_SEL_CTL, &chan);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_CONV_REQ, &req);
-+	ret = regmap_read(iadc->regmap, IADC_CONV_REQ, &req);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+	ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 	if (ret < 0)
- 		return;
- 
--	ret = iadc_read(iadc, IADC_EN_CTL1, &en);
-+	ret = regmap_read(iadc->regmap, IADC_EN_CTL1, &en);
- 	if (ret < 0)
- 		return;
- 
-@@ -199,34 +181,34 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 
- 	/* Mode selection */
- 	mode = (IADC_OP_MODE_NORMAL << IADC_OP_MODE_SHIFT) | IADC_TRIM_EN;
--	ret = iadc_write(iadc, IADC_MODE_CTL, mode);
-+	ret = regmap_write(iadc->regmap, IADC_MODE_CTL, mode);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Channel selection */
--	ret = iadc_write(iadc, IADC_CH_SEL_CTL, channel);
-+	ret = regmap_write(iadc->regmap, IADC_CH_SEL_CTL, channel);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* Digital parameter setup */
- 	decim = IADC_DEF_DECIMATION << IADC_DIG_DEC_RATIO_SEL_SHIFT;
--	ret = iadc_write(iadc, IADC_DIG_PARAM, decim);
-+	ret = regmap_write(iadc->regmap, IADC_DIG_PARAM, decim);
- 	if (ret < 0)
- 		return ret;
- 
- 	/* HW settle time delay */
--	ret = iadc_write(iadc, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
-+	ret = regmap_write(iadc->regmap, IADC_HW_SETTLE_DELAY, IADC_DEF_HW_SETTLE_TIME);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = iadc_write(iadc, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
-+	ret = regmap_write(iadc->regmap, IADC_FAST_AVG_CTL, IADC_DEF_AVG_SAMPLES);
- 	if (ret < 0)
- 		return ret;
- 
- 	if (IADC_DEF_AVG_SAMPLES)
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, IADC_FAST_AVG_EN_SET);
- 	else
--		ret = iadc_write(iadc, IADC_FAST_AVG_EN, 0);
-+		ret = regmap_write(iadc->regmap, IADC_FAST_AVG_EN, 0);
- 
- 	if (ret < 0)
- 		return ret;
-@@ -239,19 +221,19 @@ static int iadc_configure(struct iadc_chip *iadc, int channel)
- 		return ret;
- 
- 	/* Request conversion */
--	return iadc_write(iadc, IADC_CONV_REQ, IADC_CONV_REQ_SET);
-+	return regmap_write(iadc->regmap, IADC_CONV_REQ, IADC_CONV_REQ_SET);
- }
- 
- static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- {
- 	unsigned int count, retry;
- 	int ret;
--	u8 sta1;
-+	u32 sta1;
- 
- 	retry = interval_us / IADC_CONV_TIME_MIN_US;
- 
- 	for (count = 0; count < retry; count++) {
--		ret = iadc_read(iadc, IADC_STATUS1, &sta1);
-+		ret = regmap_read(iadc->regmap, IADC_STATUS1, &sta1);
- 		if (ret < 0)
- 			return ret;
- 
-@@ -267,11 +249,6 @@ static int iadc_poll_wait_eoc(struct iadc_chip *iadc, unsigned int interval_us)
- 	return -ETIMEDOUT;
- }
- 
--static int iadc_read_result(struct iadc_chip *iadc, u16 *data)
--{
--	return regmap_bulk_read(iadc->regmap, IADC_DATA, data, 2);
--}
--
- static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- {
- 	unsigned int wait;
-@@ -296,7 +273,7 @@ static int iadc_do_conversion(struct iadc_chip *iadc, int chan, u16 *data)
- 	}
- 
- 	if (!ret)
--		ret = iadc_read_result(iadc, data);
-+		ret = regmap_bulk_read(iadc->regmap, IADC_DATA, data, sizeof(*data));
- exit:
- 	iadc_set_state(iadc, false);
- 	if (ret < 0)
-@@ -392,10 +369,10 @@ static int iadc_update_offset(struct iadc_chip *iadc)
- 
- static int iadc_version_check(struct iadc_chip *iadc)
- {
--	u8 val;
-+	u32 val;
- 	int ret;
- 
--	ret = iadc_read(iadc, IADC_PERPH_TYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_TYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -404,7 +381,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_PERPH_SUBTYPE, &val);
-+	ret = regmap_read(iadc->regmap, IADC_PERPH_SUBTYPE, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -413,7 +390,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_REVISION2, &val);
-+	ret = regmap_read(iadc->regmap, IADC_REVISION2, &val);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -428,7 +405,7 @@ static int iadc_version_check(struct iadc_chip *iadc)
- static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- {
- 	int ret, sign, int_sense;
--	u8 deviation;
-+	u32 deviation;
- 
- 	ret = of_property_read_u32(node, "qcom,external-resistor-micro-ohms",
- 				   &iadc->rsense[IADC_EXT_RSENSE]);
-@@ -440,7 +417,7 @@ static int iadc_rsense_read(struct iadc_chip *iadc, struct device_node *node)
- 		return -EINVAL;
- 	}
- 
--	ret = iadc_read(iadc, IADC_NOMINAL_RSENSE, &deviation);
-+	ret = regmap_read(iadc->regmap, IADC_NOMINAL_RSENSE, &deviation);
- 	if (ret < 0)
- 		return ret;
- 
--- 
-2.51.0
+Regards
+Luca
+
+>
+> Regards
+> Luca
+>
+>>
+>>  arch/arm64/boot/dts/qcom/sm6350.dtsi | 49 ++++++++++++++++++++++++++++-=
+-------
+>>  1 file changed, 39 insertions(+), 10 deletions(-)
+>> ---
+>> base-commit: eea255893718268e1ab852fb52f70c613d109b99
+>> change-id: 20250314-sm6350-ufs-things-53c5de9fec5e
+>>
+>> Best regards,
 
 
