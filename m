@@ -1,69 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-73777-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73778-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8B14B59EA6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:01:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 73035B59EAD
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:02:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BCE513A5D9E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:00:24 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1F3BD3AFB23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:00:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 40D983294F2;
-	Tue, 16 Sep 2025 16:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03BAA329510;
+	Tue, 16 Sep 2025 16:58:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iNfloWg+"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cQdDOSiE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF833294E8;
-	Tue, 16 Sep 2025 16:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA03329507;
+	Tue, 16 Sep 2025 16:58:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758041915; cv=none; b=r2+jpjNrXECXOQtShMumCjbaEZZMXBFhpDXuZe1WTGNy5K96XckHgzFnzTdsdns00fDvVIyM3D3t4X0I1byOK9Gii4icwElpuc50NwsesLfemi5gZqPHRm/pM6BFq4AQOgxDdGWh9G6BAMD22ntiMuMIOfhniG7EsRWd6Lc6RkI=
+	t=1758041915; cv=none; b=c7cqH+h7YerOGSZh3HZaXk7Q8vgaNj8MsEIae8SSdPnE4WPTnyOAqSnzbAeJs+RMgEk7q45BpI5w1wkqgaZtrJY0hBfQB4cN3bcAF8OriHLoD4CYYajvn2l4kFq80S/wsu9qKDRA9Lmw6zQfjCJIeOIw1DxIAQ8kjJ3YPzPzCLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758041915; c=relaxed/simple;
-	bh=D3qvIg6ko2yKinLTtLMypu7l8kYVGM9TPZja3TTO2pY=;
+	bh=5jpgW/taQoRjrH7fWmFshvZbv+5XefS9vlH6JfwCvls=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=jWc7j+csKtpQm/inuEwvRgHQdMO5GnqzipV78H3xMnv34MJ3wFD39SFdmMbrsVtmTBmkE69jTGDy4kSB/K1Eh+pEIU5IgdUpCT/hc8V9wq9JAuPOJ4cRtp9y7NuV0yFFWm8TDOphM6k+74UD2zRNUcUAoQj5GkuRH9oJOuhovkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iNfloWg+; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FC4FC4CEFD;
-	Tue, 16 Sep 2025 16:58:33 +0000 (UTC)
+	 MIME-Version:Content-Type; b=e3QXyuQt/VSqnmJaEBkhzQVblj+2M1+1xUXSqYZmsFKsN5VmCqOjOo16UIzh/U1Yr/GMk2kShlASz+0dTGzf/4N59qLcHh3Jo0i4XRDMmkBrn4zAG+dwnaRbEZhFgzdpHw6voVX5K4YrdeMlN034Pu/llAfxtK/EFQFWLDEpn5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cQdDOSiE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49FCC4CEEB;
+	Tue, 16 Sep 2025 16:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758041914;
-	bh=D3qvIg6ko2yKinLTtLMypu7l8kYVGM9TPZja3TTO2pY=;
+	s=k20201202; t=1758041915;
+	bh=5jpgW/taQoRjrH7fWmFshvZbv+5XefS9vlH6JfwCvls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNfloWg+RYVsWVVUekTMIF7SiaatayhzqVsocVe2bBlFAtCHkJVS6b5eRCX6NhaPE
-	 fakx5iD9ewvQI2s/cwIpuNxDO2C+e+TJ3YAQimnOOaHiAnWSZzBOFIup0SrF4Fd1qm
-	 h+P6GV8YjwhS9mfPXaYD0gAtLqVUBFlf4+nX8YVv//zQAm3/iNXMl/7q/p5lV2rId+
-	 UU+x1b1b90QDosYsKb0Ff+b5k3TRLUohBEqr/XTsDeDKQ2ImqbWgwQ7n780sSyh8fv
-	 1SvXu/HVTCfILKAqE2b2txlgRoZezxvLIZ2j52GagqR+LPsoCVV0cSpYPNDD8iIt1B
-	 tchFKDp78eyfg==
+	b=cQdDOSiEGHBu3fzW1a9v4JdpOiweGIwA9tkxB1/4OiM+ZgwueRim5FYVrh7PYUJy/
+	 zQyLNt97XZtpnICQVPJ/d2N6yryQuhp3kAr3hi9W4TYizUGArTc7M/IedEzOVbizTC
+	 d8ZeqMdcZOJ95AfAIeieyQeYSB2TwkL+YrFFMFeQvx38LkP6iqwOr/biD7g1vFz+Ye
+	 +gMvyShyS4o0BRqWDxwzomCnvnacIlEbxUf50ZQM97J+zi2FKUvOxfp8ldLEboR2t8
+	 jswp8Ge0ky2W6JCjyCe1SVzkx1vmmlMxlcBNsf1Csv+fLaITziqRhO1XBj9dY5jvsG
+	 bvoMDofHBwnPg==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>,
-	Robert Foss <rfoss@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
+To: Konrad Dybcio <konradybcio@kernel.org>,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Vincent Knecht <vincent.knecht@mailoo.org>,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
 	Rob Herring <robh@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>,
 	Conor Dooley <conor+dt@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	bryan.odonoghue@linaro.org,
-	Wenmeng Liu <quic_wenmliu@quicinc.com>
-Cc: linux-i2c@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-media@vger.kernel.org,
-	Wenmeng Liu <quic_wenmliu@qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v6 0/3] Add CCI and imx577 sensor support for LeMans EVK
-Date: Tue, 16 Sep 2025 11:58:17 -0500
-Message-ID: <175804189857.3983789.14525162950764666455.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 0/3] arm64: dts: qcom: msm8916/39: Add missing MDSS/SDCC resets
+Date: Tue, 16 Sep 2025 11:58:18 -0500
+Message-ID: <175804189847.3983789.8145952973228554616.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250912-camss_rb8-v6-0-c9a6c3d67392@oss.qualcomm.com>
-References: <20250912-camss_rb8-v6-0-c9a6c3d67392@oss.qualcomm.com>
+In-Reply-To: <20250915-msm8916-resets-v1-0-a5c705df0c45@linaro.org>
+References: <20250915-msm8916-resets-v1-0-a5c705df0c45@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -74,28 +68,24 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 12 Sep 2025 23:19:24 +0800, Wenmeng Liu wrote:
-> This series adds cci definition and imx577 sensor enablement
-> via cci1 on LeMans EVK.
+On Mon, 15 Sep 2025 15:28:29 +0200, Stephan Gerhold wrote:
+> Add the missing resets for MDSS and SDCC on MSM8916 and MSM8939 to ensure
+> that we don't run into issues with the hardware configured by the
+> bootloader. On v6.17, the MDSS reset is necessary to have working display
+> when the bootloader has already initialized it for the boot splash screen.
+> MSM8939 has the SDCC resets specified already, so that commit is omitted.
 > 
-> An example media-ctl pipeline for the imx577 is:
-> 
-> media-ctl -d /dev/media0 --reset
-> media-ctl -d /dev/media0 -V '"imx577 0-001a":0[fmt:SRGGB10/4056x3040 field:none]'
-> media-ctl -d /dev/media0 -V '"msm_csiphy1":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -d /dev/media0 -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -d /dev/media0 -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
-> media-ctl -d /dev/media0 -l '"msm_csiphy1":1->"msm_csid0":0[1]'
-> media-ctl -d /dev/media0 -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
 > 
 > [...]
 
 Applied, thanks!
 
-[2/3] arm64: dts: qcom: sa8775p: Add CCI definitions
-      commit: 3964a91e552880c356ec4d3f09eed927f48e9c66
-[3/3] arm64: dts: qcom: lemans-evk-camera: Add DT overlay
-      commit: b68fc45910d4eb1b3bb7e160282fba5a4bdd8409
+[1/3] arm64: dts: qcom: msm8916: Add missing MDSS reset
+      commit: 99b78773c2ae55dcc01025f94eae8ce9700ae985
+[2/3] arm64: dts: qcom: msm8939: Add missing MDSS reset
+      commit: f73c82c855e186e9b67125e3eee743960320e43c
+[3/3] arm64: dts: qcom: msm8916: Add SDCC resets
+      commit: 456dcaf570043e60978352da9b2a55d067fd290b
 
 Best regards,
 -- 
