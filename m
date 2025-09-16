@@ -1,131 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-73723-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73724-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C659BB59931
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:16:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A92E1B59A23
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:32:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7979C1886285
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 14:12:49 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 090EF4A227F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 14:23:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8388129E6E;
-	Tue, 16 Sep 2025 14:12:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D3D9324B1E;
+	Tue, 16 Sep 2025 14:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="mOCGnvwg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dSuZ369x"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16B425F7BF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 14:12:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F18258ED4
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 14:19:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758031944; cv=none; b=TYge9y8Ks+OHygDypxtxYPNspcc/1BFawRVimWu13Ui7KWV/pjtkYJkBx7NVxvZt+wBVyg9IkcuoVqcy0vmai2euBK8BXh1Ltk/WZYSAoj4ZqL3v00F4T8GNx706H/ceZHc0WfGzzbqvWYYcrUA+C3AhfEbBrCX+RPdrz1FGKOA=
+	t=1758032388; cv=none; b=Mmfi9pDxO6rvKWnuUt6pohyTLkdkWGA/hQxcjcpjTzA2FDu+v3w/fb1rXzp13iLwjKHvWOQ1m9ocVq8mlUIBtoZwilKN37fqD7LHO/gIAEg+cAlUQNFVhA7TNk2yNNpNdxoQQl9ORh4FEkrJKlnzRmCaghGdGT5L6WrMqQxamQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758031944; c=relaxed/simple;
-	bh=fVduY9ChM+XTiJ/WxOZb5vLjE0k0RtwqZkyUiEW8pZ8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QoB6YuhvL/xprn+TGQlqY80B61moraAgO6dALWe3+yWyXsEfaIpRmj4opz9T+z8+iARgjXfl0GTFd3QTEdUftIV94qGQEnNbjsgPS3I0xYERjY1HfmUiJiShM4zFll8usniiFdPz4VgIFspWHZm8JCE9r6NvtxglWWdHox1xU8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=mOCGnvwg; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1758032388; c=relaxed/simple;
+	bh=IkW4nK/vinXYi2bfrKKAAwnIOc30dbD41Dd6dOR/Ldo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=qMMbwNehl8JhhrP6nUcHbeY7CZjYi7DGMBpdGPPPl/r/LxeNq/G5DmCa9gmwQOfnLsSMKC0KDEcB2I04cpInZDiVT8/XHD/79GSRKdHyZ1/uz4bpeb1cQ9W/Aouo6G1CCYjPbE1dRzhWpmPp3KsEG8681Hv5RpKzXQD4Zw4KCPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dSuZ369x; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45dcfecdc0fso55337715e9.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 07:12:22 -0700 (PDT)
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3e9042021faso2093060f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 07:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758031941; x=1758636741; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5ihTrH7t7gLzKRumooOOczb4IBjokkGyHJ2+QxNRMxY=;
-        b=mOCGnvwgcrU5KMtGEYRdZSbfkuz1xSxEYBDr0cn6QPZPfHN3Ekbdo2d4sqORAIe5Md
-         BWG3CUqFvXoePD6D2vMNjzRJMlxt/DDkXlXbSKT3p5XRGysYXw98oGzaUSF5L6m8FEMr
-         OzIjEKCneuEMM6RXtPw1JcA8qF/6eUN6Rax4+x3DVn4TB+Lpx5JbC0Tz1QpCl9QGDrlJ
-         jreFR6TE2YU7/XEPu0u7ag1n+bpDl5msFmnjdxhllhSaZT2vxM2Xl6QklzlghUipVSZC
-         HGZ2Ad3FDOmHkSwgdSdNuh0hpoJSHa5xvXNmLqPaVA+zLmlYR1hEyGuK9VPacYtdSF2M
-         K09w==
+        d=linaro.org; s=google; t=1758032386; x=1758637186; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EtjNvPki9FX33kkHGpqKgjuJyKPvLiypLHYyt3prAwM=;
+        b=dSuZ369x3at3HvOo1zi/P7neUerMH16IN8qEEjX/PgKSQp6+YOLK16HhHDMsCuCwvA
+         vdT32WSgailg55IEn4kbgpql03gu2tJ+bGlDZ6iBECv2RGbTYBnKio4s+lusm93A0mrf
+         dxnS9OCGdk1u6+H9a3bFve10aKB7Vf3U/YEjlyH26gfYQCsfoV3hXVCBB0eOr7P9TpbH
+         9+vDRmi9PoQHSY7IUGgA9rPsJoOPjTmiBsv+7hlO9AZWC8MUuX9PegxB0phvkcoOPawu
+         yokVmsQvr42UZCdMAwj9yulPaxWHaC93PHenkaF4RPYQ6rm63Rmqt9b4lz72bD4KhDgL
+         fG6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758031941; x=1758636741;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=5ihTrH7t7gLzKRumooOOczb4IBjokkGyHJ2+QxNRMxY=;
-        b=HViVzGiA3JbgFuLV1kNdNWx1A2GyEkSMOT3UNCXGCj/mChVX+GPIGWsucdWAgWC9QJ
-         TR3m6Q3oyDPA22cvogr+EO+fg0cYX4cq9l0QXPIsdrAOkXfUkiJu+A34b8sOtJxyPqiI
-         4h42rwR+BUU4giG2VTvyLjYyNJUUKOQNfuUSRPCgZXU1FmFWvrN6XhL2WqXQJBGwixm7
-         +xdF+mcO/QERf7GIRbhmxsL+HQOeOwOHX6m81cpxfPE84prNGDbGPUY/DDFbb9KQQaSt
-         5CA4FUOJlZh6osCkqOADPtg64HgS3HaMCx3ayn8wd7o5TDxMMZaRPWpaj7t0Q6nDM+My
-         Y78w==
-X-Forwarded-Encrypted: i=1; AJvYcCW/sH37IXto7ROKBSTs3lXQgzgNx0Ott68BA9TobFEdfWBUyaShNspfoq6YG3/XoRaiaoKX3pOsIr47zKDw@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzqf1ocPkJZZG+FkkJnncR1gX4TotBG/DA1mS1JWSuwN9hc1i28
-	dDPV9D6TmUOqkkHL9ovkXqik8sYvvUklos+XSVWHGTkZ8AUZVuthpmJuoNEpOdKSVR0=
-X-Gm-Gg: ASbGncu1zMA57F3jKUnwGinuIBRcyXWwYzAWieyGyJG+BxMmQTr5Cl4n4MvjStufwy9
-	RSOZEsAWAUHb+0tNjv+N1+EfMcY+44UiBOARrwBRBrwzym5hJcgEsCQANqChsGPtSFFSFwhtKj+
-	ASNs21syonug9SVQDuEC/sA8vYRCWwpRNzQHLcSdSODS8YrseFX8D4Cig2Zt01hJgsJRuYV9+Id
-	gKqvcPdh/TStDa/F0FOy1fklK69jbOQNETnufV7pRRoOi7qsihkww55mtX3O+Zvip17Gs+fX7kD
-	BZhItOY9IWtJ2WL7IduMuT3WGEeTcU1ITvklVZDQUUs8cFuMwcuEtm4LYkYevRi5/qIz575ubxk
-	2qWjEWDrj51C+pLKIrcMkG1wO9A4Hrwo8SbKAuwkDXxkQDH85/cCQ4qyMfkkge8PXPR6XaXsg+a
-	XJVo9irzNcdIVvaJabDvI=
-X-Google-Smtp-Source: AGHT+IGmb1kHFNHQ4frPlib14MxI7w4SRTDLbyi2XJON83MQa2TxlNaD5uBHUokreLL+hCdD46cN6Q==
-X-Received: by 2002:a05:600c:1546:b0:458:bc3f:6a77 with SMTP id 5b1f17b1804b1-45f211c4c03mr137113085e9.2.1758031941271;
-        Tue, 16 Sep 2025 07:12:21 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3e8c7375fb7sm14091558f8f.14.2025.09.16.07.12.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Sep 2025 07:12:20 -0700 (PDT)
-Message-ID: <ca511d42-0381-41d1-bea0-0d766e04f9f4@linaro.org>
-Date: Tue, 16 Sep 2025 15:12:16 +0100
+        d=1e100.net; s=20230601; t=1758032386; x=1758637186;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EtjNvPki9FX33kkHGpqKgjuJyKPvLiypLHYyt3prAwM=;
+        b=i5H0ejTZCMHztuQFMk5461h715JE4dL9qyWac3fi/qkdoC+7cZcGEGzEBtQRTakd3n
+         ssx9IYF7DRl8OQqGNwDM6PkLOTgREwiCVrA6qu59S1B3I+/5oiKelpiBMV8BO3yJQ4fo
+         nyAyLh8wiKIRp9lbes5SDCm/RgVNGpq5T8Yp1krYfV6DsPEV9rmJ41c3RiOc1oAJ/7VM
+         XG4majJDiA8B7xALBqyY4QawiMy1UTTO6Dqpszh7EXUen3emakSg5YvYe8vWhUjWZ0m8
+         wjppSncp5eXyOo8NZu2vEBn89zYmZEfLKh/ZPuC0+5fdwjwppSKObcBRmvbrkj+vK7uy
+         WzAA==
+X-Gm-Message-State: AOJu0Yzp1QwQa71aKcA0AcKldZAGgYVTXsASjjmRNRtXL1T2G2n1OH05
+	l2iCkWT3Z2CoOM4zXfdULBUZ1iBhHP1a1xd7qUroerWjFOnXRTgLFzM/6+ei/T7pd8NDo0NayFl
+	cWkD3xvY=
+X-Gm-Gg: ASbGncuvUloyK/250MXD1+gjz9S6ZK7voIWpH1nGi83x67XCyfGbBDcLqdTi5IzIvt2
+	YxscXtKU8AOOruhNkPqEQv2r/BbC6xIRfNH2F40MpXmpZrMjHXlwVtKxMeHuwtjwSvSkn04pYDV
+	g+IHbZI+fsbBHW3f74ZnlhYpPZFCO2eHpIwO605uowS64K4KsG2TNmai5+y/LUvfwZ3BJQSW1Oq
+	1sHuxqnFuopCSYN4PKSXQkPYBUS7QuiwD2Fs7fVO4Fj9Z9OQwGqsckCPvsMJuleTfyCnMMxLIMv
+	tgF9zhoefwIL6n+tFezrKJKen+/JusTj72phiOy4jGq/dmTp48WfL4FKM7GM4nmSD4ZiM8MEh52
+	PXqdHyjyjU6R/WGfpeUkPl6lWZINTrC0=
+X-Google-Smtp-Source: AGHT+IFdcw9hqpwZPogQtp5veCDSAw8ABo2+U1X+L5NI/DxNsiFcjHEYgUJ3E2vGvtEZVPnSECGu8w==
+X-Received: by 2002:a05:6000:18a7:b0:3d4:eac4:9db2 with SMTP id ffacd0b85a97d-3e765782b5fmr18609594f8f.5.1758032385579;
+        Tue, 16 Sep 2025 07:19:45 -0700 (PDT)
+Received: from eugen-station.. ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45e037d7595sm220245015e9.24.2025.09.16.07.19.44
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Sep 2025 07:19:45 -0700 (PDT)
+From: Eugen Hristev <eugen.hristev@linaro.org>
+To: andersson@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Eugen Hristev <eugen.hristev@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: lemans: Remove unnecessary cells from DSI nodes
+Date: Tue, 16 Sep 2025 17:19:31 +0300
+Message-ID: <20250916141931.601957-1-eugen.hristev@linaro.org>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] tty: serial: qcom_geni_serial: Fix error handling for
- RS485 mode
-To: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>,
- gregkh@linuxfoundation.org, jirislaby@kernel.org, johan+linaro@kernel.org,
- dianders@chromium.org, quic_ptalari@quicinc.com, quic_zongjian@quicinc.com,
- quic_jseerapu@quicinc.com, quic_vdadhani@quicinc.com,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-serial@vger.kernel.org
-Cc: mukesh.savaliya@oss.qualcomm.com, viken.dadhaniya@oss.qualcomm.com,
- stable@vger.kernel.org
-References: <20250916093957.4058328-1-anup.kulkarni@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250916093957.4058328-1-anup.kulkarni@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 16/09/2025 10:39, Anup Kulkarni wrote:
-> If uart_get_rs485() fails, the driver returns without detaching
-> the PM domain list.
-> 
-> Fix the error handling path in uart_get_rs485_mode() to ensure the
-> PM domain list is detached before exiting.
-> 
-> Fixes: 86fa39dd6fb7 ("serial: qcom-geni: Enable Serial on SA8255p Qualcomm platforms")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>
-> ---
->   drivers/tty/serial/qcom_geni_serial.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-> index 9c7b1cea7cfe..0fc0f215b85c 100644
-> --- a/drivers/tty/serial/qcom_geni_serial.c
-> +++ b/drivers/tty/serial/qcom_geni_serial.c
-> @@ -1928,7 +1928,7 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
->   
->   	ret = uart_get_rs485_mode(uport);
->   	if (ret)
-> -		return ret;
-> +		goto error;
->   
->   	devm_pm_runtime_enable(port->se.dev);
->   
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Fix warnings
+Warning (avoid_unnecessary_addr_size): /soc@0/display-subsystem@ae00000/dsi@ae94000:
+unnecessary #address-cells/#size-cells without "ranges", "dma-ranges" or child "reg" property
+
+Fixes: 73db32b01c9f ("arm64: dts: qcom: sa8775p: add Display Serial Interface device nodes")
+Signed-off-by: Eugen Hristev <eugen.hristev@linaro.org>
+---
+I haven't found a pending patch for this, so here it goes, sorry if someone
+already sent.
+
+ arch/arm64/boot/dts/qcom/lemans.dtsi | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/lemans.dtsi b/arch/arm64/boot/dts/qcom/lemans.dtsi
+index fd6eb6fbe29a..a551f2a274a2 100644
+--- a/arch/arm64/boot/dts/qcom/lemans.dtsi
++++ b/arch/arm64/boot/dts/qcom/lemans.dtsi
+@@ -4524,9 +4524,6 @@ mdss0_dsi0: dsi@ae94000 {
+ 				operating-points-v2 = <&mdss_dsi_opp_table>;
+ 				power-domains = <&rpmhpd SA8775P_MMCX>;
+ 
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+ 				status = "disabled";
+ 
+ 				ports {
+@@ -4606,9 +4603,6 @@ mdss0_dsi1: dsi@ae96000 {
+ 				operating-points-v2 = <&mdss_dsi_opp_table>;
+ 				power-domains = <&rpmhpd SA8775P_MMCX>;
+ 
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+ 				status = "disabled";
+ 
+ 				ports {
+-- 
+2.43.0
+
 
