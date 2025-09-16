@@ -1,177 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-73759-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73762-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2087FB59D2C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 18:13:21 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC57BB59D70
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 18:23:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 13E544E01B7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:13:20 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E1BB832621C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:21:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B80A02BE053;
-	Tue, 16 Sep 2025 16:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0AB1234A339;
+	Tue, 16 Sep 2025 16:21:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vRe0Sw8m"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FAlF6tEM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D5FC2BCF4C;
-	Tue, 16 Sep 2025 16:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C5F2DC78E
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 16:20:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758039190; cv=none; b=dO62JK3yDG7Nl6SM3pkuTuPH8Dd6LXMro/rorKyWWZAtwvzwLclfsannq4VabIHIDOQGMDuU2HIs0jkkjcjQYcrDzuUwpEBYecgJqOnmP1TJp5Cl0Tr5WxOGoyHGDVaYSoi4P7ySz0/wPGUiUTiBls3XrLByXRgstUm+X2eygeU=
+	t=1758039659; cv=none; b=nRW2Nc9r8mQm6qalxBI6CCrOtsI7NxxXwSLoT8qsqmhhmynQWhgAaGcwwT5L863k6ff3cBYJOt9sXu8wzAIWVTLWspSeHXOMy9ARUCThau0zr8XtUok9ofAXKqAe+1KPoHT9Ce/EbLv5Uksj4LOQcBTRq5rqyK0dwFcynng2qM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758039190; c=relaxed/simple;
-	bh=nhZwLjBbK2lxiUbM3t8zFDAtYxpphbtAjNYYlri3ZUM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=lKGgCVXcjynAj4Vv/kHvodjn5ActwpeDXZ8n8iVASkvP8mrZd93IJFJJ2mRE9gBZ4nwM6h2Fw6mPaUyaHiznuK1AKUx0Qg9vY6lW5f65R/hwsxj6cSozVYT6JsU9vvdHWWw3DjshCAnS6pedwxgR4pIdV2uIFPN44uSpkCYe3NQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vRe0Sw8m; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 4C86EC4CEF7;
-	Tue, 16 Sep 2025 16:13:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758039190;
-	bh=nhZwLjBbK2lxiUbM3t8zFDAtYxpphbtAjNYYlri3ZUM=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=vRe0Sw8mFbPALFrvpvM93JgBBTb8vNVpSo17ARfesbjLoNPviK3zMrBvPmJpLttbs
-	 oQ+iAk9HHoVGxD7k+6rH/LeZsegj1u9FttFjhGLOAfzQ1Lj5a0+Lyuo2TogmMbupbC
-	 ti5B3I4YDY6iLLpY9mfXp9frsxuDmg6JCX0X5+FVSupavXczac98jpM8OY1pCpjGEz
-	 AY28jiR2ZbeT2fsCZb6XtdVONLP3XFQYPo/N6AJDntfq/0wOVjIdftOvYMM2d6gZdt
-	 9W8J5IFMHd7tmk/upHc0LI5lOJYWlOneO5twMxTf/RMX46u8w7uDaAaK1wrPJq7puN
-	 uWYnEy80nvzIg==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 39D9ECAC592;
-	Tue, 16 Sep 2025 16:13:10 +0000 (UTC)
-From: Manivannan Sadhasivam via B4 Relay <devnull+manivannan.sadhasivam.oss.qualcomm.com@kernel.org>
-Date: Tue, 16 Sep 2025 21:42:53 +0530
-Subject: [PATCH 2/2] PCI: qcom: Remove the custom ASPM enablement code
+	s=arc-20240116; t=1758039659; c=relaxed/simple;
+	bh=ulrBpmULpfIvUTZuGDI6k7fL4z+It/qAwTU3sy4JRNA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UX9S0zOUB06MVcwaALT8Z4YF8mxRZYEFkkDV5UGCFtgTaw64s9YM8pFom9qjw2hUSRk9oQbiMOoF5tpWpcZfQ9lp5mH+y6Rv9INdLU9J1nfhkAQLlL2SCXRQwqiolhNW1BwZ9JupE5teL7FnN83byegk4RR5n6yeEgae2sjKuZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FAlF6tEM; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b07e3a77b72so5292066b.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 09:20:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758039656; x=1758644456; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ulrBpmULpfIvUTZuGDI6k7fL4z+It/qAwTU3sy4JRNA=;
+        b=FAlF6tEMVhLJBRSiGqNvlLzuyefv2GGW/3r4gmVNhxQ2oN703pMr7WRxPba/N1MaYX
+         ly9UbOtCDrQsdUnwZflXE2Ftc/3qOJuF+MAfPivUqvGu39nKjZ8AbUv/YnQiDbVcn/Ji
+         qKk1zz5uw8ZJRMJHfplWtpERA01Cv52kmzQM57sCd9c6z1cPSRny8/UC4oNbLjGugWCb
+         f8JQzy6lZ78kwuzKE7aWa5WHYXekfhFE4Ow+gpZzvvC4Ol4duJSU2dGExPp//kNgmMOd
+         0grEIfR70SFZnqM1p5vdPFRSG16S4BS1RZp/XsWbuq6rbxY5gvc5oRcs5i6/slwZ/ySN
+         td+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758039656; x=1758644456;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ulrBpmULpfIvUTZuGDI6k7fL4z+It/qAwTU3sy4JRNA=;
+        b=g0C0o5hklQkNNCobrQJjGfJ2QAo+EaSkLBh7C1HfQKYKv4e/wNTuYGVvWgkKYMWlNZ
+         OqHD85kcEco3k92SF7cYxT5+Vw7ZNrV8Jlt8FHfZ879WhnlLocW55LRMRNg0ctmD8v/v
+         s5yQ08tk00jPe36T7QGRcxrUuxDdxV3QMWRnbBWc/KPsZtS+WNzl1KNh+vgiWZmQYGiz
+         pHwJHcJs+f+IUD5AZYLTqUQaLf3BgfEef4+KyiWYlzGLdwHrFFjcP2PAtN5j+nFGts4M
+         tA4lplQhp6h7le3Yew56HC+p0r5yl/ewzfQ9A+pi6xTMwL4qgZaSz7WEzpvzQhXhPVDD
+         zjIg==
+X-Forwarded-Encrypted: i=1; AJvYcCUpAOCtm/oHLI1+IDZG4s3bjUd6FOmmGMz5aHB6ye43PyZe3uDZRBPFnvewrEYbWtwZ02bNQmF3EjyJy3Y7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxc3zCJtfz5cRu5yxZaNz3aHtmIUi16sYPSXWejP8JVLTY0uB5Z
+	GzP8Z0vnwH5S9RJkagOUMByahRGKt0CaLFj9vtXCIVfh0GQTCBVRR7peoItoHL96YmDRk6pe+qn
+	ZGFoap7BqUP+5g7+iXm5YfPivtDdM6k8=
+X-Gm-Gg: ASbGncv3CizWNY2iXhh4NkF7zza9Z9HzXA3FMOGBAkBCGJFfswAOW0LmbSo8vtfI2N2
+	S0FAYHh6MBPzw5UkLuVKTkCb8ltTZxCxcSMD+kKSUrklIfx8PAgmXfQRlLva874pSztJzoeMeFe
+	7BGFf/pYtlaC5eofPlb1d2yoOGa5DUG5svtQyYdBETorFNuPFB1RCu1WvHw7q9xCfHayCrOQL1z
+	r7mGk+XzAnL+MWcIl2G
+X-Google-Smtp-Source: AGHT+IGA8Hqku61GdN0tv82dLQSpehp3yOORqLZ98SpsQ5y7NQFjpoQmHrSdJ6nWYWpl2lgbZa5OwvxQ8sZ190mW4i0=
+X-Received: by 2002:a17:907:3ea6:b0:aff:1586:14c2 with SMTP id
+ a640c23a62f3a-b167ea602f4mr354112766b.4.1758039656243; Tue, 16 Sep 2025
+ 09:20:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250916-pci-dt-aspm-v1-2-778fe907c9ad@oss.qualcomm.com>
-References: <20250916-pci-dt-aspm-v1-0-778fe907c9ad@oss.qualcomm.com>
-In-Reply-To: <20250916-pci-dt-aspm-v1-0-778fe907c9ad@oss.qualcomm.com>
-To: Bjorn Helgaas <bhelgaas@google.com>, 
- Manivannan Sadhasivam <mani@kernel.org>, 
- Lorenzo Pieralisi <lpieralisi@kernel.org>, 
- =?utf-8?q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
- Rob Herring <robh@kernel.org>
-Cc: linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, "David E. Box" <david.e.box@linux.intel.com>, 
- Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3086;
- i=manivannan.sadhasivam@oss.qualcomm.com; h=from:subject:message-id;
- bh=v+JInE9O8Tswt5Gb7HgmBeTnkIFZVhVGNtOszvn/Reo=;
- b=owEBbQGS/pANAwAKAVWfEeb+kc71AcsmYgBoyYyUK92Y9Hk/YDUED8Qnpzv5tspszujaDTdSe
- cIRz9x6xTuJATMEAAEKAB0WIQRnpUMqgUjL2KRYJ5dVnxHm/pHO9QUCaMmMlAAKCRBVnxHm/pHO
- 9WVcB/9K6OcVd3VxKpE3xwCCevGn8evTpp/gGbH9Ca/IxDN7167JcoAou+d0EQI+VP50snw8Yrz
- 0r4s5nbsp1sK4yJnpUuWsAmNtYzg/v1baXQTBPvwXjJ6u21I11J5xj5mZUsTah3/sRW2sn5zq3W
- +9EzK0gP+6/LzlX28jIjIlCYEUyM+nDcUsAGeBCXyd1Qc32hG5P1JEiIyzrIfflI+JPSps7EloY
- RpMU7ruPWY8AHFYO+4XBezZAGuaVoS50TAo/eNmk39lHvmYW9yaSxaLXBb4mvL6vvycO1XKaK3A
- cQUDUeuBWZOlfitJSgadqLgAL5kbMCH/58+mA1Isju67HQsI
-X-Developer-Key: i=manivannan.sadhasivam@oss.qualcomm.com; a=openpgp;
- fpr=C668AEC3C3188E4C611465E7488550E901166008
-X-Endpoint-Received: by B4 Relay for
- manivannan.sadhasivam@oss.qualcomm.com/default with auth_id=461
-X-Original-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-Reply-To: manivannan.sadhasivam@oss.qualcomm.com
+References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
+ <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
+ <aMlnp4x-1MUoModr@smile.fi.intel.com> <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
+In-Reply-To: <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Tue, 16 Sep 2025 19:20:20 +0300
+X-Gm-Features: AS18NWDRlilzMzu6AWDLe7t6r54-DCtwvznfQrFZlMZ-V39YV0OjdaouC0GJw1E
+Message-ID: <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to devm_spmi_subdevice_alloc_and_add()
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Andy Shevchenko <andriy.shevchenko@intel.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, sboyd@kernel.org, 
+	jic23@kernel.org, dlechner@baylibre.com, nuno.sa@analog.com, andy@kernel.org, 
+	arnd@arndb.de, gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org, 
+	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org, 
+	casey.connolly@linaro.org, Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+On Tue, Sep 16, 2025 at 6:11=E2=80=AFPM Uwe Kleine-K=C3=B6nig
+<u.kleine-koenig@baylibre.com> wrote:
+> On Tue, Sep 16, 2025 at 04:35:35PM +0300, Andy Shevchenko wrote:
+> > On Tue, Sep 16, 2025 at 03:24:56PM +0200, Uwe Kleine-K=C3=B6nig wrote:
+> > > On Tue, Sep 16, 2025 at 10:44:40AM +0200, AngeloGioacchino Del Regno =
+wrote:
 
-Since the PCI subsystem has started enabling all ASPM states for all
-devicetree based platforms, the ASPM enablement code from this driver can
-now be dropped.
+...
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
----
- drivers/pci/controller/dwc/pcie-qcom.c | 32 --------------------------------
- 1 file changed, 32 deletions(-)
+> > > > +MODULE_IMPORT_NS("SPMI");
+> > >
+> > > If it's exactly the files that #include <linux/spmi.h> should have th=
+at
+> > > namespace import, you can put the MODULE_IMPORT_NS into that header.
+> >
+> > Which makes anyone to import namespace even if they just want to use so=
+me types
+> > out of the header.
+>
+> Notice that I carefully formulated my suggestion to cope for this case.
 
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 294babe1816e4d0c2b2343fe22d89af72afcd6cd..a1c4a9c31f9241e9ca679533323e33c0b972e678 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -247,7 +247,6 @@ struct qcom_pcie_ops {
- 	int (*get_resources)(struct qcom_pcie *pcie);
- 	int (*init)(struct qcom_pcie *pcie);
- 	int (*post_init)(struct qcom_pcie *pcie);
--	void (*host_post_init)(struct qcom_pcie *pcie);
- 	void (*deinit)(struct qcom_pcie *pcie);
- 	void (*ltssm_enable)(struct qcom_pcie *pcie);
- 	int (*config_sid)(struct qcom_pcie *pcie);
-@@ -1040,25 +1039,6 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
- 	return 0;
- }
- 
--static int qcom_pcie_enable_aspm(struct pci_dev *pdev, void *userdata)
--{
--	/*
--	 * Downstream devices need to be in D0 state before enabling PCI PM
--	 * substates.
--	 */
--	pci_set_power_state_locked(pdev, PCI_D0);
--	pci_enable_link_state_locked(pdev, PCIE_LINK_STATE_ALL);
--
--	return 0;
--}
--
--static void qcom_pcie_host_post_init_2_7_0(struct qcom_pcie *pcie)
--{
--	struct dw_pcie_rp *pp = &pcie->pci->pp;
--
--	pci_walk_bus(pp->bridge->bus, qcom_pcie_enable_aspm, NULL);
--}
--
- static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
- {
- 	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
-@@ -1358,19 +1338,9 @@ static void qcom_pcie_host_deinit(struct dw_pcie_rp *pp)
- 	pcie->cfg->ops->deinit(pcie);
- }
- 
--static void qcom_pcie_host_post_init(struct dw_pcie_rp *pp)
--{
--	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
--	struct qcom_pcie *pcie = to_qcom_pcie(pci);
--
--	if (pcie->cfg->ops->host_post_init)
--		pcie->cfg->ops->host_post_init(pcie);
--}
--
- static const struct dw_pcie_host_ops qcom_pcie_dw_ops = {
- 	.init		= qcom_pcie_host_init,
- 	.deinit		= qcom_pcie_host_deinit,
--	.post_init	= qcom_pcie_host_post_init,
- };
- 
- /* Qcom IP rev.: 2.1.0	Synopsys IP rev.: 4.01a */
-@@ -1432,7 +1402,6 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_7_0,
- 	.init = qcom_pcie_init_2_7_0,
- 	.post_init = qcom_pcie_post_init_2_7_0,
--	.host_post_init = qcom_pcie_host_post_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- 	.config_sid = qcom_pcie_config_sid_1_9_0,
-@@ -1443,7 +1412,6 @@ static const struct qcom_pcie_ops ops_1_21_0 = {
- 	.get_resources = qcom_pcie_get_resources_2_7_0,
- 	.init = qcom_pcie_init_2_7_0,
- 	.post_init = qcom_pcie_post_init_2_7_0,
--	.host_post_init = qcom_pcie_host_post_init_2_7_0,
- 	.deinit = qcom_pcie_deinit_2_7_0,
- 	.ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
- };
+And I carefully answered. Your proposal won't prevent _other_ files to
+use the same header in the future without needing a namespace to be
+imported.
 
--- 
-2.45.2
+> > This is not good solution generally speaking. Also this will
+> > diminish one of the purposes of _NS variants of MODULE*/EXPORT*, i.e. m=
+ake it
+> > invisible that some of the code may become an abuser of the API just by=
+ someone
+> > include the header (for a reason or by a mistake).
+>
+> Yeah, opinions differ. In my eyes it's quite elegant.
 
+It's not a pure opinion, it has a technical background that I
+explained. The explicit usage of MODULE_IMPORT_NS() is better than
+some header somewhere that might even be included by another and be
+proxied to the code that doesn't need / want to have this namespace to
+be present. Puting MODULE_IMPORT_NS() into a _header_ is a minefield
+for the future.
 
+--=20
+With Best Regards,
+Andy Shevchenko
 
