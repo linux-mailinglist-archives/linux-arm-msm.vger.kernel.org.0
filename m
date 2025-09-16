@@ -1,78 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-73714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 723EAB5977F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:25:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05AB4B5978B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:25:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E83791BC5DFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 13:25:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AADFE2A6E37
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 13:25:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 01E4A307AEA;
-	Tue, 16 Sep 2025 13:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C87C43191C0;
+	Tue, 16 Sep 2025 13:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="jeIYMd/q"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="IVUJhPTX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD1441D7E26
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:24:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFE57315D30
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 13:25:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758029101; cv=none; b=sUDAFouG1fBzwsT6dWmOeIwherjnpggK49W3Q4WMpDyM4i17zPsPqi6fcQlKPuPK1zqsJbuHBOLE8FsLMn2Yjvr4PddyPEI3lPK520LZn1WAD1sjWLaWkstgMLzjObWIkb+rYDURaDIpxBltuRTvQXC1IidPqDYL6cagaGuehwc=
+	t=1758029119; cv=none; b=U9GUxopnC/e/6YlA52nJAyefDW23wFNe6KMLuufljBdi6PeXJsOWe4R/W4Ae5FOPz6BP8p+vau/RKujXKRfUtAuughNf6PtKBhHzJQLmSLaQfc20pNUs35jkBXdw9wqhBVmoqHjIRXoH0Quqovobk7+VPpf2x1sc8CvH2t+fYm4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758029101; c=relaxed/simple;
-	bh=s8ThdCXM5O9yyBHIfDFZ9OEayAHX03FFFGLLjXjF7XY=;
+	s=arc-20240116; t=1758029119; c=relaxed/simple;
+	bh=PRpXH+sZjdebPpC4rWrrnPimJkKolPv4aO3TWAccum0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jGHvDDWSSrJvtmG1a6BbtfyMk3+jM+RZhp/sOnxu6rsr0V84jxJmaIFF6XwTvDpkBwtvZBF8pzVkQPGRxTJ62kKzkU7wsqG2wbnLC8+3e1peJ79MtyjrHaooh/pSIqRpCvRbXT3pfxBxK7ZKX/nMzaB2Y77h1rDHX8ypSZOMLc8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=jeIYMd/q; arc=none smtp.client-ip=209.85.218.49
+	 Content-Type:Content-Disposition:In-Reply-To; b=tEFSoAD8kUmDCeJSSJx+y2tfuAnHRL4bGqrcL1ZoShH1tPQSB3SW3ABMBCAovH3iygE7yT96p0oosUuZ+TuUbeWExfhhaTK+thNOYdfMcligtGpUPqraZbHXd2PmipXuQLda8jBqfHsHVlHQkgqNIaYsabWPAE2FOzaOP0a8yrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=IVUJhPTX; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-b03fa5c5a89so891740566b.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 06:24:59 -0700 (PDT)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-afcb7ae6ed0so826489166b.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 06:25:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758029098; x=1758633898; darn=vger.kernel.org;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758029116; x=1758633916; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gwfKh8YcNEbswE2yYv8jHBhvIioj0iL2kRQaWZR7TS4=;
-        b=jeIYMd/qRHO+nPBNV5EseY3/4XkcyAp9gayRU5pCXHVJYBIhZMwzNpcKQEuDLXP+n0
-         hRv6WaRsqF6Ex0gQ0qpwcj64LW0uIrA8ciLh5U7qSFL8B1w/zkZnBTiXUCzyEZBjDurA
-         K6CR9IXZBnBFGym4LBqzhiLHAgJgfBnNoGae8Si//bWDUMWlcAY1EeHoQVodaONgiHa0
-         bxJO0hKeD1TWbAt5q6sAG5RvONO8mQGXGLAcjDAbl7uFwgx0MrTYOOuwmfJYj0dkOQxe
-         fpuXn0D4l7gsCNF31gjZFhGfIMV1dL6ARMSoTS295WLe/s0NQVrjR2TRHl7BFK0DKxUW
-         fbWQ==
+        bh=cec1ryxoXhXjrqFSDj+/T+n/YhygzPX418Utr1UQ+9Q=;
+        b=IVUJhPTXbWR8QfUsBnQZUZsqv5OFAueWaiCO4FxXmaMFpwLs7Pn4IJfZI02C64cAwC
+         +RgPjPf/6I3Oinz0CfZfrNgP7pN061/hDfV7X9c9YjDJNJ3ZMEY73YBuR1O7zk2Eh+q+
+         PWWlULY8Z1Otvpz9z8SeD1zIryMmxf1/sOo/IY5drClwgKZwHO6GFxoe1kHpwzZhjccK
+         YvfRAHeYHblSiA0dTjjrXZ5VN9WoI3/KH+ADNaIBupDiMGgalOrgDpeTyLYRt//VNlPX
+         UXAuNW0mj1WnYYNdx1WB4K6sho7+aDhccOu5MqHlHEnHxdO9hQUctqvXimcR7o+I+9IH
+         08AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758029098; x=1758633898;
+        d=1e100.net; s=20230601; t=1758029116; x=1758633916;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gwfKh8YcNEbswE2yYv8jHBhvIioj0iL2kRQaWZR7TS4=;
-        b=QyRinCEBovlFdvf4ZR2s7O/9F4YxeXjkzI0ZQp+32+amuL9/a6AiuCRyggCEbindsn
-         r8PK0zrQYmEmb3lp+WlHA04OoaAvfMCbbO8l3YBZb1BTx3Y9Vpx50BPVkc1RYVwQ68MJ
-         VLSwuKFkS4UDcixrgZsRwEcwN8qy1AifmBxic+xNI+SsbJHqKmLDLnORE9K43qVRB89r
-         KaSD861vTstkK9+wuvrhGR8kYYomWMWPzGGrCCLr3o36FhycSb70ofHBYfhRS/MyRIk7
-         LBsyeReGldWnaV6r733UFEg9mP4zglcNu32jBqfjFUK8HM/upqaBVOoujcJRy/Rwbk7s
-         D9Nw==
-X-Forwarded-Encrypted: i=1; AJvYcCX7R96F89I6joZ/cSdpiPh/KhZmRMz6ReEJnyGVPQ1W/kT8lYRmxB3k5vNv+JMBJrXSQjVUEu5y7qLMxUX1@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPvqoVT6ORSckVsPO96dG4wsDCP11UKa/gchTBcOM87IcQ/2+A
-	ZpVnxccziOjEher3eUTMht/1FwzwKCQf2cBQvh3PmCVdCydWnkaM6HopTpJTZBQ5y/M=
-X-Gm-Gg: ASbGncsZne6zvJ74Ff2uq/xqgW1LqpY4TLkkkUkFw/yK4BxTYg8sjMUor0UN/8VmEX8
-	w+GIqo/+65doDM/nhzSScGwaYdvp96Ua5IYwq0h8oZxLn05eB+yHqg6OFqkAjUyvV8rzCoAy95+
-	zT/wr5KqEplDOqO/+VUkaS/rsSbYMeS/NkzIOytOYJDZX4Ui6pf+xp0yw8ycwDL3DyEXpJ7dRio
-	YiTWmBLYKz+TGxZfn/hHbXXX1SUXmAnd7jiP9ls6Gk36IzoPx3pFV8cGcHaUYqDAgxst5NoTAsG
-	iN91qvCwF0Et5yUAj8rFXtiUpA9onSsM57zQ7Wq3xPYJPXij1D71GLjDaGrz+p8JXSoT1tB/qbW
-	e9LZp2vvwqh1D7a6Y4qKN9FnbwuKBUUQcf4tY2fJqnaGWwf+3hEXFwz74FhOzbaPU
-X-Google-Smtp-Source: AGHT+IE9kjhldcCIBvjPr9jo7lRPPHVqNSYEJDmsT9jH1F0DRGqPEBku/9BloIv9jKtuTpavenfoLw==
-X-Received: by 2002:a17:907:d16:b0:afe:c6a0:d116 with SMTP id a640c23a62f3a-b07c3572d31mr1812203466b.18.1758029098143;
-        Tue, 16 Sep 2025 06:24:58 -0700 (PDT)
+        bh=cec1ryxoXhXjrqFSDj+/T+n/YhygzPX418Utr1UQ+9Q=;
+        b=j6+9cz1ZyIq1EcBU4bED7YOBPuv+E2KFJLmf4XgFqowEmTQvFgiSKStIRzNVIh5Bbc
+         qXvn/xLR8WcezvdFFAjZYxTZTM02LZpR4qu768FutImCB5KP05itDabaj2Dji7LA6DDW
+         b2+81LCZxZo9RjiyeotzKBQs3uKBjE7ioRz8fujGvenIOFB3Fqc5/M9bUoDV1gJWXaMQ
+         VcMejA0O0JMTiNTp7LFY6YCXJxNSX0rMj/2yjxjW0JNd6dj2d6yCMzB65h75/x/iBYeJ
+         upi8KyRb3mjiOidGY2Q0lwrI5pgB2e3iMR62DZHtmSPwRY4ucG93lNsKJtmc+pVukwY/
+         O4SA==
+X-Forwarded-Encrypted: i=1; AJvYcCU89KeQO4jwlVMDWqMm+85WVYZ5kMsSACEcQLrEQBOFRtNv3gCTeVlE/BucQia9WeTvIrK1Ow2oStKVUzel@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxou/j1t3aQfzssDy+8hVtB7aqGMdp7OvoflW+EjSzfa2D84adK
+	fpxtD6v+QIIT+lJW2iAld98X9LLFjHrKhrHUoG8+Dw4t+yjBPSSkfU/xB//gQGm1XyI=
+X-Gm-Gg: ASbGncsU37MakRllwqtaRzb9AIUUkuEHK1t1/DVIGYOALxQSN2+OvXk1gPxgTCnTNnt
+	QVAgzTOqALvPlTVNT9cle03SbOe81RQFZHSBtJT6wEXDDrFEmAADt3SsiEryGTEkM/czlvAVT5H
+	2ZjkBbj/yqPmtV8pwmMQ0lYKhZLXt7d3ixKpi151Nv/b41GXDFSbYfg/TFH9FQsyuJ3Uh1O6gso
+	qIj7FhgokZqkhNKwhRsgIWRJdpKnObHwwN2h8M1jwfOEdZA8cofxzqAsqnjpo+gPgzY24+r13kE
+	K6zkz65IXnaZ+bdZJW+eE7BlxBmRK5mptnwLSXGcBbLTidclRpxLOpuQP4z0lm19mATXzTU8N3O
+	nnfVWMAv8GZ8Sqg+4V8ZU3kzf3xCxkk/vLOXVEZBdQK+A2/96zBOM4cq8TxmP+vFiuT/9MJWKm9
+	Y=
+X-Google-Smtp-Source: AGHT+IHULzH6kKOXUPbwiu6vHARKbboHWXDMpcq23vOfkgCUTSIFoBy+/FHZDfo4eSTeHnxRnGrBPQ==
+X-Received: by 2002:a17:906:eca2:b0:b12:3f5f:603b with SMTP id a640c23a62f3a-b123f5f70c4mr542368966b.3.1758029116046;
+        Tue, 16 Sep 2025 06:25:16 -0700 (PDT)
 Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b07b32f202dsm1164355266b.84.2025.09.16.06.24.57
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b07b32f35cdsm1135878466b.92.2025.09.16.06.25.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 06:24:57 -0700 (PDT)
-Date: Tue, 16 Sep 2025 15:24:56 +0200
+        Tue, 16 Sep 2025 06:25:15 -0700 (PDT)
+Date: Tue, 16 Sep 2025 15:25:14 +0200
 From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com, 
@@ -81,12 +82,12 @@ Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
 	krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
 	kernel@collabora.com, wenst@chromium.org, casey.connolly@linaro.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Message-ID: <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
+	Jonathan Cameron <jonathan.cameron@huawei.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
+Message-ID: <mr7gqhvom5soofn2oujzxtsuczsnx2yizkushar64cojwnvhd6@dt64ojgjqdxw>
 References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
- <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-2-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -94,99 +95,100 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="36zni4ukkwfibixi"
+	protocol="application/pgp-signature"; boundary="j6v4vfa6gjhs5clj"
 Content-Disposition: inline
-In-Reply-To: <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
+In-Reply-To: <20250916084445.96621-2-angelogioacchino.delregno@collabora.com>
 
 
---36zni4ukkwfibixi
+--j6v4vfa6gjhs5clj
 Content-Type: text/plain; protected-headers=v1; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
+Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
 MIME-Version: 1.0
 
-Hello,
+Hello AngeloGioacchino,
 
-On Tue, Sep 16, 2025 at 10:44:40AM +0200, AngeloGioacchino Del Regno wrote:
-> @@ -119,19 +128,24 @@ static int sdam_probe(struct platform_device *pdev)
->  	if (!sdam)
->  		return -ENOMEM;
-> =20
-> -	sdam->regmap =3D dev_get_regmap(pdev->dev.parent, NULL);
-> -	if (!sdam->regmap) {
-> -		dev_err(&pdev->dev, "Failed to get regmap handle\n");
-> -		return -ENXIO;
-> -	}
-> +	sparent =3D to_spmi_device(dev->parent);
-> +	sub_sdev =3D devm_spmi_subdevice_alloc_and_add(dev, sparent);
-> +	if (IS_ERR(sub_sdev))
-> +		return PTR_ERR(sub_sdev);
-> =20
-> -	rc =3D of_property_read_u32(pdev->dev.of_node, "reg", &sdam->base);
-> +	rc =3D of_property_read_u32(dev->of_node, "reg", &sdam_regmap_config.re=
-g_base);
-
-It's a bit ugly that you pass the address of an unsigned int as u32*.
-But this isn't new, so fine for me. (Also for all Linux archs we have
-sizeof(unsigned int) =3D=3D 4, so AFAICT it's safe anyhow.)
-
->  	if (rc < 0) {
->  		dev_err(&pdev->dev, "Failed to get SDAM base, rc=3D%d\n", rc);
->  		return -EINVAL;
->  	}
-> =20
-> -	rc =3D regmap_read(sdam->regmap, sdam->base + SDAM_SIZE, &val);
-> +	sdam->regmap =3D devm_regmap_init_spmi_ext(&sub_sdev->sdev, &sdam_regma=
-p_config);
-> +	if (IS_ERR(sdam->regmap)) {
-> +		dev_err(&pdev->dev, "Failed to get regmap handle\n");
-
-dev_err_probe()
-
-> +		return PTR_ERR(sdam->regmap);
+On Tue, Sep 16, 2025 at 10:44:39AM +0200, AngeloGioacchino Del Regno wrote:
+> +/**
+> + * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
+> + * @sparent:	SPMI parent device with previously registered SPMI controller
+> + *
+> + * Returns:
+> + * Pointer to newly allocated SPMI sub-device for success or negative ERR_PTR.
+> + */
+> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *sparent)
+> +{
+> +	struct spmi_subdevice *sub_sdev;
+> +	struct spmi_device *sdev;
+> +	int ret;
+> +
+> +	sub_sdev = kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
+> +	if (!sub_sdev)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	ret = ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
+> +	if (ret < 0) {
+> +		kfree(sub_sdev);
+> +		return ERR_PTR(ret);
 > +	}
 > +
-> +	rc =3D regmap_read(sdam->regmap, SDAM_SIZE, &val);
->  	if (rc < 0) {
->  		dev_err(&pdev->dev, "Failed to read SDAM_SIZE rc=3D%d\n", rc);
->  		return -EINVAL;
-> @@ -159,7 +173,7 @@ static int sdam_probe(struct platform_device *pdev)
->  	}
->  	dev_dbg(&pdev->dev,
->  		"SDAM base=3D%#x size=3D%u registered successfully\n",
-> -		sdam->base, sdam->size);
-> +		sdam_regmap_config.reg_base, sdam->size);
-> =20
->  	return 0;
->  }
-> @@ -181,3 +195,4 @@ module_platform_driver(sdam_driver);
-> =20
->  MODULE_DESCRIPTION("QCOM SPMI SDAM driver");
->  MODULE_LICENSE("GPL v2");
-> +MODULE_IMPORT_NS("SPMI");
+> +	sdev = &sub_sdev->sdev;
+> +	sdev->ctrl = sparent->ctrl;
+> +	device_initialize(&sdev->dev);
+> +	sdev->dev.parent = &sparent->dev;
+> +	sdev->dev.bus = &spmi_bus_type;
+> +	sdev->dev.type = &spmi_subdev_type;
+> +
+> +	sub_sdev->devid = ret;
+> +	sdev->usid = sparent->usid;
+> +
+> +	ret = dev_set_name(&sdev->dev, "%d-%02x.%d.auto",
+> +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
 
-If it's exactly the files that #include <linux/spmi.h> should have that
-namespace import, you can put the MODULE_IMPORT_NS into that header.
+If I understand correctly sub_sdev->devid is globally unique. I wonder
+if a namespace that is specific to the parent spmi device would be more
+sensible?!
+
+> +	if (ret)
+> +		goto err_put_dev;
+> +
+> +	ret = device_add(&sdev->dev);
+> +	if (ret) {
+> +		dev_err(&sdev->dev, "Can't add %s, status %d\n",
+
+I'd use %pe instead of %d here.
+
+> +			dev_name(&sdev->dev), ret);
+> +		goto err_put_dev;
+> +	}
+> +
+> +	return sub_sdev;
+> +
+> +err_put_dev:
+> +	put_device(&sdev->dev);
+> +	return ERR_PTR(ret);
+> +}
+> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_alloc_and_add, "SPMI");
+> +
 
 Best regards
 Uwe
 
---36zni4ukkwfibixi
+--j6v4vfa6gjhs5clj
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjJZSUACgkQj4D7WH0S
-/k5X2gf8CPcy37sX+3TAvMselYC6a5KTw9qBUgRRRW2xU0jMLPVSugZd9i7RFBsX
-qcP6Xq/FcBLfEIdwT9uwud13CtVdV6qyNQaWgz+BnrTomiNrrr4wZTVrOOhNgSDi
-VElZSzvXwu+7EZQLmdGAwoXB3HnCHuShI5LiCUQ0zi4pYoMoAc4Tw6htJhjM7NJ2
-48eZomVZ2s+xwPA17EyHn9FaHiisgWV/tjxRtL9P5Kt79qZNel8MXHgWU4jFEUDm
-hqciH+VQhquuUhU/UfWhV0q4Q6aJ2acuI+AsHcWctTI1Whgdtm0Ddr8/iJmUjitw
-JNecAkD3czkJvfdQpE1uSbxMdDBrww==
-=Jcue
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjJZTcACgkQj4D7WH0S
+/k4DDQf9Fn1HPf8O4u3moGauabP4ZoOg+KJoOMMHiL4JAWvb+ihWLP7SpGDPBfiO
+DjMRfgEltRK7S1XHVZqjpkIAREqaRc6TQCYX7uafwyX9JXpUGPvjoVWeywhnWJU3
+5vE9b9lEeFfiRzBq8RQ0tr17GyPpmviyXdL6kimCDDWkKzCqU9mXskQiO/HYxzDV
+mJBLPPQQ6aRxVVBLLqdsggxptBQ+8BtkqUy9+yqjncsbYTwEgj4QY65d9yQXPTgL
+st+pYh7Ra8xceTMOExplwPHN/uSqPBTMTRomAsrtOz09tETIkR6mOuEOUO3fsy9q
+v/FjPX6SlBekOqw7TnPDq/t/204YwA==
+=j8SY
 -----END PGP SIGNATURE-----
 
---36zni4ukkwfibixi--
+--j6v4vfa6gjhs5clj--
 
