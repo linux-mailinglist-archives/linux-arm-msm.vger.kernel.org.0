@@ -1,60 +1,66 @@
-Return-Path: <linux-arm-msm+bounces-73756-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73757-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 233EAB59C45
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:39:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05C3FB59C5D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 17:44:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 93C961C03548
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:39:23 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BF1E117372A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 15:44:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7A634345722;
-	Tue, 16 Sep 2025 15:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 465F835E4F5;
+	Tue, 16 Sep 2025 15:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lP++sHly"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HV6/UjgH"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50F58293C44;
-	Tue, 16 Sep 2025 15:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D043345722;
+	Tue, 16 Sep 2025 15:43:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758037129; cv=none; b=rkDQUnr4piyiV+93cGjPc8M3AOXEPU+WRfrU4HF4+DNiqsEGwh81XsIy9uBGipBtiDv6/OvPhI3xd/svMUrpkiIbkOvZFoflwFxqGX5VBf4ASsTmmVywsTU7BG9yPso/lP9mpNyGESNRCffinKdRE6W2hkQVXetjyGJsJknCXs8=
+	t=1758037435; cv=none; b=YXwfj8CnqNBfA137gRDjmEYdljxR2tBndjqjP1Ur1egexRWL0JSNPkE7DGeQ9tTnXh96Te5brB9dfonvzA9Ek/zMVFy5YfZO0oYOgK2c9zU0cJ+64v1t1H/YDPtMngJsD3s3coxZqfSMsR8BSicd1xyfEBt1rNjv9Am34l/uHaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758037129; c=relaxed/simple;
-	bh=P3wG5soFYqyWrmIaLuRgRoQgSQObMaGfwT0bw/aoPl8=;
+	s=arc-20240116; t=1758037435; c=relaxed/simple;
+	bh=ThdyO2GOJ3OKtV1hGeLo+a6nDDHSjZTwlZ81sERWzQA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DpcUQLvO6v7pd4rtX3Q4Mt7zJr3AAC2MAqVBcvbXKppezc2PMiEzwdwEVW/t38Bh4hWuGONz6F+VlEVpCdFsegyGYjMDom0IWpW403dN+WVVeyZkJm8nzqv1hls6/QSsw2HSRyMRWP/zSRWbehruZBfBH0tkVOmiRDPVsKdxM+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lP++sHly; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8668DC4CEEB;
-	Tue, 16 Sep 2025 15:38:48 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=P394UT0rtqEVt3wxgrWZUR2XwDQ2D9Gjzp/0XDkLf/4DkKL03EOf4PVeF9rhs9gDm9wMC/Axh9S/w2QibMEou4EzPt+xBWjXQ5DPzCTOLdunI/MS962Cf37Gyd2rObO/Uch68gDqMrpX3hUXBHbMLwoQSQe+DaYUUR0cAqcawDQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HV6/UjgH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03401C4CEEB;
+	Tue, 16 Sep 2025 15:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758037129;
-	bh=P3wG5soFYqyWrmIaLuRgRoQgSQObMaGfwT0bw/aoPl8=;
+	s=k20201202; t=1758037434;
+	bh=ThdyO2GOJ3OKtV1hGeLo+a6nDDHSjZTwlZ81sERWzQA=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lP++sHlyj7k0eEAPOf/uITuuhvToi25EFQBWluFvV7SJpQKeEHmsvioVssY+/G0iI
-	 V5NtNobDYKbYhyI/nWtyCS2bHlV8+ah3+ApYUWNIR5ISUw8Fpj+Mp8JdRcWT30AUNr
-	 GKMWp/v5yWLfI04NGrVEXFRKIghcL95tO7Lhq5N1zZgKJ7RQd6xPDG40eexlcci7aK
-	 yUXONV5/nJLKfE9dnDvuVcGy4Ar2A5b/U/MXkrx9er5n2X/DQDyuHf12HrRp2isiQn
-	 7CJ3U60bctuWmjJNqjiFBzllsI5i7/YLU+u99IFK5DDq7l6BWfOWlDlIuD8r3ElNMG
-	 U5JhcG2VR4hXw==
-Date: Tue, 16 Sep 2025 10:38:46 -0500
+	b=HV6/UjgH3GqFwdkHUIOAHTGRemyh7AcFzMMXNgI28WUDuLEIJ0ut7XJnX7+6Qe/Ii
+	 L8RuCbebXPqPByYvvzvecHhb78flEcTWB8aoOYi6q0VNARrepfjD6tXLLHHxJKcNqI
+	 CjlJynsT3tGdv8CLgWBrAAYaEsDP8QavKjduiLiUczDM4Pv5XyNZsKUhCrQCefzTCg
+	 Rambd1no4dFQ3g4zahGnaOfRfjRi2veUnzP/tTXR1U/ied8GTmqdQzVgzoHxvTomyn
+	 34/FsJPi1IVxs0LGiYWXmjPTTBgYwF1bRJIF2tz4aUt4wZria1drDgP54sH9y8eFJs
+	 R7F/7Ix7/ocZw==
+Date: Tue, 16 Sep 2025 10:43:50 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, 
-	Stephen Boyd <sboyd@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Taniya Das <quic_tdas@quicinc.com>, Dmitry Baryshkov <lumag@kernel.org>, 
-	Jagadeesh Kona <quic_jkona@quicinc.com>, linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/6] clk: qcom: camcc-sm8550: Specify Titan GDSC power
- domain as a parent to other
-Message-ID: <kisbrykgmv7kigae4fdqm7uwkodwhhlgysja4cfaegr3zvvwiw@m6jahyjpy46m>
-References: <20250911011218.861322-1-vladimir.zapolskiy@linaro.org>
- <20250911011218.861322-2-vladimir.zapolskiy@linaro.org>
- <bsjcwbwvvw4eov4aaf4xk2bes4p4wsxvb53rsxkwhgd7bk44ix@wnbvksy6m3li>
- <e90501b8-6af1-4473-b4f5-2fe1f118a5b4@linaro.org>
+To: Hans de Goede <hansg@kernel.org>
+Cc: Lee Jones <lee@kernel.org>, Aleksandrs Vinarskis <alex@vinarskis.com>, 
+	Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Jingoo Han <jingoohan1@gmail.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Jean-Jacques Hiblot <jjhiblot@traphandler.com>, 
+	Jacopo Mondi <jacopo@jmondi.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Daniel Thompson <danielt@kernel.org>, linux-leds@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, 
+	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, threeway@gmail.com, 
+	Andy Shevchenko <andy.shevchenko@gmail.com>, Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH v5 3/4] leds: led-class: Add devicetree support to
+ led_get()
+Message-ID: <g7xkdervsknmcwjg4qgloj643b4itjlfeyiipvsrborszgrhlg@zrp65nvfueqk>
+References: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com>
+ <20250910-leds-v5-3-bb90a0f897d5@vinarskis.com>
+ <20250911081540.GD9224@google.com>
+ <b875f811-6371-4ff4-9cc2-a0a2c82a569c@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,141 +69,116 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e90501b8-6af1-4473-b4f5-2fe1f118a5b4@linaro.org>
+In-Reply-To: <b875f811-6371-4ff4-9cc2-a0a2c82a569c@kernel.org>
 
-On Fri, Sep 12, 2025 at 09:23:00AM +0300, Vladimir Zapolskiy wrote:
-> On 9/12/25 05:09, Bjorn Andersson wrote:
-> > On Thu, Sep 11, 2025 at 04:12:13AM +0300, Vladimir Zapolskiy wrote:
-> > > Make Titan GDSC power domain as a parent of all other GDSC power domains
-> > > provided by the SM8550 camera clock controller to enforce a correct
-> > > sequence of enabling and disabling power domains by the consumers.
-> > > 
-> > 
-> > I don't understand which problem you're solving.
-> > 
-> > Are these GDSCs children of the titan_top and your patch is describing
-> > that so that when a client is enabling any one of them they will be
-> > enabled in order?
-> > 
-> > Are you correcting the description of the hardware? Or is this a hack to
-> > trick the system into performing the operations in order?
-> > 
+On Thu, Sep 11, 2025 at 11:01:00AM +0200, Hans de Goede wrote:
+> Hi Lee,
 > 
-> Consumers of power domains are unaware of power domain hierarhy, same
-> with clocks for instance.
+> On 11-Sep-25 10:15 AM, Lee Jones wrote:
+> > On Wed, 10 Sep 2025, Aleksandrs Vinarskis wrote:
+> > 
+> >> From: Hans de Goede <hansg@kernel.org>
+> >>
+> >> Add 'name' argument to of_led_get() such that it can lookup LEDs in
+> >> devicetree by either name or index.
+> >>
+> >> And use this modified function to add devicetree support to the generic
+> >> (non devicetree specific) [devm_]led_get() function.
+> >>
+> >> This uses the standard devicetree pattern of adding a -names string array
+> >> to map names to the indexes for an array of resources.
+> >>
+> >> Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+> >> Reviewed-by: Lee Jones <lee@kernel.org>
+> > 
+> > Remind me why this can't go in through LED again?
 > 
-
-There are several valid cases where this might not be true.
-
-> When a consumer turns on/off a power domain dependant on another one,
-> the parent power domain shall be turned on/off, and it shall be done
-> by the power domain provider (camcc in this case), if the power domain
-> hierarchy is set. The changes in the series establish the hierarchy,
-> otherwise the CAMSS driver as a CAMCC consumer is irrecoverably broken.
+> I don't think anyone has discussed how to merge this yet.
+> 
+> I believe that the LED tree is the correct tree to merge this
+> entire series through, once the DT bits have been reviewed.
 > 
 
-Excellent, here you're saying "X is parent of Y, this needs to be
-described in software". This is completely different from the original
-"let's just make X parent of Y".
-
-> > 
-> > Please start your commit message with a problem description, then a
-> > description of your solution.
-> > 
-> > https://docs.kernel.org/process/submitting-patches.html#describe-your-changes
-> > 
-> 
-> I've started from "describe your changes in imperative mood" section,
-
-The 7 paragraphs leading up to that are important as well ;)
-
-Looking forward to v2.
+Unless there are some strong reasons (that I'm failing to spot), we
+should merge the DeviceTree binding and implementation through the LED
+tree. Then I merge the DTS change through the Qualcomm DT tree once the
+bindings are available in linux-next.
 
 Regards,
 Bjorn
 
-> I'll resend the changes with the reformulated commit messages, thank
-> you for review.
+> Regards,
 > 
-> > > Fixes: ccc4e6a061a2 ("clk: qcom: camcc-sm8550: Add camera clock controller driver for SM8550")
-> > > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-> > > ---
-> > >   drivers/clk/qcom/camcc-sm8550.c | 10 ++++++++++
-> > >   1 file changed, 10 insertions(+)
-> > > 
-> > > diff --git a/drivers/clk/qcom/camcc-sm8550.c b/drivers/clk/qcom/camcc-sm8550.c
-> > > index 63aed9e4c362..b8ece8a57a8a 100644
-> > > --- a/drivers/clk/qcom/camcc-sm8550.c
-> > > +++ b/drivers/clk/qcom/camcc-sm8550.c
-> > > @@ -3204,6 +3204,8 @@ static struct clk_branch cam_cc_sfe_1_fast_ahb_clk = {
-> > >   	},
-> > >   };
-> > > +static struct gdsc cam_cc_titan_top_gdsc;
-> > > +
-> > >   static struct gdsc cam_cc_bps_gdsc = {
-> > >   	.gdscr = 0x10004,
-> > >   	.en_rest_wait_val = 0x2,
-> > > @@ -3213,6 +3215,7 @@ static struct gdsc cam_cc_bps_gdsc = {
-> > >   		.name = "cam_cc_bps_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > @@ -3225,6 +3228,7 @@ static struct gdsc cam_cc_ife_0_gdsc = {
-> > >   		.name = "cam_cc_ife_0_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > @@ -3237,6 +3241,7 @@ static struct gdsc cam_cc_ife_1_gdsc = {
-> > >   		.name = "cam_cc_ife_1_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > @@ -3249,6 +3254,7 @@ static struct gdsc cam_cc_ife_2_gdsc = {
-> > >   		.name = "cam_cc_ife_2_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > @@ -3261,6 +3267,7 @@ static struct gdsc cam_cc_ipe_0_gdsc = {
-> > >   		.name = "cam_cc_ipe_0_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > @@ -3273,6 +3280,7 @@ static struct gdsc cam_cc_sbi_gdsc = {
-> > >   		.name = "cam_cc_sbi_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > @@ -3285,6 +3293,7 @@ static struct gdsc cam_cc_sfe_0_gdsc = {
-> > >   		.name = "cam_cc_sfe_0_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > @@ -3297,6 +3306,7 @@ static struct gdsc cam_cc_sfe_1_gdsc = {
-> > >   		.name = "cam_cc_sfe_1_gdsc",
-> > >   	},
-> > >   	.pwrsts = PWRSTS_OFF_ON,
-> > > +	.parent = &cam_cc_titan_top_gdsc.pd,
-> > >   	.flags = POLL_CFG_GDSCR | RETAIN_FF_ENABLE,
-> > >   };
-> > > -- 
-> > > 2.49.0
-> > > 
+> Hans
 > 
-> -- 
-> Best wishes,
-> Vladimir
+> 
+> 
+> 
+> >> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> >> Signed-off-by: Hans de Goede <hansg@kernel.org>
+> >> Signed-off-by: Aleksandrs Vinarskis <alex@vinarskis.com>
+> >> ---
+> >>  drivers/leds/led-class.c | 17 +++++++++++++++--
+> >>  1 file changed, 15 insertions(+), 2 deletions(-)
+> >>
+> >> diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
+> >> index 15633fbf3c166aa4f521774d245f6399a642bced..f3faf37f9a08ac762ed87b91cb3cab5faa8eacb0 100644
+> >> --- a/drivers/leds/led-class.c
+> >> +++ b/drivers/leds/led-class.c
+> >> @@ -252,15 +252,23 @@ static const struct class leds_class = {
+> >>   * of_led_get() - request a LED device via the LED framework
+> >>   * @np: device node to get the LED device from
+> >>   * @index: the index of the LED
+> >> + * @name: the name of the LED used to map it to its function, if present
+> >>   *
+> >>   * Returns the LED device parsed from the phandle specified in the "leds"
+> >>   * property of a device tree node or a negative error-code on failure.
+> >>   */
+> >> -static struct led_classdev *of_led_get(struct device_node *np, int index)
+> >> +static struct led_classdev *of_led_get(struct device_node *np, int index,
+> >> +				       const char *name)
+> >>  {
+> >>  	struct device *led_dev;
+> >>  	struct device_node *led_node;
+> >>  
+> >> +	/*
+> >> +	 * For named LEDs, first look up the name in the "led-names" property.
+> >> +	 * If it cannot be found, then of_parse_phandle() will propagate the error.
+> >> +	 */
+> >> +	if (name)
+> >> +		index = of_property_match_string(np, "led-names", name);
+> >>  	led_node = of_parse_phandle(np, "leds", index);
+> >>  	if (!led_node)
+> >>  		return ERR_PTR(-ENOENT);
+> >> @@ -324,7 +332,7 @@ struct led_classdev *__must_check devm_of_led_get(struct device *dev,
+> >>  	if (!dev)
+> >>  		return ERR_PTR(-EINVAL);
+> >>  
+> >> -	led = of_led_get(dev->of_node, index);
+> >> +	led = of_led_get(dev->of_node, index, NULL);
+> >>  	if (IS_ERR(led))
+> >>  		return led;
+> >>  
+> >> @@ -342,9 +350,14 @@ EXPORT_SYMBOL_GPL(devm_of_led_get);
+> >>  struct led_classdev *led_get(struct device *dev, char *con_id)
+> >>  {
+> >>  	struct led_lookup_data *lookup;
+> >> +	struct led_classdev *led_cdev;
+> >>  	const char *provider = NULL;
+> >>  	struct device *led_dev;
+> >>  
+> >> +	led_cdev = of_led_get(dev->of_node, -1, con_id);
+> >> +	if (!IS_ERR(led_cdev) || PTR_ERR(led_cdev) != -ENOENT)
+> >> +		return led_cdev;
+> >> +
+> >>  	mutex_lock(&leds_lookup_lock);
+> >>  	list_for_each_entry(lookup, &leds_lookup_list, list) {
+> >>  		if (!strcmp(lookup->dev_id, dev_name(dev)) &&
+> >>
+> >> -- 
+> >> 2.48.1
+> >>
+> >>
+> > 
+> 
 
