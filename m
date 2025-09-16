@@ -1,59 +1,59 @@
-Return-Path: <linux-arm-msm+bounces-73625-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90458B58C51
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 05:26:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60DCAB58CA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 06:08:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4BA5F16AC0E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 03:26:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1074C4843E2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 04:08:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49BC324C076;
-	Tue, 16 Sep 2025 03:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C213C29A9F9;
+	Tue, 16 Sep 2025 04:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JNfbdMtP"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ol7u3fui"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207DC1C5F23;
-	Tue, 16 Sep 2025 03:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931B48248B;
+	Tue, 16 Sep 2025 04:08:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757993194; cv=none; b=jYiLL1qOdqsLxuZOraYFWd5A0Vxs5uMnuX621JzMG9n7uuIjFbN1ME7tIb9/8w/YSQ7MvpLgPtALuEhGzcXCr5gBf5Z2fDGQKtBsHm53IroKfRl2L1kagw/6VB5abEQzRlOQYK5bhwiGn6kWKDa1x+VRyXcx56LbsAwlJRTizfM=
+	t=1757995723; cv=none; b=sot760H/d7CzpcMYGAMEmrTScxvs8Iir3przN+aCZlB+uWgRYCPnGD6DcSO5iFTMHsnD2JDiS7tnwz9foOHpx3a2J3ORHhcCd4u+sqv6OIAjCo689fmF2Jv/dvdjmLtYD36NFK31dEGujMyMB75aBmaa4U8Av9JIrzL1nkTZZJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757993194; c=relaxed/simple;
-	bh=unH+YFOQ0pD1jPcayEQlvD+bfPTrAe9Uh8+AJ5yu9L4=;
+	s=arc-20240116; t=1757995723; c=relaxed/simple;
+	bh=RKlBUMEmah/S4UwmVeB7EGIXLIhiwyPctDOINOzxFEI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C0r2R5KUDNYjV9x3lnoqQT/QFZPeUOrH+MD+0ZApq8Ku7Sv4bDHjUzZg4YdNWiJOLsepfs2SbTcnV8HqNIqq9CuoTeECdA7r5IDcHpoeFduOGSkv+cksLrSXHUhMdqDk2aGoiA8N/UDhjutZxJt2Q22Hw0NwZPj7LGJ7s19/rCg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JNfbdMtP; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED409C4CEEB;
-	Tue, 16 Sep 2025 03:26:32 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=TJB2RtWHLUn8Q0gd66sIdMsRIknfMc+fe7w+G/LWPYx12EDXhTVuEmiiFJDFA4G8niKlGC0F36mFXL4XcKYOA+tnBI5eE1CUtkRhHbcf+hit/e5s03UTplAupaGRIr7qTLdMr9QJBhlfeO3yqe81rPw9ywFTxOG3u2tTVJVxrDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ol7u3fui; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B49F1C4CEEB;
+	Tue, 16 Sep 2025 04:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1757993193;
-	bh=unH+YFOQ0pD1jPcayEQlvD+bfPTrAe9Uh8+AJ5yu9L4=;
+	s=k20201202; t=1757995723;
+	bh=RKlBUMEmah/S4UwmVeB7EGIXLIhiwyPctDOINOzxFEI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JNfbdMtP+E2Tly5vFhD9niRfjVECjxx3j4iduiyLeiL9P0yROsMhX38W4O1oRkJaH
-	 8G7MiKdteB1/BEbTa7ODG+eTfnz6PAaF5axn0YXTjJoV7sHn6K9Q0unJW7qZb88UwV
-	 r0ADEA5ODtq+9TQtrsRUq0BBn/+z8+oivNruGODXLbaZHd6T25zVAUyyU/th0FfgDY
-	 WG+pDKxuJfkFWv/VSz8fzxWx6y3xi48GH+7OlwkdRZ5eZ+CexAGFNTzdP/c3x2D9UT
-	 ZkVkE/AgtuNd/xGzToYacgSMkFDghwiHErIW15rejWLu3QqnNHbi1UKu7yfX33IuQr
-	 uPFZ89oquEp1A==
-Date: Mon, 15 Sep 2025 22:26:30 -0500
+	b=ol7u3fui3NNLUyBKBcHAiqvESbKOMj5HTE6VDCjwVyqAiZMdR04X/2khyjcGO0ocT
+	 yxrsIuuuQ7/xyb93faJsetShuvM/uQVO+YY3r4WSDi4MU/ikxx/1+ZA9Tkjsbyn787
+	 is0N6f+BEgGTHlKHXow4YmWeZ7bfEA3vo1BwY5ewxz5ai/cWIGKgAWwyjsFGgRVrUj
+	 Rk2gfaQj7LDUC8JSvpnryaaYkAfs8r03u7ign3CdNt5Ya6mVOEcJ8/9BgeiUpAPnlB
+	 oZ48RARyxE1BwaJQtIiVhOwb8n47JOhqCpiz2OZVK271eqKBut3UKPREPK62bdQdvU
+	 DGY7Xwtk8rz1Q==
+Date: Mon, 15 Sep 2025 23:08:40 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Cc: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>, 
 	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
 	Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
 	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/3] arm64: dts: qcom: qcm6490: Introduce Particle Tachyon
-Message-ID: <4gx66y2oncjppqjhap5q2fmwlgkhv74rupeo4iwbyqw6ipoddn@fpp56byglnwe>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: qcm6490: Introduce the Particle
+ Tachyon
+Message-ID: <zjmf27y5i6ypba3nvsxxceuxn6yogp46lmtrjua37qa4ibrleq@4qv5s2wirgdh>
 References: <20250910-tachyon-v1-0-5090bfd133e0@oss.qualcomm.com>
- <2tnzsjw3xy5jct4bcmahcwhjbzlmyxgcx6fzlz5qrzxume2uoy@phpcz6mnydlt>
- <nweaxuma3dkhzcc46ztfhmxxrchgidxjprc2tz5eahle6sxsuy@qvczmexs4qnn>
- <2bc767td7gw4bxts4k4xwhdiv5tgxmpyjwwv6nqeatvncdov6c@u7gfilzxgomp>
+ <20250910-tachyon-v1-3-5090bfd133e0@oss.qualcomm.com>
+ <ec31257b-fe10-4de7-8fb6-d649677f680e@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -62,60 +62,110 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2bc767td7gw4bxts4k4xwhdiv5tgxmpyjwwv6nqeatvncdov6c@u7gfilzxgomp>
+In-Reply-To: <ec31257b-fe10-4de7-8fb6-d649677f680e@oss.qualcomm.com>
 
-On Fri, Sep 12, 2025 at 04:22:18AM +0300, Dmitry Baryshkov wrote:
-> On Thu, Sep 11, 2025 at 02:19:39PM -0500, Bjorn Andersson wrote:
-> > On Thu, Sep 11, 2025 at 03:01:35AM +0300, Dmitry Baryshkov wrote:
-> > > On Wed, Sep 10, 2025 at 06:05:36PM -0500, Bjorn Andersson wrote:
-> > > > Introduce the Particle Tachyon board (https://www.particle.io/tachyon/),
-> > > > a single board compute with 5G connectivity and AI accelerator.
-> > > > 
-> > > > The boards currently ships with the Android Boot Loader, but replacing
-> > > > this with abl2esp allows writing a EFI System Parition and OS partitions
-> > > > to all of LUN0, and a more UEFI boot experience. A prebuilt version of
-> > > > abl2esp is provided at [1], as abl2esp-v6.elf.
-> > > > 
-> > > > With a (very) recent version of QDL, a flash programmer from a Tachyon
-> > > > software release, and a full distro image, this can be achieved with:
-> > > > 
-> > > >   qdl prog_firehose_ddr.elf write abl_a abl2esp-v6.elf write abl_b abl2esp-v6.elf write 0 image.raw
-> > > > 
-> > > > The following firmware files are currently used, on top of what's in
-> > > > linux-firmware already:
-> > > >   qcom/qcm6490/particle/tachyon/a660_zap.mbn
-> > > >   qcom/qcm6490/particle/tachyon/adsp.mbn
-> > > >   qcom/qcm6490/particle/tachyon/cdsp.mbn
-> > > >   qcom/qcm6490/particle/tachyon/ipa_fws.mbn
-> > > >   qcom/qcm6490/particle/tachyon/modem.mbn
-> > > 
-> > > Is it locked?
+On Fri, Sep 12, 2025 at 01:13:17PM +0200, Konrad Dybcio wrote:
+> On 9/11/25 1:05 AM, Bjorn Andersson wrote:
+> > The Particle Tachyon is a single board computer with 5G connectivity
+> > with AI accelerator, based on the Qualcomm QCM6490 platform.
 > > 
-> > It doesn't look that way.
+> > Introduce the board, with support for UFS, USB, USB Type-C PD and
+> > altmode (DisplayPort), GPU, charger/battery status, PCIe shield,
+> > SD-card, and remoteprocs.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+> > ---
 > 
-> Then anything preventing us from using the default, non-signed FW?
+> [...]
+> 
+> > +	leds {
+> > +		compatible = "gpio-leds";
+> > +
+> > +		pinctrl-names = "default";
+> > +		pinctrl-0 = <&activity_led_state>;
+> 
+> property-n
+> property-names
+> 
+> is preferred, file-wide (you currently have a mixture)
+> 
+> [...]
+> 
+> > +
+> > +&i2c1 {
+> > +	status = "okay";
+> 
+> This likely results in a "falling back to 100 KHz" warning/notice,
+> please specify the bus speed explicitly
+> 
+> [...]
+> 
+> > +&mdss_dp_out {
+> > +	data-lanes = <0 1>;
+> 
+> Is 2 lanes a hw limitation?
 > 
 
-Looking at the version, they are not from the same branch or year.
+[   20.947242] [drm:msm_dp_ctrl_link_train_1_2 [msm]] *ERROR* max v_level reached
+[   20.955002] [drm:msm_dp_ctrl_link_train_1_2 [msm]] *ERROR* link training #1 on phy 0 failed. ret=-11
+[   20.964702] [drm:msm_dp_ctrl_setup_main_link [msm]] *ERROR* link training on sink failed. ret=-11
 
-I suggest that we stick with the firmware that the vendor has validated
-on their piece of hardware together with the other pieces of firmware,
-at least for now.
-
-Once/if we built confidence in the QLI firmware, we can replace these
-paths.
+I believe I saw the same problem on Rb3Gen2. Do we know if there's any
+sc7280 that has working 4-lane DP, or are we perhaps missing something
+in the PHY sequences?
 
 Regards,
 Bjorn
 
-> > 
-> > > Would it be possible to Particle-signed firmware into linux-firmware?
-> > 
-> > That is something that would have to be discussed...
+> [...]
 > 
-> It would be really nice...
+> > +&pmk8350_rtc {
 > 
-> -- 
-> With best wishes
-> Dmitry
+> I see no reason for RTC not to be enabled by default
+> 
+> [...]
+> 
+> > +&pon_pwrkey {
+> 
+> Same here> +	status = "okay";
+> > +};
+> 
+> 
+> > +&uart7 {
+> > +	/delete-property/interrupts;
+> 
+> /delete-property/(space)interrupts, please
+> 
+> (yes we desperately need a formatter)
+> 
+> [...]
+> 
+> > +&usb_1_qmpphy {
+> > +	vdda-phy-supply = <&vreg_l6b_1p2>;
+> > +	vdda-pll-supply = <&vreg_l1b_0p912>;
+> > +
+> > +	orientation-switch;
+> 
+> This is specified in the SoC DTSI
+> 
+> [...]
+> 
+> > +&usb_dp_qmpphy_dp_in {
+> > +	remote-endpoint = <&mdss_dp_out>;
+> > +};
+> 
+> And so is this link
+> 
+> > +
+> > +&usb_dp_qmpphy_out {
+> > +	remote-endpoint = <&pmic_glink_ss_in>;
+> > +};
+> > +
+> > +&usb_dp_qmpphy_usb_ss_in {
+> > +	remote-endpoint = <&usb_1_dwc3_ss>;
+> > +};
+> 
+> And this one
+> 
+> Konrad
 
