@@ -1,76 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-73814-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73815-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F21B7B7D843
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:30:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 228EFB7ECCD
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:02:01 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D62DF169F9C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 22:20:00 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0982016741D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 22:48:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE8B629B204;
-	Tue, 16 Sep 2025 22:19:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DA54E2BDC1B;
+	Tue, 16 Sep 2025 22:48:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="PbGhk40v"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="oQXJ8Yj3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D443228C869;
-	Tue, 16 Sep 2025 22:19:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 091D027E043
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 22:48:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758061197; cv=none; b=LRBLMoLjFrJCf9rZn/9wvSf5M57BpZBQymkY5PKoUN71qClAS2BQ58a3Vwplob87Dq8bqj6ZHtck8pGZEB9qvd6OIKOHjeGRNC2iRmEVpo+aDjsipJX48uF0M7NY1ecTrj8EAMAlxThdtJr7A9h3ltIsYGhGt9Won1qFaprHlWU=
+	t=1758062906; cv=none; b=VhUV8mfnEWHmHN5LlC9b9AbD5BmA6K/FxLtfbDkcBYZ3OcXMxPQWqvtnIV0N3miqQIz4l8ujYYieHjHFGMuHxykaHNhTMrD6XQ7NYfRL5qvkoBkJETs2pFyAm9xQhSgUF62AOe5s9b70YXhMGbiDIf9CjJUPq6k3PshvHwwW3sQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758061197; c=relaxed/simple;
-	bh=m4JY9aGLYVoEfQTvIOCGSK9fG/1zq/kPVw6zLN783uQ=;
+	s=arc-20240116; t=1758062906; c=relaxed/simple;
+	bh=2DFMm6LIh3PH3uODuHvlYd6xCZm/nyxzIpl1xb3Rlc0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MY+MJzCBVG7m73E74aNoVf+V9ZJFvjiCEQMsXlKR00uoc8i6gN3YOpveDMoIpoFNbV+ZKau4E+6sIiibPOPZZOcwIpuBvOPk0iCNufwBBLfLDvMnks6+ZaazlVVv2xB90j7mX/EWvRxXZD+eeBlEwwA5/oGXWpThCh5PIirzSsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=PbGhk40v; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=6jJa1yb6mq/yCOx6rK0pnWqPtQg/Mqf+5GEFWxFsvHU=; b=PbGhk40vPRpR4Y38Yd5CXsgOaC
-	Ingfdvy+FZckMkZJRlESAaVZaRGIrREu/7sMA+TyDBh15nM2L34u/cbtJRtrKsDDSNIjquIkoxpUv
-	MAwpW5lTHDf4HwH70NGP/CObiaadLjKXVCKlgQ36ZJR3XLnaRBV9uXGndZAr/fGHV+OqeXPr0RAnf
-	XhQq1qeZDvgBh0Q/Dkq1ksASa5fjifQx1XexIUz2emDWMhUD6wx0jTKFjzyKjER/HJXCbJHZWVRcL
-	b53hkOrayZEQZ1nRdIvtToxDitAkeJKZPwaZRcJYtKYUQ4DgEKsKgFS2p4V4uI8rd1S91uudMm97j
-	uPvbti9A==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:33612)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1uye1d-000000006Wl-3upM;
-	Tue, 16 Sep 2025 23:19:50 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1uye1b-0000000082K-1ZIi;
-	Tue, 16 Sep 2025 23:19:47 +0100
-Date: Tue, 16 Sep 2025 23:19:47 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Mohd Ayaan Anwar <mohd.anwar@oss.qualcomm.com>
-Cc: andrew@lunn.ch, Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>,
-	netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next] net: phy: qcom: qca808x: Add .get_rate_matching
- support
-Message-ID: <aMnigwTeMQc0GxaD@shell.armlinux.org.uk>
-References: <20250914-qca808x_rate_match-v1-1-0f9e6a331c3b@oss.qualcomm.com>
- <aMcFHGa1zNFyFUeh@shell.armlinux.org.uk>
- <aMfUiBe9gdEAuySZ@oss.qualcomm.com>
- <aMgCA13MhTnG80_V@shell.armlinux.org.uk>
- <aMgootkPQ/GcdiXX@oss.qualcomm.com>
- <aMgsiDS5tFeqJsKD@shell.armlinux.org.uk>
+	 Content-Type:Content-Disposition:In-Reply-To; b=nGRXwhX9xVeaMRjHaX6n2sUyy+Z4rT7bp7AJ/QD34IpwfadukjTxpsTk1D7WldxT6eHYQ56n2Q1pvDRKtlSU2PzbOhOvB7IEJRf7kWuDYfcp1e1F8zui/BHmcYx2psOwNQO1+N2/e/xmwlk9XcGk6LcdNzCVzG5xDAbW+MXk5jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=oQXJ8Yj3; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58GLZk1t017807
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 22:48:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=6lqy88FzgcpTp3nfJKIO0ixM
+	kbRL1bHvuglEZ1P3X1g=; b=oQXJ8Yj3+sfKiF4C96MYOcOWnQsURIEOvgINIDrJ
+	3W9dWs/p5dfXyUNf0NgVXZx4bp4RbaIRyFFgYGiYadRQKmc/wTSBQrV7UVq+7UEt
+	Zm76MHFR6nrE9pNTSPDADfZtdCDOSq8tnCHkfHwZeM/e5Z0K1cmYdMe0QkxQa8EX
+	rpgf56ZNXvYjkUkC6XWAWR/ZFQP5lGtSAOQ4QSKFo7hKe1HiLmvjGyywa3Fr4ko2
+	JJNKzTI0Yx5bCVBAuauIHxHDhTSH3k7440SL/L2V8ae5vHnWM4R6CwRhwcx4saEq
+	GXMMvKIxg6LB8dPWRBEeRqS8+YrfyPZ5vhG7unQgfwBUuw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxt05tt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 22:48:24 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b7a5595a05so58469941cf.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 15:48:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758062902; x=1758667702;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6lqy88FzgcpTp3nfJKIO0ixMkbRL1bHvuglEZ1P3X1g=;
+        b=BO2pQCYvNralhdq91dYnzXb+KnGr6lkRx8W0jHfRm4a+QwOaEcdNpajOKgNoqJb0BT
+         D68oJo6gfCa008Bm4lJ0tTaRUGZ5K2BvVmn9rJENJJK3kcABGLXJraiXkQn124UhJfLu
+         OGvZWBLWyyqhIh+Ntkm8qbckEOSPE80Eu+BO/UH9GINBTCHbyjcKKqz+ubZsjJNCxHB3
+         XcQc0Gwx3gRV502vgFYbQm7RgFHjfmyo33NiNEUFsOp7z252p5bwwhiIZE+2F5D/4LST
+         vvyDh4yXjs1cE3HmqirZ87yKPNVz64QzvXpEGyAyS8vNtgwAjylic6QqStRgBLUB+Cv5
+         NQ0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXKz0m+894htu98WOJgBmB52+XGcL8ATz0+EtLdELZ8TAedI5XSbxGblnSWAIq94aK8ZW5Tv3m5RahIORox@vger.kernel.org
+X-Gm-Message-State: AOJu0YyLmwbPXmo8PGPrZ5yeetgaOkj7xMKr4v69z3lru3Rt3pjsDhoB
+	pwapgRm8xClVcR4QvLjLJjq1B8ndUAQGkzqNJsjav5DMp8mPFxPfJB6zrbMiwduwwHdpjZ4y0Ag
+	0+5S4S2cwIXz05KaiNzjGuPRbxLsLX9tJZo+lPvSHSfGRy/OTiGWqge3ErrCu4EqVr7V11SAeA8
+	f0
+X-Gm-Gg: ASbGncuVYrBLh2Gfx9lvi1rLscKZO82vjdGo+9k9OQ7EtTy+TG3hK0XHXBBQLfSWwAu
+	/Rpe9Q79/FaVdWJEGMBqjQS+PMyzt2KqkZLu99kbVzSowD+deWf/HWLMM9vmTIDSqS+Xp7lVDuy
+	k7IjGMRpGYE+x+iJyWC7cdv2/Raj7ScpkaSsYrtLu7VSkuJEvsYYYe7kzcjgI8vlYG1k6Z+aQk6
+	rsPoU9r/3fH3TZl2V+KJ1cBoQizTyB+sSsXpEdk5XmdUpah8YRHKbboVV/slVZpoEYIGIQqWU0U
+	MtX7rXYa2dJ9VRNNnDn5vty/h/WsxKyj7balGZDjdRWpXoc5jmNgMKSxs7adj4+0Ov0QqEAlzDt
+	X7I+pRE7gXD49Y7rKvWHEYfRENvuwczp+0sa+ppE6uZ2wh3TqKqlj
+X-Received: by 2002:a05:622a:2505:b0:4b7:b193:56c0 with SMTP id d75a77b69052e-4ba66e0c77fmr2182791cf.21.1758062902181;
+        Tue, 16 Sep 2025 15:48:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHiAGFbpHt/NioJ7e/FEexyytK2hopKKGV8FKMvLAQUpoguf3uiH8FC1V5uYGk4pK4dTKzi9Q==
+X-Received: by 2002:a05:622a:2505:b0:4b7:b193:56c0 with SMTP id d75a77b69052e-4ba66e0c77fmr2182311cf.21.1758062901616;
+        Tue, 16 Sep 2025 15:48:21 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-56e5c3b6193sm4670677e87.31.2025.09.16.15.48.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 16 Sep 2025 15:48:20 -0700 (PDT)
+Date: Wed, 17 Sep 2025 01:48:18 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konradybcio@kernel.org>
+Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+        Wesley Cheng <quic_wcheng@quicinc.com>,
+        Jack Pham <quic_jackp@quicinc.com>,
+        Raghavendra Thoorpu <rthoorpu@qti.qualcomm.com>,
+        Mayank Rana <mayank.rana@oss.qualcomm.com>,
+        Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Andreas Noever <andreas.noever@gmail.com>,
+        Mika Westerberg <westeri@kernel.org>,
+        Yehezkel Bernat <YehezkelShB@gmail.com>, linux-usb@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Subject: Re: [PATCH RFC] dt-bindings: thunderbolt: Add Qualcomm USB4 Host
+ Router
+Message-ID: <fqxcvu5o7urw6fxbzshp3kv7mlte4iujgxjab3qs2yo5mv2o6h@umutqskjoxvg>
+References: <20250916-topic-qcom_usb4_bindings-v1-1-943ecb2c0fa7@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -79,129 +111,389 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aMgsiDS5tFeqJsKD@shell.armlinux.org.uk>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+In-Reply-To: <20250916-topic-qcom_usb4_bindings-v1-1-943ecb2c0fa7@oss.qualcomm.com>
+X-Proofpoint-GUID: lNyAv-ObJUipbu9OEASbxCxxKlRvfNI8
+X-Authority-Analysis: v=2.4 cv=bIMWIO+Z c=1 sm=1 tr=0 ts=68c9e938 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=gEfo2CItAAAA:8 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
+ a=bXFFeEhO61wJ5UbjiUcA:9 a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
+ a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX6WrWQMYq/k3H
+ k1mIphphBOG1njN08NtQ36iRm4OVOQ698WCjUCN/gOTjtJcca5jnTnvSQGIzat9OJ/CXVxPtgKd
+ bSham7OTbuKklutApU7GAYgKU5bdDyLXPbGbYrjXLAfMFj2PmDlAnxwBSC7zVFolhXJNfBUYY7j
+ V+M7HFdeqvX1bmTLG7UBE34oMTG2NTCk5lC32TdmKlSyF9pu252bDEbm35iV2JksDvz+bwJu/84
+ MMnC+Cc9myVL4PxriV0yYWv4nORo1bDAtAbWpQ7F6HjkZmPD4TVLL30KwLjRErpUdLXJbJO3drC
+ oi6iDbi5mPbWE4V+L+J2rDGzbSgI380hTirF8cGsR7R6XcB1abtZK/fN8v1KK8qKa3rjPMStmig
+ 12wVSgHb
+X-Proofpoint-ORIG-GUID: lNyAv-ObJUipbu9OEASbxCxxKlRvfNI8
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-16_02,2025-09-16_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509160202
 
-On Mon, Sep 15, 2025 at 04:11:04PM +0100, Russell King (Oracle) wrote:
-> On Mon, Sep 15, 2025 at 08:24:26PM +0530, Mohd Ayaan Anwar wrote:
-> > On Mon, Sep 15, 2025 at 01:09:39PM +0100, Russell King (Oracle) wrote:
-> > > This shows that the PHY supports SGMII (4) and 2500base-X (23). However,
-> > > as we only validate 2500base-X, this suggests stmmac doesn't support
-> > > switching between SGMII and 2500base-X.
-> > > 
-> > > What *exactly* is the setup with stmmac here? Do you have an external
-> > > PCS to support 2500base-X, or are you using the stmmac internal PCS?
-> > 
-> > Internal PCS. But it's not really pure 2500base-X...
-> > I found an older thread for this exact MAC core [0], and it looks like
-> > we have an overclocked SGMII, i.e., 2500base-X without in-band
-> > signalling.
-> > 
-> > Just wondering if registering a `.get_interfaces` callback in
-> > `dwmac-qcom-ethqos.c` and doing something like the following will be
-> > helpful?
-> > 
-> > case PHY_INTERFACE_MODE_2500BASEX:
-> > 	__set_bit(PHY_INTERFACE_MODE_2500BASEX, interfaces);
-> > 	fallthrough;
-> > case PHY_INTERFACE_MODE_SGMII:
-> > 	__set_bit(PHY_INTERFACE_MODE_SGMII, interfaces);
-> > 	break;
-> > ...
-> > 
-> > This should ensure that both SGMII and 2500base-X are validated,
-> > allowing switching between them.
+On Tue, Sep 16, 2025 at 10:06:01PM +0200, Konrad Dybcio wrote:
+> From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 > 
-> So, this is something that has never worked with this hardware setup.
-> I don't think we should rush to make it work. The stmmac internal
-> PCS code is a mess, bypassing phylink. I had a patch series which
-> addressed this a while back but it went nowhere, but I guess this is
-> an opportunity to say "look, we need to get this sorted properly".
+> Several Qualcomm platforms feature an in-house Host Router IP block,
+> which enables USB4 and Thunderbolt 3 functionality. It implements the
+> common NHI interface, allowing for easier integration with existing
+> Thunderbolt driver implementations.
 > 
-> I suspect this isn't going to be simple - stmmac does _not_ use
-> phylink properly (I've been doing lots of cleanups to this driver
-> over the last year or so to try and make the code more
-> understandable so I can start addressing this deficiency) and
-> there's still lots of work to be done. The way the "platform glue"
-> drivers work is far from ideal, especially when it comes to
-> switching interfaces.
+> The Host Router features a microcontroller (with loadable firmware),
+> which takes care of detecting and acting upon plug events, initiating
+> high-speed link establishment or performing HW power management
+> operations.
 > 
-> I'll try to post the stmmac PCS cleanup series in the coming few
-> days, and it would be useful if you could give it whatever
-> testing you can.
+> Each instance is connected to a single USB3.x host, a PCIe RC and a
+> DisplayPort controller through a fitting Protocol Adapter, allowing
+> for the tunneling of the respective protocols between the USB4/TBT3
+> device and the on-SoC controller.
 
-... and it's been delayed because I've had to rework three of the
-patch series I recently posted.
+I'd really like to see a full example, how the overall picture looks
+like? The bindings describe a single port with a single endpoint. Where
+is it supposed to be connected to?
 
-I did get some time late last night to read through the documentation
-I have for one version of the dwmac which has optional PCS, and I'm
-coming to the conclusion that the whole mac_interface vs phy_interface
-thing is wrong in the driver.
+Could you please provide an example of the overall system (including USB
+controller, DP controller, USB-C connector, etc.). I think one of the
+systems had muxes on the SBU lines, how are they supposed to be defined?
 
-My comment update which added this a few years ago:
+Also, do we need to define the thunderbolt AltMode inside
+usb-connector.yaml?
 
-        /* MAC ----- optional PCS ----- SerDes ----- optional PHY ----- Media
-         *       ^                               ^
-         * mac_interface                   phy_interface
-         *
-         * mac_interface is the MAC-side interface, which may be the same
-         * as phy_interface if there is no intervening PCS. If there is a
-         * PCS, then mac_interface describes the interface mode between the
-         * MAC and PCS, and phy_interface describes the interface mode
-         * between the PCS and PHY.
-         */
+> 
+> Describe the block, as present on the X1E family of SoCs, where it
+> implements the USB4v1 standard.
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> ---
+> Hello!
+> 
+> This is our stab at USB4/Thunderbolt dt-bindings.
+> 
+> This submission, as stated in the commit message, describes our USB4
+> Host Router block, which is roughly the same class of hardware that you
+> can find on add-in PCIe cards aimed at x86 machines.
+> 
+> This specific patch is NOT supposed to be merged, since the bindings
+> may still ever so slightly change, as we continue work on the driver
+> (i.e. it's still possible that we omitted some resource).
+> 
+> It is however published early to create grounds for a discussion.
+> This is the first bring-up of USB4/TBT3 on a DT platform, so this
+> binding is likely going to influence all subsequent submissions. I've
+> added various DT and TBT folks to the recipient list to make everyone
+> aware of any decisions we settle on.
+> 
+> Comments very welcome!
+> 
+> P.S.
+> The driver part (which has quite some dependencies) is not yet 100%
+> ready to share and will be published at a later date.
+> ---
+>  .../bindings/thunderbolt/qcom,usb4-hr.yaml         | 263 +++++++++++++++++++++
+>  MAINTAINERS                                        |   1 +
+>  2 files changed, 264 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/thunderbolt/qcom,usb4-hr.yaml b/Documentation/devicetree/bindings/thunderbolt/qcom,usb4-hr.yaml
+> new file mode 100644
+> index 0000000000000000000000000000000000000000..1cf3d083c6129a492010a4b98fea0e8dec9746cf
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/thunderbolt/qcom,usb4-hr.yaml
+> @@ -0,0 +1,263 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/thunderbolt/qcom,usb4-hr.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm USB4 Host Router
+> +
+> +maintainers:
+> +  - Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> +
+> +description:
+> +  The Qualcomm USB4 Host Router IP block implements the NHI standard
+> +  as described in the USB4 specification.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,x1e80100-usb4-hr # USB4v1
+> +      - const: qcom,usb4-hr
+> +
+> +  reg:
+> +    maxItems: 17
+> +
+> +  reg-names:
+> +    items:
+> +      - const: router
+> +      - const: router_config
+> +      - const: tmu_config
+> +      - const: port_group
+> +      - const: sideband
+> +      - const: uc_ram
+> +      - const: uc_per
+> +      - const: uc_mbox
+> +      - const: nhi
+> +      - const: cfg
+> +      - const: debug
+> +      - const: usbap_config
+> +      - const: pcieap_config
+> +      - const: dpap0_aux
+> +      - const: dpap0_config
+> +      - const: dpap1_aux
+> +      - const: dpap1_config
+> +
+> +  interrupts:
+> +    items:
+> +      - description: Combined event interrupt for all three rings
+> +      - description: OOB Firmware interrupt
+> +
+> +  interrupt-names:
+> +    items:
+> +      - const: ring
+> +      - const: fw
+> +
+> +  clocks:
+> +    maxItems: 10
+> +
+> +  clock-names:
+> +    items:
+> +      - const: sys
+> +      - const: tmu
+> +      - const: ahb
+> +      - const: axi
+> +      - const: master
+> +      - const: phy_rx0
+> +      - const: phy_rx1
+> +      - const: sb
+> +      - const: dp0
+> +      - const: dp1
+> +
+> +  resets:
+> +    maxItems: 13
+> +
+> +  reset-names:
+> +    items:
+> +      - const: core
+> +      - const: phy_nocsr
+> +      - const: sys
+> +      - const: rx0
+> +      - const: rx1
+> +      - const: usb_pipe
+> +      - const: pcie_pipe
+> +      - const: tmu
+> +      - const: sideband_iface
+> +      - const: hia_master
+> +      - const: ahb
+> +      - const: dp0
+> +      - const: dp1
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  required-opps:
+> +    maxItems: 1
+> +
+> +  phys:
+> +    maxItems: 1
+> +
+> +  phy-names:
+> +    const: usb4
+> +
+> +  iommus:
+> +    maxItems: 1
+> +
+> +  interconnects:
+> +    maxItems: 2
+> +
+> +  interconnect-names:
+> +    items:
+> +      - const: usb4-ddr
+> +      - const: apps-usb4
+> +
+> +  mode-switch: true
+> +
+> +  wakeup-source: true
+> +
+> +allOf:
+> +  - $ref: /schemas/usb/usb-switch.yaml#
 
-appears to be incorrect. It was based on just phylink knowledge and a
-reasonable guess about what was going on with this driver. It seems
-no one had any better ideas on exactly what mac_interface was trying
-to describe.
+I don't think this should be including usb-switch.yaml (pretty much like
+QMP PHY isn't a usb-switch).
 
-Having looked at the information I now have, and referred back to the
-psat code, it appears to me that what is actually going on here is
-this:
-
-	MAC --- optional integrated PCS --- SerDes --- world (media or PHY)
-                                         ^          ^
-                                 mac_interface  phy_interface
-				        TBI      1000base-X
-
-It seems that TBI is used on the PCS output when talking to a SerDes
-for 1000BASE-X or SGMII. RTBI is used with a PHY that can talk RTBI.
-
-Considering just 2.5G and below, it seems to me that mac_interface
-can be determined from phy_interface:
-
-phy_interface		mac_interface
-SGMII			TBI
-1000BASE-X		TBI
-2500BASE-X		TBI
-RTBI			RTBI
-
-These are the "official" modes. There is also a seperate block that
-is used for SMII and RGMII which the code treats as a PCS (partly
-because it uses the same registers) so I'd throw into this:
-
-phy_interface		mac_interface
-SMII			SMII
-RGMII*			RGMII*
-
-For every other phy_interface <= 2.5G, mac_interface is basically
-not applicable, and we should be referring to phy_interface everywhere.
-
-In fact, I can't see that mac_interface actually matters for most of
-the driver. The only case I can see it matters is when the core
-supports multiple interfaces, and needs to be configured appropriately
-(which needs an entire core-wide reset if it changes.)
-
-So, I'm going to propose at the very least selecting whether the driver
-uses the PCS not based on mac_interface as the code currently does, but
-on phy_interface (actually the interface passed by phylink.) That will
-make phylink happier when stmmac is converted to phylink_pcs.
-
-This means I need to spend some time reworking my series... and yay,
-more patches to add to my already massive stack of stmmac patches. :/
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - reg-names
+> +  - interrupts
+> +  - interrupt-names
+> +  - clocks
+> +  - clock-names
+> +  - resets
+> +  - reset-names
+> +  - power-domains
+> +  - phys
+> +  - phy-names
+> +  - iommus
+> +  - interconnects
+> +  - interconnect-names
+> +  - mode-switch
+> +  - port
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,x1e80100-gcc.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        usb4_router0: usb4-host-router@15600000 {
+> +            compatible = "qcom,x1e80100-usb4-hr",
+> +                         "qcom,usb4-hr";
+> +            reg = <0x0 0x15600000 0x0 0x8000>,
+> +                  <0x0 0x15608000 0x0 0x70>,
+> +                  <0x0 0x15608070 0x0 0x500>,
+> +                  <0x0 0x1560d000 0x0 0x1000>,
+> +                  <0x0 0x15612000 0x0 0x1000>,
+> +                  <0x0 0x15613000 0x0 0xe000>,
+> +                  <0x0 0x15621000 0x0 0x2000>,
+> +                  <0x0 0x15623000 0x0 0x2000>,
+> +                  <0x0 0x1563f000 0x0 0x40000>,
+> +                  <0x0 0x1567f000 0x0 0x1000>,
+> +                  <0x0 0x15680000 0x0 0x1000>,
+> +                  <0x0 0x15681000 0x0 0x1000>,
+> +                  <0x0 0x15682000 0x0 0x1000>,
+> +                  <0x0 0x15683000 0x0 0x1000>,
+> +                  <0x0 0x15685000 0x0 0x1000>,
+> +                  <0x0 0x15686000 0x0 0x1000>,
+> +                  <0x0 0x15688000 0x0 0x1000>;
+> +            reg-names = "router",
+> +                        "router_config",
+> +                        "tmu_config",
+> +                        "port_group",
+> +                        "sideband",
+> +                        "uc_ram",
+> +                        "uc_per",
+> +                        "uc_mbox",
+> +                        "nhi",
+> +                        "cfg",
+> +                        "debug",
+> +                        "usbap_config",
+> +                        "pcieap_config",
+> +                        "dpap0_aux",
+> +                        "dpap0_config",
+> +                        "dpap1_aux",
+> +                        "dpap1_config";
+> +
+> +            interrupts = <GIC_SPI 472 IRQ_TYPE_LEVEL_HIGH>,
+> +                         <GIC_SPI 579 IRQ_TYPE_LEVEL_HIGH>;
+> +            interrupt-names = "ring",
+> +                              "fw";
+> +
+> +            clocks = <&gcc_usb4_0_sys_clk>,
+> +                     <&gcc_usb4_0_tmu_clk>,
+> +                     <&gcc_usb4_0_cfg_ahb_clk>,
+> +                     <&gcc_aggre_usb4_0_axi_clk>,
+> +                     <&gcc_usb4_0_master_clk>,
+> +                     <&gcc_usb4_0_phy_rx0_clk>,
+> +                     <&gcc_usb4_0_phy_rx1_clk>,
+> +                     <&gcc_usb4_0_sb_if_clk>,
+> +                     <&gcc_usb4_0_dp0_clk>,
+> +                     <&gcc_usb4_0_dp1_clk>;
+> +            clock-names = "sys",
+> +                          "tmu",
+> +                          "ahb",
+> +                          "axi",
+> +                          "master",
+> +                          "phy_rx0",
+> +                          "phy_rx1",
+> +                          "sb",
+> +                          "dp0",
+> +                          "dp1";
+> +
+> +            resets = <&gcc_usb4_0_bcr>,
+> +                     <&gcc_usb4phy_phy_prim_bcr>,
+> +                     <&gcc_usb4_0_misc_usb4_sys_bcr>,
+> +                     <&gcc_usb4_0_misc_rx_clk_0_bcr>,
+> +                     <&gcc_usb4_0_misc_rx_clk_1_bcr>,
+> +                     <&gcc_usb4_0_misc_usb_pipe_bcr>,
+> +                     <&gcc_usb4_0_misc_pcie_pipe_bcr>,
+> +                     <&gcc_usb4_0_misc_tmu_bcr>,
+> +                     <&gcc_usb4_0_misc_sb_if_bcr>,
+> +                     <&gcc_usb4_0_misc_hia_mstr_bcr>,
+> +                     <&gcc_usb4_0_misc_ahb_bcr>,
+> +                     <&gcc_usb4_0_misc_dp0_max_pclk_bcr>,
+> +                     <&gcc_usb4_0_misc_dp1_max_pclk_bcr>;
+> +            reset-names = "core",
+> +                          "phy_nocsr",
+> +                          "sys",
+> +                          "rx0",
+> +                          "rx1",
+> +                          "usb_pipe",
+> +                          "pcie_pipe",
+> +                          "tmu",
+> +                          "sideband_iface",
+> +                          "hia_master",
+> +                          "ahb",
+> +                          "dp0",
+> +                          "dp1";
+> +
+> +            power-domains = <&gcc GCC_USB4_0_GDSC>;
+> +
+> +            phys = <&usb4_phy>;
+> +            phy-names = "usb4";
+> +
+> +            iommus = <&apps_smmu 0x1440 0x0>;
+> +
+> +            interconnects = <&icc0 &icc1>,
+> +                            <&icc2 &icc3>;
+> +            interconnect-names = "usb4-ddr",
+> +                                 "apps-usb4";
+> +
+> +            mode-switch;
+> +
+> +            port {
+> +                usb4_0_mode_in: endpoint {
+> +                };
+> +            };
+> +        };
+> +    };
+> +...
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 9da37c8dee69de9421d4f70906b4e623a442d171..b607f0a66f953fb1ea72e3405820288850004dfe 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -25428,6 +25428,7 @@ L:	linux-usb@vger.kernel.org
+>  S:	Maintained
+>  T:	git git://git.kernel.org/pub/scm/linux/kernel/git/westeri/thunderbolt.git
+>  F:	Documentation/admin-guide/thunderbolt.rst
+> +F:	Documentation/devicetree/bindings/thunderbolt/
+>  F:	drivers/thunderbolt/
+>  F:	include/linux/thunderbolt.h
+>  
+> 
+> ---
+> base-commit: 05af764719214d6568adb55c8749dec295228da8
+> change-id: 20250916-topic-qcom_usb4_bindings-3e83e2209e1e
+> 
+> Best regards,
+> -- 
+> Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> 
 
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+With best wishes
+Dmitry
 
