@@ -1,123 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-73791-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73792-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66ECEB5A00B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 20:04:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id AA951B5A0C1
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 20:45:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 161CB1C05876
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 18:04:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 868997A7DE7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 18:43:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75910279DC9;
-	Tue, 16 Sep 2025 18:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB0D02DE202;
+	Tue, 16 Sep 2025 18:45:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFXckyTF"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="LR5V0opg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0EA32D5BE
-	for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 18:04:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758045867; cv=none; b=s/R1tMkWixuEUsHLQw2ueEEu+XrzfPoUviOOGsSxp+acWTVO5nzNm9wH/KcMBtJknve6Yf2OT+lsiKgS9F7MKEMVQrIKXTJ/U4araUN5tPOvE8xqCwM5hUVCBlSLY1dWAyNq7D6u/9a+ycCI6SXDSYHodqSQVBg0DfobFwrgqiw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758045867; c=relaxed/simple;
-	bh=PzcSQ8s7GfmxH7lt4N94QWfy7MnO8OSH0HGrI/uXssY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=N4WPlxau/+yXwHRS0jveFbhRCXlY134g5/Et9l+R5tLgFfAazaDqLGBA1X6ZpT9m3uOIw/4h4yrO9xJz4E2LZGiYHJ/xrJ33otKQyjdwNXROSDKOm9n4uc3/Ddlx2K75knnK/N1M1p6GoRgx1kqEJqUhzXyLEV04Hh5bHmW4hg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFXckyTF; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7742adc1f25so4012848b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 11:04:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758045865; x=1758650665; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KlMD9Q0JVitdbzhKoBVG9BxngG7xfjv+ACgNnBWgBr8=;
-        b=jFXckyTF2Joss6ICkOWP/E4pJDdtXhIA/G2BlkW5sPdHs2K/wVYIUM8GiaE/YM/fX8
-         YavV4Mw/Pa6HFFACKsgSyQQpKkDdy+XOpzsEtic8TPyDzH/TzGRAcyWp9g5HMnMaGMYn
-         IVMjJ07k6L1kzaBgY5YoUXqR6O3OfvcMb1CYLp1rWcMioDFlfbkOKMyZ2oKV4kZ+EVW9
-         IsJpYCszn98zDsQPacpdeK519NFOoxHq5kVr0PpENic3iMIpkPvrxe4IkcmVC821Br/8
-         5s0ttX5k2ctUNeSKESMvoSNY+1FzkLIOgbsm71CWRpgwPBFwoMhkSqivAkuQ8cCUuwbN
-         RF2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758045865; x=1758650665;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KlMD9Q0JVitdbzhKoBVG9BxngG7xfjv+ACgNnBWgBr8=;
-        b=Dmf2fTfWe0KRiZ+m4QJyRVWADadt4m6L+VETOjez5Qb3pSgfM09DgUlooe6s3heomy
-         t9ST4vXVn/GDfzge4QXndiq37yUj3F3aoRtysf0KrkN6Jwk4pVqWXhG8CXazoYNDCEZ1
-         JTQR5euFIuP6og8Fqp/+Ypx2A0eh6bKbdr7vv1KM4NJvFwtdvkJnMiJfO7CIKDCu3ddP
-         3IHApa/qMcLO0GW+ouSsh1Ocahvs8LEe/U9cyQmDWo/pcwTHboDVoP9ANNMh686vqbqW
-         4q8UHt+a1ERQbQy44CCRB2zwrFtwb7wcGcKekUIhHYywoLtnoA75QeTFWVF+rpovtKJL
-         Y6rQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU7fo+xW+xnUXuF/AHbpuqJsVG/GwQzIgE20zWJTPfr5m2DDGRi8ZF/R2LTKkxCcfeLVORfqsU/ED2VxZ/7@vger.kernel.org
-X-Gm-Message-State: AOJu0YyhnzRVcWxDDaaL0ytvJLUbjP72i2nFPKfW5q2TfP7utnJGupFc
-	5ougoleddvLl4+2DE9kxqwK10CzBSwtTgKA3sXSHi+2XN9HXulnQV/fx
-X-Gm-Gg: ASbGncsDzsnzYAjt4eR/iLsrML1Rl5V2ZR97uI4gX6WH9QnZnxnNZzyOMjikVZ8W2pn
-	EHN4q894Owwl52PP4PcJCh0bUl8Zr2KLXzQIRgmsuyGmBykggx9llw8E2hI/FDyzlxk2GFQitfo
-	6mdkyzs4xG6kl5jeQX7RumtaYXN2tX6h9TQYokBTMmUU8jX74LoJ5BWeMUwqTdhZIHtF0yL9dVM
-	Y936dKqD5rAfuKe6kUYSVWbIK1i+TE5OifDCMkLFhEMc8nvFYrH1bV9wTBRHhceCWYeEJCtlkZa
-	SJrP/VpvLe91TSCs8ORgWRcHjgMZVxoEZita13HQGH3r/b1YxeTG5ZwKRCQ7HPbIBa38t9/EOrO
-	pIDZa3uZad8wclt1xBs6IqC9HLoVbmA==
-X-Google-Smtp-Source: AGHT+IE64vEQGGYu0FHbritPemhJAwVBgkK+MK3Escq6TQXLMCHhie2Kq66Y/kds7nMxdc8J5lT6NA==
-X-Received: by 2002:a05:6a21:99a8:b0:243:d052:9833 with SMTP id adf61e73a8af0-2602aa809d1mr21763638637.25.1758045865256;
-        Tue, 16 Sep 2025 11:04:25 -0700 (PDT)
-Received: from archlinux ([152.245.61.22])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7760944a9a9sm16329819b3a.78.2025.09.16.11.04.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 16 Sep 2025 11:04:23 -0700 (PDT)
-From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>
-Cc: devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: arm: qcom: sort sm8450 boards
-Date: Tue, 16 Sep 2025 18:04:08 +0000
-Message-ID: <20250916180409.157115-1-ghatto404@gmail.com>
-X-Mailer: git-send-email 2.51.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F49275B0F;
+	Tue, 16 Sep 2025 18:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758048303; cv=pass; b=hnlbVrRyuSZHSoK/+62fFachtvJCXBLEhTBW/WBdCLFZlmBzacq+ajPOlwvSubMKNM2PHHgyWOMyIcBr3pL2T31r687eVI/vE0QCQIj1zLpFouiLl4rh5PZzAoGb2C7qOHm4RmmtxzdiOjxAjpTZ8v2r0zV26TYHyrRRXtUFOFs=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758048303; c=relaxed/simple;
+	bh=kg7Z4AVuzVyDq0Z/9aYlA/WI+AyxXsieVETIb4nuE6Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=B+FZ2x5hg8INlCPDtYoAYFloAcmLceLxLkYDQqBWZXfW6jwjI0Zvu9iklv+DnnfwaVunuhdY+swGDHfRGOPQRTgk+ndki9FV0dCZK7/I/6ok5c6f4xzeqGmm3UgIQVqhkxU01g3sFW1gqymT+nf161X6ewn9PG82pzG9PP67cPY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=LR5V0opg; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1758048275; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=hOCDdnG63dQU7qFtNpQB190B0Huwnk8I20iE5Nk5P4Ltn6woyC2lAy9FFoTofXQmo2aiaieXc8QucJRWJHkle6+PcWdE3HfN8gkjQePqDI+lOd52mW8cC8XNaqCYrk/hTQ52gP8h1zPEBRnLUZwOc3vbIvyAJmXIPOh9eYFPgVA=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1758048275; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=F8AzxSXiqyaK53ijp2vluA+48cHW4LFRyjsjMYLM0wg=; 
+	b=UGoeeqW/9wNW9iI+UIOYEPL1+gVhv+m9P+ikc2lEpy4JjIaMCCkGM7ZXyX3MANvL8f/ZG0uZuPqeC1tg844J0XeG+OnAmlObMS8UlEeYstQb5oezu16aJ7E0qH0WSDbguzkEMdtp7NfF+g6w7GFJXe8EiUyVtQy7vNll9+wFlPc=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
+	dmarc=pass header.from=<sebastian.reichel@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758048275;
+	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=F8AzxSXiqyaK53ijp2vluA+48cHW4LFRyjsjMYLM0wg=;
+	b=LR5V0opgPXLfbdKounrbU2gyC7JnFd9tyB9GieBJItv90Nc864qK6t35RjPVtG5n
+	A47RJ+s+UmMFWBl5BXx+50T8zZZwod111orZ4vXH79nmHxgWYzE14J1U/7zzyMOdToh
+	nXTc4SthnyTwFlJ86yun7TSGmgVjs3coGQoxo5Uw=
+Received: by mx.zohomail.com with SMTPS id 1758048273886940.1781889933253;
+	Tue, 16 Sep 2025 11:44:33 -0700 (PDT)
+Received: by venus (Postfix, from userid 1000)
+	id AE499180733; Tue, 16 Sep 2025 20:44:15 +0200 (CEST)
+Date: Tue, 16 Sep 2025 20:44:15 +0200
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Sudeep Holla <sudeep.holla@arm.com>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Andy Yan <andy.yan@rock-chips.com>, Mark Rutland <mark.rutland@arm.com>, 
+	Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
+	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
+	Vinod Koul <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
+	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
+	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
+	Elliot Berman <quic_eberman@quicinc.com>, Srinivas Kandagatla <srini@kernel.org>
+Subject: Re: [PATCH v14 01/10] power: reset: reboot-mode: Synchronize list
+ traversal
+Message-ID: <7eqa3rs3nvy7htvrkwyh5m7ok34n6c3h2dxn7xm2abdjzav4hp@i275ed4owgru>
+References: <20250815-arm-psci-system_reset2-vendor-reboots-v14-0-37d29f59ac9a@oss.qualcomm.com>
+ <20250815-arm-psci-system_reset2-vendor-reboots-v14-1-37d29f59ac9a@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="qa7akznga3nuo6q7"
+Content-Disposition: inline
+In-Reply-To: <20250815-arm-psci-system_reset2-vendor-reboots-v14-1-37d29f59ac9a@oss.qualcomm.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-1.4.3/258.4.7
+X-ZohoMailClient: External
 
-The bindings had samsung,r0q before sony,pdx*, which is out of
-alphabetical order, solve this issue by moving samsung,r0q before
-the pdx boards.
 
-Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
----
- Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+--qa7akznga3nuo6q7
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v14 01/10] power: reset: reboot-mode: Synchronize list
+ traversal
+MIME-Version: 1.0
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 4f254922069e..640fae56f6ac 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -1097,9 +1097,9 @@ properties:
-           - enum:
-               - qcom,sm8450-hdk
-               - qcom,sm8450-qrd
-+              - samsung,r0q
-               - sony,pdx223
-               - sony,pdx224
--              - samsung,r0q
-           - const: qcom,sm8450
- 
-       - items:
--- 
-2.51.0
+Hi,
 
+On Fri, Aug 15, 2025 at 08:05:06PM +0530, Shivendra Pratap wrote:
+> List traversals must be synchronized to prevent race conditions
+> and data corruption. The reboot-mode list is not protected by a
+> lock currently, which can lead to concurrent access and race.
+>=20
+> Introduce a mutex lock to guard all operations on the reboot-mode
+> list and ensure thread-safe access. The change prevents unsafe
+> concurrent access on reboot-mode list.
+>=20
+> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> ---
+
+This should use scoped_guard() and a Fixes: tag. Otherwise LGTM.
+
+Greetings,
+
+-- Sebastian
+
+>  drivers/power/reset/reboot-mode.c | 24 ++++++++++++++++++++----
+>  include/linux/reboot-mode.h       |  4 ++++
+>  2 files changed, 24 insertions(+), 4 deletions(-)
+>=20
+> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/rebo=
+ot-mode.c
+> index fba53f638da04655e756b5f8b7d2d666d1379535..42bb99128ed3846d4bff62416=
+dc31135ddeaeb90 100644
+> --- a/drivers/power/reset/reboot-mode.c
+> +++ b/drivers/power/reset/reboot-mode.c
+> @@ -29,9 +29,14 @@ static unsigned int get_reboot_mode_magic(struct reboo=
+t_mode_driver *reboot,
+>  	if (!cmd)
+>  		cmd =3D normal;
+> =20
+> -	list_for_each_entry(info, &reboot->head, list)
+> -		if (!strcmp(info->mode, cmd))
+> +	mutex_lock(&reboot->rb_lock);
+> +	list_for_each_entry(info, &reboot->head, list) {
+> +		if (!strcmp(info->mode, cmd)) {
+> +			mutex_unlock(&reboot->rb_lock);
+>  			return info->magic;
+> +		}
+> +	}
+> +	mutex_unlock(&reboot->rb_lock);
+> =20
+>  	/* try to match again, replacing characters impossible in DT */
+>  	if (strscpy(cmd_, cmd, sizeof(cmd_)) =3D=3D -E2BIG)
+> @@ -41,9 +46,14 @@ static unsigned int get_reboot_mode_magic(struct reboo=
+t_mode_driver *reboot,
+>  	strreplace(cmd_, ',', '-');
+>  	strreplace(cmd_, '/', '-');
+> =20
+> -	list_for_each_entry(info, &reboot->head, list)
+> -		if (!strcmp(info->mode, cmd_))
+> +	mutex_lock(&reboot->rb_lock);
+> +	list_for_each_entry(info, &reboot->head, list) {
+> +		if (!strcmp(info->mode, cmd_)) {
+> +			mutex_unlock(&reboot->rb_lock);
+>  			return info->magic;
+> +		}
+> +	}
+> +	mutex_unlock(&reboot->rb_lock);
+> =20
+>  	return 0;
+>  }
+> @@ -77,7 +87,9 @@ int reboot_mode_register(struct reboot_mode_driver *reb=
+oot)
+>  	int ret;
+> =20
+>  	INIT_LIST_HEAD(&reboot->head);
+> +	mutex_init(&reboot->rb_lock);
+> =20
+> +	mutex_lock(&reboot->rb_lock);
+>  	for_each_property_of_node(np, prop) {
+>  		if (strncmp(prop->name, PREFIX, len))
+>  			continue;
+> @@ -113,12 +125,14 @@ int reboot_mode_register(struct reboot_mode_driver =
+*reboot)
+>  	reboot->reboot_notifier.notifier_call =3D reboot_mode_notify;
+>  	register_reboot_notifier(&reboot->reboot_notifier);
+> =20
+> +	mutex_unlock(&reboot->rb_lock);
+>  	return 0;
+> =20
+>  error:
+>  	list_for_each_entry(info, &reboot->head, list)
+>  		kfree_const(info->mode);
+> =20
+> +	mutex_unlock(&reboot->rb_lock);
+>  	return ret;
+>  }
+>  EXPORT_SYMBOL_GPL(reboot_mode_register);
+> @@ -133,8 +147,10 @@ int reboot_mode_unregister(struct reboot_mode_driver=
+ *reboot)
+> =20
+>  	unregister_reboot_notifier(&reboot->reboot_notifier);
+> =20
+> +	mutex_lock(&reboot->rb_lock);
+>  	list_for_each_entry(info, &reboot->head, list)
+>  		kfree_const(info->mode);
+> +	mutex_unlock(&reboot->rb_lock);
+> =20
+>  	return 0;
+>  }
+> diff --git a/include/linux/reboot-mode.h b/include/linux/reboot-mode.h
+> index 4a2abb38d1d612ec0fdf05eb18c98b210f631b7f..b73f80708197677db8dc2e43a=
+ffc519782b7146e 100644
+> --- a/include/linux/reboot-mode.h
+> +++ b/include/linux/reboot-mode.h
+> @@ -2,11 +2,15 @@
+>  #ifndef __REBOOT_MODE_H__
+>  #define __REBOOT_MODE_H__
+> =20
+> +#include <linux/mutex.h>
+> +
+>  struct reboot_mode_driver {
+>  	struct device *dev;
+>  	struct list_head head;
+>  	int (*write)(struct reboot_mode_driver *reboot, unsigned int magic);
+>  	struct notifier_block reboot_notifier;
+> +	/*Protects access to reboot mode list*/
+> +	struct mutex rb_lock;
+>  };
+> =20
+>  int reboot_mode_register(struct reboot_mode_driver *reboot);
+>=20
+> --=20
+> 2.34.1
+>=20
+>=20
+
+--qa7akznga3nuo6q7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmjJr/gACgkQ2O7X88g7
++prrKRAAmEnXJSTUr9zaDNlJyvd/+QFjmEvEdR7ulx2pMArVwOuEh/Icc6UCYXoM
+Bdfge4fdpyVtWbQZFyRCnTuFL1A++0EE5w+7yXJIXOr2+6DLy95jqHeA4aOeh4Pw
+mxHuq2szqBl6V4iJTRMa40rXuYSjHtfnaKeroobDrDSO+cQj+vk9f9gXuvLwa8Qx
+ORwZ/8FEeZRhUDFGuckhr5eYDbFoFvt5xqLcNxGdpRm0Ph6YdeQZhMTu6XRl+BjX
+Et2rNFsg4taCnyRZfUQ75yu3rz/tf+CoSzR5U6CF14EXE6Fug8Dv89EL7HEtAssX
+ZZ2hhNwPY2MntJRi/RvXVcjYJs5ibANyWTf4HDHZlAuwX7ctOqvJFpVwmqUZOV3u
+RpVGu5JfFbSNvx5ec672ffMOf7zfTG7MelUjOYAaEeVhkrlgO87/3Tg7Z6adIDog
+91afcQjJBAyGeyIQb+EyBCcEK/Ts52Vhg4wbg/uYFczsLcTphPg9kPi4VunzfieY
+pTDJuAKQm7FSgxBACopqbf0K1W0tY6zhQNyA7sMuS4+DhMDrp38W0eQGhl9rD9zx
+Qu3GVsrCreplugk8oayxZvX0274cBtpbUW40EXv5hJaAIKzHzSmzhMrKQPna0skT
+o0HoXcGldCK7VEIXcjAIBjRNomjqybmvdfAYXoxbEWBaZZci98o=
+=hRJY
+-----END PGP SIGNATURE-----
+
+--qa7akznga3nuo6q7--
 
