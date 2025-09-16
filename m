@@ -1,191 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-73721-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73722-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66B32B598ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:11:17 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C479EB59905
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 16:12:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B680D16666A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 14:08:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2CE471C03D35
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 14:09:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98AB6341651;
-	Tue, 16 Sep 2025 14:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 680B93431E2;
+	Tue, 16 Sep 2025 14:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CSfXvnU5"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="X03ZJERA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5B04129E6E;
-	Tue, 16 Sep 2025 14:03:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5062129E6E;
+	Tue, 16 Sep 2025 14:03:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758031399; cv=none; b=oYWKoIcvoKt31M0zd4EQBPwfijsaHOecQIpwqNa1Pxv1UT+0tyTcIbdOQLsWoAleBxJNP3qpKOxJzwyX0j/k5J+SyhwGNUO7jDGSDeAzQ7Od5+Zb+J3Ikiee2Lcdvajr2OyY07BK7lMHmj4JrdnWdqcUe6FyWB8NH7T0yFHZV7M=
+	t=1758031428; cv=none; b=JwUDG0TneVLuOt0Gx2+luPIhKJ2JI1gSwfPEnrezTp5ZPdTZO7f3YfD8vn0OebxRxcUHus/yqaBiGmgvGwPLN5pk87FCsigooIRRCiUsp8qRTQoduZ74XucOcHq2sx8CTasr5dXLa7KzE4kELD6GdooIO0QxOYgqnO9i0lNMvdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758031399; c=relaxed/simple;
-	bh=lFV+fw+L8i1jg9c+p1LCKtySyEmUlzqQ14ODWK6gkok=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=MtdjnYCs6a1u/qZVty5ROvnwSBUirII/rCTooGy4uNr/WlE1PUyVPKpiacCANCTmr5TgtckNRCyD49Fa31U6CTjpoms4Nj1YJL1x5J/Gzm41zs/rUl5i6jB/6Mz3/Pp9RBCXN3tP1gtrmhZQ3XdzA+pXLOEwKaMxvK59rpqzOGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CSfXvnU5; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1758031428; c=relaxed/simple;
+	bh=jDkzduPIFAj6tQpA9LK703PSOe4qFHKJ6yj+8XUz7U4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=q8ZTogQhAU9wRDQai+xOH5Vvctj/L1NCsSlUy97Q81u79jJ5goKIOzL/THfaAw9L7nsMO0WRLTS4kKNVLnoS1JjMa8wrLY1OMHtGANO19ey5p+uP7n70A+dLfvJ9lapo7YZ/v048ijnbGitqQnKt2yntTDvKB4/o2Roknxu8oRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=X03ZJERA; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58GAKlDS020394;
-	Tue, 16 Sep 2025 14:03:06 GMT
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58GAmwKL021429;
+	Tue, 16 Sep 2025 14:03:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=v8Tu5LUQavuzbEX1FDO9TFCB23DnjS203lh
-	5d2K19V4=; b=CSfXvnU5gc46rbapwyfyBELUnEhb/1hCwvFt3/NS3O04Nvr2/eN
-	slmvlMCaMBMHREWkdg8ASCIPbZc3jGuIhW8H/Ale27Xc3WvDkmLzj0esHvAZkO4e
-	LxL/M5W1ODESLAwOlWvonKjZsdoF4qCeZ71ZFDqtHqPnSEoWd5VqwGZjkBGn8C42
-	7S9LpkX3uFZv5USwP/VMJDcf2X4yiaNFp34SaUva8q20013ZAFMD6eAMJftTJ2cY
-	RPU6xpD1tf9nNYTuSJwfJmpv6lK/0Vn3kMyUtGI2zaaslJpccSKxEJ+tqIhUKUtU
-	4e9MpcueM0GlRyxaFCId6MIK/quIEcx6lPQ==
-Received: from aptaippmta01.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4951chh0v6-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6X4Oo9dw265PURxeYMUaHsX4sLsJPuBPvb+0hPhB0tw=; b=X03ZJERAb6N+nykO
+	fRhY76URm/EZRth1agRZGE+rmcUE0A8iieizzc7LMY61aORwVFv4jx5sPQiqn8PM
+	LB3F3scF2PRfbAxdef75VtJFXwB9TUByWNjGmUdT9HDx3J/PPMSZQa17gJNT7w9O
+	ztT31JoyjV/2tAQ24qj3EwzKu8cWXpenI/qJSGPtMfXnS2YZsMBw4Ztm1jsQ6Wdm
+	UEMAanrQ4ZjdrwPXf17KUbxwLXBo9BVremMaIRqhOYxpwMh4kt8llEVyGD6YEdDg
+	Fp6Ehbjyrk7JBL1YqIFhuINTmzto00p3+U05za7REZLW+kP//hoDurAu/3cgrJ8K
+	VKyS1g==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 494yma92qj-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Sep 2025 14:03:05 +0000 (GMT)
-Received: from pps.filterd (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 58GE32Bt019834;
-	Tue, 16 Sep 2025 14:03:02 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 4951pmcha5-1
+	Tue, 16 Sep 2025 14:03:26 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58GE3Ppj030456
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Sep 2025 14:03:02 +0000
-Received: from APTAIPPMTA01.qualcomm.com (APTAIPPMTA01.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58GE31P4019819;
-	Tue, 16 Sep 2025 14:03:02 GMT
-Received: from bt-iot-sh02-lnx.ap.qualcomm.com (bt-iot-sh02-lnx.qualcomm.com [10.253.144.65])
-	by APTAIPPMTA01.qualcomm.com (PPS) with ESMTPS id 58GE31aQ019807
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 16 Sep 2025 14:03:01 +0000
-Received: by bt-iot-sh02-lnx.ap.qualcomm.com (Postfix, from userid 4467449)
-	id 9781523404; Tue, 16 Sep 2025 22:03:00 +0800 (CST)
-From: Shuai Zhang <quic_shuaz@quicinc.com>
-To: dmitry.baryshkov@oss.qualcomm.com, marcel@holtmann.org,
-        luiz.dentz@gmail.com
-Cc: linux-bluetooth@vger.kernel.org, stable@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        quic_chejiang@quicinc.com, Shuai Zhang <quic_shuaz@quicinc.com>
-Subject: [PATCH v12] Bluetooth: hci_qca: Fix SSR (SubSystem Restart) fail when BT_EN is pulled up by hw
-Date: Tue, 16 Sep 2025 22:02:59 +0800
-Message-Id: <20250916140259.400285-1-quic_shuaz@quicinc.com>
-X-Mailer: git-send-email 2.34.1
+	Tue, 16 Sep 2025 14:03:25 GMT
+Received: from [10.253.73.4] (10.80.80.8) by nasanex01b.na.qualcomm.com
+ (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 16 Sep
+ 2025 07:03:18 -0700
+Message-ID: <1e7d7066-fa0b-4ebc-8f66-e3208bb6f948@quicinc.com>
+Date: Tue, 16 Sep 2025 22:03:14 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 02/10] dt-bindings: clock: Add required
+ "interconnect-cells" property
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        Konrad Dybcio
+	<konrad.dybcio@oss.qualcomm.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette
+	<mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        "Varadarajan
+ Narayanan" <quic_varada@quicinc.com>,
+        Georgi Djakov <djakov@kernel.org>, "Rob
+ Herring" <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        "Conor
+ Dooley" <conor+dt@kernel.org>,
+        Anusha Rao <quic_anusha@quicinc.com>,
+        "Manikanta Mylavarapu" <quic_mmanikan@quicinc.com>,
+        Devi Priya
+	<quic_devipriy@quicinc.com>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Richard
+ Cochran" <richardcochran@gmail.com>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
+        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
+        <quic_leiwei@quicinc.com>, <quic_pavir@quicinc.com>,
+        <quic_suruchia@quicinc.com>
+References: <20250909-qcom_ipq5424_nsscc-v5-0-332c49a8512b@quicinc.com>
+ <20250909-qcom_ipq5424_nsscc-v5-2-332c49a8512b@quicinc.com>
+ <20250912-nocturnal-horse-of-acumen-5b2cbd@kuoka>
+ <b7487ab1-1abd-40ca-8392-fdf63fddaafc@oss.qualcomm.com>
+ <0aa8bf54-50e4-456d-9f07-a297a34b86c5@linaro.org>
+Content-Language: en-US
+From: Luo Jie <quic_luoj@quicinc.com>
+In-Reply-To: <0aa8bf54-50e4-456d-9f07-a297a34b86c5@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=eeo9f6EH c=1 sm=1 tr=0 ts=68c96e19 cx=c_pps
- a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=i1iVT939vnhokII3DuMA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-ORIG-GUID: Ol-zXOWSmWPWNRGqDV8MgV1kQVU1yDx_
-X-Proofpoint-GUID: Ol-zXOWSmWPWNRGqDV8MgV1kQVU1yDx_
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAzNiBTYWx0ZWRfXx9VA/G0uZM/F
- UWC6R8VkKKFYmtwA73vDw6y032wNfEZP8dEFhw1kC75mQEBCOin4YXvWO217qcOxVlCgy2dzo+A
- IgDwa4D4jMwQiOmOT3Yr5LWB/BkSy/4fLQzE4UkhoYAoIy68kROH3B9x8qoNhk+C8B2QJ41ABb5
- 2glz2q3unbX+H5V/ByL/aqPHP0ztyXlWAFYLo83lCIf/1YR4dZiSO8/IbQg+VLdAUzlyfrGkZ5c
- YG5KMccD1Uv0XHX1JIAdWLmPnYw6piiK0xCK5MTPtGChKb6vaZBfqdVGbGEUO9XzrqIzQ9iXgwb
- SPLeXqgK2xV/hBy8n2GRH0NcCXZAzcpfJYTqQENUeMXCG3Oh0ARsofKd9xsOwB9yVVUF6aKG0xZ
- ZcmA8O3+
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTEzMDAxOSBTYWx0ZWRfX+9fniE3pPWHB
+ OK1mPcvWK39tjQpXeg8MT+BqotrnwWTpPXA47FselkKhjNIKTmvcDr6saYw99d/BVXIJhsDfVHF
+ etU73HHUoARWi+cuEUe8kEn/BU/2eceCg7Dbb0SjbIcoVuKZE1W1IK8KPMGTthcJmUCAYXaTF1g
+ CmoetI2YNTVgs5IaaRvgpKChIoq4svHTMffGrXGdZIM0MujvmF6vY7J7V3QxNTTGFqDPzFmCGEI
+ FHPXtmj2Ll8giOhyYfxfJVLYTozy2RMuteHsZySMVg/01HkUkCTYqjMQEWhrDxlCKGaIePm2pnm
+ H8rVrDGCmQCoIF0paiVaQAAOxAw2TzK20GcvInI19G3+HEPn0mvLaecbopPySZGzt01qjn9umyu
+ 9KiSVr3P
+X-Authority-Analysis: v=2.4 cv=cdTSrmDM c=1 sm=1 tr=0 ts=68c96e2e cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
+ a=gKVqG3yGxRJGUVRL1-wA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: LvqLRf81n_ETBpixAjO1G1xzpO7c-pka
+X-Proofpoint-GUID: LvqLRf81n_ETBpixAjO1G1xzpO7c-pka
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-16_02,2025-09-12_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 impostorscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 phishscore=0 spamscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509130036
+ clxscore=1015 phishscore=0 priorityscore=1501 adultscore=0 suspectscore=0
+ bulkscore=0 impostorscore=0 spamscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509130019
 
-On QCS9075 and QCA8275 platforms, the BT_EN pin is always pulled up by hw
-and cannot be controlled by the host. As a result, in case of a firmware
-crash, the host cannot trigger a cold reset. Instead, the BT controller
-performs a warm restart on its own, without reloading the firmware.
 
-This leads to the controller remaining in IBS_WAKE state, while the host
-expects it to be in sleep mode. The mismatch causes HCI reset commands
-to time out. Additionally, the driver does not clear internal flags
-QCA_SSR_TRIGGERED and QCA_IBS_DISABLED, which blocks the reset sequence.
-If the SSR duration exceeds 2 seconds, the host may enter TX sleep mode
-due to tx_idle_timeout, further preventing recovery. Also, memcoredump_flag
-is not cleared, so only the first SSR generates a coredump.
 
-Tell driver that BT controller has undergone a proper restart sequence:
+On 9/12/2025 5:16 PM, Krzysztof Kozlowski wrote:
+> On 12/09/2025 11:13, Konrad Dybcio wrote:
+>> On 9/12/25 9:04 AM, Krzysztof Kozlowski wrote:
+>>> On Tue, Sep 09, 2025 at 09:39:11PM +0800, Luo Jie wrote:
+>>>> The Networking Subsystem (NSS) clock controller acts as both a clock
+>>>> provider and an interconnect provider. The #interconnect-cells property
+>>>> is mandatory in the Device Tree Source (DTS) to ensure that client
+>>>> drivers, such as the PPE driver, can correctly acquire ICC clocks from
+>>>> the NSS ICC provider.
+>>>>
+>>>> Although this property is already present in the NSS CC node of the DTS
+>>>> for CMN PLL for IPQ9574 SoC which is currently supported, it was previously
+>>>> omitted from the list of required properties in the bindings documentation.
+>>>> Adding this as a required property is not expected to break the ABI for
+>>>> currently supported SoC.
+>>>>
+>>>> Marking #interconnect-cells as required to comply with Device Tree (DT)
+>>>> binding requirements for interconnect providers.
+>>>
+>>> DT bindings do not require interconnect-cells, so that's not a correct
+>>> reason. Drop them from required properties.
+>>
+>> "Mark #interconnect-cells as required to allow consuming the provided
+>> interconnect endpoints"?
+> 
+> 
+> The point is they do not have to be required.
 
-- Clear QCA_SSR_TRIGGERED and QCA_IBS_DISABLED flags after SSR.
-- Add a 50ms delay to allow the controller to complete its warm reset.
-- Reset tx_idle_timer to prevent the host from entering TX sleep mode.
-- Clear memcoredump_flag to allow multiple coredump captures.
+The reason for adding this property as required is to enforce
+the DTS to define this important resource correctly. If this property
+is missed from the DTS, the client driver such as PPE driver will not
+be able to initialize correctly. This is necessary irrespective of
+whether these clocks are enabled by bootloader or not. The IPQ9574 SoC
+DTS defines this property even though the property was not marked as
+mandatory in the bindings, and hence the PPE driver is working.
 
-Apply these steps only when HCI_QUIRK_NON_PERSISTENT_SETUP is not set,
-which indicates that BT_EN is defined in DTS and cannot be toggled.
+By now marking it as required, we can enforce that DTS files going
+forward for newer SoC (IPQ5424 and later) are properly defining this
+resource. This prevents any DTS misconfiguration and improves bindings
+validation as new SoCs are introduced.
 
-Refer to the comment in include/net/bluetooth/hci.h for details on
-HCI_QUIRK_NON_PERSISTENT_SETUP.
-
-Changes in v12:
-- Rewrote commit to clarify the actual issue and affected platforms.
-- Used imperative language to describe the fix.
-- Explained the role of HCI_QUIRK_NON_PERSISTENT_SETUP.
-
-Signed-off-by: Shuai Zhang <quic_shuaz@quicinc.com>
----
- drivers/bluetooth/hci_qca.c | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
-
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 4cff4d9be..2d6560482 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -1653,6 +1653,39 @@ static void qca_hw_error(struct hci_dev *hdev, u8 code)
- 		skb_queue_purge(&qca->rx_memdump_q);
- 	}
- 
-+	/*
-+	 * If the BT chip's bt_en pin is connected to a 3.3V power supply via
-+	 * hardware and always stays high, driver cannot control the bt_en pin.
-+	 * As a result, during SSR (SubSystem Restart), QCA_SSR_TRIGGERED and
-+	 * QCA_IBS_DISABLED flags cannot be cleared, which leads to a reset
-+	 * command timeout.
-+	 * Add an msleep delay to ensure controller completes the SSR process.
-+	 *
-+	 * Host will not download the firmware after SSR, controller to remain
-+	 * in the IBS_WAKE state, and the host needs to synchronize with it
-+	 *
-+	 * Since the bluetooth chip has been reset, clear the memdump state.
-+	 */
-+	if (!hci_test_quirk(hu->hdev, HCI_QUIRK_NON_PERSISTENT_SETUP)) {
-+		/*
-+		 * When the SSR (SubSystem Restart) duration exceeds 2 seconds,
-+		 * it triggers host tx_idle_delay, which sets host TX state
-+		 * to sleep. Reset tx_idle_timer after SSR to prevent
-+		 * host enter TX IBS_Sleep mode.
-+		 */
-+		mod_timer(&qca->tx_idle_timer, jiffies +
-+				  msecs_to_jiffies(qca->tx_idle_delay));
-+
-+		/* Controller reset completion time is 50ms */
-+		msleep(50);
-+
-+		clear_bit(QCA_SSR_TRIGGERED, &qca->flags);
-+		clear_bit(QCA_IBS_DISABLED, &qca->flags);
-+
-+		qca->tx_ibs_state = HCI_IBS_TX_AWAKE;
-+		qca->memdump_state = QCA_MEMDUMP_IDLE;
-+	}
-+
- 	clear_bit(QCA_HW_ERROR_EVENT, &qca->flags);
- }
- 
--- 
-2.34.1
+> 
+> Best regards,
+> Krzysztof
 
 
