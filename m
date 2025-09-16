@@ -1,80 +1,76 @@
-Return-Path: <linux-arm-msm+bounces-73795-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73796-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09A71B5A0DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 21:03:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7DC0BB5A141
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 21:19:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 7E15F1C04BAD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:03:53 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 346AE2A6F34
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 16 Sep 2025 19:19:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81B5A2D47F1;
-	Tue, 16 Sep 2025 19:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 41F482D9488;
+	Tue, 16 Sep 2025 19:19:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="gsW460ix"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="VT3qMEzf"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E151A2389;
-	Tue, 16 Sep 2025 19:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EC321E098;
+	Tue, 16 Sep 2025 19:19:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758049406; cv=pass; b=RzmPYzGa7OtQTVdnUQzlBvFDZZ1Q6z8hKnEC6BGUD2Etr62KiUudircAUBpAPmYSwcHartqcSmRjOY6ehlnIf2l8ESQDVdj0W+nF5MGvMK660EXkpJpp27XYVano8UxrUztpmX8b6Jd+YTC+W5M+oRszV/kGZ9f0kc7wHII24OA=
+	t=1758050364; cv=pass; b=syoxRISKjmrC7RLSlkWT7jx3E7DH4Egaq1SvnVO8nQpBuJJAGnzbtO66Hx2TqO4FhWoNkhSO0X/Nt2D8dWhGkCFHqwhoNxq2WGgcprhrAsC3fDsduYj15WXe9GhE7D+6hoCp6KoKW+Gb7dPcjs4s2s2CLzDPBcu1eYQu5YUpZ0M=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758049406; c=relaxed/simple;
-	bh=Jz1/U05SCwquRX/JQQZs4ngB0vGf9gKVPSHcX4eRJ6M=;
+	s=arc-20240116; t=1758050364; c=relaxed/simple;
+	bh=l2W5f1wjH+NU+wN5+BLNLhE7Zjola1cMNFKsxlO3Av4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jbite39wpJvZMGUZzWOVHYZRWbfHC/W5LifQSq6H41jzKHO5ziA0wJgYcBIGiX19q0e5UGn6vfZa2fYj8h7w0t/C2zOY1yAlyIUw0Fwf1WGHYKq2H52ROM2iNzwzn+JM/YQ8eFXywp5XuqtSJn159n/T/QDhn7JWLA9+lYOjMuw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=gsW460ix; arc=pass smtp.client-ip=136.143.188.112
+	 Content-Type:Content-Disposition:In-Reply-To; b=GGZERtLmSR0G2qanDBguqP4x+0eS2zfrTcinqZ2oLZqf7HkNQyUnHWL4ohcrKR3Grngn4XqneSdJqZZiTAV1XM+Zh9tYXjwOMz+MsLolehVqKQwPXg/mqN8j9XBQkqdAXw51YGvNuF58OBjmbkdKIeF8kKZ/VROmmex+AqBwr/o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=VT3qMEzf; arc=pass smtp.client-ip=136.143.188.112
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1758049380; cv=none; 
+ARC-Seal: i=1; a=rsa-sha256; t=1758050337; cv=none; 
 	d=zohomail.com; s=zohoarc; 
-	b=LSLQIrN4wdI567Qx4kfSQGcakSZxqqKWJ95JLo/WRlzYsTYxTudM/nY279cbR7BThDd86gKHoMOoMqVif9eWVV05HIugLmCyqtmMtmPRpv9vhcNlYc9QVAmxzOYRLSCL45cL9KawobAUTg87l7JS/rf7eyq1mFAfvEYh2CO3qao=
+	b=EE/E4mBeNgVMc8CgxnaAYsuEngiFC/qBKjH/XEUsQHdzdHWhTfD0+OQVgCEj0Gu65CXuFiJAZpk5cWnk+5luHZuBZthypnISlq+ukGhyYwbQsQRrQ3HZAUgygJXQILLlswRdAKj/NOBjIAPwDBg8wx7PHo1o3vM49uc/UJWEV84=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1758049380; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=AmLHLzUeV9VSK4+ZRmRQHJz37kpqz+83jxn06y7PIN0=; 
-	b=nA6meiVA5PjXqY8j6DGtpCCFuHXidyQeZKsGw7ZXNXB/tuPey5D5hy59Y/11TQOrNn1oIOspCvfd3G9B9ZlgcGKBdgS8oPm1XTDcUVPj7SflSRkvsfAXRB8p/4hVVenrRV0AU4/tQH1P5VESh9Gd8P9dD10U0bQdS7Ttkiwlx50=
+	t=1758050337; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=M6YkaVAVR8lt6A5LvHddbSlxJ7ZMT9y1dxIlFzTD5mA=; 
+	b=Xbyg8loUBpnfHjL+bZg7jm4V5I3KRDcNQ/+KZII8KrLbFWaLRPH0sG+lPBcQWVaZ8KNiFooD9T7pZYBnVIiOsJuahFp61yB8NrMzAjSewY/V8sNUAdtxqCsHjqRdUbKTxPWr1aqbFXZtWwykOjX2vqofUUBuMdqDa02OpwUr67A=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
 	dkim=pass  header.i=collabora.com;
 	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
 	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758049380;
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758050337;
 	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
 	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=AmLHLzUeV9VSK4+ZRmRQHJz37kpqz+83jxn06y7PIN0=;
-	b=gsW460ix/8dOFJPUY4Tsyf/O/owKBsFYUTEfOYVngiD6lXOWjxUWK3q2QHkI7UmG
-	kfHM1J3VzZ0o0g6Jog1hxujJFWKWjbO2i23iX5Mg/BZ6jf6RVMjvUOtQxEPVBBFMk6I
-	qNlQQQvSrF/Z1BY2As9OIq3QV03ZZ61KQofxASKE=
-Received: by mx.zohomail.com with SMTPS id 1758049378526820.4472844737274;
-	Tue, 16 Sep 2025 12:02:58 -0700 (PDT)
+	bh=M6YkaVAVR8lt6A5LvHddbSlxJ7ZMT9y1dxIlFzTD5mA=;
+	b=VT3qMEzfyoYWJeqvMzN9nQAuZvKLmIWtPgg8zaj4QFZ+YDXnxWfYbBJrqIbj0BQ2
+	PHLU/GFqJSsiu/OSeStDLitodnTIiveffJuG1Nvme+wODoceJPLT0mJubl0mQMXg1pc
+	s4QZTPL+fXC1n8zMXSqsxOxWEjwhFqwxoIiwKFak=
+Received: by mx.zohomail.com with SMTPS id 1758050334998606.6949339145506;
+	Tue, 16 Sep 2025 12:18:54 -0700 (PDT)
 Received: by venus (Postfix, from userid 1000)
-	id 8ADE9180733; Tue, 16 Sep 2025 21:02:41 +0200 (CEST)
-Date: Tue, 16 Sep 2025 21:02:41 +0200
+	id 26E81180733; Tue, 16 Sep 2025 21:18:40 +0200 (CEST)
+Date: Tue, 16 Sep 2025 21:18:40 +0200
 From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
-	Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Sudeep Holla <sudeep.holla@arm.com>, Souvik Chakravarty <Souvik.Chakravarty@arm.com>, 
+To: fenglin.wu@oss.qualcomm.com
+Cc: Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Andy Yan <andy.yan@rock-chips.com>, Mark Rutland <mark.rutland@arm.com>, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Arnd Bergmann <arnd@arndb.de>, 
-	Konrad Dybcio <konradybcio@kernel.org>, cros-qcom-dts-watchers@chromium.org, 
-	Vinod Koul <vkoul@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
-	Will Deacon <will@kernel.org>, Florian Fainelli <florian.fainelli@broadcom.com>, 
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>, 
-	Stephen Boyd <swboyd@chromium.org>, Andre Draszik <andre.draszik@linaro.org>, 
-	linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, 
-	Elliot Berman <quic_eberman@quicinc.com>, Srinivas Kandagatla <srini@kernel.org>
-Subject: Re: [PATCH v14 05/10] power: reset: reboot-mode: Expose sysfs for
- registered reboot_modes
-Message-ID: <lgoahuqgoajuj352h7rnjfyeeyf24x45pj3qmidc6qqrc75vej@3hrblxle7uyk>
-References: <20250815-arm-psci-system_reset2-vendor-reboots-v14-0-37d29f59ac9a@oss.qualcomm.com>
- <20250815-arm-psci-system_reset2-vendor-reboots-v14-5-37d29f59ac9a@oss.qualcomm.com>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, David Collins <david.collins@oss.qualcomm.com>, 
+	=?utf-8?Q?Gy=C3=B6rgy?= Kurucz <me@kuruczgy.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com, devicetree@vger.kernel.org, 
+	linux-usb@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/8] power: supply: core: Add state_of_health power
+ supply property
+Message-ID: <5nxoadknvk5wt5gniekfinhe42dm72kbluxcmsqsw57g2xpr2a@jgury7ds6bcb>
+References: <20250915-qcom_battmgr_update-v4-0-6f6464a41afe@oss.qualcomm.com>
+ <20250915-qcom_battmgr_update-v4-2-6f6464a41afe@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,174 +78,133 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rvds47h6heygbawa"
+	protocol="application/pgp-signature"; boundary="s45526ndzapes52i"
 Content-Disposition: inline
-In-Reply-To: <20250815-arm-psci-system_reset2-vendor-reboots-v14-5-37d29f59ac9a@oss.qualcomm.com>
+In-Reply-To: <20250915-qcom_battmgr_update-v4-2-6f6464a41afe@oss.qualcomm.com>
 X-Zoho-Virus-Status: 1
 X-Zoho-Virus-Status: 1
 X-Zoho-AV-Stamp: zmail-av-1.4.3/258.4.7
 X-ZohoMailClient: External
 
 
---rvds47h6heygbawa
+--s45526ndzapes52i
 Content-Type: text/plain; protected-headers=v1; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v14 05/10] power: reset: reboot-mode: Expose sysfs for
- registered reboot_modes
+Subject: Re: [PATCH v4 2/8] power: supply: core: Add state_of_health power
+ supply property
 MIME-Version: 1.0
 
 Hi,
 
-On Fri, Aug 15, 2025 at 08:05:10PM +0530, Shivendra Pratap wrote:
-> Currently, there is no standardized mechanism for userspace to
-> discover which reboot-modes are supported on a given platform.
-> This limitation forces tools and scripts to rely on hardcoded
-> assumptions about the supported reboot-modes.
+On Mon, Sep 15, 2025 at 04:49:54PM +0800, Fenglin Wu via B4 Relay wrote:
+> From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 >=20
-> Create a class 'reboot-mode' and a device under it to expose a
-> sysfs interface to show the available reboot mode arguments to
-> userspace.
+> Add state_of_health power supply property to represent battery
+> health percentage.
 >=20
-> Provision the register function with an additional parameter to
-> get an explicit driver_name. Create the device using this
-> driver_name. For platform drivers, use the driver_name configured
-> in dev node.
->=20
-> This results in the creation of:
->   /sys/class/reboot-mode/<driver>/reboot_modes
->=20
-> This read-only sysfs file will exposes the list of supported
-> reboot modes arguments provided by the driver, enabling userspace
-> to query the list of arguments.
->=20
-> Align the clean up path to maintain backward compatibility for
-> existing reboot-mode based drivers.
->=20
-> Signed-off-by: Shivendra Pratap <shivendra.pratap@oss.qualcomm.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S =
+OLED
+> Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 > ---
->  drivers/power/reset/reboot-mode.c | 131 +++++++++++++++++++++++++++++++-=
-------
->  include/linux/reboot-mode.h       |   4 +-
->  2 files changed, 110 insertions(+), 25 deletions(-)
+>  Documentation/ABI/testing/sysfs-class-power | 15 +++++++++++++++
+>  drivers/power/supply/power_supply_sysfs.c   |  1 +
+>  include/linux/power_supply.h                |  1 +
+>  3 files changed, 17 insertions(+)
 >=20
-> diff --git a/drivers/power/reset/reboot-mode.c b/drivers/power/reset/rebo=
-ot-mode.c
-> index ac81b8b0a9b7fc31f8ef21024333a050087ce90f..7ecab050e496af3e1cc01c1a4=
-614787707cb74b4 100644
-> --- a/drivers/power/reset/reboot-mode.c
-> +++ b/drivers/power/reset/reboot-mode.c
-> @@ -6,6 +6,7 @@
->  #define pr_fmt(fmt)	"reboot-mode: " fmt
+> diff --git a/Documentation/ABI/testing/sysfs-class-power b/Documentation/=
+ABI/testing/sysfs-class-power
+> index cea1a38f5a8fb754d4e6323967ef6cf2e20a68ce..04f82e3e33aad6e16dc4fbace=
+066b5d26069bf44 100644
+> --- a/Documentation/ABI/testing/sysfs-class-power
+> +++ b/Documentation/ABI/testing/sysfs-class-power
+> @@ -568,6 +568,21 @@ Description:
 > =20
->  #include <linux/device.h>
-> +#include <linux/err.h>
->  #include <linux/init.h>
->  #include <linux/kernel.h>
->  #include <linux/list.h>
-> @@ -23,6 +24,8 @@ struct mode_info {
->  	struct list_head list;
->  };
+>  		Valid values: Represented in microohms
 > =20
-> +static struct class *rb_class;
-> +
->  static u64 get_reboot_mode_magic(struct reboot_mode_driver *reboot, cons=
-t char *cmd)
->  {
->  	const char *normal =3D "normal";
-> @@ -75,26 +78,121 @@ static int reboot_mode_notify(struct notifier_block =
-*this,
->  	return NOTIFY_DONE;
->  }
-> =20
-> +static void release_reboot_mode_device(struct device *dev, void *res);
-> +
-> +static ssize_t reboot_modes_show(struct device *dev, struct device_attri=
-bute *attr, char *buf)
-> +{
-> +	struct reboot_mode_driver **devres_reboot;
-> +	struct reboot_mode_driver *reboot;
-> +	struct mode_info *info;
-> +	ssize_t size =3D 0;
-> +
-> +	devres_reboot =3D devres_find(dev, release_reboot_mode_device, NULL, NU=
-LL);
-> +	if (!devres_reboot || !(*devres_reboot))
-> +		return -ENODATA;
-> +
-> +	reboot =3D *devres_reboot;
-> +	mutex_lock(&reboot->rb_lock);
-> +	list_for_each_entry(info, &reboot->head, list) {
-> +		size +=3D sprintf(buf + size, "%s ", info->mode);
+> +What:		/sys/class/power_supply/<supply_name>/state_of_health
+> +Date:		August 2025
+> +Contact:	linux-arm-msm@vger.kernel.org
+> +Description:
+> +		The state_of_health parameter quantifies the overall condition
+> +		of a battery as a percentage, reflecting its ability to deliver
+> +		rated performance relative to its original specifications. It is
+> +		dynamically computed using a combination of learned capacity
+> +		and impedance-based degradation indicators, both of which evolve
+> +		over the battery's lifecycle.
 
-sysfs_emit_at
+I think this should be extended by the following:
 
-> +	}
-> +	mutex_unlock(&reboot->rb_lock);
-> +
-> +	if (size) {
-> +		size +=3D sprintf(buf + size - 1, "\n");
-
-sysfs_emit_at
-
-> +		return size;
-> +	}
-> +
-> +	return -ENODATA;
-> +}
-> +static DEVICE_ATTR_RO(reboot_modes);
-> +
-> +static void release_reboot_mode_device(struct device *dev, void *res)
-> +{
-> +	struct reboot_mode_driver *reboot =3D *(struct reboot_mode_driver **)re=
-s;
-> +	struct mode_info *info;
-> +	struct mode_info *next;
-> +
-> +	unregister_reboot_notifier(&reboot->reboot_notifier);
-> +
-> +	mutex_lock(&reboot->rb_lock);
-> +	list_for_each_entry_safe(info, next, &reboot->head, list) {
-> +		list_del(&info->list);
-> +		kfree_const(info->mode);
-> +		kfree(info);
-> +	}
-> +	mutex_unlock(&reboot->rb_lock);
-> +
-> +	device_remove_file(reboot->reboot_dev, &dev_attr_reboot_modes);
-> +}
-> +
-> +static int create_reboot_mode_device(struct reboot_mode_driver *reboot,
-> +				     const char *dev_name)
-
-Instead of adding more and more arguments to this, just add a name
-field to struct reboot_mode_driver.
-
-Greetings,
+Note that the exact algorithms are kept secret by most battery
+vendors and the value from different battery vendors cannot be
+compared with each other as there is no vendor-agnostic definition
+of "performance". Also this usually cannot be used for any
+calculations (i.e. this is not the factor between charge_full and
+charge_full_design).
 
 -- Sebastian
 
-> [...]
+> +
+> +		Access: Read
+> +
+> +		Valid values: 0 - 100 (percent)
+> +
+>  **USB Properties**
+> =20
+>  What:		/sys/class/power_supply/<supply_name>/input_current_limit
+> diff --git a/drivers/power/supply/power_supply_sysfs.c b/drivers/power/su=
+pply/power_supply_sysfs.c
+> index cfa8f90a88ebc8fc1c7447198f138e5d2e699e5a..d96a8578308e3af60cc1a3528=
+45662aa922c29b3 100644
+> --- a/drivers/power/supply/power_supply_sysfs.c
+> +++ b/drivers/power/supply/power_supply_sysfs.c
+> @@ -221,6 +221,7 @@ static struct power_supply_attr power_supply_attrs[] =
+__ro_after_init =3D {
+>  	POWER_SUPPLY_ATTR(MANUFACTURE_MONTH),
+>  	POWER_SUPPLY_ATTR(MANUFACTURE_DAY),
+>  	POWER_SUPPLY_ATTR(INTERNAL_RESISTANCE),
+> +	POWER_SUPPLY_ATTR(STATE_OF_HEALTH),
+>  	/* Properties of type `const char *' */
+>  	POWER_SUPPLY_ATTR(MODEL_NAME),
+>  	POWER_SUPPLY_ATTR(MANUFACTURER),
+> diff --git a/include/linux/power_supply.h b/include/linux/power_supply.h
+> index 8bc3b7a67eb5693a16db9b7d123e7881711c6bf4..ccb43fe44381965069dc3bd95=
+05d45050b9b1bd8 100644
+> --- a/include/linux/power_supply.h
+> +++ b/include/linux/power_supply.h
+> @@ -175,6 +175,7 @@ enum power_supply_property {
+>  	POWER_SUPPLY_PROP_MANUFACTURE_MONTH,
+>  	POWER_SUPPLY_PROP_MANUFACTURE_DAY,
+>  	POWER_SUPPLY_PROP_INTERNAL_RESISTANCE,
+> +	POWER_SUPPLY_PROP_STATE_OF_HEALTH,
+>  	/* Properties of type `const char *' */
+>  	POWER_SUPPLY_PROP_MODEL_NAME,
+>  	POWER_SUPPLY_PROP_MANUFACTURER,
+>=20
+> --=20
+> 2.34.1
+>=20
+>=20
 
---rvds47h6heygbawa
+--s45526ndzapes52i
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmjJtEoACgkQ2O7X88g7
-+pqh5RAAiwcRD05/Qi5M1FQ+czBKYt0JywEwWfXl7Vbc0K5fbgDIkTNxJbWT0k7R
-aipONT1XttYqVqmIFTeVj9cT/THMn+c6hLvIZZXtCDxscGgmLJAYLP45alzRo//W
-55bEIMCJUzQY4xNqMxGtLWdO+DvTyhj3so90UungJV9uJcZB0RdUwWJu5AQqabrj
-muJNvAWCn8qJiAThahESDnzLfJOUsXuctNDMXpBU4EsGYyH0CcUtqSxF6hBaYK1j
-x6SJ4s6XGisYDoZ4Ao7/ENgM2kJoZELixzf+jSpGUHG+JXmI/yMSJcHXkEco6ID+
-DRE8lEJCsJ33sYVgmvav8JURJdP3A8Sl3FIq+03rigqLWOEem61wMG7FR4fQIo1t
-078rMHdXKW1B4FGFTxQ3utkbqKGZ3cXyoze52nKue8bJ19huPNf2rg8rCmzFHUEY
-dZ6N4cPkgC2ioJNP1kCthHFMHgNtaCJXfBaiz14/gUgpJ8EbR9aVob74LRKBevT2
-1usAzDEBQk0R5eqhfbfHY/vGafyzA6G1K9TLB6MK5U8HtNVCra7Zf5Khti0+jkdB
-FaG9LWZQLQrLlcNWcAEbkRJUirY7GSbJ9xpefSNKHS2TQPdHrFBfZMkCiXoZlqBR
-S/Ou5i+fpjZd5zXerOct4/4DGgJF2vciq4hb79bpcMtBviSawGs=
-=JZ25
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmjJuAkACgkQ2O7X88g7
++pqSXA//UyXZ+wptD9xIabMfB9X1z8ivuchEpWRVY3ZHVs0mm59ceOTqnqXkXhe7
+ZZn2aIYIEdjxQWUeGH0EQwKXlOkHqt3+KpxkkSTXR2oU1bGv+7/EQq3rbnR6vg3k
+BZ9IKRuDfBnfVe7WdBrtirDDUaf803L1l+yQO/6GrafCOmtN6+IJFd/7t5UL5+4m
+G08fJXOKz6M0GUBLd0jmyXe4LL14bMIFBq2QCvR3YiEvkoCDjttSQNIIn1rTV86L
+5cBGgq5j7ndrHK0Sgtvvz45YXj4vyVYuKOOG8p5iU6GaZL45wEgkUqN7QSFrhXhf
+dckEFILjtqfW3xCrqMIX5ddnx9WMXtB00tKoUucsJfCGoyxRs2NiJIIF5D9Vjp8o
+LLCcd6LZWGVFJYYQ9B5ZAEbUE520pO5pqAb3lYJgvjcEsQbtpzslWGUN97ogAmMB
+QWpUGew+Epw4wcfMEKK8gdBy24Pe7Y4f/OfYz7fwJwvfTvMU3JdOzDR3acSnPXT5
+sHp+2vF2Ma+qoUzMF/g6zcWHLx7qLCe9JSrSly8Jz1Y3rKUwR3ulwjBa6EPwZrEK
+ZtorpEQAl66hgJuRHSeV3xiR1CQEDVYuBmqBFeof0mo141b7tbkKwX2l4517uMHd
+U/i5CMxN1X3MjDAKQU9IpMTJZRmobwu7kLuVuFnOSbqBBpLFT7Q=
+=b/Yd
 -----END PGP SIGNATURE-----
 
---rvds47h6heygbawa--
+--s45526ndzapes52i--
 
