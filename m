@@ -1,146 +1,180 @@
-Return-Path: <linux-arm-msm+bounces-73897-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73899-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C2DA7B7E59F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:47:08 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BDA8B7E6F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:48:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1B5EF521EF2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 10:16:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5A7C7325EFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 10:19:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D21D35A2AF;
-	Wed, 17 Sep 2025 10:15:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1CF14356914;
+	Wed, 17 Sep 2025 10:17:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EIGFoxor"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="a0uIKsaU"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F1234AAEA;
-	Wed, 17 Sep 2025 10:15:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464F76ADD;
+	Wed, 17 Sep 2025 10:17:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758104131; cv=none; b=hjd0fk04N9vkmU0nnX5WKwT6wXkrdlMYVV2ZEGj0aSxSo4EAF5ApCpk10GRRM4kas3motZw5BXB0mApuLqXe1k+Mgk+zh5z0cNjL4KATh0wjAtcRU0TH6ksTebUM4EsL8B7qa+ix5xaeUeTe4inPz2g1Sy0Z7Tb3SR+a/D1nC7U=
+	t=1758104230; cv=none; b=LQR21EmbZtpDumu4OkFuUQQE1mlBeXNjKjpJ3cLodA1cc/ClkliBFcwN319Ckh+vQp957Fx1c3oKOsKQgR6iI3dK0Jb2r49QjF6S7JLIuyiYJ1gVBgxjPWOTiHmImvozGMaVXGJVh2pG1Mb/YRl3V0rrbeKSTzyuRqWdXvpocqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758104131; c=relaxed/simple;
-	bh=jFN0rM4WOdVF6LWQb08Md1pxuOJ6ixjcBhDhHV+V3Xw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GX5oezxrXZdTYiw6/rm8xm0dYTC0YzxqrflJpQmphFXw4DG6wu6iXOb0DGyUexaskUQvvW3FjVeObq6kkj7p0cF2Vy8k+3PtOZ0h2NVJn/ZxE7wtSXqZRjL272pL5cOGhr1/DKzsQDpLSMUNXd6hHW5cvXVIZPd2s+FCV/pTNyg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EIGFoxor; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id A475EC113CF;
-	Wed, 17 Sep 2025 10:15:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758104130;
-	bh=jFN0rM4WOdVF6LWQb08Md1pxuOJ6ixjcBhDhHV+V3Xw=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=EIGFoxorRKqKKFJaurlSQO4Hwurdm3HLsk1NZItkPjwLRfydEXGE3LZQd9KTb8CSe
-	 ofwyQDkBXVgwzuBEhQc843kOgHWtF1F95L7pUtnmuqViwCTyQY1ZQYBsiigBRXW69L
-	 Ef4X1nqKtQ1p1zhkmKr+Ez23MJLrQuxXtNMXvpcSj2vLPatUxedR8Lf6RACR6mRcef
-	 WT7vTUCt5V6eIGqZDcrXfJKV2WzYCXz+dHvBfDasYpMNnwB1FrtG7YE/WO6fmxViJk
-	 10DNcObfLObN1TNO2+CvtXBrpqhJAcblBptzQKAjjKKc06QEH8mB4inGgnBIZDaJ4g
-	 43LPTkM2NL1iQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 9A423CAC59F;
-	Wed, 17 Sep 2025 10:15:30 +0000 (UTC)
-From: Fenglin Wu via B4 Relay <devnull+fenglin.wu.oss.qualcomm.com@kernel.org>
-Date: Wed, 17 Sep 2025 18:15:22 +0800
-Subject: [PATCH v5 9/9] power: supply: qcom_battmgr: handle charging state
- change notifications
+	s=arc-20240116; t=1758104230; c=relaxed/simple;
+	bh=I1gr9r69jlTdi7WrDbcTVQMuxftBJAz2+Ve90aHs+vw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=bft6z6uxRatOppMIf+DHJUwbNNct81IozkGWrwrFGV3V18GdcEmtxlqPWfciaOnjWXKJOgcr7qUi5ea4LFEz7d5lJziwgr0P/31lEtDsDgu4ZP9y9gpkdg7BNbb1KbKTM4IpRtvZooqacS2cBB8oFeAm+wzUS/A1K1fnp21BH8s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=a0uIKsaU; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58H8XZqH021413;
+	Wed, 17 Sep 2025 10:17:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	S96CBZmI5ch+MiqlOIvzqqQqE9xu7ajb8Vt6h82T5OU=; b=a0uIKsaUOj1Or+0s
+	UB9U6QZP7hUOPHlXzkdkPYIv6moU5MnJGQD59Y0T8czqYuSi1/EcIcbZYNAXKOM8
+	5Ldscp/Pc3pKNOSLCD89kA//QondBgPw2Uaq7DZ31KOrTY8yu8CyG9PD5MPn9R/3
+	2sNypl6Quiu5qlvAqTtloX11LWlaXgjQBazFW6cgPSi4hmqkd92JVDFv5KVxY4B1
+	Pusb4bPFzkAk6PmqYOzJB0ASqzWTDNg+4damQvnjA5Ysyv38xkwr7UYo4NAy8r/R
+	1AiabdvW5jarxpyR5df43Y4ScYyqc31t4SZn0SLKX3xGb8p+Q7NhQj1F+xp4+gDl
+	v+AKDA==
+Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fy59wd3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Sep 2025 10:17:04 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com [10.47.97.35])
+	by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58HAH2TK015659
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Sep 2025 10:17:02 GMT
+Received: from [10.64.69.186] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 17 Sep
+ 2025 03:16:59 -0700
+Message-ID: <cdcc53e9-c616-405c-85c7-f65e83bd4918@qualcomm.com>
+Date: Wed, 17 Sep 2025 18:16:57 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/3] media: qcom: camss: Add sa8775p camss TPG support
+To: Wenmeng Liu <quic_wenmliu@quicinc.com>, Robert Foss <rfoss@kernel.org>,
+        Todor Tomov <todor.too@gmail.com>,
+        Bryan O'Donoghue
+	<bryan.odonoghue@linaro.org>,
+        Vladimir Zapolskiy
+	<vladimir.zapolskiy@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+CC: <linux-kernel@vger.kernel.org>, <linux-media@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20250822-camss_tpg-v3-0-c7833a5f10d0@quicinc.com>
+Content-Language: en-US
+From: Wenmeng Liu <quic_wenmliu@qualcomm.com>
+In-Reply-To: <20250822-camss_tpg-v3-0-c7833a5f10d0@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-qcom_battmgr_update-v5-9-270ade9ffe13@oss.qualcomm.com>
-References: <20250917-qcom_battmgr_update-v5-0-270ade9ffe13@oss.qualcomm.com>
-In-Reply-To: <20250917-qcom_battmgr_update-v5-0-270ade9ffe13@oss.qualcomm.com>
-To: Sebastian Reichel <sre@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, 
- David Collins <david.collins@oss.qualcomm.com>, 
- =?utf-8?q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- kernel@oss.qualcomm.com, devicetree@vger.kernel.org, 
- linux-usb@vger.kernel.org, Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758104128; l=2037;
- i=fenglin.wu@oss.qualcomm.com; s=20240327; h=from:subject:message-id;
- bh=u/UsvrdOaH8FPPbaWz45xYUdDcRqs2rzsPnEOVbRCYQ=;
- b=fajsAkYwMy2+oxB6R/muS3GvMix4qIVRZwPtunicG8Ju8jmojarqCRdEnoWvFtAkses3lSYhR
- NMBwF3eGbozDIjQDpJmCsaKSmxJxlrkqkISyZsTJ/XOLE4FpRiTrRDL
-X-Developer-Key: i=fenglin.wu@oss.qualcomm.com; a=ed25519;
- pk=BF8SA4IVDk8/EBCwlBehKtn2hp6kipuuAuDAHh9s+K4=
-X-Endpoint-Received: by B4 Relay for fenglin.wu@oss.qualcomm.com/20240327
- with auth_id=406
-X-Original-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Reply-To: fenglin.wu@oss.qualcomm.com
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: eFLV-Wijl7nmYVNtly7q0-ouNTLoPrs-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX01U6X3gdu2kb
+ MCkSk8ZL3+GwAR4koFl1gKSqN/SIANQOPbjSJ1tEZizCoR4vk4ZPZpsONq+6wDomzwqUaQ/pAXO
+ DfwhDpLgvpqiW1BGTNWzg7FsPBnJVDS5ob66PjD7xmpG8APJfuB4dfzccTouK7BxJtF38vpiWv/
+ pHSTKki618fbaf9cOZOP9piO6/N18EoQQS5FdVBepwjAEvRxrmqwlOklf7UzMx+kMI9d1TfsFyR
+ C7mMaqb2lSDFE5WIAAxLZle5Yhp8wRReOqgDM9xLF/zvizIRgJ9Y52/PuS/QoVsJfSBBQL8fgB0
+ LoW8L29HPD8UreSObfc0w3J1/6wom/fUMECgaZfeF5ORNu6YjnpX6u4+2I19+SH0QC2IwArd5ZG
+ O5cqvdJ/
+X-Authority-Analysis: v=2.4 cv=Y+f4sgeN c=1 sm=1 tr=0 ts=68ca8aa0 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8
+ a=COk6AnOGAAAA:8 a=Olb3F6Lyt1vXxSobhcoA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: eFLV-Wijl7nmYVNtly7q0-ouNTLoPrs-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-17_01,2025-09-17_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 spamscore=0 clxscore=1011 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509160202
 
-From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
 
-The X1E80100 battery management firmware sends a notification with
-code 0x83 when the battery charging state changes, such as switching
-between fast charge, taper charge, end of charge, or any other error
-charging states. The same notification code is used with bit[16] set
-if charging stops due to reaching the charge control end threshold.
-Additionally, a 2-bit value is added in bit[18:17] with the same code
-and used to indicate the charging source capability: a value of 2
-represents a strong charger, 1 is a weak charger, and 0 is no charging
-source. The 3-MSB [18:16] in the notification code is not much useful
-for now, hence just ignore them and trigger a power supply change event
-whenever 0x83 notification code is received. This helps to eliminate the
-unknown notification error messages.
 
-Signed-off-by: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
----
- drivers/power/supply/qcom_battmgr.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+On 8/22/2025 8:09 PM, Wenmeng Liu wrote:
+> SA8775P is a Qualcomm SoC. This series adds driver changes to
+> bring up the TPG interfaces in SA8775P.
+> 
+> We have tested this on qcs9100-ride board with 'Test Pattern Generator'.
+> Unlike CSID TPG, this TPG can be seen as a combination of CSIPHY and sensor.
+> 
+> Tested with following commands:
+> - media-ctl --reset
+> - media-ctl -V '"msm_tpg0":0[fmt:SRGGB10/4608x2592 field:none]'
+> - media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4608x2592 field:none]'
+> - media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4608x2592 field:none]'
+> - media-ctl -l '"msm_tpg0":1->"msm_csid0":0[1]'
+> - media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+> - v4l2-ctl -d /dev/v4l-subdev4 -c test_pattern=9
+> - yavta -B capture-mplane -n 5 -f SRGGB10P -s 4608x2592 /dev/video0
+>    --capture=7
+> 
+> Dependencies:
+> https://lore.kernel.org/all/20250814101615.1102795-10-quic_vikramsa@quicinc.com/
+> https://lore.kernel.org/all/20250813053724.232494-1-quic_vikramsa@quicinc.com/
+> 
+> changes in v3:
+> - Change the payload mode string
+> - Change the method for setting the TPG clock rate
+> - Remove the TPG IRQ
+> - Format correction
+> - Remove unused variables
+> - Merge functions and eliminate redundancy
+> - Modify the register write method
+> - Change TPG matching method to use grp_id
+> - Encapsulate magic numbers as macros
+> - Link to v2: https://lore.kernel.org/all/20250717-lemans_tpg-v2-0-a2538659349c@quicinc.com/
+> 
+> Changes in v2:
+> - rebase tpg changes based on new versions of sa8775p and qcs8300 camss patches
+> - Link to v1: https://lore.kernel.org/all/20250211-sa8775p_tpg-v1-0-3f76c5f8431f@quicinc.com/
+> 
+> ---
+> Wenmeng Liu (3):
+>        media: qcom: camss: Add support for TPG common
+>        media: qcom: camss: Add link support for TPG common
+>        media: qcom: camss: tpg: Add TPG support for SA8775P and QCS8300
+> 
+>   drivers/media/platform/qcom/camss/Makefile         |   2 +
+>   .../media/platform/qcom/camss/camss-csid-gen3.c    |  17 +
+>   drivers/media/platform/qcom/camss/camss-csid.c     |  43 +-
+>   drivers/media/platform/qcom/camss/camss-csiphy.c   |   1 +
+>   drivers/media/platform/qcom/camss/camss-csiphy.h   |   2 +
+>   drivers/media/platform/qcom/camss/camss-tpg-gen1.c | 219 +++++++
+>   drivers/media/platform/qcom/camss/camss-tpg.c      | 696 +++++++++++++++++++++
+>   drivers/media/platform/qcom/camss/camss-tpg.h      | 125 ++++
+>   drivers/media/platform/qcom/camss/camss.c          | 130 ++++
+>   drivers/media/platform/qcom/camss/camss.h          |   5 +
+>   10 files changed, 1226 insertions(+), 14 deletions(-)
+> ---
+> base-commit: 6afac82056e38e02266cd30f458b25a1f9017508
+> change-id: 20250822-camss_tpg-718db678d984
+> 
+> Best regards,
 
-diff --git a/drivers/power/supply/qcom_battmgr.c b/drivers/power/supply/qcom_battmgr.c
-index 151cd5618ca5c70f941245e4df5a18d4778f1349..4056290b5d737f762d9adb2783d26bb50ec5a664 100644
---- a/drivers/power/supply/qcom_battmgr.c
-+++ b/drivers/power/supply/qcom_battmgr.c
-@@ -34,8 +34,9 @@ enum qcom_battmgr_variant {
- #define NOTIF_BAT_PROPERTY		0x30
- #define NOTIF_USB_PROPERTY		0x32
- #define NOTIF_WLS_PROPERTY		0x34
--#define NOTIF_BAT_INFO			0x81
- #define NOTIF_BAT_STATUS		0x80
-+#define NOTIF_BAT_INFO			0x81
-+#define NOTIF_BAT_CHARGING_STATE	0x83
- 
- #define BATTMGR_BAT_INFO		0x9
- 
-@@ -1206,12 +1207,14 @@ static void qcom_battmgr_notification(struct qcom_battmgr *battmgr,
- 	}
- 
- 	notification = le32_to_cpu(msg->notification);
-+	notification &= 0xff;
- 	switch (notification) {
- 	case NOTIF_BAT_INFO:
- 		battmgr->info.valid = false;
- 		fallthrough;
- 	case NOTIF_BAT_STATUS:
- 	case NOTIF_BAT_PROPERTY:
-+	case NOTIF_BAT_CHARGING_STATE:
- 		power_supply_changed(battmgr->bat_psy);
- 		break;
- 	case NOTIF_USB_PROPERTY:
+Gently reminder to Bryan.
 
--- 
-2.34.1
+Thanks,
+Wenmeng
 
 
 
