@@ -1,57 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-73906-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39309B7DC0D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:34:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 93841B7C701
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:01:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 833B13248F6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 11:15:28 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F10F2A7E01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 11:22:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49F482EC0A7;
-	Wed, 17 Sep 2025 11:15:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAAEB2F0688;
+	Wed, 17 Sep 2025 11:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WRpkJFId"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkOcHhF8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BBFF29A33E;
-	Wed, 17 Sep 2025 11:15:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5292D9EE5;
+	Wed, 17 Sep 2025 11:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758107724; cv=none; b=rye5YN3Z8hIaaNKtRe7jknBP6GxZAzHl6hoVwxl+SEgk0Vm/trHtbWC1oySKhhFxXSUOrknyOLfcYnKrno+WVgWC03Xfw5+M3bEpqSalEOSFxDVdRmXG5yVESTob1wrI+oBtv8zFJJpFbXesSvYg2GkDHCWkEQSoFm8uPT5pKYc=
+	t=1758108140; cv=none; b=aFv/5AafTuqEBntg2xiQdAWCz5YQden83dN0OraKtyQl4F6nm6qhxpscayk5SXoTDhdPxt9LAryQyBqyagUe74WzaQGqzv8pjoeyl4Ce5F8NRzib2cYQqrKxLtlXlTdmm1zyo1UfKSOnVJqNPgbUbc8UD/dFzWQ3UJe/ndWz0a4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758107724; c=relaxed/simple;
-	bh=uDP2b4S2SvL1JYH08JdqWPZeiRysWaiCHsC50RoU31c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DsqNqLaGUFNXHiUeSzCqFXAGSmUtWWdLq2drVZvhdX9lfqHwfKPR8M/vTTxce9vqgaQ5J0RPLKS7df2qlE2wQuxIiuWGmhtXhu2Y7uEwSoJjZbR0kT/tB60wmdOSuTihGAhtAt29tLCXwuCCzH+fgoSX9n1wHG89BHQTLdcQ6QE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WRpkJFId; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2979C4CEF0;
-	Wed, 17 Sep 2025 11:15:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758107723;
-	bh=uDP2b4S2SvL1JYH08JdqWPZeiRysWaiCHsC50RoU31c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WRpkJFIdt7CuYVdA8DMIS++lYnxY0qO6qgWdE+SIfzL4CK9n9KpAcgG2qL9p2LQd2
-	 26XQ2PU86QOv2Z/mlz6cwK+2oIWTG60dRtY8C1A8Ip9lFflv0m42XFp8gwkRugaKaP
-	 VrmcilsloCORSwqN0srBU1TtzB/M17dP3WU5cE7M=
-Date: Wed, 17 Sep 2025 13:15:20 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>
-Cc: jirislaby@kernel.org, johan+linaro@kernel.org, dianders@chromium.org,
-	quic_ptalari@quicinc.com, bryan.odonoghue@linaro.org,
-	quic_zongjian@quicinc.com, quic_jseerapu@quicinc.com,
-	quic_vdadhani@quicinc.com, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
-	mukesh.savaliya@oss.qualcomm.com, viken.dadhaniya@oss.qualcomm.com,
-	stable@vger.kernel.org
-Subject: Re: [PATCH v1] tty: serial: qcom_geni_serial: Fix error handling for
- RS485 mode
-Message-ID: <2025091701-glamorous-financial-b649@gregkh>
-References: <20250916093957.4058328-1-anup.kulkarni@oss.qualcomm.com>
+	s=arc-20240116; t=1758108140; c=relaxed/simple;
+	bh=P8qzGWIhByRFZr7nwyU8aErrXN4ExIt9jBI3wNw3DOE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=ng6IFEdbGunDvXsXITWN4qwnM6mXB+t6Eh2IzX4ljyci7a6eBgMwZk2B/+Szcm15plGx2V39LMTdNAySQAsuJYsPnlgAydjnKkxxzKjbcVtwqrtDKdBtyJBAJQ2Cy8PjvxQHwRFLfTtJtldA8g0oMNjZeFD/G9PHvkRm6UBWF5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkOcHhF8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F68C4CEF0;
+	Wed, 17 Sep 2025 11:22:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758108140;
+	bh=P8qzGWIhByRFZr7nwyU8aErrXN4ExIt9jBI3wNw3DOE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=dkOcHhF8Tzhf0qmstpd8TJR+CwpzHhukAz4m9vupb6UvHShWYkw1MkqHh9q/AAvqr
+	 6vkTRBEt9Qondm1AWJlecwk46MZPAvuYqGMNuVjIZMKMnqt2rUY/0EAaKfJKPvujkY
+	 MonE5s/ljRaU0Mss9XIi2DMw09nzmss4SrCthOviw0aSM26EIbJkUVP+d7Fru5gSfj
+	 bsAksP3XDV0GQZO38LaGzxofCGsUIFMtUNN+LO0wG2g/FAomCX2C0pKNy79fblr3S/
+	 2xHQ4LVqOndRB8Ivlclljhcuzkf5oQJ0kaDUAisrKfdpccFOEbvxV2DLjRiwZEtKY4
+	 15xUV3ByVE3xA==
+Date: Wed, 17 Sep 2025 06:22:18 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	"David E. Box" <david.e.box@linux.intel.com>,
+	Kai-Heng Feng <kai.heng.feng@canonical.com>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Chia-Lin Kao <acelan.kao@canonical.com>
+Subject: Re: [PATCH 1/2] PCI/ASPM: Override the ASPM and Clock PM states set
+ by BIOS for devicetree platforms
+Message-ID: <20250917112218.GA1844955@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -60,27 +66,35 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250916093957.4058328-1-anup.kulkarni@oss.qualcomm.com>
+In-Reply-To: <frmzvhnhljy23xds7lnmo23zg35wxpzu4pvabnc6v6vz7qn2lj@gk25cglbpn3q>
 
-On Tue, Sep 16, 2025 at 03:09:57PM +0530, Anup Kulkarni wrote:
-> If uart_get_rs485() fails, the driver returns without detaching
-> the PM domain list.
+[+cc Kai-Heng, Rafael, Heiner, AceLan; response to
+https://lore.kernel.org/r/20250916-pci-dt-aspm-v1-1-778fe907c9ad@oss.qualcomm.com]
+
+On Wed, Sep 17, 2025 at 04:14:42PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Sep 16, 2025 at 12:15:46PM GMT, Bjorn Helgaas wrote:
+> > On Tue, Sep 16, 2025 at 09:42:52PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > > So far, the PCI subsystem has honored the ASPM and Clock PM states set by
+> > > the BIOS (through LNKCTL) during device initialization. This was done
+> > > conservatively to avoid issues with the buggy devices that advertise
+> > > ASPM capabilities, but behave erratically if the ASPM states are enabled.
+> > > So the PCI subsystem ended up trusting the BIOS to enable only the ASPM
+> > > states that were known to work for the devices.
+> ...
+
+> > For debuggability, I wonder if we should have a pci_dbg() at the point
+> > where we actually update PCI_EXP_LNKCTL, PCI_L1SS_CTL1, etc?  I could
+> > even argue for pci_info() since this should be a low-frequency and
+> > relatively high-risk event.
 > 
-> Fix the error handling path in uart_get_rs485_mode() to ensure the
-> PM domain list is detached before exiting.
-> 
-> Fixes: 86fa39dd6fb7 ("serial: qcom-geni: Enable Serial on SA8255p Qualcomm platforms")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Anup Kulkarni <anup.kulkarni@oss.qualcomm.com>
-> ---
->  drivers/tty/serial/qcom_geni_serial.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> I don't know why we should print register settings since we are explicitly
+> printing out what states are getting enabled.
 
-I've taken
-https://lore.kernel.org/r/20250917010437.129912-2-krzysztof.kozlowski@linaro.org
-instead, so this shouldn't be needed anymore.
+My thinking here is that we care about is what is actually written to
+the device, not what we *intend* to write to the device.
 
-thanks,
-
-greg k-h
+There's a lot of complicated aspm.c code between setting
+link->clkpm_default/aspm_default and actually programming the device,
+and when debugging a problem, I don't want to have to parse all that
+code to derive the register values.
 
