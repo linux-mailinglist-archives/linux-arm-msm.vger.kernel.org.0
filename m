@@ -1,90 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-73989-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73990-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C2C1B81A51
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 21:32:35 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 509BAB81AAB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 21:44:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E4E70520BF9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 19:32:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D898A1C23AD8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 19:44:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D0EB12FF666;
-	Wed, 17 Sep 2025 19:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D49C73009ED;
+	Wed, 17 Sep 2025 19:43:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HM6yxVA2"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Yi67W+xl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A611B2FC006;
-	Wed, 17 Sep 2025 19:32:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C18C18D656;
+	Wed, 17 Sep 2025 19:43:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758137546; cv=none; b=c7A+uhWa+UP31+ARmo/JROne8CbSOb4dkHA2wfb78Fj7RZ6VPXHApoE6Z5U0pFmBKHuoJsrpGD9GDLkOkR6jQ2KNlW9qJahsymrI0c3pvNBuVz2aqvzX2Z7cCdYlty2pL3lR6UCbPc7qvI4VaA8DNP5jyJTltRbFl/ZR7XdFOAs=
+	t=1758138236; cv=none; b=NzgoMZyCPgma9lpgcsB8TOCALbmtwAnZkI1EBW304wPvhLU5u3PZq6inQuxWZ9RRlonL+zu+eGPRi3JH0zV3a66+NzzVcNQyi4Bl3snNsT+Kh7budw53C838g5m4DG45T92gF5dJm4ukAXCoXrW7wF9fDueFZtWgjjWgn9cH8To=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758137546; c=relaxed/simple;
-	bh=O+NCfXNK7eFUSNWAZ6pnwhRHuvHQKpY0A8plG7DVe4U=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X38o3U4UWWpGKZW+w64B+LVW53t8zfebKVt9/cL+YLs66ptRZCW/43oe/hWQSBnYM6/k5PFKL7SF3LCQOGvkfuw1L3XhVyWWZN5bF8hKlU4ZprEkJBad80+Ct7AP5fG7WABzSZUwEcwOvZPye19Tk4W4S5cE4MfnBSHu4trsHKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HM6yxVA2; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DDC1C4CEF7;
-	Wed, 17 Sep 2025 19:32:25 +0000 (UTC)
+	s=arc-20240116; t=1758138236; c=relaxed/simple;
+	bh=q+Lt8bH7T373kamJB5/tW5TmCsjbKI0EIvvyC2SNLBU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lwrg6bFz9xrsBR146YJPFf6xEGq9r7E9o4TZg9uxwL3+qWN28NbiXN5qz0SVCmOLBeAxE9fPs5cJcpJaRZhT41Z88aL/pyPVUi3fKTK0Z6mxUMuswXdPCYbBkWqcP1QJYtm4/VILwDftDfjBe1vfwaBaol/OIb0cGraLydpRnFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Yi67W+xl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14C9AC4CEE7;
+	Wed, 17 Sep 2025 19:43:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758137546;
-	bh=O+NCfXNK7eFUSNWAZ6pnwhRHuvHQKpY0A8plG7DVe4U=;
-	h=From:To:Subject:Date:In-Reply-To:References:From;
-	b=HM6yxVA2w+UJdmdZtcXNcyaU2nxe6ZorDLBNQ6KDt1WgE1VIVqBhUr87GnazbD2Ec
-	 a0aDUmon3CVKVjGaqATYapD3KBMphrvj5/XoDTDaFI7vBL4qvZ/TzgmfDGZBTFtJxU
-	 l6D/D8heMW5nFfFHvT5ioNxC3VfkMwA0sULK2usGtFzTvO2dx8X7xx31iDVvWDSGt8
-	 i8k+PHEcFJm2UD93Lf8zAG3jVJUQgFK3kAFHsEdx7IlTuOqu/fmQNqzFov1piaa5ZF
-	 TJ2LFwQKxkBmMbYpVOK9xFOMyyouFRCoBecglNTKCEqfB0JfUYpyHndaMoEeyINmK6
-	 wYLC13gu6MKYA==
+	s=k20201202; t=1758138235;
+	bh=q+Lt8bH7T373kamJB5/tW5TmCsjbKI0EIvvyC2SNLBU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Yi67W+xlyLhhvg7XND+78Cx7G7AW4F9jGoY5/Kd9uVeWBMKDBf1iMzIwktyPSbibR
+	 hmEE8+7Rg/Dn7EjkUIl+9dVmyYg2PADd3MlugSPmwTk5IiMx2zUauAn2QNBwrMnEV+
+	 mZXO3Qv6vW9zWmSNxlhP8G7Nrb6uyL9iUo2zdKzUTK1rBt/QZKET7df+/rEPOtfSTZ
+	 CBxM88mVDHzCM2/UdCBbITHLnZuqYsCy3OnChqVUiJssJpaqSE/IpEAyRWXM/NQlTw
+	 Tkwl/YwctXk2/ACsm271DrynM5sZ8sFl/bBHmyked2o3HryaxSYO3Px0QzqXUfyo1c
+	 RKF90lq6nfOZw==
+Date: Wed, 17 Sep 2025 14:43:51 -0500
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [RESEND PATCH v3] arm64: dts: qcom: sm8750-mtp: Add WiFi and Bluetooth
-Date: Wed, 17 Sep 2025 14:32:20 -0500
-Message-ID: <175813753509.68230.13877434690290192148.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250902140018.247209-2-krzysztof.kozlowski@linaro.org>
-References: <20250902140018.247209-2-krzysztof.kozlowski@linaro.org>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>, 
+	jic23@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
+	agross@kernel.org, lumag@kernel.org, konradybcio@kernel.org, 
+	daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org, thara.gopinath@gmail.com, 
+	lee@kernel.org, rafael@kernel.org, subbaraman.narayanamurthy@oss.qualcomm.com, 
+	david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com, 
+	kamal.wadhwa@oss.qualcomm.com, rui.zhang@intel.com, lukasz.luba@arm.com, 
+	devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org, cros-qcom-dts-watchers@chromium.org, 
+	quic_kotarake@quicinc.com, neil.armstrong@linaro.org, stephan.gerhold@linaro.org
+Subject: Re: [PATCH V7 0/5] Add support for QCOM SPMI PMIC5 Gen3 ADC
+Message-ID: <uvgeuxf7cpnlypif35lvzatdkwrnxynhvf43qw2nc2bvt3zcf3@75kkwp3raqfm>
+References: <20250826083657.4005727-1-jishnu.prakash@oss.qualcomm.com>
+ <20250829-demonic-soft-guppy-512c13@kuoka>
+ <zgm2k2osmasdal6anba66pw24a7fiypgwlf3c36kvteshz7uef@wee4had7x54u>
+ <8fdc99b6-4ad2-4a08-9dca-6289c8fdddd6@linaro.org>
+ <nsyhau4pnn2nbxdf35npwq4gvjiphocrftrwi4seirxqzurww6@6jgyzzmjyg7q>
+ <20250829173117.000029e6@huawei.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250829173117.000029e6@huawei.com>
 
-
-On Tue, 02 Sep 2025 16:00:19 +0200, Krzysztof Kozlowski wrote:
-> MTP8750 rev 2.0 (power grid v8) boards come as two different variants
-> with different WiFi chips: WCN7850 and WCN786x.  WCN7850 is already
-> supported by the kernel, but WCN786x is not.  Both of the board variants
-> are considered newest revisions and the difference is only in MCN
-> numbers and internal codenames.
+On Fri, Aug 29, 2025 at 05:31:17PM +0100, Jonathan Cameron wrote:
+> On Fri, 29 Aug 2025 12:20:45 +0300
+> Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
 > 
-> Add WCN7850 WiFi and Bluetooth to the MTP8750, stating that this DTS
-> represents the WCN7850 variant.  The S4D and S5F regulators should
-> operate at 0.85 V, thus adjust lower constraint and regulator name.
+> > On Fri, Aug 29, 2025 at 11:11:48AM +0200, Krzysztof Kozlowski wrote:
+> > > On 29/08/2025 10:09, Dmitry Baryshkov wrote:  
+> > > > On Fri, Aug 29, 2025 at 09:12:59AM +0200, Krzysztof Kozlowski wrote:  
+> > > >> On Tue, Aug 26, 2025 at 02:06:52PM +0530, Jishnu Prakash wrote:  
+> > > >>>  create mode 100644 drivers/iio/adc/qcom-spmi-adc5-gen3.c
+> > > >>>  create mode 100644 drivers/thermal/qcom/qcom-spmi-adc-tm5-gen3.c
+> > > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550-adc5-gen3.h
+> > > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550b-adc5-gen3.h
+> > > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pm8550vx-adc5-gen3.h
+> > > >>>  create mode 100644 include/dt-bindings/iio/adc/qcom,pmk8550-adc5-gen3.h
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm7325.h (98%)
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350.h (98%)
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pm8350b.h (99%)
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmk8350.h (97%)
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735a.h (95%)
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-pmr735b.h (95%)
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-adc7-smb139x.h (93%)
+> > > >>>  rename include/dt-bindings/iio/{ => adc}/qcom,spmi-vadc.h (78%)
+> > > >>>  create mode 100644 include/linux/iio/adc/qcom-adc5-gen3-common.h
+> > > >>>
+> > > >>>
+> > > >>> base-commit: 0f4c93f7eb861acab537dbe94441817a270537bf  
+> > > >>
+> > > >> What's the base commit?
+> > > >>
+> > > >> git show 0f4c93f7eb861acab537dbe94441817a270537bf
+> > > >> fatal: bad object 0f4c93f7eb861acab537dbe94441817a270537bf  
+> > > > 
+> > > > https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/commit/?h=next-20250822&id=0f4c93f7eb861acab537dbe94441817a270537bf  
+> > > 
+> > > I see:
+> > > "Notice: this object is not reachable from any branch."
+> > > 
+> > > I guess you think this is 20250822?  
+> > 
+> > Well, it kinda is. It's a commit by Stephen, it has proper contents,
+> > etc.  next-20250822 is not a branch, but a tag, that's why you observe
+> > the warning from gitweb. You can verify it yourself by manually pulling
+> > the tag from the repo.
+> > 
 > 
-> [...]
+> Kind of immaterial.  Typically subsystem maintainers want a base of
+> *-rc1 unless there is a dependency in their tree.
+> 
 
-Applied, thanks!
+Basing the work on -rc1 is nice, but unless I'm missing something, patch
+1 depend on changes that only exists in your -next branch and changes
+that only exists in my (the qcom/dts) -next branch.
 
-[1/1] arm64: dts: qcom: sm8750-mtp: Add WiFi and Bluetooth
-      commit: 141714e163bbb7620d538af48fce4024a4f239e1
+So, it seems that this can only be merged into next-20250822, not into
+any actual maintainer's branch.
 
-Best regards,
--- 
-Bjorn Andersson <andersson@kernel.org>
+
+In the current form, the only sensible way I see to merge this is to get
+a version freshly rebased on v6.18-rc1 (before we pile up any other
+conflicts), we merge patch 1 into a immutable branch and then you take
+the rest of the patches on top of this in your tree. Does this sound
+reasonable? I'm open for suggestions...
+
+Regards,
+Bjorn
 
