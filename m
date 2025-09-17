@@ -1,86 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-73967-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73968-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2783B80824
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:25:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EF58B8097A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:33:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id C721146682B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:25:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B53501C04ABE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:33:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 683133064A2;
-	Wed, 17 Sep 2025 15:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6520E333AA6;
+	Wed, 17 Sep 2025 15:32:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AmYGJNOg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="u5VU4cWL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C05453397D4
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 15:25:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 263652BEC59
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 15:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758122707; cv=none; b=eMMmK1G0nEeEgIcwleIHCQ7RgNUmarfX/yOaXdj7fjcbB/SpCd57Avd6Zz9lrg1WdZ11mTYzM8d8e95QO1ySkLrVIlvsvqz5Y9kyVdGhI1M5gjwif1RpHiz4DLE5opTfsl4p1nJ8CV2dvUahqqL2Qiub6IukPt2J6N8/MyD/GNs=
+	t=1758123168; cv=none; b=Nw3fss6kxjWdbC2QosRRv1IjG2d5dVKZ2fBjgak4J54vc0q9pQBl12NtSgxeDwlh17GEuolAK+4XVHyn5fCUdvNTtHQ7r4XPpn7RFS6APQ9HWl0ZNwYWo3KS/HdasPlmi1iTns4/7HeSdSiHq9MlRQr6XQTiSZOLomiODhWJiDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758122707; c=relaxed/simple;
-	bh=gwgIsDRVRYX2HhF1a8Tduga7fOLhZSoXaPH0ZHLIBKA=;
+	s=arc-20240116; t=1758123168; c=relaxed/simple;
+	bh=1PjU7nEeEI5Wf3JTQRVSrCL28uqYi+NS88MtDd4/3b4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=uwYDepaQZhEmNv9H9Vi4UAXQySE7WtODth8MSQhzpIRDBI0E+LLcgt2knyTwGxaJAx7Ea/FDxradM1AfZgSjsPjvlVkrIxMDJn6h3gi2pSxu1voBCln3937S4nqqetBqilPZlL4tzGnRrcXIlrdwNkrhf5XkS3wq9ItUnPYPqWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AmYGJNOg; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58H8Xai1032429
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 15:25:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HL0iIHuhrw0+QPXTAS58J7uV9gkk1dnDKaysIWMxgeI=; b=AmYGJNOg7ZI9mNqf
-	ohNuYKzbBoNUXLEe1XfqGDT4QPC1lDgzm60HYvILfn8U4Nb2JNLHsmA5N4FM/Gob
-	ve1MgvnBFB/mDsoUTMlag1zyMHHND41OJ4NYgFi8UOty8+wxv8JXM1Do4h40WBAv
-	gSu5FehDq+UXNv7Ek9dbdUO/rGo/9PBhhIl5qxCIhOMUFTKxV8xKZJnZRtmGDKOZ
-	9qOki9ZUjt6ML7mu4WCIiaepLLxHqltbO2n8xiA29SU/hzHmGwcaDd5Pk/Qxa/8z
-	GzQT676WCBNS2ho43eiSvKFqtoylv1Tg+uzRd/98I9Nj2fWNvBVZVym7us9PczmG
-	eCNGtA==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxyjwm4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 15:25:04 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b54b7cb9d30so6275654a12.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 08:25:04 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=TsOv6o2n2XYJA1Zg3/zekXPr0/Z0fkMibekG3le4AJbMhfAncqi4e4MfIBFILXr6FNzkRLSWTtppkSMqutD4FaFREmpLPOZDLtlfAqpw+jcMNuMf4QIb/LwWgLHE7pvpGl5S+khKjF5EtAX7eFCMwPSS88W/BIVmr4+AxBDhYA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=u5VU4cWL; arc=none smtp.client-ip=209.85.208.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-62f0411577aso8617668a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 08:32:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758123164; x=1758727964; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=V4k5J8VkcsZOGowc/PhE+thWQDtpKbu6223a2JTLS/I=;
+        b=u5VU4cWLvJNpz09QCFKrR9WS/+Lra5YUO3vptMugtunB9E6jEgY/OKlWhkOoHc1H1X
+         I3qX8hKbQRjdvIWnMFUvC64EgrzeUNY8GkFP82xe54nlukkqHLoKRkrLPX/Ebund1Osr
+         Tdwwd+YVGj3F6z3AkC4xk6PkSjAb+clOqjhhe3DegFA9wE6ifxtbQQRIh1VNcY6VvfKp
+         h0DIPyhXzi96SvMh5jCO4/yOEs8K8epFO7r4SgjRiI+gO2MhU6rpM6vVixpgjNGtqC+B
+         uznB7eCyBPbJ3k5+ihi8YkcrwPYdB2K//2ORlsP4Jm/voVzrESZUFr/XeseP7ntBgyXY
+         9KTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758122704; x=1758727504;
-        h=content-transfer-encoding:in-reply-to:content-language:from
+        d=1e100.net; s=20230601; t=1758123164; x=1758727964;
+        h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HL0iIHuhrw0+QPXTAS58J7uV9gkk1dnDKaysIWMxgeI=;
-        b=gC3jZDoGe7EqJYfV2Z5h+X90Gt54x4TMKPlsKKeY6Uz6ds8JNVmvl8zjRE4p0WqLIF
-         9v7VN0QM2F6+8tIqmXf3o0oRSMAGsgi3t8fL5EdDtSUKCmZTvzmfCNX7/e9EniPr6Tx3
-         jzikvHKCRVRu7kcchHoWskqNt06Z15LWQYXRACjpZ2TEXMVTby6R9HAUv6cQYwPtlV1M
-         ojEe3I1umZhep5XTNY2OR9NWdbaUHhFVjNEBg3CIWl+6NpLooShnVkibmPG5Gnwi92YR
-         Qq9/I+cniCUA6jeMwAV3iOP6mu9B8ZqZY6JWFjldsL11rMNz5ZRr+BRInMFAH2DTWMnA
-         EyVg==
-X-Gm-Message-State: AOJu0YwIaEhXczfW+acJsidfYD3LNoCpuOqwJVqSWglCLG8isfqKUA8Z
-	LxWL71r4L4YklGs/3FLgk3IgQPqbtQ0pHSf1g5DCwTlGqEMvhsGaZtcxKVDy94CYqLgXbRmsUlL
-	PJgNBqEWGtRZNcHLoQkfEDTV7CpSlsI8eWhVmnENCl5A1ClUR2vOtw6RFk9PkgYSHEfqk
-X-Gm-Gg: ASbGncsGlOD3SlSGP1fdeV5VVoHTiPTZmCdB3K9nKIrw/KQSUllRbokgVJXovzETBHO
-	d8soZdjb0bTyRtTo2iLB2hptXfoZSISHNaERsasLTqj2NeW8srKuGD9J2tE2+z1/pWtCfhnniNt
-	BGagQLv9MbrW09erRUy7zvY6t/0WE/az7yu8pTReJtE0p3fSgdHVSM1TsBcvUyhShrJN8lYnvCf
-	hcatz6rOq6HpzZX2vYsayIDRScJfuKV2KV9yWmQ4WMPxWJrKUgZT6nSRjlXhtiIiegn4OjcLx+p
-	i3qR9FMmeZ1T/29PbGhEPNcvB/jqTm7QbpLWDyWwYytFfQvsG1qvWJHDTTwmvw==
-X-Received: by 2002:a17:903:234b:b0:24b:1d30:5b09 with SMTP id d9443c01a7336-26811ba45b9mr26940405ad.13.1758122703762;
-        Wed, 17 Sep 2025 08:25:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmORI6sNcePUHDL1ea7LBwUjWJDxDDKVUaaJcRzC/M+TlpMhiORpT2SoIF305qk9daBSB9Zw==
-X-Received: by 2002:a17:903:234b:b0:24b:1d30:5b09 with SMTP id d9443c01a7336-26811ba45b9mr26940035ad.13.1758122703239;
-        Wed, 17 Sep 2025 08:25:03 -0700 (PDT)
-Received: from [10.91.118.43] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25c3a84a80asm193499715ad.90.2025.09.17.08.24.58
+        bh=V4k5J8VkcsZOGowc/PhE+thWQDtpKbu6223a2JTLS/I=;
+        b=KTp7k3uxfES9FzwLbrleRx8qCmpTAf3ongh88/6m7/6xb3N2PZKM3cZiWjCjZ2BjnS
+         VSLQhmcxvAuT6cReZFb8ENRSYOfSaFtqsztGFQyWe/4TwxrOdiAKiBjnlWkm/vE2Ek9B
+         szPccMWXScGnlpaSL6XkT59qhT2VFi60EheX/81yU2szGjCgA4Qi4B6jEGA0pYOLY/05
+         dqjhl1Q3frnNTdYsJnfi0IT5LHxoj2fCFjxodJMwjxB/0T3kZLj3fUVuQ8WooVOk7bn5
+         gXALr+zCR6hqkGt5jjnO+iD7DQdw4GkwiHuPNB/JyVltgasPUdzHb1Cg2k1GD+zhUU1F
+         ieGw==
+X-Forwarded-Encrypted: i=1; AJvYcCVezA+o/nXrnKUrH9OalMZcsGMkq1VXybtowfUYZiAY1gELx4pIdtaJaYT6oY+YpP+ShNU+MLOZ85bfACdS@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSdiOVeCgve7JYjtrugZSnFq/YN6xgCKEm2GGhnqiItzTLpaeW
+	C8lNgxnfIQMDwNLBifpibpX77Mqzb3razBjlcobmsZhQE4Q+ELvJJlacYLgTDIH8tdE=
+X-Gm-Gg: ASbGncs3X8ao5eGPjDAF+5lYBz4pqsD4WpdA14aqlViEIGX9aPnZwx9q7w8IFRXL7df
+	Ut3QUX3JLeMMCKnydfhVcrcLzkIaPnqOqHtZ+15o8E1gdchqo4xh3py8jwx4L1M58boQn+Wzqyk
+	mTWsvraGZ7cKyO5q0RlSPuJkWuTQ9ERvrEgsCYC0NjiwuAYGs5zfn7cTaY88oUNZ9r8fuYah2YT
+	5AXzQdAQu59ZImqFjtGnEdMFQiUd8t0If8PSDte3c81ELL/ex7MviDY5y+U9Ae0Rkw4ESPEfL4P
+	amX/337f0vvWi/FyH3LzGuP7ODh0yhBzJCDm11Yv3VcPJSmiZCmgcpOZJdD8XNR/3A9byz1ggqa
+	jOR6/xKRT+G6CD6wPVzsdIhwQrpz/eMZEu1s66ep0wgE=
+X-Google-Smtp-Source: AGHT+IE8ZMv8HN0yNwSikwv6pMskOhk9zA0LwfuIGCKmhTnIQQy04Vwmljxv3YCiPD4eKH8iHrC6Ug==
+X-Received: by 2002:a17:906:6a09:b0:b04:a1a4:4bec with SMTP id a640c23a62f3a-b1bc020111bmr330491066b.58.1758123164384;
+        Wed, 17 Sep 2025 08:32:44 -0700 (PDT)
+Received: from [172.20.10.3] ([109.166.135.151])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b317124esm1395390166b.46.2025.09.17.08.32.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Sep 2025 08:25:02 -0700 (PDT)
-Message-ID: <16701111-9e8c-42d6-8fac-2f4b9a5e5e5d@oss.qualcomm.com>
-Date: Wed, 17 Sep 2025 20:54:56 +0530
+        Wed, 17 Sep 2025 08:32:43 -0700 (PDT)
+Message-ID: <10540b3e-09ca-403d-bc20-b9412a7fe28a@linaro.org>
+Date: Wed, 17 Sep 2025 18:32:41 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,70 +82,169 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] drm/msm/registers: Sync GPU registers from mesa
-To: Anna Maniscalco <anna.maniscalco2000@gmail.com>,
-        Rob Clark <robin.clark@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20250911-preemption_aware_hangcheck-v1-0-974819876819@gmail.com>
- <20250911-preemption_aware_hangcheck-v1-1-974819876819@gmail.com>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
+To: David Hildenbrand <david@redhat.com>, Thomas Gleixner
+ <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
+ <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
+ <87a52u9jyl.ffs@tglx> <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
+ <2bd45749-e483-45ea-9c55-74c5ba15b012@redhat.com> <87v7lh891c.ffs@tglx>
+ <95ff36c2-284a-46ba-984b-a3286402ebf8@redhat.com>
+ <24d6a51d-f5f8-44d7-94cb-58b71ebf473a@linaro.org>
+ <7f4aa4c6-7b77-422b-9f7a-d01530c54bff@redhat.com>
 Content-Language: en-US
-In-Reply-To: <20250911-preemption_aware_hangcheck-v1-1-974819876819@gmail.com>
+From: Eugen Hristev <eugen.hristev@linaro.org>
+In-Reply-To: <7f4aa4c6-7b77-422b-9f7a-d01530c54bff@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=e50GSbp/ c=1 sm=1 tr=0 ts=68cad2d0 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
- a=wfxb_XhhgxZQwQkhXVMA:9 a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: 8CexbHE1ZRepilRTVVeF4zbY4wUQ9EDg
-X-Proofpoint-ORIG-GUID: 8CexbHE1ZRepilRTVVeF4zbY4wUQ9EDg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX6RtM31Y81W9H
- iGv5IlxmHUB0OAfQEuAXbAGSI4O/obbAn2TXBCBtHM/ZCVo22SANpDViYwT4jvX2NDZgRHywyw3
- pxX7WjcKHHPWFwVWCGS7RRf0KjUCBly/oEhUpbI++hs0LTmbDSV4PNjT52aOrn7fT5eOMngEe/t
- /87Y5V+3z5kMgiLUumPoVQUZ29mNRk/sreykBDD5eP+sw5QhUSzwGDlVLEycMECpO5iCMeILjxK
- t8RgEYNsEGUJziCaakXPD5CtzXzc0zQM38zuK8HbqQUGGDN0BoxRkG64BAJV47+0/7cpO2kO8O6
- ehEYe3NkKwq9W3DCsRTAgV/P1NxzyYtbIbMfulW7sneCBtcWrETEvK/JZjbLwctUGoG+YggwpKX
- AChwkzVM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
 
-On 9/11/2025 10:31 PM, Anna Maniscalco wrote:
-> In particular bring in `CP_ALWAYS_ON_CONTEXT`
-> 
-> Signed-off-by: Anna Maniscalco <anna.maniscalco2000@gmail.com>
-> ---
->  drivers/gpu/drm/msm/registers/adreno/a6xx.xml | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> index 9459b603821711a1a7ed44f0f1a567cf989b749b..6ea5479670970cc610ca25e71aa41af5f328f560 100644
-> --- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> +++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
-> @@ -254,6 +254,7 @@ by a particular renderpass/blit.
->  		<bitfield name="CONTEXT" low="4" high="5"/>
->  	</bitset>
->  	<reg64 offset="0x0980" name="CP_ALWAYS_ON_COUNTER"/>
-> +	<reg64 offset="0x0982" name="CP_ALWAYS_ON_CONTEXT"/>
->  	<reg32 offset="0x098D" name="CP_AHB_CNTL"/>
->  	<reg32 offset="0x0A00" name="CP_APERTURE_CNTL_HOST" variants="A6XX"/>
->  	<reg32 offset="0x0A00" name="CP_APERTURE_CNTL_HOST" type="a7xx_aperture_cntl" variants="A7XX-"/>
-> 
 
-Reviewed-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
--Akhil
+On 9/17/25 18:18, David Hildenbrand wrote:
+> On 17.09.25 17:02, Eugen Hristev wrote:
+>>
+>>
+>> On 9/17/25 17:46, David Hildenbrand wrote:
+>>> On 17.09.25 16:10, Thomas Gleixner wrote:
+>>>> On Wed, Sep 17 2025 at 09:16, David Hildenbrand wrote:
+>>>>> On 17.09.25 07:43, Eugen Hristev wrote:
+>>>>>> On 9/17/25 00:16, Thomas Gleixner wrote:
+>>>>>>> I pointed you to a solution for that and just because David does not
+>>>>>>> like it means that it's acceptable to fiddle in subsystems and expose
+>>>>>>> their carefully localized variables.
+>>>>>
+>>>>> It would have been great if we could have had that discussion in the
+>>>>> previous thread.
+>>>>
+>>>> Sorry. I was busy with other stuff and did not pay attention to that
+>>>> discussion.
+>>>
+>>> I understand, I'm busy with too much stuff such that sometimes it might
+>>> be good to interrupt me earlier: "David, nooo, you're all wrong"
+>>>
+>>>>
+>>>>> Some other subsystem wants to have access to this information. I agree
+>>>>> that exposing these variables as r/w globally is not ideal.
+>>>>
+>>>> It's a nono in this case. We had bugs (long ago) where people fiddled
+>>>> with this stuff (I assume accidentally for my mental sanity sake) and
+>>>> caused really nasty to debug issues. C is a horrible language to
+>>>> encapsulate stuff properly as we all know.
+>>>
+>>> Yeah, there is this ACCESS_PRIVATE stuff but it only works with structs
+>>> and relies on sparse IIRC.
+>>>
+>>>>
+>>>>> I raised the alternative of exposing areas or other information through
+>>>>> simple helper functions that kmemdump can just use to compose whatever
+>>>>> it needs to compose.
+>>>>>
+>>>>> Do we really need that .section thingy?
+>>>>
+>>>> The section thing is simple and straight forward as it just puts the
+>>>> annotated stuff into the section along with size and id and I definitely
+>>>> find that more palatable, than sprinkling random functions all over the
+>>>> place to register stuff.
+>>>>
+>>>> Sure, you can achieve the same thing with an accessor function. In case
+>>>> of nr_irqs there is already one: irq_get_nr_irqs(), but for places which
+>>>
+>>> Right, the challenge really is that we want the memory range covered by
+>>> that address, otherwise it would be easy.
+>>>
+>>>> do not expose the information already for real functional reasons adding
+>>>> such helpers just for this coredump muck is really worse than having a
+>>>> clearly descriptive and obvious annotation which results in the section
+>>>> build.
+>>>
+>>> Yeah, I'm mostly unhappy about the "#include <linux/kmemdump.h>" stuff.
+>>>
+>>> Guess it would all feel less "kmemdump" specific if we would just have a
+>>> generic way to tag/describe certain physical memory areas and kmemdump
+>>> would simply make use of that.
+>>
+>> The idea was to make "kmemdump" exactly this generic way to tag/describe
+>> the memory.
+> 
+> That's probably where I got lost, after reading the cover letter 
+> assuming that this is primarily to program kmemdump backends, which I 
+> understood to just special hw/firmware areas, whereby kinfo acts as a 
+> filter.
+
+If there is a mechanism to tag all this memory, or regions, into a
+specific section, what we would do with it next ?
+It would have a purpose to be parsed and reused by different drivers,
+that would be able to actually use it.
+So there has a to be some kind of middleman, that holds onto this list
+of regions, manages it (unique id, add/remove), and allows certain
+drivers to use it.
+Now it would be interesting to have different kind of drivers connect to
+it (or backends how I called them).
+One of these programs an internal table for the firmware to use.
+Another , writes information into a dedicated reserved-memory for the
+bootloader to use on the next soft reboot (memory preserved).
+I called this middleman kmemdump. But it can be named differently, and
+it can reside in different places in the kernel.
+But what I would like to avoid is to just tag all this memory and have
+any kind of driver connect to the table. That works, but it's quite
+loose on having control over the table. E.g. no kmemdump, tag all the
+memory to sections, and have specific drivers (that would reside where?)
+walk it.
+
+> 
+>> If we would call it differently , simply dump , would it be better ?
+>> e.g. include linux/dump.h
+>> and then DUMP(var, size) ?
+>>
+>> could we call it maybe MARK ? or TAG ?
+>> TAG_MEM(area, size)
+> 
+> I'm wondering whether there could be any other user for this kind of 
+> information.
+> 
+> Like R/O access in a debug kernel to these areas, exporting the 
+> ranges/names + easy read access to content through debugfs or something.
+
+One idea I had to to have a jtag script read the table , parse it, and
+know where some information resides.
+Another idea is to use Uboot in case of persistent memory across reboot,
+and Uboot can read all the sections and assemble a ready-to-download
+coredump. (sure this doesn't work in all cases)
+What can be done in case of hypervisor is to implement there a routine
+that would read it, in case the OS is non-responsive, or even in the
+secure monitor.
+Another suggestion I had from someone was to use a pure software default
+backend in which to just keep the regions stored, and it could be
+accessed through userspace or read by a crash analyzer.
+
+> 
+> Guess that partially falls under the "dump" category.
+> 
+> Including that information in a vmcore info would probably allow to 
+> quickly extract some information even without the debug symbols around 
+> (I run into that every now and then).
+> 
+>>
+>> this would go to a separate section called .tagged_memory.
+>>
+> 
+> Maybe just "tagged_memory.h" or sth. like that? I'm bad at naming, so I 
+> would let others make better suggestions.
+> 
+>> Then anyone can walk through the section and collect the data.
+>>
+>> I am just coming up with ideas here.
+>> Could it be even part of mm.h instead of having a new header perhaps ?
+>> Then we won't need to include one more.
+> 
+> I don't really have something against a new include, just not one that 
+> sounded like a very specific subsystem, not something more generic.
+> 
 
 
