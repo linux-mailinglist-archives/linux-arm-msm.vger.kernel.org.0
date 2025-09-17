@@ -1,205 +1,352 @@
-Return-Path: <linux-arm-msm+bounces-73970-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 78184B80C23
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:52:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D6F38B80FA3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 18:27:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 3D9551712C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:49:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 070A11887349
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 16:26:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE40F314D29;
-	Wed, 17 Sep 2025 15:47:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AB509239594;
+	Wed, 17 Sep 2025 16:25:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Jyuy7Gal"
+	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="B1+cRPXk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0358F285C82;
-	Wed, 17 Sep 2025 15:47:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758124060; cv=none; b=Obq+370gJr6EL7PzBKZ7bsTIALQ9EfuwgWLFH4MlmAU919bIsbSx7jUOdL4VOTSQujI3w9n6HMiiTlGgzDiz41rfDB1Ka5SHxFmP0aTAZwdZ+OTEYt/bwGv9jqtY5vLGr70x6vOvqABpLx6kOgKequ5VScocJI9AEpQpfwm+h/Y=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758124060; c=relaxed/simple;
-	bh=NlYC/Qs/zM0HnIIEytwgOrzKMLjNq/qFHYT1dPcwfWw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=NmTXaHQ/XKcoqc/dTYVx0rPUTcG/LdCtCqwVrcV3UN2htZqdezpdJmIQhqEps166MFdZIkdQnF6bzweBP7U7RzMwRQyMz51irYRDZm1FWJXsVive9lERrQawSUf1wBge1nSYSivApVkck37yRZp6lq5k2HQZfqCEzLYjawF7rCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Jyuy7Gal; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HB0uJu031000;
-	Wed, 17 Sep 2025 15:47:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Nm5EclL4hvVyoCBtsdEWwKNnR6ndycdHW5JBCL0fhsU=; b=Jyuy7GalvecMmaUM
-	jKrC/FbQSCt8bh0Y2vn/D0Tgxno7s3ZRbiuGxfCMuw+FnTDMVUWrFn+nqGoSHEK1
-	ZzBku7SB9HoXqyNjoBeB98uYaIGCHVo0lqIVwzwO16eqGCAINbmVIiszR1XlFSSa
-	egFPFN6tm1vi5FhGQUWmUXWOtPrW7bMDucKPpA2yy/alBH8AhNIqEGc1LIEDc42t
-	remUyzRSzNKxBN829OdYEXNBvL1web4epncuwXDBXkPrh2YG8CR6NyTh+9qMXnF1
-	8FmSZkpOetZh5/Cm+cxs7VXvFc5C+9N95O5hPWuR0K38w8G5vGouuicTWibMRYAL
-	DdzRfw==
-Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fy0tyqf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Sep 2025 15:47:22 +0000 (GMT)
-Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
-	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58HFlMsX029136
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Sep 2025 15:47:22 GMT
-Received: from [10.253.13.179] (10.80.80.8) by nasanex01b.na.qualcomm.com
- (10.46.141.250) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 17 Sep
- 2025 08:47:15 -0700
-Message-ID: <d8da8454-d5ab-41e9-a34a-127366e83ae1@quicinc.com>
-Date: Wed, 17 Sep 2025 23:47:13 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65CF34BA42;
+	Wed, 17 Sep 2025 16:25:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758126340; cv=pass; b=HtHaP+xXLyU6SsgohBcnTOJuZj1Z28B8wPDLB8CDPc8FIbFPu0fRxIMcQwZ1vFJpaq+wxp/oBrWdT1Y2oNFTaYlMf16e9ofMWHd+l0M0BiIzMC5lx7fwyPwNfma0gS7+++BX9oMyP9z30ZyTNTysolCPE7LNMtY4V1Cz4hcITME=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758126340; c=relaxed/simple;
+	bh=E2xoPDGeSVO0PLklH+sUA3dvhuCum19UEvEz2dbu8jg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KuVCIepGp4Es0zIbsJ/Bkjte2i2VlAJUOGjxpACTwmdFfsEBGcyRj45DYNQNO8M9UqdcdT9hBKjPaVtvX5/tYqZY3O00OtTy9KuEvdWADTahYTIxm+/1KWWj2kwQ0h7WJBUqqNOkRVwp46VD5ur0Xc8NMzbfieCsZIO5i3ge6lY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=B1+cRPXk; arc=pass smtp.client-ip=136.143.188.112
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+ARC-Seal: i=1; a=rsa-sha256; t=1758126283; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=UoUxm3TG+Xdqdt4n6U36BzI+ZArx0id4xIhPohYJk3DcYQKQ3gFw6Bm+XpQRDTul+ELzmkXOAwgOG8WJMQ2VP6txBjz7QSu79IYoaJBOCb8gtqfyzlYEtIDLEqQHjmEyRQhIUhE3LKHczAiNtmLZHMA+NHtnQMAIjLMRZckikOc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1758126283; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=dUV4xEya8An9AsAZIkFaG1G41M6EhB9SXM95Zf2aVOs=; 
+	b=T5ygtmluYn6j1nGKR6dCuqGrwo8jgjwQ7HRQB1kFGDR3TV+ZbvUMPUXLreIpws72ahMaTDVRpM468xuR2abHclMk96T83OxFmhWZagKCIEXxY0Y5u6rKK5JZ6nACNBsBrS5rc4a4DcuA8sQhNGqkJVyS2tjCWSwQsJZkBMKk/a4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=collabora.com;
+	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
+	dmarc=pass header.from=<sebastian.reichel@collabora.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758126283;
+	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=dUV4xEya8An9AsAZIkFaG1G41M6EhB9SXM95Zf2aVOs=;
+	b=B1+cRPXk0cJs3HmKjgPbf4rOEZkW5FzCMbo/y7pyOUdeGT0CNzMTg53IAdty9WTR
+	hkgBpU6u3XxrNpbfC9M+rPMZjNW+rjJ6GMIenoAQ6iP/OhbeJGjoGGkOLa6kO6KB/R5
+	PveNckwFRHSTIxxLF7cHSDs38Qchjg+1BPit9+sE=
+Received: by mx.zohomail.com with SMTPS id 1758126271855414.6769814303776;
+	Wed, 17 Sep 2025 09:24:31 -0700 (PDT)
+Received: by venus (Postfix, from userid 1000)
+	id 0F592180265; Wed, 17 Sep 2025 18:24:26 +0200 (CEST)
+Date: Wed, 17 Sep 2025 18:24:26 +0200
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com, 
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org, 
+	srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, 
+	krzysztof.kozlowski@linaro.org, u.kleine-koenig@baylibre.com, linux-arm-msm@vger.kernel.org, 
+	linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, 
+	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org, 
+	casey.connolly@linaro.org, Jonathan Cameron <jonathan.cameron@huawei.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
+Message-ID: <zfe2q5sw5pphfyzidhe6d564j6yw32lnxzv4etxcr3hhi2ychy@34qka6dllzxe>
+References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-2-angelogioacchino.delregno@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 02/10] dt-bindings: clock: Add required
- "interconnect-cells" property
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-        Konrad Dybcio
-	<konrad.dybcio@oss.qualcomm.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette
-	<mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        "Varadarajan
- Narayanan" <quic_varada@quicinc.com>,
-        Georgi Djakov <djakov@kernel.org>, "Rob
- Herring" <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        "Conor
- Dooley" <conor+dt@kernel.org>,
-        Anusha Rao <quic_anusha@quicinc.com>,
-        "Manikanta Mylavarapu" <quic_mmanikan@quicinc.com>,
-        Devi Priya
-	<quic_devipriy@quicinc.com>,
-        Philipp Zabel <p.zabel@pengutronix.de>,
-        "Richard
- Cochran" <richardcochran@gmail.com>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-clk@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-pm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <netdev@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-        <quic_kkumarcs@quicinc.com>, <quic_linchen@quicinc.com>,
-        <quic_leiwei@quicinc.com>, <quic_pavir@quicinc.com>,
-        <quic_suruchia@quicinc.com>
-References: <20250909-qcom_ipq5424_nsscc-v5-0-332c49a8512b@quicinc.com>
- <20250909-qcom_ipq5424_nsscc-v5-2-332c49a8512b@quicinc.com>
- <20250912-nocturnal-horse-of-acumen-5b2cbd@kuoka>
- <b7487ab1-1abd-40ca-8392-fdf63fddaafc@oss.qualcomm.com>
- <0aa8bf54-50e4-456d-9f07-a297a34b86c5@linaro.org>
- <1e7d7066-fa0b-4ebc-8f66-e3208bb6f948@quicinc.com>
- <e874339e-f802-4793-8c0f-db85575be8e5@linaro.org>
-Content-Language: en-US
-From: Luo Jie <quic_luoj@quicinc.com>
-In-Reply-To: <e874339e-f802-4793-8c0f-db85575be8e5@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01b.na.qualcomm.com (10.46.141.250)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: wXx7ORkbgQ2ggq8x1-ynkeB8cSyPi6kB
-X-Authority-Analysis: v=2.4 cv=btZMBFai c=1 sm=1 tr=0 ts=68cad80a cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
- a=YxtPb7ZjVR6RY7X2M68A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: wXx7ORkbgQ2ggq8x1-ynkeB8cSyPi6kB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX5Fbqin2NXOcS
- e/NUiqHV51DBjUSBU5UbMKF9nGCBGOyb5Nnp+V6E5uNz/36h6XhaApGN+Af7me0yuDasmV8NLO+
- pnI4a5yQNAGB4fsZTrosNWNf8KxDtvGwgFOrlfaDFgMBnGwOvP1FqfRTssphD6cG1gTVf2Q7syA
- M8N/ynAIMAE3l53RKIylbihwoOea1ymxbuiCcUl4pGBVVk6BSURI9THQkMMcVpudISYWLdfAEIp
- cxVpUM6XI8ItqCqnvY1x3fob/HbO1aLy8sfMuG97QjCTxRTJhUK15eFurFTCOYXS41s5VUspzxV
- HvGdXMgG7Nd4EafFW62QoM+qOMV+MthOTMaQ/7nQkbcu9in0SqwkV/lR1OTCpBvFjoFzh6Hlnrh
- 7/cBr6Bw
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0
- spamscore=0 adultscore=0 phishscore=0 suspectscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509160202
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="b73zeyu7mpwvdb3l"
+Content-Disposition: inline
+In-Reply-To: <20250916084445.96621-2-angelogioacchino.delregno@collabora.com>
+X-Zoho-Virus-Status: 1
+X-Zoho-Virus-Status: 1
+X-Zoho-AV-Stamp: zmail-av-1.4.3/258.96.42
+X-ZohoMailClient: External
 
 
+--b73zeyu7mpwvdb3l
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
+MIME-Version: 1.0
 
-On 9/17/2025 8:35 AM, Krzysztof Kozlowski wrote:
-> On 16/09/2025 16:03, Luo Jie wrote:
->>
->>
->> On 9/12/2025 5:16 PM, Krzysztof Kozlowski wrote:
->>> On 12/09/2025 11:13, Konrad Dybcio wrote:
->>>> On 9/12/25 9:04 AM, Krzysztof Kozlowski wrote:
->>>>> On Tue, Sep 09, 2025 at 09:39:11PM +0800, Luo Jie wrote:
->>>>>> The Networking Subsystem (NSS) clock controller acts as both a clock
->>>>>> provider and an interconnect provider. The #interconnect-cells property
->>>>>> is mandatory in the Device Tree Source (DTS) to ensure that client
->>>>>> drivers, such as the PPE driver, can correctly acquire ICC clocks from
->>>>>> the NSS ICC provider.
->>>>>>
->>>>>> Although this property is already present in the NSS CC node of the DTS
->>>>>> for CMN PLL for IPQ9574 SoC which is currently supported, it was previously
->>>>>> omitted from the list of required properties in the bindings documentation.
->>>>>> Adding this as a required property is not expected to break the ABI for
->>>>>> currently supported SoC.
->>>>>>
->>>>>> Marking #interconnect-cells as required to comply with Device Tree (DT)
->>>>>> binding requirements for interconnect providers.
->>>>>
->>>>> DT bindings do not require interconnect-cells, so that's not a correct
->>>>> reason. Drop them from required properties.
->>>>
->>>> "Mark #interconnect-cells as required to allow consuming the provided
->>>> interconnect endpoints"?
->>>
->>>
->>> The point is they do not have to be required.
->>
->> The reason for adding this property as required is to enforce
->> the DTS to define this important resource correctly. If this property
->> is missed from the DTS, the client driver such as PPE driver will not
->> be able to initialize correctly. This is necessary irrespective of
->> whether these clocks are enabled by bootloader or not. The IPQ9574 SoC
->> DTS defines this property even though the property was not marked as
->> mandatory in the bindings, and hence the PPE driver is working.
->>
->> By now marking it as required, we can enforce that DTS files going
->> forward for newer SoC (IPQ5424 and later) are properly defining this
->> resource. This prevents any DTS misconfiguration and improves bindings
->> validation as new SoCs are introduced.
-> 
-> So you explain to the DT maintainer how the DT works. Well, thank you,
-> everyday I can learn something.
-> 
-> You wasted a lot of our (multiple maintainers) time in the past, so I
-> will just NAK your patches instead of wasting time again.
-> 
-> Best regards,
-> Krzysztof
+Hi,
 
-My sincere apologies for the misunderstanding and inconvenience my
-previous response has caused. I can assure you that my intention
-was never to describe the DT subsystem working, and am sorry that
-it has come out as such.
+On Tue, Sep 16, 2025 at 10:44:39AM +0200, AngeloGioacchino Del Regno wrote:
+> Some devices connected over the SPMI bus may be big, in the sense
+> that those may be a complex of devices managed by a single chip
+> over the SPMI bus, reachable through a single SID.
+>=20
+> Add new functions aimed at managing sub-devices of a SPMI device
+> spmi_subdevice_alloc_and_add() and a spmi_subdevice_put_and_remove()
+> for adding a new subdevice and removing it respectively, and also
+> add their devm_* variants.
+>=20
+> The need for such functions comes from the existance of	those
+> complex Power Management ICs (PMICs), which feature one or many
+> sub-devices, in some cases with these being even addressable on
+> the chip in form of SPMI register ranges.
+>=20
+> Examples of those devices can be found in both Qualcomm platforms
+> with their PMICs having PON, RTC, SDAM, GPIO controller, and other
+> sub-devices, and in newer MediaTek platforms showing similar HW
+> features and a similar layout with those also having many subdevs.
+>=20
+> Also, instead of generally exporting symbols, export them with a
+> new "SPMI" namespace: all users will have to import this namespace
+> to make use of the newly introduced exports.
+>=20
+> Link: https://lore.kernel.org/r/20250722101317.76729-2-angelogioacchino.d=
+elregno@collabora.com
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on SM8650-QRD
+> Link: https://lore.kernel.org/r/20250730112645.542179-2-angelogioacchino.=
+delregno@collabora.com
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@coll=
+abora.com>
+> ---
 
-I am committed to learning and continuously improving the quality
-of my contributions, and co-operating with reviewers and maintainers
-by following their feedback.
+It would be nice, if this patch lands in the 6.18 merge window. That
+way we don't need to do an immutable branch for the different involved
+subsystems.
 
-I will update the patch accordingly to remove this property marking
-as required. Thank you very much for your support.
+Greetings,
+
+-- Sebastian
+
+>  drivers/spmi/spmi-devres.c | 24 ++++++++++++
+>  drivers/spmi/spmi.c        | 79 ++++++++++++++++++++++++++++++++++++++
+>  include/linux/spmi.h       | 16 ++++++++
+>  3 files changed, 119 insertions(+)
+>=20
+> diff --git a/drivers/spmi/spmi-devres.c b/drivers/spmi/spmi-devres.c
+> index 62c4b3f24d06..8feebab0365b 100644
+> --- a/drivers/spmi/spmi-devres.c
+> +++ b/drivers/spmi/spmi-devres.c
+> @@ -60,5 +60,29 @@ int devm_spmi_controller_add(struct device *parent, st=
+ruct spmi_controller *ctrl
+>  }
+>  EXPORT_SYMBOL_GPL(devm_spmi_controller_add);
+> =20
+> +static void devm_spmi_subdevice_remove(void *res)
+> +{
+> +	spmi_subdevice_remove(res);
+> +}
+> +
+> +struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *=
+dev,
+> +							 struct spmi_device *sparent)
+> +{
+> +	struct spmi_subdevice *sub_sdev;
+> +	int ret;
+> +
+> +	sub_sdev =3D spmi_subdevice_alloc_and_add(sparent);
+> +	if (IS_ERR(sub_sdev))
+> +		return sub_sdev;
+> +
+> +	ret =3D devm_add_action_or_reset(dev, devm_spmi_subdevice_remove, sub_s=
+dev);
+> +	if (ret)
+> +		return ERR_PTR(ret);
+> +
+> +	return sub_sdev;
+> +}
+> +EXPORT_SYMBOL_NS_GPL(devm_spmi_subdevice_alloc_and_add, "SPMI");
+> +
+>  MODULE_LICENSE("GPL");
+>  MODULE_DESCRIPTION("SPMI devres helpers");
+> +MODULE_IMPORT_NS("SPMI");
+> diff --git a/drivers/spmi/spmi.c b/drivers/spmi/spmi.c
+> index 3cf8d9bd4566..e011876c3187 100644
+> --- a/drivers/spmi/spmi.c
+> +++ b/drivers/spmi/spmi.c
+> @@ -19,6 +19,7 @@
+> =20
+>  static bool is_registered;
+>  static DEFINE_IDA(ctrl_ida);
+> +static DEFINE_IDA(spmi_subdevice_ida);
+> =20
+>  static void spmi_dev_release(struct device *dev)
+>  {
+> @@ -31,6 +32,19 @@ static const struct device_type spmi_dev_type =3D {
+>  	.release	=3D spmi_dev_release,
+>  };
+> =20
+> +static void spmi_subdev_release(struct device *dev)
+> +{
+> +	struct spmi_device *sdev =3D to_spmi_device(dev);
+> +	struct spmi_subdevice *sub_sdev =3D container_of(sdev, struct spmi_subd=
+evice, sdev);
+> +
+> +	ida_free(&spmi_subdevice_ida, sub_sdev->devid);
+> +	kfree(sub_sdev);
+> +}
+> +
+> +static const struct device_type spmi_subdev_type =3D {
+> +	.release	=3D spmi_subdev_release,
+> +};
+> +
+>  static void spmi_ctrl_release(struct device *dev)
+>  {
+>  	struct spmi_controller *ctrl =3D to_spmi_controller(dev);
+> @@ -90,6 +104,18 @@ void spmi_device_remove(struct spmi_device *sdev)
+>  }
+>  EXPORT_SYMBOL_GPL(spmi_device_remove);
+> =20
+> +/**
+> + * spmi_subdevice_remove() - Remove an SPMI subdevice
+> + * @sub_sdev:	spmi_device to be removed
+> + */
+> +void spmi_subdevice_remove(struct spmi_subdevice *sub_sdev)
+> +{
+> +	struct spmi_device *sdev =3D &sub_sdev->sdev;
+> +
+> +	device_unregister(&sdev->dev);
+> +}
+> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_remove, "SPMI");
+> +
+>  static inline int
+>  spmi_cmd(struct spmi_controller *ctrl, u8 opcode, u8 sid)
+>  {
+> @@ -431,6 +457,59 @@ struct spmi_device *spmi_device_alloc(struct spmi_co=
+ntroller *ctrl)
+>  }
+>  EXPORT_SYMBOL_GPL(spmi_device_alloc);
+> =20
+> +/**
+> + * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-device
+> + * @sparent:	SPMI parent device with previously registered SPMI controll=
+er
+> + *
+> + * Returns:
+> + * Pointer to newly allocated SPMI sub-device for success or negative ER=
+R_PTR.
+> + */
+> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *=
+sparent)
+> +{
+> +	struct spmi_subdevice *sub_sdev;
+> +	struct spmi_device *sdev;
+> +	int ret;
+> +
+> +	sub_sdev =3D kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
+> +	if (!sub_sdev)
+> +		return ERR_PTR(-ENOMEM);
+> +
+> +	ret =3D ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
+> +	if (ret < 0) {
+> +		kfree(sub_sdev);
+> +		return ERR_PTR(ret);
+> +	}
+> +
+> +	sdev =3D &sub_sdev->sdev;
+> +	sdev->ctrl =3D sparent->ctrl;
+> +	device_initialize(&sdev->dev);
+> +	sdev->dev.parent =3D &sparent->dev;
+> +	sdev->dev.bus =3D &spmi_bus_type;
+> +	sdev->dev.type =3D &spmi_subdev_type;
+> +
+> +	sub_sdev->devid =3D ret;
+> +	sdev->usid =3D sparent->usid;
+> +
+> +	ret =3D dev_set_name(&sdev->dev, "%d-%02x.%d.auto",
+> +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
+> +	if (ret)
+> +		goto err_put_dev;
+> +
+> +	ret =3D device_add(&sdev->dev);
+> +	if (ret) {
+> +		dev_err(&sdev->dev, "Can't add %s, status %d\n",
+> +			dev_name(&sdev->dev), ret);
+> +		goto err_put_dev;
+> +	}
+> +
+> +	return sub_sdev;
+> +
+> +err_put_dev:
+> +	put_device(&sdev->dev);
+> +	return ERR_PTR(ret);
+> +}
+> +EXPORT_SYMBOL_NS_GPL(spmi_subdevice_alloc_and_add, "SPMI");
+> +
+>  /**
+>   * spmi_controller_alloc() - Allocate a new SPMI controller
+>   * @parent:	parent device
+> diff --git a/include/linux/spmi.h b/include/linux/spmi.h
+> index 28e8c8bd3944..7cea0a5b034b 100644
+> --- a/include/linux/spmi.h
+> +++ b/include/linux/spmi.h
+> @@ -69,6 +69,22 @@ int spmi_device_add(struct spmi_device *sdev);
+> =20
+>  void spmi_device_remove(struct spmi_device *sdev);
+> =20
+> +/**
+> + * struct spmi_subdevice - Basic representation of an SPMI sub-device
+> + * @sdev:	Sub-device representation of an SPMI device
+> + * @devid:	Platform Device ID of an SPMI sub-device
+> + */
+> +struct spmi_subdevice {
+> +	struct spmi_device	sdev;
+> +	unsigned int		devid;
+> +};
+> +
+> +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_device *=
+sparent);
+> +void spmi_subdevice_remove(struct spmi_subdevice *sdev);
+> +
+> +struct spmi_subdevice *devm_spmi_subdevice_alloc_and_add(struct device *=
+dev,
+> +							 struct spmi_device *sparent);
+> +
+>  /**
+>   * struct spmi_controller - interface to the SPMI master controller
+>   * @dev:	Driver model representation of the device.
+> --=20
+> 2.51.0
+>=20
+
+--b73zeyu7mpwvdb3l
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmjK4LMACgkQ2O7X88g7
++pquRQ//fllBLsQUj+gMWiKvHca0QRVBivSZq0aVidiaTPryqzJ/vEJWq/KjpSJP
+W8Kx9YHDiHh3cBqBQ+KW1EyQRmYhUmhGeuwVbYdjdtWpPKDcCcsPo1QqBFQL+Z0U
+V4Kd1WGg1Gwf5FEXAXFrsCKhdBasWoRlyMsyNUiwbEDi92hLq/t8dOdmyuQH+EcA
+a/KRM7YmIBIeej6E7lx3pdizHPBdVKijMK4pd8j+4fNOxUBpPi/7XT81K9X2Nzic
+lEyUcgsjpjTs2FJbFW8+EZODMLmgd6UGyA5Pv3jzHPgZBWZI6zZubgfFuVVCNttu
+qxXskmzHKyF9rman3tvWVbFL/CC/m5f11hxJstG1sBPmrrgOpsD5iN0XerOuta24
+tnxIQQMjrVG/1+1uMVRuBy2v7OqBnP7PBHkK1icudPB2zxTZN6XVaULOS+htaYJc
+jAPDSKS4wjOULAg4vLQORtXIBhN1lBBbgRNH+jXCtBA6W1HmWwI0NJ3MaippHMjw
+Nqeo50Tv7xEgIWn8ZiS+AP0+xBR1bBXqNaydZuf/plzklqFl/Sk9x1qGKCZZZOLW
+jufnq18D9wxl53JHztTwLIlNILdxwvIVDrkhbFgrHk/BaeXIT4txniES2lq0FLFf
+CeBsQeBJ3GHT+HaUQnOcRJwqfUZo7Y8mqMeImzZCnTAgL6NDvtI=
+=AZLG
+-----END PGP SIGNATURE-----
+
+--b73zeyu7mpwvdb3l--
 
