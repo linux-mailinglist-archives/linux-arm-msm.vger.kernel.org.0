@@ -1,80 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-73853-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73854-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E844B7E0D1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:40:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BDC0B7E9FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:55:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96707581313
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 05:30:47 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E0474324927
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 05:43:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B36427C178;
-	Wed, 17 Sep 2025 05:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 497A827A462;
+	Wed, 17 Sep 2025 05:43:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bk7WdYeB"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="bahRn+WE"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875C726E6EA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 05:30:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F211EBA42
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 05:43:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758087045; cv=none; b=cyC6oZDJM1hnCdJpx0jCCvzFJqKkV474G+AvxhAD9OdBssczXnYIEEuziwu/r8Val6ksPvEWfK8lQTjzAL29Cbr3pe4DGmAsgKQEnVfPV6kTsg4YjcISvfEjs+LGT+rfFVTNhfp1V1y6vsF5OokMlfo0F10582ZiuLqqvw+nFnU=
+	t=1758087832; cv=none; b=IwOGDB0tcbeHGDn9ogv/MBD48UHY+t5VA8L/okhyxQJkhaBHKlhnaX+O+PACrLL3Zc9so9AK/O9MV5gRvxN/R0gQSDdjHB5Bt9jHlTYhi+WzKxfjxHBby5WuPsKYNDGL7eml5km3Qwd56CLbZAsl3ny356UviKkG4ICmmRV3vdY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758087045; c=relaxed/simple;
-	bh=ojcEEPJefpnCUVr9pVG02gpYlf8ErQMG41Qqu959wmc=;
+	s=arc-20240116; t=1758087832; c=relaxed/simple;
+	bh=2Rj2GVVJeO3cElmAMzCe+vsZ7kk7vpWF5sm/8l3AHd8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X54EF5StGnWtAFxNeHPI/omTb7D6LHeyR3mJFx2Z8L0nttkoBM0mIKcQGPBy0rqG3EKkJDmqcp2R2b0FWnMudACWQ2Dec8DZTjsNEBuytGXd/pAFFTLtKSFsQw1HPW3ibP6Ij6f18wZ8n7bbpJ3Vm8f+lZiDj8TanWK4VX3w2dI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bk7WdYeB; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-25d44908648so62181275ad.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 22:30:43 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=HIrhLOmEVcbuJ67+2NeBcWblR+eaALwbSadgZimibZLOnTpAra7YudBR/Yt1VXFik7bFdBwwgTAqNEHIO7ShohNgeQUOGlVveNci1tuUUV9a1f8kvCy8n+XeE2ptDyK5wk4a1d59JzHiE9oZ3kY9UT9KN/BfvV5z4tK4x+hCFcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=bahRn+WE; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b07c28f390eso850811566b.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 16 Sep 2025 22:43:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758087043; x=1758691843; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1758087828; x=1758692628; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+RLDgsVG/9yzmSOd51trY/YU6lrZVjPVVmLXoww2Ukw=;
-        b=bk7WdYeBMYO1wwPHYIB9Zo1lF2X916w7ZcDopOCIwQiOG0JdBYt2B15F5w7Lw+re4f
-         ygm2zJHU+Eg/aalsGjGn11EZJgt7qMn/qNEpFiU+cuYuuBq0vPIPUwih/qRgpjRGLaR5
-         W+Jl4jtQRd7fi+Tt0M4xqDTO6oVrmHg9Rz6td93TYKB/7v1QoqK8BVelg78MU3sq6Fbs
-         TeTWsTImQifrb/EbolBNZVi3ZlL2pqzdnH7zxPlK3j1uEId8ARkQLznW6sioN/lmINy9
-         6vFg8VfEKvTW5VKu7Ak/wdsrS10jKN9+aBIDRvSy0y+9puativoVvvlHtcWdlGcN6D95
-         P6DA==
+        bh=CW6YRUB7XWZg6Z0QvIr5Jdp9CvsPmVtxl4KHm6Wzt7g=;
+        b=bahRn+WE6Dm9TwNA8fqpX/CAWNUyUdT37CPdrvoYBZ+zF3AfoojbVZDika7I2d/O5i
+         JAzevz8or6hZBhQeCy0coOVyjpNdqev5KgTseH4dv7Jvt3zucPhrSIY+J9Z978FQdIS1
+         UsJUHi9S/7gUvi9thBF9ASjWAHM1wpSbMAr4YgqJoGdidfVDNDwXxwf8OXlWWxl1aCtf
+         +kv5AdUQOifw85GCvDvPo3AodUv3QVhtJuPWpNSGlPQACDKb8Bqk6RjU3pqLvH9odVY1
+         8DHh68E5LeURTLUuzIyKHaI5qnAOF7vSJQe5EVlPSN7/3YABk4KBHq1+F2MBNV8GvzoT
+         6Fug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758087043; x=1758691843;
+        d=1e100.net; s=20230601; t=1758087828; x=1758692628;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=+RLDgsVG/9yzmSOd51trY/YU6lrZVjPVVmLXoww2Ukw=;
-        b=UtruA+ll1a8PN7RnpMvypJQBCF/fGLnD2A6FOIG7AomzdKC1ssvqOy2b3KmK7TyWCV
-         lAtoBYts+NGY3wkIRyUvNXcUP0atFUuuvcGAHc9Lk9Ru6h/TThbbHE87EGcby5l+cewL
-         0I0xWAI9Hi9KX/WN/9oCc3e5Ud7gQQiqeeQ/UEavvNmqmFnC8lKepGdUChzWHNCakaF5
-         zvi9wA2qmeNC2cmQabrwm6fKMwoQJ9bbgAswwBe1eKqCRtbl+tkMwGzNHabMbHr1moFJ
-         +7mY3hPWzorqOWv6JWTzNUrV2fapbBhEyHzF3U4v4Kc6b2Ox8j6/WzO+IygLOzrRfYTR
-         /g9g==
-X-Forwarded-Encrypted: i=1; AJvYcCXAKof1+2dlvHfiBalQaXUlhqdaVxDvwsEtAej5AApIGY2oGH9F2I1oQbt2Io5RDtvQ0ST1cFQMUZNqFv+b@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIw2fsEBNX9c4lJjSPrO73N2l1KgIr6FUgMsHXKVT22vzpQnSA
-	a16e7G2SHmmnNJvqMvIlQyNOhChke+NXfL0b5XU4ksN8D0VQdBgx4+y3
-X-Gm-Gg: ASbGncuS102tVPwuEM05l7rKXPm+2ybgTy8L0YvVH7rJ1ZR7mQlkdy1vezvwhIT2/08
-	K885YAkpiBNRDbuGnjcYTLBAtM0wHq+V4revwkT22hfvVi1BMmkqBF52nB3xypSz+2OPtnTonEE
-	Cjiwtydzw6o4vo1a33/AjoanzoXsOuX8Ls/3ZW6YYBxPIOiIK6vNR/5oHYMNynhLFv45vUMosC3
-	GKlwupbtkfh2BwhB2AoRoWrxjWzWFPGPoHQW1AGuuaS/7folzPh7T7cXhurxbpXywsBHXDcdnIH
-	U0j2kLEbbQUapLKYhtTmB1POe98IK250ig0cjqj0jBB/RWcRysL1Igx8uH31yFkz0JZLymOwKX0
-	rXANF3aeZmiELMVnAHy1ivBTG9o/DwNLy
-X-Google-Smtp-Source: AGHT+IEAVa+T6fRcCJa37o376SoMU7onInRHzwpwOfD+pCgZlxIWR6i2Ecy3rSFDP4O2WFq9GPHBKQ==
-X-Received: by 2002:a17:903:4109:b0:25b:fad8:d7c2 with SMTP id d9443c01a7336-268137f2945mr7319385ad.39.1758087042781;
-        Tue, 16 Sep 2025 22:30:42 -0700 (PDT)
-Received: from [172.17.44.75] ([49.249.92.90])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-25db018df8bsm142006335ad.151.2025.09.16.22.30.39
+        bh=CW6YRUB7XWZg6Z0QvIr5Jdp9CvsPmVtxl4KHm6Wzt7g=;
+        b=b+wkeiyN5LVxftzfoWZJ2FZBQrqoRj+6cmeXysykPbEmhSNQ1Eo0JdlL0MEpzF4DtR
+         bFtRlSj/gxQXO9+MyDywrjEp8zRBG3177gXsbD7ge6NMgVISj6C3gA9am5hH8DALTBaA
+         BySpDBLfe17nwJv/mT5K2/jEVdyFDYPh2af99dlbUz6MrcgrCMcSKLg3nnM2IEsXqQ+0
+         lOUira99EfW0xInEgE6q0EY32+Y7ZaJlbg0FmT2Iz5Vt/NmmV/Qsg8rT4/Y9+omE2MAt
+         h8YKb85ofniKBKZCwQ4qU4sjzcfrUJT4m7sy9+0awzzxRkv7N/3bHTTXwG+iVfTOj6Rc
+         oddg==
+X-Forwarded-Encrypted: i=1; AJvYcCVDh3SVsGckRuLYM4o6yghXJMAMrBang7A04s1iOLf2PhwOdBc52ECS3mYB82YgBhSRLgKQAe99nqbeQf1n@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwfukrtibLOkHF18C0rrBdUMU59jRS/zsUydHG24Cz10CntdR2
+	m2ZFDHNQB8RqgAuVzNQpiAYtxRBFOEnFdcSJKbUAZ0WylNz5gy78QAAMR66Evihj9BA=
+X-Gm-Gg: ASbGnctc9RvoHrkHKeC+yrdPCBCfkAYWa13VvYUEvbeCf/9f0cb2YZFgDcBygUtECFX
+	L9F38BiR6jHVFMTDS8VT3NXWKksqS1SDeMRkzYicsDww+InFg7wscx4aADWBlYZQwubqtBs878W
+	Ag2c6GJhe+LAtW6AQEwybflMFRZiHI9nUi7rD5tLR5LbHk9cMtKZOpBd5X2Pu5XhnFnX368P28V
+	tt3L7/RB4TjFmSMdIEdjnvHBtIPj/HFXY74HpAsIhkXdtg0mAHk9bZRIxmS34JN/q8VSaXcAOqc
+	rAGvx56Q39+t/u/sbhRvJ66S1olxCBUoWM1yj8ZbTRHlML0jwZLkOOdxyd1tSBkfHyMSvmsG50J
+	AZnONFlZlOQCyVO3PyrgdIxO/gz4I6Q==
+X-Google-Smtp-Source: AGHT+IEwTeAqrWw3yRYXMNv2Kyom1bFBunp2rNawKurYFNJfFiYeBaBgK7tfvL+8o/YQVxm7ewmS1g==
+X-Received: by 2002:a17:907:3f0a:b0:b08:85d0:3d8b with SMTP id a640c23a62f3a-b1bb73a69abmr108132766b.21.1758087828294;
+        Tue, 16 Sep 2025 22:43:48 -0700 (PDT)
+Received: from [192.168.0.24] ([82.76.24.202])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07c6110c27sm1088029366b.66.2025.09.16.22.43.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 16 Sep 2025 22:30:42 -0700 (PDT)
-Message-ID: <3fae286a-dc5b-4024-be28-ab51dc907ba5@gmail.com>
-Date: Wed, 17 Sep 2025 11:00:36 +0530
+        Tue, 16 Sep 2025 22:43:47 -0700 (PDT)
+Message-ID: <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
+Date: Wed, 17 Sep 2025 08:43:46 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -82,79 +82,57 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add support for QCS615 talos evk
- board
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: konradybcio@kernel.org, andersson@kernel.org, robh@kernel.org,
- krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- tingweiz@qti.qualcomm.com
-References: <20250909125255.1124824-1-tessolveupstream@gmail.com>
- <20250909125255.1124824-2-tessolveupstream@gmail.com>
- <v2d4e6py34xb2hjrfnmlrmd7xme45equ76zb2c5cmftgylk7w6@5lmexwfupj4e>
- <70c2f78b-c3ce-4b7b-a961-9f3957ce40f8@gmail.com>
- <axtz5euoa5lyg5clwj44jhdn5gvfubic6un3ilndzzoy22rici@rqqk4eyw7yas>
+Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
+To: Thomas Gleixner <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, david@redhat.com,
+ mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
+ <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
+ <87a52u9jyl.ffs@tglx>
 Content-Language: en-US
-From: Tessolve Upstream <tessolveupstream@gmail.com>
-In-Reply-To: <axtz5euoa5lyg5clwj44jhdn5gvfubic6un3ilndzzoy22rici@rqqk4eyw7yas>
+From: Eugen Hristev <eugen.hristev@linaro.org>
+In-Reply-To: <87a52u9jyl.ffs@tglx>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
 
-On 16/09/25 15:55, Dmitry Baryshkov wrote:
-> On Tue, Sep 16, 2025 at 11:22:02AM +0530, Tessolve Upstream wrote:
+On 9/17/25 00:16, Thomas Gleixner wrote:
+> On Tue, Sep 16 2025 at 23:10, Thomas Gleixner wrote:
+>> On Fri, Sep 12 2025 at 18:08, Eugen Hristev wrote:
+>>> nr_irqs is required for debugging the kernel, and needs to be
+>>> accessible for kmemdump into vmcoreinfo.
 >>
+>> That's a patently bad idea.
 >>
->> On 09/09/25 19:28, Dmitry Baryshkov wrote:
->>> On Tue, Sep 09, 2025 at 06:22:55PM +0530, Sudarshan Shetty wrote:
->>>> Introduce the device tree support for the QCS615-based talos-evk
->>>> platform, which follows the SMARC (Smart Mobility ARChitecture)
->>>> standard. The platform is composed of two main hardware
->>>> components: the IQ-QCS615-SOM and the talos-evk carrier board.
->>>>
->>>> The IQ-QCS615-SOM is a compact System on Module that integrates the
->>>> QCS615 SoC, PMIC, and essential GPIO connectivity. It follows the
->>>> SMARC standard, which defines a modular form factor allowing the SoM
->>>> to be paired with different carrier boards for varied applications.
->>>>
->>>> The talos-evk is one such carrier board, designed for evaluation
->>>> and development purposes. It provides additional peripherals
->>>> such as UART, USB, and other interfaces to enable rapid
->>>> prototyping and hardware bring-up.
->>>>
->>>> This initial device tree provides the basic configuration needed
->>>> to boot the platform to a UART shell. Further patches will extend
->>>> support for additional peripherals and subsystems.
->>>>
->>>> The initial device tree includes basic support for:
->>>>
->>>> - CPU and memory
->>>>
->>>> - UART
->>>>
->>>> - GPIOs
->>>>
->>>> - Regulators
->>>>
->>>> - PMIC
->>>>
->>>> - Early console
->>>>
->>>> - AT24MAC602 EEPROM
->>>>
->>>> - MCP2515 SPI to CAN
->>>
->>> No WiFi/BT/ethernet?
+>> Care to grep how many instances of 'nr_irqs' variables are in the
+>> kernel?
 >>
->> Networking peripherals such as WiFi/BT and Ethernet will be enabled in follow-up patches.
+>> That name is way too generic to be made global.
 > 
-> Why? WiFi/BT are supported for the RIDE platform. Is EVK using something
-> different?
+> Aside of that there is _ZERO_ justification to expose variables globaly,
+> which have been made file local with a lot of effort in the past.
+> 
+> I pointed you to a solution for that and just because David does not
+> like it means that it's acceptable to fiddle in subsystems and expose
+> their carefully localized variables.
+> 
 
-We used a Quectel based AF68E module (PCIe for WiFi and UART for Bluetooth),
-which is different from what is used on the RIDE platform. I plan to
-enable these in a follow-up patch series.
+I agree. I explained the solution to David. He wanted to un-static
+everything. I disagreed.
+I implemented your idea in the v2 of the patch series.
+Did you have a look on how it turned out ?
+Perhaps I can improve on that and make it more acceptable.
+
+Eugen
+
+> Thanks
 > 
+>         tglx
 
 
