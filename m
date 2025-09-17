@@ -1,161 +1,165 @@
-Return-Path: <linux-arm-msm+bounces-73943-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD881B7FB21
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 16:04:12 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7ECF9B7FDEC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 16:17:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C9A37189C37B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 13:59:54 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 447D4627C09
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:11:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D8812F39B9;
-	Wed, 17 Sep 2025 13:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CA42BE7B2;
+	Wed, 17 Sep 2025 14:02:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GmusjpdG"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jzGEKl2l"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC6529B76F
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 13:59:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4343132BBEA
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 14:02:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758117559; cv=none; b=SDerAfLvkqdB7CPzo0CnCn0EIdinYETWIRXQH/BUk75QNVxi1Wyqn5nQk8lCa4AsYMZWrDoMu1CFd5gJys2Ir5TKI+y55gWDh9rjTSizbavtWVNYy/RmJK7AC44yLzmWvtVdHxUmdm9a5H/7bWuqtQDw5lblmBzKr+e6eA3H0Fo=
+	t=1758117759; cv=none; b=HQvgXRDriZtkWcfL7XfKMfR1VuuPQL6IEQYMksC1XUK2J6EMOGydOIxc7VHf73sHor9bK2sjLommL2q0pYInFihzi7op95c7v+mix/Z/AUC4xAFdds5nL8gw+9x6a592Ec5+G3gRVc/YxcIF5k3b1JNQajBqipLON1p3gGzI374=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758117559; c=relaxed/simple;
-	bh=lyGb1aFoYsF+raAKp8sU36n+AGvzU8VFUBNR24jkqzw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DT193913JRGXNrr+T7IzeZRwdyRk4c6vZf2XZyqkO53T03DCpoG81rnYTjZnkw8zu9lkLduokfZKI/1AtX18ip0fTctHDoLY/aheKLsJpciOcZ/x97I5k52VUnqsX1RKYIY+6je2zFIYJskaGFnMtmjJgfA4zMZGa7ftXIbJGY4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GmusjpdG; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58H8XbPn010769
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 13:59:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	uiv/XsSJSXK2+dr1Alsnv4ajZiNrr6ESJ9d7QQbgOeM=; b=GmusjpdGWf2ntEuN
-	yKa8qCfbKl/RpVTJVVX4qC7wlSFDnSXYYpAlMOT665oYDxcgHFCAPo94gap3cs1g
-	HEHutbKCNyXeh1pr6wTzKJ8bmzbLh3hSfg5AJUCvVTBXkXt7ASZSeafScMixmaRX
-	9U1Qtoy9rqDjd9IDQSbIKRCdKG5KcI90JyzbW7Ts0pgB2YM8pU65kFgNBPtaRY2/
-	ffKZRIHvflq5j9I3YBjEmToNuL7gupmIjwaXZi9h+DROeu1pRr4Sv1x/f+nSFb9K
-	Fro7xJP687mno1TBMVJ1brL7purdc2tffvT7isnM1RQsPA0SXnMZC9ObTg3PNDVN
-	hIiRIQ==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxxtjux-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 13:59:15 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b822016cd2so5457031cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 06:59:15 -0700 (PDT)
+	s=arc-20240116; t=1758117759; c=relaxed/simple;
+	bh=RefTj2LFec46dsJYSPZ8tEBm1+3mD1JsxhEJXrBH8b8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LiDzVcG1tEIfWsxUQYoHzP38PD0cGEBy3Z42TImeHzedyueBz5groXMGx/Uiuuu5gXjrSP02eoA8Uz9dcDrQiGfUPi0aUnbYpS1BJlvJn2NlEARXERhPm716M/ee7I7EOtn7O4sj86Oa4MUQGSqK0OH4jj+C4dgag1Xr0VD6Hek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jzGEKl2l; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b0b6bf0097aso702828166b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 07:02:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758117754; x=1758722554; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=+aI0KZC1S6i6KZFgi+7mCnlg3sWeGuC+L+mdTKqHXWA=;
+        b=jzGEKl2ldjQhOOSsKb06Fha6LgYoyLdKgQ3A4Jx6N9aXyL25JkKSdHMv3WQPzK44Jk
+         2e2A/q4FWpYAEoco41Qr6Fg/vwnaX2gEb7tp/l5+6uXdPDdptI4Pesl5xHH4cg7APoDM
+         xXr7IWGz569kWGi6atos85QR0WvnEdd4S1KRvyYLfeGlvWeUptRQx2C+hTl4q8K2moYJ
+         KCrg8a9zN4bbWJ6l03a7dIFkqLljT/+rnYA0N4ceMuPNoy+7K/CiANyoHDZf26G4JbY1
+         GpdzsZ05mW2cHfUkf910zsCe55jgTVY5t7IEGWbZmWjdYhFdhCAngArPksI90WX4Wf3q
+         np0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758117554; x=1758722354;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=uiv/XsSJSXK2+dr1Alsnv4ajZiNrr6ESJ9d7QQbgOeM=;
-        b=wh/3ek9RkUf2cR11XdddFq31/MhwSFtLJSi7TJbB/4tJWihNcE4VbEYF+VrRLH3YJi
-         ohhix3nQgNcedWi1RUzwVare2rpb9zk2oYOjlydHuAkYpE7DVkBmeDobiBxdvQQxfNi3
-         e9edWwlNJg7St9l4gyG+Wp9yVMBBQZXVa/L2E3jBDy951yIOx6p372HkmOTC5t/hp0VM
-         wUaMsJBtOdnM5J5u+U2uZYDfAOBnsAc2gTHsMUNaIMgn4j8zvZc5wOLog4XXpGrYy2Gf
-         7KwDdhQXrq8YDnV5Yk+2TjeGJ3YCoQoh+1YcJBsHyICz4HKBqv8AOvDQM21yGAmWJmIM
-         BfQg==
-X-Gm-Message-State: AOJu0YyGCaoScMfX2qRAA5j3t+yO+3xVB1tjOGho40Fdk9EyefkQ+KZm
-	yrZfwojsivs+hBUpRI6d1fUPmM4RkWpPJEqCyj6h7OeOpsjJRLSZh1JiP4Aqh/y8JUtm8HxJv8M
-	dj4lRmQ86aUhXIaRbKaje65a/eazdoWuzTK9dY+p0rMgCEBr/iuInQwKZXMj1GrQiNbpA
-X-Gm-Gg: ASbGncvQu0q5E7ZI0PG78z2K01j//PXcf++qiPtLuAk12HPtHn2wrSSRLgsWviGJ0sT
-	4Ci64InVBtCdK3l0BmdZ+19VP9W5UBZAeu/vLgUwnyGdl5YH+QZ7xrYIHlooRVh+IEXQ8vmus5f
-	QdR3JTtcYd+izoNn8LlXiYNpCBQQNjoHqL0G5fVWFmNTWxXTI0cBIZuP13Xnj8GMP7ZtUnqDIin
-	7BfQNAmbq1PMaWYAhSdv0JdoGyOJhvOdWvAk181I5mwmNIOVjCzxMI/MNgk8p1v7PxDny5wF/8z
-	kVXPT93NupDBUX1/TUh0qJn7qUXRKq5AGYyju7hh+Eunl8Bf/HENJzBJQC6CVyxCc41Tt9C58fu
-	oYr3aRGTibqBJ86Y+nPCjkg==
-X-Received: by 2002:a05:622a:10b:b0:4b7:a308:b5aa with SMTP id d75a77b69052e-4ba68901f95mr17460001cf.7.1758117554310;
-        Wed, 17 Sep 2025 06:59:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGXXp9M/NfwdwYTCoRDI+XQGNkB750ohCjW9JwuICJtNf50OfYIZe+NpGOz7kkOSn2YvOjDsQ==
-X-Received: by 2002:a05:622a:10b:b0:4b7:a308:b5aa with SMTP id d75a77b69052e-4ba68901f95mr17459721cf.7.1758117553734;
-        Wed, 17 Sep 2025 06:59:13 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07dbf5dbf5sm1019452566b.79.2025.09.17.06.59.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Sep 2025 06:59:13 -0700 (PDT)
-Message-ID: <de1a7ecb-924d-4ed2-8034-721b8dce69d4@oss.qualcomm.com>
-Date: Wed, 17 Sep 2025 15:59:10 +0200
+        d=1e100.net; s=20230601; t=1758117754; x=1758722554;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+aI0KZC1S6i6KZFgi+7mCnlg3sWeGuC+L+mdTKqHXWA=;
+        b=U3SqbFYZpQVPHK9znuXGrVOnLv/TeO9hRpxr0UtKXsv3ZQhCGwDUkcCjIf5OFXoGGO
+         TYbnajUW7Xa1ta/Wo6SJ5QIxqyokK6BXyF/JRyVOyJkedxJ+gYpkZhfq2SBlq7IUgjXD
+         Rw33mCZkrO65E1CJPiSzzeyedTAJjk6hVwbZcC8dbfopVWCXJDx+3+amAJ8qZ7JbtIVx
+         idlSQFywv4SDlbTdKSh9J8LJKSIeYNpXbbyWDWvU5yzRlZOM8gwAfIZvXJfyqg/VwYsh
+         //IxTJDV4WPglI0+ixR1X9WeJUSv+F+wyd0s9ly2GZJhkxOLBVfLl+42GAY8fcd4c6cy
+         2xFw==
+X-Forwarded-Encrypted: i=1; AJvYcCWC1aIPhsADViEYzQ7a0Bc6B6fa165AODc9peTjayKA7CDLVvPdhzfjTjwiiWals/eDMTkkLEs6YuzmEI0g@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw9+3ZkWjhWZWc9KNdqxw6id57ucTAesxSjKU2Jku+Msbc3y7zG
+	+mdxQFnWrrAkntCU/aHsEDopHWz4Bz774C9YY1/SbFsGUYNgGowYmhQQxnRSv65fEfY=
+X-Gm-Gg: ASbGnctThsquNZ9wAhJ/c+QfWa9s5ui2ioMOPtYpZgdxwDj36f/B5oX5NlCc3rJ3HsV
+	STL5ehovTt9Si4mQX+/4DidtrKhxmBnf0sjAlHR6BdHeg747KXF+oOWhpbtK8toMlQ8cNy5WDtc
+	jRflltcUIUUZUW+QCMzYPi3ga4tBfcSb/1DT6YVsHjahtCv5bP7MfMYUgGIHxOaLXr5D8o6uaPd
+	/mRGsI2dd21xJxZ/X1ILN06KfrCmeoTE2W3pJetf6eGcjZ8hhFAVRbDEBWtakTp3BXpmG5yIPGT
+	WkJ6b9RBoEVFQiVKxpl03xBbLtuppDbnAEa9kXjNczpV6f3FJTu1UN8XKopBD7j1v02c+aS5oEf
+	ZekKUnQ8qPOBwAcqgG6irLDVKLFZcSQ==
+X-Google-Smtp-Source: AGHT+IG4Gian2+1eYXK+LJPiJ/IOk7YXX7BNAP8tJbijpr4j+Tg2SNRKcI5T/sLwoI+EVC41Iboriw==
+X-Received: by 2002:a17:907:9691:b0:b04:3b97:f965 with SMTP id a640c23a62f3a-b1bc1168641mr281451566b.49.1758117754340;
+        Wed, 17 Sep 2025 07:02:34 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:30:96c4:427:30f:64da])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b3347a4fsm1352382866b.103.2025.09.17.07.02.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Sep 2025 07:02:33 -0700 (PDT)
+Date: Wed, 17 Sep 2025 16:02:29 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Paul Sajna <sajattack@postmarketos.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	phone-devel@vger.kernel.org,
+	Amir Dahan <system64fumo@protonmail.com>,
+	Christopher Brown <crispybrown@gmail.com>
+Subject: Re: [PATCH v2 11/13] arm64: dts: qcom: sdm845-lg-common: Add
+ bootloader-compatible board and MSM IDs
+Message-ID: <aMq_dbLRShTVLlc8@linaro.org>
+References: <20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org>
+ <20250916-judyln-dts-v2-11-5e16e60263af@postmarketos.org>
+ <acb4f8a2-ff08-4a90-a7ad-7b25a7f4b6b0@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/13] arm64: dts: qcom: sdm845-lg-judyln: Add fb_panel
- dimensions
-To: Paul Sajna <sajattack@postmarketos.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        Amir Dahan <system64fumo@protonmail.com>,
-        Christopher Brown <crispybrown@gmail.com>
-References: <20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org>
- <20250916-judyln-dts-v2-9-5e16e60263af@postmarketos.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250916-judyln-dts-v2-9-5e16e60263af@postmarketos.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX14PKb4TLcRRp
- UiXYK9eTpC9t+K3Ld4dzGAdqynnI43s3MN4CITHVGxQNiddoAmpH4ii2J1lQwA7md61/a4WBZZf
- gzo77g9LWBACRlKkDFcFIiM3Wze5w39uo05LabVi8IVnNfGdwouQ7SuwXq7a7HUDLLe209ZAdw6
- bevhOMMRmcczVULUUNeDGL1N+kRB6oXfg8bTyFKRQFGD4SoYs3YG0tS7PmgixYJPlPWC/UNvpCS
- z/QsK90+u8m2WuHQsLjCswimZHz70ATiA55jTINHvg7lWpZri00rc6t44G5CtTRHH3CgpjTOFLq
- gyhTI4HaYmHJvQAPlby3V6Tk1he2S0XxI+O/D/BzG4R/lKTdc6cPqyDV7coTtMX7LsjMpQuh7lg
- jxv4zqE3
-X-Proofpoint-ORIG-GUID: sIG9AVgt8Rk_z3toTMgyT-A79hA_2E0q
-X-Authority-Analysis: v=2.4 cv=KJZaDEFo c=1 sm=1 tr=0 ts=68cabeb3 cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=Gbw9aFdXAAAA:8 a=H5uZHoPd_HLTupC0YvAA:9
- a=QEXdDO2ut3YA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=9vIz8raoGPyDa4jBFAYH:22
-X-Proofpoint-GUID: sIG9AVgt8Rk_z3toTMgyT-A79hA_2E0q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 impostorscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <acb4f8a2-ff08-4a90-a7ad-7b25a7f4b6b0@oss.qualcomm.com>
 
-On 9/17/25 3:09 AM, Paul Sajna wrote:
-> Add display dimensions for proper scaling
+On Wed, Sep 17, 2025 at 03:55:47PM +0200, Konrad Dybcio wrote:
+> On 9/17/25 3:09 AM, Paul Sajna wrote:
+> > The original bootloader (fastboot) requires board and MSM IDs in order
+> > to boot the kernel, so these have been added. When re-using the same
+> > files to chainload U-Boot, these compatibles are also needed to ensure
+> > proper booting.
+> > 
+> > Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 2 ++
+> >  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 1 +
+> >  2 files changed, 3 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> > index 1baec758c7d881026bf6001a0a305687d7a14b40..a513cd931b3a984443183ee4e8df7b0e45732630 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
+> > @@ -5,6 +5,7 @@
+> >   * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+> >   */
+> >  
+> > +#include <dt-bindings/arm/qcom,ids.h>
+> >  #include <dt-bindings/gpio/gpio.h>
+> >  #include <dt-bindings/leds/common.h>
+> >  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> > @@ -29,6 +30,7 @@
+> >  
+> >  / {
+> >  	chassis-type = "handset";
+> > +	qcom,msm-id = <QCOM_ID_SDM845 0x20001>;
+> >  
+> >  	aliases {
+> >  		serial0 = &uart9;
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> > index 8c1692f86e6ceea7b718361965e78f95d39373bb..beb1372dc6c17f5f06c2044412ee1c8165858cd1 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
+> > @@ -12,6 +12,7 @@
+> >  / {
+> >  	model = "LG G7 ThinQ";
+> >  	compatible = "lg,judyln", "qcom,sdm845";
+> > +	qcom,board-id = <0x020C0008 0>;
 > 
-> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
-> ---
->  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts | 7 +++++++
->  1 file changed, 7 insertions(+)
+> This is almost QCOM_BOARD_ID(MTP, 12, 0), except for the odd BIT(25)
+> which the dt-binding promises should be left unused..
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> index e84b45ed82fd13850ea7ec1f34ddac5b59fc1434..8c1692f86e6ceea7b718361965e78f95d39373bb 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> @@ -23,6 +23,13 @@ framebuffer@9d400000 {
->  			format = "a8r8g8b8";
->  			lab-supply = <&lab>;
->  			ibb-supply = <&ibb>;
-> +
-> +			panel = <&fb_panel>;
-> +
-> +			fb_panel: fb-panel {
-> +				width-mm = <65>;
-> +				height-mm = <140>;
+> +Stephan maybe you know more?
+> 
 
-It'd be nicer if you moved these properties to the actual panel
-node (the DSI one) and referenced that one instead (I think that
-should work)
+I'm not sure what BIT(25) is exactly, but I think you can generally give
+up any hope of trying to make sense of the board IDs of large vendors
+like LG, Samsung, Motorola etc. It's a pity that Qualcomm has never
+created a board ID scheme with enough room for customization for
+vendors. The qcom,board-id scheme seems to be entirely focused just
+around Qualcomm's own boards (MTP, QRD, SBC etc). That is why we ended
+up with every vendor using their own incompatible approach. :-(
 
-Konrad
+Sorry, I wish I had a better explanation. :-)
+
+Stephan
 
