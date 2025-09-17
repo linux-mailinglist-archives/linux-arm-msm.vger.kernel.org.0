@@ -1,109 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-73917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DB06B7EFF7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:10:30 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id B716BB7F235
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:19:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 9601D7A1AD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 13:08:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A1A791885782
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 13:13:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9842328977;
-	Wed, 17 Sep 2025 13:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DB1FF330D45;
+	Wed, 17 Sep 2025 13:07:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gZr6mxGv"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="NVVMP4F9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C87529BDA3;
-	Wed, 17 Sep 2025 13:03:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B6A2494F8;
+	Wed, 17 Sep 2025 13:07:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758114233; cv=none; b=UEQF8cJlHa30VgNJkf+SOBsHN8RzmlT65JqkC/zNFdymgvQcfv5RmjhdlU2rl1UGXiAjZE5Y0WFl4zg4KHs4erf4TwaRQsZC4Is4uG104EJdRMSEEYPwrLWC58SA37IbDZqQDSmHJ+AqkZWTpiYrJbKmgYMSTFLgUQES+GdbEbc=
+	t=1758114440; cv=none; b=sVVa59at2Lem+FaekEmOQ1x1QvvApVKZ6G41nvs4zHcnMb2PjO+GHPR7Up3KDiJgaj1StnLACvC5n6lV6EnbnHdqTtWFVzL6nWpzwBwb5Ac5IeURF/bDJi8eFQkuV8uRTapB2l3hW16i+ex7+MJsBrQEBpWrxd2im5kDrV/JhXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758114233; c=relaxed/simple;
-	bh=mNCWQ7fqTtCLr0owwxZ4bFfSdq0S2SRt3AhVHe0ur5c=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Tk4VYdl0cspOuxKTM044nFkMhfCYBIouAskt+RJj1qYd5z+XbkTS5KT50snrPzB3wWc/Lv9C8VAahjd33zF7CE9gaAP3v5ct+O1zNat3DaizNRXMc5J9cm2BGANnrpzxjVIH68bWAWstPwbQLJYqV/CGXOkcCMYrjG407cPNDSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gZr6mxGv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356B2C4CEF0;
-	Wed, 17 Sep 2025 13:03:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758114233;
-	bh=mNCWQ7fqTtCLr0owwxZ4bFfSdq0S2SRt3AhVHe0ur5c=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=gZr6mxGvdVRKpfldxKeNfps3tSvpTNLGIV02tC7SsREh5Gcnf7e6396Ll9auP0Bwk
-	 rgGcSYT3AoEIxk09qx45vygEjdpJzqiwNS4u5ablxwVYqB+TXLCshUGar8Vpo/Bgck
-	 fDKygIzvomCaN7boM+MmrjxLSf0ri3Hc/kiDxYT1GhCRGnAw+jXXErcF+SIleAw7pn
-	 HP3mjxHxx/VKG0lhvwvFRm4GCLNva8hr1lPgau+gf0Ukc5IqnJCSla0X7U7ozEzP9O
-	 k2ll7GnK+siJSpGNnjPqYNKbFEKv6qE6lqsMLH7D4msvuJc8D0e2FYZaryzP0Ya5tY
-	 8TGIkJskD/EgQ==
-Date: Wed, 17 Sep 2025 18:33:43 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
-	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
-	Chia-Lin Kao <acelan.kao@canonical.com>
-Subject: Re: [PATCH 1/2] PCI/ASPM: Override the ASPM and Clock PM states set
- by BIOS for devicetree platforms
-Message-ID: <jgidvwogoopfgtmxywllxl76lap42s4fhzt23ldncgtzfvy5ir@xs7pnhuz2nxs>
-References: <frmzvhnhljy23xds7lnmo23zg35wxpzu4pvabnc6v6vz7qn2lj@gk25cglbpn3q>
- <20250917112218.GA1844955@bhelgaas>
+	s=arc-20240116; t=1758114440; c=relaxed/simple;
+	bh=07Z+7lEYn50IcefYha2C+kHvzFRCpea9gQQqNZKbmdc=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Fe+Mzx9tYj4WFUaST/6nLIhV50Jc71oddlLTYiFl53bjCz0qF+869fEA/SFdKeJHCiHJmyU8dOQSKycjjDJffrlH5RdxLLE5z6XceX8Aek4noqngxIaeEr1/YulSbY89IJbBhZYMPANurTWMq0zHZegNlIbBxGlpXfxXuv8q0xo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=NVVMP4F9; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58H8XYdO026846;
+	Wed, 17 Sep 2025 13:07:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=CM6E97NiG5rYGpms0xKoTs
+	VCHIrPGUqA11xmEILxBao=; b=NVVMP4F9RcrX9GRWcbBw9hSAP23kNb2hLlr4yl
+	eogAiNqQOU0hyQPuCsHLmqV5AMbiOGrG4JacmtQDQcmPgAw4oC3yjUtigwTsAVXH
+	hgwne4NcJPsksJ1kJ6yAwodUZlgh3/pUma5hhZGtCiddIpV7dUnuHet8tvjt7HJI
+	1g88x9u9qibodmNTBLKBA1i2D8Zx0F8MKI1MsUH5gSOwMssvSeH6NNFrN9xSH01m
+	s/s9PAlWSV399jjTV5zlKcdhUIT66TXjlzQ0DotTJIR9WbC2gUEExMAs3YvdM7rs
+	Ye8fDKYAmx+o3BjY59bvOQBUjzBOhO5dE179OE4eRM+YRwcA==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxt2evp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Sep 2025 13:07:06 +0000 (GMT)
+Received: from nasanex01b.na.qualcomm.com (nasanex01b.na.qualcomm.com [10.46.141.250])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58HD75Ov002310
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Sep 2025 13:07:05 GMT
+Received: from hu-vikramsa-hyd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Wed, 17 Sep 2025 06:07:00 -0700
+From: Vikram Sharma <quic_vikramsa@quicinc.com>
+To: <vladimir.zapolskiy@linaro.org>, <bryan.odonoghue@linaro.org>,
+        <mchehab@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
+        <conor+dt@kernel.org>, <andersson@kernel.org>,
+        <konradybcio@kernel.org>, <hverkuil-cisco@xs4all.nl>,
+        <cros-qcom-dts-watchers@chromium.org>, <catalin.marinas@arm.com>,
+        <will@kernel.org>
+CC: <linux-arm-kernel@lists.infradead.org>, <quic_vikramsa@quicinc.com>,
+        <quic_nihalkum@quicinc.com>, <quic_svankada@quicinc.com>,
+        <linux-media@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v3 0/3] Add CCI and imx577 sensor support for monaco evk
+Date: Wed, 17 Sep 2025 18:36:44 +0530
+Message-ID: <20250917130647.1701883-1-quic_vikramsa@quicinc.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250917112218.GA1844955@bhelgaas>
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: VQhMJjhFcM3_yEVESsif9x4y_XadTmjB
+X-Authority-Analysis: v=2.4 cv=bIMWIO+Z c=1 sm=1 tr=0 ts=68cab27a cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
+ a=RVIg9llbwysgEqpyqKEA:9 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX3Qe/BDbphKXU
+ 0Ze/s0IjNOetLsRnxcKLW3Tza1MLvcIcoo5h8G3gcXv3QscmTXJztcWk3efoD6ovaQASaj+t7Nk
+ y0n9GN7d+5ZgNg45R/8qEJtu4tlIW3Lb/8FfMWRSgMwRZTBOR+jItaGthBhqJ3TbOR0xulGJVjK
+ mQCvG8qObGD9+BxLlSmgs+hPVHL5YpCMBD+R6mKB+Lzty0JsCCF/6tchSoVgD0RqVFqVXT8Kyqd
+ R/ytdBcl5dEVUJpnXFsvlY6ANBYMFMQlDsNrB3QwOSXgKJtFRM9KAaqkp4Kj7yNFH1U53VRdBZN
+ Zh9v/ke4ZaA2SZm9v09nm+xmcqbbAvgxgaIjWkB+xyILaHr5iMuUe1Z4IEeQ0aS4ITmQxfY7FHh
+ cbY3bOzz
+X-Proofpoint-ORIG-GUID: VQhMJjhFcM3_yEVESsif9x4y_XadTmjB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0 malwarescore=0 adultscore=0 priorityscore=1501
+ suspectscore=0 spamscore=0 bulkscore=0 phishscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509160202
 
-On Wed, Sep 17, 2025 at 06:22:18AM GMT, Bjorn Helgaas wrote:
-> [+cc Kai-Heng, Rafael, Heiner, AceLan; response to
-> https://lore.kernel.org/r/20250916-pci-dt-aspm-v1-1-778fe907c9ad@oss.qualcomm.com]
-> 
-> On Wed, Sep 17, 2025 at 04:14:42PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Sep 16, 2025 at 12:15:46PM GMT, Bjorn Helgaas wrote:
-> > > On Tue, Sep 16, 2025 at 09:42:52PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > > So far, the PCI subsystem has honored the ASPM and Clock PM states set by
-> > > > the BIOS (through LNKCTL) during device initialization. This was done
-> > > > conservatively to avoid issues with the buggy devices that advertise
-> > > > ASPM capabilities, but behave erratically if the ASPM states are enabled.
-> > > > So the PCI subsystem ended up trusting the BIOS to enable only the ASPM
-> > > > states that were known to work for the devices.
-> > ...
-> 
-> > > For debuggability, I wonder if we should have a pci_dbg() at the point
-> > > where we actually update PCI_EXP_LNKCTL, PCI_L1SS_CTL1, etc?  I could
-> > > even argue for pci_info() since this should be a low-frequency and
-> > > relatively high-risk event.
-> > 
-> > I don't know why we should print register settings since we are explicitly
-> > printing out what states are getting enabled.
-> 
-> My thinking here is that we care about is what is actually written to
-> the device, not what we *intend* to write to the device.
-> 
-> There's a lot of complicated aspm.c code between setting
-> link->clkpm_default/aspm_default and actually programming the device,
-> and when debugging a problem, I don't want to have to parse all that
-> code to derive the register values.
+Monaco EVK is a single-board computer based on the Qualcomm QCS8300 SoC.
+It lacks a camera sensor in its default configuration.
+This series adds CCI support and enables the IMX577 sensor via CSIPHY1
+through device tree overlay.
 
-Sure, but that is not strictly related to this series I believe. I will add a
-patch for that at the start of this series so that you can merge it
-independently.
+We have tested IMX577 Sensor on CCI1 with following commands:
+- media-ctl --reset
+- media-ctl -V '"imx577 3-001a":0[fmt:SRGGB10/4056x3040 field:none]'
+- media-ctl -V '"msm_csiphy1":0[fmt:SRGGB10/4056x3040]'
+- media-ctl -V '"msm_csid0":0[fmt:SRGGB10/4056x3040]'
+- media-ctl -V '"msm_vfe0_rdi0":0[fmt:SRGGB10/4056x3040]'
+- media-ctl -l '"msm_csiphy1":1->"msm_csid0":0[1]'
+- media-ctl -l '"msm_csid0":1->"msm_vfe0_rdi0":0[1]'
+- yavta -B capture-mplane -c -I -n 5 -f SRGGB10P -s 4056x3040 -F /dev/video1
+---
 
-- Mani
+This patch series depends on patch series:
+https://lore.kernel.org/all/20250813053724.232494-1-quic_vikramsa@quicinc.com
+
+Bindings for Supplies are added by below patch, Bryan is going to merge
+this in linux-next:
+https://lore.kernel.org/all/20250910104915.1444669-1-quic_vikramsa@quicinc.com/
+
+Changes in V3:
+- Updated and Wrapped commit messages for [PATCH v2 1/3] and [PATCH v2 2/3] - Rob
+- Link to v2:
+  https://lore.kernel.org/all/20250912141134.2799078-1-quic_vikramsa@quicinc.com
+
+Changes in V2:
+- Remove the patch that adds PHY supply documentation in the qcs8300 CAMSS. 
+  bindings. This change should be submitted together with the qcs8300 bindings patch.
+- Fix indentation and regulator node name - Krzysztof.
+- Update commit message as suggested - Dmitry.
+- Link to v1:
+  https://lore.kernel.org/lkml/20250909114241.840842-1-quic_vikramsa@quicinc.com
+
+Used following tools for the sanity check of these changes.
+- make -j32 W=1
+- checkpatch.pl
+- make DT_CHECKER_FLAGS=-m W=1 DT_SCHEMA_FILES=i2c/qcom,i2c-cci.yaml dt_binding_check
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=i2c/qcom,i2c-cci.yaml
+
+  Below 2 checks are passing by taking bindings from:
+  https://lore.kernel.org/all/20250910104915.1444669-1-quic_vikramsa@quicinc.com/
+- make DT_CHECKER_FLAGS=-m W=1 DT_SCHEMA_FILES=media/qcom,qcs8300-camss.yaml dt_binding_check
+- make CHECK_DTBS=y W=1 DT_SCHEMA_FILES=media/qcom,qcs8300-camss.yaml
+
+
+Signed-off-by: Nihal Kumar Gupta <quic_nihalkum@quicinc.com>
+Signed-off-by: Vikram Sharma <quic_vikramsa@quicinc.com>
+
+Nihal Kumar Gupta (3):
+  dt-bindings: i2c: qcom-cci: Document qcs8300 compatible
+  arm64: dts: qcom: qcs8300: Add CCI definitions
+  arm64: dts: qcom: monaco-evk-camera: Add DT overlay
+
+ .../devicetree/bindings/i2c/qcom,i2c-cci.yaml |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   4 +
+ .../dts/qcom/monaco-evk-camera-imx577.dtso    |  96 ++++++
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 309 ++++++++++++++++++
+ 4 files changed, 411 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/monaco-evk-camera-imx577.dtso
 
 -- 
-மணிவண்ணன் சதாசிவம்
+2.25.1
+
 
