@@ -1,290 +1,495 @@
-Return-Path: <linux-arm-msm+bounces-73861-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 51734B7C817
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:04:54 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB624B7F516
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:31:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D2EA1881AD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 07:05:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A3BF73B010A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 07:09:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B31EE2882DB;
-	Wed, 17 Sep 2025 07:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64A6B2F25E6;
+	Wed, 17 Sep 2025 07:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=westermo.com header.i=@westermo.com header.b="ZgJvFfgR";
-	dkim=pass (1024-bit key) header.d=beijerelectronicsab.onmicrosoft.com header.i=@beijerelectronicsab.onmicrosoft.com header.b="VA3e6ruJ"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="EuaHPm2y"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx07-0057a101.pphosted.com (mx07-0057a101.pphosted.com [205.220.184.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF54C1514F7;
-	Wed, 17 Sep 2025 07:04:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.184.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758092700; cv=fail; b=O2Z9HUT0LOegRG9Dr/zNqnjznHxUOZqKmrn5KB0gTiG+15zss/ickyXFzxWVpET0JuVcimLvjfBO9bwYUzxHp/qcajdtl4JujlV74GWIEhkYUOrvprLHeUjGMdpVcaeSpk1YsGtmvwNzmU4yLInuF+tEYWmVVZGgyGZtqxIeT+8=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758092700; c=relaxed/simple;
-	bh=htHAMMindNlX2x8eXbjYmgLRexhBNs7uO3GD8vEDVPo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Gv6SMz4ktqRdT1W/vK7VNLqdEg3LW1k1O8aAbeuDIURa32fCDI5LYrz5rO6PL5Q+/b0zgFo1MMiit00l/rcygdi7a7lqZVf2KQhj/1DVMfO7zXwT5XiUbVL4MpRLjv0ZrbPEj5hc7YBVuq+uHD2+A+FxqQMtgUBudRst0nBn4Ow=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=westermo.com; spf=pass smtp.mailfrom=westermo.com; dkim=pass (2048-bit key) header.d=westermo.com header.i=@westermo.com header.b=ZgJvFfgR; dkim=pass (1024-bit key) header.d=beijerelectronicsab.onmicrosoft.com header.i=@beijerelectronicsab.onmicrosoft.com header.b=VA3e6ruJ; arc=fail smtp.client-ip=205.220.184.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=westermo.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=westermo.com
-Received: from pps.filterd (m0214197.ppops.net [127.0.0.1])
-	by mx07-0057a101.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 58H4t7PF3437884;
-	Wed, 17 Sep 2025 09:04:42 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=westermo.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=270620241; bh=
-	u+3wuJlWW4WfI9uAsDl+aDULFZzpAr+PG8OoUz7ArNI=; b=ZgJvFfgRSHg8nQ96
-	1XCLNRd4W0pY0VS+GCY8CXfRuCKGmwC14hrlTw+E0M3/VIuEE0MUY+6VSdTcrcqS
-	qHUr+PdU53rikFSYQmC0Tk4K8AaphRIHEHvhYgWBsaJtyl380/0uNMSL49oseon9
-	ZRNHWrhqFYSxaSacO3rik79cisqfRWASSapcLOKxO1BL1hVJG0Xg7zaN6aBvC8FF
-	CLHWUtQF78EVC5rByTJz8CePKfAvSPKM+4jbDWkiWKLUlAmJy9oBQ15A0oRvFGMM
-	7f1AzpybB+pNTHS0WEVFTcRL+cYqmqaR11b+ezNCUNd88sgwEuzO3CX8UEttnslg
-	OvdWEw==
-Received: from eur02-vi1-obe.outbound.protection.outlook.com (mail-vi1eur02on2114.outbound.protection.outlook.com [40.107.241.114])
-	by mx07-0057a101.pphosted.com (PPS) with ESMTPS id 496uxd1gaj-1
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
-	Wed, 17 Sep 2025 09:04:42 +0200 (MEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mBl8L5FT7MHF2gyxhPIz/F135j/jXQEhgFJ/lViOugpdDdlyxkildXQaYh5S31giIcmhofeauPbZzhfEOggz5nLataLtkoquTpj9lfMMGEgGD/B+3HePF2PZz+G3A06obdki+Loa53FvEx7LsAM1pMZaHNcc1MftMkqmL5141U3AfKWh0K0hcEVItgN2dfdCLFggAGrnaPzn6H8/TSzxBVtakV9y4QTrhbeIO4wJoEhXj3RfFkHxwN1z8Zc0IP5ZZHFNXS3k3PJ+Fv3clM0ND5UwoUdctkwzkZhb23VYP9ZVRe7Kc/eEKGWykVSvhZaJHEIzRC7rHuaMOhaVEwmR/g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=u+3wuJlWW4WfI9uAsDl+aDULFZzpAr+PG8OoUz7ArNI=;
- b=oUAieKiBvinor/Dw+Rhfh01T91ZXktuVbH/k1e40aMy1KVV+E5gUHdO54ybbsGUR7vs1FjNSHb/pCap4t3uscbaCUB5iNd8+KKZZJGO/52H8a53efnTK7MC+mFrg40lrsh0dkCnkIUx++Bxb6uDfmZ8/KiBm2xrUJ2gBzyVqpThcQ3wFhNDRtncnYU1M/wDPrgx+azZRCnrXtS6Y90k9xbX3RlrhjP6q34QjYWYqHy78BnonbAsPSn2LZ2m8U6bYChp1IQXSjNJUaU2lvK6PBVLoAhgx+VrYOdLhwwYBCRTQs6kRyR8s3S6aXjDoQ9q0UnmWDUpg/J2T2T9HqUCwEg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=westermo.com; dmarc=pass action=none header.from=westermo.com;
- dkim=pass header.d=westermo.com; arc=none
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1662E542A
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 07:08:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758092936; cv=none; b=GYTj3gI01p+FriglxSYGItpcX29vhxdrtcw0X5R+yB/1tNuIt3WnDPN3kEpQV43vjfo7iJmGnBdNez5M2fRRKozD7xHFAlEnxRkE2jEctT7mW8Or6dXbeTVVX7/rocJM/3dixzIRekKdwpNSksl67LoXLSbK3hO7b9EmmGspU08=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758092936; c=relaxed/simple;
+	bh=ghh8f7c7dHgoFU96mLfUg95zZb0yUffRkhQnBIriyD4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:
+	 References:In-Reply-To; b=kkFkJiZ4jpKvmNIkmPn+X1j4sTjXB+RojxgYmc3dt8cFmytL9bB04x/6crk6462QHXT68Mo9rIFAcOtDltcaHma3cPPJkmvIvj88Lg0GUKW5H7tZXJeIkBWE1LlGYLGFN6I69xwPHyl3zUgE7ZJaxwLvTd9qxqrai5WEaA6zVH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=EuaHPm2y; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45dcfecdc0fso62469415e9.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 00:08:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=beijerelectronicsab.onmicrosoft.com;
- s=selector1-beijerelectronicsab-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=u+3wuJlWW4WfI9uAsDl+aDULFZzpAr+PG8OoUz7ArNI=;
- b=VA3e6ruJCbgcgY/5+Rg7SX1rWG9fS1dhw32A1Iyawl2hJCPIYm0rAB7VkVXt3WOQLpL7Lc8JAFp96xwpBu17fm2DxPQaqkHJoApR5dNKtclCw9g6OD1KCPPNx6VSh373AWEjIX+IqUp/qx9wHazuAJ0rs5OGpYYsmjOAdZbIBFw=
-Received: from FRWP192MB2997.EURP192.PROD.OUTLOOK.COM (2603:10a6:d10:17c::10)
- by DU2P192MB2171.EURP192.PROD.OUTLOOK.COM (2603:10a6:10:495::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9115.21; Wed, 17 Sep
- 2025 07:04:41 +0000
-Received: from FRWP192MB2997.EURP192.PROD.OUTLOOK.COM
- ([fe80::8e66:c97e:57a6:c2b0]) by FRWP192MB2997.EURP192.PROD.OUTLOOK.COM
- ([fe80::8e66:c97e:57a6:c2b0%5]) with mapi id 15.20.9137.012; Wed, 17 Sep 2025
- 07:04:41 +0000
-From: Alexander Wilhelm <alexander.wilhelm@westermo.com>
-To: Jeff Johnson <jjohnson@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-wireless@vger.kernel.org, ath12k@lists.infradead.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 RESEND 4/4] wifi: ath12k: enforce CPU-endian format for all QMI messages
-Date: Wed, 17 Sep 2025 09:04:27 +0200
-Message-ID: <20250917070428.2909-5-alexander.wilhelm@westermo.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250917070428.2909-1-alexander.wilhelm@westermo.com>
-References: <20250917070428.2909-1-alexander.wilhelm@westermo.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: GVYP280CA0026.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:150:f9::29) To FRWP192MB2997.EURP192.PROD.OUTLOOK.COM
- (2603:10a6:d10:17c::10)
+        d=linaro.org; s=google; t=1758092932; x=1758697732; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=FJK4r9naNgdoIpAJSQN31kuHKBKYgSYDtK0elIxrPLg=;
+        b=EuaHPm2y/3TXpoEssKVHl3oG2WMcA94pa3wxG72v1WZ7MguLEi6e/hx9sv5QHoumFg
+         eMBDZ/g7VEOprKDesKkyFqWch0Yd4+yssFdis/zhCWj6La4gdWVDCOenlFY1Vti0xMjU
+         0jukFGOKtsQkbnwwMW9bYSVV3qPxAHDKWW6gKWmZUFRHp8c8aeyqvkQqDjrg1tOyw8S6
+         bQlB4+xIyB4DOc4LfLYCyC3K23y+NGfI21BcR81p45zMY/c8eQpbjGswomNa0RpOuXoQ
+         au67wa4zCNJIqDj0Ee7UH8NjblijrMP4R2p1wZc2L3rT5XKTHdzKyCgFfgE5Yld+Phbd
+         QL4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758092932; x=1758697732;
+        h=in-reply-to:references:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FJK4r9naNgdoIpAJSQN31kuHKBKYgSYDtK0elIxrPLg=;
+        b=gazQZfeSN45w/wDzoNTI3k9nRGisZPEfk6qH0Va1pm648P+XTeFIR38Q4cnV/as6Em
+         w+ibPuu6I3dOl1q8kN1MtheVhVYYBu7a+owEuFSDEC88baOuhpBcZo0qD7lmBSEKli/P
+         699HADF+qGhK18LFG7wdKqVTy1G1QNBhga5JlSX012UaLjM5BDnd5oYWQw6mS/BcQFzy
+         Cbxm2vdFxYfQHI37Dvxmm+esSRLp1QURmWnp2pk3ctlByUYG4K94QsEF4DUQvTzmAKmf
+         ys1P8xd49Wqo0y4eLoBqDsbG1yOKnS8bmjU3/l9tAobbZcJZTb89Pz9K0GZ82aWaeyXA
+         xl8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCValXSghcVlNlC80fmrFJY+KAb5rSkrXR3xEfvfNZGjvR9+PoK2B//F8aO5V4aJ1byGfjNSsC6GMFcVKMIz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw6vQ8IWbfruWC7S0L4BfjOI712rLSidDDIck4yFVJLf9Ix9nhl
+	NMhZH8INRDhEoHi5KaTN1rs/1asAqzjv1+qeg/I/8/fNcoIvgJhVnz0eQwDS/ny0PT0=
+X-Gm-Gg: ASbGnctqdE3bh/mfI5vQnz873DkKpJXvqnvV++/AeB96hhsPicNmn0QDZdWQ895HWNU
+	u1Fx+aYt7YWAZUqM3fBosiQcP/nmuhnRytHpQFbhFfUFFu1giy93K/Bpt9k30DonaBkEaEJStj6
+	i7vej/7Fodg/aIKGV6wA+/zrssfzziVE4kJMe1Z5njZboKI4PSjMFu6NIITzEmhxwwfTQeao5q2
+	n7MAy5Yp/YFAisT88pqJxRpPfTzX/9NimRODiNfzlD7PqYQn3d6STfIS6XP9Qcv/bqQVPYiUV88
+	HwFbFgiImM0z8irSiFR7kTAtWmZwFt/Lo+mvC4IlKkAoaHUzLoiQ4aRozlWuYffRI+Ix/WlF/Wi
+	k02hBsZfXjuT3xs6wG9S9r3uuoCs=
+X-Google-Smtp-Source: AGHT+IEV0vTT/XNc5OKi7rjTK+jaItMIqenxjHFWCKAa4kCBZcGZsvlMLEbgeMFkL1di8SFusYOkBg==
+X-Received: by 2002:a05:600c:c4b8:b0:45f:2bc5:41c3 with SMTP id 5b1f17b1804b1-46202174cb4mr9532275e9.8.1758092932388;
+        Wed, 17 Sep 2025 00:08:52 -0700 (PDT)
+Received: from localhost ([2a02:c7c:7259:a00:75ac:2ea2:dfdc:89c7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46137c0f342sm23837645e9.8.2025.09.17.00.08.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Sep 2025 00:08:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: FRWP192MB2997:EE_|DU2P192MB2171:EE_
-X-MS-Office365-Filtering-Correlation-Id: 739f43c9-085c-4d53-091c-08ddf5b87933
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?FC3FqqPC3rVqiTvTsgIABTrCApzCJTtooJLv9HIyXu8X6ZhfYVIhW324dIOf?=
- =?us-ascii?Q?FsKglkRwZcZgiAsju207pWSR1a8g1nDL1E0R/JpnoYDIAVZ4Z957DhKEW5y3?=
- =?us-ascii?Q?IaUGVQaQjFxc4FOaj/FNbYJIFxvsQxYNHD/0cO4p8fhWMxIlp9ApzH/XRMdV?=
- =?us-ascii?Q?fyGKTBeY1pVjVEgP58/hNQOIxTC1VH08lXTxt7x9JtPrqz+etOfBQpbfomX0?=
- =?us-ascii?Q?f5YQ22P6QbgTIMQfdfVg4Nx4iVHyyUiNGZ2BhJSwkQ+DVvkfrCX+nClW/HFH?=
- =?us-ascii?Q?OkVqsv8yv6aYYJMyN6WbMWUCHav2v7S7FyThqHrmerMJtQvVTpv9dF2km5ze?=
- =?us-ascii?Q?zIfiw65HzZ2xohyay8UW50pzPmGBZ1Z4gqVFAAw38QVY2jQeEPb8QWNqoJiC?=
- =?us-ascii?Q?G3ACqQ26GDMck6fnyNXrjp4ynqQII+oZpdpu8CWZKwahaaytL7XDqHeNb+P+?=
- =?us-ascii?Q?QahkKI15HH0JgdtCACr0ayZFjqXs6lDNfK12pGTuhPGWTOvdDmIDQm/8RgwQ?=
- =?us-ascii?Q?LA5XsKXL4Up5yQ9LijZNbkd45b6SKsEc5cbvK93TdFN6chnyw6aTcY0bBrCh?=
- =?us-ascii?Q?bXDbBveijcy9Sb0Gmo5nwhTT9Z9/8w2CfIzTqENcCpC1IZ6tChjf8VhQ+NnF?=
- =?us-ascii?Q?dlRed/uTxP9Aiu9CI3w5TxLY9ApoJ95tOjiBoE0Mr1fTtxmFa2jeeGf9s4qR?=
- =?us-ascii?Q?JIAu/iqBAVw2V1pQ1XWuRFxevH4W6ffDJ2KdOGNxyiEeQANa2ZOVQrtrRmhY?=
- =?us-ascii?Q?m7vtOmUzilY5i0kntcQjcikR4to+aWuCM9XGqRfqSqgqA74nnoEiojfrkch6?=
- =?us-ascii?Q?0Ks+mrQDxRDNtiebHH7qrIj7naxFRbsC0LJq0ROX6VM36HzGSGPkBItEeidz?=
- =?us-ascii?Q?irl4ZAc+oCMx8cE47Tyc37Tt0S9kTk6lkJTqIV595hXoWxNu+TqmEJCQphIj?=
- =?us-ascii?Q?S2lfileqxBOSO2uhG+7EYG+cMnB6ocWkG0iYc6WzLzA9UtVqq4lL5JZIk9w2?=
- =?us-ascii?Q?bUO4tvx26ThDZu+lk+zulFq4DS6XQwD9caRVJ8JNSQP2rRyxAC7DrQu9fkf7?=
- =?us-ascii?Q?XFGKnz/9eLJCmPp+4fc+aIidY4SKpMveZlRL+iQQque7QvxNh/7FJDKfLlg1?=
- =?us-ascii?Q?LD83cjHKuNua8FxEWBTSa50qHSBexXQr7o+3wnhb6X1EZjB/mfG4JZu1u0ZM?=
- =?us-ascii?Q?GMyYcOREfXfdLgF4Em5RUGJrS/mn0XpjlX3Caj/2dknQS+pdi2vpQ8wpvFNW?=
- =?us-ascii?Q?8FEd0G3RtuKUOLvP+SGF/voAEaYOm2PWB5PqE1yJdLeLuTAm4kpKfeVgtq8e?=
- =?us-ascii?Q?OvxnjK1421oeGR5CuNi/WI6hmNeGnRh/NFZ91CFuhE0M8UrMOHOOHcDeJNLx?=
- =?us-ascii?Q?M2y2EugOLI6y7VWOUXY3IDTeSf/G4RgWvvgTxwWZHo49DjGFAE6cOCPF7XJW?=
- =?us-ascii?Q?7b1ZxlrXExw=3D?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FRWP192MB2997.EURP192.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?EKbI7STZ8kYVvQpI7vizK3bMGGI0v+uGt8C+NNmCt8ecgyNk3Gsqb4AMe3Kc?=
- =?us-ascii?Q?IkPk88GeKcWt+gajkDcJYe2WMJQ6VGB9XQLHOlTZyBmdGkTRyU7YdttNgW4z?=
- =?us-ascii?Q?wvCFsQw8ItLQtTTKQcvtOgqfuI1y2gsvhUmredobECgDh2DT3jeoGKCzFAg+?=
- =?us-ascii?Q?IOTzo2l6QWLvb6k9WhrQZPZwJor84Y0tYYdl42tlvbTHo1oIiCje1z93JzDE?=
- =?us-ascii?Q?Jg75WiYmljR4sjjvCLdaYjYH7LBB8I+uBWu3twRBJnXLQLuUpaAn627ojSKi?=
- =?us-ascii?Q?kFaioJOrDGhmqNqo7QFZy3cF0hmYL1UqEY8Y0R1rkjyzMmRgyfI/vsJsr1Qh?=
- =?us-ascii?Q?NbnNTYpa8yEQKk0TSGf3HMx9axwWw8QJbwdkM49cWBHujKjfDmgakU9iIkA2?=
- =?us-ascii?Q?TM/DxIljGIN5REpaIgRnleAqRFXaLoTd0hF6y2Zt+yDXp4Ude4QzMDzPqwc4?=
- =?us-ascii?Q?St1JFdWBIz77IAC8OL0ai1r24eWSEKGE4ZJ+KB/Eeo1j79pGHOr7xbU54g/1?=
- =?us-ascii?Q?ka+c5yHB0knWYd2X+WGDyvM9s+jWq2wOfgW493EXo9vKLnI+8M92/wnrCdsT?=
- =?us-ascii?Q?u3NJHxAsMS3kNPDGi4t6BRh+IM5/9PAV2sbare3Cp+HZI40cWzXDYg0ClpQP?=
- =?us-ascii?Q?KEw0CKcqOnT3pLRSWLZcwcAAgM6VEQcM2Mq7/WmjGkwmxrc1CNjYHCOx1YEZ?=
- =?us-ascii?Q?qQTPTVBA6Zj5CkTQwOd02qhd3DGH1zueiJoqlYXXgLOF3nOiPT+Fe6uxgrNd?=
- =?us-ascii?Q?ixtoO4gdHVcyb6WB8UtGnIAVnbANqJ36KwJPB78DxGF9/WVnEAmGrNAba42e?=
- =?us-ascii?Q?iCWbF04nK2lrzioFMs1z+0lJIp1rEmTzoifl8P+/lKM1j4PYa1XtVlYLy7Bo?=
- =?us-ascii?Q?deI0b+LtLzsEIQs/iwa6hxT7oskXhigGO8dpflduDagRh6EU+fud8EpEMXdM?=
- =?us-ascii?Q?rqpJf5I+LXW+d8G/0nOi09WweRqir+4/pgARiFJBrR32J4yLEwWU9hnV4Ojy?=
- =?us-ascii?Q?h9JknjnWQkDlqb9o9QpeYE3HUnKi+thfQMD39S+2jJThy0Soze2FPPiZ1vEK?=
- =?us-ascii?Q?vyMlYBXCWriFh+kksJNA/T3S9f3knGiAmN8TVYlEjFM2e5aa94CF5Rif/uJJ?=
- =?us-ascii?Q?Yz0CX+hIbQEsWh87N6HkiMVpOhx+frSpFwa5HrvxNayHLaOSXI/gxMVXXuUm?=
- =?us-ascii?Q?4HUhoTNIWnI/+Hd6wRGOWeWQOpINQ9gSC9Vw7yUwurJ6rupFkBMv8g7EoRgv?=
- =?us-ascii?Q?Og2qHuPfRuq4nivE0aUdU+5Om6CdU05qrQvBLIabJOG+rAsUDzcyEeCVOrkT?=
- =?us-ascii?Q?cYmiLZimg72CDfPS6Ka9t8duWfCdihrNn62ENdnQvYZ1PLZFlvEyXEfh9A94?=
- =?us-ascii?Q?6RxGHXC8lIeo3Z5qBukZE9BeRbYOSphBkDRTf/kqP0hcLgsWOwdcnJAhuGB6?=
- =?us-ascii?Q?HlrW263YxRgwdVGvFvSYVJxM/Ajc9wSqwxempMh4CdmjVMpxuPNqNTDmGjj0?=
- =?us-ascii?Q?H8sA0Ly8UNwYKUkKqco9XUIxA6fPv3rMu93gkXYlmWgb4Xs7urPy+OWfemFi?=
- =?us-ascii?Q?afsR9v34A+fNDwmGeMxrmSYrfhSx4fxmWx33DiTF?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0:
-	ZH/plmZyT4iWv8TfqU5UXQ2qaGe89iqfcj+TJ/K08A18s1HBVZG+bh3LmonoL/z98Vsi3Loc4aU20KrmfTapxNug44SuSviqCgsJX+cT1G9JHUbxoN0Q0lLPxkaHKajVeZ05+WDy8KoX2V0rAgoBeR2IM5WcmLMtU79VOZFvfwWIjDSVqK+EUsyuUe0FUAOToYT71D5zApG9HWYrNMR+4vy4W1/j+5bVTVqrq70bnJJs9PFL/Puc7ys/kb2slQg7hWJ33pEoYgsBjXvth0QwmlC3ti4vj+lUwZZtG2nt2GTWAsL0yFfBOhtrp04SdslA2Kpm72CNzybRuSxqI3ZTabH5uZHxYgN6ggB2D7cIsOceg7GVlPE9o+f6vcpgZ3D1m0470jcX1Fdnurjmtzo1Jf+ITHB3UDNIZ0uWlu6Xz2HbIM4o7EkdtVoKPazkF35IE3hD/zLpvS4rFzeBhnq2CTZDZ9GRJ1ATHTkWEprfo8ngWuTLPqO49JPzIySWFju8hVujTtooxE1+PekSTlS9N3/qko0Hb1tBEE74mQuEPejV3IZtvKTYz8dFW7m8w4iEUkmIGlTaWGLotK1IYoJ2Gev1BQr+44WH7i7b4VA3HpDVy4bCYi6rI/vtqBcZ7baA
-X-OriginatorOrg: westermo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 739f43c9-085c-4d53-091c-08ddf5b87933
-X-MS-Exchange-CrossTenant-AuthSource: FRWP192MB2997.EURP192.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2025 07:04:41.3112
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4b2e9b91-de77-4ca7-8130-c80faee67059
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: o8jxn+Xsmv6toNhLURAAGmOPnjsO0Q9GY4I25Zdk1PPk37kO5DYyZntSxc0rhlxEv2JnNfMX0WDP2PXwI0anDQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU2P192MB2171
-X-MS-Exchange-CrossPremises-AuthSource: FRWP192MB2997.EURP192.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossPremises-AuthAs: Internal
-X-MS-Exchange-CrossPremises-AuthMechanism: 14
-X-MS-Exchange-CrossPremises-Mapi-Admin-Submission:
-X-MS-Exchange-CrossPremises-MessageSource: StoreDriver
-X-MS-Exchange-CrossPremises-BCC:
-X-MS-Exchange-CrossPremises-OriginalClientIPAddress: 104.151.95.196
-X-MS-Exchange-CrossPremises-TransportTrafficType: Email
-X-MS-Exchange-CrossPremises-Antispam-ScanContext:
-	DIR:Originating;SFV:NSPM;SKIP:0;
-X-MS-Exchange-CrossPremises-SCL: 1
-X-MS-Exchange-CrossPremises-Processed-By-Journaling: Journal Agent
-X-OrganizationHeadersPreserved: DU2P192MB2171.EURP192.PROD.OUTLOOK.COM
-X-Authority-Analysis: v=2.4 cv=PaL/hjhd c=1 sm=1 tr=0 ts=68ca5d8a cx=c_pps
- a=hM8yxYzsqXlWHy+t09BC9Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19 a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=yJojWOMRYYMA:10 a=8gLI3H-aZtYA:10 a=N9GNhs4bAAAA:8
- a=-n57fyUix78Y44btv20A:9 a=PZhj9NlD-CKO8hVp7yCs:22
-X-Proofpoint-GUID: MY1MqAflqSumc_gv1Rs2C5A8FccJsNe8
-X-Proofpoint-ORIG-GUID: MY1MqAflqSumc_gv1Rs2C5A8FccJsNe8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE3MDA2NyBTYWx0ZWRfX98FqP87SEJMV
- zGQ0U78ROsSJGkNTnkgknenbaz1L0zoRLYlSPoY+y6RirvzZwmrFLkICI78UeLvndlu/gX4mChL
- XUfLweBT0MDWV+02TuWv1R5M9SQf/Z6tjOV4tnniTBcwX6IsOVXzYTE5NP/oJCqilwHxgYGmfXC
- 1pgjSS36x/AMc42VE1PDnUeH5OB555ZqbV7wkFjrqvYJ+vDU7ABc1LzM4EHcSMCRONxT2iKBknh
- 2N1ZNEnauO+hmy66kQi8QwEG9K+x0oXAfpVI7sj2WJ0yUfQjFgPE5sjdvWnTNRPtb43yXjQOkwO
- OLLumguuhbIgYnDum0IQRxMaNFMcL7se8dc0uC3jZByW7zHDVL9qD3SYOw+lbE=
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 17 Sep 2025 08:08:51 +0100
+Message-Id: <DCUVXIPKCGFS.E32DN2I35RRR@linaro.org>
+Subject: Re: [PATCH v2] serial: qcom-geni: Fix blocked task
+From: "Alexey Klimov" <alexey.klimov@linaro.org>
+To: "Krzysztof Kozlowski" <krzysztof.kozlowski@linaro.org>, "Greg
+ Kroah-Hartman" <gregkh@linuxfoundation.org>, "Jiri Slaby"
+ <jirislaby@kernel.org>, "Praveen Talari" <quic_ptalari@quicinc.com>, "Bryan
+ O'Donoghue" <bryan.odonoghue@linaro.org>, <linux-arm-msm@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <linux-serial@vger.kernel.org>
+X-Mailer: aerc 0.20.0
+References: <20250917010437.129912-2-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20250917010437.129912-2-krzysztof.kozlowski@linaro.org>
 
-Due to internal endianness handling within the QMI subsystem, all QMI
-requests and responses must now be provided in CPU byte order. Replace all
-QMI-related data types with CPU-endian types and add the necessary
-conversions to ensure correct interpretation across architectures.
+On Wed Sep 17, 2025 at 2:04 AM BST, Krzysztof Kozlowski wrote:
+> Revert commit 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for
+> serial driver") and its dependent commit 86fa39dd6fb7 ("serial:
+> qcom-geni: Enable Serial on SA8255p Qualcomm platforms") because the
+> first one causes regression - hang task on Qualcomm RB1 board (QRB2210)
+> and unable to use serial at all during normal boot:
+>
+>   INFO: task kworker/u16:0:12 blocked for more than 42 seconds.
+>         Not tainted 6.17.0-rc1-00004-g53e760d89498 #9
+>   "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this messag=
+e.
+>   task:kworker/u16:0   state:D stack:0     pid:12    tgid:12    ppid:2   =
+   task_flags:0x4208060 flags:0x00000010
+>   Workqueue: async async_run_entry_fn
+>   Call trace:
+>    __switch_to+0xe8/0x1a0 (T)
+>    __schedule+0x290/0x7c0
+>    schedule+0x34/0x118
+>    rpm_resume+0x14c/0x66c
+>    rpm_resume+0x2a4/0x66c
+>    rpm_resume+0x2a4/0x66c
+>    rpm_resume+0x2a4/0x66c
+>    __pm_runtime_resume+0x50/0x9c
+>    __driver_probe_device+0x58/0x120
+>    driver_probe_device+0x3c/0x154
+>    __driver_attach_async_helper+0x4c/0xc0
+>    async_run_entry_fn+0x34/0xe0
+>    process_one_work+0x148/0x290
+>    worker_thread+0x2c4/0x3e0
+>    kthread+0x118/0x1c0
+>    ret_from_fork+0x10/0x20
+>
+> The issue was reported on 12th of August and was ignored by author of
+> commits introducing issue for two weeks.  Only after complaining author
+> produced a fix which did not work, so if original commits cannot be
+> reliably fixed for 5 weeks, they obviously are buggy and need to be
+> dropped.
+>
+> Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial dri=
+ver")
+> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+> Closes: https://lore.kernel.org/all/DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org/
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-Fixes: d889913205cf ("wifi: ath12k: driver for Qualcomm Wi-Fi 7 devices")
-Signed-off-by: Alexander Wilhelm <alexander.wilhelm@westermo.com>
----
- drivers/net/wireless/ath/ath12k/qmi.c | 24 ++++++++++++++++--------
- drivers/net/wireless/ath/ath12k/qmi.h | 16 ++++++++--------
- 2 files changed, 24 insertions(+), 16 deletions(-)
+Tested-by: Alexey Klimov <alexey.klimov@linaro.org>
+Reviewed-by: Alexey Klimov <alexey.klimov@linaro.org>
 
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.c b/drivers/net/wireless/ath/ath12k/qmi.c
-index 7c611a1fd6d0..36325e62aa24 100644
---- a/drivers/net/wireless/ath/ath12k/qmi.c
-+++ b/drivers/net/wireless/ath/ath12k/qmi.c
-@@ -3307,20 +3307,28 @@ static int ath12k_qmi_wlanfw_wlan_cfg_send(struct ath12k_base *ab)
- 	/* This is number of CE configs */
- 	req->tgt_cfg_len = ab->qmi.ce_cfg.tgt_ce_len;
- 	for (pipe_num = 0; pipe_num < req->tgt_cfg_len ; pipe_num++) {
--		req->tgt_cfg[pipe_num].pipe_num = ce_cfg[pipe_num].pipenum;
--		req->tgt_cfg[pipe_num].pipe_dir = ce_cfg[pipe_num].pipedir;
--		req->tgt_cfg[pipe_num].nentries = ce_cfg[pipe_num].nentries;
--		req->tgt_cfg[pipe_num].nbytes_max = ce_cfg[pipe_num].nbytes_max;
--		req->tgt_cfg[pipe_num].flags = ce_cfg[pipe_num].flags;
-+		req->tgt_cfg[pipe_num].pipe_num =
-+			__le32_to_cpu(ce_cfg[pipe_num].pipenum);
-+		req->tgt_cfg[pipe_num].pipe_dir =
-+			__le32_to_cpu(ce_cfg[pipe_num].pipedir);
-+		req->tgt_cfg[pipe_num].nentries =
-+			__le32_to_cpu(ce_cfg[pipe_num].nentries);
-+		req->tgt_cfg[pipe_num].nbytes_max =
-+			__le32_to_cpu(ce_cfg[pipe_num].nbytes_max);
-+		req->tgt_cfg[pipe_num].flags =
-+			__le32_to_cpu(ce_cfg[pipe_num].flags);
- 	}
- 
- 	req->svc_cfg_valid = 1;
- 	/* This is number of Service/CE configs */
- 	req->svc_cfg_len = ab->qmi.ce_cfg.svc_to_ce_map_len;
- 	for (pipe_num = 0; pipe_num < req->svc_cfg_len; pipe_num++) {
--		req->svc_cfg[pipe_num].service_id = svc_cfg[pipe_num].service_id;
--		req->svc_cfg[pipe_num].pipe_dir = svc_cfg[pipe_num].pipedir;
--		req->svc_cfg[pipe_num].pipe_num = svc_cfg[pipe_num].pipenum;
-+		req->svc_cfg[pipe_num].service_id =
-+			__le32_to_cpu(svc_cfg[pipe_num].service_id);
-+		req->svc_cfg[pipe_num].pipe_dir =
-+			__le32_to_cpu(svc_cfg[pipe_num].pipedir);
-+		req->svc_cfg[pipe_num].pipe_num =
-+			__le32_to_cpu(svc_cfg[pipe_num].pipenum);
- 	}
- 
- 	/* set shadow v3 configuration */
-diff --git a/drivers/net/wireless/ath/ath12k/qmi.h b/drivers/net/wireless/ath/ath12k/qmi.h
-index abdaade3b542..4767d9a2e309 100644
---- a/drivers/net/wireless/ath/ath12k/qmi.h
-+++ b/drivers/net/wireless/ath/ath12k/qmi.h
-@@ -392,17 +392,17 @@ enum qmi_wlanfw_pipedir_enum_v01 {
- };
- 
- struct qmi_wlanfw_ce_tgt_pipe_cfg_s_v01 {
--	__le32 pipe_num;
--	__le32 pipe_dir;
--	__le32 nentries;
--	__le32 nbytes_max;
--	__le32 flags;
-+	u32 pipe_num;
-+	u32 pipe_dir;
-+	u32 nentries;
-+	u32 nbytes_max;
-+	u32 flags;
- };
- 
- struct qmi_wlanfw_ce_svc_pipe_cfg_s_v01 {
--	__le32 service_id;
--	__le32 pipe_dir;
--	__le32 pipe_num;
-+	u32 service_id;
-+	u32 pipe_dir;
-+	u32 pipe_num;
- };
- 
- struct qmi_wlanfw_shadow_reg_cfg_s_v01 {
--- 
-2.43.0
+
+
+> ---
+>
+> Changes in v2:
+> 1. Correct reference to cause (proper commit) in the commit msg.
+> ---
+>  drivers/tty/serial/qcom_geni_serial.c | 176 +++-----------------------
+>  1 file changed, 16 insertions(+), 160 deletions(-)
+>
+> diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/q=
+com_geni_serial.c
+> index 0fdda3a1e70b..7c5befe5490d 100644
+> --- a/drivers/tty/serial/qcom_geni_serial.c
+> +++ b/drivers/tty/serial/qcom_geni_serial.c
+> @@ -14,7 +14,6 @@
+>  #include <linux/irq.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/pm_domain.h>
+>  #include <linux/pm_opp.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/pm_runtime.h>
+> @@ -102,16 +101,10 @@
+>  #define DMA_RX_BUF_SIZE		2048
+> =20
+>  static DEFINE_IDA(port_ida);
+> -#define DOMAIN_IDX_POWER	0
+> -#define DOMAIN_IDX_PERF		1
+> =20
+>  struct qcom_geni_device_data {
+>  	bool console;
+>  	enum geni_se_xfer_mode mode;
+> -	struct dev_pm_domain_attach_data pd_data;
+> -	int (*resources_init)(struct uart_port *uport);
+> -	int (*set_rate)(struct uart_port *uport, unsigned int baud);
+> -	int (*power_state)(struct uart_port *uport, bool state);
+>  };
+> =20
+>  struct qcom_geni_private_data {
+> @@ -149,7 +142,6 @@ struct qcom_geni_serial_port {
+> =20
+>  	struct qcom_geni_private_data private_data;
+>  	const struct qcom_geni_device_data *dev_data;
+> -	struct dev_pm_domain_list *pd_list;
+>  };
+> =20
+>  static const struct uart_ops qcom_geni_console_pops;
+> @@ -1301,42 +1293,6 @@ static int geni_serial_set_rate(struct uart_port *=
+uport, unsigned int baud)
+>  	return 0;
+>  }
+> =20
+> -static int geni_serial_set_level(struct uart_port *uport, unsigned int b=
+aud)
+> -{
+> -	struct qcom_geni_serial_port *port =3D to_dev_port(uport);
+> -	struct device *perf_dev =3D port->pd_list->pd_devs[DOMAIN_IDX_PERF];
+> -
+> -	/*
+> -	 * The performance protocol sets UART communication
+> -	 * speeds by selecting different performance levels
+> -	 * through the OPP framework.
+> -	 *
+> -	 * Supported perf levels for baudrates in firmware are below
+> -	 * +---------------------+--------------------+
+> -	 * |  Perf level value   |  Baudrate values   |
+> -	 * +---------------------+--------------------+
+> -	 * |      300            |      300           |
+> -	 * |      1200           |      1200          |
+> -	 * |      2400           |      2400          |
+> -	 * |      4800           |      4800          |
+> -	 * |      9600           |      9600          |
+> -	 * |      19200          |      19200         |
+> -	 * |      38400          |      38400         |
+> -	 * |      57600          |      57600         |
+> -	 * |      115200         |      115200        |
+> -	 * |      230400         |      230400        |
+> -	 * |      460800         |      460800        |
+> -	 * |      921600         |      921600        |
+> -	 * |      2000000        |      2000000       |
+> -	 * |      3000000        |      3000000       |
+> -	 * |      3200000        |      3200000       |
+> -	 * |      4000000        |      4000000       |
+> -	 * +---------------------+--------------------+
+> -	 */
+> -
+> -	return dev_pm_opp_set_level(perf_dev, baud);
+> -}
+> -
+>  static void qcom_geni_serial_set_termios(struct uart_port *uport,
+>  					 struct ktermios *termios,
+>  					 const struct ktermios *old)
+> @@ -1355,7 +1311,7 @@ static void qcom_geni_serial_set_termios(struct uar=
+t_port *uport,
+>  	/* baud rate */
+>  	baud =3D uart_get_baud_rate(uport, termios, old, 300, 8000000);
+> =20
+> -	ret =3D port->dev_data->set_rate(uport, baud);
+> +	ret =3D geni_serial_set_rate(uport, baud);
+>  	if (ret)
+>  		return;
+> =20
+> @@ -1642,27 +1598,8 @@ static int geni_serial_resources_off(struct uart_p=
+ort *uport)
+>  	return 0;
+>  }
+> =20
+> -static int geni_serial_resource_state(struct uart_port *uport, bool powe=
+r_on)
+> +static int geni_serial_resource_init(struct qcom_geni_serial_port *port)
+>  {
+> -	return power_on ? geni_serial_resources_on(uport) : geni_serial_resourc=
+es_off(uport);
+> -}
+> -
+> -static int geni_serial_pwr_init(struct uart_port *uport)
+> -{
+> -	struct qcom_geni_serial_port *port =3D to_dev_port(uport);
+> -	int ret;
+> -
+> -	ret =3D dev_pm_domain_attach_list(port->se.dev,
+> -					&port->dev_data->pd_data, &port->pd_list);
+> -	if (ret <=3D 0)
+> -		return -EINVAL;
+> -
+> -	return 0;
+> -}
+> -
+> -static int geni_serial_resource_init(struct uart_port *uport)
+> -{
+> -	struct qcom_geni_serial_port *port =3D to_dev_port(uport);
+>  	int ret;
+> =20
+>  	port->se.clk =3D devm_clk_get(port->se.dev, "se");
+> @@ -1707,10 +1644,10 @@ static void qcom_geni_serial_pm(struct uart_port =
+*uport,
+>  		old_state =3D UART_PM_STATE_OFF;
+> =20
+>  	if (new_state =3D=3D UART_PM_STATE_ON && old_state =3D=3D UART_PM_STATE=
+_OFF)
+> -		pm_runtime_resume_and_get(uport->dev);
+> +		geni_serial_resources_on(uport);
+>  	else if (new_state =3D=3D UART_PM_STATE_OFF &&
+>  		 old_state =3D=3D UART_PM_STATE_ON)
+> -		pm_runtime_put_sync(uport->dev);
+> +		geni_serial_resources_off(uport);
+> =20
+>  }
+> =20
+> @@ -1813,16 +1750,13 @@ static int qcom_geni_serial_probe(struct platform=
+_device *pdev)
+>  	port->se.dev =3D &pdev->dev;
+>  	port->se.wrapper =3D dev_get_drvdata(pdev->dev.parent);
+> =20
+> -	ret =3D port->dev_data->resources_init(uport);
+> +	ret =3D geni_serial_resource_init(port);
+>  	if (ret)
+>  		return ret;
+> =20
+>  	res =3D platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> -	if (!res) {
+> -		ret =3D -EINVAL;
+> -		goto error;
+> -	}
+> -
+> +	if (!res)
+> +		return -EINVAL;
+>  	uport->mapbase =3D res->start;
+> =20
+>  	uport->rs485_config =3D qcom_geni_rs485_config;
+> @@ -1834,26 +1768,19 @@ static int qcom_geni_serial_probe(struct platform=
+_device *pdev)
+>  	if (!data->console) {
+>  		port->rx_buf =3D devm_kzalloc(uport->dev,
+>  					    DMA_RX_BUF_SIZE, GFP_KERNEL);
+> -		if (!port->rx_buf) {
+> -			ret =3D -ENOMEM;
+> -			goto error;
+> -		}
+> +		if (!port->rx_buf)
+> +			return -ENOMEM;
+>  	}
+> =20
+>  	port->name =3D devm_kasprintf(uport->dev, GFP_KERNEL,
+>  			"qcom_geni_serial_%s%d",
+>  			uart_console(uport) ? "console" : "uart", uport->line);
+> -	if (!port->name) {
+> -		ret =3D -ENOMEM;
+> -		goto error;
+> -	}
+> +	if (!port->name)
+> +		return -ENOMEM;
+> =20
+>  	irq =3D platform_get_irq(pdev, 0);
+> -	if (irq < 0) {
+> -		ret =3D irq;
+> -		goto error;
+> -	}
+> -
+> +	if (irq < 0)
+> +		return irq;
+>  	uport->irq =3D irq;
+>  	uport->has_sysrq =3D IS_ENABLED(CONFIG_SERIAL_QCOM_GENI_CONSOLE);
+> =20
+> @@ -1875,18 +1802,16 @@ static int qcom_geni_serial_probe(struct platform=
+_device *pdev)
+>  			IRQF_TRIGGER_HIGH, port->name, uport);
+>  	if (ret) {
+>  		dev_err(uport->dev, "Failed to get IRQ ret %d\n", ret);
+> -		goto error;
+> +		return ret;
+>  	}
+> =20
+>  	ret =3D uart_get_rs485_mode(uport);
+>  	if (ret)
+>  		return ret;
+> =20
+> -	devm_pm_runtime_enable(port->se.dev);
+> -
+>  	ret =3D uart_add_one_port(drv, uport);
+>  	if (ret)
+> -		goto error;
+> +		return ret;
+> =20
+>  	if (port->wakeup_irq > 0) {
+>  		device_init_wakeup(&pdev->dev, true);
+> @@ -1896,15 +1821,11 @@ static int qcom_geni_serial_probe(struct platform=
+_device *pdev)
+>  			device_init_wakeup(&pdev->dev, false);
+>  			ida_free(&port_ida, uport->line);
+>  			uart_remove_one_port(drv, uport);
+> -			goto error;
+> +			return ret;
+>  		}
+>  	}
+> =20
+>  	return 0;
+> -
+> -error:
+> -	dev_pm_domain_detach_list(port->pd_list);
+> -	return ret;
+>  }
+> =20
+>  static void qcom_geni_serial_remove(struct platform_device *pdev)
+> @@ -1917,31 +1838,6 @@ static void qcom_geni_serial_remove(struct platfor=
+m_device *pdev)
+>  	device_init_wakeup(&pdev->dev, false);
+>  	ida_free(&port_ida, uport->line);
+>  	uart_remove_one_port(drv, &port->uport);
+> -	dev_pm_domain_detach_list(port->pd_list);
+> -}
+> -
+> -static int __maybe_unused qcom_geni_serial_runtime_suspend(struct device=
+ *dev)
+> -{
+> -	struct qcom_geni_serial_port *port =3D dev_get_drvdata(dev);
+> -	struct uart_port *uport =3D &port->uport;
+> -	int ret =3D 0;
+> -
+> -	if (port->dev_data->power_state)
+> -		ret =3D port->dev_data->power_state(uport, false);
+> -
+> -	return ret;
+> -}
+> -
+> -static int __maybe_unused qcom_geni_serial_runtime_resume(struct device =
+*dev)
+> -{
+> -	struct qcom_geni_serial_port *port =3D dev_get_drvdata(dev);
+> -	struct uart_port *uport =3D &port->uport;
+> -	int ret =3D 0;
+> -
+> -	if (port->dev_data->power_state)
+> -		ret =3D port->dev_data->power_state(uport, true);
+> -
+> -	return ret;
+>  }
+> =20
+>  static int qcom_geni_serial_suspend(struct device *dev)
+> @@ -1979,46 +1875,14 @@ static int qcom_geni_serial_resume(struct device =
+*dev)
+>  static const struct qcom_geni_device_data qcom_geni_console_data =3D {
+>  	.console =3D true,
+>  	.mode =3D GENI_SE_FIFO,
+> -	.resources_init =3D geni_serial_resource_init,
+> -	.set_rate =3D geni_serial_set_rate,
+> -	.power_state =3D geni_serial_resource_state,
+>  };
+> =20
+>  static const struct qcom_geni_device_data qcom_geni_uart_data =3D {
+>  	.console =3D false,
+>  	.mode =3D GENI_SE_DMA,
+> -	.resources_init =3D geni_serial_resource_init,
+> -	.set_rate =3D geni_serial_set_rate,
+> -	.power_state =3D geni_serial_resource_state,
+> -};
+> -
+> -static const struct qcom_geni_device_data sa8255p_qcom_geni_console_data=
+ =3D {
+> -	.console =3D true,
+> -	.mode =3D GENI_SE_FIFO,
+> -	.pd_data =3D {
+> -		.pd_flags =3D PD_FLAG_DEV_LINK_ON,
+> -		.pd_names =3D (const char*[]) { "power", "perf" },
+> -		.num_pd_names =3D 2,
+> -	},
+> -	.resources_init =3D geni_serial_pwr_init,
+> -	.set_rate =3D geni_serial_set_level,
+> -};
+> -
+> -static const struct qcom_geni_device_data sa8255p_qcom_geni_uart_data =
+=3D {
+> -	.console =3D false,
+> -	.mode =3D GENI_SE_DMA,
+> -	.pd_data =3D {
+> -		.pd_flags =3D PD_FLAG_DEV_LINK_ON,
+> -		.pd_names =3D (const char*[]) { "power", "perf" },
+> -		.num_pd_names =3D 2,
+> -	},
+> -	.resources_init =3D geni_serial_pwr_init,
+> -	.set_rate =3D geni_serial_set_level,
+>  };
+> =20
+>  static const struct dev_pm_ops qcom_geni_serial_pm_ops =3D {
+> -	SET_RUNTIME_PM_OPS(qcom_geni_serial_runtime_suspend,
+> -			   qcom_geni_serial_runtime_resume, NULL)
+>  	SYSTEM_SLEEP_PM_OPS(qcom_geni_serial_suspend, qcom_geni_serial_resume)
+>  };
+> =20
+> @@ -2027,18 +1891,10 @@ static const struct of_device_id qcom_geni_serial=
+_match_table[] =3D {
+>  		.compatible =3D "qcom,geni-debug-uart",
+>  		.data =3D &qcom_geni_console_data,
+>  	},
+> -	{
+> -		.compatible =3D "qcom,sa8255p-geni-debug-uart",
+> -		.data =3D &sa8255p_qcom_geni_console_data,
+> -	},
+>  	{
+>  		.compatible =3D "qcom,geni-uart",
+>  		.data =3D &qcom_geni_uart_data,
+>  	},
+> -	{
+> -		.compatible =3D "qcom,sa8255p-geni-uart",
+> -		.data =3D &sa8255p_qcom_geni_uart_data,
+> -	},
+>  	{}
+>  };
+>  MODULE_DEVICE_TABLE(of, qcom_geni_serial_match_table);
 
 
