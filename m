@@ -1,61 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-73986-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73987-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC5F6B8196A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 21:23:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 87EF1B81997
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 21:25:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 096EE1899014
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 19:23:52 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D2965170B46
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 19:23:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5527C3043D0;
-	Wed, 17 Sep 2025 19:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 314D130CB2B;
+	Wed, 17 Sep 2025 19:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rcEIjs8e"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hztTDeD5"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2417D301715;
-	Wed, 17 Sep 2025 19:23:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E709730C110;
+	Wed, 17 Sep 2025 19:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758137003; cv=none; b=lLyp3h4+EFotPZkvVEcIcsFWMhrZ0bNB/bDq31bTPtMxqR2B6m6ajuLv3sst+mgFkEItfHDHwUUdQ9n7Ts5ZUTO7SacixCSai61v7wc7srLD7RVrpMqdxbdLIMw/JgD3Anl6+TnlktJyNwN0nHAr5RGRROP55j1VZ6/Xoke8MDk=
+	t=1758137005; cv=none; b=YYlOapJGumFNKbKugnKGj8jWVBlq0+/vMvQDv/fSuJ2xUXLNw6+O00jM8mLj4CiWVNnuG4o4RT6pzA3uOolpRpCcrhfG2cZmxa6f9/dQCjAOwwW2IRKyw3klZUhVWR9cW3K2bDA5kNuNJE6R8nhEAU1av+TNwRL3sky4WJJ97CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758137003; c=relaxed/simple;
-	bh=VbYuT4eimslG2e4iLpbUc1+CLllNv9ySnfQZg6GJ0Kk=;
+	s=arc-20240116; t=1758137005; c=relaxed/simple;
+	bh=MFa4MrLLeBxJ4spNgJzdHnMZEO1qEG9apiibEMwKF+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=TwlmKGxaUSBk+GWcmEPiVwWn0llQ/K1Uk7+pf9/SNAFZkNVBGtiGV1PsBbAjUA2MEOLVtG7VXwVRzsvdP1lkq7JPixElfUH+qKcibpaM5TQCDdwPH9PIj6SIGC4DWiRMOEeXQa3yJseHvGxuxdO8B1ABNB7Wd3D39MEqDlZgD+k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rcEIjs8e; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5623EC4CEFA;
-	Wed, 17 Sep 2025 19:23:22 +0000 (UTC)
+	 MIME-Version:Content-Type; b=dGu13itbM5cWhtbPkm7DPCwbwwo/aogCGIihXFgNUxsSBIZpy/GLBGifnN3xdz6U1n80H7HKhK/p2OtGTAMuAbrHtpsAF7d6nkpMYUwSZNrykT/z9A6Nv0RvPcfuPf5wH5JEtr2D22+6tgx/UOTfHAVhbTAbCwVvgWpq2a+OntQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hztTDeD5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3109DC4CEFB;
+	Wed, 17 Sep 2025 19:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758137003;
-	bh=VbYuT4eimslG2e4iLpbUc1+CLllNv9ySnfQZg6GJ0Kk=;
+	s=k20201202; t=1758137004;
+	bh=MFa4MrLLeBxJ4spNgJzdHnMZEO1qEG9apiibEMwKF+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rcEIjs8eTX+C2mnGhC1LjZmPJVHKPAEJAEbBnxnY+LtbkkOMuu+LlDef1ke6poPk/
-	 otshpNkEl50zx0ZIiQcFxFtVRZkGUNQfoC5wPSEMClJ0fRWhdDH+yiO4Asbm6ajSyv
-	 hA1ASoXA8K6k9P8/KgxY8BVvtoc/tSI8qZHyhVapGVLdPyL0QtFxo+HcZqtdh+yW+W
-	 5uk8/rok7vz9q1WaqGq5lOz9YV3S01p1eOL4lUN+nunDGskAijBc2x3hPshmkDDOPr
-	 vufGI2C4KE+cKFUeEm4BxXpWgVNR3LOe1dFOosaB7ogcj5zB52r6BaDj6QDm9g6xOU
-	 ZafYIe/Bwi0pw==
+	b=hztTDeD5xlD8jRixl4Pxqbhj8i+b07MKO4vukji5FOvcufnEFBVDnUG3O39XqxEDf
+	 fRfRqP9SzSW+KP9YaaoIOGCbEGdM+/jH9zvtgkeb1fk21D0+Woe/fz4mx+4nkTwi8t
+	 pI0F4pL4JR1rij724ydjdyWMqqm1SmfSaS0M0ZYYyHU6tr0Hh43jZy3SDWqKIDH8BL
+	 V8o35BqbbsomC6B9QR0d5mM/lCO9neVYWqrcCfLAsnPfjuwFR/QRHSj9pPcRtGKc1t
+	 9JObbpttreKLKaZxdOPbdiny+a14JCdMCRGm3Y0swnxHw2i4zX8ohFjE/+jhCjdYcp
+	 RhV6wSpUEI5kQ==
 From: Bjorn Andersson <andersson@kernel.org>
-To: Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org,
+To: andi.shyti@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org,
+	gregkh@linuxfoundation.org,
+	jirislaby@kernel.org,
+	konradybcio@kernel.org,
+	broonie@kernel.org,
+	johan+linaro@kernel.org,
+	dianders@chromium.org,
+	agross@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-i2c@vger.kernel.org,
 	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: lemans: Flatten usb controller nodes
-Date: Wed, 17 Sep 2025 14:23:18 -0500
-Message-ID: <175813699401.66282.3103305628321781310.b4-ty@kernel.org>
+	linux-kernel@vger.kernel.org,
+	linux-serial@vger.kernel.org,
+	linux-spi@vger.kernel.org,
+	Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Cc: mukesh.savaliya@oss.qualcomm.com
+Subject: Re: [PATCH v7 0/6] Add support to load QUP SE firmware from
+Date: Wed, 17 Sep 2025 14:23:19 -0500
+Message-ID: <175813699406.66282.993438408948834854.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250917123827.671966-1-krishna.kurapati@oss.qualcomm.com>
-References: <20250917123827.671966-1-krishna.kurapati@oss.qualcomm.com>
+In-Reply-To: <20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com>
+References: <20250911043256.3523057-1-viken.dadhaniya@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -66,17 +77,33 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Wed, 17 Sep 2025 18:08:27 +0530, Krishna Kurapati wrote:
-> Flatten usb controller nodes and update to using latest bindings and
-> flattened driver approach. Enumeration of ADB has been tested on EVK
-> Platform.
+On Thu, 11 Sep 2025 10:02:50 +0530, Viken Dadhaniya wrote:
+> In Qualcomm SoCs, firmware loading for Serial Engines (SE) in the QUP
+> hardware has traditionally been managed by TrustZone (TZ). This setup
+> handled Serial Engines(SE) assignments and access control permissions,
+> ensuring a high level of security but limiting flexibility and
+> accessibility.
 > 
+> This limitation poses a significant challenge for developers who need more
+> flexibility to enable any protocol on any of the SEs within the QUP
+> hardware.
 > 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: lemans: Flatten usb controller nodes
-      commit: 6e5c4c093c7215198ea9fa83dcbc47d3f961de7a
+[1/6] dt-bindings: qcom: se-common: Add QUP Peripheral-specific properties for I2C, SPI, and SERIAL bus
+      commit: 9bc7130822c4c7f3ef39f20174a379e476586ab3
+[2/6] soc: qcom: geni-se: Cleanup register defines and update copyright
+      commit: b44a593fb53a6f5e135af2c5351546f80c1285ac
+[3/6] soc: qcom: geni-se: Add support to load QUP SE Firmware via Linux subsystem
+      commit: d4bf06592ad68ac4353a81c73e8e662cf88aa2cc
+[4/6] i2c: qcom-geni: Load i2c qup Firmware from linux side
+      commit: b645df76536c5b7d40e60450bf8011f70f34415f
+[5/6] spi: geni-qcom: Load spi qup Firmware from linux side
+      commit: 99cf351ee1c46b39c0581220807290b1dd56488e
+[6/6] serial: qcom-geni: Load UART qup Firmware from linux side
+      commit: 3f1707306b79cafc5a11350befd5a4081b807760
 
 Best regards,
 -- 
