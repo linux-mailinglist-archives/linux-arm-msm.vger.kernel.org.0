@@ -1,247 +1,311 @@
-Return-Path: <linux-arm-msm+bounces-73982-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73983-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F1FFB8163A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 20:51:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 810EBB8169E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 21:04:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DF561C2608B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 18:51:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 33494625B0A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 19:04:09 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 86AEE2FFDFC;
-	Wed, 17 Sep 2025 18:51:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B0552459E1;
+	Wed, 17 Sep 2025 19:04:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="DqUZ5lCb"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="Ixf29J58"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3CFE2F7444
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 18:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D9026657B
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 19:04:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758135077; cv=none; b=TetxQrXy517igr+iUFBCS9yV6uKKJdwrrV8w6A1UL9Hitq/xmostR9cxS82132Jj1bLZBZYUKjeO0g6N83WQotyOT+dCBuM7nRdLHzcCwI/SMd5g9+sCyXMOZp3jpRH8fx9qYMVQ5VQJSlgdo4PCsKSFNEu7NpRTZlqxJvCoKhE=
+	t=1758135845; cv=none; b=Ul6hnvrfX2OD6WBShFFJAVwD7idQHGs5hCioq50ToL13BNJq2UT8HXr9gTMN62sDnpR5anovUKTzTaQYyQW/8zna9KsWSovQwAGj7cBPlSKRZtXEAprVUHpEHk47FufnX7V42I7Gca9N1htTQDE654hnXZJOoFM3J3bqKnpeiyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758135077; c=relaxed/simple;
-	bh=g1vnWUaMY21ZweVmDS3CEeizZSJGhlvyw+DQg0nuAB4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=jrQVBgCO2fWhffx2HxApZ1pJw7qxdRbot00LmRLztkGO6ZYpkCYxkyEgAWPwHLkR45mlZ862p1zISDJXyE0Bhm3cr2l1XkIkIgeQyYkuCVV0CICFc886mxxg37zmHfCH/rabcry6IVhVKL7nxICW8YfHR/uXzTq43fBdiQbfSSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=DqUZ5lCb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HGWsrt019611
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 18:51:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=80VzWFaJZMNEFuuP5xyZJUoij+JkgurBnIg
-	JG8M7y9o=; b=DqUZ5lCbQTmMcbH+yAMIuW/jAyyyEyp0xF2lK3J9HErR/0t5PD6
-	NUJAc7bRuLKYkqINieSrLdJcvd2gs6acqSjsa4M7qOxPJtK032WKV4dUA92eLwva
-	sx9CGOhkpuS34xm19pQPnSpb4/Tzm7IIiA1W9EdJbCaKlYGhS1bXCutMiU+A52eX
-	gOE7IFhec8ulvrSi+GX6RNAfaQ68erFObeFO/0iI5bXMyzwjxA663l+fTdlkcoN0
-	TgnIRZogV0vSj5KIxXj/My6akede8MTfhW5FH+W/TkzU89AfVWz3/Ti/Tnq9Rllg
-	U5f6VQS0MR71Cf6AvBtDRqRlcBVWoAEu5bQ==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fy1ujd1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 18:51:14 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-329cb4c3f78so55306a91.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 11:51:14 -0700 (PDT)
+	s=arc-20240116; t=1758135845; c=relaxed/simple;
+	bh=uHriSmtS7Lxm0GPG+EDQP+ngN4Ody8EIz+QPxFS4Sww=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=JnEBH8tI0na+k23tyqofZxKl2gC1cE1betKfBT0fEAMBDtcFoUETol56JHEBFoNIWGR5ms9e60tigPEPTxkCvUoY7cWBqBTxe3PD28LKGKDfoWf+27ZOOWL8DxQrToGI4TVWVbVX5897/bgzDlAFzzxs+i2237e2Dccd6/ClxUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=Ixf29J58; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1758135842;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=aHCH0VCzsWU4m239VlHHtfDVtMJrBZLoOpM6kxyrkrM=;
+	b=Ixf29J58lKOB2AYmlS6Sp3hr0p3O+S4l4GP9kAwrKkWKd54I3WP8gR7SAMS5HWDwn2oGRd
+	/9H+98RKf02UazN0RjZwIMwLCuP8AbqRcfMVQ1PDCJ1/ltkn51lulnTDwYNq9MxkUBQThz
+	eIYgnAflX3av5BSELXwi0jj/QqIyF9U=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-455-YTWGhEzZOVikXmBJcFkNPw-1; Wed, 17 Sep 2025 15:03:59 -0400
+X-MC-Unique: YTWGhEzZOVikXmBJcFkNPw-1
+X-Mimecast-MFC-AGG-ID: YTWGhEzZOVikXmBJcFkNPw_1758135839
+Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-3eb67c4aae5so29065f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 12:03:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758135073; x=1758739873;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1758135839; x=1758740639;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=80VzWFaJZMNEFuuP5xyZJUoij+JkgurBnIgJG8M7y9o=;
-        b=qTKTYeO2574J9Kece7TjP4+eQyDrU0C27Ooqe7MMWj28GezfJ77Dm3mxDSMZQdeZoJ
-         SxF7CcRJdj4YwFLTFjWRBuwzZhFXJ3uv5aMTr2UGGGw1srJjEBFN0AeCj3qkHt0WZJHT
-         1IzV5bzG1s2yvLbLQjjgEDq1OU/zp0msoz66K6x8aF/8ceePt7aJPJkATgxgu0INmpXr
-         rsgNMsUZY4KrkrsDFV1LoGAo9FYNr2kIiZBi5Ehyiv6lFFgqySZR9tuBRsprBT99QC2N
-         qREMdso+ObRaMrSUDzrSWvNbZQ0Ox/IWTz+S58P3jm8phzT0w9RGCg6bV4P42pw9+uwQ
-         bE5g==
-X-Forwarded-Encrypted: i=1; AJvYcCX/uFftHtKT76juLfl6QQ7TCspaduByP9E0A1V4qJhaTlGfKaKxqokHS8yF9zwHYitCCLykZs+sbT0JkbK8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw+03CaRGRU87zunWWc5doAEFzAiLZ7gVvbWcALDtTKAUVed/IM
-	7+vwbZb1IFsvike2zv+sw2jSGChri8Qb2M/8sO041vU3NIVxlz+SMnIfIEVsgn81BvW5JVBV+I5
-	QYCthArDlV2b7OlUrD0SYKfTaL5UOcDdyTmnqOH0HGySPNjekctSAP+RokEXmzHMm3p9W
-X-Gm-Gg: ASbGncutwuvhAnqb0Y2HnZqxGXDrheGXs/V5odrA9Y7s11JhG1jAAapyzfoGPM5B9rv
-	Jehukn3NAby/7OraGWxikRanvObb8s+4EcbkfvnG8lmTmgpJOQDZvyZrszT3I8cogJ3tUS96oEb
-	H+pdfZrjcaY8bDrB1eQMj1XYKIHu10Ot1hId28NLG+b+FVG+Nyf6Slert33yG7wgNAU1GTO9fGG
-	HhiToRXSx/9QuIr+iLdU3zFsI/gRINzVwhbWEesS0QKMdVvca5V4EBFW1PEUeM5PCtzW35T2qAP
-	WOnXyx9dCWDkSjrg/IiaE9oMucgTo1osFZazq/2MueTpacuNQmPq+BpXUOS+doE0jEVCRx+6GA=
-	=
-X-Received: by 2002:a17:90b:2249:b0:32e:96b1:fb56 with SMTP id 98e67ed59e1d1-32ee3eaf849mr4036495a91.16.1758135073158;
-        Wed, 17 Sep 2025 11:51:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFQyT6jR6EPc0UlP+uiIETFX1kVKYMkXJBU9ZXM/pXHo7xVC2tlsDhwpR+iBlSm3oCncUstFA==
-X-Received: by 2002:a17:90b:2249:b0:32e:96b1:fb56 with SMTP id 98e67ed59e1d1-32ee3eaf849mr4036441a91.16.1758135072533;
-        Wed, 17 Sep 2025 11:51:12 -0700 (PDT)
-Received: from hu-ptalari-hyd.qualcomm.com ([202.46.22.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32ea0859e20sm3049771a91.0.2025.09.17.11.51.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 11:51:12 -0700 (PDT)
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jiri Slaby <jirislaby@kernel.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Praveen Talari <quic_ptalari@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-serial@vger.kernel.org, alexey.klimov@linaro.org,
-        krzk@kernel.org, jorge.ramirez@oss.qualcomm.com,
-        dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org
-Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
-        quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
-        quic_shazhuss@quicinc.com, quic_cchiluve@quicinc.com,
-        Praveen Talari <praveen.talari@oss.qualcomm.com>
-Subject: [PATCH v2] serial: qcom_geni: Fix pinctrl deadlock on runtime resume
-Date: Thu, 18 Sep 2025 00:21:02 +0530
-Message-Id: <20250917185102.3763398-1-praveen.talari@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        bh=aHCH0VCzsWU4m239VlHHtfDVtMJrBZLoOpM6kxyrkrM=;
+        b=Ujc79xDWuUaLeY3V0VLsUIlJT4OwKjrjgZCD6XsfLhr2DvtPeO6Ny3lcX2Ai4oCP5k
+         oK+bl2nk9umbz0KHmdfd4FanOKaCqb4lw/2oAzh1n+SfWMFF3o5Np2uFAw9h53yvK9cP
+         NXMAfhPo7RX4MCurjTmgR29r2sNEWuiQV0MAIWPHOAa0BVTpoF3jC8Q7272xoAEe3auF
+         I5WD3T/hM1dA1S/LOETi1F8cY+/sNkya1G+fvl63hSCD04nwSP/K3hZf7eehAv3HSd/R
+         uvOqfZtlIp1G/jVaqmzfTw5yhQiqN+8ARzH7lcr/xzeRQP0HJpgeb36H5J4Ra9EtyFQR
+         HULA==
+X-Forwarded-Encrypted: i=1; AJvYcCUUej3L0YBIqwwL9+9RhSsyZXeqQ1JoQi8LVoidTasYRimKL/JocrHWQ5Urej/6AjFD69+HoDwsEsSa9Lh6@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqL1bevCEMhqumZ1mdMAWd0jjgw20KrdBuUSnN/B7/xECI5xCF
+	P+Y5Yn/QTVEHeUydFpUkQHq1xkzQ4tRp+O29ZdIJIZGDwGXjI43sPj9dn/usWjbvRSh5g8+PmAm
+	6LL2sZkGvMUXgjR+wx0UaM8KYiHm4xHRMMcAJuXQPmQmsoiP4YGpicHOq2jH5rO/y/OU=
+X-Gm-Gg: ASbGncuZgtD1exZ0MCOZHEn+XunsyFyRDRduDDzdeL7R+pwu+54KwMe+pB1PTZ5bN1n
+	DIghccEAZQeiPhYwZbdh5drIRksDVxJ0jjjPwrTP9Jwppjvx6mSZTdAPJ9i35JZbcVNu1F+l9Dv
+	Q9we3SDWYjKj3avKZ843u3P+tMSK35a3tONxNH3dz8SSadOunjiRJeCryZRAeF6z7bw6O2msI8N
+	b61aF43r2/Sz2oZEzUvy/HcdfS3FWehKNcIwCjcBHEsqPMvQzb4DoeKeb5A4iNfcsC30U53/A4B
+	GthaUAHeIdSa7cXvde+gpFgBabfa92M+dzJ4lib2WzALyH1FVdfOtkjXnUy0n5Dleo1ZvKeWRP0
+	Iwce/lVLxsJnaqJxWNK+e5sdn8xEYZaqyP6aZ4Io+7W6oLEw+sD2HDs+iDM0Uuag8
+X-Received: by 2002:a05:6000:200c:b0:3ec:d789:b35e with SMTP id ffacd0b85a97d-3ecdf9f3e2bmr2220751f8f.8.1758135838656;
+        Wed, 17 Sep 2025 12:03:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHH1jtQqXfA5qQMVLv888l0a3c36h370u+0P0yyGL+jfEOy01vR98KIIIx9Ov3RHgb7jlDtug==
+X-Received: by 2002:a05:6000:200c:b0:3ec:d789:b35e with SMTP id ffacd0b85a97d-3ecdf9f3e2bmr2220727f8f.8.1758135838182;
+        Wed, 17 Sep 2025 12:03:58 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f27:6d00:7b96:afc9:83d0:5bd? (p200300d82f276d007b96afc983d005bd.dip0.t-ipconnect.de. [2003:d8:2f27:6d00:7b96:afc9:83d0:5bd])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee073f3d68sm446010f8f.10.2025.09.17.12.03.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Sep 2025 12:03:56 -0700 (PDT)
+Message-ID: <f8d3c2d4-8399-4169-8527-3c87922f2ef1@redhat.com>
+Date: Wed, 17 Sep 2025 21:03:55 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 3qenwwJaeh29rhF0yMNRUezU8JQ_TNoa
-X-Proofpoint-ORIG-GUID: 3qenwwJaeh29rhF0yMNRUezU8JQ_TNoa
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfXxN+wx6J8yXPp
- 807J1RDEMfqoXhYcPcGXIvjQ2QdPXH0zQZzxU5zz+/vv6HzZ7YaBGBAyCCutlBz1AFm1sRJDKEp
- xT5Sw4ln2BLAnL7GBmYmy7JTwEqVqaLdq4XidclmwtePBm4eQt7NGF6le2uvhMEWQtISibmpG81
- T6uPwtQJ2Rk2khazrp+WJ9Cv97ienFuFUgzCNpZDuSB0saTgDvaW0w03IrOkmEK6hKTsZBgisfr
- tznVu+/mZnQITqBqh2OmzoxTX0aSCUxqIJyy0VO6uOWSmSQdXGd7Pl6e2zVmY5bdW2jGIgktVKd
- U2egdIKToiSB2YEYDCuY9GQafsc3pAWXzwsqeAzuCXa9r2qOIBILOmA12qMP/OQS9PrGsqCDtnd
- vyCUZZCO
-X-Authority-Analysis: v=2.4 cv=cf7SrmDM c=1 sm=1 tr=0 ts=68cb0322 cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
- a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=Ep-CN0p5e5Gb-nl4-GwA:9 a=rl5im9kqc5Lf4LNbBjHf:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015 adultscore=0 bulkscore=0 priorityscore=1501
- spamscore=0 phishscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
+To: Thomas Gleixner <tglx@linutronix.de>,
+ Eugen Hristev <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
+ <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
+ <87a52u9jyl.ffs@tglx> <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
+ <2bd45749-e483-45ea-9c55-74c5ba15b012@redhat.com> <87v7lh891c.ffs@tglx>
+ <95ff36c2-284a-46ba-984b-a3286402ebf8@redhat.com>
+ <24d6a51d-f5f8-44d7-94cb-58b71ebf473a@linaro.org>
+ <7f4aa4c6-7b77-422b-9f7a-d01530c54bff@redhat.com> <87segk9az5.ffs@tglx>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ qIws/H2t
+In-Reply-To: <87segk9az5.ffs@tglx>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-A stall was observed in disable_irq() during
-pinctrl_pm_select_default_state(), triggered by wakeup IRQ being active
-while the UART port was not yet active. This led to a hang in
-__synchronize_irq(), as shown in the following trace:
+> 
+>>> this would go to a separate section called .tagged_memory.
+> 
+> That'd be confusing vs. actual memory tags, no?
 
-Call trace:
-    __switch_to+0xe0/0x120
-    __schedule+0x39c/0x978
-    schedule+0x5c/0xf8
-    __synchronize_irq+0x88/0xb4
-    disable_irq+0x3c/0x4c
-    msm_pinmux_set_mux+0x508/0x644
-    pinmux_enable_setting+0x190/0x2dc
-    pinctrl_commit_state+0x13c/0x208
-    pinctrl_pm_select_default_state+0x4c/0xa4
-    geni_se_resources_on+0xe8/0x154
-    qcom_geni_serial_runtime_resume+0x4c/0x88
-    pm_generic_runtime_resume+0x2c/0x44
-    __genpd_runtime_resume+0x30/0x80
-    genpd_runtime_resume+0x114/0x29c
-    __rpm_callback+0x48/0x1d8
-    rpm_callback+0x6c/0x78
-    rpm_resume+0x530/0x750
-    __pm_runtime_resume+0x50/0x94
-    handle_threaded_wake_irq+0x30/0x94
-    irq_thread_fn+0x2c/0xa8
-    irq_thread+0x160/0x248
-    kthread+0x110/0x114
-    ret_from_fork+0x10/0x20
+Yeah, I came to the conclusion just after an upstream call we just had 
+about that topic (bi-weekly MM alignment session).
 
-To fix this, wakeup IRQ setup is moved from probe to UART startup,
-ensuring it is only configured when the port is active. Correspondingly,
-the wakeup IRQ is cleared during shutdown. This avoids premature IRQ
-disable during pinctrl setup and prevents the observed stall. The probe
-and remove pathsare simplified by removing redundant wakeup IRQ handling.
+I'm open for any suggestions that make it more generic. My first 
+instinct was "named memory regions".
 
-Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial driver")
-Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
-Closes: https://lore.kernel.org/all/DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org/
-Tested-by: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
----
-v1 -> v2:
-- remove changes from runtime resume/suspend.
-- updated commit text based on changes.
-- added new a change w.r.t wakeup IRQ setup.
-- verified on RB1 (qrb2210-rb1-core-kit).
----
----
- drivers/tty/serial/qcom_geni_serial.c | 22 +++++++++++-----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+>   
+>> Maybe just "tagged_memory.h" or sth. like that? I'm bad at naming, so I
+>> would let others make better suggestions.
+> 
+> inspect.h :)
+> 
+> I'm going to use 'inspect' as prefix for the thoughts below, but that's
+> obviously subject to s/inspect/$BETTERNAME/g :)
+> 
+>>> Then anyone can walk through the section and collect the data.
+>>>
+>>> I am just coming up with ideas here.
+>>> Could it be even part of mm.h instead of having a new header perhaps ?
+>>> Then we won't need to include one more.
+>>
+>> I don't really have something against a new include, just not one that
+>> sounded like a very specific subsystem, not something more generic.
+> 
+> Right. We really don't want to have five different mechanisms for five
+> infrastructures which all allow to inspect kernel memory (life or
+> dead) in one way or the other. The difference between them is mostly:
+> 
+>     - Which subset of the information they expose for inspection
+> 
+>     - The actual exposure mechanism: crash dump, firmware storage,
+>       run-time snapshots in a filesystem, ....
+> 
+> Having one shared core infrastructure to expose data to those mechanisms
+> makes everyones life simpler.
+> 
+> That obviously needs to collect the superset of data, but that's just a
+> bit more memory consumed. That's arguably significantly smaller than
+> supporting a zoo of mechanisms to register data for different
+> infrastructures.
+> 
+> I'm quite sure that at least a substantial amount of the required
+> information can be collected at compile time in special section
+> tables. The rest can be collected in runtime tables, which have the same
+> format as the compile time section tables to avoid separate parsers.
+> 
+> Let me just float some ideas here, how that might look like. It might be
+> completely inpractical, but then it might be at least fodder for
+> thoughts.
 
-diff --git a/drivers/tty/serial/qcom_geni_serial.c b/drivers/tty/serial/qcom_geni_serial.c
-index 0fdda3a1e70b..9c1bd4e5852c 100644
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -1160,6 +1160,7 @@ static int setup_fifos(struct qcom_geni_serial_port *port)
- 
- static void qcom_geni_serial_shutdown(struct uart_port *uport)
- {
-+	struct qcom_geni_serial_port *port = to_dev_port(uport);
- 	disable_irq(uport->irq);
- 
- 	uart_port_lock_irq(uport);
-@@ -1168,6 +1169,8 @@ static void qcom_geni_serial_shutdown(struct uart_port *uport)
- 
- 	qcom_geni_serial_cancel_tx_cmd(uport);
- 	uart_port_unlock_irq(uport);
-+	if (port->wakeup_irq > 0)
-+		dev_pm_clear_wake_irq(uport->dev);
- }
- 
- static void qcom_geni_serial_flush_buffer(struct uart_port *uport)
-@@ -1236,6 +1239,13 @@ static int qcom_geni_serial_startup(struct uart_port *uport)
- 			return ret;
- 	}
- 
-+	if (port->wakeup_irq > 0) {
-+		ret = dev_pm_set_dedicated_wake_irq(uport->dev,
-+						    port->wakeup_irq);
-+		if (ret)
-+			return ret;
-+	}
-+
- 	uart_port_lock_irq(uport);
- 	qcom_geni_serial_start_rx(uport);
- 	uart_port_unlock_irq(uport);
-@@ -1888,17 +1898,8 @@ static int qcom_geni_serial_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto error;
- 
--	if (port->wakeup_irq > 0) {
-+	if (port->wakeup_irq > 0)
- 		device_init_wakeup(&pdev->dev, true);
--		ret = dev_pm_set_dedicated_wake_irq(&pdev->dev,
--						port->wakeup_irq);
--		if (ret) {
--			device_init_wakeup(&pdev->dev, false);
--			ida_free(&port_ida, uport->line);
--			uart_remove_one_port(drv, uport);
--			goto error;
--		}
--	}
- 
- 	return 0;
- 
-@@ -1913,7 +1914,6 @@ static void qcom_geni_serial_remove(struct platform_device *pdev)
- 	struct uart_port *uport = &port->uport;
- 	struct uart_driver *drv = port->private_data.drv;
- 
--	dev_pm_clear_wake_irq(&pdev->dev);
- 	device_init_wakeup(&pdev->dev, false);
- 	ida_free(&port_ida, uport->line);
- 	uart_remove_one_port(drv, &port->uport);
+Thanks a bunch for writing all that down!
 
-base-commit: 3e8e5822146bc396d2a7e5fbb7be13271665522a
+> 
+> As this is specific for the compiled kernel version you can define an
+> extensible struct format for the table.
+> 
+> struct inspect_entry {
+> 	unsigned long	properties;
+>          unsigned int	type;
+>          unsigned int	id;
+>          const char	name[$MAX_NAME_LEN];
+> 	unsigned long	address;
+>          unsigned long	length;
+>          ....
+> };
+> 
+> @type
+>         refers either to a table with type information, which describes
+>         the struct in some way or just generate a detached compile time
+>         description.
+> 
+> @id
+>         a unique id created at compile time or via registration at
+>         runtime. Might not be required
+
+We discussed that maybe one would want some kind of a "class" 
+description. For example we might have to register one pgdat area per 
+node. Giving each one a unique name might be impractical / unreasonable.
+
+Still, someone would want to select / filter out all entries of the same 
+"class".
+
+Just a thought.
+
+> 
+> @name:
+>         Name of the memory region. That might go into a separate table
+>         which is referenced by @id, but that's up for debate.
+
+Jup.
+
+> 
+> @address:
+> @length:
+>         obvious :)
+> 
+> ...
+>          Whatever a particular consumer might require
+> 
+> @properties:
+> 
+>          A "bitfield", which allows to mark this entry as (in)valid for a
+>          particular consumer.
+> 
+>          That obviously requires to modify these properties when the
+>          requirements of a consumer change, new consumers arrive or new
+>          producers are added, but I think it's easier to do that at the
+>          producer side than maintaining filters on all consumer ends
+>          forever.
+
+Question would be if that is not up to a consumer to decide ("allowlist" 
+/ filter) by class or id, stored elsewhere.
+
+> 
+> Though I might be wrong as usual. IOW this needs some thoughts. :)
+> 
+> The interesting engineering challenge with such a scheme is to come up
+> with a annotation mechanism which is extensible.
+> 
+>       Runtime is trivial as it just needs to fill in the new field in the
+>       datastructure and all other runtime users have that zero
+>       initialized automatically, if you get the mechanism correct in the
+>       first place. Think in templates :)
+> 
+>       Compile time is a bit more effort, but that should be solvable with
+>       key/value pairs.
+> 
+>       Don't even waste a thought about creating the final tables and
+>       sections in macro magic. All the annotation macros have to do is to
+>       emit the pairs in a structured way into discardable sections.
+> 
+>       Those section are then converted in post processing into the actual
+>       section table formats and added to the kernel image. Not a
+>       spectacular new concept. The kernel build does this already today.
+> 
+>       Just keep the compile time annotation macro magic simple and
+>       stupid. It can waste 10k per entry at compile time and then let
+>       postprocessing worry about downsizing and consolidation. Nothing to
+>       see here :)
+
+Sounds interesting!
+
 -- 
-2.34.1
+Cheers
+
+David / dhildenb
 
 
