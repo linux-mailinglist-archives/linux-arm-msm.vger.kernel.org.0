@@ -1,100 +1,103 @@
-Return-Path: <linux-arm-msm+bounces-73907-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73908-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93841B7C701
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:01:38 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 048CCB7CC76
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:10:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6F10F2A7E01
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 11:22:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 962CC18858C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 11:40:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAAEB2F0688;
-	Wed, 17 Sep 2025 11:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 490AC35690C;
+	Wed, 17 Sep 2025 11:39:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dkOcHhF8"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GSfaV//+"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB5292D9EE5;
-	Wed, 17 Sep 2025 11:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0802F5A2A;
+	Wed, 17 Sep 2025 11:39:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758108140; cv=none; b=aFv/5AafTuqEBntg2xiQdAWCz5YQden83dN0OraKtyQl4F6nm6qhxpscayk5SXoTDhdPxt9LAryQyBqyagUe74WzaQGqzv8pjoeyl4Ce5F8NRzib2cYQqrKxLtlXlTdmm1zyo1UfKSOnVJqNPgbUbc8UD/dFzWQ3UJe/ndWz0a4=
+	t=1758109190; cv=none; b=bopWPYnkVX+hl3XEx5R1MOnTb7MWJedTke9d7VCJQ5ovteQHWNpIWi0KhUzKwj49XuFMlMkimo0DsZjg0m5+iYT2o8IqK0KR1+gbHOORdiHtN+PU+5gqMH7Gfxf8YB0GbsmXzZOxWqEu+HkH6STBswAXd1ne9OtS17wW5jqCKP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758108140; c=relaxed/simple;
-	bh=P8qzGWIhByRFZr7nwyU8aErrXN4ExIt9jBI3wNw3DOE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=ng6IFEdbGunDvXsXITWN4qwnM6mXB+t6Eh2IzX4ljyci7a6eBgMwZk2B/+Szcm15plGx2V39LMTdNAySQAsuJYsPnlgAydjnKkxxzKjbcVtwqrtDKdBtyJBAJQ2Cy8PjvxQHwRFLfTtJtldA8g0oMNjZeFD/G9PHvkRm6UBWF5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dkOcHhF8; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F68C4CEF0;
-	Wed, 17 Sep 2025 11:22:19 +0000 (UTC)
+	s=arc-20240116; t=1758109190; c=relaxed/simple;
+	bh=JPMCEaWQxLA38lC24FQ0rxlTNPnKwalzKyJK8yfHqok=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MGLHeJt2XyrYpMUMphFv01J7xVNuodJfpYJDlfvlKOktoE7bvobYlaJLVfIM4KOF9V7deXQaf01O/zBRMRRM2fwi1ZIadcBGrB2Zug/WIaS7DVlYc9uXARzOO1i2mVDrKH9xcnf6M+9X1VPu4ORUeGX4lUbXGsI9qQ7Em7CNwrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GSfaV//+; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89AE5C4CEF0;
+	Wed, 17 Sep 2025 11:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758108140;
-	bh=P8qzGWIhByRFZr7nwyU8aErrXN4ExIt9jBI3wNw3DOE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=dkOcHhF8Tzhf0qmstpd8TJR+CwpzHhukAz4m9vupb6UvHShWYkw1MkqHh9q/AAvqr
-	 6vkTRBEt9Qondm1AWJlecwk46MZPAvuYqGMNuVjIZMKMnqt2rUY/0EAaKfJKPvujkY
-	 MonE5s/ljRaU0Mss9XIi2DMw09nzmss4SrCthOviw0aSM26EIbJkUVP+d7Fru5gSfj
-	 bsAksP3XDV0GQZO38LaGzxofCGsUIFMtUNN+LO0wG2g/FAomCX2C0pKNy79fblr3S/
-	 2xHQ4LVqOndRB8Ivlclljhcuzkf5oQJ0kaDUAisrKfdpccFOEbvxV2DLjRiwZEtKY4
-	 15xUV3ByVE3xA==
-Date: Wed, 17 Sep 2025 06:22:18 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org,
+	s=k20201202; t=1758109189;
+	bh=JPMCEaWQxLA38lC24FQ0rxlTNPnKwalzKyJK8yfHqok=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GSfaV//+EoCRIjS4mrDlxg3qfGvWgJYLsUgBCXyoHFfaJDTMcGncpK8t0IiLP/n2A
+	 5KX+jNiPHe5EafQMCpzRzRHkqRBFZ+hC5zxTugVnGns9yKlvzUwTc4VJw3shhzcUo6
+	 NheeyNNDYAhwj76lcwJqSUCsZ30QrO4OeVKOkkXSBJqmyXPMUy4w6EedpMEGAxTDs2
+	 uuR2uoVUe2vBGwowApwptg5R7OnZxh5lArH85tlKkQ0QNciA/QG8UMQDytjPhbap04
+	 Vc9epzNOIweg9UQ4XAR7VGqfK6bqojrFm1yR8+OLkkUqLuTC82GDJ16f/0OJmKaYKC
+	 0Ceo9ToVT9oeg==
+Date: Wed, 17 Sep 2025 12:39:43 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Patrick Lai <plai@qti.qualcomm.com>,
+	Annemarie Porter <annemari@quicinc.com>,
+	srinivas.kandagatla@oss.qualcomm.com, linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	"David E. Box" <david.e.box@linux.intel.com>,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Chia-Lin Kao <acelan.kao@canonical.com>
-Subject: Re: [PATCH 1/2] PCI/ASPM: Override the ASPM and Clock PM states set
- by BIOS for devicetree platforms
-Message-ID: <20250917112218.GA1844955@bhelgaas>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	kernel@oss.qualcomm.com,
+	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+Subject: Re: [PATCH v3 3/3] ASoC: qcom: qdsp6/audioreach: add support for
+ offloading raw opus playback
+Message-ID: <1e29ebfc-9b0d-4f3e-a034-64e102273de0@sirena.org.uk>
+References: <20250917-opus_codec_rfc_v1-v3-0-7737ad40132e@linaro.org>
+ <20250917-opus_codec_rfc_v1-v3-3-7737ad40132e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5+aHDuhDSkVtN+Z2"
+Content-Disposition: inline
+In-Reply-To: <20250917-opus_codec_rfc_v1-v3-3-7737ad40132e@linaro.org>
+X-Cookie: Lake Erie died for your sins.
+
+
+--5+aHDuhDSkVtN+Z2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <frmzvhnhljy23xds7lnmo23zg35wxpzu4pvabnc6v6vz7qn2lj@gk25cglbpn3q>
 
-[+cc Kai-Heng, Rafael, Heiner, AceLan; response to
-https://lore.kernel.org/r/20250916-pci-dt-aspm-v1-1-778fe907c9ad@oss.qualcomm.com]
+On Wed, Sep 17, 2025 at 08:32:52AM +0100, Alexey Klimov wrote:
+> Add support for OPUS module, OPUS format ID, media format payload struct
+> and make it all recognizable by audioreach compress playback path.
 
-On Wed, Sep 17, 2025 at 04:14:42PM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Sep 16, 2025 at 12:15:46PM GMT, Bjorn Helgaas wrote:
-> > On Tue, Sep 16, 2025 at 09:42:52PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > So far, the PCI subsystem has honored the ASPM and Clock PM states set by
-> > > the BIOS (through LNKCTL) during device initialization. This was done
-> > > conservatively to avoid issues with the buggy devices that advertise
-> > > ASPM capabilities, but behave erratically if the ASPM states are enabled.
-> > > So the PCI subsystem ended up trusting the BIOS to enable only the ASPM
-> > > states that were known to work for the devices.
-> ...
+Acked-by: Mark Brown <broonie@kernel.org>
 
-> > For debuggability, I wonder if we should have a pci_dbg() at the point
-> > where we actually update PCI_EXP_LNKCTL, PCI_L1SS_CTL1, etc?  I could
-> > even argue for pci_info() since this should be a low-frequency and
-> > relatively high-risk event.
-> 
-> I don't know why we should print register settings since we are explicitly
-> printing out what states are getting enabled.
+--5+aHDuhDSkVtN+Z2
+Content-Type: application/pgp-signature; name="signature.asc"
 
-My thinking here is that we care about is what is actually written to
-the device, not what we *intend* to write to the device.
+-----BEGIN PGP SIGNATURE-----
 
-There's a lot of complicated aspm.c code between setting
-link->clkpm_default/aspm_default and actually programming the device,
-and when debugging a problem, I don't want to have to parse all that
-code to derive the register values.
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjKnf8ACgkQJNaLcl1U
+h9DVBAf/SyeCSpGrRfF5GOjjzgqmyrK1Yj6K1rb9dMZb8HNgOvLxADwW6TQyMiDI
+wcbW54qUqw1cnGF5bmUUeKOUibxfwENLv6pLTtRSAEkRE0cKXEFKKgwA2lVmvUuy
+oY1K115xjV/Db91tPeOT2MURM0riH8mCCutuKSiYsyWsy05IkyTx78e/Apus2nEo
+51DaTk2bhg/4DOl5CCawWnDjDXr/fqTtyiVgoYTewAvvij8gSCRpJI9l6yfMcUpq
+fEgqDCBDtUf72kisQmFUo/w2vqBUbAAEuaY7SzD/4edfp7lJvxfZRGmq420VvTK3
+pF1sFsjTRokQUCRU5dCPukVfAf/Mwg==
+=dm9f
+-----END PGP SIGNATURE-----
+
+--5+aHDuhDSkVtN+Z2--
 
