@@ -1,240 +1,263 @@
-Return-Path: <linux-arm-msm+bounces-73882-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73883-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4D0BB7D2D6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:20:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9DE64B7EB5B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:58:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C5D9C189CBED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 07:33:46 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8DC1D1C04937
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 08:07:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1172304BAA;
-	Wed, 17 Sep 2025 07:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7384E305E3B;
+	Wed, 17 Sep 2025 08:07:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="RempHgvs"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="MIaj6d43"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643AD304962
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 07:32:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01722F261C
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 08:06:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758094382; cv=none; b=WZjtdWAUWP4TY1bzKS3p/RGwqG5eS8aCBwID3p3vr/DqlRthVTiC0OC9PT51bb14zcEslxDCWnrXYNbgmn8r728xHS3YudCK6E2Xc4XjxVS0ISPZoMXIyBd7J/UnCnmnJMFEFQKhJjryWcKTZm1iq+pB00YFWa1ZdJZpqud2bXc=
+	t=1758096420; cv=none; b=Fkh8MDOE0GBwY9qcFdQPgn4abfH3bZowZO4Wlo08FUe7v/Huww9Rwb4A62xA+yy8vT0CdMQs83rTNclJ0TSlW9vCYrNKjKilItThtnIgOA6D8tbHuwOfstK0v5YNXhiD4+Va2R4eh9eNH3VzGNsEeSQrudhJXcmm6ATG1r0kxjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758094382; c=relaxed/simple;
-	bh=7dBbJ2XDaICT5fY10gi7xHs1MZJM2ZIuPzivB427+9A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NwzXB4w33QODhDBmDV63IyXUPgsbA8xnHvjq4P59MeBKy4GfUTV3TUnA+6UQDsK6wbjHcfWJxL6Apv6Emovqq+5S/LaH0FKBxSLhAomIafZAcq/kqHLXgZRkdbfYsKIg5CMdvMR4TOyFIucZJiVdBYEyztwknonjDR8vx5wHxwQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=RempHgvs; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45de56a042dso42798275e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 00:32:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758094376; x=1758699176; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=V+S8Bi8p7Aa3TTJtUqEJlrmt11baBIIjX3yVkC4MHgM=;
-        b=RempHgvsHJSCr06KxMaJOx74OnqcdET4GXTzGspDPkUUUJf95oX6idkHDtzSPAoZLg
-         9GHV9DnL9CoKJ5ggWnojvVbVfaCaKmkaXvnS/7A7/saiNfmLC7kX8j6gCD0fYq/HtpGS
-         82WmjJ567RHNS6DIfkzZiMlFe/c+5uAGEhavOJGFO6G6o8jAB1F76oAskpEMBqnb/S7f
-         pzM4IGSa1he/dItjbcsX4n2GheEBYyvkd/DaCn8lEZb8RIv7owHg/fuD0IOAFlByuOv3
-         GcRmNeTeiqW4VjggwINGjX1sVBZCalXXGzbn3ACJ2e4pU+fEcPMAkIkiOt/4zTZEqFBk
-         +Ffw==
+	s=arc-20240116; t=1758096420; c=relaxed/simple;
+	bh=99E/Q8dl1z6a1fSwTsa33XnQl0e7pN1bDPF/vKPOGmU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BRyE+gSVZEiaHtIjo5FZq/ED88lu34DFM8PxvlNeFSx6foh2oHX7OgEUzGAe8CV4Ng+fbg7ED48LaLj3vnCHlB8imwDjw9RPvj8e8NC4UAhqqZi2toNchTOLJilTEtZysPdWnMmT18shUwNV34+S7Dvs3zr/bEmYFTS0laFWXYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=MIaj6d43; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58H5QkOg013655
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 08:06:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	c4+1T7hrQrCbgIKXWS+wJqveQlpBa3wYZt9yOaHwkvU=; b=MIaj6d43UK9ZQSx8
+	agM81e5wqoSWBC63D43WjsF1gm5IB6k/xb2BpVZo02QhE//HDj4YZ0HW4pKmu6K4
+	aBDGT3bH/DZIWE5OLCyG7elAqlIIaR9pO5kL+zq2+Uaq/raR82fc0MvpWJOAC/A6
+	I6qnI2kA6wvFxm+Iz42kP1C15JzKsqH5jKlFIvI7h7hhWtNLPcMcTdpZbXLQADtS
+	y/3kf/z0catX7heqa8vF7T0miUEZknxZ99Sc7Jhry8IApYEKsozHOqTGI8vkraD3
+	hrseruWwNV7XY02zlHATrDUAUvvXqkTdl/8tkjyZMWyc6W4rbvXFNx9vEo/cA8yH
+	w/bkWQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxyhhj2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 08:06:58 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-26166420e5dso40296795ad.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 01:06:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758094376; x=1758699176;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V+S8Bi8p7Aa3TTJtUqEJlrmt11baBIIjX3yVkC4MHgM=;
-        b=HRQUIbrFlqeeXqv3eKHpHczYn6i23XUB0K8N5+dNP7BSdf5GG/tQit/3UltFwzpzfc
-         +yqi8/hcqEbzFX4gDYj21Yp36o4mgQ9IxVW0VoWoreopjcVxKHy5f3mMNJAVsERF9yKX
-         g2+kd/rDsXojBykVLQqermlEb0Brtufas1SGtdqnFIjyUsAbBGexgBPsTmq0HIz2AWNU
-         CiNviZhTXwlHvRwQgMWA2eqNashKm+amYGTEfilqw2zjzzBpOQN85Y0gBBGBt/Mtf+OW
-         AQ1AcPzBQpTjf60RAMr5F2jV9alPPOLRBIozIYwPYb1SaejWIPm1P4xPVPrA97zuwxex
-         6QWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXD2BZcs4k9X/KSZrK/+fl6HO8u5YDPslyEHUE2lns75Y+Eo/pyL4bIsPQUk1CNOBcnErTmk941sPqPLvwr@vger.kernel.org
-X-Gm-Message-State: AOJu0YzRyvDrcaq51pI5n68Htn8KiVIusoLqV5+QQXK/dX9T7Sn1rviU
-	Kd9qanm/OLQXKoZ+ZgEUnEeqZb5ICsylvfI6+0896qnqZXnXRAH99/ldTcRbjY9o6eo=
-X-Gm-Gg: ASbGnctnZRT5H+IvRPD7KqNZaXoQEiqNfpywjpsQICep2ctMPdHRoMz0K4b0VV9hvUJ
-	DIgcP0Ga7Ut86E43s+j3hBdbqZgup3uQWGECM55X5RfdL5ppfIbgVdiZCj7l37nFhSXBrKo71cx
-	fY4BAEk92JocZ3/3ekLNwZx+brX6XbNlQkKsow3hVkbE01nMnAV9R3w+h7K730FzMa1PvuaNykv
-	ISURIKnQ4H0LSrr6DguJHJ/pGtQtChEJepeyU9bMfSAIjgsV6dd0PVmMMXRc4lz3D1R0fpA0SXi
-	o2L5pbuSjY4oXDxHScKX9BmzqWy35XBATHzllsOuoDj40McLNjZaPyDN86P/+z3IKfIn4lGjjPE
-	KtdzoFfoG3QI/z5Z6jNoJdbjMMTTu
-X-Google-Smtp-Source: AGHT+IG39wg4+SfI6QbDsnNVP9k5NdIqdTUynjs+9INnoKNB2fdUr4/IiXpXxER5ArqUSoMK0pfKtQ==
-X-Received: by 2002:a05:600c:548e:b0:45b:8ac2:975e with SMTP id 5b1f17b1804b1-4620665613amr8870305e9.26.1758094375874;
-        Wed, 17 Sep 2025 00:32:55 -0700 (PDT)
-Received: from orion.home ([2a02:c7c:7259:a00:75ac:2ea2:dfdc:89c7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4613eb27f25sm25442035e9.23.2025.09.17.00.32.54
+        d=1e100.net; s=20230601; t=1758096417; x=1758701217;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=c4+1T7hrQrCbgIKXWS+wJqveQlpBa3wYZt9yOaHwkvU=;
+        b=s8lr+Nhb7FHGB6NhQtmxXHt/hLftIPkNBxQZBg3OhLrQ9utw1TjCF4dcRSvs8ChuGz
+         ui3BMLwzUGfoomfu+X208r8E+Bdq7jsvBuGwD/juqB6BW2BdtqSvLNlbR6An+h1tB+nn
+         cWqPMj/x3nyKCyFDacKce8j6eknUhlQUkjcZFGMx3bNgPFfUCxHNDRGNZNK3s8OG8gOH
+         j++qxlEhsHpUSzw9CQPQ3fyCwUz/5OPw9i9asF+2DZeR0QS2CDhPoWXpTqSa9XEf63JN
+         VA/rzZztDPbewsG9LS/THPy3aYhcSwWxvaaBsDgw1+38rQ0HYOR1XVLdJvTzBgxOGx8+
+         WZWg==
+X-Forwarded-Encrypted: i=1; AJvYcCW6T3tCboPzzNKvS3hM3mAG7/dGrUNaSz+N3oyB187VEJywr9yaumP7cx74YcdapYYzmeMqKoZqqYgPHait@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxotSlsEZaMu3igHI2PZs1QoUN7AkOaecsKq1fT7Xmy6WZl4pU
+	FPubwg2vEGws4MnW7CglDzODKje7hRgY4Ig1BqXbe7TTN18qQJBusfN7SOOf9lqlzHKYJSWEjub
+	YzdOmtFa0vQ62nqHSUyFaeBIdA3mlVLHgALUZU6b/adgG7xCkuwhNPlgnjWKdwvcgeX2Q
+X-Gm-Gg: ASbGncv5STlNHYxOJfChkAnh/NJFX9xD4zXp0kcnjz1fXcsRGDajJVaFtH814g+1PkL
+	FidzUMg3U81LrZRucgO+8B+SO9c0/7BEBpiw3J5Sm0LT36OoT8FSlnLAWGmm/6HCap1bsNAOgvL
+	Is64VEO/GOwk4bhPCyIG8EYb0eTCHWeUVc+ukPRXVV2Dnxy5yTXJ6cWRlJ132fJ/i1W30+TK+V6
+	5pFj6JPGi3Pu6IOhtnzDFARzeVlqLJ6Uwh9/COLS8fSDDAV90bn9AqE/Bja1URp0F7m8nXB0kB+
+	b07MpY0Kf2Dt/kO2QHd85mg3j5hxHSjGGAZ8RULL/VajpVUNNMDmtW4=
+X-Received: by 2002:a17:903:8ce:b0:24b:1609:5e2b with SMTP id d9443c01a7336-268119b3b6emr16788485ad.5.1758096417030;
+        Wed, 17 Sep 2025 01:06:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE5UMbMaWJIzZ57Vql1tJjVuAN5j2QcuMqGy0y+1atO6oPbE3RHp/4BjwtArBerLWUYCCdoJg==
+X-Received: by 2002:a17:903:8ce:b0:24b:1609:5e2b with SMTP id d9443c01a7336-268119b3b6emr16788085ad.5.1758096416585;
+        Wed, 17 Sep 2025 01:06:56 -0700 (PDT)
+Received: from work ([120.60.54.163])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32ee223f2ecsm1177088a91.18.2025.09.17.01.06.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 00:32:55 -0700 (PDT)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-Date: Wed, 17 Sep 2025 08:32:52 +0100
-Subject: [PATCH v3 3/3] ASoC: qcom: qdsp6/audioreach: add support for
- offloading raw opus playback
+        Wed, 17 Sep 2025 01:06:56 -0700 (PDT)
+Date: Wed, 17 Sep 2025 13:36:47 +0530
+From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        Richard Cochran <richardcochran@gmail.com>,
+        Bartosz Golaszewski <brgl@bgdev.pl>, kernel@oss.qualcomm.com,
+        linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, linux-i2c@vger.kernel.org,
+        Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
+Subject: Re: [PATCH v5 05/10] arm64: dts: qcom: lemans-evk: Enable PCIe
+ support
+Message-ID: <h2t7ajhtyq3vivbw67tifrn73i4zisicoktsgab76zptxre6at@vl2q4d6i3lms>
+References: <20250916-lemans-evk-bu-v5-0-53d7d206669d@oss.qualcomm.com>
+ <20250916-lemans-evk-bu-v5-5-53d7d206669d@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250917-opus_codec_rfc_v1-v3-3-7737ad40132e@linaro.org>
-References: <20250917-opus_codec_rfc_v1-v3-0-7737ad40132e@linaro.org>
-In-Reply-To: <20250917-opus_codec_rfc_v1-v3-0-7737ad40132e@linaro.org>
-To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
- Takashi Iwai <tiwai@suse.com>, Srinivas Kandagatla <srini@kernel.org>, 
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
-Cc: Patrick Lai <plai@qti.qualcomm.com>, 
- Annemarie Porter <annemari@quicinc.com>, 
- srinivas.kandagatla@oss.qualcomm.com, linux-sound@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- kernel@oss.qualcomm.com, Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, 
- Alexey Klimov <alexey.klimov@linaro.org>, 
- Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250916-lemans-evk-bu-v5-5-53d7d206669d@oss.qualcomm.com>
+X-Authority-Analysis: v=2.4 cv=e50GSbp/ c=1 sm=1 tr=0 ts=68ca6c22 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=zfGe9qrPU0lfmTaoSSnydg==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=qGp1FZVzPMbQ2NxWyGYA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: xY2V-XJf5EoXInwe1K4OvEIH-HReM9CP
+X-Proofpoint-ORIG-GUID: xY2V-XJf5EoXInwe1K4OvEIH-HReM9CP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfXzwJdCrS9C4I1
+ CtU1Kc2H29D2jIXh3nTQrE3BmmYdfa33zxk4+Mx8kgNQoP9qWKynwOy7lowNvn/5LbThEzj3z/c
+ 3k6PN5pkNBgQhHnB2aqnmkEll+OaE+6kOrx74/WAlwlpIXAWpTCK3o73gNKatdLhawMI79MdMIu
+ 6rqPiNJNjH33S86g3faQ6yp1XeNmn6WUeKsjlvR/q9QzOSGFWP54q08hVKsn6Im0reqOYJj4biX
+ K7a2anHGcBul0MM1BfHTG0qi/xzWwxBLt5/xv69J86ecY6FR4boo2dJBBESXaP6DBOgd1okZ2ci
+ BmUo1G1IIkLi8tRJr06ov3UUji0IZO0Jw7BTPOdZJItKNTdhK/4uU+QwV9OVMP8el11+L0OI/fJ
+ 7C/FkUFf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-16_02,2025-09-17_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
 
-Add support for OPUS module, OPUS format ID, media format payload struct
-and make it all recognizable by audioreach compress playback path.
+On Tue, Sep 16, 2025 at 04:16:53PM GMT, Wasim Nazir wrote:
+> From: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
+> 
+> Enable PCIe0 and PCIe1 along with the respective phy-nodes.
+> 
+> PCIe0 is routed to an m.2 E key connector on the mainboard for wifi
+> attaches while PCIe1 routes to a standard PCIe x4 expansion slot.
+> 
 
-At this moment this only supports raw or plain OPUS packets not
-encapsulated in container (for instance OGG container). For this usecase
-each OPUS packet needs to be prepended with 4-bytes long length field
-which is expected to be done by userspace applications. This is
-Qualcomm DSP specific requirement.
+Where did you define the supply for M.2 connector? We don't have a proper
+binding for M.2 today, but atleast the supply should be modeled as a fixed
+regulator with EN GPIOs as like other boards.
 
-Cc: Annemarie Porter <annemari@quicinc.com>
-Cc: Vinod Koul <vkoul@kernel.org>
-Co-developed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
----
- sound/soc/qcom/qdsp6/audioreach.c | 27 +++++++++++++++++++++++++++
- sound/soc/qcom/qdsp6/audioreach.h | 17 +++++++++++++++++
- sound/soc/qcom/qdsp6/q6apm-dai.c  |  3 ++-
- sound/soc/qcom/qdsp6/q6apm.c      |  3 +++
- 4 files changed, 49 insertions(+), 1 deletion(-)
+- Mani
 
-diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
-index bbfd51db879766445fa0fea564659fabd06b59ad..7e9c48ad0b88213fd39eab222c104a8e41c583da 100644
---- a/sound/soc/qcom/qdsp6/audioreach.c
-+++ b/sound/soc/qcom/qdsp6/audioreach.c
-@@ -883,6 +883,7 @@ static int audioreach_set_compr_media_format(struct media_format *media_fmt_hdr,
- 	struct payload_media_fmt_aac_t *aac_cfg;
- 	struct payload_media_fmt_pcm *mp3_cfg;
- 	struct payload_media_fmt_flac_t *flac_cfg;
-+	struct payload_media_fmt_opus_t *opus_cfg;
- 
- 	switch (mcfg->fmt) {
- 	case SND_AUDIOCODEC_MP3:
-@@ -925,6 +926,32 @@ static int audioreach_set_compr_media_format(struct media_format *media_fmt_hdr,
- 		flac_cfg->min_frame_size = mcfg->codec.options.flac_d.min_frame_size;
- 		flac_cfg->max_frame_size = mcfg->codec.options.flac_d.max_frame_size;
- 		break;
-+	case SND_AUDIOCODEC_OPUS_RAW:
-+		media_fmt_hdr->data_format = DATA_FORMAT_RAW_COMPRESSED;
-+		media_fmt_hdr->fmt_id = MEDIA_FMT_ID_OPUS;
-+		media_fmt_hdr->payload_size = sizeof(*opus_cfg);
-+		p = p + sizeof(*media_fmt_hdr);
-+		opus_cfg = p;
-+		/* raw opus packets prepended with 4 bytes of length */
-+		opus_cfg->bitstream_format = 1;
-+		/*
-+		 * payload_type:
-+		 * 0 -- read metadata from opus stream;
-+		 * 1 -- metadata is provided by filling in the struct here.
-+		 */
-+		opus_cfg->payload_type = 1;
-+		opus_cfg->version = mcfg->codec.options.opus_d.version;
-+		opus_cfg->num_channels = mcfg->codec.options.opus_d.num_channels;
-+		opus_cfg->pre_skip = mcfg->codec.options.opus_d.pre_skip;
-+		opus_cfg->sample_rate = mcfg->codec.options.opus_d.sample_rate;
-+		opus_cfg->output_gain = mcfg->codec.options.opus_d.output_gain;
-+		opus_cfg->mapping_family = mcfg->codec.options.opus_d.mapping_family;
-+		opus_cfg->stream_count = mcfg->codec.options.opus_d.chan_map.stream_count;
-+		opus_cfg->coupled_count = mcfg->codec.options.opus_d.chan_map.coupled_count;
-+		memcpy(opus_cfg->channel_mapping, mcfg->codec.options.opus_d.chan_map.channel_map,
-+		       sizeof(opus_cfg->channel_mapping));
-+		opus_cfg->reserved[0] = opus_cfg->reserved[1] = opus_cfg->reserved[2] = 0;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
-diff --git a/sound/soc/qcom/qdsp6/audioreach.h b/sound/soc/qcom/qdsp6/audioreach.h
-index 790fba96e34db0fc9d5c90504747174f56b65b32..d1b60b36468a86301601b61a7f8e7f6051561c3e 100644
---- a/sound/soc/qcom/qdsp6/audioreach.h
-+++ b/sound/soc/qcom/qdsp6/audioreach.h
-@@ -31,6 +31,7 @@ struct q6apm_graph;
- #define MODULE_ID_MP3_DECODE		0x0700103B
- #define MODULE_ID_GAPLESS		0x0700104D
- #define MODULE_ID_DISPLAY_PORT_SINK	0x07001069
-+#define MODULE_ID_OPUS_DEC		0x07001174
- 
- #define APM_CMD_GET_SPF_STATE		0x01001021
- #define APM_CMD_RSP_GET_SPF_STATE	0x02001007
-@@ -257,6 +258,22 @@ struct payload_media_fmt_aac_t {
- 	uint32_t sample_rate;
- } __packed;
- 
-+#define MEDIA_FMT_ID_OPUS	0x09001039
-+struct payload_media_fmt_opus_t {
-+	uint16_t bitstream_format;
-+	uint16_t payload_type;
-+	uint8_t version;
-+	uint8_t num_channels;
-+	uint16_t pre_skip;
-+	uint32_t sample_rate;
-+	uint16_t output_gain;
-+	uint8_t mapping_family;
-+	uint8_t stream_count;
-+	uint8_t coupled_count;
-+	uint8_t channel_mapping[8];
-+	uint8_t reserved[3];
-+} __packed;
-+
- #define DATA_CMD_WR_SH_MEM_EP_EOS			0x04001002
- #define WR_SH_MEM_EP_EOS_POLICY_LAST	1
- #define WR_SH_MEM_EP_EOS_POLICY_EACH	2
-diff --git a/sound/soc/qcom/qdsp6/q6apm-dai.c b/sound/soc/qcom/qdsp6/q6apm-dai.c
-index 09da26f712a6ada97196090d760b91bc2dc2a732..4ecaff45c51860cddc631725953ba7dfa84eeb50 100644
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -551,10 +551,11 @@ static int q6apm_dai_compr_get_caps(struct snd_soc_component *component,
- 	caps->max_fragment_size = COMPR_PLAYBACK_MAX_FRAGMENT_SIZE;
- 	caps->min_fragments = COMPR_PLAYBACK_MIN_NUM_FRAGMENTS;
- 	caps->max_fragments = COMPR_PLAYBACK_MAX_NUM_FRAGMENTS;
--	caps->num_codecs = 3;
-+	caps->num_codecs = 4;
- 	caps->codecs[0] = SND_AUDIOCODEC_MP3;
- 	caps->codecs[1] = SND_AUDIOCODEC_AAC;
- 	caps->codecs[2] = SND_AUDIOCODEC_FLAC;
-+	caps->codecs[3] = SND_AUDIOCODEC_OPUS_RAW;
- 
- 	return 0;
- }
-diff --git a/sound/soc/qcom/qdsp6/q6apm.c b/sound/soc/qcom/qdsp6/q6apm.c
-index b4ffa0f0b188e2c32fdfb863b9130d1d11e578dd..0e667a7eb5467bdd65326099132e8ba9dfefa21e 100644
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -354,6 +354,9 @@ int q6apm_set_real_module_id(struct device *dev, struct q6apm_graph *graph,
- 	case SND_AUDIOCODEC_FLAC:
- 		module_id = MODULE_ID_FLAC_DEC;
- 		break;
-+	case SND_AUDIOCODEC_OPUS_RAW:
-+		module_id = MODULE_ID_OPUS_DEC;
-+		break;
- 	default:
- 		return -EINVAL;
- 	}
+> Signed-off-by: Sushrut Shree Trivedi <quic_sushruts@quicinc.com>
+> Signed-off-by: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/lemans-evk.dts | 82 +++++++++++++++++++++++++++++++++
+>  1 file changed, 82 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> index 97428d9e3e41..99400ff12cfd 100644
+> --- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> +++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+> @@ -431,6 +431,40 @@ &mdss0_dp1_phy {
+>  	status = "okay";
+>  };
+>  
+> +&pcie0 {
+> +	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 0 GPIO_ACTIVE_HIGH>;
+> +
+> +	pinctrl-0 = <&pcie0_default_state>;
+> +	pinctrl-names = "default";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie0_phy {
+> +	vdda-phy-supply = <&vreg_l5a>;
+> +	vdda-pll-supply = <&vreg_l1c>;
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie1 {
+> +	perst-gpios = <&tlmm 4 GPIO_ACTIVE_LOW>;
+> +	wake-gpios = <&tlmm 5 GPIO_ACTIVE_HIGH>;
+> +
+> +	pinctrl-0 = <&pcie1_default_state>;
+> +	pinctrl-names = "default";
+> +
+> +	status = "okay";
+> +};
+> +
+> +&pcie1_phy {
+> +	vdda-phy-supply = <&vreg_l5a>;
+> +	vdda-pll-supply = <&vreg_l1c>;
+> +
+> +	status = "okay";
+> +};
+> +
+>  &qupv3_id_0 {
+>  	status = "okay";
+>  };
+> @@ -447,6 +481,54 @@ &sleep_clk {
+>  	clock-frequency = <32768>;
+>  };
+>  
+> +&tlmm {
+> +	pcie0_default_state: pcie0-default-state {
+> +		clkreq-pins {
+> +			pins = "gpio1";
+> +			function = "pcie0_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-pins {
+> +			pins = "gpio2";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		wake-pins {
+> +			pins = "gpio0";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +
+> +	pcie1_default_state: pcie1-default-state {
+> +		clkreq-pins {
+> +			pins = "gpio3";
+> +			function = "pcie1_clkreq";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		perst-pins {
+> +			pins = "gpio4";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +
+> +		wake-pins {
+> +			pins = "gpio5";
+> +			function = "gpio";
+> +			drive-strength = <2>;
+> +			bias-pull-up;
+> +		};
+> +	};
+> +};
+> +
+>  &uart10 {
+>  	compatible = "qcom,geni-debug-uart";
+>  	pinctrl-0 = <&qup_uart10_default>;
+> 
+> -- 
+> 2.51.0
+> 
 
 -- 
-2.47.3
-
+மணிவண்ணன் சதாசிவம்
 
