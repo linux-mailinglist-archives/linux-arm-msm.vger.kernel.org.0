@@ -1,103 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-73995-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73996-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D3B47B823A3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 01:03:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D4709B82546
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 01:59:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 910AF1BC05FF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 23:04:13 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 690451BC05EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 23:59:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D60A422A1E1;
-	Wed, 17 Sep 2025 23:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14F792EA726;
+	Wed, 17 Sep 2025 23:59:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lsDfVDDo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C8E2820DA;
-	Wed, 17 Sep 2025 23:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70FF262FD8;
+	Wed, 17 Sep 2025 23:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758150220; cv=none; b=R8AlTSu5hWXlWQ3Z4LapmL7LaTdDtDtWlIcGaQJkc+P63vUyEHMVBHPmJVn6WPboBTIjAlriFJnsYh/vnfJ4luqRflJkqJq90SSK+6+4Jq5YEQwN1MyParysiOSn3XtvviDeUfLIvYTN+gn/DQFac1233fU2Hy44eew3RLPGVfg=
+	t=1758153540; cv=none; b=r+KBLh0qw4QSc3Nla7LTq+Wa5fhI8Ai7tH+2p2pBF+ezFuZG57OWfZih53p5qL19yazzDQoJa0gK0V3PfsyDagxTkxSR04T1knSoCUraQmLBleGwgaabXG8a3+a3uwy09vi9CnofQ537VJyc2UJ26+4OceXzgvYSE+jhDk5JwRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758150220; c=relaxed/simple;
-	bh=Zo/Ay+2cH68lkGb1JUgQaKyyVRAeZxJc/f6BDBEWERM=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
-	 MIME-Version:Content-Type; b=pC4pHCc+luxfPlPEdq/n+/q4IVhWVe4buE9dWMAxzgsOwdRFiG0sX2guN9RS0GT845DKYA868+jlJ98b9OCnPfLMSOmIJQT+9LbuiOCNDoAo+yeqxAR2wFZThK8e9iBMa3iGbMeRMBD0w9cLkGHkFij375oY//rMCRU3mxXGlxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344B9C4CEF5;
-	Wed, 17 Sep 2025 23:03:40 +0000 (UTC)
-Received: by venus (Postfix, from userid 1000)
-	id 62C0B18067F; Thu, 18 Sep 2025 01:03:38 +0200 (CEST)
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Sebastian Reichel <sre@kernel.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Cc: Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, 
- David Collins <david.collins@oss.qualcomm.com>, 
- =?utf-8?q?Gy=C3=B6rgy_Kurucz?= <me@kuruczgy.com>, linux-pm@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- kernel@oss.qualcomm.com, devicetree@vger.kernel.org, 
- linux-usb@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
-In-Reply-To: <20250917-qcom_battmgr_update-v5-0-270ade9ffe13@oss.qualcomm.com>
-References: <20250917-qcom_battmgr_update-v5-0-270ade9ffe13@oss.qualcomm.com>
-Subject: Re: (subset) [PATCH v5 0/9] power: supply: Add several features
- support in qcom-battmgr driver
-Message-Id: <175815021839.129824.15553934022652541389.b4-ty@collabora.com>
-Date: Thu, 18 Sep 2025 01:03:38 +0200
+	s=arc-20240116; t=1758153540; c=relaxed/simple;
+	bh=yUnTqNSlOTSApytbl115zDhyJMMhucx8J4LyCp1ebPQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=O45zDssMNt0pzyVscMI8F/A2aXDxv4C+9bry7+LPUUpkFsIQyabV0Z4d7cRXA5pxHNZTsZybqhIQsD6bl3nHqnBJSHwMf0QuKm2RYW0Ht5NJlySMhx3+pIPLs4UKbxpYdRoVPFovRMsJnAIpaeh1aUnZ0C4QQZfHK4MfDUTKCDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lsDfVDDo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 419E6C4CEE7;
+	Wed, 17 Sep 2025 23:58:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758153539;
+	bh=yUnTqNSlOTSApytbl115zDhyJMMhucx8J4LyCp1ebPQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lsDfVDDohhE1YamjhG8WVFvAN/xlZoIAUJs2qHS5p/o/5ztd0TJqEdkrHBI2BlFqS
+	 MYhD04VeqlX6rFzIfEcs1Qqnl3NUxFfCBhPymNr2PMTwiqRpapXPqgkpfWNbtGvvCf
+	 343GelpotnOIVTrU4LWfmGDf4hKVZG+lMIWCbj5/pLHlkiHDEsrCdsVkRyXhKYQAId
+	 uypx8lPVgiexmDH8W83NIBVao/EiOQRN8g2nG3NzS+oxTQBCSig2J8furg6GedywC9
+	 HVfrweTWfbBushGT/RwaAmxr4pv1qic7pgKi4axHwM412L36jld5ltEwnsTcUtGmc2
+	 0d4x61Eb7mN1g==
+Message-ID: <dab18f70-4017-4c06-92c1-91cfd2229540@kernel.org>
+Date: Thu, 18 Sep 2025 08:58:54 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] serial: qcom_geni: Fix pinctrl deadlock on runtime
+ resume
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Praveen Talari <quic_ptalari@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ alexey.klimov@linaro.org, jorge.ramirez@oss.qualcomm.com,
+ dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org
+Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
+ quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
+ quic_shazhuss@quicinc.com, quic_cchiluve@quicinc.com
+References: <20250917185102.3763398-1-praveen.talari@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250917185102.3763398-1-praveen.talari@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
 
-
-On Wed, 17 Sep 2025 18:15:13 +0800, Fenglin Wu wrote:
-> Add following features in qcom-battmgr drivers as the battery management
-> firmware has provided such capabilities:
->  - Add resistance power supply property in core driver and qcom-battmgr
->    driver to get battery resistance
->  - Add state_of_health power supply property in core driver and
->    qcom-battmgr driver to get battery health percentage
->  - Add charge control start/end threshold control by using
->    charge_control_start_threshold and charge_control_end_threshold power
->    supply properties
+On 18/09/2025 03:51, Praveen Talari wrote:
+> A stall was observed in disable_irq() during
+> pinctrl_pm_select_default_state(), triggered by wakeup IRQ being active
+> while the UART port was not yet active. This led to a hang in
+> __synchronize_irq(), as shown in the following trace:
 > 
-> [...]
+> Call trace:
+>     __switch_to+0xe0/0x120
+>     __schedule+0x39c/0x978
+>     schedule+0x5c/0xf8
+>     __synchronize_irq+0x88/0xb4
+>     disable_irq+0x3c/0x4c
+>     msm_pinmux_set_mux+0x508/0x644
+>     pinmux_enable_setting+0x190/0x2dc
+>     pinctrl_commit_state+0x13c/0x208
+>     pinctrl_pm_select_default_state+0x4c/0xa4
+>     geni_se_resources_on+0xe8/0x154
+>     qcom_geni_serial_runtime_resume+0x4c/0x88
+>     pm_generic_runtime_resume+0x2c/0x44
+>     __genpd_runtime_resume+0x30/0x80
+>     genpd_runtime_resume+0x114/0x29c
+>     __rpm_callback+0x48/0x1d8
+>     rpm_callback+0x6c/0x78
+>     rpm_resume+0x530/0x750
+>     __pm_runtime_resume+0x50/0x94
+>     handle_threaded_wake_irq+0x30/0x94
+>     irq_thread_fn+0x2c/0xa8
+>     irq_thread+0x160/0x248
+>     kthread+0x110/0x114
+>     ret_from_fork+0x10/0x20
+> 
+> To fix this, wakeup IRQ setup is moved from probe to UART startup,
+> ensuring it is only configured when the port is active. Correspondingly,
+> the wakeup IRQ is cleared during shutdown. This avoids premature IRQ
+> disable during pinctrl setup and prevents the observed stall. The probe
+> and remove pathsare simplified by removing redundant wakeup IRQ handling.
+> 
+> Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial driver")
+> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+> Closes: https://lore.kernel.org/all/DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org/
+> Tested-by: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
 
-Applied, thanks!
-
-[1/9] power: supply: core: Add resistance power supply property
-      commit: d69ae81efbc95c94a2760fc82d27cdab4c26fe76
-[2/9] power: supply: core: Add state_of_health power supply property
-      commit: cd93fbdce5981c947f22015ded3ac6bd1939b0ad
-[3/9] power: supply: qcom_battmgr: Add resistance power supply property
-      commit: 45e57e6a213448f0b372f9cbd3f90f301f675c9b
-[4/9] power: supply: qcom_battmgr: Add state_of_health property
-      commit: b8e5030e09c11a47b7dadd28b492ec00b40a1b8c
-[5/9] power: supply: qcom_battmgr: update compats for SM8550 and X1E80100
-      commit: b3c0f651b3cf4dfaf2e8210d7bb9b79471f6403b
-[6/9] dt-bindings: soc: qcom,pmic-glink: Add charge limit nvmem properties
-      commit: 7f8624af8e8c2c1a0169b46a23729a4cc614635c
-[7/9] power: supply: qcom_battmgr: Add charge control support
-      commit: cc3e883a06251ba835f15672dbe8724f2687971b
+Where did you receive this tag for this patch exactly?
 
 Best regards,
--- 
-Sebastian Reichel <sebastian.reichel@collabora.com>
-
+Krzysztof
 
