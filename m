@@ -1,181 +1,246 @@
-Return-Path: <linux-arm-msm+bounces-73956-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73957-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14497B8004A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 16:33:19 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD30DB80305
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 16:46:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2D47163C09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:30:04 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 38424542357
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:46:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A283D2D7DDD;
-	Wed, 17 Sep 2025 14:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29568328980;
+	Wed, 17 Sep 2025 14:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="S9LDaaun"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MIwa8x9g"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010362D4B71;
-	Wed, 17 Sep 2025 14:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDBD323F68;
+	Wed, 17 Sep 2025 14:46:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758119401; cv=none; b=IzYUVq2fHRFoF9GGhY2oQ1yOl6J3lSis7+Go1nDQi6lPlE59Gq3emRVzvC3Jo5dGNUvqfeTZ3/VYjoZA3rjFlwlEM+P+gR1rQBhPZoRRu1clkz1MYjK5D2nCpiLSI0v0h5X6OnFcLASPUyKS+Vzuk8TfhpKRuVVHe6DMARg2S/M=
+	t=1758120372; cv=none; b=lSLy1EoMskaZSpkenGp1LEYsnGD8YnAiokuHy7SbQiCbZXij3dwtERi5ndg3M6il6Qqni6Xt7I81F/m4ZzxTPyfIqauEaFxXJYykt0wmuXICI8Du2PENg3UhIVafaf1k0GBlu47T8geJzWnNsq2pAPgjhrnvIk/XTqVR5MwFnu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758119401; c=relaxed/simple;
-	bh=6AC9IsRJupEPZp611yucaK3pIYA+QofGgL5/NzSNUgY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=uNSBOED+6iaLueZsuv6pS6uOyc+6Ln5EODgM8N5gpukwFwUYh0uk6QQi2M7g3rOfT8typIvkf4rseteOjYA1RgZOpZNoWZgYDiM5ssztnIempE/1fMltnskB0OFjkAmTUZU4WSpBNSXSatxqU6YPEXw6fct4S5iF/r4HoAgrOo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=S9LDaaun; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58H8XfmS010827;
-	Wed, 17 Sep 2025 14:29:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jawXIxis37bWIPOnqourLw0/qXEIwvwtvxlta3lSn7I=; b=S9LDaaunSk35t9We
-	wqxw2m5U488RVf+3I1tfmC8Cs6JIYP2+9QEfSzdXUAnzgCIiS3cRMWROyuWqvpcB
-	6ZOQsGTUxu2uPDc6bsLfPDjM1f73fJRYk5Bt5pS/cuxD5lgvSdHga0d3Pjb1FK75
-	/WQW04C4/UfOiP4yoc2tCuot48MxZWQ0KUADbY6lxlhUEreN7l2IduTX014kLyXW
-	vXCDGIKdh6RaoRqQ2KkqTwQQfBCSXe9665dE+jbqrUXfyDv+DqeI5ofHHExVlzpc
-	sGZlI4KMgF7yBcKEa2718wS8EqfDGzrJWq4fBDRTD8l/7sWXKcNygUWePGCo5hHB
-	YjugkA==
-Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxxtp9y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Sep 2025 14:29:48 +0000 (GMT)
-Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
-	by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58HETl9v012967
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 17 Sep 2025 14:29:47 GMT
-Received: from [10.218.4.141] (10.80.80.8) by nalasex01b.na.qualcomm.com
- (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 17 Sep
- 2025 07:29:43 -0700
-Message-ID: <8138a25e-eb1b-4edc-92d1-270066b8fc85@quicinc.com>
-Date: Wed, 17 Sep 2025 19:59:40 +0530
+	s=arc-20240116; t=1758120372; c=relaxed/simple;
+	bh=QiXOszuUJaheRV8S9Arrs3CKQDXneHf83M7ZXth8QR4=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=R4nUwT2jQbo68gOJaBL73t34/NFRBkYZCwADSS174Bt5aWyjWJVfOPrAi6dJrW149GUiYmNf+2eGstFLVLyLpgUoe8NEY0xFfJv8PW77axrhJsuyR35ZTjAhlKqB3n1kw1tQRUbR4kRyPVSdxFCJWbRAO9jrDrldxQmSItUksHo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MIwa8x9g; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC381C4CEF0;
+	Wed, 17 Sep 2025 14:46:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758120371;
+	bh=QiXOszuUJaheRV8S9Arrs3CKQDXneHf83M7ZXth8QR4=;
+	h=From:Subject:Date:To:Cc:From;
+	b=MIwa8x9gHctSBJzz9zwPFWbclfLYWnLFUCKoJnI+49+anpgrnykmOdyUjTTvAbLkZ
+	 82mnCK4D4uDWlw4RIpC+5ERBSM1P5SR4ciJanNbxduEky/QciqERoB1qq1NED9XiSn
+	 66gB6tkJyjfAZDQrfQPzBle3VfJkdjxsSS4F24ej1n2WfyFEDXrDtnYMz1BhYgvAdE
+	 6O7kyVki6zaIYpXNAPRNVkX6gb9dEBPhchv6lIWzdkQjoqjXmsB015AvkbAdSVuJ0y
+	 aCJsawhoW8KjCtbxUdJx5ZTtm6WpZb6XyJBaNjU+g23ptMjyxWCIj1Z9Ci9qorSl8d
+	 Fy0HzdBvAOIKA==
+From: Maxime Ripard <mripard@kernel.org>
+Subject: [PATCH v4 00/39] drm/atomic: Get rid of existing states (not
+ really)
+Date: Wed, 17 Sep 2025 16:45:41 +0200
+Message-Id: <20250917-drm-no-more-existing-state-v4-0-5d4b9889c3c8@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 2/4] ufs: ufs-qcom: Remove redundant re-assignment to
- hs_rate
-To: Alim Akhtar <alim.akhtar@samsung.com>, <avri.altman@wdc.com>,
-        <bvanassche@acm.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <mani@kernel.org>,
-        <James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>
-CC: <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-References: <20250902164900.21685-1-quic_rdwivedi@quicinc.com>
- <CGME20250902164935epcas5p14139d20b5d385b99edfc0da60865dd98@epcas5p1.samsung.com>
- <20250902164900.21685-3-quic_rdwivedi@quicinc.com>
- <3a9201dc1c8e$affa1c10$0fee5430$@samsung.com>
-Content-Language: en-US
-From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-In-Reply-To: <3a9201dc1c8e$affa1c10$0fee5430$@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01b.na.qualcomm.com (10.47.209.197)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX0z6uE4Lx1C4G
- NL+W9Rd4ytpvINNx8Z45mZuF697l16+nWLfZumhOpeosTWQvPaRR/QlmMYA522ZvC9SH1fuOLbj
- SN1LfnMT72plrSm9wEvPC6FYQkYIsoYNU1CHph1qfdBduju03AyzMhbM4UiJFuckAzGEcsGvD+4
- 165+wp8P3P/bPk97+WK1+6IALNaSOnjZpi6GLmw238XIiG+1zb4KjsfypYqhyuutamLt9hKwr5n
- 45UXPgbsREISEn5o+NvzyHSlAeUdz7GfT4k8Uu34Q/bd6cRPU5+dc2sOptB55Do6kom+U+Oy3Pl
- dtofFuMizxwjPnCD2mBmz+8WncKRSVLDUgmw/y8rwxKZCOQ+YsmtRVfvq5Ar+ZrchMThcAnmL73
- eU8rtdKo
-X-Proofpoint-ORIG-GUID: Zp6r04OFxRdBFBG5JyIeQwTXDFXOnjmT
-X-Authority-Analysis: v=2.4 cv=KJZaDEFo c=1 sm=1 tr=0 ts=68cac5dc cx=c_pps
- a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8
- a=hD80L64hAAAA:8 a=JF9118EUAAAA:8 a=N54-gffFAAAA:8 a=VwQbUJbxAAAA:8
- a=bLk-5xynAAAA:8 a=yPCof4ZbAAAA:8 a=OIpetahlEYfThk03V3EA:9 a=QEXdDO2ut3YA:10
- a=TjNXssC_j7lpFel5tvFf:22 a=xVlTc564ipvMDusKsbsT:22 a=zSyb8xVVt2t83sZkrLMb:22
-X-Proofpoint-GUID: Zp6r04OFxRdBFBG5JyIeQwTXDFXOnjmT
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 impostorscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
+X-B4-Tracking: v=1; b=H4sIAJXJymgC/43NQQ6CMBCF4auQrh1TWgvUlfcwLqCdQqO2piUEQ
+ 7i7hY0aE+Lyf5l8M5GIwWIkx2wiAQcbrXcpDruMqK52LYLVqQmjTNCKCdDhDs7D3QcEHG3srWs
+ h9nWPIBvOBFN5zXlDEvAIaOy44udL6i5d+/Bcfw35sv7FDjlQMLRSSktTCSVPVwwOb3sfWrK4A
+ 3tbkrJNiyVLo6yMEqbQRfFj8U9Lblo8Wbkq61LLgirOv6x5nl/BcxAsXQEAAA==
+X-Change-ID: 20250825-drm-no-more-existing-state-9b3252c1a33b
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+ Simona Vetter <simona@ffwll.ch>
+Cc: dri-devel@lists.freedesktop.org, Maxime Ripard <mripard@kernel.org>, 
+ Luca Ceresoli <luca.ceresoli@bootlin.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ =?utf-8?q?Ville_Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>, 
+ Louis Chauvet <louis.chauvet@bootlin.com>, 
+ Haneen Mohammed <hamohammed.sa@gmail.com>, 
+ Melissa Wen <melissa.srw@gmail.com>, Jyri Sarha <jyri.sarha@iki.fi>, 
+ Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
+ Paul Cercueil <paul@crapouillou.net>, linux-mips@vger.kernel.org, 
+ Liviu Dudau <liviu.dudau@arm.com>, Russell King <linux@armlinux.org.uk>, 
+ Manikandan Muralidharan <manikandan.m@microchip.com>, 
+ Dharma Balasubiramani <dharma.b@microchip.com>, 
+ Nicolas Ferre <nicolas.ferre@microchip.com>, 
+ Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+ Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
+ linux-arm-kernel@lists.infradead.org, Inki Dae <inki.dae@samsung.com>, 
+ Seung-Woo Kim <sw0312.kim@samsung.com>, 
+ Kyungmin Park <kyungmin.park@samsung.com>, 
+ Krzysztof Kozlowski <krzk@kernel.org>, 
+ Alim Akhtar <alim.akhtar@samsung.com>, linux-samsung-soc@vger.kernel.org, 
+ Liu Ying <victor.liu@nxp.com>, Shawn Guo <shawnguo@kernel.org>, 
+ Sascha Hauer <s.hauer@pengutronix.de>, 
+ Pengutronix Kernel Team <kernel@pengutronix.de>, 
+ Fabio Estevam <festevam@gmail.com>, imx@lists.linux.dev, 
+ Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>, 
+ Lucas Stach <l.stach@pengutronix.de>, 
+ Philipp Zabel <p.zabel@pengutronix.de>, 
+ Anitha Chrisanthus <anitha.chrisanthus@intel.com>, 
+ Edmund Dea <edmund.j.dea@intel.com>, Paul Kocialkowski <paulk@sys-base.io>, 
+ Sui Jingfeng <suijingfeng@loongson.cn>, 
+ Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
+ Matthias Brugger <matthias.bgg@gmail.com>, 
+ AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
+ linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org, 
+ Rob Clark <robin.clark@oss.qualcomm.com>, 
+ Dmitry Baryshkov <lumag@kernel.org>, 
+ Abhinav Kumar <abhinav.kumar@linux.dev>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+ Marijn Suijten <marijn.suijten@somainline.org>, 
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+ Sandy Huang <hjc@rock-chips.com>, 
+ =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
+ Andy Yan <andy.yan@rock-chips.com>, linux-rockchip@lists.infradead.org, 
+ Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+ Samuel Holland <samuel@sholland.org>, linux-sunxi@lists.linux.dev, 
+ Thierry Reding <thierry.reding@gmail.com>, 
+ Mikko Perttunen <mperttunen@nvidia.com>, 
+ Jonathan Hunter <jonathanh@nvidia.com>, linux-tegra@vger.kernel.org, 
+ Hans de Goede <hansg@kernel.org>, 
+ Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+ =?utf-8?q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>, 
+ Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5910; i=mripard@kernel.org;
+ h=from:subject:message-id; bh=QiXOszuUJaheRV8S9Arrs3CKQDXneHf83M7ZXth8QR4=;
+ b=owGbwMvMwCmsHn9OcpHtvjLG02pJDBmnTs7nOfS799mbr9bv3QWVn5ovvPrUukglLeninLOyA
+ R/m/WFW65jKwiDMySArpsjyRCbs9PL2xVUO9it/wMxhZQIZwsDFKQATMeJlbHgVHJux/5lLmPAb
+ rsdT1NM0Dn/JDXOK3CIpESl7v+b+5x1ai+viVEpeF7X81Wy2KQtqZWyYybN97q7MiwaiXzYWJTp
+ ZHKzc3xN17e/JKRb7Pqd0/KjmNtjwSJFdl1GqyGg2q73RpDcA
+X-Developer-Key: i=mripard@kernel.org; a=openpgp;
+ fpr=BE5675C37E818C8B5764241C254BCFC56BF6CE8D
 
+Hi,
 
+Here's a series to get rid of the drm_atomic_helper_get_existing_*_state
+accessors.
 
-On 03-Sep-25 10:23 AM, Alim Akhtar wrote:
-> 
-> 
->> -----Original Message-----
->> From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
->> Sent: Tuesday, September 2, 2025 10:19 PM
->> To: alim.akhtar@samsung.com; avri.altman@wdc.com;
->> bvanassche@acm.org; robh@kernel.org; krzk+dt@kernel.org;
->> conor+dt@kernel.org; mani@kernel.org;
->> James.Bottomley@HansenPartnership.com; martin.petersen@oracle.com
->> Cc: linux-scsi@vger.kernel.org; devicetree@vger.kernel.org; linux-
->> kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org
->> Subject: [PATCH V5 2/4] ufs: ufs-qcom: Remove redundant re-assignment to
->> hs_rate
->>
->> Remove the redundant else block that assigns PA_HS_MODE_B to hs_rate,
->> as it is already assigned in ufshcd_init_host_params(). This avoids
->> unnecessary reassignment and prevents overwriting hs_rate when it is
->> explicitly set to a different value.
->>
->> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
->> ---
-> Better to send non-dependent patches separately.
+The initial intent was to remove the __drm_*_state->state pointer to
+only rely on old and new states, but we still need it now to know which
+of the two we need to free: if a state has not been committed (either
+dropped or checked only), then we need to free the new one, if it has
+been committed we need to free the old state. 
 
-Hi Alim,
+Thus, the state pointer is kept (and documented) only to point to the
+state we should free eventually.
 
-Thanks for the suggestion. This patch is essential for our
-ufs-qcom changes to function correctly. Without it,
-the rate limit would be overwritten.
+All users have been converted to the relevant old or new state
+accessors.  
 
-Thanks,
-Ram.> 
-> Feel free to add:
-> Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>  
-> 
->>  drivers/ufs/host/ufs-qcom.c | 8 ++------
->>  1 file changed, 2 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
-> index
->> 9574fdc2bb0f..1a93351fb70e 100644
->> --- a/drivers/ufs/host/ufs-qcom.c
->> +++ b/drivers/ufs/host/ufs-qcom.c
->> @@ -494,12 +494,8 @@ static int ufs_qcom_power_up_sequence(struct
->> ufs_hba *hba)
->>  	 * If the HS-G5 PHY gear is used, update host_params->hs_rate to
->> Rate-A,
->>  	 * so that the subsequent power mode change shall stick to Rate-A.
->>  	 */
->> -	if (host->hw_ver.major == 0x5) {
->> -		if (host->phy_gear == UFS_HS_G5)
->> -			host_params->hs_rate = PA_HS_MODE_A;
->> -		else
->> -			host_params->hs_rate = PA_HS_MODE_B;
->> -	}
->> +	if (host->hw_ver.major == 0x5 && host->phy_gear == UFS_HS_G5)
->> +		host_params->hs_rate = PA_HS_MODE_A;
->>
->>  	mode = host_params->hs_rate == PA_HS_MODE_B ?
->> PHY_MODE_UFS_HS_B : PHY_MODE_UFS_HS_A;
->>
->> --
->> 2.50.1
-> 
-> 
+This was tested on tidss.
+
+Let me know what you think,
+Maxime
+
+Signed-off-by: Maxime Ripard <mripard@kernel.org>
+---
+Changes in v4:
+- Fix ingenic
+- Rebased on latest drm-misc-next tag
+- Link to v3: https://lore.kernel.org/r/20250909-drm-no-more-existing-state-v3-0-1c7a7d960c33@kernel.org
+
+Changes in v3:
+- Added an armada rework patch
+- Added an ingenic fix
+- Collected tags
+- Rebased on latest drm-misc-next tag
+- Link to v2: https://lore.kernel.org/r/20250902-drm-no-more-existing-state-v2-0-de98fc5f6d66@kernel.org
+
+Changes in v2:
+- Dropped the first and second patches
+- Reworked the recipient list to be nicer with SMTPs
+- Link to v1: https://lore.kernel.org/r/20250825-drm-no-more-existing-state-v1-0-f08ccd9f85c9@kernel.org
+
+---
+Maxime Ripard (39):
+      drm/atomic: Convert drm_atomic_get_connector_state() to use new connector state
+      drm/atomic: Remove unused drm_atomic_get_existing_connector_state()
+      drm/atomic: Document __drm_connectors_state state pointer
+      drm/atomic: Convert __drm_atomic_get_current_plane_state() to modern accessor
+      drm/atomic: Convert drm_atomic_get_plane_state() to use new plane state
+      drm/vkms: Convert vkms_crtc_atomic_check() to use new plane state
+      drm/tilcdc: crtc: Use drm_atomic_helper_check_crtc_primary_plane()
+      drm/atomic: Remove unused drm_atomic_get_existing_plane_state()
+      drm/atomic: Document __drm_planes_state state pointer
+      drm/atomic: Convert drm_atomic_get_crtc_state() to use new connector state
+      drm/ingenic: ipu: Switch to drm_atomic_get_new_crtc_state()
+      drm/arm/malidp: Switch to drm_atomic_get_new_crtc_state()
+      drm/armada: Drop always true condition in atomic_check
+      drm/armada: Switch to drm_atomic_get_new_crtc_state()
+      drm/atmel-hlcdc: Switch to drm_atomic_get_new_crtc_state()
+      drm/exynos: Switch to drm_atomic_get_new_crtc_state()
+      drm/imx-dc: Switch to drm_atomic_get_new_crtc_state()
+      drm/imx-dcss: Switch to drm_atomic_get_new_crtc_state()
+      drm/imx-ipuv3: Switch to drm_atomic_get_new_crtc_state()
+      drm/ingenic: Switch to drm_atomic_get_new_crtc_state()
+      drm/kmb: Switch to drm_atomic_get_new_crtc_state()
+      drm/logicvc: Switch to drm_atomic_get_new_crtc_state()
+      drm/loongson: Switch to drm_atomic_get_new_crtc_state()
+      drm/mediatek: Switch to drm_atomic_get_new_crtc_state()
+      drm/msm/mdp5: Switch to drm_atomic_get_new_crtc_state()
+      drm/omap: Switch to drm_atomic_get_new_crtc_state()
+      drm/rockchip: Switch to drm_atomic_get_new_crtc_state()
+      drm/sun4i: Switch to drm_atomic_get_new_crtc_state()
+      drm/tegra: Switch to drm_atomic_get_new_crtc_state()
+      drm/tilcdc: Switch to drm_atomic_get_new_crtc_state()
+      drm/vboxvideo: Switch to drm_atomic_get_new_crtc_state()
+      drm/vc4: Switch to drm_atomic_get_new_crtc_state()
+      drm/atomic: Switch to drm_atomic_get_new_crtc_state()
+      drm/framebuffer: Switch to drm_atomic_get_new_crtc_state()
+      drm/atomic: Remove unused drm_atomic_get_existing_crtc_state()
+      drm/atomic: Document __drm_crtcs_state state pointer
+      drm/ingenic: crtc: Switch to ingenic_drm_get_new_priv_state()
+      drm/atomic: Convert drm_atomic_get_private_obj_state() to use new plane state
+      drm/atomic: Document __drm_private_objs_state state pointer
+
+ drivers/gpu/drm/arm/malidp_planes.c             |   2 +-
+ drivers/gpu/drm/armada/armada_plane.c           |   7 +-
+ drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c |   2 +-
+ drivers/gpu/drm/drm_atomic.c                    |  21 ++--
+ drivers/gpu/drm/drm_framebuffer.c               |   2 +-
+ drivers/gpu/drm/exynos/exynos_drm_plane.c       |   2 +-
+ drivers/gpu/drm/imx/dc/dc-plane.c               |   2 +-
+ drivers/gpu/drm/imx/dcss/dcss-plane.c           |   4 +-
+ drivers/gpu/drm/imx/ipuv3/ipuv3-plane.c         |   3 +-
+ drivers/gpu/drm/ingenic/ingenic-drm-drv.c       |  13 ++-
+ drivers/gpu/drm/ingenic/ingenic-ipu.c           |   4 +-
+ drivers/gpu/drm/kmb/kmb_plane.c                 |   3 +-
+ drivers/gpu/drm/logicvc/logicvc_layer.c         |   4 +-
+ drivers/gpu/drm/loongson/lsdc_plane.c           |   2 +-
+ drivers/gpu/drm/mediatek/mtk_plane.c            |   3 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c      |   7 +-
+ drivers/gpu/drm/omapdrm/omap_plane.c            |   2 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_vop.c     |   6 +-
+ drivers/gpu/drm/rockchip/rockchip_drm_vop2.c    |   2 +-
+ drivers/gpu/drm/sun4i/sun8i_ui_layer.c          |   3 +-
+ drivers/gpu/drm/sun4i/sun8i_vi_layer.c          |   3 +-
+ drivers/gpu/drm/tegra/dc.c                      |   2 +-
+ drivers/gpu/drm/tilcdc/tilcdc_crtc.c            |   9 +-
+ drivers/gpu/drm/tilcdc/tilcdc_plane.c           |   3 +-
+ drivers/gpu/drm/vboxvideo/vbox_mode.c           |   8 +-
+ drivers/gpu/drm/vc4/vc4_plane.c                 |   6 +-
+ drivers/gpu/drm/vkms/vkms_crtc.c                |   4 +-
+ include/drm/drm_atomic.h                        | 144 ++++++++++++------------
+ 28 files changed, 132 insertions(+), 141 deletions(-)
+---
+base-commit: 91494dee1091a14d91da6bcb39e12a907765c793
+change-id: 20250825-drm-no-more-existing-state-9b3252c1a33b
+
+Best regards,
+-- 
+Maxime Ripard <mripard@kernel.org>
 
 
