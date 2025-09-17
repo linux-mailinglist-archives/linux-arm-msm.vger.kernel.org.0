@@ -1,165 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-73944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73951-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7ECF9B7FDEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 16:17:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B50AB7FEDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 16:23:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 447D4627C09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:11:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 24759627625
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:16:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 26CA42BE7B2;
-	Wed, 17 Sep 2025 14:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E21182F1FD6;
+	Wed, 17 Sep 2025 14:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jzGEKl2l"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="XHNI9s2r"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4343132BBEA
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 14:02:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463192F069C;
+	Wed, 17 Sep 2025 14:10:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758117759; cv=none; b=HQvgXRDriZtkWcfL7XfKMfR1VuuPQL6IEQYMksC1XUK2J6EMOGydOIxc7VHf73sHor9bK2sjLommL2q0pYInFihzi7op95c7v+mix/Z/AUC4xAFdds5nL8gw+9x6a592Ec5+G3gRVc/YxcIF5k3b1JNQajBqipLON1p3gGzI374=
+	t=1758118247; cv=none; b=H94n2SScmAW6s8Qcb8shtRxDjub1wKdfrDEw26elti1lEykQIfTqsz4Kcob9NzS300zvFwB/9F6xO2Y0Ya2K5NxOa7Lt2WbK6f5N3d9NNs2tpIFh2m5kq1h9vsawEzpCE/eGNzxRYQ3rnpEWmXIpS25z/ksPTA1x3vTfyO02Ndc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758117759; c=relaxed/simple;
-	bh=RefTj2LFec46dsJYSPZ8tEBm1+3mD1JsxhEJXrBH8b8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LiDzVcG1tEIfWsxUQYoHzP38PD0cGEBy3Z42TImeHzedyueBz5groXMGx/Uiuuu5gXjrSP02eoA8Uz9dcDrQiGfUPi0aUnbYpS1BJlvJn2NlEARXERhPm716M/ee7I7EOtn7O4sj86Oa4MUQGSqK0OH4jj+C4dgag1Xr0VD6Hek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jzGEKl2l; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b0b6bf0097aso702828166b.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 07:02:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758117754; x=1758722554; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+aI0KZC1S6i6KZFgi+7mCnlg3sWeGuC+L+mdTKqHXWA=;
-        b=jzGEKl2ldjQhOOSsKb06Fha6LgYoyLdKgQ3A4Jx6N9aXyL25JkKSdHMv3WQPzK44Jk
-         2e2A/q4FWpYAEoco41Qr6Fg/vwnaX2gEb7tp/l5+6uXdPDdptI4Pesl5xHH4cg7APoDM
-         xXr7IWGz569kWGi6atos85QR0WvnEdd4S1KRvyYLfeGlvWeUptRQx2C+hTl4q8K2moYJ
-         KCrg8a9zN4bbWJ6l03a7dIFkqLljT/+rnYA0N4ceMuPNoy+7K/CiANyoHDZf26G4JbY1
-         GpdzsZ05mW2cHfUkf910zsCe55jgTVY5t7IEGWbZmWjdYhFdhCAngArPksI90WX4Wf3q
-         np0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758117754; x=1758722554;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+aI0KZC1S6i6KZFgi+7mCnlg3sWeGuC+L+mdTKqHXWA=;
-        b=U3SqbFYZpQVPHK9znuXGrVOnLv/TeO9hRpxr0UtKXsv3ZQhCGwDUkcCjIf5OFXoGGO
-         TYbnajUW7Xa1ta/Wo6SJ5QIxqyokK6BXyF/JRyVOyJkedxJ+gYpkZhfq2SBlq7IUgjXD
-         Rw33mCZkrO65E1CJPiSzzeyedTAJjk6hVwbZcC8dbfopVWCXJDx+3+amAJ8qZ7JbtIVx
-         idlSQFywv4SDlbTdKSh9J8LJKSIeYNpXbbyWDWvU5yzRlZOM8gwAfIZvXJfyqg/VwYsh
-         //IxTJDV4WPglI0+ixR1X9WeJUSv+F+wyd0s9ly2GZJhkxOLBVfLl+42GAY8fcd4c6cy
-         2xFw==
-X-Forwarded-Encrypted: i=1; AJvYcCWC1aIPhsADViEYzQ7a0Bc6B6fa165AODc9peTjayKA7CDLVvPdhzfjTjwiiWals/eDMTkkLEs6YuzmEI0g@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9+3ZkWjhWZWc9KNdqxw6id57ucTAesxSjKU2Jku+Msbc3y7zG
-	+mdxQFnWrrAkntCU/aHsEDopHWz4Bz774C9YY1/SbFsGUYNgGowYmhQQxnRSv65fEfY=
-X-Gm-Gg: ASbGnctThsquNZ9wAhJ/c+QfWa9s5ui2ioMOPtYpZgdxwDj36f/B5oX5NlCc3rJ3HsV
-	STL5ehovTt9Si4mQX+/4DidtrKhxmBnf0sjAlHR6BdHeg747KXF+oOWhpbtK8toMlQ8cNy5WDtc
-	jRflltcUIUUZUW+QCMzYPi3ga4tBfcSb/1DT6YVsHjahtCv5bP7MfMYUgGIHxOaLXr5D8o6uaPd
-	/mRGsI2dd21xJxZ/X1ILN06KfrCmeoTE2W3pJetf6eGcjZ8hhFAVRbDEBWtakTp3BXpmG5yIPGT
-	WkJ6b9RBoEVFQiVKxpl03xBbLtuppDbnAEa9kXjNczpV6f3FJTu1UN8XKopBD7j1v02c+aS5oEf
-	ZekKUnQ8qPOBwAcqgG6irLDVKLFZcSQ==
-X-Google-Smtp-Source: AGHT+IG4Gian2+1eYXK+LJPiJ/IOk7YXX7BNAP8tJbijpr4j+Tg2SNRKcI5T/sLwoI+EVC41Iboriw==
-X-Received: by 2002:a17:907:9691:b0:b04:3b97:f965 with SMTP id a640c23a62f3a-b1bc1168641mr281451566b.49.1758117754340;
-        Wed, 17 Sep 2025 07:02:34 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:30:96c4:427:30f:64da])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b3347a4fsm1352382866b.103.2025.09.17.07.02.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 07:02:33 -0700 (PDT)
-Date: Wed, 17 Sep 2025 16:02:29 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Paul Sajna <sajattack@postmarketos.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	phone-devel@vger.kernel.org,
-	Amir Dahan <system64fumo@protonmail.com>,
-	Christopher Brown <crispybrown@gmail.com>
-Subject: Re: [PATCH v2 11/13] arm64: dts: qcom: sdm845-lg-common: Add
- bootloader-compatible board and MSM IDs
-Message-ID: <aMq_dbLRShTVLlc8@linaro.org>
-References: <20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org>
- <20250916-judyln-dts-v2-11-5e16e60263af@postmarketos.org>
- <acb4f8a2-ff08-4a90-a7ad-7b25a7f4b6b0@oss.qualcomm.com>
+	s=arc-20240116; t=1758118247; c=relaxed/simple;
+	bh=eEd470u7CzAzRCgJ1yE6xvnuciGhUWvl5SHPO0UxlJM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:CC:References:
+	 In-Reply-To:Content-Type; b=stMetFOkiNzTC8l6GX2YjYdWqp3ckDbD7rbAuC/ua4aUpMONVVMRyBw9nTxWGj7uBtbQl6UvcU9Qsa35XUR31D7AhEPi974zrhTtEmb9/SnKzLLxpsRTkIa1M3k9wwS7zeexBIBs4/g5vLG2kvYoK6wmHfkUQvVQbErycL7DY6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=XHNI9s2r; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58HDGXWb004305;
+	Wed, 17 Sep 2025 14:10:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ePcboJNrvqFfQxXev1JTwCoGIGRzXZjx8+H/6ozCrXs=; b=XHNI9s2rrXVmFpQ6
+	hNX0KPGbhSDSh/LX65OinopyKmEvGXpKPyj5KW0+Df5TLwMnb1Q5g4jp0ipqVL5x
+	dn1LueEkp4/srP1BZA7Z/veAQD0DXhoQCnqtnchPwvcmWeQeSSor79pCGU9ssWg+
+	dDpAeUnbeDUlvB4/o901gshlPgTgol4WpztmCebnlKu0WqS5TMR3zFtO59wjPq0G
+	/7MFXDrsWjSJQj6kVhu0f1YK5qw6BWMlfwT/VCpDJHMc83XuUBiuWMlyaY0v6hvn
+	1Ezfw02jfMXbY8IhRnz7WluEPfpjTtiS/vpEBwf9B/C2hHOMfVGwD75tBewy/3Sw
+	ApnM+A==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497wqgr51f-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Sep 2025 14:10:32 +0000 (GMT)
+Received: from nalasex01b.na.qualcomm.com (nalasex01b.na.qualcomm.com [10.47.209.197])
+	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58HEAVRh004849
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 17 Sep 2025 14:10:31 GMT
+Received: from [10.218.4.141] (10.80.80.8) by nalasex01b.na.qualcomm.com
+ (10.47.209.197) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Wed, 17 Sep
+ 2025 07:10:27 -0700
+Message-ID: <44dce42a-8a78-4b09-b5fb-3fff72b4e4b5@quicinc.com>
+Date: Wed, 17 Sep 2025 19:39:15 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <acb4f8a2-ff08-4a90-a7ad-7b25a7f4b6b0@oss.qualcomm.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 1/4] ufs: dt-bindings: Document gear and rate limit
+ properties
+From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+To: Krzysztof Kozlowski <krzk@kernel.org>
+CC: <alim.akhtar@samsung.com>, <avri.altman@wdc.com>, <bvanassche@acm.org>,
+        <robh@kernel.org>, <krzk+dt@kernel.org>, <conor+dt@kernel.org>,
+        <mani@kernel.org>, <James.Bottomley@hansenpartnership.com>,
+        <martin.petersen@oracle.com>, <linux-scsi@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>
+References: <20250902164900.21685-1-quic_rdwivedi@quicinc.com>
+ <20250902164900.21685-2-quic_rdwivedi@quicinc.com>
+ <20250903-sincere-brass-rhino-19f61a@kuoka>
+ <2360f9f8-470d-46dc-be9e-660bb1580428@quicinc.com>
+ <ea81a84c-738e-4e70-a0d4-e5f6d4b1064f@quicinc.com>
+Content-Language: en-US
+In-Reply-To: <ea81a84c-738e-4e70-a0d4-e5f6d4b1064f@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01b.na.qualcomm.com (10.47.209.197)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: UeLZDa2kzbteYYyDleiGa16o1xVG4yu-
+X-Authority-Analysis: v=2.4 cv=HITDFptv c=1 sm=1 tr=0 ts=68cac159 cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8
+ a=KKAkSRfTAAAA:8 a=2ydiuVImiamWSaWHqPgA:9 a=QEXdDO2ut3YA:10
+ a=TjNXssC_j7lpFel5tvFf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: UeLZDa2kzbteYYyDleiGa16o1xVG4yu-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE3MDEyOCBTYWx0ZWRfX3aHwgvLEni0n
+ h6sq+86Ub1JTJUVWIkD7Gv6HlrIpxLhtX/3XlJ1ZrgEPOhF8SG2L47flTLBxz6RmwIXn7r7SOms
+ DCna4o5uBxyvUDwRaHvFjTYfbPp/RRQ4fMA+g8lRAFmX2y1V0z4VozwNGvorHcOVlrz1nNz2E+r
+ H3lZ7xXQSUusp2iWXV3csbip4Qmupo+8Ief00ZcV7HBm0kfGGYD1OVYpT5OAGrsxY3f/0L4VU3D
+ 3U9JZJoT4TPRIN2k2iKdPlRAAX1aCjCqWPKIia6kJiHSFWl4on8pw4pvo+pwaNVm+KMdgw2yLw/
+ plmUr+DX/09zGJKWNqdLK2Db4zhN1itlg/QI3uO9DJs1HWhdPEHNfWY3MUTwMqZILb7RVGdOfbC
+ cFo2bFRY
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 phishscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 impostorscore=0 clxscore=1015 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509170128
 
-On Wed, Sep 17, 2025 at 03:55:47PM +0200, Konrad Dybcio wrote:
-> On 9/17/25 3:09 AM, Paul Sajna wrote:
-> > The original bootloader (fastboot) requires board and MSM IDs in order
-> > to boot the kernel, so these have been added. When re-using the same
-> > files to chainload U-Boot, these compatibles are also needed to ensure
-> > proper booting.
-> > 
-> > Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 2 ++
-> >  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 1 +
-> >  2 files changed, 3 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> > index 1baec758c7d881026bf6001a0a305687d7a14b40..a513cd931b3a984443183ee4e8df7b0e45732630 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi
-> > @@ -5,6 +5,7 @@
-> >   * Copyright (c) 2022, The Linux Foundation. All rights reserved.
-> >   */
-> >  
-> > +#include <dt-bindings/arm/qcom,ids.h>
-> >  #include <dt-bindings/gpio/gpio.h>
-> >  #include <dt-bindings/leds/common.h>
-> >  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-> > @@ -29,6 +30,7 @@
-> >  
-> >  / {
-> >  	chassis-type = "handset";
-> > +	qcom,msm-id = <QCOM_ID_SDM845 0x20001>;
-> >  
-> >  	aliases {
-> >  		serial0 = &uart9;
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> > index 8c1692f86e6ceea7b718361965e78f95d39373bb..beb1372dc6c17f5f06c2044412ee1c8165858cd1 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
-> > @@ -12,6 +12,7 @@
-> >  / {
-> >  	model = "LG G7 ThinQ";
-> >  	compatible = "lg,judyln", "qcom,sdm845";
-> > +	qcom,board-id = <0x020C0008 0>;
+
+
+On 12-Sep-25 9:14 PM, Ram Kumar Dwivedi wrote:
 > 
-> This is almost QCOM_BOARD_ID(MTP, 12, 0), except for the odd BIT(25)
-> which the dt-binding promises should be left unused..
 > 
-> +Stephan maybe you know more?
+> On 09-Sep-25 8:28 PM, Ram Kumar Dwivedi wrote:
+>>
+>>
+>> On 03-Sep-25 12:14 PM, Krzysztof Kozlowski wrote:
+>>> On Tue, Sep 02, 2025 at 10:18:57PM +0530, Ram Kumar Dwivedi wrote:
+>>>> Add optional "limit-hs-gear" and "limit-rate" properties to the
+>>>> UFS controller common binding. These properties allow limiting
+>>>> the maximum HS gear and rate.
+>>>>
+>>>> This is useful in cases where the customer board may have signal
+>>>> integrity, clock configuration or layout issues that prevent reliable
+>>>> operation at higher gears. Such limitations are especially critical in
+>>>> those platforms, where stability is prioritized over peak performance.
+>>>>
+>>>> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
+>>>> ---
+>>>>  .../devicetree/bindings/ufs/ufs-common.yaml      | 16 ++++++++++++++++
+>>>>  1 file changed, 16 insertions(+)
+>>>
+>>> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>>
+>> Hi Krzysztof,
+>>
+>> Alim has recommended renaming the "limit-rate" property to "limit-gear-rate".
+>> Please let me know if you have any concerns.
+>>
+>> Also, may I retain your "Reviewed-by" tag in the next patchset?
+>>
+> Hi Krzysztof,
+> 
+> Just a friendly reminder,
+> Would appreciate your feedback when you have time.
+
+Hi Krzysztof,
+
+I am retaining your Reviewed-by tag in the next patchset.
+
+Thanks,
+Ram.> 
+> Thanks,
+> Ram.> Thanks,
+>> Ram.> 
+>>> Best regards,
+>>> Krzysztof
+>>>
+>>
+> 
 > 
 
-I'm not sure what BIT(25) is exactly, but I think you can generally give
-up any hope of trying to make sense of the board IDs of large vendors
-like LG, Samsung, Motorola etc. It's a pity that Qualcomm has never
-created a board ID scheme with enough room for customization for
-vendors. The qcom,board-id scheme seems to be entirely focused just
-around Qualcomm's own boards (MTP, QRD, SBC etc). That is why we ended
-up with every vendor using their own incompatible approach. :-(
-
-Sorry, I wish I had a better explanation. :-)
-
-Stephan
 
