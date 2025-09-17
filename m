@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-73962-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id DACF2B8063D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:10:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9979AB80607
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:09:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BEC9E1C81BD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:03:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96CF2585EB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:03:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D82D32E72E;
-	Wed, 17 Sep 2025 15:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDAB3705AC;
+	Wed, 17 Sep 2025 15:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eyxr26a/"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZekiJBnx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C203333AB6;
-	Wed, 17 Sep 2025 15:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C5F19CC0C;
+	Wed, 17 Sep 2025 15:00:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758121243; cv=none; b=ljwlsU9JldhiePKBungNqptbABCjWb3eczbkIkz2CFRdPg7UrxgP+2EwUGIr0HGxwKR0a6KcjAOdQFeZ0OPcGYxJsTTJTWjIPG49eriDkvCTWW8jvUwsI4n08srV9wvhHLiU+1tcJq21KqaYVzz+2APyFOopdaj+D+y7ahAi1es=
+	t=1758121246; cv=none; b=lEungVWkaZ50En2t61GbalJUwxPGY6tEnLFVt2s8oithE0VUufKAe/CiXt/B6psLOH7Lpsq+gX+wMB+bUmONnCy7/biftMLtQq5jqzKzP3Zuax+WY9Xl91lkX4YM8mSa5J+zjAphMKN8ch8RCrAA8Gv+k/AwKGHhgHHMzByjUAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758121243; c=relaxed/simple;
-	bh=uKTzGagGhtTrXiBZUakEIOCIX+NG+7SQ5Y4JJ+cUDsU=;
+	s=arc-20240116; t=1758121246; c=relaxed/simple;
+	bh=n8b7BCp5JPPR7LVBqJbWYtWx0G87/2qE/nO7QOyYb94=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=PYJH65qChf1bybMR/6sqQpx1GMZznOuyF8dBeqxXeGr6Uqw+x3VmR6tPyB73yPh8hPw/BEiIQKEBcl+hP1ZtBzTEJVFbFBbuplOfyO33UD2u3oaXcCTyFLDjopSciFRHys5dKhgdHUQdzKbEtWrbaOu73huYv0AlO6k0JLsfIU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eyxr26a/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA32C4CEF0;
-	Wed, 17 Sep 2025 15:00:42 +0000 (UTC)
+	 Message-Id:Subject; b=kEuj/AahQvjEcmpDbze5yOxObPJiAB1gQ0yNI4DTY6vMF0tFMejHFzd0S4CzCW34TZ+Cvy66rue6Yy3xenSmjsHj5glOejLtrVzyZd2s/BnMCu/dzznTOHRzV1tne8put9KFSP+dfn+NypdOcGwPYVsSkMUOKdHioBaGnWQIo8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZekiJBnx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E83C4CEE7;
+	Wed, 17 Sep 2025 15:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758121242;
-	bh=uKTzGagGhtTrXiBZUakEIOCIX+NG+7SQ5Y4JJ+cUDsU=;
+	s=k20201202; t=1758121245;
+	bh=n8b7BCp5JPPR7LVBqJbWYtWx0G87/2qE/nO7QOyYb94=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Eyxr26a/Rt2KgGizbTuCA2IUVZrVVuRqbvmp5/HB46TnrhJjoaS1XiCgpsy1jf/Dj
-	 x/AMKfw3rxqmADP0Dl4eTN7KKfF+cmtv0VXAtlGM5qL1X7jpPFkVikhJcwwmaDa9jU
-	 cZf/0lVYVhLKpzKHn28CrVjtCkGxC630FMJsaOmMQou1rjraFT8OoRaBhp8A+LZUef
-	 k4Qocg0FSHWgg4ZYg+KR5aX5jTMRvvct7QBoKzraeez73o4it6FqoaA6JIjm+HS8CX
-	 TKuH1IftkU2oAVoj2VsKCN0xGVkhMFW1dAEF4RWy9W7Ht5ql5+fyoRZldBAey5qDec
-	 R2/nUG3wlipEA==
-Date: Wed, 17 Sep 2025 10:00:36 -0500
+	b=ZekiJBnxnAXSJunQHScmVci1aFkwUH3Bh9u0Mmdtm6LfiGIzJiYiiyrRbVuPcDYEa
+	 4bmMB4DDPS7AFxpc/0yBbThk4WqvgYiBFFHbLHqF8j0CUowpoBjeiwVdh1SYCWko6j
+	 vQp5Zpuy34nWfdDsvgkhnb0pjbnps70A4bAC0ygbt/ipKVqlVSYcPuZ2d+DNBaqG/6
+	 isw3hIm43JafCd+wG7dw+Vfcm+160vOr80cswynjD94NMoapg8pp+tPArrjS266Ipf
+	 ZQPRjQ/akDXHsF8JEsIejtndCy/qZBHEbkVvk+BuL/6NuECBFhNm9uOlDEpZ8n3+LQ
+	 JriYcOrnbi1ww==
+Date: Wed, 17 Sep 2025 10:00:43 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,87 +51,157 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: phone-devel@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Amir Dahan <system64fumo@protonmail.com>, 
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
- David Heidelberg <david@ixit.cz>, Christopher Brown <crispybrown@gmail.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org
-To: Paul Sajna <sajattack@postmarketos.org>
-In-Reply-To: <20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org>
-References: <20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org>
-Message-Id: <175812100543.2051686.13703690250183906386.robh@kernel.org>
-Subject: Re: [PATCH v2 00/13] arm64: dts: qcom: sdm845-lg-{common, judyln}:
- Improve HW support in dts
+Cc: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
+ Monish Chunara <quic_mchunara@quicinc.com>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
+ Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Richard Cochran <richardcochran@gmail.com>, linux-i2c@vger.kernel.org, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>, 
+ Sushrut Shree Trivedi <quic_sushruts@quicinc.com>, 
+ Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>, netdev@vger.kernel.org, 
+ Ulf Hansson <ulf.hansson@linaro.org>, linux-kernel@vger.kernel.org, 
+ devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
+ Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>, 
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
+ Bartosz Golaszewski <brgl@bgdev.pl>, linux-mmc@vger.kernel.org, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
+In-Reply-To: <20250916-lemans-evk-bu-v6-0-62e6a9018df4@oss.qualcomm.com>
+References: <20250916-lemans-evk-bu-v6-0-62e6a9018df4@oss.qualcomm.com>
+Message-Id: <175812100719.2051822.15573385822403919775.robh@kernel.org>
+Subject: Re: [PATCH v6 00/10] arm64: dts: qcom: lemans-evk: Extend board
+ support for additional peripherals
 
 
-On Tue, 16 Sep 2025 18:09:46 -0700, Paul Sajna wrote:
-> Rollup of improved hardware support via devicetree for LG G7 ThinQ
-> (judyln) from sdm845-mainline kernel fork
+On Tue, 16 Sep 2025 20:29:22 +0530, Wasim Nazir wrote:
+> This series extend support for additional peripherals on the Qualcomm
+> Lemans EVK board to enhance overall hardware functionality.
 > 
-> Notably, this patch-series enables full DRM acceleration and wifi,
-> among other small improvements in individual commits
+> It includes:
+>   - New peripherals like:
+>     - I2C based devices like GPIO I/O expander and EEPROM.
+>     - GPI (Generic Peripheral Interface) DMA controllers and QUPv3 controllers
+>       for peripheral communication.
+>     - PCIe HW with required regulators and PHYs.
+>     - Remoteproc subsystems for supported DSPs.
+>     - Iris video codec.
+>     - First USB controller in device mode.
+>     - SD card support on SDHC v5.
+>     - Qca8081 2.5G Ethernet PHY.
 > 
-> after this patch-series the main things that remain to be worked
-> on include touchscreen, audio, and modem.
+> Dependency:
+>   - The ethernet PHY QCA8081 depends on CONFIG_QCA808X_PHY, without
+>     which ethernet will not work.
 > 
-> Depends upon panel driver patch-series https://lore.kernel.org/all/20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org/T/#r9a976ca01e309b6c03100e984a26a0ffc2fe2002
-> 
-> Co-developed-by: Amir Dahan <system64fumo@protonmail.com>
-> Co-developed-by: Christopher Brown <crispybrown@gmail.com>
-> Signed-off-by: Amir Dahan <system64fumo@protonmail.com>
-> Signed-off-by: Christopher Brown <crispybrown@gmail.com>
-> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
 > ---
+> Changes in v6:
+> - Update commit message of patch 02/10 (v5) to reflect QUP interfaces and
+>   its ports - Dmitry.
+> - Link to v5: https://lore.kernel.org/r/20250916-lemans-evk-bu-v5-0-53d7d206669d@oss.qualcomm.com
+> 
+> Changes in v5:
+> - Dropping these changes from the series, as they are already part of
+>   linux-next:
+>   - Audio change [1]
+>   - MMC dt-bindings change 01/14 (v4)
+>   - EEPROM dt-bindings change 05/14 (v4)
+> - Change bias to 'pull-up' for PCIe 'perst-pins' - Konrad.
+> - Link to v4: [2]
+> 
+> [1] https://lore.kernel.org/linux-arm-msm/20250822131902.1848802-1-mohammad.rafi.shaik@oss.qualcomm.com/
+> [2] https://lore.kernel.org/r/20250908-lemans-evk-bu-v4-0-5c319c696a7d@oss.qualcomm.com
+> 
+> Changes in v4:
+> - Move 'bus-width' property of SDHC to Board DT and also keep the width
+>   to 4 bits - Dmitry/Konrad.
+> - Update commit text of eeprom bindings to describe the reason for the
+>   change 05/14 (v3) - Dmitry.
+> - Bring all tags from v3.
+> - Link to v3: https://lore.kernel.org/r/20250904-lemans-evk-bu-v3-0-8bbaac1f25e8@oss.qualcomm.com
+> 
+> Changes in v3:
+> - Re-order QUP patch 05/13 (v2) to not break i2c node enablement in patch
+>   03/13 (v2) - Dmitry.
+> - Update commit text for QUP patch to highlight which all clients each
+>   QUP is accessing.
+> - Add dedicated compatible for Giantec EEPROM, because usage of generic
+>   compatible "atmel,24c256" alone is not advised.
+> - Update commit text for EEPROM patch 04/13 (v2) to emphasize on EEPROM
+>   enablement - Konrad.
+> - Put 'reg' property after 'compatible' in Expander - Konrad.
+> - Put 'pinctrl-names' after 'pinctrl-n' in PCIe - Konrad.
+> - SDHC:
+>     - Update interconnect nodes with ICC_TAG macro - Konrad.
+>     - Put new lines for each entry in interrupt-names, clock-names,
+>       interconnect-names - Konrad.
+>     - Put bias properties below drive-strength for consistency in
+>       sdc-default-state - Konrad.
+>     - Move 'bus-width' property to SOC DT - Konrad.
+>     - Move 'no-mmc' and 'no-sdio' properties to board DT - Dmitry/Konrad.
+> - Add 'Reviewed-by' tag from Konrad [3] on Audio patch 13/13 (v2),
+>   although the commit text is changed now.
+> - Link to v2: [4]
+> 
+> [3] https://lore.kernel.org/linux-arm-msm/b4b6678b-46dd-4f57-9c26-ff0e4108bf79@oss.qualcomm.com/
+> [4] https://lore.kernel.org/r/20250903-lemans-evk-bu-v2-0-bfa381bf8ba2@oss.qualcomm.com
+> 
 > Changes in v2:
-> - sort at the start
-> - drop unnecessary labels
-> - drop unnecessary gmu
-> - multi-led
-> - split fb-panel changes
-> - expand upon firmware commit message
-> - use qcom,calibration-variant instead of
->   qcom,ath10k-calibration-variant
-> - change firmware paths to include "LG"
-> - remove framebuffer reservation
-> - add lab/ibb
-> 
-> - Link to v1: https://lore.kernel.org/r/20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org
+> - Split the patch 3/5 in v1 into separate patch per author - Bjorn.
+> - Use generic node names for expander - Krzysztof.
+> - Change video firmware to 16MB comapatible - Dmitry.
+> - SDHC:
+>     - Arrange SDHCI-compatible alphanumerically - Dmitry.
+>     - Move OPP table and power-domains to lemans.dtsi as these are
+>       part of SoC.
+>     - Move bus-width to board file - Dmitry.
+>     - Change 'states' property to array in vreg_sdc and also re-arrange
+>       the other properties.
+> - Remove the redundant snps,ps-speed property from the ethernet node as
+>   the MAC is actually relying on PCS auto-negotiation to set its speed
+>   (via ethqos_configure_sgmii called as part of mac_link_up).
+> - Refine commit text for audio patch - Bjorn.
+> - Link to v1: https://lore.kernel.org/r/20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com
 > 
 > ---
-> Amir Dahan (1):
->       arm64: dts: qcom: sdm845-lg-common: Add leds
+> Krishna Kurapati (1):
+>       arm64: dts: qcom: lemans-evk: Enable first USB controller in device mode
 > 
-> Christopher Brown (1):
->       arm64: dts: qcom: sdm845-lg-judyln: Add battery and charger
+> Mohd Ayaan Anwar (1):
+>       arm64: dts: qcom: lemans-evk: Enable 2.5G Ethernet interface
 > 
-> Paul Sajna (11):
->       arm64: dts: qcom: sdm845-lg-common: Sort nodes and properties
->       arm64: dts: qcom: sdm845-lg-common: Add uarts and Bluetooth
->       arm64: dts: qcom: sdm845-lg-judyln: Add display panel
->       arm64: dts: qcom: sdm845-lg-judyln: Add firmware nodes
->       arm64: dts: qcom: sdm845-lg-{common, judyln}: Add wifi node
->       arm64: dts: qcom: sdm845-lg-common: Add chassis-type
->       arm64: dts: qcom: sdm845-lg-judyln: Add fb_panel dimensions
->       arm64: dts: qcom: sdm845-lg-common: Add camera flash
->       arm64: dts: qcom: sdm845-lg-common: Add bootloader-compatible board and MSM IDs
->       arm64: dts: qcom: sdm845-judyln-common: Remove framebuffer reserved-mem
->       arm64: dts: qcom: sdm845-lg-judyln: Add lab/ibb
+> Monish Chunara (3):
+>       arm64: dts: qcom: lemans: Add SDHC controller and SDC pin configuration
+>       arm64: dts: qcom: lemans-evk: Add EEPROM and nvmem layout
+>       arm64: dts: qcom: lemans-evk: Enable SDHCI for SD Card
 > 
->  arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 222 ++++++++++++++++++-------
->  arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 136 ++++++++++++++-
->  2 files changed, 296 insertions(+), 62 deletions(-)
+> Nirmesh Kumar Singh (1):
+>       arm64: dts: qcom: lemans-evk: Add TCA9534 I/O expander
+> 
+> Sushrut Shree Trivedi (1):
+>       arm64: dts: qcom: lemans-evk: Enable PCIe support
+> 
+> Vikash Garodia (1):
+>       arm64: dts: qcom: lemans-evk: Enable Iris video codec support
+> 
+> Viken Dadhaniya (1):
+>       arm64: dts: qcom: lemans-evk: Enable GPI DMA and QUPv3 controllers
+> 
+> Wasim Nazir (1):
+>       arm64: dts: qcom: lemans-evk: Enable remoteproc subsystems
+> 
+>  arch/arm64/boot/dts/qcom/lemans-evk.dts | 365 ++++++++++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/lemans.dtsi    |  92 ++++++++
+>  2 files changed, 457 insertions(+)
 > ---
-> base-commit: 8394712bc1340df993cb167199568f44013b45d3
-> change-id: 20250911-judyln-dts-17c41e59dc0f
-> prerequisite-message-id: <20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org>
-> prerequisite-patch-id: e51151ea7f8fdad6ad7d90713febc5c6b6fc4f9c
-> prerequisite-patch-id: b3dd44250da9cd12bc5b2d0d7e865dbe19ceed92
-> prerequisite-patch-id: fd6c8077806cb03fcf37d0e0d730314c2760e334
+> base-commit: c3067c2c38316c3ef013636c93daa285ee6aaa2e
+> change-id: 20250814-lemans-evk-bu-ec015ce4080e
 > 
 > Best regards,
 > --
-> Paul Sajna <sajattack@postmarketos.org>
+> Wasim Nazir <wasim.nazir@oss.qualcomm.com>
 > 
 > 
 > 
@@ -152,29 +222,35 @@ make sure dt-schema is up to date:
 
 
 This patch series was applied (using b4) to base:
- Base: base-commit 8394712bc1340df993cb167199568f44013b45d3 not known, ignoring
- Base: attempting to guess base-commit...
- Base: tags/next-20250916 (exact match)
- Deps: looking for dependencies matching 3 patch-ids
- Deps: Applying prerequisite patch: [PATCH 1/3] drm/panel: Add LG SW49410 Panel
- Deps: Applying prerequisite patch: [PATCH 2/3] dt-bindings: display: panel: Add devicetree documentation for lg,sw49410
- Deps: Applying prerequisite patch: [PATCH 3/3] Update MAINTAINERS for lg,sw49410
+ Base: using specified base-commit c3067c2c38316c3ef013636c93daa285ee6aaa2e
 
 If this is not the correct base, please add 'base-commit' tag
 (or use b4 which does this automatically)
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250916-lemans-evk-bu-v6-0-62e6a9018df4@oss.qualcomm.com:
 
-arch/arm64/boot/dts/qcom/sdm845-lg-judyp.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): clocks: [[206, 0], [206, 28], [206, 32], [206, 34], [206, 37]] is too short
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 11], [251, 15], [251, 18], [251, 19]] is too short
 	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/sdm845-lg-judyp.dtb: wifi@18800000 (qcom,wcn3990-wifi): 'qcom,snoc-host-cap-skip-quirk' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/net/wireless/qcom,ath10k.yaml#
-arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dtb: framebuffer@9d400000 (simple-framebuffer): 'fb-panel' does not match any of the regexes: '^[a-zA-Z0-9-]+-supply$', '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/display/simple-framebuffer.yaml#
-arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dtb: displayport-controller@ae90000 (qcom,sdm845-dp): clocks: [[209, 0], [209, 28], [209, 32], [209, 34], [209, 37]] is too short
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 11], [250, 15], [250, 18], [250, 19]] is too short
 	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dtb: wifi@18800000 (qcom,wcn3990-wifi): 'qcom,snoc-host-cap-skip-quirk' does not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/net/wireless/qcom,ath10k.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 28], [251, 32], [251, 35], [251, 36]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 28], [250, 32], [250, 35], [250, 36]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 11], [250, 15], [250, 18], [250, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 28], [250, 32], [250, 35], [250, 36]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 11], [251, 15], [251, 18], [251, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/lemans-evk.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[236, 1], [236, 11], [236, 15], [236, 18], [236, 19]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 28], [251, 32], [251, 35], [251, 36]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/lemans-evk.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[236, 1], [236, 28], [236, 32], [236, 35], [236, 36]] is too short
+	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
+arch/arm64/boot/dts/qcom/lemans-evk.dtb: ethernet@23040000 (qcom,sa8775p-ethqos): Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
+	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
 
 
 
