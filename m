@@ -1,247 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-73980-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73981-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14AE2B81604
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 20:43:04 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7395EB81622
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 20:46:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C164252092F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 18:43:02 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1FA68486F1D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 18:46:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 193B9301004;
-	Wed, 17 Sep 2025 18:42:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A9D162C0263;
+	Wed, 17 Sep 2025 18:46:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="31NPyURf";
-	dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b="+0O3GflI"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ltHWAdcy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from galois.linutronix.de (Galois.linutronix.de [193.142.43.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582FB2F7ADF;
-	Wed, 17 Sep 2025 18:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=193.142.43.55
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4811AF0C8
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 18:46:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758134579; cv=none; b=BP8k6MUPvawf+5ZjibYaq7P8WkdnejM14zY1jYL7ihG7xYuYZHxYZfgLxAvPauid8zN4+kl3fV6ExCXLsR+lK2+EClxDhX7X6p+rcwKrQfikrrte+HlOUVzNBVmQ+/7xjpr6ZVhS52rCjg4XflhwwKY+Dc/r5vHGZhD1J+ZwcMs=
+	t=1758134788; cv=none; b=imt92EawzY91HHaFbkCMjPH0i5DTudgAVblV51ULsUFpylydcXQ//VNJILQFcDwDT/Isypll8ifC0YGdM8VzXloBbeOHJIStd9D8JG7Hmxr+AxchTFbTVF4WKEqwIocgO8B+jTd+Hom1yLZdUt6yu80/rffDu3ZTeA68MGnPcBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758134579; c=relaxed/simple;
-	bh=n4tuaVTkOrU5F2vMDHUFbmMsDqBcpYzzhkIfb7fSeSk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OR6ix4pOUBKU8A9J+YMUF8/vd69X1IOlTde85ps5R4bWrJG0ptkodGGsY8QaABd7smtgWhCRIpZYMUcPfRJTBUkVIFqnhLHCxy+gEiZogI1NpqUy/OdtmSd4gcj7wnPPCK1kuFP0Wbq0Yodv43FIEDXDGY0qwdx0cwFrz+OnYT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de; spf=pass smtp.mailfrom=linutronix.de; dkim=pass (2048-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=31NPyURf; dkim=permerror (0-bit key) header.d=linutronix.de header.i=@linutronix.de header.b=+0O3GflI; arc=none smtp.client-ip=193.142.43.55
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linutronix.de
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020; t=1758134575;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zgxBzCQCDvwwT1MdtXjPWMiw/X9+NdfomOMbxA0z+nk=;
-	b=31NPyURfNoC+Hp4DlCfka73PQbGe2AnSx5Lhwo3ZAk40OESvmsNtKLZX/mLN+gUMrsQ7Xj
-	oE1AJTAEi+EfVNjcJpgdtsMX+9eZeJVcd9Cxf9O9hoWMReNGVFq3KDq4HwFLvTJyTvpG0q
-	5tVYyYZKYPYmlYS1v+blGf4H505UHNUxr/5ykB0Z0b+1B0qOtFt2rLmkRPEIqCIw7dJu+t
-	CZNMJy4quCw5wPcBPT/ZONfgr9blUyWN2Tu7MkrKyaD2A2Bjm6turlQT2tLG4ftXi6KyEr
-	8wZRxR70OE05sJ5qLeKfeX3NfNnOjt+EX11TDmw61wq3ERRuxc6UzjUz9nzxiQ==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
-	s=2020e; t=1758134575;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zgxBzCQCDvwwT1MdtXjPWMiw/X9+NdfomOMbxA0z+nk=;
-	b=+0O3GflIeWtQKvcZ+4RGDE9CFHto6HOBWzA3hxU9BVVK3FujuWCVujUHWubIAY5CX/ouK9
-	VWtYg60SdwLM0iCw==
-To: David Hildenbrand <david@redhat.com>, Eugen Hristev
- <eugen.hristev@linaro.org>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
- pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, mhocko@suse.com
-Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
- devicetree@vger.kernel.org
-Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
-In-Reply-To: <7f4aa4c6-7b77-422b-9f7a-d01530c54bff@redhat.com>
-References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
- <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
- <87a52u9jyl.ffs@tglx> <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
- <2bd45749-e483-45ea-9c55-74c5ba15b012@redhat.com> <87v7lh891c.ffs@tglx>
- <95ff36c2-284a-46ba-984b-a3286402ebf8@redhat.com>
- <24d6a51d-f5f8-44d7-94cb-58b71ebf473a@linaro.org>
- <7f4aa4c6-7b77-422b-9f7a-d01530c54bff@redhat.com>
-Date: Wed, 17 Sep 2025 20:42:54 +0200
-Message-ID: <87segk9az5.ffs@tglx>
+	s=arc-20240116; t=1758134788; c=relaxed/simple;
+	bh=btH0t94NpPvDHFTHl7A5rtmlTOTJwOQnsxlnzjc77To=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oiJDfq8UgLhlXOCVn0E5fKxRxVfSQrH5P4cu2PkjxqoEvrxVaWzxzAbr7DqmcALWx/F1u+Nt8ilJzb9Afhf1asnhUJqKgMSgH9ip2cS16JsCpOxEbGIymL97lUpiT9Zf22gF1OZZg8ovvY50ze9s/zJIe1ucpyrNrQrC27ykOtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ltHWAdcy; arc=none smtp.client-ip=209.85.216.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-32e2794c97eso63192a91.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 11:46:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758134786; x=1758739586; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4CUH1cxrzGbtKg/vcM5DH0s3j2Zg6HTRa2VG9pGeCYA=;
+        b=ltHWAdcyg9US6FADquD+LpfygC/dogU3iZ1Yhw5sBPQBSf88DcG0LOjadoWpIp1uRB
+         b+2ZXUguQi0TEVgdhjg+9sUzY8RQr2cbF00LILS0UqCssYXV0jXSraqBnGhC/w37tn8p
+         FvfyLGRELcG0jSuU3z6x3cLr8Li2IasqTiBipF39LSvhBhgTYm0RI50rQXCoNjjlWkiI
+         mAho4RzhWXtyvSqSH1t2miMIZ5rzN+TJ6XLGVi+HOogyKVM7wry2FEZ85f203W6vNN5V
+         TUhzNyYuhasP8x9Q1gkD1i6fZQUiGwm6416sI2AR4oEzeB5NPFb2zZ8Kcg+mHTMlMHlK
+         lm8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758134786; x=1758739586;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4CUH1cxrzGbtKg/vcM5DH0s3j2Zg6HTRa2VG9pGeCYA=;
+        b=Ijmb4vMxPRMKUDSWD15K/7TJLDxnsjv3Jaaamy4Oot3rPoThT7xkzwfJfskLaCNqHp
+         KH2rj9B2de8aV0uyp8YdKsiueM2d6P8PMQFz4G5m0jjUyID4YofpmCpyRU/yfuxEIseN
+         umdQi4WRvJiRhCD2eJxtfh2SivdmUtgGveseCi7UP46Li3mEtLUbUJG6PmNR1DxfQo9F
+         pO3t98tuiVxA8m253ufWBIPAPwYQlknTGBsWBds2D/p9xtjcMPYINAePa6LkIacpZB8Y
+         CvXvLrQ4UfQYkoFMbmggmGmvrd0iCxcy1YDB524Y7rkd65Xt4FtwvSEddSMV8O5r+NPA
+         ZpOQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUvWBbuNhwIgPhjCDmGVz/H3xyTl/lg8KuR6Y/pSiNtXuFMKFnxynoSjmrVVeupWXWdPDnk9nN35A0SmnDZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YxPFtTPoLkJ2tuemdFfSzbBgR0AfZ5Qvyp5zKEv5UK7BqrbkB6v
+	QAF44s3A+V7IcWXWIa6QguJYSX+4AlTITh8aUam+9WaZuYVY6LrAvXHi
+X-Gm-Gg: ASbGncsQjiMOVziMDPkMkKHa14ey0jnid3zoGkhRuUc/PZm7o35rbnMj794su/jYWUx
+	zXprUMzp0abttqVEI6O1znuZgct2OCuzHlyOB8KKGvVXeYXgCUGxWenLeBLMLMCVkxIU0GZQYU1
+	uPQR78dJSnOFkMetLG3pq60g0qqhq9Fp8aOk8utYj2HlfblZ1gGunnzztrYSYeBBuehseUxo+WJ
+	Sorf1JCE49REEFyvvLCgggez4Czae+3Ewq+AXZj4vCYNz7x0THIqsoI/x+YDadGuVJ4A9Mdklgn
+	atf7TfP8Vrhuh0xMSwMrlnx0RxmN8o/TZE/Ra9vjM3Rb0HuJQyMg00KB1HRkllWBzc5583RdG/Z
+	P1jeGs9HWKsmFzAyuJIYx6bbGbYMPmMpgqScrYijZxQ==
+X-Google-Smtp-Source: AGHT+IEATHK4oZBUQ2XFmupV9qFdWwS+bGbZy20FnYjT9stAUVExIl1DxfPhf6kzlDTzmLMxk2zr3A==
+X-Received: by 2002:a17:90b:4986:b0:32b:4c71:f423 with SMTP id 98e67ed59e1d1-32ee3f75457mr3359863a91.32.1758134786351;
+        Wed, 17 Sep 2025 11:46:26 -0700 (PDT)
+Received: from kforge.gk.pfsense.com ([103.70.166.143])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3306082eff4sm187852a91.25.2025.09.17.11.46.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Sep 2025 11:46:25 -0700 (PDT)
+From: Gopi Krishna Menon <krishnagopi487@gmail.com>
+To: robin.clark@oss.qualcomm.com,
+	lumag@kernel.org
+Cc: Gopi Krishna Menon <krishnagopi487@gmail.com>,
+	abhinav.kumar@linux.dev,
+	jessica.zhang@oss.qualcomm.com,
+	sean@poorly.run,
+	marijn.suijten@somainline.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	skhan@linuxfoundation.org,
+	david.hunter.linux@gmail.com,
+	linux-arm-msm@vger.kernel.org,
+	dri-devel@lists.freedesktop.org,
+	freedreno@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org,
+	linux-kernel-mentees@lists.linux.dev
+Subject: [PATCH] drm/msm: Add NULL check in vm_op_enqueue
+Date: Thu, 18 Sep 2025 00:16:14 +0530
+Message-ID: <20250917184616.85797-1-krishnagopi487@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-On Wed, Sep 17 2025 at 17:18, David Hildenbrand wrote:
-> On 17.09.25 17:02, Eugen Hristev wrote:
->> On 9/17/25 17:46, David Hildenbrand wrote:
->>> On 17.09.25 16:10, Thomas Gleixner wrote:
->>>> Sorry. I was busy with other stuff and did not pay attention to that
->>>> discussion.
->>>
->>> I understand, I'm busy with too much stuff such that sometimes it might
->>> be good to interrupt me earlier: "David, nooo, you're all wrong"
+vm_op_enqueue allocates an msm_vm_op struct with kmalloc,
+but the return value is not checked for NULL value which
+can be returned by kmalloc under low-memory conditions.
+This can result in NULL pointer dereference when the pointer
+is dereferenced.
 
-I know that feeling.
+Add NULL check after the allocation and propagate -ENOMEM back
+to the caller in case of a failure.
 
->> The idea was to make "kmemdump" exactly this generic way to tag/describe
->> the memory.
->
-> That's probably where I got lost, after reading the cover letter 
-> assuming that this is primarily to program kmemdump backends, which I 
-> understood to just special hw/firmware areas, whereby kinfo acts as a 
-> filter.
->
->> If we would call it differently , simply dump , would it be better ?
->> e.g. include linux/dump.h
->> and then DUMP(var, size) ?
->> 
->> could we call it maybe MARK ? or TAG ?
->> TAG_MEM(area, size)
->
-> I'm wondering whether there could be any other user for this kind of 
-> information.
->
-> Like R/O access in a debug kernel to these areas, exporting the 
-> ranges/names + easy read access to content through debugfs or something.
->
-> Guess that partially falls under the "dump" category.
+Signed-off-by: Gopi Krishna Menon <krishnagopi487@gmail.com>
+---
+ drivers/gpu/drm/msm/msm_gem_vma.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
 
-I'd rather call it inspection.
-
-> Including that information in a vmcore info would probably allow to 
-> quickly extract some information even without the debug symbols around 
-> (I run into that every now and then).
-
-Correct.
-
->> this would go to a separate section called .tagged_memory.
-
-That'd be confusing vs. actual memory tags, no?
+diff --git a/drivers/gpu/drm/msm/msm_gem_vma.c b/drivers/gpu/drm/msm/msm_gem_vma.c
+index 00d0f3b7ba32..639425849d86 100644
+--- a/drivers/gpu/drm/msm/msm_gem_vma.c
++++ b/drivers/gpu/drm/msm/msm_gem_vma.c
+@@ -455,15 +455,20 @@ struct op_arg {
+ 	bool kept;
+ };
  
-> Maybe just "tagged_memory.h" or sth. like that? I'm bad at naming, so I 
-> would let others make better suggestions.
+-static void
++static int
+ vm_op_enqueue(struct op_arg *arg, struct msm_vm_op _op)
+ {
+ 	struct msm_vm_op *op = kmalloc(sizeof(*op), GFP_KERNEL);
++	if (!op)
++		return -ENOMEM;
++
+ 	*op = _op;
+ 	list_add_tail(&op->node, &arg->job->vm_ops);
+ 
+ 	if (op->obj)
+ 		drm_gem_object_get(op->obj);
++
++	return 0;
+ }
+ 
+ static struct drm_gpuva *
+@@ -482,6 +487,7 @@ msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg)
+ 	struct drm_gpuva *vma;
+ 	struct sg_table *sgt;
+ 	unsigned prot;
++	int ret;
+ 
+ 	if (arg->kept)
+ 		return 0;
+@@ -493,8 +499,6 @@ msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg)
+ 	vm_dbg("%p:%p:%p: %016llx %016llx", vma->vm, vma, vma->gem.obj,
+ 	       vma->va.addr, vma->va.range);
+ 
+-	vma->flags = ((struct op_arg *)arg)->flags;
+-
+ 	if (obj) {
+ 		sgt = to_msm_bo(obj)->sgt;
+ 		prot = msm_gem_prot(obj);
+@@ -503,7 +507,7 @@ msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg)
+ 		prot = IOMMU_READ | IOMMU_WRITE;
+ 	}
+ 
+-	vm_op_enqueue(arg, (struct msm_vm_op){
++	ret = vm_op_enqueue(arg, (struct msm_vm_op){
+ 		.op = MSM_VM_OP_MAP,
+ 		.map = {
+ 			.sgt = sgt,
+@@ -516,6 +520,10 @@ msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg)
+ 		.obj = vma->gem.obj,
+ 	});
+ 
++	if (ret)
++		return ret;
++
++	vma->flags = ((struct op_arg *)arg)->flags;
+ 	to_msm_vma(vma)->mapped = true;
+ 
+ 	return 0;
+@@ -531,6 +539,7 @@ msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg)
+ 	struct drm_gpuvm_bo *vm_bo = orig_vma->vm_bo;
+ 	bool mapped = to_msm_vma(orig_vma)->mapped;
+ 	unsigned flags;
++	int ret;
+ 
+ 	vm_dbg("orig_vma: %p:%p:%p: %016llx %016llx", vm, orig_vma,
+ 	       orig_vma->gem.obj, orig_vma->va.addr, orig_vma->va.range);
+@@ -540,7 +549,7 @@ msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg)
+ 
+ 		drm_gpuva_op_remap_to_unmap_range(&op->remap, &unmap_start, &unmap_range);
+ 
+-		vm_op_enqueue(arg, (struct msm_vm_op){
++		ret = vm_op_enqueue(arg, (struct msm_vm_op){
+ 			.op = MSM_VM_OP_UNMAP,
+ 			.unmap = {
+ 				.iova = unmap_start,
+@@ -550,6 +559,9 @@ msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg)
+ 			.obj = orig_vma->gem.obj,
+ 		});
+ 
++		if (ret)
++			return ret;
++
+ 		/*
+ 		 * Part of this GEM obj is still mapped, but we're going to kill the
+ 		 * existing VMA and replace it with one or two new ones (ie. two if
+@@ -611,6 +623,7 @@ msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *_arg)
+ 	struct msm_vm_bind_job *job = arg->job;
+ 	struct drm_gpuva *vma = op->unmap.va;
+ 	struct msm_gem_vma *msm_vma = to_msm_vma(vma);
++	int ret;
+ 
+ 	vm_dbg("%p:%p:%p: %016llx %016llx", vma->vm, vma, vma->gem.obj,
+ 	       vma->va.addr, vma->va.range);
+@@ -643,7 +656,7 @@ msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *_arg)
+ 	if (!msm_vma->mapped)
+ 		goto out_close;
+ 
+-	vm_op_enqueue(arg, (struct msm_vm_op){
++	ret = vm_op_enqueue(arg, (struct msm_vm_op){
+ 		.op = MSM_VM_OP_UNMAP,
+ 		.unmap = {
+ 			.iova = vma->va.addr,
+@@ -653,6 +666,9 @@ msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *_arg)
+ 		.obj = vma->gem.obj,
+ 	});
+ 
++	if (ret)
++		return ret;
++
+ 	msm_vma->mapped = false;
+ 
+ out_close:
+-- 
+2.43.0
 
-inspect.h :)
-
-I'm going to use 'inspect' as prefix for the thoughts below, but that's
-obviously subject to s/inspect/$BETTERNAME/g :)
-
->> Then anyone can walk through the section and collect the data.
->> 
->> I am just coming up with ideas here.
->> Could it be even part of mm.h instead of having a new header perhaps ?
->> Then we won't need to include one more.
->
-> I don't really have something against a new include, just not one that 
-> sounded like a very specific subsystem, not something more generic.
-
-Right. We really don't want to have five different mechanisms for five
-infrastructures which all allow to inspect kernel memory (life or
-dead) in one way or the other. The difference between them is mostly:
-
-   - Which subset of the information they expose for inspection
-
-   - The actual exposure mechanism: crash dump, firmware storage,
-     run-time snapshots in a filesystem, ....
-
-Having one shared core infrastructure to expose data to those mechanisms
-makes everyones life simpler.
-
-That obviously needs to collect the superset of data, but that's just a
-bit more memory consumed. That's arguably significantly smaller than
-supporting a zoo of mechanisms to register data for different
-infrastructures.
-
-I'm quite sure that at least a substantial amount of the required
-information can be collected at compile time in special section
-tables. The rest can be collected in runtime tables, which have the same
-format as the compile time section tables to avoid separate parsers.
-
-Let me just float some ideas here, how that might look like. It might be
-completely inpractical, but then it might be at least fodder for
-thoughts.
-
-As this is specific for the compiled kernel version you can define an
-extensible struct format for the table.
-
-struct inspect_entry {
-	unsigned long	properties;
-        unsigned int	type;
-        unsigned int	id;
-        const char	name[$MAX_NAME_LEN];
-	unsigned long	address;
-        unsigned long	length;
-        ....
-};
-
-@type
-       refers either to a table with type information, which describes
-       the struct in some way or just generate a detached compile time
-       description.
-
-@id
-       a unique id created at compile time or via registration at
-       runtime. Might not be required
-
-@name:
-       Name of the memory region. That might go into a separate table
-       which is referenced by @id, but that's up for debate.
-
-@address:
-@length:
-       obvious :)
-
-...
-        Whatever a particular consumer might require
-
-@properties:
-
-        A "bitfield", which allows to mark this entry as (in)valid for a
-        particular consumer.
-
-        That obviously requires to modify these properties when the
-        requirements of a consumer change, new consumers arrive or new
-        producers are added, but I think it's easier to do that at the
-        producer side than maintaining filters on all consumer ends
-        forever.
-
-Though I might be wrong as usual. IOW this needs some thoughts. :)
-
-The interesting engineering challenge with such a scheme is to come up
-with a annotation mechanism which is extensible.
-
-     Runtime is trivial as it just needs to fill in the new field in the
-     datastructure and all other runtime users have that zero
-     initialized automatically, if you get the mechanism correct in the
-     first place. Think in templates :)
-
-     Compile time is a bit more effort, but that should be solvable with
-     key/value pairs.
-
-     Don't even waste a thought about creating the final tables and
-     sections in macro magic. All the annotation macros have to do is to
-     emit the pairs in a structured way into discardable sections.
-
-     Those section are then converted in post processing into the actual
-     section table formats and added to the kernel image. Not a
-     spectacular new concept. The kernel build does this already today.
-
-     Just keep the compile time annotation macro magic simple and
-     stupid. It can waste 10k per entry at compile time and then let
-     postprocessing worry about downsizing and consolidation. Nothing to
-     see here :)
-
-Hope that helps.
-
-Thanks,
-
-        tglx
 
