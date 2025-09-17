@@ -1,145 +1,197 @@
-Return-Path: <linux-arm-msm+bounces-73912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 52FF4B7E35D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:44:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 65BE3B7E801
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:51:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EACEC468019
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 12:43:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4A13546772A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 12:48:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id AACF81F09A5;
-	Wed, 17 Sep 2025 12:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D07C302774;
+	Wed, 17 Sep 2025 12:47:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nP6pojE/"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="xl0pRa4B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF741E489
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 12:43:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C4ED7FBA2
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 12:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758113000; cv=none; b=BdPEvQUOuZheGNuj076tQ2AI+joP5O4mJMV8OOd57OmEmdI7+29gb8kneN8JfTiwOMvJ3ojXZEDw1DN+eYJnuWMgQcDH80/mFNCwThaSeRWMwZ7VobLgLhSnCrOyXjEEYgXS68LvkZf0KaTjCbBYVHnhOVGW0JyrBSTIMkVcz1k=
+	t=1758113250; cv=none; b=RPnqB7A+KJgBqeRfkPGIzIlFHIKwT+3uPHPPc0HN9LA6Aw5XFnvMBpuGkUWAbsx26S3ebgSG5vEjWqAmLODy22e8993mBb+BM/MLC4Wl0c2BkHj7DKZ1omANH3Qd4t6qCjbuPB3C3p/A5fukqpIDmoAlVynGzA959W3Mf3ndM7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758113000; c=relaxed/simple;
-	bh=oOZ/7kAmUDMub6ey+4hK6Sglu0Yb5mr5rXFQCUqGmPs=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fr3RqFbqtUJLIgbZI9831blwNdHYzmWgcFWaZR4HBoYYSA8cjTlJnt7MpZX/KeEFesR+osDuZXFEvfFLLPhkJd9TyO1Z+C2bMSfBdKM/L0qK3B83cIIvQXSLBklTxAjiR2m05WXqwrKwmQZrKlSWKy6iGhROH2zp/nlj3TO1XEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nP6pojE/; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58H8XhpA018300
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 12:43:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=k9z+tLwy73tIEM76xmcjOm76wTNihCeFsBC
-	dMYZqszw=; b=nP6pojE/v7li6XNVjOY9F37t5DSUV4Tmd9UbpQK7ki3QETLnCLq
-	PWsU6YHEJcJLROH3hMW9cvGhzvSt4qrI9s7DZc5cDHDGG0Z+rPPrTMrt+FnNftG0
-	MhTk5l7q8DVJG9wbY7E8IBXHNqj3Li4dVrFaXuTMBlEpMh9VJWC59wtPtjH8gZNk
-	u4VKgwjgi70YR5KkCZHwvc+QYuch1LDkck11R1mXk6luhpAqbq3FgjeOvCrrHV4Z
-	aVQtZsIw22TlxXGfjTcKT4g4ygXkE+bRHIvoIvN3NqHRvCzke6eTa5Y511zW2Jt1
-	1rztMDsNdZ9t8dsLyaanv3wViSXh1k63lQw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxwac5s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 12:43:18 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-783f069a122so79117736d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 05:43:18 -0700 (PDT)
+	s=arc-20240116; t=1758113250; c=relaxed/simple;
+	bh=OpFjrz8zqyAOuDDEavL83RJ8Trpvvw84g1TSZSRsq/o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sQL20+VVdA0B+ZEpjHvj5SU3WjqSBCSL1qhlxGaOiiJhymEKp21HHapnkNneIoUuEijdqgt/suiGx1KlriHMFlMaqbGaPa242bD4upW1zxH+f+CO/pekNO97nrxtRGE4yw/Ps75EVEWHMd8TgEAjvJ4ZG/i7avxXuHvk94mvJLM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=xl0pRa4B; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-b0787fc3008so937264166b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 05:47:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758113246; x=1758718046; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=OpFjrz8zqyAOuDDEavL83RJ8Trpvvw84g1TSZSRsq/o=;
+        b=xl0pRa4BIirS0C0dFTJ/dW+xk8U5t6HlNa1G/ySOuv+k0h/p7O4dLGjFTF/MGExHAW
+         TPzml1vDfNLBlCqwa/UBJwzmgP2Sdy83nOUA8zBHQtqIazy0D2PaM2A3RPhLlXcr/BKr
+         DG2HJ6bFsq2b6395UWCEjRYKyqmw0xFNcBzKYnfxRYQbd0uyglQZ98AtCHVCL1qQm3gz
+         tiTvJPReFqvyGJKGAOmnPEd4bnpdA+9+pFXcclg3XCyYKXe+SiAH4Jnl5J28WPE5DEUs
+         n0IPqIvc4z9rDp835TH3OafrV66TqAtQBZeChXtqORbqLLoDXt4HWcy1vXkfPF6NX6fh
+         lpbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758112997; x=1758717797;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=k9z+tLwy73tIEM76xmcjOm76wTNihCeFsBCdMYZqszw=;
-        b=uJwkHbuzmotp+I1vtMpNDYQyOQjc4EHm0asNY1gDr8dEJMDk+fpf3sR8L/PaD68/jf
-         VWTwIOerLZASYs+6n59TwKbjuwntnv5IVxQ6PztW0Wg+p3V4ppm3hvOUKl5fJoXKSNvb
-         o5JCTvhJO2p13iKYnpZJgtTHc2351rPMuP/cteck2vgQ+k81rJNmQcAprEE26vwi6jQe
-         wAJiwU5IDqk/JpGCpOduOP8QYdVBg13IT7GClPmnlQWjFZpVeVozP5BNZyAjCMiX+W15
-         8axVnYT+oKPOcF/VkVP/p/f6A0sS6xUg73fI6lpBBG2ef2hhZEvCVET1rpcemmaw0dY/
-         f/nw==
-X-Forwarded-Encrypted: i=1; AJvYcCXGq5lazKpcIWdOG+Fajc5C3h7AM5X9E5/sEFQQZ8z5S6OEpwYXnDx1c4MJ66XVfGlQGBNVVyvo56hqcoMh@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywaz0LNl4Zcu5sYnm6/2FsJUCpbrIMp2qaqtwHRJtbrBCcgOzBY
-	GQCZ/ozeY/3IPrQ+052xPBIY4X1a66GSa6cpFqCYPfA00nLv49mdxAZzWHWBTUfCuSbuFlPE4mF
-	dWElRfT8oV8DnJWh6nUaWqVvo2mMbzn68ymPHzSJ0IgzDDZhEzFgxhAOAoeY6i52B5c7R
-X-Gm-Gg: ASbGncunWdpjAsft69bqOt0LXc+irYkrmLrblGs04Udg+vjySXBN9Ms8pmFmxtoA75t
-	vA1X6m6R1WKK0O22dncYjW0LdxgbPfLDkRnRx8XEf0RVNNu9fkewNjnxnm1vsqGOhnrAoxkVwGi
-	XkgPYpNfLUja+y64MlNqJfuMz943MqlMZ4fGpNqmngTFKUPR+rJ6Go+FGBQBwR/GSaUbcB1tKXF
-	mCXDPQlD7pzz/1ihNcqlLzEuS841z9m5y8RuAwWHz0hxQbyNnfFxTEnoCKdxOAf8CyW0NhRZHqq
-	cN/fVkRK6za5j60v0Vl30RepE5ZBTloTEAsJBMsYVlEmxN94YARAxXAWhQsMrs04nSF2zfgDkwM
-	=
-X-Received: by 2002:a05:6214:4e01:b0:78e:f843:e946 with SMTP id 6a1803df08f44-78ef843f609mr13785196d6.18.1758112996538;
-        Wed, 17 Sep 2025 05:43:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IELljfmECKu32zNDPwj9ZBwm7G4s6/ARtKvGww6liQ0R5vbGuh0ED7c/QnHn3Y9lXKYu42Icg==
-X-Received: by 2002:a05:6214:4e01:b0:78e:f843:e946 with SMTP id 6a1803df08f44-78ef843f609mr13784786d6.18.1758112995894;
-        Wed, 17 Sep 2025 05:43:15 -0700 (PDT)
-Received: from QCOM-eG0v1AUPpu.qualcomm.com ([2a01:e0a:82c:5f0:81ce:8337:616d:c2d5])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46137930274sm35251035e9.6.2025.09.17.05.43.14
+        d=1e100.net; s=20230601; t=1758113246; x=1758718046;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OpFjrz8zqyAOuDDEavL83RJ8Trpvvw84g1TSZSRsq/o=;
+        b=oQuWDsZAfO3jaXi1yqI8XFHzqx9Saao0YJ+TzL9L/itk+j6p6gBJsvVfqKofpFE3as
+         ibGGMVUr4hweDzFtNV4Gj7ZtcJLZJjpfNTwWEP8WdiI6AaCDCwIDxH9FmXt/Ec5REVDG
+         7dH0BvIrHmHS8zgyVx0b3CJTDoi1FZVJa4OLO0B2MlgWwS5zOBjg86sWaF1wKFNEn+JW
+         bqiahN+QvXEv3+zxfr0HCT0/54fCXZad82xD3Upsx8MGvz0ADt5RSBB48MPYSqMdSlk1
+         pk11ExYggAwi/FX8BbqrA1QM/8G0liQt+dkJp6H24lIFR8upgrqHLtAgIPxkJb2dMwuJ
+         nj6A==
+X-Forwarded-Encrypted: i=1; AJvYcCVmyRMBPdV225lG3UAIcCt2+ek4MVzXYwR98GujWw5pb2X2SCWhrpmzCOg+WxnLpEnv7tsIgAtIY1FKUfBr@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuS+7pmgQ2Kwfam2S9JRflic2p5DyYOC3Uq6fcIuADt+lyJLUM
+	ZfuPD8ITXV3QK/pmrJ56XTzvNrtLaCjJLvVhBfOjsNvSYdWcOAyjVtJOmQwSxvr9160=
+X-Gm-Gg: ASbGncvQQ6LeyOc/s6049VrCDrcvG5KVTAyWHTBUPjmgbJxBUysZGFn6dQk4IpsXDhg
+	oKCbBSWk24N4GJ9ECcgTca01lssSINP+LYFz2LFls8wSkTb2vVhsTJnrHtAYbpeCphv7xZqbibb
+	l/yPl6D9KBnfTsuxNVfBSQkmlpdZvM+VAJP8/ny/CVh9B4mrRLWzRDd4OD6QCRs1duk3OGJRYNz
+	R2kgdLVWXE345AoHTP0WfJlN95y6e1N07pQESxmqrsoQlowG77bAcLiCGMSlD57axZpAFSXlbtl
+	m9sEtIfFdsSPvnPKz+2W7PEnrzFayn35SjE7zouGxQJFPp8u3lapDXthdIIdHCVip5LMFQ56jI1
+	WQvozKYxbVh33b4ai87nsWJ40tkM=
+X-Google-Smtp-Source: AGHT+IHgG+feaLFS5lYK61xigE0As4f8SIEZukBQyUiZyyvMqVLGwJC7y1Bl5VWs3fMe9SZIDZZJTw==
+X-Received: by 2002:a17:906:f591:b0:b07:c905:af33 with SMTP id a640c23a62f3a-b1bc02f669dmr228527266b.65.1758113246285;
+        Wed, 17 Sep 2025 05:47:26 -0700 (PDT)
+Received: from localhost ([2a02:8071:b783:6940:36f3:9aff:fec2:7e46])
+        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-b07b30da289sm1339567666b.17.2025.09.17.05.47.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 17 Sep 2025 05:43:14 -0700 (PDT)
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-To: bryan.odonoghue@linaro.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vladimir.zapolskiy@linaro.org,
-        Loic Poulain <loic.poulain@oss.qualcomm.com>
-Subject: [PATCH] media: qcom: camss: vfe: Fix BPL alignment for QCM2290
-Date: Wed, 17 Sep 2025 14:43:12 +0200
-Message-Id: <20250917124312.675996-1-loic.poulain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        Wed, 17 Sep 2025 05:47:25 -0700 (PDT)
+Date: Wed, 17 Sep 2025 14:47:22 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc: Andy Shevchenko <andriy.shevchenko@intel.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com, 
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org, 
+	srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org, 
+	krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
+	kernel@collabora.com, wenst@chromium.org, casey.connolly@linaro.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
+References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
+ <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
+ <aMlnp4x-1MUoModr@smile.fi.intel.com>
+ <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
+ <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=HbIUTjE8 c=1 sm=1 tr=0 ts=68caace6 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=xqWC_Br6kY4A:10 a=yJojWOMRYYMA:10
- a=EUspDBNiAAAA:8 a=gZ4aIBoJpEVIEF-KsNAA:9 a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX9YK+ra6KxoO3
- yDkWS3mXWpRMiVFn8qXXIRqTYg90gCFGfabH54zmOaD9SAMP5RStr75ClrpoBzPnRu4GtGVZ8qD
- VQcQEO+A6vjjIh0z0AeAnb7jlT2cXoGN1Wk6OHp8Z4UIka6zZ1PXWG58VpEKffedSOGuAb/J8jS
- VCuL0NFfGnhl7PMJAYnjSTbkZMAA0kKQNf4Pmu3r1b420d2p5KECdhPjM6W1jhL7n3YcupJUesT
- 6erk1SwYWmdwZvWCAQae+Fb5O32IaeWiZIAE0h55+zuj6UfkvxqjYE0no/wdCv0i225SSRqJK9E
- UQmpZ+dBkyLIac5c34EUXxG/h4j5mRDAJUZv3RdU+/vJDx8RisBZGultnNkxPaMbuv7ZhnXvZPG
- LvwRC29I
-X-Proofpoint-GUID: W0g5M0tSUsYKtTq9WlYMIB6kBABsEPlV
-X-Proofpoint-ORIG-GUID: W0g5M0tSUsYKtTq9WlYMIB6kBABsEPlV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-17_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015
- adultscore=0 priorityscore=1501 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ah6qgcyytq6i6rrs"
+Content-Disposition: inline
+In-Reply-To: <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
 
-VFE-340 requires 8-byte alignment instead of 16-byte. This adjustment
-prevents image corruption/misaligment when padding is needed.
 
-Example: For SRGGB10_1X10/3280x2464, aligned BPL was 4112 instead of 4104
+--ah6qgcyytq6i6rrs
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+MIME-Version: 1.0
 
-Fixes: 9e89149a19ed ("media: qcom: camss: add support for QCM2290 camss")
-Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
----
- drivers/media/platform/qcom/camss/camss-vfe.c | 1 -
- 1 file changed, 1 deletion(-)
+Hello Andy,
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index ee08dbbddf88..dff8d0a1e8c2 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1989,7 +1989,6 @@ static int vfe_bpl_align(struct vfe_device *vfe)
- 	int ret = 8;
- 
- 	switch (vfe->camss->res->version) {
--	case CAMSS_2290:
- 	case CAMSS_7280:
- 	case CAMSS_8250:
- 	case CAMSS_8280XP:
--- 
-2.34.1
+On Tue, Sep 16, 2025 at 07:20:20PM +0300, Andy Shevchenko wrote:
+> On Tue, Sep 16, 2025 at 6:11=E2=80=AFPM Uwe Kleine-K=C3=B6nig
+> <u.kleine-koenig@baylibre.com> wrote:
+> > On Tue, Sep 16, 2025 at 04:35:35PM +0300, Andy Shevchenko wrote:
+> > > On Tue, Sep 16, 2025 at 03:24:56PM +0200, Uwe Kleine-K=C3=B6nig wrote:
+> > > > On Tue, Sep 16, 2025 at 10:44:40AM +0200, AngeloGioacchino Del Regn=
+o wrote:
+>=20
+> ...
+>=20
+> > > > > +MODULE_IMPORT_NS("SPMI");
+> > > >
+> > > > If it's exactly the files that #include <linux/spmi.h> should have =
+that
+> > > > namespace import, you can put the MODULE_IMPORT_NS into that header.
+> > >
+> > > Which makes anyone to import namespace even if they just want to use =
+some types
+> > > out of the header.
+> >
+> > Notice that I carefully formulated my suggestion to cope for this case.
+>=20
+> And I carefully answered.
 
+I tend to disagree. If that anyone only wants some type from the header
+but not the namespace, the if part of my statement isn't given any more.
+Still your reply felt like objection while logically it's not.
+
+> Your proposal won't prevent _other_ files to
+> use the same header in the future without needing a namespace to be
+> imported.
+
+Oh yes. But that's true for every change: If you change it further you
+have to cope for what is already there.
+
+> > > This is not good solution generally speaking. Also this will
+> > > diminish one of the purposes of _NS variants of MODULE*/EXPORT*, i.e.=
+ make it
+> > > invisible that some of the code may become an abuser of the API just =
+by someone
+> > > include the header (for a reason or by a mistake).
+> >
+> > Yeah, opinions differ. In my eyes it's quite elegant.
+>=20
+> It's not a pure opinion,
+
+That's your opinion :-)
+
+> it has a technical background that I
+> explained. The explicit usage of MODULE_IMPORT_NS() is better than
+> some header somewhere that might even be included by another and be
+> proxied to the code that doesn't need / want to have this namespace to
+> be present. Puting MODULE_IMPORT_NS() into a _header_ is a minefield
+> for the future.
+
+Well, for a deliberate abuser the hurdle to have to add the explicit
+MODULE_IMPORT_NS() isn't that big. And a mistaken abuser won't explode,
+just generate a few bytes overhead that can be fixed when noticed.
+
+In my opinion that is an ok cost for the added elegance.
+
+Best regards
+Uwe
+
+--ah6qgcyytq6i6rrs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjKrdcACgkQj4D7WH0S
+/k5EEgf8CdFx6+6iEV1AE4GeSJAKaBL6T9A2o7N08nLq8lg9b0873yxBoHXcU5fC
+aJjF55sEwR98xGntE7kk39pH49RCG8ugwvBfJUnq75LJiKU4gyhg9P3OPFnLShiJ
+I6m5bqGNDlAwq3dSuYSiDSr/4wi/Rq4mPKqRZoCT0WHQz9CWes6CdQPuRMSKYeJF
+5VvswQqZGx5s73s0oi9UinWZ1/t/tX8KTjVeEgkmosNDtXb8rSwQbmfIUqnuCv0m
+ZjvuFwKtei8Q90Ro1LSW+QP0R1bN1ydWluw6cGH65qE7Yqpb/P49Yupan3C0YEsr
+nJJjRh4HIIADYdzeEZWvvrOcN8LC8Q==
+=NvWc
+-----END PGP SIGNATURE-----
+
+--ah6qgcyytq6i6rrs--
 
