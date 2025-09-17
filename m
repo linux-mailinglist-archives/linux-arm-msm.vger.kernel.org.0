@@ -1,259 +1,227 @@
-Return-Path: <linux-arm-msm+bounces-73963-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73964-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9979AB80607
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:09:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F4045B80646
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:10:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 96CF2585EB1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:03:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4434F720132
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:04:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5EDAB3705AC;
-	Wed, 17 Sep 2025 15:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1C8EF32E749;
+	Wed, 17 Sep 2025 15:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZekiJBnx"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="NlgIVplc"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27C5F19CC0C;
-	Wed, 17 Sep 2025 15:00:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F026D32BC18
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 15:02:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758121246; cv=none; b=lEungVWkaZ50En2t61GbalJUwxPGY6tEnLFVt2s8oithE0VUufKAe/CiXt/B6psLOH7Lpsq+gX+wMB+bUmONnCy7/biftMLtQq5jqzKzP3Zuax+WY9Xl91lkX4YM8mSa5J+zjAphMKN8ch8RCrAA8Gv+k/AwKGHhgHHMzByjUAk=
+	t=1758121358; cv=none; b=gLFJcoyinDcRIKGFlDIfmkcHonY7hmI0ew5nKS3LtuN8GiKNUQDA2fhSnc4dimpwOAwCJ0Wsktazmi5Ps5cmIAfORlZ/mxCbmVy6H9TX5DZ2AZDS5Mc8FJy+GDYBLj/YeRKr3BCeJG56h6ODnH41NPgKiJ02w7h6U9s9NpYFhSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758121246; c=relaxed/simple;
-	bh=n8b7BCp5JPPR7LVBqJbWYtWx0G87/2qE/nO7QOyYb94=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=kEuj/AahQvjEcmpDbze5yOxObPJiAB1gQ0yNI4DTY6vMF0tFMejHFzd0S4CzCW34TZ+Cvy66rue6Yy3xenSmjsHj5glOejLtrVzyZd2s/BnMCu/dzznTOHRzV1tne8put9KFSP+dfn+NypdOcGwPYVsSkMUOKdHioBaGnWQIo8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZekiJBnx; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E83C4CEE7;
-	Wed, 17 Sep 2025 15:00:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758121245;
-	bh=n8b7BCp5JPPR7LVBqJbWYtWx0G87/2qE/nO7QOyYb94=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=ZekiJBnxnAXSJunQHScmVci1aFkwUH3Bh9u0Mmdtm6LfiGIzJiYiiyrRbVuPcDYEa
-	 4bmMB4DDPS7AFxpc/0yBbThk4WqvgYiBFFHbLHqF8j0CUowpoBjeiwVdh1SYCWko6j
-	 vQp5Zpuy34nWfdDsvgkhnb0pjbnps70A4bAC0ygbt/ipKVqlVSYcPuZ2d+DNBaqG/6
-	 isw3hIm43JafCd+wG7dw+Vfcm+160vOr80cswynjD94NMoapg8pp+tPArrjS266Ipf
-	 ZQPRjQ/akDXHsF8JEsIejtndCy/qZBHEbkVvk+BuL/6NuECBFhNm9uOlDEpZ8n3+LQ
-	 JriYcOrnbi1ww==
-Date: Wed, 17 Sep 2025 10:00:43 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1758121358; c=relaxed/simple;
+	bh=NK1NyMuEOj0ydYsGx4ZznjUDtoWvKqGQmTI9anPdlYg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IiaMaR7OuBIc/Jniwyjx6w4rF1j6m88JhyGJNa4K+zl0bnfPkeIUvpP61jiGywM8fZQ+P55t3hPWNa4snlUXd0E3a3mT939TlVm6c+4MGuSKWVeEMs/qGfXGSpXX/i+eLKj7T1dO2JLnVezeEiAWxtkBaOqaBPLNWQPU4r7ziAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=NlgIVplc; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-afcb78ead12so980925966b.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 08:02:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758121354; x=1758726154; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lIUjmKGGbQEJsCoFeZig1jDOJNxeqR+9vgxX7Gkos/k=;
+        b=NlgIVplccLGOuDvQmoD4tVOjPq2CsNCms1DDKVBojv/PLJ1rVg3DGM6XZkhVJnsYmV
+         ul8erHnVNPhBNr0BJIO+Os3+qzQpLhm9jyqF+GPasH/tz4iuaK3w3OTpS+U9lgOWA/iq
+         H8ycdarrSInpy3Q2CHPukpaJHnCWmfwZ1ORjaUJWA2aE8vOAWnCEYUo/HuZtzQt2GuCM
+         aOzkR1kl31hdOmKUf4OdjuV+k5MwtW2gDdtS51/9NJOjPdmwVgSYsRXZgWGY8H702CO6
+         qtIKva4qwKkhl0q5flGlrcJOiMLFDLZk+Y8SZ0QFs0zCJT1yu//wga1S0/8x1Ti7eGej
+         IuTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758121354; x=1758726154;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lIUjmKGGbQEJsCoFeZig1jDOJNxeqR+9vgxX7Gkos/k=;
+        b=JgETKnsyoGiHb71Je3fNIoxEyGU6Y5pYIKteqvUrnfR3PP1DXl6JrPwJNUQpcqaJiw
+         Xsc5jYriHHct5I5kYltx6YvP9AhI4w/EsIf/JwAhZuDrJum83Lek89cxiRXEIrN9T2Hl
+         pZbQKkjrvZ+Q+qPyliMzxK/LtAJW4Y1r3gwajwObs8Q1PrhIn2ruIP35N1OKYTghM6Le
+         EkDlSa8+JTCGsJKIfpDgGlFiqIlkQ5XK4n9S0jPYbaqYUvqCYKTCytLJSMfDSZYFZF9z
+         eYtc2PrGD1PZtbx/tTy85By9giRZ+SGV/7jE5uS9IIF/bzIb+gJxRWolFxkrekLyY0jG
+         +YIQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV3PfkKWW9r7G0jJ13XxoplSKFe2HjNYWfTRDJhkHyAYk63VkdWFGAPrJePMLtHwJhfalbkGng5FwUJv0v7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx95o6mlIcBKs9meCf/K5hhpXKWLc6KrrSxi4wwNYqK97BinHfV
+	7rQQpY2Y2BpVpJ4vi24zPQWxrvK56McSz5o7nt/Rimi4T3E1NGzyr7N4pG54GBRA/M8=
+X-Gm-Gg: ASbGncvk6mOPtEED7sy9XExxLyzrfAMIeOmHD6XA30rxVOY6x82Uasz/w/ZtBsApnMG
+	Eg8Tmuf2DPKqRY1FilqVmtCrXQas+x77fmmzeHwWeaU4MqOfLdo3VJm3ilH7sd89uC/2rx/ppsO
+	LiG+0Yf+PNYPuCa8ZsWVDWmsncFyf0jMwixPIu3Gt4HkT/YazXWB390lAiqV8hWBmWc+GvSd4D2
+	W2zCw+ky8gc3JPHnA36L/9iaZoatIG99lY+SeD++86wle9RXKunq5+KjK8PP08xOdwdGjn9V6aB
+	0mt6eIOhx+CuigWB5wZe79tMiNi5mPmBDVMEOK0TMqmX3yKe9/U+/Rc8j0wDGxkwEqGTMms5f2j
+	20kZ/dmk2T6LEhIFMVVgSzCwAMOu92ySz
+X-Google-Smtp-Source: AGHT+IH30uplY82utdrU9T7Dyp89uUZLy9OYpPpZfnqv2x2yCGVqH4bKpd1FnewjvmvV1dBnafhklA==
+X-Received: by 2002:a17:907:6ea4:b0:b04:85f2:d272 with SMTP id a640c23a62f3a-b1bb935d70fmr292343066b.49.1758121353549;
+        Wed, 17 Sep 2025 08:02:33 -0700 (PDT)
+Received: from [172.20.10.3] ([109.166.135.151])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b07b3347b90sm1362672466b.109.2025.09.17.08.02.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 17 Sep 2025 08:02:33 -0700 (PDT)
+Message-ID: <24d6a51d-f5f8-44d7-94cb-58b71ebf473a@linaro.org>
+Date: Wed, 17 Sep 2025 18:02:30 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>, 
- Monish Chunara <quic_mchunara@quicinc.com>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konradybcio@kernel.org>, kernel@oss.qualcomm.com, 
- Conor Dooley <conor+dt@kernel.org>, 
- Richard Cochran <richardcochran@gmail.com>, linux-i2c@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- Nirmesh Kumar Singh <quic_nkumarsi@quicinc.com>, 
- Sushrut Shree Trivedi <quic_sushruts@quicinc.com>, 
- Mohd Ayaan Anwar <quic_mohdayaa@quicinc.com>, netdev@vger.kernel.org, 
- Ulf Hansson <ulf.hansson@linaro.org>, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>, 
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, 
- Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>, 
- Vikash Garodia <vikash.garodia@oss.qualcomm.com>, 
- Bartosz Golaszewski <brgl@bgdev.pl>, linux-mmc@vger.kernel.org, 
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-In-Reply-To: <20250916-lemans-evk-bu-v6-0-62e6a9018df4@oss.qualcomm.com>
-References: <20250916-lemans-evk-bu-v6-0-62e6a9018df4@oss.qualcomm.com>
-Message-Id: <175812100719.2051822.15573385822403919775.robh@kernel.org>
-Subject: Re: [PATCH v6 00/10] arm64: dts: qcom: lemans-evk: Extend board
- support for additional peripherals
-
-
-On Tue, 16 Sep 2025 20:29:22 +0530, Wasim Nazir wrote:
-> This series extend support for additional peripherals on the Qualcomm
-> Lemans EVK board to enhance overall hardware functionality.
-> 
-> It includes:
->   - New peripherals like:
->     - I2C based devices like GPIO I/O expander and EEPROM.
->     - GPI (Generic Peripheral Interface) DMA controllers and QUPv3 controllers
->       for peripheral communication.
->     - PCIe HW with required regulators and PHYs.
->     - Remoteproc subsystems for supported DSPs.
->     - Iris video codec.
->     - First USB controller in device mode.
->     - SD card support on SDHC v5.
->     - Qca8081 2.5G Ethernet PHY.
-> 
-> Dependency:
->   - The ethernet PHY QCA8081 depends on CONFIG_QCA808X_PHY, without
->     which ethernet will not work.
-> 
-> ---
-> Changes in v6:
-> - Update commit message of patch 02/10 (v5) to reflect QUP interfaces and
->   its ports - Dmitry.
-> - Link to v5: https://lore.kernel.org/r/20250916-lemans-evk-bu-v5-0-53d7d206669d@oss.qualcomm.com
-> 
-> Changes in v5:
-> - Dropping these changes from the series, as they are already part of
->   linux-next:
->   - Audio change [1]
->   - MMC dt-bindings change 01/14 (v4)
->   - EEPROM dt-bindings change 05/14 (v4)
-> - Change bias to 'pull-up' for PCIe 'perst-pins' - Konrad.
-> - Link to v4: [2]
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20250822131902.1848802-1-mohammad.rafi.shaik@oss.qualcomm.com/
-> [2] https://lore.kernel.org/r/20250908-lemans-evk-bu-v4-0-5c319c696a7d@oss.qualcomm.com
-> 
-> Changes in v4:
-> - Move 'bus-width' property of SDHC to Board DT and also keep the width
->   to 4 bits - Dmitry/Konrad.
-> - Update commit text of eeprom bindings to describe the reason for the
->   change 05/14 (v3) - Dmitry.
-> - Bring all tags from v3.
-> - Link to v3: https://lore.kernel.org/r/20250904-lemans-evk-bu-v3-0-8bbaac1f25e8@oss.qualcomm.com
-> 
-> Changes in v3:
-> - Re-order QUP patch 05/13 (v2) to not break i2c node enablement in patch
->   03/13 (v2) - Dmitry.
-> - Update commit text for QUP patch to highlight which all clients each
->   QUP is accessing.
-> - Add dedicated compatible for Giantec EEPROM, because usage of generic
->   compatible "atmel,24c256" alone is not advised.
-> - Update commit text for EEPROM patch 04/13 (v2) to emphasize on EEPROM
->   enablement - Konrad.
-> - Put 'reg' property after 'compatible' in Expander - Konrad.
-> - Put 'pinctrl-names' after 'pinctrl-n' in PCIe - Konrad.
-> - SDHC:
->     - Update interconnect nodes with ICC_TAG macro - Konrad.
->     - Put new lines for each entry in interrupt-names, clock-names,
->       interconnect-names - Konrad.
->     - Put bias properties below drive-strength for consistency in
->       sdc-default-state - Konrad.
->     - Move 'bus-width' property to SOC DT - Konrad.
->     - Move 'no-mmc' and 'no-sdio' properties to board DT - Dmitry/Konrad.
-> - Add 'Reviewed-by' tag from Konrad [3] on Audio patch 13/13 (v2),
->   although the commit text is changed now.
-> - Link to v2: [4]
-> 
-> [3] https://lore.kernel.org/linux-arm-msm/b4b6678b-46dd-4f57-9c26-ff0e4108bf79@oss.qualcomm.com/
-> [4] https://lore.kernel.org/r/20250903-lemans-evk-bu-v2-0-bfa381bf8ba2@oss.qualcomm.com
-> 
-> Changes in v2:
-> - Split the patch 3/5 in v1 into separate patch per author - Bjorn.
-> - Use generic node names for expander - Krzysztof.
-> - Change video firmware to 16MB comapatible - Dmitry.
-> - SDHC:
->     - Arrange SDHCI-compatible alphanumerically - Dmitry.
->     - Move OPP table and power-domains to lemans.dtsi as these are
->       part of SoC.
->     - Move bus-width to board file - Dmitry.
->     - Change 'states' property to array in vreg_sdc and also re-arrange
->       the other properties.
-> - Remove the redundant snps,ps-speed property from the ethernet node as
->   the MAC is actually relying on PCS auto-negotiation to set its speed
->   (via ethqos_configure_sgmii called as part of mac_link_up).
-> - Refine commit text for audio patch - Bjorn.
-> - Link to v1: https://lore.kernel.org/r/20250826-lemans-evk-bu-v1-0-08016e0d3ce5@oss.qualcomm.com
-> 
-> ---
-> Krishna Kurapati (1):
->       arm64: dts: qcom: lemans-evk: Enable first USB controller in device mode
-> 
-> Mohd Ayaan Anwar (1):
->       arm64: dts: qcom: lemans-evk: Enable 2.5G Ethernet interface
-> 
-> Monish Chunara (3):
->       arm64: dts: qcom: lemans: Add SDHC controller and SDC pin configuration
->       arm64: dts: qcom: lemans-evk: Add EEPROM and nvmem layout
->       arm64: dts: qcom: lemans-evk: Enable SDHCI for SD Card
-> 
-> Nirmesh Kumar Singh (1):
->       arm64: dts: qcom: lemans-evk: Add TCA9534 I/O expander
-> 
-> Sushrut Shree Trivedi (1):
->       arm64: dts: qcom: lemans-evk: Enable PCIe support
-> 
-> Vikash Garodia (1):
->       arm64: dts: qcom: lemans-evk: Enable Iris video codec support
-> 
-> Viken Dadhaniya (1):
->       arm64: dts: qcom: lemans-evk: Enable GPI DMA and QUPv3 controllers
-> 
-> Wasim Nazir (1):
->       arm64: dts: qcom: lemans-evk: Enable remoteproc subsystems
-> 
->  arch/arm64/boot/dts/qcom/lemans-evk.dts | 365 ++++++++++++++++++++++++++++++++
->  arch/arm64/boot/dts/qcom/lemans.dtsi    |  92 ++++++++
->  2 files changed, 457 insertions(+)
-> ---
-> base-commit: c3067c2c38316c3ef013636c93daa285ee6aaa2e
-> change-id: 20250814-lemans-evk-bu-ec015ce4080e
-> 
-> Best regards,
-> --
-> Wasim Nazir <wasim.nazir@oss.qualcomm.com>
-> 
-> 
-> 
-
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: using specified base-commit c3067c2c38316c3ef013636c93daa285ee6aaa2e
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250916-lemans-evk-bu-v6-0-62e6a9018df4@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 11], [251, 15], [251, 18], [251, 19]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 11], [250, 15], [250, 18], [250, 19]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/sa8775p-ride.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 28], [251, 32], [251, 35], [251, 36]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/qcs9100-ride.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 28], [250, 32], [250, 35], [250, 36]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 11], [250, 15], [250, 18], [250, 19]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/qcs9100-ride-r3.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[250, 1], [250, 28], [250, 32], [250, 35], [250, 36]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 11], [251, 15], [251, 18], [251, 19]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/lemans-evk.dtb: displayport-controller@af54000 (qcom,sa8775p-dp): clocks: [[236, 1], [236, 11], [236, 15], [236, 18], [236, 19]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/sa8775p-ride-r3.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[251, 1], [251, 28], [251, 32], [251, 35], [251, 36]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/lemans-evk.dtb: displayport-controller@af5c000 (qcom,sa8775p-dp): clocks: [[236, 1], [236, 28], [236, 32], [236, 35], [236, 36]] is too short
-	from schema $id: http://devicetree.org/schemas/display/msm/dp-controller.yaml#
-arch/arm64/boot/dts/qcom/lemans-evk.dtb: ethernet@23040000 (qcom,sa8775p-ethqos): Unevaluated properties are not allowed ('interconnect-names', 'interconnects' were unexpected)
-	from schema $id: http://devicetree.org/schemas/net/qcom,ethqos.yaml#
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
+To: David Hildenbrand <david@redhat.com>, Thomas Gleixner
+ <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
+ <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
+ <87a52u9jyl.ffs@tglx> <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
+ <2bd45749-e483-45ea-9c55-74c5ba15b012@redhat.com> <87v7lh891c.ffs@tglx>
+ <95ff36c2-284a-46ba-984b-a3286402ebf8@redhat.com>
+From: Eugen Hristev <eugen.hristev@linaro.org>
+Content-Language: en-US
+In-Reply-To: <95ff36c2-284a-46ba-984b-a3286402ebf8@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
 
 
+On 9/17/25 17:46, David Hildenbrand wrote:
+> On 17.09.25 16:10, Thomas Gleixner wrote:
+>> On Wed, Sep 17 2025 at 09:16, David Hildenbrand wrote:
+>>> On 17.09.25 07:43, Eugen Hristev wrote:
+>>>> On 9/17/25 00:16, Thomas Gleixner wrote:
+>>>>> I pointed you to a solution for that and just because David does not
+>>>>> like it means that it's acceptable to fiddle in subsystems and expose
+>>>>> their carefully localized variables.
+>>>
+>>> It would have been great if we could have had that discussion in the
+>>> previous thread.
+>>
+>> Sorry. I was busy with other stuff and did not pay attention to that
+>> discussion.
+> 
+> I understand, I'm busy with too much stuff such that sometimes it might 
+> be good to interrupt me earlier: "David, nooo, you're all wrong"
+> 
+>>
+>>> Some other subsystem wants to have access to this information. I agree
+>>> that exposing these variables as r/w globally is not ideal.
+>>
+>> It's a nono in this case. We had bugs (long ago) where people fiddled
+>> with this stuff (I assume accidentally for my mental sanity sake) and
+>> caused really nasty to debug issues. C is a horrible language to
+>> encapsulate stuff properly as we all know.
+> 
+> Yeah, there is this ACCESS_PRIVATE stuff but it only works with structs 
+> and relies on sparse IIRC.
+> 
+>>
+>>> I raised the alternative of exposing areas or other information through
+>>> simple helper functions that kmemdump can just use to compose whatever
+>>> it needs to compose.
+>>>
+>>> Do we really need that .section thingy?
+>>
+>> The section thing is simple and straight forward as it just puts the
+>> annotated stuff into the section along with size and id and I definitely
+>> find that more palatable, than sprinkling random functions all over the
+>> place to register stuff.
+>>
+>> Sure, you can achieve the same thing with an accessor function. In case
+>> of nr_irqs there is already one: irq_get_nr_irqs(), but for places which
+> 
+> Right, the challenge really is that we want the memory range covered by 
+> that address, otherwise it would be easy.
+> 
+>> do not expose the information already for real functional reasons adding
+>> such helpers just for this coredump muck is really worse than having a
+>> clearly descriptive and obvious annotation which results in the section
+>> build.
+> 
+> Yeah, I'm mostly unhappy about the "#include <linux/kmemdump.h>" stuff.
+> 
+> Guess it would all feel less "kmemdump" specific if we would just have a 
+> generic way to tag/describe certain physical memory areas and kmemdump 
+> would simply make use of that.
 
+The idea was to make "kmemdump" exactly this generic way to tag/describe
+the memory.
+If we would call it differently , simply dump , would it be better ?
+e.g. include linux/dump.h
+and then DUMP(var, size) ?
+
+could we call it maybe MARK ? or TAG ?
+TAG_MEM(area, size)
+
+this would go to a separate section called .tagged_memory.
+
+Then anyone can walk through the section and collect the data.
+
+I am just coming up with ideas here.
+Could it be even part of mm.h instead of having a new header perhaps ?
+Then we won't need to include one more.
+
+> 
+> For example, wondering if it could come in handy to have an ordinary 
+> vmcoreinfo header contain this information as well?
+> 
+> Case in point, right now we do in crash_save_vmcoreinfo_init()
+> 
+> 	VMCOREINFO_SYMBOL_ARRAY(mem_section);
+> 	VMCOREINFO_LENGTH(mem_section, NR_SECTION_ROOTS);
+> 	VMCOREINFO_STRUCT_SIZE(mem_section);
+> 
+> And in kmemdump code we do
+> 
+> 	kmemdump_register_id(KMEMDUMP_ID_COREIMAGE_mem_section,
+> 			     (void *)&mem_section, sizeof(mem_section));
+> 
+> I guess both cases actually describe roughly the same information: An 
+> area with a given name.
+> 
+> Note 1: Wondering if sizeof(mem_section) is actually correct in the 
+> kmemdump case
+> 
+> Note 2: Wondering if kmemdump would also want the struct size, not just 
+> the area length.
+
+For kmemdump, right now, debugging without vmlinux symbols is rather
+impossible, so we have all that information from vmlinux.
+> 
+> (memblock alloc wrappers are a separate discussion)
+> 
+>>
+>> The charm of sections is that they don't neither extra code nor stubs or
+>> ifdeffery when a certain subsystem is disabled and therefore no
+>> information available.
+> 
+> Extra code is a very good point.
+> 
+>>
+>> I'm not insisting on sections, but having a table of 2k instead of
+>> hundred functions, stubs and whatever is definitely a win to me.
+> 
+> So far it looks like it's not that many, but of course, the question 
+> would be how it evolves.
+> 
 
 
