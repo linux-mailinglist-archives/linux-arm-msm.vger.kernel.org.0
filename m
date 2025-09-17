@@ -1,205 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-73867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73879-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6CDD7B7C9E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:06:28 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 48699B7D18C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:18:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCBA7171787
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 07:16:42 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 986927B70EA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 07:31:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D24BE29C32F;
-	Wed, 17 Sep 2025 07:16:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25C702F547D;
+	Wed, 17 Sep 2025 07:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="RwfhhQZ0"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Z9DwWrGg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0878326059D
-	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 07:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7CA2F60AC
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 07:32:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758093396; cv=none; b=Sge+94GuYLfj4RBcMvsqwtixyCDmaPQ5OggUtqfLKWcRvooCvlyMISpzZdxafoHc+lum6KAmEz1txySkVRvqS9/5oEV+7LQKRzqvu18ZxVqJCPWYoJJV2fHXJHcNYM5c2szl6zsvB2hUfQmeqk3zYqm4v5p2mZF6bBYspXg2+MY=
+	t=1758094376; cv=none; b=c16xRMQF/DAkJt9c6GfV2f4MZ6gqP+o3pUk/RTTwQYdeUy6M9E4GSGhuqIT/XFe28Wo2i26oQw2YINj7jjSLPj4GrEX+xxGsDj8pLI7/sutci447JqO8oofcoPgmGaTqLTjZ2NlsP79adkyeNz01EQoJ4lXmHw5NFEnmieMekhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758093396; c=relaxed/simple;
-	bh=T5zrGXefk5YqzH+xL7lyiCx6Qqp0h29OwnsxViUW03c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=T65u5A7QEQk6G6svNpaaF7ti0/sYSwKrfdkoivwsQlNBBOerVuZcIi2w2TbpxUbf7OCthR1/zIB9xOFNl4vUT9ggCKo+bVTUYz1YLz+VgzIs1cB1lxLFrGCWjxK/v5WNMn+F2c9TspCsgAPpRy1j9d5l/eIV8mz7AyQPGH1Aqbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=RwfhhQZ0; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1758093394;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=dVrVz1y1JTYA35iR89KO57gWYWUGvkIopfwpVXaBh+A=;
-	b=RwfhhQZ0nGYUBf/zLChUZ31fGuBHJ8Z4MVzNZGayr5OdngOfmrPQEwVB91dDc4NEjKHKB/
-	KOf6SCCd5HC/tVsgEKmEsU7Pjz42Sd+nmD8OsH34aEfwgeqN9rnHj0suwvydz/5jUvv0Zm
-	LISK7ZgwZ6hx1oK+mNnZwUYilPrqpJs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-X1rDn9phMTGEzUucmpPN6A-1; Wed, 17 Sep 2025 03:16:32 -0400
-X-MC-Unique: X1rDn9phMTGEzUucmpPN6A-1
-X-Mimecast-MFC-AGG-ID: X1rDn9phMTGEzUucmpPN6A_1758093391
-Received: by mail-wr1-f72.google.com with SMTP id ffacd0b85a97d-3eaed4aea75so2251575f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 00:16:32 -0700 (PDT)
+	s=arc-20240116; t=1758094376; c=relaxed/simple;
+	bh=4UuqKX3OB4C4vFgEAnd56vVvZ8U0LkURnxJegy0E2fU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Txrw3Ex01QjxjiOWvZfJyQIZ1dFX+0IhMP+jHEDcyd1E+0054gKJZ/Yj9nNJ5vQUsZE6j5GseIeTwREF1y0MS6YpjyC668t4ydpph0BUfjCozMKq4MVpDh20y8MTz59iZhp0Rv7kjPMeGGqq/RC0uKNBUsxtgt8/yOJCZTt+NRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Z9DwWrGg; arc=none smtp.client-ip=209.85.128.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-45cb5e5e71eso39582715e9.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 00:32:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758094372; x=1758699172; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=NssRIOM+Nk5TpF2zDpkYc0MvhVsky+7OBhV3Anr+sDk=;
+        b=Z9DwWrGgHKvonHOxR6rUMqawcDYv4n3gRUJtKpWVLxRenj6qh2XvNYPFKOKPS04JS/
+         7EL+IEL0qPmy1doiq89qtiUq+BMCwxGXIRJPWBpbkifaABG8C8EmN1ImBxOzfjvAFnS5
+         DBW5sheVhmatjb/Lk0dSSpIikQaDWEBh8Zh56iyvvR49y4b3ChXT03OxdFzalhHTZkqL
+         tM4h3QXpkjyUrNqS2wiTaFBfHKOFoWKksQ9VhnzTxnxxAqVGMJQsFuTPJaaG7G664wsQ
+         G6EhXlJJc7xmIXFGMVNa3wWKf1fXM7dJV0SLWgn+W3tacyQ1uX/X8MpshsZSGWpz3fIh
+         IgDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758093391; x=1758698191;
-        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
-         :from:references:cc:to:subject:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1758094372; x=1758699172;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dVrVz1y1JTYA35iR89KO57gWYWUGvkIopfwpVXaBh+A=;
-        b=VEEDd5xiwuBFcI3GpWQgzhz+InVj1lc5D1qmi/JScgriAuTg9lr/MShnMJ4ITIHWw8
-         5TdKq/VBAwrjuSwYym7dEhVNVnoRMOQcDsGfxSm+jp0Hvr6LHbAnSv/eG0WvLDvkrgiW
-         U78UdjzH0HkrCwssz44rvd6SpGguqBY3rN2RGL7iJHI6Hz8Qdrh3g5cz39X1OREMbMcO
-         IJsxlGrmos6a+FyFkiiBeb8kyy4aPnffqMPdM8drzO863jscbiTP/g2iK3XjDIx6eQmf
-         wQYlrlD8ZT6DXiQ2xNqpp0Z7sgzb6mdyJQRwbt+5fu1bIWxcCnY7XOdMnwKSZ7SZxy9a
-         1jQQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWjXku6dyQoyOHQXDEPL58eVJZrNWn4739Zx11mVIBExwPGzu/TuaDUwh3yw87DvLzz5U5yh5H59sdRTaEE@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrjCy9pbMMaZ9L98NrMs4/cUsJCbZI+ggXr+c/M6juND8OE2+k
-	PDcWPZQgEkIimTkVhTzLz8WlF8VgZaTf8hPAzOFmgxCpzRfuyi3SNGGItHIV5NAlJwUJN45RU7J
-	s0mZ7Uj+zDMVjJbCo2DvXsRkS89G+kion5EStC1oC5KirCGCGLyo0kBpfGH1ZOG437Zg=
-X-Gm-Gg: ASbGncu1K3eo7dds6WAcKXQypweMwvAHEWa2rsApa7Ot18Qp0xL2KaYbOjnRoYrfWax
-	9cGwc7ZEIv2K2APPnhCoRWQoUQG1LMhP39O7lJB9Afc9CokaJh3B4jilD+LTuTOWx5vVwnGSlQe
-	dykg/eW5KMefu0iQm/JETaG0qcp7KwJxpylU9eqdVvFF+HZgN5ZfAAn5O7SpGrBotcHEk4AKVx9
-	1IH2rKnODM5zvf/YZiNZUR74sb9nwOxU/MhbLGieY4vnRmpiTGqI1MqMq9//7CTNFyFMbhsAL9Z
-	q10qu/UI3DlHUV+z7BiPWWQMtF/TUhrsKdwfMxi4TGwJ6uYPzTBcDBvNDxa2SeB1rzkWw3+8usC
-	aMJkYunwshFq1j4Q/jKby1feyoCwKSN9GIluxP+Q7l1yW2vl5FF8RVuIX51047xtw
-X-Received: by 2002:a05:6000:24c5:b0:3e8:b4cb:c3a0 with SMTP id ffacd0b85a97d-3ecdf9afe4amr737088f8f.8.1758093391105;
-        Wed, 17 Sep 2025 00:16:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE6KvkUbAw/hWHVpyZFeQHd7+eZojTjephumHug7ngWtVuZzWRraD7sIx3LIE+G0iYk+zOhBg==
-X-Received: by 2002:a05:6000:24c5:b0:3e8:b4cb:c3a0 with SMTP id ffacd0b85a97d-3ecdf9afe4amr737058f8f.8.1758093390674;
-        Wed, 17 Sep 2025 00:16:30 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f27:6d00:7b96:afc9:83d0:5bd? (p200300d82f276d007b96afc983d005bd.dip0.t-ipconnect.de. [2003:d8:2f27:6d00:7b96:afc9:83d0:5bd])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46139122a8fsm23710285e9.7.2025.09.17.00.16.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 17 Sep 2025 00:16:30 -0700 (PDT)
-Message-ID: <2bd45749-e483-45ea-9c55-74c5ba15b012@redhat.com>
-Date: Wed, 17 Sep 2025 09:16:28 +0200
+        bh=NssRIOM+Nk5TpF2zDpkYc0MvhVsky+7OBhV3Anr+sDk=;
+        b=I5FF5Lxtz+9PLs0pFOVMBhTtuPwntptq5x7flyuTy0b0EubjDu0BG2+YWe1Au6+/Zk
+         D3ORmHTa91ZmHu/WIzr/x4ZmUdxeK8v6aRw8EaZK5vfmDUHNtEHmjscChMqyNz84OkIK
+         RArSCQBeqvBq7gfMaJ503qwaxAwr/6Z3KHePKY3BmZrO+cFs7qJfkDN0ygGsg7NKdtSh
+         DPax0WrAe6dzmWfnUpnE/X9jgJzjaNodgDF19SAZI4A9MTBCZ6OkkDnXYyieQe5Yvzfa
+         +etDpE9cmMCSbAy2Nq0YVNuE6rqv4RuNlN3clg2G9f/ofWZ+7ZrlGdinNo/jyqY570W+
+         x3tQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVPFkLisbJ4EPjjOp0VyTznK6KNmp05Vx4X09Up/PyToYYQx8H/ZBwgVaRaK5YbO1k3D/bbLPpAXsXMVVU7@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7xYJX7+JrtDz8I6bCMI7Wcoyosxqbs1vXNiQ2b3/e0Wx9U+RM
+	wMf6WpfyJCDlPUn3DJ2Q2WDDnUqFB/Gjz+ygMNwRxN7ND/ZSDd/79AAFl0egfR8nnSk=
+X-Gm-Gg: ASbGncvSOU2wKIer7lD2G1RlYuZ8pVWZi5dWBm+nnUyiRg7LNiQ6mrVe/mN/tOS1gWp
+	QMr2BjRc+OsUCojzIzt3BYOTDBeW8JBSUwcLkofIn+ZjvvRkN8P9WkiFan3ybYbLA65YbhwLjLu
+	0sIBArdNMMAY1y+/Z4q9yKoIYZ/bWEP0cJsLOOCtCrEiaJQfjr0ES2M2WTCzkH2jWE4wZDTSDyx
+	gdIuurSO0byXgdOG7obqtaB9oNFsu5RlTC1/Gw2+m7I1hp4JVQk0A+18EA6ZHv0Up86Tu0EoXny
+	0xr9/2FgmYe687cfaOaLqtUXdjG3sDxDknm/yJtDVdXHPyR3DtWYfQNoEQpXfp+TTs1K8gOO2C9
+	fOtlpFAtTbg8FHKWHoWj7Uh55Qs5b
+X-Google-Smtp-Source: AGHT+IGE3KGGsL03Vf5Ls5zNFSXdigUvJnu+gvn1xbZ1dzKAezrUvG4htWCcEVpLa4a+HvmsvGC2Kw==
+X-Received: by 2002:a05:600c:5248:b0:45b:8adf:cf2b with SMTP id 5b1f17b1804b1-46206099ddamr9334455e9.21.1758094372096;
+        Wed, 17 Sep 2025 00:32:52 -0700 (PDT)
+Received: from orion.home ([2a02:c7c:7259:a00:75ac:2ea2:dfdc:89c7])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4613eb27f25sm25442035e9.23.2025.09.17.00.32.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Sep 2025 00:32:51 -0700 (PDT)
+From: Alexey Klimov <alexey.klimov@linaro.org>
+Subject: [PATCH v3 0/3] Add raw OPUS codec support for compress offload
+Date: Wed, 17 Sep 2025 08:32:49 +0100
+Message-Id: <20250917-opus_codec_rfc_v1-v3-0-7737ad40132e@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
-To: Eugen Hristev <eugen.hristev@linaro.org>,
- Thomas Gleixner <tglx@linutronix.de>, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
- pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, mhocko@suse.com
-Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
- <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
- <87a52u9jyl.ffs@tglx> <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- qIws/H2t
-In-Reply-To: <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACFkymgC/32OywrCMBBFf6VkbWWSNGnqyv8QKXm2AWlKokUp/
+ XfTblRQYTb3wjl3ZpRs9DahQzGjaCeffBhyoLsC6V4OnS29yRkRIAw45mUYb6nVwVjdRqfbCZe
+ KgzIUhGioQpkbo3X+vjlP55x7n64hPraJCa/tP1s+KLGrQYGssKzhePGDjGEfYrfaN1QQ+IWyy
+ jBdMw6C8Xd0/WQir/UGf1WQrKDMKc4oN46rD8WyLE9PUH3sMQEAAA==
+X-Change-ID: 20250616-opus_codec_rfc_v1-b60bd308893b
+To: Vinod Koul <vkoul@kernel.org>, Jaroslav Kysela <perex@perex.cz>, 
+ Takashi Iwai <tiwai@suse.com>, Srinivas Kandagatla <srini@kernel.org>, 
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>
+Cc: Patrick Lai <plai@qti.qualcomm.com>, 
+ Annemarie Porter <annemari@quicinc.com>, 
+ srinivas.kandagatla@oss.qualcomm.com, linux-sound@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ kernel@oss.qualcomm.com, Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>, 
+ Alexey Klimov <alexey.klimov@linaro.org>, 
+ Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
+X-Mailer: b4 0.14.2
 
-On 17.09.25 07:43, Eugen Hristev wrote:
-> 
-> 
-> On 9/17/25 00:16, Thomas Gleixner wrote:
->> On Tue, Sep 16 2025 at 23:10, Thomas Gleixner wrote:
->>> On Fri, Sep 12 2025 at 18:08, Eugen Hristev wrote:
->>>> nr_irqs is required for debugging the kernel, and needs to be
->>>> accessible for kmemdump into vmcoreinfo.
->>>
->>> That's a patently bad idea.
->>>
->>> Care to grep how many instances of 'nr_irqs' variables are in the
->>> kernel?
->>>
->>> That name is way too generic to be made global.
->>
->> Aside of that there is _ZERO_ justification to expose variables globaly,
->> which have been made file local with a lot of effort in the past.
->>
->> I pointed you to a solution for that and just because David does not
->> like it means that it's acceptable to fiddle in subsystems and expose
->> their carefully localized variables.
+This series adds support in kernel to recognise raw (or plain) OPUS
+codec playback for compress offloading. At this point this series
+doesn't deal with OPUS packets packed in any kind of containers (OGG or
+others) and focuses on adding missing bits for pure OPUS packets.
 
-It would have been great if we could have had that discussion in the 
-previous thread.
+The second patch adds its usage in Qualcomm Audio DSP code. To correctly
+recognise raw OPUS packets by qdsp6, each packets needs to be prepended
+with 4-bytes field that contains length of a raw OPUS packet.
+It is expected to be useful for usecases when OPUS packets are streamed
+over network and they are not encapsulated in a container. Userspace
+application that will use the compress API has to manually add such
+4-bytes long field to each OPUS packet.
 
-I didn't like what I saw in v2. In particular, having subsystems fiddle 
-with kmemdump specifics.
+This is tested on sm8750-mtp. It is expected that next hardware revisions
+will also support raw OPUS codec offloading.
 
-I prefer if we can find a way to not have subsystems to that.
+Dependencies are:
+-- hardware with DSP that supports decoding OPUS packets (>= Qualcomm sm8750);
+-- adsp fastrpc;
+-- explicitly setting format in sm8750 soundcard driver
+https://lore.kernel.org/linux-sound/20250911154340.2798304-1-alexey.klimov@linaro.org/
+-- running adsprpcd tool with support for Audio PD and DSP libraries
+loading support (or its alternative);
+-- tinycompress fcplay tool that will prepare raw opus packets and
+do the required addition of length field;
+-- mfc module in topology compress-playback path, that module is
+expected to parse channel mapping and do the required things to
+map streams/channels to physically-present output channels on backend.
 
->>
-> 
-> I agree. I explained the solution to David. He wanted to un-static
-> everything. I disagreed.
+The userspace tinycompress tool with support for raw OPUS compress
+playback is located here:
+https://github.com/laklimov/tinycompress_opus
+branch: opus_v3_workinprogress
 
-Some other subsystem wants to have access to this information. I agree 
-that exposing these variables as r/w globally is not ideal.
+The userspace tool is not expected that it is ready and still needs
+some work, for instance recognition that it runs on Qualcomm hardware.
+More like working PoC.
 
-I raised the alternative of exposing areas or other information through 
-simple helper functions that kmemdump can just use to compose whatever 
-it needs to compose.
+Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+---
+Changes in v3:
+- back to define version member as __u8 in snd_dec_opus and reading it in audioreach_set_compr_media_format()
+as suggested by Takashi;
+- new patch, bumping compress API minor version as suggested by Vinod and Takashi;
+- Link to v2: https://lore.kernel.org/r/20250910-opus_codec_rfc_v1-v2-0-35fb6536df6b@linaro.org
 
-Do we really need that .section thingy?
+Changes in v2 (as suggested by Vinod):
+- opus decoder struct: switch version memeber to be union to allow reading it
+ as a byte or two 4-bits fields;
+- audioreach_set_compr_media_format: read version byte.
+- Link to v1: https://lore.kernel.org/r/20250820-opus_codec_rfc_v1-v1-0-54d5c7560856@linaro.org
 
+Changes since RFC (mostly as suggetsed by Srini):
+- added struct snd_dec_opus_ch_map to struct snd_dec_opus;
+- changed tags;
+- reworked comments for struct snd_dec_opus;
+In qcom audioreach patch:
+- corrected how {stream_count,coupled_count} is ejected from mcfg->codec;
+- stopped dealing with channel mapping parsing (this is internal struct for
+  decoder on audio DSP side);
+- used sizeof(*opus_cfg) for payload size;
+Tinycompress/fcplay:
+- small updates to match kernel structs.
+- Link to RFC: https://lore.kernel.org/r/20250616-opus_codec_rfc_v1-v1-0-1f70b0a41a70@linaro.org
+
+---
+Alexey Klimov (3):
+      ALSA: compress: add raw opus codec define and opus decoder structs
+      ALSA: compress_offload: increase SNDRV_COMPRESS_VERSION minor version by 1
+      ASoC: qcom: qdsp6/audioreach: add support for offloading raw opus playback
+
+ include/uapi/sound/compress_offload.h |  2 +-
+ include/uapi/sound/compress_params.h  | 43 ++++++++++++++++++++++++++++++++++-
+ sound/soc/qcom/qdsp6/audioreach.c     | 27 ++++++++++++++++++++++
+ sound/soc/qcom/qdsp6/audioreach.h     | 17 ++++++++++++++
+ sound/soc/qcom/qdsp6/q6apm-dai.c      |  3 ++-
+ sound/soc/qcom/qdsp6/q6apm.c          |  3 +++
+ 6 files changed, 92 insertions(+), 3 deletions(-)
+---
+base-commit: 05af764719214d6568adb55c8749dec295228da8
+change-id: 20250616-opus_codec_rfc_v1-b60bd308893b
+
+Best regards,
 -- 
-Cheers
-
-David / dhildenb
+Alexey Klimov <alexey.klimov@linaro.org>
 
 
