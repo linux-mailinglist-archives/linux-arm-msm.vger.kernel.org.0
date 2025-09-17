@@ -1,171 +1,224 @@
-Return-Path: <linux-arm-msm+bounces-73960-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-73961-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E036B8055F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:02:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76FF7B805E0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 17:06:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 177861C814CA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 14:58:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4B1FD3B9AD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 17 Sep 2025 15:01:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 89DB4330D50;
-	Wed, 17 Sep 2025 14:55:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5318A333AB5;
+	Wed, 17 Sep 2025 14:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b="Kr+SmylE"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="rcgaLz0B"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sm24.hosting.reg.ru (sm24.hosting.reg.ru [31.31.198.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082AA32E756;
-	Wed, 17 Sep 2025 14:55:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=31.31.198.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C42BE335927
+	for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 14:57:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758120911; cv=none; b=MY9rUnCZkWHc7K+nPqWJmorNEwh0icOJ0klTETqEmIpccJmWELO07u5cND6VD42SdckNOytD5I2tZBQQ83rZ1smFJbfY4O3xVmYwv1WZLWaCTQElEeKBT96COtyBFEHQ3t/044ujcU+V+K7mfNuybGqcQROesKKXK8IIDLtWse8=
+	t=1758121078; cv=none; b=GmBScWq56F3w79ZUa/icCPtU1lCkgU1yY/pZ2CkoKz+dCvMQgjQQz3mOB9j5J16umic03MmQ48ts147u1aItFRwk3sJHN0iLgfct+GtgwTW8sxhPlJ7URoN8wbJdvcGxsyKdh6OTyMQ9SxwJq2W0DEKrjhhhwVwbWJ1hK9pA79U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758120911; c=relaxed/simple;
-	bh=nJA8GDTU8VBse67HgpuXXx2PRQZBrnDPF8MjpbI7u/A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IBXocLnhHSG5ucUTx0fb3Mzi5C4HZaFeUbz6lKeSWxB4LazCLsqsNecg0TX4eTxpnEhJObOzBFVG1GtwFnv4cEMZZQUuQGdXglQzyx/Bg4fOFKkhFb0jpifxV1SZ9L8sgVD4vyxgWk/oLiw4NmhBRjbMfH5ir4YB8t/Le1xvEcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru; spf=none smtp.mailfrom=minlexx.ru; dkim=pass (1024-bit key) header.d=minlexx.ru header.i=@minlexx.ru header.b=Kr+SmylE; arc=none smtp.client-ip=31.31.198.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=minlexx.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=minlexx.ru
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=minlexx.ru;
-	s=dkim; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:References:
-	Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:Content-ID:
-	Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
-	:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
-	List-Post:List-Owner:List-Archive;
-	bh=lr//MT3EvIZWtAnrp9YlJUSITHvIatxfg7SqJqzZ7kk=; b=Kr+SmylEfF+MJMWOSPBbWNMKYr
-	yuRnejpuyr871uTaZv+METHqtUEcbcuqSEt8SHgBDulqYpcCrUkcDLpggI7zl90F3tRG8sxxFURnm
-	FKNNlGCuv5646s7BXRtrcNLxq6lGOqC1WF48duEkhJLnS15I7N1ESnSVMhcBF0k/ccCs=;
-Received: 
-	by sm24.hosting.reg.ru with esmtpsa (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(envelope-from <alexeymin@minlexx.ru>)
-	id 1uytYd-000000000nG-2HQ1;
-	Wed, 17 Sep 2025 17:54:55 +0300
-Message-ID: <ac2d419d-a1b4-4b3f-a07a-4f5d047901aa@minlexx.ru>
-Date: Wed, 17 Sep 2025 17:54:55 +0300
+	s=arc-20240116; t=1758121078; c=relaxed/simple;
+	bh=0lm6it3QlZzl73ho+O20bHsFQIQ20Ploay6fb04E/yE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NwXYzW+IPrOxefRx+ELS7iVh4hhw9siyqYnmDRXjHa6pwgsjBBGXc18ofOyAPyi9RrBPi3JTcpVEWyuoTOdzHHiqCfGPvOFkqeg8IjEF2zcXHtse8rIxpGcRsc19hu7mAapBslQj2NMmRpRt0clnPhbopB+lK+XjFyuIStBoLaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=rcgaLz0B; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45dd7b15a64so9804775e9.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 07:57:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758121074; x=1758725874; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=VNJiPyXScWAskCoPGIAYsTwf0lJxfeavCsADGNiPscs=;
+        b=rcgaLz0BHQKyc7WirFsDkS0I9eFiWcE8R3p9tGxUZssQa23U++uWvHGBwe+9aK1Gd+
+         KbjTzolnBBfjOmknuthuVHMKhAoQr9blURtBJGfXrxeVx3qfRSCQqUVTyZ0n8yGeWnmo
+         BNNMd/bg06wV8GQO7lgfHo4qIEgy5MjHWO+3fLtpbcFKGxO+LfMQ6RSY0AtXod85IIhY
+         NhgZdbd7v2PJZSyQFFE4SlJyB4xtaHRAKi7YyTlNT3JifO9V9uIuOgGX3pDhyWNTz7xz
+         NAAUrOHghLsRT5yDbw13IL+A4pFunU9hvpWX+ANE395o4Ak5ugY4ciw1b8iigs5K0dKV
+         H1tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758121074; x=1758725874;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VNJiPyXScWAskCoPGIAYsTwf0lJxfeavCsADGNiPscs=;
+        b=wSRP9s8X2/JDURdouZL57SfHGUUd+k5PGNrIMlWrDGhnnOUZX85WNR67mlycVfpVDN
+         JVEfARRmt1x+hTHNT72B4sV4nIsmSrxlfk0URO1q0B3UEve9RQMoj0BV6kmNThjHRwQD
+         svQaPUoG8ClYUzEAJm7oSCuhPJI98SX2Wk5vETIVKZW+cAV+f/jQoUlck4G1feX62Uum
+         JeHigRMf6zaC2Lnxu7+cGgvhq+0aebrKz2ihmQeLRIGlKWAyqd8TCXovW+JB183jPSgt
+         wK4VsvHD9BO3oaCsNmMbI0n57QasGd4ygFiwayZ+vNznMnosl3dktdhYgKyweslS+B9b
+         NuhQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXW4hAIesmF4mDTraF/yM5n5ypf5FXDckEnKAuuM6eQqYM/JT249mdsSxy5mQoXvKK+g21f5PNfh7kC9w8h@vger.kernel.org
+X-Gm-Message-State: AOJu0YzI+fljBRVx4zLZMmI/CEp8gn/9dcPhJMJB0QANwhKr2SHVSrKO
+	WNYakXZMuDuTomVcD1U6QV4kKqiFPy1HxvZCmh7NHDm5JOlaY26OdbepWWmLB7GTSq8=
+X-Gm-Gg: ASbGncs40AwJpG6jyR2bTGLAwsLxlHDlN/LTpFHaCOTrwWqNJvMSLuCUKodRgoSfV19
+	szCwEiRI0mff0qav/71XyXuAzl5ZUiov3+pZ8qPX/BKsY2PVjM6V8LeBnmpq1+aAtlvbN2D5m4I
+	g6B1eHuQKw9WTH3KdqlCCHA1G+s24lEbJ3p/FxWqxdxf0cuffdsDx3TixFUV14AjkrADo4B+VuG
+	UBtnhVWFKgMuFp9xxw5B2xMhs5Frhi7wDqlNqvTbO527umcIlmn5FXZifMisDWY1BCzmnJN1QXl
+	3XsatlSg4bItmMR4V2fOiQzxK24pR+PmTGv9ArAHuw3225xZJEt/VsRbg+nxTjUFxk9FW86aqY7
+	36i4w4emPmKyfbXuUL0s22mkfxPRUIIYY5TETla1xZjSo2XBDawZz8/rDm0YuDTD1
+X-Google-Smtp-Source: AGHT+IHaJ8RLGRWJjGkWj3mOlv4MrMyQtredyYklN46lH/3oMjKK5GoSCinEm44gnypkzxXye6/JJg==
+X-Received: by 2002:a05:600c:608b:b0:45d:e775:d8b8 with SMTP id 5b1f17b1804b1-45f32d002bamr73775275e9.1.1758121074054;
+        Wed, 17 Sep 2025 07:57:54 -0700 (PDT)
+Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-46137930274sm39496035e9.6.2025.09.17.07.57.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Sep 2025 07:57:53 -0700 (PDT)
+Date: Wed, 17 Sep 2025 16:57:52 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Cc: sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com, 
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de, gregkh@linuxfoundation.org, 
+	srini@kernel.org, vkoul@kernel.org, kishon@kernel.org, sre@kernel.org, 
+	krzysztof.kozlowski@linaro.org, linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, 
+	kernel@collabora.com, wenst@chromium.org, casey.connolly@linaro.org, 
+	Jonathan Cameron <jonathan.cameron@huawei.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
+Message-ID: <hsemgg5s3nptxeh3jyim6ahgb37yb3h3hcbdtwixiisyf7ehqk@r7zlg23yz5cv>
+References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-2-angelogioacchino.delregno@collabora.com>
+ <mr7gqhvom5soofn2oujzxtsuczsnx2yizkushar64cojwnvhd6@dt64ojgjqdxw>
+ <a16cafd4-4d6c-45be-b241-45d2d6479bb1@collabora.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/13] arm64: dts: qcom: sdm845-lg-judyln: Add fb_panel
- dimensions
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Paul Sajna <sajattack@postmarketos.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
- Amir Dahan <system64fumo@protonmail.com>,
- Christopher Brown <crispybrown@gmail.com>
-References: <20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org>
- <20250916-judyln-dts-v2-9-5e16e60263af@postmarketos.org>
- <de1a7ecb-924d-4ed2-8034-721b8dce69d4@oss.qualcomm.com>
-Content-Language: en-US
-From: Alexey Minnekhanov <alexeymin@minlexx.ru>
-In-Reply-To: <de1a7ecb-924d-4ed2-8034-721b8dce69d4@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vd4q4xt757pbxzqi"
+Content-Disposition: inline
+In-Reply-To: <a16cafd4-4d6c-45be-b241-45d2d6479bb1@collabora.com>
 
-On 17.09.2025 16:59, Konrad Dybcio wrote:
-> On 9/17/25 3:09 AM, Paul Sajna wrote:
->> Add display dimensions for proper scaling
->>
->> Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts | 7 +++++++
->>   1 file changed, 7 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
->> index e84b45ed82fd13850ea7ec1f34ddac5b59fc1434..8c1692f86e6ceea7b718361965e78f95d39373bb 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts
->> @@ -23,6 +23,13 @@ framebuffer@9d400000 {
->>   			format = "a8r8g8b8";
->>   			lab-supply = <&lab>;
->>   			ibb-supply = <&ibb>;
->> +
->> +			panel = <&fb_panel>;
->> +
->> +			fb_panel: fb-panel {
->> +				width-mm = <65>;
->> +				height-mm = <140>;
-> 
-> It'd be nicer if you moved these properties to the actual panel
-> node (the DSI one) and referenced that one instead (I think that
-> should work)
-> 
-> Konrad
-> 
 
-Hi!
+--vd4q4xt757pbxzqi
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 1/7] spmi: Implement spmi_subdevice_alloc_and_add()
+ and devm variant
+MIME-Version: 1.0
 
-First of all this code doesn't work well for upstream, because it causes
-errors with dtbs checks like:
+Hello AngeloGioacchino,
 
-   framebuffer@9d400000 (simple-framebuffer): 'fb-panel' does not match 
-any of the regexes: '^[a-zA-Z0-9-]+-supply$', '^pinctrl-[0-9]+$'
+On Wed, Sep 17, 2025 at 01:41:40PM +0200, AngeloGioacchino Del Regno wrote:
+> Il 16/09/25 15:25, Uwe Kleine-K=F6nig ha scritto:
+> > Hello AngeloGioacchino,
+> >=20
+> > On Tue, Sep 16, 2025 at 10:44:39AM +0200, AngeloGioacchino Del Regno wr=
+ote:
+> > > +/**
+> > > + * spmi_subdevice_alloc_and_add(): Allocate and add a new SPMI sub-d=
+evice
+> > > + * @sparent:	SPMI parent device with previously registered SPMI cont=
+roller
+> > > + *
+> > > + * Returns:
+> > > + * Pointer to newly allocated SPMI sub-device for success or negativ=
+e ERR_PTR.
+> > > + */
+> > > +struct spmi_subdevice *spmi_subdevice_alloc_and_add(struct spmi_devi=
+ce *sparent)
+> > > +{
+> > > +	struct spmi_subdevice *sub_sdev;
+> > > +	struct spmi_device *sdev;
+> > > +	int ret;
+> > > +
+> > > +	sub_sdev =3D kzalloc(sizeof(*sub_sdev), GFP_KERNEL);
+> > > +	if (!sub_sdev)
+> > > +		return ERR_PTR(-ENOMEM);
+> > > +
+> > > +	ret =3D ida_alloc(&spmi_subdevice_ida, GFP_KERNEL);
+> > > +	if (ret < 0) {
+> > > +		kfree(sub_sdev);
+> > > +		return ERR_PTR(ret);
+> > > +	}
+> > > +
+> > > +	sdev =3D &sub_sdev->sdev;
+> > > +	sdev->ctrl =3D sparent->ctrl;
+> > > +	device_initialize(&sdev->dev);
+> > > +	sdev->dev.parent =3D &sparent->dev;
+> > > +	sdev->dev.bus =3D &spmi_bus_type;
+> > > +	sdev->dev.type =3D &spmi_subdev_type;
+> > > +
+> > > +	sub_sdev->devid =3D ret;
+> > > +	sdev->usid =3D sparent->usid;
+> > > +
+> > > +	ret =3D dev_set_name(&sdev->dev, "%d-%02x.%d.auto",
+> > > +			   sdev->ctrl->nr, sdev->usid, sub_sdev->devid);
+> >=20
+> > If I understand correctly sub_sdev->devid is globally unique. I wonder
+> > if a namespace that is specific to the parent spmi device would be more
+> > sensible?!
+>=20
+> Only in the context of the children of sdev. I'm not sure of what you're =
+proposing
+> here, looks like it would complicate the code for no big reason - unless =
+I am
+> misunderstanding something here.
 
-^^ The subnode is not allowed by bindings.
+The thing that I wondered about is: Why use sdev->usid if
+sub_sdev->devid is already a unique description of the subdevice? And
+for other device types (platform devices, mfd) the device identifiers
+are not globally unique. So I just wondered why spmi is different here.
 
-The whole reasoning for this little hack is that the upstream
-recommended approach to solve the "unknown DPI" for framebuffer issue
-is to put width-mm, height-mm into real panel node and and reference it
-in simple-fb node - sonds very nice in theory, but also doesn't work
-well in practice, and explanation why will take a bit longer, please
-bear with me for a minute.
+> > > +	if (ret)
+> > > +		goto err_put_dev;
+> > > +
+> > > +	ret =3D device_add(&sdev->dev);
+> > > +	if (ret) {
+> > > +		dev_err(&sdev->dev, "Can't add %s, status %d\n",
+> >=20
+> > I'd use %pe instead of %d here.
+> >=20
+>=20
+> The only reason why I am using %d is for consistency with the rest of the=
+ code that
+> is in SPMI - there is another device_add() call in spmi_device_add() whic=
+h prints
+> the same error in the very same way as I'm doing here.
+>=20
+> I agree that using %pe makes error prints more readable, but perhaps that=
+ should be
+> done as a later cleanup to keep prints consistent (and perhaps that shoul=
+d not be
+> done only in SPMI anyway).
+>=20
+> If you have really strong opinions about doing that right now I can do it=
+, but I
+> anyway prefer seeing that as a later commit doing that in the entire SPMI=
+ codebase.
 
-If we do as recommended, device tree structure will look like this:
+My approach would be to first convert the driver to use %pe and then
+add the new code. But I don't feel strong.
 
-  framebuffer@9d400000 {
-      ...
-      panel = <&display_panel>;
-  };
+Best regards
+Uwe
 
-  soc@0 {
-      ....
+--vd4q4xt757pbxzqi
+Content-Type: application/pgp-signature; name="signature.asc"
 
-      mdss {
-          ...
-          dsi0 {
-              ...
-              display_panel: panel@0 {
-                  reg = <0>;
-                  compatible = "lg,sw49410";
-                  ...
-                  width-mm = <65>;
-                  height-mm = <140>;
-              };
-          ...
+-----BEGIN PGP SIGNATURE-----
 
-Then, to my understanding, due to how fw-devlink works, the panel=<&..>
-link from simplefb node to display_panel node creates a probe-time
-dependency, so that the whole display stack probes first: MDSS, DSI
-controller, maybe even Adreno GPU, *AND* panel all probe first, thus
-making the mere existence of simple-framebuffer pointless.
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjKzG0ACgkQj4D7WH0S
+/k6QAwgAjFK8Yjwpa5jj8yoQmTljLuhXr3CuLMG/fOZmijXiT4J5ufD4aliJbr4c
+zkNE7I3gWE8MV1guDtw7WULdaj7y1RnKRvOVADynBNQpXb6TuHwp8Gwf9IEZNbtJ
+Vi+wPP46epW94GY1SGjJHd6SJzg3ZqIO5LAAuEQwlXcrm4Y513Kv9pflqChHkr2D
+rNpkyVdzDbrIjBpnmqbpYsi/bMShr0GL0/PIzE0wd/0cFYjLRc+PsjvTtXmnJ6SW
+NC4IDWqztRVrsKZJNYc4mI8oD/ysZDjKGs62xmrcNrJxnYuZO0bzIZXGctuailWF
+faHHEN/aOhC5FVoar9BuOkvPukStTQ==
+=HAfP
+-----END PGP SIGNATURE-----
 
-Additionally, simple-framebuffer probes succesfully after that,
-creating "second GPU" entry in as /dev/dri/card1 making it look like
-system has 2 GPUS, which confuses almost every window manager in
-userspace later. Normally, if simplefb probes first, it gets unloaded
-and replaced by MDSS and does not cause any chaos. In the end the whole
-situation looks even more silly than the fake panel subnode hack.
-
-Therefore for upstream I'd recommend to just drop any fb-panel hacks and
-to not use panel=<&...> with reference to real panel either.
-
-It would all be much much easier if we could just specify width-mm/
-height-mm directly in simplefb node, but DT maintainers rejected that idea.
-
----
-Regards,
-Alexey Minnekhanov
+--vd4q4xt757pbxzqi--
 
