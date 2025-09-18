@@ -1,150 +1,126 @@
-Return-Path: <linux-arm-msm+bounces-74111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74113-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 32A3FB87193
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 23:23:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C97A0B871E6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 23:25:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1BAE17C0E6C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 21:23:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 82F4B1893730
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 21:25:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0DB2E2FBDFF;
-	Thu, 18 Sep 2025 21:20:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 80F5B2E0905;
+	Thu, 18 Sep 2025 21:25:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YubTuwnN"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="jdgu7m42"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B202F83B6;
-	Thu, 18 Sep 2025 21:20:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A016B2ED848
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 21:25:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758230457; cv=none; b=fTc/wY3hnytjWvKoTBwded4QNHeAH9yCrQdHiiWK0z6Pqcdtg+10gDKp/ccSB66DbzE9eIj9Le0CcXiAavv7yD9sT9nPxxuGP/BmLlm5kurzpbIOLKkTSehJDsGqutg4GpI7r2o5Cw3AAEG74Xwb/k03QsLhQbhp6DWlej5a1qA=
+	t=1758230707; cv=none; b=q8FbW+0vRfMxZ+oXZXMwCQJL8LjUvnWYKLfyRsPm8efkVmNQsapNsFLjjpZjGK2NnDQdFzE9MTYCZJu4G4AAJ33QvrBGdTHNbFOoEqOtgEhxveuuUKW8Ko7SsVNEogx7rxLjcXxjzWxDXfl78ZReOofItkNgjGfGNIphPzsuE8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758230457; c=relaxed/simple;
-	bh=dSo8PyCv5W3wiR8ABae/XBucYd73xpUbLl7qWfh1KCs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oTWwfoXSQYxe9UihEet/KoEy8+gssft04eerj6B9obrjyNRyEj4o8/jVNHMYfT3h8SNqhco6AsANZG9+j5RpjH2FgqFlDxSjWzu5ef8svH0hBc4ZLwwLP4j1qoVpLhr+OReGD1kkH3uOQxQkifX22f2LYSGV/2nLsXO4rqN7R+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YubTuwnN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE1D0C4CEF0;
-	Thu, 18 Sep 2025 21:20:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758230457;
-	bh=dSo8PyCv5W3wiR8ABae/XBucYd73xpUbLl7qWfh1KCs=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=YubTuwnNXOEsZGOJrmNzP4BY8+oXAxaZ8/3J6b7ZP7w7k7Yzrma1vHKKvco/Fz2Jh
-	 IMgMWqw9P9cYnU+i6+q7lGukmUnVB/Tb6xHCj5xWF4kY0sBjaXW31iw9ExO+Bu51wj
-	 4RBi3qIG3RfLDnfboA66rdLxN3mmgV4JAMgDmHmvcMuCbTs+YcmAEkQ8knUYzuNTRz
-	 rz6vrFMyg6KbU0NLT5UevgXmylfJnoyHonHG63Wp2fbDreQAoohtzKHxRpIIRYbmUP
-	 I5svjp7Ok9P66SN/zfnhCfTXgr4gHrf/5ZX22a5x5hG1TCZ8+BXbjtyCEviOhmQk3Q
-	 Goq7pyFOlw2Xw==
-Received: by venus (Postfix, from userid 1000)
-	id 2A8A1180F7B; Thu, 18 Sep 2025 23:20:50 +0200 (CEST)
-From: Sebastian Reichel <sre@kernel.org>
-Date: Thu, 18 Sep 2025 23:20:28 +0200
-Subject: [PATCH v5 3/3] arm64: dts: qcom: x1e80100-t14s: add EC
+	s=arc-20240116; t=1758230707; c=relaxed/simple;
+	bh=0Orrvnym9z6mx+qpAqsBTHEzgkRRZum9L9LV5MLQZns=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Y6c7wHZsUg8AU4RON7A70Jwt+BcBYpM89TJmIbGEwS1tZZhB2EEow4eRFzwqITbykbqvsbrvBopP2iNQJNrNZ69iGliiFLanG7RVJoJcK3EorP/hcsslF73jCGMQINBbB7hDFQqhf7hUZzuq/9sSgpwco2fa7KjNGsEUyu3v5Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=jdgu7m42; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45f2f10502fso8801005e9.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 14:25:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758230704; x=1758835504; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=otQb23FFW/XLhr6Oh4NQ/t5sBVjKo9CxPKgxi2MGprU=;
+        b=jdgu7m42NDv6ixwTSCratw0l9mcTHs/P6NKZbRYnE6OfYFPFsju6KnRP+UixwzdCHW
+         JVrtA99LnWM5Z982z0SOHpWmUVk7S52HqXHXauIFZn5r9VRM8frmst/KczF/RAtDuKBd
+         ybTDX9rNq0vWKRR7gUB25uVYrUTg3qxumLQdoKBR4L3j0TAxtom2A6jvYeUYK55MJE2N
+         CRFvjTNw1X5cqeSpc1Y3/4J5M2SFBS2gMbyKZvSKfm9Z+AY24ah8WyW/DXbFlQjQx8eQ
+         /KqRwa5+C3ISqAWgLIv50xYCpTo4/G7nENkcelQdfrQ8pvvehHEDKqLVZNqSBTtHkRxS
+         blfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758230704; x=1758835504;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=otQb23FFW/XLhr6Oh4NQ/t5sBVjKo9CxPKgxi2MGprU=;
+        b=oOHs7HEY2yTtc9g17eBaWQtntqSylKXUwA13AGJYca/qyfCRtcaaz6TWTvXD3yLDx4
+         EKEVo3Cbgenrt9EOxyaUdbxw1WBsrrNSWz7FDgoFtvbdGgASgZAdIUlfGua4z8guyI6e
+         oGlIXTjWtmTlnZ1BFp5YW1AVjwaGwEnDALBtlGoMeF67WasHy5Evf9f0hR0eceXOLKX1
+         3O11Y1IIpWkq4xx9b9nQgLRWBaCr2oMqBO6CvVcz0ZuNE5ypZp/IYTQTnCkNgd0EbjwQ
+         WHM6gfmo6/NsXlVTKaNsh9iTtRmNXnaVdqNUFl//iBrwsMDWIWXTCR9lDKk51fCqnSRL
+         ddmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXbSaJ/M5JmpU6ByLN9MnNQslKX0D343lqBEXs3slcUdnZ6QLBQXbfEkC51QWRlxlePrSIVLWiz/x3A2+z6@vger.kernel.org
+X-Gm-Message-State: AOJu0YwIxCVlbGNz/9oXV7wB56OUWbTUqf+RxS1G8FydpTQyMH0dceNC
+	1Ui50fn19KypGIEP5Hq4ft8mnUmjBTJXyXx1kJovn6f0h8oJLnsvBJ2viPn4MQjn7y4=
+X-Gm-Gg: ASbGncv4DOGIA/gS4PMb+6UKd2H2DBOv25+t0uGh3SM71h9UdBUitW/fjwEy/Nb42Fo
+	40WW68kIjlKbTvLKvWOdFFiQHmwAjt8wq6+/aw7vmbX3wgcyjLMckqZ8/QMxF7OjOY6gzPHF6Ms
+	0JDdJvOcVWU6nef1PFHa4r3f0CLQs/F5Epc7xz3v3BuVUxLtkbuLrA1YIrgkYNzvav9XW4vEob0
+	nNKcxjGQgd9hKhTd3TUibiW57eAOjAO/oy6bg75K18Lq/QZvFPy0FWDgoGmNsGzwiOq4G+CZ75p
+	/voR/lDlIJ8k2BFdxL+ko8KxIkyHg+XDUf8T/+toiFnlM2DyO9IBVUT3/vFPdBaArNeb8SOCYAZ
+	b7ounUcLClHbOWQaKbE1XoXq34wKzypZNTr57TS/GIc70Dbvj6ADh0ehEn6XHin+vaE8bWf6w/P
+	CYjvPNMYMZXafaraQuB8MSTIFu78IBOq4iAf0Z/A==
+X-Google-Smtp-Source: AGHT+IH01Q3BMBxvVH7m//3u3Ebb9hjBK36gAEMhS02bZTEjbdioULidegt2Ht2MGCXIEyWOW0PaKw==
+X-Received: by 2002:a05:600c:1f85:b0:45b:79fd:cb3d with SMTP id 5b1f17b1804b1-467ec45ff4amr4854965e9.36.1758230704012;
+        Thu, 18 Sep 2025 14:25:04 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-464f64ad359sm70611035e9.22.2025.09.18.14.25.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Sep 2025 14:25:03 -0700 (PDT)
+Message-ID: <0bb932e4-9fb5-4ee0-bd21-6e30d6c8044c@linaro.org>
+Date: Thu, 18 Sep 2025 22:25:02 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250918-thinkpad-t14s-ec-v5-3-ac0bc6382c5c@collabora.com>
-References: <20250918-thinkpad-t14s-ec-v5-0-ac0bc6382c5c@collabora.com>
-In-Reply-To: <20250918-thinkpad-t14s-ec-v5-0-ac0bc6382c5c@collabora.com>
-To: Sebastian Reichel <sre@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>, 
- =?utf-8?q?Ilpo_J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>, 
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Mark Pearson <mpearson-lenovo@squebb.ca>
-Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>, 
- Henrique de Moraes Holschuh <hmh@hmh.eng.br>, 
- Neil Armstrong <neil.armstrong@linaro.org>, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
- linux-arm-msm@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1616;
- i=sebastian.reichel@collabora.com; h=from:subject:message-id;
- bh=dSo8PyCv5W3wiR8ABae/XBucYd73xpUbLl7qWfh1KCs=;
- b=kA0DAAoB2O7X88g7+poByyZiAGjMd7HIPCB6SidF/F0gf4XfrlxnI8SEHQTMMLGDdoMGucYS9
- YkCMwQAAQoAHRYhBO9mDQdGP4tyanlUE9ju1/PIO/qaBQJozHexAAoJENju1/PIO/qaOyoQAKTM
- Kv+SX0EsexHhM5HSGv0TkgZsXb8HaRqjsJUop81J5l6ZWx37oIr4Rd6a2DqnEOQJNFFUqyoaeHC
- bNHwoobRSsWJxTLb73+pYXXzCYS4AQA+CnC5cWSgVMioQ2uxIxlHNkmuhHsHLVTKJ9clmIHSEnS
- BAkmCQybFdH4zoTeX87zDCkrInrF2t6L0gmIGxIyG529lvC5RyNzbrjZ52sfJ6Xss9nOpxZfFQj
- 4/fSUGJNHVbH6JH2/j5mxHFqdxUpFK4rS+Wxds2msvMZWFvhr6HpuvwtgXEB5D33kFb8jAgXVK/
- 1YjBEu4e3RbO0g5LPfIqXKPRXb3gz05P5Lrv8STE31T0nJQ4+QqF+venbid/sXHb0yBdR5Bu3bq
- fGTr9+uCgdRO5sZ95clX9bIEkQqQPYltdfVGy+cdEyWbeciFjL226QDeBYBM8ux/gs0ZL+BsYt2
- sSu8dYJJjbBtNK+NF4KVwY+/taip+INXc5f2GoyqP80PB2bOktO4b8hsEGHCOrqHY4TB8qxI3eK
- y5/6icskrWZxJKZSLwg7u/Bn3Xey2nUDyYPU46pJ8j9FFclHmH3YJauQXTVsEssyfdHzf4sae6F
- XUAnwVKFI7rl8jHFkYS1m6yKWoqnP5XiNxGR5KYonF+jVgbrnnJMeavKqM5u9w5lPJkP7lhMDJg
- stFB5
-X-Developer-Key: i=sebastian.reichel@collabora.com; a=openpgp;
- fpr=EF660D07463F8B726A795413D8EED7F3C83BFA9A
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] media: Use of_reserved_mem_region_to_resource() for
+ "memory-region"
+To: Rob Herring <robh@kernel.org>, Ming Qian <ming.qian@nxp.com>,
+ Zhou Peng <eagle.zhou@nxp.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>
+Cc: Ming Qian <ming.qian@oss.nxp.com>, linux-media@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20250813214949.897858-1-robh@kernel.org>
+ <CAL_Jsq+vUNtMw6JS0ac6a8LTdJBB+UepadpDxP_S8vr6QwUiNA@mail.gmail.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAL_Jsq+vUNtMw6JS0ac6a8LTdJBB+UepadpDxP_S8vr6QwUiNA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Describe ThinkPad Embedded Controller in the T14s device tree,
-which adds LED and special key support.
+On 18/09/2025 21:22, Rob Herring wrote:
+> On Wed, Aug 13, 2025 at 4:50 PM Rob Herring (Arm) <robh@kernel.org> wrote:
+>>
+>> Use the newly added of_reserved_mem_region_to_resource() function to
+>> handle "memory-region" properties.
+>>
+>> Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+>> Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+>> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+>> ---
+>> v2:
+>>   - Rebase on v6.17-rc1
+>> ---
+>>   drivers/media/platform/amphion/vpu_core.c     | 40 +++++--------------
+>>   .../media/platform/qcom/iris/iris_firmware.c  | 18 +++------
+>>   drivers/media/platform/qcom/venus/firmware.c  | 19 +++------
+>>   3 files changed, 21 insertions(+), 56 deletions(-)
+> 
+> Ping!
+I'll pick this one up.
 
-Tested-by: Neil Armstrong <neil.armstrong@linaro.org> # on Thinkpad T14S OLED
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Sebastian Reichel <sre@kernel.org>
 ---
- .../dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi    | 24 ++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-index ac1dddf27da30e6a9f7e1d1ecbd5192bf2d0671e..f70489aba870289edbcf84ec22fdb004e010868b 100644
---- a/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-+++ b/arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi
-@@ -887,6 +887,24 @@ eusb6_repeater: redriver@4f {
- 	};
- };
- 
-+&i2c6 {
-+	clock-frequency = <400000>;
-+
-+	status = "okay";
-+
-+	embedded-controller@28 {
-+		compatible = "lenovo,thinkpad-t14s-ec";
-+		reg = <0x28>;
-+
-+		interrupts-extended = <&tlmm 66 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&ec_int_n_default>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+};
-+
- &i2c7 {
- 	clock-frequency = <400000>;
- 
-@@ -1267,6 +1285,12 @@ &tlmm {
- 			       <72 2>, /* Secure EC I2C connection (?) */
- 			       <238 1>; /* UFS Reset */
- 
-+	ec_int_n_default: ec-int-n-state {
-+		pins = "gpio66";
-+		function = "gpio";
-+		bias-disable;
-+	};
-+
- 	eusb3_reset_n: eusb3-reset-n-state {
- 		pins = "gpio6";
- 		function = "gpio";
-
--- 
-2.51.0
-
+bod
 
