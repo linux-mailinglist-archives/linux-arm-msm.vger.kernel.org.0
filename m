@@ -1,92 +1,107 @@
-Return-Path: <linux-arm-msm+bounces-74105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0F5AB869A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 21:00:50 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 362F4B869C9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 21:05:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5DD21C86E0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 19:01:11 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF4113BAC34
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 19:05:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D3772D3758;
-	Thu, 18 Sep 2025 19:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32AFC25A2BF;
+	Thu, 18 Sep 2025 19:05:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Oowgo4YY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ERQ0hiWd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319EF23AE62;
-	Thu, 18 Sep 2025 19:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880BB60DCF
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 19:05:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758222042; cv=none; b=mhYvnbMUmmmXniQVRnbBa4T/BWHohi0oWLboS4ZcfgRx8wXXZ89fLEXGFC5n/m0fSTu9nOfIlRIKzBTC5HezBfOy6g+nsj8RqDWo924j+qK/0vqdNVebGk1gmLzfz9SBsIumXHcHrwaQpqxguk3A9Mh47zUg5avUILyCkFdf41k=
+	t=1758222330; cv=none; b=dwFORYJMggNhXc91tkIE0Wql50MMkiPUQX3mOipVhBfC9BN0zb4TOrp3Uu1+ASgSmq5ePFSLKPmR5dVtN8mt/2XOCHhN50OovRgCiXiWBo4lsqr3LySgHdcACNbmeCDqmaHYTBdzJGNmjtz+b3TbcXjgOFUS/s8fOryfVctoU4M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758222042; c=relaxed/simple;
-	bh=ef0mTUC0aOMKx4QFCiLnqXP82GZHO1F+FgK59dzSrlg=;
+	s=arc-20240116; t=1758222330; c=relaxed/simple;
+	bh=L8Q4kES265N0bPdrK3OJGb8b/G8wOrKW6p4eJ1orclo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fzQsMmob2TnVnILm+fCkYt6gwXUKS852rJtXt+U1VThTcMADRFf2OF2Nwqs9hYQSIzGS0ucsjdHVVzhvABeoTYPLWE3Q8ThoXkp6vMHWHFY6Wdbh7C33SN0MUQwp0ZsrqkEcqD1GwH9NYWDtVemAwb1691ZbCz+aIAe0s/q+GXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Oowgo4YY; arc=none smtp.client-ip=192.198.163.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1758222040; x=1789758040;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:content-transfer-encoding:in-reply-to;
-  bh=ef0mTUC0aOMKx4QFCiLnqXP82GZHO1F+FgK59dzSrlg=;
-  b=Oowgo4YYfVh2MruJgeRr5276ZAaKB/9coD93mJZaDxDt8NQ/RmJtmRMs
-   x0N4MVKwwe7NNGPJnGvaprmb8akvEDgfeCZ1RIJlFpoubGbKdYw/EtcVy
-   QQUN9z1seEnYxZ/cis8TqNB6Ui4DMEpnLI5NXRaDTnLO9K3rDTxaPSa3S
-   YsSbMUkC7pe8y6DWYNkUvkpBxVYQkGrVaEvZtZ0egFG1TBKakAENpeKmv
-   jji2V/bwAqw+aS5T1BAFER5uTbkbyHb5HgzlNi5rL9zKvRKKrCOWSNLNb
-   Jh9/UqQ86ti9JAhT0soEbynQBDRaDe0QCWG+f16Shih9e+1ditd+jx5za
-   g==;
-X-CSE-ConnectionGUID: v50uP0dsTkGaSEkklLpPDQ==
-X-CSE-MsgGUID: XikY+1EBS+G3CYMKaV4mvw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11557"; a="59785092"
-X-IronPort-AV: E=Sophos;i="6.18,275,1751266800"; 
-   d="scan'208";a="59785092"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2025 12:00:40 -0700
-X-CSE-ConnectionGUID: lsksx+3EQUqb4vrXiQW2XA==
-X-CSE-MsgGUID: qfVbTbAJQF+iIHcpl+feOQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,275,1751266800"; 
-   d="scan'208";a="174747856"
-Received: from smile.fi.intel.com ([10.237.72.51])
-  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2025 12:00:33 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
-	(envelope-from <andriy.shevchenko@intel.com>)
-	id 1uzJrp-00000004Ad0-3os0;
-	Thu, 18 Sep 2025 22:00:29 +0300
-Date: Thu, 18 Sep 2025 22:00:29 +0300
-From: Andy Shevchenko <andriy.shevchenko@intel.com>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
-	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
-	gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
-	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org,
-	casey.connolly@linaro.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Message-ID: <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
-References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
- <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
- <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
- <aMlnp4x-1MUoModr@smile.fi.intel.com>
- <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
- <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
- <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
+	 Content-Type:Content-Disposition:In-Reply-To; b=h0MQHxc9pGTEXe4Es+bgxRtcy6dZSsb5F3dMwtPTzh/lDfW6jTVOx20XoRQj0eT1Wa2xDj6hRh4vh9WYChNPrLznjlpjmlIb+CrAiFznNrUo5a5cIoeGyoDFOI0T2Z4tkWpIfWhG14VG/UcEpU8Y1GfiolA/SuIyS7MJKlWPewM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ERQ0hiWd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IIrhep032421
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 19:05:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	yTnlkubgXN3pvYwP0kv0Ntpu3yy4hFj+2++sr6eyVII=; b=ERQ0hiWdhED1+hVs
+	J0/MeEEi0+IZV8Upbxj1WTjsAlPdz02EhLlQiC1Kl11q1uYZjkrutpYzbQHqQGGm
+	SSz+DkfXX/RFrDyl8BMDgncFh0Sevew1eS0zCiAsoyPTKK9WuVh+w9AfC8d3eSWg
+	ZDA8T4i/nFfFt+miKxjqGJ/Tkh/f5PJBqEniqygBvWhhpoX5zNd794bLRNaP33CT
+	1M7muhKKCGGe2XdJyPCyPLO2hqha4UmKpOzF551pkQJObmMNZBzXTGKkMuN502Ez
+	dAE7HPAkyvV9ozsenswUZj0uF+JMFusBjOlMj2no4JKU/+i5vK04bHD452chchWQ
+	XnuGEg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxyqpen-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 19:05:27 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-78f6250f0cdso20481646d6.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 12:05:27 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758222326; x=1758827126;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yTnlkubgXN3pvYwP0kv0Ntpu3yy4hFj+2++sr6eyVII=;
+        b=Ka7dZCliVfCMxLrGR64HDpC9FWnxT790VxqbWm+WZG1IPawmaw+WHUvEQQeG9BSpSj
+         ROAYjKKbGy8557bkezO2neJ7k5tW1o9SA4ziJRjhIeceJXZwpMNeXIwt4je0zcK4v2db
+         sNKcfI5NVoiSLLPeUVHIidW46h3xpHbw+ofPz/OBkMeGvIMDxKJc6o03BJ+fuxSGx1Op
+         U9jpDfM+CeFb9Hl0/1gNYWskMZtFrhqsKS9K4rcYMVU+OtJFMC41xrcJD30ZR7sVBqbe
+         9QhFHM6DyAyJiRaJP/8G/7YPi3cSSGQlC22Hv+YDu+Q51eaKkY7hm8XuLEptRH+ujAUE
+         Bj5g==
+X-Forwarded-Encrypted: i=1; AJvYcCV93WCn9XLfJfOkaSsdXOy59jT5OCXIuxb4hBl0IMFX+nYoHm0ScPTau7c8PB+gpzuJC6h5ndKUhTyN8nAL@vger.kernel.org
+X-Gm-Message-State: AOJu0YwBVekL3+uykMUzFXaj857geofqfSh4uKe5mxexiPUP3a6Q3Qf5
+	oBHkP/y9o3FKK7midjKb8nBda5J8b1F0nBYLsqnbTYckWMc4ONvHmbO9id42xIKzJBFy4iDuV4N
+	WO5+3Pd0j/NYpP1u4ELxhphLoV5/UyJAZGjx+bE+m1gjzTDFSwIQPYBcyouRD/0SX2fXB
+X-Gm-Gg: ASbGncvKyxF1aWRegz8uh5BOn9pm4YUrwbqYNXtJTz0ty1C/fjRnXrv4SJYNisinhFY
+	eVaj1+cpALcAW60J00KvmRiHigsklX0sz+/XXUkCjzP6DKh5Ph8Uibwx4pPgRUk1uVUkpsSi8Z/
+	bUYBG/rR2mAhcpOI4WnLfKaGRz80wn0eU/txsjBea1/1p2ugPnOEwBgMPC34xEe/9iGBIaZAuLU
+	kviFv6A1jKx133r5wePy0vMdJNgSr2PD+F3i9MGxdOzZXkFoHFepfDDDpw7SYh6GjqqMNHsVReN
+	E5txAe8n1a4YzDPf2SXfWU9+/jdmcis7rcGfP72QE48/a9nmtTassAWqn0rleFi3hGo5tmFGW4P
+	wvG8U4Ger4KNWliS/YcSH5mDmsyuG2HvUsx1Oo6Av8oOL+/s4skBP
+X-Received: by 2002:a05:6214:2482:b0:780:6e19:8ed with SMTP id 6a1803df08f44-7991e49eb72mr7161856d6.65.1758222325857;
+        Thu, 18 Sep 2025 12:05:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEm4oJ0+aXHSlFoCgy0RIeo++8o8ouiSBaRi8HkPi1nbfIvBuioYVVK0oJj5NFbUoBqHtRQEg==
+X-Received: by 2002:a05:6214:2482:b0:780:6e19:8ed with SMTP id 6a1803df08f44-7991e49eb72mr7161156d6.65.1758222325187;
+        Thu, 18 Sep 2025 12:05:25 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-361a26cb93bsm7775931fa.16.2025.09.18.12.05.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Sep 2025 12:05:24 -0700 (PDT)
+Date: Thu, 18 Sep 2025 22:05:21 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Rob Clark <rob.clark@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH v5 2/5] drm/msm: split VM_BIND from the rest of GEM VMA
+ code
+Message-ID: <oepspnsohjueyafzk6c2qp2o7vhh4eax73po4byejacujyoiam@7avjrl6alhq2>
+References: <20250918-msm-gpu-split-v5-0-44486f44d27d@oss.qualcomm.com>
+ <20250918-msm-gpu-split-v5-2-44486f44d27d@oss.qualcomm.com>
+ <CACSVV036k+VwtLEvX4ATG7h7fTpXAzUuOZr9AY4WzwJWFvw0zQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -96,88 +111,211 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
- krs, Bertel Jungin Aukio 5, 02600 Espoo
+In-Reply-To: <CACSVV036k+VwtLEvX4ATG7h7fTpXAzUuOZr9AY4WzwJWFvw0zQ@mail.gmail.com>
+X-Authority-Analysis: v=2.4 cv=e50GSbp/ c=1 sm=1 tr=0 ts=68cc57f7 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=YIf0c4_oue8ogryinRwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: uEOr8osWLzzumIY2wISNbRJ4N7P1ltG6
+X-Proofpoint-ORIG-GUID: uEOr8osWLzzumIY2wISNbRJ4N7P1ltG6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX4evaRL5ACxsh
+ EcSYkl3WBULwOFiE1uNfSU36g2EHGMMTcPMQWhuAlOrrCOSwp7TGio6drJwaRYsLalgU4MwICBD
+ 7ylb/1xhSMbv9UfaaPInSRayrwRet8ujPnxnpjRfp0oK8S+sRjkl1yqxczYTdPzx3LWbsqUxspG
+ keOkdV9RgR9RWT2xsK1KbqV4WNYCev+IzJSX1boE7/2AZyGiaeScka44ILXlH8RJdFGxFnX6Jed
+ FRXK3ZnKRPgK16tTr8t798xSTfkX2pIdwfRZvzynHaPAsBjHOiuQhzG8IcDNZ048vWVKBvu4/UN
+ eu7BrIZpfLJBpfEMFnNl8C94/1Fc65owNpT2WsZRq++nYCEHiTiLBESlZaAhYLDY/VP67D3iSPs
+ Tyf2hFEK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-18_02,2025-09-18_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501
+ phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
 
-On Wed, Sep 17, 2025 at 02:47:22PM +0200, Uwe Kleine-König wrote:
-> On Tue, Sep 16, 2025 at 07:20:20PM +0300, Andy Shevchenko wrote:
-> > On Tue, Sep 16, 2025 at 6:11 PM Uwe Kleine-König
-> > <u.kleine-koenig@baylibre.com> wrote:
-> > > On Tue, Sep 16, 2025 at 04:35:35PM +0300, Andy Shevchenko wrote:
-> > > > On Tue, Sep 16, 2025 at 03:24:56PM +0200, Uwe Kleine-König wrote:
-> > > > > On Tue, Sep 16, 2025 at 10:44:40AM +0200, AngeloGioacchino Del Regno wrote:
-
-...
-
-> > > > > > +MODULE_IMPORT_NS("SPMI");
-> > > > >
-> > > > > If it's exactly the files that #include <linux/spmi.h> should have that
-> > > > > namespace import, you can put the MODULE_IMPORT_NS into that header.
-> > > >
-> > > > Which makes anyone to import namespace even if they just want to use some types
-> > > > out of the header.
-> > >
-> > > Notice that I carefully formulated my suggestion to cope for this case.
-> > 
-> > And I carefully answered.
+On Thu, Sep 18, 2025 at 07:46:32AM -0700, Rob Clark wrote:
+> On Wed, Sep 17, 2025 at 8:51 PM Dmitry Baryshkov
+> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >
+> > In preparation to disabling GPU functionality split VM_BIND-related
+> > functions (which are used only for the GPU) from the rest of the GEM VMA
+> > implementation.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> > ---
+> >  drivers/gpu/drm/msm/Makefile          |    1 +
+> >  drivers/gpu/drm/msm/msm_gem_vm_bind.c | 1116 +++++++++++++++++++++++++++++++
+> >  drivers/gpu/drm/msm/msm_gem_vma.c     | 1177 +--------------------------------
+> >  drivers/gpu/drm/msm/msm_gem_vma.h     |  105 +++
+> >  4 files changed, 1225 insertions(+), 1174 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+> > index 0c0dfb25f01b193b10946fae20138caf32cf0ed2..d7876c154b0aa2cb0164c4b1fb7900b1a42db46b 100644
+> > --- a/drivers/gpu/drm/msm/Makefile
+> > +++ b/drivers/gpu/drm/msm/Makefile
+> > @@ -115,6 +115,7 @@ msm-y += \
+> >         msm_gem_shrinker.o \
+> >         msm_gem_submit.o \
+> >         msm_gem_vma.o \
+> > +       msm_gem_vm_bind.o \
+> >         msm_gpu.o \
+> >         msm_gpu_devfreq.o \
+> >         msm_io_utils.o \
 > 
-> I tend to disagree. If that anyone only wants some type from the header
-> but not the namespace, the if part of my statement isn't given any more.
-> Still your reply felt like objection while logically it's not.
-
-You assumed that in case that the header that is *currently* included in the
-users, may be the one that used by the same users that needs an imported
-namespace. Okay, *now* (or today) it's not a problem, but *in the future* it
-might be *when* one wants to use *just* types from it.
-I don't think this is likely to happen, but in general including something
-"by default" is not a good idea. That's what I'm objecting to.
-
-> > Your proposal won't prevent _other_ files to
-> > use the same header in the future without needing a namespace to be
-> > imported.
+> [snip]
 > 
-> Oh yes. But that's true for every change: If you change it further you
-> have to cope for what is already there.
+> > diff --git a/drivers/gpu/drm/msm/msm_gem_vma.h b/drivers/gpu/drm/msm/msm_gem_vma.h
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..f702f81529e72b86bffb4960408f1912bc65851a
+> > --- /dev/null
+> > +++ b/drivers/gpu/drm/msm/msm_gem_vma.h
+> > @@ -0,0 +1,105 @@
+> > +/* SPDX-License-Identifier: GPL-2.0-only */
+> > +/*
+> > + * Copyright (C) 2016 Red Hat
+> > + * Author: Rob Clark <robdclark@gmail.com>
+> > + */
+> > +
+> > +#ifndef _MSM_GEM_VMA_H_
+> > +#define _MSM_GEM_VMA_H_
+> > +
+> > +#define vm_dbg(fmt, ...) pr_debug("%s:%d: "fmt"\n", __func__, __LINE__, ##__VA_ARGS__)
+> > +
+> > +/**
+> > + * struct msm_vm_map_op - create new pgtable mapping
+> > + */
+> > +struct msm_vm_map_op {
+> > +       /** @iova: start address for mapping */
+> > +       uint64_t iova;
+> > +       /** @range: size of the region to map */
+> > +       uint64_t range;
+> > +       /** @offset: offset into @sgt to map */
+> > +       uint64_t offset;
+> > +       /** @sgt: pages to map, or NULL for a PRR mapping */
+> > +       struct sg_table *sgt;
+> > +       /** @prot: the mapping protection flags */
+> > +       int prot;
+> > +
+> > +       /**
+> > +        * @queue_id: The id of the submitqueue the operation is performed
+> > +        * on, or zero for (in particular) UNMAP ops triggered outside of
+> > +        * a submitqueue (ie. process cleanup)
+> > +        */
+> > +       int queue_id;
+> > +};
+> > +
+> > +/**
+> > + * struct msm_vm_unmap_op - unmap a range of pages from pgtable
+> > + */
+> > +struct msm_vm_unmap_op {
+> > +       /** @iova: start address for unmap */
+> > +       uint64_t iova;
+> > +       /** @range: size of region to unmap */
+> > +       uint64_t range;
+> > +
+> > +       /** @reason: The reason for the unmap */
+> > +       const char *reason;
+> > +
+> > +       /**
+> > +        * @queue_id: The id of the submitqueue the operation is performed
+> > +        * on, or zero for (in particular) UNMAP ops triggered outside of
+> > +        * a submitqueue (ie. process cleanup)
+> > +        */
+> > +       int queue_id;
+> > +};
+> > +
+> > +static void
+> > +vm_log(struct msm_gem_vm *vm, const char *op, uint64_t iova, uint64_t range, int queue_id)
 > 
-> > > > This is not good solution generally speaking. Also this will
-> > > > diminish one of the purposes of _NS variants of MODULE*/EXPORT*, i.e. make it
-> > > > invisible that some of the code may become an abuser of the API just by someone
-> > > > include the header (for a reason or by a mistake).
-> > >
-> > > Yeah, opinions differ. In my eyes it's quite elegant.
-> > 
-> > It's not a pure opinion,
+> These would have to be static-inline
 > 
-> That's your opinion :-)
+> But overall I'm not sure how I feel about this.. I guess the goal is
+> to reduce the size of a kms-only driver?  If so, I think you could do
+> better with some ugly ifdef (for ex, you could also remove scheduler
+> and other fields not used by kernel managed VMs from msm_gem_vm).
 
-All we said is just set of opinions. Facts are provided by scientific
-experiments.
+More or less so. I also wanted to separate the complicated parts from
+the simple GEM parts, but I see your point too.
 
-> > it has a technical background that I
-> > explained. The explicit usage of MODULE_IMPORT_NS() is better than
-> > some header somewhere that might even be included by another and be
-> > proxied to the code that doesn't need / want to have this namespace to
-> > be present. Puting MODULE_IMPORT_NS() into a _header_ is a minefield
-> > for the future.
+I was also trying to trim the dependencies, but this can be #ifdef'd.
+
+> I'm not sure how much the savings would be, or if it is worth the pain
+> (ie. extra build configurations to test going forward, etc).  Having
+> no GPU doesn't seem like a case worth optimizing for, tbh.  You could
+> still have a single driver which binds to multiple different devices,
+> ie. if # of GPUs != # of DPUs without this with no change in
+> footprint.
+
+Counting GPUs and DPUs isn't that easy, because this also makes things
+assymmetric: some of the GPU/DPU pairs can be handled natively, some of
+them need to have buffers exported and then imported. We also have a
+usecase of splitting the GPU driver because for some of the workloads it
+would be better to load just the GPU driver or just the display driver
+(possibly replacing the other one with the proprietary driver).
+
 > 
-> Well, for a deliberate abuser the hurdle to have to add the explicit
-> MODULE_IMPORT_NS() isn't that big. And a mistaken abuser won't explode,
-> just generate a few bytes overhead that can be fixed when noticed.
+> BR,
+> -R
 > 
-> In my opinion that is an ok cost for the added elegance.
-
-I tend to disagree. The practice to include (be lazy) something just in case is
-a bad practice. Developer has to know what they are doing. We have already too
-much bad code in the kernel and opening new ways for more "vibe:ish" coding is
-a road to accumulated issues in the future.
-
-I,o.w. I principally disagree on putting MODULE_IMPORT_NS() into the header
-file.
+> 
+> 
+> 
+> > +{
+> > +       int idx;
+> > +
+> > +       if (!vm->managed)
+> > +               lockdep_assert_held(&vm->mmu_lock);
+> > +
+> > +       vm_dbg("%s:%p:%d: %016llx %016llx", op, vm, queue_id, iova, iova + range);
+> > +
+> > +       if (!vm->log)
+> > +               return;
+> > +
+> > +       idx = vm->log_idx;
+> > +       vm->log[idx].op = op;
+> > +       vm->log[idx].iova = iova;
+> > +       vm->log[idx].range = range;
+> > +       vm->log[idx].queue_id = queue_id;
+> > +       vm->log_idx = (vm->log_idx + 1) & ((1 << vm->log_shift) - 1);
+> > +}
+> > +
+> > +static void
+> > +vm_unmap_op(struct msm_gem_vm *vm, const struct msm_vm_unmap_op *op)
+> > +{
+> > +       const char *reason = op->reason;
+> > +
+> > +       if (!reason)
+> > +               reason = "unmap";
+> > +
+> > +       vm_log(vm, reason, op->iova, op->range, op->queue_id);
+> > +
+> > +       vm->mmu->funcs->unmap(vm->mmu, op->iova, op->range);
+> > +}
+> > +
+> > +static int
+> > +vm_map_op(struct msm_gem_vm *vm, const struct msm_vm_map_op *op)
+> > +{
+> > +       vm_log(vm, "map", op->iova, op->range, op->queue_id);
+> > +
+> > +       return vm->mmu->funcs->map(vm->mmu, op->iova, op->sgt, op->offset,
+> > +                                  op->range, op->prot);
+> > +}
+> > +
+> > +int msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg);
+> > +int msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg);
+> > +int msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *_arg);
+> > +
+> > +int msm_gem_vm_sched_init(struct msm_gem_vm *vm, struct drm_device *drm);
+> > +void msm_gem_vm_sched_fini(struct msm_gem_vm *vm);
+> > +
+> > +#endif
+> >
+> > --
+> > 2.47.3
+> >
 
 -- 
-With Best Regards,
-Andy Shevchenko
-
-
+With best wishes
+Dmitry
 
