@@ -1,318 +1,204 @@
-Return-Path: <linux-arm-msm+bounces-74088-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74089-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5B619B84D8D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 15:33:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98C8EB84EB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 15:53:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6D10F1C85684
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 13:32:42 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4C6AD7C48A0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 13:53:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 776CC30F80C;
-	Thu, 18 Sep 2025 13:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E47431078F;
+	Thu, 18 Sep 2025 13:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="wuV12JyC"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cfQMeVPw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5B830C111
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 13:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5521DA4E
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 13:53:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758202215; cv=none; b=nfSo65rzBspISvy1V2Fk9zo+2tAdKSAr4G5JSXSSFkohbWsZ/sv7VyQcwwYaH05Djvx3ywsnohUEUW3SIe9yM/1UeTsrzftuVdPBoMqsw6GfuuC0w/X9+nIICZybgW8M+ZHUevsITZ+3Yn6iBiG7D21uhnNj86Ib8SuiG1YK03I=
+	t=1758203631; cv=none; b=d5abs0Lzc5QWFBbLdpn33IcdnkbMd942U+AaqpIFGo/xNJhY18kBMcIyie7l7le+t60GKqE9LIEWHLldLvLib9yIs6EEul7bKvcV3hTmb6QPWhKBcWXVovFKBf7KCm+LakVMfc0nNhtgo3oY0XWAp/zUP/KZAFQuE2aBC8EV35M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758202215; c=relaxed/simple;
-	bh=RnZk0AxApC2cXL1UUCfzBA0NW7fSXzJTNG/igbpoTYs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=FXHomzhoc6bLtJ9kOGPrCg7wwPY2IlRhQDK2xehyHh/2S3+PP1IuhtNDT1x6bJIZ415wnp2pUNtisblm4fYH4SUiZxFLUBuRV0yiZxwaxY2lMC0LlR4IP1RSXc2kkSytpQ+0XkQTxHLhMmr+vVPeJdwSBoogB1m3LiTwMktzgi4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=wuV12JyC; arc=none smtp.client-ip=209.85.210.176
+	s=arc-20240116; t=1758203631; c=relaxed/simple;
+	bh=W8d+rtW76hd2LNkPX2+QJLDJy6PBL5cszIE1g/3/9FI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WFSb2zv7N5Wh3zACHtpTfqUtdHysOVb09ieGQWkzCxJ2abKUxg+8oHkylrGufJjvGm2POJhlBlO/NTdkaEs49+nEHUftLu5bUbCxj7YLNRcurIOr5O5TbpD6IxZpCtMhCQ66UdJdt9IeYGHx8DP6uNVXMbA8A/bsVfH0cjvUzVo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cfQMeVPw; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7761b392d50so1281250b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 06:30:13 -0700 (PDT)
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-b0b6bf0097aso182592166b.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 06:53:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758202213; x=1758807013; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4iiwLuAxDHP9nes3VG9Yx/lVPEQs5Q0ILzvPHO1VnMc=;
-        b=wuV12JyCAr0eOfPoG/q/8VdE4R2ZNSuDp50RGOg16fOy4duFuHMttDPmqR0VWgJ3wU
-         OnRTOBdcJWPBBT0fR+DNUTOoiclEf4F35GtvFqlbGeyyorud/lyZ2C/z8g+O3Pz/l4A6
-         NAskEH7wGbgNEtaqHMdC1dd/bCSDnW1+xaITGdQy22kJZQDoQHKI82n1/WGc/z8XLCjy
-         shIwX6jplvltpt7MDeo8ju8V/ZyJq/YP4pLbb4kXJSGMZSw0J6NncxzWEwugijEwrMC9
-         Qm2Mt4M6O1qGsYq4FBU8/VrSgascc+snYq0G3b4mS++ppWS/eUc8XB+aexjpqlVw+qrw
-         PdGg==
+        d=linaro.org; s=google; t=1758203628; x=1758808428; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=j7efdXg49cd0dO4HNsPgED93u6J0FRsteNdyMBWuRc0=;
+        b=cfQMeVPwhlYmpXtRfT5BYz/T64TCrvFJH32cIptJYbfQCQtwjQsSKaALeXPvk33VpH
+         arNXDWeQtAB702/agV1Yb32LnvTiUtMqTik2TaYQiQXOKm/pXZfcgDMDgXTbX3k+8A0y
+         OaRPcDv3acaWTtrxzqWfSR7KIQ/pWUhzTwypH+zeKkK5pzI7Zjt4xFlqjNNLgyFIMmRT
+         40MWju1htAXyxrvY9WduasEk6HQQXXrUbFxklSW+ghU45OQefJky7Yl77X2GMM7RIDRD
+         b6hxehcLvwJwR1QDj0FxPKio+SUWdBrDk8SxtjjdvS9IxiLeQCsa5koecQdC1qlQah4D
+         ywig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758202213; x=1758807013;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4iiwLuAxDHP9nes3VG9Yx/lVPEQs5Q0ILzvPHO1VnMc=;
-        b=uvzDd/iaUregHG8AQFvzRxec8McMceS5IFs1aa0j3RESYJakdKf/HtDR8T2a2b7WRJ
-         OHfBi+Q1LSczkZ9pGFZmSpB0ViDGAoeslqgiidA5sO3F7OT6NjtAuekNhClMXcf4uvga
-         Aq8KNMcM1+yio+sg2I/bDqoBzXAORSMauj5/wWh84MEBQpExMICAHcAjOJ0dRckGZhr4
-         lTNroFRPCM8ru+Csiwui4Pf5s2wneZNF+F1Gyn6NiEZ92hVX3I+1u3r4+ybfgu7hd3Fh
-         Ofo4VQR4M+xyMx+2wnMOfvvs83MR1aXAIN13E9YNsLdB6pSGgkE3cx2m0w8Z+HkXzkvi
-         M+DQ==
-X-Gm-Message-State: AOJu0Yx1c/eG1KCY1p5mdURKgfUWZRlUU/Hq/9lVd45K1NdciL/fpZKK
-	YNBBctitHnoFFFduRClCBFWJjhmKXiGMWOupq7T6ghivVmUFEKN8trTRo0rRbwWnW6A=
-X-Gm-Gg: ASbGncudjBpB071OPWbNK0e4fmO4Dlnqq0awS6wNxWQ+nphWeLmqe0YQwCswoLda93v
-	hBnauQLkZTbDG7ZFbIh5ovfWwhhkpEjAnYPla11U2UN93Qsq/DH5+FKav0P6VODi47WnRTh3oBu
-	6Dx+FFiF8WNxhZG3ywBBcoRW7UKL1fXKg4VOLHO+XYpezYTQnOp6uLWJrOddv/PVfcB5JHzHmMz
-	ZAVxBR4D87rRjUSFqrYU/+NCTHtI/ZCyZ3KbtYKIRN932IeVCggCH4Cl0wP+Y7Si2vhr7rYQiJk
-	chMHlI8WWike6jV8u1FYPYNZdlDhncJJYs4+CVawy6DUwGZ4Z2Jh77O9JNHsEzjyNntPoM/f92u
-	ikdJLz9n0L1zvPmsf+vCWTv/DqPAFdAvxu7Y=
-X-Google-Smtp-Source: AGHT+IEmY9pyA8E4Bw454wiRLpK/QDxyfhJlmzd3+hQt52KxBpNF93GYZBgVixN0JCRosBR/17TNDQ==
-X-Received: by 2002:a05:6a20:7f8c:b0:263:767c:28e1 with SMTP id adf61e73a8af0-27ab34e6646mr8272296637.42.1758202212681;
-        Thu, 18 Sep 2025 06:30:12 -0700 (PDT)
-Received: from [127.0.1.1] ([112.64.61.5])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b54ff35cc76sm2331479a12.10.2025.09.18.06.30.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Sep 2025 06:30:12 -0700 (PDT)
-From: Jun Nie <jun.nie@linaro.org>
-Date: Thu, 18 Sep 2025 21:29:02 +0800
-Subject: [PATCH v16 10/10] drm/msm/dpu: Enable quad-pipe for DSC and
- dual-DSI case
+        d=1e100.net; s=20230601; t=1758203628; x=1758808428;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=j7efdXg49cd0dO4HNsPgED93u6J0FRsteNdyMBWuRc0=;
+        b=uNOoPcVbIyn7ITzbUSgMrZ5Ir1/szo9/5J9ygf+M8qjkv83diYN8zlNllRjJCtHDPg
+         hb+ixddpGJ6fxedLjBmDiB9GPXoX5E1twOj0ROiYgyKh1SbmxozOy8BjZZC67JRd8BvR
+         6uCXrv3r1E+nIG7FOC2o+eLFIMC11w3PNJOpovUdXBC7sppq5+OP+2X1TsS2jsOqFK/E
+         jGkk2B6KANR0h8vSgQw/GPuOhOQO4bOe8nJFjD7beQoRRlYsU+ovQ0v1sCyCRjivCCZt
+         trKwD3TIN28IyDjYN40szV1iVhXEebvuxMwTRwqdRTdIBD6pFHbXvKJEjk+XELOGHV9w
+         m9OA==
+X-Forwarded-Encrypted: i=1; AJvYcCWmk7pjac8IEnCPjs9p42R+Zfx9eS6bUiegTAoNPcv+jDhQcjyZ25EyPbZxC7FG978KXn/xV2I7fmJnb4Eb@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRJh9raJa0jj4zL5DIxaOJs/D1DEfEMIC50RrlF/N4t8tGD87P
+	veGZr7yt78WwW5Da23cfkGXqoIjVrWpxyLxQiwfN2JyVVWEAGE3VoBJgnzsxn9oynejOPA9avsU
+	pTMqbNoY=
+X-Gm-Gg: ASbGncuMwUiwHtfnn4L60c51cXjISFpDcV2n3DASkufF2Zgw7v1XHJZGXNm/2RdYip4
+	vG3htEVch9hj3mTc1ms28Ln7Y7KeO/14FZ3/LX8CIk7YHlyCa9QBV3u3L7rdlqi0L6yojjtyR1o
+	/J+lLfPfslbvywtnSFGfxUMlPWbVR53pEHPS12oHVY0/Y3d7YazsMfo+3aQra6ewbsCI0g7YDjk
+	eV3umNKbX2IioI6bgcn1xXRJEYCqTe4ki27kqFq5AKtMbV0K5kgU4n5SNHtzJRqzXNj4rg8tHtC
+	mFwUhEH0YCd7OAs7MpjOgaZT/w7CnxeyQn9NRg/hdgBUX50BRWKcSZxEVv1ui8gV4O7D44QI5vu
+	VyK1OCvAzNodngTW0yLj1T0ZeYx1YbBfP1y/ljJ3jZrE8B2iYcVQ=
+X-Google-Smtp-Source: AGHT+IHnDWpjM1umgSyHsR6OREF3QxVVNfm6x8W+jII5XcXDsJKZeNe+EM7x++buErDbKkF9QmRQfw==
+X-Received: by 2002:a17:907:7e93:b0:b02:a093:eac9 with SMTP id a640c23a62f3a-b1bc1169518mr637192866b.53.1758203628349;
+        Thu, 18 Sep 2025 06:53:48 -0700 (PDT)
+Received: from [172.20.10.3] ([109.166.131.237])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b1fc5f44bbcsm203026466b.5.2025.09.18.06.53.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 18 Sep 2025 06:53:47 -0700 (PDT)
+Message-ID: <c3ab4a21-183f-495a-b3b5-cc74b392eebc@linaro.org>
+Date: Thu, 18 Sep 2025 16:53:45 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
+To: Thomas Gleixner <tglx@linutronix.de>, David Hildenbrand
+ <david@redhat.com>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-mm@kvack.org, andersson@kernel.org,
+ pmladek@suse.com, rdunlap@infradead.org, corbet@lwn.net, mhocko@suse.com
+Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
+ linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
+ jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
+ <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
+ <87a52u9jyl.ffs@tglx> <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
+ <2bd45749-e483-45ea-9c55-74c5ba15b012@redhat.com> <87v7lh891c.ffs@tglx>
+ <95ff36c2-284a-46ba-984b-a3286402ebf8@redhat.com>
+ <24d6a51d-f5f8-44d7-94cb-58b71ebf473a@linaro.org>
+ <7f4aa4c6-7b77-422b-9f7a-d01530c54bff@redhat.com> <87segk9az5.ffs@tglx>
+ <f8d3c2d4-8399-4169-8527-3c87922f2ef1@redhat.com> <87jz1w88zq.ffs@tglx>
+From: Eugen Hristev <eugen.hristev@linaro.org>
+Content-Language: en-US
+In-Reply-To: <87jz1w88zq.ffs@tglx>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-10-ff6232e3472f@linaro.org>
-References: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org>
-In-Reply-To: <20250918-v6-16-rc2-quad-pipe-upstream-4-v16-0-ff6232e3472f@linaro.org>
-To: Abhinav Kumar <abhinav.kumar@linux.dev>, 
- Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>, 
- Marijn Suijten <marijn.suijten@somainline.org>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Clark <robin.clark@oss.qualcomm.com>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>
-Cc: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org, 
- freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- Jun Nie <jun.nie@linaro.org>, Jessica Zhang <quic_jesszhan@quicinc.com>, 
- Dmitry Baryshkov <lumag@kernel.org>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758202147; l=8147;
- i=jun.nie@linaro.org; s=20240403; h=from:subject:message-id;
- bh=RnZk0AxApC2cXL1UUCfzBA0NW7fSXzJTNG/igbpoTYs=;
- b=DwPZxT6CuV2+Y8HoyEddbThJnH4mF9vwAAt/3ikL8I6Kts+WzfZa2TAIVPxdYleVidjn/FtTQ
- komvUr4HA3mANzBXpDL4+4vws6EItZRP/CYUWe9MOkxX/syLvS9NURj
-X-Developer-Key: i=jun.nie@linaro.org; a=ed25519;
- pk=MNiBt/faLPvo+iJoP1hodyY2x6ozVXL8QMptmsKg3cc=
 
-To support high-resolution cases that exceed the width limitation of
-a pair of SSPPs, or scenarios that surpass the maximum MDP clock rate,
-additional pipes are necessary to enable parallel data processing
-within the SSPP width constraints and MDP clock rate.
 
-Request 4 mixers and 4 DSCs for high-resolution cases where both DSC
-and dual interfaces are enabled. More use cases can be incorporated
-later if quad-pipe capabilities are required.
 
-Signed-off-by: Jun Nie <jun.nie@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Jessica Zhang <quic_jesszhan@quicinc.com>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c         | 27 +++++++++++++++++------
- drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h         |  6 ++---
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c      | 28 ++++++++----------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h   |  2 +-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h      |  2 +-
- 6 files changed, 35 insertions(+), 32 deletions(-)
+On 9/18/25 11:23, Thomas Gleixner wrote:
+> On Wed, Sep 17 2025 at 21:03, David Hildenbrand wrote:
+>>> As this is specific for the compiled kernel version you can define an
+>>> extensible struct format for the table.
+>>>
+>>> struct inspect_entry {
+>>> 	unsigned long	properties;
+>>>          unsigned int	type;
+>>>          unsigned int	id;
+>>>          const char	name[$MAX_NAME_LEN];
+>>> 	unsigned long	address;
+>>>          unsigned long	length;
+>>>          ....
+>>> };
+>>>
+>>> @type
+>>>         refers either to a table with type information, which describes
+>>>         the struct in some way or just generate a detached compile time
+>>>         description.
+>>>
+>>> @id
+>>>         a unique id created at compile time or via registration at
+>>>         runtime. Might not be required
+>>
+>> We discussed that maybe one would want some kind of a "class" 
+>> description. For example we might have to register one pgdat area per 
+>> node. Giving each one a unique name might be impractical / unreasonable.
+>>
+>> Still, someone would want to select / filter out all entries of the same 
+>> "class".
+>>
+>> Just a thought.
+> 
+> Right. As I said this was mostly a insta brain dump to start a
+> discussion. Seems it worked :)
+> 
+>>> @properties:
+>>>
+>>>          A "bitfield", which allows to mark this entry as (in)valid for a
+>>>          particular consumer.
+>>>
+>>>          That obviously requires to modify these properties when the
+>>>          requirements of a consumer change, new consumers arrive or new
+>>>          producers are added, but I think it's easier to do that at the
+>>>          producer side than maintaining filters on all consumer ends
+>>>          forever.
+>>
+>> Question would be if that is not up to a consumer to decide ("allowlist" 
+>> / filter) by class or id, stored elsewhere.
+> 
+> Yes, I looked at it the wrong way round. We should leave the filtering
+> to the consumers. If you use allow lists, then a newly introduced class
+> won't be automatically exposed everywhere.
+> 
+> Thanks,
+> 
+>         tglx
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-index e925d93b38feac0594d735fdc2c5b9fd5ae83e6a..7a88a26d04b46c7df86eebec27c7cda28725f6ea 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
-@@ -200,7 +200,7 @@ static int dpu_crtc_get_lm_crc(struct drm_crtc *crtc,
- 		struct dpu_crtc_state *crtc_state)
- {
- 	struct dpu_crtc_mixer *m;
--	u32 crcs[CRTC_DUAL_MIXERS];
-+	u32 crcs[CRTC_QUAD_MIXERS];
- 
- 	int rc = 0;
- 	int i;
-@@ -1328,6 +1328,7 @@ static struct msm_display_topology dpu_crtc_get_topology(
- 	struct drm_display_mode *mode = &crtc_state->adjusted_mode;
- 	struct msm_display_topology topology = {0};
- 	struct drm_encoder *drm_enc;
-+	u32 num_rt_intf;
- 
- 	drm_for_each_encoder_mask(drm_enc, crtc->dev, crtc_state->encoder_mask)
- 		dpu_encoder_update_topology(drm_enc, &topology, crtc_state->state,
-@@ -1341,11 +1342,14 @@ static struct msm_display_topology dpu_crtc_get_topology(
- 	 * Dual display
- 	 * 2 LM, 2 INTF ( Split display using 2 interfaces)
- 	 *
-+	 * If DSC is enabled, try to use 4:4:2 topology if there is enough
-+	 * resource. Otherwise, use 2:2:2 topology.
-+	 *
- 	 * Single display
- 	 * 1 LM, 1 INTF
- 	 * 2 LM, 1 INTF (stream merge to support high resolution interfaces)
- 	 *
--	 * If DSC is enabled, use 2 LMs for 2:2:1 topology
-+	 * If DSC is enabled, use 2:2:1 topology
- 	 *
- 	 * Add dspps to the reservation requirements if ctm is requested
- 	 *
-@@ -1357,14 +1361,23 @@ static struct msm_display_topology dpu_crtc_get_topology(
- 	 * (mode->hdisplay > MAX_HDISPLAY_SPLIT) check.
- 	 */
- 
--	if (topology.num_intf == 2 && !topology.cwb_enabled)
--		topology.num_lm = 2;
--	else if (topology.num_dsc == 2)
-+	num_rt_intf = topology.num_intf;
-+	if (topology.cwb_enabled)
-+		num_rt_intf--;
-+
-+	if (topology.num_dsc) {
-+		if (dpu_kms->catalog->dsc_count >= num_rt_intf * 2)
-+			topology.num_dsc = num_rt_intf * 2;
-+		else
-+			topology.num_dsc = num_rt_intf;
-+		topology.num_lm = topology.num_dsc;
-+	} else if (num_rt_intf == 2) {
- 		topology.num_lm = 2;
--	else if (dpu_kms->catalog->caps->has_3d_merge)
-+	} else if (dpu_kms->catalog->caps->has_3d_merge) {
- 		topology.num_lm = (mode->hdisplay > MAX_HDISPLAY_SPLIT) ? 2 : 1;
--	else
-+	} else {
- 		topology.num_lm = 1;
-+	}
- 
- 	if (crtc_state->ctm)
- 		topology.num_dspp = topology.num_lm;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-index 6eaba5696e8e6bd1246a9895c4c8714ca6589b10..455073c7025b0bcb970d8817f197d9bcacc6dca5 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
-@@ -210,7 +210,7 @@ struct dpu_crtc_state {
- 
- 	bool bw_control;
- 	bool bw_split_vote;
--	struct drm_rect lm_bounds[CRTC_DUAL_MIXERS];
-+	struct drm_rect lm_bounds[CRTC_QUAD_MIXERS];
- 
- 	uint64_t input_fence_timeout_ns;
- 
-@@ -218,10 +218,10 @@ struct dpu_crtc_state {
- 
- 	/* HW Resources reserved for the crtc */
- 	u32 num_mixers;
--	struct dpu_crtc_mixer mixers[CRTC_DUAL_MIXERS];
-+	struct dpu_crtc_mixer mixers[CRTC_QUAD_MIXERS];
- 
- 	u32 num_ctls;
--	struct dpu_hw_ctl *hw_ctls[CRTC_DUAL_MIXERS];
-+	struct dpu_hw_ctl *hw_ctls[CRTC_QUAD_MIXERS];
- 
- 	enum dpu_crtc_crc_source crc_source;
- 	int crc_frame_skip_count;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-index 55b83ba6102d38a9ec97bc4d12ad31810e4b261a..3dd202e0ce94eaecfc7e401e1c9e1fe43106dc9e 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-@@ -55,7 +55,7 @@
- #define MAX_PHYS_ENCODERS_PER_VIRTUAL \
- 	(MAX_H_TILES_PER_DISPLAY * NUM_PHYS_ENCODER_TYPES)
- 
--#define MAX_CHANNELS_PER_ENC 2
-+#define MAX_CHANNELS_PER_ENC 4
- #define MAX_CWB_PER_ENC 2
- 
- #define IDLE_SHORT_TIMEOUT	1
-@@ -675,22 +675,12 @@ void dpu_encoder_update_topology(struct drm_encoder *drm_enc,
- 
- 	dsc = dpu_encoder_get_dsc_config(drm_enc);
- 
--	/* We only support 2 DSC mode (with 2 LM and 1 INTF) */
--	if (dsc) {
--		/*
--		 * Use 2 DSC encoders, 2 layer mixers and 1 or 2 interfaces
--		 * when Display Stream Compression (DSC) is enabled,
--		 * and when enough DSC blocks are available.
--		 * This is power-optimal and can drive up to (including) 4k
--		 * screens.
--		 */
--		WARN(topology->num_intf > 2,
--		     "DSC topology cannot support more than 2 interfaces\n");
--		if (topology->num_intf >= 2 || dpu_kms->catalog->dsc_count >= 2)
--			topology->num_dsc = 2;
--		else
--			topology->num_dsc = 1;
--	}
-+	/*
-+	 * Set DSC number as 1 to mark the enabled status, will be adjusted
-+	 * in dpu_crtc_get_topology()
-+	 */
-+	if (dsc)
-+		topology->num_dsc = 1;
- 
- 	connector = drm_atomic_get_new_connector_for_encoder(state, drm_enc);
- 	if (!connector)
-@@ -2181,8 +2171,8 @@ static void dpu_encoder_helper_reset_mixers(struct dpu_encoder_phys *phys_enc)
- 	struct dpu_hw_mixer_cfg mixer;
- 	int i, num_lm;
- 	struct dpu_global_state *global_state;
--	struct dpu_hw_blk *hw_lm[2];
--	struct dpu_hw_mixer *hw_mixer[2];
-+	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
-+	struct dpu_hw_mixer *hw_mixer[MAX_CHANNELS_PER_ENC];
- 	struct dpu_hw_ctl *ctl = phys_enc->hw_ctl;
- 
- 	memset(&mixer, 0, sizeof(mixer));
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-index 61b22d9494546885db609efa156222792af73d2a..09395d7910ac87c035b65cf476350bf6c9619612 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys.h
-@@ -302,7 +302,7 @@ static inline enum dpu_3d_blend_mode dpu_encoder_helper_get_3d_blend_mode(
- 
- 	/* Use merge_3d unless DSC MERGE topology is used */
- 	if (phys_enc->split_role == ENC_ROLE_SOLO &&
--	    dpu_cstate->num_mixers == CRTC_DUAL_MIXERS &&
-+	    (dpu_cstate->num_mixers != 1) &&
- 	    !dpu_encoder_use_dsc_merge(phys_enc->parent))
- 		return BLEND_3D_H_ROW_INT;
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-index f0768f54e9b3d5a3f5a7bec4b66127f2e2284cfd..21c980f8e2e3e8469055ff6bfbba1afdbb88bfbc 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
-@@ -24,7 +24,7 @@
- #define DPU_MAX_IMG_WIDTH 0x3fff
- #define DPU_MAX_IMG_HEIGHT 0x3fff
- 
--#define CRTC_DUAL_MIXERS	2
-+#define CRTC_QUAD_MIXERS	4
- 
- #define MAX_XIN_COUNT 16
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-index e4875a1f638db6f1983d9c51cb399319d27675e9..5cedcda285273a46cd6e11da63cde92cab94b9f4 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_mdss.h
-@@ -34,7 +34,7 @@
- #define DPU_MAX_PLANES			4
- #endif
- 
--#define STAGES_PER_PLANE		1
-+#define STAGES_PER_PLANE		2
- #define PIPES_PER_STAGE			2
- #define PIPES_PER_PLANE			(PIPES_PER_STAGE * STAGES_PER_PLANE)
- #ifndef DPU_MAX_DE_CURVES
 
--- 
-2.34.1
+So, one direction to follow from this discussion is to have the
+inspection entry and inspection table for all these entries.
+Now, one burning question open for debate, is, should this reside into mm ?
+mm/inspect.h would have to define the inspection entry struct, and some
+macros to help everyone add an inspection entry.
+E.g. INSPECTION_ENTRY(my ptr, my size);
+and this would be used all over the kernel wherever folks want to
+register something.
+Now the second part is, where to keep all the inspection drivers ?
+Would it make sense to have mm/inspection/inspection_helpers.h which
+would keep the table start/end, some macros to traverse the tables, and
+this would be included by the inspection drivers.
+inspection drivers would then probe via any mechanism, and tap into the
+inspection table.
+I am thinking that my model with a single backend can be enhanced by
+allowing any inspection driver to access it. And further on, each
+inspection driver would register a notifier to be called when an entry
+is being created or not. This would mean N possible drivers connected to
+the table at the same time. ( if that would make sense...)
+Would it make sense for pstore to have an inspection driver that would
+be connected here to get different kinds of stuff ?
+Would it make sense to have some debugfs driver that would just expose
+to user space different regions ? Perhaps something similar with
+/proc/kcore but not the whole kernel memory rather only the exposed
+inspection entries.
+Now, for the dynamic memory, e.g. memblock_alloc and friends ,
+would it be interesting to have a flag e.g. MEMBLOCK_INSPECT, that would
+be used when calling it, and in the background, this would request an
+inspection_entry being created ? Or it makes more sense to call some
+function like inspect_register as a different call directly at the
+allocation point ?
 
+Feel free to throw your opinion at each of the above.
+Thanks for helping out !
 
