@@ -1,134 +1,183 @@
-Return-Path: <linux-arm-msm+bounces-74104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74105-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1704EB86974
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 20:54:41 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C0F5AB869A8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 21:00:50 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 930007BCCD6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 18:52:25 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A5DD21C86E0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 19:01:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE450288C35;
-	Thu, 18 Sep 2025 18:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D3772D3758;
+	Thu, 18 Sep 2025 19:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggOo/wv6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Oowgo4YY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF6127B357;
-	Thu, 18 Sep 2025 18:53:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319EF23AE62;
+	Thu, 18 Sep 2025 19:00:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758221638; cv=none; b=cEqnSh9dunaHECkyakMZcLX8enHnBA3iOP0mZ4Ttw4g32tk93nleVHaP3I6plBq4O3uF4WSdMCDu/eV5y9nNyMEo+0JgvaBKEYf5IL68XUMUtlRqSVwKGTGSNK4pEPgc0Roxz3j5ycEmPPfWKod2d+fPUG//wm9DdxoJ76fc5O4=
+	t=1758222042; cv=none; b=mhYvnbMUmmmXniQVRnbBa4T/BWHohi0oWLboS4ZcfgRx8wXXZ89fLEXGFC5n/m0fSTu9nOfIlRIKzBTC5HezBfOy6g+nsj8RqDWo924j+qK/0vqdNVebGk1gmLzfz9SBsIumXHcHrwaQpqxguk3A9Mh47zUg5avUILyCkFdf41k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758221638; c=relaxed/simple;
-	bh=8pFcwNdTRRXNyhxMg3EVbIUjIj9oGklWQFId1hTxeWE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=WkDTKSUT7e6vZYBfwufMerreXl7Fv+gxvo1DEOfdH4MCs9emKgc5g8oB7SFkM32ZUqJm7KaATuoevAaMlSd7k3IMYQSrx0eLQRe7pUgQK4I8PuIjSYP5qRLiw0vjLlgtPjCk2w+ps93Ldcf2xkTZrwkF0frDu0n7n4qrEmpuEfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggOo/wv6; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F161BC4CEE7;
-	Thu, 18 Sep 2025 18:53:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758221638;
-	bh=8pFcwNdTRRXNyhxMg3EVbIUjIj9oGklWQFId1hTxeWE=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=ggOo/wv6spysNgu8Zxg51el+9c+Z9BAXohzEw+5T15dJ+3eruutBRss9+oDCUC2vW
-	 PEeWGEyCt9dR8CEqji9p5mJLcd+FMZrCJNWWjjECY5+khLbKSIa9PoMxqUK4W/T1gu
-	 RoSutHlVDJuXpFBeL2IwrWkYFR9Fu0sH50+eZHDzCv6em8UCH6HmvAXQ+iv3EDTHCN
-	 dNBxRSIhbGYde6Njg+JNAphhQBxMFlvg/936HWE6jaV/2YoG6IQJkrCeYpXZLL2pqZ
-	 JdqFD+eXg8aoLS/s0W2Il8jmiuSOCoGjEPHxSbhwKd/sHAHXDGjgU3t6APcksbGCOH
-	 /ISDzYzl48cfg==
-Date: Thu, 18 Sep 2025 13:53:56 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH v3 4/4] PCI: qcom: Allow pwrctrl core to control PERST#
- if 'reset-gpios' property is available
-Message-ID: <20250918185356.GA1879416@bhelgaas>
+	s=arc-20240116; t=1758222042; c=relaxed/simple;
+	bh=ef0mTUC0aOMKx4QFCiLnqXP82GZHO1F+FgK59dzSrlg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fzQsMmob2TnVnILm+fCkYt6gwXUKS852rJtXt+U1VThTcMADRFf2OF2Nwqs9hYQSIzGS0ucsjdHVVzhvABeoTYPLWE3Q8ThoXkp6vMHWHFY6Wdbh7C33SN0MUQwp0ZsrqkEcqD1GwH9NYWDtVemAwb1691ZbCz+aIAe0s/q+GXY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Oowgo4YY; arc=none smtp.client-ip=192.198.163.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1758222040; x=1789758040;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:content-transfer-encoding:in-reply-to;
+  bh=ef0mTUC0aOMKx4QFCiLnqXP82GZHO1F+FgK59dzSrlg=;
+  b=Oowgo4YYfVh2MruJgeRr5276ZAaKB/9coD93mJZaDxDt8NQ/RmJtmRMs
+   x0N4MVKwwe7NNGPJnGvaprmb8akvEDgfeCZ1RIJlFpoubGbKdYw/EtcVy
+   QQUN9z1seEnYxZ/cis8TqNB6Ui4DMEpnLI5NXRaDTnLO9K3rDTxaPSa3S
+   YsSbMUkC7pe8y6DWYNkUvkpBxVYQkGrVaEvZtZ0egFG1TBKakAENpeKmv
+   jji2V/bwAqw+aS5T1BAFER5uTbkbyHb5HgzlNi5rL9zKvRKKrCOWSNLNb
+   Jh9/UqQ86ti9JAhT0soEbynQBDRaDe0QCWG+f16Shih9e+1ditd+jx5za
+   g==;
+X-CSE-ConnectionGUID: v50uP0dsTkGaSEkklLpPDQ==
+X-CSE-MsgGUID: XikY+1EBS+G3CYMKaV4mvw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11557"; a="59785092"
+X-IronPort-AV: E=Sophos;i="6.18,275,1751266800"; 
+   d="scan'208";a="59785092"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2025 12:00:40 -0700
+X-CSE-ConnectionGUID: lsksx+3EQUqb4vrXiQW2XA==
+X-CSE-MsgGUID: qfVbTbAJQF+iIHcpl+feOQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,275,1751266800"; 
+   d="scan'208";a="174747856"
+Received: from smile.fi.intel.com ([10.237.72.51])
+  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Sep 2025 12:00:33 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.98.2)
+	(envelope-from <andriy.shevchenko@intel.com>)
+	id 1uzJrp-00000004Ad0-3os0;
+	Thu, 18 Sep 2025 22:00:29 +0300
+Date: Thu, 18 Sep 2025 22:00:29 +0300
+From: Andy Shevchenko <andriy.shevchenko@intel.com>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Andy Shevchenko <andy.shevchenko@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
+	gregkh@linuxfoundation.org, srini@kernel.org, vkoul@kernel.org,
+	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org,
+	casey.connolly@linaro.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
+References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
+ <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
+ <aMlnp4x-1MUoModr@smile.fi.intel.com>
+ <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
+ <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
+ <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <gnaubphg6iyh23vtf2flsjxoot7psgla7cr2c5jpecaozh4vf3@mzcmg74g3ogk>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
+Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6
+ krs, Bertel Jungin Aukio 5, 02600 Espoo
 
-On Wed, Sep 17, 2025 at 03:53:25PM +0530, Manivannan Sadhasivam wrote:
-> On Tue, Sep 16, 2025 at 03:48:10PM GMT, Bjorn Helgaas wrote:
-> > On Fri, Sep 12, 2025 at 02:05:04PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > 
-> > > For historic reasons, the pcie-qcom driver was controlling the
-> > > power supply and PERST# GPIO of the PCIe slot.
+On Wed, Sep 17, 2025 at 02:47:22PM +0200, Uwe Kleine-König wrote:
+> On Tue, Sep 16, 2025 at 07:20:20PM +0300, Andy Shevchenko wrote:
+> > On Tue, Sep 16, 2025 at 6:11 PM Uwe Kleine-König
+> > <u.kleine-koenig@baylibre.com> wrote:
+> > > On Tue, Sep 16, 2025 at 04:35:35PM +0300, Andy Shevchenko wrote:
+> > > > On Tue, Sep 16, 2025 at 03:24:56PM +0200, Uwe Kleine-König wrote:
+> > > > > On Tue, Sep 16, 2025 at 10:44:40AM +0200, AngeloGioacchino Del Regno wrote:
+
+...
+
+> > > > > > +MODULE_IMPORT_NS("SPMI");
+> > > > >
+> > > > > If it's exactly the files that #include <linux/spmi.h> should have that
+> > > > > namespace import, you can put the MODULE_IMPORT_NS into that header.
+> > > >
+> > > > Which makes anyone to import namespace even if they just want to use some types
+> > > > out of the header.
+> > >
+> > > Notice that I carefully formulated my suggestion to cope for this case.
 > > 
-> > > This turned out to be an issue as the power supply requirements
-> > > differ between components. For instance, some of the WLAN
-> > > chipsets used in Qualcomm systems were connected to the Root
-> > > Port in a non-standard way using their own connectors.
+> > And I carefully answered.
+> 
+> I tend to disagree. If that anyone only wants some type from the header
+> but not the namespace, the if part of my statement isn't given any more.
+> Still your reply felt like objection while logically it's not.
+
+You assumed that in case that the header that is *currently* included in the
+users, may be the one that used by the same users that needs an imported
+namespace. Okay, *now* (or today) it's not a problem, but *in the future* it
+might be *when* one wants to use *just* types from it.
+I don't think this is likely to happen, but in general including something
+"by default" is not a good idea. That's what I'm objecting to.
+
+> > Your proposal won't prevent _other_ files to
+> > use the same header in the future without needing a namespace to be
+> > imported.
+> 
+> Oh yes. But that's true for every change: If you change it further you
+> have to cope for what is already there.
+> 
+> > > > This is not good solution generally speaking. Also this will
+> > > > diminish one of the purposes of _NS variants of MODULE*/EXPORT*, i.e. make it
+> > > > invisible that some of the code may become an abuser of the API just by someone
+> > > > include the header (for a reason or by a mistake).
+> > >
+> > > Yeah, opinions differ. In my eyes it's quite elegant.
 > > 
-> > This is kind of hand-wavy.  I don't know what a non-standard
-> > connector has to do with this.  I assume there's still a PCIe link
-> > from Root Port to WLAN, and there's still a PERST# signal to the
-> > WLAN device and a Root Port GPIO that asserts/deasserts it.
+> > It's not a pure opinion,
 > 
-> If we have a non-standard connector, then the power supply
-> requirements change.  There is no longer the standard 3.3v, 3.3Vaux,
-> 1.8v supplies, but plenty more.  For instance, take a look at the
-> WCN6855 WiFi/BT combo chip in the Lenovo X13s laptop:
+> That's your opinion :-)
+
+All we said is just set of opinions. Facts are provided by scientific
+experiments.
+
+> > it has a technical background that I
+> > explained. The explicit usage of MODULE_IMPORT_NS() is better than
+> > some header somewhere that might even be included by another and be
+> > proxied to the code that doesn't need / want to have this namespace to
+> > be present. Puting MODULE_IMPORT_NS() into a _header_ is a minefield
+> > for the future.
 > 
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts#n414
+> Well, for a deliberate abuser the hurdle to have to add the explicit
+> MODULE_IMPORT_NS() isn't that big. And a mistaken abuser won't explode,
+> just generate a few bytes overhead that can be fixed when noticed.
 > 
-> These supplies directly go from the host PMIC to the WCN6855 chip
-> integrated in the PCB itself. And these supplies need to be turned
-> on/off in a sequence also, together with the EN/SWCTRL GPIOs, while
-> sharing with the Bluetooth driver.
+> In my opinion that is an ok cost for the added elegance.
 
-It sounds like the WCN6855 power supplies have nothing to do with the
-qcom PCIe controller, the Root Port, or any switches leading to the
-WCN6855.  And I guess the same for the wlan-enable, bt-enable, and
-swctrl GPIOs?
+I tend to disagree. The practice to include (be lazy) something just in case is
+a bad practice. Developer has to know what they are doing. We have already too
+much bad code in the kernel and opening new ways for more "vibe:ish" coding is
+a road to accumulated issues in the future.
 
-  wcn6855-pmu {
-          compatible = "qcom,wcn6855-pmu";
-          wlan-enable-gpios = <&tlmm 134 GPIO_ACTIVE_HIGH>;
-          bt-enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
-          swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
-          regulators {
-                  vreg_pmu_rfa_cmn_0p8: ldo0 {
-                          regulator-name = "vreg_pmu_rfa_cmn_0p8";
-                  ...
+I,o.w. I principally disagree on putting MODULE_IMPORT_NS() into the header
+file.
 
-  &pcie4_port0 {
-          wifi@0 {
-                  compatible = "pci17cb,1103";
-                  vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
-                  ...
+-- 
+With Best Regards,
+Andy Shevchenko
 
-But I guess PERST# isn't described in the same place (not in
-wcn6855-pmu)?  Looks like maybe it's this, which IIUC is part of the
-pcie4 host bridge?
 
-  &pcie4 {
-          max-link-speed = <2>;
-          perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
-          wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
-
-Does that mean this PERST# signal is driven by a GPIO and routed
-directly to the WCN6855?  Seems like there's some affinity between the
-WCN6855 power supplies and the WCN6855 PERST# signal, and maybe they
-would be better described together?
 
