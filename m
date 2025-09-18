@@ -1,321 +1,189 @@
-Return-Path: <linux-arm-msm+bounces-74106-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 362F4B869C9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 21:05:34 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B383B86DDE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 22:14:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id DF4113BAC34
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 19:05:32 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 881CA1CC4618
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 20:14:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 32AFC25A2BF;
-	Thu, 18 Sep 2025 19:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6269631A7FD;
+	Thu, 18 Sep 2025 20:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ERQ0hiWd"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vLIp2Jvi"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880BB60DCF
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 19:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3037C2BDC3F;
+	Thu, 18 Sep 2025 20:14:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758222330; cv=none; b=dwFORYJMggNhXc91tkIE0Wql50MMkiPUQX3mOipVhBfC9BN0zb4TOrp3Uu1+ASgSmq5ePFSLKPmR5dVtN8mt/2XOCHhN50OovRgCiXiWBo4lsqr3LySgHdcACNbmeCDqmaHYTBdzJGNmjtz+b3TbcXjgOFUS/s8fOryfVctoU4M=
+	t=1758226472; cv=none; b=IhJS/+AgQBb0H95yKOCvdui73HGuVLm33ja/OrHGV0Ev/W/be8u1kZOdvBc9uyaWHTajA48+KqWAsXNjb56yQmNubqISFE9RycSgps+909XVQjy2VPEtgyFWJe5eTx/eZGHK/zXG9q2+lEubGVW0fiv+o+60F/HvPqGoluEgihM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758222330; c=relaxed/simple;
-	bh=L8Q4kES265N0bPdrK3OJGb8b/G8wOrKW6p4eJ1orclo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h0MQHxc9pGTEXe4Es+bgxRtcy6dZSsb5F3dMwtPTzh/lDfW6jTVOx20XoRQj0eT1Wa2xDj6hRh4vh9WYChNPrLznjlpjmlIb+CrAiFznNrUo5a5cIoeGyoDFOI0T2Z4tkWpIfWhG14VG/UcEpU8Y1GfiolA/SuIyS7MJKlWPewM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ERQ0hiWd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IIrhep032421
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 19:05:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	yTnlkubgXN3pvYwP0kv0Ntpu3yy4hFj+2++sr6eyVII=; b=ERQ0hiWdhED1+hVs
-	J0/MeEEi0+IZV8Upbxj1WTjsAlPdz02EhLlQiC1Kl11q1uYZjkrutpYzbQHqQGGm
-	SSz+DkfXX/RFrDyl8BMDgncFh0Sevew1eS0zCiAsoyPTKK9WuVh+w9AfC8d3eSWg
-	ZDA8T4i/nFfFt+miKxjqGJ/Tkh/f5PJBqEniqygBvWhhpoX5zNd794bLRNaP33CT
-	1M7muhKKCGGe2XdJyPCyPLO2hqha4UmKpOzF551pkQJObmMNZBzXTGKkMuN502Ez
-	dAE7HPAkyvV9ozsenswUZj0uF+JMFusBjOlMj2no4JKU/+i5vK04bHD452chchWQ
-	XnuGEg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxyqpen-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 19:05:27 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-78f6250f0cdso20481646d6.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 12:05:27 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758222326; x=1758827126;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=yTnlkubgXN3pvYwP0kv0Ntpu3yy4hFj+2++sr6eyVII=;
-        b=Ka7dZCliVfCMxLrGR64HDpC9FWnxT790VxqbWm+WZG1IPawmaw+WHUvEQQeG9BSpSj
-         ROAYjKKbGy8557bkezO2neJ7k5tW1o9SA4ziJRjhIeceJXZwpMNeXIwt4je0zcK4v2db
-         sNKcfI5NVoiSLLPeUVHIidW46h3xpHbw+ofPz/OBkMeGvIMDxKJc6o03BJ+fuxSGx1Op
-         U9jpDfM+CeFb9Hl0/1gNYWskMZtFrhqsKS9K4rcYMVU+OtJFMC41xrcJD30ZR7sVBqbe
-         9QhFHM6DyAyJiRaJP/8G/7YPi3cSSGQlC22Hv+YDu+Q51eaKkY7hm8XuLEptRH+ujAUE
-         Bj5g==
-X-Forwarded-Encrypted: i=1; AJvYcCV93WCn9XLfJfOkaSsdXOy59jT5OCXIuxb4hBl0IMFX+nYoHm0ScPTau7c8PB+gpzuJC6h5ndKUhTyN8nAL@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBVekL3+uykMUzFXaj857geofqfSh4uKe5mxexiPUP3a6Q3Qf5
-	oBHkP/y9o3FKK7midjKb8nBda5J8b1F0nBYLsqnbTYckWMc4ONvHmbO9id42xIKzJBFy4iDuV4N
-	WO5+3Pd0j/NYpP1u4ELxhphLoV5/UyJAZGjx+bE+m1gjzTDFSwIQPYBcyouRD/0SX2fXB
-X-Gm-Gg: ASbGncvKyxF1aWRegz8uh5BOn9pm4YUrwbqYNXtJTz0ty1C/fjRnXrv4SJYNisinhFY
-	eVaj1+cpALcAW60J00KvmRiHigsklX0sz+/XXUkCjzP6DKh5Ph8Uibwx4pPgRUk1uVUkpsSi8Z/
-	bUYBG/rR2mAhcpOI4WnLfKaGRz80wn0eU/txsjBea1/1p2ugPnOEwBgMPC34xEe/9iGBIaZAuLU
-	kviFv6A1jKx133r5wePy0vMdJNgSr2PD+F3i9MGxdOzZXkFoHFepfDDDpw7SYh6GjqqMNHsVReN
-	E5txAe8n1a4YzDPf2SXfWU9+/jdmcis7rcGfP72QE48/a9nmtTassAWqn0rleFi3hGo5tmFGW4P
-	wvG8U4Ger4KNWliS/YcSH5mDmsyuG2HvUsx1Oo6Av8oOL+/s4skBP
-X-Received: by 2002:a05:6214:2482:b0:780:6e19:8ed with SMTP id 6a1803df08f44-7991e49eb72mr7161856d6.65.1758222325857;
-        Thu, 18 Sep 2025 12:05:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEm4oJ0+aXHSlFoCgy0RIeo++8o8ouiSBaRi8HkPi1nbfIvBuioYVVK0oJj5NFbUoBqHtRQEg==
-X-Received: by 2002:a05:6214:2482:b0:780:6e19:8ed with SMTP id 6a1803df08f44-7991e49eb72mr7161156d6.65.1758222325187;
-        Thu, 18 Sep 2025 12:05:25 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-361a26cb93bsm7775931fa.16.2025.09.18.12.05.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 18 Sep 2025 12:05:24 -0700 (PDT)
-Date: Thu, 18 Sep 2025 22:05:21 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Rob Clark <rob.clark@oss.qualcomm.com>
-Cc: Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        linaro-mm-sig@lists.linaro.org
-Subject: Re: [PATCH v5 2/5] drm/msm: split VM_BIND from the rest of GEM VMA
- code
-Message-ID: <oepspnsohjueyafzk6c2qp2o7vhh4eax73po4byejacujyoiam@7avjrl6alhq2>
-References: <20250918-msm-gpu-split-v5-0-44486f44d27d@oss.qualcomm.com>
- <20250918-msm-gpu-split-v5-2-44486f44d27d@oss.qualcomm.com>
- <CACSVV036k+VwtLEvX4ATG7h7fTpXAzUuOZr9AY4WzwJWFvw0zQ@mail.gmail.com>
+	s=arc-20240116; t=1758226472; c=relaxed/simple;
+	bh=O5wQLmWrqsWflWIq1hbTefCtmSzwhyOY86w/cK+ayWM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=meDHbsHiocEv4s6b4C91gPYVpt2qMY/B16P82tf8Bhhd8FK0fwsr5euPuNoQqZsij7GqA9I2nZIqYEGui+8DfSS1ViXtnlmHgkoq8JZsqXf6VwCL5d+C5ShBlzRakQ2xkNfdv+FIQ3vQK0GfOfmJYR5VxIlSwqCuLwsCUQfn3PU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vLIp2Jvi; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68955C4CEF0;
+	Thu, 18 Sep 2025 20:14:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758226471;
+	bh=O5wQLmWrqsWflWIq1hbTefCtmSzwhyOY86w/cK+ayWM=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=vLIp2JviNDdoeJs5bzgcw9toagt6JcspQdZSI2/VUGY4b2P2T/XPi7jNDi7Ob3ixu
+	 wtW5/TiXPX8Y6C4WgRQ/Ao7SZmG3oWkR0gzgrW5hq2+h9JX0h8BIjE/J8fWsEiVRGF
+	 9wZX3a1sZO6huUr8iHt4d5HpQbJTGMLS1fiBwekPSyD5705VQTDoIHPg7/clJ9mYaP
+	 QYuRQolbLD+8lRS19zwwMBN4CWd1nqIFzZxNNGQpDf6hy8zNmZ3D47gdJkgLo65yfe
+	 0SUA8ReXk1iO2pnIL1HeAqCnfBS44SpCxBZaJZcq3WQkeBshG0T9DdpT/UP2Uh+1NL
+	 SJfSIWqbQ/YNg==
+Date: Thu, 18 Sep 2025 15:14:30 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+	krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+	mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+	bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+	kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+	kw@linux.com, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
+	qiang.yu@oss.qualcomm.com, quic_krichai@quicinc.com,
+	quic_vbadigan@quicinc.com, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
+Subject: Re: [PATCH v13 0/5] pci: qcom: Add QCS8300 PCIe support
+Message-ID: <20250918201430.GA1919478@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACSVV036k+VwtLEvX4ATG7h7fTpXAzUuOZr9AY4WzwJWFvw0zQ@mail.gmail.com>
-X-Authority-Analysis: v=2.4 cv=e50GSbp/ c=1 sm=1 tr=0 ts=68cc57f7 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=YIf0c4_oue8ogryinRwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-GUID: uEOr8osWLzzumIY2wISNbRJ4N7P1ltG6
-X-Proofpoint-ORIG-GUID: uEOr8osWLzzumIY2wISNbRJ4N7P1ltG6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX4evaRL5ACxsh
- EcSYkl3WBULwOFiE1uNfSU36g2EHGMMTcPMQWhuAlOrrCOSwp7TGio6drJwaRYsLalgU4MwICBD
- 7ylb/1xhSMbv9UfaaPInSRayrwRet8ujPnxnpjRfp0oK8S+sRjkl1yqxczYTdPzx3LWbsqUxspG
- keOkdV9RgR9RWT2xsK1KbqV4WNYCev+IzJSX1boE7/2AZyGiaeScka44ILXlH8RJdFGxFnX6Jed
- FRXK3ZnKRPgK16tTr8t798xSTfkX2pIdwfRZvzynHaPAsBjHOiuQhzG8IcDNZ048vWVKBvu4/UN
- eu7BrIZpfLJBpfEMFnNl8C94/1Fc65owNpT2WsZRq++nYCEHiTiLBESlZaAhYLDY/VP67D3iSPs
- Tyf2hFEK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-18_02,2025-09-18_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 clxscore=1015 spamscore=0 priorityscore=1501
- phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
+In-Reply-To: <f16f14ab-ff11-42a2-b63b-ed28e85d620b@oss.qualcomm.com>
 
-On Thu, Sep 18, 2025 at 07:46:32AM -0700, Rob Clark wrote:
-> On Wed, Sep 17, 2025 at 8:51 PM Dmitry Baryshkov
-> <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> >
-> > In preparation to disabling GPU functionality split VM_BIND-related
-> > functions (which are used only for the GPU) from the rest of the GEM VMA
-> > implementation.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+On Thu, Sep 18, 2025 at 10:51:22AM +0800, Ziyue Zhang wrote:
+> On 9/8/2025 3:38 PM, Ziyue Zhang wrote:
+> > This series depend on this patch
+> > https://lore.kernel.org/all/20250826-pakala-v2-3-74f1f60676c6@oss.qualcomm.com/
+
+That patch ("PCI: qcom: Restrict port parsing only to pci child
+nodes") is currently in the pci/controller/qcom branch:
+
+  https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/log/?h=controller/qcom
+
+and won't be merged upstream until the v6.18 merge window.  This will
+probably be between Sep 28 and Oct 12.
+
+I don't know what that means for the dt-binding and arm64 dts changes
+in this series, but typically changes like this series are merged via
+a different tree than the PCI changes, so the ordering isn't
+guaranteed until one of them is pulled by Linus.
+
+> > This series adds document, phy, configs support for PCIe in QCS8300.
+> > It also adds 'link_down' reset for sa8775p.
+> > 
+> > Have follwing changes:
+> > 	- Add dedicated schema for the PCIe controllers found on QCS8300.
+> > 	- Add compatible for qcs8300 platform.
+> > 	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
+> > 	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
+> > 
+> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
+> > Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
 > > ---
-> >  drivers/gpu/drm/msm/Makefile          |    1 +
-> >  drivers/gpu/drm/msm/msm_gem_vm_bind.c | 1116 +++++++++++++++++++++++++++++++
-> >  drivers/gpu/drm/msm/msm_gem_vma.c     | 1177 +--------------------------------
-> >  drivers/gpu/drm/msm/msm_gem_vma.h     |  105 +++
-> >  4 files changed, 1225 insertions(+), 1174 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-> > index 0c0dfb25f01b193b10946fae20138caf32cf0ed2..d7876c154b0aa2cb0164c4b1fb7900b1a42db46b 100644
-> > --- a/drivers/gpu/drm/msm/Makefile
-> > +++ b/drivers/gpu/drm/msm/Makefile
-> > @@ -115,6 +115,7 @@ msm-y += \
-> >         msm_gem_shrinker.o \
-> >         msm_gem_submit.o \
-> >         msm_gem_vma.o \
-> > +       msm_gem_vm_bind.o \
-> >         msm_gpu.o \
-> >         msm_gpu_devfreq.o \
-> >         msm_io_utils.o \
+> > Changes in v13:
+> > - Fix dtb error
+> > - Link to v12: https://lore.kernel.org/all/20250905071448.2034594-1-ziyue.zhang@oss.qualcomm.com/
+> > 
+> > Changes in v12:
+> > - rebased pcie phy bindings
+> > - Link to v11: https://lore.kernel.org/all/20250826091205.3625138-1-ziyue.zhang@oss.qualcomm.com/
+> > 
+> > Changes in v11:
+> > - move phy/perst/wake to pcie bridge node (Mani)
+> > - Link to v10: https://lore.kernel.org/all/20250811071131.982983-1-ziyue.zhang@oss.qualcomm.com/
+> > 
+> > Changes in v10:
+> > - Update PHY max_items (Johan)
+> > - Link to v9: https://lore.kernel.org/all/20250725104037.4054070-1-ziyue.zhang@oss.qualcomm.com/
+> > 
+> > Changes in v9:
+> > - Fix DTB error (Vinod)
+> > - Link to v8: https://lore.kernel.org/all/20250714081529.3847385-1-ziyue.zhang@oss.qualcomm.com/
+> > 
+> > Changes in v8:
+> > - rebase sc8280xp-qmp-pcie-phy change to solve conflicts.
+> > - Add Fixes tag to phy change (Johan)
+> > - Link to v7: https://lore.kernel.org/all/20250625092539.762075-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v7:
+> > - rebase qcs8300-ride.dtsi change to solve conflicts.
+> > - Link to v6: https://lore.kernel.org/all/20250529035635.4162149-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v6:
+> > - move the qcs8300 and sa8775p phy compatibility entry into the list of PHYs that require six clocks
+> > - Update QCS8300 and sa8775p phy dt, remove aux clock.
+> > - Fixed compile error found by kernel test robot
+> > - Link to v5: https://lore.kernel.org/all/20250507031019.4080541-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v5:
+> > - Add QCOM PCIe controller version in commit msg (Mani)
+> > - Modify platform dts change subject (Dmitry)
+> > - Fixed compile error found by kernel test robot
+> > - Link to v4: https://lore.kernel.org/linux-phy/20241220055239.2744024-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v4:
+> > - Add received tag
+> > - Fixed compile error found by kernel test robot
+> > - Link to v3: https://lore.kernel.org/lkml/202412211301.bQO6vXpo-lkp@intel.com/T/#mdd63e5be39acbf879218aef91c87b12d4540e0f7
+> > 
+> > Changes in v3:
+> > - Add received tag(Rob & Dmitry)
+> > - Update pcie_phy in gcc node to soc dtsi(Dmitry & Konrad)
+> > - remove pcieprot0 node(Konrad & Mani)
+> > - Fix format comments(Konrad)
+> > - Update base-commit to tag: next-20241213(Bjorn)
+> > - Corrected of_device_id.data from 1.9.0 to 1.34.0.
+> > - Link to v2: https://lore.kernel.org/all/20241128081056.1361739-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Changes in v2:
+> > - Fix some format comments and match the style in x1e80100(Konrad)
+> > - Add global interrupt for PCIe0 and PCIe1(Konrad)
+> > - split the soc dtsi and the platform dts into two changes(Konrad)
+> > - Link to v1: https://lore.kernel.org/all/20241114095409.2682558-1-quic_ziyuzhan@quicinc.com/
+> > 
+> > Ziyue Zhang (5):
+> >    dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
+> >      for qcs8300
+> >    arm64: dts: qcom: qcs8300: enable pcie0
+> >    arm64: dts: qcom: qcs8300-ride: enable pcie0 interface
+> >    arm64: dts: qcom: qcs8300: enable pcie1
+> >    arm64: dts: qcom: qcs8300-ride: enable pcie1 interface
+> > 
+> >   .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  17 +-
+> >   arch/arm64/boot/dts/qcom/qcs8300-ride.dts     |  84 +++++
+> >   arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 310 +++++++++++++++++-
+> >   3 files changed, 394 insertions(+), 17 deletions(-)
+> > 
+> > 
+> > base-commit: be5d4872e528796df9d7425f2bd9b3893eb3a42c
+> Hi Maintainers,
 > 
-> [snip]
+> It seems the patches get reviewed tag for a long time, can you give this
 > 
-> > diff --git a/drivers/gpu/drm/msm/msm_gem_vma.h b/drivers/gpu/drm/msm/msm_gem_vma.h
-> > new file mode 100644
-> > index 0000000000000000000000000000000000000000..f702f81529e72b86bffb4960408f1912bc65851a
-> > --- /dev/null
-> > +++ b/drivers/gpu/drm/msm/msm_gem_vma.h
-> > @@ -0,0 +1,105 @@
-> > +/* SPDX-License-Identifier: GPL-2.0-only */
-> > +/*
-> > + * Copyright (C) 2016 Red Hat
-> > + * Author: Rob Clark <robdclark@gmail.com>
-> > + */
-> > +
-> > +#ifndef _MSM_GEM_VMA_H_
-> > +#define _MSM_GEM_VMA_H_
-> > +
-> > +#define vm_dbg(fmt, ...) pr_debug("%s:%d: "fmt"\n", __func__, __LINE__, ##__VA_ARGS__)
-> > +
-> > +/**
-> > + * struct msm_vm_map_op - create new pgtable mapping
-> > + */
-> > +struct msm_vm_map_op {
-> > +       /** @iova: start address for mapping */
-> > +       uint64_t iova;
-> > +       /** @range: size of the region to map */
-> > +       uint64_t range;
-> > +       /** @offset: offset into @sgt to map */
-> > +       uint64_t offset;
-> > +       /** @sgt: pages to map, or NULL for a PRR mapping */
-> > +       struct sg_table *sgt;
-> > +       /** @prot: the mapping protection flags */
-> > +       int prot;
-> > +
-> > +       /**
-> > +        * @queue_id: The id of the submitqueue the operation is performed
-> > +        * on, or zero for (in particular) UNMAP ops triggered outside of
-> > +        * a submitqueue (ie. process cleanup)
-> > +        */
-> > +       int queue_id;
-> > +};
-> > +
-> > +/**
-> > + * struct msm_vm_unmap_op - unmap a range of pages from pgtable
-> > + */
-> > +struct msm_vm_unmap_op {
-> > +       /** @iova: start address for unmap */
-> > +       uint64_t iova;
-> > +       /** @range: size of region to unmap */
-> > +       uint64_t range;
-> > +
-> > +       /** @reason: The reason for the unmap */
-> > +       const char *reason;
-> > +
-> > +       /**
-> > +        * @queue_id: The id of the submitqueue the operation is performed
-> > +        * on, or zero for (in particular) UNMAP ops triggered outside of
-> > +        * a submitqueue (ie. process cleanup)
-> > +        */
-> > +       int queue_id;
-> > +};
-> > +
-> > +static void
-> > +vm_log(struct msm_gem_vm *vm, const char *op, uint64_t iova, uint64_t range, int queue_id)
+> series further comment or help me to merge them ?
+> Thanks very much.
 > 
-> These would have to be static-inline
+> BRs
+> Ziyue
 > 
-> But overall I'm not sure how I feel about this.. I guess the goal is
-> to reduce the size of a kms-only driver?  If so, I think you could do
-> better with some ugly ifdef (for ex, you could also remove scheduler
-> and other fields not used by kernel managed VMs from msm_gem_vm).
-
-More or less so. I also wanted to separate the complicated parts from
-the simple GEM parts, but I see your point too.
-
-I was also trying to trim the dependencies, but this can be #ifdef'd.
-
-> I'm not sure how much the savings would be, or if it is worth the pain
-> (ie. extra build configurations to test going forward, etc).  Having
-> no GPU doesn't seem like a case worth optimizing for, tbh.  You could
-> still have a single driver which binds to multiple different devices,
-> ie. if # of GPUs != # of DPUs without this with no change in
-> footprint.
-
-Counting GPUs and DPUs isn't that easy, because this also makes things
-assymmetric: some of the GPU/DPU pairs can be handled natively, some of
-them need to have buffers exported and then imported. We also have a
-usecase of splitting the GPU driver because for some of the workloads it
-would be better to load just the GPU driver or just the display driver
-(possibly replacing the other one with the proprietary driver).
-
-> 
-> BR,
-> -R
-> 
-> 
-> 
-> 
-> > +{
-> > +       int idx;
-> > +
-> > +       if (!vm->managed)
-> > +               lockdep_assert_held(&vm->mmu_lock);
-> > +
-> > +       vm_dbg("%s:%p:%d: %016llx %016llx", op, vm, queue_id, iova, iova + range);
-> > +
-> > +       if (!vm->log)
-> > +               return;
-> > +
-> > +       idx = vm->log_idx;
-> > +       vm->log[idx].op = op;
-> > +       vm->log[idx].iova = iova;
-> > +       vm->log[idx].range = range;
-> > +       vm->log[idx].queue_id = queue_id;
-> > +       vm->log_idx = (vm->log_idx + 1) & ((1 << vm->log_shift) - 1);
-> > +}
-> > +
-> > +static void
-> > +vm_unmap_op(struct msm_gem_vm *vm, const struct msm_vm_unmap_op *op)
-> > +{
-> > +       const char *reason = op->reason;
-> > +
-> > +       if (!reason)
-> > +               reason = "unmap";
-> > +
-> > +       vm_log(vm, reason, op->iova, op->range, op->queue_id);
-> > +
-> > +       vm->mmu->funcs->unmap(vm->mmu, op->iova, op->range);
-> > +}
-> > +
-> > +static int
-> > +vm_map_op(struct msm_gem_vm *vm, const struct msm_vm_map_op *op)
-> > +{
-> > +       vm_log(vm, "map", op->iova, op->range, op->queue_id);
-> > +
-> > +       return vm->mmu->funcs->map(vm->mmu, op->iova, op->sgt, op->offset,
-> > +                                  op->range, op->prot);
-> > +}
-> > +
-> > +int msm_gem_vm_sm_step_map(struct drm_gpuva_op *op, void *_arg);
-> > +int msm_gem_vm_sm_step_remap(struct drm_gpuva_op *op, void *arg);
-> > +int msm_gem_vm_sm_step_unmap(struct drm_gpuva_op *op, void *_arg);
-> > +
-> > +int msm_gem_vm_sched_init(struct msm_gem_vm *vm, struct drm_device *drm);
-> > +void msm_gem_vm_sched_fini(struct msm_gem_vm *vm);
-> > +
-> > +#endif
-> >
-> > --
-> > 2.47.3
-> >
-
--- 
-With best wishes
-Dmitry
+> -- 
+> linux-phy mailing list
+> linux-phy@lists.infradead.org
+> https://lists.infradead.org/mailman/listinfo/linux-phy
 
