@@ -1,189 +1,300 @@
-Return-Path: <linux-arm-msm+bounces-74107-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74108-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B383B86DDE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 22:14:37 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EA9B2B86E63
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 22:22:48 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 881CA1CC4618
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 20:14:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E93E5B624C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 20:20:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6269631A7FD;
-	Thu, 18 Sep 2025 20:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5FDAF31CA54;
+	Thu, 18 Sep 2025 20:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vLIp2Jvi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YxI1kMrP"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3037C2BDC3F;
-	Thu, 18 Sep 2025 20:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AA4531BC94
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 20:22:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758226472; cv=none; b=IhJS/+AgQBb0H95yKOCvdui73HGuVLm33ja/OrHGV0Ev/W/be8u1kZOdvBc9uyaWHTajA48+KqWAsXNjb56yQmNubqISFE9RycSgps+909XVQjy2VPEtgyFWJe5eTx/eZGHK/zXG9q2+lEubGVW0fiv+o+60F/HvPqGoluEgihM=
+	t=1758226950; cv=none; b=eYZ7YM8P41YPH3LQ1zty/LDxt1q8T1KYcXOt+HxiA0PRCPI97lL8zdv9+xkn4+vgbNUF6eZXCNYcuvS04v23M8vdqOCeKZsD7E00zfeaBNSMK9zlt/489hB0WOyONJ9aZYzZSrHVGHftmcJtMOF+9URG3W7jFImCsTrnSiwiXPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758226472; c=relaxed/simple;
-	bh=O5wQLmWrqsWflWIq1hbTefCtmSzwhyOY86w/cK+ayWM=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=meDHbsHiocEv4s6b4C91gPYVpt2qMY/B16P82tf8Bhhd8FK0fwsr5euPuNoQqZsij7GqA9I2nZIqYEGui+8DfSS1ViXtnlmHgkoq8JZsqXf6VwCL5d+C5ShBlzRakQ2xkNfdv+FIQ3vQK0GfOfmJYR5VxIlSwqCuLwsCUQfn3PU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vLIp2Jvi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68955C4CEF0;
-	Thu, 18 Sep 2025 20:14:31 +0000 (UTC)
+	s=arc-20240116; t=1758226950; c=relaxed/simple;
+	bh=QjNmDwrXMkVGE6227hZ98N5IIzCiYBnxH21RS1w/p04=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=HqYQuUsZ4H4N2b4hq4lJJ27kBYulW6zmemeFcctDocJVHwT98ZenKxjWvtmLM+PrAqx8Ffwsjernda/X94RyKJa6LsTTcjiN2E5csRhOlfn+nDclAuZSXPh2B4vMc2XOxlqk/muxuTRfqBVjd/l4zP/lB6I60mQbpmP/kjG9h/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YxI1kMrP; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D0DC4CEFB
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 20:22:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758226471;
-	bh=O5wQLmWrqsWflWIq1hbTefCtmSzwhyOY86w/cK+ayWM=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=vLIp2JviNDdoeJs5bzgcw9toagt6JcspQdZSI2/VUGY4b2P2T/XPi7jNDi7Ob3ixu
-	 wtW5/TiXPX8Y6C4WgRQ/Ao7SZmG3oWkR0gzgrW5hq2+h9JX0h8BIjE/J8fWsEiVRGF
-	 9wZX3a1sZO6huUr8iHt4d5HpQbJTGMLS1fiBwekPSyD5705VQTDoIHPg7/clJ9mYaP
-	 QYuRQolbLD+8lRS19zwwMBN4CWd1nqIFzZxNNGQpDf6hy8zNmZ3D47gdJkgLo65yfe
-	 0SUA8ReXk1iO2pnIL1HeAqCnfBS44SpCxBZaJZcq3WQkeBshG0T9DdpT/UP2Uh+1NL
-	 SJfSIWqbQ/YNg==
-Date: Thu, 18 Sep 2025 15:14:30 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
-Cc: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
-	krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
-	mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
-	bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
-	kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
-	kw@linux.com, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-pci@vger.kernel.org, linux-phy@lists.infradead.org,
-	qiang.yu@oss.qualcomm.com, quic_krichai@quicinc.com,
-	quic_vbadigan@quicinc.com, Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-Subject: Re: [PATCH v13 0/5] pci: qcom: Add QCS8300 PCIe support
-Message-ID: <20250918201430.GA1919478@bhelgaas>
+	s=k20201202; t=1758226949;
+	bh=QjNmDwrXMkVGE6227hZ98N5IIzCiYBnxH21RS1w/p04=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=YxI1kMrPqsBOsfgCaLSTQ5RW3a7AoWfvsOwTpUcqmiXqf3R88GjJcd6BfSMY0bPOZ
+	 S3r/XpEKWhzMJX1y6DqZKlKf90zRoMcXStKcC6/jAQv/bwE7fZ+Co2YpPaAKbow/yq
+	 nPBjpG5soOwhHaQ1UTnDVuLC/VK3kSm1IUB+aRehFcKs9ceFMXUO95PqsNtSl9i0ds
+	 gMvnGF2TBTqeWMBUU7w47crXAxFccnSZl9TUqmDO0wnyEgldEn/rA2pc+qdPN1Yziw
+	 AouHPka3McJOvZ1Ol7IdmZLulIn3a+74NpR6bNZb+Rv0+DYjkDN4002aZi2Xld/Tz7
+	 hd/DiOUMRKseg==
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-62ecd3c21d3so2097976a12.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 13:22:29 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCVmslVSm7nkSbhUlo69nrihhS0KHkPHI/eUqfUbLMpR8EPRd9CgQ1xJeXqxw0+1Td3EfrYgdHAP8WkbaijQ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBPYMG+D0QEP0RfuZZrZcs/zcsmp4dfTrH7GBjc9ilGcGWvAQO
+	RaFxg1FJLU+yapBAd/925R/JOsDaw6TOh5vlotlI9rfEF7nr2dJ5pAjglWKVu4mrNnn1+PmoaU6
+	FpdATXwcEbDIy08nMyhGwXEyaIVr3ww==
+X-Google-Smtp-Source: AGHT+IFajxjcKFx3zWO77Gy/c7uJiTNdaDUhcRVQ1r7GoNy7DX8Ynp1ebJyWs8GOaL2Y1BaCBd9H5rnv7Pyyv/bZLi0=
+X-Received: by 2002:a05:6402:21c6:b0:62f:a51b:f839 with SMTP id
+ 4fb4d7f45d1cf-62fc0a6e182mr518403a12.32.1758226948397; Thu, 18 Sep 2025
+ 13:22:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f16f14ab-ff11-42a2-b63b-ed28e85d620b@oss.qualcomm.com>
+References: <20250813214949.897858-1-robh@kernel.org>
+In-Reply-To: <20250813214949.897858-1-robh@kernel.org>
+From: Rob Herring <robh@kernel.org>
+Date: Thu, 18 Sep 2025 15:22:15 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+vUNtMw6JS0ac6a8LTdJBB+UepadpDxP_S8vr6QwUiNA@mail.gmail.com>
+X-Gm-Features: AS18NWDedZhOrWTNOyy1X1kKu1N_5AKCHYvPnHcoB1LsY8J75zpcDn2q59JgBhQ
+Message-ID: <CAL_Jsq+vUNtMw6JS0ac6a8LTdJBB+UepadpDxP_S8vr6QwUiNA@mail.gmail.com>
+Subject: Re: [PATCH v2] media: Use of_reserved_mem_region_to_resource() for "memory-region"
+To: Ming Qian <ming.qian@nxp.com>, Zhou Peng <eagle.zhou@nxp.com>, 
+	Mauro Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia <quic_vgarodia@quicinc.com>, 
+	Dikshita Agarwal <quic_dikshita@quicinc.com>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	"Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: Ming Qian <ming.qian@oss.nxp.com>, linux-media@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Sep 18, 2025 at 10:51:22AM +0800, Ziyue Zhang wrote:
-> On 9/8/2025 3:38 PM, Ziyue Zhang wrote:
-> > This series depend on this patch
-> > https://lore.kernel.org/all/20250826-pakala-v2-3-74f1f60676c6@oss.qualcomm.com/
+On Wed, Aug 13, 2025 at 4:50=E2=80=AFPM Rob Herring (Arm) <robh@kernel.org>=
+ wrote:
+>
+> Use the newly added of_reserved_mem_region_to_resource() function to
+> handle "memory-region" properties.
+>
+> Reviewed-by: Dikshita Agarwal <quic_dikshita@quicinc.com>
+> Reviewed-by: Ming Qian <ming.qian@oss.nxp.com>
+> Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+> ---
+> v2:
+>  - Rebase on v6.17-rc1
+> ---
+>  drivers/media/platform/amphion/vpu_core.c     | 40 +++++--------------
+>  .../media/platform/qcom/iris/iris_firmware.c  | 18 +++------
+>  drivers/media/platform/qcom/venus/firmware.c  | 19 +++------
+>  3 files changed, 21 insertions(+), 56 deletions(-)
 
-That patch ("PCI: qcom: Restrict port parsing only to pci child
-nodes") is currently in the pci/controller/qcom branch:
+Ping!
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/pci/pci.git/log/?h=controller/qcom
-
-and won't be merged upstream until the v6.18 merge window.  This will
-probably be between Sep 28 and Oct 12.
-
-I don't know what that means for the dt-binding and arm64 dts changes
-in this series, but typically changes like this series are merged via
-a different tree than the PCI changes, so the ordering isn't
-guaranteed until one of them is pulled by Linus.
-
-> > This series adds document, phy, configs support for PCIe in QCS8300.
-> > It also adds 'link_down' reset for sa8775p.
-> > 
-> > Have follwing changes:
-> > 	- Add dedicated schema for the PCIe controllers found on QCS8300.
-> > 	- Add compatible for qcs8300 platform.
-> > 	- Add configurations in devicetree for PCIe0, including registers, clocks, interrupts and phy setting sequence.
-> > 	- Add configurations in devicetree for PCIe1, including registers, clocks, interrupts and phy setting sequence.
-> > 
-> > Signed-off-by: Krishna chaitanya chundru <quic_krichai@quicinc.com>
-> > Signed-off-by: Ziyue Zhang <quic_ziyuzhan@quicinc.com>
-> > ---
-> > Changes in v13:
-> > - Fix dtb error
-> > - Link to v12: https://lore.kernel.org/all/20250905071448.2034594-1-ziyue.zhang@oss.qualcomm.com/
-> > 
-> > Changes in v12:
-> > - rebased pcie phy bindings
-> > - Link to v11: https://lore.kernel.org/all/20250826091205.3625138-1-ziyue.zhang@oss.qualcomm.com/
-> > 
-> > Changes in v11:
-> > - move phy/perst/wake to pcie bridge node (Mani)
-> > - Link to v10: https://lore.kernel.org/all/20250811071131.982983-1-ziyue.zhang@oss.qualcomm.com/
-> > 
-> > Changes in v10:
-> > - Update PHY max_items (Johan)
-> > - Link to v9: https://lore.kernel.org/all/20250725104037.4054070-1-ziyue.zhang@oss.qualcomm.com/
-> > 
-> > Changes in v9:
-> > - Fix DTB error (Vinod)
-> > - Link to v8: https://lore.kernel.org/all/20250714081529.3847385-1-ziyue.zhang@oss.qualcomm.com/
-> > 
-> > Changes in v8:
-> > - rebase sc8280xp-qmp-pcie-phy change to solve conflicts.
-> > - Add Fixes tag to phy change (Johan)
-> > - Link to v7: https://lore.kernel.org/all/20250625092539.762075-1-quic_ziyuzhan@quicinc.com/
-> > 
-> > Changes in v7:
-> > - rebase qcs8300-ride.dtsi change to solve conflicts.
-> > - Link to v6: https://lore.kernel.org/all/20250529035635.4162149-1-quic_ziyuzhan@quicinc.com/
-> > 
-> > Changes in v6:
-> > - move the qcs8300 and sa8775p phy compatibility entry into the list of PHYs that require six clocks
-> > - Update QCS8300 and sa8775p phy dt, remove aux clock.
-> > - Fixed compile error found by kernel test robot
-> > - Link to v5: https://lore.kernel.org/all/20250507031019.4080541-1-quic_ziyuzhan@quicinc.com/
-> > 
-> > Changes in v5:
-> > - Add QCOM PCIe controller version in commit msg (Mani)
-> > - Modify platform dts change subject (Dmitry)
-> > - Fixed compile error found by kernel test robot
-> > - Link to v4: https://lore.kernel.org/linux-phy/20241220055239.2744024-1-quic_ziyuzhan@quicinc.com/
-> > 
-> > Changes in v4:
-> > - Add received tag
-> > - Fixed compile error found by kernel test robot
-> > - Link to v3: https://lore.kernel.org/lkml/202412211301.bQO6vXpo-lkp@intel.com/T/#mdd63e5be39acbf879218aef91c87b12d4540e0f7
-> > 
-> > Changes in v3:
-> > - Add received tag(Rob & Dmitry)
-> > - Update pcie_phy in gcc node to soc dtsi(Dmitry & Konrad)
-> > - remove pcieprot0 node(Konrad & Mani)
-> > - Fix format comments(Konrad)
-> > - Update base-commit to tag: next-20241213(Bjorn)
-> > - Corrected of_device_id.data from 1.9.0 to 1.34.0.
-> > - Link to v2: https://lore.kernel.org/all/20241128081056.1361739-1-quic_ziyuzhan@quicinc.com/
-> > 
-> > Changes in v2:
-> > - Fix some format comments and match the style in x1e80100(Konrad)
-> > - Add global interrupt for PCIe0 and PCIe1(Konrad)
-> > - split the soc dtsi and the platform dts into two changes(Konrad)
-> > - Link to v1: https://lore.kernel.org/all/20241114095409.2682558-1-quic_ziyuzhan@quicinc.com/
-> > 
-> > Ziyue Zhang (5):
-> >    dt-bindings: phy: qcom,sc8280xp-qmp-pcie-phy: Update pcie phy bindings
-> >      for qcs8300
-> >    arm64: dts: qcom: qcs8300: enable pcie0
-> >    arm64: dts: qcom: qcs8300-ride: enable pcie0 interface
-> >    arm64: dts: qcom: qcs8300: enable pcie1
-> >    arm64: dts: qcom: qcs8300-ride: enable pcie1 interface
-> > 
-> >   .../phy/qcom,sc8280xp-qmp-pcie-phy.yaml       |  17 +-
-> >   arch/arm64/boot/dts/qcom/qcs8300-ride.dts     |  84 +++++
-> >   arch/arm64/boot/dts/qcom/qcs8300.dtsi         | 310 +++++++++++++++++-
-> >   3 files changed, 394 insertions(+), 17 deletions(-)
-> > 
-> > 
-> > base-commit: be5d4872e528796df9d7425f2bd9b3893eb3a42c
-> Hi Maintainers,
-> 
-> It seems the patches get reviewed tag for a long time, can you give this
-> 
-> series further comment or help me to merge them ?
-> Thanks very much.
-> 
-> BRs
-> Ziyue
-> 
-> -- 
-> linux-phy mailing list
-> linux-phy@lists.infradead.org
-> https://lists.infradead.org/mailman/listinfo/linux-phy
+>
+> diff --git a/drivers/media/platform/amphion/vpu_core.c b/drivers/media/pl=
+atform/amphion/vpu_core.c
+> index da00f5fc0e5d..168f0514851e 100644
+> --- a/drivers/media/platform/amphion/vpu_core.c
+> +++ b/drivers/media/platform/amphion/vpu_core.c
+> @@ -10,7 +10,7 @@
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+>  #include <linux/of.h>
+> -#include <linux/of_address.h>
+> +#include <linux/of_reserved_mem.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/slab.h>
+>  #include <linux/types.h>
+> @@ -542,47 +542,30 @@ const struct vpu_core_resources *vpu_get_resource(s=
+truct vpu_inst *inst)
+>
+>  static int vpu_core_parse_dt(struct vpu_core *core, struct device_node *=
+np)
+>  {
+> -       struct device_node *node;
+>         struct resource res;
+>         int ret;
+>
+> -       if (of_count_phandle_with_args(np, "memory-region", NULL) < 2) {
+> -               dev_err(core->dev, "need 2 memory-region for boot and rpc=
+\n");
+> -               return -ENODEV;
+> +       ret =3D of_reserved_mem_region_to_resource(np, 0, &res);
+> +       if (ret) {
+> +               dev_err(core->dev, "Cannot get boot-region\n");
+> +               return ret;
+>         }
+>
+> -       node =3D of_parse_phandle(np, "memory-region", 0);
+> -       if (!node) {
+> -               dev_err(core->dev, "boot-region of_parse_phandle error\n"=
+);
+> -               return -ENODEV;
+> -       }
+> -       if (of_address_to_resource(node, 0, &res)) {
+> -               dev_err(core->dev, "boot-region of_address_to_resource er=
+ror\n");
+> -               of_node_put(node);
+> -               return -EINVAL;
+> -       }
+>         core->fw.phys =3D res.start;
+>         core->fw.length =3D resource_size(&res);
+>
+> -       of_node_put(node);
+> -
+> -       node =3D of_parse_phandle(np, "memory-region", 1);
+> -       if (!node) {
+> -               dev_err(core->dev, "rpc-region of_parse_phandle error\n")=
+;
+> -               return -ENODEV;
+> -       }
+> -       if (of_address_to_resource(node, 0, &res)) {
+> -               dev_err(core->dev, "rpc-region of_address_to_resource err=
+or\n");
+> -               of_node_put(node);
+> -               return -EINVAL;
+> +       ret =3D of_reserved_mem_region_to_resource(np, 1, &res);
+> +       if (ret) {
+> +               dev_err(core->dev, "Cannot get rpc-region\n");
+> +               return ret;
+>         }
+> +
+>         core->rpc.phys =3D res.start;
+>         core->rpc.length =3D resource_size(&res);
+>
+>         if (core->rpc.length < core->res->rpc_size + core->res->fwlog_siz=
+e) {
+>                 dev_err(core->dev, "the rpc-region <%pad, 0x%x> is not en=
+ough\n",
+>                         &core->rpc.phys, core->rpc.length);
+> -               of_node_put(node);
+>                 return -EINVAL;
+>         }
+>
+> @@ -594,7 +577,6 @@ static int vpu_core_parse_dt(struct vpu_core *core, s=
+truct device_node *np)
+>         if (ret !=3D VPU_CORE_MEMORY_UNCACHED) {
+>                 dev_err(core->dev, "rpc region<%pad, 0x%x> isn't uncached=
+\n",
+>                         &core->rpc.phys, core->rpc.length);
+> -               of_node_put(node);
+>                 return -EINVAL;
+>         }
+>
+> @@ -606,8 +588,6 @@ static int vpu_core_parse_dt(struct vpu_core *core, s=
+truct device_node *np)
+>         core->act.length =3D core->rpc.length - core->res->rpc_size - cor=
+e->log.length;
+>         core->rpc.length =3D core->res->rpc_size;
+>
+> -       of_node_put(node);
+> -
+>         return 0;
+>  }
+>
+> diff --git a/drivers/media/platform/qcom/iris/iris_firmware.c b/drivers/m=
+edia/platform/qcom/iris/iris_firmware.c
+> index f1b5cd56db32..40448429ba97 100644
+> --- a/drivers/media/platform/qcom/iris/iris_firmware.c
+> +++ b/drivers/media/platform/qcom/iris/iris_firmware.c
+> @@ -19,8 +19,7 @@ static int iris_load_fw_to_memory(struct iris_core *cor=
+e, const char *fw_name)
+>         u32 pas_id =3D core->iris_platform_data->pas_id;
+>         const struct firmware *firmware =3D NULL;
+>         struct device *dev =3D core->dev;
+> -       struct reserved_mem *rmem;
+> -       struct device_node *node;
+> +       struct resource res;
+>         phys_addr_t mem_phys;
+>         size_t res_size;
+>         ssize_t fw_size;
+> @@ -30,17 +29,12 @@ static int iris_load_fw_to_memory(struct iris_core *c=
+ore, const char *fw_name)
+>         if (strlen(fw_name) >=3D MAX_FIRMWARE_NAME_SIZE - 4)
+>                 return -EINVAL;
+>
+> -       node =3D of_parse_phandle(dev->of_node, "memory-region", 0);
+> -       if (!node)
+> -               return -EINVAL;
+> -
+> -       rmem =3D of_reserved_mem_lookup(node);
+> -       of_node_put(node);
+> -       if (!rmem)
+> -               return -EINVAL;
+> +       ret =3D of_reserved_mem_region_to_resource(dev->of_node, 0, &res)=
+;
+> +       if (ret)
+> +               return ret;
+>
+> -       mem_phys =3D rmem->base;
+> -       res_size =3D rmem->size;
+> +       mem_phys =3D res.start;
+> +       res_size =3D resource_size(&res);
+>
+>         ret =3D request_firmware(&firmware, fw_name, dev);
+>         if (ret)
+> diff --git a/drivers/media/platform/qcom/venus/firmware.c b/drivers/media=
+/platform/qcom/venus/firmware.c
+> index 66a18830e66d..37c0fd52333e 100644
+> --- a/drivers/media/platform/qcom/venus/firmware.c
+> +++ b/drivers/media/platform/qcom/venus/firmware.c
+> @@ -9,7 +9,6 @@
+>  #include <linux/iommu.h>
+>  #include <linux/io.h>
+>  #include <linux/of.h>
+> -#include <linux/of_address.h>
+>  #include <linux/of_reserved_mem.h>
+>  #include <linux/platform_device.h>
+>  #include <linux/of_device.h>
+> @@ -83,8 +82,7 @@ static int venus_load_fw(struct venus_core *core, const=
+ char *fwname,
+>                          phys_addr_t *mem_phys, size_t *mem_size)
+>  {
+>         const struct firmware *mdt;
+> -       struct reserved_mem *rmem;
+> -       struct device_node *node;
+> +       struct resource res;
+>         struct device *dev;
+>         ssize_t fw_size;
+>         void *mem_va;
+> @@ -94,15 +92,8 @@ static int venus_load_fw(struct venus_core *core, cons=
+t char *fwname,
+>         *mem_size =3D 0;
+>
+>         dev =3D core->dev;
+> -       node =3D of_parse_phandle(dev->of_node, "memory-region", 0);
+> -       if (!node) {
+> -               dev_err(dev, "no memory-region specified\n");
+> -               return -EINVAL;
+> -       }
+> -
+> -       rmem =3D of_reserved_mem_lookup(node);
+> -       of_node_put(node);
+> -       if (!rmem) {
+> +       ret =3D of_reserved_mem_region_to_resource(dev->of_node, 0, &res)=
+;
+> +       if (ret) {
+>                 dev_err(dev, "failed to lookup reserved memory-region\n")=
+;
+>                 return -EINVAL;
+>         }
+> @@ -117,8 +108,8 @@ static int venus_load_fw(struct venus_core *core, con=
+st char *fwname,
+>                 goto err_release_fw;
+>         }
+>
+> -       *mem_phys =3D rmem->base;
+> -       *mem_size =3D rmem->size;
+> +       *mem_phys =3D res.start;
+> +       *mem_size =3D resource_size(&res);
+>
+>         if (*mem_size < fw_size || fw_size > VENUS_FW_MEM_SIZE) {
+>                 ret =3D -EINVAL;
+> --
+> 2.47.2
+>
 
