@@ -1,132 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-74103-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74104-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E95D4B8670B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 20:43:35 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1704EB86974
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 20:54:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C157F1C25388
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 18:43:57 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 930007BCCD6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 18:52:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C3912D3A6A;
-	Thu, 18 Sep 2025 18:43:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE450288C35;
+	Thu, 18 Sep 2025 18:53:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b="O9EVDpf5"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ggOo/wv6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864B71643B;
-	Thu, 18 Sep 2025 18:43:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.137.202.133
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF6127B357;
+	Thu, 18 Sep 2025 18:53:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758221011; cv=none; b=V2lpnQ7pZ2YJ6aZYzE2p48494Urtcoocy0fRqoAPTnZX2IvMzN+sQngTIfWzNeYj3k17F621raY7dFU7EO5R7nqJwv1AmZ38DP1INnQi0BzuyeJBAa/ZSKxSpRQRNKH91Sy1cPvr3citZSc1Za++qm84KDSB0AIZU/VVYqm1usU=
+	t=1758221638; cv=none; b=cEqnSh9dunaHECkyakMZcLX8enHnBA3iOP0mZ4Ttw4g32tk93nleVHaP3I6plBq4O3uF4WSdMCDu/eV5y9nNyMEo+0JgvaBKEYf5IL68XUMUtlRqSVwKGTGSNK4pEPgc0Roxz3j5ycEmPPfWKod2d+fPUG//wm9DdxoJ76fc5O4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758221011; c=relaxed/simple;
-	bh=lOi4oPKaTPDoudyEXtbkS6QEa07mzTiiZ91A7/9u70E=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VhpKb2c7Nw2G19Ov2pBdS9/rB4ga6jjKK9ePJDt/bLmSxXHQBH/vs1ZDGDg+8c52qE6+Vw/FEGZ6zzgxzm8SOAc31NFQj9l6WiZFAGJIWWGJeNty8208xk93Oy/aP9Y5DscqY+9GgRYj1Bskw+LEpUUg+ea5pVtGDqyaCsjS6TA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org; spf=none smtp.mailfrom=infradead.org; dkim=pass (2048-bit key) header.d=infradead.org header.i=@infradead.org header.b=O9EVDpf5; arc=none smtp.client-ip=198.137.202.133
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=infradead.org
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=infradead.org
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-	Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
-	Message-ID:Sender:Reply-To:Content-ID:Content-Description;
-	bh=liLJhgZknOFrb3ADlwKcsc/J07rUAwg/dZtDpx06Vic=; b=O9EVDpf5g7zgd/J126cLkxpokq
-	67CZ2pUYtUpJvmRk+WYzJi4DRPy27TOexm3lqamKDUh9IAlUGC03Lo2+0dFCanLLcxE4Mq1PqYmfD
-	zsG861c8Yr5xX5D52wzOhnO9imrDSEtHEzBeBr7ShxCDXCN7KUWzGlLz5OtEM/SgQI+7R701O6suA
-	cqJ61q2nppVq1TNR9wmWEcUpWFM/p7f1YIhX+ZAp278XRRDKeWyKepe8MLKNd1KkIFXmrisE/qJNF
-	AeU2q6OwccURPflquwzeQOYrJnhz8Z3QCRMH4kKvxK1qifV6WvifJnGULJgOXEDIPW+XnTMdlRxk4
-	KPFtZ1jw==;
-Received: from [50.53.25.54] (helo=[192.168.254.17])
-	by bombadil.infradead.org with esmtpsa (Exim 4.98.2 #2 (Red Hat Linux))
-	id 1uzJbK-00000000t2F-3Pb9;
-	Thu, 18 Sep 2025 18:43:26 +0000
-Message-ID: <be6e146b-3429-4264-bf04-2ea15957f010@infradead.org>
-Date: Thu, 18 Sep 2025 11:43:25 -0700
+	s=arc-20240116; t=1758221638; c=relaxed/simple;
+	bh=8pFcwNdTRRXNyhxMg3EVbIUjIj9oGklWQFId1hTxeWE=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=WkDTKSUT7e6vZYBfwufMerreXl7Fv+gxvo1DEOfdH4MCs9emKgc5g8oB7SFkM32ZUqJm7KaATuoevAaMlSd7k3IMYQSrx0eLQRe7pUgQK4I8PuIjSYP5qRLiw0vjLlgtPjCk2w+ps93Ldcf2xkTZrwkF0frDu0n7n4qrEmpuEfo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ggOo/wv6; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F161BC4CEE7;
+	Thu, 18 Sep 2025 18:53:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758221638;
+	bh=8pFcwNdTRRXNyhxMg3EVbIUjIj9oGklWQFId1hTxeWE=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=ggOo/wv6spysNgu8Zxg51el+9c+Z9BAXohzEw+5T15dJ+3eruutBRss9+oDCUC2vW
+	 PEeWGEyCt9dR8CEqji9p5mJLcd+FMZrCJNWWjjECY5+khLbKSIa9PoMxqUK4W/T1gu
+	 RoSutHlVDJuXpFBeL2IwrWkYFR9Fu0sH50+eZHDzCv6em8UCH6HmvAXQ+iv3EDTHCN
+	 dNBxRSIhbGYde6Njg+JNAphhQBxMFlvg/936HWE6jaV/2YoG6IQJkrCeYpXZLL2pqZ
+	 JdqFD+eXg8aoLS/s0W2Il8jmiuSOCoGjEPHxSbhwKd/sHAHXDGjgU3t6APcksbGCOH
+	 /ISDzYzl48cfg==
+Date: Thu, 18 Sep 2025 13:53:56 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Saravana Kannan <saravanak@google.com>, linux-pci@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Brian Norris <briannorris@chromium.org>
+Subject: Re: [PATCH v3 4/4] PCI: qcom: Allow pwrctrl core to control PERST#
+ if 'reset-gpios' property is available
+Message-ID: <20250918185356.GA1879416@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC][PATCH v3 09/16] genirq/irqdesc: Have nr_irqs as non-static
-To: Eugen Hristev <eugen.hristev@linaro.org>,
- Thomas Gleixner <tglx@linutronix.de>, David Hildenbrand <david@redhat.com>,
- linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-mm@kvack.org, andersson@kernel.org, pmladek@suse.com, corbet@lwn.net,
- mhocko@suse.com
-Cc: tudor.ambarus@linaro.org, mukesh.ojha@oss.qualcomm.com,
- linux-arm-kernel@lists.infradead.org, linux-hardening@vger.kernel.org,
- jonechou@google.com, rostedt@goodmis.org, linux-doc@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250912150855.2901211-1-eugen.hristev@linaro.org>
- <20250912150855.2901211-10-eugen.hristev@linaro.org> <87cy7q9k8y.ffs@tglx>
- <87a52u9jyl.ffs@tglx> <8df2cf28-c15e-4692-a127-6a5c966a965e@linaro.org>
- <2bd45749-e483-45ea-9c55-74c5ba15b012@redhat.com> <87v7lh891c.ffs@tglx>
- <95ff36c2-284a-46ba-984b-a3286402ebf8@redhat.com>
- <24d6a51d-f5f8-44d7-94cb-58b71ebf473a@linaro.org>
- <7f4aa4c6-7b77-422b-9f7a-d01530c54bff@redhat.com> <87segk9az5.ffs@tglx>
- <f8d3c2d4-8399-4169-8527-3c87922f2ef1@redhat.com> <87jz1w88zq.ffs@tglx>
- <c3ab4a21-183f-495a-b3b5-cc74b392eebc@linaro.org>
-Content-Language: en-US
-From: Randy Dunlap <rdunlap@infradead.org>
-In-Reply-To: <c3ab4a21-183f-495a-b3b5-cc74b392eebc@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <gnaubphg6iyh23vtf2flsjxoot7psgla7cr2c5jpecaozh4vf3@mzcmg74g3ogk>
 
-
-
-On 9/18/25 6:53 AM, Eugen Hristev wrote:
+On Wed, Sep 17, 2025 at 03:53:25PM +0530, Manivannan Sadhasivam wrote:
+> On Tue, Sep 16, 2025 at 03:48:10PM GMT, Bjorn Helgaas wrote:
+> > On Fri, Sep 12, 2025 at 02:05:04PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
+> > > 
+> > > For historic reasons, the pcie-qcom driver was controlling the
+> > > power supply and PERST# GPIO of the PCIe slot.
+> > 
+> > > This turned out to be an issue as the power supply requirements
+> > > differ between components. For instance, some of the WLAN
+> > > chipsets used in Qualcomm systems were connected to the Root
+> > > Port in a non-standard way using their own connectors.
+> > 
+> > This is kind of hand-wavy.  I don't know what a non-standard
+> > connector has to do with this.  I assume there's still a PCIe link
+> > from Root Port to WLAN, and there's still a PERST# signal to the
+> > WLAN device and a Root Port GPIO that asserts/deasserts it.
 > 
+> If we have a non-standard connector, then the power supply
+> requirements change.  There is no longer the standard 3.3v, 3.3Vaux,
+> 1.8v supplies, but plenty more.  For instance, take a look at the
+> WCN6855 WiFi/BT combo chip in the Lenovo X13s laptop:
 > 
-> So, one direction to follow from this discussion is to have the
-> inspection entry and inspection table for all these entries.
-> Now, one burning question open for debate, is, should this reside into mm ?
-> mm/inspect.h would have to define the inspection entry struct, and some
-> macros to help everyone add an inspection entry.
-> E.g. INSPECTION_ENTRY(my ptr, my size);
-> and this would be used all over the kernel wherever folks want to
-> register something.
-> Now the second part is, where to keep all the inspection drivers ?
-> Would it make sense to have mm/inspection/inspection_helpers.h which
-> would keep the table start/end, some macros to traverse the tables, and
-> this would be included by the inspection drivers.
-> inspection drivers would then probe via any mechanism, and tap into the
-> inspection table.
-
-Surely someone wants to inspect more than mm/ variables.
-I prefer kernel/inspect/ etc.
-
-> I am thinking that my model with a single backend can be enhanced by
-> allowing any inspection driver to access it. And further on, each
-> inspection driver would register a notifier to be called when an entry
-> is being created or not. This would mean N possible drivers connected to
-> the table at the same time. ( if that would make sense...)
-> Would it make sense for pstore to have an inspection driver that would
-> be connected here to get different kinds of stuff ?
-> Would it make sense to have some debugfs driver that would just expose
-> to user space different regions ? Perhaps something similar with
-> /proc/kcore but not the whole kernel memory rather only the exposed
-> inspection entries.
-> Now, for the dynamic memory, e.g. memblock_alloc and friends ,
-> would it be interesting to have a flag e.g. MEMBLOCK_INSPECT, that would
-> be used when calling it, and in the background, this would request an
-> inspection_entry being created ? Or it makes more sense to call some
-> function like inspect_register as a different call directly at the
-> allocation point ?
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts#n414
 > 
-> Feel free to throw your opinion at each of the above.
-> Thanks for helping out !
+> These supplies directly go from the host PMIC to the WCN6855 chip
+> integrated in the PCB itself. And these supplies need to be turned
+> on/off in a sequence also, together with the EN/SWCTRL GPIOs, while
+> sharing with the Bluetooth driver.
 
-In general I like the way that this is going.
-Thanks to all of you for this discussion.
+It sounds like the WCN6855 power supplies have nothing to do with the
+qcom PCIe controller, the Root Port, or any switches leading to the
+WCN6855.  And I guess the same for the wlan-enable, bt-enable, and
+swctrl GPIOs?
 
--- 
-~Randy
+  wcn6855-pmu {
+          compatible = "qcom,wcn6855-pmu";
+          wlan-enable-gpios = <&tlmm 134 GPIO_ACTIVE_HIGH>;
+          bt-enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
+          swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
+          regulators {
+                  vreg_pmu_rfa_cmn_0p8: ldo0 {
+                          regulator-name = "vreg_pmu_rfa_cmn_0p8";
+                  ...
 
+  &pcie4_port0 {
+          wifi@0 {
+                  compatible = "pci17cb,1103";
+                  vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
+                  ...
+
+But I guess PERST# isn't described in the same place (not in
+wcn6855-pmu)?  Looks like maybe it's this, which IIUC is part of the
+pcie4 host bridge?
+
+  &pcie4 {
+          max-link-speed = <2>;
+          perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
+          wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
+
+Does that mean this PERST# signal is driven by a GPIO and routed
+directly to the WCN6855?  Seems like there's some affinity between the
+WCN6855 power supplies and the WCN6855 PERST# signal, and maybe they
+would be better described together?
 
