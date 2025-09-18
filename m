@@ -1,119 +1,108 @@
-Return-Path: <linux-arm-msm+bounces-74031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74032-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 869EFB83004
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 07:22:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 843E6B83010
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 07:23:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2C011621CC9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 05:22:14 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 47BCD4A3E4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 05:23:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03E3A29E113;
-	Thu, 18 Sep 2025 05:22:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F4FB29C325;
+	Thu, 18 Sep 2025 05:23:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="L64GzKng"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UTMtazp4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mailout3.samsung.com (mailout3.samsung.com [203.254.224.33])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3745F27380C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 05:22:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.254.224.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06398217733
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 05:23:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758172927; cv=none; b=DWw1MSz3s+PIN6xnFonNoEQIFYEUM4SBBzJ7hAKUcntBqD2gPDVXpeHk8PD/In3rsJ5HYUrdF0CSz2WCTOLKOp8oAJyzOI97qcC7bqqiJyKHOny1uEy6dWzlfEDC7iaN1euZT284jimzCf6s0WVNE8cv+oUz+/PERE1UjNO3ubY=
+	t=1758172989; cv=none; b=dXRLNjP4I79X1zxNp6K4Z/yyZxQYQ45EyeaDa4cWxoQdP23RNNtJ3nEZTm/PHcTez9n5Y7feJlcigI2dKcWrgaHzKv1mlnaPq7PJFevA1fhjije4QwFOsXH5C/qMe6LxOgaKDwHuSVx611J0UGSJ5XvjNjKreRTo1mikmkVwDtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758172927; c=relaxed/simple;
-	bh=KUcCexFEbCDMXaMBUTpgROGMapdiXsN4o/IinUg9NQU=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:Message-ID:MIME-Version:
-	 Content-Type:References; b=lUp2AbSKVOYaZKfOdHMnlEJo8toI5ENC/7xFm7ZVDyIPYv8P5x9Y/XNdmYg2JKSrjWKuz9ucp0MYyLTdDmVXN7WrDYhA1G3EaA4oQicD90iW+580lfV5K8CKpZ/zLjTcSMx+UGDCg2P1iY+FSN1oTuyEuTib3y6H/5CsbFbNd5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=L64GzKng; arc=none smtp.client-ip=203.254.224.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-	by mailout3.samsung.com (KnoxPortal) with ESMTP id 20250918052204epoutp039b4768f450e15fdfe8f8b590267de5a9~mSPWTrmXS2043320433epoutp036
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 05:22:04 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com 20250918052204epoutp039b4768f450e15fdfe8f8b590267de5a9~mSPWTrmXS2043320433epoutp036
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1758172924;
-	bh=miH9oPHylJR7rAEXE40TRuXYzTxBfP58QKYbk6GkLcI=;
-	h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-	b=L64GzKngS7YlSt4WWYibkSSA0EHeaeAMF4xfHmzkjCra9RPbSzqeOyGOdzjvEAHY3
-	 P8e/WKfFv6wydXCK/+ufzyC9tDpHYLiXdNcYR8EmVQw2gJkDu/4L1pIcKqPt+2jgZG
-	 JQVJNywD5oCLUyvCnP0gjImiL5wYa4tltc8XjErk=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPS id
-	20250918052203epcas5p4155efc46a73e7dd8832cd87915560575~mSPV2urv61929319293epcas5p4i;
-	Thu, 18 Sep 2025 05:22:03 +0000 (GMT)
-Received: from epcas5p2.samsung.com (unknown [182.195.38.89]) by
-	epsnrtp02.localdomain (Postfix) with ESMTP id 4cS3sk6sDnz2SSKk; Thu, 18 Sep
-	2025 05:22:02 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
-	epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
-	20250918052202epcas5p4a32a896d2f6a0e42142480b823868def~mSPUu4Ywl0771707717epcas5p42;
-	Thu, 18 Sep 2025 05:22:02 +0000 (GMT)
-Received: from INBRO002756 (unknown [107.122.3.168]) by epsmtip2.samsung.com
-	(KnoxPortal) with ESMTPA id
-	20250918052200epsmtip28e7901f8ee796c304aded6f80c83cc5d~mSPSr5asu1966619666epsmtip2b;
-	Thu, 18 Sep 2025 05:22:00 +0000 (GMT)
-From: "Alim Akhtar" <alim.akhtar@samsung.com>
-To: "'Ram Kumar Dwivedi'" <quic_rdwivedi@quicinc.com>,
-	<avri.altman@wdc.com>, <bvanassche@acm.org>, <robh@kernel.org>,
-	<krzk+dt@kernel.org>, <conor+dt@kernel.org>, <mani@kernel.org>,
-	<James.Bottomley@HansenPartnership.com>, <martin.petersen@oracle.com>
-Cc: <linux-scsi@vger.kernel.org>, <devicetree@vger.kernel.org>,
-	<linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>
-In-Reply-To: <20250917140933.2042689-5-quic_rdwivedi@quicinc.com>
-Subject: RE: [PATCH V6 4/4] ufs: ufs-qcom: Add support for limiting HS gear
- and rate
-Date: Thu, 18 Sep 2025 10:51:58 +0530
-Message-ID: <06fd01dc285c$2a0141e0$7e03c5a0$@samsung.com>
+	s=arc-20240116; t=1758172989; c=relaxed/simple;
+	bh=TLOVWO8z3YKEVC/nG7+rCJR0ydpCskrgzD5ovtmPwE0=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=NrttBMQGz3rrZAnteK/n/51P+Q5QWztb6I3aLIH0jC2ZyGstF/s3AcJ30wvvbvwJDd/saYo3tbeiuGXl+Gqic9Yg++6uNSJ16g9djKe7F3dcdv2mK5zy3VYVYYKcdznniuKCvjnGbRwzXwKRBUph9ravDFQZP7+U+kz6zHNhVaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UTMtazp4; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b5503438189so153694a12.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 17 Sep 2025 22:23:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758172987; x=1758777787; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TLOVWO8z3YKEVC/nG7+rCJR0ydpCskrgzD5ovtmPwE0=;
+        b=UTMtazp4XYHPTLcZ0zHHCcpO0xHIRSB2lMJPxIoGzrvIt9EoD96ld88ffOtZgirzuD
+         ZD5KbZbNZ9a/L2mqKGWCHxw22nWAy/BwQYf69/jnVi7F764hg+b3pOCU4aP6e9oOkNMw
+         cmhR/HBpzMnsq1Nweon1AxOgBvXoWtxUy3msrsuKeGYbVLA5cD++CM9tg+Zt3bg2ajHc
+         XspbdBSW97T/9Ef1jzffWN4ZwzX1vQJBHe7WNzDScnJISR0AkO4TlyLozbZ+pkxZE2Re
+         VmQBX7wt/fjsmIyFlNYk25ZSPXyvoIDlXGzx1xthR9h8NT9IBPWhZmjQ2HFZRs5oDnkx
+         RtDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758172987; x=1758777787;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TLOVWO8z3YKEVC/nG7+rCJR0ydpCskrgzD5ovtmPwE0=;
+        b=ogSEdcWSEUgEJZZhDKdwwg1N1UYTNGIe/GBlTmaezDXj5e7Ss/Il/RWndat6Te4PtN
+         383aKsXfszRtERzHjSoqhTMSFr2EaBVDtFHUmSGOsW4CzIdPNzI2tt8Cp7w9MerbkuHT
+         QE4ecjtOSxMIT0YwtXePnccSckDHvZqYIn3euSQM2P0NGR9lcuINDZYb9HOjhO8ky7jp
+         c5MoQ0CErCTCWRg4PEgexwSEv9fbj3zR4M/Xv1cCImY7G7YL9fCWJVzvF7vkcZNTiw/u
+         dUvVDausbiPcoynueAfHGeY3NRNt9b4d3XgMtN3anvZMhHGXsFE4HTPy3hc4d4fIWpYW
+         wMQg==
+X-Forwarded-Encrypted: i=1; AJvYcCVIiQ93pSGthlsNvXRRDYt20M4Gc+YlWPRiGLFzIlIQGSgtCoPlOGFRC9VPjZ8i9vDBfh7ltafw41zJZkL7@vger.kernel.org
+X-Gm-Message-State: AOJu0YyjEubdOGM5q6ho7Imu3eM59MhldVFDuBTdI/8SX9oYKmDK1EJq
+	oH+tmUbo8EgDf6qHLUcCdp9z5iw8VRx1wx07I9DdR1b6bJG0rbNrhhFX
+X-Gm-Gg: ASbGncvZPjXaz/qdmFRlET7bokzy29w2IlX/C4KXAOgDwao6MV7HQYFcyINiURjY2fP
+	QWPElfzB1PD10AOTvkEwJzjv091a9UdvOEeT7BEKMXMJT5zycRSjjA4oxbIn3VVdzyX22wYWqke
+	Kkfkq39SMxPtmMunUEpF1ZtV5GkC5ymQYHkil3YdPCEFu8E4pzRzcJIN3kQI2oOVnqDm4yw7ips
+	7ouciKE841y/aXT6bRg6L4Om9sfwggKZsGzXUSMCGFcUcSYc7QZSpzFR69pw/yMpxI6btrDOiP9
+	Clz7mPMfm0padn45jKJH/+HWQvBkhcJSmeYd7KEehvGtkDkQgXZCSH4T7bfUj/yFMQ5IvJxYOmA
+	mlSovCzVOf5qaS5CHYcGfeFKBchTEKVxYDxRUslb/343eAQkDyAv/lwI0uWTz6+ZI
+X-Google-Smtp-Source: AGHT+IHrJelkeadXxxJ309pMmd78F2SZWNn8q0FOA+TBRg4iz1HVjQgFNx8SwnfeBgb2w12a3cnNUQ==
+X-Received: by 2002:a17:90b:4ccb:b0:32b:6820:6509 with SMTP id 98e67ed59e1d1-32ee3ef0a33mr5635940a91.9.1758172987275;
+        Wed, 17 Sep 2025 22:23:07 -0700 (PDT)
+Received: from test-HP-Desktop-Pro-G3.. ([49.249.92.90])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32ec9e66b02sm2118449a91.10.2025.09.17.22.23.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Sep 2025 22:23:07 -0700 (PDT)
+From: Sudarshan Shetty <tessolveupstream@gmail.com>
+To: dmitry.baryshkov@oss.qualcomm.com
+Cc: andersson@kernel.org,
+	conor+dt@kernel.org,
+	devicetree@vger.kernel.org,
+	konradybcio@kernel.org,
+	krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	robh@kernel.org,
+	tessolveupstream@gmail.com,
+	tingweiz@qti.qualcomm.com
+Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add support for QCS615 talos evk board
+Date: Thu, 18 Sep 2025 10:53:01 +0530
+Message-Id: <20250918052301.2583623-1-tessolveupstream@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <f3y4ibzkyfdub6gszoliaenuiudfrtqfr5u4zqpibfdr44hr7l@z5ap4odsoiti>
+References: <f3y4ibzkyfdub6gszoliaenuiudfrtqfr5u4zqpibfdr44hr7l@z5ap4odsoiti>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQJRoHUYa79wgWtyawBlQOaHwFj68gHuslinAamlZ6uzkLSUIA==
-Content-Language: en-us
-X-CMS-MailID: 20250918052202epcas5p4a32a896d2f6a0e42142480b823868def
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250917141028epcas5p10a2034f660037186138ef0f4c5be0aa9
-References: <20250917140933.2042689-1-quic_rdwivedi@quicinc.com>
-	<CGME20250917141028epcas5p10a2034f660037186138ef0f4c5be0aa9@epcas5p1.samsung.com>
-	<20250917140933.2042689-5-quic_rdwivedi@quicinc.com>
+Content-Transfer-Encoding: 8bit
 
+Thank you for the suggestion.
 
-
-> -----Original Message-----
-> From: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> Sent: Wednesday, September 17, 2025 7:40 PM
-> To: alim.akhtar@samsung.com; avri.altman@wdc.com; bvanassche@acm.org;
-> robh@kernel.org; krzk+dt@kernel.org; conor+dt@kernel.org; mani@kernel.org;
-> James.Bottomley@HansenPartnership.com; martin.petersen@oracle.com
-> Cc: linux-scsi@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org; linux-arm-msm@vger.kernel.org
-> Subject: [PATCH V6 4/4] ufs: ufs-qcom: Add support for limiting HS gear
-and rate
-> 
-> Add support to limit Tx/Rx gear and rate during UFS initialization based
-on DT
-> property.
-> 
-> Also update the phy_gear to ensure PHY calibrations align with the
-required gear
-> and rate.
-> 
-> Signed-off-by: Ram Kumar Dwivedi <quic_rdwivedi@quicinc.com>
-> ---
-
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-
+Sure, I will update the commit message in v2 to mention
+that the QCS615 talos-evk uses a Quectel AF68E module
+(PCIe for WiFi and UART for Bluetooth), which is
+different from the RIDE platform.
 
