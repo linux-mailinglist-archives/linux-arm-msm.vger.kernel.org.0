@@ -1,126 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-74045-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74046-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E08EB83B3D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 11:12:13 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A95ABB83C8A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 11:28:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 10FFB7B15D8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 09:10:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4D67E16EE7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 09:28:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C23D2FFDE9;
-	Thu, 18 Sep 2025 09:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 806EC3009D4;
+	Thu, 18 Sep 2025 09:28:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="aLZwD3nk"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SESQ9tHW"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8EB2FFDDD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 09:11:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7CA2FBDF5
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 09:28:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758186719; cv=none; b=mTVvVvCimvp3ltWfdXIWlE9FC+BaN6csCdJezoab0ANu8xhGICLAjzz3AgmzRut9VBrV7nyR7NHhXYuJCkaeec/WTE64SRiFFj5Qcg2Lotv8hIetR1tNq0srzqIT9hTC7IFIG2sHZEkCE+r+G/DHYjbV6PEnmIHQ0gTJAJ2CbLs=
+	t=1758187686; cv=none; b=dyhSuWaTTz6BpFNNF95WkQ+T+P5wsN5PTDS3EWhwPmLawVjN1s9UiDa3zAUk6YOk12KsFAEFwadTrwkMjyos8ho1VQaBb/B92MgQjCglqpn+XnOaOp4mVugswTpyy8ppbMXhHR2MsLlzbFAnxm0IyeY7R1WlMQAfLNC5oioDLC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758186719; c=relaxed/simple;
-	bh=YehKDSxyn3BbBA6CQ4vbBJf8xzzXSHHNCC7si+BTARg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=juF8VNdJzwdAdjYa3FJ8d9ROMb5zRbvrpV35tXoqjghAYOKtuUF96ZVn/LdRcqx/VerV64OAnUhn2wp4kL5QB0XKyMUCb87C1nPAYcnCVEIdWGzLOeofWoV3AXVn9dV+uEbQszLiEGU5a20iaYqX8b7J1LY7uvtr4qaM6l0jplM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=aLZwD3nk; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1758186716;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=fIIhFJxvx8zBwtE+pqWyod+Uw5u+tNDgcJScnd+oTIw=;
-	b=aLZwD3nkAX92Qao2m8Sv485XZwAcVaH0c6sgF8eZRSmJ4VndPW0y6zmWsWtOAUU0tBRuc8
-	Ncn/aOK0/KI2ew7WUcLMajT8xYT9mWKMtmNdI7vRAiX93qoCqZtrleAbX4g3pzDPxNaE25
-	8nDoODBypbuQVQ97G+u/2g4ttW4ZCQI=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-28-YPLtNzdpMlqXE6jy5RDw1A-1; Thu, 18 Sep 2025 05:11:55 -0400
-X-MC-Unique: YPLtNzdpMlqXE6jy5RDw1A-1
-X-Mimecast-MFC-AGG-ID: YPLtNzdpMlqXE6jy5RDw1A_1758186714
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-45b986a7b8aso3791985e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 02:11:55 -0700 (PDT)
+	s=arc-20240116; t=1758187686; c=relaxed/simple;
+	bh=l6H4V0fQEokHqrkMVzviMMbf53iH0VnNQQZCKS04FPw=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=RDne8b8MSibsft3tRQXR/V0HWGuIHT2xMNsHOJnUSk9xNOC7jjZ7+e/qVoFpspCVNet+rvTH1NKEJenCx16mBp8oYIrp+1+yHBXezMqxHdftOuxE51D3e0u2oXl8q6X1G8iYTr64Xj17+eNVZuZ9ImFoAEPvzyrivAAEzAgs63s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SESQ9tHW; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58I5UMjY017934
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 09:28:03 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=BHFxrzpGWX6fpMMyJtE9Sd
+	73ze9X/UFyj9mR/CCnpNI=; b=SESQ9tHWfvNidSpU2IDiakLhvL4iDlruqiWkZh
+	BJZ/TsZ/TkG6IaNP52Eh8BWMhFMRjdU2uBggz67pAqk66X4Bz6wYT0z4qUz+knop
+	I3EIjh1EL+iY9jWMJEdhZqw9csRNEP/HE1FzIKe/Z3qT+p4NAJjI/gbvEV1/rm4E
+	OdBV2XnO/RIMoIQDCSfigPcLIPQRvIIJsIsuKyMu6BHCGiqWkYgD8A3b9plfF2D4
+	qf3KQJNFo4TNJlmTyLCRT4phKoaLEhbRvmr5EprDXq/UXpmeKholX3bQyWBwpskP
+	yZHAF5gEGPg2qF+KUUEtgVl9KcgzPfa4hnqwjL5MLcIKIF0A==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4982dea8rm-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 09:28:03 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-77d1bd8d0a5so653937b3a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 02:28:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758186714; x=1758791514;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fIIhFJxvx8zBwtE+pqWyod+Uw5u+tNDgcJScnd+oTIw=;
-        b=nRNp7kXhuR/q1hl8/vM4SbtZnkRbWwoWAFgMCV308PXC6oV6OEESdRcvJdVkypfoWM
-         5fY4nWHwEWylp6b0M0rLP3AQvxGuUelvZcrV+yb2k5totb5E7FnEc5UCtm3Tx74rR1HJ
-         Yb1jP8GcjWgIASb27D7poWEgzNE5a40OsbHHma6Czgx2TaWbUzeKxmcCnLPnvQ5kr3g0
-         pzdkyLoJajyVqGavp1YV5+qhD+LEgYJZMBZG3VkLhmIYW7ak2nBRkld5yBZVUKIeHy3C
-         8juP/jEjiFkkyY5TTLFPT9VBbQm30VqsNHe6kRflHAmpGwcufpCUg7MBjjVSc8B0g3zB
-         PJCw==
-X-Forwarded-Encrypted: i=1; AJvYcCWccmIilroS9zf205UwFzLBx+jd1zVpAFyNgib+RPi7+J+QgYeVTi8ORVOU/B+ZeOPzVS73AEUfHkiXEqAV@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw0zHQ4UATTCb9Eq/w2GBY8whide9OKjZyu9jofe+gA5dctEbZ5
-	th8msc2wpO2/mGUZBWiDsez8Zw7eeN7dKTRmD66F4IcRO0xtncRY9QPgMNOvZdQ4/Fo3hFIb2Dg
-	gXtfAKOCGRz7u3ccXpAkDdgScMC2ZcG9djKhcWzpM3NVKviCFSR7w/99qqAGFFf5eCPQ=
-X-Gm-Gg: ASbGncue8Wn3uT2zEm4ZGlC32491rX74Bdf1RWjP3BQEcLT3WPxjvlHxOZKREPr5aRy
-	IaH4DNDKmtNoGXC8+77M2fCzlWPJiMv9CwdiIlT7LvchP8j6RCojXcIV1++MbSyIRJyETwd0M9X
-	vfaumBIbJuANdwLkzFTTOr8XryrgXg5wDBS7tS2+uUJFCnXy7FwjsqL6pvKTbYM+uiTGZDB9Rt6
-	W5oQJNa9s2ZaIrdFDix+lshj2U3z5magpUphXZMFYvm5MF0USPdCUeAmb/ZVWX+HyTzx0UYT+5P
-	XjBV3b5rbW+qvX0pQVrBViuRF/pq8Hfp9aoMbJBmA6Jk72iUNbJr5tCOAJi3mFH6RV2GCJO4YmG
-	0vuUh7mI7/McA
-X-Received: by 2002:a5d:5f95:0:b0:3ea:3b7b:80a8 with SMTP id ffacd0b85a97d-3ecdfa7499amr4439731f8f.52.1758186713959;
-        Thu, 18 Sep 2025 02:11:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHSxFTvwkHZMTFVNF3/CKJIFGtDCQS73vdlDAWGqmaZ0EEiGh4Dz51JVsx1rqLeCvLq5fLFaw==
-X-Received: by 2002:a5d:5f95:0:b0:3ea:3b7b:80a8 with SMTP id ffacd0b85a97d-3ecdfa7499amr4439705f8f.52.1758186713547;
-        Thu, 18 Sep 2025 02:11:53 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c? ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee0fbf3bfcsm2785767f8f.58.2025.09.18.02.11.52
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 18 Sep 2025 02:11:52 -0700 (PDT)
-Message-ID: <68baf2d7-fe76-40e9-a255-a9dd41de129b@redhat.com>
-Date: Thu, 18 Sep 2025 11:11:51 +0200
+        d=1e100.net; s=20230601; t=1758187682; x=1758792482;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BHFxrzpGWX6fpMMyJtE9Sd73ze9X/UFyj9mR/CCnpNI=;
+        b=CDScjQA6aDRVfXQpz79c/fq+hDfxHYvwGhEYdB0ntQOk97lXeK3PdTMnBdzQ1QxKr/
+         hvttmgRF3XQ8TM/tfNDijuXF20XDbcIgFuI31oIxWe8eKvZkJsNddjVvbe1JScXSWbI1
+         83TWvWIuW9t6Rd8j4c6eB09fkNcg4Yzs5Oy2qLnGMqA9VMeXViGBBdvnXKVpDrqtu+lS
+         bG52HVCP5Zk6F4VGvjQVGzZ9sLW5oBzMR4+4KUuObmCXobbVdCfZfSwUOk4CJB/RZs9I
+         3RUjL68OLnkl1T1r0etVznwCHy2BHmYsGuD3Zrph2Kgp+5XQEuM0kPY1ClXqBr1U+Oa1
+         ZNlw==
+X-Gm-Message-State: AOJu0YwnnkLmq61rW2QWVjK26nqEjNj2Cn2uM0QFLfPK3fm3cEp57jbA
+	WcE8gvtu+YT6kqcElL1wBu9sMe4FxRZGClAT+Xh9v4TnjxjucMwpry8KLddh+TmbgDCnEaB9SJc
+	HSxTsTGhnsa4FByF1mtJXYhuVloljdTeSbsbalq3il2cdNgAOaBmAy2uKOo8ZSVBMeNgN
+X-Gm-Gg: ASbGncskiiki0d/34Q+vKluCE5nb6DYDk5U+BYk/E3T6z3BeIllTlkcGuLs8laM4CVl
+	0YiA3WijF1+8m7fiSpUShWLr/IomNgGtfRGRQE011+1lhkpVSG1vYDTXOaB0ZQn49tRcud6GnsW
+	azYpOvm+cbW4L+umpqT+uU8IJv4YUPfUjrGfmmPgjpaR6bLvum62yQmCGH5NZwrw67037QTKtCw
+	e+QwrlxsW0AhrMTMCC8rWhpavNk6nNuExFRuebnpJ6ZFSO1CDYwSEjLOV96ghpWKRYgkJ+kmM68
+	zHYI8EE3EDUm62W5YUicLZteIDoJEOCUNjQNBH3UaZw2FYejLJGxB6x6BYh5LZ+vQl2XM8iR0Xc
+	5pWTMvCrIvO1KDZPaCgoSdChxyw==
+X-Received: by 2002:a05:6a00:39a0:b0:772:a5c:6eea with SMTP id d2e1a72fcca58-77bf936aed3mr7399516b3a.17.1758187681810;
+        Thu, 18 Sep 2025 02:28:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLbURNKAK354nvvmQrQ7xrw5OdrE51GKcGvT0vEwNXT9BwkSQR+mZlitAF9htpDXo2P52P9Q==
+X-Received: by 2002:a05:6a00:39a0:b0:772:a5c:6eea with SMTP id d2e1a72fcca58-77bf936aed3mr7399471b3a.17.1758187681194;
+        Thu, 18 Sep 2025 02:28:01 -0700 (PDT)
+Received: from hu-kamalw-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77cfbb79b81sm1819205b3a.10.2025.09.18.02.27.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Sep 2025 02:28:00 -0700 (PDT)
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Subject: [PATCH v3 0/4] rpmh-regulators: Update rpmh-regulator driver and
+ dt-bindings for Glymur
+Date: Thu, 18 Sep 2025 14:57:00 +0530
+Message-Id: <20250918-glymur-rpmh-regulator-driver-v3-0-184c09678be3@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next 7/7] net: sfp: remove old sfp_parse_* functions
-To: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
- Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
-Cc: "David S. Miller" <davem@davemloft.net>,
- Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- linux-arm-msm@vger.kernel.org, Marek Beh__n <kabel@kernel.org>,
- netdev@vger.kernel.org
-References: <aMnaoPjIuzEAsESZ@shell.armlinux.org.uk>
- <E1uydVz-000000061Wj-13Yd@rmk-PC.armlinux.org.uk>
-Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <E1uydVz-000000061Wj-13Yd@rmk-PC.armlinux.org.uk>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAGTQy2gC/5XNwQ6DIAyA4VdZOA8DomTstPdYdgCsSiLiyiQzx
+ ncfet5huzT5m+brSiKgg0iup5UgJBddGHOI84nYXo8dUNfkJiUra6a4pN2w+BkpTr6nCN086Fd
+ A2qBLgPTCrKorYZtGAsnEhNC698HfH7l7F/P1cnxLfN/+CCdOGTVGGcZACS35LcRYPGc92OB9k
+ QfZ/VT+Y5bZtLJWom2VqQx8Mbdt+wCosCG6IwEAAA==
+X-Change-ID: 20250916-glymur-rpmh-regulator-driver-80c9543cdd6e
+To: Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org,
+        Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+        Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758187677; l=2051;
+ i=kamal.wadhwa@oss.qualcomm.com; s=20241018; h=from:subject:message-id;
+ bh=l6H4V0fQEokHqrkMVzviMMbf53iH0VnNQQZCKS04FPw=;
+ b=xbpUVtZC7cZLMFRi5jtkV49vKMoccBhfy1sonC0NksGzZ5U95xbLp2LSPhtRNFPCYdQz4CGll
+ hYQ2f0UyCuYDHA/fp7XozC8EhPNSeci0e+X6UYtP6pWNzAClNEecQx7
+X-Developer-Key: i=kamal.wadhwa@oss.qualcomm.com; a=ed25519;
+ pk=XbPE6DM5/mJi2tsiYwMCJCZ4O5XPMqColJRlGVcM7Hs=
+X-Authority-Analysis: v=2.4 cv=YfO95xRf c=1 sm=1 tr=0 ts=68cbd0a3 cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=QyXUC8HyAAAA:8
+ a=EUspDBNiAAAA:8 a=BXGrXTCzJtV5nmjeyUEA:9 a=QEXdDO2ut3YA:10
+ a=2VI0MkxyNR6bbpdq8BZq:22
+X-Proofpoint-GUID: -Uwv5Ns5_ZnQ2Q5rEo7aAuh8Ud0XPYFd
+X-Proofpoint-ORIG-GUID: -Uwv5Ns5_ZnQ2Q5rEo7aAuh8Ud0XPYFd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE3MDE4MiBTYWx0ZWRfX2njX/spx0rpF
+ E6Mfsq9Zh3IsGrp47b81XdYQ6LGbif4FrAZw88x7v4GRT0qEimUA7ySXICWxeNNr1TlVATwMxVr
+ 7lFaytzVpYQR/1wg31ul5/lciEkjNkmoPnfTzulaTkB/u9II+4NMQl6ofJl1EHLVQ1RYr1QztZL
+ VpNK92VkbaNx8vzSABt+iR6+6zv0x81VCiUIECX1Tsun+OLbzx1wAn9WyVX7bG2b1ACAWkqMWoz
+ 7fNmlWlpZHT31gruVyINftksPYrVXNxWw+2dDEY2q/fpH8/GHR9kHF9xXG5wzGohjTxj1rF1Rae
+ YaqUJkWGdamhwUNobmf9JVVA1j+SZ83iHvtsByCH0ncgmyN2L0TG5xAurztY88JC9L/EqN/Gve1
+ 0e3P/fCR
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-17_01,2025-09-18_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 phishscore=0 malwarescore=0 bulkscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509170182
 
-On 9/16/25 11:47 PM, Russell King (Oracle) wrote:
-> Remove the old sfp_parse_*() functions that are now no longer used.
-> 
-> Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+This series contains patches to update rpmh-regulator driver and
+dt-bindings for supporting the PMIC voltage regulators present on the
+boards with Qualcomm's next gen compute SoC - Glymur.
 
-Very nice cleanup series! LGTM! Waiting a little more for any comments
-from Andrew.
+Device tree changes aren't part of this series and will be posted
+separately after the official announcement of the Glymur SoC.
 
-Just in case a repost would be needed, please consider:
+Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+---
+Changes in v3:
+- Added more details in pmic-id dt binding's commit message to clearly
+  explain about the limitation in existing CMD-DB names and why the
+  new format has been added and how this changes the pmic-id
+  interpretation in code
+- Fixed the issue reported-by the `kernel test robot <lkp@intel.com>`
+  in patch [3/4] code comments to close:
+  https://lore.kernel.org/oe-kbuild-all/202509171822.oRjF64pS-lkp@intel.com/
+- Link to v2: https://lore.kernel.org/r/20250916-glymur-rpmh-regulator-driver-v2-0-c6593ff9b4be@oss.qualcomm.com
 
-sed -e 's/sfp_parse_*() functions/sfp_parse_*() and sfp_may_have_phy()
-functions/'
+Changes in v2:
+- Updated pmic-id dt binding's change commit message to elaborate `why` the
+  dt-binding change is needed
+- Updated commit message for driver change related to new resource name patch
+  to clarify that `resource name` refers to `cmd-db resource names`.
+- Link to v1: https://lore.kernel.org/r/20250916-glymur-rpmh-regulator-driver-v1-0-bb9b00e93a61@oss.qualcomm.com
 
-in the commit message.
+---
+Kamal Wadhwa (4):
+      dt-bindings: rpmh-regulator : Add compatibles for PMH01XX & PMCX0102
+      dt-bindings: rpmh-regulator: Update pmic-id DT prop info for new CMD-DB
+      regulator: rpmh-regulator: Add support for new resource name format
+      regulator: rpmh-regulator: Add RPMH regulator support for Glymur
 
-thanks,
+ .../bindings/regulator/qcom,rpmh-regulator.yaml    |   39 +-
+ drivers/regulator/qcom-rpmh-regulator.c            | 1323 ++++++++++++--------
+ 2 files changed, 812 insertions(+), 550 deletions(-)
+---
+base-commit: c3067c2c38316c3ef013636c93daa285ee6aaa2e
+change-id: 20250916-glymur-rpmh-regulator-driver-80c9543cdd6e
 
-Paolo
+Best regards,
+-- 
+Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
 
 
