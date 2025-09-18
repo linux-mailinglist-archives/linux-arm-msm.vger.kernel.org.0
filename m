@@ -1,174 +1,118 @@
-Return-Path: <linux-arm-msm+bounces-74060-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74061-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68C25B83DDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 11:43:30 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id D531CB83E91
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 11:50:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 2BCC71BC3F31
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 09:43:52 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7EEA64E0663
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 09:50:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 73DA33002BA;
-	Thu, 18 Sep 2025 09:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B881C2D593D;
+	Thu, 18 Sep 2025 09:50:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="CbcYBYse"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="cm3gFDaL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6B9F2FFDD2;
-	Thu, 18 Sep 2025 09:41:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D062BE7A3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 09:50:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758188482; cv=none; b=KDWx6LUnla1LyAv9eueIlOaW5MfjvD/Qn8xmGtkLAKVOw0XgO6uhZ02HOPW7JriRVJG6y+idTg6neMI2cTtgEk7Rlb/PVpvGF4OFzevAqGgzHegpM2I0TgwOf8Gp6Sk8QF8OkOhrQx3J3unswlRUmLF92YVORBr/TTpKkFDWSU4=
+	t=1758189033; cv=none; b=jheBvHjHDG+OiugAOOgn9VTkxGx+5uts0lY07iYz8d8WpQ95hHn3B7xE+xvR2G2OhpKGRdWzOTYBWeZg+KMaRXDNN8PMOvrTvTsAuzS6jHV+lKh1v+AitnlwD63XK98k6+QQEE8GyMRCv83cIai9oowM16QZeB5xUfiZAsQnUPU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758188482; c=relaxed/simple;
-	bh=iNIW6Ig/R0jBcU1ipy88h4CePqrzK12A5gXblRD5MsU=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aDNRVpCyPbVpICTrW3n6ECNJT0Y9/2GNlFCq582Oel3tmzx3V09miA6o74Qbg5CIZPoj6NLHb317ln54Tdyv9beQFUVppA3Ut9us8k98WoDcmpisJyxQc8WP/eKe3KNuBxaqX53BO/ASFvO45qQQvNpWhx8jEfWfbBRXBiH/Wgg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=CbcYBYse; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58I7dONu013186;
-	Thu, 18 Sep 2025 09:41:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	8Nx5jpucxpBfAEXxkmUbfMYh5HKvwd8GpF4BKYFxjm8=; b=CbcYBYseQEevUyIK
-	8CUCynzH+8AnWL+vBVDHpPMH6Nb8x6fNskeUKHCLSRTjaT4iBjC+QN4+7GdwtJ+s
-	unXXTuzB1be1f/5ZOPWwuQMtNsCRY8uXWX1safOYaA93ZYzMQiZtWza731wLX3Zt
-	hE0WmjzVqrqLL8MHL4fE6SD7brNO1CExRGJYrLVCxjgXYjRGGGrDZKbZnio0rIz2
-	rOMV/tYFgXUYP+MoDYe0qbWtdaa/vdlnxW2DsVa/VvSxwympuBzP+VW+Ejx994qi
-	rUYKefGDBKhGnmDPhDHkafqsSC9bp/r2QHg8ETYdKGeMxXJz+uh70ycy/ow221d5
-	1qyyeQ==
-Received: from nasanppmta02.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4985wx1qg4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Sep 2025 09:41:17 +0000 (GMT)
-Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
-	by NASANPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 58I9fGe4019322
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 18 Sep 2025 09:41:16 GMT
-Received: from hu-mdalam-blr.qualcomm.com (10.80.80.8) by
- nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1748.24; Thu, 18 Sep 2025 02:41:11 -0700
-From: Md Sadre Alam <quic_mdalam@quicinc.com>
-To: <broonie@kernel.org>, <robh@kernel.org>, <krzk+dt@kernel.org>,
-        <conor+dt@kernel.org>, <andersson@kernel.org>,
-        <konradybcio@kernel.org>, <vkoul@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-spi@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <dmaengine@vger.kernel.org>
-CC: <quic_varada@quicinc.com>, <quic_mdalam@quicinc.com>
-Subject: [PATCH 9/9] arm64: dts: qcom: ipq5332: Remove eMMC support
-Date: Thu, 18 Sep 2025 15:10:17 +0530
-Message-ID: <20250918094017.3844338-10-quic_mdalam@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250918094017.3844338-1-quic_mdalam@quicinc.com>
-References: <20250918094017.3844338-1-quic_mdalam@quicinc.com>
+	s=arc-20240116; t=1758189033; c=relaxed/simple;
+	bh=qHLJX/TtpVtJetIsYqyBWRD9Yy9lM9oH0njdixetFrQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=j6FFrNM2Nc97yDxasSg0PyHK+CnKAJd4+4KjYGPWIyWjQwc6LWxQYSWXcZWYHKXyTf7sukLfAgCyCVWO24CXtbnQdPYeujyB3sODM8i7SQra+WA6D/tCBBIBa2g9PvnhQb9vvOddp55gpruuwnrypl+JPiTQ1sZfsivEa6h8+KU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=cm3gFDaL; arc=none smtp.client-ip=209.85.221.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3ec4d6ba0cdso547388f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 02:50:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758189030; x=1758793830; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eQwKqTQzxVu8vPTkPS6AVCaGBlFPjm0mxCJ88MPBe7I=;
+        b=cm3gFDaL0oJjGb4Xa0O12OWm/ZzkJJkpTchRc9XSNEEJ5168AitPEYTZ9qx2o+JwZd
+         7RBIwOka/wkQCsAlYtbCIIBftfAlh0vey9KBFPKllUZ/Z1aLPei0elc78W3zC+1zWBgS
+         /j+Ypdpr/gxDpgzQ6q/MN3ii18TXCQWm4dIz5Zzz9eZ0jX5FallIpoNldIIJH60RfYug
+         N0yH0DFaOeTGPnv70Jq8USf8GQF+fU3zuQhjXbZgcaZobO7oxMoQnZDblht5HHk3RzpO
+         GGDO1IuNZ3V0Cd9OOOOxTTbmO6u7vAypoos5ojI65P2QQENXYRoVV7Dytm1N/Nk6ExE/
+         mmUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758189030; x=1758793830;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eQwKqTQzxVu8vPTkPS6AVCaGBlFPjm0mxCJ88MPBe7I=;
+        b=UBFklNC1n0C5QId/gyxCeoJJ02Z4rx2a3WPyATfTh4uSN8IOnwhzGe+a0dfS580ngV
+         VGzZmD1lB3zHrg2lUMjGogzypfOdViHEgIp9kTuwJkDIjTmOZCi0hyS8jyufemTDF6yU
+         fQ0PjNX1yKynzaoykdOeYfEvUf6/qSG5D27bjWAqJnG+jxPNlIn2AOwCOyUr7DiTUt5G
+         BddWlr0S/eD+zZu1s+RixMR+zUl+27U5gcFezPe6SHHbBnC8tk5WMrXbP4iwcG3CaJHX
+         7vyyp2tc23kMdzYnLG3vQ+M0h05pDmSGJAwrvClY8QF5yIbVJR2jP24Tlhs51f7m7x6e
+         AxkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVMoLs24kjk5MJA8fVpGYWI5TzUdQ/26GuUt9fe9eepgi+P4HDGG4sPmlhiMRc2mI+qZ5gfORJRnX3Wp2BZ@vger.kernel.org
+X-Gm-Message-State: AOJu0YwSPYo7Tq2u3wXEx3xVx8mWWbdJ2mFjCO9HA1bAdt9QMKbWm/cY
+	8LevWZXkPk03b1B5qcwkEmc14enjkuAFjfjsujLFlA5kJYsjQmTJRQnwOQ8w7h5q+wg=
+X-Gm-Gg: ASbGncuh9kUWMWAxoanwYPf1NvD35yixRUFGQRQ3Q6MikLytLNhLch1Wc0IS6TEMNZ0
+	K4BeGMn3VtxvJtamQzSKkNeryrFCRLml7UjSCUJs0uVeqPP86p6CZqB9k4hu7XxqSOxIQm/vNOL
+	CdrDFZ8H1YT9g0NNF6vo+hYL8Zu3JSJX9uJOkNla7rxqj729NON4suTFry4Rmhk1DvXbGI6Av0h
+	hZN8s63FJ/IEGtZEgdB3ysG2232rBP9ym1yi7xnSu3ENWuOgheBz5S597yxh8Xsr2LpVuxlZjPp
+	Ye4Txz0WoOvp2W9tMux+Q8w4Hnj2Jx7LBFI3pDKY7iZrl2SRv7LYgl3ZYMN9hgdZbz2+vuP1md/
+	Y85wgS+1UpAYafeDKWLe7MP+FlO7mrr5F6wcSgwuFgyFKPQ==
+X-Google-Smtp-Source: AGHT+IGoCMIZSYVGVdr+LonBDIWcYYTv19TLhpipu3kLj9HY+JsSF6G9ZNs6lLtq6lsBFQeD0PjV6w==
+X-Received: by 2002:a05:6000:1a8e:b0:3e7:ff70:1b41 with SMTP id ffacd0b85a97d-3ecdf9c9fc7mr4630089f8f.25.1758189030108;
+        Thu, 18 Sep 2025 02:50:30 -0700 (PDT)
+Received: from localhost ([196.207.164.177])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3ee0fbc7107sm3078259f8f.30.2025.09.18.02.50.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Sep 2025 02:50:29 -0700 (PDT)
+Date: Thu, 18 Sep 2025 12:50:26 +0300
+From: Dan Carpenter <dan.carpenter@linaro.org>
+To: Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>
+Cc: Jens Wiklander <jens.wiklander@linaro.org>,
+	Sumit Garg <sumit.garg@kernel.org>, linux-arm-msm@vger.kernel.org,
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org,
+	kernel-janitors@vger.kernel.org
+Subject: [PATCH next] tee: qcom: prevent potential off by one read
+Message-ID: <aMvV4kK386Sni10i@stanley.mountain>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
- nasanex01a.na.qualcomm.com (10.52.223.231)
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-ORIG-GUID: rrwIlaCFuQx2ZHWGma99z0MsIaF4vjlT
-X-Proofpoint-GUID: rrwIlaCFuQx2ZHWGma99z0MsIaF4vjlT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE3MDIxOSBTYWx0ZWRfX4Sy93abIFcEx
- tskCgs9Fr8NK3NwdwmhrIoGEnRFeEvf9JAa4M+4SCGFojX33a2GyC2JfuTIl7x/Bah7GVctSbBZ
- aMyOF0XFbzPZrv4ivznPjD52E9nbDsASUSH9alJofna1isSl+HJZazBHXPUiwjdGOMpT6JsIiqt
- Vym0UUKbppDrv0NH+wDf2uNYIcfzG+4hpsflOFLQQr0ButjJ2FbXtEVu+1sFHNDCi4DJY4p2FG1
- 6/q6gdaV5zo1L2RwZq1Fjq3huQvj/5nti/T5l6dkUMFUoLmnx1+hFu4nMKyJV50HICB+lQJgTTs
- 4mlL+ZD2m7d05N0UExfyAUThO+uz3FyxE++6L0NG9ZVWhkZVIr1VvFt11BlznaEUvYbG5ycyGmh
- 1K6DteU7
-X-Authority-Analysis: v=2.4 cv=Fq8F/3rq c=1 sm=1 tr=0 ts=68cbd3bd cx=c_pps
- a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=GEpy-HfZoHoA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=fuWxvNZPvO_ztXA3lyEA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-17_01,2025-09-18_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 impostorscore=0 phishscore=0 priorityscore=1501
- bulkscore=0 spamscore=0 suspectscore=0 adultscore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509170219
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
 
-Remove eMMC support from the IPQ5332 RDP442 board configuration to
-align with the board's default NOR+NAND boot mode design.
+Re-order these checks to check if "i" is a valid array index before using
+it.  This prevents a potential off by one read access.
 
-The IPQ5332 RDP442 board is designed with NOR+NAND as the default boot
-mode configuration. The eMMC and SPI NAND interface share
-same GPIO
-
-Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+Fixes: d6e290837e50 ("tee: add Qualcomm TEE driver")
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts | 34 ---------------------
- 1 file changed, 34 deletions(-)
+ drivers/tee/qcomtee/call.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts b/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-index ed8a54eb95c0..6e2abde9ed89 100644
---- a/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq5332-rdp442.dts
-@@ -35,17 +35,6 @@ flash@0 {
- 	};
- };
+diff --git a/drivers/tee/qcomtee/call.c b/drivers/tee/qcomtee/call.c
+index cc17a48d0ab7..ac134452cc9c 100644
+--- a/drivers/tee/qcomtee/call.c
++++ b/drivers/tee/qcomtee/call.c
+@@ -308,7 +308,7 @@ static int qcomtee_params_from_args(struct tee_param *params,
+ 	}
  
--&sdhc {
--	bus-width = <4>;
--	max-frequency = <192000000>;
--	mmc-ddr-1_8v;
--	mmc-hs200-1_8v;
--	non-removable;
--	pinctrl-0 = <&sdc_default_state>;
--	pinctrl-names = "default";
--	status = "okay";
--};
--
- &tlmm {
- 	i2c_1_pins: i2c-1-state {
- 		pins = "gpio29", "gpio30";
-@@ -54,29 +43,6 @@ i2c_1_pins: i2c-1-state {
- 		bias-pull-up;
- 	};
- 
--	sdc_default_state: sdc-default-state {
--		clk-pins {
--			pins = "gpio13";
--			function = "sdc_clk";
--			drive-strength = <8>;
--			bias-disable;
--		};
--
--		cmd-pins {
--			pins = "gpio12";
--			function = "sdc_cmd";
--			drive-strength = <8>;
--			bias-pull-up;
--		};
--
--		data-pins {
--			pins = "gpio8", "gpio9", "gpio10", "gpio11";
--			function = "sdc_data";
--			drive-strength = <8>;
--			bias-pull-up;
--		};
--	};
--
- 	spi_0_data_clk_pins: spi-0-data-clk-state {
- 		pins = "gpio14", "gpio15", "gpio16";
- 		function = "blsp0_spi";
+ 	/* Release any IO and OO objects not processed. */
+-	for (; u[i].type && i < num_params; i++) {
++	for (; i < num_params && u[i].type; i++) {
+ 		if (u[i].type == QCOMTEE_ARG_TYPE_OO ||
+ 		    u[i].type == QCOMTEE_ARG_TYPE_IO)
+ 			qcomtee_object_put(u[i].o);
 -- 
-2.34.1
+2.51.0
 
 
