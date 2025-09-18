@@ -1,223 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-74068-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74069-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8077AB8423E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 12:38:06 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38F9FB84599
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 13:28:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D4A3F188EA4C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 10:36:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id AC1204A8412
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 11:28:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25CF627978C;
-	Thu, 18 Sep 2025 10:36:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C620301032;
+	Thu, 18 Sep 2025 11:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ergZYfav"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="LUV4rZI0"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB896248873;
-	Thu, 18 Sep 2025 10:36:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8043043B3
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 11:27:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758191790; cv=none; b=eQYSPXnLIL3m1soRciMnknQiOj3mrFklS8BJXWedId3k2lsrjwAuMbKHJCjw4UhQMDww/+8D5mObnVn+EBdOqhWKikPies4wk/kePnbB1jbdkYHOpsQaXiay+7MUdpyLyBmaU/Bp0gEN5DImARuFLZXhfDrGWiOQP4V+mML4Me0=
+	t=1758194859; cv=none; b=o4BeBRqsVqMOEmuJXsZvkbyAMezBbPUfFJJfKuyDMyJ5lM613gtfiBbgOW/+Z7ZYJRLYvUAMScMfcwFFHebZaNd5fjLwcjO2kHsxjRRhcWaX+bE8ltACAkb36qPj0roLbkfbnaK48NvJ9Xefwr4qj+g6zCZ5ykjvpY6ix7Kl/No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758191790; c=relaxed/simple;
-	bh=cKSTVhSvmb5YUS3u1Y6cdzoo5orOzVA1+59PDgLYgYg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=D38URSb5tAvBs+1d1L3UBQllac2W4Y5wBBZPDqJtEaCOCkO1Ncr5/YAMuc8W2VHUt47hekGCKITQ/pRGk60+H5+LbGfhecvp3nIlFsXAPsa6Eup+A0IXWwGWUKHLoHY2+AnAPB/oyI24FmqhTcRLdfMAHtY8cy508NQReLwBfQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ergZYfav; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0E1C4CEE7;
-	Thu, 18 Sep 2025 10:36:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758191789;
-	bh=cKSTVhSvmb5YUS3u1Y6cdzoo5orOzVA1+59PDgLYgYg=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
-	b=ergZYfavH31ZqhCSiUoSaQZh1UpMWKj9Kn6YB3Cpman7AtMAbgv7jT1B7DA/V0R9+
-	 wKEq6gk52QRCpX+bXAuemhqcrJHqjWAMrvNmQGMs5D70DH6IWoYDCf5JLi8Ap9JpRe
-	 /6qS+wI6DujtJO0sN4OM6RJVRHStYPME21+BFj85m1jjOCepRO4KDFavNMQzlTpaCH
-	 +M+nFXImmY8Dvd23k3e1QoOQZ+ZpDOtG/l65ib4vI4Bu1CjLTJfp/YXdEt/D4AsTB5
-	 S7uR5YlTuOeQTzxhVEzIeGReDyMTmc1qvhVzAkpZAQuxGySw2TLnc48MXykgzLyeyZ
-	 9eVHiQdDQSC2A==
-Message-ID: <56a6a3b8-bee4-46db-af15-8312067e28db@kernel.org>
-Date: Thu, 18 Sep 2025 11:36:25 +0100
+	s=arc-20240116; t=1758194859; c=relaxed/simple;
+	bh=IUU/IggIt5ZdvVUDdA+5dvadTg+m7Vkq9dz4uwpNq0Q=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=O3aR8F4YQd7HuIg6bAJxZoN2pt60sfKYVYai54XO+X8XHlUpJhX/TieIu7Rw0z41uACKOb2fpZykXeSxCths4NMkDrZnNrrX4LyMg+/eXzJ/tuWUF/sBeMoGHhAaAn+vF9/gT+mEAmij0S4XR3b4JWkF89DCIb2ETidLrBE7FME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=LUV4rZI0; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58IBM9nN021911
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 11:27:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=em02LUNYeaoKw60r2hbDNF6m9VIKoQ80dUP
+	lB9X65YY=; b=LUV4rZI0SzSHDYpKEf9ShLhttC0NM2NWvNC7WEuQXG8Lcbs2ET3
+	za3ZcRJHtNtjvaTLCbe45Q86Iniqxg8B10Gur1ccT9AmljSdIplunRhx2/iez38z
+	r1A2/Yk9DUTBGtEKEC1utkIvpyXW3XLN0iTQNJnRJGcCghysSbNSkW40fjHhSo36
+	em+bvYm7ke2JlToxRXTPZlxSDfm59ut3DIPc1hvBrg/J6TlzmCgaYGfYCbAFbHha
+	PwLl5i+0bYvp/C0eLZVbrNdlVwYV/gTYgrAMSms4o3MmO9+0ZSbFP5d6TFJJ0PX2
+	p31Wgpxxh1bScC57NewpK+l2QZdTjpnF7Xg==
+Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fy5e42v-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 11:27:36 +0000 (GMT)
+Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-77422201fd8so1008873b3a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 18 Sep 2025 04:27:36 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758194855; x=1758799655;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=em02LUNYeaoKw60r2hbDNF6m9VIKoQ80dUPlB9X65YY=;
+        b=WcYeDmnK1VxnkHQYbI2iLkwmC0qsOv+5vzrt5hCLQWfrmHxEaAxGbeSeY9yr8/zMPr
+         j7vN9OoLd3dU/5vUKyGrM1FYLN7SAdhRSxBZ5cOl9wCez9KnhgeMMz+S84rRX+8UwFaB
+         8iijmhYBeC0zFVKjRPN9a5fPTmo1L/F9l0s5VsM3cgBYxIGYzqFqC/ohCfOpMM2rEoEJ
+         vltYYaaGjNp4AlrU6nvG6Iiv46PEeE4l48wDGAZqRVGhw9B+Xbuw3oU/OZjKHD9rBvgY
+         9PnElWDfwKC7uTmguIHuPRcVErtEauY4wqlZdJem/wq7TYdtlx38rhuPvgVcQ4UOm8ru
+         rtAA==
+X-Gm-Message-State: AOJu0YylCIfW3CgvBATn7jAJxqy9jQboNQUgmXJnH1+GKC9aoVB2mK+3
+	K+6zHNJaMjbYdj9d73EmSEsU8mal5kcGrSZ2Rc4NQJxuF7fjGuRGL3l3VJCxNa5uK1+ttH4CazA
+	B5wR5YSkEglJO5YDIinwLqk26/YqJyb3498joHUt98Ub3xouc6DcrN5K0PCL21PgadQ+3
+X-Gm-Gg: ASbGncupCJ2r14hxcKE8Q+4Z0/iyU9Ka+LYvnmbFqMeZHpLkOQSit0oaWuhjciJY5am
+	ZwW/DkpgvcCLmIpTq6DuG/jVLb5tiVVy181DblnQtEMxhrNuWWgQMoURmZSB5sVHPd6gHzEeD8v
+	xH4lZWjRZcC1kqD2dI5dwFXhZPXg/vbXwLJqmJAOBYsD5GyhOnUxz9FUQMwc3aaXUuG/m8gW1xM
+	hU/GMiagnl9ysu/eCrjgn7gLmJPkuE9Cz2FVirwjjj/vYVm/8Ccfkko21qghTGScUB8x+mxOolx
+	cUpB2MKrcXS9/exCQp8c9X/zVvMZX+v3xoYOZmbEyXe3mKjH8x0RGXW7L5dsUg==
+X-Received: by 2002:a05:6a20:914a:b0:252:2bfe:b65a with SMTP id adf61e73a8af0-27a91197b56mr7041407637.7.1758194855304;
+        Thu, 18 Sep 2025 04:27:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3iHWGK8a3hmAVBUv+NQGrIktg73U/FZNcDHWZ4s3IBRB+hSihP3LeJbH5xBNSNNbX2z8UtA==
+X-Received: by 2002:a05:6a20:914a:b0:252:2bfe:b65a with SMTP id adf61e73a8af0-27a91197b56mr7041377637.7.1758194854834;
+        Thu, 18 Sep 2025 04:27:34 -0700 (PDT)
+Received: from jiadhuan2-gv.qualcomm.com ([114.94.8.21])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b54ff3733dasm2143820a12.14.2025.09.18.04.27.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 18 Sep 2025 04:27:34 -0700 (PDT)
+From: "Yu(Yuriy) Zhang" <yu.zhang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: qcs615-ride: Set drive strength for wlan-en-state pin
+Date: Thu, 18 Sep 2025 19:27:29 +0800
+Message-Id: <20250918112729.3512516-1-yu.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] media: venus: pm_helpers: add fallback for the
- opp-table
-From: Bryan O'Donoghue <bod@kernel.org>
-To: Renjiang Han <quic_renjiang@quicinc.com>, quic_qiweil@quicinc.com,
- quic_wangaow@quicinc.com, Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-References: <20250724-fallback_of_opp_table-v2-1-2fc61f2407dc@quicinc.com>
- <6dc33f02-6691-4ad8-b04f-423e4e5caea8@linaro.org>
- <b19ff26f-7dc7-4022-aec7-49922ab521cf@quicinc.com>
- <b4e25dd2-caf3-48f0-8e1b-622f3db1b7ca@quicinc.com>
- <a59ccd01-1482-4091-957f-740840ff5112@linaro.org>
-Content-Language: en-US
-In-Reply-To: <a59ccd01-1482-4091-957f-740840ff5112@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: L3LtD61GdiCguKmQ5wNCOhkjoffxKhqW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX9mguqMmZPnxK
+ p0Rd7338aanqLHNqn4zs9UTDmfGwgDYKkHPnTaFgMyLtl+jQvNIjywVQpZnZLw4QzlM/PHMqVeB
+ ndR3Vm5ADVoNahOzg4TQ9cHItrTG9TsEOBAZ+kAAk0Q3p1Ii27IyAuPzoV+aHnydb6ct7HA6rg2
+ Vw2CsdlLBzH6HVHZnaW87BcQV0V59Y8Q6hWPn2cyXckqb7rC8C4QhbhOzcBedKqDPMknFM6QJbB
+ h+R7ZtZLqqxIDhEv/JtcF3l69mFWVSohsWwpgAxdiFLEo4zKTZmbbWIqJbyilaVTPehWTocSEbW
+ 922Je3SoTQOEz3NTYFVLihD5UXfLUasiYLB0HYZtBUyuNnEM0h5yPLbu6NOeF7e3FV04nfFPNfb
+ BUBG+qCR
+X-Authority-Analysis: v=2.4 cv=Y+f4sgeN c=1 sm=1 tr=0 ts=68cbeca8 cx=c_pps
+ a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=Uz3yg00KUFJ2y2WijEJ4bw==:17
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=xJVcXfk84ssIFEjcLW8A:9
+ a=OpyuDcXvxspvyRM73sMx:22
+X-Proofpoint-ORIG-GUID: L3LtD61GdiCguKmQ5wNCOhkjoffxKhqW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-17_01,2025-09-18_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
+ malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509160202
 
-On 18/09/2025 11:33, Bryan O'Donoghue wrote:
-> On 18/09/2025 11:21, Renjiang Han wrote:
->>
->> On 9/4/2025 11:33 AM, Renjiang Han wrote:
->>>
->>> On 7/28/2025 11:20 PM, Bryan O'Donoghue wrote:
->>>> On 24/07/2025 08:53, Renjiang Han wrote:
->>>>> Since the device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX
->>>>> do not include an opp-table and have not configured opp-pmdomain, they
->>>>> still need to use the frequencies defined in the driver's freq_tbl.
->>>>>
->>>>> Both core_power_v1 and core_power_v4 functions require 
->>>>> core_clks_enable
->>>>> function during POWER_ON. Therefore, in the core_clks_enable function,
->>>>> if calling dev_pm_opp_find_freq_ceil to obtain the frequency fails,
->>>>> it needs to fall back to the freq_tbl to retrieve the frequency.
->>>>>
->>>>> Fixes: b179234b5e59 ("media: venus: pm_helpers: use opp-table for 
->>>>> the frequency")
->>>>> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
->>>>> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
->>>>> Signed-off-by: Renjiang Han <quic_renjiang@quicinc.com>
->>>>> ---
->>>>> Since device trees for both HFI_VERSION_1XX and HFI_VERSION_3XX do not
->>>>> contain an opp-table and have not configured opp-pmdomain, they still
->>>>> need to use the frequencies defined in the driver's freq_tbl.
->>>>>
->>>>> Therefore, if calling dev_pm_opp_find_freq_ceil to obtain the 
->>>>> frequency
->>>>> fails in the core_clks_enable, it needs to fall back to the 
->>>>> freq_tbl to
->>>>> retrieve the frequency.
->>>>>
->>>>> Validated this series on QCS615 and msm8916.
->>>>> ---
->>>>> Changes in v2:
->>>>> - 1. Update the returned error value as per the feedback.
->>>>> - Link to v1: https://lore.kernel.org/r/20250723- 
->>>>> fallback_of_opp_table-v1-1-20a6277fdded@quicinc.com
->>>>> ---
->>>>>   drivers/media/platform/qcom/venus/pm_helpers.c | 11 ++++++++++-
->>>>>   1 file changed, 10 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/ 
->>>>> drivers/media/platform/qcom/venus/pm_helpers.c
->>>>> index 
->>>>> 8dd5a9b0d060cddfeafd4da477ade0c7aeb6c390..77c12273dbb9505244e260fc8fa635e4fe045236 100644
->>>>> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
->>>>> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
->>>>> @@ -40,6 +40,8 @@ static int core_clks_get(struct venus_core *core)
->>>>>     static int core_clks_enable(struct venus_core *core)
->>>>>   {
->>>>> +    const struct freq_tbl *freq_tbl = core->res->freq_tbl;
->>>>> +    unsigned int freq_tbl_size = core->res->freq_tbl_size;
->>>>>       const struct venus_resources *res = core->res;
->>>>>       struct device *dev = core->dev;
->>>>>       unsigned long freq = 0;
->>>>> @@ -48,7 +50,14 @@ static int core_clks_enable(struct venus_core 
->>>>> *core)
->>>>>       int ret;
->>>>>         opp = dev_pm_opp_find_freq_ceil(dev, &freq);
->>>>> -    dev_pm_opp_put(opp);
->>>>> +    if (IS_ERR(opp)) {
->>>>> +        if (!freq_tbl)
->>>>> +            return -ENODEV;
->>>>> +        freq = freq_tbl[freq_tbl_size - 1].freq;
->>>>> +    } else {
->>>>> +        dev_pm_opp_put(opp);
->>>>> +    }
->>>>> +
->>>>>         for (i = 0; i < res->clks_num; i++) {
->>>>>           if (IS_V6(core)) {
->>>>>
->>>>> ---
->>>>> base-commit: d086c886ceb9f59dea6c3a9dae7eb89e780a20c9
->>>>> change-id: 20250721-fallback_of_opp_table-4ea39376f617
->>>>>
->>>>> Best regards,
->>>>
->>>> Note to self add a
->>>>
->>>> Closes: 
->>>> CA+G9fYu5=3n84VY+vTbCAcfFKOq7Us5vgBZgpypY4MveM=eVwg@mail.gmail.com
->>> Thanks for helping review this patch. But I'm sorry, may I ask how to
->>> understand this comment?
->>>
->>> This patch has not been picked yet.Is there anything else I need to do?
->> I’d appreciate any thoughts you might have on this.
->>>>
->>>>
->>>> ---
->>>> bod
->>>
-> 
-> Marked as "Not applicable" on media-ci patchwork - you should have 
-> received an email about that.
-> 
-> * 7881cd6886a89 - media: venus: Fix OPP table error handling (6 weeks ago)
-> * b179234b5e590 - media: venus: pm_helpers: use opp-table for the 
-> frequency (3 months ago)
-> * 14423fc3a4a21 - media: venus: pm_helpers: add compatibility for 
-> dev_pm_genpd_set_hwmode on V4 (5 months ago)
-> 
-> git checkout -b linux-next/master-25-09-18 linux-next/master
-> Updating files: 100% (10211/10211), done.
-> branch 'linux-next/master-25-09-18' set up to track 'linux-next/master'.
-> 
-> b4 shazam b4e25dd2-caf3-48f0-8e1b-622f3db1b7ca@quicinc.com
-> Grabbing thread from lore.kernel.org/all/b4e25dd2- 
-> caf3-48f0-8e1b-622f3db1b7ca@quicinc.com/t.mbox.gz
-> Checking for newer revisions
-> Grabbing search results from lore.kernel.org
-> Analyzing 5 messages in the thread
-> Looking for additional code-review trailers on lore.kernel.org
-> Analyzing 0 code-review messages
-> Checking attestation on all messages, may take a moment...
-> ---
->    ✓ [PATCH v2] media: venus: pm_helpers: add fallback for the opp-table
->      + Closes: 
-> CA+G9fYu5=3n84VY+vTbCAcfFKOq7Us5vgBZgpypY4MveM=eVwg@mail.gmail.com (✗ 
-> DKIM/linaro.org)
->      + Reviewed-by: Vikash Garodia <quic_vgarodia@quicinc.com> (✓ DKIM/ 
-> quicinc.com)
->    ---
->    ✗ No key: ed25519/quic_renjiang@quicinc.com
->    ✓ Signed: DKIM/quicinc.com
-> ---
-> Total patches: 1
-> ---
->   Base: using specified base-commit 
-> d086c886ceb9f59dea6c3a9dae7eb89e780a20c9
-> Applying: media: venus: pm_helpers: add fallback for the opp-table
-> Patch failed at 0001 media: venus: pm_helpers: add fallback for the opp- 
-> table
-> error: patch failed: drivers/media/platform/qcom/venus/pm_helpers.c:48
-> error: drivers/media/platform/qcom/venus/pm_helpers.c: patch does not apply
-> hint: Use 'git am --show-current-patch=diff' to see the failed patch
-> hint: When you have resolved this problem, run "git am --continue".
-> hint: If you prefer to skip this patch, run "git am --skip" instead.
-> hint: To restore the original branch and stop patching, run "git am -- 
-> abort".
-> hint: Disable this message with "git config set advice.mergeConflict false"
-> 
-> ---
-> bod
+From: "Yu Zhang(Yuriy)" <yu.zhang@oss.qualcomm.com>
 
-"Not Applicable" -> "Changes Requested"
+Set the drive-strength to 16mA for gpio98 used as wlan-en-state in the
+QCS615 ride platform device tree. This ensures sufficient output
+strength for controlling the WLAN enable signal reliably.
 
+Signed-off-by: Yu Zhang(Yuriy) <yu.zhang@oss.qualcomm.com>
 ---
-bod
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/boot/dts/qcom/qcs615-ride.dts b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+index 705ea71b07a1..a69b1335f0ba 100644
+--- a/arch/arm64/boot/dts/qcom/qcs615-ride.dts
++++ b/arch/arm64/boot/dts/qcom/qcs615-ride.dts
+@@ -398,6 +398,7 @@ wlan_en_state: wlan-en-state {
+ 		pins = "gpio98";
+ 		function = "gpio";
+ 		bias-pull-down;
++		drive-strength = <16>;
+ 		output-low;
+ 	};
+ };
+
+base-commit: ae2d20002576d2893ecaff25db3d7ef9190ac0b6
+-- 
+2.34.1
+
 
