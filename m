@@ -1,137 +1,124 @@
-Return-Path: <linux-arm-msm+bounces-74232-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74233-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2571B8ABD3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 19:21:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B265B8ABFD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 19:24:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6E94E4E6838
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 17:21:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 171533AC71A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 17:24:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 090DD272E54;
-	Fri, 19 Sep 2025 17:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1260E258ED6;
+	Fri, 19 Sep 2025 17:24:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NwscmKcX"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Akjzzx2E"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB07276048
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B25D155A30
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:24:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758302471; cv=none; b=hXlyF/8wt9l3u+uV/gyE7tFfO1IIZn3sTkmg7vQtwAKKhmA9y6W2j/cWl/vFozTD0QCwYHgrHr0vFJyukYUVbmKg9Ba7LtlQFsMQfwtL7/O3QdhFfINgnS9APOzgoC9Lk/eACfT5rP6WPdiOxnaROUQNpsla2CIVWSN95wAXB1M=
+	t=1758302673; cv=none; b=uEa18vZDpJurMeBfquP2QPA5enxjNLHC67xEKsYOJx1Z4nILp74erKppJHNIRYiEy/LQ4IxQfIkJuION2Gb+KtHSHobX+Ahuo4a8w3q1yeEoNDXyucqGWh8MGpK2FBPDvvxIs/PP/ra9p/YIzaAMugPbQfaRNFDj2k+vNTz9G0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758302471; c=relaxed/simple;
-	bh=BnykSKnbxL/JbVG4C2eSeMxrGBCa+WojSF98CVVbJBU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=c+5vVghXdyJRfNM1Oz9GlE8spjhZns6Fh1NQZSBw8L9X+eAb9IiucPha/WXws2OTgdqjYZH25tku9ZWHoIOxCjJ4glpnhTsqWQ4rzWiM3Bh9zjSsNSIdtrRS7tkifX7B4orEzkVFNItzDw8th1IbgnBg+2ZWt28GI6gpzjjnVX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NwscmKcX; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1758302673; c=relaxed/simple;
+	bh=jz6EK/5R/cZ51gSyiWj0rppUrk/++V0bISlTdb7FPBM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iWMlRR6I7kdbxK2jQ/9EbiahYInYHEE1+U4YDhcxSewc+ndOPzUH3YYIDpsfttDWP29EsQJUnQpodtzic5W67cSU6wUSKXJMSCwLGPBHg99xb+1qaCJfRTylcILoVI4G2A7Y+gpjUx6Pkn1g7xffht5jkkqyi3QsOZmqmXFdAdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Akjzzx2E; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JEDvdp009918
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:21:08 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JDkRj5009015
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:24:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=kxVNKbUzAJV99X9dS/+gmi
-	7NdsiUJfq4YgJmO8sKUp8=; b=NwscmKcX9Orgtckc3FVnSWRjrXacPIID7ZzxjZ
-	joPpAUIMdp3ncl716dr+7KTk42qi2JQxSEBiLvDYg1GRN2sShViQeFIqDB/BJmCN
-	0r0CjcP+D0JRpU9cgJID96xMaoE9+szUT6VI+wXXZ2Gu5Q13pDYpblPHK0C2/wKF
-	WtUyVV7d0CxVKy1U2swytQHj6lMhsfrY3DbPvpf4g28PKQ/BBdRaB/rkjf4x68eh
-	T+M7mXxwxsGxemlqFOuaJ8F2k6JVO200kkeLm/HyZlQSc4Zry36Fq/wEVoqZ9UeS
-	f9J1CCaibeUIYdryqo8zPVL00QbNM2q3mQ6XljdmlM3JiGkA==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 498q9dbpsq-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=2SmCmfA+ffYL/cc7ScaFG2SQ
+	47LI5h70ggIXvRCOHEw=; b=Akjzzx2EPN6moRmflxOtitL+pQPgsWDdtWBjIDzb
+	SI9gvZn4SDbKuRbRCI/W8Namjisn8Gj47i+y1yqNnNW0fWGAeWiU584myZTd5prs
+	sBFkfPgTJ5061jNFFGvJTdogvEPSvgarLFocP9gB5AgIoGdMbaeu8bZr31+UCY4L
+	WTp7+VdRKzvaRfr9DHQS+PAe7MyrPo1TzIWT0qVgC6JYFJ+Q1CRgNonqOWyGk2Qs
+	+gxPs/0sFDZGU2olQdb1AT/yv0CqMqMB5NgveyKypKLRs13HlFsQsHeF0zUPgdJP
+	7+THt5oGeOj0QyVna4exc21dD9bEF2V1AW0CPntGWCmHdw==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 498q9dbq85-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:21:08 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b5f31ef7dfso60917111cf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 10:21:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:24:30 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b3415ddb6aso74882701cf.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 10:24:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758302467; x=1758907267;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=kxVNKbUzAJV99X9dS/+gmi7NdsiUJfq4YgJmO8sKUp8=;
-        b=mfbqn7T/st248q5Sk0EuHpGH9b0d8G/YZXFDQXQxnnkcXZoD/TQfubIjxujRcjzrtF
-         Vu5g+lwe4lFEFldwFWJHwVOYFIq0mQcHwdCbHJWDEtOYrJU8sFyQzBQCwOLJr9Q97nZ1
-         FU2r9bHAqyieeRT1V6VuroN9Hxo6x0N7gdcE9TJvWisERDg6/3jeacp7sFehvCZf2CIG
-         kw5Q72aJ99xJmPFDTGQwh/jezKSn0LE7Dy5kH9EBNaPS6KPRKGApIiFp5Essc/qfeYJK
-         mRcVeASE7UN5vHY/4rHDV41C0lB5d6RQjoPUg+tZE/lk5d9n5zdQX/5zndEzuKqLv3ua
-         2Jbg==
-X-Forwarded-Encrypted: i=1; AJvYcCWnJ18cfjpIY8ZsUMnq24AS/h1bjjj9IOt96DpcmMjRPfl9Es/r0vW2zfyPRDIBgAYDIGWQRwu0tf7d3DNQ@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx4ICpp2XndZ7yiEkxGlMDBQvQg4geJiQFzZq5Gniy9EIJ29bZw
-	jWRrJ0kurudE0XS9o6ggCfJUJDvLsM1/9Qafz7hAt1R4xG1uK89Eru6u85soyeyTQ80KFBaG+Se
-	WjsaKHwjA4rKSuZyKwsRdiUKZ3DBLmsxLy4/L9LBpWovjSdAj+0ntR32X8JZWMJ4Gg0G2
-X-Gm-Gg: ASbGncszp7I6cbrN6rnxpt+DCFVgsssF9T38lDADOO1TALvxFkoNkoxQtsuKNSquAvU
-	qyZDKlqV81EmOAh7IAP0XfNWMa+YM2Ci/KGhIlUtVB7iKUG6/fAtAHy7rahFvJHUgKZo6yIKfDq
-	+L7P7XWAsr3I+SAzygk/HPPOaXrne9vWTDOK4mG0wFi7LDKdaWdQG5tX4ndjLuhRrEe3xGFXXas
-	kENvpfHYKQQuWgKQU0ROlc/Xy5ytBodLMTqPey6FO+xNeFpQkkRyNnrbRCAvLklGiXLV76WkzxI
-	fNFF9wZ9aV00YgY7ffulSwq8z7RCIgkULU11RJpeILvjnghvrPyK208x1TS8a+V2n4j1aGHtSj6
-	yv8qzYEIufjNhN4+/YyaxXU1meJUp8l8b9TJukLTr2LNEZPOW28rG
-X-Received: by 2002:a05:622a:a6c4:b0:4b7:ad70:238b with SMTP id d75a77b69052e-4bfb25ec815mr60645611cf.32.1758302466959;
-        Fri, 19 Sep 2025 10:21:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4d98CBOBqf2FaOXuHvtl4BnNL0RixaCIYvrS+wV5YsTKL6WDAJme6mX7DEYtUHRmlOxiN0Q==
-X-Received: by 2002:a05:622a:a6c4:b0:4b7:ad70:238b with SMTP id d75a77b69052e-4bfb25ec815mr60645051cf.32.1758302466296;
-        Fri, 19 Sep 2025 10:21:06 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758302670; x=1758907470;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2SmCmfA+ffYL/cc7ScaFG2SQ47LI5h70ggIXvRCOHEw=;
+        b=U8lk7Upo3S5RScbA2M7Wq68KeOHCJU4iXt5FC7ADKNT5W05etVFTyMqNkXCU1vg9xu
+         Pwz6zlPC0phM/yEa2F/dqAugC3GYW0Vucx2AyyRuvcFrSIsrhOTvxvFpm/eLBCKBNQcu
+         8OfiDSpeZ65cRzpgeQX4+b+nJ0hs24o1GIfuN8ybEVGNXyjkahKlLs6cNSND9IvUaNPu
+         fAXz+dDv9j1U50jiAy7Qxnler8wXWhW7LVd83fEV2Y2DV7V88GUNB5a23xFv/Vv+eHW1
+         n3EPsPubrECE3sqsyld6QLBwks8SG0A6/HxZcPjnxLbKP5OJ6YJZQskn4kHKIwOw9DIP
+         4W/Q==
+X-Forwarded-Encrypted: i=1; AJvYcCV1t5WXkV9jTneQqMdp+dZ3JIE88dHmS+vO7CHPqOTg1cjS4MICasdrM0bmmW1U6Xo3S7cpMgmTN/K0WSn+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzaBztIb9w9SpOnCA5ylagaN2kq3Fr+tb8O6MSwuGIkNeplvlGG
+	ZosDxJ8co+KpLrZ2zG9mcPTvwXBq1oLZW/ajII1dGVOfNhw8FuS4ZtXlZp40uIuRcvhlS14ys/w
+	l/8DosTMPXj1/xk6kpYmybn1Uu6yT/1iFhb68CZ9lCgZcmp0CSlzNLs0bEPbGs6EbKO4O
+X-Gm-Gg: ASbGncuPvCjYoBcn2pJZ9lgBiiHf6KDV+dCLfGQx87dzmKgYWsRjA9pIwHHHsVG52J7
+	d+OwRTh+XxB+nvoQOVuPDuEO6hEI7g3Huwdd/v5FewLhvqziTub6rCON83fZ4sMEFF6zwCJvNcF
+	aOZNGxajDkAPg9eaJbFiy0ed9MCRXl+ENaWJosQg0kOLndJif6fGVKlzPcgM7xgDcWcd2Zxa1/3
+	MOK56Pde3SCdUH2oFV0E/i710YTt0pYoWWIjoWyVSJ/Wiu6oF9rItEnm0robgx0bH7K21vzjaNz
+	IKRkY4HC3qb5Q0jhFoBGgiPJCJMF64SVIY8YuDHHyyL759BzX4eHfh13YEHJEzCJ7fHbfGcRj/U
+	HD2OUmBadFdCXvk935GMgZNcdmOgvJpUSMRyP1Tpk1AcJ5aHTjpHJ
+X-Received: by 2002:a05:622a:110f:b0:4b4:906b:d05d with SMTP id d75a77b69052e-4bdae5ac1b5mr88562271cf.29.1758302669489;
+        Fri, 19 Sep 2025 10:24:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEowL0VkIS55e+wrnpXk8ejFGWmiVu1K7CSpGZAvwocAzm3e82EVFvLe2rVUzxckJSDcYN9iQ==
+X-Received: by 2002:a05:622a:110f:b0:4b4:906b:d05d with SMTP id d75a77b69052e-4bdae5ac1b5mr88561851cf.29.1758302668930;
+        Fri, 19 Sep 2025 10:24:28 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-361a25d7309sm13737241fa.15.2025.09.19.10.21.05
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-578a8fada4fsm1524487e87.89.2025.09.19.10.24.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 10:21:05 -0700 (PDT)
+        Fri, 19 Sep 2025 10:24:28 -0700 (PDT)
+Date: Fri, 19 Sep 2025 20:24:26 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Date: Fri, 19 Sep 2025 20:21:00 +0300
-Subject: [PATCH v2] devfreq: move governor.h to a public header location
+To: Luca Weiss <luca.weiss@fairphone.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/3] clk: qcom: dispcc-sm6350: Add MDSS_CORE & MDSS_RSCC
+ resets
+Message-ID: <cujc27qvhzblxsvkiyn2kpyl2btkeysr22amuhpfhjlsvwfuka@ukzba7jz4ftp>
+References: <20250919-sm6350-mdss-reset-v1-0-48dcac917c73@fairphone.com>
+ <20250919-sm6350-mdss-reset-v1-2-48dcac917c73@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250919-governor-public-v2-1-37e117ac0060@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAPuQzWgC/3WNQQqDMBBFryKzbiRJKyRd9R7FRUyiDqjRpIYWy
- d07dV9mGHgf5v0Dko/oE9yrA6LPmDAsBPJSgR3NMniGjhgklw3X/MqGkH1cQmTr3k1omdPW3YR
- WvWoU0NcafY/v0/hsiUdMrxA/Z0EWv/S/KwtGI4TpnNKG9hFSqrfdTDbMc00H2lLKF/ZLUTi1A
- AAA
-X-Change-ID: 20250903-governor-public-d9cd4198f858
-To: MyungJoo Ham <myungjoo.ham@samsung.com>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Chanwoo Choi <cw00.choi@samsung.com>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>
-Cc: linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Robie Basak <robibasa@qti.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8969;
- i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=BnykSKnbxL/JbVG4C2eSeMxrGBCa+WojSF98CVVbJBU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBozZEBhVKPQ9g1zZIP+co09QhudTAVGqHOjB+NN
- 9PiH3VUg46JATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaM2RAQAKCRCLPIo+Aiko
- 1a4CB/9vza4es6gtD0/SDV0ZoohF521+lQIW3hMvrnTfXYtedHzj3OMGwBiAEZphEQQbXgJEx63
- nYimJfZnGaxTlCZb3UZE6GasGwC8kVdPAQrYjoBzW/cZzTeQXbooxkU641RwJJDjZ37kAk+5/1N
- w3TWJkiDMMM1wIWhyseicx9WjRHi9SGKAKJNwe14kBAGEMfNVG6zjDrgLNoDrwLnBq6rjGE/fnw
- FlvHOSGsdA8D66U7/ix25D4CaNg8W/HjkPxlso9R/qkLv4BIULtj4w+nWo7NKoMR4CSUWgFJjJ6
- ojfuwFkoU0WC8fwg5e64128fHVLN+aKLYjjnuRSD4+R2qMuR
-X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
- fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Authority-Analysis: v=2.4 cv=YsAPR5YX c=1 sm=1 tr=0 ts=68cd9104 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=Ikd4Dj_1AAAA:8
- a=hD80L64hAAAA:8 a=rlKpfLgfwYsX6qVZeg8A:9 a=QEXdDO2ut3YA:10
- a=kacYvNCVWA4VmyqE58fU:22
-X-Proofpoint-GUID: 5kiTg-ZtRTTdujr-J__dTB0d9qxTEZlg
-X-Proofpoint-ORIG-GUID: 5kiTg-ZtRTTdujr-J__dTB0d9qxTEZlg
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE4MDE2MyBTYWx0ZWRfX8AhzeH4cZ6kg
- gue0asRcFF9Hf2BsVuKe8gvizF8Ceb4/DwQOMyOfx+Elh2bEjPwriSc8vUrY99WeVvYA0lTdHfs
- XM3uNu107kbbB2wFt3ZGdYtyQEuXXS/kLRPiXaa7ibHxxI9dCwX9T3rdgppXCTeRWutOQTHUAs0
- kaLtYm0iCPz8LDkQfXjHkkNBZtwUhy3XICDzknOQrHBqiv3Oh6Boz4PIxfGMqQmPwx4KC+90ZGm
- mod7DuEVXMqLHRPpzsMWVtZZgSPkaLRWFUzxW9nFfG+Da1j0WxWTVarmXOyYafthpMDioNU07Om
- 64eGZ/yreoG5FKtNPD0mURwRulKCgJ0F6/6v0tBgUYm7y8Yp4qlXeBHzqzggUE4u8A2J/EiztuH
- LjhbM3uH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250919-sm6350-mdss-reset-v1-2-48dcac917c73@fairphone.com>
+X-Authority-Analysis: v=2.4 cv=YsAPR5YX c=1 sm=1 tr=0 ts=68cd91ce cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=6H0WHjuAAAAA:8 a=EUspDBNiAAAA:8 a=S60hzewbzrEDFSkdeIwA:9
+ a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22 a=Soq9LBFxuPC4vsCAQt-j:22
+X-Proofpoint-GUID: UEC64ooVZ8F4eIjjIyiBHxQliP8gSsjm
+X-Proofpoint-ORIG-GUID: UEC64ooVZ8F4eIjjIyiBHxQliP8gSsjm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE4MDE2MyBTYWx0ZWRfX6E2mp0yJgmym
+ CLVuKV7vGitpWQFJWUelqmYRRT3rhmNXUR9YRTMTfWhdOkBybZrkOzwRcD8+UE0v35bDoYjo7XR
+ YMzkC9nAPNfOB2DvXGQsGhQkHlhuq2YpCTx/U9fnmxYxJs4RroCMCI7OeN/y52z6kQSVnXWdMqH
+ rchhoNX1Al4KJLpUMgJjNhit7bTYS7i/hFTHOBlF/NLK9sQXAZRPTAoYmX7+J/RpX0aUDZ0qfs2
+ weeB2kshODnDeDpFT3U5lGwlBJBXqq+cq1wkZqWW/t7N4NfM+6EdNpM75R1I20YBlQ/GYQmqdQz
+ t+ijfT6215LGlJ4du0NU1eCXtvEZxqlXdSGymIl7rg3tHQq6E2PPdhmnEdeHARFynslO1JjVbBl
+ P41A1miz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
@@ -141,263 +128,27 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509180163
 
-Some device drivers (and out-of-tree modules) might want to define
-device-specific device governors. Rather than restricting all of them to
-be a part of drivers/devfreq/ (which is not possible for out-of-tree
-drivers anyway) move governor.h to include/linux/devfreq-governor.h and
-update all drivers to use it.
+On Fri, Sep 19, 2025 at 11:57:24AM +0200, Luca Weiss wrote:
+> Add the offsets for two resets inside the dispcc on SM6350 SoC.
+> 
+> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+> ---
+>  drivers/clk/qcom/dispcc-sm6350.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/drivers/clk/qcom/dispcc-sm6350.c b/drivers/clk/qcom/dispcc-sm6350.c
+> index b0bd163a449ccd2b27751e32eb17a982facf07d8..5b1d8f86515f251d90e01a4f3cb3b5582b5db683 100644
+> --- a/drivers/clk/qcom/dispcc-sm6350.c
+> +++ b/drivers/clk/qcom/dispcc-sm6350.c
+> @@ -679,6 +679,11 @@ static struct clk_branch disp_cc_xo_clk = {
+>  	},
+>  };
+>  
 
-The devfreq_cpu_data is only used internally, by the passive governor,
-so it is moved to the driver source rather than being a part of the
-public interface.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-Reported-by: Robie Basak <robibasa@qti.qualcomm.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
----
-Changes in v2:
-- Fixed typo in commit subject (Mikko Perttunen)
-- Link to v1: https://lore.kernel.org/r/20250903-governor-public-v1-1-111abd89a89a@oss.qualcomm.com
----
- drivers/devfreq/devfreq.c                          |  2 +-
- drivers/devfreq/governor_passive.c                 | 27 +++++++++++++++++-
- drivers/devfreq/governor_performance.c             |  2 +-
- drivers/devfreq/governor_powersave.c               |  2 +-
- drivers/devfreq/governor_simpleondemand.c          |  2 +-
- drivers/devfreq/governor_userspace.c               |  2 +-
- drivers/devfreq/hisi_uncore_freq.c                 |  3 +-
- drivers/devfreq/tegra30-devfreq.c                  |  3 +-
- .../governor.h => include/linux/devfreq-governor.h | 33 +++-------------------
- 9 files changed, 37 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
-index 2e8d01d47f6996a634a8ad5ddf20c5a68d1a299d..00979f2e0e276a05ee073dcf5cd8e930bdd539fb 100644
---- a/drivers/devfreq/devfreq.c
-+++ b/drivers/devfreq/devfreq.c
-@@ -20,6 +20,7 @@
- #include <linux/stat.h>
- #include <linux/pm_opp.h>
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/workqueue.h>
- #include <linux/platform_device.h>
- #include <linux/list.h>
-@@ -28,7 +29,6 @@
- #include <linux/of.h>
- #include <linux/pm_qos.h>
- #include <linux/units.h>
--#include "governor.h"
- 
- #define CREATE_TRACE_POINTS
- #include <trace/events/devfreq.h>
-diff --git a/drivers/devfreq/governor_passive.c b/drivers/devfreq/governor_passive.c
-index 953cf9a1e9f7f93804cc889db38883bf97ae005d..8cd6f9a59f6422ccd138ff4b264dc8a547ad574f 100644
---- a/drivers/devfreq/governor_passive.c
-+++ b/drivers/devfreq/governor_passive.c
-@@ -14,8 +14,33 @@
- #include <linux/slab.h>
- #include <linux/device.h>
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/units.h>
--#include "governor.h"
-+
-+/**
-+ * struct devfreq_cpu_data - Hold the per-cpu data
-+ * @node:	list node
-+ * @dev:	reference to cpu device.
-+ * @first_cpu:	the cpumask of the first cpu of a policy.
-+ * @opp_table:	reference to cpu opp table.
-+ * @cur_freq:	the current frequency of the cpu.
-+ * @min_freq:	the min frequency of the cpu.
-+ * @max_freq:	the max frequency of the cpu.
-+ *
-+ * This structure stores the required cpu_data of a cpu.
-+ * This is auto-populated by the governor.
-+ */
-+struct devfreq_cpu_data {
-+	struct list_head node;
-+
-+	struct device *dev;
-+	unsigned int first_cpu;
-+
-+	struct opp_table *opp_table;
-+	unsigned int cur_freq;
-+	unsigned int min_freq;
-+	unsigned int max_freq;
-+};
- 
- static struct devfreq_cpu_data *
- get_parent_cpu_data(struct devfreq_passive_data *p_data,
-diff --git a/drivers/devfreq/governor_performance.c b/drivers/devfreq/governor_performance.c
-index 2e4e981446fa8ea39f65b09dddff198c0b8e3338..fdb22bf512cf134d75f1eaf3edb80e562dd28bec 100644
---- a/drivers/devfreq/governor_performance.c
-+++ b/drivers/devfreq/governor_performance.c
-@@ -7,8 +7,8 @@
-  */
- 
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/module.h>
--#include "governor.h"
- 
- static int devfreq_performance_func(struct devfreq *df,
- 				    unsigned long *freq)
-diff --git a/drivers/devfreq/governor_powersave.c b/drivers/devfreq/governor_powersave.c
-index f059e881480465b051f27d740348adaf779aebf0..ee2d6ec8a512248f070b2c5bee8146320b7be312 100644
---- a/drivers/devfreq/governor_powersave.c
-+++ b/drivers/devfreq/governor_powersave.c
-@@ -7,8 +7,8 @@
-  */
- 
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/module.h>
--#include "governor.h"
- 
- static int devfreq_powersave_func(struct devfreq *df,
- 				  unsigned long *freq)
-diff --git a/drivers/devfreq/governor_simpleondemand.c b/drivers/devfreq/governor_simpleondemand.c
-index c234357363675508c12732a08c1cd26c349039d1..9c69b96df5f97306e9be46aa6bb1d9d2f8e58490 100644
---- a/drivers/devfreq/governor_simpleondemand.c
-+++ b/drivers/devfreq/governor_simpleondemand.c
-@@ -9,8 +9,8 @@
- #include <linux/errno.h>
- #include <linux/module.h>
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/math64.h>
--#include "governor.h"
- 
- /* Default constants for DevFreq-Simple-Ondemand (DFSO) */
- #define DFSO_UPTHRESHOLD	(90)
-diff --git a/drivers/devfreq/governor_userspace.c b/drivers/devfreq/governor_userspace.c
-index 175de0c0b50e087861313060eab70a35b757fd20..395174f93960d0762456238654f4d356e21cf57c 100644
---- a/drivers/devfreq/governor_userspace.c
-+++ b/drivers/devfreq/governor_userspace.c
-@@ -9,11 +9,11 @@
- #include <linux/slab.h>
- #include <linux/device.h>
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/kstrtox.h>
- #include <linux/pm.h>
- #include <linux/mutex.h>
- #include <linux/module.h>
--#include "governor.h"
- 
- struct userspace_data {
- 	unsigned long user_frequency;
-diff --git a/drivers/devfreq/hisi_uncore_freq.c b/drivers/devfreq/hisi_uncore_freq.c
-index 96d1815059e32c4e70a1d3c257655cc6b162f745..b8e4621c57ebc76513e4eba978aa54f2b884e210 100644
---- a/drivers/devfreq/hisi_uncore_freq.c
-+++ b/drivers/devfreq/hisi_uncore_freq.c
-@@ -9,6 +9,7 @@
- #include <linux/bits.h>
- #include <linux/cleanup.h>
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/device.h>
- #include <linux/dev_printk.h>
- #include <linux/errno.h>
-@@ -26,8 +27,6 @@
- #include <linux/units.h>
- #include <acpi/pcc.h>
- 
--#include "governor.h"
--
- struct hisi_uncore_pcc_data {
- 	u16 status;
- 	u16 resv;
-diff --git a/drivers/devfreq/tegra30-devfreq.c b/drivers/devfreq/tegra30-devfreq.c
-index 4a4f0106ab9ddcfb106a1860370cbf8a3579322a..77cbb204087c970c1fec0c1597b1e76c1a11b390 100644
---- a/drivers/devfreq/tegra30-devfreq.c
-+++ b/drivers/devfreq/tegra30-devfreq.c
-@@ -9,6 +9,7 @@
- #include <linux/clk.h>
- #include <linux/cpufreq.h>
- #include <linux/devfreq.h>
-+#include <linux/devfreq-governor.h>
- #include <linux/interrupt.h>
- #include <linux/io.h>
- #include <linux/irq.h>
-@@ -21,8 +22,6 @@
- 
- #include <soc/tegra/fuse.h>
- 
--#include "governor.h"
--
- #define ACTMON_GLB_STATUS					0x0
- #define ACTMON_GLB_PERIOD_CTRL					0x4
- 
-diff --git a/drivers/devfreq/governor.h b/include/linux/devfreq-governor.h
-similarity index 80%
-rename from drivers/devfreq/governor.h
-rename to include/linux/devfreq-governor.h
-index 0adfebc0467a3db39278814fa66d2b1f25d61f7a..dfdd0160a29f35f5608575b07b450cf5157420ff 100644
---- a/drivers/devfreq/governor.h
-+++ b/include/linux/devfreq-governor.h
-@@ -5,11 +5,11 @@
-  * Copyright (C) 2011 Samsung Electronics
-  *	MyungJoo Ham <myungjoo.ham@samsung.com>
-  *
-- * This header is for devfreq governors in drivers/devfreq/
-+ * This header is for devfreq governors
-  */
- 
--#ifndef _GOVERNOR_H
--#define _GOVERNOR_H
-+#ifndef __LINUX_DEVFREQ_DEVFREQ_H__
-+#define __LINUX_DEVFREQ_DEVFREQ_H__
- 
- #include <linux/devfreq.h>
- 
-@@ -47,31 +47,6 @@
- #define DEVFREQ_GOV_ATTR_POLLING_INTERVAL		BIT(0)
- #define DEVFREQ_GOV_ATTR_TIMER				BIT(1)
- 
--/**
-- * struct devfreq_cpu_data - Hold the per-cpu data
-- * @node:	list node
-- * @dev:	reference to cpu device.
-- * @first_cpu:	the cpumask of the first cpu of a policy.
-- * @opp_table:	reference to cpu opp table.
-- * @cur_freq:	the current frequency of the cpu.
-- * @min_freq:	the min frequency of the cpu.
-- * @max_freq:	the max frequency of the cpu.
-- *
-- * This structure stores the required cpu_data of a cpu.
-- * This is auto-populated by the governor.
-- */
--struct devfreq_cpu_data {
--	struct list_head node;
--
--	struct device *dev;
--	unsigned int first_cpu;
--
--	struct opp_table *opp_table;
--	unsigned int cur_freq;
--	unsigned int min_freq;
--	unsigned int max_freq;
--};
--
- /**
-  * struct devfreq_governor - Devfreq policy governor
-  * @node:		list node - contains registered devfreq governors
-@@ -124,4 +99,4 @@ static inline int devfreq_update_stats(struct devfreq *df)
- 
- 	return df->profile->get_dev_status(df->dev.parent, &df->last_status);
- }
--#endif /* _GOVERNOR_H */
-+#endif /* __LINUX_DEVFREQ_DEVFREQ_H__ */
-
----
-base-commit: 8cd53fb40a304576fa86ba985f3045d5c55b0ae3
-change-id: 20250903-governor-public-d9cd4198f858
-
-Best regards,
 -- 
 With best wishes
 Dmitry
-
 
