@@ -1,81 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-74181-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91E84B8967E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 14:17:47 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79464B8968A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 14:18:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 507E7163805
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 12:17:47 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F17F1C87FD7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 12:18:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1792F310628;
-	Fri, 19 Sep 2025 12:17:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 867E831197B;
+	Fri, 19 Sep 2025 12:17:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="N13wDTSK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="aOekwumb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C3E30FF08
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 12:17:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7143101D9
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 12:17:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758284259; cv=none; b=lsE87WONTsrZUoHeqe2PYq0arv730zA1sC2B2a0bAz4tf41OVvj+Oge176V6Zagn7L5gwJD8AjGxzxNi1i++xpuyLKvMdva1y+K96VNu4BCiLwHU6fh8lOC9gZroqpLnhMY4k9RYu2ortYhURGT/H0H4gbBAnW9lvOMuV2koJfQ=
+	t=1758284261; cv=none; b=duuVM8I/3SaScUkVI4x5qGYP+zmZ8k5nRUDotbJwL6Bw7VaY+csVvsFW1aVVQ2oeVpA8MuUPx96btsLLDfq4wOKbQpxd6NZj5gX+gSUqAiqN8Ka7kQcUOT7+4AviRCA57cgibwBOJbR95wKq16ShrnvTaMd39u2zzZNcdwjWUjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758284259; c=relaxed/simple;
-	bh=SdGpmTC+LKgK19BvUf9yW/Fp11UDvjXE5sjy2+/Mh/k=;
+	s=arc-20240116; t=1758284261; c=relaxed/simple;
+	bh=uXMsVRvIWUUHVkklABfE5JimlZKe9ncD9jrhLJ/1tIM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KmiTfAx3QGCucp0EoiUCZnf5QEm7Ob0TiK/L9/ifDzG8ErYZd6c7i2owcvsvWVCmLF7Ux2MoLjkvp/Rsp3HB+bp5K2gvdyJqkap1NQgL24nw/r5wypeHN5lWF4jzxMNkH9jbv4AUXPHxAbYo25yqf9D8aF/DT/SBK77YJ334nXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=N13wDTSK; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:To:Cc; b=ApbXwsORF/pH/Djmwlt0nBQ58Ca2a1z6rmGFiU9lr4IbGVFesPDS/cKF+GpygvxJTxcGbK1EYdUQxUHJr4qsFH5SURpvCh96v7gm4uVzF0wRwIuHGgdV94SdcN8RXH9drLx8bYXckIWwEl7fZpMoqMPKy6MzqomyoUAj2qp0yaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=aOekwumb; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45f2acb5f42so15957755e9.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 05:17:36 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45df7dc1b98so12595055e9.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 05:17:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758284255; x=1758889055; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1758284257; x=1758889057; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=vUabflASE+6vplUQ9XK7OmtiqdkIjEnnJBBKIE665XU=;
-        b=N13wDTSKuGEC7T9IUf8q9QMjScUAMoyDrtTEVXXn5kXjxD0WIAdHGpx/6U8/fb4T3J
-         rOqCnMHr9EXRXrkbCowCppmytXdxtuj8ppKQUHf08DUGPQ8Ap8qZHWlBXslfE6zx0wLI
-         uEexYLDIWDtQrlhXhJlagpBmnBBd6nfLvjRTSs3oN+G44kKlYZDu2i4fdGCTDtZnzLGv
-         rLu0VZYZTmcJlPWq9Ik6xyZ5id4YJ5HQiLKhzO/4CfpTqHxf+qGH+daQ6A28FoCPpptZ
-         PujqIkLMFJn6sth3uvwzWtWYt1/j6Rk5OTovCmPukR5ik2ZddyCtDJ4gVBB6zGAN0MpJ
-         COHw==
+        bh=TIW2cqbRLJugG5iAmnoTn2WqOkPb3SCBmhz78WCDfZg=;
+        b=aOekwumbS67JQCB5kDY34mBviO7d8/N3UTXkPnSu1VJjDuQojzQ1JgSurl11vUr1cd
+         pX3HdjKZL2AW8Weyrl+g1zJjq3hM4n9RnKcA6H8Gx/VVNR/bZlafA7h+x7aONWj06ekA
+         pJPGkF30Ln7V92NWuTJFW3I/GFe2ShJvNhB6mmhFh8nsDM86VWm6yNuBIi/+2pEdKPMH
+         EpaddFhTtWJuAB2geNue+67ne28ZCJQBjFiVjEOamD7/Bg2GVOb/GHOabLcKMMeftSnZ
+         RRoh0u37hMZhJm9m956fHETGSD1PyscKuUtEQQJgUA/BoKMA3+Cw/LZobaHzMJQ7Dago
+         OD8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758284255; x=1758889055;
+        d=1e100.net; s=20230601; t=1758284257; x=1758889057;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vUabflASE+6vplUQ9XK7OmtiqdkIjEnnJBBKIE665XU=;
-        b=M/Soohk81vb8AnRHWQkBFFH/9rle78RSMI4cf+gJ1NSap1/gjLIiWzsb16OvDGJ5mI
-         MvNPGVFQaUWkgS4niv53N+ZKu8Kpk5CbsPH+RXzF51RhT2yfka6cFdv6NNNYMG0NPQWV
-         eSjXMhD/WyY/KL2YJZXz7LBBW4SBfbKeetqm3+w09SRh4372km9KNWbGT+Vzh5MrJvCB
-         qSqO/XXPQw5s3ESC9UI7XEWte0qTKKP0wNN0Y7Poc9sCkT+nIn5UKFGaxlYn8Wi3F9ir
-         79DpbVFCLHGJjZepWlhx/CCrKT52WvQNUuumZ75PNx5gR239nu3mA2eeWjpewhv2RSeh
-         g6yQ==
-X-Gm-Message-State: AOJu0YxDtUxuTVC3DBNXooATG5J8vDazT5340gxnjyN9oV13wkCSk5JC
-	HlWN+uNtd2r27NVwm9TvIs0yUsgFH/xYviw667tavWn6SggOB3eMqpQ1bMsSJpjtVZw=
-X-Gm-Gg: ASbGncuM7ftVm/m3HImPbCMoT71mJHTdbvlcLv10FTMBDr9g6478bp0nJ92SZv8Rhr2
-	7ypMU5eHUzIdwFFdQNNz60JCnXEYh4T5TsiNIiI9aKzVmnm3HZdI51CdbCilzXDR+ZQ95H7RnvN
-	NxmY3il8T7dilkyJZgLU+ex1mdwHDYseqQEyzoPIR/RS+Q6UtdrfM0E04cgOescmxbgxbu79MGH
-	OZWIJSwATjCXbNx/oqshUyEvdwUBu5qmUzRX3oysLe0LVcsl9Z3lisvfxwPK0JnmzpNB4ALx6YX
-	udhKRslEFOQ+zajjQODDzqsgp+bsHFBWMGM+8p3Zh4Y1a85SWOJWI03eMNW+ME7hETREt7NTVeX
-	lMpk3WEBoykTXy4jSYXBym2KUWuW6a2ay0A==
-X-Google-Smtp-Source: AGHT+IEm1zNvRP64p97SmF5zBsPRhlOyd1TYwTgUAKfJzmHXRryQz2eEQp1ibm+E9nxfvdNNjZXkwg==
-X-Received: by 2002:a05:600c:450c:b0:456:942:b162 with SMTP id 5b1f17b1804b1-467aad1449amr27743565e9.11.1758284255454;
-        Fri, 19 Sep 2025 05:17:35 -0700 (PDT)
+        bh=TIW2cqbRLJugG5iAmnoTn2WqOkPb3SCBmhz78WCDfZg=;
+        b=a8+xFp86rnQx95ZCMUMtBaU0vsdL5b4xSuxvYtTy5eObpRSX5Zge22i6qKywBjthbC
+         zodUUAcC98hBwMOrA9Ac2P96ke07jPdWJGTocS+creemZrgp+wrxfKLMaHL4kBIgMljQ
+         aMoNNNQqKkr9IBSjPPirz8dsWcbwAbJ5aHxBCpj8qgtnRYAOOM1plVnKFuiVYheXNOvT
+         QDNFZ1h7qzTvlYsllhEd56XOO+ESr1ffTSjGwgFnbXxncbjfuECUlKuXMM7tixWpL3qg
+         jfyNhi6yP6Sa7/MDBvZbW8PzzueLox/0OIS4pHSIoUjM82PChydhLpIs3tsbC+1P5X+v
+         //sQ==
+X-Gm-Message-State: AOJu0YytHJE1wge49lu0x6c30RiLz/HF5loQBN2EE6LV8wIlp2+3HOhT
+	snzrYtZmuDvvv+Ekmqgrh1ctpsx3eR6PU3nJRhRNDyK2acicWEXvk1dWgQTbq9kIX04=
+X-Gm-Gg: ASbGncs4krLWLFzVCC77AGSfzxQjipIyCbc4oKExDr6+d7btglOma1NMBD/ku9LqULz
+	9E7nFJO5BiJObt/LnbHUUTyGTzESNXGY/x6WOWLtEgj0kURVJOl7gPyl240vyCBZYLBw2k3p3Nz
+	49zjeCkD//GFZYxNRNWKWi5/4btOW1OSpwWyPWYTmQ2dEa6sYGKZo3rNdfV48LNHVdNK8kPqdHg
+	XCVTymYlyhoD9mOyw3zcqlHGZaab3aBwCgDwksnCYJvhn1lPUJfdxLPkyRw5BCx3KlSVtOUp/j5
+	5xKgXfq3XMCsak3/5dsG3+pKFE52Zp6zW4okoL55///vXF01oIEFTlXahHPURSO/EX4OWIurh0L
+	CMdf7PaNjOhBHQpcF1mNbQqM=
+X-Google-Smtp-Source: AGHT+IEU5j/e9+xQRgSg21pb50+kFe5FlXJM7VGLOto6peVQI7x2WopuQi2c3s4oSklCM8+Yd4STAA==
+X-Received: by 2002:a05:6000:2f83:b0:3eb:f3de:1a87 with SMTP id ffacd0b85a97d-3ee87cb37ddmr2548806f8f.56.1758284256906;
+        Fri, 19 Sep 2025 05:17:36 -0700 (PDT)
 Received: from hackbox.lan ([86.121.170.194])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee0fbf20b9sm7655176f8f.57.2025.09.19.05.17.34
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3ee0fbf20b9sm7655176f8f.57.2025.09.19.05.17.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 05:17:34 -0700 (PDT)
+        Fri, 19 Sep 2025 05:17:36 -0700 (PDT)
 From: Abel Vesa <abel.vesa@linaro.org>
-Date: Fri, 19 Sep 2025 15:17:11 +0300
-Subject: [PATCH 1/2] pinctrl: qcom: glymur: Drop unnecessary platform data
- from match table
+Date: Fri, 19 Sep 2025 15:17:12 +0300
+Subject: [PATCH 2/2] pinctrl: qcom: glymur: Fix the gpio and egpio pin
+ functions
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250919-pinctrl-qcom-glymur-fixes-v1-1-426ea410aa94@linaro.org>
+Message-Id: <20250919-pinctrl-qcom-glymur-fixes-v1-2-426ea410aa94@linaro.org>
 References: <20250919-pinctrl-qcom-glymur-fixes-v1-0-426ea410aa94@linaro.org>
 In-Reply-To: <20250919-pinctrl-qcom-glymur-fixes-v1-0-426ea410aa94@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -94,46 +94,55 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Abel Vesa <abel.vesa@linaro.org>
 X-Mailer: b4 0.15-dev-dedf8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=966; i=abel.vesa@linaro.org;
- h=from:subject:message-id; bh=SdGpmTC+LKgK19BvUf9yW/Fp11UDvjXE5sjy2+/Mh/k=;
- b=owEBbQKS/ZANAwAKARtfRMkAlRVWAcsmYgBozUnZt/5qTrvt9MqqryKoaUxqZEtIcboDQe9mC
- xiCPJmCUYyJAjMEAAEKAB0WIQRO8+4RTnqPKsqn0bgbX0TJAJUVVgUCaM1J2QAKCRAbX0TJAJUV
- VrB9D/0SfiJmSN6tUAyB1JjcJXXAi+YAm7WkyEd8CMsJeZqH9d7L0WrmqevyoZNGlGSAJ5EiVOG
- xeAmzB/smZ7T78ItnJNSTp7w2MbyBhL1jBRPm9N1EynAoPKcnbeZuFPNLkLM8uGliVZXp45Z1E2
- Ej5fxzrfFZt0ztCBB3NGXdkbzEegPAtsltOiLCOYWOwJJvanvJvaX6BgCHv5aKFzMEeyduh90pc
- BcwaWiH3WowOkwCn4b0KIW+QG5dfAC0NMGEeogNggJ6R6wS8YUKFBqp2Tqy2lr6mKaIe3+PFRr7
- nA6i6tIF2XLMiIwXgl4ZgqH5yfynNwDmwqFJypvE1apxy0mnDNvGol36lqLnlKqYUIVxglkuo0R
- z9vhZmHmZTJ+5zUnPYYyvHVDPnS61d+hHG/AQ17XV1sGsd37yZmAuFckwkt8PH8ezQm2E5PNNF/
- 0pANEnTP0rerApK4ZZ8QwKF421fZKCzdF/yy7h5un3u3sbJ5TFGRWfpvwYuufYZ1sQvxNmNlmT7
- BB648NQBY8JRFl4kzvSwvIKlo2Jk009+rIm6ENEM6qTfS98tZMVrmx1S9knPWm20ATzPBBx094F
- AP40cGySErIA5Ad9Gr2CPq6vt1KDZbhOaNZwKF2Y42uui6qfS9NjG/mTSa/AgDTukIQr+sKu/nN
- 97ptDmOD+XNVTLA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1308; i=abel.vesa@linaro.org;
+ h=from:subject:message-id; bh=uXMsVRvIWUUHVkklABfE5JimlZKe9ncD9jrhLJ/1tIM=;
+ b=kA0DAAoBG19EyQCVFVYByyZiAGjNSdvIDDjbI1JLB8ePj/ESqVEnWB5TaAl9s/1lTqUIn4wue
+ YkCMwQAAQoAHRYhBE7z7hFOeo8qyqfRuBtfRMkAlRVWBQJozUnbAAoJEBtfRMkAlRVWZOEQAIxO
+ ssFzqa8egLYxWi5IpqBNV+LRJgUFBcOn4okFexW0eomoaAP1I+WPrh26ke0+EQr11sHB60MlgJE
+ e5gXfLdwfryc7rsuzJxi0sKCwWqHdxGAXYzt0cu6PeR35gVWfPahLJ8CAmQWzCsmZJnKmPJKAml
+ GirTnUTj4OljMmZprdgfiNCEwBFL3gWSfUmGiCHyPwZy3qUBEdQZfLFOQSzuo8hpkwuYW2zJTv/
+ p6uCbYrjSwvJNzYBG4mfXp8Uk2VNvZoJKLE5F8LthiCvIOxFLt73MwdAbHGMhXORl+ebUbnEpnk
+ Iqyn1VRlrv0U4YQn5N5DUbSjlwNBjMWHZTFouRBv425krhbh50QeDQODYsLTzpEP7OmovrA1Hjm
+ vH/Ynw5EjW+KUcYu8XgMIi8NLfMIswqlpiX4Cy1H2xxNjVGJlz6IAGW3u9idfxqfUMLIB8ocgT2
+ k9CEc2sS59Ygq/plITHnJqqgXk+Cb9q8+n3MQ7KtWtPX0cA15/yeNZGKzeK8fgtWw6v9X/HK9p/
+ oCBPl8xARiOEC2j11Kq0Q7ZkmJDPrI472Aipe3m3KG6PdxAOZtnJXV/e/d42mZ0Abl7lmSIADXC
+ VVrdXijALy5qm9uMF87/f3DlyNV4kK7o10Y4nJxJwCJKEGOP+leEOm0F+9aGEJtljVZluDZh4pe
+ 5cK1a
 X-Developer-Key: i=abel.vesa@linaro.org; a=openpgp;
  fpr=6AFF162D57F4223A8770EF5AF7BF214136F41FAE
 
-The platform specific configuration is already passed on to the generic
-msm probe. So it's useless to exist in the match table next to the
-compatible. So drop it from match table.
+Mark the gpio/egpio as GPIO specific pin functions, othewise
+the pin muxing generic framework will complain about the gpio
+being already requested by a different owner.
 
 Fixes: 87ebcd8baebf ("pinctrl: qcom: Add glymur pinctrl driver")
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 ---
- drivers/pinctrl/qcom/pinctrl-glymur.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-glymur.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/pinctrl/qcom/pinctrl-glymur.c b/drivers/pinctrl/qcom/pinctrl-glymur.c
-index 9913f98e953110d32e804c8d210220857583ba46..9781e7fcb3a11c85dbd5497170188e2da051215b 100644
+index 9781e7fcb3a11c85dbd5497170188e2da051215b..335005084b6bc87db6d700471264edde00370ca0 100644
 --- a/drivers/pinctrl/qcom/pinctrl-glymur.c
 +++ b/drivers/pinctrl/qcom/pinctrl-glymur.c
-@@ -1743,7 +1743,7 @@ static const struct msm_pinctrl_soc_data glymur_tlmm = {
+@@ -1316,7 +1316,7 @@ static const char *const wcn_sw_ctrl_groups[] = {
  };
  
- static const struct of_device_id glymur_tlmm_of_match[] = {
--	{ .compatible = "qcom,glymur-tlmm", .data = &glymur_tlmm },
-+	{ .compatible = "qcom,glymur-tlmm", },
- 	{ }
- };
- 
+ static const struct pinfunction glymur_functions[] = {
+-	MSM_PIN_FUNCTION(gpio),
++	MSM_GPIO_PIN_FUNCTION(gpio),
+ 	MSM_PIN_FUNCTION(resout_gpio_n),
+ 	MSM_PIN_FUNCTION(aoss_cti),
+ 	MSM_PIN_FUNCTION(asc_cci),
+@@ -1342,7 +1342,7 @@ static const struct pinfunction glymur_functions[] = {
+ 	MSM_PIN_FUNCTION(edp0_hot),
+ 	MSM_PIN_FUNCTION(edp0_lcd),
+ 	MSM_PIN_FUNCTION(edp1_lcd),
+-	MSM_PIN_FUNCTION(egpio),
++	MSM_GPIO_PIN_FUNCTION(egpio),
+ 	MSM_PIN_FUNCTION(eusb_ac_en),
+ 	MSM_PIN_FUNCTION(gcc_gp1),
+ 	MSM_PIN_FUNCTION(gcc_gp2),
 
 -- 
 2.48.1
