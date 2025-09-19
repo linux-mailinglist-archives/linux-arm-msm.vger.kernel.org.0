@@ -1,151 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-74135-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74136-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C9F2B885E1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 10:16:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A3369B88806
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 11:02:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 452123ABE80
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 08:16:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 635C13B5189
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 09:02:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F12B2D9EE4;
-	Fri, 19 Sep 2025 08:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8FBF62E62D8;
+	Fri, 19 Sep 2025 09:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aduFlHHp"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E38w/Yds"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180A727FD71;
-	Fri, 19 Sep 2025 08:16:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63EE21CEACB;
+	Fri, 19 Sep 2025 09:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758269760; cv=none; b=i0b8nmpwvhu3rqyDrehUOaR1X+X/OAK/ipkLbIhx+ja6iQ+V7KBGWBwVmY6u+i1zOc4lJfIWiRiPLXFKSYEpEcLhONgpX8gxKCT9oyOaHZbGZkFvdDGOVhxXPFGGTYnmCa5Uu6lzPU1lze6303+RViuzX08ZKuzEA8tLbBC9ygI=
+	t=1758272572; cv=none; b=oNWg6HmhO8wPsmZLnP/9gA0i3j/jqnY+06j0LDvJmFpSOzfGR/1ZywnxZBES86pO1Pw5YmAy6iC0M8/9rLwxAqi4H0qZAKjRu8emxif0naumrcU2SeenOAhSF7PIdbnk53EeUmuGq7UxIw/unlRlJHAOjyTP8zxceZQC60cSNuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758269760; c=relaxed/simple;
-	bh=VxTAjSklRSGqESyW8iAN9ut3qajeB4/ZGEoQ1sC9AGc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CjqePxo111cBziWdO+xo77qP5OP56ljKQur5giit85mSVjHAxwaqiuDbvHKOfgEBmmtWX8haRC1YxSLK+PSLuDgCtnDGAkI4tWjxC2/uhFhAmyxRqjj/MM0AN4/gJEpis27pQae2Ocp87QMxNEOBUe/lZndv2kwUHlGZsdHzPsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aduFlHHp; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F8FAC4CEF0;
-	Fri, 19 Sep 2025 08:15:55 +0000 (UTC)
+	s=arc-20240116; t=1758272572; c=relaxed/simple;
+	bh=QnqUEnpeLq9ge4Og296heLwMfc1HMVf6E6vKR5SfUvc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=mHxfQwDFncsJBpn8cUDlpx0w5WGN6iehP3pRbUEYz4Wp+X3LnSLnwoEbBaE3DdZDCTFB6wdQgoLSBlDC0OhMpdm9p81g1qps5gjMG4q0h2BilWQIBhG7xL5GN34QzMbJSQYRzAGgT8rpWxaNYbuIeQyckXG2cMS2zMDLT4d0AVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E38w/Yds; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id D0440C4CEF1;
+	Fri, 19 Sep 2025 09:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758269759;
-	bh=VxTAjSklRSGqESyW8iAN9ut3qajeB4/ZGEoQ1sC9AGc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aduFlHHpk5thnaiNT9P64Li/+3xf6NFuLJ0K2/6m57BH17S00nClFhpJJkvSGMcx/
-	 FG2FWJmu0sXcdVr3znKtPHiuysD4gSew11FaMSpfpEnSL/XKzV9NaSdAAzo2CQo3oK
-	 +Npzxtvvafi7SKiQRZDZxvYp/qhXl39HRJa36AOIZsNd2B6JRcO68BIGraQkX1Kz54
-	 ayZTWtsZfE8DjK4AyTvrgxoO0WyOgMVi4ET7aPTph55fEdRmrNpsYZnWZUrHEkoxh9
-	 z3cNG71qmYRzZRM+nu3UauFTAQ/zBMmZP3WNIXwfB0yU8mBVySI1cCsQPrcGSOQJpX
-	 BHabaLVJrQp+w==
-Date: Fri, 19 Sep 2025 13:45:51 +0530
-From: Manivannan Sadhasivam <mani@kernel.org>
-To: Bjorn Helgaas <helgaas@kernel.org>
-Cc: manivannan.sadhasivam@oss.qualcomm.com, 
-	Lorenzo Pieralisi <lpieralisi@kernel.org>, Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>, 
-	Bartosz Golaszewski <brgl@bgdev.pl>, Saravana Kannan <saravanak@google.com>, 
-	linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	devicetree@vger.kernel.org, Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>, 
-	Brian Norris <briannorris@chromium.org>
-Subject: Re: [PATCH v3 4/4] PCI: qcom: Allow pwrctrl core to control PERST#
- if 'reset-gpios' property is available
-Message-ID: <nxcr6ymgspcdofoy7cv4lok34qqucwrm4cxn7a7spqrszgmvin@x3mhucqy2tb3>
-References: <gnaubphg6iyh23vtf2flsjxoot7psgla7cr2c5jpecaozh4vf3@mzcmg74g3ogk>
- <20250918185356.GA1879416@bhelgaas>
+	s=k20201202; t=1758272571;
+	bh=QnqUEnpeLq9ge4Og296heLwMfc1HMVf6E6vKR5SfUvc=;
+	h=From:Date:Subject:To:Cc:Reply-To:From;
+	b=E38w/YdsnZ9PM9bSqTcUODxorau6UBsEe1kSQ0y3sMhTJJHyzLsnmmoTyF3kMYTVN
+	 Idu8bL2erULMLCYZ1U9kE5A+hJs6CNgRXcVQYQJd8WoB4RVBLNu0BzerWwMH5iglYY
+	 oVU5NzYSoPu3smgV0E1pPjxeqtwtjxBdB6uMocCzK8pp56zRuC5ItW4GBETPQeK1Ar
+	 tVGYT0N0ZCURrP+kwm9lKJEBhbNb03/+a4S0Z8HTR4aSDp3xOkW4fJhtC1+OO8p22i
+	 0to9oxWU6/XKsFNcqPdGIoN++OlWgvNZA5v594aK5BDFfPhW345o6k92Ni01NbbTWJ
+	 m9L9bfoVwpv6A==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id BC93BCAC592;
+	Fri, 19 Sep 2025 09:02:51 +0000 (UTC)
+From: Joel Selvaraj via B4 Relay <devnull+foss.joelselvaraj.com@kernel.org>
+Date: Fri, 19 Sep 2025 04:02:29 -0500
+Subject: [PATCH] arm64: dts: qcom: sdm845-shift-axolotl: fix touchscreen
+ properties
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250918185356.GA1879416@bhelgaas>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250919-shift-axolotl-fix-touchscreen-dts-v1-1-60e26ad4e038@joelselvaraj.com>
+X-B4-Tracking: v=1; b=H4sIACUczWgC/x2NQQqAIBAAvxJ7bqGsiPpKdBBdcyE0XIsg+nvSc
+ WCYeUAoMQnM1QOJLhaOoUBbV2C8Dhsh28KgGjU0UzuheHYZ9R33mHd0fGOOp/FiElFAmwW102r
+ sjeo6S1A6R6Ki/Y9lfd8P3kSGknMAAAA=
+X-Change-ID: 20250919-shift-axolotl-fix-touchscreen-dts-afa274c233de
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Joel Selvaraj <foss@joelselvaraj.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758272571; l=1992;
+ i=foss@joelselvaraj.com; s=20250919; h=from:subject:message-id;
+ bh=6LBH+r1kb4SLbj+q2QfBWT2d9IJvx4qETyl2gI3HG/E=;
+ b=A//B6TSPiw9hGoryvpzwQBGolYnGD8pHdgBCJFbRqADxMePhaVm8ZvlzGqjNC64tW080SNCPE
+ x1J7WRb5LM7ASwcLijqa2/VDMrzeeBrDN6RViRYR/cErbb3YzNvwWyX
+X-Developer-Key: i=foss@joelselvaraj.com; a=ed25519;
+ pk=BBMos4ph15apUFh2AkG9rLZIrBWl5LD4egPOhEv63X0=
+X-Endpoint-Received: by B4 Relay for foss@joelselvaraj.com/20250919 with
+ auth_id=529
+X-Original-From: Joel Selvaraj <foss@joelselvaraj.com>
+Reply-To: foss@joelselvaraj.com
 
-On Thu, Sep 18, 2025 at 01:53:56PM -0500, Bjorn Helgaas wrote:
-> On Wed, Sep 17, 2025 at 03:53:25PM +0530, Manivannan Sadhasivam wrote:
-> > On Tue, Sep 16, 2025 at 03:48:10PM GMT, Bjorn Helgaas wrote:
-> > > On Fri, Sep 12, 2025 at 02:05:04PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
-> > > > From: Manivannan Sadhasivam <manivannan.sadhasivam@oss.qualcomm.com>
-> > > > 
-> > > > For historic reasons, the pcie-qcom driver was controlling the
-> > > > power supply and PERST# GPIO of the PCIe slot.
-> > > 
-> > > > This turned out to be an issue as the power supply requirements
-> > > > differ between components. For instance, some of the WLAN
-> > > > chipsets used in Qualcomm systems were connected to the Root
-> > > > Port in a non-standard way using their own connectors.
-> > > 
-> > > This is kind of hand-wavy.  I don't know what a non-standard
-> > > connector has to do with this.  I assume there's still a PCIe link
-> > > from Root Port to WLAN, and there's still a PERST# signal to the
-> > > WLAN device and a Root Port GPIO that asserts/deasserts it.
-> > 
-> > If we have a non-standard connector, then the power supply
-> > requirements change.  There is no longer the standard 3.3v, 3.3Vaux,
-> > 1.8v supplies, but plenty more.  For instance, take a look at the
-> > WCN6855 WiFi/BT combo chip in the Lenovo X13s laptop:
-> > 
-> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/arch/arm64/boot/dts/qcom/sc8280xp-lenovo-thinkpad-x13s.dts#n414
-> > 
-> > These supplies directly go from the host PMIC to the WCN6855 chip
-> > integrated in the PCB itself. And these supplies need to be turned
-> > on/off in a sequence also, together with the EN/SWCTRL GPIOs, while
-> > sharing with the Bluetooth driver.
-> 
-> It sounds like the WCN6855 power supplies have nothing to do with the
-> qcom PCIe controller, the Root Port, or any switches leading to the
-> WCN6855.  And I guess the same for the wlan-enable, bt-enable, and
-> swctrl GPIOs?
-> 
->   wcn6855-pmu {
->           compatible = "qcom,wcn6855-pmu";
->           wlan-enable-gpios = <&tlmm 134 GPIO_ACTIVE_HIGH>;
->           bt-enable-gpios = <&tlmm 133 GPIO_ACTIVE_HIGH>;
->           swctrl-gpios = <&tlmm 132 GPIO_ACTIVE_HIGH>;
->           regulators {
->                   vreg_pmu_rfa_cmn_0p8: ldo0 {
->                           regulator-name = "vreg_pmu_rfa_cmn_0p8";
->                   ...
-> 
->   &pcie4_port0 {
->           wifi@0 {
->                   compatible = "pci17cb,1103";
->                   vddrfacmn-supply = <&vreg_pmu_rfa_cmn_0p8>;
->                   ...
-> 
-> But I guess PERST# isn't described in the same place (not in
-> wcn6855-pmu)?  Looks like maybe it's this, which IIUC is part of the
-> pcie4 host bridge?
-> 
->   &pcie4 {
->           max-link-speed = <2>;
->           perst-gpios = <&tlmm 141 GPIO_ACTIVE_LOW>;
->           wake-gpios = <&tlmm 139 GPIO_ACTIVE_LOW>;
-> 
-> Does that mean this PERST# signal is driven by a GPIO and routed
-> directly to the WCN6855?  Seems like there's some affinity between the
-> WCN6855 power supplies and the WCN6855 PERST# signal, and maybe they
-> would be better described together?
+From: Joel Selvaraj <foss@joelselvaraj.com>
 
-Yes, 'perst-gpios' is the PERST# signal that goes from the host system to the
-WCN6855 chip. But we cannot define this signal in the WCN6855 node as the DT
-binding only allows to define it in the PCI bridge nodes. This is why it is
-currently defined in the host bridge node. But when this platform switches to
-the per-Root Port binding, this property will be moved to the Root Port node as
-'reset-gpios'.
+The touchscreen properties previously upstreamed was based on downstream
+touchscreen driver. We ended up adapting upstream edt_ft5x06 driver to
+support the FocalTech FT5452 touchscreen controller used in this device.
+Update the touchscreen properties to match with the upstream edt_ft5x06
+driver. Also, as mentioned, the touchscreen controller used in this
+device is ft5452 and not fts8719. Fix it.
 
-Because of this reason, the host controller driver has to parse PERST# from all
-PCI bridge nodes (like if there is a switch connected, there might be PERST# per
-downstream port) and share them with the pwrctrl framework.
+Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
+---
+ arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-- Mani
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+index 89260fce6513937224f76a94e1833a5a8d59faa4..d4062844234e33b0d501bcb7d0b6d5386c822937 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-shift-axolotl.dts
+@@ -434,20 +434,19 @@ &i2c5 {
+ 	status = "okay";
+ 
+ 	touchscreen@38 {
+-		compatible = "focaltech,fts8719";
++		compatible = "focaltech,ft5452";
+ 		reg = <0x38>;
+-		wakeup-source;
+-		interrupt-parent = <&tlmm>;
+-		interrupts = <125 IRQ_TYPE_EDGE_FALLING>;
+-		vdd-supply = <&vreg_l28a_3p0>;
+-		vcc-i2c-supply = <&vreg_l14a_1p88>;
+ 
+-		pinctrl-names = "default", "suspend";
++		interrupts-extended = <&tlmm 125 IRQ_TYPE_EDGE_FALLING>;
++		reset-gpios = <&tlmm 99 GPIO_ACTIVE_LOW>;
++
++		vcc-supply = <&vreg_l28a_3p0>;
++		iovcc-supply = <&vreg_l14a_1p88>;
++
+ 		pinctrl-0 = <&ts_int_active &ts_reset_active>;
+ 		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
++		pinctrl-names = "default", "suspend";
+ 
+-		reset-gpio = <&tlmm 99 GPIO_ACTIVE_HIGH>;
+-		irq-gpio = <&tlmm 125 GPIO_TRANSITORY>;
+ 		touchscreen-size-x = <1080>;
+ 		touchscreen-size-y = <2160>;
+ 	};
 
+---
+base-commit: 8f7f8b1b3f4c613dd886f53f768f82816b41eaa3
+change-id: 20250919-shift-axolotl-fix-touchscreen-dts-afa274c233de
+
+Best regards,
 -- 
-மணிவண்ணன் சதாசிவம்
+Joel Selvaraj <foss@joelselvaraj.com>
+
+
 
