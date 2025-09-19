@@ -1,327 +1,222 @@
-Return-Path: <linux-arm-msm+bounces-74224-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29836B8A62D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 17:47:50 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 29C06B8A89C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 18:18:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C2DED1C83D20
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 15:48:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9630189CEF9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 16:18:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F83131E8AF;
-	Fri, 19 Sep 2025 15:47:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CF7D258CD8;
+	Fri, 19 Sep 2025 16:18:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="BCoq3Z4h"
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="EZqkadce"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AD831E89A
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 15:47:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51CC2652A6
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 16:18:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758296851; cv=none; b=sni6V/3YZz2ITWjDrK8NavJhhsvJpIIb/JBNhRiVDAYUnNfjlV+1a59nuyXhDRUojF8zNOVOhnGjcIOFJl57XzSmnlDRVEAm1r7bB9StZ1g3csWvHgN1HwegtRZsZyaEiepazXDI8Tsvp+JsdG54Qt6Sbj3MAlLmj/pldnC7DIQ=
+	t=1758298700; cv=none; b=fci+/5sgt0SMgEwXk6wQ3i9BR3Wl3OPUpKYoUV2Mz/+mfKaA4ziWU0St1hI54UwRJraBLIDmYs8MmuKu+/AsxHEdWLf7f/JTpyuxJF0punBxhjkvXJomyrE8TUA0paAFCMMHR7Vp4GnZVjcXYdSsiraEukefuRKDcKKEfVY3GWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758296851; c=relaxed/simple;
-	bh=Dn7j9lnDJj7KNzypQILQKqp9DEY+kjRS+/3ssNOzKhE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KGQJhVX+bNUj5VRHh5we+o9/Xnzt/lmWE8UJ4kKAVdLGS3zw8AfxlZnlkEWMA2xIoIuCehspym+6LLugMa/zGQrzDhKFuNgy7VzyKSMpn+1lXcEKx9gAh+XiES6OgwnKqDz06ophnb2bQX6LjjuidlNd+w+8zaePhl6XNzTyeT4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=BCoq3Z4h; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JD8HNO031325
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 15:47:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3ecqilbI3lofq8Y7qAqt2PleVeF/bxdv24r6HUaOnpw=; b=BCoq3Z4hTqKaZnTD
-	La/71svCBSZGV5lGeYDaCk6ar2o3ZqlmdqUgtN2Y1UVrkbUW/yNwpoYb+wkjRh4P
-	17sJPPVSBJxK1KlX2M99t7/UDmAOumIydSrK0BT6UsCdZAySiIXGcNmjB1GfqSfu
-	XOKGunR56BYsOLgppz2VDnWRvgcNIrLbpoMxPz98Ag1+tuZqLsEuXaQK6sleZq3H
-	DeO/4Y/UO8XJYQBeyUB91ij5AtmJ42sel8nMd/i2n3FDQoGGRUtatMk+2eUEbwBU
-	2uUw0FmU8iUsypt2YDwAMrkeN+t7Mh1ttl7vmPp/QzUBEihubo3w4PTDgeHSG2ba
-	Cc+fQg==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49916x1syr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 15:47:29 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-777d80370a7so4264245b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 08:47:29 -0700 (PDT)
+	s=arc-20240116; t=1758298700; c=relaxed/simple;
+	bh=WxQ0B4IlsgTIq4DWFmrJtf+73r29i4Kp+qGE9Unb6OU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ukfpF6iKpjV1KJRuJz9DRgMxmoPqj96KmAw48mDGRVvrWScEHyeD/N9Unw4VA8VSHptRsIGCgRa1K/RGgeOcn63OXD7/cFSIjXsOJiM1kkvdG9BdVx9g5GJhOoPooMhpO3OABN/IdlLskiD0hAFji7fDDy4+GeZMJ+iLiIbILs0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=EZqkadce; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3f2cf786abeso83622f8f.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 09:18:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758298696; x=1758903496; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rCMQiFsm4hsxlP+tNTYkhaVGT0aEA2D4RKsC3Gwmrs0=;
+        b=EZqkadceqFxerreYBdqwFV5YJ44n7V/slvuzf41+//RfCO4ImSUEhNlXJra+tXl6Kv
+         3ZN6bEPT8bu5KeHN8FwZ9yHVJIMQMvyxZCW1zW+UqiF7G0GETN6NH7/bM31wgBdmiJSq
+         Dxn1+G8bZHXZFqs16sfPc8MOCpsmR3QPWLpMzqL+fj8EJWNMjk4D6RFld3jOGbQnEiUs
+         l7b0e2KV0GAxRsmS/c6mzfpf2c11Ld81JnhWP4wv9N6lzoiy92ARa97lWCyH0kT/+io5
+         vhCiL/BYEFebmwFUrrO6PwRQ8p/qtZVXgKPhjgTS2jDQCZPqHKmszTi2BGTDOrU/swpi
+         ppug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758296848; x=1758901648;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3ecqilbI3lofq8Y7qAqt2PleVeF/bxdv24r6HUaOnpw=;
-        b=BmHml12wzCkj+e/DSkUVoMleCBJZ9q6bMmEdcZg0n9M7+o0tsDRnJerxG+tpCw7CVf
-         pRHzoBxNgSwG9IvJoSMFdRuxrUa3Rh9spzt5ceJSwcSjYX50Qy7GH3vqll2B79JPn7f6
-         yrHnBQ53JTotHziAufhtbJ5sCr0j63PDbj234keE2y/5XvWMKGgoNLFBSjK9oa3mvOso
-         3wb+E/yNbLARfcCoMa1shqYo8aiPuLeAEwjrlLvPduguofQuuNW/DSqF3K1JPVtDe2u5
-         o4BovUlQAWE6QxsalNDHDAc9LS7bMopoQodt4bcN5xz1+HwiMUJxZV28E8wN53GVc77F
-         l+rw==
-X-Forwarded-Encrypted: i=1; AJvYcCW9yUedMxg/OhGMXr+4zhP3VFU/8qgH66+7c38EIJkKTmaWAVlkhjw89WiILaOJgIrWehTYAJAZ6CVvXh+C@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzf1CXh6rkKC5WOEgUpyaCBETpab+hHmM/Fi35sf/kjl9q6/sUG
-	JF65T8Zgarufef5WVv8NgWlEo+zrELrGm5wjP6vGmJ3UXDNN94LYBdS6DEXcU/P/cPfJtlZzqFB
-	wW9GqelZEj9sWVjL8eNuxHl6ZnfOIUkbyK7Vp8cFyYizz9bg+gvR31+ONeXRsCZ27cD8C
-X-Gm-Gg: ASbGncvDOsOOAsQoKXAJmrIoRRkE4SPU5/wcSV7ezxTBG5I2tGZTSNVmuKyI9iA0If2
-	RP824r/6lq6tqyG1zeC+MiUv8nhzfdbkpTGXeCuPAUFPciRLzzfw5nkSkahDM+gtH3XsCzqEI5d
-	opQ0GuR+pRo1zcnQ2sSzWGtHNkoFH52RUHz0Z3kxXD9sOWZvZsymyj+zEsv9k+p2fkBHOKLGgq+
-	cUlyy9wWZ50PNp/IRDV/lc84Lz+PD/1r65nbwrGXXU/KKWOkeeSJx1A4/+4zhdJhhQ797sSGms+
-	xuT19A/3uu9dq7VVBFAt5ViyEPg79WzfWPs7ye+lqvrBqWFg6t4vy+CKRs4WsU1qVJowUgyCJzT
-	XOA==
-X-Received: by 2002:a05:6a00:1d18:b0:77f:11bd:749a with SMTP id d2e1a72fcca58-77f11bd75c0mr1170449b3a.20.1758296848258;
-        Fri, 19 Sep 2025 08:47:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlXo0KSqglVgpIcLh5XA7UCg42fBIQBsxCnMNPxIstRIdEmma7vCc+k2D4gDdNlEVk+r71cA==
-X-Received: by 2002:a05:6a00:1d18:b0:77f:11bd:749a with SMTP id d2e1a72fcca58-77f11bd75c0mr1170410b3a.20.1758296847757;
-        Fri, 19 Sep 2025 08:47:27 -0700 (PDT)
-Received: from hu-dikshita-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77cfc2490dcsm5706653b3a.36.2025.09.19.08.47.25
+        d=1e100.net; s=20230601; t=1758298696; x=1758903496;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rCMQiFsm4hsxlP+tNTYkhaVGT0aEA2D4RKsC3Gwmrs0=;
+        b=Y1Y59pusUQn+DYWBmUhXvJ0xINF+Hy07thD92GyOLJaYcMwGZnaybQN6xhrdYvuc7n
+         +8VGZY65z+SWpIHxRgaIm83HzFWaVVjy9v7fA+b4fREn1j9ba4voqC9Kz6w4pXdzY6S/
+         4dsdyKD19xaHDDq+agOe7B6ThTa0mP1kqB3wNpU6riS3VRcoNgT3yDD/kRREcH79WpEG
+         XLYhCnxUfEqLhe08/PIALKwAFtqrhBF64bGKg2JOmfWvDzpwnkEx8KhBYwjLmZIE5WO7
+         0HQd/J4i/MZPrVRL6tLfA7sfyR5GW/vrSI5XrXJwkfBCF6gVzjHeZxGu5UuvoRRSkkH5
+         zrfg==
+X-Forwarded-Encrypted: i=1; AJvYcCWZjiYucpd58QLHHw0KA/h644iYxDkZujT52GjZZZMfXAGg11yYoOt+fApNqKj36Xtudy/VcV1IDB/IYEx+@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzlu+FaW5hHv/EBZf5vKoDxQ48/nL+xtlTPWvz4D+k5wpr9U1M2
+	QRKHBfhz0LXZTB2QtSib2qpm42TuO3QmUoOo2NXe+QLzloANpiQ2PD0Pkpf+ox3ti5c=
+X-Gm-Gg: ASbGncu4lNt0b7drswkW2lWSzff2giYpZRL895GmOPaT2HBSGP+kCwsBmJ4H5BWrJkB
+	73pFxNy0ldPWqlixOXHX7tD/iDnp2cEX505Zkwwzvqp6gQ8hzwRD3+wiHHQN7o3tB5391op5dLG
+	ASq1u4MTcVuXJ+PFIYZryrPEW/8x7KD/pUHX/WiLlmf8pTZU1YxCvOk5y7zVqh7Ry+RlwleQqpa
+	rJZ5gmHPRGRDLje8CfRgyBVc2oJqZdv/+FxGRj2LFejJNH/saHms6ym50tWJuPg2MbXyXr++yq8
+	XcNzQF/2vNIjysgfQH2cwg0RTGFe0qaaKAY5JRsUaJpefXFyZWieTqgHN/vTafIqDAgAiVk8H1q
+	CH89HO2mN7Byq/88SzEHstWUmQLF0jTk06njAq7Jvo5gAmjhcGbRmNhUVLq8jejOk
+X-Google-Smtp-Source: AGHT+IHeDyqCwZEwmBRMLgDcVcjTaBDuQhje8qnjQHoNKHQszsQBAbYzFqO5E0qmktZp1YKSObnQbQ==
+X-Received: by 2002:a05:6000:248a:b0:3ec:b384:322b with SMTP id ffacd0b85a97d-3ee8585f513mr3310968f8f.46.1758298696034;
+        Fri, 19 Sep 2025 09:18:16 -0700 (PDT)
+Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3ee07412111sm8325227f8f.28.2025.09.19.09.18.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 08:47:27 -0700 (PDT)
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Date: Fri, 19 Sep 2025 21:17:17 +0530
-Subject: [PATCH 2/2] media: iris: Add support for QC08C format for encoder
+        Fri, 19 Sep 2025 09:18:15 -0700 (PDT)
+Date: Fri, 19 Sep 2025 18:18:14 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: David Lechner <dlechner@baylibre.com>, 
+	Andy Shevchenko <andriy.shevchenko@intel.com>, Andy Shevchenko <andy.shevchenko@gmail.com>, 
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, sboyd@kernel.org, jic23@kernel.org, nuno.sa@analog.com, 
+	andy@kernel.org, arnd@arndb.de, srini@kernel.org, vkoul@kernel.org, 
+	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org, 
+	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, kernel@collabora.com, 
+	wenst@chromium.org, casey.connolly@linaro.org, 
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <lq4rgzue6uah67nc7lob7eexsquk7qhr22wr4xwymzrvvopgc4@mkzyvadgd3qs>
+References: <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
+ <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
+ <aMlnp4x-1MUoModr@smile.fi.intel.com>
+ <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
+ <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
+ <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
+ <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
+ <2025091925-thirsting-underuse-14ab@gregkh>
+ <f16ea5eb-cbda-4788-956b-d41c2af51745@baylibre.com>
+ <2025091918-glancing-uptown-7d63@gregkh>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250919-video-iris-ubwc-enable-v1-2-000d11edafd8@oss.qualcomm.com>
-References: <20250919-video-iris-ubwc-enable-v1-0-000d11edafd8@oss.qualcomm.com>
-In-Reply-To: <20250919-video-iris-ubwc-enable-v1-0-000d11edafd8@oss.qualcomm.com>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758296838; l=7485;
- i=dikshita.agarwal@oss.qualcomm.com; s=20240917; h=from:subject:message-id;
- bh=Dn7j9lnDJj7KNzypQILQKqp9DEY+kjRS+/3ssNOzKhE=;
- b=z40yWKPrSg9gWTZrVQX9dkXCJ+P+ESWbLiIfXy1lK664oIgZ7GFYj3jS+A/D3hqvChSKEh//9
- +snbCDgSVOmBqIMyNxGmDcC5Y1xmuJ9Rs7oOe57aMrjCr1ansPczg4/
-X-Developer-Key: i=dikshita.agarwal@oss.qualcomm.com; a=ed25519;
- pk=EEvKY6Ar1OI5SWf44FJ1Ebo1KuQEVbbf5UNPO+UHVhM=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE5MDA0OCBTYWx0ZWRfX6Hp5ejnGYv8S
- JUrQEaSK4f3zROAMOvYl2TutoFefq8HivOiWmyvbLgNfvoNWgJJZ+0WbuPiHioP2R7fC93vc2cD
- 2LeJr2iqu/KxKKFgGauX9Nw8DggVgsY8ziKY1JFfxenC1jcF0QW++OazQj01GBInIXE2RFdzDyV
- 7oKK9QRxpS193mJARzd9+ywl4hjvlCh4IlyIDVTVRMsAd0vCb1ydd/p8Jhx765yrQljJbdUc1YH
- dYoEo4rSTXKmgR69zU+PRhsY2j/H8B1IZ8BTWRh59F7XSMlbR1hcdMY5I3bcSJfK18kJUCfXXsl
- M9/QzZ4xJqLLv2cEXGkVcjGSPv76JjEQjnLdaMGQpzNgrzohwGJLBDJ2oGWNTvCxTPdLtzBiFZl
- BDTa1p2r
-X-Proofpoint-GUID: pGAmuvx7su9IxI5fcA-SkadQDRGiJP-Q
-X-Authority-Analysis: v=2.4 cv=LcM86ifi c=1 sm=1 tr=0 ts=68cd7b11 cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=nS3McV74YSJk3wcLVjgA:9
- a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-ORIG-GUID: pGAmuvx7su9IxI5fcA-SkadQDRGiJP-Q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 malwarescore=0 phishscore=0 spamscore=0 impostorscore=0
- suspectscore=0 adultscore=0 bulkscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509190048
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="enuyknrtw4cq5eeq"
+Content-Disposition: inline
+In-Reply-To: <2025091918-glancing-uptown-7d63@gregkh>
 
-Introduce handling for the QC08C format in the encoder. Update format
-checks and configuration to enable encoding to QC08C streams.
 
-Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
----
- drivers/media/platform/qcom/iris/iris_buffer.c     | 12 ++++-
- .../platform/qcom/iris/iris_hfi_gen1_command.c     |  3 +-
- .../platform/qcom/iris/iris_hfi_gen2_command.c     |  3 +-
- drivers/media/platform/qcom/iris/iris_venc.c       | 59 ++++++++++++++++++----
- 4 files changed, 63 insertions(+), 14 deletions(-)
+--enuyknrtw4cq5eeq
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+MIME-Version: 1.0
 
-diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
-index 83dcf49e57ec1473bc4edd26c48ab0b247d23818..b89b1ee06cce151e7c04a80956380d154643c116 100644
---- a/drivers/media/platform/qcom/iris/iris_buffer.c
-+++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-@@ -171,9 +171,14 @@ static u32 iris_yuv_buffer_size_nv12(struct iris_inst *inst)
- static u32 iris_yuv_buffer_size_qc08c(struct iris_inst *inst)
- {
- 	u32 y_plane, uv_plane, y_stride, uv_stride;
--	struct v4l2_format *f = inst->fmt_dst;
- 	u32 uv_meta_stride, uv_meta_plane;
- 	u32 y_meta_stride, y_meta_plane;
-+	struct v4l2_format *f = NULL;
-+
-+	if (inst->domain == DECODER)
-+		f = inst->fmt_dst;
-+	else
-+		f = inst->fmt_src;
- 
- 	y_meta_stride = ALIGN(DIV_ROUND_UP(f->fmt.pix_mp.width, META_STRIDE_ALIGNED >> 1),
- 			      META_STRIDE_ALIGNED);
-@@ -273,7 +278,10 @@ int iris_get_buffer_size(struct iris_inst *inst,
- 	} else {
- 		switch (buffer_type) {
- 		case BUF_INPUT:
--			return iris_yuv_buffer_size_nv12(inst);
-+			if (inst->fmt_src->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC08C)
-+				return iris_yuv_buffer_size_qc08c(inst);
-+			else
-+				return iris_yuv_buffer_size_nv12(inst);
- 		case BUF_OUTPUT:
- 			return iris_enc_bitstream_buffer_size(inst);
- 		default:
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-index e458d3349ce09aadb75d056ae84e3aab95f03078..52da7ef7bab08fb1cb2ac804ccc6e3c7f9677890 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-@@ -795,7 +795,8 @@ static int iris_hfi_gen1_set_raw_format(struct iris_inst *inst, u32 plane)
- 	} else {
- 		pixelformat = inst->fmt_src->fmt.pix_mp.pixelformat;
- 		fmt.buffer_type = HFI_BUFFER_INPUT;
--		fmt.format = pixelformat == V4L2_PIX_FMT_NV12 ? HFI_COLOR_FORMAT_NV12 : 0;
-+		fmt.format = pixelformat == V4L2_PIX_FMT_NV12 ?
-+			HFI_COLOR_FORMAT_NV12 : HFI_COLOR_FORMAT_NV12_UBWC;
- 		ret = hfi_gen1_set_property(inst, ptype, &fmt, sizeof(fmt));
- 	}
- 
-diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-index 5ad202d3fcdc57a2b7b43de15763a686ce0f7bd7..6a772db2ec33fb002d8884753a41dc98b3a8439d 100644
---- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-+++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
-@@ -447,7 +447,8 @@ static int iris_hfi_gen2_set_colorformat(struct iris_inst *inst, u32 plane)
- 			HFI_COLOR_FMT_NV12 : HFI_COLOR_FMT_NV12_UBWC;
- 	} else {
- 		pixelformat = inst->fmt_src->fmt.pix_mp.pixelformat;
--		hfi_colorformat = pixelformat == V4L2_PIX_FMT_NV12 ? HFI_COLOR_FMT_NV12 : 0;
-+		hfi_colorformat = pixelformat == V4L2_PIX_FMT_NV12 ?
-+			HFI_COLOR_FMT_NV12 : HFI_COLOR_FMT_NV12_UBWC;
- 	}
- 
- 	return iris_hfi_gen2_session_set_property(inst,
-diff --git a/drivers/media/platform/qcom/iris/iris_venc.c b/drivers/media/platform/qcom/iris/iris_venc.c
-index 099bd5ed4ae0294725860305254c4cad1ec88d7e..51fa4a06a70e15310ad8e32d7e16b60b2ab11d5a 100644
---- a/drivers/media/platform/qcom/iris/iris_venc.c
-+++ b/drivers/media/platform/qcom/iris/iris_venc.c
-@@ -80,7 +80,7 @@ void iris_venc_inst_deinit(struct iris_inst *inst)
- 	kfree(inst->fmt_src);
- }
- 
--static const struct iris_fmt iris_venc_formats[] = {
-+static const struct iris_fmt iris_venc_formats_cap[] = {
- 	[IRIS_FMT_H264] = {
- 		.pixfmt = V4L2_PIX_FMT_H264,
- 		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
-@@ -91,12 +91,35 @@ static const struct iris_fmt iris_venc_formats[] = {
- 	},
- };
- 
-+static const struct iris_fmt iris_venc_formats_out[] = {
-+	[IRIS_FMT_NV12] = {
-+		.pixfmt = V4L2_PIX_FMT_NV12,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+	[IRIS_FMT_UBWC] = {
-+		.pixfmt = V4L2_PIX_FMT_QC08C,
-+		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
-+	},
-+};
-+
- static const struct iris_fmt *
- find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
- {
--	const struct iris_fmt *fmt = iris_venc_formats;
--	unsigned int size = ARRAY_SIZE(iris_venc_formats);
-+	const struct iris_fmt *fmt = NULL;
-+	unsigned int size = 0;
- 	unsigned int i;
-+	switch (type) {
-+	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
-+		fmt = iris_venc_formats_out;
-+		size = ARRAY_SIZE(iris_venc_formats_out);
-+		break;
-+	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
-+		fmt = iris_venc_formats_cap;
-+		size = ARRAY_SIZE(iris_venc_formats_cap);
-+		break;
-+	default:
-+		return NULL;
-+	}
- 
- 	for (i = 0; i < size; i++) {
- 		if (fmt[i].pixfmt == pixfmt)
-@@ -112,8 +135,21 @@ find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
- static const struct iris_fmt *
- find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
- {
--	const struct iris_fmt *fmt = iris_venc_formats;
--	unsigned int size = ARRAY_SIZE(iris_venc_formats);
-+	const struct iris_fmt *fmt = NULL;
-+	unsigned int size = 0;
-+
-+	switch (type) {
-+	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
-+		fmt = iris_venc_formats_out;
-+		size = ARRAY_SIZE(iris_venc_formats_out);
-+		break;
-+	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
-+		fmt = iris_venc_formats_cap;
-+		size = ARRAY_SIZE(iris_venc_formats_cap);
-+		break;
-+	default:
-+		return NULL;
-+	}
- 
- 	if (index >= size || fmt[index].type != type)
- 		return NULL;
-@@ -127,9 +163,11 @@ int iris_venc_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
- 
- 	switch (f->type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
--		if (f->index)
-+		fmt = find_format_by_index(inst, f->index, f->type);
-+		if (!fmt)
- 			return -EINVAL;
--		f->pixelformat = V4L2_PIX_FMT_NV12;
-+
-+		f->pixelformat = fmt->pixfmt;
- 		break;
- 	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
- 		fmt = find_format_by_index(inst, f->index, f->type);
-@@ -156,7 +194,7 @@ int iris_venc_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
- 	fmt = find_format(inst, pixmp->pixelformat, f->type);
- 	switch (f->type) {
- 	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
--		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_NV12) {
-+		if (!fmt) {
- 			f_inst = inst->fmt_src;
- 			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
- 			f->fmt.pix_mp.height = f_inst->fmt.pix_mp.height;
-@@ -221,7 +259,7 @@ static int iris_venc_s_fmt_input(struct iris_inst *inst, struct v4l2_format *f)
- 
- 	iris_venc_try_fmt(inst, f);
- 
--	if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_NV12)
-+	if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
- 		return -EINVAL;
- 
- 	fmt = inst->fmt_src;
-@@ -289,7 +327,8 @@ int iris_venc_validate_format(struct iris_inst *inst, u32 pixelformat)
- {
- 	const struct iris_fmt *fmt = NULL;
- 
--	if (pixelformat != V4L2_PIX_FMT_NV12) {
-+	fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
-+	if (!fmt) {
- 		fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
- 		if (!fmt)
- 			return -EINVAL;
+Hello Greg,
 
--- 
-2.34.1
+On Fri, Sep 19, 2025 at 05:13:35PM +0200, Greg KH wrote:
+> On Fri, Sep 19, 2025 at 10:05:28AM -0500, David Lechner wrote:
+> > On 9/19/25 8:59 AM, Greg KH wrote:
+> > > On Thu, Sep 18, 2025 at 10:00:29PM +0300, Andy Shevchenko wrote:
+> > >> I,o.w. I principally disagree on putting MODULE_IMPORT_NS() into the=
+ header
+> > >> file.
+> > >=20
+> > > Yes, please never do that, it defeats the purpose of module namespaces
+> > > completly.  If you don't want to have module namespaces, don't use th=
+em
+> > > for your subsytem.  Don't use them and then make them moot by putting
+> > > MODULE_IMPORT_NS() in the .h file for the symbols as that's pointless.
+> > >=20
+> > > thanks,
+> > >=20
+> > > greg k-h
+> >=20
+> >=20
+> > Could someone suggest some additional explanation to add to
+> > Documentation/core-api/symbol-namespaces.rst to explain the
+> > reasoning behind this?
+> >=20
+> > Right now, the only part of that document that say _why_ we have
+> > module namespces says:
+> >=20
+> > 	That is useful for documentation purposes (think of the
+> > 	SUBSYSTEM_DEBUG namespace) as well as for limiting the
+> > 	availability of a set of symbols for use in other parts
+> > 	of the kernel.
+> >=20
+> > So I don't see the connection between this explanation and and:
+> >=20
+> > 	[Putting MODULE_IMPORT_NS() into the header] defeats
+> > 	the purpose of module namespaces completely.
+> >=20
+> > I am guilty of putting it in a header, so if I need to fix that
+> > I would like to actually understand why first. Andy has mentioned
+> > something about potential abuses, but without any example, I haven't
+> > been able to understand what this would actually actually look like.
+> > Or maybe there is some other reason that Greg is thinking of that
+> > hasn't been mentioned yet?
+>=20
+> Let me turn it around, _why_ would you want your exports in a namespace
+> at all if you just are putting a MODULE_IMPORT_NS() in the .h file at
+> the same time?  What is this giving you at all compared to just a normal
+> MODULE_EXPORT() marking for your exports?
+>=20
+> I know what it gives me when I don't put it in a .h file, but I think
+> that might be different from what you are thinking here :)
 
+For me (who still today thinks it's elegant to put the MODULE_IMPORT_NS
+in a header next to the declarations of the symbols in that namespace)
+it's the documentation thing quoted above (e.g. modinfo lists the used
+namespaces) and to unclutter the global namespace.
+
+The latter was essentially the motivation to introduce symbol
+namespaces, see the cover letter from back then[1].
+
+Personally I don't see the relevance of making it harder for abusers.
+
+A non-GPL module should be stopped by the symbol being exported using
+EXPORT_SYMBOL_GPL() with or without namespaces. And for a binary
+distribution of a module the need to add the MODULE_IMPORT_NS statement
+in the source code is a quite low barrier for the evil binary module
+distributor that IMHO doesn't justify to burden all regular users of a
+namespace to have to do two things (#include + MODULE_IMPORT_NS) instead
+of only one (include which implies the MODULE_IMPORT_NS) to make use of
+said namespace.
+
+And for GPL code: Who is actually an abuser of say devm_pwm_get()?
+In my eyes any module should be free to use that function. And if it's
+not sensible to do so, I would expect this to be discovered even without
+the needed MODULE_IMPORT_NS("PWM") in the code. And if it's not
+discovered that's fine for me, too. For me that's the spirit of Open
+Source: If someone finds devm_pwm_get() useful, let them use it. Please
+even tell me if you use it in a way I didn't expect, I'm glad to hear
+about it.
+
+I'm probably missing something.
+
+Best regards
+Uwe
+
+--enuyknrtw4cq5eeq
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjNgkMACgkQj4D7WH0S
+/k50wggAm2DTHJtv28WePL2zBaXONs/0AtzDza8lXQgPQoUVHUJXsRVsYbdK+5Te
+R8MYd6+n8hqXv/pnvnZRwd81Wv0yFwJOJtUzAlqiXYr2tfvSfe785liM73qS3JNs
+MI5i+z0WoWyRTqGTmPxJjJ1r/SgcvGFl+CHm9j1vDehiPVRnPalOS+y1JzYBezf3
+CTfbDpMOfi4y6a9u/6GX+UrUMxe7arfGlBB7Sy3dOoxlXSWqoQ1hzjlTo4YrsYwU
+ulHe6jKB+OI6xyUPqM0xXCphVFUZFacH+RitcWEFsTWH6Dt2vv8muCeB8jzPFkYc
+QRkS8BwIA/n7bOdJgYaEtTcUyCIa4g==
+=568Y
+-----END PGP SIGNATURE-----
+
+--enuyknrtw4cq5eeq--
 
