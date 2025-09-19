@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-74115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74116-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75B97B87792
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 02:30:57 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id D0B41B877EB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 02:34:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32250564EEC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 00:30:57 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 655111C24AF7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 00:35:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78DC51CEACB;
-	Fri, 19 Sep 2025 00:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7B51D2561C2;
+	Fri, 19 Sep 2025 00:33:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z5YgjgKr"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uQkPxmXb"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4894C34BA2F;
-	Fri, 19 Sep 2025 00:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E6C8246773;
+	Fri, 19 Sep 2025 00:33:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758241853; cv=none; b=Oi4YIHey4+gFYkvaHfeQ0UhRvrrYICqAa4yqeQ097MaqZcaUt/erzUA8mTiMhbqEGn0sF0HgLXcAy1TeCx3sLyHh+Nouy6hNiiyeAObQnI4zZlpDsqlYNN2gxBIpqN0UuzsL81QXZHtmJM46keuayCAw79XpKXCzBvND0EltQG4=
+	t=1758242014; cv=none; b=d25c8q2ZbqDPSYrS64PNREWE0fZPn0pLaBLAq4wClwWkUqMyOeeDCjmzzmmSLyL+iXYOClCixevQeMRyrJQrkTSxlIbjfJFXjeiVTeNUlzHE62EjMhP24SUhPxPpHqknLerAYeleDB/abLbvMkP++gEZDxDZcC1Svb6Gc2fZ86E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758241853; c=relaxed/simple;
-	bh=txV1vWnmrpDvHeycC4Fe2ea2OXZwWkdwSNUAUxRCpEQ=;
+	s=arc-20240116; t=1758242014; c=relaxed/simple;
+	bh=MvqdhfH2nX/TJ4+5NKKfQ+8Xw1soS4FUL5ceqWBJjCM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ERYEFHIbdbKvl65N8T8BpuBw7ulOS1SN8mccrgKk+nBN1rDyGZAXPcnxiNwjyx3Kcz53HU90NNpo95o2bmgikZE/akB0H1UgD1mz2v1GtrMQI3Kea/EjQMY1sxBAYySYaoRJwX5vmH5k2s5+eTbAlpRQRlTELaONVbMXWZGVutc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z5YgjgKr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30BDC4CEE7;
-	Fri, 19 Sep 2025 00:30:49 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=c3NDshJTO4sGCHZ764J1MrKs2DH/Umb+rf3MIiNnP+TeqjqzxjuQm57LkxWseVAJ4ZKD6NnWpfMU4R1ZGgYX5mFPyc82j9wj1tR4yDEmyS/pyfRJS9V8mEzqP0uNHBh/VV/1XUKnOmO4cgwmNwRtnRIP/h4IH74uQa2KAxE+Sis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uQkPxmXb; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D45C4CEE7;
+	Fri, 19 Sep 2025 00:33:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758241852;
-	bh=txV1vWnmrpDvHeycC4Fe2ea2OXZwWkdwSNUAUxRCpEQ=;
+	s=k20201202; t=1758242013;
+	bh=MvqdhfH2nX/TJ4+5NKKfQ+8Xw1soS4FUL5ceqWBJjCM=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Z5YgjgKrBKWymSwGs6RK+OjtokRAdxbD72r5YYkWxdpBqPfvv7H7bk8WBhkrRTSAs
-	 f/aR78zsU8rWBjW9G1CWKqfEgwobcqipLKl+AattPUO/FAhHspB5lEZuKDmX9hQTE6
-	 i7HtmIQbuEuNtzaOU90Gr6wRhq0GwFd2sPrSjJuioqwocB+qhrSKKlk60o23aRxD+L
-	 WMgDCRrTaoeAE0buWFHf6rLJhnzGMj6RyXwIS5/N24L3/Ix8R3yL78PQ2R2aagCYQG
-	 1Fduz8c0DylHZB+PTvF7SIGzEw2q+qzeV7IhTuGoa0+7ebOS0/6GakoMBYgoP1zHvl
-	 jDWr+bfTpf9gw==
-Message-ID: <641256da-e142-4a35-9089-d3833baec6fd@kernel.org>
-Date: Fri, 19 Sep 2025 09:30:48 +0900
+	b=uQkPxmXbxwUl6cwbOOZBY79XW1iBBiitcmNCoSjVxOKC5FXvBY1M8kA8bu3xdWn05
+	 gnCysPWjCfb/rPVS7CjgqsJ/W54JCls5HYXoABZZjCum1nCkEuct1rQksqauvHtFem
+	 lTkMZblVerTEMb4PuRVHeZN2BKaYkRsgZ9+y1/a6pw9gB6nghW81Vo81EO+D6jH+oF
+	 GtRGkx0aO5XK7y4HNXn3Bhf1n9NWIcdkGXZ7KSElncIgT+VQwF5i9yh82sIFs/sh5t
+	 Jfe4hzP5d5gMKJXB9cXFRLRYc4DmGQnbRdGGMYtLkfLgCZMWja4qCGsyJBw5dEDMdk
+	 8xklEUnyAfWIg==
+Message-ID: <4ca07bd0-d44a-488f-a97b-47774f253f73@kernel.org>
+Date: Fri, 19 Sep 2025 09:33:29 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,22 +52,20 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2] serial: qcom_geni: Fix pinctrl deadlock on runtime
  resume
-To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
+To: Praveen Talari <praveen.talari@oss.qualcomm.com>,
  Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
  Jiri Slaby <jirislaby@kernel.org>,
  Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
  Praveen Talari <quic_ptalari@quicinc.com>, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
- alexey.klimov@linaro.org, dmitry.baryshkov@oss.qualcomm.com,
- andersson@kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
- quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
- quic_arandive@quicinc.com, quic_shazhuss@quicinc.com,
- quic_cchiluve@quicinc.com
+ alexey.klimov@linaro.org, jorge.ramirez@oss.qualcomm.com,
+ dmitry.baryshkov@oss.qualcomm.com, andersson@kernel.org
+Cc: psodagud@quicinc.com, djaggi@quicinc.com, quic_msavaliy@quicinc.com,
+ quic_vtanuku@quicinc.com, quic_arandive@quicinc.com,
+ quic_shazhuss@quicinc.com, quic_cchiluve@quicinc.com
 References: <20250917185102.3763398-1-praveen.talari@oss.qualcomm.com>
  <dab18f70-4017-4c06-92c1-91cfd2229540@kernel.org>
  <8e2781ae-34d2-4009-bf8c-56aa1bb6fe85@oss.qualcomm.com>
- <aMuz/C1iT8JtjXbQ@trex> <aMvZ10EsMif/DOP4@trex>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,31 +111,68 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <aMvZ10EsMif/DOP4@trex>
+In-Reply-To: <8e2781ae-34d2-4009-bf8c-56aa1bb6fe85@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 18/09/2025 19:07, Jorge Ramirez wrote:
-> On 18/09/25 09:25:48, Jorge Ramirez wrote:
->>
->> let's test a bit further Praveen - we need to validate/trace the wake
->> path on a real scenairo to make sure it is not cpu intensive (although I
->> suspect the 2% was due to the storm you described more than to the code
->> path itself)
->>
->> I can then provide the tested-by on the list.
->>
+On 18/09/2025 12:55, Praveen Talari wrote:
+> Hi Krzysztof,
 > 
-> um bluetooh comms are broken - reverting the runtime_pm patch fixes it.
-> and the proposed fix (V2) does not address this scenario.
+> On 9/18/2025 5:28 AM, Krzysztof Kozlowski wrote:
+>> On 18/09/2025 03:51, Praveen Talari wrote:
+>>> A stall was observed in disable_irq() during
+>>> pinctrl_pm_select_default_state(), triggered by wakeup IRQ being active
+>>> while the UART port was not yet active. This led to a hang in
+>>> __synchronize_irq(), as shown in the following trace:
+>>>
+>>> Call trace:
+>>>      __switch_to+0xe0/0x120
+>>>      __schedule+0x39c/0x978
+>>>      schedule+0x5c/0xf8
+>>>      __synchronize_irq+0x88/0xb4
+>>>      disable_irq+0x3c/0x4c
+>>>      msm_pinmux_set_mux+0x508/0x644
+>>>      pinmux_enable_setting+0x190/0x2dc
+>>>      pinctrl_commit_state+0x13c/0x208
+>>>      pinctrl_pm_select_default_state+0x4c/0xa4
+>>>      geni_se_resources_on+0xe8/0x154
+>>>      qcom_geni_serial_runtime_resume+0x4c/0x88
+>>>      pm_generic_runtime_resume+0x2c/0x44
+>>>      __genpd_runtime_resume+0x30/0x80
+>>>      genpd_runtime_resume+0x114/0x29c
+>>>      __rpm_callback+0x48/0x1d8
+>>>      rpm_callback+0x6c/0x78
+>>>      rpm_resume+0x530/0x750
+>>>      __pm_runtime_resume+0x50/0x94
+>>>      handle_threaded_wake_irq+0x30/0x94
+>>>      irq_thread_fn+0x2c/0xa8
+>>>      irq_thread+0x160/0x248
+>>>      kthread+0x110/0x114
+>>>      ret_from_fork+0x10/0x20
+>>>
+>>> To fix this, wakeup IRQ setup is moved from probe to UART startup,
+>>> ensuring it is only configured when the port is active. Correspondingly,
+>>> the wakeup IRQ is cleared during shutdown. This avoids premature IRQ
+>>> disable during pinctrl setup and prevents the observed stall. The probe
+>>> and remove pathsare simplified by removing redundant wakeup IRQ handling.
+>>>
+>>> Fixes: 1afa70632c39 ("serial: qcom-geni: Enable PM runtime for serial driver")
+>>> Reported-by: Alexey Klimov <alexey.klimov@linaro.org>
+>>> Closes: https://lore.kernel.org/all/DC0D53ZTNOBU.E8LSD5E5Z8TX@linaro.org/
+>>> Tested-by: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+>>
+>> Where did you receive this tag for this patch exactly?
 > 
-> I agree with the common sentiment, I think the patch should be reverted
-> in linux-next and better test definition shared.
+> Since Jorge was involved in validating the change, I’ve added him under 
+> the Tested-by tag.
+> 
+> Please correct me if I’m not supposed to add this tag myself.
+Yes, it is wrong. You did not receive the tag! Which process or
+document, suggested that you can create such tag? I commented on the
+patches, so you will add now "Reviewed-by" with my name?
 
-For the record, the revert was already applied.
+No.
 
-Any new patch here should carry some more tested-by, before it can get
-applied.
 
 Best regards,
 Krzysztof
