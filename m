@@ -1,201 +1,90 @@
-Return-Path: <linux-arm-msm+bounces-74188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1860DB898F8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 15:00:08 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68AEBB89C39
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 16:00:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C69116225A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 13:00:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F10F1A00C19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 13:59:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0635E2367AD;
-	Fri, 19 Sep 2025 13:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AE7D8313E08;
+	Fri, 19 Sep 2025 13:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="WsdrUrtI";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="vaKHYxr5";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="WsdrUrtI";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="vaKHYxr5"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FuaBUzXS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19881238D42
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 13:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB55313D75;
+	Fri, 19 Sep 2025 13:59:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758286805; cv=none; b=JdoyhRY4kPPQiQ8PIL92nvOt06oK5D3D6QXpVQLz0RBVq+ZQK0QmGaV4xVc8tvImFqqCoVWzmZwQ3Kyhi01oJWqC7jac59iVzpsiLUNMzYyHQTZyewJxYlMXq4R5mh1sYQIYDadzRZNv/al0Lb9M3ecZfyU9Iy81DOLQFL4YAOs=
+	t=1758290377; cv=none; b=W2edY/+P0Fi1PGfn2KZTNU+2wOiRwszIxTncm2V3YFzXU3dKCIif7wt3Wtpt8UgU8i+4Y4XmEUxg6SuyWlAlA9nePtUfsqdBJOcHCpeYNpcHnvDpl6HuyY3UvI8orNWdYrzG6KZajGrg0LembbO7e08RNo7T4fL+Rym2tILo9Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758286805; c=relaxed/simple;
-	bh=o14wFhxXepo5o+mqZ3aUgF/dYby9/jrJO6CfF2IpjPo=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KusKOmxE5st1IZSRc2pi3X+B0/tT2xJxXOB1nNXy8aoxgfVbYjAY+OU5bAgWKeODd8JhAMFjd1boeGczxukYhH9UpUliwY7kvCtHlp5Yx4loJBTebCUHnE6bbIw46nueC5u4KXYY/O9opkdNekLjXvCN5Av1SSGH50hPzr+X5yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=WsdrUrtI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=vaKHYxr5; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=WsdrUrtI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=vaKHYxr5; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 48CD21F7D8;
-	Fri, 19 Sep 2025 13:00:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1758286802; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y2LrxQGrj/DRzcR+81yCK2sfCYQD1ShVTHdJPOHNt2M=;
-	b=WsdrUrtIXGLPPXiklonoK0G9uAbyUovr6DVy9JZNPJTx0Lpdwjb0BrP6YQxpR+Ync7Z7lm
-	FfV3kFLneZvTsRxWRD8Ya8vo+LqviZHO3mT3GbtfpeR6/zwETQ51CSkOiLd8MBOz3zU9bP
-	WWvW7/2D6dgxUt5EyXwAugUhA/Fuxsk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1758286802;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y2LrxQGrj/DRzcR+81yCK2sfCYQD1ShVTHdJPOHNt2M=;
-	b=vaKHYxr5OJtYDo+jM/Rfo2iw4PMpwoTlSp9ALBhtfxwyxuVYayQHQ6B+7xkbTs/6+7mLQN
-	fqSr/6+sa1qYJ8DA==
-Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WsdrUrtI;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=vaKHYxr5
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1758286802; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y2LrxQGrj/DRzcR+81yCK2sfCYQD1ShVTHdJPOHNt2M=;
-	b=WsdrUrtIXGLPPXiklonoK0G9uAbyUovr6DVy9JZNPJTx0Lpdwjb0BrP6YQxpR+Ync7Z7lm
-	FfV3kFLneZvTsRxWRD8Ya8vo+LqviZHO3mT3GbtfpeR6/zwETQ51CSkOiLd8MBOz3zU9bP
-	WWvW7/2D6dgxUt5EyXwAugUhA/Fuxsk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1758286802;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=y2LrxQGrj/DRzcR+81yCK2sfCYQD1ShVTHdJPOHNt2M=;
-	b=vaKHYxr5OJtYDo+jM/Rfo2iw4PMpwoTlSp9ALBhtfxwyxuVYayQHQ6B+7xkbTs/6+7mLQN
-	fqSr/6+sa1qYJ8DA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id D900513A78;
-	Fri, 19 Sep 2025 13:00:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id oFSpM9FTzWgwCwAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Fri, 19 Sep 2025 13:00:01 +0000
-Date: Fri, 19 Sep 2025 15:00:01 +0200
-Message-ID: <87plbm8uni.wl-tiwai@suse.de>
-From: Takashi Iwai <tiwai@suse.de>
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: Vinod Koul <vkoul@kernel.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
-	Patrick Lai <plai@qti.qualcomm.com>,
-	Annemarie Porter <annemari@quicinc.com>,
-	srinivas.kandagatla@oss.qualcomm.com,
-	linux-sound@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	kernel@oss.qualcomm.com,
-	Ekansh Gupta <ekansh.gupta@oss.qualcomm.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.dev>
-Subject: Re: [PATCH v3 0/3] Add raw OPUS codec support for compress offload
-In-Reply-To: <20250917-opus_codec_rfc_v1-v3-0-7737ad40132e@linaro.org>
-References: <20250917-opus_codec_rfc_v1-v3-0-7737ad40132e@linaro.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
+	s=arc-20240116; t=1758290377; c=relaxed/simple;
+	bh=G+eKhQdY3LXsknfdquHgWXFZCZJaYm8/KtCWfTr3cUA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cbsjHhFOP/Bfcm2Nsu5eToAoR8fXH9bmdNap+6hNBTZNkS1q4q23Knv15KfdxIrv5/29YVO3CIJNB4htKWWHv3ktNwNwc6iVwQQ6uS6gKfG49wqY7zJTTeMu15S9pztOQZXcjHyYQGYYD2GFaI0wg+83zkR8IKfgsm21w+Z/NR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FuaBUzXS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E045C4CEF5;
+	Fri, 19 Sep 2025 13:59:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1758290377;
+	bh=G+eKhQdY3LXsknfdquHgWXFZCZJaYm8/KtCWfTr3cUA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FuaBUzXS0qCl6HAJ4XYjHQp6it8Dm536/l+ZByopsVOtdtZ/m3yVdkKgZIERvVALP
+	 nrWyMbs/HCYptk+HuEp9y/UxEBUEBwq4i478l52wlAqBpQ2QcqULucRqK3+Fyu9k7b
+	 ygJGYPQ9kxlywpHj5HihIV09eFg543KFXH4iaKZE=
+Date: Fri, 19 Sep 2025 15:59:32 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	sboyd@kernel.org, jic23@kernel.org, dlechner@baylibre.com,
+	nuno.sa@analog.com, andy@kernel.org, arnd@arndb.de,
+	srini@kernel.org, vkoul@kernel.org, kishon@kernel.org,
+	sre@kernel.org, krzysztof.kozlowski@linaro.org,
+	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
+	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org,
+	casey.connolly@linaro.org,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
+ devm_spmi_subdevice_alloc_and_add()
+Message-ID: <2025091925-thirsting-underuse-14ab@gregkh>
+References: <20250916084445.96621-1-angelogioacchino.delregno@collabora.com>
+ <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
+ <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
+ <aMlnp4x-1MUoModr@smile.fi.intel.com>
+ <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
+ <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
+ <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
+ <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-Spamd-Result: default: False [-3.51 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	RCVD_TLS_ALL(0.00)[];
-	FUZZY_RATELIMITED(0.00)[rspamd.com];
-	ARC_NA(0.00)[];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_TWELVE(0.00)[17];
-	MIME_TRACE(0.00)[0:+];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_HAS_DN(0.00)[];
-	FREEMAIL_CC(0.00)[kernel.org,perex.cz,suse.com,gmail.com,qti.qualcomm.com,quicinc.com,oss.qualcomm.com,vger.kernel.org,linaro.org,linux.dev];
-	TO_DN_SOME(0.00)[];
-	FROM_EQ_ENVFROM(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+]
-X-Spam-Flag: NO
-X-Spam-Level: 
-X-Rspamd-Queue-Id: 48CD21F7D8
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-X-Spam-Score: -3.51
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
 
-On Wed, 17 Sep 2025 09:32:49 +0200,
-Alexey Klimov wrote:
-> 
-> This series adds support in kernel to recognise raw (or plain) OPUS
-> codec playback for compress offloading. At this point this series
-> doesn't deal with OPUS packets packed in any kind of containers (OGG or
-> others) and focuses on adding missing bits for pure OPUS packets.
-> 
-> The second patch adds its usage in Qualcomm Audio DSP code. To correctly
-> recognise raw OPUS packets by qdsp6, each packets needs to be prepended
-> with 4-bytes field that contains length of a raw OPUS packet.
-> It is expected to be useful for usecases when OPUS packets are streamed
-> over network and they are not encapsulated in a container. Userspace
-> application that will use the compress API has to manually add such
-> 4-bytes long field to each OPUS packet.
-> 
-> This is tested on sm8750-mtp. It is expected that next hardware revisions
-> will also support raw OPUS codec offloading.
-> 
-> Dependencies are:
-> -- hardware with DSP that supports decoding OPUS packets (>= Qualcomm sm8750);
-> -- adsp fastrpc;
-> -- explicitly setting format in sm8750 soundcard driver
-> https://lore.kernel.org/linux-sound/20250911154340.2798304-1-alexey.klimov@linaro.org/
-> -- running adsprpcd tool with support for Audio PD and DSP libraries
-> loading support (or its alternative);
-> -- tinycompress fcplay tool that will prepare raw opus packets and
-> do the required addition of length field;
-> -- mfc module in topology compress-playback path, that module is
-> expected to parse channel mapping and do the required things to
-> map streams/channels to physically-present output channels on backend.
-> 
-> The userspace tinycompress tool with support for raw OPUS compress
-> playback is located here:
-> https://github.com/laklimov/tinycompress_opus
-> branch: opus_v3_workinprogress
-> 
-> The userspace tool is not expected that it is ready and still needs
-> some work, for instance recognition that it runs on Qualcomm hardware.
-> More like working PoC.
-> 
-> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+On Thu, Sep 18, 2025 at 10:00:29PM +0300, Andy Shevchenko wrote:
+> I,o.w. I principally disagree on putting MODULE_IMPORT_NS() into the header
+> file.
 
-Applied now to for-next branch for 6.18.
-For further improvements, please submit on top of that.
-
+Yes, please never do that, it defeats the purpose of module namespaces
+completly.  If you don't want to have module namespaces, don't use them
+for your subsytem.  Don't use them and then make them moot by putting
+MODULE_IMPORT_NS() in the .h file for the symbols as that's pointless.
 
 thanks,
 
-Takashi
+greg k-h
 
