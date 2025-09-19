@@ -1,298 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-74137-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74138-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id A802CB8883F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 11:08:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18E3FB88A59
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 11:49:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6335F1C81650
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 09:08:49 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C95C51890E47
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 09:49:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4911C1BEF7E;
-	Fri, 19 Sep 2025 09:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5E85F21CA0D;
+	Fri, 19 Sep 2025 09:49:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="XCmkW+a0"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="xE2vwJN9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504C82D46B3
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 09:08:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8791CFBA
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 09:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758272904; cv=none; b=J/PiRSULqKP81mG6kYjw75YXTvedYDWEkfhzemQWeP32wkqzxD/H1Q5z3GNUB6EiwVmWHc3maqCv0abhj+kj9k0PNu9THuJjfaHOGMmuOzf+2faTqDlrsC6G9iKa4SwwCaCvdPf6rx4RLtA9TI26n/F5X1Uhz3fKuYu6DHFs120=
+	t=1758275366; cv=none; b=DR8JofPmvaJ89/TqWOIHKObYR4TzSxa+xi6s/ffMis1X8K580yDGe4cbD8PZ4VZ998Gymp87V44w0lKlhQJIdfPGi+lq/FY550Q7An2qQiPK406nHeu45/x4YL14wRt7lFWUwTVlcD+Pm2nCj3t9hvDjMlgv2Ct2+ntJEfy9aH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758272904; c=relaxed/simple;
-	bh=QAf8PPSaPOW1dXcDI9+c34wFeqG558XUfmyI1Bhvxmw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ct+3+bYU9uDwB7cgrYsF+4D/TIovgSXQFvI+PVeVbXdu1WV6WAjRFU2rMRHTAiVCqYsyw3+dAzJDKp5iVith7C0jWTv5FPmhpcHFz1o5YjWuqSvssfMSFagGdIoznfEPl4hI0iydmaT5ez8Ri4o3ATdaKocZiJ8JbzGrd2yj+SM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=XCmkW+a0; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58J7J8Z7010735
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 09:08:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=1201jJ6f+XXOQPOoUJASps
-	DX/E2sK4NLMNpj7tDXUBQ=; b=XCmkW+a0m5czV9M35RhWpapjDIBH8bFdRdVM1m
-	DN7OlJrvB6QzhyfD4eCEO4587zsOAv6ckuF0ebg7UM5lFYr7E0eOWi2Sj+FcxURl
-	x8xoPE88WG4n+yP/OBr1bhGbRmeiJf18hiyroMBnBPC8FWaJjHi1uk4ekv7fNRmE
-	P2e71ddX8dXD3SylmrZTUkhVCMTnBwfGuPqCKdnz4W7dP5S59zmH6eTyzlkZcQVO
-	VBWRQkRhVfy2BkOj/CvlP+IeOpVBVdqrB0PTULYSRDJG2yT4WYi8Gcq5oXVaABht
-	OectLPwWI6N2ihGiUdJ8SozZC5A2weIWHoB87yIM0p7YQnqQ==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxy1qbb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 09:08:21 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-77b73bddbdcso2123122b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 02:08:21 -0700 (PDT)
+	s=arc-20240116; t=1758275366; c=relaxed/simple;
+	bh=Tz2BYFvF/M11ZKfSqaimmGgmE3eUTJYVaFA8dA+tDN4=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=cEyFaVfzMcitz22N2qhLEZnZGC1D6iJC6KztKlg+J6cMT/VjPOmkBYY9Jp6EuSmPURUnLdH31CDXPPAFtVNtSkNQFSVmHajEj7D30Xzkr33l/YGklGdMFxq2xiJRGfZndtXXI7mYvxZd0I9OwR3x3CgsI1vQLXrA0Z9AZ9/GRSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=xE2vwJN9; arc=none smtp.client-ip=209.85.218.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-b042cc3954fso351085566b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 02:49:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1758275362; x=1758880162; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bF+fr97ZY8gnHTqJgWFCrdHRcSxw9tzCQyJHijmyQXA=;
+        b=xE2vwJN95mzyOnC4ZTWV9laCOyOgDXALTW4Ju5t4ko0uYUIb+zqCaiTtOgB1K6qHB8
+         IEMj5rHwV9JWQPg3FjvudGXjmU3qLOVgvx4TStrLDAUabmdYW0Z0THb9idND5yR3xGm/
+         YvMxXgKgDXpF02D8n+avVYJ60nyi48ZK5+kKb9JYQtTMtDNrWBMG4nk0gY26gLNUxnZX
+         UCE9MqU4MNaiNkHVXsiSVQI8z1FNK6TskgFVIwdhqUSZB/y1LBKGoWfo8AgQeRwFPAKX
+         iU/Ay8ydvAm3WRR1hI4vPizEXX5b+Sj1hxv2ex99uAySEApJHvXMS2kRh8PSuD1ugjKR
+         Auqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758272900; x=1758877700;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1201jJ6f+XXOQPOoUJASpsDX/E2sK4NLMNpj7tDXUBQ=;
-        b=KAjSrL/U/yvTwjYOrQQRCg6beh3SB56RRdIhZIq03ge7z4N4As9DMip8KPjvf7eQNZ
-         Ce9QKnBHO2XnK9w98hpDGsWRMAYbXDr1z26xlAySv1QKSeBWM7f4E1irwwBJWQlQNQ8E
-         iH4OwhlLmJ6KeeqzZIgoKdHmNL0x1t/0xqQ/vYu6B5I89XvqWO9cyHZSecM9Umrwm7O7
-         dzUcZmpZh6IKqSzm5Br7HJqLv950w4+TrSETzTwcc2Guq8gA5B3bJh6LQNllEyv8dBQn
-         gfqzRM4Cio2rnY08fyW5xfr4juIfdFUh346RgQtm2YteCWpwyt406bTgqY3AifZ3FWCR
-         G5Ng==
-X-Gm-Message-State: AOJu0Yw+4SZaPfK9ap8e/OaGLOrB9hZizueUm83sdVPsXnIY2kj0RWnf
-	lpRk7jAT0Bk7fp1NkgVRWZEWOxuNycVcjW1p38mJCkugEh3PAESOPCgHat86lPvpthvfuI+zqF4
-	IMJ8R9ArUuJJoDG9RJuQdyiewyM11M+9On01d4BUeCCupfmzUnEN0FQIjXQzbyaZ5GmKTCCCdRV
-	Q=
-X-Gm-Gg: ASbGnctH6t1g7qmHePUWVsbLPcBkIghO5Bck6csR3iOmPFOgN9umYvZA+UI5MBJ9/cm
-	Si4qUGpSVdlDtowZ+QO2gIDAFplUal89PKZdzh+6e230Ktw6Z7iTTS8QsFmfy23Ox01Z8/QuIII
-	ZAVin58sfFqbTC6oJibCm/DHhVBgWLgwrnfX2CKZubVi2tiJM3/11eT9CFBG6fRA4cqKHEfT3lR
-	VZcjWnfbPZ7R0jMaoUC6QJG/bcm4QjpEYqd+xaNPd//fqaWCu+xFBlTj7IlrJA4obQTIJp44nz2
-	K3huwrPCjPpGJ3FXdSt9epewM9N2B4U3+Vaf7lWnnettZW6IYlELwjBk0m4nQHie06v6tA==
-X-Received: by 2002:a05:6a00:392a:b0:771:f071:28fd with SMTP id d2e1a72fcca58-77e36d2891fmr3691128b3a.14.1758272900066;
-        Fri, 19 Sep 2025 02:08:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1ctVUiHOCYAhyPQgIHmDw2/ieiXUu4lKWjH8m/+iKcQdMktzFymE6vMKXe78TEi/bB9DUAw==
-X-Received: by 2002:a05:6a00:392a:b0:771:f071:28fd with SMTP id d2e1a72fcca58-77e36d2891fmr3691090b3a.14.1758272899576;
-        Fri, 19 Sep 2025 02:08:19 -0700 (PDT)
-Received: from hu-kotarake-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77cfec3f379sm4601064b3a.74.2025.09.19.02.08.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 02:08:19 -0700 (PDT)
-From: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-Date: Fri, 19 Sep 2025 14:37:40 +0530
-Subject: [PATCH] arm64: dts: qcom: qcs6490-rb3gen2: Update regulator
- settings
+        d=1e100.net; s=20230601; t=1758275362; x=1758880162;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=bF+fr97ZY8gnHTqJgWFCrdHRcSxw9tzCQyJHijmyQXA=;
+        b=lZWQu6wehi0nfG1J/QEnYe0QBhhpfiHn+XkzeuVAd51sD9LOCFB/wGVscoWjgjPvdm
+         suQARoLZcfvpEB8nZH7/YuKFiUuZf5gStGMpmxn3pVySAekjxpjWnpMfbWBn9GHUAtpp
+         aqoqJK2t/UAepKVH3oogV+eztOWJ65cAIB+wxhztnmE23cuv/GgsqNMVNt9FTNAU6t6s
+         E+PvBRWaI5Z6bx3Mj8IK/KBenIDt1rdG40PKCYv36CW1qef+I6SWGP1V+hPVAxR1AarW
+         ndR7fk9f+My+5HN63wKWwdwVfcG5C6QYK50TWX9mRuPgAs4dz3ozuBW+0+LRZD575fR/
+         fB3A==
+X-Forwarded-Encrypted: i=1; AJvYcCW7k1NeclUM1jwmNEDS0h1LioyaCPsiGLS9ZOWEF3rZwKCUc4fNLC7GPskQy+N9B1g+jfXmYiMRuVtj02IM@vger.kernel.org
+X-Gm-Message-State: AOJu0YzH+EXMA5scxRlDtQhLMaFf55K+Q1St3z7W5ClqVgLwMi4zSTeR
+	/yXxCiYYU8e5MAcD+2Y+Rzw1todfu4CiUV3fYWGgmpjY2YUebIahQStoMeOzHU/6Clo=
+X-Gm-Gg: ASbGncsTo0SCmXAcElejrZht76FCwDSJEL26QLwXW11+Be2JNvseMnXn7Qpt6gjfbw6
+	RYzawWNW0sWAeAJ5228dCICRGNs+okTnetE0v4WgAi94Js1DvE/JWsSK8mrAJRJ785oA/deUQiY
+	JZ+5fX9YLumXR4MZOivGQA2lgdcfuDBeBVn1qPEoxiGgz3d7BLm9BRNigFcQ1++rnGz6Jiw2Lo+
+	20Ix1BMkMdDoKX368MQmRz54VpECA2mKjO7siobma68VU646kvh/JXAPatz1aEuIp4hD7NClju/
+	wNKpl90Qf3LuH7g/nUi6dTQvreJw4HphQPzhyx5uoHykVXLMuV9PFsWFhwmiGQFyH1MgRoYcinF
+	RndO0zZoLrEChKmQhnqhnvu8g1CjWvr9c3GqcSr6w5MlP3Z+V74xx5CePm2fdYbp5fwtr
+X-Google-Smtp-Source: AGHT+IEFBu6jYd3DaMItgC8kjB1GxQEyOVsDZz2UShssNFNRiR0gE56ikyqcHlsjZ4qckWKtQlZbDg==
+X-Received: by 2002:a17:907:7292:b0:b0c:4ff9:5c77 with SMTP id a640c23a62f3a-b24f6f91688mr289081966b.54.1758275361898;
+        Fri, 19 Sep 2025 02:49:21 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b26e36ae75dsm15882366b.8.2025.09.19.02.49.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Sep 2025 02:49:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250919-rb3gen2-update-regulator-v1-1-76913be0a8d3@oss.qualcomm.com>
-X-B4-Tracking: v=1; b=H4sIAFsdzWgC/x3MQQqDMBBG4avIrDtgUhXaq5QuovkTB0qUiZGCe
- HeDy2/x3kEZKsj0bg5S7JJlSRXm0dA0uxTB4qvJtrZvX8ayjs+IZLms3m1gRSw/ty3KwRvfDdP
- oDALVfFUE+d/rz/c8L4r4svVqAAAA
-X-Change-ID: 20250912-rb3gen2-update-regulator-fd1d46cba1ef
-To: linux-arm-msm@vger.kernel.org
-Cc: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758272897; l=5260;
- i=rakesh.kota@oss.qualcomm.com; s=20250919; h=from:subject:message-id;
- bh=QAf8PPSaPOW1dXcDI9+c34wFeqG558XUfmyI1Bhvxmw=;
- b=mqqH31iF7qj1+yy3cTaWxAYFcg48rDdY1Va/effXC9bAHF0uDVdcKKDa1aY1Ce1OWDtwUpE7o
- JLwQ/enyRFpBhES3lLO7P8ljPrGBN7ZRNKuQtqPv7qEfNd1RvJ0B24a
-X-Developer-Key: i=rakesh.kota@oss.qualcomm.com; a=ed25519;
- pk=dFhv9yPC8egZglsSLDMls08cOvZKZkG6QQn1a/ofwNU=
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX/M0HC/RsDDJH
- MoNUK6arbSrxNeaNDNgNh4jI2pSdJX8es22867bWeEiQDWiqYr2RH5ln5XhcsyPqvoBKK7fZuYt
- l+9hMxvyMqJDLYBpupTF7manBNQQ5sbE8pgfsse1U/c/tkUsJQjHPxOuJVaUnq2Zy5dQc3X4/XP
- r7XNL0LHMQw+AMIWEcoAe37ggix++nzbJ29b/CWlG3rq1uG2xGaDG19HYAJIlU/gcsA8fQQ8Akf
- 8ICgugw+jydEYKaXXQJSPLF01yKchoVSJ5v202Y9dJpINZPaoo0k/eQ6xnNnJQXU/7m88+kcjon
- IDNNMXj658fOLuXIs+PgR7dFoeAWUN7iDQCG51xGsYtIjKIfnv0aJekY00ElkudwqWyowhLsjhs
- QUHXl2xj
-X-Proofpoint-ORIG-GUID: Z9AUda8Y9bSeOA_23PjM0hgqdoP2Yb34
-X-Authority-Analysis: v=2.4 cv=KJZaDEFo c=1 sm=1 tr=0 ts=68cd1d85 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=xy6SXK4bz0Lwp-duAgIA:9
- a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-GUID: Z9AUda8Y9bSeOA_23PjM0hgqdoP2Yb34
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-18_03,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 impostorscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 19 Sep 2025 11:49:20 +0200
+Message-Id: <DCWOLHPCYG3X.32KTGBE4SYMDV@fairphone.com>
+Cc: "Vincent Knecht" <vincent.knecht@mailoo.org>, "Bryan O'Donoghue"
+ <bryan.odonoghue@linaro.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: msm8916: Add missing MDSS reset
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Stephan Gerhold" <stephan.gerhold@linaro.org>, "Bjorn Andersson"
+ <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20250915-msm8916-resets-v1-0-a5c705df0c45@linaro.org>
+ <20250915-msm8916-resets-v1-1-a5c705df0c45@linaro.org>
+In-Reply-To: <20250915-msm8916-resets-v1-1-a5c705df0c45@linaro.org>
 
-Update min/max voltage settings for regulators below to align
-with the HW specification
-vreg_l3b_0p504
-vreg_l6b_1p2
-vreg_l11b_1p504
-vreg_l14b_1p08
-vreg_l16b_1p1
-vreg_l17b_1p7
-vreg_s1c_2p19
-vreg_l8c_1p62
-vreg_l9c_2p96
-vreg_l12c_1p65.
+Hi Stephan,
 
-While at it, remove RPMH regulator rails (listed below) as
-these are not to be used on APPS, and any client accidently
-voting on it can potentially cause issues.
-vreg_s2b_0p876
-vreg_s2c_0p752
-vreg_s5c_0p752
-vreg_s7c_0p752
-vreg_s10c_0p752
-vreg_l4b_0p752
-vreg_l5b_0p752.
+On Mon Sep 15, 2025 at 3:28 PM CEST, Stephan Gerhold wrote:
+> On most MSM8916 devices (aside from the DragonBoard 410c), the bootloader
+> already initializes the display to show the boot splash screen. In this
+> situation, MDSS is already configured and left running when starting Linu=
+x.
+> To avoid side effects from the bootloader configuration, the MDSS reset c=
+an
+> be specified in the device tree to start again with a clean hardware stat=
+e.
+>
+> The reset for MDSS is currently missing in msm8916.dtsi, which causes
+> errors when the MDSS driver tries to re-initialize the registers:
+>
+>  dsi_err_worker: status=3D6
+>  dsi_err_worker: status=3D6
+>  dsi_err_worker: status=3D6
+>  ...
+>
+> It turns out that we have always indirectly worked around this by buildin=
+g
+> the MDSS driver as a module. Before v6.17, the power domain was temporari=
+ly
+> turned off until the module was loaded, long enough to clear the register
+> contents. In v6.17, power domains are not turned off during boot until
+> sync_state() happens, so this is no longer working. Even before v6.17 thi=
+s
+> resulted in broken behavior, but notably only when the MDSS driver was
+> built-in instead of a module.
 
-Signed-off-by: Rakesh Kota <rakesh.kota@oss.qualcomm.com>
----
- arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts | 58 +++++-----------------------
- 1 file changed, 9 insertions(+), 49 deletions(-)
+Do you have a link to the patch that causes this behavior? I've tried
+looking through the git log for drivers/gpu/drm/msm/ but couldn't find
+anything that looks relevant.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-index 18cea8812001421456dc85547c3c711e2c42182a..6355c1e2c58165757a9a20ab4368e93545904693 100644
---- a/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts
-@@ -335,8 +335,6 @@ regulators-0 {
- 		vdd-s8-supply = <&vph_pwr>;
- 		vdd-l1-l4-l12-l15-supply = <&vreg_s7b_0p972>;
- 		vdd-l2-l7-supply = <&vreg_bob_3p296>;
--		vdd-l3-supply = <&vreg_s2b_0p876>;
--		vdd-l5-supply = <&vreg_s2b_0p876>;
- 		vdd-l6-l9-l10-supply = <&vreg_s8b_1p272>;
- 		vdd-l8-supply = <&vreg_s7b_0p972>;
- 		vdd-l11-l17-l18-l19-supply = <&vreg_s1b_1p872>;
-@@ -349,12 +347,6 @@ vreg_s1b_1p872: smps1 {
- 			regulator-max-microvolt = <2040000>;
- 		};
- 
--		vreg_s2b_0p876: smps2 {
--			regulator-name = "vreg_s2b_0p876";
--			regulator-min-microvolt = <570070>;
--			regulator-max-microvolt = <1050000>;
--		};
--
- 		vreg_s7b_0p972: smps7 {
- 			regulator-name = "vreg_s7b_0p972";
- 			regulator-min-microvolt = <535000>;
-@@ -385,27 +377,13 @@ vreg_l2b_3p072: ldo2 {
- 		vreg_l3b_0p504: ldo3 {
- 			regulator-name = "vreg_l3b_0p504";
- 			regulator-min-microvolt = <312000>;
--			regulator-max-microvolt = <910000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--		};
--
--		vreg_l4b_0p752: ldo4 {
--			regulator-name = "vreg_l4b_0p752";
--			regulator-min-microvolt = <752000>;
--			regulator-max-microvolt = <820000>;
--			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
--		};
--
--		reg_l5b_0p752: ldo5 {
--			regulator-name = "reg_l5b_0p752";
--			regulator-min-microvolt = <552000>;
--			regulator-max-microvolt = <832000>;
-+			regulator-max-microvolt = <650000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vreg_l6b_1p2: ldo6 {
- 			regulator-name = "vreg_l6b_1p2";
--			regulator-min-microvolt = <1140000>;
-+			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1260000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-@@ -436,7 +414,7 @@ vreg_l9b_1p2: ldo9 {
- 
- 		vreg_l11b_1p504: ldo11 {
- 			regulator-name = "vreg_l11b_1p504";
--			regulator-min-microvolt = <1504000>;
-+			regulator-min-microvolt = <1776000>;
- 			regulator-max-microvolt = <2000000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-@@ -457,7 +435,7 @@ vreg_l13b_0p53: ldo13 {
- 
- 		vreg_l14b_1p08: ldo14 {
- 			regulator-name = "vreg_l14b_1p08";
--			regulator-min-microvolt = <1080000>;
-+			regulator-min-microvolt = <1200000>;
- 			regulator-max-microvolt = <1304000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-@@ -521,26 +499,8 @@ regulators-1 {
- 
- 		vreg_s1c_2p19: smps1 {
- 			regulator-name = "vreg_s1c_2p19";
--			regulator-min-microvolt = <2190000>;
--			regulator-max-microvolt = <2210000>;
--		};
--
--		vreg_s2c_0p752: smps2 {
--			regulator-name = "vreg_s2c_0p752";
--			regulator-min-microvolt = <750000>;
--			regulator-max-microvolt = <800000>;
--		};
--
--		vreg_s5c_0p752: smps5 {
--			regulator-name = "vreg_s5c_0p752";
--			regulator-min-microvolt = <465000>;
--			regulator-max-microvolt = <1050000>;
--		};
--
--		vreg_s7c_0p752: smps7 {
--			regulator-name = "vreg_s7c_0p752";
--			regulator-min-microvolt = <465000>;
--			regulator-max-microvolt = <800000>;
-+			regulator-min-microvolt = <2200000>;
-+			regulator-max-microvolt = <2208000>;
- 		};
- 
- 		vreg_s9c_1p084: smps9 {
-@@ -600,7 +560,7 @@ vreg_l7c_3p0: ldo7 {
- 
- 		vreg_l8c_1p62: ldo8 {
- 			regulator-name = "vreg_l8c_1p62";
--			regulator-min-microvolt = <1620000>;
-+			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <2000000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
-@@ -608,7 +568,7 @@ vreg_l8c_1p62: ldo8 {
- 		vreg_l9c_2p96: ldo9 {
- 			regulator-name = "vreg_l9c_2p96";
- 			regulator-min-microvolt = <2700000>;
--			regulator-max-microvolt = <35440000>;
-+			regulator-max-microvolt = <3544000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
-@@ -628,7 +588,7 @@ vreg_l11c_2p8: ldo11 {
- 
- 		vreg_l12c_1p65: ldo12 {
- 			regulator-name = "vreg_l12c_1p65";
--			regulator-min-microvolt = <1650000>;
-+			regulator-min-microvolt = <1800000>;
- 			regulator-max-microvolt = <2000000>;
- 			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
+FWIW a similar change to this was also necessary for sc7280 (as done by
+Bjorn) and for sm6350 (will send the patches very soon).
 
----
-base-commit: 590b221ed4256fd6c34d3dea77aa5bd6e741bbc1
-change-id: 20250912-rb3gen2-update-regulator-fd1d46cba1ef
+And happily enough for me, with v6.17 and that reset, a long-standing
+issue on sm7225-fairphone-fp4 has been resolved that the display init
+seems to somehow fail the first time after bootup, with the screen
+needing to be turned off once and back on to work. I traced this back
+to some power domain behavior as well back then.
 
-Best regards,
--- 
-Rakesh Kota <rakesh.kota@oss.qualcomm.com>
+> "mdss_gdsc needs to be off before mdss/dpu probe, this can happen with
+> genpd_power_off_unused but not guaranteed"
+
+Anyways, I'm hoping this is not just a coincidence it works now but
+will stay working on my device. Just the reset in the past didn't seem
+to affect anything.
+
+Regards
+Luca
+
+>
+> Cc: stable@vger.kernel.org
+> Fixes: 305410ffd1b2 ("arm64: dts: msm8916: Add display support")
+> Signed-off-by: Stephan Gerhold <stephan.gerhold@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 ++
+>  1 file changed, 2 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/=
+qcom/msm8916.dtsi
+> index b50c7e6e0bfcd35ab4f8b84aeabe214fd60e8d7c..de0c10b54c86c7795b7a0d1ec=
+d80652e60e117b6 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+> @@ -1562,6 +1562,8 @@ mdss: display-subsystem@1a00000 {
+> =20
+>  			interrupts =3D <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
+> =20
+> +			resets =3D <&gcc GCC_MDSS_BCR>;
+> +
+>  			interrupt-controller;
+>  			#interrupt-cells =3D <1>;
+> =20
 
 
