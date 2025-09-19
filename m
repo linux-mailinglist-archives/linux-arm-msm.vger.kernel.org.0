@@ -1,51 +1,51 @@
-Return-Path: <linux-arm-msm+bounces-74183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74184-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79E2FB8977B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 14:36:22 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 890EBB8978A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 14:37:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 272CC5A1BC9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 12:36:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 563151C878E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 12:38:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E5321E3DDE;
-	Fri, 19 Sep 2025 12:36:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1AD801E5B73;
+	Fri, 19 Sep 2025 12:37:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="FJbxdM5n";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="BElzwfKH"
+	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="iafKBMAn";
+	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="6XwjPMJk"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 859471B4236;
-	Fri, 19 Sep 2025 12:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77DC41DA62E;
+	Fri, 19 Sep 2025 12:37:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758285376; cv=none; b=O/2o4y2Hj6okNYaPbvQXtuV+YRHaR2OF09ed3bKZ2cZdu1DSuXBky+mkHPZmbrrsTssP3w5mzNZCIycx4UML9L9Q+/j8CtoHgliOYhMo2yaop29Y7dj8LQe57ff3rIXgl2hcKTZrlySKPg9c1bjLns7fXBG8R/5mCn02inblqFE=
+	t=1758285461; cv=none; b=CMS8+4D0D12CDZj9uhu0F1NZKsekvJrFFrlMyLAYsP7ixV2sbOqCvDMYx0Vq2KNiIQUn7DKGoSynVWaV8k8Z35MeYZnQFnIeuFhNSJ7b07v5RhaEjzET1j+AGVFaIdK59tSPbUrufTOy86iQ+wDCjPsZpJFvBu4Is40WSsxNCcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758285376; c=relaxed/simple;
-	bh=yHE19xNWqMoQ0j5g1y4gQ2BjKim8cHCBZSXAnCp6u+U=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OS4R9vEjzVG94jC8ka3CMgq/P4zxlm4hV02PjnmLSOHbEstfhW82tSkZ19lxfnIKDLDvLOeYe0LenQ3AQQorQ/YO/FjsKKNIv8nvq3WIYDtE1wI8AC6UiDjxfSOT8Cdpk+oE3ihQrYfNmIWlxx+uBgQiPtdWkIk0d8Am26wMb1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=FJbxdM5n; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=BElzwfKH; arc=none smtp.client-ip=5.75.144.95
+	s=arc-20240116; t=1758285461; c=relaxed/simple;
+	bh=Cfh7jKCIIdh0ilsuaB7h/MSlYkhLkr2BKLhXRvpHUWc=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=brzJxoimRgoMYSfdJmLNChFSW9kjJYa9EyNGUDXBr4SQpa4EB6zaHfjbiyR5UvjLaL/ZBf6AmvaqTdkKeX/xL2WTk+nSycMWyAgn0mIH+VzQH9n+F/XdKqpdnjYlpi1QJ4JolWqiKiQwzy8Lun2HfwpP/sfIOoxHLD05C3Mk//s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=iafKBMAn; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=6XwjPMJk; arc=none smtp.client-ip=5.75.144.95
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
 DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Date:Subject:From; t=1758285281; bh=oq1b1uY6WD8MECr+zOBO74z
-	BuK4eY2CaQ4h7o8MTRj8=; b=FJbxdM5nf7mj9ohcJJHm8qBW9/QvH7VUNYyQZoKInDqNq1R3ho
-	LnSY0HU7Ty9sHSKcuF+bpKfV+aHt2bq3CIrsR1ZdTtgJySqfVpiVY7DHMMz95UFdVkabUZpnCu1
-	rtkTD3+OgBucccGrpA+u4IK5kHTCf2nFEaUbChKemrE3RzkEek+2FKOwIRC3aiGMrnEmmTjkckL
-	qn5YWchQIEaaaK+Ik0RzsMqm78KIFMvuDWW5O/UCJiNXaT1kKUy/IX8gGXo7MUFEzE/gSYJaRh9
-	Dw3AR5ltOpp1Zv+3Fp5pqvcH8j6wCJxJN9a0QrtpTIEVAGf3uJxDJUaKZ6LmNS7y97g==;
+	h=To:Message-Id:Subject:Date:From; t=1758285281; bh=cE4YyDikLXUbR2I09c3gZ0I
+	Uijha+U7iyL4uJQme8R0=; b=iafKBMAnqbhfA87Pt3Sev9F7isZPfrZ88XQcDzoHs8h0T3UXhN
+	5qWkhKFhUvlfU03tbN4xdFm70HUEekgTOH5mctfxn9uzFsIDIdgqPvRoYRmgkrj4n4pLPLH+Dl0
+	Fr3u0D8h48+vMTB+e4Rvqw/XyX8bBI0o52W6jTHsBkrDMiLz3DMa13ZCBsXjZH0smaEVwDbtMbG
+	Gv57fWjH3b2peWEYF4mjKFMUSWMDkZAN6U+19iSeFVL6HzJ12HGB/vJhk4Ce/Hx4WLJNxXgv1pM
+	YZsCepv5YSz+oD8ZVw07nYHQc+chyqzpKE7SfEbBh6prifhAVsdt4cumqgqjeLntyGA==;
 DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=To:Message-Id:Date:Subject:From; t=1758285281; bh=oq1b1uY6WD8MECr+zOBO74z
-	BuK4eY2CaQ4h7o8MTRj8=; b=BElzwfKH8zasbivxDfNkiZZGHoIXk/bi3Zp5iCe+gSV/eN9dIW
-	X/fsfs9AvU5gdXVgXlTP8ti7Nab4XJMbtyAg==;
+	h=To:Message-Id:Subject:Date:From; t=1758285281; bh=cE4YyDikLXUbR2I09c3gZ0I
+	Uijha+U7iyL4uJQme8R0=; b=6XwjPMJkQX0ZTtQSVwDr7QQE9krj4y51fbxD2w9+gZaRF3pIKE
+	k6pk2fcwC0I+pn3E/winjhkc81JEartUdUBA==;
 From: Jens Reidel <adrian@mainlining.org>
-Subject: [PATCH 0/3] Fixes for SM7150 dispcc driver
-Date: Fri, 19 Sep 2025 14:34:29 +0200
-Message-Id: <20250919-sm7150-dispcc-fixes-v1-0-308ad47c5fce@mainlining.org>
+Date: Fri, 19 Sep 2025 14:34:30 +0200
+Subject: [PATCH 1/3] dt-bindings: clock: sm7150-dispcc: Add MDSS_CORE reset
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -54,10 +54,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANVNzWgC/x3LSwqAMAwA0atI1gYapVS9irgoMWoWfmhAhOLdL
- S4fw2QwSSoGQ5Uhya2m51FAdQW8xWMV1LkYGtd411OPtgfyDme1ixkXfcSwJR86juKZIpTzSvK
- HMo7T+36UaYOGZQAAAA==
-X-Change-ID: 20250919-sm7150-dispcc-fixes-31578cae5c1a
+Message-Id: <20250919-sm7150-dispcc-fixes-v1-1-308ad47c5fce@mainlining.org>
+References: <20250919-sm7150-dispcc-fixes-v1-0-308ad47c5fce@mainlining.org>
+In-Reply-To: <20250919-sm7150-dispcc-fixes-v1-0-308ad47c5fce@mainlining.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
  Michael Turquette <mturquette@baylibre.com>, 
  Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>, 
@@ -69,38 +68,38 @@ Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
  phone-devel@vger.kernel.org, linux@mainlining.org, 
  ~postmarketos/upstreaming@lists.sr.ht, Jens Reidel <adrian@mainlining.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=909; i=adrian@mainlining.org;
- h=from:subject:message-id; bh=yHE19xNWqMoQ0j5g1y4gQ2BjKim8cHCBZSXAnCp6u+U=;
- b=owGbwMvMwCWmfPDpV6GDysyMp9WSGDLO+j5wlzLQyfIPXsvU//3qgbvPWCLMrJ9wH+Z+sj1u+
- z9R8zX3O0pZGMS4GGTFFFnqbySYXLX+dmh+vs1qmDmsTCBDGLg4BWAijzwY/mfLN167u0uuSsTr
- Z+R/tUrBz5dVbWJsO2T4Lj5S5N4Wr8zwz0RvYfN0p/T20r1Zz6xdd5xzED7+2FZ3SY6puOTuymm
- ruAA=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=741; i=adrian@mainlining.org;
+ h=from:subject:message-id; bh=Cfh7jKCIIdh0ilsuaB7h/MSlYkhLkr2BKLhXRvpHUWc=;
+ b=owGbwMvMwCWmfPDpV6GDysyMp9WSGDLO+j5gsMtbukdsze9noifq/ssmrje7JKC54dCneT9FI
+ iostTOXdJSyMIhxMciKKbLU30gwuWr97dD8fJvVMHNYmcCGcHEKwES67jP8r9FX2J02QXT9wcXn
+ VFeYlidM1mr8u3vlXJHjZw0SGk8dcWP4X6Auw77bKphRYc19jccRhsvDX9QZXnLr1D/pLrtBvOc
+ wJwA=
 X-Developer-Key: i=adrian@mainlining.org; a=openpgp;
  fpr=7FD86034D53BF6C29F6F3CAB23C1E5F512C12303
 
-The MDSS needs a reference to the MDSS_CORE reset since 6.17-rc,
-otherwise video mode panel initialization appears to be broken.
-
-Also ensure that the parent of dispcc_mdss_pclk0_clk_src gets prepared
-and enabled to fix an "rcg didn't update its configuration" warning that
-started occurring recently.
+Add the index for a reset inside the dispcc on SM7150 SoC.
 
 Signed-off-by: Jens Reidel <adrian@mainlining.org>
 ---
-Jens Reidel (3):
-      dt-bindings: clock: sm7150-dispcc: Add MDSS_CORE reset
-      clk: qcom: dispcc-sm7150: Add MDSS_CORE reset
-      clk: qcom: dispcc-sm7150: Fix dispcc_mdss_pclk0_clk_src
-
- drivers/clk/qcom/dispcc-sm7150.c               | 9 ++++++++-
  include/dt-bindings/clock/qcom,sm7150-dispcc.h | 3 +++
- 2 files changed, 11 insertions(+), 1 deletion(-)
----
-base-commit: 8f7f8b1b3f4c613dd886f53f768f82816b41eaa3
-change-id: 20250919-sm7150-dispcc-fixes-31578cae5c1a
+ 1 file changed, 3 insertions(+)
 
-Best regards,
+diff --git a/include/dt-bindings/clock/qcom,sm7150-dispcc.h b/include/dt-bindings/clock/qcom,sm7150-dispcc.h
+index fc1fefe8fd7248bb160816cebb8cc4c51615a8dc..1e4e6432d5065b1dd3daed5b382732c9c9c09444 100644
+--- a/include/dt-bindings/clock/qcom,sm7150-dispcc.h
++++ b/include/dt-bindings/clock/qcom,sm7150-dispcc.h
+@@ -53,6 +53,9 @@
+ #define DISPCC_SLEEP_CLK			41
+ #define DISPCC_SLEEP_CLK_SRC			42
+ 
++/* DISPCC resets */
++#define DISPCC_MDSS_CORE_BCR			0
++
+ /* DISPCC GDSCR */
+ #define MDSS_GDSC				0
+ 
+
 -- 
-Jens Reidel <adrian@mainlining.org>
+2.51.0
 
 
