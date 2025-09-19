@@ -1,95 +1,134 @@
-Return-Path: <linux-arm-msm+bounces-74131-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74132-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D9CEEB88439
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 09:51:17 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 044E1B884E4
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 09:59:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A96D41BC139B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 07:51:39 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BCDE7563DE6
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 07:59:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5939E2EAB8E;
-	Fri, 19 Sep 2025 07:51:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 039EC29ACE5;
+	Fri, 19 Sep 2025 07:59:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tsuprpiX"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="U8sgX+OM"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0332E972A;
-	Fri, 19 Sep 2025 07:51:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328D92FDC5B
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 07:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758268267; cv=none; b=rTVyFDQIfgJFpo0CKWHz+9ZQ1IfNARokhXxc5P+PLGIDlTtvAAlfuSis9Rl2Ze3FvjYD9Jd554nseGmjovljhNRB6lw1GIpQFOgRmTXYU5f3OWcbhcKSZjP6C7V32ls3Vrwh5zftFuFjWgluw8lqFvcny4vBe+CdZaOCnlaMtCY=
+	t=1758268739; cv=none; b=gFF+cR3gcBGPWi25/wvFzUpxtJ4opjHkCpgQc4mqYsxacGWrmnti/uy39YOJM0m+ka0hArU2M52HJeTPKIbigMti1+gzm2V8TzZJ2V8j2dJxeTpLJk+ByF98IKIVRJxATaISQ91uLnsXM2UgsaCdGil+g7r+LTDOj2QNfpvfp4Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758268267; c=relaxed/simple;
-	bh=APlp1xW8NAQ7jnrv9E9kYLn5pnd6JDt9VpE5agdknts=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Cdfmvr/iZjGz1g82DoamFL3SWXxhEKtS7b0e9xHCS5sv0hbyJ5GpRW/pEuyhiihGGmYj3Frq1eyat2FWWVXewB5s35L4qHJifD4iSq+JtnLZvdALahQ2TFhpHev4og4di1MPNXhxetdi7waHgjWqEdKYj+pLRsf1tmbMBIOnsyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tsuprpiX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAC2C4CEF0;
-	Fri, 19 Sep 2025 07:51:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758268266;
-	bh=APlp1xW8NAQ7jnrv9E9kYLn5pnd6JDt9VpE5agdknts=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=tsuprpiX71oIEYiECpyW0yByyMrzhbYxUz9A9iK3O7JiF9onfLY+F1SwFA8fZ9P/q
-	 ZNW23CMx1Pfs38eVSMGiime8p1dlB+D6Mb0N5i5YHQzk4a14dRGCvI5m8Iid1rUmgg
-	 z+s475OhyCB9HbaRIzO/zmFGw9J5dOJs7gBVaSHgGv4DMzjhW++UuwW4PS8hi4lSGb
-	 5m4bNRDjOZbuvcdY8/z27UrCwMcN3IWRRm2nZQlXKuvGkfjkHwjGEG0rny0z9Tszyb
-	 Cg+e54F5vglpH0kzMVJc2oDTbrr0Y+470SkQ75W6omut85fG12VUCAOcAx8g1ewBZf
-	 n8S2C0KxODPig==
-Date: Fri, 19 Sep 2025 08:51:01 +0100
-From: Will Deacon <will@kernel.org>
-To: Stephan Gerhold <stephan.gerhold@linaro.org>
-Cc: Robin Murphy <robin.murphy@arm.com>, Joerg Roedel <joro@8bytes.org>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Johan Hovold <johan@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>, iommu@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] iommu/arm-smmu-qcom: Enable use of all SMR groups when
- running bare-metal
-Message-ID: <aM0LZVudBKjWuVrT@willie-the-truck>
-References: <20250821-arm-smmu-qcom-all-smr-v1-1-7f5cbbceac3e@linaro.org>
- <aMAkJ7CfPQuhvhfm@willie-the-truck>
- <aMBJNzXpQTMg4Ncs@linaro.org>
- <d73e5026-ccb0-4a19-9742-099a0443f878@arm.com>
- <aMsJHheI6Y1V5q74@linaro.org>
+	s=arc-20240116; t=1758268739; c=relaxed/simple;
+	bh=O+hzsSvVnJz7MunYFuB149YvUwD55qvPOuK7bklmxF0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Rgo8BjI4BTBMvvHl+qLJ6vKuX1wQvwSJkFJAvLlZQ46iBssrrrsf/TqNJLI+xFJ/vsirXhnHFjDJtdQAF5HV3h15tASfk/xAW9prdb4TW4deNZhg/FdgoaVIX4XHStXXnhQKIm9HPin3qAmZreykULKekspl5vAboMQLAoi3G3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=U8sgX+OM; arc=none smtp.client-ip=209.85.161.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-62347d880feso1073411eaf.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 00:58:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758268737; x=1758873537; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=AHJ3UbPpS3D5IfXMLoQP0sFO1NEt5wlea5HnZpiaQh0=;
+        b=U8sgX+OMvuAMhWAlTzti44Vh98HqEFnUG2ujSwiS4fo7cGSZmErv3+k68VHbPMegHO
+         PHFMKM4nYYFJ3D+JwXM+7gaRNA5fCkfCSL3yES2TQ/pBnUy3z0saX/GzcQQAb6taAwlD
+         QOQiyhBhPaT4CRkHFTJWIqkoJpqIjMFHknaca3MqRAN7tDvleJLK7Lupl2Zbeh1ilakS
+         Ge9eY9UlcjI/abZ8h8i6Z7Oop9r7c6FD87tIZKg3IQdWCB8q4iXzv8UP2qGT9xyCUFWy
+         nuCoFuqvGCRyC5OYjvZIsrvWKYRhJysn7KbsoX4QStZumnJunHE6lw+SDaOG7hAmNDiu
+         jR4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758268737; x=1758873537;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=AHJ3UbPpS3D5IfXMLoQP0sFO1NEt5wlea5HnZpiaQh0=;
+        b=K+j34xWjyN2kJA9NA04dvzUZ5E3m7zoxedaCxgRvKRuTg9+2KkhH1EWSBowrcYcw86
+         CZj+8z8ioTKWh5+Hf/kPpnF0Rot1ibtimXjns+EHEYTFxNa68gDPFql1/loUSu932NnL
+         eJWQNDbSO0/BBouLNive0JH/kHGZbTHWPSsTB9FOVeaQQjUqhklVCeIWkVEticMvyV+I
+         kmR58PB25WDEq0log1HEtTK3bzFUQkzEbOTcr1Y3hXc/Oz/0SDwkRul6YoC4x0fkbt02
+         01Nurq/gmSXLNVoVbmg75TXkA2mUNqutitBlbvMeJ7XvkUW26SE5i7PhT2Kccul/ZwkG
+         2xQg==
+X-Forwarded-Encrypted: i=1; AJvYcCVyksgnv8Vk3RPbaTnp6D4w/rzNZQN08jq+/5+3qWOPPQ4aBi0VeO3YcNfivh1oeEG6Eab9BuOzXMpXznDg@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqaGwhi+nHA4X4i9SRg+W3MHc81b8UWhp5RuFjj/dCGdaeFcrd
+	0+GYUvFgLZz9uUT3rfTV5/KuYJBws2v0wYKnk9nnO5PNAU6JqXUHDGi5e+TFWW1bDTYt59V3B4j
+	E50ieLafr7HQQAYpPXHNPToPdikGTKAf+M3vH5APzJZvHOmwjhMEG3kE=
+X-Gm-Gg: ASbGncvlGO2NTO5WR/SuanHD9gFGrnkDFMSle9+HJZIjInn0VPCxSA7Tbi/jXbuvmv6
+	xdU8biZLCB4dnQWmiN/FO32gPQUCzeuBTjz2kdq9+Jxdi6DXICu0ZYSgWRjNRqc8/9oQ7k/6N2u
+	bHj7kuoV3voGMxsBNwHkgHzf80P+7K0aLGiFC2rr4B6Jhos1LJowSMGih4WZ1oyBIaN+5rotDlw
+	eP3UnMW
+X-Google-Smtp-Source: AGHT+IFkd+gNrjrot18Zo5hmp077YMeppKIoRCZvWMh3/mqyMghiA3DIyH1IQhZkyQF86NUjQQnEf00dsGPBqTCeBfU=
+X-Received: by 2002:a05:6808:6f85:b0:43d:6b7b:2469 with SMTP id
+ 5614622812f47-43d6c129f19mr966534b6e.4.1758268737218; Fri, 19 Sep 2025
+ 00:58:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aMsJHheI6Y1V5q74@linaro.org>
+References: <aMvV8WIKnqLN3w6R@stanley.mountain> <aMzodGIvL88HNi0d@sumit-X1>
+In-Reply-To: <aMzodGIvL88HNi0d@sumit-X1>
+From: Jens Wiklander <jens.wiklander@linaro.org>
+Date: Fri, 19 Sep 2025 09:58:46 +0200
+X-Gm-Features: AS18NWD_RyD3kl7DRtBl_0VNsyLANW3lHRdWn6UrulYuNqtupf3pr3qBMXZkBaU
+Message-ID: <CAHUa44HLULAZ3XXimqDzCfG8rc8OzU-ACmv2Gaee7Xbi=w3VEg@mail.gmail.com>
+Subject: Re: [PATCH] tee: qcom: return -EFAULT instead of -EINVAL if
+ copy_from_user() fails
+To: Sumit Garg <sumit.garg@kernel.org>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>, 
+	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
+	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
+	kernel-janitors@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Sep 17, 2025 at 09:16:46PM +0200, Stephan Gerhold wrote:
-> I realize it is weird to allow non-architectural features like this, but
-> I haven't found any indication that the additional SMRs work any
-> different from the standard ones. The SMMU spec seems to reserve space
-> for up to 256 SMRs in the address space and the register bits, as if it
-> was intended to be extended like this later. That's also why it works
-> correctly without any changes in arm-smmu.c: the bit masks used there
-> already allow up to 256 SMRs.
-> 
-> What do you think?
+On Fri, Sep 19, 2025 at 7:22=E2=80=AFAM Sumit Garg <sumit.garg@kernel.org> =
+wrote:
+>
+> On Thu, Sep 18, 2025 at 12:50:41PM +0300, Dan Carpenter wrote:
+> > If copy_from_user() fails, the correct error code is -EFAULT, not
+> > -EINVAL.
+> >
+> > Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> > ---
+> >  drivers/tee/qcomtee/core.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
 
-Although it's all pretty ugly, I think we really only have two choices:
+Applied.
 
-  - Teach the core driver code about all this and use an rmr-like scheme
-    to leave the upper SMRs in bypass
+/Jens
 
-  - Hack it in the impl code as per your patch
-
-The latter option is probably the most pragmatic (especially considering
-the need to handle the virtualised case differently) but I'd like to see
-what Robin thinks.
-
-Will
+>
+> -Sumit
+>
+> >
+> > diff --git a/drivers/tee/qcomtee/core.c b/drivers/tee/qcomtee/core.c
+> > index 783acc59cfa9..b6715ada7700 100644
+> > --- a/drivers/tee/qcomtee/core.c
+> > +++ b/drivers/tee/qcomtee/core.c
+> > @@ -424,7 +424,7 @@ static int qcomtee_prepare_msg(struct qcomtee_objec=
+t_invoke_ctx *oic,
+> >               if (!(u[i].flags & QCOMTEE_ARG_FLAGS_UADDR))
+> >                       memcpy(msgptr, u[i].b.addr, u[i].b.size);
+> >               else if (copy_from_user(msgptr, u[i].b.uaddr, u[i].b.size=
+))
+> > -                     return -EINVAL;
+> > +                     return -EFAULT;
+> >
+> >               offset +=3D qcomtee_msg_offset_align(u[i].b.size);
+> >               ib++;
+> > --
+> > 2.51.0
+> >
 
