@@ -1,182 +1,158 @@
-Return-Path: <linux-arm-msm+bounces-74236-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74237-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9DFDB8AD35
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 19:52:26 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 497BCB8AE77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 20:23:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 10E661CC634F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 17:52:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 04A1D7C06DB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 18:23:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 93A87322A2E;
-	Fri, 19 Sep 2025 17:50:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 832B425B31D;
+	Fri, 19 Sep 2025 18:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ohk+ioKN"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pBI8VajJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D695A309F06
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:50:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA16C1D8DE1
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 18:23:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758304232; cv=none; b=B6YKiR64CtKfjnHiJLQYo+l/m5duyXr3NoPL2bnX6DOXQ+nwFtRheGANmU8X7paWKXizeXz8DSLT+iM0Yg2mkenTosJWqeSIGDIpQl7a/gyh1JzO42uL4wgu5nJNShhvDxYitQaby05owPlvIT7mH1kqdCycUM0wLSR95qS2+Aw=
+	t=1758306207; cv=none; b=XEuBPhJVi9oqq6/3u4Z/UM+xI0Fg1jrEdju9/Zmkzddtypb+mP5o4PMq5JnBRJ92h1mUUMpaaUmVe5FSJVaxC6OlkHHByQmSWbiGqSXOTxaHROrgO8+pAS+1sGQR0VjzYOaQTYJmm4inI2MMCBoOh6jMPRrvadyeuG9wst2j28w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758304232; c=relaxed/simple;
-	bh=/mPo8lPIeMUbMiGlkP38hUb5Wg6RHjHPXXFrqZymSjY=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=oRIlBzxH5ogUtpHre3kHBYqvMDX89p8K7d66/vsv8GLlqpuAl8V5nY1MywIMUUgiBIwxc9ak5OzZEBjd5qRMWyY15aceZvsAqKUi9mM7ZZDfb9VON8NgFReOwPXX5YstoxDSqVKeHIBno0PtTk3dff3nDmS+xY+o2Hp14RUbmDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ohk+ioKN; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1758306207; c=relaxed/simple;
+	bh=ZMlanAxFKexgGCKXayKLLyUygjm2ZbznDAdzTjViEy0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HC8NTrioa5pd2oVvf1O/127RX/u6DY5n55nAP4dhhcLLJHop+1yOyEv36TsjRQOVlcyROtob/qt+gSMnyv3OxXaza136MBWZ7QjjZBc491ik2GtQ/Uzw26PVjguki8sdVAGm0nRAZf4jMBfae9wpPDvmzk4ikiDpHSEXobwPpko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pBI8VajJ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JEl942021413
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:50:29 GMT
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JFNKjv018036
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 18:23:24 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=lUVhA5pzXz07jeB/n45m2bQF4wRz5z2cLhx
-	Sd7PJcPQ=; b=ohk+ioKNN2W3E6EOYRZBoPo4r3rQDfby/DuHAxFp6dCus+XrWMv
-	Pi1/LekuSehpupAOj1hi52L3UpgJ7UCpt6MQ2ITe0TRGoazdcUn1Le+Da+Y2ngSS
-	AgIB59giKn0RBQZ1WR+wVZQ3mTrRb6k8xfGd619saGYQJb+5IGR04lZvhZfK0vim
-	p23uD/9DBKVnBwhCimf9lQCE/hvo6jWg9ODvF5Fy4Ta8OIqeZjlqM+xZDcenl0xS
-	jJKgK/NK8xaQau+qaVIyG0N4jTsHAGtLFYun7HOcbDeOcbQxP44Y5qt/ML5iANby
-	jWZ1ognNFU5IWzBufFlvwL/nempJvjWKZ9Q==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fy5kc82-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	t2Rn0Zhk2qgPlF/bJPji0KgeEB74Opf+t5Tm2Q0n1/w=; b=pBI8VajJQpCv0y8r
+	ng1nup7uOt4/HbABfBpalOq8BFXke5Ysktwl/FHNyGRG/Mf/iTOp0/1iiHaKGNQh
+	LRsu1C1aAtFw9Rba6HMies2sVcZMWncqB8+e60FXeJ1ykTe2ySTyjDSUA7nHwPrc
+	tq0zluMNISUwnlPQGMkj7E9uBPXucO0Z6C0AJebUlTAiUFExLfouX4C7sO9kwFsX
+	uqIqMi4u94DgvzCHlz5dcbYvwsva3JB5Gw8Ey2awCbDfDJpN8Qoq82ae/OS0wzCM
+	HC9HrMUKY+F/Ccg1AhmPBiCCT5PiEIHhbLgMzEDu5GT/grIqNBVVxHv0d2pvlX6A
+	hYx56A==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4982deg1jt-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 17:50:29 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2681623f927so24003735ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 10:50:29 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 18:23:24 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-32eb18b5529so2111604a91.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 11:23:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758304228; x=1758909028;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lUVhA5pzXz07jeB/n45m2bQF4wRz5z2cLhxSd7PJcPQ=;
-        b=hZbYMSQd17vX5u9VYGEZIfD/GgG0sKXOhEutMAvi0sLebMz7/bNhJ5DYngS6AgLwjo
-         9w4LAlisKKii90kbTziTUK2caDW+uBIc/cAvjboktkxPKbuPeRQVw6ld/mR8mihG/W8i
-         D+TNb9r9L8j8JLu3PyG4pIqeY++vzCQ0IlQ+6gYq547YIC9QVqmK5ObE3peltsRgR4p0
-         spqgoCJ9PBBt2SxAi5YVQ/++Amxhg04/xyRi6ZBUO/S4JYk0obTLGox5ypCt5P445tHa
-         7NN/kSYtM0HCk+Io3In119atGoEjkhWuBGb9AagO95jpFU1M2DmA0vBmh7hurnip1Kj5
-         7SBg==
-X-Gm-Message-State: AOJu0YwpvewgUYPokZjCc9rpPMHJXkwQwdcI5Ror/1gt1UTHWWVAKfrE
-	wdWQRQCzVHd9TXsbdW7MsK+/FsdsIYJJJtqtc3d5o5QXLF8S/XEMttUNWhs3FuQnCniiym2w+h6
-	2ZAM6e8ceN7Nsssd/o5xV5kpjwCbL82F7ozmXqmZsn3dUgPs+amei1hTWY87dOD2l6lnT
-X-Gm-Gg: ASbGncupLXKqVJIZxGBMxDEqwVehJxaRtxh1hLsz6k809KKk8y9eXEDDIcZiMSsusn4
-	hhtV9GtwDK7RWe3a4MwraKfdsiVzSE+FI8FBPTLpsKOuIHgp/LZyoknYVfX3yawWKGM024x6wuM
-	q90DZAkWcsIDKyqfRPzTytimYfcc3aet6g6wXvyAGVIzBstEWhJ/ynygEPxjHPIkpODvcPVDHyL
-	tzAgVVlwKkv6i1dYuqyIUoN+rk7R0l3QIGlsmuh+kBalLyEtr964nBQJ95hKa9qNTLXFaUc9ewf
-	bQ+ogpb17cGrVTuVNNu7/h3VbL0r4R0jWXngEeR3fFqPdc9uk3cchmrtT+AkIVn8/RoU40/nZO5
-	MuS3AmebYPn27abwwWSJnU1SGlc8=
-X-Received: by 2002:a17:903:1b6c:b0:261:1521:17a8 with SMTP id d9443c01a7336-269ba43dfffmr64056335ad.16.1758304228074;
-        Fri, 19 Sep 2025 10:50:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7Kzie8oSdOEBS90XbtwiLTvrynMSVegeI/TKZ5eJjg06eMYGr2szW6HyTo08NoA0zM8CkGw==
-X-Received: by 2002:a17:903:1b6c:b0:261:1521:17a8 with SMTP id d9443c01a7336-269ba43dfffmr64056025ad.16.1758304227603;
-        Fri, 19 Sep 2025 10:50:27 -0700 (PDT)
-Received: from hu-amelende-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32ed26876ffsm8970468a91.3.2025.09.19.10.50.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 10:50:27 -0700 (PDT)
-From: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-To: andersson@kernel.org, konradybcio@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] soc: qcom: pmic_glink: Add support for SOCCP remoteproc channels
-Date: Fri, 19 Sep 2025 10:50:25 -0700
-Message-Id: <20250919175025.2988948-1-anjelique.melendez@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1758306203; x=1758911003;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=t2Rn0Zhk2qgPlF/bJPji0KgeEB74Opf+t5Tm2Q0n1/w=;
+        b=vSPblX43RZfW/e4HgSWdh9UfXBWmINO5pMyFgVNabn2/B/c6eHJeBtpE2e3WITcVSN
+         4jtjocMiXjLwaLdP6s0T91+02d8a3DVrOm41S9drdrdl8TPgPuCC6TPlmwoX0hSE/P/P
+         iKBxrbEkmJRAXLMy426n0Ty+WE20fthLy1ojZr49idXMKuUaBt8xzWa0F+EbdIhFvEpK
+         Qw8aMQk1ExpfsAgEM+9eGZQopOUUYQiv+V9faIWIxEqeITgOHeaI67KIoVfZL/RU2frH
+         4derE4WfL7Hd6tKwWkiZGllZ5YZ5i/SwuIQWL0tp/EqZJ6L1ph6S5dq5PF8AaymDsfhH
+         jSMg==
+X-Forwarded-Encrypted: i=1; AJvYcCUzQp2PxnTp/yYXVaQBbnxwBBBUwdQP5NNJ8yDK2dj+piCa2I+SUuGkEljJP2Wub9/OQLxU6aK6UzQY5DXc@vger.kernel.org
+X-Gm-Message-State: AOJu0YyETLs9RTv7k0VxYOUHPKjApzQwZ1rQt5tU0RZHnwEVOqwWrS2p
+	3nYoOhoTtLri/b4ynk0/LwJddFdMumqHHs6OFgGFBYAeHsik333EyCearFC+nThl7sNotUGCe8+
+	pLbLVmDHWNcDqQBbGAyPM+09VTPeDT16YMTmLy70tu4r9iEZCBDTMHGPJlhfXofh/F6ov
+X-Gm-Gg: ASbGnctR1VEK9oOI+10Evp3vz3FzZhqs6HvC71B7DdgI43PPyhjfJnwf/pudT6K+aB6
+	nIUPFKR5CQcJMcDoCyXLGFyzAw0YMPksz4jiJozFBPOex9y39lpWF334IoXVdoQBdgmKeyAwgIj
+	Fi3EIiDISEWLes8vwvTRY6tQHG+PaX0fbwhM1cUwzmsDap8OH5myHOjSE0LGhI6y0YYkxDwb/ba
+	IkDkRKHixGqPKRe/RWPrvn/vELaYGXJeM9H+jPtLCE0lV9f4cGW13OB671LTMdxTNPQKiAD7YBF
+	DMyuFtvgTEOHvK3eQDmuI4lpQ5JSvR9StpX/fkYmNyRe8czG4YypEuyC1DEzFcycqjUO19u1mEQ
+	yJL363LhqmGH4QpDViPkU0g7cUnA6dOtyx9eJ
+X-Received: by 2002:a17:90b:3c85:b0:32e:a54a:be5d with SMTP id 98e67ed59e1d1-33097fd51bemr4758857a91.2.1758306203196;
+        Fri, 19 Sep 2025 11:23:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrPPr/A79RaXqsrPS/Xqqb+C4t+vc2ZLNFhqzMrVIkwPB4cvK1/aMVX2xJwlhu213uyd53HQ==
+X-Received: by 2002:a17:90b:3c85:b0:32e:a54a:be5d with SMTP id 98e67ed59e1d1-33097fd51bemr4758834a91.2.1758306202765;
+        Fri, 19 Sep 2025 11:23:22 -0700 (PDT)
+Received: from [192.168.1.111] (c-73-202-227-126.hsd1.ca.comcast.net. [73.202.227.126])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b551c279cd5sm2292066a12.3.2025.09.19.11.23.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Sep 2025 11:23:22 -0700 (PDT)
+Message-ID: <dd5add54-c121-49dd-a3bd-0acc51fc3a33@oss.qualcomm.com>
+Date: Fri, 19 Sep 2025 11:23:20 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: coE8d2y5Qz5CGU23fBVwWxl9W1kQ34mf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX4LbAFWMOpSNj
- clQ+59ZEagcJ0trfOQGid3T/MdXA7s+NPBajwTsT7ztBPFGihFPAumJaPCVLkiE7T3dJ35F+56A
- XNUoYNVHO2tuNrypZkRzwbO1Uy+Q1cuCUB8wuYh1DODITzwlgmRWs9TgWuKYg5HSCgwulDIAYjg
- HoPrL2fEOCTfmk0JmnSqn1GSk/FB5Cr+MjZaqX71mWIGfMgYuXMj2FFhxnDHSvnuPVWRJF+wUiZ
- zSYR4qNJXEMUMSFpjwVHI6ao9NiQ81GmNfYPFQTpxZPIYQ2VqUN2z2RvM0z9InLmdMbNtb4qG6J
- LoztnvXbQdJErHAKTRQmqvwZrH/NTjQUo1vEdSVB2aFVrvSLwXUvSevJjK6E28ipDm9zwVw0lg8
- qIs8aHLn
-X-Authority-Analysis: v=2.4 cv=Y+f4sgeN c=1 sm=1 tr=0 ts=68cd97e5 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=U2TDSMueiEXJ_JPGoVUA:9
- a=GvdueXVYPmCkWapjIL-Q:22
-X-Proofpoint-ORIG-GUID: coE8d2y5Qz5CGU23fBVwWxl9W1kQ34mf
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] wifi: ath12k: enforce CPU-endian format for all
+ QMI
+To: Alexander Wilhelm <alexander.wilhelm@westermo.com>
+Cc: Jeff Johnson <jjohnson@kernel.org>,
+        Bjorn Andersson
+ <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-wireless@vger.kernel.org,
+        ath12k@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20250918085406.2049559-1-alexander.wilhelm@westermo.com>
+ <20250918085406.2049559-5-alexander.wilhelm@westermo.com>
+ <e8d283aa-fb73-45d6-a89a-54ff31f205c8@oss.qualcomm.com>
+ <aM0BRto3lYNJdBYz@FUE-ALEWI-WINX>
+From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <aM0BRto3lYNJdBYz@FUE-ALEWI-WINX>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=YfO95xRf c=1 sm=1 tr=0 ts=68cd9f9c cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=e70TP3dOR9hTogukJ0528Q==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=GsdoeonjsfuC13c6vpsA:9
+ a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-GUID: 3yxHY2ptjeIojgo8J8ys_d-kuAjWVQmc
+X-Proofpoint-ORIG-GUID: 3yxHY2ptjeIojgo8J8ys_d-kuAjWVQmc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE3MDE4MiBTYWx0ZWRfX18vGvrmMlwXV
+ ERkBsFSaWtZZ5ibbT0K6FBHdiv/G6gDRis/H70xCTVc1s8Ybkpn2xMiWrgaDDspp7tvDlZ/zG2G
+ HuMC4LE/IXYVOoU2lq1mq14j70oBdOPm2llhvXEY6yXlC2ght3TKcl2Bd0Geus0LgKEn3O0Z2Ng
+ cNkj2aI5OlpkNCK7EEojBnNazV1nXeT32voOuNS4RWG87WOeHFNBscAO2ZraYeeSQ6E8nmqrqSX
+ zJXpJyJyCOepyFvAhRbe2BajZGVjUeoRaxIhi3qO3AOeV+vHWWnPi+47qkDalfDyXu9O7KycWPD
+ 4iI8gluXsmIO2VTxqASdHIKLSU3z/ky551a7X+drxlQ8AmCYpGSLx+aNMkSvhHPXjPgOOeQSPxT
+ tgt5V47C
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
+ definitions=2025-09-19_02,2025-09-19_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 suspectscore=0 impostorscore=0 phishscore=0 adultscore=0
- malwarescore=0 bulkscore=0 spamscore=0 clxscore=1015 classifier=typeunknown
+ adultscore=0 impostorscore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ spamscore=0 phishscore=0 malwarescore=0 bulkscore=0 classifier=typeunknown
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509160202
+ engine=8.19.0-2507300000 definitions=main-2509170182
 
-System On Chip Control Processor (SOCCP) is a subsystem that can have
-battery management firmware running on it to support Type-C/PD and
-battery charging. SOCCP does not have multiple PDs and hence PDR is not
-supported. So, if the subsystem comes up/down, rpmsg driver would be
-probed or removed. Use that for notifying clients of pmic_glink for
-PDR events.
+On 9/19/2025 12:07 AM, Alexander Wilhelm wrote:
+> On Thu, Sep 18, 2025 at 09:31:18AM -0700, Jeff Johnson wrote:
+>> On 9/18/2025 1:53 AM, Alexander Wilhelm wrote:
+>>> Due to internal endianness handling within the QMI subsystem, all QMI
+>>> requests and responses must now be provided in CPU byte order. Replace all
+>>> QMI-related data types with CPU-endian types and add the necessary
+>>> conversions to ensure correct interpretation across architectures.
+>>
+>> I think you can break this out into a separate patch, but reword in a manner
+>> that doesn't indicate any dependency upon your series (it can be a predecessor)
+> 
+> Sure, I will do that. I have only two questions:
+> * If I split this patch series, should I start on each one with v1 again, right?
 
-Add support for battery management FW running on SOCCP by adding the
-"PMIC_RTR_SOCCP_APPS" channel name to the rpmsg_match list and
-updating notify_clients logic.
+for the qmi series use v2 and in the rev history note you dropped the ath12k
+patch. for the ath12k singleton use v1
 
-Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
----
-Changes since V1:
-  - Updated commit message
-  - Removed enum defintions and isntead using booleans
-  - Simplified logic by setting pg->pdr_state directly if pdr is not available
----
- drivers/soc/qcom/pmic_glink.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+> * When I mention that BE support will only work on future kernel version, should
+>   I better avoid the "Fixed:" tag or not?
 
-diff --git a/drivers/soc/qcom/pmic_glink.c b/drivers/soc/qcom/pmic_glink.c
-index c0a4be5df926..627f96ca322e 100644
---- a/drivers/soc/qcom/pmic_glink.c
-+++ b/drivers/soc/qcom/pmic_glink.c
-@@ -39,6 +39,7 @@ struct pmic_glink {
- 	struct mutex state_lock;
- 	unsigned int client_state;
- 	unsigned int pdr_state;
-+	bool pdr_available;
- 
- 	/* serializing clients list updates */
- 	spinlock_t client_lock;
-@@ -246,9 +247,12 @@ static int pmic_glink_rpmsg_probe(struct rpmsg_device *rpdev)
- 		return dev_err_probe(&rpdev->dev, -ENODEV, "no pmic_glink device to attach to\n");
- 
- 	dev_set_drvdata(&rpdev->dev, pg);
-+	pg->pdr_available = rpdev->id.driver_data;
- 
- 	guard(mutex)(&pg->state_lock);
- 	pg->ept = rpdev->ept;
-+	if (!pg->pdr_available)
-+		pg->pdr_state = SERVREG_SERVICE_STATE_UP;
- 	pmic_glink_state_notify_clients(pg);
- 
- 	return 0;
-@@ -265,11 +269,14 @@ static void pmic_glink_rpmsg_remove(struct rpmsg_device *rpdev)
- 
- 	guard(mutex)(&pg->state_lock);
- 	pg->ept = NULL;
-+	if (!pg->pdr_available)
-+		pg->pdr_state = SERVREG_SERVICE_STATE_DOWN;
- 	pmic_glink_state_notify_clients(pg);
- }
- 
- static const struct rpmsg_device_id pmic_glink_rpmsg_id_match[] = {
--	{ "PMIC_RTR_ADSP_APPS" },
-+	{.name = "PMIC_RTR_ADSP_APPS", .driver_data = true },
-+	{.name = "PMIC_RTR_SOCCP_APPS", .driver_data = false },
- 	{}
- };
- 
--- 
-2.34.1
+i'd avoid the Fixes tag.
+If you eventually need this series backported, you can do it yourself rather
+than have the stable team unnecessarily backport it.
 
+/jeff
 
