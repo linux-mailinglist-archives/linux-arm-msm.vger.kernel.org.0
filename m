@@ -1,222 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-74225-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74226-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29C06B8A89C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 18:18:23 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CB89B8AA19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 18:46:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D9630189CEF9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 16:18:44 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC1251BC74E0
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 16:46:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CF7D258CD8;
-	Fri, 19 Sep 2025 16:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD2D7264617;
+	Fri, 19 Sep 2025 16:45:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="EZqkadce"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="L+zIWkYX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51CC2652A6
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 16:18:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 319E831E8B7
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 16:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758298700; cv=none; b=fci+/5sgt0SMgEwXk6wQ3i9BR3Wl3OPUpKYoUV2Mz/+mfKaA4ziWU0St1hI54UwRJraBLIDmYs8MmuKu+/AsxHEdWLf7f/JTpyuxJF0punBxhjkvXJomyrE8TUA0paAFCMMHR7Vp4GnZVjcXYdSsiraEukefuRKDcKKEfVY3GWg=
+	t=1758300335; cv=none; b=V8DcUBAwvcw1B/2sbEZrwuZymEpO24zzrWBGTxJxWb2ZUujrBoIvIlrTrp2kQ4JaDIrb1Q7ZGoAPHWTZnK/BLtZ94iXXmPQeorNxMG7DVo278847TyKHuOi+vLRZXhyVtZHaryFtiNkwcmvewMvL0csht9gVvP4TZZIK7oWubtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758298700; c=relaxed/simple;
-	bh=WxQ0B4IlsgTIq4DWFmrJtf+73r29i4Kp+qGE9Unb6OU=;
+	s=arc-20240116; t=1758300335; c=relaxed/simple;
+	bh=4fs98jrSck3x8PLmQUQVQOKqZfnNTah8hBpBS8SrcvU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ukfpF6iKpjV1KJRuJz9DRgMxmoPqj96KmAw48mDGRVvrWScEHyeD/N9Unw4VA8VSHptRsIGCgRa1K/RGgeOcn63OXD7/cFSIjXsOJiM1kkvdG9BdVx9g5GJhOoPooMhpO3OABN/IdlLskiD0hAFji7fDDy4+GeZMJ+iLiIbILs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=EZqkadce; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3f2cf786abeso83622f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 09:18:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758298696; x=1758903496; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rCMQiFsm4hsxlP+tNTYkhaVGT0aEA2D4RKsC3Gwmrs0=;
-        b=EZqkadceqFxerreYBdqwFV5YJ44n7V/slvuzf41+//RfCO4ImSUEhNlXJra+tXl6Kv
-         3ZN6bEPT8bu5KeHN8FwZ9yHVJIMQMvyxZCW1zW+UqiF7G0GETN6NH7/bM31wgBdmiJSq
-         Dxn1+G8bZHXZFqs16sfPc8MOCpsmR3QPWLpMzqL+fj8EJWNMjk4D6RFld3jOGbQnEiUs
-         l7b0e2KV0GAxRsmS/c6mzfpf2c11Ld81JnhWP4wv9N6lzoiy92ARa97lWCyH0kT/+io5
-         vhCiL/BYEFebmwFUrrO6PwRQ8p/qtZVXgKPhjgTS2jDQCZPqHKmszTi2BGTDOrU/swpi
-         ppug==
+	 Content-Type:Content-Disposition:In-Reply-To; b=B9YlnVwfn65dgo9bgd2y9FbKGfi6YP+g1h4N269ErDC5CWo2Sn8X6cPfb5dQeTibQGOw6LPYs6/JXL6JeunQ8K8/5vmb/BPJHu2NPg8Gv3Koo458TqkBfXHjNDiLIUY5ciocVfrAfux2TDgPMzq3DrAo3G398OEHlbpgBWoWPgA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=L+zIWkYX; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58JFHUSd029741
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 16:45:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=C20ghaTYz2z07OewDUW3U9kP
+	PyChf5ZskPTDdANcg0M=; b=L+zIWkYX2CHEXD1IG7LIUWQjC0kQ25fACtMvwpbi
+	OZboAtLm0n3MKd/wqPAgbMCllkaBCywR/c1UNbx1+bk1upwTi5krAOiY71qoc0b2
+	mivrON5KmSG3KK97wOSVX03BecCOBLMcWCTd47sVdojrmDgixGdUsvzoIh5GLaDm
+	aJVclV883owgqTbbHMTb+uPs707N0k+5UoKpuhQr5EqDLQKjYj5jGRrfrQJsVsTx
+	ji7qbLbGiKr67yB3KEJIZgXwx0mG+6sRoNFTnbeB0NUw4vBVXA48aV6Hb2Gz35D+
+	RY8MC/gjrF7wxU3T1isgVegs5peQSApRmS6bTSj9bGegVw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fy133ux-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 16:45:33 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b7ad72bc9dso60082751cf.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 09:45:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758298696; x=1758903496;
+        d=1e100.net; s=20230601; t=1758300332; x=1758905132;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rCMQiFsm4hsxlP+tNTYkhaVGT0aEA2D4RKsC3Gwmrs0=;
-        b=Y1Y59pusUQn+DYWBmUhXvJ0xINF+Hy07thD92GyOLJaYcMwGZnaybQN6xhrdYvuc7n
-         +8VGZY65z+SWpIHxRgaIm83HzFWaVVjy9v7fA+b4fREn1j9ba4voqC9Kz6w4pXdzY6S/
-         4dsdyKD19xaHDDq+agOe7B6ThTa0mP1kqB3wNpU6riS3VRcoNgT3yDD/kRREcH79WpEG
-         XLYhCnxUfEqLhe08/PIALKwAFtqrhBF64bGKg2JOmfWvDzpwnkEx8KhBYwjLmZIE5WO7
-         0HQd/J4i/MZPrVRL6tLfA7sfyR5GW/vrSI5XrXJwkfBCF6gVzjHeZxGu5UuvoRRSkkH5
-         zrfg==
-X-Forwarded-Encrypted: i=1; AJvYcCWZjiYucpd58QLHHw0KA/h644iYxDkZujT52GjZZZMfXAGg11yYoOt+fApNqKj36Xtudy/VcV1IDB/IYEx+@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzlu+FaW5hHv/EBZf5vKoDxQ48/nL+xtlTPWvz4D+k5wpr9U1M2
-	QRKHBfhz0LXZTB2QtSib2qpm42TuO3QmUoOo2NXe+QLzloANpiQ2PD0Pkpf+ox3ti5c=
-X-Gm-Gg: ASbGncu4lNt0b7drswkW2lWSzff2giYpZRL895GmOPaT2HBSGP+kCwsBmJ4H5BWrJkB
-	73pFxNy0ldPWqlixOXHX7tD/iDnp2cEX505Zkwwzvqp6gQ8hzwRD3+wiHHQN7o3tB5391op5dLG
-	ASq1u4MTcVuXJ+PFIYZryrPEW/8x7KD/pUHX/WiLlmf8pTZU1YxCvOk5y7zVqh7Ry+RlwleQqpa
-	rJZ5gmHPRGRDLje8CfRgyBVc2oJqZdv/+FxGRj2LFejJNH/saHms6ym50tWJuPg2MbXyXr++yq8
-	XcNzQF/2vNIjysgfQH2cwg0RTGFe0qaaKAY5JRsUaJpefXFyZWieTqgHN/vTafIqDAgAiVk8H1q
-	CH89HO2mN7Byq/88SzEHstWUmQLF0jTk06njAq7Jvo5gAmjhcGbRmNhUVLq8jejOk
-X-Google-Smtp-Source: AGHT+IHeDyqCwZEwmBRMLgDcVcjTaBDuQhje8qnjQHoNKHQszsQBAbYzFqO5E0qmktZp1YKSObnQbQ==
-X-Received: by 2002:a05:6000:248a:b0:3ec:b384:322b with SMTP id ffacd0b85a97d-3ee8585f513mr3310968f8f.46.1758298696034;
-        Fri, 19 Sep 2025 09:18:16 -0700 (PDT)
-Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3ee07412111sm8325227f8f.28.2025.09.19.09.18.15
+        bh=C20ghaTYz2z07OewDUW3U9kPPyChf5ZskPTDdANcg0M=;
+        b=Sb++wF/u1Z/2fDZpmtVQmoyYzleVkOI8+JGvYygSd1t50B8ST+pVUV0nrsMvoRv8jy
+         FaiTA+G+PD6BUzDzA5GI3PnUimZ2ZN1vA7L+CilTbwIYFkjsIdtfo+wV4x/WB8DSeTfj
+         eCnnMm39h2RRvn0IsZxQVkD6bZx5628qNAV4PyeeXbAF7SKiFfa5zrrqVtagMgS9DPpj
+         csAD5OC1RvZ/gY22z68PXaFSpTeYPxnZJVvCDIdfTsYQmL59a8rEydTLVM3ciubZpc9s
+         PhcqdX6SjRwBUqYzWp08fKYIOqAyzaVd9VZRL+WtlyT73xbzrL9CMiV49rxumL5AD6M0
+         ZOOw==
+X-Forwarded-Encrypted: i=1; AJvYcCWl62FDcupedFZIySbObpJJRjFPOZaWgToBkIV3ZUah+FiVOgw9hmxwF4UQdv1n1+7T9PoOGihmmKx/1hJw@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXd+z6coOEIMWAHjtRBIfMYjuUNxtJPMBlOVz99J1Ya9EK+Hgu
+	nABM5jtgivbT3C22AH7jyflo7L53v4oYNOkNfUU1l5ygmFj0u0N32TS8J+z3+IC+9x+gJzw+G9c
+	RdFbbdJBruai07eeLqRIcUPzwjOAX+iW0ePDiAnHLbrrCFfOuUYFZklWcRNhM3CdHzVUJ
+X-Gm-Gg: ASbGncuD2Yr5kS1MjA/lU9jW81kKmt+5XC9ZkNpb6j2wHq2fwKhNDmuvOpSpJKkxT/I
+	i57hoO+NEGNb2Bbwm2zyiU+YNVx2nC7yG4My239bYjDmJD/teejN2KNupYY4NDmCzFBjWfVQtqV
+	PWVHul7HIoggtk53C/NHMiFBS+QgxLfET5j0RMr/IpsNp/5dZS2zbtcar+5pE4HZgxrS/N/3RPi
+	+h2Pie81g1/jLCil3qCIvsoStQYx5fbokfda+ILyHA0j/dOCk38ZoQlQfbCcUysIjqEPVzwJIzF
+	QgLcSZscOxJJDvBEWwoJpad4Ln0BDTDMYuSW+ujmhaloYayllJUnvg32Y8cC8FULeaS9Ks0IC7x
+	wrbsrXWucKhySG9qTC+xrP21zEAD2PXP2F4oovnt0oCaHiPgpUiyE
+X-Received: by 2002:ad4:5de6:0:b0:78d:72e5:4309 with SMTP id 6a1803df08f44-79913f8ccc3mr48541616d6.25.1758300331919;
+        Fri, 19 Sep 2025 09:45:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENMkKKG2cQIkLe25WJp4a+nFBl5DjpFFzclGB37kCIW8D1f1msQ+H2z+bjyqDP10qr1zJDzA==
+X-Received: by 2002:ad4:5de6:0:b0:78d:72e5:4309 with SMTP id 6a1803df08f44-79913f8ccc3mr48541056d6.25.1758300331184;
+        Fri, 19 Sep 2025 09:45:31 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-361a26cbcffsm14030911fa.22.2025.09.19.09.45.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 09:18:15 -0700 (PDT)
-Date: Fri, 19 Sep 2025 18:18:14 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: David Lechner <dlechner@baylibre.com>, 
-	Andy Shevchenko <andriy.shevchenko@intel.com>, Andy Shevchenko <andy.shevchenko@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, sboyd@kernel.org, jic23@kernel.org, nuno.sa@analog.com, 
-	andy@kernel.org, arnd@arndb.de, srini@kernel.org, vkoul@kernel.org, 
-	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org, 
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, kernel@collabora.com, 
-	wenst@chromium.org, casey.connolly@linaro.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Message-ID: <lq4rgzue6uah67nc7lob7eexsquk7qhr22wr4xwymzrvvopgc4@mkzyvadgd3qs>
-References: <20250916084445.96621-3-angelogioacchino.delregno@collabora.com>
- <t3uk3k4h3l53yajoe3xog2njmdn3jhkmdphv3c4wnpvcqniz4n@opgigzazycot>
- <aMlnp4x-1MUoModr@smile.fi.intel.com>
- <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
- <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
- <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
- <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
- <2025091925-thirsting-underuse-14ab@gregkh>
- <f16ea5eb-cbda-4788-956b-d41c2af51745@baylibre.com>
- <2025091918-glancing-uptown-7d63@gregkh>
+        Fri, 19 Sep 2025 09:45:29 -0700 (PDT)
+Date: Fri, 19 Sep 2025 19:45:27 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com,
+        li.liu@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v5 05/14] phy: qcom: qmp-usbc: Move reset config into PHY
+ cfg
+Message-ID: <z3phuuokrhonbukct2siz3ujear5ymtnoviea2epxzvjdmsvkj@w4puf4c44tmk>
+References: <20250919-add-displayport-support-for-qcs615-platform-v5-0-eae6681f4002@oss.qualcomm.com>
+ <20250919-add-displayport-support-for-qcs615-platform-v5-5-eae6681f4002@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="enuyknrtw4cq5eeq"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2025091918-glancing-uptown-7d63@gregkh>
+In-Reply-To: <20250919-add-displayport-support-for-qcs615-platform-v5-5-eae6681f4002@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: 87bBOv6UuBiIEtz0xZO7xnu0ydYh9mH_
+X-Authority-Analysis: v=2.4 cv=btZMBFai c=1 sm=1 tr=0 ts=68cd88ad cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=_hUenYmi4SsfCOKiixMA:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: 87bBOv6UuBiIEtz0xZO7xnu0ydYh9mH_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfXz3lY8dXpxTZX
+ nxaYrfho7RflwUrfixxbB5xJfxXbig3yzTQVzEtNDbbO3bELtPQ3wTOkBwhoZfsHIYEhkODouAx
+ FQ9iVbfMgx9AADzbM1AIF6n1iBzrY57SFA58I9qpbUoXqM3zsTyQSoE+sEb+unuhj/YOcoro2Yo
+ B5POY0LKrGPtt+GpPesFBWXZ27SPNuiCyctEpSHFZUo0W2Tk97jtQlxh8kSkMhtS8ezo8E8IBFK
+ Yd5bmitK/0UeHgvF6O50FPtcHti4/SoBdLdEGeonzEzmu+8xnSSTAehLZv2fYm6DsOBZQBMoMQN
+ T4o8Wcm+Ydz5EAAlV3tItd9laG9r2VPFYwOr97ZhgYCE8Fz6xQ6RObev2zqS6SIQpN3/ZL8ySZe
+ 80RHyAGg
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-19_01,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 priorityscore=1501 impostorscore=0 clxscore=1015 malwarescore=0
+ spamscore=0 adultscore=0 phishscore=0 suspectscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509160202
 
+On Fri, Sep 19, 2025 at 10:24:22PM +0800, Xiangxu Yin wrote:
+> Move resets to qmp_phy_cfg for per-PHY customization. Keep legacy DT
+> path on the old hardcoded list; non-legacy path uses cfg->reset_list.
 
---enuyknrtw4cq5eeq
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-MIME-Version: 1.0
+Why? Start your commit messages with the description of the issue that
+you are trying to solve.
 
-Hello Greg,
+> 
+> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
+> 
 
-On Fri, Sep 19, 2025 at 05:13:35PM +0200, Greg KH wrote:
-> On Fri, Sep 19, 2025 at 10:05:28AM -0500, David Lechner wrote:
-> > On 9/19/25 8:59 AM, Greg KH wrote:
-> > > On Thu, Sep 18, 2025 at 10:00:29PM +0300, Andy Shevchenko wrote:
-> > >> I,o.w. I principally disagree on putting MODULE_IMPORT_NS() into the=
- header
-> > >> file.
-> > >=20
-> > > Yes, please never do that, it defeats the purpose of module namespaces
-> > > completly.  If you don't want to have module namespaces, don't use th=
-em
-> > > for your subsytem.  Don't use them and then make them moot by putting
-> > > MODULE_IMPORT_NS() in the .h file for the symbols as that's pointless.
-> > >=20
-> > > thanks,
-> > >=20
-> > > greg k-h
-> >=20
-> >=20
-> > Could someone suggest some additional explanation to add to
-> > Documentation/core-api/symbol-namespaces.rst to explain the
-> > reasoning behind this?
-> >=20
-> > Right now, the only part of that document that say _why_ we have
-> > module namespces says:
-> >=20
-> > 	That is useful for documentation purposes (think of the
-> > 	SUBSYSTEM_DEBUG namespace) as well as for limiting the
-> > 	availability of a set of symbols for use in other parts
-> > 	of the kernel.
-> >=20
-> > So I don't see the connection between this explanation and and:
-> >=20
-> > 	[Putting MODULE_IMPORT_NS() into the header] defeats
-> > 	the purpose of module namespaces completely.
-> >=20
-> > I am guilty of putting it in a header, so if I need to fix that
-> > I would like to actually understand why first. Andy has mentioned
-> > something about potential abuses, but without any example, I haven't
-> > been able to understand what this would actually actually look like.
-> > Or maybe there is some other reason that Greg is thinking of that
-> > hasn't been mentioned yet?
->=20
-> Let me turn it around, _why_ would you want your exports in a namespace
-> at all if you just are putting a MODULE_IMPORT_NS() in the .h file at
-> the same time?  What is this giving you at all compared to just a normal
-> MODULE_EXPORT() marking for your exports?
->=20
-> I know what it gives me when I don't put it in a .h file, but I think
-> that might be different from what you are thinking here :)
-
-For me (who still today thinks it's elegant to put the MODULE_IMPORT_NS
-in a header next to the declarations of the symbols in that namespace)
-it's the documentation thing quoted above (e.g. modinfo lists the used
-namespaces) and to unclutter the global namespace.
-
-The latter was essentially the motivation to introduce symbol
-namespaces, see the cover letter from back then[1].
-
-Personally I don't see the relevance of making it harder for abusers.
-
-A non-GPL module should be stopped by the symbol being exported using
-EXPORT_SYMBOL_GPL() with or without namespaces. And for a binary
-distribution of a module the need to add the MODULE_IMPORT_NS statement
-in the source code is a quite low barrier for the evil binary module
-distributor that IMHO doesn't justify to burden all regular users of a
-namespace to have to do two things (#include + MODULE_IMPORT_NS) instead
-of only one (include which implies the MODULE_IMPORT_NS) to make use of
-said namespace.
-
-And for GPL code: Who is actually an abuser of say devm_pwm_get()?
-In my eyes any module should be free to use that function. And if it's
-not sensible to do so, I would expect this to be discovered even without
-the needed MODULE_IMPORT_NS("PWM") in the code. And if it's not
-discovered that's fine for me, too. For me that's the spirit of Open
-Source: If someone finds devm_pwm_get() useful, let them use it. Please
-even tell me if you use it in a way I didn't expect, I'm glad to hear
-about it.
-
-I'm probably missing something.
-
-Best regards
-Uwe
-
---enuyknrtw4cq5eeq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjNgkMACgkQj4D7WH0S
-/k50wggAm2DTHJtv28WePL2zBaXONs/0AtzDza8lXQgPQoUVHUJXsRVsYbdK+5Te
-R8MYd6+n8hqXv/pnvnZRwd81Wv0yFwJOJtUzAlqiXYr2tfvSfe785liM73qS3JNs
-MI5i+z0WoWyRTqGTmPxJjJ1r/SgcvGFl+CHm9j1vDehiPVRnPalOS+y1JzYBezf3
-CTfbDpMOfi4y6a9u/6GX+UrUMxe7arfGlBB7Sy3dOoxlXSWqoQ1hzjlTo4YrsYwU
-ulHe6jKB+OI6xyUPqM0xXCphVFUZFacH+RitcWEFsTWH6Dt2vv8muCeB8jzPFkYc
-QRkS8BwIA/n7bOdJgYaEtTcUyCIa4g==
-=568Y
------END PGP SIGNATURE-----
-
---enuyknrtw4cq5eeq--
+-- 
+With best wishes
+Dmitry
 
