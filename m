@@ -1,77 +1,58 @@
-Return-Path: <linux-arm-msm+bounces-74214-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74215-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92570B8A1B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 16:55:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8901BB8A1DF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 16:57:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0855A587C4A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 14:53:59 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 624191C25626
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 14:58:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3A35315D4A;
-	Fri, 19 Sep 2025 14:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 217512FC03B;
+	Fri, 19 Sep 2025 14:57:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b="atNMxuBZ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fgmm1bZy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mo4-p01-ob.smtp.rzone.de (mo4-p01-ob.smtp.rzone.de [85.215.255.50])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88761313264;
-	Fri, 19 Sep 2025 14:53:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=85.215.255.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758293584; cv=pass; b=cTTC43lkMh0LC08iVAHEwFBmDg0n+E+PqW/c2aYiAPblw6el4SInx4qFHBwl/JzBc6Xc6Pyhw6Cm7cHWuSL15ATFMqMsGMK/YxdCoTX+MlnaMo4X1pVl9uelrOkXEaeXGVIW+MHYwmRuiXfTTd8PNEp4DAkWsHuY55Slm7v2s/M=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758293584; c=relaxed/simple;
-	bh=NPU6R/xcCQOM1ggUhPE7hD61oLKixNf8wkoXcLLLXeY=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Qbn593kK0IxECxpPn3kJ+7vE7Mil6ktk5HCQocBDIt/+Ln5StVegBBguWj1i2zZKAEZ2yr3PvQmO49g2IB6S163dqaY2u81ElvTQUNZP2lK8S1V/kONLC0gYw1kuwn0oaIoY83Tt48pQs8SGaNvozl/fAXDe9L6BhHP6HN6DWDc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gerhold.net; spf=none smtp.mailfrom=gerhold.net; dkim=pass (2048-bit key) header.d=gerhold.net header.i=@gerhold.net header.b=atNMxuBZ; arc=pass smtp.client-ip=85.215.255.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=gerhold.net
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=gerhold.net
-ARC-Seal: i=1; a=rsa-sha256; t=1758293394; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=acv5eugD5Gq4KPFEfWtA3/fTqwmKOIsFvg1B+hJkTnk0vgRmqFNqjkOkuMbir2or3Z
-    8bjOZ2qOPQ6QwrAFXi2JuKNQBwiNSPN/PyrZIOl/p6cUj62XtbjSu3XaGFy/GQoqQd54
-    ohqvLSaMitlWMEC4KKrWYAM7jX3qqaa67oyaPRJPmZRHIwNfDxqKCYi+zdcS0LNcxYB1
-    q+lM7S4wa9aieaSE1ua8XZbBXnK7RMmMogAdDyMh2pk8zIBvatStL4rSTcEanO9CFTOE
-    ZwZlBc+zHVVDdfeGrOaY3XEtEVJglU9e7PdpP7KlQPhulUGXdNbbICqdP49GBAnAT+1+
-    61ZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1758293394;
-    s=strato-dkim-0002; d=strato.com;
-    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
-    bh=61bwaMcPRWuSXCmHhvg6GAB4rPUgzrAWmuHTQsPRxU0=;
-    b=cHcEmvNS+eK0791m83j75JlC7Y4usGSsN9VQZjXSGnPdocITcJ3de8dvAKKyU3YiQH
-    6nGMKfm4O9aoaKhZOVW/zsgMVEDA20lAwXiX52EXB7l5KRDYiBe4CeGsFXu3Qp8v0Mz9
-    k13AzTKfJX8aiFiSSXmgTG8EHz/NwGSGphe/EoObCbo73nqTMRUzcrdNPd7x3cARdr5u
-    LR3d596JN2KOv6zxj7CacF2UlVSdeKOVce1WJkgE4mAQNZC6FXsW4/E/9nQl7hNvHA2q
-    88H/P4znlE3iW+z1OkYQJGe9C0mz3DR0TKFMMuZvs3NRd4pZBqBf/Ro77QLsPGiCWqzJ
-    etIA==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo01
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1758293394;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Cc:To:Message-Id:Subject:Date:From:Cc:Date:From:Subject:Sender;
-    bh=61bwaMcPRWuSXCmHhvg6GAB4rPUgzrAWmuHTQsPRxU0=;
-    b=atNMxuBZcv/q+MRebWRNd+obdkHIWmFDCKBqPm45j0nhkkg/Qbfm47kRKtlus6ZmXG
-    lwgen8AJxHYjZkotjqHik9VyIfnL/eODWZDDfR1sCjxENcQ3xNi3Gzwebwqt9N8Ij346
-    k+x9buYOdOs20+SJRt4CBwIUugS8sBR4e6a5QHX3pieUyCJ4fwosL9NjdFkfDWRxz4qE
-    7QMgWXq3k7V0SKDf2fD9kAdf8uvtrkrFs/VbWmuuMXSFvBNvC5DJz9XlrKzeffE8UBLO
-    cyDsY77m/vrediVTYn/896NNOFKfiLx9G04eMRNzTujuvrvsYm2vtlvXFeFO+tX/fE4B
-    5DVw==
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXSOYQGpRtZhZnncGoRCMFriGKY/zxVJ2QgPDtEteoYvgoAn2AACU="
-Received: from [127.0.0.2]
-    by smtp.strato.de (RZmta 52.1.2 AUTH)
-    with ESMTPSA id R027cc18JEnsOGm
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Fri, 19 Sep 2025 16:49:54 +0200 (CEST)
-From: Stephan Gerhold <stephan@gerhold.net>
-Date: Fri, 19 Sep 2025 16:49:32 +0200
-Subject: [PATCH] arm64: dts: qcom: msm8916-longcheer-l8910: Add touchscreen
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A3D1C862E;
+	Fri, 19 Sep 2025 14:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758293866; cv=none; b=tdLPgZPlsRgli+BJEqQ/Fh8IKUNtfoPrDH4JSPIH5mAR8DfR9mjMBT9jKhwQ47v5EQKH6VNu2PmJ3PLtYjZ12BqCiJI6lovfeaECfAf+bqMwGKbCIVma7LmIPx0TOSCibjtfnyxeQ+BmKcAeotl0WoaeowotLPTJoh9rdJUlONs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758293866; c=relaxed/simple;
+	bh=PS8ubXu5Kppe4atQoWr6Kmj6Ede0rdtmbXeTw2ERbq0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=Gc9qr1zQDCHOsGX9KsZTydRXoodfk0SpcXQ9AJUM5JmNZqzTjWkuPG/3XQea1peRuvYoO0yELtN/6xwDsM28V4w1vtsqTHB8Pa0H2Kank86SD1avxYakGWvUSrfvQjNyehTsGi2f/i2Pa0Hw92J1VKHVJ4xNmUQgUjl7n+c8UWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fgmm1bZy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F942C4CEF5;
+	Fri, 19 Sep 2025 14:57:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758293865;
+	bh=PS8ubXu5Kppe4atQoWr6Kmj6Ede0rdtmbXeTw2ERbq0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=fgmm1bZyGaIRL4Yox7sOtaA2ZKp3Hl3XypidPD3CcPm3QlFhsXLtbBAsEAN2MnDYs
+	 meigfUOsHUQDEoNYFYanNTVopj/W/op6sxBzgT9yGzyM1uvqlEirTjlzlCG4+S/s50
+	 HE+LPm9ROGE7WKGjBIP83mEhW7dfCwy9SwA6DlKAyXHgaMwXpweQ5wVQ/swWioWWYa
+	 h5qqRdQt/SB/2DceYU28tudGDCJpoN4q7LtPk+LAzAFLnuklocmIg+IVFatPtWzmVr
+	 IISC0RFWZRPXYI7FiU7D3E6RjbqyGv6b+ZQvUtNrZwL5iNC2QTqndOE3IjioUyHOT8
+	 tiSS0UlIPkUqQ==
+From: Mark Brown <broonie@kernel.org>
+To: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: lgirdwood@gmail.com, tiwai@suse.com, vkoul@kernel.org, srini@kernel.org, 
+ yung-chuan.liao@linux.intel.com, pierre-louis.bossart@linux.dev, 
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ dmitry.baryshkov@oss.qualcomm.com, linux-sound@vger.kernel.org
+In-Reply-To: <20250909121954.225833-1-srinivas.kandagatla@oss.qualcomm.com>
+References: <20250909121954.225833-1-srinivas.kandagatla@oss.qualcomm.com>
+Subject: Re: [PATCH v5 00/13] ASoC: codecs: wcd93xxx: remove code
+ duplication
+Message-Id: <175829386322.143827.8672127425047600449.b4-ty@kernel.org>
+Date: Fri, 19 Sep 2025 15:57:43 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -80,111 +61,70 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250919-msm8916-l8910-touchscreen-v1-1-c46e56ec0a3b@gerhold.net>
-X-B4-Tracking: v=1; b=H4sIAHttzWgC/x2MywqEMAwAf0Vy3kAqvuqvLHvQNmpAqzSrCOK/W
- 7wMzGHmAuUorNBmF0Q+RGUNScwnAzd1YWQUnxxyykuyxuKiS2NNhXMi4X/d3aQuMgesuSipMH1
- F3kPqt8iDnO/7+7vvB1E9UUBrAAAA
-X-Change-ID: 20250919-msm8916-l8910-touchscreen-7e45041b60dd
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- Jonathan Albrieux <jonathan.albrieux@gmail.com>, 
- Stephan Gerhold <stephan@gerhold.net>
-X-Mailer: b4 0.14.2
+X-Mailer: b4 0.15-dev-56183
 
-From: Jonathan Albrieux <jonathan.albrieux@gmail.com>
+On Tue, 09 Sep 2025 13:19:41 +0100, Srinivas Kandagatla wrote:
+> All the Qualcomm WCD codecs and WCD based codecs have lots of code in
+> common, resulting in lot of duplicate code.
+> This series is an attempt to clean some of this by moving the common
+> code to wcd-common library or to soundwire helper functions.
+> 
+> Currently I have done cleanups for 4 codecs wcd934x, wcd937x, wcd938x
+> and wcd939x, however any new Qualcomm codecs can avoid this duplication
+> by using the wcd-common library.
+> 
+> [...]
 
-The BQ Aquaris X5 (Longcheer L8910) has a Himax HX852x-ES touchscreen,
-which can now be described with the bindings recently added to linux-next.
-Add it to the device tree to allow using the touchscreen.
+Applied to
 
-Signed-off-by: Jonathan Albrieux <jonathan.albrieux@gmail.com>
-Co-developed-by: Stephan Gerhold <stephan@gerhold.net>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- .../boot/dts/qcom/msm8916-longcheer-l8910.dts      | 46 ++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-index 887764dc55b21a5892510f822004b054eb65fa0a..93d5ea279cff1eaf929d2bf0673e02819225d88a 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dts
-@@ -79,6 +79,19 @@ led-0 {
- 		};
- 	};
- 
-+	reg_ts_vcca: regulator-vcca-ts {
-+		compatible = "regulator-fixed";
-+		regulator-name = "regulator-vcca-ts";
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 78 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		pinctrl-0 = <&ts_vcca_default>;
-+		pinctrl-names = "default";
-+	};
-+
- 	usb_id: usb-id {
- 		compatible = "linux,extcon-usb-gpio";
- 		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-@@ -176,6 +189,25 @@ imu@68 {
- 	};
- };
- 
-+&blsp_i2c5 {
-+	status = "okay";
-+
-+	touchscreen@48 {
-+		compatible = "himax,hx8527e", "himax,hx852es";
-+		reg = <0x48>;
-+
-+		interrupts-extended = <&tlmm 13 IRQ_TYPE_LEVEL_LOW>;
-+		reset-gpios = <&tlmm 12 GPIO_ACTIVE_LOW>;
-+		vcca-supply = <&reg_ts_vcca>;
-+		vccd-supply = <&pm8916_l6>;
-+
-+		pinctrl-0 = <&ts_int_reset_default>;
-+		pinctrl-names = "default";
-+
-+		linux,keycodes = <KEY_BACK KEY_HOMEPAGE KEY_APPSELECT>;
-+	};
-+};
-+
- &blsp_uart2 {
- 	status = "okay";
- 	pinctrl-0 = <&blsp_uart2_console_default>;
-@@ -338,6 +370,20 @@ spk_ext_pa_default: spk-ext-pa-default-state {
- 		bias-disable;
- 	};
- 
-+	ts_int_reset_default: ts-int-reset-default-state {
-+		pins = "gpio12", "gpio13";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	ts_vcca_default: ts-vcca-default-state {
-+		pins = "gpio78";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	usb_id_default: usb-id-default-state {
- 		pins = "gpio110";
- 		function = "gpio";
+Thanks!
 
----
-base-commit: 8f7f8b1b3f4c613dd886f53f768f82816b41eaa3
-change-id: 20250919-msm8916-l8910-touchscreen-7e45041b60dd
+[01/13] ASoC: codecs: wcd937x: set the comp soundwire port correctly
+        commit: 66a940b1bf48a7095162688332d725ba160154eb
+[02/13] ASoC: codecs: wcd937x: make stub functions inline
+        commit: c4bb62eb594418a6bd05ff03bb9072ee1fef29c2
+[03/13] soundwire: bus: add of_sdw_find_device_by_node helper
+        commit: 76cffc3eb1bdee0a7e8cca090adfd46a740f1cb0
+[04/13] soundwire: bus: add sdw_slave_get_current_bank helper
+        commit: 2e07017b28e8bbace4a4973d11d0646575d36f94
+[05/13] ASoC: codecs: wcdxxxx: use of_sdw_find_device_by_node helper
+        commit: 772ed12bd04e6e6ad6d3fbc34016a2f88e63af7d
+[06/13] ASoC: codecs: wcdxxxx: use sdw_slave_get_current_bank helper
+        commit: 45a3295a3005f7782054a153312ba81d28eb7664
+[07/13] ASoC: codecs: wcd: add common helper for wcd codecs
+        commit: 4f16b6351bbff629e1a2a9d902b96210a50d65f0
+[08/13] ASoC: codecs: wcd-common: move WCD_SDW_CH to common
+        commit: 4652f02cf6150ae496eec582e76b7cc7bb3089a1
+[09/13] ASoC: codecs: wcd-common: move component ops to common
+        commit: ebaf88c0546ddfd5efe5d7867a2e8e9f0e5969ed
+[10/13] ASoC: codecs: wcd939x: get regmap directly
+        commit: 45f2c5e1d1fa413e862379f0ec765c3fdd07ec8e
+[11/13] ASoC: codecs: wcd-common: move status_update callback to common
+        commit: 59aebbbb0b47ee97c15cb6992c0fd665289544de
+[12/13] ASoC: codecs: wcd938x: get regmap directly
+        commit: edf8918028e226515c3869c3b8b16f12fe6e62fe
+[13/13] ASoC: codecs: wcd937x: get regmap directly
+        commit: 0266f9541038b9b98ddd387132b5bdfe32a304e3
 
-Best regards,
--- 
-Stephan Gerhold <stephan@gerhold.net>
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
 
 
