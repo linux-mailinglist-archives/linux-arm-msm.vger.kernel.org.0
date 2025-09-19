@@ -1,135 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-74133-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74134-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45752B884F6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 09:59:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93B5BB885A8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 10:12:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4D5F03B5C82
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 07:59:28 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3E2831BC5A41
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 08:12:47 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E0C82FE05D;
-	Fri, 19 Sep 2025 07:59:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 07F093054DE;
+	Fri, 19 Sep 2025 08:12:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="YR7fQ92I"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="YJBB1iDZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
+Received: from mail-ej1-f68.google.com (mail-ej1-f68.google.com [209.85.218.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E862FE057
-	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 07:59:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D01304BAB
+	for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 08:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758268767; cv=none; b=U1PNQoPWTi1EHddy1LQZLK5BFKYE+vxRrqI7CTUp+SlYWCWZQpZyzztwmWpRo1DwsCKCjP1QCuQwa/JvixNFUTaHTKvK513IX8V20Hk6PjCqQj2AR+hMGlohfRSy/d3vAXC7aEH0DBRj0vR0mSJReU0KhfNx5gV56V9mcisp/eA=
+	t=1758269542; cv=none; b=TMct57vVqhOHA1o2AVXSZY4JMqfdtzzT05fRG2KN3SVkuVQweNsAKY5gtFpyzY4xg/LkRGBUM8XadwUVmx3ns63xOF3GJtxMcWuTGJQNbmadjHYK4ZM6lfigvr78gwCBhMFTtyYOzMmz4Vzn2xYMZg40OqPqk8AkDqSoGST2u8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758268767; c=relaxed/simple;
-	bh=FwMus99U8OAhl7KhXnsvGESrZFJWyVna+f36n8I5bZM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OGa4px94Fat149hb+4MtXljjasjsUJor3+GP+ycMB3SvSetvYLojNRNvb9OjPIA98og4j0PhsxKOMuOH9nJNzqr2K00WKvU5khcwTbxEfHtybFPOKUYr4gu/6Rzj8MfMKTv993x4pCRCUMdUKWddDFJVAMeLYs7dtqNOgeeqYFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=YR7fQ92I; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-621cc387bb8so674832eaf.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 00:59:25 -0700 (PDT)
+	s=arc-20240116; t=1758269542; c=relaxed/simple;
+	bh=NpaY/s4HIMDt0+2Bxnt8uJctQlICgEp1j3rKlIvDyLQ=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=BN2qFI5jXTUmaMUbrOnS0cU4g0jHNAj+/jIdlkiQ3c2e1JMJsUQbTyps5aMi5UwwzPNcptq4l+P0H82fax3OaVy1TFdjQiBpy2/dGxz5PcOwUL/9XJuA7GJJUsFZLEKFah94Y2oMJuqf2WaRg42lkkS+6hRGiZAcid4d8K4citQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=YJBB1iDZ; arc=none smtp.client-ip=209.85.218.68
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f68.google.com with SMTP id a640c23a62f3a-b246eee7153so115686866b.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 01:12:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758268764; x=1758873564; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=fairphone.com; s=fair; t=1758269539; x=1758874339; darn=vger.kernel.org;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ASDqAkH4cmxDPZSFWYENHrs1T7W+4jRPHJP2+bsh1GM=;
-        b=YR7fQ92Ia2V7geu1PHmvzbLL9QMop1gN73J1L2hxicnLCpQxFtU5C0a5xPX9YXpkmD
-         E+6ZVepeYfpFwxM+4NFBLwfToq82fs2O9z+xLYzycg2b5XUfVhOco39Nm1/q5Tq1Sv6A
-         d2SeyfKkE6Lu6tC8Xk9SlObyC/T1QOmz4IlD8mPAK9V4//xUGL95jjSyAiFSJq4EW+8S
-         7r3aDKjg0z8I/6SCHEEV0LccVroN+98TvDBaZnMv0zBlVfKGgcLjzUZ+irgmd2JDZCRj
-         sfVwwjmcGLK0kS8dij6ndG7Eu+9zbU8TZUz8yfcsF4xIHgThy9IElnuZtVUWgYrI0Ag3
-         H+MA==
+        bh=NpaY/s4HIMDt0+2Bxnt8uJctQlICgEp1j3rKlIvDyLQ=;
+        b=YJBB1iDZ2SM/3fNTx+cKBUR2i3rVdSHcZQhcVOc1zml7yyFnwsG0wVbwtYUdJwiyR8
+         meRFgoRJiFhqJn5lbG1V8ayujsMpvqErsq29EiWUXCFSqAJ9TRqEZ/cHTtL/Uq1IsET9
+         pFB89G2kRXutIzdLi35DWtXcnZGuBSO4P4fC3sHteLK7ubTeFS339Yu40ZY89Nckj7KG
+         lrkqBiSxw6EyFPcU9IrRPyaClQLfPTi710tAxkBySmh2HWH7C14f/YREbthmwZZVUJT5
+         3jSBcypiUAXvqeXaISKYpAjFrTUFLXauCYnCp4IQ2oZn6RAT1ctCuJ2cPXoC9IuJKBJk
+         MucQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758268764; x=1758873564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ASDqAkH4cmxDPZSFWYENHrs1T7W+4jRPHJP2+bsh1GM=;
-        b=p86C3dn4J1IkHg5xHxO9+ZJlNFpmhzIUEf1Cy294UimDOYpEA6Czd37lTK31SpVrow
-         +CHuYVFD1rdfRDQrPDdGos4rZdr31leCx/17lSeLhnVXCTrJENs8RtDtHETiT/EiHoDv
-         4WjXUCIlcFyHJhGaqY8fkyc+Nu8RpmxW/NKnoKH+113+TkoS21cg+UjeTbf4DrqR/Rb+
-         Y5uq4bwk+8FDMl4FhWAM2q9tjAIOOlq12ip+cwB/CuM7TgI8oSxwvOSo04P6ZcDzDc9E
-         kLT7iK1nRvMrHa8LaiicWmZzVeHR07heBiZbMnPUUwhqdqMJheqmeyskPi2YB1zSSpBK
-         LMNQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU9NJxWl81sthO078RA8+T6H5XQBGeuSjbXLb9zsd9I7p/+VYfBKmw6GN71Mme1kJK5hKcKIFZzKea9cK1S@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw/acLX7hoOiw8Of4nm937jIY0nlv+KJU2pJ9uikbL4Dk6Ekepb
-	jPWlj+Adf3wnxZKEJ3rYp7tm87oRAQRi0xJ5XtpeGQ4zVrYdbdvcsncQUA92SRwJ+6TaZssDRGM
-	KEcbExcYstAC32Fks9bxQTnatsgCq5cgmcEWE7WXmQA==
-X-Gm-Gg: ASbGnctXmGBXxjK8+e4M5STohSuZDKlqzvJmAqC+/srL/BnM1q4SJbu1WP9foMovF0U
-	sSr81h6oiR+yOE3Llsx4uKsVjRhZYCgVX3g/E1+c2jCNPAZYS4Th8Zypdbwiyg6Zi8Cm1Oz3eUt
-	4PS0d1YraTMnDYO2q73BGpkuxreR6Subw84EQTX8kVqpHQA1M2tidTvMrknLKXcRnN12i+s/Dac
-	8d0xpFw
-X-Google-Smtp-Source: AGHT+IEekOH9/D2Na5uJOAYH+Gd3gYDqTSm7RjBTFazB5QY2j1Nx/k/QnGRih+TMOqi+VBgoo9dEC9T1EDeBavQpFxI=
-X-Received: by 2002:a05:6808:5094:b0:439:b674:d9a3 with SMTP id
- 5614622812f47-43d6c26736fmr1011006b6e.35.1758268764408; Fri, 19 Sep 2025
- 00:59:24 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758269539; x=1758874339;
+        h=in-reply-to:references:to:from:subject:cc:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=NpaY/s4HIMDt0+2Bxnt8uJctQlICgEp1j3rKlIvDyLQ=;
+        b=dMZ4J/pQGd6eiaihHQbQoOgLdvnYWdkgbyCpZRNUDFWOp6JIHF4dYjB7DK5eJFuGgX
+         kGSQNmO/NAwJYHw92u6O9WRZ9pY6icTvjHDjHGiDfcqkfDYH/eOCweiUrpO6nvMgVE5A
+         oe1+8kTWCpvvbia7VjmVrJvMBaJqKGkrFVO9c4wO+wt3+4NB+fv40H3D1Tu38qFeOctB
+         ZwFPE6lVz8rGAgr1KFs3jGkVkkk+2J22X23rfUl3V/ITIdMolc37Xn8suYQQBQNye7PQ
+         FMFYF7fSi6xU5E2Ay8N2Rg+ZdmzDxwwDZ+uNVGccSNnXtxEXchh1yqBgE2L+ilw2vd1C
+         s0QQ==
+X-Gm-Message-State: AOJu0YxalAPFRehvIJ8cnIOAvS/7Go3krMcvm+CpNrqXFgZoGSfpZop8
+	TZEeWY06TiZqYWo1uy4qsbsq2WQ0jYUOrdYRje7HjeA6FkVOcpvTvN0/YLL61ELlVac=
+X-Gm-Gg: ASbGncsjRkfBdH8IS4Ur/cVNtaReAAz8tCyfjibZkDqKQ+CzpMkq+K4wa1lYsnblDYv
+	hT69TqleQ3B2pn/bQe4UjH29xGjmx0J53Tq3PVkbfYt4TMo3CmJ6oadLPCfrGK4zfuiK6pSbJ5a
+	GPlDeZEkSAGimWLvz9tuyGxdyhzToqIytryGa6jHNoaAx2SLT9kY7+Ao1Fh92hcvUQ5a2edTOZQ
+	/vqsdg7SFTN5MCu6yMvi5uTHQIkHoJGNd6WQIFzZ3Q1pvFM1tWgzj1nDyn1gfuQvsRe0wXdfYNe
+	aogvhWrrlcyCHHUDTDuYQzrduIc3OR4/fvrgQd2acJh8V6QmAJ8XgbB3oIu0AVV8y9up9dx7M/6
+	d1e7eBCco0LDcb5ULwD41MSFVYCJalACm6LiUktYroT5GAKc8H9ifMzs4hp7cBJV86VoE
+X-Google-Smtp-Source: AGHT+IGH2L5Cs1Yr4IicnBQLWLPnN2LIXEqc14EimrkOsvHCK05Z8Mf+Sxf46z58s1gpwiushS71dw==
+X-Received: by 2002:a17:907:849:b0:b0e:8cd4:e2e8 with SMTP id a640c23a62f3a-b24eedc3122mr252009466b.17.1758269539368;
+        Fri, 19 Sep 2025 01:12:19 -0700 (PDT)
+Received: from localhost (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b1fcfe88d79sm378700866b.65.2025.09.19.01.12.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 19 Sep 2025 01:12:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <aMvV4kK386Sni10i@stanley.mountain> <aMzoPc67ws5NMpKS@sumit-X1>
-In-Reply-To: <aMzoPc67ws5NMpKS@sumit-X1>
-From: Jens Wiklander <jens.wiklander@linaro.org>
-Date: Fri, 19 Sep 2025 09:59:11 +0200
-X-Gm-Features: AS18NWA3C9LQrIakhvqgeKImPW9n-BTnckAYGagXPywalztGB_Wmp1fHsBSux6w
-Message-ID: <CAHUa44G96pdFL+08Rn8yr_5fp2MpUCjLAUsUcgprnrZCcSyLxg@mail.gmail.com>
-Subject: Re: [PATCH next] tee: qcom: prevent potential off by one read
-To: Sumit Garg <sumit.garg@kernel.org>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>, 
-	Amirreza Zarrabi <amirreza.zarrabi@oss.qualcomm.com>, linux-arm-msm@vger.kernel.org, 
-	op-tee@lists.trustedfirmware.org, linux-kernel@vger.kernel.org, 
-	kernel-janitors@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 19 Sep 2025 10:12:18 +0200
+Message-Id: <DCWMJ6YDI2GA.EKTOE6UN9HNQ@fairphone.com>
+Cc: <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sdm845-shift-axolotl: Fix typo of
+ compatible
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Joel Selvaraj" <foss@joelselvaraj.com>, "Luca Weiss"
+ <luca.weiss@fairphone.com>, "Tamura Dai" <kirinode0@gmail.com>, "Bjorn
+ Andersson" <andersson@kernel.org>, "Konrad Dybcio"
+ <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Joel Selvaraj" <joelselvaraj.oss@gmail.com>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <4ae418ec-5b84-40b5-b47f-ee2e988d7e99@joelselvaraj.com>
+In-Reply-To: <4ae418ec-5b84-40b5-b47f-ee2e988d7e99@joelselvaraj.com>
 
-On Fri, Sep 19, 2025 at 7:21=E2=80=AFAM Sumit Garg <sumit.garg@kernel.org> =
-wrote:
+On Fri Sep 19, 2025 at 8:23 AM CEST, Joel Selvaraj wrote:
+> Hi Luca Weiss and Tamura Dai,
 >
-> On Thu, Sep 18, 2025 at 12:50:26PM +0300, Dan Carpenter wrote:
-> > Re-order these checks to check if "i" is a valid array index before usi=
-ng
-> > it.  This prevents a potential off by one read access.
-> >
-> > Fixes: d6e290837e50 ("tee: add Qualcomm TEE driver")
-> > Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-> > ---
-> >  drivers/tee/qcomtee/call.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
+> On 9/12/25 02:24, Luca Weiss wrote:
+>> Hi Tamura,
+>>=20
+>> On Fri Sep 12, 2025 at 9:01 AM CEST, Tamura Dai wrote:
+>>> The bug is a typo in the compatible string for the touchscreen node.
+>>> According to Documentation/devicetree/bindings/input/touchscreen/edt-ft=
+5x06.yaml,
+>>> the correct compatible is "focaltech,ft8719", but the device tree used
+>>> "focaltech,fts8719".
+>>=20
+>> +Joel
+>>=20
+>> I don't think this patch is really correct, in the sdm845-mainline fork
+>> there's a different commit which has some more changes to make the
+>> touchscreen work:
+>>=20
+>> https://gitlab.com/sdm845-mainline/linux/-/commit/2ca76ac2e046158814b043=
+fd4e37949014930d70
 >
-> Reviewed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
+> Yes, this patch is not correct. My commit from the gitlab repo is the=20
+> correct one. But I personally don't have the shiftmq6 device to smoke=20
+> test before sending the patch. That's why I was hesitant to send it=20
+> upstream. I have now requested someone to confirm if the touchscreen=20
+> works with my gitlab commit. If if its all good, I will send the correct=
+=20
+> patch later.
 
-Applied.
+Hi,
 
-/Jens
+As written on Matrix I've confirmed the patch you linked works on v6.16.
+
+Regards
+Luca
 
 >
-> -Sumit
->
-> >
-> > diff --git a/drivers/tee/qcomtee/call.c b/drivers/tee/qcomtee/call.c
-> > index cc17a48d0ab7..ac134452cc9c 100644
-> > --- a/drivers/tee/qcomtee/call.c
-> > +++ b/drivers/tee/qcomtee/call.c
-> > @@ -308,7 +308,7 @@ static int qcomtee_params_from_args(struct tee_para=
-m *params,
-> >       }
-> >
-> >       /* Release any IO and OO objects not processed. */
-> > -     for (; u[i].type && i < num_params; i++) {
-> > +     for (; i < num_params && u[i].type; i++) {
-> >               if (u[i].type =3D=3D QCOMTEE_ARG_TYPE_OO ||
-> >                   u[i].type =3D=3D QCOMTEE_ARG_TYPE_IO)
-> >                       qcomtee_object_put(u[i].o);
-> > --
-> > 2.51.0
-> >
-> >
+> Regards,
+> Joel
+
 
