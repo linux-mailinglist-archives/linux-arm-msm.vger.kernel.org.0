@@ -1,178 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-74114-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74115-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2F180B8758C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 01:19:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75B97B87792
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 02:30:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C66081BC4564
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 18 Sep 2025 23:19:26 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32250564EEC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 19 Sep 2025 00:30:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C0BC323D7E5;
-	Thu, 18 Sep 2025 23:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78DC51CEACB;
+	Fri, 19 Sep 2025 00:30:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b="MepmCO20"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z5YgjgKr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-f112.zoho.com (sender4-pp-f112.zoho.com [136.143.188.112])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8B6F4A2D;
-	Thu, 18 Sep 2025 23:18:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.112
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758237539; cv=pass; b=HAMzxyHz9ufTeorV3zlW2h4bOswmwl0N5UlYWjs5zR0RFs4+ojT4Wnl5n4ynWQoe69AWNmqSxDoBT8Vdnv2GRroQgTf3Be3IBIKlRLfPH3xlAN9aZ+B/LWu7gJkqnUXz4MOFiGdEbhTCuIPAbGbf2PLcGP7AMpAUVMFY/bXKjLo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758237539; c=relaxed/simple;
-	bh=5iJGPs6vcEGywKPGkLdblZZi+nX/oYrCVtOfsRMrNrw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Yun8CgoqTRXzjcALxnG4djKakihm1P79+Fp8TRf8Zi5ZYcjDy3V7bOARugJmrUY8y2yFCyNT7ffOpvBc16iOeOgDNB7ljfH+/kEAFMDTJxA8xfpnxpjNXbQJoTOzsWkzVGQhfrRAdFMK7YC8ivjuQB3/UzksolbyVWIRRNlw9ms=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (1024-bit key) header.d=collabora.com header.i=sebastian.reichel@collabora.com header.b=MepmCO20; arc=pass smtp.client-ip=136.143.188.112
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-ARC-Seal: i=1; a=rsa-sha256; t=1758237508; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=eWUw3ZFSZkaOGqkvPkt58f11mCaojnfzoco2m3GDejMcZkkir8nmXmASCGMiUjMEFI6yHQjK+2Rgnb6P766jooFfj4flJZyZQL70JkSn9Wn+lfpsNsTr9IrNJmvTZ6hzCK3dhyd8guTw3JF8M99vh9R9YdYXBRlfXVwfX/W97Xs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1758237507; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=5iJGPs6vcEGywKPGkLdblZZi+nX/oYrCVtOfsRMrNrw=; 
-	b=MqHoOMhTefu1WmEPJywpu/MRI071IOIuuOOapI7fayqpLqoEPkqWkJ2iF8KB1yJtjpUoxNBXR2NMiOqJhZ4aQ8shhwO8FnGFbAvNVTjy6ZsvGn/tH3G1K7xujNoWTgegV1RSIOxsMDsus8370VCJ4zByMsyGsyycEg9t7Ds0lOA=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=collabora.com;
-	spf=pass  smtp.mailfrom=sebastian.reichel@collabora.com;
-	dmarc=pass header.from=<sebastian.reichel@collabora.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1758237507;
-	s=zohomail; d=collabora.com; i=sebastian.reichel@collabora.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=5iJGPs6vcEGywKPGkLdblZZi+nX/oYrCVtOfsRMrNrw=;
-	b=MepmCO20SYiw8AKHbcsT60UEli4QFi2Uzu8R1pBWBlO7t5J+55XfdujA/qMK1wUi
-	rucR3lwpVSgA5VgsOwGU0YFgZESGDXuQ52xfX7Xg16EcECWQttdkq11Xpf62TtFVwFE
-	swVy+qOXrznSDVhvO3KsB79qH7Y/qUQ3JOWZXgmQ=
-Received: by mx.zohomail.com with SMTPS id 1758237504693973.1672975828773;
-	Thu, 18 Sep 2025 16:18:24 -0700 (PDT)
-Received: by venus (Postfix, from userid 1000)
-	id B72F8180517; Fri, 19 Sep 2025 01:17:55 +0200 (CEST)
-Date: Fri, 19 Sep 2025 01:17:55 +0200
-From: Sebastian Reichel <sebastian.reichel@collabora.com>
-To: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
-	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
-	Conor Dooley <conor+dt@kernel.org>, Heikki Krogerus <heikki.krogerus@linux.intel.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
-	Subbaraman Narayanamurthy <subbaraman.narayanamurthy@oss.qualcomm.com>, David Collins <david.collins@oss.qualcomm.com>, 
-	=?utf-8?Q?Gy=C3=B6rgy?= Kurucz <me@kuruczgy.com>, linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, kernel@oss.qualcomm.com, devicetree@vger.kernel.org, 
-	linux-usb@vger.kernel.org
-Subject: Re: [PATCH v5 9/9] power: supply: qcom_battmgr: handle charging
- state change notifications
-Message-ID: <mub3b5r3zpcgsisicjbbl2kudefibj7t2n3jz5pgshlqsglnlw@5a7gc3trlnn5>
-References: <20250917-qcom_battmgr_update-v5-0-270ade9ffe13@oss.qualcomm.com>
- <20250917-qcom_battmgr_update-v5-9-270ade9ffe13@oss.qualcomm.com>
- <fa258ad4-1efa-4fe8-9636-d70c5ea9c8e1@oss.qualcomm.com>
- <d9db8b82-9000-478b-a7b5-93792f1e1bea@oss.qualcomm.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4894C34BA2F;
+	Fri, 19 Sep 2025 00:30:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758241853; cv=none; b=Oi4YIHey4+gFYkvaHfeQ0UhRvrrYICqAa4yqeQ097MaqZcaUt/erzUA8mTiMhbqEGn0sF0HgLXcAy1TeCx3sLyHh+Nouy6hNiiyeAObQnI4zZlpDsqlYNN2gxBIpqN0UuzsL81QXZHtmJM46keuayCAw79XpKXCzBvND0EltQG4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758241853; c=relaxed/simple;
+	bh=txV1vWnmrpDvHeycC4Fe2ea2OXZwWkdwSNUAUxRCpEQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ERYEFHIbdbKvl65N8T8BpuBw7ulOS1SN8mccrgKk+nBN1rDyGZAXPcnxiNwjyx3Kcz53HU90NNpo95o2bmgikZE/akB0H1UgD1mz2v1GtrMQI3Kea/EjQMY1sxBAYySYaoRJwX5vmH5k2s5+eTbAlpRQRlTELaONVbMXWZGVutc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z5YgjgKr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30BDC4CEE7;
+	Fri, 19 Sep 2025 00:30:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758241852;
+	bh=txV1vWnmrpDvHeycC4Fe2ea2OXZwWkdwSNUAUxRCpEQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=Z5YgjgKrBKWymSwGs6RK+OjtokRAdxbD72r5YYkWxdpBqPfvv7H7bk8WBhkrRTSAs
+	 f/aR78zsU8rWBjW9G1CWKqfEgwobcqipLKl+AattPUO/FAhHspB5lEZuKDmX9hQTE6
+	 i7HtmIQbuEuNtzaOU90Gr6wRhq0GwFd2sPrSjJuioqwocB+qhrSKKlk60o23aRxD+L
+	 WMgDCRrTaoeAE0buWFHf6rLJhnzGMj6RyXwIS5/N24L3/Ix8R3yL78PQ2R2aagCYQG
+	 1Fduz8c0DylHZB+PTvF7SIGzEw2q+qzeV7IhTuGoa0+7ebOS0/6GakoMBYgoP1zHvl
+	 jDWr+bfTpf9gw==
+Message-ID: <641256da-e142-4a35-9089-d3833baec6fd@kernel.org>
+Date: Fri, 19 Sep 2025 09:30:48 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kybmdzwa6byyxpic"
-Content-Disposition: inline
-In-Reply-To: <d9db8b82-9000-478b-a7b5-93792f1e1bea@oss.qualcomm.com>
-X-Zoho-Virus-Status: 1
-X-Zoho-Virus-Status: 1
-X-Zoho-AV-Stamp: zmail-av-1.4.3/258.211.62
-X-ZohoMailClient: External
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] serial: qcom_geni: Fix pinctrl deadlock on runtime
+ resume
+To: Jorge Ramirez <jorge.ramirez@oss.qualcomm.com>
+Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Jiri Slaby <jirislaby@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Praveen Talari <quic_ptalari@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-serial@vger.kernel.org,
+ alexey.klimov@linaro.org, dmitry.baryshkov@oss.qualcomm.com,
+ andersson@kernel.org, psodagud@quicinc.com, djaggi@quicinc.com,
+ quic_msavaliy@quicinc.com, quic_vtanuku@quicinc.com,
+ quic_arandive@quicinc.com, quic_shazhuss@quicinc.com,
+ quic_cchiluve@quicinc.com
+References: <20250917185102.3763398-1-praveen.talari@oss.qualcomm.com>
+ <dab18f70-4017-4c06-92c1-91cfd2229540@kernel.org>
+ <8e2781ae-34d2-4009-bf8c-56aa1bb6fe85@oss.qualcomm.com>
+ <aMuz/C1iT8JtjXbQ@trex> <aMvZ10EsMif/DOP4@trex>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <aMvZ10EsMif/DOP4@trex>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 18/09/2025 19:07, Jorge Ramirez wrote:
+> On 18/09/25 09:25:48, Jorge Ramirez wrote:
+>>
+>> let's test a bit further Praveen - we need to validate/trace the wake
+>> path on a real scenairo to make sure it is not cpu intensive (although I
+>> suspect the 2% was due to the storm you described more than to the code
+>> path itself)
+>>
+>> I can then provide the tested-by on the list.
+>>
+> 
+> um bluetooh comms are broken - reverting the runtime_pm patch fixes it.
+> and the proposed fix (V2) does not address this scenario.
+> 
+> I agree with the common sentiment, I think the patch should be reverted
+> in linux-next and better test definition shared.
 
---kybmdzwa6byyxpic
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v5 9/9] power: supply: qcom_battmgr: handle charging
- state change notifications
-MIME-Version: 1.0
+For the record, the revert was already applied.
 
-Hi,
+Any new patch here should carry some more tested-by, before it can get
+applied.
 
-On Thu, Sep 18, 2025 at 10:01:24AM +0800, Fenglin Wu wrote:
-> On 9/17/2025 7:14 PM, Konrad Dybcio wrote:
-> > On 9/17/25 12:15 PM, Fenglin Wu via B4 Relay wrote:
-> > > From: Fenglin Wu <fenglin.wu@oss.qualcomm.com>
-> > >=20
-> > > The X1E80100 battery management firmware sends a notification with
-> > > code 0x83 when the battery charging state changes, such as switching
-> > > between fast charge, taper charge, end of charge, or any other error
-> > > charging states. The same notification code is used with bit[16] set
-> > > if charging stops due to reaching the charge control end threshold.
-> > > Additionally, a 2-bit value is added in bit[18:17] with the same code
-> > > and used to indicate the charging source capability: a value of 2
-> > > represents a strong charger, 1 is a weak charger, and 0 is no charging
-> > > source. The 3-MSB [18:16] in the notification code is not much useful
-> > > for now, hence just ignore them and trigger a power supply change eve=
-nt
-> > > whenever 0x83 notification code is received. This helps to eliminate =
-the
-> > > unknown notification error messages.
-> > Thank you for explaining the technical background.
-> >=20
-> > Please hit enter somewhere in your commit message, this is a very
-> > long paragraph, making it difficult to read.
-> I just realized I made a mistake on the bit position, it should be bit[8]
-> for reaching to the charge control threshold, bit[10:9] for charging sour=
-ce
-> capability. I don't know what I was thinking when writing the commit text
-> :(. I will correct them in the next patch.
-> >=20
-> > I believe this maps to:
-> >=20
-> > 0 -> POWER_SUPPLY_CHARGE_TYPE_NONE
-> > 1 -> POWER_SUPPLY_CHARGE_TYPE_TRICKLE
-> > 2 -> POWER_SUPPLY_CHARGE_TYPE_FAST (or _STANDARD, I see battmgr code
-> > reports them both as 2)
-> >=20
-> > However, we already set it to none/trickle/standard(taper) based on
-> > the usual notifications, so I'm not sure if these are more common or
-> > arrive outside the normal state changes - if so, perhaps we can take
-> > them into account as well?
->=20
-> This is not related with the real charging status. I double checked in the
-> battery management firmware, it is checking the charging source power
-> capability by multiplying maximum voltage and current reading from the PD=
-Os.
-> Any charger adapter with a maximum power below 60W is identified as a
-> slow/weak charger.
-
-Please include that info in the commit message when sending a v6.
-The code change itself LGTM.
-
-Thanks,
-
--- Sebastian
-
---kybmdzwa6byyxpic
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmjMkx8ACgkQ2O7X88g7
-+pqwLg/8DogotcprKe+ff5MNlSQgo3S8L5Bo8a46PQ6yojTQC7i5j/2A5mIwMJOw
-YbEDu4okwunPYtLjOvcQDbyx3QwnB8Rgl0KkqQ8aOc/t9HxcuDDfVALsqooGKNuC
-6z/PIA+XzH91Dxi9pUaVwlt6gobgCVcxze2uoOOnWjWhPnQvg14NRSFirmZ1bLV3
-nUQAbOs7bPOodecSPOmlEAtFBeMOGQxsV0wfh8tzF1JwxsxaMsdlLET00OgKsyvv
-jNL9I1X8wx2dno6kzjRDKVsqFKMewweTCMrjJaExGeFN/2gsSyhYR8GbMKcUVyUK
-deuA5/j+FxL3DBzNp0DD76DhCWRz63QtOI3foyEcSlhOXSeUP+omKiVImtNl3L6i
-Jaif8Tl5v3qVag8hYcvx9y/t6GQmadaJ0yw53uEKtF6XTlQAs4zuPWyxaCJ2Y0o5
-ZEstSYigPM5nqcBtw9fepVu0uRNKT1DPRkO2sg0CZ6SAsKAoOH7ztQxDUp2UNinv
-dG/HxbB7iU2WNEOiRbX5VXT8F9AiqgOgAsA8+6vy901rsjvxe5NRTiWk+mfcNO5Q
-xhyj/gEMbA3U8Y7z4Na84lUopjpFqWqSixUlGcb9waP/pCIkiumwpu6ORTcUuF/E
-LHdrTtRYAMSKTDUcUfinMhnzdKFSidGEMmzoOIBDH56OXCuDsFY=
-=v/vi
------END PGP SIGNATURE-----
-
---kybmdzwa6byyxpic--
+Best regards,
+Krzysztof
 
