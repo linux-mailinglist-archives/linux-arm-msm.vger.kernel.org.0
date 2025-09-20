@@ -1,210 +1,131 @@
-Return-Path: <linux-arm-msm+bounces-74289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B71F4B8CD65
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 18:42:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 45CAFB8CDA4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 19:12:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 719EF7E0B78
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 16:42:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C8D3F3BC6CB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 17:12:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 410B32EA75C;
-	Sat, 20 Sep 2025 16:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0169E305946;
+	Sat, 20 Sep 2025 17:12:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="yS0M+6ww"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YRs16w05"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB7C21D3E4
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 16:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52F61228CB8;
+	Sat, 20 Sep 2025 17:12:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.8
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758386524; cv=none; b=EwXl7BcpJghflv+cKmSVy4+4I7JlxhQBPhNEYbMF0UJT5TmN+QVeTARaHmI7IQSh4Dr/q1gWR8eFrRHvtoQWHXBzyb7WaSje/BvCIoMtJjbYRadMLu7lnaoTmNEmO/a1FLTc9he7T0nmYtqy5D3sXddxdxSPqjCaE5D4zLPF66Q=
+	t=1758388351; cv=none; b=SZLb8rW17VpKYPddOy7LhoWxv/NYV3nhHwk+5ikxBZ9dnTvhvqv7wba9Jt7v514OIAx05Wd7DSXK8Q95X6eMv30dM73U3XZuGgxpP++3WBfRGJwIm8VfhHpFoBECUEitRlDeixDkZo/DteFAfWK1goMgtzApgc8tIfmRkTiPCV4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758386524; c=relaxed/simple;
-	bh=8yxUmsnX9yOq7CyqhC2sAV111qny6SgsS0lVVp0vL/I=;
+	s=arc-20240116; t=1758388351; c=relaxed/simple;
+	bh=q79LSJRIN+4CMGDHGwwOtCi+446YUY7DGBcf9uK/a+8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KBoDTaFDMbUltgu6lQonM8DQX0rEQgnGarJ3Mfa1I4tYutqM0Y0QzP8VkVWWVwTreyj4SIUstG4GJbnDw6XFIKg3K37B8rvHGFNZPP3gXEeIBtHukksY7ke+0u4cMz8ZIxR6/mqIsqsvVeSo3aiCupdKaLNEGh4UDepqHxcPtUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=yS0M+6ww; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-62fb48315ddso3650687a12.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 09:42:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1758386520; x=1758991320; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7uzS/vyKL78XLGJYkf20HiEkzzRuN4BWxhwOr5TgLy8=;
-        b=yS0M+6ww/YPK2CkMWuQnHdODGXlQLo0i9T61SmpHCdkjld2vLUZmVnyu/kiIy0QY2V
-         MydMXHeLMvKxqoMc4x4RE0oJiLYYiSqx0F745Z5FRv/Zt3GWy9HLFI+vC+6mcU9Zhvg/
-         grKxRw83QgKNp1XzH2HIdEM0qT6H7quH8wzWxty5knLNRGuD2FgjfuWLG36LB5WaT13T
-         32vGReGV2X6+l4c04XiR7ZpDHRHnys7KSMNBQgUYdKwl9jPJ3wtfxpn+1dGJ9mpYV4QP
-         2BjQaY1cTtoVCQK2naL6LciSribJd1i/9vcN6cSiVTyItr7j89bUUB/o62VEvAApkFr5
-         1/xQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758386520; x=1758991320;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7uzS/vyKL78XLGJYkf20HiEkzzRuN4BWxhwOr5TgLy8=;
-        b=dTaLfr4qH1iYMIl9C0QJb4XjLx0cXvpC9Qt9cm6fEl35WJWDnt9jyXR8IVnzqxK8oL
-         ZKp//NAZbxo0XsjgcW4DzJPr26kSLUAJtIt1RgSdbKr3AtATFQ3gvhFt1BR1zhzb0gu7
-         Ai8UmSZtR+efNcf41s08dok7l1BQlGrd3ND32fJCsU1hCeXTRvgAQJ7oXUeQL5EBOPCT
-         fCPUUEpRM4SQaTXhRXrF9ZeNqLwRLdhmfMe4BbnPhU5Etp8/w5vrOIU4zyG+VvpBeq2b
-         e8XV5g/Sy+C2INZ/UMH6fnAXjO0xohIwDneO7i/JE9HqO086HbrT+3E0Dz+lDovyU3TT
-         G9qw==
-X-Forwarded-Encrypted: i=1; AJvYcCWRSfUJFTLQNLcagLsZ3KEwydNwpl/KoYy1o+otBr0mZTCMyf6WNOWwh8SNu0UuVadx1vryRL1++lj3uqbF@vger.kernel.org
-X-Gm-Message-State: AOJu0YwGx4DQCqXYd6ROPvuccnfMYCRiHqa691dw3bgumRoFhtAxu3yu
-	x9b4yvdnQFWz8C49e1dIfzWBbOm6ZIQNFOdRqGPCfppsjjGZGjyl1pktWz0kqDoY+uk=
-X-Gm-Gg: ASbGncuOr1rzL9oqfxF9PSj8FSIVkP6R+isr0lMUoADJU3szCe8sbp4PJFCjrpwbHfQ
-	ypcIsLniu5naXPLHGKCcXnqdyRxlaTpTQs/vrhoHyHYDQnZFyKEmE8eUK2qYappB0Q/9T6gIQqC
-	IeEGGnMuQRrxOtV7JI6sqP40bAtKnBD43Hzeh58+IwhjMYtxC5oJU0yY9ChEcowgY/N+BH4vHl9
-	X2BOpYcudrVocZIeffnOVx9PZkG6mWkHvAsg51bI0cuVyNGXMn82CRJv2/P+erkHLiXo3PqbVes
-	iEi6vO8CqX9tHEX5+mI8+VSzxnbeaMjvOwfL8L6JnsxkdtAqMja54+OgLTgSzEJIk7+Oe1veRvI
-	ZE0Oe8LwXlNZTuAIhf08vz6vmYUQ=
-X-Google-Smtp-Source: AGHT+IGKt39UQn5jzBEhjnHbjhGMHaeA/VyK514j5LVq6YZ3WWPLFkMfByunXzny8uptDg8fNtpVnA==
-X-Received: by 2002:a05:6402:3202:b0:61c:bfa7:5d0 with SMTP id 4fb4d7f45d1cf-62fc0a78f7fmr7798031a12.30.1758386520260;
-        Sat, 20 Sep 2025 09:42:00 -0700 (PDT)
-Received: from localhost ([2a02:8071:b783:6940:36f3:9aff:fec2:7e46])
-        by smtp.gmail.com with UTF8SMTPSA id 4fb4d7f45d1cf-62fa5f28672sm5489248a12.43.2025.09.20.09.41.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 20 Sep 2025 09:41:59 -0700 (PDT)
-Date: Sat, 20 Sep 2025 18:41:57 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: David Lechner <dlechner@baylibre.com>, 
-	Andy Shevchenko <andriy.shevchenko@intel.com>, Andy Shevchenko <andy.shevchenko@gmail.com>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, sboyd@kernel.org, jic23@kernel.org, nuno.sa@analog.com, 
-	andy@kernel.org, arnd@arndb.de, srini@kernel.org, vkoul@kernel.org, 
-	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org, 
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	linux-phy@lists.infradead.org, linux-pm@vger.kernel.org, kernel@collabora.com, 
-	wenst@chromium.org, casey.connolly@linaro.org, 
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Message-ID: <x5ot622jqzz67imvswtdacqeeclqaw7my3pj6ne7tureec6ufg@fuzltifrkcae>
-References: <aMlnp4x-1MUoModr@smile.fi.intel.com>
- <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
- <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
- <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
- <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
- <2025091925-thirsting-underuse-14ab@gregkh>
- <f16ea5eb-cbda-4788-956b-d41c2af51745@baylibre.com>
- <2025091918-glancing-uptown-7d63@gregkh>
- <8702fd35-945a-4d20-bc37-410c74c70da6@baylibre.com>
- <2025091902-dwelled-calculate-c755@gregkh>
+	 Content-Type:Content-Disposition:In-Reply-To; b=FWLJRI+P3NJ7IfIHipyl9gR97ZGSU4TgOld3M8LZnPeIz9UAvdoI0F0gMmVFS55is2/EM69ibKBEtxQrA405ueOu98GRKWKWNUrina4ewtV0KFP7q40Yqbx3zsmz4HN/cPQ6mcq2kaUy+Xce1+UyFbheUH8WDSys6o9DMB/ci3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YRs16w05; arc=none smtp.client-ip=192.198.163.8
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1758388350; x=1789924350;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=q79LSJRIN+4CMGDHGwwOtCi+446YUY7DGBcf9uK/a+8=;
+  b=YRs16w05LEWGg1ab6Gp6Tr8zYriZsk50wWXiC+bD+HJaP9yi4pbGdzp+
+   CP1TFXHWX8VUrukvlweYdoFyF3b9Lt2ZpTK0KRS0BjY2EjR3+YF0h9j3j
+   vahtJBhN/DaoYY958Hqc0lac3Hx1cBwJHOxxu3Up+1Dlksn6DliYxEoOg
+   cB+q+M2us3uPRM0WdyzC9xJP4w+9JMcHJLUj14wi4Xv8hsY3D7FSakagw
+   +GYlel1oEVkzKzy3YUAj4WQCR4s4bcPDy05tDzHBsF3EbIzedJAcTLJHg
+   9YNgd/7sDaSCuO9Ug9G87fRVFwFVKhArkIfssXiS52f2wv7sythJv6iCn
+   A==;
+X-CSE-ConnectionGUID: G3XQyPbyTcOe7+2k0RzzYQ==
+X-CSE-MsgGUID: ECIFiZiOSfKeDvlqtsqvgg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="78316339"
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; 
+   d="scan'208";a="78316339"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2025 10:12:29 -0700
+X-CSE-ConnectionGUID: pt82aHB0SAS5SO5GndB+ZQ==
+X-CSE-MsgGUID: BsB7TnlMQ+qllss3tERJeg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; 
+   d="scan'208";a="180354343"
+Received: from lkp-server01.sh.intel.com (HELO 84a20bd60769) ([10.239.97.150])
+  by orviesa004.jf.intel.com with ESMTP; 20 Sep 2025 10:12:25 -0700
+Received: from kbuild by 84a20bd60769 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1v018J-0005Zb-0J;
+	Sat, 20 Sep 2025 17:12:23 +0000
+Date: Sun, 21 Sep 2025 01:12:22 +0800
+From: kernel test robot <lkp@intel.com>
+To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>, krzk+dt@kernel.org,
+	conor+dt@kernel.org, kishon@kernel.org, vkoul@kernel.org,
+	gregkh@linuxfoundation.org, robh@kernel.org
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+Subject: Re: [PATCH 6/9] phy: qualcomm: qmp-combo: Update QMP PHY with Glymur
+ settings
+Message-ID: <202509210051.o1oMhgXv-lkp@intel.com>
+References: <20250920032108.242643-7-wesley.cheng@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7d2frku4wfk7wjvb"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2025091902-dwelled-calculate-c755@gregkh>
+In-Reply-To: <20250920032108.242643-7-wesley.cheng@oss.qualcomm.com>
+
+Hi Wesley,
+
+kernel test robot noticed the following build warnings:
+
+[auto build test WARNING on robh/for-next]
+[also build test WARNING on usb/usb-testing usb/usb-next usb/usb-linus linus/master v6.17-rc6 next-20250919]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Wesley-Cheng/dt-bindings-phy-qcom-sc8280xp-qmp-usb43dp-phy-Add-Glymur-compatible/20250920-112504
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20250920032108.242643-7-wesley.cheng%40oss.qualcomm.com
+patch subject: [PATCH 6/9] phy: qualcomm: qmp-combo: Update QMP PHY with Glymur settings
+config: x86_64-buildonly-randconfig-002-20250920 (https://download.01.org/0day-ci/archive/20250921/202509210051.o1oMhgXv-lkp@intel.com/config)
+compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250921/202509210051.o1oMhgXv-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202509210051.o1oMhgXv-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/phy/qualcomm/phy-qcom-qmp-combo.c:1745:38: warning: unused variable 'glymur_usb43dp_pcs_misc_tbl' [-Wunused-const-variable]
+    1745 | static const struct qmp_phy_init_tbl glymur_usb43dp_pcs_misc_tbl[] = {
+         |                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+   1 warning generated.
 
 
---7d2frku4wfk7wjvb
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-MIME-Version: 1.0
+vim +/glymur_usb43dp_pcs_misc_tbl +1745 drivers/phy/qualcomm/phy-qcom-qmp-combo.c
 
-Hello Greg,
+  1744	
+> 1745	static const struct qmp_phy_init_tbl glymur_usb43dp_pcs_misc_tbl[] = {
+  1746		QMP_PHY_INIT_CFG(QPHY_V4_PCS_MISC_PCS_MISC_CONFIG1, 0x01),
+  1747	};
+  1748	
 
-it seems we agree on the advantage of module namespaces that the pool of
-global symbols is reduced, right? That is given with and without the
-module import in a header.
-
-On Fri, Sep 19, 2025 at 05:37:03PM +0200, Greg KH wrote:
-> On Fri, Sep 19, 2025 at 10:20:29AM -0500, David Lechner wrote:
-> > Up to now, my (naive) understanding was that the point module namespaces
-> > is to reduce the number of symbols in the global namespace because havi=
-ng
-> > too many symbols there was starting to cause problems. So moving symbols
-> > to another namespace was a "good thing".
->=20
-> Yes, it is a "good thing" overall, but by just making all of your
-> symbols in a namespace, and then including it in the .h file, that does
-> the same exact thing as before (i.e. anyone that includes that .h file
-> puts the symbols into the global namespace with that prefix.)
-
-I fail to parse the part in parenthesis. The symbols of the pwm
-subsystem are defined in the "PWM" namespace (using `#define
-DEFAULT_SYMBOL_NAMESPACE "PWM"` in drivers/pwm/core.c). In <linux/pwm.h>
-there is a `MODULE_IMPORT_NS("PWM");`, so a consumer (say
-`drivers/regulator/pwm-regulator.c`) only needs
-
-	#include <linux/pwm.h>
-
-to import the "PWM" namespace. So pwm-regulator.c puts the symbols
-into the global namespace with that prefix. What symbols? What prefix?
-
-The thing that is different is that the pwm functions are in the "PWM"
-namespace, so a module without an import for "PWM" has a smaller pool of
-global symbols and so loading that module is a tad more effective,
-right?
-
-I agree that for the consumer source it doesn't make a difference if pwm
-is using a namespace or not. I'd count that as an advantage of the
-"import in a header" approach.
-
-> Ideally, the goal was to be able to easily see in a module, what symbol
-> namespaces they depend on, which requires them to put MODULE_IMPORT_NS()
-> in the module to get access to those symbols.  dmabuf has done this very
-> well, making it obvious to the maintainers of that subsystem that they
-> should be paying attention to those users.
-
-For me as pwm maintainer it doesn't matter much if I pay attention to
-`MODULE_IMPORT_NS("PWM");` or `#include <linux/pwm.h>`.
-=20
-> For other "tiny" subsystems, it just slots away their symbols so that no
-> one else should ever be using them, and it makes it blindingly obvious
-> if they do.  For example, the usb-storage symbols, anyone that does:
-> 	MODULE_IMPORT_NS("USB_STORAGE");
-> had better be living in drivers/usb/storage/ otherwise I need to have a
-> word with those offenders :)
-
-All symbols in the "USB_STORAGE" namespace (apart from
-`fill_inquiry_response`) start with `usb_stor_`. If you grep for that
-string you find all the (probably illegitimate) users of the usb-storage
-symbols, but also those that define their own symbols with that prefix.
-
-Do you actually look out for such offenders, i.e. have a lei mailbox
-with `MODULE_IMPORT_NS("USB_STORAGE")` as search string or a cron job
-grepping your tree for that?
-
-> So it's a way of "tidying" up things, and to make things more explicit
-> than just having to rely on searching a tree and looking for .h include
-> usage.=20
-
-For some reason in your eyes grepping for MODULE_IMPORT_NS is superior
-to grepping for an #include. Can you explain that?
-
-Best regards
-Uwe
-
---7d2frku4wfk7wjvb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmjO2S4ACgkQj4D7WH0S
-/k4IhQf/UtPUTnhbxWROvnPeLQVLBT7LYDoSGOyTSyXtAb7AtAQeUqfa7EOc+mbs
-9mnVB/2Tv8YaD+bCuGpjvR2UPbbitvNteBfOKlyq/VoLROElZ9C/muciDIkTDqzt
-a3u+lJJaxf9nhWtJHj35qZ3OUc5Uq3kLBBW4TGxz021/qFWdfa2FzPXuWkaPN43I
-PR7RIvLA7Wn1xzEUYoWCTrHA1oc+iHIwgn1Gisr3dzxVl3ouIEssExI2fULWb/8U
-6MjMbiAXkqKXJF9GP7ugR1oyf9Ia+EV+XwWy0h263ozE+LdoqcBRtobGEjMsW/lG
-VhUonqtHTK4KWOq7bew5fEBs52y4KA==
-=AIm3
------END PGP SIGNATURE-----
-
---7d2frku4wfk7wjvb--
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
