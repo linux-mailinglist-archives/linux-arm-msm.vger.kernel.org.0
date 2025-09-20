@@ -1,231 +1,266 @@
-Return-Path: <linux-arm-msm+bounces-74309-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74310-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A4C6B8D149
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 22:49:40 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55D99B8D23F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 01:21:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E92BA623FBA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 20:49:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02085625F59
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 23:21:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EEC12C2365;
-	Sat, 20 Sep 2025 20:49:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 527CC267B94;
+	Sat, 20 Sep 2025 23:21:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="kxGuF4/f"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pqoANKw6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23F1921C163;
-	Sat, 20 Sep 2025 20:49:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34611DDA18
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 23:21:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758401376; cv=none; b=VQDEXPFwoavzK9Wq+amwPYfLMw5GPjxy29Ycwsu2pZNfSuCzXLcDabMgxPeyWGpKz8b36+Wj01TruaZUlNhyDIBS8MP7jwY1O91AF/SUL3nJ0quVTDKL9moLtYroIHkk2Dcgefj7AgsXUsO0v/C/jyel8ZDeVK07S+ePmUDBmi4=
+	t=1758410488; cv=none; b=E73tsg6mLa9WaZsX1zAJp3uZIvsh9dDzeE61WW1DaBlCVum5/iHTTayMG9FGw6F5CCG4k/Hez826LnTIlOf6ywQM2bN3jQo+yuzalF+8IU8PKkqoHxnyxpgq38XRJQNszjSTl5nZltFch6TzjWtCKFn0hXcEk0UzEHNAIusrYIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758401376; c=relaxed/simple;
-	bh=5PofiIjgAx4VGnfdZ4zQnv30kMD9cHFOibQ2RBJQAwo=;
+	s=arc-20240116; t=1758410488; c=relaxed/simple;
+	bh=RUL1Zs2ER3rymeciz/eOY8tNxSFCvRDGsNi6QpI68eg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kp2BnDLw+CGIbkGeukVN//nAn+6aQejc3rMRCkDKfFmt4PT52/Sos7MnGuUC5UzsxwwDDrwQ5lW5yk5te+6GA8wwPCr5W1Lzh5bt8KK//gd4jdoWcPnOiclQsLw4m6LEbd0sjcpGi/B8+sE5eC2+1p24aVpx7TC5a8eIz7NizWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=kxGuF4/f; arc=none smtp.client-ip=192.198.163.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1758401374; x=1789937374;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=5PofiIjgAx4VGnfdZ4zQnv30kMD9cHFOibQ2RBJQAwo=;
-  b=kxGuF4/fCsKbldf/f5BB+tcYDR0/baEHrf+dcTLy20IceBxr63Rqa9ll
-   JfMDS7t4h8/RHDN8NbP13kr6tbWwSvXXqyH5kuCjNCErpZE9W/gSlkv0G
-   +tft2phokDhxn6whCm7w0BU+mYZEe+0BWsoA6NwfZpf92KcDKRC0q+hoT
-   l4dfqI8d39j53ibblpwKQqz5CE7RrVRxKjl0xwlMLam4cQMds09lGu119
-   yM5dMAnm2jQNdsOZL++HqrEB7CnItM+ZTuWGjelYiPhorid1JJH/NF54t
-   5lYR/ihaanPKYLJpQhZ99RU1vD4GFfV+qJrolHjUx/yV5IAN5NYlXQ2d0
-   A==;
-X-CSE-ConnectionGUID: tDrbZqw6R2moNdZIGD2uiA==
-X-CSE-MsgGUID: 6QTJ1xgXTz64bJ0bY3cqTg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11559"; a="71395420"
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; 
-   d="scan'208";a="71395420"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Sep 2025 13:49:34 -0700
-X-CSE-ConnectionGUID: qsWGhSxhQPyWu+N0WNqlGg==
-X-CSE-MsgGUID: PBO4BdgHSSur2mHpWFrq7g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,281,1751266800"; 
-   d="scan'208";a="175388023"
-Received: from lkp-server01.sh.intel.com (HELO 7f63209e7e66) ([10.239.97.150])
-  by orviesa010.jf.intel.com with ESMTP; 20 Sep 2025 13:49:31 -0700
-Received: from kbuild by 7f63209e7e66 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1v04WN-00006t-1t;
-	Sat, 20 Sep 2025 20:49:27 +0000
-Date: Sun, 21 Sep 2025 04:49:08 +0800
-From: kernel test robot <lkp@intel.com>
-To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Linus Walleij <linus.walleij@linaro.org>
-Cc: oe-kbuild-all@lists.linux.dev, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
-	Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
-	David Collins <david.collins@oss.qualcomm.com>
-Subject: Re: [PATCH 1/3] spmi: spmi-pmic-arb: add support for PMIC arbiter v8
-Message-ID: <202509210436.v24lwANK-lkp@intel.com>
-References: <20250920-glymur-spmi-v8-gpio-driver-v1-1-23df93b7818a@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=n/62fzekHAizt77RDb1Mi9M1n6ibdpa0iwpdVNn4NY4yWzg88EITsYGgEXaffjj4kr9CR1nZ1nEA2dJ26Ju5TjzFVQauGE9t8mDE9Qlhr1nmKz1zZtOC5OPdjoHyOI6HkpZUBrkTpyjIdSbLEfkX8oLJDWaIU6Iwl8VAhE8XUxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pqoANKw6; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58KMHSOX011423
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 23:21:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	QJ08kPi4J0e6QPjOfD6/wld0PtOfnxlKb2Gc/b7w35U=; b=pqoANKw6CwhCz9j1
+	JD7U/Mv4jQ5cCH+952wBFWXKgoWPPlqzDBlBYQu3xziRVSkLFlP2sm4VxW3UWLKy
+	qibAH/jOKD2fvndcAaHs9GErZZdc1GV9zVSrvJV/H7fJzNuQq8Sf4NOEZaEPXAas
+	j6oz1j6NTC1tWPfmoBfqTtGKPsSI6CoQqng0d3g5rh0ezbvoIBKpg8xjBwE4+vhQ
+	ezkJIOttUd4YH1KGh5RT8ar2Rb1sgtySaqz/pWWNE4CC51JmV7Puj1hp+UJQHYKl
+	9m2p+DfmUBRDTpEXIhc09OXsnYkkN/Gad9NSVibZISwC2kCk8r1iFCfeVIsySOff
+	4e8+RQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499mg31ct0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 23:21:25 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b49666c8b8so57377591cf.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 16:21:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758410484; x=1759015284;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QJ08kPi4J0e6QPjOfD6/wld0PtOfnxlKb2Gc/b7w35U=;
+        b=DSzU1P1CJA7qYSwQgG9fNKb6UMx70nihUDkMSDvFIC8/N3Vs1phAQu1IC1OjN0amJS
+         cyGCnXTxDAxjDPnQRTsYCfauQt+yE4JEmSg4bUZe+NXdBVFeIQG6h5/qbc9Re02QtQNN
+         5tNGhD/uRHkqZcbZViQkfwBoDJP0H5BUrebC2IIXdtrqrV3goXTBx94L+Iue3EVrJ9FM
+         orgO19TJB2pRkc6vTXYsca2KLQ/v3z6E5uNJq4qD4hS9IGWFyK5D88Oh+YC5vGoSg5ck
+         3KVy2XatA/XcOOfqt0KVmrEJXfp/uDK5L7h89Sg3ahzc8rvNCTZeDq40VYJNMp+Nt6T1
+         D5uQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUktllsRd6A//3+/fU0UArdIP7YN5BdFRWcw7C+KLups5xrGZTroK46Ug7Pqq2jPhMlNY9XCZaaxmJvUyBs@vger.kernel.org
+X-Gm-Message-State: AOJu0YyVAcBUN4Eh08ZcRsho9R58CbUitG3s53bu3BLxvq0WVEghTJBI
+	bTbBR5mxB3snnBF/XkrmycJuvPtZsSqQLVpr3HsmZsz2lmVskKgKEcOrKk2KV7SZg3zb9Rbnlr/
+	2cM6myXEmdkwiPebiZ0J3pnx9UvbpUqdwUisVBlhmrpdIZ/QE/XeHVr1yEZy4FwveFdYL
+X-Gm-Gg: ASbGnctf141BIjfgekntWMjdUKnfKXH/3DdcvCdTzB1dpnG6YE+7+SYdUmI0Bg/et/s
+	IJTn/egxcxDDP96ZuQ06F1GwA+q6eAZZMy7QtmDyp7u7urJWGa7K5QZaOSe29xfRl9Zj3RuhRU+
+	VfW3Sb5lhvr/JClq/i1B3gIzSWzYFRcD3RXlpMXJTh84I12Aa/xpbt9bJsNo/gKU3ScXlynrUNh
+	WJSFshvoCHM12vQCS6w1hQRAFBb2pyXu0SzyG4AraTruMOuLxgRK7hOXNWdS6SnymUYbGhEH/qM
+	uRMMCS/qatk4Zl0P9418/6C6gEND9pKG0DfvTmWIqooWNCHzlz+pWHEBAt8LaQPnpQGNmx/xAP+
+	FHjsaJy7nSXrcG1Jven+uUNcyLrLt3dunXLB4WMhnH8cgMd/088uw
+X-Received: by 2002:a05:622a:1389:b0:4b9:6bbf:7073 with SMTP id d75a77b69052e-4c0720ac134mr82344421cf.53.1758410484399;
+        Sat, 20 Sep 2025 16:21:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYGaTWFE/W0JZvdbyAwuAt0nxQOFKarDbY+G/GCtpOyicyxYjNEFi6dQXVLSt7TGc08dWv0Q==
+X-Received: by 2002:a05:622a:1389:b0:4b9:6bbf:7073 with SMTP id d75a77b69052e-4c0720ac134mr82344251cf.53.1758410483922;
+        Sat, 20 Sep 2025 16:21:23 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-578a68e8814sm2191909e87.62.2025.09.20.16.21.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 20 Sep 2025 16:21:23 -0700 (PDT)
+Date: Sun, 21 Sep 2025 02:21:19 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Eric =?utf-8?Q?Gon=C3=A7alves?= <ghatto404@gmail.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] arm64: dts: qcom: r0q: add gpio keys
+Message-ID: <3sox7jdjpahljevgyctg7zbvoua364hyajbap3ulsykloxqzna@dl2lfxdppdba>
+References: <20250920014637.38175-1-ghatto404@gmail.com>
+ <20250920014637.38175-2-ghatto404@gmail.com>
+ <qiiuezocvxvj5bhrr77v6o2amaaaepdx54pqoewvhtnxce5ccz@g7bhkrb6a4pd>
+ <5436E420-E459-4E47-9752-EF80F550FA6F@gmail.com>
+ <r6e23h4nkddktkle5rohdiiqkw667rq26j7u2yodao6p3scixp@y3roqbly4oje>
+ <B58EE981-3702-4FA3-B150-A3C862643870@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250920-glymur-spmi-v8-gpio-driver-v1-1-23df93b7818a@oss.qualcomm.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <B58EE981-3702-4FA3-B150-A3C862643870@gmail.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAzMiBTYWx0ZWRfX5/n1G4X1aWit
+ e4t/35t3fP7kpriAUEIz4nUC6A1AHQiuCofreXB5ZAUj71S3yZes+nWQcx0OBKJoD/QzFK8mMnl
+ nxd7dbDO8Nfg8hRgWuVUMx7KNGQDfbw259TVuw15bca5myPKQB+uwD5zOC16f/1xEYzXLknd8yJ
+ x0ZYBb3jHBmahoFZoW+evgqSiwqGRl/iQy+hnow7MuF43UbSI35hOHcM/24uqO4AUujFq9BOG/Q
+ cFR3l9hmd/EDD3MctXXM3Ev8o30GQQmdnjt1Z2sEIPxR/bSlOtSCCXLsBXgb8UfieS1hxn7yOWi
+ ZyTImwDDYyfoBeIc7DFc9bbFlmhd4LWKxVpZylY7t+jmP1+SODkrmJ7IRiZHGMsfZ4ufvtKcXzR
+ pb0dmAl7
+X-Proofpoint-GUID: m-yniTROuR8yAVK2SsKhCsfkIi9oCkGp
+X-Authority-Analysis: v=2.4 cv=UvtjN/wB c=1 sm=1 tr=0 ts=68cf36f5 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=pGLkceISAAAA:8 a=tsbVFwL6q7DH9GSC2JYA:9
+ a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-ORIG-GUID: m-yniTROuR8yAVK2SsKhCsfkIi9oCkGp
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-20_08,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 adultscore=0 impostorscore=0 bulkscore=0
+ malwarescore=0 suspectscore=0 clxscore=1015 priorityscore=1501
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200032
 
-Hi Kamal,
+On Sat, Sep 20, 2025 at 05:22:28PM -0300, Eric Gonçalves wrote:
+> 
+> 
+> On September 20, 2025 5:15:41 PM GMT-03:00, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >On Sat, Sep 20, 2025 at 03:02:42PM -0300, Eric Gonçalves wrote:
+> >> 
+> >> 
+> >> On September 20, 2025 12:45:27 PM GMT-03:00, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> >> >On Sat, Sep 20, 2025 at 01:46:33AM +0000, Eric Gonçalves wrote:
+> >> >> Add GPIO keys support to Samsung Galaxy S22 (r0q).
+> >> >> 
+> >> >> Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
+> >> >> ---
+> >> >>  .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 53 +++++++++++++++----
+> >> >>  1 file changed, 44 insertions(+), 9 deletions(-)
+> >> >> 
+> >> >> diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+> >> >> index 880d74ae6032..70e953824996 100644
+> >> >> --- a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+> >> >> +++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dts
+> >> >> @@ -2,11 +2,12 @@
+> >> >>  
+> >> >>  /dts-v1/;
+> >> >>  
+> >> >> +#include <dt-bindings/input/linux-event-codes.h>
+> >> >>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> >> >> -
+> >> >>  #include "sm8450.dtsi"
+> >> >>  #include "pm8350.dtsi"
+> >> >>  #include "pm8350c.dtsi"
+> >> >> +#include "pmk8350.dtsi"
+> >> >>  
+> >> >>  / {
+> >> >>  	model = "Samsung Galaxy S22 5G";
+> >> >> @@ -28,13 +29,19 @@ framebuffer: framebuffer@b8000000 {
+> >> >>  		};
+> >> >>  	};
+> >> >>  
+> >> >> -	vph_pwr: regulator-vph-pwr {
+> >> >> -		compatible = "regulator-fixed";
+> >> >> -		regulator-name = "vph_pwr";
+> >> >> -		regulator-min-microvolt = <3700000>;
+> >> >> -		regulator-max-microvolt = <3700000>;
+> >> >> -		regulator-always-on;
+> >> >> -		regulator-boot-on;
+> >> >
+> >> >Please don't mix up refactorings and new features. Split this patch into
+> >> >several.
+> >> The patch only added gpio-keys node and pon_resin,
+> >> pon_pwrkey. Do you mean I have to split each button
+> >> into separate patches?
+> >
+> >No. The patch also moves regulator-vph-pwr and changes the comment in
+> >the TLMM node.
+> >
+> I thought they would be too small to be
+> patches on their own. Is it okay if I split
+> them into 2: arm64: dts: qcom: r0q: small refactor
+> and arm64: dts: qcom: r0q: add gpio keys?
 
-kernel test robot noticed the following build errors:
+SGTM.
 
-[auto build test ERROR on c3067c2c38316c3ef013636c93daa285ee6aaa2e]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Kamal-Wadhwa/spmi-spmi-pmic-arb-add-support-for-PMIC-arbiter-v8/20250920-040410
-base:   c3067c2c38316c3ef013636c93daa285ee6aaa2e
-patch link:    https://lore.kernel.org/r/20250920-glymur-spmi-v8-gpio-driver-v1-1-23df93b7818a%40oss.qualcomm.com
-patch subject: [PATCH 1/3] spmi: spmi-pmic-arb: add support for PMIC arbiter v8
-config: nios2-randconfig-001-20250921 (https://download.01.org/0day-ci/archive/20250921/202509210436.v24lwANK-lkp@intel.com/config)
-compiler: nios2-linux-gcc (GCC) 8.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250921/202509210436.v24lwANK-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509210436.v24lwANK-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   drivers/spmi/spmi-pmic-arb.c: In function 'qpnpint_spmi_write':
->> drivers/spmi/spmi-pmic-arb.c:129:30: error: implicit declaration of function 'FIELD_GET' [-Werror=implicit-function-declaration]
-    #define hwirq_to_sid(hwirq)  FIELD_GET(GENMASK(32, 28), (hwirq))
-                                 ^~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:620:11: note: in expansion of macro 'hwirq_to_sid'
-     u8 sid = hwirq_to_sid(d->hwirq);
-              ^~~~~~~~~~~~
-   In file included from include/linux/bitops.h:6,
-                    from include/linux/bitmap.h:8,
-                    from drivers/spmi/spmi-pmic-arb.c:5:
-   include/linux/bits.h:49:20: warning: right shift count >= width of type [-Wshift-count-overflow]
-           type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-                       ^~
-   include/linux/bits.h:51:24: note: in expansion of macro 'GENMASK_TYPE'
-    #define GENMASK(h, l)  GENMASK_TYPE(unsigned long, h, l)
-                           ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:129:40: note: in expansion of macro 'GENMASK'
-    #define hwirq_to_sid(hwirq)  FIELD_GET(GENMASK(32, 28), (hwirq))
-                                           ^~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:620:11: note: in expansion of macro 'hwirq_to_sid'
-     u8 sid = hwirq_to_sid(d->hwirq);
-              ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c: In function 'qpnpint_spmi_read':
-   include/linux/bits.h:49:20: warning: right shift count >= width of type [-Wshift-count-overflow]
-           type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-                       ^~
-   include/linux/bits.h:51:24: note: in expansion of macro 'GENMASK_TYPE'
-    #define GENMASK(h, l)  GENMASK_TYPE(unsigned long, h, l)
-                           ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:129:40: note: in expansion of macro 'GENMASK'
-    #define hwirq_to_sid(hwirq)  FIELD_GET(GENMASK(32, 28), (hwirq))
-                                           ^~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:632:11: note: in expansion of macro 'hwirq_to_sid'
-     u8 sid = hwirq_to_sid(d->hwirq);
-              ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c: In function 'qpnpint_spmi_masked_write':
-   include/linux/bits.h:49:20: warning: right shift count >= width of type [-Wshift-count-overflow]
-           type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-                       ^~
-   include/linux/bits.h:51:24: note: in expansion of macro 'GENMASK_TYPE'
-    #define GENMASK(h, l)  GENMASK_TYPE(unsigned long, h, l)
-                           ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:129:40: note: in expansion of macro 'GENMASK'
-    #define hwirq_to_sid(hwirq)  FIELD_GET(GENMASK(32, 28), (hwirq))
-                                           ^~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:646:11: note: in expansion of macro 'hwirq_to_sid'
-     u8 sid = hwirq_to_sid(d->hwirq);
-              ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c: In function 'periph_interrupt':
->> drivers/spmi/spmi-pmic-arb.c:124:3: error: implicit declaration of function 'FIELD_PREP' [-Werror=implicit-function-declaration]
-     (FIELD_PREP(GENMASK(32, 28), (slave_id))  | \
-      ^~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:685:12: note: in expansion of macro 'spec_to_hwirq'
-               spec_to_hwirq(sid, per, id, apid));
-               ^~~~~~~~~~~~~
-   In file included from include/linux/bitops.h:6,
-                    from include/linux/bitmap.h:8,
-                    from drivers/spmi/spmi-pmic-arb.c:5:
-   include/linux/bits.h:49:20: warning: right shift count >= width of type [-Wshift-count-overflow]
-           type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-                       ^~
-   include/linux/bits.h:51:24: note: in expansion of macro 'GENMASK_TYPE'
-    #define GENMASK(h, l)  GENMASK_TYPE(unsigned long, h, l)
-                           ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:124:14: note: in expansion of macro 'GENMASK'
-     (FIELD_PREP(GENMASK(32, 28), (slave_id))  | \
-                 ^~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:685:12: note: in expansion of macro 'spec_to_hwirq'
-               spec_to_hwirq(sid, per, id, apid));
-               ^~~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c: In function 'qpnpint_irq_domain_activate':
-   include/linux/bits.h:49:20: warning: right shift count >= width of type [-Wshift-count-overflow]
-           type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-                       ^~
-   include/linux/bits.h:51:24: note: in expansion of macro 'GENMASK_TYPE'
-    #define GENMASK(h, l)  GENMASK_TYPE(unsigned long, h, l)
-                           ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:129:40: note: in expansion of macro 'GENMASK'
-    #define hwirq_to_sid(hwirq)  FIELD_GET(GENMASK(32, 28), (hwirq))
-                                           ^~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:887:12: note: in expansion of macro 'hwirq_to_sid'
-     u16 sid = hwirq_to_sid(d->hwirq);
-               ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c: In function 'qpnpint_irq_domain_translate':
-   include/linux/bits.h:49:20: warning: right shift count >= width of type [-Wshift-count-overflow]
-           type_max(t) >> (BITS_PER_TYPE(t) - 1 - (h)))))
-                       ^~
-   include/linux/bits.h:51:24: note: in expansion of macro 'GENMASK_TYPE'
-    #define GENMASK(h, l)  GENMASK_TYPE(unsigned long, h, l)
-                           ^~~~~~~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:124:14: note: in expansion of macro 'GENMASK'
-     (FIELD_PREP(GENMASK(32, 28), (slave_id))  | \
-                 ^~~~~~~
-   drivers/spmi/spmi-pmic-arb.c:952:15: note: in expansion of macro 'spec_to_hwirq'
-     *out_hwirq = spec_to_hwirq(intspec[0], intspec[1], intspec[2], apid);
-                  ^~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
-
-
-vim +/FIELD_GET +129 drivers/spmi/spmi-pmic-arb.c
-
-   118	
-   119	/*
-   120	 * hwirq value crosses 32 bits only for platforms with more than 16 PMICs,
-   121	 * none of which happen to support booting Linux in 32-bit mode.
-   122	 */
-   123	#define spec_to_hwirq(slave_id, periph_id, irq_id, apid) \
- > 124		(FIELD_PREP(GENMASK(32, 28), (slave_id))  | \
-   125		FIELD_PREP(GENMASK(27, 20), (periph_id)) | \
-   126		FIELD_PREP(GENMASK(18, 16), (irq_id))    | \
-   127		FIELD_PREP(GENMASK(12, 0),  (apid)))
-   128	
- > 129	#define hwirq_to_sid(hwirq)  FIELD_GET(GENMASK(32, 28), (hwirq))
-   130	#define hwirq_to_per(hwirq)  FIELD_GET(GENMASK(27, 20), (hwirq))
-   131	#define hwirq_to_irq(hwirq)  FIELD_GET(GENMASK(18, 16), (hwirq))
-   132	#define hwirq_to_apid(hwirq) FIELD_GET(GENMASK(12, 0), (hwirq))
-   133	
+> >> >
+> >> >> +	gpio-keys {
+> >> >> +		compatible = "gpio-keys";
+> >> >> +		autorepeat;
+> >> >> +
+> >> >> +		pinctrl-0 = <&vol_up_n>;
+> >> >> +		pinctrl-names = "default";
+> >> >> +
+> >> >> +		key-vol-up {
+> >> >> +			label = "Volume Up";
+> >> >> +			linux,code = <KEY_VOLUMEUP>;
+> >> >> +			gpios = <&pm8350_gpios 6 GPIO_ACTIVE_LOW>;
+> >> >> +			debounce-interval = <15>;
+> >> >> +		};
+> >> >>  	};
+> >> >>  
+> >> >>  	reserved-memory {
+> >> >> @@ -47,6 +54,15 @@ splash-region@b8000000 {
+> >> >>  			no-map;
+> >> >>  		};
+> >> >>  	};
+> >> >> +
+> >> >> +	vph_pwr: regulator-vph-pwr {
+> >> >> +		compatible = "regulator-fixed";
+> >> >> +		regulator-name = "vph_pwr";
+> >> >> +		regulator-min-microvolt = <3700000>;
+> >> >> +		regulator-max-microvolt = <3700000>;
+> >> >> +		regulator-always-on;
+> >> >> +		regulator-boot-on;
+> >> >> +	};
+> >> >>  };
+> >> >>  
+> >> >>  &apps_rsc {
+> >> >> @@ -119,8 +135,27 @@ vreg_l1c_1p8: ldo1 {
+> >> >>  	};
+> >> >>  };
+> >> >>  
+> >> >> +&pm8350_gpios {
+> >> >> +	vol_up_n: vol-up-n-state {
+> >> >> +		pins = "gpio6";
+> >> >> +		function = "normal";
+> >> >> +		power-source = <1>;
+> >> >> +		input-enable;
+> >> >> +	};
+> >> >> +};
+> >> >> +
+> >> >> +&pon_pwrkey {
+> >> >> +	status = "okay";
+> >> >> +};
+> >> >> +
+> >> >> +&pon_resin {
+> >> >> +	linux,code = <KEY_VOLUMEDOWN>;
+> >> >> +
+> >> >> +	status = "okay";
+> >> >> +};
+> >> >> +
+> >> >>  &tlmm {
+> >> >> -	gpio-reserved-ranges = <36 4>; /* SPI (not linked to anything) */
+> >> >> +	gpio-reserved-ranges = <36 4>; /* SPI (Unused) */
+> >> >>  };
+> >> >>  
+> >> >>  &usb_1 {
+> >> >> -- 
+> >> >> 2.51.0
+> >> >> 
+> >> >
+> >> Resend because I forgot to CC the mailing lists
+> >
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+With best wishes
+Dmitry
 
