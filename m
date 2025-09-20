@@ -1,79 +1,79 @@
-Return-Path: <linux-arm-msm+bounces-74291-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74292-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E804B8CE63
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 20:02:55 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63D85B8CE75
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 20:04:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C19FC1B2368B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 18:03:16 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 28FD81B26A62
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 18:05:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3268C23A9BD;
-	Sat, 20 Sep 2025 18:02:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A860830F7FE;
+	Sat, 20 Sep 2025 18:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O2opIBqe"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lYarsMCY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD551F4297
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 18:02:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7E82FFDF4
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 18:04:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758391369; cv=none; b=nIxpfKSL3MWk/uRQXWMt1kwNbahQ8iJTLjfGpPPQsLr2nUafWwJ9cskaU02Q3aLzlcgNMIo3aXnhh3L7disOX5sf9wVg8LUn/jceJhryQBHWop0ApDbu0E1RQP4xBSmPlbqtj1ndc8GWzSX+o9b2GUTYTtU4PuqifmAYTk1Fprs=
+	t=1758391470; cv=none; b=cTCmeG2vFPUiXGVyDEd+vnS3EBjcpj+/ozhQGhsboQWLcUb/RDIanjb3teu5OYWERoaBcPVmbrr09BYLq/oXvN2m+4oT6SExOEw5uhEMOkLxTzaRbrEAgE27AdvF2e1HKOz3QzuFCC40eKy548p0IMcgNf0JNItsTKVtsviPD94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758391369; c=relaxed/simple;
-	bh=vNzlM1+uldR3GR03lrv5Hb+eyrK5yBBZ4NCVSo6sEE8=;
+	s=arc-20240116; t=1758391470; c=relaxed/simple;
+	bh=4tlnfib27kjuIoWZqfi44dVrHnKQF8NT22sSeHsQkVI=;
 	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=EOIv+vNw9Nf7OX2eiXWyodDw9Epyirtoyg2MVLvfjPUDiILXgtxjtrqflEuxBulV+a/rLTt57CAxwEJ3bnbQEY3ibNWh1lM2rf6JjYS8jxxN+MAliDuy4xJTEW0wjaCWYd9Otd4IvZhms9yRwLvLpuDbeTC0djgshv5XJtPKpfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O2opIBqe; arc=none smtp.client-ip=209.85.210.174
+	 MIME-Version:Content-Type; b=QFSMvI42bCVg/MX6Es6GwDOH8AcJjhYo1KC3bzWDIEVHi9V0g+E4/vJxLR+XtbYneTKEA8o+mbTZuqAcptmedOHHMUMW2JZNGMN+qvPGhqM64DV57ptza8ChoHScaKNsL/ybZqW96AlHamRxOaIpU2NwUOsA1RuTVKcRhDM2FrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lYarsMCY; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-77f2a62e44dso179558b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 11:02:47 -0700 (PDT)
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2698384978dso26066415ad.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 11:04:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758391367; x=1758996167; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1758391468; x=1758996268; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=kK6gdymZIwc9poT/IoegtWOD+uKcHWv6G1pOTAAibsg=;
-        b=O2opIBqexJ5hobnYZm7dDmx08mTJrXkmAwIt9X0Q8WhXukCgPX6iWdYNbGMk+yn3le
-         pZop7OO7kKCtggDnqOFnZPKjmv80X2fN+7PQKObfAycHPe9n6OSmT/L2OsNBrUGBo1yq
-         G27HryeOmPITwB3qTwfNt04e8fOPhNd5N0U1WHD4n3j1B0boh+LWLXTcPRtD794DviO6
-         33LMEG0DYoK180EMzzbOmQPQ6AvGUaVMZtTbJ2BA0sBPBRAbv+8PZeUxuhm2tFIiQdQe
-         rdK1ecsQM2hvxPzfJ012Bg3uLSxD/SF7LwaHF/twMVZ+MrI9vlkkg13LcQe51ZjNvPVC
-         eXsg==
+        bh=xbFzY792ZouMJtV7uIcmYuiGAKGlq9XPmiStNipyVbE=;
+        b=lYarsMCYzSWsfDtNvbdZUperw9D48r/aitL9Bs+CxX2GZ7qdaZEwVWAUZ30Utv89VE
+         Q+ePHB1oUObsk7NV4Kx8JSOG8gZQixIn+6vOmZazah92unZCpDRMWRFdxxVtWBfcQNVT
+         u+nby5oj160uHQV+BdkRvdOyDZwo/qFxvsIPnDi65vVqXE13MvOT/et12+6HNqDvnEQW
+         0DBOyGuJDrrYgSdQue5NLoXgYhyfAbHSR2sKiW3T3HrQSvGBNb1ekLW8uTTj62GIM/SQ
+         RhOjxLLKZ49OdQ4O1Yv5QfqkpwhcM1VYg+kvhKEDCnpE2FGcdWtF7GNs0ZPRnkZHKzWz
+         ETsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758391367; x=1758996167;
+        d=1e100.net; s=20230601; t=1758391468; x=1758996268;
         h=content-transfer-encoding:mime-version:message-id:references
          :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=kK6gdymZIwc9poT/IoegtWOD+uKcHWv6G1pOTAAibsg=;
-        b=OFnZzH3N6ECQtPafQNvGofwtQQbtG2Yqabe5tiGJ1wy+EU2eK1VEdL+Bdp9aSimfTO
-         D80a6PzyvixXD/TWhweHF65/XGA+3VTNJm38cNoG0johbzkjzAWrxIyZvnN+uUgSZRiE
-         7TE4cBrQbzxbsNEBj9FLM2Ct0A1vM1a9Oohow0xtgCfWu477UQXIQVDjRu3yydpV2YBU
-         22Jm7EoHJrQxKfgLPrVYTLSMj4QsTxuaDL3QQMyz8qKcMuxplrhdqT4OEfS5pExCg+U7
-         YVD8Kp5UCBhY1Zh4ojfANkBPPfvKXDlOHXx4o3l83CVxJaHIY82AmYNUUsyfeT2yOAO3
-         z+MQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXe8l3Gg5u9kC4z4mTYHfC1/FYnC/G60cW0NOnx7mTWkvSFQtcTrv15k5+8Dhmx4jEkVhTO3YQN7ErigxXg@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy4XVxpaq6A4XNLHqIBz3CXWhnwCtV0q54Q5d8IxLrqAiCzPchj
-	gHkYZu3wR+pLpayW9S7W+2B0uQmD2kTsg6MkZDYhuH4OzJIVOxfq8szZ
-X-Gm-Gg: ASbGncsePQtrX5ksj1xlKPe1GEzamiA0MCJqGhMg2HLhfH0H2tYXwbv4FxdMM97sD57
-	hYumALYto3701i9BzbLO0OP1O3hy0Xt2baO/GxVN7tSa11bQlgONfj2p7pUXxi6nrFPGe7us8sg
-	rgQqBCiwvLwsZSkgp2AWQCIV3eEaIKa7HWdsU2n16aVs8+8P4tMvZz2SpIMtKz1jmJ9r4lIRA0l
-	YO7wwa+vYeAQNqMus1a4D3sU+hKFdVi6LSJVpnNx1fhZOBNvyU9VwTQe5GUx8voOV+yOp8bH/Rp
-	BhxrOPCSzEHZVJoNbf9v4f7yGHwx5M7ZLEWh2yfhgldxwFuc/9xco6dxSP1Yj8YtLmVAaL+Bh/q
-	3q18p2ThZkMSEpdIaXO4VjPUof+ZOAWNm
-X-Google-Smtp-Source: AGHT+IFp6eWlmg8WSXqzKC/ZwpZ4bfPJ5EFKDbuMmDmSFcEI8h/Ve/sdTRdeV0vJtSBr/ZKe/FrXJw==
-X-Received: by 2002:a05:6a20:2449:b0:24e:e270:2f5d with SMTP id adf61e73a8af0-29271269db9mr11740772637.43.1758391366780;
-        Sat, 20 Sep 2025 11:02:46 -0700 (PDT)
+        bh=xbFzY792ZouMJtV7uIcmYuiGAKGlq9XPmiStNipyVbE=;
+        b=aRqH63CwONsOjaxPAbTRpDXzD5+2tWVlqm+s5t6W0PcpFCW+I00XYNlz/bsg1B+IPv
+         0BiSRzUZ661pX3wuF02OjJ9Ot4UiTHbdWD+mtVrd7R4olkSH4x8iSQ9mgISg1MuYpoRg
+         8ol2yTDzPr21HNJ8PFHzkbCkdkQ+Fym47jwEjR98r0vUPe+Iy6d0FL2Z7941Bcit4cwh
+         8fA4lVFsu6eRtu31KZ8XdWjMC02C6m4Nh1J+7Xd3CZy/E4gehQCxvKTDjF9TR+Bo7dlC
+         6uAPxxibHq458nkhYyepA583rcHcUPsEJ6fA6ne6bELCXdRwxYRyBzpitnb9QJg0FXWG
+         q49Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVVCHaA7D5k0TMG9DwwUBNBCOhSfE1OkaaKKS4xas5vlgXgAwO6Z/ZZM6aNpXBglJQ7D/xgSvs1RRtCmngJ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw0orloaC1dEnL74q5WoJfbEKlkWlMqLH+NxsR/cs6uQuap2s04
+	PzN3KyKj7O5VA2VqxMugLwAWM9sJxqvO5M5iCru3R47RK8OtWcSz0mdR
+X-Gm-Gg: ASbGnctOCWk+2Vxw9mpgGwbiFR8ujETXQ1PFOVu7Z29MB3ELd68f1/uKFHbSUhb7jYY
+	ScYDBuu1O8yOdg7x2wxga9hBO1RMFunMOZbidqGy6EptdRJW0VIx8tI9XGOF0b3ehv0xTWjmc1r
+	KdzQJvmlPB1VL4XmACxhOIPlYOlP2BSvqimF2G16/+L+yvDokMFrKAAcQLL17m5tYnQbLomeGRD
+	svIsscVM76Rq2Sw/s4cXazH4u8TGRfPHWuwKWX26tXZwFfJBX2n4AwsE05xiRIapl0AhXPQOBrP
+	iResX7E04FUsFjQyii7Auj/HVJaW15o1WGTw0Du8VQyFgDlAt8w3IaayYztY0k6edJg+MQuaDFl
+	QF8HorhpeIVUVdRr6kWw7/b3hrEq8a4sI
+X-Google-Smtp-Source: AGHT+IEpnNSFdb3DDYxlQp/zpH31nLfl753vHvXYDevnTOJD3gAIr4knj1uVbiblHrcXNrdV7FT1BA==
+X-Received: by 2002:a17:903:2d0:b0:24c:bc02:788b with SMTP id d9443c01a7336-269ba53c0ebmr101044065ad.44.1758391468341;
+        Sat, 20 Sep 2025 11:04:28 -0700 (PDT)
 Received: from ehlo.thunderbird.net ([191.193.70.152])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b5541f0374csm251586a12.49.2025.09.20.11.02.45
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32ed278b065sm11818123a91.29.2025.09.20.11.04.27
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 20 Sep 2025 11:02:46 -0700 (PDT)
-Date: Sat, 20 Sep 2025 15:02:42 -0300
+        Sat, 20 Sep 2025 11:04:27 -0700 (PDT)
+Date: Sat, 20 Sep 2025 15:04:24 -0300
 From: =?ISO-8859-1?Q?Eric_Gon=E7alves?= <ghatto404@gmail.com>
 To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 CC: Bjorn Andersson <andersson@kernel.org>,
@@ -81,11 +81,11 @@ CC: Bjorn Andersson <andersson@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
  devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
  linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/5] arm64: dts: qcom: r0q: add gpio keys
+Subject: Re: [PATCH 3/5] arm64: dts: qcom: r0q: enable max77705 PMIC
 User-Agent: Thunderbird for Android
-In-Reply-To: <qiiuezocvxvj5bhrr77v6o2amaaaepdx54pqoewvhtnxce5ccz@g7bhkrb6a4pd>
-References: <20250920014637.38175-1-ghatto404@gmail.com> <20250920014637.38175-2-ghatto404@gmail.com> <qiiuezocvxvj5bhrr77v6o2amaaaepdx54pqoewvhtnxce5ccz@g7bhkrb6a4pd>
-Message-ID: <5436E420-E459-4E47-9752-EF80F550FA6F@gmail.com>
+In-Reply-To: <uzofi67alw7kkzr5lom73ozghtytdquiigcwsucmut2mi3hvvk@26goz4knd7xk>
+References: <20250920014637.38175-1-ghatto404@gmail.com> <20250920014637.38175-4-ghatto404@gmail.com> <uzofi67alw7kkzr5lom73ozghtytdquiigcwsucmut2mi3hvvk@26goz4knd7xk>
+Message-ID: <7A9A8218-EE98-4548-A9F6-14DD278D47CD@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -98,119 +98,84 @@ Content-Transfer-Encoding: quoted-printable
 
 
 
-On September 20, 2025 12:45:27 PM GMT-03:00, Dmitry Baryshkov <dmitry=2Eba=
+On September 20, 2025 12:48:55 PM GMT-03:00, Dmitry Baryshkov <dmitry=2Eba=
 ryshkov@oss=2Equalcomm=2Ecom> wrote:
->On Sat, Sep 20, 2025 at 01:46:33AM +0000, Eric Gon=C3=A7alves wrote:
->> Add GPIO keys support to Samsung Galaxy S22 (r0q)=2E
+>On Sat, Sep 20, 2025 at 01:46:35AM +0000, Eric Gon=C3=A7alves wrote:
+>> The Samsung Galaxy S22 uses max77705 as its charger, fuelgauge and hapt=
+ic
+>> PMIC, enable the fuelgauge and charger for now=2E
 >>=20
 >> Signed-off-by: Eric Gon=C3=A7alves <ghatto404@gmail=2Ecom>
 >> ---
->>  =2E=2E=2E/boot/dts/qcom/sm8450-samsung-r0q=2Edts      | 53 +++++++++++=
-++++----
->>  1 file changed, 44 insertions(+), 9 deletions(-)
+>>  =2E=2E=2E/boot/dts/qcom/sm8450-samsung-r0q=2Edts      | 34 +++++++++++=
+++++++++
+>>  1 file changed, 34 insertions(+)
 >>=20
 >> diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts b/arch/a=
 rm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
->> index 880d74ae6032=2E=2E70e953824996 100644
+>> index 7bf56564dfc6=2E=2Ec1b0b21c0ec5 100644
 >> --- a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
 >> +++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
->> @@ -2,11 +2,12 @@
+>> @@ -14,6 +14,16 @@ / {
+>>  	compatible =3D "samsung,r0q", "qcom,sm8450";
+>>  	chassis-type =3D "handset";
 >> =20
->>  /dts-v1/;
->> =20
->> +#include <dt-bindings/input/linux-event-codes=2Eh>
->>  #include <dt-bindings/regulator/qcom,rpmh-regulator=2Eh>
->> -
->>  #include "sm8450=2Edtsi"
->>  #include "pm8350=2Edtsi"
->>  #include "pm8350c=2Edtsi"
->> +#include "pmk8350=2Edtsi"
->> =20
->>  / {
->>  	model =3D "Samsung Galaxy S22 5G";
->> @@ -28,13 +29,19 @@ framebuffer: framebuffer@b8000000 {
->>  		};
->>  	};
->> =20
->> -	vph_pwr: regulator-vph-pwr {
->> -		compatible =3D "regulator-fixed";
->> -		regulator-name =3D "vph_pwr";
->> -		regulator-min-microvolt =3D <3700000>;
->> -		regulator-max-microvolt =3D <3700000>;
->> -		regulator-always-on;
->> -		regulator-boot-on;
->
->Please don't mix up refactorings and new features=2E Split this patch int=
-o
->several=2E
-The patch only added gpio-keys node and pon_resin,
-pon_pwrkey=2E Do you mean I have to split each button
-into separate patches?
->
->> +	gpio-keys {
->> +		compatible =3D "gpio-keys";
->> +		autorepeat;
+>> +	battery: battery {
+>> +		compatible =3D "simple-battery";
 >> +
->> +		pinctrl-0 =3D <&vol_up_n>;
->> +		pinctrl-names =3D "default";
->> +
->> +		key-vol-up {
->> +			label =3D "Volume Up";
->> +			linux,code =3D <KEY_VOLUMEUP>;
->> +			gpios =3D <&pm8350_gpios 6 GPIO_ACTIVE_LOW>;
->> +			debounce-interval =3D <15>;
->> +		};
->>  	};
->> =20
->>  	reserved-memory {
->> @@ -47,6 +54,15 @@ splash-region@b8000000 {
->>  			no-map;
->>  		};
->>  	};
->> +
->> +	vph_pwr: regulator-vph-pwr {
->> +		compatible =3D "regulator-fixed";
->> +		regulator-name =3D "vph_pwr";
->> +		regulator-min-microvolt =3D <3700000>;
->> +		regulator-max-microvolt =3D <3700000>;
->> +		regulator-always-on;
->> +		regulator-boot-on;
+>> +		constant-charge-current-max-microamp =3D <2150000>;
+>> +		charge-full-design-microamp-hours =3D <3700000>;
+>> +		over-voltage-threshold-microvolt =3D <4500000>;
+>> +		voltage-min-design-microvolt =3D <3400000>;
+>> +		voltage-max-design-microvolt =3D <4350000>;
 >> +	};
->>  };
->> =20
->>  &apps_rsc {
->> @@ -119,8 +135,27 @@ vreg_l1c_1p8: ldo1 {
+>> +
+>>  	chosen {
+>>  		#address-cells =3D <2>;
+>>  		#size-cells =3D <2>;
+>> @@ -186,6 +196,26 @@ vreg_l11c_3p0: ldo11 {
 >>  	};
 >>  };
 >> =20
->> +&pm8350_gpios {
->> +	vol_up_n: vol-up-n-state {
->> +		pins =3D "gpio6";
->> +		function =3D "normal";
->> +		power-source =3D <1>;
->> +		input-enable;
+>> +&i2c5 {
+>> +	status =3D "okay";
+>
+>Could you please also add 'clock-frequency' for this bus?
+Will do, thanks
+>
+>LGTM otherwise=2E
+>
+>> +
+>> +	max77705_charger: charger@69 {
+>> +	    compatible =3D "maxim,max77705-charger";
+>> +	    reg =3D <0x69>;
+>> +	    monitored-battery =3D <&battery>;
+>> +	    interrupt-parent =3D <&tlmm>;
+>> +	    interrupts =3D <5 IRQ_TYPE_LEVEL_LOW>;
+>> +	};
+>> +
+>> +	fuel-gauge@36 {
+>> +		reg =3D <0x36>;
+>> +		compatible =3D "maxim,max77705-battery";
+>> +		power-supplies =3D <&max77705_charger>;
+>> +		interrupt-parent =3D <&tlmm>;
+>> +		interrupts =3D <5 IRQ_TYPE_LEVEL_LOW>;
 >> +	};
 >> +};
 >> +
->> +&pon_pwrkey {
->> +	status =3D "okay";
->> +};
->> +
->> +&pon_resin {
->> +	linux,code =3D <KEY_VOLUMEDOWN>;
->> +
->> +	status =3D "okay";
->> +};
->> +
->>  &tlmm {
->> -	gpio-reserved-ranges =3D <36 4>; /* SPI (not linked to anything) */
->> +	gpio-reserved-ranges =3D <36 4>; /* SPI (Unused) */
->>  };
+>>  &pm8350_gpios {
+>>  	vol_up_n: vol-up-n-state {
+>>  		pins =3D "gpio6";
+>> @@ -345,3 +375,7 @@ &usb_1_hsphy {
 >> =20
->>  &usb_1 {
+>>  	status =3D "okay";
+>>  };
+>> +
+>> +&qupv3_id_0 {
+>> +	status =3D "okay";
+>> +};
 >> --=20
 >> 2=2E51=2E0
 >>=20
 >
-Resend because I forgot to CC the mailing lists
 
