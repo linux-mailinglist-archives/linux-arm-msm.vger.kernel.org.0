@@ -1,153 +1,317 @@
-Return-Path: <linux-arm-msm+bounces-74273-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74274-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4015B8BE5E
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 05:24:07 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB922B8C556
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 12:21:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2CE24179D91
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 03:24:04 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DCBEE7B1B8A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 20 Sep 2025 10:19:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06F7C22CBE6;
-	Sat, 20 Sep 2025 03:22:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 62D7F2F616A;
+	Sat, 20 Sep 2025 10:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k5t3ABKb"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R/7euhNL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84458225A34
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 03:22:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58B9529B775
+	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 10:21:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758338524; cv=none; b=H9zItS1+3MKqXhOI6vCN9khj0ynPQeBHmEv1dGtk07Qr48epFke2z21eL0cmCqmrT5x5LCubGHQREJrrwCRoGfej374AeES+I3wDH/YMpFMoa3dThECl5aeZeCppvgk8XHym7oqDF5itag8yIeLfvkXkeg+RkXOHv8bJ3LMGhHQ=
+	t=1758363690; cv=none; b=W3QdJcFSO2XuZIJS3tn18YINZ0o/zKXBSOiufpBtnH5xnzz4hMdUYRLTqZteW2VpCuk8YJWMuEHnjMwyYufJnjN8a/SFLmv7mviGBZzsz4tsBJ7pZ/SWRfgpVud2QrADk2BDdYkKnwdsyn6t/yHyjdknuWIvDy1MGEabaj3qCn0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758338524; c=relaxed/simple;
-	bh=0xFRrxPf1HgCf/uIpvSwdyWaSlw0SJxq9j5r8OfcLSM=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ukssCZme6arWysyAoYZK9mtUqULQNXBOsqoUUhxs/j15nNLsG7SnQzU2bszzs9/APE7h01poWvk8H4L1VYN5M1S/dzYDTFSXoJK5Z5wJNJIHB7iTY9UuFXUc1Uj3byFKHv677k7SpRfK4w2d2XjA6g0kzd15PDSRQXk3LadNjI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k5t3ABKb; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58K3FYWi011324
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 03:22:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=vuZU5U4R9Rryr7IdAfkxs753zdgqirIJxPG
-	858BKWwE=; b=k5t3ABKb2GvmSXeB4L3qyWcAYWv5GOpbrwGW+IExQE1comiVw9E
-	ufPeF4cJJ7qL+T4YI2BBhXvKmXrX68hUmV/WZaehLJ/YiOIbqZFcBF1oCjbIPwM6
-	lzLPk5OTNYfyltG8g4gxAzEYzii1sIrdstgY/9nnyxxS/68jD72JN1L14PwkJbVJ
-	2XJXH8KI3+c2owvmLYP57zqvFY6+E7wIyWy2UuL+XNko0BgJ56aA/LkK/+p7IYqC
-	RUI5Hwitgf1h12SB6TXEy5uASbJL8QU/VX6Aovv9yoip7N8ftZzg3JCKkMNcorWn
-	42GzpCK37ZzvaYhVs+BIb6eysOaEto+PC1w==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 497fxy4fbf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 03:22:02 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2681623f927so26483335ad.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 19 Sep 2025 20:22:02 -0700 (PDT)
+	s=arc-20240116; t=1758363690; c=relaxed/simple;
+	bh=NeUWLUvwC6kW9VyfKYx42FFXe0IA1wZCOhU/BXYAKwI=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=eXdYkhOf3YmGH4qBFgAR/Twy2tnF+CzcxujJgIlIVDpxqRaWCWfDUntnCNZZBl+pGTwwigol+OnPfrCAaJvodjCCFVUc8t9Cfy5VcC8MJoP28tO5wqnk1j4DVIeh46Nc5Js3cQKgZMiKHojmHXpwa8EQzdC3JcsyfGrbDH2mYQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R/7euhNL; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-45cb6428c46so26826745e9.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 20 Sep 2025 03:21:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758363686; x=1758968486; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=P0vYXtUQVOuP2mhoWd4ropfz+61/nK8dVG+VKmZf9qg=;
+        b=R/7euhNLFeNlzmaUZ+Phoi0Q88Um1/yPfSkGC3G2sFF8md/oqJcr43+2FV+9UmZ2Dk
+         SUnKvAzbGiMrGaYgJR97ThDsbv3pKQfcEILZgylruuHbwAgK1ibJB3U9tn1aPxbYXcK1
+         MyRhovHH6tj9EMTzJqrblnvCmVfWpPYmKtlRwrM4k2sJZEX5nejonCqSjRQvEZ+qH5zA
+         DZ8wgDnOm8GaSljL3BUhgkod1l54KOPFjRhr/NVlywP8mhfKqtfasB/gPB/yUR4l9gOU
+         cdSyKg0V831oaRBDwypFkfc9dJHAFm8Nx1QoZlRSq09uBR4nwN02T4sdmyv+CMFSoURH
+         KYog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758338522; x=1758943322;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=vuZU5U4R9Rryr7IdAfkxs753zdgqirIJxPG858BKWwE=;
-        b=gsHr6mEqc85mTUseeq8M4BZv3XAP318WB4WnLzW7U7AS4kLcTxIblNTxFT2ABabWmA
-         oQkXI47ElnTBdrBX+HiDinN6b0fswds6Z6JcHiPp2Vew6JdUV0Br96RstlG1RM7yoWBh
-         unREX4De+sQCK7FPd1RFznKNODcC1JbfjsZfNmuLBdNQsuNEusmqJHjk4jQX6ru5tFwB
-         R4iqqX46ICQ0Zlxubjjx+SrJ0J/MiP3oFQgFs1b5RS3Mp2QjL0SHGjj46kaAI90lnuJv
-         KH8ZeoutCZgyW41+cwhYKxbmJ4wS6dQfcBlkFRI9wbRUFA4hVNnwrLTr/SaXl+AIeJRa
-         6VHA==
-X-Gm-Message-State: AOJu0YzqbetbUYmDnZnFQf4Hn2ARn60culrQd5ccpoABmQnAhOwI04/0
-	hoFyjyl1CU76Io33oyUjRSgSdXhlssNJ3bpJWTz5eNRqsWvyycLVogwKTlhNJqipJ8PsHlouCa4
-	qBT87e8uC3FxfL+0hAYj0SfvTeZKcOUtyMiCZnDHruntBzWAZ2TYOwUpyH7G17NqKQ/5J
-X-Gm-Gg: ASbGnctu/QJ35BwbDgUJbfJBOMyImQk+AGFzpYQL1XllyfzL0YwkHGQFZApZ4EKGB0J
-	Lhk33B218ZU3OAJPlNMupREhDhlJBZK1vRfLumb6BW0t0PNxNL0uufZELjtghn6FYPU1DCXjZVu
-	7rdDyU3F5LMb9MMp4L1P1pUTsAY0q/eW5vfn2z81ZrDRQJdUzXWQioC247GDGU/vIAOP+xVZ9wn
-	KkzkaLhcmxKjz42aDxSzQinWFTzpZP2HaPTkuQ3Pv5zVWsz2BkGnCtqDp7ryHX4+Bav+gjNAiLK
-	LiYPNgdpxfTXqcmDwyatc+OJ6qFeqn1Y2//Psds/zvPShUaNzr3Zx5yLT3Ida/x/dTE7WVR+TF5
-	9JUnLoHIprkqT1Pxr
-X-Received: by 2002:a17:90a:ec83:b0:32e:9da9:3e60 with SMTP id 98e67ed59e1d1-3309838e41emr6060605a91.36.1758338522085;
-        Fri, 19 Sep 2025 20:22:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnfgc9WbLWRAMVvDv9SHJUx3qQPyX7uwJoFjB6p+plahvgBOQhzvbXnu4sxjxYoajBAIfINg==
-X-Received: by 2002:a17:90a:ec83:b0:32e:9da9:3e60 with SMTP id 98e67ed59e1d1-3309838e41emr6060577a91.36.1758338521632;
-        Fri, 19 Sep 2025 20:22:01 -0700 (PDT)
-Received: from hu-wcheng-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3306082eff4sm6660409a91.25.2025.09.19.20.22.00
+        d=1e100.net; s=20230601; t=1758363686; x=1758968486;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=P0vYXtUQVOuP2mhoWd4ropfz+61/nK8dVG+VKmZf9qg=;
+        b=CMuA4p1fkJ96+i9N2RW/8zR/DKqpkwb5xnuNhg5Yd1UbJh2QjUTGBRuyia61O0ZZeX
+         PBE/xDfzg0+C4HYBua1YHu2XmGDP8ZHfHxLTYxvKc2CQAEfb5NNCe/VcSgb2ge8gS2ah
+         VgBSEB5bp2TrAGVBSpoRswUOGXS1L4UTO8+18pdAoS/HsYfpKvE6lgsV4HcEMXVllSEe
+         HND58to9/yIHRDXFUXdsKeGNqP3ssSZznvd+HS0FlqiWdT7740tVL8vsWHLZzUkTUop3
+         7ThXAW0i2e4SpoQN/TjFau1YLdbE+VG+1vXENvJm1fUkoF5bnovql6hUzcswO+tu+c3A
+         x2Eg==
+X-Forwarded-Encrypted: i=1; AJvYcCXheDuftyedCitStP0VqviH7cinM7EpmkSQJbAXSYpOLWr+tOY1P6bArr2N/wm8UuaKGkqR4NCG7yZk6/Zw@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0pfbHqu/e849s8fWKX2FNQNcOTHGmWNDrmw2yPn4sX27nnluM
+	JY+rebTs+O004KLGdLj74gnTyPB374rWqUDtfyO9qsWgFAbsZVQDXK7s
+X-Gm-Gg: ASbGnctWPW+fASRu4Xdd6b84QKIPRrBKwHp2D0H0TAewO1qNEYpWTpcBfTuP3ZoZb9d
+	SMx28y6wlOCbxESH3jfHdO+JjJLUW509X1lZ0fIyrgO1XrcxJzmak2kbRAdc1B+akjc/ZZlLgoU
+	YmLMYXA99euBssmM69r2L1ADsQWpwIpRuNmnfeKyKbuKAQa8zPKKl7arURjgA3+jXa91h5yxj57
+	JoymGtFqljdW8YGix2AvcKHKd4b1Xob8d1qCVHaGCcmVl5rDrN/ByDab9JUwRXBJfjhbNT52kZs
+	GOHPJvGVNHslhliN64jw+ASPmzphJ+1TzRElkul/wHKw0y1ahHrEpNhA0CCcjeXN3vjzlB0pAA5
+	g7Op0ch/8kR1P5BKyWf9i36KRwOdaPUREAUQ9t9oQtI5bWMMIK0IKS5Zb+Kx+
+X-Google-Smtp-Source: AGHT+IFiz+7GSgFF/mIUUp0ndfipkNQ39jr+2XK+PXUAveDTslyL1Wu67txaLfdop4/qCEdAg/m1vQ==
+X-Received: by 2002:a05:600c:c8f:b0:45f:2919:5e6c with SMTP id 5b1f17b1804b1-467e6f37d8dmr76782405e9.16.1758363685327;
+        Sat, 20 Sep 2025 03:21:25 -0700 (PDT)
+Received: from pumpkin (82-69-66-36.dsl.in-addr.zen.co.uk. [82.69.66.36])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3f0e28c83d6sm5624389f8f.56.2025.09.20.03.21.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Sep 2025 20:22:01 -0700 (PDT)
-From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-To: kishon@kernel.org, vkoul@kernel.org
-Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-kernel@vger.kernel.org,
-        Ronak Raheja <ronak.raheja@oss.qualcomm.com>,
-        Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-Subject: [PATCH] phy: qcom: m31-eusb2: Update init sequence to set PHY_ENABLE
-Date: Fri, 19 Sep 2025 20:21:58 -0700
-Message-Id: <20250920032158.242725-1-wesley.cheng@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+        Sat, 20 Sep 2025 03:21:25 -0700 (PDT)
+Date: Sat, 20 Sep 2025 11:21:22 +0100
+From: David Laight <david.laight.linux@gmail.com>
+To: Christian =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>
+Cc: linux@armlinux.org.uk, jdike@addtoit.com,
+ anton.ivanov@cambridgegreys.com, dave.hansen@linux.intel.com,
+ peterz@infradead.org, tglx@linutronix.de, x86@kernel.org, hpa@zytor.com,
+ tony.luck@intel.com, qiuxu.zhuo@intel.com, mchehab@kernel.org,
+ james.morse@arm.com, rric@kernel.org, harry.wentland@amd.com,
+ sunpeng.li@amd.com, alexander.deucher@amd.com, airlied@linux.ie,
+ daniel@ffwll.ch, evan.quan@amd.com, james.qian.wang@arm.com,
+ liviu.dudau@arm.com, mihail.atanassov@arm.com, brian.starkey@arm.com,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, tzimmermann@suse.de,
+ robdclark@gmail.com, sean@poorly.run, dmitry.torokhov@gmail.com,
+ agk@redhat.com, snitzer@redhat.com, dm-devel@redhat.com, rajur@chelsio.com,
+ davem@davemloft.net, kuba@kernel.org, peppe.cavallaro@st.com,
+ alexandre.torgue@st.com, joabreu@synopsys.com, mcoquelin.stm32@gmail.com,
+ malattia@linux.it, hdegoede@redhat.com, mgross@linux.intel.com,
+ intel-linux-scu@intel.com, artur.paszkiewicz@intel.com, jejb@linux.ibm.com,
+ martin.petersen@oracle.com, sakari.ailus@linux.intel.com,
+ gregkh@linuxfoundation.org, dushistov@mail.ru, luc.vanoostenryck@gmail.com,
+ rostedt@goodmis.org, pmladek@suse.com, sergey.senozhatsky@gmail.com,
+ andriy.shevchenko@linux.intel.com, linux@rasmusvillemoes.dk,
+ akpm@linux-foundation.org, kuznet@ms2.inr.ac.ru, yoshfuji@linux-ipv6.org,
+ pablo@netfilter.org, kadlec@netfilter.org, jmaloy@redhat.com,
+ ying.xue@windriver.com, willy@infradead.org, sashal@kernel.org,
+ ruanjinjie@huawei.com, David.Laight@ACULAB.COM, herve.codina@bootlin.com,
+ Jason@zx2c4.com, bvanassche@acm.org, keescook@chromium.org,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ linux-um@lists.infradead.org, linux-edac@vger.kernel.org,
+ amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ linux-hwmon@vger.kernel.org, linux-input@vger.kernel.org,
+ linux-media@vger.kernel.org, netdev@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com,
+ platform-driver-x86@vger.kernel.org, linux-scsi@vger.kernel.org,
+ linux-staging@lists.linux.dev, linux-btrfs@vger.kernel.org,
+ linux-ext4@vger.kernel.org, linux-sparse@vger.kernel.org,
+ linux-mm@kvack.org, netfilter-devel@vger.kernel.org,
+ coreteam@netfilter.org, tipc-discussion@lists.sourceforge.net,
+ stable@vger.kernel.org, jonnyc@amazon.com
+Subject: Re: [PATCH 00/27 5.10.y] Backport minmax.h updates from v6.17-rc6
+Message-ID: <20250920111904.6d9ecb17@pumpkin>
+In-Reply-To: <184ce83f-0063-43a0-a1c8-da23c5d03cf7@amd.com>
+References: <20250919101727.16152-1-farbere@amazon.com>
+	<184ce83f-0063-43a0-a1c8-da23c5d03cf7@amd.com>
+X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; arm-unknown-linux-gnueabihf)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTE2MDIwMiBTYWx0ZWRfX52/Phvd6jIyT
- Y+5USv/DbrmsYk1olwtuGDaCakBm3DahQ5xasEF1+9/r5GZ0YSf/NlhyTqebU4AiKwu2VBGZpVb
- ovOTOSOJjhTE4Q9HcuISXLTqVE79V349oXS4v+76zURG1nLiqfqtXLGCf+zAOg45G0yqM7+vkz7
- +V7cNYw5il6n4hzUW8rsODD0wyR87zLiUdk1cPBJ2k9zdwPagbpnoyUh1JCSb06/0wM3zt/HPyg
- gcx1fxxxO/rT/0FvnnwI9b2rv89JiSA9AU6Ryfy2kY7AcMG5/V5x63xw3LyQIssi08R32gQOBVN
- nI8H/aMM+mECq7+gIDb1QYt9oCjY/z4fbnlV8/gSoEwAQZOrhnfBKqfI7h6Sd3qYZHkdwKsOlfr
- fVBdHBJX
-X-Proofpoint-ORIG-GUID: 8Cx9uK0tAI3pPRSB__u80jrs8Onti9oj
-X-Authority-Analysis: v=2.4 cv=KJZaDEFo c=1 sm=1 tr=0 ts=68ce1dda cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=y6qI-x7cYgrOQfqpg38A:9
- a=uG9DUKGECoFWVXl0Dc02:22
-X-Proofpoint-GUID: 8Cx9uK0tAI3pPRSB__u80jrs8Onti9oj
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-20_01,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 bulkscore=0 adultscore=0 impostorscore=0
- suspectscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509160202
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+On Fri, 19 Sep 2025 14:11:37 +0200
+Christian K=C3=B6nig <christian.koenig@amd.com> wrote:
 
-Certain platforms may not have the PHY_ENABLE bit set on power on reset.
-Update the current sequence to explicitly write to enable the PHY_ENABLE
-bit.  This ensures that regardless of the platform, the PHY is properly
-enabled.
+> On 19.09.25 12:17, Eliav Farber wrote:
+> > This series includes a total of 27 patches, to align minmax.h of
+> > v5.15.y with v6.17-rc6.
+> >=20
+> > The set consists of 24 commits that directly update minmax.h:
+> > 1) 92d23c6e9415 ("overflow, tracing: Define the is_signed_type() macro
+> >    once")
+> > 2) 5efcecd9a3b1 ("minmax: sanity check constant bounds when clamping")
+> > 3) 2122e2a4efc2 ("minmax: clamp more efficiently by avoiding extra
+> >    comparison")
+> > 4) f9bff0e31881 ("minmax: add in_range() macro")
+> > 5) c952c748c7a9 ("minmax: Introduce {min,max}_array()")
+> > 6) 5e57418a2031 ("minmax: deduplicate __unconst_integer_typeof()")
+> > 7) f6e9d38f8eb0 ("minmax: fix header inclusions")
+> > 8) d03eba99f5bf ("minmax: allow min()/max()/clamp() if the arguments
+> >    have the same signedness.")
+> > 9) f4b84b2ff851 ("minmax: fix indentation of __cmp_once() and
+> >    __clamp_once()")
+> > 10) 4ead534fba42 ("minmax: allow comparisons of 'int' against 'unsigned
+> >     char/short'")
+> > 11) 867046cc7027 ("minmax: relax check to allow comparison between
+> >     unsigned arguments and signed constants")
+> > 12) 3a7e02c040b1 ("minmax: avoid overly complicated constant
+> >     expressions in VM code")
+> > 14) 017fa3e89187 ("minmax: simplify and clarify min_t()/max_t()
+> >     implementation")
+> > 15) 1a251f52cfdc ("minmax: make generic MIN() and MAX() macros
+> >     available everywhere")
+> > 18) dc1c8034e31b ("minmax: simplify min()/max()/clamp()
+> >     implementation")
+> > 19) 22f546873149 ("minmax: improve macro expansion and type
+> >     checking")
+> > 20) 21b136cc63d2 ("minmax: fix up min3() and max3() too")
+> > 21) 71ee9b16251e ("minmax.h: add whitespace around operators and after
+> >     commas")
+> > 22) 10666e992048 ("minmax.h: update some comments")
+> > 23) b280bb27a9f7 ("minmax.h: reduce the #define expansion of min(),
+> >     max() and clamp()")
+> > 24) a5743f32baec ("minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi
+> >     test in clamp()")
+> > 25) c3939872ee4a ("minmax.h: move all the clamp() definitions after the
+> >     min/max() ones")
+> > 26) 495bba17cdf9 ("minmax.h: simplify the variants of clamp()")
+> > 27) 2b97aaf74ed5 ("minmax.h: remove some #defines that are only
+> >     expanded once")
+> >=20
+> > 2 prerequisite commits that adjust users of MIN and MAX macros (to
+> > prevent compilation issues):
+> > 13) 4477b39c32fd ("minmax: add a few more MIN_T/MAX_T users")
+> > 17) cb04e8b1d2f2 ("minmax: don't use max() in situations that want a C
+> >     constant expression")
+> >=20
+> > 1 additional commit introduced to resolve a build failures during the
+> > backport:
+> > 16) lib: zstd: drop local MIN/MAX macros in favor of generic ones
+> >=20
+> > The primary motivation is to bring in commit (8).
+> > In mainline, this change allows min()/max()/clamp() to accept mixed
+> > argument types when both share the same signedness.
+> > Backported patches to v5.10.y that use such forms trigger compiler
+> > warnings, which in turn cause build failures when -Werror is enabled.
+> >=20
+> > Originaly I aligned 5.10.y to 5.15.y, but David Laight commented that I
+> > need to pick up the later changes (from Linus) as well.
+> >=20
+> > Andy Shevchenko (2):
+> >   minmax: deduplicate __unconst_integer_typeof()
+> >   minmax: fix header inclusions
+> >=20
+> > Bart Van Assche (1):
+> >   overflow, tracing: Define the is_signed_type() macro once
+> >=20
+> > David Laight (11):
+> >   minmax: allow min()/max()/clamp() if the arguments have the same
+> >     signedness.
+> >   minmax: fix indentation of __cmp_once() and __clamp_once()
+> >   minmax: allow comparisons of 'int' against 'unsigned char/short'
+> >   minmax: relax check to allow comparison between unsigned arguments and
+> >     signed constants
+> >   minmax.h: add whitespace around operators and after commas
+> >   minmax.h: update some comments
+> >   minmax.h: reduce the #define expansion of min(), max() and clamp()
+> >   minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()
+> >   minmax.h: move all the clamp() definitions after the min/max() ones
+> >   minmax.h: simplify the variants of clamp()
+> >   minmax.h: remove some #defines that are only expanded once
+> >=20
+> > Eliav Farber (1):
+> >   lib: zstd: drop local MIN/MAX macros in favor of generic ones
+> >=20
+> > Herve Codina (1):
+> >   minmax: Introduce {min,max}_array()
+> >=20
+> > Jason A. Donenfeld (2):
+> >   minmax: sanity check constant bounds when clamping
+> >   minmax: clamp more efficiently by avoiding extra comparison
+> >=20
+> > Linus Torvalds (8):
+> >   minmax: avoid overly complicated constant expressions in VM code
+> >   minmax: add a few more MIN_T/MAX_T users
+> >   minmax: simplify and clarify min_t()/max_t() implementation
+> >   minmax: make generic MIN() and MAX() macros available everywhere
+> >   minmax: don't use max() in situations that want a C constant
+> >     expression
+> >   minmax: simplify min()/max()/clamp() implementation
+> >   minmax: improve macro expansion and type checking
+> >   minmax: fix up min3() and max3() too
+> >=20
+> > Matthew Wilcox (Oracle) (1):
+> >   minmax: add in_range() macro
+> >=20
+> >  arch/arm/mm/pageattr.c                        |   6 +-
+> >  arch/um/drivers/mconsole_user.c               |   2 +
+> >  arch/x86/mm/pgtable.c                         |   2 +- =20
+>=20
+> >  drivers/edac/sb_edac.c                        |   4 +-
+> >  drivers/edac/skx_common.h                     |   1 -
+> >  .../drm/amd/display/modules/hdcp/hdcp_ddc.c   |   2 +
+> >  .../drm/amd/pm/powerplay/hwmgr/ppevvmath.h    |  14 +-
+> >  .../drm/arm/display/include/malidp_utils.h    |   2 +-
+> >  .../display/komeda/komeda_pipeline_state.c    |  24 +-
+> >  drivers/gpu/drm/drm_color_mgmt.c              |   2 +-
+> >  drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |   6 -
+> >  drivers/gpu/drm/radeon/evergreen_cs.c         |   2 +
+> >  drivers/hwmon/adt7475.c                       |  24 +-
+> >  drivers/input/touchscreen/cyttsp4_core.c      |   2 +-
+> >  drivers/md/dm-integrity.c                     |   2 +-
+> >  drivers/media/dvb-frontends/stv0367_priv.h    |   3 +
+> >  .../net/ethernet/chelsio/cxgb3/cxgb3_main.c   |  18 +-
+> >  .../net/ethernet/stmicro/stmmac/stmmac_main.c |   2 +-
+> >  drivers/net/fjes/fjes_main.c                  |   4 +-
+> >  drivers/nfc/pn544/i2c.c                       |   2 -
+> >  drivers/platform/x86/sony-laptop.c            |   1 -
+> >  drivers/scsi/isci/init.c                      |   6 +- =20
+>=20
+> I do see the value to backport the infrastructure, but why are driver spe=
+cific changes backported as well?
 
-Signed-off-by: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
-Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
----
- drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 2 ++
- 1 file changed, 2 insertions(+)
+They will be about removing local definitions of MIN() and MAX() freeing
+them up for simple implementations (usable as constant initialisers) and th=
+en
+using them in places where the compound statements in min() and max() can't
+be used.
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-index bf32572566c4..fbf5e999ca7a 100644
---- a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-+++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
-@@ -25,6 +25,7 @@
- #define POR				BIT(1)
- 
- #define USB_PHY_HS_PHY_CTRL_COMMON0	(0x54)
-+#define PHY_ENABLE			BIT(0)
- #define SIDDQ_SEL			BIT(1)
- #define SIDDQ				BIT(2)
- #define FSEL				GENMASK(6, 4)
-@@ -81,6 +82,7 @@ struct m31_eusb2_priv_data {
- static const struct m31_phy_tbl_entry m31_eusb2_setup_tbl[] = {
- 	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG0, UTMI_PHY_CMN_CTRL_OVERRIDE_EN, 1),
- 	M31_EUSB_PHY_INIT_CFG(USB_PHY_UTMI_CTRL5, POR, 1),
-+	M31_EUSB_PHY_INIT_CFG(USB_PHY_HS_PHY_CTRL_COMMON0, PHY_ENABLE, 1),
- 	M31_EUSB_PHY_INIT_CFG(USB_PHY_CFG1, PLL_EN, 1),
- 	M31_EUSB_PHY_INIT_CFG(USB_PHY_FSEL_SEL, FSEL_SEL, 1),
- };
+Linus did all those changes - so he didn't have to wait for the maintainers
+to apply the changes (etc).
+
+	David
+=20
+>=20
+> I mean the changes are most likely correct but also not valuable in anywa=
+y as bug fix.
+>=20
+> Regards,
+> Christian.
+>=20
+> >  .../pci/hive_isp_css_include/math_support.h   |   5 -
+> >  fs/btrfs/misc.h                               |   2 -
+> >  fs/btrfs/tree-checker.c                       |   2 +-
+> >  fs/ext2/balloc.c                              |   2 -
+> >  fs/ext4/ext4.h                                |   2 -
+> >  fs/ufs/util.h                                 |   6 -
+> >  include/linux/compiler.h                      |  15 +
+> >  include/linux/minmax.h                        | 267 ++++++++++++++----
+> >  include/linux/overflow.h                      |   1 -
+> >  include/linux/trace_events.h                  |   2 -
+> >  kernel/trace/preemptirq_delay_test.c          |   2 -
+> >  lib/btree.c                                   |   1 -
+> >  lib/decompress_unlzma.c                       |   2 +
+> >  lib/logic_pio.c                               |   3 -
+> >  lib/vsprintf.c                                |   2 +-
+> >  lib/zstd/zstd_internal.h                      |   2 -
+> >  mm/zsmalloc.c                                 |   1 -
+> >  net/ipv4/proc.c                               |   2 +-
+> >  net/ipv6/proc.c                               |   2 +-
+> >  net/netfilter/nf_nat_core.c                   |   6 +-
+> >  net/tipc/core.h                               |   2 +-
+> >  net/tipc/link.c                               |  10 +-
+> >  44 files changed, 306 insertions(+), 164 deletions(-)
+> >  =20
+>=20
+>=20
+
 
