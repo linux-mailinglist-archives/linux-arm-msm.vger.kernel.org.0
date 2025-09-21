@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-74358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74359-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60243B8DE53
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 18:07:46 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C683EB8DE65
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 18:08:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 165093AF95F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 16:07:45 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E49367B0422
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 16:06:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06DA91F91F6;
-	Sun, 21 Sep 2025 16:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 33D5321ABC9;
+	Sun, 21 Sep 2025 16:06:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GvotMVmn"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="E7k9rUms"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29149217659;
-	Sun, 21 Sep 2025 16:06:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 345F918E02A;
+	Sun, 21 Sep 2025 16:06:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758470799; cv=none; b=ppna0aw/rgBXOMzdKwoe3BLL7PwgQECnsLMtAzrYhXf+Y8OzAu1VcmRFLW1isdgHYRIFFhgvbhrNivFPqbYsxr0d4cYNO5bzYWze67aueQhrvJyEqiqvQWVBJ0v30SqP8A/XZjh0aKVJUESuujaNN1meQJWGAiTa/ixMvfdEurg=
+	t=1758470811; cv=none; b=OGvwn58fmzG0e3vqF/HvV7S/Vl3FvBuevmSMMGw854tOXDobSJGpPoo+FL0yS2eZMOVCbEGOMSTv27DQGe0z8riuI4d8++msVD2xrmvRScN6ShlI5w2PXViPzle8hmsmAyH9F+Qn5rAl6XcVy+ja76hblQEsFiEegUh44VjWow0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758470799; c=relaxed/simple;
-	bh=mxNKKeBXGKBUNR8BYD+IqMQnNtpJ62xKjUyrjGDUHB4=;
+	s=arc-20240116; t=1758470811; c=relaxed/simple;
+	bh=DbqOOI5Fz/lFkvjC03wJhfpZc/C9gNzxI/luNPSPyAk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ItLw/R026kwYEzr2off+OEWB44EgKpkwcMyMAZ6oIuS/DZuqIRL9HXHKi2mq8Q6hwIUEzlYa8L4yvR4u8jcJVySSroZXyCnnpwNbP70RhaWujQdDz348f4f+MSsTOxWo7cImfahxTwQwDCrpNSoTiuEaL29egenTnb/70D/tdh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GvotMVmn; arc=none smtp.client-ip=185.246.84.56
+	 MIME-Version; b=rqLXrF3aPJGaNjiZ3RnEcW6WpkulSZgEfXNy1KosKRJ31MibRUMjpOpDlFTr28ekhI7RMlUqZYFLF0jYPAyaJUZqiBjBzsVNtcKKi2qLoYWZ7QnS/Yl7UhpZxNPLz89SqPQwp4oUBL6bbc3WuSwCs83P16rf6wCQ6ycT1ogSOv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=E7k9rUms; arc=none smtp.client-ip=185.171.202.116
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id A5C311A053F;
-	Sun, 21 Sep 2025 16:06:36 +0000 (UTC)
+	by smtpout-04.galae.net (Postfix) with ESMTPS id E19D4C8F46A;
+	Sun, 21 Sep 2025 16:06:30 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 7B57B60634;
-	Sun, 21 Sep 2025 16:06:36 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 89423102F17CA;
-	Sun, 21 Sep 2025 18:06:24 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id CC5CA60634;
+	Sun, 21 Sep 2025 16:06:47 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 39F84102F17C0;
+	Sun, 21 Sep 2025 18:06:35 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1758470795; h=from:subject:date:message-id:to:cc:mime-version:
+	t=1758470806; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=3iQPgBitT0sQKwgb8teB2uqJP8R29q/Dxra69fQyLCY=;
-	b=GvotMVmnIGWLlUVp8tWx4wBifolOSnThT54ER6bGYD56sGNFLf+Xj8RXbm7hmROqIXB3C6
-	A+89dxrIZK4ikCWkO84I+dNuwv7AZO8Tnr8QRblDNR7vVF0a04y3jNr+Zrg2+DSzhKS6F6
-	4n0qAykqkjN+A2c51CKb/qqPjHUQaMJTCkzyEOsE+8a5tCSy5QIVCMv1+hreKRHz6WALm0
-	75lr6uaqBEO5MISCsiqspM45Q54kYziB6kA+hlUHxmDIwcR2p3lv7dGctqVNzJNnhgUXW6
-	aGj4af3/j+c1c3PtVCbxygvOGhWHZXP7ZEQrhsBSN3ZgNStfgUnKQR7HnkhC5Q==
+	bh=xwNwjpxn2Scs1djWjvIAB2Y7ftqiaveNW9zzbvGC4GU=;
+	b=E7k9rUms4AcnFDctRHlGxHJ5cqXitxgN8ktUR5Me7vzgsYzBbpfvwE1yBQ9iSYu97hI9gL
+	AqgTtCHEICDWeSFnnu2KE/nmvz78pHjV2YvxiO+draj2UKI1U97L+QD92bbgQadZsJPk5A
+	qz1kBnPLhsWI0mD4QXIJXmeW3oO6zK97aihoENuMZkMnBWATjNjNkeN5mynDuiJ+RCOfxk
+	u0OnrMWX9H2VEler9iLlYLnorIU/IouJkU+NFMiQhSpwUm3InCEzTLxcpiZk7svhZ4/zQ4
+	cvR4Rd3UO/kiifnEm+eGxfLIbgMvBjGtF1PaMAybmCnYD9+HuSzCIVQ185x0QA==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -81,9 +81,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH net-next v13 07/18] net: phy: Create a phy_port for PHY-driven SFPs
-Date: Sun, 21 Sep 2025 21:34:05 +0530
-Message-ID: <20250921160419.333427-8-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v13 08/18] net: phylink: Move phylink_interface_max_speed to phy_caps
+Date: Sun, 21 Sep 2025 21:34:06 +0530
+Message-ID: <20250921160419.333427-9-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250921160419.333427-1-maxime.chevallier@bootlin.com>
 References: <20250921160419.333427-1-maxime.chevallier@bootlin.com>
@@ -96,19 +96,10 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-Some PHY devices may be used as media-converters to drive SFP ports (for
-example, to allow using SFP when the SoC can only output RGMII). This is
-already supported to some extend by allowing PHY drivers to registers
-themselves as being SFP upstream.
-
-However, the logic to drive the SFP can actually be split to a per-port
-control logic, allowing support for multi-port PHYs, or PHYs that can
-either drive SFPs or Copper.
-
-To that extent, create a phy_port when registering an SFP bus onto a
-PHY. This port is considered a "serdes" port, in that it can feed data
-to anther entity on the link. The PHY driver needs to specify the
-various PHY_INTERFACE_MODE_XXX that this port supports.
+The phylink_interface_max_speed() retrieves the max achievable speed
+on a MII interface. This logic needs to be re-used in other parts of the
+PHY stack, let's move it to phy_caps as it already contains most of the
+interface attribute accessors.
 
 Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
@@ -116,78 +107,237 @@ Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- drivers/net/phy/phy_device.c | 24 ++++++++++++++++++++++++
- drivers/net/phy/phy_port.c   | 15 +++++++++++++++
- 2 files changed, 39 insertions(+)
+ drivers/net/phy/phy-caps.h |  1 +
+ drivers/net/phy/phy_caps.c | 80 +++++++++++++++++++++++++++++++++++
+ drivers/net/phy/phylink.c  | 87 ++------------------------------------
+ 3 files changed, 85 insertions(+), 83 deletions(-)
 
-diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
-index e8708bc9739c..786e20307943 100644
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1631,6 +1631,26 @@ static void phy_del_port(struct phy_device *phydev, struct phy_port *port)
- 	phydev->n_ports--;
- }
+diff --git a/drivers/net/phy/phy-caps.h b/drivers/net/phy/phy-caps.h
+index 01df1bdc1516..ba81cd75e122 100644
+--- a/drivers/net/phy/phy-caps.h
++++ b/drivers/net/phy/phy-caps.h
+@@ -49,6 +49,7 @@ void phy_caps_linkmode_max_speed(u32 max_speed, unsigned long *linkmodes);
+ bool phy_caps_valid(int speed, int duplex, const unsigned long *linkmodes);
+ void phy_caps_linkmodes(unsigned long caps, unsigned long *linkmodes);
+ unsigned long phy_caps_from_interface(phy_interface_t interface);
++int phy_caps_interface_max_speed(phy_interface_t interface);
  
-+static int phy_setup_sfp_port(struct phy_device *phydev)
+ const struct link_capabilities *
+ phy_caps_lookup_by_linkmode(const unsigned long *linkmodes);
+diff --git a/drivers/net/phy/phy_caps.c b/drivers/net/phy/phy_caps.c
+index e4efd5c477b4..b38c567ec6ef 100644
+--- a/drivers/net/phy/phy_caps.c
++++ b/drivers/net/phy/phy_caps.c
+@@ -440,3 +440,83 @@ u32 phy_caps_mediums_from_linkmodes(unsigned long *linkmodes)
+ 	return mediums;
+ }
+ EXPORT_SYMBOL_GPL(phy_caps_mediums_from_linkmodes);
++
++/**
++ * phy_caps_interface_max_speed() - get the maximum speed of a phy interface
++ * @interface: phy interface mode defined by &typedef phy_interface_t
++ *
++ * Determine the maximum speed of a phy interface. This is intended to help
++ * determine the correct speed to pass to the MAC when the phy is performing
++ * rate matching.
++ *
++ * Return: The maximum speed of @interface
++ */
++int phy_caps_interface_max_speed(phy_interface_t interface)
 +{
-+	struct phy_port *port = phy_port_alloc();
++	switch (interface) {
++	case PHY_INTERFACE_MODE_100BASEX:
++	case PHY_INTERFACE_MODE_REVRMII:
++	case PHY_INTERFACE_MODE_RMII:
++	case PHY_INTERFACE_MODE_SMII:
++	case PHY_INTERFACE_MODE_REVMII:
++	case PHY_INTERFACE_MODE_MII:
++	case PHY_INTERFACE_MODE_MIILITE:
++		return SPEED_100;
 +
-+	if (!port)
-+		return -ENOMEM;
++	case PHY_INTERFACE_MODE_TBI:
++	case PHY_INTERFACE_MODE_MOCA:
++	case PHY_INTERFACE_MODE_RTBI:
++	case PHY_INTERFACE_MODE_1000BASEX:
++	case PHY_INTERFACE_MODE_1000BASEKX:
++	case PHY_INTERFACE_MODE_TRGMII:
++	case PHY_INTERFACE_MODE_RGMII_TXID:
++	case PHY_INTERFACE_MODE_RGMII_RXID:
++	case PHY_INTERFACE_MODE_RGMII_ID:
++	case PHY_INTERFACE_MODE_RGMII:
++	case PHY_INTERFACE_MODE_PSGMII:
++	case PHY_INTERFACE_MODE_QSGMII:
++	case PHY_INTERFACE_MODE_QUSGMII:
++	case PHY_INTERFACE_MODE_SGMII:
++	case PHY_INTERFACE_MODE_GMII:
++		return SPEED_1000;
 +
-+	port->parent_type = PHY_PORT_PHY;
-+	port->phy = phydev;
++	case PHY_INTERFACE_MODE_2500BASEX:
++	case PHY_INTERFACE_MODE_10G_QXGMII:
++		return SPEED_2500;
 +
-+	/* The PHY is a media converter, the port connected to the SFP cage
-+	 * is a MII port.
-+	 */
-+	port->is_mii = true;
++	case PHY_INTERFACE_MODE_5GBASER:
++		return SPEED_5000;
 +
-+	phy_add_port(phydev, port);
++	case PHY_INTERFACE_MODE_XGMII:
++	case PHY_INTERFACE_MODE_RXAUI:
++	case PHY_INTERFACE_MODE_XAUI:
++	case PHY_INTERFACE_MODE_10GBASER:
++	case PHY_INTERFACE_MODE_10GKR:
++	case PHY_INTERFACE_MODE_USXGMII:
++		return SPEED_10000;
 +
-+	return 0;
-+}
++	case PHY_INTERFACE_MODE_25GBASER:
++		return SPEED_25000;
 +
- /**
-  * phy_sfp_probe - probe for a SFP cage attached to this PHY device
-  * @phydev: Pointer to phy_device
-@@ -1652,6 +1672,10 @@ int phy_sfp_probe(struct phy_device *phydev,
- 		ret = sfp_bus_add_upstream(bus, phydev, ops);
- 		sfp_bus_put(bus);
- 	}
++	case PHY_INTERFACE_MODE_XLGMII:
++		return SPEED_40000;
 +
-+	if (phydev->sfp_bus)
-+		ret = phy_setup_sfp_port(phydev);
++	case PHY_INTERFACE_MODE_50GBASER:
++	case PHY_INTERFACE_MODE_LAUI:
++		return SPEED_50000;
 +
- 	return ret;
- }
- EXPORT_SYMBOL(phy_sfp_probe);
-diff --git a/drivers/net/phy/phy_port.c b/drivers/net/phy/phy_port.c
-index cf897ed74c4c..6fecaa68350e 100644
---- a/drivers/net/phy/phy_port.c
-+++ b/drivers/net/phy/phy_port.c
-@@ -113,6 +113,21 @@ void phy_port_update_supported(struct phy_port *port)
- 		phy_caps_medium_get_supported(supported, i, port->lanes);
- 		linkmode_or(port->supported, port->supported, supported);
- 	}
++	case PHY_INTERFACE_MODE_100GBASEP:
++		return SPEED_100000;
 +
-+	/* Serdes ports supported through SFP may not have any medium set,
-+	 * as they will output PHY_INTERFACE_MODE_XXX modes. In that case, derive
-+	 * the supported list based on these interfaces
-+	 */
-+	if (port->is_mii && linkmode_empty(supported)) {
-+		unsigned long interface, link_caps = 0;
-+
-+		/* Get each interface's caps */
-+		for_each_set_bit(interface, port->interfaces,
-+				 PHY_INTERFACE_MODE_MAX)
-+			link_caps |= phy_caps_from_interface(interface);
-+
-+		phy_caps_linkmodes(link_caps, port->supported);
++	case PHY_INTERFACE_MODE_INTERNAL:
++	case PHY_INTERFACE_MODE_NA:
++	case PHY_INTERFACE_MODE_MAX:
++		/* No idea! Garbage in, unknown out */
++		return SPEED_UNKNOWN;
 +	}
++
++	/* If we get here, someone forgot to add an interface mode above */
++	WARN_ON_ONCE(1);
++	return SPEED_UNKNOWN;
++}
++EXPORT_SYMBOL_GPL(phy_caps_interface_max_speed);
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index 1b06805f1bd7..6e667a2aa374 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -220,85 +220,6 @@ static unsigned int phylink_interface_signal_rate(phy_interface_t interface)
+ 	}
  }
- EXPORT_SYMBOL_GPL(phy_port_update_supported);
  
+-/**
+- * phylink_interface_max_speed() - get the maximum speed of a phy interface
+- * @interface: phy interface mode defined by &typedef phy_interface_t
+- *
+- * Determine the maximum speed of a phy interface. This is intended to help
+- * determine the correct speed to pass to the MAC when the phy is performing
+- * rate matching.
+- *
+- * Return: The maximum speed of @interface
+- */
+-static int phylink_interface_max_speed(phy_interface_t interface)
+-{
+-	switch (interface) {
+-	case PHY_INTERFACE_MODE_100BASEX:
+-	case PHY_INTERFACE_MODE_REVRMII:
+-	case PHY_INTERFACE_MODE_RMII:
+-	case PHY_INTERFACE_MODE_SMII:
+-	case PHY_INTERFACE_MODE_REVMII:
+-	case PHY_INTERFACE_MODE_MII:
+-	case PHY_INTERFACE_MODE_MIILITE:
+-		return SPEED_100;
+-
+-	case PHY_INTERFACE_MODE_TBI:
+-	case PHY_INTERFACE_MODE_MOCA:
+-	case PHY_INTERFACE_MODE_RTBI:
+-	case PHY_INTERFACE_MODE_1000BASEX:
+-	case PHY_INTERFACE_MODE_1000BASEKX:
+-	case PHY_INTERFACE_MODE_TRGMII:
+-	case PHY_INTERFACE_MODE_RGMII_TXID:
+-	case PHY_INTERFACE_MODE_RGMII_RXID:
+-	case PHY_INTERFACE_MODE_RGMII_ID:
+-	case PHY_INTERFACE_MODE_RGMII:
+-	case PHY_INTERFACE_MODE_PSGMII:
+-	case PHY_INTERFACE_MODE_QSGMII:
+-	case PHY_INTERFACE_MODE_QUSGMII:
+-	case PHY_INTERFACE_MODE_SGMII:
+-	case PHY_INTERFACE_MODE_GMII:
+-		return SPEED_1000;
+-
+-	case PHY_INTERFACE_MODE_2500BASEX:
+-	case PHY_INTERFACE_MODE_10G_QXGMII:
+-		return SPEED_2500;
+-
+-	case PHY_INTERFACE_MODE_5GBASER:
+-		return SPEED_5000;
+-
+-	case PHY_INTERFACE_MODE_XGMII:
+-	case PHY_INTERFACE_MODE_RXAUI:
+-	case PHY_INTERFACE_MODE_XAUI:
+-	case PHY_INTERFACE_MODE_10GBASER:
+-	case PHY_INTERFACE_MODE_10GKR:
+-	case PHY_INTERFACE_MODE_USXGMII:
+-		return SPEED_10000;
+-
+-	case PHY_INTERFACE_MODE_25GBASER:
+-		return SPEED_25000;
+-
+-	case PHY_INTERFACE_MODE_XLGMII:
+-		return SPEED_40000;
+-
+-	case PHY_INTERFACE_MODE_50GBASER:
+-	case PHY_INTERFACE_MODE_LAUI:
+-		return SPEED_50000;
+-
+-	case PHY_INTERFACE_MODE_100GBASEP:
+-		return SPEED_100000;
+-
+-	case PHY_INTERFACE_MODE_INTERNAL:
+-	case PHY_INTERFACE_MODE_NA:
+-	case PHY_INTERFACE_MODE_MAX:
+-		/* No idea! Garbage in, unknown out */
+-		return SPEED_UNKNOWN;
+-	}
+-
+-	/* If we get here, someone forgot to add an interface mode above */
+-	WARN_ON_ONCE(1);
+-	return SPEED_UNKNOWN;
+-}
+-
+ static struct {
+ 	unsigned long mask;
+ 	int speed;
+@@ -432,7 +353,7 @@ static unsigned long phylink_get_capabilities(phy_interface_t interface,
+ 					      int rate_matching)
+ {
+ 	unsigned long link_caps = phy_caps_from_interface(interface);
+-	int max_speed = phylink_interface_max_speed(interface);
++	int max_speed = phy_caps_interface_max_speed(interface);
+ 	unsigned long caps = MAC_SYM_PAUSE | MAC_ASYM_PAUSE;
+ 	unsigned long matched_caps = 0;
+ 
+@@ -1539,7 +1460,7 @@ static void phylink_link_up(struct phylink *pl,
+ 		 * the link_state) to the interface speed, and will send
+ 		 * pause frames to the MAC to limit its transmission speed.
+ 		 */
+-		speed = phylink_interface_max_speed(link_state.interface);
++		speed = phy_caps_interface_max_speed(link_state.interface);
+ 		duplex = DUPLEX_FULL;
+ 		rx_pause = true;
+ 		break;
+@@ -1549,7 +1470,7 @@ static void phylink_link_up(struct phylink *pl,
+ 		 * the link_state) to the interface speed, and will cause
+ 		 * collisions to the MAC to limit its transmission speed.
+ 		 */
+-		speed = phylink_interface_max_speed(link_state.interface);
++		speed = phy_caps_interface_max_speed(link_state.interface);
+ 		duplex = DUPLEX_HALF;
+ 		break;
+ 	}
+@@ -2757,7 +2678,7 @@ static phy_interface_t phylink_sfp_select_interface_speed(struct phylink *pl,
+ 		if (!test_bit(interface, pl->sfp_interfaces))
+ 			continue;
+ 
+-		max_speed = phylink_interface_max_speed(interface);
++		max_speed = phy_caps_interface_max_speed(interface);
+ 
+ 		/* The logic here is: if speed == max_speed, then we've found
+ 		 * the best interface. Otherwise we find the interface that
 -- 
 2.49.0
 
