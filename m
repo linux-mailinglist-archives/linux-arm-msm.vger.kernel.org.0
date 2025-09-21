@@ -1,258 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-74369-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74370-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07D16B8DF34
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 18:13:08 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C9FCB8E1D0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 19:28:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A09921638DB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 16:12:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DD1C5189BBBD
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 17:29:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D32F8242D91;
-	Sun, 21 Sep 2025 16:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C080526C386;
+	Sun, 21 Sep 2025 17:28:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="ly8ICvH9"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oNji14LK"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DCD2264CB;
-	Sun, 21 Sep 2025 16:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62AB918EB0;
+	Sun, 21 Sep 2025 17:28:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758470933; cv=none; b=OKojNRfFErt5hOnMc8RM7CRr7uZU3tynqX80FsALlCFbDGFCclyo82FA5EsT5zHRLyec3cvT3H/HvWmx/udcqHTnIjC5IYWB3Xnp2odVFq/KSlC6bcUM51OVlOInzxFrO3hiWYA7JWIjFK28LqSt7F0J3yepj643y3iJM2SKrz0=
+	t=1758475727; cv=none; b=sOJy37ZvvJF/rleRS3I9lBsWgsAGi53Q3oecgGwlPpWKNDLb5yHMuzKhG/TjnU7nrN6PDBmu96r/NQmb/MCI1BaDmdKaaN1K2VGoeapNHb0Nhj92zm2Ybtoe32gaVf9U9Ynse7RykB0RwTEDQKQ+x0tNivJ6qVIuHb4Hir4mlsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758470933; c=relaxed/simple;
-	bh=Tvb35KEawGTvQfq3pB9sAjTfPFVAx012pMEh8wggDnI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V0I0wjaxIfbjIoyiknVlo2ZZjxAUlzjg8oIz6tpte6FEQIFKuiwHpX6fpysWTEBTNN5x159/pKc/L/BJQGs4r+jj/ak6rPieV1mv4IlI2YyHIrJD/BfsBfM1lWXb1pRek/xBKzz7/9qwwWmzlPxhe5CdZGKAmq5ktWWF3xagI2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=ly8ICvH9; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id 6A3E44E40D1D;
-	Sun, 21 Sep 2025 16:08:50 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 38BC460634;
-	Sun, 21 Sep 2025 16:08:50 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 8D9B3102F17CA;
-	Sun, 21 Sep 2025 18:08:37 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1758470929; h=from:subject:date:message-id:to:cc:mime-version:
-	 content-transfer-encoding:in-reply-to:references;
-	bh=5CzxrENjKwpRWc59vERhlxTpCoVgt4s24AiBGvpC4bg=;
-	b=ly8ICvH9i0Rz73HLK38mh8W2mkKdweWYopeZ19de+lGgM6heL8cdIQZnXfxdBgwuJIvP1O
-	gNjE+NiwfWj+zgJp6l9jAMEdjXnke5rrMUKxsFwKpX8NTiQYGuwCak6g73RSyu5c7x7+sV
-	p1zkfTmpzjF6S74Mbcr8NTfWOW1uovJb+tNLcw2z+XbdcTnnjMZWEANyxOefWChlaSrYse
-	3a4qo2PzT1I3a2t4u93dzrNJJejTwFtiFip3U18MRj/QtaUk7lpbpt6/2Y3YfJDIhd1WFd
-	xMtb7I80PPTOGam7BV6Bd4L1LjhS7WQ8PfQolleGbK8gXDR9gTiZ0ZSUbTU40g==
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-To: davem@davemloft.net
-Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	netdev@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	thomas.petazzoni@bootlin.com,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Russell King <linux@armlinux.org.uk>,
-	linux-arm-kernel@lists.infradead.org,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Herve Codina <herve.codina@bootlin.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?K=C3=B6ry=20Maincent?= <kory.maincent@bootlin.com>,
-	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	=?UTF-8?q?Nicol=C3=B2=20Veronese?= <nicveronese@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	mwojtas@chromium.org,
-	Antoine Tenart <atenart@kernel.org>,
-	devicetree@vger.kernel.org,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Romain Gantois <romain.gantois@bootlin.com>,
-	Daniel Golle <daniel@makrotopia.org>,
-	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH net-next v13 18/18] Documentation: networking: Document the phy_port infrastructure
-Date: Sun, 21 Sep 2025 21:34:16 +0530
-Message-ID: <20250921160419.333427-19-maxime.chevallier@bootlin.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250921160419.333427-1-maxime.chevallier@bootlin.com>
-References: <20250921160419.333427-1-maxime.chevallier@bootlin.com>
+	s=arc-20240116; t=1758475727; c=relaxed/simple;
+	bh=OhAKhAi+AnzI3Qc3qjl3chOvflGQ1Z6G7nQKCQgIA6k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JuPr5dIW1ixZuyWe44ZzOdSr41wfxfYgGXFy7a7pxwkDbkKRnRPNgsnZ0o4s8njNs/JgwyQiuLityq6PZVdZVBpcf9DMX1bw9BJr6PThPXIjlJcYu3m+6BryRzjSPCuFGL9MI2ZqDmdbwG97mDa9bsddGcdpuCbPDxCOgxre/mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oNji14LK; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22692C4CEE7;
+	Sun, 21 Sep 2025 17:28:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1758475727;
+	bh=OhAKhAi+AnzI3Qc3qjl3chOvflGQ1Z6G7nQKCQgIA6k=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oNji14LKsaN74d6/6VxXQLAaEWqiMK1odhhlWG54PmdesR086HbzOQPsvLp4l8W8h
+	 erd/geKCs7blyB1imhKlNfDZtIHl2vwbNw8z3TSYAfWxPI4STRspwkbfLQuyq+0pRc
+	 wfxpVS7OtRaNl868jtRKMkgfZDW20Ck1f7t2BQsw=
+Date: Sun, 21 Sep 2025 19:28:44 +0200
+From: Greg KH <gregkh@linuxfoundation.org>
+To: Eliav Farber <farbere@amazon.com>
+Cc: linux@armlinux.org.uk, jdike@addtoit.com, richard@nod.at,
+	anton.ivanov@cambridgegreys.com, dave.hansen@linux.intel.com,
+	luto@kernel.org, peterz@infradead.org, tglx@linutronix.de,
+	mingo@redhat.com, bp@alien8.de, x86@kernel.org, hpa@zytor.com,
+	tony.luck@intel.com, qiuxu.zhuo@intel.com, mchehab@kernel.org,
+	james.morse@arm.com, rric@kernel.org, harry.wentland@amd.com,
+	sunpeng.li@amd.com, alexander.deucher@amd.com,
+	christian.koenig@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+	evan.quan@amd.com, james.qian.wang@arm.com, liviu.dudau@arm.com,
+	mihail.atanassov@arm.com, brian.starkey@arm.com,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	tzimmermann@suse.de, robdclark@gmail.com, sean@poorly.run,
+	jdelvare@suse.com, linux@roeck-us.net, fery@cypress.com,
+	dmitry.torokhov@gmail.com, agk@redhat.com, snitzer@redhat.com,
+	dm-devel@redhat.com, rajur@chelsio.com, davem@davemloft.net,
+	kuba@kernel.org, peppe.cavallaro@st.com, alexandre.torgue@st.com,
+	joabreu@synopsys.com, mcoquelin.stm32@gmail.com, malattia@linux.it,
+	hdegoede@redhat.com, mgross@linux.intel.com,
+	intel-linux-scu@intel.com, artur.paszkiewicz@intel.com,
+	jejb@linux.ibm.com, martin.petersen@oracle.com,
+	sakari.ailus@linux.intel.com, clm@fb.com, josef@toxicpanda.com,
+	dsterba@suse.com, jack@suse.com, tytso@mit.edu,
+	adilger.kernel@dilger.ca, dushistov@mail.ru,
+	luc.vanoostenryck@gmail.com, rostedt@goodmis.org, pmladek@suse.com,
+	sergey.senozhatsky@gmail.com, andriy.shevchenko@linux.intel.com,
+	linux@rasmusvillemoes.dk, minchan@kernel.org, ngupta@vflare.org,
+	akpm@linux-foundation.org, kuznet@ms2.inr.ac.ru,
+	yoshfuji@linux-ipv6.org, pablo@netfilter.org, kadlec@netfilter.org,
+	fw@strlen.de, jmaloy@redhat.com, ying.xue@windriver.com,
+	willy@infradead.org, sashal@kernel.org, ruanjinjie@huawei.com,
+	David.Laight@aculab.com, herve.codina@bootlin.com, Jason@zx2c4.com,
+	bvanassche@acm.org, keescook@chromium.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-um@lists.infradead.org, linux-edac@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	linux-hwmon@vger.kernel.org, linux-input@vger.kernel.org,
+	linux-media@vger.kernel.org, netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	platform-driver-x86@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-staging@lists.linux.dev, linux-btrfs@vger.kernel.org,
+	linux-ext4@vger.kernel.org, linux-sparse@vger.kernel.org,
+	linux-mm@kvack.org, netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org, tipc-discussion@lists.sourceforge.net,
+	stable@vger.kernel.org, jonnyc@amazon.com
+Subject: Re: [PATCH 00/27 5.10.y] Backport minmax.h updates from v6.17-rc6
+Message-ID: <2025092136-unelected-skirt-d91d@gregkh>
+References: <20250919101727.16152-1-farbere@amazon.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250919101727.16152-1-farbere@amazon.com>
 
-This documentation aims at describing the main goal of the phy_port
-infrastructure.
+On Fri, Sep 19, 2025 at 10:17:00AM +0000, Eliav Farber wrote:
+> This series includes a total of 27 patches, to align minmax.h of
+> v5.15.y with v6.17-rc6.
+> 
+> The set consists of 24 commits that directly update minmax.h:
+> 1) 92d23c6e9415 ("overflow, tracing: Define the is_signed_type() macro
+>    once")
 
-Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
----
- Documentation/networking/index.rst    |   1 +
- Documentation/networking/phy-port.rst | 111 ++++++++++++++++++++++++++
- MAINTAINERS                           |   1 +
- 3 files changed, 113 insertions(+)
- create mode 100644 Documentation/networking/phy-port.rst
+But this isn't in 5.15.y, so how is this syncing things up?
 
-diff --git a/Documentation/networking/index.rst b/Documentation/networking/index.rst
-index c775cababc8c..915c27977756 100644
---- a/Documentation/networking/index.rst
-+++ b/Documentation/networking/index.rst
-@@ -96,6 +96,7 @@ Contents:
-    packet_mmap
-    phonet
-    phy-link-topology
-+   phy-port
-    pktgen
-    plip
-    ppp_generic
-diff --git a/Documentation/networking/phy-port.rst b/Documentation/networking/phy-port.rst
-new file mode 100644
-index 000000000000..6d9d46ebe438
---- /dev/null
-+++ b/Documentation/networking/phy-port.rst
-@@ -0,0 +1,111 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+.. _phy_port:
-+
-+=================
-+Ethernet ports
-+=================
-+
-+This document is a basic description of the phy_port infrastructure,
-+introduced to represent physical interfaces of Ethernet devices.
-+
-+Without phy_port, we already have quite a lot of information about what the
-+media-facing interface of a NIC can do and looks like, through the
-+:c:type:`struct ethtool_link_ksettings <ethtool_link_ksettings>` attributes,
-+which includes :
-+
-+ - What the NIC can do through the :c:member:`supported` field
-+ - What the Link Partner advertises through :c:member:`lp_advertising`
-+ - Which features we're advertising through :c:member:`advertising`
-+
-+We also have info about the number of lanes and the PORT type. These settings
-+are built by aggregating together information reported by various devices that
-+are sitting on the link :
-+
-+  - The NIC itself, through the :c:member:`get_link_ksettings` callback
-+  - Precise information from the MAC and PCS by using phylink in the MAC driver
-+  - Information reported by the PHY device
-+  - Information reported by an SFP module (which can itself include a PHY)
-+
-+This model however starts showing its limitations when we consider devices that
-+have more than one media interface. In such a case, only information about the
-+actively used interface is reported, and it's not possible to know what the
-+other interfaces can do. In fact, we have very few information about whether or
-+not there are any other media interfaces.
-+
-+The goal of the phy_port representation is to provide a way of representing a
-+physical interface of a NIC, regardless of what is driving the port (NIC through
-+a firmware, SFP module, Ethernet PHY).
-+
-+Multi-port interfaces examples
-+==============================
-+
-+Several cases of multi-interface NICs have been observed so far :
-+
-+Internal MII Mux::
-+
-+  +------------------+
-+  | SoC              |
-+  |          +-----+ |           +-----+
-+  | +-----+  |     |-------------| PHY |
-+  | | MAC |--| Mux | |   +-----+ +-----+
-+  | +-----+  |     |-----| SFP |
-+  |          +-----+ |   +-----+
-+  +------------------+
-+
-+Internal Mux with internal PHY::
-+
-+  +------------------------+
-+  | SoC                    |
-+  |          +-----+ +-----+
-+  | +-----+  |     |-| PHY |
-+  | | MAC |--| Mux | +-----+   +-----+
-+  | +-----+  |     |-----------| SFP |
-+  |          +-----+       |   +-----+
-+  +------------------------+
-+
-+External Mux::
-+
-+  +---------+
-+  | SoC     |  +-----+  +-----+
-+  |         |  |     |--| PHY |
-+  | +-----+ |  |     |  +-----+
-+  | | MAC |----| Mux |  +-----+
-+  | +-----+ |  |     |--| PHY |
-+  |         |  +-----+  +-----+
-+  |         |     |
-+  |    GPIO-------+
-+  +---------+
-+
-+Double-port PHY::
-+
-+  +---------+
-+  | SoC     | +-----+
-+  |         | |     |--- RJ45
-+  | +-----+ | |     |
-+  | | MAC |---| PHY |   +-----+
-+  | +-----+ | |     |---| SFP |
-+  +---------+ +-----+   +-----+
-+
-+phy_port aims at providing a path to support all the above topologies, by
-+representing the media interfaces in a way that's agnostic to what's driving
-+the interface. the struct phy_port object has its own set of callback ops, and
-+will eventually be able to report its own ksettings::
-+
-+             _____      +------+
-+            (     )-----| Port |
-+ +-----+   (       )    +------+
-+ | MAC |--(   ???   )
-+ +-----+   (       )    +------+
-+            (_____)-----| Port |
-+                        +------+
-+
-+Next steps
-+==========
-+
-+As of writing this documentation, only ports controlled by PHY devices are
-+supported. The next steps will be to add the Netlink API to expose these
-+to userspace and add support for raw ports (controlled by some firmware, and directly
-+managed by the NIC driver).
-+
-+Another parallel task is the introduction of a MII muxing framework to allow the
-+control of non-PHY driver multi-port setups.
-diff --git a/MAINTAINERS b/MAINTAINERS
-index ec8815007467..24c0ff188d2f 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -9118,6 +9118,7 @@ F:	Documentation/devicetree/bindings/net/ethernet-connector.yaml
- F:	Documentation/devicetree/bindings/net/ethernet-phy.yaml
- F:	Documentation/devicetree/bindings/net/mdio*
- F:	Documentation/devicetree/bindings/net/qca,ar803x.yaml
-+F:	Documentation/networking/phy-port.rst
- F:	Documentation/networking/phy.rst
- F:	drivers/net/mdio/
- F:	drivers/net/mdio/acpi_mdio.c
--- 
-2.49.0
+I'm all for this, but I got confused here, at the first commit :)
 
+> 2) 5efcecd9a3b1 ("minmax: sanity check constant bounds when clamping")
+
+
+
+> 3) 2122e2a4efc2 ("minmax: clamp more efficiently by avoiding extra
+>    comparison")
+> 4) f9bff0e31881 ("minmax: add in_range() macro")
+> 5) c952c748c7a9 ("minmax: Introduce {min,max}_array()")
+> 6) 5e57418a2031 ("minmax: deduplicate __unconst_integer_typeof()")
+> 7) f6e9d38f8eb0 ("minmax: fix header inclusions")
+> 8) d03eba99f5bf ("minmax: allow min()/max()/clamp() if the arguments
+>    have the same signedness.")
+> 9) f4b84b2ff851 ("minmax: fix indentation of __cmp_once() and
+>    __clamp_once()")
+> 10) 4ead534fba42 ("minmax: allow comparisons of 'int' against 'unsigned
+>     char/short'")
+> 11) 867046cc7027 ("minmax: relax check to allow comparison between
+>     unsigned arguments and signed constants")
+> 12) 3a7e02c040b1 ("minmax: avoid overly complicated constant
+>     expressions in VM code")
+> 14) 017fa3e89187 ("minmax: simplify and clarify min_t()/max_t()
+>     implementation")
+> 15) 1a251f52cfdc ("minmax: make generic MIN() and MAX() macros
+>     available everywhere")
+> 18) dc1c8034e31b ("minmax: simplify min()/max()/clamp()
+>     implementation")
+> 19) 22f546873149 ("minmax: improve macro expansion and type
+>     checking")
+> 20) 21b136cc63d2 ("minmax: fix up min3() and max3() too")
+> 21) 71ee9b16251e ("minmax.h: add whitespace around operators and after
+>     commas")
+> 22) 10666e992048 ("minmax.h: update some comments")
+> 23) b280bb27a9f7 ("minmax.h: reduce the #define expansion of min(),
+>     max() and clamp()")
+> 24) a5743f32baec ("minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi
+>     test in clamp()")
+> 25) c3939872ee4a ("minmax.h: move all the clamp() definitions after the
+>     min/max() ones")
+> 26) 495bba17cdf9 ("minmax.h: simplify the variants of clamp()")
+> 27) 2b97aaf74ed5 ("minmax.h: remove some #defines that are only
+>     expanded once")
+
+Some of these are also only in newer kernels, which, as you know, is
+generally a bad thing (i.e. I can't take patches only for older
+kernels.)
+
+I want these changes, as they are great, but can you perhaps provide
+patch series for newer kernels first so that I can then take these?
+
+thanks,
+
+greg k-h
 
