@@ -1,53 +1,53 @@
-Return-Path: <linux-arm-msm+bounces-74357-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74358-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D902B8DE50
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 18:07:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60243B8DE53
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 18:07:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4E087189BDBF
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 16:08:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 165093AF95F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 21 Sep 2025 16:07:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 25B0D21773F;
-	Sun, 21 Sep 2025 16:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 06DA91F91F6;
+	Sun, 21 Sep 2025 16:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="Va35oROP"
+	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GvotMVmn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-04.galae.net (smtpout-04.galae.net [185.171.202.116])
+Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDA71CF5C6
-	for <linux-arm-msm@vger.kernel.org>; Sun, 21 Sep 2025 16:06:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.171.202.116
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29149217659;
+	Sun, 21 Sep 2025 16:06:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758470793; cv=none; b=o0J/vcSqNwjYSrFagSaeE/vh2gUMCYVwpPeQ6ADfTx9oiLyFAom7BW4+iCsrVRpi2l0xjnEy97n//hyMdmtroXYnbdKvzGI7Zs6DBmSCc5c5w92EaEJX2wQfA/W8NIy5dJPSJpwxHTfKv+ao7ySaA8tZkYd1/6YwFzU+2DC25qQ=
+	t=1758470799; cv=none; b=ppna0aw/rgBXOMzdKwoe3BLL7PwgQECnsLMtAzrYhXf+Y8OzAu1VcmRFLW1isdgHYRIFFhgvbhrNivFPqbYsxr0d4cYNO5bzYWze67aueQhrvJyEqiqvQWVBJ0v30SqP8A/XZjh0aKVJUESuujaNN1meQJWGAiTa/ixMvfdEurg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758470793; c=relaxed/simple;
-	bh=IUCVK1zPKshv2Ku76C1FnxyAUScuBWDG8OHsbAAf8ck=;
+	s=arc-20240116; t=1758470799; c=relaxed/simple;
+	bh=mxNKKeBXGKBUNR8BYD+IqMQnNtpJ62xKjUyrjGDUHB4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j0BU3zVEJw7C20Vm0UGuL30GLp8RgNoWhmSUN8riRE3GVJw5gobMaUOMVjqi2ipQJcguUbCQVl+SvWMfZoghDy3JN2cbGivQZrWFCjR+uDJ+C9KfkMYE1kdDm2RqdlMkXYo0VeESLzux+jMjxoZcaut8DLHkZ77PAQ1doFWPUxs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=Va35oROP; arc=none smtp.client-ip=185.171.202.116
+	 MIME-Version; b=ItLw/R026kwYEzr2off+OEWB44EgKpkwcMyMAZ6oIuS/DZuqIRL9HXHKi2mq8Q6hwIUEzlYa8L4yvR4u8jcJVySSroZXyCnnpwNbP70RhaWujQdDz348f4f+MSsTOxWo7cImfahxTwQwDCrpNSoTiuEaL29egenTnb/70D/tdh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GvotMVmn; arc=none smtp.client-ip=185.246.84.56
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
 Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-04.galae.net (Postfix) with ESMTPS id 0DFD6C8F46A;
-	Sun, 21 Sep 2025 16:06:13 +0000 (UTC)
+	by smtpout-02.galae.net (Postfix) with ESMTPS id A5C311A053F;
+	Sun, 21 Sep 2025 16:06:36 +0000 (UTC)
 Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id E592160634;
-	Sun, 21 Sep 2025 16:06:24 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id C3B12102F17C0;
-	Sun, 21 Sep 2025 18:06:12 +0200 (CEST)
+	by smtpout-01.galae.net (Postfix) with ESMTPS id 7B57B60634;
+	Sun, 21 Sep 2025 16:06:36 +0000 (UTC)
+Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 89423102F17CA;
+	Sun, 21 Sep 2025 18:06:24 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1758470783; h=from:subject:date:message-id:to:cc:mime-version:
+	t=1758470795; h=from:subject:date:message-id:to:cc:mime-version:
 	 content-transfer-encoding:in-reply-to:references;
-	bh=zXSVl18LYAxv8kuJFIbcL5dzUgOV2k3k+9+IZ9rZiVU=;
-	b=Va35oROP6H0C1gWl4CZws89OTz/6inuha0qxy9bICOS67EGbbRoWIZeErKfY4oLW5pzOUj
-	BdeZGlXlbQ1WdAWi7drffTzdbM/ocvcE7BV0zQ2kcGSLgQxEdPACy+mwrrv+40vjZ0zV+J
-	pgGVZv6xEOqmtFvTI3MdqHf2dUnG7FmftgiZUegOH/N1W3/hBoyqIc759PuLG31FmGSffZ
-	sj0Ouj3lmmktfDHMXNhUJIWn6x2mlIHGZ6yDk1Nz7EJx77VVm6bIZ6ikh47UdbW9pEsXBJ
-	LULbKtQp52LTknz0/h359Ql/t9oqTzoUlz66hFmmCje37VfmSAAm0AOpe6CXqw==
+	bh=3iQPgBitT0sQKwgb8teB2uqJP8R29q/Dxra69fQyLCY=;
+	b=GvotMVmnIGWLlUVp8tWx4wBifolOSnThT54ER6bGYD56sGNFLf+Xj8RXbm7hmROqIXB3C6
+	A+89dxrIZK4ikCWkO84I+dNuwv7AZO8Tnr8QRblDNR7vVF0a04y3jNr+Zrg2+DSzhKS6F6
+	4n0qAykqkjN+A2c51CKb/qqPjHUQaMJTCkzyEOsE+8a5tCSy5QIVCMv1+hreKRHz6WALm0
+	75lr6uaqBEO5MISCsiqspM45Q54kYziB6kA+hlUHxmDIwcR2p3lv7dGctqVNzJNnhgUXW6
+	aGj4af3/j+c1c3PtVCbxygvOGhWHZXP7ZEQrhsBSN3ZgNStfgUnKQR7HnkhC5Q==
 From: Maxime Chevallier <maxime.chevallier@bootlin.com>
 To: davem@davemloft.net
 Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
@@ -81,9 +81,9 @@ Cc: Maxime Chevallier <maxime.chevallier@bootlin.com>,
 	Daniel Golle <daniel@makrotopia.org>,
 	Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>
-Subject: [PATCH net-next v13 06/18] dt-bindings: net: dp83822: Deprecate ti,fiber-mode
-Date: Sun, 21 Sep 2025 21:34:04 +0530
-Message-ID: <20250921160419.333427-7-maxime.chevallier@bootlin.com>
+Subject: [PATCH net-next v13 07/18] net: phy: Create a phy_port for PHY-driven SFPs
+Date: Sun, 21 Sep 2025 21:34:05 +0530
+Message-ID: <20250921160419.333427-8-maxime.chevallier@bootlin.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250921160419.333427-1-maxime.chevallier@bootlin.com>
 References: <20250921160419.333427-1-maxime.chevallier@bootlin.com>
@@ -96,48 +96,98 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Last-TLS-Session-Version: TLSv1.3
 
-The newly added ethernet-connector binding allows describing an Ethernet
-connector with greater precision, and in a more generic manner, than
-ti,fiber-mode. Deprecate this property.
+Some PHY devices may be used as media-converters to drive SFP ports (for
+example, to allow using SFP when the SoC can only output RGMII). This is
+already supported to some extend by allowing PHY drivers to registers
+themselves as being SFP upstream.
 
-Reviewed-by: Rob Herring (Arm) <robh@kernel.org>
+However, the logic to drive the SFP can actually be split to a per-port
+control logic, allowing support for multi-port PHYs, or PHYs that can
+either drive SFPs or Copper.
+
+To that extent, create a phy_port when registering an SFP bus onto a
+PHY. This port is considered a "serdes" port, in that it can feed data
+to anther entity on the link. The PHY driver needs to specify the
+various PHY_INTERFACE_MODE_XXX that this port supports.
+
 Reviewed-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Tested-by: Oleksij Rempel <o.rempel@pengutronix.de>
 Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Tested-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Maxime Chevallier <maxime.chevallier@bootlin.com>
 ---
- Documentation/devicetree/bindings/net/ti,dp83822.yaml | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/net/phy/phy_device.c | 24 ++++++++++++++++++++++++
+ drivers/net/phy/phy_port.c   | 15 +++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/ti,dp83822.yaml b/Documentation/devicetree/bindings/net/ti,dp83822.yaml
-index 28a0bddb9af9..dc6c50413a67 100644
---- a/Documentation/devicetree/bindings/net/ti,dp83822.yaml
-+++ b/Documentation/devicetree/bindings/net/ti,dp83822.yaml
-@@ -47,6 +47,9 @@ properties:
-        is disabled.
-        In fiber mode, auto-negotiation is disabled and the PHY can only work in
-        100base-fx (full and half duplex) modes.
-+       This property is deprecated, for details please refer to
-+       Documentation/devicetree/bindings/net/ethernet-connector.yaml
-+    deprecated: true
+diff --git a/drivers/net/phy/phy_device.c b/drivers/net/phy/phy_device.c
+index e8708bc9739c..786e20307943 100644
+--- a/drivers/net/phy/phy_device.c
++++ b/drivers/net/phy/phy_device.c
+@@ -1631,6 +1631,26 @@ static void phy_del_port(struct phy_device *phydev, struct phy_port *port)
+ 	phydev->n_ports--;
+ }
  
-   rx-internal-delay-ps:
-     description: |
-@@ -141,7 +144,12 @@ examples:
-         tx-internal-delay-ps = <1>;
-         ti,gpio2-clk-out = "xi";
-         mac-termination-ohms = <43>;
-+        mdi {
-+          connector-0 {
-+            lanes = <1>;
-+            media = "BaseF";
-+          };
-+        };
-       };
-     };
--
- ...
++static int phy_setup_sfp_port(struct phy_device *phydev)
++{
++	struct phy_port *port = phy_port_alloc();
++
++	if (!port)
++		return -ENOMEM;
++
++	port->parent_type = PHY_PORT_PHY;
++	port->phy = phydev;
++
++	/* The PHY is a media converter, the port connected to the SFP cage
++	 * is a MII port.
++	 */
++	port->is_mii = true;
++
++	phy_add_port(phydev, port);
++
++	return 0;
++}
++
+ /**
+  * phy_sfp_probe - probe for a SFP cage attached to this PHY device
+  * @phydev: Pointer to phy_device
+@@ -1652,6 +1672,10 @@ int phy_sfp_probe(struct phy_device *phydev,
+ 		ret = sfp_bus_add_upstream(bus, phydev, ops);
+ 		sfp_bus_put(bus);
+ 	}
++
++	if (phydev->sfp_bus)
++		ret = phy_setup_sfp_port(phydev);
++
+ 	return ret;
+ }
+ EXPORT_SYMBOL(phy_sfp_probe);
+diff --git a/drivers/net/phy/phy_port.c b/drivers/net/phy/phy_port.c
+index cf897ed74c4c..6fecaa68350e 100644
+--- a/drivers/net/phy/phy_port.c
++++ b/drivers/net/phy/phy_port.c
+@@ -113,6 +113,21 @@ void phy_port_update_supported(struct phy_port *port)
+ 		phy_caps_medium_get_supported(supported, i, port->lanes);
+ 		linkmode_or(port->supported, port->supported, supported);
+ 	}
++
++	/* Serdes ports supported through SFP may not have any medium set,
++	 * as they will output PHY_INTERFACE_MODE_XXX modes. In that case, derive
++	 * the supported list based on these interfaces
++	 */
++	if (port->is_mii && linkmode_empty(supported)) {
++		unsigned long interface, link_caps = 0;
++
++		/* Get each interface's caps */
++		for_each_set_bit(interface, port->interfaces,
++				 PHY_INTERFACE_MODE_MAX)
++			link_caps |= phy_caps_from_interface(interface);
++
++		phy_caps_linkmodes(link_caps, port->supported);
++	}
+ }
+ EXPORT_SYMBOL_GPL(phy_port_update_supported);
+ 
 -- 
 2.49.0
 
