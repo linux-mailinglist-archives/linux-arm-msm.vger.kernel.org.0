@@ -1,121 +1,114 @@
-Return-Path: <linux-arm-msm+bounces-74443-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CB1A0B91EF1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 17:30:52 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FE74B9212D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 17:54:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B18CB7A4AFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 15:29:11 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2B9212A2B1B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 15:54:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 68DDA2E6CDB;
-	Mon, 22 Sep 2025 15:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8605030EF82;
+	Mon, 22 Sep 2025 15:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="T6N4B1ZW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C06HFul/"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B0362AF1B;
-	Mon, 22 Sep 2025 15:30:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5664B30E82A;
+	Mon, 22 Sep 2025 15:53:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758555046; cv=none; b=mJVjXHKWwibrxpLKLcLB291UQmVe1/gNsOBbozR7dvIu/og9ceOxQXInzGWPAA4xbMTnPz4Lixhn9A36H7c/cQcOksU6rkVTMIWwyJQ2KuCWd6xXFT3jopOKXCxmCCLOe+rD49bUfRGGO8jrz4o3bEERShHSbXHLNyq/MB6WBgg=
+	t=1758556431; cv=none; b=bA2dLQvXcgimXg4b5Gjlt0SauStDVDF4JsLpV8f+HHx9mjmJn1aAm6ZjHhhORx4rGgmXR/ANY0DveRL1FQO1v+PTt+lLq85bkSnoLISTHvTKdIMtdr/t9PivqAwxXols5tJxvo/ccEgnM3lCPl4FDg1oTj08W7azGRyKErJl3/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758555046; c=relaxed/simple;
-	bh=9rHZ46XQ5Qf/T3d8zzS2nXiEGU9SVrkDNZX4Ew3/lcA=;
+	s=arc-20240116; t=1758556431; c=relaxed/simple;
+	bh=aRbXPB1JpMvAIJq5asAovoC0H16Nxldusb6Zozv6hHg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=J8H1ejCIvccztbETuMaGWNjoRk/EeX8YhSKFqsip/8zMPPJbbj/WUtG0wHhxr4rjx0ZE2lm4skuNopYE36wOCRu5Jfe6/3wJwU7owNgh3O8u1s8NJ+v6KjJjfimTaBMEKUe2/edwzXmdQaI//hWnqglRhYV5PC7DCaMVU7I5LPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=T6N4B1ZW; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F36D8C4CEF7;
-	Mon, 22 Sep 2025 15:30:45 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=UGyMT9NNjAuHCQidNOT2/anOOuc5/y1tc9sxiWcoQ5rm6ooA4nFQB2zifMjyGNcgTlHtknC8mVafG6CwyrStHvVm/M1MmzxHLFih7EEYW5ktC6gTNctUZO2ULkdNgE6my0La8lGzcSe8gOnC32GMNucBnuDB6MPvD09oxeDukiM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C06HFul/; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED55EC4CEF0;
+	Mon, 22 Sep 2025 15:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758555046;
-	bh=9rHZ46XQ5Qf/T3d8zzS2nXiEGU9SVrkDNZX4Ew3/lcA=;
+	s=k20201202; t=1758556430;
+	bh=aRbXPB1JpMvAIJq5asAovoC0H16Nxldusb6Zozv6hHg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=T6N4B1ZWorGk+L/UGZxbHdH1HdmI84ojMsZi6kG5My+Hru+jwCNqOxvOUBjqizQZy
-	 h3o1M9/Yyyvokovm8IqHQ2wlBb0K9NPUwmvRwuw5V1ADrYOG4CpukYgIl5JzboMifB
-	 ULra0fcxgl8oVORd4ETL4ExxVkmG675nIu+X1LiSW2+wMGXM+85EcLokJc4TE5zObb
-	 adXV3rlbHLCytUt8h1gDEsfw27t8TI1q4jgUGvdnQccjBeGq75Ekja7oi6y1jlwoVK
-	 u0aRggSPVtBWHOZvCTpG8m2ylT/P/KFm5Qyqq7faHb5w1N+3gLuoe9OJhqxnd6vx8p
-	 D4UpHSwrUabLA==
-Date: Mon, 22 Sep 2025 10:30:45 -0500
-From: Rob Herring <robh@kernel.org>
-To: Dzmitry Sankouski <dsankouski@gmail.com>
-Cc: Chanwoo Choi <cw00.choi@samsung.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v3 1/3] dt-bindings: max77705: add interrupt-controller
- node
-Message-ID: <20250922153045.GA4143633-robh@kernel.org>
-References: <20250912-starqltechn-correct_max77705_nodes-v3-0-4ce9f694ecd9@gmail.com>
- <20250912-starqltechn-correct_max77705_nodes-v3-1-4ce9f694ecd9@gmail.com>
+	b=C06HFul/szSJI0xrMjnZM1Ks1trKCXzVjBMOMrKb2VFViBpRuvzgO+pmJkv1umK2C
+	 JnSK7Nyww7INSIyb/94rRMQm6binnV5LaXoLcngcUWamHTE5fCbpMCyhJFIE96WxB2
+	 l/MZIDaLi3jj0kF3lcEbm3Cd+82Y1Ir4bM+q9X5NOXMlCEduS+V+5VTCOIuwGtnmU9
+	 bgsQhrpaKfRqdXPFVz/1Rg7ndFcKCEaMoHIHZ4PawV8hKiR61Gm11baBOQuJFjGo+s
+	 EAg28HFex3cQCPMFUIXUOQoTgW4JEcsHt11sauBMZS6A8YVXNICsQUYOdY+FquElN+
+	 OcHa8LIlTl2Kw==
+Date: Mon, 22 Sep 2025 21:23:41 +0530
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Bjorn Helgaas <helgaas@kernel.org>
+Cc: manivannan.sadhasivam@oss.qualcomm.com, 
+	Bjorn Helgaas <bhelgaas@google.com>, Lorenzo Pieralisi <lpieralisi@kernel.org>, 
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>, Rob Herring <robh@kernel.org>, linux-pci@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	"David E. Box" <david.e.box@linux.intel.com>, Kai-Heng Feng <kai.heng.feng@canonical.com>, 
+	"Rafael J. Wysocki" <rafael@kernel.org>, Heiner Kallweit <hkallweit1@gmail.com>, 
+	Chia-Lin Kao <acelan.kao@canonical.com>
+Subject: Re: [PATCH 1/2] PCI/ASPM: Override the ASPM and Clock PM states set
+ by BIOS for devicetree platforms
+Message-ID: <oc23e5sgo74wpjpaaefc6or5f54crfaeyer5zwst3wyyiauhxg@ess265fdcbeu>
+References: <frmzvhnhljy23xds7lnmo23zg35wxpzu4pvabnc6v6vz7qn2lj@gk25cglbpn3q>
+ <20250917112218.GA1844955@bhelgaas>
+ <jgidvwogoopfgtmxywllxl76lap42s4fhzt23ldncgtzfvy5ir@xs7pnhuz2nxs>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250912-starqltechn-correct_max77705_nodes-v3-1-4ce9f694ecd9@gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <jgidvwogoopfgtmxywllxl76lap42s4fhzt23ldncgtzfvy5ir@xs7pnhuz2nxs>
 
-On Fri, Sep 12, 2025 at 07:47:01PM +0300, Dzmitry Sankouski wrote:
-> Add interrupt-controller node, because it has dedicated interrupt source
-> register, to determine which sub device triggered an interrupt.
+On Wed, Sep 17, 2025 at 06:33:53PM +0530, Manivannan Sadhasivam wrote:
+> On Wed, Sep 17, 2025 at 06:22:18AM GMT, Bjorn Helgaas wrote:
+> > [+cc Kai-Heng, Rafael, Heiner, AceLan; response to
+> > https://lore.kernel.org/r/20250916-pci-dt-aspm-v1-1-778fe907c9ad@oss.qualcomm.com]
+> > 
+> > On Wed, Sep 17, 2025 at 04:14:42PM +0530, Manivannan Sadhasivam wrote:
+> > > On Tue, Sep 16, 2025 at 12:15:46PM GMT, Bjorn Helgaas wrote:
+> > > > On Tue, Sep 16, 2025 at 09:42:52PM +0530, Manivannan Sadhasivam via B4 Relay wrote:
+> > > > > So far, the PCI subsystem has honored the ASPM and Clock PM states set by
+> > > > > the BIOS (through LNKCTL) during device initialization. This was done
+> > > > > conservatively to avoid issues with the buggy devices that advertise
+> > > > > ASPM capabilities, but behave erratically if the ASPM states are enabled.
+> > > > > So the PCI subsystem ended up trusting the BIOS to enable only the ASPM
+> > > > > states that were known to work for the devices.
+> > > ...
+> > 
+> > > > For debuggability, I wonder if we should have a pci_dbg() at the point
+> > > > where we actually update PCI_EXP_LNKCTL, PCI_L1SS_CTL1, etc?  I could
+> > > > even argue for pci_info() since this should be a low-frequency and
+> > > > relatively high-risk event.
+> > > 
+> > > I don't know why we should print register settings since we are explicitly
+> > > printing out what states are getting enabled.
+> > 
+> > My thinking here is that we care about is what is actually written to
+> > the device, not what we *intend* to write to the device.
+> > 
+> > There's a lot of complicated aspm.c code between setting
+> > link->clkpm_default/aspm_default and actually programming the device,
+> > and when debugging a problem, I don't want to have to parse all that
+> > code to derive the register values.
+> 
+> Sure, but that is not strictly related to this series I believe. I will add a
+> patch for that at the start of this series so that you can merge it
+> independently.
+> 
 
-The subject and commit msg are wrong. You aren't adding a node.
+I'm going to send this patch separately from this series.
 
-> 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
->  Documentation/devicetree/bindings/mfd/maxim,max77705.yaml | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml b/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
-> index 0ec89f0adc64..d265c8213a08 100644
-> --- a/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
-> @@ -26,6 +26,18 @@ properties:
->    interrupts:
->      maxItems: 1
->  
-> +  interrupt-controller:
-> +    description:
-> +      The driver implements an interrupt controller for the sub devices.
-> +      The interrupt number mapping is as follows
-> +      0 - charger
-> +      1 - topsys
-> +      2 - fuelgauge
-> +      3 - usb type-c management block.
-> +
-> +  '#interrupt-cells':
-> +    const: 1
-> +
->    haptic:
->      type: object
->      additionalProperties: false
-> @@ -120,8 +132,10 @@ examples:
->              reg = <0x66>;
->              interrupt-parent = <&pm8998_gpios>;
->              interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-> +            interrupt-controller;
->              pinctrl-0 = <&chg_int_default>;
->              pinctrl-names = "default";
-> +            #interrupt-cells = <1>;
->  
->              leds {
->                  compatible = "maxim,max77705-rgb";
-> 
-> -- 
-> 2.39.5
-> 
+- Mani
+
+-- 
+மணிவண்ணன் சதாசிவம்
 
