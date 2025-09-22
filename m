@@ -1,129 +1,81 @@
-Return-Path: <linux-arm-msm+bounces-74455-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74456-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC4F1B9269A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 19:27:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A71C4B926CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 19:28:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E08B519046A1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 17:28:07 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 6A4732A6DB6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 17:28:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00CCD313E27;
-	Mon, 22 Sep 2025 17:27:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ED64F313E3B;
+	Mon, 22 Sep 2025 17:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BGQwq3BA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PrkJtioE"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9369126F0A;
-	Mon, 22 Sep 2025 17:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE91313E2B;
+	Mon, 22 Sep 2025 17:28:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758562061; cv=none; b=MA7z0lh5op0+t3IpvemQo9bSEAaE5ywvwGZ/58W98uYKIfZngv3US/iv2DInv6xBjfz+CL6EPc7yPWK0HwG7eAbVYFRrFe2tOitfPY8Lfnqm0OwLTNId/e5WgEw6IM3FjJ1+Uq3uIj+bDA2125HBH0LerC5W7lV26ALpY3c2v7w=
+	t=1758562125; cv=none; b=gksBgWb6hmooOAsLT3YKOTp56EvEA+1l1Jk1UyuakpL8OcUpD/lzSWwsMux6r65aOEPVdvdVCYRPwBHnq3bs1EIOMgoq0IqVEEFJircQHMtKHpC5PnoP72RBPtjtyssyKOOMyU7BvRa1eXmT6F2qdfp5esb8stwgdn1tXQ/v+xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758562061; c=relaxed/simple;
-	bh=HnPSSlUSpZrAcD4oDZt1QLsdHVZRdP8Zbo9c9kITCks=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=EE+IhxmO3NPhcffLNdbSN84wjXssUnkcSqbx4qCav1LacV/3XLDeY/6Os1FWjp5RkzM1uaNfnmyRngUFa5RvFUn3Y3AA0kkMHtj80D2btPepCKjArReH4ypLu0b+PidWw2Yr+xFoRXLBw8nKqcwfe8JqwAYItokn8Hx6rAvaSps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BGQwq3BA; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1779C4CEF0;
-	Mon, 22 Sep 2025 17:27:40 +0000 (UTC)
+	s=arc-20240116; t=1758562125; c=relaxed/simple;
+	bh=xWh/GvAqWRCKj0KUUTfyKjrVO33OOAVo1h4s/cBrpZ8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=oNL6GJDMHfXX7fr+rkfq8blkoZktS2b+IVDsk35031USHG5jWCWDssANeeJYFJSIR5QiaV1coIR1gbPuom9j34BDnSx9yMuYyra3iYq9hwtagKMS0xWCNmC3fb8qLG4ez15N9tJo1C/6FRH9dk8ZURHsUW7xRrRx5b4ty1wltNM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PrkJtioE; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44439C4CEF0;
+	Mon, 22 Sep 2025 17:28:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758562061;
-	bh=HnPSSlUSpZrAcD4oDZt1QLsdHVZRdP8Zbo9c9kITCks=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=BGQwq3BAV7JKQqf9KC8Jchxh6K2oO46jbR39GbEcgY6JDy4t7sVesnp+O1vduEe9I
-	 ZPAq3+Xj+dWKMVqE+xwMeubFCj7lrlzPYvITjhGpGPg3b3Qars9cgIZ9oNnzd9NAwj
-	 kFZKRsq1RKw7WKfm1QpQ+cPxC8ogVLXSlxouQrF+dM+zV2rP6G+/Gjw0l2TZOADwHv
-	 QCFaYI5d64z0BsHgWZgWyLdLCDSWw6hqZ/r2S7CXW/9r6/AwNZaIzxIN0QYO0tbjpY
-	 5CyiajgDun71TBQsGbxT+9tE4SI31mT0FSdMC6LuR/MCRijEUO8Np2Ec/RG0ii/GJu
-	 YvyOcgvPCIb+w==
-Date: Mon, 22 Sep 2025 12:27:40 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=k20201202; t=1758562125;
+	bh=xWh/GvAqWRCKj0KUUTfyKjrVO33OOAVo1h4s/cBrpZ8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PrkJtioEOSYPoyVx1rybJ+uzDR/Q6UPnelJGrJNQ7Lu+C+w8AZIG2lCISQIzyGP+q
+	 gnJ9OD1dKzjh8yIi7pXFHfm9CLJJ0/LO5b7bTAxjABA98SKzDSQbiNTGl3hN7noL1B
+	 6g1JSyYB4f3pdWN+zSgb3UJ6u9IVcAwt0yeRfDVQb+C7RXt9FGDu+E9F5EbcKbJSFh
+	 LQ3A6bQMnydcpjeIdstajPFi1LW/sDmpMWKDj9eTg8dRN29GJUHm+F+Q2vr6uAPvPV
+	 /RchmYnOJT7r4x1CSjl/qugKvgKuOMDc97b9dhqliSRJ4yYb/IIc0rB5Kqp15X07sN
+	 7nco7eUhZ50zw==
+Date: Mon, 22 Sep 2025 12:28:44 -0500
+From: "Rob Herring (Arm)" <robh@kernel.org>
+To: Md Sadre Alam <quic_mdalam@quicinc.com>
+Cc: devicetree@vger.kernel.org, conor+dt@kernel.org, krzk+dt@kernel.org,
+	konradybcio@kernel.org, linux-spi@vger.kernel.org,
+	linux-kernel@vger.kernel.org, vkoul@kernel.org,
+	quic_varada@quicinc.com, linux-arm-msm@vger.kernel.org,
+	andersson@kernel.org, dmaengine@vger.kernel.org, broonie@kernel.org
+Subject: Re: [PATCH 1/9] spi: dt-bindings: spi-qpic-snand: Add IPQ5424
+ compatible
+Message-ID: <175856212403.505378.6554973184588982018.robh@kernel.org>
+References: <20250918094017.3844338-1-quic_mdalam@quicinc.com>
+ <20250918094017.3844338-2-quic_mdalam@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- devicetree@vger.kernel.org, Konrad Dybcio <konradybcio@kernel.org>, 
- linux-arm-msm@vger.kernel.org, Bjorn Andersson <andersson@kernel.org>
-To: =?utf-8?q?Eric_Gon=C3=A7alves?= <ghatto404@gmail.com>
-In-Reply-To: <20250920014637.38175-1-ghatto404@gmail.com>
-References: <20250920014637.38175-1-ghatto404@gmail.com>
-Message-Id: <175856183518.499741.3237175571653776732.robh@kernel.org>
-Subject: Re: [PATCH 0/5] arm64: dts: qcom: r0q: enable more peripherals
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250918094017.3844338-2-quic_mdalam@quicinc.com>
 
 
-On Sat, 20 Sep 2025 01:46:32 +0000, Eric Gonçalves wrote:
-> This patchset adds support for multiple devices found on the Galaxy S22,
-> side buttons, touchscreen, max77705 charger/fuelgauge, RTC and UFS. It
-> depends on "Input: add support for the STM FTS2BA61Y touchscreen" for
-> TS to be enabled.
+On Thu, 18 Sep 2025 15:10:09 +0530, Md Sadre Alam wrote:
+> IPQ5424 contains the QPIC-SPI-NAND flash controller which is the same as
+> the one found in IPQ9574. So let's document the IPQ5424 compatible and
+> use IPQ9574 as the fallback.
 > 
-> Thanks!
-> 
-> Eric Gonçalves (5):
->   arm64: dts: qcom: r0q: add gpio keys
->   arm64: dts: qcom: r0q: add touchscreen support
->   arm64: dts: qcom: r0q: enable max77705 PMIC
->   arm64: dts: qcom: r0q: enable hardware clocks
->   arm64: dts: qcom: r0q: enable ufs storage
-> 
->  .../boot/dts/qcom/sm8450-samsung-r0q.dts      | 308 +++++++++++++++++-
->  1 file changed, 299 insertions(+), 9 deletions(-)
-> 
-> --
-> 2.51.0
-> 
-> 
+> Signed-off-by: Md Sadre Alam <quic_mdalam@quicinc.com>
+> ---
+>  Documentation/devicetree/bindings/spi/qcom,spi-qpic-snand.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
-
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
-
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
-
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
-
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/v6.17-rc1-242-g11cf389c103f (exact match)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250920014637.38175-1-ghatto404@gmail.com:
-
-arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dtb: / (samsung,r0q): spi-gpio@0: 'anyOf' conditional failed, one must be fixed:
-	'reg' is a required property
-	'ranges' is a required property
-	from schema $id: http://devicetree.org/schemas/root-node.yaml#
-arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dtb: pinctrl@f100000 (qcom,sm8450-tlmm): Unevaluated properties are not allowed ('spi_clk_tsp_active', 'spi_clk_tsp_sleep', 'spi_cs_tsp_active', 'spi_cs_tsp_sleep', 'spi_miso_tsp_active', 'spi_miso_tsp_sleep', 'spi_mosi_tsp_active', 'spi_mosi_tsp_sleep', 'tsp_int_active', 'tsp_int_sleep_state' were unexpected)
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sm8450-tlmm.yaml#
-arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dtb: spi-gpio@0 (spi-gpio): $nodename:0: 'spi-gpio@0' does not match '^spi(@.*|-([0-9]|[1-9][0-9]+))?$'
-	from schema $id: http://devicetree.org/schemas/spi/spi-gpio.yaml#
-arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dtb: spi-gpio@0 (spi-gpio): Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'spi-max-frequency', 'touchscreen@0' were unexpected)
-	from schema $id: http://devicetree.org/schemas/spi/spi-gpio.yaml#
-arch/arm64/boot/dts/qcom/sm8450-samsung-r0q.dtb: /spi-gpio@0/touchscreen@0: failed to match any schema with compatible: ['st,fts2ba61y']
-
-
-
-
+Acked-by: Rob Herring (Arm) <robh@kernel.org>
 
 
