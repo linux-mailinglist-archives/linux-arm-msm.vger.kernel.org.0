@@ -1,183 +1,138 @@
-Return-Path: <linux-arm-msm+bounces-74390-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id F294FB8F541
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 09:45:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 448EAB8F59F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 09:55:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B4B6B1722AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 07:45:24 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 07A8017D4C4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 07:55:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0581426F463;
-	Mon, 22 Sep 2025 07:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 35D192F6585;
+	Mon, 22 Sep 2025 07:55:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="fYkVa7vr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Y4YdA5Ka"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C1686329;
-	Mon, 22 Sep 2025 07:45:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B126D22A7E5;
+	Mon, 22 Sep 2025 07:55:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758527120; cv=none; b=SKySCclZGHmvG8TVB0jHn5H0Bt+E59mn1Fad1MQNS0sn1CN3hjTs2HUeWoR0v5YxB50RStflzNmdjvMk/hZDyehDsm7HYZ8Yrf7HJCnbyYq9hbyDEZepLVNtjEW7oKpkgPLV1GBHoyY5yXVVjfQFgiR4Sy6EBqPhnggZQ0yiODU=
+	t=1758527731; cv=none; b=mABbAAqqvjlP08nbPM7ZdshSxd6+HI3dzOKBZknACAAwc5RCx61g85c0buqzZWHNHqnvqM1wzAocoXXczwEMgJz16j5HIIYOfJjS8AzfRBiVdwd0+1pkkrJwelmUfI1LIFeiqjtzKaKnod8E1zZntgMcwC06rxa6yQLkCOkqTnY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758527120; c=relaxed/simple;
-	bh=H1RyaGQe908wgP+9DtCfGX//XxA1/HxhCRdfcWfFnz4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qDbws+FQH/DQ5cPNw4Nqeiruet82jx9Ctnoo8+UIxlvW4GlcskIut531Rgco50WICSAtSmsBlY2etyvEVTLyDlLMW6DrBDM1lL4+NzKC5taY2gqG/eMKgSD1FXbGSyY3nZ9n3MkgSS7jPFUaxz3FJ2p8iTR9SqOMuxwf4TYkf9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=fYkVa7vr; arc=none smtp.client-ip=198.175.65.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1758527120; x=1790063120;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=H1RyaGQe908wgP+9DtCfGX//XxA1/HxhCRdfcWfFnz4=;
-  b=fYkVa7vr2GGEbJfEFsfcOIrvUaFBw6nSD1prLtP5u0+sytar615BsP6g
-   xOgPSut/HEYAxDjvwp19/n+CWjb80H+hG1SMxijGOtkJgrm/WWI1EXG2a
-   TolX1H3myh8IBYrMvWjyvGSjKeRPTQl26cB7I6Qfg6GPpi08gkkHn1su/
-   xAkdPrXaGN4xXT06/uj33KbOTPUp3Jfb3rI+NV4K4n7NUfFqbcU/m2fUc
-   OLiMvRqB8nqrBlB0PTuzq0AmUXFQ5AjP75V3BeiUCMUuHc2lkDSCcI/f/
-   GhWc5oEHP5Psqber+rYtYuo+wfxZ9pUaS18i8qyEjyMUO4AwtiyoP2Tgi
-   Q==;
-X-CSE-ConnectionGUID: dOodfSctSOq24iLZ62LSuw==
-X-CSE-MsgGUID: cKjAn5KfRiW1Yzw0vc8IHg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11560"; a="78224477"
-X-IronPort-AV: E=Sophos;i="6.18,284,1751266800"; 
-   d="scan'208";a="78224477"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Sep 2025 00:45:19 -0700
-X-CSE-ConnectionGUID: h9HCINiUTMCizWZCP4GPqw==
-X-CSE-MsgGUID: /oSvEyXuS/2s/wbNz4RHQQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,284,1751266800"; 
-   d="scan'208";a="207149858"
-Received: from lkp-server02.sh.intel.com (HELO 84c55410ccf6) ([10.239.97.151])
-  by orviesa002.jf.intel.com with ESMTP; 22 Sep 2025 00:45:16 -0700
-Received: from kbuild by 84c55410ccf6 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1v0bEV-0001QP-0U;
-	Mon, 22 Sep 2025 07:45:11 +0000
-Date: Mon, 22 Sep 2025 15:45:03 +0800
-From: kernel test robot <lkp@intel.com>
-To: Ma Ke <make24@iscas.ac.cn>, srini@kernel.org, lgirdwood@gmail.com,
-	broonie@kernel.org, perex@perex.cz, tiwai@suse.com,
-	pierre-louis.bossart@linux.dev
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org, akpm@linux-foundation.org,
-	Ma Ke <make24@iscas.ac.cn>, stable@vger.kernel.org
-Subject: Re: [PATCH v2] ASoC: wcd934x: fix error handling in
- wcd934x_codec_parse_data()
-Message-ID: <202509221535.es8PWacQ-lkp@intel.com>
-References: <20250922013507.558-1-make24@iscas.ac.cn>
+	s=arc-20240116; t=1758527731; c=relaxed/simple;
+	bh=BHlVCI0RAYek6UwchOkDkXbXFt6NXcfxNN4MdAPfvpQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=YnQ9vXqCDx2IRCWy3upPnNjab19OOgA43/pjmnx+EOpxBJ4gzr7CAr3hFWXCVmFVnopQSOLRkpLAuJba/e8OzZoPKMNUL0ke73L0lvP0GJp89sxbiesWNH6MG2fTeQRAwMu2s/sxU7vGtUv+cRkcfV1IE9XcRJC3BL4lNXVB7r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Y4YdA5Ka; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58LMhs0S013411;
+	Mon, 22 Sep 2025 07:55:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=q2TTWfPPdRbtXjNcPVyyM613088qz57a8Kp
+	5KPxUQb0=; b=Y4YdA5KaE2nPI45odYRkl5USmKTocGlvU3Gh3ss2FFBLm8Hx85P
+	phMGbjVvVgqOrMuW5cQL2CEU30xDMytIV2ERQY8kfRgJ+3yibx25DXo0Lf9Qt0XW
+	zljKWBBs9ZcQ9C2uYUiNBpFh9715dJhVgoWgZWz4PYhevieZIxi3tyOem2lGr+/z
+	zs8fcp5ncVYYFdsAIxVQFfNpeXGlTyui+Dh2HdXmH4bmSkMgmn8Q+USViCVyRnHU
+	FC7VIOygcEvPGelC0OrY8ccZvCWPtbnOudqkPQgtIWfqb5zyZsZkjMEc0GN0CZQ1
+	ZBUVPPdkxPsxVmCg8rgwnvR+wLyO5amxeQQ==
+Received: from aptaippmta02.qualcomm.com (tpe-colo-wan-fw-bordernet.qualcomm.com [103.229.16.4])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499nekupkx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Sep 2025 07:55:18 +0000 (GMT)
+Received: from pps.filterd (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 58M7tGSV022237;
+	Mon, 22 Sep 2025 07:55:16 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 499nbm0545-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Sep 2025 07:55:16 +0000
+Received: from APTAIPPMTA02.qualcomm.com (APTAIPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58M7tG53022218;
+	Mon, 22 Sep 2025 07:55:16 GMT
+Received: from cse-cd02-lnx.ap.qualcomm.com (cse-cd02-lnx.qualcomm.com [10.64.75.246])
+	by APTAIPPMTA02.qualcomm.com (PPS) with ESMTPS id 58M7tFDg022210
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 22 Sep 2025 07:55:16 +0000
+Received: by cse-cd02-lnx.ap.qualcomm.com (Postfix, from userid 4438065)
+	id 80C1978F; Mon, 22 Sep 2025 15:55:14 +0800 (CST)
+From: Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, jingoohan1@gmail.com,
+        mani@kernel.org, lpieralisi@kernel.org, kwilczynski@kernel.org,
+        bhelgaas@google.com, johan+linaro@kernel.org, vkoul@kernel.org,
+        kishon@kernel.org, neil.armstrong@linaro.org, abel.vesa@linaro.org,
+        kw@linux.com
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-phy@lists.infradead.org, qiang.yu@oss.qualcomm.com,
+        quic_krichai@quicinc.com, quic_vbadigan@quicinc.com,
+        Ziyue Zhang <ziyue.zhang@oss.qualcomm.com>
+Subject: [PATCH v1 0/4] Add PCIe3 and PCIe5 support for HAMOA-IOT-EVK board
+Date: Mon, 22 Sep 2025 15:55:05 +0800
+Message-Id: <20250922075509.3288419-1-ziyue.zhang@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250922013507.558-1-make24@iscas.ac.cn>
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-ORIG-GUID: P5o3jBsPVlON9C_jr5OKaUoqukc0NLmE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDA0MSBTYWx0ZWRfX1Ja8mTfkmE2v
+ egs7vPUa8nGcd2XJX2JlRAMSl6OXJa9daa20UqS72FVPaOJs6BUHAuMBy0RMKzV79Uh2/CUBKcm
+ KGXpyLvMWbWNGYsXeXfGz7FKG6uWbl2ZYwPf3WPpvUezZgQxjsCiOMN+UxtUFtuRxsiy4JqHjJ/
+ L7Aw4//urSI3KGnsS+EmnBBlulC+CjZyoMI1qRF/C0M7y5HsSMkNjK1R3vlYqtIc43Q45FxZi5z
+ 09W38QQVYYkLKTd2cMLhSFzNGiChXgeWdfzFu+iaVnDiPjtxTxghqxzWQpAORYe5q8WpEAU+wPk
+ 1FGyh6my6QgkBC4SzWHF6nMcln4hzyaFSQDMzMOuLBYBVDA8Qw2q7dlvvLYT7/pNStiVYDKPsvp
+ +Ut0vt7Z
+X-Authority-Analysis: v=2.4 cv=b+Oy4sGx c=1 sm=1 tr=0 ts=68d100e7 cx=c_pps
+ a=nuhDOHQX5FNHPW3J6Bj6AA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=yJojWOMRYYMA:10 a=RMFkh6N_GHqejj8ZFKIA:9
+X-Proofpoint-GUID: P5o3jBsPVlON9C_jr5OKaUoqukc0NLmE
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-22_01,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 adultscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ malwarescore=0 priorityscore=1501 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200041
 
-Hi Ma,
+This patch series adds support for PCIe3 and PCIe5 on the HAMOA-IOT-EVK
+board.
 
-kernel test robot noticed the following build warnings:
+PCIe3 is a Gen4 x8 slot intended for external GPU.
+PCIe5 is a Gen3 x2 slot designed for external modem connectivity.
 
-[auto build test WARNING on broonie-sound/for-next]
-[also build test WARNING on linus/master v6.17-rc7 next-20250919]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+To enable these interfaces, the series introduces the necessary device
+tree nodes and associated regulator definitions to ensure proper power
+sequencing and functionality.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Ma-Ke/ASoC-wcd934x-fix-error-handling-in-wcd934x_codec_parse_data/20250922-094038
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-patch link:    https://lore.kernel.org/r/20250922013507.558-1-make24%40iscas.ac.cn
-patch subject: [PATCH v2] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()
-config: i386-buildonly-randconfig-005-20250922 (https://download.01.org/0day-ci/archive/20250922/202509221535.es8PWacQ-lkp@intel.com/config)
-compiler: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250922/202509221535.es8PWacQ-lkp@intel.com/reproduce)
+Ziyue Zhang (4):
+  arm64: dts: qcom: Add PCIe 5 support for HAMOA-IOT-SOM platform
+  arm64: dts: qcom: Add PCIe 5 wwan regulator for HAMOA-IOT-EVK board
+  arm64: dts: qcom: Add PCIe 3 support for HAMOA-IOT-SOM platform
+  arm64: dts: qcom: Add PCIe 3 regulators for HAMOA-IOT-EVK board
 
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509221535.es8PWacQ-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> sound/soc/codecs/wcd934x.c:5862:38: warning: cast from 'void (*)(struct device *)' to 'void (*)(void *)' converts to incompatible function type [-Wcast-function-type-strict]
-    5862 |         ret = devm_add_action_or_reset(dev, (void (*)(void *))put_device, &wcd->sidev->dev);
-         |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/device/devres.h:166:34: note: expanded from macro 'devm_add_action_or_reset'
-     166 |         __devm_add_action_or_reset(dev, action, data, #action)
-         |                                         ^~~~~~
-   1 warning generated.
+ arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts  |  52 +++++++++
+ arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi | 110 ++++++++++++++++++++
+ 2 files changed, 162 insertions(+)
 
 
-vim +5862 sound/soc/codecs/wcd934x.c
-
-  5837	
-  5838	static int wcd934x_codec_probe(struct platform_device *pdev)
-  5839	{
-  5840		struct device *dev = &pdev->dev;
-  5841		struct wcd934x_ddata *data = dev_get_drvdata(dev->parent);
-  5842		struct wcd934x_codec *wcd;
-  5843		int ret, irq;
-  5844	
-  5845		wcd = devm_kzalloc(dev, sizeof(*wcd), GFP_KERNEL);
-  5846		if (!wcd)
-  5847			return -ENOMEM;
-  5848	
-  5849		wcd->dev = dev;
-  5850		wcd->regmap = data->regmap;
-  5851		wcd->extclk = data->extclk;
-  5852		wcd->sdev = to_slim_device(data->dev);
-  5853		mutex_init(&wcd->sysclk_mutex);
-  5854		mutex_init(&wcd->micb_lock);
-  5855		wcd->common.dev = dev->parent;
-  5856		wcd->common.max_bias = 4;
-  5857	
-  5858		ret = wcd934x_codec_parse_data(wcd);
-  5859		if (ret)
-  5860			return ret;
-  5861	
-> 5862		ret = devm_add_action_or_reset(dev, (void (*)(void *))put_device, &wcd->sidev->dev);
-  5863		if (ret)
-  5864			return ret;
-  5865	
-  5866		/* set default rate 9P6MHz */
-  5867		regmap_update_bits(wcd->regmap, WCD934X_CODEC_RPM_CLK_MCLK_CFG,
-  5868				   WCD934X_CODEC_RPM_CLK_MCLK_CFG_MCLK_MASK,
-  5869				   WCD934X_CODEC_RPM_CLK_MCLK_CFG_9P6MHZ);
-  5870		memcpy(wcd->rx_chs, wcd934x_rx_chs, sizeof(wcd934x_rx_chs));
-  5871		memcpy(wcd->tx_chs, wcd934x_tx_chs, sizeof(wcd934x_tx_chs));
-  5872	
-  5873		irq = regmap_irq_get_virq(data->irq_data, WCD934X_IRQ_SLIMBUS);
-  5874		if (irq < 0)
-  5875			return dev_err_probe(wcd->dev, irq, "Failed to get SLIM IRQ\n");
-  5876	
-  5877		ret = devm_request_threaded_irq(dev, irq, NULL,
-  5878						wcd934x_slim_irq_handler,
-  5879						IRQF_TRIGGER_RISING | IRQF_ONESHOT,
-  5880						"slim", wcd);
-  5881		if (ret)
-  5882			return dev_err_probe(dev, ret, "Failed to request slimbus irq\n");
-  5883	
-  5884		wcd934x_register_mclk_output(wcd);
-  5885		platform_set_drvdata(pdev, wcd);
-  5886	
-  5887		return devm_snd_soc_register_component(dev, &wcd934x_component_drv,
-  5888						       wcd934x_slim_dais,
-  5889						       ARRAY_SIZE(wcd934x_slim_dais));
-  5890	}
-  5891	
-
+base-commit: 846bd2225ec3cfa8be046655e02b9457ed41973e
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.34.1
+
 
