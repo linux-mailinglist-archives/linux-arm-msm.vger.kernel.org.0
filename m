@@ -1,64 +1,60 @@
-Return-Path: <linux-arm-msm+bounces-74438-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6542B918DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 16:00:42 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0216EB918F0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 16:01:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D79CC18997B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 14:00:56 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 700292A3182
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 14:00:49 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 022571482E8;
-	Mon, 22 Sep 2025 14:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A46861A314E;
+	Mon, 22 Sep 2025 14:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VCx1AkCv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dNaNZVod"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB744AEE2;
-	Mon, 22 Sep 2025 14:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE3319E97B;
+	Mon, 22 Sep 2025 14:00:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758549627; cv=none; b=JGrVE0W51MWqp3RyEreU+/vukPKtc+musRlVYNXvrXWNeaB0pqmjRPJelIHS3Juiuy6Zmp+VTpupKTOGWUA/5cP0CS9pyLBkipjAeSSs6yDAK+8uXjNT1NnyE83OQ1qhOEDkvxhTlQ+LiBi9LOtpt7UPlyyvma/46/d9FsrF6ko=
+	t=1758549630; cv=none; b=gDc0mdKspMAdZvkIyY74q3yYc5x61FDc5RGvoAnse+AKWqUjaV52yFz3rpKm3YFstfxU4Y01wlubGfMSBYeXoxrHQAsMTHM0eN2Ztuu+Y1EFBwbGOceCqBszMjrhGqSj/+17VDowJdTaVv8N82rflbUFzzeEpxDHoqBMT3ugGuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758549627; c=relaxed/simple;
-	bh=E3sdM+sVgc4gPEGHLFWWB3ONFSYLIUVewf4FnPVnNko=;
+	s=arc-20240116; t=1758549630; c=relaxed/simple;
+	bh=9+X8lOiOtYMbUbFdpAmI3p+yU7sWK/FSC3XDXhVkqzo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sWvcmW0wT2bcqLCDsYkO3RUBto+Yh43i9xJqZYzD1pMABCZkvL+9MAz91W/LuUEdQ41+7ZvVmWk4hVYm6+JrRreEIPMTnMcZzkKv7mdiaejWTiNgLog6Pzc7yTZSsIPkNJEhlRf8tj0niNX+S37dboqAHZ19uIni5K07wuWdN4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VCx1AkCv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C9D8C4CEF0;
-	Mon, 22 Sep 2025 14:00:26 +0000 (UTC)
+	 MIME-Version:Content-Type; b=Taw/RgPLycYdVTB3FFy9Q4U7dv3bqyUAJOcvf/4llEQwBgoUI9w2xlkdXbhjFcCYWX0+uy1OHdhZ6j6pD+wht4pUm1Ri/ua2MunfYRUZl3Lhz/LSPyQQpIQlg7wxU9icsqh7vLGIdgXLg4UqXEWV4dyziuWP3ybMKjLqkHhNbc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dNaNZVod; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710A9C113D0;
+	Mon, 22 Sep 2025 14:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758549627;
-	bh=E3sdM+sVgc4gPEGHLFWWB3ONFSYLIUVewf4FnPVnNko=;
+	s=k20201202; t=1758549628;
+	bh=9+X8lOiOtYMbUbFdpAmI3p+yU7sWK/FSC3XDXhVkqzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VCx1AkCvfPyrVhShnCv/SFwo0rbnut3TO4KhIXnqKOrGlriQAPyOFpACn+ipGnbuV
-	 jtialiB8qyI52fU2nWl1UKuKxf3y2bPFvHJEz0RG2E1plv3aSVnq0lNirIy5jckzkO
-	 Z7UuC5bbpRpB5sug0AhLN+rbtks6yRJ62rCEUwTmXJ4+sAyh7APVK8071uYX7hDa86
-	 8pa3HnCeDdZ4B+mICbtGdR6vnWi4XGzWnBiQVUNwxv4kwA2LqMo54PdH2mGWa0pM2s
-	 Y6PJ81QkgYZxJ06WNXacCkaqpkSp8So6ma4W0W7M7QKZunyLYQuG5ZQ0LMD8VyeBaR
-	 pSQAScWU9rOSQ==
+	b=dNaNZVodysfX1Axn+pXuGlkBpDyAa21j3nHRs24l5efSBBUSgEG2bg4aR18zxnzZQ
+	 gA15wFNwSLUp9OVPsEO3dqfQ2AjAqopr/hx5PJqWWYhBnXur4718I+vamM4sR5jYXm
+	 L3le/utpvozKsjYXKA5wOf8buQXY5klXU6teTXX7QHc6q2RCaIk/ydazsJ6TBKAv4D
+	 JNjBzA3gYse1h5PAIBm4vLxIKqEOUBu9aolyhuOPjmnuXDlSwU51Y0AK4oVDvtoEa3
+	 u5wkmEQ1Rwe5XJrxcKHuhlZ06q1jAt9NlJRETiQISOtEpvyr1/4MscxtMy/x2s/awW
+	 hW+cv5D91yMeg==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	=?UTF-8?q?Barnab=C3=A1s=20Cz=C3=A9m=C3=A1n?= <barnabas.czeman@mainlining.org>
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Cc: linux-arm-msm@vger.kernel.org,
 	linux-remoteproc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Luca Weiss <luca@lucaweiss.eu>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Stephan Gerhold <stephan.gerhold@linaro.org>
-Subject: Re: [PATCH v2] rpmsg: qcom_smd: Fix fallback to qcom,ipc parse
-Date: Mon, 22 Sep 2025 09:00:20 -0500
-Message-ID: <175854961645.817693.1581014950745950581.b4-ty@kernel.org>
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v4] remoteproc: qcom_q6v5_mss: support loading MBN file on msm8974
+Date: Mon, 22 Sep 2025 09:00:21 -0500
+Message-ID: <175854961646.817693.9374579634970777125.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250725-fix-qcom-smd-v2-1-e4e43613f874@mainlining.org>
-References: <20250725-fix-qcom-smd-v2-1-e4e43613f874@mainlining.org>
+In-Reply-To: <20250706-msm8974-fix-mss-v4-1-630907dbd898@oss.qualcomm.com>
+References: <20250706-msm8974-fix-mss-v4-1-630907dbd898@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -69,18 +65,17 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Fri, 25 Jul 2025 22:02:58 +0200, Barnabás Czémán wrote:
-> mbox_request_channel() returning value was changed in case of error.
-> It uses returning value of of_parse_phandle_with_args().
-> It is returning with -ENOENT instead of -ENODEV when no mboxes property
-> exists.
+On Sun, 06 Jul 2025 17:47:08 +0300, Dmitry Baryshkov wrote:
+> On MSM8974 / APQ8074, MSM8226 and MSM8926 the MSS requires loading raw
+> MBA image instead of the ELF file. Skip the ELF headers if mba.mbn was
+> specified as the firmware image.
 > 
 > 
 
 Applied, thanks!
 
-[1/1] rpmsg: qcom_smd: Fix fallback to qcom,ipc parse
-      commit: 09390ed9af37ed612dd0967ff2b0d639872b8776
+[1/1] remoteproc: qcom_q6v5_mss: support loading MBN file on msm8974
+      commit: 581e3dea0ece4b59cf714c9dfe195a178d3ae13b
 
 Best regards,
 -- 
