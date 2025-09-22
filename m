@@ -1,243 +1,573 @@
-Return-Path: <linux-arm-msm+bounces-74420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69E31B91145
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 14:15:38 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D5F4CB91505
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 15:12:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DA4E18944C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 12:16:00 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 89E9A3AB5B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 13:12:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 71222306B06;
-	Mon, 22 Sep 2025 12:15:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ICQHhCOJ"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 90FFB30AAC8;
+	Mon, 22 Sep 2025 13:12:22 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C55303CB3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 12:15:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7057130ACF6
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 13:12:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758543329; cv=none; b=N187v6WxNKH7ymqtDrLuIMqUwj02wP4Y/fIO9BsuxzFyR6JZ6F43apNCiBD2r3CGYKXwfiCP9DFDket7IZ50z+GTvOkQ0Ep/zDcQqgQBfjfXaFfzlTrFjz3lZFhJv6y4wGuQvk/uHFrzf/c9aijHkgp7jYJpSKms2uTXU1bL1s8=
+	t=1758546742; cv=none; b=FHZzEK8KEGsx3/bNKYVEmBUuJlzoWi6l/ojyzGXblDGqXv3mYEuFOET6+hnDC9XJjQdoSIWHZG3Jg3B881jCQ4JkvtbUzTrM68CrCX4IpWP96lWtbeuAH9mIbcarQfGKko4Dc/pTJRryxXmK7GKlpfuo8GY8PHnoNLYHm0Dxh2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758543329; c=relaxed/simple;
-	bh=G3F0xMEE+TMsLruePptbFERK2DWVWwzzsLhy11bsxDg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S9h6GpFneNsSSjUS6VDLO8FbnBYd9FpWmCsJXN1TAKLQuKUm2+o62T20BfkHCxdmRAagUZUNMhJVxW6OZfk6J1jogX7iTiZ9w++ZcLlxFxJpEwgKabquE4yU98fcrYIzjkvI5nVENl8+VQi1Lwc4x+5gXTTZrNRL5VQ+2OewdVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ICQHhCOJ; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58M8ufR4030265
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 12:15:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2SOcElaA9ELOUb5vvWlHmIL1+0Xp49z4i8jOou1NK2U=; b=ICQHhCOJDviz6wjG
-	VQYHLnyag2O9oFXDHa6uFvZ79hCsn8n6yzpFtrncVlK49rpzkZBKkULl9Su6lOAN
-	CEr7KbchXfhXaXYjiQ3lp3vPSiVcLSEGIbYrCzxvGRkd+aCxAfsmMhsgA0DgvIWj
-	/FySuvB/oBq0SX2jN9n5HxNwpfPKiaWkWzg/h3MQususUtJlhfYiwx/OwYg6snvW
-	JBdRj2GUDoDz7QhejmgrhuIPPciUwGpk3ezVmpGj/VporvYy1JJxcVNlZcAATRvH
-	RuRtXWnQEyAGMFHUpNLhTp7nyyuQfEfKc/FA57tRhp1Ny7VlGxHqytDieH/ph3A+
-	uoFUAw==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499k98cq6s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 12:15:21 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b54b37ba2d9so4031456a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 05:15:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758543314; x=1759148114;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2SOcElaA9ELOUb5vvWlHmIL1+0Xp49z4i8jOou1NK2U=;
-        b=rKu8bs/iVUPD3zC0EtCQVgzfferjXYEYkg8cc9hZSlO3UYOVaLpB6E2pp8EE4bfGhJ
-         5GvZzUK0TWHPrdz0+YyJFXvtpDlK4UwhBT408AeKEDqZC6sjOerqfTQtrkGoO1Om5/y6
-         pXMDefmLT6iA96ql3EKsqGKbnE+ZYR+4tiwcR22ejcj/VxrDw30QMBvDFkSCZm5++rWt
-         ++fH4fkY1H2G/sZmOB07YiDFWvD2Ibsk8S5nf1VG0yZ9ek8rHgF7ujzakMEcjEMND429
-         wj2MzYxNH+lOsl3QvMFLm4RSFqWuPPxLp9OXFzBGv4LhFq13UAdLCWxQ916/pPwDFjU3
-         Hmpw==
-X-Forwarded-Encrypted: i=1; AJvYcCWtMckyAYZXOFcUlZEpgDZWN/Lu/ows7DrpBC/Qgz0UH+lncRmUamI9279989OdPY9MiMAMATtyyHhSy5Ez@vger.kernel.org
-X-Gm-Message-State: AOJu0YxO23VbWxdjuHvkeJgAwbT8OqC5wncVFtTDhDGdNFD9CowtlpWW
-	SE+NHVz8WvOifmq7eKHow8IxAONHXhOeXjbcx3sio5JIXdWEVZi8jom3ecu0R+ckzE7CXnIy/eG
-	oAxoctThmrgYQuyunz5FKQ8ipTMdSAqZXtlw0g4W4rHb2R4FoCKRh2+79/obKCAaMrogj
-X-Gm-Gg: ASbGncsYMlPlCg9/l8Zf1I8d8hK7aDBHwBiDiUnFAQ1m+JDFXJVv4tjlAGPNTJ0ID35
-	ixYBTlazZQdDVqNqUs0KK2r3tA1DUxjCA35J6PSoWaXCUMq8GYT5ygEy26OyPjuHXCXRgn8zUEh
-	7MlJaxbk8zzkF37XdVSmEzuQLXRwf/89yuqn6SoaTNuJncpMZ3BOaOD+rNbF48v4Vqd7OxOOun4
-	hHLdvB5zDycYUXMdrqgLt6Dp8FmK+JsFlUPvs60jxMTzvOvUAMAJTmvVts1KmeCpAek+GXxyKZV
-	4Tjce7tstCLk58HDJyl3wWXkt9md9dXt/MYEZEbzGKQxS61boNCOImTEryEKZQM=
-X-Received: by 2002:a17:902:f68e:b0:262:f975:fcba with SMTP id d9443c01a7336-269b7952ec0mr164439965ad.9.1758543313680;
-        Mon, 22 Sep 2025 05:15:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETp5+7x0LZwwUg6TPsnjfrGzvqeKvEn0RwiiAxqp/8tCtsL27SgsBFX8tYALlFBBn3b0Z/+A==
-X-Received: by 2002:a17:902:f68e:b0:262:f975:fcba with SMTP id d9443c01a7336-269b7952ec0mr164439345ad.9.1758543312965;
-        Mon, 22 Sep 2025 05:15:12 -0700 (PDT)
-Received: from [10.206.104.82] ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-269802dfcbesm131950355ad.88.2025.09.22.05.15.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 05:15:12 -0700 (PDT)
-Message-ID: <134a9c5e-3933-4e53-bfb8-5d1de0111fcb@oss.qualcomm.com>
-Date: Mon, 22 Sep 2025 17:45:07 +0530
+	s=arc-20240116; t=1758546742; c=relaxed/simple;
+	bh=dBo02lAOpS9f/amBLfsXoqwSXXZtmCKvCnbIv2T6WBs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=esEKDpUvY9093RZfm+IR9se+KGPqiEhL3A9nhveXfJPIEewmMPLO8npSSxMB1cS4HV1E36Y4WJ9TVDdCOuJimvlhamsiGHBEy01POUJhoKTVjNpUzawrb6Dym8YBUK3PaKmNqAHa1J4xh9D6rOQaBRkp8c5G7mc7QogeBIrvveQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id BFEAB2444
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 06:12:11 -0700 (PDT)
+Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id 875B73F694
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 06:12:19 -0700 (PDT)
+Date: Mon, 22 Sep 2025 14:10:19 +0100
+From: Liviu Dudau <liviu.dudau@arm.com>
+To: Eliav Farber <farbere@amazon.com>
+Cc: linux@armlinux.org.uk, jdike@addtoit.com, richard@nod.at,
+	anton.ivanov@cambridgegreys.com, dave.hansen@linux.intel.com,
+	luto@kernel.org, peterz@infradead.org, tglx@linutronix.de,
+	mingo@redhat.com, bp@alien8.de, x86@kernel.org, hpa@zytor.com,
+	tony.luck@intel.com, qiuxu.zhuo@intel.com, mchehab@kernel.org,
+	james.morse@arm.com, rric@kernel.org, harry.wentland@amd.com,
+	sunpeng.li@amd.com, alexander.deucher@amd.com,
+	christian.koenig@amd.com, airlied@linux.ie, daniel@ffwll.ch,
+	evan.quan@amd.com, james.qian.wang@arm.com,
+	mihail.atanassov@arm.com, brian.starkey@arm.com,
+	maarten.lankhorst@linux.intel.com, mripard@kernel.org,
+	tzimmermann@suse.de, robdclark@gmail.com, sean@poorly.run,
+	jdelvare@suse.com, linux@roeck-us.net, fery@cypress.com,
+	dmitry.torokhov@gmail.com, agk@redhat.com, snitzer@redhat.com,
+	dm-devel@redhat.com, rajur@chelsio.com, davem@davemloft.net,
+	kuba@kernel.org, peppe.cavallaro@st.com, alexandre.torgue@st.com,
+	joabreu@synopsys.com, mcoquelin.stm32@gmail.com, malattia@linux.it,
+	hdegoede@redhat.com, mgross@linux.intel.com,
+	intel-linux-scu@intel.com, artur.paszkiewicz@intel.com,
+	jejb@linux.ibm.com, martin.petersen@oracle.com,
+	sakari.ailus@linux.intel.com, gregkh@linuxfoundation.org,
+	clm@fb.com, josef@toxicpanda.com, dsterba@suse.com, jack@suse.com,
+	tytso@mit.edu, adilger.kernel@dilger.ca, dushistov@mail.ru,
+	luc.vanoostenryck@gmail.com, rostedt@goodmis.org, pmladek@suse.com,
+	sergey.senozhatsky@gmail.com, andriy.shevchenko@linux.intel.com,
+	linux@rasmusvillemoes.dk, minchan@kernel.org, ngupta@vflare.org,
+	akpm@linux-foundation.org, kuznet@ms2.inr.ac.ru,
+	yoshfuji@linux-ipv6.org, pablo@netfilter.org, kadlec@netfilter.org,
+	fw@strlen.de, jmaloy@redhat.com, ying.xue@windriver.com,
+	willy@infradead.org, sashal@kernel.org, ruanjinjie@huawei.com,
+	David.Laight@aculab.com, herve.codina@bootlin.com, Jason@zx2c4.com,
+	bvanassche@acm.org, keescook@chromium.org,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	linux-um@lists.infradead.org, linux-edac@vger.kernel.org,
+	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+	linux-hwmon@vger.kernel.org, linux-input@vger.kernel.org,
+	linux-media@vger.kernel.org, netdev@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	platform-driver-x86@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-staging@lists.linux.dev, linux-btrfs@vger.kernel.org,
+	linux-ext4@vger.kernel.org, linux-sparse@vger.kernel.org,
+	linux-mm@kvack.org, netfilter-devel@vger.kernel.org,
+	coreteam@netfilter.org, tipc-discussion@lists.sourceforge.net,
+	stable@vger.kernel.org, jonnyc@amazon.com
+Subject: Re: [PATCH 04/27 5.10.y] minmax: add in_range() macro
+Message-ID: <aNFKuyJ8_EjdDwn8@e110455-lin.cambridge.arm.com>
+References: <20250919101727.16152-1-farbere@amazon.com>
+ <20250919101727.16152-5-farbere@amazon.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/12] arm64: dts: qcom: Add EL2 overlay for Lemans
-To: Stephan Gerhold <stephan.gerhold@linaro.org>,
-        Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250921-kvm_rproc_pas-v3-0-458f09647920@oss.qualcomm.com>
- <20250921-kvm_rproc_pas-v3-12-458f09647920@oss.qualcomm.com>
- <aNEHJv92i8NlaSO3@linaro.org>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <aNEHJv92i8NlaSO3@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: UGoh3IbBIYs2zznahHYWbFbXIgKSKuTn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAxOCBTYWx0ZWRfX2pJSx0XRFXdT
- kVIBYdqrKP0OYuqHgeYZ5BlsfD9uH94PgVw6t4wNar5US++ZoTHnBC5Xsi8dDESSu7N4G5D9Q44
- te/41YmzkYwlXyaETPE3tZPF2NpJqxnFtxsnpue2A3V8u48QrpGtDaHDgA3bfH6yS3ZCopLgcBH
- otSe6jjJlQHib+WAk0CJD8P0kAzrLM3zF+5zr6eMGHlakIOxf1DLceS6tI8P+DOevh2winSK2fr
- TcRa1xsOvZaLIaQQgBlpEw3ASNqvOLFh63nqlCDZLeV5gmPErxE93pDwpwgGl30g0ImQT19yiHt
- lBfr5f2X+1+11TYtL0nv+YzI8GAQHzQtF/qLSU2B+EqxMZxT0PRZFl0AxzLiS4X4t0NkScIeje5
- YrpX03bw
-X-Proofpoint-ORIG-GUID: UGoh3IbBIYs2zznahHYWbFbXIgKSKuTn
-X-Authority-Analysis: v=2.4 cv=Dp1W+H/+ c=1 sm=1 tr=0 ts=68d13dd9 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=b-_fF0JyYpgD-z2UGBkA:9 a=QEXdDO2ut3YA:10 a=eSe6kog-UzkA:10
- a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-22_01,2025-09-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 spamscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200018
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250919101727.16152-5-farbere@amazon.com>
 
-On 9/22/2025 1:51 PM, Stephan Gerhold wrote:
-> On Sun, Sep 21, 2025 at 01:11:10AM +0530, Mukesh Ojha wrote:
->> All the Lemans IOT variants boards are using Gunyah hypervisor which
->> means that, so far, Linux-based OS could only boot in EL1 on those
->> devices.  However, it is possible for us to boot Linux at EL2 on these
->> devices [1].
->>
->> When running under Gunyah, remote processor firmware IOMMU streams is
->> controlled by the Gunyah however when Linux take ownership of it in EL2,
->> It need to configure it properly to use remote processor.
->>
->> Add a EL2-specific DT overlay and apply it to Lemans IOT variant
->> devices to create -el2.dtb for each of them alongside "normal" dtb.
->>
->> [1]
->> https://docs.qualcomm.com/bundle/publicresource/topics/80-70020-4/boot-developer-touchpoints.html#uefi
->>
->> Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
->> ---
->>  arch/arm64/boot/dts/qcom/Makefile        |  7 ++++++-
->>  arch/arm64/boot/dts/qcom/lemans-el2.dtso | 28 ++++++++++++++++++++++++++++
->>  2 files changed, 34 insertions(+), 1 deletion(-)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 296688f7cb26..e2eb6c4f8e25 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -35,6 +35,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk.dtb
->>  lemans-evk-camera-csi1-imx577-dtbs	:= lemans-evk.dtb lemans-evk-camera-csi1-imx577.dtbo
->>  
->>  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera-csi1-imx577.dtb
->> +lemans-evk-el2-dtbs := lemans-evk.dtb lemans-el2.dtbo
->> +dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-el2.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
->> @@ -136,7 +138,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
->> -dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
->> +qcs9100-ride-el2-dtbs := qcs9100-ride.dtb lemans-el2.dtbo
->> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb qcs9100-ride-el2.dtb
->> +qcs9100-ride-r3-el2-dtbs := qcs9100-ride-r3.dtb lemans-el2.dtbo
->> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb qcs9100-ride-r3-el2.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
->>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/lemans-el2.dtso b/arch/arm64/boot/dts/qcom/lemans-el2.dtso
->> new file mode 100644
->> index 000000000000..55a2a9e2b10d
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/lemans-el2.dtso
->> @@ -0,0 +1,28 @@
->> +// SPDX-License-Identifier: BSD-3-Clause
->> +/*
->> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
->> + */
->> +
->> +/*
->> + * Lemans specific modifications required to boot in EL2.
->> + */
->> +
->> +/dts-v1/;
->> +/plugin/;
->> +
->> +/*
->> + * When running under Gunyah, remote processor firmware IOMMU streams is
->> + * controlled by the Gunyah however when we take ownership of it in EL2,
->> + * we need to configure it properly to use remote processor.
->> + */
->> +&remoteproc_adsp {
->> +	iommus = <&apps_smmu 0x3000 0x0>;
->> +};
->> +
->> +&remoteproc_cdsp0 {
->> +	iommus = <&apps_smmu 0x21c0 0x0400>;
->> +};
->> +
->> +&remoteproc_cdsp1 {
->> +	iommus = <&apps_smmu 0x29c0 0x0400>;
->> +};
->>
+On Fri, Sep 19, 2025 at 10:17:04AM +0000, Eliav Farber wrote:
+> From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 > 
-> Would be good to disable &iris here for now similar to
-> https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git/commit/?h=for-next&id=c0f045e303e014cec5d883edf82fe5de74769944
-> (I'm assuming it is broken without specifying the iommus?)
+> [ Upstream commit f9bff0e31881d03badf191d3b0005839391f5f2b ]
 > 
-> What about GPU? You can load the GPU zap shader in EL2 without further
-> changes in the drm/msm driver?
+> Patch series "New page table range API", v6.
+> 
+> This patchset changes the API used by the MM to set up page table entries.
+> The four APIs are:
+> 
+>     set_ptes(mm, addr, ptep, pte, nr)
+>     update_mmu_cache_range(vma, addr, ptep, nr)
+>     flush_dcache_folio(folio)
+>     flush_icache_pages(vma, page, nr)
+> 
+> flush_dcache_folio() isn't technically new, but no architecture
+> implemented it, so I've done that for them.  The old APIs remain around
+> but are mostly implemented by calling the new interfaces.
+> 
+> The new APIs are based around setting up N page table entries at once.
+> The N entries belong to the same PMD, the same folio and the same VMA, so
+> ptep++ is a legitimate operation, and locking is taken care of for you.
+> Some architectures can do a better job of it than just a loop, but I have
+> hesitated to make too deep a change to architectures I don't understand
+> well.
+> 
+> One thing I have changed in every architecture is that PG_arch_1 is now a
+> per-folio bit instead of a per-page bit when used for dcache clean/dirty
+> tracking.  This was something that would have to happen eventually, and it
+> makes sense to do it now rather than iterate over every page involved in a
+> cache flush and figure out if it needs to happen.
+> 
+> The point of all this is better performance, and Fengwei Yin has measured
+> improvement on x86.  I suspect you'll see improvement on your architecture
+> too.  Try the new will-it-scale test mentioned here:
+> https://lore.kernel.org/linux-mm/20230206140639.538867-5-fengwei.yin@intel.com/
+> You'll need to run it on an XFS filesystem and have
+> CONFIG_TRANSPARENT_HUGEPAGE set.
+> 
+> This patchset is the basis for much of the anonymous large folio work
+> being done by Ryan, so it's received quite a lot of testing over the last
+> few months.
+> 
+> This patch (of 38):
+> 
+> Determine if a value lies within a range more efficiently (subtraction +
+> comparison vs two comparisons and an AND).  It also has useful (under some
+> circumstances) behaviour if the range exceeds the maximum value of the
+> type.  Convert all the conflicting definitions of in_range() within the
+> kernel; some can use the generic definition while others need their own
+> definition.
+> 
+> Link: https://lkml.kernel.org/r/20230802151406.3735276-1-willy@infradead.org
+> Link: https://lkml.kernel.org/r/20230802151406.3735276-2-willy@infradead.org
+> Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+> Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+> Signed-off-by: Eliav Farber <farbere@amazon.com>
+> ---
+>  arch/arm/mm/pageattr.c                        |  6 ++---
+>  .../drm/arm/display/include/malidp_utils.h    |  2 +-
+>  .../display/komeda/komeda_pipeline_state.c    | 24 ++++++++---------
 
-Lemans GPU DT patches are still in the mailing lists. Hopefully, they
-will be picked up for v6.19.
+For the malidp and komeda changes:
 
--Akhil.
+Reviewed-by: Liviu Dudau <liviu.dudau@arm.com>
 
+Best regards,
+Liviu
+
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |  6 -----
+>  .../net/ethernet/chelsio/cxgb3/cxgb3_main.c   | 18 ++++++-------
+>  fs/btrfs/misc.h                               |  2 --
+>  fs/ext2/balloc.c                              |  2 --
+>  fs/ext4/ext4.h                                |  2 --
+>  fs/ufs/util.h                                 |  6 -----
+>  include/linux/minmax.h                        | 27 +++++++++++++++++++
+>  lib/logic_pio.c                               |  3 ---
+>  net/netfilter/nf_nat_core.c                   |  6 ++---
+>  net/tipc/core.h                               |  2 +-
+>  net/tipc/link.c                               | 10 +++----
+>  14 files changed, 61 insertions(+), 55 deletions(-)
 > 
-> What about &remoteproc_gpdsp0 and &remoteproc_gpdsp1?
-> 
-> Please make the changes in a way that they result in a properly
-> functional boot without errors. Disable functionality that needs
-> more work before it can be enabled in EL2.
-> 
-> Thanks,
-> Stephan
+> diff --git a/arch/arm/mm/pageattr.c b/arch/arm/mm/pageattr.c
+> index 9790ae3a8c68..3b3bfa825fad 100644
+> --- a/arch/arm/mm/pageattr.c
+> +++ b/arch/arm/mm/pageattr.c
+> @@ -25,7 +25,7 @@ static int change_page_range(pte_t *ptep, unsigned long addr, void *data)
+>  	return 0;
+>  }
+>  
+> -static bool in_range(unsigned long start, unsigned long size,
+> +static bool range_in_range(unsigned long start, unsigned long size,
+>  	unsigned long range_start, unsigned long range_end)
+>  {
+>  	return start >= range_start && start < range_end &&
+> @@ -46,8 +46,8 @@ static int change_memory_common(unsigned long addr, int numpages,
+>  	if (!size)
+>  		return 0;
+>  
+> -	if (!in_range(start, size, MODULES_VADDR, MODULES_END) &&
+> -	    !in_range(start, size, VMALLOC_START, VMALLOC_END))
+> +	if (!range_in_range(start, size, MODULES_VADDR, MODULES_END) &&
+> +	    !range_in_range(start, size, VMALLOC_START, VMALLOC_END))
+>  		return -EINVAL;
+>  
+>  	data.set_mask = set_mask;
+> diff --git a/drivers/gpu/drm/arm/display/include/malidp_utils.h b/drivers/gpu/drm/arm/display/include/malidp_utils.h
+> index 49a1d7f3539c..9f83baac6ed8 100644
+> --- a/drivers/gpu/drm/arm/display/include/malidp_utils.h
+> +++ b/drivers/gpu/drm/arm/display/include/malidp_utils.h
+> @@ -35,7 +35,7 @@ static inline void set_range(struct malidp_range *rg, u32 start, u32 end)
+>  	rg->end   = end;
+>  }
+>  
+> -static inline bool in_range(struct malidp_range *rg, u32 v)
+> +static inline bool malidp_in_range(struct malidp_range *rg, u32 v)
+>  {
+>  	return (v >= rg->start) && (v <= rg->end);
+>  }
+> diff --git a/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c b/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
+> index 7cc891c091f8..3e414d2fbdda 100644
+> --- a/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
+> +++ b/drivers/gpu/drm/arm/display/komeda/komeda_pipeline_state.c
+> @@ -305,12 +305,12 @@ komeda_layer_check_cfg(struct komeda_layer *layer,
+>  	if (komeda_fb_check_src_coords(kfb, src_x, src_y, src_w, src_h))
+>  		return -EINVAL;
+>  
+> -	if (!in_range(&layer->hsize_in, src_w)) {
+> +	if (!malidp_in_range(&layer->hsize_in, src_w)) {
+>  		DRM_DEBUG_ATOMIC("invalidate src_w %d.\n", src_w);
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (!in_range(&layer->vsize_in, src_h)) {
+> +	if (!malidp_in_range(&layer->vsize_in, src_h)) {
+>  		DRM_DEBUG_ATOMIC("invalidate src_h %d.\n", src_h);
+>  		return -EINVAL;
+>  	}
+> @@ -452,14 +452,14 @@ komeda_scaler_check_cfg(struct komeda_scaler *scaler,
+>  	hsize_out = dflow->out_w;
+>  	vsize_out = dflow->out_h;
+>  
+> -	if (!in_range(&scaler->hsize, hsize_in) ||
+> -	    !in_range(&scaler->hsize, hsize_out)) {
+> +	if (!malidp_in_range(&scaler->hsize, hsize_in) ||
+> +	    !malidp_in_range(&scaler->hsize, hsize_out)) {
+>  		DRM_DEBUG_ATOMIC("Invalid horizontal sizes");
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (!in_range(&scaler->vsize, vsize_in) ||
+> -	    !in_range(&scaler->vsize, vsize_out)) {
+> +	if (!malidp_in_range(&scaler->vsize, vsize_in) ||
+> +	    !malidp_in_range(&scaler->vsize, vsize_out)) {
+>  		DRM_DEBUG_ATOMIC("Invalid vertical sizes");
+>  		return -EINVAL;
+>  	}
+> @@ -574,13 +574,13 @@ komeda_splitter_validate(struct komeda_splitter *splitter,
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (!in_range(&splitter->hsize, dflow->in_w)) {
+> +	if (!malidp_in_range(&splitter->hsize, dflow->in_w)) {
+>  		DRM_DEBUG_ATOMIC("split in_w:%d is out of the acceptable range.\n",
+>  				 dflow->in_w);
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (!in_range(&splitter->vsize, dflow->in_h)) {
+> +	if (!malidp_in_range(&splitter->vsize, dflow->in_h)) {
+>  		DRM_DEBUG_ATOMIC("split in_h: %d exceeds the acceptable range.\n",
+>  				 dflow->in_h);
+>  		return -EINVAL;
+> @@ -624,13 +624,13 @@ komeda_merger_validate(struct komeda_merger *merger,
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (!in_range(&merger->hsize_merged, output->out_w)) {
+> +	if (!malidp_in_range(&merger->hsize_merged, output->out_w)) {
+>  		DRM_DEBUG_ATOMIC("merged_w: %d is out of the accepted range.\n",
+>  				 output->out_w);
+>  		return -EINVAL;
+>  	}
+>  
+> -	if (!in_range(&merger->vsize_merged, output->out_h)) {
+> +	if (!malidp_in_range(&merger->vsize_merged, output->out_h)) {
+>  		DRM_DEBUG_ATOMIC("merged_h: %d is out of the accepted range.\n",
+>  				 output->out_h);
+>  		return -EINVAL;
+> @@ -866,8 +866,8 @@ void komeda_complete_data_flow_cfg(struct komeda_layer *layer,
+>  	 * input/output range.
+>  	 */
+>  	if (dflow->en_scaling && scaler)
+> -		dflow->en_split = !in_range(&scaler->hsize, dflow->in_w) ||
+> -				  !in_range(&scaler->hsize, dflow->out_w);
+> +		dflow->en_split = !malidp_in_range(&scaler->hsize, dflow->in_w) ||
+> +				  !malidp_in_range(&scaler->hsize, dflow->out_w);
+>  }
+>  
+>  static bool merger_is_available(struct komeda_pipeline *pipe,
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index 655938df4531..f11da95566da 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -657,12 +657,6 @@ struct block_header {
+>  	u32 data[];
+>  };
+>  
+> -/* this should be a general kernel helper */
+> -static int in_range(u32 addr, u32 start, u32 size)
+> -{
+> -	return addr >= start && addr < start + size;
+> -}
+> -
+>  static bool fw_block_mem(struct a6xx_gmu_bo *bo, const struct block_header *blk)
+>  {
+>  	if (!in_range(blk->addr, bo->iova, bo->size))
+> diff --git a/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c b/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c
+> index 8a167eea288c..10790a370f22 100644
+> --- a/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c
+> +++ b/drivers/net/ethernet/chelsio/cxgb3/cxgb3_main.c
+> @@ -2131,7 +2131,7 @@ static const struct ethtool_ops cxgb_ethtool_ops = {
+>  	.set_link_ksettings = set_link_ksettings,
+>  };
+>  
+> -static int in_range(int val, int lo, int hi)
+> +static int cxgb_in_range(int val, int lo, int hi)
+>  {
+>  	return val < 0 || (val <= hi && val >= lo);
+>  }
+> @@ -2162,19 +2162,19 @@ static int cxgb_extension_ioctl(struct net_device *dev, void __user *useraddr)
+>  			return -EINVAL;
+>  		if (t.qset_idx >= SGE_QSETS)
+>  			return -EINVAL;
+> -		if (!in_range(t.intr_lat, 0, M_NEWTIMER) ||
+> -		    !in_range(t.cong_thres, 0, 255) ||
+> -		    !in_range(t.txq_size[0], MIN_TXQ_ENTRIES,
+> +		if (!cxgb_in_range(t.intr_lat, 0, M_NEWTIMER) ||
+> +		    !cxgb_in_range(t.cong_thres, 0, 255) ||
+> +		    !cxgb_in_range(t.txq_size[0], MIN_TXQ_ENTRIES,
+>  			      MAX_TXQ_ENTRIES) ||
+> -		    !in_range(t.txq_size[1], MIN_TXQ_ENTRIES,
+> +		    !cxgb_in_range(t.txq_size[1], MIN_TXQ_ENTRIES,
+>  			      MAX_TXQ_ENTRIES) ||
+> -		    !in_range(t.txq_size[2], MIN_CTRL_TXQ_ENTRIES,
+> +		    !cxgb_in_range(t.txq_size[2], MIN_CTRL_TXQ_ENTRIES,
+>  			      MAX_CTRL_TXQ_ENTRIES) ||
+> -		    !in_range(t.fl_size[0], MIN_FL_ENTRIES,
+> +		    !cxgb_in_range(t.fl_size[0], MIN_FL_ENTRIES,
+>  			      MAX_RX_BUFFERS) ||
+> -		    !in_range(t.fl_size[1], MIN_FL_ENTRIES,
+> +		    !cxgb_in_range(t.fl_size[1], MIN_FL_ENTRIES,
+>  			      MAX_RX_JUMBO_BUFFERS) ||
+> -		    !in_range(t.rspq_size, MIN_RSPQ_ENTRIES,
+> +		    !cxgb_in_range(t.rspq_size, MIN_RSPQ_ENTRIES,
+>  			      MAX_RSPQ_ENTRIES))
+>  			return -EINVAL;
+>  
+> diff --git a/fs/btrfs/misc.h b/fs/btrfs/misc.h
+> index 6461ebc3a1c1..40ad75511435 100644
+> --- a/fs/btrfs/misc.h
+> +++ b/fs/btrfs/misc.h
+> @@ -8,8 +8,6 @@
+>  #include <asm/div64.h>
+>  #include <linux/rbtree.h>
+>  
+> -#define in_range(b, first, len) ((b) >= (first) && (b) < (first) + (len))
+> -
+>  static inline void cond_wake_up(struct wait_queue_head *wq)
+>  {
+>  	/*
+> diff --git a/fs/ext2/balloc.c b/fs/ext2/balloc.c
+> index 9bf086821eb3..1d9380c5523b 100644
+> --- a/fs/ext2/balloc.c
+> +++ b/fs/ext2/balloc.c
+> @@ -36,8 +36,6 @@
+>   */
+>  
+>  
+> -#define in_range(b, first, len)	((b) >= (first) && (b) <= (first) + (len) - 1)
+> -
+>  struct ext2_group_desc * ext2_get_group_desc(struct super_block * sb,
+>  					     unsigned int block_group,
+>  					     struct buffer_head ** bh)
+> diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+> index 1dc1292d8977..4adaf97d7435 100644
+> --- a/fs/ext4/ext4.h
+> +++ b/fs/ext4/ext4.h
+> @@ -3659,8 +3659,6 @@ static inline void set_bitmap_uptodate(struct buffer_head *bh)
+>  	set_bit(BH_BITMAP_UPTODATE, &(bh)->b_state);
+>  }
+>  
+> -#define in_range(b, first, len)	((b) >= (first) && (b) <= (first) + (len) - 1)
+> -
+>  /* For ioend & aio unwritten conversion wait queues */
+>  #define EXT4_WQ_HASH_SZ		37
+>  #define ext4_ioend_wq(v)   (&ext4__ioend_wq[((unsigned long)(v)) %\
+> diff --git a/fs/ufs/util.h b/fs/ufs/util.h
+> index 4931bec1a01c..89247193d96d 100644
+> --- a/fs/ufs/util.h
+> +++ b/fs/ufs/util.h
+> @@ -11,12 +11,6 @@
+>  #include <linux/fs.h>
+>  #include "swab.h"
+>  
+> -
+> -/*
+> - * some useful macros
+> - */
+> -#define in_range(b,first,len)	((b)>=(first)&&(b)<(first)+(len))
+> -
+>  /*
+>   * functions used for retyping
+>   */
+> diff --git a/include/linux/minmax.h b/include/linux/minmax.h
+> index abdeae409dad..7affadcb2a29 100644
+> --- a/include/linux/minmax.h
+> +++ b/include/linux/minmax.h
+> @@ -3,6 +3,7 @@
+>  #define _LINUX_MINMAX_H
+>  
+>  #include <linux/const.h>
+> +#include <linux/types.h>
+>  
+>  /*
+>   * min()/max()/clamp() macros must accomplish three things:
+> @@ -175,6 +176,32 @@
+>   */
+>  #define clamp_val(val, lo, hi) clamp_t(typeof(val), val, lo, hi)
+>  
+> +static inline bool in_range64(u64 val, u64 start, u64 len)
+> +{
+> +	return (val - start) < len;
+> +}
+> +
+> +static inline bool in_range32(u32 val, u32 start, u32 len)
+> +{
+> +	return (val - start) < len;
+> +}
+> +
+> +/**
+> + * in_range - Determine if a value lies within a range.
+> + * @val: Value to test.
+> + * @start: First value in range.
+> + * @len: Number of values in range.
+> + *
+> + * This is more efficient than "if (start <= val && val < (start + len))".
+> + * It also gives a different answer if @start + @len overflows the size of
+> + * the type by a sufficient amount to encompass @val.  Decide for yourself
+> + * which behaviour you want, or prove that start + len never overflow.
+> + * Do not blindly replace one form with the other.
+> + */
+> +#define in_range(val, start, len)					\
+> +	((sizeof(start) | sizeof(len) | sizeof(val)) <= sizeof(u32) ?	\
+> +		in_range32(val, start, len) : in_range64(val, start, len))
+> +
+>  /**
+>   * swap - swap values of @a and @b
+>   * @a: first value
+> diff --git a/lib/logic_pio.c b/lib/logic_pio.c
+> index 07b4b9a1f54b..2ea564a40064 100644
+> --- a/lib/logic_pio.c
+> +++ b/lib/logic_pio.c
+> @@ -20,9 +20,6 @@
+>  static LIST_HEAD(io_range_list);
+>  static DEFINE_MUTEX(io_range_mutex);
+>  
+> -/* Consider a kernel general helper for this */
+> -#define in_range(b, first, len)        ((b) >= (first) && (b) < (first) + (len))
+> -
+>  /**
+>   * logic_pio_register_range - register logical PIO range for a host
+>   * @new_range: pointer to the IO range to be registered.
+> diff --git a/net/netfilter/nf_nat_core.c b/net/netfilter/nf_nat_core.c
+> index b7c3c902290f..96b61f0658c8 100644
+> --- a/net/netfilter/nf_nat_core.c
+> +++ b/net/netfilter/nf_nat_core.c
+> @@ -262,7 +262,7 @@ static bool l4proto_in_range(const struct nf_conntrack_tuple *tuple,
+>  /* If we source map this tuple so reply looks like reply_tuple, will
+>   * that meet the constraints of range.
+>   */
+> -static int in_range(const struct nf_conntrack_tuple *tuple,
+> +static int nf_in_range(const struct nf_conntrack_tuple *tuple,
+>  		    const struct nf_nat_range2 *range)
+>  {
+>  	/* If we are supposed to map IPs, then we must be in the
+> @@ -311,7 +311,7 @@ find_appropriate_src(struct net *net,
+>  				       &ct->tuplehash[IP_CT_DIR_REPLY].tuple);
+>  			result->dst = tuple->dst;
+>  
+> -			if (in_range(result, range))
+> +			if (nf_in_range(result, range))
+>  				return 1;
+>  		}
+>  	}
+> @@ -543,7 +543,7 @@ get_unique_tuple(struct nf_conntrack_tuple *tuple,
+>  	if (maniptype == NF_NAT_MANIP_SRC &&
+>  	    !(range->flags & NF_NAT_RANGE_PROTO_RANDOM_ALL)) {
+>  		/* try the original tuple first */
+> -		if (in_range(orig_tuple, range)) {
+> +		if (nf_in_range(orig_tuple, range)) {
+>  			if (!nf_nat_used_tuple(orig_tuple, ct)) {
+>  				*tuple = *orig_tuple;
+>  				return;
+> diff --git a/net/tipc/core.h b/net/tipc/core.h
+> index 73a26b0b9ca1..7c86fa4bb967 100644
+> --- a/net/tipc/core.h
+> +++ b/net/tipc/core.h
+> @@ -199,7 +199,7 @@ static inline int less(u16 left, u16 right)
+>  	return less_eq(left, right) && (mod(right) != mod(left));
+>  }
+>  
+> -static inline int in_range(u16 val, u16 min, u16 max)
+> +static inline int tipc_in_range(u16 val, u16 min, u16 max)
+>  {
+>  	return !less(val, min) && !more(val, max);
+>  }
+> diff --git a/net/tipc/link.c b/net/tipc/link.c
+> index 336d1bb2cf6a..ca96bdb77190 100644
+> --- a/net/tipc/link.c
+> +++ b/net/tipc/link.c
+> @@ -1588,7 +1588,7 @@ static int tipc_link_advance_transmq(struct tipc_link *l, struct tipc_link *r,
+>  					  last_ga->bgack_cnt);
+>  			}
+>  			/* Check against the last Gap ACK block */
+> -			if (in_range(seqno, start, end))
+> +			if (tipc_in_range(seqno, start, end))
+>  				continue;
+>  			/* Update/release the packet peer is acking */
+>  			bc_has_acked = true;
+> @@ -2216,12 +2216,12 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
+>  		strncpy(if_name, data, TIPC_MAX_IF_NAME);
+>  
+>  		/* Update own tolerance if peer indicates a non-zero value */
+> -		if (in_range(peers_tol, TIPC_MIN_LINK_TOL, TIPC_MAX_LINK_TOL)) {
+> +		if (tipc_in_range(peers_tol, TIPC_MIN_LINK_TOL, TIPC_MAX_LINK_TOL)) {
+>  			l->tolerance = peers_tol;
+>  			l->bc_rcvlink->tolerance = peers_tol;
+>  		}
+>  		/* Update own priority if peer's priority is higher */
+> -		if (in_range(peers_prio, l->priority + 1, TIPC_MAX_LINK_PRI))
+> +		if (tipc_in_range(peers_prio, l->priority + 1, TIPC_MAX_LINK_PRI))
+>  			l->priority = peers_prio;
+>  
+>  		/* If peer is going down we want full re-establish cycle */
+> @@ -2264,13 +2264,13 @@ static int tipc_link_proto_rcv(struct tipc_link *l, struct sk_buff *skb,
+>  		l->rcv_nxt_state = msg_seqno(hdr) + 1;
+>  
+>  		/* Update own tolerance if peer indicates a non-zero value */
+> -		if (in_range(peers_tol, TIPC_MIN_LINK_TOL, TIPC_MAX_LINK_TOL)) {
+> +		if (tipc_in_range(peers_tol, TIPC_MIN_LINK_TOL, TIPC_MAX_LINK_TOL)) {
+>  			l->tolerance = peers_tol;
+>  			l->bc_rcvlink->tolerance = peers_tol;
+>  		}
+>  		/* Update own prio if peer indicates a different value */
+>  		if ((peers_prio != l->priority) &&
+> -		    in_range(peers_prio, 1, TIPC_MAX_LINK_PRI)) {
+> +		    tipc_in_range(peers_prio, 1, TIPC_MAX_LINK_PRI)) {
+>  			l->priority = peers_prio;
+>  			rc = tipc_link_fsm_evt(l, LINK_FAILURE_EVT);
+>  		}
+> -- 
+> 2.47.3
 > 
 
+-- 
+====================
+| I would like to |
+| fix the world,  |
+| but they're not |
+| giving me the   |
+ \ source code!  /
+  ---------------
+    ¯\_(ツ)_/¯
 
