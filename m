@@ -1,168 +1,178 @@
-Return-Path: <linux-arm-msm+bounces-74396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74397-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 795D6B8F668
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 10:05:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 807F4B8F6B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 10:10:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 860D018911CC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 08:05:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 60BC218992C6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 08:11:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 145E32F99A6;
-	Mon, 22 Sep 2025 08:04:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4E582FD1C3;
+	Mon, 22 Sep 2025 08:10:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="pHqe234Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="HebjR3Og"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f65.google.com (mail-wm1-f65.google.com [209.85.128.65])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31D362F3C21
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 08:04:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6D80264FB5
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 08:10:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758528298; cv=none; b=bFt/H2g1Zy8Ueufqp6ZQinU0Z188c74/HByKODCTj7F/koEyEro6NP3AScV4vi86iM5rOYuEqyOsu4TA8Ymv9l4dDshdcJgzQKNtM7FuO07b+Om1n80itns5fwwa1/mFw33dlBxbx7advfcQuwc1uvG2igbAwE2Lb15dUa2zj54=
+	t=1758528652; cv=none; b=q2FHrvSrstZqBZAra8ty2773Yz85cGBD5CRjIxMm8hWJkJQg6TBh4gtiO7LanS6avlxPEKZmPXbzCh9xK6pi+hEAG4+GtJtDX+DzYZJo17vdDBPophSYmc7Z8inh+bEjq1p0K/btZdwguQVC65i2SUqqQCWO9ICbruqSXxYQalk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758528298; c=relaxed/simple;
-	bh=xLT431DxIwGI9NTKBWbscnMylArnj++bgBzt6HSURuk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Mcy2Gyx4p1zXTZZIafh1iU5oERuM8P7HOzBLoUl6t2LcQZGnl/lccK5rDH4+Orfy0Xc9od7bF27nAqLiyMj60n4JQ0Uf1MZ5M2WT//is8cYe660pkGYS9Mw8kt0mOJls0US3OWkXPugRINT3Jp1XENMD2k5uCZQFroPSwxwiLII=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=pHqe234Q; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58LNeRZE011505
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 08:04:54 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OBOlNt0KylCLkmD2DPMzP/dcM42JfiU2PW1abyinKzQ=; b=pHqe234Qr4hfKtip
-	8vFbscrqsNDOJhQB6RrHpm3aVnDYgX+Z/kJlOKRtpAQS+BmMCNPZbbIgYBX8TWmQ
-	71izMGieIm6StRm2fZ+V6HPEQ+Xtxw34Oiss6v1xpQNjc2WBCerD++Gfil98f04E
-	fLRJZhDAIbe7ZeXi4quiOU2HYvvDZo+BFPKdadiCebtgvq1//aAkVZaq2fiVzvX7
-	LUbcaVOsO7rmVQrDTnvEyWTE/d+sNF9k4VYg7y6R3hHIGVZf2zIKCI9+KRWrswdk
-	pQey1qYAsRpdNYPhW/nKj7pWdqbRa+dKC5OZxs2lNSrOtrDrN3A9vEa/HyuSGWRq
-	TB8gPA==
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com [209.85.214.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499hmnm4k0-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 08:04:53 +0000 (GMT)
-Received: by mail-pl1-f199.google.com with SMTP id d9443c01a7336-269b2d8af0cso8182745ad.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 01:04:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758528292; x=1759133092;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+	s=arc-20240116; t=1758528652; c=relaxed/simple;
+	bh=s7UO2fKhfUCI4YhH5MtiSmIjIIKO8XsVSeOX4a7lczA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=IvGqoIBlvZk+lbR11h2w+fQyYGWdBchS0qrKCSAsRt9MaCGWDaBrkdZVE/V/JY11ayZpp0Aj+cglnKUexC9B/IoJxs7iaph5CVn2V8a7Erp8kFMkmov7iNdBkvDIDLzkbayhJxF9khqe5GjEyy7gCA3fiN1k9MAkRSNLi28u370=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=HebjR3Og; arc=none smtp.client-ip=209.85.128.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f65.google.com with SMTP id 5b1f17b1804b1-45dcff2f313so23609795e9.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 01:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1758528649; x=1759133449; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=OBOlNt0KylCLkmD2DPMzP/dcM42JfiU2PW1abyinKzQ=;
-        b=HE7HLphypdsu+yxytRj2gp2kAmRSgNzY8EGTOZInxMLkS9/LQcSPAWIWhVBv0RE7RQ
-         c83nyX99NK40R7BW/I2QZITM3B6DA8W6x7mXged682KZPLWl1phCRzoPfUekwg5hxYpN
-         TTEN6pnepQ6tHxCQd/ypEwVtc/LKpyoUPEQALi0b+yrrU0ggX09kKSHGCPESqSMXzvpL
-         dWHfTkjD7BIVBYfmM9/Avo+iQ8kNGK57xmlyEfXvKeZCuXsBWG5MnMaubb3GyFcpFClT
-         E6oBWZVWLADjIv5ov1Q1iEDh9RcASxR3r+EXvHAwPG3H5DHAjh8k/Vh+2zbXSna8FYF9
-         JOJw==
-X-Forwarded-Encrypted: i=1; AJvYcCXDgR93ax0G6C03q06TxsDxhpdyC3jdMGQyTrjzu+12CHNQ0YrWXjaGoDxA0DDp6Z2cp2AGCR5XMbWH1z0i@vger.kernel.org
-X-Gm-Message-State: AOJu0YyfuwMdtOdAv0h+eZsmD2ZgF4M8nD2ksHseTvAdy8nzlMYss2ct
-	cx6R/rQP6nIyvxYlhOoU0H662H18KxYUWfpCKKOM/Y+dIuxaMuk/Hb1CMSy0jp+bvERfo78dylN
-	WN+edSlIpUEXKmjOneLURI0WImHVEOn5um4HnlMgdsbo/SAwbC6gNWhD+eyd2qtq6W63z
-X-Gm-Gg: ASbGnctqXtCGAOxifkuyhNUqzdOWHstgPbx6DEczhczkliK8UJYWzf0swmDkJ7blgPg
-	CnMBGNpWtP0j8PjvRzjZM+mwGHE2ekW9bjrDM7rQFLyC/IZCYwp+keaGLTXghNUKMlOQNctZhE2
-	k7ORjRiYDVUtLDopVOKH5gQRemy4xuHtTMqOaoaUgkVhbzndABstKETXWr9QnhX7z7DXFpJPOYo
-	Bibhu2R5mGEZsjVgisVVOk96aY91xV4MG3gAqk0vsU55xn+ooHVG31GuuM50DKNph+qnj6H6bYn
-	D2rDJXZDfL9qGMJkvRqFoba7rWz6Gu30q6dTqE9SeMjESvOA42TEDNRrQr4tg+ZLyAmeRRpKolk
-	sHnKQSZeypYZ1N3pQGRj1uO+/gyPOMwVsug==
-X-Received: by 2002:a17:902:8f90:b0:269:85aa:3776 with SMTP id d9443c01a7336-269ba565f84mr64992155ad.11.1758528292458;
-        Mon, 22 Sep 2025 01:04:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IETp7wbXt+1gQikMI1ABo2kP9bbRyManwLPmYcLYXRvB4adBdDDjXk0Op1hW4hh5H/vg0jXlQ==
-X-Received: by 2002:a17:902:8f90:b0:269:85aa:3776 with SMTP id d9443c01a7336-269ba565f84mr64991965ad.11.1758528292012;
-        Mon, 22 Sep 2025 01:04:52 -0700 (PDT)
-Received: from [10.133.33.87] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2698035cd39sm124460975ad.146.2025.09.22.01.04.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 01:04:51 -0700 (PDT)
-Message-ID: <83b5a265-1c5f-49f5-a89e-22f466df3304@oss.qualcomm.com>
-Date: Mon, 22 Sep 2025 16:04:42 +0800
+        bh=q6oR8Fo0jD+wRtkqL3niLJ+D52o9GcW+sR1rF3CUjoI=;
+        b=HebjR3OgoR37YQlUjIACWF6/9uWGr2CTLWFY4PwC8whzo8fJWI9dAdpPCEEIWblKpB
+         FK5JwUY40AdAai5FFHCjf+QcJ6SzxvUVprelnLWEIKiOzkaDkHNuC6tsUV0ckBnHVoNF
+         jQ8OeLILc2MPRipVjjVw0qCWHXBG9kaRqUVA4HWyFSn2kHTKEtwmLVTJwTgFxJkwVUVi
+         G2nVX5z/kJnpZPaNdl2CHUpe/pvNSlGZCqITTcoalLbUht8Z/JvD5T7zqAm5sS1d7zut
+         iWm5X6vmrP/RbsY8qr9CNVco7lzT+rt5tl6aTRYYgibD/XBaJ3+ZsUQI9V+6EIxsPfQx
+         I3IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758528649; x=1759133449;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=q6oR8Fo0jD+wRtkqL3niLJ+D52o9GcW+sR1rF3CUjoI=;
+        b=JlDKnUv5DChbOYc57CNpidziqOfQW8g1L+fpEqGZRLVCMzoOa7+xdMVtmYVn/Lr0pb
+         bzWSI1FsWFrY96umbfXtOJRZjMWinr6VXZtbnBL3PbKe85bAk3PlODT3svZOVU7FKAvO
+         7gBBwn/vwHtyLl6eja9HrGe9qR6O7x55SHUEQb0ySUgar5AoWXWBgz7lXN0UCZV3ZEqI
+         0Ti2V3lal0wYJgojwCHT4NGFIZepi63YAOf+OXD4hCaxfFAJSNNo+ailAUD3HNWy0vVm
+         s+xlNM2kGte4+GnAFKFG4SBujv19HVhKz0jvh05yBVsbdA26A2mQpUgKZ6pk67SG3roD
+         h6kA==
+X-Forwarded-Encrypted: i=1; AJvYcCWsbCtiNE+T844JczK4UIxrKvhz5+bEDY9jYf9oFrpFWb5hBw8gbBEbemGzqjgUUUUPR5FdDqZtNexSy0mz@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7rKqn/q/DBhpJ32eOn+L8EyL4MekGaPBGDJHIU69PO7onKfSx
+	JzZUnqSNoWKrdVM6zM2p/Q4hgproduPeur4vah5cURhNdLWtsGbfJm4sp898rS3movo=
+X-Gm-Gg: ASbGncu96ozg0i7VwDzrMBy5IbROj3ozsOta2CxawfbAHNrnjR+NOXdZDupY+3exDTS
+	TGjNZ5VmAjD6gT7chyLYHWr/TEz14ndmVK1B3RHwAF0VCtO2tj4GDHFNxMSkvl/wpUojy/Wn7pj
+	lnzUS58qh2A0gwyQ+aRjNlOyLqKqS0x1E0+4LT88mfzfMSXwVprZvkeBi+09FJE5vscD89b1RrC
+	Tigm02C2VtB28MZ6UHFALRimyYFHDVzx7QOwqHeotQlUC4krqP1R0xOoj2UA70mJcFOvJvAraKt
+	ZX5bKNaUrR3c59UFlHEHqk7qCES1+kbKmBOZsmdNAWd4g6s4igl0i/T/tBIGXkaKMMnMBEw3XyQ
+	S6qpong6GAiLPtu16TPq/A5iMIX6LHqUn
+X-Google-Smtp-Source: AGHT+IGdrKT0myFfqU5UTIGGqRLFLmRn7oXJe/NQIiIiBcxhj9xZ+01ud7wQJESCIUyS8bhQf9QZTg==
+X-Received: by 2002:a05:600c:3b20:b0:45b:9912:9f30 with SMTP id 5b1f17b1804b1-467ead6730bmr93561975e9.6.1758528648740;
+        Mon, 22 Sep 2025 01:10:48 -0700 (PDT)
+Received: from linaro.org ([2a02:2454:ff21:30:c61f:42e4:1d2c:1992])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3f88de2ced0sm7345719f8f.33.2025.09.22.01.10.47
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Sep 2025 01:10:48 -0700 (PDT)
+Date: Mon, 22 Sep 2025 10:10:42 +0200
+From: Stephan Gerhold <stephan.gerhold@linaro.org>
+To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH v3 00/12] Peripheral Image Loader support for Qualcomm
+ SoCs running Linux host at EL2
+Message-ID: <aNEEglLZTJuR1sLi@linaro.org>
+References: <20250921-kvm_rproc_pas-v3-0-458f09647920@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/14] phy: qcom: qmp-usbc: Move reset config into PHY
- cfg
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Rob Clark <robin.clark@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com,
-        li.liu@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-References: <20250919-add-displayport-support-for-qcs615-platform-v5-0-eae6681f4002@oss.qualcomm.com>
- <20250919-add-displayport-support-for-qcs615-platform-v5-5-eae6681f4002@oss.qualcomm.com>
- <z3phuuokrhonbukct2siz3ujear5ymtnoviea2epxzvjdmsvkj@w4puf4c44tmk>
-From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
-In-Reply-To: <z3phuuokrhonbukct2siz3ujear5ymtnoviea2epxzvjdmsvkj@w4puf4c44tmk>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=YPqfyQGx c=1 sm=1 tr=0 ts=68d10325 cx=c_pps
- a=JL+w9abYAAE89/QcEU+0QA==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=M2ADfI_v5YemfhxMpdoA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=324X-CrmTo6CU4MGRt3R:22
-X-Proofpoint-ORIG-GUID: DcpNn6vEVk76jWhhn91D21r8m_AB2_rJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAwMCBTYWx0ZWRfXz43k01bqYI9a
- u9jRitTMOunn+TCv20xISHbQfuVGxXLleclhBKWkQ7opJ5gkVFKpnOGRFPkfttPavXrMEOwhTZt
- pe9PbbUGLFbZVTUhLGXl8+XcFZkf3K5iP1TCGmJBJgF73HjtpLLEqXOcX+0m6rA0Y50LWF3MFJk
- lQWa1AjInYSWmhP1hgpaeklz7L6ZlW8Nbk6qY+ijbXz7R8oPD9bPoXzO11i8yQi4rMyjZC2+1EB
- yrhG2gKtwRpC5/WsBN/Pmrg6HtzndIA0zGl5fKI1tYql/ZBHQ790QF9Bzf49eUZg9XTM+J2RX7p
- DUjseRQEsjxmJXFe81dFg8RHufpxjDELGzDBXTfhc+T3jhTdOhxGdPG4QPivU0br5ifsbJ+KVJs
- 3zXYHoS/
-X-Proofpoint-GUID: DcpNn6vEVk76jWhhn91D21r8m_AB2_rJ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-22_01,2025-09-19_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0
- clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200000
+In-Reply-To: <20250921-kvm_rproc_pas-v3-0-458f09647920@oss.qualcomm.com>
 
+On Sun, Sep 21, 2025 at 01:10:58AM +0530, Mukesh Ojha wrote:
+> A few months ago, we discussed the challenges at Linaro Connect 2025 [1] 
+> related to Secure PAS remoteproc enablement when Linux is running at EL2.
+> 
+> [1] https://resources.linaro.org/en/resource/sF8jXifdb9V1mUefdbfafa
+> 
+> Below, is the summary of the discussion.
+> 
+> Qualcomm is working to enable remote processors on the SA8775p SoC with
+> a Linux host running at EL2. In doing so, it has encountered several
+> challenges related to how the remoteproc framework is handled when Linux
+> runs at EL1.
+> 
+> One of the main challenges arises from differences in how IOMMU
+> translation is currently managed on SoCs running the Qualcomm EL2
+> hypervisor (QHEE), where IOMMU translation for any device is entirely
+> owned by the hypervisor. Additionally, the firmware for remote
+> processors does not contain a resource table, which would typically
+> include the necessary IOMMU configuration settings.
+> 
+> Qualcomm SoCs running with QHEE (EL2) have been utilizing the Peripheral
+> Authentication Service (PAS) from TrustZone (TZ) firmware to securely
+> authenticate and reset remote processors via a single SMC call,
+> _auth_and_reset_. This call is first trapped by QHEE, which then invokes
+> TZ for authentication. Once authentication is complete, the call returns
+> to QHEE, which sets up the IOMMU translation scheme for the remote
+> processors and subsequently brings them out of reset. The design of the
+> Qualcomm EL2 hypervisor dictates that the Linux host OS running at EL1
+> is not permitted to configure IOMMU translation for remote processors,
+> and only a single-stage translation is configured.
+> 
+> To make the remote processor bring-up (PAS) sequence
+> hypervisor-independent, the auth_and_reset SMC call is now handled
+> entirely by TZ. However, the issue of IOMMU configuration remains
+> unresolved, for example a scenario, when KVM host at EL2 has no
+> knowledge of the remote processors’ IOMMU settings.  This is being
+> addressed by overlaying the IOMMU properties when the SoC runs a Linux
+> host at EL2. SMC call is being provided from the TrustZone firmware to
+> retrieve the resource table for a given subsystem.
+> 
+> There are also remote processors such as those for video, camera, and
+> graphics that do not use the remoteproc framework to manage their
+> lifecycle. Instead, they rely on the Qualcomm PAS service to
+> authenticate their firmware. These processors also need to be brought
+> out of reset when Linux is running at EL2. The client drivers for these
+> processors use the MDT loader function to load and authenticate
+> firmware. Similar to the Qualcomm remoteproc PAS driver, they also need
+> to retrieve the resource table, create a shared memory bridge
+> (shmbridge), and map the resources before bringing the processors out of
+> reset.
+> 
+> This series has dependency on below series for creating SHMbridge over
+> carveout memory. It seems to be merged on linux-next and pushed for 6.18.
+> 
+> https://lore.kernel.org/lkml/20250911-qcom-tee-using-tee-ss-without-mem-obj-v12-0-17f07a942b8d@oss.qualcomm.com/
+> 
+> It is based on next-20250919 where above series is already merged
+> and tested on SA8775p which is now called Lemans IOT platform and
+> does not addresses DMA problem discussed at [1] which is future
+> scope of the series.
+> 
 
-On 9/20/2025 12:45 AM, Dmitry Baryshkov wrote:
-> On Fri, Sep 19, 2025 at 10:24:22PM +0800, Xiangxu Yin wrote:
->> Move resets to qmp_phy_cfg for per-PHY customization. Keep legacy DT
->> path on the old hardcoded list; non-legacy path uses cfg->reset_list.
-> Why? Start your commit messages with the description of the issue that
-> you are trying to solve.
+When testing your series on Lemans, what happens with the additional
+SIDs from the peripherals assigned to the remoteproc ("DMA masters" in
+your talk)? Are these running in bypass because the previous firmware
+component (Gunyah?) had allocated SMMU SMRs for these?
 
+It would be worth mentioning this in the cover letter (and perhaps as
+part of the EL2 overlay patch as well), since it is unclear otherwise
+why your series does not result in crashes the first time a remoteproc
+tries to use one of these DMA-capable peripherals.
 
-The original reset list only works for USB-only PHYs. USB3DP PHYs need different
-reset names like "dp_phy", so they use a separate list. Moving resets to
-qmp_phy_cfg enables per-PHY config without special-case logic in DT parsing.
-I will update commit msg with issue description.
-
-Or do you suggest using (offs->dp_serdes != 0) to choose the reset list instead
-using new attributes?
-
-
->> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
->> ---
->>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 18 +++++++++++++++---
->>  1 file changed, 15 insertions(+), 3 deletions(-)
->>
+Thanks,
+Stephan
 
