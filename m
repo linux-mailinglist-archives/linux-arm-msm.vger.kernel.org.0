@@ -1,221 +1,231 @@
-Return-Path: <linux-arm-msm+bounces-74401-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74402-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39102B8FA81
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 10:54:23 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E2BA4B8FC72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 11:39:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0D264189C8EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 08:54:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 98C3D420CEC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 09:39:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1831281530;
-	Mon, 22 Sep 2025 08:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A4B728467B;
+	Mon, 22 Sep 2025 09:39:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ocddq7Qo"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bQdCtVh/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 074DF274669
-	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 08:54:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5AF24BBFD
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 09:39:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758531257; cv=none; b=mG6O7ASzTqvkJ4siUlvhdzZP9MtD9uRU8YTV7bPesSBO7z5B32zmVraW+XVYBjLlSGYgn6xV27rvBcQTkaZBgqjpcC6QP7p61tOQhfWv+Bagfwno+Aj6v286wq/EDyg4cth8r9lrHbZ9qnPO++mxPHf4hYaDnmtml7Udq5Eg3Uw=
+	t=1758533952; cv=none; b=o9fTSh8Vo8EQomCdAM2f417DS1VxPV6jbSd8xxWpd5re0LKmE5lMviHzjMAruRRS9gzFhXIpVbHWydtSpgjrFO3CgUnEw6HKGNnEkrYTavKWHd62f0G93WVD39vbvn0B0Ku16D18BskwsXHhX16s91cJMi/9DQpjjrIp7I6zlsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758531257; c=relaxed/simple;
-	bh=fIxQDWFzDzPVs0j3qsFbaUuYMMb/ZT7gym4kUpMe2fU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G2MZ7GY6kRAO4cdE4EaeFa8+SnppuI3JSdKAQz0YZBZTfnVR7dy9971qpNkJz3/PP3q/Zr8Brkr3rj/kVDkh5jp68V8rF+gWQ29qbXkavXTd2ZJxDgDHvflhxVpJgnHJ/J/NBnxmH9IWfyOj0A/4jr5mMPidJTNBaD/QPGEU5EM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ocddq7Qo; arc=none smtp.client-ip=209.85.216.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f49.google.com with SMTP id 98e67ed59e1d1-32ed19ce5a3so2653013a91.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 01:54:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1758531255; x=1759136055; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=H39k1K0aEvBoQr1mBKXQ5JihuYk+RiG4/kveWZ5LX1M=;
-        b=Ocddq7QoZY4NkwSo1icocw2ocMATfPlatPFuLvPFMaLQTMR5+DM/fcbLrcB/sbNeo1
-         pVKBZ1fXuix3zodPjelh3K/7j+mNgVqMDPNSpwLm7gdMMzNow9aG636CSM+Jz7sTflCZ
-         x8yqrCT+wTlKufJovZ0RXrt6wa3kqcuwP5pbUClpKwYu+EZ68jEenFxxpQZVdB+WXDer
-         t6RjM44GA+Lh+6sIHX7TviuK/5VgM0EXRNdVwoCPKyJo2+Bq0aazvLSDrtO+qKTNUJbC
-         Kw9zcv53VM59tOg3+V/9CwLpLWoQ8roGQrlIoiPQPBS6j8m7s4KjS6oaQUs+01HbpwMj
-         NL4g==
+	s=arc-20240116; t=1758533952; c=relaxed/simple;
+	bh=sYuFd35lcDhboPlpjlFr9bmZUXD05YmQrZz6vSdnrNI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KvKQ6B8tEKpg3WBpRDjo4C6jHepHnHdtIPfDWFa0xeASieHhVouSfUiIuW83+3D+FKMguk+G0rzXyR77lx0EE31ekvA9cfLsGcFtpqiGwjhLWwE3v0TvAyL6BLgLSwRB6JMunN0ZDyg9G/njNFvgxz/+a4CMhV2jHTNeA+Rrz3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bQdCtVh/; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58M8v6T7027509
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 09:39:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=jAx4FwcII6wbkb81OdZIPAi0
+	xEvtze7qSPUTGq3+NiI=; b=bQdCtVh/6lGcmYm68OuLAMQHtqjheTJb/MMDTuIX
+	knaM7VoUP44mrC3gDXYoNCsEzXPscI1MZ7D7s148GWcdxu8MbQd52HClZyWrVhXx
+	mPxQ694jTIsDtrMxgrZ2vCjs0jyqW969j2NmSkqHohKGPjs/ZnYdQ8tmDB9tykzB
+	7ZePQjlB33JF3CSz90w8xKrS3jKxF3sBEMcsEnEku9Fm0Dh94yW9t38uEXA2jnxA
+	tUp6j/Otyf6HLRHGskP+gM4t/5fTeu+dFYkGl4+foWuRoMGpVj68W9RCMqMYUdwN
+	J/T0bVU13J7x5HAOe7J8O56+q/T3+66SB06In7YYNCEjlw==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499kkhma9y-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 09:39:09 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4b5f6eeb20eso150190331cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 02:39:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758531255; x=1759136055;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=H39k1K0aEvBoQr1mBKXQ5JihuYk+RiG4/kveWZ5LX1M=;
-        b=WfIMMLVrClQdYIKeTmhLaH4KCZTLbYXHvEYHuWjB0dzA9lhnv+sQglwh6cYI+IvODe
-         FNuaTF9Z8qDR9aJ4jAqTFG5sjdgo7v76h5VQZUjBbI4qOgJlvSxMFcbD04R0qDFFg1Sm
-         LslDrNl5lFZnOOxnrKHdtqQi7UW6BcSHQtZ70JAM13aZQ6KXlklwX3HELlvyRTwutLOp
-         6OPYjaxoJYFC/pyWqKvD6uqBXJ/fSs+HsLRUO15argfuhvVYhaBG+ljGl5DHdR+bbILU
-         q4sITg2k97tzXQF2ZwdY64rrstJFBFdwUZcDdHNqUkOCbq4D2bktcad9WuekK2QAmNL+
-         nerg==
-X-Forwarded-Encrypted: i=1; AJvYcCW9+8AW8FcDlKRix+XTXeXzR7T9sCI+hZAXLpll1i6Nm6vzhznjMptQUW90pRE1JLp4v8JUL8yidjQOaT1J@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx5fJeSMi+WujnXcRFqu4p8EUtDB2gPfEh5dCFMjYKOGCGji6DP
-	gjEsaXTAdrrJHk8hZnFYS1WU73qt+QYtyE+nn6/WbzOhYtkCkx2RRk53
-X-Gm-Gg: ASbGncsqG1/ERDDpowxJ/DYmxbdVPlf5YxDy0DRgxt5ob1W53CRcdlQvcc/JeOxjsb9
-	BjZQKAB3fzy2U28IMj6+RVIUxOUp7DnTgpYW6aUPp2Yu/RAw+RUKA7QB35ecrzgNs4A4Y+QHW1Z
-	Bcrg8GmF0eVh6Ufd5PEt1HBHj4XK7uD/BKpyZB5FAqcgqrleyoefn7b8Ks/l77FNvLcljDzAxlg
-	Uc7rf+L1V3Medkn5YDI+85ce0hIws/IlY4TOVDPptXYyd6I6yZO0Ps15lUjMvndXv1WFhdt0Tyv
-	fGtAictf3MUwtxUfUiRwGRQiNZYrFlLCHIOsRpJqnizyOo2F5jha/t646XfYPSblUbWfSw9Nai/
-	ZyYOvaBQBSJVSPH7Xq7D3P7kZpgjFzO6UN4A=
-X-Google-Smtp-Source: AGHT+IFiY6tuQs9Ly2byFHESUqEOqHC4JVRymKDPpM6rTB1ptSMUW3Ya07YAM9AAssUUu4Mv+I7hIw==
-X-Received: by 2002:a17:90a:d40d:b0:32b:df0e:928f with SMTP id 98e67ed59e1d1-330983a1a88mr14963585a91.37.1758531255192;
-        Mon, 22 Sep 2025 01:54:15 -0700 (PDT)
-Received: from [172.17.44.75] ([103.218.174.11])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-32ed273e52fsm15591083a91.17.2025.09.22.01.54.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 01:54:14 -0700 (PDT)
-Message-ID: <50cec728-fb3e-4ab2-bf53-ecdcb6e027d1@gmail.com>
-Date: Mon, 22 Sep 2025 14:24:09 +0530
+        d=1e100.net; s=20230601; t=1758533949; x=1759138749;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jAx4FwcII6wbkb81OdZIPAi0xEvtze7qSPUTGq3+NiI=;
+        b=xUNGGChqiE6v50blYMNRm5Uck8SXTZ7RZv2yyY9BZpUjno6UHgxbU9y2VV0fOCzHt7
+         qCECQ5igxWvAER0TqaS2Ry2UwefxncFKymdcWsPtH0k4R+mpp60Zj32C48IGXAQHPAfR
+         MskSRZZV4O9goiSsjXlcrfyVIC6d46o7UnMvgWiZ+Fn7HY8MDAHTwS+Zwr1bI0yE/+Lg
+         rcP/g6XCakW0c51F1YKd86zsXij0+J+MabiKUT7RyAsJWRXzA1I3UN04YWODW6VoE+fV
+         BWrA/LBrtqjmovpt0yEwDORquVyIKS2BaGwCbuks4xyhHL7CyqBoU5zGo9DXe4XdU4I7
+         Ur6g==
+X-Forwarded-Encrypted: i=1; AJvYcCUxsuq9EegPPJaw2an20gGjqVxp2GRc3SgpEDsvbA9GHOiqO3yrobuW9e7kNAQN/JrYIEDHvglVES44wK/t@vger.kernel.org
+X-Gm-Message-State: AOJu0YwHINEEVLV+2rFDGVeeaTMylAaY7MXghR5AeJ4mmbT7V1NZ4quh
+	xf7r/F27ufGhHDroCKkj5m29W4DM3dA1/s2RCTinK7qx6fnEPwZ791sxSNmiAcFUv2V0yiuMLb2
+	Ub4ZtIyVIn53nHYSJwhdnC/673cyhILDYKmurZFDYcRh4mfrH7W2PxfN+Gb/Iiuuj1rrf
+X-Gm-Gg: ASbGncuEW3eo8nhVqUh09RVk2f3B8b+fnY8d0IzgN/ITMGxVVEf9Us/KFSsu0NApzO4
+	YcZFLu7wdIQ7KwYJLJ/0k/qP8Xa5tqwzau6pPn035GmLZwDkWlxuUa3Al89VGKeb6aFfADD9NQ6
+	8tOP6CePTbperZHicwgbE1xyIMRHL18DMHmj2tofnyyqz7pdhFGByRe102Hwexa5shiHrzc0FX8
+	mbXwv0M22MIHJr5Rqs9I+z2WIWeaYza5grBMzysv19NoJJRn2M3vo7OKs86CchymOWXWIgijiwY
+	PtBuplWcgZB3jmaZuPQ5gmXL/SYnLXJVreqjK9fFOhgjPtYif/iyrJ8To2znv8x0pJEuaQsz1od
+	iWSnb4/7K1Soi1ZNp10AHhhNGuyOGbObrKjCVCcLNpVrif4c9ebK8
+X-Received: by 2002:a05:622a:143:b0:4b5:d60c:2fc8 with SMTP id d75a77b69052e-4c0734ea370mr157007591cf.71.1758533948669;
+        Mon, 22 Sep 2025 02:39:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE35/RYNkp6gQyQPasMu7rVuD0sFyNJP9oENTXh4ze2R7ETd8aNwunTy76/33FRan7WDLixdA==
+X-Received: by 2002:a05:622a:143:b0:4b5:d60c:2fc8 with SMTP id d75a77b69052e-4c0734ea370mr157007381cf.71.1758533948134;
+        Mon, 22 Sep 2025 02:39:08 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-57b78577636sm1624019e87.80.2025.09.22.02.39.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 22 Sep 2025 02:39:07 -0700 (PDT)
+Date: Mon, 22 Sep 2025 12:39:05 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com,
+        li.liu@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Subject: Re: [PATCH v5 05/14] phy: qcom: qmp-usbc: Move reset config into PHY
+ cfg
+Message-ID: <z6x3bwb7izywozeran5aq64uw4tiwlbwx4kekoy3vv3vt7qyip@2ibiat5focw2>
+References: <20250919-add-displayport-support-for-qcs615-platform-v5-0-eae6681f4002@oss.qualcomm.com>
+ <20250919-add-displayport-support-for-qcs615-platform-v5-5-eae6681f4002@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add support for QCS615 talos evk
- board
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, konradybcio@kernel.org,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, tingweiz@qti.qualcomm.com
-References: <20250909125255.1124824-1-tessolveupstream@gmail.com>
- <20250909125255.1124824-2-tessolveupstream@gmail.com>
- <f6kaau5sxgleuim7cgdw6hsvlwl73ye7emwjtrxwvtpl3pxsvr@frxbvtv6ixho>
- <98a92bff-db74-4b14-8a19-1171e60e87bd@gmail.com>
- <4e5hygjnmbnxm7gmdqce5w75nupwxo3b6ehgocmrjmfuhlomf5@6ydkk2yaxazj>
-Content-Language: en-US
-From: Tessolve Upstream <tessolveupstream@gmail.com>
-In-Reply-To: <4e5hygjnmbnxm7gmdqce5w75nupwxo3b6ehgocmrjmfuhlomf5@6ydkk2yaxazj>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250919-add-displayport-support-for-qcs615-platform-v5-5-eae6681f4002@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: fYVTssGU2xHZPgMgh3-6uEEABbNRoa-0
+X-Proofpoint-GUID: fYVTssGU2xHZPgMgh3-6uEEABbNRoa-0
+X-Authority-Analysis: v=2.4 cv=JMo7s9Kb c=1 sm=1 tr=0 ts=68d1193d cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=RqUhitWEW_Btmly2q4YA:9 a=CjuIK1q_8ugA:10
+ a=a_PwQJl-kcHnX1M80qC6:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyMiBTYWx0ZWRfX4BO7PmUARacj
+ w8Em95LVl2yuTrJf9i2WWkU01DT8oWA2ME9jsIOuhb5I4h0iie50LTDixMe3DDVP/FPGJumYOIp
+ Yybw6Dl3SlHeKyB3n+uTLeWqWr4TGeb69k60QXpti8SmOmHI0ArSTZL0NPCrpAo4HCHk59BjiBQ
+ NIJKfRo3v2qiz+Gso13ZGK3sUCAJSIuHyeeDq785xj9Tya1ncVKEO2Ac92UylxEWYUIQmoSycFf
+ dAFgCQZI6rh91b+gsmVJv1zgvxWKBkuQpHVBMkRwgHf9BqdCQm8tLX4ouqdGU9ynskA5/hiB5Pt
+ 3JIymMZRWjalBlajQmcvR2yjo2n8ymMYj7UI6Dg8sqgjZxxeT+XH1rQvH9ElQlsXQsrYVdgbXU1
+ CyRtEWit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-22_01,2025-09-19_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0
+ clxscore=1015 adultscore=0 spamscore=0 malwarescore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509200022
 
-
-
-On 16/09/25 15:59, Dmitry Baryshkov wrote:
-> On Tue, Sep 16, 2025 at 11:17:31AM +0530, Tessolve Upstream wrote:
->>
->>
->> On 09/09/25 19:56, Bjorn Andersson wrote:
->>> On Tue, Sep 09, 2025 at 06:22:55PM +0530, Sudarshan Shetty wrote:
->>>> Introduce the device tree support for the QCS615-based talos-evk
->>>> platform, which follows the SMARC (Smart Mobility ARChitecture)
->>>> standard. The platform is composed of two main hardware
->>>> components: the IQ-QCS615-SOM and the talos-evk carrier board.
->>>>
->>>> The IQ-QCS615-SOM is a compact System on Module that integrates the
->>>> QCS615 SoC, PMIC, and essential GPIO connectivity. It follows the
->>>> SMARC standard, which defines a modular form factor allowing the SoM
->>>> to be paired with different carrier boards for varied applications.
->>>>
->>>> The talos-evk is one such carrier board, designed for evaluation
->>>> and development purposes. It provides additional peripherals
->>>> such as UART, USB, and other interfaces to enable rapid
->>>> prototyping and hardware bring-up.
->>>>
->>>> This initial device tree provides the basic configuration needed
->>>> to boot the platform to a UART shell. Further patches will extend
->>>> support for additional peripherals and subsystems.
->>>>
->>>> The initial device tree includes basic support for:
->>>>
->>>> - CPU and memory
->>>>
->>>> - UART
->>>>
->>>> - GPIOs
->>>>
->>>> - Regulators
->>>>
->>>> - PMIC
->>>>
->>>> - Early console
->>>>
->>>> - AT24MAC602 EEPROM
->>>>
->>>> - MCP2515 SPI to CAN
->>>>
->>>> Signed-off-by: Sudarshan Shetty <tessolveupstream@gmail.com>
->>>> ---
->>>>
->>>> This series depend on the below patch changes
->>>> https://lore.kernel.org/linux-arm-msm/20250625063213.1416442-1-quic_ziyuzhan@quicinc.com/T/#t
->>>
->>> This was merged August 11.
->>>
->>>> https://lore.kernel.org/all/20241224-fix-board-clocks-v3-0-e9b08fbeadd3@linaro.org/
->>>
->>> This was merged December 27.
->>>
->>>> https://lore.kernel.org/linux-arm-msm/20250604-qcs615-sm6150-v1-0-2f01fd46c365@oss.qualcomm.com/T/#t
->>>
->>> This was merged July 16.
->>>
->>> You just wasted 5 minutes of my time, tracking down the status of these
->>> dependencies. Don't list dependencies that are already in linux-next (or
->>> actual releases), or even better, only send patches once the
->>> dependencies has landed (or send them together with the dependencies).
->>>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/Makefile        |   1 +
->>>>  arch/arm64/boot/dts/qcom/qcs615-som.dtsi | 414 +++++++++++++++++++++++
->>>>  arch/arm64/boot/dts/qcom/talos-evk.dts   |  42 +++
->>>>  3 files changed, 457 insertions(+)
->>>>  create mode 100644 arch/arm64/boot/dts/qcom/qcs615-som.dtsi
->>>>  create mode 100644 arch/arm64/boot/dts/qcom/talos-evk.dts
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->>>> index 4bfa926b6a08..588dc55995c5 100644
->>>> --- a/arch/arm64/boot/dts/qcom/Makefile
->>>> +++ b/arch/arm64/boot/dts/qcom/Makefile
->>>> @@ -117,6 +117,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
->>>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
->>>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
->>>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs615-ride.dtb
->>>> +dtb-$(CONFIG_ARCH_QCOM)	+= talos-evk.dtb
->>>
->>> If you look a little bit harder, you can see that all other entries in
->>> this file is sorted alphabetically.
->>
->> Yes, Will sort it in v2 patch. 
->>>
->>>>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
->>>>  
->>>>  qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-vision-mezzanine.dtbo
->>>> diff --git a/arch/arm64/boot/dts/qcom/qcs615-som.dtsi b/arch/arm64/boot/dts/qcom/qcs615-som.dtsi
->>>> new file mode 100644
->>>> index 000000000000..1b9b2581af42
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/qcs615-som.dtsi
->>>> @@ -0,0 +1,414 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2025, Qualcomm Innovation Center, Inc. All rights reserved.
->>>
->>> This is not the correct copyright statement.
->>
->> Thanks for the review. 
->> I used above copyright since qcs615-ride.dts in the same platform tree already follows this format.
->> If you’d prefer me to switch to The Linux Foundation for consistency with older DTS files, I can respin the patch accordingly.
+On Fri, Sep 19, 2025 at 10:24:22PM +0800, Xiangxu Yin wrote:
+> Move resets to qmp_phy_cfg for per-PHY customization. Keep legacy DT
+> path on the old hardcoded list; non-legacy path uses cfg->reset_list.
 > 
-> Please check current marketing guidelines, then you won't have to ask
-> such a question. Also please fix your mailer to wrap your responses on a
-> useful boundary (usually 72-75 chars per line).
-
-Thanks for the clarification. I’ll update the copyright to match
-the current marketing guidelines in the v2 patch and also
-fix my mailer settings for proper line wrapping.
+> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
 > 
+> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> index 3b48c69f9c3cb7daec495ebc281b83fe34e56881..3d228db9ef0882eb76e7ab9e82f8122fa9cfe314 100644
+> --- a/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-usbc.c
+> @@ -335,7 +335,8 @@ struct qmp_phy_cfg {
+>  	int (*configure_dp_phy)(struct qmp_usbc *qmp);
+>  	int (*calibrate_dp_phy)(struct qmp_usbc *qmp);
+>  
+> -	/* regulators to be requested */
+> +	const char * const *reset_list;
+> +	int num_resets;
+>  	const struct regulator_bulk_data *vreg_list;
+>  	int num_vregs;
+>  
+> @@ -428,6 +429,10 @@ static const char * const usb3phy_reset_l[] = {
+>  	"phy_phy", "phy",
+>  };
+>  
+> +static const char * const usb3dpphy_reset_l[] = {
+> +	"phy_phy", "dp_phy",
+> +};
+
+This is unused in this patch. It should go to the patch adding QCS615 DP
+PHY compatible and the rest of the config data.
+
+> +
+>  static const struct regulator_bulk_data qmp_phy_msm8998_vreg_l[] = {
+>  	{ .supply = "vdda-phy", .init_load_uA = 68600 },
+>  	{ .supply = "vdda-pll", .init_load_uA = 14200 },
+> @@ -464,6 +469,8 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
+>  	.rx_tbl_num             = ARRAY_SIZE(msm8998_usb3_rx_tbl),
+>  	.pcs_tbl                = msm8998_usb3_pcs_tbl,
+>  	.pcs_tbl_num            = ARRAY_SIZE(msm8998_usb3_pcs_tbl),
+> +	.reset_list		= usb3phy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
+>  	.vreg_list              = qmp_phy_msm8998_vreg_l,
+>  	.num_vregs              = ARRAY_SIZE(qmp_phy_msm8998_vreg_l),
+>  	.regs                   = qmp_v3_usb3phy_regs_layout,
+> @@ -480,6 +487,8 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_rx_tbl),
+>  	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
+> +	.reset_list		= usb3phy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
+>  	.vreg_list		= qmp_phy_sm2290_vreg_l,
+>  	.num_vregs		= ARRAY_SIZE(qmp_phy_sm2290_vreg_l),
+>  	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
+> @@ -496,6 +505,8 @@ static const struct qmp_phy_cfg sdm660_usb3phy_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(sdm660_usb3_rx_tbl),
+>  	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
+> +	.reset_list		= usb3phy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
+>  	.vreg_list		= qmp_phy_msm8998_vreg_l,
+>  	.num_vregs		= ARRAY_SIZE(qmp_phy_msm8998_vreg_l),
+>  	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
+> @@ -512,6 +523,8 @@ static const struct qmp_phy_cfg qcs615_usb3phy_cfg = {
+>  	.rx_tbl_num		= ARRAY_SIZE(qcm2290_usb3_rx_tbl),
+>  	.pcs_tbl		= qcm2290_usb3_pcs_tbl,
+>  	.pcs_tbl_num		= ARRAY_SIZE(qcm2290_usb3_pcs_tbl),
+> +	.reset_list		= usb3phy_reset_l,
+> +	.num_resets		= ARRAY_SIZE(usb3phy_reset_l),
+>  	.vreg_list		= qmp_phy_qcs615_vreg_l,
+>  	.num_vregs		= ARRAY_SIZE(qmp_phy_qcs615_vreg_l),
+>  	.regs			= qmp_v3_usb3phy_regs_layout_qcm2290,
+> @@ -1051,8 +1064,7 @@ static int qmp_usbc_parse_dt(struct qmp_usbc *qmp)
+>  				     "failed to get pipe clock\n");
+>  	}
+>  
+> -	ret = qmp_usbc_reset_init(qmp, usb3phy_reset_l,
+> -				 ARRAY_SIZE(usb3phy_reset_l));
+> +	ret = qmp_usbc_reset_init(qmp, cfg->reset_list, cfg->num_resets);
+>  	if (ret)
+>  		return ret;
+>  
+> 
+> -- 
+> 2.34.1
 > 
 
+-- 
+With best wishes
+Dmitry
 
