@@ -1,58 +1,56 @@
-Return-Path: <linux-arm-msm+bounces-74472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id C52AEB9337D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 22:26:18 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D4CAB93386
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 22:26:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D3563190550F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 20:26:40 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8204319056B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 20:26:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F5112F6583;
-	Mon, 22 Sep 2025 20:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 22E223090CA;
+	Mon, 22 Sep 2025 20:26:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="saAgGjL1"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fhy16nPq"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DF9B22259A;
-	Mon, 22 Sep 2025 20:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77D3302748;
+	Mon, 22 Sep 2025 20:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758572774; cv=none; b=a/9NwigonR2Xn2eLvWBlFBoUtwDsInJREBV9EPHRVlP4u25LWsk+YEpptzSFjjCBqoea3TRERHq43CrK2FVJY4MREbwODGX8xxPVggjSu0kHQNFEhQzZND1eJxsIfdovJdRNFz0nqJ/VBMEDJzOt/A3+U98Ou50U323TpZytD9w=
+	t=1758572790; cv=none; b=pTgDYhov1mDlB2ghUuvYy6T12HlQxVkW+ZmbI/2ehfsNJ/M1SWPOxhHfe3dszkHqwde6D7E4grGR0wyVy7MO4ojTEro+zsG5Jy3ubSZENbIrGk/EGjU4/QHrOT+cOOjwznDZPD+kE9Mm10KYUhdSYBmM81H+IQ8jmJHDE8nL5WE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758572774; c=relaxed/simple;
-	bh=l5lnmbDzd10qt/bOUXemT2muAwVjbvmYxpxePXIG/y4=;
+	s=arc-20240116; t=1758572790; c=relaxed/simple;
+	bh=8/Sodj1mjXkjB4zFqzkZm1U4zLysyWPNUhHTxhwMLzI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m7qsANgxHWgt37c57l6Wy/XthTbOIcljfw/sbTu1KL167pd8BjF6FTIWfqQLy5b7nYZaucqeH4GUqiUYuq8iBOu5rO9mY1CfTmRt3qX/Ayot6kVAM65HXyV7xYPKeiScl0U/wFfy6RqdXxcC6sr2wap4RHp4J1b4FPUmBQXuS6s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=saAgGjL1; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A142CC4CEF0;
-	Mon, 22 Sep 2025 20:26:11 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=DF2/TjM2iq7wKdzDIOMN0IMutGOiNLtAhqLOWfXJBLK5KsYw0oQ+4qZQxexO/yn1nnbhnd0WIGMH/XqB0wPJ9bUqfRx2v+trq1wcw2HIifSKuzPRgLFOTEnvhXAIi20GM7t2vNfEf4WIYkoWxpybSupsSNXU+8OKXOYAO4kBtUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fhy16nPq; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D38EC4CEF0;
+	Mon, 22 Sep 2025 20:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758572771;
-	bh=l5lnmbDzd10qt/bOUXemT2muAwVjbvmYxpxePXIG/y4=;
+	s=k20201202; t=1758572788;
+	bh=8/Sodj1mjXkjB4zFqzkZm1U4zLysyWPNUhHTxhwMLzI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=saAgGjL13iZm1qcJcb/cj77P8NH8hjc0uH72qEdQKdLozaOe9dqDyz/mHOC5eVeDs
-	 FCL/XBAXI43HjnrPQb3yaW9VXjep67fpNnIuF8fH8DdhaPvHQMD5jpHhg7eDASzwhN
-	 /SgW2TSvjnFVn9GEfYfpV4oGO5zDJIHjEp1z4MQqZs7Vz8/+gTZXyz1ApCK6jqEWr6
-	 ZKZTKdAxTYuMfbv+NWdVxKuj+tOS6abMc3fO8Zu+c4jSSj3mr6hKKjeAiaedjbYAyN
-	 9KsiWmJ1uYMNWzLe3GXsV+Vwzx3ENVhyhJpUnrYyQbkBMF5MWKWUaqOLLfQ9PhZvHA
-	 dE6T8VdGb3lEw==
-Date: Mon, 22 Sep 2025 15:26:10 -0500
+	b=Fhy16nPquN6DthdhSi3nskGzHCgePSJ005XwjNU/5c9UW7WEJxuvogdQjWq67kSDY
+	 iurWMdHX2W0VPJfZE6e3MuU0iuK1Fki+TRt50StIh4VSR2FMZJzVXZMzl+ahXopGXF
+	 FAbrRGpt3cNhO7W6pLgvs4AJyXz0HHPq6yDhjTJowOOUFsODpLRYRXadnrKtFHZJQK
+	 zvnzcUzNlJUVITNEKhdq5eNZG/sRtPdxZYJrnl9jtP96fTGqV/NtcepKYJARUGzlxj
+	 Qdu715H/8m8X+6cXGKykCweVGQvGOqu1D6RoSRJTpWM+z09tWEDPYho+Sx7Zn6imFb
+	 F6AbAtjC4Chhw==
+Date: Mon, 22 Sep 2025 15:26:27 -0500
 From: "Rob Herring (Arm)" <robh@kernel.org>
 To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	lukasz.luba@arm.com, daniel.lezcano@linaro.org, amitk@kernel.org,
-	linux-arm-msm@vger.kernel.org, rafael@kernel.org,
-	conor+dt@kernel.org, rui.zhang@intel.com, krzk+dt@kernel.org,
-	thara.gopinath@gmail.com, linux-pm@vger.kernel.org
-Subject: Re: [PATCH v2] dt-bindings: thermal: qcom-tsens: Document the Glymur
- temperature Sensor
-Message-ID: <175857277024.1274056.7585926568505615723.robh@kernel.org>
-References: <20250920123631.281153-1-pankaj.patil@oss.qualcomm.com>
+Cc: vkoul@kernel.org, conor+dt@kernel.org, krzk+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+	dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: dma: qcom,gpi: Document the glymur GPI DMA
+ engine
+Message-ID: <175857278671.1274472.1445857118961212430.robh@kernel.org>
+References: <20250920133305.412974-1-pankaj.patil@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,21 +59,18 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250920123631.281153-1-pankaj.patil@oss.qualcomm.com>
+In-Reply-To: <20250920133305.412974-1-pankaj.patil@oss.qualcomm.com>
 
 
-On Sat, 20 Sep 2025 18:06:31 +0530, Pankaj Patil wrote:
-> From: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+On Sat, 20 Sep 2025 19:03:05 +0530, Pankaj Patil wrote:
+> From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
 > 
-> Document the Temperature Sensor (TSENS) on Glymur Platform.
+> Document the GPI DMA engine on the Glymur.
 > 
-> Signed-off-by: Manaf Meethalavalappu Pallikunhi <quic_manafm@quicinc.com>
+> Signed-off-by: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
 > Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
 > ---
-> Changes in v2:
-> Fixed to sort entry in alphabetical order.
-> 
->  Documentation/devicetree/bindings/thermal/qcom-tsens.yaml | 1 +
+>  Documentation/devicetree/bindings/dma/qcom,gpi.yaml | 1 +
 >  1 file changed, 1 insertion(+)
 > 
 
