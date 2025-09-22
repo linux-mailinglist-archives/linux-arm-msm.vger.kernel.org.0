@@ -1,67 +1,62 @@
-Return-Path: <linux-arm-msm+bounces-74441-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DF5EB918F1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 16:01:15 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id A497EB918E6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 16:01:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9CC32189CFE6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 14:01:15 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DE5B61900004
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 22 Sep 2025 14:01:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B35881A9F99;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A4FAD1A317D;
 	Mon, 22 Sep 2025 14:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kJgPTcWJ"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Eln0plRe"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BDEA19E96D;
-	Mon, 22 Sep 2025 14:00:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE8A19F111;
+	Mon, 22 Sep 2025 14:00:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758549630; cv=none; b=E1RCQ9ERK2a+ES9rKdflc8JiyLcjhIfmIl2bQGKkR1wa/ThhajCWG+1Zxukt794YL7LDJxuN56/c3ZJD8GcdljJW1ypXfkus+sa+xErhIka7kuG2zbwz6rxEFt6dLWL7WRaq2WHBkoimix87iBjQrKaCPecGs6FQwW3Pe6BFLNg=
+	t=1758549630; cv=none; b=Sfq+wPSjmAk3Sm1Ej62OU6Mf2YJIPPvfEz3LpUfmePkXeAVMXXjELGd5405kjYw99KEjsWfwjer53tEcBfJB05fKo2Z1h+Id4+d5EztZkFO4Dr6JaD6b7inGIi2ZUMJXDN+ysFq05ulTMJhcSTP1WposRH2xE1aWq9mBEHSgdQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758549630; c=relaxed/simple;
-	bh=ot5gDs3uWkRALVnz+D+awLfgmWq2/BB15HPR7a9xRHM=;
+	bh=QM4Xe+Ere+bNd5tqXHknQgb0b4fotLoTht1uGvK9hSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=J4CYsODOJIMyb6jfxJu8fwu7IS6wwMpuuB2Xdxi6K/+hAdshdOiaeV2JZbyvt6h18ytubVQUTHd7LSn9Nw40Mgyj1jvDvbrSzb435Lnoyzt+ANDnx/kOZROzUoARHslVJsSVwp9pWUmxxXnNmVqVg7syCzarxlrd9raxHBKmFkA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kJgPTcWJ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395E5C4CEF7;
-	Mon, 22 Sep 2025 14:00:28 +0000 (UTC)
+	 MIME-Version:Content-Type; b=RyNqOJt8D09BGoVUKomwVZdCadjS5ac+1XutzCNfsjWbhNPT56i3uzPRk7fd+SXVGY7npfkNuRSewpx4mvVqE1mbkGa112W4Li8FpJYVZTJck6FvR/KCbNPy4gf4jUkD3BogHPEG5KkYcos9x9r3nQuxZzdGqQrZcARa/OzOrmc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Eln0plRe; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A008C4CEF0;
+	Mon, 22 Sep 2025 14:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758549629;
-	bh=ot5gDs3uWkRALVnz+D+awLfgmWq2/BB15HPR7a9xRHM=;
+	s=k20201202; t=1758549630;
+	bh=QM4Xe+Ere+bNd5tqXHknQgb0b4fotLoTht1uGvK9hSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kJgPTcWJ79YRYc8fyVQfzA9WO51HxkAAkipic4wiQdRZGE4PGnJyw0PNw2I+SFkxQ
-	 gsCzYLdpQxtunXbrSxOjA+GPFeTRVVr/xBSakEMgeszVa0aciitD8bY83RPX8/+5FN
-	 noB8NFHCLiAdsVgT99Og3QTeGLCtrQimPD17u/n4rAtfgTmkwo48b0GkbFWIM6R47g
-	 A/OvDyaqCImpc9s1vrNOGU9Sc3g5ohwm1fxPZccpX+BdXJST/x0yVSyoMGu6gnB75q
-	 MGELkyabon82uNdt22X9JuWH53r0cz/fJ2RoDfHJs229jwN3TLyXQrpMkUkEsv5j8S
-	 +ZvXZo9rZEWSw==
+	b=Eln0plRe+pAFA8SgXSlmm54EpxKcIi+paMDG3JraQCQqeKv3kfkI7aSh8KyYEeT5P
+	 qtkL7OJanS5YXSbdSHZ0Fh+2Fdj63MuLvlJNG99uPGnrRz93f/Cjap5OvPdBh5LbcL
+	 PkAA3kTGUlM12FjXf0ko2N3EfJfmi1tGS5CSIZrlvMC0fn4saeWl7qmrpfMfBnPOj0
+	 RAAUaaNBPRCn7TEqkctkGM9Y79NyJmLNB7vwGd3pbf4fGT1ZyWzlLYJ8pde+YUUGJ9
+	 bIZ4ENYXMho7+iofDPesxH/IJYXB8W25YzlT4aXPKz81dnLT2CgNh0yepgscJhR2r4
+	 GJENzJXwDe+2A==
 From: Bjorn Andersson <andersson@kernel.org>
 To: Mathieu Poirier <mathieu.poirier@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Luca Weiss <luca.weiss@fairphone.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht,
-	phone-devel@vger.kernel.org,
+	Stephan Gerhold <stephan.gerhold@linaro.org>
+Cc: Sibi Sankar <quic_sibis@quicinc.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	linux-arm-msm@vger.kernel.org,
 	linux-remoteproc@vger.kernel.org,
-	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
 	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: Re: [PATCH v5 0/2] Add support for remoteprocs on Milos SoC
-Date: Mon, 22 Sep 2025 09:00:22 -0500
-Message-ID: <175854961650.817693.4199511918479024240.b4-ty@kernel.org>
+Subject: Re: [PATCH v2 0/4] remoteproc: qcom_q6v5: Misc fixes to prepare for reusing the "lite" ADSP FW
+Date: Mon, 22 Sep 2025 09:00:23 -0500
+Message-ID: <175854961651.817693.12196182147383570806.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20250915-sm7635-remoteprocs-v5-0-96526cac59c6@fairphone.com>
-References: <20250915-sm7635-remoteprocs-v5-0-96526cac59c6@fairphone.com>
+In-Reply-To: <20250820-rproc-qcom-q6v5-fixes-v2-0-910b1a3aff71@linaro.org>
+References: <20250820-rproc-qcom-q6v5-fixes-v2-0-910b1a3aff71@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -72,18 +67,26 @@ Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 
 
-On Mon, 15 Sep 2025 13:15:17 +0200, Luca Weiss wrote:
-> Add the bindings and driver for the ADSP, CDSP, MPSS and WPSS on the
-> Milos SoC.
+On Wed, 20 Aug 2025 18:02:32 +0200, Stephan Gerhold wrote:
+> On X1E, the boot firmware already loads a "lite" ADSP firmware that
+> provides essential functionality such as charging, battery status and USB-C
+> detection. Only the audio functionality is missing. Since the full ADSP
+> firmware is device-specific and needs to be manually copied by the user, it
+> would be useful if we could provide the basic functionality even without
+> having the full firmware present.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/2] dt-bindings: remoteproc: qcom,milos-pas: Document remoteprocs
-      commit: 24723d7c09ddac90bdd9e9864f92eb43ed70a083
-[2/2] remoteproc: qcom: pas: Add Milos remoteproc support
-      commit: ef575ff2054ceb2bd6701630db2f3d33f5c1a1cf
+[1/4] remoteproc: qcom_q6v5: Avoid disabling handover IRQ twice
+      commit: 110be46f5afe27b66caa2d12473a84cd397b1925
+[2/4] remoteproc: qcom_q6v5: Avoid handling handover twice
+      commit: 54898664e1eb6b5b3e6cdd9343c6eb15da776153
+[3/4] remoteproc: qcom_q6v5_pas: Shutdown lite ADSP DTB on X1E
+      commit: 142964960c7c35de5c5f7bdd61c32699de693630
+[4/4] remoteproc: qcom_q6v5_pas: Drop redundant assignment to ret
+      commit: 1ae4e2dbf4cbf7c1ab2bdc89af1dc1a6af4106b3
 
 Best regards,
 -- 
