@@ -1,164 +1,117 @@
-Return-Path: <linux-arm-msm+bounces-74501-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74502-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6FFCB94BE4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 09:22:22 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A683B94C80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 09:27:52 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C30E21902B77
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 07:22:44 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4A57F482B28
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 07:27:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 57C10311950;
-	Tue, 23 Sep 2025 07:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC4B93161B7;
+	Tue, 23 Sep 2025 07:27:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b="sTTBQf/a"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oNAeZyWj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4C631158A;
-	Tue, 23 Sep 2025 07:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.255.230.98
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B999531618F;
+	Tue, 23 Sep 2025 07:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758612133; cv=none; b=IUWaBoK94Ccq0EW1te+N+1ny6S+wJ6664fa+MrZoab0ljtRxQx4tWohCaYZwOAeJs+UL5tRa7EZ9D1K8K2qu9inYN7t+i8z4Yo9ZvgWjrthWCdwBUYQBENbqqE3aVyf8bxyzG5vsPketDQWmVb18wUJoLvve1Z/1BxRWFThnM+Q=
+	t=1758612445; cv=none; b=C/He4rS5b9qtoTX1DsHMK1jmX7TfDZMpVV+JqzV9C9E2btc9S+xTn/W9R3tmNSfAW65NpiD0TMc3Vn3IPW+vy9K3J9K6XKqni6+L4C2VjT62Ykh/OQ8uIbRqhuJ1jR0bruLrtty7ibZb5hDk7GXSk+Ox6UXPJQcAYZSLyS5Sg3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758612133; c=relaxed/simple;
-	bh=UXWIhJQT0UWxMfY/+J9fpbJB9h4hs4LLSoJ3ohNFBv0=;
+	s=arc-20240116; t=1758612445; c=relaxed/simple;
+	bh=KeDKwQHVQdiXPUQ8+Nb80zJOIZ1+DrcUy6TSKrXqibM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=smcRhb2ZtNw0nYSwmiN8CWyg2+6olJtj2jOFEaPQd49rMSfP7utWJO+Z/AD0sZVj+N21Idylc+9xH4YxDjcdTJH295CosSjiZxYq6XfES6FmQKNHZzuoyS7lgIsnRtW5mirur3QNZKBNI4gdD3QJ9EDvv7xHEOfRILcT3yKridw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz; spf=pass smtp.mailfrom=ucw.cz; dkim=pass (1024-bit key) header.d=ucw.cz header.i=@ucw.cz header.b=sTTBQf/a; arc=none smtp.client-ip=46.255.230.98
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ucw.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ucw.cz
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 0CBDD1C01D7; Tue, 23 Sep 2025 09:22:07 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ucw.cz; s=gen1;
-	t=1758612127;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=hwzWkQrBN4TucShSte7+gBBGke3z5o+Bkhkg05nMEo4=;
-	b=sTTBQf/a2nzDFGyFnuAvY+ZoWD8Hosb9TzAxDaZiDAvOEHBXFt2Ry+MnJvCHTHajjKDe30
-	+6esiaJNy6v6yDUz49gjYVaUeMw3Eoiy4/0gLL1s/YKgW31/ZpI0TrH8W7O7EFLug/Kc3m
-	TK/E85C8luh+gvffde677ZQ3AhTp++0=
-Date: Tue, 23 Sep 2025 09:22:06 +0200
-From: Pavel Machek <pavel@ucw.cz>
-To: barnabas.czeman@mainlining.org
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Michael Turquette <mturquette@baylibre.com>,
-	Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Otto =?iso-8859-1?Q?Pfl=FCger?= <otto.pflueger@abscue.de>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Lee Jones <lee@kernel.org>, Joerg Roedel <joro@8bytes.org>,
-	Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-	Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Dmitry Baryshkov <lumag@kernel.org>,
-	Adam Skladowski <a_skl39@protonmail.com>,
-	Sireesh Kodali <sireeshkodali@protonmail.com>,
-	Rob Clark <robin.clark@oss.qualcomm.com>,
-	Abhinav Kumar <abhinav.kumar@linux.dev>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Srinivas Kandagatla <srini@kernel.org>,
-	linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-gpio@vger.kernel.org, iommu@lists.linux.dev,
-	dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-	phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-	linux@mainlining.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v7 6/6] arm64: dts: qcom: Add Xiaomi Redmi 3S
-Message-ID: <aNJKniJ46YuUsbQ+@duo.ucw.cz>
-References: <20250831-msm8937-v7-0-232a9fb19ab7@mainlining.org>
- <20250831-msm8937-v7-6-232a9fb19ab7@mainlining.org>
- <aNGLPdmOyh/pfroq@duo.ucw.cz>
- <97ee369f6ffbe42c72c57ebd72887b23@mainlining.org>
+	 Content-Type:Content-Disposition:In-Reply-To; b=qdbPhDRJ535bFE347Ly40nQSffgfIyaIOg7UX/nVsnedCddwNhDxDj/iu9oyk9GZDZAteoD0TNLvqNzmN7mx5u7xGnD7991ZImnz2CXJIH5mn/e+SK2W341KgAuQIQtg/9Uo206u3C0YCvGkLTXMtJ3v4KJJaSsyf12TC1qXwzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oNAeZyWj; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520DCC4CEF5;
+	Tue, 23 Sep 2025 07:27:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758612445;
+	bh=KeDKwQHVQdiXPUQ8+Nb80zJOIZ1+DrcUy6TSKrXqibM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=oNAeZyWj9z+KyZz5eb7jbYDIlZ0amPo6gA4Q5lS/TB0nBA5styzuTLBS7qS8pfipd
+	 DsWrYKKauedaMBuTZSiiiXgEa80mNYLTgoXJ9QQz+sXnwCSLg1+CHHAuaxyIvabIJb
+	 FkkKsQAkjKOr++6OzJ1l51mNgogh3btwXmUUlkrsyp4KjgHWOUcRnZ9CIJX+3jZM8e
+	 3Gznieq8XUCpXFzjzAl8ZbYlf8ZEynQHtdPXdHu3b/S0lV9rml+JPwCnEqs3faYbfe
+	 I/esSuYz602PXf2i/y957GNYvN5dk26kTQp4iMXsfIx6tBy2kA4AdGnSfX89qToP/G
+	 +zOx1t9Fby+BQ==
+Received: from johan by xi.lan with local (Exim 4.98.2)
+	(envelope-from <johan@kernel.org>)
+	id 1v0xQj-000000001HA-41EB;
+	Tue, 23 Sep 2025 09:27:18 +0200
+Date: Tue, 23 Sep 2025 09:27:17 +0200
+From: Johan Hovold <johan@kernel.org>
+To: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	krzk+dt@kernel.org, conor+dt@kernel.org, kishon@kernel.org,
+	vkoul@kernel.org, gregkh@linuxfoundation.org, robh@kernel.org,
+	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+	linux-phy@lists.infradead.org
+Subject: Re: [PATCH 2/9] dt-bindings: phy: qcom,qmp-usb: Add Glymur USB UNI
+ PHY compatible
+Message-ID: <aNJL1YEXx6IabTos@hovoldconsulting.com>
+References: <20250920032108.242643-1-wesley.cheng@oss.qualcomm.com>
+ <20250920032108.242643-3-wesley.cheng@oss.qualcomm.com>
+ <7gvp6pshp4eiugk3qodg2ub3azu365loturidbkxqly6nhtgq7@bxnkxeqzarkv>
+ <4116b593-d36d-df10-6101-4e3539b8b812@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="iO6C/R28FEPs1Luw"
-Content-Disposition: inline
-In-Reply-To: <97ee369f6ffbe42c72c57ebd72887b23@mainlining.org>
-
-
---iO6C/R28FEPs1Luw
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <4116b593-d36d-df10-6101-4e3539b8b812@oss.qualcomm.com>
 
-Hi!
-> > Hi!
-> >=20
-> > > +	led-controller@45 {
-> > > +		compatible =3D "awinic,aw2013";
-> > > +		reg =3D <0x45>;
-> > > +		#address-cells =3D <1>;
-> > > +		#size-cells =3D <0>;
-> > > +
-> > > +		vcc-supply =3D <&pm8937_l10>;
-> > > +		vio-supply =3D <&pm8937_l5>;
-> > > +
-> > > +		led@0 {
-> > > +			reg =3D <0>;
-> > > +			function =3D LED_FUNCTION_STATUS;
-> > > +			led-max-microamp =3D <5000>;
-> > > +			color =3D <LED_COLOR_ID_RED>;
-> > > +		};
-> > > +
-> > > +		led@1 {
-> > > +			reg =3D <1>;
-> > > +			function =3D LED_FUNCTION_STATUS;
-> > > +			led-max-microamp =3D <5000>;
-> > > +			color =3D <LED_COLOR_ID_GREEN>;
-> > > +		};
-> > > +
-> > > +		led@2 {
-> > > +			reg =3D <2>;
-> > > +			function =3D LED_FUNCTION_STATUS;
-> > > +			led-max-microamp =3D <5000>;
-> > > +			color =3D <LED_COLOR_ID_BLUE>;
-> > > +		};
-> > > +	};
-> > > +};
-> >=20
-> > That's single, 3-color LED, right? Please see LED multicolor support.
-> As far as i know aw2013 driver does not have multicolor support.
-> https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/tree/=
-Documentation/devicetree/bindings/leds/leds-aw2013.yaml
+On Mon, Sep 22, 2025 at 06:00:04PM -0700, Wesley Cheng wrote:
+> 
+> 
+> On 9/20/2025 8:22 AM, Dmitry Baryshkov wrote:
+> > On Fri, Sep 19, 2025 at 08:21:01PM -0700, Wesley Cheng wrote:
+> >> The Glymur USB subsystem contains a multiport controller, which utilizes
+>
+>> two QMP UNI PHYs.  Add the proper compatible string for the Glymur SoC.
+> >> @@ -16,6 +16,7 @@ description:
+> >>   properties:
+> >>     compatible:
+> >>       enum:
+> >> +      - qcom,glymur-qmp-usb3-uni-phy
 
-I believe that needs to be fixed before more bugs are added on top to
-work around that problem...
+Odd indentation?
 
-=2E..and before that bug is cemented in the ABI.
+> >>         - qcom,ipq5424-qmp-usb3-phy
+> >>         - qcom,ipq6018-qmp-usb3-phy
+> >>         - qcom,ipq8074-qmp-usb3-phy
+> >> @@ -62,6 +63,8 @@ properties:
+> >>   
+> >>     vdda-pll-supply: true
+> >>   
+> >> +  refgen-supply: true
+> > 
+> > You've added it, but it's not referenced as required. Why is it so?
 
-Best regards,
-								Pavel
---=20
-I don't work for Nazis and criminals, and neither should you.
-Boycott Putin, Trump, Netanyahu and Musk!
+> The refgen clock isn't always required on each and every platform unlike 
+> the .9v and 1.2v rail/supply, which directly power the QMP PHY.  It only 
+> really depends on how the refclk/CXO network is built for that 
+> particular chipset.  The refgen ensures that we're properly voting for 
+> the supply that is powering our CXO buffer.
 
---iO6C/R28FEPs1Luw
-Content-Type: application/pgp-signature; name="signature.asc"
+I thought we discussed this before and concluded that this is not an
+accurate description of the hardware (even if you now call this supply
+refgen instead of qref):
 
------BEGIN PGP SIGNATURE-----
+	https://lore.kernel.org/lkml/aEBfV2M-ZqDF7aRz@hovoldconsulting.com/
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCaNJKngAKCRAw5/Bqldv6
-8rwwAKCAEqvmxyif1M2EfR+OkPL1Yc+kKACfXIQxtdTTJxoVlwLVcRR2GW3coKg=
-=tPlv
------END PGP SIGNATURE-----
+Given your description above this still looks wrong (at least after a
+quick look).
 
---iO6C/R28FEPs1Luw--
+Johan
 
