@@ -1,127 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-74507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BBDAB95041
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 10:36:32 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AAC2B9507A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 10:40:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BA2263AF8C7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 08:36:30 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2958617269F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 08:40:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3C27C30FC27;
-	Tue, 23 Sep 2025 08:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C1DF31D382;
+	Tue, 23 Sep 2025 08:40:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="fHApz0RV"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="SuE8wWKR"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-08.mail-europe.com (mail-08.mail-europe.com [57.129.93.249])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BCC2EDD5D
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 08:36:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.129.93.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B357D31D362;
+	Tue, 23 Sep 2025 08:40:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758616589; cv=none; b=g63WXdk4+k0CxiCrLXMwAbgQ/DM4hJk67kyc1Az4lvcZtcs3It5rZJr4YgeGHqtD3ETVVpZoRLgOq92pfWM3xIk8dY10RWAAsLYwbGBFo4ysGt5DSp4Vy0WIUlbuTWwsOw3GCcAZp/F6/NYmmoRs7DE1pg/MEWKOW4aSAkRIYmE=
+	t=1758616818; cv=none; b=mM6t1DNqyGx4e0aMTC4+6Q5epwzeL71kyncJVqTDq6ldyIXitQz2lXEWNNIiTjRNbUExqcPvuoNFSnOcha3LrvXdSij2fi9ShyUk3RlLR4ExDTS6VFyAM32+7XX/4k+COIO7fyid+LJgY/+hflGUETpdEqZZ2674Wy1M7yAOT8I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758616589; c=relaxed/simple;
-	bh=36wGYpuu29aWoxY4/k1QrrP8i5Y0zUpVWuiRxXPR8fY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ROOwrML1hUBCMCoO/EnAKxxNpjRY4/eWHhOZD593wky7noz9sRF7aqeqzYXAyfSzz5277dh+jvLxC6/leC/3odF18vFvX22tYVRYhF3INaRUUu2273cdWAyxEXpMFNxHcxhxTAAaVdi9C26UhMlQEkVMtOMSJ32Gxyd+ChLw4w8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=fHApz0RV; arc=none smtp.client-ip=57.129.93.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
-	s=protonmail; t=1758616572; x=1758875772;
-	bh=36wGYpuu29aWoxY4/k1QrrP8i5Y0zUpVWuiRxXPR8fY=;
-	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
-	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
-	 Message-ID:BIMI-Selector;
-	b=fHApz0RVITdZg1tf9qnyf0aw2LS9nBnWe0dZJSTvAO/7tupXU8gAnmmkA4DFQKZdG
-	 F0LBghPLHLvZLiT8VKqkz++c1FgZrgs6YuFBZXdvF5PbhFUHVjm7+k+/4whxxXT1w/
-	 0dulULVJlDsb3yYotkQUTraHEiEdOhFheppQonoMtqAxrNWrCAMm75UlmxYgkd6A+W
-	 ASY3D0FhstmBDoVZSvxIUVkGwcuqlJo2DfPY1g6OUPAPLHzQWMj0OmSEHWih7ddYA5
-	 g92BzUzdx1aC8w0iNvVq6RR7AQfW3uz2AJ7eu4epnsq8C2KyUQKjx9eKk73/QDCmWO
-	 TRx4oT/M35f2g==
-Date: Tue, 23 Sep 2025 08:36:08 +0000
-To: Lee Jones <lee@kernel.org>
-From: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Hans de Goede <hansg@kernel.org>, Pavel Machek <pavel@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Jingoo Han <jingoohan1@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Jean-Jacques Hiblot <jjhiblot@traphandler.com>, Jacopo Mondi <jacopo@jmondi.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, Konrad Dybcio <konradybcio@kernel.org>, Daniel Thompson <danielt@kernel.org>, linux-leds@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, threeway@gmail.com, Andy Shevchenko <andy.shevchenko@gmail.com>, Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [PATCH v5 3/4] leds: led-class: Add devicetree support to led_get()
-Message-ID: <L7z33cG0mE3y_WEFhvHRJ-wbjg2kxIBVMV0C9qCifJx1DTAyMYyokyKWErFXEuzra3Kjt4pcUZ1VtzRWLBbKVNewDvJtyqPdcHMXUp4h0G0=@vinarskis.com>
-In-Reply-To: <20250916160707.GA3893363@google.com>
-References: <20250910-leds-v5-0-bb90a0f897d5@vinarskis.com> <20250910-leds-v5-3-bb90a0f897d5@vinarskis.com> <20250911081540.GD9224@google.com> <b875f811-6371-4ff4-9cc2-a0a2c82a569c@kernel.org> <g7xkdervsknmcwjg4qgloj643b4itjlfeyiipvsrborszgrhlg@zrp65nvfueqk> <20250916160707.GA3893363@google.com>
-Feedback-ID: 158356072:user:proton
-X-Pm-Message-ID: 9fddac5264039b46b6df9b51ab3c5969c12c32b0
+	s=arc-20240116; t=1758616818; c=relaxed/simple;
+	bh=CUDAyPmWzHGBHTlq0IqMu3RYBPGp4SCwqHs1KhIXCnw=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=b/k8X/Q+cvXICIa7MWQvJ48CkWbojiEf4n/ApUW0Jw2DNJHRq2QjBAu4mmOWS/mPXIijQlHMOQlhgvzfJ3iHhosMoBMTEi5jwnRIPnt/WfI3Oa0S/lEGGZpv8h9euo/HMvKqPUjuAVMCGSmhSaLltAHKCkJ3S8bLHY3YNfwZ/WA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=SuE8wWKR; arc=none smtp.client-ip=198.175.65.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1758616817; x=1790152817;
+  h=from:to:cc:in-reply-to:references:subject:message-id:
+   date:mime-version:content-transfer-encoding;
+  bh=CUDAyPmWzHGBHTlq0IqMu3RYBPGp4SCwqHs1KhIXCnw=;
+  b=SuE8wWKR/d5X0EcboGzmXfstHcZU/GitSksybT2KPgtwmsF4JIC8iVLV
+   zQbI4WvAAVvdC4R0+NCw17Uu3rgex2BJ9pYVJhzqUoRUc7fEWUTxRlDL8
+   FYtjR0UjGLpU0Yv4DOPfI+0m+R7V0lxumpm9szwJWuxbpq0at/rIxX4OV
+   C+A1ZRAV/b+AtKUYnqVnceVamPp9DyIdAqIZumz20Vp7Oayuj/BGmhDbL
+   6XMAt6i/m0PXR3s3y/bV3n4MAsNQFPR0x4vTdpHBwX/iJwuCMFHZJgzYu
+   Tr0TKhE5/bGanehSpk3pu53KvZd80roF+dnwsY90R0sN1SOXKPbYtrnxH
+   g==;
+X-CSE-ConnectionGUID: Oxc6Rm6tQV6OveijWHed1A==
+X-CSE-MsgGUID: q7+ProweQCmYUFmnb7fyKw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11561"; a="71135514"
+X-IronPort-AV: E=Sophos;i="6.18,287,1751266800"; 
+   d="scan'208";a="71135514"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2025 01:40:15 -0700
+X-CSE-ConnectionGUID: u5BQTh96SKGMj6nk5qoIpA==
+X-CSE-MsgGUID: b2oRGV9nTt+/wNrGxJQjDQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.18,287,1751266800"; 
+   d="scan'208";a="176291302"
+Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.234])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2025 01:40:08 -0700
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+To: Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Hans de Goede <hansg@kernel.org>, 
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Mark Pearson <mpearson-lenovo@squebb.ca>, 
+ Sebastian Reichel <sre@kernel.org>
+Cc: "Derek J. Clark" <derekjohn.clark@gmail.com>, 
+ Henrique de Moraes Holschuh <hmh@hmh.eng.br>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org, 
+ linux-arm-msm@vger.kernel.org, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250918-thinkpad-t14s-ec-v5-0-ac0bc6382c5c@collabora.com>
+References: <20250918-thinkpad-t14s-ec-v5-0-ac0bc6382c5c@collabora.com>
+Subject: Re: [PATCH v5 0/3] platform: arm64: thinkpad-t14s-ec: new driver
+Message-Id: <175861680092.3176.3763843003064695385.b4-ty@linux.intel.com>
+Date: Tue, 23 Sep 2025 11:40:00 +0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.13.0
+
+On Thu, 18 Sep 2025 23:20:25 +0200, Sebastian Reichel wrote:
+
+> Introduce driver for the ThinkPad T14s Gen6 Snapdragon EC. In theory
+> it seems to be compatible with the ThinkPad ACPI driver, but these
+> devices are booted with device tree. As the name implies, the existing
+> ThinkPad ACPI driver only supports the ACPI interface. Looking at
+> the implementation, the ACPI DSDT contains many mapping functions
+> to translate the low level I2C messages into the interface used by
+> the ThinkPad ACPI driver. Adding DT support to the ThinkPad ACPI driver
+> would require adding all those translation functions, which would add
+> more or less the same amount of code as writing a separate driver using
+> the low level interface directly. I don't think it's sensible to make
+> the existing ACPI driver even more complicated, so I went for a separate
+> driver.
+> 
+> [...]
 
 
+Thank you for your contribution, it has been applied to my local
+review-ilpo-next branch. Note it will show up in the public
+platform-drivers-x86/review-ilpo-next branch only once I've pushed my
+local branch there, which might take a while.
 
+The list of commits applied:
+[1/3] dt-bindings: platform: Add Lenovo Thinkpad T14s EC
+      commit: bee278e18e641a4bc11513b0fa8f5eb2667b8a32
+[2/3] platform: arm64: thinkpad-t14s-ec: new driver
+      commit: 27221f91b83ff1435e550f57b8380a01bab0fc80
+[3/3] arm64: dts: qcom: x1e80100-t14s: add EC
+      commit: 7de8353e082d179a241dc4a4129c5d6916803399
 
+--
+ i.
 
-
-On Tuesday, September 16th, 2025 at 18:07, Lee Jones <lee@kernel.org> wrote=
-:
-
->=20
->=20
-> On Tue, 16 Sep 2025, Bjorn Andersson wrote:
->=20
-> > On Thu, Sep 11, 2025 at 11:01:00AM +0200, Hans de Goede wrote:
-> >=20
-> > > Hi Lee,
-> > >=20
-> > > On 11-Sep-25 10:15 AM, Lee Jones wrote:
-> > >=20
-> > > > On Wed, 10 Sep 2025, Aleksandrs Vinarskis wrote:
-> > > >=20
-> > > > > From: Hans de Goede hansg@kernel.org
-> > > > >=20
-> > > > > Add 'name' argument to of_led_get() such that it can lookup LEDs =
-in
-> > > > > devicetree by either name or index.
-> > > > >=20
-> > > > > And use this modified function to add devicetree support to the g=
-eneric
-> > > > > (non devicetree specific) [devm_]led_get() function.
-> > > > >=20
-> > > > > This uses the standard devicetree pattern of adding a -names stri=
-ng array
-> > > > > to map names to the indexes for an array of resources.
-> > > > >=20
-> > > > > Reviewed-by: Andy Shevchenko andy.shevchenko@gmail.com
-> > > > > Reviewed-by: Lee Jones lee@kernel.org
-> > > >=20
-> > > > Remind me why this can't go in through LED again?
-> > >=20
-> > > I don't think anyone has discussed how to merge this yet.
-> > >=20
-> > > I believe that the LED tree is the correct tree to merge this
-> > > entire series through, once the DT bits have been reviewed.
-> >=20
-> > Unless there are some strong reasons (that I'm failing to spot), we
-> > should merge the DeviceTree binding and implementation through the LED
-> > tree. Then I merge the DTS change through the Qualcomm DT tree once the
-> > bindings are available in linux-next.
-
-Hi Bjorn,
-
-The bindings are now in linux-next. Could you please pick the DTS change?
-
-Thanks,
-Alex
-
->=20
->=20
-> 1-3 have been applied to the LED tree already.
->=20
-> --
-> Lee Jones [=E6=9D=8E=E7=90=BC=E6=96=AF]
 
