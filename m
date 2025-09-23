@@ -1,172 +1,203 @@
-Return-Path: <linux-arm-msm+bounces-74512-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D5484B956CC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 12:28:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BDE2B958B2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 13:02:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE85519C020D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 10:28:34 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5300319C1C74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 11:02:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 20CC1321277;
-	Tue, 23 Sep 2025 10:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D2D030F545;
+	Tue, 23 Sep 2025 11:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=apitzsch.eu header.i=@apitzsch.eu header.b="gJd2K421"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B/qp0n9N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from www637.your-server.de (www637.your-server.de [168.119.26.117])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66F1C310645;
-	Tue, 23 Sep 2025 10:27:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=168.119.26.117
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F41260575
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758623274; cv=none; b=Xei6Lii997xyX7dvnc77/urhvybxtoVaPkaOYh0iGWgauR7aVi2qxya0J3slsO/fjJ6OE9pyeV66jA3g8PmjR6PmQTNQBUsYxETyYOp7igHTqa0YXMmoYto7fRym63w6GVuHcOxd15eI10r5rllLnJWs2AGswz9y4Ip3BF6zNog=
+	t=1758625337; cv=none; b=dEChO8/0OeW/NzASEngkNZlfOWe2zcGSDquW4q3UUUDl+4DnNr2rPK2g1v0wrtwciEs9z8zN76rlBAEA9k4szSPkRUp3O5LSXGZwvcTTm/k5brMj2KBbziPJDpduk1N4W0TvrcO1PiMVqSZAhZStm7upOh8wTRef2ffZP8dllYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758623274; c=relaxed/simple;
-	bh=7DNbOHNaKHAqXh6/yA4lmhTQDKdshc7fyPtpwopNmIA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Q3fW15VzCeR3HTC2cjqlnxnwND7s95v4DBx4oq9X6utG0UF1pqu/IZ1ygymQyCX7b5Tbqr8Ut9nKgGaUWExFxJtzrIRR2kXJV/c+H/XiEAGmlcMT96q8b1+oR23j14LZKvZogD/v8jkGNaH7ZV7p9aLWHaZj0dlfWhlQ3uM+NZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu; spf=pass smtp.mailfrom=apitzsch.eu; dkim=pass (2048-bit key) header.d=apitzsch.eu header.i=@apitzsch.eu header.b=gJd2K421; arc=none smtp.client-ip=168.119.26.117
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=apitzsch.eu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=apitzsch.eu
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=apitzsch.eu
-	; s=default2410; h=MIME-Version:Content-Transfer-Encoding:Content-Type:
-	References:In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID;
-	bh=7DNbOHNaKHAqXh6/yA4lmhTQDKdshc7fyPtpwopNmIA=; b=gJd2K421lEKr0jTa6IxYU1zGTF
-	AMOxn+22FIDzUH7XwXhl9QUd8RpXnciqAcVEJvSFmLdsspKV+N5xiWR2W7G0DqI+lESS9z8VqI5vc
-	J4KsR9bQf9yKI2WvYWGQIxRys5jkO+eT2J/26b+kEX3qNTI8UdSoI0acoWT2H0wtgqi2OkKEeZ8eO
-	G7j2FRYdLx86+HT5dXcd1FGrR2AVqxIfoJb6elVNJzavUIkEbOWj43T26ExivTgV5f5soqqZFme30
-	wG3EZ4u0y+YPRz3kbS4wVWU3AJ28kbpw2RLrKP2ZedY/ypLcrxcdMg1sAA9s166jKeDZMFHM4NqlA
-	8txKlEqA==;
-Received: from sslproxy08.your-server.de ([78.47.166.52])
-	by www637.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96.2)
-	(envelope-from <git@apitzsch.eu>)
-	id 1v10FL-0003pV-0X;
-	Tue, 23 Sep 2025 12:27:43 +0200
-Received: from localhost ([127.0.0.1])
-	by sslproxy08.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <git@apitzsch.eu>)
-	id 1v10Ef-0002i2-1d;
-	Tue, 23 Sep 2025 12:27:42 +0200
-Message-ID: <14e75b6ebc3e558d3449f8b4043d31260bfaffc4.camel@apitzsch.eu>
-Subject: Re: [PATCH 0/4] Add CAMSS support for MSM8939
-From: =?ISO-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>
-To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>, Robert Foss	
- <rfoss@kernel.org>, Todor Tomov <todor.too@gmail.com>, Vladimir Zapolskiy	
- <vladimir.zapolskiy@linaro.org>, Mauro Carvalho Chehab
- <mchehab@kernel.org>,  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>,  Bjorn Andersson
- <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
-	linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Vincent Knecht
-	 <vincent.knecht@mailoo.org>
-Date: Tue, 23 Sep 2025 12:27:41 +0200
-In-Reply-To: <bfc3838c-b2fe-40c9-a1bf-f5269b48dca9@linaro.org>
-References: <20250908-camss-8x39-vbif-v1-0-f198c9fd0d4d@apitzsch.eu>
-	 <bfc3838c-b2fe-40c9-a1bf-f5269b48dca9@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.0 
+	s=arc-20240116; t=1758625337; c=relaxed/simple;
+	bh=5hEBAumSRnPCha/Ny/m++/pZyTtvzKOFLtKUlv8WYhU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iP0GC3r0f6O97bLG4Nv6+4AsX1g6LCCFoPg84A67LMtoK6n6qzR9jOBavGU0N4jpnLzUwE+bEQLu6yQngDSGXnJDnAS5B2n5C7XGtlzJzQoG+GXwk0E867w78bKF55nnUaMAbbtivF4Ieyp9jJCKaSRxmvp4L+3PTz4OvT3oijw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B/qp0n9N; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58N8H5Io015977
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=GCCtjueZgBHRf2lKO9QvuT
+	Vc8R/RhxwXGzaoHvYzDdU=; b=B/qp0n9N78pOX/CQWvRk3WSTHYwwQLN2W+XFVh
+	dnlApt8tgnof2c1eP4noj6GmRQTC9OiCT+kVI8tFIics3zaFRGJd0hfGLVrYCODg
+	Ozj/t4mYn/VJLvmNWrC/sBKatH2ldqUpwCTo2by1kF8+hiBpr7I1Dk2d3Kpe0FO3
+	YhqJIK3ITyzYRS/pj/D/Vt8boUjMM1dFBJGOZfLat5SL6qxCLmUHdPuBCjpQbXOc
+	ipPmKAz1IaQ0yPjdwy/hK/QnXZzygWswqqRm/QvhTsaH4ARxuRVZ17vqjpabPgkH
+	QbrLKUQlIndUgXrsN9laM1vXcNowDdP8ZaGrfALkZDMPWyKg==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bjpdsepw-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:12 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-78f3a8ee4d8so89389906d6.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 04:02:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758625331; x=1759230131;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GCCtjueZgBHRf2lKO9QvuTVc8R/RhxwXGzaoHvYzDdU=;
+        b=pjkdQQTpAJjx0PhKa9X7osKe/pFxZGCsrmGQpHopesPFtbsUi058bVHS2069i00xe/
+         V9+FGp5Wq9qso3KlLBkvkrLnGxxa0HYLYlMkhW2uF68pwMSo/EnmP44lAZWoB2CV7uv+
+         v6z41x/7edzatxJ1h642vg5vkmlzAhUtDjnWa+uaPtXX6gRi+JtoxIJvkTqzKu2wr6rG
+         PF3e9suQ8ikZeYwmOR5ns7vqa2klFt5Zb/jr4EN0DwSBBrWIrlkhUU+AtGlXO5EY1Is1
+         g29fy2nDcxLHTKmsnajxUccrl9SpzTW4OkmQFj8mf+JsCZKP8LVX0sY0fsuQ16n7ZE+H
+         2fsg==
+X-Gm-Message-State: AOJu0Yw1HoAKIrPBqtNMHxuskSjCmwEY23XSUk+zXWsvH+/zM4KQHFkE
+	rZhBTwWZ5Cd13j4eVxkgQXqRqVMUNcpoSQzv0kKdIxDFiHqpp28JorvMuDhN9b2dyfQN4dw3CoA
+	v8MemLmXBXVRc2zuLYKdpEJxBaJXIjeFNlG77TfOVFiQ/PmPEm6tJvMife4SI9dXmWzJq
+X-Gm-Gg: ASbGnct52UYmg1TGFcIZ768DkqefiewedcvBjmzP6QaJVJZP4pGO5VWsVqyvFRjk5bu
+	7qrqcJ054i5SVPiHLTQXVcQhKQP1QacYXC9guw+W27o9zqvIoGoI8dR/wwHeTNxw/VsD3oiCZaE
+	C+ASTPOdlwtyW9A8qPfV5HBEPJg0+Iy/KdVvhZnNKo3oHC8NpR4SFkH2qhni8TtQvwsmRw8Lud4
+	/18/o38xe8Pa7M9/cJjIJPCr4IHBKqogDMtopQoR3bJkeaW51Yb2POwhgL8vfusbVr+30yAlQTd
+	Hu2pablRu8y+BAErF0PeWFWCKX2rDqpNPFMZ/eTPG/PthAVjKQyvI5Im6J80T9ZSIp7RxkMDSrG
+	g3tqcZX9JfYUSVTzBUnW0Jqu8wBezb2o15EBUqO1MQiBQnbkKHH3u
+X-Received: by 2002:a05:6214:20ef:b0:70d:a91d:2ec4 with SMTP id 6a1803df08f44-7e716d467e7mr22730236d6.49.1758625330885;
+        Tue, 23 Sep 2025 04:02:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFsFNNHaOMJ0Dvt+QYoMrgLHz7i5vsL16oR9PxtXAbrChfsujy9S7H0z5WkxgV9KWb7cMrvWg==
+X-Received: by 2002:a05:6214:20ef:b0:70d:a91d:2ec4 with SMTP id 6a1803df08f44-7e716d467e7mr22729526d6.49.1758625330338;
+        Tue, 23 Sep 2025 04:02:10 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-578a5f4537csm4075975e87.27.2025.09.23.04.02.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 04:02:09 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 0/3] arm64: dts: qcom: rename dtsi files for sm6150,
+ x1e80100 and qcs8300
+Date: Tue, 23 Sep 2025 14:01:53 +0300
+Message-Id: <20250923-rename-dts-v1-0-21888b68c781@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Virus-Scanned: Clear (ClamAV 1.0.9/27771/Tue Sep 23 10:26:39 2025)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACF+0mgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDSyNj3aLUvMTcVN2UkmJd0xRzkxQzQ2OjNBMDJaCGgqLUtMwKsGHRsbW
+ 1AEOh8EFcAAAA
+X-Change-ID: 20250923-rename-dts-5d74d6132f40
+To: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3505;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=5hEBAumSRnPCha/Ny/m++/pZyTtvzKOFLtKUlv8WYhU=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBo0n4wYArVdXVon0JH98ViR+JTPByVSEXNFQb1r
+ zraqatvJkCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaNJ+MAAKCRCLPIo+Aiko
+ 1eXpCACIFEaqSDVyKtaSdzlP/SEPJgi3gtn84vuZrJNohZvAjLzQ+nCKVBeLnO629smbi0JlW8I
+ uMuC/ArjQPbvOTvG1EBcveLto9p7i34o6sWRIfK6zsKIGsWqtmFdq0yvmhv9kq8lPWOZcy8ik5/
+ gac/tZNqT2nbMe1eupMF5TMSmGkoHmrH+nq85lMzEfNjKJCJ9L5ZcbNfDChDtCj7fNVDrY6sQpS
+ puZZKpSfM3pJtmnFO831NzGUsbHg4ukGQV0ipe31DH3PX7mB3dyDLN5UlZ4nBdYYy4Tt4BDZsLF
+ /I5XhdAcJJSZnkNlPV5Tn16k9zlmIKCjFMfNluVVM6vuAd21
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-ORIG-GUID: miKNBbU5eOqHAtKx7TCRKPyhhkywYP-y
+X-Authority-Analysis: v=2.4 cv=Pc//hjhd c=1 sm=1 tr=0 ts=68d27e34 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=CLCcR14eWKlEiziUIbcA:9 a=QEXdDO2ut3YA:10
+ a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: miKNBbU5eOqHAtKx7TCRKPyhhkywYP-y
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIzMDAyMCBTYWx0ZWRfX9jQcAeFoXIu1
+ zmoXDL0efy1Lk5D00r+ZkVMwhHGXHvY+zPxFW6Jkj9q859rvRR3C45fqvksLJ140sv6La8wYVmP
+ fuVlQ5ajsF35ZO6FlDDGq4oj8vd0xs+PSKdsoSXobbRuFgpvMaH92v9jFOmvqv3brpd7Aw1i3hw
+ jJSX5bAMK8angKvUk5eT79UsqdDiumMhva78mGni9wo5CFdrpSTEM0E1+96uJa/s5YXTPBmVLVG
+ MYTaZrPPqGzmLXsk8ZAiMILdOkfp1qDPebq6K8OBBvlXJpeWY/dPdIAIfYxWY7sdIW2v9eeTGyZ
+ s89PL96sS8QiYHLiGEZ3kznsu4WhvccHnOk2LRHQ9vKOfRjOlml4q/Kj6Nvd+tXkWlaRn84vK11
+ 6zYx6yK4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-23_02,2025-09-22_05,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509230020
 
-Hi,
+Bjorn said to me that he disliked the conseqeuences of renaming
+qcs615.dtsi to sm6150.dtsi. Let's increase entropy even more and rename
+even more base DTSI files.
 
-Am Montag, dem 08.09.2025 um 11:56 +0100 schrieb Bryan O'Donoghue:
-> On 07/09/2025 23:04, Andr=C3=A9 Apitzsch via B4 Relay wrote:
-> > (This series resumes [1].)
-> >=20
-> > This series adds CAMSS support for MSM8939.=C2=A0 It's mostly identical
-> > to
-> > MSM8916, except for some clocks and an additional CSI.
-> >=20
-> > To fix black stripes across sensor output, and garbage in CSID TPG
-> > output, 2 VFE VBIF register settings are needed.=C2=A0 So the 2nd patch
-> > adds
-> > helper functions to do just that.
-> >=20
-> > Patch 1: documents qcom,msm8939-camss DT bindings
-> > Patch 2: adds helper for VFE VBIF settings
-> > Patch 3: adds CAMSS_8x39 version in CAMSS driver
-> > Patch 4: adds camss and cci in msm8939.dtsi
-> >=20
-> > Changes compared to [1]:
-> > - Move bindings patch to the beginning
-> > - Make the order of {reg, clock, interrupt} items the same as in
-> > 8916 +
-> > =C2=A0=C2=A0 append additional items
-> > - Drop R-b tags from bindings and dts patches as order of items was
-> > =C2=A0=C2=A0 changed
-> >=20
-> > [1]
-> > https://lore.kernel.org/all/20250613-camss-8x39-vbif-v5-0-a002301a7730@=
-mailoo.org/
-> >=20
-> > Signed-off-by: Vincent Knecht <vincent.knecht@mailoo.org>
-> > [Andr=C3=A9: Apply reviewer comments]
-> > Signed-off-by: Andr=C3=A9 Apitzsch <git@apitzsch.eu>
-> > ---
-> > Vincent Knecht (4):
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: dt-bindings: Add qcom,msm89=
-39-camss
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: camss: vfe: Add VBIF =
-setting support
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: qcom: camss: Add support fo=
-r MSM8939
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 arm64: dts: qcom: msm8939: Add cam=
-ss and cci
-> >=20
-> > =C2=A0 .../bindings/media/qcom,msm8939-camss.yaml=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 254
-> > +++++++++++++++++++++
-> > =C2=A0 arch/arm64/boot/dts/qcom/msm8939-pm8916.dtsi=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 4 +
-> > =C2=A0 arch/arm64/boot/dts/qcom/msm8939.dtsi=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 146
-> > ++++++++++++
-> > =C2=A0 drivers/media/platform/qcom/camss/Makefile=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-csiphy.c=C2=A0=C2=A0 |=
-=C2=A0=C2=A0 1 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-ispif.c=C2=A0=C2=A0=C2=
-=A0 |=C2=A0=C2=A0 8 +-
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-vfe-4-1.c=C2=A0 |=C2=A0 =
-12 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-vfe-vbif.c |=C2=A0 31 ++=
-+
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-vfe-vbif.h |=C2=A0 19 ++
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-vfe.c=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0 10 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss-vfe.h=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0 |=C2=A0=C2=A0 3 +
-> > =C2=A0 drivers/media/platform/qcom/camss/camss.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 157
-> > +++++++++++++
-> > =C2=A0 drivers/media/platform/qcom/camss/camss.h=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0=C2=A0 1 +
-> > =C2=A0 13 files changed, 645 insertions(+), 2 deletions(-)
-> > ---
-> > base-commit: be5d4872e528796df9d7425f2bd9b3893eb3a42c
-> > change-id: 20250517-camss-8x39-vbif-975ff5819198
-> >=20
-> > Best regards,
->=20
-> Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Leaving jokes aside. It's not uncommon to see different names for the
+same SoC (or almost same SoC, with no visible differences from the Linux
+side). The platform now known as 'lemans' is a good example, because it
+had been using SA8775P, QCS9100 and QCS9075 in different contexts for
+slightly different modifications. QCS8300 / QCS8275 is another example.
+All such names cause a lot of confusion when somebody tries to follow
+the actual SoC used by the platform.
 
-any chance, this series can be applied for the next merge window?
+For 'lemans' after a lot of trial, error, Naks and reviews we've settled
+upon having 'lemans.dtsi', the core DT file for the platform and then
+naming individual DT files following the marketing name for the platform
+or for the SoC.
+
+Apply the same approach to several other platforms, renaming the base
+DTSI and keeping the DT names as is.
+
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+Dmitry Baryshkov (3):
+      arm64: dts: qcom: rename qcs8300 to monaco
+      arm64: dts: qcom: rename x1e80100 to hamoa
+      arm64: dts: qcom: rename sm6150 to talos
+
+ arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi                        | 4 ++--
+ arch/arm64/boot/dts/qcom/{x1e80100-pmics.dtsi => hamoa-pmics.dtsi} | 0
+ arch/arm64/boot/dts/qcom/{x1e80100.dtsi => hamoa.dtsi}             | 0
+ arch/arm64/boot/dts/qcom/monaco-evk.dts                            | 4 ++--
+ arch/arm64/boot/dts/qcom/{qcs8300-pmics.dtsi => monaco-pmics.dtsi} | 0
+ arch/arm64/boot/dts/qcom/{qcs8300.dtsi => monaco.dtsi}             | 0
+ arch/arm64/boot/dts/qcom/qcs615-ride.dts                           | 2 +-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts                          | 4 ++--
+ arch/arm64/boot/dts/qcom/{sm6150.dtsi => talos.dtsi}               | 0
+ arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi                  | 2 +-
+ arch/arm64/boot/dts/qcom/x1-crd.dtsi                               | 2 +-
+ arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi                        | 2 +-
+ arch/arm64/boot/dts/qcom/x1e001de-devkit.dts                       | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi        | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts            | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts             | 2 +-
+ arch/arm64/boot/dts/qcom/x1e80100-crd.dts                          | 2 +-
+ arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts   | 2 +-
+ arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts           | 2 +-
+ arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts              | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts              | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts           | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi           | 4 ++--
+ arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                          | 4 ++--
+ arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts              | 2 +-
+ arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts          | 2 +-
+ arch/arm64/boot/dts/qcom/x1p42100.dtsi                             | 4 ++--
+ 27 files changed, 34 insertions(+), 34 deletions(-)
+---
+base-commit: bf2602a3cb2381fb1a04bf1c39a290518d2538d1
+change-id: 20250923-rename-dts-5d74d6132f40
 
 Best regards,
-Andr=C3=A9
+-- 
+With best wishes
+Dmitry
+
 
