@@ -1,159 +1,162 @@
-Return-Path: <linux-arm-msm+bounces-74541-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74542-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75848B97435
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 21:00:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E040B9751B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 21:21:27 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5AC443208B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 19:00:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 32915169AED
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 19:21:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EFD7302CB1;
-	Tue, 23 Sep 2025 18:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2913303A07;
+	Tue, 23 Sep 2025 19:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Q+4NDdnw"
+	dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b="l9mwWuzr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail-4323.protonmail.ch (mail-4323.protonmail.ch [185.70.43.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FAF2FB084
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 18:59:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE65272E5A;
+	Tue, 23 Sep 2025 19:21:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758653994; cv=none; b=tEkWW5kpooLSV+aETU+mfpN8HUEsbrWLkCI3OkyF/edk4HR4hNDMzmig/9zoKyNfwl+jRzmGQKzXuUCsmtXr63k+jcMRae8Xt6h1smCK6EOXFaSwxSXbbn6Mj8PptpaEkUJSRlM1/JUfHi3URz9373fXqpur+59HHdtGNtA9ZRw=
+	t=1758655284; cv=none; b=FMjrN02T7DY9hzULquIXEcp6Ivhi0bxWNoigIXUrWRxLkouaBX+cS/kIlmhP5GI0EV1sIWcZuafyXpJgDfRvNom4oyqIWJFvbCsp4nSS7sI4/98VZrHiC87R4gjgLpeSyn9G4ffuI7JZfFNbiwrWfrHyPld0HIo44AD90hhOgOQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758653994; c=relaxed/simple;
-	bh=DWcgQoC7mbLIcOae7OLDIeE5ye70Nq22n9Jh3BH3ixE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nbml7+I+tjs/TrawK/Kt5UHJUAIEgR91kpaCGYcMQriNl5/+HIj7cKkjKey6qfiqCgTchixiuvVE6Pm0YYqcIEprpsdfQcRlqqRRk+mX8tyNzRA6ezo0AhzQqBmCDKY0n9IJwACvDbwfw7PFAwyMliyFraN9f9OoZidH3rg6e40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Q+4NDdnw; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb7ae6ed0so831522166b.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:59:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758653990; x=1759258790; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LORB79saQtcNPiyY44B6K0FPB3bszS2VB5LSvhgyj0k=;
-        b=Q+4NDdnwc5FV4iltYyv1orIoLQPw3BpDoi9qEnGN8ZQo+vm7NJdcz8aMhQZf8C/i4/
-         vGA8nwcta7z+Z9MR8Jh4rBccRziHGpkOr/IbrgGtPO6o50pPM/T5j597HMvuTFyQpmGD
-         kab5SKsQUw5x8Fsso7+dpAxu0GP4mL/oC//6V1UiGixiwBpJodI0Gvp+2sduxrMkgjgV
-         ZM7W/2Lt5itEe58FdMJV8SmujNyH8a8Vg+QD+K6uigu3AOMgjRSsU+8nNr0/6m3pUpXf
-         VSngb94yAINIqIbP5d+kq/bvuwxD1Mc38OIjsePRkD8h8/I2MISnLku+kj/m3bpOLks/
-         OePw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758653990; x=1759258790;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LORB79saQtcNPiyY44B6K0FPB3bszS2VB5LSvhgyj0k=;
-        b=I2EzDZ8wdid5F8iOeiBPlz31Ld8qxKqO5Mj15pe5DEBmHCWJqgh8izAJwI9ljj63fw
-         26tKJ0paBzmsqHVZbBcSFsL9/+W5TQJyQV9jWKtxH2FYPH3cW/vmR4kZvKSf5Ix1cUmX
-         7moN58yUqgRRVVWD89axUbW77WAJMkhLqPUwsXtGqcYaqqcp9kbmMHP9EQTqaPDlhGqv
-         DMaTnFTOOmyS+UjMsgkUAVD1aoAAyxqbCyyp6YHzn6I/kyg1ab9HWQgaxPTVoeKn66wV
-         rwmnY2Bf+tYAGCmKg5I0X4PBfIFBTgRn7l15+DeRBTojKeQN4w55d+mPGNzhab9MNRVU
-         xxHg==
-X-Forwarded-Encrypted: i=1; AJvYcCXVAP4yoZW0CMBe4ny3b2yGHAddR+Ab6LaZ66Ofo5MjwwuZhwYDhqXiHRkCRkLy/D+OUorkYlPeaNJAHAG0@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyptX64ZOLWyhBoY/mjnU5kFOj5WtXamxLy35BD9YcmSkZzMJc
-	uIaz6VvpifF7JPlUgyz3KClCxzujPHr4mwS5TVXjHNj/dnagFRE2zaInan3GWIIBdtw=
-X-Gm-Gg: ASbGncsdfkFVxvT+qp+Nm8k0by4hdNjoH3rfK/ob2X68NQ3nNdd0DBkCvn0INQR9t38
-	bFWUdlPegcnXB/VV/EWKd7hzt5D5RA7/a/Sr0aTDqTuQ8voQg8Rf0gwRQDiIFQxWQJJlof0Akqw
-	G4GdYjqaap2S0Gqif6+W8t89G6CLfUDiqQMl48tjvi1oxUkmWaRVmHGPMXYxTM1n/3kU4b/fUXd
-	XFeRvVqbHR/L0P1lzdEKMK3DG4mZTVdeNAI8aKyBmoc1CkcltAPZXlEKBZ4j7DFL23AIBYqnfAT
-	vJPUg7dh5rI7nuNh3oYtJBdb8VX8EQVpUYuO+ExiZ33r4Ty6DxzBfND+Q90VNJ2dOjtfw+Qggke
-	4oDjditl8WjXekroKbKMDWJS69rD6pw+O
-X-Google-Smtp-Source: AGHT+IHpNDrBMGpbrr+jACB56SjeewurC5sNC2bfrGwwMx9GpqNnbrlv/Ka/PcBzermBd/G+tFnJ7w==
-X-Received: by 2002:a17:906:6a28:b0:aff:fe6:78f0 with SMTP id a640c23a62f3a-b302c20390dmr373202366b.54.1758653990098;
-        Tue, 23 Sep 2025 11:59:50 -0700 (PDT)
-Received: from linaro.org ([2a02:2454:ff21:30:bd4e:c20d:5910:982f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b31a562fe38sm86252966b.45.2025.09.23.11.59.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Sep 2025 11:59:49 -0700 (PDT)
-Date: Tue, 23 Sep 2025 20:59:45 +0200
-From: Stephan Gerhold <stephan.gerhold@linaro.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: rename x1e80100 to hamoa
-Message-ID: <aNLuIX1wcUYMpVBp@linaro.org>
-References: <20250923-rename-dts-v1-0-21888b68c781@oss.qualcomm.com>
- <20250923-rename-dts-v1-2-21888b68c781@oss.qualcomm.com>
- <aNKAjIXT3ll3L0qT@linaro.org>
- <f5kgh4hivkrxcfkinberpdxdnyybw552zqup66cmobtgqag477@qldaejueyyr3>
+	s=arc-20240116; t=1758655284; c=relaxed/simple;
+	bh=HDn2G/3gGiCHnuMHHgteEinUK8Sz4555CP9qgYozpS4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=FUOQaTfDI9rJQoo2Z/LDQGx1J+Mn/L86oEnXx/3WIjZob2oVJQzkANAAKLhpMZr7EsT+LdWB4kqFK1q2ItMx915S+Uga85760oQ+pqV3KjZ+a/Ti3IMG0gBLEWj25ea9uszBUACl1DxlkG+kGIHjU6XIjWCfH/dxiY2GjWzJmxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com; spf=pass smtp.mailfrom=vinarskis.com; dkim=pass (2048-bit key) header.d=vinarskis.com header.i=@vinarskis.com header.b=l9mwWuzr; arc=none smtp.client-ip=185.70.43.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=vinarskis.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=vinarskis.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vinarskis.com;
+	s=protonmail; t=1758655273; x=1758914473;
+	bh=HDn2G/3gGiCHnuMHHgteEinUK8Sz4555CP9qgYozpS4=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=l9mwWuzrbUfL1NTSJeFvkKFPVE4eSQwgZPjOIO/tOvawTfk8httXLi9PH9cpyHpHB
+	 RDS8F5L5jZv8CQHR7LsIh7tqGJPcZlr/IUf1wJmIPnpmiS5TXhJGCLeV0JUdtAugKt
+	 C9SDOJAQyJajWq9FCYbnMWgLkSi9UQLW9DgCD51Koo5NW+eXDWZutAgvmlxMZeajxh
+	 YORX0J2DsBdZcNFIGETbTFqxr2Ux8atqnBLNQRYkdrOfDkvh/JerUDxeItyOM2q/Nt
+	 E1ZARmaDlMzJTTSB8Jsu/7jO09uA53WoPLFgO9UAWhbPjEzJnXRPkyctAN/yJSqqsc
+	 9d6WotM/4Ae5w==
+Date: Tue, 23 Sep 2025 19:21:10 +0000
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+From: Aleksandrs Vinarskis <alex@vinarskis.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, Jens Glathe <jens.glathe@oldschoolsolutions.biz>
+Subject: Re: [PATCH 2/3] arm64: dts: qcom: Rework X1-based Asus Zenbook A14's displays
+Message-ID: <blMLYZBNCKa8x50Dd-zdFPdx7wZNor45QRJeeqjVautVqCR3aIoVAUrxacXkYNAlrC6p6npHSU_ZMfUDvZzoUzXg_2iiXMJPFmW85P-B3HU=@vinarskis.com>
+In-Reply-To: <X5l7eScrcspQe6JfPyx8VCIZXmCmq-VBlAoNmIuAAmwfp1z-yNAG5GyIEnp4ByyPOEfJHEtewC0uOgrc0GiLlaz433Gheubseb-pXH1ZfUw=@vinarskis.com>
+References: <20250908-zenbook-improvements-v1-0-43ecbbf39c60@vinarskis.com> <20250908-zenbook-improvements-v1-2-43ecbbf39c60@vinarskis.com> <e54daa39-ffb1-4f0e-82c6-42e45efe5044@oss.qualcomm.com> <X5l7eScrcspQe6JfPyx8VCIZXmCmq-VBlAoNmIuAAmwfp1z-yNAG5GyIEnp4ByyPOEfJHEtewC0uOgrc0GiLlaz433Gheubseb-pXH1ZfUw=@vinarskis.com>
+Feedback-ID: 158356072:user:proton
+X-Pm-Message-ID: a3ab3237e5d9dce4fe5fd0114118c126a6ef5003
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f5kgh4hivkrxcfkinberpdxdnyybw552zqup66cmobtgqag477@qldaejueyyr3>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 23, 2025 at 06:14:45PM +0300, Dmitry Baryshkov wrote:
-> On Tue, Sep 23, 2025 at 01:12:12PM +0200, Stephan Gerhold wrote:
-> > On Tue, Sep 23, 2025 at 02:01:55PM +0300, Dmitry Baryshkov wrote:
-> > > The X1E80100 and several other similar names (X1E78100, X1E001DE) all
-> > > belong to the platform now known as 'hamoa'. Follow the example of
-> > > 'lemans' and rename the x1e80100.dtsi to hamoa.dtsi and
-> > > x1e80100-pmics.dtsi to hamoa-pmics.dtsi.
-> > > 
-> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+
+
+
+
+
+On Friday, September 12th, 2025 at 18:52, Aleksandrs Vinarskis <alex@vinars=
+kis.com> wrote:
+
+>=20
+>=20
+>=20
+>=20
+>=20
+>=20
+>=20
+> On Friday, September 12th, 2025 at 12:44, Konrad Dybcio konrad.dybcio@oss=
+.qualcomm.com wrote:
+>=20
+> > On 9/8/25 8:45 PM, Aleksandrs Vinarskis wrote:
+> >=20
+> > > The laptop comes in two variants:
+> > >=20
+> > > * UX3407RA, higher end, FHD+ OLED or WOXGA+ OLED panels
+> > > * UX3407QA, lower end, FHD+ OLED or FHD+ LCD panels
+> > >=20
+> > > Even though all three panels work with "edp-panel", unfortunately the
+> > > brightness adjustmenet of LCD panel is PWM based, requiring a dedicat=
+ed
+> > > device-tree. Convert "x1p42100-asus-zenbook-a14.dts" into ".dtsi" to
+> > > allow for this split, introduce new LCD variant. Leave current varian=
+t
+> > > without postfix and with the unchanged model name, as some distros
+> > > (eg. Ubuntu) rely on this for automatic device-tree detection during
+> > > kernel installation/upgrade.
+> > >=20
+> > > As dedicated device-tree is required, update compatibles of OLED
+> > > variants to correct ones. Keep "edp-panel" as fallback, since it is
+> > > enough to make the panels work.
+> > >=20
+> > > Signed-off-by: Aleksandrs Vinarskis alex@vinarskis.com
+> > > Co-developed-by: Jens Glathe jens.glathe@oldschoolsolutions.biz
+> > > Signed-off-by: Jens Glathe jens.glathe@oldschoolsolutions.biz
 > > > ---
-> > >  arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi                        | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/{x1e80100-pmics.dtsi => hamoa-pmics.dtsi} | 0
-> > >  arch/arm64/boot/dts/qcom/{x1e80100.dtsi => hamoa.dtsi}             | 0
-> > >  arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi                  | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1-crd.dtsi                               | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi                        | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1e001de-devkit.dts                       | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi        | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts            | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts             | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1e80100-crd.dts                          | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts   | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts           | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts              | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts              | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts           | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi           | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                          | 4 ++--
-> > >  arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts              | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts          | 2 +-
-> > >  arch/arm64/boot/dts/qcom/x1p42100.dtsi                             | 4 ++--
-> > >  21 files changed, 29 insertions(+), 29 deletions(-)
-> > > 
-> > > [...]
-> > > diff --git a/arch/arm64/boot/dts/qcom/x1p42100.dtsi b/arch/arm64/boot/dts/qcom/x1p42100.dtsi
-> > > index 10d26958d3c66a5a4faf2ca6065e7b661f967b4e..2cecd2dd0de8c39f0702d6983bead2bc2adccf9b 100644
-> > > --- a/arch/arm64/boot/dts/qcom/x1p42100.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/x1p42100.dtsi
-> > > @@ -3,8 +3,8 @@
-> > >   * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
-> > >   */
-> > >  
-> > > -/* X1P42100 is heavily based on X1E80100, with some meaningful differences */
-> > > -#include "x1e80100.dtsi"
-> > > +/* X1P42100 is heavily based on hamoa, with some meaningful differences */
-> > > +#include "hamoa.dtsi"
-> > >  
-> > 
-> > If you're renaming X1E, please also rename X1P42100 ("X1(P) with 8
-> > cores"(?)) for consistency. That one also covers multiple SoCs.
-> 
-> I haven't checked if we have clearence for that name.
-> 
+> >=20
+> > [...]
+> >=20
+> > > --- /dev/null
+> > > +++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
+> > > @@ -0,0 +1,141 @@
+> > > +// SPDX-License-Identifier: BSD-3-Clause
+> > > +/*
+> > > + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights re=
+served.
+> > > + * Copyright (c) 2025 Aleksandrs Vinarskis alex@vinarskis.com
+> > > + */
+> > > +
+> > > +/dts-v1/;
+> > > +
+> > > +#include "x1p42100.dtsi"
+> > > +#include "x1-asus-zenbook-a14.dtsi"
+> > > +
+> > > +/delete-node/ &pmc8380_6;
+> > > +/delete-node/ &pmc8380_6_thermal;
+> > > +
+> > > +/ {
+> > > + model =3D "ASUS Zenbook A14 (UX3407QA)";
+> >=20
+> > 'model' in .dtsi is 'eeeeh'
+>=20
+>=20
+> Followed example of Thinkpad t14s and CRD, as they set it to
+> 'default' in .dtsi, and overwrite in .dts. Could fix it starting
+> with Zenbook here, but in this case probably makes sense to also
+> drop 'model' from higher level 'x1-asus-zenbook-a14.dtsi' as well?
 
-This is a good chance to ask then? :-) I'm pretty sure I've seen it
-being used by someone on the mailing list already ...
+Hi Konrad,
 
-Thanks,
-Stephan
+Any comments on this?
+
+Alex
+
+>=20
+> > [...]
+> >=20
+> > > +&remoteproc_adsp {
+> > > + firmware-name =3D "qcom/x1p42100/ASUSTeK/zenbook-a14/qcadsp8380.mbn=
+",
+> > > + "qcom/x1p42100/ASUSTeK/zenbook-a14/adsp_dtbs.elf";
+> > > +
+> >=20
+> > are both of the aforementioned variants' firmwares the same?
+>=20
+>=20
+> Yes, Asus doesn't distinguish BSP packages between options (displays
+> in this case) but only X1E (UX3407RA) vs X1(P) (UX3407QA).
+>=20
+> > Konrad
 
