@@ -1,176 +1,156 @@
-Return-Path: <linux-arm-msm+bounces-74486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74487-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B736EB93C86
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 03:04:03 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id F17F2B94048
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 04:39:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6A5873A9585
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 01:04:02 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id BA5AA7A1C2E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 02:37:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EDADF487BE;
-	Tue, 23 Sep 2025 01:03:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="U2g7pwnx"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 53F7126A0EB;
+	Tue, 23 Sep 2025 02:38:57 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from cstnet.cn (smtp21.cstnet.cn [159.226.251.21])
+	(using TLSv1.2 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B50B3A1B5
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 01:03:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB2E2580ED;
+	Tue, 23 Sep 2025 02:38:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=159.226.251.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758589439; cv=none; b=AYhy9r2g8y3NMLnQBb1zMqdqnk7IYsqt4GYbL+MFzgORdvd7r891/gZseHxZppTFHUL1gBQANPgnolhfW+mAewdbxs+uW2IiK8wtdXVWr1wIlVCWmZLlv7J5RcdAYV0Ze6U5RMY5bJIqqJM2J62awT4Qro+HHWh8bguAptKdb1k=
+	t=1758595137; cv=none; b=QFXbtqxRwT79jCLCl8y3W+2kYtIVXyMZ85iVR69BHwgvQmUBfB3769HN+Pi0hyPkg/lslvZryakTWP2LkHUAE9SHvhYyWw4nd27o5+L4HRfzhzl1TSXBhzRdeipQSUzmT2zyx46OUQXoN4F9F4wubMFHHcD4dVkvWzHrh4XAFy0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758589439; c=relaxed/simple;
-	bh=AkmFWqZWKDdWgx+k3IxAC0AsHW+/Je62e22sgXDU+2Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RcpeEm2IXFuWnVmTLLv0WL7E1mfFWGDrbRQnv5W1Vq3oxQ8re7ir3VFh1aiN2BqP0cHLXQ1J2xCWfizXq9n8u/iVB14Bft+VtD9t8aXO21+qj3fQOnAR+uh/1HukMl+5eTYC1pPGkYJPaKD2L+VPBykOYqMaT4fTea0jFXkeZRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=U2g7pwnx; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58MG4OG3001358
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 01:03:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3r2gyH2o9KM3Y4VR/nSiqz6V1kwzJFKLhM9PNywxZ9M=; b=U2g7pwnx7X8Zkxz2
-	z+R+FuWVj9i6fTjNhzSitDitg/0dKOsNgygJTVMxGczOSmW4fa/yp1tuZTSf09FV
-	geRntp4WiiFIei/DNOpNVcvDXmvNSQSZYkjWFgKioptWGMniAb63x8pXLKrDtVLf
-	UPBah2saDNqTLVn6h1RxHyuRa8ePxH6aOkXSpHospDU719xiWAK/mw8jZIafmXmp
-	J6gZeOpKqxXfCMGp2l9wZb4Fsl2hl5vOnbU23h/Uzy/9k2Hq8wgvNeL1kpssCtFn
-	T29DoN5oVUhwUJRkdd2l/zNMMyWbCDcVWHHNSu7ZUQuxO+14ZYvNKZcOOOYjJMuB
-	vAXjrg==
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499n1fejq8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 01:03:57 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b54d0ffd172so3949805a12.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 22 Sep 2025 18:03:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758589437; x=1759194237;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3r2gyH2o9KM3Y4VR/nSiqz6V1kwzJFKLhM9PNywxZ9M=;
-        b=OAwcTHhKpzS+uCzuC4D49EBQfAaC8J/ZCw+bGNfoKx67wUxty4QP+BpWZYsOWLfwIh
-         OmrcYrmK099iIpEzD0x8bvkUWkCpXxqIqC4BKfXOTejrXqJt8CyMNjuvx3FvQxg0HQbZ
-         cuHglhKXhuKeyKXGH5LEKGIbcEsNhE3jaoPUbKsmLkR4e4UlrPPfEcCSL4ls+O7v3EgP
-         QobZ3B0Iwwp7SscHy8PZAtCxgnbMvFTCfgSCiZlu1ZwI4PHcNdVE/BvD0l6D0RltsYEt
-         NvlOWdax2zwhT34do7dDhiETM+xuB+a2Xmf14BeJoUA3H/EoJXljl2Rnu9lXLAe/gSEk
-         2VLg==
-X-Forwarded-Encrypted: i=1; AJvYcCVLWAtsus4LlomBh9e4uKAd+WHW0GntZDsebrUDKY2SnARxC8kjsUa+3WA0Lm6Vq/YAm3z57hy3c5Ze05KB@vger.kernel.org
-X-Gm-Message-State: AOJu0YxOR1BqKtXYXFrST29Do04r4IRmEaAYc5qNz1ZHAqyhPTRqCnkp
-	PUwUpLv2wH8VYdGmbF8UwF4PM6N1Q+sep70omRbkcwlm858e8Axw6IdMvZGGLiaGBNnJJiRFLtn
-	7F0BrjT1Jka7FZSZw4ItA/waB13+hOc7eYIOKnYaEyolTI4E5TcBjG5jklz55xhH/LG3t
-X-Gm-Gg: ASbGncuanwbVovm0RBj86E8HSr8uVz6WGBdU2NAEOjDwzQe10gTfx5ZtyhdtaqdwO3b
-	U4OpfCVr2t8KHs9GK8VN9a7PCZLlSATmDG8syJKz2wn8NQPh24/4bEydlTGUN/xEN+k6/UwY9DJ
-	EL3q1Hh4mtugmQ0tl46X56m+xQw4NjqCOI27trmZtFDd4ehcXt4tWE5WwXfk4XTPhGgpR1AJ/1B
-	lRlNJG89QhsmrXyMh1pMP7mfUdVxuEBD6VDazuE74CmZqSbWtF4PXClFFhdeK7Q5kWLqzyGUUiV
-	SCKGo+ZvFWz5UkTISy9ygZjVXGU9t0VClU23VW9LNDwokXdjS1M85j803lgVwZY7cOnYEFofvRF
-	zArOJf8OdMna9eoF4IgpGCemga5tjwUI=
-X-Received: by 2002:a05:6a20:a10f:b0:246:3a6:3e47 with SMTP id adf61e73a8af0-2d10ea02f65mr823594637.12.1758589436708;
-        Mon, 22 Sep 2025 18:03:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGZu5szyIQ3+/h2P8RAeWjsUwtJhLpq8SVRmJe1NhdUsMWX4SpcQc49bQMtqaOjrR0EYSzmzw==
-X-Received: by 2002:a05:6a20:a10f:b0:246:3a6:3e47 with SMTP id adf61e73a8af0-2d10ea02f65mr823558637.12.1758589436149;
-        Mon, 22 Sep 2025 18:03:56 -0700 (PDT)
-Received: from [192.168.1.239] (syn-075-080-180-230.res.spectrum.com. [75.80.180.230])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77f2deca77asm5515903b3a.98.2025.09.22.18.03.54
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 22 Sep 2025 18:03:55 -0700 (PDT)
-Message-ID: <95c59ba6-fd9c-ef59-c5c5-33cb2fb5db8e@oss.qualcomm.com>
-Date: Mon, 22 Sep 2025 18:03:54 -0700
+	s=arc-20240116; t=1758595137; c=relaxed/simple;
+	bh=FRjm17X99obcxvnwsM+wwNCYZMqeHfNSAs0zNYnppFw=;
+	h=From:To:Cc:Subject:Date:Message-Id; b=ijIV0Wc6agOpQW2xCi5M9XmVNNzrq88Dul+bAk9kRSrOsserkJ6BG4OWHdw4ARSaEYydBqm8KfZhXST+PJHCUVy3dJ04aiWXb+MmStXXZU/JLJ7r9j/RFDLEE5NcWPlgpJP9OB5ofCW/5Z81j5szfjEXCS2SZY3bMXvrt67viP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn; spf=pass smtp.mailfrom=iscas.ac.cn; arc=none smtp.client-ip=159.226.251.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=iscas.ac.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=iscas.ac.cn
+Received: from localhost.localdomain (unknown [202.112.113.212])
+	by APP-01 (Coremail) with SMTP id qwCowAC3DqElCNJonBhjBA--.6286S2;
+	Tue, 23 Sep 2025 10:38:42 +0800 (CST)
+From: Ma Ke <make24@iscas.ac.cn>
+To: srini@kernel.org,
+	lgirdwood@gmail.com,
+	broonie@kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	pierre-louis.bossart@linux.dev
+Cc: linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	akpm@linux-foundation.org,
+	Ma Ke <make24@iscas.ac.cn>,
+	stable@vger.kernel.org
+Subject: [PATCH v3] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()
+Date: Tue, 23 Sep 2025 10:38:28 +0800
+Message-Id: <20250923023828.36647-1-make24@iscas.ac.cn>
+X-Mailer: git-send-email 2.17.1
+X-CM-TRANSID:qwCowAC3DqElCNJonBhjBA--.6286S2
+X-Coremail-Antispam: 1UD129KBjvJXoWxXFy5JFy7JFWUJr47GryUKFg_yoW5Aw1fp3
+	yDCFWYgrZ8GrnF9r4SyrW8Aa4IkrW093WfAr48K34I9ws0kry7KFy0q3WYqFZ3tFWfJF1U
+	Xry7Zr18CF4UZaDanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDU0xBIdaVrnRJUUUPF14x267AKxVW8JVW5JwAFc2x0x2IEx4CE42xK8VAvwI8IcIk0
+	rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj41l84x0c7CEw4AK67xGY2AK02
+	1l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0I7IYx2IY6xkF7I0E14v26F4j
+	6r4UJwA2z4x0Y4vEx4A2jsIE14v26r4UJVWxJr1l84ACjcxK6I8E87Iv6xkF7I0E14v26F
+	4UJVW0owAac4AC62xK8xCEY4vEwIxC4wAS0I0E0xvYzxvE52x082IY62kv0487Mc02F40E
+	FcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr
+	0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI48JM4x0x7Aq67IIx4CEVc8v
+	x2IErcIFxwACI402YVCY1x02628vn2kIc2xKxwCY1x0262kKe7AKxVWUtVW8ZwCY02Avz4
+	vE14v_Gr1l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+	67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r1q6r43MI
+	IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+	14v26r4j6F4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+	W8JwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUOTmh
+	UUUUU
+X-CM-SenderInfo: ppdnvj2u6l2u1dvotugofq/
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH 9/9] phy: qualcomm: m31-eusb2: Make USB repeater optional
-Content-Language: en-US
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: krzk+dt@kernel.org, conor+dt@kernel.org, kishon@kernel.org,
-        vkoul@kernel.org, gregkh@linuxfoundation.org, robh@kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-phy@lists.infradead.org
-References: <20250920032108.242643-1-wesley.cheng@oss.qualcomm.com>
- <20250920032108.242643-10-wesley.cheng@oss.qualcomm.com>
- <umoo45pmamr3qraaiommpqh37tgmqidylmtjh3iamlxs34s7wf@ouug53aqvdfd>
-From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
-In-Reply-To: <umoo45pmamr3qraaiommpqh37tgmqidylmtjh3iamlxs34s7wf@ouug53aqvdfd>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: KS1YmIulH5_9cr7jP_Y6ZIi1MYig0aw1
-X-Proofpoint-GUID: KS1YmIulH5_9cr7jP_Y6ZIi1MYig0aw1
-X-Authority-Analysis: v=2.4 cv=No/Rc9dJ c=1 sm=1 tr=0 ts=68d1f1fd cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=agQD+r7xwyS+FYqxhQjztw==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=2H1wgwkl3dmy4IbtCtkA:9
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAzNyBTYWx0ZWRfX/StmYSKYk3qX
- aQ+2H8wKuVWfu3fRt5iV9SfbZJ6kIreWN9ontB5oxU2mFSnmWjizfqcApxaapvgAdLsvQw685rQ
- Xjnt7Ox13jk6JpaLW2JTFCAPiYL9Gwe7wayYQA6Db330O0WIDLnGgJwpqAlCtn1QbtDLi99pxHB
- ujzSZcNUGSmVKYi58U7k4EMsz7SzGz8WjKw2lNcOSQrVOdokwhORUUDahy2MRCE7EYocyLi+ROx
- 2PJheMInHCOLBHtjceDq2XBp69xQXZweUlGEn505eWQnE/d0w1xfSvpw2LFwr9p/D0txKQh0Zpj
- 3FSCFcN/dK1phczk79CtMLDW505hbQ4BXM7yFB2kk2bGiwJBFYiwgaYtdM9RZONroWnX+pUiFbq
- ac6EI3FQ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-22_05,2025-09-22_05,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
- phishscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200037
 
+wcd934x_codec_parse_data() contains a device reference count leak in
+of_slim_get_device() where device_find_child() increases the reference
+count of the device but this reference is not properly decreased in
+the success path. Add put_device() in wcd934x_codec_parse_data() and
+add devm_add_action_or_reset() in the probe function, which ensures
+that the reference count of the device is correctly managed.
 
+Memory leak in regmap_init_slimbus() as the allocated regmap is not
+released when the device is removed. Using devm_regmap_init_slimbus()
+instead of regmap_init_slimbus() to ensure automatic regmap cleanup on
+device removal.
 
-On 9/20/2025 8:42 AM, Dmitry Baryshkov wrote:
-> On Fri, Sep 19, 2025 at 08:21:08PM -0700, Wesley Cheng wrote:
->> Change the notation of making the USB repeater a required DT parameter.
->> Issues were seen when supporting USB2 across different form
->> factor/platforms, which led to enumeration issues due to improper eUSB2
->> repeater tuning.  By making the repeater optional, for SMB/QC PMIC based
->> repeaters, it can utilize repeater settings done in the bootloader,
->> which cover a wider range of platforms.
-> 
-> No, please don't depend on the bootloader settings. Instead we need to
-> implement proper prgramming / tuning for eUSB2 repeaters
-> 
+Calling path: of_slim_get_device() -> of_find_slim_device() ->
+device_find_child(). As comment of device_find_child() says, 'NOTE:
+you will need to drop the reference with put_device() after use.'.
 
-Hi Dmitry,
+Found by code review.
 
-Will update the next rev with the entries to support the SM2370 repeater.
+Cc: stable@vger.kernel.org
+Fixes: a61f3b4f476e ("ASoC: wcd934x: add support to wcd9340/wcd9341 codec")
+Signed-off-by: Ma Ke <make24@iscas.ac.cn>
+---
+Changes in v3:
+- added a wrapper function due to the warning report from kernel test robot;
+Changes in v2:
+- modified the handling in the success path and fixed the memory leak for regmap as suggestions.
+---
+ sound/soc/codecs/wcd934x.c | 19 +++++++++++++++++--
+ 1 file changed, 17 insertions(+), 2 deletions(-)
 
-Thanks
-Wesley Cheng
+diff --git a/sound/soc/codecs/wcd934x.c b/sound/soc/codecs/wcd934x.c
+index 1bb7e1dc7e6b..d9d8cf64977a 100644
+--- a/sound/soc/codecs/wcd934x.c
++++ b/sound/soc/codecs/wcd934x.c
+@@ -5831,6 +5831,15 @@ static const struct snd_soc_component_driver wcd934x_component_drv = {
+ 	.endianness = 1,
+ };
+ 
++static void wcd934x_put_device_action(void *data)
++{
++	struct device *dev = data;
++
++	if (dev) {
++		put_device(dev);
++	}
++}
++
+ static int wcd934x_codec_parse_data(struct wcd934x_codec *wcd)
+ {
+ 	struct device *dev = &wcd->sdev->dev;
+@@ -5847,11 +5856,13 @@ static int wcd934x_codec_parse_data(struct wcd934x_codec *wcd)
+ 		return dev_err_probe(dev, -EINVAL, "Unable to get SLIM Interface device\n");
+ 
+ 	slim_get_logical_addr(wcd->sidev);
+-	wcd->if_regmap = regmap_init_slimbus(wcd->sidev,
++	wcd->if_regmap = devm_regmap_init_slimbus(wcd->sidev,
+ 				  &wcd934x_ifc_regmap_config);
+-	if (IS_ERR(wcd->if_regmap))
++	if (IS_ERR(wcd->if_regmap)) {
++		put_device(&wcd->sidev->dev);
+ 		return dev_err_probe(dev, PTR_ERR(wcd->if_regmap),
+ 				     "Failed to allocate ifc register map\n");
++	}
+ 
+ 	of_property_read_u32(dev->parent->of_node, "qcom,dmic-sample-rate",
+ 			     &wcd->dmic_sample_rate);
+@@ -5893,6 +5904,10 @@ static int wcd934x_codec_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = devm_add_action_or_reset(dev, wcd934x_put_device_action, &wcd->sidev->dev);
++	if (ret)
++		return ret;
++
+ 	/* set default rate 9P6MHz */
+ 	regmap_update_bits(wcd->regmap, WCD934X_CODEC_RPM_CLK_MCLK_CFG,
+ 			   WCD934X_CODEC_RPM_CLK_MCLK_CFG_MCLK_MASK,
+-- 
+2.17.1
 
->>
->> For other repeater vendors outside of the SMB/QC PMICs the repeater
->> should be defined and managed within the kernel.
->>
->> Signed-off-by: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-m31-eusb2.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
->> index f4355d38aad9..b8ddadf78c53 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-m31-eusb2.c
->> @@ -285,7 +285,7 @@ static int m31eusb2_phy_probe(struct platform_device *pdev)
->>   
->>   	phy_set_drvdata(phy->phy, phy);
->>   
->> -	phy->repeater = devm_of_phy_get_by_index(dev, dev->of_node, 0);
->> +	phy->repeater = devm_phy_optional_get(dev, NULL);
->>   	if (IS_ERR(phy->repeater))
->>   		return dev_err_probe(dev, PTR_ERR(phy->repeater),
->>   				     "failed to get repeater\n");
-> 
 
