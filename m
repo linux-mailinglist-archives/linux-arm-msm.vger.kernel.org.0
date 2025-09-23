@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-74513-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74514-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BDE2B958B2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 13:02:23 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0214B958B5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 13:02:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5300319C1C74
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 11:02:45 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 631EB2A6017
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 23 Sep 2025 11:02:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D2D030F545;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3443321268;
 	Tue, 23 Sep 2025 11:02:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B/qp0n9N"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="SnOabaAs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F41260575
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6987628032D
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758625337; cv=none; b=dEChO8/0OeW/NzASEngkNZlfOWe2zcGSDquW4q3UUUDl+4DnNr2rPK2g1v0wrtwciEs9z8zN76rlBAEA9k4szSPkRUp3O5LSXGZwvcTTm/k5brMj2KBbziPJDpduk1N4W0TvrcO1PiMVqSZAhZStm7upOh8wTRef2ffZP8dllYE=
+	t=1758625337; cv=none; b=W1UyWvvEd1it9l5HFrWnhe2BaavP5I9nUy/2sAxcNumQFZp0c+ETtQNgRkvNmZUHXP6WG0XgBEeOO+2bjXJ2n9SSiXxfsKqI8zRKBCqEdyF97VPFscoije7/dAKL1uekqDDu5cVj0kMtvljVX5vn6jfXeSK5zBGIAbTTg9r/mwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1758625337; c=relaxed/simple;
-	bh=5hEBAumSRnPCha/Ny/m++/pZyTtvzKOFLtKUlv8WYhU=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=iP0GC3r0f6O97bLG4Nv6+4AsX1g6LCCFoPg84A67LMtoK6n6qzR9jOBavGU0N4jpnLzUwE+bEQLu6yQngDSGXnJDnAS5B2n5C7XGtlzJzQoG+GXwk0E867w78bKF55nnUaMAbbtivF4Ieyp9jJCKaSRxmvp4L+3PTz4OvT3oijw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B/qp0n9N; arc=none smtp.client-ip=205.220.168.131
+	bh=iLMoVlJmYtd6HczEdyExEbXAySwZHYx/WHqezGjTXaQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=T0JqhB9IkP//HLAyAycH+cZsSSAR68T2qK2xcZMA+OOqYMpAY3pKN2+dI3qj+gTi34a6vLtMilkOVs19Ltjiy/gckXWnVVOBbeHRbleHLVkTy7YVpGSJqGklYtdH88UZA3nSYJ7ZkTsXalYjVA4+b+DTXR3tr8nA4Qhk1uFZatQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=SnOabaAs; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58N8H5Io015977
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:12 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58N8H5EY015973
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=GCCtjueZgBHRf2lKO9QvuT
-	Vc8R/RhxwXGzaoHvYzDdU=; b=B/qp0n9N78pOX/CQWvRk3WSTHYwwQLN2W+XFVh
-	dnlApt8tgnof2c1eP4noj6GmRQTC9OiCT+kVI8tFIics3zaFRGJd0hfGLVrYCODg
-	Ozj/t4mYn/VJLvmNWrC/sBKatH2ldqUpwCTo2by1kF8+hiBpr7I1Dk2d3Kpe0FO3
-	YhqJIK3ITyzYRS/pj/D/Vt8boUjMM1dFBJGOZfLat5SL6qxCLmUHdPuBCjpQbXOc
-	ipPmKAz1IaQ0yPjdwy/hK/QnXZzygWswqqRm/QvhTsaH4ARxuRVZ17vqjpabPgkH
-	QbrLKUQlIndUgXrsN9laM1vXcNowDdP8ZaGrfALkZDMPWyKg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bjpdsepw-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	6OwBCFG306qly1YwPCrXWNZ696eFbdWgQ4DKgQjVJ58=; b=SnOabaAsWz4fAjNz
+	qUaLCTf4aamHb8zY7SmNh6wWcx3oLgl3w0rdG6QxCylwH8ucpPVRZzieqXHp3dI0
+	N6mHs4zcewGyQUKQz1YKXF21iHb2ddjDlOPkdvmgKEe7CCx9w1cDLzPuPYcHoHih
+	mKMp01GmzEJvZz/hxuBQNxLWY+hjAIp/PxOMK3VzXtR78YMVLy6L1qJvwzwAj9b9
+	oGXLS0QqRJvmmIx1CYVFt9oxbhY8/85X+0we9KdlEsy2JYNssZPmZu3O2jL9cGF0
+	ursFMo3IHcNn0k+U8hmjckrP7x+RhRS+J1wc5P7caxcnQeOOVQ2u+nGIkgyGEPXh
+	6zJbgg==
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bjpdseq2-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:12 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-78f3a8ee4d8so89389906d6.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 04:02:12 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 11:02:15 +0000 (GMT)
+Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-78f6250f0cdso87712326d6.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 04:02:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758625331; x=1759230131;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=GCCtjueZgBHRf2lKO9QvuTVc8R/RhxwXGzaoHvYzDdU=;
-        b=pjkdQQTpAJjx0PhKa9X7osKe/pFxZGCsrmGQpHopesPFtbsUi058bVHS2069i00xe/
-         V9+FGp5Wq9qso3KlLBkvkrLnGxxa0HYLYlMkhW2uF68pwMSo/EnmP44lAZWoB2CV7uv+
-         v6z41x/7edzatxJ1h642vg5vkmlzAhUtDjnWa+uaPtXX6gRi+JtoxIJvkTqzKu2wr6rG
-         PF3e9suQ8ikZeYwmOR5ns7vqa2klFt5Zb/jr4EN0DwSBBrWIrlkhUU+AtGlXO5EY1Is1
-         g29fy2nDcxLHTKmsnajxUccrl9SpzTW4OkmQFj8mf+JsCZKP8LVX0sY0fsuQ16n7ZE+H
-         2fsg==
-X-Gm-Message-State: AOJu0Yw1HoAKIrPBqtNMHxuskSjCmwEY23XSUk+zXWsvH+/zM4KQHFkE
-	rZhBTwWZ5Cd13j4eVxkgQXqRqVMUNcpoSQzv0kKdIxDFiHqpp28JorvMuDhN9b2dyfQN4dw3CoA
-	v8MemLmXBXVRc2zuLYKdpEJxBaJXIjeFNlG77TfOVFiQ/PmPEm6tJvMife4SI9dXmWzJq
-X-Gm-Gg: ASbGnct52UYmg1TGFcIZ768DkqefiewedcvBjmzP6QaJVJZP4pGO5VWsVqyvFRjk5bu
-	7qrqcJ054i5SVPiHLTQXVcQhKQP1QacYXC9guw+W27o9zqvIoGoI8dR/wwHeTNxw/VsD3oiCZaE
-	C+ASTPOdlwtyW9A8qPfV5HBEPJg0+Iy/KdVvhZnNKo3oHC8NpR4SFkH2qhni8TtQvwsmRw8Lud4
-	/18/o38xe8Pa7M9/cJjIJPCr4IHBKqogDMtopQoR3bJkeaW51Yb2POwhgL8vfusbVr+30yAlQTd
-	Hu2pablRu8y+BAErF0PeWFWCKX2rDqpNPFMZ/eTPG/PthAVjKQyvI5Im6J80T9ZSIp7RxkMDSrG
-	g3tqcZX9JfYUSVTzBUnW0Jqu8wBezb2o15EBUqO1MQiBQnbkKHH3u
-X-Received: by 2002:a05:6214:20ef:b0:70d:a91d:2ec4 with SMTP id 6a1803df08f44-7e716d467e7mr22730236d6.49.1758625330885;
-        Tue, 23 Sep 2025 04:02:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFsFNNHaOMJ0Dvt+QYoMrgLHz7i5vsL16oR9PxtXAbrChfsujy9S7H0z5WkxgV9KWb7cMrvWg==
-X-Received: by 2002:a05:6214:20ef:b0:70d:a91d:2ec4 with SMTP id 6a1803df08f44-7e716d467e7mr22729526d6.49.1758625330338;
-        Tue, 23 Sep 2025 04:02:10 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1758625334; x=1759230134;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6OwBCFG306qly1YwPCrXWNZ696eFbdWgQ4DKgQjVJ58=;
+        b=UuFsg5pBAXgAPBe/CcHZC/8bI5mdz2p0MrQyt4F6tj2lwqmFh4okiYEUTW+leL6FMi
+         xsW9J+cU8qqlRT1htB/PI8wLYGl1Q8IhuNWnKQU7cSs3taBTyn6T5js6797r8EFiwPv/
+         ScGzh1+FnIm/GUNTpIDkqZ8B4pesiYxQMgPpy2m5iTloEt80/ysQ73FP18XJd+kE0Yy8
+         AP8UbjrAaEK+iC5ir406hwp1K3Zzsnjy8jbbdi6l+T0RD6xy+kA2aH1QOFvKKDDjmZCe
+         gUEao4lWvxdjo+Um9vI6E9h7xNT57/61olOs8U6VD7VzwTE1cqCIrzK0y4TOxPyhHwKU
+         HufA==
+X-Gm-Message-State: AOJu0YxG+TFGbUw/2FzPLTri02hzr3gJCdxB7nO7SS1NBhEQmiZEAe4b
+	QByhUYIQmVKa7rGf4HuqPcco5K3Kvg8uIjI6hqjx6lIrCXbEczlPmfQyFLGIqFwizbTd6xgo4l9
+	bFanpvo09DMeSo8mgGGbf211wzoizMaJ7MzUM9itcMKvgibc+uKBzkcJ648RCgXY6lGHO
+X-Gm-Gg: ASbGncsbeItk/xJOHHBMG/k3UWiCQCRsKFItfHLj8hfpQYe5IKNsXhPtf7uOzfReZ2r
+	JsrYkdA31y44N4vJDY9Art7dtAqP+QwiO0aH+uiZEKrRPAW4B2WTIscWKxer+rkNw0soYg98+Sr
+	McTN9Q5bww7nQFPboKRO9+DZlwXq6626u6vjYH3zVyTtMRDAKbF7nFty2dzYoGDDsX1hlKMK+QA
+	ElzWwcOhvSIPGCQwETxI8xTBNJ/gnoghwycSrOaJ9A12D1xUIi9SGYvRm1IpBjS8ZO6u3ZBc8f2
+	11VwsGxYVp4dSAyHMWFyCWOd2Ay+MCueIGK5S89FpQ6iJgNXVi2lMlRR3Zahm2QjUT6+SxR/UJP
+	9azKv4B60TzMEG19pFd+YIX+z+59DT6k4I0ZzOAIVsyoqzfOdFez/
+X-Received: by 2002:ad4:5ca4:0:b0:795:cb4a:9b7c with SMTP id 6a1803df08f44-7e71582ac99mr21921126d6.35.1758625333703;
+        Tue, 23 Sep 2025 04:02:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFgsCw1vfrpAdR5i1dbQBrqcURljcwF/F/6Z1lDZv+2PnzCx0GYBvjUf6cpkba5O6048hfA+w==
+X-Received: by 2002:ad4:5ca4:0:b0:795:cb4a:9b7c with SMTP id 6a1803df08f44-7e71582ac99mr21919476d6.35.1758625331346;
+        Tue, 23 Sep 2025 04:02:11 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-578a5f4537csm4075975e87.27.2025.09.23.04.02.09
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-578a5f4537csm4075975e87.27.2025.09.23.04.02.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 23 Sep 2025 04:02:09 -0700 (PDT)
+        Tue, 23 Sep 2025 04:02:10 -0700 (PDT)
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 0/3] arm64: dts: qcom: rename dtsi files for sm6150,
- x1e80100 and qcs8300
-Date: Tue, 23 Sep 2025 14:01:53 +0300
-Message-Id: <20250923-rename-dts-v1-0-21888b68c781@oss.qualcomm.com>
+Date: Tue, 23 Sep 2025 14:01:54 +0300
+Subject: [PATCH 1/3] arm64: dts: qcom: rename qcs8300 to monaco
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -91,10 +91,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACF+0mgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDSyNj3aLUvMTcVN2UkmJd0xRzkxQzQ2OjNBMDJaCGgqLUtMwKsGHRsbW
- 1AEOh8EFcAAAA
-X-Change-ID: 20250923-rename-dts-5d74d6132f40
+Message-Id: <20250923-rename-dts-v1-1-21888b68c781@oss.qualcomm.com>
+References: <20250923-rename-dts-v1-0-21888b68c781@oss.qualcomm.com>
+In-Reply-To: <20250923-rename-dts-v1-0-21888b68c781@oss.qualcomm.com>
 To: Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -102,31 +101,31 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3505;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2454;
  i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
- bh=5hEBAumSRnPCha/Ny/m++/pZyTtvzKOFLtKUlv8WYhU=;
- b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBo0n4wYArVdXVon0JH98ViR+JTPByVSEXNFQb1r
- zraqatvJkCJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaNJ+MAAKCRCLPIo+Aiko
- 1eXpCACIFEaqSDVyKtaSdzlP/SEPJgi3gtn84vuZrJNohZvAjLzQ+nCKVBeLnO629smbi0JlW8I
- uMuC/ArjQPbvOTvG1EBcveLto9p7i34o6sWRIfK6zsKIGsWqtmFdq0yvmhv9kq8lPWOZcy8ik5/
- gac/tZNqT2nbMe1eupMF5TMSmGkoHmrH+nq85lMzEfNjKJCJ9L5ZcbNfDChDtCj7fNVDrY6sQpS
- puZZKpSfM3pJtmnFO831NzGUsbHg4ukGQV0ipe31DH3PX7mB3dyDLN5UlZ4nBdYYy4Tt4BDZsLF
- /I5XhdAcJJSZnkNlPV5Tn16k9zlmIKCjFMfNluVVM6vuAd21
+ bh=iLMoVlJmYtd6HczEdyExEbXAySwZHYx/WHqezGjTXaQ=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBo0n4wGvN+dWIo7sLxDKaAwiz8WW3t2teh9HSGa
+ NkEC1KBpvqJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaNJ+MAAKCRCLPIo+Aiko
+ 1bonCACGVxHN5ydariXpov2ySAg2vb8owrTn53HKYFizfb2RNQwOor96v/5kugFAX9DwckYduhL
+ bJhbZ2J5Vh9lXvXUWMkvKtv+9sB+Gz7AMrNK1FIkguCqYseNRhB5EL0xbOwMTFTFDG67LlhqAGE
+ bbPZ/3lw8TlgtN7ZwprAkIdRYGfmhtS4rjU1LqoLnlB5oilmcotjAb0Cg1dlOxnM+SfC/M+tbO/
+ eglOx3/+TnV/kHUnsnwZXITaKsBiGOAOwpxR3UVvBP7yuNU9vdUT9nNV8bggRPJpn7NGpE+2DCN
+ elUEqkVlb7uyZ4nWSgT7C7BOER3MqrKDgm5PrAa7BHDgM/8n
 X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
  fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
-X-Proofpoint-ORIG-GUID: miKNBbU5eOqHAtKx7TCRKPyhhkywYP-y
-X-Authority-Analysis: v=2.4 cv=Pc//hjhd c=1 sm=1 tr=0 ts=68d27e34 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=CLCcR14eWKlEiziUIbcA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-GUID: miKNBbU5eOqHAtKx7TCRKPyhhkywYP-y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIzMDAyMCBTYWx0ZWRfX9jQcAeFoXIu1
- zmoXDL0efy1Lk5D00r+ZkVMwhHGXHvY+zPxFW6Jkj9q859rvRR3C45fqvksLJ140sv6La8wYVmP
- fuVlQ5ajsF35ZO6FlDDGq4oj8vd0xs+PSKdsoSXobbRuFgpvMaH92v9jFOmvqv3brpd7Aw1i3hw
- jJSX5bAMK8angKvUk5eT79UsqdDiumMhva78mGni9wo5CFdrpSTEM0E1+96uJa/s5YXTPBmVLVG
- MYTaZrPPqGzmLXsk8ZAiMILdOkfp1qDPebq6K8OBBvlXJpeWY/dPdIAIfYxWY7sdIW2v9eeTGyZ
- s89PL96sS8QiYHLiGEZ3kznsu4WhvccHnOk2LRHQ9vKOfRjOlml4q/Kj6Nvd+tXkWlaRn84vK11
- 6zYx6yK4
+X-Proofpoint-ORIG-GUID: QLJtw0tmGKMFGCUjZ1cFphA3dMWPrsMe
+X-Authority-Analysis: v=2.4 cv=Pc//hjhd c=1 sm=1 tr=0 ts=68d27e37 cx=c_pps
+ a=oc9J++0uMp73DTRD5QyR2A==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=CGs7eBeCNeLIcw_ASWkA:9 a=QEXdDO2ut3YA:10
+ a=iYH6xdkBrDN1Jqds4HTS:22
+X-Proofpoint-GUID: QLJtw0tmGKMFGCUjZ1cFphA3dMWPrsMe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIzMDAyMCBTYWx0ZWRfX5DXA/UWe/wsa
+ Ks139c+JNflIatay5MGDAGppyv4REb4diaFCyVROtUXypIt/nHfIIMBD+Eiq6EMP54fgiPppVDp
+ O1cPx3NmODRN36CNvc7mS4uUH687QyOSxMxoNsM/ZOsgJikfSOY+H134XjDeSnwbxqZP9+9mPS7
+ shbwbCDXr95fBxp4nIFQuq1kiYIJ1Go6Bbxwgm12ATbwqio5NTQnM/OklRgy1dAO6rP8s+lpL53
+ 7sSbxVj26TkzKisZrN0R11t8zbS8ALR1uCDnankDwivXPlIWsEE7QBWGOWI5YZKGWvEnB5V+IdD
+ at2iA4kWnfc4fh8Xgke2MGpWMoeJ2/NsX1egymCh806z/dg2/1vbVBqMfiARYHoMhNCCGEVJjFi
+ o18mWjn8
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-23_02,2025-09-22_05,2025-03-28_01
@@ -136,68 +135,60 @@ X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
  engine=8.19.0-2507300000 definitions=main-2509230020
 
-Bjorn said to me that he disliked the conseqeuences of renaming
-qcs615.dtsi to sm6150.dtsi. Let's increase entropy even more and rename
-even more base DTSI files.
-
-Leaving jokes aside. It's not uncommon to see different names for the
-same SoC (or almost same SoC, with no visible differences from the Linux
-side). The platform now known as 'lemans' is a good example, because it
-had been using SA8775P, QCS9100 and QCS9075 in different contexts for
-slightly different modifications. QCS8300 / QCS8275 is another example.
-All such names cause a lot of confusion when somebody tries to follow
-the actual SoC used by the platform.
-
-For 'lemans' after a lot of trial, error, Naks and reviews we've settled
-upon having 'lemans.dtsi', the core DT file for the platform and then
-naming individual DT files following the marketing name for the platform
-or for the SoC.
-
-Apply the same approach to several other platforms, renaming the base
-DTSI and keeping the DT names as is.
+The QCS8300 and QCS8275 are two variants of the same die with no
+difference visible to the Linux kernel, which are collectively named as
+'monaco'. Rather than trying to using the name, which is not always
+relevant, follow the example of 'lemans' and rename qcs8300.dtsi to
+monaco.dtsi (and qcs8300-pmics.dtsi to monaco-pmics.dtsi).
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 ---
-Dmitry Baryshkov (3):
-      arm64: dts: qcom: rename qcs8300 to monaco
-      arm64: dts: qcom: rename x1e80100 to hamoa
-      arm64: dts: qcom: rename sm6150 to talos
-
- arch/arm64/boot/dts/qcom/hamoa-iot-som.dtsi                        | 4 ++--
- arch/arm64/boot/dts/qcom/{x1e80100-pmics.dtsi => hamoa-pmics.dtsi} | 0
- arch/arm64/boot/dts/qcom/{x1e80100.dtsi => hamoa.dtsi}             | 0
  arch/arm64/boot/dts/qcom/monaco-evk.dts                            | 4 ++--
  arch/arm64/boot/dts/qcom/{qcs8300-pmics.dtsi => monaco-pmics.dtsi} | 0
  arch/arm64/boot/dts/qcom/{qcs8300.dtsi => monaco.dtsi}             | 0
- arch/arm64/boot/dts/qcom/qcs615-ride.dts                           | 2 +-
  arch/arm64/boot/dts/qcom/qcs8300-ride.dts                          | 4 ++--
- arch/arm64/boot/dts/qcom/{sm6150.dtsi => talos.dtsi}               | 0
- arch/arm64/boot/dts/qcom/x1-asus-zenbook-a14.dtsi                  | 2 +-
- arch/arm64/boot/dts/qcom/x1-crd.dtsi                               | 2 +-
- arch/arm64/boot/dts/qcom/x1-dell-thena.dtsi                        | 2 +-
- arch/arm64/boot/dts/qcom/x1e001de-devkit.dts                       | 4 ++--
- arch/arm64/boot/dts/qcom/x1e78100-lenovo-thinkpad-t14s.dtsi        | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-asus-vivobook-s15.dts            | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-asus-zenbook-a14.dts             | 2 +-
- arch/arm64/boot/dts/qcom/x1e80100-crd.dts                          | 2 +-
- arch/arm64/boot/dts/qcom/x1e80100-dell-inspiron-14-plus-7441.dts   | 2 +-
- arch/arm64/boot/dts/qcom/x1e80100-dell-latitude-7455.dts           | 2 +-
- arch/arm64/boot/dts/qcom/x1e80100-dell-xps13-9345.dts              | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-hp-omnibook-x14.dts              | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-lenovo-yoga-slim7x.dts           | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-microsoft-romulus.dtsi           | 4 ++--
- arch/arm64/boot/dts/qcom/x1e80100-qcp.dts                          | 4 ++--
- arch/arm64/boot/dts/qcom/x1p42100-hp-omnibook-x14.dts              | 2 +-
- arch/arm64/boot/dts/qcom/x1p42100-lenovo-thinkbook-16.dts          | 2 +-
- arch/arm64/boot/dts/qcom/x1p42100.dtsi                             | 4 ++--
- 27 files changed, 34 insertions(+), 34 deletions(-)
----
-base-commit: bf2602a3cb2381fb1a04bf1c39a290518d2538d1
-change-id: 20250923-rename-dts-5d74d6132f40
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-Best regards,
+diff --git a/arch/arm64/boot/dts/qcom/monaco-evk.dts b/arch/arm64/boot/dts/qcom/monaco-evk.dts
+index e72cf6725a52c0c0e017be800bfac1773fad1059..d9e9e65a137da73645aee4a857688a4730875347 100644
+--- a/arch/arm64/boot/dts/qcom/monaco-evk.dts
++++ b/arch/arm64/boot/dts/qcom/monaco-evk.dts
+@@ -9,8 +9,8 @@
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ 
+-#include "qcs8300.dtsi"
+-#include "qcs8300-pmics.dtsi"
++#include "monaco.dtsi"
++#include "monaco-pmics.dtsi"
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. Monaco EVK";
+diff --git a/arch/arm64/boot/dts/qcom/qcs8300-pmics.dtsi b/arch/arm64/boot/dts/qcom/monaco-pmics.dtsi
+similarity index 100%
+rename from arch/arm64/boot/dts/qcom/qcs8300-pmics.dtsi
+rename to arch/arm64/boot/dts/qcom/monaco-pmics.dtsi
+diff --git a/arch/arm64/boot/dts/qcom/qcs8300.dtsi b/arch/arm64/boot/dts/qcom/monaco.dtsi
+similarity index 100%
+rename from arch/arm64/boot/dts/qcom/qcs8300.dtsi
+rename to arch/arm64/boot/dts/qcom/monaco.dtsi
+diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+index cabb3f508704bc9eb0038bd797cc547d0c8cb3ed..9bcb869dd270603a34221b905f0946e8af028433 100644
+--- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
++++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
+@@ -8,8 +8,8 @@
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+ 
+-#include "qcs8300.dtsi"
+-#include "qcs8300-pmics.dtsi"
++#include "monaco.dtsi"
++#include "monaco-pmics.dtsi"
+ / {
+ 	model = "Qualcomm Technologies, Inc. QCS8300 Ride";
+ 	compatible = "qcom,qcs8300-ride", "qcom,qcs8300";
+
 -- 
-With best wishes
-Dmitry
+2.47.3
 
 
