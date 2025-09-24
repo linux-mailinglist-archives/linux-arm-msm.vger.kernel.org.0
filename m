@@ -1,194 +1,237 @@
-Return-Path: <linux-arm-msm+bounces-74658-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD8F2B9BA96
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:19:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id D4AA3B9BACF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:21:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 1C1CC7A47DF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:17:24 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC7861B27F70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:22:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6D97E26658A;
-	Wed, 24 Sep 2025 19:19:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00F9426A0BD;
+	Wed, 24 Sep 2025 19:21:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="lk+db/bL"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OYt3irBd"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from SN4PR0501CU005.outbound.protection.outlook.com (mail-southcentralusazon11011053.outbound.protection.outlook.com [40.93.194.53])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D88392594BD;
-	Wed, 24 Sep 2025 19:18:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.194.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758741541; cv=fail; b=e0SPRVaQqUh0+L1DVdPsHb50662hFNWkKEb4L0vxZtY3csSWIh47StRiEpM5Z5Z0KYP+5ZSpwa+8DRmaQb+ggTlXnEHscbKF4hfWiLkPVGZQelLMzCb2IUeaQOJORJoHJy/xxl+Mk6DZ+c/A96T2shfiPE0wklj8smL1yBLvROc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758741541; c=relaxed/simple;
-	bh=yZfyw3n+mBkzqu+xn7uTgzhM5cFEpb3B43KpWTGLipw=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ofh3dY7XfgcQi+jgoVxln2t0KNIlbauquUQKLDABsbmDW33VMUJX6Atojb+ywvwoUPzuy8XgcEFBZzbNfOjwfBQ+Zqpm0D3jZR1pBWg81S5bI2eKYLAJosbZ+4D3JeIMraqRPeybd5acV9JJV/jp+xV6ibZiPtZ02lfxpOL8uZ4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=lk+db/bL; arc=fail smtp.client-ip=40.93.194.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HFXIG7KcQZvwT9GX4t4wFzNHoCGkDJo7NfcOB9Gb1cxCx9NyRpu8+YFm9cDVZoelu/k+SM9Xp1Ro7hqJgLreEkMGTcIltjJtH9/h9KALfuAlsuSMetCmzX25xAa2NmBZZuSadb4w9gEmcB3aI8juRRoewq50Un6x65Pstyn7I5KPIdKO+tl115BCzRGoJmm6Z2/gqjo3p868hqmDhzXcFiZ2hdjUfb6lPRM0/TLYoVb4n8JAKrugZkqFhL8d1QnFjRbmD+009ycKsMhjHBTriKqZ+2KvNzC5cjx7bLx672RHuDEpWXjSfS91I+qZSoUZlAmtLl/DPNDKbcq9tmUhIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gXNzY6XHZfn/5ZTzycSEtYX2YjcDoXsQIMwssN7E92s=;
- b=KDnQ0BkyJxaSM5IcFi/ifoQXSnff46+ZZfn88iwkbLvRasx5wtpvBdLb8+FWzKXi26+ZKhjumy7MPxFY8Hykn7ArqycyetxCiPomNZ5XLtSiJxG6muQzevqj3vCqWi/SbGDuyLbOb28gdk/uUf95Vz4pniQd6Igs/qlmB9Aqc78b6dvaIM1kg6WsoUon4IWmjmD0C2JHYFwYBRwJpbLG9TlCIj6gzvsIdmTHxHKg9Ze+OsLobGLXwkZByZM14oW6UK9+9Zquh5rj4Cs1EPzInr1kVfJ72dAgQAf6PlDGQPqNc+W5TL46PgzNHAmfef7a7YTTf56mV+pa861lZS14Rw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=csie.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gXNzY6XHZfn/5ZTzycSEtYX2YjcDoXsQIMwssN7E92s=;
- b=lk+db/bLq1f0SifuPXuFUQ+zGjgjutqjhqiHVlbBm4HkFu+1jDQqJKwRNOSEl+8bdkndHfd7hihCbCCM05zyZVXtD0xbg4BC4SpQL9Fi4EtWqAFO7+Pck2nC/L5XWhyZr13UHt2jKLhpkx2kkiqS4cXRWizbg0//57dB32Yn7PfY9LURqeoP+54pkHit//uSUEcNKVBUY8ZqFPkUtxorcHuo+gK9/nlSm5CoYU5KS0HV0/2gvVas2uPufL3SpB/IiIeRcCYhn1a8e0cKvE71c+nUHSzSS9cNGf1rKndYvkJo6yCfzO7JavPm7BSqQNyrYVHSeGcrlkgskM1BMt0F2A==
-Received: from CH2PR12CA0006.namprd12.prod.outlook.com (2603:10b6:610:57::16)
- by LV5PR12MB9778.namprd12.prod.outlook.com (2603:10b6:408:300::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.20; Wed, 24 Sep
- 2025 19:18:57 +0000
-Received: from DS3PEPF0000C37F.namprd04.prod.outlook.com
- (2603:10b6:610:57:cafe::b1) by CH2PR12CA0006.outlook.office365.com
- (2603:10b6:610:57::16) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9137.21 via Frontend Transport; Wed,
- 24 Sep 2025 19:18:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- DS3PEPF0000C37F.mail.protection.outlook.com (10.167.23.9) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9160.9 via Frontend Transport; Wed, 24 Sep 2025 19:18:56 +0000
-Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14; Wed, 24 Sep
- 2025 12:18:47 -0700
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Wed, 24 Sep 2025 12:18:46 -0700
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
- (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Wed, 24 Sep 2025 12:18:44 -0700
-Date: Wed, 24 Sep 2025 12:18:43 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: <joro@8bytes.org>, <bhelgaas@google.com>, <suravee.suthikulpanit@amd.com>,
-	<will@kernel.org>, <robin.murphy@arm.com>, <sven@kernel.org>, <j@jannau.net>,
-	<alyssa@rosenzweig.io>, <neal@gompa.dev>, <robin.clark@oss.qualcomm.com>,
-	<m.szyprowski@samsung.com>, <krzk@kernel.org>, <alim.akhtar@samsung.com>,
-	<dwmw2@infradead.org>, <baolu.lu@linux.intel.com>, <kevin.tian@intel.com>,
-	<yong.wu@mediatek.com>, <matthias.bgg@gmail.com>,
-	<angelogioacchino.delregno@collabora.com>, <tjeznach@rivosinc.com>,
-	<paul.walmsley@sifive.com>, <palmer@dabbelt.com>, <aou@eecs.berkeley.edu>,
-	<alex@ghiti.fr>, <heiko@sntech.de>, <schnelle@linux.ibm.com>,
-	<mjrosato@linux.ibm.com>, <gerald.schaefer@linux.ibm.com>,
-	<orsonzhai@gmail.com>, <baolin.wang@linux.alibaba.com>,
-	<zhang.lyra@gmail.com>, <wens@csie.org>, <jernej.skrabec@gmail.com>,
-	<samuel@sholland.org>, <jean-philippe@linaro.org>, <rafael@kernel.org>,
-	<lenb@kernel.org>, <yi.l.liu@intel.com>, <cwabbott0@gmail.com>,
-	<quic_pbrahma@quicinc.com>, <iommu@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <asahi@lists.linux.dev>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-arm-msm@vger.kernel.org>,
-	<linux-samsung-soc@vger.kernel.org>, <linux-mediatek@lists.infradead.org>,
-	<linux-riscv@lists.infradead.org>, <linux-rockchip@lists.infradead.org>,
-	<linux-s390@vger.kernel.org>, <linux-sunxi@lists.linux.dev>,
-	<linux-tegra@vger.kernel.org>, <virtualization@lists.linux.dev>,
-	<linux-acpi@vger.kernel.org>, <linux-pci@vger.kernel.org>,
-	<patches@lists.linux.dev>, <vsethi@nvidia.com>, <helgaas@kernel.org>,
-	<etzhao1900@gmail.com>
-Subject: Re: [PATCH v4 4/7] iommu: Pass in old domain to attach_dev callback
- functions
-Message-ID: <aNREE5qMJRU+0+Bw@Asurada-Nvidia>
-References: <cover.1756682135.git.nicolinc@nvidia.com>
- <19570f350d15528e13447168b7dcd95795afdbf3.1756682135.git.nicolinc@nvidia.com>
- <20250924184346.GI2617119@nvidia.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666FD265CDD
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:21:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758741713; cv=none; b=LqK4hVOT7IoI2fiiI1ktc8Ce7DLSJa9+jkiz9z66u6JajZ6GtPZnerBmiQsOozfic20CLEaQJPm4EZ6PxjlIbFykf/DD/WFH+hbtVec1lSWFF42VmX04mnhg/vkAGgj41gn5gYU1R2+FlQzUzQTcMyxtRlmX6qYc98O/VoIwMmQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758741713; c=relaxed/simple;
+	bh=fCDcNvXPeCb6M3hXJIxhsSMcNmiBoWRBaGg9SWvAhEI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Vee0+QCQX1QGdPKSEkOat+qChNztK6XKSWqt3T+H3gaXFq921bymUsHvU26Y3NNsDEd0WelUmpuX3pKb82HnsDOwx/K5X6XfxfBNa9Gw4uf+8V3XZniwV8TKlsWgZ/ly3vQS9nzOQ1SUsMO+pI8YF050dxF7GqnDuEQqORTVY6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OYt3irBd; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58OCseIh002662
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:21:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=0iu1Wjnwv+f5AYYfHw58qhf/
+	bG3HYMyGpWsuOD72KVE=; b=OYt3irBdhpx9aAiIMdbkqDlTw+/XKF7xO+0lhAON
+	cEPYRnzCWanMF+8BQc0OnILdjgc9xSUkvQpbkXk+z8XSJ77l131fsYU6AaDvzqtd
+	K4XSBQX5yz3mnzO8w9FBT6U0j1end7RQjLG5622rl8qYnGY6qUlMXuYoOQ8sl981
+	yltphA8af1Bqh0PoOlEykCKHpJ+8v52Gjb859XYpOaAS0O67NWPIhBpvxDgGSGC3
+	ewau2muRbr95q2NycC1Bwu806tZaERN4Ic8ZraY/bGk0sGhzc4Sc5OvJZuEr/Xpa
+	P6kbDBGpUeoR+/x2jiBwU4o8BhxZAejcnzf+cy/IRrvW7g==
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bajf03ta-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:21:51 +0000 (GMT)
+Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4d374dd29d1so4948711cf.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 12:21:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758741710; x=1759346510;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0iu1Wjnwv+f5AYYfHw58qhf/bG3HYMyGpWsuOD72KVE=;
+        b=b6nvAJpzyyPkDscjVMzuRumcj7nK9YsQ+u5Wl4YAunS8WZqPNumuRKrBNrVa/DSOsU
+         yrw1996Q4OelDXcygFZJh13xawZ56rRhVmZgfgT8UjGqpWeFhxdZKaNH80Xpgv2u7nEc
+         uw095z6c6DWZ6/WAiN/nPsPn+jmp3Sd2Uqqxh7jX63wFuKc5T8acz7AgA6HWQgAV16yX
+         nn4ApDQywseZcKUDALKUfvCpDR+1LfeMGrM3yWh8FQwtWWAtU6lL9flCMPlmvX3feoAb
+         S+Q9BpmiKr9CYf3irxzqdTOELM7qTDaIrC+ctOlUiG1U8uNtss/PStZPPpDOZqy0pqu8
+         andA==
+X-Forwarded-Encrypted: i=1; AJvYcCUENeePzD/8QaCp8UmoNJgJcZdXEsSJsGi9WcsbceZCxMp7fACM+7bAw3px0YKMqLXgudDsX8ZDb/wq7Rhn@vger.kernel.org
+X-Gm-Message-State: AOJu0YwPzAM1Jij4u6J+4+7UyS6GhJEURwU1CA0URyAcxurkU93+WM3t
+	EMDBIxVdq6bfx11PnjV67RWTf4SniOscEcYBVcssIckF7Iu3aIG9hB7SkRdtgBoDj9hqJYTJIeL
+	c7lw/OBDlJOGerU7ZJjGCUlvkKUzbPsaWQGYco+rsrW33xqdgcJVilGLR34b0WdXdvkkc
+X-Gm-Gg: ASbGnctw9bkVB0+pQI7pRIOo1nTM2pSi3NkuX43ezBLLUf6aiRddG0prFKqqcWQd9WK
+	VC59KArV9WiXEtaSPUTkOtn5eLDBSIIEuHmeD1XZbdtzlmfzu2X2FBtUa7ndgZpVhABb8udsDLK
+	XjNOIEF+23gzqze+aBpLoK59SMcLtJJQd1UxEQbpkpVLrm+qk+Y46V3AT+m3O1yKt7IqYHu9m1b
+	1sqehegVmnWOELudef1unlzigPFVzPz+4bPsuj28NC6Xr1HXgcu/5PnLxFZkcjxmB1CsbUwIxy2
+	4nC9w9G2IlDK1tR2lF8yWhkm//Tlj2hhcFxrSbbjcac0kGG9vKQ6lu5LyTu9l9jxPhLv46+0YQU
+	xbHZgmrbBVxOjow4VBZrKPCXpJI7tmg/c5sq7zCfdOP5ZhX9wa3Jn
+X-Received: by 2002:ac8:7c42:0:b0:4c7:e39a:388b with SMTP id d75a77b69052e-4da4b428df9mr11723691cf.47.1758741709962;
+        Wed, 24 Sep 2025 12:21:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFaFsspAyH/V3Y+WNKmm+luXg2sxoUJuUxgT3PD4jQ2JdvLW6f6tdlPbuRxY0RMCgn1FJCFVg==
+X-Received: by 2002:ac8:7c42:0:b0:4c7:e39a:388b with SMTP id d75a77b69052e-4da4b428df9mr11723151cf.47.1758741709377;
+        Wed, 24 Sep 2025 12:21:49 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-57f477153bdsm2419549e87.29.2025.09.24.12.21.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Sep 2025 12:21:48 -0700 (PDT)
+Date: Wed, 24 Sep 2025 22:21:46 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Jun Nie <jun.nie@linaro.org>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Krishna Manikandan <quic_mkrishn@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] drm/msm/dsi: Support dual panel use case with
+ single CRTC
+Message-ID: <v3tfzspjck2oqppelx7bmi5uflhs47ixw6tjmq2d7inauzfo7k@gxebj3buyuni>
+References: <20250924-dsi-dual-panel-upstream-v3-0-6927284f1098@linaro.org>
+ <20250924-dsi-dual-panel-upstream-v3-3-6927284f1098@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250924184346.GI2617119@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF0000C37F:EE_|LV5PR12MB9778:EE_
-X-MS-Office365-Filtering-Correlation-Id: ea0ff33c-82bc-4f39-19cf-08ddfb9f350a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|36860700013|376014|7416014|1800799024|82310400026;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?cBcblxgwdefty0+60CAsDexb2LWIuUGGs0+Yy5DkDXjR4BUO44FR/6HKpIKO?=
- =?us-ascii?Q?tdnp3sb9LM8uZHZUbPzqhOmJmrKOwPiZCQY6CuXP1rC23o2MMDInzbVByHbr?=
- =?us-ascii?Q?yH1oIEFFPsIun7Us/3MMYvtkTTbQymsB2+wdzG0k3nR9m+IncBPAwKs9sWik?=
- =?us-ascii?Q?CAIe4ks0/LOuwdG+7gVZRmv/9cZ1iqRly02LTfjNtaBMEKH5hCUgfpn+nxfJ?=
- =?us-ascii?Q?3p30Xz+XrSSx/u1icZ0e9L0Qq/Oe0eE9yEM7Wva/6ommIGFEsUdvpZVpM9cY?=
- =?us-ascii?Q?I5R8eg4bgVkRPRaGvkzUgsI2bLS0xqK7LySXirszLbbxTrIhsKVw/DLmCgDT?=
- =?us-ascii?Q?JMLViVBhvUDk7iwn9oSglYJNyr4adrDClCpeobfg6QoKWRtnqlZnnhs1aQFR?=
- =?us-ascii?Q?FEzvCG/IIp9s1mYqsFumCevpUjX62zObZ0AWfLoGzZN4YANv2EIwb6abYRG3?=
- =?us-ascii?Q?m8sEMAtTb2t9mbQaALvTfGU9oF9YDB8aTEBqcqw8zJUbo59zMMrw6dt1H49S?=
- =?us-ascii?Q?CHITGOg3hMPk3HukIGRC222AUhws0rE8jRscGocO/k3Qnp7eO7ZGrwDYNV5a?=
- =?us-ascii?Q?N2t+fdDrlWVD2yG2oSKkVcoag21QH+qTR5PzynQVq+yf6wys3aYGO3w6P0IJ?=
- =?us-ascii?Q?RG3U6+eBswCLuA58GAMB5oJVMC4QCy5DqIOfs3IZiSPql/fruopHmxqQXLCA?=
- =?us-ascii?Q?4qRNjMU4vl8K/wEFIykH0cwNwyM+4hbWk1Ymi4o/4m5+yr58CyqqbKZcjlye?=
- =?us-ascii?Q?Gg2bPK5+DP/kOw/SXbOq04GpmnmhGHvIDHhV/4kPP09vZIGBO8vgTDD2gPKE?=
- =?us-ascii?Q?x7TKwPXfsBtw4Th5eZpUj0CdfPsBTGqeaUKZrUbwq1rOJg1V0ropL8XHs0iu?=
- =?us-ascii?Q?N6fiTEo4htBXkAicXqtl9lxY9YY/0plvbOg4uODOF647EYWB1oKHJHKrG3Sq?=
- =?us-ascii?Q?31xXjMgbXfoJ1PXDAMe5/brF2XU66q+1tFn+phQxH3/B88CyC1M37vtyYEt5?=
- =?us-ascii?Q?HjxE6yD3rxyuKuYNRtgU1son+QRNk++x+kWN+rcQG7819p6lckdX5EEQVHY7?=
- =?us-ascii?Q?ajTICTjw7FgbeSnU1f92uyvcfbTG916BoUkFREaucvA6hN0ClXHMkock70G0?=
- =?us-ascii?Q?6Z8b+6U+GXp8Q7YTJD43yJq0G8m0gSITjbfN5d0/y5ORLD2OTfaIhtPTrJME?=
- =?us-ascii?Q?dbqDpRO16+4+gla4Tjr1xm455k+UhIJsYNkJcbT7jS9dT34tJWszd2gpJdSn?=
- =?us-ascii?Q?zedMJX6pCVH+HZqsd/38bIA89gY+jFG1MzO8JuVm/I/CgKFr2np3yvwivc/l?=
- =?us-ascii?Q?ND4yChwwsjuMgKLbhjgZAjkwiUc0IAET6/iHjlvLvA4rQniKn689LRh0RrD+?=
- =?us-ascii?Q?ZLYvlSEspBwAVIx2dpXa9MPS81C0VVjh2ZG0dEtGEHMM8t8ppQ93OGH3n4bB?=
- =?us-ascii?Q?Rul/s13vpajYIrpY/pmxAkcRWfVN3FKf4Fh3MfgI7V3XFqVu0ufUzEQVp7RT?=
- =?us-ascii?Q?qqWvWRMYCKiButfEjzP2C4O3EQz9/+zNQ72l?=
-X-Forefront-Antispam-Report:
-	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230040)(36860700013)(376014)(7416014)(1800799024)(82310400026);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2025 19:18:56.3711
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ea0ff33c-82bc-4f39-19cf-08ddfb9f350a
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	DS3PEPF0000C37F.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV5PR12MB9778
+In-Reply-To: <20250924-dsi-dual-panel-upstream-v3-3-6927284f1098@linaro.org>
+X-Proofpoint-GUID: Lpzqd3Tf0Qb7VZM3vAWjxnDeYOWXRd2A
+X-Authority-Analysis: v=2.4 cv=fY2ty1QF c=1 sm=1 tr=0 ts=68d444cf cx=c_pps
+ a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=sWKEhP36mHoA:10 a=KKAkSRfTAAAA:8 a=BVByBJJp0cfCRiHu0pEA:9
+ a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIyMDE2OCBTYWx0ZWRfX/pR7cD49UEkS
+ yIx3QgwAjTgM0EQ0f3hP2M4xTNyD8+MWqafh2hVuQewsyGcLjPYG959ltNMp9c1V5bNMZ+Zvr4j
+ z7hOY8jVo5zsd5ZVhdbtPjzvRqcD+mv3nivuyGjNK/W9q66iPoGNQUjpu34K4gu41rv8nsR+VHb
+ 3rucSdDrAYHLfgFVdzBQG7Rv5Z4Nz0I9UPFaoWHOPl+3sjFB26bZmP5uDNIclGTMP/ZBSzYzIE4
+ HsqBTnk2B7HHJVLtyMLDbWV00wkF3HAfTbIB7HemxR426QY8OFaEXuRa8XnFfDADrpib2s2e4g8
+ UYyIw9hdpI36tlTFKuqUQfK95b4I8draF48wAFB14eWiUR9Ubz1hIKCV26Psj2V4rKRkcTqN5iA
+ HWPhSc3A
+X-Proofpoint-ORIG-GUID: Lpzqd3Tf0Qb7VZM3vAWjxnDeYOWXRd2A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-24_06,2025-09-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 spamscore=0 adultscore=0 impostorscore=0
+ phishscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509220168
 
-On Wed, Sep 24, 2025 at 03:43:46PM -0300, Jason Gunthorpe wrote:
-> I've split things like this into more patches before, but this
-> actually isn't too bad, so I wouldn't push for it.
+On Wed, Sep 24, 2025 at 11:08:12PM +0800, Jun Nie wrote:
+> Support a hardware configuration where two independent DSI panels are
+> driven by a single, synchronous CRTC. This configuration uses a bonded
+> DSI link to provide a unified vblank for both displays.
+> 
+> This allows application software to treat the two displays as a single,
+> wide framebuffer with a synchronized refresh cycle, simplifying rendering
+> logic for side-by-side panel arrangements.
 
-Thanks. I will keep the flow in mind.
+I'd like to understand how is it framed on the overall system design
+level. If it's a panel controlled over the DSI interface, it's fine
+since we can broadcast commands over two DSI links. What if the panel
+(or bridge) is controlled via I2C / SPI?
 
-For working more on the new test attach op, I'd probably keep it
-as-is.
+> 
+> At the DSI host level, the frame width for each link must be that of an
+> individual panel. The driver therefore halves the CRTC's horizontal
+> resolution before configuring the DSI host and any DSC encoders, ensuring
+> each panel receives the correct half of the framebuffer.
 
-> A series version would be:
->  - add a new op 'attach_dev2' or whatever
->  - Convert all drivers that just change the signature
->  - Convert drivers that have a trivial iommu_get_domain_for_dev()
->  - N patches to convert more complex drivers one by one
->  - Remove old op attach_dev
+> 
+> While the DSI panel driver should manage two panels togehter.
+> 1. During probe, the driver finds the sibling dsi host via device tree
+> phandle and register the 2nd panel to get another mipi_dsi_device.
+> 2. Set dual_panel flag on both mipi_dsi_device.
+> 3. Prepare DSC data per requirement from single panel.
+> 4. All DSI commands should be send on every DSI link.
+> 5. Handle power supply for 2 panels in one shot, the same is true to
+>    brightness.
+> 6. From the CRTC's perspective, the two panels appear as one wide display.
+>    The driver exposes a DRM mode where the horizontal timings (hdisplay,
+>    hsync_start, etc.) are doubled, while the vertical timings remain those
+>    of a single panel. Because 2 panels are expected to be mounted in
+>    left/right position.
+> 
+> To maintain synchronization, both DSI links are configured to share a
+> single clock source, with the DSI1 controller using the clock provided
+> to DSI0 as below.
+> 
+> &mdss_dsi1 {
+>    assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
+> 		     <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
+>    assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
+> }
+> 
+> Signed-off-by: Jun Nie <jun.nie@linaro.org>
+> ---
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 10 +++++++++-
+>  1 file changed, 9 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index de51cb02f267205320c5a94fc4188413e05907e6..1fddcea7f86547258be18a51a0a3e3f96f6c3838 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -177,6 +177,7 @@ struct msm_dsi_host {
+>  	bool registered;
+>  	bool power_on;
+>  	bool enabled;
+> +	bool is_dual_panel;
+>  	int irq;
+>  };
+>  
+> @@ -935,7 +936,10 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+>  			return;
+>  		}
+>  
+> -		dsc->pic_width = mode->hdisplay;
+> +		if (msm_host->is_dual_panel)
+> +			dsc->pic_width = hdisplay;
+> +		else
+> +			dsc->pic_width = mode->hdisplay;
+>  		dsc->pic_height = mode->vdisplay;
+>  		DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
+>  
+> @@ -1609,6 +1613,7 @@ static int dsi_host_attach(struct mipi_dsi_host *host,
+>  	if (dsi->lanes > msm_host->num_data_lanes)
+>  		return -EINVAL;
+>  
+> +	msm_host->is_dual_panel = dsi->dual_panel;
+>  	msm_host->channel = dsi->channel;
+>  	msm_host->lanes = dsi->lanes;
+>  	msm_host->format = dsi->format;
+> @@ -2492,6 +2497,9 @@ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
+>  	if (!msm_host->dsc)
+>  		return MODE_OK;
+>  
+> +	if (msm_host->is_dual_panel)
+> +		pic_width = mode->hdisplay / 2;
+> +
+>  	if (pic_width % dsc->slice_width) {
+>  		pr_err("DSI: pic_width %d has to be multiple of slice %d\n",
+>  		       pic_width, dsc->slice_width);
+> 
+> -- 
+> 2.34.1
+> 
 
-Does this mean that drivers would live with the 'attach_dev2' op
-renamed from 'attach_dev'? Or the last could rename it back?
-
-Nicolin
+-- 
+With best wishes
+Dmitry
 
