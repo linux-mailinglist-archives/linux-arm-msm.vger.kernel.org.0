@@ -1,216 +1,472 @@
-Return-Path: <linux-arm-msm+bounces-74581-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3122CB99797
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 12:45:37 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 68F7CB99815
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 12:54:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D7C95325BD8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 10:45:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6081619C73D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 10:54:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C4DFC26B098;
-	Wed, 24 Sep 2025 10:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9EF4922541B;
+	Wed, 24 Sep 2025 10:54:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fcVV4Sql"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="bhm3iKyA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AA72DC77B
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 10:45:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1D71A9F8D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 10:54:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758710732; cv=none; b=cFwRRuqbMyb9ilRW+y8UFYGwtd4bksF3GI1KtvaQzQ5bOAdr/DZduIfR4pmx6Mniznb/AMcI9WTPI/DsMwDHzshiGrNxzFQy1/vesOaeFGp3TWW7U8t40pQOmLU9FFlLEzF3KxuIgZJnWD9DqHR3TneU+0oFBdXzQcJIOSaF3pg=
+	t=1758711258; cv=none; b=C4pW01Q01PHR19e0dvbQmjIUa+mZvMi5q0vKkfAvfbkNQ8ZBZv0skON37/xSqEJv/JH5Sbd8itVgWkMRHZg4xpQEie1jBEXA4h/zx7Ea18jeMVRgXn/WiV73M19HBR8elPZfq2mhGXr+FWOlKqGNLcWwiC/8ekxorSEsJuzuIUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758710732; c=relaxed/simple;
-	bh=izbfN5zlluTvTDU5QBrF+CRs+L/OG8KsQ9B39AZHdSs=;
+	s=arc-20240116; t=1758711258; c=relaxed/simple;
+	bh=oT1z5JxaCkcHXs3x0iDnCU/v0li7LGqT+H3MjvUGNQI=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oNDrKN73eOgrOgyvR2PmI9e8Bq04R5YJ2IrmzT8lCQC4YkXFtnx05HM8kI0V3kPd0QarY7jIOo6H+ZI7cuIp5BfIX7zvZ3xdzn3emdQY0ig3O9iVDtfRwT3lrn3O0wyaQhCvj4o6RYUX0aaMHa1zi4qoX/6MuCy87UqsQyxvcw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fcVV4Sql; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=BoskOXLkqW/Eb1560qEPl5KR72IKCPY12/y6htAe3RMCWg5x+fGjM4dm/aPc6RWlSdVy4ttBDuXA5LX/o/8H1QDg5GhqcZtkgIrCKuK7eBFssAsqns6/itaH+k9PvKDyNCBCWv/bC3UkeNQePveNX0LNi8MkTmVQQvnG3uCqMZw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=bhm3iKyA; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58O4iIbW002802
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 10:45:27 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58O4iFON027779
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 10:54:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	HX6oleHUsB5SDxMPBnujI7fM0fMhWH3Il+PVWdZRijU=; b=fcVV4SqlDbjFTvzq
-	4p5+9vemuguxM02OY18H6uYHkGc41gWfit77quaawHdd8rqWA2ekQ1Rv2qWYgkzh
-	jbNwb9M9FAHkG55lUs8XUJKc/aiPBXRazmiEbbltZmqMb1czc0szahf6PBbtrnIC
-	UnJ3d1W0qGCO96yzE28cJsmyrrmjuV4v0nLkoOrLgvvIXTWvQ/3Vfa4NlKhBbTlc
-	LMV4rOt33XS3ASWyXzqj7LVWpBqDQglgysG5LH92A9hF51qSGIIu+FwhMwUSy8RI
-	eDFvFxrFJc+pviEABHk3q2TsoLwkWz8105kE7R5UzjCvVYYpYG9+oEbxYQhxplIT
-	LHq0xQ==
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com [209.85.219.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bajexj8s-1
+	JSS+1e+gt7F7YUw/cKXNEYGCABVjM4iXTnQn4w30LXM=; b=bhm3iKyAtu7Lu3oE
+	XV+mtqYV3Eszs2cTVhblgnQnmZtbQ9n1zC/zHReNt+0VW8NgI2sFRm9dngsQxyfB
+	z2KfRQs1tkMQkMZtGJkUIaAXM1MusIKx7q9xE9EOJFs0tQw6f5n8699tiIYaCD5w
+	eSiT2hs+8gXyfEm2aDcemcrIjvqEojjwMWyMTKrYYY+Ef0aXNgnfbwj8QI2Rj6bK
+	1zei5DgwsJ6xqN3/ZG2u5ev4mSjx8UZVYKZ+VrkT7zpJ2yuutNgDoUboMMy1YY3v
+	FXeI5dDCn33YvX94PrFiFwhYoMj+KArhrVUp/aCUGX0z+HSix1bgxngJhK5Igc0b
+	lPfaYg==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499hmnvbu6-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 10:45:26 +0000 (GMT)
-Received: by mail-qv1-f69.google.com with SMTP id 6a1803df08f44-796f103f50aso11467806d6.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 03:45:26 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 10:54:14 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-77e7d9ed351so4468116b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 03:54:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758710725; x=1759315525;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1758711253; x=1759316053;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HX6oleHUsB5SDxMPBnujI7fM0fMhWH3Il+PVWdZRijU=;
-        b=aozTe9MD41ujiQk6o5cVLVH6r5F4ZnrKcFlOOd5cSDQVnqfQa0zzZVo+c2BL8O4Nk+
-         NAlCepzOkhOJ5H4m5VMcnsgCjhC+1iasZv7oqT5LOBHTs/dFOJPuxzh6KUtWMg3KVp+A
-         2sbOmQgoua2Bqp+h/2TBtSH9qNwa20Is/i3+NeNGWWIHxb4hoCgE5xV5blPOTV8Z3iS1
-         K1M6TV7wl3f76YvSSHV1XoEDIF0lWf6NRPLknFD7DwPB2M9aL7YZt6jvoy5lDSoM4/PD
-         aOSXD4rcxIIXxZ9cdbjU+++bbJKtc30QRY21D8cKMgVkpfm5Or9BU/JS3BYUANeIEycq
-         pe8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXGPpyl932yKZNmQquzmGyluqq+s6ZqseWJbKP1jWeN9kvHTZmdvOVhU7QHY96hwKEB6PgaVXTtqzdgjq57@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyym04Vv+RT7EJFl1aFNApcqG8vtGd41jUKBCytFHaYIhdjPH0y
-	gd1Z5gKVa6yiX/dKyDOoAifLJXARGqq6z7+95bztjXrNFB+EzglE24NTaapWnT5qIl6IySOvUzY
-	i+DdLhCXRjGUvtOLxh359GNmqrrn3PfolxoI/nVNhSC6EGCNoKB8fOZuZZVXX8+LKbfpX
-X-Gm-Gg: ASbGncvtwMUw6gMPI3Er6l4Z89FMrt2ZTxkft22PSnW8+9DFB6/hcdKiKoWZwfRipgf
-	nmH1zxb0xrf1aGe1SJBTuJbT7fvfpzHalPFrgEJ0P0o55eB0ZY56vXf2zsnnIHGKx2NBraoSWXf
-	XiHuop89WvCxWk6Wsj/YDeRsxImb44ipF8eiRp1p28SPYYzL+3W+g8KMArh49opYFdoMiYz4gX9
-	2faMsRCr64lz0VBN2MF79NXAGymCJG5vsmTOTxphoEeyCMCXSgqHLHUKDjHq5q8JDmpOL3ehhw/
-	be0jpdVRdLkjWUJNh6flkFXZGIFdgEdFEnmzBIrrx/v/739I5/mgIQcKTD6QNRH1iO7vYvqiboU
-	eRf5QsPYvPj2qRVEvWlvGlg==
-X-Received: by 2002:ac8:7d8b:0:b0:4b5:e4dc:1ee5 with SMTP id d75a77b69052e-4d36707e722mr47274341cf.3.1758710724416;
-        Wed, 24 Sep 2025 03:45:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGlonZ9+W9s9uT6vfFr8FKvlXPmIwYYLXdwCud4N5wiTYqUItOgeQ3pjQWcy/3rqzCLiWuDOA==
-X-Received: by 2002:ac8:7d8b:0:b0:4b5:e4dc:1ee5 with SMTP id d75a77b69052e-4d36707e722mr47274091cf.3.1758710723897;
-        Wed, 24 Sep 2025 03:45:23 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b29e6597caesm889524566b.73.2025.09.24.03.45.21
+        bh=JSS+1e+gt7F7YUw/cKXNEYGCABVjM4iXTnQn4w30LXM=;
+        b=PZg8sVNQ2emED8hqvaz4kzsDk4vVmMTcF0jAUKsH5VITE0SSIEqp1s/sJwb5zcHVOW
+         D9Cf5Vz794H/L/moBQm7x/l31zy5o5nQId2S+GOjWifHzFHX4+dcEZ9RWHpfx0cDzvs3
+         0xKzvnLcEhbmxlXXwPbWKQn97Xzd+M0t/hyibWjt/xsDBqVv+2/TfoyiM2jhrxHr2ce9
+         0VtJTNimZrXEy8HKpx/GWVc04+KRvKDQiKt9OsiGUmaeKYjmicRKVmsxqbzE6uoXJu1L
+         S5l12exoX7ynUhy4RGRiAvJaRZBuNzFIw6Gwxj8tqX9Nw8/Uq1NeKNCBlVyFBgdaYump
+         t2xw==
+X-Forwarded-Encrypted: i=1; AJvYcCX11CEc6o1UeGxYsjkgMxRXR9iVZsnMuAoYG/HLuSmNM4O3HJeVXNckZY79UGZDMNHCTuZ7bDlJtPOT0iyr@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCdrUQEFLbQ+RRbVusa+ESpcVmSzyM3bSrX3C1dzZ/GuME/WnU
+	cpxjncqmnIwMtWddLb6l82bFLeTkpZivxp0CM+K/a2mlLrHK/lz0CiyMxET++gZstuRNXnEH3GU
+	317JMitkl0Nt1M3lwctK1CJ6E1ZUlZ5JrYWPfNV4wceGENGRyGt/H+8IXFjAIUplxdKfs
+X-Gm-Gg: ASbGncvmQcMaAU0vy57MF5NUKwEl0zOucLbEXnlOli8Lka//ohpP2lhw64rWURtk7qm
+	hdTULtTBUYBU+LuZfwkG3HNo4PisqmIsL6oYTkmR/nZCms8B1877jadL9o5tpSdvrzYJgdTkZbb
+	r3Qxs1WaTCh/N2/9PNoMLFxJTUCL1LdDMyy9IiwcWF8AeB6Sa2S74Tj6g2a8MwiU8+24O7dZ3cQ
+	pnHYwxckFLBtUFoIDh3Yvfm8K72S/Ky8lFC3xTMun7WpOHGcMyeV7J3f1mF2j7MkPDl/3Fg4f2t
+	Y5Ck95GMmWrdPiMU6e8LsHt7SrUCX0PBqQCCkCBs+sHNtbZyWcHgO3b/HXu5cmiCWhLWNLcJew=
+	=
+X-Received: by 2002:a05:6a00:1398:b0:772:63ba:127 with SMTP id d2e1a72fcca58-77f53aa656cmr8013955b3a.24.1758711252917;
+        Wed, 24 Sep 2025 03:54:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkk3zLohmUvhkW4YeeMScuehmTSlCnUkX7YIdy8aRbLfTbPw3eiVk5vZgbOYjGpTimKDYuGw==
+X-Received: by 2002:a05:6a00:1398:b0:772:63ba:127 with SMTP id d2e1a72fcca58-77f53aa656cmr8013920b3a.24.1758711252401;
+        Wed, 24 Sep 2025 03:54:12 -0700 (PDT)
+Received: from [10.0.0.86] ([106.222.229.252])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-77f2fdfbffesm9443835b3a.73.2025.09.24.03.54.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 24 Sep 2025 03:45:23 -0700 (PDT)
-Message-ID: <36372e64-83ec-46d6-9e66-7000c19fb871@oss.qualcomm.com>
-Date: Wed, 24 Sep 2025 12:45:21 +0200
+        Wed, 24 Sep 2025 03:54:11 -0700 (PDT)
+Message-ID: <81932285-b007-7cdf-a28d-21131a26eb85@oss.qualcomm.com>
+Date: Wed, 24 Sep 2025 16:24:07 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] arm64: dts: qcom: Rework X1-based Asus Zenbook A14's
- displays
-To: Aleksandrs Vinarskis <alex@vinarskis.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Jens Glathe <jens.glathe@oldschoolsolutions.biz>
-References: <20250908-zenbook-improvements-v1-0-43ecbbf39c60@vinarskis.com>
- <20250908-zenbook-improvements-v1-2-43ecbbf39c60@vinarskis.com>
- <e54daa39-ffb1-4f0e-82c6-42e45efe5044@oss.qualcomm.com>
- <X5l7eScrcspQe6JfPyx8VCIZXmCmq-VBlAoNmIuAAmwfp1z-yNAG5GyIEnp4ByyPOEfJHEtewC0uOgrc0GiLlaz433Gheubseb-pXH1ZfUw=@vinarskis.com>
- <blMLYZBNCKa8x50Dd-zdFPdx7wZNor45QRJeeqjVautVqCR3aIoVAUrxacXkYNAlrC6p6npHSU_ZMfUDvZzoUzXg_2iiXMJPFmW85P-B3HU=@vinarskis.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH 1/2] media: iris: Add support for QC08C format for decoder
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <blMLYZBNCKa8x50Dd-zdFPdx7wZNor45QRJeeqjVautVqCR3aIoVAUrxacXkYNAlrC6p6npHSU_ZMfUDvZzoUzXg_2iiXMJPFmW85P-B3HU=@vinarskis.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250919-video-iris-ubwc-enable-v1-0-000d11edafd8@oss.qualcomm.com>
+ <20250919-video-iris-ubwc-enable-v1-1-000d11edafd8@oss.qualcomm.com>
+ <d2qkd3k7pv7cv3rf76nf3wxedqagg7egz7q2vipiddxzbac5oj@rva7gymbaof7>
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+In-Reply-To: <d2qkd3k7pv7cv3rf76nf3wxedqagg7egz7q2vipiddxzbac5oj@rva7gymbaof7>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: TFP_uevUTXd7tpq4VwIyHUQ0wNHwD8ES
-X-Authority-Analysis: v=2.4 cv=fY2ty1QF c=1 sm=1 tr=0 ts=68d3cbc6 cx=c_pps
- a=wEM5vcRIz55oU/E2lInRtA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=I76Qk8w-AAAA:8 a=EUspDBNiAAAA:8
- a=gxl3bz0cAAAA:8 a=ZGzr1XgpPqI01JkrxgEA:9 a=QEXdDO2ut3YA:10
- a=OIgjcC2v60KrkQgK7BGD:22 a=vUPM0Wvl0xcrLs4nqPIT:22 a=kiRiLd-pWN9FGgpmzFdl:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIyMDE2OCBTYWx0ZWRfX8KM3mkd1dbug
- ICHZodId2Nb5MFXU5ZSS0V4b5l332GEx6lrtEwhszlTd59SipBvDnSbE/GC6PemaE1ZNlY7VM0c
- pWtiSUzMg1moj8y+8pD3Y1SPmdjE+ESdMGC/7jXZXR3zjS4gEn47C+hlwZPqCtPMndVMsKVFU9O
- EGtBpwlngs3XidM3yLxgFwaXoqF2YPk5ATYk0hzPcNiN0fezzec6zWclRambrYge81pnoVCJy4b
- 0Wzcx5U6mOEDVFauYOO2Zve/OrHI7l39nR7BPMG5ruhBt4xp8gc+99v/1Bnb2v/ZCsisPzbNDs+
- h8t2Dgoi50ZLpkP1Q4zERqOpo+eOTLpgXeCwpnc46zuAodVBdDQKcR5PA7Nxf1f9A5KftEfqNKF
- /AYfe4wz
-X-Proofpoint-ORIG-GUID: TFP_uevUTXd7tpq4VwIyHUQ0wNHwD8ES
+X-Authority-Analysis: v=2.4 cv=YPqfyQGx c=1 sm=1 tr=0 ts=68d3cdd6 cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=P-IC7800AAAA:8 a=EUspDBNiAAAA:8
+ a=jALX246FgZPKRjHUN40A:9 a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+ a=d3PnA9EDa4IxuAV0gXij:22
+X-Proofpoint-ORIG-GUID: zXCt2Gy2gEzxnPhyMHwszA5uiS9YT2c-
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAwMCBTYWx0ZWRfX8cGIH0Jg08O0
+ 5R6LZP8DpMPoj3/kr0NqMfSIl1wbsZ5vMKDVvv1hWyrQyRZ0xfTJkgwzTK0kJr2+GMbUCxasnll
+ kuhvuB4dNj3vqkLJA9CqM5RKPlUyELuXPl2iJZWlHdVjZpgcUmlr1oCU1Yy7qYsGzRBZpSkMinO
+ fq6Uy9ojpWqSiCrJQrhp97OoZbK+whgFKB1ToahK6jlah4qNkFnssrJ+efbF0pqBZr556G/6AiJ
+ wfvYlYTXbQh0c3GRzzAAvjPFH+CoDGMHcQUaqSxIcvY/NH49v3X1y4uMN8WGOdoJ8eJcrxESR7b
+ 3KrNWCQiS5V53xfaRD/R47rFUtLjaIRCy+aHuBb3aR+SiNYmEvmC8C7rlLuSkd87TSnJyzmKWAu
+ apN9zMAI
+X-Proofpoint-GUID: zXCt2Gy2gEzxnPhyMHwszA5uiS9YT2c-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-24_03,2025-09-22_05,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 adultscore=0 impostorscore=0
- phishscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
+ suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509220168
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200000
 
-On 9/23/25 9:21 PM, Aleksandrs Vinarskis wrote:
-> 
-> 
-> 
-> 
-> 
-> On Friday, September 12th, 2025 at 18:52, Aleksandrs Vinarskis <alex@vinarskis.com> wrote:
-> 
->>
->>
->>
->>
->>
->>
->>
->> On Friday, September 12th, 2025 at 12:44, Konrad Dybcio konrad.dybcio@oss.qualcomm.com wrote:
->>
->>> On 9/8/25 8:45 PM, Aleksandrs Vinarskis wrote:
->>>
->>>> The laptop comes in two variants:
->>>>
->>>> * UX3407RA, higher end, FHD+ OLED or WOXGA+ OLED panels
->>>> * UX3407QA, lower end, FHD+ OLED or FHD+ LCD panels
->>>>
->>>> Even though all three panels work with "edp-panel", unfortunately the
->>>> brightness adjustmenet of LCD panel is PWM based, requiring a dedicated
->>>> device-tree. Convert "x1p42100-asus-zenbook-a14.dts" into ".dtsi" to
->>>> allow for this split, introduce new LCD variant. Leave current variant
->>>> without postfix and with the unchanged model name, as some distros
->>>> (eg. Ubuntu) rely on this for automatic device-tree detection during
->>>> kernel installation/upgrade.
->>>>
->>>> As dedicated device-tree is required, update compatibles of OLED
->>>> variants to correct ones. Keep "edp-panel" as fallback, since it is
->>>> enough to make the panels work.
->>>>
->>>> Signed-off-by: Aleksandrs Vinarskis alex@vinarskis.com
->>>> Co-developed-by: Jens Glathe jens.glathe@oldschoolsolutions.biz
->>>> Signed-off-by: Jens Glathe jens.glathe@oldschoolsolutions.biz
->>>> ---
->>>
->>> [...]
->>>
->>>> --- /dev/null
->>>> +++ b/arch/arm64/boot/dts/qcom/x1p42100-asus-zenbook-a14.dtsi
->>>> @@ -0,0 +1,141 @@
->>>> +// SPDX-License-Identifier: BSD-3-Clause
->>>> +/*
->>>> + * Copyright (c) 2025 Qualcomm Innovation Center, Inc. All rights reserved.
->>>> + * Copyright (c) 2025 Aleksandrs Vinarskis alex@vinarskis.com
->>>> + */
->>>> +
->>>> +/dts-v1/;
->>>> +
->>>> +#include "x1p42100.dtsi"
->>>> +#include "x1-asus-zenbook-a14.dtsi"
->>>> +
->>>> +/delete-node/ &pmc8380_6;
->>>> +/delete-node/ &pmc8380_6_thermal;
->>>> +
->>>> +/ {
->>>> + model = "ASUS Zenbook A14 (UX3407QA)";
->>>
->>> 'model' in .dtsi is 'eeeeh'
->>
->>
->> Followed example of Thinkpad t14s and CRD, as they set it to
->> 'default' in .dtsi, and overwrite in .dts. Could fix it starting
->> with Zenbook here, but in this case probably makes sense to also
->> drop 'model' from higher level 'x1-asus-zenbook-a14.dtsi' as well?
-> 
-> Hi Konrad,
-> 
-> Any comments on this?
-> 
-> Alex
 
-Yes, ultimately model and compatible should be in .dts only
 
-Konrad
+On 9/19/2025 10:24 PM, Dmitry Baryshkov wrote:
+> On Fri, Sep 19, 2025 at 09:17:16PM +0530, Dikshita Agarwal wrote:
+>> Introduce handling for the QC08C format in the decoder.
+>> Update format checks and configuration to enable decoding of QC08C
+>> streams.
+> 
+> What is QC08C? Is it supported on all devices?
+
+It's qualcomm specific compressed format, it's defined here
+https://elixir.bootlin.com/linux/v6.17-rc2/source/include/uapi/linux/videodev2.h#L820
+
+And Yes, it's supported on all Qualcomm devices supported by iris driver.
+
+> 
+>>
+>> Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+>> ---
+>>  drivers/media/platform/qcom/iris/iris_buffer.c     |  5 +-
+>>  .../platform/qcom/iris/iris_hfi_gen1_command.c     | 12 +++--
+>>  .../platform/qcom/iris/iris_hfi_gen2_command.c     | 18 ++++++-
+>>  .../platform/qcom/iris/iris_hfi_gen2_defines.h     |  1 +
+>>  drivers/media/platform/qcom/iris/iris_instance.h   |  7 ++-
+>>  .../media/platform/qcom/iris/iris_platform_gen2.c  |  1 +
+>>  drivers/media/platform/qcom/iris/iris_utils.c      |  3 +-
+>>  drivers/media/platform/qcom/iris/iris_vdec.c       | 61 ++++++++++++++++++----
+>>  8 files changed, 89 insertions(+), 19 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.c b/drivers/media/platform/qcom/iris/iris_buffer.c
+>> index c0900038e7defccf7de3cb60e17c71e36a0e8ead..83dcf49e57ec1473bc4edd26c48ab0b247d23818 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_buffer.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+>> @@ -261,7 +261,10 @@ int iris_get_buffer_size(struct iris_inst *inst,
+>>  		case BUF_INPUT:
+>>  			return iris_dec_bitstream_buffer_size(inst);
+>>  		case BUF_OUTPUT:
+>> -			return iris_yuv_buffer_size_nv12(inst);
+>> +			if (inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC08C)
+>> +				return iris_yuv_buffer_size_qc08c(inst);
+>> +			else
+>> +				return iris_yuv_buffer_size_nv12(inst);
+>>  		case BUF_DPB:
+>>  			return iris_yuv_buffer_size_qc08c(inst);
+>>  		default:
+>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+>> index e1788c266bb1080921f17248fd5ee60156b3143d..e458d3349ce09aadb75d056ae84e3aab95f03078 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
+>> @@ -774,20 +774,21 @@ static int iris_hfi_gen1_set_raw_format(struct iris_inst *inst, u32 plane)
+>>  		pixelformat = inst->fmt_dst->fmt.pix_mp.pixelformat;
+>>  		if (iris_split_mode_enabled(inst)) {
+>>  			fmt.buffer_type = HFI_BUFFER_OUTPUT;
+>> -			fmt.format = pixelformat == V4L2_PIX_FMT_NV12 ?
+>> -				HFI_COLOR_FORMAT_NV12_UBWC : 0;
+>> +			fmt.format = HFI_COLOR_FORMAT_NV12_UBWC;
+> 
+> This needs some explanation.
+
+We are enabling QC08C format in iris driver with split mode, which means we
+need to set UBWC format for DPB (reference buffer) buffers to firmware,
+since firmware only supports UBWC format for DPB buffers.
+
+> 
+>>  
+>>  			ret = hfi_gen1_set_property(inst, ptype, &fmt, sizeof(fmt));
+>>  			if (ret)
+>>  				return ret;
+>>  
+>>  			fmt.buffer_type = HFI_BUFFER_OUTPUT2;
+>> -			fmt.format = pixelformat == V4L2_PIX_FMT_NV12 ? HFI_COLOR_FORMAT_NV12 : 0;
+>> +			fmt.format = pixelformat == V4L2_PIX_FMT_NV12 ?
+>> +				HFI_COLOR_FORMAT_NV12 : HFI_COLOR_FORMAT_NV12_UBWC;
+>>  
+>>  			ret = hfi_gen1_set_property(inst, ptype, &fmt, sizeof(fmt));
+>>  		} else {
+>>  			fmt.buffer_type = HFI_BUFFER_OUTPUT;
+>> -			fmt.format = pixelformat == V4L2_PIX_FMT_NV12 ? HFI_COLOR_FORMAT_NV12 : 0;
+>> +			fmt.format = pixelformat == V4L2_PIX_FMT_NV12 ?
+>> +				HFI_COLOR_FORMAT_NV12 : HFI_COLOR_FORMAT_NV12_UBWC;
+>>  
+>>  			ret = hfi_gen1_set_property(inst, ptype, &fmt, sizeof(fmt));
+>>  		}
+>> @@ -806,6 +807,9 @@ static int iris_hfi_gen1_set_format_constraints(struct iris_inst *inst, u32 plan
+>>  	const u32 ptype = HFI_PROPERTY_PARAM_UNCOMPRESSED_PLANE_ACTUAL_CONSTRAINTS_INFO;
+>>  	struct hfi_uncompressed_plane_actual_constraints_info pconstraint;
+>>  
+>> +	if (inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC08C)
+>> +		return 0;
+>> +
+>>  	pconstraint.buffer_type = HFI_BUFFER_OUTPUT2;
+>>  	pconstraint.num_planes = 2;
+>>  	pconstraint.plane_format[0].stride_multiples = 128;
+>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+>> index 4ce71a14250832440099e4cf3835b4aedfb749e8..5ad202d3fcdc57a2b7b43de15763a686ce0f7bd7 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+>> @@ -422,6 +422,20 @@ static int iris_hfi_gen2_set_level(struct iris_inst *inst, u32 plane)
+>>  						  sizeof(u32));
+>>  }
+>>  
+>> +static int iris_hfi_gen2_set_opb_enable(struct iris_inst *inst, u32 plane)
+>> +{
+>> +	u32 port = iris_hfi_gen2_get_port(inst, plane);
+>> +	u32 opb_enable = iris_split_mode_enabled(inst);
+>> +
+>> +	return iris_hfi_gen2_session_set_property(inst,
+>> +						  HFI_PROP_OPB_ENABLE,
+>> +						  HFI_HOST_FLAGS_NONE,
+>> +						  port,
+>> +						  HFI_PAYLOAD_U32,
+>> +						  &opb_enable,
+>> +						  sizeof(u32));
+>> +}
+>> +
+>>  static int iris_hfi_gen2_set_colorformat(struct iris_inst *inst, u32 plane)
+>>  {
+>>  	u32 port = iris_hfi_gen2_get_port(inst, plane);
+>> @@ -429,7 +443,8 @@ static int iris_hfi_gen2_set_colorformat(struct iris_inst *inst, u32 plane)
+>>  
+>>  	if (inst->domain == DECODER) {
+>>  		pixelformat = inst->fmt_dst->fmt.pix_mp.pixelformat;
+>> -		hfi_colorformat = pixelformat == V4L2_PIX_FMT_NV12 ? HFI_COLOR_FMT_NV12 : 0;
+>> +		hfi_colorformat = pixelformat == V4L2_PIX_FMT_NV12 ?
+>> +			HFI_COLOR_FMT_NV12 : HFI_COLOR_FMT_NV12_UBWC;
+>>  	} else {
+>>  		pixelformat = inst->fmt_src->fmt.pix_mp.pixelformat;
+>>  		hfi_colorformat = pixelformat == V4L2_PIX_FMT_NV12 ? HFI_COLOR_FMT_NV12 : 0;
+>> @@ -527,6 +542,7 @@ static int iris_hfi_gen2_session_set_config_params(struct iris_inst *inst, u32 p
+>>  		{HFI_PROP_SIGNAL_COLOR_INFO,          iris_hfi_gen2_set_colorspace             },
+>>  		{HFI_PROP_PROFILE,                    iris_hfi_gen2_set_profile                },
+>>  		{HFI_PROP_LEVEL,                      iris_hfi_gen2_set_level                  },
+>> +		{HFI_PROP_OPB_ENABLE,                 iris_hfi_gen2_set_opb_enable             },
+>>  		{HFI_PROP_COLOR_FORMAT,               iris_hfi_gen2_set_colorformat            },
+>>  		{HFI_PROP_LINEAR_STRIDE_SCANLINE,     iris_hfi_gen2_set_linear_stride_scanline },
+>>  		{HFI_PROP_TIER,                       iris_hfi_gen2_set_tier                   },
+>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+>> index aa1f795f5626c1f76a32dd650302633877ce67be..1b6a4dbac828ffea53c1be0d3624a033c283c972 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_defines.h
+>> @@ -91,6 +91,7 @@ enum hfi_seq_header_mode {
+>>  #define HFI_PROP_BUFFER_MARK			0x0300016c
+>>  #define HFI_PROP_RAW_RESOLUTION		0x03000178
+>>  #define HFI_PROP_TOTAL_PEAK_BITRATE		0x0300017C
+>> +#define HFI_PROP_OPB_ENABLE			0x03000184
+>>  #define HFI_PROP_COMV_BUFFER_COUNT		0x03000193
+>>  #define HFI_PROP_END				0x03FFFFFF
+>>  
+>> diff --git a/drivers/media/platform/qcom/iris/iris_instance.h b/drivers/media/platform/qcom/iris/iris_instance.h
+>> index 5982d7adefeab80905478b32cddba7bd4651a691..11134f75c26dd1f6c92ba72fbf4e56e41a72de64 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_instance.h
+>> +++ b/drivers/media/platform/qcom/iris/iris_instance.h
+>> @@ -15,12 +15,17 @@
+>>  #define DEFAULT_WIDTH 320
+>>  #define DEFAULT_HEIGHT 240
+>>  
+>> -enum iris_fmt_type {
+>> +enum iris_fmt_type_out {
+>>  	IRIS_FMT_H264,
+>>  	IRIS_FMT_HEVC,
+>>  	IRIS_FMT_VP9,
+>>  };
+>>  
+>> +enum iris_fmt_type_cap {
+>> +	IRIS_FMT_NV12,
+>> +	IRIS_FMT_UBWC,
+> 
+> UBWC is not a format on its own, it's a modifier of the format. Please
+> come up with a better naming.
+
+Sure, will rename this to IRIS_FMT_QC08C inline with v4l2 definition.
+
+> 
+>> +};
+>> +
+>>  struct iris_fmt {
+>>  	u32 pixfmt;
+>>  	u32 type;
+>> diff --git a/drivers/media/platform/qcom/iris/iris_platform_gen2.c b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> index 36d69cc73986b74534a2912524c8553970fd862e..69c952c68e939f305f25511e2e4763487ec8e0de 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_platform_gen2.c
+>> @@ -691,6 +691,7 @@ static const u32 sm8550_venc_input_config_params[] = {
+>>  };
+>>  
+>>  static const u32 sm8550_vdec_output_config_params[] = {
+>> +	HFI_PROP_OPB_ENABLE,
+>>  	HFI_PROP_COLOR_FORMAT,
+>>  	HFI_PROP_LINEAR_STRIDE_SCANLINE,
+>>  };
+>> diff --git a/drivers/media/platform/qcom/iris/iris_utils.c b/drivers/media/platform/qcom/iris/iris_utils.c
+>> index 85c70a62b1fd2c409fc18b28f64771cb0097a7fd..e2f1131de43128254d8211343771e657e425541e 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_utils.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_utils.c
+>> @@ -34,7 +34,8 @@ int iris_get_mbpf(struct iris_inst *inst)
+>>  
+>>  bool iris_split_mode_enabled(struct iris_inst *inst)
+>>  {
+>> -	return inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_NV12;
+>> +	return inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_NV12 ||
+>> +		inst->fmt_dst->fmt.pix_mp.pixelformat == V4L2_PIX_FMT_QC08C;
+>>  }
+>>  
+>>  void iris_helper_buffers_done(struct iris_inst *inst, unsigned int type,
+>> diff --git a/drivers/media/platform/qcom/iris/iris_vdec.c b/drivers/media/platform/qcom/iris/iris_vdec.c
+>> index ae13c3e1b426bfd81a7b46dc6c3ff5eb5c4860cb..7fa745c6bf8950d192c2d2fc1770c4b6fd7b8c4c 100644
+>> --- a/drivers/media/platform/qcom/iris/iris_vdec.c
+>> +++ b/drivers/media/platform/qcom/iris/iris_vdec.c
+>> @@ -67,7 +67,7 @@ void iris_vdec_inst_deinit(struct iris_inst *inst)
+>>  	kfree(inst->fmt_src);
+>>  }
+>>  
+>> -static const struct iris_fmt iris_vdec_formats[] = {
+>> +static const struct iris_fmt iris_vdec_formats_out[] = {
+>>  	[IRIS_FMT_H264] = {
+>>  		.pixfmt = V4L2_PIX_FMT_H264,
+>>  		.type = V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE,
+>> @@ -82,12 +82,35 @@ static const struct iris_fmt iris_vdec_formats[] = {
+>>  	},
+>>  };
+>>  
+>> +static const struct iris_fmt iris_vdec_formats_cap[] = {
+> 
+> s/formats_cap/formats_capture/
+
+Ok.
+
+Thanks,
+Dikshita
+
+> 
+>> +	[IRIS_FMT_NV12] = {
+>> +		.pixfmt = V4L2_PIX_FMT_NV12,
+>> +		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>> +	},
+>> +	[IRIS_FMT_UBWC] = {
+>> +		.pixfmt = V4L2_PIX_FMT_QC08C,
+>> +		.type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE,
+>> +	},
+>> +};
+>> +
+>>  static const struct iris_fmt *
+>>  find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
+>>  {
+>> -	unsigned int size = ARRAY_SIZE(iris_vdec_formats);
+>> -	const struct iris_fmt *fmt = iris_vdec_formats;
+>> +	const struct iris_fmt *fmt = NULL;
+>> +	unsigned int size = 0;
+>>  	unsigned int i;
+>> +	switch (type) {
+>> +	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+>> +		fmt = iris_vdec_formats_out;
+>> +		size = ARRAY_SIZE(iris_vdec_formats_out);
+>> +		break;
+>> +	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+>> +		fmt = iris_vdec_formats_cap;
+>> +		size = ARRAY_SIZE(iris_vdec_formats_cap);
+>> +		break;
+>> +	default:
+>> +		return NULL;
+>> +	}
+>>  
+>>  	for (i = 0; i < size; i++) {
+>>  		if (fmt[i].pixfmt == pixfmt)
+>> @@ -103,8 +126,21 @@ find_format(struct iris_inst *inst, u32 pixfmt, u32 type)
+>>  static const struct iris_fmt *
+>>  find_format_by_index(struct iris_inst *inst, u32 index, u32 type)
+>>  {
+>> -	const struct iris_fmt *fmt = iris_vdec_formats;
+>> -	unsigned int size = ARRAY_SIZE(iris_vdec_formats);
+>> +	const struct iris_fmt *fmt = NULL;
+>> +	unsigned int size = 0;
+>> +
+>> +	switch (type) {
+>> +	case V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE:
+>> +		fmt = iris_vdec_formats_out;
+>> +		size = ARRAY_SIZE(iris_vdec_formats_out);
+>> +		break;
+>> +	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+>> +		fmt = iris_vdec_formats_cap;
+>> +		size = ARRAY_SIZE(iris_vdec_formats_cap);
+>> +		break;
+>> +	default:
+>> +		return NULL;
+>> +	}
+>>  
+>>  	if (index >= size || fmt[index].type != type)
+>>  		return NULL;
+>> @@ -126,9 +162,10 @@ int iris_vdec_enum_fmt(struct iris_inst *inst, struct v4l2_fmtdesc *f)
+>>  		f->flags = V4L2_FMT_FLAG_COMPRESSED | V4L2_FMT_FLAG_DYN_RESOLUTION;
+>>  		break;
+>>  	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+>> -		if (f->index)
+>> +		fmt = find_format_by_index(inst, f->index, f->type);
+>> +		if (!fmt)
+>>  			return -EINVAL;
+>> -		f->pixelformat = V4L2_PIX_FMT_NV12;
+>> +		f->pixelformat = fmt->pixfmt;
+>>  		break;
+>>  	default:
+>>  		return -EINVAL;
+>> @@ -157,7 +194,7 @@ int iris_vdec_try_fmt(struct iris_inst *inst, struct v4l2_format *f)
+>>  		}
+>>  		break;
+>>  	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+>> -		if (f->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_NV12) {
+>> +		if (!fmt) {
+>>  			f_inst = inst->fmt_dst;
+>>  			f->fmt.pix_mp.pixelformat = f_inst->fmt.pix_mp.pixelformat;
+>>  			f->fmt.pix_mp.width = f_inst->fmt.pix_mp.width;
+>> @@ -238,10 +275,11 @@ int iris_vdec_s_fmt(struct iris_inst *inst, struct v4l2_format *f)
+>>  		inst->crop.height = f->fmt.pix_mp.height;
+>>  		break;
+>>  	case V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE:
+>> +		if (!(find_format(inst, f->fmt.pix_mp.pixelformat, f->type)))
+>> +			return -EINVAL;
+>> +
+>>  		fmt = inst->fmt_dst;
+>>  		fmt->type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
+>> -		if (fmt->fmt.pix_mp.pixelformat != V4L2_PIX_FMT_NV12)
+>> -			return -EINVAL;
+>>  		fmt->fmt.pix_mp.pixelformat = f->fmt.pix_mp.pixelformat;
+>>  		fmt->fmt.pix_mp.width = ALIGN(f->fmt.pix_mp.width, 128);
+>>  		fmt->fmt.pix_mp.height = ALIGN(f->fmt.pix_mp.height, 32);
+>> @@ -268,7 +306,8 @@ int iris_vdec_validate_format(struct iris_inst *inst, u32 pixelformat)
+>>  {
+>>  	const struct iris_fmt *fmt = NULL;
+>>  
+>> -	if (pixelformat != V4L2_PIX_FMT_NV12) {
+>> +	fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE);
+>> +	if (!fmt) {
+>>  		fmt = find_format(inst, pixelformat, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+>>  		if (!fmt)
+>>  			return -EINVAL;
+>>
+>> -- 
+>> 2.34.1
+>>
+> 
 
