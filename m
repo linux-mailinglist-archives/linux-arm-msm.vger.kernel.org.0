@@ -1,154 +1,255 @@
-Return-Path: <linux-arm-msm+bounces-74618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94167B9AC49
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 17:50:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 85CFCB9ACF7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 18:04:22 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 5881017C5C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 15:50:40 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 434D9320395
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 16:04:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 748283115A5;
-	Wed, 24 Sep 2025 15:50:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 129913126D3;
+	Wed, 24 Sep 2025 16:04:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="MH/NzWFm"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OJpw4AKZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBE4347C3
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 15:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D927316D4EF;
+	Wed, 24 Sep 2025 16:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758729034; cv=none; b=uHCJGsttiw38emOJw2u+rST5U7C7moiUdJoSmEZzPkqzx1fPnU/hf5rFpYmNdXAWv3xvF676aNCb2eIvIzx2sE8NjMyxsaIHJMdyeN2PibKW4aaydUxpaLcwJJZJiC5mhtvYSzdPsWeDPf2K+hjtLmN5hMJk9lvMt05KPajAJqQ=
+	t=1758729861; cv=none; b=VwTchktZ3PxNoTWGSbx5RnQ/O16gE8WfwbOU1aoY8FrD0qKC5C1Yuaq0xB2GwEQBTE5X7hHWmUQTg0qTtpYxTJR+t+zoBh5M612m0OsZe3P9HDo/WbuX9EyUay8jRQV+2Zn3Ktup13ezVs/YynSL1eVKvaet8m0wz77aq3ipoqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758729034; c=relaxed/simple;
-	bh=3HFVHU2A86JsxNXWuaSgCTlzKZ3pf22FDrMEBP9wlaM=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=Rdqpj9Ojk/gIUX2GEoFzNkgdU5B+l5+CLXwFzWoFMvOjNM7/MAN1mKTb3T2nKq93HWfMvgK1X+MQaF8muPqHAHPtFNd0MO0dXpkjKEVTDAlnm4VJ61z8r6VqkXdHuqHCBeYNXjA5kr5sub6MMdXelnUJvuVYgZi+UcT8mImfa7w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=MH/NzWFm; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4c88e79866aso29910651cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 08:50:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1758729030; x=1759333830; darn=vger.kernel.org;
-        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
-         :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=wKYKt3wBpNWpKAvLvz/Y9fS8qlda2gni+8GdP2SiBRk=;
-        b=MH/NzWFmMK66WDJO0EcpeK4YNLynWzOQlyauaqvCkKb3hlA0JQn91tXAOyzlwp+b+o
-         +wo6IafMnp+3aS9zFGtnQKugNM3uebSQZJ/ab30xfp5WBXV2fBzdPTbd2Gn64JC1wJMS
-         mtLWtCQxbfwh9gO3CVdTwsorBka/UWYstT1vjOplFKOgKdOV2XHRFJ4dlv7G7/B3msSu
-         oLh54+K20hlX3OY4CacgIe6uSMLi77toaBXRIjX9yBgwYA2vnr1cNv+vIjNrHIqZIlAK
-         qQNmzgKhITzTwRRweswLiC5EqsUCB01mTUwvzvH1OKnbkcAEZKlqZadqHGJeVIAvewxX
-         QPuw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758729030; x=1759333830;
-        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
-         :subject:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wKYKt3wBpNWpKAvLvz/Y9fS8qlda2gni+8GdP2SiBRk=;
-        b=rgRayXyDlgkxvmddoISmZ5883PoPNUHsP1dDNeUNkZqGAPtnVRWrYCjhcRfRr86wcG
-         Pyv08fOLYID1cI7yxSszzaAsuBttDwDJMncsRH5uRQ43EmPaNVv3CGQPF6h7hW1jHM+V
-         kq++H+dfZ24rxJaS0OWC1xeUh/ePWgHqsjw449lfLaV5XJAx9aefBT42+ov8iKQfRuuO
-         yLj/nEhWEFiODGLuU3Rz/jwqdef0volmI90zAIPg3MPCoZ9P+jblEgMhSQ8/fHs1zuZJ
-         JRW7fEvuBOPoWBUV4pNPU1Yboh9ChKI+f20psYD+25K1R6Bjc82tT1nBMl0Eb7YnRYMx
-         R4YA==
-X-Forwarded-Encrypted: i=1; AJvYcCWMb9KJ7CwNFhmWZnVAziAWfvTTrM84yU5DI8D43/ntl3CNhJX5JWsT2FZEDS74I9hwf7urRC001Il9ahKl@vger.kernel.org
-X-Gm-Message-State: AOJu0YyUl3+VdRnQxhAJ5d9u8Gjxv6VB/p0Ti7hoRbo7ODr3ytMmarYu
-	Pfxvq8CqZrQCx/8tTYClxUrpLyad7yK7mH+9Lxct0237j5XXRv4WhBw9wvldUWc0Gik=
-X-Gm-Gg: ASbGncuXh+8WAibVWX8MxnJqFMs8Emi+yxeOzpAP5xZE7wzTIHX9pxjLpdKbWMEfL3F
-	v23bRG9aVAAovpBYxqBDse6/BUQ9vdv6CEYPJwBeQnBWm1TH6HRcudCuMdiLZSOWcIdoJT3G3fE
-	KlZL3eW6h54X8CHPXxNANtB2tk128SsCJBpdc3BQAi86rd8rQK1HqdQizlq51OhgLW5oqB3IFcL
-	ugw4INLlmUXLCdAd+3jYULc0vcHD3mZvW6NLT9btyZFdfcVvfT9XDfLmmm0fg92d1gfhtun7epx
-	c2JZ2ymg+3Kq1gCTFghNTIxVko3aDjNrZx10/yhMgjLyWTrqCXi17OYrXsfpUITzVuQjFrdwaQB
-	pTX3I9KG+IA+vQWveOyqQtYLmvgL8
-X-Google-Smtp-Source: AGHT+IHFDw/Eg5JWh7qPZieLyWp9NXunBGjbJijvunF0rhToS+dVyRBZ8XDISKVOXGkGM4owfaf9Vw==
-X-Received: by 2002:ac8:7d8e:0:b0:4cf:b74b:e1af with SMTP id d75a77b69052e-4da4c1aeacfmr3705331cf.63.1758729030340;
-        Wed, 24 Sep 2025 08:50:30 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:17:ebd3::5ac? ([2606:6d00:17:ebd3::5ac])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-79351f713a5sm109494106d6.44.2025.09.24.08.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Sep 2025 08:50:29 -0700 (PDT)
-Message-ID: <b3c3a9b47a2075f6a0acc1ee501f885d4997679e.camel@ndufresne.ca>
-Subject: Re: [PATCH 1/2] media: iris: Add support for QC08C format for
- decoder
-From: Nicolas Dufresne <nicolas@ndufresne.ca>
-To: Markus Elfring <Markus.Elfring@web.de>, Dikshita Agarwal
-	 <dikshita.agarwal@oss.qualcomm.com>, linux-media@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org
-Cc: LKML <linux-kernel@vger.kernel.org>, Abhinav Kumar
- <abhinav.kumar@linux.dev>,  Bryan O'Donoghue	 <bod@kernel.org>, Mauro
- Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia	
- <vikash.garodia@oss.qualcomm.com>
-Date: Wed, 24 Sep 2025 11:50:28 -0400
-In-Reply-To: <ce08ae79-8f7e-4a37-85b9-d86c10567881@web.de>
-References: 
-	<20250919-video-iris-ubwc-enable-v1-1-000d11edafd8@oss.qualcomm.com>
-	 <ce08ae79-8f7e-4a37-85b9-d86c10567881@web.de>
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-BGkOL5lJ8hoFaStaZV+n"
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+	s=arc-20240116; t=1758729861; c=relaxed/simple;
+	bh=E9Wmp4VzDVFmzMwC3gaWc5Qt/y2pbmHe5FUqOJ1zB00=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VTmI7jzEkx+BXkpRqdy002WgPlPGdzfcwBunWr22hoUUvQqDb62pV2cXib/bdo1DNRNchi0FPsMd7YJBmvDKIf+vNdLM81AfwzR1a4gNisLYsAdk1a5DdqvCJjNOgfwkZCgKouPr/PGOaYej6yg4Myu/rYus3WyQVr8DASOnDj4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OJpw4AKZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F379C4CEE7;
+	Wed, 24 Sep 2025 16:04:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758729860;
+	bh=E9Wmp4VzDVFmzMwC3gaWc5Qt/y2pbmHe5FUqOJ1zB00=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=OJpw4AKZ3CoXkYx9DM0Zd4wz3N9iQg8icvrAH8rlczKpltLIua4fpzTkYGvX//fzj
+	 cqmHTJnF4+TH7kiGV4dKYh+1nxVvSevglJy0Apry5oPf2R21li+Qz/lhagSV1Jmk9r
+	 msb3E9R/jF5985DE2h5XeMmBGdE9JYGLSIp4Ty2Kxk498sJ1+gBpQlqYVX8nL6Qp4q
+	 W44Fk8Yq5OLB0GEf5BZg036zxAOmLchSru7+XW38U3bvKfgQsyi/6jXKbEdAri9TyB
+	 owTfqi9kFBF/Fk6cvRFoJnUMTqU1ESH2ZI0JTKGkkJSvQjJdcL73AKR3pLAYOsu/oO
+	 WcH+znnobiXNg==
+Date: Wed, 24 Sep 2025 11:04:14 -0500
+From: Rob Herring <robh@kernel.org>
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: sboyd@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org,
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	devicetree@vger.kernel.org
+Subject: Re: [PATCH] dt-bindings: spmi: add bindings for glymur-spmi-pmic-arb
+ (arbiter v8)
+Message-ID: <20250924160414.GA1780679-robh@kernel.org>
+References: <20250919140952.1057737-1-pankaj.patil@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250919140952.1057737-1-pankaj.patil@oss.qualcomm.com>
 
+On Fri, Sep 19, 2025 at 07:39:52PM +0530, Pankaj Patil wrote:
+> From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> 
+> SPMI PMIC Arbiter version 8 builds upon version 7 with support for
+> up to four SPMI buses.  To achieve this, the register map was
+> slightly rearranged.  Add a new binding file and compatible string
+> for version 8 using the name 'glymur' as the Qualcomm Technologies,
+> Inc. Glymur SoC is the first one to use PMIC arbiter version 8.  This
+> specifies the new register ranges needed only for version 8.
+> 
+> Signed-off-by: David Collins <david.collins@oss.qualcomm.com>
+> Signed-off-by: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> ---
+>  .../spmi/qcom,glymur-spmi-pmic-arb.yaml       | 158 ++++++++++++++++++
+>  1 file changed, 158 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml b/Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml
+> new file mode 100644
+> index 000000000000..e80997a5fb4b
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/spmi/qcom,glymur-spmi-pmic-arb.yaml
+> @@ -0,0 +1,158 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/spmi/qcom,glymur-spmi-pmic-arb.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. Glymur SPMI Controller (PMIC Arbiter v8)
+> +
+> +maintainers:
+> +  - Stephen Boyd <sboyd@kernel.org>
+> +
+> +description: |
+> +  The Glymur SPMI PMIC Arbiter implements HW version 8 and it's an SPMI
+> +  controller with wrapping arbitration logic to allow for multiple on-chip
+> +  devices to control up to 4 SPMI separate buses.
+> +
+> +  The PMIC Arbiter can also act as an interrupt controller, providing interrupts
+> +  to slave devices.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,glymur-spmi-pmic-arb
+> +
+> +  reg:
+> +    items:
+> +      - description: core registers
+> +      - description: tx-channel per virtual slave registers
+> +      - description: rx-channel (called observer) per virtual slave registers
+> +      - description: channel to PMIC peripheral mapping registers
+> +
+> +  reg-names:
+> +    items:
+> +      - const: core
+> +      - const: chnls
+> +      - const: obsrvr
+> +      - const: chnl_map
+> +
+> +  ranges: true
+> +
+> +  '#address-cells':
+> +    const: 2
+> +
+> +  '#size-cells':
+> +    const: 2
+> +
+> +  qcom,ee:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 5
+> +    description: >
+> +      indicates the active Execution Environment identifier
+> +
+> +  qcom,channel:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    minimum: 0
+> +    maximum: 5
+> +    description: >
+> +      which of the PMIC Arb provided channels to use for accesses
 
---=-BGkOL5lJ8hoFaStaZV+n
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+We already have these properties defined elsewhere. You need to pull the 
+common properties out into a shared schema and then reference that 
+schema in this one. IOW, a given property should only have a type $ref 
+in a single place.
 
-Hi,
-
-Le mercredi 24 septembre 2025 =C3=A0 14:32 +0200, Markus Elfring a =C3=A9cr=
-it=C2=A0:
-> =E2=80=A6
-> > +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
-> > @@ -261,7 +261,10 @@ int iris_get_buffer_size(struct iris_inst *inst,
-> > =C2=A0		case BUF_INPUT:
-> > =C2=A0			return iris_dec_bitstream_buffer_size(inst);
-> > =C2=A0		case BUF_OUTPUT:
-> > -			return iris_yuv_buffer_size_nv12(inst);
-> > +			if (inst->fmt_dst->fmt.pix_mp.pixelformat =3D=3D
-> > V4L2_PIX_FMT_QC08C)
-> > +				return iris_yuv_buffer_size_qc08c(inst);
-> > +			else
-> > +				return iris_yuv_buffer_size_nv12(inst);
-> =E2=80=A6
->=20
-> How do you think about to use a source code variant like the following?
->=20
-> 			return (inst->fmt_dst->fmt.pix_mp.pixelformat =3D=3D
-> V4L2_PIX_FMT_QC08C)
-> 				? iris_yuv_buffer_size_qc08c(inst)
-> 				: iris_yuv_buffer_size_nv12(inst);
-
-Please don't, this is less readable and have no explained technical advanta=
-ges.
-
-Nicolas
-
->=20
->=20
-> Regards,
-> Markus
-
---=-BGkOL5lJ8hoFaStaZV+n
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaNQTRAAKCRDZQZRRKWBy
-9M4hAP4xMwFl82DVj9T4UD6n+w1SjuDmzrNmUl3WHwoFFThJMAD/de71Hs2BOyqL
-rqF9js4QRLUpv4wRTLhyGSuePA0+EQ0=
-=v93q
------END PGP SIGNATURE-----
-
---=-BGkOL5lJ8hoFaStaZV+n--
+> +
+> +patternProperties:
+> +  "^spmi@[a-f0-9]+$":
+> +    type: object
+> +    $ref: /schemas/spmi/spmi.yaml
+> +    unevaluatedProperties: false
+> +
+> +    properties:
+> +      reg:
+> +        items:
+> +          - description: configuration registers
+> +          - description: interrupt controller registers
+> +          - description: channel owner EE mapping registers
+> +
+> +      reg-names:
+> +        items:
+> +          - const: cnfg
+> +          - const: intr
+> +          - const: chnl_owner
+> +
+> +      interrupts:
+> +        maxItems: 1
+> +
+> +      interrupt-names:
+> +        const: periph_irq
+> +
+> +      interrupt-controller: true
+> +
+> +      '#interrupt-cells':
+> +        const: 4
+> +        description: |
+> +          cell 1: slave ID for the requested interrupt (0-15)
+> +          cell 2: peripheral ID for requested interrupt (0-255)
+> +          cell 3: the requested peripheral interrupt (0-7)
+> +          cell 4: interrupt flags indicating level-sense information,
+> +                  as defined in dt-bindings/interrupt-controller/irq.h
+> +
+> +required:
+> +  - compatible
+> +  - reg-names
+> +  - qcom,ee
+> +  - qcom,channel
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        arbiter@c400000 {
+> +            compatible = "qcom,glymur-spmi-pmic-arb";
+> +            reg = <0x0 0xc400000 0x0 0x3000>,
+> +                  <0x0 0xc900000 0x0 0x400000>,
+> +                  <0x0 0xc4c0000 0x0 0x400000>,
+> +                  <0x0 0xc403000 0x0 0x8000>;
+> +            reg-names = "core", "chnls", "obsrvr", "chnl_map";
+> +
+> +            qcom,ee = <0>;
+> +            qcom,channel = <0>;
+> +
+> +            #address-cells = <2>;
+> +            #size-cells = <2>;
+> +            ranges;
+> +
+> +            spmi@c426000 {
+> +                reg = <0x0 0xc426000 0x0 0x4000>,
+> +                      <0x0 0xc8c0000 0x0 0x10000>,
+> +                      <0x0 0xc42a000 0x0 0x8000>;
+> +                reg-names = "cnfg", "intr", "chnl_owner";
+> +
+> +                interrupts-extended = <&pdc 1 IRQ_TYPE_LEVEL_HIGH>;
+> +                interrupt-names = "periph_irq";
+> +                interrupt-controller;
+> +                #interrupt-cells = <4>;
+> +
+> +                #address-cells = <2>;
+> +                #size-cells = <0>;
+> +            };
+> +
+> +            spmi@c437000 {
+> +                reg = <0x0 0xc437000 0x0 0x4000>,
+> +                      <0x0 0xc8d0000 0x0 0x10000>,
+> +                      <0x0 0xc43b000 0x0 0x8000>;
+> +                reg-names = "cnfg", "intr", "chnl_owner";
+> +
+> +                interrupts-extended = <&pdc 3 IRQ_TYPE_LEVEL_HIGH>;
+> +                interrupt-names = "periph_irq";
+> +                interrupt-controller;
+> +                #interrupt-cells = <4>;
+> +
+> +                #address-cells = <2>;
+> +                #size-cells = <0>;
+> +            };
+> +        };
+> +    };
+> -- 
+> 2.34.1
+> 
 
