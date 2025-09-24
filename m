@@ -1,205 +1,185 @@
-Return-Path: <linux-arm-msm+bounces-74662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74663-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E29F2B9BB77
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:31:49 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26DBDB9BB8F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:34:17 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05ACE1BC2440
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:32:12 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 608317A5BC8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:32:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A0E421767C;
-	Wed, 24 Sep 2025 19:31:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 799DD26E146;
+	Wed, 24 Sep 2025 19:34:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="b5/u/dXh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="PAyAPJd3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7C425BEE8;
-	Wed, 24 Sep 2025 19:31:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18F626D4C6
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:34:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758742306; cv=none; b=O2G8ZMKpx9D01rAvRNblyQyGQ5LUS9T/fz4XbC4geRjh22Xuh6QyvH8Ppkm5f6z3tkxrdfEYoD3pPdqNnuFL5hKuNx8NUlzTIm5aGVl9U8VVCs+lqhuUyCqR/rzAWfG+J2oVkFx5IC60+7Kyg5UY/e0jYQII5u5w6SxSFZeMPlU=
+	t=1758742449; cv=none; b=nzaCx5ojwiqznZwJ2RWkAXJF5Bc/zOjqp2DdHrDN20h1/P+OacEBt4NU1iybWZEFlPeqSDnuvy6oA7/+yFfd+yckXUdcjjIMzx0bDZ5qAbs/CvIYxC9Rhush9FgMTpHO0hZRtGcKH/N9eNSkJbviDnkXQOswBGJiENzj5MJ/5fA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758742306; c=relaxed/simple;
-	bh=tlixfbHwjHBby8L7DHyt8s5o7TZ4R6qxUBlWrExicus=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cCSoXZUDBXvx4kty6ux+5P+UFUHGuldKaCvhVCjNQApruvhLz7GJKJ7mei6CrCww1DdbENKiH6AKWjKLXZ3m2Vm73PnC8ldjPmTsJqZjvcE1naQoQminDBN86gSxrBd4dfFTgfeaoSINGN4TU1OJW+1aK/dQdX+sPG/b63mFOgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=b5/u/dXh; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=wWHuMNffMGutQbJvBKG/MZveRAosfgTjgtTC/tzZqkI=; b=b5/u/dXh0JBJyMqjvQCaQFkHk+
-	8Ksv2CPwkCAHaWyXWet8FTyq9FgPyo7XewgPvma6VXyppo3tezvBghJZfbT9HetuKxM795x5Kn7sr
-	hIwXirxpW1Br4vDkZdC0CkWR6PKd2tEIxzEtktNIuD7WKO7pXP4kAfvgqHmmkTra4W+m4smtqCSuK
-	XCOL9BxcPLVKGW785xU3zvkHu3JWuKs4AbGatRATYJYy4dHehqcVXwlroC7HjAXdeuwBz+1c2MDRq
-	4FJmYWRFEXRXE1ABa/Jzw5zSJ3zIMTfFp8EaqrW37NtkfPs0PSG0jrfnENMkugEBKVbMTyULQoSIV
-	Sb37R4Rg==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:34686)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1v1VCp-000000001DY-2osw;
-	Wed, 24 Sep 2025 20:31:11 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1v1VCd-000000007PA-3Edy;
-	Wed, 24 Sep 2025 20:30:59 +0100
-Date: Wed, 24 Sep 2025 20:30:59 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
-	Abhishek Chauhan <quic_abchauha@quicinc.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alexis Lothore <alexis.lothore@bootlin.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Drew Fustini <dfustini@tenstorrent.com>,
-	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
-	Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>, Vinod Koul <vkoul@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: Re: [PATCH RFC net-next 0/9] net: stmmac: experimental PCS conversion
-Message-ID: <aNRG82biP9mA-rvm@shell.armlinux.org.uk>
-References: <aNQ1oI0mt3VVcUcF@shell.armlinux.org.uk>
- <b7fb3c8c-bfa6-4e46-b5ed-05e4752bbc00@intel.com>
+	s=arc-20240116; t=1758742449; c=relaxed/simple;
+	bh=xfl3uxDOzjZCkGChsJFqKv75YMjMYfOWhpiQ/rlytpo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NfrZeHRyo5Q7KEKkMvw5mEtIoM7swcD+K41WdUD/JLyEsB5XxfPwW7nglE59QNQ9ZVNGTXhG4bZkZ4PptvgKEFknGFtd21GhHMqG0GFDXwBFuPXByW0F6HkIq7fICUfbIrQpnJiqpkhe6amjEFK6YMSQqrck3MOx06QI66x8Hbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=PAyAPJd3; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58OD1BtI002114
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:34:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:message-id
+	:mime-version:subject:to; s=qcppdkim1; bh=6kyEEdDA7/yMJdt973yjQu
+	IpFG0VMOH8xFXM5wrtcS0=; b=PAyAPJd3f+PcSF2lo4S01+lUukq+wa3idsG0st
+	l/FmB219Zpc97VRDuXpj3KWzwjvaX7S4vL3wBhS3sQAP+aveZPWMJqPPJGgBK6AQ
+	37LGUEbtiOSsgYRNH8sHJzuEGdtejLp7tOsXdyzFx/2tkG1r20EiV6QFWJZeSR6m
+	L9hO+HgVRO6zfNckuB3HZUVcH0aafjdoa4949l6P8ppt5RHiYvkfvPDay3+r7qYl
+	sLbRBy+NFmZ+9MNM82vtN++SrQqthqmFDV3NkR/ffQJTmvVkHsHoz+jv1LXqnC7V
+	v7UrImogDCSna8u3aNOc5qxuliroLBetwQ4b2+w99jevLZaA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499k98nj84-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:34:06 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b5ecf597acso4471851cf.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 12:34:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758742446; x=1759347246;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6kyEEdDA7/yMJdt973yjQuIpFG0VMOH8xFXM5wrtcS0=;
+        b=YdZ2J0wJTJC2UiYcws9nbBnh6uyJz7jLBKQvFIudrMjqZTKReoQ3D9CHcgdPh7MQ6Y
+         BvAGVe0fReNrtEp1IYFv/mdb09mCzBgQmr6SPPe6SeTJtm+THSc21fyOGdqpPD3ZhuDF
+         tlUI+C6J2StJVoVQi3pFd65jEIL5+Sz5t0E6iPtLtO2JI4nV2V7FN1OKVZLFR71xoZwh
+         HvNEbn5M1WJYb7f//wDfn70XqSohhlap++PMyw37oTdMRLQb2D7cuxMEQjElFI32hwZ1
+         U6/1JzrCkyQJgn+HkS+xRBp0mSr+57E6AvgZrsUrxlt6Nxv2RQHlwQ9/BS8YSyQYNcfC
+         bZ4g==
+X-Forwarded-Encrypted: i=1; AJvYcCXL3xf+gzSKhEQ8npKTJaBtyNAF2X1k3P/irrmVDWgxWHQV7fO6YnC+pUn5v9cKpUQpLnV3XmNG0bm/ooS3@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx37eYsz29nvWomhhtKq4mHyju2XAOrZ6TxHypxx8CerHgh/gAr
+	9cIP3EH8uiKUFNGjxvszfmKJskgu3N0N1Esq7qa2ZeJDVldVehGqtgB8rGE1jtZAJEO0AyueSIw
+	r633q+im9OU9CxQKrQfxU5ADB1k8Xho4YHx0c04IZnLy2rBUhYPQFC0seJdi0TrV5vujg
+X-Gm-Gg: ASbGnctqTfgTCVu2PpuTrKeuDqn6FsTE1pSp2FtfSe48NI45yRvGKUi4WANZ9qU2K3P
+	7kMZngGsJizw/6YhKimkjsSbZTwg5pXwWonmATWColkOSDbP3hTSu+/wPTH62mtn8Saf5pqn8vN
+	laLYoYDm1zU9BiUJWzuLB7BWW9P0kkf+Z5MwZqd8KZerqtIvS5SGt/8Sd4jyW2s9JrB9PNNcVer
+	jUCotdOVe2yPezGXaR6EqBs4BHbPHFNV4go2YdAlGSkJOveJINuyuwAxFkiJofaFNkBHRe5HmLS
+	qJxOETejV0FTQwt0VdFHAQatSE2qDaKC0RQwTnBBPj17/IYmLAEKnlRRgtcVZPQstcs3O8I3Rnj
+	RDu/qgOFnAQuCywcVBqDuL4DZ5Dz8lDJ89te5FIzWOC3Kg1DqVsUI
+X-Received: by 2002:a05:622a:1aaa:b0:4b5:d739:627b with SMTP id d75a77b69052e-4da4cd45775mr15807551cf.76.1758742445794;
+        Wed, 24 Sep 2025 12:34:05 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF4fb8o4wRnsBHeduGJFDhap3zn+3L+mr0uLlLrQBQk9n38VpgMCuzXlsaG6Aw9BO3BYu12Mg==
+X-Received: by 2002:a05:622a:1aaa:b0:4b5:d739:627b with SMTP id d75a77b69052e-4da4cd45775mr15806951cf.76.1758742445116;
+        Wed, 24 Sep 2025 12:34:05 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-57e4a6033d9sm2895884e87.119.2025.09.24.12.34.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Sep 2025 12:34:03 -0700 (PDT)
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Wed, 24 Sep 2025 22:34:02 +0300
+Subject: [PATCH v2] ASoC: qcom: sc8280xp: use sa8775p/ subdir for QCS9100 /
+ QCS9075
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <b7fb3c8c-bfa6-4e46-b5ed-05e4752bbc00@intel.com>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250924-lemans-evk-topo-v2-1-7d44909a5758@oss.qualcomm.com>
+X-B4-Tracking: v=1; b=H4sIAKlH1GgC/3WNwQ6CMBBEf4Xs2SVtxUo5+R+GA4FVGmmLXWw0h
+ H+3cncOk7xJZmYFpmiJoSlWiJQs2+AzqEMB/dj5O6EdMoMS6iSMrHEi13lGSg9cwhxwyDofe2W
+ EqiC35kg3+94Xr23m0fIS4mc/SPKX/t9KEiUaXQstBGk1VJfAXD5f3dQH58ps0G7b9gUuMFLet
+ QAAAA==
+X-Change-ID: 20250918-lemans-evk-topo-dddd73c29024
+To: Srinivas Kandagatla <srini@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+        linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1826;
+ i=dmitry.baryshkov@oss.qualcomm.com; h=from:subject:message-id;
+ bh=xfl3uxDOzjZCkGChsJFqKv75YMjMYfOWhpiQ/rlytpo=;
+ b=owEBbQGS/pANAwAKAYs8ij4CKSjVAcsmYgBo1EerNqyWNqAmjB/B6iM57TGa98B3K5RO/f5OQ
+ aE69AMHWRGJATMEAAEKAB0WIQRMcISVXLJjVvC4lX+LPIo+Aiko1QUCaNRHqwAKCRCLPIo+Aiko
+ 1V3QCACvZy2VhV6SrgN8cejwqPVDT6FcUGvZfLuhaS2FrWqm9ZaPPAn/plS9tyWvFlayyxFwgP+
+ T5CrdYGV7YOX0QdPF9lauQCYfMO+FzD33Twm9WZwCt21wqD7bwrM5xDkJPwOI70M1fdVuaJLxyO
+ xkvxawW4mcaYk7OaMojGOVfew4YR4jjd8bG0TE7L48F6s2iA8AwOYaOdQRxLlC2Jae2JBJpkFF7
+ wLHQjLGlN6O6Xs2QkVKN6jMSmW60pqs94uVV6/cnsVD2MkEcMesfEOlg01ebeHBLGyr6b2sQNvT
+ e15lbiXT8U8kXWva1AIRD88umW4y8Cg1jAzjCPztli5RofaV
+X-Developer-Key: i=dmitry.baryshkov@oss.qualcomm.com; a=openpgp;
+ fpr=8F88381DD5C873E4AE487DA5199BF1243632046A
+X-Proofpoint-GUID: baUS4qVXXFz-NJ1B9BH1jZFeoqQvbyxS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAxOCBTYWx0ZWRfX0GxMFFJfq/dc
+ P7cEWLPyIpfwb4QxGDFoVl2qAZ0ndltLR7ZWhsC56Bo9Wx0bDai2BlU1QusBYiLsH0a9K4xAayh
+ PfA75FKCYSLiQjaTmB+ufN5h9YgWKG3MvM1XiRkhPlyZRvGXgchMl9auvWehfxTzdlX1POfWf38
+ 8RbP/OHLpJ8KlXYA6eRpDWFka+/K5AEa3L0VqOblPsPPUNo5dSkcRZuLkCjwJqA0evURGamcSHA
+ jfz1sL3o+bmEM/c2+KkEKbL8Nduh5rLeub5z5YXbdAAFKhIkCx0HpF9QZ29XFuAgbBYHJkx4vhk
+ msoZAWbLUlW9nZFPsnr2+FRQIpx+iK/AqBnh3BXCiGnSK8KtiZDAPQ8sXfWuyc667OihhkGFqT6
+ 7/KWyFks
+X-Proofpoint-ORIG-GUID: baUS4qVXXFz-NJ1B9BH1jZFeoqQvbyxS
+X-Authority-Analysis: v=2.4 cv=Dp1W+H/+ c=1 sm=1 tr=0 ts=68d447ae cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KGRU7LGiJR5Q1pf3Q6AA:9
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-24_06,2025-09-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 impostorscore=0
+ phishscore=0 spamscore=0 priorityscore=1501 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200018
 
-On Wed, Sep 24, 2025 at 12:13:18PM -0700, Jacob Keller wrote:
-> 
-> 
-> On 9/24/2025 11:17 AM, Russell King (Oracle) wrote:
-> > This series is radical - it takes the brave step of ripping out much of
-> > the existing PCS support code and throwing it all away.
-> > 
-> > I have discussed the introduction of the STMMAC_FLAG_HAS_INTEGRATED_PCS
-> > flag with Bartosz Golaszewski, and the conclusion I came to is that
-> > this is to workaround the breakage that I've been going on about
-> > concerning the phylink conversion for the last five or six years.
-> > 
-> > The problem is that the stmmac PCS code manipulates the netif carrier
-> > state, which confuses phylink.
-> > 
-> > There is a way of testing this out on the Jetson Xavier NX platform as
-> > the "PCS" code paths can be exercised while in RGMII mode - because
-> > RGMII also has in-band status and the status register is shared with
-> > SGMII. Testing this out confirms my long held theory: the interrupt
-> > handler manipulates the netif carrier state before phylink gets a
-> > look-in, which means that the mac_link_up() and mac_link_down() methods
-> > are never called, resulting in the device being non-functional.
-> > 
-> > Moreover, on dwmac4 cores, ethtool reports incorrect information -
-> > despite having a full-duplex link, ethtool reports that it is
-> > half-dupex.
-> > 
-> > Thus, this code is completely broken - anyone using it will not have
-> > a functional platform, and thus it doesn't deserve to live any longer,
-> > especially as it's a thorn in phylink.
-> > 
-> > Rip all this out, leaving just the bare bones initialisation in place.
-> > 
-> > However, this is not the last of what's broken. We have this hw->ps
-> > integer which is really not descriptive, and the DT property from
-> > which it comes from does little to help understand what's going on.
-> > Putting all the clues together:
-> > 
-> > - early configuration of the GMAC configuration register for the
-> >   speed.
-> > - setting the SGMII rate adapter layer to take its speed from the
-> >   GMAC configuration register.
-> > 
-> > Lastly, setting the transmit enable (TE) bit, which is a typo that puts
-> > the nail in the coffin of this code. It should be the transmit
-> > configuration (TC) bit. Given that when the link comes up, phylink
-> > will call mac_link_up() which will overwrite the speed in the GMAC
-> > configuration register, the only part of this that is functional is
-> > changing where the SGMII rate adapter layer gets its speed from,
-> > which is a boolean.
-> > 
-> > From what I've found so far, everyone who sets the snps,ps-speed
-> > property which configures this mode also configures a fixed link,
-> > so the pre-configuration is unnecessary - the link will come up
-> > anyway.
-> > 
-> > So, this series rips that out the preconfiguration as well, and
-> > replaces hw->ps with a boolean hw->reverse_sgmii_enable flag.
-> > 
-> > We then move the sole PCS configuration into a phylink_pcs instance,
-> > which configures the PCS control register in the same way as is done
-> > during the probe function.
-> > 
-> > Thus, we end up with much easier and simpler conversion to phylink PCS
-> > than previous attempts.
-> > 
-> > Even so, this still results in inband mode always being enabled at the
-> > moment in the new .pcs_config() method to reflect what the probe
-> > function was doing. The next stage will be to change that to allow
-> > phylink to correctly configure the PCS. This needs fixing to allow
-> > platform glue maintainers who are currently blocked to progress.
-> > 
-> > Please note, however, that this has not been tested with any SGMII
-> > platform.
-> > 
-> > I've tried to get as many people into the Cc list with get_maintainers,
-> > I hope that's sufficient to get enough eyeballs on this.
-> > 
-> 
-> I'm no expert with this hardware or driver, but all of your explanations
-> seem reasonable to me.
-> 
-> I'd guess the real step is to try and get this tested against the
-> variety of hardware supported by stmmac?
+All firmware for the Lemans platform aka QCS9100 aka QCS9075 is for
+historical reasons located in the qcom/sa8775p/ subdir inside
+linux-firmware. The only exceptions to this rule are audio topology
+files. While it's not too late, change the subdir to point to the
+sa8775p/ subdir, so that all firmware for that platform is present at
+the same location.
 
-Yes please, that would be very helpful, as I don't want to regress
-anyone's setup. I'm hoping that this series is going to be the low-
-risk change.
+Fixes: 5b5bf5922f4c ("ASoC: qcom: sc8280xp: Add sound card support for QCS9100 and QCS9075")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+---
+Changes in v2:
+- Rebased on linux-next (Mark)
+- Fixed commit subject (Mark)
+- Link to v1: https://lore.kernel.org/r/20250918-lemans-evk-topo-v1-1-9680600e62d4@oss.qualcomm.com
+---
+ sound/soc/qcom/sc8280xp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks.
+diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+index 3cf71cb1766ed7e3d6caf6a74876f6102ddcbc41..78e327bc2f07767b1032f09af7f45b947e7eb67a 100644
+--- a/sound/soc/qcom/sc8280xp.c
++++ b/sound/soc/qcom/sc8280xp.c
+@@ -194,8 +194,8 @@ static const struct of_device_id snd_sc8280xp_dt_match[] = {
+ 	{.compatible = "qcom,qcm6490-idp-sndcard", "qcm6490"},
+ 	{.compatible = "qcom,qcs6490-rb3gen2-sndcard", "qcs6490"},
+ 	{.compatible = "qcom,qcs8275-sndcard", "qcs8300"},
+-	{.compatible = "qcom,qcs9075-sndcard", "qcs9075"},
+-	{.compatible = "qcom,qcs9100-sndcard", "qcs9100"},
++	{.compatible = "qcom,qcs9075-sndcard", "sa8775p"},
++	{.compatible = "qcom,qcs9100-sndcard", "sa8775p"},
+ 	{.compatible = "qcom,sc8280xp-sndcard", "sc8280xp"},
+ 	{.compatible = "qcom,sm8450-sndcard", "sm8450"},
+ 	{.compatible = "qcom,sm8550-sndcard", "sm8550"},
 
+---
+base-commit: bf2602a3cb2381fb1a04bf1c39a290518d2538d1
+change-id: 20250918-lemans-evk-topo-dddd73c29024
+
+Best regards,
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+With best wishes
+Dmitry
+
 
