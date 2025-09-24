@@ -1,98 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-74661-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74662-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AB48B9BB47
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:30:21 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id E29F2B9BB77
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:31:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 410D01BC226F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:30:43 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 05ACE1BC2440
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:32:12 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3D9026A1A4;
-	Wed, 24 Sep 2025 19:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6A0E421767C;
+	Wed, 24 Sep 2025 19:31:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="prEOj23t"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="b5/u/dXh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18DD20E005
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7C425BEE8;
+	Wed, 24 Sep 2025 19:31:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758742214; cv=none; b=APZEcTIq3IP2Z2HrHQQp26HjY17meop0eGOIDzp83t/X/tPskwDqIsz4iZDQsTGqvzEd1CM9me30cspEfXjMuD2eIrrCawXLHRfjaYq2t6Baj7jr44dugL6DOc1GawGlfq/a0qv1YzinqI+KwyyW1p3cqzvfWNzewpqbjW5TPso=
+	t=1758742306; cv=none; b=O2G8ZMKpx9D01rAvRNblyQyGQ5LUS9T/fz4XbC4geRjh22Xuh6QyvH8Ppkm5f6z3tkxrdfEYoD3pPdqNnuFL5hKuNx8NUlzTIm5aGVl9U8VVCs+lqhuUyCqR/rzAWfG+J2oVkFx5IC60+7Kyg5UY/e0jYQII5u5w6SxSFZeMPlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758742214; c=relaxed/simple;
-	bh=Cq6LipIkUE9syfPqdg6mldI628jIm+60Pxd69wK/kDM=;
+	s=arc-20240116; t=1758742306; c=relaxed/simple;
+	bh=tlixfbHwjHBby8L7DHyt8s5o7TZ4R6qxUBlWrExicus=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ju3NJF/+q37IwelRYKIegClevxaOJOgmcejA/Yh2Sk7676uDD1h0fLBTWimdI/XogI1lLmM9p9NZUwJKfBRD5q1IZS7nhJLOEE8zpwACwy/leFSmXwodM1cCUoDajTKCmRt+Rj7EcitVkNaBoI0YhnVl5hkGmLN6+jOf2jtpfZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=prEOj23t; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58OCwoOT025572
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:30:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=rBfMnnfWt3L4feJTU+lsPLM+
-	2GHenz7Bt8xSF1WehQA=; b=prEOj23tKHDiF1migpbqeu6tOAWw54UOl4XdDMbY
-	5AlfEUkGmZXlfoofa4Bv9+zedcL1LMtnhmB4MXA5GgwWXiOvJnFBfWhwDYlQHwNH
-	aX/0ql+ebc5sjlUwUwvBpbfH+F+x4rM493SGyAVeCPV0PLQukxxi0lxPW7wxS6hN
-	QCyqQMjqFHC+t7aMnORh6Pi6Qaf7mbfRRTcYzTvU0cvdDcGReHkPytbtwJFdv9re
-	uyI+4BocQPYeoJVdtCt2tTHcPhBoAtb37WzoVme5yoPupDMvdauqtaaaWFFktFYK
-	2xyK9MVqmb9Gtfo9sJWlXeM1OTnlddhBXJLp9PiGZ6NLRw==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499hyewvc5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:30:11 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4ca8c6ec82eso4402471cf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 12:30:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758742210; x=1759347010;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rBfMnnfWt3L4feJTU+lsPLM+2GHenz7Bt8xSF1WehQA=;
-        b=m7s/g1QBpRje55kKUen0H4HblZDGGbKZxmet2oZnnshATnic3UKuXOYfVTUnMmKGom
-         FF1xbtO0ARM5wdVfJVC/oZHBVGuE6oQwMZPStUGaKzv7Ohg1thksa10BkgnUSgEGSgU5
-         HUfrF78+zm/o1JXsvx94wNWKhxEYru4yFRlH0DgWG5vWj72Mymoa/3l3eWIjHMD/gO/9
-         gv9vK5jY4dmJ9HDR1dSfJYnbZCF7phthfagojuT5VGFI6iZjpSb09Ostx4RQHw0kiHe+
-         AlZ0GjGopQ27+rjDh42pRKIJCo9JpuUY7zqov3/7Has2SMzzEtrgMjIr/lmM1vS2T3IU
-         0spg==
-X-Forwarded-Encrypted: i=1; AJvYcCW6Z7IfdwFONCMLPdjw4n8YePgV3OlsKenHiPl0EyDzOvMo9cCJOP2MwXJmq2tKbcYiSiW1IFU1iEWGUPbU@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw7YLuLS906/Sy5VGvXayWH2/NGY/YSKvICJej8XHWCMNXQjurT
-	x6KuzniMg9vTiWthjb5qWfVwwLQfJMCx8Z/whBp0keWv2RWVIzcQ2ZlCWEb2Xkr/Ej3JIOZwoT0
-	9LemtLftA3C8wuAaLgl/+Fj7uleaqH5UPhg24M43ZroOVQNb0K9+QssLoHQikQw13unpW
-X-Gm-Gg: ASbGncs7+9wfqtNCvPY0HDOKeVRbxr7DmCNbG/VvPdXU7a7zaXa+D+wSJdK84Rv8zbR
-	SpDLUj+IxL2hooDBstRRvrkvNW0LpOvLou60vGG5XQAsNnpoO81BpDJFLdDFiDdKn8YOHtOkGBO
-	ilKMQ+Y87BJPs+dfuYjyssRECvrm3fr4oKbXwb5ew90XKWUtx0Fpl5wrpofUS8pu55VxCQrjgb6
-	3CnJL8sxl56QcXUeLHxOLFyFHNqduEKnSrUT/QQ4j+kKuIaVBYxxmLO0HWWJK+zoaGOaj78gnPb
-	Jun/vI8ubsjaBe3Rx39rAOb7u3mK0M4iL6otYEuH5CLeKdZdpMrg+kPCaxEoYc5HXTtpn2FJrcd
-	JkAT5SPC478Fh1EzLZm84p9pbrP3ARyUjMl5ScwK2pSt079QtuB07
-X-Received: by 2002:a05:622a:84:b0:4d4:bb65:eda3 with SMTP id d75a77b69052e-4da47354dafmr14275951cf.5.1758742210365;
-        Wed, 24 Sep 2025 12:30:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWcHMG4HOiwIAPrOL7ZzQISPy6nwaAhZ4vWAdXmd32A3hnTKJfG+uBNcsuFtkWL1uneRm3xQ==
-X-Received: by 2002:a05:622a:84:b0:4d4:bb65:eda3 with SMTP id d75a77b69052e-4da47354dafmr14275521cf.5.1758742209787;
-        Wed, 24 Sep 2025 12:30:09 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-36815abf943sm30163341fa.61.2025.09.24.12.30.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Sep 2025 12:30:07 -0700 (PDT)
-Date: Wed, 24 Sep 2025 22:30:06 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Xilin Wu <sophon@radxa.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
- Q6A
-Message-ID: <gtao4eak2hp2upsjpfudkkjlrcoeelddvh7x55y6nshiwla4of@wv5yu6a7g7cw>
-References: <20250924-radxa-dragon-q6a-v4-0-10d584f2c806@radxa.com>
- <20250924-radxa-dragon-q6a-v4-2-10d584f2c806@radxa.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=cCSoXZUDBXvx4kty6ux+5P+UFUHGuldKaCvhVCjNQApruvhLz7GJKJ7mei6CrCww1DdbENKiH6AKWjKLXZ3m2Vm73PnC8ldjPmTsJqZjvcE1naQoQminDBN86gSxrBd4dfFTgfeaoSINGN4TU1OJW+1aK/dQdX+sPG/b63mFOgs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=b5/u/dXh; arc=none smtp.client-ip=78.32.30.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=wWHuMNffMGutQbJvBKG/MZveRAosfgTjgtTC/tzZqkI=; b=b5/u/dXh0JBJyMqjvQCaQFkHk+
+	8Ksv2CPwkCAHaWyXWet8FTyq9FgPyo7XewgPvma6VXyppo3tezvBghJZfbT9HetuKxM795x5Kn7sr
+	hIwXirxpW1Br4vDkZdC0CkWR6PKd2tEIxzEtktNIuD7WKO7pXP4kAfvgqHmmkTra4W+m4smtqCSuK
+	XCOL9BxcPLVKGW785xU3zvkHu3JWuKs4AbGatRATYJYy4dHehqcVXwlroC7HjAXdeuwBz+1c2MDRq
+	4FJmYWRFEXRXE1ABa/Jzw5zSJ3zIMTfFp8EaqrW37NtkfPs0PSG0jrfnENMkugEBKVbMTyULQoSIV
+	Sb37R4Rg==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:34686)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1v1VCp-000000001DY-2osw;
+	Wed, 24 Sep 2025 20:31:11 +0100
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.98.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1v1VCd-000000007PA-3Edy;
+	Wed, 24 Sep 2025 20:30:59 +0100
+Date: Wed, 24 Sep 2025 20:30:59 +0100
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>,
+	Abhishek Chauhan <quic_abchauha@quicinc.com>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Alexis Lothore <alexis.lothore@bootlin.com>,
+	Andrew Lunn <andrew+netdev@lunn.ch>,
+	Boon Khai Ng <boon.khai.ng@altera.com>,
+	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
+	Daniel Machon <daniel.machon@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Drew Fustini <dfustini@tenstorrent.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
+	Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
+	Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-stm32@st-md-mailman.stormreply.com,
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Maxime Chevallier <maxime.chevallier@bootlin.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Rohan G Thomas <rohan.g.thomas@altera.com>,
+	Shenwei Wang <shenwei.wang@nxp.com>,
+	Simon Horman <horms@kernel.org>,
+	Song Yoong Siang <yoong.siang.song@intel.com>,
+	Swathi K S <swathi.ks@samsung.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>, Vinod Koul <vkoul@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Yu-Chun Lin <eleanor15x@gmail.com>
+Subject: Re: [PATCH RFC net-next 0/9] net: stmmac: experimental PCS conversion
+Message-ID: <aNRG82biP9mA-rvm@shell.armlinux.org.uk>
+References: <aNQ1oI0mt3VVcUcF@shell.armlinux.org.uk>
+ <b7fb3c8c-bfa6-4e46-b5ed-05e4752bbc00@intel.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,65 +105,101 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250924-radxa-dragon-q6a-v4-2-10d584f2c806@radxa.com>
-X-Proofpoint-GUID: Md9yZmvv12tQlgPyb1J0wd_RUVaNFm4r
-X-Authority-Analysis: v=2.4 cv=YMOfyQGx c=1 sm=1 tr=0 ts=68d446c3 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=ksxQWNrZAAAA:8 a=EUspDBNiAAAA:8 a=JC7H1UVUsGpFjcbbhlEA:9
- a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22 a=l7WU34MJF0Z5EO9KEJC3:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAwNCBTYWx0ZWRfX1nn3nuyqAO2N
- cAenGVX/ibL0bic707lKPtOpj4rChnA+y394ftwb8ygbb5FFbbayvZT84OUlLrGMTD3FAw8uwSE
- JbyV0InQwF24SY9BFI229208AKI4rE8HyzlrNVRAx432vf2dZaGtNNAGQ2IMLvpW574g1VWoxrO
- 3WKx/QqiZYGEk/A4k805dz6/ydRgvAGo2mVrBnGhoEeNqudgk6rMKKzEG9zEQPkf3yBtrtwH2lG
- zGNpp9hujYxcDO9wdDrpDpPT9oJxfBNEStpPScW2C69IYjGvoxFkvYF8VKeQinsI+TidtVo5Bpb
- 20If8tx11LyXKBgobEK9g1G9QeZvMqmVbeVbpj71XWR4t4B1Y6AS/rfUT3JfLoad3r4FJHf2pxm
- EU/QoYXV
-X-Proofpoint-ORIG-GUID: Md9yZmvv12tQlgPyb1J0wd_RUVaNFm4r
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-24_06,2025-09-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 suspectscore=0 phishscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200004
+In-Reply-To: <b7fb3c8c-bfa6-4e46-b5ed-05e4752bbc00@intel.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Wed, Sep 24, 2025 at 11:07:10PM +0800, Xilin Wu wrote:
-> Radxa Dragon Q6A is a single board computer, based on the Qualcomm
-> QCS6490 platform.
+On Wed, Sep 24, 2025 at 12:13:18PM -0700, Jacob Keller wrote:
 > 
-> Features enabled and working:
 > 
-> - Configurable I2C/SPI/UART from 40-Pin GPIO
-> - Three USB-A 2.0 ports
-> - RTL8111K Ethernet connected to PCIe0
-> - eMMC module
-> - SD card
-> - M.2 M-Key 2230 PCIe 3.0 x2
-> - Headphone jack
-> - Onboard thermal sensors
-> - QSPI controller for updating boot firmware
-> - ADSP remoteproc (Type-C and charging features disabled in firmware)
-> - CDSP remoteproc (for AI applications using QNN)
-> - Venus video encode and decode accelerator
+> On 9/24/2025 11:17 AM, Russell King (Oracle) wrote:
+> > This series is radical - it takes the brave step of ripping out much of
+> > the existing PCS support code and throwing it all away.
+> > 
+> > I have discussed the introduction of the STMMAC_FLAG_HAS_INTEGRATED_PCS
+> > flag with Bartosz Golaszewski, and the conclusion I came to is that
+> > this is to workaround the breakage that I've been going on about
+> > concerning the phylink conversion for the last five or six years.
+> > 
+> > The problem is that the stmmac PCS code manipulates the netif carrier
+> > state, which confuses phylink.
+> > 
+> > There is a way of testing this out on the Jetson Xavier NX platform as
+> > the "PCS" code paths can be exercised while in RGMII mode - because
+> > RGMII also has in-band status and the status register is shared with
+> > SGMII. Testing this out confirms my long held theory: the interrupt
+> > handler manipulates the netif carrier state before phylink gets a
+> > look-in, which means that the mac_link_up() and mac_link_down() methods
+> > are never called, resulting in the device being non-functional.
+> > 
+> > Moreover, on dwmac4 cores, ethtool reports incorrect information -
+> > despite having a full-duplex link, ethtool reports that it is
+> > half-dupex.
+> > 
+> > Thus, this code is completely broken - anyone using it will not have
+> > a functional platform, and thus it doesn't deserve to live any longer,
+> > especially as it's a thorn in phylink.
+> > 
+> > Rip all this out, leaving just the bare bones initialisation in place.
+> > 
+> > However, this is not the last of what's broken. We have this hw->ps
+> > integer which is really not descriptive, and the DT property from
+> > which it comes from does little to help understand what's going on.
+> > Putting all the clues together:
+> > 
+> > - early configuration of the GMAC configuration register for the
+> >   speed.
+> > - setting the SGMII rate adapter layer to take its speed from the
+> >   GMAC configuration register.
+> > 
+> > Lastly, setting the transmit enable (TE) bit, which is a typo that puts
+> > the nail in the coffin of this code. It should be the transmit
+> > configuration (TC) bit. Given that when the link comes up, phylink
+> > will call mac_link_up() which will overwrite the speed in the GMAC
+> > configuration register, the only part of this that is functional is
+> > changing where the SGMII rate adapter layer gets its speed from,
+> > which is a boolean.
+> > 
+> > From what I've found so far, everyone who sets the snps,ps-speed
+> > property which configures this mode also configures a fixed link,
+> > so the pre-configuration is unnecessary - the link will come up
+> > anyway.
+> > 
+> > So, this series rips that out the preconfiguration as well, and
+> > replaces hw->ps with a boolean hw->reverse_sgmii_enable flag.
+> > 
+> > We then move the sole PCS configuration into a phylink_pcs instance,
+> > which configures the PCS control register in the same way as is done
+> > during the probe function.
+> > 
+> > Thus, we end up with much easier and simpler conversion to phylink PCS
+> > than previous attempts.
+> > 
+> > Even so, this still results in inband mode always being enabled at the
+> > moment in the new .pcs_config() method to reflect what the probe
+> > function was doing. The next stage will be to change that to allow
+> > phylink to correctly configure the PCS. This needs fixing to allow
+> > platform glue maintainers who are currently blocked to progress.
+> > 
+> > Please note, however, that this has not been tested with any SGMII
+> > platform.
+> > 
+> > I've tried to get as many people into the Cc list with get_maintainers,
+> > I hope that's sufficient to get enough eyeballs on this.
+> > 
 > 
-> Signed-off-by: Xilin Wu <sophon@radxa.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile                  |    1 +
->  .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 1107 ++++++++++++++++++++
->  2 files changed, 1108 insertions(+)
+> I'm no expert with this hardware or driver, but all of your explanations
+> seem reasonable to me.
 > 
-> +
-> +&remoteproc_adsp {
-> +	firmware-name = "qcom/qcs6490/radxa/dragon-q6a/adsp.mbn";
+> I'd guess the real step is to try and get this tested against the
+> variety of hardware supported by stmmac?
 
-I really hope to see this firmware in linux-firmware (and DSP binaries
-in the hexagon-dsp-binaries repo).
+Yes please, that would be very helpful, as I don't want to regress
+anyone's setup. I'm hoping that this series is going to be the low-
+risk change.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-
+Thanks.
 
 -- 
-With best wishes
-Dmitry
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
