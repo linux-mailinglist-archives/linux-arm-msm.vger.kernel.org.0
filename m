@@ -1,343 +1,142 @@
-Return-Path: <linux-arm-msm+bounces-74644-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74642-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B29F5B9B7B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 20:27:39 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6E22B9B787
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 20:25:26 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 43B8C3A8486
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 18:26:36 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id C133619C28EC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 18:25:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0CA3302CB5;
-	Wed, 24 Sep 2025 18:26:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3AC9831281C;
+	Wed, 24 Sep 2025 18:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="XCxrvKvG"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bvtOKgXl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A422DF3F2;
-	Wed, 24 Sep 2025 18:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2FD9239E9D
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 18:25:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758738392; cv=none; b=TXMDX1uv+YKutkMSl/1VzTG2KO/7GChP2SHTDqymSvTgDlxUimQdbJ+qCtKRucG3c6mBAFyWDfn8qwo4q4CHeo8y/Znl+wdTk8ArRsPl8oMoS2PRMwsJpi+t2yOC/uPIgVPk563D4wdLSqCiKBGQ/u+dWGTILU6/5xzsFQfNqOY=
+	t=1758738319; cv=none; b=WpFSYUCWOq+NfHmqvyF+N20U0FPOxyrEToMUZIv0MZCV03/O1ym4mLIKACVQN1Y1HSVwJ5O9UbRakWXEUGGdQ7UwFK94tkORUCPa2pM0bucfdH7rBw4KuqCI7ONNvVsT8AjV+sKLUIrIs2BMYQx2JZ/b20ZiEUj16DZjfBhBB80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758738392; c=relaxed/simple;
-	bh=gGZQrri2Qdu3AkQRHkBO2sHtuHGJA1iTZ3RXy/jkR08=;
-	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=ovsKsPPJHrPC6RyrcNlZDEBa7D0OJGEU6sx2jc4TGaVXvJuCoLjBoAo+CZtta+Hp7qxyJlUFMbfPUsbU7a9GNc95OXshPChVTEsIMYY7GMXgxd898e8FTayeMeEai0py2YNxjCJplgSeFN3dyqRpS+UYMFUA91FNsiB6OkspLg4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=XCxrvKvG; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Date:Sender:Message-Id:Content-Type:
-	Content-Transfer-Encoding:MIME-Version:Subject:Cc:To:From:References:
-	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
-	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
-	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=SgF2IXdC7OLqi5V4M3olj2hvtTyOvGrHShrr9HexHdk=; b=XCxrvKvGzjMkf396tIEa7CxBJc
-	k3K8Ld8SzLK4FZDgEJBZrbo3+hr+arr1VfIDhytHGWWDMoGfgcNC9hk1P7dLNMkb1+sUpr3zkdzY+
-	xGQBBE4W9SY/C3xixVew5vrnSSIA8d6rktGulTR1hVxUj1ofv5M8frHAYPlz47ctlgk3NCciXlJEy
-	PhBGHq+BItzYbZAtH1PDceIjEOQcoJzqYgSjIiiAqFhsBZdogJZoFI6pSnpCfL2g9FHnlY8RZTmiW
-	4ec08/Oy6YAzj0R6zjDlJT4Tp/QhRrQQyu8hVdQV3DNG3Wh4eAL8ZPxrTttbbqr5ODm2I9Ugb9gtU
-	EJiq3E0Q==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:55614 helo=rmk-PC.armlinux.org.uk)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <rmk@armlinux.org.uk>)
-	id 1v1U6Y-0000000013N-2Dbh;
-	Wed, 24 Sep 2025 19:20:39 +0100
-Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
-	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1v1U6J-00000007HwR-10eh;
-	Wed, 24 Sep 2025 19:20:23 +0100
-In-Reply-To: <aNQ1oI0mt3VVcUcF@shell.armlinux.org.uk>
-References: <aNQ1oI0mt3VVcUcF@shell.armlinux.org.uk>
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-To: Andrew Lunn <andrew@lunn.ch>,
-	Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Alexis Lothore <alexis.lothore@bootlin.com>,
-	"Alexis Lothor__" <alexis.lothore@bootlin.com>,
-	Andrew Lunn <andrew+netdev@lunn.ch>,
-	Boon Khai Ng <boon.khai.ng@altera.com>,
-	Choong Yong Liang <yong.liang.choong@linux.intel.com>,
-	Daniel Machon <daniel.machon@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
-	Furong Xu <0x1207@gmail.com>,
-	Huacai Chen <chenhuacai@kernel.org>,
-	Inochi Amaoto <inochiama@gmail.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
-	Jisheng Zhang <jszhang@kernel.org>,
-	Kees Cook <kees@kernel.org>,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-stm32@st-md-mailman.stormreply.com,
-	Matthew Gerlach <matthew.gerlach@altera.com>,
-	Maxime Chevallier <maxime.chevallier@bootlin.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	netdev@vger.kernel.org,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
-	Rohan G Thomas <rohan.g.thomas@altera.com>,
-	Shenwei Wang <shenwei.wang@nxp.com>,
-	Simon Horman <horms@kernel.org>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Swathi K S <swathi.ks@samsung.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Vinod Koul <vkoul@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH RFC net-next 9/9] net: stmmac: convert to phylink PCS support
+	s=arc-20240116; t=1758738319; c=relaxed/simple;
+	bh=g97455aHztfid/mxTIWRxfLc4DSmVKssfpZqo3D8+SY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rnFgPDs61WspAWZv0fVEEd8WGYNQ8TsuU+aSNCc7fX/sAu7rWYPBbQw97P2otZDbK5G2QgMeicRb5dMaLUC5FinMgGHWOkhZ+kdc1TpmfKw47pT5ByfqlCAUsCiBrhSE58o8uXoiikFmajMvIyjjduIY/0z+WJjHCOWwJazBz3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bvtOKgXl; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-7761b83fd01so147705b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 11:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758738316; x=1759343116; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6YgjPyD/CCV5XJY8PLF8Hf+Jbbmg9hnJHEyTuJhhjQc=;
+        b=bvtOKgXl3shv4YjcgA06OXdHR968qVWEkukCgTBFU5ZT3pYPZrVx9FeOFVpQn7GZK8
+         Y/v6S4dn/MCA5Zq9aM7uLLa4jv36KPZkUfuyfW6W1WY/wO6yS9JHlA+RUyO4s5hzbTQ2
+         0h951+EoGtpYK3+oadW+a0AlkpDcCaoGTvITkxkfxCSi4ChmmG3ecwIiLzfWcBVNBE4h
+         2KUz5spEy7Nj2SmogiXX3zbKvIYLFeQa+x5RwqGd6YWgyM0Xdc9eRlpvdPy4g4hcfnND
+         r30Xv0QUFePiTmrt0bQCksav4PkWHuFj+9U9WNac3sEl6Q/zZD6QJl7EYb4ly6gi0I2/
+         mE2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758738316; x=1759343116;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6YgjPyD/CCV5XJY8PLF8Hf+Jbbmg9hnJHEyTuJhhjQc=;
+        b=olbgN7z/nz2dWTkyZ3rRhsUF3ga7pf7aVzg+VBomunMlBCbopuYP12UY+SyIGQP+nW
+         HKWI8oPLXpb7nrpBjN+YAg04b6f5wcbpe1gYwE1h7oJ5Nn5r4Fb6AeHSkWe97yasXXoz
+         vyAPmnEJMOy9tal5ifyXHNnbuaTI3vqRUr4NivSuxrS4qOrbYIeHYdBtUCIHPzZnG+2o
+         E9ZXRLL0i3D9dZJl7DLu9Z1Th8n9vqmw0cPCxoaq2O1V9hvjh1thcNr5qFd/XV5Ppokb
+         3eXUBp4HwDZ5QrbYHuEP6QakdLUAhMHOIWd0/K/4zJIwTklpKuKY2q5GgraeI1qRltFs
+         k56w==
+X-Forwarded-Encrypted: i=1; AJvYcCXbeudli7WWsFZJE9VrdfsYgpkgtOcduiz9PXFV5cCSfKfDip6/HNtLA0S8WoDTEHdI/7PYdgrxZYHliONf@vger.kernel.org
+X-Gm-Message-State: AOJu0Yye/10af2vxAyaYroxc2uEYhPc+uKoZqzsBxq2Y+iJ6ETB5mm+3
+	1RFQFSajMrp8X0+ReALqKfWkPTM7JBC7L1UAX/j3V18rQ18pKex9LXBx
+X-Gm-Gg: ASbGncvttA6/KcXzlo1nPhWzWHGeSGnP+iGp5xRxBS8IJ0d+xneZC2AvlhL1iCc7BU1
+	/x3NqIeiXOa+D6TeyXx465Xuy+mOCflDIrZ+fU3WG2lBL150bTs2QCruRaCiSR/o3QpboDOXs37
+	kgr9VpO4xsF2UEEwlCHvj2LCxS+pPEYSHZ6mw0s4BVzq9hUJsrxsqVq4+Pm+IKezwssEOSVS9iv
+	V3XkRrPvI6eBETi+gpTZUSeWkP3FuhS38wqneQNFptDzYEhVCbEbzL0RrCjGOAldDMSHvwqYmvJ
+	p7dmFTVxjyuoe1StE5wRP8yaudLzoXHE6fFQPRlE1IMUjszDGuZj6oWJjQ90RDjH7F/r5ISXVB/
+	jmEzrrK5ARz/oXxbIQemHnflidPJXzPMzyQ==
+X-Google-Smtp-Source: AGHT+IEpqtHdu0dI46MtGn1c8K5pz/tU5t+99UVSknOsKwdK2FcxqnWLxMvVRgkYkwlIxwrVnQBnnA==
+X-Received: by 2002:a05:6a20:918e:b0:24c:f8f:2b95 with SMTP id adf61e73a8af0-2e7d0ad11ddmr748774637.40.1758738315675;
+        Wed, 24 Sep 2025 11:25:15 -0700 (PDT)
+Received: from google.com ([2620:15c:9d:2:f4c4:bad6:f33e:ddc9])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b5510fd4872sm16344912a12.32.2025.09.24.11.25.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Sep 2025 11:25:15 -0700 (PDT)
+Date: Wed, 24 Sep 2025 11:25:12 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
+	Andrew Morton <akpm@linux-foundation.org>, Linus Walleij <linus.walleij@linaro.org>, 
+	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Will Deacon <will@kernel.org>, Srinivas Kandagatla <srini@kernel.org>, 
+	Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org, 
+	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
+Message-ID: <hyzzrjn7jzo3tt3oyg7azijouawe3zopfjzq6zfhoo6e6z2m4t@ssl5vl4g557e>
+References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1v1U6J-00000007HwR-10eh@rmk-PC.armlinux.org.uk>
-Sender: Russell King <rmk@armlinux.org.uk>
-Date: Wed, 24 Sep 2025 19:20:23 +0100
+In-Reply-To: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
 
-Now that stmmac's PCS support is much more simple - just a matter of
-configuring the control register - the basic conversion to phylink PCS
-support becomes straight forward.
+Hi Bartosz,
 
-Create the infrastructure to setup a phylink_pcs instance for the
-integrated PCS:
-- add a struct stmmac_pcs to encapsulate the phylink_pcs structure,
-  pointer to stmmac_priv, and the core-specific base address of the
-  PCS registers.
-- modify stmmac_priv and stmmac_mac_select_pcs() to return the
-  embedded phylink_pcs structure when setup and STMMAC_PCS_SGMII is
-  in use, and move the comment from stmmac_hw_setup() to here.
-- create stmmac_pcs.c, which contains the phylink_pcs_ops structure,
-  a dummy .pcs_get_state() method which always reports link-down, and
-  .pcs_config() method, moving the call to stmmac_pcs_ctrl_ane() here,
-  but without indirecting through the dwmac specific core code.
+On Wed, Sep 24, 2025 at 04:51:28PM +0200, Bartosz Golaszewski wrote:
+> Here's a functional RFC for improving the handling of shared GPIOs in
+> linux.
+> 
+> Problem statement: GPIOs are implemented as a strictly exclusive
+> resource in the kernel but there are lots of platforms on which single
+> pin is shared by multiple devices which don't communicate so need some
+> way of properly sharing access to a GPIO. What we have now is the
+> GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
+> doesn't do any locking or arbitration of access - it literally just hand
+> the same GPIO descriptor to all interested users.
+> 
+> The proposed solution is composed of three major parts: the high-level,
+> shared GPIO proxy driver that arbitrates access to the shared pin and
+> exposes a regular GPIO chip interface to consumers, a low-level shared
+> GPIOLIB module that scans firmware nodes and creates auxiliary devices
+> that attach to the proxy driver and finally a set of core GPIOLIB
+> changes that plug the former into the GPIO lookup path.
+> 
+> The changes are implemented in a way that allows to seamlessly compile
+> out any code related to sharing GPIOs for systems that don't need it.
+> 
+> The practical use-case for this are the powerdown GPIOs shared by
+> speakers on Qualcomm db845c platform, however I have also extensively
+> tested it using gpio-virtuser on arm64 qemu with various DT
+> configurations.
 
-This will ensure that the PCS control register is configured to the
-same settings as before, but will now happen when the netdev is
-opened or reusmed rather than only during probe time. However, this
-will be before the .fix_mac_speed() method is called, which is
-critical for the behaviour in dwmac-qcom-ethqos's
-ethqos_configure_sgmii() function to be maintained.
+How is this different from the existing gpio-backed regulator/supply?
+IMO GPIOs are naturally exclusive-use resources (in cases when you need
+to control them, not simply read their state), and when there is a need
+to share them there are more appropriate abstractions that are built on
+top of GPIOs...
 
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
----
- drivers/net/ethernet/stmicro/stmmac/Makefile  |  2 +-
- .../ethernet/stmicro/stmmac/dwmac1000_core.c  |  2 +-
- .../net/ethernet/stmicro/stmmac/dwmac4_core.c |  2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac.h  |  4 ++
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 15 +++---
- .../net/ethernet/stmicro/stmmac/stmmac_pcs.c  | 47 +++++++++++++++++++
- .../net/ethernet/stmicro/stmmac/stmmac_pcs.h  | 17 +++++++
- 7 files changed, 79 insertions(+), 10 deletions(-)
- create mode 100644 drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
+Thanks.
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/Makefile b/drivers/net/ethernet/stmicro/stmmac/Makefile
-index b591d93f8503..0390d33b4413 100644
---- a/drivers/net/ethernet/stmicro/stmmac/Makefile
-+++ b/drivers/net/ethernet/stmicro/stmmac/Makefile
-@@ -7,7 +7,7 @@ stmmac-objs:= stmmac_main.o stmmac_ethtool.o stmmac_mdio.o ring_mode.o	\
- 	      dwmac4_dma.o dwmac4_lib.o dwmac4_core.o dwmac5.o hwif.o \
- 	      stmmac_tc.o dwxgmac2_core.o dwxgmac2_dma.o dwxgmac2_descs.o \
- 	      stmmac_xdp.o stmmac_est.o stmmac_fpe.o stmmac_vlan.o \
--	      $(stmmac-y)
-+	      stmmac_pcs.o $(stmmac-y)
- 
- stmmac-$(CONFIG_STMMAC_SELFTESTS) += stmmac_selftests.o
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-index d35db8958be1..b01c0fc822f9 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-@@ -484,7 +484,7 @@ int dwmac1000_setup(struct stmmac_priv *priv)
- 	mac->mii.clk_csr_shift = 2;
- 	mac->mii.clk_csr_mask = GENMASK(5, 2);
- 
--	return 0;
-+	return stmmac_integrated_pcs_init(priv, GMAC_PCS_BASE);
- }
- 
- /* DWMAC 1000 HW Timestaming ops */
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index d855ab6b9145..688e45b440dd 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -1017,5 +1017,5 @@ int dwmac4_setup(struct stmmac_priv *priv)
- 	mac->mii.clk_csr_mask = GENMASK(11, 8);
- 	mac->num_vlan = stmmac_get_num_vlan(priv->ioaddr);
- 
--	return 0;
-+	return stmmac_integrated_pcs_init(priv, GMAC_PCS_BASE);
- }
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index 151f08e5e85d..2883478d6769 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -25,6 +25,8 @@
- #include <net/xdp.h>
- #include <uapi/linux/bpf.h>
- 
-+struct stmmac_pcs;
-+
- struct stmmac_resources {
- 	void __iomem *addr;
- 	u8 mac[ETH_ALEN];
-@@ -273,6 +275,8 @@ struct stmmac_priv {
- 	unsigned int pause_time;
- 	struct mii_bus *mii;
- 
-+	struct stmmac_pcs *integrated_pcs;
-+
- 	struct phylink_config phylink_config;
- 	struct phylink *phylink;
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index fb5a51d16897..985890a29caa 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -46,6 +46,7 @@
- #include "stmmac_ptp.h"
- #include "stmmac_fpe.h"
- #include "stmmac.h"
-+#include "stmmac_pcs.h"
- #include "stmmac_xdp.h"
- #include <linux/reset.h>
- #include <linux/of_mdio.h>
-@@ -883,6 +884,13 @@ static struct phylink_pcs *stmmac_mac_select_pcs(struct phylink_config *config,
- 			return pcs;
- 	}
- 
-+	/* The PCS control register is only relevant for SGMII, TBI and RTBI
-+	 * modes. We no longer support TBI or RTBI, so only configure this
-+	 * register when operating in SGMII mode with the integrated PCS.
-+	 */
-+	if (priv->hw->pcs & STMMAC_PCS_SGMII && priv->integrated_pcs)
-+		return &priv->integrated_pcs->pcs;
-+
- 	return NULL;
- }
- 
-@@ -3519,13 +3527,6 @@ static int stmmac_hw_setup(struct net_device *dev)
- 		}
- 	}
- 
--	/* The PCS control register is only relevant for SGMII, TBI and RTBI
--	 * modes. We no longer support TBI or RTBI, so only configure this
--	 * register when operating in SGMII mode with the integrated PCS.
--	 */
--	if (priv->hw->pcs & STMMAC_PCS_SGMII)
--		stmmac_pcs_ctrl_ane(priv, 1, priv->hw->reverse_sgmii_enable);
--
- 	/* set TX and RX rings length */
- 	stmmac_set_rings_length(priv);
- 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-new file mode 100644
-index 000000000000..50ea51d7a1cc
---- /dev/null
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.c
-@@ -0,0 +1,47 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#include "stmmac.h"
-+#include "stmmac_pcs.h"
-+
-+static void dwmac_integrated_pcs_get_state(struct phylink_pcs *pcs,
-+					   unsigned int neg_mode,
-+					   struct phylink_link_state *state)
-+{
-+	state->link = false;
-+}
-+
-+static int dwmac_integrated_pcs_config(struct phylink_pcs *pcs,
-+				       unsigned int neg_mode,
-+				       phy_interface_t interface,
-+				       const unsigned long *advertising,
-+				       bool permit_pause_to_mac)
-+{
-+	struct stmmac_pcs *spcs = phylink_pcs_to_stmmac_pcs(pcs);
-+
-+	dwmac_ctrl_ane(spcs->base, 0, 1, spcs->priv->hw->reverse_sgmii_enable);
-+
-+	return 0;
-+}
-+
-+static const struct phylink_pcs_ops dwmac_integrated_pcs_ops = {
-+	.pcs_get_state = dwmac_integrated_pcs_get_state,
-+	.pcs_config = dwmac_integrated_pcs_config,
-+};
-+
-+int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset)
-+{
-+	struct stmmac_pcs *spcs;
-+
-+	spcs = devm_kzalloc(priv->device, sizeof(*spcs), GFP_KERNEL);
-+	if (!spcs)
-+		return -ENOMEM;
-+
-+	spcs->priv = priv;
-+	spcs->base = priv->ioaddr + offset;
-+	spcs->pcs.ops = &dwmac_integrated_pcs_ops;
-+
-+	__set_bit(PHY_INTERFACE_MODE_SGMII, spcs->pcs.supported_interfaces);
-+
-+	priv->integrated_pcs = spcs;
-+
-+	return 0;
-+}
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-index 5778f5b2f313..64397ac8ecab 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-@@ -9,6 +9,7 @@
- #ifndef __STMMAC_PCS_H__
- #define __STMMAC_PCS_H__
- 
-+#include <linux/phylink.h>
- #include <linux/slab.h>
- #include <linux/io.h>
- #include "common.h"
-@@ -46,6 +47,22 @@
- #define GMAC_ANE_RFE_SHIFT	12
- #define GMAC_ANE_ACK		BIT(14)
- 
-+struct stmmac_priv;
-+
-+struct stmmac_pcs {
-+	struct stmmac_priv *priv;
-+	void __iomem *base;
-+	struct phylink_pcs pcs;
-+};
-+
-+static inline struct stmmac_pcs *
-+phylink_pcs_to_stmmac_pcs(struct phylink_pcs *pcs)
-+{
-+	return container_of(pcs, struct stmmac_pcs, pcs);
-+}
-+
-+int stmmac_integrated_pcs_init(struct stmmac_priv *priv, unsigned int offset);
-+
- /**
-  * dwmac_pcs_isr - TBI, RTBI, or SGMII PHY ISR
-  * @ioaddr: IO registers pointer
 -- 
-2.47.3
-
+Dmitry
 
