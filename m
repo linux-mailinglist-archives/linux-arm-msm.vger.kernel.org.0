@@ -1,105 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-74568-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74569-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 257BBB98F22
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 10:42:10 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 594ECB99022
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 10:58:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D985F3A59E6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 08:42:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 821B1189FA96
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 08:59:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C582228A704;
-	Wed, 24 Sep 2025 08:42:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1603A2D2382;
+	Wed, 24 Sep 2025 08:58:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o3Ha+zzY"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JhfvUgDl"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7F8284B4E;
-	Wed, 24 Sep 2025 08:42:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AC52D0C9F
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 08:58:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758703324; cv=none; b=sZEnR6CtcLEO0bhClswIhPO6kZHL2ZaN4AX4NOCQZJu2ksLGfkAn5BJRn7TlHH76NEp5dNb1uvkpnEjp3sTUObgyi114nmnjNiFUkD//GVT7LpjdJNZEu18kcU00zL0Hzr8pWRwdj2tG3yoXvWzPIg2h2EAqCYx8NdZFEeLmmN8=
+	t=1758704310; cv=none; b=N+qls09x+5tKglzzocSpWqjAjBsar7x5SRUsVj3Q/g1YIaBkxcM5D6XtpqrnCCbmHAJ+4jPn3UT50Ub6ik/lf0gESVliTFQi3/LPtk7t0VpeFM0oRfzA3YZNJfZE/jdS+lTothA4vChs46pOrzvGR88MLR0JvoauY87itG3prKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758703324; c=relaxed/simple;
-	bh=auJYwJ+cyPyFLvcVPi26gr8jccoOsGsQ/OB2oIB5N+M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fNs26uOBF265keo2aNMz0SjBmSuss6Wd1/OWOLqjzLTOCMk/IQ9P9WbWWwf8ZMYeOqZL+Uisg/FiA63g7s2jHQj7l8Gafb9howDmEWJMSM8SLesPyrqGsHMz24xhQt5/sz8kxiz0vO2RZxI/keSQwU4zdYG0bo3ivkdfQoTtC14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o3Ha+zzY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30213C4CEE7;
-	Wed, 24 Sep 2025 08:42:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758703324;
-	bh=auJYwJ+cyPyFLvcVPi26gr8jccoOsGsQ/OB2oIB5N+M=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=o3Ha+zzYBOSQQQYu1+P54hFmQsHGKQ+/XfotMehklDSY7O4SJlxeIHrYcmqxNvJSI
-	 acewltwPW/vxbDNHV2Ip1HDL8i/21OoOeild74xSGR64Os6jUI64ZvKlJctWafexfM
-	 4dW6ztb4ygfN15HQdSztjNSgjBNnJiTZWR75zzFNRLEkDCYFnOs/m+v5OFono616nx
-	 Is232iJ51PAm0WYL+cQy2nolYFcnWVmb8cxQj4tX4h22NXN1hH7ivkVjlgOS61F2KS
-	 cZYiBmyBboMN0FJauy8tVlvD8K471jNLMBImHsnMUF/VptMdcFmrPky76F9MwbRd5z
-	 A0zLL9m12FnvQ==
-Date: Wed, 24 Sep 2025 10:42:01 +0200
-From: Mark Brown <broonie@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
-	Liam Girdwood <lgirdwood@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-	Mohammad Rafi Shaik <mohammad.rafi.shaik@oss.qualcomm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+	s=arc-20240116; t=1758704310; c=relaxed/simple;
+	bh=TW61M5zdQ1lF5kvLURL6XpqXsOuc1JvYDM5XND98Vic=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Tb5PVJAtHlXvIb6dOT1A+AFhZvNcYVHqXDgxyY2iRL8GkGqkmKn8Fnb9zQdeNiIYop0yPf7sH1PKG3D5LJC22HZHOcrnBYD+YP9EkDe2Mkm8+twtobuCyYupFi7Vq4ZaCw8rgrLw8Sfvk9bs01k67W6fTmsXc/Ws2u3I4OT1t3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JhfvUgDl; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2680ee37b21so8871875ad.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 01:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758704308; x=1759309108; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BpxautfUhVRnZ8T33dUfTx1Y/3dEnu/6VVcMUyhFYd0=;
+        b=JhfvUgDl7TGB4OdLDJ83xGj5rH8oQexpKuSwpN2QWFZwfAK9O4bT36xgl7G194fQ6I
+         y2YeFCSWkl5g3L4mhQRQTii1W4xDz9pJn/9tvsvL+3vy9rsrkF5i2I/PODB6iuL8xSFX
+         imkONn40g8orXI8qs3S4A4grXSe2xFFm8xsX0l1jC9efBMqE/eiwomY4HBPauPErqOYZ
+         ++gbLN0h5IvM1m7vKKAjp6Pch/254U+E/BUV0Fu9Fk/ZzGZjvKXqaHaH+C+1Fz24hd9v
+         7GcPidNug98kU5u9AquRECoZjJKy++Bj58KPTZCHR5Tb/AzCKbN6u76r6/wwxHB4By7r
+         /J4A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758704308; x=1759309108;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BpxautfUhVRnZ8T33dUfTx1Y/3dEnu/6VVcMUyhFYd0=;
+        b=hmTi8WnybITSxb319TAQCrVihOhTV37QCHsojCCUH5Srk6YmBDj2GDhuMNcEBcwXhF
+         HsWZCDdNN7Nz8dJSGufuXi+ledIJqugyPoc2FtilQhBYaP6NM7T2gq3VRLu1FEY0mICv
+         pbsSp5f0MD22ht7XEYY1gL+d/a7Z1ls+wju7OW0x1XVqKdH7EvqKHp2YfO1UvyhImJor
+         /XXDuMxvB/lR0LUcX9pBI1/qjXQeFOFcTcCbG0PBhr9E7JifDWHUJtoaa9m0eR6mdShe
+         Il4eez7wTYkhMMwRNlXSrmxhWpV3hc3PPVSQJ3Mc3W/vIqffYvDAs47S/uBP9hna1ZSZ
+         JYLg==
+X-Gm-Message-State: AOJu0YxZPx7Suti2kpCXBK+3RM2ex2fMtKcHi1uQzxOg4wDm7+5cRE47
+	v/fVQZHz7sfFNEB6sxFuR+cX3Jbu9v+U5+vu+qwfGdc2v/AJSKF9MjF09mLA2g==
+X-Gm-Gg: ASbGncuyxyYwv/ybvjGp6942VIxVwOgIkmtoJuZ/nXlVDnpej28JwkMjFkf5BtGOmpQ
+	1cuU7MRckcdEGDVe9IF9We3R6URlyx3iGv25/yvSfhFc7wi03QDZ3KpaNNv5SZh349PcPTbiLNX
+	EMAE184OtlP9tO6czuxA2mQGx+Qgwb2LGlfNLT2Q+kJsuAY160itwyNOeLUHNJNhSuapSqLkBzw
+	LEcpOWBa/NZ5GAvgkQIrii/MCQaR71nsdRWoWJAVlrTMfvukRoWZoASs4LAfolLr1O4bKKlZw3v
+	991qe7VHdTY2w1pMcL6AL174QLBdeIQPa33N9axsL+WFC547JbKDoDwmv85OInUvjUXcPDX+Dxd
+	0vBYUPIaIuLM0kE9rTOg+JgPzlzl42F2igQ==
+X-Google-Smtp-Source: AGHT+IFIK5UmnbSxQTMbrW0b+kgVYDY9yAoSYqzhZLZMRlOtkVRe1ldf7XOAaAJVdmK+PgEzwcT/1Q==
+X-Received: by 2002:a17:902:dac5:b0:272:2bf1:6a1f with SMTP id d9443c01a7336-27cc2d925a5mr36209745ad.4.1758704307558;
+        Wed, 24 Sep 2025 01:58:27 -0700 (PDT)
+Received: from rock-5b.. ([45.32.55.39])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-26980368fe3sm180399505ad.151.2025.09.24.01.58.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Sep 2025 01:58:27 -0700 (PDT)
+From: Jianfeng Liu <liujianfeng1994@gmail.com>
+To: linux-arm-msm@vger.kernel.org
+Cc: Xilin Wu <sophon@radxa.com>,
+	Jianfeng Liu <liujianfeng1994@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	David Airlie <airlied@gmail.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Maxime Ripard <mripard@kernel.org>,
+	Simona Vetter <simona@ffwll.ch>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] sound: soc: qcom: use sa8775p/ subdir for QCS9100 /
- QCS9075
-Message-ID: <aNOu2ZnBXeqNXdJ8@finisterre.sirena.org.uk>
-References: <20250918-lemans-evk-topo-v1-1-9680600e62d4@oss.qualcomm.com>
+Subject: [PATCH] drm/display: add hw_params callback function to drm_connector_hdmi_audio_ops
+Date: Wed, 24 Sep 2025 16:57:43 +0800
+Message-ID: <20250924085804.34183-1-liujianfeng1994@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="yVEte8S97JDuXU9I"
-Content-Disposition: inline
-In-Reply-To: <20250918-lemans-evk-topo-v1-1-9680600e62d4@oss.qualcomm.com>
-X-Cookie: Filmed before a live audience.
+Content-Transfer-Encoding: 8bit
 
+After reusing drm_hdmi_audio_* helpers and drm_bridge_connector
+integration in drm/msm/dp, we have dropped msm_dp_audio_hw_params and
+use msm_dp_audio_prepare instead. While userspace is still calling
+hw_params to do audio initialization, and we get the following errors:
 
---yVEte8S97JDuXU9I
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+[ 784.904566] qcom-apm gprsvc:service:2:1: Error (1) Processing 0x01001002 cmd
+[ 784.912185] qcom-apm gprsvc:service:2:1: DSP returned error[1001002] 1
+[ 784.918927] q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: Failed to start APM port 104
+[ 784.929947] q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: ASoC error (-22): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
 
-On Thu, Sep 18, 2025 at 05:41:52AM +0300, Dmitry Baryshkov wrote:
-> All firmware for the Lemans platform aka QCS9100 aka QCS9075 is for
-> historical reasons located in the qcom/sa8775p/ subdir inside
-> linux-firmware. The only exceptions to this rule are audio topology
-> files. While it's not too late, change the subdir to point to the
-> sa8775p/ subdir, so that all firmware for that platform is present at
-> the same location.
+msm_dp_audio_prepare is not called because hdmi-codec driver only checks
+and runs hw_params. This commit will add hw_params callback function
+same as drm_connector_hdmi_audio_prepare, so that hdmi-codec driver can
+work with userspace alsa.
 
-Please submit patches using subject lines reflecting the style for the
-subsystem, this makes it easier for people to identify relevant patches.
-Look at what existing commits in the area you're changing are doing and
-make sure your subject lines visually resemble what they're doing.
-There's no need to resubmit to fix this alone.
+Tested with Radxa Dragon Q6A.
 
---yVEte8S97JDuXU9I
-Content-Type: application/pgp-signature; name="signature.asc"
+Fixes: 98a8920e7b07 ("drm/msm/dp: reuse generic HDMI codec implementation")
 
------BEGIN PGP SIGNATURE-----
+Signed-off-by: Jianfeng Liu <liujianfeng1994@gmail.com>
+---
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmjTrtkACgkQJNaLcl1U
-h9BStgf/XpuYwx/3L8j1Z43CTYp48DfN5BQ0J1tRag7XO9ZF4DjZoCrm/OkCd5P1
-Ni5PIrng35htiBf9x7ZA3pEJ/d9+WHLMAZBTAvyXSOzB/QQ7cs84/oJ4GgBkkH9y
-jIQNKgNplOXPtGikem2sMJpE8MNKDkrZt8Eb/4Zm8QFhc3EtNHVLlBf7jWN1jYPp
-tuc2tMr0a0zp9l+APi7bod2YkIqKtNXeEB0iamk1yjZ6TLdhE3ecBrF4s9UIEqEo
-2paC3NS4E/JNiY9DU9Me7/6XJ9bUYG2sPNuTFaUBTHIFtzeqweIAdMSqubaUEY25
-c32XZKR2DSKGqFlDl60aP0B1HHUjdA==
-=MJVp
------END PGP SIGNATURE-----
+ drivers/gpu/drm/display/drm_hdmi_audio_helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---yVEte8S97JDuXU9I--
+diff --git a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+index 7d78b02c1446..6ca1c7ad0632 100644
+--- a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
++++ b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+@@ -130,6 +130,7 @@ EXPORT_SYMBOL(drm_connector_hdmi_audio_plugged_notify);
+ 
+ static const struct hdmi_codec_ops drm_connector_hdmi_audio_ops = {
+ 	.audio_startup = drm_connector_hdmi_audio_startup,
++	.hw_params = drm_connector_hdmi_audio_prepare,
+ 	.prepare = drm_connector_hdmi_audio_prepare,
+ 	.audio_shutdown = drm_connector_hdmi_audio_shutdown,
+ 	.mute_stream = drm_connector_hdmi_audio_mute_stream,
+-- 
+2.43.0
+
 
