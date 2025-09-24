@@ -1,168 +1,172 @@
-Return-Path: <linux-arm-msm+bounces-74587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7756B99DAF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 14:32:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 51CCDB99E83
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 14:43:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4BEB4161F9F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 12:32:57 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E05AD3ABE03
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 12:42:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5F9E22E62B4;
-	Wed, 24 Sep 2025 12:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2C9DE30B53C;
+	Wed, 24 Sep 2025 12:41:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ULRDCf0q"
+	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="eGgO9Ty5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mout.web.de (mout.web.de [212.227.17.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185464C6C;
-	Wed, 24 Sep 2025 12:32:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB033093A1;
+	Wed, 24 Sep 2025 12:40:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758717174; cv=none; b=VK0q65GxcKbdAk+yX3i5bKKEo5QqBYHV3K4EDup8rTzI6xqWRugpLrkQ0sB6vTzvZziEJfrenntZAe38nPxGePvrhwaxNj8QzVFj6HYUqYbDwWnhcvw5upjXtvdeQ4gE3/rqWq2x0BNPjwUXUQ/60GYq7J+U1+xFpIaQBVNJFI4=
+	t=1758717661; cv=none; b=OcX6NSJsugXTJSSXM5+tQESwdZpaQDJUwfO6oM3mE5xVRl9kvUVnTUCnx/ZhG8ksdntgSMXDkvdXYTq48kZbVTfzyxnnUdajR+IM2oBFxKE31nqjen6hLkeyC7hv3j1gCodJ6qsbBYlNlFwoht5llfuV5e/fqw0xX9ztTNzkO50=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758717174; c=relaxed/simple;
-	bh=z64hXPjSDDrR9mWwhXNbJvORU06KaAiEuX3IuDczyoU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JC8gXC1pvXjGW9KmJpsh/EYKYdU9EJS9z9dOgY0onFJJt0bJ0899rK59hR2JloKE08/o/5PfKmBOt+gZcqhlqJJrxkvCILteqRRQRw+r/KRO1sFf/X7dxV73R4qi+vfGczYmVB66qWw+tXZL0MZm4+s/r8Dm5AQxQkETwgMgsfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ULRDCf0q; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0214CC4CEE7;
-	Wed, 24 Sep 2025 12:32:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1758717173;
-	bh=z64hXPjSDDrR9mWwhXNbJvORU06KaAiEuX3IuDczyoU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ULRDCf0qblHajIl5tMOCqW2QlrTPNPQxs85zLgzDM0altTMvFrpfJiVKa3scmEJ6F
-	 rCALDgzahIaRlrKPRDQnFYEuBFYEmZIeu6WvcCI2UepX2/oBj7xUfZrTV4I8bLuMlR
-	 tV65w8AVQ1QduJfuEeknS96zdO4DY0YoNMPRa1Cg=
-Date: Wed, 24 Sep 2025 14:32:47 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
-Cc: David Lechner <dlechner@baylibre.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	sboyd@kernel.org, jic23@kernel.org, nuno.sa@analog.com,
-	andy@kernel.org, arnd@arndb.de, srini@kernel.org, vkoul@kernel.org,
-	kishon@kernel.org, sre@kernel.org, krzysztof.kozlowski@linaro.org,
-	linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-phy@lists.infradead.org,
-	linux-pm@vger.kernel.org, kernel@collabora.com, wenst@chromium.org,
-	casey.connolly@linaro.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 2/7] nvmem: qcom-spmi-sdam: Migrate to
- devm_spmi_subdevice_alloc_and_add()
-Message-ID: <2025092451-immortal-synopsis-51fa@gregkh>
-References: <mknxgesog6aghc6cjzm63g63zqbqvysxf6ktmnbrbtafervveg@uoiohk3yclso>
- <CAHp75Vf7KrsN7Ec9zOvJoRuKvkbrJ5sMv7pVv6+88tPX-j_9ZA@mail.gmail.com>
- <er7dkmzutsu3ooegeihjzngi6l3hol5iaohecr3n5bolfse3tj@xeedlx2utwym>
- <aMxWzTxvMLsVWbDB@smile.fi.intel.com>
- <2025091925-thirsting-underuse-14ab@gregkh>
- <f16ea5eb-cbda-4788-956b-d41c2af51745@baylibre.com>
- <2025091918-glancing-uptown-7d63@gregkh>
- <8702fd35-945a-4d20-bc37-410c74c70da6@baylibre.com>
- <2025091902-dwelled-calculate-c755@gregkh>
- <x5ot622jqzz67imvswtdacqeeclqaw7my3pj6ne7tureec6ufg@fuzltifrkcae>
+	s=arc-20240116; t=1758717661; c=relaxed/simple;
+	bh=ukyBehHJORSa87e6ZCtwuhVWbEtg7QA9ZDX5n3I/q3E=;
+	h=Message-ID:Date:MIME-Version:To:Cc:References:Subject:From:
+	 In-Reply-To:Content-Type; b=QC8nhA7GcZ188UaQ7w6JtnpmlnZTSJCVMkpxIi52EbEyWUQVn4gTPmuaWIlAPsWeZ4I1MF3MuRsgDZI/OECu/mIydHOlv33TyKS+/vcr7itoRPCj9dRLTZom7gY/VjBFgvOJAuIvmQuUWafv1giLHtyyIN2fmc9cpZZz1kSPGc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=eGgO9Ty5; arc=none smtp.client-ip=212.227.17.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1758717640; x=1759322440; i=markus.elfring@web.de;
+	bh=z+9jx41Vbyd9vBOhmx25zrE08I9rRDvZfvVWerZXzy8=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:Cc:References:
+	 Subject:From:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=eGgO9Ty5SCFUxsTOG+LwYXjch6LFLH6+HnPVWpT1csCVRyDo47qm4PakvwZACekK
+	 OYRWl6kYwa6jidKXDgaQyHIjA3FwlCi4L4XcNyA/dvg2U/crqt5uxVC0GRLZp2wZ3
+	 EdS8U1CNr0VrB6BDnWiQt3BjwbITOynoNSmJKfBeGrOwkXbt1vF74SYeJ3UbCac+A
+	 zkD7wsOfutyHiUIHoWixxgUQujzn6xVbJ8kdBxAU1BuuzhTK8tB85EyfGj7Tv3z4+
+	 tWmI/YQ3QsURklRYgnB6u4F8Vye7Hv/eEyZD+Fvv3/qiB89n8DXmlvr1jU7gOvFa6
+	 xMfHJa3ldyDL8lhgvQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.178.29] ([94.31.69.191]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MXGOC-1uqrk13I9W-00K7Yq; Wed, 24
+ Sep 2025 14:40:39 +0200
+Message-ID: <5c0f6b8e-c3cc-492c-9d94-3b79eaca0628@web.de>
+Date: Wed, 24 Sep 2025 14:40:38 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <x5ot622jqzz67imvswtdacqeeclqaw7my3pj6ne7tureec6ufg@fuzltifrkcae>
+User-Agent: Mozilla Thunderbird
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Cc: LKML <linux-kernel@vger.kernel.org>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+References: <20250919-video-iris-ubwc-enable-v1-2-000d11edafd8@oss.qualcomm.com>
+Subject: Re: [PATCH 2/2] media: iris: Add support for QC08C format for encoder
+Content-Language: en-GB, de-DE
+From: Markus Elfring <Markus.Elfring@web.de>
+In-Reply-To: <20250919-video-iris-ubwc-enable-v1-2-000d11edafd8@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:8Uj+YXmcuu8K4eDtiqKLNAV2mE1QjI27gJFZBrFJpOKyl4FYnAm
+ GHh/muyOdOXoFeYtLt29+qn+/jwqTIzA/ZEEXWpdkmIaWndvm9665frXX3GSxC1ZxxPrdqZ
+ Tlx/zlrpk4ZgkFKndBlE1BrRKy+4x2tT9kA0XjR8x1Kr6OWf4SXXQAvt6OXK4YxMZLTFcJw
+ e7qJd3fhRS4VD6SzOyFDA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:BTDtERsGNYE=;FRNonvllRKBZ5APRe770LNOCBmN
+ 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
 
-On Sat, Sep 20, 2025 at 06:41:57PM +0200, Uwe Kleine-König wrote:
-> On Fri, Sep 19, 2025 at 05:37:03PM +0200, Greg KH wrote:
-> > On Fri, Sep 19, 2025 at 10:20:29AM -0500, David Lechner wrote:
-> > > Up to now, my (naive) understanding was that the point module namespaces
-> > > is to reduce the number of symbols in the global namespace because having
-> > > too many symbols there was starting to cause problems. So moving symbols
-> > > to another namespace was a "good thing".
-> > 
-> > Yes, it is a "good thing" overall, but by just making all of your
-> > symbols in a namespace, and then including it in the .h file, that does
-> > the same exact thing as before (i.e. anyone that includes that .h file
-> > puts the symbols into the global namespace with that prefix.)
-> 
-> I fail to parse the part in parenthesis. The symbols of the pwm
-> subsystem are defined in the "PWM" namespace (using `#define
-> DEFAULT_SYMBOL_NAMESPACE "PWM"` in drivers/pwm/core.c). In <linux/pwm.h>
-> there is a `MODULE_IMPORT_NS("PWM");`, so a consumer (say
-> `drivers/regulator/pwm-regulator.c`) only needs
-> 
-> 	#include <linux/pwm.h>
-> 
-> to import the "PWM" namespace. So pwm-regulator.c puts the symbols
-> into the global namespace with that prefix. What symbols? What prefix?
-> 
-> The thing that is different is that the pwm functions are in the "PWM"
-> namespace, so a module without an import for "PWM" has a smaller pool of
-> global symbols and so loading that module is a tad more effective,
-> right?
-> 
-> I agree that for the consumer source it doesn't make a difference if pwm
-> is using a namespace or not. I'd count that as an advantage of the
-> "import in a header" approach.
-> 
-> > Ideally, the goal was to be able to easily see in a module, what symbol
-> > namespaces they depend on, which requires them to put MODULE_IMPORT_NS()
-> > in the module to get access to those symbols.  dmabuf has done this very
-> > well, making it obvious to the maintainers of that subsystem that they
-> > should be paying attention to those users.
-> 
-> For me as pwm maintainer it doesn't matter much if I pay attention to
-> `MODULE_IMPORT_NS("PWM");` or `#include <linux/pwm.h>`.
+=E2=80=A6
+> +++ b/drivers/media/platform/qcom/iris/iris_buffer.c
+> @@ -171,9 +171,14 @@ static u32 iris_yuv_buffer_size_nv12(struct iris_in=
+st *inst)
+>  static u32 iris_yuv_buffer_size_qc08c(struct iris_inst *inst)
+>  {
+>  	u32 y_plane, uv_plane, y_stride, uv_stride;
+> -	struct v4l2_format *f =3D inst->fmt_dst;
+>  	u32 uv_meta_stride, uv_meta_plane;
+>  	u32 y_meta_stride, y_meta_plane;
+> +	struct v4l2_format *f =3D NULL;
+> +
+> +	if (inst->domain =3D=3D DECODER)
+> +		f =3D inst->fmt_dst;
+> +	else
+> +		f =3D inst->fmt_src;
+=E2=80=A6
 
-I think this is the primary thing here.  It's easier for some
-maintainers and reviewers to notice the MODULE_IMPORT_NS() thing than a
-simple include line.  Especially as includes are often hidden in other
-include files.
+How do you think about to use a source code variant like the following?
 
-So sure, as a maintainer, you are free to do things this way, it's just
-not really what we thought about when namespaces were first created.  We
-assumed that an explict MODULE_INPORT_NS() was what would be used, not
-worked around :)
+	struct v4l2_format *f =3D (inst->domain =3D=3D DECODER) ? inst->fmt_dst :=
+ inst->fmt_src;
 
-> > For other "tiny" subsystems, it just slots away their symbols so that no
-> > one else should ever be using them, and it makes it blindingly obvious
-> > if they do.  For example, the usb-storage symbols, anyone that does:
-> > 	MODULE_IMPORT_NS("USB_STORAGE");
-> > had better be living in drivers/usb/storage/ otherwise I need to have a
-> > word with those offenders :)
-> 
-> All symbols in the "USB_STORAGE" namespace (apart from
-> `fill_inquiry_response`) start with `usb_stor_`. If you grep for that
-> string you find all the (probably illegitimate) users of the usb-storage
-> symbols, but also those that define their own symbols with that prefix.
-> 
-> Do you actually look out for such offenders, i.e. have a lei mailbox
-> with `MODULE_IMPORT_NS("USB_STORAGE")` as search string or a cron job
-> grepping your tree for that?
 
-Some maintainers do just this, yes.  I think the dmabuf maintainers do
-as an example.
-
-> > So it's a way of "tidying" up things, and to make things more explicit
-> > than just having to rely on searching a tree and looking for .h include
-> > usage. 
-> 
-> For some reason in your eyes grepping for MODULE_IMPORT_NS is superior
-> to grepping for an #include. Can you explain that?
-
-#include files are often included in other include files, and can easily
-be "hidden" in the chain of what is needed by what .c file.
-
-That's it, nothing major here, if you want to use namespaces this way,
-that's fine, just feels kind of counter-productive :)
-
-thanks,
-
-greg k-h
+Regards,
+Markus
 
