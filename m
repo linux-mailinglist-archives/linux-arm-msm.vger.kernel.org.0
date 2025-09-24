@@ -1,237 +1,206 @@
-Return-Path: <linux-arm-msm+bounces-74659-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74660-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4AA3B9BACF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:21:58 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 64F25B9BADE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 21:23:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id DC7861B27F70
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:22:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 16C1B42778E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 19:23:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 00F9426A0BD;
-	Wed, 24 Sep 2025 19:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 717EE306B06;
+	Wed, 24 Sep 2025 19:22:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OYt3irBd"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="ru8dn9z8"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from BL0PR03CU003.outbound.protection.outlook.com (mail-eastusazon11012010.outbound.protection.outlook.com [52.101.53.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666FD265CDD
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758741713; cv=none; b=LqK4hVOT7IoI2fiiI1ktc8Ce7DLSJa9+jkiz9z66u6JajZ6GtPZnerBmiQsOozfic20CLEaQJPm4EZ6PxjlIbFykf/DD/WFH+hbtVec1lSWFF42VmX04mnhg/vkAGgj41gn5gYU1R2+FlQzUzQTcMyxtRlmX6qYc98O/VoIwMmQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758741713; c=relaxed/simple;
-	bh=fCDcNvXPeCb6M3hXJIxhsSMcNmiBoWRBaGg9SWvAhEI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Vee0+QCQX1QGdPKSEkOat+qChNztK6XKSWqt3T+H3gaXFq921bymUsHvU26Y3NNsDEd0WelUmpuX3pKb82HnsDOwx/K5X6XfxfBNa9Gw4uf+8V3XZniwV8TKlsWgZ/ly3vQS9nzOQ1SUsMO+pI8YF050dxF7GqnDuEQqORTVY6w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OYt3irBd; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58OCseIh002662
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:21:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=0iu1Wjnwv+f5AYYfHw58qhf/
-	bG3HYMyGpWsuOD72KVE=; b=OYt3irBdhpx9aAiIMdbkqDlTw+/XKF7xO+0lhAON
-	cEPYRnzCWanMF+8BQc0OnILdjgc9xSUkvQpbkXk+z8XSJ77l131fsYU6AaDvzqtd
-	K4XSBQX5yz3mnzO8w9FBT6U0j1end7RQjLG5622rl8qYnGY6qUlMXuYoOQ8sl981
-	yltphA8af1Bqh0PoOlEykCKHpJ+8v52Gjb859XYpOaAS0O67NWPIhBpvxDgGSGC3
-	ewau2muRbr95q2NycC1Bwu806tZaERN4Ic8ZraY/bGk0sGhzc4Sc5OvJZuEr/Xpa
-	P6kbDBGpUeoR+/x2jiBwU4o8BhxZAejcnzf+cy/IRrvW7g==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bajf03ta-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:21:51 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4d374dd29d1so4948711cf.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 12:21:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758741710; x=1759346510;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0iu1Wjnwv+f5AYYfHw58qhf/bG3HYMyGpWsuOD72KVE=;
-        b=b6nvAJpzyyPkDscjVMzuRumcj7nK9YsQ+u5Wl4YAunS8WZqPNumuRKrBNrVa/DSOsU
-         yrw1996Q4OelDXcygFZJh13xawZ56rRhVmZgfgT8UjGqpWeFhxdZKaNH80Xpgv2u7nEc
-         uw095z6c6DWZ6/WAiN/nPsPn+jmp3Sd2Uqqxh7jX63wFuKc5T8acz7AgA6HWQgAV16yX
-         nn4ApDQywseZcKUDALKUfvCpDR+1LfeMGrM3yWh8FQwtWWAtU6lL9flCMPlmvX3feoAb
-         S+Q9BpmiKr9CYf3irxzqdTOELM7qTDaIrC+ctOlUiG1U8uNtss/PStZPPpDOZqy0pqu8
-         andA==
-X-Forwarded-Encrypted: i=1; AJvYcCUENeePzD/8QaCp8UmoNJgJcZdXEsSJsGi9WcsbceZCxMp7fACM+7bAw3px0YKMqLXgudDsX8ZDb/wq7Rhn@vger.kernel.org
-X-Gm-Message-State: AOJu0YwPzAM1Jij4u6J+4+7UyS6GhJEURwU1CA0URyAcxurkU93+WM3t
-	EMDBIxVdq6bfx11PnjV67RWTf4SniOscEcYBVcssIckF7Iu3aIG9hB7SkRdtgBoDj9hqJYTJIeL
-	c7lw/OBDlJOGerU7ZJjGCUlvkKUzbPsaWQGYco+rsrW33xqdgcJVilGLR34b0WdXdvkkc
-X-Gm-Gg: ASbGnctw9bkVB0+pQI7pRIOo1nTM2pSi3NkuX43ezBLLUf6aiRddG0prFKqqcWQd9WK
-	VC59KArV9WiXEtaSPUTkOtn5eLDBSIIEuHmeD1XZbdtzlmfzu2X2FBtUa7ndgZpVhABb8udsDLK
-	XjNOIEF+23gzqze+aBpLoK59SMcLtJJQd1UxEQbpkpVLrm+qk+Y46V3AT+m3O1yKt7IqYHu9m1b
-	1sqehegVmnWOELudef1unlzigPFVzPz+4bPsuj28NC6Xr1HXgcu/5PnLxFZkcjxmB1CsbUwIxy2
-	4nC9w9G2IlDK1tR2lF8yWhkm//Tlj2hhcFxrSbbjcac0kGG9vKQ6lu5LyTu9l9jxPhLv46+0YQU
-	xbHZgmrbBVxOjow4VBZrKPCXpJI7tmg/c5sq7zCfdOP5ZhX9wa3Jn
-X-Received: by 2002:ac8:7c42:0:b0:4c7:e39a:388b with SMTP id d75a77b69052e-4da4b428df9mr11723691cf.47.1758741709962;
-        Wed, 24 Sep 2025 12:21:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaFsspAyH/V3Y+WNKmm+luXg2sxoUJuUxgT3PD4jQ2JdvLW6f6tdlPbuRxY0RMCgn1FJCFVg==
-X-Received: by 2002:ac8:7c42:0:b0:4c7:e39a:388b with SMTP id d75a77b69052e-4da4b428df9mr11723151cf.47.1758741709377;
-        Wed, 24 Sep 2025 12:21:49 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-57f477153bdsm2419549e87.29.2025.09.24.12.21.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Sep 2025 12:21:48 -0700 (PDT)
-Date: Wed, 24 Sep 2025 22:21:46 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jun Nie <jun.nie@linaro.org>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Dmitry Baryshkov <lumag@kernel.org>, Sean Paul <sean@poorly.run>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Krishna Manikandan <quic_mkrishn@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 3/3] drm/msm/dsi: Support dual panel use case with
- single CRTC
-Message-ID: <v3tfzspjck2oqppelx7bmi5uflhs47ixw6tjmq2d7inauzfo7k@gxebj3buyuni>
-References: <20250924-dsi-dual-panel-upstream-v3-0-6927284f1098@linaro.org>
- <20250924-dsi-dual-panel-upstream-v3-3-6927284f1098@linaro.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B9D263F3C;
+	Wed, 24 Sep 2025 19:22:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.53.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1758741777; cv=fail; b=MWTrkovcPX2C694dnvXuLsN3yHegB0pxRcsyAn0X2J/caU+6Y4edELded9pPinMh7ynkAtbYv3ajBHgBD+kY22iXqiC5EvONF62yswf/SpmdpYFLpXZml3yJfoOMjwVOkczkhXz6p1hYFODhgEGA4XHkJx6iNQxvjD5vpec5brY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1758741777; c=relaxed/simple;
+	bh=GrJfbUqC/ixQxgH+pF15JnXV+iapy3lU3SS+1iriDEs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=CxPmyRyv9oV/1XDaOCXdUPllPJw78T6dZ+orb/qu65qcHM9yPSOc/7WmFE/gA7Z2KGYjY3AKFapQtHmjnhu4XUbYKLxnenuGDIWzCt5o4NMiPkZeqibH+5eUQan2usHvIX/lnE19pwn+YHclu+6L7O9j4kgyIRCUfFzksmKStlU=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=ru8dn9z8; arc=fail smtp.client-ip=52.101.53.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RVAZtZ0+kThonDa11n+QiQkWnXH+2YaPv72y0Cd8UX4RV4QE/uMvBJ9ym6PJoscOuUmJy1lcvYAMVF0xC9Cpg8gdI0fjMLKdnXa+1Px5fUhq1KoO7LPKxZVwHFDwXsSDe31y+zdXluK2nORD4QwNGgga/Sf5OHQGYrAIOXioBgokdgUq8Eud3Hr+D/qal38IhIpDM0ZlX22/ZvC6X87GiqOMpiA9gGpOUgUrzs2T/gwdxrpkoz2m87OU5320o0F62fT0yny7Yy09UdfFq8R2jc0mq7Nxw3tXYnsd7FnJrSEZkuhOuE7RbCgEVKb0Nw82kEa13rItxF3ua1ad/xmnIg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4Iv5bwT+c4OjwCRiqZYTJwYVpy/ysyCcg9hrNpncSTQ=;
+ b=TGJNQaziqKYW1GfOw+wG6IhUr70EfEmxhJrjLaVtw9heeEIgTfjXZSISxC/aKrUi5EmD6BZF51r4wTP8sD3wAkQF4O5NSApNywheTMHA4B2AmzyHo2/tPrTLy2QO8RaoEA1kjPHJwRQEjvwPgzqg1L6Rdi7Yfl18fcMzNaEbHQ2JfocMICPwolMiKjpNlFDqMUOyzcsKDASijb/yfekO7YR7f0WTcGOv96TXVM0GgJ2i3P2yLcX53kNksEjKXdhsxAtxBKKp1kxSz1qaH56PkEnZo7Qli1Ek6aVZGpY4D+ik22FIa1pXVN9ZJoohtqDI3FYz4NANRFq+JFgjPxM8WA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4Iv5bwT+c4OjwCRiqZYTJwYVpy/ysyCcg9hrNpncSTQ=;
+ b=ru8dn9z8rbSKD7dlBRmYkbA+tXJT0sc8r/SNDc5zJX4vHkYqovdNFyojTszdpGooXHzresKFeV7ujMhQZcqBPMpC48zCMC4B417rfIXTD9beRu7KivyvRngPWYAydcP9c2A1TbGvbwmDVl15W+Z3qQxC4aNQJ+fshi/SpSXiee/YF4rwLQu1T7EgJf6BmKRcC2DEOpzyJMcpokU53wjvhfDJadhGzbOMvVVIBpJfJ37Y3pL7uXYqRSlpx/qobKmevRK57iCzwdGO+8ZZgx9jH67AuJllCxTkgjfWuUpwsRktiOD/xdPhn+OPXrfvHzvEd7RFOvVhg/2Pcy28KkNFCw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com (2603:10b6:510:1d0::13)
+ by PH7PR12MB7283.namprd12.prod.outlook.com (2603:10b6:510:20a::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9137.20; Wed, 24 Sep
+ 2025 19:22:49 +0000
+Received: from PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632]) by PH7PR12MB5757.namprd12.prod.outlook.com
+ ([fe80::f012:300c:6bf4:7632%2]) with mapi id 15.20.9137.021; Wed, 24 Sep 2025
+ 19:22:49 +0000
+Date: Wed, 24 Sep 2025 16:22:46 -0300
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: joro@8bytes.org, bhelgaas@google.com, suravee.suthikulpanit@amd.com,
+	will@kernel.org, robin.murphy@arm.com, sven@kernel.org,
+	j@jannau.net, alyssa@rosenzweig.io, neal@gompa.dev,
+	robin.clark@oss.qualcomm.com, m.szyprowski@samsung.com,
+	krzk@kernel.org, alim.akhtar@samsung.com, dwmw2@infradead.org,
+	baolu.lu@linux.intel.com, kevin.tian@intel.com,
+	yong.wu@mediatek.com, matthias.bgg@gmail.com,
+	angelogioacchino.delregno@collabora.com, tjeznach@rivosinc.com,
+	paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu,
+	alex@ghiti.fr, heiko@sntech.de, schnelle@linux.ibm.com,
+	mjrosato@linux.ibm.com, gerald.schaefer@linux.ibm.com,
+	orsonzhai@gmail.com, baolin.wang@linux.alibaba.com,
+	zhang.lyra@gmail.com, wens@csie.org, jernej.skrabec@gmail.com,
+	samuel@sholland.org, jean-philippe@linaro.org, rafael@kernel.org,
+	lenb@kernel.org, yi.l.liu@intel.com, cwabbott0@gmail.com,
+	quic_pbrahma@quicinc.com, iommu@lists.linux.dev,
+	linux-kernel@vger.kernel.org, asahi@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-mediatek@lists.infradead.org, linux-riscv@lists.infradead.org,
+	linux-rockchip@lists.infradead.org, linux-s390@vger.kernel.org,
+	linux-sunxi@lists.linux.dev, linux-tegra@vger.kernel.org,
+	virtualization@lists.linux.dev, linux-acpi@vger.kernel.org,
+	linux-pci@vger.kernel.org, patches@lists.linux.dev,
+	vsethi@nvidia.com, helgaas@kernel.org, etzhao1900@gmail.com
+Subject: Re: [PATCH v4 4/7] iommu: Pass in old domain to attach_dev callback
+ functions
+Message-ID: <20250924192246.GK2617119@nvidia.com>
+References: <cover.1756682135.git.nicolinc@nvidia.com>
+ <19570f350d15528e13447168b7dcd95795afdbf3.1756682135.git.nicolinc@nvidia.com>
+ <20250924184346.GI2617119@nvidia.com>
+ <aNREE5qMJRU+0+Bw@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aNREE5qMJRU+0+Bw@Asurada-Nvidia>
+X-ClientProxiedBy: BYAPR05CA0101.namprd05.prod.outlook.com
+ (2603:10b6:a03:e0::42) To PH7PR12MB5757.namprd12.prod.outlook.com
+ (2603:10b6:510:1d0::13)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250924-dsi-dual-panel-upstream-v3-3-6927284f1098@linaro.org>
-X-Proofpoint-GUID: Lpzqd3Tf0Qb7VZM3vAWjxnDeYOWXRd2A
-X-Authority-Analysis: v=2.4 cv=fY2ty1QF c=1 sm=1 tr=0 ts=68d444cf cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=sWKEhP36mHoA:10 a=KKAkSRfTAAAA:8 a=BVByBJJp0cfCRiHu0pEA:9
- a=CjuIK1q_8ugA:10 a=a_PwQJl-kcHnX1M80qC6:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIyMDE2OCBTYWx0ZWRfX/pR7cD49UEkS
- yIx3QgwAjTgM0EQ0f3hP2M4xTNyD8+MWqafh2hVuQewsyGcLjPYG959ltNMp9c1V5bNMZ+Zvr4j
- z7hOY8jVo5zsd5ZVhdbtPjzvRqcD+mv3nivuyGjNK/W9q66iPoGNQUjpu34K4gu41rv8nsR+VHb
- 3rucSdDrAYHLfgFVdzBQG7Rv5Z4Nz0I9UPFaoWHOPl+3sjFB26bZmP5uDNIclGTMP/ZBSzYzIE4
- HsqBTnk2B7HHJVLtyMLDbWV00wkF3HAfTbIB7HemxR426QY8OFaEXuRa8XnFfDADrpib2s2e4g8
- UYyIw9hdpI36tlTFKuqUQfK95b4I8draF48wAFB14eWiUR9Ubz1hIKCV26Psj2V4rKRkcTqN5iA
- HWPhSc3A
-X-Proofpoint-ORIG-GUID: Lpzqd3Tf0Qb7VZM3vAWjxnDeYOWXRd2A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-24_06,2025-09-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 spamscore=0 adultscore=0 impostorscore=0
- phishscore=0 bulkscore=0 priorityscore=1501 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509220168
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH7PR12MB5757:EE_|PH7PR12MB7283:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1fdd5966-c4dd-4dc9-2e60-08ddfb9fbfbb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?DJpk3apvdLdK6qEpvZnDAq7ic+TYVQtU0k3yPF0tLSs5KAMeq9b/uD0t2ZPO?=
+ =?us-ascii?Q?8gEjCRUFuJ9htydLX8xMfGtSkoAmxe9ZK+eAOtgn8Qw93Edrf63oy+K8vog4?=
+ =?us-ascii?Q?NmMfU+x+fJoSuTty96KnIJ+tRWTXcsS6wPzmBIZTJI3I3+FkCh95cZ/fsKvu?=
+ =?us-ascii?Q?6o9U4sNPvKrnzYtGLXHOeSMFE8IJJEqUDdJELTaeZ2OPAqwXduvdozUxti1g?=
+ =?us-ascii?Q?y2vvrT/tIbyCPQXh0Duowq4J7tIbwnhVLsF9zlm6znQSFqS1qTikd4+MIs37?=
+ =?us-ascii?Q?Nj09xHUkFGu5beBbzaj8XwYfiZuQvUptKO0svc0qfW0gqaerqhX1jOotM5aK?=
+ =?us-ascii?Q?R1k3xWCIxG2rBqidtrONiX9SBW6FoZ/6eLN9oSodbvRlNmICp3MSPTFk/6j7?=
+ =?us-ascii?Q?2YUd9YZjB9huW/TIIMpz7f3+8OljOQJ8UIKUKfXPM9GIw+AYmFz54fp/W44J?=
+ =?us-ascii?Q?3Om7Je4bmqNUC5lcqyrk8lHad0SfkwuTBUwd5PXk6hQGW1t4Abvrt1y1R7/u?=
+ =?us-ascii?Q?YWNswPg9SD+fXLFxSI/KQtPqOjJL2VnK3FUfk2FykvaDbYuqMQSYO2nrjiWC?=
+ =?us-ascii?Q?aVpR8Zlz2Yeik7lq11wN/cPh0Fgi6cf8s1Y7Rq6zpoKyoof7raVE73SxWsUZ?=
+ =?us-ascii?Q?dL3rVATKUR2TZ9el7rLR7hkqbnj5ACLlKEVDMV3tyf306flk5SSjatobjPo5?=
+ =?us-ascii?Q?qwz3f67byF4NaRvxhGzoPiQSwXvFjKvhulNNBlaLaUp7YElC7IH9Zpi/mW7O?=
+ =?us-ascii?Q?/mYu3dO438El4hAtrup28NwoYIpI6i6+gKFf+nesLb+YElQ9Y+RdFqauW18v?=
+ =?us-ascii?Q?hwgsYkxXB2LC1CdP6NdRUMwol13+1SBc97iyCQXVWkHhBvRhxRJHQue6gLK6?=
+ =?us-ascii?Q?MoQZkN+ytn5NgkGFP5DLV16tvXdeyLqRNOj+atRuKLWJAt0MpguRhB8/mEzA?=
+ =?us-ascii?Q?VL2vfIX90pTssLzdIiv02vIkEZHLqnu8bsvq33jyqe4GW12uAjLkKNFh2q36?=
+ =?us-ascii?Q?9bD/MsXm1uozkVTOvYmY334juPSDugEi/DiQRqm9UIU39hthEJIarl6OlGvk?=
+ =?us-ascii?Q?1pHX+RQyy97+VIhF5PCoP01K0/jZOygoYeOGBx3ZL371XjHIrPbtydKxcOm0?=
+ =?us-ascii?Q?DHF0o48m/LnNXJKvxOiIx32QLHdSLszBFswgV+9yAjK4y0oK3VJD0mP15lSs?=
+ =?us-ascii?Q?ex1ghd0JvFa4nXwDm9UjH4HjJUSso1h5Kqa00JeSiRujjulu0CX7pdzzCOPt?=
+ =?us-ascii?Q?MFyPlK9N9CRVSgK0xazohFd42BCp/qH3lDZlFtBxGXbu3GA34IKWcMVxljNM?=
+ =?us-ascii?Q?JwN//IuTvHr+/er7tze41HyUhbxrsk1CuE0kas5EYcMYuZnsN3yKlbgblJIJ?=
+ =?us-ascii?Q?QsUqOQxyG0X4KMZxz/qC7rq2zpBS7n46JcBSlpTRzclP823+J7oUVbxyRQV2?=
+ =?us-ascii?Q?pVIIbDZRupU=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5757.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?H+PdLoH6bGeJG20/b/NDqWLEPT7KXFHuvXqaIIF8fxQGPHEytFQIXeEp9/sE?=
+ =?us-ascii?Q?84VHlgVEALrOXUU+qBAenI67cORQ7zfjeWKf/qV9W4HQzD4oCQCNSNfQAWod?=
+ =?us-ascii?Q?edkoAXIAc00N3dAKRZcVgyQXzhoYb2VDV0Z6TlgDG0+/W2q6J6KDk/R8GPXV?=
+ =?us-ascii?Q?c3eGtYRr1Y1bXz54P5Key6m3OnKAneXlgbjCzJnkPFEh+GN1j8DCYRfqcqS9?=
+ =?us-ascii?Q?klydDolhaANdWwBJE+N2MzRFfh8nDNk+yIhvI1dLeCPS2Y80DMoHG+FjMRrB?=
+ =?us-ascii?Q?T0GcbBJQ/8IqiW4jXoOM7oG32jQDTFlDEm8btzX/5fKZT/NfyJIXmhW03Htc?=
+ =?us-ascii?Q?zluDel47rjnI8EtF+qQGOi0Z2LovxrZ1QCeIW6ODFsXa5ULG5ZC4ysn+2Q6l?=
+ =?us-ascii?Q?JBYh+yRbqLZdMUPKno+0PaF8qLjdBSBfxl1v9eLycS1+7EXIyZr2sltdWpBU?=
+ =?us-ascii?Q?9aaSXAFUoog9rFi5kxUEF4tkCsYZpuOtlr+VvJhHaQOhE5ysGo0U7wMbJQ/a?=
+ =?us-ascii?Q?ODcnbDXfwcRFZ5MoiGBPlEu56lhNX1cZ8pOhcBBUSWc8NtAYRiKmTnCWUl27?=
+ =?us-ascii?Q?ZY0GbigkUpzNP6I4rYhZ/BJko8PhCyNZN3KUoFAf5QzDYdAq3LfXwISDYpjH?=
+ =?us-ascii?Q?fxU4duJ0sBeeXhXuk3i04GRzvrKbRh3/NStLrGWID/2mK2Dw+tCzShvy8Dfl?=
+ =?us-ascii?Q?XSmgEljY50stxDS0XY6FGZCGYhCd2OklSgJhqYokVzv/D2BKatuzJkxucF8I?=
+ =?us-ascii?Q?vBV2DehCHvldpylXpZPSQUbrCg3eqNT09HxQz8aXKulYkMPv3IgSn4ADijWm?=
+ =?us-ascii?Q?eyHAhu+mlLnQ23ynf38bl7Pmmj/vKPhqZh3SEl91nk9LGsu0J5mEtzPr8or/?=
+ =?us-ascii?Q?TETI5uJ28YbnlzVjqBQmBmkkM2ZJvuYHs3xKH+EE3ln4i8kLbRWrYSos48jZ?=
+ =?us-ascii?Q?L/Awv16wi/y41Pc9wdBxtDF1ibv1FyaxONrrUmg1XWDzhWZu3dYXJ4XMT8Dq?=
+ =?us-ascii?Q?IoD1bs5mqCcVVVEcpjNrtJY8IUp50x3zxTshnxCcr9I4MlttlHPgF10YICVo?=
+ =?us-ascii?Q?l6NW4sYC22yv8koOkr6QsYScj3RF/chIYS/ppjW21zeznw17W22Ua7MWif5Y?=
+ =?us-ascii?Q?4HvQb/W4H49UWKnCochrS+sxreTmp9YcX2niNz/Si1ZAmyHUGWk/Q6WwZffh?=
+ =?us-ascii?Q?d7fph8l33n91FS1G3Ek9RxQ8hOVKhcUDtsFFbBCi4/bogfsGOqhFKvcs2ccI?=
+ =?us-ascii?Q?VAfXi/JBsdJT2i7rfbZip2WLo4vnCcmJUePT9398N7BPnhDnNYBU91t6u3rU?=
+ =?us-ascii?Q?6qnk2tTpmkoZEFeDei8aVcJkWvG6evuJpLtSnnpK4FXueJUoP02nSRrEixvw?=
+ =?us-ascii?Q?rfW9vvwehrz+5PkWN5Z6RhS8NtNrASorNDXP90aJXYTqTkuo+HGxqm7GuG2W?=
+ =?us-ascii?Q?Th4rXedJTIcpExYIchwfWLWBTc4EmE3WhqNecRh7rbZcg3MovtEvL4/qEM7/?=
+ =?us-ascii?Q?VrSzHI6j9yawNYmoFGnz+P2aHzyBwtv9PXBumpS5PR895NwXET3dRsy4EVmw?=
+ =?us-ascii?Q?IwxA1eIByvjc0bJmQKZwmie39PykeS+z8GaDKD8L?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1fdd5966-c4dd-4dc9-2e60-08ddfb9fbfbb
+X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5757.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Sep 2025 19:22:49.6534
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sAhIDaV4liUTqtPVLo8pa2nOfcJPHOsJjCVIZD1lGcxIFaKIuScPtx0uQ2ES97f4
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7283
 
-On Wed, Sep 24, 2025 at 11:08:12PM +0800, Jun Nie wrote:
-> Support a hardware configuration where two independent DSI panels are
-> driven by a single, synchronous CRTC. This configuration uses a bonded
-> DSI link to provide a unified vblank for both displays.
+On Wed, Sep 24, 2025 at 12:18:43PM -0700, Nicolin Chen wrote:
+> On Wed, Sep 24, 2025 at 03:43:46PM -0300, Jason Gunthorpe wrote:
+> > I've split things like this into more patches before, but this
+> > actually isn't too bad, so I wouldn't push for it.
 > 
-> This allows application software to treat the two displays as a single,
-> wide framebuffer with a synchronized refresh cycle, simplifying rendering
-> logic for side-by-side panel arrangements.
+> Thanks. I will keep the flow in mind.
+> 
+> For working more on the new test attach op, I'd probably keep it
+> as-is.
+> 
+> > A series version would be:
+> >  - add a new op 'attach_dev2' or whatever
+> >  - Convert all drivers that just change the signature
+> >  - Convert drivers that have a trivial iommu_get_domain_for_dev()
+> >  - N patches to convert more complex drivers one by one
+> >  - Remove old op attach_dev
+> 
+> Does this mean that drivers would live with the 'attach_dev2' op
+> renamed from 'attach_dev'? Or the last could rename it back?
 
-I'd like to understand how is it framed on the overall system design
-level. If it's a panel controlled over the DSI interface, it's fine
-since we can broadcast commands over two DSI links. What if the panel
-(or bridge) is controlled via I2C / SPI?
+Could rename back, often better to select a name that doesn't need a
+rename back :)
 
-> 
-> At the DSI host level, the frame width for each link must be that of an
-> individual panel. The driver therefore halves the CRTC's horizontal
-> resolution before configuring the DSI host and any DSC encoders, ensuring
-> each panel receives the correct half of the framebuffer.
-
-> 
-> While the DSI panel driver should manage two panels togehter.
-> 1. During probe, the driver finds the sibling dsi host via device tree
-> phandle and register the 2nd panel to get another mipi_dsi_device.
-> 2. Set dual_panel flag on both mipi_dsi_device.
-> 3. Prepare DSC data per requirement from single panel.
-> 4. All DSI commands should be send on every DSI link.
-> 5. Handle power supply for 2 panels in one shot, the same is true to
->    brightness.
-> 6. From the CRTC's perspective, the two panels appear as one wide display.
->    The driver exposes a DRM mode where the horizontal timings (hdisplay,
->    hsync_start, etc.) are doubled, while the vertical timings remain those
->    of a single panel. Because 2 panels are expected to be mounted in
->    left/right position.
-> 
-> To maintain synchronization, both DSI links are configured to share a
-> single clock source, with the DSI1 controller using the clock provided
-> to DSI0 as below.
-> 
-> &mdss_dsi1 {
->    assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>,
-> 		     <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
->    assigned-clock-parents = <&mdss_dsi0_phy 0>, <&mdss_dsi0_phy 1>;
-> }
-> 
-> Signed-off-by: Jun Nie <jun.nie@linaro.org>
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 10 +++++++++-
->  1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index de51cb02f267205320c5a94fc4188413e05907e6..1fddcea7f86547258be18a51a0a3e3f96f6c3838 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -177,6 +177,7 @@ struct msm_dsi_host {
->  	bool registered;
->  	bool power_on;
->  	bool enabled;
-> +	bool is_dual_panel;
->  	int irq;
->  };
->  
-> @@ -935,7 +936,10 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
->  			return;
->  		}
->  
-> -		dsc->pic_width = mode->hdisplay;
-> +		if (msm_host->is_dual_panel)
-> +			dsc->pic_width = hdisplay;
-> +		else
-> +			dsc->pic_width = mode->hdisplay;
->  		dsc->pic_height = mode->vdisplay;
->  		DBG("Mode %dx%d\n", dsc->pic_width, dsc->pic_height);
->  
-> @@ -1609,6 +1613,7 @@ static int dsi_host_attach(struct mipi_dsi_host *host,
->  	if (dsi->lanes > msm_host->num_data_lanes)
->  		return -EINVAL;
->  
-> +	msm_host->is_dual_panel = dsi->dual_panel;
->  	msm_host->channel = dsi->channel;
->  	msm_host->lanes = dsi->lanes;
->  	msm_host->format = dsi->format;
-> @@ -2492,6 +2497,9 @@ enum drm_mode_status msm_dsi_host_check_dsc(struct mipi_dsi_host *host,
->  	if (!msm_host->dsc)
->  		return MODE_OK;
->  
-> +	if (msm_host->is_dual_panel)
-> +		pic_width = mode->hdisplay / 2;
-> +
->  	if (pic_width % dsc->slice_width) {
->  		pr_err("DSI: pic_width %d has to be multiple of slice %d\n",
->  		       pic_width, dsc->slice_width);
-> 
-> -- 
-> 2.34.1
-> 
-
--- 
-With best wishes
-Dmitry
+Jason
 
