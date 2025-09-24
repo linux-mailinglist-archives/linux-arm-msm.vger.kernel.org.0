@@ -1,135 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-74555-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74554-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 244D8B98288
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 05:55:12 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84260B9827E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 05:54:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D67922A7909
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 03:55:11 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 728BA189AC8A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 24 Sep 2025 03:54:45 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 790FB225408;
-	Wed, 24 Sep 2025 03:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2679721D3F2;
+	Wed, 24 Sep 2025 03:54:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GCN4JXvy"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GkJJsX9K"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-02.galae.net (smtpout-02.galae.net [185.246.84.56])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E73A1F91D6
-	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 03:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.84.56
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84DB54C98
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 03:54:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758686106; cv=none; b=cl42Lu4heXIQJFZUkbvkiFPR2lh1v7B5aPmqucBIphQSmW+X1hteqxLoxcAsax2WkjDMNwxx664lqC4s8KAkyBbTYpdVi4GaDDRwxBlmnTQ/ehFyPZLbIG0oUg+5NpMYTas2EFecCCXPLI09M6y1V4bNvBIxtWMGSoCjvSAYlIU=
+	t=1758686060; cv=none; b=uFpMtgxdbmBEM5gWpUnceui4+ZZundsw39owXOQtf3qOnCgFA5csql1yDv+rJ4VITgeCvwaUjYTQ6i+ZqiV6HIQ46t+E9mz1AX/NhCjQAX7SQL/CCsB90KYHyaocTF76O0dyGZ89Lo8I5yiCNFW8xZRT5QChuoM4DDpLTlNIdmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758686106; c=relaxed/simple;
-	bh=GLI4abl8FZ4HfkmnRdlogF0X6++XTS/tUyrTv2strik=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=e7jg/n+NufNMx3/MNnaXg6HadiQr/1BBPuUINBjMSD3BDQmwMT0YChBg1ylQH2Bn+V10OZSbPLXudT+sZQ7NLLhQuoLdsVeJzqdxYqzi6T0Xh/I8OZSBGeks7NjID54bBc3K0HN0Sl0mO36eI5UTrASjkv3fIC2qnCdqe3hgLbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GCN4JXvy; arc=none smtp.client-ip=185.246.84.56
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-02.galae.net (Postfix) with ESMTPS id 1CA101A0ECD;
-	Wed, 24 Sep 2025 03:54:58 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id D3384606B6;
-	Wed, 24 Sep 2025 03:54:57 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id EF2FD102F1886;
-	Wed, 24 Sep 2025 05:54:01 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1758686096; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=g+qDq5wTJI6x9EY39D0tJB9MH6r0WcMVdVhtkKarOt0=;
-	b=GCN4JXvy5Jr2Cc5svIW5gg1tIvUpzdNR4vXL3iilzXOvA0IDaSnXsAipk852bsHFxPGIar
-	8xzEeaC3wRS7xz17WwtS9be1O0lZdzovwkekvueR4jPF20QzmTvDy5Eq7nR2JGLrRuKNSg
-	Ku8B522sIzaksIy3APEcrUHJ7wxRltQdFreb3Em9UPhhxCvlEUtSvVjcr+qiOZXaP+j8Yl
-	IAewYMc7DqVeRLKEno1S6nCb+rdumy5n1bjCodVN71F+Mm5tjr8DpQQfvqkUvJdnPQmJIq
-	y4ltufGnQ4H3zsCCGOJOSY/k69w417eWj3go6jOn9ibxoz7FxppNR2aVFDu9SA==
-Message-ID: <ff7432c4-27ce-45a1-ac4d-c18d612ef04d@bootlin.com>
-Date: Wed, 24 Sep 2025 09:23:55 +0530
+	s=arc-20240116; t=1758686060; c=relaxed/simple;
+	bh=Nu/WF9Ml6c6YsVo7Zy/YIo3B9jWxhA3hMhqvN1Z4F8I=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=hSJkdHDc2OylKrxfp5rSYFuuKydwYRFFgHbfXZZad4A/mpfM+97fa8c6wtxEtq7FDBZL1H/rKzhwKsa9sCoOigwc88TLlJq3yIpd5IQqc2hhCvd5l+1ngWfX1HettlDbxSIZetePM353v1vOvyfO9uYutgoGV7Q5511nxySS9pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GkJJsX9K; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58O0ogCQ020615
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 03:54:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=j/3ckqBWBGaw/aVVkFjuVsL+rcB/4ID+XJ2
+	bnAbFK+U=; b=GkJJsX9KglNWNO6J8FBogG76QndvnPu2ZPwEK7T7Atvou9HAFlF
+	Z1tMiFjdgD55nGmKwt3XlZdr+5eqMqa/vi6GqV21WUjh50pDKWxeDSewplCcRCIm
+	Jt9uF4rY9L1sEj1PBDa3pjCEVO4XpImDJ3+2GNkC/x0/dr6LeUJBnZAQ/6aBWTVs
+	Ej2Y8mzLI5xBxmXoxvlsJaZseXomaiI7ZsTwXcc9SMj4LhD+Ru8UawqixGWSMz2o
+	STm94gFt9oPCT14FDcU9bewlnx4OhP3RmIw2cO3O3ReVP19PpgYDDiJnK/C6BzCA
+	kKS1ehHWqyFfrspasFlJmYs9oeCNb3pXkKA==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bhvjv8q7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 03:54:17 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-32ee62ed6beso8616654a91.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 23 Sep 2025 20:54:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758686057; x=1759290857;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=j/3ckqBWBGaw/aVVkFjuVsL+rcB/4ID+XJ2bnAbFK+U=;
+        b=P6baPf7nUxgrUjUFBWpXbeB+qB/ESa+FpfGOKlrnkHlyAFSowaOLQmFOv21rIj73jN
+         YngIfvU7fZpuXLHdLOF0kRdDQB4CXgn6QBmwyKDW5E6SCghxq5c3ypEBFp3SztJnybAV
+         3e8Wb0iDAoHuAHceIbsSUOgjX2GyEo6cXCk/BgQitl/2H9oOlJNZyVjYetRuLt9u4usU
+         n4rpyzWZcH47ZRaT1InHNA6Wd4W9MpFT4DHOl6TpSp+DzvNqlWJC0N+BZCpvgTP9ZS/Y
+         7eZc2YmNICK5/l6bz08GVguU/EYRwbMFZC7Y6ryEany6k28EFpsGFTj05UHSxaWD0W09
+         eHRw==
+X-Forwarded-Encrypted: i=1; AJvYcCW25DUacoSz7OuekncMBPyCikQ24eb5K8nR9bCNwH5YF3043nnz0GnSMdSAdEh4SzGRQkBXWlc3iPNtWJTl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx/0P14hBV/tGrOJLdYi333kkaMgkzGRa0xAymOKj8YP/HtYArl
+	/yt6slsni24V2E00M1mV9NkBnWQwKTBbTtstJX1OL6B/jcVYJ9BJ8i/8NF/qSDWLXdZ72mvNZFB
+	COfB6jB0imfb53PSRlaO2nalxapldhrWs7JwYjpv56O8/bo7V0yt1u8OVT3eA9LIfIw1J
+X-Gm-Gg: ASbGncvvzP+3uUdYihd+MzwtADZAoR2LuBWZxUGf6HpImehryx87rCeF0tSxkllYmji
+	rF1w7SEGyj+sDQt3S7WDh0OXiohENEazwRaflQNx+EVkRFf9GaHbFCdBOe5wACXQKsiwwUbLA8n
+	HiLETLsDmrW2mA8MzURtmIfdZLK7B1UDwq8K5aSYCtFVq8COKF3+pM0Ho4wHygKONqPqrJ8Tuls
+	4jMt9WcHUtJxePNQ0KXwZeTixATl1oYeUkbqcksdj9l85NF5iApDElPkVaFZAlPUs+G8pxCxn6/
+	eXWLe2a6A4zIXVTWqqKdgaSPnuKsqA35wIV/2wLZFY+KWJg5ZeVjAJfhUJ0ZOPdLvXZbTRrkzTZ
+	O
+X-Received: by 2002:a17:90b:3d09:b0:32e:753d:76da with SMTP id 98e67ed59e1d1-332a95e9263mr6031276a91.20.1758686056703;
+        Tue, 23 Sep 2025 20:54:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFbrko3GJ0QqG1oehM35y/SAlmwzDijJZMdFCaekD3Nn7gzlJ5Px5HbAR+Bh4TzIkGAvo/bDQ==
+X-Received: by 2002:a17:90b:3d09:b0:32e:753d:76da with SMTP id 98e67ed59e1d1-332a95e9263mr6031245a91.20.1758686056209;
+        Tue, 23 Sep 2025 20:54:16 -0700 (PDT)
+Received: from hu-vdadhani-hyd.qualcomm.com ([202.46.23.25])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3341bdb4082sm750903a91.14.2025.09.23.20.54.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 23 Sep 2025 20:54:15 -0700 (PDT)
+From: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+To: andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: mukesh.savaliya@oss.qualcomm.com, anup.kulkarni@oss.qualcomm.com,
+        Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+Subject: [PATCH v1] arm64: dts: qcom: lemans-evk: Add firmware-name to QUPv3 nodes
+Date: Wed, 24 Sep 2025 09:24:09 +0530
+Message-Id: <20250924035409.3976652-1-viken.dadhaniya@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH net-next v13 13/18] net: phy: marvell10g: Support SFP
- through phy_port
-To: Jakub Kicinski <kuba@kernel.org>
-Cc: davem@davemloft.net, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- thomas.petazzoni@bootlin.com, Andrew Lunn <andrew@lunn.ch>,
- Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>,
- Russell King <linux@armlinux.org.uk>, linux-arm-kernel@lists.infradead.org,
- Christophe Leroy <christophe.leroy@csgroup.eu>,
- Herve Codina <herve.codina@bootlin.com>,
- Florian Fainelli <f.fainelli@gmail.com>,
- Heiner Kallweit <hkallweit1@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>,
- =?UTF-8?Q?K=C3=B6ry_Maincent?= <kory.maincent@bootlin.com>,
- =?UTF-8?Q?Marek_Beh=C3=BAn?= <kabel@kernel.org>,
- Oleksij Rempel <o.rempel@pengutronix.de>,
- =?UTF-8?Q?Nicol=C3=B2_Veronese?= <nicveronese@gmail.com>,
- Simon Horman <horms@kernel.org>, mwojtas@chromium.org,
- Antoine Tenart <atenart@kernel.org>, devicetree@vger.kernel.org,
- Conor Dooley <conor+dt@kernel.org>, Krzysztof Kozlowski
- <krzk+dt@kernel.org>, Rob Herring <robh@kernel.org>,
- Romain Gantois <romain.gantois@bootlin.com>,
- Daniel Golle <daniel@makrotopia.org>,
- Dimitri Fedrau <dimitri.fedrau@liebherr.com>,
- Florian Fainelli <florian.fainelli@broadcom.com>
-References: <20250921160419.333427-1-maxime.chevallier@bootlin.com>
- <20250921160419.333427-14-maxime.chevallier@bootlin.com>
- <20250923182429.697b149b@kernel.org>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Content-Language: en-US
-In-Reply-To: <20250923182429.697b149b@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: VTXH9jsUo7tQsLZ_CddVcBX4uEQiVm-z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIzMDAxMSBTYWx0ZWRfX7sCFGhSUonVa
+ 0CpeJ+hiB377lqfNwmcBGPdsRVM9E7ENTBWobVdKn17ZBLTg/p3ZN1qzW/jNysXfww9+gPxmogG
+ wuwTaEMFtnrZn7bIHVvqzgOoowhbO3Hlnkz2sWoL/A88EvElPId68kw0EQeLV5Uz474DhJ1LOmW
+ DLK+61T13gqZR4WheLD4YLdRmpdQ8d1S3ulqbYFFAvy+0OZs4JXrNb83B2ndY3qZ3VIXhGqKZaA
+ eQX0irSblc723lQ/dOMadYmbRRqgIxpUoteqnA2JH3DlUZ6oleIqPZi/a4cDpZTgsacdVLNVP1+
+ RDURTz0U022pyPNpIYPSZi3Xp8bvIjKjMZrdQcx3sE6XnaziOSqAEtbtXDxmUK+0JdgQeQFZF80
+ nwXwyUOR
+X-Proofpoint-GUID: VTXH9jsUo7tQsLZ_CddVcBX4uEQiVm-z
+X-Authority-Analysis: v=2.4 cv=Csq/cm4D c=1 sm=1 tr=0 ts=68d36b69 cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=uj2zFQKwFRccP8yYN94A:9
+ a=rl5im9kqc5Lf4LNbBjHf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-23_08,2025-09-22_05,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 phishscore=0
+ clxscore=1015 spamscore=0 priorityscore=1501 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509230011
 
+Traditionally, firmware loading for Serial Engines (SE) in the QUP hardware
+of Qualcomm SoCs has been managed by TrustZone (TZ). While this approach
+ensures secure SE assignment and access control, it limits flexibility for
+developers who need to enable various protocols on different SEs.
 
+Add the firmware-name property to QUPv3 nodes in the device tree to enable
+firmware loading from the Linux environment. Handle SE assignments and
+access control permissions directly within Linux, removing the dependency
+on TrustZone.
 
-On 24/09/2025 06:54, Jakub Kicinski wrote:
-> On Sun, 21 Sep 2025 21:34:11 +0530 Maxime Chevallier wrote:
->> +/**
->> + * phy_port_restrict_mediums - Mask away some of the port's supported mediums
->> + * @port: The port to act upon
->> + * @mediums: A mask of mediums to support on the port
->> + *
->> + * This helper allows removing some mediums from a port's list of supported
->> + * mediums, which occurs once we have enough information about the port to
->> + * know its nature.
->> + *
->> + * Returns 0 if the change was donne correctly, a negative value otherwise.
-> 
-> kdoc likes colons after return so:
-> 
->   Returns 0 -> Return: 0
-> 
-> sorry for only providing an automated nit pick..
+Signed-off-by: Viken Dadhaniya <viken.dadhaniya@oss.qualcomm.com>
+---
+ arch/arm64/boot/dts/qcom/lemans-evk.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-It's OK, the series no longer applies with Russell's sfp_module_caps 
-series being here, so a new version is due anyway.
-
-Russell, I missed this series of yours as I wasn't available at all at 
-that time, but as this phy_port series has been in the pipe for quite a 
-while, and you commented on the used of sfp_parse_support et.al. that 
-was being replaced, I'd have appreciated to be in CC :(
-
-Given my schedule, next iteration is probably going to be for the next 
-cycle anyway so no harm :)
-
-Thanks,
-
-Maxime
-
-> 
->> + */
->> +int phy_port_restrict_mediums(struct phy_port *port, unsigned long mediums)
+diff --git a/arch/arm64/boot/dts/qcom/lemans-evk.dts b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+index c7dc9b8f4457..b21fa6bc36cf 100644
+--- a/arch/arm64/boot/dts/qcom/lemans-evk.dts
++++ b/arch/arm64/boot/dts/qcom/lemans-evk.dts
+@@ -588,14 +588,17 @@ &pcie1_phy {
+ };
+ 
+ &qupv3_id_0 {
++	firmware-name = "qcom/sa8775p/qupv3fw.elf";
+ 	status = "okay";
+ };
+ 
+ &qupv3_id_1 {
++	firmware-name = "qcom/sa8775p/qupv3fw.elf";
+ 	status = "okay";
+ };
+ 
+ &qupv3_id_2 {
++	firmware-name = "qcom/sa8775p/qupv3fw.elf";
+ 	status = "okay";
+ };
+ 
+-- 
+2.34.1
 
 
