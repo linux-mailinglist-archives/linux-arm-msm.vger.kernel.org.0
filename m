@@ -1,341 +1,140 @@
-Return-Path: <linux-arm-msm+bounces-74918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74921-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6BCBBB9D78A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 07:36:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D7DFB9D7CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 07:45:46 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 12A831641EE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 05:36:31 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 721E31BC0918
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 05:46:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 396C22E8B63;
-	Thu, 25 Sep 2025 05:36:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7D9D02DF13B;
+	Thu, 25 Sep 2025 05:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="jWhaucmV"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D2g+S9br"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5892E7F3F;
-	Thu, 25 Sep 2025 05:36:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D588A1A23A0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 05:45:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758778587; cv=none; b=tdCFnKIO/O+bINwsyJ0qiFY7RU0qmQcMoeqTagC/BF6e/g2CbpH9H1h4CoLS6grq/wBRHroDzWNSsOCpnJlL85p2vrkVpRU7p5g28wbO+nNDbzRwIDCYwMUjVsBVeFIAXn0OQ4JQsWWFFmY3YyfkLJV4//noWqaCbao/OkrH8QU=
+	t=1758779143; cv=none; b=lYX86M9Aw3Bh9AUsgFg5szCs0YcXDVU0zH/jXaMU5qq0JOVZ/OT7VVFYBSpMMJtLBDCZ9kPcGyToNfBavIOV7+AypBWoKLLMnbfA7qPPHdHgisNor3Noiz2wVLwS6a3heQRVH6Hkbe6mEgJWoEXjmlDsLCZr/kE1QHhV3Dy/+wU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758778587; c=relaxed/simple;
-	bh=c8xqBk7472R2XymfXHNgGb2nCkIciaws1PwoKnvoyTg=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=MBqbOQzKytMt2hdDOio0e+C5BLTHdYK8ZxBCoiI7w673mgoHClQOlCmOO2N3K0t9edIFVftgIv0WMNydM1v9BAToB/rKgM4QrzdRZ1D5hyDS6pCTv78NeNA54hD7Y5SVS4qLfWBJ5HTCfD5tWMd+DRFwewo96jpDftulVLOdAN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=jWhaucmV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P4auhT028512;
-	Thu, 25 Sep 2025 05:36:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
-	cc:content-transfer-encoding:date:from:in-reply-to:message-id
-	:mime-version:references:subject:to; s=qcppdkim1; bh=yobxXNa/fro
-	SgE+YMNFVJpLBB2EAvaFBepQbx5Zmc3M=; b=jWhaucmVqtNcBZ+ehgFVqqvMRZA
-	rAWhDSnYcPZVHvYJrkotDPHgr2lfJJ7CJ8OsAHhbeSg79Xe4G6O8agy7Lv39otkl
-	F/PQppks39dIH9JWUMNbYo+h4JboP/H7gsGmcw4EO4IL5X2CO2vOFB1VJ2pt3uLr
-	TmasyySQhK78vR3u9QWQdwVUwsGXq3Mpy+RZjQsBxaJYNLxiVmzESVS+Ck/i/d1X
-	eIyKOyajfF2mmAcc5JjK/vv84EWQaopWOZpEau8RBtosHxY9BLDb4lJmma5s5F7T
-	3nb8ncixwF8NgRiqxNVCXX8V2xP4fQXrpxSO2cAF9o/w5DmCa5n6p9rL+6g==
-Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49cxup046j-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Sep 2025 05:36:10 +0000 (GMT)
-Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 58P5a7nq000677;
-	Thu, 25 Sep 2025 05:36:07 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 499nbm8bwe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Sep 2025 05:36:07 +0000
-Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58P5Yjcn031572;
-	Thu, 25 Sep 2025 05:36:07 GMT
-Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
-	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 58P5a6f5000656
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 Sep 2025 05:36:07 +0000
-Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
-	id 30B0959C; Thu, 25 Sep 2025 11:06:06 +0530 (+0530)
-From: Ayushi Makhija <quic_amakhija@quicinc.com>
-To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
-        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
-        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
-        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
-        conor+dt@kernel.org, andrzej.hajda@intel.com,
-        neil.armstrong@linaro.org, rfoss@kernel.org,
-        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
-        jernej.skrabec@gmail.com, quic_rajeevny@quicinc.com,
-        quic_vproddut@quicinc.com, quic_jesszhan@quicinc.com
-Subject: [PATCH 3/3] arm64: dts: qcom: qcs8300-ride: add anx7625 DSI to DP bridge node
-Date: Thu, 25 Sep 2025 11:06:02 +0530
-Message-Id: <20250925053602.4105329-4-quic_amakhija@quicinc.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250925053602.4105329-1-quic_amakhija@quicinc.com>
-References: <20250925053602.4105329-1-quic_amakhija@quicinc.com>
+	s=arc-20240116; t=1758779143; c=relaxed/simple;
+	bh=y91CveNU8o61qRzBPIlmeKWPSA+K8ejO5zowlYxLNPA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RhhCuog3SAK83c0AFlwFR4NGociW6uANTKImBcghB3b6YfDH6Kdi5oG3UDaO+AozH4ckHScuv64FsKefjOJ+bZKEfoQ9xuydgmkzEQE7/1dpSUr+xS/5evIYEJvFfM8onoMY9guFoum8fO9n4VUC7bWCNJ4DNk5uH/ty1R+LT3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D2g+S9br; arc=none smtp.client-ip=209.85.214.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-2445805aa2eso5798075ad.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 22:45:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1758779141; x=1759383941; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Q6VyKRbOn4TYUtmAcOT7qWbJ+MHx1s5wBeVwgJ07ek=;
+        b=D2g+S9brKnGuc3tx2zqhfvgvLwLrlqIElr36sUgjOi2lXYO9iKupEG061yyBgpjEXE
+         iYYfg+Q04QFqAWqG0Seev3IcbNtm0hp2ePi3TIQX40lTVixf8M5ehqbHhpst28B+j6NF
+         ddfvCOIxD3dsbmiaR8L4D8h7Wc3smbzXwJ4V7uX6zj5g5QqbFzwE2Qjs3PqjiDIuWdH8
+         ygrxPsn7tMn/0l/yfSItt2BBEEW0WEO9D3pqG1Hzz38x4SLn/WATbRCvGJVIUCdNNjNn
+         OKIugOdp8wcnEEaWzl+WpECE0KTR2vu59zqiPn+V4UpaFEilHMKxnMosXUd2OTaE6EPk
+         BgUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758779141; x=1759383941;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3Q6VyKRbOn4TYUtmAcOT7qWbJ+MHx1s5wBeVwgJ07ek=;
+        b=qpJXUtfcjjT9FBeTp6c+Hw4LwzSfIWTY4Am5lw68g1kGqKNiCv7mAQ/aqubtVo7zZ5
+         1nA15ilxH6R7Gr5lK0IBp32gHM6+B3daY8nLNvIBbmCHOUliEVh0N7NZEFfKtN2g1SfT
+         qw2U53w4A21joN3nzrgQxTjUw8DhcUWRj7oOogze2qmOim0NIVW79mJFrRKizydx1f0s
+         +5JGvYjTwnS7mP3oaXRCe6zjdErNscUOxTTkaqgPkmgzVbLPvL0liiqzJ8v7ldvXHvcj
+         nXo/teLy1ABEGYtKlpHj3ujhTKKS6bpXZf3cm8dEUGS1uLcCVqUyPgNYs62GsRW5mkKg
+         v5Tg==
+X-Forwarded-Encrypted: i=1; AJvYcCXkRKsw8jn4Cazi1hfbEzmhXPRrNYcpP5MWzWtBKl/4hjM8n4xp+2I17L/iilyTsG8Rfip+IPg/BpaVuPya@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRkCvKHHBiwbichWjtIuVIncKdT5fVKPhcBdx9AoK1nsa0lwfy
+	CnnFaL2R85hs8OpWW7dLBfq8T4bJZ7emyAw2JbOta07hrCYZlVZ6RlmB
+X-Gm-Gg: ASbGncsnHRq63veBhVBMS3GLyuIGi9XYol5s9Dkx9trm1qkhCRhu5y/E9a6xquFZ0nC
+	gcprxIch5yhUjicVZFZKvqjuoW9ixPmOMI/CoeTsbkLeCKXtn7k+2gnY+2bN9ZYF61Nn+33ds3B
+	n37TbvpfVHgB/BeyfU2vHK1Z5Y/TkDkCdAHR3T/Y2lbgXmz8c60+gOlqrdsC7WDBEdbKHBGli6D
+	IhFZVAGcrwqsiXdjVCdnRPM29cVrlJSUV45q0lB+cioAODq2otNtgkA8NhRGtvS2fruRBq/U/h1
+	q+zeeHz4WTMtn9mI1DZRgLBnLSe4Wu3t/bGArfBWe8UhjIqzrnEGBE7ul/g5/B0bWPdPLbeWSx9
+	FQ9uatKGXf0Yz70i4NfTdaukFaF0w7tNE
+X-Google-Smtp-Source: AGHT+IFHyxcxK4Vd8sIGKGdSk7wQBBMmiacmoNUDPi5/Fxp6WTX1EZgpGu3p+r4H5CbHYpbKWFBz3w==
+X-Received: by 2002:a17:902:cf0d:b0:27d:69bd:cc65 with SMTP id d9443c01a7336-27ed4a96a83mr23489065ad.45.1758779141061;
+        Wed, 24 Sep 2025 22:45:41 -0700 (PDT)
+Received: from google.com ([2620:15c:9d:2:5a97:14cb:a5e:6c78])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed671d8bbsm11739105ad.59.2025.09.24.22.45.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 24 Sep 2025 22:45:40 -0700 (PDT)
+Date: Wed, 24 Sep 2025 22:45:37 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Luca Weiss <luca@lucaweiss.eu>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Courtney Cavin <courtney.cavin@sonymobile.com>, Vinod Koul <vkoul@kernel.org>, Bhushan Shah <bshah@kde.org>, 
+	~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-input@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: input: pm8941-pwrkey: Document
+ wakeup-source property
+Message-ID: <3kww5et2q2mqddpvtqzuj3jqzvfds66qrufawcmumamrqoaugk@tiq6zoe5psom>
+References: <20250909-resin-wakeup-v1-0-46159940e02b@lucaweiss.eu>
+ <20250909-resin-wakeup-v1-1-46159940e02b@lucaweiss.eu>
+ <efb03993-0481-45ed-8f7e-8b65519a55cb@kernel.org>
+ <phctwoxml7hscwcgaipl233lotnrkgcpe7rxvhm5syoiadu3lv@ibgeib4kjyhs>
+ <9e39f1b4-63b2-4c6a-8b31-6360be1952e6@kernel.org>
+ <dcdbc6424db6953dfc39fc05e0e050ab@lucaweiss.eu>
+ <kxgvebizxvlflu4qen3cb5v4lcuydmdixvi7624hrggo7f5u5f@zbengtjkekfj>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QCInternal: smtphost
-X-QCInternal: smtphost
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Authority-Analysis: v=2.4 cv=B4a50PtM c=1 sm=1 tr=0 ts=68d4d4ca cx=c_pps
- a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=PS1UjZDpBljCGRlzRBMA:9
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDA0MiBTYWx0ZWRfX1JZ/aTcrww4o
- 2gDmBqcBeooZW8KWe6nufqqSKK4ThUbXwN/rrwG37K3Q6GhGCK73v522NH+0QD+WcYV2ykzffbu
- JH/PGvR9nWG9EjQ38Dkeew8c8/q9t/CMaBYcuKdxTQVxB6eZcwvOcOgemTHWP6rlPmf0E7h/89D
- 2MWQzNn3zZPTcamCos+02rQpspRULqdO7K/zJDGER6y7ZG8t+ZwVChqm6JfB7S6P/sg7ciWbLq5
- xS9MH3Y1YrEPk9X+jNi574o8n9z4TXW+a4tFkT8imJVIXTcEtW7onnSc/d62ljUVuNobfhjQ00v
- UKvSyDROldzlMEoKaTXPRpgVadbtmbXboNMTgwpm3Enbir140mCMbFQri9Hbwziyf3edPV1mvkw
- uiA7tV0L
-X-Proofpoint-GUID: no2RLb3-7VDc7Vs2XrW85yfp5B6cdaIz
-X-Proofpoint-ORIG-GUID: no2RLb3-7VDc7Vs2XrW85yfp5B6cdaIz
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-24_07,2025-09-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 suspectscore=0 priorityscore=1501 adultscore=0
- phishscore=0 clxscore=1011 spamscore=0 malwarescore=0 classifier=typeunknown
- authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2507300000 definitions=main-2509250042
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <kxgvebizxvlflu4qen3cb5v4lcuydmdixvi7624hrggo7f5u5f@zbengtjkekfj>
 
-Add anx7625 DSI to DP bridge device node.
+On Tue, Sep 09, 2025 at 07:54:33AM -0700, Dmitry Torokhov wrote:
+> On Tue, Sep 09, 2025 at 04:41:26PM +0200, Luca Weiss wrote:
+> > On 2025-09-09 16:33, Krzysztof Kozlowski wrote:
+> > > On 09/09/2025 16:08, Dmitry Torokhov wrote:
+> > > > > >    compatible:
+> > > > > >      enum:
+> > > > > > @@ -36,6 +33,11 @@ properties:
+> > > > > >             pin should be configured for pull up.
+> > > > > >      $ref: /schemas/types.yaml#/definitions/flag
+> > > > > > 
+> > > > > > +  wakeup-source:
+> > > > > > +    description: |
+> > > > > > +           Button can wake-up the system. Only applicable
+> > > > > > for 'resin',
+> > > > > > +           'pwrkey' always wakes the system by default.
+> > > > > 
+> > > > > 
+> > > > > I'll fix existing code, so don't repeat that style.
+> > > > 
+> > > > If you ack I can reformat on my side to match the patch you just sent.
+> > > 
+> > > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > 
+> > Thanks for fixing that up Krzysztof! I noticed but didn't want to deviate
+> > from the style just for this description. Of course better to fix the
+> > formatting in the first place.
+> > 
+> > @Dmitry: Maybe give this patch some time (1-2 weeks?) to gather more
+> > feedback,
+> > given the reasons outlined in the cover letter. Also on the driver patch.
+> 
+> OK, I'll hold on to this for a couple of weeks.
 
-Signed-off-by: Ayushi Makhija <quic_amakhija@quicinc.com>
----
- arch/arm64/boot/dts/qcom/qcs8300-ride.dts | 170 ++++++++++++++++++++++
- 1 file changed, 170 insertions(+)
+Nobody voiced any objections so far, so applied both.
 
-diff --git a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-index 891e49602c97..5d4040376857 100644
---- a/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-+++ b/arch/arm64/boot/dts/qcom/qcs8300-ride.dts
-@@ -24,6 +24,64 @@ chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
- 
-+	vreg_12p0: vreg-12p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_12P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <12000000>;
-+		regulator-max-microvolt = <12000000>;
-+	};
-+
-+	vreg_5p0: vreg-5p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_5P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+	};
-+
-+	vreg_1p8: vreg-1p8-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P8";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <1800000>;
-+		regulator-max-microvolt = <1800000>;
-+
-+		vin-supply = <&vreg_5p0>;
-+	};
-+
-+	vreg_1p0: vreg-1p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_1P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <1000000>;
-+		regulator-max-microvolt = <1000000>;
-+
-+		vin-supply = <&vreg_1p8>;
-+	};
-+
-+	vreg_3p0: vreg-3p0-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "VREG_3P0";
-+
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <3000000>;
-+		regulator-max-microvolt = <3000000>;
-+
-+		vin-supply = <&vreg_12p0>;
-+	};
-+
- 	dp0-connector {
- 		compatible = "dp-connector";
- 		label = "DP0";
-@@ -36,6 +94,18 @@ dp0_connector_in: endpoint {
- 		};
- 	};
- 
-+	dp-dsi0-connector {
-+		compatible = "dp-connector";
-+		label = "DSI0";
-+		type = "full-size";
-+
-+		port {
-+			dp_dsi0_connector_in: endpoint {
-+				remote-endpoint = <&dsi2dp_bridge_out>;
-+			};
-+		};
-+	};
-+
- 	regulator-usb2-vbus {
- 		compatible = "regulator-fixed";
- 		regulator-name = "USB2_VBUS";
-@@ -316,6 +386,70 @@ &gpu_zap_shader {
- 	firmware-name = "qcom/qcs8300/a623_zap.mbn";
- };
- 
-+&i2c8 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	io_expander: gpio@74 {
-+		compatible = "ti,tca9539";
-+		reg = <0x74>;
-+		interrupts-extended = <&tlmm 93 IRQ_TYPE_EDGE_BOTH>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+		interrupt-controller;
-+		#interrupt-cells = <2>;
-+		reset-gpios = <&tlmm 66 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-0 = <&io_expander_intr_active>,
-+			    <&io_expander_reset_active>;
-+		pinctrl-names = "default";
-+	};
-+
-+	i2c-mux@70 {
-+		compatible = "nxp,pca9543";
-+		#address-cells = <1>;
-+
-+		#size-cells = <0>;
-+		reg = <0x70>;
-+
-+		i2c@0 {
-+			reg = <0>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			bridge@58 {
-+				compatible = "analogix,anx7625";
-+				reg = <0x58>;
-+				interrupts-extended = <&io_expander 2 IRQ_TYPE_EDGE_FALLING>;
-+				enable-gpios = <&io_expander 1 GPIO_ACTIVE_HIGH>;
-+				reset-gpios = <&io_expander 0 GPIO_ACTIVE_HIGH>;
-+				vdd10-supply = <&vreg_1p0>;
-+				vdd18-supply = <&vreg_1p8>;
-+				vdd33-supply = <&vreg_3p0>;
-+
-+				ports {
-+					#address-cells = <1>;
-+					#size-cells = <0>;
-+
-+					port@0 {
-+						reg = <0>;
-+						dsi2dp_bridge_in: endpoint {
-+							remote-endpoint = <&mdss_dsi0_out>;
-+						};
-+					};
-+
-+					port@1 {
-+						reg = <1>;
-+						dsi2dp_bridge_out: endpoint {
-+							remote-endpoint = <&dp_dsi0_connector_in>;
-+						};
-+					};
-+				};
-+			};
-+		};
-+	};
-+};
-+
- &pmm8650au_1_gpios {
- 	usb2_en: usb2-en-state {
- 		pins = "gpio7";
-@@ -353,10 +487,31 @@ &mdss_dp0_phy {
- 	status = "okay";
- };
- 
-+&mdss_dsi0 {
-+	vdda-supply = <&vreg_l5a>;
-+
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vreg_l4a>;
-+
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	data-lanes = <0 1 2 3>;
-+	remote-endpoint = <&dsi2dp_bridge_in>;
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
- 
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
- &remoteproc_adsp {
- 	firmware-name = "qcom/qcs8300/adsp.mbn";
- 	status = "okay";
-@@ -419,6 +574,21 @@ dp_hot_plug_det: dp-hot-plug-det-state {
- 		function = "edp0_hot";
- 		bias-disable;
- 	};
-+
-+	io_expander_intr_active: io-expander-intr-active-state {
-+		pins = "gpio93";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	io_expander_reset_active: io-expander-reset-active-state {
-+		pins = "gpio66";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+		output-high;
-+	};
- };
- 
- &uart7 {
 -- 
-2.34.1
-
+Dmitry
 
