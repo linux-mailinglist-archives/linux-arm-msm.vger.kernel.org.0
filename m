@@ -1,148 +1,252 @@
-Return-Path: <linux-arm-msm+bounces-75095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75096-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9157AB9F44A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 14:34:08 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59A6DB9F477
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 14:36:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id E21867A5555
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 12:32:22 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C39784E3625
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 12:36:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 865D626136D;
-	Thu, 25 Sep 2025 12:30:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC3BE13B293;
+	Thu, 25 Sep 2025 12:36:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VmGVRa9Z"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XkvQ1go5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98357259C9F
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 12:30:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB3F282F1;
+	Thu, 25 Sep 2025 12:36:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758803456; cv=none; b=U+kiDpq4ChDHn/mFcLNNS/dEQZY9NkO38iBN9nEtyd3UR0YCMaUxdO/rXxKZaET5f8yXND3j4i9QiWDaH5EOygmUzpEh9ys/I5k5NXqDt5fizOKycC3Dyn+kXUIrybF676ZfHES/OhNDmSast4uBy45eQPnAotFVwwZ/oil1rK0=
+	t=1758803812; cv=none; b=Q1LpynVM/N63nEOebvoBE0K7D3V+kPHmu13MpmGeyzacXjSzjr5hMGvEnxVDerCRmG50OO8Y4RfEvLayWmqvfHNaqO2o5cvM41UMNFqD3DpTOL/fEoP2kSbDIG516yJJ5PNWm0QgD6S3cIJvO5cPzxp2V8sWC0EhI5UCW8Rc1gY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758803456; c=relaxed/simple;
-	bh=7ew/W+Ffe0KBAYyes2vO95JQpX9yAe8JQiojzZrabPg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TZlSyWI2kQsa+19oFnU36KdwIGXJFaI4oIxfMZUWy2OREiAO9tm6Zs7U98k0qO1e46XaFMIOaKDE3Y1/Vz2kLbQB3WUxlrslKV0VK28FNmSLKt/jEU4m/iRMWgL6dKJ18m8JuRr05aFD9wl+dUxdQNCuZin3wH3I+ig6O8GxdLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VmGVRa9Z; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P9D3Ot027304
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 12:30:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	a2+3a6uGlyRN5xorj47QcSLNbjRjLn7ScwNgiGItbrU=; b=VmGVRa9ZMQGHh/qi
-	OPIKsOoEpllEfHV0ggtrq/e5HN2FVto6jE+R3L0OnzVIq7u3WK+s/sJq7VDoaN8+
-	TCW0BlzWoJFWpoTksr7OsDq6iOzbBsEY4Oa4JRSHn0O6LcYql58XrTYfVKPjEdOz
-	5ZSzyXrlw7FQsBRTCPs0muhFo49uyhMQt4QPcdm0BjPR98nNPJMEDHhndOuHrSJc
-	MgFjMhNsxfATVvGK+nKFjCK51g3HoBFvGNOX7c53Tq+pq7XINE7CYUFOLzM3dhtu
-	YJWi3aq52Vre4vuTCVnG5qh4rJw55YIXr37+EcFYNaoa2wNiYMqkiRljbM2aVFfu
-	JjEndQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499kv182xe-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 12:30:53 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-7cc365ab519so2246576d6.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 05:30:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758803453; x=1759408253;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=a2+3a6uGlyRN5xorj47QcSLNbjRjLn7ScwNgiGItbrU=;
-        b=KRLnNmLD2oubpCORDDlwJUB9oL47yNbiO8DZXauWWl5c0nsqpoEXJ7DuKqwB2SmR3o
-         ZhxEXAnyqVKo8EpTp1oo0rihTgDY1EjgHNtofm2g2PSIBAhcAHuvndNcAAjmJrvmjecO
-         vDnj+h0tgQcu0ReB8Eu+ydpp3owHJ+LFQqJ84xM/tomPG04WY98Ph08DOlw22wfcXeg6
-         gXYrjVSo7xnG4GClvQJoiD2tbzVkQxFqzh8K3hibZAn5ksvr1RNVgtSWyV0xCjgs7H5M
-         YbaOBrWPQ33rUFc7iCmlKpVJ3XIFFpEgXf90uiD970Nmg/J+J7RS+NuyJ+vuPUta11Cj
-         d4dw==
-X-Gm-Message-State: AOJu0YwMG/0cwzDk/nwTQvdJmAN2/jkHLIHBo44nz6D+Obu7kuceD4QR
-	vbL4tvWs4AnrB64OBgREQJZ50IVQlMR8r+nd4K3+X0KheP1NBT0LF9Vy+5vNmvFnuEgE1CSXsaj
-	ahq6ao96VVNQR6aolGa18ARlcbSDyTgAljyFWQKNzimyv6+FoJ+T74XqbsHaXr52t7OMt
-X-Gm-Gg: ASbGncvY+SzxN32vlpdGIpD4RifPp3EqW2UBI0Q9COqUGGAGRWps7Qa+kdwH5UDXMS8
-	oTOJVN0wrz9nbFgQGDwLlwcBc/PGqxgZAyzeDc+mzD/+x3DR0V1lrJnzb8jG3u9FkSuP0ryE7IP
-	BKy2pvQmcrWlA7HroeVYC24KOvqhNPGnP5gPj1aj/uMJIHKC/T/GvesVGnZa4bJgWpPBLMnc0C3
-	LYp6y27CkQGim937TbnY5QG4xcqFGIKw2LZ/f56+CC3hUVEfRSV2+oJC1Srl1DcdXYhJl0EzMO3
-	nti9E88UosI5ojAMx3oPlA/qF2Cj5lZNg8Wx7OA80+uxMa8nnMTMW8Pwf4pIn2EhO7vrpgoiPUr
-	jwWCd4xrmvGpFJ2ciT0DjTw==
-X-Received: by 2002:ac8:5d08:0:b0:4d7:9039:2e87 with SMTP id d75a77b69052e-4da47c063ffmr29352331cf.1.1758803452591;
-        Thu, 25 Sep 2025 05:30:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG6EOmvQw8+zyiD5JPVWFExQhq7VAwgLKd4zuEmNy7aNwJAHke/OZ1IRA4eTgQWRp3Z0UmA9w==
-X-Received: by 2002:ac8:5d08:0:b0:4d7:9039:2e87 with SMTP id d75a77b69052e-4da47c063ffmr29351821cf.1.1758803451871;
-        Thu, 25 Sep 2025 05:30:51 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-634a3af5721sm1121368a12.43.2025.09.25.05.30.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 05:30:51 -0700 (PDT)
-Message-ID: <b25e5df1-8481-41fd-851c-5463389c0689@oss.qualcomm.com>
-Date: Thu, 25 Sep 2025 14:30:48 +0200
+	s=arc-20240116; t=1758803812; c=relaxed/simple;
+	bh=IBUAnul7b8BQqt3zLS4cohInRJ5Mx15MT7PNd8Nz5R4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=deFSqZbxg9K4bM44m6cWC4w6LHYQEgIs0yKPBO+Q2N6TzOfj1uP5zYOLdNvCBkwbsbbUBbIupVNOlWK+Htyt/kuYhLdnHIKo1KbrGQbY3PGJ82hC2DnqGJ2BhYAiKDzQZSE+nho9d2tPKok6n8qd3GRqab6hDiX0xf2oEekA8e0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XkvQ1go5; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054A8C4CEF0;
+	Thu, 25 Sep 2025 12:36:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758803811;
+	bh=IBUAnul7b8BQqt3zLS4cohInRJ5Mx15MT7PNd8Nz5R4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=XkvQ1go55VUCHLla+6DHun6ac9iHj597k6xHzW2ehbWZf1qu17advzm0DOfLaJdX2
+	 CFK1pTszoqCLJrUFasnXEbhaA+1f/RSAgXuAlCqIPBFAunLcZSLWGiS/DqtgPo1lAz
+	 vd59DiKljlaDbik78b3p69oUNn/NqxQnsAOZKEj9miVMPRGtAD7JdxnTW3ZYETd/id
+	 3l8YdBfhuJ0+fEQ/tfJEwaZ73jeDNCtDBWibnzrzLBuVvq+35kOG7RWoaJ9NZ0Zvhk
+	 QMPN3eI4qbedD4PN9VBWseCLjfv6KabHrHPVkDmVcJZq2VK9elqC28msll8ZwXvERx
+	 rJPYbUQBQg33g==
+Date: Thu, 25 Sep 2025 14:36:46 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
+	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
+	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
+	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
+	Simona Vetter <simona@ffwll.ch>, Sandy Huang <hjc@rock-chips.com>, 
+	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
+	Daniel Stone <daniels@collabora.com>
+Subject: Re: [PATCH v4 01/10] drm/connector: let drivers declare infoframes
+ as unsupported
+Message-ID: <20250925-didactic-spiked-lobster-fefabe@penduick>
+References: <20250909-drm-limit-infoframes-v4-0-53fd0a65a4a2@oss.qualcomm.com>
+ <20250909-drm-limit-infoframes-v4-1-53fd0a65a4a2@oss.qualcomm.com>
+ <20250910-furry-singing-axolotl-9aceac@houat>
+ <z333ysst5ifakomo35jtbpydj44epqwwn4da76rcnsq4are62m@32gsmgx2pcdi>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/20] arm64: dts: qcom: kaanapali-mtp: Add audio support
- (WSA8845, WCD9395, DMIC)
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
-        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
-        yijie.yang@oss.qualcomm.com,
-        Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <20250924-knp-dts-v1-18-3fdbc4b9e1b1@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250924-knp-dts-v1-18-3fdbc4b9e1b1@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 9u_U6CtaW66pBv5wuMk43wZZJcFQyZZG
-X-Authority-Analysis: v=2.4 cv=RO2zH5i+ c=1 sm=1 tr=0 ts=68d535fd cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=3dHrxlFa4xLiy63zdp0A:9
- a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyNSBTYWx0ZWRfX7TIy24o/J5g7
- 56n9qJcqUi8vfIp7KaPofalncL1B1TG54rmP8YCtPqXE6hDPSRWXXWC+K9yr8SPISAfIf5KZZDL
- Popf0Grbj4T33H/IpTFSjMkfFlm3gTk8boDqPN6fg6EtS4O/lLdQD8pXAwIbr85CEhOoLQ4iKrV
- ljregYHQpmXXE+Unhd3wodRk00Hq8sEQnmBDdyrBv7M7/0Lci7wRe+HIEGyG+B8i09J20YJstVK
- wW4FxhhKosxKYmydHA3QWkbXjYhZU3sbukLFpkFN8jmgiUkzsgXlfPILwOb2CgGFIbxpismsAkx
- UmoouVY7IN0J7ERPGmUqX0pt1f+TcNXCtI6p+gizwBnACNqsTTdlqhMdSxr8CngZmLn5pZnmPGY
- b+i+2azF
-X-Proofpoint-ORIG-GUID: 9u_U6CtaW66pBv5wuMk43wZZJcFQyZZG
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-25_01,2025-09-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- impostorscore=0 spamscore=0 adultscore=0 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200025
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="5gspsh2yhbs7pucv"
+Content-Disposition: inline
+In-Reply-To: <z333ysst5ifakomo35jtbpydj44epqwwn4da76rcnsq4are62m@32gsmgx2pcdi>
 
-On 9/25/25 2:17 AM, Jingyi Wang wrote:
-> From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-> 
-> Add support for audio on the Kaanapali MTP platform by introducing device
-> tree nodes for WSA8845 smart speaker amplifier for playback, DMIC
-> microphone for capture, and sound card routing. The WCD9395 codec is add
-> to supply MIC-BIAS, for enabling onboard microphone capture.
-> 
-> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+--5gspsh2yhbs7pucv
+Content-Type: text/plain; protected-headers=v1; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 01/10] drm/connector: let drivers declare infoframes
+ as unsupported
+MIME-Version: 1.0
 
-Konrad
+On Wed, Sep 10, 2025 at 06:16:25PM +0300, Dmitry Baryshkov wrote:
+> On Wed, Sep 10, 2025 at 01:03:47PM +0200, Maxime Ripard wrote:
+> > On Tue, Sep 09, 2025 at 05:51:59PM +0300, Dmitry Baryshkov wrote:
+> > > Currently DRM framework expects that the HDMI connector driver suppor=
+ts
+> > > all infoframe types: it generates the data as required and calls into
+> > > the driver to program all of them, letting the driver to soft-fail if
+> > > the infoframe is unsupported. This has a major drawback on userspace
+> > > API: the framework also registers debugfs files for all Infoframe typ=
+es,
+> > > possibly surprising the users when infoframe is visible in the debugfs
+> > > file, but it is not visible on the wire. Drivers are also expected to
+> > > return success even for unsuppoted InfoFrame types.
+> > >=20
+> > > Let drivers declare that they support only a subset of infoframes,
+> > > creating a more consistent interface. Make the affected drivers return
+> > > -EOPNOTSUPP if they are asked to program (or clear) InfoFrames which =
+are
+> > > not supported.
+> > >=20
+> > > Acked-by: Liu Ying <victor.liu@nxp.com>
+> > > Acked-by: Daniel Stone <daniels@collabora.com>
+> > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> >=20
+> > Again, I still believe that it's a bad idea, goes against what the spec
+> > states, and the framework was meant to be.
+>=20
+> Please correct me if I'm wrong. The specs (HDMI & CEA) define several
+> infoframes and whether we should be sending them. If I'm reading it
+> correctrly, CEA spec explicitly says 'If the Source supports the
+> transmission of [foo] InfoFrame..." (6.4 - AVI, 6.6 - Audio, 6.7 MPEG,
+> 6.9 - DRM). For other InfoFrames (6.5 SPD, 6.8 NTSC VBI) it just defines
+> that sending those frames is optional.
+
+SPD is indeed optional, but the HDMI spec, (HDMI 1.4b, Section 8.2.1 -
+Auxiliary Video information (AVI) InfoFrame) states that:
+
+  A Source shall always transmit an AVI InfoFrame at least once per two
+  Video Fields if the Source:
+
+   * is ever capable of transmitting an AVI InfoFrame or,
+   * is ever capable of transmitting YCBCR pixel encoding or,
+   * is ever capable of transmitting any colorimetry other than the
+     transmitted video format=E2=80=99s default colorimetry or,
+   * is ever capable of transmitting any xvYCC or future enhanced
+     colorimetry or,
+   * is ever capable of transmitting any Gamut Metadata packet or,
+   * is ever capable of transmitting any video format with multiple
+     allowed pixel repetitions or,
+   * is ever capable of transmitting Content Type other than =E2=80=9Cno da=
+ta=E2=80=9D or,
+   * is ever capable of transmitting YCC Quantization Range.
+
+  The AVI InfoFrame shall be transmitted even while such a Source is
+  transmitting RGB and non-pixel-repeated video. When a Source is not
+  explicitly required to transmit AVI InfoFrames, it is recommended that
+  the Source transmit AVI InfoFrames.
+
+So it's recommended in every case, and the list kind of makes it
+mandatory for how Linux uses HDMI.
+
+Also, did we ever encounter some hardware that couldn't send AVI?
+
+Audio is mandatory when streaming audio, DRM when using HDR, and we
+don't support the others yet.
+
+So the only we support but don't have to send is SPD.
+
+> We can't even infer support for InfoFrames from the Source features.
+> E.g. CEA 6.6.1 defines a case when digital audio is allowed to be sent,
+> without sending Audio InfoFrame.
+
+HDMI 1.4 section 8.2.2 - Audio Infoframe states that:
+
+  Whenever an active audio stream is being transmitted, an accurate
+  Audio InfoFrame shall be transmitted at least once per two Video
+  Fields.
+
+I'd say it takes precedence over CTA-861.
+
+> As we will be getting more and more features, some of the InfoFrames
+> or data packets will be 'good to have, but not required'.
+
+And drivers would be free to ignore those.
+
+> > So, no, sorry. That's still a no for me. Please stop sending that patch
+>=20
+> Oops :-)
+>=20
+> > unless we have a discussion about it and you convince me that it's
+> > actually something that we'd need.
+>=20
+> My main concern is that the drivers should not opt-out of the features.
+> E.g. if we start supporting ISRC packets or MPEG or NTSC VBI InfoFrames
+> (yes, stupid examples), it should not be required to go through all the
+> drivers, making sure that they disable those. Instead the DRM framework
+> should be able to make decisions like:
+>=20
+> - The driver supports SPD and the VSDB defines SPD, enable this
+>   InfoFrame (BTW, this needs to be done anyway, we should not be sending
+>   SPD if it's not defined in VSDB, if I read it correctly).
+>=20
+> - The driver hints that the pixel data has only 10 meaninful bits of
+>   data per component (e.g. out of 12 for DeepColor 36), the Sink has
+>   HF-VSDB, send HF-VSIF.
+>=20
+> - The driver has enabled 3D stereo mode, but it doesn't declare support
+>   for HF-VSIF. Send only H14b-VSIF.
+>=20
+> Similarly (no, I don't have these on my TODO list, these are just
+> examples):
+> - The driver defines support for NTSC VBI, register a VBI device.
+>=20
+> - The driver defines support for ISRC packets, register ISRC-related
+>   properties.
+>=20
+> - The driver defines support for MPEG Source InfoFrame, provide a way
+>   for media players to report frame type and bit rate.
+>=20
+> - The driver provides limited support for Extended HDR DM InfoFrames,
+>   select the correct frame type according to driver capabilities.
+>=20
+> Without the 'supported' information we should change atomic_check()
+> functions to set infoframe->set to false for all unsupported InfoFrames
+> _and_ go through all the drivers again each time we add support for a
+> feature (e.g. after adding HF-VSIF support).
+
+=46rom what you described here, I think we share a similar goal and have
+somewhat similar concerns (thanks, btw, it wasn't obvious to me before),
+we just disagree on the trade-offs and ideal solution :)
+
+I agree that we need to sanity check the drivers, and I don't want to go
+back to the situation we had before where drivers could just ignore
+infoframes and take the easy way out.
+
+It should be hard, and easy to catch during review.
+
+I don't think bitflag are a solution because, to me, it kind of fails
+both.
+
+What if, just like the debugfs discussion, we split write_infoframe into
+write_avi_infoframe (mandatory), write_spd_infoframe (optional),
+write_audio_infoframe (checked by drm_connector_hdmi_audio_init?) and
+write_hdr_infoframe (checked in drmm_connector_hdmi_init if max_bpc > 8)
+
+How does that sound?
+
+Maxime
+
+--5gspsh2yhbs7pucv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaNU3XQAKCRAnX84Zoj2+
+duiWAYCEQHaNpq1acegbRGgnWK7idyco+oNyb5OKUdG2mSrF8iG51+HcmQ30rpWH
+OmNB+HsBf3AD+4uAstcClyYSies8sQ9MYWjuxdp67l9l23iryEuQM410hwJTA3iL
+XSaP3z9ISQ==
+=35Cr
+-----END PGP SIGNATURE-----
+
+--5gspsh2yhbs7pucv--
 
