@@ -1,239 +1,171 @@
-Return-Path: <linux-arm-msm+bounces-74870-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74871-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2916EB9D249
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 04:28:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0523DB9D285
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 04:29:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D32FF3AC11C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 02:28:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B8C654268C3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 02:29:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 45A8F2DEA97;
-	Thu, 25 Sep 2025 02:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 14E032E719B;
+	Thu, 25 Sep 2025 02:28:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kMJ9nqtc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gHaJ1xfV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C9327F754
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:28:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 714D62E6CAE
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:28:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758767304; cv=none; b=B437t5AcPiqLNVqQU/NQ6Z0h6tWUO1aRKANRZBvBM/oys/dLrdRhy+cHN7hwyx8cHZGd1EUTo0+qF49dfyMQnTqM53ogMc8kT866H5+h1PiEzT83UOL+bt+475Q/xQXC0FKcpxmYTj8VpjQ8ZLMbYFBh/SUfAcQmQI+VCTmmP1g=
+	t=1758767338; cv=none; b=qljG4dOHNx/rY9f8QANSEFUH3q51mLPDtYImgLPoIhIx8q6PN/+tZggZ/Iu8EClei4NPRFj0K8MiJt2AYPbEzyqpcTdyRiUg9/Fx7lwD7xjJ5t+41Jk5QjHFKJweFXckJVei//Ok3qFC19FT6GkYGfXjSBDz8SnhMcKbdO7jihg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758767304; c=relaxed/simple;
-	bh=VeW+/dxWBFokkjVS0wYtTsWpjpgB19ZpOQMGvhrWa2I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RCntJh53Bxx2geR0I4U+4MQFBdFlqikF6k5iplPj1OhWNskMPVMFDe9CY1BxxLcf2TPHKDl9QCYDUKx9nqhrhnNf6X6pfgiH2eujdZxAZVBBnanxb25dedtZhhSGxIlTE6chGu0IMzqAhwXeV3kYx49e7lmeeM5Y07yr3xrWAs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kMJ9nqtc; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1758767338; c=relaxed/simple;
+	bh=D3B612wqHIZ8dAE7hwWXIKwnog8Oa7HQK/30EwYk1kA=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=kg5hwjUjyMIsVcCiOmqk+TgWoPxtMYT1kViGNPwL+mdhD0ZfaTPABytEXIfQhKHJ+QSzBDixz4LGXWdssp85fGEQsU+hAEhF6XCMFbHS7a01cbmo7L8RvDW7fUZFwIF0iPdgceJL5xUgwhw/e/shYtFHvP4NECFd/FY9mQM1Bzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gHaJ1xfV; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P10QKG018716
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:28:22 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P0XAqs027477
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:28:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=wXSfj1wi08RKzF1L2ephokkz
-	/QuwdGIgQuSB3kutQM8=; b=kMJ9nqtcoBmAhHEvQshcaEBd68YJo37OKD8KDaQu
-	IjF+2n/fEIA87dyZpcu8b1ho+xbcqXGUXCQVHGvHhxUpQdymjPQoUkg9MDAp+MeZ
-	4RnYUJ98E7cA5NSsXzKBFF08xLTCKqsOhCX5tYhIUV7SUYJIaVL/+28GOai7mAiU
-	9pNRwJYaUjdgKyAHmXcD8J3yfoqnz4d7yVPapdBfbFrX76Ew4w4EYod7IjH3zfeR
-	LOJHic8ZdFBNOSmPETGO2HBHp1JYzY6FxVSCWPhB00jVYjB/ztt2bhZ+4PtGBF5T
-	fjfs97a/RdhC1aoDkWmaz9uvRpJQbQcFDLgXTiwVmiQCVg==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bhvjyry6-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=pozgUr4Pa5MFZ7maN78woqc3uxqicgDaK8J
+	oc7Ogf0c=; b=gHaJ1xfV/vBnMerYgWszNYnjEUvMrv/BiGaG1j5cTGI1MBlAwx3
+	koXSLXrNN1aFea4RcFLQX9cmVxlRqZ9KMZwjGDB9D/l1KYiM95b4PAFGobSLMNK7
+	7FYgQL769AMGAoufbWYe8Wbg9gFLvYIwwlpxo/dKSNBcQ36i2++UlzTxq/XmOoOU
+	G0gOyx/jJZx+xZfE91mk+ydSFissDmr2kgax/Kw9L70hvNqjblZHZNTPJnx24hZX
+	zBGpuzNSc3M9CNyS+q4d9cZPGAQFsCavPkBqPf4pM6xHZoqIrEvJzvAmvIUvmOwK
+	KNB+YLwl50pV60Ydq/J9zJ9wVwcvL/74zvA==
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com [209.85.215.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499kv16fd1-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:28:21 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4d6a41b5b66so12042911cf.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:28:21 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:28:55 +0000 (GMT)
+Received: by mail-pg1-f197.google.com with SMTP id 41be03b00d2f7-b54a30515cfso1189352a12.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:28:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758767300; x=1759372100;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wXSfj1wi08RKzF1L2ephokkz/QuwdGIgQuSB3kutQM8=;
-        b=nOFnZk2Wo11zyN573rclphr6KU+dxCnmzIILDb/MyxU4X+zmV8IeFDQUSGP4tb1G7n
-         5Tu4E6pXQM4IaAy/LDglOkY7VwQLEBtzC3zQv0RD+mGMOV/x6m1Hc05GIK/plVQ0xg7Q
-         dTpCKb1t10T6CNWisRWWFeqFve9p1hIU5WylYLMpIMp31RFX+ENY87m8eLYpsZ+l8jb9
-         PqwvW7PeH4VaEO1vfZ/u+67yWOguKndhBb04r5ztT036g0U0ECT3RF+UcKxTLLaaymXm
-         fVHQ08DzwIFCmX65GPCBtaf9DdOaLAjb1ONbO63w4wxqboIWvP+sK8WnM7rtcviLNJG+
-         HjXw==
-X-Forwarded-Encrypted: i=1; AJvYcCUG6KrCxWqAa+Um7Qim/6zJMuZrM6OwsUKbQ+adyhUXAMUfiXpM3oPZvWdAkgxzxjh8ecpkEfIKbvgrEvh0@vger.kernel.org
-X-Gm-Message-State: AOJu0YxlFGMIVDIDnEXvhuHwt0HXidCMA3CqGTRrzyUNFGWcCWh6fqhz
-	5vFX0qhOZh4BmiV+UufADPGjDUFZOo/WoSlKKiDpAU+pADUZb9PLrkslfuF/Mxwk7QZzJr0V2Dl
-	T3MKeGptRd2Jiu8GGWszyULOYIXiRf4D62CAF3WRxh+YQ/vTS7eDEQeGHuWShZcPJNHIm
-X-Gm-Gg: ASbGncsGISy9ym46gutEn7P5Mqgpoi6Vm6kCii5dWnFfwL7VkrjRgNlwvliPLx6jVNl
-	S2omqojszEktIysHUfSu62zcSn08JgwwWfJU40IgBnb1OrHmMQhouVdtDOuRg9qNFAUsXt1eY5o
-	5WzErFFm0dczKts/nl4gsf0lno1NTVUu7Ks9IE9+Ti/hWupfWLgj44WcFXAA8lW7YuiJg4BS/P6
-	zIj3CgQEj4g19cNZkGYfDjXhILCSoZxAMOYVZyP2fKiFB7nmy24iB63pEYdj+RZzkoVyHfPXJW9
-	0CbI5axYFh34AwZVQIBBpKU6fEfxMhCHvtomv5DzkIg4IOc3mK/wqf2n4r7Pqa1KTql7jlr3B+z
-	RUEQVAKvMq0SFN2Bn9RPgT+8keDepDDzPI8zljUlc0gCa2nbNPeuC
-X-Received: by 2002:ac8:5856:0:b0:4b6:2be2:e816 with SMTP id d75a77b69052e-4da4735508amr26619121cf.8.1758767300266;
-        Wed, 24 Sep 2025 19:28:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE4UEfkhO1mpjxW8ifjJvdLmt7J0vNk2R3BrhhdTbo1+/m7PrsyR8BHP8zagES/AEoTWgsM8A==
-X-Received: by 2002:ac8:5856:0:b0:4b6:2be2:e816 with SMTP id d75a77b69052e-4da4735508amr26618921cf.8.1758767299822;
-        Wed, 24 Sep 2025 19:28:19 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-583166561c0sm243601e87.81.2025.09.24.19.28.17
+        d=1e100.net; s=20230601; t=1758767334; x=1759372134;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pozgUr4Pa5MFZ7maN78woqc3uxqicgDaK8Joc7Ogf0c=;
+        b=dCQC/99fMS5PAzmHV1Jswzs9cbw78iRq2NRhR0pi6tEaxmEtuMLb3s2xAcUaJUj7Fm
+         q/8MP5hmAuPDYYAN+ug/idj4gH5XMNVz4ab4BpQq7l4W+Bq5FHzOTcsKdPUcVygI829s
+         356RoqE/FazYeEIcl9sgCdRSoM46OFKaB7Uaqh7NGTkvSjRGgJrqzZ7hAPKiYhbs4ERt
+         Gvf5TfmXcbDmL5EfIgITqoF4aL4VAnnsY9k064yvDuIj2wa1MgSyY2FWpqiDbG1zkOrp
+         jn8HEEmDaBQKzJbc7tLbXxfzEYL9Ua2SQs0J0qeLj+UEdbet3CJnu1wNTLaKNOdas7U7
+         l4yA==
+X-Gm-Message-State: AOJu0YwFaFaQzIryyzsxxzGAxdDyuPZrgv7bkq5KYHRRTasApP9kJq8T
+	BMfTyJ6k8cne5KQYMpVOBmw9I1FNSVurIEBj+jlnzUO65k/LhxTz8SADW4ZE9HLpTslMDoISi9a
+	IpI29P1y/KofhE72J2mI17WaOkhJjy40cbhCnAwwDi7gaveE2aS63zAq1TJeEaSPIoZbr
+X-Gm-Gg: ASbGnctEYWFb+pRZbeR9P+Sdb6PB8RTvGGeWYiwwc/2LINIbBMGT+kVsuuyHv8KOJO/
+	mhzpYDcF2k9TptUEcnlqpM1nwdDLm/D/qYXpj4IHX5HDTuMy7DEO3/LxHOW2/LUBNxR0XlZIenM
+	TcIaANfzgoY5ec2Hjjm9K/VhsbpAXSl8EOOR8QH6ZxpmFqbev5h1EExVHonj8zu1BeC/TA0lFYE
+	Kxj7Upxjm6knEzdS1cyjRt9qm0Z/c1OTMFk1lH+TUilXEpN00JoscICbicziMa8cu1ekKUk32mz
+	0nfMhvWKu31oNOICGALh6WHl1ZvLYucL2SavmQr+bO7s7j1TkPHVpY9AJN111UFbSzd1I7rFUfE
+	svHJr6gN4/41AB1Yy
+X-Received: by 2002:a17:903:2403:b0:271:6af4:17c with SMTP id d9443c01a7336-27ed6abbab3mr7476125ad.1.1758767334030;
+        Wed, 24 Sep 2025 19:28:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHpDQAb9zhwAQk2cn3fm3Sj/BbBznzSAqjeAN+5V7NHD0Qqpd9x8hSwTL4ww8Ou3qnnfWG26Q==
+X-Received: by 2002:a17:903:2403:b0:271:6af4:17c with SMTP id d9443c01a7336-27ed6abbab3mr7476005ad.1.1758767333526;
+        Wed, 24 Sep 2025 19:28:53 -0700 (PDT)
+Received: from hu-wcheng-lv.qualcomm.com (Global_NAT1.qualcomm.com. [129.46.96.20])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33471d711ecsm499881a91.4.2025.09.24.19.28.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Sep 2025 19:28:18 -0700 (PDT)
-Date: Thu, 25 Sep 2025 05:28:15 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Kishon Vijay Abraham I <kishon@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, aiqun.yu@oss.qualcomm.com,
-        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
-        yijie.yang@oss.qualcomm.com, Qiang Yu <qiang.yu@oss.qualcomm.com>
-Subject: Re: [PATCH 3/6] phy: qcom-qmp: qserdes-txrx: Add QMP PCIe PHY
- v8-specific register offsets
-Message-ID: <fw5hf4p2mjybvfo756dhdm6wwlgnkzks4uwgo7k3dy7hyjhzyr@bv4p7msxapcb>
-References: <20250924-knp-pcie-v1-0-5fb59e398b83@oss.qualcomm.com>
- <20250924-knp-pcie-v1-3-5fb59e398b83@oss.qualcomm.com>
+        Wed, 24 Sep 2025 19:28:52 -0700 (PDT)
+From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+To: krzk+dt@kernel.org, conor+dt@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
+        kishon@kernel.org, vkoul@kernel.org, gregkh@linuxfoundation.org,
+        robh@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+Subject: [PATCH v3 00/10] Introduce Glymur USB support
+Date: Wed, 24 Sep 2025 19:28:40 -0700
+Message-Id: <20250925022850.4133013-1-wesley.cheng@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250924-knp-pcie-v1-3-5fb59e398b83@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: p0DiidpoAuHicdKzp0HmxN5zrygZtMa5
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIzMDAxMSBTYWx0ZWRfX6XaIp/l+LTgf
- 39RWXt5GS/q3bcsVpikGLtJuA8Yyjly6EPXzA4arCcvfEgQk14kNNvXTcUuKbokUCFyZ0ygfiiG
- b39H7zQmn5mhuwlrAx3YUcTz8VZx3LW3p/4/EeME3ofZcLke2rJ+Z+hn3eyftiXFdL8lK6N4bD4
- oyIJDeo5w3+XR8Cz1avnx8wd8kjvmdrLoQEEC8kB6Ist+B8USJgS8m+E1+G/IWP1o0W1LTlfDoR
- i7hSkYEyZbvYBYQ1iv2JTSHLJCYFuPnjyt7eHb1dTUWb2A1tKgCcuVeBREneU+hRQoMBS3lMhu2
- 0RGJYKxTaQ6poY8Ne34/sHkBW8ZGJqxFZBerDZFkt3Tk2+5xQVphfiwv0BD8J5G7wYG6/VU3hGb
- 10mUrwev
-X-Proofpoint-GUID: p0DiidpoAuHicdKzp0HmxN5zrygZtMa5
-X-Authority-Analysis: v=2.4 cv=Csq/cm4D c=1 sm=1 tr=0 ts=68d4a8c5 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=KS3u3L2nYUaZ2k-SVKIA:9 a=CjuIK1q_8ugA:10
- a=kacYvNCVWA4VmyqE58fU:22
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: korjs7WPXr3en63rfpk3Aojr4ejuXR_e
+X-Authority-Analysis: v=2.4 cv=RO2zH5i+ c=1 sm=1 tr=0 ts=68d4a8e7 cx=c_pps
+ a=rz3CxIlbcmazkYymdCej/Q==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=yJojWOMRYYMA:10 a=uF0vjx2ZuONpqyvErPEA:9 a=bFCP_H2QrGi7Okbo017w:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyNSBTYWx0ZWRfX3occ46QuEZoY
+ UO2KX5VJ2JhS23sRUMFmDH4pchntgOkJGSRWbwr2pvF2cuOQUE+UC8dop0lAEDCdEvTaTR1y6KX
+ IGM1F8DJWnMrwDC4r7oYLCmHHuECAA+l2YfHVbk2adNCbR3f/siVlAbrNWBT7CIwLWUJlO3f64x
+ Cf1h9seWiQXS+T4AfS3K0WGGgS20iYvvX6NYGgZUgaxgFSVkUmXqdSQs6Zbn8BbxgfgiCpXXg4k
+ ntFaarTlKpiFCLPSitry1a0LH+J7Nf3RrL/aAEhEWi44O0fFepRR+pBxAr9z0wAsHEpekuLDDCw
+ iQCRoHJBeZCv+0JKqMj08DNZDnoIGqGL77Nyiwik9EloasfcoJy/DMu3txkzvmrgEfUTXtcel7G
+ MuDY8sUX
+X-Proofpoint-ORIG-GUID: korjs7WPXr3en63rfpk3Aojr4ejuXR_e
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-24_07,2025-09-24_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0 adultscore=0 impostorscore=0 phishscore=0
- clxscore=1015 spamscore=0 priorityscore=1501 malwarescore=0
+ malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ impostorscore=0 spamscore=0 adultscore=0 bulkscore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509230011
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200025
 
-On Wed, Sep 24, 2025 at 04:33:19PM -0700, Jingyi Wang wrote:
-> From: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> 
-> Kaanapali SoC uses QMP PHY with version v8 for PCIe Gen3 x2, but its
-> qserdes-txrx register offsets differ from the existing v8 offsets. To
-> accommodate these differences, add the qserdes-txrx specific offsets in
-> a dedicated header file.
+This series enables the PHY level changes that are required to support
+the type C based controllers and the multiport controller.  The typeC
+ports utilize a usb43dp based QMP PHY for the SSUSB path, while using
+the M31 eUSB2 PHY for the HSUSB path.  For the multiport controller,
+it will utilize two QMP UNI PHYs for the SSUSB path, and two M31 eUSB2
+PHYs for the HSUSB path.
 
-With this approach it's not obvious, which register names are shared
-with the existing header and which fields are unique. Please provide a
-full set of defines in this header.
+-----
+Changes in v3:
+- Fixed some incorrect patch ordering.
+- Alphabetized Glymur QMP settings for combo and UNI setting arrays
 
-> 
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  .../qualcomm/phy-qcom-qmp-qserdes-txrx-pcie-v8.h   | 71 ++++++++++++++++++++++
->  1 file changed, 71 insertions(+)
-> 
-> diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-pcie-v8.h b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-pcie-v8.h
-> new file mode 100644
-> index 000000000000..181846e08c0f
-> --- /dev/null
-> +++ b/drivers/phy/qualcomm/phy-qcom-qmp-qserdes-txrx-pcie-v8.h
-> @@ -0,0 +1,71 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries. All rights reserved.
-> + */
-> +
-> +#ifndef QCOM_PHY_QMP_QSERDES_TXRX_PCIE_V8_H_
-> +#define QCOM_PHY_QMP_QSERDES_TXRX_PCIE_V8_H_
-> +
-> +#define QSERDES_V8_PCIE_TX_RES_CODE_LANE_OFFSET_TX		0x030
-> +#define QSERDES_V8_PCIE_TX_RES_CODE_LANE_OFFSET_RX		0x034
-> +#define QSERDES_V8_PCIE_TX_LANE_MODE_1		0x07c
-> +#define QSERDES_V8_PCIE_TX_LANE_MODE_2		0x080
-> +#define QSERDES_V8_PCIE_TX_LANE_MODE_3		0x084
-> +#define QSERDES_V8_PCIE_TX_TRAN_DRVR_EMP_EN		0x0b4
-> +#define QSERDES_V8_PCIE_TX_TX_BAND0		0x0e0
-> +#define QSERDES_V8_PCIE_TX_TX_BAND1		0x0e4
-> +#define QSERDES_V8_PCIE_TX_SEL_10B_8B		0x0f4
-> +#define QSERDES_V8_PCIE_TX_SEL_20B_10B		0x0f8
-> +#define QSERDES_V8_PCIE_TX_PARRATE_REC_DETECT_IDLE_EN		0x058
-> +#define QSERDES_V8_PCIE_TX_TX_ADAPT_POST_THRESH1		0x118
-> +#define QSERDES_V8_PCIE_TX_TX_ADAPT_POST_THRESH2		0x11c
-> +#define QSERDES_V8_PCIE_TX_PHPRE_CTRL		0x128
-> +#define QSERDES_V8_PCIE_TX_EQ_RCF_CTRL_RATE3		0x148
-> +#define QSERDES_V8_PCIE_TX_EQ_RCF_CTRL_RATE4		0x14c
-> +
-> +#define QSERDES_V8_PCIE_RX_UCDR_FO_GAIN_RATE4		0x0dc
-> +#define QSERDES_V8_PCIE_RX_UCDR_SO_GAIN_RATE3		0x0ec
-> +#define QSERDES_V8_PCIE_RX_UCDR_SO_GAIN_RATE4		0x0f0
-> +#define QSERDES_V8_PCIE_RX_UCDR_PI_CONTROLS		0x0f4
-> +#define QSERDES_V8_PCIE_RX_VGA_CAL_CNTRL1		0x170
-> +#define QSERDES_V8_PCIE_RX_VGA_CAL_MAN_VAL		0x178
-> +#define QSERDES_V8_PCIE_RX_RX_EQU_ADAPTOR_CNTRL4		0x1b4
-> +#define QSERDES_V8_PCIE_RX_SIGDET_ENABLES			0x1d8
-> +#define QSERDES_V8_PCIE_RX_SIGDET_LVL			0x1e0
-> +#define QSERDES_V8_PCIE_RX_RXCLK_DIV2_CTRL			0x0b8
-> +#define QSERDES_V8_PCIE_RX_RX_BAND_CTRL0			0x0bc
-> +#define QSERDES_V8_PCIE_RX_RX_TERM_BW_CTRL0			0x0c4
-> +#define QSERDES_V8_PCIE_RX_RX_TERM_BW_CTRL1			0x0c8
-> +#define QSERDES_V8_PCIE_RX_SVS_MODE_CTRL			0x0b4
-> +#define QSERDES_V8_PCIE_RX_UCDR_PI_CTRL1			0x058
-> +#define QSERDES_V8_PCIE_RX_UCDR_PI_CTRL2			0x05c
-> +#define QSERDES_V8_PCIE_RX_UCDR_SB2_THRESH2_RATE3			0x084
-> +#define QSERDES_V8_PCIE_RX_UCDR_SB2_GAIN1_RATE3			0x098
-> +#define QSERDES_V8_PCIE_RX_UCDR_SB2_GAIN2_RATE3			0x0ac
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE_0_1_B0			0x218
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE_0_1_B1			0x21c
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE_0_1_B2			0x220
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE_0_1_B4			0x228
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE_0_1_B7			0x234
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE3_B0			0x260
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE3_B1			0x264
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE3_B2			0x268
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE3_B3			0x26c
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE3_B4			0x270
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE4_SA_B0			0x284
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE4_SA_B1			0x288
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE4_SA_B2			0x28c
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE4_SA_B3			0x290
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE4_SA_B4			0x294
-> +#define QSERDES_V8_PCIE_RX_RX_MODE_RATE4_SA_B5			0x298
-> +#define QSERDES_V8_PCIE_RX_Q_PI_INTRINSIC_BIAS_RATE32			0x31c
-> +#define QSERDES_V8_PCIE_RX_Q_PI_INTRINSIC_BIAS_RATE4			0x320
-> +#define QSERDES_V8_PCIE_RX_EOM_MAX_ERR_LIMIT_LSB			0x11c
-> +#define QSERDES_V8_PCIE_RX_EOM_MAX_ERR_LIMIT_MSB			0x120
-> +#define QSERDES_V8_PCIE_RX_AUXDATA_BIN_RATE23			0x108
-> +#define QSERDES_V8_PCIE_RX_AUXDATA_BIN_RATE4			0x10c
-> +#define QSERDES_V8_PCIE_RX_VTHRESH_CAL_MAN_VAL_RATE3			0x198
-> +#define QSERDES_V8_PCIE_RX_VTHRESH_CAL_MAN_VAL_RATE4			0x19c
-> +#define QSERDES_V8_PCIE_RX_GM_CAL			0x1a0
-> +
-> +#endif
-> 
-> -- 
-> 2.25.1
-> 
+Changes in v2:
+- Updated QMP combo PHY to properly handle the refgen-supply and to
+remove the primary core reference/tag
+- Updated QMP UNI PHY to properly handle the refgen-supply and added
+a separate IF/THEN block to handle the new clkref
+- Updated M31 eUSB2 to make clocks and clocks-name required for sm8750
+and optional for Glymur
+- Fixed missing PCS MISC table
+- Added SMB2370 repeater changes
 
--- 
-With best wishes
-Dmitry
+Wesley Cheng (10):
+  dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy: Add Glymur compatible
+  dt-bindings: phy: qcom,qmp-usb: Add Glymur USB UNI PHY compatible
+  dt-bindings: phy: qcom-m31-eusb2: Add Glymur compatible
+  dt-bindings: usb: qcom,snps-dwc3: Add Glymur compatible
+  dt-bindings: phy: qcom,snps-eusb2-repeater: Add SMB2370 compatible
+  phy: qualcomm: Update the QMP clamp register for V6
+  phy: qualcomm: qmp-combo: Update QMP PHY with Glymur settings
+  phy: qualcomm: qmp-usb: Add support for Glymur USB UNI PHY
+  phy: qualcomm: m31-eusb2: Make clkref an optional resource
+  phy: qualcomm: eusb2-repeater: Add SMB2370 eUSB2 repeater support
+
+ .../bindings/phy/qcom,m31-eusb2-phy.yaml      |  21 +-
+ .../phy/qcom,sc8280xp-qmp-usb3-uni-phy.yaml   |  35 ++
+ .../phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    |  19 +-
+ .../phy/qcom,snps-eusb2-repeater.yaml         |   1 +
+ .../bindings/usb/qcom,snps-dwc3.yaml          |  26 ++
+ .../phy/qualcomm/phy-qcom-eusb2-repeater.c    |  18 +
+ drivers/phy/qualcomm/phy-qcom-m31-eusb2.c     |   2 +-
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c     | 349 +++++++++++++++++-
+ .../phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h    |  12 +
+ .../phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h   |  12 +
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c       | 163 ++++++++
+ drivers/phy/qualcomm/phy-qcom-qmp.h           |   4 +
+ 12 files changed, 649 insertions(+), 13 deletions(-)
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-aon-v6.h
+ create mode 100644 drivers/phy/qualcomm/phy-qcom-qmp-pcs-misc-v5.h
+
 
