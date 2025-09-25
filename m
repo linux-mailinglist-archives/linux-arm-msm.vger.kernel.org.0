@@ -1,58 +1,100 @@
-Return-Path: <linux-arm-msm+bounces-75161-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75162-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id E250DBA0C0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 19:09:51 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C98ECBA0CCE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 19:19:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 9E7243B9B4E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 17:09:50 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 52EF27BC288
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 17:10:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6E3F630BB91;
-	Thu, 25 Sep 2025 17:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EC1030AD00;
+	Thu, 25 Sep 2025 17:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uo2KfWBr"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="OfeR5DJt"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB0730B527;
-	Thu, 25 Sep 2025 17:09:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14AA9277C8F
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 17:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758820168; cv=none; b=JY1hClZHCVRNFgKe2eEkxV0YY8xhwqfAQcQ6vi9TyKYM7HXeuyhlph8r0e5J31g1sROJ7I8qO1CRvFFpjs6uQLpM/lX7n7XnOqpqefktZSB83xXs0DYWjyS2zg83iN0BCujttJ+l50Jcnxted95yOSyByysfUX7zMR75ILTWONA=
+	t=1758820279; cv=none; b=Xp29t2OL+iFcY+Jskk3ZkIUEspGE1C7ylW8jGViQnNOxwn5BaWwr42vvvLEar1/7C5tZV6L/ZEIjNvJj0yQ9bpqh8IcECsrZyjWkiJr098Re6Cf1O1hTdF1fXzczltL/Y2e3OAoupJg9ZJulj0nV+O1HpOzotB3rg7xQCOy+Hh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758820168; c=relaxed/simple;
-	bh=XDxPM6jflzJUIZwXDJYFUZz4XlIBk/qtwe3fVUXPTD8=;
+	s=arc-20240116; t=1758820279; c=relaxed/simple;
+	bh=2A2VlsDYMkB/821WPHSmvGeZ4Cdpi/oZMk8ty52o9yY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZGbvIPdv8Ns44iTyQfdeVK+CeRBXPB6kcjSTUQ9/ziYDu1Itp7AphgB2+K8q7kihQQTizPNOL0vUdHcasW+ScpsuyOvBAoU0klH6yEcRZOBKT7OnzsCXzSj+WF3tuBn7fWnrGvZ+aGHcNZ2W95UYMF71ynU17sR6m97etEKqdug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uo2KfWBr; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF0BC4CEF0;
-	Thu, 25 Sep 2025 17:09:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758820167;
-	bh=XDxPM6jflzJUIZwXDJYFUZz4XlIBk/qtwe3fVUXPTD8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uo2KfWBr261HqEGuBWaHjFXtLnSXRrnavsybCrV5hzGIys/0qlL5nOaj6zex3vdQH
-	 TIhhdep/ojwk/8oX9Iat5B5/0dLFvNKQPHZpeMA0E0B2ggw0u2uqHPr0N6AUXaDIo5
-	 UuRHgxh99juiH+6mRos3y/6VVybtoYf63ZlAlkB40Xhhsa6hR3yfe2mQ8v2ptRTh/w
-	 2LLPVO04OIyA3piw0QY1mCUNNPte5TN1RlhRL5pT2DPPVn3EviQOPQRUbkuqdaux8I
-	 gHo6IItOoSf2rJGvFrKEkkD1rr7ulNyQe2l8KhviSFYSRk5PjP6ww4ySTUIhDLhern
-	 iRVqT0hOjtWgA==
-Date: Thu, 25 Sep 2025 12:09:25 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Subject: Re: [PATCH 09/24] arm64: dts: qcom: glymur-crd: Add RPMH regulator
- rails
-Message-ID: <pqulydlgdjrbgv2l2wgienn6bdzvmf7lafriwt6d3aqabkolkj@5jrjv4jnqyyz>
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-9-24b601bbecc0@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=codvU9OGhWtUsfQO/jl6txzLZZ0ykNMGffTeBmSUlJo/+6g8RsET/Cuf9dEz8rdISKoO/9mtHLjWUCHlHUZB+sgq+qAVcIvOY/b03YGHvPqxhAE2B9eWvdHjOfNMMl1evxjEsjeeelm0TrjV9lqHVHMviQGXOV6pmmZjEFyqcEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=OfeR5DJt; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P9fGvl029712
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 17:11:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=kXw3CoTNhUiXzTf4M7hCnKv4
+	j02uevXwUtdwRCg5VCs=; b=OfeR5DJtoMu1lUxfqiKvEBtUCBTNDrepul4fswiV
+	PINrqbXPgAweF6wn3V7+PLPd8/0CYeH/lP5CIz6VeLBXLt0yZeCqGi44+tKplWL4
+	qHPhLxGPruC7mB6bNw2cMKG3RKbf5hRZANCML+3ByTr4SXS3pgnmggQCfWHaoS8E
+	jLi9s9Mm//2Ssj3GpW91faSS+RZwSG4R0txYD9GQWWx6RloJdGSGRYMSYDQSVD4g
+	UYvKm0bSzm896jXI81Y0vJTb0sUfAK9taMUY+ytmjh5CytFsl+i0Xl8ItWR7B9j1
+	9GkQWvMSoLu9ju+DXrMmeq2TcZ4qDodZ2UFo4/OQ4EEM3A==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499n1frv0n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 17:11:17 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4b793b04fe0so27938941cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 10:11:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758820276; x=1759425076;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kXw3CoTNhUiXzTf4M7hCnKv4j02uevXwUtdwRCg5VCs=;
+        b=cw0zp+X1kpzWMyxIYI4pJ6qjosHAvGa4bW5UojOJDmxEpolD5ZrzuB7XwyS7GpZGKk
+         6aR8i5Dw9ID/I41yOgxtqFSjQRUDetxtTky2OTyfcYVREUQkIBBuLZa7AANN9zx5C3D6
+         MpkGggQmJXCcJFAyRo24AzYkTENsTMbzNMTpJ/L3MVtSunPzomjT80MbiNEP8cQNXnzX
+         BOJF/jjbdZaioep4aLzqgf4nd0xwTWPlP/y+LZvglC1xtGvPftVawcOREufdhEDA926v
+         Y5CaDZT7uLSJMg1Bg4Wybig18d0GTkJNG2zCJB8tARum6ZDJodKuwWHSGvfEngz7S2lg
+         dsiQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUeBMwOeKagZn053NNX8GMWQ3A/jNFQx5DJxda/MdaxE95bstN7h0S/qHzMBBtHztBGX6EkbtlcFzd0mjxh@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzt76KIg20340ZHhvLkzmMi5/3J/zYXcbliWvMeXEk+oRNVVy/H
+	WMZXxDs9weQEUzfnRFnkS2L6JJ4pEwuRGwL4RBS6hBF3E4kFqQ/qUQFRyZmT8cMvb3ix8AOisQO
+	h0FGBbgIiue7I8MfeCCAWxufIZp9/PNPjSokfaaRccADAQDaQyMl2IVfxDl3YZA+0xj/N
+X-Gm-Gg: ASbGnct4X5vLl4hr5uXoxjqlSdOy1NwTLXLSi/fflCdYcUc7FVzT3RrSeeTr1NJ7rdE
+	8ifT7aM9KvW4t/GGaAObNavE0//sDWvhpkXE7OvdpIHMsIar7TTdAeeOhdauKozaSiW8BcD0tXq
+	1tWb5xnpmMdDlwi4Doi1HLHKM2w1psnmhfTFdW4vsGh9PcFq8bznciYCVRH7MAitMny20RwAPoB
+	vPV4wfW1V3N+uKSgLz85e/UEikmRmuKSRgtHfL2loj/RL8TN0D6M9o1G0m9O2R3hZI7p82husGs
+	5r1saX8mCjBUMqbkw2vi9TIb6xy7PIEM4XH1fI9PA0W3qBLV54arvCs0MX2cSL2ORVI/VF2j0RL
+	BAiWKHsS7QwAdN+O6vEW5PbUyKGdF6tbIV3AeuUcvyKJqpnkmi+QH
+X-Received: by 2002:ac8:5852:0:b0:4d9:5ce:3749 with SMTP id d75a77b69052e-4da4cd4791cmr52410541cf.72.1758820275532;
+        Thu, 25 Sep 2025 10:11:15 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGoHvBOPLPvyJUniaKzaRAGpPOF+o4ZXMRhf7+ISSnlvoSo5lj+B74ghkMrUs0F7vcZagSMQ==
+X-Received: by 2002:ac8:5852:0:b0:4d9:5ce:3749 with SMTP id d75a77b69052e-4da4cd4791cmr52409821cf.72.1758820274662;
+        Thu, 25 Sep 2025 10:11:14 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-58313cde476sm951564e87.48.2025.09.25.10.11.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Sep 2025 10:11:13 -0700 (PDT)
+Date: Thu, 25 Sep 2025 20:11:11 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] arm64: dts: qcom: glymur: Describe display related
+ nodes
+Message-ID: <43jgqfcw2nnasdnskfdri5swddr6kunvvp6oxzqibnlvyc4jd2@4y6x7fy5shq2>
+References: <20250925-dts-qcom-glymur-crd-add-edp-v1-0-20233de3c1e2@linaro.org>
+ <20250925-dts-qcom-glymur-crd-add-edp-v1-1-20233de3c1e2@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -61,378 +103,503 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250925-v3_glymur_introduction-v1-9-24b601bbecc0@oss.qualcomm.com>
+In-Reply-To: <20250925-dts-qcom-glymur-crd-add-edp-v1-1-20233de3c1e2@linaro.org>
+X-Proofpoint-ORIG-GUID: _XPIn_sPBPQvWKcnPbt-xCbb_RuFPCFk
+X-Proofpoint-GUID: _XPIn_sPBPQvWKcnPbt-xCbb_RuFPCFk
+X-Authority-Analysis: v=2.4 cv=No/Rc9dJ c=1 sm=1 tr=0 ts=68d577b5 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=KKAkSRfTAAAA:8 a=em26Cy0fR9YT-IQVlA0A:9 a=CjuIK1q_8ugA:10
+ a=dawVfQjAaf238kedN5IG:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAzNyBTYWx0ZWRfX+adQrggyns2a
+ dlQn/QCF8JlRY8N0STujakzy0iatR5zHdfowNaqqxQ4tz4Nqilwl5FAvB+jv5Ef6ECJSpt1VUsI
+ Z/Yy5U341sBoIvrzTyEewXy4okfuZ92t+GCTn5czJ0TLQxknzLvzP58OIBHa3bnXb6HT9TZjiVj
+ ZQYMjSurw0M5dNjt1mv0b0lcFdIuZtW5lE4rs4x2A2J2nc9dgK6ZsyAdtHoMt8lCgX5eyAy5jtJ
+ gICHSp+GcV/8yWjCnFiCaWOrfvYG/PD6G+S/LmUWlb9on8tsDxkqV2qFyS00xGHESWOAstuRgWO
+ i5Mfj7LxrC4dSaqS/fE9CE8vyEFQnD4TSdzjeSUfuGCVTWBXqACzYjZRW0wIDMqt2+1a6z3ciho
+ R6alYOgn
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 spamscore=0 suspectscore=0 adultscore=0 malwarescore=0
+ phishscore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200037
 
-On Thu, Sep 25, 2025 at 12:02:17PM +0530, Pankaj Patil wrote:
-> From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+On Thu, Sep 25, 2025 at 06:02:48PM +0300, Abel Vesa wrote:
+> The MDSS (Mobile Display SubSystem) on Glymur comes with 4 DisplayPort
+> controllers. Describe them along with display controller and the eDP
+> PHY. Then, attach the combo PHYs link and vco_div clocks to the Display
+> clock controller and link up the PHYs and DP endpoints in the graph.
 > 
-> Add RPMH regulator rails for Glymur CRD.
-> 
-
-Please don't sprinkle board-specific changes throughout the series.
-
-It's useful to introduce the dts early on, so that any dtsi changes gets
-compiled, but you can then group the board-specific changes at the end
-of the series; and squash them into one.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 > ---
->  arch/arm64/boot/dts/qcom/glymur-crd.dts | 332 ++++++++++++++++++++++++++++++++
->  1 file changed, 332 insertions(+)
+>  arch/arm64/boot/dts/qcom/glymur.dtsi | 492 ++++++++++++++++++++++++++++++++++-
+>  1 file changed, 484 insertions(+), 8 deletions(-)
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dts b/arch/arm64/boot/dts/qcom/glymur-crd.dts
-> index 4561c0b87b017cba0a1db8814123a070b37fd434..e89b81dcb4f47b78307fa3ab6831657cf6491c89 100644
-> --- a/arch/arm64/boot/dts/qcom/glymur-crd.dts
-> +++ b/arch/arm64/boot/dts/qcom/glymur-crd.dts
-> @@ -6,6 +6,7 @@
->  /dts-v1/;
+> diff --git a/arch/arm64/boot/dts/qcom/glymur.dtsi b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> index a131cd6c3d9e7f14ed1c4aef4b68e1860cc3bca5..41d89998b1fe14a24cd528e73afc37cf2a840bab 100644
+> --- a/arch/arm64/boot/dts/qcom/glymur.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/glymur.dtsi
+> @@ -2698,6 +2698,7 @@ port@2 {
+>  					reg = <2>;
 >  
->  #include "glymur.dtsi"
-> +#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  					usb_dp_qmpphy_dp_in: endpoint {
+> +						remote-endpoint = <&mdss_dp0_out>;
+>  					};
+>  				};
+>  			};
+> @@ -2766,11 +2767,34 @@ port@2 {
+>  					reg = <2>;
 >  
->  / {
->  	model = "Qualcomm Technologies, Inc. Glymur CRD";
-> @@ -66,3 +67,334 @@ chosen {
->  &tlmm {
->  	gpio-reserved-ranges = <4 4>, <10 2>, <44 4>; /*Security SPI (TPM)*/
->  };
+>  					usb_1_ss1_qmpphy_dp_in: endpoint {
+> +						remote-endpoint = <&mdss_dp1_out>;
+>  					};
+>  				};
+>  			};
+>  		};
+>  
+> +		mdss_dp3_phy: phy@faac00 {
+> +			compatible = "qcom,glymur-dp-phy";
+> +			reg = <0 0x00faac00 0 0x1d0>,
+> +			      <0 0x00faa400 0 0x128>,
+> +			      <0 0x00faa800 0 0x128>,
+> +			      <0 0x00faa000 0 0x358>;
 > +
-> +&apps_rsc {
+> +			clocks = <&dispcc DISP_CC_MDSS_DPTX3_AUX_CLK>,
+> +				 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +				 <&tcsrcc TCSR_EDP_CLKREF_EN>;
+> +			clock-names = "aux",
+> +				      "cfg_ahb",
+> +				      "ref";
 > +
-> +	vph_pwr: vph-pwr-regulator {
-> +		compatible = "regulator-fixed";
-> +		regulator-name = "vph_pwr";
-> +		regulator-min-microvolt = <3700000>;
-> +		regulator-max-microvolt = <3700000>;
-> +	};
+> +			power-domains = <&rpmhpd RPMHPD_MX>;
 > +
-> +	regulators-0 {
-> +		compatible = "qcom,pmh0101-rpmh-regulators";
-> +		qcom,pmic-id = "B_E0";
+> +			#clock-cells = <1>;
+> +			#phy-cells = <0>;
 > +
-> +		vdd-bob1-supply = <&vph_pwr>;
-> +		vdd-bob2-supply = <&vph_pwr>;
-> +		vdd-l1-l10-l15-supply = <&vreg_s9f_e0_1p9>;
-> +		vdd-l2-l7-l8-l9-l16-supply = <&vreg_bob1_e0>;
-> +		vdd-l11-l12-l18-supply = <&vreg_s7f_e0_1p32>;
-> +		vdd-l17-supply = <&vreg_bob2_e0>;
-> +
-> +		vreg_bob1_e0: bob1 {
-> +			regulator-name = "vreg_bob1_e0";
-> +			regulator-min-microvolt = <2200000>;
-> +			regulator-max-microvolt = <4224000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
+> +			status = "disabled";
 > +		};
 > +
-> +		vreg_bob2_e0: bob2 {
-> +			regulator-name = "vreg_bob2_e0";
-> +			regulator-min-microvolt = <2540000>;
-> +			regulator-max-microvolt = <3600000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
+>  		cnoc_main: interconnect@1500000 {
+>  			compatible = "qcom,glymur-cnoc-main";
+>  			reg = <0x0 0x01500000 0x0 0x17080>;
+> @@ -3248,6 +3272,7 @@ port@2 {
+>  					reg = <2>;
+>  
+>  					usb_1_ss2_qmpphy_dp_in: endpoint {
+> +						remote-endpoint = <&mdss_dp2_out>;
+>  					};
+>  				};
+>  			};
+> @@ -3523,7 +3548,458 @@ usb_mp: usb@a400000 {
+>  			dr_mode = "host";
+>  
+>  			status = "disabled";
 > +		};
 > +
-> +		vreg_l1b_e0_1p8: ldo1 {
-> +			regulator-name = "vreg_l1b_e0_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +		mdss: display-subsystem@ae00000 {
+> +			compatible = "qcom,glymur-mdss";
+> +			reg = <0x0 0x0ae00000 0x0 0x1000>;
+> +			reg-names = "mdss";
 > +
-> +		vreg_l2b_e0_2p9: ldo2 {
-> +			regulator-name = "vreg_l2b_e0_2p9";
-> +			regulator-min-microvolt = <2900000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
 > +
-> +		vreg_l7b_e0_2p79: ldo7 {
-> +			regulator-name = "vreg_l7b_e0_2p79";
-> +			regulator-min-microvolt = <2790000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +				 <&gcc GCC_DISP_HF_AXI_CLK>,
+> +				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
 > +
-> +		vreg_l8b_e0_1p50: ldo8 {
-> +			regulator-name = "vreg_l8b_e0_1p50";
-> +			regulator-min-microvolt = <1504000>;
-> +			regulator-max-microvolt = <3544000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			resets = <&dispcc DISP_CC_MDSS_CORE_BCR>;
 > +
-> +		vreg_l9b_e0_2p7: ldo9 {
-> +			regulator-name = "vreg_l9b_e0_2p7";
-> +			regulator-min-microvolt = <2700000>;
-> +			regulator-max-microvolt = <3300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			interconnects = <&mmss_noc MASTER_MDP QCOM_ICC_TAG_ALWAYS
+> +					 &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
+> +					<&hsc_noc MASTER_APPSS_PROC QCOM_ICC_TAG_ACTIVE_ONLY
+> +					 &config_noc SLAVE_DISPLAY_CFG QCOM_ICC_TAG_ACTIVE_ONLY>;
+> +			interconnect-names = "mdp0-mem",
+> +					     "cpu-cfg";
 > +
-> +		vreg_l10b_e0_1p8: ldo10 {
-> +			regulator-name = "vreg_l10b_e0_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			power-domains = <&dispcc DISP_CC_MDSS_CORE_GDSC>;
 > +
-> +		vreg_l11b_e0_1p2: ldo11 {
-> +			regulator-name = "vreg_l11b_e0_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			iommus = <&apps_smmu 0x1de0 0x2>;
 > +
-> +		vreg_l12b_e0_1p14: ldo12 {
-> +			regulator-name = "vreg_l12b_e0_1p14";
-> +			regulator-min-microvolt = <1140000>;
-> +			regulator-max-microvolt = <1260000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			interrupt-controller;
+> +			#interrupt-cells = <1>;
 > +
-> +		vreg_l15b_e0_1p8: ldo15 {
-> +			regulator-name = "vreg_l15b_e0_1p8";
-> +			regulator-min-microvolt = <1800000>;
-> +			regulator-max-microvolt = <1800000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +			ranges;
 > +
-> +		vreg_l17b_e0_2p4: ldo17 {
-> +			regulator-name = "vreg_l17b_e0_2p4";
-> +			regulator-min-microvolt = <2400000>;
-> +			regulator-max-microvolt = <2700000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			status = "disabled";
 > +
-> +		vreg_l18b_e0_1p2: ldo18 {
-> +			regulator-name = "vreg_l18b_e0_1p2";
-> +			regulator-min-microvolt = <1200000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
+> +			mdss_mdp: display-controller@ae01000 {
+> +				compatible = "qcom,glymur-dpu";
+> +				reg = <0 0x0ae01000 0 0x93000>,
+> +				      <0 0x0aeb0000 0 0x2008>;
+> +				reg-names = "mdp",
+> +					    "vbif";
 > +
-> +	regulators-1 {
-> +		compatible = "qcom,pmcx0102-rpmh-regulators";
-> +		qcom,pmic-id = "C_E0";
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s8-supply = <&vph_pwr>;
+> +				interrupts-extended = <&mdss 0>;
 > +
-> +		vreg_s1c_e0_0p3: smps1 {
-> +			regulator-name = "vreg_s1c_e0_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_MDP_LUT_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_MDP_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_VSYNC_CLK>;
+> +				clock-names = "nrt_bus",
+> +					      "iface",
+> +					      "lut",
+> +					      "core",
+> +					      "vsync";
 > +
-> +		vreg_s8c_e0_0p3: smps8 {
-> +			regulator-name = "vreg_s8c_e0_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
+> +				operating-points-v2 = <&mdp_opp_table>;
 > +
-> +	regulators-2 {
-> +		compatible = "qcom,pmcx0102-rpmh-regulators";
-> +		qcom,pmic-id = "C_E1";
+> +				power-domains = <&rpmhpd RPMHPD_MMCX>;
 > +
-> +		vdd-l2-supply = <&vreg_s7f_e0_1p32>;
-> +		vdd-l1-l3-l4-supply = <&vreg_s8f_e0_0p95>;
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
 > +
-> +		vreg_l1c_e1_0p82: ldo1 {
-> +			regulator-name = "vreg_l1c_e1_0p82";
-> +			regulator-min-microvolt = <825000>;
-> +			regulator-max-microvolt = <958000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +					port@0 {
+> +						reg = <0>;
 > +
-> +		vreg_l2c_e1_1p14: ldo2 {
-> +			regulator-name = "vreg_l2c_e1_1p14";
-> +			regulator-min-microvolt = <1140000>;
-> +			regulator-max-microvolt = <1300000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +						dpu_intf0_out: endpoint {
+> +							remote-endpoint = <&mdss_dp0_in>;
+> +						};
+> +					};
 > +
-> +		vreg_l3c_e1_0p89: ldo3 {
-> +			regulator-name = "vreg_l3c_e1_0p89";
-> +			regulator-min-microvolt = <890000>;
-> +			regulator-max-microvolt = <980000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +					port@4 {
+> +						reg = <4>;
 > +
-> +		vreg_l4c_e1_0p72: ldo4 {
-> +			regulator-name = "vreg_l4c_e1_0p72";
-> +			regulator-min-microvolt = <720000>;
-> +			regulator-max-microvolt = <980000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
+> +						mdss_intf4_out: endpoint {
+> +							remote-endpoint = <&mdss_dp1_in>;
+> +						};
+> +					};
 > +
-> +	regulators-3 {
-> +		compatible = "qcom,pmh0110-rpmh-regulators";
-> +		qcom,pmic-id = "F_E0";
-> +		vdd-s7-supply = <&vph_pwr>;
-> +		vdd-s8-supply = <&vph_pwr>;
-> +		vdd-s9-supply = <&vph_pwr>;
-> +		vdd-s10-supply = <&vph_pwr>;
-> +		vdd-l2-supply = <&vreg_s8f_e0_0p95>;
-> +		vdd-l3-supply = <&vreg_s8f_e0_0p95>;
-> +		vdd-l4-supply = <&vreg_s8f_e0_0p95>;
+> +					port@5 {
+> +						reg = <5>;
 > +
-> +		vreg_s7f_e0_1p32: smps7 {
-> +			regulator-name = "vreg_s7f_e0_1p32";
-> +			regulator-min-microvolt = <1320000>;
-> +			regulator-max-microvolt = <1352000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +						mdss_intf5_out: endpoint {
+> +							remote-endpoint = <&mdss_dp3_in>;
+> +						};
+> +					};
 > +
-> +		vreg_s8f_e0_0p95: smps8 {
-> +			regulator-name = "vreg_s8f_e0_0p95";
-> +			regulator-min-microvolt = <952000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +					port@6 {
+> +						reg = <6>;
 > +
-> +		vreg_s9f_e0_1p9: smps9 {
-> +			regulator-name = "vreg_s9f_e0_1p9";
-> +			regulator-min-microvolt = <1900000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +						mdss_intf6_out: endpoint {
+> +							remote-endpoint = <&mdss_dp2_in>;
+> +						};
+> +					};
+> +				};
 > +
-> +		vreg_s10f_e0_0p3: smps10 {
-> +			regulator-name = "vreg_s10f_e0_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				mdp_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
 > +
-> +		vreg_l2f_e0_0p82: ldo2 {
-> +			regulator-name = "vreg_l2f_e0_0p82";
-> +			regulator-min-microvolt = <825000>;
-> +			regulator-max-microvolt = <980000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +					opp-205000000 {
+> +						opp-hz = /bits/ 64 <205000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
 > +
-> +		vreg_l3f_e0_0p72: ldo3 {
-> +			regulator-name = "vreg_l3f_e0_0p72";
-> +			regulator-min-microvolt = <720000>;
-> +			regulator-max-microvolt = <980000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +					opp-337000000 {
+> +						opp-hz = /bits/ 64 <337000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
 > +
-> +		vreg_l4f_e0_0p3: ldo4 {
-> +			regulator-name = "vreg_l4f_e0_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
+> +					opp-417000000 {
+> +						opp-hz = /bits/ 64 <417000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
 > +
-> +	regulators-4 {
-> +		compatible = "qcom,pmh0110-rpmh-regulators";
-> +		qcom,pmic-id = "F_E1";
-> +		vdd-s1-supply = <&vph_pwr>;
-> +		vdd-s3-supply = <&vph_pwr>;
-> +		vdd-s5-supply = <&vph_pwr>;
-> +		vdd-s6-supply = <&vph_pwr>;
-> +		vdd-s7-supply = <&vph_pwr>;
-> +		vdd-l1-supply = <&vreg_s8f_e0_0p95>;
-> +		vdd-l2-supply = <&vreg_s8f_e0_0p95>;
-> +		vdd-l4-supply = <&vreg_s8f_e0_0p95>;
+> +					opp-532000000 {
+> +						opp-hz = /bits/ 64 <532000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
 > +
-> +		vreg_s1f_e1_0p3: smps1 {
-> +			regulator-name = "vreg_s1f_e1_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +					opp-600000000 {
+> +						opp-hz = /bits/ 64 <600000000>;
+> +						required-opps = <&rpmhpd_opp_nom_l1>;
+> +					};
+> +				};
+> +			};
 > +
-> +		vreg_s5f_e1_0p3: smps5 {
-> +			regulator-name = "vreg_s5f_e1_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +			mdss_dp0: displayport-controller@af54000 {
+> +				compatible = "qcom,glymur-dp";
+> +				reg = <0x0 0xaf54000 0x0 0x104>,
+> +				      <0x0 0xaf54200 0x0 0xc0>,
+> +				      <0x0 0xaf55000 0x0 0x770>,
+> +				      <0x0 0xaf56000 0x0 0x9c>,
+> +				      <0x0 0xaf57000 0x0 0x9c>;
 > +
-> +		vreg_s6f_e1_0p3: smps6 {
-> +			regulator-name = "vreg_s6f_e1_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				interrupts-extended = <&mdss 12>;
 > +
-> +		vreg_s7f_e1_0p3: smps7 {
-> +			regulator-name = "vreg_s7f_e1_0p3";
-> +			regulator-min-microvolt = <300000>;
-> +			regulator-max-microvolt = <1200000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK>;
+
+No pixel1 clock?
+
+> +				clock-names = "core_iface",
+> +					      "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface",
+> +					      "stream_pixel";
 > +
-> +		vreg_l1f_e1_0p82: ldo1 {
-> +			regulator-name = "vreg_l1f_e1_0p82";
-> +			regulator-min-microvolt = <825000>;
-> +			regulator-max-microvolt = <950000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX0_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DPTX0_PIXEL0_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_1_ss0_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_1_ss0_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+
+No pixel1 clock?
+
 > +
-> +		vreg_l2f_e1_0p83: ldo2 {
-> +			regulator-name = "vreg_l2f_e1_0p83";
-> +			regulator-min-microvolt = <830000>;
-> +			regulator-max-microvolt = <920000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				operating-points-v2 = <&mdss_dp0_opp_table>;
 > +
-> +		vreg_l4f_e1_1p08: ldo4 {
-> +			regulator-name = "vreg_l4f_e1_1p08";
-> +			regulator-min-microvolt = <1080000>;
-> +			regulator-max-microvolt = <1320000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
+> +				power-domains = <&rpmhpd RPMHPD_MMCX>;
 > +
-> +	regulators-5 {
-> +		compatible = "qcom,pmh0110-rpmh-regulators";
-> +		qcom,pmic-id = "H_E0";
+> +				phys = <&usb_1_ss0_qmpphy QMP_USB43DP_DP_PHY>;
+> +				phy-names = "dp";
 > +
-> +		vdd-l1-supply = <&vreg_s8f_e0_0p95>;
-> +		vdd-l2-supply = <&vreg_s8f_e0_0p95>;
-> +		vdd-l3-supply = <&vreg_s9f_e0_1p9>;
-> +		vdd-l4-supply = <&vreg_s7f_e0_1p32>;
+> +				#sound-dai-cells = <0>;
 > +
-> +		vreg_l1h_e0_0p89: ldo1 {
-> +			regulator-name = "vreg_l1h_e0_0p89";
-> +			regulator-min-microvolt = <825000>;
-> +			regulator-max-microvolt = <950000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				status = "disabled";
 > +
-> +		vreg_l2h_e0_0p72: ldo2 {
-> +			regulator-name = "vreg_l2h_e0_0p72";
-> +			regulator-min-microvolt = <830000>;
-> +			regulator-max-microvolt = <920000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
 > +
-> +		vreg_l3h_e0_0p32: ldo3 {
-> +			regulator-name = "vreg_l3h_e0_0p32";
-> +			regulator-min-microvolt = <320000>;
-> +			regulator-max-microvolt = <2000000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
+> +					port@0 {
+> +						reg = <0>;
 > +
-> +		vreg_l4h_e0_1p2: ldo4 {
-> +			regulator-name = "vreg_l4h_e0_1p2";
-> +			regulator-min-microvolt = <1080000>;
-> +			regulator-max-microvolt = <1320000>;
-> +			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-> +		};
-> +	};
-> +};
-> 
-> -- 
-> 2.34.1
-> 
+> +						mdss_dp0_in: endpoint {
+> +							remote-endpoint = <&dpu_intf0_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						mdss_dp0_out: endpoint {
+> +							remote-endpoint = <&usb_dp_qmpphy_dp_in>;
+> +						};
+> +					};
+> +				};
+> +
+> +				mdss_dp0_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-192000000 {
+> +						opp-hz = /bits/ 64 <192000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs_d1>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+> +			mdss_dp1: displayport-controller@af5c000 {
+> +				compatible = "qcom,glymur-dp", "qcom,sm8650-dp";
+
+This doesn't match your own bindings. WT?
+
+> +				reg = <0x0 0xaf5c000 0x0 0x104>,
+> +				      <0x0 0xaf5c200 0x0 0xc0>,
+> +				      <0x0 0xaf5d000 0x0 0x770>,
+> +				      <0x0 0xaf5e000 0x0 0x9c>,
+> +				      <0x0 0xaf5f000 0x0 0x9c>;
+> +
+> +				interrupts-extended = <&mdss 13>;
+>  
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX1_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX1_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX1_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX1_PIXEL0_CLK>;
+
+pixel1
+
+> +				clock-names = "core_iface",
+> +					      "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface",
+> +					      "stream_pixel";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX1_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DPTX1_PIXEL0_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_1_ss1_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_1_ss1_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+
+pixel1
+
+> +
+> +				operating-points-v2 = <&mdss_dp1_opp_table>;
+> +
+> +				power-domains = <&rpmhpd RPMHPD_MMCX>;
+> +
+> +				phys = <&usb_1_ss1_qmpphy QMP_USB43DP_DP_PHY>;
+> +				phy-names = "dp";
+> +
+> +				#sound-dai-cells = <0>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +
+> +						mdss_dp1_in: endpoint {
+> +							remote-endpoint = <&mdss_intf4_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						mdss_dp1_out: endpoint {
+> +							remote-endpoint = <&usb_1_ss1_qmpphy_dp_in>;
+> +						};
+> +					};
+> +				};
+> +
+> +				mdss_dp1_opp_table: opp-table {
+> +					compatible = "operating-points-v2";
+
+Is it differnt from dp0 table?
+
+> +
+> +					opp-192000000 {
+> +						opp-hz = /bits/ 64 <192000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs_d1>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+> +			mdss_dp2: displayport-controller@af64000 {
+> +				compatible = "qcom,glymur-dp";
+> +				reg = <0x0 0x0af64000 0x0 0x104>,
+> +				      <0x0 0x0af64200 0x0 0xc0>,
+> +				      <0x0 0x0af65000 0x0 0x770>,
+> +				      <0x0 0x0af66000 0x0 0x9c>,
+> +				      <0x0 0x0af67000 0x0 0x9c>;
+> +
+> +				interrupts-extended = <&mdss 14>;
+> +
+> +				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX2_AUX_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX2_LINK_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX2_LINK_INTF_CLK>,
+> +					 <&dispcc DISP_CC_MDSS_DPTX2_PIXEL0_CLK>;
+
+pixel1 clock
+
+> +				clock-names = "core_iface",
+> +					      "core_aux",
+> +					      "ctrl_link",
+> +					      "ctrl_link_iface",
+> +					      "stream_pixel";
+> +
+> +				assigned-clocks = <&dispcc DISP_CC_MDSS_DPTX2_LINK_CLK_SRC>,
+> +						  <&dispcc DISP_CC_MDSS_DPTX2_PIXEL0_CLK_SRC>;
+> +				assigned-clock-parents = <&usb_1_ss2_qmpphy QMP_USB43DP_DP_LINK_CLK>,
+> +							 <&usb_1_ss2_qmpphy QMP_USB43DP_DP_VCO_DIV_CLK>;
+
+pixel1
+
+> +
+> +				operating-points-v2 = <&mdss_dp2_opp_table>;
+> +
+> +				power-domains = <&rpmhpd RPMHPD_MMCX>;
+> +
+> +				phys = <&usb_1_ss2_qmpphy QMP_USB43DP_DP_PHY>;
+> +				phy-names = "dp";
+> +
+> +				#sound-dai-cells = <0>;
+> +
+> +				status = "disabled";
+> +
+> +				ports {
+> +					#address-cells = <1>;
+> +					#size-cells = <0>;
+> +
+> +					port@0 {
+> +						reg = <0>;
+> +						mdss_dp2_in: endpoint {
+> +							remote-endpoint = <&mdss_intf6_out>;
+> +						};
+> +					};
+> +
+> +					port@1 {
+> +						reg = <1>;
+> +
+> +						mdss_dp2_out: endpoint {
+> +							remote-endpoint = <&usb_1_ss2_qmpphy_dp_in>;
+> +						};
+> +					};
+> +				};
+> +
+> +				mdss_dp2_opp_table: opp-table {
+
+
+Different from dp0?
+
+> +					compatible = "operating-points-v2";
+> +
+> +					opp-160000000 {
+> +						opp-hz = /bits/ 64 <160000000>;
+> +						required-opps = <&rpmhpd_opp_low_svs>;
+> +					};
+> +
+> +					opp-270000000 {
+> +						opp-hz = /bits/ 64 <270000000>;
+> +						required-opps = <&rpmhpd_opp_svs>;
+> +					};
+> +
+> +					opp-540000000 {
+> +						opp-hz = /bits/ 64 <540000000>;
+> +						required-opps = <&rpmhpd_opp_svs_l1>;
+> +					};
+> +
+> +					opp-810000000 {
+> +						opp-hz = /bits/ 64 <810000000>;
+> +						required-opps = <&rpmhpd_opp_nom>;
+> +					};
+> +				};
+> +			};
+> +
+
+-- 
+With best wishes
+Dmitry
 
