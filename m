@@ -1,169 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-75048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B920DB9E7D9
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 11:48:47 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D56CB9E918
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 12:08:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id CA44718838A8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 09:49:09 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3D8C94E1111
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 10:08:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8D91265CDD;
-	Thu, 25 Sep 2025 09:48:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A8882EAD18;
+	Thu, 25 Sep 2025 10:07:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="m7eaxLLd"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="nD2f0lnn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B58A1805E
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 09:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F96D2EA48D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 10:07:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758793722; cv=none; b=V3s7SPNV5PN35xCG/vYu7mfCBfj5MaJgS5KYSAA4MlNh7rtm0iPDOzbrd/T24rpGS/y8Q18xI1rOPd/UAX5fGhzBAK8ZBK6qKtRoFTNX3ecZwWjgWJtxyjJtvdOKbjcfDx95mA1mIIngqg1HSfDwlA3eNFk5qjEFnZtBSQ8fuyk=
+	t=1758794872; cv=none; b=VqUuNMm8ik0SetHEPFPl6YcKeOgL2yzVjXxdYHFV6GJy0YkatlxZ49j3XM0SrBSJqLs5pGgBMFPh/Ghibjbg70FZ/EAAOpAj8G+dwgZVoB5A4w55J2h5k1fb2K+Jihaj4n8YKD5PwojVu2+4b0VHhdtIztZxj1FsDHp5T3QB2i4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758793722; c=relaxed/simple;
-	bh=fwqz9ukGkSB7nQ6RVe6CRYI/1cDROkzR8BkzCK6xgws=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tfEYBBxmXsEyQoE5D33ux70ZL1ZSuHLyAYsaMXhOFniVGG7JrVnIsPKfxjd6MC+j9tIyipTwLJpQ5DcRiA8xhmtsm+pvhsJhl+GXAy3/xNDH2nw7W8ejHq55c516+H9mM6kPD8Cj6UWbMB4bUrYwKtsekKTmbvT99PZme6+DA6M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=m7eaxLLd; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P0XAgR027477
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 09:48:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GR4aDHZmhZBwmaG12GtJDL8oCuro3wUhp6sGrSaguaI=; b=m7eaxLLdH1g46xFg
-	urwnknI2nzrjPOU3i6E8gVZkG0nasuC09LhubfNqUUJ+mHaEkX//gcFJyHIbI1Mk
-	mZy80NDu/Z8HDb38x9bmmdZKjtna8AzNFr/ZYb/pz5YwwcpPKmZzqIPlxU+LjOM2
-	HLb5Jragn4FDyQ9FloYcEDFG8UZAwVmc1RWn+vHKG00aALvpIC78bifXOtJIc4TV
-	K87KAtgPp3x2pB//y++UN2XJ6N3gjc/jmU/QiU/rqoUbdSlu3OVOddTuFWY7klgl
-	fjArjnHzq70UCbqqtnJquEE2+VZUPiSsBg0q/QVMCDASLH5YTAyM/7v/8s97EqGH
-	uSqxMw==
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499kv17n0u-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 09:48:40 +0000 (GMT)
-Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-798925d8e2eso1228896d6.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:48:39 -0700 (PDT)
+	s=arc-20240116; t=1758794872; c=relaxed/simple;
+	bh=2wAPPbqLo2LqU/nTBFwRHUuMpcX/WMRKMRc0AgRIv18=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=H91r4sK9umV7Bg4mV8uyANirk24M3K1YKqrrKD497CE0MZ5g+lhyQCc5HXWC8oeECI+4Ft0ROjLha1v3pc2OFV9TeqbVeNoL8G38aYNtpWtUmCL4bCpbW0Z3qu0KpCA+KgBLaq/NbAi69Ma+PBrXMhXzHNk/zdq+m2tJR1xPYcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=nD2f0lnn; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b33d785db6fso147862366b.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 03:07:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1758794868; x=1759399668; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=RQA2xq7mI4lOuuo7UB6QFY4SFCKqLwIJHu6LK04sK3w=;
+        b=nD2f0lnncVnT4QZlW9KHYIBQyCCpLCF4x2U6jsXUfoNo23H62ShBrU7PhHzT5FCjyw
+         4bpYiB9zQSUXFS0+5d78bSWCgvfW0cKM/1RkEgb/kSrOtOcK4TxiSGy8mggQiHI4ykUm
+         KS/27UcYF5kYw2xDUX/9X+36i6M9ahOjEFDAm5Pr7zHxRS/qhCnEg0rpGfyczfD9lC1N
+         q/7xvtHJMDUZE30r2OWuoNuQLMt8dynXRvYf6UIDzaN7IijoBReIkjOryNQ8QHfKc1hs
+         /6xby/oe/evOL8uObx6MTC+Wk1Q5Si/MTyijB8pXoISS6Mhzlfhd047IIqZDHYnHqKOC
+         yEuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758793719; x=1759398519;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GR4aDHZmhZBwmaG12GtJDL8oCuro3wUhp6sGrSaguaI=;
-        b=CzWCS3cUQnepyZE+gLh/5A3VYfzg9Mkro2RvxrXfWe13ys7vjUmGz40Z8m7G6G7H0E
-         AJP12kbSdP3HnTWWYhkjL//sbSdgxGgiH5pc7bIcu8RJC3oP0arFf5kQXMmLy3uV+ehn
-         NabvPtKLv7pDdYeNhcoTEUk/m91P4R7MPMjg8pngXj2aehLZ0VFMq33ejPngraF85taL
-         NaVYi8UIIid+7jBz8/xOwOrI4OTJM5HhE0zOEZpAuZQfA3lIpWdNpOmCcJmaU8j1bU96
-         UjJvF2eNxriWGzdz9KpAXScjNSa382mK5m1TD+f3xCxQYx+V1sw+dCo3AlJ0WdDRUAgI
-         Y9ZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU6z8omV/bAVTpzeFgqkKY0J7oWKkTjmtP70qNsOPRFroguEVy7JsWXPGv6GWEGFvP5wMDZL0qTEpjXRO02@vger.kernel.org
-X-Gm-Message-State: AOJu0YwTskfjCL42WBXFpCos/sRATp4gOvd91IftGO2zm5SUWzEPuGTo
-	XqUqhRSnL0ZnLp/MRAqPsnSgMImKVFJbZbjiKTbAi3QhgK4x2B8LjtbkT/X5y8BhdOLZyvOSMC7
-	Sp0Dac3KOy8nP1wglTQxvhPDx9uI8QWARqd+jUgBPWaKdGcXKGV4ePgpAM7CruTOQYiqH
-X-Gm-Gg: ASbGncvkmrrryv+wjmnI8CxGqxnV+rEq4IJ0A6FHMPvx+f5OlB2T0h2n6zTQhDoL//T
-	nAoxaAaCRW3/XYSAkE/qx6AAPIus1PPU34u24MpP6P1k52OZH1pg8aspiSOmlpV/NpqAZ8EOU0I
-	Z4to7N6DneWBhAibk/0pdQ8urxEFVwMTQXQxszbSWVczoffEFUk3tluaUBk5juM5GBFSho2HWcw
-	RbA/p6vsCRObd2CjnW/EFElzXqHEi4EgTpHhjLPWmpckN+RC6jNCu4RQ9Bd2LubGVeih4G7meDi
-	crAqU7cfhhWHeCprIpTvObjks8HHDtQVn2e+cWy0tl5IFHyhnwcdl1UOga8oO49ETRcylvAxacH
-	W2B80tts4VkhTev/a3+uEUw==
-X-Received: by 2002:a05:6214:f2a:b0:70d:e7e1:840f with SMTP id 6a1803df08f44-7fc39460be1mr21832776d6.3.1758793719143;
-        Thu, 25 Sep 2025 02:48:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IENwkiAkwLrvqAp2PIFN0hMMx4wQy6rf7aMEP/NqMglaCPy/Vd/ggqXiqJ+HQHH8XZj9B8+Yg==
-X-Received: by 2002:a05:6214:f2a:b0:70d:e7e1:840f with SMTP id 6a1803df08f44-7fc39460be1mr21832636d6.3.1758793718628;
-        Thu, 25 Sep 2025 02:48:38 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-634a3af5483sm910511a12.42.2025.09.25.02.48.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 02:48:38 -0700 (PDT)
-Message-ID: <26467336-3322-40fc-8dcb-efc06934162e@oss.qualcomm.com>
-Date: Thu, 25 Sep 2025 11:48:36 +0200
+        d=1e100.net; s=20230601; t=1758794868; x=1759399668;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=RQA2xq7mI4lOuuo7UB6QFY4SFCKqLwIJHu6LK04sK3w=;
+        b=HhItspHTDQMfQ8N/xwE5KNviuViH0LDD57JRIgfVu3x/tuoXuTO6+tJ6aOy8+0Qf4M
+         GvuigW90j3R3oRtSNDf/fXuJQaFKKPKPpqI1Jwf+6NcleQTPYqHUrNEaLr1IpENpLyZ9
+         z6b4iEgRq9MXLyBZ7z5EJmBaXINbczAx+xq3NtdV1N+BNnX5tI+w5yxvxTydIUx27jlC
+         R0J7WMEctoa3pqM9O75p5/smROsMeNxyMIJhP8KSsPLWy0qzNrKReVcgNvoB7OvoC5QL
+         n32OvJKjE9Y9qnA4AiJSiCt5/HbRAdK1nNCXakYSo6RWcOAngKDEjm1ecML1Y7I6MgOH
+         ewkA==
+X-Forwarded-Encrypted: i=1; AJvYcCXC3zCg+Vol7areBjql3nUtqWFMT8EkKroFa0ylMx8jIEqrxQENya+c6Q+g22/+9yMB2o4ZYizQlqr67RZU@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgXB2TE0zOoFortWoyJJv0dNeqYrzWuJnQugQdsn3P3fmrIxd2
+	dXoyUdfkMyI/KR5EsW58j4BCYrlrlxikjW10iuRngbI53xk361oammksfdNuW9mIfsI=
+X-Gm-Gg: ASbGncskE+4mdjQn74dmSqRm3t4zP1A882wo+qbFWveCPHjcGynLwyNP5pbYZdAZnhj
+	EnCNR3r+VsI26ZB1PDk68tVWlHQdSdle4qg7FT6hzT35eiCX3aQon69/DvLHr6fH1wKuRFYFBFd
+	pKJSEaucpuqCBMXyzZHcQvxHPgA00gc1PuwannIidxhWkTZ2mrE12Qrzi28C94+4z6FprcR+qh4
+	ba8PZ5vNh+Iy0PmiyhMC0Zj4doC69c4H232Ahodf79AL18pza+vycM9aYkQw3k9Jg93iCR1gwTw
+	PNNC2iqJkw59Am00znUNycNecAzTjIJFON3msWKdkii+Jf3wMr1nVecQPlQYPNUHwn59xx5VSYP
+	bMJhJnydey+g7hzSgOzCywGr50wYH0Ibyc/7T4BxEllYgUTaCqFtEtxN/OhAHXDauzoNyP7uWK5
+	+LJkXi
+X-Google-Smtp-Source: AGHT+IE8TAQ0ieTHgs4m7gim+fRDgMGDmFFmvRIfockvNvymGGa0I6tPXCyGsiDJM+I3Aju2cVvIZg==
+X-Received: by 2002:a17:907:94c7:b0:b2d:804c:f5c with SMTP id a640c23a62f3a-b34b684a76bmr362320866b.4.1758794866008;
+        Thu, 25 Sep 2025 03:07:46 -0700 (PDT)
+Received: from [172.16.220.225] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b35446f7746sm134270766b.59.2025.09.25.03.07.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Sep 2025 03:07:45 -0700 (PDT)
+From: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+Subject: [PATCH RESEND v3 0/3] Add support for Awinic AW86927 haptic driver
+Date: Thu, 25 Sep 2025 12:07:27 +0200
+Message-Id: <20250925-aw86927-v3-0-1fc6265b42de@fairphone.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/20] arm64: dts: qcom: kaanapali-mtp: Enable more
- features
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <20250924-knp-dts-v1-14-3fdbc4b9e1b1@oss.qualcomm.com>
- <ejcchgc3isc5f6tmiqbxqihmk5efmbcyhv3ehuoerb5ulkd5an@g7a2wc422l6n>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <ejcchgc3isc5f6tmiqbxqihmk5efmbcyhv3ehuoerb5ulkd5an@g7a2wc422l6n>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: MKmaFDTinyAtrGEiAN2AsmkUzMoSHtvZ
-X-Authority-Analysis: v=2.4 cv=RO2zH5i+ c=1 sm=1 tr=0 ts=68d50ff8 cx=c_pps
- a=UgVkIMxJMSkC9lv97toC5g==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=8xtE-M9Tj1n2mnedfNEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=5XHQ0vS7sDUA:10 a=1HOtulTD9v-eNWfpl4qZ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAyNSBTYWx0ZWRfX40O6AVrqPANT
- 5iWtUUhwUfvlpxZoWk/KQK9sYf4jQ+FKYJC12baeiCAKpTUBd1wLCwoBcH4CusmB9q8eQXZEUs6
- 6YXDDeUSPWdIdwBriTIjQ98NgEM3hK7RpinG7Mc20rWBYQGGGwH6+0fkzHaBa9DkuZNUGYwb7cj
- WNlTcvvipwcDW+HwJw0mkiDig+xXvk97aHGFxK0haTkpQKEPcP0dLdfbgAQGpDypZWfdMS1RA9l
- lfEomaPuo5R0RRFspzinhPV9iHWpo/kIfw4yftBF+kbNfMf7MzqGMucP8BpIIr/op/FXIychiId
- rkb2zFzDtpGnGD2FBszyNkxDrZWtag5Dl5ia06wOcUuCSwtd0pTStAKiPprbeL96LTnsgeKC5H+
- d/KOj6Se
-X-Proofpoint-ORIG-GUID: MKmaFDTinyAtrGEiAN2AsmkUzMoSHtvZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-24_07,2025-09-24_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 suspectscore=0 priorityscore=1501
- impostorscore=0 spamscore=0 adultscore=0 bulkscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200025
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Luca Weiss <luca.weiss@fairphone.com>
+Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ Griffin Kroah-Hartman <griffin.kroah@fairphone.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758794865; l=1819;
+ i=griffin.kroah@fairphone.com; s=20250804; h=from:subject:message-id;
+ bh=2wAPPbqLo2LqU/nTBFwRHUuMpcX/WMRKMRc0AgRIv18=;
+ b=K6q9xHDFqVzGDg0/K3TIC4M42C44EAjwZ3LnaQSldYEZrPR+LSp9uqb03ogPaOSd/mx0AmbMf
+ 4OybTK6Nk29BQYXsj4zEvBALFeNtIKQfZxmoX+kXzUcHlaZ331S+tPO
+X-Developer-Key: i=griffin.kroah@fairphone.com; a=ed25519;
+ pk=drSBvqKFiR+xucmLWONHSq/wGrW+YvcVtBXFYnYzn8U=
 
-On 9/25/25 4:09 AM, Dmitry Baryshkov wrote:
-> On Wed, Sep 24, 2025 at 05:17:31PM -0700, Jingyi Wang wrote:
->> Enable more features on Kaanapali MTP boards including PMIC peripherals,
->> bus, SDHCI, remoteprocs, USB, PCIE, WLAN and Bluetooth.
->>
->> Written with help from Jyothi Kumar Seerapu(added bus), Ronak Raheja
->> (added USB), Manish Pandey(added SDHCI), Jishnu Prakash(added PMIC),
->> Qiang Yu(added PCIE), Yijie Yang(Added WLAN) and Zijun Hu(Added Bluetooth).
->>
->> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->> ---
+Add devicetree bindings and a driver for the AW86927 haptic driver, and
+add it to the devicetree for the Fairphone 5 smartphone.
 
-[...]
+This driver does not enable all capabilities of the AW86927, features
+such as f0 detection, rtp mode, and cont mode are not included.
 
+Note: This is my first driver I have ever worked on so if there is
+anything I can do to improve it please let me know!
 
->> +&tlmm {
->> +	wlan_en: wlan-en-state {
->> +		pins = "gpio16";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		bias-pull-down;
->> +	};
-> 
-> Why are the TLMM pin entries sorted?
+Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+---
+Changes in v3:
+- Removed obsolete FIXME comments
+- Adjusted Error handling to fit best practice
+- Changed formatting due to feedback
+- Removed obsolete terminology from patch subjects.
+- Properly credited reviewers
+- Link to v2: https://lore.kernel.org/r/20250811-aw86927-v2-0-64be8f3da560@fairphone.com
 
-https://docs.kernel.org/devicetree/bindings/dts-coding-style.html#order-of-nodes
+Changes in v2:
+- Changed title and fixed license of devicetree binding
+- Fixed typo where the 'm' in 'ms' was excluded
+- Changed error handling return values in driver probe function
+- Link to v1: https://lore.kernel.org/r/20250806-aw86927-v1-0-23d8a6d0f2b2@fairphone.com
 
-"""
-For a few node types, they can be ordered by the main property, e.g.
-pin configuration states ordered by value of “pins” property.
-"""
+---
+Griffin Kroah-Hartman (3):
+      dt-bindings: input: Add Awinic AW86927
+      Input: aw86927 - add driver for Awinic AW86927
+      arm64: dts: qcom: qcm6490-fairphone-fp5: Add vibrator support
 
-Konrad
+ .../devicetree/bindings/input/awinic,aw86927.yaml  |  48 ++
+ arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts |  18 +-
+ drivers/input/misc/Kconfig                         |  11 +
+ drivers/input/misc/Makefile                        |   1 +
+ drivers/input/misc/aw86927.c                       | 854 +++++++++++++++++++++
+ 5 files changed, 931 insertions(+), 1 deletion(-)
+---
+base-commit: 3624e9a34b36d64a7037946eda28ae9599363a3b
+change-id: 20250804-aw86927-9dddc32fcaec
+
+Best regards,
+-- 
+Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+
 
