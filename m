@@ -1,150 +1,101 @@
-Return-Path: <linux-arm-msm+bounces-75109-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75110-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD53BB9F651
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 15:03:02 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id F3753B9F6A5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 15:07:03 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 034237AF99A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:01:15 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E56EC4E3B79
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:06:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 49B9521771B;
-	Thu, 25 Sep 2025 13:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B0F5820B81B;
+	Thu, 25 Sep 2025 13:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p3jedWCv"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kQrG8RUh"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A771212574;
-	Thu, 25 Sep 2025 13:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9D1137923;
+	Thu, 25 Sep 2025 13:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758805360; cv=none; b=eypYditTe4qWxlJtu3jmzx9axkZmGd025Jh2PLFtDZQAMbWmHRI/5Tg1Gf8MLVw94oT/jyx0b9CjIsECOYvy+FlXehH6XCGT50WBrYbS+Udc4ruBz81tDCMSrSTg7nsHc2mKx77Ds0rET2RBbaZXYgtrW9spKW36u3Au6jukZhk=
+	t=1758805607; cv=none; b=hO8HL9U1abxTFJxGUiQFQV0c4enoEx3yYFoWsWoxhcixDQBJjLicFjxr1dhO0m9PuO+zRA00cdZyyzI0M6v92VW/Ws4vq+bxnREo4FGVHym76+WuDqyXuCRb+Tw8FU4AsMPz+5Q43GlEsDUt5BjH7Hw81aBmg/HNDWLZJy2RbP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758805360; c=relaxed/simple;
-	bh=AfsLdojQ8QPIxkk+3F9A1jxrBChJ42VMetvVNH9c3ik=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aPNVoqFTjzTGr8BahMcBUfN8fPoWfrT6n2ALFwogjxEwXV1+HecYYU5DwtaLLvGAK7tOBG6l5gFyVn3r5/UOKRhQIuJtlcl+SxQIRUdVWjMZJnEe0rJWdrf8GlINAMm9Gsx2e82qeiegdGLuIgtqkIVCs2yBNjoG3s773Z3kLN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p3jedWCv; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928E6C4CEF0;
-	Thu, 25 Sep 2025 13:02:39 +0000 (UTC)
+	s=arc-20240116; t=1758805607; c=relaxed/simple;
+	bh=tqHiPuaWvPkWNyWSejFJnXiHQaUaHLR+Dsrl+qUoonE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=YgBw1qsvxeHeB9slQXjQ/EOnGhUxpvNEHuw3QRzq9B9GIgy7H72bgaCgLERfhHXj2jC6Qs9ZYvy2h6hIxHWTy9B6B2lk2eZZPeuS0lb3EoaitPdhOJtwzt/nwG5kfA3MsitV04UiI1kFqviGJMu73RrNcmudcgHie7I8+ttjguE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kQrG8RUh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920D7C113D0;
+	Thu, 25 Sep 2025 13:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758805359;
-	bh=AfsLdojQ8QPIxkk+3F9A1jxrBChJ42VMetvVNH9c3ik=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=p3jedWCvT2s2T09odYijh9bcA9Md64UeMkYKOBHBiKJeSOJJGHdyILIeYXqDU32Sm
-	 EScE8ruuAuyPFrIbrQyYWyON3RSkCvn7ICDWNilOzchTFaKR5VYKAejBOskPSocCDI
-	 MeFGgCe61Ltm6fXOrXiqSeIu1zBs7QSkW9xYO+sC/x2mP9suyUuXzantX4ekWg/4UH
-	 eWQsEURzUjkVQ+dG1ltI4auEGz4ls1lNMxyk88CjeeiBxDCOr3ODJ/VElF8HgODxJm
-	 zIJ4jI6TCeLaWFoDKKfRj10nf13CnN1FzOb7HcnUbS2zXDjW96EaZfS5KfS24gz+Dn
-	 Zkuk5MLx3pW6A==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=goblin-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1v1lcL-00000009MWY-1N7B;
-	Thu, 25 Sep 2025 13:02:37 +0000
-Date: Thu, 25 Sep 2025 14:02:36 +0100
-Message-ID: <867bxm1y8j.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
+	s=k20201202; t=1758805607;
+	bh=tqHiPuaWvPkWNyWSejFJnXiHQaUaHLR+Dsrl+qUoonE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=kQrG8RUhEmZDzFq7uUXrW2aUzU/juCKW/Z0JZX4mnIHFCAL6KODWeh4dB6AQLe6xc
+	 PfTNxofgZFn89DvL3mZLIRwlAly3B2gydD1YejNSWbYD/KV0SDt1uvMcQRRLaMLwtQ
+	 +8sMFXWtkbVqMLsTdaUtt1DH0fVU1UR3YmCk3AgoIJgXuMaLo5iGBTMy8UPyUr2PgM
+	 UQl41Q9MTh7Vn6O08eEOe+v5UjEYvbunuUT6kNGuoHvq1G0jiDKO2C/E8yCaGgHwxB
+	 5Jzp+QsnsbT7ljExB8ER52wfMKfndh3GlRPPivYMCuvdBclDMeUI1o1BCCb5jrtvzR
+	 2wyZH1ZSnLBAg==
+From: Manivannan Sadhasivam <mani@kernel.org>
+To: Jingoo Han <jingoohan1@gmail.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
 	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Jonathan Chocron <jonnyc@amazon.com>,
+	Manivannan Sadhasivam <mani@kernel.org>
+Cc: linux-pci@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-samsung-soc@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
 	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 03/24] arm64: dts: qcom: Introduce Glymur base dtsi and CRD dts
-In-Reply-To: <20250925-v3_glymur_introduction-v1-3-24b601bbecc0@oss.qualcomm.com>
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
-	<20250925-v3_glymur_introduction-v1-3-24b601bbecc0@oss.qualcomm.com>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Subject: Re: [PATCH v10 0/4] PCI: dwc: Add ECAM support with iATU configuration
+Date: Thu, 25 Sep 2025 18:36:36 +0530
+Message-ID: <175880556056.15879.13833041080045099781.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250923-controller-dwc-ecam-v10-0-e84390ba75fa@kernel.org>
+References: <20250923-controller-dwc-ecam-v10-0-e84390ba75fa@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: pankaj.patil@oss.qualcomm.com, andersson@kernel.org, konradybcio@kernel.org, robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu, 25 Sep 2025 07:32:11 +0100,
-Pankaj Patil <pankaj.patil@oss.qualcomm.com> wrote:
+
+On Tue, 23 Sep 2025 16:56:50 +0530, Manivannan Sadhasivam wrote:
+> The current implementation requires iATU for every configuration
+> space access which increases latency & cpu utilization.
 > 
-> Introduce initial device tree support for Glymur - Qualcomm's
-> next-generation compute SoC and it's associated Compute Reference
-> Device (CRD) platform.
+> Designware databook 5.20a, section 3.10.10.3 says about CFG Shift Feature,
+> which shifts/maps the BDF (bits [31:16] of the third header DWORD, which
+> would be matched against the Base and Limit addresses) of the incoming
+> CfgRd0/CfgWr0 down to bits[27:12]of the translated address.
 > 
-> The dt describes CPUs, CPU map, GCC and RPMHCC clock controllers,
-> geni UART, interrupt controller, TLMM, reserved memory,
-> interconnects, SMMU, firmware scm, watchdog, apps rsc, RPMHPD,
-> SRAM, PSCI and pmu nodes.
-> 
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/Makefile       |    1 +
->  arch/arm64/boot/dts/qcom/glymur-crd.dts |   25 +
->  arch/arm64/boot/dts/qcom/glymur.dtsi    | 1320 +++++++++++++++++++++++++++++++
->  3 files changed, 1346 insertions(+)
->
+> [...]
 
-[...]
+Applied to pci/controller/qcom, thanks!
 
-> +		intc: interrupt-controller@17000000 {
-> +			compatible = "arm,gic-v3";
-> +			reg = <0x0 0x17000000 0x0 0x10000>,
-> +			      <0x0 0x17080000 0x0 0x480000>;
-> +
-> +			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			#interrupt-cells = <3>;
-> +			interrupt-controller;
-> +
-> +			#redistributor-regions = <1>;
-> +			redistributor-stride = <0x0 0x40000>;
+[1/4] PCI: dwc: Add support for ELBI resource mapping
+      commit: c96992a24beca0768c1c42ad25d6a466e17ec70f
+[2/4] PCI: dwc: Prepare the driver for enabling ECAM mechanism using iATU 'CFG Shift Feature'
+      commit: f6fd357f7afbeb34a633e5688a23b9d7eb49d558
+[3/4] PCI: qcom: Prepare for the DWC ECAM enablement
+      commit: 4660e50cf81800f82eeecf743ad1e3e97ab72190
+[4/4] PCI: dwc: Support ECAM mechanism by enabling iATU 'CFG Shift Feature'
+      commit: 0da48c5b2fa731b21bc523c82d927399a1e508b0
 
-Drop these two properties. I assume that your GIC implementation is
-compliant with the architecture, and doesn't need hand-holding.
-
-> +
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +
-> +			gic_its: gic-its@17040000 {
-> +				compatible = "arm,gic-v3-its";
-> +				reg = <0x0 0x17040000 0x0 0x40000>;
-> +
-> +				msi-controller;
-> +				#msi-cells = <1>;
-> +			};
-> +		};
-
-[...]
-
-> +	timer {
-> +		compatible = "arm,armv8-timer";
-> +		interrupts = <GIC_PPI 13 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 14 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 11 IRQ_TYPE_LEVEL_LOW>,
-> +			     <GIC_PPI 10 IRQ_TYPE_LEVEL_LOW>;
-
-You are missing at one interrupt here, as the CPUs have both secure
-security state and FEAT_VHE (hint: the EL2 virtual timer also has an
-interrupt, usually on PPI 12).
-
-	M.
-
+Best regards,
 -- 
-Without deviation from the norm, progress is not possible.
+Manivannan Sadhasivam <mani@kernel.org>
 
