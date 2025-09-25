@@ -1,162 +1,96 @@
-Return-Path: <linux-arm-msm+bounces-75128-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B82CB9FA8B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 15:49:58 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 76590B9FA64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 15:46:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 30B507A3000
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:48:16 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 309012E0188
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:46:14 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F31EA283FFC;
-	Thu, 25 Sep 2025 13:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58E6A1FDA9E;
+	Thu, 25 Sep 2025 13:46:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="mqR4TSd7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XiNW8bxX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DBF1D6DDD;
-	Thu, 25 Sep 2025 13:49:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3425B18BC3D
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:46:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758808190; cv=none; b=kIPOffvGQzn96HgzizjhxWuC06BMktIdIQ2Xe9dcCnXfYiJ5MKeApP78WPVz/iamFnxpRhs/2w+p3T0zpm7/vPF20b6a3uKBEbj7ir9uHI1MbwDCwmLwe0BoEKeQ8qRXY7+6Gg57pevuOqx1v0kPubDX0WHeuGgqmL3cEe1Gu/E=
+	t=1758807970; cv=none; b=SVDhzeIS7NsTNAURVaD0QX4ulqTx0iWUAhzbUqrEnCQ9S62bbvKer4ZiC6EtUDXLwVq0NU04wETvgrzfg7TX8fiNM5KORBNZ4KPY6T/p4Jp6DTHirFegFsTBIKJEEiqNS384QIBfpqveAwDYNyictUcOqsihnOGj5BkRyGQbEC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758808190; c=relaxed/simple;
-	bh=fQlu4S1Xpfp+OjsU8aoZiqJX/wsJnC+sYNgxE5Ve1Z0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rroMfLSuOUYdF4/hUZmYPJawH8YWyLl4ISxfNqfpPySpET90M3gzCw+D1zOBuPx2ymmKZ0fWGyWPFVenCyT/lMRe8wtCo89kEhMyAQo9yiSIACYkEOjeNj2HUQL/s3MujfjAKk+Ox313YxCa9js4HYjk1AB5F24v4l+0HnB5Mjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=mqR4TSd7; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id 6A2D2534011B;
-	Thu, 25 Sep 2025 15:41:34 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1758807694;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=uy252oP/86BgCE/4KMshl0UWHD/Fva5QoCb2a0Z/n04=;
-	b=mqR4TSd7t1ah2KuuyTGFMvdZc0EWgCvD1q4g7xBMnRwMCtK/jyQtPkVwwOJlJLzZKmimBF
-	2C6IHvJtbOTagHghIy3LanewyZBuT+qUpjLmdFPaYWcnrz9APaPjHpB9XA5YCPJ1gKCACE
-	pCXBMGMubJ9NZUCnT1vJ5ibYqd0yYZo=
-Message-ID: <7282a888-e550-4d75-838c-0fb242fefdf6@ixit.cz>
-Date: Thu, 25 Sep 2025 15:41:34 +0200
+	s=arc-20240116; t=1758807970; c=relaxed/simple;
+	bh=pHyKqP1Uh80It6oT0jRI0YIpxXPjZpzLcuVmlSJEK1c=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=mPepvXASBnWz1wcYv5g2p9zFWXk67o+qBJPzDXQ2bs5TPTFqCKBMajMC8o6BNgjHSWD0gT6M+Hw+Mq4scW1Gko2zrhZVnMXrs8RpCLWStqyf2kzP6TZaOUJsiXAenFeJLsq2O4a38SZd1YTQTY4sM2EWBekrs4Hp3LPwrZGeQhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XiNW8bxX; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31CEC116B1
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:46:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758807969;
+	bh=pHyKqP1Uh80It6oT0jRI0YIpxXPjZpzLcuVmlSJEK1c=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=XiNW8bxXTf+AbnOtfSmD5CrhXa1fuuLgoQd0HlrZ24VB2O6uQRFoXkX+FLOPpdQY6
+	 VUOCfpFFTdv8l5jZmx1qpxxDBKc83G+fDhrd1Xag215A4Kd3cvC0JfjNoASjCexKw6
+	 5JKkbodzP3Mvlve8ygvjXUogDiGcB7rudsD6Q6qXFpZOeVhxT745sj2bLO32LJifDg
+	 KV3TSZ4MVzBkk2OWUU8kmdW4sMEgCcd3M00EqcJy1vtvYU87SSFpq5TXT0XPSS35nF
+	 hJIl9FxZOIUqT0FGXeTZM+GMr0hR9IYRYsQfU89n9ghi+PGhP3YjU91nmZ4GV5J9uJ
+	 +4FspOZTZu8rw==
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b551b040930so668947a12.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 06:46:09 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCUjZ0QgDFNdE9poHbDHayZYp7rjVi2qGv1AGH20OcA3hScq/GuOC6To3qLobwTrhxywzT7K+pdLyO87tY1n@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzi7CLj024Lfca4cij/4+XNFvG7FAgh/4YkWq1UjVks18L44yFp
+	ABYgsKjJLsP5vGb9TgPWrQ/AQzC3Or5oTxPjHYSAteEBbp1RdA5iu9+GkUv7pjNumQ8s1b32jhG
+	7ptu6L35GJ2HVHc+JVkLDVq3+8EVGEdo=
+X-Google-Smtp-Source: AGHT+IGYiTJ1wnTGYsqQn62kGuq/Qk4m+FLl3QNtyI9gHwCMbuPRif0+n7p6QvUqoKMqu/CcGrrIjG0cpQ8IrhIQzAo=
+X-Received: by 2002:a17:902:d2cf:b0:24a:d213:9e74 with SMTP id
+ d9443c01a7336-27ed4a60608mr43986485ad.49.1758807969443; Thu, 25 Sep 2025
+ 06:46:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] Add OnePlus 6T display (Samsung S6E3FC2X01 DDIC with
- AMS641RW panel)
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Thierry Reding
- <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Casey Connolly <casey.connolly@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20250925-s6e3fc2x01-v1-0-9293016768f7@ixit.cz>
- <a078c6a0-5a54-4ad5-8e3a-c676783e68a3@oss.qualcomm.com>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <a078c6a0-5a54-4ad5-8e3a-c676783e68a3@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250925-v3_glymur_introduction-v2-0-8e1533a58d2d@oss.qualcomm.com>
+ <20250925-v3_glymur_introduction-v2-16-8e1533a58d2d@oss.qualcomm.com>
+In-Reply-To: <20250925-v3_glymur_introduction-v2-16-8e1533a58d2d@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Date: Thu, 25 Sep 2025 22:45:57 +0900
+X-Gmail-Original-Message-ID: <CAJKOXPd9KbrOcR+0+9C+8E7EGZox8CvhA+ohVJzqav3qOiSaKw@mail.gmail.com>
+X-Gm-Features: AS18NWBvQ2h2Q9lWRzUJAnfxzgiCdQUhDR0fS4kR1DkeIzXQ0g9dyjgD4jgxyEk
+Message-ID: <CAJKOXPd9KbrOcR+0+9C+8E7EGZox8CvhA+ohVJzqav3qOiSaKw@mail.gmail.com>
+Subject: Re: [PATCH v2 16/24] arm64: boot: dts: glymur-crd: Add Volume down/up
+ keys support
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 25/09/2025 11:37, Konrad Dybcio wrote:
-> On 9/25/25 11:12 AM, David Heidelberg via B4 Relay wrote:
->> This patchset enables display on the OnePlus 6T smartphone.
->>
->> Minor adjust to the device-tree of OnePlus 6 had to be done
->> to properly document reset GPIO used. Also same adjustments
->> had been done to the sofef00 panel driver (used by OnePlus 6).
->>
->> In the last step new DDIC driver is introduced together with AMS641RW
->> panel sequences.
-> 
-> I think you skipped the elephant in the room - some of these patches
-> break panel for the phone intermittently..
+On Thu, 25 Sept 2025 at 15:29, Pankaj Patil
+<pankaj.patil@oss.qualcomm.com> wrote:
+>
+> From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+>
+> Add Volume Down/Up keys for Glymur CRD.
+>
+> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/glymur-crd.dts | 30 ++++++++++++++++++++++++++++++
+>  1 file changed, 30 insertions(+)
 
-Thank you for the review Konrad. I plan to incorporate all your 
-suggested changes in the next revision.
 
-To clarify, while sofef00 has been introduced as supporting OnePlus 6T 
-too, but it never did (and the compatible was removed later).
+NAK
 
-All the changes CAN'T BREAK anything for OnePlus 6T display as it's not 
-supported yet by mainline.
-
-All the changes SHOULDN'T CHANGE anything for the OnePlus 6, as both 
-sides (device-tree and the driver) is changed at once to correct reset 
-polarity.
-
-David
-
-> 
-> Konrad
-
--- 
-David Heidelberg
-
+Keys are not a separate feature but integral part of the board. Your
+split of patches is artificial and fake. Please stop sending patches
+per one device node for a new bringing.
 
