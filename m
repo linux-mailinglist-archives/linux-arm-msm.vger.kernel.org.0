@@ -1,127 +1,161 @@
-Return-Path: <linux-arm-msm+bounces-75125-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75126-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id D11E2B9F98F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 15:35:20 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70C9FB9F9EF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 15:41:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C61524E2669
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:35:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 839D71C22A42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:41:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 67DB326D4EA;
-	Thu, 25 Sep 2025 13:35:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 94E7426E6FE;
+	Thu, 25 Sep 2025 13:41:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JslnrxGq"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eucOK8fH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EC926C3BD
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:35:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7EE271A94
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:41:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758807305; cv=none; b=hISbFCcG3Kd06b1mCzD9/ABHFzUqoWfXBl7+wbu+yTSAl7wH315tfma0SEx6Ek9etFthJ8CT0uG3C+HnB7BGPyMXXvIXZyZntO/zIaYXWMPFeVL+kBn2gmi7/127q5ozlqpFC1tE5VqNvnmeF5JbG6dp2L9+VyyBLRK9A/ai9sU=
+	t=1758807675; cv=none; b=V2TzR/2zBKJUFsIS4uTFgZFaMl64kJq8SAFFUPpMDWD+niYZQqk9bMio5hRM0KjcRi5jml/kc5P2b5h7T1/fHJMq1KS6dht7hj7mHGNcx7jFcSitQ44PUHWPV8zxclP1n83PxZBjURKaTuFU0IT8IEtvQhU++Zm1kD5LTixlXH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758807305; c=relaxed/simple;
-	bh=U0zBqrOVz2aVyIkOdhN/c5ZsuFUDGjUs9oZhG9G8cd8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eFd+umhzM655nv+vsyxDdIEf8rg1aaS7FuzuHbuFQAUF4Mp/5n8iCm9EGlrlqwYSioB/rIavXhLUt0w160m0Yke1sBLauYY1eAXPde7dx/RVb3xSXrkrmL/xe5PtPFf8uRm35knykAPNZOia+CanDEM+C3H7oqxPUfG8Ma6zvwA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JslnrxGq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58E9C4CEF0
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:35:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758807304;
-	bh=U0zBqrOVz2aVyIkOdhN/c5ZsuFUDGjUs9oZhG9G8cd8=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=JslnrxGqC5YDchzPfgAZdyZrZgtviyOLpf4A8RzMq84c78iYViknuF2beVq+xKQcl
-	 pt1l/eLOt6ThyA4pwBQXoVYEzzbibKihOg2E7wWv5bYvNICV0+RrwIipzKfDN4nYYB
-	 sK3FQISCI+IXTgXSSRkCLj2kdel+ayYwsSTu9XWndFYynTAPselJj4+eyObo6cy/SH
-	 ic+uKvU0LfEYoHyZsVSoqnqdzowbL5rW8eyv2iu3Wf6b9CuWtNMYqxiixyhz8SYR+K
-	 z0bX/YKVN11y5visySyyoc4v0VAeuqh5ASxbLlFgpBTt+KEpWWahNB5J5z7MBkf9oR
-	 VlIaw18Bas/9g==
-Received: by mail-pg1-f169.google.com with SMTP id 41be03b00d2f7-b55197907d1so751019a12.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 06:35:04 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXdQQHCJLBTT2r9wb53qEArz904RF/phhfDXabsm+oJUU9Kwg4FYBHDKhNxBfn/fVFvUg19JF8140AyZVI5@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUWKabI/1Y3KPEyxQSNQBp4bZ4VY/udo2ewEwku9LgH9zyyHFD
-	a4sT2WFSUqTGrdFhwjXNB7Y9/6TdoTnlVOlGyCsUCIqbxCWtr1hUXT8mP7WNHMHNdj5ok9pq2U4
-	ryQ43ehdd+flUhCIYFJ+j8aF/Xhe5AKQ=
-X-Google-Smtp-Source: AGHT+IF2gfRSMbhEJa8nvrh+JpQ+A2ctdyaVqt5YxJDoqNHuurr02R6K0ugrO5eiCQDnx8VVAz7RofYZkW98Xl+uAW4=
-X-Received: by 2002:a17:903:2c9:b0:259:5fdf:d79c with SMTP id
- d9443c01a7336-27ed4ad65e1mr32294745ad.51.1758807304473; Thu, 25 Sep 2025
- 06:35:04 -0700 (PDT)
+	s=arc-20240116; t=1758807675; c=relaxed/simple;
+	bh=k24TsHdSWeGcrDakZ5ZxZ4u26blxOVBlucfWSid3ZFA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=YGHhsDLDSB7EOpj/+1+UZvz+OkO/RBs+Id4sdS7f1OhlYXuEgRJbU+TbGUBiVSi9YDK0zXTjJUsOK9Z2OcLIRHxa4HGcSjOAA+5q+cUng9MOepsG6hQ2BWXqyxYFadE0qODrP8w83rAXM9PdCiUyohSypr8HZYh6T3/QaWXkd24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eucOK8fH; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P9JnZA025358
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:41:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	ZxuB5kT9QhvZV6VcXA7vRyRC6QPVlvbL5ixfpltHdps=; b=eucOK8fHI7HhgVa8
+	3u5MMOZiHNnfVdURqAECjRHKZ7ExeVIJWHEeuEgxep4LuXhlBlpEnBR/EzmvXHos
+	G+toHPzHRkAvSTEjqOR6LPGI7lyX9jRU+xkyzGAWPpjft6e/IrBrSAm0ITnqYaKq
+	LPatB8rXP17OlhaP2ZtlEMZOn8bOnNE5ge5Z5LAz489BTMA60jD55IayqazRGlYQ
+	pExZvl6BgHnu6QWVPnuvmj2S79PuMxVKuEWAm+xAKn/ROSbKzXsqLU7f0hFpCrJL
+	myLZ+lrmcge1zbiBij+sJh8YKadcHFkKoMs5HsIrCuNkSTK93Zv9dF4YJXwWUY3j
+	lpV/dQ==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499hyf0kgt-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:41:11 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-27c62320f16so12386515ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 06:41:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758807671; x=1759412471;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZxuB5kT9QhvZV6VcXA7vRyRC6QPVlvbL5ixfpltHdps=;
+        b=bSy6kVZVXGE0CLLGVdXLRPnn7U0E/TocKwfOJAEv4pwzp094wx4UtZMF0Ba4xpB6D8
+         NdRQBHKSpkrdovKjgmDgpCJrBh7XU1mxCVS/QdINdEw+cemfLVBCf72iSqRU64AUd/bD
+         NvysKsocxngtrIqP9zgz+cXau7Uks8+h6eOWDDeUMLFvCB5GfnN4i/8fLpLBSiRGI4AR
+         dL4jp61UqJ0Aup6Eq2hfQPYVLBdarxH1j0lb5vWhmD+uhBfP3vnUWWX3RV4CpHSkLfqz
+         hvEExI9iMJahx8coFEVQNh44PVxl7rXKuYeWjhUYfZ3f59hmE/4gZDOPnYJbf14cAKP8
+         22Lg==
+X-Forwarded-Encrypted: i=1; AJvYcCVlobXKQ9h169CH7z2/p+ANvyAfEFCbIQ/NZ/GorpcwpD/M9CMO+2IfAgxK13kPRnWEQXiSgGYfiL+M2hXU@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4TBKYf9AhrGMEtq2Cp8aXghquegOcLBn9G32fd5Sfb71F1jTP
+	hhuWXDSmBsoeYxNops7T+VxiHd3Iw6KORePn6jB/bubgPgmTsRoRE63eeEmTrG678/S9GswZRSH
+	ftxbiI3imKUaEPyCSN2tzn31246qVCS+1Z113iHZtkIZN3T+VQpBzW9xfC8S7SgW0lXW3
+X-Gm-Gg: ASbGncv1VMQuFOjO1MOjuD2ZBGePPXt/LZDyuVk4eJHWkOVD10MrRqBF+FrJoYqv8tj
+	Ads7AT4fg+X5KQkpuxVYbGrte9zT6dp/OMw2beCEbL7gu9q3CbYrxZ2JXc8Az05NzjnVZ77U04Z
+	/Tc9Vtlw/o+yJ16OZQlHIWRyPoFhWY0ZiYqXlr/YMz7x7nNMbtx6lQdn00fzw+DWEqp7q9nQ5/f
+	bCBA0Dr7Vqbh0JZ3MDbrFxG4q1D98a8GPAyD/mUpdH1HEgSLP/qsWySOMp5wxmChAeZTPiwi6AM
+	XC0j5wlMLumB+Oq62iQg4eI+NJ8WqnTwgV++8ZGEyQcktiDtoeXeErsummwMRmLT/103
+X-Received: by 2002:a17:903:8c8:b0:269:9446:8e45 with SMTP id d9443c01a7336-27ed4a7ebaemr37331075ad.34.1758807670477;
+        Thu, 25 Sep 2025 06:41:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGc0Iz3ZnWQ7KLTGI1sXvRmOPwr9wL6X2M5C7upUNaBrMM/aDz21PI8yG4UpXaXxAe3VMbrYg==
+X-Received: by 2002:a17:903:8c8:b0:269:9446:8e45 with SMTP id d9443c01a7336-27ed4a7ebaemr37330445ad.34.1758807669493;
+        Thu, 25 Sep 2025 06:41:09 -0700 (PDT)
+Received: from [192.168.29.198] ([49.37.133.0])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed66d3df7sm26066295ad.1.2025.09.25.06.41.05
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Sep 2025 06:41:09 -0700 (PDT)
+Message-ID: <9066c8b1-bf25-4ce1-a0ee-16e9ab44dcad@oss.qualcomm.com>
+Date: Thu, 25 Sep 2025 19:10:47 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-14-24b601bbecc0@oss.qualcomm.com>
- <CAJKOXPdQH2jXcEY6ZpkmixvUt26SqdzYgDAiJ3RHMG7xkPyi_A@mail.gmail.com> <lcbcjpoazpwbltedkiqlw4l3aomwvi3qsfwvmwghb6uf5wvnme@kh7qdpunfuwr>
-In-Reply-To: <lcbcjpoazpwbltedkiqlw4l3aomwvi3qsfwvmwghb6uf5wvnme@kh7qdpunfuwr>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Date: Thu, 25 Sep 2025 22:34:52 +0900
-X-Gmail-Original-Message-ID: <CAJKOXPcyhDdFW_u4YQLiHYj8gM7wYB-LOmB_PJs+5OOgn8WZFw@mail.gmail.com>
-X-Gm-Features: AS18NWC4qEyHuPYqOFoEoG1CnyL6J8LaE_ysvRuMlpyTnvkn7ftx1v5-lrNiYqU
-Message-ID: <CAJKOXPcyhDdFW_u4YQLiHYj8gM7wYB-LOmB_PJs+5OOgn8WZFw@mail.gmail.com>
-Subject: Re: [PATCH 14/24] arm64: dts: qcom: Update the pmh0110.dtsi for Glymur
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
-	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] clk: qcom: gcc-glymur: Update the halt check flags for
+ pipe clocks
+To: Taniya Das <taniya.das@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd
+ <sboyd@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+        Imran Shaik <quic_imrashai@quicinc.com>,
+        Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20250925-glymur_gcc_usb_fixes-v2-1-ee4619571efe@oss.qualcomm.com>
+Content-Language: en-US
+From: Imran Shaik <imran.shaik@oss.qualcomm.com>
+In-Reply-To: <20250925-glymur_gcc_usb_fixes-v2-1-ee4619571efe@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: szABSg1XG59xqyf5dOCB7WcH0yg5Fk0U
+X-Authority-Analysis: v=2.4 cv=YMOfyQGx c=1 sm=1 tr=0 ts=68d54677 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=5wqTxrHxgjUWVXd7k2kF3w==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
+ a=encx6hSPGTGxlSLovxUA:9 a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAwNCBTYWx0ZWRfX/aQAY3Oj7WYP
+ S0kCKCt8BizLxJcUW1fvTGSk7qTUNDqFOvtflzaLo4g3aOfBvGNX/9ZmvYVpiar90okwVJOoVhY
+ sD2s4DcInNxubO+LhxRGKYrAAX2qOugHSP1iOMlRdwwrFbtiokqpXu7iXXEwoAILaeKqst6sSLA
+ boWfaSQ7D+NXm2ipWbVLVoxSWvD0iTJAu60HGHvfP+o/fVFmXRImRNvz+EMC0YxEbr8nKUZ0cWt
+ boOOvSXE+6Dd0lu/9SPFfKe5yiMU53PH6oUt89LwI/KyDDJurW/Ptz4/Du7zjEdd88BMs4HH54t
+ BbAuJxuX4QwOHZYajMEA85t8M0epaJhT/dwZ+2IJPCY+Kam1c2L0KBXFe6GwC3w0FtC9nE7r4T3
+ E1zfD5Pz
+X-Proofpoint-ORIG-GUID: szABSg1XG59xqyf5dOCB7WcH0yg5Fk0U
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0
+ clxscore=1015 suspectscore=0 phishscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200004
 
-On Thu, 25 Sept 2025 at 22:14, Dmitry Baryshkov
-<dmitry.baryshkov@oss.qualcomm.com> wrote:
->
-> On Thu, Sep 25, 2025 at 05:08:54PM +0900, Krzysztof Kozlowski wrote:
-> > On Thu, 25 Sept 2025 at 15:34, Pankaj Patil
-> > <pankaj.patil@oss.qualcomm.com> wrote:
-> > >
-> > > From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> > >
-> > > Add multiple instance of PMH0110 DT node, one for each assigned
-> > > SID for this PMIC on the spmi_bus0 and spmi_bus1 on the Glymur
-> > > CRD.
-> > >
-> > > Take care to avoid compilation issue with the existing nodes by
-> > > gaurding each PMH0110 nodes with `#ifdef` for its corresponding
-> > > SID macro. So that only the nodes which have the their SID macro
-> > > defined are the only ones picked for compilation.
-> > >
-> > > Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> > > Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/pmh0110.dtsi | 66 ++++++++++++++++++++++++++++++++++-
-> > >  1 file changed, 65 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/pmh0110.dtsi b/arch/arm64/boot/dts/qcom/pmh0110.dtsi
-> > > index b99c33cba8860f1852231db33a127646c08c1e23..4a5c66e5c9fbc35cedb67601f4568844dc41fbea 100644
-> > > --- a/arch/arm64/boot/dts/qcom/pmh0110.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/pmh0110.dtsi
-> > > @@ -7,6 +7,8 @@
-> > >  #include <dt-bindings/spmi/spmi.h>
-> > >
-> > >  &spmi_bus0 {
-> > > +
-> > > +#ifdef PMH0110_D_E0_SID
-> >
-> > NAK
-> >
-> > I already explained on IRC in great details why.
->
-> A short summary or a link to a channel / date would be nice in order to
-> include other people into the discussion.
->
 
-Of course but:
-1. You were there so maybe you remember the arguments, and:
-2. I'm offline, using phone, not having laptop, replying during my
-personal time off just before merge window so any emergency time
-should be spent on important matters instead these two huge patch
-bombs adding such usage I already said: NO, don't do this.
+
+On 9/25/2025 3:49 PM, Taniya Das wrote:
+> The pipe clocks for PCIE and USB are externally sourced and they should
+> not be polled by the clock driver. Update the halt_check flags to 'SKIP'
+> to disable polling for these clocks.
+> 
+> This helps avoid the clock status stuck at 'off' warnings, which are
+> benign, since all consumers of the PHYs must initialize a given instance
+> before performing any operations.
+> 
+> Fixes: efe504300a17 ("clk: qcom: gcc: Add support for Global Clock Controller")
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
+> ---
+> Changes in v2:
+> - Update the commit text to add the SoC name "glymur" [Konrad]
+> - Update the commit subject to add more details [Konrad]
+> - Add RB [Konrad]
+> - Fix a typo [Markus Elfring]
+> - Link to v1: https://lore.kernel.org/r/20250924-glymur_gcc_usb_fixes-v1-1-a90568723e64@oss.qualcomm.com
+> ---
+>  drivers/clk/qcom/gcc-glymur.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+> Reviewed-by: Imran Shaik <imran.shaik@oss.qualcomm.com>
+
+Thanks,
+Imran
 
