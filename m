@@ -1,131 +1,141 @@
-Return-Path: <linux-arm-msm+bounces-75030-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75031-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E077B9E369
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 11:10:43 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82F26B9E378
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 11:12:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1F21E1BC30F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 09:11:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 34958166170
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 09:12:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F1EB527B335;
-	Thu, 25 Sep 2025 09:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EAA5A27B34C;
+	Thu, 25 Sep 2025 09:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ZNEVQhCi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dKbH5RJH"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A082877EE
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 09:10:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA26A2367BF;
+	Thu, 25 Sep 2025 09:12:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758791423; cv=none; b=Skf9pQLxAqlN87/bwa62bt+c6reYoFTW9Iu8Fd/C9tqUQYVVI1/UHWnB1z4CDf+tnNIqg5WL5jONaJACJae8SOIFknulan2lOwLuYoxl+rMv7ocqBcnRzmj4n8Zfe/q+oVeh8MgRx0dk99CgY7IeMgBy4INfdqNTw/z8SN3Bf/A=
+	t=1758791571; cv=none; b=qMbFvvOZwT80/WiWz1aDLIo99ZylFFZuXBueyotehzvcrZZFmnKgM1AmrA2Yvrhq9IMCbkOW3XPzJdRXiRSoyP8reKinI8zbSD2WKVi28h5JR2i78VVufk5p7WdwZjNh79NP2JC/GYZW+gnWf7gnN7gMSokv6WM5T28xsAAZD5A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758791423; c=relaxed/simple;
-	bh=L5XR6t5ZxwfG3rtP2YnGXIBz4GtqNch7l7akgqfMJNs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j3NO/1I3FcJiRb+rD+1xdF0FMMj9NfXA7qyj9l+ujd/teOyhKMVrHRMv2lCx1eC/eXDTdYtq/fcKKX3Yr9KKVx1UcIC8if/E2A3kRwFNzgoFQ6WUyLSBoowVrSeWflK7xdiVTKA8wPVnWUQK+/mcUHE5QdUbuw3thzhIpSyxzbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ZNEVQhCi; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3f2cf786abeso551785f8f.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:10:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758791420; x=1759396220; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nMuA4DWC6qNeuux3AJTay/iyO89ifrzsRhDuGmNfotc=;
-        b=ZNEVQhCiUaS4rNzMkUfSwGh75tyS/xDug9nFLpBRlRh600+XKL5d4QkFikSRs6y0fU
-         nsd1nKRh1f+SBofkmrSphSxpGnVwOMti8pinY0Ahkk/nM4JyJYrb0FqUHZdBe26np63z
-         TaLFo/XsNaCjyL8hl9dnsE+/BRYHO4jPvPifKWcwbqk7yHG27TkkwAhUjrRzImj94t/j
-         g9izz81008mC0rtN6Ip7xjNgSN3RvxxCzwA0FhZSx2BISl3R/eO8BVbxytjl8vHLVlPY
-         Fi+UB9mLUQlUugtLCa268g9hEC35EdWyuBYRDckiZPOmyu7gMYYNjwzZvRNvtcc0lSL6
-         3WLw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758791420; x=1759396220;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nMuA4DWC6qNeuux3AJTay/iyO89ifrzsRhDuGmNfotc=;
-        b=dGw51AY9DRuExnMaUlU7U5KkgfWvt5034rAokTJQa3MTjg9KVm7DhRLo5MqPr278bQ
-         xu811+GXL5ZuYKqWuXs53lLopTnaGenoyvELV6kiXcPOA/vy39jAW+PoJrLoSbzPxe19
-         T4wou4IOH/nPaCNzFXtFzcOeayrNwQn9SgEA7XiO4UFLinmCWQyWtiS2k+ATfu141N/+
-         Sj3C4N8MTpnZTY4oba8QwkdPN7M7ok9j+OUU1C+EgD65q485jwoMMVaLw8MwbyNMEP/O
-         91pzz8UYw2gmkunZXknYFlM6FBVaLHWEB8nroLxM+mvkoMfx5Y5XBVJIt5AjVHKbTMyQ
-         P0bw==
-X-Gm-Message-State: AOJu0YwrI3S6rXfgLD/zcejafnSGLg5WU0WygfpozzklylvKyAF4Qf4e
-	f+LkGRI33vibD7FdY50nkoaCKFkOKwX9Fw1r/zhsRBrNKrheWT8/71uJx+CLZ/ZkM4/xqCHRjFG
-	oqX59TFI=
-X-Gm-Gg: ASbGncvCTyNzBV6gNVeyj+NJ54YvxapItV3IgdXv46YD15YNaopBmyFCMDSrPPG95CG
-	W6d5EFoSrpLulxf/p2dpXvqZURth4OkKaN+Q4dBWOFzeR2qgBGh363KSwxot0aejAKYbfsdkEKg
-	Z3+9tuJiK0pz51cGmxix+/p8l70SMwo/lPm7blnQ2ltZiKwU8Lv/4OxsCayvikjoKR6/tCxuix9
-	9j1B2xRVS9j/QKprXwoMaQH7JP6I4K2pEKdobcfnQb+tdkxrbYjnPP211yEUHP35aVBYjseWfTk
-	8WiX3g+jSoghlOjJCTR474lhbSy/lRdSW0f5kym1LH+LqG9wMsb4JgetpFGh66qAi7PJspVRPwr
-	MXxWr2Q/NxukbL8t9sVBPWV5bYlN5XOHYw43Mr2ytMhTq2FgRBT7WvlWnPr3mx1eoADQtEZxSIk
-	a5du1doi5OhIWWRy2JdJkE
-X-Google-Smtp-Source: AGHT+IFDpMpHsFRgd6YSWfaUgP4h+TK2gackvhjt2ED62B1HXzzX5IdszOWCjQD2qcaPDSO7lAZ6/Q==
-X-Received: by 2002:a05:6000:2484:b0:3f1:2671:6d9e with SMTP id ffacd0b85a97d-40e497c346fmr2389638f8f.1.1758791420460;
-        Thu, 25 Sep 2025 02:10:20 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e33b9e3bdsm27566255e9.2.2025.09.25.02.10.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 02:10:19 -0700 (PDT)
-Message-ID: <d18c5196-dd8e-47d6-87bd-de0ac94fbf3b@linaro.org>
-Date: Thu, 25 Sep 2025 10:10:18 +0100
+	s=arc-20240116; t=1758791571; c=relaxed/simple;
+	bh=w2h021jMD9GsalBB3ADdOMlEjXOVX1XyaFvRU6+ecZI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=u/NTS0B3kCMNUjmIL7nlATn5kwNxkWdda6Gd6UaQPsspMbwRU5EI41SdZKBfSr8u9JIJHAptXjIh0dof1twqLfLeGB94mcSdmphed0suYssdNVTp+7HiJY1VvKdpJl/lG6L3ZNrI8BeJzVkAiQGSTYLMXd5gr/8L8XeQk0/Z84w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dKbH5RJH; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id 70E8CC4CEF0;
+	Thu, 25 Sep 2025 09:12:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758791571;
+	bh=w2h021jMD9GsalBB3ADdOMlEjXOVX1XyaFvRU6+ecZI=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=dKbH5RJHQHW1RgTdRXzYy3rquYIplWD4iF3X9cXALr3WQm5iqIKVFY4XPvzgkLnXb
+	 jlWpjPBxi99OdNziyT9e1mXm0t2kzr1tMqUD28mbc+ssW2JNrSUVAiupXLDIKcmvhv
+	 CYkaSb5ywMpua58n3SsQA3rpYSYzmgRf6ShVJbwmjZMzpUb0R6E9J7lDvm97NyXyXH
+	 v93s1owXyg0jQ+ynXCJfqLB9KPUBY64JoYR7+uzO1aOZJGa2KoVXOK52L4/WpX4NTr
+	 WO5ZOhNAPvs2PkTIDxYd8zZ3g4HQHfkCbht8EnVEWnn96syPnmKJaPy9oB3l8XfZ73
+	 vvipOAOnHs2MA==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 58942CAC5A7;
+	Thu, 25 Sep 2025 09:12:51 +0000 (UTC)
+From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
+Subject: [PATCH 0/8] Add OnePlus 6T display (Samsung S6E3FC2X01 DDIC with
+ AMS641RW panel)
+Date: Thu, 25 Sep 2025 11:12:46 +0200
+Message-Id: <20250925-s6e3fc2x01-v1-0-9293016768f7@ixit.cz>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/9] clk: qcom: camcc: Add support for camera clock
- controller for Kaanapali
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
- <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Neil Armstrong <neil.armstrong@linaro.org>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Jagadeesh Kona <quic_jkona@quicinc.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Taniya Das <taniya.das@oss.qualcomm.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org, aiqun.yu@oss.qualcomm.com,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com
-References: <20250924-knp-mmclk-v1-0-d7ea96b4784a@oss.qualcomm.com>
- <20250924-knp-mmclk-v1-7-d7ea96b4784a@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20250924-knp-mmclk-v1-7-d7ea96b4784a@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAI4H1WgC/x3MQQqAIBBA0avIrBN0xMiuEi3KxpqNhUII4t2Tl
+ m/xf4VMiSnDLCokejnzHTv0IMBfWzxJ8tENqNAqh0bmkUzwWJSWwVmr9gkxkIUePIkCl3+2rK1
+ 9d2mGnVwAAAA=
+X-Change-ID: 20250923-s6e3fc2x01-f9550b822fe5
+To: Neil Armstrong <neil.armstrong@linaro.org>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, 
+ Casey Connolly <casey.connolly@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+ phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1800; i=david@ixit.cz;
+ h=from:subject:message-id;
+ bh=w2h021jMD9GsalBB3ADdOMlEjXOVX1XyaFvRU6+ecZI=;
+ b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBo1QeRbo/2hmfLGDqLFdrUixqM5/mVi8/CFahBd
+ 9U//pQ1aSyJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaNUHkQAKCRBgAj/E00kg
+ cgz+EACLEFfyyaze7JqKF3k9hOiOSWTJoexB38nGRUvr0km2RFSrI7+TtZMbd7N5uanhHCerasM
+ HUV4yxMt1kMmT/1gn/+IoWLHuRCXc4EBef9dLSV7vBhso05eVS7qYHyg0NaZ6uGQyhlEbafuLHQ
+ nbmskpvjZnmUEcyGHTegWkgY1EK/erUfgJzZNo8yvLAvzKFDdhT7KvCdhfNRa9uOqQP2PM8zkQI
+ tuAQ4h2FzdmQNHeQoG0Ie6mi3G3YbnHexRP2/5MaEP+WSRRn5gcTcRgzTjLO022b4SzsAyK286T
+ OJv2vhYd+2FM3hNt8+iFriMvwH36GvCBEeHVj/F9lOI3A7vFa0Zb5W2T6J5nrrVmO9R4xQgiHMw
+ PfLZdPqnkxqPpDoDKrA7JM1vKS8Drxt3BAKMmkg/9W/PRyZMTFEaocSbO5Y4ERdJjHL6THVs1uO
+ VOJNlYKfBhnGWdDryD++mdcI58goV06Yrb0/yzcj+u7MRrwCp5ThR0BgD8o872HPhKygPjaeXDJ
+ mZMRr13bZvlc9g6rJ+5CTgaa1xUREI3cvlrOKrhZk2j+dhwg6qmB50+lK/IwlNtAAVNCCyxyAXR
+ s0e7WdQA3GHQ6XuZR4Sw+5epDNdyXML2kdW9e6DKkIWEPmfN+K6Azp4GFHpJqaxYgoiqmRj6h00
+ MTX3CYPWBuf1zug==
+X-Developer-Key: i=david@ixit.cz; a=openpgp;
+ fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
+X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
+X-Original-From: David Heidelberg <david@ixit.cz>
+Reply-To: david@ixit.cz
 
-On 25/09/2025 00:56, Jingyi Wang wrote:
-> +static u32 cam_cc_kaanapali_critical_cbcrs[] = {
-> +	0x21398, /* CAM_CC_DRV_AHB_CLK */
-> +	0x21390, /* CAM_CC_DRV_XO_CLK */
-> +	0x21364, /* CAM_CC_GDSC_CLK */
-> +	0x21368, /* CAM_CC_SLEEP_CLK */
-> +};
+This patchset enables display on the OnePlus 6T smartphone.
 
-How is this critical list decided ?
+Minor adjust to the device-tree of OnePlus 6 had to be done
+to properly document reset GPIO used. Also same adjustments
+had been done to the sofef00 panel driver (used by OnePlus 6).
 
-For example why is the AHB clock critical but the CAMNOC and AXI clocks 
-not critical ?
+In the last step new DDIC driver is introduced together with AMS641RW
+panel sequences.
 
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-bod
+Casey Connolly (1):
+      arm64: dts: qcom: sdm845-oneplus: Describe panel vci and poc supplies
+
+David Heidelberg (7):
+      dt-bindings: panel: Add Samsung S6E3FC2X01 DDIC with panel
+      dt-bindings: display: panel-simple-dsi: Remove Samsung S6E3FC2 compatible
+      arm64: dts: qcom: sdm845-oneplus-fajita: Reflect used panel in compatible
+      arm64: dts: qcom: sdm845-oneplus: Correct panel reset gpio polarity
+      arm64: dts: qcom: sdm845-oneplus: Document TE gpio
+      drm/panel: samsung-sofef00: Invert reset gpio polarity
+      drm/panel: Add Samsung S6E3FC2X01 DDIC with AMS641RW panel
+
+ .../bindings/display/panel/panel-simple-dsi.yaml   |   2 -
+ .../bindings/display/panel/samsung,s6e3fc2x01.yaml |  77 ++++
+ MAINTAINERS                                        |   6 +
+ .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi |  31 +-
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts |   2 +-
+ drivers/gpu/drm/panel/Kconfig                      |  13 +
+ drivers/gpu/drm/panel/Makefile                     |   1 +
+ drivers/gpu/drm/panel/panel-samsung-s6e3fc2x01.c   | 404 +++++++++++++++++++++
+ drivers/gpu/drm/panel/panel-samsung-sofef00.c      |  10 +-
+ 9 files changed, 536 insertions(+), 10 deletions(-)
+---
+base-commit: ce7f1a983b074f6cf8609068088ca3182c569ee4
+change-id: 20250923-s6e3fc2x01-f9550b822fe5
+
+Best regards,
+-- 
+David Heidelberg <david@ixit.cz>
+
+
 
