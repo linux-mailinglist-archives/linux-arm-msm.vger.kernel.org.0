@@ -1,159 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-75202-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75203-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D27B4BA187E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 23:28:20 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2DD20BA18A7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 23:31:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id B05E27B0F22
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 21:26:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D1BFA169500
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 21:31:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADDB1321284;
-	Thu, 25 Sep 2025 21:28:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F7D3286D70;
+	Thu, 25 Sep 2025 21:31:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="B8sZz5an"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fmmMuQl1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F35531DDA4
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 21:28:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B39CA6F;
+	Thu, 25 Sep 2025 21:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758835693; cv=none; b=Sp9iVDMIYOXYODgHRKixEfCwLA0+B8zjFjJY4MutkklQGz8765SU+u+VePeeqRHiYlpbNoOxKpXpC4B6FOsHZnAobWm8wRoaWenyeLwgoGEw2aNA7J4TPdC0+kgAHjI1wuuLZJJGW2khpuxR0O5L9KHX1fCYQg3i5iJb+AGZ5UA=
+	t=1758835912; cv=none; b=ZLPd7JMEzwtpwkt0oQy/YUUZbV0XD2hHTLg+RgjI93sIETrbyS2C5sdIsR8CItcTEfn+c8Bdk30oJV8cm/elN595IdD8OIdcKLYbb4Cwo+DxUh9DywxTriM5DdMOHugg/j/ywdfnXZfDHzchFS26P+D9pU+l5ecfstEYEum0D2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758835693; c=relaxed/simple;
-	bh=mGf87w9ZJVllgijc5JEtI9vZxiYgE1xsayOGWYC3GHc=;
+	s=arc-20240116; t=1758835912; c=relaxed/simple;
+	bh=2rdE884ixAkfLh4eDjI+jatwgporJLTY5lqZ7Hh2KGM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XrrPQU5OyDn+cQoA90iYRDVEH8yH9a6+FifM136TVHsQ9ROIu/79BxhciRydy+lG4qOaDS17ltwcbgQdWael0+K+SrY+G2KjLFUZUpepcJNWxM1x5yXIV7uD8c2o9NRh0ifdJ4VvnbSoBOga9xIitU+aw07WirI0LYxjjSghBUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=B8sZz5an; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIPYve011327
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 21:28:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=xVJa3hRBr3b8zN4SyC/HCbPD
-	O2Mv7vIE7SFYZLeD+YA=; b=B8sZz5anXZPlbzTc9hWAN039PM5eI/vPGLR9keVD
-	lp79P3PfevuRe+d5Kc1Zaz8mlSd11QLO931d5PcKqGVijyYlGPGB1nXoKRUwNdBF
-	r3mDHD73DhqAZQh3wDMrj68lJ+5USVUq75bsLx66tk2WZrp/3QORyHSOEcvLe9wf
-	y8omFZDmX2TZuDBkSmtRMFPvf83NQiUaucsmNvvZSrZGrMqRnyJixksO4+y1EztY
-	VnHysQoE83yxbJZqAyvpNyBOsYtcUUGmarQWl/TG5ay+HJFznS5hOU4wO+7GGm46
-	GcJtkNrDyZm9WdrSfEoFfeVC0G+0eeIKz5SsHpJie/v9/A==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db0q0ehq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 21:28:11 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4d91b91b6f8so33015631cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 14:28:11 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758835690; x=1759440490;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xVJa3hRBr3b8zN4SyC/HCbPDO2Mv7vIE7SFYZLeD+YA=;
-        b=VZNGMYgVJtOeASiw7JwE/DvU7q4s6IJC8mVUGucDAzWoGrUiJ3n028PQ9nNOioioIv
-         bv+yZbV4M6ogPeM0j5ciQ+f2FEB21YvOSv6hIxw9hY3c/Axd3bPEZN7JknJ8/Nq5pEIj
-         sV6ooMo4xa6xD7DWbxUKrwtr+6j/DYOSJj/YyE8jojRYhsQxpK/rmB8PpGFANwphAsg+
-         24RTf78NJ1frJsnpPcoNIYxw7+8AcIvcRC+lsQEF3XJJMK2URPlvqSWvuhlF0AlhtF22
-         QDKi623U4FMzcL/nhv+AOX0CHykS83gMnqMRtW49i8o8Qi1VfKeZFo9SVNc7VemGIble
-         25+g==
-X-Forwarded-Encrypted: i=1; AJvYcCUGBzk+B8WDJIVO2dpvsJsNufrM8154rriMe/wweHmooXQK8KaJOt5HgO3ZKU6ifPORh+pSGybiPG29RKpx@vger.kernel.org
-X-Gm-Message-State: AOJu0YxCqHx9OMK2yv+Q4HmJrH0k7+XOD3O3AmmmfzfsMuo30jb62qOO
-	JMtPOtmCVSFfTRmRH4dnDlB9hVLhl8eVmjvjvJKcLm2CP/0enODhAwVdY6fvZYieoPrMVyrkw98
-	tvk8hzalFGFIqefcuvZzx+UMunUjAQCFED94McgXPxHtgPIrmXt1LlKeKPFoTKfJf2rhx
-X-Gm-Gg: ASbGncuZ/+Uieje91UkbTc9ko9VuJJ1c0kqnw51vSAJPv0v8vmtsvThBYLDSER5nC0J
-	kj9SbEOlvaxROc1GYnktBKaaL8SHfpOAKSxH70ST3Wl4P5VW+1A2GXwFTz30rOLJjA9RFhLmKgl
-	5SvuXVjHF3O2M/tRdLC/7RrfCHqMI77UII51YNw3siR061GHeNZZTniOlENE25IZX9f++BEFzcg
-	WoZ67NUpEoRPJ4oWW/k/qJmqLQw+0evQM7zMFy49JMMXqRpGF8QW0mFyA4GgwAlF2LOkDsBY4zg
-	Sb+k2BRPHjxrOrlpIBvuco/ud108v/qr2ef+50b9o5zf7o53NtgD3yLuw8iQrsFG6h7kQEZCQ+H
-	Vxr+h8d12BJE0nSA2hJ3sQ4sFTJpYlQdCGiS0XVKrLZhySbO4hGMD
-X-Received: by 2002:a05:622a:4208:b0:4b6:2360:accd with SMTP id d75a77b69052e-4da4d125b3bmr70727591cf.79.1758835689953;
-        Thu, 25 Sep 2025 14:28:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERpLILMpHgYah/4YChT5n6vChPATcZxT+HTlD/SkOj7T7pjCCewNbSF+lhHTpWFPOyyIoKdQ==
-X-Received: by 2002:a05:622a:4208:b0:4b6:2360:accd with SMTP id d75a77b69052e-4da4d125b3bmr70727131cf.79.1758835689375;
-        Thu, 25 Sep 2025 14:28:09 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-58313dd66fesm1132195e87.54.2025.09.25.14.28.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 14:28:08 -0700 (PDT)
-Date: Fri, 26 Sep 2025 00:28:06 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, Taniya Das <quic_tdas@quicinc.com>,
-        Taniya Das <taniya.das@oss.qualcomm.com>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-Subject: Re: [PATCH 7/9] clk: qcom: clk-alpha-pll: Update the PLL support for
- cal_l
-Message-ID: <wbabc2pjwe2ir6pb2nd5s3hfaf6y7nd6baabjl3rdgawtsdxq3@ncedo6jio7rz>
-References: <20250924-knp-clk-v1-0-29b02b818782@oss.qualcomm.com>
- <20250924-knp-clk-v1-7-29b02b818782@oss.qualcomm.com>
+	 Content-Type:Content-Disposition:In-Reply-To; b=fYznGUFAgQsJZiHcJqSdfXBVJBDdBk8FhFA/Y4JCw5tpRC8id1wQJsn8vZOQyXhGl+v4pNiqT9aD8IHveitP3e4ArZgwGjS1OF1/wkinj51ue8oUJBu0OlLM917PEXtMjc7OhMXydjVGmbdEPbGkYcjyImFZn2dlebI5TcctGKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fmmMuQl1; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E092EC4CEF0;
+	Thu, 25 Sep 2025 21:31:51 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1758835912;
+	bh=2rdE884ixAkfLh4eDjI+jatwgporJLTY5lqZ7Hh2KGM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=fmmMuQl1nSZpZUZE2/hqygssvGmLUSYK1XgihiOlfrR+TGt6BIZ+9GtdeJ+Q+YgtH
+	 7+Hfq12TSUL3cg+6LK644mP5ANAp58L3qxCq/3DY6PaGsm4budf5beDbv2OmtbdgbW
+	 RaS6+Eu6z2JuwN0M+oHsTQrgcqm6nsB6C3TmEmkRjh1bO3qNoRsL+oWkCkCOHOlw3p
+	 UCmQVxXKwFhHBAFqaXCjs6H+esr/8kp5g22HeADv463ZZ0v7947G4rKZnhBE7ZyXF7
+	 ena2q25wzk40UNjY/L09f5e62klBzKJ5ZiMVtYuvDKSqoZE/UVparFNcAx8GhBarje
+	 JhyxIszQ6nQ3w==
+Date: Thu, 25 Sep 2025 16:31:51 -0500
+From: Rob Herring <robh@kernel.org>
+To: Bjorn Andersson <andersson@kernel.org>
+Cc: Krzysztof =?utf-8?Q?Koz=C5=82owski?= <k.kozlowski.k@gmail.com>,
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+	Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+Subject: Re: [PATCH 06/20] arm64: dts: qcom: kaanapali: Add USB support for
+ Kaanapali SoC
+Message-ID: <20250925213151.GA2455023-robh@kernel.org>
+References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
+ <20250924-knp-dts-v1-6-3fdbc4b9e1b1@oss.qualcomm.com>
+ <CAJKOXPcbJY4JEjfZLvOAXEWCTYFpe7En+Riis2t3K5fWJgNU5A@mail.gmail.com>
+ <3up4xqgd2ay3tex4ckzgews3ukyrdikcmgk7tbddggj3s5gt4d@foqcpnfptjk7>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250924-knp-clk-v1-7-29b02b818782@oss.qualcomm.com>
-X-Proofpoint-ORIG-GUID: IdYccaenuJ_MM0RKGwVkm7nuuKX1lz-M
-X-Proofpoint-GUID: IdYccaenuJ_MM0RKGwVkm7nuuKX1lz-M
-X-Authority-Analysis: v=2.4 cv=aZhsXBot c=1 sm=1 tr=0 ts=68d5b3eb cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=QDpnt0wtCZc4EWvjjt8A:9 a=CjuIK1q_8ugA:10
- a=a_PwQJl-kcHnX1M80qC6:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MSBTYWx0ZWRfX68IbozOrLy3I
- X9tBV7Ihus6FDY0QvQ3OlzW0Rn13O8EnBseg8/uzowa6vCl8eK1v6f5OJTxULq11RApgU4GpwEp
- y1d53b+FKBLxI0DHwyc0QmIb+L8+HzK0Gm2PQ5pfhtEEj7taEu2nPLBNSxFN4gMIMBOf9d5dXNx
- RuyxKYIVbjEIjBEorm1U1vLiBkNmkVzPv9V6EY/HtBldA4kBeTqNSrvUCbYf+5lZMLQraQPf6W/
- 47Bgh6kkQs42hchyg+CBI6FwjWvncdJ+FcxesvDnyOL8sm6TnneM8XyGcpAEve0BBqUKgqW58h8
- 9sXAQ+8aTXrnYqCSDzQVeyeRDclr36XwZ0rD49N2n5iy/tCsvXVfviB3nebR1PRLelTzCIPgOdD
- /0wKY/ELHkQTiS9iB0VsWNnF+N6ssg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-25_02,2025-09-25_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 adultscore=0
- clxscore=1015 impostorscore=0 bulkscore=0 lowpriorityscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250171
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3up4xqgd2ay3tex4ckzgews3ukyrdikcmgk7tbddggj3s5gt4d@foqcpnfptjk7>
 
-On Wed, Sep 24, 2025 at 03:58:59PM -0700, Jingyi Wang wrote:
-> From: Taniya Das <taniya.das@oss.qualcomm.com>
+On Thu, Sep 25, 2025 at 08:57:56AM -0500, Bjorn Andersson wrote:
+> On Thu, Sep 25, 2025 at 10:50:10AM +0900, Krzysztof Kozłowski wrote:
+> > On Thu, 25 Sept 2025 at 09:17, Jingyi Wang <jingyi.wang@oss.qualcomm.com> wrote:
+> > >
+> > > From: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+> > >
+> > > Add the base USB devicetree definitions for Kaanapali platform. The overall
+> > > chipset contains a single DWC3 USB3 controller (rev. 200a), SS QMP PHY
+> > > (rev. v8) and M31 eUSB2 PHY.
+> > >
+> > > Signed-off-by: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+> > > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/kaanapali.dtsi | 155 ++++++++++++++++++++++++++++++++
+> > >  1 file changed, 155 insertions(+)
+> > >
+> > 
+> > 
+> > Second try, without HTML:
+> > 
+> > I really don't understand why you created such huge patchset.
 > 
-> Recent QCOM PLLs require the CAL_L field to be programmed according to
-> specific hardware recommendations, rather than using the legacy default
-> value of 0x44. Hardcoding this value can lead to suboptimal or incorrect
-> behavior on newer platforms.
+> Because I looked at the logical changes that went into the big squash
+> that was initially planned, and requested that some of those was kept
+> intact - because they where independent logical changes.
 > 
-> To address this, introduce a `cal_l` field in the PLL configuration
-> structure, allowing CAL_L to be set explicitly based on platform
-> requirements. This improves flexibility and ensures correct PLL
-> initialization across different hardware variants.
+> > Year
+> > ago, two years ago, we were discussing it already and explained that's
+> > just inflating the patchset without reason.
+> > 
 > 
-> Signed-off-by: Taniya Das <taniya.das@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  drivers/clk/qcom/clk-alpha-pll.c | 6 +++++-
->  drivers/clk/qcom/clk-alpha-pll.h | 1 +
->  2 files changed, 6 insertions(+), 1 deletion(-)
+> We used to add things node by node and that was indeed not
+> comprehensible. Overall this adds features in large logical chunks, but
+> there are a few of the patches that could have been squashed.
 > 
+> > New Soc is one logical change. Maybe two. Not 18!
+> 
+> I can see your argument for one patch to introduce the soc. But two
+> doesn't make sense, because that incremental patch is going to be the
+> kitchen sink.
+> 
+> > 
+> > Not one patch per node or feature.
+> > 
+> 
+> Definitely agree that we don't want one patch for every tiny block!
+> 
+> > This hides big picture, makes difficult to review everything,
+> > difficult to test.
+> 
+> The big picture is already obscured due to the size of the content
+> added.
+> 
+> Comparing to previous targets, I see the baseline content in 2-3
+> patches, and the remainder of the series being things that usually has
+> been scattered in many more small changes in the following weeks or
+> months.
+> 
+> There's plenty of features in this series that are yet to be concluded
+> for SM8750.
+> 
+> > Your patch count for LWN stats doesn't matter to
+> > us.
+> 
+> I agree with this. That's why the QRD is 1 patch, and MTP is 4 (this I
+> think should be squashed to 2) - compared to 13 patches for across the
+> pair for SM8750 with less scope.
+> 
+> > 
+> > NAK and I'm really disappointed I have to repeat the same review .
+> 
+> I'm not sure what you're disappointed in, this initial series is larger
+> than any we've seen before. I really like the work Jingyi has done here,
+> aggregating the otherwise scattered patches into one series.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+The QCom folks can review all this first because I don't care to review 
+the 50+ binding (just bindings!) patches sent all at once right before 
+the merge window.
 
+One comment on commit messages though. Please explain how the h/w block 
+is or isn't compatible with some existing platforms. Many just state the 
+obvious "add a compatible" or such. I've yet to find what kaanapali is 
+in relation to any other QCom chip. It may be the next SoC for the smart 
+toaster market for all I know.
 
--- 
-With best wishes
-Dmitry
+Rob
 
