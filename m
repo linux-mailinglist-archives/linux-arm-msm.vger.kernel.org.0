@@ -1,81 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-75051-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D56CB9E918
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 12:08:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 277BEB9E910
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 12:08:06 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3D8C94E1111
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 10:08:10 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A95F04C3AB0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 10:07:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4A8882EAD18;
-	Thu, 25 Sep 2025 10:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C10902EAB63;
+	Thu, 25 Sep 2025 10:07:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="nD2f0lnn"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="glqlS/OL"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F96D2EA48D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 10:07:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1280285C89
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 10:07:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758794872; cv=none; b=VqUuNMm8ik0SetHEPFPl6YcKeOgL2yzVjXxdYHFV6GJy0YkatlxZ49j3XM0SrBSJqLs5pGgBMFPh/Ghibjbg70FZ/EAAOpAj8G+dwgZVoB5A4w55J2h5k1fb2K+Jihaj4n8YKD5PwojVu2+4b0VHhdtIztZxj1FsDHp5T3QB2i4=
+	t=1758794870; cv=none; b=JybGOK1LS1GULyyHeHZPI8x5LxrZ6uNqNko5EWv+39k0t19ghJfpCY12RLjVkvwzpJKyWABZj/P6kl3wl/OcFhstXLAnmLk2I7mOI40zc9Utlap2LJsMcyvJuSVtIDZuEIJicYI/xEkQXnG5iulnWXZN2V8PnBdov/rb5LmWh+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758794872; c=relaxed/simple;
-	bh=2wAPPbqLo2LqU/nTBFwRHUuMpcX/WMRKMRc0AgRIv18=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=H91r4sK9umV7Bg4mV8uyANirk24M3K1YKqrrKD497CE0MZ5g+lhyQCc5HXWC8oeECI+4Ft0ROjLha1v3pc2OFV9TeqbVeNoL8G38aYNtpWtUmCL4bCpbW0Z3qu0KpCA+KgBLaq/NbAi69Ma+PBrXMhXzHNk/zdq+m2tJR1xPYcg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=nD2f0lnn; arc=none smtp.client-ip=209.85.218.44
+	s=arc-20240116; t=1758794870; c=relaxed/simple;
+	bh=1QUK9jJoKqv/JFiexX45KtZUZbQgSKDFt0QiDPiytLQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=DseFgWvtQ22CpmDADnYdS918lIpo4iMmltwntzIzBcEasnXBBhq1TJCDUSyIRG33Rb0nIn6Os5DPXRA3PvoD+fd2SIe4HcMDERxcatBWvt98Im7QOuTiVTWxwIZeUUswVy6VcB7iP/KIwTShJ3/aIhNBsTCeduzmE22LrOsF+CI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=glqlS/OL; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fairphone.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-b33d785db6fso147862366b.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 03:07:49 -0700 (PDT)
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b0787fdb137so128910866b.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 03:07:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1758794868; x=1759399668; darn=vger.kernel.org;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RQA2xq7mI4lOuuo7UB6QFY4SFCKqLwIJHu6LK04sK3w=;
-        b=nD2f0lnncVnT4QZlW9KHYIBQyCCpLCF4x2U6jsXUfoNo23H62ShBrU7PhHzT5FCjyw
-         4bpYiB9zQSUXFS0+5d78bSWCgvfW0cKM/1RkEgb/kSrOtOcK4TxiSGy8mggQiHI4ykUm
-         KS/27UcYF5kYw2xDUX/9X+36i6M9ahOjEFDAm5Pr7zHxRS/qhCnEg0rpGfyczfD9lC1N
-         q/7xvtHJMDUZE30r2OWuoNuQLMt8dynXRvYf6UIDzaN7IijoBReIkjOryNQ8QHfKc1hs
-         /6xby/oe/evOL8uObx6MTC+Wk1Q5Si/MTyijB8pXoISS6Mhzlfhd047IIqZDHYnHqKOC
-         yEuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758794868; x=1759399668;
-        h=cc:to:content-transfer-encoding:mime-version:message-id:date
-         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=fairphone.com; s=fair; t=1758794867; x=1759399667; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=RQA2xq7mI4lOuuo7UB6QFY4SFCKqLwIJHu6LK04sK3w=;
-        b=HhItspHTDQMfQ8N/xwE5KNviuViH0LDD57JRIgfVu3x/tuoXuTO6+tJ6aOy8+0Qf4M
-         GvuigW90j3R3oRtSNDf/fXuJQaFKKPKPpqI1Jwf+6NcleQTPYqHUrNEaLr1IpENpLyZ9
-         z6b4iEgRq9MXLyBZ7z5EJmBaXINbczAx+xq3NtdV1N+BNnX5tI+w5yxvxTydIUx27jlC
-         R0J7WMEctoa3pqM9O75p5/smROsMeNxyMIJhP8KSsPLWy0qzNrKReVcgNvoB7OvoC5QL
-         n32OvJKjE9Y9qnA4AiJSiCt5/HbRAdK1nNCXakYSo6RWcOAngKDEjm1ecML1Y7I6MgOH
-         ewkA==
-X-Forwarded-Encrypted: i=1; AJvYcCXC3zCg+Vol7areBjql3nUtqWFMT8EkKroFa0ylMx8jIEqrxQENya+c6Q+g22/+9yMB2o4ZYizQlqr67RZU@vger.kernel.org
-X-Gm-Message-State: AOJu0YxgXB2TE0zOoFortWoyJJv0dNeqYrzWuJnQugQdsn3P3fmrIxd2
-	dXoyUdfkMyI/KR5EsW58j4BCYrlrlxikjW10iuRngbI53xk361oammksfdNuW9mIfsI=
-X-Gm-Gg: ASbGncskE+4mdjQn74dmSqRm3t4zP1A882wo+qbFWveCPHjcGynLwyNP5pbYZdAZnhj
-	EnCNR3r+VsI26ZB1PDk68tVWlHQdSdle4qg7FT6hzT35eiCX3aQon69/DvLHr6fH1wKuRFYFBFd
-	pKJSEaucpuqCBMXyzZHcQvxHPgA00gc1PuwannIidxhWkTZ2mrE12Qrzi28C94+4z6FprcR+qh4
-	ba8PZ5vNh+Iy0PmiyhMC0Zj4doC69c4H232Ahodf79AL18pza+vycM9aYkQw3k9Jg93iCR1gwTw
-	PNNC2iqJkw59Am00znUNycNecAzTjIJFON3msWKdkii+Jf3wMr1nVecQPlQYPNUHwn59xx5VSYP
-	bMJhJnydey+g7hzSgOzCywGr50wYH0Ibyc/7T4BxEllYgUTaCqFtEtxN/OhAHXDauzoNyP7uWK5
-	+LJkXi
-X-Google-Smtp-Source: AGHT+IE8TAQ0ieTHgs4m7gim+fRDgMGDmFFmvRIfockvNvymGGa0I6tPXCyGsiDJM+I3Aju2cVvIZg==
-X-Received: by 2002:a17:907:94c7:b0:b2d:804c:f5c with SMTP id a640c23a62f3a-b34b684a76bmr362320866b.4.1758794866008;
+        bh=MlraT9aep0ygh9OC4i2N/udBlNlRXDYuFWD4+3zrjGg=;
+        b=glqlS/OLGMkYgPlfvz9L29E4za7zNYDA8P9oFLOyN4O8FTR3+Zcob0z8fbJRWgpN/L
+         4rp/ycWnS1DPDdzbQ7OiHXYFIkZI5PJchm/nWfRmYpl541J4niJRqH07zWqHQPK+6Kb1
+         J9YxvxCx5jjj3AA9tcLRryEC3F88Fm7FMsSh29wTMD969EbYtxkRM81Z4OFP5+yv6ks9
+         P97CorLvv8FRv2nkWz0qdht74Bz6ptj3OtJ45ire4p1FKxVM/25NMxlFQ/6AhDk4cyo7
+         C0zSkEdZLT3d3RgfCEk17JhHnFoDTamADQsvtazEOF3sUCb8MmIa/QxfMwOyTmp4v7/0
+         LAwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758794867; x=1759399667;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=MlraT9aep0ygh9OC4i2N/udBlNlRXDYuFWD4+3zrjGg=;
+        b=Jqcvp8DrPA1zinQobRlAb9EMD7pQxEsOCh1cG8lJDKHj0EvSNNUvvbSktfePkwQJYy
+         uh8Ido7T9B7X0fOZQZQ0Cw5/00Mt0jtYx+/uCzTtBlqngAkXWPbkCGBlcQG/hlW6Cee1
+         DKGi1jeRX1O5utoLv/OwIUzR+KY0eHRQMpBCZKoXXSUT/5IdCJBEVR+NIPu814FYGn1O
+         /OjxHgdC1jRDSPDnjgbyXUb7/yqHErzZ3uSfIFLdz7aVz0d4XNQYK1jA9jF2Vztee2Ru
+         LQOp9OqNiMsDQ/MxpYMEgqHxoR0+seDcQltOfyVEMZ8HwF0LvKhBk2dLP7iTrCzQxLqu
+         RzVA==
+X-Forwarded-Encrypted: i=1; AJvYcCX/W10fOnV/jDEvsaiBVwYdlpLFopipAsqnBFmeUc3cUQ7Mx9i0NhymuWtYmo7ZhzzUycUPxr3JUY5RJ2PG@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQZ5xCeVwygEcfdcjHcAa4lb/jtafIS/6zwS/IOTmHWppekXMj
+	RnFxtaGHYvHGXmCkwIVNRcuyPtuBDreYp8M45HhymiMyjNUOGnfH+NfVxX1ppTnkZ2LNUOEJPCX
+	gHxkQSYEm8w==
+X-Gm-Gg: ASbGncvceFWiYdUat0uPGoEK/Erq1lat5Kbdm/s2YUyR3Z47TG/SLCycY/BUz59aVLi
+	KCCcgmkBznyniyPnSaGwDQnVyA4gYLfkPWHrouNlZ35MNwqldEJSpYFBwv6xCUSwDOa810lHpQx
+	tbvcX7brdotAnQCvCjE5l9JvHqw4D9VPcoI5Aof+rHXxpIi7CSH81jLvrhYt0RAcH9b0r152J6Y
+	dgQqxamg1KThhdIIlq3EAh40YFSOHS/UcDy6yONNPfC+ur5cYFg4uU33Icm/kXovTO6jqBUu7sH
+	xSZr8+KIXCoUiwA7bzzXvb5LB1fz2VLo6qdiLpp8Gioq3XaGBvLjornewMot6Aod1niZ+FxZk1u
+	uRmsSca5jiPYxb5OjBhc3MEwjnKDL1HTxgDtt9YsIru9+lu4OALlS0UUdqDtCmJlgQtl8WPm5wK
+	/Z4Djl
+X-Google-Smtp-Source: AGHT+IF6yachSnDBfrcZ3V0TzrsfeZbsh50wHUGTubUCMItVqZFVHiYHFhthgCJw93KVQb8DLdZCow==
+X-Received: by 2002:a17:907:d0a:b0:afd:d94b:830d with SMTP id a640c23a62f3a-b34bfa5c2ddmr346388166b.62.1758794866636;
         Thu, 25 Sep 2025 03:07:46 -0700 (PDT)
 Received: from [172.16.220.225] (144-178-202-139.static.ef-service.nl. [144.178.202.139])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b35446f7746sm134270766b.59.2025.09.25.03.07.45
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b35446f7746sm134270766b.59.2025.09.25.03.07.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 25 Sep 2025 03:07:45 -0700 (PDT)
+        Thu, 25 Sep 2025 03:07:46 -0700 (PDT)
 From: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-Subject: [PATCH RESEND v3 0/3] Add support for Awinic AW86927 haptic driver
-Date: Thu, 25 Sep 2025 12:07:27 +0200
-Message-Id: <20250925-aw86927-v3-0-1fc6265b42de@fairphone.com>
+Date: Thu, 25 Sep 2025 12:07:28 +0200
+Subject: [PATCH RESEND v3 1/3] dt-bindings: input: Add Awinic AW86927
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -84,6 +86,9 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250925-aw86927-v3-1-1fc6265b42de@fairphone.com>
+References: <20250925-aw86927-v3-0-1fc6265b42de@fairphone.com>
+In-Reply-To: <20250925-aw86927-v3-0-1fc6265b42de@fairphone.com>
 To: Dmitry Torokhov <dmitry.torokhov@gmail.com>, 
  Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
  Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
@@ -92,60 +97,81 @@ To: Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 Cc: linux-input@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
  Griffin Kroah-Hartman <griffin.kroah@fairphone.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1758794865; l=1819;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1758794865; l=1746;
  i=griffin.kroah@fairphone.com; s=20250804; h=from:subject:message-id;
- bh=2wAPPbqLo2LqU/nTBFwRHUuMpcX/WMRKMRc0AgRIv18=;
- b=K6q9xHDFqVzGDg0/K3TIC4M42C44EAjwZ3LnaQSldYEZrPR+LSp9uqb03ogPaOSd/mx0AmbMf
- 4OybTK6Nk29BQYXsj4zEvBALFeNtIKQfZxmoX+kXzUcHlaZ331S+tPO
+ bh=1QUK9jJoKqv/JFiexX45KtZUZbQgSKDFt0QiDPiytLQ=;
+ b=fsqcucISYV12YVSllE7SDA4gLAbgrvocKzurN7EjjzUKfL99HMpSbvtKf6IalaWBzxCDjwImf
+ OHcWM3YxSn6Dr/itl+UN+LBAjCCjzWaWDdmOfrThQTxT/q+oH5dMAZZ
 X-Developer-Key: i=griffin.kroah@fairphone.com; a=ed25519;
  pk=drSBvqKFiR+xucmLWONHSq/wGrW+YvcVtBXFYnYzn8U=
 
-Add devicetree bindings and a driver for the AW86927 haptic driver, and
-add it to the devicetree for the Fairphone 5 smartphone.
+Add bindings for the Awinic AW86927 haptic chip which can be found in
+smartphones.
 
-This driver does not enable all capabilities of the AW86927, features
-such as f0 detection, rtp mode, and cont mode are not included.
-
-Note: This is my first driver I have ever worked on so if there is
-anything I can do to improve it please let me know!
-
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
 ---
-Changes in v3:
-- Removed obsolete FIXME comments
-- Adjusted Error handling to fit best practice
-- Changed formatting due to feedback
-- Removed obsolete terminology from patch subjects.
-- Properly credited reviewers
-- Link to v2: https://lore.kernel.org/r/20250811-aw86927-v2-0-64be8f3da560@fairphone.com
+ .../devicetree/bindings/input/awinic,aw86927.yaml  | 48 ++++++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-Changes in v2:
-- Changed title and fixed license of devicetree binding
-- Fixed typo where the 'm' in 'ms' was excluded
-- Changed error handling return values in driver probe function
-- Link to v1: https://lore.kernel.org/r/20250806-aw86927-v1-0-23d8a6d0f2b2@fairphone.com
+diff --git a/Documentation/devicetree/bindings/input/awinic,aw86927.yaml b/Documentation/devicetree/bindings/input/awinic,aw86927.yaml
+new file mode 100644
+index 0000000000000000000000000000000000000000..b7252916bd727486c1a98913d4ec3ef12422e4bd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/input/awinic,aw86927.yaml
+@@ -0,0 +1,48 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/input/awinic,aw86927.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Awinic AW86927 LRA Haptic IC
++
++maintainers:
++  - Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
++
++properties:
++  compatible:
++    const: awinic,aw86927
++
++  reg:
++    maxItems: 1
++
++  reset-gpios:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - reset-gpios
++  - interrupts
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/gpio/gpio.h>
++    #include <dt-bindings/interrupt-controller/irq.h>
++
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        vibrator@5a {
++            compatible = "awinic,aw86927";
++            reg = <0x5a>;
++            interrupts-extended = <&tlmm 101 IRQ_TYPE_EDGE_FALLING>;
++            reset-gpios = <&tlmm 100 GPIO_ACTIVE_LOW>;
++        };
++    };
 
----
-Griffin Kroah-Hartman (3):
-      dt-bindings: input: Add Awinic AW86927
-      Input: aw86927 - add driver for Awinic AW86927
-      arm64: dts: qcom: qcm6490-fairphone-fp5: Add vibrator support
-
- .../devicetree/bindings/input/awinic,aw86927.yaml  |  48 ++
- arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts |  18 +-
- drivers/input/misc/Kconfig                         |  11 +
- drivers/input/misc/Makefile                        |   1 +
- drivers/input/misc/aw86927.c                       | 854 +++++++++++++++++++++
- 5 files changed, 931 insertions(+), 1 deletion(-)
----
-base-commit: 3624e9a34b36d64a7037946eda28ae9599363a3b
-change-id: 20250804-aw86927-9dddc32fcaec
-
-Best regards,
 -- 
-Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+2.43.0
 
 
