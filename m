@@ -1,56 +1,72 @@
-Return-Path: <linux-arm-msm+bounces-75163-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75164-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D9ECBA0CF8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 19:22:30 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92C75BA0D32
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 19:25:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 226EB3A7465
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 17:22:29 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4BEFB2A8401
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 17:25:24 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7369730C343;
-	Thu, 25 Sep 2025 17:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E62FB30CD92;
+	Thu, 25 Sep 2025 17:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rRixk6y0"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lkwYG/vU"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A441E0DEA;
-	Thu, 25 Sep 2025 17:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7196217704;
+	Thu, 25 Sep 2025 17:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758820945; cv=none; b=Wgg5litQl99W8Mk5J/HTQ/0P75Y/HV5txPjTrZntexkKz1/agtYHkhY5q9OUQqK58TEc3T/buHpX/dXEvFrsqMjNhSAVK9zR40BvHSzgn2q01h0aFALt1S7s6/V0a1giVZkWv3uTFmaxLtE+uU8ak8efqMcMf9+Pk73W18pgu74=
+	t=1758821119; cv=none; b=OabjhWRgoZu1+X+hKH/9Ya7XyIMDK2HSMT5bXew5SS/3xvoUQI3MCD1vR77Yyb9fAp3U+sDXNlnWxQMLBx6OZNk9CHjPJJCYzzXsVk9FJhVrCwhZKQw3l9+yNZiqhmvonoEyoy5izGbG7hUvCDd35i9PIsNRgOiz57xFLNVFJqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758820945; c=relaxed/simple;
-	bh=dDJFQDaVQ5uaXLI9MnAMiuwznAAVvCXjH088JRdvUzQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=teSB+AXZ8QnETSm0UQvl8NjPJ0hX51qk8jF/3TGiMWsN+QTmNN7OzcrH6wPCRgcSn9RsJN8+29hVX/uanPAHiWGBjkLtgQASAV2DtrrLIXcbh3yTxpgEIzcrUuTZ0PVVzKcARpaIQeOsdx+BJYznZrV1GMIrFEYjLZpFDG/DkP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rRixk6y0; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A2EC4CEF0;
-	Thu, 25 Sep 2025 17:22:23 +0000 (UTC)
+	s=arc-20240116; t=1758821119; c=relaxed/simple;
+	bh=vdDtnd7eralUvO1XlLeDfYnMfW2wY9yiVB9StQbyH5g=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=cSHLXtB6pTdZGGuvJ4/zqsd2M5ne+IC5KzDnLmTNnF4SYuUs0x0PFy3VYEhA4TJf56ObSGuLEFpCRZvVW3uixcM4velkYapmy2narCNeqNVzl5joC3agYVD4e/Amlc5oSfEzGEWwYdvbPUPKpWkkHc1x1Utmtm6ZDqQpTPkSPgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lkwYG/vU; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16DF0C4CEF0;
+	Thu, 25 Sep 2025 17:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758820944;
-	bh=dDJFQDaVQ5uaXLI9MnAMiuwznAAVvCXjH088JRdvUzQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=rRixk6y09iHKd12jgHzvxRA3YXmjQ4mr2qlni9atr0inoAFjOOip9kJEE6lwIF7WX
-	 Mifij3AIG3ZjLtGMNqhucvqt4gStu8DWOZvLJ0slwnN8QJJkZ/Mj6+KY49vLrgwXJl
-	 aZP7SGwLlfo9/xw+mo/7VASUFqsRn2MVcO2B4Et0g7W45Xv5XZXL8LzzG0vWduSeKu
-	 nPSDDcPaCRUGpfWil4CGoRLxPDUIhTWSYk22Y1laROu9mMIM5bL8dGDZtmo6EwRD60
-	 LoLY6jf7jWR5ko1y17cKCv8Tlpt9hgYFRNgubjYy69msOMgyGzAxWBb+QyPxNSdJg4
-	 qYwNXHInW77Lw==
-Date: Thu, 25 Sep 2025 12:22:22 -0500
-From: Bjorn Andersson <andersson@kernel.org>
-To: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-Cc: robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org, 
-	jingyi.wang@oss.qualcomm.com, mathieu.poirier@linaro.org, linux-kernel@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: remoteproc: qcom,pas: Document SoCCP PAS
- for Glymur
-Message-ID: <ydfiugeifs5c6v7dzms5tlkkmhf26q42pav2ugfuxjytugr5nc@ppxoiize27ug>
-References: <20250925002034.856692-1-sibi.sankar@oss.qualcomm.com>
+	s=k20201202; t=1758821119;
+	bh=vdDtnd7eralUvO1XlLeDfYnMfW2wY9yiVB9StQbyH5g=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=lkwYG/vUo/EzJ1jKlWOOEn0aUxEoQ862XOvuqFQ1HWIWXVCw8SLuwWFk4Fx7INazg
+	 AYxo/tvw14FhUtCBX+5CzFGq5H8eG0qu7nk+QpdwPBzV6YlVt/Fivwrs25d2uisYZA
+	 LXv4LQr6Q7yfS3zg3wG8Eu/JsXLyuQurV9HquIahNtTZ0Wm+vCI0BUTRXZasvWNvOj
+	 GaSOYG1/rqSFThGrnD2AqDnGj78ARhBTvhJ6DX84WQ0L2+NubSUymF2znFkLIY+SbF
+	 M7zqNIZqk4GuJ/HEedGgXWBInI8ICSRT0nk5HRIXSOvRG/epW6AglVRqX/fQk7cB6i
+	 8kMkZJC0QZuaQ==
+Date: Thu, 25 Sep 2025 12:25:17 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	chaitanya chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, quic_vbadigan@quicnic.com,
+	amitk@kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com,
+	linux-arm-kernel@lists.infradead.org,
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v6 5/9] PCI: dwc: Implement .start_link(), .stop_link()
+ hooks
+Message-ID: <20250925172517.GA2169496@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -59,62 +75,67 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250925002034.856692-1-sibi.sankar@oss.qualcomm.com>
+In-Reply-To: <yofmk5uyykyv4jxzem622dtuyzknk7ipd5xlkzdrfl5v7tgojy@5aarg5wj6bar>
 
-On Thu, Sep 25, 2025 at 05:50:34AM +0530, Sibi Sankar wrote:
-> Document compatible for Qualcomm Glymur SoC SoCCP (SoC Control Processor)
-> PAS which is fully compatible with Kaanapali.
+On Thu, Sep 25, 2025 at 09:49:16PM +0530, Manivannan Sadhasivam wrote:
+> On Thu, Sep 25, 2025 at 09:54:16AM -0500, Bjorn Helgaas wrote:
+> > On Thu, Aug 28, 2025 at 05:39:02PM +0530, Krishna Chaitanya Chundru wrote:
+> > > Implement stop_link() and  start_link() function op for dwc drivers.
+> > > 
+> > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > > ---
+> > >  drivers/pci/controller/dwc/pcie-designware-host.c | 18 ++++++++++++++++++
+> > >  1 file changed, 18 insertions(+)
+> > > 
+> > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > index 952f8594b501254d2b2de5d5e056e16d2aa8d4b7..bcdc4a0e4b4747f2d62e1b67bc1aeda16e35acdd 100644
+> > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > @@ -722,10 +722,28 @@ void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
+> > >  }
+> > >  EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
+> > >  
+> > > +static int dw_pcie_op_start_link(struct pci_bus *bus)
+> > > +{
+> > > +	struct dw_pcie_rp *pp = bus->sysdata;
+> > > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> > > +
+> > > +	return dw_pcie_host_start_link(pci);
+> > 
+> > This takes a pci_bus *, which could be any PCI bus, but this only
+> > works for root buses because it affects the link from a Root Port.
+> > 
+> > I know the TC9563 is directly below the Root Port in the current
+> > topology, but it seems like the ability to configure a Switch with
+> > I2C or similar is potentially of general interest, even if the
+> > switch is deeper in the hierarchy.
+> > 
+> > Is there a generic way to inhibit link training, e.g., with the
+> > Link Disable bit in the Link Control register?  If so, this could
+> > potentially be done in a way that would work for any vendor and
+> > for any Downstream Port, including Root Ports and Switch
+> > Downstream Ports.
 > 
-> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
-> ---
-> 
-> Dependencies:
-> [1] Add initial remoteproc support for Kaanapali SoC
-> https://lore.kernel.org/linux-arm-msm/20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com/T/#t
+> FWIW, the link should not be stopped for a single device, since it
+> could affect other devices in the bus. Imagine if this switch is
+> connected to one of the downstream port of another switch. Then
+> stopping and starting the link will affect other devices connected
+> to the upstream switch as well.
 
-Please don't send out patches that depend on other patches sent out the
-same day. This just assumes that the maintainer will keep track of
-dependencies and figure out when a future version of that dependency
-meets the needs of this version.
+Link Disable would affect all devices downstream of the bridge where
+it is set, same as dw_pcie_op_stop_link().
 
-Work with Jingyi to handle dependencies on your side.
+> This driver is doing it right now just because, there is no other
+> way to control the switch state machine. Ideally, we would want the
+> PERST# to be in asserted stage to keep the device from starting the
+> state machine, then program the registers over I2C and deassert
+> PERST#. This will work across all of the host controller drivers (if
+> they support pwrctrl framework).
 
-> 
-> This patch depends on patch 4/5 of ^^ series
-> 
-> [2] Add support for remoteproc early attach
-> https://lore.kernel.org/linux-arm-msm/20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com/T/#t
+I don't think there's a way to implement .start_link() and
+.stop_link() for ACPI unless it's by using Link Disable, which is why
+I asked about this.  If Link Disable *does* work, it would be a very
+generic way to do this because it's part of the PCIe base spec.
 
-This is the same link as above and what you call "early attach" that
-series calls "late attach".
-
-Thanks,
 Bjorn
-
->  .../bindings/remoteproc/qcom,kaanapali-soccp-pas.yaml    | 9 +++++++--
->  1 file changed, 7 insertions(+), 2 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,kaanapali-soccp-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,kaanapali-soccp-pas.yaml
-> index 79f678f5f7d9..8089e0869ed2 100644
-> --- a/Documentation/devicetree/bindings/remoteproc/qcom,kaanapali-soccp-pas.yaml
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,kaanapali-soccp-pas.yaml
-> @@ -17,8 +17,13 @@ description:
->  
->  properties:
->    compatible:
-> -    enum:
-> -      - qcom,kaanapali-soccp-pas
-> +    oneOf:
-> +      - items:
-> +          - enum:
-> +              - qcom,glymur-soccp-pas
-> +          - const: qcom,kaanapali-soccp-pas
-> +      - enum:
-> +          - qcom,kaanapali-soccp-pas
->  
->    reg:
->      maxItems: 1
-> -- 
-> 2.34.1
-> 
 
