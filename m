@@ -1,96 +1,146 @@
-Return-Path: <linux-arm-msm+bounces-75127-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75129-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76590B9FA64
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 15:46:14 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 284EFB9FD3F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 16:08:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 309012E0188
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:46:14 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A0D051C267BB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 14:05:03 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 58E6A1FDA9E;
-	Thu, 25 Sep 2025 13:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BE249286885;
+	Thu, 25 Sep 2025 13:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XiNW8bxX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O8GIzLqd"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3425B18BC3D
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DAD7286429;
+	Thu, 25 Sep 2025 13:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758807970; cv=none; b=SVDhzeIS7NsTNAURVaD0QX4ulqTx0iWUAhzbUqrEnCQ9S62bbvKer4ZiC6EtUDXLwVq0NU04wETvgrzfg7TX8fiNM5KORBNZ4KPY6T/p4Jp6DTHirFegFsTBIKJEEiqNS384QIBfpqveAwDYNyictUcOqsihnOGj5BkRyGQbEC4=
+	t=1758808679; cv=none; b=hSRZ0fmecX8bZDi0dHBrUSWbbY9U6l285UTbFoL15Kj5X9WVS743UQmYsHIYRIFo+X96NAvTpy2UGauj/viIwK/L5cXnqro9B6tML5hTGSThe+yxMvOFtCcZbbKTY9gEcRXCn3MGjmNAPZ/+s8AHbSydJedeMX4QFOMys0cEwlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758807970; c=relaxed/simple;
-	bh=pHyKqP1Uh80It6oT0jRI0YIpxXPjZpzLcuVmlSJEK1c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mPepvXASBnWz1wcYv5g2p9zFWXk67o+qBJPzDXQ2bs5TPTFqCKBMajMC8o6BNgjHSWD0gT6M+Hw+Mq4scW1Gko2zrhZVnMXrs8RpCLWStqyf2kzP6TZaOUJsiXAenFeJLsq2O4a38SZd1YTQTY4sM2EWBekrs4Hp3LPwrZGeQhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XiNW8bxX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E31CEC116B1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 13:46:09 +0000 (UTC)
+	s=arc-20240116; t=1758808679; c=relaxed/simple;
+	bh=ul5hTKXU0p0dHakS2dh4PrhYg1610/K+8jal1vsHoHM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CzzB0wUXyVbuOO8b0yEXQ5RbVWklPeB0qL7ZaSvVsdVZ/H4mKB1HhkEOVsA0ebQDvoEZC4Cut6gbgbGI3+x4W5wt/DXPzcDm4aPv3W7zNSa1h/AWekYj2as/YdSryox4xA+Lw2P6RMbRIjxBScvJKewM+Rthe+xd44lEelMpyfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O8GIzLqd; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F4EC4CEF0;
+	Thu, 25 Sep 2025 13:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758807969;
-	bh=pHyKqP1Uh80It6oT0jRI0YIpxXPjZpzLcuVmlSJEK1c=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=XiNW8bxXTf+AbnOtfSmD5CrhXa1fuuLgoQd0HlrZ24VB2O6uQRFoXkX+FLOPpdQY6
-	 VUOCfpFFTdv8l5jZmx1qpxxDBKc83G+fDhrd1Xag215A4Kd3cvC0JfjNoASjCexKw6
-	 5JKkbodzP3Mvlve8ygvjXUogDiGcB7rudsD6Q6qXFpZOeVhxT745sj2bLO32LJifDg
-	 KV3TSZ4MVzBkk2OWUU8kmdW4sMEgCcd3M00EqcJy1vtvYU87SSFpq5TXT0XPSS35nF
-	 hJIl9FxZOIUqT0FGXeTZM+GMr0hR9IYRYsQfU89n9ghi+PGhP3YjU91nmZ4GV5J9uJ
-	 +4FspOZTZu8rw==
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b551b040930so668947a12.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 06:46:09 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCUjZ0QgDFNdE9poHbDHayZYp7rjVi2qGv1AGH20OcA3hScq/GuOC6To3qLobwTrhxywzT7K+pdLyO87tY1n@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzi7CLj024Lfca4cij/4+XNFvG7FAgh/4YkWq1UjVks18L44yFp
-	ABYgsKjJLsP5vGb9TgPWrQ/AQzC3Or5oTxPjHYSAteEBbp1RdA5iu9+GkUv7pjNumQ8s1b32jhG
-	7ptu6L35GJ2HVHc+JVkLDVq3+8EVGEdo=
-X-Google-Smtp-Source: AGHT+IGYiTJ1wnTGYsqQn62kGuq/Qk4m+FLl3QNtyI9gHwCMbuPRif0+n7p6QvUqoKMqu/CcGrrIjG0cpQ8IrhIQzAo=
-X-Received: by 2002:a17:902:d2cf:b0:24a:d213:9e74 with SMTP id
- d9443c01a7336-27ed4a60608mr43986485ad.49.1758807969443; Thu, 25 Sep 2025
- 06:46:09 -0700 (PDT)
+	s=k20201202; t=1758808679;
+	bh=ul5hTKXU0p0dHakS2dh4PrhYg1610/K+8jal1vsHoHM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=O8GIzLqd5+u5IYxNOzM58b8/lJETDBPoK9EvxGzr0vwVZJS7BhGf77i3LtjGIuG/h
+	 mZE6H9d0Kw0GpcdmArxMbUxZpBI9ku9xJGX+g51khr62j+v9Ri/QznsT6+ixfbIhX3
+	 QRSCxvgm4vVO+dbVc9rPB/+g1Qp3LjZBeAWp/wIUGpN6qeXLd2KeWbwwIrHqpmtbTe
+	 rkcfCm4GJGR0/EeE6ig+LFU34c2s0gnmrsn1vzo9rHSMxU275yqNGfmrB9IsZe/r9+
+	 aQdjtjQS/3FV1CDDnTXFWeGh3KbtzbEwlZCKrGaS/U1lT+RXPcsyCH4UE8arQ9xTth
+	 p1bQcKJO+weiA==
+Date: Thu, 25 Sep 2025 08:57:56 -0500
+From: Bjorn Andersson <andersson@kernel.org>
+To: Krzysztof =?utf-8?Q?Koz=C5=82owski?= <k.kozlowski.k@gmail.com>
+Cc: Jingyi Wang <jingyi.wang@oss.qualcomm.com>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, 
+	yijie.yang@oss.qualcomm.com, Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+Subject: Re: [PATCH 06/20] arm64: dts: qcom: kaanapali: Add USB support for
+ Kaanapali SoC
+Message-ID: <3up4xqgd2ay3tex4ckzgews3ukyrdikcmgk7tbddggj3s5gt4d@foqcpnfptjk7>
+References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
+ <20250924-knp-dts-v1-6-3fdbc4b9e1b1@oss.qualcomm.com>
+ <CAJKOXPcbJY4JEjfZLvOAXEWCTYFpe7En+Riis2t3K5fWJgNU5A@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250925-v3_glymur_introduction-v2-0-8e1533a58d2d@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v2-16-8e1533a58d2d@oss.qualcomm.com>
-In-Reply-To: <20250925-v3_glymur_introduction-v2-16-8e1533a58d2d@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Date: Thu, 25 Sep 2025 22:45:57 +0900
-X-Gmail-Original-Message-ID: <CAJKOXPd9KbrOcR+0+9C+8E7EGZox8CvhA+ohVJzqav3qOiSaKw@mail.gmail.com>
-X-Gm-Features: AS18NWBvQ2h2Q9lWRzUJAnfxzgiCdQUhDR0fS4kR1DkeIzXQ0g9dyjgD4jgxyEk
-Message-ID: <CAJKOXPd9KbrOcR+0+9C+8E7EGZox8CvhA+ohVJzqav3qOiSaKw@mail.gmail.com>
-Subject: Re: [PATCH v2 16/24] arm64: boot: dts: glymur-crd: Add Volume down/up
- keys support
-To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJKOXPcbJY4JEjfZLvOAXEWCTYFpe7En+Riis2t3K5fWJgNU5A@mail.gmail.com>
 
-On Thu, 25 Sept 2025 at 15:29, Pankaj Patil
-<pankaj.patil@oss.qualcomm.com> wrote:
->
-> From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
->
-> Add Volume Down/Up keys for Glymur CRD.
->
-> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/glymur-crd.dts | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
+On Thu, Sep 25, 2025 at 10:50:10AM +0900, Krzysztof Kozłowski wrote:
+> On Thu, 25 Sept 2025 at 09:17, Jingyi Wang <jingyi.wang@oss.qualcomm.com> wrote:
+> >
+> > From: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+> >
+> > Add the base USB devicetree definitions for Kaanapali platform. The overall
+> > chipset contains a single DWC3 USB3 controller (rev. 200a), SS QMP PHY
+> > (rev. v8) and M31 eUSB2 PHY.
+> >
+> > Signed-off-by: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
+> > Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/kaanapali.dtsi | 155 ++++++++++++++++++++++++++++++++
+> >  1 file changed, 155 insertions(+)
+> >
+> 
+> 
+> Second try, without HTML:
+> 
+> I really don't understand why you created such huge patchset.
 
+Because I looked at the logical changes that went into the big squash
+that was initially planned, and requested that some of those was kept
+intact - because they where independent logical changes.
 
-NAK
+> Year
+> ago, two years ago, we were discussing it already and explained that's
+> just inflating the patchset without reason.
+> 
 
-Keys are not a separate feature but integral part of the board. Your
-split of patches is artificial and fake. Please stop sending patches
-per one device node for a new bringing.
+We used to add things node by node and that was indeed not
+comprehensible. Overall this adds features in large logical chunks, but
+there are a few of the patches that could have been squashed.
+
+> New Soc is one logical change. Maybe two. Not 18!
+
+I can see your argument for one patch to introduce the soc. But two
+doesn't make sense, because that incremental patch is going to be the
+kitchen sink.
+
+> 
+> Not one patch per node or feature.
+> 
+
+Definitely agree that we don't want one patch for every tiny block!
+
+> This hides big picture, makes difficult to review everything,
+> difficult to test.
+
+The big picture is already obscured due to the size of the content
+added.
+
+Comparing to previous targets, I see the baseline content in 2-3
+patches, and the remainder of the series being things that usually has
+been scattered in many more small changes in the following weeks or
+months.
+
+There's plenty of features in this series that are yet to be concluded
+for SM8750.
+
+> Your patch count for LWN stats doesn't matter to
+> us.
+
+I agree with this. That's why the QRD is 1 patch, and MTP is 4 (this I
+think should be squashed to 2) - compared to 13 patches for across the
+pair for SM8750 with less scope.
+
+> 
+> NAK and I'm really disappointed I have to repeat the same review .
+
+I'm not sure what you're disappointed in, this initial series is larger
+than any we've seen before. I really like the work Jingyi has done here,
+aggregating the otherwise scattered patches into one series.
+
+Regards,
+Bjorn
 
