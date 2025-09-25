@@ -1,440 +1,166 @@
-Return-Path: <linux-arm-msm+bounces-75221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75222-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC57BBA1E5F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 00:59:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D1CABBA1E8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 01:03:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A6A673A7051
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 22:59:32 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 8CE663BCE31
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 23:03:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 283192EC0B5;
-	Thu, 25 Sep 2025 22:59:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 02C8E2EC0BC;
+	Thu, 25 Sep 2025 23:03:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="XfUsdbFd"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="aGbwZ7eQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D56902E8E08
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 22:59:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2182EB5BA
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 23:03:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758841166; cv=none; b=GdDWrDW5YQAcXd281CBPgse1aikNw7TRxHGW/O0pLxKElO98HfnW8kC48+rc4QdvU9nnWjUckkbzSL9KEYFCOe4MK8nTBR7TVq5JoYDTjYrahuv7EHCPtjFXXlsJJiwe/9XGTFPOmfrso9+xiSWSEuTVZm/dHTo0rW5DASE5NDw=
+	t=1758841408; cv=none; b=jE3fh5ZmoIHxmxvlkMV69VuAE3kR5vMKLfQxA1C1AMdTzJYXnZmrg6EnHwXgBDd9ulZbGCcEiFhDN1eh9xkLSBlftziil90pAnY8nY16x4+ROq4sY9hB7mPBneVjSbmV1vTEhWbr1X5sHrg0hkSveAC+hCRp0j/SZ95OVMdHYeo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758841166; c=relaxed/simple;
-	bh=asi7yKAzDY6ff4Uv+LdakjEb8LaywDZ3LnaOM0bWb/E=;
+	s=arc-20240116; t=1758841408; c=relaxed/simple;
+	bh=Re6vJcgbqIa0a2Z8s/dyJr+80qdfjB5ADuATqHo7/iY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QZyyjPpQPOv++2WjYZXBgLGSXlSA/ITH8fQdEOGTFwuG9+nAd5at/i9SLAB4hKbT0GmGx/h+zlUK9rWqBW2QuW2HeRCXeNKAQMePq60ZbOGSDVN1WrsMcZDjdJVWP3fuGMhHlF9P/zqMyc9Gvypor1eh9weN4MvRtPZlUQ6KqMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=XfUsdbFd; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-46e2e6a708fso8670375e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 15:59:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1758841161; x=1759445961; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3aVnp4v9l300Sl3SJvhuDDJcKqZmlgdynJIN/iiCQdc=;
-        b=XfUsdbFdWH9RChoVAMC1QfKdfNgYOr13NJY45L943cBSVMgs0DlG6w2/NMSD5Jd0ZW
-         bJstkbTHfVvFXnukqqGbeSAYQbjN6g585KbOxyl3VTtx/mGJoEvjtVqkOre6qHYXhOLg
-         D55x93dqyntb2hp/pj+0bEf8exFiH42mzjSDMpsSFeBd0dywhidNAP8zZ54xC9IS6Vuu
-         hYTNH7XWTtJYLTr2uJQtlslGzmMgai2JYw5zrJg4+o1ZVA4b5pE0vUKr4xM812oSJO+i
-         6AZ1GqJw1z1KfYlEASA6bcmtdGcWFCzhp2ETz1iDFrXjn4MzQe+wpBXeQfd7hL8FtVcU
-         glzQ==
+	 In-Reply-To:Content-Type; b=o1KW/6wjirDWzhyYhY9ir6z/Npwp9aUu9DIy+/t2yQgRCdktpguov2joqIB5ooTr4lpWmWGZmWd9PZ8qmfgxSJTG9fF3ev4HK8h1JXqjw5x2iQ/7f04srT9e+iTUDY5KzOXg3n5AnWbYPjUY0j7tofHrPVCEtnvbPtV9x8d8NAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=aGbwZ7eQ; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIQL5C022790
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 23:03:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WfzKhTLo4L9EzNBCoQA/Ic/EtRob2BTZ1wUdjds434Q=; b=aGbwZ7eQaktzZUWg
+	TtevFKgN97y9vQBzP88J7XVt/wMNzOmew8z97fNrK1c5Kh2V3DhUBDjDi1g2VtPR
+	8S1/M8Mz4j/Aubuz5cnHf7znpl2VPnxpIto7IyLMvnz8L+zZKHFm3Bf552x1nkme
+	QE5/wnQACNH4COg6qdHBk1bv+A2TT7IilVu+WTNsIxRaoJiatdxhwx+iRP/ynafO
+	XY3VlPlhJNPTTILXWRujMJOaTM9uiv7PoSzfa/69EeO8IxIazJwE+bIxOj9jvcWE
+	10mhHmmmvp47afkRDWXwUtV7QjOQNxbQXd0/4P6XN+0bE+hciNoUtr7n1ovtHVt/
+	EVSN3g==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db0qrmyg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 23:03:26 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2697410e7f9so33909675ad.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 16:03:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758841161; x=1759445961;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1758841406; x=1759446206;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3aVnp4v9l300Sl3SJvhuDDJcKqZmlgdynJIN/iiCQdc=;
-        b=tuwrBz0GYa00ZOH9tsy/3BOE6dBxVTd4qGL41E6NEnYz+DqV1xA80jZComZbnHBC1O
-         oyF+JMt28dVW4Mcx/PtcDI8IP170HCGMV1x9DsjgMcqbCsT3sBh30XsHgEhGjGP2YODK
-         4v7Ynrv3V+qnYzn1sqcBVAhyjws4UcZvB1nxx4wWD8w4KyQNMagcw/ojJyBelVKW+Yqf
-         4tPGzk2T9TYrHPcpzVZ+mS0Sqd/1hU5bYvtfjMst+3mJwDXM2GtNV/lhm0ntmjr/2N/4
-         InRg6y3ZMNjAAldC6qaBkwyvbmouEucM7vPbuSCaEG1jevIrVxS42wleAl7uv0PEXyOs
-         riMw==
-X-Forwarded-Encrypted: i=1; AJvYcCX8evli2b0bUxGhs3LdWHCs89Y7VdruW/3cbKwbisClDqpYf2O7gpXWF9lr/hx3G3/T2/v4SR61UJU37dHg@vger.kernel.org
-X-Gm-Message-State: AOJu0YwK0nVi1wauAHWkMch8Ao0GLM8Zi/LNC7gLrQxXmlhqQVm2tcOe
-	vUNAAxTEuEde0nBFvKJKIAB3HchGIf+c7z/hawbk3iLJEOI1zHyndKX1X+escoyW1Ts=
-X-Gm-Gg: ASbGncu3afm0IIi6a+t/2ObXN46nqgn9w77fcL2mwvY5RKzvh7wXtgKXRO17mCkLmq/
-	7JfmSfV1EnjPxVOvMvNvQyv4vEUWpQsL/FxXIBeroTMZROIPN/+gR8jSymHLS1cefZDXIjox2d+
-	Dy2PluVSzxqPD4l8UTZCXYay6AMeVHEQ33sHHnTGJU0KeYMKlqDAcDU8WIVe+nCZ06kTTRThkTc
-	8OR69vqGsh7Bom01S0QC5ifwhaeQCHmxxr5qS+diHvKtX3IRaTbH906Sggr45mv/jDV1d6N9XT2
-	mNwgvSGn9/lCJWffDM2bgom+dEZmu4Oloo2E8zTQhFZeI2kImt56D0ipGw96OwdEjSq0YJZIiKu
-	lsk+bJEd93ZplE2iSm2hVoKEMW/TKDJhAzhc3kLxWdPSGOTcOMcuirLxLp0z95A29jjqJqm/3Tc
-	oezO1UL+5TFJ5j3yVSCM8c
-X-Google-Smtp-Source: AGHT+IEcfHL7a+VIAxKJLwI4AYY7pQlZ380DaSoOPqadhI1oc2vGeQ1NqBd7gxGA9iuaf8EecmKdDQ==
-X-Received: by 2002:a05:600c:1c24:b0:46e:3709:d88a with SMTP id 5b1f17b1804b1-46e3709dcd4mr41331335e9.33.1758841161084;
-        Thu, 25 Sep 2025 15:59:21 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e354e07f2sm20654605e9.9.2025.09.25.15.59.19
+        bh=WfzKhTLo4L9EzNBCoQA/Ic/EtRob2BTZ1wUdjds434Q=;
+        b=ReouZ+5IbubGlzyAv9AOswT7Vymz5eSPaVMPajN2/WOczMbaZiUjIEUciy/QLWxmtX
+         vil9XORqB9HG8+FDd64RmFGR38MqLozeol6rzWEkAKHLVrudkUo1KlhmVEQtuq5tHXgA
+         K75ppeSQlDyTtXlFPRTMkIa63XIJofSFMlMwpggZGnUHQGOvLVgrprmGR0dNZX0sDZIw
+         07cVgsYU7biRWa938eCajOJImDHKm6eXKQROOp7gcGnISe3EmwMiBcTNd16ZA4Z3uOyX
+         BCNkopl6CmOa/HrDjG4EVD4dd8SJ9ZVnVL1TzeopOLPfuoDDrZo91sMR//x6C2ntqH3F
+         0YXQ==
+X-Gm-Message-State: AOJu0Yzafnhi0ovF44cs/OWcfJvUojKagoA0g7M4uR9Mij0tilRIGvZw
+	+cX4j6yRao1FpMVmPVHTKQSd8ktPIXJc4VnvOLYwSVvptzRqFHu2PtTuHvKH4PiS6boVsqclC7r
+	jQgMhcBhpfyYc4XHCaz/v8sM5kbyuKjTe2+KUZeie0Hi+zjoLVqqMtVR03GCt7FT+1CVC
+X-Gm-Gg: ASbGncu2NlLaPirZ3beTvuwghbl1ciHYNfyAIoalVbauo6X9CmsT2i8SuOF+m5pVkg2
+	yoBQ8s6J29uWgHnqoZHZv+6Au7XbpSdpAsTtnWCbO68OXneUxXytsKfmUzibVdn4VbTJCjYeAeV
+	96K+02SW7W9l5A3IDSOVzGUKNnv6AZMmhvsDOnLs51N0TAX2OSriuH6+hfmQTZAtaGdduAPBzwE
+	NjTYvMPtaKmVmFcPA1dvFaWWGLKRX7hkHzoWwlE82SU2jmBYaQZ/ct4h1TrDL+rikaiwd+a3eUl
+	Gzz6Qn2Y2m8RoCHZ2vTHPBd6dtjW424FdY3GDYc2nyzRbU2ejG6QAsOMAtdSBiLeWUAez17ixpP
+	MUMRn5lw=
+X-Received: by 2002:a17:903:2ac7:b0:24b:270e:56c7 with SMTP id d9443c01a7336-27ed49c771emr61707245ad.7.1758841405499;
+        Thu, 25 Sep 2025 16:03:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGHOJqmjzO+AnKfT1eW43G4SzpCox+5vXEEMV2sxZr+rbaIyUa/gbfX30AzcLSCvAvNAzb4yA==
+X-Received: by 2002:a17:903:2ac7:b0:24b:270e:56c7 with SMTP id d9443c01a7336-27ed49c771emr61706895ad.7.1758841405047;
+        Thu, 25 Sep 2025 16:03:25 -0700 (PDT)
+Received: from [10.73.53.199] (pat_11.qualcomm.com. [192.35.156.11])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed6ad1d45sm35260175ad.141.2025.09.25.16.03.23
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 15:59:20 -0700 (PDT)
-Message-ID: <d0a0ecbb-7bd6-4dfa-8fd2-dce3db317862@linaro.org>
-Date: Thu, 25 Sep 2025 23:59:19 +0100
+        Thu, 25 Sep 2025 16:03:24 -0700 (PDT)
+Message-ID: <297ee4ab-73f3-60d5-8e16-8830135603f1@oss.qualcomm.com>
+Date: Thu, 25 Sep 2025 16:03:22 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] media: qcom: camss: vfe: Add support for VFE 1080
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Loic Poulain <loic.poulain@oss.qualcomm.com>, Robert Foss
- <rfoss@kernel.org>, Andi Shyti <andi.shyti@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Todor Tomov <todor.too@gmail.com>,
- Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
- Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc: linux-i2c@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-media@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com, Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-References: <20250924-knp-cam-v1-0-b72d6deea054@oss.qualcomm.com>
- <i-fHBAndz36bG6iGCIcendT_guG_FLPagipModQ-UVJ1XzRD-p8_9mMEuFMSFTziZ4zepZdXLtMTglOEqyEdew==@protonmail.internalid>
- <20250924-knp-cam-v1-6-b72d6deea054@oss.qualcomm.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.15.1
+Subject: Re: [PATCH v3 07/10] phy: qualcomm: qmp-combo: Update QMP PHY with
+ Glymur settings
 Content-Language: en-US
-In-Reply-To: <20250924-knp-cam-v1-6-b72d6deea054@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, krzk+dt@kernel.org,
+        conor+dt@kernel.org, dmitry.baryshkov@oss.qualcomm.com,
+        kishon@kernel.org, vkoul@kernel.org, gregkh@linuxfoundation.org,
+        robh@kernel.org
+Cc: linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20250925022850.4133013-1-wesley.cheng@oss.qualcomm.com>
+ <20250925022850.4133013-8-wesley.cheng@oss.qualcomm.com>
+ <bc866f21-9b41-43dc-b450-59a25d547b88@oss.qualcomm.com>
+From: Wesley Cheng <wesley.cheng@oss.qualcomm.com>
+In-Reply-To: <bc866f21-9b41-43dc-b450-59a25d547b88@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: y4Ho3MxB4F_zL1mRixyVDjh-PalN-TjM
+X-Proofpoint-ORIG-GUID: y4Ho3MxB4F_zL1mRixyVDjh-PalN-TjM
+X-Authority-Analysis: v=2.4 cv=api/yCZV c=1 sm=1 tr=0 ts=68d5ca3e cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=ZdW6uxA9NKXbfdqeeS2OGA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=R8zOBIxM2Q8kPqU31PkA:9
+ a=QEXdDO2ut3YA:10 a=GvdueXVYPmCkWapjIL-Q:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MSBTYWx0ZWRfXzkWOZFdp3rTh
+ rQrlH/DX/B+BqVJNdGfCeipvUBM/J6jh5TwNME3S6XdmBAhOR3v4mC8J2Jytgp+XJqBD4p6eV2a
+ w3Asws9pTQE8A25K3za30gr1r1d553UgzLJADSykKmRt1jAhPPwNxZZoX8WljmS6Gza2JmMa12L
+ C/IbeTYf/Meh9GS606CjQSN2mw1cC2ekvAvVmfCxn5JvAX1ycZono6/pd7r9jfWRYDN2Pvb2ACh
+ 7PAjClXfXuVYyVlNxmpIUzRYZe8zQD194mRu+jwoym+ZJKRNVeER+8/L9ee5pT550zscegNyhjy
+ LLu5TS9Zu9pf2tos1bOikQ5bDiJxyZTDY8YeIHxPl1+aONNB/nne/ZOJL9ElRHDMKjleo6X2F70
+ bkiPQ4Zbv396E5Lqc0QpbQxqek9KJw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_02,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250171
 
-On 25/09/2025 01:02, Jingyi Wang wrote:
-> From: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
+
+
+On 9/25/2025 3:43 AM, Konrad Dybcio wrote:
+> On 9/25/25 4:28 AM, Wesley Cheng wrote:
+>> For SuperSpeed USB to work properly, there is a set of HW settings that
+>> need to be programmed into the USB blocks within the QMP PHY.  Ensure that
+>> these settings follow the latest settings mentioned in the HW programming
+>> guide.  The QMP USB PHY on Glymur is a USB43 based PHY that will have some
+>> new ways to define certain registers, such as the replacement of TXA/RXA
+>> and TXB/RXB register sets.  This was replaced with the LALB register set.
 > 
-> Add more detailed resource information for VFE and VFE Lite devices
-> along with a driver for the 1080 version of those that is responsible
-> for bus write master configuration and buffer address update.
-
-"Add Video Front End (VFE) version 1080 as found on the Kaanapali SoC"
-
-> The FULL front end modules in Kaanapali camera subsystem are called TFEs
-> (Thin Front End), however, retaining the name VFE at places to maintain
-> consistency and avoid unnecessary code changes.
-
-Good
-
+> [...]
 > 
-> Co-developed-by: Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-> Signed-off-by: Atiya Kailany <atiya.kailany@oss.qualcomm.com>
-> Signed-off-by: Hangxiang Ma <hangxiang.ma@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->   drivers/media/platform/qcom/camss/Makefile         |   1 +
->   drivers/media/platform/qcom/camss/camss-vfe-1080.c | 156 +++++++++++++++++++++
->   drivers/media/platform/qcom/camss/camss-vfe.c      |  15 +-
->   drivers/media/platform/qcom/camss/camss-vfe.h      |   1 +
->   drivers/media/platform/qcom/camss/camss.c          | 138 ++++++++++++++++++
->   5 files changed, 307 insertions(+), 4 deletions(-)
+>> +	/* override hardware control for reset of qmp phy */
+>> +	if (pcs_aon && cfg->regs[QPHY_AON_TOGGLE_ENABLE])
+>> +		qphy_clrbits(pcs_aon, cfg->regs[QPHY_AON_TOGGLE_ENABLE], 0x1);
 > 
-> diff --git a/drivers/media/platform/qcom/camss/Makefile b/drivers/media/platform/qcom/camss/Makefile
-> index 3a7ed4f5a004..dc41b0d6dc21 100644
-> --- a/drivers/media/platform/qcom/camss/Makefile
-> +++ b/drivers/media/platform/qcom/camss/Makefile
-> @@ -22,6 +22,7 @@ qcom-camss-objs += \
->   		camss-vfe-340.o \
->   		camss-vfe-480.o \
->   		camss-vfe-680.o \
-> +		camss-vfe-1080.o \
->   		camss-vfe-gen3.o \
->   		camss-vfe-gen1.o \
->   		camss-vfe.o \
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-1080.c b/drivers/media/platform/qcom/camss/camss-vfe-1080.c
-> new file mode 100644
-> index 000000000000..f1852a3bf97f
-> --- /dev/null
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe-1080.c
-> @@ -0,0 +1,156 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * camss-vfe-1080.c
-> + *
-> + * Qualcomm MSM Camera Subsystem - VFE (Video Front End) Module v1080
-> + *
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> + */
-> +#include <linux/interrupt.h>
-> +#include <linux/io.h>
-> +#include <linux/iopoll.h>
-> +
-> +#include "camss.h"
-> +#include "camss-vfe.h"
-> +
-> +/* VFE-1080 Bus Register Base Addresses */
-> +#define BUS_REG_BASE				(vfe_is_lite(vfe) ? 0x800 : 0x1000)
-> +
-> +#define VFE_BUS_WM_CGC_OVERRIDE			(BUS_REG_BASE + 0x08)
-> +#define		WM_CGC_OVERRIDE_ALL			(0x7FFFFFF)
-> +
-> +#define VFE_BUS_WM_TEST_BUS_CTRL		(BUS_REG_BASE + 0x128)
-> +
-> +#define VFE_BUS_WM_CFG(n)			(BUS_REG_BASE + 0x500 + (n) * 0x100)
-> +#define		WM_CFG_EN				BIT(0)
-> +#define		WM_VIR_FRM_EN				BIT(1)
-> +#define		WM_CFG_MODE				BIT(16)
-> +#define VFE_BUS_WM_IMAGE_ADDR(n)		(BUS_REG_BASE + 0x504 + (n) * 0x100)
-> +#define VFE_BUS_WM_FRAME_INCR(n)		(BUS_REG_BASE + 0x508 + (n) * 0x100)
-> +#define VFE_BUS_WM_IMAGE_CFG_0(n)		(BUS_REG_BASE + 0x50c + (n) * 0x100)
-> +#define		WM_IMAGE_CFG_0_DEFAULT_WIDTH		(0xFFFF)
-> +#define VFE_BUS_WM_IMAGE_CFG_2(n)		(BUS_REG_BASE + 0x514 + (n) * 0x100)
-> +#define		WM_IMAGE_CFG_2_DEFAULT_STRIDE		(0xFFFF)
-> +#define VFE_BUS_WM_PACKER_CFG(n)		(BUS_REG_BASE + 0x518 + (n) * 0x100)
-> +
-> +#define VFE_BUS_WM_IRQ_SUBSAMPLE_PERIOD(n)	(BUS_REG_BASE + 0x530 + (n) * 0x100)
-> +#define VFE_BUS_WM_IRQ_SUBSAMPLE_PATTERN(n)	(BUS_REG_BASE + 0x534 + (n) * 0x100)
-> +
-> +/* VFE lite has no such registers */
-> +#define VFE_BUS_WM_FRAMEDROP_PERIOD(n)		(BUS_REG_BASE + 0x538 + (n) * 0x100)
-> +#define VFE_BUS_WM_FRAMEDROP_PATTERN(n)		(BUS_REG_BASE + 0x53c + (n) * 0x100)
-> +
-> +#define VFE_BUS_WM_MMU_PREFETCH_CFG(n)		(BUS_REG_BASE + 0x560 + (n) * 0x100)
-> +#define VFE_BUS_WM_MMU_PREFETCH_MAX_OFFSET(n)	(BUS_REG_BASE + 0x564 + (n) * 0x100)
-> +
-> +/*
-> + * Bus client mapping:
-> + *
-> + * Full VFE:
-> + * 23 = RDI0, 24 = RDI1, 25 = RDI2, 26 = RDI3, 27 = RDI4
-> + *
-> + * VFE LITE:
-> + * 0 = RDI0, 1 = RDI1, 2 = RDI2, 3 = RDI3
-> + */
-
-Give the full bus client mapping, no the partial.
-
-> +#define RDI_WM(n) ((vfe_is_lite(vfe) ? 0x0 : 0x17) + (n))
-> +
-> +static void vfe_wm_start_1080(struct vfe_device *vfe, u8 wm, struct vfe_line *line)
-> +{
-> +	struct v4l2_pix_format_mplane *pix =
-> +		&line->video_out.active_fmt.fmt.pix_mp;
-> +
-> +	wm = RDI_WM(wm);
-> +
-> +	/* no clock gating at bus input */
-> +	writel(WM_CGC_OVERRIDE_ALL, vfe->base + VFE_BUS_WM_CGC_OVERRIDE);
-> +
-> +	writel(0x0, vfe->base + VFE_BUS_WM_TEST_BUS_CTRL);
-> +
-> +	writel(ALIGN(pix->plane_fmt[0].bytesperline, 16) * pix->height >> 8,
-> +	       vfe->base + VFE_BUS_WM_FRAME_INCR(wm));
-> +	writel((WM_IMAGE_CFG_0_DEFAULT_WIDTH & 0xFFFF),
-> +	       vfe->base + VFE_BUS_WM_IMAGE_CFG_0(wm));
-> +	writel(WM_IMAGE_CFG_2_DEFAULT_STRIDE,
-> +	       vfe->base + VFE_BUS_WM_IMAGE_CFG_2(wm));
-> +	writel(0, vfe->base + VFE_BUS_WM_PACKER_CFG(wm));
-> +
-> +	/* no dropped frames, one irq per frame */
-> +	if (!vfe_is_lite(vfe)) {
-> +		writel(0, vfe->base + VFE_BUS_WM_FRAMEDROP_PERIOD(wm));
-> +		writel(1, vfe->base + VFE_BUS_WM_FRAMEDROP_PATTERN(wm));
-> +	}
-> +
-> +	writel(0, vfe->base + VFE_BUS_WM_IRQ_SUBSAMPLE_PERIOD(wm));
-> +	writel(1, vfe->base + VFE_BUS_WM_IRQ_SUBSAMPLE_PATTERN(wm));
-> +
-> +	writel(1, vfe->base + VFE_BUS_WM_MMU_PREFETCH_CFG(wm));
-> +	writel(0xFFFFFFFF, vfe->base + VFE_BUS_WM_MMU_PREFETCH_MAX_OFFSET(wm));
-> +
-> +	writel(WM_CFG_EN | WM_CFG_MODE, vfe->base + VFE_BUS_WM_CFG(wm));
-> +}
-> +
-> +static void vfe_wm_stop_1080(struct vfe_device *vfe, u8 wm)
-> +{
-> +	wm = RDI_WM(wm);
-> +	writel(0, vfe->base + VFE_BUS_WM_CFG(wm));
-> +}
-> +
-> +static void vfe_wm_update_1080(struct vfe_device *vfe, u8 wm, u32 addr,
-> +			       struct vfe_line *line)
-> +{
-> +	wm = RDI_WM(wm);
-> +	writel((addr >> 8) & 0xFFFFFFFF, vfe->base + VFE_BUS_WM_IMAGE_ADDR(wm));
-> +
-> +	dev_dbg(vfe->camss->dev, "wm:%d, image buf addr:0x%x\n", wm, addr);
-> +}
-> +
-> +static void vfe_reg_update_1080(struct vfe_device *vfe, enum vfe_line_id line_id)
-> +{
-> +	int port_id = line_id;
-> +
-> +	camss_reg_update(vfe->camss, vfe->id, port_id, false);
-> +}
-> +
-> +static const struct camss_video_ops vfe_video_ops_1080 = {
-> +	.queue_buffer = vfe_queue_buffer_v2,
-> +	.flush_buffers = vfe_flush_buffers,
-> +};
-> +
-> +static void vfe_subdev_init_1080(struct device *dev, struct vfe_device *vfe)
-> +{
-> +	vfe->video_ops = vfe_video_ops_1080;
-> +}
-> +
-> +static void vfe_global_reset_1080(struct vfe_device *vfe)
-> +{
-> +	vfe_isr_reset_ack(vfe);
-> +}
-> +
-> +static irqreturn_t vfe_isr_1080(int irq, void *dev)
-> +{
-> +	/* nop */
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int vfe_halt_1080(struct vfe_device *vfe)
-> +{
-> +	/* rely on vfe_disable_output() to stop the VFE */
-> +	return 0;
-> +}
-> +
-> +const struct vfe_hw_ops vfe_ops_1080 = {
-> +	.global_reset = vfe_global_reset_1080,
-> +	.hw_version = vfe_hw_version,
-> +	.isr = vfe_isr_1080,
-> +	.pm_domain_off = vfe_pm_domain_off,
-> +	.pm_domain_on = vfe_pm_domain_on,
-> +	.reg_update = vfe_reg_update_1080,
-> +	.subdev_init = vfe_subdev_init_1080,
-> +	.vfe_disable = vfe_disable,
-> +	.vfe_enable = vfe_enable_v2,
-> +	.vfe_halt = vfe_halt_1080,
-> +	.vfe_wm_start = vfe_wm_start_1080,
-> +	.vfe_wm_stop = vfe_wm_stop_1080,
-> +	.vfe_buf_done = vfe_buf_done,
-> +	.vfe_wm_update = vfe_wm_update_1080,
-> +};
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-> index ee08dbbddf88..90e7fbd2428b 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.c
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-> @@ -349,6 +349,7 @@ static u32 vfe_src_pad_code(struct vfe_line *line, u32 sink_code,
->   	case CAMSS_845:
->   	case CAMSS_8550:
->   	case CAMSS_8775P:
-> +	case CAMSS_KAANAPALI:
->   	case CAMSS_X1E80100:
->   		switch (sink_code) {
->   		case MEDIA_BUS_FMT_YUYV8_1X16:
-> @@ -521,7 +522,8 @@ int vfe_enable_output_v2(struct vfe_line *line)
+> Clearing this field is going to prevent the PHY from ever going offline
 > 
->   	spin_lock_irqsave(&vfe->output_lock, flags);
+> The HPG says this should only be necessary for keeping the phy active
+> during MX retention (and the listed usecases are USB4 wakeup clock
+> generation via a respective _USB4 register and/or USB3 autonomous mode
+> operation), both of which are currently unsupported.
 > 
-> -	ops->reg_update_clear(vfe, line->id);
-> +	if (ops->reg_update_clear)
-> +		ops->reg_update_clear(vfe, line->id);
-
-What's going on here, why don't you have to clear the reg_update for 
-your hardware ?
-
+> Are you sure it's necessary / desired?
 > 
->   	if (output->state > VFE_OUTPUT_RESERVED) {
->   		dev_err(vfe->camss->dev,
-> @@ -541,14 +543,17 @@ int vfe_enable_output_v2(struct vfe_line *line)
-> 
->   	ops->vfe_wm_start(vfe, output->wm_idx[0], line);
-> 
-> -	for (i = 0; i < 2; i++) {
-> +	for (i = 0; i < CAMSS_INIT_BUF_COUNT; i++) {
 
-This I like but it's not specific to VFE 1080.
+Hi Konrad,
 
-It can/should be introduced as its own patch to remove this hard-coded 
-value.
+At least on the PHY HSR, its mentioned as required, and if I remember 
+correctly, if this wasn't done, I'd see QMP PHY init timeout.
 
->   		output->buf[i] = vfe_buf_get_pending(output);
->   		if (!output->buf[i])
->   			break;
->   		output->gen2.active_num++;
->   		ops->vfe_wm_update(vfe, output->wm_idx[0],
->   				   output->buf[i]->addr[0], line);
-> -		ops->reg_update(vfe, line->id);
-> +
-> +		/* Deferring the reg update until after CSID config */
-> +		if (vfe->camss->res->version != CAMSS_KAANAPALI)
-> +			ops->reg_update(vfe, line->id);
-
-Needs more justification - here in the email thread will do.
-
-OK you don't have to do reg_update but, your logic is not consistent for 
-this.
-
-In one case you check for ops->reg_update_clear() in this case you check 
-for !KANNAPALI
-
-Definitely don't want to have SoC specific logic in the core files 
-unless absolutely necessary, which in this case it is not.
-
->   	}
-> 
->   	spin_unlock_irqrestore(&vfe->output_lock, flags);
-> @@ -914,7 +919,8 @@ static int vfe_match_clock_names(struct vfe_device *vfe,
->   	return (!strcmp(clock->name, vfe_name) ||
->   		!strcmp(clock->name, vfe_lite_name) ||
->   		!strcmp(clock->name, "vfe_lite") ||
-> -		!strcmp(clock->name, "camnoc_axi"));
-> +		!strcmp(clock->name, "camnoc_axi") ||
-> +		!strcmp(clock->name, "camnoc_rt_axi"));
-
-I'd prefer to see a small patch adding camnoc_rt_axi and explaining what 
-it is inside of CAMSS and why we should clock it.
-
->   }
-> 
->   /*
-> @@ -1997,6 +2003,7 @@ static int vfe_bpl_align(struct vfe_device *vfe)
->   	case CAMSS_845:
->   	case CAMSS_8550:
->   	case CAMSS_8775P:
-> +	case CAMSS_KAANAPALI:
->   	case CAMSS_X1E80100:
->   		ret = 16;
->   		break;
-> diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-> index 0300efdb1c46..444924ddf724 100644
-> --- a/drivers/media/platform/qcom/camss/camss-vfe.h
-> +++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-> @@ -245,6 +245,7 @@ extern const struct vfe_hw_ops vfe_ops_170;
->   extern const struct vfe_hw_ops vfe_ops_340;
->   extern const struct vfe_hw_ops vfe_ops_480;
->   extern const struct vfe_hw_ops vfe_ops_680;
-> +extern const struct vfe_hw_ops vfe_ops_1080;
->   extern const struct vfe_hw_ops vfe_ops_gen3;
-> 
->   int vfe_get(struct vfe_device *vfe);
-> diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
-> index 74a8ad3cb728..2239abfef26e 100644
-> --- a/drivers/media/platform/qcom/camss/camss.c
-> +++ b/drivers/media/platform/qcom/camss/camss.c
-> @@ -217,6 +217,142 @@ static const struct camss_subdev_resources csid_res_kaanapali[] = {
->   	}
->   };
-> 
-> +/* In Kaanapali, CAMNOC requires all CAMNOC_RT_TFEX clocks
-> + * to operate on any TFE Full.
-> + */
-> +static const struct camss_subdev_resources vfe_res_kaanapali[] = {
-> +	/* VFE0 - TFE Full */
-> +	{
-> +		.regulators = {},
-> +		.clock = { "gcc_hf_axi", "vfe0_fast_ahb", "vfe0",
-> +			   "camnoc_rt_vfe0", "camnoc_rt_vfe1", "camnoc_rt_vfe2",
-> +			   "camnoc_rt_axi", "camnoc_nrt_axi", "qdss_debug_xo" },
-
-XO debug ?
-
-Really ? Why ?
-
-Whats that clock for and why is it needed for the runtime TFE to function ?
-
----
-bod
+Thanks
+Wesley Cheng
 
