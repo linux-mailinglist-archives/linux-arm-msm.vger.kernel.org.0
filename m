@@ -1,129 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-74916-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74919-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AB20CB9D6D5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 07:11:45 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 21348B9D78D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 07:36:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73DF34A4E8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 05:11:44 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id D76A3165A4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 05:36:32 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DDCD12E7BDF;
-	Thu, 25 Sep 2025 05:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4D13A2E8B6F;
+	Thu, 25 Sep 2025 05:36:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fv4fcEwc"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="kpDwu2fF"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EBF42E7BB4;
-	Thu, 25 Sep 2025 05:11:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DC72E88A6;
+	Thu, 25 Sep 2025 05:36:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758777101; cv=none; b=Gy/4yqRJ57QidgiyTLUuK60+S4EME/yco6QTtMvFG2kPUianb/hJVSDm+MS2uAz3mZ2EGMwrSKomNtsqAjoObjPtC+x+ORWgj1o+QB3ugclHUgQ3PWy8VCbLZAANeBJ5Gd/Ofaz/79S+aKNZLCsRLP0oNFpBjHYf5g09cuCl1Yc=
+	t=1758778587; cv=none; b=Gy94G6VbfPHUxSewUYIDY/j3i47k57HNSPvI/NJFMwEfl5aL6A9duOGVhUESy77zo9r2mWmyIDb5/xmf07uDW1KQvo9oSd80ElgsFmduP5RI+SzH8YnzscmydDkDtXw9G9Fv+tyhJ5OKwgQAja7wipAh0cAWi0Vdw/phSLLOuF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758777101; c=relaxed/simple;
-	bh=KRCmad8gpTCEGZzbPJ+vSzMUoizSy+0/nHSK13v/JUg=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=RwIUjPXzXS7CHQscjRw8Uz9mKeH7Qjb2Q8xbB8KvtAD1+XE1m79RRrzBBee4BKGH53YBWfuteNt+68nKnG6G/snYEVBhlNPr8blWb5lDYg85ljpszX4WJ/kmzX7L5Khz+b/l1o/9YIKg7+rS43Hn4OlOsCEhr7/P8rw/8ezMUxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fv4fcEwc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6853C4CEF0;
-	Thu, 25 Sep 2025 05:11:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758777101;
-	bh=KRCmad8gpTCEGZzbPJ+vSzMUoizSy+0/nHSK13v/JUg=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=Fv4fcEwclyjPKiFI99RYIOpyTKY922a8mAvXHKQg3SZBC0LRMDM6qQzzzo4MUHfYH
-	 2/kl06WeJCrZhxebEBFGOQIUxhBB2y6usnxZu9TaSRDt4N44C4/jUr2d30LCKWQ7qk
-	 y3A3ZBLpUUrQe0aFGftYaW9BWtx7L59DWB+KAmEcNjiwWkGBhFD5rgoKR2c0da5e3C
-	 +DDBmBIX0Gy7yvsdsz2xxrIiC5LTeIZQhf2FnzjSYd5Te7MD86ncR2gdenxku3+Bzc
-	 bXn+Khd58yimiptR+EYtvj2DZKUYF5sn50umanjb3QjRT+PQtYmBSob2AxzCBT3ufF
-	 26dnaLHhWUyZA==
-Date: Thu, 25 Sep 2025 00:11:40 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1758778587; c=relaxed/simple;
+	bh=c0V1dQ0V/PxJus1LQibgssi4WjyTxsZDMbNQ6GgQoVQ=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=bI7G0jJfSFiYYlMYR9XCa1c51gn5jZ4NpULJ7PyDHOPJXWKNLclTCI0lfwdkLTa9A2s2FOF8UrX3dQzRC5pU0vpDY/J182faO9E6ngmFdT1tjWgNCcnqxxSrZeE4kPMahyPgz5e9P4d9Edop/0c4rQAzcibT9nYvSytHErsBPI8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=kpDwu2fF; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58ONiVpv029044;
+	Thu, 25 Sep 2025 05:36:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=SiJomSvigflcijZ8Hjhvzj1Uqeo93IsBHsm
+	HqGcw7/A=; b=kpDwu2fFbppkzOsLivAyF5PSWJu5anhbxPOvKLtMCWidQS49/pN
+	iVmEiIORrnYIDLi2l2MjpiIAoes9FP0I/0aOwraPXiUIikhKKbLSJgplMDz2FYjz
+	JmuWOmVvZlkA3SHlmOkcMhiHb8Bhl2jT/QXwbK87KCk2dPYRQfzSbW80/5vExocv
+	NtRTGxBwSm+DA5ZhMPB2GXStZX9o9zPbnrCRLRhns7QVCcw6TcchAbfEeaeQTzQ3
+	VNl+sX+LA0JBoXCrNSm0852y5e4Amg2dddQhbaMNlEaYhNhtOiV8DdmhYxdiHWTK
+	Y2rnq2Kk4bUs0zh6BYAKq50GjNLnKWE8lVA==
+Received: from apblrppmta02.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499hmny7xg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Sep 2025 05:36:11 +0000 (GMT)
+Received: from pps.filterd (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTP id 58P5a8XK000688;
+	Thu, 25 Sep 2025 05:36:08 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 499nbm8bwj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Sep 2025 05:36:07 +0000
+Received: from APBLRPPMTA02.qualcomm.com (APBLRPPMTA02.qualcomm.com [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 58P5a7cU000660;
+	Thu, 25 Sep 2025 05:36:07 GMT
+Received: from hu-devc-hyd-u22-c.qualcomm.com (hu-amakhija-hyd.qualcomm.com [10.213.99.91])
+	by APBLRPPMTA02.qualcomm.com (PPS) with ESMTPS id 58P5a6Hf000658
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 25 Sep 2025 05:36:07 +0000
+Received: by hu-devc-hyd-u22-c.qualcomm.com (Postfix, from userid 4090850)
+	id 2276B56F; Thu, 25 Sep 2025 11:06:06 +0530 (+0530)
+From: Ayushi Makhija <quic_amakhija@quicinc.com>
+To: linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc: Ayushi Makhija <quic_amakhija@quicinc.com>, robdclark@gmail.com,
+        dmitry.baryshkov@oss.qualcomm.com, sean@poorly.run,
+        marijn.suijten@somainline.org, andersson@kernel.org, robh@kernel.org,
+        robh+dt@kernel.org, krzk+dt@kernel.org, konradybcio@kernel.org,
+        conor+dt@kernel.org, andrzej.hajda@intel.com,
+        neil.armstrong@linaro.org, rfoss@kernel.org,
+        Laurent.pinchart@ideasonboard.com, jonas@kwiboo.se,
+        jernej.skrabec@gmail.com, quic_rajeevny@quicinc.com,
+        quic_vproddut@quicinc.com, quic_jesszhan@quicinc.com
+Subject: [PATCH 0/3] Add DSI display support for QCS8300 target
+Date: Thu, 25 Sep 2025 11:05:59 +0530
+Message-Id: <20250925053602.4105329-1-quic_amakhija@quicinc.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Abhinav Kumar <abhinav.kumar@linux.dev>, devicetree@vger.kernel.org, 
- Philipp Zabel <p.zabel@pengutronix.de>, Conor Dooley <conor+dt@kernel.org>, 
- linux-arm-msm@vger.kernel.org, Mauro Carvalho Chehab <mchehab@kernel.org>, 
- Bryan O'Donoghue <bod@kernel.org>, Vishnu Reddy <quic_bvisredd@quicinc.com>, 
- linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, 
- Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-In-Reply-To: <20250925-knp_video-v1-1-e323c0b3c0cd@oss.qualcomm.com>
-References: <20250925-knp_video-v1-0-e323c0b3c0cd@oss.qualcomm.com>
- <20250925-knp_video-v1-1-e323c0b3c0cd@oss.qualcomm.com>
-Message-Id: <175877709998.3725789.11141152500856219909.robh@kernel.org>
-Subject: Re: [PATCH 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
- kaanapali video codec binding
+Content-Transfer-Encoding: 8bit
+X-QCInternal: smtphost
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Authority-Analysis: v=2.4 cv=YPqfyQGx c=1 sm=1 tr=0 ts=68d4d4cb cx=c_pps
+ a=Ou0eQOY4+eZoSc0qltEV5Q==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=QF8eukqJN6OF58MEyQAA:9
+X-Proofpoint-ORIG-GUID: mao4Vumg_hcFxSHGZ27kkNsPawBNMjdT
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAwMCBTYWx0ZWRfX045a6HG9M8oj
+ Lm/weq4J7EDhk7rV+dB1C/mYmg4BwaWrMbuxcPtYA7o8vS9HHsvlBpX02shryMBBa2liH2TpeW3
+ +27xtjJ2/qfDrUCkuO1sttEBj5fmcwbyr6qTlHDvpkdVAd0FSTXHK6omye+YI6TeAAI9D7olWEJ
+ 6hDbR/gi5WQC8Wt77X4DTGdYCpxPVIX+ME7Mu3sSx25mZjSLZYG2Mh/NbpGf1OmQz+0np33RfeK
+ L7kKZ9eJ0GI6O4ncmKghCFJqzgPJlqbdmw9c+HmMcu2VifcJaLjzIV9Z2Vb6K4opL55sQOdj0jU
+ DHhg/KdgMo4KMjFCQ7vlicK5r8+TUXm9zpGhKPs0KiHLDZ7EU1qyJxY9J7E9MEPaFOL4FsD7cOX
+ ekCWMCZX
+X-Proofpoint-GUID: mao4Vumg_hcFxSHGZ27kkNsPawBNMjdT
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-24_07,2025-09-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ clxscore=1011 impostorscore=0 spamscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200000
 
+This series enables the support for DSI to DP bridge port
+(labeled as DSI0) of the Qualcomm's QCS8300 Ride platform.
 
-On Thu, 25 Sep 2025 04:44:39 +0530, Vikash Garodia wrote:
-> Kaanapali SOC brings in the new generation of video IP i.e iris4. When
-> compared to previous generation, iris3x, it has,
-> - separate power domains for stream and pixel processing hardware blocks
->   (bse and vpp).
-> - additional power domain for apv codec.
-> - power domains for individual pipes (VPPx).
-> - different clocks and reset lines.
-> 
-> There are variants of this hardware, where only a single VPP pipe would
-> be functional (VPP0), and APV may not be present. In such case, the
-> hardware can be enabled without those 2 related power doamins, and
-> corresponding clocks. This explains the min entries for power domains
-> and clocks.
-> Iommus include all the different stream-ids which can be possibly
-> generated by vpu4 video hardware in both secure and non secure
-> execution mode.
-> 
-> This patch depends on following patches
-> https://lore.kernel.org/all/20250924-knp-interconnect-v1-1-4c822a72141c@oss.qualcomm.com/
-> https://lore.kernel.org/all/20250924-knp-clk-v1-3-29b02b818782@oss.qualcomm.com/
-> 
-> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
-> ---
->  .../bindings/media/qcom,kaanapali-iris.yaml        | 236 +++++++++++++++++++++
->  1 file changed, 236 insertions(+)
-> 
+QCS8300 SoC has DSI controller v2.5.1 and DSI PHY v4.2.
+The Ride platform is having ANX7625 DSI to DP bridge chip from Analogix.
 
-My bot found errors running 'make dt_binding_check' on your patch:
+---
+This patch depends on following series:
+https://lore.kernel.org/all/20250916-dp_mst_bindings-v9-0-68c674b39d8e@oss.qualcomm.com/ 
+(Add support for 4 pixel streams)
+https://lore.kernel.org/all/20250911-qcs8300_mdss-v12-0-5f7d076e2b81@oss.qualcomm.com/
+(Display enablement changes for Qualcomm QCS8300 platform)
+https://lore.kernel.org/all/20250917-dts_qcs8300-v6-0-5c862aa80f64@oss.qualcomm.com/
+(Enable DPU and Display Port for Qualcomm QCS8300-ride platform)
 
-yamllint warnings/errors:
+Ayushi Makhija (3):
+  dt-bindings: display: msm: document DSI controller and phy on QCS8300
+  arm64: dts: qcom: qcs8300: add Display Serial Interface device nodes
+  arm64: dts: qcom: qcs8300-ride: add anx7625 DSI to DP bridge node
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dts:24:18: fatal error: dt-bindings/interconnect/qcom,kaanapali-rpmh.h: No such file or directory
-   24 |         #include <dt-bindings/interconnect/qcom,kaanapali-rpmh.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[2]: *** [scripts/Makefile.dtbs:132: Documentation/devicetree/bindings/media/qcom,kaanapali-iris.example.dtb] Error 1
-make[2]: *** Waiting for unfinished jobs....
-make[1]: *** [/builds/robherring/dt-review-ci/linux/Makefile:1525: dt_binding_check] Error 2
-make: *** [Makefile:248: __sub-make] Error 2
+ .../display/msm/qcom,qcs8300-mdss.yaml        | 100 ++++++++++-
+ arch/arm64/boot/dts/qcom/qcs8300-ride.dts     | 170 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/qcs8300.dtsi         |  95 +++++++++-
+ 3 files changed, 363 insertions(+), 2 deletions(-)
 
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20250925-knp_video-v1-1-e323c0b3c0cd@oss.qualcomm.com
-
-The base for the series is generally the latest rc1. A different dependency
-should be noted in *this* patch.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command yourself. Note
-that DT_SCHEMA_FILES can be set to your schema file to speed up checking
-your schema. However, it must be unset to test all examples with your schema.
+base-commit: fba389ea7aa6401d3539456123cbadfa1a87231e ("next-20250922")
+-- 
+2.34.1
 
 
