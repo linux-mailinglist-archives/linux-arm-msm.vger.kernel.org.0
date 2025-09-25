@@ -1,114 +1,254 @@
-Return-Path: <linux-arm-msm+bounces-75182-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75183-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16341BA136D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 21:36:54 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 36D7CBA1388
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 21:38:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 23FAC7BA976
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 19:35:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 578DC1C206A3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 19:39:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BA77931B816;
-	Thu, 25 Sep 2025 19:36:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2B74654F81;
+	Thu, 25 Sep 2025 19:38:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="S4n5h9fc";
-	dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b="vZiG+hlB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hvuE8/OA"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.mainlining.org (mail.mainlining.org [5.75.144.95])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AAB52E8B8A;
-	Thu, 25 Sep 2025 19:36:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=5.75.144.95
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7112231C591
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 19:38:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758828997; cv=none; b=WeybF3s1H+cCiiR6SYE5eMyJUzWi0KekTw7HMZqJhDLShghJXWwiYIllcGEqz38EoNFyZ6lkiG6RbToVe6d40x2znaXIGEZuW5x+zM7bPw18FO2xQKLgUU3C+6NsA1SB03S5qP8H56SDjMKNnAEaSu1PJFgG7EfoThnt5dLYcOU=
+	t=1758829117; cv=none; b=MSNiZy9cToROV0iUE05bk9sopzSLy4kt2x+x5QO3kXTy3KV20HAaD7zp5yj2OX809eVoIiEpowS2X2E5QQJVdNU7laYV0F84nW6+oBou7iU09UTfPqaPdF43g051YvZM+mOrZEZFzIaldGWE2q2QF1tVVmNWcTNReWZknYRg0A8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758828997; c=relaxed/simple;
-	bh=wUCV5gZxAYMRE5R8Fyb0RkkstbddJPktPAhrNem9sMU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SsYeFdN3ElxrsZocQpQvdWbJ+qAHYZGZ6J3jJHS2zgT+qRpleXz5R8IVxECGGUV+Tdh5sPFhfiK6kqEAb3X5fnBt8KiR7NREsicqz2ImcOPoe+dWfchUZLKd7k8eTpoSsnt+nmujrUvnt9jyyk3NgdE09w1kHDuVER6ONaWCfN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org; spf=pass smtp.mailfrom=mainlining.org; dkim=pass (2048-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=S4n5h9fc; dkim=permerror (0-bit key) header.d=mainlining.org header.i=@mainlining.org header.b=vZiG+hlB; arc=none smtp.client-ip=5.75.144.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=mainlining.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=mainlining.org
-DKIM-Signature: v=1; a=rsa-sha256; s=202507r; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1758828885; bh=qajMjw3QsMJTz3D164BqXP1
-	pakOaeLD61QWvXvNAFNU=; b=S4n5h9fcKQ0Y21h8RuONku8Hocsd+4OTv9Xfp/hFb9A/6vsk3h
-	O+WXPt6klKux5I7ya2oSnGOOIHue/pH17CheCrkrphrxc0crsi3pXJ8gIHfVmokCGgg+6RUWFJu
-	n1YL6DWXNLhQ+nNSiZ610tAe/OkZuPrI3pl2UQ/6Nqx8Pf/OB8R5OpcmifF8EvQufiYLLEy9Ano
-	keW4SYqS4OSFJbW36G0usaZp5BpNj7/Gpo+RLoovpore3BFByg4GbOwg94LchskyOxt0h9POIF1
-	tPQAJ/hoc/S5P7FGJWqW3LanOM50f/SYJxJh6RhQ9O0FaCfrZP9TikZXA90sSJhqqlg==;
-DKIM-Signature: v=1; a=ed25519-sha256; s=202507e; d=mainlining.org; c=relaxed/relaxed;
-	h=From:To:Subject:Date:Message-ID; t=1758828885; bh=qajMjw3QsMJTz3D164BqXP1
-	pakOaeLD61QWvXvNAFNU=; b=vZiG+hlBLFjNzb7KoNNG/kytOS7piGnGwYp9/mFOPP0t7PXiWl
-	4gm0IRw5gHJJFsdrMy+WpcgJIVs0XxmOzRDg==;
-Message-ID: <44229f2c-7004-480f-973b-a36e3288959b@mainlining.org>
-Date: Thu, 25 Sep 2025 21:34:44 +0200
+	s=arc-20240116; t=1758829117; c=relaxed/simple;
+	bh=Gw6Lv3ZZKaXOQeZbLrbNQm+hOUdCDO6KkbPO+UpMV5I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=RjLv+OkemtUe83CiTXIHtB2q2n55Cf/KoQBmBVYphf5jVMtJu9bXKuCIF8wq7W/qushQ+71vikjCb3LImw9d1JkfeZ0SXIk9brHcA3mVFjv0fF2iHbW8o/um0JmARQ1L6wnhl/toEurBQJknnq3ZlagrIKlPh64yhP2gaqoWTB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hvuE8/OA; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIRFom028176
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 19:38:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=bZUq7CDDhSmRig6Cx1+uuI0h
+	ZxZQyPvmkPpUPwn89LI=; b=hvuE8/OA9JOtidnSZORgmM4jRfOo0ad879Xb3RcY
+	zZNSPMCMe6rakDVd5GejDyqQkMpgLCXGuXyvY0unf3jIYXzJ1EmcaHlSRTzbnu0C
+	vzs8RNBfko8oABinO0BO4XDA66kR5mSBAMamPgUzSSM1OhkIPdX0SWcHe53CLyHB
+	+iM5t13u0UxlAJ+Bija4wtiusCNwyJu0kSFx1E1PZqppWA/vb0ClbcBuQ+tLYJkd
+	x3KE1cBxnr+LTknelBmR8eNLu1omZftXldv6vWcYxHBC4dsgmlbW9Yv6f64egU6Y
+	F06oUNvaKZ5mX0UChewg6OTUxZsq1UC4uyGyaTDaz6+0HQ==
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db0u05jj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 19:38:34 +0000 (GMT)
+Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-8544316ef6aso516635985a.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 12:38:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758829113; x=1759433913;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bZUq7CDDhSmRig6Cx1+uuI0hZxZQyPvmkPpUPwn89LI=;
+        b=ie2OU1Odz8qcvWkZcpsxBcpE6fq4C89EYOKbqrJFgdLu/KMZMTS7RIWOaTBTYNFy3w
+         GwcG5IWDjf0HAxUSVpSFprpAwUpW8lZaZq/CQDLGmWdxRM4ddnPMClKxevo2aKzEfGr1
+         iqtQPZghdq4F5JUMuwuJj5h2vj8CQwXIu6Z+IHI1pA1T3WuS/LDsZp0sRI/6kOAIR3wt
+         vG9guahT0KsOJuCoEn4CXGZXThYGEceO+57vn/SU/F9e170WDsK1GijJJvyQfEK5ttoF
+         AgDxkviUbUZJuirrMdrCO5IRd2sVAkK0Aq+L5MF2im9fNHioZdNWwGMG1wZlws11d23V
+         29ug==
+X-Forwarded-Encrypted: i=1; AJvYcCWjyQmhD+yAueUO/+qf4/i1mbhYqQEBJkdq+rVMm30dcrqRuQD6E7E2alOb/FypCh7GA6YCqXDbmaMFneRK@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhQY/tVy0/zTbCrVUUIDK1ZIO3WswXXkL4vPLahSdJyusfNTSW
+	WWFXAGl+PR4g6pj134cTBDVmszfSFr8vJTmJ5f2q5ZsbjEb6d6KQFaVs0YZJdl44gdDL0ujmItC
+	n72VgqMSYSA/rBcOHdisjAbwXdY4S+pIrs9uoNQ1qMyPIzg5Z46hynePgVVBqPKzcUUHp
+X-Gm-Gg: ASbGncuR/qtxauF6xi1sh0NzlQxY10QzbuNIpkyi9MjeX5CSKPj6MZ92jb+6oJdMdoQ
+	exl7l5Luvo9RoMQjDYNes8mmr2NmRhV7rtKyMTS6u2jzfjCsh6UBd/G2ineNI+oLmnqbr5GRJ/1
+	uHznzjETpKllG1zZnlTXpmFXIINCLlJYJy6yytDK36yzyjEwSQ4G5JxXa4pLGvIILvZRqqgzKNR
+	XO59TsXQK/rjKOFrBBCXJ9MtQOTwvw9C4x1eXMfuIQij0Crk78K+LWU2h1bPd195G5C/guDfwF0
+	GZW7Uk+q/L6RZSYgYc5642110HIRgUr5PN6Ty+P2mDN95zFWdk29+AHJFVvXcCHjaToLgCNPzsj
+	VRKGvIYz/mDYxs5o7mdk1ixZr1gUqfuTJIVXSNRm/etR/1mikBSfe
+X-Received: by 2002:a05:622a:1a86:b0:4b5:ee26:5371 with SMTP id d75a77b69052e-4da48a98618mr59982681cf.26.1758829113246;
+        Thu, 25 Sep 2025 12:38:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEScP8g2QLcbwROLLnoam3rSDhjtQbKS1uSD/NVSg/54p4XWIFVNkB6GUFvdkeQo6tU0VNN0A==
+X-Received: by 2002:a05:622a:1a86:b0:4b5:ee26:5371 with SMTP id d75a77b69052e-4da48a98618mr59982101cf.26.1758829112481;
+        Thu, 25 Sep 2025 12:38:32 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-583139f99d5sm1059076e87.40.2025.09.25.12.38.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Sep 2025 12:38:31 -0700 (PDT)
+Date: Thu, 25 Sep 2025 22:38:29 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Vishnu Reddy <quic_bvisredd@quicinc.com>
+Subject: Re: [PATCH 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
+ kaanapali video codec binding
+Message-ID: <oimuo26ohcye74j6rl5hfbmd4ip5wzudhyiaibf74b5zmjb4vl@xh3dnp7gmvq7>
+References: <20250925-knp_video-v1-0-e323c0b3c0cd@oss.qualcomm.com>
+ <20250925-knp_video-v1-1-e323c0b3c0cd@oss.qualcomm.com>
+ <nuunkv3xwfes6wed5xf4re2efakndvvrfl4lhmenilkic4sjiy@5cb2f5ygegvm>
+ <522d7244-0003-a42e-9be0-1d353df8d5bd@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/8] arm64: dts: qcom: sdm845-oneplus: Correct panel reset
- gpio polarity
-To: david@ixit.cz, Neil Armstrong <neil.armstrong@linaro.org>,
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Thierry Reding
- <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>,
- Casey Connolly <casey.connolly@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- phone-devel@vger.kernel.org
-References: <20250925-s6e3fc2x01-v1-0-9293016768f7@ixit.cz>
- <20250925-s6e3fc2x01-v1-5-9293016768f7@ixit.cz>
-Content-Language: en-US
-From: Jens Reidel <adrian@mainlining.org>
-In-Reply-To: <20250925-s6e3fc2x01-v1-5-9293016768f7@ixit.cz>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <522d7244-0003-a42e-9be0-1d353df8d5bd@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: Ja2o83NUFsklf9u8flMHnX5_SWTY7hNp
+X-Proofpoint-GUID: Ja2o83NUFsklf9u8flMHnX5_SWTY7hNp
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MSBTYWx0ZWRfX0+OyZ+tYxHz4
+ KvKHlOHZApLPJcqY/C1KR5QVFbzU0b+lomUKfYAJ9NBSWE+VQu7+N6lbrvduJuVCY0HH9DIQgT0
+ RUMr/rhx7XxzRcPGx7v9W0kigJFxExMq6L/TbCCgWKfporw6ansjzC3MIBDEL0OW6JqbX/5dd7p
+ Buiww85Qp6hTk7gY/D7ajiJ+J8gU2viEj8FgdW87vAeXus6fwBWpGzXwQ8S0NCQiwy8ouTP3mIM
+ k1T1tEUsi9fep9wrSN1o/c13EZUvmscRmZF+C7BZp0ZTd6lYSwAC1noC3u5BLcSCJA35bZSAncY
+ 3T2ME+e93jUSsHy3nV62gL95xpwg9RXVQsvLCyyi7h3O/cmhR06HGWbUSZFBliudxMzUPUGTLQt
+ insKydqSCq7l6LqpMoLEG61L0dYj6w==
+X-Authority-Analysis: v=2.4 cv=ZsHg6t7G c=1 sm=1 tr=0 ts=68d59a3a cx=c_pps
+ a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=gEfo2CItAAAA:8
+ a=wIq4btY2Nqnwc6W55twA:9 a=CjuIK1q_8ugA:10 a=PEH46H7Ffwr30OY-TuGO:22
+ a=sptkURWiP4Gy88Gu7hUp:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250171
 
-On 9/25/25 11:12, David Heidelberg via B4 Relay wrote:
-> From: David Heidelberg <david@ixit.cz>
+On Fri, Sep 26, 2025 at 01:01:29AM +0530, Vikash Garodia wrote:
 > 
-> Reset GPIO should be active in high state as usually the board doesn't
-> invert the polarity.
+> On 9/26/2025 12:55 AM, Dmitry Baryshkov wrote:
+> > On Thu, Sep 25, 2025 at 04:44:39AM +0530, Vikash Garodia wrote:
+> >> Kaanapali SOC brings in the new generation of video IP i.e iris4. When
+> >> compared to previous generation, iris3x, it has,
+> >> - separate power domains for stream and pixel processing hardware blocks
+> >>   (bse and vpp).
+> >> - additional power domain for apv codec.
+> >> - power domains for individual pipes (VPPx).
+> >> - different clocks and reset lines.
+> >>
+> >> There are variants of this hardware, where only a single VPP pipe would
+> >> be functional (VPP0), and APV may not be present. In such case, the
+> >> hardware can be enabled without those 2 related power doamins, and
+> >> corresponding clocks. This explains the min entries for power domains
+> >> and clocks.
+> >> Iommus include all the different stream-ids which can be possibly
+> >> generated by vpu4 video hardware in both secure and non secure
+> >> execution mode.
+> >>
+> >> This patch depends on following patches
+> >> https://lore.kernel.org/all/20250924-knp-interconnect-v1-1-4c822a72141c@oss.qualcomm.com/
+> >> https://lore.kernel.org/all/20250924-knp-clk-v1-3-29b02b818782@oss.qualcomm.com/
+> >>
+> >> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> >> ---
+> >>  .../bindings/media/qcom,kaanapali-iris.yaml        | 236 +++++++++++++++++++++
+> >>  1 file changed, 236 insertions(+)
+> >>
+> >> diff --git a/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.yaml b/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.yaml
+> >> new file mode 100644
+> >> index 0000000000000000000000000000000000000000..f3528d514fe29771227bee5f156962fedb1ea9cd
+> >> --- /dev/null
+> >> +++ b/Documentation/devicetree/bindings/media/qcom,kaanapali-iris.yaml
+> >> @@ -0,0 +1,236 @@
+> >> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> >> +%YAML 1.2
+> >> +---
+> >> +$id: http://devicetree.org/schemas/media/qcom,kaanapali-iris.yaml#
+> >> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> >> +
+> >> +title: Qualcomm kaanapali iris video encode and decode accelerators
+> >> +
+> >> +maintainers:
+> >> +  - Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> >> +  - Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> >> +
+> >> +description:
+> >> +  The iris video processing unit is a video encode and decode accelerator
+> >> +  present on Qualcomm platforms.
+> >> +
+> >> +properties:
+> >> +  compatible:
+> >> +    const: qcom,kaanapali-iris
+> >> +
+> >> +  reg:
+> >> +    maxItems: 1
+> >> +
+> >> +  interrupts:
+> >> +    maxItems: 1
+> >> +
+> >> +  power-domains:
+> >> +    minItems: 5
+> >> +    maxItems: 7
+> > 
+> > You are sending bindings for a single device on a single platform. How
+> > comes that it has min != max?
 > 
-> Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
-> Signed-off-by: David Heidelberg <david@ixit.cz>
-> ---
->   arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> index aff5e80c1eba43e830991c2afd53b6322893cd27..7f968f90a83b869395bedd5de510ba96de3c4e94 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-> @@ -456,7 +456,7 @@ display_panel: panel@0 {
->   		vci-supply = <&panel_vci_3v3>;
->   		poc-supply = <&panel_vddi_poc_1p8>;
->   
-> -		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
-> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_HIGH>;
->   
->   		pinctrl-names = "default";
->   		pinctrl-0 = <&panel_reset_pins &panel_te_pin &panel_esd_pin>;
-> 
+> I was planning to reuse this binding for the variant SOCs of kaanapali/vpu4. If
+> we do not have min interface, then for those variants, we have to either have
+> separate bindings or add if/else conditions(?). Introducing min now can make it
+> easily usable for upcoming vpu4 variants.
 
-Hi David,
+No, it makes it harder to follow the changes. This platform has
+this-and-that requirements. Then you add another platform and it's clear
+that the changes are for that platform. Now you have mixed two different
+patches into a single one.
 
-according to the schematics available to me, this GPIO is active low (as 
-on most other Qualcomm phones). I'd suggest dropping this and the driver 
-change.
+> 
+> > 
+> >> +
+> >> +  power-domain-names:
+> >> +    items:
+> >> +      - const: venus
+> >> +      - const: vcodec0
+> >> +      - const: vpp0
+> >> +      - const: vpp1
+> >> +      - const: apv
+> >> +      - const: mxc
+> >> +      - const: mmcx
+> >> +
+> >> +  clocks:
+> >> +    minItems: 8
+> >> +    maxItems: 10
+> > 
+> > And here.
+> 
+> Same case here.
+> > 
+> >> +
+> >> +  clock-names:
+> >> +    items:
+> >> +      - const: iface
+> >> +      - const: core
+> >> +      - const: vcodec0_core
+> >> +      - const: iface1
+> >> +      - const: core_freerun
+> >> +      - const: vcodec0_core_freerun
+> >> +      - const: vcodec_bse
+> >> +      - const: vcodec_vpp0
+> >> +      - const: vcodec_vpp1
+> >> +      - const: vcodec_apv
+> >> +
+> > 
 
-Best regards,
-Jens
+-- 
+With best wishes
+Dmitry
 
