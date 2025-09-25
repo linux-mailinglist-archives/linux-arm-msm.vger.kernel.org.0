@@ -1,158 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-75079-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75080-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98280B9EFDB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:49:11 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0554BB9F03B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:54:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9D5581BC61B3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 11:49:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFA724E318F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 11:54:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E4B122F83A0;
-	Thu, 25 Sep 2025 11:49:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09BAB2FC017;
+	Thu, 25 Sep 2025 11:54:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="mOIzC4YF"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k7qW1Q7/"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8CE1DC9B1
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 11:49:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F96D2FBDE0
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 11:54:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758800946; cv=none; b=Pv60GlElMNMN7jQXP5eHkjoxknZ/uRKrkssClxW+VNgqwWElqRut/akwrGMVEo4PJZP3m+MPTAJb9Z5u5Qlmxaj3VKuHP5F8nLHpM5bLFrDx4VB+F/KG1ktSXMBIUS+3vkYkzMF4mBTcvtI1Q4BWz8DydiR7OrRSfkX18uq+lLM=
+	t=1758801264; cv=none; b=VXRLNI1cW6+BHUHqNUE1xFv6UD/dztsUWHYmZBcLBM5PGNJ5/doD/pMibLI/CGNKV58l6uFX9CszOCwtxI4Z/7jYcknjib3Qv7O5l0zye1TfCvqfPrY3dTrKIKbYaBd5mEpb3YIYCANoxoKZtjHkQKXGFY5u5xMdms9gsriONN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758800946; c=relaxed/simple;
-	bh=toxgSbOuMYd0l1zBSSHDfmkI9Q5eCWB7QxXd6A9cDi0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=atI4gZFITAYVX1+F7L6wReFYu9xmTF22uiecgrhq/mKnAacPGTI2MaxeYuM/mR/jxiUMSP20zJ4VukaaLYyg526q73HPZKnv8Thqw6btFvH9k49Dzo0Af3RAVz3xlXrwr/UyUEp0WsgOv5vYfBWFJw/uVQ+uRuSoqJ1L5fZYrZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=mOIzC4YF; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1758801264; c=relaxed/simple;
+	bh=SyjT/o2z0dyOG2o4BytzIRC4dNs1eO2vwpK24YRaEkY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NYlxFwbGUmsmh0Dz0cNSMIwkrTrqJ/2hAiKDYeKffOTHWD/zrzuu2mtWB5NiBJfWE6gqqvNMBdh3B/OJNqmOiAHsnNH95L8Z6xhbhh6yYXFVABX/039M9FcC2SBU8K/ALELMWx8w8b/HC/6aYfI9I1PqZWqSsE5sMdnr9GkED5c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k7qW1Q7/; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P9UgTR025591
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 11:49:04 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P90Eis027782
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 11:54:22 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	nX/7+Es5CEXVgmPLU51KFWh1W5gFD+wvMunPIFeNs98=; b=mOIzC4YF+zV4gcYV
-	DVX2M16FN1bj/oQfzLXzFrje37j2ogmMyB9d4Ols67RKZOTJ6WdzGxVyyTiHHL27
-	N2TpLQWURenH+h1Q1Pv2+xoWYZ+VTZEBuUtRaMVmBmKsyqB+OHa96CXOt8w3MF9N
-	aR9dpanx+JpxN5TzuMa5Cd//D7gHlYpS1kW7aQWEwsPX8N1coiG9yUEZpN7kpuvW
-	WqGUM26PdwDavOH+FRNtewWGg67tWfNQPP3M0z/taVCJBf9V0gKgKE/L/LaK2UMn
-	alZE+bwczoVPCgDZo1GLvGRz94vFOB4b2TdWiUFNsEXW3W7qgDOY9oBi/3zldFIj
-	nKqAbw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499hyf099x-1
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=Ibi4SnoGMV8sI9OUOF4j1A9snxHLAbs/hnY
+	dDBg+Vjw=; b=k7qW1Q7/SptebFxWY3QJgijbjb8kx1guveuj61ZnjJ70SxrHSW+
+	f/VugZaQ3HWw2ZT2ZS6sc4FnUoU+GuOzNJRe0M2lsvohTQObbRUjW8lI07u2F0C/
+	giMUSgAWEAoaJXSP7lYSJfsS30efuoGi/87V8OuMMiwUoCAy5cB8Z4WBJo0p1TA7
+	lNjK0WfXeyg3tQhDO52kp8x2pf0gXnnQyFS0UhkRQ+ajz4eLDv0ellFi7io2DmCx
+	R1Uu5DVRCGHJqcH1pZFekAlEJGpJjhpq/F7rD7aFrklQOvryXADtEu0LhOuUENxu
+	xf9Z6s33PlONOK7lZPF1n6gp4+zj/Zi2nfQ==
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499hmp0b1s-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 11:49:04 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4dc37a99897so409951cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 04:49:04 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 11:54:22 +0000 (GMT)
+Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-2699ed6d43dso10425575ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 04:54:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758800943; x=1759405743;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nX/7+Es5CEXVgmPLU51KFWh1W5gFD+wvMunPIFeNs98=;
-        b=UouaGkqE2r6nRIFU0Al5XNqSgUdwSTzs9CcFvFkPiND+LSxHa5bE16w4lrVD4NAbHI
-         4fK4s9TGYfuM6OYyklGS5gdU0W/6pQKlaPvZlSLg65Acn0+3J92Z1hL2FD17nNf7/RhA
-         FkoZe9Vuxa6Q8UyUxIvIsw2inZXZFmaVJE+OdPo/EvnSFDWKI5gjiTJ7H8l4jvlJall3
-         K0oAENuQ2GqgytSdcs5tIOqqFNbkXOzo39N9VisuHUxX5uTQxj08+9WmUNZ9L1vwX1hd
-         RivoydqVe+CeCeN3nGXp65fKu6+OqWzE/kgvt8ZgLKHE2t6mlNeuG8XWHtanNBfUeyA5
-         s/fg==
-X-Gm-Message-State: AOJu0YzMlfA8z0ZEjvb7Fw3I9f0qUpTvG9flzAAhY2hw/ad4l4UsUt+2
-	keSuvMNvwxL5Np/0pUfoJzBxbFqJLV3gzXNbnLeEeMG57VSPKC7LOHGW2yqrtlIS6O21yjB4YBs
-	G5w2uHeH3kpF/zspTuGFOZnb7fNZn1ewi34BaSzXZFOnsUECe5laPauAxEj6MaROe6+JI
-X-Gm-Gg: ASbGncsvaWPrFmhykHDPqN1nyfAoI8OJ2w8ThFOAjy5BjuDbV0P4Bqov32K9QSlTLa1
-	jQj59rlkzKi0eTbZHn7UXXyGWn5O/ktGiIRQoUGDtAGZcq3lGX+CJR8Em5RhT7mRDMCBuYABHRk
-	gbGrY51pU/8AnZgy3EDKjxFHylY7p+3YZaaeAGs90BzqxREm4fhiJH55r3PIh12QKiYwTY44y8T
-	DbxaL5zstz0T1P8DK53zvQViWv7nYScF1EMpYhnyKcwR3RsWSA70TVyPmiuDPQAidpNAAfi21qI
-	nklZureggGkd4+4UIz7kGw6sj6IA/dDlBKbt8IthUhDdU2Zam6tSPXSTQWICUB4MxlK2xf7GDcb
-	Bw25I/VJH1y1yvqI+ei3nBQ==
-X-Received: by 2002:a05:622a:1988:b0:4d9:7eeb:3f76 with SMTP id d75a77b69052e-4da4b42881bmr27497671cf.8.1758800943292;
-        Thu, 25 Sep 2025 04:49:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVDTxNrr1MXCU1YXwmH3hI/4HBUQONc/+oEm+jljQypOdh5NlhLYUBxtFh9nstaa+aDjP86A==
-X-Received: by 2002:a05:622a:1988:b0:4d9:7eeb:3f76 with SMTP id d75a77b69052e-4da4b42881bmr27497281cf.8.1758800942641;
-        Thu, 25 Sep 2025 04:49:02 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b353e5d155asm159172266b.6.2025.09.25.04.48.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 25 Sep 2025 04:49:02 -0700 (PDT)
-Message-ID: <39f6f7af-4b0a-496f-9391-880932634551@oss.qualcomm.com>
-Date: Thu, 25 Sep 2025 13:48:58 +0200
+        d=1e100.net; s=20230601; t=1758801261; x=1759406061;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ibi4SnoGMV8sI9OUOF4j1A9snxHLAbs/hnYdDBg+Vjw=;
+        b=G3Fla+q8SazO0xmna1Rjgk6y1FB/HfY3Y3KxYrycqGH6T78xuPQCNKzbU+TxGrLeUC
+         OkZ1eb9TD6PTWKS50tNvvafzdYrwfSxY9c0M74g/Vb8TLJy1ATXukLd1DUx77edTeRLD
+         03OPOtQgVqx+Kznl0nP0fEb1IAc1mED6ZBKYXe7JVfU9tDjEoxaCeSPxjWQXUZSuPFL8
+         DxSZMBB/Il8Y4fDXxliEZCoDGdNmoT1+UkCGALq0pKSTPy16tWckLss/4+HvE2+/RTKw
+         IxUzjxnrUh+KmeLIIJnamCy9xoCSzKC8PIteuB8zPyz3dnezMFFmpZHx4ZsUyGBIO9M8
+         UA0g==
+X-Gm-Message-State: AOJu0YyERBPS0IMfhmDtHs8S6kD6c53R8NNU7uaBd4nZmLdsLBFDaL+R
+	R2XuG5uGn2Ap/Kes3dD7fR1iQOqlxA3tnrbyiqJbAQrVoRl24GGKk0qDEX9HOVawsUVbx6YKPQ0
+	vRvueA7L5wGuQkM7OFba+xXTZ7SIiZCfUNUCeP0j4+btjkDqGcCWWTcW19tN0saeG+hQE
+X-Gm-Gg: ASbGncuSRKoq6JSemxVyPkO4wjHAP9YUdOau3iRPl3/KOir+dLSq2vYjUNdw7PosPU+
+	cIVWLMYcx/iBTYjouIvE6Ud4kXAjZfXCaYeb9f2EMbqZMMduxe8sY1XLzKrjmWCSLtS0lBnN5to
+	LEEiTcvuH1RlM2mJJOP1gV+e/4/9hCwLCmQaIEJWmoRnuP7W5VEdiIlYr6Sv/ec0E+9dvW4n4QU
+	3J4wf9nEcoHGUooIyu2ppFuJFGWa2xdM0eGDg+lYVZl2IT0zxrHPs9jnQj+3WhIjI7fNwNRPNYG
+	RTm+xWJ+ebneijcLHZSkqg+0fw+P4DDUaK84KMc/BLcDOUsjdYJ7zsdJkjs+/hxBaz0tL48rbcs
+	=
+X-Received: by 2002:a17:903:2c06:b0:269:ed31:6c50 with SMTP id d9443c01a7336-27ed4a091e8mr37880435ad.10.1758801260808;
+        Thu, 25 Sep 2025 04:54:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuENIT7uqE/PhFHkktSwABTjczamPHUaUnB2zTV5WRthAd1QMusVFWwc0an+6Xwk23xxnGrw==
+X-Received: by 2002:a17:903:2c06:b0:269:ed31:6c50 with SMTP id d9443c01a7336-27ed4a091e8mr37880135ad.10.1758801260297;
+        Thu, 25 Sep 2025 04:54:20 -0700 (PDT)
+Received: from hu-jseerapu-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed69bb502sm22087935ad.118.2025.09.25.04.54.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Sep 2025 04:54:20 -0700 (PDT)
+From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+To: Vinod Koul <vkoul@kernel.org>,
+        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
+Subject: [PATCH v8] i2c: i2c-qcom-geni: Add Block event interrupt support
+Date: Thu, 25 Sep 2025 17:24:10 +0530
+Message-Id: <20250925115412.2843659-1-jyothi.seerapu@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] crypto: qce: add support for QCE major version 6
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
-        Herbert Xu <herbert@gondor.apana.org.au>,
-        "David S. Miller" <davem@davemloft.net>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Thara Gopinath <thara.gopinath@gmail.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
-        Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
-References: <20250924-knp-crypto-v1-0-49af17a231b7@oss.qualcomm.com>
- <20250924-knp-crypto-v1-3-49af17a231b7@oss.qualcomm.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250924-knp-crypto-v1-3-49af17a231b7@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 2NVSNQSlbdZ57hn7h2Pk_XAwbHLObAwl
-X-Authority-Analysis: v=2.4 cv=YMOfyQGx c=1 sm=1 tr=0 ts=68d52c30 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=um4aV7xw4E9mcPOvuVgA:9
- a=QEXdDO2ut3YA:10 a=zgiPjhLxNE0A:10 a=uxP6HrT_eTzRwkO_Te1X:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAwNCBTYWx0ZWRfXzNzSXGd8Z0gT
- WDfuH20bOu3n3yGTLahMEf+kZ0vbTO7PXb2j36EuPx6jkzi1IDI2eFb7+b2dvJ3a1a29t6MW5yU
- 9GJxdRtntQs3bULP48qMGGoCLqlJcpeefsxVniqxCok0g4Bi8DblQ6q/J2lRkntcIFLk0kREAxb
- dwz4rFvnh6O39lZJvfNkJirjP1FuczcmY2JPKQYDWw6Cy8MX5GSpiTBVKCPh6SESr2380QkOd4X
- zDVzjUBSdM4cFQsJpycsahonoozpt1tC+9vwjzyhJ4NoTmjzUFuAHFQIQByXVKYebTshJfZ8ypG
- fBTRy05WjPu/shX2C1ficQKEx1eMOKZwM3fyp2DEpNn+BCoprOPlPZxlQGKjNekWt9BlJ80UjT8
- t0eSBp+y
-X-Proofpoint-ORIG-GUID: 2NVSNQSlbdZ57hn7h2Pk_XAwbHLObAwl
+Content-Transfer-Encoding: 8bit
+X-Authority-Analysis: v=2.4 cv=YPqfyQGx c=1 sm=1 tr=0 ts=68d52d6e cx=c_pps
+ a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=AcHsLZsjNhMhd8_3HEgA:9
+ a=GvdueXVYPmCkWapjIL-Q:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: cjyVN1gl7yXfHSyAma_XT17R4na-U2lC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAwMCBTYWx0ZWRfXwh1pq5NNOS5d
+ uKexv06HAS4OOk9cYSXCHfPf3nBbFlPpsPVMABTSHMbRe7hfxcYkrtDhW+HaW9AA4ZUcfIzaWCO
+ t6QigvTrHpPwhuW5L3coTXp980KYOExii4bstcXznsqlxbzriifHVGJSvAdu+lHSdSomSGJHtP9
+ WhqncjK2oQl/cXqe7+lyN4hTwUz7xTPxQR6B02kW3R6SkRXhTZljJnADvL1fkTN3Zyt8Aw5L42C
+ 3MIcSZeONr7gxCz+8wUO3F9Tl/FHG3CTcDa2FqFjNmDFvLgL458Ltoyee32lnOdPeVo7HM4B7wv
+ Yd3k9wOEcYDs3NyErnE5xs/sOri4c7224w8rUD64Cq4bdkEg9LmezOphnjL2pMx8SlOZOCTQcDq
+ WsY/HGla
+X-Proofpoint-GUID: cjyVN1gl7yXfHSyAma_XT17R4na-U2lC
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-25_01,2025-09-24_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501 spamscore=0
- clxscore=1015 suspectscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0
+ clxscore=1011 impostorscore=0 spamscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200004
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200000
 
-On 9/25/25 1:38 AM, Jingyi Wang wrote:
-> From: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
-> 
-> The Qualcomm General Purpose Crypto Engine (GPCE) has
-> upgraded to version 6 on newer socs, this makes the
-> version check logic obsolete and needs to be updated
-> to account for v6.0.
-> 
-> As part of this, unnecessary version macros has also
-> been removed.
-> 
-> Signed-off-by: Gaurav Kashyap <gaurav.kashyap@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
+From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
 
-This commit message does not reflect what the code does (or at
-least it does so very indirectly)
+The I2C driver gets an interrupt upon transfer completion.
+When handling multiple messages in a single transfer, this
+results in N interrupts for N messages, leading to significant
+software interrupt latency.
 
-You can instead title the commit message "fix version check" and
-mention in the commit text that this is necessary e.g. for v6
+To mitigate this latency, utilize Block Event Interrupt (BEI)
+mechanism. Enabling BEI instructs the hardware to prevent interrupt
+generation and BEI is disabled when an interrupt is necessary.
 
-Konrad
+Large I2C transfer can be divided into chunks of messages internally.
+Interrupts are not expected for the messages for which BEI bit set,
+only the last message triggers an interrupt, indicating the completion of
+N messages. This BEI mechanism enhances overall transfer efficiency.
+
+BEI optimizations are currently implemented for I2C write transfers only,
+as there is no use case for multiple I2C read messages in a single transfer
+at this time.
+
+v7 -> v8:
+   - Removed duplicate sentence in patch1 commit description
+   - Updated with proper types when calling geni_i2c_gpi_unmap() inside
+     geni_i2c_gpi_multi_desc_unmap().
+
+v6 -> v7:
+   - The design has been modified to configure BEI for interrupt
+     generation either:
+     After the last I2C message, if sufficient TREs are available, or
+     After a specific I2C message, when no further TREs are available.
+   - dma_buf and dma_addr for multi descriptor support is changed from
+     static allocation to dynmic allocation.
+   - In i2c_gpi_cb_result function, for multi descriptor case, instead of invoking
+     complete for everry 8 messages completions, changed the logic to Invoke 'complete'
+     for every I2C callback (for submitted I2C messages).
+   - For I2C multi descriptor case, updated 'gi2c_gpi_xfer->dma_buf' and
+     'gi2c_gpi_xfer->dma_addr' for unmappping in geni_i2c_gpi_multi_desc_unmap.
+   - In the GPI driver, passed the flags argumnetr to the gpi_create_i2c_tre function and
+     so avoided using external variables for DMA_PREP_INTERRUPT status.
+   - Updated documentation removed for "struct geni_i2c_dev" as per the review comments.
+
+v5 -> v6:
+   - Instead of using bei_flag, moved the logic to use with DMA
+     supported flags like DMA_PREP_INTERRUPT.
+   - Additional parameter comments removed from geni_i2c_gpi_multi_desc_unmap
+     function documentation.
+
+v4 -> v5:
+   -  BEI flag naming changed from flags to bei_flag.
+   -  QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
+      file, and Block event support is checked with bei_flag.
+   -  Documentation added for "struct geni_i2c_dev".
+
+v3 -> v4:
+  - API's added for Block event interrupt with multi descriptor support is
+    moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
+  - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
+    I2C driver.
+  - geni_i2c_gpi_multi_desc_xfer structure is added as a member of
+    struct geni_i2c_dev.
+  - Removed the changes of making I2C driver is dependent on GPI driver.
+
+v2 -> v3:
+  - Updated commit description
+  - In I2C GENI driver, for i2c_gpi_cb_result moved the logic of
+    "!is_tx_multi_xfer" to else part.
+  - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
+  - Changes of I2C GENI driver to depend on the GPI driver moved
+    to patch3.
+  - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
+  - Added description for newly added changes in "qcom-gpi-dma.h" file.
+
+v1 -> v2:
+  - DT changes are reverted for adding dma channel size as a new arg of
+    dma-cells property.
+  - DT binding change reveted for dma channel size as a new arg of
+    dma-cells property.
+  - In GPI driver, reverted the changes to parse the channel TRE size
+    from device tree.
+  - Made the changes in QCOM I2C geni driver to support the BEI
+    functionality with the existing TRE size of 64.
+  - Made changes in QCOM I2C geni driver as per the review comments.
+  - Fixed Kernel test robot reported compiltion issues.
+
+Jyothi Kumar Seerapu (2):
+  dmaengine: qcom: gpi: Add GPI Block event interrupt support
+  i2c: i2c-qcom-geni: Add Block event interrupt support
+
+ drivers/dma/qcom/gpi.c             |  11 +-
+ drivers/i2c/busses/i2c-qcom-geni.c | 248 ++++++++++++++++++++++++++---
+ 2 files changed, 233 insertions(+), 26 deletions(-)
+
+-- 
+2.34.1
+
 
