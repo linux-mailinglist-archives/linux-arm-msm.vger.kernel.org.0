@@ -1,183 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-75084-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75085-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE334B9F0B2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 13:57:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 43047B9F0F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 14:01:10 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F3C003B0231
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 11:57:06 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 022C84A092F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 12:01:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 754D525B67D;
-	Thu, 25 Sep 2025 11:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C34D02F5478;
+	Thu, 25 Sep 2025 12:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b="GXjyMDoh"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="i9KKXRdI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtpout-03.galae.net (smtpout-03.galae.net [185.246.85.4])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935602FB995
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 11:57:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.246.85.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E2629BDB9
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 12:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758801423; cv=none; b=aPR0rmqLpkGqWK+j6pd+mZGijJhTn2iG5Q32xnJXN/FMm6FHr3Pi9wlesJgs/jDklyKRm9UI3wCmsYeyF5coH4hdxvkQcEGleUQzgmSXWzYeXdg6rEn+tNg3jKRRgrvPHp4zP1EG1gzymqggqnLcAXXj9xizbzAD7ZVLvbudRlI=
+	t=1758801659; cv=none; b=HPfAWDYsFZx3Hpm/BGQQXo48ncZN5ayMF8VmOHzYHkbG1VLN4zBlJwuVvmtu4i14et6xf1xtwnG1eSdjmTcPURD6jAPTyAj4pA7ZW04A2nJWdEXG6v+XzDpmidK5KV/IG1tf68x2jHhW4YfdURkNHQ1CLndCR7d/mh+BSvafE/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758801423; c=relaxed/simple;
-	bh=V6MTDiVySTY0FtRDwbSPAeskWfvP6UybS3p7cJ7SG+c=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=HTitz27zsq+/Mz/USrTmqRLPPAEU4v2n3jtr6prBc5EIsxV0fhHCUXUukK2fnNfJM2zb48XPIwFrA/OTu7EB+fnYzEWH5RrF2eOTXzMf00VSs9XAiloxw3gYURHO54KZJ9zzcwcsMPBgaU8XI3tuIMq9BjPn4yd5mQPPHBVAm/A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com; spf=pass smtp.mailfrom=bootlin.com; dkim=pass (2048-bit key) header.d=bootlin.com header.i=@bootlin.com header.b=GXjyMDoh; arc=none smtp.client-ip=185.246.85.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=bootlin.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bootlin.com
-Received: from smtpout-01.galae.net (smtpout-01.galae.net [212.83.139.233])
-	by smtpout-03.galae.net (Postfix) with ESMTPS id CD0A94E40DD3;
-	Thu, 25 Sep 2025 11:56:59 +0000 (UTC)
-Received: from mail.galae.net (mail.galae.net [212.83.136.155])
-	by smtpout-01.galae.net (Postfix) with ESMTPS id 920F16062C;
-	Thu, 25 Sep 2025 11:56:59 +0000 (UTC)
-Received: from [127.0.0.1] (localhost [127.0.0.1]) by localhost (Mailerdaemon) with ESMTPSA id 990C7102F17C2;
-	Thu, 25 Sep 2025 13:56:10 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=dkim;
-	t=1758801417; h=from:subject:date:message-id:to:cc:mime-version:content-type:
-	 content-transfer-encoding:content-language:in-reply-to:references;
-	bh=aETJ2zYw/6HsvY9Zf2t3GTjzejHx+Y6hnBsuvecmf/k=;
-	b=GXjyMDohYRGVoA/jxxP+Zh/xhFZkXEw47idV2kkxCw4BsGWQCQQpWMx3vX5TDqxj9lCsTk
-	qE4zU9kk6HI3rTWGvibKSdaxk0hi20iX+8mDs656ftEn3KudwCsJZh80+kw4zv8NU19C+c
-	gcFWBMQp9Xvevo9GamLy26ktiXq8jcWVvd1rm8sSW4V0GV43nVd3cFz0YvWJRoRuFm27gh
-	CGd/jii+CU7Xf9etVZ0b3pymhMQ0SroYPtG99j2sICWkx8k6/AMlX6TinkAWlONweTlHIw
-	JS5o2Y9WmCO/tth3lpUwH/y+uTpltg4Ciu0AholB4azScehG9yO5lyfizaoWxA==
-Message-ID: <4822b6a5-5b40-47bb-8bff-7a3cc91f93c8@bootlin.com>
-Date: Thu, 25 Sep 2025 17:26:01 +0530
+	s=arc-20240116; t=1758801659; c=relaxed/simple;
+	bh=SyjT/o2z0dyOG2o4BytzIRC4dNs1eO2vwpK24YRaEkY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=ZizChfzVJsaPHhvU8QMtyoUvdJU8ED73nbjCxjjrozwm3Gyn/wCDEDNhgpygQtDut0WdN63gMUeuz6hdAVSXkLfmgy3Jvw/FuYgpE844VNY2/AwdePGr34jTX+8PnklndBXZZRvfs4yCc4TcaHw+tGgMjELHFzkopvGhYmLdOhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=i9KKXRdI; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P9tCqL018069
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 12:00:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=Ibi4SnoGMV8sI9OUOF4j1A9snxHLAbs/hnY
+	dDBg+Vjw=; b=i9KKXRdI58COK8vJctc3V1u2NMDiPYXT/9aK84O7uzmmbrZW7+u
+	I0HdUNw274w8+Hae2C+FWKbMlHMhFf7hrXRxNu7mzdcbUQtq7tmoxrDPcqe5iig0
+	azgg2YxMyUDw3+7vrl/k0tcQac2fmgT+H0zrxKw45GAM/FKStn+CFBx2zItqmsNS
+	37bbWBK0YzqCNkPXDm1CJoDT12pJOlrc6nZoA1fazHzv9wmcAlmPYkWbEA7sz9sv
+	ujslBadeGgcRq9OorZZUDgVBskSJHL2YQohthCtEwEFrocnU4Ubm/EO5i7cuhHC2
+	XkthclIt4srpiby65SNo7RjZwqBi5xRDg6A==
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49b3kkbxjk-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 12:00:56 +0000 (GMT)
+Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-269880a7bd9so10389905ad.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 05:00:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758801655; x=1759406455;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ibi4SnoGMV8sI9OUOF4j1A9snxHLAbs/hnYdDBg+Vjw=;
+        b=NgsqZlRvrgnBzhE6idU1+95DsriqLsob89G4xtmxhga50q86Sm2c71Gl/pjGXCXzLt
+         SshzWi3c8MDSJeXtuWoc+wUHcyBJSaOPKv7A776kyXuh6Ukx6WsPTxWcnJC1cCgNhdtp
+         uUPnx/cyY+W/z82OOLLOZWZLhQsyHB1nxgA1+qcu0h+i4wB1xGmlcgX/CBVs/t+MhGEH
+         csHXOAhJMQTVPHIOQWZlEihS4QCtsgL83pB3oUagiNFpUtxECECF20oxfBZqth53cw8i
+         GHoMB6p3VsHSFC5N/NmG9Epd2mX4bjsLzSN1xUm5D1+t+A+K5SlhOoNgqTDa8zU9sfpz
+         d6ag==
+X-Gm-Message-State: AOJu0YxX+DOK7Fb5QS5j6S09DqKmVDP40QERk3WPyXyP1FkfOrrDzunV
+	BhIdyKX+YsuQpSYPx58E5/tdYTbOzvWZm1ETpCifz+wTXrSczZlXMBMIGqm8y/9ftcLwqVf9irc
+	KAu+a/7sUFzLzU89C+crzROOmyPusa2rgGoStXniQovMuTNZbhn/V/OpSx4uZ8mEbc4N4
+X-Gm-Gg: ASbGnct8QIwFMiqEDXepxMecnjERX83AzZYjqYakDZP77gZzmDBplDybjNG/k4BfPYM
+	l7984gqu7BiEBHNeZe2AjUMd4IndG5czYk8XvIOETr8p2yXqvk53cFt5AhrjE5kGGrWZqsyYxw4
+	Fm7PuPa0lWyED8LxeiJ7le7JW+3ExKqGJlaFXRCv3kxezmBXGYfYc2O0VE2dj719oILs0A7XpsG
+	FHgvBeKoEzns4DgRXgO5NT45gsNBW/yMwyrPox/EOsOmeUKM0QzhFnOnzVi90YWCnOfSXDhopKz
+	6gtgvXWsPrZzsF/S/KhB9ypSTdoW/4m9HaIYrWP2oVjgoO8/gKsy4lrgw/EarthW1+Q/CeHy8qY
+	=
+X-Received: by 2002:a17:902:ecc3:b0:269:4759:904b with SMTP id d9443c01a7336-27ed4ade041mr36647735ad.58.1758801654950;
+        Thu, 25 Sep 2025 05:00:54 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEnXD2mZAewf9zy3BLbepfrjU+YGJ4Cp4RyCyDnMr5leVblOCnWiw4Ra971I5AdyuLPIQ+vrw==
+X-Received: by 2002:a17:902:ecc3:b0:269:4759:904b with SMTP id d9443c01a7336-27ed4ade041mr36646315ad.58.1758801653319;
+        Thu, 25 Sep 2025 05:00:53 -0700 (PDT)
+Received: from hu-jseerapu-hyd.qualcomm.com ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-27ed69a9668sm22266585ad.112.2025.09.25.05.00.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 25 Sep 2025 05:00:53 -0700 (PDT)
+From: Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+To: Vinod Koul <vkoul@kernel.org>,
+        Mukesh Kumar Savaliya <quic_msavaliy@quicinc.com>,
+        Viken Dadhaniya <quic_vdadhani@quicinc.com>,
+        Andi Shyti <andi.shyti@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
+Cc: linux-arm-msm@vger.kernel.org, dmaengine@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-media@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        linaro-mm-sig@lists.linaro.org, quic_vtanuku@quicinc.com
+Subject: [PATCH v8 0/2] i2c: i2c-qcom-geni: Add Block event interrupt support
+Date: Thu, 25 Sep 2025 17:30:33 +0530
+Message-Id: <20250925120035.2844283-1-jyothi.seerapu@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC net-next 0/9] net: stmmac: experimental PCS conversion
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>,
- Andrew Lunn <andrew@lunn.ch>, Heiner Kallweit <hkallweit1@gmail.com>
-Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>,
- Alexis Lothore <alexis.lothore@bootlin.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, Boon Khai Ng <boon.khai.ng@altera.com>,
- Choong Yong Liang <yong.liang.choong@linux.intel.com>,
- Daniel Machon <daniel.machon@microchip.com>,
- "David S. Miller" <davem@davemloft.net>,
- Drew Fustini <dfustini@tenstorrent.com>,
- Emil Renner Berthing <emil.renner.berthing@canonical.com>,
- Eric Dumazet <edumazet@google.com>,
- Faizal Rahim <faizal.abdul.rahim@linux.intel.com>,
- Furong Xu <0x1207@gmail.com>, Inochi Amaoto <inochiama@gmail.com>,
- Jacob Keller <jacob.e.keller@intel.com>, Jakub Kicinski <kuba@kernel.org>,
- "Jan Petrous (OSS)" <jan.petrous@oss.nxp.com>,
- Jisheng Zhang <jszhang@kernel.org>, Kees Cook <kees@kernel.org>,
- Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
- Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
- Ley Foon Tan <leyfoon.tan@starfivetech.com>,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- Matthew Gerlach <matthew.gerlach@altera.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
- netdev@vger.kernel.org, Oleksij Rempel <o.rempel@pengutronix.de>,
- Paolo Abeni <pabeni@redhat.com>, Rohan G Thomas <rohan.g.thomas@altera.com>,
- Shenwei Wang <shenwei.wang@nxp.com>, Simon Horman <horms@kernel.org>,
- Song Yoong Siang <yoong.siang.song@intel.com>,
- Swathi K S <swathi.ks@samsung.com>, Tiezhu Yang <yangtiezhu@loongson.cn>,
- Vinod Koul <vkoul@kernel.org>, Vladimir Oltean <olteanv@gmail.com>,
- Vladimir Oltean <vladimir.oltean@nxp.com>, Yu-Chun Lin <eleanor15x@gmail.com>
-References: <aNQ1oI0mt3VVcUcF@shell.armlinux.org.uk>
-From: Maxime Chevallier <maxime.chevallier@bootlin.com>
-Content-Language: en-US
-In-Reply-To: <aNQ1oI0mt3VVcUcF@shell.armlinux.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Last-TLS-Session-Version: TLSv1.3
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: RFkC1TpgxWymXWBvlMT9cQu4IogWyOpZ
+X-Proofpoint-ORIG-GUID: RFkC1TpgxWymXWBvlMT9cQu4IogWyOpZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIyMDA4OSBTYWx0ZWRfXwn9os60yemWF
+ 8TMImiox4h1JXRcSFFmR81oaIKHrdX0mFqXKwpLHmo61ohP99FibY1K/UPA2gapIMl3Uoo50LBM
+ s2MS6rbjZeEZTkj7GyommiDp47m526isRBH0BiCISiErJqlgUZrmK1JyFKphP3XZiFkhWdrrQ0t
+ mMgBNXnFSBRSu/qliS/aM36RK2aJZU/qIu79XbXHvHXWIK1hUQSdaJkWvjxe2qgP6Sbdnr1qOsr
+ WEqML0wCPKzhjYiRPMRP7zPAJ1+FGD5dppomvC90yI3S31FKX+5QMfZl6QQVYCAMfDqOrIiZJmK
+ LezkARr6vSnxGc1AodovtRSgccSQFs4VIXKAOQ11ed4s9erBuzUCVv5FOFoCRxkUNQJKvNk7/2o
+ l3dk/1NH
+X-Authority-Analysis: v=2.4 cv=BabY0qt2 c=1 sm=1 tr=0 ts=68d52ef8 cx=c_pps
+ a=IZJwPbhc+fLeJZngyXXI0A==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=AcHsLZsjNhMhd8_3HEgA:9
+ a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-25_01,2025-09-24_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 phishscore=0 bulkscore=0 priorityscore=1501
+ adultscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509220089
 
-Hi Russell,
+From: Jyothi Kumar Seerapu <quic_jseerapu@quicinc.com>
 
-On 24/09/2025 23:47, Russell King (Oracle) wrote:
-> This series is radical - it takes the brave step of ripping out much of
-> the existing PCS support code and throwing it all away.
-> 
-> I have discussed the introduction of the STMMAC_FLAG_HAS_INTEGRATED_PCS
-> flag with Bartosz Golaszewski, and the conclusion I came to is that
-> this is to workaround the breakage that I've been going on about
-> concerning the phylink conversion for the last five or six years.
-> 
-> The problem is that the stmmac PCS code manipulates the netif carrier
-> state, which confuses phylink.
-> 
-> There is a way of testing this out on the Jetson Xavier NX platform as
-> the "PCS" code paths can be exercised while in RGMII mode - because
-> RGMII also has in-band status and the status register is shared with
-> SGMII. Testing this out confirms my long held theory: the interrupt
-> handler manipulates the netif carrier state before phylink gets a
-> look-in, which means that the mac_link_up() and mac_link_down() methods
-> are never called, resulting in the device being non-functional.
-> 
-> Moreover, on dwmac4 cores, ethtool reports incorrect information -
-> despite having a full-duplex link, ethtool reports that it is
-> half-dupex.
-> 
-> Thus, this code is completely broken - anyone using it will not have
-> a functional platform, and thus it doesn't deserve to live any longer,
-> especially as it's a thorn in phylink.
-> 
-> Rip all this out, leaving just the bare bones initialisation in place.
-> 
-> However, this is not the last of what's broken. We have this hw->ps
-> integer which is really not descriptive, and the DT property from
-> which it comes from does little to help understand what's going on.
-> Putting all the clues together:
-> 
-> - early configuration of the GMAC configuration register for the
->    speed.
-> - setting the SGMII rate adapter layer to take its speed from the
->    GMAC configuration register.
-> 
-> Lastly, setting the transmit enable (TE) bit, which is a typo that puts
-> the nail in the coffin of this code. It should be the transmit
-> configuration (TC) bit. Given that when the link comes up, phylink
-> will call mac_link_up() which will overwrite the speed in the GMAC
-> configuration register, the only part of this that is functional is
-> changing where the SGMII rate adapter layer gets its speed from,
-> which is a boolean.
-> 
->  From what I've found so far, everyone who sets the snps,ps-speed
-> property which configures this mode also configures a fixed link,
-> so the pre-configuration is unnecessary - the link will come up
-> anyway.
-> 
-> So, this series rips that out the preconfiguration as well, and
-> replaces hw->ps with a boolean hw->reverse_sgmii_enable flag.
-> 
-> We then move the sole PCS configuration into a phylink_pcs instance,
-> which configures the PCS control register in the same way as is done
-> during the probe function.
-> 
-> Thus, we end up with much easier and simpler conversion to phylink PCS
-> than previous attempts.
-> 
-> Even so, this still results in inband mode always being enabled at the
-> moment in the new .pcs_config() method to reflect what the probe
-> function was doing. The next stage will be to change that to allow
-> phylink to correctly configure the PCS. This needs fixing to allow
-> platform glue maintainers who are currently blocked to progress.
-> 
-> Please note, however, that this has not been tested with any SGMII
-> platform.
+The I2C driver gets an interrupt upon transfer completion.
+When handling multiple messages in a single transfer, this
+results in N interrupts for N messages, leading to significant
+software interrupt latency.
 
-Thanks for that.
+To mitigate this latency, utilize Block Event Interrupt (BEI)
+mechanism. Enabling BEI instructs the hardware to prevent interrupt
+generation and BEI is disabled when an interrupt is necessary.
 
-I'll give this a test on socfpga next week, as I don't have access to 
-the HW right now. It may not be the best platform to test this on, as it 
-has a lynx PCS and no internal PCS :/
+Large I2C transfer can be divided into chunks of messages internally.
+Interrupts are not expected for the messages for which BEI bit set,
+only the last message triggers an interrupt, indicating the completion of
+N messages. This BEI mechanism enhances overall transfer efficiency.
 
-Maxime
+BEI optimizations are currently implemented for I2C write transfers only,
+as there is no use case for multiple I2C read messages in a single transfer
+at this time.
+
+v7 -> v8:
+   - Removed duplicate sentence in patch1 commit description
+   - Updated with proper types when calling geni_i2c_gpi_unmap() inside
+     geni_i2c_gpi_multi_desc_unmap().
+
+v6 -> v7:
+   - The design has been modified to configure BEI for interrupt
+     generation either:
+     After the last I2C message, if sufficient TREs are available, or
+     After a specific I2C message, when no further TREs are available.
+   - dma_buf and dma_addr for multi descriptor support is changed from
+     static allocation to dynmic allocation.
+   - In i2c_gpi_cb_result function, for multi descriptor case, instead of invoking
+     complete for everry 8 messages completions, changed the logic to Invoke 'complete'
+     for every I2C callback (for submitted I2C messages).
+   - For I2C multi descriptor case, updated 'gi2c_gpi_xfer->dma_buf' and
+     'gi2c_gpi_xfer->dma_addr' for unmappping in geni_i2c_gpi_multi_desc_unmap.
+   - In the GPI driver, passed the flags argumnetr to the gpi_create_i2c_tre function and
+     so avoided using external variables for DMA_PREP_INTERRUPT status.
+   - Updated documentation removed for "struct geni_i2c_dev" as per the review comments.
+
+v5 -> v6:
+   - Instead of using bei_flag, moved the logic to use with DMA
+     supported flags like DMA_PREP_INTERRUPT.
+   - Additional parameter comments removed from geni_i2c_gpi_multi_desc_unmap
+     function documentation.
+
+v4 -> v5:
+   -  BEI flag naming changed from flags to bei_flag.
+   -  QCOM_GPI_BLOCK_EVENT_IRQ macro is removed from qcom-gpi-dma.h
+      file, and Block event support is checked with bei_flag.
+   -  Documentation added for "struct geni_i2c_dev".
+
+v3 -> v4:
+  - API's added for Block event interrupt with multi descriptor support is
+    moved from qcom-gpi-dma.h file to I2C geni qcom driver file.
+  - gpi_multi_xfer_timeout_handler function is moved from GPI driver to
+    I2C driver.
+  - geni_i2c_gpi_multi_desc_xfer structure is added as a member of
+    struct geni_i2c_dev.
+  - Removed the changes of making I2C driver is dependent on GPI driver.
+
+v2 -> v3:
+  - Updated commit description
+  - In I2C GENI driver, for i2c_gpi_cb_result moved the logic of
+    "!is_tx_multi_xfer" to else part.
+  - MIN_NUM_OF_MSGS_MULTI_DESC changed from 4 to 2
+  - Changes of I2C GENI driver to depend on the GPI driver moved
+    to patch3.
+  - Renamed gpi_multi_desc_process to gpi_multi_xfer_timeout_handler
+  - Added description for newly added changes in "qcom-gpi-dma.h" file.
+
+v1 -> v2:
+  - DT changes are reverted for adding dma channel size as a new arg of
+    dma-cells property.
+  - DT binding change reveted for dma channel size as a new arg of
+    dma-cells property.
+  - In GPI driver, reverted the changes to parse the channel TRE size
+    from device tree.
+  - Made the changes in QCOM I2C geni driver to support the BEI
+    functionality with the existing TRE size of 64.
+  - Made changes in QCOM I2C geni driver as per the review comments.
+  - Fixed Kernel test robot reported compiltion issues.
+
+Jyothi Kumar Seerapu (2):
+  dmaengine: qcom: gpi: Add GPI Block event interrupt support
+  i2c: i2c-qcom-geni: Add Block event interrupt support
+
+ drivers/dma/qcom/gpi.c             |  11 +-
+ drivers/i2c/busses/i2c-qcom-geni.c | 248 ++++++++++++++++++++++++++---
+ 2 files changed, 233 insertions(+), 26 deletions(-)
+
+-- 
+2.34.1
 
 
