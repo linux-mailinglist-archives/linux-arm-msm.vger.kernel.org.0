@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-75146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E69DB9FF0F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 16:20:30 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id DBCFFB9FE54
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 16:15:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B4C75E4332
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 14:15:17 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 978064E39D3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 14:15:30 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D59942C11E7;
-	Thu, 25 Sep 2025 14:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4E9362C21D3;
+	Thu, 25 Sep 2025 14:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EGO09OcG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UU0T3pc0"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62BA2C11CF;
-	Thu, 25 Sep 2025 14:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 211D72C15BC;
+	Thu, 25 Sep 2025 14:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758809553; cv=none; b=p1A6WfnWG9XEpgzmvqGLQ+eCyWn7ZyPfVAAG31vlqnwo7eQ6yzsLjs+w7iV2i1xUiHCHfNQg+Z1AdkGQlEkHhAbMr+s1wLGuUgqQpJ3ys0K2v4K8g6v6SJ0SYOrI+h9wHRr1/v52VFa3riecRRo4+FniDoScabWocep9WkAqOHM=
+	t=1758809555; cv=none; b=T4WVUKBKwHjJAIAf9LKclZt+cq8BFyP49D0qRaRB8VBr6kEB4nSBUgy4nAm9MzE1dKe3HgkqjV9Tcam88GSCzJOwnKiS9c4TNRN2pfs9QH2p3k5hKMx1f0wGoO1VtdqlIcvUcbqXn1xBaTxJFKfBTwH25k0lsWEnnq20wDzdMCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758809553; c=relaxed/simple;
-	bh=45sNohOdgqpRrnKmZqLr3TowaEBvAp7Eccog+QljG2g=;
+	s=arc-20240116; t=1758809555; c=relaxed/simple;
+	bh=1vyxGwtjiGL2rnIKM6Bn8m6jVXq/TnHR8oRRcP/oPJk=;
 	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=OR9f2ef+FgQGxlnIs1tJkMaflhLrMAJo6/20Z3XIBp2qmU9NJ+TI5ghasgQPUpqIF3E89tnMHRMhyus1jfpoGxvjWhz0kG7O89N8/YNdVjMqCp5MXf+4rInk1PLuOw9Xnc6b8TSbU9dwyEWT52iaiuUkVJTuJRu80eIb2AaHYPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EGO09OcG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E59C4CEF5;
-	Thu, 25 Sep 2025 14:12:32 +0000 (UTC)
+	 Message-Id:Subject; b=qWXt2i4YJplleP50Bzcp0qrHpw3IZCr4NczMbVG0N4YC+mQoaF3vbJpiTqQeKT2Kjfrm/bcTrj/HtJ8MY51nSZ7fV7CkD8KzfSa6ehlnY7+dzMTJbu2AyaaikyCFlRxB1cCZi9pOd3R/C2tVehMvcuco6L5D9hZfPtc2nUrusEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UU0T3pc0; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDB9CC4CEF7;
+	Thu, 25 Sep 2025 14:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758809552;
-	bh=45sNohOdgqpRrnKmZqLr3TowaEBvAp7Eccog+QljG2g=;
+	s=k20201202; t=1758809554;
+	bh=1vyxGwtjiGL2rnIKM6Bn8m6jVXq/TnHR8oRRcP/oPJk=;
 	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=EGO09OcGbEjlYra5EMSMXzIs096VW7kFsgBPeCOnhz2ihb3ib6XGcAuOFY0j4Yygk
-	 JftCzDgv9T1XmBXqwc/aLyPdyA2ooIcfxVASoEcXVugIg9Qi0rZbWVChEwOk11e4Ek
-	 Tx+/9krd7ZUn6I3bpoHW8y89491qBGfgdbIDMdUQwVJKtDgA76ws7QxRYN+TQNU9hS
-	 1pTjqaryVBunjVYLiASedFpipSHAhZf1AXGszul3SM4u2mtySR3r6gC4pAYBNoEgCC
-	 Q+OKr9H84mIeb9nw6XsKZqzS4k30w8rudpf56dGVP1nYf211MNjTJtsNsgj7l0ccgi
-	 BmwjM2bS6yxvQ==
-Date: Thu, 25 Sep 2025 09:12:32 -0500
+	b=UU0T3pc0FF2wFfPhEKXpDoO4w8nYaCrUtjVf70Pa44wSxk8fBHg56SaET3X4tOaBq
+	 PnOkMCB87iPNPQTC7OdoziohljObnYjhcirEUzoi2B7KJxGAxe5eL4UkekJIVw1h3b
+	 y5DnlDt5qw/CUxmTrbDvdReJVrNIGzwXeI98zwY+YkqSCvy0G/aZpq7tmFJZfIISU0
+	 taP8MTsn6JA3NPFpFEp5cD645iJ6VUYQo80pPgNxHEs5R8KCwnlxjgciwdTqEKB3II
+	 Lvl5FeXi8rAFWZp0rHj+RgHTeLGaAdm9pg4GHm7rCvTMbhEy8UEt78eryhcVRUUkDg
+	 15OBR0plyNQhw==
+Date: Thu, 25 Sep 2025 09:12:34 -0500
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -51,36 +51,68 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: andersson@kernel.org, conor+dt@kernel.org, konradybcio@kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- krzk+dt@kernel.org, linux-arm-msm@vger.kernel.org
-To: Jingzhou Zhu <newwheatzjz@zohomail.com>
-In-Reply-To: <20250925040246.8454-1-newwheatzjz@zohomail.com>
-References: <20250925040246.8454-1-newwheatzjz@zohomail.com>
-Message-Id: <175880948940.820227.6318085829775855857.robh@kernel.org>
-Subject: Re: [PATCH 0/2] arm64: dts: qcom: Introduce Huawei MateBook E 2019
+Cc: Casey Connolly <casey.connolly@linaro.org>, 
+ Sam Ravnborg <sam@ravnborg.org>, Simona Vetter <simona@ffwll.ch>, 
+ devicetree@vger.kernel.org, 
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org, 
+ Thomas Zimmermann <tzimmermann@suse.de>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Bjorn Andersson <andersson@kernel.org>, Maxime Ripard <mripard@kernel.org>, 
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
+ David Airlie <airlied@gmail.com>, Konrad Dybcio <konradybcio@kernel.org>, 
+ Thierry Reding <thierry.reding@gmail.com>, dri-devel@lists.freedesktop.org, 
+ Conor Dooley <conor+dt@kernel.org>, 
+ Neil Armstrong <neil.armstrong@linaro.org>, linux-kernel@vger.kernel.org
+To: David Heidelberg <david@ixit.cz>
+In-Reply-To: <20250925-s6e3fc2x01-v1-0-9293016768f7@ixit.cz>
+References: <20250925-s6e3fc2x01-v1-0-9293016768f7@ixit.cz>
+Message-Id: <175880949068.820285.11045140052982213642.robh@kernel.org>
+Subject: Re: [PATCH 0/8] Add OnePlus 6T display (Samsung S6E3FC2X01 DDIC
+ with AMS641RW panel)
 
 
-On Thu, 25 Sep 2025 12:02:44 +0800, Jingzhou Zhu wrote:
-> Huawei MateBook E 2019 is a 2-in-1 tablet shipped with Windows on ARM.
-> It is one of the early WoA devices powered by Qualcomm Snapdragon 850,
-> or the sdm850 platform. This series adds mainline Linux support for this
-> device using device tree.
+On Thu, 25 Sep 2025 11:12:46 +0200, David Heidelberg wrote:
+> This patchset enables display on the OnePlus 6T smartphone.
 > 
-> Signed-off-by: Jingzhou Zhu <newwheatzjz@zohomail.com>
+> Minor adjust to the device-tree of OnePlus 6 had to be done
+> to properly document reset GPIO used. Also same adjustments
+> had been done to the sofef00 panel driver (used by OnePlus 6).
+> 
+> In the last step new DDIC driver is introduced together with AMS641RW
+> panel sequences.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
 > ---
-> Jingzhou Zhu (2):
->   dt-bindings: arm: qcom: Document Huawei MateBook E 2019
->   arm64: dts: qcom: Add support for Huawei MateBook E 2019
+> Casey Connolly (1):
+>       arm64: dts: qcom: sdm845-oneplus: Describe panel vci and poc supplies
 > 
->  .../devicetree/bindings/arm/qcom.yaml         |   1 +
->  arch/arm64/boot/dts/qcom/Makefile             |   1 +
->  .../qcom/sdm850-huawei-matebook-e-2019.dts    | 967 ++++++++++++++++++
->  3 files changed, 969 insertions(+)
->  create mode 100644 arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
+> David Heidelberg (7):
+>       dt-bindings: panel: Add Samsung S6E3FC2X01 DDIC with panel
+>       dt-bindings: display: panel-simple-dsi: Remove Samsung S6E3FC2 compatible
+>       arm64: dts: qcom: sdm845-oneplus-fajita: Reflect used panel in compatible
+>       arm64: dts: qcom: sdm845-oneplus: Correct panel reset gpio polarity
+>       arm64: dts: qcom: sdm845-oneplus: Document TE gpio
+>       drm/panel: samsung-sofef00: Invert reset gpio polarity
+>       drm/panel: Add Samsung S6E3FC2X01 DDIC with AMS641RW panel
 > 
+>  .../bindings/display/panel/panel-simple-dsi.yaml   |   2 -
+>  .../bindings/display/panel/samsung,s6e3fc2x01.yaml |  77 ++++
+>  MAINTAINERS                                        |   6 +
+>  .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi |  31 +-
+>  arch/arm64/boot/dts/qcom/sdm845-oneplus-fajita.dts |   2 +-
+>  drivers/gpu/drm/panel/Kconfig                      |  13 +
+>  drivers/gpu/drm/panel/Makefile                     |   1 +
+>  drivers/gpu/drm/panel/panel-samsung-s6e3fc2x01.c   | 404 +++++++++++++++++++++
+>  drivers/gpu/drm/panel/panel-samsung-sofef00.c      |  10 +-
+>  9 files changed, 536 insertions(+), 10 deletions(-)
+> ---
+> base-commit: ce7f1a983b074f6cf8609068088ca3182c569ee4
+> change-id: 20250923-s6e3fc2x01-f9550b822fe5
+> 
+> Best regards,
 > --
-> 2.47.3
+> David Heidelberg <david@ixit.cz>
 > 
 > 
 > 
@@ -101,22 +133,15 @@ make sure dt-schema is up to date:
 
 
 This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: tags/next-20250924 (exact match)
+ Base: using specified base-commit ce7f1a983b074f6cf8609068088ca3182c569ee4
 
 If this is not the correct base, please add 'base-commit' tag
 (or use b4 which does this automatically)
 
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250925040246.8454-1-newwheatzjz@zohomail.com:
+New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20250925-s6e3fc2x01-v1-0-9293016768f7@ixit.cz:
 
-arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dtb: pinctrl@3400000 (qcom,sdm845-pinctrl): i2c5-hid-active-state: 'oneOf' conditional failed, one must be fixed:
-	'bias-pull-up', 'drive-strength', 'function', 'input-enable', 'pins' do not match any of the regexes: '-pins$', '^pinctrl-[0-9]+$'
-	False schema does not allow True
-	from schema $id: http://devicetree.org/schemas/pinctrl/qcom,sdm845-pinctrl.yaml#
-arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dtb: rsc@179c0000 (qcom,sdm845-rpmh-apps-rsc): regulators-0:smps4: Unevaluated properties are not allowed ('enable-active-high' was unexpected)
-	from schema $id: http://devicetree.org/schemas/soc/qcom/qcom,rpmh-rsc.yaml#
-arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dtb: regulators-0 (qcom,pm8998-rpmh-regulators): smps4: Unevaluated properties are not allowed ('enable-active-high' was unexpected)
-	from schema $id: http://devicetree.org/schemas/regulator/qcom,rpmh-regulator.yaml#
+arch/arm64/boot/dts/qcom/sdm845-oneplus-enchilada.dtb: panel@0 (samsung,sofef00): 'poc-supply', 'te-gpios', 'vci-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
+	from schema $id: http://devicetree.org/schemas/display/panel/panel-simple-dsi.yaml#
 
 
 
