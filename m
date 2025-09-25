@@ -1,98 +1,104 @@
-Return-Path: <linux-arm-msm+bounces-74866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-74867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC4EBB9D1EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 04:18:19 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0EB77B9D204
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 04:19:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 72E584E195C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 02:18:18 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1BCA21B26D7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 25 Sep 2025 02:19:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7EB6682899;
-	Thu, 25 Sep 2025 02:18:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B367D1EA7CE;
+	Thu, 25 Sep 2025 02:19:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="I6hbMzC1"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="KcJ9qBim"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFE701E260C
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:18:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB151397
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:19:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758766695; cv=none; b=B6JK+9WFjGAKV1LYjSiUS3yRsYMr6Ay8/QFg4jkcB6S5cBIzd2A4xh3DOtMUqcu5Wh6mAsSPdA/5dX048eRL/QDEn7mDu46N9c/HVJIXZCQLhTssvwzN57XDQ3M8WNZq3iwHW3tA0H8LHVcLXDqEveSnUPQVV9VaPrOswlVwHG4=
+	t=1758766760; cv=none; b=rAItd7zWxborKuDWFYAK132ZU4pXeC6bdFZ3txazRIxDyhJnyohKAWMWJ4dFufLsqNn0jzVAZWyiUucjFqPGxV2WPdrteXjdAjBsDIeMU2YDfMI6+LosLyoeQ+WuCJrRk1GABeG/J9q96UdKlMjDbJ99A236zaygwL1GxQGE7Yc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758766695; c=relaxed/simple;
-	bh=CehTCmJ3harVhsJLXtf6xLYElsZU85bSjSvk7ys12WE=;
+	s=arc-20240116; t=1758766760; c=relaxed/simple;
+	bh=V0o0RUbSBp5pz28ZYimBAnWbI9+qlIN8juPN5I30FXk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mz6mkURtvcHOf9PWzduaaygXQquDarQQ0uiDiq86u0H3nLXIjl7VazE2T13easRBLgEdnJzA/5Vdz+wRicfpCiKjp7jZxqdtxnaNfoXdgiZKLms+ocYCIVnTCWEcpVMGPOlv/xsOR7uRfnxCCBl36PljVx3E9zIBuBhGUI8vCy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=I6hbMzC1; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=Jl9QrAMKmsWIsSv9nkD6EF9RWnouEbb5VV+WzFcBkgRVf7ub4oH6F0M1WbxxjKCOfOOL4c0z2NfRLiShbwro4ktljbuiy1YKOk0YhUDXXezV7xx3y6ns9bpNWWAm6a9/rxa69A54vOz2n0wjHluhHTXMBnXaz8VTqWsBAv2djK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=KcJ9qBim; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P0qisx001992
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:18:13 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58P1CQQc019949
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:19:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=1tdqO6cd5fS/+0X1NnexIlG3
-	ahbTElvONhvf7VCi+6w=; b=I6hbMzC1fh2Scl+TOYopFwKYOj3BNWylHO/zZqGk
-	6gfoCqw7pFzO1jOYtskX3JNJB6AGkeoaw2/cipQvzyOQvilwapzlzq3xqNaTOciR
-	McMhPo6Oayuq8nkVhnDNaLHUDB0OAwP8XxR76TDUFT3lXBFRdr4BY/hYu2M2qmKh
-	s4LWdCErmLCWF9ml0O3EBI4KFK455jNaGvDfjz3vm0SE5q4QtVrNgjwrx1L1r8gE
-	y6oW614EMhcKxW42n7a+KjaJayj2CPZSDJjJfWdPlq7qQnOYMMXeKHkfcOVfDETL
-	eK4ZAm1JDR/bF/N8hiUyCRrvCBJZAxe295l9ED/uSXyydg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 499k98pdy9-1
+	:references:subject:to; s=qcppdkim1; bh=kXk60tSvBFJFBNcCoJMszP6h
+	av8IWwZrJglPAylRH68=; b=KcJ9qBimdnC4DcQ9taZSKFlEBr65ZwgcP691v3rR
+	rVBr+bJOKGlI7De2HUw/QaU80Zor7DjqZT4daVHVTDgRLtgDeguznlTSq1ssCAIX
+	SKrDS7FnshiAIjqMrFr8foGlk3n3PopOtyyeBKqP+bpMH4AFd3ry/8yzEP3HqpNj
+	WgF5phMsGUnfe31Y07O40j0MimurZujxMWVw5rsIp9bJjGEmZJ0hlBx9517haYC1
+	6zm7Kh58VygsJgmQbqC57zfsPwe3o8uJs73z4lxF9XgJETc9fl6Xu0/0y3KdRrrh
+	uSmPOVafU5cq87OBUHsAnfXB6nv0//HbjL41ij3xTRb6BQ==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49bjpdymus-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:18:12 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4cce66e91e3so15332611cf.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:18:12 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 02:19:18 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4d7f90350f3so11421381cf.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 24 Sep 2025 19:19:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758766692; x=1759371492;
+        d=1e100.net; s=20230601; t=1758766757; x=1759371557;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1tdqO6cd5fS/+0X1NnexIlG3ahbTElvONhvf7VCi+6w=;
-        b=Zj8NKg7t1MFA/HjttESaaEM+AxCTB/SOifOtVatdgkpwzYJufM7fcHPGo1IsuArpRe
-         ECeyha2oskt8a/d2vKicISRpUJdAkS+bV5xWQ+Igo87dQ1CkZq4Cacor4KXTsk8IyJm3
-         IiioDblPiBHvmMQQSEWjtQtCkab4aQbJjLHGyHY3f3dCbskH9pYpcCDj7IQtspxuoQSE
-         Lwp2R1VDw2xfe0OkKrNF9VQiTtl/KwNK3YUG8lkq6v7Xe2/JbNiq8xiTFnBY1YH5Q4tF
-         wrIAbcmHwbbEdMZusKH+OjXvvSufWyb9l1orhXnO7u3VbIyIMHgTWguOLWrd02RrKkVZ
-         c1IA==
-X-Forwarded-Encrypted: i=1; AJvYcCUlZnhGM0C/g4xdC12y7cw74ovhGrgCGAFLURhKsajSk6gwee2ICDC1JwDF8GMWG2ytPHDHjQ6WC3/VHn6V@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8Q7rGvq2mkNvRv8osaQOgeZKW5KAeTSAhmpqdKooZpvn2LOH7
-	/jDd1pw8pLbRYCrB05hwy4C64nLUv/TMlSp4sh/hBZw96jqisAtt5eul831vSpo0k5YQ4LTJ8nw
-	JdsUewvBPVgdJLbvhJi8lkhGN5O1VHZFFrNX86WXTk/dCAftmwLbn2TgyjDssBNner58d
-X-Gm-Gg: ASbGnctyWIuzUjyenlegxupCCCTM1cOUL81CA90qgbqgKa1s26buMgDA91P/NxIvpvA
-	wVfYrQmNEwN12aJ+FJ1oZCUjXHM59RInGjb2sfi2ZV4VY2lG2rIcCROhfz4Pwe6dLNiv4PzIcN0
-	sWFIzo+czJM+In2MY/BjDVkIz+e5WU2tCKIneOdEjf8HeVrS0t4ifpGs5kv5XuKlXzNvk31A4Wu
-	pI5zoqvGvobwofAwV+hwQwJMhgEe3xgohtv3lm6hpSOSamZnq47tD7AwfhD0dpU//IN8wQDTVRH
-	5ka1arRxLuth9tAcywzfVMh60YkuxqTm78v+CGdgT1eeEiwoOmFwqiDe4lmUdcHILCMJiVwU0Vh
-	SAlEgLPQn2ljjTuR47LEaoioWiInfcNWH75bU5j9Rn8oCkRIu+wn7
-X-Received: by 2002:a05:622a:1793:b0:4d0:63f2:7f49 with SMTP id d75a77b69052e-4da4962f5a5mr25304251cf.33.1758766692074;
-        Wed, 24 Sep 2025 19:18:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxpvMVwwqQ5NSW2xYygd6P9uBSKUklEXxj6opSTMlhrMfSS6SRxYcwepDRrUJAQRSgxE63IQ==
-X-Received: by 2002:a05:622a:1793:b0:4d0:63f2:7f49 with SMTP id d75a77b69052e-4da4962f5a5mr25304041cf.33.1758766691461;
-        Wed, 24 Sep 2025 19:18:11 -0700 (PDT)
+        bh=kXk60tSvBFJFBNcCoJMszP6hav8IWwZrJglPAylRH68=;
+        b=XDmufn/VqkfZcPqbHR653G983mQRbBZWX0KqVNbIOTPViCIoRSYTmObC/ClF27gxLz
+         pXmPwu+pZKpomev4HIeYDmVeugpCPnWz67pmfLceLqiC1ZgrBJy7wC8wFMZ6KAam8Uf1
+         UbxyZn5zelUVvVAbmHBxvx2n5c4pTBCwkvIz49A3uZn8IEtbDHqahyRNcaZwaU+avegF
+         93J0o6uBIAjUw3mXcCaAdw+7ZmkJRLyc7nnksXZH1m3Ep+iUDwbnVD273C9EDlwHh1F2
+         2th8eh+O1LMzFzL8XCWdxru2shWLAGyIhjuwrha4g5rXoU6OTD0sTRj6hMisWgBhTKmd
+         hjbA==
+X-Forwarded-Encrypted: i=1; AJvYcCXiU8PjTerV6H2x6X6fa2iTWJCtEp7s1Aa84pyxeo3sDd6bBx8Iwwt5GBYlr6gLd6Im6aq6AVIkKh1BaH1+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzsjRicqItVfwVAvrmbyZUka3ETrXa095Aci/k2P+xiywwBCM3r
+	heS445jeLisbFwE822qK8Bk3CGXHjexUBuaOeW3U0ry7RvANXozhb3g6J2X4uX4A0O5vbyV2Ote
+	RyZLVGEixVjFUtrYI/0rAF8rLuI8IGgfk2bEs0hkf8VxOavkdbnFsRuq3P/x9+2HBsJIL
+X-Gm-Gg: ASbGnct3OlQR0Y2HQT0lzVdqDOzy+wsJTPQ7U6iz6UWRC95Py3MlerjDxU0/BR+8ON6
+	d1/4/zfnSYvQ6JxzgK4lyfVtoW5pj8CbiKuLjHJyKND2GsTaMaUPNHKpiKmFGwHP0uyzQuH9fU9
+	duiFgqzhZaJ2+QerOQCD+j4aPLj0vvdKaJKZ1UGPWYoQsAn3Jdk5DuB+3Nw8YSvlMiN9KdqXRcp
+	ZePuOEyUVK6P51Gq9DTpwPqvpJ2zvhDRZ1lQNLATEhCx687jGbWYg3tBkv4367QqLP+wqgE/jj8
+	zfn1LFeSJT8R6rKwNvCYTUM7OmyT1zYgPXH62g1Cinw8l954xggnPAZwn7pQv1ik8KgN4ICUwwO
+	GCNemNGgwHMygHtMY2nhqeGJ5eZGxIQZoTDClr6AVLPJlgmzx2Ed7
+X-Received: by 2002:ac8:5712:0:b0:4b2:8ac4:f097 with SMTP id d75a77b69052e-4dacdce3156mr13155351cf.33.1758766757150;
+        Wed, 24 Sep 2025 19:19:17 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEkHoyd8pfNk/u0CL0VcNtv5YsWD3I6SuFs5XOWMFIZNGOfOtmwhgR8TS+cBKd/zfDeZIjh2w==
+X-Received: by 2002:ac8:5712:0:b0:4b2:8ac4:f097 with SMTP id d75a77b69052e-4dacdce3156mr13155191cf.33.1758766756673;
+        Wed, 24 Sep 2025 19:19:16 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-58313dd5f4bsm242768e87.52.2025.09.24.19.18.09
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5831343111asm244566e87.19.2025.09.24.19.19.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 24 Sep 2025 19:18:10 -0700 (PDT)
-Date: Thu, 25 Sep 2025 05:18:07 +0300
+        Wed, 24 Sep 2025 19:19:14 -0700 (PDT)
+Date: Thu, 25 Sep 2025 05:19:12 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Jianfeng Liu <liujianfeng1994@gmail.com>
-Cc: airlied@gmail.com, broonie@kernel.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        lumag@kernel.org, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, quic_abhinavk@quicinc.com, simona@ffwll.ch,
-        sophon@radxa.com, tzimmermann@suse.de
-Subject: Re: [PATCH] drm/display: add hw_params callback function to
- drm_connector_hdmi_audio_ops
-Message-ID: <6mq5morx4kuwmxa3dhpxf42uqedtveectlbeodl5oj74rqk4gy@oweda3unauqj>
-References: <zopgbudg67lygconkv3bl43xogzl6rncif7wdpclbyc4wblan2@n7v75dbnaqqd>
- <20250925015112.19499-1-liujianfeng1994@gmail.com>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+        tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+        yijie.yang@oss.qualcomm.com
+Subject: Re: [PATCH 1/6] dt-bindings: remoteproc: qcom,sm8550-pas: Add
+ Kaanapali ADSP
+Message-ID: <h4lk5psnwx3ma3um2sozhcdccwhmgmbje2lgjks2czcrzn4mre@svtnbyzvrivw>
+References: <20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com>
+ <20250924-knp-remoteproc-v1-1-611bf7be8329@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -101,59 +107,77 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250925015112.19499-1-liujianfeng1994@gmail.com>
-X-Proofpoint-GUID: 0gY_5tjWnqgANQCdWasTcTDBtri7ORt8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIwMDAxOCBTYWx0ZWRfXyrVxL7v0iYb8
- 3Gt64O90LqVHKxrzySAYGFeEC5auo7zjTi500GN1f+udt3OTonA5JO4JwS5g9EujR9c5ccRUPPV
- PEEHdGcLVuFjdnzMl2VdiyDPQI/4LqNjxg5eBEVQ9FKWHkhPBvHl/T2L1XmCwAFd8U5AVyfpWGW
- 4HcLCtHg+1y8qJjkCe5JJZi0+IBIUBPMt0ZyIojQw/VhF8DMLbWG8T9M7gT5lRt9FJxohaEKDwy
- TVnTJOhWH4AaInJRSy+rfuDdREiubr23mM9vKzO5gmdY/Ci7wQFbp2Qp8mzFtA2SA0bpAajdwe5
- XiUXw6i+gB7dHQYCLgylHFqqlIdWaG2dAnfGybv6SGWL99jyjyEboWQRuc9oKShx9LEJw4D5TMK
- qPEfcz9V
-X-Proofpoint-ORIG-GUID: 0gY_5tjWnqgANQCdWasTcTDBtri7ORt8
-X-Authority-Analysis: v=2.4 cv=Dp1W+H/+ c=1 sm=1 tr=0 ts=68d4a664 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=GGPZM4PYextjLufLVlkA:9 a=CjuIK1q_8ugA:10
- a=dawVfQjAaf238kedN5IG:22
+In-Reply-To: <20250924-knp-remoteproc-v1-1-611bf7be8329@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: mDt0Wh1MfDeN8qRp1vFfCkH5N4mR4m_u
+X-Authority-Analysis: v=2.4 cv=Pc//hjhd c=1 sm=1 tr=0 ts=68d4a6a6 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=TG0ozkzLEzouTHCdhgAA:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-GUID: mDt0Wh1MfDeN8qRp1vFfCkH5N4mR4m_u
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTIzMDAyMCBTYWx0ZWRfX0TPlzbNxGkI2
+ iWEs3rGjdmcwP2oYnZBOyesxim8YRcUBZ0ZMbu0EEWf5gI35rQvZYpbiBuHY9haRB3I8TJK5Qpw
+ +APRf0shl12a4gxtxXMZG0c3ND1/JuuqFixFFKPObRegMv9ohMJAin1D/vIXVPdpM+gj1dEG7GN
+ ynCij9RbSgiB+/OQtBCO0E6y84KgRCp5g5NQRblZ5uRRTkpBJ2vLqHb1tjzkdDZCYIOV/CSwvTn
+ 6r87kKFSGpjNpcWFqcjR1yg1uwQIdZwU9fzqzCuI8Kbd/0P0ybbtxRqrXvweHELVRlXN+rKgfzB
+ bgLybDU88ciKhUBSR0JdHtOjZYS0H14ABZ5xOtn3+BIJEFhP4KKEbKbPxfroQ4vyTeIDPqei7K8
+ WvvwvD4U
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-24_07,2025-09-24_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1015 adultscore=0 bulkscore=0 impostorscore=0
- phishscore=0 spamscore=0 priorityscore=1501 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2507300000 definitions=main-2509200018
+ priorityscore=1501 phishscore=0 bulkscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 suspectscore=0 clxscore=1015 adultscore=0 classifier=typeunknown
+ authscore=0 authtc= authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2507300000 definitions=main-2509230020
 
-On Thu, Sep 25, 2025 at 09:51:12AM +0800, Jianfeng Liu wrote:
-> Hi,
+On Wed, Sep 24, 2025 at 04:37:22PM -0700, Jingyi Wang wrote:
+> Document compatible for Qualcomm Kaanapali SoC ADSP PAS which looks fully
+> compatible with SM8750, which can fallback to SM8550 except for one more
+> interrupt ("shutdown-ack").
 > 
-> On 2025-09-24 20:17 UTC, Dmitry Baryshkov wrote:
-> >> msm_dp_audio_prepare is not called because hdmi-codec driver only checks
-> >> and runs hw_params. This commit will add hw_params callback function
-> >> same as drm_connector_hdmi_audio_prepare, so that hdmi-codec driver can
-> >> work with userspace alsa.
-> >
-> >I think something is wrong here. The prepare callback also should be
-> >called. Is it that the prepare callback is called too late?
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
+>  Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 > 
-> I have added debug log to hdmi_codec_hw_params() and hdmi_codec_prepare(),
-> but only logs from hdmi_codec_hw_params() are printed without this patch.
-> After applying this patch, hdmi_codec_prepare() is called after
-> hdmi_codec_hw_params():
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> index 2dd479cf4821..be9e2a0bc060 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,sm8550-pas.yaml
+> @@ -28,7 +28,9 @@ properties:
+>            - qcom,x1e80100-adsp-pas
+>            - qcom,x1e80100-cdsp-pas
+>        - items:
+> -          - const: qcom,sm8750-adsp-pas
+> +          - enum:
+> +              - qcom,kaanapali-adsp-pas
+> +              - qcom,sm8750-adsp-pas
+>            - const: qcom,sm8550-adsp-pas
+>        - items:
+>            - const: qcom,sm8750-cdsp-pas
+> @@ -95,6 +97,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,kaanapali-adsp-pas
 
-When does q6apm_lpass_dai_prepare() happen?
+This one and the next entry are redundant. Do you see why?
 
+>                - qcom,sm8750-adsp-pas
+>      then:
+>        properties:
+> @@ -185,6 +188,7 @@ allOf:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,kaanapali-adsp-pas
+>                - qcom,sm8550-adsp-pas
+>                - qcom,sm8650-adsp-pas
+>                - qcom,sm8750-adsp-pas
 > 
-> [   14.218445] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_hw_params() started
-> [   14.223004] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_prepare() started
-> [   14.534614] msm_dpu ae01000.display-controller: [drm:adreno_request_fw] loaded qcom/a660_gmu.bin from new location
-> [   14.535750] [drm] Loaded GMU firmware v3.1.10
-> [   15.727443] rfkill: input handler disabled
-> [   42.647157] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_hw_params() started
-> [   42.656774] hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_prepare() started
+> -- 
+> 2.25.1
 > 
-> Best regards,
-> Jianfeng
 
 -- 
 With best wishes
