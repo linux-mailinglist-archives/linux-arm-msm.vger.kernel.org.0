@@ -1,100 +1,110 @@
-Return-Path: <linux-arm-msm+bounces-75346-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75347-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0DA9DBA54B0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 00:07:32 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EEB3BA552D
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 00:26:04 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id B2AAC2A27F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 22:07:31 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id DD0B44E1C19
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 22:26:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 147C01D6187;
-	Fri, 26 Sep 2025 22:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7E58D2BDC14;
+	Fri, 26 Sep 2025 22:25:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cIzTOVac"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="NSEIvewc"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700D6296BAB
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 22:07:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD9C129B8D0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 22:25:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758924444; cv=none; b=gEhgT/mJET5pZiAxLbcDOppNSTIJZhQME2q3CAl0qb2jA0bnqdQ7D3N3cGabsVgZzAdxkXCHdhHqLWKkvevocltZVVFsV7f5iqRjrm5TG26fuyaqHbBlehAYt5lNZG2kTMlx0y8yS88kWylgVt2a5Idos0QWEiWqzNWiOlRKRts=
+	t=1758925555; cv=none; b=jVAdYiwwHVRqztQsMzvl1qImg6RHcnF/sHA7/1SfAOluqgxzH93r3sLDC4O5psEZF6V9a3ek3Y1nYO7iZYZn6bSfIoOVnetIBzQ/Af/R2PAQ0x3r299CL0GiAlHuhZ+eBtBD+74LLmXBiTE8Ga0vDPKCP7a3KSS6kC4mt6t7COU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758924444; c=relaxed/simple;
-	bh=BV1ZxDHMWxY38fQkwL5M+vOanIM66s2UNwhIQ9cEvbk=;
+	s=arc-20240116; t=1758925555; c=relaxed/simple;
+	bh=7MM/4Q8HvlxKD6Ly9fAUUqgP7sTmdfwyfWBD93UJUZQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gEDkUTBBg56QnJnZ+8XK4CF6yfmwxKRAbPHKScz2memsMbgZorRHloSk5L12paL9y8+U3OnUmwNlIQG+h9jB/9FfIqeD7/IJCbFQMoyyVEtwwaAA7viH9OTturV/8pDZW9pD7aYYhlxo+kcPDM79k1h/98oj4Wj2ZftzQljcnuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cIzTOVac; arc=none smtp.client-ip=205.220.180.131
+	 Content-Type:Content-Disposition:In-Reply-To; b=cZ1x42ZS2owLuL3aZfUIn60zvh4V1NlxhbiF+jiOsOFtOIXy2oYQgcDa0Tm8H7SbYIOR8+kSDbcEJHGOfolbwD/GKCTHuwtsgFJ8ahRy1Pk/YEWOmLwykZcWC1pcN0oxdC76uFgsOmPiVEiyO491bChTQHP2yDioAS2pwzswOEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=NSEIvewc; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58QEWovi015940
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 22:07:20 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58QEX5WV012723
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 22:25:52 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=lHtAHBnJANbRMtBfR2vxVJaV
-	VRDR9+GfMMa3SXU9+WQ=; b=cIzTOVacqywUe94nbfMHFrTcCGghBqY+QdouA70B
-	8JE55/BAUndTR85COcseST3y0UhmeG/BUmxYf2+En06Tq4n7xrdyUrWsywJ45qqM
-	9w3JUJaUBIp9JWWN6uOod3aGGVWm+1AXOVG2msHITPJzr9qSv0Usak/6G0QaqJZC
-	lbP8u+ZRQOQcS/zABwhZsMIIP7KIjkzU44J/AGUYZKJXss8Iy2IoEeYjhw+fyZ47
-	QSWXGCPO4O1t0/d1f1BhUizsj+/DiKviS2Lfxkdb3sCQHaGVHdraEJmASQzk+FOp
-	uTN/U54NHMN9QQFwssWS98wxuqjVLIwjTT2e646blJtcZA==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db0tv95y-1
+	:references:subject:to; s=qcppdkim1; bh=5lSU3+DF/fdtA8+mTA+JC5Hi
+	PEd6zdPlVsitlBTLwGQ=; b=NSEIvewcyL3zFXW/+Ca5Qzv1D84DcIgwrazLs7aM
+	TBGuHKNPsECaGDepxywh1q7Rk1eJ0NjKW7o8AbCSpRacX0AEyz6saDV7Qqh+Ai7q
+	18m/hqjdp1Dl6Ce8CiwKWsXV/E/m0EwD2Y4yiYxVgAVJ6VSlkMi0q4TLUOsss6fP
+	wCebTbDOmD8iEuf6uIvZgmZ/dWRAnhgHOJ2LrC067nbaweygrDODO+bTlvrijntS
+	ZateaaO+PmUuqqjxZzLYVvEn2ulWsH5PZBKkv1n1gxwpugjWO8FfEZjPQv6BlOta
+	k0ScioXI334PD/xEKq8tjMKKSiQYmiel/zgcDnwco8QMcA==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db0u49me-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 22:07:20 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4de36c623f6so23578471cf.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 15:07:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 22:25:52 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ddc5a484c9so27338021cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 15:25:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758924439; x=1759529239;
+        d=1e100.net; s=20230601; t=1758925551; x=1759530351;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lHtAHBnJANbRMtBfR2vxVJaVVRDR9+GfMMa3SXU9+WQ=;
-        b=KXvEmlHzITO1BAlL+fVz8pCubTMo3ChGAsu22qT3uqwyDe8RXZApYkeKv2+ePGKmwG
-         5ZfVEG7yUOksYlMTRbMGUEHH46K7oyXw12hok3kIMC6amqAp/6rZvLP0/cxlVq7ScFdW
-         HWvIvycJ7T7NSk8KlqP+bSo1LtPRSKIyvAVHnuaGkPhfwybaj2ci52x1axh0syhe3Jqv
-         hX/DVVVdlyMHzcpiWVgTzL/aB1SSz+sW4T8/tWoiQnwkfIiagdqNjg405eAmo/gjkBP+
-         H+FmxRQmSvR8ognCF3Qbb9zIQJ2igckillG+MFX9jYljuUkrSAzDQgKWNB0qaYIEIfdb
-         hkyg==
-X-Forwarded-Encrypted: i=1; AJvYcCWjE1KX1j/2Ad+gEBZCYoRjCYSCots3RrLMrL3uagjxHpDfjBEEK/PqmcL/hb1wN8LYorEKKZJ8lcA2jHJO@vger.kernel.org
-X-Gm-Message-State: AOJu0YwHx72Qvq8J8+KjdblCd0QSzBYrRT6GnO2cSir7gR26yIesEwDP
-	WPj760xXI8tgPL6BuxDKofi6meR23KpPBuKFlNQ/+jimn7amcI0wyrGCqIol+TtwPAQ2M/BQFeE
-	yInVfSFHbje9V/PPtfjENpDsyamqjVUlPIw0hkKWnspMX80VA/Frb1oYRuJvieDqjd20J
-X-Gm-Gg: ASbGnctfoBFHHVykHvvVnXtE0JcMzV40gZxk9+KnKN7GNzqyyvIKsV8v+Ljw90fRl7w
-	EmAHZ54rlI0MpGu0jKOwvLjAO6kGUQfsrjhIZyQZhfBPRxukpVchLhr5/L/zMqbylqRSMqBvN7Z
-	8po5a6b25GIxgwDM0sLCFdYueUzQsva3hpkmi3H48cCWo+qA/vk4bcOOl7g5yJL1mKSWQuDaRHt
-	9sE5vwgm4v4yIwqqkuhyoKPcpHjdaupubW9qce19UTdFKTauf9WRRh/XcuXRPU794iC0Dag2e1y
-	Im8hKkXtsKMK52JG42jbjKBTzCCZzPdl4/imxb2t89E51bz7k+aAIbM0nKBVMsQPxPvH2aJxji9
-	hbCvUyki2RA4flUiFNbh8ll0OmXkhAylGBDbyUOO6TzsvtODyYp8S
-X-Received: by 2002:a05:622a:5e1a:b0:4da:7af7:ca1d with SMTP id d75a77b69052e-4da7b1654b9mr66755251cf.55.1758924439247;
-        Fri, 26 Sep 2025 15:07:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF7y9BPwYXsLwllrlICGh/y3wjajN0DatA1Xa1+K1MRg4+CJ6exu6kPOh8+ogzY0kvWFwS0xQ==
-X-Received: by 2002:a05:622a:5e1a:b0:4da:7af7:ca1d with SMTP id d75a77b69052e-4da7b1654b9mr66754931cf.55.1758924438695;
-        Fri, 26 Sep 2025 15:07:18 -0700 (PDT)
+        bh=5lSU3+DF/fdtA8+mTA+JC5HiPEd6zdPlVsitlBTLwGQ=;
+        b=RrLfKjTR+PnBJTvgqru4CiGAuzvX6MxCY7+CXYD13504mpC5spp8ySLfbFa643cPVi
+         st/pVS7b9sgX/jsEkDymaeZxfUkS+14/S2nIoveCxlQujvifTjNXEY6EizjBxYUt89pf
+         Jc98LnYZnIcWbtVMw38wdLLkF1sWaFNeDgdt0fNelX54fytcOq8Kd5YeK98LiwQlNf3n
+         aL2edX746sZ4dbKE0haeYDA0OyHNjF/G+f+8FwBsU7ot/lqW4EbKHZG96/AtCCJy2Yvo
+         d1i4eoKU0d69pwzIurNtWnlGJ3Eldr1p685qBGRwZlagL/jBz2bprHJfjVrgFOtJJIYA
+         nZHA==
+X-Forwarded-Encrypted: i=1; AJvYcCW8ixEZYszmPQm6+tR5UsADqfKVF9PzbRp8ldoEUL0yUp40Y7M+oWBeHs7cddWbgLKz3nKjJj0PuTHRNrYh@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzb7F09kZequpHsTupNcdTkBhxFmQ61mAFAnO5nCcbg8X4o/nUw
+	oDq2zzlBPvkgp/FXtymLd1Q1y9O6Xv13JjycdhcbQmfcOhTtb990QXWWxNB7F6zlL/YwQF8E7Kn
+	FQTRmdzkQCCkdeACCymFS/Qxdp03GBS4uKMM6kRkmVO2AL5SfnXDbEixVtOP0sM+Nta3iU4cw+L
+	pV
+X-Gm-Gg: ASbGnctgGypatPoMzgY9ynT0iwqcxy+nHth4y0EqqqmvwYe61kLK+3PKCf7/5mdzO2Q
+	wfoaElYr0+sipjhwYvJZehe7ZxwKfZLl/FD0I8F6s2ZjIzUtZzY7+Si+F4nGVFP1ZhnpArzDuiu
+	XP+8bTPxoqguxHn43r4e7b2d1352zOaiPAdMki7zOtBtt7fCXbv73X3VA66JEkSp0PQNhU2VGno
+	oK3qQ7WoavCNIRbIkmQ8FbVODIawbPKUK94zsaobx7aKZgC3gyVfH1O2LseZ/65mf9sF/yMDEis
+	r0f7vesoy9Q2AOm09hicGod4pYTZvaxOAQgq+IXlqdGVgIv4z/HlahJ9/yR3r5lRIIftckZYI+V
+	oDCEnr0gkpDT6DSLR7sa9a/7V087uOL/tXg4v4wb1hYuvid8lmn1T
+X-Received: by 2002:ac8:5945:0:b0:4d9:f384:769f with SMTP id d75a77b69052e-4da4744eaeamr125486851cf.12.1758925550962;
+        Fri, 26 Sep 2025 15:25:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH3Hq26X7V05u80hWdOHJ/Gh3+FDD0FTa4NVIS1a/lRO9spXDUP4q5N9EZ6UiSnowVWAOEQ0g==
+X-Received: by 2002:ac8:5945:0:b0:4d9:f384:769f with SMTP id d75a77b69052e-4da4744eaeamr125486521cf.12.1758925550469;
+        Fri, 26 Sep 2025 15:25:50 -0700 (PDT)
 Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-583173d0fbfsm2141145e87.144.2025.09.26.15.07.16
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-58316a31e19sm2140360e87.107.2025.09.26.15.25.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 26 Sep 2025 15:07:16 -0700 (PDT)
-Date: Sat, 27 Sep 2025 01:07:14 +0300
+        Fri, 26 Sep 2025 15:25:48 -0700 (PDT)
+Date: Sat, 27 Sep 2025 01:25:46 +0300
 From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
 Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org,
-        lumag@kernel.org, neil.armstrong@linaro.org, johan+linaro@kernel.org,
-        quic_bjorande@quicinc.com, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 2/2] usb: typec: ucsi_glink: Increase buffer size to
- support UCSI v2
-Message-ID: <6kbkkiwsp3hzu2u6uezelwufooeeh7efrcc2buydpbziuhr5px@xdp24rhfjqyf>
-References: <20250924232631.644234-1-anjelique.melendez@oss.qualcomm.com>
- <20250924232631.644234-3-anjelique.melendez@oss.qualcomm.com>
- <t3hfr33t76ckecatro5gheycb2phnch57m6zzdpm44ibykbubd@e6nffasyetib>
- <4cbcf312-7697-4725-8fd8-45f2b5b0584f@oss.qualcomm.com>
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>, linux-arm-msm@vger.kernel.org,
+        linux-media@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Vishnu Reddy <quic_bvisredd@quicinc.com>
+Subject: Re: [PATCH 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
+ kaanapali video codec binding
+Message-ID: <2ppixuzddqmpa2d7nkvwwbfn4dnt7j7voyqfqcqeokbkzjg2lm@mokv4cihiuw2>
+References: <20250925-knp_video-v1-0-e323c0b3c0cd@oss.qualcomm.com>
+ <20250925-knp_video-v1-1-e323c0b3c0cd@oss.qualcomm.com>
+ <nuunkv3xwfes6wed5xf4re2efakndvvrfl4lhmenilkic4sjiy@5cb2f5ygegvm>
+ <522d7244-0003-a42e-9be0-1d353df8d5bd@oss.qualcomm.com>
+ <oimuo26ohcye74j6rl5hfbmd4ip5wzudhyiaibf74b5zmjb4vl@xh3dnp7gmvq7>
+ <7c6ab647-0c54-4480-9eb2-5c2bbf5f857d@oss.qualcomm.com>
+ <b5d465e9-e84c-fabf-f275-3d0a5abf764f@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -103,186 +113,125 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4cbcf312-7697-4725-8fd8-45f2b5b0584f@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=I9Vohdgg c=1 sm=1 tr=0 ts=68d70e98 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=KvxZ8lf09URLfSDANNkA:9
- a=CjuIK1q_8ugA:10 a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-GUID: B0nekm2eKV1USFUOwzfm_H6ZwJfFVu0g
-X-Proofpoint-ORIG-GUID: B0nekm2eKV1USFUOwzfm_H6ZwJfFVu0g
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MSBTYWx0ZWRfXyQH3jq//EBxz
- IrO5HV3WTPFAPH1d4+4EmzsIBNo/Z6IO7zhTVXnTQLKFtU0H5B7KJieDKsGfyOn+4f8LPmHH6gq
- cKYeBjpO5USItpZfCymdK5W1dAyB9XzRV7WGdIPpx9u1yxsts6XOm36k1cgvyuQWdLzK4fjo9l8
- s8zeb0Xq5gSndiAIGKdTHdI/2SQ4oh2tH7O0q0ISoU48Rei6l+ZZcJGtxF9ye9z8scEbElW6+jF
- 9z1jEhAB5a+AIGjNW/fa+JbdAAYXIKgk5GAE+oHLpiI2RnN4SbFb2VyODOUNk117oS8FSSxAMAg
- ml2mNMJIpHKujFjPenTGBwnyzGMVhQ4XdYYYVS2zxNfswm+U6Eg7FdPEaTKOqDYaPb1/rmNWCfo
- 74zj7dE87He8dIH3YmRCDefYPj7HMA==
+In-Reply-To: <b5d465e9-e84c-fabf-f275-3d0a5abf764f@oss.qualcomm.com>
+X-Proofpoint-ORIG-GUID: CCQUrR5dtH8T9463UeTR6dw0PnBpcDTS
+X-Proofpoint-GUID: CCQUrR5dtH8T9463UeTR6dw0PnBpcDTS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MSBTYWx0ZWRfX187V/sT4GWgT
+ 8eAEhC52I+nb0DAIkjUYKz/eZVAaH2EJ77PyGX69tQ+1bk0Y3H23ao3ZQ1eGhNumAhKUyYPgwFN
+ dkIBCX98+J1U2EkDqBjIXLBpEXD4l1myAjz5Vc7HkIveleKlNM8etkbD96gPqkZPP7ZDVHwECJo
+ f7UFV0f8gGrmkSd74hBxyZGWJiaTTqY3rNnvoO45czFYhptBylVf6elUcejO70cAaLrQsh3ByMP
+ h08mJQNsYmHe4cIKS2rROCRUYjYNMMyn6rP6ZRiCWx4MSO5LeMtsSuQ4RqagcwBGe77quUP/K/M
+ qkYQeyR0LnKa5je+O4D4TDwYH7UjmXptx2PodVe/oUcygenW+DcRpIZWgEttGij6U9qJyqdaQlM
+ e7eMt1LAKy/ao1MOrzIx8oncVkJ2Ag==
+X-Authority-Analysis: v=2.4 cv=ZsHg6t7G c=1 sm=1 tr=0 ts=68d712f0 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=sxVh0rNj7eTcMgoLKOEA:9 a=CjuIK1q_8ugA:10
+ a=uxP6HrT_eTzRwkO_Te1X:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-09-26_08,2025-09-26_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
+ phishscore=0 spamscore=0 malwarescore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 impostorscore=0 bulkscore=0 suspectscore=0 clxscore=1015
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250171
 
-On Fri, Sep 26, 2025 at 11:19:13AM -0700, Anjelique Melendez wrote:
+On Fri, Sep 26, 2025 at 07:25:30PM +0530, Vikash Garodia wrote:
 > 
-> 
-> On 9/25/2025 2:43 PM, Dmitry Baryshkov wrote:
-> > On Wed, Sep 24, 2025 at 04:26:31PM -0700, Anjelique Melendez wrote:
-> > > UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
-> > > 16 bytes to 256 bytes each for the message exchange between OPM and PPM
-> > > This makes the total buffer size increase from 48 bytes to 528 bytes.
-> > > Update the buffer size to support this increase.
-> > > 
-> > > Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-> > > ---
-> > >   drivers/usb/typec/ucsi/ucsi_glink.c | 81 ++++++++++++++++++++++++-----
-> > >   1 file changed, 68 insertions(+), 13 deletions(-)
-> > > 
-> > > diff --git a/drivers/usb/typec/ucsi/ucsi_glink.c b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > index 1f9f0d942c1a..7f19b4d23fed 100644
-> > > --- a/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > +++ b/drivers/usb/typec/ucsi/ucsi_glink.c
-> > > @@ -16,10 +16,10 @@
-> > >   #define PMIC_GLINK_MAX_PORTS		3
-> > > -#define UCSI_BUF_SIZE                   48
-> > > +#define UCSI_BUF_V1_SIZE		(UCSI_MESSAGE_OUT + (UCSI_MESSAGE_OUT - UCSI_MESSAGE_IN))
-> > > +#define UCSI_BUF_V2_SIZE		(UCSIv2_MESSAGE_OUT + (UCSIv2_MESSAGE_OUT - UCSI_MESSAGE_IN))
-> > >   #define MSG_TYPE_REQ_RESP               1
-> > > -#define UCSI_BUF_SIZE                   48
-> > >   #define UC_NOTIFY_RECEIVER_UCSI         0x0
-> > >   #define UC_UCSI_READ_BUF_REQ            0x11
-> > > @@ -30,15 +30,27 @@ struct ucsi_read_buf_req_msg {
-> > >   	struct pmic_glink_hdr   hdr;
-> > >   };
-> > > -struct __packed ucsi_read_buf_resp_msg {
-> > > +struct __packed ucsi_v1_read_buf_resp_msg {
-> > >   	struct pmic_glink_hdr   hdr;
-> > > -	u8                      buf[UCSI_BUF_SIZE];
-> > > +	u8                      buf[UCSI_BUF_V1_SIZE];
-> > >   	u32                     ret_code;
-> > >   };
-> > > -struct __packed ucsi_write_buf_req_msg {
-> > > +struct __packed ucsi_v2_read_buf_resp_msg {
-> > >   	struct pmic_glink_hdr   hdr;
-> > > -	u8                      buf[UCSI_BUF_SIZE];
-> > > +	u8                      buf[UCSI_BUF_V2_SIZE];
-> > > +	u32                     ret_code;
-> > > +};
-> > > +
-> > > +struct __packed ucsi_v1_write_buf_req_msg {
-> > > +	struct pmic_glink_hdr   hdr;
-> > > +	u8                      buf[UCSI_BUF_V1_SIZE];
-> > > +	u32                     reserved;
-> > > +};
-> > > +
-> > > +struct __packed ucsi_v2_write_buf_req_msg {
-> > > +	struct pmic_glink_hdr   hdr;
-> > > +	u8                      buf[UCSI_BUF_V2_SIZE];
-> > >   	u32                     reserved;
-> > >   };
-> > > @@ -72,7 +84,7 @@ struct pmic_glink_ucsi {
-> > >   	bool ucsi_registered;
-> > >   	bool pd_running;
-> > > -	u8 read_buf[UCSI_BUF_SIZE];
-> > > +	u8 read_buf[UCSI_BUF_V2_SIZE];
-> > >   };
-> > >   static int pmic_glink_ucsi_read(struct ucsi *__ucsi, unsigned int offset,
-> > > @@ -131,18 +143,34 @@ static int pmic_glink_ucsi_read_message_in(struct ucsi *ucsi, void *val, size_t
-> > >   static int pmic_glink_ucsi_locked_write(struct pmic_glink_ucsi *ucsi, unsigned int offset,
-> > >   					const void *val, size_t val_len)
-> > >   {
-> > > -	struct ucsi_write_buf_req_msg req = {};
-> > > -	unsigned long left;
-> > > +	struct ucsi_v2_write_buf_req_msg req = {};
-> > > +	unsigned long left, max_buf_len;
-> > > +	size_t req_len;
-> > >   	int ret;
-> > > +	memset(&req, 0, sizeof(req));
-> > >   	req.hdr.owner = PMIC_GLINK_OWNER_USBC;
-> > >   	req.hdr.type = MSG_TYPE_REQ_RESP;
-> > >   	req.hdr.opcode = UC_UCSI_WRITE_BUF_REQ;
-> > > +
-> > > +	if (ucsi->ucsi->version >= UCSI_VERSION_2_0) {
-> > > +		req_len = sizeof(struct ucsi_v2_write_buf_req_msg);
-> > > +		max_buf_len = UCSI_BUF_V2_SIZE;
+> On 9/26/2025 5:17 PM, Konrad Dybcio wrote:
+> > On 9/25/25 9:38 PM, Dmitry Baryshkov wrote:
+> >> On Fri, Sep 26, 2025 at 01:01:29AM +0530, Vikash Garodia wrote:
+> >>>
+> >>> On 9/26/2025 12:55 AM, Dmitry Baryshkov wrote:
+> >>>> On Thu, Sep 25, 2025 at 04:44:39AM +0530, Vikash Garodia wrote:
 > > 
-> > I'd prefer it to be more explicit. Define an union of v1 and v2, fill
-> > common parts and version-specific parts separately.
-> Konrad also left a similar comment in this function "This code keeps the
-> 'reserved' field zeored out for v1, but it does so in a fragile and implicit
-> way :/" (https://lore.kernel.org/all/df671650-a5af-4453-a11d-e8e2a32bd1ab@oss.qualcomm.com/#t)
+> > 
+> > [...]
+> > 
+> >>>>> +  power-domains:
+> >>>>> +    minItems: 5
+> >>>>> +    maxItems: 7
+> >>>>
+> >>>> You are sending bindings for a single device on a single platform. How
+> >>>> comes that it has min != max?
+> >>>
+> >>> I was planning to reuse this binding for the variant SOCs of kaanapali/vpu4. If
+> >>> we do not have min interface, then for those variants, we have to either have
+> >>> separate bindings or add if/else conditions(?). Introducing min now can make it
+> >>> easily usable for upcoming vpu4 variants.
+> >>
+> >> No, it makes it harder to follow the changes. This platform has
+> >> this-and-that requirements. Then you add another platform and it's clear
+> >> that the changes are for that platform. Now you have mixed two different
+> >> patches into a single one.
+> > 
+> > Vikash, preparing for future submissions is a very good thing,
+> > however "a binding" can be thought of as a tuple of
+> > 
+> > (compatible, allowed_properties, required_properties)
+> > 
+> > which needs(asterisk) to remain immutable
+> > 
+> > You can make changes to this file later, when introducing said
+> > platforms and it will be fine, so long as you preserve the same allowed
+> > and required properties that you're trying to associate with Kanaapali
+> > here
 > 
-> So I figured I would try to get thoughts from the both of you :)
-> 
-> We could have a union defined like so:
-> struct __packed ucsi_write_buf_req_msg {
-> 	struct pmic_glink_hdr   hdr;
-> 	union {
-> 		u8 v2_buf[UCSI_BUF_V2_SIZE];
-> 		u8 v1_buf[UCSI_BUF_V1_SIZE];
-> 	} buf;
-> 	u32                     reserved;
-> };
+> Let say, we have a kaanapali hardware (calling it as kaanapali_next) with 6
+> power domains, instead of 7, given that one of the pipe is malfunctional or
+> fused out in that hardware distrubution, should the binding be extended for such
+> variant like below ?
 
-LGTM.
+This comes together with the description of kaanapali_next and a proper
+commit message, describing the usage of fuses in the nvram for this
+hardware, etc. My point is that you are adding support for a fixed class
+of hardware: normal Kaanapali device, no extras, no disabled blocks,
+etc. This class of hardware has a fixed connections between IP blocks,
+fixed number of cores, power domains, etc.
+
+Only when we actually add kaanapali_next, kaanapali_lite, kaanapali+1 or
+kaanapali-minor it would be logical to extend the base declarations, add
+add if-conditions for both kaanapali and the new device (notice
+if-conditions for kaanapali too).
+
+I can say it other way around: the bindings that you've submitted are
+not complete as you have not bound kaanapali desription according to its
+actual hardware.
 
 > 
-> and then ucsi_locked_write() pseudo would be something like this:
+> power-domains:
+>   maxItems: 7
 > 
-> pmic_glink_ucsi_locked_write()
-> {
-> 	struct ucsi_write_buf_req_msg req = {};
-> 	u8 *buf;
+>   - if:
+>       properties:
+>         compatible:
+>           enum:
+>             - qcom,kaanapali_next-iris
+>     then:
+>       properties:
+>         power-domains:
+>           maxItems: 6
 > 
-> 	req.hdr.owner = PMIC_GLINK_OWNER_USBC;
-> 	req.hdr.type = MSG_TYPE_REQ_RESP;
-> 	req.hdr.opcode = UC_UCSI_WRITE_BUF_REQ;
+>     else:
+>       properties:
+>         power-domains:
+>           maxItems: 7
 > 
-> 	if (version >= UCSI_VERSION_2_0)
-> 		buf_len = UCSI_BUF_V2_SIZE;
-> 		buf = req.buf.v2_buf;
-> 	else if (version)
-> 		buf_len = UCSI_BUF_V1_SIZE;
-> 		buf = req.buf.v1_buf;
-> 	else
-> 		return -EINVAL;
-> 	req_len = sizeof(struct pmic_glink_hdr) + buf_len + sizeof(u32);
+> Also, what is the downside in existing approach where we say that the hardware
+> can be functional with 5 pds, and 2 are optional based on hardware having them
+> or not ? So all combinations of [5, 6, 7] pds are valid. IIUC, the optional
+> entries are made for such cases where some hardware parts are variable, please
+> correct my understanding.
+
+Kaanapali hardware is not variable, is it?
+
 > 
-> 	memcpy(&buf[offset], val, val_len);
+> Regards,
+> Vikash
 > 
-> 	ret = pmic_glink_send(ucsi->client, &req, req_len);
-> 	if (ret < 0)
-> 		return ret;
-> 
-> 	left = wait_for_completion_timeout(&ucsi->write_ack, 5 * HZ);
-> 	if (!left)
-> 		return -ETIMEDOUT;
-> 
-> 	return 0;
-> }
-> 
-> Since we are adding the union we still end up initializing space for the
-> larger UCSI v2 buffer and when we have UCSI v1 we are only expected to send
-> a request with buffer size = UCSI v1. With this we would still be keeping a
-> reserved field zeroed for v1 but it still is not the req.reserved field
-> being explicitly sent.
-> 
-> The only other solution I can think of that would be fully explicit is if we
-> created pmic_glink_ucsi_v2_locked_write() which basically just did the exact
-> same thing as the original pmic_glink_ucsi_locked_write() but instead used
-> ucsi_v2_write_buf_req_msg struct. pmic_glink_ucsi_async_control() would then
-> decide which locked_write function to call based on version. However that
-> would include a lot of code copying.
-> 
-> Let me know what your thoughts are - I'm more than happy to go the way of
-> the union but just want to make sure that we are all on same page and can
-> agree on best steps forward :)
-> 
-> Thanks,
-> Anjelique
+> > (i.e. YAML refactors are OK but the result must come out identical)
+> > 
+> > Konrad
 
 -- 
 With best wishes
