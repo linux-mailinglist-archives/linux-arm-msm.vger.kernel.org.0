@@ -1,107 +1,151 @@
-Return-Path: <linux-arm-msm+bounces-75340-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC850BA4F4F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 21:20:57 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFBD0BA5145
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 22:39:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 38DBD1C20FB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 19:21:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB8453BE079
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 20:39:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8A1E72798E8;
-	Fri, 26 Sep 2025 19:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BBE127FB34;
+	Fri, 26 Sep 2025 20:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZQSPF1xB"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="siIOIe/J"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B73202976
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 19:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E953B13BC3F;
+	Fri, 26 Sep 2025 20:39:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758914454; cv=none; b=lWK9eQoRAq2LXCvBw/p7L4/LnLgfDzbtFCL/6Hg69+vCJPKcgYk+f+HT7WIKeifHW8PV/WQiNdmoaC6JalPLFWkWHf1TQaKpzytlmNRLH4yrVFGbHYWRuAxNQHwRa5U6y50ucXxLC7gwyacZmxy91Mo8UCHmsTUAe/oZA9iiNx8=
+	t=1758919159; cv=none; b=aZuaAH8MpheAM2ClY37CC++JAZjeUomXmtRIPib+nJTriem63lD8LRcdUOI5K6VieX0jBcJA8/SohQNcyevGOXR1EjE6sWPInI0yPuuSdL0eWBK0rpr6vEY7gMj72m2GbamhmT3HECFCjSmc7kYXvuasmMZbalCWMz1KrHHyFIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758914454; c=relaxed/simple;
-	bh=7N5d3Dzn0BqHEAQopLp1FnVDhZ7Z9IfM3JDchDGwd7o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=VATmF1mbxR2vOZskS9fAhenNeZL2KnR0koJar7ic4Ka2xJkgjo7gk/uehUsl+IBObq9NgFp1fhhFEba2HW9XHs4a9ckBuzBV8IXMdT5qXls3XcMqHiGfgY7FQMolIzj3QQ0B2ZlKQPXPiBWPnefwiGFoAYaoKdTV6IXOl4ZJue8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZQSPF1xB; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 382DCC4AF0B
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 19:20:54 +0000 (UTC)
+	s=arc-20240116; t=1758919159; c=relaxed/simple;
+	bh=DN6Qwr15i5uFVBUupd5QlMIvaTum5HUKi8sCfH8FrpI=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:In-Reply-To; b=hPhcyx7UNI5gsq63kqMCqq64VLP4b2BNRNjFJzpkWrkRlZ0W1g0v9t2slpnglLO3ZD+oJOKqLKF+I0tTwe4drfLBGchD52tERmjQcwAchtKZO5/SebsGle9Kc4CnR9nMZK1IYZ/RLITnhUQ3XsPUjii0DNvN0Ou7DGQSWR666H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=siIOIe/J; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42628C4CEF4;
+	Fri, 26 Sep 2025 20:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758914454;
-	bh=7N5d3Dzn0BqHEAQopLp1FnVDhZ7Z9IfM3JDchDGwd7o=;
-	h=References:In-Reply-To:From:Date:Subject:To:List-Id:Cc:From;
-	b=ZQSPF1xBgM96I2MWM0dcn8wjqduyQcKbFFS968j39f0uPa3raUpCmI6jgj2Lw/0fp
-	 Z+QG+AORHoXiC2Tda84eXJomW3In78K3nHsa952sTosHu0Cn1lhZBIuRQMxu3YWuyG
-	 5CcxooN+FidyexO6fvRoPQ8jqnyennIqWNQhAbp5v6gIL7rDQ3LQXt0bQ7lT2LGlGF
-	 2uhGQhrk7QuL7+VdDhQy8YS8Y39kmhVqdAyvj7s6vpTGlADfAotIFSWNUDeM0fucOB
-	 TyFMUzq3W3pg9/VjQSvKMFmWOeRAPzNSy4ktFGNby+lbCLu0NpqTb+H7xQ1bLoi/nV
-	 KYYr3c54ORIxA==
-Received: by mail-yx1-f52.google.com with SMTP id 956f58d0204a3-63605f6f64eso1850240d50.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 12:20:54 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCXgstJvDprGNm4BGvRTW+ycnCQ9+FLpLpA9Kj9zLpjKOXqcxXylgGeLlJGxEKFam43nhIZN07tTaXByfgLs@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrQ3d9DLwMCDApZYYqbs6DNkoCZyzWxkYV9H2ozB7afowr2mQk
-	2eY/Se41Zi7ioSEQrrDrM5OuU4RwuJY8NOOr11Kz7ISVvMyGFLn4fQSuLoKzgyFcsK8OxdPq+oc
-	4ATakl3uCg+BAKNJEBcxk54ShaxgmSxQ=
-X-Google-Smtp-Source: AGHT+IES1raCxxFINJQr+dmtQ9LgFVrs8IhuqhlDaCX3NyY/+k68dtZjbkgtpMQiAG5OyOqdO2Yyt7upU4mGvVz7Ic0=
-X-Received: by 2002:a05:690e:144c:b0:635:4ecd:75a0 with SMTP id
- 956f58d0204a3-6361a89a815mr7552466d50.46.1758914453395; Fri, 26 Sep 2025
- 12:20:53 -0700 (PDT)
+	s=k20201202; t=1758919158;
+	bh=DN6Qwr15i5uFVBUupd5QlMIvaTum5HUKi8sCfH8FrpI=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:From;
+	b=siIOIe/Jddewm5lK6in8+WPYGB83DvHTHmJw3qcHCKgl88DH9uAFCnU/alvTGc771
+	 HZ12gzaoeJTS2ZkiYCJxQzvubH66i1yvLvWqsXZThEA2S4AUp8IBYfDtF3wmLthmwl
+	 Zv8lVXGvZWxl0wCFVwRTCzbA3kl76iI3kx4k3oF027IRHXN1J6qdwSPh/+LecMZDVL
+	 IJ4rK4CW9SH0NU08vEURQ0FbvY3v57TZWJfd05qWly7IM3b6wd/kCvJcAt/i1j4SHI
+	 qQlk5c1Tb+Pp3R8+mV3n7mdHgce6ljgKFjzO3hdzrCwrBoTxvDZwZxk12Nzlxs7NlL
+	 5yD7MXLqyUDtw==
+Date: Fri, 26 Sep 2025 15:39:16 -0500
+From: Bjorn Helgaas <helgaas@kernel.org>
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+Cc: Manivannan Sadhasivam <mani@kernel.org>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	chaitanya chundru <quic_krichai@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	cros-qcom-dts-watchers@chromium.org,
+	Jingoo Han <jingoohan1@gmail.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
+	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>, quic_vbadigan@quicnic.com,
+	amitk@kernel.org, linux-pci@vger.kernel.org,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com,
+	linux-arm-kernel@lists.infradead.org,
+	Dmitry Baryshkov <lumag@kernel.org>
+Subject: Re: [PATCH v6 5/9] PCI: dwc: Implement .start_link(), .stop_link()
+ hooks
+Message-ID: <20250926203916.GA2266029@bhelgaas>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <bc9e546e-d560-4088-a6ea-937009b8343e@oss.qualcomm.com>
-In-Reply-To: <bc9e546e-d560-4088-a6ea-937009b8343e@oss.qualcomm.com>
-From: Josh Boyer <jwboyer@kernel.org>
-Date: Fri, 26 Sep 2025 15:20:41 -0400
-X-Gmail-Original-Message-ID: <CA+5PVA4X7i2rQV=QHLC-K-_pjNUp=LaRJY0tspBYXSvpoV9STA@mail.gmail.com>
-X-Gm-Features: AS18NWAoUXnaqRXQfeU4OiGKI_n-1x0a1TmuD0a4qrZj3f9RWUzb0lk6u9nGURM
-Message-ID: <CA+5PVA4X7i2rQV=QHLC-K-_pjNUp=LaRJY0tspBYXSvpoV9STA@mail.gmail.com>
-Subject: Re: [PULL]: Update firmware for Qualcomm AIC100
-To: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
-Cc: linux-firmware@kernel.org, linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4a3f9494-27a2-47d6-bdef-0b1bcbd99903@oss.qualcomm.com>
 
-On Thu, Sep 25, 2025 at 1:49=E2=80=AFPM Jeff Hugo <jeff.hugo@oss.qualcomm.c=
-om> wrote:
->
-> The following changes since commit 1269106c61a34b8f65d045c8045df880083bd3=
-b1:
->
->    Merge branch 'amd-staging' into 'main' (2025-09-24 13:46:33 +0000)
->
-> are available in the Git repository at:
->
->    https://github.com/quic-jhugo/linux-firmware aic100_1_20_2_4
+On Fri, Sep 26, 2025 at 07:09:17PM +0530, Krishna Chaitanya Chundru wrote:
+> On 9/25/2025 10:55 PM, Bjorn Helgaas wrote:
+> > On Thu, Sep 25, 2025 at 09:49:16PM +0530, Manivannan Sadhasivam wrote:
+> > > On Thu, Sep 25, 2025 at 09:54:16AM -0500, Bjorn Helgaas wrote:
+> > > > On Thu, Aug 28, 2025 at 05:39:02PM +0530, Krishna Chaitanya Chundru wrote:
+> > > > > Implement stop_link() and  start_link() function op for dwc drivers.
+> > > > > 
+> > > > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
+> > > > > ---
+> > > > >   drivers/pci/controller/dwc/pcie-designware-host.c | 18 ++++++++++++++++++
+> > > > >   1 file changed, 18 insertions(+)
+> > > > > 
+> > > > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > index 952f8594b501254d2b2de5d5e056e16d2aa8d4b7..bcdc4a0e4b4747f2d62e1b67bc1aeda16e35acdd 100644
+> > > > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > > > > @@ -722,10 +722,28 @@ void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
+> > > > >   }
+> > > > >   EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
+> > > > > +static int dw_pcie_op_start_link(struct pci_bus *bus)
+> > > > > +{
+> > > > > +	struct dw_pcie_rp *pp = bus->sysdata;
+> > > > > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> > > > > +
+> > > > > +	return dw_pcie_host_start_link(pci);
+> > > > 
+> > > > This takes a pci_bus *, which could be any PCI bus, but this only
+> > > > works for root buses because it affects the link from a Root Port.
+> > > > 
+> > > > I know the TC9563 is directly below the Root Port in the current
+> > > > topology, but it seems like the ability to configure a Switch with
+> > > > I2C or similar is potentially of general interest, even if the
+> > > > switch is deeper in the hierarchy.
+> > > > 
+> > > > Is there a generic way to inhibit link training, e.g., with the
+> > > > Link Disable bit in the Link Control register?  If so, this could
+> > > > potentially be done in a way that would work for any vendor and
+> > > > for any Downstream Port, including Root Ports and Switch
+> > > > Downstream Ports.
+> > > 
+> > > FWIW, the link should not be stopped for a single device, since it
+> > > could affect other devices in the bus. Imagine if this switch is
+> > > connected to one of the downstream port of another switch. Then
+> > > stopping and starting the link will affect other devices connected
+> > > to the upstream switch as well.
+> > 
+> > Link Disable would affect all devices downstream of the bridge where
+> > it is set, same as dw_pcie_op_stop_link().
+> > 
+> > > This driver is doing it right now just because, there is no other
+> > > way to control the switch state machine. Ideally, we would want the
+> > > PERST# to be in asserted stage to keep the device from starting the
+> > > state machine, then program the registers over I2C and deassert
+> > > PERST#. This will work across all of the host controller drivers (if
+> > > they support pwrctrl framework).
+> > 
+> > I don't think there's a way to implement .start_link() and
+> > .stop_link() for ACPI unless it's by using Link Disable, which is why
+> > I asked about this.  If Link Disable *does* work, it would be a very
+> > generic way to do this because it's part of the PCIe base spec.
+> 
+> We did test as you suggested but unfortunately the setting are not
+> getting reflected we need to explicitly assert perst to make sure
+> pcie is in reset state while applying these settings.
 
-Merged and pushed out.
+Maybe ".stop_link()" is the wrong name if what's actually required is
+PERST#?
 
-https://gitlab.com/kernel-firmware/linux-firmware/-/merge_requests/704
-
-josh
-
->
-> for you to fetch changes up to 19c12c41c84187a9fa1df1b58bb6f72a181ba620:
->
->    qcom: Update aic100 firmware files (2025-09-25 11:38:38 -0600)
->
-> ----------------------------------------------------------------
-> Jeff Hugo (1):
->        qcom: Update aic100 firmware files
->
->   qcom/aic100/fw1.bin  | Bin 2135752 -> 2180920 bytes
->   qcom/aic100/fw10.bin | Bin 249439 -> 249439 bytes
->   qcom/aic100/fw2.bin  | Bin 783512 -> 812184 bytes
->   qcom/aic100/fw5.bin  | Bin 24576 -> 24576 bytes
->   qcom/aic100/fw9.bin  | Bin 762704 -> 787280 bytes
->   qcom/aic100/sbl.bin  | Bin 1048576 -> 1048576 bytes
->   6 files changed, 0 insertions(+), 0 deletions(-)
+This feels like the kind of problem we are likely to see again in
+different topologies, e.g., a switch in an external enclosure that
+needs configuration.
 
