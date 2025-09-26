@@ -1,46 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-75234-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75235-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 22ABCBA248C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 05:17:05 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FE09BA249F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 05:17:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 465581C26F1F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 03:17:27 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 097C8326924
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 03:17:21 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0D0581D63F0;
-	Fri, 26 Sep 2025 03:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E75C8266EE7;
+	Fri, 26 Sep 2025 03:17:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="IY0hQEii"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042EB23B0;
-	Fri, 26 Sep 2025 03:16:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188F523B0
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 03:17:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758856619; cv=none; b=bSdYVZfG5EGt0nzoKcknSfqLoPwuKciUGpp2yVyEoOhpFdPBUNmUw2P08CydYqfc17/rq0nMme+RX2DDGYUlRcsJuU1rEpNXto/5Yk12Bee8EfTVuI0hD+K4ZfCeK8P121JCk+D23naNOMdRzfLKekwj01I7fFO/xiK8bT7gfvM=
+	t=1758856624; cv=none; b=IzQtPPD994Ph2CugHjpttT1wD1vc6O9fYa0a9ybN/dWPxZiZnWpm0pxmYRaTyxeAYJV91gg5mRRDclKR6nor4Jsu3eSQYDUt2R7Arx5kkDeTxcBld2buL0ZgDJle2lOtCAgJ9Yb1GBiTsQruP9tgf7w6GozmmKKv4SG2kRrHlF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758856619; c=relaxed/simple;
-	bh=I2vtGvQ0RLsYBblujTwSpfJ1S9qbBzQ3NqIIuX/Mqx4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=S5+/JEUUKiTia0CkZQP73fRdanrN6bFv9SUTESildnjk5wlHS5EfKJEfz1Rj40ai2AOTSpetJdhgE68RR08GvDwG/HkuvAvo035OwJSvhrJQ6Kahv0gk4OkrNxynSjxXWXuUAujeBSOeP9wm6NPD2EP4PP+RwEiDla94ANv6Uf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com; spf=pass smtp.mailfrom=hisilicon.com; arc=none smtp.client-ip=45.249.212.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hisilicon.com
-Received: from mail.maildlp.com (unknown [172.19.163.174])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4cXwc86T6dzRkBh;
-	Fri, 26 Sep 2025 11:12:08 +0800 (CST)
-Received: from kwepemr500004.china.huawei.com (unknown [7.202.195.141])
-	by mail.maildlp.com (Postfix) with ESMTPS id A6D58140203;
-	Fri, 26 Sep 2025 11:16:47 +0800 (CST)
-Received: from [10.67.121.58] (10.67.121.58) by kwepemr500004.china.huawei.com
- (7.202.195.141) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 26 Sep
- 2025 11:16:46 +0800
-Message-ID: <ae509446-4703-43af-a48d-9c72da0b3813@hisilicon.com>
-Date: Fri, 26 Sep 2025 11:16:46 +0800
+	s=arc-20240116; t=1758856624; c=relaxed/simple;
+	bh=M2cMozZeB8nC9X8dnmwplIBPaVCtjwjIuAhM0d49Oaw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=M714RHM2IZUroCN5VQJPYVtyLQHG/K1NPMOnm8uJPLdpAmeHi8/vFYQlWhQfs33ceRY913nHtAF+I+MEv5SSk1G0rB8E8IqrZkvFTYE0Ot0HVXKhcC9bsqPe9yivdRX5MZD1npSAc+9Dezv5pWGpVnxNc4YNQOpBTqmnC+yQf0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=IY0hQEii; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58PIUkfY024718
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 03:17:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	9f6LSM6OdZg1tUtjh3SpMPAi8kke+aQ/eiH9bqFrAoc=; b=IY0hQEiiUKjWIxlz
+	GvvGIamAvxkoqk3lbTXoYxuP4aHFIE9UWsA7aAy+slvo7FTwMZd3gfWIg6hU/9VH
+	wCBQjhDxjZIfKR9tKWr8OvDiGSauCiuPczfoMhEFmBnozzfPhq4j2UPHP1DECSgH
+	0CtqodR7Aw/J+D9RB/cNu9rjWTofNI91RD6xrxELmyKZV1W1xobgA6xhH3P/owRc
+	wRFheeh/xVhRrPERbBtch9dShWYLyr3b7eUeta6VVLFMWKWZKhQLn4nUzGPAQXyG
+	aUg0r9zWQebI/yZVwWdcfHA0TwlBrpRt7u46cG0HTs2ZaP2tcs9n9mJyb1762b4M
+	C/+Zyw==
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com [209.85.216.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db34h54j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 03:17:01 +0000 (GMT)
+Received: by mail-pj1-f72.google.com with SMTP id 98e67ed59e1d1-33085281806so516410a91.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 25 Sep 2025 20:17:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758856621; x=1759461421;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=9f6LSM6OdZg1tUtjh3SpMPAi8kke+aQ/eiH9bqFrAoc=;
+        b=JNhV3mW2uRRtwBGyVwBK9Ljqzlbd3lRHoTHuqVDbPl0LPjYIaUqNMnXLtGml1VyUap
+         tgMDjcfvRmjdhUmP7W/8Vu/2iNvBUMl4WWVPWfjV1lYv6TPJdLopg2e7bzxsPSarzu6H
+         IxyF/2RYTVjdVfhnvlcIYlQwZJAcTOt8KkdBAVy+34Aamz55hqlQa0z7y+XTH3fG9+PD
+         ENZqIRDnYaRInFUP9qEyVSaz9EiKIP7sQ6rN9Dg2hE+j7Kz41JiLtcHbjnhvkwnRG0Fx
+         ZsULP5MXUtucrCo/4FB/WY7Mju9SIVgdmaM7lZmIfBT6Mduvh9nNF45HBasALLIYD80D
+         GtvQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX+W9K9UBE1+GvVXVVK/vbf5iMAWr2GVx4nNfixTVT1A6FyiXUPMHqBFyOk0ZdCj3jJaWlz5p6nBFHUeJh/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxp9BA4rmf/tRFlGi+8SPQXuMt0M941Udk+TJ9K6RulOlwL+NIq
+	Ttm01hR9d+VdDxV4xjETP4A0IpwySaj+5mYFuOON1pTe0NT9Z/HpZgK8Ok5Ysvi7drMMG4llzlb
+	yeieacgr/ZVSbqOb3DIarNixy2rTsx/SuvGiJVlwYoIXbmjqE/OaoRJRlJKGgYhx+o+4R
+X-Gm-Gg: ASbGncsaEz74aiwi68UmGBY1XAKBNSx+lMW4577ctyqK/ala2QKgbVhiMCqMohKOzpF
+	LTkeIK5s2wxfu7dYy3b+cZ+Yb7uWlJEuZytPcg393wxbC7Zf3yNHem94KRzmz6JwqztwYuu/qjO
+	G0MYn2iydIpgm+nQ7Du9tcUAxUf2fX9EcROSumiSUDbr4/o2/et6Fs8NPC/5z3O5qZjZvOzqOET
+	AaPG9nXWJysA9Fc69WBHQinki8Un3tvJ7X9KSzBvU1VYqVf7xGIFbtNe41tIGDSoY1b0jRT/cpL
+	m4uJ859OEPhfp2/UhhbBkdcaVJrW4aXxb3MkZ/k0QhLDX1nsUEKbPxTMiscRi/SL6SY451l41/x
+	3+UiKpyES+mNQJ6RVAHukE24bgfmdYAcyxlA=
+X-Received: by 2002:a17:90b:3b48:b0:32d:e980:7a70 with SMTP id 98e67ed59e1d1-3342a17d006mr3998879a91.0.1758856620641;
+        Thu, 25 Sep 2025 20:17:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiqzLmVD4byJpS81rkUiJ1Icsy/ExxJQYHMvD+WEtpM3r1cCrKQQ5MrCKcNruiodugOB5rJQ==
+X-Received: by 2002:a17:90b:3b48:b0:32d:e980:7a70 with SMTP id 98e67ed59e1d1-3342a17d006mr3998835a91.0.1758856620082;
+        Thu, 25 Sep 2025 20:17:00 -0700 (PDT)
+Received: from [10.133.33.139] (tpe-colo-wan-fw-bordernet.qualcomm.com. [103.229.16.4])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-781023c203dsm3184336b3a.22.2025.09.25.20.16.53
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 25 Sep 2025 20:16:59 -0700 (PDT)
+Message-ID: <2577fb3e-96bb-4f2e-871d-27395065ef4b@oss.qualcomm.com>
+Date: Fri, 26 Sep 2025 11:16:51 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -48,289 +90,94 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] devreq: move governor.h to a public header location
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, MyungJoo Ham
-	<myungjoo.ham@samsung.com>, Kyungmin Park <kyungmin.park@samsung.com>,
-	Chanwoo Choi <cw00.choi@samsung.com>, Dmitry Osipenko <digetx@gmail.com>,
-	Thierry Reding <thierry.reding@gmail.com>, Jonathan Hunter
-	<jonathanh@nvidia.com>
-CC: <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-tegra@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, Robie Basak
-	<robibasa@qti.qualcomm.com>
-References: <20250903-governor-public-v1-1-111abd89a89a@oss.qualcomm.com>
-Content-Language: en-US
-From: Jie Zhan <zhanjie9@hisilicon.com>
-In-Reply-To: <20250903-governor-public-v1-1-111abd89a89a@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH v6 12/14] phy: qcom: qmp-usbc: Add QCS615 USB/DP PHY
+ config and DP mode support
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
+ <kishon@kernel.org>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        fange.zhang@oss.qualcomm.com, yongxing.mou@oss.qualcomm.com,
+        li.liu@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+References: <20250925-add-displayport-support-for-qcs615-platform-v6-0-419fe5963819@oss.qualcomm.com>
+ <20250925-add-displayport-support-for-qcs615-platform-v6-12-419fe5963819@oss.qualcomm.com>
+ <5dtlqq7x36gb7cmiunoreoe2vftq46pusb75sbol47ceazefpf@lxrx3hhcwhju>
+From: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+In-Reply-To: <5dtlqq7x36gb7cmiunoreoe2vftq46pusb75sbol47ceazefpf@lxrx3hhcwhju>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems200001.china.huawei.com (7.221.188.67) To
- kwepemr500004.china.huawei.com (7.202.195.141)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MiBTYWx0ZWRfX4Rjmr+G/9GkT
+ Oee6MkF94sXBw6WkwVMNYqPiVV+Mbc3sN2Vg0Fwu2W1bXWcMrsQIt/JA/25P8cmO5KRrnmGXwXm
+ OH4rXeHQWYfj+XXLpvVF3ZKdj77BAEpJVgk5z+5u89oKIyXkq6a9VgoGKcbPOU/w59tUYMYAwO+
+ eHyemOkV+N7kAfTj4WY1Shepfm4wWlo4PIT7aq4Z4fXCD9BsfXWvSJUNgAa/bLQBmXJcuIeEgiW
+ sKt8LysFySLPGWHWyclJUsWCZ/BPlEGv4kazIP3Km+f8frnOpkOHBBGzRHFcRToZ4+WWcx9Ae2R
+ Hxncbk+/KNiaTYpwUAiPlHgBXvtcYTsRPk1k2kWRxoRiEw9hUkI3HgUaRxLmvPv2hI0DFU6sx0u
+ Lq0K3W+iDlwwkBrd6mwbDf9wAWdDzA==
+X-Authority-Analysis: v=2.4 cv=Hb0ZjyE8 c=1 sm=1 tr=0 ts=68d605ad cx=c_pps
+ a=RP+M6JBNLl+fLTcSJhASfg==:117 a=nuhDOHQX5FNHPW3J6Bj6AA==:17
+ a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=DA7DBj9iRjnvuWfEG8oA:9
+ a=QEXdDO2ut3YA:10 a=iS9zxrgQBfv6-_F4QbHw:22
+X-Proofpoint-ORIG-GUID: sSaMjKx46ZRbTG_Ju0-gQr4O5OVNW6tX
+X-Proofpoint-GUID: sSaMjKx46ZRbTG_Ju0-gQr4O5OVNW6tX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-26_01,2025-09-25_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 adultscore=0 bulkscore=0 impostorscore=0
+ spamscore=0 lowpriorityscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250172
 
 
-Hi Dmitry,
+On 9/26/2025 5:57 AM, Dmitry Baryshkov wrote:
+> On Thu, Sep 25, 2025 at 03:04:58PM +0800, Xiangxu Yin wrote:
+>> Add QCS615-specific configuration for USB/DP PHY, including DP init
+>> routines, voltage swing tables, and platform data. Add compatible
+>> "qcs615-qmp-usb3-dp-phy".
+>>
+>> Note: SW_PORTSELECT handling for orientation flip is not implemented
+>> due to QCS615 fixed-orientation design and non-standard lane mapping.
+>>
+>> Signed-off-by: Xiangxu Yin <xiangxu.yin@oss.qualcomm.com>
+>> ---
+>>  drivers/phy/qualcomm/phy-qcom-qmp-usbc.c | 407 +++++++++++++++++++++++++++++++
+>>  1 file changed, 407 insertions(+)
+>> +
+>> +static const struct qmp_phy_init_tbl qmp_v2_dp_serdes_tbl_rbr[] = {
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_HSCLK_SEL, 0x2c),
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_DEC_START_MODE0, 0x69),
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START1_MODE0, 0x00),
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START2_MODE0, 0x80),
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_DIV_FRAC_START3_MODE0, 0x07),
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP1_MODE0, 0xbf),
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP2_MODE0, 0x21),
+>> +	QMP_PHY_INIT_CFG(QSERDES_COM_LOCK_CMP3_MODE0, 0x00),
+>> +	QMP_PHY_INIT_CFG(QSERDES_V2_TX_LANE_MODE_1, 0xc6),
+> Hmm, I just noticed. This register belongs to a _different_ space. As
+> such you can't have it in the COM table.
 
-On 9/3/2025 9:43 PM, Dmitry Baryshkov wrote:
-> Some device drivers (and out-of-tree modules) might want to define
-> device-specific device governors. Rather than restricting all of them to
-> be a part of drivers/devfreq/ (which is not possible for out-of-tree
-> drivers anyway) move governor.h to include/linux/devfreq-governor.h and
-> update all drivers to use it.
 
-For out-of-tree module compilation, can it add drivers/devfreq/ to the
-include path?
-I suppose this is unnecessary.
+Thanks for pointing this out. It likely worked before because the default
+value (0xc6) was sufficient during validation.
 
-Minor comments inline.
+I'll move this configuration into configure_dp_tx() and set it based on
+link_rate.
 
-Thanks,
-Jie
 
-> 
-> The devfreq_cpu_data is only used internally, by the passive governor,
-> so it is moved to the driver source rather than being a part of the
-> public interface.
-> 
-> Reported-by: Robie Basak <robibasa@qti.qualcomm.com>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-> ---
->  drivers/devfreq/devfreq.c                          |  2 +-
->  drivers/devfreq/governor_passive.c                 | 27 +++++++++++++++++-
->  drivers/devfreq/governor_performance.c             |  2 +-
->  drivers/devfreq/governor_powersave.c               |  2 +-
->  drivers/devfreq/governor_simpleondemand.c          |  2 +-
->  drivers/devfreq/governor_userspace.c               |  2 +-
->  drivers/devfreq/hisi_uncore_freq.c                 |  3 +-
->  drivers/devfreq/tegra30-devfreq.c                  |  3 +-
->  .../governor.h => include/linux/devfreq-governor.h | 33 +++-------------------
->  9 files changed, 37 insertions(+), 39 deletions(-)
-> 
-> diff --git a/drivers/devfreq/devfreq.c b/drivers/devfreq/devfreq.c
-> index 2e8d01d47f6996a634a8ad5ddf20c5a68d1a299d..00979f2e0e276a05ee073dcf5cd8e930bdd539fb 100644
-> --- a/drivers/devfreq/devfreq.c
-> +++ b/drivers/devfreq/devfreq.c
-> @@ -20,6 +20,7 @@
->  #include <linux/stat.h>
->  #include <linux/pm_opp.h>
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/workqueue.h>
->  #include <linux/platform_device.h>
->  #include <linux/list.h>
-> @@ -28,7 +29,6 @@
->  #include <linux/of.h>
->  #include <linux/pm_qos.h>
->  #include <linux/units.h>
-> -#include "governor.h"
->  
->  #define CREATE_TRACE_POINTS
->  #include <trace/events/devfreq.h>
-> diff --git a/drivers/devfreq/governor_passive.c b/drivers/devfreq/governor_passive.c
-> index 953cf9a1e9f7f93804cc889db38883bf97ae005d..8cd6f9a59f6422ccd138ff4b264dc8a547ad574f 100644
-> --- a/drivers/devfreq/governor_passive.c
-> +++ b/drivers/devfreq/governor_passive.c
-> @@ -14,8 +14,33 @@
->  #include <linux/slab.h>
->  #include <linux/device.h>
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/units.h>
-> -#include "governor.h"
-> +
-> +/**
-> + * struct devfreq_cpu_data - Hold the per-cpu data
-> + * @node:	list node
-> + * @dev:	reference to cpu device.
-> + * @first_cpu:	the cpumask of the first cpu of a policy.
-> + * @opp_table:	reference to cpu opp table.
-> + * @cur_freq:	the current frequency of the cpu.
-> + * @min_freq:	the min frequency of the cpu.
-> + * @max_freq:	the max frequency of the cpu.
-> + *
-> + * This structure stores the required cpu_data of a cpu.
-> + * This is auto-populated by the governor.
-> + */
-> +struct devfreq_cpu_data {
-> +	struct list_head node;
-> +
-> +	struct device *dev;
-> +	unsigned int first_cpu;
-> +
-> +	struct opp_table *opp_table;
-> +	unsigned int cur_freq;
-> +	unsigned int min_freq;
-> +	unsigned int max_freq;
-> +};
->  
->  static struct devfreq_cpu_data *
->  get_parent_cpu_data(struct devfreq_passive_data *p_data,
-> diff --git a/drivers/devfreq/governor_performance.c b/drivers/devfreq/governor_performance.c
-> index 2e4e981446fa8ea39f65b09dddff198c0b8e3338..fdb22bf512cf134d75f1eaf3edb80e562dd28bec 100644
-> --- a/drivers/devfreq/governor_performance.c
-> +++ b/drivers/devfreq/governor_performance.c
-> @@ -7,8 +7,8 @@
->   */
->  
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/module.h>
-> -#include "governor.h"
->  
->  static int devfreq_performance_func(struct devfreq *df,
->  				    unsigned long *freq)
-> diff --git a/drivers/devfreq/governor_powersave.c b/drivers/devfreq/governor_powersave.c
-> index f059e881480465b051f27d740348adaf779aebf0..ee2d6ec8a512248f070b2c5bee8146320b7be312 100644
-> --- a/drivers/devfreq/governor_powersave.c
-> +++ b/drivers/devfreq/governor_powersave.c
-> @@ -7,8 +7,8 @@
->   */
->  
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/module.h>
-> -#include "governor.h"
->  
->  static int devfreq_powersave_func(struct devfreq *df,
->  				  unsigned long *freq)
-> diff --git a/drivers/devfreq/governor_simpleondemand.c b/drivers/devfreq/governor_simpleondemand.c
-> index c234357363675508c12732a08c1cd26c349039d1..9c69b96df5f97306e9be46aa6bb1d9d2f8e58490 100644
-> --- a/drivers/devfreq/governor_simpleondemand.c
-> +++ b/drivers/devfreq/governor_simpleondemand.c
-> @@ -9,8 +9,8 @@
->  #include <linux/errno.h>
->  #include <linux/module.h>
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/math64.h>
-> -#include "governor.h"
->  
->  /* Default constants for DevFreq-Simple-Ondemand (DFSO) */
->  #define DFSO_UPTHRESHOLD	(90)
-> diff --git a/drivers/devfreq/governor_userspace.c b/drivers/devfreq/governor_userspace.c
-> index 175de0c0b50e087861313060eab70a35b757fd20..395174f93960d0762456238654f4d356e21cf57c 100644
-> --- a/drivers/devfreq/governor_userspace.c
-> +++ b/drivers/devfreq/governor_userspace.c
-> @@ -9,11 +9,11 @@
->  #include <linux/slab.h>
->  #include <linux/device.h>
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/kstrtox.h>
->  #include <linux/pm.h>
->  #include <linux/mutex.h>
->  #include <linux/module.h>
-> -#include "governor.h"
->  
->  struct userspace_data {
->  	unsigned long user_frequency;
-> diff --git a/drivers/devfreq/hisi_uncore_freq.c b/drivers/devfreq/hisi_uncore_freq.c
-> index 96d1815059e32c4e70a1d3c257655cc6b162f745..b8e4621c57ebc76513e4eba978aa54f2b884e210 100644
-> --- a/drivers/devfreq/hisi_uncore_freq.c
-> +++ b/drivers/devfreq/hisi_uncore_freq.c
-> @@ -9,6 +9,7 @@
->  #include <linux/bits.h>
->  #include <linux/cleanup.h>
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/device.h>
->  #include <linux/dev_printk.h>
->  #include <linux/errno.h>
-> @@ -26,8 +27,6 @@
->  #include <linux/units.h>
->  #include <acpi/pcc.h>
->  
-> -#include "governor.h"
-> -
->  struct hisi_uncore_pcc_data {
->  	u16 status;
->  	u16 resv;
-> diff --git a/drivers/devfreq/tegra30-devfreq.c b/drivers/devfreq/tegra30-devfreq.c
-> index 4a4f0106ab9ddcfb106a1860370cbf8a3579322a..77cbb204087c970c1fec0c1597b1e76c1a11b390 100644
-> --- a/drivers/devfreq/tegra30-devfreq.c
-> +++ b/drivers/devfreq/tegra30-devfreq.c
-> @@ -9,6 +9,7 @@
->  #include <linux/clk.h>
->  #include <linux/cpufreq.h>
->  #include <linux/devfreq.h>
-> +#include <linux/devfreq-governor.h>
->  #include <linux/interrupt.h>
->  #include <linux/io.h>
->  #include <linux/irq.h>
-> @@ -21,8 +22,6 @@
->  
->  #include <soc/tegra/fuse.h>
->  
-> -#include "governor.h"
-> -
->  #define ACTMON_GLB_STATUS					0x0
->  #define ACTMON_GLB_PERIOD_CTRL					0x4
->  
-> diff --git a/drivers/devfreq/governor.h b/include/linux/devfreq-governor.h
-> similarity index 80%
-> rename from drivers/devfreq/governor.h
-> rename to include/linux/devfreq-governor.h
-> index 0adfebc0467a3db39278814fa66d2b1f25d61f7a..dfdd0160a29f35f5608575b07b450cf5157420ff 100644
-> --- a/drivers/devfreq/governor.h
-> +++ b/include/linux/devfreq-governor.h
-> @@ -5,11 +5,11 @@
->   * Copyright (C) 2011 Samsung Electronics
->   *	MyungJoo Ham <myungjoo.ham@samsung.com>
->   *
-> - * This header is for devfreq governors in drivers/devfreq/
-> + * This header is for devfreq governors
->   */
-There is a line of 'governor.h - internal header for devfreq governors.' up
-there before this hunk.  That should be updated as well.
->  
-> -#ifndef _GOVERNOR_H
-> -#define _GOVERNOR_H
-> +#ifndef __LINUX_DEVFREQ_DEVFREQ_H__
-> +#define __LINUX_DEVFREQ_DEVFREQ_H__
-__LINUX_DEVFREQ_GOVERNOR_H__
->  
->  #include <linux/devfreq.h>
->  
-> @@ -47,31 +47,6 @@
->  #define DEVFREQ_GOV_ATTR_POLLING_INTERVAL		BIT(0)
->  #define DEVFREQ_GOV_ATTR_TIMER				BIT(1)
->  
-> -/**
-> - * struct devfreq_cpu_data - Hold the per-cpu data
-> - * @node:	list node
-> - * @dev:	reference to cpu device.
-> - * @first_cpu:	the cpumask of the first cpu of a policy.
-> - * @opp_table:	reference to cpu opp table.
-> - * @cur_freq:	the current frequency of the cpu.
-> - * @min_freq:	the min frequency of the cpu.
-> - * @max_freq:	the max frequency of the cpu.
-> - *
-> - * This structure stores the required cpu_data of a cpu.
-> - * This is auto-populated by the governor.
-> - */
-> -struct devfreq_cpu_data {
-> -	struct list_head node;
-> -
-> -	struct device *dev;
-> -	unsigned int first_cpu;
-> -
-> -	struct opp_table *opp_table;
-> -	unsigned int cur_freq;
-> -	unsigned int min_freq;
-> -	unsigned int max_freq;
-> -};
-> -
->  /**
->   * struct devfreq_governor - Devfreq policy governor
->   * @node:		list node - contains registered devfreq governors
-> @@ -124,4 +99,4 @@ static inline int devfreq_update_stats(struct devfreq *df)
->  
->  	return df->profile->get_dev_status(df->dev.parent, &df->last_status);
->  }
-> -#endif /* _GOVERNOR_H */
-> +#endif /* __LINUX_DEVFREQ_DEVFREQ_H__ */
-> 
-> ---
-> base-commit: 8cd53fb40a304576fa86ba985f3045d5c55b0ae3
-> change-id: 20250903-governor-public-d9cd4198f858
-> 
-> Best regards,
+>> +};
+>> +
 
