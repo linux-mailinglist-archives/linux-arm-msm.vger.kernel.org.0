@@ -1,72 +1,95 @@
-Return-Path: <linux-arm-msm+bounces-75341-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75342-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EFBD0BA5145
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 22:39:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9ED89BA5292
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 23:08:54 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AB8453BE079
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 20:39:22 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5AF874A7D2F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 21:08:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2BBE127FB34;
-	Fri, 26 Sep 2025 20:39:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 562E4284684;
+	Fri, 26 Sep 2025 21:08:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="siIOIe/J"
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="WcyChExw"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E953B13BC3F;
-	Fri, 26 Sep 2025 20:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EC238834
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 21:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758919159; cv=none; b=aZuaAH8MpheAM2ClY37CC++JAZjeUomXmtRIPib+nJTriem63lD8LRcdUOI5K6VieX0jBcJA8/SohQNcyevGOXR1EjE6sWPInI0yPuuSdL0eWBK0rpr6vEY7gMj72m2GbamhmT3HECFCjSmc7kYXvuasmMZbalCWMz1KrHHyFIo=
+	t=1758920930; cv=none; b=O5YV4YmNCWFXGU877amfnR1BBAJJ1bGRepuqGc+P0kd4/K3ab/DyeumZuEK9jChielbMIYO4UiKj7+FQJM0YZkkdoXyekAyoWV/I4Qx2kx4NxyrXInSK3RCAJxvFAVw9wqMPuMaKPWQmPrGrS3yMgYyhQnOgmJmGvFzTVXn961g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758919159; c=relaxed/simple;
-	bh=DN6Qwr15i5uFVBUupd5QlMIvaTum5HUKi8sCfH8FrpI=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To; b=hPhcyx7UNI5gsq63kqMCqq64VLP4b2BNRNjFJzpkWrkRlZ0W1g0v9t2slpnglLO3ZD+oJOKqLKF+I0tTwe4drfLBGchD52tERmjQcwAchtKZO5/SebsGle9Kc4CnR9nMZK1IYZ/RLITnhUQ3XsPUjii0DNvN0Ou7DGQSWR666H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=siIOIe/J; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42628C4CEF4;
-	Fri, 26 Sep 2025 20:39:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758919158;
-	bh=DN6Qwr15i5uFVBUupd5QlMIvaTum5HUKi8sCfH8FrpI=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:From;
-	b=siIOIe/Jddewm5lK6in8+WPYGB83DvHTHmJw3qcHCKgl88DH9uAFCnU/alvTGc771
-	 HZ12gzaoeJTS2ZkiYCJxQzvubH66i1yvLvWqsXZThEA2S4AUp8IBYfDtF3wmLthmwl
-	 Zv8lVXGvZWxl0wCFVwRTCzbA3kl76iI3kx4k3oF027IRHXN1J6qdwSPh/+LecMZDVL
-	 IJ4rK4CW9SH0NU08vEURQ0FbvY3v57TZWJfd05qWly7IM3b6wd/kCvJcAt/i1j4SHI
-	 qQlk5c1Tb+Pp3R8+mV3n7mdHgce6ljgKFjzO3hdzrCwrBoTxvDZwZxk12Nzlxs7NlL
-	 5yD7MXLqyUDtw==
-Date: Fri, 26 Sep 2025 15:39:16 -0500
-From: Bjorn Helgaas <helgaas@kernel.org>
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-Cc: Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	chaitanya chundru <quic_krichai@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	s=arc-20240116; t=1758920930; c=relaxed/simple;
+	bh=Jc4EjceSLmpDjEcyfGiNWZ65Xn1oM5ndssYe+GwUZgA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=i7wqBBCJA/JIdYTEQWrX2zYz1eDBAak2vhaCeykFN5Kf4skNvbZPKkJxKGdLGpER7yqntTcFiU6P5978AorBsxKOfKvZd1Q0iSbNch5eQgGifVQwgM6tPtZd1DNVRbZtSy8v8H9q0ftw25txZn8cqAiS3LgcufJHb4S58eaQnd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=WcyChExw; arc=none smtp.client-ip=170.10.133.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1758920926;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Y3GVZ1JYDpd64aStls1BI0HpVUBRoCJZmr3t6BifA9A=;
+	b=WcyChExwjLMOdsTYGbJrWkPRIXtr70IfNPL/r8ezpTY9DQm+JhyGUjtAFRWHlnkRbZFDHr
+	eQcDl+GaF1QQXtoCjkEhFPWYnvacMhJs37IhOT6PAQvyglib5FvkllmG5h46iXKbZcKrf0
+	+FuMeOrpEk/9piUSFP+igLwZkFoWl1g=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-362-XsQlOlkoPbCDBjXDT7WiKA-1; Fri, 26 Sep 2025 17:08:45 -0400
+X-MC-Unique: XsQlOlkoPbCDBjXDT7WiKA-1
+X-Mimecast-MFC-AGG-ID: XsQlOlkoPbCDBjXDT7WiKA_1758920925
+Received: by mail-qk1-f197.google.com with SMTP id af79cd13be357-85641d6f913so584484885a.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 14:08:45 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758920925; x=1759525725;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Y3GVZ1JYDpd64aStls1BI0HpVUBRoCJZmr3t6BifA9A=;
+        b=uDDNDFLSup3jO9S23lHS0+ocsbZr8t/YUAmW80yN9dxO7XRGb7qY+oZVKEEZ8UHDpb
+         HQvfwgb1cxDO1oYmzsmsNHaFDbQucZvlSNS6euEyL+Jf1CJSI6CszQdpAOtvUMhphwo8
+         bG6qoWRsUN/LOVsQo7bKm9dwRoF9yKX09GUT7QAYx+vt3WmGe9qV52knxuUzJ98Gy1cI
+         Pe2fFUk509l7cH9F4l7GLjv8+qCt7VV6i+wSXA3wvZET7GqwotYZZCtkfmrdlLHwfdlg
+         LNwNchciyPRDpEuDgJyJLdr3X9NkVLxYwjE9QhU75VOpJ9qGquYoRVTecRa2osKzC9J3
+         zKmg==
+X-Forwarded-Encrypted: i=1; AJvYcCXQZI9fd1yhTkoN/1iJjdhUlT5+WvG4U4tzh6hy7peq07x+M1v1M4KZD9uOvTPdWjTD/iZe5eTKg0VtjHnc@vger.kernel.org
+X-Gm-Message-State: AOJu0YyrZ6zArS/tfh87HwBpIqFwuuca3Drv9uG8z0Ot9SZqnYy5us15
+	XLpZFf+hOxusmsDnxY/a4QDpnnHf58z6vYW11ylWpZtJvC0e1fjTPDxUbEOWXSYJqawOvSN7W9A
+	kNJG9uTbHRNDoy+O+ZcOZTLro8R7WKcvj9H+V7yfwQX73VbTIgmXcl/C6OvIc64U/aRg=
+X-Gm-Gg: ASbGncu3cfxTbf5h3jtB/+iExRjstkV/80wn9aNxKKxaRUUgWc6IYqzywAtN1ZAYBcH
+	8g/nKi7PxLtfuHN8aIPJ1/4S5TtsXEcYf/lwnwqKh76qmqLUaVkwxGcb9twSr52znrKNgokVffr
+	w6h6zuyjtRkSuI+wURE2SxN2qi1z/wMpStg2wbtyadRHLxHCq59eX1Jo3iL/s7vhKncj9rm39Y+
+	/chVKlebWiSKP2FdV8F7yTOC7j/wkzB5Ulaqu0Dp8UgDhMmqn6aSq1HQIoBOZvIXGAkc3s2SjF1
+	wqOUmiM6YKPMlsB9gwMDjClSAhl55s41pTdAt56Lrk4eeTRkL4az8dFBIB7b/f/upTHBf0Q5VDE
+	X7xsIZEgvj1w091+MPESGESnYUgtKbjY=
+X-Received: by 2002:a05:620a:4722:b0:85a:2def:2fe0 with SMTP id af79cd13be357-85ae033d4d8mr1349869585a.22.1758920924976;
+        Fri, 26 Sep 2025 14:08:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEJQzW4JZ3je9wirGSfh6XIDEj/iDBCJuS1EQrYgcojfBD4UAa9IhVt5/kN4bppw04xeCyjUw==
+X-Received: by 2002:a05:620a:4722:b0:85a:2def:2fe0 with SMTP id af79cd13be357-85ae033d4d8mr1349864685a.22.1758920924446;
+        Fri, 26 Sep 2025 14:08:44 -0700 (PDT)
+Received: from redhat.com (c-73-183-52-120.hsd1.pa.comcast.net. [73.183.52.120])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-85c34da236asm340619385a.68.2025.09.26.14.08.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Sep 2025 14:08:43 -0700 (PDT)
+Date: Fri, 26 Sep 2025 17:08:41 -0400
+From: Brian Masney <bmasney@redhat.com>
+To: Johan Hovold <johan@kernel.org>
+Cc: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
-	cros-qcom-dts-watchers@chromium.org,
-	Jingoo Han <jingoohan1@gmail.com>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>, quic_vbadigan@quicnic.com,
-	amitk@kernel.org, linux-pci@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, jorge.ramirez@oss.qualcomm.com,
-	linux-arm-kernel@lists.infradead.org,
-	Dmitry Baryshkov <lumag@kernel.org>
-Subject: Re: [PATCH v6 5/9] PCI: dwc: Implement .start_link(), .stop_link()
- hooks
-Message-ID: <20250926203916.GA2266029@bhelgaas>
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org, Miaoqian Lin <linmq006@gmail.com>
+Subject: Re: [PATCH 1/2] soc: qcom: ocmem: fix device leak on lookup
+Message-ID: <aNcA2SCZMckYmZXb@redhat.com>
+References: <20250926143511.6715-1-johan@kernel.org>
+ <20250926143511.6715-2-johan@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -75,77 +98,26 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <4a3f9494-27a2-47d6-bdef-0b1bcbd99903@oss.qualcomm.com>
+In-Reply-To: <20250926143511.6715-2-johan@kernel.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
 
-On Fri, Sep 26, 2025 at 07:09:17PM +0530, Krishna Chaitanya Chundru wrote:
-> On 9/25/2025 10:55 PM, Bjorn Helgaas wrote:
-> > On Thu, Sep 25, 2025 at 09:49:16PM +0530, Manivannan Sadhasivam wrote:
-> > > On Thu, Sep 25, 2025 at 09:54:16AM -0500, Bjorn Helgaas wrote:
-> > > > On Thu, Aug 28, 2025 at 05:39:02PM +0530, Krishna Chaitanya Chundru wrote:
-> > > > > Implement stop_link() and  start_link() function op for dwc drivers.
-> > > > > 
-> > > > > Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
-> > > > > ---
-> > > > >   drivers/pci/controller/dwc/pcie-designware-host.c | 18 ++++++++++++++++++
-> > > > >   1 file changed, 18 insertions(+)
-> > > > > 
-> > > > > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > > > index 952f8594b501254d2b2de5d5e056e16d2aa8d4b7..bcdc4a0e4b4747f2d62e1b67bc1aeda16e35acdd 100644
-> > > > > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > > > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > > > > @@ -722,10 +722,28 @@ void __iomem *dw_pcie_own_conf_map_bus(struct pci_bus *bus, unsigned int devfn,
-> > > > >   }
-> > > > >   EXPORT_SYMBOL_GPL(dw_pcie_own_conf_map_bus);
-> > > > > +static int dw_pcie_op_start_link(struct pci_bus *bus)
-> > > > > +{
-> > > > > +	struct dw_pcie_rp *pp = bus->sysdata;
-> > > > > +	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
-> > > > > +
-> > > > > +	return dw_pcie_host_start_link(pci);
-> > > > 
-> > > > This takes a pci_bus *, which could be any PCI bus, but this only
-> > > > works for root buses because it affects the link from a Root Port.
-> > > > 
-> > > > I know the TC9563 is directly below the Root Port in the current
-> > > > topology, but it seems like the ability to configure a Switch with
-> > > > I2C or similar is potentially of general interest, even if the
-> > > > switch is deeper in the hierarchy.
-> > > > 
-> > > > Is there a generic way to inhibit link training, e.g., with the
-> > > > Link Disable bit in the Link Control register?  If so, this could
-> > > > potentially be done in a way that would work for any vendor and
-> > > > for any Downstream Port, including Root Ports and Switch
-> > > > Downstream Ports.
-> > > 
-> > > FWIW, the link should not be stopped for a single device, since it
-> > > could affect other devices in the bus. Imagine if this switch is
-> > > connected to one of the downstream port of another switch. Then
-> > > stopping and starting the link will affect other devices connected
-> > > to the upstream switch as well.
-> > 
-> > Link Disable would affect all devices downstream of the bridge where
-> > it is set, same as dw_pcie_op_stop_link().
-> > 
-> > > This driver is doing it right now just because, there is no other
-> > > way to control the switch state machine. Ideally, we would want the
-> > > PERST# to be in asserted stage to keep the device from starting the
-> > > state machine, then program the registers over I2C and deassert
-> > > PERST#. This will work across all of the host controller drivers (if
-> > > they support pwrctrl framework).
-> > 
-> > I don't think there's a way to implement .start_link() and
-> > .stop_link() for ACPI unless it's by using Link Disable, which is why
-> > I asked about this.  If Link Disable *does* work, it would be a very
-> > generic way to do this because it's part of the PCIe base spec.
+On Fri, Sep 26, 2025 at 04:35:10PM +0200, Johan Hovold wrote:
+> Make sure to drop the reference taken to the ocmem platform device when
+> looking up its driver data.
 > 
-> We did test as you suggested but unfortunately the setting are not
-> getting reflected we need to explicitly assert perst to make sure
-> pcie is in reset state while applying these settings.
+> Note that holding a reference to a device does not prevent its driver
+> data from going away so there is no point in keeping the reference.
+> 
+> Also note that commit 0ff027027e05 ("soc: qcom: ocmem: Fix missing
+> put_device() call in of_get_ocmem") fixed the leak in a lookup error
+> path, but the reference is still leaking on success.
+> 
+> Fixes: 88c1e9404f1d ("soc: qcom: add OCMEM driver")
+> Cc: stable@vger.kernel.org	# 5.5: 0ff027027e05
+> Cc: Brian Masney <bmasney@redhat.com>
+> Cc: Miaoqian Lin <linmq006@gmail.com>
+> Signed-off-by: Johan Hovold <johan@kernel.org>
 
-Maybe ".stop_link()" is the wrong name if what's actually required is
-PERST#?
+Reviewed-by: Brian Masney <bmasney@redhat.com>
 
-This feels like the kind of problem we are likely to see again in
-different topologies, e.g., a switch in an external enclosure that
-needs configuration.
 
