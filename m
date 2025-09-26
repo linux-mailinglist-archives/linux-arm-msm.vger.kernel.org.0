@@ -1,87 +1,54 @@
-Return-Path: <linux-arm-msm+bounces-75303-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75304-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57103BA384C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 13:44:55 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id A2486BA386B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 13:46:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 126CC4A881A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 11:44:54 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 004FD327CE8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 11:45:53 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D056E299A94;
-	Fri, 26 Sep 2025 11:44:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CDAF02BDC2B;
+	Fri, 26 Sep 2025 11:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="opsE6fbD"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="oak0N9IQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4391E2773DD
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 11:44:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248341C8629;
+	Fri, 26 Sep 2025 11:45:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758887090; cv=none; b=YuUwXcXlU/f4EW4McBpmanzUicJrEl+PzeN+IvZl9Eka6CTdoGZLkBYrwQ/L4IeOxWaHeRJxJcRBa//T23rwFGnuT3MJ+5skL0iuy5JNmpw2Ksnmp2KS6+OSG6fpok7SjwXdbkRqvsYMlY6fx1gInPh2Cs3IqCayX2lgJvWmZh0=
+	t=1758887151; cv=none; b=W6OPNqJCfp5vfMPMBFijNKjQjip1zVzDaLqEFMhFhPcLgECxSonqEEgtvVFPCVEyFk6HV9TUwctqEtL5r5vLrJLsZPNopXnhasiZW8gvVzx03t/Hhp/E8bUxiivw2iySR3nObVsqN75d3VtenNOlSnllmQLk60W2lXNT2xTW+p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758887090; c=relaxed/simple;
-	bh=jafD62n3oYEBDKuYo3x5ICEIx1nzpV4cTgn3R7efROY=;
+	s=arc-20240116; t=1758887151; c=relaxed/simple;
+	bh=qaaPocrM5brCsxW/SLoRxadDHG+48wJddHhlLbcYn/A=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qRoGZb3qmEMrrBJI1k4B3z5wQqIfnkZF3+I/LJQSf55VsOuiO6Urpi2VLlIoO6O5OfCEZcBKlsgakWj20vyDoM76FUv51CE7oT9oWU4BU5ClyvqarDS5xRbyw8fhXunOcob6lsBhJMW6Hk0QW5vaW2hyVKlmIxkCDlsgGkHukIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=opsE6fbD; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58Q8w6UC002161
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 11:44:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	oazNeDOXBpNTA9CUERHFDVRMmm0DeM7PNOxF45++cQo=; b=opsE6fbDl/ENPXKt
-	eCNa+YeipF2nS9vJmn3AXtZPRjm4GimhVqxxO6Wsw+f3gMIa5ePU1+gTBuwnZ95g
-	WYtJdTV3oBtxadZOm/V4gknB+XIp2C+XhhC3dDFzuU+u2Fywvryx9r8lmGXYOEso
-	V7aFtgWi4t+naiCCsMehgHb2GAwQx8bES1caEN1fUVhxB5JGUyBGiu76swQGMe8T
-	y0Fm0JGFExvF9j38+y38IBpef9F5ONhoOhz67QYC6b7qbleQrf4MNF8E/iuadvuB
-	jkRCHlUCwXcrA/Wj+mAM33G1yrUjPm+MJz/IX0WvKIIh+xNR0LeZnN0ivZEhGrP0
-	pr7/hg==
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com [209.85.222.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db0ttqef-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 11:44:48 +0000 (GMT)
-Received: by mail-qk1-f200.google.com with SMTP id af79cd13be357-853f011da26so73402285a.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 04:44:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1758887087; x=1759491887;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=oazNeDOXBpNTA9CUERHFDVRMmm0DeM7PNOxF45++cQo=;
-        b=oAfKEsHfsMQSUx1p6+5/4tUcRosUh3WEGyd23LnbmfCPB/ZS3vMotjxK3iahY8EbNL
-         GKn8fLGNW9kH/3Rw6R2QiNRiMuIYf3lnMeBtsw3hzNvW9Y1TSQKjfkIUeTdQ4T099hBa
-         CLN8QqMG26JSo39IUnT5VRySOE6HiJYbEsqTQpvqukijj5uaCE0C73lLROcbVC2unHCE
-         WPZydUQxDAYj2HdsV6yuqr2ev6v1bYqcm4j60uOIolahIhNrBoPIjmGzWWueWbXMda6K
-         7R99KBETIuF/9P4Gyp6DDunxSaxIom6yYSVRDJG4K+UuzUl3nZK3TQknL1EDmbrzAt5p
-         uCfA==
-X-Gm-Message-State: AOJu0YxJw9rePEf9eifx0nwydzYvQJV2J9UYflj+LFkQzweJVHAZsjtk
-	XkSvSV4PfurvSy8HdGDU+Uo+YJkmNT5DC6KOw08IHzOtcMySBMCdfsHefSvMTBP5IenR5Sd3mdO
-	migpaY/i8CY4hqcTJ3leg8v2wQacUvAR+msfGeIXPK/0XhF0RcirNJpMc74Jh1ROPNCKg
-X-Gm-Gg: ASbGncvJW6XVVkrvj2y5eMK0TlT1DRsKbB/TsU39Sz2qigMfMcBdtmOzVrzyL2e6+AN
-	S4LQFxLdmrYYJOz/Y83zUSWg7Yd/2W2utep14qg3JLy+sWVT1DVf0pJQre034QfWNIj2m8U63Hy
-	FldhxtuJLu3bOXOdDJtnJMdmWiVzYPDXslLcZEKw1hxNVIvU8CdDp/CI0QmdnlAskTZuCq7c5+5
-	1HbcpfmMWoCpz6XnVCybx4VFDV2DTuqfFvT6doDhgr7Aq+jezaZVjpBdSInU0kj1L3ql/jBQfJ6
-	tMdfM3fwRkmYrvkE48HmYnV96GJ+1KnH/VRInCOo/XJnRnmYQhl7XL/3e4/iSR4bbmAgCOaGhho
-	6SSZ6xTHJROy6wocuErXq3g==
-X-Received: by 2002:ac8:57c9:0:b0:4d8:85db:314 with SMTP id d75a77b69052e-4da4bfc05b4mr56721151cf.11.1758887087228;
-        Fri, 26 Sep 2025 04:44:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUJgskH5/9pO1Sz5CQgZsxdYJG0av5mRyh8GQfkS2NLlVmdflNR0Y7Vg+ttb4L9svIeMZhPg==
-X-Received: by 2002:ac8:57c9:0:b0:4d8:85db:314 with SMTP id d75a77b69052e-4da4bfc05b4mr56720871cf.11.1758887086719;
-        Fri, 26 Sep 2025 04:44:46 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b353f86f974sm353684466b.40.2025.09.26.04.44.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 26 Sep 2025 04:44:46 -0700 (PDT)
-Message-ID: <ccb57be5-7f8a-4008-a650-4683d34bfeff@oss.qualcomm.com>
-Date: Fri, 26 Sep 2025 13:44:43 +0200
+	 In-Reply-To:Content-Type; b=EGy1t43APfkarZQNRFMGYlHNadb/SbS7f0dNjPOu63FW9e1cvy75nZws9xNVRf/hvnYA+rs68HRV+/bcliSWcGcuf4W+lmsFra0iBD35tHiHsGuKagZwHw210CppVaKTPV1R1Ho7FY+2aLM+7pNLnpf9bHgCdnAPIMQ6v+v0g5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=oak0N9IQ; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [10.0.0.200] (unknown [10.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id 109115340A9A;
+	Fri, 26 Sep 2025 13:45:45 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1758887145;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=hmc0nO62D+pcYqSViTefHG7TcYqYnck8bqXIMVd1kKA=;
+	b=oak0N9IQ/UvJ12dhJ7KgMNhriNmWE4XFw+ThYT4HUVO4r/KiXPtUiUfaoNzPXCS3Wbi3Wb
+	2WBnD6YTv6JUl2qeN+rz0DHES4lNMR5qxfHNxSTitsrYWXcLnyfzMFEV+8VfZzH1nFkbQe
+	gwAiMbkmmDQWCYSK4nMpTtXs1l43cIo=
+Message-ID: <541bc30a-f5b6-47e3-8185-163b8ee4d5a1@ixit.cz>
+Date: Fri, 26 Sep 2025 13:45:44 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,95 +56,99 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] media: iris: Add support for multiple TZ CP configs
-To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Bryan O'Donoghue <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Philipp Zabel <p.zabel@pengutronix.de>
-Cc: linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Vishnu Reddy <quic_bvisredd@quicinc.com>
-References: <20250925-knp_video-v1-0-e323c0b3c0cd@oss.qualcomm.com>
- <20250925-knp_video-v1-3-e323c0b3c0cd@oss.qualcomm.com>
- <050b2cc8-ddbd-4a79-879e-4a2c9e7d95f0@oss.qualcomm.com>
- <94f6754f-cc56-09c5-3730-3f36c22e4786@oss.qualcomm.com>
+Subject: Re: [PATCH 7/8] drm/panel: samsung-sofef00: Invert reset gpio
+ polarity
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Neil Armstrong <neil.armstrong@linaro.org>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Thierry Reding
+ <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Casey Connolly <casey.connolly@linaro.org>, dri-devel@lists.freedesktop.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
+References: <20250925-s6e3fc2x01-v1-0-9293016768f7@ixit.cz>
+ <20250925-s6e3fc2x01-v1-7-9293016768f7@ixit.cz>
+ <anrdocs56hbunj7ga573kopcol34pw5cklrwneqevpfhhlm2bc@qvih2y7vm7q7>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <94f6754f-cc56-09c5-3730-3f36c22e4786@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <anrdocs56hbunj7ga573kopcol34pw5cklrwneqevpfhhlm2bc@qvih2y7vm7q7>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=I9Vohdgg c=1 sm=1 tr=0 ts=68d67cb0 cx=c_pps
- a=hnmNkyzTK/kJ09Xio7VxxA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
- a=-AzuYhFZr7sfLd3NIz8A:9 a=QEXdDO2ut3YA:10 a=PEH46H7Ffwr30OY-TuGO:22
- a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: -pq2-E4LGT05woaodO11MfaScwdgjVlw
-X-Proofpoint-ORIG-GUID: -pq2-E4LGT05woaodO11MfaScwdgjVlw
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MSBTYWx0ZWRfX3DRo/ivRVYoR
- EnwAcgEQ77fp/E3Nwdh7VpQGL1IHD8J2Gz5CQQGl44ZysmqZ0MG+XeBrCVOw1F0uVqjECaFT1VC
- s1C4/clw6zbcx5fNfORMXeeZKRxztdo9xM5swhsVIju7KdzboZ/HI48KJdRzt4HyJTOxFwAkDA0
- lzYy0VKH0+gPTyvL6+joMVhh6Lylxy5gX3xR6f8vra39aWTHraw7ItM5w8QuEHWr+b+TloaGjMO
- M4X7sqfNuAUSauVyXQCuQZVAfTj7PO5+ZamsXM9YEX2Hht/U0yYX/ONIJnpuTx8TAY/bgf/LDYu
- jjDfyRY+sS27nvIjPD5CXPxH3a3wAZEYw+F+zOJ6XTzmRXs7PzXiLPc6ZawBvzsFQR+BHFmkNK5
- c6HNCk5CMaZvYIm9sbOpJxzXQZiYBw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-26_03,2025-09-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 phishscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250171
 
-On 9/25/25 9:27 PM, Vikash Garodia wrote:
+Thank you, in v2 I'll drop the invert and revert polarity in the 
+S6E3FC2X01. Jens confirmed that GPIO should stay as is.
+
+David
+
+On 25/09/2025 23:00, Dmitry Baryshkov wrote:
+> On Thu, Sep 25, 2025 at 11:12:53AM +0200, David Heidelberg via B4 Relay wrote:
+>> From: David Heidelberg <david@ixit.cz>
+>>
+>> Follow the device-tree change for OnePlus 6/6T and invert the reset
+>> polarity in the driver.
 > 
-> On 9/25/2025 2:31 PM, Konrad Dybcio wrote:
->> On 9/25/25 1:14 AM, Vikash Garodia wrote:
->>> vpu4 needs an additional configuration w.r.t CP regions. Make the CP
->>> configuration as array such that the multiple configuration can be
->>> managed per platform.
->>>
->>> Co-developed-by: Vishnu Reddy <quic_bvisredd@quicinc.com>
->>> Signed-off-by: Vishnu Reddy <quic_bvisredd@quicinc.com>
->>> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
->>> ---
->>
->> [...]
->>
->>> -	ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
->>> -					     cp_config->cp_size,
->>> -					     cp_config->cp_nonpixel_start,
->>> -					     cp_config->cp_nonpixel_size);
->>> -	if (ret) {
->>> -		dev_err(core->dev, "protect memory failed\n");
->>> -		qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
->>> -		return ret;
->>> +	for (i = 0; i < core->iris_platform_data->tz_cp_config_data_size; i++) {
->>> +		cp_config = &core->iris_platform_data->tz_cp_config_data[i];
->>> +		ret = qcom_scm_mem_protect_video_var(cp_config->cp_start,
->>> +						     cp_config->cp_size,
->>> +						     cp_config->cp_nonpixel_start,
->>> +						     cp_config->cp_nonpixel_size);
->>> +		if (ret) {
->>> +			dev_err(core->dev, "protect memory failed\n");
->>> +			qcom_scm_pas_shutdown(core->iris_platform_data->pas_id);
->>> +			return ret;
->>> +		}
->>>  	}
->>
->> Do we need to do any "un-protecting" when unrolling from an error?
+> Reset is usually active-low. On most of the boards it is described as
+> RESET#.
 > 
-> Not needed for unwinding part.
+>>
+>> Fixes: 5933baa36e26 ("drm/panel/samsung-sofef00: Add panel for OnePlus 6/T devices")
+>> Signed-off-by: David Heidelberg <david@ixit.cz>
+>> ---
+>>   drivers/gpu/drm/panel/panel-samsung-sofef00.c | 10 +++++-----
+>>   1 file changed, 5 insertions(+), 5 deletions(-)
+>>
+> 
 
-Thanks for confirming
+-- 
+David Heidelberg
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-
-Konrad
 
