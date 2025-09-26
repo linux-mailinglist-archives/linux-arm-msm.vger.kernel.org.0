@@ -1,237 +1,229 @@
-Return-Path: <linux-arm-msm+bounces-75330-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75331-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4F38BA4471
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 16:47:31 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14B10BA45C2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 17:09:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A018238423F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 14:47:31 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id BB307165293
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 26 Sep 2025 15:09:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8D1F199FBA;
-	Fri, 26 Sep 2025 14:47:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29D941F2BB5;
+	Fri, 26 Sep 2025 15:09:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="moIfQDSQ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WIYhxgFV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B404C1581EE
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 14:47:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A0851F0E56
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 15:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758898043; cv=none; b=dfleCP+DR/Sa8CwMenz9pXgvzmVsStA9xo2/gQbb8HRG3wPlxFdA3Yc4XOGF7O3urea33E05Kgs/CkjsP5pkypY/tGI0TPbsEx+/PkXbmwIG0joKMBMdC4O82EWBztka3mUXRjUtV5FkkQY9BE5os3f/T+P1cS7QD4OB2PwtL2M=
+	t=1758899370; cv=none; b=RdhYZXH4roOTontvgbffAFsOfa75Zu6sgpC7H7mdvTh3C6VrhO9gHIjqu89KO4XmnV+h8M4e8SLeY4jjjsMoWL2oHpV8l7wTdwRE4CuUtzDoPMBifUqGOl3MkeJoe2rqLnen4AQEmLoL2MFeY4k1IFYXX0efznKUxfLPWDAVDLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758898043; c=relaxed/simple;
-	bh=PxLJxKxKxHHAU6FGVEjqIZb4eS8mFOjMm0lu6rHkXFs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CfgbBO+Y5kQy0YjAEt4g90I+ic9WfYYLdqoi3W6FJgkHZHZwaCmRLdhsfJXP8Dcd0U9R/RgrX4O9mxViK80Bs7c4WmNGG8k7gtwkHy6ecnFzIBqK8cHESz14qJ8+iLhcvQjIsgFkukgQEZYvDFxsx/WmMlXClNfWJiVgiWPNEfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=moIfQDSQ; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39049C4AF09
-	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 14:47:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1758898043;
-	bh=PxLJxKxKxHHAU6FGVEjqIZb4eS8mFOjMm0lu6rHkXFs=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=moIfQDSQC/I8oMohSKkuwl/IppgEcDKIezdjh7KfKl7Nn/2Z15OAtbZBq02WlXvHs
-	 zYYRcpFlZv4tP8PukMEf/ZRKs5PMskLG0i47dI7aF8MUHM50akaoSAUHuxfdQFk4zj
-	 fzuM/gw7ylJVMc7aVquDxSnGGGLUJHhjf9eK8HCSiUY0CPax65b8Jbiz6s3wDTmXRc
-	 2UhNkeaBxCIiwhXAXcp/PHHa4EIuV5DYVF2rgqcYmH0x/sc6YeqTs8385P8JV7dA/l
-	 0vHkYVJUvzPwQWq+hF9OWvFvZjcWzt4U9EyNoHdXVVdW+qNw0GWhF+9qojEYoizcyD
-	 lrBYkc/JQvctw==
-Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-afcb7a16441so370561366b.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 07:47:23 -0700 (PDT)
-X-Forwarded-Encrypted: i=1; AJvYcCWtLR3MAYKeHWWlhe8MEaNzyS9awemkbiiGR4j1KdjJjD/Hz6tLWtAIBMz706Ng36vLikuVYBRh6/yUDCh3@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKQhvcdRfpTII4fpNqs27Nzn/FQ+JUrDvxnqJXwGISJhyT6Tt6
-	vm2C0DUHZp9y/r8U7wCOPD3nHkUtmWoLdpvFgtWrfC/fsSvZ/vceK8iP9+idCNvbTUjC4xV6gzF
-	LyORgPUv10JxiJt347Z5yRtEZXkme9w==
-X-Google-Smtp-Source: AGHT+IFYlhh1P/VEFhBfLmLyN0WsblCYhmdb8/TU2n2m3mQ/geQQ+5CPtM0v6/lEal0Fl9k9sVhPFz3LsvIfu6OQy8E=
-X-Received: by 2002:a17:907:86ab:b0:b04:6cf7:75d4 with SMTP id
- a640c23a62f3a-b34bcd5959amr809600766b.49.1758898041746; Fri, 26 Sep 2025
- 07:47:21 -0700 (PDT)
+	s=arc-20240116; t=1758899370; c=relaxed/simple;
+	bh=2FVv1Hq8CsLTgxv3TXvMbj799Kn3CqKDdgv2Rf9D5Gw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q1N8JCyTddF/98OPyP74FIFGVxFNflbR3VdN5DWRQqgLawusyGne/sPm2yJbtOLv3MeLCaDbQWaiyjKOGPfrB9fq9bogj+2hABbzZytSWlEjPSP5Tla/APliJEfAzNcs7AF5riPYee+aHsvOIDhdCZDJVPJgruX+4+ZFQag/G+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WIYhxgFV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58QEX49t006922
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 15:09:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=xml9I4KJWJ+n/mLooOTRb4jr
+	nF4kQuIKgjMLbzeFPFg=; b=WIYhxgFVDjPJC/GSKCkdWOuL54sXvXqRiPPI18rq
+	X2kNGEj7aIp59ie7UxCbGCNu4uoFiSviFSSZhMP5D2vxEKkUPp/g2Rz8rq2dZ6YC
+	Vez2sH4QsvLhmQoz1DD5c5hqqeEGWLZJUc44Q8eJg0WS6HaVUS1a6mU9kHu0GMg+
+	Cm3i48ZM4+UcnAwEUMhqR3vr1l9J5WnirS7DndEIg2KTqYZCgI7OGadhvHmpg0yp
+	vz5uUv0YUuEW3LditKCHg0dk8lKXuqW9dU69zTFgQFEj2a6s5cQBZEJwkuchnTbG
+	/cq7HaKJ+uRxOxSGYX0KQQGOAwfqE2W9+e5KcRhlKjVsqw==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49db0qu9am-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 15:09:21 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4b78fb75a97so28683061cf.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 26 Sep 2025 08:09:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1758899359; x=1759504159;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xml9I4KJWJ+n/mLooOTRb4jrnF4kQuIKgjMLbzeFPFg=;
+        b=DgwKuYI4KNorkXDaiPJReJ1Ia3q3gQ24gTMmgtcVoiBz71UtGnOPmHK8NWL/rFwz3m
+         1xYDySJ4NYusJJxnuaOJ+sqcXGtHT852+sQCpK3BaezRj8wKZwxSJNXRmlZXzFQ+GrJu
+         cjGqwDn5fx1vwok52gbGwxsr1rnsk9+SfXQMDs0C3u0g1mS/K9XEfL4fA5Y9PNV1nq3F
+         Ri4uk7HhL5aJ7OiqeDoijJWEjopx2YAy0dkMrWUVnyHoAGFbO5iaR4nvMFwx4x9IjGwi
+         yQfJ/ht9Hicf8ghLjyxabMDgEwJVDhI5utXG5mf/kg4mmBc3OKPhYGivVh1AClzg6OeO
+         dgwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX5jGebBKnwCAn+p86kVlpuijdob7HlBoxnjpDF+u7M1tiBv+Y5l4oOVi+uNnrjzwWDDxMVQeIFCiUgbs3+@vger.kernel.org
+X-Gm-Message-State: AOJu0YzrU3MREl25ombFiV+L4HgsobodxItS+RxBd94AJvx9W0MRhyN8
+	4OM7klHV9ThZTiAE4egRQB0EFnwnzrrMNK24k/CdD6OwWgnvAL9kg9IN+ky/+I4wGKSZrX6e380
+	v2eOUPgeUIDNb1k5WqRXzf3XOR2ZEkVwexLAltyHCP4N6XfuALqKvSOzYNLsTn0/TToo/
+X-Gm-Gg: ASbGncs4k7uDiBKJddAWiOafwxkQJBZVg/Dmr2FJSNfuLtYSa7uHtK6W/L2OJuhPs0b
+	eF76Wk4ntDPaUk6/krjc56QLfjKw8bMZ1YEAngIfd1zv4DppocXDZHjm9cIJuvN1SGTf9lJLEw8
+	7oHzBfCBmOrUwHmNCqLzXExXab9czUWUj5FmN5BUXGGrQ5NjENx3LqgzvAMBvuyG7NtRFle6Eo+
+	dt5XpV9++1HKpbTDScD5ay24z087eq7X1sq7NwqF4v2/SpsmvsSGI1Uo9XN1rPPbsxgduSPxlM8
+	uQh/IC7sqdhcv7jwW+kbUUFHEzajoKCy3sSEr79+7sK1ylTYifREMDyOIJryrOmqhlfLPWUro6i
+	2bLtPxKfpaYGqIE8qpT6SNLCJoQppJvDEMbmpiqyM0nywkBB50XpN
+X-Received: by 2002:ac8:57c6:0:b0:4d8:f0e4:f92d with SMTP id d75a77b69052e-4da48a96e98mr117642891cf.34.1758899359133;
+        Fri, 26 Sep 2025 08:09:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGVNL1+kS1q2UptTniV/FQ9TTOA5N9MQS67FNYuK7ugL+YJ4ZWes7rk96zqrRI0rqdGs4Uteg==
+X-Received: by 2002:ac8:57c6:0:b0:4d8:f0e4:f92d with SMTP id d75a77b69052e-4da48a96e98mr117641741cf.34.1758899358147;
+        Fri, 26 Sep 2025 08:09:18 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-58316d14010sm1877513e87.124.2025.09.26.08.09.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 26 Sep 2025 08:09:17 -0700 (PDT)
+Date: Fri, 26 Sep 2025 18:09:15 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Srinivas Kandagatla <srini@kernel.org>
+Cc: Jianfeng Liu <liujianfeng1994@gmail.com>,
+        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+        linux-arm-msm@vger.kernel.org, Xilin Wu <sophon@radxa.com>,
+        Abhinav Kumar <quic_abhinavk@quicinc.com>,
+        David Airlie <airlied@gmail.com>, Dmitry Baryshkov <lumag@kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>, Simona Vetter <simona@ffwll.ch>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        linux-sound@vger.kernel.org
+Subject: Re: [PATCH v2] drm/display: add hw_params callback function to
+ drm_connector_hdmi_audio_ops
+Message-ID: <rydatk4grelhg6w57wwkqafq5ghccnsuiwvfqvvdv7qum5dg5a@scoc76ni7hue>
+References: <20250925040530.20731-1-liujianfeng1994@gmail.com>
+ <46q2pje4hginnm2wld6ejyo36hfkmkzydaa4qggx47gd2p4q4z@q6vmomtgqihv>
+ <cc1afa21-8a66-4e0c-8fae-d0b07142b11d@kernel.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <20250924-knp-dts-v1-6-3fdbc4b9e1b1@oss.qualcomm.com> <CAJKOXPcbJY4JEjfZLvOAXEWCTYFpe7En+Riis2t3K5fWJgNU5A@mail.gmail.com>
- <3up4xqgd2ay3tex4ckzgews3ukyrdikcmgk7tbddggj3s5gt4d@foqcpnfptjk7>
- <20250925213151.GA2455023-robh@kernel.org> <c13b94ed-a240-4a32-9f11-f0e323197500@oss.qualcomm.com>
-In-Reply-To: <c13b94ed-a240-4a32-9f11-f0e323197500@oss.qualcomm.com>
-From: Rob Herring <robh@kernel.org>
-Date: Fri, 26 Sep 2025 09:47:09 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqLCLy0JxPtbg5sbXux-o8aQi3a8EOs0c=VEJCePew72nw@mail.gmail.com>
-X-Gm-Features: AS18NWC5C7HnLX7fNJNeb1WDQk7YmZFfyTQG79-Q0QGWW0BmFcacKZTlJXUOwQI
-Message-ID: <CAL_JsqLCLy0JxPtbg5sbXux-o8aQi3a8EOs0c=VEJCePew72nw@mail.gmail.com>
-Subject: Re: [PATCH 06/20] arm64: dts: qcom: kaanapali: Add USB support for
- Kaanapali SoC
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>, =?UTF-8?Q?Krzysztof_Koz=C5=82owski?= <k.kozlowski.k@gmail.com>, 
-	Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Konrad Dybcio <konradybcio@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com, 
-	trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, 
-	Ronak Raheja <ronak.raheja@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cc1afa21-8a66-4e0c-8fae-d0b07142b11d@kernel.org>
+X-Proofpoint-GUID: fYNrkF5ddrJTJlgZq06yG_ltOYVpqSen
+X-Proofpoint-ORIG-GUID: fYNrkF5ddrJTJlgZq06yG_ltOYVpqSen
+X-Authority-Analysis: v=2.4 cv=api/yCZV c=1 sm=1 tr=0 ts=68d6aca1 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=yJojWOMRYYMA:10 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=Hfy8LQLwNBXcVyXodC8A:9
+ a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI1MDE3MSBTYWx0ZWRfX96zJMZQ7Kvtf
+ Q31/HSwEM4xMJn0pztabAl4dlU/depx8vGXGkx+B/vLzb9fM33hs3aAuUszeApdrtT2+6HzRfHN
+ Ag5LCdBaYUzeq/9p7QmP41nGRdJM25fpttqfMR0POmwQRgikAD8R3I/6pfq5TeaSw25WeCAHOWU
+ W82fJju0rax0bsSd/XNSIc5dmWww27I4oK8EJsi602NFNKyo99nf9YJicBVpzYtk0mB+RVURSJq
+ Vk5gJDKlSst7+AbcH/YJ/NRDrvxm4DqHXPs7I9QXEy0R7DIM+7AwbcktogH+0tRx40OIszNKnWO
+ cwsJlBk9K5MsUTaULaF5D8t/UWn6E9Afz4B9ZSJ5sQR1pkoTnF80Se49FdB+W4MqbAwm+dJOHui
+ X2leqmf3KOs7fibVvK2Nuu/Y4is3dQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-26_05,2025-09-26_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 malwarescore=0 suspectscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509250171
 
-On Fri, Sep 26, 2025 at 8:21=E2=80=AFAM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 9/25/25 11:31 PM, Rob Herring wrote:
-> > On Thu, Sep 25, 2025 at 08:57:56AM -0500, Bjorn Andersson wrote:
-> >> On Thu, Sep 25, 2025 at 10:50:10AM +0900, Krzysztof Koz=C5=82owski wro=
-te:
-> >>> On Thu, 25 Sept 2025 at 09:17, Jingyi Wang <jingyi.wang@oss.qualcomm.=
-com> wrote:
-> >>>>
-> >>>> From: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
-> >>>>
-> >>>> Add the base USB devicetree definitions for Kaanapali platform. The =
-overall
-> >>>> chipset contains a single DWC3 USB3 controller (rev. 200a), SS QMP P=
-HY
-> >>>> (rev. v8) and M31 eUSB2 PHY.
-> >>>>
-> >>>> Signed-off-by: Ronak Raheja <ronak.raheja@oss.qualcomm.com>
-> >>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> >>>> ---
-> >>>>  arch/arm64/boot/dts/qcom/kaanapali.dtsi | 155 +++++++++++++++++++++=
-+++++++++++
-> >>>>  1 file changed, 155 insertions(+)
-> >>>>
-> >>>
-> >>>
-> >>> Second try, without HTML:
-> >>>
-> >>> I really don't understand why you created such huge patchset.
+On Fri, Sep 26, 2025 at 11:30:26AM +0100, Srinivas Kandagatla wrote:
+> 
+> 
+> On 9/25/25 5:28 AM, Dmitry Baryshkov wrote:
+> > On Thu, Sep 25, 2025 at 12:05:09PM +0800, Jianfeng Liu wrote:
+> >> After reusing drm_hdmi_audio_* helpers and drm_bridge_connector
+> >> integration in drm/msm/dp, we have dropped msm_dp_audio_hw_params and
+> >> use msm_dp_audio_prepare instead. While userspace is still calling
+> >> hw_params to do audio initialization, and we get the following errors:
 > >>
-> >> Because I looked at the logical changes that went into the big squash
-> >> that was initially planned, and requested that some of those was kept
-> >> intact - because they where independent logical changes.
+> >> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> >> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> >> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> >> hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_hw_params() started
+> >> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+> >> qcom-apm gprsvc:service:2:1: Error (1) Processing 0x01001002 cmd
+> >> qcom-apm gprsvc:service:2:1: DSP returned error[1001002] 1
+> >> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: Failed to start APM port 104
+> >> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: ASoC error (-22): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
+> >> MultiMedia2 Playback: ASoC error (-22): at dpcm_run_update_startup() on MultiMedia2 Playback
+> > 
+> > And a call to hdmi_codec_prepare() comes only at this place.
+> > 
+> > Srini, Mark, when selecting to only implement .prepare for codec ops I
+> > was following the commit 2fef64eec23a ("ASoC: hdmi-codec: Add a prepare
+> > hook"), which documents that IEC958 status bit is set after
+> > .hw_params(), so it's only visible during .prepare(). Is it okay to
+> > implement both callbacks? Or should the audioreach DAI driver be fixed
+> > somehow instead (I suppose it assumes that the port is available after
+> > .hw_params(), not sure if that assumption is correct)?
+> > 
 > >>
-> >>> Year
-> >>> ago, two years ago, we were discussing it already and explained that'=
-s
-> >>> just inflating the patchset without reason.
-> >>>
+> >> msm_dp_audio_prepare is not called because hdmi-codec driver only checks
+> >> and runs hw_params before q6apm_lpass_dai_prepare(). This commit will
+> >> add hw_params callback same as drm_connector_hdmi_audio_prepare, so that
+> >> hdmi-codec driver can work with userspace alsa.
 > >>
-> >> We used to add things node by node and that was indeed not
-> >> comprehensible. Overall this adds features in large logical chunks, bu=
-t
-> >> there are a few of the patches that could have been squashed.
+> >> Tested with Radxa Dragon Q6A.
 > >>
-> >>> New Soc is one logical change. Maybe two. Not 18!
-> >>
-> >> I can see your argument for one patch to introduce the soc. But two
-> >> doesn't make sense, because that incremental patch is going to be the
-> >> kitchen sink.
-> >>
-> >>>
-> >>> Not one patch per node or feature.
-> >>>
-> >>
-> >> Definitely agree that we don't want one patch for every tiny block!
-> >>
-> >>> This hides big picture, makes difficult to review everything,
-> >>> difficult to test.
-> >>
-> >> The big picture is already obscured due to the size of the content
-> >> added.
-> >>
-> >> Comparing to previous targets, I see the baseline content in 2-3
-> >> patches, and the remainder of the series being things that usually has
-> >> been scattered in many more small changes in the following weeks or
-> >> months.
-> >>
-> >> There's plenty of features in this series that are yet to be concluded
-> >> for SM8750.
-> >>
-> >>> Your patch count for LWN stats doesn't matter to
-> >>> us.
-> >>
-> >> I agree with this. That's why the QRD is 1 patch, and MTP is 4 (this I
-> >> think should be squashed to 2) - compared to 13 patches for across the
-> >> pair for SM8750 with less scope.
-> >>
-> >>>
-> >>> NAK and I'm really disappointed I have to repeat the same review .
-> >>
-> >> I'm not sure what you're disappointed in, this initial series is large=
-r
-> >> than any we've seen before. I really like the work Jingyi has done her=
-e,
-> >> aggregating the otherwise scattered patches into one series.
-> >
-> > The QCom folks can review all this first because I don't care to review
-> > the 50+ binding (just bindings!) patches sent all at once right before
-> > the merge window.
->
-> Unfortunately this is sort of beyond our control. We don't expect you to
-> review or apply these patches immediately.
+> >> Fixes: 98a8920e7b07 ("drm/msm/dp: reuse generic HDMI codec implementation")
+> >> Signed-off-by: Jianfeng Liu <liujianfeng1994@gmail.com>
+> > 
+> > The patch LGTM, but I would wait for response from audio maintainers.
+> > 
+> 
+> The ordering matters in this case as we need clocks and audio
+> configuration on DP codec side to be setup before we start configuring
+> the dsp pipeline. Looks like that DSP is trying to setup DP endpoint
+> even before it is ready.
+> 
+> q6apm prepare loads the dsp pipeline and starts configuring the
+> endpoints, if the DP endpoint is not ready dsp would throw an error.
+> 
+> We might be able to pull in some dsp logs to confirm this, but I dont
+> have a setup that I can reproduce this issue.
 
-It is *only* in your (QCom) control. I would love to have control over
-receiving patches to review, but sadly I do not.
+What would be your recommendation to proceed? Is it okay for the DAI
+driver to depend on the .hw_params enabling the clock? Also I see that
+the error regarding the clocks comes from .prepare callback too. What is
+the order of .prepare callbacks()? Can we influence it?
 
-Then you should mark them RFC at least if you know they are going into 6.18=
-.
+> 
+> 
+> --srini
+> >> ---
+> >>
+> >> Changes in v2:
+> >> - Link to v1: https://lore.kernel.org/linux-arm-msm/20250924085804.34183-1-liujianfeng1994@gmail.com/
+> >> - Use more detailed trace log in commit message.
+> >> - Drop the empty line between Fixex and SoB.
+> >>
+> >>  drivers/gpu/drm/display/drm_hdmi_audio_helper.c | 1 +
+> >>  1 file changed, 1 insertion(+)
+> >>
+> >> diff --git a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+> >> index 7d78b02c1446..6ca1c7ad0632 100644
+> >> --- a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+> >> +++ b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+> >> @@ -130,6 +130,7 @@ EXPORT_SYMBOL(drm_connector_hdmi_audio_plugged_notify);
+> >>  
+> >>  static const struct hdmi_codec_ops drm_connector_hdmi_audio_ops = {
+> >>  	.audio_startup = drm_connector_hdmi_audio_startup,
+> >> +	.hw_params = drm_connector_hdmi_audio_prepare,
+> >>  	.prepare = drm_connector_hdmi_audio_prepare,
+> >>  	.audio_shutdown = drm_connector_hdmi_audio_shutdown,
+> >>  	.mute_stream = drm_connector_hdmi_audio_mute_stream,
+> >> -- 
+> >> 2.43.0
+> >>
+> > 
+> 
 
-> The platform announcement just happened to occur at this and not any othe=
-r
-> time, and we can't just ask the entire company to shift it to better
-> accommodate the kernel release cycle..
-
-That's exactly what we expect. Companies following the rules or
-preferences of the kernel community is exactly what is expected and
-required. Companies that continuously fail to do that result in
-requirements that all patches be first signed off by trusted kernel
-developers in those companies.
-
-What would you have done if the timing hit in the merge window where
-you have trees which have policies of don't send new content during
-merge windows? Just going to ignore that?
-
-
-> We do have an interest in sharing the work at the earliest time possible,
-> and with all the legal knots included, this is what it came down to.
->
-> I (and many others) made an internal push to upstream any pre-requisite
-> patches that we didn't need to disclose any platform details for in
-> advance, so this patchbomb is actually somewhat reduced.. but of course
-> DT and bindings are the main course size-wise and we simply couldn't do
-> it earlier.
->
-> Give or take 80% of the bindings will be "boring", i.e. "add compatbile"
-> or "add compatible and adjust clocks" because our hw is rather
-> standardized and the interesting changes often happen at a level beyond
-> bindings
->
-> > One comment on commit messages though. Please explain how the h/w block
-> > is or isn't compatible with some existing platforms. Many just state th=
-e
-> > obvious "add a compatible" or such. I've yet to find what kaanapali is
-> > in relation to any other QCom chip. It may be the next SoC for the smar=
-t
-> > toaster market for all I know.
->
-> Perhaps this would be useful to have in bindings commit messages, but
-> the cover letter of >this< series states that Kaanapali is the newly
-> announced Snapdragon 8 Elite Gen 5.
-
-Patches should stand on their own. I'm talking about patches in other serie=
-s.
-
-> The product page states at the very bottom of the spec sheet that
-> SM8850 is another name for it (although the shift to codenames
-> happened precisely to disconnect from specific SKU numbers,
-> because e.g. both SA8775P and QCS9100 are 'lemans' silicon)
-
-Sorry, I'm not going to go read your product pages...
-
-Rob
+-- 
+With best wishes
+Dmitry
 
