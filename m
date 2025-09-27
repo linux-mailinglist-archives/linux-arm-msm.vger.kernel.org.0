@@ -1,167 +1,207 @@
-Return-Path: <linux-arm-msm+bounces-75371-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75372-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [IPv6:2604:1380:40f1:3f00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 91B4FBA5CF2
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 11:43:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AAB6BA5D31
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 11:56:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5E2F47B547D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 09:41:51 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 3CA7D7A9BD4
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 09:54:48 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 843672D7DEE;
-	Sat, 27 Sep 2025 09:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9D8E529ACF0;
+	Sat, 27 Sep 2025 09:56:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="OJIGcH/P"
+	dkim=pass (2048-bit key) header.d=cknow.org header.i=@cknow.org header.b="l35Yh+D4"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-188.mta0.migadu.com (out-188.mta0.migadu.com [91.218.175.188])
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5DF2848AD
-	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Sep 2025 09:42:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.188
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC9F19D8A8
+	for <linux-arm-msm@vger.kernel.org>; Sat, 27 Sep 2025 09:56:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1758966137; cv=none; b=HjNR04iHRzS3tWiLiPJLM29jxiH8SJYQ4JQ0u+szpYzZq8wLeBlvjsHclssP2YrngYDYw6IU5UWQ3/cEGViwtuqUdoEajGM196Yc69MOhttPnncwDLWEpq4CO/He43Qouyjo1MeU6x57/Ljken+qc/XeN0It4DPR8MgdniUl4To=
+	t=1758966984; cv=none; b=od1wQs+ZOlSse3dNAmz3rbtUXf7tPi6qI54+VfaHyyuDP5IY13pt+uGlkHXm/D21aohV9AB7pLShU7tuREuF60HdxpFmEm/OnZT/BfjLNUW+/26Z/NtK7gm2kfDv8CT9G2feL6wwXm/zh7uTDHPyMrYB/eSKNPMPFUMymGZKLVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1758966137; c=relaxed/simple;
-	bh=hj9SQaZQ+NV1jo8qCsoqhEp+uAha3FzKkF1vJ4yct8c=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=V0T7kgp1DGXsA4yaXuUW/U4BZYhzUCtcsKdQ85BfMDnxYLp8KHLi0UJtXDgT1bu0FYY2QypkoT6hIGephaXoyfRXbr2PxOQILYC8lpUgogSi397L7OCJV0AUQPZfG9WwG1bp3Uu5JcC4fLOXHf7raxmoNlaXNq0Xq6BXaAxpsGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=OJIGcH/P; arc=none smtp.client-ip=91.218.175.188
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
-	s=key1; t=1758966123;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=jJjBFBfPE6u5zLZVPpTcas9pDk+d/zRNn1H+l1sjsiA=;
-	b=OJIGcH/PqeyTMTwxhWqadvm8TobreeF1C3abUHlNXW2fRXMwuXFdXLZvfkdgCWiICjQ0gl
-	VG7wkJwnLvxPU5cHeINO7ZpCK84wcy1B+pj3yYt7Buj3KM6evQOVGgHmWkjK88lWNp39Sr
-	ngpDLGVwIGOE76oiylVnXynxMGvclwtCTz6BdZqQGT7eeOLYFam8shN2+7FAdKxes8NCG6
-	l/Ut/f2ofL03QjYzuV2YTaIj45llSrotjcocaFxgVVgo8OEhoGObLv2LWj5Q9Mqh9L2zUF
-	K6xX0l0nhUEI0P4+AuJOJNdluUu25ODIlLSwHUhsQjRKjCERIcRzhc0eO/6JCg==
-From: Val Packett <val@packett.cool>
-To: Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: Val Packett <val@packett.cool>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH] phy: qcom: qmp-combo: Move pipe_clk on/off to common
-Date: Sat, 27 Sep 2025 06:17:32 -0300
-Message-ID: <20250927093915.45124-2-val@packett.cool>
+	s=arc-20240116; t=1758966984; c=relaxed/simple;
+	bh=b35t56y4UDt8FwfT9zL1LJiLMU447oDw7O6y/WQjZ2Y=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=P9o7sStIpiooLsd8e8R+sGItILdLoGDtvKzxKc5jT99cc0Dep+fz7qEAqLD0I98dN7A3QWIR4xubrzzE3JlbLvLm1VIUC5mVp2NVdZbPxYkZG0apM2MnbIRX2o33zgq0qskpwwrBhG8dNJ74kl/dO8vGkI6PsJxMc3QHLegr5gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow.org; spf=pass smtp.mailfrom=cknow.org; dkim=pass (2048-bit key) header.d=cknow.org header.i=@cknow.org header.b=l35Yh+D4; arc=none smtp.client-ip=91.218.175.189
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=cknow.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cknow.org
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cknow.org; s=key1;
+	t=1758966978;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Y3x1Sed9F8EalDsModwxtm1c+k2dv0YDnCmwsZS/B5g=;
+	b=l35Yh+D4Q2oNYPZGHMcBntinmXfzF0w9i3ouEm37VXZ6knq0Ae65AveIxo7DWlUXX/i+rI
+	v6MxMPbMJ69e4NgfYM1fErKz9U+zPUoHg9qcQQGzTGnGhNuhn8VNyiR/v8eoJYFvOlxK4Y
+	KjRvxgJZyCyx7E0M9e9Leluq2Jxzt5PDE9IF3IVZJiJxiEoUIfMlU4xQx+T4a5vAyldUuW
+	xpgjM3TksXpYjr5OtjfXp/88vr82N5V4yaXWtn2OL8UyF6wW7MXKEBgJ1VWpwCLl4kYShC
+	7PvMeOhNe/2T65bMjiZ4DNMOdt6L97L4945a/yit58jOIvnWucwvWBwc8Dqk1g==
+Content-Type: multipart/signed;
+ boundary=009f252ba09693b5e8abec8ec687c59ee2a383ff22d9e36d8a97ad51c14e;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Sat, 27 Sep 2025 11:56:07 +0200
+Message-Id: <DD3HR1AGS7HT.2D858FUG2L2YB@cknow.org>
+Cc: <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+ <linux-arm-kernel@lists.infradead.org>,
+ <linux-rockchip@lists.infradead.org>, <linux-sunxi@lists.linux.dev>
+Subject: Re: [PATCH 8/9] drm/rockchip: inno-hdmi: handle unsupported
+ InfoFrames
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Diederik de Haas" <didi.debian@cknow.org>
+To: "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>, "Maarten
+ Lankhorst" <maarten.lankhorst@linux.intel.com>, "Maxime Ripard"
+ <mripard@kernel.org>, "Thomas Zimmermann" <tzimmermann@suse.de>, "David
+ Airlie" <airlied@gmail.com>, "Simona Vetter" <simona@ffwll.ch>, "Liu Ying"
+ <victor.liu@nxp.com>, "Andrzej Hajda" <andrzej.hajda@intel.com>, "Neil
+ Armstrong" <neil.armstrong@linaro.org>, "Robert Foss" <rfoss@kernel.org>,
+ "Laurent Pinchart" <Laurent.pinchart@ideasonboard.com>, "Jonas Karlman"
+ <jonas@kwiboo.se>, "Jernej Skrabec" <jernej.skrabec@gmail.com>, "Rob Clark"
+ <robin.clark@oss.qualcomm.com>, "Dmitry Baryshkov" <lumag@kernel.org>,
+ "Abhinav Kumar" <abhinav.kumar@linux.dev>, "Jessica Zhang"
+ <jessica.zhang@oss.qualcomm.com>, "Sean Paul" <sean@poorly.run>, "Marijn
+ Suijten" <marijn.suijten@somainline.org>, "Sandy Huang"
+ <hjc@rock-chips.com>, =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
+ "Andy Yan" <andy.yan@rock-chips.com>, "Chen-Yu Tsai" <wens@csie.org>,
+ "Samuel Holland" <samuel@sholland.org>
+References: <20250927-limit-infoframes-2-v1-0-697511bd050b@oss.qualcomm.com>
+ <20250927-limit-infoframes-2-v1-8-697511bd050b@oss.qualcomm.com>
+In-Reply-To: <20250927-limit-infoframes-2-v1-8-697511bd050b@oss.qualcomm.com>
 X-Migadu-Flow: FLOW_OUT
 
-Keep the USB pipe clock working when the phy is in DP-only mode, because
-the dwc controller still needs it for USB 2.0 over the same Type-C port.
+--009f252ba09693b5e8abec8ec687c59ee2a383ff22d9e36d8a97ad51c14e
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
 
-Tested with the BenQ RD280UA monitor which has a downstream-facing port
-for data passthrough that's manually switchable between USB 2 and 3,
-corresponding to 4-lane and 2-lane DP respectively.
+On Sat Sep 27, 2025 at 3:04 AM CEST, Dmitry Baryshkov wrote:
+> Make write_hdmi_infoframe() and clear_infoframe() callbacks
+> return -EOPNOTSUPP for unsupported InfoFrames and make sure that
+> atomic_check() callback doesn't allow unsupported InfoFrames to be
+> enabled.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/gpu/drm/rockchip/inno_hdmi.c | 46 +++++++++++++++++++++++++++---=
+------
+>  1 file changed, 35 insertions(+), 11 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/rockchip/inno_hdmi.c b/drivers/gpu/drm/rockc=
+hip/inno_hdmi.c
+> index f24827dc1421cf5e0c1be63a80da23d645cf3f24..dc2d68b9c87f7ae7b06ecbeae=
+bc82b9689c1abfd 100644
+> --- a/drivers/gpu/drm/rockchip/inno_hdmi.c
+> +++ b/drivers/gpu/drm/rockchip/inno_hdmi.c
+> @@ -641,11 +641,8 @@ static int inno_hdmi_disable_frame(struct drm_connec=
+tor *connector,
+>  {
+>  	struct inno_hdmi *hdmi =3D connector_to_inno_hdmi(connector);
+> =20
+> -	if (type !=3D HDMI_INFOFRAME_TYPE_AVI) {
+> -		drm_err(connector->dev,
+> -			"Unsupported infoframe type: %u\n", type);
+> -		return 0;
+> -	}
+> +	if (type !=3D HDMI_INFOFRAME_TYPE_AVI)
+> +		return -EOPNOTSUPP;
+> =20
+>  	hdmi_writeb(hdmi, HDMI_CONTROL_PACKET_BUF_INDEX, INFOFRAME_AVI);
+> =20
+> @@ -659,11 +656,8 @@ static int inno_hdmi_upload_frame(struct drm_connect=
+or *connector,
+>  	struct inno_hdmi *hdmi =3D connector_to_inno_hdmi(connector);
+>  	ssize_t i;
+> =20
+> -	if (type !=3D HDMI_INFOFRAME_TYPE_AVI) {
+> -		drm_err(connector->dev,
+> -			"Unsupported infoframe type: %u\n", type);
+> -		return 0;
+> -	}
+> +	if (type !=3D HDMI_INFOFRAME_TYPE_AVI)
+> +		return -EOPNOTSUPP;
+> =20
+>  	inno_hdmi_disable_frame(connector, type);
+> =20
+> @@ -673,6 +667,36 @@ static int inno_hdmi_upload_frame(struct drm_connect=
+or *connector,
+>  	return 0;
+>  }
+> =20
+> +static int inno_hdmi_connector_atomic_check(struct drm_connector *connec=
+tor,
+> +					    struct drm_atomic_state *state)
+> +{
+> +	struct drm_connector_state *conn_state =3D
+> +		drm_atomic_get_new_connector_state(state, connector);
+> +	int ret;
+> +
+> +	ret =3D drm_atomic_helper_connector_hdmi_check(connector, state);
+> +	if (ret)
+> +		return ret;
+> +
+> +	/* not supported by the driver */
+> +	conn_state->hdmi.infoframes.spd.set =3D false;
+> +
+> +	/* FIXME: not supported by the driver */
+> +	conn_state->hdmi.infoframes.hdmi.set =3D false;
+> +
+> +	/* should not happen, HDR support not enabled */
+> +	if (drm_WARN_ON_ONCE(connector->dev,
+> +			     connector->hdmi.infoframes.audio.set))
+> +		return -EOPNOTSUPP;
+> +
+> +	/* should not happen, audio support not enabled */
+> +	if (drm_WARN_ON_ONCE(connector->dev,
+> +			     conn_state->hdmi.infoframes.hdr_drm.set))
+> +		return -EOPNOTSUPP;
 
-Note: the suspend/resume callbacks were already gating the enable/disable
-of this clock only on init_count and not usb_init_count!
+Looks like the comments are on the wrong line? Also in patch 7.
 
-Signed-off-by: Val Packett <val@packett.cool>
----
-o/
+Cheers,
+  Diederik
 
-Just got my hands on a perfect test device for DP alt mode: a monitor with an
-on-demand toggle between 2 and 4 lanes. (Started digging because I thought
-I needed 4 lanes to use its full resolution and refresh rate, even though
-it turned out to be the dpu adjusted mode clock check rejecting the modes,
-patches for which are already posted.)
+> +
+> +	return 0;
+> +}
+> +
+>  static const struct drm_connector_hdmi_funcs inno_hdmi_hdmi_connector_fu=
+ncs =3D {
+>  	.clear_infoframe	=3D inno_hdmi_disable_frame,
+>  	.write_infoframe	=3D inno_hdmi_upload_frame,
+> @@ -1029,7 +1053,7 @@ static const struct drm_connector_funcs inno_hdmi_c=
+onnector_funcs =3D {
+>  };
+> =20
+>  static struct drm_connector_helper_funcs inno_hdmi_connector_helper_func=
+s =3D {
+> -	.atomic_check =3D drm_atomic_helper_connector_hdmi_check,
+> +	.atomic_check =3D inno_hdmi_connector_atomic_check,
+>  	.get_modes =3D inno_hdmi_connector_get_modes,
+>  	.mode_valid =3D inno_hdmi_connector_mode_valid,
+>  };
 
-In [1] Konrad mentioned that "the hardware disagrees" with keeping the USB
-PLL always on. I'm not sure what exactly was meant by disagreement there,
-and I didn't find any specific code that touches that PLL in the driver,
-so I decided to just try it anyway.
 
-Before the changes, 4-lane mode would actually kill the USB 2.0 functionality
-on the port, no recovery until reboot.
+--009f252ba09693b5e8abec8ec687c59ee2a383ff22d9e36d8a97ad51c14e
+Content-Type: application/pgp-signature; name="signature.asc"
 
-With this patch, I can switch the monitor between 4-lane and 2-lane modes
-(with an unplug-replug cycle..) and the USB 2.0 devices attached through
-the monitor keep working! (I verified the number of lanes used via dp_debug).
+-----BEGIN PGP SIGNATURE-----
 
-I'm sure it might not be that simple but from my limited and uninformed
-understanding without any internal knowledge, the "sneaky workaround"
-might actually be the intended way to do things?
+iHUEABYKAB0WIQT1sUPBYsyGmi4usy/XblvOeH7bbgUCaNe0uwAKCRDXblvOeH7b
+bn7bAPwJebDnI2AKKmrsKb1ukF91oehuobCOe5iej/is8fNtcwD/U9U72TebO6mY
+b18goM6s7bCYCHVCztoR8gN8bUTvIgo=
+=dph3
+-----END PGP SIGNATURE-----
 
-Thanks,
-~val
-
-P.S. if I'm actually wrong and this is not acceptable for $reasons, the suspend
-and resume callbacks would need to be changed to match the logic of having the
-clk on depending on usb_init_count, not just the overall init_count.
-
-[1]: https://lore.kernel.org/all/f21b7d52-4c3f-4e5b-bee7-f8b2945b5b02@oss.qualcomm.com/
-
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 7b5af30f1d02..c4bbd738eba1 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -3035,6 +3035,13 @@ static int qmp_combo_com_init(struct qmp_combo *qmp, bool force)
- 	if (ret)
- 		goto err_assert_reset;
- 
-+	/* In DP-only mode, the pipe clk is still required for USB2 */
-+	ret = clk_prepare_enable(qmp->pipe_clk);
-+	if (ret) {
-+		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
-+		return ret;
-+	}
-+
- 	qphy_setbits(com, QPHY_V3_DP_COM_POWER_DOWN_CTRL, SW_PWRDN);
- 
- 	/* override hardware control for reset of qmp phy */
-@@ -3103,6 +3110,7 @@ static int qmp_combo_com_exit(struct qmp_combo *qmp, bool force)
- 	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
- 
- 	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
-+	clk_disable_unprepare(qmp->pipe_clk);
- 
- 	regulator_bulk_disable(cfg->num_vregs, qmp->vregs);
- 
-@@ -3205,12 +3213,6 @@ static int qmp_combo_usb_power_on(struct phy *phy)
- 
- 	qmp_configure(qmp->dev, serdes, cfg->serdes_tbl, cfg->serdes_tbl_num);
- 
--	ret = clk_prepare_enable(qmp->pipe_clk);
--	if (ret) {
--		dev_err(qmp->dev, "pipe_clk enable failed err=%d\n", ret);
--		return ret;
--	}
--
- 	/* Tx, Rx, and PCS configurations */
- 	qmp_configure_lane(qmp->dev, tx, cfg->tx_tbl, cfg->tx_tbl_num, 1);
- 	qmp_configure_lane(qmp->dev, tx2, cfg->tx_tbl, cfg->tx_tbl_num, 2);
-@@ -3254,8 +3256,6 @@ static int qmp_combo_usb_power_off(struct phy *phy)
- 	struct qmp_combo *qmp = phy_get_drvdata(phy);
- 	const struct qmp_phy_cfg *cfg = qmp->cfg;
- 
--	clk_disable_unprepare(qmp->pipe_clk);
--
- 	/* PHY reset */
- 	qphy_setbits(qmp->pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
- 
--- 
-2.51.0
-
+--009f252ba09693b5e8abec8ec687c59ee2a383ff22d9e36d8a97ad51c14e--
 
