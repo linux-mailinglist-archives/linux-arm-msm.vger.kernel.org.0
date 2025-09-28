@@ -1,126 +1,143 @@
-Return-Path: <linux-arm-msm+bounces-75394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D14EBBA67E6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 06:46:15 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CE41BA67F6
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 06:49:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0BE141893A26
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 04:46:38 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9CE2178B85
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 04:49:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D4D622173F;
-	Sun, 28 Sep 2025 04:46:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E24D2253A1;
+	Sun, 28 Sep 2025 04:49:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K3yfAOFC"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8pDNWlJ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1591421B9E2
-	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 04:46:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74812222BF
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 04:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759034771; cv=none; b=jDMRCcS13NHu7ggRyc/5unKTvicyfXucnLpsX1oVH8Da4P1jl6eHsn9eO/86SLR5cI//o1nxW9DY2TJgtDquwvy2hJiy/LL9KXG0sRuh/NCQzITWrSrEyNXEpdF7p1s74mFsts+JM/ZdD7Ylyy8XkRZ0zjk+qtodqiidFniv+0Q=
+	t=1759034967; cv=none; b=C86Ere5f+ckL77vZk3t1fgRcObvbmgQ0vsSWxSsfzxdqvv8lfVmeS4jDac4pW2WhULOOSEMzUfWALdnqK/S/Si9KXnCkn3J1QBhFFxHl9zojiCjJQntrS0QIDYNizN4vURTyVtrC03PxIsXDC5dJWeyr75FIomy6bIk7OQ7GFyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759034771; c=relaxed/simple;
-	bh=zfTq5g1ludAKubu4g9KK7vCWa/JgTFL7So3sYNlLrGY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aG1o9luGRjWn2yyca+2ouKtfNXOwS+64W4a/D7RoTXLrsKw/BtvIMGArgD2yjjbebOsMoFwE/V48WJn5Wo8eddwnWXn21cPusw2A0Qm/kiLu3DPIPZ//qEtKX1eNkJZNFyP82e8u21s2OLnakXJbVdIjcpmptd/q15WfILgEnHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K3yfAOFC; arc=none smtp.client-ip=209.85.216.45
+	s=arc-20240116; t=1759034967; c=relaxed/simple;
+	bh=0/cALg/CUu77B5//afrOOTSS5oVPeVKNtLywwtIogKQ=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=BMZrAk6nSO1nlnHkSGDPZiLfvgX+IzasRx65vvMXnW8FjnQN4z/fvh6mCeyNdfFfmWvtVsaWDMGcO7Fc7p3stTHKAyr4H3BLp9i6qSBBxBoju14f60tLKbbflybVfr6tLpYmsToPn8ExKybJUNB5dHVvGlhYJdqPJleXopn3Qvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8pDNWlJ; arc=none smtp.client-ip=209.85.216.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-3306eb96da1so2842312a91.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Sep 2025 21:46:09 -0700 (PDT)
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3306eb96da1so2843245a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Sep 2025 21:49:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759034769; x=1759639569; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2Iq+ECzazVF8cvZrw/yaLLDjTg+zMVvRf59rdoyx9e0=;
-        b=K3yfAOFCREtzG9mjpmOURVgR6itrACdIZQhC9dfpEIwo+dR2rZ/FOd6CDKTAJ3RoG0
-         WeootEoyNhvOjyRkBmb+0AUxo3kTydZkh0BFiJ1kxvqo5LGhOQDFo0JEByELEUBsMT2d
-         FExKVO6pTJiNUeBM+mH7wu3mdmHS8HRFshiY8zRCfmzGSP+5Tc6oqBdrwoMHcMEyrLQR
-         ZxwxqRXQJlUYaO6kgO1BV9FsepzoW9giu6w7MSDc46Xe4iDdbMpswg1Yj7T0M5RZ1hVK
-         IcDcJGPRyYcSW3IkHEVxWT67yYkW70zsCjBcro55Re3yQP2WFnv8/ZywuDj+Dia6h9P4
-         l/4A==
+        d=gmail.com; s=20230601; t=1759034965; x=1759639765; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MCjdjQn242Y3/+NeNWwaAVxKQkMZf3KJ9t0iHGGsdtI=;
+        b=l8pDNWlJ/Q4uMPMJ9x7CMHQs7bl9D1Jm17jVEpTpz9nYH5IXs29THM8yxrD3d5buVH
+         /uGZD0uGfMW9GQoC1Im8uMTcrl8eHd1DC5y04oj1vI8ZKzFQXpUycL+eqBLPVE1uddz3
+         VlGtzOqUEISOg2JDMwCjqVBapIQPQ6M7jCLvQpjj+zXjr0jFD3AfeytQH5LkHEZgZ5n2
+         9cZCQsz0wjEGC8Y+cLokVercOKMIeD+P7P39uglP/v6k2wQIR0ULbRtR55t0bedx9f/w
+         XMdpG4tnjLuLknSXZlSd+xfS0QoQuWZ5D1c7fZYtbyG11+/6prl75FBoi7ridplnDX/C
+         R2Fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759034769; x=1759639569;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2Iq+ECzazVF8cvZrw/yaLLDjTg+zMVvRf59rdoyx9e0=;
-        b=bNihb2mSyU35wBkRhPqMnhpAAzPyQWw7qWnyWkhf2uItaPJj4K2kUaMygprkbBhqS5
-         15j8LMNJVKi40SnojOhuZ2DtcdJ+B1EVgRGS9e1j1lMehxDT4rmrMhHubS4qlLkD4UN8
-         FDv3xIJqiQGqYWdhIwxRPKjbzAbTc5dlNrqiYJ7p10V+SMuCoih9FD8t24prM32T3lMT
-         iOY9IXzKxXY3NYHki7lRl/gUxM97CVK/FEH0ObjoXHkL+lBRg9ZuCnnlsPTJjSAIEmHj
-         YzkY6LgVOLyZ/yrhph2FBQJ3zY4A6LB6hC2lmFHzJW+eGsZyZSCbdZJI9c2ksXjU4AaC
-         OTFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUYzlBYYAfJtRHDCnqAf9e4z9iBy4UXQcS/1iA2NdVyX4857j//JEJlpAvzmB7AIP/vvVWMotqlcPTf1fJW@vger.kernel.org
-X-Gm-Message-State: AOJu0YwD1QJEHw29Wpvr4TadCLaNADmkNlQYIjVerhSPOW4eHIP3c0tc
-	AxNsgBRSeU8irMzdCxNt9ZX3IkXC82i0BErc9xs4pfgb/d+Amr5nzQB9
-X-Gm-Gg: ASbGncuOEwwgstUAfTrVVyZ8qhgROGPGLcnHJb2IKFDWN0qgZM1uSD5YxBYsTZrmdIm
-	uaw9JR0za6F8nzaW+kutTzKG7vXJw+sO80AXf5rF+mUyFEebhac2biDjeRqHIG5gD6n2yguYk5S
-	ir91QUFcCHQRzZXD+dlGpuxTAg9N/n89/vnxMaCeef5R/DhpaGlfx5+G+ZpLgvgN8UqLfoI3+fx
-	f9xjS3TSpT5pakInPQufdA/EpGsLMcTgBb50givJTytNMO427VHdibWZeABJx9cL0VjtrdxV2tr
-	14p1dfq48NbGBIktEMTm5R/DFI4Q3qDNKX6QUyajuDP64Kr+esrPAYUHuLZUWfnqOrfDexRraKy
-	z2LNzoImx2/MLnxuLb+jRnJ7y9T4vdEC4bnfL85Q4ItNe2QA4Tv0=
-X-Google-Smtp-Source: AGHT+IEoaeyJQ5U8TsP5ap0KoAVJ8ly2czmGqC1fBrRX1g9BM6bblQ1XKTqGT2n8r5GFu3V9SPfCSg==
-X-Received: by 2002:a17:90a:c2c3:b0:32e:9da9:3e60 with SMTP id 98e67ed59e1d1-3342a346330mr12163227a91.36.1759034769289;
-        Sat, 27 Sep 2025 21:46:09 -0700 (PDT)
-Received: from archlinux ([179.113.184.101])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3350256d403sm8621263a91.14.2025.09.27.21.46.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 27 Sep 2025 21:46:08 -0700 (PDT)
-From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Rob Herring <robh+dt@kernel.org>
-Cc: devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sm8250-samsung-common: correct reserved pins
-Date: Sun, 28 Sep 2025 04:45:33 +0000
-Message-ID: <20250928044533.34798-1-ghatto404@gmail.com>
-X-Mailer: git-send-email 2.51.0
+        d=1e100.net; s=20230601; t=1759034965; x=1759639765;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MCjdjQn242Y3/+NeNWwaAVxKQkMZf3KJ9t0iHGGsdtI=;
+        b=iSri6qtCkwi5dubt8xysy6lJsj+JJ16qsM1zN3+a3JkruWAfqcWo5swf6a4pjyvvb7
+         BxdD7Ln2F6VauPKWZV2bkUUGYTgXeAXFXT/mlUegQagQzSpB68QFhUK9FTNK7tAHk5xE
+         H5BsSOfKuuXc5f/o1K5ceNh0nTp1UwyksfBQVepDFOw3AwEMNERKsr4hWY6DpgJA8BMG
+         1Xve0F9FsCd7sBqWhsaZVdc6DNQhuDek57l4d0gvNmkWFzpmufTODCJdZi89fejGnBoL
+         zjeRQGEf6iZ7wnZQp8vKkVJ0WDHZf8WIXCOK0EI0XLB5w2PcnFa8nzaEtneGRqS0WzYH
+         fDSw==
+X-Forwarded-Encrypted: i=1; AJvYcCW4F3lX4Nx4yDxEDH5dPllJXPMackXb9nRXTcwjd22XTtk7L+FPHsoOsnfrDagAgC+Ash+73yvXHhT9ot9z@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy/89/XewIOa9EUqy7+tHDKmVTIitpAbKowMxF2xtEPEmslP3eg
+	jXTgNsB/guZnaEnSYpBgDOZfVPGLXZg5ZSfF4m8W0bQlSik3Rp91GwEW
+X-Gm-Gg: ASbGnctDR8XVXXmmjliidh28iQ4h9PkMTFf44T6TZi7eT5Qlb8WcaK6pR6/8oN13VHc
+	36GcrWQkZ3qaHVqMJMCgLBXqdiQNQTLgtd+LF7lOMGc7Vjn0ojySonANTwT20hqkgBI5F7hFbup
+	EYvuv/duUg1GYL1al+ll9r6UoRUWjdZUQ9JQM+X1mSeT0YScI1yi0pF00IECVS6mvhktjFagsNn
+	HZGao1fDs6UdnNJFtDa7cuW7Oy8qlHwJ/WLvCTJ8+CEC/5m5pN336G8TxS9v9qFRiki+UKgO25p
+	zMkp2vaTHVEHBvu7WkmiV8GFZ+zT0qMtWxWlg1Ilwyk8YMRdQDDYg+VFL9hTHR45JiJ1qVleQf3
+	QdkkYj4xNrg9Lkykc+vHW+TtNP1gdaj+zBshaQ9FvshVa
+X-Google-Smtp-Source: AGHT+IHs5S4vCyfYNXJe8BarL/unwhfRqZBmxJoU0ifSgIkyPygD0xTD357dBlsVUNmTvVibBbdOTg==
+X-Received: by 2002:a17:90b:1d86:b0:329:cb75:fef2 with SMTP id 98e67ed59e1d1-3342a272dc1mr13118071a91.3.1759034964944;
+        Sat, 27 Sep 2025 21:49:24 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([2804:18:113a:1c85:b8cb:8c96:f099:efc])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33471d711a6sm9644063a91.6.2025.09.27.21.49.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 27 Sep 2025 21:49:24 -0700 (PDT)
+Date: Sun, 28 Sep 2025 01:49:17 -0300
+From: =?ISO-8859-1?Q?Eric_Gon=E7alves?= <ghatto404@gmail.com>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+CC: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_arm64=3A_dts=3A_qcom=3A_sm8250-?=
+ =?US-ASCII?Q?samsung-common=3A_correct_reserved_pins?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <aar5oq4xvlbpjmitnwzti5w7gitf7wxdas4bflx6eqh3r6srt7@iccpujd6xc4m>
+References: <20250921135623.273662-1-ghatto404@gmail.com> <aar5oq4xvlbpjmitnwzti5w7gitf7wxdas4bflx6eqh3r6srt7@iccpujd6xc4m>
+Message-ID: <51C6A39B-538B-483B-8E75-F86D1612EBAD@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-The S20 series has additional reserved pins for the fingerprint sensor,
-GPIO 20-23. Correct it by adding them into gpio-reserved-ranges.
 
-Fixes: 6657fe9e9f23 ("arm64: dts: qcom: add initial support for Samsung Galaxy S20 FE")
-Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
----
-Changes in v2:
-- Fixed the formatting of the <40 4> line
-- Added Fixes tag
----
- arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi
-index 96662bf9e527..a87e3d23e3e2 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi
-@@ -159,7 +159,8 @@ &pon_resin {
- };
- 
- &tlmm {
--	gpio-reserved-ranges = <40 4>; /* I2C (Unused) */
-+	gpio-reserved-ranges = <20 4>, /* SPI (fingerprint scanner) */
-+					       <40 4>, /* Unused */
- };
- 
- &usb_1 {
--- 
-2.51.0
-
+On September 22, 2025 6:51:30 AM GMT-03:00, Dmitry Baryshkov <dmitry=2Ebar=
+yshkov@oss=2Equalcomm=2Ecom> wrote:
+>On Sun, Sep 21, 2025 at 01:56:23PM +0000, Eric Gon=C3=A7alves wrote:
+>> The S20 series has additional reserved pins for the fingerprint sensor,
+>> GPIO 20-23=2E Correct it by adding them into gpio-reserved-ranges=2E
+>>=20
+>> Signed-off-by: Eric Gon=C3=A7alves <ghatto404@gmail=2Ecom>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi | 3 ++-
+>>  1 file changed, 2 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi b/ar=
+ch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi
+>> index 96662bf9e527=2E=2E1680be67e733 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi
+>> @@ -159,7 +159,8 @@ &pon_resin {
+>>  };
+>> =20
+>>  &tlmm {
+>> -	gpio-reserved-ranges =3D <40 4>; /* I2C (Unused) */
+>> +	gpio-reserved-ranges =3D <20 4>, /* SPI (Fingerprint scanner) */
+>> +						   <40 4>; /* I2C (Unused) */
+>
+>Typically Tab size is 8 spaces, not 4=2E
+I'll change that, thanks
+>
+>
+>Also:
+>
+>Fixes: 6657fe9e9f23 ("arm64: dts: qcom: add initial support for Samsung G=
+alaxy S20 FE")
+>
+>
+>>  };
+>> =20
+>>  &usb_1 {
+>> --=20
+>> 2=2E51=2E0
+>>=20
+>
 
