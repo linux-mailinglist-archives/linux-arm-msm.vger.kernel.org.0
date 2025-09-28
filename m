@@ -1,203 +1,98 @@
-Return-Path: <linux-arm-msm+bounces-75391-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3F60DBA62E0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 21:38:07 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 879DDBA65E8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 04:02:16 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 521553BD661
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 27 Sep 2025 19:38:05 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 13B6F173082
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 02:02:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 81D25227599;
-	Sat, 27 Sep 2025 19:38:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UB4OS5rq"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A35C923278D;
+	Sun, 28 Sep 2025 02:02:11 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
+Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8C5816A956;
-	Sat, 27 Sep 2025 19:37:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522F233EC;
+	Sun, 28 Sep 2025 02:02:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759001881; cv=none; b=Za7YaRSPULjbKv/Bq5DCk/Y1eC3LQOqtzT65AkDk7pxg176yBzkRSwtrl2PGmJhL3hLXlOb1YpezEeDRNuOXpBIrY0I7RQbGMFMYEV3Q2JvB9/RqUrrVt/X6klgkBfcQ5o6rnH5Gify+cU0P7hG/wJ1mZ9SwlV+RVIbIYGbskU8=
+	t=1759024931; cv=none; b=NlnhrQztiX+DCEV23uBJzgA2KKuXA6F7lA0xvoWxl3mDh1Dc2TpA1EIJPQeBHOoqIK9Gsg7foSargGHzo1GQVGXjyTIRlpOzvbZaqoQ9zVs5BeNBMl48oQH6ki8cslwZSA/DiZYoQvD6McyFqF2LQMvFnsXPhsVl/rp8motMd5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759001881; c=relaxed/simple;
-	bh=v4tYuKq23IFkP5pTX5xVWeK6wNj4TsUt3W+E4QEibj8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UwSVBYAjYbExZ7pxno192NVt+yiXkseAat94BWCG8Kkv3tTV+z5QgGBxYwTi6NZPILC97NBGOR763UZxOycf/nZrqnVm6aHY5ykA61kiAue2RNjjbntOe4oIbD29iCy6ThWd6IzpG90TprD4Q1mHBWOzMnPHvztkPc67c8oefS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UB4OS5rq; arc=none smtp.client-ip=198.175.65.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1759001880; x=1790537880;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=v4tYuKq23IFkP5pTX5xVWeK6wNj4TsUt3W+E4QEibj8=;
-  b=UB4OS5rqC9UKfOfsmDTbDCxhsexNF+DlbV9RyulG0ApDkt3HgOymBl5w
-   ZLu++sat8F7QFS1Yc9Uj+CrpU9lQrgHhuPD9CT3Y+/R7oRzEGnUwb0ytK
-   it/K8fHRHDhiEERXPEH+u7yLVHl6FOz/dx1dhk5k1ujHRDZ6p3NJYK2Kw
-   xKfWEXM1fZRMXkJe2Zo776BezLJffN3x1DEyOorvgnQGNuCUJnENri3Mh
-   GRNb9hiJfI1d6a0sCEo5g+9WoCYYYEhGgedGS4GWElEKS88N9AiliCMdT
-   k4IEEwwHrOVlVTwijLkw0jlWFvs6yyz2F2Z7tyz78MaSw6he0HrqHzy4a
-   g==;
-X-CSE-ConnectionGUID: LXGPSR7mR8qBnohnPmh9WA==
-X-CSE-MsgGUID: levRUB3ZTmWsJw4UJg9tMQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11566"; a="83908958"
-X-IronPort-AV: E=Sophos;i="6.18,298,1751266800"; 
-   d="scan'208";a="83908958"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Sep 2025 12:37:59 -0700
-X-CSE-ConnectionGUID: FJxBiAB5RyqbSrOb7oISQg==
-X-CSE-MsgGUID: T0kuUb2QSoG4qQMy8NQM9A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,298,1751266800"; 
-   d="scan'208";a="208615280"
-Received: from lkp-server02.sh.intel.com (HELO 84c55410ccf6) ([10.239.97.151])
-  by orviesa002.jf.intel.com with ESMTP; 27 Sep 2025 12:37:54 -0700
-Received: from kbuild by 84c55410ccf6 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1v2ajv-0007IB-1o;
-	Sat, 27 Sep 2025 19:37:51 +0000
-Date: Sun, 28 Sep 2025 03:37:50 +0800
-From: kernel test robot <lkp@intel.com>
-To: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	Sam Ravnborg <sam@ravnborg.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Casey Connolly <casey.connolly@linaro.org>
-Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
-	dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-	phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH 8/8] drm/panel: Add Samsung S6E3FC2X01 DDIC with AMS641RW
- panel
-Message-ID: <202509280303.sWeQi4ks-lkp@intel.com>
-References: <20250925-s6e3fc2x01-v1-8-9293016768f7@ixit.cz>
+	s=arc-20240116; t=1759024931; c=relaxed/simple;
+	bh=2Ldqunqua+Ct1DWMfYX/V9YnIxX1ZwBCUQtELFEyUpo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=j4qpjvIDczxapimLq57DmM3xCsePkEpYbLOj2XCBqWcqudErmii6fStjiA6CEJka40Y2CWzCXnU0K01OCb6dE3q26XI4ckeXe2NnUUrQ/kouhmu67bbtSzHBpD80J6x96nZLBCttelWv17kkV0/WQpotY8zcNMyHMmkKMgHSK0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com; spf=pass smtp.mailfrom=hisilicon.com; arc=none smtp.client-ip=45.249.212.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hisilicon.com
+Received: from canpmsgout01.his.huawei.com (unknown [172.19.92.178])
+	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4cZ6sL6SMMzWvDH;
+	Sun, 28 Sep 2025 09:57:42 +0800 (CST)
+Received: from mail.maildlp.com (unknown [172.19.162.254])
+	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4cZ6xs0Z8mz1T4Gx;
+	Sun, 28 Sep 2025 10:01:37 +0800 (CST)
+Received: from kwepemr500004.china.huawei.com (unknown [7.202.195.141])
+	by mail.maildlp.com (Postfix) with ESMTPS id A39AB180464;
+	Sun, 28 Sep 2025 10:01:57 +0800 (CST)
+Received: from [10.67.121.58] (10.67.121.58) by kwepemr500004.china.huawei.com
+ (7.202.195.141) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Sun, 28 Sep
+ 2025 10:01:56 +0800
+Message-ID: <d694df21-235f-422e-ba08-1eb442b376bd@hisilicon.com>
+Date: Sun, 28 Sep 2025 10:01:56 +0800
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250925-s6e3fc2x01-v1-8-9293016768f7@ixit.cz>
-
-Hi David,
-
-kernel test robot noticed the following build warnings:
-
-[auto build test WARNING on ce7f1a983b074f6cf8609068088ca3182c569ee4]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/David-Heidelberg-via-B4-Relay/dt-bindings-panel-Add-Samsung-S6E3FC2X01-DDIC-with-panel/20250925-171444
-base:   ce7f1a983b074f6cf8609068088ca3182c569ee4
-patch link:    https://lore.kernel.org/r/20250925-s6e3fc2x01-v1-8-9293016768f7%40ixit.cz
-patch subject: [PATCH 8/8] drm/panel: Add Samsung S6E3FC2X01 DDIC with AMS641RW panel
-config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20250928/202509280303.sWeQi4ks-lkp@intel.com/config)
-compiler: clang version 18.1.8 (https://github.com/llvm/llvm-project 3b5b5c1ec4a3095ab096dd780e84d7ab81f3d7ff)
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250928/202509280303.sWeQi4ks-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509280303.sWeQi4ks-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/gpu/drm/panel/panel-samsung-s6e3fc2x01.c:210:17: warning: unused variable 'dev' [-Wunused-variable]
-     210 |         struct device *dev = &ctx->dsi->dev;
-         |                        ^~~
->> drivers/gpu/drm/panel/panel-samsung-s6e3fc2x01.c:256:29: warning: unused variable 'ctx' [-Wunused-variable]
-     256 |         struct samsung_s6e3fc2x01 *ctx = to_samsung_s6e3fc2x01(panel);
-         |                                    ^~~
-   2 warnings generated.
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] devreq: move governor.h to a public header location
+To: Jon Hunter <jonathanh@nvidia.com>, Dmitry Baryshkov
+	<dmitry.baryshkov@oss.qualcomm.com>, MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Kyungmin Park <kyungmin.park@samsung.com>, Chanwoo Choi
+	<cw00.choi@samsung.com>, Dmitry Osipenko <digetx@gmail.com>, Thierry Reding
+	<thierry.reding@gmail.com>
+CC: <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<linux-tegra@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, Robie Basak
+	<robibasa@qti.qualcomm.com>
+References: <20250903-governor-public-v1-1-111abd89a89a@oss.qualcomm.com>
+ <ae509446-4703-43af-a48d-9c72da0b3813@hisilicon.com>
+ <25692922-7610-49bc-b33d-c799a13995cb@nvidia.com>
+Content-Language: en-US
+From: Jie Zhan <zhanjie9@hisilicon.com>
+In-Reply-To: <25692922-7610-49bc-b33d-c799a13995cb@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
+ kwepemr500004.china.huawei.com (7.202.195.141)
 
 
-vim +/dev +210 drivers/gpu/drm/panel/panel-samsung-s6e3fc2x01.c
 
-   206	
-   207	static int s6e3fc2x01_prepare(struct drm_panel *panel)
-   208	{
-   209		struct samsung_s6e3fc2x01 *ctx = to_samsung_s6e3fc2x01(panel);
- > 210		struct device *dev = &ctx->dsi->dev;
-   211		int ret;
-   212	
-   213		ret = regulator_bulk_enable(ARRAY_SIZE(s6e3fc2x01_supplies), ctx->supplies);
-   214		if (ret < 0)
-   215			return ret;
-   216	
-   217		s6e3fc2x01_reset(ctx);
-   218	
-   219		ret = s6e3fc2x01_on(ctx);
-   220		if (ret < 0) {
-   221			gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-   222			regulator_bulk_disable(ARRAY_SIZE(s6e3fc2x01_supplies), ctx->supplies);
-   223			return ret;
-   224		}
-   225	
-   226		return 0;
-   227	}
-   228	
-   229	static int s6e3fc2x01_unprepare(struct drm_panel *panel)
-   230	{
-   231		struct samsung_s6e3fc2x01 *ctx = to_samsung_s6e3fc2x01(panel);
-   232	
-   233		gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-   234		regulator_bulk_disable(ARRAY_SIZE(s6e3fc2x01_supplies), ctx->supplies);
-   235	
-   236		return 0;
-   237	}
-   238	
-   239	static const struct drm_display_mode ams641rw_mode = {
-   240		.clock = (1080 + 72 + 16 + 36) * (2340 + 32 + 4 + 18) * 60 / 1000,
-   241		.hdisplay = 1080,
-   242		.hsync_start = 1080 + 72,
-   243		.hsync_end = 1080 + 72 + 16,
-   244		.htotal = 1080 + 72 + 16 + 36,
-   245		.vdisplay = 2340,
-   246		.vsync_start = 2340 + 32,
-   247		.vsync_end = 2340 + 32 + 4,
-   248		.vtotal = 2340 + 32 + 4 + 18,
-   249		.width_mm = 68,
-   250		.height_mm = 145,
-   251	};
-   252	
-   253	static int s6e3fc2x01_get_modes(struct drm_panel *panel,
-   254						struct drm_connector *connector)
-   255	{
- > 256		struct samsung_s6e3fc2x01 *ctx = to_samsung_s6e3fc2x01(panel);
-   257		struct drm_display_mode *mode;
-   258	
-   259		mode = drm_mode_duplicate(connector->dev, &ams641rw_mode);
-   260		if (!mode)
-   261			return -ENOMEM;
-   262	
-   263		drm_mode_set_name(mode);
-   264	
-   265		mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
-   266		connector->display_info.width_mm = mode->width_mm;
-   267		connector->display_info.height_mm = mode->height_mm;
-   268		drm_mode_probed_add(connector, mode);
-   269	
-   270		return 1;
-   271	}
-   272	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+On 9/26/2025 6:33 PM, Jon Hunter wrote:
+> 
+> On 26/09/2025 04:16, Jie Zhan wrote:
+>>
+>> Hi Dmitry,
+>>
+>> On 9/3/2025 9:43 PM, Dmitry Baryshkov wrote:
+>>> Some device drivers (and out-of-tree modules) might want to define
+>>> device-specific device governors. Rather than restricting all of them to
+>>> be a part of drivers/devfreq/ (which is not possible for out-of-tree
+>>> drivers anyway) move governor.h to include/linux/devfreq-governor.h and
+>>> update all drivers to use it.
+>>
+>> For out-of-tree module compilation, can it add drivers/devfreq/ to the
+>> include path?
+>> I suppose this is unnecessary.
+> 
+> The kernel header/source package created for most linux distros will not included this header because it is internal and so in that case it is necessary.
+> 
+> Jon
+> 
+Got it, thanks.
 
