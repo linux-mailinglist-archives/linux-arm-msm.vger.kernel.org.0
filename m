@@ -1,98 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-75392-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75393-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 879DDBA65E8
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 04:02:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 02C6EBA6788
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 06:10:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 13B6F173082
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 02:02:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B61C83BA4DC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 04:10:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A35C923278D;
-	Sun, 28 Sep 2025 02:02:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CF1A2836AF;
+	Sun, 28 Sep 2025 04:10:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="abQhTIdn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 522F233EC;
-	Sun, 28 Sep 2025 02:02:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=45.249.212.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA9B283130
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 04:10:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759024931; cv=none; b=NlnhrQztiX+DCEV23uBJzgA2KKuXA6F7lA0xvoWxl3mDh1Dc2TpA1EIJPQeBHOoqIK9Gsg7foSargGHzo1GQVGXjyTIRlpOzvbZaqoQ9zVs5BeNBMl48oQH6ki8cslwZSA/DiZYoQvD6McyFqF2LQMvFnsXPhsVl/rp8motMd5E=
+	t=1759032629; cv=none; b=ZJIAx7anJP7DMrY7QK2pkxyQ14U+Y4C39B6jz259u7KqiKJvStydnO9HQ+4ZC35bQvg/q3QzZpF0gppdBhIzsCq4HqkXiRm0hB2vVZlICW+Q7Yh6/pFcueY3e06jXscFVGUuqXFvNddi57oo9eARt3Z71V3tMxgT+CAly52MQKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759024931; c=relaxed/simple;
-	bh=2Ldqunqua+Ct1DWMfYX/V9YnIxX1ZwBCUQtELFEyUpo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=j4qpjvIDczxapimLq57DmM3xCsePkEpYbLOj2XCBqWcqudErmii6fStjiA6CEJka40Y2CWzCXnU0K01OCb6dE3q26XI4ckeXe2NnUUrQ/kouhmu67bbtSzHBpD80J6x96nZLBCttelWv17kkV0/WQpotY8zcNMyHMmkKMgHSK0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com; spf=pass smtp.mailfrom=hisilicon.com; arc=none smtp.client-ip=45.249.212.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=hisilicon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hisilicon.com
-Received: from canpmsgout01.his.huawei.com (unknown [172.19.92.178])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4cZ6sL6SMMzWvDH;
-	Sun, 28 Sep 2025 09:57:42 +0800 (CST)
-Received: from mail.maildlp.com (unknown [172.19.162.254])
-	by canpmsgout01.his.huawei.com (SkyGuard) with ESMTPS id 4cZ6xs0Z8mz1T4Gx;
-	Sun, 28 Sep 2025 10:01:37 +0800 (CST)
-Received: from kwepemr500004.china.huawei.com (unknown [7.202.195.141])
-	by mail.maildlp.com (Postfix) with ESMTPS id A39AB180464;
-	Sun, 28 Sep 2025 10:01:57 +0800 (CST)
-Received: from [10.67.121.58] (10.67.121.58) by kwepemr500004.china.huawei.com
- (7.202.195.141) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Sun, 28 Sep
- 2025 10:01:56 +0800
-Message-ID: <d694df21-235f-422e-ba08-1eb442b376bd@hisilicon.com>
-Date: Sun, 28 Sep 2025 10:01:56 +0800
+	s=arc-20240116; t=1759032629; c=relaxed/simple;
+	bh=MT9tKkwXIZXiyVLaQ6s0/YQ4jUj80adYH+HGV903H5U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=E6sv2PaGkUh73jSqUG9pP6iVc8msALgok520n7nXprTC1+psxDLLB4DKfxzAXF3GCSz7a38RPoxhgAISrNJLC6LT2hJTe1TaYK+IufKA75l4Gll2gENfIZQxOvEDSo85z+IRlAdvW8yzHOjnHZg0ZNkmAxl/MmG7K1pfXnC+grs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=abQhTIdn; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-7811fa91774so1375383b3a.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Sep 2025 21:10:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759032627; x=1759637427; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qzG/7kOHEfeLkUdxagU+uDSqBvkgOfJrlSWLn2MJmZc=;
+        b=abQhTIdnMMhglJwaoBcyTozeCd7g4/u7soWp+Vgqfclv246AlRjtdSOUndyO7ns2Ds
+         2htXqQyRgMneAZcrLZQKKznYd0UThV4TEkanp0taQHvBoPlyrGOA3J3+GbLxXo7tFgsL
+         qQE+K+wfCiXkeRxKx8IAhaE8F9FlIoTI2QdoAZXwunWmVh4XUTyZV1Bz1TCgKZcvOoFI
+         dpJ9QTmjWMl02Ec6bl7j2ooyHsIVZvYcZ4TtjTHNIXtNqnW4qfU5uExmzKYhPFkbAa/8
+         GnLwuA4q6L/5PDH45A/ecpc3RugmCrczGtbY1tzW+7nwvg8wZfU1iM38I9IXdBsm47aQ
+         DsmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759032627; x=1759637427;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qzG/7kOHEfeLkUdxagU+uDSqBvkgOfJrlSWLn2MJmZc=;
+        b=rOkGdfoOw7ZigTz7C8f0vc2REME5lHZI2XVFPoTNiv//BlaFqapxxWfAwqQ1XncfVF
+         Di5Qm2sA4kH+ZNdW2B3fvWWK2u2ZCulUKLLO8PBRcX1MOMnGvGUn4wS4mUp7vDEmPICq
+         k6oM5RneAJdLqGHWOK3nfXvFrBBlRcmVkdwU9Xu3QQbdN7x+0Wu8sjUrdgUCX9yxIfsp
+         ZvTJKmDzusc6hXduWf1GruqhRXS6hKZfr96cpcBczd9dZ74QPg7ZUPpES+n3k7sAsaKd
+         VAGWSodHUrW7Sx8djtm4CapDbnXHtSLR5NAb8vIiDngcbS8PNImyLfWqXSzVf5LQP6Oe
+         Fbfg==
+X-Forwarded-Encrypted: i=1; AJvYcCWi7vXUbGgKYgEQnJaZ+81N8gSrJqX/S90D8+hoGTsbwDJ5a4zLL6XRADhdksokd0GeSKri4bfEP2m5gOUi@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzie2nIPVYB7QwZWki4Z9nhvlXUlglDh5uygVC2sQSYo25Zn0bD
+	UgMiUGiWowFM6+PbKYCokxIJwjrpaDo+m4Ep24eun65Pz1hV1KIxGmc2
+X-Gm-Gg: ASbGnctO/28qb7XLWQBxKaGWwV8bqS0HTDAnMo3oeZ5sryU7kLGp+lJCqQTZWr21bxY
+	SaMkOt3OtGnQIyHLz13V3CObQyf7/BlTCbtslUbqJL/cULZmQth2IuW6ZCYRWWZXc49QGrtv6nB
+	rI+YG6i0HFPTwX43+ATiJCHSXI1x/tPPHmg1lhr0rWUBvbAI24WlPIk7yaHL82y4g6np43yFITs
+	5zKV+u9rV18YoOFUFpVj+8mg+p7rgiQN0FVeewgvBq+xtDjpkfMopzjOYG6YW6PwgLIVt4A+ZRp
+	w20BkMrGI4BAis+2Xt2xjN1Ay0dlBFNs4MCbAwjJ9Iz2ifb5JOKWMJsfCyE3vrLIiCYrjfAVgTo
+	y92VOq6UuZblAArhAapaG2fiGRT81Kq0MZZ3RWPTukO5NRMhPUw5zzb1/oIbZs5o=
+X-Google-Smtp-Source: AGHT+IEttJNR6dQcxc0S02k/NqvdYM08QJTyqxD8QfDYHrUp+FQRyRQQhuVbqr8Tkf1c0f19Ut/XAQ==
+X-Received: by 2002:a05:6a00:3e27:b0:781:2538:bfb4 with SMTP id d2e1a72fcca58-7812538c21fmr4706553b3a.10.1759032626571;
+        Sat, 27 Sep 2025 21:10:26 -0700 (PDT)
+Received: from google.com ([2a00:79e0:2ebe:8:22dc:7b49:8c5d:38f6])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7844ef5d62csm154187b3a.26.2025.09.27.21.10.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Sep 2025 21:10:25 -0700 (PDT)
+Date: Sat, 27 Sep 2025 21:10:23 -0700
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>, 
+	Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+	Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Luca Weiss <luca.weiss@fairphone.com>, 
+	linux-input@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH RESEND v3 2/3] Input: aw86927 - add driver for Awinic
+ AW86927
+Message-ID: <kzp2aodslil2urxszk7jjd2mhtx7amssn53g5msskwpw4fkvjw@iwqcwy2rk7ny>
+References: <20250925-aw86927-v3-0-1fc6265b42de@fairphone.com>
+ <20250925-aw86927-v3-2-1fc6265b42de@fairphone.com>
+ <81822df8-1978-4f22-93e7-87b79e1fc9f3@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] devreq: move governor.h to a public header location
-To: Jon Hunter <jonathanh@nvidia.com>, Dmitry Baryshkov
-	<dmitry.baryshkov@oss.qualcomm.com>, MyungJoo Ham <myungjoo.ham@samsung.com>,
-	Kyungmin Park <kyungmin.park@samsung.com>, Chanwoo Choi
-	<cw00.choi@samsung.com>, Dmitry Osipenko <digetx@gmail.com>, Thierry Reding
-	<thierry.reding@gmail.com>
-CC: <linux-pm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-	<linux-tegra@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>, Robie Basak
-	<robibasa@qti.qualcomm.com>
-References: <20250903-governor-public-v1-1-111abd89a89a@oss.qualcomm.com>
- <ae509446-4703-43af-a48d-9c72da0b3813@hisilicon.com>
- <25692922-7610-49bc-b33d-c799a13995cb@nvidia.com>
-Content-Language: en-US
-From: Jie Zhan <zhanjie9@hisilicon.com>
-In-Reply-To: <25692922-7610-49bc-b33d-c799a13995cb@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: kwepems100002.china.huawei.com (7.221.188.206) To
- kwepemr500004.china.huawei.com (7.202.195.141)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <81822df8-1978-4f22-93e7-87b79e1fc9f3@oss.qualcomm.com>
 
+On Thu, Sep 25, 2025 at 02:15:42PM +0200, Konrad Dybcio wrote:
+> On 9/25/25 12:07 PM, Griffin Kroah-Hartman wrote:
+> > +static int aw86927_wait_enter_standby(struct aw86927_data *haptics)
+> > +{
+> > +	unsigned int reg_val;
+> > +	int err;
+> 
+> "ret" is more common (for "return value")
 
+I requested this, "error" or "err" is my preference for temporaries that
+hold either a negative error code or 0.
 
-On 9/26/2025 6:33 PM, Jon Hunter wrote:
-> 
-> On 26/09/2025 04:16, Jie Zhan wrote:
->>
->> Hi Dmitry,
->>
->> On 9/3/2025 9:43 PM, Dmitry Baryshkov wrote:
->>> Some device drivers (and out-of-tree modules) might want to define
->>> device-specific device governors. Rather than restricting all of them to
->>> be a part of drivers/devfreq/ (which is not possible for out-of-tree
->>> drivers anyway) move governor.h to include/linux/devfreq-governor.h and
->>> update all drivers to use it.
->>
->> For out-of-tree module compilation, can it add drivers/devfreq/ to the
->> include path?
->> I suppose this is unnecessary.
-> 
-> The kernel header/source package created for most linux distros will not included this header because it is internal and so in that case it is necessary.
-> 
-> Jon
-> 
-Got it, thanks.
+Thanks.
+
+-- 
+Dmitry
 
