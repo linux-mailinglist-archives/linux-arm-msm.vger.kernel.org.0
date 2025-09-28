@@ -1,123 +1,125 @@
-Return-Path: <linux-arm-msm+bounces-75439-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75440-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 46A98BA76C3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 21:11:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4DF9ABA7789
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 22:24:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 00EB57ACF94
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 19:09:19 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8E061896CB8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 20:24:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4099925A331;
-	Sun, 28 Sep 2025 19:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D3F2A27EFFA;
+	Sun, 28 Sep 2025 20:23:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="KLjcCQM7"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R+2t5RUg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C272F259CA4;
-	Sun, 28 Sep 2025 19:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7C627E1D5
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 20:23:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759086628; cv=none; b=OBe70/fMNueDFTAxNqP3uDwfc3Xj0Gn77jwz5VlezcSoa2sFC9Lm6tpzSt8ZGbGkeMeZfof4Tlzh+f1YRSSOtiylQmKws4VG8aMjLume5EIFrgZ1SK6p6mMGglT9UXRBfAjno50ON40u/Pk/R90dwJbJlTcBwZveutBgReGN5y0=
+	t=1759091034; cv=none; b=pipkesVlchL3NLYqYSfjvIuEK7WCuDSA6JFRFicWBcDa+cPHZzCABP47+Ws9Z6UDVgkrGl14QVMy2sydFTI2Xh7e5sV3hNVUtnR5y2LXw55+TGJSxKD1//1hQWMMI5ODEEEDA/lcsdhczdHyX5OX0SQLITBojMZnU72bQrUs2bs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759086628; c=relaxed/simple;
-	bh=ARfTGfLniAH7wUpL/BT0VpywPmBlBLL8BFcDU6AhgMY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BL3kLAaRH5jJr5Sy6kplXP83IP1iPHbWtpaguJ01RJ5wTgjKJXDDrAPdbQFttpckHviJlNQBARObW6HKy67QW1WhZpGgSb5xbYLZKzHv/810IT5i80DLbAL3XFHsb5EmHlX5xOeeaNS16apcLJ87sLra3ENfB6kySyB7wRnMYdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=KLjcCQM7; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1759086626; x=1790622626;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=ARfTGfLniAH7wUpL/BT0VpywPmBlBLL8BFcDU6AhgMY=;
-  b=KLjcCQM72/FpskmIHyhDRtcTLwuoGPBJb4BG12p+EWFr85aBiUKGORo1
-   SpH0rMfwvBY7dRN49U64xBhEJ9wqknq8DEJi3dwnzJSwjUz42h13AUyiG
-   0rAcLbUqQxWbjrkbbSqhcSmPXxgWzzykGjj9Im6nrd2n9GrZCIMmq2w++
-   yw9Y9qxBg24evxp23XrfbK7LzD99qGL5TI46n48pb+b7tTQK0lazclkV4
-   OexDZuXZdccowKmFrv5oovFPEunPlHcrIV+e/5rxZQQV1UVs3bcz1uCNQ
-   R1J37uqO1uG6ao1jCm6LsE3HbumH70z++8fNDRWym8wbNr8b3Xp1b9Foa
-   w==;
-X-CSE-ConnectionGUID: dyHLJHLIRgKfC72cNLrv8g==
-X-CSE-MsgGUID: cvlfHCa2Rw6nGB8phWaaaQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11567"; a="86789065"
-X-IronPort-AV: E=Sophos;i="6.18,300,1751266800"; 
-   d="scan'208";a="86789065"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2025 12:10:25 -0700
-X-CSE-ConnectionGUID: 28kYypdTR3+5govQnOWY+w==
-X-CSE-MsgGUID: N8rFLA6UT+2MHMdcmrmaDw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,300,1751266800"; 
-   d="scan'208";a="177315325"
-Received: from lkp-server02.sh.intel.com (HELO 84c55410ccf6) ([10.239.97.151])
-  by orviesa010.jf.intel.com with ESMTP; 28 Sep 2025 12:10:22 -0700
-Received: from kbuild by 84c55410ccf6 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1v2wml-0007y3-0R;
-	Sun, 28 Sep 2025 19:10:16 +0000
-Date: Mon, 29 Sep 2025 03:10:14 +0800
-From: kernel test robot <lkp@intel.com>
-To: Sumit Kumar <sumit.kumar@oss.qualcomm.com>,
-	Manivannan Sadhasivam <mani@kernel.org>
-Cc: oe-kbuild-all@lists.linux.dev,
-	Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-	Akhil Vinod <akhil.vinod@oss.qualcomm.com>,
-	Subramanian Ananthanarayanan <subramanian.ananthanarayanan@oss.qualcomm.com>,
-	linux-kernel@vger.kernel.org, mhi@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org, quic_vpernami@quicinc.com,
-	Sumit Kumar <sumit.kumar@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] bus: mhi: ep: Add loopback driver for data path
- testing
-Message-ID: <202509290238.4kkJL0x5-lkp@intel.com>
-References: <20250923-loopback_mhi-v1-2-8618f31f44aa@oss.qualcomm.com>
+	s=arc-20240116; t=1759091034; c=relaxed/simple;
+	bh=f0KbGPF00kZzNzX882R/gqRn05yNZLkgA/Ha1ipTTiY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RArH6Cgt7YT/nuy1hoW7tBfKFXu7dtvryD2dbNazIb8zDGnQLbjI01gpDS7E1NJ/hXNCREyqFKlHtTd9PeVQi7yHzRdpUPVBz5+SGIdJVLuBIFTzSYyxMtzkkymuYry+wsyOYhwLtNDJ5PL3xPpwT/0KoLuwPNZ1B8XYnrBVdJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R+2t5RUg; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B53C2BC86
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 20:23:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759091034;
+	bh=f0KbGPF00kZzNzX882R/gqRn05yNZLkgA/Ha1ipTTiY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=R+2t5RUgotK+O5B/9A9YIogztwNESvf0W363S+UgXHbDl1ck0fvV3GcsLQ8gtsuIw
+	 aS4AngeHx6FSaxB3OPOKXhFu2RCJag9jvS/ThypK3OXnDw5UohS6Iqrp0DqKHrHDZm
+	 0rwAH2WWsEfuersMEGVi1mcvu8XJ63L2Q/jcpnuiSEDA3lAXDPrsfYKLeYyYdW+g5v
+	 TZ8U0YBwYN1Ai3SAnBTTKqgwpV2NTuSRTulONTcQ2QLRV+vbvSOXzk/M9V04bx5SGD
+	 rqOXZPfneL3+33RDBwg+stRErELMlXUHLQgVRV5AX1Y7C/3sYu2O/qdbiochfGQbvZ
+	 ieY6Mkw7IDEiA==
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-636255b92c9so2236242a12.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 13:23:54 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCWLJ1Sn/R55CjhT7EccLsU2n7KWUOI+KfXLirc1Fmcpb2U5yUBgZcr515y3ajrrFhifmVJYULx1NPn240S+@vger.kernel.org
+X-Gm-Message-State: AOJu0YwxwFR0fqun0vqLmcZ7ZRx7G/cDfjydoLYl9cg+c6LuVarhmntF
+	w/miG9UK1W996ySdS2ETjB2V39TNB9OI6JeEOmX5IfebMHaMY/W989L8nCDohEwhOqMIoizG6wo
+	Hs4VDELzSg5RvHN9AoWlo3OTy+WpASw==
+X-Google-Smtp-Source: AGHT+IGljkA1Fha+nY81qrIVwl5aGRrhj/Ww61c1Va1R3cSc0Qwgx1hOVjVnCVYAJOUI9Ne0SY3WAcvwrWIE4YCtKW4=
+X-Received: by 2002:a17:907:97c7:b0:b3d:e9be:7ac2 with SMTP id
+ a640c23a62f3a-b3de9be7bf9mr214954366b.5.1759091032783; Sun, 28 Sep 2025
+ 13:23:52 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250923-loopback_mhi-v1-2-8618f31f44aa@oss.qualcomm.com>
+References: <20250928171718.436440-1-charan.kalla@oss.qualcomm.com>
+In-Reply-To: <20250928171718.436440-1-charan.kalla@oss.qualcomm.com>
+From: Rob Herring <robh@kernel.org>
+Date: Sun, 28 Sep 2025 15:23:41 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqK9waZK=i+ov0jV-PonWSfddwHvE94Q+pks4zAEtKc+yg@mail.gmail.com>
+X-Gm-Features: AS18NWB9iYb53BkxRxGbaDbf_ZYxtXe5ZBA-hIIueyfkPaVxGM2QNyJN-EWNlNw
+Message-ID: <CAL_JsqK9waZK=i+ov0jV-PonWSfddwHvE94Q+pks4zAEtKc+yg@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/3] Introduce iommu-map-masked for platform devices
+To: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>
+Cc: joro@8bytes.org, will@kernel.org, robin.murphy@arm.com, 
+	saravanak@google.com, conor+dt@kernel.org, mchehab@kernel.org, bod@kernel.org, 
+	krzk+dt@kernel.org, abhinav.kumar@linux.dev, vikash.garodia@oss.qualcomm.com, 
+	dikshita.agarwal@oss.qualcomm.com, linux-media@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, iommu@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Sumit,
+On Sun, Sep 28, 2025 at 12:17=E2=80=AFPM Charan Teja Kalla
+<charan.kalla@oss.qualcomm.com> wrote:
+>
+> This series introduces a new iommu property called iommu-map-masked(may
+> be there is a better name), which is used to represent the IOMMU
+> specifier pairs for each function of a __multi-functional platform
+> device__, where each function can emit unique master id(s) that can be
+> associated with individual translation context.
+>
+> Currently, the iommu configuration - at least for arm architecture-
+> requires all the functions of a platform device will be represented
+> under single dt node thus endup in using only a single translation
+> context.
+>
+> A simple solution to associate individual translation context for each
+> function of a device can be through creating per function child nodes in
+> the device tree, but dt is only to just represent the soc layout to
+> linux kernel.
+>
+> Supporting such cases requires a new iommu property called,
+> iommu-map-masked(taking cue from iommu-map for pci devices) and syntax
+> is:
+>    iommu-map-masked =3D <FUNCTION_ID1 &iommu ID1 MASK1>,
+>                       <FUNCTION_ID2 &iommu ID2 MASK2>;
+> NOTE: As an RFC, it is considered that this property always expects 4
+> cells.
+>
+> During the probe phase of the driver for a multi-functional device
+> behind an IOMMU, a child device is instantiated for each FUNCTION_ID.
+> The call to of_dma_configure_id() on each child sets up the IOMMU
+> configuration, ensuring that each function of the device is associated
+> with a distinct translation context.
+>
+> This property can also be used in association with 'iommus=3D' when dt
+> bindings requires the presence of 'iommus=3D', example[2]. For these
+> cases, representation will be(on arm64):
+>    iommus =3D <&iommu sid mask>; //for default function.
+>    iommu-map-masked =3D <FUNCTION_ID &iommu sid mask>;//additional
+> function.
 
-kernel test robot noticed the following build errors:
+Where does the FUNCTION_ID value come from?
 
-[auto build test ERROR on e6b9dce0aeeb91dfc0974ab87f02454e24566182]
+Why can't you just have multiple "iommus" entries where the index
+defines the default and any FUNCTION_ID entries? What's in each index
+is specific to the device.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Sumit-Kumar/bus-mhi-host-Add-loopback-driver-with-sysfs-interface/20250923-144109
-base:   e6b9dce0aeeb91dfc0974ab87f02454e24566182
-patch link:    https://lore.kernel.org/r/20250923-loopback_mhi-v1-2-8618f31f44aa%40oss.qualcomm.com
-patch subject: [PATCH 2/2] bus: mhi: ep: Add loopback driver for data path testing
-config: loongarch-randconfig-001-20250929 (https://download.01.org/0day-ci/archive/20250929/202509290238.4kkJL0x5-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 12.5.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250929/202509290238.4kkJL0x5-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202509290238.4kkJL0x5-lkp@intel.com/
-
-All errors (new ones prefixed by >>):
-
-   loongarch64-linux-ld: drivers/bus/mhi/ep/mhi_ep_loopback.o: in function `mhi_ep_loopback_dl_callback':
->> mhi_ep_loopback.c:(.text+0x20): undefined reference to `sk_skb_reason_drop'
-   loongarch64-linux-ld: drivers/bus/mhi/ep/mhi_ep_loopback.o: in function `mhi_ep_loopback_work_handler':
-   mhi_ep_loopback.c:(.text+0x74): undefined reference to `sk_skb_reason_drop'
-   loongarch64-linux-ld: drivers/bus/mhi/ep/mhi_ep_loopback.o: in function `mhi_ep_loopback_ul_callback':
->> mhi_ep_loopback.c:(.text+0x19c): undefined reference to `__alloc_skb'
->> loongarch64-linux-ld: mhi_ep_loopback.c:(.text+0x1e4): undefined reference to `skb_put'
->> loongarch64-linux-ld: mhi_ep_loopback.c:(.text+0x2b8): undefined reference to `sk_skb_reason_drop'
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+Rob
 
