@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-75418-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75420-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08DD7BA6D16
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 11:21:36 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BAA0BA6D30
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 11:21:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 224E81897366
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 09:21:58 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id DB0697AC330
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 09:20:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BAD432D5941;
-	Sun, 28 Sep 2025 09:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B86E62D7381;
+	Sun, 28 Sep 2025 09:21:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="R5sxjT0z"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="bNxEvZ+O"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BC12D0617;
-	Sun, 28 Sep 2025 09:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE5D2D1F7E;
+	Sun, 28 Sep 2025 09:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759051290; cv=none; b=ZTVe+5qaYTFjWnv3J20NB9wNngql4m40k7S0zfmT8O/f5+FgxBvnAtFvkobdAb9WGm5byxqrJgZ0v6Q6wZkw93fOWKrazXVyVS4+BAs5Ew8C8kAVi9+lS+jeNNUTUmQB6VOCu4JPZrx356fzKRSlFW3Ml/vjBv1PJb7FC/U5u9U=
+	t=1759051297; cv=none; b=J0xScyd4njivMDVWVGMsnZKwedyaMH6DM/4qKXe8z0dCqhHZbOzhMifVRpmKOne045aZWNWsV6pvMbaMv3mcMZQaZy+qBaH0ouTUgjo8DLGzO+N/TAGUDKwoOu8n9KzYOWcztrStnihAFw/eECvZ/32uTAX5LPVtVSKeZTf63jA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759051290; c=relaxed/simple;
-	bh=P0MjpZAOJgomSiQMu1qt2sW60fA3nWzZ2SZakhkLZWk=;
+	s=arc-20240116; t=1759051297; c=relaxed/simple;
+	bh=XcMZNNLMtiKbA786j1tJuvBwn3efx6UCT9YPvujBkWk=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=InwC088QW8gsi/rh0QL46Z1XUf76xGMrlrMpG06vWdbE6yUAd6MCNpT74ts72BniaaBmIIXdD/78vUx12i0AtTqHZGYbFn6PnP1VKIpPJkrP+T0rrIgG6ixSLcztBiAFEVIjpchbVWvOoX5Hm9PyRRMrLWqXzjWDV7bFp/0Cs9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=R5sxjT0z; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=YGpLZSxMQi1LgDjFlI6DLkZgKZhYKbqRAdZK/y+UzhBBkZM6cHK3z5ZfAVwa0AoYvL4qxhBPSailF+eyCsEafyCUT7dRNXgr8Msn6d/muBWFjVGFijeG/Cth7tpex+XXtxU9/qnuVX76twr70elaPCyy7vLG4drvxSZ8RlZlk5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=bNxEvZ+O; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,22 +37,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=LGPzF9dfN0BwNNAMP6+edKFGJ24TiblnDHG0vkTA1C8=; b=R5sxjT0zdEKrnbb9oK34bI/a2T
-	lJaPuNrPaDoUhw/A2mAhDn6xJGk2VEOCd0ujYtmTqOjPX27ywx24i8xZLkiSKDa4WvzQGHxJF6UxP
-	H4xkqXpPKAIJEZNWJiamPSvh9yWdLUJLNqV5K2TR41SMAkaBY5jcmquvPOLCBoo0+kCX5nifPsIXw
-	KF/9VWZAm5fn6fSn2CnIqghId3Yp1MkYVYnvY8o3mLa/56fRCk0aeLbRF4UJt4G5PdorCLdgo/cBN
-	WluvHBkika4B0pYoFFzZWIKnSBETq1lsatOMX8ieAuYh8IuKmPlJir7cVup4Zg0S0jYaqgRdDmSeV
-	Rb+uqqgA==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:51462 helo=rmk-PC.armlinux.org.uk)
+	bh=PkzEXKrk7RiVwlShBSl0OJhiBXrJm3zMeL24zlXLNiM=; b=bNxEvZ+OfTskC0HV0M6CYZUSNr
+	1D4LGOEusWj2nf3QjeTrWd7ogPP2CRG7W2Y9rczrUvXDmnZyhFw+2nT1R2CWCHxrpY/i4V/npQnam
+	8jdWPLSKyvXtOiHlQCKaGkeC1UuEBgL4Y2BKWhIV4BNPqG7l9NX5o5qMjjQDj0J5bRtZq4hjmGo/u
+	QFxKWY7BOQD7gkOnP1H3B3Ivw1u4+CSjFSzQMHjJ59kIosRqukAejVwYtEa9BhhdXEGvDS/D23zmy
+	RyBP8Ip2cBUH5WDD0Xp/Jgtl6Jk23rcsmc/y/0x5xRocSfytMd/bZM8lVr5JY4500f2lGFHbqDTD1
+	tSTfbG7A==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:51472 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1v2na2-000000005Fu-2sPe;
-	Sun, 28 Sep 2025 10:20:31 +0100
+	id 1v2naD-000000005GR-1Ye1;
+	Sun, 28 Sep 2025 10:20:41 +0100
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1v2na0-00000007oC3-1T7E;
-	Sun, 28 Sep 2025 10:20:28 +0100
+	id 1v2na5-00000007oCw-26Z7;
+	Sun, 28 Sep 2025 10:20:33 +0100
 In-Reply-To: <aNj8U4xPJ0JepmZs@shell.armlinux.org.uk>
 References: <aNj8U4xPJ0JepmZs@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -100,8 +100,8 @@ Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH RFC net-next v2 05/19] net: stmmac: remove unused PCS loopback
- support
+Subject: [PATCH RFC net-next v2 06/19] net: stmmac: remove hw->ps
+ xxx_core_init() hardware setup
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -111,127 +111,169 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1v2na0-00000007oC3-1T7E@rmk-PC.armlinux.org.uk>
+Message-Id: <E1v2na5-00000007oCw-26Z7@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Sun, 28 Sep 2025 10:20:28 +0100
+Date: Sun, 28 Sep 2025 10:20:33 +0100
 
-Nothing calls stmmac_pcs_ctrl_ane() with the "loopback" argument set to
-anything except zero, so this serves no useful purpose. Remove the
-argument to reduce the code complexity.
+After a lot of digging, it seems that the oddly named hw->ps member is
+all about configuring the core for reverse SGMII. This member is set to
+one of 0, SPEED_10, SPEED_100 or SPEED_1000 depending on
+priv->plat->mac_port_sel_speed. On DT systems, this comes from the
+"snps,ps-speed" DT property.
+
+When set to a non-zero value, it:
+
+1. Configures the MAC at initialisation time to operate at a specific
+   speed. However, this will be overwritten by mac_link_up() when the
+   link comes up (e.g. with the fixed-link parameters.)
+
+   Note that dwxgmac2 wants to also support SPEED_2500 and SPEED_10000,
+   but both these values are impossible.
+
+2. It _incorrectly_ enables the transmitter (GMAC_CONFIG_TE) which
+   makes no sense, rather than enabling the "transmit configuration"
+   bit (GMAC_CONFIG_TC). Likely a typo.
+
+3. It configures the SGMII rate adapter layer to retrieve its speed
+   setting from the MAC configuration register rather than the PHY.
+
+There are two ways forward here:
+
+a) fixing (2) so that we set GMAC_CONFIG_TC. However, we have platform
+   that set the "snps,ps-speed" property and that work today. Fixing
+   this will cause the RGMII, SGMII or SMII inband configuration to be
+   transmitted, which will be a functional change which could cause a
+   regression.
+
+b) ripping out (1) and (2) as they are ineffective. This also has the
+   possibility of regressions, but the patch author believes this risk
+   is much lower than (a).
+
+Therefore, this commit takes the approach in (b).
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 +-
- drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c    | 4 ++--
- drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c       | 5 ++---
- drivers/net/ethernet/stmicro/stmmac/hwif.h              | 4 ++--
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c       | 2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h        | 6 +-----
- 6 files changed, 9 insertions(+), 14 deletions(-)
+ .../ethernet/stmicro/stmmac/dwmac1000_core.c  | 23 +++--------------
+ .../net/ethernet/stmicro/stmmac/dwmac4_core.c | 24 +++---------------
+ .../ethernet/stmicro/stmmac/dwxgmac2_core.c   | 25 ++-----------------
+ 3 files changed, 8 insertions(+), 64 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index f62825220cf7..32244217d952 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -622,7 +622,7 @@ static void ethqos_set_serdes_speed(struct qcom_ethqos *ethqos, int speed)
- 
- static void ethqos_pcs_set_inband(struct stmmac_priv *priv, bool enable)
- {
--	stmmac_pcs_ctrl_ane(priv, enable, 0, 0);
-+	stmmac_pcs_ctrl_ane(priv, enable, 0);
- }
- 
- /* On interface toggle MAC registers gets reset.
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-index 654331b411f4..5c653be3d453 100644
+index 5c653be3d453..d35db8958be1 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac1000_core.c
-@@ -358,9 +358,9 @@ static void dwmac1000_set_eee_timer(struct mac_device_info *hw, int ls, int tw)
- }
- 
- static void dwmac1000_ctrl_ane(struct stmmac_priv *priv, bool ane,
--			       bool srgmi_ral, bool loopback)
-+			       bool srgmi_ral)
+@@ -26,35 +26,18 @@ static void dwmac1000_core_init(struct mac_device_info *hw,
+ 				struct net_device *dev)
  {
--	dwmac_ctrl_ane(priv->ioaddr, GMAC_PCS_BASE, ane, srgmi_ral, loopback);
-+	dwmac_ctrl_ane(priv->ioaddr, GMAC_PCS_BASE, ane, srgmi_ral);
- }
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 value = readl(ioaddr + GMAC_CONTROL);
+ 	int mtu = dev->mtu;
++	u32 value;
  
- static void dwmac1000_debug(struct stmmac_priv *priv, void __iomem *ioaddr,
+ 	/* Configure GMAC core */
+-	value |= GMAC_CORE_INIT;
++	value = readl(ioaddr + GMAC_CONTROL);
+ 
+ 	if (mtu > 1500)
+ 		value |= GMAC_CONTROL_2K;
+ 	if (mtu > 2000)
+ 		value |= GMAC_CONTROL_JE;
+ 
+-	if (hw->ps) {
+-		value |= GMAC_CONTROL_TE;
+-
+-		value &= ~hw->link.speed_mask;
+-		switch (hw->ps) {
+-		case SPEED_1000:
+-			value |= hw->link.speed1000;
+-			break;
+-		case SPEED_100:
+-			value |= hw->link.speed100;
+-			break;
+-		case SPEED_10:
+-			value |= hw->link.speed10;
+-			break;
+-		}
+-	}
+-
+-	writel(value, ioaddr + GMAC_CONTROL);
++	writel(value | GMAC_CORE_INIT, ioaddr + GMAC_CONTROL);
+ 
+ 	/* Mask GMAC interrupts */
+ 	value = GMAC_INT_DEFAULT_MASK;
 diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-index bff4c371c1d2..21e4461db937 100644
+index 21e4461db937..d855ab6b9145 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/dwmac4_core.c
-@@ -583,10 +583,9 @@ static void dwmac4_flow_ctrl(struct mac_device_info *hw, unsigned int duplex,
- 	}
- }
- 
--static void dwmac4_ctrl_ane(struct stmmac_priv *priv, bool ane, bool srgmi_ral,
--			    bool loopback)
-+static void dwmac4_ctrl_ane(struct stmmac_priv *priv, bool ane, bool srgmi_ral)
+@@ -27,29 +27,11 @@ static void dwmac4_core_init(struct mac_device_info *hw,
  {
--	dwmac_ctrl_ane(priv->ioaddr, GMAC_PCS_BASE, ane, srgmi_ral, loopback);
-+	dwmac_ctrl_ane(priv->ioaddr, GMAC_PCS_BASE, ane, srgmi_ral);
- }
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+ 	void __iomem *ioaddr = hw->pcsr;
+-	u32 value = readl(ioaddr + GMAC_CONFIG);
+ 	unsigned long clk_rate;
++	u32 value;
  
- static int dwmac4_irq_mtl_status(struct stmmac_priv *priv,
-diff --git a/drivers/net/ethernet/stmicro/stmmac/hwif.h b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-index 14dbe0685997..7796f5f3c96f 100644
---- a/drivers/net/ethernet/stmicro/stmmac/hwif.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/hwif.h
-@@ -374,8 +374,8 @@ struct stmmac_ops {
- 		      struct stmmac_extra_stats *x, u32 rx_queues,
- 		      u32 tx_queues);
- 	/* PCS calls */
--	void (*pcs_ctrl_ane)(struct stmmac_priv *priv, bool ane, bool srgmi_ral,
--			     bool loopback);
-+	void (*pcs_ctrl_ane)(struct stmmac_priv *priv, bool ane,
-+			     bool srgmi_ral);
- 	/* Safety Features */
- 	int (*safety_feat_config)(void __iomem *ioaddr, unsigned int asp,
- 				  struct stmmac_safety_feature_cfg *safety_cfg);
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index d5e345c6f6eb..05eb4b5fbf04 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3494,7 +3494,7 @@ static int stmmac_hw_setup(struct net_device *dev)
- 	}
- 
- 	if (priv->hw->pcs)
--		stmmac_pcs_ctrl_ane(priv, 1, priv->hw->ps, 0);
-+		stmmac_pcs_ctrl_ane(priv, 1, priv->hw->ps);
- 
- 	/* set TX and RX rings length */
- 	stmmac_set_rings_length(priv);
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-index 4a684c97dfae..5778f5b2f313 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_pcs.h
-@@ -82,13 +82,12 @@ static inline void dwmac_pcs_isr(void __iomem *ioaddr, u32 reg,
-  * @reg: Base address of the AN Control Register.
-  * @ane: to enable the auto-negotiation
-  * @srgmi_ral: to manage MAC-2-MAC SGMII connections.
-- * @loopback: to cause the PHY to loopback tx data into rx path.
-  * Description: this is the main function to configure the AN control register
-  * and init the ANE, select loopback (usually for debugging purpose) and
-  * configure SGMII RAL.
-  */
- static inline void dwmac_ctrl_ane(void __iomem *ioaddr, u32 reg, bool ane,
--				  bool srgmi_ral, bool loopback)
-+				  bool srgmi_ral)
- {
- 	u32 value = readl(ioaddr + GMAC_AN_CTRL(reg));
- 
-@@ -104,9 +103,6 @@ static inline void dwmac_ctrl_ane(void __iomem *ioaddr, u32 reg, bool ane,
- 	if (srgmi_ral)
- 		value |= GMAC_AN_CTRL_SGMRAL;
- 
--	if (loopback)
--		value |= GMAC_AN_CTRL_ELE;
+-	value |= GMAC_CORE_INIT;
 -
- 	writel(value, ioaddr + GMAC_AN_CTRL(reg));
+-	if (hw->ps) {
+-		value |= GMAC_CONFIG_TE;
+-
+-		value &= hw->link.speed_mask;
+-		switch (hw->ps) {
+-		case SPEED_1000:
+-			value |= hw->link.speed1000;
+-			break;
+-		case SPEED_100:
+-			value |= hw->link.speed100;
+-			break;
+-		case SPEED_10:
+-			value |= hw->link.speed10;
+-			break;
+-		}
+-	}
+-
+-	writel(value, ioaddr + GMAC_CONFIG);
++	value = readl(ioaddr + GMAC_CONFIG);
++	writel(value | GMAC_CORE_INIT, ioaddr + GMAC_CONFIG);
+ 
+ 	/* Configure LPI 1us counter to number of CSR clock ticks in 1us - 1 */
+ 	clk_rate = clk_get_rate(priv->plat->stmmac_clk);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+index 00e929bf280b..0430af27da40 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwxgmac2_core.c
+@@ -23,29 +23,8 @@ static void dwxgmac2_core_init(struct mac_device_info *hw,
+ 	tx = readl(ioaddr + XGMAC_TX_CONFIG);
+ 	rx = readl(ioaddr + XGMAC_RX_CONFIG);
+ 
+-	tx |= XGMAC_CORE_INIT_TX;
+-	rx |= XGMAC_CORE_INIT_RX;
+-
+-	if (hw->ps) {
+-		tx |= XGMAC_CONFIG_TE;
+-		tx &= ~hw->link.speed_mask;
+-
+-		switch (hw->ps) {
+-		case SPEED_10000:
+-			tx |= hw->link.xgmii.speed10000;
+-			break;
+-		case SPEED_2500:
+-			tx |= hw->link.speed2500;
+-			break;
+-		case SPEED_1000:
+-		default:
+-			tx |= hw->link.speed1000;
+-			break;
+-		}
+-	}
+-
+-	writel(tx, ioaddr + XGMAC_TX_CONFIG);
+-	writel(rx, ioaddr + XGMAC_RX_CONFIG);
++	writel(tx | XGMAC_CORE_INIT_TX, ioaddr + XGMAC_TX_CONFIG);
++	writel(rx | XGMAC_CORE_INIT_RX, ioaddr + XGMAC_RX_CONFIG);
+ 	writel(XGMAC_INT_DEFAULT_EN, ioaddr + XGMAC_INT_EN);
  }
- #endif /* __STMMAC_PCS_H__ */
+ 
 -- 
 2.47.3
 
