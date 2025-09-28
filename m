@@ -1,34 +1,34 @@
-Return-Path: <linux-arm-msm+bounces-75421-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F421BA6D36
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 11:22:03 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8AD39BA6D7E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 11:30:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E4DAC17271A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 09:21:56 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E39271896F92
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 09:30:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8D8032D73B1;
-	Sun, 28 Sep 2025 09:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C804A2D8395;
+	Sun, 28 Sep 2025 09:30:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="mwJiwUxI"
+	dkim=fail reason="signature verification failed" (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="j33weVGz"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E68C12D63F6;
-	Sun, 28 Sep 2025 09:21:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341C5212562;
+	Sun, 28 Sep 2025 09:30:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759051301; cv=none; b=ilaaFqJG+AD2XsFu0+NHYreLLFZkKhAOvhSoe0I6ZeQwIEgqxhMONMjkuxc9JzmD3AGQIM/62qNMRsoXMqjwax12SmuMwNGVS7D0FgjYYZGPQ5itb+bw91n6vyVbzgT7VXUad/OZmn8cwCm5qQ1Hmpt7+gmhmbcvXPPJKZr1GI4=
+	t=1759051812; cv=none; b=Clxp4uqF/GTuuauwHw4+58oArVCAXptVfE6DtI53vzmZMMnQRD7eFv2m+TmxuC8RKU7kkdDNGF6iOu02qRk4nOFTz86p8I2+gr1PAIt+Oju+I7ti/rwbxthA8xj0RHikxut4OBp0VmTOXEHRwsReaVJfQtwcV2vwMNWHDoQ6pRE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759051301; c=relaxed/simple;
-	bh=vEG1pzCRP2l8UiBCtpRjNH80AfHUVbdD5hPoTMpg1/M=;
+	s=arc-20240116; t=1759051812; c=relaxed/simple;
+	bh=VvaMrE0CNxv5pCeExQ/kHw77un3pG7xNKUpaOaU1jb0=;
 	h=In-Reply-To:References:From:To:Cc:Subject:MIME-Version:
-	 Content-Disposition:Content-Type:Message-Id:Date; b=huEhvZf4Y7QKZBFmrA9oyCnRSjM5zOISf4/imgG79mkmZ7tLDyuqGI5STuQ+CD5v4nevGQK3g70/n97jBYbUoLkwFc3NhKyg4NmNvis33CQoRSoSDJ4Yfg6SbT7isb/IeebVZtT7nr1lL9hrwN7Kk0I5glUXgOyypOqWzyyS8ME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=mwJiwUxI; arc=none smtp.client-ip=78.32.30.218
+	 Content-Disposition:Content-Type:Message-Id:Date; b=oDwvM00WFhz0Cj3FY3Bk1aYFBgdEC9FA9vj6WyRFzwlGiuuQflspGPbqTvLr8GMEKeCkYILwvuDNS0rCiZATmGSH2FMMaoAVeYlSLsuDZMgBaLHMNnHEP1J/EwXgDwdtaB2KwYX2BXST744ADT/RGdnTh2ZAeheHhGiGs/dxWTw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=j33weVGz; arc=none smtp.client-ip=78.32.30.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
@@ -37,22 +37,22 @@ DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	In-Reply-To:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
 	Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
 	List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ubf8ru2yeav1iqcn4xlDDDTK5MJ9RiF2NcA/K6NqMrw=; b=mwJiwUxIRZyNFQ0GqD2Qyni4QA
-	qWPP5tAXPRJbKg551zuXI5Vb0+L+SNSn0HMPwWY+IYLCTjS7a96+ojWoxIojQAdv8b+NK7N8P3hww
-	gDkgb4HTJfRv9c/Di1UQ/o4rU6YAimKivaZ0E/IIJKhLqah3aS9GaUMR0r3ikAeqP67DN149zeB0o
-	4w8j3kTF0wyaEvryEvOU0ShH76HIdQX5ASNCHte4ZEbiP2p8IfQDeeIQxEmpxl3G9I9mr//kALDFi
-	E8IJEqISwHEGp2aiSMDGAUligtNuAj3UIZ0vlK1oSWQ999TNS/r2e2Z68h0o/Qi4MH8H53FieDeaa
-	xymGlC6A==;
-Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:52256 helo=rmk-PC.armlinux.org.uk)
+	bh=e/o+nUzd6QInr6Je88IK6BznxBIP/hyub+kKCuKpaJA=; b=j33weVGz4hapihnqPltKciR7qA
+	t30D2Oxvclo4OJ885OzrXzCxM789x0qKkCqWB/ejNs9BJJdgDrq4VWHFBP302nrRDI6e5oR7uRIxC
+	Mk4Qkx/msCZu25nuqVpsj7MVl8LTJhc9Gww55CFocZ0b31R6E0VLHV8i0v5pWypx0VQE+FFRve+wA
+	6dXBSh+sVgOtWf+Gxt36TyYjGu4zUsR1oUIAgky/AHow1xxL34K7mTA54qB45rtsbp195exES8xof
+	OvrKjRNls+KYVGUQDvbUSDr8ZsbLuxuEian8GXQJ9fmJppDzLsTtNhqX8+vNA3yDbS52/3I9pvWZ9
+	0xDz+wWg==;
+Received: from e0022681537dd.dyn.armlinux.org.uk ([fd8f:7570:feb6:1:222:68ff:fe15:37dd]:46452 helo=rmk-PC.armlinux.org.uk)
 	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
 	(Exim 4.98.2)
 	(envelope-from <rmk@armlinux.org.uk>)
-	id 1v2naJ-000000005H2-420C;
-	Sun, 28 Sep 2025 10:20:48 +0100
+	id 1v2naW-000000005HZ-2LJe;
+	Sun, 28 Sep 2025 10:21:00 +0100
 Received: from rmk by rmk-PC.armlinux.org.uk with local (Exim 4.98.2)
 	(envelope-from <rmk@rmk-PC.armlinux.org.uk>)
-	id 1v2naF-00000007oET-3Q5a;
-	Sun, 28 Sep 2025 10:20:44 +0100
+	id 1v2naL-00000007oFE-0d6b;
+	Sun, 28 Sep 2025 10:20:49 +0100
 In-Reply-To: <aNj8U4xPJ0JepmZs@shell.armlinux.org.uk>
 References: <aNj8U4xPJ0JepmZs@shell.armlinux.org.uk>
 From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
@@ -100,8 +100,8 @@ Cc: Abhishek Chauhan <quic_abchauha@quicinc.com>,
 	Vladimir Oltean <olteanv@gmail.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Yu-Chun Lin <eleanor15x@gmail.com>
-Subject: [PATCH RFC net-next v2 08/19] net: stmmac: move reverse-"pcs" mode
- setup to stmmac_check_pcs_mode()
+Subject: [PATCH RFC net-next v2 09/19] net: stmmac: simplify
+ stmmac_check_pcs_mode()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -111,69 +111,53 @@ MIME-Version: 1.0
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset="utf-8"
-Message-Id: <E1v2naF-00000007oET-3Q5a@rmk-PC.armlinux.org.uk>
+Message-Id: <E1v2naL-00000007oFE-0d6b@rmk-PC.armlinux.org.uk>
 Sender: Russell King <rmk@armlinux.org.uk>
-Date: Sun, 28 Sep 2025 10:20:43 +0100
+Date: Sun, 28 Sep 2025 10:20:49 +0100
 
-The broken reverse-mode, selected by snps,ps-speed, is configured when
-the platform provides a valid port speed and a PCS is being used.
-
-Both these remain constant after the driver has probed, so the software
-state doesn't need to be re-initialised each time stmmac_hw_setup() is
-called (which is called at open and resume time.)
-
-Move the software setup of reverse-mode to stmmac_check_pcs_mode()
-which is called from the driver probe function.
+Now that we only support one mode, simplify stmmac_check_pcs_mode().
 
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c | 26 +++++++++----------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c   | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index f90742ab68ae..414a00ab5012 100644
+index 414a00ab5012..94b615444734 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1091,6 +1091,19 @@ static void stmmac_check_pcs_mode(struct stmmac_priv *priv)
+@@ -1086,22 +1086,23 @@ static const struct phylink_mac_ops stmmac_phylink_mac_ops = {
+ static void stmmac_check_pcs_mode(struct stmmac_priv *priv)
+ {
+ 	int interface = priv->plat->phy_interface;
++	int speed = priv->plat->mac_port_sel_speed;
+ 
+ 	if (priv->dma_cap.pcs && interface == PHY_INTERFACE_MODE_SGMII) {
  		netdev_dbg(priv->dev, "PCS SGMII support enabled\n");
  		priv->hw->pcs = STMMAC_PCS_SGMII;
- 	}
-+
-+	/* PS and related bits will be programmed according to the speed */
-+	if (priv->hw->pcs) {
-+		int speed = priv->plat->mac_port_sel_speed;
-+
-+		if ((speed == SPEED_10) || (speed == SPEED_100) ||
-+		    (speed == SPEED_1000)) {
-+			priv->hw->ps = speed;
-+		} else {
-+			dev_warn(priv->device, "invalid port speed\n");
-+			priv->hw->ps = 0;
-+		}
-+	}
- }
- 
- /**
-@@ -3436,19 +3449,6 @@ static int stmmac_hw_setup(struct net_device *dev)
- 	stmmac_set_umac_addr(priv, priv->hw, dev->dev_addr, 0);
- 	phylink_rx_clk_stop_unblock(priv->phylink);
- 
+-	}
+-
 -	/* PS and related bits will be programmed according to the speed */
 -	if (priv->hw->pcs) {
 -		int speed = priv->plat->mac_port_sel_speed;
--
+ 
 -		if ((speed == SPEED_10) || (speed == SPEED_100) ||
 -		    (speed == SPEED_1000)) {
--			priv->hw->ps = speed;
++		switch (speed) {
++		case SPEED_10:
++		case SPEED_100:
++		case SPEED_1000:
+ 			priv->hw->ps = speed;
 -		} else {
--			dev_warn(priv->device, "invalid port speed\n");
--			priv->hw->ps = 0;
--		}
--	}
--
- 	/* Initialize the MAC Core */
- 	stmmac_core_init(priv, priv->hw, dev);
- 
++			break;
++
++		default:
+ 			dev_warn(priv->device, "invalid port speed\n");
+ 			priv->hw->ps = 0;
++			break;
+ 		}
+ 	}
+ }
 -- 
 2.47.3
 
