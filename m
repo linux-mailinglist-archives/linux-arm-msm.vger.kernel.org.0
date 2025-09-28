@@ -1,143 +1,130 @@
-Return-Path: <linux-arm-msm+bounces-75395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75396-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3CE41BA67F6
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 06:49:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id D8923BA6808
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 06:58:51 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E9CE2178B85
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 04:49:38 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 93D3F3B8BBF
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 28 Sep 2025 04:58:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E24D2253A1;
-	Sun, 28 Sep 2025 04:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 74E652222C5;
+	Sun, 28 Sep 2025 04:58:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8pDNWlJ"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EX3bEQH1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74812222BF
-	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 04:49:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC461EBFFF
+	for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 04:58:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759034967; cv=none; b=C86Ere5f+ckL77vZk3t1fgRcObvbmgQ0vsSWxSsfzxdqvv8lfVmeS4jDac4pW2WhULOOSEMzUfWALdnqK/S/Si9KXnCkn3J1QBhFFxHl9zojiCjJQntrS0QIDYNizN4vURTyVtrC03PxIsXDC5dJWeyr75FIomy6bIk7OQ7GFyM=
+	t=1759035528; cv=none; b=YRdAqsOSiKUH9mmfrMqOMsx0/22gqXFCeF8oacpZ9RGMSqyL6FELhgDo8wbBia5BfPdB2Zgftt85/jkxk1CXlROQcgPioQ0kuIiYtn65i/Zb7wh4HufBQZ5ITgMbET6Iec/Z0TzUjq4DxPQZ+BUjAKIJ0pIXNY7j+BtEruR8wOo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759034967; c=relaxed/simple;
-	bh=0/cALg/CUu77B5//afrOOTSS5oVPeVKNtLywwtIogKQ=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=BMZrAk6nSO1nlnHkSGDPZiLfvgX+IzasRx65vvMXnW8FjnQN4z/fvh6mCeyNdfFfmWvtVsaWDMGcO7Fc7p3stTHKAyr4H3BLp9i6qSBBxBoju14f60tLKbbflybVfr6tLpYmsToPn8ExKybJUNB5dHVvGlhYJdqPJleXopn3Qvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8pDNWlJ; arc=none smtp.client-ip=209.85.216.50
+	s=arc-20240116; t=1759035528; c=relaxed/simple;
+	bh=gBdIOP8VAofWeg0VuDnNTI1eOLpqvNJeatbnz/SutbE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CDicwN+Ek/MwzHF92rmGmAxuQhJwPWOVPOWdvk3mcXtKkDtwHc3XlLI0K3PsVYC/cph6c+LS2HRLLezLaFo+rqc6qchA8lNbwJezSqG6znD8fqAT2tDdYUftNvsqL2N5y8Tl9SObRXLojiD8A/J5QZ02GlU67I53rtg4K1cEtHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EX3bEQH1; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-3306eb96da1so2843245a91.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Sep 2025 21:49:25 -0700 (PDT)
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-33255011eafso3403314a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 27 Sep 2025 21:58:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759034965; x=1759639765; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=MCjdjQn242Y3/+NeNWwaAVxKQkMZf3KJ9t0iHGGsdtI=;
-        b=l8pDNWlJ/Q4uMPMJ9x7CMHQs7bl9D1Jm17jVEpTpz9nYH5IXs29THM8yxrD3d5buVH
-         /uGZD0uGfMW9GQoC1Im8uMTcrl8eHd1DC5y04oj1vI8ZKzFQXpUycL+eqBLPVE1uddz3
-         VlGtzOqUEISOg2JDMwCjqVBapIQPQ6M7jCLvQpjj+zXjr0jFD3AfeytQH5LkHEZgZ5n2
-         9cZCQsz0wjEGC8Y+cLokVercOKMIeD+P7P39uglP/v6k2wQIR0ULbRtR55t0bedx9f/w
-         XMdpG4tnjLuLknSXZlSd+xfS0QoQuWZ5D1c7fZYtbyG11+/6prl75FBoi7ridplnDX/C
-         R2Fw==
+        d=gmail.com; s=20230601; t=1759035526; x=1759640326; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=WxpcNLUlja4tVEmgOEAKXd31nleDdtBAzU43V4PpQ1k=;
+        b=EX3bEQH1RldiCz6Q6x9VieCZGV1PZUGMArvm3sRj1ayX0+TKVJD6PdZFV/LkHOpWwc
+         AafowvR+AN339b0To54H+IYTmtYx7lHkhdUIBrWGtD7x65GnLq48zS9VeE//n8rbp5/W
+         pX/XFNIOfgGGYUlyh+A+a8TqkANRKYVzIxW0fUuVEo3q/IUvCGg7KsSxZZ8cgCmc7A1Y
+         0ekTXeY44Udkc4naOIjrn6D9fniySPkxwVe1UEi9dxwwWLbCWSLr7nXpthRqALkXP93G
+         iNt6kfCmV+nJkkFz120EciWl9Wq8cq1LOE+Goz3oV0OpbnEiRstm64xXLfZZqdUsbZf5
+         Dp0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759034965; x=1759639765;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MCjdjQn242Y3/+NeNWwaAVxKQkMZf3KJ9t0iHGGsdtI=;
-        b=iSri6qtCkwi5dubt8xysy6lJsj+JJ16qsM1zN3+a3JkruWAfqcWo5swf6a4pjyvvb7
-         BxdD7Ln2F6VauPKWZV2bkUUGYTgXeAXFXT/mlUegQagQzSpB68QFhUK9FTNK7tAHk5xE
-         H5BsSOfKuuXc5f/o1K5ceNh0nTp1UwyksfBQVepDFOw3AwEMNERKsr4hWY6DpgJA8BMG
-         1Xve0F9FsCd7sBqWhsaZVdc6DNQhuDek57l4d0gvNmkWFzpmufTODCJdZi89fejGnBoL
-         zjeRQGEf6iZ7wnZQp8vKkVJ0WDHZf8WIXCOK0EI0XLB5w2PcnFa8nzaEtneGRqS0WzYH
-         fDSw==
-X-Forwarded-Encrypted: i=1; AJvYcCW4F3lX4Nx4yDxEDH5dPllJXPMackXb9nRXTcwjd22XTtk7L+FPHsoOsnfrDagAgC+Ash+73yvXHhT9ot9z@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/89/XewIOa9EUqy7+tHDKmVTIitpAbKowMxF2xtEPEmslP3eg
-	jXTgNsB/guZnaEnSYpBgDOZfVPGLXZg5ZSfF4m8W0bQlSik3Rp91GwEW
-X-Gm-Gg: ASbGnctDR8XVXXmmjliidh28iQ4h9PkMTFf44T6TZi7eT5Qlb8WcaK6pR6/8oN13VHc
-	36GcrWQkZ3qaHVqMJMCgLBXqdiQNQTLgtd+LF7lOMGc7Vjn0ojySonANTwT20hqkgBI5F7hFbup
-	EYvuv/duUg1GYL1al+ll9r6UoRUWjdZUQ9JQM+X1mSeT0YScI1yi0pF00IECVS6mvhktjFagsNn
-	HZGao1fDs6UdnNJFtDa7cuW7Oy8qlHwJ/WLvCTJ8+CEC/5m5pN336G8TxS9v9qFRiki+UKgO25p
-	zMkp2vaTHVEHBvu7WkmiV8GFZ+zT0qMtWxWlg1Ilwyk8YMRdQDDYg+VFL9hTHR45JiJ1qVleQf3
-	QdkkYj4xNrg9Lkykc+vHW+TtNP1gdaj+zBshaQ9FvshVa
-X-Google-Smtp-Source: AGHT+IHs5S4vCyfYNXJe8BarL/unwhfRqZBmxJoU0ifSgIkyPygD0xTD357dBlsVUNmTvVibBbdOTg==
-X-Received: by 2002:a17:90b:1d86:b0:329:cb75:fef2 with SMTP id 98e67ed59e1d1-3342a272dc1mr13118071a91.3.1759034964944;
-        Sat, 27 Sep 2025 21:49:24 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([2804:18:113a:1c85:b8cb:8c96:f099:efc])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-33471d711a6sm9644063a91.6.2025.09.27.21.49.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 27 Sep 2025 21:49:24 -0700 (PDT)
-Date: Sun, 28 Sep 2025 01:49:17 -0300
-From: =?ISO-8859-1?Q?Eric_Gon=E7alves?= <ghatto404@gmail.com>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-CC: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Rob Herring <robh+dt@kernel.org>,
- devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_arm64=3A_dts=3A_qcom=3A_sm8250-?=
- =?US-ASCII?Q?samsung-common=3A_correct_reserved_pins?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <aar5oq4xvlbpjmitnwzti5w7gitf7wxdas4bflx6eqh3r6srt7@iccpujd6xc4m>
-References: <20250921135623.273662-1-ghatto404@gmail.com> <aar5oq4xvlbpjmitnwzti5w7gitf7wxdas4bflx6eqh3r6srt7@iccpujd6xc4m>
-Message-ID: <51C6A39B-538B-483B-8E75-F86D1612EBAD@gmail.com>
+        d=1e100.net; s=20230601; t=1759035526; x=1759640326;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WxpcNLUlja4tVEmgOEAKXd31nleDdtBAzU43V4PpQ1k=;
+        b=cshTX+Y6C0InrIsA9XrLttFkszGEF7OiA7CEe79fpX3SHmbMShIaNvRgF/MGizbwkg
+         Ocx+b9X6Xf8FG841XvT23eM0RujdPSWYRG4qbiqlXp5RgJoPKN5xYzbfMy6NgnXLuzxv
+         ZfJS3XCTJXe6tz2/N8Wq4N+ZIgC5U9o3Nmt+/ZW4vuwItRfcpMlJ4A+4UrzYofbmoSoJ
+         hU5I+oZDAcAqx7cFtK8aBVSqXqoUyMfS1l/TGZCQ2kgnEHJt4jaNgQ7BamAH+GLdXhAb
+         bPOKG+FaiRHsgE7V0QTuanZ7aW0o9LtM8IocGcSx5nOFzOqIuTy/lxIyArdsq3pEZPxy
+         gkjw==
+X-Forwarded-Encrypted: i=1; AJvYcCWzJ7RDcw4L6KrmiCvnhsZ14KecR/yC1kEyu6yX0ce825jo7b7G2KP3b72zpMAQhzIJZOoMcNtuV8vVFHyQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyv0XywinF5FGzO4uotFSxXs3gjQiMddAzF6WvkMrjXf/b2USFH
+	uX5jUPckFq3PUj+13940SZavlNw/E+GzWncqSkHNHR0byI9MwnE14rJ8
+X-Gm-Gg: ASbGnctpp0mbD933IKwuvRNC77QEwNCmD76yD6voTXaL0Ufy+QaAu+8E5weQhgAYJPh
+	5L+Pwz7PJqmoCSrmG+QxF+AnTiC52PCCgEc5AQDCLMyLjzcWDmQNHojuovzwNIfz2lrE6ym8ipw
+	m8DjE9Un7njAXj+ngUezr+xmrsq5tGHCNv2lBue7IfVum5QiR9Nu3irg/fbMd6bQkmmjP1uj7Y/
+	dI/W62TiN+hTOF15uZY1l6YgpFGxJQMBylWSoE+1ysqbHe1tRP0BvDoq9uh4x/BP77KI3VY2jw+
+	sSl9xM6bM4PksNh+KTfdlQE0sHF6Sp7wfFLj9LqVlunbuNAWuRCV12NwUv+azZVSdnvT/9hjSwi
+	U95X8jWSkDZKuRQH1rkybsg==
+X-Google-Smtp-Source: AGHT+IE0uum1cQjjCYy4XHrx9Lz7DJLQZgSgm0Y7FIM4nk9ZjG6E7r6a4gPVs87kQ4KMF3PhUwjdGA==
+X-Received: by 2002:a17:90b:1a8b:b0:32e:59ef:f403 with SMTP id 98e67ed59e1d1-3342a299099mr13890106a91.17.1759035526242;
+        Sat, 27 Sep 2025 21:58:46 -0700 (PDT)
+Received: from archlinux ([179.113.184.101])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3341bcd9afbsm13383430a91.0.2025.09.27.21.58.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 27 Sep 2025 21:58:45 -0700 (PDT)
+From: =?UTF-8?q?Eric=20Gon=C3=A7alves?= <ghatto404@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Rob Herring <robh+dt@kernel.org>
+Cc: devicetree@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v3] arm64: dts: qcom: sm8250-samsung-common: correct reserved pins
+Date: Sun, 28 Sep 2025 04:58:17 +0000
+Message-ID: <20250928045817.37384-1-ghatto404@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+The S20 series has additional reserved pins for the fingerprint sensor,
+GPIO 20-23. Correct it by adding them into gpio-reserved-ranges.
 
+Fixes: 6657fe9e9f23 ("arm64: dts: qcom: add initial support for Samsung Galaxy S20 FE")
+Signed-off-by: Eric Gonçalves <ghatto404@gmail.com>
+---
+Changes in v3:
+- Actually fixed <40 4> indentation
+Sorry, I still had my editor on 4 spaces a tab
 
-On September 22, 2025 6:51:30 AM GMT-03:00, Dmitry Baryshkov <dmitry=2Ebar=
-yshkov@oss=2Equalcomm=2Ecom> wrote:
->On Sun, Sep 21, 2025 at 01:56:23PM +0000, Eric Gon=C3=A7alves wrote:
->> The S20 series has additional reserved pins for the fingerprint sensor,
->> GPIO 20-23=2E Correct it by adding them into gpio-reserved-ranges=2E
->>=20
->> Signed-off-by: Eric Gon=C3=A7alves <ghatto404@gmail=2Ecom>
->> ---
->>  arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi | 3 ++-
->>  1 file changed, 2 insertions(+), 1 deletion(-)
->>=20
->> diff --git a/arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi b/ar=
-ch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi
->> index 96662bf9e527=2E=2E1680be67e733 100644
->> --- a/arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi
->> +++ b/arch/arm64/boot/dts/qcom/sm8250-samsung-common=2Edtsi
->> @@ -159,7 +159,8 @@ &pon_resin {
->>  };
->> =20
->>  &tlmm {
->> -	gpio-reserved-ranges =3D <40 4>; /* I2C (Unused) */
->> +	gpio-reserved-ranges =3D <20 4>, /* SPI (Fingerprint scanner) */
->> +						   <40 4>; /* I2C (Unused) */
->
->Typically Tab size is 8 spaces, not 4=2E
-I'll change that, thanks
->
->
->Also:
->
->Fixes: 6657fe9e9f23 ("arm64: dts: qcom: add initial support for Samsung G=
-alaxy S20 FE")
->
->
->>  };
->> =20
->>  &usb_1 {
->> --=20
->> 2=2E51=2E0
->>=20
->
+Changes in v2:
+- "Fixed" the formatting of the <40 4> line
+- Added Fixes tag
+---
+ arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi b/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi
+index 96662bf9e527..7696b147e7da 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-samsung-common.dtsi
+@@ -159,7 +159,8 @@ &pon_resin {
+ };
+ 
+ &tlmm {
+-	gpio-reserved-ranges = <40 4>; /* I2C (Unused) */
++	gpio-reserved-ranges = <20 4>, /* SPI (fingerprint scanner) */
++			       <40 4>, /* Unused */
+ };
+ 
+ &usb_1 {
+-- 
+2.51.0
+
 
