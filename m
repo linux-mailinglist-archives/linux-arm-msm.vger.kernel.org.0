@@ -1,119 +1,147 @@
-Return-Path: <linux-arm-msm+bounces-75485-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75486-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E50BBA8712
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 10:46:31 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id EE482BA876F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 10:54:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 176BD3B5296
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 08:46:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 700FB189D116
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 08:54:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EC05F26529A;
-	Mon, 29 Sep 2025 08:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BFEA227FB2B;
+	Mon, 29 Sep 2025 08:53:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="CmkQYJ9U"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cD0sNuFV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A5823D7E3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 08:46:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25A2027E043
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 08:53:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759135584; cv=none; b=oas10FOdntbz4s7zE+UiDB6KPC1G8v/clcWGXHXMMRSwtbbDN4oGluts5wRCzQJsJikutRRUXKncsbzCd0ExNaV5D8C05bG9JBBewjhyR4aeEnO6j3Gde/CWYFr2pMo874dfHzYK0R1WtQZxoZGy5NdSuuyEaequiAEVSsdcb3I=
+	t=1759136037; cv=none; b=UmfYVow638NfL7dbPInxOROsq4T8C2dDr9geo0l8Rv4xRYZF3qScRQ5QMsqPYE1QGgNKBYYmBt8sSfQNXdjyhhF8gqZd9ky5ycjtXjtFq9qbasa0LtQHrxPHHRyd499OLHk0X6j5PLWCTLrvR24Dm7XiJgVE67bkgs0gpTYoKIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759135584; c=relaxed/simple;
-	bh=elHCX2J+mUL+jknpKGeN90bcu2WaP/CHNiOnbcSUmQE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LKFc5wU2JcP1BD1tInbUQufL5KgH17GOSQ9IwySk0qaTBQ5+4VMgmDl1Rqh4lrQSSkts80H1fZgJPDMGQWQpV9GQTKygMirLhgpDN0FMUmidAtFVueT8Dd7f5h2eNAYGIA3OXBlaMuRo6JisvdY7g3pI2XZuXtTJtNu6MxHmm0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=CmkQYJ9U; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-57e3cad25e8so876805e87.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 01:46:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759135580; x=1759740380; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kxq9PcJJJz0spR6MwcPMvKvnViO9P8tXOB0T4VWVPBQ=;
-        b=CmkQYJ9U+GliEz7nRk6vJ/DwAIKRba08MCUMyI5GDxnWaS1mUyUUhRi0VCbXQmk0Cf
-         YZKPcnTOb/sNct1CqPhjAGVYakSSDo0Gyp5TdH1wafm/F/D5H/VvIJALB1YqH251ho4+
-         duwqQEZwUirV4fpYY0KOwTDqG3JnJHkxvrcVC3FUoxBFJoxEEX3jKj2g2aKUGUwRMZAI
-         VxoBMD7Rb6C8XjyzBK+MvQnC4QkG1NGvSgNCGGwBrVin5XgR2hZxUHr1Kac0t7TgupDM
-         JRanGLiULD7C5b8YXYoSlIfZyKn2czhrep1aDq+LA3huJlttvrCmRYW8SwLeaen7n9NJ
-         W1kA==
+	s=arc-20240116; t=1759136037; c=relaxed/simple;
+	bh=R7BdmZgGTbdZfx8EcUuOrDncdMcGmRVH+JIXn1G/oLY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pc6UZoLmACvpeus04e9GimhE2c60s5v7A8dgQfvpZ8ie0W7I84mMdtx40MNHqOHnUlxyPwGBmGX2x19OzDcOuo+sxG4DjuTUAJBLVFFXlX7rum3fg1BrMKWi9XbNM0qTFlkiTLniL2bJP1j+pYXR+nXkKxxBkdbImG3epPcO2fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cD0sNuFV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SNgAs5023427
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 08:53:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	R7BdmZgGTbdZfx8EcUuOrDncdMcGmRVH+JIXn1G/oLY=; b=cD0sNuFVC2Q5FHs9
+	BMnBlwSDxTWRi9aCZfSzPKvDpgCeHs49SO1uh86bOF8hVGPzPVd3vHWERnMGVrtj
+	TsTbpFeENNbE9ZECfBhRbrQ3mAytjl9446q5uW5dXACcgFVfRg7ZX7+s5+IDEIQi
+	9OX68idSS9P7chbxX2TooLkGPpAFsBgJt42lKD7MWiVEIYU4mKFrDiTK5xOqMEmG
+	T76GK9OcN/S76OM+s2s8f25b2rqrQheTPntzl6+0bKf/Ka66M5bNacHcb/bIhE7R
+	S1lqBMDlbeZRLe9sK9j7SdFEWIfufXU709SwpPZirJHo2EytxlIB8FLrHRtgyKT0
+	RgBZkQ==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com [209.85.219.71])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e8pdcb9u-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 08:53:55 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id 6a1803df08f44-797ab35807eso112259866d6.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 01:53:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759135580; x=1759740380;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Kxq9PcJJJz0spR6MwcPMvKvnViO9P8tXOB0T4VWVPBQ=;
-        b=pL4VsLy/WwFmQg1qB+3kFfN4NF7VmLxW4FyN0nRtHsFIHlvHD6gVio+/bTRcCWBEIN
-         om2uWMS1JaXin/VvL1btD7eOIFFuH8UNRN2BcIrK54Sq550ExqlcrErhq3KssZcIcond
-         mlEYapfFBvVjJdiOm5xQYdpHOGDw//0d8wUBh9CY7tq0YSwOEy+zJCzyd8AemvugH1DW
-         RlfG69zlFA+XJydAbaOe2AVg5gZxvjlLcpDfDdniwBS/XKxFHS9bODdbkhDwBj7Hqr5A
-         HtLwouKcOWh+Sr0pYSEJp1bmQxl8r0GE/XyBhpjU7i3hoPYLCOSEoJqZYcvaqrqLBcrQ
-         ux5A==
-X-Gm-Message-State: AOJu0YzPHkK0o1/QY+2A16AaE1nBXdqLS4zf+thtRNMSH4v0upP+pGsl
-	jkOyIJThknb8snweFBjFBX5Hgd95trfBAOmybhNQcNJphCtRnUNqdLQmsp2kM3LbZ2U=
-X-Gm-Gg: ASbGncsIcbst1fI1tkW+17Ir5U3oG1ekO1b7SEkHrvqwdbgCe8nP0Yf0uYeczIY0JPm
-	HfCu2NqE4Q9iD/BKqTsTfQ5uqcfyNU68sF3gG7XBwiwJevbVOIk0fo1GQJYNLjNparnVByRj7RS
-	CL21+s4wSRlCSMX8YNCLu0Zryu6JZ4IuoiP5UALgLJz1FM4ftFD0wqOQCca22CuJJoJr+d1pKbu
-	EJmArvXrzHBFBdO2sLG7/b8pZOKEMcMam3m/0DAUm9XsQ1jqonZ18cEJitA+p+5ZmG6JxuKeUbG
-	CgPx/pMFLkmq1Px3+EraMqqepDo5pXwuV4ln2NerfKirgc0KHoVJMnd0eTiPXxVUwFcA6bjCdic
-	XMly85v9cQEHdkubwG/d8w6igmtSS/2P3jpiD3CVs4LR4D0orbDC8fY/9t6OFFJKeib5Mle14GT
-	Vpyw==
-X-Google-Smtp-Source: AGHT+IFIjTl+y8eSPvSavTSLzI1Q8jLm3uTQFD+1kwjOwgznMH7R9DOWq1dsckUO7nJaFttB2+hYNw==
-X-Received: by 2002:a2e:bc0c:0:b0:36b:93b0:2a8a with SMTP id 38308e7fff4ca-36f7ec73bb1mr25499411fa.5.1759135579722;
-        Mon, 29 Sep 2025 01:46:19 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-36fb770fdb2sm26762571fa.43.2025.09.29.01.46.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Sep 2025 01:46:19 -0700 (PDT)
-Message-ID: <0bfc50c3-2df7-4e7c-a6b7-99b8e56a65ea@linaro.org>
-Date: Mon, 29 Sep 2025 11:46:18 +0300
+        d=1e100.net; s=20230601; t=1759136034; x=1759740834;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=R7BdmZgGTbdZfx8EcUuOrDncdMcGmRVH+JIXn1G/oLY=;
+        b=TfJRDowtU0PzteKJ+c1z1ySh5d3NfsrLHLLtLoSigwWTfZWDO4QTu31p0PMsfVPpqW
+         7JEuIlGk13t+x9kYaj47fQZOGTtwd4KVvZG0XcWOX6ELlkgs5BwniTjNs1OWxQLAh1Ao
+         f96GgYg69R4QM9G+FvQSMdO/UiFcdFFX30hngtnef5qF3Nd3aW3btF7Noc4V/Sc/cqe2
+         sgpp0k5Mfa/qwQWtGD7liGy+Uh18jscMRKMqAh1J6fZFVozORyB8La9Guk9UZF4r2p4o
+         T9QjzT7Qw/g9kzctVR7XozqMpizvJvGCLQh3AbcqywK671Q+qqZPeAdn1JiSeTX/3+CS
+         hhsQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVQHaOSWqOQYjCoxpvcCOoRzWUs3PYz0XfFL4gGpi0nepnBc5DFpEzjhqfRbewN3CM4eqvot2XBv5HHlHK8@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzd+JnnNbRj+nemrxPELtX7f+8RXGG89KDSfk5i5bFEJZ52EXoU
+	fcosswbxo1oxppybG9JmTZSV/EivdSH3oUOZHXogs123y8wGHkxNAwj+2s/Q3Gu/z/3xLI+iDBw
+	fJkE19mx/L8WB5RSDSOOMz7qYwSsbhKO4wvBmAoTh+xzUO01109sr3eWw4bDhTYh3V3XtkNZfDe
+	4QChRJOq9dGcat55wMvCHyEAspBsTBnPsnYN4bUXVlDlyljcKBWCnDMA==
+X-Gm-Gg: ASbGncvRgZL3ib49pMaO/qI+O448KsBQ5MZ3FLE4N1OYGDNIhRWbXgV65uS1Blt1/s+
+	1i+d1cvAiGslMCa2fnUEw9TVDGSkn1vQR7u+G/myMh/BJMcv7MOCpwaX/sRFnlPDKEYDMPEhPXT
+	A2S00wnI26Qtn+hKco5dYWBXmyU3+8K8mAEXLExUNDS51eJHCWQI93474=
+X-Received: by 2002:a05:6214:411:b0:7d0:341f:148a with SMTP id 6a1803df08f44-7fc3aa707a8mr169288996d6.33.1759136033911;
+        Mon, 29 Sep 2025 01:53:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEE7+++gueAWVbcIWzNugbC5NemFua/qTKa7w8VJdZEmfCrc0HAv3aQj1V7qkKv/arj7Jri3xWs8memUSFsccU=
+X-Received: by 2002:a05:6214:411:b0:7d0:341f:148a with SMTP id
+ 6a1803df08f44-7fc3aa707a8mr169288896d6.33.1759136033411; Mon, 29 Sep 2025
+ 01:53:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] media: i2c: ov9282: Fix reset-gpio logical state
-Content-Language: ru-RU
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org, dave.stevenson@raspberrypi.com,
- sakari.ailus@linux.intel.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-media@vger.kernel.org, mchehab@kernel.org, conor+dt@kernel.org,
- robh@kernel.org
 References: <20250926073421.17408-1-loic.poulain@oss.qualcomm.com>
- <20250926073421.17408-2-loic.poulain@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250926073421.17408-2-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ <20250926073421.17408-2-loic.poulain@oss.qualcomm.com> <0bfc50c3-2df7-4e7c-a6b7-99b8e56a65ea@linaro.org>
+In-Reply-To: <0bfc50c3-2df7-4e7c-a6b7-99b8e56a65ea@linaro.org>
+From: Loic Poulain <loic.poulain@oss.qualcomm.com>
+Date: Mon, 29 Sep 2025 10:53:42 +0200
+X-Gm-Features: AS18NWDWFNifGO0pEvmy4HvdAyPW7WJ3Wi0YNtbMTnTSHZCFCSZ5-ItZzCp9W10
+Message-ID: <CAFEp6-0nja15oSEhm=ZjJb1g2MgM8Vv+fPdDgyghFNestf_t4A@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] media: i2c: ov9282: Fix reset-gpio logical state
+To: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc: andersson@kernel.org, konradybcio@kernel.org,
+        dave.stevenson@raspberrypi.com, sakari.ailus@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-media@vger.kernel.org, mchehab@kernel.org, conor+dt@kernel.org,
+        robh@kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-GUID: 8zvAXSFsyge7hQ7LBAqTRL__lP86ICKS
+X-Authority-Analysis: v=2.4 cv=MYZhep/f c=1 sm=1 tr=0 ts=68da4923 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=y2W2zGIOAgzQDGN_av8A:9 a=QEXdDO2ut3YA:10
+ a=1HOtulTD9v-eNWfpl4qZ:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: 8zvAXSFsyge7hQ7LBAqTRL__lP86ICKS
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAzNiBTYWx0ZWRfXzNtZpLscEt0O
+ DxVmtmCiT6qcJ+ITk0JR4EnoyMGPg6pk5GCi2gu0XVA1/UgkW+lx5xFDUba5qoGmpUxixzqUBZc
+ x4fMfsBZUD84ObSSN2yonHpD4KipEuD4QrdetAwdcJHptQXpdkHctV3I4Oh9hmJL9gl6qQMTNE2
+ 4lqouRIgRzCLbaoGRpCy4wPQHFd8+DbLoxJDI82x2ff+VxPA93gJNBKfFN7LKX33yIp5aioZITz
+ EhSwFoZd/yGunETc2URgkZPTc1fIA4PcjnIhGXeXwHajfHwDXRJVPkD2oiqOUDgOlZ9q88gAkOs
+ eTPggxGd4gvMWKDA4LvbC4Sos4fB1giH3zXqZhXKIwReJXyfk99sDxx/oxGINlqMGOHmAnggZn8
+ QD95fzeCV3D/896YKH7fNGWrKvxP6Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-29_03,2025-09-29_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2509270036
 
-On 9/26/25 10:34, Loic Poulain wrote:
-> Ensure reset state is low in the power-on state and high in the
-> power-off state (assert reset). Note that the polarity is abstracted
-> by the GPIO subsystem, so the logic level reflects the intended reset
-> behavior.
-> 
-> This breaks backward compatibility for any downstream dts using the
-> wrong polarity.
-> 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+On Mon, Sep 29, 2025 at 10:46=E2=80=AFAM Vladimir Zapolskiy
+<vladimir.zapolskiy@linaro.org> wrote:
+>
+> On 9/26/25 10:34, Loic Poulain wrote:
+> > Ensure reset state is low in the power-on state and high in the
+> > power-off state (assert reset). Note that the polarity is abstracted
+> > by the GPIO subsystem, so the logic level reflects the intended reset
+> > behavior.
+> >
+> > This breaks backward compatibility for any downstream dts using the
+> > wrong polarity.
+> >
+> > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
+>
+> Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+>
+> I kindly ask you to specify the intended behaviour in the documentation
+> Documentation/devicetree/bindings/media/i2c/ovti,ov9282.yaml
 
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Sure, I will add this in V3.
 
-I kindly ask you to specify the intended behaviour in the documentation
-Documentation/devicetree/bindings/media/i2c/ovti,ov9282.yaml
-
--- 
-Best wishes,
-Vladimir
+Thanks,
+Loic
 
