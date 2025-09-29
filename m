@@ -1,264 +1,286 @@
-Return-Path: <linux-arm-msm+bounces-75483-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75484-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28262BA852E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 09:52:37 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9D70BA8553
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 09:55:25 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8181B189C8A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 07:52:59 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id CC35C16FA86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 07:55:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2786A2116F6;
-	Mon, 29 Sep 2025 07:52:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id EA89F26529A;
+	Mon, 29 Sep 2025 07:55:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gQfDWEqA"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="a2MlVNzv"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013000.outbound.protection.outlook.com [40.107.162.0])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A364335C7
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 07:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759132350; cv=none; b=fJsT4McrnkjQjbjOZ/rFEkOPbMc43tG0Yg9NKrBEx2CmL/+RYyJhiNtGwDsAfIsx4U+7hDJGnKxuuJqfIafabPn35Xcw0hGB0I5mPL7r91ttBNiB2TVQTD/ru352WpBZgGrzNR3hWalwaD9XZwddLNcLqJzmDWhbd1WIatZ16B8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759132350; c=relaxed/simple;
-	bh=OYl49xeEXpiI0RagBTycUAoRztRBz7XsSTezk35V2Hc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sbKKsb0Bp6XSenc7Iovbj+k6kbkTCiudWi0QQ5HTL5G8EbWdj1AYaHXlgBdHuiM/6Cxx/926wXxj2wUTXopZVS9t2K0T6OT1HIQxEYkX8KG4IEaWZTQhVxAa109C9a/5y21hkZ8XWmgTJaXiKuz+LGgS0tzpGKJFr23mba78QIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gQfDWEqA; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SNs1x2030886
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 07:52:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	/3bhZMKmMUmaTU+3BKHI6HH3EfslIEObhFbsznu1nTQ=; b=gQfDWEqA6pW8PD/O
-	PKx7NeY2Dh0Ed/hKDl9I0dGNTt9/XWKHn4rXnzNpbQIWSwHqQ7WIDQvYpYZ0XXee
-	VNyPBLu13ODcsT76GqdOqifsEnJM7LFkrPIUMtp7flEmZqIrd8ZOsAop3eBYuzGf
-	3Or8LvKCy/WE5W2xFZQIzbCudYRNKzzOi8etky94e5PwzZfSiNaWZPqsU87pvIuX
-	TJmSHMjNtfkSpEXftwCJZuSDhGTOSnzx58FEg8evOmcD+fI4OTJRdzPARKWOpddw
-	7p3YTQfWSfFJYFiOogqjRfcBLF+m7E5Cg0Iwi2DrOUf8xrzL68hOm7Z+AFjxk7i+
-	pgX5bg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e59mvqny-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 07:52:26 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4d7f90350f3so102250561cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 00:52:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759132345; x=1759737145;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/3bhZMKmMUmaTU+3BKHI6HH3EfslIEObhFbsznu1nTQ=;
-        b=iaFg/nABa5LSihXOrPZ205zcOgGS2+2LatzR7ZxlmpRz+W+Sr5HxLbOHJ27O7Z49FN
-         pIJ9FpuomFKxQQR+4QejxsdyTw8LW2R0ymYZ3OZEnsIIIlnUCHq1R/sOi7ctng556Opb
-         UuKRJdv2hQFKQzXxVkC3DyCYYlvnVvS1V0RYgaQyuQli6PRE2LrxN/42Zl5whMrjWh5H
-         BuCu92CvCQGitJW9jbLU2OAoc27zvuqd0ggBRT7mgk+2Ez/SI9xUtRpy6fs1VRFS7UTI
-         EPQEZ1Ec3JfHKGQGYBYU3jjdjK2J/VeeEPyAP2InSr1nu0diLxVMtsefmR+j6/zImaeh
-         ci2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCV9FCXMNIUvJ+PhVoUzxGim6KjldXpWMWHG1nTw2kznM4KlqwoNASLEUuS7Il8/WofZc7x2CUKZ2T3IZ2I3@vger.kernel.org
-X-Gm-Message-State: AOJu0YwrLDuFdSlXmThicfadI4x1/nS3MQMq5lZg0lK+/uJxPCsmhNWw
-	1vR/1o6vdYFnNE+E3dW8LZgd11B0Drbc7G1KeS4yoXFRf5WjmbOYC4Qexa9MdgPw4KTkfsjuI2U
-	nUFVXVLNh5Vqs8APssXNBSnKOEn/4NDUFgEkQeCQVvNxemd/cDv1A3PJZVV5egcdkfOU7QGn4fx
-	oX3nxXGD4iFsmn1099gcDaIfjlJGiKK008VBheMHckHQI=
-X-Gm-Gg: ASbGncsJLqLxXoIxzs3dLg4Fd2pkHOXhEbgqDFzVaD911TStGb8hLMhfCZPb6TdV7Fx
-	d/J3Bafwh2Akaxl5aqhqWs2VLRaabzAhybeEw/dVdfvX7Ngzelmk27SSY55Q8R9hTpYQtMz4KUh
-	DqHJqcOawfwOu9dVZCgrBDdZy6xVq/TQoty+EUdf2SytVwsDyAryxx6BzsCiTpE9O2Q3VM8NaR+
-	YYzMkGLIPk=
-X-Received: by 2002:a05:622a:19a7:b0:4d0:b31:e63d with SMTP id d75a77b69052e-4ded5b24c34mr111775081cf.35.1759132345311;
-        Mon, 29 Sep 2025 00:52:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGwO8ztuFh5yRJFV/G0DsFEp5rqg88Rqt4skhMXTedmpDojowQVpiAMDQ3BA2b1xWzYqlOph04xzyNszTgwz3s=
-X-Received: by 2002:a05:622a:19a7:b0:4d0:b31:e63d with SMTP id
- d75a77b69052e-4ded5b24c34mr111774841cf.35.1759132344766; Mon, 29 Sep 2025
- 00:52:24 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82DD11E260A;
+	Mon, 29 Sep 2025 07:55:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.0
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759132508; cv=fail; b=PhMPJXUpsrbsBPQusDjt9iN5b42yiTH5Z3iW5ZJeXKYLD628DB5KumzKfso20mhlKWiHQm/y+0jJrGuaZv/+gls9tqsLr0+3N7eaOoa4E19zGD1dQ2KoPmoSH4bNtGd89uNBN+s9axfRNML4ix2rd3FSp9uxOHGe1NxMCRdsEig=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759132508; c=relaxed/simple;
+	bh=JBe0RGzSLvQKY8siaH4Mcl5pL87puPq0mWlzHqZL4TA=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=l0KuES7cvkafG+uS2bQKGHgSL0aPFVW4ZcCzJhVT7o2gJxHpn/4laAk8rNiJZs3ASXqba8hBD273sJnTOagBLQJ/kENcZhCDLqbHI2OLg5hXtC4z9rHqG4bCcdivQoRMysGMyBRmIEohLy2f1UdzIWx8SUQBMO+JvuNCvOr84+w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=a2MlVNzv; arc=fail smtp.client-ip=40.107.162.0
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=y8pnEL55wpT87hIqkxPiAJc4V3q3SxF5OWTytgPvBVojpu9k6vXdIeBGfWLW9o87rRRH3aYQNih2zuwK/l8LwEwR3EOWgMCwddtQmaB1NenVifMlXgSFw5EL29AsJUgHNSq5siMH9KuViUkXY9d90oO5nx9GpHi1WoGeHA783nksT4WcAcjK5hDEwzTu+z2GCzv1AkAaaQMq5OKaVhRGx9EaWZKen0fn6eQSTiZn2nUydgOLjGlr7DDJj7x5bCfKXXBnzoOs/fK/mTxJ4ozDdcqlEofJNu59RyrCMnhrgoeU04pj964AdAHeFSleazkSC1nKN2z2lBBEoe6e1sWTOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FGpN2YKLA3WqQLAnfjAzEIn1Q5947fDktnHF27+sjWo=;
+ b=AqBEXUHeOapekEkDXwV8UlnKXfqEmsf1O/GyvXJxqS5AzqLrByHhoXnfbWzG409vU1C0RWMbr/grvMqIDibVKT/cvFvQGRy5Nozewl08PflOao4+L1XjYeLQMOpdUi3gW2UZySacwYGLs1jzVOTCDQhlfW1rSQ4nXH2rlQYoDz7NOPokDP1Oz5Wu1g1qN+3yDtuD36KlTymfeiEPb/9DrGO5dvvbZvD1i9ffTwDtyAcCB9HyCkdw5wdu9ig2hpYIiR7S/+rnorbnIj6NESxjf784JlwrwKazYtvUgFA+HN5hYWSFbJBe3T0mEU6zPmuHeUSn+qTqo/n8IyKNifM3bg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FGpN2YKLA3WqQLAnfjAzEIn1Q5947fDktnHF27+sjWo=;
+ b=a2MlVNzvFhIWDalBGYrJlO7733smUPcLJ3P9bIVf8MVhFyVftAiCkWcp9Dhi3/2gl6MQSndx4K4cVdowOP9Ye7VOLooMNtlMU1ON7QrT54FVZFhMdQve8Spw2/O83q6PAf5sYnRTc+SmiYcqQ2Ki6Lfd5Kqeu1MJkML7Mnv/CkBNmkQKwvEQYM6qWaIWfJlc3h0hIc7F4a5pPfDNDWkxxa1zm2YZRHUSoM06FUn/lNDY7nkXffgyDD/psuRQ7us+S8cFN9gi8ohC8uZVwI8t9BiuHGYmHAeAzzmf82Elj+qCwgZAc+MQCQ64PBDm3pzIc2v15TCe+LlSiZCUtfBHog==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com (2603:10a6:20b:113::22)
+ by AS5PR04MB11419.eurprd04.prod.outlook.com (2603:10a6:20b:6c4::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.10; Mon, 29 Sep
+ 2025 07:55:04 +0000
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::4609:64af:8a4b:fd64]) by AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::4609:64af:8a4b:fd64%6]) with mapi id 15.20.9160.015; Mon, 29 Sep 2025
+ 07:55:03 +0000
+Message-ID: <a7f0ced8-d704-4a59-bcc7-e0bd4db113fd@nxp.com>
+Date: Mon, 29 Sep 2025 15:56:31 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/9] drm/bridge: ite-it6263: handle unsupported
+ InfoFrames
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Sandy Huang <hjc@rock-chips.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?=
+ <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>,
+ Samuel Holland <samuel@sholland.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org,
+ linux-sunxi@lists.linux.dev
+References: <20250928-limit-infoframes-2-v2-0-6f8f5fd04214@oss.qualcomm.com>
+ <20250928-limit-infoframes-2-v2-3-6f8f5fd04214@oss.qualcomm.com>
+From: Liu Ying <victor.liu@nxp.com>
+Content-Language: en-US
+In-Reply-To: <20250928-limit-infoframes-2-v2-3-6f8f5fd04214@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR02CA0002.apcprd02.prod.outlook.com
+ (2603:1096:4:194::22) To AM7PR04MB7046.eurprd04.prod.outlook.com
+ (2603:10a6:20b:113::22)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250926073421.17408-1-loic.poulain@oss.qualcomm.com>
- <LAizvAKB21pYsBNwprUFqHcf56-GeWV5IFNd-yzGM688kLehFGW9bQ-LgO3uS6zSt5cXJKjwg8HAGa2ev9E4mw==@protonmail.internalid>
- <20250926073421.17408-4-loic.poulain@oss.qualcomm.com> <35402c21-bef8-44ac-844b-1cc97ff83c6f@kernel.org>
-In-Reply-To: <35402c21-bef8-44ac-844b-1cc97ff83c6f@kernel.org>
-From: Loic Poulain <loic.poulain@oss.qualcomm.com>
-Date: Mon, 29 Sep 2025 09:52:14 +0200
-X-Gm-Features: AS18NWDOSHkEL4yXiSPWpTN451IiyKugWRO9I8AyA7SxoQ6f_P5gemouvrFXM_s
-Message-ID: <CAFEp6-3=5FLnn+uhJDaS4=szmeM6tLqoPCtweCLMV9y9vEtkig@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qrb2210-rb1: Add overlay for
- vision mezzanine
-To: "Bryan O'Donoghue" <bod@kernel.org>
-Cc: andersson@kernel.org, konradybcio@kernel.org,
-        dave.stevenson@raspberrypi.com, sakari.ailus@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-media@vger.kernel.org, mchehab@kernel.org, conor+dt@kernel.org,
-        robh@kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-GUID: R8T-fzUNLPYhcPFi7KpFo8U3iBgW5dR6
-X-Authority-Analysis: v=2.4 cv=O4g0fR9W c=1 sm=1 tr=0 ts=68da3aba cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=MUhHvKHzP_bnBK4GCF0A:9 a=QEXdDO2ut3YA:10
- a=dawVfQjAaf238kedN5IG:22
-X-Proofpoint-ORIG-GUID: R8T-fzUNLPYhcPFi7KpFo8U3iBgW5dR6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAwMSBTYWx0ZWRfX3IqEWB2/E/Jc
- K8nNqzSV05nmjwd9mApnE2KvnNtixbtwHYCbS2eWXhgAk9OqjmN9PGUC7G2xf2M3SMU2tk38Rl6
- HAesfgt3p6+F11GNHi7+Eipc3P93qtIHUfwls1auhksns9okZo0CVw1NyiG7NH2c7/SQcdUwIdE
- 91fGmb8lf2FqZIycybdAnJLvCzqvylKQX3Bh5V5jJW1OLIqYhkv9fXPJySJGq2Rl9TYGeELYyRd
- F8o0nZ78hIuJn8m+PpR9or1OVEhE1uIpxZkbNqp5FrkNap546jGD4apHgyes/qp04i3wJYj88ZI
- fQ68fT5M9IKAZ+qMyNxFMfCVfwkuZ/FRHDYhx4lhDOE4ByGDuftXTH9m7lMO8EY6eeeZEfPT/00
- h01mph3H0fRl52AQNOheHo2pX3Vapw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-29_02,2025-09-29_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270001
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM7PR04MB7046:EE_|AS5PR04MB11419:EE_
+X-MS-Office365-Filtering-Correlation-Id: 601b5fae-8cba-4db1-c4e9-08ddff2d7f4c
+X-LD-Processed: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+ BCL:0;ARA:13230040|1800799024|366016|19092799006|7416014|376014|921020|7053199007;
+X-Microsoft-Antispam-Message-Info:
+ =?utf-8?B?Y1FsdjR4bVNDS0ZtbmtUWDRXVXFxN3VLaWdwdURpK09pTWMwdk51RjFTTHlF?=
+ =?utf-8?B?QWE0MExnb0MrM0JuV29lcHRKZDhvVGlBcCtXT2JMOENZQ0Z0TWQwNXhzdTJE?=
+ =?utf-8?B?ckNVNEwzRlVxeGlTRWtHOHFhTkkzMWx2eFFFV3ErWm52R0FtVmRJTkhlRHVt?=
+ =?utf-8?B?dEk1a21JZmdyUjRRay9XSFFkNC9LdnpDVDB2TDdCc1NCUmpEeWN0MER3OG90?=
+ =?utf-8?B?TWljc29aMVRoT0UvMnZiTkRpUGpoOUtQYisyb2xqOEtraGJLWlNLOHYrTTQ5?=
+ =?utf-8?B?L3JnOHlielREWVFtdFVJMk05N0tQQmw5SlNHSnR1eUllQkVKU2FZVWxvZVo3?=
+ =?utf-8?B?QzVpNWQ0bVd0QjJzOFVnUzA5RUxVZDVVd2VkOThETmQwbm53d041Z1dydFZ1?=
+ =?utf-8?B?RU1vb0dEWm4yRDJDSExsYm15Z2xHVklVSzZKOVFFMm5PdEp2dldUcjZrZmpk?=
+ =?utf-8?B?U1lUck8zTjhFcUpSaHZNMXQ5SXcxTUNwajF5K2dZU28zRFhDeEpaQjEvZjAy?=
+ =?utf-8?B?Um9GMlZraHNvYUFHMExBMlpVTFYvVTBhY3B3TCtWL2k3a3pveXRKWW5EYkl4?=
+ =?utf-8?B?NHpKRDloeFJCM1RkblJFRUlwV0JZSC8vMnQxaExHOTVMVDU2Y3JoUjBSN1Jj?=
+ =?utf-8?B?ak5oU1pUYWlBOSs0RG5ISVlvN2RiT3JWV1NEdWh2d1FYZDJjWjAxcytYZEkz?=
+ =?utf-8?B?UGtxUnd6US9QRytTQ3RJRmJVUGdDaUlPSlVmWkhGQjJkeGtQS2lQV3hvZndV?=
+ =?utf-8?B?alRRVC81VS9jbUZuM0dTcFlBVzVka3gwTGNvVDczZ01sWFlwMzJ4ZXJURDJh?=
+ =?utf-8?B?Si85Rmd4c1Q2Z2ZHUk9YTGN6RmVORjA5U2JVV0JINlg2RURlR3pKeStoZFNi?=
+ =?utf-8?B?bm1TZm0xNGdobEdoQTd6SmVGRGtveU5MemNZVVlhNUFZWHdWdEdNZjBKL2li?=
+ =?utf-8?B?Z1NoOFhVcGxDT2IxdlN6Z2NSbXFJczRkbGxrVlhVbDVNQUcydk9ZcldoclFP?=
+ =?utf-8?B?NW9ESjMrZGtKSTkzL2M1SFh5SzNwYWYvMVc4ZUNRVmsyUnBmQ21nbGliMFF2?=
+ =?utf-8?B?RHVmRUJEeWEwNWVFN0hnbjIwalI3bDkwMFg5ZTcrckxaWGlqK0dsck9wSTdi?=
+ =?utf-8?B?bGRhTWN3cUUwQVd1UThOdm0xMGNWei9HbDE0NEp6ZGVBZnlPY2VkSVNZeHJN?=
+ =?utf-8?B?aXU3ck84bndQZFp6VDkzRDRZZnVPZmR3SXBpWjlQK0xKL0dFNnZxZEYzeXFO?=
+ =?utf-8?B?cElXNTc0QVpuTnVZUjBYQm4wREQ3NEorY3ZiMHYzalc1ZG8zWDE0OU8rcmNE?=
+ =?utf-8?B?V2trQWszM2ZoQ0UxRmtiZ29Id2hPZGl4Y3BpcGo5WkUyMXh5T3ByVTMvTHov?=
+ =?utf-8?B?VjZydU5KTzZOYXE1SlQwU1lkQlRocXNUZ05yZjFsaVV3T0dUZ2w2RkJNRDhH?=
+ =?utf-8?B?dE5FY09HdmVLU1BFVGVHVllhTWt2U3FFSEErUEpLSVlJMDR6b3NJZXhWYitO?=
+ =?utf-8?B?cmNITmRTMUwxUmQxMXBpMGE0YjNRUXA3dkRDWWtjOWhHaEw5M1ovdVBsSDBD?=
+ =?utf-8?B?NlhFS1hDV3NmZjdyVDhmOGIrMlJGVTFLMlEvdDM0YkZQSUZZbVpBWWpSUXds?=
+ =?utf-8?B?Z21nS05ZMzZuRk81ZGNWVHZmbXNQeTd3TzVZWm5yTGZEM1FzeExLS0hCOXNy?=
+ =?utf-8?B?akVwWnY3czJWMUl6VTh1UXJtS2xUZ0Q3MkZ3Vkw4UkdJMFBmVWVtSWN6ZHVl?=
+ =?utf-8?B?T2g1QmhzNzRmemJEcCtMdEsrcnpYOXd5Wk4xd3dLNWFtWFlmOU1VSW41bmdH?=
+ =?utf-8?B?ZEdoaUtYNGRiSzRTZnRHYkNFYldIditwZDdvZHdFNEpDa0ZUOVg2aFl2Z1B0?=
+ =?utf-8?B?TWVudDVlSjhuS1FtbVRTVU94T1h5TTRYMzNTeUY2OUE4VmZ4YUZDVTBwL2F6?=
+ =?utf-8?B?RFZ3UlB4SHFtOFE0UGVSLzRGTUdEdUgvYUxCSExhcDhZMUpSZzZNbk9rcWxS?=
+ =?utf-8?Q?ciV/foHmKKVXubfCJmfmrB46AIPss8=3D?=
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR04MB7046.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(19092799006)(7416014)(376014)(921020)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?utf-8?B?MVJEUXNFOXp6ajloc2dqK1BrSTQxOEJIVTJSNXBZUzA0NmNyRnpzSFJ6TElu?=
+ =?utf-8?B?WHZZaXNyeXQzU1VqdEJoLytNLzU3V0ZpK1V4bGxXV25zcnlab3BrVmV2SVZH?=
+ =?utf-8?B?RGdjaWJBem5qOEozS0JjVDV4K1FWeFdJOWZVTTZZYkVGRXgxSS8zYndkNk5L?=
+ =?utf-8?B?eGxvem5LRW5MUmZabHBQZlh2b2JGSUJCNjlHazFqY3pQSkVEU3MvSWRja3Zw?=
+ =?utf-8?B?b1pHZnhTTmVNOCs4Nk8vbithMkkwekx2WHVQTkwxQXJ6K2Vrcnlld3puUzM3?=
+ =?utf-8?B?NU11bjlUcnBTMkJMZXpuOFI3MTE2UEo3VW9tNlB3RjdEa05NRE5TSzNSQXFM?=
+ =?utf-8?B?NVozYkV4N3JyemlTdnlzakt2Zis3cVZDOXJNL21QN0V0T1l1b1RiSy9rdHhy?=
+ =?utf-8?B?dXNicXhidnJJbW5OeThYZ01QRWZadHVHcmFLV21lTGV6ZFlQcGVDZWhYanBv?=
+ =?utf-8?B?Z1dXTlo3NWhscVg5THFZUW5GWjJaYWpCRUY2a2FxOFE1Y2VQdEs0dnNReTE0?=
+ =?utf-8?B?YnNRS25mRDc3WEtiOG1PaVEzR1Y1THpwWmFwS3dWZGRFWEx3bkRrT05pOGVQ?=
+ =?utf-8?B?cm9NcVp0OFova0tzd1hkejdEaWFSWUdMbWpISnhEVjRldTNMV2NsNEhkZkxx?=
+ =?utf-8?B?VVdUck8ycDlYTEg3SVhVUXlNSmkxWUl6akQ3Z1RhckdaN05sUCtaRjU0UW5R?=
+ =?utf-8?B?R2RVM3hwbTJoN29jbXM5dWdwZWJzZjBrQ1hBZ3dnUEJ5d1dnQXh6bStSaWRh?=
+ =?utf-8?B?UkFVdmFKRSs3YVFZQ1B4c29HSUhITk5YKzdUdUpmRjlKZGhSTWlXT3hXb2Fz?=
+ =?utf-8?B?QkJoUHFWeC9wV1hYTWs3KzhKdDFpeXBNMW9IaGdGYXFlb2s5SXhma2NUYldS?=
+ =?utf-8?B?dkdGa05DSmNYOFJzaUlUV1AwLzh5NHQyR0s1Q1ZSQXlQUjdxbDhvdDFWT3g0?=
+ =?utf-8?B?VksrZmw5dkIxSFdLc0w0TkUvVDRvQXgvV2VjL1kwZDMwcGZQdUJpUlREd2tX?=
+ =?utf-8?B?Qi94SytTOE5BUmsyWTJRUFlCWHB2SmpzZHRsc2s4VUVMY2Z1b2ZEZVNZbWhu?=
+ =?utf-8?B?Qk5RMFJsVDQ5TTRudEVHZURhQmVKK3J2Q3c1NFBoQ1l2ODgrVUNSVU4yamRs?=
+ =?utf-8?B?dFUxODFMSFdzOEFGVVlGbndsUXc5TjlQb2VWeEQvYnpRY1pWYXdBejRPN0Jp?=
+ =?utf-8?B?ZkhMV2k1cUloeHAwNnJrdVFQNDljd3Y4UG5ac2MvWG5QS05tM3dva2tFL3dE?=
+ =?utf-8?B?Ky96dGU5NmVZb2FMNldHWDQ1ZlVnVENWalpOdzZmdmpJb1U4Z3AyQXAzcXBD?=
+ =?utf-8?B?dXhTaEwzcExWdTl4RWhSMWMrTWxJb3JTbHpYcldvbGNCbG9qeE1SdkR3SGdU?=
+ =?utf-8?B?VkNCN2NKSGduZkxkaHVUZzZ4Q1ladld2c3FWRnhmN1JSZjQ5R0hialhhWFA1?=
+ =?utf-8?B?MDNQbEVWeEJjZXJ0TDc1SWMxenAyVkJLU1NQeFozOWF5ZFNGb1hWWmxXZTZS?=
+ =?utf-8?B?cFlZTTBqem5OYmY4Z3cwaFNQMUFmUXJwckI0V3pIbXVOVkpHNTA1OU9DVXI2?=
+ =?utf-8?B?bXdORjNMWFd1dUNDRUh3Qi9qVjBqelhmdk1WUjk0WjkvSERsNE52aWwzVitR?=
+ =?utf-8?B?ZTNoQnlsY3BKRkxWc2F2OTJwc3RQSUdpVXowZDc3V1JlaGV3MDdjL2tqQkJL?=
+ =?utf-8?B?TEovYnBYZ3VhdWtxU1VuZHN0N2RiZFVLY2U0RzNEK2dYUTlXOTc3SzR5bW5H?=
+ =?utf-8?B?bGZmVFc4N2c2UktsVlBIRm54OW9kdHU2L01INFV6Uzc3SnBVak5waHowV1ZN?=
+ =?utf-8?B?YmpLTFlRZkk5QldLcUxKSExHajBGaEEvVUJZbWFnalRyZlB1WnBvOFlwbTJv?=
+ =?utf-8?B?VWZIK2djS0dZaS9jTS9QM1VReGM3aktSOC91Y1Ezd3EwUFJCM0FudGdnL2Z5?=
+ =?utf-8?B?N2dWVDZxVHBua0x0Rk9HSlRJNzFldFY1NDZsVGZESTlrWWJwL2NQMzVZRUF2?=
+ =?utf-8?B?T3NscHBEZkpxRzJKWUcxRjc5cmlaTUtaNlkweXg2SHZNN3pWdVYyYU91aWl3?=
+ =?utf-8?B?MG96NG5hbnN3MWZBZ2l5eWxZbStwOW96QmZhRVJpNTB3US9zaHBPWFVCSWFB?=
+ =?utf-8?Q?WnxGfR+gJP/WwR6JO2EcxqCyh?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 601b5fae-8cba-4db1-c4e9-08ddff2d7f4c
+X-MS-Exchange-CrossTenant-AuthSource: AM7PR04MB7046.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 07:55:03.6288
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Y2k00bEZk84p0qmE31cSepeNrNS2duRRfs3sO2f46DHsBW+SiK33oAaRxde+sEfa1qVJfRXnLyxkUnMzW8BYUw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS5PR04MB11419
 
-Hi Bryan,
-
-On Sat, Sep 27, 2025 at 12:37=E2=80=AFPM Bryan O'Donoghue <bod@kernel.org> =
-wrote:
->
-> On 26/09/2025 08:34, Loic Poulain wrote:
-> > This initial version includes support for OV9282 camera sensor.
-> >
-> > Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> > ---
-> >   arch/arm64/boot/dts/qcom/Makefile             |  5 ++
-> >   .../qcom/qrb2210-rb1-vision-mezzanine.dtso    | 76 ++++++++++++++++++=
-+
-> >   2 files changed, 81 insertions(+)
-> >   create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzan=
-ine.dtso
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qc=
-om/Makefile
-> > index d7f22476d510..bee021efc249 100644
-> > --- a/arch/arm64/boot/dts/qcom/Makefile
-> > +++ b/arch/arm64/boot/dts/qcom/Makefile
-> > @@ -138,6 +138,11 @@ dtb-$(CONFIG_ARCH_QCOM)  +=3D qcs9100-ride.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qcs9100-ride-r3.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qdu1000-idp.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qrb2210-rb1.dtb
-> > +
-> > +qrb2210-rb1-vision-mezzanine-dtbs    :=3D qrb2210-rb1.dtb qrb2210-rb1-=
-vision-mezzanine.dtbo
-> > +
-> > +dtb-$(CONFIG_ARCH_QCOM)      +=3D qrb2210-rb1-vision-mezzanine.dtb
-> > +
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qrb4210-rb2.dtb
-> >   dtb-$(CONFIG_ARCH_QCOM)     +=3D qrb5165-rb5.dtb
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso=
- b/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
-> > new file mode 100644
-> > index 000000000000..3b6261131b75
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
-> > @@ -0,0 +1,76 @@
-> > +// SPDX-License-Identifier: BSD-3-Clause
-> > +/*
-> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
-> > + */
-> > +
-> > +/dts-v1/;
-> > +/plugin/;
-> > +
-> > +#include <dt-bindings/clock/qcom,gcc-qcm2290.h>
-> > +#include <dt-bindings/gpio/gpio.h>
-> > +
-> > +&tlmm {
-> > +     cam0a_default: cam0a-default-state {
-> > +             pins =3D "gpio28";
-> > +             function =3D "cam_mclk";
-> > +             drive-strength =3D <16>;
-> > +             bias-disable;
-> > +     };
-> > +};
-> > +
-> > +&pm8008 {
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&camss {
-> > +     status =3D "okay";
-> > +
-> > +     vdd-csiphy-1p2-supply =3D <&pm4125_l5>;
-> > +     vdd-csiphy-1p8-supply =3D <&pm4125_l13>;
-> > +
-> > +     ports {
-> > +             port@0 {
-> > +                     csiphy0_ep: endpoint {
-> > +                             data-lanes =3D <0 1>;
-> > +                             remote-endpoint =3D <&ov9282_ep>;
-> > +                     };
-> > +             };
-> > +     };
-> > +};
-> > +
-> > +&cci {
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&cci_i2c1 {
-> > +     #address-cells =3D <1>;
-> > +     #size-cells =3D <0>;
-> > +
-> > +     /* Vision Mezzanine DIP3-1 must be ON (Selects camera CAM0A&B) */
-> > +     camera@60 {
-> > +             compatible =3D "ovti,ov9282";
-> > +             reg =3D <0x60>;
-> > +
-> > +             /* Note: Reset is active-low but ov9282 driver logic is i=
-nverted... */
-> > +             reset-gpios =3D <&tlmm 18 GPIO_ACTIVE_LOW>;
->
-> This comment is confusing me a bit.
->
-> Shouldn't it be that the driver polarity gets fixed and the DTS just
-> declares the correct thing ?
-
-Yes, as Konrad pointed out, this comment is no longer relevant in V2.
-I overlooked removing it when applying his suggested fix to the driver.
-
-
->
-> > +
-> > +             pinctrl-0 =3D <&cam0a_default>;
-> > +             pinctrl-names =3D "default";
-> > +
-> > +             clocks =3D <&gcc GCC_CAMSS_MCLK3_CLK>;
-> > +             assigned-clocks =3D <&gcc GCC_CAMSS_MCLK3_CLK>;
-> > +             assigned-clock-rates =3D <24000000>;
-> > +
-> > +             avdd-supply =3D <&vreg_l3p>;
-> > +             dvdd-supply =3D <&vreg_l1p>;
-> > +             dovdd-supply =3D <&vreg_l7p>;
-> > +
-> > +             port {
-> > +                     ov9282_ep: endpoint {
-> > +                             link-frequencies =3D /bits/ 64 <400000000=
->;
-> > +                             data-lanes =3D <1 2>;
-> > +                             remote-endpoint =3D <&csiphy0_ep>;
-> > +                        };
-> > +                };
-> > +     };
-> > +};
-> > --
-> > 2.34.1
-> >
-> >
->
+On 09/28/2025, Dmitry Baryshkov wrote:
+> Make hdmi_write_hdmi_infoframe() and hdmi_clear_infoframe() callbacks
+> return -EOPNOTSUPP for unsupported InfoFrames and make sure that
+> atomic_check() callback doesn't allow unsupported InfoFrames to be
+> enabled.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 > ---
-> bod
+>  drivers/gpu/drm/bridge/ite-it6263.c | 27 +++++++++++++++++++++++++--
+>  1 file changed, 25 insertions(+), 2 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ite-it6263.c b/drivers/gpu/drm/bridge/ite-it6263.c
+> index 2eb8fba7016cbf0dcb19aec4ca8849f1fffaa64c..cf3d76d748dde51e93b2b19cc2cbe023ca2629b8 100644
+> --- a/drivers/gpu/drm/bridge/ite-it6263.c
+> +++ b/drivers/gpu/drm/bridge/ite-it6263.c
+> @@ -26,6 +26,7 @@
+>  #include <drm/drm_crtc.h>
+>  #include <drm/drm_edid.h>
+>  #include <drm/drm_of.h>
+> +#include <drm/drm_print.h>
+>  #include <drm/drm_probe_helper.h>
+>  
+>  /* -----------------------------------------------------------------------------
+> @@ -772,7 +773,7 @@ static int it6263_hdmi_clear_infoframe(struct drm_bridge *bridge,
+>  		regmap_write(it->hdmi_regmap, HDMI_REG_PKT_NULL_CTRL, 0);
+>  		break;
+>  	default:
+> -		dev_dbg(it->dev, "unsupported HDMI infoframe 0x%x\n", type);
+> +		return -EOPNOTSUPP;
+>  	}
+>  
+>  	return 0;
+> @@ -812,13 +813,35 @@ static int it6263_hdmi_write_infoframe(struct drm_bridge *bridge,
+>  			     ENABLE_PKT | REPEAT_PKT);
+>  		break;
+>  	default:
+> -		dev_dbg(it->dev, "unsupported HDMI infoframe 0x%x\n", type);
+> +		return -EOPNOTSUPP;
+>  	}
+>  
+>  	return 0;
+>  }
+>  
+> +static int it6263_bridge_atomic_check(struct drm_bridge *bridge,
+> +				      struct drm_bridge_state *bridge_state,
+> +				      struct drm_crtc_state *crtc_state,
+> +				      struct drm_connector_state *conn_state)
+> +{
+> +	/* not supported by the driver */
+> +	conn_state->hdmi.infoframes.spd.set = false;
+> +
+> +	/* should not happen, audio support not enabled */
+> +	if (drm_WARN_ON_ONCE(bridge->encoder->dev,
+> +			     conn_state->connector->hdmi.infoframes.audio.set))
+
+Maybe use drm_err_once() instead to provide the reason for the warning in
+a string?
+
+> +		return -EOPNOTSUPP;
+
+As this check could return error, it should be moved before
+'conn_state->hdmi.infoframes.spd.set = false;' to gain a little performance.
+
+> +
+> +	/* should not happen, HDR support not enabled */
+> +	if (drm_WARN_ON_ONCE(bridge->encoder->dev,
+> +			     conn_state->hdmi.infoframes.hdr_drm.set))
+> +		return -EOPNOTSUPP;
+
+I don't think IT6263 chip supports DRM infoframe.  The drm_WARN_ON_ONCE()
+call could make driver readers think that DRM infoframe could be enabled
+in the future as audio infoframe has the same warning and IT6263 chip does
+support audio infoframe.  So, maybe:
+
+/* IT6263 chip doesn't support DRM infoframe. */
+conn_state->hdmi.infoframes.hdr_drm.set = false;
+
+> +
+> +	return 0;
+> +}
+> +
+>  static const struct drm_bridge_funcs it6263_bridge_funcs = {
+> +	.atomic_check = it6263_bridge_atomic_check,
+>  	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+>  	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+>  	.atomic_reset = drm_atomic_helper_bridge_reset,
+> 
+
+
+-- 
+Regards,
+Liu Ying
 
