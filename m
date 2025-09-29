@@ -1,46 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-75480-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75479-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DFFABA82C7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 08:47:46 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 439D8BA82C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 08:47:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 2DF121C08B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 06:47:46 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id CF68A3B5430
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 06:47:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B688D2BF00B;
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 207FE2BEC53;
 	Mon, 29 Sep 2025 06:47:38 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0F59D271;
-	Mon, 29 Sep 2025 06:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EAC12BE7DD;
+	Mon, 29 Sep 2025 06:47:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759128458; cv=none; b=dyctifbHLKuznBMXaNHuHyGE0+gfiT9x5BQ52joUawxDhfE6L2Hl8xFzFtYbLYe3FG7W561qqdkEKClkvAgi54N/AKuBCrpucirQJzyTnKJdzB7+r5WYvh5B5YYbma0lJEQJLq3yZLLSutio9NWeJWpl7hNt97LuPtSoDMNw/e0=
+	t=1759128458; cv=none; b=M/LllFeaOZ6mo1NVOKKFDel1GBlLiA22UfDnt85zbfwuWxecaig95CsmVvcfuXlBK6PSiBV3INxeYWYSOfNbKD7eAXnn9E8/2Qtp3rdXRekfJu5T6StT/EP1Bo6LjrNp7/F2bCWwXTKsDsxUb+MzMpi3xlevafkJSGThV3T86+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1759128458; c=relaxed/simple;
-	bh=+iv5zRGMLQo5WENFMbbcB6yHAuv5xbx2teATjhd7cMM=;
+	bh=tGyhvqirgjILpKwbIDERMloAcAgA0p/FX0xuVdy2ojc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=B2iUOzamuQ/HoP49RsukauE6ZMnARH6rJEOVsUXwBLy13b8rTUJvKS8lhUi0xPwNQ8Cv3WWEmn7IhsS3nUk9L18EY1i5LmPncY+SP53/1MuGfpdAhcTD0ip+9hGPtFdhIPdjJbL4VE5a/OZQYFhzeTFDW4p6kQpPl32hNuKJlgY=
+	 In-Reply-To:To:Cc; b=ShTuXvk5ekdEpK/PmfQcrUuiYgFLztPmiatMf8yb3PIlKG+a4gLfeV9SYYIaBy9ZlBGNb8zaYxCU349Hk0waZsMXaozTTDh1EMS2CYctvOnZFInc4KjQctiR/gnLq8A7KEFfj61acM8hQTAHt4ifVGx9sji2RPQvRCdQVNhrvgg=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com; spf=pass smtp.mailfrom=radxa.com; arc=none smtp.client-ip=52.59.177.22
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=radxa.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=radxa.com
-X-QQ-mid: zesmtpip2t1759128412t6c5db7f2
-X-QQ-Originating-IP: X/z+cmFFEoiyXZHBx+7oyPnTrWlM42QeXgFKXycEK0s=
+X-QQ-mid: zesmtpip2t1759128415te8301039
+X-QQ-Originating-IP: 52XT0uYA3pAesgwvPh12ddTCUcOwvOc+dZUbO2GsjYM=
 Received: from [192.168.30.36] ( [localhost])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Mon, 29 Sep 2025 14:46:51 +0800 (CST)
+	id ; Mon, 29 Sep 2025 14:46:53 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 6403738838587250170
-EX-QQ-RecipientCnt: 10
+X-BIZMAIL-ID: 9462128510341651698
+EX-QQ-RecipientCnt: 11
 From: Xilin Wu <sophon@radxa.com>
-Date: Mon, 29 Sep 2025 14:46:41 +0800
-Subject: [PATCH v5 1/2] dt-bindings: arm: qcom: Add Radxa Dragon Q6A
+Date: Mon, 29 Sep 2025 14:46:42 +0800
+Subject: [PATCH v5 2/2] arm64: dts: qcom: qcs6490: Introduce Radxa Dragon
+ Q6A
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -49,7 +50,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250929-radxa-dragon-q6a-v5-1-aa96ffc352f8@radxa.com>
+Message-Id: <20250929-radxa-dragon-q6a-v5-2-aa96ffc352f8@radxa.com>
 References: <20250929-radxa-dragon-q6a-v5-0-aa96ffc352f8@radxa.com>
 In-Reply-To: <20250929-radxa-dragon-q6a-v5-0-aa96ffc352f8@radxa.com>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -58,59 +59,1176 @@ To: Bjorn Andersson <andersson@kernel.org>,
  Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
  linux-kernel@vger.kernel.org, Xilin Wu <sophon@radxa.com>, 
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759128408; l=921;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1759128408; l=26593;
  i=sophon@radxa.com; s=20240424; h=from:subject:message-id;
- bh=+iv5zRGMLQo5WENFMbbcB6yHAuv5xbx2teATjhd7cMM=;
- b=aE3uaE3aemyiR2TtttAGaYIqd+LoXaA5gfn1X3QVXSROpKkBzh6b+ZxtZoP+hTBue8zSNa0FS
- smPfz7v6c7pA8AjvjFZofzirOLAZLNvg0OGpofvOPcsEFD6nahN9Q1Q
+ bh=tGyhvqirgjILpKwbIDERMloAcAgA0p/FX0xuVdy2ojc=;
+ b=bROzrEgGI8cZyamjhdomRScRnRGbS4WzwCtaQjZvyTvyseVhI1mcYQrlDZlBFEfxoxmL82EqR
+ BRqDxmk/cw/Anm9MVfWnVhVzxL/bh0V2W9KrG7ZuYbxDwga151Cia5C
 X-Developer-Key: i=sophon@radxa.com; a=ed25519;
  pk=vPnxeJnlD/PfEbyQPZzaay5ezxI/lMrke7qXy31lSM8=
 X-QQ-SENDSIZE: 520
 Feedback-ID: zesmtpip:radxa.com:qybglogicsvrgz:qybglogicsvrgz8a-1
-X-QQ-XMAILINFO: NVgUsgecbtFO33R2cRhuQZ6TnPUbRfmYf3dbtaAr0/x9/tRF3U1ipvz5
-	QJYxwJL2GX4zqMY+fCFwIetK7iSeb/MHrvlaaRUTveBS6IIuURNbWMR6GKXJLSnCTsp1Kzt
-	V+xTkjHJNT+SwXaUF7k4+x/W3sNB+ygjzJ+kSJw1ENMxxaw9VKM9WvwqZv8cGQ8wzUWPKG+
-	9xBLYQPCGttWmOXwg9nm6tjVcK1YUOPoVqbG94/ARFiPcY4ovQe1DEgYXls7BZuECN4xyGM
-	JoHPJu+d536krMeBFWqkmGuQnTCQGGSQS+oSGfab7cx1eaPOopEuiuHD9vbAAfoI4hca8R6
-	z4dFeYO3as8xIqQZ1oWcxHR9TaXU5hvVVqiRuYMeglNVlv1QhobMjeiUwjAH8gy87HUaf5F
-	ya5MOGTJW9KAzmszL68FS6pKSG9t4d770VQdfslqTaWGaliIkz2ghsqkJxHpR70GscNhw5o
-	QNnQX//064ZFl9fZ23sN7HDiUoizHzzHKR8WtVIabHJUWPMm0gI8lApgUd9i1G0+szR66OM
-	96XzkSsUHYaXHQWesc6+EhPwOt6bmrrQMDU83daFL/hZ0leslHC6i5Ceo5HK+p1dH7xymMD
-	wmrQzMeFTQqz8Hb/ipz7VSTgNcWxWBHrHZ49aubK8pvQBoNqeO7NAatzF6+g6WahW0DSws+
-	gBxg9OyIl/DMzpQVme/UTomQX9DMi+z3IwZ9OoSfh2kCk1JGVl0+SDEvg3BrQQbqeZjf5TZ
-	P26FRaYqcikDo9JIAjNr/wPd49ymTx6WMJdjEHLEgpisTnXVzeyxzZ8GaYBHa/k8LOzPnkR
-	SfjBK14njWWKCyj2KLGX9wkFRJ405mCB9RgxZ6O2svZ6lCynPLhWrl2yWkqVc2E/m08Tg1n
-	BSHnMdDLxYh1VuYUDzawL2maEpkD9/kGOyuylMFLveeF/nTPW/PxpU2hTmSMJjgu5BfEa3v
-	RbZsKoPZE50ySVLyzxPjl+oQOMr0rPwVVkjg9GaccexJMUA8tB0v5H6gM+b4tPgUHHw5v0m
-	iC6LaxM0Yx236OvOf4
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+X-QQ-XMAILINFO: NUTz4BkILuKLJc0BqlfT4fM7nzsDs+m+v14yXZ7oo1hS9Kp8P+1X+sjW
+	MXeG9ATT7twrTeisuG88zUhDKkFR1H2R6FrB4gaEhtgS0Dt0HL7cfV7Orpwy2l2/55Ngfga
+	upbeetR1b2ZeOXq8JJA6e2KdDwT2CVRgQtCmEwbs9RK0oIsQuielQwBETHimMmEn1Rka1OT
+	U71Mk56gSDb+AtM5gRFj5CAeJlOKgEAHdbf5W4m0df8MBM6HzHSICl1YDYLjCIrnj00K59R
+	oZvAkvFGgS4Hoo2V4uVGvDAKbdY0c6/70rzwb4gn7Lar+ONf12qZwj5KBdalQmmeKh+rR3a
+	gOMyMlCbSy3V7LXAuGZVrfsWx6k3P0zbNj2maaEwg6a1vq1yCGPDL9dWC5oRiFnureNn1SK
+	KntNuOaPecpKBnnN9auBngf+oxsGVp+zSbvtJ0gtvye9i9tgbc4KzgiS9+YsBLuPtV0Yq65
+	GmoCZ/AkD83uPOyRf+LFxqZSXkswBsRojVpV6pYUjUnXsNdDPabnr5JuJnzg7lCjW57Gc97
+	5l9AcXM8lr61zEKemaJBx54+1XzwKz7vePv3Jw3dFITzUMeKtsYdWvi/nAtFpoRa9+Y1IIS
+	bizGkrgBkQ7/7KERY58guGMEHOy2zDQmih1AJZLCEmZ+P7/R6gYbVrgWpHnxAoafZZzkVAJ
+	Hhbw/2g8vjCRNc1R6ourtxelNrzliOL5GGBVWBWPNPxwn7QykHOVnxpC5H8gFxa1ZbDvaPU
+	4Q5UEdMC8M726z9b/bssUcEerbVV2b8OBNGnsGOMpB1kYecWJ3NELGZFEgzAHD/otElnBbE
+	enVd2hk6ns8wCrIgDNkwCI8S5V8+DlER1TKYI9p6HstdQZKyIIDWEGrjlbAottpzA1iTOPj
+	KM7eXK3nOStvMbBYwgFOw651haVary1Pvfzk5NM4VlRDqGkxi991pEAlqeSGSouNwVKdi9x
+	6iJTC5EAQdxt0+UPFPZaxvbzdhY4My/EtGfN8b059PbOoQEISg/rG+1ghsteytD4qng4UMX
+	4T/31z1lmhikR2uDkc
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
 X-QQ-RECHKSPAM: 0
 
 Radxa Dragon Q6A is a single board computer, based on the Qualcomm
 QCS6490 platform.
 
-Document the top-level compatible for this board.
+Features enabled and working:
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+- Configurable I2C/SPI/UART from 40-Pin GPIO
+- Three USB-A 2.0 ports
+- RTL8111K Ethernet connected to PCIe0
+- eMMC module
+- SD card
+- M.2 M-Key 2230 PCIe 3.0 x2
+- Headphone jack
+- Onboard thermal sensors
+- QSPI controller for updating boot firmware
+- ADSP remoteproc (Type-C and charging features disabled in firmware)
+- CDSP remoteproc (for AI applications using QNN)
+- Venus video encode and decode accelerator
+
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Xilin Wu <sophon@radxa.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/Makefile                  |    1 +
+ .../boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts     | 1095 ++++++++++++++++++++
+ 2 files changed, 1096 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 0a3222d6f3686f1647b9e2ea192c175b0b96d48a..a7469a51adf0d6ebc1bf25acce8f125a844dcdbf 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -339,6 +339,7 @@ properties:
-               - fairphone,fp5
-               - qcom,qcm6490-idp
-               - qcom,qcs6490-rb3gen2
-+              - radxa,dragon-q6a
-               - shift,otter
-           - const: qcom,qcm6490
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 5b52f9e4e5f31ac5a398d0762337a0a31af1f4dd..3a246adb0c435d7b08dda404ed2bcb2a9c8c48b0 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -120,6 +120,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcm6490-shift-otter.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-1000.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs404-evb-4000.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs615-ride.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-radxa-dragon-q6a.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2.dtb
  
+ qcs6490-rb3gen2-vision-mezzanine-dtbs := qcs6490-rb3gen2.dtb qcs6490-rb3gen2-vision-mezzanine.dtbo
+diff --git a/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
+new file mode 100644
+index 0000000000000000000000000000000000000000..a63f79b0844c8472c16e3b5b979bcc8a892ee245
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/qcs6490-radxa-dragon-q6a.dts
+@@ -0,0 +1,1095 @@
++// SPDX-License-Identifier: BSD-3-Clause
++/*
++ * Copyright (c) 2025 Radxa Computer (Shenzhen) Co., Ltd.
++ */
++
++/dts-v1/;
++
++/* PM7250B is configured to use SID8/9 */
++#define PM7250B_SID 8
++#define PM7250B_SID1 9
++
++#include <dt-bindings/iio/qcom,spmi-adc7-pmk8350.h>
++#include <dt-bindings/iio/qcom,spmi-adc7-pm7325.h>
++#include <dt-bindings/leds/common.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
++#include "sc7280.dtsi"
++#include "pm7250b.dtsi"
++#include "pm7325.dtsi"
++#include "pm8350c.dtsi" /* PM7350C */
++#include "pmk8350.dtsi" /* PMK7325 */
++#include "qcs6490-audioreach.dtsi"
++
++/delete-node/ &adsp_mem;
++/delete-node/ &cdsp_mem;
++/delete-node/ &ipa_fw_mem;
++/delete-node/ &mpss_mem;
++/delete-node/ &remoteproc_mpss;
++/delete-node/ &remoteproc_wpss;
++/delete-node/ &rmtfs_mem;
++/delete-node/ &video_mem;
++/delete-node/ &wifi;
++/delete-node/ &wlan_ce_mem;
++/delete-node/ &wlan_fw_mem;
++/delete-node/ &wpss_mem;
++/delete-node/ &xbl_mem;
++
++/ {
++	model = "Radxa Dragon Q6A";
++	compatible = "radxa,dragon-q6a", "qcom,qcm6490";
++	chassis-type = "embedded";
++
++	aliases {
++		mmc0 = &sdhc_1;
++		mmc1 = &sdhc_2;
++		serial0 = &uart5;
++	};
++
++	wcd938x: audio-codec {
++		compatible = "qcom,wcd9380-codec";
++
++		pinctrl-0 = <&wcd_default>;
++		pinctrl-names = "default";
++
++		reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>;
++
++		vdd-rxtx-supply = <&vreg_l18b_1p8>;
++		vdd-io-supply = <&vreg_l18b_1p8>;
++		vdd-buck-supply = <&vreg_l17b_1p8>;
++		vdd-mic-bias-supply = <&vreg_bob_3p296>;
++
++		qcom,micbias1-microvolt = <1800000>;
++		qcom,micbias2-microvolt = <1800000>;
++		qcom,micbias3-microvolt = <1800000>;
++		qcom,micbias4-microvolt = <1800000>;
++		qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000 500000 500000 500000 500000>;
++		qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
++		qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
++		qcom,rx-device = <&wcd_rx>;
++		qcom,tx-device = <&wcd_tx>;
++
++		qcom,hphl-jack-type-normally-closed;
++
++		#sound-dai-cells = <1>;
++	};
++
++	chosen {
++		stdout-path = "serial0:115200n8";
++	};
++
++	usb2_1_con: connector-0 {
++		compatible = "usb-a-connector";
++		vbus-supply = <&vcc_5v_peri>;
++
++		port {
++			usb2_1_connector: endpoint {
++				remote-endpoint = <&usb_hub_2_1>;
++			};
++		};
++	};
++
++	usb2_2_con: connector-1 {
++		compatible = "usb-a-connector";
++		vbus-supply = <&vcc_5v_peri>;
++
++		port {
++			usb2_2_connector: endpoint {
++				remote-endpoint = <&usb_hub_2_2>;
++			};
++		};
++	};
++
++	usb2_3_con: connector-2 {
++		compatible = "usb-a-connector";
++		vbus-supply = <&vcc_5v_peri>;
++
++		port {
++			usb2_3_connector: endpoint {
++				remote-endpoint = <&usb_hub_2_3>;
++			};
++		};
++	};
++
++	leds {
++		compatible = "gpio-leds";
++
++		pinctrl-0 = <&user_led>;
++		pinctrl-names = "default";
++
++		user-led {
++			color = <LED_COLOR_ID_BLUE>;
++			function = LED_FUNCTION_INDICATOR;
++			gpios = <&tlmm 42 GPIO_ACTIVE_HIGH>;
++			linux,default-trigger = "none";
++			default-state = "off";
++			panic-indicator;
++		};
++	};
++
++	reserved-memory {
++		xbl_mem: xbl@80700000 {
++			reg = <0x0 0x80700000 0x0 0x100000>;
++			no-map;
++		};
++
++		cdsp_secure_heap_mem: cdsp-secure-heap@81800000 {
++			reg = <0x0 0x81800000 0x0 0x1e00000>;
++			no-map;
++		};
++
++		camera_mem: camera@84300000 {
++			reg = <0x0 0x84300000 0x0 0x500000>;
++			no-map;
++		};
++
++		adsp_mem: adsp@84800000 {
++			reg = <0x0 0x84800000 0x0 0x2800000>;
++			no-map;
++		};
++
++		cdsp_mem: cdsp@87000000 {
++			reg = <0x0 0x87000000 0x0 0x1e00000>;
++			no-map;
++		};
++
++		video_mem: video@88e00000 {
++			reg = <0x0 0x88e00000 0x0 0x700000>;
++			no-map;
++		};
++
++		cvp_mem: cvp@89500000 {
++			reg = <0x0 0x89500000 0x0 0x500000>;
++			no-map;
++		};
++
++		gpu_microcode_mem: gpu-microcode@89a00000 {
++			reg = <0x0 0x89a00000 0x0 0x2000>;
++			no-map;
++		};
++
++		tz_stat_mem: tz-stat@c0000000 {
++			reg = <0x0 0xc0000000 0x0 0x100000>;
++			no-map;
++		};
++
++		tags_mem: tags@c0100000 {
++			reg = <0x0 0xc0100000 0x0 0x1200000>;
++			no-map;
++		};
++
++		qtee_mem: qtee@c1300000 {
++			reg = <0x0 0xc1300000 0x0 0x500000>;
++			no-map;
++		};
++
++		trusted_apps_mem: trusted-apps@c1800000 {
++			reg = <0x0 0xc1800000 0x0 0x1c00000>;
++			no-map;
++		};
++
++		debug_vm_mem: debug-vm@d0600000 {
++			reg = <0x0 0xd0600000 0x0 0x100000>;
++			no-map;
++		};
++	};
++
++	thermal-zones {
++		msm-skin-thermal {
++			polling-delay-passive = <0>;
++			thermal-sensors = <&pmk8350_adc_tm 2>;
++		};
++
++		quiet-thermal {
++			polling-delay-passive = <0>;
++			thermal-sensors = <&pmk8350_adc_tm 1>;
++		};
++
++		ufs-thermal {
++			polling-delay-passive = <0>;
++			thermal-sensors = <&pmk8350_adc_tm 3>;
++		};
++
++		xo-thermal {
++			polling-delay-passive = <0>;
++			thermal-sensors = <&pmk8350_adc_tm 0>;
++		};
++	};
++
++	vcc_1v8: regulator-vcc-1v8 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_1v8";
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++		vin-supply = <&vcc_5v_peri>;
++
++		regulator-boot-on;
++		regulator-always-on;
++	};
++
++	vcc_3v3: regulator-vcc-3v3 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_3v3";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		vin-supply = <&vcc_5v_peri>;
++
++		regulator-boot-on;
++		regulator-always-on;
++	};
++
++	vcc_5v_peri: regulator-vcc-5v-peri {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_5v_peri";
++		regulator-min-microvolt = <5000000>;
++		regulator-max-microvolt = <5000000>;
++		vin-supply = <&vph_pwr>;
++
++		regulator-boot-on;
++		regulator-always-on;
++	};
++
++	vph_pwr: regulator-vph-pwr {
++		compatible = "regulator-fixed";
++		regulator-name = "vph_pwr";
++		regulator-min-microvolt = <3700000>;
++		regulator-max-microvolt = <3700000>;
++
++		regulator-boot-on;
++		regulator-always-on;
++	};
++};
++
++&apps_rsc {
++	regulators-0 {
++		compatible = "qcom,pm7325-rpmh-regulators";
++		qcom,pmic-id = "b";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++		vdd-l1-l4-l12-l15-supply = <&vreg_s7b_0p536>;
++		vdd-l2-l7-supply = <&vreg_bob_3p296>;
++		vdd-l6-l9-l10-supply = <&vreg_s8b_1p2>;
++		vdd-l11-l17-l18-l19-supply = <&vreg_s1b_1p84>;
++
++		vreg_s1b_1p84: smps1 {
++			regulator-name = "vreg_s1b_1p84";
++			regulator-min-microvolt = <1840000>;
++			regulator-max-microvolt = <2040000>;
++		};
++
++		vreg_s7b_0p536: smps7 {
++			regulator-name = "vreg_s7b_0p536";
++			regulator-min-microvolt = <536000>;
++			regulator-max-microvolt = <1120000>;
++		};
++
++		vreg_s8b_1p2: smps8 {
++			regulator-name = "vreg_s8b_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1496000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_RET>;
++		};
++
++		vreg_l1b_0p912: ldo1 {
++			regulator-name = "vreg_l1b_0p912";
++			regulator-min-microvolt = <832000>;
++			regulator-max-microvolt = <920000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++							RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l2b_3p072: ldo2 {
++			regulator-name = "vreg_l2b_3p072";
++			regulator-min-microvolt = <2704000>;
++			regulator-max-microvolt = <3544000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++							RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6b_1p2: ldo6 {
++			regulator-name = "vreg_l6b_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1256000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++							RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l7b_2p96: ldo7 {
++			regulator-name = "vreg_l7b_2p96";
++			regulator-min-microvolt = <2960000>;
++			regulator-max-microvolt = <2960000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++							RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l9b_1p2: ldo9 {
++			regulator-name = "vreg_l9b_1p2";
++			regulator-min-microvolt = <1200000>;
++			regulator-max-microvolt = <1304000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l17b_1p8: ldo17 {
++			regulator-name = "vreg_l17b_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1896000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l18b_1p8: ldo18 {
++			regulator-name = "vreg_l18b_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2000000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-always-on;
++		};
++
++		vreg_l19b_1p8: ldo19 {
++			regulator-name = "vreg_l19b_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <2000000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++	};
++
++	regulators-1 {
++		compatible = "qcom,pm8350c-rpmh-regulators";
++		qcom,pmic-id = "c";
++
++		vdd-s1-supply = <&vph_pwr>;
++		vdd-s2-supply = <&vph_pwr>;
++		vdd-s3-supply = <&vph_pwr>;
++		vdd-s4-supply = <&vph_pwr>;
++		vdd-s5-supply = <&vph_pwr>;
++		vdd-s6-supply = <&vph_pwr>;
++		vdd-s7-supply = <&vph_pwr>;
++		vdd-s8-supply = <&vph_pwr>;
++		vdd-s9-supply = <&vph_pwr>;
++		vdd-s10-supply = <&vph_pwr>;
++		vdd-l1-l12-supply = <&vreg_s1b_1p84>;
++		vdd-l6-l9-l11-supply = <&vreg_bob_3p296>;
++		vdd-l10-supply = <&vreg_s7b_0p536>;
++		vdd-bob-supply = <&vph_pwr>;
++
++		vreg_l1c_1p8: ldo1 {
++			regulator-name = "vreg_l1c_1p8";
++			regulator-min-microvolt = <1800000>;
++			regulator-max-microvolt = <1976000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l6c_2p96: ldo6 {
++			regulator-name = "vreg_l6c_2p96";
++			regulator-min-microvolt = <1650000>;
++			regulator-max-microvolt = <3544000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l9c_2p96: ldo9 {
++			regulator-name = "vreg_l9c_2p96";
++			regulator-min-microvolt = <2704000>;
++			regulator-max-microvolt = <3544000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_l10c_0p88: ldo10 {
++			regulator-name = "vreg_l10c_0p88";
++			regulator-min-microvolt = <720000>;
++			regulator-max-microvolt = <1048000>;
++			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
++			regulator-allow-set-load;
++			regulator-allowed-modes = <RPMH_REGULATOR_MODE_LPM
++						   RPMH_REGULATOR_MODE_HPM>;
++		};
++
++		vreg_bob_3p296: bob {
++			regulator-name = "vreg_bob_3p296";
++			regulator-min-microvolt = <3032000>;
++			regulator-max-microvolt = <3960000>;
++		};
++	};
++};
++
++&gcc {
++	protected-clocks = <GCC_CFG_NOC_LPASS_CLK>,
++			   <GCC_MSS_CFG_AHB_CLK>,
++			   <GCC_MSS_GPLL0_MAIN_DIV_CLK_SRC>,
++			   <GCC_MSS_OFFLINE_AXI_CLK>,
++			   <GCC_MSS_Q6SS_BOOT_CLK_SRC>,
++			   <GCC_MSS_Q6_MEMNOC_AXI_CLK>,
++			   <GCC_MSS_SNOC_AXI_CLK>,
++			   <GCC_SEC_CTRL_CLK_SRC>,
++			   <GCC_WPSS_AHB_BDG_MST_CLK>,
++			   <GCC_WPSS_AHB_CLK>,
++			   <GCC_WPSS_RSCP_CLK>;
++};
++
++&gpi_dma0 {
++	status = "okay";
++};
++
++&gpi_dma1 {
++	status = "okay";
++};
++
++&gpu {
++	status = "okay";
++};
++
++&gpu_zap_shader {
++	firmware-name = "qcom/qcs6490/a660_zap.mbn";
++};
++
++/* Pin 13, 15 in GPIO header */
++&i2c0 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++};
++
++/* Pin 27, 28 in GPIO header */
++&i2c2 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++};
++
++/* Pin 3, 5 in GPIO header */
++&i2c6 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++};
++
++&i2c10 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++
++	rtc: rtc@68 {
++		compatible = "st,m41t11";
++		reg = <0x68>;
++	};
++};
++
++/* External touchscreen */
++&i2c13 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++};
++
++&lpass_audiocc {
++	compatible = "qcom,qcm6490-lpassaudiocc";
++	/delete-property/ power-domains;
++};
++
++&lpass_rx_macro {
++	status = "okay";
++};
++
++&lpass_tx_macro {
++	status = "okay";
++};
++
++&lpass_va_macro {
++	status = "okay";
++};
++
++&pcie0 {
++	perst-gpios = <&tlmm 87 GPIO_ACTIVE_LOW>;
++	wake-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
++
++	pinctrl-0 = <&pcie0_clkreq_n>, <&pcie0_reset_n>, <&pcie0_wake_n>;
++	pinctrl-names = "default";
++
++	status = "okay";
++};
++
++&pcie0_phy {
++	vdda-phy-supply = <&vreg_l10c_0p88>;
++	vdda-pll-supply = <&vreg_l6b_1p2>;
++
++	status = "okay";
++};
++
++&pcie1 {
++	perst-gpios = <&tlmm 2 GPIO_ACTIVE_LOW>;
++	wake-gpios = <&tlmm 3 GPIO_ACTIVE_HIGH>;
++
++	pinctrl-0 = <&pcie1_clkreq_n>, <&pcie1_reset_n>, <&pcie1_wake_n>;
++	pinctrl-names = "default";
++
++	/* Support for QPS615 PCIe switch */
++	iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
++		    <0x100 &apps_smmu 0x1c81 0x1>,
++		    <0x208 &apps_smmu 0x1c84 0x1>,
++		    <0x210 &apps_smmu 0x1c85 0x1>,
++		    <0x218 &apps_smmu 0x1c86 0x1>,
++		    <0x300 &apps_smmu 0x1c87 0x1>,
++		    <0x400 &apps_smmu 0x1c88 0x1>,
++		    <0x500 &apps_smmu 0x1c89 0x1>,
++		    <0x501 &apps_smmu 0x1c90 0x1>;
++
++	status = "okay";
++};
++
++&pcie1_phy {
++	vdda-phy-supply = <&vreg_l10c_0p88>;
++	vdda-pll-supply = <&vreg_l6b_1p2>;
++
++	status = "okay";
++};
++
++&pm7325_gpios {
++	pm7325_adc_default: adc-default-state {
++		pins = "gpio2";
++		function = PMIC_GPIO_FUNC_NORMAL;
++		bias-high-impedance;
++	};
++};
++
++&pm7325_temp_alarm {
++	io-channels = <&pmk8350_vadc PM7325_ADC7_DIE_TEMP>;
++	io-channel-names = "thermal";
++};
++
++&pmk8350_adc_tm {
++	status = "okay";
++
++	xo-therm@0 {
++		reg = <0>;
++		io-channels = <&pmk8350_vadc PMK8350_ADC7_AMUX_THM1_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time-us = <200>;
++	};
++
++	quiet-therm@1 {
++		reg = <1>;
++		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM1_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time-us = <200>;
++	};
++
++	msm-skin-therm@2 {
++		reg = <2>;
++		io-channels = <&pmk8350_vadc PM7325_ADC7_AMUX_THM3_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time-us = <200>;
++	};
++
++	ufs-therm@3 {
++		reg = <3>;
++		io-channels = <&pmk8350_vadc PM7325_ADC7_GPIO1_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time-us = <200>;
++	};
++};
++
++&pmk8350_vadc {
++	pinctrl-0 = <&pm7325_adc_default>;
++	pinctrl-names = "default";
++
++	channel@3 {
++		reg = <PMK8350_ADC7_DIE_TEMP>;
++		label = "pmk7325_die_temp";
++		qcom,pre-scaling = <1 1>;
++	};
++
++	channel@44 {
++		reg = <PMK8350_ADC7_AMUX_THM1_100K_PU>;
++		label = "xo_therm";
++		qcom,hw-settle-time = <200>;
++		qcom,pre-scaling = <1 1>;
++		qcom,ratiometric;
++	};
++
++	channel@103 {
++		reg = <PM7325_ADC7_DIE_TEMP>;
++		label = "pm7325_die_temp";
++		qcom,pre-scaling = <1 1>;
++	};
++
++	channel@144 {
++		reg = <PM7325_ADC7_AMUX_THM1_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time = <200>;
++		qcom,pre-scaling = <1 1>;
++		label = "quiet_therm";
++	};
++
++	channel@146 {
++		reg = <PM7325_ADC7_AMUX_THM3_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time = <200>;
++		qcom,pre-scaling = <1 1>;
++		label = "msm_skin_therm";
++	};
++
++	channel@14a {
++		/* According to datasheet, 0x4a = AMUX1_GPIO = GPIO_02 */
++		reg = <PM7325_ADC7_GPIO1_100K_PU>;
++		qcom,ratiometric;
++		qcom,hw-settle-time = <200>;
++		qcom,pre-scaling = <1 1>;
++		label = "ufs_therm";
++	};
++};
++
++&pon_pwrkey {
++	status = "okay";
++};
++
++&qspi {
++	/* It's not possible to use QSPI with iommu */
++	/* due to an error in qcom_smmu_write_s2cr */
++	/delete-property/ iommus;
++
++	pinctrl-0 = <&qspi_clk>, <&qspi_cs0>, <&qspi_data0>,
++				<&qspi_data1>, <&qspi_data23>;
++	pinctrl-1 = <&qspi_sleep>;
++	pinctrl-names = "default", "sleep";
++
++	status = "okay";
++
++	spi_flash: flash@0 {
++		compatible = "winbond,w25q256", "jedec,spi-nor";
++		reg = <0>;
++
++		spi-max-frequency = <104000000>;
++		spi-tx-bus-width = <4>;
++		spi-rx-bus-width = <4>;
++	};
++};
++
++&qupv3_id_0 {
++	firmware-name = "qcom/qcm6490/qupv3fw.elf";
++	status = "okay";
++};
++
++&qupv3_id_1 {
++	firmware-name = "qcom/qcm6490/qupv3fw.elf";
++	status = "okay";
++};
++
++&remoteproc_adsp {
++	firmware-name = "qcom/qcs6490/radxa/dragon-q6a/adsp.mbn";
++	status = "okay";
++};
++
++&remoteproc_cdsp {
++	firmware-name = "qcom/qcs6490/cdsp.mbn";
++	status = "okay";
++};
++
++&sdhc_1 {
++	non-removable;
++	no-sd;
++	no-sdio;
++
++	vmmc-supply = <&vreg_l7b_2p96>;
++	vqmmc-supply = <&vreg_l19b_1p8>;
++
++	status = "okay";
++};
++
++&sdhc_2 {
++	pinctrl-0 = <&sdc2_clk>, <&sdc2_cmd>, <&sdc2_data>, <&sd_cd>;
++	pinctrl-1 = <&sdc2_clk_sleep>, <&sdc2_cmd_sleep>, <&sdc2_data_sleep>, <&sd_cd>;
++
++	vmmc-supply = <&vreg_l9c_2p96>;
++	vqmmc-supply = <&vreg_l6c_2p96>;
++
++	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
++	status = "okay";
++};
++
++&sound {
++	compatible = "qcom,qcs6490-rb3gen2-sndcard";
++	model = "QCS6490-Radxa-Dragon-Q6A";
++
++	audio-routing = "IN1_HPHL", "HPHL_OUT",
++			"IN2_HPHR", "HPHR_OUT",
++			"AMIC2", "MIC BIAS2",
++			"TX SWR_ADC1", "ADC2_OUTPUT";
++
++	wcd-playback-dai-link {
++		link-name = "WCD Playback";
++
++		codec {
++			sound-dai = <&wcd938x 0>, <&swr0 0>, <&lpass_rx_macro 0>;
++		};
++
++		cpu {
++			sound-dai = <&q6apmbedai RX_CODEC_DMA_RX_0>;
++		};
++
++		platform {
++			sound-dai = <&q6apm>;
++		};
++	};
++
++	wcd-capture-dai-link {
++		link-name = "WCD Capture";
++
++		codec {
++			sound-dai = <&wcd938x 1>, <&swr1 0>, <&lpass_tx_macro 0>;
++		};
++
++		cpu {
++			sound-dai = <&q6apmbedai TX_CODEC_DMA_TX_3>;
++		};
++
++		platform {
++			sound-dai = <&q6apm>;
++		};
++	};
++};
++
++/* Pin 11, 29, 31, 32 in GPIO header */
++&spi7 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++};
++
++/* Pin 19, 21, 23, 24, 26 in GPIO header */
++&spi12 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++};
++
++/* Pin 22, 33, 36, 37 in GPIO header */
++&spi14 {
++	qcom,enable-gsi-dma;
++	status = "okay";
++};
++
++&swr0 {
++	status = "okay";
++
++	wcd_rx: codec@0,4 {
++		compatible = "sdw20217010d00";
++		reg = <0 4>;
++		qcom,rx-port-mapping = <1 2 3 4 5>;
++	};
++};
++
++&swr1 {
++	status = "okay";
++
++	wcd_tx: codec@0,3 {
++		compatible = "sdw20217010d00";
++		reg = <0 3>;
++		qcom,tx-port-mapping = <1 1 2 3>;
++	};
++};
++
++&tlmm {
++	gpio-line-names =
++		/* GPIO_0 ~ GPIO_3 */
++		"PIN_13", "PIN_15", "", "",
++		/* GPIO_4 ~ GPIO_7 */
++		"", "", "", "",
++		/* GPIO_8 ~ GPIO_11 */
++		"PIN_27", "PIN_28", "", "",
++		/* GPIO_12 ~ GPIO_15 */
++		"", "", "", "",
++		/* GPIO_16 ~ GPIO_19 */
++		"", "", "", "",
++		/* GPIO_20 ~ GPIO_23 */
++		"", "", "PIN_8", "PIN_10",
++		/* GPIO_24 ~ GPIO_27 */
++		"PIN_3", "PIN_5", "PIN_16", "PIN_27",
++		/* GPIO_28 ~ GPIO_31 */
++		"PIN_31", "PIN_11", "PIN_32", "PIN_29",
++		/* GPIO_32 ~ GPIO_35 */
++		"", "", "", "",
++		/* GPIO_36 ~ GPIO_39 */
++		"", "", "", "",
++		/* GPIO_40 ~ GPIO_43 */
++		"", "", "", "",
++		/* GPIO_44 ~ GPIO_47 */
++		"", "", "", "",
++		/* GPIO_48 ~ GPIO_51 */
++		"PIN_21", "PIN_19", "PIN_23", "PIN_24",
++		/* GPIO_52 ~ GPIO_55 */
++		"", "", "", "PIN_26",
++		/* GPIO_56 ~ GPIO_59 */
++		"PIN_33", "PIN_22", "PIN_37", "PIN_36",
++		/* GPIO_60 ~ GPIO_63 */
++		"", "", "", "",
++		/* GPIO_64 ~ GPIO_67 */
++		"", "", "", "",
++		/* GPIO_68 ~ GPIO_71 */
++		"", "", "", "",
++		/* GPIO_72 ~ GPIO_75 */
++		"", "", "", "",
++		/* GPIO_76 ~ GPIO_79 */
++		"", "", "", "",
++		/* GPIO_80 ~ GPIO_83 */
++		"", "", "", "",
++		/* GPIO_84 ~ GPIO_87 */
++		"", "", "", "",
++		/* GPIO_88 ~ GPIO_91 */
++		"", "", "", "",
++		/* GPIO_92 ~ GPIO_95 */
++		"", "", "", "",
++		/* GPIO_96 ~ GPIO_99 */
++		"PIN_7", "PIN_12", "PIN_38", "PIN_40",
++		/* GPIO_100 ~ GPIO_103 */
++		"PIN_35", "", "", "",
++		/* GPIO_104 ~ GPIO_107 */
++		"", "", "", "",
++		/* GPIO_108 ~ GPIO_111 */
++		"", "", "", "",
++		/* GPIO_112 ~ GPIO_115 */
++		"", "", "", "",
++		/* GPIO_116 ~ GPIO_119 */
++		"", "", "", "",
++		/* GPIO_120 ~ GPIO_123 */
++		"", "", "", "",
++		/* GPIO_124 ~ GPIO_127 */
++		"", "", "", "",
++		/* GPIO_128 ~ GPIO_131 */
++		"", "", "", "",
++		/* GPIO_132 ~ GPIO_135 */
++		"", "", "", "",
++		/* GPIO_136 ~ GPIO_139 */
++		"", "", "", "",
++		/* GPIO_140 ~ GPIO_143 */
++		"", "", "", "",
++		/* GPIO_144 ~ GPIO_147 */
++		"", "", "", "",
++		/* GPIO_148 ~ GPIO_151 */
++		"", "", "", "",
++		/* GPIO_152 ~ GPIO_155 */
++		"", "", "", "",
++		/* GPIO_156 ~ GPIO_159 */
++		"", "", "", "",
++		/* GPIO_160 ~ GPIO_163 */
++		"", "", "", "",
++		/* GPIO_164 ~ GPIO_167 */
++		"", "", "", "",
++		/* GPIO_168 ~ GPIO_171 */
++		"", "", "", "",
++		/* GPIO_172 ~ GPIO_174 */
++		"", "", "";
++
++	pcie0_reset_n: pcie0-reset-n-state {
++		pins = "gpio87";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	pcie0_wake_n: pcie0-wake-n-state {
++		pins = "gpio89";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	pcie1_reset_n: pcie1-reset-n-state {
++		pins = "gpio2";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	pcie1_wake_n: pcie1-wake-n-state {
++		pins = "gpio3";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	qspi_sleep: qspi-sleep-state {
++		pins = "gpio12", "gpio13", "gpio14", "gpio15", "gpio16", "gpio17";
++		function = "gpio";
++		output-disable;
++	};
++
++	sd_cd: sd-cd-state {
++		pins = "gpio91";
++		function = "gpio";
++		bias-pull-up;
++	};
++
++	user_led: user-led-state {
++		pins = "gpio42";
++		function = "gpio";
++		bias-pull-up;
++	};
++
++	wcd_default: wcd-reset-n-active-state {
++		pins = "gpio83";
++		function = "gpio";
++		drive-strength = <16>;
++		bias-disable;
++		output-low;
++	};
++};
++
++&uart5 {
++	status = "okay";
++};
++
++&usb_2 {
++	dr_mode = "host";
++
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	status = "okay";
++
++	/* Onboard USB 2.0 hub */
++	usb_hub_2_x: hub@1 {
++		compatible = "usb1a40,0101";
++		reg = <1>;
++		vdd-supply = <&vcc_5v_peri>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@1 {
++				reg = <1>;
++
++				usb_hub_2_1: endpoint {
++					remote-endpoint = <&usb2_1_connector>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++
++				usb_hub_2_2: endpoint {
++					remote-endpoint = <&usb2_2_connector>;
++				};
++			};
++
++			port@3 {
++				reg = <3>;
++
++				usb_hub_2_3: endpoint {
++					remote-endpoint = <&usb2_3_connector>;
++				};
++			};
++		};
++
++		/* FCU760K Wi-Fi & Bluetooth module */
++		wifi@4 {
++			compatible = "usba69c,8d80";
++			reg = <4>;
++		};
++	};
++};
++
++&usb_2_hsphy {
++	vdda-pll-supply = <&vreg_l10c_0p88>;
++	vdda33-supply = <&vreg_l2b_3p072>;
++	vdda18-supply = <&vreg_l1c_1p8>;
++
++	status = "okay";
++};
++
++&venus {
++	status = "okay";
++};
++
++/* PINCTRL - additions to nodes defined in sc7280.dtsi */
++&pcie0_clkreq_n {
++	bias-pull-up;
++	drive-strength = <2>;
++};
++
++&pcie1_clkreq_n {
++	bias-pull-up;
++	drive-strength = <2>;
++};
++
++&qspi_clk {
++	bias-disable;
++	drive-strength = <16>;
++};
++
++&qspi_cs0 {
++	bias-disable;
++	drive-strength = <8>;
++};
++
++&qspi_data0 {
++	bias-disable;
++	drive-strength = <8>;
++};
++
++&qspi_data1 {
++	bias-disable;
++	drive-strength = <8>;
++};
++
++&qspi_data23 {
++	bias-disable;
++	drive-strength = <8>;
++};
++
++&sdc1_clk {
++	bias-disable;
++	drive-strength = <16>;
++};
++
++&sdc1_cmd {
++	bias-pull-up;
++	drive-strength = <10>;
++};
++
++&sdc1_data {
++	bias-pull-up;
++	drive-strength = <10>;
++};
++
++&sdc1_rclk {
++	bias-pull-down;
++};
++
++&sdc2_clk {
++	bias-disable;
++	drive-strength = <16>;
++};
++
++&sdc2_cmd {
++	bias-pull-up;
++	drive-strength = <10>;
++};
++
++&sdc2_data {
++	bias-pull-up;
++	drive-strength = <10>;
++};
 
 -- 
 2.51.0
