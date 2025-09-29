@@ -1,324 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-75507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75508-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 846B4BA9428
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 15:00:11 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 033CDBA94A2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 15:11:47 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C300C18851D6
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 13:00:33 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 810217AA56B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 13:10:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 484F33064BA;
-	Mon, 29 Sep 2025 13:00:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0B474306B16;
+	Mon, 29 Sep 2025 13:11:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jz8wwdhF"
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dW1xdGqy"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2B130649E;
-	Mon, 29 Sep 2025 13:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D460E305E09;
+	Mon, 29 Sep 2025 13:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759150807; cv=none; b=X6Pdu/5DpZlbH5gzU1y2QEE91I5CRfQ4RGwanZCgDKV14Fim/DMJiIt971nywxSB6H9GGGv5S2lIjXT50NDd49iN+C+GiJFs81yYWqsDt9+IlWTJ8gJ0pOHvWlVFVUyU4SLSnnVt7+dPJ3bhE4nX8G96XM1dekGQJdZ0aum2xOI=
+	t=1759151501; cv=none; b=QwoLCmh1ueu3NsgfoIMjM5cRvZekoIKqIBAEtc84UJBCwl1BHCUltHRYFqrQR801H1fZQZJzQW/Q8KCMtFaIykR8lTIK/s8KN+wkYfFtZPxLx5QqQ7ImRfP7D/KJYI1sIO7VIb6S0sZAWJ16XmxvjTa9Ki+N0fhV9izsh6yH31M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759150807; c=relaxed/simple;
-	bh=v14ZqLeXTqvnBbKfvaWvZF9NSLmuvJRKsZQBeOmW5Wk=;
+	s=arc-20240116; t=1759151501; c=relaxed/simple;
+	bh=iLOE8W2/99hWknymgXjyOoeKtMi2ze7WIIb2J/6KcFw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JGgQ1MYFxG5xZdLiysO3FSNbRKWg1jpS1teoeFloWag6shPrhrdWPWZ6QUF26bBNCGmPGFlrqmCVuj2oyS5eLsriOfmUr/ju9usKwla70O47flqdMlck8lZnEHrEV+PrXvO9tk1l8nQqdoPmqXNLZIcK+QNM6D3NArzkccDQEEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jz8wwdhF; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3639AC4CEF4;
-	Mon, 29 Sep 2025 13:00:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759150806;
-	bh=v14ZqLeXTqvnBbKfvaWvZF9NSLmuvJRKsZQBeOmW5Wk=;
+	 Content-Type:Content-Disposition:In-Reply-To; b=fIaLxj4SoyDd3J657HeYHNs7ADzZ78mTiHLwYPX9YmjPSoOvuSbCnzHhWVjQ+HeMzvjjN+IXH0zfaOUrXMJv23wpslsAFCL+ZPo8TNDnvC8vw9MZS4457KYtFmTV1vpJylMemmDfsl2ykYDGZZY5xcxcs1kf8KEdYHhdfu9Dhyo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dW1xdGqy; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C4CDC4CEF4;
+	Mon, 29 Sep 2025 13:11:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1759151501;
+	bh=iLOE8W2/99hWknymgXjyOoeKtMi2ze7WIIb2J/6KcFw=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jz8wwdhF/Yk6MGtZ5Kdn5W8KFDTZFtIhNpHLM8je6/OG7jVFn/717TBkjRnVxmSPy
-	 VI1Dku+c1ztJrRasrV2hmU/nNli7IsX8XRIGI5PCB9xbYnmwPj4pjsb4xFcXXvCftj
-	 IGkGfw9u6XLg7PdBvq/L4qevkPuOrYAAbXa0HjFMi/gj/RUXV860hs6msyfOP2l43H
-	 3kPkDzyiPpaIwploKLOSx8yoBoCD4+9f+UNSRUcMaLxTKBhC7hKg4vrrlS/TvSomde
-	 e7XsEjO2ZImnkX2A/V6Ub3iFY0snOBM3YLzqDbLzkbboJAY2kJkoai/xENtnwBglub
-	 +WuX5P/Ynzd+w==
-Date: Mon, 29 Sep 2025 15:00:04 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Daniel Stone <daniel@fooishbar.org>, 
-	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
-	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
-	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
-	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
-	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
-	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
- driver capabilities
-Message-ID: <20250929-gregarious-worm-of-memory-c5354d@houat>
-References: <CAPj87rNDtfEYV88Ue0bFXJwQop-zy++Ty7uQ9XfrQ2TbAijeRg@mail.gmail.com>
- <57ekub6uba7iee34sviadareqxv234zbmkr7avqofxes4mqnru@vgkppexnj6cb>
- <20250901-voracious-classy-hedgehog-ee28ef@houat>
- <voknqdv3zte2jzue5yxmysdiixxkogvpblvrccp5gu55x5ycca@srrcscly4ch4>
- <st6wob5hden6ypxt2emzokfhl3ezpbuypv2kdtf5zdrdhlyjfw@l2neflb4uupo>
- <pe6g2fanw65p67kfy5blbtiytngxmr6nkbazymojs4a66yvpl3@7j4ccnsvc6az>
- <20250910-didactic-honored-chachalaca-f233b2@houat>
- <x562ueky2z5deqqmhl222moyrbylfwi35u4hb34dpl3z52ra4c@dyw4iayrewnz>
- <20250925-fervent-merry-beagle-2baba3@penduick>
- <qx5ashx62pufott6hnsfna3qntnoyvxwxze4rihhuxcsdxi37s@bbdvc3sfsgne>
+	b=dW1xdGqyVt/TrsQIXloANR3pVBr2+hrkA1b/T3cYQ9QPJOsrvw7fFgatp801pFlid
+	 ObHMHvQO2oXrx4X3Ep9oK4/GuCYOYOPY4E+MWit5LAhE4WuXMYZ0R75/sOlvxsDEJW
+	 AhVV4XiA8u5A2pYupeVYPd4nmoPRurVebXEOoXTs=
+Date: Mon, 29 Sep 2025 09:11:37 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: "Aiqun(Maria) Yu" <aiqun.yu@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
+	Jingyi Wang <jingyi.wang@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>, 
+	Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com, 
+	Jyothi Kumar Seerapu <jyothi.seerapu@oss.qualcomm.com>
+Subject: Re: [PATCH 13/20] arm64: dts: qcom: kaanapali: Add QUPv3
+ configuration for serial engines
+Message-ID: <20250929-notorious-masterful-cassowary-e26114@lemur>
+References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
+ <20250924-knp-dts-v1-13-3fdbc4b9e1b1@oss.qualcomm.com>
+ <9685e29d-bff3-4188-b878-230d0f161ce3@oss.qualcomm.com>
+ <5410dc83-0732-4b25-ba07-605e4956d840@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="5omahayljejanoli"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <qx5ashx62pufott6hnsfna3qntnoyvxwxze4rihhuxcsdxi37s@bbdvc3sfsgne>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5410dc83-0732-4b25-ba07-605e4956d840@oss.qualcomm.com>
 
+On Mon, Sep 29, 2025 at 02:41:27PM +0800, Aiqun(Maria) Yu wrote:
+> We’ve tried using git format-patch --patience, and it did help avoid the
+> deletion lines issue. However, when we send out patches using the B4
+> tool, the formatting still defaults to the standard behavior.
+> The challenge now is: how can we integrate the functionality of git
+> format-patch --patience into the B4 workflow?
+> Any ideas?>
 
---5omahayljejanoli
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
- driver capabilities
-MIME-Version: 1.0
+You can set this in your .git/config:
 
-On Thu, Sep 25, 2025 at 05:16:07PM +0300, Dmitry Baryshkov wrote:
-> On Thu, Sep 25, 2025 at 03:13:47PM +0200, Maxime Ripard wrote:
-> > On Wed, Sep 10, 2025 at 06:26:56PM +0300, Dmitry Baryshkov wrote:
-> > > On Wed, Sep 10, 2025 at 09:30:19AM +0200, Maxime Ripard wrote:
-> > > > On Wed, Sep 03, 2025 at 03:03:43AM +0300, Dmitry Baryshkov wrote:
-> > > > > On Tue, Sep 02, 2025 at 08:06:54PM +0200, Maxime Ripard wrote:
-> > > > > > On Tue, Sep 02, 2025 at 06:45:44AM +0300, Dmitry Baryshkov wrot=
-e:
-> > > > > > > On Mon, Sep 01, 2025 at 09:07:02AM +0200, Maxime Ripard wrote:
-> > > > > > > > On Sun, Aug 31, 2025 at 01:29:13AM +0300, Dmitry Baryshkov =
-wrote:
-> > > > > > > > > On Sat, Aug 30, 2025 at 09:30:01AM +0200, Daniel Stone wr=
-ote:
-> > > > > > > > > > Hi Dmitry,
-> > > > > > > > > >=20
-> > > > > > > > > > On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
-> > > > > > > > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
-> > > > > > > > > > > It's not uncommon for the particular device to suppor=
-t only a subset of
-> > > > > > > > > > > HDMI InfoFrames. It's not a big problem for the kerne=
-l, since we adopted
-> > > > > > > > > > > a model of ignoring the unsupported Infoframes, but i=
-t's a bigger
-> > > > > > > > > > > problem for the userspace: we end up having files in =
-debugfs which do
-> > > > > > > > > > > mot match what is being sent on the wire.
-> > > > > > > > > > >
-> > > > > > > > > > > Sort that out, making sure that all interfaces are co=
-nsistent.
-> > > > > > > > > >=20
-> > > > > > > > > > Thanks for the series, it's a really good cleanup.
-> > > > > > > > > >=20
-> > > > > > > > > > I know that dw-hdmi-qp can support _any_ infoframe, by =
-manually
-> > > > > > > > > > packing it into the two GHDMI banks. So the supported s=
-et there is
-> > > > > > > > > > 'all of the currently well-known ones, plus any two oth=
-ers, but only
-> > > > > > > > > > two and not more'. I wonder if that has any effect on t=
-he interface
-> > > > > > > > > > you were thinking about for userspace?
-> > > > > > > > >=20
-> > > > > > > > > I was mostly concerned with the existing debugfs interfac=
-e (as it is
-> > > > > > > > > also used e.g. for edid-decode, etc).
-> > > > > > > > >=20
-> > > > > > > > > It seems "everything + 2 spare" is more or less common (A=
-DV7511, MSM
-> > > > > > > > > HDMI also have those. I don't have at hand the proper dat=
-asheet for
-> > > > > > > > > LT9611 (non-UXC one), but I think its InfoFrames are also=
- more or less
-> > > > > > > > > generic).  Maybe we should change debugfs integration to =
-register the
-> > > > > > > > > file when the frame is being enabled and removing it when=
- it gets unset.
-> > > > > > > >=20
-> > > > > > > > But, like, for what benefit?
-> > > > > > > >=20
-> > > > > > > > It's a debugfs interface for userspace to consume. The curr=
-ent setup
-> > > > > > > > works fine with edid-decode already. Why should we complica=
-te the design
-> > > > > > > > that much and create fun races like "I'm running edid-decod=
-e in parallel
-> > > > > > > > to a modeset that would remove the file I just opened, what=
- is the file
-> > > > > > > > now?".
-> > > > > > >=20
-> > > > > > > Aren't we trading that with the 'I'm running edid-decode in p=
-aralle with
-> > > > > > > to a modeset and the file suddenly becomes empty'?
-> > > > > >=20
-> > > > > > In that case, you know what the file is going to be: empty. And=
- you went
-> > > > > > from a racy, straightforward, design to a racy, complicated, de=
-sign.
-> > > > > >=20
-> > > > > > It was my question before, but I still don't really see what be=
-nefits it
-> > > > > > would have, and why we need to care about it in the core, when =
-it could
-> > > > > > be dealt with in the drivers just fine on a case by case basis.
-> > > > >=20
-> > > > > Actually it can not: debugfs files are registered from the core, =
-not
-> > > > > from the drivers. That's why I needed all the supported_infoframes
-> > > > > (which later became software_infoframes).
-> > > >=20
-> > > > That's one thing we can change then.
-> > > >=20
-> > > > > Anyway, I'm fine with having empty files there.
-> > > > >=20
-> > > > > > > > > Then in the long run we can add 'slots' and allocate some=
- of the frames
-> > > > > > > > > to the slots. E.g. ADV7511 would get 'software AVI', 'sof=
-tware SPD',
-> > > > > > > > > 'auto AUDIO' + 2 generic slots (and MPEG InfoFrame which =
-can probably be
-> > > > > > > > > salvaged as another generic one)). MSM HDMI would get 'so=
-ftware AVI',
-> > > > > > > > > 'software AUDIO' + 2 generic slots (+MPEG + obsucre HDMI =
-which I don't
-> > > > > > > > > want to use). Then the framework might be able to priorit=
-ize whether to
-> > > > > > > > > use generic slots for important data (as DRM HDR, HDMI) o=
-r less important
-> > > > > > > > > (SPD).
-> > > > > > > >=20
-> > > > > > > > Why is it something for the framework to deal with? If you =
-want to have
-> > > > > > > > extra infoframes in there, just go ahead and create additio=
-nal debugfs
-> > > > > > > > files in your driver.
-> > > > > > > >=20
-> > > > > > > > If you want to have the slot mechanism, check in your atomi=
-c_check that
-> > > > > > > > only $NUM_SLOT at most infoframes are set.
-> > > > > > >=20
-> > > > > > > The driver can only decide that 'we have VSI, SPD and DRM Inf=
-oFrames
-> > > > > > > which is -ETOOMUCH for 2 generic slots'. The framework should=
- be able to
-> > > > > > > decide 'the device has 2 generic slots, we have HDR data, use=
- VSI and
-> > > > > > > DRM InfoFrames and disable SPD for now'.
-> > > > > >=20
-> > > > > > I mean... the spec does? The spec says when a particular feature
-> > > > > > requires to send a particular infoframe. If your device cannot =
-support
-> > > > > > to have more than two "features" enabled at the same time, so b=
-e it. It
-> > > > > > something that should be checked in that driver atomic_check.
-> > > > >=20
-> > > > > Sounds good to me. Let's have those checks in the drivers until we
-> > > > > actually have seveal drivers performing generic frame allocation.
-> > > > >=20
-> > > > > > Or just don't register the SPD debugfs file, ignore it, put a c=
-omment
-> > > > > > there, and we're done too.
-> > > > >=20
-> > > > > It's generic code.
-> > > > >=20
-> > > > > > > But... We are not there yet and I don't have clear usecase (w=
-e support
-> > > > > > > HDR neither on ADV7511 nor on MSM HDMI, after carefully readi=
-ng the
-> > > > > > > guide I realised that ADV7511 has normal audio infoframes). M=
-aybe I
-> > > > > > > should drop all the 'auto' features, simplifying this series =
-and land
-> > > > > > > [1] for LT9611UXC as I wanted origianlly.
-> > > > > > >=20
-> > > > > > > [1] https://lore.kernel.org/dri-devel/20250803-lt9611uxc-hdmi=
--v1-2-cb9ce1793acf@oss.qualcomm.com/
-> > > > > >=20
-> > > > > > Looking back at that series, I think it still has value to rely=
- on the
-> > > > > > HDMI infrastructure at the very least for the atomic_check sani=
-tization.
-> > > > > >=20
-> > > > > > But since you wouldn't use the generated infoframes, just skip =
-the
-> > > > > > debugfs files registration. You're not lying to userspace anymo=
-re, and
-> > > > > > you get the benefits of the HDMI framework.
-> > > > >=20
-> > > > > We create all infoframe files for all HDMI connectors.
-> > > >=20
-> > > > Then we can provide a debugfs_init helper to register all of them, =
-or
-> > > > only some of them, and let the drivers figure it out.
-> > > >=20
-> > > > Worst case scenario, debugfs files will not get created, which is a=
- much
-> > > > better outcome than having to put boilerplate in every driver that =
-will
-> > > > get inconsistent over time.
-> > >=20
-> > > debugfs_init() for each infoframe or taking some kind of bitmask?
-> >=20
-> > I meant turning hdmi_debugfs_add and create_hdmi_*_infoframe_file into
-> > public helpers. That way, drivers that don't care can use the (renamed)
-> > hdmi_debugfs_add, and drivers with different constraints can register
-> > the relevant infoframes directly.
->=20
-> Doesn't that mean more boilerplate?
+    [diff]
+    algorithm = patience
 
-I don't think it would? In the general case, it wouldn't change
-anything, and in special cases, then it's probably going to be different
-=66rom one driver to the next so there's not much we can do.
-
-> In the end, LT9611UXC is a special case, for which I'm totally fine
-> not to use HDMI helpers at this point: we don't control infoframes
-> (hopefully that can change), we don't care about the TMDS clock, no
-> CEC, etc.
-
-Not using the helpers sound pretty reasonable here too.
-
-> For all other usecases I'm fine with having atomic_check() unset all
-> unsupported infoframes and having empty files in debugfs. Then we can
-> evolve over the time, once we see a pattern. We had several drivers
-> which had very limited infoframes support, but I think this now gets
-> sorted over the time.
-
-I never talked about atomic_check()? You were initially concerned that
-the framework would expose data in debugfs that it's not using. Not
-registering anything in debugfs solves that, but I'm not sure we need to
-special case atomic_check.
-
-Worst case scenario, we're going to generate infoframes the driver will
-ignore.
-
-Maxime
-
---5omahayljejanoli
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaNqC0wAKCRAnX84Zoj2+
-diX/AYD7tGMpz//OLeUzSg3QYHAZkitZyXT00YfJmgxYpCUMSnb6h8ucgQ8Om8Vk
-gbiiQX0Bf2U6KVN7HpvEuga5AMtIOqqgCE/fQHox7oXRJiC3nuzlZW5e70PMzD7l
-uQgN/qqEkQ==
-=aZZH
------END PGP SIGNATURE-----
-
---5omahayljejanoli--
+-K
 
