@@ -1,162 +1,160 @@
-Return-Path: <linux-arm-msm+bounces-75448-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75452-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 573D4BA7E4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 05:58:11 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F614BA7F50
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 07:06:24 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 97DF7189A0B9
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 03:58:33 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 928E018971A6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 05:06:46 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2CF8C21D5AA;
-	Mon, 29 Sep 2025 03:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 98542225402;
+	Mon, 29 Sep 2025 05:05:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ALD1/oni"
+	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="OQO8Bnbn"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from out-186.mta0.migadu.com (out-186.mta0.migadu.com [91.218.175.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB69219A7A
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 03:57:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E4B6223323
+	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 05:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759118274; cv=none; b=nuAfv93YbTdMLnzPsYCoG1wGzAqp9W0GZc/wGY/t2wOaF3HLXBWlwkB4XUK1Kwxv2QFeuz+geX/0qq5tzqV0iZEzvbihZONnZcL5HLq11fhOgB15ki5irdWDa+AufHSNDkICNGqh0P1rOnAhKKESzzSo62HIyYdzba9dCfn0LEo=
+	t=1759122347; cv=none; b=RLNvkUww7ZRGnebQAJkSSSv/P+MVo8fCDOh2R2l+Fu+QH49///AlQjLIsUNSWSJ8cbj1fsTDwId2+gTxGg6f2dsSg6D98Ng4R03HTGWfARELdwRFVmzXJQVcUhxv7uXiuFj3t/Q7KOUQyXYXJz0893UTctoFopAIoqd0xVKfGKQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759118274; c=relaxed/simple;
-	bh=iEoKhzPpfOdEKO/nolkZGQ09h0XsBnz8AzJd6bFhW7I=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=plmMTuLE+8VGyuYmVr/w6Zzijfgb3d6RaUl4lkGdgMQhWvw7tEJPkdRG2cPs/cUHC0P77hkiU2UXSrhqT3pELPS//pHmdrFVOTcJjLDgoZgNw07YyWjgv65bFFuDvoVqEN+aggkVlxrAr4VyeebdNaHCsy3Ok1m2/dq9hAHJtG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ALD1/oni; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58SMQxlL009420
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 03:57:49 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	x5IKET2ZNaGZqu6vqn23CHsftRhx4zpASBXEh2O62jc=; b=ALD1/oni7E0Qcubm
-	g5TALLkBGTCUmHYW+fuNpKM4J3bcx8KZDvdu+AneTt15G8DKwFGe+o38O5wHM6K3
-	q3c8oESGGT9smKgWgZ8Lrje/qBM5WrSR8sV98BjAZ3XTad223SOd2F/AqK5LCyVi
-	fMFDHqMIILqZoznI6uyDf8STPoDe9dkHZ8lR+g4h6znO7mC+dxcYZ3RuiQ50+8eZ
-	giwb0q3GaNaWJW9+77UwpCzCahaC2iU+k0xm8nJCb7pHtXbZDdQVMExvugH/eOH+
-	v0w32g89HNFpe5HJI36KaSl/HS6Ax1nR6RXuXSZSMgVi4o7Bm4+gJl8e+jXEsmDL
-	EqBjFg==
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e59mv4mf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 03:57:49 +0000 (GMT)
-Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-32ec67fcb88so3697355a91.3
-        for <linux-arm-msm@vger.kernel.org>; Sun, 28 Sep 2025 20:57:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759118268; x=1759723068;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=x5IKET2ZNaGZqu6vqn23CHsftRhx4zpASBXEh2O62jc=;
-        b=S18mBH9VjFUQYDtwXZK6T6B3xbUAQWuoDRjn2hPr8vSZChDaWaCNzocKx+I9wv7cC9
-         hKt4o4J2MkvmXgXw2sg3gK0mhRAn2ARu72sHa6pw2paozdToDZKx6f4i8DM0d/Yj6gDQ
-         J92bvBH53DTILOB6jxyG2VVPUcs9tmia0B0GjjYl9AbLmNq7+hL93aIuk5WatrWq6uCs
-         snn4KkiO/xotdQXMCvCpMrWL+JkC/nG5Du+50QyHiLPBztEZJluRKmes5faUQ98mXik2
-         X99tpTiRBz90FC5gtkVYXvSJBkkirH96ywFJS7al6SOCc7TGElJ5/utL1NluanvG/9Zw
-         QCuw==
-X-Forwarded-Encrypted: i=1; AJvYcCXdf7xnHTLE74yKrlf2oOF7FC/u8tAHFvvxHt18zf9DfgA3YJkncNx3D5m47YnhKY6wcpiPRQ49jbe8/Kq3@vger.kernel.org
-X-Gm-Message-State: AOJu0Yycyg7O1+jnisdEwE932XaUTYqovelettrehTDyRfylmWKb5hJF
-	+fGl/8ZURQwqzcF6udO7mXSuVgOgoojbHhpgZ2WBCvGCpc8Q5vgWcWalbmzak48FS1O9VVLYCQ/
-	s9yhjjTwKfkFEwc4DFpw78nR6tEnl8oXR3ph/9k0QYQ00O1Gzye+Ybr6GVPfTeIm9zvMF
-X-Gm-Gg: ASbGnctvwUKpRULR1LjFr4ysILxa/3OPfO+3FjSQclECQniuu1Sdb7M3jYKudL4Q3hD
-	kcp4iRxvA3yQbFEed3dVB1WK/j7hp3/5jw3ez3CwLvvzQfZDqcS5WYafMG9YAx63rqYZ3A5AXAh
-	xFMvAzsw6hvuUi4hrwc+HMlMC+GkPsmS/sHItxXJ3dhvu3Z1Lwtt52RxI9lJJ0XNPVxFsXq6l/n
-	YqM+zviZAQzom5OKKkHBudbA5EYeurIMFdRKD3s8JISINafhaIo7IGTJoivNpegZGTxrpfn+CwH
-	CS+qTdZn4hM4ESMCnDmx4Giemje/C0tf/1Oj0Ul7Yhiaxdtc8tEcE6FzTMxGXgUAvvM=
-X-Received: by 2002:a17:90b:314e:b0:32e:c6b6:956b with SMTP id 98e67ed59e1d1-3342a2702ebmr15297819a91.4.1759118268185;
-        Sun, 28 Sep 2025 20:57:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHuArBOJSGdH2d51k037g9fbFwwwtZi2aIpgGp3j1sTG3Gq9TQVKDuopvTuXrBfvMWjx4Po8Q==
-X-Received: by 2002:a17:90b:314e:b0:32e:c6b6:956b with SMTP id 98e67ed59e1d1-3342a2702ebmr15297792a91.4.1759118267758;
-        Sun, 28 Sep 2025 20:57:47 -0700 (PDT)
-Received: from [192.168.0.195] ([49.204.31.98])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b57c55be61bsm9939207a12.48.2025.09.28.20.57.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 28 Sep 2025 20:57:47 -0700 (PDT)
-Message-ID: <fc8b2845-5c1e-4f4f-962a-b1b0009114ba@oss.qualcomm.com>
-Date: Mon, 29 Sep 2025 09:27:43 +0530
+	s=arc-20240116; t=1759122347; c=relaxed/simple;
+	bh=fjcFdJgH23VF8JsWbXTLHJaSvRl57I+MqNIoSEc6Lus=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Hx8I2llhNQDdn5ay0TdFATRvy6X3fZTfFVd+JAP/2m01cAYbRqjRoFceKeVwSfRKQ3uIfSJzsqOLq3CK8rnVc63ZX1yb32UpSAj0fCYhMiiwkGWagXxlzuVQN9ly31pAnTGiDiM5y4vhvzSQEXCTUyQYthCV+Pi/vKA+DRtKfFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=OQO8Bnbn; arc=none smtp.client-ip=91.218.175.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
+	s=key1; t=1759122333;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=j2Ykjpn2M9MUdD7CCOsDxyX4Ug+kRVxSWmRB5xwuvk8=;
+	b=OQO8Bnbn2I7/EjHI3H0AqudFKHMxxSIfx6y6huCR1FKsaR9Ttj56MOLOTP4nLXFnIqT2K3
+	u0NsmnSlh4bOtBHEzeEl4CDK0uLUIcJMUm8qpesohAHBrtVbtgUu01aQKUvtaRiUt1w9Tj
+	NOM5gAthCy7aBHtC6c45hiiCrwSs02aDXO0n5peiZQ5ZxxnqvPHWf+6XacjGe0q9CbddaE
+	DEsqXrvGVeNJmSLJKbLaWXk+Wo/thkUuYnm2rUeRECUIuynzCaA/1sDyVFZ1gxgTXfodKa
+	b4T4XeHlL3GMkZPIHxG76cFiMAwkF+/LMVrMv1pNP24vf3nD9nnP1awClyVqBg==
+From: Paul Sajna <sajattack@postmarketos.org>
+Subject: [PATCH v3 00/11] arm64: dts: qcom: sdm845-lg-{common, judyln}:
+ Improve HW support in dts
+Date: Sun, 28 Sep 2025 22:05:23 -0700
+Message-Id: <20250928-judyln-dts-v3-0-b14cf9e9a928@postmarketos.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 22/24] arm64: dts: qcom: glymur: Add display clock
- controller device
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-22-24b601bbecc0@oss.qualcomm.com>
- <CAJKOXPd97tJ_1cRZQmKE_1-B7AqgRr_CJ1cYMe=v4hBb9Z3eog@mail.gmail.com>
-Content-Language: en-US
-From: Taniya Das <taniya.das@oss.qualcomm.com>
-In-Reply-To: <CAJKOXPd97tJ_1cRZQmKE_1-B7AqgRr_CJ1cYMe=v4hBb9Z3eog@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: YLTqEPehtQnRljdQzNS-TeHrk1NbCU7J
-X-Authority-Analysis: v=2.4 cv=O4g0fR9W c=1 sm=1 tr=0 ts=68da03bd cx=c_pps
- a=vVfyC5vLCtgYJKYeQD43oA==:117 a=YGGbjFxyX1jBzPa45jwK0A==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=fESiJu-7EXqA1LiMi5MA:9
- a=QEXdDO2ut3YA:10 a=rl5im9kqc5Lf4LNbBjHf:22
-X-Proofpoint-ORIG-GUID: YLTqEPehtQnRljdQzNS-TeHrk1NbCU7J
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAwMSBTYWx0ZWRfX/NzlOJivpeUg
- 4JobY21EvYi8RfQFqIzbAsPn9haFNAGsDMRvKYi5WJIeAbiNCK8T4ZBqpFzjUJ2o/neYigAt6nC
- f7YcsioZ87sGA1IVpceSJYM1cOwCy9LmiQB/HS1ZpQBM4BR1bGhPJlHj5u2W+xhux/VMDd2g9uu
- +PK1yj8a/TypvSDNPW8OkJ4TdgkqR8dleNtsciw+YaWpClNen2G62Mv+4bgvQFbZ3ovo6BCUnNK
- NdpAe0EwDMdsj3gjYJApwzGixDpWhoI6D7OcGjjOvmFPqSeR3oj5nYQL2vfD1a2kaf3m08IOqit
- iDI7IAosAAm0folx091rNb8yiOhRpe4b2FmBGkp/dHFiW1rFe/GH1DxJFA6bU0ASgkuBfxGsiJi
- cUGv7FOES1pNRFaC9sLLhNXlGpViLg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-29_01,2025-09-26_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270001
+X-B4-Tracking: v=1; b=H4sIAJMT2mgC/23O2W7CMBCF4VeJfI0rL1lIhKq+R9ULLxMwS5x6T
+ FSE8u41BiQQXP4jzadzJgjBAZKuOJMAk0PnhxRyURCzUcMaqLOpiWCiYi3ndHu0p/1AbUTKG1N
+ yqFprWE/Swxigd38Z+/65doDfYzLj9UgOgKiy2RWrG8nu5KgG2NOJU06XojJNWTKptf4aPcaDC
+ juIHj98WH+SC75xGH045eETz/oNlI8bE8eokLrUTdMya+CFy9okHoX6SRBJqIDXUDNRS9W/EeZ
+ 5/gfn9tfbSgEAAA==
+X-Change-ID: 20250911-judyln-dts-17c41e59dc0f
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, 
+ Amir Dahan <system64fumo@protonmail.com>, 
+ Christopher Brown <crispybrown@gmail.com>, 
+ Paul Sajna <sajattack@postmarketos.org>
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1759122330; l=3146;
+ i=sajattack@postmarketos.org; s=20250422; h=from:subject:message-id;
+ bh=fjcFdJgH23VF8JsWbXTLHJaSvRl57I+MqNIoSEc6Lus=;
+ b=K3kbXQT2DMDOmbcTGKVUqRQfUhBJZ11f7Bsg37vqNqgupuKd+NR5qgVaSmeGfcViNMvgCsm58
+ 3APixQTZzpGDkJ5SCEzJeh2rH8kkxGVAxd7/UW6+X9IfvfM4MTutrEx
+X-Developer-Key: i=sajattack@postmarketos.org; a=ed25519;
+ pk=TwacvEOiRJ2P2oAdEqIDrtQTL18QS4FfcHfP/zNsxkQ=
+X-Migadu-Flow: FLOW_OUT
 
+Rollup of improved hardware support via devicetree for LG G7 ThinQ 
+(judyln) from sdm845-mainline kernel fork
 
+Notably, this patch-series enables full DRM acceleration and wifi,
+among other small improvements in individual commits
 
-On 9/25/2025 1:48 PM, Krzysztof Kozlowski wrote:
-> On Thu, 25 Sept 2025 at 15:34, Pankaj Patil
-> <pankaj.patil@oss.qualcomm.com> wrote:
->>
->> From: Taniya Das <taniya.das@oss.qualcomm.com>
->>
->> Support the display clock controller for GLYMUR SoC.
-> 
-> One clock controller is not a separate commit.
-> 
-> Stop inflating patch count, you just makes it difficult for us to see
-> complete picture.
-> 
+after this patch-series the main things that remain to be worked
+on include touchscreen, audio, and modem.
 
-Sorry about that Krzysztof. As the display clock controller was enabled
-later point of time probably it was kept as a separate patch and not
-merged.
+Depends upon panel driver patch-series https://lore.kernel.org/all/20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org/T/#r9a976ca01e309b6c03100e984a26a0ffc2fe2002
 
-> Is this somehow for LWN stats? That's why one node per patch?
-> 
+Co-developed-by: Amir Dahan <system64fumo@protonmail.com>
+Co-developed-by: Christopher Brown <crispybrown@gmail.com>
+Signed-off-by: Amir Dahan <system64fumo@protonmail.com>
+Signed-off-by: Christopher Brown <crispybrown@gmail.com>
+Signed-off-by: Paul Sajna <sajattack@postmarketos.org>
+---
+Changes in v3:
+- change firmware paths to lowercase 'lg' (matching dt-bindings)
+- fix signoffs
+- add wifi dmesg to commit message
+- remove regulator-always-on from ibb
+- remove framebuffer
+- remove msm ids
+- don't continue commit subject into commit messages
+- split bluetooth node
+- add sbu uart details to commit message
+- change ipa gsi-loader to self
+- Link to v2: https://lore.kernel.org/r/20250916-judyln-dts-v2-0-5e16e60263af@postmarketos.org
 
-That is definitely not the intention. As it was enabled later, it was
-left as a separate patch.
+Changes in v2:
+- sort at the start
+- drop unnecessary labels
+- drop unnecessary gmu
+- multi-led
+- split fb-panel changes
+- expand upon firmware commit message
+- use qcom,calibration-variant instead of
+  qcom,ath10k-calibration-variant
+- change firmware paths to include "LG"
+- remove framebuffer reservation
+- add lab/ibb
 
+- Link to v1: https://lore.kernel.org/r/20250913-judyln-dts-v1-0-23b4b7790dce@postmarketos.org
+
+---
+Amir Dahan (1):
+      arm64: dts: qcom: sdm845-lg-common: Add leds
+
+Christopher Brown (1):
+      arm64: dts: qcom: sdm845-lg-judyln: Add battery and charger
+
+Paul Sajna (9):
+      arm64: dts: qcom: sdm845-lg-common: Sort nodes and properties
+      arm64: dts: qcom: sdm845-lg-common: Add uarts and Bluetooth
+      arm64: dts: qcom: sdm845-lg-judyln: Add display panel
+      arm64: dts: qcom: sdm845-lg-judyln: Add firmware nodes, change path
+      arm64: dts: qcom: sdm845-lg-{common, judyln}: Add wifi node
+      arm64: dts: qcom: sdm845-lg-common: Add chassis-type
+      arm64: dts: qcom: sdm845-lg-common: Add camera flash
+      arm64: dts: qcom: sdm845-lg-judyln: Add lab/ibb
+      arm64: dts: qcom: sdm845-lg-common: Change ipa gsi-loader to 'self'
+
+ arch/arm64/boot/dts/qcom/sdm845-lg-common.dtsi | 222 ++++++++++++++++++-------
+ arch/arm64/boot/dts/qcom/sdm845-lg-judyln.dts  | 140 ++++++++++++++--
+ 2 files changed, 289 insertions(+), 73 deletions(-)
+---
+base-commit: 8394712bc1340df993cb167199568f44013b45d3
+change-id: 20250911-judyln-dts-17c41e59dc0f
+prerequisite-message-id: <20250910-judyln-panel-v1-1-825c74403bbb@postmarketos.org>
+prerequisite-patch-id: e51151ea7f8fdad6ad7d90713febc5c6b6fc4f9c
+prerequisite-patch-id: b3dd44250da9cd12bc5b2d0d7e865dbe19ceed92
+prerequisite-patch-id: fd6c8077806cb03fcf37d0e0d730314c2760e334
+
+Best regards,
 -- 
-Thanks,
-Taniya Das
+Paul Sajna <sajattack@postmarketos.org>
 
 
