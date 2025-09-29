@@ -1,229 +1,318 @@
-Return-Path: <linux-arm-msm+bounces-75488-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75489-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5561BA8827
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 11:03:21 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98762BA8863
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 11:09:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 7FBEB3A55A4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 09:03:20 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 4F2793A901A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 29 Sep 2025 09:09:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6AFB02032D;
-	Mon, 29 Sep 2025 09:03:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D685D27F75F;
+	Mon, 29 Sep 2025 09:09:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dDBoMyhc"
+	dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b="Nqhn0eJ6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PA4PR04CU001.outbound.protection.outlook.com (mail-francecentralazon11013059.outbound.protection.outlook.com [40.107.162.59])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23A0C1448E3
-	for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 09:03:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759136595; cv=none; b=aHRoh7s8c1UCz6toos2mgcGDUnELGiH8HA6WcEA/AsJFHdyoqj7bmnoYMT+fenJ0r6XybEk7s3zIeLo1X8KQAwAdGVsMEYMTP1aRdd0JQNKKeUlS0Cw0EUXthYp/ylxAruiihwfpQeUVgBT6PrUypPJGBwL80jRfqBaoJMc5S7g=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759136595; c=relaxed/simple;
-	bh=YDkB1cC1lei3HB7fQRoAVOGBWOAs06N/aEhJ0IeU4eQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=af+mYw673BgpjZnMH7ufJ7GRFa3wsvMXbkzQer6H2Chcii9j9/uR2X0AbGZXe5DetfL+UF8322+/uBVYAZ4/CDasj/rfxDSvY2P+JdPM21Nl36wEIMPryrCnzR4BBvv/hzSCkVjagkwsVq1NtuSU3eosKT0LCaAaPlM9BIZ6az0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dDBoMyhc; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-5848a2b3c8aso532542e87.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 29 Sep 2025 02:03:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759136590; x=1759741390; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SQ1kR/YUyZ1nKY+v1ygHX/aXlVuO3SwbSwJRstRbb9s=;
-        b=dDBoMyhc87yvAJOHgaElDJMprkqDNtYY8fXo7lOlADdonOZ/cJYXHdOcxQ9rQueuBR
-         LERpIoy2kOXv+/KEbIpKqeKu4wq95AGTEyiEwXZHtnI8HMTLzF6sj6Blh35h+Hvgefoq
-         sRYzZtXijZjKxrJR9T2PYGrsGZbPNBNnHMzGHfZwRHZOXi02I0yV3VWAiIeWjMJ2ncvh
-         XiuUscm1Ea/CkRtqt7sBf4rVE+9G2kcqO8Fes2EZW0At0HqeddhTqIWWjS+xb31wKSwg
-         7c3FTEqrVe4FnFJPctZJJTaHeTjtS/eWyZgWAjxas/nJToi0p3Yyefp0kHabOB2VJVrw
-         Z5mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759136590; x=1759741390;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=SQ1kR/YUyZ1nKY+v1ygHX/aXlVuO3SwbSwJRstRbb9s=;
-        b=HJ5pGemZsngpqMhE/dvOQe3CDl8xeZ1aZEy8CUFk4yQfSnpCY4381GwTffBywR5NMW
-         t9bu7bAxIcI+mgh2V2F33HLa57INaccgAK1pdDFvM+Eup3blOxWUlvbt9EbSHNFexOj9
-         jC3eyEuxP+rubKz9yvxSfQok5iGpaRLfz1wRAZpexqRTQ5epDWcy4mC1Ey2bgBX90955
-         bmxIwBee/SZjMQrgMCMfAAhqZJicgW8fQHYBo1W3r+WKyMNDX5scZcsbHykw17YvH6Q1
-         Q9jFq2NHDX90GbDt1RhVDK0oW//HjryzuXF07VgqSuoVccwQmjJUnDvFAPgno+3RI/Vm
-         vmhg==
-X-Gm-Message-State: AOJu0Ywb2n+u35x8IEmY+i3hnaw4aUHVwSHXi17WIXm1M4kVcDaJ46uv
-	5HAi0JRVfjjAEBmM/GgugiI+63Z1mdTYiSUWD5W0eioHxX6q4BwgcHqFWb6C9gYQ03M=
-X-Gm-Gg: ASbGnct3hgxXgdCDKEIxJ9fhPmj2Nmf76wqNsXBf6/WCJx95SeqlXJxHhuHG4uimKrr
-	YLuF9Uuo2mAD4bKo5rlX1ObSPexca/gwJsDHX5sj8+MATblPT/r0ZVmhqGxfzG49pDYOSgBDc0L
-	TJ6vy2ZmvHupo6udQXa2maTObN3RTZG8AXpw4/+oixJGM3IIiSB/StAaou87KW0ImsT1oRjzTVp
-	eqyHli9pgI2JJ7AGHvfXETbpjIZdaQzNTyzqD/qeT9/eKEEJnDogo42aYnnSBcPrl0avjXeKAae
-	NQSrQoSp5KIZwMlxpPQWAqfL+xKjLCkX1s3q/5LKDlCkO1GgBOZTDCOpCg8ZmT6YEdKQJPN6WZr
-	I1CyX/N0NYWWdcp05Aot5fj+1MQrHp2Zr8lsuHW0oUE+Lr2XUCBur3ag0iph5HmkWM6/PwjXGj+
-	XY5w==
-X-Google-Smtp-Source: AGHT+IFxskxasAcUCzpw5FlswrTo8wIg2CVztTjf3s5U11u0jYRFd9ekebyNAAIZnj0TT5QUNQxd4w==
-X-Received: by 2002:a19:5212:0:b0:584:2ad8:7cd1 with SMTP id 2adb3069b0e04-5842ad87ee4mr1305280e87.3.1759136590100;
-        Mon, 29 Sep 2025 02:03:10 -0700 (PDT)
-Received: from [192.168.1.100] (91-159-24-186.elisa-laajakaista.fi. [91.159.24.186])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-58316ff552esm4006185e87.127.2025.09.29.02.03.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 29 Sep 2025 02:03:09 -0700 (PDT)
-Message-ID: <d6530142-469e-4859-ac71-fd4af82ed4be@linaro.org>
-Date: Mon, 29 Sep 2025 12:03:08 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AEB92749DC;
+	Mon, 29 Sep 2025 09:09:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.162.59
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759136979; cv=fail; b=I1vZ/Upt36Z+6mnX4wlNtL0Jh26gw+fF6ujFFpsz+5ot1YbpKOMeb0fpjRJbZ8rUe7X1KSb99+gUYq8tfhJ9ORXlUGldQ16mGFOK5BxkuJqt5OnoYQ2RKFRihSMapCtnkVs/E7uGZuRm2sAlo04cNTKM8sGVrlyuW1BKow1Yjvg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759136979; c=relaxed/simple;
+	bh=dlFBWpOtaFBYR1N7D+vUiByWFAdjBb19eXMUwv6+zGM=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=Xsofgxsq9Qf1SHDtMpnYiKVX8FkRxkD7/m0bsf5vPWjENbfBqbVWtN0eltnMVWWvIqck4DMDx0xOA8LiD0IRXFQKX+6FkwEDvCDig8ogYqhEMvlBGPtFHjvHfmHMM1Z01seJCeMNzj+joIU/roOcxuetzKDqmPBcNX+zYe4zEjs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com; spf=pass smtp.mailfrom=nxp.com; dkim=pass (2048-bit key) header.d=nxp.com header.i=@nxp.com header.b=Nqhn0eJ6; arc=fail smtp.client-ip=40.107.162.59
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=nxp.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nxp.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Sf1H8W4mTZH4Xb0adWZ4cwzikn9cayjZxS5TL/9lOwHs1ObqYfWblSjYHel6uX21aIpS8m3F2TDRNz0MsrCkWzgyxXo/x5F0NoiwSXSM9eW9v0lgohLS3evwTxf6eZ7uKzd1SrJB1jZ/nhKFsHpTUdhOU4lrYZFEGE/vMy1O6XuomcOxI+VtYWYX77OQHzWvCiNf/rReHond18AhDEROmLDxxLNpjO5dHGGW9k0WRW1njreMY2lAyC4cTYduge3NLGi9gjeCQZkSggoyONHqJ+wED9CTyZY1CKxHaIT5VAe+64hHiIU5Y1lVxrpr8tAlyjs2TT3db9GWjiWY5urAFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0InCHjc6DCLmA+cOFiqRqiSKsXgkIavVYoGBu6TNt6g=;
+ b=Q2+7Fhwdeb/nLv5L5O+/bvG04T5CHTfWDUB63HXxL5tdEXwT0gYcUHpeTTAPG2ScAZ/t77fvXMM9PPsFNz8moog8E6OXRUswO29Ib6RVAmKCMsYWpkU46NYohirMcFGTe5hnqXwZQWtVQhUAMTAfRf6Hn/l4zatDnrRFDiZAK83y9eLRf04tsQdL2iUcr6FzpT/5RrFYDvAzCSKJfp2fS7+5YOoLU15KzDcExE12aUB/OZOaBXWvVe49hXzcknTm9vOV9gwJ66EpHmkeJgoxNonJ1J0DP9tFDu9NewfIrJTcL90TUzUKeFDWByz303SO8n0Rc6xHcPkZBfzUjXfTMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0InCHjc6DCLmA+cOFiqRqiSKsXgkIavVYoGBu6TNt6g=;
+ b=Nqhn0eJ6iwmfmTrD+AN3xYgXCCrTzosXV9OE//dQT2r9y4r4ZB1tO+SdO2cxpF+U1ccF5mGUXE+aSteVW/gwOaJ852//09JUsdXEvNqEZLIyLjJC4h2w1DjBYZYhshZiOmmw+nqeUDtxAUtUIozWKli8l1EHbqaC18EBNdLEmq4dkkRa1FaIDnTnfqfKVteaM6RY2xjxwNsv5waD8IC7aY3j/s2oAFUvqh3mRWhZco8VtajSGgt1YXjk3h6HGBAGUrk1b1oxtOy5nt98qzv6F5aa/kVQVZ8d3rV1JtavQB4iprmDfZX7x6URWwu4mbv/k7QJ9BnDM72qvqVRy8/uBA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com (2603:10a6:20b:113::22)
+ by AMDPR04MB11619.eurprd04.prod.outlook.com (2603:10a6:20b:71c::5) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.16; Mon, 29 Sep
+ 2025 09:09:32 +0000
+Received: from AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::4609:64af:8a4b:fd64]) by AM7PR04MB7046.eurprd04.prod.outlook.com
+ ([fe80::4609:64af:8a4b:fd64%6]) with mapi id 15.20.9160.015; Mon, 29 Sep 2025
+ 09:09:32 +0000
+Message-ID: <6db3337a-ba59-4901-b0e2-2b0b93c8a4e7@nxp.com>
+Date: Mon, 29 Sep 2025 17:10:59 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/9] drm/bridge: ite-it6263: handle unsupported
+ InfoFrames
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>,
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+ Andrzej Hajda <andrzej.hajda@intel.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>,
+ Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+ Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Rob Clark <robin.clark@oss.qualcomm.com>, Dmitry Baryshkov
+ <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>,
+ Marijn Suijten <marijn.suijten@somainline.org>,
+ Sandy Huang <hjc@rock-chips.com>, =?UTF-8?Q?Heiko_St=C3=BCbner?=
+ <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>,
+ Samuel Holland <samuel@sholland.org>, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
+ linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev
+References: <20250928-limit-infoframes-2-v2-0-6f8f5fd04214@oss.qualcomm.com>
+ <20250928-limit-infoframes-2-v2-3-6f8f5fd04214@oss.qualcomm.com>
+ <a7f0ced8-d704-4a59-bcc7-e0bd4db113fd@nxp.com>
+ <y3sndmfnwtljkbrssyycg6scjujt4kkjfo3gjclo3suzvqdahl@bdrdzmiolcb4>
+From: Liu Ying <victor.liu@nxp.com>
+Content-Language: en-US
+In-Reply-To: <y3sndmfnwtljkbrssyycg6scjujt4kkjfo3gjclo3suzvqdahl@bdrdzmiolcb4>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR02CA0023.apcprd02.prod.outlook.com
+ (2603:1096:4:195::11) To AM7PR04MB7046.eurprd04.prod.outlook.com
+ (2603:10a6:20b:113::22)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] arm64: dts: qcom: qrb2210-rb1: Add overlay for
- vision mezzanine
-To: Loic Poulain <loic.poulain@oss.qualcomm.com>, andersson@kernel.org,
- konradybcio@kernel.org, dave.stevenson@raspberrypi.com,
- sakari.ailus@linux.intel.com
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-media@vger.kernel.org, mchehab@kernel.org, conor+dt@kernel.org,
- robh@kernel.org
-References: <20250926073421.17408-1-loic.poulain@oss.qualcomm.com>
- <20250926073421.17408-4-loic.poulain@oss.qualcomm.com>
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-In-Reply-To: <20250926073421.17408-4-loic.poulain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM7PR04MB7046:EE_|AMDPR04MB11619:EE_
+X-MS-Office365-Filtering-Correlation-Id: d17baee8-8563-4800-dd9f-08ddff37e736
+X-LD-Processed: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+ BCL:0;ARA:13230040|366016|19092799006|376014|7416014|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info:
+ =?utf-8?B?bWdIVy93a3VuWkRVWGlSSC9OcGQyMjBIR1NJZnpzaUtueElaeURLNU5IVmJp?=
+ =?utf-8?B?bFpwMmtoeGtwZ0dnQkxCcGg2RU9lM3Nicnlpc3JDNEJtemNZNGI1bmNnMGU0?=
+ =?utf-8?B?TjV5UXBNTVdaZHF0cnVtc05NVVFDOCtYVkhKMlRNRGFURWl3UzRaaGZLZzEw?=
+ =?utf-8?B?Z1JVV3IwQUlIZ2FBT1pBUm43UitvNjBWYnpzUWpiSDJoWGorZy9INVRVQXBD?=
+ =?utf-8?B?YVBDYlNIQU1YL3pCNXliZUlQQW0wQW9wU0tGOGIzSXBSSGFSUTVKOGZncnFL?=
+ =?utf-8?B?TU5PTUQ3dkNsZGZtWTIzbk04NXRQQkVjUkRRUnNFdFVycFk5SmVhellqWnYr?=
+ =?utf-8?B?UVpEM2crT3RSM0xGM2FoMzkwTmc2dEpuSTByeEFUSWJLL2tRcVdkYndUTFBL?=
+ =?utf-8?B?MDdMU2NCRDN1Y0Y1SzFFdFVBMVY1TGhBZWkwYzNacWU4RzdvWDZ5a09iVDBY?=
+ =?utf-8?B?WWtUd3ZzRTkyNWhFK3o5VXFETS9UdE13eWFaYU1PN1lRcGtjVnNOTmJ0TjIw?=
+ =?utf-8?B?Y3ZNcStka3g0Z0tTMmM0UUhpejZVeGlzZlE5d1FWeHBpNlNKMEZNYkFVZ3h4?=
+ =?utf-8?B?WWtzUnpQT0g1eE9weVZ0YzFNVGhodUhqQW1nYmhGWFZQV3N4U0V1aGtSUVJX?=
+ =?utf-8?B?Ni9uSHFlaXgyd0pKbGpsajBtMVJWWnBHaFM3Mm13dGxpd1B2Zjh4ZktJNFBD?=
+ =?utf-8?B?OTAyaUZpa3Nxb3VRc04yWjFtL2NHUVdJOFVtdFhwdk5IOGxXbEVOamd0UjFB?=
+ =?utf-8?B?dExreWxPbjBUT0pDRWxIem0wK3VFaFJibVF6cDIyWUdlY3hHNnY1WjlkUGdi?=
+ =?utf-8?B?NHFOU3lqMWdvTHZldFZjcnM2QTEvbWtOZ00rMzhIRkZIR2RjUktsR2tYUklH?=
+ =?utf-8?B?bFIxQVF1d0xxcytJdmxsVHk2dXZmOGpTZFR6eVNHeldXc1YzZzBHZmordHFr?=
+ =?utf-8?B?dDBXRkxxU1ZjR3d3L0lPMTA4M2o2M2RiWXhZcS9pdWEzR1lyUmEzUkIxNGxR?=
+ =?utf-8?B?RGllTGo1aHIxYkJTd1JiQ3RFWTU4K1lNdjB3WkxhYVZxRkRpTHprMVJLTTBk?=
+ =?utf-8?B?N0FMVSsweXFncWpqRUlnUmxDcHVHMW5NL1FNeURqemFiWU04QXBiT1l3UWJu?=
+ =?utf-8?B?Q0MxM2l2djBxN3B0ZXdDdUU5SG54c0x1YTZFeGIvb25RZkFaTEhwTXBuNjk0?=
+ =?utf-8?B?RmI3M1JMRHAyaHUrY29YYlJ4S2xyVDQyTExnaVNNek5Kbjk2Q0p2QnkxU3dQ?=
+ =?utf-8?B?dXZJV2hkY2RkaVFMMk8wOXZ1ZGhqMmJVQmRnTDBVTDNaVnZIV3pmZmZLcGZC?=
+ =?utf-8?B?cERiWlAvMTUvUjRIK1RvajgreU5EbUY3NU11MlJaYzVUL1VGWWVuVDdJWVBY?=
+ =?utf-8?B?eFdQZy9JUFByd1grMmtWVXpSc3JCTEhSYnhzQ0dYRjNRUFNHZWhHbDFzTm9O?=
+ =?utf-8?B?TzFTOGdtOUNQdk91dk05T1gxZ3lQc3liRkZzSDFEQmJQb2NETTlGM3VmUytu?=
+ =?utf-8?B?NnV3T2dMRTZsNU5CbWN2Z3dBMjhucm4zbVpKSG54Q1BZODNGNmE5cndxZHdT?=
+ =?utf-8?B?eitNMU80TVU2eEsyYW5pZlB5N3VIcWtkU0ZoUzJCdnhDNWQ3clpjMlJqWDlN?=
+ =?utf-8?B?aWlnUXBjaHpLdEhYU1U5T0p1eUVGZGVkMHVoMVV3T2o3WFlIYTRJT2ZOL2sw?=
+ =?utf-8?B?dm1Ca1RrMTJONUZtMllZSTFUelpHZEJpT3VqYzNFODd2dlZwOFMwSndteDJW?=
+ =?utf-8?B?VnF5Rm1EajB0K05qQ3R1VkRUYW55NTB1VHNERG44WWd5SnMrZExmaHErbEZ1?=
+ =?utf-8?B?MDMvZWhvaUJrd25Tc1hUTjhBZVQvUUlMY1ZWVm9YZnJGVDQ2WXhIM1VTQ1Vu?=
+ =?utf-8?B?K1cxeVE3TFREaVhMZFNuYWNnd3lneE4veDNKSjJERnFmY0xMaW9waTJubmhi?=
+ =?utf-8?Q?szVweb957cpLT+iET9AijP5XASVi73ok?=
+X-Forefront-Antispam-Report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM7PR04MB7046.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(19092799006)(376014)(7416014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+ =?utf-8?B?akxvbjdpd1RKeUV3RS83aUZTNko0SVFnYTJxQ2Rld1l3ODhYOG1WMk0yd2lU?=
+ =?utf-8?B?ZkRZUFZBVnIyZG1mNUNjQWtHSFQvYS9SMjlwRG9XcGd1OTh3SEFucVhEU1ZH?=
+ =?utf-8?B?Z3NYNzRuSkpza2c0MWhpTVJRMG5YL0x6cXZkbkRkbGtzOFFEeWQ1YVJtSUFR?=
+ =?utf-8?B?ZDJ3K0Fqclo1OWVJM3FIQytNT21MZ2NaZ05yek9rd2loaC91dVV5NGNjZGJM?=
+ =?utf-8?B?UnFaV0t4VVZ0UkdoMWVxRGZvOVBqU1lScklBbk9DQmk2Sy92VHlHU1hMQkxp?=
+ =?utf-8?B?RlpLZHFUL1FxOE00Ny9vaXU4RjVNb042bkgvcmkrVGFkYVZwSnA5RlUzV1B0?=
+ =?utf-8?B?MGswTC9ocUVXVDQwU1VXTGJkTGVhSHlTZ3lsemVZQmsyb2JMZm1COWdVbHV5?=
+ =?utf-8?B?YzZ2cFBRNzVBSkg1TmVCdkk5L0ZscUxObmJ3N2JnemZWMm5QMlkwQmZNdGdI?=
+ =?utf-8?B?VUkyZlpsK091T0VJUnRDZ3ZiZVhOTFdKcDJ3V1g2SkN4Y05IbnFGcWdrTUlF?=
+ =?utf-8?B?ZjBqdmtHb1VoQmFHVlZaL2EwS3RXbzgxL2dzTHBRcU5IVXU2Nk41alBQNVdB?=
+ =?utf-8?B?SkZQbmkxbTNZZHV4MkswVnp5V2Z6bldzSWp2RUJZT005QkZnVjkxN21LRy8w?=
+ =?utf-8?B?dDRnUGVZMnpydmRMK3ZkQ2VPaDlxcGJtTzV1N09XRDRkWWNMbUU2UG9HV2dD?=
+ =?utf-8?B?RENEYzdlYXNtdGpmZ3pnTUNIcEcvaFlCOGxDbmhNakhxTm04S1R2M1ZVRFRF?=
+ =?utf-8?B?WDFWc3V1THFXMDVndFZZYWhYbFpnYkFBdU9sMEZSYUFCQzQ0RHdKVU1kTVRX?=
+ =?utf-8?B?OXBZK1A3OWZzbEFGdjQ4alA2TkVlUUpvVnYyRnh6R1cxT005d3RsamMvQStC?=
+ =?utf-8?B?ektlazk1N0RaMGw0TFJkZFRUWm8xQWY3eWMyNHE1Nlc3dmVQb0wyNTd5RDFN?=
+ =?utf-8?B?dmUzejJXWmRnZnFQQ2VTVnloMVlrZ2pKRjc2MG9mK2lWNHJ5Qm91bXRGNEN4?=
+ =?utf-8?B?dUpJRjZ4ZjZveW12Uk5KYWlXU2E5ZDhOQVJTSVkrWFZPTHNzRkFpWjdoalBV?=
+ =?utf-8?B?eFdIeDJCbkV0VFZ6OTFTTENGVEV5N2ZaRzN5NlRiVVY5ZlJvWGs0aUpvaXpX?=
+ =?utf-8?B?ZjRSVDdVeFh0WkpWUHZvREl1a1FoSGFvL1J0SG5TTjk3NmtsTGl1YjBFQ0xZ?=
+ =?utf-8?B?bmpGUzVIMURFdzhZUE1UVkl0K25uUHRqK1FOKzNzeU0zdEI1ZElVbnBrTFF3?=
+ =?utf-8?B?eTJkbGNINXVwWkY4ZjN0QWxuZ0ZwMUZQR2VYQnlpeEd1YkQwM0IveHdtVlpu?=
+ =?utf-8?B?ZHlrclgvT1ArQWFucWxTOXNMTUgyZWJBdmtOMDVEVit3UGNGOTNtVGp2QU1k?=
+ =?utf-8?B?YkkraWpXdkNKR3dwVFRtdnNkcUJYa2dVMXE0UjQxMEFVTzhqWmt0ejl1MmlV?=
+ =?utf-8?B?TnlFcHR3MmlvYnR4enRMSkRjMGo0bW9sOEI0SFVPVEdnRWpLNkcxL1BaQW5i?=
+ =?utf-8?B?cFI0Y0hFZUZTNHN5WlE1SVEwTytRL0hhZFNOWjhjNElFeVJ4NVRXelFiTGNh?=
+ =?utf-8?B?d09CUERBTE0xSCtveThvUk02MkV3dFhnaVBzVFFsU0wzS0hmTHhmemxkZENX?=
+ =?utf-8?B?SXNRMks2ejU1WFN5WnFrSURxcWFDeVJ1TktkeEtlaTkyNm9oZzFDdGc0eUhp?=
+ =?utf-8?B?Y3FWNzI5UWdNZHl3eTdOanNLZ0pYQ0VUNjNHYWVDMHdJMGg2WjZEM1hEU3d6?=
+ =?utf-8?B?QTdRTW4xdXpKMG1VTHpnUEdNMnlBRmNmTG4rRnBqNTNRaDBzUHdPc0ZmNkFZ?=
+ =?utf-8?B?eEh0SXVjVmFsd2Y5V1hnN0U1bnhnMDdVanZRK0FqUUJzRDdIZjliTW5aUlVs?=
+ =?utf-8?B?TzlROXovOCt6VHltNHV6cnJ3L0NKWWhyVXo4Ny9NQXpkWTVtNDljbVloN0dz?=
+ =?utf-8?B?ZDJLUXFLK2h1TFdETG1WQUhDaEhvVjlxemtBZ1dPWndOWnVwbmxkSG1EeEdo?=
+ =?utf-8?B?ZDg1UWNSdm1PSzFEMittOVhRTlhTNnVvYUJqT0lvUUdlQ1VKVVg4elZRaTU1?=
+ =?utf-8?B?YitSZ3F6b010Q0dIREtib3ZQTUJramdEcWNZQkVOMlB2dDlVbjlNbmQ4QjZa?=
+ =?utf-8?Q?6FFarZ6A3n+gd3KWlwTF3spN8?=
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d17baee8-8563-4800-dd9f-08ddff37e736
+X-MS-Exchange-CrossTenant-AuthSource: AM7PR04MB7046.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2025 09:09:32.7228
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: h3KDVx5mDAGIM0+ukB7ZLNXK734aI38z+pL3j8BlWiR5nlo8FMsez1y299d6NtuEQ2y2MnYtItgYUnlWOE4Alw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AMDPR04MB11619
 
-On 9/26/25 10:34, Loic Poulain wrote:
-> This initial version includes support for OV9282 camera sensor.
+On 09/29/2025, Dmitry Baryshkov wrote:
+> On Mon, Sep 29, 2025 at 03:56:31PM +0800, Liu Ying wrote:
+>> On 09/28/2025, Dmitry Baryshkov wrote:
+>>> Make hdmi_write_hdmi_infoframe() and hdmi_clear_infoframe() callbacks
+>>> return -EOPNOTSUPP for unsupported InfoFrames and make sure that
+>>> atomic_check() callback doesn't allow unsupported InfoFrames to be
+>>> enabled.
+>>>
+>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+>>> ---
+>>>  drivers/gpu/drm/bridge/ite-it6263.c | 27 +++++++++++++++++++++++++--
+>>>  1 file changed, 25 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/drivers/gpu/drm/bridge/ite-it6263.c b/drivers/gpu/drm/bridge/ite-it6263.c
+>>> index 2eb8fba7016cbf0dcb19aec4ca8849f1fffaa64c..cf3d76d748dde51e93b2b19cc2cbe023ca2629b8 100644
+>>> --- a/drivers/gpu/drm/bridge/ite-it6263.c
+>>> +++ b/drivers/gpu/drm/bridge/ite-it6263.c
+>>> @@ -26,6 +26,7 @@
+>>>  #include <drm/drm_crtc.h>
+>>>  #include <drm/drm_edid.h>
+>>>  #include <drm/drm_of.h>
+>>> +#include <drm/drm_print.h>
+>>>  #include <drm/drm_probe_helper.h>
+>>>  
+>>>  /* -----------------------------------------------------------------------------
+>>> @@ -772,7 +773,7 @@ static int it6263_hdmi_clear_infoframe(struct drm_bridge *bridge,
+>>>  		regmap_write(it->hdmi_regmap, HDMI_REG_PKT_NULL_CTRL, 0);
+>>>  		break;
+>>>  	default:
+>>> -		dev_dbg(it->dev, "unsupported HDMI infoframe 0x%x\n", type);
+>>> +		return -EOPNOTSUPP;
+>>>  	}
+>>>  
+>>>  	return 0;
+>>> @@ -812,13 +813,35 @@ static int it6263_hdmi_write_infoframe(struct drm_bridge *bridge,
+>>>  			     ENABLE_PKT | REPEAT_PKT);
+>>>  		break;
+>>>  	default:
+>>> -		dev_dbg(it->dev, "unsupported HDMI infoframe 0x%x\n", type);
+>>> +		return -EOPNOTSUPP;
+>>>  	}
+>>>  
+>>>  	return 0;
+>>>  }
+>>>  
+>>> +static int it6263_bridge_atomic_check(struct drm_bridge *bridge,
+>>> +				      struct drm_bridge_state *bridge_state,
+>>> +				      struct drm_crtc_state *crtc_state,
+>>> +				      struct drm_connector_state *conn_state)
+>>> +{
+>>> +	/* not supported by the driver */
+>>> +	conn_state->hdmi.infoframes.spd.set = false;
+>>> +
+>>> +	/* should not happen, audio support not enabled */
+>>> +	if (drm_WARN_ON_ONCE(bridge->encoder->dev,
+>>> +			     conn_state->connector->hdmi.infoframes.audio.set))
+>>
+>> Maybe use drm_err_once() instead to provide the reason for the warning in
+>> a string?
 > 
-> Signed-off-by: Loic Poulain <loic.poulain@oss.qualcomm.com>
-> ---
->   arch/arm64/boot/dts/qcom/Makefile             |  5 ++
->   .../qcom/qrb2210-rb1-vision-mezzanine.dtso    | 76 +++++++++++++++++++
->   2 files changed, 81 insertions(+)
->   create mode 100644 arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
+> I can change all of them to drm_err_once(), sure.
+
+With those changed,
+Acked-by: Liu Ying <victor.liu@nxp.com>
+
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-> index d7f22476d510..bee021efc249 100644
-> --- a/arch/arm64/boot/dts/qcom/Makefile
-> +++ b/arch/arm64/boot/dts/qcom/Makefile
-> @@ -138,6 +138,11 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
-> +
-> +qrb2210-rb1-vision-mezzanine-dtbs	:= qrb2210-rb1.dtb qrb2210-rb1-vision-mezzanine.dtbo
-> +
-> +dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1-vision-mezzanine.dtb
-> +
->   dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
->   dtb-$(CONFIG_ARCH_QCOM)	+= qrb5165-rb5.dtb
->   
-> diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso b/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
-> new file mode 100644
-> index 000000000000..3b6261131b75
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1-vision-mezzanine.dtso
-> @@ -0,0 +1,76 @@
-> +// SPDX-License-Identifier: BSD-3-Clause
-> +/*
-> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+>>
+>>> +		return -EOPNOTSUPP;
+>>
+>> As this check could return error, it should be moved before
+>> 'conn_state->hdmi.infoframes.spd.set = false;' to gain a little performance.
+> 
+> I'd say, it would be negligible.
 
-Year is missing, please set it.
+Fine, up to you :)
 
-> + */
-> +
-> +/dts-v1/;
-> +/plugin/;
-> +
-> +#include <dt-bindings/clock/qcom,gcc-qcm2290.h>
-> +#include <dt-bindings/gpio/gpio.h>
-> +
-> +&tlmm {
-> +	cam0a_default: cam0a-default-state {
-> +		pins = "gpio28";
-> +		function = "cam_mclk";
-> +		drive-strength = <16>;
-> +		bias-disable;
-> +	};
-> +};
+> 
+>>
+>>> +
+>>> +	/* should not happen, HDR support not enabled */
+>>> +	if (drm_WARN_ON_ONCE(bridge->encoder->dev,
+>>> +			     conn_state->hdmi.infoframes.hdr_drm.set))
+>>> +		return -EOPNOTSUPP;
+>>
+>> I don't think IT6263 chip supports DRM infoframe.  The drm_WARN_ON_ONCE()
+>> call could make driver readers think that DRM infoframe could be enabled
+>> in the future as audio infoframe has the same warning and IT6263 chip does
+>> support audio infoframe.  So, maybe:
+>>
+>> /* IT6263 chip doesn't support DRM infoframe. */
+>> conn_state->hdmi.infoframes.hdr_drm.set = false;
+> 
+> I'd rather not do that. My point here was that the driver can not end up
+> in the state where this frame is enabled, because it can only happen if
+> the driver sets max_bpc (which it doesn't). Likewise Audio InfoFrame can
+> not get enabled because the driver doesn't call into audio functions. On
+> the contrary, SPD frame (or HDMI in several other drivers) can be
+> enabled by the framework, so we silently turn then off here.
 
-This is a generic non-changeable MCLK3 pin configuration, which is
-specific to the SoC. Like in a number of other cases please consider
-to define this and other MCLKx pin configurations in the SoC .dtsi file.
+Ditto.
 
-> +
-> +&pm8008 {
-> +	status = "okay";
-> +};
-> +
-> +&camss {
-> +	status = "okay";
-> +
-> +	vdd-csiphy-1p2-supply = <&pm4125_l5>;
-> +	vdd-csiphy-1p8-supply = <&pm4125_l13>;
-> +
-> +	ports {
-> +		port@0 {
-> +			csiphy0_ep: endpoint {
-> +				data-lanes = <0 1>;
-> +				remote-endpoint = <&ov9282_ep>;
-> +			};
-> +		};
-> +	};
-> +};
-> +
-> +&cci {
-> +	status = "okay";
-> +};
-> +
-> +&cci_i2c1 {
-> +	#address-cells = <1>;
-> +	#size-cells = <0>;
-> +
-> +	/* Vision Mezzanine DIP3-1 must be ON (Selects camera CAM0A&B) */
-> +	camera@60 {
-> +		compatible = "ovti,ov9282";
-> +		reg = <0x60>;
-> +
-> +		/* Note: Reset is active-low but ov9282 driver logic is inverted... */
-> +		reset-gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
-> +
-> +		pinctrl-0 = <&cam0a_default>;
-> +		pinctrl-names = "default";
-> +
-> +		clocks = <&gcc GCC_CAMSS_MCLK3_CLK>;
-> +		assigned-clocks = <&gcc GCC_CAMSS_MCLK3_CLK>;
-> +		assigned-clock-rates = <24000000>;
-> +
+> 
+>>
+>>> +
+>>> +	return 0;
+>>> +}
+>>> +
+>>>  static const struct drm_bridge_funcs it6263_bridge_funcs = {
+>>> +	.atomic_check = it6263_bridge_atomic_check,
+>>>  	.atomic_duplicate_state = drm_atomic_helper_bridge_duplicate_state,
+>>>  	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
+>>>  	.atomic_reset = drm_atomic_helper_bridge_reset,
+>>>
+>>
+>>
+>> -- 
+>> Regards,
+>> Liu Ying
+> 
 
-It makes little sense to split properties with blank lines.
-
-> +		avdd-supply = <&vreg_l3p>;
-> +		dvdd-supply = <&vreg_l1p>;
-> +		dovdd-supply = <&vreg_l7p>;
-> +
-> +		port {
-> +			ov9282_ep: endpoint {
-> +				link-frequencies = /bits/ 64 <400000000>;
-> +				data-lanes = <1 2>;
-> +				remote-endpoint = <&csiphy0_ep>;
-
-It's quite strange to see CSI0 and MCLK3 in the same boat, but the
-schematics says so.
-
-> +                        };
-> +                };
-> +	};
-> +};
-
-Reviewed-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
 -- 
-Best wishes,
-Vladimir
+Regards,
+Liu Ying
 
