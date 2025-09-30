@@ -1,50 +1,50 @@
-Return-Path: <linux-arm-msm+bounces-75582-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75583-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD79EBAC952
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 13:00:09 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9C200BAC9BE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 13:01:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 18A7E3C0DEB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 11:00:08 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4E25717F042
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 11:01:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B1BC32F9DBF;
-	Tue, 30 Sep 2025 11:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id F2D02E555;
+	Tue, 30 Sep 2025 11:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hMgAjDFi"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YanJcyaI"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B022F9D8E;
-	Tue, 30 Sep 2025 11:00:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE61C220F20
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 11:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759230004; cv=none; b=bbExXTsfBcFu4hPNBQfoJPzQGWK6D48mdUkrZ0o6e/jCfTt/MTIXKv4MQTGedigz5GR8tmYeqgMmI4CsgNY9OqOscA2iZwtqis+Dm10rHOJdtpv4Z90UviKWkZQ7CRAhlkxyJN1gQd0dQAG5JdXh3fRquzXnZGBa1WLJaQazylA=
+	t=1759230077; cv=none; b=Ov0lusjn4oK17VOoWwy06VzS6y11/5t6ooDetZmC3CMQ7BexaDO83+nbyeAfXtgRe2DQDUho+Sc+5bUruULEui0RASR1QDPhwnorMr7CD9c1jrUBYn5d/LiTK/1WRNVTwvfl8ABZO6tK+qW8XDko39TkBvMHH5bKK/KXLY/ESVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759230004; c=relaxed/simple;
-	bh=hl6CpBsFM0yclQLF3Wr1UR3e+Pr0M3yXUJx6ZUgVFTo=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=WSYuc+M3UiIhWil9LzeCvIgf0lBpGri/ly+LkJoSOZi0qPSGV24hi1IW6e/vZ+ervFZCC8nYioZjEa04+NPE2cZBcUDg+jTttjzyFMeFsex1+zWJ3dYfVKvgo2QymQ3LnURrWfhgGR3Ng5tsS+EH245O8Dc/ajGRCNI/VYu42ic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hMgAjDFi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51488C4CEF0;
-	Tue, 30 Sep 2025 11:00:03 +0000 (UTC)
+	s=arc-20240116; t=1759230077; c=relaxed/simple;
+	bh=2PhLE1kRIvU6OO2foF6GoCBKG5WdnrFc/wYBlbDxAiU=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=vA/p7fbf0Pjg6zIwP/g6+l8pPwzsjMzK27HKKa9J9jInPsDO+npQK6i4aTF5tH4gZ5BHJTFyIzUXNXU4PxtmBa1UW5dPvJ9WNmFOip8WkW8BHKukpIKGRSVvfIuZywuwWIgSgm/r9ffo4RLDl/wezYrJEjOLXX197/LXB39qTGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YanJcyaI; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E709DC113D0;
+	Tue, 30 Sep 2025 11:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759230003;
-	bh=hl6CpBsFM0yclQLF3Wr1UR3e+Pr0M3yXUJx6ZUgVFTo=;
-	h=From:Subject:Date:To:Cc:From;
-	b=hMgAjDFiUcHZlHXjNfiivYmi8e8vUVWCi59OcfXv0rRTbwfOXoZRgN9AbmT6dp24I
-	 QG9cauPJW6cadrjxv9LaBeqXg2c41/8Afqvud6K2PeYu5cT41oVL2Rd0dO08HLJ1KN
-	 EzucbmMAqmuZu+7MBn6um5hAXXbmRWnDv/rV8vIGOBaSOEnTsFyZ6ZM571/O9AUMGH
-	 Flap9Gu7hgedgeX22zbtnMoQdL9pkmX/clya9FLtDuexAQAJiXx6m81fUxDWpuNtm+
-	 hQszCjBUs8oMkf3jYBWhJnB4L+H4zNY2ZqKUrJaEKvD8H/JgewXOHCi9u/myHJLxn8
-	 dS3ZTJeRZILEw==
+	s=k20201202; t=1759230077;
+	bh=2PhLE1kRIvU6OO2foF6GoCBKG5WdnrFc/wYBlbDxAiU=;
+	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
+	b=YanJcyaIreu0Bvp5IsBbjjEDOxHayh4M8xD5Qf8nX/wRRhrajW1u7qLmE82z1fvrg
+	 xpY0ENM4yz8gMVvlCBW7ny/85+c92ks8lq+8kYXmAAIwU27o5lDAoJoc06lVgu0GC1
+	 plBuPb0ku0lmUnaYo8by/S6cTiQKBK6CM8wwNaHNDLtjJs+eh/qZDfgSm0jGbKOOR8
+	 l9U6w4/YHXtVV3upyc1CDg5wSdQJmp75JJ6CRmBqdO3aiyRTSZBq6e98CVJ6CT33EN
+	 XvY5+9WQxkkZqhXNUvrV8LnXg7q16C2nxirLMjwy7no1GHXygIxWYNXpXWTkrJWJCP
+	 EIIrLlev5jdbw==
 From: Maxime Ripard <mripard@kernel.org>
-Subject: [PATCH v5 00/39] drm/atomic: Get rid of existing states (not
- really)
-Date: Tue, 30 Sep 2025 12:59:15 +0200
-Message-Id: <20250930-drm-no-more-existing-state-v5-0-eeb9e1287907@kernel.org>
+Date: Tue, 30 Sep 2025 12:59:40 +0200
+Subject: [PATCH v5 25/39] drm/msm/mdp5: Switch to
+ drm_atomic_get_new_crtc_state()
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -52,200 +52,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAO422gC/43NTWrDMBCG4asErTtFP5at6ar3KF3Yo5Ej2khFM
- iYl+O5VsmlKwHT5fgzPXETlErmKl8NFFF5jjTm1sE8HQccxzQzRtxZaaiudtuDLCVKGUy4MfI5
- 1iWmGuowLA05GW01qNGYSDfgqHOL5hr+9tz6261y+b79WdV3/xa4KJATpiDwGZwlfP7gk/nzOZ
- RZXd9W/Fkq9a+lmeUYXyIbe9/2DZe4t3LVMsxQN4+Cxl2TMg9XdWWrYtbpmWd9N6BySIffH2rb
- tB24+KlipAQAA
-X-Change-ID: 20250825-drm-no-more-existing-state-9b3252c1a33b
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250930-drm-no-more-existing-state-v5-25-eeb9e1287907@kernel.org>
+References: <20250930-drm-no-more-existing-state-v5-0-eeb9e1287907@kernel.org>
+In-Reply-To: <20250930-drm-no-more-existing-state-v5-0-eeb9e1287907@kernel.org>
 To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
  Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
  Simona Vetter <simona@ffwll.ch>
 Cc: dri-devel@lists.freedesktop.org, Maxime Ripard <mripard@kernel.org>, 
- Luca Ceresoli <luca.ceresoli@bootlin.com>, 
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
  =?utf-8?q?Ville_Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>, 
- Louis Chauvet <louis.chauvet@bootlin.com>, 
- Haneen Mohammed <hamohammed.sa@gmail.com>, 
- Melissa Wen <melissa.srw@gmail.com>, Jyri Sarha <jyri.sarha@iki.fi>, 
- Tomi Valkeinen <tomi.valkeinen@ideasonboard.com>, 
- Paul Cercueil <paul@crapouillou.net>, linux-mips@vger.kernel.org, 
- Liviu Dudau <liviu.dudau@arm.com>, Russell King <linux@armlinux.org.uk>, 
- Manikandan Muralidharan <manikandan.m@microchip.com>, 
- Dharma Balasubiramani <dharma.b@microchip.com>, 
- Nicolas Ferre <nicolas.ferre@microchip.com>, 
- Alexandre Belloni <alexandre.belloni@bootlin.com>, 
- Claudiu Beznea <claudiu.beznea@tuxon.dev>, 
- linux-arm-kernel@lists.infradead.org, Inki Dae <inki.dae@samsung.com>, 
- Seung-Woo Kim <sw0312.kim@samsung.com>, 
- Kyungmin Park <kyungmin.park@samsung.com>, 
- Krzysztof Kozlowski <krzk@kernel.org>, 
- Alim Akhtar <alim.akhtar@samsung.com>, linux-samsung-soc@vger.kernel.org, 
- Liu Ying <victor.liu@nxp.com>, Shawn Guo <shawnguo@kernel.org>, 
- Sascha Hauer <s.hauer@pengutronix.de>, 
- Pengutronix Kernel Team <kernel@pengutronix.de>, 
- Fabio Estevam <festevam@gmail.com>, imx@lists.linux.dev, 
- Laurentiu Palcu <laurentiu.palcu@oss.nxp.com>, 
- Lucas Stach <l.stach@pengutronix.de>, 
- Philipp Zabel <p.zabel@pengutronix.de>, 
- Anitha Chrisanthus <anitha.chrisanthus@intel.com>, 
- Edmund Dea <edmund.j.dea@intel.com>, Paul Kocialkowski <paulk@sys-base.io>, 
- Sui Jingfeng <suijingfeng@loongson.cn>, 
- Chun-Kuang Hu <chunkuang.hu@kernel.org>, 
- Matthias Brugger <matthias.bgg@gmail.com>, 
- AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
- linux-mediatek@lists.infradead.org, linux-kernel@vger.kernel.org, 
  Rob Clark <robin.clark@oss.qualcomm.com>, 
  Dmitry Baryshkov <lumag@kernel.org>, 
  Abhinav Kumar <abhinav.kumar@linux.dev>, 
  Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
  Marijn Suijten <marijn.suijten@somainline.org>, 
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
- Sandy Huang <hjc@rock-chips.com>, 
- =?utf-8?q?Heiko_St=C3=BCbner?= <heiko@sntech.de>, 
- Andy Yan <andy.yan@rock-chips.com>, linux-rockchip@lists.infradead.org, 
- Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
- Samuel Holland <samuel@sholland.org>, linux-sunxi@lists.linux.dev, 
- Thierry Reding <thierry.reding@gmail.com>, 
- Mikko Perttunen <mperttunen@nvidia.com>, 
- Jonathan Hunter <jonathanh@nvidia.com>, linux-tegra@vger.kernel.org, 
- Hans de Goede <hansg@kernel.org>, 
- Dave Stevenson <dave.stevenson@raspberrypi.com>, 
- =?utf-8?q?Ma=C3=ADra_Canal?= <mcanal@igalia.com>, 
- Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6084; i=mripard@kernel.org;
- h=from:subject:message-id; bh=hl6CpBsFM0yclQLF3Wr1UR3e+Pr0M3yXUJx6ZUgVFTo=;
- b=owGbwMvMwCmsHn9OcpHtvjLG02pJDBm3d8j/a/a6xTLbujO7gOmIX8GRFI/Z08TFfa8l/f2wJ
- 1vwnOCTjqksDMKcDLJiiixPZMJOL29fXOVgv/IHzBxWJpAhDFycAjCRo76M9RGT5kX9/PrcYUOU
- Xc3vVCdrnrZQvp8/9rW2TlB2zd9arHTJpL76n8H01qSDffMSOxbsZayPWzpdcdqEsnkMcZ3Su3a
- bh9aUT/vo9XJ+SPfni76/f52viFVZ8PjkVV3ZNO+5Bldt9xgAAA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2354; i=mripard@kernel.org;
+ h=from:subject:message-id; bh=2PhLE1kRIvU6OO2foF6GoCBKG5WdnrFc/wYBlbDxAiU=;
+ b=owGbwMvMwCmsHn9OcpHtvjLG02pJDBm3d2hVWLIeCRPrNp9uuYSzJXjtIr/zKYkeHqaVx3Mur
+ v51ULC/YyoLgzAng6yYIssTmbDTy9sXVznYr/wBM4eVCWQIAxenAEykhouxPn12ae6yyLkL9PnO
+ uXGwNvV/+rZzYsBZi4Oi7KXrb07+/bk7cB+XbnBYy+H1WW85lm5gZ6wvfWh6fO66g5Jl4hkbt8a
+ 8/xP/68yEkKqJx8Nefkjy2r/dwb1v2n1bo8dfz76RW7RgliQjAA==
 X-Developer-Key: i=mripard@kernel.org; a=openpgp;
  fpr=BE5675C37E818C8B5764241C254BCFC56BF6CE8D
 
-Hi,
+The msm atomic_check implementation uses the deprecated
+drm_atomic_get_existing_crtc_state() helper.
 
-Here's a series to get rid of the drm_atomic_helper_get_existing_*_state
-accessors.
+This hook is called as part of the global atomic_check, thus before the
+states are swapped. The existing state thus points to the new state, and
+we can use drm_atomic_get_new_crtc_state() instead.
 
-The initial intent was to remove the __drm_*_state->state pointer to
-only rely on old and new states, but we still need it now to know which
-of the two we need to free: if a state has not been committed (either
-dropped or checked only), then we need to free the new one, if it has
-been committed we need to free the old state. 
-
-Thus, the state pointer is kept (and documented) only to point to the
-state we should free eventually.
-
-All users have been converted to the relevant old or new state
-accessors.  
-
-This was tested on tidss.
-
-Let me know what you think,
-Maxime
-
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Acked-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
 Signed-off-by: Maxime Ripard <mripard@kernel.org>
 ---
-Changes in v5:
-- Added some more documentation on state teardown
-- Link to v4: https://lore.kernel.org/r/20250917-drm-no-more-existing-state-v4-0-5d4b9889c3c8@kernel.org
-
-Changes in v4:
-- Fix ingenic
-- Rebased on latest drm-misc-next tag
-- Link to v3: https://lore.kernel.org/r/20250909-drm-no-more-existing-state-v3-0-1c7a7d960c33@kernel.org
-
-Changes in v3:
-- Added an armada rework patch
-- Added an ingenic fix
-- Collected tags
-- Rebased on latest drm-misc-next tag
-- Link to v2: https://lore.kernel.org/r/20250902-drm-no-more-existing-state-v2-0-de98fc5f6d66@kernel.org
-
-Changes in v2:
-- Dropped the first and second patches
-- Reworked the recipient list to be nicer with SMTPs
-- Link to v1: https://lore.kernel.org/r/20250825-drm-no-more-existing-state-v1-0-f08ccd9f85c9@kernel.org
-
+To: Rob Clark <robin.clark@oss.qualcomm.com>
+To: Dmitry Baryshkov <lumag@kernel.org>
+Cc: Abhinav Kumar <abhinav.kumar@linux.dev>
+Cc: Jessica Zhang <jessica.zhang@oss.qualcomm.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Marijn Suijten <marijn.suijten@somainline.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
 ---
-Maxime Ripard (39):
-      drm/atomic: Convert drm_atomic_get_connector_state() to use new connector state
-      drm/atomic: Remove unused drm_atomic_get_existing_connector_state()
-      drm/atomic: Document __drm_connectors_state state pointer
-      drm/atomic: Convert __drm_atomic_get_current_plane_state() to modern accessor
-      drm/atomic: Convert drm_atomic_get_plane_state() to use new plane state
-      drm/vkms: Convert vkms_crtc_atomic_check() to use new plane state
-      drm/tilcdc: crtc: Use drm_atomic_helper_check_crtc_primary_plane()
-      drm/atomic: Remove unused drm_atomic_get_existing_plane_state()
-      drm/atomic: Document __drm_planes_state state pointer
-      drm/atomic: Convert drm_atomic_get_crtc_state() to use new connector state
-      drm/ingenic: ipu: Switch to drm_atomic_get_new_crtc_state()
-      drm/arm/malidp: Switch to drm_atomic_get_new_crtc_state()
-      drm/armada: Drop always true condition in atomic_check
-      drm/armada: Switch to drm_atomic_get_new_crtc_state()
-      drm/atmel-hlcdc: Switch to drm_atomic_get_new_crtc_state()
-      drm/exynos: Switch to drm_atomic_get_new_crtc_state()
-      drm/imx-dc: Switch to drm_atomic_get_new_crtc_state()
-      drm/imx-dcss: Switch to drm_atomic_get_new_crtc_state()
-      drm/imx-ipuv3: Switch to drm_atomic_get_new_crtc_state()
-      drm/ingenic: Switch to drm_atomic_get_new_crtc_state()
-      drm/kmb: Switch to drm_atomic_get_new_crtc_state()
-      drm/logicvc: Switch to drm_atomic_get_new_crtc_state()
-      drm/loongson: Switch to drm_atomic_get_new_crtc_state()
-      drm/mediatek: Switch to drm_atomic_get_new_crtc_state()
-      drm/msm/mdp5: Switch to drm_atomic_get_new_crtc_state()
-      drm/omap: Switch to drm_atomic_get_new_crtc_state()
-      drm/rockchip: Switch to drm_atomic_get_new_crtc_state()
-      drm/sun4i: Switch to drm_atomic_get_new_crtc_state()
-      drm/tegra: Switch to drm_atomic_get_new_crtc_state()
-      drm/tilcdc: Switch to drm_atomic_get_new_crtc_state()
-      drm/vboxvideo: Switch to drm_atomic_get_new_crtc_state()
-      drm/vc4: Switch to drm_atomic_get_new_crtc_state()
-      drm/atomic: Switch to drm_atomic_get_new_crtc_state()
-      drm/framebuffer: Switch to drm_atomic_get_new_crtc_state()
-      drm/atomic: Remove unused drm_atomic_get_existing_crtc_state()
-      drm/atomic: Document __drm_crtcs_state state pointer
-      drm/ingenic: crtc: Switch to ingenic_drm_get_new_priv_state()
-      drm/atomic: Convert drm_atomic_get_private_obj_state() to use new plane state
-      drm/atomic: Document __drm_private_objs_state state pointer
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
- drivers/gpu/drm/arm/malidp_planes.c             |   2 +-
- drivers/gpu/drm/armada/armada_plane.c           |   7 +-
- drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_plane.c |   2 +-
- drivers/gpu/drm/drm_atomic.c                    |  21 ++--
- drivers/gpu/drm/drm_framebuffer.c               |   2 +-
- drivers/gpu/drm/exynos/exynos_drm_plane.c       |   2 +-
- drivers/gpu/drm/imx/dc/dc-plane.c               |   2 +-
- drivers/gpu/drm/imx/dcss/dcss-plane.c           |   4 +-
- drivers/gpu/drm/imx/ipuv3/ipuv3-plane.c         |   3 +-
- drivers/gpu/drm/ingenic/ingenic-drm-drv.c       |  13 +-
- drivers/gpu/drm/ingenic/ingenic-ipu.c           |   4 +-
- drivers/gpu/drm/kmb/kmb_plane.c                 |   3 +-
- drivers/gpu/drm/logicvc/logicvc_layer.c         |   4 +-
- drivers/gpu/drm/loongson/lsdc_plane.c           |   2 +-
- drivers/gpu/drm/mediatek/mtk_plane.c            |   3 +-
- drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c      |   7 +-
- drivers/gpu/drm/omapdrm/omap_plane.c            |   2 +-
- drivers/gpu/drm/rockchip/rockchip_drm_vop.c     |   6 +-
- drivers/gpu/drm/rockchip/rockchip_drm_vop2.c    |   2 +-
- drivers/gpu/drm/sun4i/sun8i_ui_layer.c          |   3 +-
- drivers/gpu/drm/sun4i/sun8i_vi_layer.c          |   3 +-
- drivers/gpu/drm/tegra/dc.c                      |   2 +-
- drivers/gpu/drm/tilcdc/tilcdc_crtc.c            |   9 +-
- drivers/gpu/drm/tilcdc/tilcdc_plane.c           |   3 +-
- drivers/gpu/drm/vboxvideo/vbox_mode.c           |   8 +-
- drivers/gpu/drm/vc4/vc4_plane.c                 |   6 +-
- drivers/gpu/drm/vkms/vkms_crtc.c                |   4 +-
- include/drm/drm_atomic.h                        | 152 +++++++++++++-----------
- 28 files changed, 140 insertions(+), 141 deletions(-)
----
-base-commit: 91494dee1091a14d91da6bcb39e12a907765c793
-change-id: 20250825-drm-no-more-existing-state-9b3252c1a33b
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+index 7c790406d533fbabb330c438419efb18204cc4b7..4ca183fb61a95af60ef5a2c011ae6b2a0df963f0 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_plane.c
+@@ -334,12 +334,11 @@ static int mdp5_plane_atomic_check(struct drm_plane *plane,
+ 
+ 	crtc = new_plane_state->crtc ? new_plane_state->crtc : old_plane_state->crtc;
+ 	if (!crtc)
+ 		return 0;
+ 
+-	crtc_state = drm_atomic_get_existing_crtc_state(state,
+-							crtc);
++	crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
+ 	if (WARN_ON(!crtc_state))
+ 		return -EINVAL;
+ 
+ 	return mdp5_plane_atomic_check_with_state(crtc_state, new_plane_state);
+ }
+@@ -371,12 +370,12 @@ static int mdp5_plane_atomic_async_check(struct drm_plane *plane,
+ 	struct mdp5_plane_state *mdp5_state = to_mdp5_plane_state(new_plane_state);
+ 	struct drm_crtc_state *crtc_state;
+ 	int min_scale, max_scale;
+ 	int ret;
+ 
+-	crtc_state = drm_atomic_get_existing_crtc_state(state,
+-							new_plane_state->crtc);
++	crtc_state = drm_atomic_get_new_crtc_state(state,
++						   new_plane_state->crtc);
+ 	if (WARN_ON(!crtc_state))
+ 		return -EINVAL;
+ 
+ 	if (!crtc_state->active)
+ 		return -EINVAL;
 
-Best regards,
 -- 
-Maxime Ripard <mripard@kernel.org>
+2.51.0
 
 
