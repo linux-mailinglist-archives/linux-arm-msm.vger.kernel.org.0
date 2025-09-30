@@ -1,182 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-75585-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75586-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id CE83DBACC60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 14:06:49 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B3B0FBAD0D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 15:27:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 3BC72188E3FF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 12:07:12 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 4F58E320136
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 13:27:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A73512F7AB9;
-	Tue, 30 Sep 2025 12:06:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DAF772F5301;
+	Tue, 30 Sep 2025 13:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="iaoRTpuk"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aaXmhwDa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD692853EF
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 12:06:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7FC230D0F
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 13:27:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759234006; cv=none; b=dUP2DMMWbdBJDpQjro8w1MGJZlFblUExTBQnag/AzIXqpXoqjka++xHbv88AM8HvF+InGH1CXb+soIkQ2tRcC6ZeBLJn5i/8Oa0i1kwIByg76jxAqNqXL6YzM9CbNhtfn/sgD6R3nqYE9EvlXV/jT/xWJX+9ASISClt+H/PyDo0=
+	t=1759238836; cv=none; b=mzm+xPvfzXRmreVpaEHHozxPJ8Ua6dYBDjeK7R63ZWHMI6rwWTKpIGodOe/HF84SZwpeziFLevgaiwqM/VV+q/DYg33UBXDE/C3OGR7NTaXHw3wvGQEazemdi3zP+1Ma/OgoZ977uid2pWsdGuUDckh+GOfz16Eseb54GF894zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759234006; c=relaxed/simple;
-	bh=kTN82QZE1YVf3HwRi95Em/EAWrMW/V8K6a1OaEPGfc4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UfVgO8NRqawwc00TwrG77EhKTkxK9o30rQtVmfNdtT7eNBeoODiOuFYGLKjmSOXHEEKICExvhaKWtbgWkyU8/E5bdPhNr0o1SE4qKulSuHvjXWceG8Wkz8620xGtoGjneFceIY33+Omuf71zMI0fJh3cpbIZ4PO4HGeVBJ5QFDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=iaoRTpuk; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58UBvwSh010703
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 12:06:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	EkaBsegfjzyeBh8oOxCHkshGj1/Y5QRA9G6enyBN7ZI=; b=iaoRTpukXHuTeq3S
-	WLKzIuWPnKgcExCUnR1/FE/rtI4GSCTocagt+tSpSP5xWZuIJ89ohsASpQbu0Po4
-	wh9QAIzmHjyDDYOI5YmDH8XbeEwcGKO9RaZFHMgW2Ce4B0Y90UdRX4L6ipdcH5v/
-	IOoPXA7Ju/MEWkKFMP2ANKt9OWGNADLETSx1k3wCFGwODocFPE+GYb2WRHT14z21
-	nuCg6nxnlHJavri9aAhtp7BNjwFUwNd3fNtRznewsRtqWMXpE8onEQ1M3wC6M0E6
-	XVPmX8UD5C2SkX+df4Q80a5ZnEt8QoKyVlfy+efBSDMWJmUQaszLZXDXOfWMiwmT
-	mT5P4Q==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e5mcs721-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 12:06:44 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-781269a9049so6093763b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 05:06:44 -0700 (PDT)
+	s=arc-20240116; t=1759238836; c=relaxed/simple;
+	bh=C2c+iYmbNgGTOO2nKF6xIbNLg4yN9mRhc5CtHzgpGc4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fGna8kAN+Z73LamHHVEhBjdg2nV8J5S9dTr8G7JdgJ2w0dEvkRfjIJhl/cyC/GvpYjmZ6QnhCPBvP/ULi8egoeeLfPIa87WSXqQbNZBNCyFOo/y26qDkL9pbVePvlumohpBjr+SFqQ/aZ+S3ArwD2r0M6f2ay/DDJ9LpdymucjA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aaXmhwDa; arc=none smtp.client-ip=209.85.218.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-b4539dddd99so130188666b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 06:27:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759238834; x=1759843634; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pEYWNqVN+hXm3csWbV92tvh3D0m5lJ5Vd6pA/p8j2lM=;
+        b=aaXmhwDafjIq8CmeSc2aZEr69FBaH8jalQuIio+zTpzuBMCFyrevY6oUJQ/6dygtTd
+         riCuHIE1+Ryt082KbELkkeoO2Fi9ip+9g25nDnOp/v4xbCY4XC8Nus029t4m4/FE/9kq
+         RjsyHbg1RFwNPbziPpvJYMlMe6o3RmK0o1q8q2bNKIVKTlNS6GsukMIj/NrQ/ELtyXPm
+         28N3moCURJ0/UxOMLEEvzC3+wpKQtKugXkl6xhUmRsR3flUfibprAim+Rp5UqN7mxgvz
+         6xvj9cjvOpTjXP67L6p3tTq9BQloBz0L0n5B4lgdU5wAx+iA2dPVcGXpUIgrM8GeBz/f
+         4DjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759234003; x=1759838803;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EkaBsegfjzyeBh8oOxCHkshGj1/Y5QRA9G6enyBN7ZI=;
-        b=RKYmlsfDxWmYN7D7nGAX7yX8nQMGI48WzStlo/429gEdrjzHSyoZ3/iqQ+aaGpgrWQ
-         7/nZes1L4QKBKZxGN1hot5p9HmdB9XVmxfI9DD/37xbBUiWoi/U+1Qyypuch8zHZg0Lu
-         jvBwFr5Fbn39WL32p9F2WP7oBEqpJXfI1SEqfdcbKfAQ8UVe98H475Qh4gLfMvbVcaC6
-         eFUPXY+SAA5hxtdFdVRVZNKWfgDLoTeTD63NnkLXa3r5P7vj9H8UNwLjv/PVoJlECNjs
-         Ki3UDI3DAZXQotkrLOsuZ7oslsjgHVRopPLimCSBoQF6/ppEJ1I3X3L2A9swICJaYICP
-         /2kw==
-X-Forwarded-Encrypted: i=1; AJvYcCWB2Hpuefm/1CA37c9ReCR9/yyx4ZIO13ZTftAcGAEEp7eqDwNyYJVFkqa1rGHh2zwQKmU8CezGXHD9a+Gm@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSkzGYtVE0IZVH7WYnMqEytY4Hosh2S2JRJMLeIQCtX4NGw/Iv
-	OPMu0SqMlYRvRIHyB4ct1fjgkujPIj77jSsiASylYsFIHbXStS+/W1RGJRMsbQDTAyvso0zr27J
-	AGwdwAm6m2owJLINtYh2HMsrQIamPUCjKnCUKFbwEGJxRGf6XgHzWos/093PM7siAZpSs
-X-Gm-Gg: ASbGnct0bxp02Rn8AJ2Dh1IK/P3zOqYVRFYGLt6/WUXIuei5muKJpzFZLzqwBlLBYa8
-	YD7DomZU849dTQB06eOUQ3TBEOb3iCGPKd9LKvdj9u5WFseAre24C7CkoZ4gzkEw2qr+A418AyB
-	EKWv9+juI5qSaYn0+7P6YP/tkrswaF6Uq2uPxBwpPwoMRIBeHrBbFMwjJXxsjfZS/RPWs9o32BX
-	orLPY0V0hpycgVGkNouoPN31F/0YsFWZCzo8akU6kwox6m1yKrJrypplddu94NJNRS8JNDH16CY
-	FqxZabwGOE0rxBQ3GnixCbWUARww5WMqHPNcDYYuPHq0mTq2GWPb5ZbQ2lxAeuB7rebcuc4LQAu
-	rTvc=
-X-Received: by 2002:a05:6a00:3e27:b0:781:2538:bf95 with SMTP id d2e1a72fcca58-7812538c1afmr13271677b3a.10.1759234003372;
-        Tue, 30 Sep 2025 05:06:43 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAWC6qZJiFW1T+hfkMFajhkKgE2qQSFj6mEYH92+MF2n+0pztInszFB0KjM2zlM/1ETInsQA==
-X-Received: by 2002:a05:6a00:3e27:b0:781:2538:bf95 with SMTP id d2e1a72fcca58-7812538c1afmr13271630b3a.10.1759234002835;
-        Tue, 30 Sep 2025 05:06:42 -0700 (PDT)
-Received: from [10.219.49.214] ([202.46.23.19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-78102c07696sm13638107b3a.74.2025.09.30.05.06.38
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 30 Sep 2025 05:06:42 -0700 (PDT)
-Message-ID: <51637d37-aa5e-492a-851c-e5d6bfbe421e@oss.qualcomm.com>
-Date: Tue, 30 Sep 2025 17:36:37 +0530
+        d=1e100.net; s=20230601; t=1759238834; x=1759843634;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pEYWNqVN+hXm3csWbV92tvh3D0m5lJ5Vd6pA/p8j2lM=;
+        b=vbtlCTHVIr0FoRjokaGPn1zLIq7DKs4fAWbPfXlBqNGYGB452iJqa/8KPVQ9VEtAbd
+         i3YqCn2OAU66sjHF//RCaa5JsM2KKF0m90M0poxjtQsxJX98wZh+EZ0E7yfgAP+8UabK
+         ItESdL8Fw9dp2jou2/L+SjB4VgRM62+tweuh5PGrRDPhGe7XjVo7DWW39pAqawjGnDH4
+         Q4ldlqVD4EEfRgSOqGoUgSVRvfjq+xwSuTn4/2IMnxIqBYG6plBnW4nC9OzaolhOivWh
+         RszTl/53CZV4cksTFeSjJcHwATWHzulbKMqbRg8N2lG3E+AMYBpab9PzmEQTpW0PdcOD
+         WMeQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVUH3H4xdR+/w1Ur+ROnQGyCXTFKAOFkPOYjzkzrVSkWcZT8dmAMCJSre2SxbECNXB/Nfu1cEeJgMQS4pbQ@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywp+ZUWkrwed2JcZyxZhomSzhDpudoV6wLVeVU+pGlFGMQbpK0b
+	xeJgGUIPq9gsyUCjZaYBGcPFJhGiTTpNoKcCO1ZTTtbbSZgLaNv638OT
+X-Gm-Gg: ASbGncsbgrsEBgSLfp341qvYjZnEF8Cf+jB/DBTX7/cfRRFU+bRPrNhGeJIdkxpOcGR
+	DfTZJEry+8P06aZyLjS5jQEBcYHxcdW8xoED6ZnC0bcIW2ZQuCLa30GU9ApIyeOdC5TQjnpjcLO
+	YEodPB2nHfAmFXHDqZUkPOf/beBxbqPS86gqDC7hUcFI/H6kxho4UiLNukuRyzSuNDQcBaSYHd6
+	JmKO1sYXtW/kRITe5zYnL4/vn+kRXj+vdoAJRZWYSOFaax4NVOoa0zIKoBtj6VjANYonhcqJxVD
+	zvQz0S5PamZokIxxuMoPsG7JgBm9wlutfNwlXnsmAZObMn/8qgiW8ersd924P8g04vKMbhK5nIB
+	7BvqEqC/opLyQAsAolcI3gvz7P9Dn8gAbGZxwYUf99napJkUmM+UiluZCM5mIP8rauQ==
+X-Google-Smtp-Source: AGHT+IEIubUseLSqrueCli47kNdptFpvg2o9b0qj23reXDH/dzzBpT/3wCPqEhs77WVKuNIkRCUy9A==
+X-Received: by 2002:a17:907:728d:b0:b3b:d167:944a with SMTP id a640c23a62f3a-b3bd167d29dmr1320480866b.57.1759238833521;
+        Tue, 30 Sep 2025 06:27:13 -0700 (PDT)
+Received: from crusty-box ([88.223.153.72])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b353efa46b2sm1143934766b.24.2025.09.30.06.27.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 30 Sep 2025 06:27:13 -0700 (PDT)
+From: Erikas Bitovtas <xerikasxx@gmail.com>
+To: Bjorn Andersson <andersson@kernel.org>,
+	Konrad Dybcio <konradybcio@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: phone-devel@vger.kernel.org,
+	~postmarketos/upstreaming@lists.sr.ht,
+	Erikas Bitovtas <xerikasxx@gmail.com>
+Subject: [PATCH 0/2] arm64: dts: qcom: msm8939-asus-z00t: add initial device tree
+Date: Tue, 30 Sep 2025 16:20:08 +0300
+Message-ID: <20250930132556.266434-1-xerikasxx@gmail.com>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/20] arm64: dts: qcom: kaanapali-mtp: Add audio support
- (WSA8845, WCD9395, DMIC)
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <20250924-knp-dts-v1-18-3fdbc4b9e1b1@oss.qualcomm.com>
- <CAJKOXPfY-CpE_aKd910PQ2+u9ux2EvuVEt9ArzhdVCJcTQJUQQ@mail.gmail.com>
-Content-Language: en-US
-From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-In-Reply-To: <CAJKOXPfY-CpE_aKd910PQ2+u9ux2EvuVEt9ArzhdVCJcTQJUQQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=RMC+3oi+ c=1 sm=1 tr=0 ts=68dbc7d4 cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=j4ogTh8yFefVWWEFDRgCtg==:17
- a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10 a=EUspDBNiAAAA:8 a=LNC-FtsJvgg718asVBsA:9
- a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
-X-Proofpoint-ORIG-GUID: s1eBYtuIQKvvVa4Y5cZJz4VT8jp2wuPN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAwNCBTYWx0ZWRfX26Z/ocYH0emt
- +51fAOu2QjhMSjHzK8NwqF9uq7N4Ydzp1plcehblTMV/LGeHf83RpfGbEXC+774JMMCAi/cEOxU
- DulEBOIr+ssKt/0OuLe1FRUpmoCmqc370I7ukf4ROq2yL8DhRlRagrx0hJzjVKajg6+LoZqYTxt
- 8o5x4wzsPxehlKk1HsSxq1T98pNhMfDSjaFoo+KPr/vzQahYKS1qPAkonnHbbRjYaz5S//SIis6
- gW5yB/2uIhAkeZzA6493BjcwJsDLo4Ww5LoA5uih/KKiV8NPJJHY+VAFdc5FUWc/1bFOfgkk/+T
- X8dQqoIghUvprPOTXXXtaPpCjnW1/wMJkqbZWb9OH9GUfeQuIBG+09FyigtCYBzL5jQErPCnYAE
- 3MeW6oLRTebY16YFetAb4ktoH5xBOg==
-X-Proofpoint-GUID: s1eBYtuIQKvvVa4Y5cZJz4VT8jp2wuPN
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-09-30_02,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 priorityscore=1501 suspectscore=0 impostorscore=0 spamscore=0
- adultscore=0 bulkscore=0 clxscore=1015 phishscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270004
+Content-Transfer-Encoding: 8bit
 
+This dts adds support for Asus ZenFone 2 Laser/Selfie (1080p) smartphone
+released in 2015.
 
-On 9/25/2025 6:56 PM, Krzysztof Kozlowski wrote:
-> On Thu, 25 Sept 2025 at 09:18, Jingyi Wang <jingyi.wang@oss.qualcomm.com> wrote:
->> From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
->>
->> Add support for audio on the Kaanapali MTP platform by introducing device
->> tree nodes for WSA8845 smart speaker amplifier for playback, DMIC
->> microphone for capture, and sound card routing. The WCD9395 codec is add
->> to supply MIC-BIAS, for enabling onboard microphone capture.
->>
->> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
->> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->> ---
->>   arch/arm64/boot/dts/qcom/kaanapali-mtp.dts | 226 +++++++++++++++++++++++++++++
->>   1 file changed, 226 insertions(+)
->>
-> Audio is not a separate feature from USB.
+Add an initial device tree support for Z00T with support for:
+- GPIO keys
+- SDHCI (Internal and external storage)
+- WCNSS (WiFi/BT)
+- Sensors (accelerometer and magnetometer)
+- Touchscreen
+- Audio input and output
+- Vibrator
 
-I didn't understand this, Could you please help me to provide more 
-context on it?
-Is this regarding Audio over Type-c?
+Erikas Bitovtas (2):
+  dt-bindings: arm: qcom: Add Asus ZenFone 2 Laser/Selfie
+  arm64: dts: qcom: msm8939-asus-z00t: add initial device tree
 
-> It's simply incomplete
-> picture which is wrong for case of submitting everything at once.
-> Either you release early, release often (which I asked you many
-> times), or you submit complete work.
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../arm64/boot/dts/qcom/msm8939-asus-z00t.dts | 255 ++++++++++++++++++
+ 3 files changed, 257 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
 
-These patches enable usecase for Speaker playback and On-board-Mic
-Capture. Do you consider is there is anything need to do to make it 
-complete ?
+-- 
+2.51.0
 
->
-> You don't understand how your own SoC is organized and create fake
-> split and inflated patch count just, as someone admitted, to have LWN
-> stats.
->
-> This work is incomplete, so please start organizing patches per
-> logical features, not per your patch count and company KPI
-> .
-> NAK, incomplete patch and previously communicated as non working
-
-Earlier there is an issue with SWR-TX interrupt configuration so did not 
-work. As i fixed/configured
-interrupt, it worked and validated on Kaanapali-MTP.
-
-Thanks,
-Prasad
 
