@@ -1,138 +1,205 @@
-Return-Path: <linux-arm-msm+bounces-75594-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75595-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6C6BBAD1F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 15:58:11 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C958BAD2A5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 16:23:39 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5919F4A5367
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 13:58:09 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 90F381C812D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 14:23:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 155AB306B21;
-	Tue, 30 Sep 2025 13:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D1CF93043D6;
+	Tue, 30 Sep 2025 14:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="rXvPUwYH"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eaCz3Iom"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C7830496A
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 13:57:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFD5303A0B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 14:23:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759240645; cv=none; b=E0ErXoYnU/1B4n6sxTImJZv32dTCpcvB2bU54uIYMplHANS3q6zbKlvv99x80veN8Hh9voBTYZHQvqqNfCb1B7MRBbMsXYggUgYwH4OlmXM4zYBLVEOx3y3B/necbA3ga5bKq9Zq9xPCOPZ/36IPpA6fKJm8xKzNZZE+cfTp4So=
+	t=1759242195; cv=none; b=IlKFXHQdXVdsicy8jjCL3wDOhe0WJsXbZIW9cy2oqwzh3+4OYCA8fAd4lbP/EuYzqRQl7fQ02jnZNlL5g80Jr2j8awwHdsvpPocUDug3D73iCg+xr5kSGloi8SsKGfmQOdTrrVmz2E34z1MYl0Y0pilw88ql7exkHYBocbMj6PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759240645; c=relaxed/simple;
-	bh=Qe0f2DSIOI6REPXvZsw6mfNG/f7zF2Kc4oN276oEtsk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YzmEwFqt8YiquZVSwf/GcWmjErxdOt32tjMhVGLRjxWK4Ik7jntsxA6Feij2zWqdlNm/eu3AaSlCcFF5CZS1Z5fGPE5tobXmesqgHBoNDu9CiNrw0LQOgJyz7nMp1+DSdKIM0mc/qsZBrJHIJ2YPhjM6DHFN2NZ2ahIpSBdUmDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=rXvPUwYH; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-b3e9d633b78so550375766b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 06:57:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1759240640; x=1759845440; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BwEwaOkD7UmGdIyIsYNJIdPeNIJYu5qlxwHSoyboRho=;
-        b=rXvPUwYH4aCKhfbpz10HjbPxrKZxEU1ILAlElKLVzULtot1BBF1FaPhS6it64jbQHX
-         c9becfh5Xej7rslZBnlbG6Vufu0oHKYU0gz6UySDdC6WgXUw4Nnzj+AqpDPXjmykY2rl
-         WctxkycmiUamKZJ8POVjJVmLP2PxZEKz2r6NNkiRpn4/xx11doj9tPR43lpeIXFxlJJr
-         Ym13spEAgPWkSoFR4vnVHLxRRAi7yZyrVMOHIVQXP7kBcCbwf6PtE25fs6yhnfR4ZeRN
-         xuwtJq625e5dKzCN4kye5JS1o2DWF/SMLPfu3WAAScFIAQgcvy3bi3Ee/PubcaJRfWMv
-         ab7Q==
+	s=arc-20240116; t=1759242195; c=relaxed/simple;
+	bh=RVn1Y7CUJwx3eNPVEiu6A51ryxvfn843eX3o/eMwsLU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jfaES5UqdjJybN5t4qV58uDm9nVVx1Ne5WzbvxnzqJqzrPXMqa9Jh0U/jaCNL/gfSJMfYWUJEVsXfJ7miuft/KuT6H9nx29LorDurVYPDjSw6FxIDMseSAc/djfv0X/WF8GqrsdpCO7+uKBcUNP62ma5F32zc+ut6RLA+WFQT2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eaCz3Iom; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58UCSUKZ016964
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 14:23:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	PCoEmaeNR1CQ408nB7pwWG6+U1aaMDJRP47t2kBBg6w=; b=eaCz3Iomj0yPqZ7q
+	HYjg1zD8PNOaIK0wgZo6lhdjAqEC0o6pigA90iQx1+JZYyJ6DUABNAmzd20Y9Jj8
+	S7k2n9PDhQ6kTrTq2I/+7avdXa/wYyrfbPEXGGhp+Ftu2PPHtuSGfQxYV8IW+kGn
+	7SFCIB5bgLJhqZ7snConY/5ltTC4vzjQkCGIj0z8pPtmrSFvRI39K0TBMhKMx2G5
+	Hn9sFTgyrt7zkZiDbY9VDWed3GfvC4NNmmgl0MzbZrBE78flkm8L5vDpKP4RH405
+	FlSwW5fHpy+ag2i9poKVtsWU03Ii1id7hOVf2oQA1C9uUdBP/Jldbb+a6oRnRDw/
+	AfH32g==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e93hgyfx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 14:23:11 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-33428befc08so11721148a91.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 07:23:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759240640; x=1759845440;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1759242191; x=1759846991;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BwEwaOkD7UmGdIyIsYNJIdPeNIJYu5qlxwHSoyboRho=;
-        b=uyCp9O+RaWvVDTrkKTX18K9LjltCnwEYnAxJQBi4wh6wSCqmG/fWEehRWJVb9SyZPw
-         nHAw4iV6Kew71rX4OFGq2gDgfSALrd5aUviKLt+NMxQLXEz67fYE/FP864ULQJZ5soiU
-         MrQIYMV6WZpU20JfrZS0NepVcptwvCd0x2D5xWXjSGy577NCg7lcInSVXO/wsi1LLnZ2
-         Q6beS9GrwtOqMmdjqVr9XATete8rfB8mNkasSjz3aljQwxAVyuFujwpLGO+yjpuKfryJ
-         fQ4DJfqXD//clXpPzn57LiTaZ5KTlgWHUBPr1oxi89wE8K9NSTInCEMRI2kNGyPtM1N8
-         zvdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVHOCwoELPYa+vS2gYwK7E4vbY1qeUQMKsNTMOX4j3Pk7XY0K6gKJqt3RynsSiLyNSU7KJXESogEJGCWV2G@vger.kernel.org
-X-Gm-Message-State: AOJu0YzfYKXb50GvyeCEHhzYg1SfgzuJdr8rQvUO88SntTgDj2wnLw2n
-	/F0qvhogkoWohafS6GImNRCMQITQphpBMqCsLv9EaX76ZJfwVggGbEUDRmVoEQ8gmHg=
-X-Gm-Gg: ASbGncu6ZF26m5a3LjMqePz6HTKf8gziG+Rg6swblghpY/0rpre0LCh0fdpxUDTGZn5
-	/fbj47HPbnQdEkEIxbJQHyiMU/tLhHTmQhpacTSRvnHI++KKwXYMmqQNybXOQaaL8e9DPYtgOzG
-	aFexqEntz5YEpOVgV+Iy4frOVNTXStEzD7D5DSa6DknNTxVWhX5Sb3/vtOYVYNojDdqzGBxyKFJ
-	9jzy314FNI3NcwA+dEfp5kFgh9fzOGgL5aPAGXiLKw2akpVSVVI+VcE9O7CSwq53qVL4iXaWF/a
-	CY7lZrE0+h0CphNi1eOnJbpY6k6znzZ3+WcpZj6B+5g5mWvHKMKu3cuAxh7OOwgKMsa5ok0m6DU
-	+M/XiXVyOGpkbRU0wkV+tB4UFhyANeiwjY3VJfvgYMy+JQZp2OSl0LQTTLvgwBR+WRhytioMz6s
-	Vn2FSnLIrUsURcxDuu6ftHHSeXIcZD
-X-Google-Smtp-Source: AGHT+IFJQpq+WDwMaA7FjW347FsSVxwD9q92/cNDpC/Ji3gT0PuUoKthgOuYOi1dG6lyZEmWekcLtg==
-X-Received: by 2002:a17:906:c155:b0:b07:e258:4629 with SMTP id a640c23a62f3a-b4138d53c0cmr550146166b.16.1759240640482;
-        Tue, 30 Sep 2025 06:57:20 -0700 (PDT)
-Received: from otso.local (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b3fb818fb90sm370234866b.63.2025.09.30.06.57.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Sep 2025 06:57:20 -0700 (PDT)
-From: Luca Weiss <luca.weiss@fairphone.com>
-Date: Tue, 30 Sep 2025 15:57:05 +0200
-Subject: [PATCH 5/5] arm64: dts: qcom: sm7325-nothing-spacewar: Use correct
- compatible for audiocc
+        bh=PCoEmaeNR1CQ408nB7pwWG6+U1aaMDJRP47t2kBBg6w=;
+        b=l/IR9HzT9XiIiXyT4AUUoq606chilPh3vr5TWNGzOtcW1zAJETSyYeTKnxn1Ox5YoB
+         j0EGNbEZK1ieDK6c0PFKh2C0CijEGq80RJ/jWhy9hEFVxrTpvb36BfXo4+tRrmfLZSRX
+         evDU5KgrvIgGaXTRnM2S3kTq/S+WjOjhPNSWfiHVkF1s2bhrsS8jqPiAW8m/Pb4DZ8nl
+         AzGbxuMDoTp6OJBt/FOaL4F6zFdpsMe69r+Q3izKdkxj7/Ds8u/jvxwDXfGxy/LvUhbr
+         C5kNq+TMbDxGXJUCzAr/fzhirP+M8Edzbbvg4K4mjvlPD3fIW+OU6LMkyv5atF8X4a98
+         Resw==
+X-Forwarded-Encrypted: i=1; AJvYcCW1YdVmdL55d9XNWJQlaQUbeCtceGtQvn76+lIOJDKpYEfWWElDyXf0MLN+YX9DbvTDNbk1JJbIfrWi9xkl@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx7bLNeVXpXt8B1CKgzbSt0lgws1c3V9YAm5UJ/r1Gm1i/sww29
+	cBnOcodlFrxZCN0C/5lsaHJAHBZs7QtOK/8KufapQCTxinB20+T9Dx1jBo9TNHSWjRUrQff033d
+	dFCH8zTQ/6guCdFqTDkKkOTaWh8KoP9fSORz7irjFQIadBRbECD3JooDFfEV9RPEbPWmgXAb5nw
+	elcn/Ec8j4qT3qlUgvvdwe5Z3XSmWBW8ITJ6niRYdbqdI=
+X-Gm-Gg: ASbGncsOXiCenvZB4iJdRYViqVHzAkIQ7DK1edSH04m5pgEjC0X3ee5GeAWy20FKyw3
+	FABs+tCDJ0M1BZv1H1mUUCCK6UemQWZ7evdEEmXJN+pCRRPTx+a92fQR91U0xVWMDK8/kakA6W6
+	Q3XXm0oFuM8QNnFM9RZfMHuQh6tUQRzTJpLU45NPCRXdCN0y2k45O18wzy5aI=
+X-Received: by 2002:a17:90b:1347:b0:330:6edd:9cf with SMTP id 98e67ed59e1d1-3342a2b0f1fmr22671386a91.22.1759242190808;
+        Tue, 30 Sep 2025 07:23:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzb25ExFEcqNL2JTIBvO7jYPWKzbGJdh+trj0QxoYd4yATaY5jEOtcnTkr/l1fj2D9IMQTydqQPESJBbvdJLc=
+X-Received: by 2002:a17:90b:1347:b0:330:6edd:9cf with SMTP id
+ 98e67ed59e1d1-3342a2b0f1fmr22671322a91.22.1759242190186; Tue, 30 Sep 2025
+ 07:23:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250930-sc7280-dts-misc-v1-5-5a45923ef705@fairphone.com>
-References: <20250930-sc7280-dts-misc-v1-0-5a45923ef705@fairphone.com>
-In-Reply-To: <20250930-sc7280-dts-misc-v1-0-5a45923ef705@fairphone.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Marijn Suijten <marijn.suijten@somainline.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Luca Weiss <luca.weiss@fairphone.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759240635; l=855;
- i=luca.weiss@fairphone.com; s=20250611; h=from:subject:message-id;
- bh=Qe0f2DSIOI6REPXvZsw6mfNG/f7zF2Kc4oN276oEtsk=;
- b=B3B1V2m8I4ILfMLAP07WhFgzpb2Btd7IyCQvlV/gHJlnHz60/uC241UAB6TGvRLCLOrn77iYl
- 7ounVtZZsn7DlxLzS3U09xKD2dn2MFQAYcB/DJJ9J6TcEM26TGv6ZJp
-X-Developer-Key: i=luca.weiss@fairphone.com; a=ed25519;
- pk=O1aw+AAust5lEmgrNJ1Bs7PTY0fEsJm+mdkjExA69q8=
+References: <20250925-v3_glymur_introduction-v2-0-8e1533a58d2d@oss.qualcomm.com>
+ <20250925-v3_glymur_introduction-v2-15-8e1533a58d2d@oss.qualcomm.com> <tsh4w4paux3g772ynjcbjx3ntz6ynqx2ucd273yz3ncscxihjk@dwwjbcqyheuo>
+In-Reply-To: <tsh4w4paux3g772ynjcbjx3ntz6ynqx2ucd273yz3ncscxihjk@dwwjbcqyheuo>
+From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+Date: Tue, 30 Sep 2025 19:52:59 +0530
+X-Gm-Features: AS18NWDHg7DGICX2lVp5x-v_No7K2LhwMINF4nyiPyA8aZivXeot0lqk7bF6EQg
+Message-ID: <CADhhZXY8t7fnSiq7g2dsAE+aQ3AvO5_0k0Ft2_12pMhOjoirGg@mail.gmail.com>
+Subject: Re: [PATCH v2 15/24] arm64: dts: qcom: glymur: Add PMICs dtsi for CRD
+To: Abel Vesa <abel.vesa@linaro.org>
+Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDA0MSBTYWx0ZWRfX3DhiqQYFoc2a
+ 5efewXtTIyo2/DhTJWY833l9efVB/edOgU2vt+8FfOBKUvVCtruDUpK5ioh5u5VdS66DsHVcSBM
+ O1heTk7sXORmqRMxfRW1YHKUbnrjSATa2et2f1PLU+zxGZK/yCEF8IbIXarZ+6TW/o0ukXwzA8/
+ vUCoCF7GmfehX24D00ZfSAs9TbkVEyOnrlT/Y5RC2/xkrgWsD/E0WyF7CQdBA43cYAoIhtEM6F2
+ Ktls01J2hzhXk/SKOHnaLnMw1+QSh7pVeuQ2424mS16Vv9D6RFxqnkvE1h1r/FmJnfErFM0oJwZ
+ IVNXxyA5jaFjVVi02lAcw43eJNgNV8NZdrhRMXI9UUuKt81XJzm+lSf2H8S3QOA/bW9hIhyS7Mc
+ 9PtLHyrpJe7o7zK831WckGNe+/1MCw==
+X-Proofpoint-GUID: IjkuqaRnwTudOX2Boy-jBr0St09b3XV8
+X-Proofpoint-ORIG-GUID: IjkuqaRnwTudOX2Boy-jBr0St09b3XV8
+X-Authority-Analysis: v=2.4 cv=Rfydyltv c=1 sm=1 tr=0 ts=68dbe7cf cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=IkcTkHD0fZMA:10 a=yJojWOMRYYMA:10
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=42uetSTeVEhJ1EzdpwsA:9 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-09-30_03,2025-09-29_04,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 bulkscore=0 adultscore=0 lowpriorityscore=0
+ impostorscore=0 clxscore=1015 malwarescore=0 spamscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270041
 
-Use the correct compatible for this phone with standard Qualcomm
-firmware and remove references to power-domains from a 'reserved' node.
+Hi Abel,
 
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
----
- arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+On Thu, Sep 25, 2025 at 1:45=E2=80=AFPM Abel Vesa <abel.vesa@linaro.org> wr=
+ote:
+>
+> On 25-09-25 11:58:21, Pankaj Patil wrote:
+> > From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+> >
+> > Include all the PMICs present on the Glymur board into
+> > the glymur CRD DTS file.
+> >
+> > Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+> > Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+> > ---
+> >  arch/arm64/boot/dts/qcom/glymur-crd.dts    |  1 +
+> >  arch/arm64/boot/dts/qcom/glymur-pmics.dtsi | 19 +++++++++++++++++++
+> >  2 files changed, 20 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/glymur-crd.dts b/arch/arm64/boot/=
+dts/qcom/glymur-crd.dts
+> > index e89b81dcb4f47b78307fa3ab6831657cf6491c89..97f6eedd7222368f5cbfdd0=
+2e9c4d87261d7f19a 100644
+> > --- a/arch/arm64/boot/dts/qcom/glymur-crd.dts
+> > +++ b/arch/arm64/boot/dts/qcom/glymur-crd.dts
+> > @@ -6,6 +6,7 @@
+> >  /dts-v1/;
+> >
+> >  #include "glymur.dtsi"
+> > +#include "glymur-pmics.dtsi"
+> >  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+> >
+> >  / {
+> > diff --git a/arch/arm64/boot/dts/qcom/glymur-pmics.dtsi b/arch/arm64/bo=
+ot/dts/qcom/glymur-pmics.dtsi
+> > new file mode 100644
+> > index 0000000000000000000000000000000000000000..59dcfb67a203a7c57640603=
+7377fc9fbdce51a97
+> > --- /dev/null
+> > +++ b/arch/arm64/boot/dts/qcom/glymur-pmics.dtsi
+> > @@ -0,0 +1,19 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> > + */
+> > +
+> > +#define PMH0110_F_E0 0x5
+> > +#define PMH0110_H_E0 0x7
+> > +#define PMH0104_I_E0 0x8
+> > +#define PMH0104_J_E0 0x9
+>
+> These haven't been used anywhere.
+>
+> Maybe you meant to define the ones suffixed with _SID, like so:
+>
+> #define PMH0110_F_E0_SID       5
+> #define PMH0110_H_E0_SID       7
+> #define PMH0104_I_E0_SID       8
+> #define PMH0104_J_E0_SID       9
+>
+> and without the '0x' as you will get a build warning about it.
+>
+> > +
+> > +#define PMH0110_F_E1 0x5
+> > +#define PMH0104_L_E1 0xb
+>
+> and here is an even bigger issue. If you define it with '0x' prefix, then=
+ you
+> get the warning, but if you drop the '0x' prefix it will fail to build.
+>
+> I'm sorry to point this out, but this hasn't been properly tested.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts b/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-index f16b47b6a74c5f16657be1cb1e1dc03afedb1167..cb59c122f6f6adc8aee127944dd1ec2d967f3c2e 100644
---- a/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-+++ b/arch/arm64/boot/dts/qcom/sm7325-nothing-spacewar.dts
-@@ -978,6 +978,11 @@ &ipa {
- 	status = "okay";
- };
- 
-+&lpass_audiocc {
-+	compatible = "qcom,qcm6490-lpassaudiocc";
-+	/delete-property/ power-domains;
-+};
-+
- &mdss {
- 	status = "okay";
- };
+Sorry it seems this somehow got overlooked in testing and compilation also
+passed ( without _SID) so it went unnoticed. Will take care to correct this=
+ in
+next version. Thanks for your help in identifying this.
 
--- 
-2.51.0
+>
+> Thanks for the patch though!
 
+Regards,
+Kamal
 
