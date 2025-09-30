@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-75587-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 974D9BAD0DF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 15:27:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B4C49BAD0E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 15:28:30 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5B22E3C4D50
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 13:27:30 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6F8AE3B7595
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 30 Sep 2025 13:28:29 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8B2D2FC895;
-	Tue, 30 Sep 2025 13:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id ADF22254B18;
+	Tue, 30 Sep 2025 13:28:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g/DOm/ft"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B4AOmVS9"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8291F428F
-	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 13:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1DD1DFD8B
+	for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 13:28:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759238849; cv=none; b=XIoIfA/YsbFFUpTxJg0FZLy77j9oDNiyK54brIoMTokA/rRtgsOJ0BOGfCzpZYqY7abcGTp7qcoyvrW7gtmmJu1Aghg0YKLBpSue6to0Qcgu47FgR+y/ZmEK9gKaDDqzCn3yGk7n0iqXQl4c214A2+v8EQX9VrPsZzw9n6i7DP8=
+	t=1759238907; cv=none; b=qbJvsZbapPvedzl0TEO0/LpyEq4ckVJeZwEkoWS7AccqV7LkdyXYJcffNn4pOhB2KXaUEuUF19EI0OIpKA8+0otQ+JhXQNXKH3/zLJ39KRt1SjcvC8ceIXHc8oQyPslcU98kEmmUqZUAWYJFI3TBpXo5pQImZRmXMZp5KcUzsyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759238849; c=relaxed/simple;
-	bh=p280qPQj27zEghzXtASKe/5ZJm4NWAcJ5opk5rxq8ss=;
+	s=arc-20240116; t=1759238907; c=relaxed/simple;
+	bh=aQCtEDogYo5K+HhgSRY3Q/D4yqHNS/3tcEzXSuSbqQU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ej3NE3BdfBBykm63ClLy4BOX7OPhL95d7O5OqTs6g/Vd2clpQSUv6OLNlUTjsAF2Jh5rGA+8WSLVnVpvUuBxyN2kd+YscsEorY7Ba2ddpG0/NttiYIk850JPyOcbsNA11CHzKRh4I84vOVy/dZ2juksvm9s3vL71qTvOmunjiYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g/DOm/ft; arc=none smtp.client-ip=209.85.218.47
+	 MIME-Version; b=P7VH/VzatxTpFgvIOnDE06ajacSfwSOqqgZjvq9AljG4aPug4fnp7zgxENdZpnVVXa0HiLgdatbI26dZOBJtOrDm+O0+axErQAMNLnWxTqcXJxNxa3QJk7r33kKMUy2FkdEnzTj1AjDATyyajcGZaX5JSGkDl7TfW4flLsvwU0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B4AOmVS9; arc=none smtp.client-ip=209.85.218.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-b3be330b1f5so614682066b.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 06:27:27 -0700 (PDT)
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-b3d5088259eso410620666b.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 30 Sep 2025 06:28:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759238846; x=1759843646; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1759238904; x=1759843704; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xpsQ648q3C0xKugj4mrt9FABQZLoyanw2vv+wH0Qsz0=;
-        b=g/DOm/ftd7Mj7D+q5GPZ47BU5tOLnmY/ck72FUktAk8JpiKghPMqmLJIz0rRJfA81z
-         rajwp1wcZ/X1BzTw2EVxRWx5jGM6/kH01th+DYTb2komLNSDQQNmlEd2FOtn2osljmMx
-         CuKlWT0RI5C7Xsq6pFCKE//xChYbWvR0TvlQSKV2Mp906Uy/IJXlOlJNp/rz8QN8Uz+G
-         9C5UxKLCVyC+irERiD8xWv8QMIle6h9li9nKkKuQ7AAvp6Sggbi8373izgrnWkxaiP6G
-         FEVf9fJq7KUGrsB+gVnA/MiZEflRYzcCe+dVMaKDLbz/AtEw6SXJHJfZk20IiD5yG7Pu
-         WcdA==
+        bh=ixK1ETMduGm99BlTcoFj/aPFW7iMIuM7nmIo04sLrUc=;
+        b=B4AOmVS97VrWljsnLDSotLlBE4oWv+/Vx6gD0m/mXC2KP00SyX7buc1bK3laznEJgn
+         OChqwB6DdysnPbR/hZbgbfjdpU3DB6O78XQAlo7ke/GTBhlwL/BTIPWBGqg3EDAB2LU/
+         +LtWWdigbNoXwUqJoefygUKU0peJlGyjGt2WAr8/HyP97RzKC0uecNIRCTE6mxAIN8Rv
+         h92q9ilaDFzKh/SkLEO9TA41JbirKVxEI5nklqRgVt/gdzju0dANVifsUDUtKRDypFuR
+         5NGlSWrjok6UJX5RwSzkiSU1gSd9WWJK0f/xoCf18U+qZiw+leYdHW+lWVb/bMj7muP6
+         +9sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759238846; x=1759843646;
+        d=1e100.net; s=20230601; t=1759238904; x=1759843704;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xpsQ648q3C0xKugj4mrt9FABQZLoyanw2vv+wH0Qsz0=;
-        b=QhD09YTgoHRbVqoyt3/BDPwTuY1ZoSh6cI/vhAyb6M1sQ826T09ld1iIp0UOC9s9jy
-         I8B3ZpStZzQrIFhqca1Bm5uC4a55hChXEZ5YijTw5xnky+3gPiey8ofowgYQd9PLiYF5
-         tJzjBIWtzhXIvdTRzReMJ9qJiLYppJEBnJz8XHnT3TcWfxBOLuFeAdHDfpKVKZofFHjh
-         gaPOTLW746AG3zk1WYUSSxOXJMTJ/S6whj4p24jC0Sbg0fKVuQpTaT18Uw+9nRzEhNXb
-         n1EsctBgxdJ7ZGuaHZUIE65zfW2/TNIU4szB0EBTJP3R6XQ5TetejHlnj1udmINguX6V
-         IfFw==
-X-Forwarded-Encrypted: i=1; AJvYcCXHM1E40ecf1DTzquKkPNmXockiMYPHJ/dc/P8T3RTsxYd4gGSYv+J7uwZJpipULtW65EsN58tgyDGb7sbi@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkwUfTJsK4IHBiUTrnstlwH2sV0YOxJ+VWRXDvuRS5JJxkKEU6
-	TKnRSmMl77zrsDHxVqZ/dA/rmb6sNiR2YeCvXe3F4PX7Ek7EiCI7ZSma
-X-Gm-Gg: ASbGnctskFsA41NzUVdbOHWlnxMsXPORbtGn2FiRi5M+m3T5SHaukzjdCJpVboQu0os
-	CEBHI35gaCkn/GDYVt2cf+u/auI7j5q7vR79JGMLrQTLuESkyzHO47PIhwBvZq6Pj35xVN+neFk
-	JIVxhyWk2yDeXnzLxZhX6x29v7qD1iunLdQjgWWxxiiiyqwBr5kfvwbT6epyM5Z6GdoZy2oBB7t
-	Sp7JkmjUzyCySl/ptO7wu54JokGLMX5QtGSv1AsuKJ2CO1BMYAdgUG2ywbf/Evgm+Ma6ZliX2ei
-	zwEOv/2Pa+9fklv7YW5jjq14crbbyLYjUrDpxmmbFzFK3Q01WLefKy/jTnC6cIJ8GA6m2CZIc4z
-	MDytZd3Qf2+NaXRXaqfx3WCtEoFEmi79gQ0MVOn/LiC8go6e77jZcEZihwNO3FvyaEQ==
-X-Google-Smtp-Source: AGHT+IFqZj82HIUPV+dIzJvrTOxVkE1LRYZqyDhYctKIsl9P0BboCTyc7K3Z5HX1b2xDNVD5wraHXw==
-X-Received: by 2002:a17:907:3f88:b0:b41:e675:95cd with SMTP id a640c23a62f3a-b41e675a6damr413544966b.13.1759238846374;
-        Tue, 30 Sep 2025 06:27:26 -0700 (PDT)
+        bh=ixK1ETMduGm99BlTcoFj/aPFW7iMIuM7nmIo04sLrUc=;
+        b=C+115Vt/LqiecXBQT1YWqFbm2CeNKDxR5CVGxwWsd2sjyerTArdxjUcimduBPXIkxs
+         nSSmhJ6vLM3y2GXOAT3HO5BoiJVOPDBShquZcrAcL5z2P0imQhej+gdGWKr756C4WE6X
+         AodvXnRkCZroq8qPB59Z4YQ0jikDkJbV2aqbeJzVxsbVc5cEYrQFujrValAY2hGBDkq3
+         QQvp0YdhM1plH5bNHno1d/dk9aRKRwT6YHdoVeZIUUiL2d+uXsYJGP4QD9Y/vRNwXW77
+         5Y5zYuS7koCesvrD/LkTDH9yjOCimJuOMfvFEDvuHQCXpLORFSwymiydRJz5BVI7xCpe
+         OxMA==
+X-Forwarded-Encrypted: i=1; AJvYcCVsIyAKH0kUQSMmFaahK+NYclRosWC6babpXVNw1sOWfBYyCdBTLySESc/sBEgwS0P00ieTTq0XKNDeirQS@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx3wrtPnN137u8DEWMrZF6wLMUcUoUV+YoDa4zvMrjYYWqc5X+S
+	rkV0x50aY3Zv+pWG4cJp87WZkLXneEBwgDFBPQNJ5BJf0TS3PhMFFgHG
+X-Gm-Gg: ASbGncvsTWxISNQGxAHkJ3TxNk2oo3fE1dD+1RBt6xU238Q3X2W1Yl2AhrCg2z/LPCn
+	hn4EQLlBUjbUUeQMAabHMuW63G16LmDr9W+VHyfUI7XW7f7vLQXR4LcXKpukt6raH2iC3zw0ur+
+	oViLFkZFlFcnXvN4YAclZTwwwx5LTcm29y0FU6k7y5gSZkS8ueqz4h3dSz14gIuMl2GSzWMHbDy
+	hMZjniCMdLagmtNY0D8EncHI2BJG98g2boszEilsLoE+u1t032KOh7PoP8Hivsxf0XTnjDcXWcn
+	PW8OkCALFXdSKFSJJapt4Wc7cZkVtR8w9OLxaPFGZlr4ypoptfrfAa4chu2jA3Ew2VR8Gb4h7T5
+	0DAIh1PKiZlztFsCtXJWqsYBrvOC6Vy1bIQEcZbUPJjHshY6WNrWHl1k=
+X-Google-Smtp-Source: AGHT+IGLnx7R2B80B9d9tAufNTvF/3v0WxPgD8/yTRQ1sR+rOyEoiQbgk51XpXcC1IGp95/m0ONvpg==
+X-Received: by 2002:a17:907:3c8c:b0:b09:c230:12dc with SMTP id a640c23a62f3a-b34b7209e46mr2179868866b.8.1759238904061;
+        Tue, 30 Sep 2025 06:28:24 -0700 (PDT)
 Received: from crusty-box ([88.223.153.72])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b353efa46b2sm1143934766b.24.2025.09.30.06.27.25
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b353efa46b2sm1143934766b.24.2025.09.30.06.28.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 30 Sep 2025 06:27:26 -0700 (PDT)
+        Tue, 30 Sep 2025 06:28:23 -0700 (PDT)
 From: Erikas Bitovtas <xerikasxx@gmail.com>
 To: Bjorn Andersson <andersson@kernel.org>,
 	Konrad Dybcio <konradybcio@kernel.org>,
@@ -85,9 +85,9 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: phone-devel@vger.kernel.org,
 	~postmarketos/upstreaming@lists.sr.ht,
 	Erikas Bitovtas <xerikasxx@gmail.com>
-Subject: [PATCH 1/2] dt-bindings: arm: qcom: Add Asus ZenFone 2 Laser/Selfie
-Date: Tue, 30 Sep 2025 16:20:09 +0300
-Message-ID: <20250930132556.266434-2-xerikasxx@gmail.com>
+Subject: [PATCH 2/2] arm64: dts: qcom: msm8939-asus-z00t: add initial device tree
+Date: Tue, 30 Sep 2025 16:20:10 +0300
+Message-ID: <20250930132556.266434-3-xerikasxx@gmail.com>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20250930132556.266434-1-xerikasxx@gmail.com>
 References: <20250930132556.266434-1-xerikasxx@gmail.com>
@@ -99,25 +99,300 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a compatible for Asus ZenFone 2 Laser/Selfie (1080p)
+Add an initial device tree for Asus ZenFone 2 Laser/Selfie. This
+includes support for:
+- UART
+- USB
+- Internal storage
+- MicroSD
+- Volume keys
+- Touchscreen: Focaltech FT5306
+- Accelerometer: Invensense MPU6515
+- Magnetometer: Asahi Kasei AK09911
+- Vibrator
+- Audio input and output
+- Modem
 
 Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
 ---
- Documentation/devicetree/bindings/arm/qcom.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../arm64/boot/dts/qcom/msm8939-asus-z00t.dts | 255 ++++++++++++++++++
+ 2 files changed, 256 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
 
-diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
-index 18b5ed044f9f..1ad77a68fc11 100644
---- a/Documentation/devicetree/bindings/arm/qcom.yaml
-+++ b/Documentation/devicetree/bindings/arm/qcom.yaml
-@@ -88,6 +88,7 @@ properties:
- 
-       - items:
-           - enum:
-+              - asus,z00t
-               - huawei,kiwi
-               - longcheer,l9100
-               - samsung,a7
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 296688f7cb26..35f3ff0d6f18 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -72,6 +72,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-asus-z00t.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
+diff --git a/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
+new file mode 100644
+index 000000000000..687ba02a8139
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
+@@ -0,0 +1,255 @@
++// SPDX-License-Identifier: GPL-2.0-only
++
++/dts-v1/;
++
++#include "msm8939-pm8916.dtsi"
++#include "msm8916-modem-qdsp6.dtsi"
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/interrupt-controller/irq.h>
++
++/ {
++	model = "Asus ZenFone 2 Laser/Selfie (1080p)";
++	compatible = "asus,z00t", "qcom,msm8939";
++	chassis-type = "handset";
++
++	aliases {
++		mmc0 = &sdhc_1;
++		mmc1 = &sdhc_2;
++		serial0 = &blsp_uart2;
++	};
++
++	chosen {
++		stdout-path = "serial0";
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-0 = <&gpio_keys_default>;
++		pinctrl-names = "default";
++
++		button-volume-up {
++			label = "Volume Up";
++			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++			debounce-interval = <15>;
++		};
++
++		button-volume-down {
++			label = "Volume Down";
++			gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEDOWN>;
++			debounce-interval = <15>;
++		};
++	};
++
++	reg_sd_vmmc: regulator-sdcard-vmmc {
++		compatible = "regulator-fixed";
++		regulator-name = "sdcard-vmmc";
++		regulator-min-microvolt = <2950000>;
++		regulator-max-microvolt = <2950000>;
++
++		gpio = <&tlmm 87 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++
++		startup-delay-us = <200>;
++
++		pinctrl-0 = <&sd_vmmc_en_default>;
++		pinctrl-names = "default";
++	};
++
++	usb_id: usb-id {
++		compatible = "linux,extcon-usb-gpio";
++		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
++		pinctrl-0 = <&usb_id_default>;
++		pinctrl-names = "default";
++	};
++};
++
++&blsp_i2c2 {
++	status = "okay";
++
++	magnetometer@c {
++		compatible = "asahi-kasei,ak09911";
++		reg = <0x0c>;
++
++		vdd-supply = <&pm8916_l8>;
++		vid-supply = <&pm8916_l6>;
++
++		reset-gpios = <&tlmm 112 GPIO_ACTIVE_LOW>;
++		pinctrl-0 = <&mag_reset_default>;
++		pinctrl-names = "default";
++	};
++
++	imu@68 {
++		compatible = "invensense,mpu6515";
++		reg = <0x68>;
++
++		interrupts-extended = <&tlmm 36 IRQ_TYPE_EDGE_RISING>;
++
++		vdd-supply = <&pm8916_l8>;
++		vddio-supply = <&pm8916_l6>;
++
++		pinctrl-0 = <&imu_default>;
++		pinctrl-names = "default";
++
++		mount-matrix = "0",  "1", "0",
++			       "-1", "0", "0",
++			       "0",  "0", "1";
++	};
++};
++
++&blsp_i2c5 {
++	status = "okay";
++
++	touchscreen@38 {
++		compatible = "edt,edt-ft5306";
++		reg = <0x38>;
++
++		interrupts-extended = <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
++
++		reset-gpios = <&tlmm 12 GPIO_ACTIVE_LOW>;
++
++		vcc-supply = <&pm8916_l8>;
++		iovcc-supply = <&pm8916_l6>;
++
++		touchscreen-size-x = <1080>;
++		touchscreen-size-y = <1920>;
++
++		pinctrl-0 = <&touchscreen_default>;
++		pinctrl-names = "default";
++	};
++};
++
++&blsp_uart2 {
++	pinctrl-0 = <&blsp_uart2_console_default>;
++	pinctrl-1 = <&blsp_uart2_console_sleep>;
++	pinctrl-names = "default", "sleep";
++	status = "okay";
++};
++
++&mpss_mem {
++	reg = <0x0 0x86800000 0x0 0x5500000>;
++};
++
++&pm8916_codec {
++	qcom,micbias-lvl = <2800>;
++	qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
++	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
++	qcom,micbias1-ext-cap;
++	qcom,hphl-jack-type-normally-open;
++	status = "okay";
++};
++
++&pm8916_vib {
++	status = "okay";
++};
++
++&sdhc_1 {
++	status = "okay";
++};
++
++&sdhc_2 {
++	vmmc-supply = <&reg_sd_vmmc>;
++
++	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
++	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
++	pinctrl-names = "default", "sleep";
++	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
++	status = "okay";
++};
++
++&sound {
++	audio-routing =
++		"AMIC1", "MIC BIAS External1",
++		"AMIC2", "MIC BIAS Internal2",
++		"AMIC3", "MIC BIAS External1";
++	status = "okay";
++};
++
++&usb {
++	extcon = <&usb_id>, <&usb_id>;
++	status = "okay";
++};
++
++&usb_hs_phy {
++	extcon = <&usb_id>;
++};
++
++&wcnss {
++	status = "okay";
++};
++
++&wcnss_iris {
++	compatible = "qcom,wcn3660b";
++};
++
++&wcnss_mem {
++	status = "okay";
++};
++
++&tlmm {
++	gpio_keys_default: gpio-keys-default-state {
++		pins = "gpio107", "gpio117";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	imu_default: imu-default-state {
++		pins = "gpio36";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	mag_reset_default: mag-reset-default-state {
++		pins = "gpio112";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	sd_vmmc_en_default: sd-vmmc-en-default-state {
++		pins = "gpio87";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	sdc2_cd_default: sdc2-cd-default-state {
++		pins = "gpio38";
++		function = "gpio";
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	touchscreen_default: touchscreen-default-state {
++		touch-pins {
++			pins = "gpio13";
++			function = "gpio";
++
++			drive-strength = <2>;
++			bias-pull-up;
++		};
++
++		reset-pins {
++			pins = "gpio12";
++			function = "gpio";
++
++			drive-strength = <2>;
++			bias-disable;
++		};
++	};
++
++	usb_id_default: usb-id-default-state {
++		pins = "gpio110";
++		function = "gpio";
++		drive-strength = <8>;
++		bias-pull-up;
++	};
++};
 -- 
 2.51.0
 
