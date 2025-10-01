@@ -1,163 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-75678-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75679-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id D7054BB0680
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 15:05:02 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 53E0CBB08EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 15:48:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 58BD71945AEC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 13:05:25 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 0433317263A
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 13:48:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CF93F1F4621;
-	Wed,  1 Oct 2025 13:04:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id AC3812FBE19;
+	Wed,  1 Oct 2025 13:48:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="YUX3EtsG"
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="vqC6kgC5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343CE1E834E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 13:04:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB5C27380A
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 13:48:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759323897; cv=none; b=EGHk4bzu9cmtmA7bS8vJuQSbYk963bw77L+98eWAMUdPloWBkdgHp++1rqfHgB4SS+Gds8oOaS+Tze0sfoIcD91GscoAgmmjLiNF1IwMdoTvEMOilg9TXZv18vo8SdQrg+5/A/IOs7sR/LI1lqfL58TPtCfdm0OiHJe751zO92o=
+	t=1759326482; cv=none; b=BWA4r9VT4sljU4Ue1Oqe0l0Cff7gxMgt68doQW/ooUedt3YgCAlpf4pIOtNiRSr0D9lGSpQew6SxO4NriT+2tXCmiKVKAgAvZe54ZSxVDjTz9vR7An8I+T1Lt+a17ycfee7HSNR3tDyc8OynUV5+JIa+PRbieKHqixFtLStE3cY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759323897; c=relaxed/simple;
-	bh=Sd6yCdxS3n5TE903KsbIcaO2lzqa35LHjefQZurCtJE=;
-	h=From:In-Reply-To:MIME-Version:References:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Gbf0cRCmqB9ElbG1LcyekUuNDIvQ056DgOuMSzNID4TSZtjUp40kp1Kf7GFXl6j9Coo84ZILmP9pFYsuG0hnvc3QVQTV1IZf7GpjcAvAeOjtL6KOIJYb6VJ9ZO+hKwZ5csdBGLYFuFmQCFbLBz6RxqbDL+QKO4s1dkaM4S5b1Os=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=YUX3EtsG; arc=none smtp.client-ip=209.85.215.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b5506b28c98so4962100a12.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 06:04:56 -0700 (PDT)
+	s=arc-20240116; t=1759326482; c=relaxed/simple;
+	bh=GwWiPxXWApSuBjTieyfbH0uVPyK1qpzobUKX5yWOe8Y=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=UDmmfmK9Tu3bEnn8MZBLntuh626kW5uANrl/AjxXUsCah2UB0JeeD5qH5yQ2ceoh8hhx3ahxA1ltf1sSm/CVkxAj1WWBvqoM3IU7weMiefkVN8kNDFUpHhKNIsEjEiLPwaVX4I5LPUNTPzahRK3h/uy1wN2BtTCPih14fkwbosk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=vqC6kgC5; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-856222505eeso783316285a.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 06:48:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1759323895; x=1759928695; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:references
-         :mime-version:in-reply-to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FHbqmA3oKpic6IfyRvOOe8x31ZYEYEaGDwcq5aemMoY=;
-        b=YUX3EtsGULfgO3jbr/yyY0xXUjnKvm9KSHwMEvLR29i5AfD8NVcNmxHTaeoWkXqDa2
-         +fz7+eZhD0b7REf1FTf57q0trH7Fvmn8i+Xz00LgxDJXUuhmAld99SIhADKnl6XNvefv
-         foMuvVWk25cc3qnCJUKOBHJbQXYj0+SFsQipoCqOHKAr6HEpG3RkjEyS0jPcF8Aj77/v
-         fUgqNyEzFEiNyF3LKX2KgK10Eq3WxKqM++EwxhtZlYWYCh7/vpK8faKdCXEQTy++eMKW
-         IrRhfYSTq2wcv9ODuCIAawLGSAt/tVpfJzXdlo+mJpRjJHQrJpKKvgZ151CeiY0k0Lkg
-         jpoQ==
+        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1759326480; x=1759931280; darn=vger.kernel.org;
+        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
+         :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=GwWiPxXWApSuBjTieyfbH0uVPyK1qpzobUKX5yWOe8Y=;
+        b=vqC6kgC5WJx43JKAZUo4OKxI5cD8wS1kM0pPUBM9r6Q7BZOf6e/51l6rEqWVNizAfp
+         Opy/HojCfjeeDcRIu8IepjriyXP8iAPuKv2gyWOWRDHrtUHWd2687Ea/GIKY558i8hxB
+         LMREcOMXyc4IZJPHGcV1/Jvxb69JX6paLieAr6y+qikWD0lCYg9lzR761XOtYCsFom2j
+         zhajVMyuPrlUCqAGr3CfLW9+LwrzSWs6WCKPFf1Cix08AF+y6rI8w8J4z/n3D1YOmZwy
+         eAdG8v40dmI5Lp0MUqMIQ0/iRefgEVLZYRSAi5eAQxYHVxeuGGyhUWd2QbBgDkQ+sd+Q
+         gJmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759323895; x=1759928695;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:references
-         :mime-version:in-reply-to:from:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FHbqmA3oKpic6IfyRvOOe8x31ZYEYEaGDwcq5aemMoY=;
-        b=oDguUkL8Q5R0SUYe2fFiZPr2V51drgk+YiyOm72/gmZHumSicsUwMNhPXl3TkIxf4S
-         OIF/66tq+vkY3bc76iT6I8gmbx673oUBhWyt7FV6uMxRvVdtp57+A5YtXocz1XdEtQ2B
-         I1AU5LCbLh3Ls9t1TDv6588IZin7nur/fZGJnkErMXYT3ks1/KkJgM8SJpwHGpLyRHGX
-         Mw0fz2Btr8T9pL+NNDgk6r7B7jCx0i8mnKBEHEMMfEUKgvpxIXPiy3qBoXm7BGqNx9+l
-         aoef5GkGbflDSbILOT3Cc93iBCG6r+TntKlFpO8736OrbAByFw6Po32gM+e+7RjDiK33
-         8qbw==
-X-Forwarded-Encrypted: i=1; AJvYcCXqdHRW7g3Xvi5cCEoxXt+FYIOIlnUG9qHnqT58LiucJ5OXjuhFEi/jkxT//AgnRI4/VJVtnESzR8VuTTmt@vger.kernel.org
-X-Gm-Message-State: AOJu0YwetQhxsEOlTLcj5d4SPWK2ZMSKnNzEU8nLuPr7pxUersMNHGBX
-	2mZ1+ljtEhUzszzdcnxzDtDm2jvYi5sz5Mp9U/i8T3ZXy2PGM6D6NU2+lOZaPX9tMSqlQ92LNFJ
-	HYtZ4enB+uoe7IK7LY95MhScQLO8coz0vVgJPcA/qZg==
-X-Gm-Gg: ASbGncsj3kT7PPx1E7ZxI7W1miazY0KT6zRPdRYeCYgo6nMJO4fW9p4/TBX25XNY1cY
-	On8ifrAhLF56OaQmxStlFZwFiPk/j1rxWcnlSJvDi1vB89LJyJh/E+VWq3y/Qha+PcqESICbIkI
-	A50HgNyPm5B1MaGQv5Tngje/zKUtnOjVnM/Hwso7f3B8akntQJg+6GIHFNWBjAd7dOmJQqL24U0
-	rwop3OSrKBGRdBVmCJybDRCIEVtdjOkw1BzK9Mxr0IiWHcbH4bChkHLaMibZJ8=
-X-Google-Smtp-Source: AGHT+IHIX0BnzV5QR3ZUNafIRXxWw+fJ+TE74iOPYTO055yiV9YQx881LMKJ8ntEhbIPyMH/yj9fWYf3xbX9jssRLhM=
-X-Received: by 2002:a17:903:15cc:b0:26c:e270:6dad with SMTP id
- d9443c01a7336-28e7f43f288mr40560635ad.60.1759323893974; Wed, 01 Oct 2025
- 06:04:53 -0700 (PDT)
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 1 Oct 2025 06:04:51 -0700
-Received: from 969154062570 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 1 Oct 2025 06:04:51 -0700
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-In-Reply-To: <CACRpkda-ZvrAC4bNLnA+ao0Y8-Nd_-b89N6HU10hhEdaOUYAjw@mail.gmail.com>
+        d=1e100.net; s=20230601; t=1759326480; x=1759931280;
+        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
+         :subject:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=GwWiPxXWApSuBjTieyfbH0uVPyK1qpzobUKX5yWOe8Y=;
+        b=mVBQDc2zipAhAUxAfbK9lVlJmqb/j06MkfpBuzyQtYtNRGpXEXgiYJ+2ziVvp7CaVP
+         qbTakAcNsJ8OHFhxmVi7sHQPDy473Tn+qQUOzDXM7gx69WwH1le5d4ao6NUTa2uS9Peu
+         8LJN6H0dTRsb5P6BagpCxn45La/e+ZxyNP9dsBQId+AORLznKfY6vv2D9QWK5Mprzg3H
+         V2Uka8P8i96FizI1XfgIaX/s4rozxYRQ8BqY9rWSfAMTT9m8oGBof6jLVAX7fXlG7Jny
+         /ywSo70Jr7hCBtjw3dighO9cfB8ki+60JDTG83b3D5xas1wcjzF93UV4suQe6bl/9IOD
+         xAPA==
+X-Forwarded-Encrypted: i=1; AJvYcCXsa1VHRTxmlPX+MW+QC4tVVUk/Wsu49+fMdRXCF7K1TO7jbDr1nHvj73JL5p5f424QKqkMnHKRpZfpSXMo@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyg7Z7KRbtpUqJius5L4fvrmzwBWkBBKOArIn8rwkRVfgd8fUgk
+	GiDYj7B4QB6KZsst+5QOjrkdZa3qdGnsxKO0uhLaoaH+k9sKQgFTo/jfHHVeqNMQ9bc=
+X-Gm-Gg: ASbGnctlRs4bZIe8dqo45H1k4fw69jr91Da9A11fQMnMSiaLEfXNMdfS9ITFuDHXpYf
+	q1LkP9J7UHTRC56Ny6dVVWN1ckD7imqdZmTz8s4hkajLF15yU0Px9BkgdoCIIdIyLrPzUV6qICE
+	lxA1ZbJYYq3wXGe9bj4/yzUWc9vv8RYNZf0WqptGKgHkhLBFMH7np5piTkp/PiEFo+OKY+X73WU
+	iQ0ry1dL1Rdikkyr/fgENQfrWlDFQm9KWEFSRvE4uEK+hcx+xYJdAzzYJeQyv6UFPG3sW4T5s59
+	gltV1w0s3vgmnWkWxJ5mNRokEsKy75EKQ4tA+ebVJm4D05BFICvvy4U+xssP8cS+AiQxAV6Sxgp
+	81tyk7efY/kEOTxkRB7t1ul2NlkJk2lb/b7igOEihv4xzcrJTR4J7
+X-Google-Smtp-Source: AGHT+IHiblZwtYX3wgFUO/7OpMhacfKleAAxOFFJx1Q7ftMvPB1RMJ+PB8Ib9Ip55aCTEP2Txr59Ow==
+X-Received: by 2002:a05:622a:5c88:b0:4de:1d0e:5cd4 with SMTP id d75a77b69052e-4e41c732f0fmr44326791cf.30.1759326479606;
+        Wed, 01 Oct 2025 06:47:59 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:17:ebd3::5ac? ([2606:6d00:17:ebd3::5ac])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-80167b8b79esm110958756d6.38.2025.10.01.06.47.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Oct 2025 06:47:58 -0700 (PDT)
+Message-ID: <971675c3d0a5f033d9eb68698dd9985a0a122aa9.camel@ndufresne.ca>
+Subject: Re: [PATCH 0/2] Add support for QC08C format in iris driver
+From: Nicolas Dufresne <nicolas@ndufresne.ca>
+To: Neil Armstrong <neil.armstrong@linaro.org>, Dikshita Agarwal	
+ <dikshita.agarwal@oss.qualcomm.com>, Vikash Garodia	
+ <vikash.garodia@oss.qualcomm.com>, Abhinav Kumar <abhinav.kumar@linux.dev>,
+  Bryan O'Donoghue	 <bod@kernel.org>, Mauro Carvalho Chehab
+ <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
+	linux-kernel@vger.kernel.org
+Date: Wed, 01 Oct 2025 09:47:57 -0400
+In-Reply-To: <b2538934-bda7-45e1-b368-8dc4d2c6f71b@linaro.org>
+References: 
+	<20250919-video-iris-ubwc-enable-v1-0-000d11edafd8@oss.qualcomm.com>
+	 <b2538934-bda7-45e1-b368-8dc4d2c6f71b@linaro.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-8im6X2nzMFe6Gk5DQ8ir"
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
- <CACRpkdYcVtJjRHRJ8GgeU7rZDuyaJKu0vgcknb7DsHPjZGKGuA@mail.gmail.com> <CACRpkda-ZvrAC4bNLnA+ao0Y8-Nd_-b89N6HU10hhEdaOUYAjw@mail.gmail.com>
-Date: Wed, 1 Oct 2025 06:04:51 -0700
-X-Gm-Features: AS18NWB4-ek2de5G39SVs91_zyxyHsKkPvhufhJXGysoQ2YUW53Yv6YTbFeN0M4
-Message-ID: <CAMRc=Mdb_cUG+hKq8GyfUP1SYBh0p19J+4dFG7G3JSuZTr4n8Q@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
-To: Linus Walleij <linus.walleij@linaro.org>
-Cc: Kees Cook <kees@kernel.org>, Mika Westerberg <westeri@kernel.org>, 
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>, Andrew Morton <akpm@linux-foundation.org>, 
-	Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>, Bartosz Golaszewski <brgl@bgdev.pl>
+
+
+--=-8im6X2nzMFe6Gk5DQ8ir
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 1 Oct 2025 12:53:07 +0200, Linus Walleij
-<linus.walleij@linaro.org> said:
-> Replying to self so Bartosz don't have to tell me off...
->
-> On Wed, Oct 1, 2025 at 10:49=E2=80=AFAM Linus Walleij <linus.walleij@lina=
-ro.org> wrote:
->
->> and every GPIO access on every system will be proxied
->> and then this better be fast.
->
-> What about I read the code before I talk :/
->
-> Inspecting patch 4/9 it is clear that only GPIOs that actually
-> need to be proxied are proxied.
->
->> Two things come to mind, and I bet you have thought of
->> them already:
->>
->> 1. Footprint: all systems using regulators will now have
->>    to compile in all this code as well.
->
-> This still holds. It could be a concern if it's a lot of code.
+Hi,
 
-It depends on how we implement this. If we just rip out the enable counting
-from regulator core entirely, then it would be transparent from the
-regulator's point of view and each platform could still select the new opti=
-on
-as required.
+Le mercredi 01 octobre 2025 =C3=A0 10:39 +0200, Neil Armstrong a =C3=A9crit=
+=C2=A0:
+> Hi,
+>=20
+> On 9/19/25 17:47, Dikshita Agarwal wrote:
+> > Add support for the QC08C color format in both the encoder and decoder
+> > paths of the iris driver. The changes include:
+> >=20
+> > - Adding QC08C format handling in the driver for both encoding and
+> > decoding.
+> > - Updating format enumeration to properly return supported formats.
+> > - Ensuring the correct HFI format is set for firmware communication.
+> > -Making all related changes required for seamless integration of QC08C
+> > support.
+> >=20
+> > The changes have been validated using v4l2-ctl, compliance, and GStream=
+er
+> > (GST) tests.
+> > Both GST and v4l2-ctl tests were performed using the NV12 format, as
+> > these clients do not support the QCOM-specific QC08C format, and all
+> > tests passed successfully.
+>=20
+> Sorry but this means you didn't test the full decoding and encoding with =
+GST
+> and v4l2-ctl using QC08C ?
+> So how did you test ?
 
-However there's the issue of regulator consumers who need to know when
-something changes on a regulator and to that end subscribe to the regulator
-notifer. Regulator core knows then it actually changes the GPIO so it emits
-the event. There are several ways to approach it but the best one seems to
-be: allow to subscribe for a per-descriptor event notifier (implementation
-details may include: only actually creating the notifier for shared GPIOs),
-and be notified about an actual change in value and then propagate it to
-regulator users. This would still be transparent and allow us to select
-HAVE_SHARED_GPIOS on a per-arch basis.
+We've made addition of V4L2/DRM format mapping trivial lately in GStreamer.=
+ So
+trivial, that my colleague Robert Mader made the changes for you, and this
+change is just waiting for someone with the hardware to test.
 
-Bartosz
+https://gitlab.freedesktop.org/gstreamer/gstreamer/-/merge_requests/8195
 
->
->> 2. Performance, I didn't quite get it if every GPIO on the
->>   system will be proxied through a layer of indirection
->>   if you select HAVE_SHARED_GPIOS
->>   but that would not be good, since some users are in
->>   fastpath such as IRQ handlers, and the old way of
->>   sharing GPIOs would just affect pins that are actually
->>   shared.
->
-> It is clear from patch 4/9 that this only affects GPIOs
-> that are actually shared, and those tend to not be
-> performance-critical so this concern is moot.
->
-> Yours,
-> Linus Walleij
->
+With that you can visually test it by rendering through OpenGL or your disp=
+lay
+controller if supported. This gives option to use glimagesink, waylandsink,=
+ and
+possibly kmssink, but not sure for the later.
+
+What would need to work harder would be fluster testing. Going through GL w=
+ill
+mean converting from YUV to RGB back to YUV, which can damage the pictures
+slightly, resulting in different MD5.
+
+regards,
+Nicolas
+
+>=20
+> Thanks,
+> Neil
+>=20
+> >=20
+> > During v4l2-ctl testing, a regression was observed when using the NV12
+> > color format after adding QC08C support. A fix for this regression has
+> > also been posted [1].
+> >=20
+> > [1]:
+> > https://lore.kernel.org/linux-media/20250918103235.4066441-1-dikshita.a=
+garwal@oss.qualcomm.com/T/#u
+> >=20
+> > Signed-off-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+> > ---
+> > Dikshita Agarwal (2):
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: iris: Add support for QC08C=
+ format for decoder
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 media: iris: Add support for QC08C=
+ format for encoder
+> >=20
+> > =C2=A0 drivers/media/platform/qcom/iris/iris_buffer.c=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 17 ++++--
+> > =C2=A0 .../platform/qcom/iris/iris_hfi_gen1_command.c=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 15 ++++--
+> > =C2=A0 .../platform/qcom/iris/iris_hfi_gen2_command.c=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 21 +++++++-
+> > =C2=A0 .../platform/qcom/iris/iris_hfi_gen2_defines.h=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0 1 +
+> > =C2=A0 drivers/media/platform/qcom/iris/iris_instance.h=C2=A0=C2=A0 |=
+=C2=A0 7 ++-
+> > =C2=A0 .../media/platform/qcom/iris/iris_platform_gen2.c=C2=A0 |=C2=A0 =
+1 +
+> > =C2=A0 drivers/media/platform/qcom/iris/iris_utils.c=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 |=C2=A0 3 +-
+> > =C2=A0 drivers/media/platform/qcom/iris/iris_vdec.c=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 | 61
+> > ++++++++++++++++++----
+> > =C2=A0 drivers/media/platform/qcom/iris/iris_venc.c=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 | 59 +++++++++++++++++-
+> > ---
+> > =C2=A0 9 files changed, 152 insertions(+), 33 deletions(-)
+> > ---
+> > base-commit: 40b7a19f321e65789612ebaca966472055dab48c
+> > change-id: 20250918-video-iris-ubwc-enable-87eac6f41fa4
+> >=20
+> > Best regards,
+>=20
+
+--=-8im6X2nzMFe6Gk5DQ8ir
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaN0xDQAKCRDZQZRRKWBy
+9MA4AP9Wnbk1p1fA9WS9eZnfnfvuJohBg8nrG8sTKlfaHftc6wEAwGh9enUFIa14
+IZhYzQqBaFqyPDvB4BlNfMDrr5KeSAs=
+=PwN1
+-----END PGP SIGNATURE-----
+
+--=-8im6X2nzMFe6Gk5DQ8ir--
 
