@@ -1,172 +1,168 @@
-Return-Path: <linux-arm-msm+bounces-75645-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75646-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 84541BAFA0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 10:30:27 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5480DBAFA27
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 10:30:49 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 03BCF19417F2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 08:30:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B16F51941957
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 08:31:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBFEA2773CC;
-	Wed,  1 Oct 2025 08:30:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CA6C927FB0E;
+	Wed,  1 Oct 2025 08:30:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="k5HW5zA0"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="jXr4/wlO"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38ECC1DDC1D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 08:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E10284681
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 08:30:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759307423; cv=none; b=HXourOZGt/8laOwxDAW+c51KpPknaYfO4kOuZ/tz07HVbk3gDWsnVPQIq7JXcU8eWHmUsX/vrVuQZ65G+RLspjIn0l+WkwqUJjbQ96nqi9ebznTIzfwUUzVVXsJnzXSWjXXy6D+A2veuYGLXfkdtupUw9ek6HrwXNSdxiQJ22KU=
+	t=1759307436; cv=none; b=R8ILt0Uwp3bXJG3jnPuzZMQXDT6/2b9nwwZ+bI/TOlC7FEJV7tGgAaphvFe+9FYHYnYIY2oDRe+AgWdTAb81IysFuChhlp2NG3Y8NywWhKsIFDdLo7rpouRbgP6MN/Wj0pCxM7C1UpsWywJI7lS6pVj8DnPQ2rYLqDB2S3PQCtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759307423; c=relaxed/simple;
-	bh=UDw9fFof8/RcJ1kPbVY+sQqoq6I7U5xpbsVTYPMeEQM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ifTd6Gj+0UV1ysjceN93J2wlWh1OvuSdBbWYc0eilvqXrHEl478dyMNEApu5FFGuO0R6kG/l822x8qXfA8p4L0ov2So+wXSOQ+nt7i5TYo3YMIZKGBxVpjAfOsGUjRlkF6WLmMLKJ3fchd5muto5apaGRsIXXDAIWhweiD7UL3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=k5HW5zA0; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 58UMJ0jS001259
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Oct 2025 08:30:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	2X6tqOnkZCqc9sQ2fgf+wm6GtNt0ebr+SQzxsxlSdHc=; b=k5HW5zA0ar0TIz7i
-	XbxPZoCMmoZHXcXb/R7VIRbM/3YJQPqLm9jkIJCw+aJzX9XT5I2vLeDVvBdUWPiI
-	uKjz8sQqo8qs1VW6e1MwbVkNhx9Qrm99z1PY0BQUO+bWMjgtKd52L8xVCssqEEY0
-	rn30RiZiDx0zMFicf+4Ooj9HZ4x56hmvSG9tDj2Rf7mX6Hvxmudyt9m9H8CmWx+t
-	eTNu6emQfnv9XJ3vHeQQAM88S/VEpdbBqEXVKfpH8rsJh//JQWzZ40OfrAS09+uf
-	K1MqU8XME0eldagxHn43cuc18nCzEjHXRg4jrJJLDd8kzr9Tlt2X7WwheOz+CEUg
-	31tSsQ==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49fppr7bpk-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 08:30:18 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-798447d6dd6so15373096d6.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 01:30:07 -0700 (PDT)
+	s=arc-20240116; t=1759307436; c=relaxed/simple;
+	bh=aTV9DJ4X7CNRdvh2CbVxN/SzInF2XKP4CHkbj/CtYyI=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=pqyuZyl3hemq90vHED72s1uZNaDAqK44iBszp5YBJ44yLSkMmQpa6K4VciUx9tYWdjm/4CHb1WelSgluVgRygf8o6fQXPND5EVe4nVei4Z3IxLzsxIYnsO+6Tf7rKRCZTVb9dSKRfIHpGRTc2k6D8wUFWj4/9GO3XfaHC988wz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=jXr4/wlO; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-afcb7ae31caso1023780866b.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 01:30:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1759307433; x=1759912233; darn=vger.kernel.org;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4sp5MBlUIUhjs/PyEtVVLwD5jMkZMg5ArpTjJ0W4Ld0=;
+        b=jXr4/wlOXPJxJVUtIidlhK0+XB9rgQV5Ai1Op2CnCYjL6+RGJwFnfSQlxEQCrkzrRd
+         kU2RH1w8yJjR0u5BfNTtqpA+XqHpFC/a53srwMkx5I3guA6Xkxz4+SCvomLZN99W1j6C
+         D8vdspdxjUvTMyOh9LnQEvMwHSulpVpq6Ejf4ledMzE4nPcXD6n2/BiZQ362bSIhJSjZ
+         fXrzXugNEx3y0piasPKI7GBe+HHwSXGTnfaWBwBcTxTgcuNJhtCTGEtfE+Ev0QUwuTWN
+         78sjxRuiWXu1laj9GWbwsZfupMfc9hqtDtzmqv228uMGr+se+fVf5aXIc3yWBnTDZFlu
+         5KDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759307406; x=1759912206;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2X6tqOnkZCqc9sQ2fgf+wm6GtNt0ebr+SQzxsxlSdHc=;
-        b=sSr1QtDFrcBn8G8xEnt9Z2DrSezxNT0pSm051oIWbExqaQqIz0yyy6+n0864uiu3++
-         vDLfP+H1uzJNH1E8y3E8S0RUQUOxtWKgfNHV6mPbxE9EAE+uX7djFfcZH4GQInuDF9U0
-         lkxV7q0cQGBcaghVEr65oxzPKq4Lhog3fv/P7zbRw29x0QFnzSjUjiOawOgpkw4WsYPk
-         IrFNtwmoX6LnychqiYpPrv4pf+W18fOyalIO2AQ1rMjfJ1JnXS2U5ViUc80OEx/ZSfEO
-         1YQKty4FU5j4aGEtIPBCV6Zlug61MiVrl+xLvwLiM2zvNblUDFR00Ao7+3e2d9cPRjDE
-         9lzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWWy36v5ydkbSFHVUMLJLxDa+d2LFBygIbYZO2tq8g88+6CIk9Pb21UQwH6buKDTx4B7tOcu/rpa9XA0Bue@vger.kernel.org
-X-Gm-Message-State: AOJu0YzjE2b2RmtZjVFfM30VGqgjCW5Hr2TY4zXQ/S1djgGwajKpLiqP
-	ddos/yFaNuWl0TKcJVzB2P3gXXXe425mVIMsMolF2h1sw1t8ddOX1Frd6ku6j6LEr/cGGuMcqk9
-	dfJgMKzXvcYLU2N6cbEOAPgLaO2mL8gREU8KP+Gst/Apgbr/uV7cGc9dzwLzBi/k2IrmJNr48NB
-	EM
-X-Gm-Gg: ASbGnctBt9kHFSc6JJ9S3lIogp1/pdDKarI9YlrRFbDoOy+T2ca787XtCvYghkxsQUf
-	/wHFoF5r3IVBt2eE5d+S19hDOGQ7UojYJXbiHqAIklG9WfugMlEfio5+64YWxuyQzUCNr0q1Gz0
-	teLz+pB4/CUXnDaA3T8vpZae1G6IoQaezLG9S3nyajIPOey4+ircgxKJGSkYNTjfaMnYNHU1ZYw
-	R5ecaaFFLjv6mppsTHXju/xcUymXZe0Vf5svwfyZf8IBhYZ1fZWokiit0Gz9pGoqfwvRtRh/0mK
-	n6iZg3kDt24fXuFuNMJ97EMrt6Y7xHiUTIXFZ+jWQM/27l6MsSTYqX+EKXeUsjfOPqUQS+aSS3N
-	JeofL3TPG+esJ7b5+9GvcjAl48yw=
-X-Received: by 2002:a05:6214:f6a:b0:806:d113:3f87 with SMTP id 6a1803df08f44-873abb0222emr22127536d6.8.1759307406454;
-        Wed, 01 Oct 2025 01:30:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGC8KNsHxDoPXMUkX/fvgyVmTEiJDo+/TI3l8mHrrYISyzN5SbngHkWWEk4JHQhpymJZjMEYg==
-X-Received: by 2002:a05:6214:f6a:b0:806:d113:3f87 with SMTP id 6a1803df08f44-873abb0222emr22127286d6.8.1759307405922;
-        Wed, 01 Oct 2025 01:30:05 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-634a3629cb2sm11171448a12.11.2025.10.01.01.30.03
+        d=1e100.net; s=20230601; t=1759307433; x=1759912233;
+        h=in-reply-to:references:cc:to:from:subject:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=4sp5MBlUIUhjs/PyEtVVLwD5jMkZMg5ArpTjJ0W4Ld0=;
+        b=ty+Zx9LbbdPFtAvqzolFnXifgFTm5o7spaXMSbAwDdHDtosT4E9XDXDs3WjsRuvX64
+         /t9kNMB3ASXPuap7H6hylwUB3Jl4uiyuxVboOBPNlyRkpC/qQA2nQUOkF4F2hf3+1BOY
+         AlKxr34ywSp52es2luyErPGrFDRsToJqzOFXORPKknRwxApctKgDBgXmn0lCXSRcGusH
+         w1xYRpnoIRyiZdMowTSeNOiDZpG6EOlSQ5suaElhpTjCIgU0itojF2VQ91htEijMPcfW
+         gdaaaIe8NfmMQgGvHA0UIadhXkePM9C7/gNNDECTM9vB6iLWN7LIO4q7yBovEt6A9IRL
+         8eig==
+X-Forwarded-Encrypted: i=1; AJvYcCXqUXSO4c5EdqxUO7a4qAZBGsGqx2rHCnWRFFV1b92Z/B0voEg+91uCMY2TfADlZIxwMN703OhHraeUVbg2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxoZMZwtD6Siuyv/RQF8PsyFWcwKvh1GoJDjZ/XoYVW8T/QQb2Q
+	H4wup8PMm+pTYugW35BnmP1sb5ltkBl6mIhkSvmYs34D+F6tt2SedPTMOsE6lIJG8sU=
+X-Gm-Gg: ASbGnctdncsO0YXqCaPth0J4SZnV2lIBWJmWmTJ39UzEP1M88HSUnFVu6qvtZg6pqYc
+	x+UETFWBGBMuZ093VN4OAnYAVH3vE3h1CNlVykonk6M45KpNXU8e21EJVayJFijPJ/7kKIyjDeR
+	EPZI208IyNc4pmYMPM95aRf6PcNClmzabcy4BV+GzWDvsuZp61fPdEm347ONKQLO3YuU5Vapbiy
+	LoGd1huf2ogy6tP1MX40QOS96h88bKVPNd3xL+K2N3cqAJmuhyITGPksSfabP/FD5kT/Pto9orJ
+	8f3fHLrbH7jHNW8ySfbyemQUNYh3rOxxWClbSoLUVhoYHJFXpGnhFAc9XuPL+SoD41EIU4UkSQc
+	sH1y+6aBptkhx5uJWi5dRy+XNEQk1zy52ulFrGdfHAI0p6FoFEsfiu0hpEYCf3PlfS+bZA5vo0n
+	lufMS5jUK5cUdVk9L2
+X-Google-Smtp-Source: AGHT+IEo+e2rUvArQhzF5eV5Lh+i9AY1uOMcpk2GIpqm4c0ralkRiKHWzmcmVJzcPnQvOl2COH3sJg==
+X-Received: by 2002:a17:907:9709:b0:b42:f7df:a2ec with SMTP id a640c23a62f3a-b46e4b8f700mr308378766b.9.1759307433006;
+        Wed, 01 Oct 2025 01:30:33 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b3f1b54c4fesm566437966b.86.2025.10.01.01.30.32
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Oct 2025 01:30:05 -0700 (PDT)
-Message-ID: <3483a7ba-7248-4358-b65f-356743648c92@oss.qualcomm.com>
-Date: Wed, 1 Oct 2025 10:30:02 +0200
+        Wed, 01 Oct 2025 01:30:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] arm64: dts: qcom: qcm6490-shift-otter: Enable flash
- LED
-To: Luca Weiss <luca.weiss@fairphone.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Casey Connolly <casey.connolly@linaro.org>,
-        Alexander Martinz <amartinz@shiftphones.com>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250930-otter-further-bringup-v1-0-7fe66f653900@fairphone.com>
- <20250930-otter-further-bringup-v1-4-7fe66f653900@fairphone.com>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20250930-otter-further-bringup-v1-4-7fe66f653900@fairphone.com>
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI5MDA4MiBTYWx0ZWRfX/3npjVOaWe4w
- mKLbSZ+hF5gVVZPEuroL+rM6wPYs2uJ1QF8HGGc6h2KzQwoagNgtjHc9revSLp01KUtdPpPbNjw
- yggeNH9ZH/Zu2U30iw6JNihAnGC3FX6wsdyi+zN8WuUfDY8iPDA+fSrdfxjbQw+2mCM7HKu8hZi
- nkoFJjXMzznrK6KaFwCj0iy6r47RayIrKIg+7j7fnErw/zlE9a1jJFE6G6DS0CtFVv9QIRfyHDQ
- KUqtsazXWPQ/5iujY63LcU9B2HueABBs8SR0+PKAQdDOOB6Ay+7hahALgOZ9VASEF6yZi/7PqS2
- /53mG4jIdx9o3++pL+ds1HnrkEOwBuLkAX8njMbN2B87O4BYR6QHo4gC7LPPfuUnmUT2QYHtk33
- g1a6PW3255yj8GM/s6HcBJ5Q08m1iA==
-X-Proofpoint-ORIG-GUID: ALEO4_ch_10T5UlOL1-KslbhjG6LN0JC
-X-Authority-Analysis: v=2.4 cv=GLoF0+NK c=1 sm=1 tr=0 ts=68dce69a cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=KKAkSRfTAAAA:8 a=6H0WHjuAAAAA:8
- a=EUspDBNiAAAA:8 a=v7dz08i6nHTDO6dUxXgA:9 a=QEXdDO2ut3YA:10
- a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22 a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-GUID: ALEO4_ch_10T5UlOL1-KslbhjG6LN0JC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-01_02,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 suspectscore=0
- impostorscore=0 spamscore=0 bulkscore=0 clxscore=1015 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2509290082
+Date: Wed, 01 Oct 2025 10:30:32 +0200
+Message-Id: <DD6UFOT1KRFG.3M6QJRGYRAJF9@fairphone.com>
+Subject: Re: [PATCH 5/6] arm64: dts: qcom: qcm6490-shift-otter: Enable RGB
+ LED
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Luca Weiss"
+ <luca.weiss@fairphone.com>, "Bjorn Andersson" <andersson@kernel.org>,
+ "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
+ "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
+ <conor+dt@kernel.org>, "Casey Connolly" <casey.connolly@linaro.org>,
+ "Alexander Martinz" <amartinz@shiftphones.com>
+Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
+ <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+ <linux-kernel@vger.kernel.org>, "Luca Weiss" <luca@lucaweiss.eu>
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20250930-otter-further-bringup-v1-0-7fe66f653900@fairphone.com>
+ <20250930-otter-further-bringup-v1-5-7fe66f653900@fairphone.com>
+ <fc5d2d9c-7200-416f-ad89-4c1907e313c9@oss.qualcomm.com>
+In-Reply-To: <fc5d2d9c-7200-416f-ad89-4c1907e313c9@oss.qualcomm.com>
 
-On 9/30/25 4:32 PM, Luca Weiss wrote:
-> From: Casey Connolly <casey.connolly@linaro.org>
-> 
-> Describe the flash LED on this phone.
-> 
-> Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-> ---
->  arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 13 +++++++++++++
->  1 file changed, 13 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-> index ce794ca724db6deb39f7fae47912c3fefe974573..36cc67469615974c193ea3a9db1b2362869d56bb 100644
-> --- a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-> +++ b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
-> @@ -619,6 +619,19 @@ volume_down_default: volume-down-default-state {
->  	};
->  };
->  
-> +&pm8350c_flash {
-> +	status = "okay";
-> +
-> +	led-0 {
-> +		function = LED_FUNCTION_FLASH;
-> +		color = <LED_COLOR_ID_WHITE>;
-> +		led-sources = <1>, <2>;
-> +		led-max-microamp = <500000>;
-> +		flash-max-microamp = <1500000>;
-> +		flash-max-timeout-us = <1280000>;
-> +	};
+On Wed Oct 1, 2025 at 10:29 AM CEST, Konrad Dybcio wrote:
+> On 9/30/25 4:32 PM, Luca Weiss wrote:
+>> From: Luca Weiss <luca@lucaweiss.eu>
+>>=20
+>> Enable the RGB LED connected to the PM7350C (PM8350C).
+>>=20
+>> Signed-off-by: Luca Weiss <luca@lucaweiss.eu>
+>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+>> ---
+>>  arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts | 27 +++++++++++++++++=
++++++++
+>>  1 file changed, 27 insertions(+)
+>>=20
+>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts b/arch/arm=
+64/boot/dts/qcom/qcm6490-shift-otter.dts
+>> index 36cc67469615974c193ea3a9db1b2362869d56bb..b4c69dc50ed0f0b3cb45341a=
+01c89210bd261993 100644
+>> --- a/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
+>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-shift-otter.dts
+>> @@ -632,6 +632,33 @@ led-0 {
+>>  	};
+>>  };
+>> =20
+>> +&pm8350c_pwm {
+>> +	status =3D "okay";
+>> +
+>> +	multi-led {
+>> +		color =3D <LED_COLOR_ID_RGB>;
+>> +		function =3D LED_FUNCTION_STATUS;
+>> +
+>> +		#address-cells =3D <1>;
+>> +		#size-cells =3D <0>;
+>> +
+>> +		led@1 {
+>> +			reg =3D <1>;
+>> +			color =3D <LED_COLOR_ID_RED>;
+>> +		};
+>> +
+>> +		led@2 {
+>> +			reg =3D <2>;
+>> +			color =3D <LED_COLOR_ID_GREEN>;
+>> +		};
+>> +
+>> +		led@3 {
+>> +			reg =3D <3>;
+>> +			color =3D <LED_COLOR_ID_BLUE>;
+>> +		};
+>
+> I assume you managed to confirm these mappings are correct.. sometimes
+> they are not what you'd expect
 
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+If you mean, that red =3D=3D red, green =3D=3D green and blue =3D=3D blue, =
+yes. The
+RGB configured from user space matches the color on the LED.
 
-Konrad
+Regards
+Luca
+
+>
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+>
+> Konrad
+
 
