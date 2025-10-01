@@ -1,132 +1,102 @@
-Return-Path: <linux-arm-msm+bounces-75668-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75669-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id CDF0BBAFF17
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 11:59:24 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B5E8ABAFF72
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 12:14:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id E71D81C5977
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 09:59:22 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 70227171088
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 10:14:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3B6CA29AAF8;
-	Wed,  1 Oct 2025 09:59:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R6t+EpOt"
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F66E28DEE9;
+	Wed,  1 Oct 2025 10:14:45 +0000 (UTC)
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from exchange.fintech.ru (exchange.fintech.ru [195.54.195.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FF5529A31C;
-	Wed,  1 Oct 2025 09:59:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18A32BEC23;
+	Wed,  1 Oct 2025 10:14:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.54.195.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759312750; cv=none; b=jVHyVzhP6OsTFvlEy4rgxrSarrPfM+UM6n1pmDsJ8bqZjBcOKiYnw03xpI8Bo2aYAl6A9qu9OPCfDGfYyJYtsLk0BLbPifQQyzP0ySvWBtGm3KqGvMWLUk9PThmAvWhp31huc+ngLSKwUoc5IgzhvH4yPE9zDAK9ytlTxmrHubY=
+	t=1759313685; cv=none; b=FS5o+tIVdWktpC7t6gU3t5t9im5X3rad/B6lXoGv8d7An0GYhZI3O7K5yhoerGv8Xo9gIK3CZwoQtkPcBvhWlN8QKdA3k3iulhu6psq3+MWWxGGO8+rzBoXLbLyOz6L3moHEHMbTE3bKcq82g9AO3HcxhJjZmGllJWePvm7v3lA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759312750; c=relaxed/simple;
-	bh=zQh3WXGk/9eQB/zxNVg6iMZ/HSaTpK+7Py1m4QRWrMc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NgN55eq+ggEBiAxP2XlPgjCBADWFjIO/UaotFWnATBkqsPZPJ0xloNVTybfnYG01XZRiLl44dYNRYk7I3PgS5LSn9w1m90B/1GnLM97K30INMw23109EID9dogxVth3/zZYyPu1ysSTtjHlRIi8SkCRFySb8ETP+wVLVzjVxy1g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R6t+EpOt; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3385BC4CEF7;
-	Wed,  1 Oct 2025 09:59:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759312749;
-	bh=zQh3WXGk/9eQB/zxNVg6iMZ/HSaTpK+7Py1m4QRWrMc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=R6t+EpOtg9phG1/VYTsHF/VnAqKQkR6zUFARBtsmb9XSfTLAFLHML9KiG8+rgeBmf
-	 Xm4/t1KD6j8c4eANQ6SdQON0liiDinPdJOvaOAKEFH7itPWtDtAiixf6wSV+34xZIJ
-	 y0nYVeevlSWlrQTEAYyzMm7XuFxw+fmNfSlNsMIdBwqSRhxDrQa5wTs2dU9XpXETRV
-	 pg5WB/6RopBuv7eUkTTduH08uSpQjN+mHcaGkIGKbUvVlm2sRbp1n2ryrjawqhlAQr
-	 k+zTngMNdWV/0KFWUIY21RFFvxE9pT9RiaBQAvg9S6aIYV6nZ14iDy0nswzwFNIWHf
-	 XwjkH6qftQTwA==
-Date: Wed, 1 Oct 2025 10:59:04 +0100
-From: Lee Jones <lee@kernel.org>
-To: Dzmitry Sankouski <dsankouski@gmail.com>
-Cc: Chanwoo Choi <cw00.choi@samsung.com>,
-	Krzysztof Kozlowski <krzk@kernel.org>,
-	Rob Herring <robh@kernel.org>, Conor Dooley <conor+dt@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: Re: [PATCH v4 3/3] dt-bindings: max77705: add interrupt-controller
- property
-Message-ID: <20251001095904.GQ8757@google.com>
-References: <20250925-starqltechn-correct_max77705_nodes-v4-0-93b706bdda58@gmail.com>
- <20250925-starqltechn-correct_max77705_nodes-v4-3-93b706bdda58@gmail.com>
+	s=arc-20240116; t=1759313685; c=relaxed/simple;
+	bh=7xxuCF9C5cu4w/jvCQcEs8umQTwoODQ512OHhNI8b6c=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=dL097Tjl0VRp6Ns/6S2iuubK0AHHV7iuthmQFpD9XIY+SgLDtOnXncErNDGtC7Gy7tKe05Agkd24QEMcFTo+ekLYoL4K1awFUhjTFiNB92cjHmA9yhRkE0SlqV645aR7seYr76eyOIZP8yxlWkxRjesyo6EyvtrZ4/wGIygHtNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fintech.ru; spf=pass smtp.mailfrom=fintech.ru; arc=none smtp.client-ip=195.54.195.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=fintech.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fintech.ru
+Received: from Ex16-01.fintech.ru (10.0.10.18) by exchange.fintech.ru
+ (195.54.195.169) with Microsoft SMTP Server (TLS) id 14.3.498.0; Wed, 1 Oct
+ 2025 13:13:28 +0300
+Received: from localhost (10.0.253.101) by Ex16-01.fintech.ru (10.0.10.18)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2242.4; Wed, 1 Oct 2025
+ 13:13:27 +0300
+From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+To: Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood
+	<lgirdwood@gmail.com>, Jaroslav Kysela <perex@perex.cz>, Takashi Iwai
+	<tiwai@suse.com>
+CC: Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
+	<linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+	<linux-kernel@vger.kernel.org>, <lvc-project@linuxtesting.org>
+Subject: [PATCH] ASoC: q6apm: fix potential overflow in q6hdmi_hw_params
+Date: Wed, 1 Oct 2025 13:13:02 +0300
+Message-ID: <20251001101304.612758-1-n.zhandarovich@fintech.ru>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250925-starqltechn-correct_max77705_nodes-v4-3-93b706bdda58@gmail.com>
+Content-Type: text/plain
+X-ClientProxiedBy: Ex16-02.fintech.ru (10.0.10.19) To Ex16-01.fintech.ru
+ (10.0.10.18)
 
-On Thu, 25 Sep 2025, Dzmitry Sankouski wrote:
+Since 'module_config' array in struct 'q6apm_lpass_dai_data' has fixed
+size APM_PORT_MAX (127), function q6hdmi_hw_params() may hit
+accidental buffer overflow. Specifically, in case 'dai->id' has
+values ranging between DISPLAY_PORT_RX_1 and DISPLAY_PORT_RX_7,
+DISPLAY_PORT_RX_1 being equal 129.
 
-> Add interrupt-controller property, because max77705 has dedicated interrupt
-> source register to determine which sub device triggered an interrupt.
-> 
-> Signed-off-by: Dzmitry Sankouski <dsankouski@gmail.com>
-> ---
-> Changes in v4:
-> - fix commit message: node -> property
-> - fix commit message: minor reword and punctuation
+Mitigate this issue by expanding the maximum possible size of
+'module_config' and increasing APM_PORT_MAX to account for bigger
+possible values for indexes.
 
-Please also fix the subject line.  Format should be:
+Found by Linux Verification Center (linuxtesting.org) with static
+analysis tool SVACE.
 
-  dt-bindings: mfd: <device>: Subject line starting with an uppercase char
+Fixes: 2f6860e6133f ("ASoC: qcom: q6apm: add support to display ports in lpass dais")
+Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+---
+P.S. This issue is quite similar to another, already fixed one, see
+commit a31a4934b31f ("ASoC: qcom: Fix sc7280 lpass potential buffer
+overflow").
 
-> ---
->  Documentation/devicetree/bindings/mfd/maxim,max77705.yaml | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml b/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
-> index 0ec89f0adc64..d265c8213a08 100644
-> --- a/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
-> +++ b/Documentation/devicetree/bindings/mfd/maxim,max77705.yaml
-> @@ -26,6 +26,18 @@ properties:
->    interrupts:
->      maxItems: 1
->  
-> +  interrupt-controller:
-> +    description:
-> +      The driver implements an interrupt controller for the sub devices.
-> +      The interrupt number mapping is as follows
-> +      0 - charger
-> +      1 - topsys
-> +      2 - fuelgauge
-> +      3 - usb type-c management block.
-> +
-> +  '#interrupt-cells':
-> +    const: 1
-> +
->    haptic:
->      type: object
->      additionalProperties: false
-> @@ -120,8 +132,10 @@ examples:
->              reg = <0x66>;
->              interrupt-parent = <&pm8998_gpios>;
->              interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
-> +            interrupt-controller;
->              pinctrl-0 = <&chg_int_default>;
->              pinctrl-names = "default";
-> +            #interrupt-cells = <1>;
->  
->              leds {
->                  compatible = "maxim,max77705-rgb";
-> 
-> -- 
-> 2.39.5
-> 
+ sound/soc/qcom/qdsp6/q6apm.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/sound/soc/qcom/qdsp6/q6apm.h b/sound/soc/qcom/qdsp6/q6apm.h
+index 7ce08b401e31..1d032004e01a 100644
+--- a/sound/soc/qcom/qdsp6/q6apm.h
++++ b/sound/soc/qcom/qdsp6/q6apm.h
+@@ -14,9 +14,10 @@
+ #include <linux/of_platform.h>
+ #include <linux/jiffies.h>
+ #include <linux/soc/qcom/apr.h>
++#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
+ #include "audioreach.h"
+ 
+-#define APM_PORT_MAX		127
++#define APM_PORT_MAX		DISPLAY_PORT_RX_7
+ #define APM_PORT_MAX_AUDIO_CHAN_CNT 8
+ #define PCM_CHANNEL_NULL 0
+ #define PCM_CHANNEL_FL    1	/* Front left channel. */
 -- 
-Lee Jones [李琼斯]
+2.43.0
+
 
