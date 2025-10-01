@@ -1,87 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-75714-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75715-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65163BB1BC0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 23:02:46 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 915C4BB1CC6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 23:22:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A546619C3EA5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 21:03:08 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 0091218890EB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 21:23:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79F2D30CDB5;
-	Wed,  1 Oct 2025 21:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 48D0C31195B;
+	Wed,  1 Oct 2025 21:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jcEwFVUC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="AEoBOZbY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E862EA493
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 21:02:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E352E093B
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 21:22:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759352560; cv=none; b=dj9Kp9DGsqPk35bdG+Jbj1E4PCQLdZeSI8pdRsR22LqdsM72aSS3kJRMsOBO6IB67ZSd6QWs2vSfwKv7cj0JOEm8LYl8wmkGZVB3TXCraOReEbihZdtmIKcuCBHdPZV8OB3GfciGX3OnL858ndDf/vUFA3/YGpdG329t1dBlUR0=
+	t=1759353768; cv=none; b=N4zLHu+/roFzniFZCzY2TcN9f6PVU3QndpVDCROFvN+wajNvUXuhffPXJXmVX4p+NhWfNNrdD1Eea7pEHcvHBOtX/rXGIX5YHaFH+GXJAa9lRP9iF8AoTZfiTyRWl3nf+fhiPwIJP0PjkDL/UaIoJkQxzZdm8Ofo4OQZmhKunbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759352560; c=relaxed/simple;
-	bh=q9y0gWMca2klJppfop+nGytevhGuLzjHvkG3oguHnBg=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=HjVMZhLMFmV7ILkF60Qv1MEXzPSw991aNdr4FqdnCMVqjOeU+ZfIgLASqPiWvHVaKlmaSmKAWKG4Di2KF4aueL2KHQAn3BKN3eeyplh5c4dZiVz3k3iI09C6ibSF1qcuPNNlCiYXkviRzx/6J/Aer6FxlPhurm6Nb0bM1kHhuYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jcEwFVUC; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1759353768; c=relaxed/simple;
+	bh=0feXbIiv5jZYhNGUawVlPDaLEDims5YKYfHLChZrH+Q=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=knfs/+WdFh2zFYWZ1Ixxuk8KHWc1pLXKDGfDN++KGbPv1ZnJuX5UJ1yvwLlTLE6VuaGWt+SVXqaPwFPh+k7asma/p8wbN7UC7RVOIJ555Bt/PlWevf4KtHWtHtMIwNVUA4u9mXhH5sGWALSRPf1h4yBSmOnIheUDrNpCHPgkqbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=AEoBOZbY; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591IcIL7012845
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Oct 2025 21:02:37 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591IcUSv024838
+	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Oct 2025 21:22:46 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	pWqdJYIgBrFAk/VfJaE8W7hboLe7bmM+zzZwNVqEq3g=; b=jcEwFVUCNmXpe4Hx
-	Sw/v2WMFPD6phRbFbDegjtGk92GQIFNujZBL9pIfyegiHHHlEMNpbQ96WIhogOIi
-	yIueEOnyDO8kxbeMtbdU200j5vg9E+WRufclP0LHVVLR9eQXJ5ZpPTS0GZBF7UIl
-	priz9x9aq7yrK6u2mQ3vb7Jfop325EBTi/TctO/ibhpv/7i2DfENiMvCCEjLg1m4
-	bBS6yT06EXJuH18oThldxrZtXFNeeF6wZXXq/TaEbR59P98QizUbqzVfsJScJZ0T
-	T66xSOXGAzc+6LIPqMyBfZGE6dTt1SNhHggGmhUw4fHCp+iRHV/o3LRrw5wKTbZr
-	GaZ+cg==
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com [209.85.216.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e80tx1q3-1
+	tY1kk2Q5hRz9w3+RRK/dSbVzsoNAtpTZ1wIZRGTLaPE=; b=AEoBOZbY5dwHsaEu
+	nCz2fNZKcAZfaYdo5d5ulPVRFWJ8zMZ7Mi2+jxZ1vA7pKIwX64LOdeMVvEmiD8rr
+	sIDuv9xRcIAN69afsfe63q4APcIO2rPZE4ANruDmLiGkhcnlLxQlv0q5guwKKpdT
+	8E/5BjiSkPiIHgQSXaWF5esBN9iECy0OktYe35tQKHWp+spFR2VCg2UuIy0DOYHJ
+	lg6D0+O5lQ8xw2yAfFk6mov6NbrGiJxdlmEvUy9Vth2d2s8r+3W6cZf4dZndVJuY
+	lZdnaPHFWzfCQzJe/5uh48ZM9lA1XK4aWdq70vaLqAlFNBPOF9UaA/2fqIiNCT+p
+	+1Hnvg==
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e977wrc3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 21:02:36 +0000 (GMT)
-Received: by mail-pj1-f70.google.com with SMTP id 98e67ed59e1d1-339a6d9defdso685280a91.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 14:02:36 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 21:22:45 +0000 (GMT)
+Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b5edecdf94eso493358a12.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 14:22:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759352554; x=1759957354;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1759353765; x=1759958565;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pWqdJYIgBrFAk/VfJaE8W7hboLe7bmM+zzZwNVqEq3g=;
-        b=GvzQhywk8b7e2BUqIu6s9IRfa82Nzd4D1GhMRBogdvSMo5MI2rBDeOGGrmBH7OzbSu
-         dsCGTcrQ9dMZbUHIoipZL/GhU7VDXuW3RnPocYmvJYyrJtUCrUDiU1KGf6eWT4Dsxluj
-         MlAWjlmz4vkgGMyFEzcoR3lwssPR3SgpDAdSd8WutAXfKwEsD8pj+7uzYMrUmM/+lefq
-         wHgwnx2BnRt0IFVvLe3+n4wWrFTKuCNGP57BpcUL+9a/u4ni3uJ/PSIATIURAY8Orirb
-         201b6FeFjWScGPRJ4EDo6JGGPf5MIPZM8aERR3VVLuHN9dkGkFlPjh39QE6XeZ0rM1Xo
-         SQZg==
-X-Forwarded-Encrypted: i=1; AJvYcCXVhibLwCGuqCQQKKZ3FwLX+adOfKinhI6sJ6WvciF7HiZd/b3Feept8k+JtwFG6WRv+ycEfjUtBu1zqlFG@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywn/PKoDlWHJ+6MxQ2ukMrG/Zl5UJrRrjRyPPu3RMnvW5gRDiR4
-	H6BOO6Cvz23MH3MRdS+wevsJwTizxsJdrrhuDtgZPoWTb+T5TmE3KSzJ4tjIL5d7UcUP6X8Un3v
-	AUQALEx3f4PQVQY1E325DgOcUtG0x+oqJuej2celypjFT/T2ggee4HxJbn9y1SngiMGkZ
-X-Gm-Gg: ASbGnct80Zjfauxj/axf50/CwpR754QUq+/pLDj+FgngcjuDVLVd8AzzE5ZnExGLA9d
-	+sSrbm/6gy4W1pX0y/3SQtPRWcsE2OCAw7Yq9KxlHlqa86qvmg0C3ZvZIg1LkQLKPJo9m2haoD9
-	0Wt+ORg0swIr1bJg3MZ2S8O2W/oDacJd5NcH5Bp+tMpdws+CG8jnRW3/LYaLoZGU8pvqzHybjqs
-	KZaUMgiaSqOFl2R41azSmj8GGZWyoUKsSHuS2AmLLnZPkhIOBRtrybze9/qpv3PfaejzoDcKUew
-	46uZ23YKVZdkgrQjpwNnCZwtL2tr0zu49Y3eOtxKm1ntAwaTjeobuVEgLeMJnXwqoEw=
-X-Received: by 2002:a17:90b:4d86:b0:338:3d3c:3e03 with SMTP id 98e67ed59e1d1-339a6f93accmr5793941a91.35.1759352553774;
-        Wed, 01 Oct 2025 14:02:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+adF5Hw1qoHbQQDpjT41fXsJfxm6K0JOkLji8AXIaoSONPxkixcPS43sXq5iToRh0+l8CaQ==
-X-Received: by 2002:a17:90b:4d86:b0:338:3d3c:3e03 with SMTP id 98e67ed59e1d1-339a6f93accmr5793895a91.35.1759352553114;
-        Wed, 01 Oct 2025 14:02:33 -0700 (PDT)
+        bh=tY1kk2Q5hRz9w3+RRK/dSbVzsoNAtpTZ1wIZRGTLaPE=;
+        b=DNJCsu+8M6t0g5T7iyoYn86PRcpEfWHu6dKtbneoe5noR9SfnFeH5YTrhZS5TU+M64
+         igwHun16bGyX+VljZH9ZKb+VigrRAOlWejddogkTNwretH6MKGi6ojTkqFlRdPcstBp+
+         9TYCTCDMyaPCRd0wrBoK+//S6uSNe7YiDz6ZwmSzh8jo0jamUKY8y1SCC159QWR4LMvq
+         zGAHySpYAhhTe/PYY3jUQKqeUyfq4aaCSGAd6M7cWapz60IutweOF3vCIf3VwEKD6p35
+         m6avj7hN/7/ImnJmPZpApg3wp9ofHFg00TbWgWbgH2qJs0KbtFZ5pgr/9vRCSMulRDRB
+         z1PQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU8pFYFM00T4G9UodDP6qWfiGen4W2dHVTnKcocn5LZb9XFjKexFs7HsIqiPXBW1W3GzZqzoELkSFsGhATc@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxp9mxcMkQaC+R8T6pac8vx5dqYhA8q3xj24IUd3VjIshIfFtIG
+	3++5E/paVVFA9R++afJ2lyBVQknGdmOS/wzaVcnlY6YE8y8pwTMaXpbJZCWcfGHbIzW95TyZUij
+	7xsnfvmLLx0vKVxonycrBVu4SQQ14ndIiHvfNIH7wdylGn272ns25/dyYpI6xyYVyuM96
+X-Gm-Gg: ASbGnctB9mPBZFiapKGpV//DFJfU/LSCojNz7bIkmT4MItdSaoWWCleUkWLAl5T8Ljs
+	UPmhqVYR6L0YFmDQ63bQOuMvB8BisXxJTJDHmcsX8NktQifXyiu/nk52LjiOQ/xare3GBxbQ6qG
+	WWICmIUUNgme6pIBTlMKcD54Dunyh14HziKbQK0IEDfVwSIu4bTD9L2aEbptm18NI4kY9k252qD
+	RxNBLVe69Wz8wAvs/K1xYKlzQ1YwVfREs4N0834caT6dF2IoT5uQihC/9dCLAsNxAWNoXSjwiS/
+	gz4eYLGwx3ykqegulhyM4Ex/WxDjV1HHJiYTU3iW5dtvtd9nhEi0M1MMvUh+88Fn98U=
+X-Received: by 2002:a17:90b:3143:b0:338:26e3:ffb6 with SMTP id 98e67ed59e1d1-339a6f5329fmr5484051a91.26.1759353764864;
+        Wed, 01 Oct 2025 14:22:44 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3J5m7IdAEVQ8YgjK8xPIMo/mwc0iZ4ZB/L76eAW/owdYw7sgKWjOIFg1cMlAzuYnR+gwPtg==
+X-Received: by 2002:a17:90b:3143:b0:338:26e3:ffb6 with SMTP id 98e67ed59e1d1-339a6f5329fmr5484006a91.26.1759353764421;
+        Wed, 01 Oct 2025 14:22:44 -0700 (PDT)
 Received: from [192.168.1.9] ([117.244.71.19])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-339b4f6adc7sm583074a91.27.2025.10.01.14.02.25
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-339b4f3caf9sm623334a91.13.2025.10.01.14.22.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Oct 2025 14:02:32 -0700 (PDT)
-Message-ID: <845ea929-d245-44b1-a0f5-2ea67ca595d9@oss.qualcomm.com>
-Date: Thu, 2 Oct 2025 02:32:21 +0530
+        Wed, 01 Oct 2025 14:22:44 -0700 (PDT)
+Message-ID: <edb8b0dd-126b-4ed6-8603-119f1fd52baf@oss.qualcomm.com>
+Date: Thu, 2 Oct 2025 02:52:35 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,10 +89,9 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Betterbird (Windows)
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Subject: Re: [PATCH 12/17] drm/msm/adreno: Introduce A8x GPU Support
-To: Connor Abbott <cwabbott0@gmail.com>, rob.clark@oss.qualcomm.com
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+Subject: Re: [PATCH 10/17] drm/msm/a6xx: Rebase GMU register offsets
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
         Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
         Dmitry Baryshkov <lumag@kernel.org>,
@@ -115,500 +114,71 @@ Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
         freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
         iommu@lists.linux.dev, devicetree@vger.kernel.org
 References: <20250930-kaana-gpu-support-v1-0-73530b0700ed@oss.qualcomm.com>
- <20250930-kaana-gpu-support-v1-12-73530b0700ed@oss.qualcomm.com>
- <ks3ppjsy35wka2at5nxrr74l5mvzr4l6ovm5ncohanu2gn3ytl@gt2mzwjehq73>
- <CACSVV00AFEJVti7BryA-_sosmBKCuDtX7+NEi4aL4X98AqR1Qg@mail.gmail.com>
- <CACu1E7H0Y9wLwN=ztx+YSQLMQuqOF0hYPqvF-VdXyFW65og6og@mail.gmail.com>
+ <20250930-kaana-gpu-support-v1-10-73530b0700ed@oss.qualcomm.com>
+ <s4no2wy3yskk6l6igtx7h4vopaupc3wkmu7nhpnocv3bbs4hqi@uhie6j7xr2pt>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CACu1E7H0Y9wLwN=ztx+YSQLMQuqOF0hYPqvF-VdXyFW65og6og@mail.gmail.com>
+In-Reply-To: <s4no2wy3yskk6l6igtx7h4vopaupc3wkmu7nhpnocv3bbs4hqi@uhie6j7xr2pt>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAyOSBTYWx0ZWRfX8M1tY2hVBChd
- GmeUvLpXo0Vr+o62RfSWghbaJkjKbFQH8IweGH5hYrHYAC6f1eYPrsukEYA97s6H0bu/0Df7DME
- tTAeNfcexbcHkIbpBFDTCcHMMCIMqLiLRtEjw3rWlv/TFPFsYXUdb2Y4xYQ03VkKFgDkWOAcOUs
- LKp3k6LGGKCWidrq6S1WnpELfiHmCC5bumh0BunVBOFZ2+ho9JxwJEKtguToveYLA6pGYvYIHix
- 6cRK+7KHofkHUBGmjJ1KgQWox3aDVc5itNDXPcYHcWrHBAJaDglRnum4E7QfJnQYhePRh3Hst8J
- M/0Fn1KoVVsbhgL3XDmrKZ4TV2NCd26WRLGeI1j+c5hoJoChat8OYYmYf1J1gpuby0VdcBPa+zy
- jpi9/Kk79YJuYDQeOWfUZYQxOxf1BA==
-X-Proofpoint-GUID: Z4KArsPzyKII6iq965vDRihh20-OULL1
-X-Authority-Analysis: v=2.4 cv=OMkqHCaB c=1 sm=1 tr=0 ts=68dd96ec cx=c_pps
- a=0uOsjrqzRL749jD1oC5vDA==:117 a=2kejHg7nZSoTgEpwAwsXNQ==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=e5mUnYsNAAAA:8 a=EUspDBNiAAAA:8
- a=FJEtwSaB2erPM9T07OEA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=mQ_c8vxmzFEMiUWkPHU9:22 a=Vxmtnl_E_bksehYqCbjh:22
-X-Proofpoint-ORIG-GUID: Z4KArsPzyKII6iq965vDRihh20-OULL1
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: KCK_MbigxzNygWSPRaIFWbwmTvYaXSnK
+X-Proofpoint-ORIG-GUID: KCK_MbigxzNygWSPRaIFWbwmTvYaXSnK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDA0MyBTYWx0ZWRfXwdao5HDaoGaT
+ xfAL8maMY+/CGogpySgaiADHMzyFfZkD+xMIoYXKxx1RowKGfekD07cGNNhW1lS0AefUCHLQgQ+
+ MakAG8qYTmd73+hN7TKtU2NRNSm5EulksEtbwAHv4+5lCBvx++Rf6wRnsOL/RVsCTswugYlcgoB
+ a5THzvzFOO0H7qiR98h33fD8ziWt2zJof4Eniz0MYHRdCFdW3d4mseu29PuDz4aDYoSAdpeaGmG
+ C82pmZWp61dorEUZReWbQyUVmLLFGsq+lDoLvfcarP92hTlDNqzFk7mnUMVMVEQ5YegNJ1/lei1
+ Eq2Ny9OK/HJX1J7m63Wb/KMxwpkAta6l7d/OnMRLTmaM3GRQ64yoRgS4/1RQrlKZBg4R/4PQ8MT
+ 9j2Kmw86gxX3rspOcuMX/Oy2VuGkMw==
+X-Authority-Analysis: v=2.4 cv=Sf36t/Ru c=1 sm=1 tr=0 ts=68dd9ba5 cx=c_pps
+ a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=2kejHg7nZSoTgEpwAwsXNQ==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=DsFpUOTLdg6Fp_xZM74A:9
+ a=QEXdDO2ut3YA:10 a=3WC7DwWrALyhR5TkjVHa:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-01_06,2025-09-29_04,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 bulkscore=0 phishscore=0 adultscore=0
- priorityscore=1501 lowpriorityscore=0 clxscore=1015 spamscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ clxscore=1015 bulkscore=0 suspectscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 lowpriorityscore=0 phishscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2509270029
+ definitions=main-2509270043
 
-On 9/30/2025 2:11 PM, Connor Abbott wrote:
-> On Tue, Sep 30, 2025 at 10:08 AM Rob Clark <rob.clark@oss.qualcomm.com> wrote:
->>
->> On Tue, Sep 30, 2025 at 12:43 AM Dmitry Baryshkov
->> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>>
->>> On Tue, Sep 30, 2025 at 11:18:17AM +0530, Akhil P Oommen wrote:
->>>> A8x is the next generation of Adreno GPUs, featuring a significant
->>>> hardware design change. A major update to the design is the introduction
->>>> of Slice architecture. Slices are sort of mini-GPUs within the GPU which
->>>> are more independent in processing Graphics and compute workloads. Also,
->>>> in addition to the BV and BR pipe we saw in A7x, CP has more concurrency
->>>> with additional pipes.
->>>>
->>>> From a software interface perspective, these changes have a significant
->>>> impact on the KMD side. First, the GPU register space has been extensively
->>>> reorganized. Second, to avoid  a register space explosion caused by the
->>>> new slice architecture and additional pipes, many registers are now
->>>> virtualized, instead of duplicated as in A7x. KMD must configure an
->>>> aperture register with the appropriate slice and pipe ID before accessing
->>>> these virtualized registers.
->>>>
->>>> This patch adds only a skeleton support for the A8x family. An A8x GPU
->>>> support will be added in an upcoming patch.
->>>
->>> Consider this lands in a commit message. What would it mean in the Git
->>> history?
 
-Commit text is not just for git history. This sentence is for a reviewer 
-who is going through the patches one by one.
 
->>>
->>>>
->>>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->>>> ---
->>>>  drivers/gpu/drm/msm/Makefile                      |    1 +
->>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c             |  103 +-
->>>>  drivers/gpu/drm/msm/adreno/a6xx_gpu.h             |   21 +
->>>>  drivers/gpu/drm/msm/adreno/a8xx_gpu.c             | 1238 +++++++++++++++++++++
->>>>  drivers/gpu/drm/msm/adreno/adreno_gpu.h           |    7 +
->>>>  drivers/gpu/drm/msm/registers/adreno/a6xx.xml     |    1 -
->>>>  drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml |    1 +
->>>>  7 files changed, 1344 insertions(+), 28 deletions(-)
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
->>>> index 7acf2cc13cd047eb7f5b3f14e1a42a1cc145e087..8aa7d07303fb0cd66869767cb6298b38a621b366 100644
->>>> --- a/drivers/gpu/drm/msm/Makefile
->>>> +++ b/drivers/gpu/drm/msm/Makefile
->>>> @@ -24,6 +24,7 @@ adreno-y := \
->>>>       adreno/a6xx_gmu.o \
->>>>       adreno/a6xx_hfi.o \
->>>>       adreno/a6xx_preempt.o \
->>>> +     adreno/a8xx_gpu.o \
->>>>
->>>>  adreno-$(CONFIG_DEBUG_FS) += adreno/a5xx_debugfs.o \
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>> index bd4f98b5457356c5454d0316e59d7e8253401712..4aeeaceb1fb30a9d68ac636c14249e3853ef73ac 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->>>> @@ -239,14 +239,21 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
->>>>       }
->>>>
->>>>       if (!sysprof) {
->>>> -             if (!adreno_is_a7xx(adreno_gpu)) {
->>>> +             if (!(adreno_is_a7xx(adreno_gpu) || adreno_is_a8xx(adreno_gpu))) {
->>>
->>> Here and in several other similar places:
->>>
->>>                 if (!adreno_is_a7xx(adreno_gpu) &&
->>>                     !adreno_is_a8xx(adreno_gpu))) {
-
-Ack
-
->>>
->>>>                       /* Turn off protected mode to write to special registers */
->>>>                       OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
->>>>                       OUT_RING(ring, 0);
->>>>               }
->>>>
->>>> -             OUT_PKT4(ring, REG_A6XX_RBBM_PERFCTR_SRAM_INIT_CMD, 1);
->>>> -             OUT_RING(ring, 1);
->>>> +             if (adreno_is_a8xx(adreno_gpu)) {
->>>> +                     OUT_PKT4(ring, REG_A8XX_RBBM_PERFCTR_SRAM_INIT_CMD, 1);
->>>> +                     OUT_RING(ring, 1);
->>>> +                     OUT_PKT4(ring, REG_A8XX_RBBM_SLICE_PERFCTR_SRAM_INIT_CMD, 1);
->>>> +                     OUT_RING(ring, 1);
->>>> +             } else {
->>>> +                     OUT_PKT4(ring, REG_A6XX_RBBM_PERFCTR_SRAM_INIT_CMD, 1);
->>>> +                     OUT_RING(ring, 1);
->>>> +             }
->>>>       }
->>>>
->>>>       /* Execute the table update */
->>>> @@ -275,7 +282,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
->>>>        * to make sure BV doesn't race ahead while BR is still switching
->>>>        * pagetables.
->>>>        */
->>>> -     if (adreno_is_a7xx(&a6xx_gpu->base)) {
->>>> +     if (adreno_is_a7xx(&a6xx_gpu->base) && adreno_is_a8xx(&a6xx_gpu->base)) {
->>>>               OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
->>>>               OUT_RING(ring, CP_THREAD_CONTROL_0_SYNC_THREADS | CP_SET_THREAD_BR);
->>>>       }
->>>> @@ -289,20 +296,22 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
->>>>       OUT_RING(ring, CACHE_INVALIDATE);
->>>>
->>>>       if (!sysprof) {
->>>> +             u32 reg_status = adreno_is_a8xx(adreno_gpu) ?
->>>> +                     REG_A8XX_RBBM_PERFCTR_SRAM_INIT_STATUS :
->>>> +                     REG_A6XX_RBBM_PERFCTR_SRAM_INIT_STATUS;
->>>>               /*
->>>>                * Wait for SRAM clear after the pgtable update, so the
->>>>                * two can happen in parallel:
->>>>                */
->>>>               OUT_PKT7(ring, CP_WAIT_REG_MEM, 6);
->>>>               OUT_RING(ring, CP_WAIT_REG_MEM_0_FUNCTION(WRITE_EQ));
->>>> -             OUT_RING(ring, CP_WAIT_REG_MEM_POLL_ADDR_LO(
->>>> -                             REG_A6XX_RBBM_PERFCTR_SRAM_INIT_STATUS));
->>>> +             OUT_RING(ring, CP_WAIT_REG_MEM_POLL_ADDR_LO(reg_status));
->>>>               OUT_RING(ring, CP_WAIT_REG_MEM_POLL_ADDR_HI(0));
->>>>               OUT_RING(ring, CP_WAIT_REG_MEM_3_REF(0x1));
->>>>               OUT_RING(ring, CP_WAIT_REG_MEM_4_MASK(0x1));
->>>>               OUT_RING(ring, CP_WAIT_REG_MEM_5_DELAY_LOOP_CYCLES(0));
->>>>
->>>> -             if (!adreno_is_a7xx(adreno_gpu)) {
->>>> +             if (!(adreno_is_a7xx(adreno_gpu) || adreno_is_a8xx(adreno_gpu))) {
->>>>                       /* Re-enable protected mode: */
->>>>                       OUT_PKT7(ring, CP_SET_PROTECTED_MODE, 1);
->>>>                       OUT_RING(ring, 1);
->>>> @@ -441,6 +450,7 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>       struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>>       struct msm_ringbuffer *ring = submit->ring;
->>>>       unsigned int i, ibs = 0;
->>>> +     u32 rbbm_perfctr_cp0, cp_always_on_counter;
->>>>
->>>>       adreno_check_and_reenable_stall(adreno_gpu);
->>>>
->>>> @@ -460,10 +470,16 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>       if (gpu->nr_rings > 1)
->>>>               a6xx_emit_set_pseudo_reg(ring, a6xx_gpu, submit->queue);
->>>>
->>>> -     get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
->>>> -             rbmemptr_stats(ring, index, cpcycles_start));
->>>> -     get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
->>>> -             rbmemptr_stats(ring, index, alwayson_start));
->>>> +     if (adreno_is_a8xx(adreno_gpu)) {
->>>> +             rbbm_perfctr_cp0 = REG_A8XX_RBBM_PERFCTR_CP(0);
->>>> +             cp_always_on_counter = REG_A8XX_CP_ALWAYS_ON_COUNTER;
->>>> +     } else {
->>>> +             rbbm_perfctr_cp0 = REG_A7XX_RBBM_PERFCTR_CP(0);
->>>> +             cp_always_on_counter = REG_A6XX_CP_ALWAYS_ON_COUNTER;
->>>> +     }
->>>> +
->>>> +     get_stats_counter(ring, rbbm_perfctr_cp0, rbmemptr_stats(ring, index, cpcycles_start));
->>>> +     get_stats_counter(ring, cp_always_on_counter, rbmemptr_stats(ring, index, alwayson_start));
->>>>
->>>>       OUT_PKT7(ring, CP_THREAD_CONTROL, 1);
->>>>       OUT_RING(ring, CP_SET_THREAD_BOTH);
->>>> @@ -510,10 +526,8 @@ static void a7xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->>>>               OUT_RING(ring, 0x00e); /* IB1LIST end */
->>>>       }
->>>>
->>>> -     get_stats_counter(ring, REG_A7XX_RBBM_PERFCTR_CP(0),
->>>> -             rbmemptr_stats(ring, index, cpcycles_end));
->>>> -     get_stats_counter(ring, REG_A6XX_CP_ALWAYS_ON_COUNTER,
->>>> -             rbmemptr_stats(ring, index, alwayson_end));
->>>> +     get_stats_counter(ring, rbbm_perfctr_cp0, rbmemptr_stats(ring, index, cpcycles_end));
->>>> +     get_stats_counter(ring, cp_always_on_counter, rbmemptr_stats(ring, index, alwayson_end));
->>>>
->>>>       /* Write the fence to the scratch register */
->>>>       OUT_PKT4(ring, REG_A6XX_CP_SCRATCH(2), 1);
->>>> @@ -706,8 +720,11 @@ static int a6xx_calc_ubwc_config(struct adreno_gpu *gpu)
->>>>       /* Copy the data into the internal struct to drop the const qualifier (temporarily) */
->>>>       *cfg = *common_cfg;
->>>>
->>>> -     cfg->ubwc_swizzle = 0x6;
->>>> -     cfg->highest_bank_bit = 15;
->>>> +     /* Use common config as is for A8x */
->>>> +     if (!adreno_is_a8xx(gpu)) {
->>>> +             cfg->ubwc_swizzle = 0x6;
->>>> +             cfg->highest_bank_bit = 15;
->>>> +     }
->>>>
->>>>       if (adreno_is_a610(gpu)) {
->>>>               cfg->highest_bank_bit = 13;
->>>> @@ -818,7 +835,7 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->>>>                 cfg->macrotile_mode);
->>>>  }
->>>>
->>>> -static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->>>> +void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->>>>  {
->>>>       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>>       struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> @@ -868,7 +885,7 @@ static void a7xx_patch_pwrup_reglist(struct msm_gpu *gpu)
->>>>       lock->dynamic_list_len = 0;
->>>>  }
->>>>
->>>> -static int a7xx_preempt_start(struct msm_gpu *gpu)
->>>> +int a7xx_preempt_start(struct msm_gpu *gpu)
->>>>  {
->>>>       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>>       struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> @@ -925,7 +942,7 @@ static int a6xx_cp_init(struct msm_gpu *gpu)
->>>>       return a6xx_idle(gpu, ring) ? 0 : -EINVAL;
->>>>  }
->>>>
->>>> -static int a7xx_cp_init(struct msm_gpu *gpu)
->>>> +int a7xx_cp_init(struct msm_gpu *gpu)
->>>>  {
->>>>       struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>>       struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> @@ -993,7 +1010,7 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
->>>>               return false;
->>>>
->>>>       /* A7xx is safe! */
->>>> -     if (adreno_is_a7xx(adreno_gpu) || adreno_is_a702(adreno_gpu))
->>>> +     if (adreno_is_a7xx(adreno_gpu) || adreno_is_a702(adreno_gpu) || adreno_is_a8xx(adreno_gpu))
->>>>               return true;
->>>>
->>>>       /*
->>>> @@ -2161,7 +2178,7 @@ void a6xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_
->>>>  void a6xx_gpu_sw_reset(struct msm_gpu *gpu, bool assert)
->>>>  {
->>>>       /* 11nm chips (e.g. ones with A610) have hw issues with the reset line! */
->>>> -     if (adreno_is_a610(to_adreno_gpu(gpu)))
->>>> +     if (adreno_is_a610(to_adreno_gpu(gpu)) || adreno_is_a8xx(to_adreno_gpu(gpu)))
->>>>               return;
->>>>
->>>>       gpu_write(gpu, REG_A6XX_RBBM_SW_RESET_CMD, assert);
->>>> @@ -2192,7 +2209,12 @@ static int a6xx_gmu_pm_resume(struct msm_gpu *gpu)
->>>>
->>>>       msm_devfreq_resume(gpu);
->>>>
->>>> -     adreno_is_a7xx(adreno_gpu) ? a7xx_llc_activate(a6xx_gpu) : a6xx_llc_activate(a6xx_gpu);
->>>> +     if (adreno_is_a8xx(adreno_gpu))
->>>> +             a8xx_llc_activate(a6xx_gpu);
->>>> +     else if (adreno_is_a7xx(adreno_gpu))
->>>> +             a7xx_llc_activate(a6xx_gpu);
->>>> +     else
->>>> +             a6xx_llc_activate(a6xx_gpu);
->>>>
->>>>       return ret;
->>>>  }
->>>> @@ -2561,10 +2583,8 @@ static struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>>>       adreno_gpu->base.hw_apriv =
->>>>               !!(config->info->quirks & ADRENO_QUIRK_HAS_HW_APRIV);
->>>>
->>>> -     /* gpu->info only gets assigned in adreno_gpu_init() */
->>>> -     is_a7xx = config->info->family == ADRENO_7XX_GEN1 ||
->>>> -               config->info->family == ADRENO_7XX_GEN2 ||
->>>> -               config->info->family == ADRENO_7XX_GEN3;
->>>> +     /* gpu->info only gets assigned in adreno_gpu_init(). A8x is included intentionally */
->>>> +     is_a7xx = config->info->family >= ADRENO_7XX_GEN1;
->>>
->>> Is A8xx also a part of is_a7xx? What about the A9XX which will come at
->>> some point in future?
-
-I think this is okay for now. I have a separate patch which reworks the 
-cx_mem initialization. That will completely remove the above ugliness.
-
- >>>
->>>>
->>>>       a6xx_llc_slices_init(pdev, a6xx_gpu, is_a7xx);
->>>>
->>>> +
->>>> +int a8xx_gpu_feature_probe(struct msm_gpu *gpu)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     u32 fuse_val;
->>>> +     int ret;
->>>> +
->>>> +     /*
->>>> +      * Assume that if qcom scm isn't available, that whatever
->>>> +      * replacement allows writing the fuse register ourselves.
->>>> +      * Users of alternative firmware need to make sure this
->>>> +      * register is writeable or indicate that it's not somehow.
->>>> +      * Print a warning because if you mess this up you're about to
->>>> +      * crash horribly.
->>>> +      */
->>>> +     if (!qcom_scm_is_available()) {
->>>
->>> How can it be not available here?
-
-Just in case someone loads Linux kernel in EL2.
-
->>>
->>>> +             dev_warn_once(gpu->dev->dev,
->>>> +                     "SCM is not available, poking fuse register\n");
->>>> +             a6xx_llc_write(a6xx_gpu, REG_A7XX_CX_MISC_SW_FUSE_VALUE,
->>>> +                     A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING |
->>>> +                     A7XX_CX_MISC_SW_FUSE_VALUE_FASTBLEND |
->>>> +                     A7XX_CX_MISC_SW_FUSE_VALUE_LPAC);
->>>> +             adreno_gpu->has_ray_tracing = true;
->>>> +             return 0;
->>>> +     }
->>>> +
->>>> +     ret = qcom_scm_gpu_init_regs(QCOM_SCM_GPU_ALWAYS_EN_REQ |
->>>> +                                  QCOM_SCM_GPU_TSENSE_EN_REQ);
->>>> +     if (ret)
->>>> +             return ret;
->>>> +
->>>> +     /*
->>>> +      * On a750 raytracing may be disabled by the firmware, find out
->>>
->>> It's a8xx-related code, why do you have a750 in the comment?
->>
->> This is actually related to >= a750..  from a brief look it seems like
->> the whole fuse thing can be split into a helper and shared btwn
->> a7xx/a8xx?
+On 9/30/2025 12:53 PM, Dmitry Baryshkov wrote:
+> On Tue, Sep 30, 2025 at 11:18:15AM +0530, Akhil P Oommen wrote:
+>> GMU registers are always at a fixed offset from the GPU base address,
+>> a consistency maintained at least within a given architecture generation.
+>> In A8x family, the base address of the GMU has changed, but the offsets
+>> of the gmu registers remain largely the same. To enable reuse of the gmu
 > 
-> It seems like we can just reuse a7xx_cx_mem_init() with maybe some
-> slight changes to the generation check instead of copying and pasting
-> it here.
-> 
+> I understand the code, but I think I'd very much prefer to see it in the
+> catalog file (with the note on how to calculate it). Reading resources
+> for two different devices sounds too strange to be nice. This way you
+> can keep the offsets for a6xx / a7xx untouched and just add the non-zero
+> offset for a8xx.
 
-I forgot to squash this duplication. Yeah, we can reuse a7xx_cx_mem_init().
+It is not clear to me whether the concern is about the calculation part 
+or the xml update part.
 
-> Connor
-> 
->>
->> BR,
->> -R
->>
->>>> +      * whether that's the case. The scm call above sets the fuse
->>>> +      * register.
->>>> +      */
->>>> +     fuse_val = a6xx_llc_read(a6xx_gpu,
->>>> +                              REG_A7XX_CX_MISC_SW_FUSE_VALUE);
->>>> +     adreno_gpu->has_ray_tracing =
->>>> +             !!(fuse_val & A7XX_CX_MISC_SW_FUSE_VALUE_RAYTRACING);
->>>> +
->>>> +     return 0;
->>>> +}
->>>> +
->>>> +
->>>> +#define GBIF_CLIENT_HALT_MASK                BIT(0)
->>>> +#define GBIF_ARB_HALT_MASK           BIT(1)
->>>> +#define VBIF_XIN_HALT_CTRL0_MASK     GENMASK(3, 0)
->>>> +#define VBIF_RESET_ACK_MASK          0xF0
->>>> +#define GPR0_GBIF_HALT_REQUEST               0x1E0
->>>> +
->>>> +void a8xx_bus_clear_pending_transactions(struct adreno_gpu *adreno_gpu, bool gx_off)
->>>> +{
->>>> +     struct msm_gpu *gpu = &adreno_gpu->base;
->>>> +
->>>> +     if (gx_off) {
->>>> +             /* Halt the gx side of GBIF */
->>>> +             gpu_write(gpu, REG_A8XX_RBBM_GBIF_HALT, 1);
->>>> +             spin_until(gpu_read(gpu, REG_A8XX_RBBM_GBIF_HALT_ACK) & 1);
->>>> +     }
->>>> +
->>>> +     /* Halt new client requests on GBIF */
->>>> +     gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_CLIENT_HALT_MASK);
->>>> +     spin_until((gpu_read(gpu, REG_A6XX_GBIF_HALT_ACK) &
->>>> +                     (GBIF_CLIENT_HALT_MASK)) == GBIF_CLIENT_HALT_MASK);
->>>> +
->>>> +     /* Halt all AXI requests on GBIF */
->>>> +     gpu_write(gpu, REG_A6XX_GBIF_HALT, GBIF_ARB_HALT_MASK);
->>>> +     spin_until((gpu_read(gpu,  REG_A6XX_GBIF_HALT_ACK) &
->>>> +                     (GBIF_ARB_HALT_MASK)) == GBIF_ARB_HALT_MASK);
->>>> +
->>>> +     /* The GBIF halt needs to be explicitly cleared */
->>>> +     gpu_write(gpu, REG_A6XX_GBIF_HALT, 0x0);
->>>> +}
->>>> +
->>>> +int a8xx_gmu_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +
->>>> +     mutex_lock(&a6xx_gpu->gmu.lock);
->>>> +
->>>> +     /* Force the GPU power on so we can read this register */
->>>> +     a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
->>>> +
->>>> +     *value = gpu_read64(gpu, REG_A8XX_CP_ALWAYS_ON_COUNTER);
->>>> +
->>>> +     a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
->>>> +
->>>> +     mutex_unlock(&a6xx_gpu->gmu.lock);
->>>> +
->>>> +     return 0;
->>>> +}
->>>> +
->>>> +u64 a8xx_gpu_busy(struct msm_gpu *gpu, unsigned long *out_sample_rate)
->>>> +{
->>>> +     struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
->>>> +     struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
->>>> +     u64 busy_cycles;
->>>> +
->>>> +     /* 19.2MHz */
->>>> +     *out_sample_rate = 19200000;
->>>> +
->>>> +     busy_cycles = gmu_read64(&a6xx_gpu->gmu,
->>>> +                     REG_A8XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_L,
->>>> +                     REG_A8XX_GMU_CX_GMU_POWER_COUNTER_XOCLK_0_H);
->>>> +
->>>> +     return busy_cycles;
->>>> +}
->>>> +
->>>> +bool a8xx_progress(struct msm_gpu *gpu, struct msm_ringbuffer *ring)
->>>> +{
->>>> +     return true;
->>>> +}
->>>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> index 9831401c3bc865b803c2f9759d5e2ffcd79d19f8..6a2157f31122ba0c2f2a7005c98e3e4f1ada6acc 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->>>> @@ -90,6 +90,13 @@ struct adreno_reglist {
->>>>       u32 value;
->>>>  };
->>>>
->>>> +/* Reglist with pipe information */
->>>> +struct adreno_reglist_pipe {
->>>> +     u32 offset;
->>>> +     u32 value;
->>>> +     u32 pipe;
->>>> +};
->>>> +
->>>>  struct adreno_speedbin {
->>>>       uint16_t fuse;
->>>>       uint16_t speedbin;
->>>> diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
->>>> index ddde2e03b748f447b5e57571e2b04c68f8f2efc2..c3a202c8dce65d414c89bf76f1cb458b206b4eca 100644
->>>> --- a/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
->>>> +++ b/drivers/gpu/drm/msm/registers/adreno/a6xx.xml
->>>> @@ -4876,7 +4876,6 @@ by a particular renderpass/blit.
->>>>  <domain name="A6XX_CX_MISC" width="32" prefix="variant" varset="chip">
->>>>       <reg32 offset="0x0001" name="SYSTEM_CACHE_CNTL_0"/>
->>>>       <reg32 offset="0x0002" name="SYSTEM_CACHE_CNTL_1"/>
->>>> -     <reg32 offset="0x0087" name="SLICE_ENABLE_FINAL" variants="A8XX-"/>
->>>
->>> Why?
-
-This chunk should be part of another patch. Will fix this. Thanks.
+If it is about the former,I think it is okay as we have confidence on 
+the layout of both devices. They are not random platform devices. Also, 
+we may have to do something similar for other gpu/gmu reg ranges too to 
+conveniently collect a full coredump.
 
 -Akhil
 
->>>>       <reg32 offset="0x0039" name="CX_MISC_TCM_RET_CNTL" variants="A7XX-"/>
->>>>       <reg32 offset="0x0087" name="CX_MISC_SLICE_ENABLE_FINAL" variants="A8XX"/>
->>>>       <reg32 offset="0x0400" name="CX_MISC_SW_FUSE_VALUE" variants="A7XX-">
->>>> diff --git a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
->>>> index 5dce7934056dd6472c368309b4894f0ed4a4d960..c4e00b1263cda65dce89c2f16860e5bf6f1c6244 100644
->>>> --- a/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
->>>> +++ b/drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml
->>>> @@ -60,6 +60,7 @@ xsi:schemaLocation="https://gitlab.freedesktop.org/freedreno/ rules-fd.xsd">
->>>>       <reg32 offset="0x1f400" name="GMU_ICACHE_CONFIG"/>
->>>>       <reg32 offset="0x1f401" name="GMU_DCACHE_CONFIG"/>
->>>>       <reg32 offset="0x1f40f" name="GMU_SYS_BUS_CONFIG"/>
->>>> +     <reg32 offset="0x1f50b" name="GMU_MRC_GBIF_QOS_CTRL"/>
->>>>       <reg32 offset="0x1f800" name="GMU_CM3_SYSRESET"/>
->>>>       <reg32 offset="0x1f801" name="GMU_CM3_BOOT_CONFIG"/>
->>>>       <reg32 offset="0x1f81a" name="GMU_CM3_FW_BUSY"/>
->>>>
->>>> --
->>>> 2.51.0
->>>>
->>>
->>> --
->>> With best wishes
->>> Dmitry
+> 
+>> code for A8x chipsets, update the gmu register offsets to be relative
+>> to the GPU's base address instead of GMU's.
+>>
+>> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c             |  44 +++-
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h             |  20 +-
+>>   drivers/gpu/drm/msm/registers/adreno/a6xx_gmu.xml | 248 +++++++++++-----------
+>>   3 files changed, 172 insertions(+), 140 deletions(-)
+> 
 
 
