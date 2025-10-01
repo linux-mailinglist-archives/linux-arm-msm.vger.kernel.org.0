@@ -1,178 +1,123 @@
-Return-Path: <linux-arm-msm+bounces-75631-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75632-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66E00BAF5AD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 09:07:31 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07EC5BAF63D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 09:24:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C47C318978EA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 07:07:53 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id 5B49B7A3CB8
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 07:22:05 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 381F02343B6;
-	Wed,  1 Oct 2025 07:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6B734248F47;
+	Wed,  1 Oct 2025 07:23:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dmxYv+BK"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Jc5UkhwI"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490E91D90DD
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 07:07:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9775C200C2
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 07:23:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759302448; cv=none; b=BjJQIEAowE/5Eklovw3gJZpkc9OXtEi4moivdd1YzGTYWtCoZQVtwyym1yjnOR8wTVaWsnsXRARcc0Vfjon+9zNzUGekq6rFlJPESqEvBzLox6pIZ5sJaxvMbKAfIo0N41o0N1s7XeKFh8fvrUtEdhAgcswWqfUHrQK8eJGfKwE=
+	t=1759303411; cv=none; b=Doyu/IIvq/um5B+rM4fijDr+lJEs7qjo+4M+Tw7z6IC+QgX6/pV4DUzeC0szjVfGSV87HyZNOlI3wKbYrWO/XSo8SttviAYT6IstKJwO1sqxzadrors2LrwZzjLyFZDGXaVOZ29AGQd8NnHyv6W78ZQ0ezEqT49uMn9+DRaPNKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759302448; c=relaxed/simple;
-	bh=TXavt5GUo/dW2X4D6klTWaoIUqB5VD85VTgMFo07NnU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=rpkfJqEGxkX8F+ECF8Co/OYWRcg+8xlSdaIu79krgURXoz6mpomGL7+7iUrjgBASyg+osCnIOAn2DfTD7NO+QC7subXoVGUKZpaXBREzeftDjpI/4Ka5r+i2CWkcrE/oGNzWrnVbFRrDDV18dQz0hGjOBlGpKMy5HNGIvhoezr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dmxYv+BK; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1759303411; c=relaxed/simple;
+	bh=ODbG9WzeoLx/6ugRts/m/SSUBmtDfSaE4U9IGSKKjf0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Message-Id:Date:
+	 MIME-Version:Content-Type; b=UF7pawBvPODqYDyvwU6Z/aSVWzgJnXar8gTvKxXlAsS4gL+X8rx6uNA04yX1uCI2h/b4FwjYO0YcpccY1X6pnhy1c7TE7Vo6Q+7FU3/UsP+L8/KxQsHZPcyBfuCBy5+b6OsgVNSw11PBAHLeUn7s4fatSvZJgb873nx6Lywkgmg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Jc5UkhwI; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-46e4ad36541so44705605e9.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 00:07:26 -0700 (PDT)
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-46e48d6b95fso42202775e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 00:23:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759302444; x=1759907244; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6903O+T5kzlWuzZHa7QhKxp3lHsZbgO6JKoHA8UWXyk=;
-        b=dmxYv+BKiVFZnX/Rccrm76jXUTd0jV6FweHrtRloTLYJQz1xj0KuEVB6Gmar+VvTcC
-         OpWHh9eJIvLHBkzpxRXyTVMjkxqWrFQ1pxnudvizOWxBncvvisZRw2TSLjpTL2BoWGXk
-         Cxx/G6ekAR+4DJC6DxAJwGHw7UxvsCDObUW/AA+LIqkrCeq3o4J1Lf7HCpZRZpwYAxw0
-         PT+StQRUQ6gjk1Lna8WA8hkeW/bf7anO8dhvWfoEPz9IIV+fZ0AZKDkKblrP51r2KyqJ
-         /CZrGZvNV3bYr/vdmbRytRA8trqbbleAgSkGX9FlWqdre7zdeujCGTH91NcEddgVr0bw
-         9jlg==
+        d=linaro.org; s=google; t=1759303408; x=1759908208; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/9KnLYLMgAo6iCMaJHkFXrrPXMlbYFJ8tsuzyv/2Xns=;
+        b=Jc5UkhwIbB5wTUf+BPaCTOaYk8MUqwvYdz7j36zIDPNVOpEbAIogc8Z8kCC88lJuxY
+         qRR/hmGo6VAJKFGy98AqvlVWzunYj2MqRu2d4oyx8VR6Sxr4bZtegrwE1CnHcVvFJmJI
+         oYuEUej1ID33apTybNUSKT60mxV6Cwo6maNBjAWSYmTHQHsK7kn13kaEkLMoDyWKFmPj
+         HlrslSb3lwUQxFdvTrqgDwyhRIxkcoVyNyCn+cx8iVCn8IoTG9TlX5V/N/yZNuziLcMt
+         Gj7Oi+yXnGGuOVYCMNefEnXAlYIf3wzS6+1CL1yv+6XZzIhSka92K6EZi0839UhyeXPk
+         9oaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759302444; x=1759907244;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6903O+T5kzlWuzZHa7QhKxp3lHsZbgO6JKoHA8UWXyk=;
-        b=TphYANNwCSe73CKxh+paOJ5xweakh0YNYjSaOARfzYVsTOB6r5rNY4v76jXOgvEbJz
-         6YKgydmLqVRkLT3ZDgMNtSmN2j5utr5WH3qogAq+mMCm1KOv4RAR7rkpxHmekgE07KBj
-         /CPPi5DElpNVL0vUP1if7EycQwLCXDOxRsW/p9Tt2+gIcMgwtBNrp96fuUqo+sEBIot2
-         kxDx6mtSmO3+qLV3x1sdpDn8JejvJGSpniUmLvnG+5Kue54/wCJ0A16zyhHBFqyoa+BV
-         vSwS043McjBM+7KIavKt1K/hOhneTtY0tUo5Cex0GNBkapFYvSdI0LuHrqwKQvlMkcGq
-         q/mg==
-X-Forwarded-Encrypted: i=1; AJvYcCXfjkpGrjHcYO5/ETfEhGez84FcI0qnqIjCoASAfgmOJ9qeklIgOUjSfbGD651ftkUXIvV28jqw+Pirwa0P@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx22owjGGs2wEFSBMuOAoShhvgzrzIIwGo0JsqPiSQeIHHKO+4n
-	4VVfu1WQ4sLrj6SrydYaWF143Jsf1brJp0c9Rkss0nBByhj0IQELGd8AD3X1iz8YIm4=
-X-Gm-Gg: ASbGncsEB1K4wbbEGXoVwLzmblbSUaT4dGaxog6T3QYcz3Pg7/ER3fbEyUa3DtLf5l4
-	bX6H9iyLHazqeOIRBm28xoJrCH8j5aq7i0s9P8oGYQ5yocZgm1Q599QoDNFbQRcRmjUff6yWe1C
-	oymsLMeBcTHB6jzloOLQe6BnJkmjpwUDg8n7vdN/b87NtuJcspeySo+DBiZk1uKDxK8L3AzHNsR
-	S7sDK590FVdnRkMma7yGO5G71HOc6V66hv2/8aNc2BcNCtDTqWKFiZP6uRJQv5A89dK/xVzwanQ
-	PAfVhMV4nj/qcoILsda7CsGLeE3+ZhuMoL8lt4gLAsbgP/H+W3jqCpASr+qAAnLX7sKCjn0LDcn
-	/uQK36YmGA0l6iaBFMZZ/oMctMsrOxUFZBD27OZMm7yEaMvT9K/5fQghWPvto3d0lG9UH6tDTX7
-	iXRXniolLybcIOjyQHS8lp1Gw=
-X-Google-Smtp-Source: AGHT+IGBw7CxJ7qDcqycnbC3TnzJ/BlwqGMYHQoYN72vdTSBaOUGSkrrJvxGgqOYBs6co2ci25rVDw==
-X-Received: by 2002:a05:600c:3b13:b0:46e:448a:1235 with SMTP id 5b1f17b1804b1-46e612861fcmr23527745e9.16.1759302444501;
-        Wed, 01 Oct 2025 00:07:24 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:f45f:c590:9006:d394? ([2a01:e0a:3d9:2080:f45f:c590:9006:d394])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e6199193dsm25464495e9.1.2025.10.01.00.07.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Oct 2025 00:07:24 -0700 (PDT)
-Message-ID: <99eae1be-3067-4698-aa3f-a0ff565cb62e@linaro.org>
-Date: Wed, 1 Oct 2025 09:07:23 +0200
+        d=1e100.net; s=20230601; t=1759303408; x=1759908208;
+        h=content-transfer-encoding:mime-version:date:message-id:subject
+         :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/9KnLYLMgAo6iCMaJHkFXrrPXMlbYFJ8tsuzyv/2Xns=;
+        b=aV3SmFR/J11cFG4b3WcKsHSw+8TlnVIx3x/H2Cn6j8FszXgdW4c9cMxNxFOWopiW6M
+         i1Iko4c9g64/xkUuvMyjVxKOOkAf3JzWLYfjp1lDJGlmulRPngWYjvwEElFppN1ZiMJN
+         A1lo2RMv3Wcl8F3Kgv19fluN2FMKLukil5jJpF5b8RfSnnuEkRrKySuLgp7oaiNGUjt5
+         Bfkf3xIduW9rOq+kVMjZf7BK5Vksku65vA7RWsBGMaSKlwN5VrL62ftdAPn1Vin6GpD/
+         BTW9VqX0VGxy3KQa4lTdUlegYApYhCX1hpm2T2ExZkt2ZJLfMxfIUqdZdj2gO61YWHiQ
+         xJxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWwD8Gia0v+7bmFyEKfykmGLEXtRC+Y1IECjUhLaPJsV2aqhgBUjSBGCv3ODfbRmbsNSvD/EPcFuwkpe1hA@vger.kernel.org
+X-Gm-Message-State: AOJu0YxAwsM1hsqRMv4+BJZZ8h51uCwLUaAJDmNtB6wRtD4dgkSqbGwH
+	6PDw3QIRrVj3rRGBZNR9JO/T1JQzd8SYRCDwN/tzmW0mk1os4IpRGuEwc1r58IPz3/U=
+X-Gm-Gg: ASbGncuucjSfE+oy6p2HCYvZrpC0ckjAkhFWwED7h0PTNVJSk1VrRFdCNT+gjU5KOto
+	KVx+i1gN7m4o7ZG/RKJ9u7/AB+7+iOPVqpD855BPO0eNRVW5CABXxb06vHSB9r4aY/gfRkGPUtO
+	ddUyIhk5QbA83OGr5VhkfIm1WebvHGfC8vUy3OLSsL66DSVH+hjLHeCLhcJ4VlY+bPgJHJpewX6
+	pNS4SPpBkYwKJRAjI3l8ydxnlmaKlEDpSEg+nu+yyYnkt9VIBVtv9d6e//dZ3MnHcSo/G4D20Pe
+	HZ1szTV7IniClzicSnrRT0twkL0v5BjRKTyfqdqw6+vGMtanaE6RyogNfxl9GWtIAZtMkQIkiW1
+	NL69IF4KLaRq741diAGpMAHi6IL3ZNDE9aIgHsFrpv64MTzwg/uBaX/AERFVepkhdKuQ=
+X-Google-Smtp-Source: AGHT+IEzWn4BmhnfZrcJBF3Mp5fHWEl4zVgZAe/Sje2YTE+1fAM2pKPiZRQH0Ot9w4yf2UYbaMO79Q==
+X-Received: by 2002:a05:600d:61cb:b0:46e:4b8b:75f2 with SMTP id 5b1f17b1804b1-46e61228692mr23727735e9.16.1759303407552;
+        Wed, 01 Oct 2025 00:23:27 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e619b8507sm25805335e9.3.2025.10.01.00.23.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Oct 2025 00:23:27 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+To: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
+ Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
+ David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+ Neil Armstrong <neil.armstrong@linaro.org>
+Cc: dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+ johan@kernel.org, dmitry.baryshkov@oss.qualcomm.com, 
+ linux-arm-msm@vger.kernel.org, 
+ Christopher Obbard <christopher.obbard@linaro.org>, 
+ Rui Miguel Silva <rui.silva@linaro.org>
+In-Reply-To: <20250814-topic-x1e80100-t14s-oled-dp-brightness-v7-1-b3d7b4dfe8c5@linaro.org>
+References: <20250814-topic-x1e80100-t14s-oled-dp-brightness-v7-1-b3d7b4dfe8c5@linaro.org>
+Subject: Re: [PATCH v7] drm/dp: clamp PWM bit count to advertised MIN and
+ MAX capabilities
+Message-Id: <175930340683.467410.13115461140906052706.b4-ty@linaro.org>
+Date: Wed, 01 Oct 2025 09:23:26 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: do not
- reference whole usb-switch.yaml
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Rob Herring <robh@kernel.org>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250902-topic-sm8x50-fix-qmp-usb43dp-usb-switch-v1-1-5b4a51c8c5a8@linaro.org>
- <20250905175533.GA1000951-robh@kernel.org>
- <nwtt76n4t7tlf26ex47wrot7g7nldtmavbzgwmluls3egamjsi@mkomopb6fjh6>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <nwtt76n4t7tlf26ex47wrot7g7nldtmavbzgwmluls3egamjsi@mkomopb6fjh6>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.14.2
 
-On 9/30/25 21:10, Dmitry Baryshkov wrote:
-> On Fri, Sep 05, 2025 at 12:55:33PM -0500, Rob Herring wrote:
->> On Tue, Sep 02, 2025 at 06:10:05PM +0200, Neil Armstrong wrote:
->>> Both bindings describe a different layout of the ports properties,
->>> leading to errors when validating DT using this PHY bindings as
->>> reported by Rob Herring.
->>>
->>> Reported-by: Rob Herring <robh@kernel.org>
->>> Closes: https://lore.kernel.org/all/175462129176.394940.16810637795278334342.robh@kernel.org/
->>> Fixes: 3bad7fe22796 ("dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Reference usb-switch.yaml to allow mode-switch")
->>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>> ---
->>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    | 8 +++++---
->>>   1 file changed, 5 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
->>> index c8bc512df08b5694c8599f475de78679a4438449..5005514d7c3a1e4a8893883497fd204bc04e12be 100644
->>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
->>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
->>> @@ -73,8 +73,11 @@ properties:
->>>       description:
->>>         See include/dt-bindings/phy/phy-qcom-qmp.h
->>>   
->>> -  mode-switch: true
->>> -  orientation-switch: true
->>> +  mode-switch:
->>> +    $ref: /schemas/usb/usb-switch.yaml#properties/mode-switch
->>> +
->>> +  orientation-switch:
->>> +    $ref: /schemas/usb/usb-switch.yaml#properties/orientation-switch
->>
->> This is a pattern we try to avoid with references at a property level. I
->> prefer you make port and ports not required in usb-switch.yaml.
+Hi,
+
+On Thu, 14 Aug 2025 16:16:09 +0200, Neil Armstrong wrote:
+> According to the eDP specification (VESA Embedded DisplayPort Standard
+> v1.4b, Section 3.3.10.2), if the value of DP_EDP_PWMGEN_BIT_COUNT is
+> less than DP_EDP_PWMGEN_BIT_COUNT_CAP_MIN, the sink is required to use
+> the MIN value as the effective PWM bit count.
 > 
-> But this solution is also not perfect. E.g.
-> Documentation/devicetree/bindings/phy/fsl,imx8mq-usb-phy.yaml should
-> only allow the orienttion-switch property, while using
-> allOf:$ref:usb-switch.yaml allows all three (orientation-switch,
-> mode-switch, retimer-switch).
+> This commit updates the logic to clamp the reported
+> DP_EDP_PWMGEN_BIT_COUNT to the range defined by _CAP_MIN and _CAP_MAX.
 > 
+> [...]
 
-I agree, but I'm not the original author of this change.
+Thanks, Applied to https://gitlab.freedesktop.org/drm/misc/kernel.git (drm-misc-next)
 
+[1/1] drm/dp: clamp PWM bit count to advertised MIN and MAX capabilities
+      https://gitlab.freedesktop.org/drm/misc/kernel/-/commit/68a7c52fa9e778bda45ed0b2e83a0bf2ea41b88c
+
+-- 
 Neil
+
 
