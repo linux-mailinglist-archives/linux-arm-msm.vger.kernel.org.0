@@ -1,188 +1,226 @@
-Return-Path: <linux-arm-msm+bounces-75712-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75713-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5EF0DBB1A7C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 21:55:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E72ABB1B7E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 22:57:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 462B71796A3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 19:55:03 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 09A1D2A6CE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 20:57:59 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1DC12D8365;
-	Wed,  1 Oct 2025 19:54:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 913CE3019B6;
+	Wed,  1 Oct 2025 20:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ZGd5f1Br"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Pj9k67d5"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD7317A305
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 19:54:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5DE2D6401;
+	Wed,  1 Oct 2025 20:57:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759348493; cv=none; b=lRVeFv5Mk3H5bR9vSZ7j68sbVZj8wl1fZEnRzyOLb3+B2kVKbDfDHXH0J2lBZp0U4xwHD8cClGXxBg5j/HdVxzlDFvyEbkmejmc2XRgVtU003tiJvatYatWs+FbhyweB8UZa1xhKCVHpJc1dKh7R3rOtUP60cBRE6FVfUmdHeys=
+	t=1759352273; cv=none; b=hC7otZrH9pVCbIC62HypcYrzjWWYL68+8zeO0uxsOgfzJOJ9EvgeGR+L6GfNqLoAgUnwnbovQKRkNwMVMSyhAcfZfDSi6kZfIP0TFfg2KE1KG/BW6ALNy+rFz4hzY84VubaSLnKH3NKd9/rUdg7YJs4liWzQWWayMUNuIEntFgI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759348493; c=relaxed/simple;
-	bh=qnUGsAf9QwPxL8kNSHvcwGwC6szSZfsbKOkPF7PNNGo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FMayzYDirp+H63lqN1Rxpb2SnJtRwU/hddscbQ8qYA8t0Xl6w/Et/PmpoPACy9/DvCbGK+BcZac1EZsbnZfwSJSlzaHLxwS4ER0ujfJx9H/NCjXbHE1YreywUfE/sBucyLpD19rVhZKK6BsVfJZ6Ckvw7k0rc76HIhuJQODwe1c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ZGd5f1Br; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591IcHnR022897
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Oct 2025 19:54:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	brS60HbFUtOuWxvnUIY4WzudlEdGwstrPazqVvcT3+g=; b=ZGd5f1BrVBZ6J0/d
-	GYp9HNUCicoqdgxC6Fn4OMf68pMQQnYq5zgVOTJTfA9rCaPc8cIrGVwlCIpNh3qm
-	tmm009Me6aoJTVIH91yL/3FWIH5QAyAxwiE44y2kKrxEu58dusLLuIDhjQqhdB64
-	i5cZfKsWtyVQqnZq1zrJPnxf+treMgaPlW9mawts3sNw3Ab8hXM/PPxyxat/3h/A
-	LQaS8Vo3RTZkoVloD7PfwLYYOHUx6EmaZM/7hyq9apE9NlTeMZvHTV7U5EoilAw1
-	7u/rddjgU3YyWt3ydzBg5XvJcv30JWPxbO8m0aTUPMFWvFgFCSw7/Sl2q1Dw13sw
-	FCoVwQ==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e59n63fr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 19:54:50 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id d2e1a72fcca58-781253de15aso561804b3a.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 12:54:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759348489; x=1759953289;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=brS60HbFUtOuWxvnUIY4WzudlEdGwstrPazqVvcT3+g=;
-        b=etIH45VeyoETQg4ijZYANQlgRi+cCz2IUvHheXrKy0CXHxs0ETQ66fa+ZCjNU5UxAk
-         kXmLt4/TypgyONxe/75GxBwusohT5OVsME2JjHCecoe4M2E452KQbL/o958pVz308sxN
-         86p+Z9mT/qtrrrCbifi0xHsmqSKdvzW+0GvgwESYuc/tdoOFoDT4cTAaTcp10psmKTr0
-         mKOyYYa9yLBbZRUsG342k5pR+11yvmfR/waP9cGrGaOhG145yQqjE9JM/nf7ij8PUATe
-         ckWlwvUMh3NtAmaNun6dKVSyC766QcNjCoMOK8TXTPABFo9VTmXu89t9TVVydUrBi/OO
-         1L7A==
-X-Forwarded-Encrypted: i=1; AJvYcCUNuhyGnToq3NmW1unRvkzV9xRsCqz5XzdFvd2lbWL/T2PQEPbyst3Hyn9aMvwYoiE6rQPtB2vbHYMQbA/D@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywk+bsyOlsDnH0NYfWQCbVnG7Ib4f8ZGrfegbBjn/Qmgpkrwvf4
-	gYeXeVRXE6prEumsClIScJ6YqYkrB91B6AQju7I0h1fmNlSKHvePriMlsvtc0LqM/OQ9yuBH4WL
-	J5MW99WSaR6YCo/gnb5wgLppMaBnSJ2GZp3Gdx4W+zQ1VB+jKZIoSfNzM4JOn+zwNzKZa
-X-Gm-Gg: ASbGncvyzDC96bRPoO4dscyzH60E/8I25E7tcD47QAXUkwKvupxgvXjgYgzqRJrXJee
-	iL8uA2EqvyidglNzYW2kfsT/QlF6D1mh4QAoeL+avSbyebzR1kpJnGRVDTzd0TT/9kGNXhMmnfq
-	CghCVraRfd1FrlGotjgaXN/2Kx94OJhnnkjvY8fcMumhyw5xN8CLkI487YiK35N7wwFNJcfF+bP
-	+ib9HwLWan/p2JkpvZKBHMXJozpwN08megBuT4Kxrr3qCS+MDi9ItvuxHDUuPzakHsWvq/Edf+U
-	zGlwIG5MxVRO6tanLrhL1ZdJTatKBagcQagyEi8tmrRQrPrLkqU442OSVT+IX0dlwSs=
-X-Received: by 2002:a05:6a20:258f:b0:2b1:c9dc:6da0 with SMTP id adf61e73a8af0-321dfc7f1b3mr6835300637.46.1759348488852;
-        Wed, 01 Oct 2025 12:54:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHsIg+XF+b3CzfwLXlkZJJwTtOF3hWxO1NYUBnIl48kRjZPlbxjVEtrqF7B3r6dPLdbru/a4w==
-X-Received: by 2002:a05:6a20:258f:b0:2b1:c9dc:6da0 with SMTP id adf61e73a8af0-321dfc7f1b3mr6835273637.46.1759348488399;
-        Wed, 01 Oct 2025 12:54:48 -0700 (PDT)
-Received: from [192.168.1.9] ([117.211.42.17])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6099f729c3sm297566a12.46.2025.10.01.12.54.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Oct 2025 12:54:48 -0700 (PDT)
-Message-ID: <82cd8782-b2ee-46ce-9964-e564ab6a0199@oss.qualcomm.com>
-Date: Thu, 2 Oct 2025 01:24:36 +0530
+	s=arc-20240116; t=1759352273; c=relaxed/simple;
+	bh=4bp+ljG1ekdGQkOL2AMswRVzFqz7Mw66nucoo9Ketf8=;
+	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=NEfNdaF/JWNBzjK6wTCZ00Lxi1CeRIDPD/vHbiBXAIr+GzDH0phfrULE5bJ6HEQ6DNG6xjexe9K1k/ROFfJOMG/PMDgprkB7AKF6zhLFtpyWWQlMOrQ2HFfbYyAdUGFAeZojRkqyUMbdgXyU7UdjUntlCqJbI5U5z/+zp6n4Yag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Pj9k67d5; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591Ic3jY005924;
+	Wed, 1 Oct 2025 20:57:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=dqsHg9/ZHWQkNpx2myRvt4U3
+	iO0xTHj7Lm9Ij3e6qTo=; b=Pj9k67d5qBOayulEEkoZyVrH5nl+WrKsUvM2GIKt
+	s6T6Zl+iX7YF21irsYS45Erl2JnAp5Z+1YxILzzkMvhyK4Cnc50S1QSqiCQfLEwS
+	gscnIY+FYscrvY+llWEBUBXn8z/hjpYhW7XnYcrJf0ns1rv8tjPdr2vnIjwrW/Df
+	anhLqGHXTEQF7yvFJFg+aOL79AFFWdSJs746nl/xHhFDXR13cF9kN6HR9ynZmzOb
+	LWJt0H1B+mrS+k76PFwpXB1sDLGPfaWbmc9okjUSBAhNUKbnHb2j2oVySo7WNh9N
+	f8WxAdJKVLsYvNVg8P4ph5f9e+SDQ5BaWm96UDDovteSQw==
+Received: from nasanppmta05.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e8pdnm7j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 01 Oct 2025 20:57:32 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 591KvWYN015417
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 1 Oct 2025 20:57:32 GMT
+Received: from stor-berry.qualcomm.com (10.80.80.8) by
+ nasanex01a.na.qualcomm.com (10.52.223.231) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1748.24; Wed, 1 Oct 2025 13:57:31 -0700
+From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+To: <quic_cang@quicinc.com>, <quic_nitirawa@quicinc.com>, <bvanassche@acm.org>,
+        <avri.altman@wdc.com>, <peter.wang@mediatek.com>,
+        <manivannan.sadhasivam@linaro.org>, <adrian.hunter@intel.com>,
+        <martin.petersen@oracle.com>
+CC: <linux-scsi@vger.kernel.org>, "Bao D. Nguyen" <quic_nguyenb@quicinc.com>,
+        Alim Akhtar <alim.akhtar@samsung.com>,
+        "James E.J. Bottomley"
+	<James.Bottomley@HansenPartnership.com>,
+        Stanley Jhu <chu.stanley@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Matthias Brugger
+	<matthias.bgg@gmail.com>,
+        AngeloGioacchino Del Regno
+	<angelogioacchino.delregno@collabora.com>,
+        Bean Huo <beanhuo@micron.com>, Manish Pandey <quic_mapa@quicinc.com>,
+        open list
+	<linux-kernel@vger.kernel.org>,
+        "moderated list:UNIVERSAL FLASH STORAGE HOST
+ CONTROLLER DRIVER..." <linux-mediatek@lists.infradead.org>,
+        "open
+ list:UNIVERSAL FLASH STORAGE HOST CONTROLLER DRIVER..."
+	<linux-arm-msm@vger.kernel.org>,
+        "moderated list:ARM/Mediatek SoC
+ support:Keyword:mediatek" <linux-arm-kernel@lists.infradead.org>
+Subject: [PATCH v1 1/2] scsi: ufs: core: Remove UFS_DEVICE_QUIRK_DELAY_AFTER_LPM quirk
+Date: Wed, 1 Oct 2025 13:57:11 -0700
+Message-ID: <0f0a7d5518d29fc384aace558d2bf098d792e0db.1759348507.git.quic_nguyenb@quicinc.com>
+X-Mailer: git-send-email 2.7.4
+In-Reply-To: <cover.1759348507.git.quic_nguyenb@quicinc.com>
+References: <cover.1759348507.git.quic_nguyenb@quicinc.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/17] drm/msm/adreno: Move adreno_gpu_func to catalogue
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Rob Clark <robin.clark@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
-        Dmitry Baryshkov <lumag@kernel.org>,
-        Abhinav Kumar
- <abhinav.kumar@linux.dev>,
-        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jordan Crouse
- <jordan@cosmicpenguin.net>,
-        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-kernel@lists.infradead.org,
-        iommu@lists.linux.dev, devicetree@vger.kernel.org
-References: <20250930-kaana-gpu-support-v1-0-73530b0700ed@oss.qualcomm.com>
- <20250930-kaana-gpu-support-v1-6-73530b0700ed@oss.qualcomm.com>
- <cp7djnezyp4whhfqcnsfpes5kxfbyvqvc2ceimdrnrl7s7agyk@z7ozx6oihezd>
-From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <cp7djnezyp4whhfqcnsfpes5kxfbyvqvc2ceimdrnrl7s7agyk@z7ozx6oihezd>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: gk1u42cXOoS8pLToTJhhvaG_lyGK0p0d
-X-Authority-Analysis: v=2.4 cv=O4g0fR9W c=1 sm=1 tr=0 ts=68dd870a cx=c_pps
- a=WW5sKcV1LcKqjgzy2JUPuA==:117 a=paYLq2NZIH8GVbL4gQAG2g==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=Qop4gD_cnJnpb7o7aosA:9
- a=QEXdDO2ut3YA:10 a=OpyuDcXvxspvyRM73sMx:22
-X-Proofpoint-ORIG-GUID: gk1u42cXOoS8pLToTJhhvaG_lyGK0p0d
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAwMSBTYWx0ZWRfX/CWX5HG/6xAg
- GW78EF8EPgrgNakGw64MWLDiRccw1niYPWsKksMsXyCzKdwoGC0kUzD2LH0n7TaeBd2utNVvIan
- vAg1VfZtsYWX/OeBO4C26GcZJmLk/5XJTPdVZ6tNzlA5dPVFVRvVD6kuWqSIq0qDSoUppRvWXMS
- EQYMQS7lQ3xZUT+FrRRqkyMpbJPUeTqHEnM5Ms3b2COiIhdo9C6DE94xTOJyoHzhPUBu917clBE
- 61V/VHZe4nWA8h1zxRj8TExehm0FopyJjtz4azbHqH7wenmJ1M4gJrjXcrJQ/eJjJ8716qimmRk
- j43oZPtgOm7PAFy0s6QieE6dVXWFlnB7tGoOMK/fTgyEA4pAj9Sp/+5nuM49lv9kytv9KKOA8sk
- zaLMJWbIz1Ml3QiDHKtBocFfaEBGMA==
+Content-Type: text/plain
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: JP-wVxPNdg5HUjr8rw5OZnyU5yEWkoyC
+X-Authority-Analysis: v=2.4 cv=MYZhep/f c=1 sm=1 tr=0 ts=68dd95bc cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8 a=SKyd_0MEfDjhs0-DTAYA:9
+ a=TjNXssC_j7lpFel5tvFf:22 a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: JP-wVxPNdg5HUjr8rw5OZnyU5yEWkoyC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAzNiBTYWx0ZWRfXxCim+kId29u0
+ G6h6qP7hZRaTVYB6u8Q2/Qhi3psaKF0d4NkQcHqPHDntL/2MgOhVXs2DLgnD87LCSD4GxTBZGvj
+ 4jEzwInMnO04KNtF8vfVSkR8KOGoQZlKYiikTxs5KDbm3lS8X87Oquo26+OIqthYUiURPL2w87z
+ yR/+Vwsyywf34ty0sCN1wl9n757Gnri7dp1uEell5fvZ7fobgvWXWaM9FWuF8HiqeLwcKIXLnnh
+ Bqm7hA4EPYK+0QNGiU6oiU5JXU2jVyNSaQjo/0N2b6Xh8Mg7aQaZIUfd3mBYbf6fxDgcxyWMrWB
+ u2WBM7/VhKvdh+ltwXu+1wW2ng6ioqHDlt4aDepyYpTn/876w6ZSu/kazrwvWlDHHnqHxS4//Rc
+ ObTCIr3L+0z5HFmLtrt0+ZKv5gpSAA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-01_06,2025-09-29_04,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- spamscore=0 impostorscore=0 bulkscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2509270001
+ suspectscore=0 clxscore=1011 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2509270036
 
-On 9/30/2025 12:39 PM, Dmitry Baryshkov wrote:
-> On Tue, Sep 30, 2025 at 11:18:11AM +0530, Akhil P Oommen wrote:
->> In A6x family (which is a pretty big one), there are separate
->> adreno_func definitions for each sub-generations. To streamline the
->> identification of the correct struct for a gpu, move it to the
->> catalogue and move the gpu_init routine to struct adreno_gpu_funcs.
->>
->> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
->> ---
->>  drivers/gpu/drm/msm/adreno/a2xx_catalog.c  |   8 +-
->>  drivers/gpu/drm/msm/adreno/a2xx_gpu.c      |  50 +++----
->>  drivers/gpu/drm/msm/adreno/a3xx_catalog.c  |  14 +-
->>  drivers/gpu/drm/msm/adreno/a3xx_gpu.c      |  52 +++----
->>  drivers/gpu/drm/msm/adreno/a4xx_catalog.c  |   8 +-
->>  drivers/gpu/drm/msm/adreno/a4xx_gpu.c      |  54 ++++----
->>  drivers/gpu/drm/msm/adreno/a5xx_catalog.c  |  18 +--
->>  drivers/gpu/drm/msm/adreno/a5xx_gpu.c      |  61 ++++-----
->>  drivers/gpu/drm/msm/adreno/a6xx_catalog.c  |  50 +++----
->>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 209 ++++++++++++++---------------
->>  drivers/gpu/drm/msm/adreno/adreno_device.c |   2 +-
->>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  11 +-
->>  12 files changed, 275 insertions(+), 262 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a2xx_catalog.c b/drivers/gpu/drm/msm/adreno/a2xx_catalog.c
->> index 5ddd015f930d9a7dd04e2d2035daa0b2f5ff3f27..af3e4cceadd11d4e0ec4ba75f75e405af276cb7e 100644
->> --- a/drivers/gpu/drm/msm/adreno/a2xx_catalog.c
->> +++ b/drivers/gpu/drm/msm/adreno/a2xx_catalog.c
->> @@ -8,6 +8,8 @@
->>  
->>  #include "adreno_gpu.h"
->>  
->> +extern const struct adreno_gpu_funcs a2xx_gpu_funcs;
-> 
-> Please move these definitions to aNxx_gpu.h (a2xx_gpu.h, etc). LGTM
-> otherwise.
+After the ufs device vcc is turned off, all the ufs device
+manufacturers require a period of power-off time before the
+vcc can be turned on again. This requirement has been confirmed
+with all the ufs device manufacturer's datasheets.
 
-This is a special case. These symbols needs to be visible only here.
+Remove the UFS_DEVICE_QUIRK_DELAY_AFTER_LPM quirk in the ufs
+core driver and implement a universal delay that is required by
+all the ufs device manufacturers. In addition, remove the
+support for this quirk in the platform drivers.
 
--Akhil
+Signed-off-by: Bao D. Nguyen <quic_nguyenb@quicinc.com>
+---
+ drivers/ufs/core/ufshcd.c       |  5 ++---
+ drivers/ufs/host/ufs-mediatek.c | 11 ++++-------
+ drivers/ufs/host/ufs-qcom.c     |  3 ---
+ include/ufs/ufs_quirks.h        |  7 -------
+ 4 files changed, 6 insertions(+), 20 deletions(-)
 
-> 
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 2e1fa8c..45e509b 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -9738,10 +9738,9 @@ static void ufshcd_vreg_set_lpm(struct ufs_hba *hba)
+ 	}
+ 
+ 	/*
+-	 * Some UFS devices require delay after VCC power rail is turned-off.
++	 * All UFS devices require delay after VCC power rail is turned-off.
+ 	 */
+-	if (vcc_off && hba->vreg_info.vcc &&
+-		hba->dev_quirks & UFS_DEVICE_QUIRK_DELAY_AFTER_LPM)
++	if (vcc_off && hba->vreg_info.vcc)
+ 		usleep_range(5000, 5100);
+ }
+ 
+diff --git a/drivers/ufs/host/ufs-mediatek.c b/drivers/ufs/host/ufs-mediatek.c
+index f902ce0..5c204d1 100644
+--- a/drivers/ufs/host/ufs-mediatek.c
++++ b/drivers/ufs/host/ufs-mediatek.c
+@@ -40,8 +40,7 @@ static int  ufs_mtk_config_mcq(struct ufs_hba *hba, bool irq);
+ static const struct ufs_dev_quirk ufs_mtk_dev_fixups[] = {
+ 	{ .wmanufacturerid = UFS_ANY_VENDOR,
+ 	  .model = UFS_ANY_MODEL,
+-	  .quirk = UFS_DEVICE_QUIRK_DELAY_AFTER_LPM |
+-		UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM },
++	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM },
+ 	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
+ 	  .model = "H9HQ21AFAMZDAR",
+ 	  .quirk = UFS_DEVICE_QUIRK_SUPPORT_EXTENDED_FEATURES },
+@@ -1713,15 +1712,13 @@ static void ufs_mtk_fixup_dev_quirks(struct ufs_hba *hba)
+ {
+ 	ufshcd_fixup_dev_quirks(hba, ufs_mtk_dev_fixups);
+ 
+-	if (ufs_mtk_is_broken_vcc(hba) && hba->vreg_info.vcc &&
+-	    (hba->dev_quirks & UFS_DEVICE_QUIRK_DELAY_AFTER_LPM)) {
++	if (ufs_mtk_is_broken_vcc(hba) && hba->vreg_info.vcc) {
+ 		hba->vreg_info.vcc->always_on = true;
+ 		/*
+ 		 * VCC will be kept always-on thus we don't
+-		 * need any delay during regulator operations
++		 * need any delay before putting device's VCC in LPM mode.
+ 		 */
+-		hba->dev_quirks &= ~(UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM |
+-			UFS_DEVICE_QUIRK_DELAY_AFTER_LPM);
++		hba->dev_quirks &= ~UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM;
+ 	}
+ 
+ 	ufs_mtk_vreg_fix_vcc(hba);
+diff --git a/drivers/ufs/host/ufs-qcom.c b/drivers/ufs/host/ufs-qcom.c
+index d15f1a1..15a9ffc8 100644
+--- a/drivers/ufs/host/ufs-qcom.c
++++ b/drivers/ufs/host/ufs-qcom.c
+@@ -1025,9 +1025,6 @@ static struct ufs_dev_quirk ufs_qcom_dev_fixups[] = {
+ 	{ .wmanufacturerid = UFS_VENDOR_SKHYNIX,
+ 	  .model = UFS_ANY_MODEL,
+ 	  .quirk = UFS_DEVICE_QUIRK_DELAY_BEFORE_LPM },
+-	{ .wmanufacturerid = UFS_VENDOR_TOSHIBA,
+-	  .model = UFS_ANY_MODEL,
+-	  .quirk = UFS_DEVICE_QUIRK_DELAY_AFTER_LPM },
+ 	{ .wmanufacturerid = UFS_VENDOR_WDC,
+ 	  .model = UFS_ANY_MODEL,
+ 	  .quirk = UFS_DEVICE_QUIRK_HOST_PA_TACTIVATE },
+diff --git a/include/ufs/ufs_quirks.h b/include/ufs/ufs_quirks.h
+index f52de5e..1b26932 100644
+--- a/include/ufs/ufs_quirks.h
++++ b/include/ufs/ufs_quirks.h
+@@ -101,13 +101,6 @@ struct ufs_dev_quirk {
+ #define UFS_DEVICE_QUIRK_SUPPORT_EXTENDED_FEATURES (1 << 10)
+ 
+ /*
+- * Some UFS devices require delay after VCC power rail is turned-off.
+- * Enable this quirk to introduce 5ms delays after VCC power-off during
+- * suspend flow.
+- */
+-#define UFS_DEVICE_QUIRK_DELAY_AFTER_LPM        (1 << 11)
+-
+-/*
+  * Some ufs devices may need more time to be in hibern8 before exiting.
+  * Enable this quirk to give it an additional 100us.
+  */
+-- 
+2.7.4
 
 
