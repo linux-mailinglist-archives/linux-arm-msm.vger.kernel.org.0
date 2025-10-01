@@ -1,149 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-75680-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75681-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D710CBB08FD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 15:48:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDE33BB098E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 01 Oct 2025 16:01:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C6625194685D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 13:48:52 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id E11D0188B4EE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Oct 2025 14:01:37 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 721052FC01A;
-	Wed,  1 Oct 2025 13:48:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 920273019B6;
+	Wed,  1 Oct 2025 14:00:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="n+WQA5md"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ibx8owUy"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f66.google.com (mail-wr1-f66.google.com [209.85.221.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B40512EAD0A
-	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 13:48:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E892C3019A8
+	for <linux-arm-msm@vger.kernel.org>; Wed,  1 Oct 2025 14:00:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759326504; cv=none; b=uKBdT2cmhL4Tw5x05IABjONw3vRqnWHNGHKqYRjsVC8n9w8QX9uMOCwli7Gq/69c2SOVjYLi8s3CADmwDmcsgt9ms3K40ycecv0J6y8dkEa0M5rN6koWqGMIfAKtNesV/yQ6UbWFYX1NN3BncVLq8rlryNpw75ZNkkxZTSIkxAU=
+	t=1759327259; cv=none; b=J/rIixHmy5ZvJ6AsY1QPjTNXuLOkqd3KgqBLmU5HVmSy/NvKnAmOHs0W7fad9kxqo3nsFzZ6XE9nKNIUVQt4qpk/2/Rum52BfvGv0Tl4ffmVwiiTRPdVVtwJ0suoLSwoq4iKXtPneJQFSMB7cFAc8hPSG/fbERpa+n7jo2kIKag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759326504; c=relaxed/simple;
-	bh=fp3v57qBuLEjj+J/x49VyV5FvxQeWmOVI+OPPyz4H7U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mJvfxq26y+joOBFurVQDl76tZH6NtfYKTcrnEnAz/m/KxePvq//vC4K3ALSWcqET3cuoCo0PeK4nE+N1KeFwkixtDrgj+BayU7TegCmwF9Z4bdesKDvv43RdQKHvsRw+DbLeJUoQuski5tGAfH+DtzBKaqLK8P719Q4l6THJ0RY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=n+WQA5md; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 591A4Kj4001106
-	for <linux-arm-msm@vger.kernel.org>; Wed, 1 Oct 2025 13:48:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	fp3v57qBuLEjj+J/x49VyV5FvxQeWmOVI+OPPyz4H7U=; b=n+WQA5md74ejqI22
-	weutqrqOSh8bHER/YgP7ORqarjnx1x7Q6u2QU+m0t3Lgnn8Hr547sOFtCtOpdVdo
-	VmzJNle/CIt6lSESTN5+mnCqR9WmQ6qEVGXOSctw7w9fDABsyH5X5YlBy/qWGQ1Q
-	wFFvroYetQDlqWXwFB7GeRHuK8p9JNqCZkvr0znuzjODxrwLfd5D735ii9598kQe
-	bChngM/JygPhnrKHpyQZUoSHS2Q8TeJQfkVvVvVcRn5i4g7NhtRgXbf/XQTBTQBo
-	WUxTXtxv1872zW77Fjh3QFjVsXR+UInS1z7367YDXPEF0hlFF5wmi41WBwq7m0e9
-	QD+cbw==
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com [209.85.215.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49fppr86ac-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 13:48:21 +0000 (GMT)
-Received: by mail-pg1-f200.google.com with SMTP id 41be03b00d2f7-b588fd453d7so4780239a12.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 06:48:21 -0700 (PDT)
+	s=arc-20240116; t=1759327259; c=relaxed/simple;
+	bh=NC3eeAM5DOVTDlmWZ97SXYb7EY5dN3ENSk5pS7FalZE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TxF5UA7HlISN/wG4UPZtoaNT/Yo8bVAc624RwuXtb4bwp7riFGEKzZV/D5jpup3jEVgilVqZyeSsg+haUBq+M5icskrSwXFzYqpdGIIa57XUq9vAHyJS9vnoq6vEAG2BWo0cNZviOFe34aKTdD4REzcgDiEzbN6nhJQzKg/i7WY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ibx8owUy; arc=none smtp.client-ip=209.85.221.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-wr1-f66.google.com with SMTP id ffacd0b85a97d-3ecde0be34eso592851f8f.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Oct 2025 07:00:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759327256; x=1759932056; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=EYsni1VBvs5YqLN8WcctEz3qmuBiq5eihYcUC9RPHrc=;
+        b=Ibx8owUyE3GWKSXaPZAX96wpg92fXZ8L8lT2fO94m+zHspJ/cMirVhyk2uKv8OhzXZ
+         0uPh0tuGWVn2siDo9kCH+2z64ow2+c9IHQpj19aHqogUZTNUT2ZNcZyiYcG6sVT/z0AI
+         2dR80t+PY5l75CZxo0zSsuek1k5GP2L/TThuS+tAASBO9Pfwl9J/brOsd4gnoXVg+aBh
+         oGq6doVPAIxZnQ52s4LzbiBsirzzMJHxSZWao9mPC3082y/cOmDQJw1mL7EmNwh9oS9a
+         GDafW503Ph+xLI0pmSVc0G5Jj6J0AqM8V6BLknrbqDqbo6eurpLCbhteTSbggPNR+rZI
+         JVow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759326500; x=1759931300;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fp3v57qBuLEjj+J/x49VyV5FvxQeWmOVI+OPPyz4H7U=;
-        b=PBZY1GmhRwgW7bWOw96jKTcA2hmc7zoCDsluZ9nh+xzvPVnZKVGiumnU8QaZ6lVNQ2
-         vY2UO3u6AHZZJvLCRJPwJhLkuiTwfHLJeu5tVQlURzwRmRh89UcgeNos0faf7bA/hrfR
-         Tbj9ooZyZHotB7CDsky9McI3z1uc/j7yGAkKzrhrRqxNdtjd+isyZXUPlXOktHKpag+m
-         WaZ/IorLjhzYzbxBd6TVbCoDhSCo5gkGuG5fyM1ily/+5Uy+TTqHC+gJh21c2H7bEVe9
-         xnNCnVIZikZi75l3t9WWcr9RvJov20ADFR4mB2lO+TuoYnW3QxlG2/c2Btm6wviUqlj6
-         pezw==
-X-Forwarded-Encrypted: i=1; AJvYcCWb+oNAYFLOkoJTY0lBk76dx2i0/oZh0rCT0TjgWm78iN5/aPP7wSMaYFtgb3fRzW2Kt9H+OzAW0WcwGr6u@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZQXRGeflUPR6WIDk39mJ1/fvITOAFxsDGAr10LE4JBcTcR+Oj
-	2Vp3AnQtV2cuKVfgBp13JJEIdpm4rSeI/evX/P0vZCGC/ik4UncaD52xuYw1+INssD8lPDTctOF
-	DdgUX5n5bMipzT+q73vAdKBBC7h6/HCR4cUjm2APSl4SiaD6LsL48GB9OfB1AFHRSXAgiJv2Igp
-	A8filAOrdmQcUykyXJAU56dauXEBKJ94RTANVDC9awqYI=
-X-Gm-Gg: ASbGncu0Br4k5o+nuS7fiU7AX4l0Nu542YdTU5x2U7tqnh285JYhEnprKGgfgwxuV4d
-	4LNzMSzZZZjnuUGShesDwgfPJvHe2SMoaBcihvtT/blMEIf33J2Yx6fT/UnWpzEzycVPCV4OO9/
-	rudED+oSC68Nkvsx/gP3cowk7P9dC0Z5MDuXqCnDxZnEWV1aKlHZ1kS/Nl4MU=
-X-Received: by 2002:a17:90b:17cf:b0:32b:d183:facf with SMTP id 98e67ed59e1d1-339a6f66d48mr3342745a91.28.1759326500219;
-        Wed, 01 Oct 2025 06:48:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGGEoqW8Gg2lgK86qxAwu+nfXe3G5OJ2NfYflPendMDk34x4Ydw1dWzOJ1aSl3n8ThNvGAbpRjrnFNtVgBSIzw=
-X-Received: by 2002:a17:90b:17cf:b0:32b:d183:facf with SMTP id
- 98e67ed59e1d1-339a6f66d48mr3342716a91.28.1759326499769; Wed, 01 Oct 2025
- 06:48:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1759327256; x=1759932056;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EYsni1VBvs5YqLN8WcctEz3qmuBiq5eihYcUC9RPHrc=;
+        b=sHpJUNFCys3iCNGHYoTLT92JPs4WKLY3hFW4SY8b2QAhJ7WtJBq/CqekXP8e13SFaV
+         wHhtEzHxOFMyxtO/DzCKfLq3MMoX/+OqK4z3W5624Zd4Ji0s+Ww0rj4jXqdviyn/wevq
+         x750TFzpwDx8tclEVn5wWkZax7/yT0wOEreNySKy06xoZEvL2t1jky6PNAVYJpx1WZT/
+         2D1RCyJt//zT03NGnmEkvcLi5Rdwpsmqev6kpEeDExCEf7vYl3j9YWRraX7vOhkVqwfr
+         I6WMWKkvaGAVaiyFX6sEj5L9QE7L3vZorgYnRKDnGw0WXwHX4jHOjgS+XEzqwGCr/MMy
+         a26A==
+X-Forwarded-Encrypted: i=1; AJvYcCWtQZNS2W1KNF4QrWjfXJ3TJ7+3i9grXPGerav74/G+qz1jPUcDkObeMLhf5vgL/JFsi1jNW8+YedS4nmZR@vger.kernel.org
+X-Gm-Message-State: AOJu0YyX1bynmfZjMNCzzv8OVVXTVhdloPg3xvdcMFxil5B+jqf/FRsg
+	zvfB0FhFNbj0m84AMslMb4zVn7r4QlsL1CYNlOGaw/j3akDr4NPcphwb
+X-Gm-Gg: ASbGnctRA+NLKHLE5ODURAs91UXN29nCNuDEJj6w/jnb3vPnj0ydRv0DGBNUve6sF+h
+	yy9ChHNFiKx0imjWG5wbkvjiryS0/9MPXu6SpGgzCtSwCFoEOT1DXwd4f6oCXPB86BS08VwhGq2
+	71HoOpCMb8ZfGZ+kGgikEP2jt0mgYqalirjN0m4EqayQB4TNJ2Xp/cPYm8xEvIzc08iEHUs49lw
+	1ipQdxZpHYC8TIOjkG0/MC6csIRFf/U+Kr1sI81F1XYR2D0YD4fWaPQ6mSvkAd8IW2On/QZQqlI
+	FZ2ZARtz3Tp4DliU8F4YPqe3nnofHzj0U6SEqdhBBfVGrfMBOZq4Dwddev4rmn4UBVl2uXbPh81
+	F3NHR2vZkoWACOnnXqSM7v0entLfmPlyZBhD+aPn2YnFbTrcZF0sQJIQzOdYtonUDfRyAiJh/jL
+	fpeURjY+oPVtRYPM9Ka+Rf5GIksndFGsjwcDscWbgDQWKDf9mNtsvDUtFxQQM2ZnEJ
+X-Google-Smtp-Source: AGHT+IEbCi0xm7TZs0YjOtrOHHNATQAm6IprX3ckD0OQpGOtjk01tDJ8J2LVgeXv3ddJgQ52ljhLtg==
+X-Received: by 2002:a05:6000:2901:b0:3ea:6680:8fb9 with SMTP id ffacd0b85a97d-425577761c8mr3272501f8f.3.1759327255965;
+        Wed, 01 Oct 2025 07:00:55 -0700 (PDT)
+Received: from LAPTOP-AMJDAUEJ.soton.ac.uk (globalprotect-nat-extbord.soton.ac.uk. [152.78.0.24])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-40fb89065b5sm27029828f8f.17.2025.10.01.07.00.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 01 Oct 2025 07:00:55 -0700 (PDT)
+From: Junjie Cao <caojunjie650@gmail.com>
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
+	Dmitry Baryshkov <lumag@kernel.org>,
+	Abhinav Kumar <abhinav.kumar@linux.dev>,
+	Sean Paul <sean@poorly.run>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Antonino Maniscalco <antomani103@gmail.com>,
+	Jonathan Marek <jonathan@marek.ca>,
+	Eugene Lepshy <fekz115@gmail.com>,
+	Jun Nie <jun.nie@linaro.org>
+Cc: Junjie Cao <caojunjie650@gmail.com>,
+	dri-devel@lists.freedesktop.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org
+Subject: [PATCH 0/3] drm/panel: Add support for Novatek NT36532 panel
+Date: Wed,  1 Oct 2025 21:59:11 +0800
+Message-ID: <20251001135914.13754-1-caojunjie650@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-16-24b601bbecc0@oss.qualcomm.com> <cd91e7f2-72bf-48f2-891e-4e6cd36b1e24@oss.qualcomm.com>
-In-Reply-To: <cd91e7f2-72bf-48f2-891e-4e6cd36b1e24@oss.qualcomm.com>
-From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-Date: Wed, 1 Oct 2025 19:18:07 +0530
-X-Gm-Features: AS18NWBhYwOecFTI7PUFOxMVtEHAFfH7cHQ1cCOcmiaMyYqMB14HKhsIE_TTwpI
-Message-ID: <CADhhZXau4EPEvf6Ngo+p4Jv=NPF6TYxcWtt2tV+MyrmOxp7OOQ@mail.gmail.com>
-Subject: Re: [PATCH 16/24] arm64: boot: dts: glymur-crd: Add Volume down/up
- keys support
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI5MDA4MiBTYWx0ZWRfXyyFdQZUkm7+e
- yuGxAyEw62kRet3ggu5Ib7HhogWqIOvlXISVc0cjRcfNMW8qLV7PmiY/NvDlco8ANm79oQowbO0
- PLDpjDCiYhjl0nkFwj03X3dnvZMQ0dsfGRnppig64/mUhxGq5eXOIuBWjhZSW7c9tZjKqz1qyS2
- 3T0KKkfcOHQNI0p3fXPEqhLysTWCbg2UtzC6LcFvLnbAo14WnF4a2h8w1xf+UMsPKKQUgQJZjFW
- iQyV83L+qmoYCl5QRh+HpdiMjHTl1HCTcYT+vTMosaqLfB1liippLqYAxsD0qGsbmQwiI8yuSud
- sXA3gveXVLBBNB5NZRiJMjFrx6Mn4WPn25kyORIhYAhiMSpGiwftW8lZ1Y9kyUlYn3FZf68bj1q
- qdZy0E8d07AHBb2qaMbrL+l1zV89WA==
-X-Proofpoint-ORIG-GUID: Y75pHU930I3cBOXv5IS_VYyjPueGjo71
-X-Authority-Analysis: v=2.4 cv=GLoF0+NK c=1 sm=1 tr=0 ts=68dd3125 cx=c_pps
- a=oF/VQ+ItUULfLr/lQ2/icg==:117 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
- a=EUspDBNiAAAA:8 a=QrdbydHfbqU_mCGI0rsA:9 a=QEXdDO2ut3YA:10
- a=3WC7DwWrALyhR5TkjVHa:22
-X-Proofpoint-GUID: Y75pHU930I3cBOXv5IS_VYyjPueGjo71
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-01_04,2025-09-29_04,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 suspectscore=0
- impostorscore=0 spamscore=0 bulkscore=0 clxscore=1015 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2509290082
+Content-Transfer-Encoding: 8bit
 
-Hi Konrad,
+This series adds support for panels using the Novatek NT36532 Display
+Driver IC, a dual-DSI, dual-DSC controller that requires DPU support
+for 'slice_per_pkt = 2'.
 
-On Thu, Sep 25, 2025 at 4:46=E2=80=AFPM Konrad Dybcio
-<konrad.dybcio@oss.qualcomm.com> wrote:
->
-> On 9/25/25 8:32 AM, Pankaj Patil wrote:
-> > From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
-> >
-> > Add Volume Down/Up keys for Glymur CRD.
->
-> Does the CRD have these physical keys, or are they routed to the
-> debug board?
+Since the current DPU driver lacks this capability, PATCH 2/3 is picked
+up from Jonathan Marek and Jun Nie [1].
 
-Yes, it seems to be routed only over the debug board.
-The keyboard too has the vol+ key, but seems no direct key having
-vol+/gpio6 on CRD.
-(sorry should this patch be dropped then for this reason i guess?)
+[1]: https://lore.kernel.org/all/20250220-dual-dsi-v2-3-6c0038d5a2ef@linaro.org
 
->
-> Konrad
+Jun Nie (1):
+  drm/msm/dsi: support DSC configurations with slice_per_pkt > 1
 
-Regards,
-Kamal
+Junjie Cao (2):
+  dt-bindings: display: panel: Add Novatek NT36532
+  drm/panel: Add Novatek NT36532 panel driver
+
+ .../display/panel/novatek,nt36532.yaml        |  83 ++++
+ MAINTAINERS                                   |   7 +
+ drivers/gpu/drm/msm/dsi/dsi_host.c            |  25 +-
+ drivers/gpu/drm/panel/Kconfig                 |  10 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ drivers/gpu/drm/panel/panel-novatek-nt36532.c | 437 ++++++++++++++++++
+ include/drm/drm_mipi_dsi.h                    |   2 +
+ 7 files changed, 550 insertions(+), 15 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/novatek,nt36532.yaml
+ create mode 100644 drivers/gpu/drm/panel/panel-novatek-nt36532.c
+
+
+base-commit: bf2602a3cb2381fb1a04bf1c39a290518d2538d1
+-- 
+2.48.1
+
 
