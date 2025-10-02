@@ -1,120 +1,365 @@
-Return-Path: <linux-arm-msm+bounces-75831-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
-	by mail.lfdr.de (Postfix) with ESMTPS id 34075BB4FF5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Oct 2025 21:26:41 +0200 (CEST)
+Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
+	by mail.lfdr.de (Postfix) with ESMTPS id 92F17BB5049
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Oct 2025 21:37:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id EA541170F21
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Oct 2025 19:26:40 +0000 (UTC)
+	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ACACB7B4EDD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Oct 2025 19:35:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03EEA284880;
-	Thu,  2 Oct 2025 19:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A22128725D;
+	Thu,  2 Oct 2025 19:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b="kPAF5kcB"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GJcB7/+1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C3A1280332
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Oct 2025 19:26:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B7927A927
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Oct 2025 19:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759433193; cv=none; b=h6jRjg8CcgN7M7pTNj3zuy4VLnl0ss0zwO4dxOTKOr2zBYAlSwsbYkYfGEjvSFxccFoLm1imppCVcnc9GT4/HvwZD/LmOevVCjPBK3SvsqOR4kCAK+SRyDof6an5OMxqxRS4UShjTV7qzIkZlyz3xOlG4giNgnhlZnjWQ11sx8I=
+	t=1759433841; cv=none; b=jrhMgZZSOI6S7CgGZRuvo0e23EP0IGj0A1onrqXiuOXuNiH9GR29EmlYYip4fSh+8MFoL7GMrGdfMDGVPPWeW+TOlBR/XCEihk45Goe8sssA5ES/BzygnmB0vltieMShYz8nCIOoBOFDMk/qTCctjqzZNBNpbAg7347bEp2ve0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759433193; c=relaxed/simple;
-	bh=sF6m7Kz/PItRSwhbUbxo0QBnQFFNFeFAB2lZhTsKydI=;
-	h=MIME-Version:Date:Content-Type:From:Message-ID:Subject:To:Cc:
-	 In-Reply-To:References; b=lj1YBf5q5qwy6FeCSBxlCwpHtNiblTofuufJmLrWXdY1OXK52CYUFJFQ21TU8k3NcFK5nB88pR/2NAknEeHuMwUQClOGPlJb4aDyEGBVmXu6lVE+qipbkJ/M+dKbgyGT3K9xacYEEjWns4jA6BxAOqOpnXwZ4debJvn25CJ8sDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org; spf=pass smtp.mailfrom=postmarketos.org; dkim=pass (2048-bit key) header.d=postmarketos.org header.i=@postmarketos.org header.b=kPAF5kcB; arc=none smtp.client-ip=91.218.175.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=postmarketos.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=postmarketos.org
+	s=arc-20240116; t=1759433841; c=relaxed/simple;
+	bh=fSO8CvA3pCTMDoPptUgMnTwph9BJB+1IvdM+4Xco5UQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ArgzhuajUjl2Wqn0Yf7L8i7z9iU3dv9I4FLsAoONI+iB98jnfddmi5+EPmRprUDsgZQARD7ACx2SYX0K8fJPB8tTujj+yjPM84YeiVubtD/PhOZRMTm7T3dffgDCZ3d4tTTPWqG3TDIn9RrObA+fWSykq35mAyRucNIbq+rzZgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GJcB7/+1; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5929ID4T031449
+	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Oct 2025 19:37:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	41mUsnB3TY6EVy7eiG4ANAThuUGl4wFuILLk8njZ6ng=; b=GJcB7/+1vEB5u5w5
+	x60BED/94LeeoGJzgK2xzWceLb2CRDR8GHI5PsmKHGFLlr5OKS5dyXpyN8FTwlBU
+	vTgGZ5et3QCVYoN2blouwq0IArLH9bTkDomQN6eZ5Ov5qdopx1VLgEAahPcAIAuB
+	DKK0KxAy+wxVAprPJQD9rC8M5O6kixQPVKHUYBC9mVPVdantOf5FbnTKyss70H5G
+	WNnQEYLuCY861jMbVtWEtOHYbRxNfMkXK0akwx4sYtjaNAavBTQ/mHe8NNlVgrfJ
+	EIYPMToriRQZVhWty5VNyD4KQcubhZYOZHytEvEfs2sEwuJhWYaFPcJ1/MbQ9B8I
+	n5Pnmg==
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e6vr8tgb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Oct 2025 19:37:17 +0000 (GMT)
+Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7841da93b8dso435310b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Oct 2025 12:37:17 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759433836; x=1760038636;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=41mUsnB3TY6EVy7eiG4ANAThuUGl4wFuILLk8njZ6ng=;
+        b=feDhqvRuvhvc1Mt5lICi3f42/Yyu1Rzn4yPSXksWjhuPqsjuVWvGYsPF/vt0zxBtMh
+         BCV9lKGwO8M3Swjshy6O3T8UQ2fFfFtCZcJ14hWh0V6oCaETZCu1+36sOv/cTGt3lTkZ
+         Y9V+6GBbMp/NOlwnVznTQpO0aHiu0Q7ufqMr/mZWcXmXmdFyvL88scvoD58Tg7gRUplL
+         WiI7LWia7k0S2AT0tBQWDMJBFe9ujS8RaaCQJBh4ARMebNO3inhUHcr1EYxdd49GjUte
+         q2L8G4tpBOddPIVC8f3a/5LvmqzXstgGa9rFOY1DaQYuqGhtRr4XsWuHuI+/8fGg+aNv
+         wULQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUIB23HOYoL074qaVIY/Pl1LlCP9D1lvR/r2d92SO3OeKhp+pnLVRw/2w8n3mW2GAPOLLwTumm4e3IQIhni@vger.kernel.org
+X-Gm-Message-State: AOJu0YwWS7EemUXHvs3p2UOVPrBDwzlVYOhJNVdivRnyxk2YNRoqw4xw
+	AgMgKRxP6PQoLA23A45R5MrZDaOALCftJR8IuJSqrYVqxMwAHWVPVU2WAoo5M44N2691BeiMUI1
+	15F3Hz7r58VSkF1NooDQwWpex+Rly8qKbd1Dq+/313TcBzbBYbQUdrdEG/5hKDq86Jz/4
+X-Gm-Gg: ASbGnctiuWC2MykEm/opyVEOk2Fdm7FnqWyu8YNgWnERunjUoIbE+4iPetLWh7pDnkF
+	pJpQ0OVLGr8pRvIofuO7BgudlHaIN3AUqPNl7VDokrKVevlwPf2b75vqO98HY0cZCy0+lsROPqN
+	W+70vm9zVFKiHMBJN8rkEyGKkbd55wXcZNOi8iDHMnKjGNP6yCMMBaWQJbfgAe2cVDCGiYCBl8t
+	cMtqj23QJKJF4bRpmWLbyBq+YBuvFvuOfDBB37EosbkbDAOSHcvDUVfiiX2rWTg5i5UGakPfIqR
+	tw3AHXFFyyK9+7SSDxhqkOCcFK5zGaz9+igaswlubt10lsavkoCI8XHKURA2V/dwCqW0a4UCs0a
+	tjCsh1TqHgGhWz8zxESAJ1BlL1GH4/qPf
+X-Received: by 2002:a05:6a00:b8c:b0:781:2177:1ca3 with SMTP id d2e1a72fcca58-78c98df574bmr376295b3a.6.1759433836078;
+        Thu, 02 Oct 2025 12:37:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYwgFwYPHSkxTVgMbR3ecJssERdk9ryMJd9NIRHusph0Tnr0DlMI3WgoZ5RUECPXxU7TeL3A==
+X-Received: by 2002:a05:6a00:b8c:b0:781:2177:1ca3 with SMTP id d2e1a72fcca58-78c98df574bmr376268b3a.6.1759433835415;
+        Thu, 02 Oct 2025 12:37:15 -0700 (PDT)
+Received: from [10.71.110.242] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-78b01f9a364sm2837840b3a.6.2025.10.02.12.37.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Oct 2025 12:37:15 -0700 (PDT)
+Message-ID: <970f0c9a-a8ef-4899-baa3-83f92d261ba8@oss.qualcomm.com>
+Date: Thu, 2 Oct 2025 12:37:13 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=postmarketos.org;
-	s=key1; t=1759433179;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=K4sPjDAwiOapYwAjhtANPQek3u9Zjdz92H9jh7Cwyh4=;
-	b=kPAF5kcB61C8BKqglZaikUlUk43vhdt+PPB95LWWmDjPlCucvdSH7AzHEyYR/9byIaGY2k
-	lJ1dxP0KYpCKaD6N+11aReG8B3xB/J2TZsTKVioUlTRd9MTPhfnYrH4hglCmmUkaM5t+Gy
-	mCEn9nYbmXXaO8RqHvOpxhhXZt3D/2agdQYGoY3DF0PSN77LDbT/0tGkJgh0a44n6G4095
-	3oJUk8gKYyPEkgCgUKzhNWLYZJ9tJidVMYThU1egGRA9J3wqyoLpVIIxMU+xxos+9xlSDc
-	qord78gBMt2T8D5fd8qmPeOt3/3lQR19W1/3KfobiJZ0FC/3+lBUxdAj1oWbSw==
-Date: Thu, 02 Oct 2025 19:26:16 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Paul Sajna" <sajattack@postmarketos.org>
-Message-ID: <ad721948b83a54eaa34f367e12564fe6acc222a1@postmarketos.org>
-TLS-Required: No
-Subject: Re: [PATCH v3 07/11] arm64: dts: qcom: sdm845-lg-{common, judyln}:
- Add wifi node
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>, "Rob
- Herring" <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>,
- "Conor Dooley" <conor+dt@kernel.org>, "David Heidelberg" <david@ixit.cz>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org, "Amir Dahan"
- <system64fumo@protonmail.com>, "Christopher Brown"
- <crispybrown@gmail.com>
-In-Reply-To: <7661d9d9-eca3-4708-8162-960df0d7f6c7@oss.qualcomm.com>
-References: <20250928-judyln-dts-v3-0-b14cf9e9a928@postmarketos.org>
- <20250928-judyln-dts-v3-7-b14cf9e9a928@postmarketos.org>
- <f58493a9-6def-4610-9c3e-d6a877dc23d3@oss.qualcomm.com>
- <d38801bc77ad00442b1669ea252ae30a5c6af5b4@postmarketos.org>
- <7661d9d9-eca3-4708-8162-960df0d7f6c7@oss.qualcomm.com>
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] media: iris: Add internal buffer calculation for AV1
+ decoder
+To: Nicolas Dufresne <nicolas@ndufresne.ca>,
+        Bryan O'Donoghue
+ <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20251001-av1_irisdecoder-v1-0-9fb08f3b96a0@oss.qualcomm.com>
+ <mbltuHnjNkwD91EqWND77oi8XN26tEarsTmT_fLVkZQYkc7-V_RpAVWo8KC8AnzeyV74zXurscVRHHfAL35xFw==@protonmail.internalid>
+ <20251001-av1_irisdecoder-v1-5-9fb08f3b96a0@oss.qualcomm.com>
+ <e273f195-fb5e-4b4f-bf97-63ea51ed875f@kernel.org>
+ <ec3e93e72e326db4e61fed33ade0547935ab6dca.camel@ndufresne.ca>
+Content-Language: en-US
+From: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
+In-Reply-To: <ec3e93e72e326db4e61fed33ade0547935ab6dca.camel@ndufresne.ca>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: A0NaviHHg-jExU93YvoFy0PA0oYphjrm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxNyBTYWx0ZWRfX4G1MPQraVKcc
+ sB03sQ5KEYFf/zRQ/DUHvnOJuw0hGDcVOKI4SPLylqATLrCvEkCRX3fmHZ01ElrRTay7wSidDhK
+ qvGWDfvFlZ/ruCOIKjx8GOVr12qDw44sUHf2lmXoLqXEm0tc3SORZyTldZtEFqX6ms58AN5659h
+ zmdFGupxO+9p20VKqbpzVrB0jcVcqbIiug7I1vuHYaWrAQS24yrGdKXBg4gbgxYfjL4cELIuiU+
+ 5aSgwxYE7kKkrdffEIIIw9PPPnQIAr+/1NGNDSXUhgcwNVbWPu7mtMLoYVdJvqcjNgr1YNJgx5E
+ xsabWzh43fwzqPn15WYbUiPCsp4bJR8OgaN2E5+iP2UcbClD0GxzSP9pKfqsk6Pv61SUGKiacfz
+ MEFFckxWeBZUdYRRr2z6i8l566VmZQ==
+X-Authority-Analysis: v=2.4 cv=IeiKmGqa c=1 sm=1 tr=0 ts=68ded46d cx=c_pps
+ a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=wbe282U9EvkHtdHFx4cA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
+ a=HhbK4dLum7pmb74im6QT:22
+X-Proofpoint-ORIG-GUID: A0NaviHHg-jExU93YvoFy0PA0oYphjrm
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-02_07,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
+ suspectscore=0 spamscore=0 adultscore=0 impostorscore=0 phishscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2509270017
 
-October 2, 2025 at 9:37 AM, "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.c=
-om mailto:konrad.dybcio@oss.qualcomm.com?to=3D%22Konrad%20Dybcio%22%20%3C=
-konrad.dybcio%40oss.qualcomm.com%3E > wrote:
 
-
->=20
->=20On 10/2/25 6:51 AM, Paul Sajna wrote:
->=20
->=20>=20
->=20> October 1, 2025 at 9:14 AM, "Konrad Dybcio" <konrad.dybcio@oss.qual=
-comm.com mailto:konrad.dybcio@oss.qualcomm.com?to=3D%22Konrad%20Dybcio%22=
-%20%3Ckonrad.dybcio%40oss.qualcomm.com%3E > wrote
-> >=20=20
->=20>=20=20
->=20>=20
->=20> >=20
->=20> > As the dt-checker points out, there is no such property
-> > >=20
->=20> >  If your wi-fi works regardless of that, you probably don't need
-> > >  to set the one you intended to
-> > >=20
->=20> >  Konrad
-> > >=20
->=20>=20=20
->=20>  Perhaps this only exists in the postmarketos tree, but it definite=
-ly exists, and doesn't work without it. I'll remove it for upstreaming fo=
-r now but hopefully someone sorts that out. upstream.
-> >=20
->=20So you didn't test the tree you sent? :/
->=20
->=20fwiw
->=20
->=20drivers/net/wireless/ath/ath10k/snoc.c:
->  qcom,snoc-host-cap-8bit-quirk
->=20
->=20Konrad
+On 10/2/2025 5:38 AM, Nicolas Dufresne wrote:
+> Hi,
 >
+> Le jeudi 02 octobre 2025 à 00:30 +0100, Bryan O'Donoghue a écrit :
+>> On 01/10/2025 20:00, Deepa Guthyappa Madivalara wrote:
+>>> Implement internal buffer count and size calculations for AV1 decoder.
+>>>
+>>> Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
+>>> ---
+>>>    drivers/media/platform/qcom/iris/iris_buffer.h     |   1 +
+>>>    .../platform/qcom/iris/iris_hfi_gen2_command.c     |   1 -
+>>>    drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 255 ++++++++++++++++++++-
+>>>    drivers/media/platform/qcom/iris/iris_vpu_buffer.h | 105 +++++++++
+>>>    4 files changed, 357 insertions(+), 5 deletions(-)
+>>>
+>>> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.h b/drivers/media/platform/qcom/iris/iris_buffer.h
+>>> index 5ef365d9236c7cbdee24a4614789b3191881968b..75bb767761824c4c02e0df9b765896cc093be333 100644
+>>> --- a/drivers/media/platform/qcom/iris/iris_buffer.h
+>>> +++ b/drivers/media/platform/qcom/iris/iris_buffer.h
+>>> @@ -27,6 +27,7 @@ struct iris_inst;
+>>>     * @BUF_SCRATCH_1: buffer to store decoding/encoding context data for HW
+>>>     * @BUF_SCRATCH_2: buffer to store encoding context data for HW
+>>>     * @BUF_VPSS: buffer to store VPSS context data for HW
+>>> + * @BUF_PARTIAL: buffer for AV1 IBC data
+>>>     * @BUF_TYPE_MAX: max buffer types
+>>>     */
+>>>    enum iris_buffer_type {
+>>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+>>> index e3a8b031b3f191a6d18e1084db34804a8172439c..000bf75ba74ace5e10585910cda02975b0c34304 100644
+>>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+>>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
+>>> @@ -488,7 +488,6 @@ static int iris_hfi_gen2_set_linear_stride_scanline(struct iris_inst *inst, u32
+>>>
+>>>    static int iris_hfi_gen2_set_tier(struct iris_inst *inst, u32 plane)
+>>>    {
+>>> -	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
+>>>    	u32 port = iris_hfi_gen2_get_port(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
+>>>    	u32 tier = inst->fw_caps[TIER].value;
+>>>
+>>> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>>> index 4463be05ce165adef6b152eb0c155d2e6a7b3c36..17d3a7ae79e994257d596906cb4c17250a11a0cb 100644
+>>> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>>> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
+>>> @@ -9,6 +9,14 @@
+>>>    #include "iris_hfi_gen2_defines.h"
+>>>
+>>>    #define HFI_MAX_COL_FRAME 6
+>>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_HEIGHT (8)
+>>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_WIDTH (32)
+>>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_HEIGHT (8)
+>>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_WIDTH (16)
+>>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_HEIGHT (4)
+>>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_WIDTH (48)
+>>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_HEIGHT (4)
+>>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_WIDTH (24)
+>>>
+>>>    #ifndef SYSTEM_LAL_TILE10
+>>>    #define SYSTEM_LAL_TILE10 192
+>>> @@ -39,6 +47,31 @@ static u32 hfi_buffer_bin_h264d(u32 frame_width, u32 frame_height, u32 num_vpp_p
+>>>    	return size_h264d_hw_bin_buffer(n_aligned_w, n_aligned_h, num_vpp_pipes);
+>>>    }
+>>>
+>>> +static u32 size_av1d_hw_bin_buffer(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
+>>> +{
+>>> +	u32 size_yuv, size_bin_hdr, size_bin_res;
+>>> +
+>>> +	size_yuv = ((frame_width * frame_height) <= BIN_BUFFER_THRESHOLD) ?
+>>> +		((BIN_BUFFER_THRESHOLD * 3) >> 1) :
+>>> +		((frame_width * frame_height * 3) >> 1);
+>>> +	size_bin_hdr = size_yuv * AV1_CABAC_HDR_RATIO_HD_TOT;
+>>> +	size_bin_res = size_yuv * AV1_CABAC_RES_RATIO_HD_TOT;
+>>> +	size_bin_hdr = ALIGN(size_bin_hdr / num_vpp_pipes,
+>>> +			     DMA_ALIGNMENT) * num_vpp_pipes;
+>>> +	size_bin_res = ALIGN(size_bin_res / num_vpp_pipes,
+>>> +			     DMA_ALIGNMENT) * num_vpp_pipes;
+>>> +
+>>> +	return size_bin_hdr + size_bin_res;
+>>> +}
+>>> +
+>>> +static u32 hfi_buffer_bin_av1d(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
+>>> +{
+>>> +	u32 n_aligned_h = ALIGN(frame_height, 16);
+>>> +	u32 n_aligned_w = ALIGN(frame_width, 16);
+>>> +
+>>> +	return size_av1d_hw_bin_buffer(n_aligned_w, n_aligned_h, num_vpp_pipes);
+>>> +}
+>>> +
+>>>    static u32 size_h265d_hw_bin_buffer(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
+>>>    {
+>>>    	u32 product = frame_width * frame_height;
+>>> @@ -110,6 +143,20 @@ static u32 hfi_buffer_comv_h265d(u32 frame_width, u32 frame_height, u32 _comv_bu
+>>>    	return (_size * (_comv_bufcount)) + 512;
+>>>    }
+>> What's this alignment stuffed onto the end about ?
+>>
+>> Please guys give these magic numbers meaningful names.
+> That would be nice, then I'll be able to document that for Hantro AV1 decoder
+> too. It was assumed when we picked the driver that the table was hardware
+> specific, but if its not, a drivers/media/v4l2-core/v4l2-av1.c is welcome.
+>
+>>> drivers/media/platform/verisilicon/hantro_hw.h:555
+> static inline size_t
+> hantro_av1_mv_size(unsigned int width, unsigned int height)
+> {
+> 	size_t num_sbs = hantro_av1_num_sbs(width) * hantro_av1_num_sbs(height);
+>
+> 	return ALIGN(num_sbs * 384, 16) * 2 + 512;
+> }
+> +static u32 hfi_buffer_comv_av1d(u32 frame_width, u32 frame_height, u32 comv_bufcount)
+> +{
+> +	u32 size;
+> +
+> +	size =  2 * ALIGN(MAX(((frame_width + 63) / 64) *
+> +		((frame_height + 63) / 64) * 512,
+> This looks like div_round_up()  ?
+>
+>>> +		((frame_width + 127) / 128) *
+>>> +		((frame_height + 127) / 128) * 2816),
+>>> +		DMA_ALIGNMENT);
+>>> +	size *= comv_bufcount;
+>>
+>> I'm sure this calculation is right and produces the correct value in all
+>> instances - probably anyway but also does it ?
+>>
+>> It is not obvious looking at this code that it is obviously correct.
+>>
+>> I have a similar comment for alot of these Iris patches - we end up with
+>> highly complex calculations using magic numbers which my guess would be
+>> even people immersed in the firmware/driver/silicon development have a
+>> hard time looking at and "just knowing" the code is correct.
+>>
+>> Please reduce these calculations down to some kind of define that - for
+>> example an intelligent programmer - an oxymoron of a term I accept -
+>> could read the code and actually understand what is going on.
+>>
+>> That programmer might even be yourself. You should be able to come along
+>> in two, five, eight years time, look at a code snippet and pretty much
+>> understand what it is doing and why without having to have a deep
+>> epiphany when doing it.
+>>
+>> These complex clauses stuffed with magic numbers and sometimes bitshfts
+>> with a few alignments thrown in for good measure are inscrutable.
+> I agree with this, when the driver is not from the hardware maker, this can be
+> justified, but since you have full access to the documentation and probably can
+> ask the designers, it would be nicer to replace 64, 128, 512 and 2816 by named
+> macro or const. Its not a blame, many drivers are like this already.
+>
+> Nicolas
 
-I think I'll probably just drop this until a bunch of other stuff is upst=
-reamed. mdss is totally broken on mainline, wi-fi doesn't work, fuel gaug=
-e is missing, etc. etc.
+Thank you for the feedback. I am working on making this as much clearer
+as I can.
 
-I tried the 8-bit quirk and it didn't help.
+>>> +	return size;
+>>> +}
+>>> +
+>>>    static u32 size_h264d_bse_cmd_buf(u32 frame_height)
+>>>    {
+>>>    	u32 height = ALIGN(frame_height, 32);
+>>> @@ -174,6 +221,20 @@ static u32 hfi_buffer_persist_h264d(void)
+>>>    		    DMA_ALIGNMENT);
+>>>    }
+>>>
+>>> +static u32 hfi_buffer_persist_av1d(u32 max_width, u32 max_height, u32 total_ref_count)
+>>> +{
+>>> +	u32 comv_size, size;
+>>> +
+>>> +	comv_size =  hfi_buffer_comv_av1d(max_width, max_height, total_ref_count);
+>>> +	size = ALIGN((SIZE_AV1D_SEQUENCE_HEADER * 2 + SIZE_AV1D_METADATA +
+>>> +	AV1D_NUM_HW_PIC_BUF * (SIZE_AV1D_TILE_OFFSET + SIZE_AV1D_QM) +
+>>> +	AV1D_NUM_FRAME_HEADERS * (SIZE_AV1D_FRAME_HEADER +
+>>> +	2 * SIZE_AV1D_PROB_TABLE) + comv_size + HDR10_HIST_EXTRADATA_SIZE +
+>>> +	SIZE_AV1D_METADATA * AV1D_NUM_HW_PIC_BUF), DMA_ALIGNMENT);
+>>> +
+>>> +	return ALIGN(size, DMA_ALIGNMENT);
+>>> +}
+>>> +
+>>>    static u32 hfi_buffer_non_comv_h264d(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
+>>>    {
+>>>    	u32 size_bse = size_h264d_bse_cmd_buf(frame_height);
+>>> @@ -459,6 +520,148 @@ static u32 hfi_buffer_line_h264d(u32 frame_width, u32 frame_height,
+>>>    	return ALIGN((size + vpss_lb_size), DMA_ALIGNMENT);
+>>>    }
+>>>
+>>> +static u32 size_av1d_lb_opb_wr1_nv12_ubwc(u32 frame_width, u32 frame_height)
+>>> +{
+>>> +	u32 y_width, y_width_a = 128;
+>>> +
+>>> +	y_width = ALIGN(frame_width, y_width_a);
+>>> +
+>>> +	return (256 * ((y_width + 31) / 32 + (AV1D_MAX_TILE_COLS - 1)));
+>>> +}
+>>> +
+>>> +static u32 size_av1d_lb_opb_wr1_tp10_ubwc(u32 frame_width, u32 frame_height)
+>>> +{
+>>> +	u32 y_width, y_width_a = 256;
+>>> +
+>>> +	y_width = ALIGN(frame_width, 192);
+>>> +	y_width = ALIGN(y_width * 4 / 3, y_width_a);
+>>> +
+>>> +	return (256 * ((y_width + 47) / 48 + (AV1D_MAX_TILE_COLS - 1)));
+>> y_width is a thing times 4 divided by 3 aligned to 192.
+>>
+>> OK
+>>
+>> Then we return 256 * ((y_width + 47?) / 48 + (A_DEFINE_NICE - 1)));
+>>
+>> 47 ? The magic number in the routine above is 31.
+>>
+>> I don't think I'd be comfortable giving an RB for this. You guys need to
+>> take steps to make your code more digestable - zapping the complex
+>> bit-shifts and magic numbers.
+>>
+>> I don't see how a reviewer can really be expected to fit this into their
+>> head and say "yep LGTM" needs to be decoded both for the sake of the
+>> reviewer and for future coders, perhaps even future you trying to figure
+>> out where the bug is..
+>>
+>> ---
+>> bod
+
+Understood, thank you.  I'm continuing to work on simplifying the code to
+make it more meaningful.
+
+Regards,
+Deepa
+
 
