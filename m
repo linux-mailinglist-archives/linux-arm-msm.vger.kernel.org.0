@@ -1,118 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-75817-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75818-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [IPv6:2604:1380:45d1:ec00::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 28B1ABB422B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Oct 2025 16:06:18 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C4FDBB427D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Oct 2025 16:24:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ny.mirrors.kernel.org (Postfix) with ESMTPS id 12DB717F055
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Oct 2025 14:05:49 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 40FAA3C5AEF
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Oct 2025 14:24:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6238E312808;
-	Thu,  2 Oct 2025 14:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6FEA8311591;
+	Thu,  2 Oct 2025 14:24:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b="CMBo4wuA"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="cIc0ENAm"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail.zeus03.de (zeus03.de [194.117.254.33])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F5F2877DC
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Oct 2025 14:05:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.117.254.33
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2BC3292936
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Oct 2025 14:24:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759413942; cv=none; b=WYMS/BEPqlPFYzeU6IRYtVebBjXLN28abL0G8nfurD8Hmig6Vi8YFqSZshwKYzXzy27eSrP5swl+FD1ponW6Q4RatRZIacMJhT+6fQ+e/Cp1vXkh3iUVebPevPuQCBJmaOb4xDOeSTI6AwSY6j+h1rf+7odUoMNoExhrZ9FgmGY=
+	t=1759415072; cv=none; b=FzsGFvUIUQw8f6/dxA6Yg7/FPDDzwP6yP6TpUSBm+BiyMT4o+BQAztmYcxw7TmpPu18vntxUPnuQ8rmPkShjneDImZm06aptV1LHJwVZgCnUS93lWZLA5ZoTeGNau9rwLBt9oYhudDgl0x3GixzeC/Xpoi26nNwyWS0rFd00VCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759413942; c=relaxed/simple;
-	bh=LYm9D5vlhSiUy616cHQLJ5BvEm6YIL752SKqypsFb5w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fnwo0/w4F+fxIm7GY6QgEp7Pw2NnYJyj0Ecmko5fxwDKGXyqsKWE5oEIRnWFvzx955D9XyyGAxdwj0OSLzUCgo6KeHQ8QA8H0TNSntnl7F/3iCFFB397OP0mL95pW0YS1c5e+yZIiVgdtSKvu2EAPNfxuieKNFeUvyUpMHXyWhc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com; spf=pass smtp.mailfrom=sang-engineering.com; dkim=pass (2048-bit key) header.d=sang-engineering.com header.i=@sang-engineering.com header.b=CMBo4wuA; arc=none smtp.client-ip=194.117.254.33
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=sang-engineering.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sang-engineering.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	sang-engineering.com; h=date:from:to:cc:subject:message-id
-	:references:mime-version:content-type:in-reply-to; s=k1; bh=LYm9
-	D5vlhSiUy616cHQLJ5BvEm6YIL752SKqypsFb5w=; b=CMBo4wuAPtjTjtjdpLmm
-	qn8XDWdQSJRTAPrvIx1iDiclurdwEuFzB3C08f9exHfxyBopLh/0e1hp0TV+WTJy
-	dqpycYiHLylx89u9xJQQ7Pr7tdMH3gSqWtgTlflVHxwkWh7MMWYLz8NdB+ejvSQN
-	Ck0HXEuFewJGt09bxpI7+kFeMIryT65lq068YL6794IQQ0uQ4NFPjk89YiuDdA5F
-	hzyHONjOVLzh9c2/rT8TbOVqHBja7VToYNh1mXwIqJnKBxJ0g5StwVmwZ4XS8Jsf
-	ZpwNsSCW4b0tWQChSWq3MSzFjafkkH/E/VqqF5HuNFlPIfAntcCHneiXmIrErcZ6
-	eg==
-Received: (qmail 295296 invoked from network); 2 Oct 2025 16:05:36 +0200
-Received: by mail.zeus03.de with UTF8SMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 2 Oct 2025 16:05:36 +0200
-X-UD-Smtp-Session: l3s3148p1@2PCrei1AIOIgAwDPXwQHAL/S9V79e5yL
-Date: Thu, 2 Oct 2025 16:05:35 +0200
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
-To: Luca Weiss <luca.weiss@fairphone.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Griffin Kroah-Hartman <griffin.kroah@fairphone.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-	Daniel Scally <djrscally@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	=?utf-8?B?QW5kcsOp?= Apitzsch <git@apitzsch.eu>,
-	Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-	Wolfram Sang <wsa@kernel.org>, linux-media@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Enable CCI
- pull-up
-Message-ID: <aN6Gr5FcfYpKgAFM@shikoro>
-References: <20251002-dw9800-driver-v1-0-c305328e44f0@fairphone.com>
- <20251002-dw9800-driver-v1-3-c305328e44f0@fairphone.com>
- <1be80052-3ba5-46de-804a-de995f8db5d4@oss.qualcomm.com>
- <DD7V3G4RLB2I.QYT4BWT1LA5U@fairphone.com>
+	s=arc-20240116; t=1759415072; c=relaxed/simple;
+	bh=4wFXIlhpz5cGHAwxA7bbXiNXK4dSdXARKM4L/jclrEQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oxVJ/hmR6hNwm2k02tCFFZoi+zYl8tzxMabg2z8tEGrTJnt3T0Q/coTGxJY1nuOfLMHZTXgE9yuyrqQ+AFKzMHEBhocP9c+wdQWcE5joQeOgElSADb5i+SBc+Ipmfh0zc+jATy0k5dYCbQbLKjpm2qCs7ysy6hyBaJc+m++sFhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=cIc0ENAm; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5928tWhL020464
+	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Oct 2025 14:24:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=qY4jex+bNN+7Cj5MSWvlDD9o
+	uZzrZVw7quOp9KCxze0=; b=cIc0ENAmmHAJ5tljw1/e4mqWtk05KkN2gsQjH9Ad
+	SdxuvMwqxlS5qmJ8hMEcZJgQesQh9s7zipOuXfQICOG98AQD0fEWxgb74F6IBSKb
+	i3jn1z1UrkqrwP1Mdv8LsPmT6asIA7YJiGXXdGHYsUwA8PD3sN/LtrtY6QzVUDI5
+	lkuSiKuMdrpfYoVqKimsZ0ZNf70XRnzxwl5woedtqDfM2YbVasDPQbiP2EzFmcbh
+	J578mhsG/5DcDQLAyf0j60a8+qWQ3aG/t6esXRWF4RsYOuPvm0ValCa/peYl7ZkL
+	sAQPl8bJW2dfryJqyhFqbMCHb9pg5AKn/coRahFV1cK9Rw==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49gyu1c8yg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Oct 2025 14:24:29 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-26985173d8eso16329145ad.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Oct 2025 07:24:29 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759415069; x=1760019869;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qY4jex+bNN+7Cj5MSWvlDD9ouZzrZVw7quOp9KCxze0=;
+        b=mIf5Iz4b5eHoA6Si1ddkkuPYsYTKuk71vr+IGU/sTmKqg/5t7zh5/EJmaq1DV443zu
+         im3dBfxXUx8U9GdfbTNpAwmfeg/erqKl4juLRAK/bOI+ZLe2Slm9r7xPP+x5g10BCXSx
+         dCacxlBuGOGgzkE/KPxAEAtC82lWXBeNHfqklAsTzbDjKyr+gPZKKLaj+2AQ0UgTknWH
+         lms6+9QZDp5obJZQcx5L1qYOXfv4QohGEKCQm0oqD09oBxL36DomwsUu+Dt802uYm3/j
+         vleDCHYL+r/cTPEZhuAjRYTrTgfgP/LndNwKrAI7ZftoTDccd4DsAiWpU9z0pFqLR/B2
+         Olnw==
+X-Forwarded-Encrypted: i=1; AJvYcCWLc13t0oxMuvtDyXjiQRi0JqXqgVaDGtMQc2qH9VeEuqCTdCUirnK4aIaQ5KzgUaITe9Y2rye4cJbTIfWk@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz0114o0mfOxwjc0OGgoWMonwZyXlhhszt7pRki1/Yp3XRxR4+w
+	qO7qKUGmpSHMUYzo+K67IMyVRpMlj9byYAzkX4xzvFpjE5+clfMOaoAwML1uzXoUXBAPCLO2PGB
+	vsKGsUoJz2Hh2kQp8GvIF1+v9GbPqXPoEWLjBbg9sXoe82+Qk3oEjRqMxDDyixYNXeLt4Trw17o
+	Lr0KnRMhmLgQuyfuBOT4fdFPKMQpBEfJYW+QFLLCYQ9Y4=
+X-Gm-Gg: ASbGncvRQQArPZJLJ6kMEUOp0eyw5icQvH6guFZ+u0fcAdObD50tJUp3LoxY7FKtrTm
+	C5yL5r7j+ROQlrm4w2S6jZbSnT5pPM4wqcCFxu8rrl+ZnfYYvhUWxdP9V1mkhDTvV/Er9oBcZJK
+	1eduUj6qn35NPAnObyrchOv11IPcR6gehm7nIfKPKM
+X-Received: by 2002:a17:902:eb8b:b0:272:dee1:c133 with SMTP id d9443c01a7336-28e7f2cfcaemr75266305ad.22.1759415068842;
+        Thu, 02 Oct 2025 07:24:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFeBzBT5KX3o1ORVGwXKY3MMFGH9Eu1j9lBu0xex9Z2aw49Xh0FaXZiTzwl5lGbmkvHdShkgu+EISVuOsn1Sjo=
+X-Received: by 2002:a17:902:eb8b:b0:272:dee1:c133 with SMTP id
+ d9443c01a7336-28e7f2cfcaemr75265985ad.22.1759415068338; Thu, 02 Oct 2025
+ 07:24:28 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="iN8q4H5XPZs0qq2D"
-Content-Disposition: inline
-In-Reply-To: <DD7V3G4RLB2I.QYT4BWT1LA5U@fairphone.com>
+References: <f5965570-9c49-860d-5de6-bc5a3056d9ad@quicinc.com>
+ <w2zhq4nedrzjb7znmjqhixbk7ncxqedjsi5mapsfwfe7pqcnrn@36aeageuuhs7>
+ <dcd27cce-7558-d055-caf7-3bf56ff31fdc@quicinc.com> <iksemnwiytrp5aelmhehyoexwzj6iem5b66qfr65nviad2fl6f@3qkn23jnzl2z>
+ <5ea8f6e4-04c7-092c-2acd-24e18c0bf641@quicinc.com> <imo4dxtegwq6fiu6k65ztmezuc7mjlnpnpeapfqn5ogmytj6se@6z4akhw4ymp7>
+ <5fdb8fff-d07b-c15a-3f40-eb088e3ff94e@quicinc.com> <2llwkhpwbkzqyvyoul2nwxf33d6jhuliblqng4u2bjtmsq7hlj@je3qrtntspap>
+ <5a03b200-4e1f-082a-c83a-cb46ad4cea09@quicinc.com> <zj2dreqyj7fnhiophdtevhuaohlpk3uoccrslkqt5wjt2jhiip@gqnasgvu7ipq>
+ <yeJvz1BmQX5QCjBXnjFbGz8gclNViebyCcZC1Rz2tfocg3MxOAncJZruBARGqAzxG_1UJmw35EUBl80KQy5Sqw==@protonmail.internalid>
+ <f1e9ddb0-683d-4c91-f39b-6954c23f7f75@quicinc.com> <015dc909-ad0b-4367-8dac-bed53c4f7f9b@linaro.org>
+ <25e6e163-f91f-4fe5-9454-641914d2eb43@linaro.org>
+In-Reply-To: <25e6e163-f91f-4fe5-9454-641914d2eb43@linaro.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Date: Thu, 2 Oct 2025 17:24:18 +0300
+X-Gm-Features: AS18NWCzj4q8dhDGfgTTCldJt9giO-e788X4siq-YO-bNKaZ1D2z7ELwnke4PAY
+Message-ID: <CAO9ioeUa2Ea7CNsXpUANyKiqfjzW0uQU_ZxgEw==uMA42eF1NQ@mail.gmail.com>
+Subject: Re: qcom: vpu: fix the firmware binary name for qcm6490
+To: "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>
+Cc: Dikshita Agarwal <quic_dikshita@quicinc.com>, linux-firmware@kernel.org,
+        "Vikash Garodia (QUIC)" <quic_vgarodia@quicinc.com>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+X-Authority-Analysis: v=2.4 cv=RfGdyltv c=1 sm=1 tr=0 ts=68de8b1d cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=KKAkSRfTAAAA:8 a=oeP4Tn7BOiwwBamMDKoA:9 a=QEXdDO2ut3YA:10
+ a=1OuFwYUASf3TG4hYMiVC:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: UFL_tndVU-epaEdc8r_T9cUYchVJptSw
+X-Proofpoint-GUID: UFL_tndVU-epaEdc8r_T9cUYchVJptSw
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAxMDA1OCBTYWx0ZWRfX1tWMnixRPEWu
+ 7RwiPUldhD73yFbf0e1d0Nm6tMoi6GvjsstHvsE3b/mQVuklHslTy4sOGnDrJycZMk/YE6OwLSU
+ yfJHVPbMqNxWfi6t3nz7yFrw/VTK23ND67Mgs/3NFQAts/sXisyYs3ubC0yguptB4nPhGOQh2lD
+ nbDAO1pScQo+7fyce0Vhc2ApqzLtVk/7UdjHSs3c3ghPLTb/n9y+FJ7GjhQaHwa2nb6JBrXbXWP
+ mNmH4l8r11TVBUL3yh2KlbvcmZVcwOtUTclpRKYrKXXooq98PBR6krVLKeNxoowHUiM7Oot55Rl
+ BQAX9vwLnvaS0akm05tLcBd3O8ef9m8PRe0TfvnIeAHVXJy/5FruBL2qnGXR2D5P44ENCQTxV9h
+ q03qlqfVK0Zaze0Nt81pr4fKYsGAgw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-02_05,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 lowpriorityscore=0 malwarescore=0 adultscore=0
+ priorityscore=1501 suspectscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ spamscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2510010058
 
+On Thu, 2 Oct 2025 at 13:22, Bryan O'Donoghue
+<bryan.odonoghue@linaro.org> wrote:
+>
+> On 24/09/2025 13:55, Bryan O'Donoghue wrote:
+> > On 24/09/2025 11:43, Dikshita Agarwal wrote:
+> >>>> I understand your concern. To clarify, we are not removing support
+> >>>> for the
+> >>>> existing Gen1 firmware, so backward compatibility remains intact.
+> >>>>
+> >>>> We are simply adding support for Gen2 firmware for this
+> >>>> architecture. As a
+> >>>> result, QCM6490 will support both Gen1 firmware (with the Venus
+> >>>> driver) and
+> >>>> Gen2 firmware (via Qualcomm's video driver [1]).
+> >
+> > I agree with Dmitry here.
+> >
+> > Its not possible to disjunct upstream HFI6xx @ the firmware level
+> > between Venus and Iris because the DTS would have to point to a
+> > particular firmware depending on which driver you wanted to run, which
+> > would make the DT dependent on the driver, which is not allowed.
+> >
+> >>>> Additionally, as part of our plan to transition all Venus-supported
+> >>>> targets
+> >>>> to the Iris driver, SC7280 will continue to use Gen1 HFI and Gen1
+> >>>> firmware
+> >>>> to maintain backward compatibility.
+> >>> Dikshita, this is nonsense. Venus and Iris drivers are supposed to be
+> >>> interchangeable for the hardware they both support, until the venus
+> >>> driver drops support for V6 hardware. At that point it's expected that
+> >>> there will be no V6 support in Venus driver.
+> >>>
+> >>> You can not simply upgrade to Gen2 firmware as if nothing happened.
+> >>> Consider a device node on SC7280 / QCS6490 with the firmware-name
+> >>> pointing to OEM-signed firmware. Both Venus and Iris drivers would
+> >>> happily consume the device node and try to work with it. One will work,
+> >>> another one will fail. This is definitely not what we have agreed upon,
+> >>> when you started adding Iris driver.
+> >> @Vikash, could you please chime in?
+> >
+> > It would OTOH be possible _only_ release a HFI6xx Gen2 firmware for a
+> > new SoC that doesn't appear upstream yet but, that's not the case with
+> > 7280/6490.
+> >
+> > ---
+> > bod
+>
+> So discussing this with Vikash and some other qcom folks, I realised the
+> DT binding at the moment doesn't depend on the firmware name, so my
+> concern making the DT depend on the driver is not a real problem.
 
---iN8q4H5XPZs0qq2D
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+DT bindings include a single optional firmware name.
 
+> I think in fact it should be possible to point venus @ the gen1 firmware
+> file while pointing iris @ the gen2 file.
+>
+> Unless there's something here I'm missing, that should work for the
+> update and the agreement.
 
-> Unfortunately though this effort has stalled some years ago. There is
-> "struct regulator *bus_regulator;" in "struct i2c_adapter" already and
-> vbus-supply is documented in i2c-mt65xx but afaik this not functional
-> because some code was ripped out ago because of some AMDGPU regressions.
+Both drivers are supposed to work with the same DT entry (that was the
+agreement, they should be interchangeable for the migration time).
+Consider having a device fused to require vendor key and a venus node
+with the firmware-name pointing to the vendor-signed firmware. One of
+the drivers will fail to work in such a case.
 
-Thanks for mentioning this. It all sounded familiar to me but I couldn't
-put my finger exactly.
-
-
---iN8q4H5XPZs0qq2D
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmjehqsACgkQFA3kzBSg
-KbbIAQ//QfAX8m49uUj1J5d915zmYl1ga2ibjh9XM98MLwfWVTrbBKLi8aoYwru5
-3n32muazTU8syFw9hftxJjKs7beuNJ7vBytCP+mvs/d3y976Ff6xM+kFnKUWiIb5
-v2wP3ECPOTeHO+OXG2pDIuLDpfjLlFVaO0nGbg1dnTmSvqnHbvOklmPAjqgehY78
-C4pCYZkaIsMPrRrp/lutY+W39Ua8v9B4BRaqYjepzq5u86+zaU/S3hglhrNt+MzX
-bONZqbB4HQKfYuZrcWtXIlATp1SAc7LnbAbJ6CU/gHheEUaQA8Fdw3Yn7CR3MGPn
-eVmkSv/U+8UIbFs1DY5UAv8oOnq+jqIVKrlcI36V9ftmmbsWkN4AE7mL6gpWuZZv
-C9olQqGYid0OJXe5qcU8gHOFvdj4Vspr7rbD4oQC20SF/6A0w/d1QEQPGt/fN1BY
-ppCM/MDH2R8Hw2Heibr1NDM62n7n5090UmTSPjZau4ksQuxJyga8sKvM9OAKMyk+
-8qAwilsIUxYcZYTT9DRrVJEyWGQxJp0LwO8N9FkN+eDiaY/BmPqFl33C79EU4WC9
-4705Uq5xK7f+v/Yts9ZqtIDILbSA2q0QRHcSeH2EK3PpJEvClgu7xVCPTz73Hkvb
-v9poLEjcB0lxNihio4NoTRHkWDtOS1Opds2CqwzTRDkcSvUk1tQ=
-=dsTU
------END PGP SIGNATURE-----
-
---iN8q4H5XPZs0qq2D--
+-- 
+With best wishes
+Dmitry
 
