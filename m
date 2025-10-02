@@ -1,365 +1,217 @@
-Return-Path: <linux-arm-msm+bounces-75832-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75833-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sy.mirrors.kernel.org (sy.mirrors.kernel.org [147.75.48.161])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92F17BB5049
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Oct 2025 21:37:34 +0200 (CEST)
+Received: from ny.mirrors.kernel.org (ny.mirrors.kernel.org [147.75.199.223])
+	by mail.lfdr.de (Postfix) with ESMTPS id F2C16BB5069
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 02 Oct 2025 21:42:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sy.mirrors.kernel.org (Postfix) with ESMTPS id ACACB7B4EDD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Oct 2025 19:35:50 +0000 (UTC)
+	by ny.mirrors.kernel.org (Postfix) with ESMTPS id A8CC3165BEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Oct 2025 19:42:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3A22128725D;
-	Thu,  2 Oct 2025 19:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8C22286D79;
+	Thu,  2 Oct 2025 19:42:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GJcB7/+1"
+	dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b="x9ZeJ/hS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62B7927A927
-	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Oct 2025 19:37:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A3A284894
+	for <linux-arm-msm@vger.kernel.org>; Thu,  2 Oct 2025 19:42:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759433841; cv=none; b=jrhMgZZSOI6S7CgGZRuvo0e23EP0IGj0A1onrqXiuOXuNiH9GR29EmlYYip4fSh+8MFoL7GMrGdfMDGVPPWeW+TOlBR/XCEihk45Goe8sssA5ES/BzygnmB0vltieMShYz8nCIOoBOFDMk/qTCctjqzZNBNpbAg7347bEp2ve0s=
+	t=1759434127; cv=none; b=o83B/dEeOeOUgjLgvDlMgOhdaTKWbwP9hTqzjBRQfohciqO4UCq3BnsLu+m8OfmBsHyTOhLjVCvOr0U3nQkVQVUoXb553n20qtrwT2vytunGU9ufnbyauqwprldV2166zj1ZTkQn+j+7rcpbTimPT1SqJfAedZaMobpJPqwkcxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759433841; c=relaxed/simple;
-	bh=fSO8CvA3pCTMDoPptUgMnTwph9BJB+1IvdM+4Xco5UQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ArgzhuajUjl2Wqn0Yf7L8i7z9iU3dv9I4FLsAoONI+iB98jnfddmi5+EPmRprUDsgZQARD7ACx2SYX0K8fJPB8tTujj+yjPM84YeiVubtD/PhOZRMTm7T3dffgDCZ3d4tTTPWqG3TDIn9RrObA+fWSykq35mAyRucNIbq+rzZgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GJcB7/+1; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5929ID4T031449
-	for <linux-arm-msm@vger.kernel.org>; Thu, 2 Oct 2025 19:37:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	41mUsnB3TY6EVy7eiG4ANAThuUGl4wFuILLk8njZ6ng=; b=GJcB7/+1vEB5u5w5
-	x60BED/94LeeoGJzgK2xzWceLb2CRDR8GHI5PsmKHGFLlr5OKS5dyXpyN8FTwlBU
-	vTgGZ5et3QCVYoN2blouwq0IArLH9bTkDomQN6eZ5Ov5qdopx1VLgEAahPcAIAuB
-	DKK0KxAy+wxVAprPJQD9rC8M5O6kixQPVKHUYBC9mVPVdantOf5FbnTKyss70H5G
-	WNnQEYLuCY861jMbVtWEtOHYbRxNfMkXK0akwx4sYtjaNAavBTQ/mHe8NNlVgrfJ
-	EIYPMToriRQZVhWty5VNyD4KQcubhZYOZHytEvEfs2sEwuJhWYaFPcJ1/MbQ9B8I
-	n5Pnmg==
-Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com [209.85.210.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e6vr8tgb-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 02 Oct 2025 19:37:17 +0000 (GMT)
-Received: by mail-pf1-f197.google.com with SMTP id d2e1a72fcca58-7841da93b8dso435310b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Oct 2025 12:37:17 -0700 (PDT)
+	s=arc-20240116; t=1759434127; c=relaxed/simple;
+	bh=9tSwzLcJqvFc3boxKu3LpBjYAdficu1XbyXQfBMYvR8=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=iiNjIstZSLGrkIdSq+iE8nNn1aRz5nlVxP8EznZ3mytzGeS0Sen1e+P38Gocsx6YkPtQEcjjucH1RNBuxzOmHvmEmGAHzKrI1SjX96NtLwNaadbu64i3lRpdd2TQuJVrJ7fe5NWc8q7XLhPr2fkKmkKD6Y98tWYh2B3KvA8FOzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca; spf=pass smtp.mailfrom=ndufresne.ca; dkim=pass (2048-bit key) header.d=ndufresne-ca.20230601.gappssmtp.com header.i=@ndufresne-ca.20230601.gappssmtp.com header.b=x9ZeJ/hS; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ndufresne.ca
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ndufresne.ca
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-8608f72582eso75398185a.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Oct 2025 12:42:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ndufresne-ca.20230601.gappssmtp.com; s=20230601; t=1759434124; x=1760038924; darn=vger.kernel.org;
+        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
+         :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=9tSwzLcJqvFc3boxKu3LpBjYAdficu1XbyXQfBMYvR8=;
+        b=x9ZeJ/hSXddkewfFqwPtfrJLd8YYlTBCkfDroYtxYuOVWl3dGB7cFL8mS9Ta4P+4w8
+         c15UOGSAYFA5NDT2jKs3mYL4s0iPxnsUWVVpqBYrBSUhTEtwIoC7KFlVG/oL8VuBZkq7
+         WctBGFAFt3rAoo1GoXmXTYzFisyzioaE1mH4k3prag/BazAdZ6nXc+Yy5CbKiPdKKhhR
+         2Fqt5RDsjYM1Tz/6U7Dn+K6bVIcHID1wweEOQa5ha+9iH1U4KrWu3SvY6B7GfZ4cSwxq
+         l6NeVmy1Q3pnV/5o1j7uBVLol6XfcuvCFfT+RL7NLebyYJYSVcMO7OUkXYchEkVkz4nR
+         uPvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759433836; x=1760038636;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=41mUsnB3TY6EVy7eiG4ANAThuUGl4wFuILLk8njZ6ng=;
-        b=feDhqvRuvhvc1Mt5lICi3f42/Yyu1Rzn4yPSXksWjhuPqsjuVWvGYsPF/vt0zxBtMh
-         BCV9lKGwO8M3Swjshy6O3T8UQ2fFfFtCZcJ14hWh0V6oCaETZCu1+36sOv/cTGt3lTkZ
-         Y9V+6GBbMp/NOlwnVznTQpO0aHiu0Q7ufqMr/mZWcXmXmdFyvL88scvoD58Tg7gRUplL
-         WiI7LWia7k0S2AT0tBQWDMJBFe9ujS8RaaCQJBh4ARMebNO3inhUHcr1EYxdd49GjUte
-         q2L8G4tpBOddPIVC8f3a/5LvmqzXstgGa9rFOY1DaQYuqGhtRr4XsWuHuI+/8fGg+aNv
-         wULQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUIB23HOYoL074qaVIY/Pl1LlCP9D1lvR/r2d92SO3OeKhp+pnLVRw/2w8n3mW2GAPOLLwTumm4e3IQIhni@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWS7EemUXHvs3p2UOVPrBDwzlVYOhJNVdivRnyxk2YNRoqw4xw
-	AgMgKRxP6PQoLA23A45R5MrZDaOALCftJR8IuJSqrYVqxMwAHWVPVU2WAoo5M44N2691BeiMUI1
-	15F3Hz7r58VSkF1NooDQwWpex+Rly8qKbd1Dq+/313TcBzbBYbQUdrdEG/5hKDq86Jz/4
-X-Gm-Gg: ASbGnctiuWC2MykEm/opyVEOk2Fdm7FnqWyu8YNgWnERunjUoIbE+4iPetLWh7pDnkF
-	pJpQ0OVLGr8pRvIofuO7BgudlHaIN3AUqPNl7VDokrKVevlwPf2b75vqO98HY0cZCy0+lsROPqN
-	W+70vm9zVFKiHMBJN8rkEyGKkbd55wXcZNOi8iDHMnKjGNP6yCMMBaWQJbfgAe2cVDCGiYCBl8t
-	cMtqj23QJKJF4bRpmWLbyBq+YBuvFvuOfDBB37EosbkbDAOSHcvDUVfiiX2rWTg5i5UGakPfIqR
-	tw3AHXFFyyK9+7SSDxhqkOCcFK5zGaz9+igaswlubt10lsavkoCI8XHKURA2V/dwCqW0a4UCs0a
-	tjCsh1TqHgGhWz8zxESAJ1BlL1GH4/qPf
-X-Received: by 2002:a05:6a00:b8c:b0:781:2177:1ca3 with SMTP id d2e1a72fcca58-78c98df574bmr376295b3a.6.1759433836078;
-        Thu, 02 Oct 2025 12:37:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGYwgFwYPHSkxTVgMbR3ecJssERdk9ryMJd9NIRHusph0Tnr0DlMI3WgoZ5RUECPXxU7TeL3A==
-X-Received: by 2002:a05:6a00:b8c:b0:781:2177:1ca3 with SMTP id d2e1a72fcca58-78c98df574bmr376268b3a.6.1759433835415;
-        Thu, 02 Oct 2025 12:37:15 -0700 (PDT)
-Received: from [10.71.110.242] (i-global254.qualcomm.com. [199.106.103.254])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-78b01f9a364sm2837840b3a.6.2025.10.02.12.37.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Oct 2025 12:37:15 -0700 (PDT)
-Message-ID: <970f0c9a-a8ef-4899-baa3-83f92d261ba8@oss.qualcomm.com>
-Date: Thu, 2 Oct 2025 12:37:13 -0700
+        d=1e100.net; s=20230601; t=1759434124; x=1760038924;
+        h=mime-version:user-agent:references:in-reply-to:date:cc:to:from
+         :subject:message-id:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=9tSwzLcJqvFc3boxKu3LpBjYAdficu1XbyXQfBMYvR8=;
+        b=WT0q/YdWGFOCuqJzdO8XircYW7jVYlbQ+dv98AMNL4WsgJ/buK6Ks2CoI8NpJjDBJI
+         q14s/sH2/FDXwbzr1E9RVxgaAWrgxz/fCunOd+wM7pjcrKNPkT6NmokQmRTsKKxzZFfv
+         IHM9YmqhxabYVWcjX1eujqjHomyCHjY5wGoAaZR/EUbYUALcSJ6hmPH4Sztv3Mqit7Ia
+         mpVMeSEjXqxHTqxhe95Z/PB7ESANy8kaNRkiGK5pe6ucNPS9PNxb/OgEw9nVsXSNSs2w
+         CiMij55d+fb0g7eu8g4Dq4vhQdM0RgiKUXVnwu5jYvc/xGQYrMzvWntZzcnJYMD1Jn8L
+         pyjQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV8FwjwzXdyCKrXowuaLQIl2OMvS/gco+tUgtpKWX1wWS3t6lWh+yWHd74xfd+cL9zG1WapDpIkhcUJrvUY@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQjVXIr6WqShgBpaOLtSemYUY46kY53feLFloTJpIGyn3hT+4Q
+	P0RbRB+xvTCIehtCHEA2AiV5SNgOjyyTU2Gt38WHoHhfmTtz1Bz+OzlEZF1z9m6FC1U=
+X-Gm-Gg: ASbGnctz/qPO/dVlwG+boONBqa6UMVVNvcqwKE1LF3PUJ2o3rfjywSZz1MGStat5FXW
+	K8myc3fx0jAMiJSUklTISBNlEmGUd7CPiOmOU2WTBk7cfEETxAIE/QAM8tndgB4S4W/B2/0mL2P
+	ZqjSHjuuumamWdS5njX5Scj3AVjgzrUiiJPz27Zkffi2alZlI3jA1Nn4+HrrnQbo/YSpRItbBLL
+	rYuklduliZctuLQj+vpj7RPQLTsCNDKghn9O5KEMmknWZfSEospodfgpBWNeNyZGq+QZYJ90K9/
+	wR3Fo2+FirrFAgDLpJySFF1YIMp07gr5gpOoFiTuHLLIleFRUz1AjxdL5u6p3JT34nnvnpi7Jaq
+	Dro+fuSLYu3KSNrrw6JkrSokBNmx8zSkFSFGzGa/DsSwauHXNDbXAQYHesHatZ74=
+X-Google-Smtp-Source: AGHT+IF2Mzaa1GM10qd0Br5Ca6dE3KvWVWpmD5Z0dsxS/0YWrFWGrX8QNt+0sM2dv+vntpuyD8eXFg==
+X-Received: by 2002:a05:620a:470e:b0:86e:21a4:473c with SMTP id af79cd13be357-87a33677090mr102716085a.4.1759434123532;
+        Thu, 02 Oct 2025 12:42:03 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:17:ebd3::5ac? ([2606:6d00:17:ebd3::5ac])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4e55a34aa08sm24890361cf.5.2025.10.02.12.42.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Oct 2025 12:42:02 -0700 (PDT)
+Message-ID: <dfe8bdbbf12ec54c7a27888f911082ab63d6030f.camel@ndufresne.ca>
+Subject: Re: [PATCH 1/5] media: uapi: videodev2: Add support for AV1
+ stateful decoder
+From: Nicolas Dufresne <nicolas@ndufresne.ca>
+To: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>, Mauro
+ Carvalho Chehab <mchehab@kernel.org>, Vikash Garodia
+ <vikash.garodia@oss.qualcomm.com>, Dikshita Agarwal	
+ <dikshita.agarwal@oss.qualcomm.com>, Abhinav Kumar
+ <abhinav.kumar@linux.dev>,  Bryan O'Donoghue	 <bod@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org
+Date: Thu, 02 Oct 2025 15:42:00 -0400
+In-Reply-To: <20251001-av1_irisdecoder-v1-1-9fb08f3b96a0@oss.qualcomm.com>
+References: <20251001-av1_irisdecoder-v1-0-9fb08f3b96a0@oss.qualcomm.com>
+	 <20251001-av1_irisdecoder-v1-1-9fb08f3b96a0@oss.qualcomm.com>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-JQxcsF4r3HFmPr2QkW8f"
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] media: iris: Add internal buffer calculation for AV1
- decoder
-To: Nicolas Dufresne <nicolas@ndufresne.ca>,
-        Bryan O'Donoghue
- <bod@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>
-Cc: linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20251001-av1_irisdecoder-v1-0-9fb08f3b96a0@oss.qualcomm.com>
- <mbltuHnjNkwD91EqWND77oi8XN26tEarsTmT_fLVkZQYkc7-V_RpAVWo8KC8AnzeyV74zXurscVRHHfAL35xFw==@protonmail.internalid>
- <20251001-av1_irisdecoder-v1-5-9fb08f3b96a0@oss.qualcomm.com>
- <e273f195-fb5e-4b4f-bf97-63ea51ed875f@kernel.org>
- <ec3e93e72e326db4e61fed33ade0547935ab6dca.camel@ndufresne.ca>
-Content-Language: en-US
-From: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
-In-Reply-To: <ec3e93e72e326db4e61fed33ade0547935ab6dca.camel@ndufresne.ca>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: A0NaviHHg-jExU93YvoFy0PA0oYphjrm
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAxNyBTYWx0ZWRfX4G1MPQraVKcc
- sB03sQ5KEYFf/zRQ/DUHvnOJuw0hGDcVOKI4SPLylqATLrCvEkCRX3fmHZ01ElrRTay7wSidDhK
- qvGWDfvFlZ/ruCOIKjx8GOVr12qDw44sUHf2lmXoLqXEm0tc3SORZyTldZtEFqX6ms58AN5659h
- zmdFGupxO+9p20VKqbpzVrB0jcVcqbIiug7I1vuHYaWrAQS24yrGdKXBg4gbgxYfjL4cELIuiU+
- 5aSgwxYE7kKkrdffEIIIw9PPPnQIAr+/1NGNDSXUhgcwNVbWPu7mtMLoYVdJvqcjNgr1YNJgx5E
- xsabWzh43fwzqPn15WYbUiPCsp4bJR8OgaN2E5+iP2UcbClD0GxzSP9pKfqsk6Pv61SUGKiacfz
- MEFFckxWeBZUdYRRr2z6i8l566VmZQ==
-X-Authority-Analysis: v=2.4 cv=IeiKmGqa c=1 sm=1 tr=0 ts=68ded46d cx=c_pps
- a=rEQLjTOiSrHUhVqRoksmgQ==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=wbe282U9EvkHtdHFx4cA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=2VI0MkxyNR6bbpdq8BZq:22
- a=HhbK4dLum7pmb74im6QT:22
-X-Proofpoint-ORIG-GUID: A0NaviHHg-jExU93YvoFy0PA0oYphjrm
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-02_07,2025-10-02_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 bulkscore=0
- suspectscore=0 spamscore=0 adultscore=0 impostorscore=0 phishscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2509270017
 
 
-On 10/2/2025 5:38 AM, Nicolas Dufresne wrote:
-> Hi,
->
-> Le jeudi 02 octobre 2025 à 00:30 +0100, Bryan O'Donoghue a écrit :
->> On 01/10/2025 20:00, Deepa Guthyappa Madivalara wrote:
->>> Implement internal buffer count and size calculations for AV1 decoder.
->>>
->>> Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.com>
->>> ---
->>>    drivers/media/platform/qcom/iris/iris_buffer.h     |   1 +
->>>    .../platform/qcom/iris/iris_hfi_gen2_command.c     |   1 -
->>>    drivers/media/platform/qcom/iris/iris_vpu_buffer.c | 255 ++++++++++++++++++++-
->>>    drivers/media/platform/qcom/iris/iris_vpu_buffer.h | 105 +++++++++
->>>    4 files changed, 357 insertions(+), 5 deletions(-)
->>>
->>> diff --git a/drivers/media/platform/qcom/iris/iris_buffer.h b/drivers/media/platform/qcom/iris/iris_buffer.h
->>> index 5ef365d9236c7cbdee24a4614789b3191881968b..75bb767761824c4c02e0df9b765896cc093be333 100644
->>> --- a/drivers/media/platform/qcom/iris/iris_buffer.h
->>> +++ b/drivers/media/platform/qcom/iris/iris_buffer.h
->>> @@ -27,6 +27,7 @@ struct iris_inst;
->>>     * @BUF_SCRATCH_1: buffer to store decoding/encoding context data for HW
->>>     * @BUF_SCRATCH_2: buffer to store encoding context data for HW
->>>     * @BUF_VPSS: buffer to store VPSS context data for HW
->>> + * @BUF_PARTIAL: buffer for AV1 IBC data
->>>     * @BUF_TYPE_MAX: max buffer types
->>>     */
->>>    enum iris_buffer_type {
->>> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
->>> index e3a8b031b3f191a6d18e1084db34804a8172439c..000bf75ba74ace5e10585910cda02975b0c34304 100644
->>> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
->>> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen2_command.c
->>> @@ -488,7 +488,6 @@ static int iris_hfi_gen2_set_linear_stride_scanline(struct iris_inst *inst, u32
->>>
->>>    static int iris_hfi_gen2_set_tier(struct iris_inst *inst, u32 plane)
->>>    {
->>> -	struct iris_inst_hfi_gen2 *inst_hfi_gen2 = to_iris_inst_hfi_gen2(inst);
->>>    	u32 port = iris_hfi_gen2_get_port(inst, V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE);
->>>    	u32 tier = inst->fw_caps[TIER].value;
->>>
->>> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
->>> index 4463be05ce165adef6b152eb0c155d2e6a7b3c36..17d3a7ae79e994257d596906cb4c17250a11a0cb 100644
->>> --- a/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
->>> +++ b/drivers/media/platform/qcom/iris/iris_vpu_buffer.c
->>> @@ -9,6 +9,14 @@
->>>    #include "iris_hfi_gen2_defines.h"
->>>
->>>    #define HFI_MAX_COL_FRAME 6
->>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_HEIGHT (8)
->>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_Y_TILE_WIDTH (32)
->>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_HEIGHT (8)
->>> +#define HFI_COLOR_FORMAT_YUV420_NV12_UBWC_UV_TILE_WIDTH (16)
->>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_HEIGHT (4)
->>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_Y_TILE_WIDTH (48)
->>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_HEIGHT (4)
->>> +#define HFI_COLOR_FORMAT_YUV420_TP10_UBWC_UV_TILE_WIDTH (24)
->>>
->>>    #ifndef SYSTEM_LAL_TILE10
->>>    #define SYSTEM_LAL_TILE10 192
->>> @@ -39,6 +47,31 @@ static u32 hfi_buffer_bin_h264d(u32 frame_width, u32 frame_height, u32 num_vpp_p
->>>    	return size_h264d_hw_bin_buffer(n_aligned_w, n_aligned_h, num_vpp_pipes);
->>>    }
->>>
->>> +static u32 size_av1d_hw_bin_buffer(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
->>> +{
->>> +	u32 size_yuv, size_bin_hdr, size_bin_res;
->>> +
->>> +	size_yuv = ((frame_width * frame_height) <= BIN_BUFFER_THRESHOLD) ?
->>> +		((BIN_BUFFER_THRESHOLD * 3) >> 1) :
->>> +		((frame_width * frame_height * 3) >> 1);
->>> +	size_bin_hdr = size_yuv * AV1_CABAC_HDR_RATIO_HD_TOT;
->>> +	size_bin_res = size_yuv * AV1_CABAC_RES_RATIO_HD_TOT;
->>> +	size_bin_hdr = ALIGN(size_bin_hdr / num_vpp_pipes,
->>> +			     DMA_ALIGNMENT) * num_vpp_pipes;
->>> +	size_bin_res = ALIGN(size_bin_res / num_vpp_pipes,
->>> +			     DMA_ALIGNMENT) * num_vpp_pipes;
->>> +
->>> +	return size_bin_hdr + size_bin_res;
->>> +}
->>> +
->>> +static u32 hfi_buffer_bin_av1d(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
->>> +{
->>> +	u32 n_aligned_h = ALIGN(frame_height, 16);
->>> +	u32 n_aligned_w = ALIGN(frame_width, 16);
->>> +
->>> +	return size_av1d_hw_bin_buffer(n_aligned_w, n_aligned_h, num_vpp_pipes);
->>> +}
->>> +
->>>    static u32 size_h265d_hw_bin_buffer(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
->>>    {
->>>    	u32 product = frame_width * frame_height;
->>> @@ -110,6 +143,20 @@ static u32 hfi_buffer_comv_h265d(u32 frame_width, u32 frame_height, u32 _comv_bu
->>>    	return (_size * (_comv_bufcount)) + 512;
->>>    }
->> What's this alignment stuffed onto the end about ?
->>
->> Please guys give these magic numbers meaningful names.
-> That would be nice, then I'll be able to document that for Hantro AV1 decoder
-> too. It was assumed when we picked the driver that the table was hardware
-> specific, but if its not, a drivers/media/v4l2-core/v4l2-av1.c is welcome.
->
->>> drivers/media/platform/verisilicon/hantro_hw.h:555
-> static inline size_t
-> hantro_av1_mv_size(unsigned int width, unsigned int height)
-> {
-> 	size_t num_sbs = hantro_av1_num_sbs(width) * hantro_av1_num_sbs(height);
->
-> 	return ALIGN(num_sbs * 384, 16) * 2 + 512;
-> }
-> +static u32 hfi_buffer_comv_av1d(u32 frame_width, u32 frame_height, u32 comv_bufcount)
-> +{
-> +	u32 size;
+--=-JQxcsF4r3HFmPr2QkW8f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+
+Le mercredi 01 octobre 2025 =C3=A0 12:00 -0700, Deepa Guthyappa Madivalara =
+a =C3=A9crit=C2=A0:
+> Introduce a new pixel format, V4L2_PIX_FMT_AV1, to the
+> Video4Linux2(V4L2) API. This format is intended for AV1
+> bitstreams in stateful decoding/encoding workflows.
+> The fourcc code 'AV10' is used to distinguish
+> this format from the existing V4L2_PIX_FMT_AV1_FRAME,
+> which is used for stateless AV1 decoder implementation.
+>=20
+> Signed-off-by: Deepa Guthyappa Madivalara <deepa.madivalara@oss.qualcomm.=
+com>
+> ---
+> =C2=A0Documentation/userspace-api/media/v4l/pixfmt-compressed.rst | 8 +++=
++++++
+> =C2=A0include/uapi/linux/videodev2.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 1 +
+> =C2=A02 files changed, 9 insertions(+)
+>=20
+> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-compressed.rst
+> b/Documentation/userspace-api/media/v4l/pixfmt-compressed.rst
+> index
+> 806ed73ac474ce0e6df00f902850db9fd0db240e..043ec57d7d48a36005f2a0121a5bc7b=
+733d0
+> 6590 100644
+> --- a/Documentation/userspace-api/media/v4l/pixfmt-compressed.rst
+> +++ b/Documentation/userspace-api/media/v4l/pixfmt-compressed.rst
+> @@ -274,6 +274,14 @@ Compressed Formats
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 of macroblocks to decode=
+ a full corresponding frame to the matching
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 capture buffer.
+> =C2=A0
+> +=C2=A0=C2=A0=C2=A0 * .. _V4L2-PIX-FMT-AV1:
 > +
-> +	size =  2 * ALIGN(MAX(((frame_width + 63) / 64) *
-> +		((frame_height + 63) / 64) * 512,
-> This looks like div_round_up()  ?
->
->>> +		((frame_width + 127) / 128) *
->>> +		((frame_height + 127) / 128) * 2816),
->>> +		DMA_ALIGNMENT);
->>> +	size *= comv_bufcount;
->>
->> I'm sure this calculation is right and produces the correct value in all
->> instances - probably anyway but also does it ?
->>
->> It is not obvious looking at this code that it is obviously correct.
->>
->> I have a similar comment for alot of these Iris patches - we end up with
->> highly complex calculations using magic numbers which my guess would be
->> even people immersed in the firmware/driver/silicon development have a
->> hard time looking at and "just knowing" the code is correct.
->>
->> Please reduce these calculations down to some kind of define that - for
->> example an intelligent programmer - an oxymoron of a term I accept -
->> could read the code and actually understand what is going on.
->>
->> That programmer might even be yourself. You should be able to come along
->> in two, five, eight years time, look at a code snippet and pretty much
->> understand what it is doing and why without having to have a deep
->> epiphany when doing it.
->>
->> These complex clauses stuffed with magic numbers and sometimes bitshfts
->> with a few alignments thrown in for good measure are inscrutable.
-> I agree with this, when the driver is not from the hardware maker, this can be
-> justified, but since you have full access to the documentation and probably can
-> ask the designers, it would be nicer to replace 64, 128, 512 and 2816 by named
-> macro or const. Its not a blame, many drivers are like this already.
->
-> Nicolas
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - ``V4L2_PIX_FMT_AV1``
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - 'AV10'
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - AV1 compressed video frame. This format=
+ is adapted for implementing
+> AV1
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 pipeline as stateful video de=
+coder. The decoder expects one Temporal
 
-Thank you for the feedback. I am working on making this as much clearer
-as I can.
+I would do a small edit here. Instead of stating that this is for decoders,=
+ I
+would rather document the intended behaviour for video codec. This way the =
+spec
+remains open for CAPTURE driver to produce AV1 in the future, or OUTPUT dri=
+ver
+consuming it in the future.
 
->>> +	return size;
->>> +}
->>> +
->>>    static u32 size_h264d_bse_cmd_buf(u32 frame_height)
->>>    {
->>>    	u32 height = ALIGN(frame_height, 32);
->>> @@ -174,6 +221,20 @@ static u32 hfi_buffer_persist_h264d(void)
->>>    		    DMA_ALIGNMENT);
->>>    }
->>>
->>> +static u32 hfi_buffer_persist_av1d(u32 max_width, u32 max_height, u32 total_ref_count)
->>> +{
->>> +	u32 comv_size, size;
->>> +
->>> +	comv_size =  hfi_buffer_comv_av1d(max_width, max_height, total_ref_count);
->>> +	size = ALIGN((SIZE_AV1D_SEQUENCE_HEADER * 2 + SIZE_AV1D_METADATA +
->>> +	AV1D_NUM_HW_PIC_BUF * (SIZE_AV1D_TILE_OFFSET + SIZE_AV1D_QM) +
->>> +	AV1D_NUM_FRAME_HEADERS * (SIZE_AV1D_FRAME_HEADER +
->>> +	2 * SIZE_AV1D_PROB_TABLE) + comv_size + HDR10_HIST_EXTRADATA_SIZE +
->>> +	SIZE_AV1D_METADATA * AV1D_NUM_HW_PIC_BUF), DMA_ALIGNMENT);
->>> +
->>> +	return ALIGN(size, DMA_ALIGNMENT);
->>> +}
->>> +
->>>    static u32 hfi_buffer_non_comv_h264d(u32 frame_width, u32 frame_height, u32 num_vpp_pipes)
->>>    {
->>>    	u32 size_bse = size_h264d_bse_cmd_buf(frame_height);
->>> @@ -459,6 +520,148 @@ static u32 hfi_buffer_line_h264d(u32 frame_width, u32 frame_height,
->>>    	return ALIGN((size + vpss_lb_size), DMA_ALIGNMENT);
->>>    }
->>>
->>> +static u32 size_av1d_lb_opb_wr1_nv12_ubwc(u32 frame_width, u32 frame_height)
->>> +{
->>> +	u32 y_width, y_width_a = 128;
->>> +
->>> +	y_width = ALIGN(frame_width, y_width_a);
->>> +
->>> +	return (256 * ((y_width + 31) / 32 + (AV1D_MAX_TILE_COLS - 1)));
->>> +}
->>> +
->>> +static u32 size_av1d_lb_opb_wr1_tp10_ubwc(u32 frame_width, u32 frame_height)
->>> +{
->>> +	u32 y_width, y_width_a = 256;
->>> +
->>> +	y_width = ALIGN(frame_width, 192);
->>> +	y_width = ALIGN(y_width * 4 / 3, y_width_a);
->>> +
->>> +	return (256 * ((y_width + 47) / 48 + (AV1D_MAX_TILE_COLS - 1)));
->> y_width is a thing times 4 divided by 3 aligned to 192.
->>
->> OK
->>
->> Then we return 256 * ((y_width + 47?) / 48 + (A_DEFINE_NICE - 1)));
->>
->> 47 ? The magic number in the routine above is 31.
->>
->> I don't think I'd be comfortable giving an RB for this. You guys need to
->> take steps to make your code more digestable - zapping the complex
->> bit-shifts and magic numbers.
->>
->> I don't see how a reviewer can really be expected to fit this into their
->> head and say "yep LGTM" needs to be decoded both for the sake of the
->> reviewer and for future coders, perhaps even future you trying to figure
->> out where the bug is..
->>
->> ---
->> bod
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Unit per buffer from OBU-stre=
+am or AnnexB.
+> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 The encoder generates one Tem=
+poral Unit per buffer.
 
-Understood, thank you.  I'm continuing to work on simplifying the code to
-make it more meaningful.
+Otherwise I'm fine with the proposal of using TU aligned. Similar to other
+codecs, we can always allow adapting the behaviour using controls, keeping =
+this
+as the mandatory default so it just works regardless of the HW we run on.
 
-Regards,
-Deepa
+regards,
+Nicolas
 
+> =C2=A0.. raw:: latex
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0 \normalsize
+> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev=
+2.h
+> index
+> becd08fdbddb857f8f2bf205d2164dc6e20e80b2..4c07ad6afd45d6a56d19d65fd25f091=
+d8172
+> 5823 100644
+> --- a/include/uapi/linux/videodev2.h
+> +++ b/include/uapi/linux/videodev2.h
+> @@ -775,6 +775,7 @@ struct v4l2_pix_format {
+> =C2=A0#define V4L2_PIX_FMT_H264_SLICE v4l2_fourcc('S', '2', '6', '4') /* =
+H264
+> parsed slices */
+> =C2=A0#define V4L2_PIX_FMT_HEVC_SLICE v4l2_fourcc('S', '2', '6', '5') /* =
+HEVC
+> parsed slices */
+> =C2=A0#define V4L2_PIX_FMT_AV1_FRAME v4l2_fourcc('A', 'V', '1', 'F') /* A=
+V1 parsed
+> frame */
+> +#define V4L2_PIX_FMT_AV1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('A', =
+'V', '1', '0') /* AV1
+> (stateful) */
+> =C2=A0#define V4L2_PIX_FMT_SPK=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc(=
+'S', 'P', 'K', '0') /* Sorenson
+> Spark */
+> =C2=A0#define V4L2_PIX_FMT_RV30=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('R', =
+'V', '3', '0') /* RealVideo 8
+> */
+> =C2=A0#define V4L2_PIX_FMT_RV40=C2=A0=C2=A0=C2=A0=C2=A0 v4l2_fourcc('R', =
+'V', '4', '0') /* RealVideo 9
+> & 10 */
+
+--=-JQxcsF4r3HFmPr2QkW8f
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaN7ViAAKCRDZQZRRKWBy
+9DuGAP48dh5aG0VkfQy/nd4oV9gvVlexbBpR9m3bbWdvTIQb0gD+PuyHmbVeT68A
+GmjBcXdiqd0VvgGhvVd02phpj7bicwU=
+=vkEq
+-----END PGP SIGNATURE-----
+
+--=-JQxcsF4r3HFmPr2QkW8f--
 
