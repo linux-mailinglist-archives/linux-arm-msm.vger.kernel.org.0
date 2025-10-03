@@ -1,1117 +1,348 @@
-Return-Path: <linux-arm-msm+bounces-75912-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75913-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A23ABB7012
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 15:25:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BAEA4BB701B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 15:26:15 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D2FE3B9E2E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 13:20:09 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3A4813BF17A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 13:22:27 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B02691DBB2E;
-	Fri,  3 Oct 2025 13:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52D452ECD22;
+	Fri,  3 Oct 2025 13:22:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zohomail.com header.i=newwheatzjz@zohomail.com header.b="XnpFoVOz"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m1VoQoyZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34D311D5CE0;
-	Fri,  3 Oct 2025 13:19:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759497592; cv=pass; b=TgrfNevf+NkEKNOm1FcrJAt3gsKTArUlk+T/5RF5JndvkHBcuoVGbk604yLsN1S5SZ/zVYCaZ1ibzwSOV4gQWIrp4eMln7j4f1ox5cXsLV2lJLrQQ97IfxzTezMLmluSTBFQWbhYJ/7EZzg4v8rdEjO92UWcGFwhUqT7haN49mw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759497592; c=relaxed/simple;
-	bh=FFmgale+S4xTknA6QiMdNe5GNDrRmSxu1odFPlFz6dY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GvhgRJfEOHBYi2i82mf3YCMECAk0qS5CoY4HwN25amrnrxkhOxb1zHLDTDwUXr0dnbGEHj/9Sz+ZrecmlQp4Y4vWMXGTIxvm8AIxDwBXCc/GhMMqhJhFAFnTMknIsNQkfF707ECqITZ1PE5kfgr1DhzjYscCBMnnTI5xCImUwIM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=newwheatzjz@zohomail.com header.b=XnpFoVOz; arc=pass smtp.client-ip=136.143.188.95
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
-ARC-Seal: i=1; a=rsa-sha256; t=1759497581; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=YS3puxhgkZvEt5/Vnj/alYVjwgyHzWN3Z3Lxk8DIv0CYdl1wf55NlvBb76in36jksoOfO3osgoCzSI0uEgpojA1pWIhLa6snC8TAFMusADhQXBfxTJaY2TxzSd9qOj/kI0pQzjhcCGbK93DRB1DjbfKcS+Zp5seh4kI0/S7zFxI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1759497581; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=5cwDv3IK3mAbv11/iBllJH9OQJSy3X5bU3u6vd+uquw=; 
-	b=hK0nCXiFVv99MWc95kgUTmwfBmAQxXJi9/CGos2hkFgFVJV0dOafs1ZHx1VdmJ9qSMALQcrnC5MmMCGyj+YuSnbvMHtvxdoWvKv3DYDDCfZ8I5DhE0K7KUCcmsphdGeLftDnO/7BWlU0MTxOcAcoINNIeYDKvi/GZFlYF1qSFVs=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=zohomail.com;
-	spf=pass  smtp.mailfrom=newwheatzjz@zohomail.com;
-	dmarc=pass header.from=<newwheatzjz@zohomail.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759497581;
-	s=zm2022; d=zohomail.com; i=newwheatzjz@zohomail.com;
-	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
-	bh=5cwDv3IK3mAbv11/iBllJH9OQJSy3X5bU3u6vd+uquw=;
-	b=XnpFoVOziN8GJJJyP8K+4OHhL1lhDG/QeRaVDWZPdOY8+y+aKVbPMm7Ri2m9EfDZ
-	R4NTMDD6PaN3YgBaXUvd7R1MSYHcuOaY8TIhl8KfeA4H/WXHqpJ6QOv/9lvBCW0/OmK
-	Y2cl4CctyWZWlIEWxVVMz+12EnnLg+srCr/+ThsU=
-Received: by mx.zohomail.com with SMTPS id 1759497579625515.4669755804465;
-	Fri, 3 Oct 2025 06:19:39 -0700 (PDT)
-From: Jingzhou Zhu <newwheatzjz@zohomail.com>
-To: andersson@kernel.org,
-	konradybcio@kernel.org,
-	robh@kernel.org,
-	krzk+dt@kernel.org,
-	conor+dt@kernel.org
-Cc: linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	Jingzhou Zhu <newwheatzjz@zohomail.com>
-Subject: [PATCH v3 2/2] arm64: dts: qcom: Add support for Huawei MateBook E 2019
-Date: Fri,  3 Oct 2025 21:19:25 +0800
-Message-ID: <20251003131925.15933-3-newwheatzjz@zohomail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251003131925.15933-1-newwheatzjz@zohomail.com>
-References: <20251001142107.21860-1-newwheatzjz@zohomail.com>
- <20251003131925.15933-1-newwheatzjz@zohomail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EBC2EB872;
+	Fri,  3 Oct 2025 13:22:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759497746; cv=none; b=s8xlMUoAxb+CUsPLQd9phGtnIO5+MiTtsyLhbZxGcvMtGXeI0XrNVoG2Ac6cAHYVQUJNMe67AR8A6No9ZSZJbc7+Or7vg2AzVBhhxB3HyA0CJdjAeKVpp+6Sfs+Ue1PH5tY9MWAFpvvt4ZCT1VI99sGqzWZg+9jP8EDKYF0jBA4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759497746; c=relaxed/simple;
+	bh=A2hluD0l8IO1DxEiF9nEW3SijizW71b1ccI60ZVifUE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ds06on7YjB3FJXaiptHiN20EwyqFBzTDfNDbrxmDgWbBuSGFZYuMt02xtYR+vV5VW5XfA+AURJKKR4dTM/0spPjSAyCf6z6JbwOTuGZbLyzTuFuh/R2GxSzyxBIi4EndFzCl0uEDk8V5iby+n/d+HixNUPxMzPG8jVnHA2hmidA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m1VoQoyZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71FC1C4CEF5;
+	Fri,  3 Oct 2025 13:22:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759497746;
+	bh=A2hluD0l8IO1DxEiF9nEW3SijizW71b1ccI60ZVifUE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=m1VoQoyZK+0q8O3HvyAtIGUuFnCbPyZhX1ioKmnkL3JAloHKE/f9yDYHV6zLFevmp
+	 xc05F6I9ufNwo20ENoPxDODObtxc3ePYLGeU8vWXoR/sq2wxJ36pc/j2q8tqW0L1nE
+	 C5kyoEcs5+6jD5rehK4U8rW2PXT4gNsLFbKHKPAOrp+Tgxzn0XL8VcDa10gYaWwuzL
+	 SmP+VPZBOK/p9PIZdQebasidslquTK2Zj7vHryqCeUV+xDH4c6l1351xGFwdkZKGpd
+	 beDZpivcGmRZr0qas8V9KKGrVKRX4iT2mV8JwdCoVric1qQfSB8GuVqlwBPJlJ4Pjv
+	 5v/wEfmefXb1w==
+Date: Fri, 3 Oct 2025 15:22:23 +0200
+From: Maxime Ripard <mripard@kernel.org>
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Daniel Stone <daniel@fooishbar.org>, 
+	Andrzej Hajda <andrzej.hajda@intel.com>, Neil Armstrong <neil.armstrong@linaro.org>, 
+	Robert Foss <rfoss@kernel.org>, Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, 
+	Jonas Karlman <jonas@kwiboo.se>, Jernej Skrabec <jernej.skrabec@gmail.com>, 
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, Thomas Zimmermann <tzimmermann@suse.de>, 
+	David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
+	Sandy Huang <hjc@rock-chips.com>, Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, 
+	Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
+	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
+	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
+	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
+	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
+	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
+	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
+	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+Message-ID: <20251003-uptight-echidna-of-stamina-815305@houat>
+References: <20250901-voracious-classy-hedgehog-ee28ef@houat>
+ <voknqdv3zte2jzue5yxmysdiixxkogvpblvrccp5gu55x5ycca@srrcscly4ch4>
+ <st6wob5hden6ypxt2emzokfhl3ezpbuypv2kdtf5zdrdhlyjfw@l2neflb4uupo>
+ <pe6g2fanw65p67kfy5blbtiytngxmr6nkbazymojs4a66yvpl3@7j4ccnsvc6az>
+ <20250910-didactic-honored-chachalaca-f233b2@houat>
+ <x562ueky2z5deqqmhl222moyrbylfwi35u4hb34dpl3z52ra4c@dyw4iayrewnz>
+ <20250925-fervent-merry-beagle-2baba3@penduick>
+ <qx5ashx62pufott6hnsfna3qntnoyvxwxze4rihhuxcsdxi37s@bbdvc3sfsgne>
+ <20250929-gregarious-worm-of-memory-c5354d@houat>
+ <itgffxygopi7etkt7xhvmyuvyl5ad3k43nsxvjzw3ubtwiikn7@ocugfdaigtu7>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Feedback-ID: rr08011227f3972cca8fbb34931fc344530000467714fc9ce8c9ce8e50dd6bb80b496d1f5fffb9db65004c4e:zu08011227b38e63a8d8a62ce6092cb5cb0000bed31237b75e56313b0d295303d7944c8431fcee609149abe5:rf08011226474e97f83d136941642a7a50000043067a69513daaddb9a00080948b087526e0b70b83531686:ZohoMail
-X-ZohoMailClient: External
+Content-Type: multipart/signed; micalg=pgp-sha384;
+	protocol="application/pgp-signature"; boundary="xp6eesrwl3hc4z5s"
+Content-Disposition: inline
+In-Reply-To: <itgffxygopi7etkt7xhvmyuvyl5ad3k43nsxvjzw3ubtwiikn7@ocugfdaigtu7>
 
-Add device tree for Huawei MateBook E 2019, which is a 2-in-1 tablet based
-on Qualcomm's sdm850 platform.
 
-Supported features:
- - ACSP, CDSP and SLPI
- - Volume Key
- - Power Key
- - Tablet Mode Switching
- - Display
- - Touchscreen
- - Stylus
- - WiFi
- - Bluetooth
- - GPU
- - USB
- - Keyboard
- - Touchpad
- - UFS
- - SD Card
- - Audio (right internal mic and headphone mic not working)
- - Mobile Network
+--xp6eesrwl3hc4z5s
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v3 00/11] drm/connector: hdmi: limit infoframes per
+ driver capabilities
+MIME-Version: 1.0
 
-Features not supported yet:
- - Panel Backlight
- - Lid Detection
- - Battery
- - EFI Variable Access
- - Cameras
+On Tue, Sep 30, 2025 at 10:02:28AM +0300, Dmitry Baryshkov wrote:
+> On Mon, Sep 29, 2025 at 03:00:04PM +0200, Maxime Ripard wrote:
+> > On Thu, Sep 25, 2025 at 05:16:07PM +0300, Dmitry Baryshkov wrote:
+> > > On Thu, Sep 25, 2025 at 03:13:47PM +0200, Maxime Ripard wrote:
+> > > > On Wed, Sep 10, 2025 at 06:26:56PM +0300, Dmitry Baryshkov wrote:
+> > > > > On Wed, Sep 10, 2025 at 09:30:19AM +0200, Maxime Ripard wrote:
+> > > > > > On Wed, Sep 03, 2025 at 03:03:43AM +0300, Dmitry Baryshkov wrot=
+e:
+> > > > > > > On Tue, Sep 02, 2025 at 08:06:54PM +0200, Maxime Ripard wrote:
+> > > > > > > > On Tue, Sep 02, 2025 at 06:45:44AM +0300, Dmitry Baryshkov =
+wrote:
+> > > > > > > > > On Mon, Sep 01, 2025 at 09:07:02AM +0200, Maxime Ripard w=
+rote:
+> > > > > > > > > > On Sun, Aug 31, 2025 at 01:29:13AM +0300, Dmitry Barysh=
+kov wrote:
+> > > > > > > > > > > On Sat, Aug 30, 2025 at 09:30:01AM +0200, Daniel Ston=
+e wrote:
+> > > > > > > > > > > > Hi Dmitry,
+> > > > > > > > > > > >=20
+> > > > > > > > > > > > On Sat, 30 Aug 2025 at 02:23, Dmitry Baryshkov
+> > > > > > > > > > > > <dmitry.baryshkov@oss.qualcomm.com> wrote:
+> > > > > > > > > > > > > It's not uncommon for the particular device to su=
+pport only a subset of
+> > > > > > > > > > > > > HDMI InfoFrames. It's not a big problem for the k=
+ernel, since we adopted
+> > > > > > > > > > > > > a model of ignoring the unsupported Infoframes, b=
+ut it's a bigger
+> > > > > > > > > > > > > problem for the userspace: we end up having files=
+ in debugfs which do
+> > > > > > > > > > > > > mot match what is being sent on the wire.
+> > > > > > > > > > > > >
+> > > > > > > > > > > > > Sort that out, making sure that all interfaces ar=
+e consistent.
+> > > > > > > > > > > >=20
+> > > > > > > > > > > > Thanks for the series, it's a really good cleanup.
+> > > > > > > > > > > >=20
+> > > > > > > > > > > > I know that dw-hdmi-qp can support _any_ infoframe,=
+ by manually
+> > > > > > > > > > > > packing it into the two GHDMI banks. So the support=
+ed set there is
+> > > > > > > > > > > > 'all of the currently well-known ones, plus any two=
+ others, but only
+> > > > > > > > > > > > two and not more'. I wonder if that has any effect =
+on the interface
+> > > > > > > > > > > > you were thinking about for userspace?
+> > > > > > > > > > >=20
+> > > > > > > > > > > I was mostly concerned with the existing debugfs inte=
+rface (as it is
+> > > > > > > > > > > also used e.g. for edid-decode, etc).
+> > > > > > > > > > >=20
+> > > > > > > > > > > It seems "everything + 2 spare" is more or less commo=
+n (ADV7511, MSM
+> > > > > > > > > > > HDMI also have those. I don't have at hand the proper=
+ datasheet for
+> > > > > > > > > > > LT9611 (non-UXC one), but I think its InfoFrames are =
+also more or less
+> > > > > > > > > > > generic).  Maybe we should change debugfs integration=
+ to register the
+> > > > > > > > > > > file when the frame is being enabled and removing it =
+when it gets unset.
+> > > > > > > > > >=20
+> > > > > > > > > > But, like, for what benefit?
+> > > > > > > > > >=20
+> > > > > > > > > > It's a debugfs interface for userspace to consume. The =
+current setup
+> > > > > > > > > > works fine with edid-decode already. Why should we comp=
+licate the design
+> > > > > > > > > > that much and create fun races like "I'm running edid-d=
+ecode in parallel
+> > > > > > > > > > to a modeset that would remove the file I just opened, =
+what is the file
+> > > > > > > > > > now?".
+> > > > > > > > >=20
+> > > > > > > > > Aren't we trading that with the 'I'm running edid-decode =
+in paralle with
+> > > > > > > > > to a modeset and the file suddenly becomes empty'?
+> > > > > > > >=20
+> > > > > > > > In that case, you know what the file is going to be: empty.=
+ And you went
+> > > > > > > > from a racy, straightforward, design to a racy, complicated=
+, design.
+> > > > > > > >=20
+> > > > > > > > It was my question before, but I still don't really see wha=
+t benefits it
+> > > > > > > > would have, and why we need to care about it in the core, w=
+hen it could
+> > > > > > > > be dealt with in the drivers just fine on a case by case ba=
+sis.
+> > > > > > >=20
+> > > > > > > Actually it can not: debugfs files are registered from the co=
+re, not
+> > > > > > > from the drivers. That's why I needed all the supported_infof=
+rames
+> > > > > > > (which later became software_infoframes).
+> > > > > >=20
+> > > > > > That's one thing we can change then.
+> > > > > >=20
+> > > > > > > Anyway, I'm fine with having empty files there.
+> > > > > > >=20
+> > > > > > > > > > > Then in the long run we can add 'slots' and allocate =
+some of the frames
+> > > > > > > > > > > to the slots. E.g. ADV7511 would get 'software AVI', =
+'software SPD',
+> > > > > > > > > > > 'auto AUDIO' + 2 generic slots (and MPEG InfoFrame wh=
+ich can probably be
+> > > > > > > > > > > salvaged as another generic one)). MSM HDMI would get=
+ 'software AVI',
+> > > > > > > > > > > 'software AUDIO' + 2 generic slots (+MPEG + obsucre H=
+DMI which I don't
+> > > > > > > > > > > want to use). Then the framework might be able to pri=
+oritize whether to
+> > > > > > > > > > > use generic slots for important data (as DRM HDR, HDM=
+I) or less important
+> > > > > > > > > > > (SPD).
+> > > > > > > > > >=20
+> > > > > > > > > > Why is it something for the framework to deal with? If =
+you want to have
+> > > > > > > > > > extra infoframes in there, just go ahead and create add=
+itional debugfs
+> > > > > > > > > > files in your driver.
+> > > > > > > > > >=20
+> > > > > > > > > > If you want to have the slot mechanism, check in your a=
+tomic_check that
+> > > > > > > > > > only $NUM_SLOT at most infoframes are set.
+> > > > > > > > >=20
+> > > > > > > > > The driver can only decide that 'we have VSI, SPD and DRM=
+ InfoFrames
+> > > > > > > > > which is -ETOOMUCH for 2 generic slots'. The framework sh=
+ould be able to
+> > > > > > > > > decide 'the device has 2 generic slots, we have HDR data,=
+ use VSI and
+> > > > > > > > > DRM InfoFrames and disable SPD for now'.
+> > > > > > > >=20
+> > > > > > > > I mean... the spec does? The spec says when a particular fe=
+ature
+> > > > > > > > requires to send a particular infoframe. If your device can=
+not support
+> > > > > > > > to have more than two "features" enabled at the same time, =
+so be it. It
+> > > > > > > > something that should be checked in that driver atomic_chec=
+k.
+> > > > > > >=20
+> > > > > > > Sounds good to me. Let's have those checks in the drivers unt=
+il we
+> > > > > > > actually have seveal drivers performing generic frame allocat=
+ion.
+> > > > > > >=20
+> > > > > > > > Or just don't register the SPD debugfs file, ignore it, put=
+ a comment
+> > > > > > > > there, and we're done too.
+> > > > > > >=20
+> > > > > > > It's generic code.
+> > > > > > >=20
+> > > > > > > > > But... We are not there yet and I don't have clear usecas=
+e (we support
+> > > > > > > > > HDR neither on ADV7511 nor on MSM HDMI, after carefully r=
+eading the
+> > > > > > > > > guide I realised that ADV7511 has normal audio infoframes=
+). Maybe I
+> > > > > > > > > should drop all the 'auto' features, simplifying this ser=
+ies and land
+> > > > > > > > > [1] for LT9611UXC as I wanted origianlly.
+> > > > > > > > >=20
+> > > > > > > > > [1] https://lore.kernel.org/dri-devel/20250803-lt9611uxc-=
+hdmi-v1-2-cb9ce1793acf@oss.qualcomm.com/
+> > > > > > > >=20
+> > > > > > > > Looking back at that series, I think it still has value to =
+rely on the
+> > > > > > > > HDMI infrastructure at the very least for the atomic_check =
+sanitization.
+> > > > > > > >=20
+> > > > > > > > But since you wouldn't use the generated infoframes, just s=
+kip the
+> > > > > > > > debugfs files registration. You're not lying to userspace a=
+nymore, and
+> > > > > > > > you get the benefits of the HDMI framework.
+> > > > > > >=20
+> > > > > > > We create all infoframe files for all HDMI connectors.
+> > > > > >=20
+> > > > > > Then we can provide a debugfs_init helper to register all of th=
+em, or
+> > > > > > only some of them, and let the drivers figure it out.
+> > > > > >=20
+> > > > > > Worst case scenario, debugfs files will not get created, which =
+is a much
+> > > > > > better outcome than having to put boilerplate in every driver t=
+hat will
+> > > > > > get inconsistent over time.
+> > > > >=20
+> > > > > debugfs_init() for each infoframe or taking some kind of bitmask?
+> > > >=20
+> > > > I meant turning hdmi_debugfs_add and create_hdmi_*_infoframe_file i=
+nto
+> > > > public helpers. That way, drivers that don't care can use the (rena=
+med)
+> > > > hdmi_debugfs_add, and drivers with different constraints can regist=
+er
+> > > > the relevant infoframes directly.
+> > >=20
+> > > Doesn't that mean more boilerplate?
+> >=20
+> > I don't think it would? In the general case, it wouldn't change
+> > anything, and in special cases, then it's probably going to be different
+> > from one driver to the next so there's not much we can do.
+> >=20
+> > > In the end, LT9611UXC is a special case, for which I'm totally fine
+> > > not to use HDMI helpers at this point: we don't control infoframes
+> > > (hopefully that can change), we don't care about the TMDS clock, no
+> > > CEC, etc.
+> >=20
+> > Not using the helpers sound pretty reasonable here too.
+> >=20
+> > > For all other usecases I'm fine with having atomic_check() unset all
+> > > unsupported infoframes and having empty files in debugfs. Then we can
+> > > evolve over the time, once we see a pattern. We had several drivers
+> > > which had very limited infoframes support, but I think this now gets
+> > > sorted over the time.
+> >=20
+> > I never talked about atomic_check()? You were initially concerned that
+> > the framework would expose data in debugfs that it's not using. Not
+> > registering anything in debugfs solves that, but I'm not sure we need to
+> > special case atomic_check.
+>=20
+> Well... I ended up with [1], handling infoframes in the atomic_check()
+> rather than registering fewer infoframe debugfs files. This way device
+> state is consistent, we don't have enabled instances, etc. However it
+> results in repetetive code in atomic_check().
+>=20
+> [1] https://lore.kernel.org/dri-devel/20250928-limit-infoframes-2-v2-0-6f=
+8f5fd04214@oss.qualcomm.com/
 
-1. Panel backlight, lid detection and battery will be supported with the
-   EC driver upstreamed.
-2. EFI variables can only be read with the QSEECOM driver, and will be
-   enabled when the driver is fixed.
-3. Cameras are tested to work with modified downstream driver, and once
-   drivers for these camera modules are included in the tree, cameras can
-   be enabled.
+I guess we can continue the discussion there, but I'm not sure we want
+to have more boilerplate in drivers, and especially in the atomic_check
+part. If drivers are inconsistent or wrong in the debugfs path, there's
+no major issue. If they are wrong in the atomic_check path, it will lead
+to regressions, possibly in paths that are pretty hard to test.
 
-Features won't be supported:
- - External Display
- - Fingerprint
+Maxime
 
-1. To make external display work, more reverse engineering may be required,
-   but it's beyond my ability.
-2. Fingerprint is controlled by TrustZone, meaning direct access to it
-   isn't possible.
+--xp6eesrwl3hc4z5s
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Signed-off-by: Jingzhou Zhu <newwheatzjz@zohomail.com>
----
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../qcom/sdm850-huawei-matebook-e-2019.dts    | 962 ++++++++++++++++++
- 2 files changed, 963 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 296688f7cb26..a6bcebe66dd7 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -258,6 +258,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-ebbg.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium-tianma.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-polaris.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-shift-axolotl.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-huawei-matebook-e-2019.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-samsung-w737.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdx75-idp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts b/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
-new file mode 100644
-index 000000000000..4689b22ce3ab
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
-@@ -0,0 +1,962 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Huawei MateBook E 2019
-+ *
-+ * Copyright (c) 2025, Jingzhou Zhu <newwheatzjz@zohomail.com>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/input/gpio-keys.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/leds/common.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include <dt-bindings/sound/qcom,q6afe.h>
-+#include <dt-bindings/sound/qcom,q6asm.h>
-+#include <dt-bindings/sound/qcom,wcd934x.h>
-+#include "sdm850.dtsi"
-+#include "sdm845-wcd9340.dtsi"
-+#include "pm8998.dtsi"
-+
-+/*
-+ * Update following upstream (sdm845.dtsi) reserved
-+ * memory mappings for firmware loading to succeed
-+ * and enable the IPA device.
-+ */
-+/delete-node/ &tz_mem;
-+/delete-node/ &rmtfs_mem;
-+/delete-node/ &qseecom_mem;
-+/delete-node/ &ipa_fw_mem;
-+/delete-node/ &ipa_gsi_mem;
-+/delete-node/ &gpu_mem;
-+/delete-node/ &adsp_mem;
-+/delete-node/ &wlan_msa_mem;
-+/delete-node/ &slpi_mem;
-+
-+/ {
-+	model = "Huawei MateBook E 2019";
-+	compatible = "huawei,planck", "qcom,sdm845";
-+	chassis-type = "convertible";
-+
-+	aliases {
-+		serial0 = &uart9;
-+		serial1 = &uart6;
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&volume_up_gpio &mode_pin_active>;
-+		pinctrl-names = "default";
-+
-+		key-vol-up {
-+			label = "Volume up";
-+			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+			wakeup-source;
-+		};
-+
-+		switch-mode {
-+			label = "Tablet mode switch";
-+			gpios = <&tlmm 79 GPIO_ACTIVE_HIGH>;
-+			linux,input-type = <EV_SW>;
-+			linux,code = <SW_TABLET_MODE>;
-+			wakeup-source;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+
-+		pinctrl-0 = <&cam_indicator_en>;
-+		pinctrl-names = "default";
-+
-+		led: camera_indicator_led {
-+			label = "white:camera-indicator";
-+			function = LED_FUNCTION_INDICATOR;
-+			color = <LED_COLOR_ID_WHITE>;
-+			gpios = <&tlmm 12 GPIO_ACTIVE_HIGH>;
-+			linux,default-trigger = "none";
-+			default-state = "off";
-+			/* Reuse as a panic indicator until we get a "camera on" trigger */
-+			panic-indicator;
-+		};
-+	};
-+
-+	sw_edp_1p2: regulator-edp-1p2 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "sw_edp_1p2";
-+
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+
-+		pinctrl-0 = <&sw_edp_1p2_en>;
-+		pinctrl-names = "default";
-+
-+		gpio = <&pm8998_gpios 9 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		vin-supply = <&vreg_l2a_1p2>;
-+	};
-+
-+	vph_pwr: regulator-vph-pwr {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+
-+		regulator-min-microvolt = <3700000>;
-+		regulator-max-microvolt = <3700000>;
-+
-+		regulator-always-on;
-+	};
-+
-+	vlcm_3v3: regulator-vlcm-3v3 {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vlcm_3v3";
-+
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 88 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+
-+	reserved-memory {
-+		cont_splash_mem: framebuffer@80100000 {
-+			reg = <0 0x80100000 0 0xd00000>;
-+			no-map;
-+		};
-+
-+		tz_mem: tz@86d00000 {
-+			reg = <0 0x86d00000 0 0x4600000>;
-+			no-map;
-+		};
-+
-+		qseecom_mem: qseecom@8b500000 {
-+			reg = <0 0x8b500000 0 0xa00000>;
-+			no-map;
-+		};
-+
-+		wlan_msa_mem: wlan-msa@8c400000 {
-+			reg = <0 0x8c400000 0 0x100000>;
-+			no-map;
-+		};
-+
-+		adsp_mem: adsp@8c500000 {
-+			reg = <0 0x8c500000 0 0x1a00000>;
-+			no-map;
-+		};
-+
-+		ipa_fw_mem: ipa-fw@8df00000 {
-+			reg = <0 0x8df00000 0 0x100000>;
-+			no-map;
-+		};
-+
-+		slpi_mem: slpi@96700000 {
-+			reg = <0 0x96700000 0 0x1200000>;
-+		};
-+
-+		gpu_mem: gpu@97900000 {
-+			reg = <0 0x97900000 0 0x5000>;
-+			no-map;
-+		};
-+
-+		rmtfs_mem: rmtfs@97c00000 {
-+			compatible = "qcom,rmtfs-mem";
-+			reg = <0 0x97c00000 0 0x200000>;
-+			no-map;
-+
-+			qcom,client-id = <1>;
-+			qcom,vmid = <QCOM_SCM_VMID_MSS_MSA>;
-+
-+		};
-+	};
-+
-+	sn65dsi86_refclk: sn65dsi86-refclk {
-+		compatible = "fixed-clock";
-+		#clock-cells = <0>;
-+
-+		clock-frequency = <19200000>;
-+	};
-+};
-+
-+&adsp_pas {
-+	firmware-name = "qcom/sdm850/HUAWEI/AL09/qcadsp850.mbn";
-+	status = "okay";
-+};
-+
-+&apps_rsc {
-+	regulators-0 {
-+		compatible = "qcom,pm8998-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+		vdd-s5-supply = <&vph_pwr>;
-+		vdd-s6-supply = <&vph_pwr>;
-+		vdd-s7-supply = <&vph_pwr>;
-+		vdd-s8-supply = <&vph_pwr>;
-+		vdd-s9-supply = <&vph_pwr>;
-+		vdd-s10-supply = <&vph_pwr>;
-+		vdd-s11-supply = <&vph_pwr>;
-+		vdd-s12-supply = <&vph_pwr>;
-+		vdd-s13-supply = <&vph_pwr>;
-+		vdd-l1-l27-supply = <&vreg_s7a_1p025>;
-+		vdd-l2-l8-l17-supply = <&vreg_s3a_1p35>;
-+		vdd-l3-l11-supply = <&vreg_s7a_1p025>;
-+		vdd-l4-l5-supply = <&vreg_s7a_1p025>;
-+		vdd-l6-supply = <&vph_pwr>;
-+		vdd-l7-l12-l14-l15-supply = <&vreg_s5a_2p04>;
-+		vdd-l26-supply = <&vreg_s3a_1p35>;
-+		vin-lvs-1-2-supply = <&vreg_s4a_1p8>;
-+
-+		vreg_s2a_1p125: smps2 {
-+		};
-+
-+		vreg_s3a_1p35: smps3 {
-+			regulator-min-microvolt = <1352000>;
-+			regulator-max-microvolt = <1352000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s4a_1p8: smps4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s5a_2p04: smps5 {
-+			regulator-min-microvolt = <2040000>;
-+			regulator-max-microvolt = <2040000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s6a_0p8: smps6 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_s7a_1p025: smps7 {
-+			regulator-min-microvolt = <1028000>;
-+			regulator-max-microvolt = <1028000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdd_qusb_hs0:
-+		vdda_hp_pcie_core:
-+		vdda_mipi_csi0_0p9:
-+		vdda_mipi_csi1_0p9:
-+		vdda_mipi_csi2_0p9:
-+		vdda_mipi_dsi0_pll:
-+		vdda_mipi_dsi1_pll:
-+		vdda_qlink_lv:
-+		vdda_qlink_lv_ck:
-+		vdda_qrefs_0p875:
-+		vdda_pcie_core:
-+		vdda_pll_cc_ebi01:
-+		vdda_pll_cc_ebi23:
-+		vdda_sp_sensor:
-+		vdda_ufs1_core:
-+		vdda_ufs2_core:
-+		vdda_usb1_ss_core:
-+		vdda_usb2_ss_core:
-+		vreg_l1a_0p875: ldo1 {
-+			regulator-min-microvolt = <880000>;
-+			regulator-max-microvolt = <880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_10:
-+		vreg_l2a_1p2: ldo2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_l3a_1p0: ldo3 {
-+		};
-+
-+		vdd_wcss_cx:
-+		vdd_wcss_mx:
-+		vdda_wcss_pll:
-+		vreg_l5a_0p8: ldo5 {
-+			regulator-min-microvolt = <800000>;
-+			regulator-max-microvolt = <800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_13:
-+		vreg_l6a_1p8: ldo6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a_1p8: ldo7 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8a_1p2: ldo8 {
-+		};
-+
-+		vreg_l9a_1p8: ldo9 {
-+		};
-+
-+		vreg_l10a_1p8: ldo10 {
-+		};
-+
-+		vreg_l11a_1p0: ldo11 {
-+		};
-+
-+		vdd_qfprom:
-+		vdd_qfprom_sp:
-+		vdda_apc1_cs_1p8:
-+		vdda_gfx_cs_1p8:
-+		vdda_qrefs_1p8:
-+		vdda_qusb_hs0_1p8:
-+		vddpx_11:
-+		vreg_l12a_1p8: ldo12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vddpx_2:
-+		vreg_l13a_2p95: ldo13 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14a_1p88: ldo14 {
-+			regulator-min-microvolt = <1880000>;
-+			regulator-max-microvolt = <1880000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_l15a_1p8: ldo15 {
-+		};
-+
-+		vreg_l16a_2p7: ldo16 {
-+		};
-+
-+		vreg_l17a_1p3: ldo17 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1304000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18a_2p7: ldo18 {
-+		};
-+
-+		vreg_l19a_3p0: ldo19 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l20a_2p95: ldo20 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l21a_2p95: ldo21 {
-+			regulator-min-microvolt = <2960000>;
-+			regulator-max-microvolt = <2960000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l22a_2p85: ldo22 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+
-+			regulator-always-on;
-+		};
-+
-+		vreg_l23a_3p3: ldo23 {
-+		};
-+
-+		vdda_qusb_hs0_3p1:
-+		vreg_l24a_3p075: ldo24 {
-+			/* 3075000 uV causes -ENOTRECOVERABLE error */
-+			regulator-min-microvolt = <3088000>;
-+			regulator-max-microvolt = <3088000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l25a_3p3: ldo25 {
-+			regulator-min-microvolt = <3104000>;
-+			regulator-max-microvolt = <3104000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vdda_hp_pcie_1p2:
-+		vdda_hv_ebi0:
-+		vdda_hv_ebi1:
-+		vdda_hv_ebi2:
-+		vdda_hv_ebi3:
-+		vdda_mipi_csi_1p25:
-+		vdda_mipi_dsi0_1p2:
-+		vdda_mipi_dsi1_1p2:
-+		vdda_pcie_1p2:
-+		vdda_ufs1_1p2:
-+		vdda_ufs2_1p2:
-+		vdda_usb1_ss_1p2:
-+		vdda_usb2_ss_1p2:
-+		vreg_l26a_1p2: ldo26 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l28a_3p0: ldo28 {
-+			/* 3300000 uV causes -ENOTRECOVERABLE error */
-+			regulator-min-microvolt = <2856000>;
-+			regulator-max-microvolt = <3008000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_lvs1a_1p8: lvs1 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+
-+		vreg_lvs2a_1p8: lvs2 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+	};
-+
-+	regulators-1 {
-+		compatible = "qcom,pm8005-rpmh-regulators";
-+		qcom,pmic-id = "c";
-+
-+		vdd-s1-supply = <&vph_pwr>;
-+		vdd-s2-supply = <&vph_pwr>;
-+		vdd-s3-supply = <&vph_pwr>;
-+		vdd-s4-supply = <&vph_pwr>;
-+
-+		vreg_s2c_0p752: smps2 {
-+			regulator-min-microvolt = <752000>;
-+			regulator-max-microvolt = <752000>;
-+		};
-+	};
-+};
-+
-+&cci_i2c0 {
-+	/* chipnext,cn3927e vcm@0xc */
-+	/* samsung,s5k3l6 camera@0x10 */
-+	/* eeprom@0x50 */
-+};
-+
-+&cci_i2c1 {
-+	/* galaxycore,gc5025 camera@0x36 */
-+	/* eeprom@0x50 */
-+};
-+
-+&cdsp_pas {
-+	firmware-name = "qcom/sdm850/HUAWEI/AL09/qccdsp850.mbn";
-+	status = "okay";
-+};
-+
-+&crypto {
-+	/* FIXME: qce_start triggers an SError */
-+	status = "disabled";
-+};
-+
-+&gcc {
-+	protected-clocks = <GCC_QSPI_CORE_CLK>,
-+			   <GCC_QSPI_CORE_CLK_SRC>,
-+			   <GCC_QSPI_CNOC_PERIPH_AHB_CLK>,
-+			   <GCC_LPASS_Q6_AXI_CLK>,
-+			   <GCC_LPASS_SWAY_CLK>;
-+};
-+
-+&gpu {
-+	status = "okay";
-+	zap-shader {
-+		memory-region = <&gpu_mem>;
-+		firmware-name = "qcom/sdm850/HUAWEI/AL09/qcdxkmsuc850.mbn";
-+	};
-+};
-+
-+&i2c5 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	touchscreen: hid@5d {
-+		compatible = "hid-over-i2c";
-+		reg = <0x5d>;
-+		hid-descr-addr = <0x1>;
-+
-+		interrupts-extended = <&tlmm 125 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&i2c5_hid_active>;
-+		pinctrl-names = "default";
-+
-+		wakeup-source;
-+	};
-+};
-+
-+&i2c7 {
-+	/* ec@0x76 */
-+};
-+
-+&i2c10 {
-+	clock-frequency = <400000>;
-+	status = "okay";
-+
-+	sn65dsi86: bridge@2c {
-+		compatible = "ti,sn65dsi86";
-+		reg = <0x2c>;
-+
-+		pinctrl-0 = <&sn65dsi86_pin_active>;
-+		pinctrl-names = "default";
-+
-+		enable-gpios = <&tlmm 96 GPIO_ACTIVE_HIGH>;
-+
-+		vcca-supply = <&sw_edp_1p2>;
-+		vcc-supply = <&sw_edp_1p2>;
-+		vpll-supply = <&vreg_l14a_1p88>;
-+		vccio-supply = <&vreg_l14a_1p88>;
-+
-+		clocks = <&sn65dsi86_refclk>;
-+		clock-names = "refclk";
-+
-+		no-hpd;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				sn65dsi86_in: endpoint {
-+					remote-endpoint = <&mdss_dsi0_out>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+				sn65dsi86_out: endpoint {
-+					remote-endpoint = <&panel_in_edp>;
-+				};
-+			};
-+		};
-+
-+		aux-bus {
-+			panel: panel {
-+				compatible = "innolux,p120zdg-bf1";
-+				power-supply = <&vlcm_3v3>;
-+
-+				port {
-+					panel_in_edp: endpoint {
-+						remote-endpoint = <&sn65dsi86_out>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&ipa {
-+	qcom,gsi-loader = "self";
-+	memory-region = <&ipa_fw_mem>;
-+	firmware-name = "qcom/sdm850/HUAWEI/AL09/ipa_fws.elf";
-+	status = "okay";
-+};
-+
-+&mdss {
-+	status = "okay";
-+};
-+
-+&mdss_dsi0 {
-+	vdda-supply = <&vdda_mipi_dsi0_1p2>;
-+	status = "okay";
-+};
-+
-+&mdss_dsi0_out {
-+	remote-endpoint = <&sn65dsi86_in>;
-+	data-lanes = <0 1 2 3>;
-+};
-+
-+&mdss_dsi0_phy {
-+	vdds-supply = <&vdda_mipi_dsi0_pll>;
-+	status = "okay";
-+};
-+
-+&mss_pil {
-+	firmware-name = "qcom/sdm850/HUAWEI/AL09/qcdsp1v2850.mbn",
-+			"qcom/sdm850/HUAWEI/AL09/qcdsp2850.mbn";
-+	status = "okay";
-+};
-+
-+&pm8998_gpios {
-+	sw_edp_1p2_en: pm8998-gpio9-state {
-+		pins = "gpio9";
-+		function = "normal";
-+
-+		bias-disable;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+	};
-+
-+	volume_up_gpio: pm8998-gpio6-state {
-+		pins = "gpio6";
-+		function = "normal";
-+
-+		input-enable;
-+		bias-pull-up;
-+		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
-+	};
-+};
-+
-+&pm8998_pwrkey {
-+	status = "okay";
-+};
-+
-+&pm8998_resin {
-+	linux,code = <KEY_VOLUMEDOWN>;
-+	status = "okay";
-+};
-+
-+&qupv3_id_0 {
-+	status = "okay";
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&q6asmdai {
-+	dai@0 {
-+		reg = <MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+	};
-+
-+	dai@1 {
-+		reg = <MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+	};
-+
-+	dai@2 {
-+		reg = <MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+	};
-+};
-+
-+&sdhc_2 {
-+	pinctrl-0 = <&sdc2_default_state &sdc2_card_det_n>;
-+	pinctrl-names = "default";
-+
-+	vmmc-supply = <&vreg_l21a_2p95>;
-+	vqmmc-supply = <&vddpx_2>;
-+
-+	bus-width = <4>;
-+	cd-gpios = <&tlmm 126 GPIO_ACTIVE_HIGH>;
-+
-+	status = "okay";
-+};
-+
-+&slpi_pas {
-+	firmware-name = "qcom/sdm850/HUAWEI/AL09/qcslpi850.mbn";
-+	status = "okay";
-+};
-+
-+&sound {
-+	compatible = "lenovo,yoga-c630-sndcard", "qcom,sdm845-sndcard";
-+	model = "HUAWEI-PAK_AL09-M1040";
-+
-+	audio-routing = "RX_BIAS", "MCLK",
-+			"AMIC2", "MIC BIAS2",
-+			"DMIC0", "MCLK",
-+			"DMIC0", "MIC BIAS1",
-+			"DMIC2", "MCLK",
-+			"DMIC2", "MIC BIAS3",
-+			"SpkrLeft IN", "SPK1 OUT",
-+			"SpkrRight IN", "SPK2 OUT";
-+
-+	mm1-dai-link {
-+		link-name = "MultiMedia1";
-+		cpu {
-+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+		};
-+	};
-+
-+	mm2-dai-link {
-+		link-name = "MultiMedia2";
-+		cpu {
-+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+		};
-+	};
-+
-+	mm3-dai-link {
-+		link-name = "MultiMedia3";
-+		cpu {
-+			sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+		};
-+	};
-+
-+	slim-dai-link {
-+		link-name = "SLIM Playback";
-+		cpu {
-+			sound-dai = <&q6afedai SLIMBUS_0_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+
-+		codec {
-+			sound-dai = <&left_spkr>, <&right_spkr>, <&swm 0>, <&wcd9340 AIF1_PB>;
-+		};
-+	};
-+
-+	slimcap-dai-link {
-+		link-name = "SLIM Capture";
-+		cpu {
-+			sound-dai = <&q6afedai SLIMBUS_0_TX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd9340 AIF1_CAP>;
-+		};
-+	};
-+
-+	slim-wcd-dai-link {
-+		link-name = "SLIM WCD Playback";
-+		cpu {
-+			sound-dai = <&q6afedai SLIMBUS_1_RX>;
-+		};
-+
-+		platform {
-+			sound-dai = <&q6routing>;
-+		};
-+
-+		codec {
-+			sound-dai = <&wcd9340 AIF2_PB>;
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <81 4>;
-+
-+	cam_indicator_en: cam-indicator-en-state {
-+		pins = "gpio12";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	mode_pin_active: mode-pin-state {
-+		pins = "gpio79";
-+		function = "gpio";
-+
-+		bias-disable;
-+	};
-+
-+	sn65dsi86_pin_active: sn65dsi86-enable-state {
-+		pins = "gpio96";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	i2c5_hid_active: i2c5-hid-active-state {
-+		pins = "gpio125";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	sdc2_default_state: sdc2-default-state {
-+		clk-pins {
-+			pins = "sdc2_clk";
-+
-+			drive-strength = <16>;
-+			bias-disable;
-+		};
-+
-+		cmd-pins {
-+			pins = "sdc2_cmd";
-+
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+
-+		data-pins {
-+			pins = "sdc2_data";
-+
-+			drive-strength = <16>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	sdc2_card_det_n: sd-card-det-n-state {
-+		pins = "gpio126";
-+		function = "gpio";
-+
-+		bias-pull-up;
-+	};
-+};
-+
-+&uart6 {
-+	pinctrl-0 = <&qup_uart6_4pin>;
-+	pinctrl-names = "default";
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn3990-bt";
-+
-+		vddio-supply = <&vreg_s4a_1p8>;
-+		vddxo-supply = <&vreg_l7a_1p8>;
-+		vddrf-supply = <&vreg_l17a_1p3>;
-+		vddch0-supply = <&vreg_l25a_3p3>;
-+		vddch1-supply = <&vreg_l23a_3p3>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
-+&uart9 {
-+	status = "okay";
-+};
-+
-+&ufs_mem_hc {
-+	reset-gpios = <&tlmm 150 GPIO_ACTIVE_LOW>;
-+
-+	vcc-supply = <&vreg_l20a_2p95>;
-+	vcc-max-microamp = <600000>;
-+
-+	status = "okay";
-+};
-+
-+&ufs_mem_phy {
-+	vdda-phy-supply = <&vdda_ufs1_core>;
-+	vdda-pll-supply = <&vdda_ufs1_1p2>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_1_hsphy {
-+	vdd-supply = <&vdda_usb1_ss_core>;
-+	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
-+	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
-+
-+	qcom,imp-res-offset-value = <8>;
-+	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_21_6_MA>;
-+	qcom,preemphasis-level = <QUSB2_V2_PREEMPHASIS_5_PERCENT>;
-+	qcom,preemphasis-width = <QUSB2_V2_PREEMPHASIS_WIDTH_HALF_BIT>;
-+
-+	status = "okay";
-+};
-+
-+&usb_1_qmpphy {
-+	vdda-phy-supply = <&vdda_usb1_ss_1p2>;
-+	vdda-pll-supply = <&vdda_usb1_ss_core>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2 {
-+	status = "okay";
-+};
-+
-+&usb_2_dwc3 {
-+	dr_mode = "host";
-+};
-+
-+&usb_2_hsphy {
-+	vdd-supply = <&vdda_usb2_ss_core>;
-+	vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
-+	vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
-+
-+	qcom,imp-res-offset-value = <8>;
-+	qcom,hstx-trim-value = <QUSB2_V2_HSTX_TRIM_22_8_MA>;
-+
-+	status = "okay";
-+};
-+
-+&usb_2_qmpphy {
-+	vdda-phy-supply = <&vdda_usb2_ss_1p2>;
-+	vdda-pll-supply = <&vdda_usb2_ss_core>;
-+
-+	status = "okay";
-+};
-+
-+&venus {
-+	firmware-name = "qcom/sdm850/HUAWEI/AL09/qcvss850.mbn";
-+	status = "okay";
-+};
-+
-+&wcd9340 {
-+	reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
-+	vdd-buck-supply = <&vreg_s4a_1p8>;
-+	vdd-buck-sido-supply = <&vreg_s4a_1p8>;
-+	vdd-tx-supply = <&vreg_s4a_1p8>;
-+	vdd-rx-supply = <&vreg_s4a_1p8>;
-+	vdd-io-supply = <&vreg_s4a_1p8>;
-+	qcom,mbhc-buttons-vthreshold-microvolt = <75000 150000 237000 500000
-+						  500000 500000 500000 500000>;
-+	qcom,mbhc-headset-vthreshold-microvolt = <1700000>;
-+	qcom,mbhc-headphone-vthreshold-microvolt = <50000>;
-+	qcom,micbias1-microvolt = <1800000>;
-+	qcom,micbias2-microvolt = <2700000>;
-+	qcom,micbias3-microvolt = <1800000>;
-+
-+	swm: soundwire@c85 {
-+		left_spkr: speaker@0,3 {
-+			compatible = "sdw10217211000";
-+			reg = <0 3>;
-+			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_LOW>;
-+			#thermal-sensor-cells = <0>;
-+			sound-name-prefix = "SpkrLeft";
-+			#sound-dai-cells = <0>;
-+		};
-+
-+		right_spkr: speaker@0,4 {
-+			compatible = "sdw10217211000";
-+			reg = <0 4>;
-+			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_LOW>;
-+			#thermal-sensor-cells = <0>;
-+			sound-name-prefix = "SpkrRight";
-+			#sound-dai-cells = <0>;
-+		};
-+	};
-+};
-+
-+&wifi {
-+	vdd-0.8-cx-mx-supply = <&vreg_l5a_0p8>;
-+	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
-+	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
-+	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
-+
-+	qcom,snoc-host-cap-8bit-quirk;
-+	qcom,calibration-variant = "Huawei_Planck";
-+
-+	status = "okay";
-+};
--- 
-2.47.3
+iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaN/ODwAKCRAnX84Zoj2+
+diGqAYCVf6AMoXhcU3VIb8z9xIngvdSuylZqphD9JtE/rS3QR8jtXs1A5G3e9kDf
+b9g7FbABf0JcEMqoNM9n9pzN92QZ1DiCn8U+tdtLbXL6iPX0Iagrzdcxx1bfDwJN
+nZSidYIWcw==
+=Qw5/
+-----END PGP SIGNATURE-----
 
+--xp6eesrwl3hc4z5s--
 
