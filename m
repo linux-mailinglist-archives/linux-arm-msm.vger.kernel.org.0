@@ -1,179 +1,201 @@
-Return-Path: <linux-arm-msm+bounces-75944-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75945-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7FCBBB80D7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 22:14:43 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 41AE6BB82C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 23:12:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id D69B51B208A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 20:15:05 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5BA3E4E39E9
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 21:12:02 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 46DB1238C23;
-	Fri,  3 Oct 2025 20:14:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C9F2F25B687;
+	Fri,  3 Oct 2025 21:12:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="ctDr/41q"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="pvHZeJiV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C44A22343B6
-	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Oct 2025 20:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078EF26158C;
+	Fri,  3 Oct 2025 21:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759522473; cv=none; b=U82/oW24XN2vNfdFLnnVHDsl0VFeYgPXLYJxSyud4RNv/5glKPYpQ6vXCinJ+qsor+agaPcNWTp89BNm5p9nhXfQJJfjtIvIIy9k8kVjUSFmhYUsf2Pqt+kiMq3/A4wQ1M7czlifsoHD60veND/u6AxZjOsyNuYdUIcDVt0XQ58=
+	t=1759525921; cv=none; b=CX8bjIsWH8lvr9WD3PGXIyljQ8qwBcy172Ea4SdspFF4ZGCO8P0dm4/NNDHvDu14XQmmzLmCmXHFpWOVjDtQ2/manYOgOP9/X1aYGTb0rfENl3bvS8lQ5/1TY033/UbVoQ3UnNHoax2IV80fzpe8G8WsOkLdWfcVni/w5pSe5Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759522473; c=relaxed/simple;
-	bh=fD8n54ZX9M0RRQRWUXO3tmRnzc0ewZjTWlfVmwaUwfE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=icdf+bCpL8/J05GeiFsRygVf/j2Lr1ypYs/AGDQemMmeXe8d7jWcKfOyE8XKNYIDJlbwuR4gyFz0omWUWP/0C3Bmz7EPhK9LZ3zy2OWVGFhQDxu5juiocW1MhzMs87bVVjGnmOni+CtjINC05Z/UGOUDSfmxnMgos8M/LRceAGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=ctDr/41q; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 593CG55O014922
-	for <linux-arm-msm@vger.kernel.org>; Fri, 3 Oct 2025 20:14:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=3d9SzCzSMJIBbQowA9w6QpPw
-	22iAr4U27ZeiUZsWKrA=; b=ctDr/41q1epOH8JmCATKNMFwBQJA361qEiMbkHGK
-	Vu+8JQ3OS9BLn7HIKjNVx3K45tPXip9z2SKTlASdb69+mpI0zQEeuZ9+BP+1J75f
-	JPc1phAtYdf+uAGL48vI0aJEl+d7LIteaJHTzoNyzBN//KgHtIMZ/PzhLalDrOxA
-	PsysQPT6TtqgrLmC9D1xSjA4kFm/1xFTAao897ajXeC0LiJRQHT6z/T9Sme+H4M/
-	VPhD/POypn3o8R/h3W83hZ9E4MZwdWsOqcjTApMk6JGM05iCntwrgXmfRtvLYFA4
-	f9ANutiIlJ0c/4v2KvMpM5gwKAXTebEM4X3UxzImI/thfw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jeb7h4sf-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Fri, 03 Oct 2025 20:14:30 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4de801c1446so61311111cf.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Oct 2025 13:14:30 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759522469; x=1760127269;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3d9SzCzSMJIBbQowA9w6QpPw22iAr4U27ZeiUZsWKrA=;
-        b=FOQSoMpyJSvrqZzt6Tccnv5ES3UYtWIKXS1rjdHonp1i6sXtfv8pol2gYP5hPDaGRD
-         VuskWVNUF7UH4UIk78LBjA5SNJ0JA3wcVE935zV0cSAYAXU1EPWy5c/0afoosQkOGsR3
-         ubKOzasx1Vl2m8piPMsK1qM+9ICvuMeGzF+m1JJ3mgJGKzFYs1twnBccs/dt2uiVkvj/
-         OByRB2S10zejcsmcZJSQte56gf8WZNRMF4+HnvxWHGpedDipwJiscg9MfxKzzvlCSrdH
-         /UJenU7kOuz2sgsQVstL+CDsUoyXRDIcPIr/3bvK4LGHh8r+xeDHVZsJNyCohmsGC3fE
-         lCLg==
-X-Forwarded-Encrypted: i=1; AJvYcCV6MwSOwlFAWC30d4RJsl/Rs2cN51bM3bPUn0FZYg2AwoaFrW3Uy38ZNjuMQfJp6yimvrXR1Hd2W6JfPcl8@vger.kernel.org
-X-Gm-Message-State: AOJu0YzSkgSucLSx/ZLLXLg2Mr5zVyAfMaHo1LLy3t9WBOe2DoibEksr
-	V1s8mN0WTVka//hu3FIVkC7pEYbbMLBFQtif1pV9dQ0rNnB5efjLaPs2lebKYjcNnFZ984D0Rus
-	YyeBNxV8JID3mQhtAwAFCPF65hfedRhtz2/lB1ElGEycNmR+k5VZ3kXBZv00AuRVm7NUuKC7VUJ
-	l0
-X-Gm-Gg: ASbGncuov+PS0tNrdq68YK+BH+yZ+62V0FFnjivXX8udRthrIEymqCys0wT6OPigKYc
-	kPBN5VBYOM/Lb+4/O0+6Gzui3/S38jcalAka9YgR8ClTEW217PxyYdFTTNHhQCQroCS6VirckbU
-	FI8skHHHgupQq/+aKf25zZM+e9Eyo6sjrq1PdbUTdBNG4bxPzt+M8C0M6dE2eI91m+rBtI8bTlt
-	zAaY4EanDmh3qvNr5dY8EoaqWp7z4PWp54iV2+Pfz2k1egqQDEp3lMgXleICwOMuvVEq82B7w43
-	8AECJZZAvOe+L8Vx6UNqd2oh+g4m0rj+hAPKOkgFppWcsdXfsd6i/SpgLZyv6z66ZxljROUE5z3
-	jaAhQBqwYJX+y4Rj7blO4OdRNhwA5J9dO+RAFEdUh3q0FT37KB84Fupe0VQ==
-X-Received: by 2002:a05:622a:1482:b0:4df:1196:f56f with SMTP id d75a77b69052e-4e576b43357mr58964041cf.83.1759522469110;
-        Fri, 03 Oct 2025 13:14:29 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHqQgFtCLDGX+O3PJbNb1GIypKvYOnVxRVaWG1pkNYoNTcWC/bmJvu3v1drdtBBMjl3H1gE3g==
-X-Received: by 2002:a05:622a:1482:b0:4df:1196:f56f with SMTP id d75a77b69052e-4e576b43357mr58963591cf.83.1759522468538;
-        Fri, 03 Oct 2025 13:14:28 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-373ba2b79e9sm18024371fa.16.2025.10.03.13.14.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Oct 2025 13:14:27 -0700 (PDT)
-Date: Fri, 3 Oct 2025 23:14:23 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Paul Sajna <sajattack@postmarketos.org>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>, David Heidelberg <david@ixit.cz>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        Amir Dahan <system64fumo@protonmail.com>,
-        Christopher Brown <crispybrown@gmail.com>
-Subject: Re: [PATCH v3 07/11] arm64: dts: qcom: sdm845-lg-{common, judyln}:
- Add wifi node
-Message-ID: <wudkpzky5sqrhqjfm3utrd2tcmtalszmyw3zts246pop4a7aj5@oro2wyqhtwaw>
-References: <20250928-judyln-dts-v3-0-b14cf9e9a928@postmarketos.org>
- <20250928-judyln-dts-v3-7-b14cf9e9a928@postmarketos.org>
- <f58493a9-6def-4610-9c3e-d6a877dc23d3@oss.qualcomm.com>
- <d38801bc77ad00442b1669ea252ae30a5c6af5b4@postmarketos.org>
- <7661d9d9-eca3-4708-8162-960df0d7f6c7@oss.qualcomm.com>
- <ad721948b83a54eaa34f367e12564fe6acc222a1@postmarketos.org>
- <gfbvgsen75w5h7afyo454pvdfslkeprqyuycuok6syinbza7vx@crapzdo33re7>
- <b9285a2e81ca992b9fc560c78ae03921000e388e@postmarketos.org>
- <budxy3xza3ieykmrp2anpiz3gktq6mc3pqohkf6ew23jun3po3@jv2em5mmhjts>
- <4db4f0d411cb250db2d513690c93f0ff5a6dcbd9@postmarketos.org>
+	s=arc-20240116; t=1759525921; c=relaxed/simple;
+	bh=EnTBkGoH3Jvr8KONUsAx0aPNp0x02Zoc+/pk/0q/4uU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=dE/jU+Wp9T2g2/Zax+LTzmhL1+0wUf/9NlE+1yo73Bj+MOQMmClzTVu0c3F22uoNTAvVlVxHJQnlASeyG9rCW5K0vJKqlH8GyIJVlqoOnpWiUvZ1/rwiAq+PL6iDZwlAuswtZkDaZ3pLA59bdXkSfB9njrg7ng6IocEkl+Ht7TE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=pvHZeJiV; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 593AuIIj006266;
+	Fri, 3 Oct 2025 21:11:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	VlnlmgOOT12GpfzucYvYIMK0TqyeJkc9z5qxx9XRYY8=; b=pvHZeJiVs9273E+a
+	MKB9du1YD58L3VnG+boZHwnA/z7pQ8czFVDKbBHIbxy9se3oIEIy2cgKthO2ZbtX
+	VqYhGdf823e29/tFy85dsaMqWWVV4wwnAI1FkBP2Dd+9W2dnuly5EuRzP/tpfB/T
+	rE5PIELLjNbpRWPMYjst+SgQ7KoLi6/a+ilZc9f1qNF6QGgjWYgbgLHsSE3mPthT
+	FioKhlUEhKb9/ez/EFsN0AyHt4s2RfrXErf7Mjo4jAaRqL3sARBM0PDsHfhaxayn
+	m3cPCLln/UjtcCxg757AoBYYG2uVM7d6G8xKH7REflRmg41UK27L+uQB7bgsNuYC
+	OmuGOA==
+Received: from nasanppmta01.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49e8pduqfq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 03 Oct 2025 21:11:39 +0000 (GMT)
+Received: from nasanex01a.na.qualcomm.com (nasanex01a.na.qualcomm.com [10.52.223.231])
+	by NASANPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 593LBcHc010764
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 3 Oct 2025 21:11:38 GMT
+Received: from [10.46.162.103] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Fri, 3 Oct
+ 2025 14:11:38 -0700
+Message-ID: <4e58fa6c-ddec-a6a9-fb8b-5f4ffa12fbc3@quicinc.com>
+Date: Fri, 3 Oct 2025 14:11:37 -0700
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4db4f0d411cb250db2d513690c93f0ff5a6dcbd9@postmarketos.org>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDAzMDA5OSBTYWx0ZWRfXwk4Fjhsrnwtb
- L8+x4gdR7qTTBboWB9YCT5JLSthrxX3pBB89rt0Zt5buLYSRwQfMFoOQHYI+HPJF8jvGfPvmuYj
- 2KeKnS3pVCNuvOB8xOaQuz7MQziAcwmfmwX9wx+vUUAoSVep7FSPmPTBW822DP+Ac/sw3ailpyB
- wApjF9Ph5eM6sBw0Tt4/MZ9U1DOh6upYPur/tf4bdjNMvnP0b5CfQ01B2bEXqqeHSSvMHMpJ7Cq
- bQlQO0uWwczvJC8IPUw8wtsRs8Fm9A4OYuW0Y7RePAuCMzZlfLcpqxVDRdk7JWVZb2NBeNFC9Eq
- VwFDhmEbIZU0QZdYC7W30yXatp9w97OC7bLhMDkRLnhM2PbNVsHDfR23pCRQaePLdXX7qvgBfZ+
- dcw1UggzhiWgrZ0920HjfjYEL2LnCA==
-X-Proofpoint-GUID: hOIj1YwxIagM63wHehIBKbF60sH8X07C
-X-Proofpoint-ORIG-GUID: hOIj1YwxIagM63wHehIBKbF60sH8X07C
-X-Authority-Analysis: v=2.4 cv=YrwChoYX c=1 sm=1 tr=0 ts=68e02ea6 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=p0WdMEafAAAA:8 a=85DtlbXH99wPiBcwuMQA:9
- a=lqcHg5cX4UMA:10 a=CjuIK1q_8ugA:10 a=uxP6HrT_eTzRwkO_Te1X:22
- a=poXaRoVlC6wW9_mwW8W4:22 a=pHzHmUro8NiASowvMSCR:22 a=n87TN5wuljxrRezIQYnT:22
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v1 1/2] scsi: ufs: core: Remove
+ UFS_DEVICE_QUIRK_DELAY_AFTER_LPM quirk
+Content-Language: en-US
+To: =?UTF-8?B?UGV0ZXIgV2FuZyAo546L5L+h5Y+LKQ==?= <peter.wang@mediatek.com>,
+        "avri.altman@wdc.com" <avri.altman@wdc.com>,
+        "quic_cang@quicinc.com"
+	<quic_cang@quicinc.com>,
+        "quic_nitirawa@quicinc.com"
+	<quic_nitirawa@quicinc.com>,
+        "manivannan.sadhasivam@linaro.org"
+	<manivannan.sadhasivam@linaro.org>,
+        "bvanassche@acm.org"
+	<bvanassche@acm.org>,
+        "adrian.hunter@intel.com" <adrian.hunter@intel.com>,
+        "martin.petersen@oracle.com" <martin.petersen@oracle.com>
+CC: "beanhuo@micron.com" <beanhuo@micron.com>,
+        "chu.stanley@gmail.com"
+	<chu.stanley@gmail.com>,
+        "quic_mapa@quicinc.com" <quic_mapa@quicinc.com>,
+        "linux-scsi@vger.kernel.org" <linux-scsi@vger.kernel.org>,
+        "AngeloGioacchino
+ Del Regno" <angelogioacchino.delregno@collabora.com>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "alim.akhtar@samsung.com" <alim.akhtar@samsung.com>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>,
+        "matthias.bgg@gmail.com"
+	<matthias.bgg@gmail.com>,
+        "James.Bottomley@HansenPartnership.com"
+	<James.Bottomley@HansenPartnership.com>,
+        "mani@kernel.org" <mani@kernel.org>,
+        "linux-mediatek@lists.infradead.org" <linux-mediatek@lists.infradead.org>
+References: <cover.1759348507.git.quic_nguyenb@quicinc.com>
+ <0f0a7d5518d29fc384aace558d2bf098d792e0db.1759348507.git.quic_nguyenb@quicinc.com>
+ <450e834545af935010ffc4f9079e56e47851f197.camel@mediatek.com>
+ <69a111a2-219e-e3d4-8b89-3400facc02e3@quicinc.com>
+ <9706ab36ba82a2522931326e114155c027da5461.camel@mediatek.com>
+From: "Bao D. Nguyen" <quic_nguyenb@quicinc.com>
+In-Reply-To: <9706ab36ba82a2522931326e114155c027da5461.camel@mediatek.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
+X-Proofpoint-GUID: 3c1VoxhXOBkTC4TMBzna8V3v2NIgBFn4
+X-Authority-Analysis: v=2.4 cv=MYZhep/f c=1 sm=1 tr=0 ts=68e03c0b cx=c_pps
+ a=JYp8KDb2vCoCEuGobkYCKw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10
+ a=bJ9VZFcO5FWJG7T8bRkA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cPQSjfK2_nFv0Q5t_7PE:22
+X-Proofpoint-ORIG-GUID: 3c1VoxhXOBkTC4TMBzna8V3v2NIgBFn4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwOTI3MDAzNiBTYWx0ZWRfX1n6USvtA4GKA
+ 4gP2OSfg06dxDVx/Br7mf3Nkka4psSRegTv7qkd6boyHDQDNV8r8lWcggJZJJcXNzvPadtXZVvx
+ srIE/K+KvaNBXtgN7XuLhunD+RqZo62DqUSU8SD/ltpaSZDf+tPnHXNn/qyWUI2a5x5UwUoJOYd
+ SJq2tWPU+tmqghle5BTOKcMqfULYS2Dv0AwqVOsmilb/40AdLSO6bAxXE3vzlPYD37tmclBNeUe
+ FO3pQU6Hk+e4a2A+nhmuArmlDq5U1vvwDplIr/jYWM7q5jgHxJlhz0f+Mri0mGVb70lnF1/Mcmm
+ 17d66YGlBz0gaqHzWH+x+r8rJCfPRn8jLdcY4HEMUyrt23j4BFMFM4VOtaOTXXFaLS7/6kh85lz
+ OR4nwwl6T+h7bSxQzccqrivaMO/ERA==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-03_06,2025-10-02_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 impostorscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- bulkscore=0 lowpriorityscore=0 spamscore=0 adultscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510030099
+ suspectscore=0 clxscore=1015 bulkscore=0 lowpriorityscore=0
+ priorityscore=1501 phishscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2509270036
 
-On Fri, Oct 03, 2025 at 07:55:21PM +0000, Paul Sajna wrote:
-> October 3, 2025 at 7:36 PM, "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com mailto:dmitry.baryshkov@oss.qualcomm.com?to=%22Dmitry%20Baryshkov%22%20%3Cdmitry.baryshkov%40oss.qualcomm.com%3E > wrote:
+On 10/2/2025 8:10 PM, Peter Wang (王信友) wrote:
+> On Thu, 2025-10-02 at 11:48 -0700, Bao D. Nguyen wrote:
+>>
+>>
+>> Hi Peter,
+>>
+>> The current Mediatek platform driver applies this quirk to all ufs
+>> vendors which is consistent with what we would like to do in the
+>> Qualcomm platform driver per the vendor's requests.
+>>
+>> I do see that, about 5 years ago, Mediatek merged a patch to keep the
+>> device vcc always on, probably to workaround some HW issues. Since
+> 
+> Hi Bao,
+> 
+> Yes, some UFS devices may have issues when turning off VCC.
+> 
+>> this
+>> is a very old patch and the impact of this change on a broken
+>> hardware
+>> is minimal, I would like weight the benefit of cleaning up the ufs
+>> core
+>> driver by removing the unnecessary quirk
+>> UFS_DEVICE_QUIRK_DELAY_AFTER_LPM vs the inconvenience of a 5ms
+>> (potentially reduce to 2ms) delay impact it may cause on an old
+>> broken
+>> HW in the suspend/shutdown path.
+>>
+>> I believe removing the UFS_DEVICE_QUIRK_DELAY_AFTER_LPM quirk in the
+>> ufs
+>> core driver as well as all the platform drivers yields positive net
+>> benefits in this case.
+>>
+>> Thanks, Bao
+>>
+>>
+> 
+> I think you misunderstood my point.
+> I am okay with removing this flag, but this patch will cause
+> devices with VCC always on to unnecessarily wait for the
+> delay, resulting in wasted time.
+
+Are you referring to the always_on flag in the struct ufs_vreg? I 
+believe currently the ufs_vreg's always_on flag isn't used in 
+determining whether the delay is applied or not.
+
+How about we add the check for the Vcc's always_on as shown below?
+The Mediatek's workaround can avoid the extra delay by setting the 
+always_on flag as it already did, without using the 
+UFS_DEVICE_QUIRK_DELAY_AFTER_LPM.
+
+if (vcc_off && hba->vreg_info.vcc && !hba->vreg_info.vcc->always_on)
+	usleep_range(5000, 5100);
+
+Thanks, Bao
+
+> 
+> Thanks
+> Peter
 > 
 > 
-> > 
-> > On Fri, Oct 03, 2025 at 06:52:03PM +0000, Paul Sajna wrote:
-> > 
-> > > 
-> > > October 3, 2025 at 5:13 PM, "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com mailto:dmitry.baryshkov@oss.qualcomm.com?to=%22Dmitry%20Baryshkov%22%20%3Cdmitry.baryshkov%40oss.qualcomm.com%3E > wrote:
-> > >  
-> > >  
-> > >  
-> > >  Regarding the MDSS. Is it being solved by adding reset to the MDSS node?
-> > >  Or are there any other issues?
-> > >  
-> > >  Yes I'm referring to the reset / pmdomain issue. Joel Selvaraj is looking into it in the sdm845 tree. He said he tried doing what other SOCs did and it just got stuck in a reboot loop. More investigation required. Currently he's reverted the pmdomain commits in our tree.
-> > > 
-> > Which pmdomain commits?
-> > 
-> > -- 
-> > With best wishes
-> > Dmitry
-> >
-> 
-> https://gitlab.com/sdm845-mainline/linux/-/commit/002ebddd695a53999550e241b71950f1aa0e1ac4
-> https://gitlab.com/sdm845-mainline/linux/-/commit/09813cde376d9d8f30eaf761534532101a0a7755
-> https://gitlab.com/sdm845-mainline/linux/-/commit/0e789b491ba04c31de5c71249487593e386baa67
-> https://gitlab.com/sdm845-mainline/linux/-/commit/13a4b7fb62600e1c0738fdb0b7176555ff05aadf
 
-Thanks for the pointers.
-
-> 
-> All got reverted in the sdm845-mainline tree, I believe related to fixing mdss
-> https://gitlab.com/sdm845-mainline/linux/-/commits/sdm845%2F6.17-wip
-
--- 
-With best wishes
-Dmitry
 
