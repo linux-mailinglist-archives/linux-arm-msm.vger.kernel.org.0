@@ -1,176 +1,373 @@
-Return-Path: <linux-arm-msm+bounces-75866-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75867-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 828EBBB61FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 09:04:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1CD73BB622C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 09:07:07 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 727EB4E5A0C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 07:04:27 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 00AB44E7002
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 07:07:06 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC2E02248A8;
-	Fri,  3 Oct 2025 07:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3687C227EA4;
+	Fri,  3 Oct 2025 07:07:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MPlYBMjM"
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="O9tWvjDb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazolkn19012010.outbound.protection.outlook.com [52.103.14.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ECF5158DAC;
-	Fri,  3 Oct 2025 07:04:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.13
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759475064; cv=none; b=CHfBh9sP80vFzZud/bLViqdWl7/ExP0ToOccWifXv71UiVTf0OFDr/WEFAy4K+cRQt8GVJTv71YBkfLc93vVf89oOHi3jqpwBJMLLb5/rb5NzwXPtRmw2xdnFaAeBiKutnoEor3E5fEa4t9KRniMw8px9EhyfVfpVdlNoBExzj0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759475064; c=relaxed/simple;
-	bh=LKhj0OA+zjMDWjybsyr4HohQ8bxE77BsEL62Ioho1Uo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k4+ojap+iH7B0dafLhfKkB+jIUFZK2S+HJzAXa0oFFzEZpgIZIHCsY5TGdQQ0RmIXnshMT4cNX7JBMRip64uk2JBHIoKz3Op+VmY26ytsKjBEbT8RM2cm3Z5dtCoLvpMMVKckuG7WugMKaHG5X45EnajM18uKIai52BAMW+QfHY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MPlYBMjM; arc=none smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1759475063; x=1791011063;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=LKhj0OA+zjMDWjybsyr4HohQ8bxE77BsEL62Ioho1Uo=;
-  b=MPlYBMjMwRBpjgraoPTxF/BaPF2t8OMU8D+1/wjlAI458UO5LzZubbR0
-   CuPlpaKl7path8i32qpSXjR9IrNEeUD7moI5yaUfW+TOe6gdE3s5KSILc
-   vxs11HEvWrz++hFOCAQko2/7uzVu+cUeOwO15Cpn7D6qpbF3bLTJ3D1Um
-   m9xEu85OCgxShNS+YwCZt5MYSEQtE7aoz/WIeEUFPndjKvtOGxj4DG+1Q
-   fxLgHv1GQCO2h3Czt1olv2NNpITWQQMbvgSOp9KrjIQCOve7n3ybBrqbv
-   Eh2OI7PlWHF1+qb516Tba59KCUGUKB/okxdJWBt/YpsvRCVag43SuJGgs
-   Q==;
-X-CSE-ConnectionGUID: Syxi96T2QVa1LhRzFGJbnw==
-X-CSE-MsgGUID: ykL87sHtQ8eHca6jsvtxYA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11570"; a="72861908"
-X-IronPort-AV: E=Sophos;i="6.18,311,1751266800"; 
-   d="scan'208";a="72861908"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2025 00:04:21 -0700
-X-CSE-ConnectionGUID: 2th5oiOfQK268i7sh60v4g==
-X-CSE-MsgGUID: Z4V95aTfT7+ICcxDtYd6mQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.18,311,1751266800"; 
-   d="scan'208";a="179170648"
-Received: from abityuts-desk.ger.corp.intel.com (HELO kekkonen.fi.intel.com) ([10.245.244.72])
-  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Oct 2025 00:04:18 -0700
-Received: from kekkonen.localdomain (localhost [IPv6:::1])
-	by kekkonen.fi.intel.com (Postfix) with SMTP id 3EECE121186;
-	Fri, 03 Oct 2025 10:04:15 +0300 (EEST)
-Date: Fri, 3 Oct 2025 10:04:15 +0300
-Organization: Intel Finland Oy - BIC 0357606-4 - c/o Alberga Business Park, 6 krs, Bertel Jungin Aukio 5, 02600 Espoo
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>, devicetree@vger.kernel.org,
-	Daniel Scally <djrscally@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	=?iso-8859-1?Q?Andr=E9?= Apitzsch <git@apitzsch.eu>,
-	linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/4] media: i2c: dw9719: Add DW9800K support
-Message-ID: <aN91bwetQGrpj6of@kekkonen.localdomain>
-References: <20251002-dw9800-driver-v1-0-c305328e44f0@fairphone.com>
- <20251002-dw9800-driver-v1-2-c305328e44f0@fairphone.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC20226863;
+	Fri,  3 Oct 2025 07:06:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.14.10
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759475222; cv=fail; b=cv18IIJDq/pNcj3Kx26QB3TQNWy7BEYJ2hrV/c3E4zHG2CbLdT24Z0tsVcUG8taFsNZ9H/6YZknfAV450y9RrUpF0pPaHnAz5UE7EZQFLDqTi0wIsCHe7Fa+iBGXWSjRjOsdJw3OGUCvetEbEE1sBcAR0caWm+K2v3BxUQ9TpcY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759475222; c=relaxed/simple;
+	bh=gQY7rCb5fjx4ENpigI4vIUsFbEHMjVF6nzkB87wJuic=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=DiNBTRC4NXaHs7ywDTV+LFp5OL5GFlk79LadvCBvIZZpVR6Cx7josChA/QbJOxOk96374eygr6ZTfjX/Qpf+47C6Q6hmWNQyMynFMf+ov8+KyPMqk8J6YToqDM0hKy2gdXrrV9HRhSR3TmfVSsyi5NPY+e8NNsfuZgY6br2INu4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=O9tWvjDb; arc=fail smtp.client-ip=52.103.14.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=tM1oSLYBFH/KGgxZl2nsevhxsWYwB3SfXWuiZ6sSOVo3yGNKYghn7jq9/s54U7gVW6X+VxeVTmH93U/s6DaM5Zxoldhc/QGy+N76O6jvYX8DvwqV9WNeQEW3/02D6gBFEHCdClw72ArF/aPh5JED672P7nXiZQvf+XFvlcKEWRn+uV2mWBsSKKHXTOnYpLC5su5phnhwqnVyhgOOzF2Nz5Q9PlvGwD9nO2GGKEA7eY/msxzl7ZVzJMCrEnLhKmYqdyPc5P32u5WsgEkIV6SeECjE31ocxfZqgLZ9kftUoGaQZobscf7SuWbsDIDv2JBFQAzewVbf2RsYJ51Tqr/XFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=t8SO8S3DK66GXPx8qiUoP7FoH8SVKXhUZ6N4uqbJer4=;
+ b=wGiD79uLDkP1skLtyk+O8T2eVoV8WxsxFn/gtGmHUaPdaE/SfpHhprdP9TGgmMNbM9yk5J+IFRMQOWRreW/jynC7TJIA1SNCqflzXbrQOLE9q35C5lE9P8kli2LaRHSWkhbCiOFIGE46M2WPGH3fOk6hvdFB8JhgAh4Jj7uCTx5/+i5uExMaPSjXZFe6YC82FKbHkS6jCMzBGF0YtyTwqZNFZfsqoBsh3cV9bg89Q6W5CC2MVaXBkODlBeOUJTdnqNks8dEaoTE6LtB95IxaaMYMvQ9W7iLUgLG70DPqu3hkVF6QPuQrAFMw7y/HD5Soj7HHplOgLf0SuXCGK6LDRQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=t8SO8S3DK66GXPx8qiUoP7FoH8SVKXhUZ6N4uqbJer4=;
+ b=O9tWvjDbzQMwwFo3kuyN3ygfKm5yKXuB5nSiE1QubYJfD2toEQr2fQXs4OdOVNHnwxgimHD6P8XQoveLsfVs6mL1c/FIIZLWycBrZkt0FDtIQN888CNbJmWhGNQ+BKhY3Hd2AhT2Yx9xw7wQhXX3pZ5hYxbwIWaiHJ75tTjQ/OxXF5jsIql+ILk/0C0mAzoRFXod3VhokQd4dt8DY/HozhmQIFdT3jcQO1BQZqaF02fkSgU4j18PjmoKfFjTCvtBr0gCHzsDCW9OBv66Zv6M2qyWdxWFiTJ8JoHApgVQgh6z/943dekWwB4GWFZnaIFkrEr38tcdFMpYpg6XSSfFzQ==
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com (2603:10b6:8:253::16)
+ by LV0PR19MB9496.namprd19.prod.outlook.com (2603:10b6:408:321::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9160.18; Fri, 3 Oct
+ 2025 07:06:57 +0000
+Received: from DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305]) by DS7PR19MB8883.namprd19.prod.outlook.com
+ ([fe80::e0c2:5b31:534:4305%4]) with mapi id 15.20.9160.017; Fri, 3 Oct 2025
+ 07:06:56 +0000
+Message-ID:
+ <DS7PR19MB8883CF5D3DA8ED32B6A919449DE4A@DS7PR19MB8883.namprd19.prod.outlook.com>
+Date: Fri, 3 Oct 2025 11:06:46 +0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v16 0/9] Add PWM support for IPQ chipsets
+To: "Rob Herring (Arm)" <robh@kernel.org>
+Cc: Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ linux-pwm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Baruch Siach <baruch.siach@siklu.com>, Baruch Siach <baruch@tkos.co.il>,
+ =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ Devi Priya <quic_devipriy@quicinc.com>
+References: <20251001-ipq-pwm-v16-0-300f237e0e68@outlook.com>
+ <175936202881.2426650.1624694657690403545.robh@kernel.org>
+Content-Language: en-US
+From: George Moussalem <george.moussalem@outlook.com>
+In-Reply-To: <175936202881.2426650.1624694657690403545.robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DX0P273CA0105.AREP273.PROD.OUTLOOK.COM
+ (2603:1086:300:5c::16) To DS7PR19MB8883.namprd19.prod.outlook.com
+ (2603:10b6:8:253::16)
+X-Microsoft-Original-Message-ID:
+ <45a1a0bb-605d-44c1-ae94-403545535a91@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20251002-dw9800-driver-v1-2-c305328e44f0@fairphone.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR19MB8883:EE_|LV0PR19MB9496:EE_
+X-MS-Office365-Filtering-Correlation-Id: 9a7464af-ebf3-4a6e-8e7f-08de024b6ed6
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|5072599009|8060799015|19110799012|6090799003|41001999006|23021999003|15080799012|12121999013|3412199025|4302099013|40105399003|440099028|52005399003|10035399007|1602099012;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?S1JMK05YNEFaNjdyU3NGNnlnTEtDeUUvSlJjTUw5cEQ4K2dGazA0NGY5VWd2?=
+ =?utf-8?B?OFcyc09QQ3hHbXVHRmgyVDRHTXN0TmdJVzVqZDhyVVlKZGQ1STdtYlpWYlY0?=
+ =?utf-8?B?UWg4MGQwNmZ5d0Q2akk1c1hBV3hscFFTeWJSaXBvZmhDQkhyYnR6MmpUZm93?=
+ =?utf-8?B?WEVCODFJZERQV3pQN3A0bUpiSUpXWmxkbUJTYXpiZVhWbDBSdVpiS3QxR1hJ?=
+ =?utf-8?B?RzhXeGtjNytTa2ZtNldJTkVocG1pTDNaeVJBY2dXc2F5eE1jS1ZTcFRDcUQz?=
+ =?utf-8?B?a1p3SjNkREVQK1JvVnhwNk9POUxjOWg2QzZibGxIb1I5L1NHS1J3WjBSZE9H?=
+ =?utf-8?B?SHkyWkVQMHIzb0JNM2t3OTdVS1BGZWpQa2VWNlhMczFTUXVoRFZ6dS9DN1g2?=
+ =?utf-8?B?MVdNTUFMQ1FFUmNlMGlCcGhzMDZvU055UEsrV2dSMU4yVFVzaE5oem4wdE83?=
+ =?utf-8?B?RDdrVVloUG90MVVTYk82MW5RYTI5UUhwbkUwUVBUOXVlS1d3VXhocG9QRFU1?=
+ =?utf-8?B?SGRJLytTZHlJTUNPMXpiM2JoejNIWlYxNEJ4bXJrWlRzSFYxZFF3VEJvdGpx?=
+ =?utf-8?B?SGdJeURBMXV1aXZKUGs2QUVnS04xemEwajdhQ2hsRkw3dURVZkFkYVlkUU9q?=
+ =?utf-8?B?bkdlK3VhNHBUNGFKWG5INGo0OC8zVUltVnRyVUZZQTdaay9laGEyOXRhUmx2?=
+ =?utf-8?B?N2x3SXo3c2laTktZRzAzL0JoRExCQkFSOCtYcmxHdWtWZUd3NCt5aVBCbXds?=
+ =?utf-8?B?MDdZTFVtMlI5VjhZMnBUc3l4OXY0bXlhOEhtVTA5RDdMR21GRzVMUnFGMlhD?=
+ =?utf-8?B?SDZjVStNQnltV1Q2RDFGL3BTV3JvUC9vQXpxRCtVMW5BamUvcGdKdGY1MWFH?=
+ =?utf-8?B?bkFJNGVQVXB0clFBek5ZaXhOYWFydUxSNjllejdzWEtKVnhtYUhsaDlDNlYx?=
+ =?utf-8?B?bWlqV0dnK1JmT3hRdTFjdnhIZnRYWnpCamdheVFUeERxQVBVa0E0ZFk1Z2tF?=
+ =?utf-8?B?YWRUQ1M5ZjdBcnVncEI2cUh6eFNVT0NVZnhna3NCakkraFZlM0ZLSlhkRlc2?=
+ =?utf-8?B?dStFcEl3Sk04RkFJNHJ3cUJXQkJJOWNWVzRrclQ2aTN6QU9ISkEyKzJBc0p2?=
+ =?utf-8?B?TTJacjZyRTBTSjlRRzhDeGo4RndHcWRuVUVYd3VNVTlmSm1peEs5R2lWWXl4?=
+ =?utf-8?B?VHg2TDBDc2JBdmFLZWppVmpwb05yOTcxYXVZek1mVFI4OTQxUi84b2d2MzBO?=
+ =?utf-8?B?K3BlSXlRQUpUNTU5bDZDWDZDRExWbHJzbjRDdEgyRTBRcU5SNHRlRmxGOSta?=
+ =?utf-8?B?ZGtSeGgvYmNzaWVabUJIcHY4alZCV2dZM013YU15OTFXaHQza1RZZENmVEhm?=
+ =?utf-8?B?WnpScnZrRUNwZG1OSEdXblM3OHhEbGJ0ajd0alpGVlFaS2dYOXpiTmpqQnAx?=
+ =?utf-8?B?Q20zRy9LM1lydUNyMzNiemk3OWpFdk03NitaVHo5blNGcjJ2YXQvRW5mdGJv?=
+ =?utf-8?B?QzJaUzZwK0RwT2VCelBzb2M3cVY0WGdOUmpYRDNsekVHTGVJOGx1cTFBaHI2?=
+ =?utf-8?B?WHJUNjVSdk02ZmVCSlNZT0gwVzh6cXVCL2pmSmJFMTN5bHBrMlhUa2dUaE96?=
+ =?utf-8?B?eWRpUW9kbVNGMXNxU2dqNkJEODIrc0UwRnZSVG5HZ3g1dmc4QWF1REphQVZV?=
+ =?utf-8?B?RG5jd09OS0czdTIxaklYV05WWkluNG1BYVBFb3BHZmYydnBFaXRYdTBCNHNW?=
+ =?utf-8?B?WUJERWRRZHprM3JBRkw4TEJWQ3RMWDR4TlRFTWJVa0hnVFJ5K0RxTWI4ZFdC?=
+ =?utf-8?B?S2wzcklyRlNON0RZZDE5Zz09?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?K3Fmb1U4dHV1NWl3cEdIWW1xZUh0OXNZM1o1S2o4RTlFbzAybXdBN3FqRGJC?=
+ =?utf-8?B?ck9TS0JvZ3BCeXdLZFowUS9rNTcxZENBYXpEUm11MnltemRYV3h0OTBzZmV6?=
+ =?utf-8?B?OXAzRDBabmlhUk1MT0RuYURWNmVNU08yYWNOa3d3L2h4dVF6Zk5aQzdNNE9J?=
+ =?utf-8?B?dDREbzlTa2IzSU9vbTh6cXJXdFM2MjRYdnBNVktrOVJNbjl3RUhEUW92OU1F?=
+ =?utf-8?B?K1BHc1hTV1BOTmZZWTJhbi9pVTBXbXZaakZMbXFjU0t4SnM2L052c1NGUWNT?=
+ =?utf-8?B?YWdkRE9UUExlT2FCZnhiT082aWlYcFF1MDUyc3BjM05WaXBHSDVzNm5uZE1B?=
+ =?utf-8?B?RWVra3R6OEp4N1lib2ZWUXRNSnRjeUxidTJLclozNEM3dGhoNFU4cHFRNUZE?=
+ =?utf-8?B?Y3g4MWlJbiswTFFuVlRyLzhvMks1ZTVWb3E5M1V6TlNmM255Z2llK0d5bjlQ?=
+ =?utf-8?B?RUNGVkF1dW44TklNNXVUWFpvL0VWNGVmTXhkU3kzbWw2L3NZOURqRmVTdVdS?=
+ =?utf-8?B?ZVFjWVhJR3lpKzFJa1hscjBjTzlpZ3NDdkc4dWYwWGFUS1VWc25pRUsxbGgy?=
+ =?utf-8?B?NFF2RjYvSTVaTGQ5b200VzlTZ1pBRk1XanRsSGFNb2NBclRpcm1rNEJrY1Fs?=
+ =?utf-8?B?WE5xdTR3ZWc4MkFMd0xVb3NUWGtKQk9LQys1QWFFeW9uU3hQZjBHdGZCRDEz?=
+ =?utf-8?B?REp3VDJ6RmNCdldraGthR2o3elJlR2NpcVNIYjFmelRUc1l0cWV1bXlqRGp0?=
+ =?utf-8?B?NlVhYUIwazJ3cWFwRFhVemJEVUNsRXdtaXlYQ1B2QjZNVDIrYno1VmU0NGF1?=
+ =?utf-8?B?aEMzeUFSMk5adE9oV0xTcmRmZjk5bzhEYWJKdEpMZ0xYcFVOSjYyUFNCV2xq?=
+ =?utf-8?B?RTdZVmNPYkUyNWZJeURaNU1nMjVkdmg3a0FLVXpxc0FZWXVpYTZKWm9KMlp6?=
+ =?utf-8?B?Qkl3V1FoV3VjYnlzRC9ZaHNFbTVTUlAvSUR1SHl3dEdWR1FFS3hVZnAxdjV4?=
+ =?utf-8?B?OVlVNzZ2WVpWRlptSENWL0tIWDE5S0d0WkppNXlUU3VpOGdGVHlQSnAxQ2xr?=
+ =?utf-8?B?ZjNHTjRvcXZaSlBqNE1XNk1uYmV4NEFmZW5qL0MzUGNCQmUyYlFPbDNlbWRL?=
+ =?utf-8?B?ZkVXSXVmeCtmSG5NYmJORlExanhEcUNOaXQ5RjRhZzFhK2RBSjgwYi9ldExu?=
+ =?utf-8?B?ZEpwaWNBeG5uR0d6dEdPVjM4WWN5eE1nQmZPRkN5elJQYmw5RzFJUGFGZUQr?=
+ =?utf-8?B?bDA5YTFqMXFZWERBNklob1FDZG52VjBVMFpzZml3bFh1Z0FkWmcwcXo1OEZF?=
+ =?utf-8?B?bUxZOWhoc0tXbVBhbFdld0FmTDdjYUhCMmhuY0ZObGh6U1pORzlhM3RlYjhr?=
+ =?utf-8?B?V1RVbUpMa1FrSVh5NEpWOGhxM3JjOXFSak1SNU5zVkFjMFRvakNLMTNTcTFz?=
+ =?utf-8?B?cWs5cGQxZlMvbHZuanFzUE9wUW9oOWRGOFdtUG5wZzZFcjBhalVOalZvSDFB?=
+ =?utf-8?B?cHlTdklzTDlWSktyaTFjN2ZIWGtLcjdMRzFQNWcvejV2MUNPaFpSNmNPaENK?=
+ =?utf-8?B?ZDRydG45UmcwQmtWaTc2eDdjcUk2ZEt0emt6TGd0RDJiNWY1V0FrWlZVRFFs?=
+ =?utf-8?B?UXdqUUV0ZGFQSGVDSERtZGtvL1UzZWdKbGNHQjZGOWhrTk5uNW8wSVVlR0M3?=
+ =?utf-8?Q?d329ChCVRJBbesPmo5nR?=
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a7464af-ebf3-4a6e-8e7f-08de024b6ed6
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR19MB8883.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2025 07:06:56.0118
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR19MB9496
 
-Hi Griffin,
+yeah, my bad. c/p error as I moved it out from the TCSR node.
+Ran dt_binding_check on the yaml, did dtbs_check on ipq5018 so missed it
+for ipq6018. Will be fixed in next version. Waiting for feedback on the
+driver (Uwe's?) and on the dt bindings (Krzysztof's?) for adding
+additional compatibles. Will then send out the next version..
 
-Thank you for the set.
+thanks!
 
-On Thu, Oct 02, 2025 at 12:15:34PM +0200, Griffin Kroah-Hartman wrote:
-> The DW9800K is a similar part to the DW9719. The method for operation is
-> the same as the DW9719, but the register set is different. Add support
-> for this part to the existing dw9719 driver.
+On 10/2/25 03:42, Rob Herring (Arm) wrote:
 > 
-> Tested on the Fairphone 5 smartphone.
+> On Wed, 01 Oct 2025 18:04:16 +0400, George Moussalem wrote:
+>> Add PWM driver and binding support for IPQ chipsets.
+>> Also, add nodes to add support for pwm in ipq6018, ipq5018, ipq5332, and
+>> ipq9574.
+>>
+>> I've picked up work based on Devi's last submission (v15) which dates
+>> back to 05 October 2023 as below SoCs are still active.
+>>
+>> V16:
+>>
+>>   Removed reg description in bindings as the offset is not relative to
+>>   the TCSR region anymore since simple-mfd support was dropped and PWM
+>>   nodes defined as their own nodes, not child nodes. Updated the example
+>>   too.
+>>
+>>   Dropped patch to add simple-mfd support to the qcom,tcsr bindings
+>>
+>>   Simplified code to calculate divs and duty cycle as per Uwe's comments
+>>
+>>   Removed unused pwm_chip struct from ipq_pwm_chip struct
+>>
+>>   Removed unnecessary cast as per Uwe's comment
+>>
+>>   Replaced devm_clk_get & clk_prepare_enable by devm_clk_get_enabled
+>>
+>>   Replaced pwmchip_add by devm_pwmchip_add and removed .remove function
+>>
+>>   Removed .owner from driver struct
+>>
+>>   Added compatibles to the bindings and nodes to the device trees to add
+>>   PWM support PWM in the IPQ5018, IPQ5332, and IPQ9574 SoCs
+>>
+>> v15:
+>>
+>>   No change
+>>
+>> v14:
+>>
+>>   Picked up the R-b tag
+>>
+>> v13:
+>>
+>>   Updated the file name to match the compatible
+>>
+>>   Sorted the properties and updated the order in the required field
+>>
+>>   Dropped the syscon node from examples
+>>
+>> v12:
+>>
+>>   Picked up the R-b tag
+>>
+>> v11:
+>>
+>>   No change
+>>
+>> v10:
+>>
+>>   No change
+>>
+>> v9:
+>>
+>>   Add 'ranges' property to example (Rob)
+>>
+>>   Drop label in example (Rob)
+>>
+>> v8:
+>>
+>>   Add size cell to 'reg' (Rob)
+>>
+>> v7:
+>>
+>>   Use 'reg' instead of 'offset' (Rob)
+>>
+>>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+>>
+>>   Use single cell address/size in example node (Bjorn)
+>>
+>>   Move '#pwm-cells' lower in example node (Bjorn)
+>>
+>>   List 'reg' as required
+>>
+>> v6:
+>>
+>>   Device node is child of TCSR; remove phandle (Rob Herring)
+>>
+>>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+>>
+>> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>>     Andersson, Kathiravan T)
+>>
+>> v4: Update the binding example node as well (Rob Herring's bot)
+>>
+>> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+>>
+>> v2: Make #pwm-cells const (Rob Herring)
+>>
+>> V15:
+>> Detailed Change logs are added to the respective patches.
+>>
+>> V14 can be found at:
+>> https://lore.kernel.org/linux-arm-msm/20231005043127.2690639-1-quic_devipriy@quicinc.com/
+>>
+>> Devi Priya (4):
+>>   pwm: driver for qualcomm ipq6018 pwm block
+>>   dt-bindings: pwm: add IPQ6018 binding
+>>   dt-bindings: mfd: qcom,tcsr: Add simple-mfd support for IPQ6018
+>>   arm64: dts: qcom: ipq6018: add pwm node
+>>
+>>  .../devicetree/bindings/mfd/qcom,tcsr.yaml    | 112 +++++--
+>>  .../bindings/pwm/qcom,ipq6018-pwm.yaml        |  45 +++
+>>  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  15 +-
+>>  drivers/pwm/Kconfig                           |  12 +
+>>  drivers/pwm/Makefile                          |   1 +
+>>  drivers/pwm/pwm-ipq.c                         | 282 ++++++++++++++++++
+>>  6 files changed, 435 insertions(+), 32 deletions(-)
+>>  create mode 100644 Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
+>>  create mode 100644 drivers/pwm/pwm-ipq.c
+>>
+>> --
+>> 2.34.1
+>>
+>> ---
+>> Devi Priya (3):
+>>       dt-bindings: pwm: add IPQ6018 binding
+>>       pwm: driver for qualcomm ipq6018 pwm block
+>>       arm64: dts: qcom: ipq6018: add pwm node
+>>
+>> George Moussalem (6):
+>>       dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq5018
+>>       dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq5332
+>>       dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq9574
+>>       arm64: dts: qcom: ipq5018: add pwm node
+>>       arm64: dts: qcom: ipq5332: add pwm node
+>>       arm64: dts: qcom: ipq9574: add pwm node
+>>
+>>  .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  |  51 +++++
+>>  arch/arm64/boot/dts/qcom/ipq5018.dtsi              |  10 +
+>>  arch/arm64/boot/dts/qcom/ipq5332.dtsi              |  10 +
+>>  arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  10 +
+>>  arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  10 +
+>>  drivers/pwm/Kconfig                                |  12 ++
+>>  drivers/pwm/Makefile                               |   1 +
+>>  drivers/pwm/pwm-ipq.c                              | 214 +++++++++++++++++++++
+>>  8 files changed, 318 insertions(+)
+>> ---
+>> base-commit: 846bd2225ec3cfa8be046655e02b9457ed41973e
+>> change-id: 20250922-ipq-pwm-c8c75c147d52
+>>
+>> Best regards,
+>> --
+>> George Moussalem <george.moussalem@outlook.com>
+>>
+>>
+>>
 > 
-> Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
-> ---
->  drivers/media/i2c/dw9719.c | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
 > 
-> diff --git a/drivers/media/i2c/dw9719.c b/drivers/media/i2c/dw9719.c
-> index 3627e78b8b6668933c4ecd92231465ce4105ff0c..172479f2c9f63f6b2a1f6eccf8184142edb383b9 100644
-> --- a/drivers/media/i2c/dw9719.c
-> +++ b/drivers/media/i2c/dw9719.c
-> @@ -68,6 +68,9 @@
->  #define DW9761_VCM_PRELOAD		CCI_REG8(8)
->  #define DW9761_DEFAULT_VCM_PRELOAD	0x73
->  
-> +#define DW9800K_DEFAULT_SAC		1
-> +#define DW9800K_MODE_SAC_SHIFT		6
-> +#define DW9800K_DEFAULT_VCM_FREQ		0x10
->  
->  #define to_dw9719_device(x) container_of(x, struct dw9719_device, sd)
->  
-> @@ -75,6 +78,7 @@ enum dw9719_model {
->  	DW9718S,
->  	DW9719,
->  	DW9761,
-> +	DW9800K,
->  };
->  
->  struct dw9719_device {
-> @@ -137,6 +141,12 @@ static int dw9719_power_up(struct dw9719_device *dw9719, bool detect)
->  			goto props;
->  		}
->  
-> +		if (dw9719->model == DW9800K) {
-> +			dw9719->sac_mode = DW9800K_DEFAULT_SAC;
-> +			dw9719->vcm_freq = DW9800K_DEFAULT_VCM_FREQ;
-> +			goto props;
-> +		}
-
-How about using switch() instead?
-
-> +
->  		ret = cci_read(dw9719->regmap, DW9719_INFO, &val, NULL);
->  		if (ret < 0)
->  			return ret;
-> @@ -177,6 +187,12 @@ static int dw9719_power_up(struct dw9719_device *dw9719, bool detect)
->  	}
->  
->  	switch (dw9719->model) {
-> +	case DW9800K:
-> +		cci_write(dw9719->regmap, DW9719_CONTROL, DW9719_ENABLE_RINGING, &ret);
-> +		cci_write(dw9719->regmap, DW9719_MODE,
-> +				  dw9719->sac_mode << DW9800K_MODE_SAC_SHIFT, &ret);
-
-Indentation.
-
-> +		cci_write(dw9719->regmap, DW9719_VCM_FREQ, dw9719->vcm_freq, &ret);
-> +		break;
->  	case DW9718S:
->  		/* Datasheet says [OCP/UVLO] should be disabled below 2.5V */
->  		dw9719->sac_mode &= DW9718S_CONTROL_SAC_MASK;
-> @@ -426,6 +442,7 @@ static const struct of_device_id dw9719_of_table[] = {
->  	{ .compatible = "dongwoon,dw9718s", .data = (const void *)DW9718S },
->  	{ .compatible = "dongwoon,dw9719", .data = (const void *)DW9719 },
->  	{ .compatible = "dongwoon,dw9761", .data = (const void *)DW9761 },
-> +	{ .compatible = "dongwoon,dw9800k", .data = (const void *)DW9800K },
->  	{ }
->  };
->  MODULE_DEVICE_TABLE(of, dw9719_of_table);
+> My bot found new DTB warnings on the .dts files added or changed in this
+> series.
+> 
+> Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
+> are fixed by another series. Ultimately, it is up to the platform
+> maintainer whether these warnings are acceptable or not. No need to reply
+> unless the platform maintainer has comments.
+> 
+> If you already ran DT checks and didn't see these error(s), then
+> make sure dt-schema is up to date:
+> 
+>   pip3 install dtschema --upgrade
+> 
+> 
+> This patch series was applied (using b4) to base:
+>  Base: using specified base-commit 846bd2225ec3cfa8be046655e02b9457ed41973e
+> 
+> If this is not the correct base, please add 'base-commit' tag
+> (or use b4 which does this automatically)
+> 
+> New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251001-ipq-pwm-v16-0-300f237e0e68@outlook.com:
+> 
+> arch/arm64/boot/dts/qcom/ipq6018.dtsi:418.4-28: Warning (reg_format): /soc@0/pwm@1941010:reg: property has invalid length (8 bytes) (#address-cells == 2, #size-cells == 2)
+> arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: Warning (pci_device_reg): Failed prerequisite 'reg_format'
+> arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: Warning (pci_device_bus_num): Failed prerequisite 'reg_format'
+> arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: Warning (i2c_bus_reg): Failed prerequisite 'reg_format'
+> arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: Warning (spi_bus_reg): Failed prerequisite 'reg_format'
+> arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dtb: soc@0 (simple-bus): pwm@1941010:reg:0: [26480656, 32] is too short
+> 	from schema $id: http://devicetree.org/schemas/reg.yaml#
+> 
+> 
+> 
+> 
 > 
 
--- 
-Regards,
-
-Sakari Ailus
 
