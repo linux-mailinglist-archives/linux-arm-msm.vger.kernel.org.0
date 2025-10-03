@@ -1,111 +1,111 @@
-Return-Path: <linux-arm-msm+bounces-75903-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75910-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id D270EBB6E05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 15:11:44 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 83A49BB7000
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 15:24:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 45CE64EC08B
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 13:11:21 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BC1DA3B1B41
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 13:19:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E97B92F2606;
-	Fri,  3 Oct 2025 13:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6091819E975;
+	Fri,  3 Oct 2025 13:19:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V7QRnqUT"
+	dkim=pass (1024-bit key) header.d=zohomail.com header.i=newwheatzjz@zohomail.com header.b="BA4NPUuQ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from sender4-pp-o95.zoho.com (sender4-pp-o95.zoho.com [136.143.188.95])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD92A2F0C68;
-	Fri,  3 Oct 2025 13:07:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759496859; cv=none; b=DSxkcn4Io5kp0ofHmVXPMm1CqgZnecNt64lcGhOD/j/uIx5DiGawnvjI9VZfjj+wPUNg2RqD8qcoP05lY3rky6y+Ij8nKmw5yz/32imonIVJXVJnSfLBwDLJ0TDAwKYqWsj9qRclpH8URbEWmlDE154tgdunR4cyeyuQh6hx7FE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759496859; c=relaxed/simple;
-	bh=PAJkK9dfzICQW/0A5BRssXj9Is4GeHIj5w2sCsCxQMw=;
-	h=Date:Content-Type:MIME-Version:From:Cc:To:In-Reply-To:References:
-	 Message-Id:Subject; b=OBRTv+VlhApOc8nFYjtWcf8tbeL8OJ1xCx9iiBVZZMny/3tOGpXYnuie9CJWPBfa4AlRjbT7SXIcV+elyvs9+yIzrTlQZnjxCRRqWcI79UatNakEXJKfVsgYWcQbwin7iF4Unjzk9hM8R/uCxnB1LlOVjEVRBovcpPLNWT0j8jA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V7QRnqUT; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292C2C4CEF5;
-	Fri,  3 Oct 2025 13:07:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759496859;
-	bh=PAJkK9dfzICQW/0A5BRssXj9Is4GeHIj5w2sCsCxQMw=;
-	h=Date:From:Cc:To:In-Reply-To:References:Subject:From;
-	b=V7QRnqUTG880+ZQff30yTv3EBGefTwpABXhR0FQ5xRfOh9y657VAcawufzLi+B3nY
-	 WnhXLklHf1tF3DXLQ/skmsvbBLbzdZPz3W++iTzdoeMJfHub5ucB2vIIecoL671Feo
-	 aYjAZwebArfvvgr8wG7Vw5Fj5UTPHIlTYEolC2E74bM/5RldW6m5CeEpt1UUK96tfz
-	 aTkX6suc1hG+HtMvqirg2kQhGGLffnLl+f2Y4WiVnhSVCeZ+NxMNmreJvzYTmiBYOd
-	 DOAD/C+D4tyq1pXJrd34rCe1f6Vuy8s+zqpnx7hofrr7I7xKKwqIt89BgElow1cKf1
-	 A5EqvesQUS36w==
-Date: Fri, 03 Oct 2025 08:07:38 -0500
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D713522F;
+	Fri,  3 Oct 2025 13:19:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.95
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759497581; cv=pass; b=N9JfOzflxjakki0hcAR0pKHDJkucuh6htFu4zEipNyNAx9/r/wV3iQAwLpRhIXGcBTIDCrETeDb7956XAsrS4IPPOgHmAQfv5zVnIzM2Jc63mThVIGGtWwT0CElAfkHzuJenS7S2MfWiPfK5RXjztrbVP/OFX9vdQWyJPWh5FYg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759497581; c=relaxed/simple;
+	bh=y5Wl2juJNpEAWjocguLoZJV6CZJTMDsigxy0uQkMxco=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=IB41JfDsLLJHHMBqKxeRLwIDxwG57MmoyYjX/nQQ4dZEyFlLvXLoI/E1gwjoFVVUJ8oWNZ85GsmhEwzcxE4n3vMt6O5Erm499C/NfjA0IBL08mm7SwS+VXSXcPhX0yaiTpI0riUObejEZiN++XokFSDlIX0lG2tlsryRoYsaqYE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com; spf=pass smtp.mailfrom=zohomail.com; dkim=pass (1024-bit key) header.d=zohomail.com header.i=newwheatzjz@zohomail.com header.b=BA4NPUuQ; arc=pass smtp.client-ip=136.143.188.95
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zohomail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zohomail.com
+ARC-Seal: i=1; a=rsa-sha256; t=1759497575; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=m7uMLLQFfi2eue9mIJ7yJMbOLGT6JVupDeXf/CllIdH5cL3QOJfxFXCQ4iCGcbJ8e9iXlDkVqXg4sfo1H2rijFdzsH8EfMtqxgnpkXhdanZpWHX9cNkAqCKVu9QFdCIOlHySmHgijzp4XviaUeTjo88LbPXcvv+GVu3KF5Q2xKc=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1759497575; h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=WDvaGERZwW0unNT0t+ZHheS0dLIO99p/E/1UmNyVKdg=; 
+	b=XN42mndllTKUanXwW7fr+zK8P+YNfwolXRuXPR0dQjWafvh4Ll3AxrfBmxw4n31swFkh82V4GiZtJPZyRbB0oQ2vM+GugQkq/TfeSK5GG373x/8PrDE+lQlcVtXELI4QgYjUrYmqZjz5VLxuiFuAiMXOQcl050l+3NADChhrAVw=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohomail.com;
+	spf=pass  smtp.mailfrom=newwheatzjz@zohomail.com;
+	dmarc=pass header.from=<newwheatzjz@zohomail.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1759497575;
+	s=zm2022; d=zohomail.com; i=newwheatzjz@zohomail.com;
+	h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:In-Reply-To:References:MIME-Version:Content-Transfer-Encoding:Feedback-ID:Message-Id:Reply-To;
+	bh=WDvaGERZwW0unNT0t+ZHheS0dLIO99p/E/1UmNyVKdg=;
+	b=BA4NPUuQwe0bDaUWEiwm0aQUR/h2a0tt/Y1URlR5eoauDD79Ku8+l2EsAYX01Htx
+	rPmZwSf9uB5+6d1QGk2R9LGdfoyehOQneB29NTLgGfcW88UxMn2n5CFJzG6tHQYNfpI
+	Pw+877IGaaHZ1z+SSL7ul+EgTCJIoQfJceaKh0Bc=
+Received: by mx.zohomail.com with SMTPS id 1759497572892706.9817352550522;
+	Fri, 3 Oct 2025 06:19:32 -0700 (PDT)
+From: Jingzhou Zhu <newwheatzjz@zohomail.com>
+To: andersson@kernel.org,
+	konradybcio@kernel.org,
+	robh@kernel.org,
+	krzk+dt@kernel.org,
+	conor+dt@kernel.org
+Cc: linux-arm-msm@vger.kernel.org,
+	devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	Jingzhou Zhu <newwheatzjz@zohomail.com>
+Subject: [PATCH v3 0/2] arm64: dts: qcom: Introduce Huawei MateBook E 2019
+Date: Fri,  3 Oct 2025 21:19:23 +0800
+Message-ID: <20251003131925.15933-1-newwheatzjz@zohomail.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20251001142107.21860-1-newwheatzjz@zohomail.com>
+References: <20251001142107.21860-1-newwheatzjz@zohomail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: "Rob Herring (Arm)" <robh@kernel.org>
-Cc: Konrad Dybcio <konradybcio@kernel.org>, devicetree@vger.kernel.org, 
- Conor Dooley <conor+dt@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-kernel@vger.kernel.org, 
- Bjorn Andersson <andersson@kernel.org>, linux-arm-msm@vger.kernel.org
-To: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-In-Reply-To: <20251002172946.589061-1-krishna.kurapati@oss.qualcomm.com>
-References: <20251002172946.589061-1-krishna.kurapati@oss.qualcomm.com>
-Message-Id: <175949678614.770429.8746115664528965261.robh@kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: lemans-evk: Add OTG support for
- primary USB controller
+Content-Transfer-Encoding: 8bit
+Feedback-ID: rr08011227018b94be48480eca8c6dd9540000a36dcfa08272135811c2584a4934096702c9600f78514e57e2:zu080112279578fbbc099edc8de0245e2e00002bf0b50d6d491a200abbf347158b7476e0dd4b93de9d052c0b:rf08011226cce8a2e2e887609d955fef4f000017584207c60b05865bebef06b963494bdf5e8ca092b1405f:ZohoMail
+X-ZohoMailClient: External
 
+Huawei MateBook E 2019 is a 2-in-1 tablet shipped with Windows on ARM.
+It is one of the early WoA devices powered by Qualcomm Snapdragon 850,
+or the sdm850 platform. This series adds mainline Linux support for this
+device using device tree.
 
-On Thu, 02 Oct 2025 22:59:46 +0530, Krishna Kurapati wrote:
-> Enable OTG support for primary USB controller on EVK Platform. Add
-> HD3SS3220 Type-C port controller present between Type-C port and SoC
-> that provides role switch notifications to controller.
-> 
-> Signed-off-by: Krishna Kurapati <krishna.kurapati@oss.qualcomm.com>
-> ---
-> Link to driver and binding changes:
-> https://lore.kernel.org/all/20251002172539.586538-1-krishna.kurapati@oss.qualcomm.com/
-> 
->  arch/arm64/boot/dts/qcom/lemans-evk.dts | 122 +++++++++++++++++++++++-
->  1 file changed, 121 insertions(+), 1 deletion(-)
-> 
+Changes since v1:
+ - Remove 'enable-active-high' property from &vreg_s4a_1p8 and
+   'input-enable' property from &i2c5_hid_active to avoid warnings
+   mentioned by "Rob Herring (Arm)" <robh@kernel.org>
 
+Changes since v2:
+ - Rearranged the order of nodes and properties suggested by Bjorn to meet
+   the dts coding guidelines
 
-My bot found new DTB warnings on the .dts files added or changed in this
-series.
+base-commit: 7396732143a22b42bb97710173d598aaf50daa89
 
-Some warnings may be from an existing SoC .dtsi. Or perhaps the warnings
-are fixed by another series. Ultimately, it is up to the platform
-maintainer whether these warnings are acceptable or not. No need to reply
-unless the platform maintainer has comments.
+Signed-off-by: Jingzhou Zhu <newwheatzjz@zohomail.com>
+---
+Jingzhou Zhu (2):
+  dt-bindings: arm: qcom: Document Huawei MateBook E 2019
+  arm64: dts: qcom: Add support for Huawei MateBook E 2019
 
-If you already ran DT checks and didn't see these error(s), then
-make sure dt-schema is up to date:
+ .../devicetree/bindings/arm/qcom.yaml         |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../qcom/sdm850-huawei-matebook-e-2019.dts    | 962 ++++++++++++++++++
+ 3 files changed, 964 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/sdm850-huawei-matebook-e-2019.dts
 
-  pip3 install dtschema --upgrade
-
-
-This patch series was applied (using b4) to base:
- Base: attempting to guess base-commit...
- Base: remotes/next/fs-next-6496-g155abb6f8812 (exact match)
-
-If this is not the correct base, please add 'base-commit' tag
-(or use b4 which does this automatically)
-
-New warnings running 'make CHECK_DTBS=y for arch/arm64/boot/dts/qcom/' for 20251002172946.589061-1-krishna.kurapati@oss.qualcomm.com:
-
-arch/arm64/boot/dts/qcom/lemans-evk.dtb: hd3ss3220@67 (ti,hd3ss3220): 'id-gpios', 'vbus-supply' do not match any of the regexes: '^pinctrl-[0-9]+$'
-	from schema $id: http://devicetree.org/schemas/usb/ti,hd3ss3220.yaml#
-
-
-
-
+-- 
+2.47.3
 
 
