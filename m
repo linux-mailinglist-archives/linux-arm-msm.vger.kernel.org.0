@@ -1,191 +1,195 @@
-Return-Path: <linux-arm-msm+bounces-75917-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75918-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65B5CBB72B7
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 16:23:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A4868BB738F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 03 Oct 2025 16:43:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 3BFE14E38DE
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 14:23:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 030B04ECBF6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Oct 2025 14:43:00 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B48C23185E;
-	Fri,  3 Oct 2025 14:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97C8826E706;
+	Fri,  3 Oct 2025 14:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lotxKWgY"
+	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="NPlkjwcZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C17C230BFD;
-	Fri,  3 Oct 2025 14:23:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD7926E6E8
+	for <linux-arm-msm@vger.kernel.org>; Fri,  3 Oct 2025 14:42:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759501397; cv=none; b=C/YmJvx+Jg+92OY5deGpB9bynymX1j/bsgSO41/E3nEm6V4aJURw5WcLkYEKlQ3m7uqwAe4KeR0kC3S1aVFv8mQ8LA0Rwgq+f0P8FpFqQMW2AoW1UYUOTj3Ne3Ddgkyc/W0V3z2DNnM9ZZdWrHf5/9alStspL+/X2xbqu6IcBvM=
+	t=1759502578; cv=none; b=XXP0tZuIDfcV6bPx8jMg0EbUK3UHQQyDt3pv1s+pswAq6y7icNdWdjZEf2W5KCHd4LII6Wb4uvlOt0CP/jPCgkXA7HzBwTndaWF+ti9z0/Bn2KDXt1cVlvPpUmV5ystxlAUfq3zBjpaq+9/9ADtvwpdKLNQIBWTWpvfniHutgPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759501397; c=relaxed/simple;
-	bh=NTBZAxjqSpzLuG1zGiZTH3WkfjeQ/nsmqUdkHlpqyFA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ey2q1E1z998EqWMvMtJj/gbLTXvq00L5qLWqGVaqX4F13W3n1rGCLUMQQhOfXDGxP8b37y+ONe+Hq+hPdyYfDLmmvqU2thfXamxdJky2WZ3jN6McVty5ZqUuJMuc+APgF5YhNT8oi4AsBAG0uAvZ4Ng/PSQXP86uIt8zBHVLrGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lotxKWgY; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56D16C4CEF5;
-	Fri,  3 Oct 2025 14:23:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759501396;
-	bh=NTBZAxjqSpzLuG1zGiZTH3WkfjeQ/nsmqUdkHlpqyFA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=lotxKWgY+nAfg0Bz/Vct5iFAdwEuXX/DFjaJOBqc9lv3nSDTg8zneCk9H0vxJGrbW
-	 E52huxGlaW/CCY8YVgKZLz0wtmM6C75fwjspxr7EoP9Z80p9ndf+UhnoygFBVkccey
-	 22o8GW5ooXjZHLEuJXTJ4qy8YlVK1iG8UdNcXJJzQWrRFlCNBAhUXezahWZ/FA1uXh
-	 gRw4gC4VHeSEuHL9wHJwMJ49BBMDtPI38LWs3l+Gy+LG7D2tq8pmkSmU6DE3mWIN8R
-	 Q62B4V0mj9VexBWWRMAnnPYQFBEMOgNnRbN5nQYHPg1+kAHsuyfwisrdIrxPwkFanQ
-	 vsLJda5lDMRJw==
-Date: Fri, 3 Oct 2025 16:23:14 +0200
-From: Maxime Ripard <mripard@kernel.org>
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>, 
-	Neil Armstrong <neil.armstrong@linaro.org>, Robert Foss <rfoss@kernel.org>, 
-	Laurent Pinchart <Laurent.pinchart@ideasonboard.com>, Jonas Karlman <jonas@kwiboo.se>, 
-	Jernej Skrabec <jernej.skrabec@gmail.com>, Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
-	Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>, 
-	Simona Vetter <simona@ffwll.ch>, Sandy Huang <hjc@rock-chips.com>, 
-	Heiko =?utf-8?Q?St=C3=BCbner?= <heiko@sntech.de>, Andy Yan <andy.yan@rock-chips.com>, Chen-Yu Tsai <wens@csie.org>, 
-	Samuel Holland <samuel@sholland.org>, Dave Stevenson <dave.stevenson@raspberrypi.com>, 
-	=?utf-8?B?TWHDrXJh?= Canal <mcanal@igalia.com>, Raspberry Pi Kernel Maintenance <kernel-list@raspberrypi.com>, 
-	Liu Ying <victor.liu@nxp.com>, Rob Clark <robin.clark@oss.qualcomm.com>, 
-	Dmitry Baryshkov <lumag@kernel.org>, Abhinav Kumar <abhinav.kumar@linux.dev>, 
-	Jessica Zhang <jessica.zhang@oss.qualcomm.com>, Sean Paul <sean@poorly.run>, 
-	Marijn Suijten <marijn.suijten@somainline.org>, dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, 
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org, 
-	Daniel Stone <daniels@collabora.com>
-Subject: Re: [PATCH v4 01/10] drm/connector: let drivers declare infoframes
- as unsupported
-Message-ID: <20251003-primitive-sepia-griffin-cfca55@houat>
-References: <20250909-drm-limit-infoframes-v4-0-53fd0a65a4a2@oss.qualcomm.com>
- <20250909-drm-limit-infoframes-v4-1-53fd0a65a4a2@oss.qualcomm.com>
- <20250910-furry-singing-axolotl-9aceac@houat>
- <z333ysst5ifakomo35jtbpydj44epqwwn4da76rcnsq4are62m@32gsmgx2pcdi>
- <20250925-didactic-spiked-lobster-fefabe@penduick>
- <jfxtcvh4l5kzyv74llmzz3bbt6m4mhzhhwl6lh5kfeqgqhkrhi@jzfvtxpedmyf>
+	s=arc-20240116; t=1759502578; c=relaxed/simple;
+	bh=wDdmsNkWkPfZj44KlVzWvEle8GfWI+c12B+1GRbE7R8=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=nROUZfr8h/0VfvPa2tL1iLqWSjVfzCoPY9XxPZ3zQoFPD/xkQwjhuJ0NS8FVYXJLoLLNGBbF7YqlxAHNAH9KEW2HUXSmgYZ2xYmeEk6CgDtN/9y3GCRyvmq2b69m4tovkMuGafqZu0+FAt+PVtMY+/MZdK7SnZd3uqlvHN4o4j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=NPlkjwcZ; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-628f29d68ecso5451410a12.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Oct 2025 07:42:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=fairphone.com; s=fair; t=1759502575; x=1760107375; darn=vger.kernel.org;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=SlNE36EJ5Kom/3DEY05rCkapMs77Y5jFnAKGd9Vbt6k=;
+        b=NPlkjwcZ/vQCuKBuM3nDMNsF71AXGCNZFHyIYyrDn5LTrIphL+EvxEFYLgy0JfP1NH
+         68GgdiHQsIkE+ifjzwtKeU6wBlHk4CONaxHw4cVlG1nx6L5aeivr+mBaCRXkELgLAijB
+         vroxf/JqulAf4d5wPdxqeiVLH0dyt0Y46FZBf9PYKGFAKOoSKvPvND9Uv8dbPdQb5SoX
+         kOB54XDuJbPG5Eg6jW0zXXQzUKu5bV0Ed7CDVlF3u+37pJKoSWu2+V2zKp4moVbFEXIF
+         6Qg2k2DFpbDxVkzIUAOQsiz+tY9C/gdDHRyxc/GKSppsbhyiW+Ewhaz7YswfxZ0sr308
+         mNlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759502575; x=1760107375;
+        h=in-reply-to:references:subject:cc:to:from:message-id:date
+         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=SlNE36EJ5Kom/3DEY05rCkapMs77Y5jFnAKGd9Vbt6k=;
+        b=CErgQANr6Qz33N0mkOg6+SFtCGhgmmjYZMlemvAMKUxTl0NvOxYSzHyY1W4WtfdeqB
+         CtF0VhXNT6gsjTHFBnmDdkla6CboVX9ufrmg6HkU1YO3O0BuaczmeSllmdNM1VlNsNyT
+         U8S1IRGvzd7bJiEVsIkzH/lBfXzdDck2gbsEkV78K3oFTQcU+STXdi0MdnnXHuoTTHQ8
+         po1R9ViobU3aTbjd6JWBV2m8fkL4T9uhb8waP9IfglFqoIkn8p3GmeuJyZVf/w3GhK+E
+         yGozIuNctbIsz2YOl/DukqpShGAcLEpPp5m+C9pajN+4K2QzWgTE2qy9cu0v3254O1dq
+         XuHg==
+X-Forwarded-Encrypted: i=1; AJvYcCVOw5iWUJmZ81rncsm+RkI2SutISgUAjjEDOFMKt7Qj5ojmIe1NpNp3l29EQax+UJDI7NAOjdjw1ATyN7US@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw8L0Kyh/liC1lKREwNgO9b0glHD493oGijHg52g7nZXUgRAMAL
+	3m+CV21VEs270AprKC/W/FHmRqGiyDX/cGZj/k7BWU0g4u15f8rOvvNQCQSW6IcZe/U=
+X-Gm-Gg: ASbGnct3gNiQDfY7dd3UNwljfvawDoJNps7adWZP5FclB1Fv7MgP9V/l4n57tqh/quA
+	dTWn5AgKQt1iWvGkxQu20OgLpaljJjd1MHIkdmNfcA+3bt5GWHTTvbRri6Qe8ahGV+NdPBkEDcj
+	fs9b4MU32wkKmTBDLtJW7u82I2jKNDohID//MWZdWaM9HH7q2WmWOXqnCD376p0AaPfkn3blO86
+	PCMzgTg2Q/cNDp2Gmgunef7+SMDrdofMRerSs7CIRqgh45b/XWRMlvZKKYpapXC8CWHpDTSNn3J
+	LtK5e7Bvef3K/4m6m7Z/B5Z2tSnfdAEELgqqxF9kl9Fg7gR3TC/OaaOTNbG056SZYS93ylPRoVA
+	nnPqDtuX0CoYiz/vgYJmXkYItQJ5RLUZ2QR67tXGxDo8FArqy5QpGAuJ93acmqliXH9GvloNvfT
+	PKL8DtcQl7Jlp5iyNct2V+R9Bmo40=
+X-Google-Smtp-Source: AGHT+IGX8Mwauo0jMUzXRHaaKVWDDG9Q+j/DlBoCJbJpO1bZGiCPJWunCvR+Fi60aTitcRmnndjPYQ==
+X-Received: by 2002:a05:6402:2230:b0:637:e361:f44b with SMTP id 4fb4d7f45d1cf-639348cce60mr2774437a12.12.1759502574735;
+        Fri, 03 Oct 2025 07:42:54 -0700 (PDT)
+Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6376b3abcd7sm4152122a12.2.2025.10.03.07.42.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Oct 2025 07:42:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha384;
-	protocol="application/pgp-signature"; boundary="52tkbt2twc25uy2v"
-Content-Disposition: inline
-In-Reply-To: <jfxtcvh4l5kzyv74llmzz3bbt6m4mhzhhwl6lh5kfeqgqhkrhi@jzfvtxpedmyf>
-
-
---52tkbt2twc25uy2v
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH v4 01/10] drm/connector: let drivers declare infoframes
- as unsupported
-MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Date: Fri, 03 Oct 2025 16:42:53 +0200
+Message-Id: <DD8RLVPWQQ7O.1B3E1P6VNMWV1@fairphone.com>
+From: "Luca Weiss" <luca.weiss@fairphone.com>
+To: "Jianfeng Liu" <liujianfeng1994@gmail.com>,
+ <linux-arm-msm@vger.kernel.org>
+Cc: "Xilin Wu" <sophon@radxa.com>, "Abhinav Kumar"
+ <quic_abhinavk@quicinc.com>, "David Airlie" <airlied@gmail.com>, "Dmitry
+ Baryshkov" <lumag@kernel.org>, "Maarten Lankhorst"
+ <maarten.lankhorst@linux.intel.com>, "Mark Brown" <broonie@kernel.org>,
+ "Maxime Ripard" <mripard@kernel.org>, "Simona Vetter" <simona@ffwll.ch>,
+ "Thomas Zimmermann" <tzimmermann@suse.de>,
+ <dri-devel@lists.freedesktop.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v2] drm/display: add hw_params callback function to
+ drm_connector_hdmi_audio_ops
+X-Mailer: aerc 0.21.0-0-g5549850facc2
+References: <20250925040530.20731-1-liujianfeng1994@gmail.com>
+In-Reply-To: <20250925040530.20731-1-liujianfeng1994@gmail.com>
 
-On Thu, Sep 25, 2025 at 05:55:06PM +0300, Dmitry Baryshkov wrote:
-> > > As we will be getting more and more features, some of the InfoFrames
-> > > or data packets will be 'good to have, but not required'.
-> >=20
-> > And drivers would be free to ignore those.
-> >=20
-> > > > So, no, sorry. That's still a no for me. Please stop sending that p=
-atch
-> > >=20
-> > > Oops :-)
-> > >=20
-> > > > unless we have a discussion about it and you convince me that it's
-> > > > actually something that we'd need.
-> > >=20
-> > > My main concern is that the drivers should not opt-out of the feature=
-s.
-> > > E.g. if we start supporting ISRC packets or MPEG or NTSC VBI InfoFram=
-es
-> > > (yes, stupid examples), it should not be required to go through all t=
-he
-> > > drivers, making sure that they disable those. Instead the DRM framewo=
-rk
-> > > should be able to make decisions like:
-> > >=20
-> > > - The driver supports SPD and the VSDB defines SPD, enable this
-> > >   InfoFrame (BTW, this needs to be done anyway, we should not be send=
-ing
-> > >   SPD if it's not defined in VSDB, if I read it correctly).
-> > >=20
-> > > - The driver hints that the pixel data has only 10 meaninful bits of
-> > >   data per component (e.g. out of 12 for DeepColor 36), the Sink has
-> > >   HF-VSDB, send HF-VSIF.
-> > >=20
-> > > - The driver has enabled 3D stereo mode, but it doesn't declare suppo=
-rt
-> > >   for HF-VSIF. Send only H14b-VSIF.
-> > >=20
-> > > Similarly (no, I don't have these on my TODO list, these are just
-> > > examples):
-> > > - The driver defines support for NTSC VBI, register a VBI device.
-> > >=20
-> > > - The driver defines support for ISRC packets, register ISRC-related
-> > >   properties.
-> > >=20
-> > > - The driver defines support for MPEG Source InfoFrame, provide a way
-> > >   for media players to report frame type and bit rate.
-> > >=20
-> > > - The driver provides limited support for Extended HDR DM InfoFrames,
-> > >   select the correct frame type according to driver capabilities.
-> > >=20
-> > > Without the 'supported' information we should change atomic_check()
-> > > functions to set infoframe->set to false for all unsupported InfoFram=
-es
-> > > _and_ go through all the drivers again each time we add support for a
-> > > feature (e.g. after adding HF-VSIF support).
-> >=20
-> > From what you described here, I think we share a similar goal and have
-> > somewhat similar concerns (thanks, btw, it wasn't obvious to me before),
-> > we just disagree on the trade-offs and ideal solution :)
-> >=20
-> > I agree that we need to sanity check the drivers, and I don't want to go
-> > back to the situation we had before where drivers could just ignore
-> > infoframes and take the easy way out.
-> >=20
-> > It should be hard, and easy to catch during review.
-> >=20
-> > I don't think bitflag are a solution because, to me, it kind of fails
-> > both.
-> >=20
-> > What if, just like the debugfs discussion, we split write_infoframe into
-> > write_avi_infoframe (mandatory), write_spd_infoframe (optional),
-> > write_audio_infoframe (checked by drm_connector_hdmi_audio_init?) and
-> > write_hdr_infoframe (checked in drmm_connector_hdmi_init if max_bpc > 8)
-> >=20
-> > How does that sound?
->=20
-> I'd say, I really like the single function to be called for writing the
-> infoframes. It makes it much harder for drivers to misbehave or to skip
-> something.
+Hi Jianfeng Liu,
 
-=46rom a driver PoV, I believe we should still have that single function
-indeed. It would be drm_atomic_helper_connector_hdmi_update_infoframes's
-job to fan out and call the multiple callbacks, not the drivers.
+On Thu Sep 25, 2025 at 6:05 AM CEST, Jianfeng Liu wrote:
+> After reusing drm_hdmi_audio_* helpers and drm_bridge_connector
+> integration in drm/msm/dp, we have dropped msm_dp_audio_hw_params and
+> use msm_dp_audio_prepare instead. While userspace is still calling
+> hw_params to do audio initialization, and we get the following errors:
+>
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6ap=
+m_lpass_dai_prepare() started
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6ap=
+m_lpass_dai_prepare() started
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6ap=
+m_lpass_dai_prepare() started
+> hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_hw_params() started
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6ap=
+m_lpass_dai_prepare() started
+> qcom-apm gprsvc:service:2:1: Error (1) Processing 0x01001002 cmd
+> qcom-apm gprsvc:service:2:1: DSP returned error[1001002] 1
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: Fail=
+ed to start APM port 104
+> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: ASoC=
+ error (-22): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
+> MultiMedia2 Playback: ASoC error (-22): at dpcm_run_update_startup() on M=
+ultiMedia2 Playback
+>
+> msm_dp_audio_prepare is not called because hdmi-codec driver only checks
+> and runs hw_params before q6apm_lpass_dai_prepare(). This commit will
+> add hw_params callback same as drm_connector_hdmi_audio_prepare, so that
+> hdmi-codec driver can work with userspace alsa.
 
-Maxime
+This also fixes DP audio regression on qcm6490-fairphone-fp5 (using
+Elite audio architecture)
 
---52tkbt2twc25uy2v
-Content-Type: application/pgp-signature; name="signature.asc"
+[  133.986865] qcom-q6afe aprsvc:service:4:4: AFE enable for port 0x6020 fa=
+iled -110
+[  133.986878] q6afe-dai 3700000.remoteproc:glink-edge:apr:service@4:dais: =
+fail to start AFE port 68
+[  133.986881] q6afe-dai 3700000.remoteproc:glink-edge:apr:service@4:dais: =
+ASoC error (-110): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
+[  134.045112] qcom-q6afe aprsvc:service:4:4: cmd =3D 0x100e5 returned erro=
+r =3D 0x9
+[  134.045192] qcom-q6afe aprsvc:service:4:4: DSP returned error[9]
+[  134.045214] qcom-q6afe aprsvc:service:4:4: AFE enable for port 0x6020 fa=
+iled -22
+[  134.045231] q6afe-dai 3700000.remoteproc:glink-edge:apr:service@4:dais: =
+fail to start AFE port 68
+[  134.045243] q6afe-dai 3700000.remoteproc:glink-edge:apr:service@4:dais: =
+ASoC error (-22): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
 
------BEGIN PGP SIGNATURE-----
+Tested-by: Luca Weiss <luca.weiss@fairphone.com> # qcm6490-fairphone-fp5
 
-iJUEABMJAB0WIQTkHFbLp4ejekA/qfgnX84Zoj2+dgUCaN/cUQAKCRAnX84Zoj2+
-doqJAX90zNyWmsUip91wTNJtbf8t9T8oHpuaxLd97OtefR1KrjHS2zNm3j3QKJO2
-DILT8+EBfi951vLWkKKYswrmqe4tCE/x2PvHNyVn0RvWHOXmTytjmwkrcFHfX9Z+
-tXdDckATGw==
-=lhWy
------END PGP SIGNATURE-----
+And I guess, even though I reported it after this patch was sent:
 
---52tkbt2twc25uy2v--
+Closes: https://lore.kernel.org/linux-arm-msm/DD8PK8AI24P7.YK0OGVYC0QFM@fai=
+rphone.com/
+
+Regards
+Luca
+
+>
+> Tested with Radxa Dragon Q6A.
+>
+> Fixes: 98a8920e7b07 ("drm/msm/dp: reuse generic HDMI codec implementation=
+")
+> Signed-off-by: Jianfeng Liu <liujianfeng1994@gmail.com>
+> ---
+>
+> Changes in v2:
+> - Link to v1: https://lore.kernel.org/linux-arm-msm/20250924085804.34183-=
+1-liujianfeng1994@gmail.com/
+> - Use more detailed trace log in commit message.
+> - Drop the empty line between Fixex and SoB.
+>
+>  drivers/gpu/drm/display/drm_hdmi_audio_helper.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c b/drivers/gp=
+u/drm/display/drm_hdmi_audio_helper.c
+> index 7d78b02c1446..6ca1c7ad0632 100644
+> --- a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+> +++ b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+> @@ -130,6 +130,7 @@ EXPORT_SYMBOL(drm_connector_hdmi_audio_plugged_notify=
+);
+> =20
+>  static const struct hdmi_codec_ops drm_connector_hdmi_audio_ops =3D {
+>  	.audio_startup =3D drm_connector_hdmi_audio_startup,
+> +	.hw_params =3D drm_connector_hdmi_audio_prepare,
+>  	.prepare =3D drm_connector_hdmi_audio_prepare,
+>  	.audio_shutdown =3D drm_connector_hdmi_audio_shutdown,
+>  	.mute_stream =3D drm_connector_hdmi_audio_mute_stream,
+
 
