@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-75973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75974-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id B9A14BB8E06
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Oct 2025 15:32:05 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDB77BB90F0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Oct 2025 20:25:38 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73B233B7707
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Oct 2025 13:32:04 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 8D5DE1884967
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Oct 2025 18:26:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 062DD132117;
-	Sat,  4 Oct 2025 13:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A74391DE2A5;
+	Sat,  4 Oct 2025 18:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tuK8CBuo"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="na/UNnPO"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C979938FA6;
-	Sat,  4 Oct 2025 13:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C2B63594B;
+	Sat,  4 Oct 2025 18:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759584721; cv=none; b=FtE8yRpaypiHQd5fWIjDn22iV6SxOJ24qKFPBHyzNXOPxZcTZEBGC1GmMcH8cmcbUROyl88MigJqjo2ghnmK8oDXyAZGtB+UgYUCgsueOu+4A6j8fWJq7Q589WkmPJXRsVxJmMo9Ig9AJzah5QbGAzd4re+STGtEzsn2RHUCPCc=
+	t=1759602335; cv=none; b=PmEwbbTi2VeaEPZm2vSAiS3KIdJT/P+fgKNLjllVob0cziY19AUQ3ARf/TWTO0BJnSTw2g15g4U0y6qQsD88XsZRuoHn/Jn16zW/1HI329yGX9WLj/KBgVwxqNcZk7Pcs0qWYisTToDm5OEE3JdVtp5pOtSMRTvXhCiFy5gMXu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759584721; c=relaxed/simple;
-	bh=dtmZx205TbjsYteBttndCYNtOK23Kq5LL1dH+feqtx4=;
+	s=arc-20240116; t=1759602335; c=relaxed/simple;
+	bh=dvoX9+/2ZkKZ6bUEKpbpRMnripCzPtEITdrIX91WpRQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NHERDGNq1sMdqmH+2XIBaNl+t+1V9SBQpJIsqon3Wgq7cWkkYqwv3xV2lqL3oiWZ/N5xEJrBy9fn3ODxVSZ7sVYI4qB/899asm3BY/fAgD3TcvCCt6EoN4wW9cBVnf75bDR66LqH6ougGYIA9ViBrlIKP9dzMRwCv4D0iIQI3Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tuK8CBuo; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D834C4CEF1;
-	Sat,  4 Oct 2025 13:31:28 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=ABcG+qCHwq1fPXCEjSmYZGvY3uJn3Axi6QxneaKLNld7SWvjWFMgKpDtRt18AZkRIA27DirHUSGtNSfceUhZOJH8x0v5un9fUvENghoBBzsfqygTeIfXFXDCLeQB/DAoUGZ2Ktx0IN61/WM2NbupAAD3b88uZ8Bl0ig6yiIIHq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=na/UNnPO; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3D28C4CEF1;
+	Sat,  4 Oct 2025 18:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759584721;
-	bh=dtmZx205TbjsYteBttndCYNtOK23Kq5LL1dH+feqtx4=;
+	s=k20201202; t=1759602335;
+	bh=dvoX9+/2ZkKZ6bUEKpbpRMnripCzPtEITdrIX91WpRQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=tuK8CBuoTxTO4Xa5yiMNdJJpBschaPLAH1WzqJwCfhIDwg5uol+XtbGz96beo1vIq
-	 btMwgsthkafHWvTyJwJt0JegsZLrVX7jXSWEfU4g0mu/IG/QVY9QzKynR9aIy2ld+3
-	 z4b5IljflliTuGzxvzPJgYeTRRH6QhbWoqIanV1io4e8wdHEjGRrKxcKXNR4NMKudH
-	 XO8i8Ua7OYjmfZgAa2XX5S1SJbebFap5Lqvw2rILtR4F6bALaFS4Sn7ghteYbfPayz
-	 PzJqjQauzvh43v/u0M1Evxq2AgbaAMIbiSesM2SQTBFOvkQ9r0u1atoM4jSHNJZGvK
-	 ppBUonXw54Qyg==
-Message-ID: <0b402bba-0399-4f93-873e-890a78570ff7@kernel.org>
-Date: Sat, 4 Oct 2025 14:31:16 +0100
+	b=na/UNnPOaMdb4+MNBX4qFX/QhYMGkNkbkvd9PXulEzA/7N0I187bZfxz0iRHf+4Mr
+	 bD+EMn7Q6MY//0lnvu+jIC30xiA4j6cwO7OAQQnHWyRgqNEQDDfni09Cm1v6NWBhyR
+	 sl8U+TWAFZJO62OYR2rfuJ27dFjxzR9oBul26Xux0RK36mONeIZaJYOtM6EUquGNZ5
+	 xLrZ9JzclC2C8cIs3ZY6FdLzGbmgj1Sf42oOHbyNCYJFCFsRyBNJPMrn3yj/Lnoznj
+	 8FDeYob/m5eE/NxGCLj9zACLxb7ylIEeAfQqKZDbOvkWSb23/2MEfvTs6mYO2ab0YT
+	 PYvMljsu9lqgA==
+Message-ID: <a36555b9-b2b4-41a3-bbf1-58701b9f4b1a@kernel.org>
+Date: Sat, 4 Oct 2025 19:25:19 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,127 +50,216 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
-To: Bartosz Golaszewski <brgl@bgdev.pl>, Kees Cook <kees@kernel.org>,
- Mika Westerberg <westeri@kernel.org>,
- Dmitry Torokhov <dmitry.torokhov@gmail.com>,
- Andrew Morton <akpm@linux-foundation.org>,
- Linus Walleij <linus.walleij@linaro.org>,
- Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Andy Shevchenko <andy@kernel.org>, Catalin Marinas
- <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>
-Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
- linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
+Subject: Re: [PATCH 1/2] misc: fastrpc: Add support for new DSP IOVA
+ formatting
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Srinivas Kandagatla <srini@kernel.org>,
+ Amol Maheshwari <amahesh@qti.qualcomm.com>, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org,
+ Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+References: <20250924-knp-fastrpc-v1-0-4b40f8bfce1d@oss.qualcomm.com>
+ <20250924-knp-fastrpc-v1-1-4b40f8bfce1d@oss.qualcomm.com>
 Content-Language: en-US
 From: Srinivas Kandagatla <srini@kernel.org>
-In-Reply-To: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
+In-Reply-To: <20250924-knp-fastrpc-v1-1-4b40f8bfce1d@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
-On 9/24/25 3:51 PM, Bartosz Golaszewski wrote:
-> Here's a functional RFC for improving the handling of shared GPIOs in
-> linux.
-> 
-> Problem statement: GPIOs are implemented as a strictly exclusive
-> resource in the kernel but there are lots of platforms on which single
-> pin is shared by multiple devices which don't communicate so need some
-> way of properly sharing access to a GPIO. What we have now is the
-> GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
-> doesn't do any locking or arbitration of access - it literally just hand
-> the same GPIO descriptor to all interested users.
 
-Isn't the main issue here is about not using a correct framework around
-to the gpios that driver uses. ex: the codec usecase that you are
-refering in this is using gpio to reset the line, instead of using a
-proper gpio-reset control. same with some of the gpio-muxes. the problem
-is fixed once such direct users of gpio are move their correct frameworks.
-
-Am not sure adding a abstraction with-in gpio framework is right
-solution, But I do agree that NONEXCLUSIVE flags should disappear and
-users that are using this should be moved to correct frameworks where
-they belong.
-
---srini
-
+On 9/25/25 12:46 AM, Jingyi Wang wrote:
+> From: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
 > 
-> The proposed solution is composed of three major parts: the high-level,
-> shared GPIO proxy driver that arbitrates access to the shared pin and
-> exposes a regular GPIO chip interface to consumers, a low-level shared
-> GPIOLIB module that scans firmware nodes and creates auxiliary devices
-> that attach to the proxy driver and finally a set of core GPIOLIB
-> changes that plug the former into the GPIO lookup path.
+> Implement the new IOVA formatting required by the DSP architecture change
+> on Kaanapali SoC. Place the SID for DSP DMA transactions at bit 56 in the
+> physical address. This placement is necessary for the DSPs to correctly
+> identify streams and operate as intended.
+> To address this, add an iova-format flag which determines the SID position
+> within the physical address. Set SID position to bit 56 when iova_format
+> is enabled; otherwise, default to legacy 32-bit placement.
+> Initialize the flag to 0 and update to 1 based on SoC-specific compatible
+> string from the root node.
+> This change ensures consistent SID placement across DSPs.
 > 
-> The changes are implemented in a way that allows to seamlessly compile
-> out any code related to sharing GPIOs for systems that don't need it.
-> 
-> The practical use-case for this are the powerdown GPIOs shared by
-> speakers on Qualcomm db845c platform, however I have also extensively
-> tested it using gpio-virtuser on arm64 qemu with various DT
-> configurations.
-> 
-> I'm Cc'ing some people that may help with reviewing/be interested in
-> this: OF maintainers (because the main target are OF systems initially),
-> Mark Brown because most users of GPIOD_FLAGS_BIT_NONEXCLUSIVE live
-> in audio or regulator drivers and one of the goals of this series is
-> dropping the hand-crafted GPIO enable counting via struct
-> regulator_enable_gpio in regulator core), Andy and Mika because I'd like
-> to also cover ACPI (even though I don't know about any ACPI platform that
-> would need this at the moment, I think it makes sense to make the
-> solution complete), Dmitry (same thing but for software nodes), Mani
-> (because you have a somewhat related use-case for the PERST# signal and
-> I'd like to hear your input on whether this is something you can use or
-> maybe it needs a separate, implicit gpio-perst driver similar to what
-> Krzysztof did for reset-gpios) and Greg (because I mentioned this to you
-> last week in person and I also use the auxiliary bus for the proxy
-> devices).
-> 
-> First patch in the series is a bugfix targetting stable, I'm surprised
-> nobody noticed the lockdep splat yet. The second adds a library function
-> I use in a later patch. All remaining patches implement or use the
-> shared GPIO support.
-> 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
 > ---
-> Bartosz Golaszewski (9):
->       gpio: wcd934x: mark the GPIO controller as sleeping
->       string: provide strends()
->       gpiolib: define GPIOD_FLAG_SHARED
->       gpiolib: implement low-level, shared GPIO support
->       gpio: shared-proxy: implement the shared GPIO proxy driver
->       gpiolib: support shared GPIOs in core subsystem code
->       arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
->       ASoC: wsa881x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
->       ASoC: wsa883x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+>  drivers/misc/fastrpc.c | 76 ++++++++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 68 insertions(+), 8 deletions(-)
 > 
->  arch/arm64/Kconfig.platforms     |   1 +
->  drivers/gpio/Kconfig             |  17 ++
->  drivers/gpio/Makefile            |   2 +
->  drivers/gpio/gpio-shared-proxy.c | 328 ++++++++++++++++++++++++++
->  drivers/gpio/gpio-wcd934x.c      |   2 +-
->  drivers/gpio/gpiolib-shared.c    | 481 +++++++++++++++++++++++++++++++++++++++
->  drivers/gpio/gpiolib-shared.h    |  71 ++++++
->  drivers/gpio/gpiolib.c           |  50 +++-
->  drivers/gpio/gpiolib.h           |   1 +
->  include/linux/string.h           |   2 +
->  lib/string.c                     |  19 ++
->  lib/tests/string_kunit.c         |  13 ++
->  sound/soc/codecs/wsa881x.c       |   3 +-
->  sound/soc/codecs/wsa883x.c       |   7 +-
->  14 files changed, 980 insertions(+), 17 deletions(-)
-> ---
-> base-commit: b46f7370d4a0f0b55f05b854e73b2a90dff41e1b
-> change-id: 20250908-gpio-shared-67ec352884b6
-> 
-> Best regards,
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index 8e1d97873423..db396241b8ce 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -33,7 +33,6 @@
+>  #define FASTRPC_ALIGN		128
+>  #define FASTRPC_MAX_FDLIST	16
+>  #define FASTRPC_MAX_CRCLIST	64
+> -#define FASTRPC_PHYS(p)	((p) & 0xffffffff)
+>  #define FASTRPC_CTX_MAX (256)
+>  #define FASTRPC_INIT_HANDLE	1
+>  #define FASTRPC_DSP_UTILITIES_HANDLE	2
+> @@ -105,6 +104,26 @@
+>  
+>  #define miscdev_to_fdevice(d) container_of(d, struct fastrpc_device, miscdev)
+>  
+> +/*
+> + * By default, the sid will be prepended adjacent to smmu pa before sending
+> + * to DSP. But if the compatible Soc found at root node specifies the new
+> + * addressing format to handle pa's of longer widths, then the sid will be
+> + * prepended at the position specified in this macro.
+> + */
+> +#define SID_POS_IN_IOVA 56
+> +
+> +/* Default width of pa bus from dsp */
+> +#define DSP_DEFAULT_BUS_WIDTH 32
+I dont see any point in defining these both here, this should be part of
+the fastrpc_soc_data and a fallback fastrpc_soc_data.
 
+> +
+> +/* Extract smmu pa from consolidated iova */
+> +#define IOVA_TO_PHYS(iova, sid_pos) (iova & ((1ULL << sid_pos) - 1ULL))
+> +
+> +/*
+> + * Prepare the consolidated iova to send to dsp by prepending the sid
+> + * to smmu pa at the appropriate position
+> + */
+> +#define IOVA_FROM_SID_PA(sid, phys, sid_pos) (phys += sid << sid_pos)
+> +
+>  struct fastrpc_phy_page {
+>  	u64 addr;		/* physical address */
+>  	u64 size;		/* size of contiguous region */
+> @@ -255,6 +274,7 @@ struct fastrpc_session_ctx {
+>  	int sid;
+>  	bool used;
+>  	bool valid;
+> +	u32 sid_pos;
+Why is this in session context? are you expecting this to be different
+for each session? move it to channel_ctx.
+
+>  };
+>  
+>  struct fastrpc_channel_ctx {
+> @@ -278,6 +298,7 @@ struct fastrpc_channel_ctx {
+>  	bool secure;
+>  	bool unsigned_support;
+>  	u64 dma_mask;
+> +	u32 iova_format;
+Format is very much misleading, And this is totally redundant if you add
+sid_pos to soc_data.
+
+Please add soc_data struct here, so that we dont have to keep adding
+members to this and it also makes it clear what are soc specific bits in
+this.
+
+>  };
+>  
+>  struct fastrpc_device {
+> @@ -391,8 +412,11 @@ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
+>  
+>  static void fastrpc_buf_free(struct fastrpc_buf *buf)
+>  {
+> +	uint32_t sid_pos = (buf->fl->sctx ? buf->fl->sctx->sid_pos :
+> +					    DSP_DEFAULT_BUS_WIDTH);
+
+Why this new check added?
+> +
+
+>  	dma_free_coherent(buf->dev, buf->size, buf->virt,
+> -			  FASTRPC_PHYS(buf->phys));
+> +			  IOVA_TO_PHYS(buf->phys, sid_pos));
+>  	kfree(buf);
+>  }
+>  
+> @@ -442,7 +466,7 @@ static int fastrpc_buf_alloc(struct fastrpc_user *fl, struct device *dev,
+>  	buf = *obuf;
+>  
+>  	if (fl->sctx && fl->sctx->sid)
+> -		buf->phys += ((u64)fl->sctx->sid << 32);
+> +		IOVA_FROM_SID_PA((u64)fl->sctx->sid, buf->phys, fl->sctx->sid_pos);
+>  
+>  	return 0;
+>  }
+> @@ -687,7 +711,8 @@ static int fastrpc_dma_buf_attach(struct dma_buf *dmabuf,
+>  		return -ENOMEM;
+>  
+>  	ret = dma_get_sgtable(buffer->dev, &a->sgt, buffer->virt,
+> -			      FASTRPC_PHYS(buffer->phys), buffer->size);
+> +			      IOVA_TO_PHYS(buffer->phys, buffer->fl->sctx->sid_pos),
+> +			      buffer->size);
+>  	if (ret < 0) {
+>  		dev_err(buffer->dev, "failed to get scatterlist from DMA API\n");
+>  		kfree(a);
+> @@ -736,7 +761,7 @@ static int fastrpc_mmap(struct dma_buf *dmabuf,
+>  	dma_resv_assert_held(dmabuf->resv);
+>  
+>  	return dma_mmap_coherent(buf->dev, vma, buf->virt,
+> -				 FASTRPC_PHYS(buf->phys), size);
+> +				 IOVA_TO_PHYS(buf->phys, buf->fl->sctx->sid_pos), size);
+>  }
+>  
+>  static const struct dma_buf_ops fastrpc_dma_buf_ops = {
+> @@ -793,7 +818,8 @@ static int fastrpc_map_create(struct fastrpc_user *fl, int fd,
+>  		map->phys = sg_phys(map->table->sgl);
+>  	} else {
+>  		map->phys = sg_dma_address(map->table->sgl);
+> -		map->phys += ((u64)fl->sctx->sid << 32);
+> +		IOVA_FROM_SID_PA((u64)fl->sctx->sid, map->phys,
+> +				 fl->sctx->sid_pos);
+>  	}
+>  	map->size = len;
+>  	map->va = sg_virt(map->table->sgl);
+> @@ -2153,11 +2179,14 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
+>  	sess->used = false;
+>  	sess->valid = true;
+>  	sess->dev = dev;
+> -	dev_set_drvdata(dev, sess);
+> +	/* Configure where sid will be prepended to pa */
+unnessary comment here.
+
+> +	sess->sid_pos =
+> +		(cctx->iova_format ? SID_POS_IN_IOVA : DSP_DEFAULT_BUS_WIDTH);
+
+as commented eariler, replace iova_format from soc_data with pos.
+>  
+>  	if (of_property_read_u32(dev->of_node, "reg", &sess->sid))
+>  		dev_info(dev, "FastRPC Session ID not specified in DT\n");
+>  
+> +	dev_set_drvdata(dev, sess);
+
+why this line moved in this patch?
+
+>  	if (sessions > 0) {
+>  		struct fastrpc_session_ctx *dup_sess;
+>  
+> @@ -2256,6 +2285,19 @@ static int fastrpc_get_domain_id(const char *domain)
+>  	return -EINVAL;
+>  }
+>  
+> +struct fastrpc_soc_data {
+> +	u32 dsp_iova_format;
+
+s/dsp_iova_format/sid_pos
+
+> +};
+> +
+> +static const struct fastrpc_soc_data kaanapali_soc_data = {
+> +	.dsp_iova_format = 1,
+	.sid_pos = 54,
+> +};
+> +
+> +static const struct of_device_id qcom_soc_match_table[] = {
+> +	{ .compatible = "qcom,kaanapali", .data = &kaanapali_soc_data },
+> +	{},
+> +};
+> +
+>  static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  {
+>  	struct device *rdev = &rpdev->dev;
+> @@ -2264,6 +2306,23 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
+>  	const char *domain;
 
