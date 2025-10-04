@@ -1,174 +1,221 @@
-Return-Path: <linux-arm-msm+bounces-75971-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F491BB8DAB
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Oct 2025 15:12:53 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id BC1DCBB8DC0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Oct 2025 15:16:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 670303B147E
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Oct 2025 13:12:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72EDF3C325D
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Oct 2025 13:16:36 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C3F9227BF99;
-	Sat,  4 Oct 2025 13:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBB626A1B9;
+	Sat,  4 Oct 2025 13:16:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b="hMftWlgV"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5FuXRY3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from purple.birch.relay.mailchannels.net (purple.birch.relay.mailchannels.net [23.83.209.150])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C38B7279DB3;
-	Sat,  4 Oct 2025 13:12:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.209.150
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759583555; cv=pass; b=Uy9yWf4EG8GFuTTZLyZr2yYz+L2UOXOAYhH5n3+Z2sCeGebNDyPFog+LjcqaYhrsHXiL25a3tZKCmQovA3tqxdD/PYxlNjE41V8K3ItBcTo7qGubh78G4MDCRtWKl2oKkXBDx7agMc/78NuBQm0+0SdFxk5lzm+9EhH8SVanhkQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759583555; c=relaxed/simple;
-	bh=vxKONIV30zz+HLNL0oTmMDMxJxteNXgaquhVMYtp33A=;
-	h=From:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc:Date; b=d0aip9JBfrh0IPhsKuockWEyM6VPDgnLMa6vHI7bb6lmpm1ekHy8b5gZWZmLFmyFmgTvz0VZiMw9IKtpShxvvyccfSLmvTxhCRBWQBDn6Hn6zoFk4Mw5V2eRvinLx/1fPi5LlquCzcpiRBbLR97jlR92UQkrPp+jUoFcRkWcjnk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com; spf=pass smtp.mailfrom=smankusors.com; dkim=pass (2048-bit key) header.d=smankusors.com header.i=@smankusors.com header.b=hMftWlgV; arc=pass smtp.client-ip=23.83.209.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=smankusors.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smankusors.com
-X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 2920E9020D2;
-	Sat, 04 Oct 2025 13:12:27 +0000 (UTC)
-Received: from de-fra-smtpout2.hostinger.io (trex-green-5.trex.outbound.svc.cluster.local [100.113.91.228])
-	(Authenticated sender: hostingeremail)
-	by relay.mailchannels.net (Postfix) with ESMTPA id EB608902107;
-	Sat, 04 Oct 2025 13:12:22 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1759583544; a=rsa-sha256;
-	cv=none;
-	b=6XwZcQM5bX2hupDNI0poaJ+9338ixKHSjGmuzkEJsM3Ed1UTVn5EYZ2Cd7MMjhVM60xt8D
-	4IjOABApHkIzPrlUnswJOB0gwouodXKdrSsM2jNouTOi2y1KJgZVPZaNt7tVWFxKuy0mE2
-	YE64K9h1C7CWY/VvlQonmbXm5h9Xja50sgS+hWLZQXdQpgKitoTHWtReWMJMELPZoIpFT0
-	xX+5R0b5U1lA6bE9uxs0mVWssXyIphPzzBtMtfc9ORbUsUVWG45eY2znbTSBDG0zdpJfMh
-	VzTEFu6ATLlb+j+yjWiqF5G1YRUrpRKP62Ix43xDVQfprhfBjq2GRsF4Meks1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1759583544;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=Uua/djqZV/lAVVSVWiI9dZf0bgKDa1VPSMUrVe4/ZH8=;
-	b=GO9iPpR5dtbzm4ambCe5LquzUPmVLngpFDFTo2olDLO9Kk789QF7vZs8fJqNtNZ8mbWeOE
-	vdwILA56GBljXTVJkNRD5r/2u7v2zqaO8oKrdz0ts10DZh3NO+JGMaAoUiLd3SstPE1/nY
-	ib0CNptV5AyyUfSctPtXTKPBM+yddhpru1YV6hug3m2YuSTN6frridCPTK5ddosFyUSt7X
-	uv5waL6z2mnKv9EQBhZVDSbsEzh+iyLzC3qdiqXN3YePho0G7BoA/83iGV6SRqASwBiM5P
-	21jPUYh5zr2qwL17KRhOltdER+LTza+fGNvj3ibSEeFdNIwBCNCr6jJYXVinbA==
-ARC-Authentication-Results: i=1;
-	rspamd-84f8cfc67-wgjd4;
-	auth=pass smtp.auth=hostingeremail smtp.mailfrom=linux@smankusors.com
-X-Sender-Id: hostingeremail|x-authuser|linux@smankusors.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: hostingeremail|x-authuser|linux@smankusors.com
-X-MailChannels-Auth-Id: hostingeremail
-X-Bubble-Bottle: 38b0472a77fa7ea9_1759583546817_3215434257
-X-MC-Loop-Signature: 1759583546817:657736711
-X-MC-Ingress-Time: 1759583546817
-Received: from de-fra-smtpout2.hostinger.io (de-fra-smtpout2.hostinger.io
- [148.222.55.5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.113.91.228 (trex/7.1.3);
-	Sat, 04 Oct 2025 13:12:26 +0000
-Received: from [172.17.0.2] (unknown [36.79.124.169])
-	(Authenticated sender: linux@smankusors.com)
-	by smtp.hostinger.com (smtp.hostinger.com) with ESMTPSA id 4cf5Xz2qkzz3wg3;
-	Sat,  4 Oct 2025 13:12:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=smankusors.com;
-	s=hostingermail-a; t=1759583541;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Uua/djqZV/lAVVSVWiI9dZf0bgKDa1VPSMUrVe4/ZH8=;
-	b=hMftWlgVMwXUKl+BNr/iTuuWRUchhLFWkt6ztCTzYIohAXgvHIl/hUimlwSCTbp10JzLDz
-	YO3XVEfOH9voAMhLekDa6QDlivR+23Uo7lTzkixEadLqEzk9aW17P5Eps7+D8D89I3EnkB
-	ZARfb4HJTKAQMrTsh9h9yE0hsIcyWk9OUpMQsrLdTe9AG81h9uZUpnoAbvildxWdn/AOTg
-	UKKvK+EEnzyJKz3X/0arbW7EaYiQYihvEFTnWRVcmKoJFrJcTIamRq13x5zMWDTd2VjsUI
-	xvpvQA/qltfPPJZyipKngHtMEhsnTLdtyheuDDTskc+wUbHtOGOWflM0D3GgsA==
-From: Antony Kurniawan Soemardi <linux@smankusors.com>
-Subject: [PATCH 2/2] arm64: dts: qcom: pmi8950: Fix VADC channel scaling
- factors
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FD220766E;
+	Sat,  4 Oct 2025 13:16:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1759583792; cv=none; b=JAJa3a7LKlA5fhpiqh0aM7lIrxMx1pHfR8IiVgYTJ1CnAk6rM93ctQQ4NnHWnROklPGwHCMoLXIhEdZ+43k3dEB1JOBaMdr6ZsBjLJ1AanJ4a44ePmfZLwh/5bC04H8Mlyv2txncGuH94LGs0ZL+G0PZGQWDR981qd2Vn6CjVe8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1759583792; c=relaxed/simple;
+	bh=I08Nc5q5l8NppZLvGTcwZIupkZuUfHohxlx6YSbLewk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=RvOwjAJEIm5Oj7HpwS25xl8mYhALv6qY5gXP7+b28vODFFowo3mEGatTsmJUnaHaCDllPsziNuZfNAof0tbiME4htTKeSlSkHLHjQSYJSX2ENbu8nQzxeexjUndJBaA81iOFhdJfWXIE/PrPmhBaCttNLmBzvp7XBFRZ+lYsW+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5FuXRY3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B3FC4CEF1;
+	Sat,  4 Oct 2025 13:16:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759583791;
+	bh=I08Nc5q5l8NppZLvGTcwZIupkZuUfHohxlx6YSbLewk=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=h5FuXRY3gTUhF8vmvnIftl9SK1p0HVgQBoEaGnoAnkbjYlysNFEMGuFLLApSwqh1P
+	 N5cvKvZ/R8fc7+01dERuDrHqatFrqmkHblChqJM89tEU0qqgND/gGM2B6PO/DxYl0P
+	 dBsNXe8nIraqK9Uu1H+Du0IYBmuuJ4CO+65s/BfqXHSlf1pCFcvrFE8b1vf4yX3eGi
+	 gMF4aXHlselDAZou4l1OdOEvU6jtlTc1CvRxKxZ/yAcY7O1Gw0G4S9tcVwze672uFm
+	 g77r0geiW3jJJOUrmUze93h3qE7mbcuhOXDPGo9HHJrPiaty9n0ye7bGVPsF74X6/m
+	 qAE2JrTmIfvwA==
+Message-ID: <f9c922f5-52af-45bb-a4ca-7ca80c0c3534@kernel.org>
+Date: Sat, 4 Oct 2025 14:16:08 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] drm/display: add hw_params callback function to
+ drm_connector_hdmi_audio_ops
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+ Jianfeng Liu <liujianfeng1994@gmail.com>, Liam Girdwood
+ <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ linux-arm-msm@vger.kernel.org, Xilin Wu <sophon@radxa.com>,
+ Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>,
+ Dmitry Baryshkov <lumag@kernel.org>,
+ Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+ Maxime Ripard <mripard@kernel.org>, Simona Vetter <simona@ffwll.ch>,
+ Thomas Zimmermann <tzimmermann@suse.de>, dri-devel@lists.freedesktop.org,
+ linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org
+References: <20250925040530.20731-1-liujianfeng1994@gmail.com>
+ <46q2pje4hginnm2wld6ejyo36hfkmkzydaa4qggx47gd2p4q4z@q6vmomtgqihv>
+ <cc1afa21-8a66-4e0c-8fae-d0b07142b11d@kernel.org>
+ <rydatk4grelhg6w57wwkqafq5ghccnsuiwvfqvvdv7qum5dg5a@scoc76ni7hue>
+ <e69b23de-e9b6-4dfc-af01-7d2726dc23e4@oss.qualcomm.com>
+ <bnrpfijh4rljdzroduqncfygysvgblljlhdpvq7ubajlbbwvwd@ohdmpjvpzj33>
+Content-Language: en-US
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <bnrpfijh4rljdzroduqncfygysvgblljlhdpvq7ubajlbbwvwd@ohdmpjvpzj33>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251004-fix-pmi8950-vadc-v1-2-3143ecab99e9@smankusors.com>
-References: <20251004-fix-pmi8950-vadc-v1-0-3143ecab99e9@smankusors.com>
-In-Reply-To: <20251004-fix-pmi8950-vadc-v1-0-3143ecab99e9@smankusors.com>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, 
- Antony Kurniawan Soemardi <linux@smankusors.com>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759583534; l=1463;
- i=linux@smankusors.com; s=20250609; h=from:subject:message-id;
- bh=vxKONIV30zz+HLNL0oTmMDMxJxteNXgaquhVMYtp33A=;
- b=RCZvQcXj8Mifb9fdDe1hk9k+SF1tkwwU1EplueLB5GyqNI7Q30gMihpt1DeX5mgb1FFjr193a
- /bBiZ8E8o5ICtmKSZVVjOg5ABuQ3hEy69G9550A+Izo3UsoK5AK5egz
-X-Developer-Key: i=linux@smankusors.com; a=ed25519;
- pk=65wTy06fJl2/h/EJwjr704YG+yjHFhZObJBWzzK+N00=
-Date: Sat,  4 Oct 2025 13:12:19 +0000 (UTC)
-X-CM-Analysis: v=2.4 cv=Eb6aQ+mC c=1 sm=1 tr=0 ts=68e11d35 a=aGBhDEDgd9rkiRpfI0k7ZQ==:117 a=aGBhDEDgd9rkiRpfI0k7ZQ==:17 a=IkcTkHD0fZMA:10 a=NEAV23lmAAAA:8 a=wxLWbCv9AAAA:8 a=ZVnXsdwXVl4AdgzgvEIA:9 a=QEXdDO2ut3YA:10 a=QJY96suAAestDpCc5Gi9:22
-X-CM-Envelope: MS4xfJ7LX8vJS+1jEVCFZMTBJoIzbw/gfo+MWYjBn3aks3fxgdIsLR0hfN7hUorn58uiyhUxgz60GP7en22aM9sZAkXcpxicr5bNKLOt5E6uHhnz4zJXi1Aw /OUIp/CSEARjSm7px8GmWVC6FL+teBYLzW/S4goo6Nt6cCvLMMQH9d+9Ekaj+8XAHHLvSF1YfW1Qs44AaryjMmv+VGM35RkmS2EaAmETb/4x3QaDnN37Wi9L 57Vr3Fe3nqw7Bhn5rOF4PE07zKuvkGzHFZc0jqIcIaPUtezfBf1GuxT22EqzGFzmajKKmeVq/YFkQhF03qQizSCDRe8S5Cioeqji6tKs1MJ6lz4I/Jw8tk+u nfQJsY6xhBrha0fvt0gltQXnSrpInin4D/aRceFHmM2+7DHLVA1RpOJcsC2O2f46MybD4N5UEfW/xZXaZRIW8bpeWnxxqBFroJk74Ga5D308NEnEWmU=
-X-AuthUser: linux@smankusors.com
 
-Fix USBIN/DCIN scaling to match the downstream implementation [1].
 
-Downstream defines the following scaling mappings [2], corresponding
-to mainline pre-scaling values:
 
-  <4>  ->  <1 20>
-  <1>  ->  <1 3>
+On 10/3/25 6:02 PM, Dmitry Baryshkov wrote:
+> On Fri, Oct 03, 2025 at 05:35:16PM +0100, Srinivas Kandagatla wrote:
+>>
+>>
+>> On 9/26/25 4:09 PM, Dmitry Baryshkov wrote:
+>>> On Fri, Sep 26, 2025 at 11:30:26AM +0100, Srinivas Kandagatla wrote:
+>>>>
+>>>>
+>>>> On 9/25/25 5:28 AM, Dmitry Baryshkov wrote:
+>>>>> On Thu, Sep 25, 2025 at 12:05:09PM +0800, Jianfeng Liu wrote:
+>>>>>> After reusing drm_hdmi_audio_* helpers and drm_bridge_connector
+>>>>>> integration in drm/msm/dp, we have dropped msm_dp_audio_hw_params and
+>>>>>> use msm_dp_audio_prepare instead. While userspace is still calling
+>>>>>> hw_params to do audio initialization, and we get the following errors:
+>>>>>>
+>>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+>>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+>>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+>>>>>> hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_hw_params() started
+>>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
+>>>>>> qcom-apm gprsvc:service:2:1: Error (1) Processing 0x01001002 cmd
+>>>>>> qcom-apm gprsvc:service:2:1: DSP returned error[1001002] 1
+>>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: Failed to start APM port 104
+>>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: ASoC error (-22): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
+>>>>>> MultiMedia2 Playback: ASoC error (-22): at dpcm_run_update_startup() on MultiMedia2 Playback
+>>>>>
+>>>>> And a call to hdmi_codec_prepare() comes only at this place.
+>>>>>
+>>>>> Srini, Mark, when selecting to only implement .prepare for codec ops I
+>>>>> was following the commit 2fef64eec23a ("ASoC: hdmi-codec: Add a prepare
+>>>>> hook"), which documents that IEC958 status bit is set after
+>>>>> .hw_params(), so it's only visible during .prepare(). Is it okay to
+>>>>> implement both callbacks? Or should the audioreach DAI driver be fixed
+>>>>> somehow instead (I suppose it assumes that the port is available after
+>>>>> .hw_params(), not sure if that assumption is correct)?
+>>>>>
+>>>>>>
+>>>>>> msm_dp_audio_prepare is not called because hdmi-codec driver only checks
+>>>>>> and runs hw_params before q6apm_lpass_dai_prepare(). This commit will
+>>>>>> add hw_params callback same as drm_connector_hdmi_audio_prepare, so that
+>>>>>> hdmi-codec driver can work with userspace alsa.
+>>>>>>
+>>>>>> Tested with Radxa Dragon Q6A.
+>>>>>>
+>>>>>> Fixes: 98a8920e7b07 ("drm/msm/dp: reuse generic HDMI codec implementation")
+>>>>>> Signed-off-by: Jianfeng Liu <liujianfeng1994@gmail.com>
+>>>>>
+>>>>> The patch LGTM, but I would wait for response from audio maintainers.
+>>>>>
+>>>>
+>>>> The ordering matters in this case as we need clocks and audio
+>>>> configuration on DP codec side to be setup before we start configuring
+>>>> the dsp pipeline. Looks like that DSP is trying to setup DP endpoint
+>>>> even before it is ready.
+>>>>
+>>>> q6apm prepare loads the dsp pipeline and starts configuring the
+>>>> endpoints, if the DP endpoint is not ready dsp would throw an error.
+>>>>
+>>>> We might be able to pull in some dsp logs to confirm this, but I dont
+>>>> have a setup that I can reproduce this issue.
+>>>
+>>> What would be your recommendation to proceed? Is it okay for the DAI
+>>> driver to depend on the .hw_params enabling the clock? Also I see that
+>>> the error regarding the clocks comes from .prepare callback too. What is
+>>> the order of .prepare callbacks()? Can we influence it?
+>>
+>> prepare follows hw-params, and prepare can be called multiple times
+>>
+>> When you mean order of prepare callbacks, you mean w.r.t codec and dsp
+>> backend dia link drivers ?
+> 
+> Yes. Here we got a dependency from the cpu dai to be prepare()'d after
+> the DP driver performs some actions, which were a part of hw_params()
+> callback but were moved to be executed during prepare() callback.
+> 
+> This leads me to two sets of questions:
+> - In which order are those callbacks executed? Can we make the ASoC
+>   enforce some order of DAI's prepare() callbacks?
+> 
+> - More improtantly, isn't it a sympthom of DP driver (incorrectly)
+>   performing too much in the .hw_params() / .prepare() callback? Should
+>   we move some of the setup to the .audio_startup() instead? What is the
+>   expected split between those callbacks?
 
-[1] https://github.com/LineageOS/android_kernel_qcom_msm8953/blob/e6b46fc6f52e754eef5ce6265c7d82a3622e0b0f/arch/arm64/boot/dts/qcom/pmi8950.dtsi#L55-L86
-[2] https://github.com/LineageOS/android_kernel_qcom_msm8953/blob/e6b46fc6f52e754eef5ce6265c7d82a3622e0b0f/include/linux/qpnp/qpnp-adc.h#L342-L357
+I have not looked at full dp sequences but, if prepare is the only place
+when it enables the required clocks for audio block, then it is a
+problem, we should do it early so that DSP can enable the required
+configuration in prepare.
 
-Signed-off-by: Antony Kurniawan Soemardi <linux@smankusors.com>
----
- arch/arm64/boot/dts/qcom/pmi8950.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Its also doable to move out the clock related settings from  prepare to
+startup which should work aswell.
 
-diff --git a/arch/arm64/boot/dts/qcom/pmi8950.dtsi b/arch/arm64/boot/dts/qcom/pmi8950.dtsi
-index 16e436b68a7c161b1afd4f3eac3d7d8564e40512..5bd91a5cd1245f34ef37d98b1a2669582e84876c 100644
---- a/arch/arm64/boot/dts/qcom/pmi8950.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pmi8950.dtsi
-@@ -22,19 +22,19 @@ pmi8950_vadc: adc@3100 {
- 
- 			channel@0 {
- 				reg = <VADC_USBIN>;
--				qcom,pre-scaling = <1 4>;
-+				qcom,pre-scaling = <1 20>;
- 				label = "usbin";
- 			};
- 
- 			channel@1 {
- 				reg = <VADC_DCIN>;
--				qcom,pre-scaling = <1 4>;
-+				qcom,pre-scaling = <1 20>;
- 				label = "dcin";
- 			};
- 
- 			channel@2 {
- 				reg = <VADC_VCHG_SNS>;
--				qcom,pre-scaling = <1 1>;
-+				qcom,pre-scaling = <1 3>;
- 				label = "vchg_sns";
- 			};
- 
+--srini
 
--- 
-2.34.1
+> 
+>>
+>> TBH, Am not sure, I did not find anything that was obvious from the code.
+>>
+>>
+>>
+>> --srini
+>>
+>>
+>>
+>>>
+>>>>
+>>>>
+>>>> --srini
+>>>>>> ---
+>>>>>>
+>>>>>> Changes in v2:
+>>>>>> - Link to v1: https://lore.kernel.org/linux-arm-msm/20250924085804.34183-1-liujianfeng1994@gmail.com/
+>>>>>> - Use more detailed trace log in commit message.
+>>>>>> - Drop the empty line between Fixex and SoB.
+>>>>>>
+>>>>>>  drivers/gpu/drm/display/drm_hdmi_audio_helper.c | 1 +
+>>>>>>  1 file changed, 1 insertion(+)
+>>>>>>
+>>>>>> diff --git a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+>>>>>> index 7d78b02c1446..6ca1c7ad0632 100644
+>>>>>> --- a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+>>>>>> +++ b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
+>>>>>> @@ -130,6 +130,7 @@ EXPORT_SYMBOL(drm_connector_hdmi_audio_plugged_notify);
+>>>>>>  
+>>>>>>  static const struct hdmi_codec_ops drm_connector_hdmi_audio_ops = {
+>>>>>>  	.audio_startup = drm_connector_hdmi_audio_startup,
+>>>>>> +	.hw_params = drm_connector_hdmi_audio_prepare,
+>>>>>>  	.prepare = drm_connector_hdmi_audio_prepare,
+>>>>>>  	.audio_shutdown = drm_connector_hdmi_audio_shutdown,
+>>>>>>  	.mute_stream = drm_connector_hdmi_audio_mute_stream,
+>>>>>> -- 
+>>>>>> 2.43.0
+>>>>>>
+>>>>>
+>>>>
+>>>
+>>
+> 
 
 
