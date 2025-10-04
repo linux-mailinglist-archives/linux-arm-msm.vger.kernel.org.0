@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-75972-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75973-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC1DCBB8DC0
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Oct 2025 15:16:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B9A14BB8E06
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Oct 2025 15:32:05 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 72EDF3C325D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Oct 2025 13:16:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 73B233B7707
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Oct 2025 13:32:04 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FBB626A1B9;
-	Sat,  4 Oct 2025 13:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 062DD132117;
+	Sat,  4 Oct 2025 13:32:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h5FuXRY3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tuK8CBuo"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3FD220766E;
-	Sat,  4 Oct 2025 13:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C979938FA6;
+	Sat,  4 Oct 2025 13:32:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759583792; cv=none; b=JAJa3a7LKlA5fhpiqh0aM7lIrxMx1pHfR8IiVgYTJ1CnAk6rM93ctQQ4NnHWnROklPGwHCMoLXIhEdZ+43k3dEB1JOBaMdr6ZsBjLJ1AanJ4a44ePmfZLwh/5bC04H8Mlyv2txncGuH94LGs0ZL+G0PZGQWDR981qd2Vn6CjVe8=
+	t=1759584721; cv=none; b=FtE8yRpaypiHQd5fWIjDn22iV6SxOJ24qKFPBHyzNXOPxZcTZEBGC1GmMcH8cmcbUROyl88MigJqjo2ghnmK8oDXyAZGtB+UgYUCgsueOu+4A6j8fWJq7Q589WkmPJXRsVxJmMo9Ig9AJzah5QbGAzd4re+STGtEzsn2RHUCPCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759583792; c=relaxed/simple;
-	bh=I08Nc5q5l8NppZLvGTcwZIupkZuUfHohxlx6YSbLewk=;
+	s=arc-20240116; t=1759584721; c=relaxed/simple;
+	bh=dtmZx205TbjsYteBttndCYNtOK23Kq5LL1dH+feqtx4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RvOwjAJEIm5Oj7HpwS25xl8mYhALv6qY5gXP7+b28vODFFowo3mEGatTsmJUnaHaCDllPsziNuZfNAof0tbiME4htTKeSlSkHLHjQSYJSX2ENbu8nQzxeexjUndJBaA81iOFhdJfWXIE/PrPmhBaCttNLmBzvp7XBFRZ+lYsW+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h5FuXRY3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6B3FC4CEF1;
-	Sat,  4 Oct 2025 13:16:13 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=NHERDGNq1sMdqmH+2XIBaNl+t+1V9SBQpJIsqon3Wgq7cWkkYqwv3xV2lqL3oiWZ/N5xEJrBy9fn3ODxVSZ7sVYI4qB/899asm3BY/fAgD3TcvCCt6EoN4wW9cBVnf75bDR66LqH6ougGYIA9ViBrlIKP9dzMRwCv4D0iIQI3Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tuK8CBuo; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D834C4CEF1;
+	Sat,  4 Oct 2025 13:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759583791;
-	bh=I08Nc5q5l8NppZLvGTcwZIupkZuUfHohxlx6YSbLewk=;
+	s=k20201202; t=1759584721;
+	bh=dtmZx205TbjsYteBttndCYNtOK23Kq5LL1dH+feqtx4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=h5FuXRY3gTUhF8vmvnIftl9SK1p0HVgQBoEaGnoAnkbjYlysNFEMGuFLLApSwqh1P
-	 N5cvKvZ/R8fc7+01dERuDrHqatFrqmkHblChqJM89tEU0qqgND/gGM2B6PO/DxYl0P
-	 dBsNXe8nIraqK9Uu1H+Du0IYBmuuJ4CO+65s/BfqXHSlf1pCFcvrFE8b1vf4yX3eGi
-	 gMF4aXHlselDAZou4l1OdOEvU6jtlTc1CvRxKxZ/yAcY7O1Gw0G4S9tcVwze672uFm
-	 g77r0geiW3jJJOUrmUze93h3qE7mbcuhOXDPGo9HHJrPiaty9n0ye7bGVPsF74X6/m
-	 qAE2JrTmIfvwA==
-Message-ID: <f9c922f5-52af-45bb-a4ca-7ca80c0c3534@kernel.org>
-Date: Sat, 4 Oct 2025 14:16:08 +0100
+	b=tuK8CBuoTxTO4Xa5yiMNdJJpBschaPLAH1WzqJwCfhIDwg5uol+XtbGz96beo1vIq
+	 btMwgsthkafHWvTyJwJt0JegsZLrVX7jXSWEfU4g0mu/IG/QVY9QzKynR9aIy2ld+3
+	 z4b5IljflliTuGzxvzPJgYeTRRH6QhbWoqIanV1io4e8wdHEjGRrKxcKXNR4NMKudH
+	 XO8i8Ua7OYjmfZgAa2XX5S1SJbebFap5Lqvw2rILtR4F6bALaFS4Sn7ghteYbfPayz
+	 PzJqjQauzvh43v/u0M1Evxq2AgbaAMIbiSesM2SQTBFOvkQ9r0u1atoM4jSHNJZGvK
+	 ppBUonXw54Qyg==
+Message-ID: <0b402bba-0399-4f93-873e-890a78570ff7@kernel.org>
+Date: Sat, 4 Oct 2025 14:31:16 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,172 +50,127 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] drm/display: add hw_params callback function to
- drm_connector_hdmi_audio_ops
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
- Jianfeng Liu <liujianfeng1994@gmail.com>, Liam Girdwood
- <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
- linux-arm-msm@vger.kernel.org, Xilin Wu <sophon@radxa.com>,
- Abhinav Kumar <quic_abhinavk@quicinc.com>, David Airlie <airlied@gmail.com>,
- Dmitry Baryshkov <lumag@kernel.org>,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Simona Vetter <simona@ffwll.ch>,
- Thomas Zimmermann <tzimmermann@suse.de>, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org, linux-sound@vger.kernel.org
-References: <20250925040530.20731-1-liujianfeng1994@gmail.com>
- <46q2pje4hginnm2wld6ejyo36hfkmkzydaa4qggx47gd2p4q4z@q6vmomtgqihv>
- <cc1afa21-8a66-4e0c-8fae-d0b07142b11d@kernel.org>
- <rydatk4grelhg6w57wwkqafq5ghccnsuiwvfqvvdv7qum5dg5a@scoc76ni7hue>
- <e69b23de-e9b6-4dfc-af01-7d2726dc23e4@oss.qualcomm.com>
- <bnrpfijh4rljdzroduqncfygysvgblljlhdpvq7ubajlbbwvwd@ohdmpjvpzj33>
+Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
+To: Bartosz Golaszewski <brgl@bgdev.pl>, Kees Cook <kees@kernel.org>,
+ Mika Westerberg <westeri@kernel.org>,
+ Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Manivannan Sadhasivam <mani@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Andy Shevchenko <andy@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-hardening@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
 Content-Language: en-US
 From: Srinivas Kandagatla <srini@kernel.org>
-In-Reply-To: <bnrpfijh4rljdzroduqncfygysvgblljlhdpvq7ubajlbbwvwd@ohdmpjvpzj33>
+In-Reply-To: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 
-
-On 10/3/25 6:02 PM, Dmitry Baryshkov wrote:
-> On Fri, Oct 03, 2025 at 05:35:16PM +0100, Srinivas Kandagatla wrote:
->>
->>
->> On 9/26/25 4:09 PM, Dmitry Baryshkov wrote:
->>> On Fri, Sep 26, 2025 at 11:30:26AM +0100, Srinivas Kandagatla wrote:
->>>>
->>>>
->>>> On 9/25/25 5:28 AM, Dmitry Baryshkov wrote:
->>>>> On Thu, Sep 25, 2025 at 12:05:09PM +0800, Jianfeng Liu wrote:
->>>>>> After reusing drm_hdmi_audio_* helpers and drm_bridge_connector
->>>>>> integration in drm/msm/dp, we have dropped msm_dp_audio_hw_params and
->>>>>> use msm_dp_audio_prepare instead. While userspace is still calling
->>>>>> hw_params to do audio initialization, and we get the following errors:
->>>>>>
->>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
->>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
->>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
->>>>>> hdmi-audio-codec hdmi-audio-codec.0.auto: hdmi_codec_hw_params() started
->>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: q6apm_lpass_dai_prepare() started
->>>>>> qcom-apm gprsvc:service:2:1: Error (1) Processing 0x01001002 cmd
->>>>>> qcom-apm gprsvc:service:2:1: DSP returned error[1001002] 1
->>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: Failed to start APM port 104
->>>>>> q6apm-lpass-dais 3700000.remoteproc:glink-edge:gpr:service@1:bedais: ASoC error (-22): at snd_soc_dai_prepare() on DISPLAY_PORT_RX_0
->>>>>> MultiMedia2 Playback: ASoC error (-22): at dpcm_run_update_startup() on MultiMedia2 Playback
->>>>>
->>>>> And a call to hdmi_codec_prepare() comes only at this place.
->>>>>
->>>>> Srini, Mark, when selecting to only implement .prepare for codec ops I
->>>>> was following the commit 2fef64eec23a ("ASoC: hdmi-codec: Add a prepare
->>>>> hook"), which documents that IEC958 status bit is set after
->>>>> .hw_params(), so it's only visible during .prepare(). Is it okay to
->>>>> implement both callbacks? Or should the audioreach DAI driver be fixed
->>>>> somehow instead (I suppose it assumes that the port is available after
->>>>> .hw_params(), not sure if that assumption is correct)?
->>>>>
->>>>>>
->>>>>> msm_dp_audio_prepare is not called because hdmi-codec driver only checks
->>>>>> and runs hw_params before q6apm_lpass_dai_prepare(). This commit will
->>>>>> add hw_params callback same as drm_connector_hdmi_audio_prepare, so that
->>>>>> hdmi-codec driver can work with userspace alsa.
->>>>>>
->>>>>> Tested with Radxa Dragon Q6A.
->>>>>>
->>>>>> Fixes: 98a8920e7b07 ("drm/msm/dp: reuse generic HDMI codec implementation")
->>>>>> Signed-off-by: Jianfeng Liu <liujianfeng1994@gmail.com>
->>>>>
->>>>> The patch LGTM, but I would wait for response from audio maintainers.
->>>>>
->>>>
->>>> The ordering matters in this case as we need clocks and audio
->>>> configuration on DP codec side to be setup before we start configuring
->>>> the dsp pipeline. Looks like that DSP is trying to setup DP endpoint
->>>> even before it is ready.
->>>>
->>>> q6apm prepare loads the dsp pipeline and starts configuring the
->>>> endpoints, if the DP endpoint is not ready dsp would throw an error.
->>>>
->>>> We might be able to pull in some dsp logs to confirm this, but I dont
->>>> have a setup that I can reproduce this issue.
->>>
->>> What would be your recommendation to proceed? Is it okay for the DAI
->>> driver to depend on the .hw_params enabling the clock? Also I see that
->>> the error regarding the clocks comes from .prepare callback too. What is
->>> the order of .prepare callbacks()? Can we influence it?
->>
->> prepare follows hw-params, and prepare can be called multiple times
->>
->> When you mean order of prepare callbacks, you mean w.r.t codec and dsp
->> backend dia link drivers ?
+On 9/24/25 3:51 PM, Bartosz Golaszewski wrote:
+> Here's a functional RFC for improving the handling of shared GPIOs in
+> linux.
 > 
-> Yes. Here we got a dependency from the cpu dai to be prepare()'d after
-> the DP driver performs some actions, which were a part of hw_params()
-> callback but were moved to be executed during prepare() callback.
-> 
-> This leads me to two sets of questions:
-> - In which order are those callbacks executed? Can we make the ASoC
->   enforce some order of DAI's prepare() callbacks?
-> 
-> - More improtantly, isn't it a sympthom of DP driver (incorrectly)
->   performing too much in the .hw_params() / .prepare() callback? Should
->   we move some of the setup to the .audio_startup() instead? What is the
->   expected split between those callbacks?
+> Problem statement: GPIOs are implemented as a strictly exclusive
+> resource in the kernel but there are lots of platforms on which single
+> pin is shared by multiple devices which don't communicate so need some
+> way of properly sharing access to a GPIO. What we have now is the
+> GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
+> doesn't do any locking or arbitration of access - it literally just hand
+> the same GPIO descriptor to all interested users.
 
-I have not looked at full dp sequences but, if prepare is the only place
-when it enables the required clocks for audio block, then it is a
-problem, we should do it early so that DSP can enable the required
-configuration in prepare.
+Isn't the main issue here is about not using a correct framework around
+to the gpios that driver uses. ex: the codec usecase that you are
+refering in this is using gpio to reset the line, instead of using a
+proper gpio-reset control. same with some of the gpio-muxes. the problem
+is fixed once such direct users of gpio are move their correct frameworks.
 
-Its also doable to move out the clock related settings from  prepare to
-startup which should work aswell.
+Am not sure adding a abstraction with-in gpio framework is right
+solution, But I do agree that NONEXCLUSIVE flags should disappear and
+users that are using this should be moved to correct frameworks where
+they belong.
 
 --srini
 
 > 
->>
->> TBH, Am not sure, I did not find anything that was obvious from the code.
->>
->>
->>
->> --srini
->>
->>
->>
->>>
->>>>
->>>>
->>>> --srini
->>>>>> ---
->>>>>>
->>>>>> Changes in v2:
->>>>>> - Link to v1: https://lore.kernel.org/linux-arm-msm/20250924085804.34183-1-liujianfeng1994@gmail.com/
->>>>>> - Use more detailed trace log in commit message.
->>>>>> - Drop the empty line between Fixex and SoB.
->>>>>>
->>>>>>  drivers/gpu/drm/display/drm_hdmi_audio_helper.c | 1 +
->>>>>>  1 file changed, 1 insertion(+)
->>>>>>
->>>>>> diff --git a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
->>>>>> index 7d78b02c1446..6ca1c7ad0632 100644
->>>>>> --- a/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
->>>>>> +++ b/drivers/gpu/drm/display/drm_hdmi_audio_helper.c
->>>>>> @@ -130,6 +130,7 @@ EXPORT_SYMBOL(drm_connector_hdmi_audio_plugged_notify);
->>>>>>  
->>>>>>  static const struct hdmi_codec_ops drm_connector_hdmi_audio_ops = {
->>>>>>  	.audio_startup = drm_connector_hdmi_audio_startup,
->>>>>> +	.hw_params = drm_connector_hdmi_audio_prepare,
->>>>>>  	.prepare = drm_connector_hdmi_audio_prepare,
->>>>>>  	.audio_shutdown = drm_connector_hdmi_audio_shutdown,
->>>>>>  	.mute_stream = drm_connector_hdmi_audio_mute_stream,
->>>>>> -- 
->>>>>> 2.43.0
->>>>>>
->>>>>
->>>>
->>>
->>
+> The proposed solution is composed of three major parts: the high-level,
+> shared GPIO proxy driver that arbitrates access to the shared pin and
+> exposes a regular GPIO chip interface to consumers, a low-level shared
+> GPIOLIB module that scans firmware nodes and creates auxiliary devices
+> that attach to the proxy driver and finally a set of core GPIOLIB
+> changes that plug the former into the GPIO lookup path.
 > 
+> The changes are implemented in a way that allows to seamlessly compile
+> out any code related to sharing GPIOs for systems that don't need it.
+> 
+> The practical use-case for this are the powerdown GPIOs shared by
+> speakers on Qualcomm db845c platform, however I have also extensively
+> tested it using gpio-virtuser on arm64 qemu with various DT
+> configurations.
+> 
+> I'm Cc'ing some people that may help with reviewing/be interested in
+> this: OF maintainers (because the main target are OF systems initially),
+> Mark Brown because most users of GPIOD_FLAGS_BIT_NONEXCLUSIVE live
+> in audio or regulator drivers and one of the goals of this series is
+> dropping the hand-crafted GPIO enable counting via struct
+> regulator_enable_gpio in regulator core), Andy and Mika because I'd like
+> to also cover ACPI (even though I don't know about any ACPI platform that
+> would need this at the moment, I think it makes sense to make the
+> solution complete), Dmitry (same thing but for software nodes), Mani
+> (because you have a somewhat related use-case for the PERST# signal and
+> I'd like to hear your input on whether this is something you can use or
+> maybe it needs a separate, implicit gpio-perst driver similar to what
+> Krzysztof did for reset-gpios) and Greg (because I mentioned this to you
+> last week in person and I also use the auxiliary bus for the proxy
+> devices).
+> 
+> First patch in the series is a bugfix targetting stable, I'm surprised
+> nobody noticed the lockdep splat yet. The second adds a library function
+> I use in a later patch. All remaining patches implement or use the
+> shared GPIO support.
+> 
+> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+> ---
+> Bartosz Golaszewski (9):
+>       gpio: wcd934x: mark the GPIO controller as sleeping
+>       string: provide strends()
+>       gpiolib: define GPIOD_FLAG_SHARED
+>       gpiolib: implement low-level, shared GPIO support
+>       gpio: shared-proxy: implement the shared GPIO proxy driver
+>       gpiolib: support shared GPIOs in core subsystem code
+>       arm64: select HAVE_SHARED_GPIOS for ARCH_QCOM
+>       ASoC: wsa881x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+>       ASoC: wsa883x: drop GPIOD_FLAGS_BIT_NONEXCLUSIVE flag from GPIO lookup
+> 
+>  arch/arm64/Kconfig.platforms     |   1 +
+>  drivers/gpio/Kconfig             |  17 ++
+>  drivers/gpio/Makefile            |   2 +
+>  drivers/gpio/gpio-shared-proxy.c | 328 ++++++++++++++++++++++++++
+>  drivers/gpio/gpio-wcd934x.c      |   2 +-
+>  drivers/gpio/gpiolib-shared.c    | 481 +++++++++++++++++++++++++++++++++++++++
+>  drivers/gpio/gpiolib-shared.h    |  71 ++++++
+>  drivers/gpio/gpiolib.c           |  50 +++-
+>  drivers/gpio/gpiolib.h           |   1 +
+>  include/linux/string.h           |   2 +
+>  lib/string.c                     |  19 ++
+>  lib/tests/string_kunit.c         |  13 ++
+>  sound/soc/codecs/wsa881x.c       |   3 +-
+>  sound/soc/codecs/wsa883x.c       |   7 +-
+>  14 files changed, 980 insertions(+), 17 deletions(-)
+> ---
+> base-commit: b46f7370d4a0f0b55f05b854e73b2a90dff41e1b
+> change-id: 20250908-gpio-shared-67ec352884b6
+> 
+> Best regards,
 
 
