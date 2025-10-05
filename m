@@ -1,175 +1,139 @@
-Return-Path: <linux-arm-msm+bounces-75975-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-75976-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B8718BB9105
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 04 Oct 2025 20:36:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C69F6BB93E4
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 05 Oct 2025 05:50:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 6BC22189C33F
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Oct 2025 18:36:53 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 52629189AD8C
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Oct 2025 03:50:54 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id F0EE5285068;
-	Sat,  4 Oct 2025 18:36:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E9ACD19E7F9;
+	Sun,  5 Oct 2025 03:50:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q6FexA7o"
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SXeBx7/2"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23E17260F;
-	Sat,  4 Oct 2025 18:36:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A23F195808
+	for <linux-arm-msm@vger.kernel.org>; Sun,  5 Oct 2025 03:50:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759602985; cv=none; b=ionncmPSpwZdSB6l+MnSRq5uFSMHMUuS6XmrzlVgX2DFFaVDa0TM2uTTjEvt/KVVkQBc1N1H0NiBz9qJzUVqIlolIr6sPh7Ij0KV53uIOD42D84IedEBaIYuyKkIWDR6S3V2/dYeDCK9qPDM39lHb2xvecJ+wD0ShaX4YpO2jGY=
+	t=1759636223; cv=none; b=SyMUDeIEroDAOQHXp8U50JP1e8h1buq3ImuvLS1dtl4vOX+8cLyYZcwbYWVEMk/8CR70l/BsfGeFkfg1yfePOF1h+uj7Kt/F6uV5/0RC+A4A+tYsI5u63pnj+zJrZV45vQMAZVXnlGjKfdSVHUufikVg+SloC9iF1HhvSlOM++k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759602985; c=relaxed/simple;
-	bh=xuFxxT3Xf9Ae9zNzJIfLsMGbHQLQmEnZm54x5U7nYO0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=D/LYZPDjKa4EVe9bLc1hfnZWAuem5EVrJRWhPs34bwsm3/Dhp76VaKSe+p957SfS4uKBcHYABJwejoejPx7/D5L6JeJ/Y24CMP1zCPcoq60yCrN4uK1FudWeu1EclJ4cHy0oADH9yrHtlQhuwD1fyfU1/xyMRL7MFTZNceEbB8s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q6FexA7o; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D0D1C4CEF1;
-	Sat,  4 Oct 2025 18:36:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759602985;
-	bh=xuFxxT3Xf9Ae9zNzJIfLsMGbHQLQmEnZm54x5U7nYO0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=Q6FexA7o8CEdDVeSTQY8IlJaNPgHu5gO4X5GnCtqDj9MymQLAdXlchKSd8H+pgyJQ
-	 NDjCWvXQMDVZg5rwqYqkvvaVBHJP6UD/pRqRPwKbvVsi89pyH0lecnDmBrwJHkBQxJ
-	 5wedxKBDVIY4it9TOT/C1fiuOjKaU/OmJS/yQ9SZf/SifPulbI+7ptENHlZTREl8ad
-	 LNyXqQvOGeB5VoFa8raezwq+CGPuOWhLZzUauKiTZD3EgzJFiA3XNDgljZsPe3KiuY
-	 q3OjqxsolQFsb7X0uaX8AM5C/WYA0BNuQ2okXyoCvKnPDgQ+Ml8jHGCxoxSgFiINj9
-	 mK/2SZgI3Y7ZA==
-Message-ID: <7b281f10-f42c-454b-9c4d-96ea4f66c66f@kernel.org>
-Date: Sat, 4 Oct 2025 19:36:08 +0100
+	s=arc-20240116; t=1759636223; c=relaxed/simple;
+	bh=+xM3jlWWcZ0O3zm4JBTc30PBKSwwJDsHM/u/wFG/UTs=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=OdXUeS/ef6PzrVjHnWrshLLb5hSoaJ4r3/X973lUY4JRcWi1q4twlBSYay/IxYUw9AQU8KZE0UUoxP33lobIhNxLXNUXDmgXzCWQhKlzIiUMsXPNc1FyVUNTvevfdvdv1nwPvPgfc/QcAE2JPNmMgRipj9LXlbaQZetnutJvkxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SXeBx7/2; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-3306eb96da1so3125055a91.1
+        for <linux-arm-msm@vger.kernel.org>; Sat, 04 Oct 2025 20:50:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1759636221; x=1760241021; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=c5eVUz6w+EoFaDLEM3O5W2lqhgMgUFUDbpzSqKfqJ4E=;
+        b=SXeBx7/2Pvzpq3snwaE1C5O2MPJ8vKRkotHFZZ1GvYbsB9S6w3NN5SoBrB3PFgxEzE
+         lI1haz4LSFWAHpecnMs1LLKWdIcZ7OMp2u0RHJW423mvyMBk1FKwUfTQTmTsOtSWnhlz
+         Bu6BqutqyxkUbLZ6EXunGjFxItY22K6RXn5IKsoHf6EpQwVEdmuTgh6eDE8a9KewrS5Y
+         SY6a2fYkPWxz3exO1zvP6cxC7BWZfjoxiRjHw2nsZlfz6wT3J9NPmISMExOwjuCHcWKS
+         LkBEtaX8GUVCjSecR+5Fno3hxO+X1i8/XUdr2qm8PUFCUj8OIB1QdvOeegYv0AoMYR+u
+         rWjg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759636221; x=1760241021;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=c5eVUz6w+EoFaDLEM3O5W2lqhgMgUFUDbpzSqKfqJ4E=;
+        b=YBYQh1jMIns2lY/lGOzVGqgIFUsQTUEXLl+yGikq+3GGVZuW99uB3M9wqxn06pRh6o
+         inzGHcqxecoE/AvITvYf2U6Zvbmht1NVAovfeu+EqE3WBVKv80NTiJBTaK1mPVjHo8RO
+         W2bNVMpUZkvtN081kDupGrzNNuSWYzUR64nwu6guPOMUR3i+CNwmov7swd3ZbUb1eSSr
+         JL5INX7q6A11u41Fije4v+2hR7Hrumwa4IhoB1+Hpqf91RmIiMKjYHUtt5ioOrj3JlaU
+         6Hgc6C7Uu9CD9gxWSp+DBeofv3B6kH/NJvwMbGNUh/18miFhj7nieD7whosUKGkEMuMt
+         lnvA==
+X-Forwarded-Encrypted: i=1; AJvYcCVyjyTOIw2YIgky0I3BlFYW6V0umGJAn/BD5VWWz10/jG4LtigsgFJnxGunfjLvotFq541s7+SxOKTiZto2@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHSFHnRy6KvcESVxhrHI+EG66urohJYhqYBr2cwN00lcJXBVgf
+	H8EgYpBMu4igMrySzllzzQrYDaEZYU6A9W3fHPm66o6Qgs8drYq712Oa
+X-Gm-Gg: ASbGncuh1ySHVc8JwyOnFHkyLfdvU15xIKOJr2a2UL8cuXMUTQBk5QbnwoIrFtwu9Ag
+	rlEP6V7pzMiDbPU1QQb+IKYDtNhqGOO12qb5vJZBcK9lv9/eWnlNiJG8NVd8gijzOt+ZKPpH31C
+	vfphWFvS0hM6yWG7nrkrbxUBW89RgWr7OBVJr6ae44oKPWiZAHbL6tzzq6U6GdBoBzs6mQo5sYF
+	siUymuuBLh8VEd36pU4yOQlNRaFiSl6gdG4wClxwG5f2mumI88/2LaPNJDHo9iekoicN6nk9DEV
+	JKXs5PRavQ/U9WV8wQetNqlZk5GAxdmmmP4oi7ur8MxDO+7pPJMdjfMM19ZaduRFsdL5eDMntoE
+	pIaDza9sxQG5hywm5OLlT5g5CGcgp1+s1dTKG6UBn7n4m/lkX6R8UiP60h1rRp4Jhm5u5PA==
+X-Google-Smtp-Source: AGHT+IHcTbMO5+we3ZfilD94T2VHeJ0hOb2Fn1NDL5mTMC08c7x71iIANmz2jzxUESzENW+NrQvLww==
+X-Received: by 2002:a17:90b:390f:b0:336:b60f:3935 with SMTP id 98e67ed59e1d1-339c27db5a8mr10757968a91.23.1759636220504;
+        Sat, 04 Oct 2025 20:50:20 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([2804:7f0:9241:9618:6db0:456f:e63a:4e6c])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-339c4a0d531sm6470367a91.4.2025.10.04.20.50.18
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 04 Oct 2025 20:50:19 -0700 (PDT)
+Date: Sun, 05 Oct 2025 00:50:16 -0300
+From: =?ISO-8859-1?Q?Eric_Gon=E7alves?= <ghatto404@gmail.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+CC: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/5] arm64: dts: qcom: r0q: enable hardware clocks
+User-Agent: Thunderbird for Android
+In-Reply-To: <d16e8c07-6c10-4c91-9bbe-a260f0497d29@oss.qualcomm.com>
+References: <20250920014637.38175-1-ghatto404@gmail.com> <20250920014637.38175-5-ghatto404@gmail.com> <d16e8c07-6c10-4c91-9bbe-a260f0497d29@oss.qualcomm.com>
+Message-ID: <99D0B281-03A5-447E-A6BF-892C99829D0B@gmail.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] misc: fastrpc: Update dma_mask for CDSP support on
- Kaanapali SoC
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>,
- Amol Maheshwari <amahesh@qti.qualcomm.com>, Arnd Bergmann <arnd@arndb.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
- linux-kernel@vger.kernel.org,
- Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-References: <20250924-knp-fastrpc-v1-0-4b40f8bfce1d@oss.qualcomm.com>
- <20250924-knp-fastrpc-v1-2-4b40f8bfce1d@oss.qualcomm.com>
-Content-Language: en-US
-From: Srinivas Kandagatla <srini@kernel.org>
-In-Reply-To: <20250924-knp-fastrpc-v1-2-4b40f8bfce1d@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
 
 
-On 9/25/25 12:46 AM, Jingyi Wang wrote:
-> From: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-> 
-> DSP currently supports 32-bit IOVA (32-bit PA + 4-bit SID) for
-> both Q6 and user DMA (uDMA) access. This is being upgraded to
-> 34-bit PA + 4-bit SID due to a hardware revision in CDSP for
-> Kaanapali SoC, which expands the DMA addressable range.
-> Update DMA mask configuration in the driver to support CDSP on
-> Kaanapali SoC. Set the default `dma_mask` to 32-bit and update
-> it to 34-bit based on CDSP and SoC-specific compatible string.
-> 
-> Signed-off-by: Kumari Pallavi <kumari.pallavi@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  drivers/misc/fastrpc.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> index db396241b8ce..e019163eb265 100644
-> --- a/drivers/misc/fastrpc.c
-> +++ b/drivers/misc/fastrpc.c
-> @@ -275,6 +275,7 @@ struct fastrpc_session_ctx {
->  	bool used;
->  	bool valid;
->  	u32 sid_pos;
-> +	u32 pa_bits;
-same comments as in patch 1 move to channel ctx, also why do we even
-need this  to be stored in the first place as dma mask is set in
-probe,we will not need it after wards.
->  };
->  
->  struct fastrpc_channel_ctx {
-> @@ -2179,9 +2180,9 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
->  	sess->used = false;
->  	sess->valid = true;
->  	sess->dev = dev;
-> +	sess->pa_bits = cctx->dma_mask;
-
->  	/* Configure where sid will be prepended to pa */
-> -	sess->sid_pos =
-> -		(cctx->iova_format ? SID_POS_IN_IOVA : DSP_DEFAULT_BUS_WIDTH);
-> +	sess->sid_pos = (cctx->iova_format ? SID_POS_IN_IOVA : sess->pa_bits);
->  
->  	if (of_property_read_u32(dev->of_node, "reg", &sess->sid))
->  		dev_info(dev, "FastRPC Session ID not specified in DT\n");
-> @@ -2198,9 +2199,9 @@ static int fastrpc_cb_probe(struct platform_device *pdev)
->  		}
->  	}
->  	spin_unlock_irqrestore(&cctx->lock, flags);
-> -	rc = dma_set_mask(dev, DMA_BIT_MASK(32));
-> +	rc = dma_set_mask(dev, DMA_BIT_MASK(sess->pa_bits));
->  	if (rc) {
-> -		dev_err(dev, "32-bit DMA enable failed\n");
-> +		dev_err(dev, "%u-bit DMA enable failed\n", sess->pa_bits);
->  		return rc;
->  	}
->  
-> @@ -2287,10 +2288,12 @@ static int fastrpc_get_domain_id(const char *domain)
->  
->  struct fastrpc_soc_data {
->  	u32 dsp_iova_format;
-> +	u32 cdsp_dma_mask;
->  };
->  
->  static const struct fastrpc_soc_data kaanapali_soc_data = {
->  	.dsp_iova_format = 1,
-> +	.cdsp_dma_mask = 34,
->  };
->  
->  static const struct of_device_id qcom_soc_match_table[] = {
-> @@ -2310,6 +2313,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	const struct of_device_id *match;
->  	const struct fastrpc_soc_data *soc_data = NULL;
->  	u32 iova_format = 0;
-> +	u32 ubs = DSP_DEFAULT_BUS_WIDTH;
->  
->  	root = of_find_node_by_path("/");
->  	if (!root)
-> @@ -2322,6 +2326,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	} else {
->  		soc_data = match->data;
->  		iova_format = soc_data->dsp_iova_format;
-> +		ubs = soc_data->cdsp_dma_mask;
->  	}
->  
->  	err = of_property_read_string(rdev->of_node, "label", &domain);
-> @@ -2404,6 +2409,7 @@ static int fastrpc_rpmsg_probe(struct rpmsg_device *rpdev)
->  	}
->  	/* determine where sid needs to be prepended to pa based on iova_format */
->  	data->iova_format = iova_format;
-> +	data->dma_mask = (domain_id == CDSP_DOMAIN_ID ? ubs : DSP_DEFAULT_BUS_WIDTH);
-
-set the default of 32 and move this inside switch case where we have
-domain id checks.
-
-
->  	kref_init(&data->refcount);
->  
->  	dev_set_drvdata(&rpdev->dev, data);
-> 
-
+On September 25, 2025 10:09:48 AM GMT-03:00, Konrad Dybcio <konrad=2Edybci=
+o@oss=2Equalcomm=2Ecom> wrote:
+>On 9/20/25 3:46 AM, Eric Gon=C3=A7alves wrote:
+>> Enable the real-time clocks found in R0Q board=2E
+>>=20
+>> Signed-off-by: Eric Gon=C3=A7alves <ghatto404@gmail=2Ecom>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts | 15 +++++++++++++++
+>>  1 file changed, 15 insertions(+)
+>>=20
+>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts b/arch/a=
+rm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
+>> index c1b0b21c0ec5=2E=2Ec088f1acf6ea 100644
+>> --- a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
+>> +++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
+>> @@ -225,6 +225,21 @@ vol_up_n: vol-up-n-state {
+>>  	};
+>>  };
+>> =20
+>> +&pmk8350_rtc {
+>> +	nvmem-cells =3D <&rtc_offset>;
+>> +	nvmem-cell-names =3D "offset";
+>> +
+>> +	status =3D "okay";
+>> +};
+>> +
+>> +&pmk8350_sdam_2 {
+>> +	status =3D "okay";
+>> +
+>> +	rtc_offset: rtc-offset@bc {
+>
+>Is this an offset you took from somewhere downstream?
+>
+>Generally you *really don't want to* poke at random SDAM cells,
+>as they contain a lot of important settings (incl=2E battery/charging)
+From=20another sm8450 device, I'm sure it's okay=2E
+>
+>Konrad
 
