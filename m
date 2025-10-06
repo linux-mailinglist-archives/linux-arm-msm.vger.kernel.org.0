@@ -1,132 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-76094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76095-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB897BBE991
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 18:11:20 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DBC8BBE9AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 18:14:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57A7D1899A46
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 16:11:43 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 52A203BF96C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 16:14:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A5A2D9ECF;
-	Mon,  6 Oct 2025 16:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 95EFF2D9EC5;
+	Mon,  6 Oct 2025 16:13:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VLrtECs6"
+	dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b="ULvoXn2N"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D048C2D8377
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 16:11:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 249AD2DBF4B;
+	Mon,  6 Oct 2025 16:13:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759767075; cv=none; b=i503h1R+vn3MNOixgIT1aD2rEWdJPYk1u18W0STAEiRP5DVwejDtsebxsaJ6ELm7D37x+xo6ZujtkRwxq1+uxdI5SFkVlzazd2/ThaeI4wjZ8rGCqBDSeBqGunP46Y12L0tB1c3Nt1SIHN2cqnf/VUmGL2+rQkVs/WoY/B3jh0A=
+	t=1759767234; cv=none; b=LJ+kP/rhL7011/GVF53TeXKPiSgRTNOOfKX/hsIK0tMSuIGOCzoNEnpEfvlZYxpbBxkFPtJuoorv3B8ZQXX1DWnzbsRbfCxfDJW1PfPqZ6GkV5Au2EYM57ptjWp9Kt5dPE3IhyFNGCkHDV+TzsFEiA3OKyg2SorhS+17VBSv0Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759767075; c=relaxed/simple;
-	bh=bAAmP6Vor3+frUWo9VM5DAgXz95oSL+3FrW7uk1ufUM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=C54AKwPhD4a1opc1OCAzYyRf1kud1heaTQNmL2ECc2t6qtN6Z5WNRiVoaSn/eehbcJ48VAbC4bA/sbWiv5wS1AgeODVlZsRVnq+Ir7I5TfUujB5dRVpJukEikdCdbHKzSss0aEA+y08W0a3S89/E+ZxXuoq3pyFkGDBWKUiOovY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VLrtECs6; arc=none smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-33ca74c62acso44411721fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 09:11:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1759767071; x=1760371871; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bAAmP6Vor3+frUWo9VM5DAgXz95oSL+3FrW7uk1ufUM=;
-        b=VLrtECs6+aeEeZz+5cjvV6B/jGEJBVfEd/gTDAJD2K2FcF7e15k3LADejBcX6p7l0Y
-         KrHQ10WvOU1U3EUD5RcMEz1+TNFrUT96t6wuLEOm0yM9HD5ZeC+Qbnq/dP94FHbyrUGt
-         gfhhf9RCiTUsVzFIExZhtsKkDZl9osqBoiCb85qDZL2GVxeRfdDl7Q9rp9pjQAUsufYy
-         g0exd8nmbboKMV/CVUjzM8ohVf4ACv63d0TDNGV7PweeyWSwQtX3Bf4ec3v81SXKkEe7
-         OYNkWKFno8CxXi1kQuCtjz0uTO6mmN03TBYF2aBQjubIfGOmDZaZqLhIoW72Wc5q/mmL
-         0/GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759767071; x=1760371871;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bAAmP6Vor3+frUWo9VM5DAgXz95oSL+3FrW7uk1ufUM=;
-        b=HsxLVTA+5uk0KzXe1Xf07ZVBa0Z50e1o4y2+oI/XddSJbOXoW7B7hyoyJsZtET5lZg
-         oks+OMWyyZD24MeH/CLVIyeFBfWP8eKvunE/dwngqKLQM7QMGuQBgMCH9MLa6dDe7/az
-         95b4zBbfs0OprapseA+5vEqzoFM+KhGNhk7rnR7CYgYUbfoPx/xJzNkLSjAseYqgscj2
-         12cnR5xDgT9r1u227osMqWnXVeob4yTH9FJle8s9AiTa6GkvuwhjYD7skoFt1cq/ZS4e
-         K46VHUCk2wQ/nC3zt39vgWRuoARfAhNf0hEi9AzN4a6zqSW3rq6L0aeKvGSmrmldbVAJ
-         +bow==
-X-Forwarded-Encrypted: i=1; AJvYcCVGt8yFDKycH72TgwBlOHHjuyiY7rFeiMgl2y01NOO9IoAZ45B3j7Fj2U+GSJkJGbmDjK5q74bAwZXSSkMr@vger.kernel.org
-X-Gm-Message-State: AOJu0YxofstXXVUjdh5mJNajHt3ElU8IZmL9XklaZlSHTHPgENnPvXHX
-	7jGAZPa/35G4VKQAxpEpXNkDMyC07R059xU9n/4GihsZrEGPXhoa2x343Li+d7kotiGgWAsz2Df
-	/vhuMq14D0oTaurwhvR2Cyp5eZkMMY+qXd2QjCx4fQQ==
-X-Gm-Gg: ASbGncsq0d7EpTVZdWDW0ZJNi1zrjYYHR5zBlKBeFhuORQCapM65hd9hikrUdmj/tiR
-	+7iCOB+6+tT2/TZeuER66Qfg1WFf0WOysE1ju7MYJkQlzgwXFA6yNIfCX0WOB9v0SUssXWJ3tye
-	EDb+s97gO72rHBIyad49FbxQMNiJHQyFy4nYnEjpVjO1drAVUjB481wW6+XZbTdZ+POVUaJ732J
-	pQNZ19BaSIyftZce4uyP63MkvD31TSGyT+q5/2F9LHnT8Ap7SydumXpxUwt7rQ=
-X-Google-Smtp-Source: AGHT+IHQni+hoN/f23d0O8IX74fUFomrJ9gkJXQ0jq6YVPXYNOJtNrLGQEvHZJ8/WlypXR2ARa7kU4bjK03qJXmCeP8=
-X-Received: by 2002:a2e:bcc6:0:b0:36e:35c8:3dc4 with SMTP id
- 38308e7fff4ca-374c37fc6f8mr39619951fa.21.1759767070653; Mon, 06 Oct 2025
- 09:11:10 -0700 (PDT)
+	s=arc-20240116; t=1759767234; c=relaxed/simple;
+	bh=7PpltU9DGGP6qfqzqgQNBhyvFnEH5t9R+C6nSh6GRO4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=fN2k2J/ZohzbpDjajC4yDWLoZkmFxgsniVibrycW0YK5vPDsZGm7i/uri5aYPOjEesQy5ADYOsCAa8MeagBVF/owdblMiH22eN36mWtFdJB/uIGM/OdBwdb7GXb+BeBlQ8YL4u+XE6uKNuVmqab7nYAGvMgIJIUFhHVimZIpGKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool; spf=pass smtp.mailfrom=packett.cool; dkim=pass (2048-bit key) header.d=packett.cool header.i=@packett.cool header.b=ULvoXn2N; arc=none smtp.client-ip=91.218.175.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=packett.cool
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=packett.cool
+Message-ID: <2564cdec-9726-4efa-ba07-a2f2646168c6@packett.cool>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=packett.cool;
+	s=key1; t=1759767230;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=oXidAQDLxmoPTgrGv7pYlMirqlSYDUPqKshvVJjRl/U=;
+	b=ULvoXn2NmM9A547Ta6cpDp3p7vf06JYkkubX/G15oFdb/s4IuGCeAWJFjGXcBpGrCmVZxe
+	PJW9epfxlOxoPlOFpnxr9hi7JuXAvem9IqqJK0zHIdqzgsMoksVqSpmKpddtKtRwBOK6q1
+	8HMc/ExFVs9AbpORmMPfOdDYf3mENwDn5idIzBqZ90dkvrJU7E8pbKAh1XZxUXA/HlIERF
+	pZm3NmI3oMjYgSsLluxOOzdDIBSyTgwXkh8MmvH7OJqdbsUzSFLIW57croeCG9vin13SCG
+	HuGZ5njg7qSFs85Ua0g121AfUt+5HUZqcQBd1vsbKlaygScKR/YQETgWBnXoLA==
+Date: Mon, 6 Oct 2025 13:13:42 -0300
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
- <hyzzrjn7jzo3tt3oyg7azijouawe3zopfjzq6zfhoo6e6z2m4t@ssl5vl4g557e> <zk4ea5cibrkp4vttuy4evrqybf76b3nop5lnyck4ws4nyf2yc4@ghj2eyswsoow>
-In-Reply-To: <zk4ea5cibrkp4vttuy4evrqybf76b3nop5lnyck4ws4nyf2yc4@ghj2eyswsoow>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Mon, 6 Oct 2025 18:10:59 +0200
-X-Gm-Features: AS18NWDSntYY-tS0LWjCm4WwdgxQdqQ5RgzeqJofTletfEADJXVbDbVNAU36cIY
-Message-ID: <CAMRc=MdWmO4wvX6zpzN0-LZF1pF5Y2=sS8fBwr=CKMGWHg+shA@mail.gmail.com>
-Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
-To: Manivannan Sadhasivam <mani@kernel.org>
-Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, Kees Cook <kees@kernel.org>, 
-	Mika Westerberg <westeri@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
-	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
-	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
-	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
-	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
-	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
-	linux-arm-msm@vger.kernel.org, 
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH] phy: qcom: qmp-combo: Move pipe_clk on/off to common
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Neil Armstrong <neil.armstrong@linaro.org>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, linux-kernel@vger.kernel.org
+References: <20250927093915.45124-2-val@packett.cool>
+ <e6754738-76c9-4080-bbed-17f02e6535bf@oss.qualcomm.com>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Val Packett <val@packett.cool>
+In-Reply-To: <e6754738-76c9-4080-bbed-17f02e6535bf@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-On Mon, Oct 6, 2025 at 5:43=E2=80=AFPM Manivannan Sadhasivam <mani@kernel.o=
-rg> wrote:
->
-> On Wed, Sep 24, 2025 at 11:25:12AM -0700, Dmitry Torokhov wrote:
-> > Hi Bartosz,
-> >
-> > >
-> > > The practical use-case for this are the powerdown GPIOs shared by
-> > > speakers on Qualcomm db845c platform, however I have also extensively
-> > > tested it using gpio-virtuser on arm64 qemu with various DT
-> > > configurations.
-> >
-> > How is this different from the existing gpio-backed regulator/supply?
-> > IMO GPIOs are naturally exclusive-use resources (in cases when you need
-> > to control them, not simply read their state), and when there is a need
-> > to share them there are more appropriate abstractions that are built on
-> > top of GPIOs...
-> >
->
-> Not always... For something like shared reset line, consumers request the=
- line
-> as GPIO and expect gpiolib to do resource manangement.
->
 
-They could use the reset API and it would implicitly create a virtual
-device that requests the reset GPIO and controls its enable count.
-Except that some devices also do a specific reset sequence with delays
-etc. That would require some additional logic in reset-gpio.
+On 10/6/25 11:44 AM, Konrad Dybcio wrote:
+> On 9/27/25 11:17 AM, Val Packett wrote:
+>> Keep the USB pipe clock working when the phy is in DP-only mode, because
+>> the dwc controller still needs it for USB 2.0 over the same Type-C port.
+>> [..]
+>>
+>> In [1] Konrad mentioned that "the hardware disagrees" with keeping the USB
+>> PLL always on. I'm not sure what exactly was meant by disagreement there,
+>> and I didn't find any specific code that touches that PLL in the driver,
+>> so I decided to just try it anyway.
+> So what I did was playing around with the RESET_OVRD settings, which
+> dictate what parts of the PHY (and their associated PLLs) are kept online..
+> but I totally forgot that there is a branch/gate clock in GCC that sits
+> inbetween!
+>
+>> [..]
+>> I'm sure it might not be that simple but from my limited and uninformed
+>> understanding without any internal knowledge, the "sneaky workaround"
+>> might actually be the intended way to do things?
+> Normally the clock which you're enabling is sourced from the QMPPHY.
+> The other option (bar some debug outputs) is for it to be driven by
+> the 19.2 MHz always-on crystal (instead of $lots_of_mhz from the PHY).
+>
+> For USB hosts without a USB3 phy connected to them, there's an option
+> to mux the controller's PIPE clock to be sourced from the UTMI clock
+> input. In those cases, the UTMI (and therefore PIPE) clock runs at..
+> well, 19.2 MHz!
+>
+> (you can actually do that on USB3-phy-connected hosts too, at the cost
+> of.. USB3, probably)
+>
+> So I'm not sure how much of that is well thought-out design and how
+> much is luck, but this ends up working for us anyway, with seemingly
+> no downsides.
+>
+> At least that's my understanding of the situation.
 
-Bart
+I wonder how Windows drivers handle this.
+
+The ability to use the UTMI clock sounds more appropriate for when only 
+a legacy USB2 device is plugged in and the entirety of QMPPHY is 
+unnecessary and can be shut down to save power.
+
+BTW I'm still seeing USB2 functionality die if I boot with the monitor 
+cable *already* plugged in, but that sounds like a very different issue 
+(the host controller starting to touch the bus before the PIPE clock is 
+up? something something probe order?)
+
+> The suspend logic is broken and unused anyway, but that's a nice catch,
+> the PIPE clock in question is even conveniently called "usb3_pipe" in DT
+
+Hmm. Is it unused? Oh, you mean the pm_runtime_forbid(), right.
+
+Do you have any pointers about what exactly is broken there? I've been 
+poking at the runtime PM stuff too 
+(https://gitlab.com/Linaro/arm64-laptops/linux/-/issues/14 for USB), the 
+PHYs are the biggest missing piece there overall..
+
+>> [..]
+>> @@ -3103,6 +3110,7 @@ static int qmp_combo_com_exit(struct qmp_combo *qmp, bool force)
+>>   	reset_control_bulk_assert(cfg->num_resets, qmp->resets);
+>>   
+>>   	clk_bulk_disable_unprepare(qmp->num_clks, qmp->clks);
+>> +	clk_disable_unprepare(qmp->pipe_clk);
+> Let's disable this one first, to preserve existing behavior (and it
+> makes sense logically - if the PHY doesn't have its clocks, it can't
+> really generate one either)
+
+Sure, nice catch. Will send a V2 with this fixed.
+
+Thanks,
+~val
+
 
