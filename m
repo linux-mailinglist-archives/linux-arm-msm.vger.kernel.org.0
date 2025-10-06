@@ -1,172 +1,132 @@
-Return-Path: <linux-arm-msm+bounces-76093-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76094-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D82FBBE8C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 17:50:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB897BBE991
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 18:11:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6E2CA4E2B68
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 15:50:03 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 57A7D1899A46
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 16:11:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D8A2E283FDF;
-	Mon,  6 Oct 2025 15:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92A5A2D9ECF;
+	Mon,  6 Oct 2025 16:11:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bibJvolT"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="VLrtECs6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571202D8DB1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 15:50:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D048C2D8377
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 16:11:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759765802; cv=none; b=UFBsdRffpnt2MJx4Mqlk9rcq93NbSMwHXoJdXKGPqvlI0AiM+tc7g2o2utWax1dAo2To4EbWxVC+BTeTRvLQ5wrFy9Lx2FDvoAktktBBVgb4BrohNJovcwGUxrTz3k/2fMcRIXtiWW8uNNB3urxhnPjEXwPjGrfyYLej1fB5VqE=
+	t=1759767075; cv=none; b=i503h1R+vn3MNOixgIT1aD2rEWdJPYk1u18W0STAEiRP5DVwejDtsebxsaJ6ELm7D37x+xo6ZujtkRwxq1+uxdI5SFkVlzazd2/ThaeI4wjZ8rGCqBDSeBqGunP46Y12L0tB1c3Nt1SIHN2cqnf/VUmGL2+rQkVs/WoY/B3jh0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759765802; c=relaxed/simple;
-	bh=W3PMT+hwZQ6aWg/sisolkXdcpO27FcPguWJfzNMoLuU=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 MIME-Version:Content-Type; b=K1+DZ5m19wG1MuGBkhnmi+6yifbgOGO6lR7P003sWVkfJCHzWeNsHBrpVNrO0DUakWVpP8jvnKPhX93xxVrF1Ygm3c7aK8pa+w266Fq7U3TVHGQ260ku+V9fi2wpnPeHMkXDiLLVR2rk1Kv2u2reJ4JUlb5GkT48biDzU5zfT8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bibJvolT; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-77f1f29a551so6404425b3a.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 08:50:01 -0700 (PDT)
+	s=arc-20240116; t=1759767075; c=relaxed/simple;
+	bh=bAAmP6Vor3+frUWo9VM5DAgXz95oSL+3FrW7uk1ufUM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=C54AKwPhD4a1opc1OCAzYyRf1kud1heaTQNmL2ECc2t6qtN6Z5WNRiVoaSn/eehbcJ48VAbC4bA/sbWiv5wS1AgeODVlZsRVnq+Ir7I5TfUujB5dRVpJukEikdCdbHKzSss0aEA+y08W0a3S89/E+ZxXuoq3pyFkGDBWKUiOovY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=VLrtECs6; arc=none smtp.client-ip=209.85.208.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-33ca74c62acso44411721fa.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 09:11:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759765800; x=1760370600; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=aBmtSE528Py14xtzoWyp+hmgQ/aJvwHpZdOMZKJdoak=;
-        b=bibJvolTrTu9+1p3keFG5lKoehhluFuAGAw0GSjuywIGF6RbHSL11Df4XsvM96ywhe
-         qQ/VXPsCsLQje60f0d6Ma4u2S05mytMsaSStlOmK/HVcZgr1YdtPoWWeoLaEK5F6Cb4Z
-         CPhQOPTfO6tnBojusQxLfUjpZZBqgBi5fu4x89SV5bDaqkLH0jy3NYiYeqA0MFUgLnje
-         SZNRbWjRALq4qecf3R5qcKjos0MW5uCL8xSkr3S1I0cRql097i+2tXlX4Lser5W+mxqH
-         RIKfMOlGbF2Yb/bVoCOyVK06C8aDueRt/tHO476gyq1Mp71wBbJRKye/LXxqGdSNNfsg
-         GPpQ==
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1759767071; x=1760371871; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bAAmP6Vor3+frUWo9VM5DAgXz95oSL+3FrW7uk1ufUM=;
+        b=VLrtECs6+aeEeZz+5cjvV6B/jGEJBVfEd/gTDAJD2K2FcF7e15k3LADejBcX6p7l0Y
+         KrHQ10WvOU1U3EUD5RcMEz1+TNFrUT96t6wuLEOm0yM9HD5ZeC+Qbnq/dP94FHbyrUGt
+         gfhhf9RCiTUsVzFIExZhtsKkDZl9osqBoiCb85qDZL2GVxeRfdDl7Q9rp9pjQAUsufYy
+         g0exd8nmbboKMV/CVUjzM8ohVf4ACv63d0TDNGV7PweeyWSwQtX3Bf4ec3v81SXKkEe7
+         OYNkWKFno8CxXi1kQuCtjz0uTO6mmN03TBYF2aBQjubIfGOmDZaZqLhIoW72Wc5q/mmL
+         0/GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759765800; x=1760370600;
-        h=content-transfer-encoding:mime-version:message-id:references
-         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aBmtSE528Py14xtzoWyp+hmgQ/aJvwHpZdOMZKJdoak=;
-        b=NEooMbmwrk4l6UQ+wHZIBX8GsfkMXF+7C8xPJYh4Cg2uESYWMm6lNWpVgVFNnbVeLJ
-         1gFnZ/MRFnP+p1h5U7n3BKEPXwFDbu9Xuf6ij2w1hcNW9KCTazp7rVIqm+SoFQMHP3ek
-         e/roskh4Sp6GLjdcVsKYi8TgcfzMd01YSIZl4Svik9p/aJsQYp5HkoTqHq9eC8OONymd
-         CQoLpdWrddWPDzERx/WiJqK/mKMcGfF5wWAlxbZ9QDctszhnploOvfoYSWT+k1cKRmBI
-         J1ZsLzM6WMPtxcZlwt/8LY4T7W6ArWS1I1+1pUFBX6cY65IGHpUcaBJHkmK1Lfwm6rb3
-         xDcw==
-X-Forwarded-Encrypted: i=1; AJvYcCW8K48J9iAICtdo8UI7bCc40m6SgFH0tW/NqQoa2YaciKicPoBENLOrtxEh7vFluHf6UIF+dcmt5y0r051i@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyp6sot9vwK010essLi85q5RDyBRJsQL3c3eAZ63gpQtdVm17oP
-	GNelYcfnf1AH8ZPFo7X3gk4Xg2DPJmll1b9spGg463rspalLRLAQyyHt
-X-Gm-Gg: ASbGnct2KhCN5GgTokWSqCqWT9cuj88AzlWXmgZX586zQgbf683QckQrroR66BGw0pF
-	ROv2URVn67lTQ41KsrOVRqfiyROTjTIlodd5CYOVkYgJgaw6LtepOEIjBhfARZ4SFhs4cWLDnDb
-	OPZ1bwc/8lEAWF7Rs46LTPUoBpldNTz+wvPGTxx9LArAaR21FH/4ksousYVOZv6VGXXC3okyQEw
-	GSeCRi1hWwLyGY4NNUFuGAJB8gil9eWwXLopnFAfd3iy+7Ku99Z5HwnWzbwFJg/S9bcR9CrwXP2
-	uvIszbBtfxwZX/d1n2jAYBzM3LdyVFTnYE4mpEgWxrMhgHUAULAT3n9ChHy7uuw3t6tXBVm82+V
-	KnMhA5hN5O0yxMKNg8aCazl+qGgpninFQgsgSZyP//io08Tzd7yUlHr6Wt9gPqoRSmpaF
-X-Google-Smtp-Source: AGHT+IGWCHtuMHA7m1kQjEv0z+l6rbbms0Kog1pe29YFHLTZBAPJ2rs/rWtsmuM8c24eMOHMFoatnw==
-X-Received: by 2002:a05:6a20:3d8f:b0:24c:1f78:1803 with SMTP id adf61e73a8af0-32b62093c5amr16080333637.38.1759765800563;
-        Mon, 06 Oct 2025 08:50:00 -0700 (PDT)
-Received: from ehlo.thunderbird.net ([2804:18:932:c1e3:aaa3:c804:f5ef:49e7])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-78b01fb281bsm13088496b3a.37.2025.10.06.08.49.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Oct 2025 08:50:00 -0700 (PDT)
-Date: Mon, 06 Oct 2025 12:49:55 -0300
-From: =?ISO-8859-1?Q?Eric_Gon=E7alves?= <ghatto404@gmail.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-CC: devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 5/5] arm64: dts: qcom: r0q: enable ufs storage
-User-Agent: Thunderbird for Android
-In-Reply-To: <7875ad35-366d-4480-979f-426f5760aa2a@oss.qualcomm.com>
-References: <20250920014637.38175-1-ghatto404@gmail.com> <20250920014637.38175-6-ghatto404@gmail.com> <f032db60-d625-4814-a5c9-0610618b7351@oss.qualcomm.com> <97CA26D8-2CB5-4F90-A4C8-BCD81C688F35@gmail.com> <7875ad35-366d-4480-979f-426f5760aa2a@oss.qualcomm.com>
-Message-ID: <289A60D2-9184-4DAC-BE41-D202F02361B5@gmail.com>
+        d=1e100.net; s=20230601; t=1759767071; x=1760371871;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bAAmP6Vor3+frUWo9VM5DAgXz95oSL+3FrW7uk1ufUM=;
+        b=HsxLVTA+5uk0KzXe1Xf07ZVBa0Z50e1o4y2+oI/XddSJbOXoW7B7hyoyJsZtET5lZg
+         oks+OMWyyZD24MeH/CLVIyeFBfWP8eKvunE/dwngqKLQM7QMGuQBgMCH9MLa6dDe7/az
+         95b4zBbfs0OprapseA+5vEqzoFM+KhGNhk7rnR7CYgYUbfoPx/xJzNkLSjAseYqgscj2
+         12cnR5xDgT9r1u227osMqWnXVeob4yTH9FJle8s9AiTa6GkvuwhjYD7skoFt1cq/ZS4e
+         K46VHUCk2wQ/nC3zt39vgWRuoARfAhNf0hEi9AzN4a6zqSW3rq6L0aeKvGSmrmldbVAJ
+         +bow==
+X-Forwarded-Encrypted: i=1; AJvYcCVGt8yFDKycH72TgwBlOHHjuyiY7rFeiMgl2y01NOO9IoAZ45B3j7Fj2U+GSJkJGbmDjK5q74bAwZXSSkMr@vger.kernel.org
+X-Gm-Message-State: AOJu0YxofstXXVUjdh5mJNajHt3ElU8IZmL9XklaZlSHTHPgENnPvXHX
+	7jGAZPa/35G4VKQAxpEpXNkDMyC07R059xU9n/4GihsZrEGPXhoa2x343Li+d7kotiGgWAsz2Df
+	/vhuMq14D0oTaurwhvR2Cyp5eZkMMY+qXd2QjCx4fQQ==
+X-Gm-Gg: ASbGncsq0d7EpTVZdWDW0ZJNi1zrjYYHR5zBlKBeFhuORQCapM65hd9hikrUdmj/tiR
+	+7iCOB+6+tT2/TZeuER66Qfg1WFf0WOysE1ju7MYJkQlzgwXFA6yNIfCX0WOB9v0SUssXWJ3tye
+	EDb+s97gO72rHBIyad49FbxQMNiJHQyFy4nYnEjpVjO1drAVUjB481wW6+XZbTdZ+POVUaJ732J
+	pQNZ19BaSIyftZce4uyP63MkvD31TSGyT+q5/2F9LHnT8Ap7SydumXpxUwt7rQ=
+X-Google-Smtp-Source: AGHT+IHQni+hoN/f23d0O8IX74fUFomrJ9gkJXQ0jq6YVPXYNOJtNrLGQEvHZJ8/WlypXR2ARa7kU4bjK03qJXmCeP8=
+X-Received: by 2002:a2e:bcc6:0:b0:36e:35c8:3dc4 with SMTP id
+ 38308e7fff4ca-374c37fc6f8mr39619951fa.21.1759767070653; Mon, 06 Oct 2025
+ 09:11:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
+ <hyzzrjn7jzo3tt3oyg7azijouawe3zopfjzq6zfhoo6e6z2m4t@ssl5vl4g557e> <zk4ea5cibrkp4vttuy4evrqybf76b3nop5lnyck4ws4nyf2yc4@ghj2eyswsoow>
+In-Reply-To: <zk4ea5cibrkp4vttuy4evrqybf76b3nop5lnyck4ws4nyf2yc4@ghj2eyswsoow>
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+Date: Mon, 6 Oct 2025 18:10:59 +0200
+X-Gm-Features: AS18NWDSntYY-tS0LWjCm4WwdgxQdqQ5RgzeqJofTletfEADJXVbDbVNAU36cIY
+Message-ID: <CAMRc=MdWmO4wvX6zpzN0-LZF1pF5Y2=sS8fBwr=CKMGWHg+shA@mail.gmail.com>
+Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
+To: Manivannan Sadhasivam <mani@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, Kees Cook <kees@kernel.org>, 
+	Mika Westerberg <westeri@kernel.org>, Andrew Morton <akpm@linux-foundation.org>, 
+	Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
+	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
+	Saravana Kannan <saravanak@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Andy Shevchenko <andy@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>, 
+	Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>, 
+	Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, 
+	linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org, 
+	linux-arm-msm@vger.kernel.org, 
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
+On Mon, Oct 6, 2025 at 5:43=E2=80=AFPM Manivannan Sadhasivam <mani@kernel.o=
+rg> wrote:
+>
+> On Wed, Sep 24, 2025 at 11:25:12AM -0700, Dmitry Torokhov wrote:
+> > Hi Bartosz,
+> >
+> > >
+> > > The practical use-case for this are the powerdown GPIOs shared by
+> > > speakers on Qualcomm db845c platform, however I have also extensively
+> > > tested it using gpio-virtuser on arm64 qemu with various DT
+> > > configurations.
+> >
+> > How is this different from the existing gpio-backed regulator/supply?
+> > IMO GPIOs are naturally exclusive-use resources (in cases when you need
+> > to control them, not simply read their state), and when there is a need
+> > to share them there are more appropriate abstractions that are built on
+> > top of GPIOs...
+> >
+>
+> Not always... For something like shared reset line, consumers request the=
+ line
+> as GPIO and expect gpiolib to do resource manangement.
+>
 
+They could use the reset API and it would implicitly create a virtual
+device that requests the reset GPIO and controls its enable count.
+Except that some devices also do a specific reset sequence with delays
+etc. That would require some additional logic in reset-gpio.
 
-On October 6, 2025 9:08:54 AM GMT-03:00, Konrad Dybcio <konrad=2Edybcio@os=
-s=2Equalcomm=2Ecom> wrote:
->On 9/25/25 11:37 PM, Eric Gon=C3=A7alves wrote:
->>=20
->>=20
->> On September 25, 2025 10:07:31 AM GMT-03:00, Konrad Dybcio <konrad=2Edy=
-bcio@oss=2Equalcomm=2Ecom> wrote:
->>> On 9/20/25 3:46 AM, Eric Gon=C3=A7alves wrote:
->>>> Enable UFS internal storage of the Samsung Galaxy S22=2E
->>>>
->>>> Signed-off-by: Eric Gon=C3=A7alves <ghatto404@gmail=2Ecom>
->>>> ---
->>>>  =2E=2E=2E/boot/dts/qcom/sm8450-samsung-r0q=2Edts      | 39 +++++++++=
-++++++++++
->>>>  1 file changed, 39 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts b/arch=
-/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
->>>> index c088f1acf6ea=2E=2E0a55ce952f93 100644
->>>> --- a/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
->>>> +++ b/arch/arm64/boot/dts/qcom/sm8450-samsung-r0q=2Edts
->>>> @@ -146,6 +146,24 @@ vreg_l5b_0p88: ldo5 {
->>>>  			regulator-max-microvolt =3D <888000>;
->>>>  			regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
->>>>  		};
->>>> +
->>>> +		vreg_l6b_1p2: ldo6 {
->>>> +			regulator-min-microvolt =3D <1200000>;
->>>> +			regulator-max-microvolt =3D <1200000>;
->>>> +			regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
->>>> +		};
->>>> +
->>>> +		vreg_l7b_2p5: ldo7 {
->>>> +			regulator-min-microvolt =3D <2504000>;
->>>> +			regulator-max-microvolt =3D <2504000>;
->>>> +			regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
->>>> +		};
->>>> +
->>>> +		vreg_l9b_1p2: ldo9 {
->>>> +			regulator-min-microvolt =3D <1200000>;
->>>> +			regulator-max-microvolt =3D <1200000>;
->>>> +			regulator-initial-mode =3D <RPMH_REGULATOR_MODE_HPM>;
->>>> +		};
->>>>  	};
->>>> =20
->>>>  	regulators-1 {
->>>> @@ -370,6 +388,27 @@ tsp_int_sleep: tsp_int_sleep_state {
->>>>  	};
->>>>  };
->>>> =20
->>>> +&ufs_mem_hc {
->>>> +	reset-gpios =3D <&tlmm 210 GPIO_ACTIVE_LOW>;
->>>> +
->>>> +	vcc-supply =3D <&vreg_l7b_2p5>;
->>>> +	vcc-max-microamp =3D <1100000>;
->>>
->>> because you set this, you should also set regulator-allow-set-mode and
->>> regulator-allowed-modes
->>>
->>> Konrad
->> Why is that necessary?
->
->Because that is then translated into the mode selection, based on
->the aggregated usage
->
->That said, you may also choose to omit this if you want to run all
->regulators at high-power mode (less efficient at idle), which forcefully
->ensures you're not hitting any current limits=20
-Will do, thanks
->
->Konrad
+Bart
 
