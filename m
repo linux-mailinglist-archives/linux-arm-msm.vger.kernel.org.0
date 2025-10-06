@@ -1,180 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-76041-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76042-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 57804BBDA89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 12:18:32 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AE04BBDAAA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 12:20:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id CE8D134A2B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 10:18:31 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id C050B4E7E13
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 10:20:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B066C223DF6;
-	Mon,  6 Oct 2025 10:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B9A3E220F37;
+	Mon,  6 Oct 2025 10:20:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="gcJpPpZV"
+	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="lHmOzhbj"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E5A1CF96
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 10:18:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D32A35966;
+	Mon,  6 Oct 2025 10:20:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759745908; cv=none; b=ECBztLYebOus5KdHvaLcmpi2aXXakj5F1ZM2q+2r5RL7JXR81O2jbogwku8Dv1MCUgFuZ6pw6955XmTnjVJxkzmMuL33DAGJbfS4keGgeCdkza32JBKZ5vFTA6hi16l+DQ943ofpu/zEln1T5LyoGs137GOHgzgS89NbZT/+w6E=
+	t=1759746014; cv=none; b=ojwzhqHdHNMuxLBk6Q+FUZA0WkB+QJkDwkoH31nd7KUou5f5kNPusY2Ao4fzV2mp5w+S4NQ9lQ4yISPlMCfQm9LZSdvnnlS3NlnNOSDz0wq0th3EcwjCp0FGB0/xeUvPVWQTtUgOSGmrT8lk9sjSnLP/IP1f870SvHAZ3OgumLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759745908; c=relaxed/simple;
-	bh=d5eXb6lvQ5BPtJftMmRRWMO4aqAPpK77UXRhYmq5vMc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kaZNo4NM8ukfAdOjBHAsbqcjzEJZpYi0t8VSnUu9C1/vYB2NpGV9HtVoV9GvpRgOfjgjAPMWFzsEqP+mBVshTNOPnyK32DPMaPT/exCktKLwMkvyPWUb3lcmTUjbX7NczVK4joySy7ZkHxEi8G1yP2jrSDJKEAOf2x8r7t8BTtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=gcJpPpZV; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 595NSPGI026163
-	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Oct 2025 10:18:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=uc2L32NXK+EBn6a//9GP8zev
-	u7t9yB9CW2ziKFOncAI=; b=gcJpPpZVx4uypTLvEeRIYt+J1rRlmon3vAFUzj0b
-	LxLbnV1fL8kwFq+rNvpLwaWDarugpkFOUk48hbNtXAJ6jZIFj1SfvcPbaVBUHc3N
-	nA5dOCG+Oaop/VblIf3/yY7AOBBLA+c3mw4SZc58LhBOJFtvK9KzllT12UKFXZAB
-	ex97qbOlapSvHMz0AVb63ZVR06HRtAIGAyR27uWc8ZHWRAfzzE1nRRUSp/BFTM6H
-	ldIygwnAb2LWrr2Ox6RK659fQCcT1f6moRzMbzOi5jXIQo/rBZlPk47i6OmLViDV
-	62YMpba1SK8HfWCSyYiHh8+s/oHrhirnXz6Y30C7XTbmEw==
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49k6bfjpqs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 10:18:26 +0000 (GMT)
-Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4e002f413e4so45410741cf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 03:18:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759745905; x=1760350705;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uc2L32NXK+EBn6a//9GP8zevu7t9yB9CW2ziKFOncAI=;
-        b=hA/5q642oi0FWzfJK1ZRPlhaVcuqMIKGhHgoCBD0pxB/tLB1TXi4si27xpVv2HyfMs
-         a4eRwEetjMed8wcIfy+wZTQ9z2or5vBtuNl85tddhLDHF2vk8yE7nRVYM79d2M98qiMg
-         QsTpPnZwrR84JfXAjCcBKo/hQFQ+kVJN5udQMwYRJV6+lxfHz+dkBOmQ1sCKVxldAQl3
-         kt4owturlNgKpQYpQ88E6ypd62uCyVVYuCAWPci9BRisdhnLhJZBdd5nr5k95xWERsw3
-         wZDxJu2en7gjkVv2p8G4wif4WKEQHeyFvobIJA9NzKsTaU25gJrla8U+6XnA77+sNexw
-         9bfw==
-X-Forwarded-Encrypted: i=1; AJvYcCV4jF2E//3oDUcF8p3/QW0/zKdSouMiFLDvpOzGDT8R48F4lh1EXYqqgNYIKetrBu+8Cqhnpg0C1AGBemfe@vger.kernel.org
-X-Gm-Message-State: AOJu0YzkkRgj69A/Os2LluPWFr+mqb5HJUhxlTCuupqbgT1mfkbANbZl
-	CwbOA2F3pw2AySQZzfztNX8K2hZi4xAa8LLhzXZJ30wbRXZL7IuTXalKsFtCd9hUCM2FEtvj6Ai
-	vFG30rh+M31TfUXlAYo62RGaMDxMGUHzgtQRWA4hBUPaRxLFkdJCoW63siNSGitQU1JYx
-X-Gm-Gg: ASbGncvofYZkCTWdWHLMR1O77WGiCWW3hPjzTJHfc1aFwp7BhuH72ksRmPyaGs8yDyh
-	9bLjj4IwB9OTVptqN7qqj8PmVr0TdFUJNHPscJLY5OfSXQGNNd772pOG5KqUVhkQ1Hjv990sotP
-	GzmQb2pdrlzhfZeExfQ2LJB/gcMKpywA9hlqCMwL/il3V09YttdjjPu2WDQn2EOD3+8AM7l0pa9
-	JsmA+HGe9g9LIiC2ccE5AqbF1scdJL3EDc9A8t3Nwa+SiPQ0rkt7hb+A0NeNXcYVqgGqz1IuXMp
-	Pv9O3DjqolXlWW7w6um1nCEK3e4Mx13nD2VYx2c2MA9amml7C65iNo2p/lRS4TM03GwFZZ620Lo
-	lt1pdrrQ0Is3yXsoCiOdTC+Gy5/04QznzO5Ql8fLBFhUyCDEUEvDt5AdKbQ==
-X-Received: by 2002:a05:622a:411b:b0:4b3:17dd:7766 with SMTP id d75a77b69052e-4e576ad9e6bmr121033241cf.43.1759745905007;
-        Mon, 06 Oct 2025 03:18:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH6fc+qZuQi2Tm0xx+Z8hR3Cr0NBSA31twPpqJapGf0AGVIk4uQ93BuC9exPMrDmlUuhcoDAw==
-X-Received: by 2002:a05:622a:411b:b0:4b3:17dd:7766 with SMTP id d75a77b69052e-4e576ad9e6bmr121033041cf.43.1759745904408;
-        Mon, 06 Oct 2025 03:18:24 -0700 (PDT)
-Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-58b0113fdc0sm4912578e87.54.2025.10.06.03.18.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 03:18:23 -0700 (PDT)
-Date: Mon, 6 Oct 2025 13:18:21 +0300
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-Cc: Bryan O'Donoghue <bod@kernel.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
-        Abhinav Kumar <abhinav.kumar@linux.dev>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] media: iris: Add support for QC08C format for decoder
-Message-ID: <blrugv2y4hvgcswbnyk3s6cpv3pfuyyxduoulxqnf24qnykosy@ra265lwayjix>
-References: <20250919-video-iris-ubwc-enable-v1-0-000d11edafd8@oss.qualcomm.com>
- <OyMR2y907eHs6rnnO6bzy52LY_t8KXKscM-nTPu48x3NCYFU4mza-uz0HqnQlYqPg2JtDB8AhCtGAa26Cbq4PA==@protonmail.internalid>
- <20250919-video-iris-ubwc-enable-v1-1-000d11edafd8@oss.qualcomm.com>
- <27e36fdb-3107-4e7b-b402-fd72ea5c4d61@kernel.org>
- <mL8al4KIcE6PTrBxdJa_2UyBCdazqiqrW-cNH0h4hU0lxL9e1BBoPQwqSqafI_KMAHfhK014iRoKVkQmrds0dw==@protonmail.internalid>
- <5e7f20ee-7960-4a1b-bbf2-b5f5330e1527@linaro.org>
- <d603c0d3-4dd5-4ea0-8a31-47e6dd03ffd7@kernel.org>
- <66d3b851-5b29-ca88-53de-a4126c2b5366@oss.qualcomm.com>
+	s=arc-20240116; t=1759746014; c=relaxed/simple;
+	bh=3qNU7HfS9J8iQg0rIzS6WknKzrlT3w069/gUWpf4qVY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=C9IetgR973gaBS59ezmPSp1YMmeUxO7jFgrEzpJNPt7ct12KVmtjJYtn3NPOA4bCy+E6HLVdLrz5NIjg3xKpGp422Af1WaEyzQhMUlVbqs/WHXsOYYyJezg8tf9TP84EGaT5G+/wEKujx9yJNDHSaxlkyyBbf4nape8YyQ2ffN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=lHmOzhbj; arc=none smtp.client-ip=94.112.25.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
+Received: from [192.168.1.228] (unknown [79.140.117.87])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange x25519)
+	(No client certificate requested)
+	by ixit.cz (Postfix) with ESMTPSA id B549F53433A4;
+	Mon, 06 Oct 2025 12:20:08 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+	t=1759746009;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=t5xfuud6MwgsUDEjd3HFOo37DEBoFTAysRaS0lS4b1w=;
+	b=lHmOzhbj0bC/t0ylVh7eXgsGrmcEZ598/fr2iP4zytLDsvqs5N1eVYpfbIx3AOrmqNyDjW
+	VXjjl/tKXcLuE7FsxnRCqjctZfH0BO3XI8ixJx9ALDiSh9TyZe6e970cOAPb61oHeHpeWq
+	+lEvVByej2i+w9ddZrL4U++BMS9A4Hw=
+Message-ID: <fabf130b-72e4-4aaa-8570-b6b8378c09a7@ixit.cz>
+Date: Mon, 6 Oct 2025 12:20:07 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <66d3b851-5b29-ca88-53de-a4126c2b5366@oss.qualcomm.com>
-X-Proofpoint-GUID: X4KjEZeutupdo8oYor2oqMscO-xMPnKl
-X-Proofpoint-ORIG-GUID: X4KjEZeutupdo8oYor2oqMscO-xMPnKl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDEzNSBTYWx0ZWRfX+a9LiSRu0gq8
- 7XlXrg0rUO5T+XryZZxZ7HJy8UoErpU8igiRcHM36iCxdmHQFYyySKVoINFvi6L1JhCEzcPNpav
- /myDeu5XnJA8k3d1xuFcoPlxCnie6FQ0Ss63iGYmOquAzsOFvdaQGEfIkoNpQnOTBdbWJt8cxGr
- goeVYuCZS0tzEiWvxnF1koMCyryQLhyfYdibITg+/NiA74uU4myQZ/3LsqdKPCh/MifQZt37CxQ
- BJxi4M9n+af33Bu7/UMbYYf5o+M4IReU+kTzeqDCj3X18QjkybxrFBvV1L2RTdYNPjW7fiQMV3e
- XbGORP0jSBYLFjGTeUC3vF/OgG+ZyUJ1ysvUg0/FNaHttOmKa5ECfXKKWtY53drfA4dMcPaweby
- kBAeWtzypGiudeDpCS0Pdlr2p7BWvA==
-X-Authority-Analysis: v=2.4 cv=Hr572kTS c=1 sm=1 tr=0 ts=68e39772 cx=c_pps
- a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
- a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=Pcl2lPME8pu7ACZwHE0A:9 a=CjuIK1q_8ugA:10 a=kacYvNCVWA4VmyqE58fU:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-06_03,2025-10-02_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0 lowpriorityscore=0 priorityscore=1501
- spamscore=0 bulkscore=0 impostorscore=0 phishscore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2510040135
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] arm64: head: set TEXT_OFFSET to the historical value
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Catalin Marinas <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20251006-arm64-text-offset-v1-1-bf0e8a27383b@oss.qualcomm.com>
+Content-Language: en-US
+From: David Heidelberg <david@ixit.cz>
+Autocrypt: addr=david@ixit.cz; keydata=
+ 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
+In-Reply-To: <20251006-arm64-text-offset-v1-1-bf0e8a27383b@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Oct 06, 2025 at 11:51:19AM +0530, Dikshita Agarwal wrote:
-> 
-> 
-> On 10/1/2025 8:34 PM, Bryan O'Donoghue wrote:
-> > On 01/10/2025 09:36, Neil Armstrong wrote:
-> >> On 9/24/25 15:28, Bryan O'Donoghue wrote:
-> >>> On 19/09/2025 16:47, Dikshita Agarwal wrote:
-> >>>> Introduce handling for the QC08C format in the decoder.
-> >>>> Update format checks and configuration to enable decoding of QC08C
-> >>>> streams.
-> >>>
-> >>> Since QC08C is a Qualcomm specific pixel format, you should detail in
-> >>> your commit log exactly what the packing/ordering of pixels is.
-> >>>
-> >>> In other words tell the reader more about QC08C.
-> >>
-> >> This has been upstreamed 3y ago for venus, which is the same as iris:
-> >> https://lore.kernel.org/all/20220117155559.234026-1-stanimir.varbanov@linaro.org/
-> >>
-> >> No need to re-explain it for iris, the format is the same.
-> >>
-> >> Neil
-> > Yeah no, at a minimum the explanation of NV12 + UBWC should appear in the
-> > commit log for this format.
-> 
-> Please see [1] in case it was missed
+Hi.
 
-Just mentioning that QC08C is NV12 with UBWC compression wouldn't harm
-and it would make everybody's life easier.
+So far, only Pixel 3 and 3 XL with "recent" bootloaders are affected.
 
+As I see it, the cost of making it compatible is accepting the commit at 
+zero maintenance or runtime cost.
+
+Would make sense to also update the comment in the code to reflect the 
+change?
+
+Thank you!
+
+Reviewed-by: David Heidelberg <david@ixit.cz>
+
+
+On 06/10/2025 00:21, Dmitry Baryshkov wrote:
+> From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > 
-> [1]:
-> https://lore.kernel.org/linux-media/10bb819d-105b-5471-b3a6-774fce134eb6@oss.qualcomm.com/
+> Historically arm64 kernel contained (almost fixed) value of 0x8000 at
+> the TEXT_OFFSET. The commit cfa7ede20f13 ("arm64: set TEXT_OFFSET to 0x0
+> in preparation for removing it entirely") and then commit 120dc60d0bdb
+> ("arm64: get rid of TEXT_OFFSET") replaced this field with 0.
 > 
-> Thanks,
-> Dikshita
-> > 
-> > thx
-> > ---
-> > bod
+> This caused no problems so far, because nobody seemed to be playing with
+> the extremely picky Qualcomm bootloader as used on some of Google Pixel
+> phones. Current attempting to boot the Linux kernel on those devices
+> will fail to load on those phones with the following message:
+> 
+> KernelDecompress failed: Invalid Parameter Kernel TextOffset does not match
+> Error calling BootPrepareAsync Invalid Parameter
+> 
+> Since the kernel ignores the field, set it to the expected value of
+> 0x8000, unbreaking boot of upstream kernels on Qualcomm devices.
+> 
+> Note: I purposedly didn't add Fixes tags, since those commits didn't
+> break any of devices that were supported at that time.
+> 
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>   arch/arm64/kernel/head.S | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/arch/arm64/kernel/head.S b/arch/arm64/kernel/head.S
+> index ca04b338cb0d173f6d9f5bcee52f6d3d06552599..05e874977de376835625f52bfdda78305dca28b5 100644
+> --- a/arch/arm64/kernel/head.S
+> +++ b/arch/arm64/kernel/head.S
+> @@ -60,7 +60,7 @@
+>   	 */
+>   	efi_signature_nop			// special NOP to identity as PE/COFF executable
+>   	b	primary_entry			// branch to kernel start, magic
+> -	.quad	0				// Image load offset from start of RAM, little-endian
+> +	.quad	0x80000				// Image load offset from start of RAM, little-endian
+>   	le64sym	_kernel_size_le			// Effective size of kernel image, little-endian
+>   	le64sym	_kernel_flags_le		// Informative flags, little-endian
+>   	.quad	0				// reserved
+> 
+> ---
+> base-commit: bd773c01d149aec064ea0fc890a54be277acfa3b
+> change-id: 20251006-arm64-text-offset-a45fee505c4d
+> 
+> Best regards,
 
 -- 
-With best wishes
-Dmitry
+David Heidelberg
+
 
