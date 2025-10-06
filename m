@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76077-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76078-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6B41BBE51A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 16:23:51 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 411EBBBE53B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 16:26:42 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A081D18968C1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 14:24:14 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 51F1B4E4E9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 14:26:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 639722D5432;
-	Mon,  6 Oct 2025 14:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9989F2D5C74;
+	Mon,  6 Oct 2025 14:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AJ9gJQHh"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KEh6YG42"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3356D2D47F4;
-	Mon,  6 Oct 2025 14:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68C1F2D5C68;
+	Mon,  6 Oct 2025 14:26:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759760614; cv=none; b=XwjA+awONUPaJ4ROtXQNi3NJ34tPbnE/iNiM+coDPKgdtXjtpPrJRU0CWkdpFlNUlHdqbLpFfKBJhn19swnxdyrD5S6dXoOGx0LsDqkWR93n6O1LrecV6Uzb9PabzDknc2wTPNe7vjGRqG4Rz3E0VG3/rOzEF+Z58PqSZH/81ro=
+	t=1759760784; cv=none; b=JMgyeV5WsuQwkkbllrlpcltHW2acpW7JUti3pe6rd6bIj/ouSnnVNEzw8mOfNCjQwkD24rLwssoZqqQOtZaqnbbM6cCmK7qpd/y3X/gM6kDbn3sXPakXiwQrAmaRkXtmP8L2bayasXLU4CGoV9Hg4FRdblbZBeVTRNhsRnMpOpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759760614; c=relaxed/simple;
-	bh=sfQEahhgwSwtWa3SuJN1nrxCNTr57iKyvBb9RylCNJM=;
+	s=arc-20240116; t=1759760784; c=relaxed/simple;
+	bh=eftMgfwgscG6LqXxQTKafpvlVpml4H7qXDS9XK9mbNQ=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jy1HMt+aTTazr4hEdDh27zIFYCFdKfCGk8dvgLA9lkp0QKoEYn6wGhIm7r+D5BWqHMZYPeBq7CggMJdt3EDr6WllnLFlhbB1zujXOkT1Nur7WCVXIo5we/d2bhngj7P6l5I/cH4/Mt8AubZf6K5kDJIGiwGLAxjgCT3xs52BU5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AJ9gJQHh; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B13C4CEF5;
-	Mon,  6 Oct 2025 14:23:26 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=R/Qet9P+ASnPj34obr9g/+tXvpim8yoakt8dKBLDcp/F2DVOrWtZVgkf+vjjzIsfhko23VvD+/rFUeDm3nGGGynvMrXmC6MwCMRzrqJZMOF/PTHLdAZBFdo2wXLMWCYMg6b4xMzvUy5LAQUsiHcziWMNb9SlUufyL+vrMkLSD0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KEh6YG42; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365A6C4CEF9;
+	Mon,  6 Oct 2025 14:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759760612;
-	bh=sfQEahhgwSwtWa3SuJN1nrxCNTr57iKyvBb9RylCNJM=;
+	s=k20201202; t=1759760784;
+	bh=eftMgfwgscG6LqXxQTKafpvlVpml4H7qXDS9XK9mbNQ=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=AJ9gJQHhKtxBAmA1qEgBRq33wLoCR/Kjh+nHgY1pEb0zosnOV3bNtY7pbkfJP91S0
-	 mOCNCr2AgT8yuFOYrIlPVF7Rn+sKuiXp0Ea1G6zmGc3N7N6HbvOU04GEJJrVciXFVU
-	 XyC/PQXRwaP8uZ+HEmDMSmaGTywUSUtePztsVy3o8RduET6/ZnIdwp5Hf8w//XSs0X
-	 eSXcUzGO7vJGQvFfV6B2Kl8M77NTSPjIT/XbphEFKvD6/Zw6IRpq2c1RoK59bdPpG8
-	 gBsTlVscT53+Rp+iUz617j7DIGTyKNAQ/SbuNKh07RT3XY1IVsqCP66b3Lm2UqDpcB
-	 vtnDmDVMe6gug==
-Message-ID: <68fbfa0a-605c-4b6f-8ef6-33ebeea8909a@kernel.org>
-Date: Mon, 6 Oct 2025 23:23:23 +0900
+	b=KEh6YG42lcwSy797te9QC9aB0j3VdoM9Gqy6mPn2k2HdXf2RFCqQCsbkzuZXsjF6F
+	 x1+voVSDXX3tJVSjikgvXOO+6g7LY4233SOH9O6+QN4yqDKDbD6YSZ0XJscklH+VyU
+	 LvinGAhUda6irgo2cLto5La51xwl6gnwOYuyNAWNdtK1ngS3LrU1ixiMmnDBfFmHsm
+	 TR7FS7guXTa1TYCmlbt1nCUSX8M1DYGGv/vG8CTxRX79DIQTxZQPjkPiXkr6hL423f
+	 dK8XwQ2tMWHYCzs5KksowR9ozPPOAePHIIUoNXRhbyd8uRQYwTW7uIoj53mq4zOfOo
+	 EJ/CQKYHVHrfg==
+Message-ID: <d1de95e2-0665-4889-aaae-f8370b041826@kernel.org>
+Date: Mon, 6 Oct 2025 23:26:18 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,15 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/20] arm64: dts: qcom: kaanapali: Add support for PCIe0
- on Kaanapali
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+Subject: Re: [PATCH 05/24] arm64: dts: qcom: glymur: Add cpu idle states
+To: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
  Bjorn Andersson <andersson@kernel.org>,
  Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
 Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com, Qiang Yu <qiang.yu@oss.qualcomm.com>
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <20250924-knp-dts-v1-4-3fdbc4b9e1b1@oss.qualcomm.com>
+ linux-kernel@vger.kernel.org, Maulik Shah <maulik.shah@oss.qualcomm.com>
+References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
+ <20250925-v3_glymur_introduction-v1-5-24b601bbecc0@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,41 +104,19 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250924-knp-dts-v1-4-3fdbc4b9e1b1@oss.qualcomm.com>
+In-Reply-To: <20250925-v3_glymur_introduction-v1-5-24b601bbecc0@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/09/2025 09:17, Jingyi Wang wrote:
-> From: Qiang Yu <qiang.yu@oss.qualcomm.com>
+On 25/09/2025 15:32, Pankaj Patil wrote:
+> From: Maulik Shah <maulik.shah@oss.qualcomm.com>
 > 
-> Describe PCIe0 controller and PHY. Also add required system resources like
-> regulators, clocks, interrupts and registers configuration for PCIe0.
-> 
-> Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  arch/arm64/boot/dts/qcom/kaanapali.dtsi | 182 +++++++++++++++++++++++++++++++-
->  1 file changed, 181 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/kaanapali.dtsi b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-> index b385b4642883..07dc112065d1 100644
-> --- a/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/kaanapali.dtsi
-> @@ -452,7 +452,7 @@ gcc: clock-controller@100000 {
->  			clocks = <&bi_tcxo_div2>,
->  				 <0>,
->  				 <&sleep_clk>,
-> -				 <0>,
+> Add CPU power domains
 
+CPUs are part of base SoC. Splitting it makes no sense.
 
-Why are you removing lines which you just added? What sort of buggy
-patch was before?
-
-> +				 <&pcie0_phy>,
->  				 <0>,
->  				 <0>,
->  				 <0>,
-
+Stop fake-splitting this patchset just to bump your LWN stats (as
+admitted in other email)
 
 Best regards,
 Krzysztof
