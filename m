@@ -1,155 +1,186 @@
-Return-Path: <linux-arm-msm+bounces-76048-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 540E4BBDC5C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 12:49:42 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C3CFFBBDC9B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 12:50:41 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 402CB18986B8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 10:50:05 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A6D144EC610
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 10:50:40 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0FC9926C3A7;
-	Mon,  6 Oct 2025 10:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 851F52620F5;
+	Mon,  6 Oct 2025 10:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E597mMN/"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GoznwhWC"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8D4259C83;
-	Mon,  6 Oct 2025 10:47:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D402B226D04
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 10:49:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759747669; cv=none; b=tml4xtVwYWs7mwKu465pxaD9M1wNYmsIhsvhYxtQe8J4IYyauWoIwFyBOajIomUKRi+FbYs4heASeBAJovYd3/4qXOaToPNs2uKLWlmDGAxuudifybv/pb6Jz16G0BR61jbzOUzpKpUlXQcLdtryVBvskiTo1m9DbqRTPnXAq0k=
+	t=1759747776; cv=none; b=OMETYWuTO/hebOQMtnDWexUVXDlXNnVoil0rbsvBq3UZ00WgK/T1jMb/VzOT7++N3UcVfoq4fop2iKPrgqxClzx3SsyJJ5lPX4sMv+ygGI+YA/PMdF0lr6GxqKnkjMCehDiU8Wv5BYcxW0dCZJal9RI+knOnUZ2aLkmradWNjQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759747669; c=relaxed/simple;
-	bh=FX1Lzu7+bvM9e8qmukvbO1hpPMzmlxgfp1qFo7AK/EQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=miDG5M6zH2nR+N4KhMGspZyicQXFTmDEh9ybswXjTlXN3HR+mLrxpPwebHxHysiiOqDHjMS/H8EKFHhQdNj4df9F7p4DBzVyfAygw1GCUL1GC9xovSEVk5dzcfGjbrAE8tYY2km5ucrFKZ8EY44tph7O1wcpbAS0IbE7mE7jP10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E597mMN/; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FDD7C4CEF5;
-	Mon,  6 Oct 2025 10:47:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1759747669;
-	bh=FX1Lzu7+bvM9e8qmukvbO1hpPMzmlxgfp1qFo7AK/EQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=E597mMN/x7YVkjNX1Bc0G8W7GHt89kk8u2seksXgi5q2H3Gw9DqBry/MoIgd7Hl/f
-	 QcuYuZ/DwxfZxXg04LwRoNwgtiAl8T7SsOstK7UXK8SyqkUmffohAckrwzORjzcTe+
-	 /i/1SV3Pn0pttPu3dXePy8Hlmyjuwx9fL801o6Qw=
-Date: Mon, 6 Oct 2025 12:47:45 +0200
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Eliav Farber <farbere@amazon.com>
-Cc: jdike@addtoit.com, richard@nod.at, anton.ivanov@cambridgegreys.com,
-	dave.hansen@linux.intel.com, luto@kernel.org, peterz@infradead.org,
-	tglx@linutronix.de, mingo@redhat.com, bp@alien8.de, x86@kernel.org,
-	hpa@zytor.com, tony.luck@intel.com, qiuxu.zhuo@intel.com,
-	james.morse@arm.com, rric@kernel.org, airlied@linux.ie,
-	daniel@ffwll.ch, maarten.lankhorst@linux.intel.com,
-	mripard@kernel.org, tzimmermann@suse.de, robdclark@gmail.com,
-	sean@poorly.run, jdelvare@suse.com, linux@roeck-us.net,
-	linus.walleij@linaro.org, dmitry.torokhov@gmail.com, maz@kernel.org,
-	wens@csie.org, jernej.skrabec@gmail.com, agk@redhat.com,
-	snitzer@redhat.com, dm-devel@redhat.com, davem@davemloft.net,
-	kuba@kernel.org, mcoquelin.stm32@gmail.com,
-	krzysztof.kozlowski@canonical.com, malattia@linux.it,
-	hdegoede@redhat.com, mgross@linux.intel.com, jejb@linux.ibm.com,
-	martin.petersen@oracle.com, sakari.ailus@linux.intel.com,
-	clm@fb.com, josef@toxicpanda.com, dsterba@suse.com, jack@suse.com,
-	tytso@mit.edu, adilger.kernel@dilger.ca, dushistov@mail.ru,
-	luc.vanoostenryck@gmail.com, rostedt@goodmis.org, pmladek@suse.com,
-	senozhatsky@chromium.org, andriy.shevchenko@linux.intel.com,
-	linux@rasmusvillemoes.dk, minchan@kernel.org, ngupta@vflare.org,
-	akpm@linux-foundation.org, yoshfuji@linux-ipv6.org,
-	dsahern@kernel.org, pablo@netfilter.org, kadlec@netfilter.org,
-	fw@strlen.de, jmaloy@redhat.com, ying.xue@windriver.com,
-	shuah@kernel.org, willy@infradead.org, sashal@kernel.org,
-	quic_akhilpo@quicinc.com, ruanjinjie@huawei.com,
-	David.Laight@aculab.com, herve.codina@bootlin.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	linux-um@lists.infradead.org, linux-edac@vger.kernel.org,
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-	linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-	linux-hwmon@vger.kernel.org, linux-input@vger.kernel.org,
-	linux-sunxi@lists.linux.dev, linux-media@vger.kernel.org,
-	netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
-	platform-driver-x86@vger.kernel.org, linux-scsi@vger.kernel.org,
-	linux-staging@lists.linux.dev, linux-btrfs@vger.kernel.org,
-	linux-ext4@vger.kernel.org, linux-sparse@vger.kernel.org,
-	linux-mm@kvack.org, netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org, tipc-discussion@lists.sourceforge.net,
-	linux-kselftest@vger.kernel.org, stable@vger.kernel.org,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Subject: Re: [PATCH v2 07/19 5.15.y] minmax: simplify and clarify
- min_t()/max_t() implementation
-Message-ID: <2025100648-capable-register-101b@gregkh>
-References: <20251003130006.41681-1-farbere@amazon.com>
- <20251003130006.41681-8-farbere@amazon.com>
+	s=arc-20240116; t=1759747776; c=relaxed/simple;
+	bh=x71PrHPLBC3o+Re2qS7/l/9Tp2/YYxE8yRMamqWUugk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Go1dNW82C9F9hZsZ3PUFT6R61qFpOUUH1RyruiBVlTI254pOi0ciX/xW7Raez1CnsYNkTaG+fXMJCBCAdmBAoKFmCN0Tv4N8R2HWkCa5zkffcN7IC24fX8wXJ6SRkAv1whlRggoRBT61Jk40h/klpR4z09b0uWycIQ8i8Utp4wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GoznwhWC; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 595MnwcP006757
+	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Oct 2025 10:49:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	drmnN38OlIqORdZDnJMTiW0WKN2hGOxhxcBoXK8cfco=; b=GoznwhWCEQdAi6Bq
+	8Gg7Lc4qNeNbQGRzJ8XB//x0lAKC5J1uZwuYEasv3JPayzgGTivpQp/q0gS+b9xS
+	bxxU1Z4P6VKPgCds1YOihU1w6q02DcqMk0LTXyz8i0hIf9IcDyif4Fhidpl6AQKT
+	PGR5t7LBwPTjO0SI3/1du8smyaxrXYAU8/QV/0fJYy2+jPkTB88LQ5l2erS83e1O
+	JUXPqCN3VccmMxWl6aV7m9IcweZBBK2xXOCP9qVytGE+OgPXeCt6lc71fv/ufnQ0
+	xvUdt7VBJYT35T/eFRQ7NgxsxFqdeDfLzqWQHNpzuLG2m6P4Jd9k+DxPrAihhdAj
+	plQ2lw==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jtwgkpx0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 10:49:33 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8247c6738edso12884906d6.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 03:49:33 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759747773; x=1760352573;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=drmnN38OlIqORdZDnJMTiW0WKN2hGOxhxcBoXK8cfco=;
+        b=AP93/iu8mEkRNi21HEez3vopuwrZy8aHgyr1nMCnXay9ChofRjMtm7BHDfdEgAaKMF
+         3+GCyjFnVxNEOCdUaIGVQMJjMw77FGHQPCaUB0M3cFETbMuEEm0A8G28eyU52Dx3eoYK
+         rQ1/RiKJWinXhjpNafEhvloHuF1c6fnKCrWp1a2gIizB+rgeej+8R9T6lhnpHj4RrdCT
+         uel1xC6VgdHJii1kw072aosTiDDZMXtu7rb9UAZcAEg0qPYxZtn5oSDYrmoogOHJSSbw
+         A+Mj/9TbsYSYIKThsG2m5OvZaDTr0ynUK5D1fJrQrAl+yR7u0DbC8ZoeeW8Mz/QTd8gl
+         uShQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV8F3edzQCM953vm91OY/XJ2QUhvSIwfrSIjzpRjnm6lnLvLDFbGyD30qMfE/szq3IPtYI54oZeqnSIKHQc@vger.kernel.org
+X-Gm-Message-State: AOJu0YxhDyIsDmMNZutshMrKdJ2ZAbCaJcN5qmKvx/k3aX/mUSDktVbr
+	cy9BRwoZ08h7ZwYQ/EFx8Iyl3vK/1RdmAO+1BUchwtgtoevapbRL9nGYZkBJiVHLb+/TNumfWk4
+	izbvV7OrkKD/UHycb8CG/MQxqkKaHGDwP2PMwtXTqmKeG9bbD3qeHLPn3T9sHFzBp8AWT
+X-Gm-Gg: ASbGncsI3PpQw2yZM0gYOQm9ZmIn0eQha4pRM9Xura57AkHDFKinew/tXcZI39GOldj
+	lQ0iHb7srOuntpaCOkMMsPY6KQvhM3TNJD8XZvz+cVzBUXgcVBS/UrRbim5FmJyYM5JNyrivonX
+	bQ2tzdoIu5fqBXN03/M+V0qYkaIxVVvFQcCYl4z6g2KeaQVWFcequJJrCiaiRtssMJl+Y3T8/HI
+	zUh9wkCG8oKr8vUSgek/dKJH/aFE3gHkGfm/3fnwBw2N6SIpBO1HDLQ2/YFiwqIktNv1GJWEUx9
+	NVj0P1BaBUhC6loQ/dBECF1+nbbS+o+LXIlW9uJPNwF263ZqJiJBPAiFBIntIVz3NGipIrIKKKu
+	NOBNQJsoGm3tmBhOh4SULT7gx7dA=
+X-Received: by 2002:a05:6214:512:b0:879:e928:5213 with SMTP id 6a1803df08f44-879e9285584mr49477036d6.5.1759747772576;
+        Mon, 06 Oct 2025 03:49:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+VTWvo+yiJd2hka5IitB6LJFZiNkwhD2oNWTU0fPQwx+hny/k3raTEntXTMOxMdhTcNd53w==
+X-Received: by 2002:a05:6214:512:b0:879:e928:5213 with SMTP id 6a1803df08f44-879e9285584mr49476946d6.5.1759747772073;
+        Mon, 06 Oct 2025 03:49:32 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6396f73ae64sm4690940a12.9.2025.10.06.03.49.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Oct 2025 03:49:31 -0700 (PDT)
+Message-ID: <7390eaf3-0215-49d6-8605-bf573d693ad9@oss.qualcomm.com>
+Date: Mon, 6 Oct 2025 12:49:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251003130006.41681-8-farbere@amazon.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 2/2] usb: typec: ucsi_glink: Increase buffer size to
+ support UCSI v2
+To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
+        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org
+Cc: lumag@kernel.org, neil.armstrong@linaro.org, johan+linaro@kernel.org,
+        quic_bjorande@quicinc.com, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
+References: <20251003002044.2944497-1-anjelique.melendez@oss.qualcomm.com>
+ <20251003002044.2944497-3-anjelique.melendez@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251003002044.2944497-3-anjelique.melendez@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAxOSBTYWx0ZWRfX2HkHzwl0lHrB
+ TJ1p9npnF7bCLp5A/Vxf/78m0/TZa+6txZ1Um+GL/jwFJIfSRiS0w3uemx2uTCfMc7bBOdGDNiq
+ Q9XmPdP0RsWp/SfS/VerknzQwsnNiXKfdswmmz4Ic/VlecaEM6we1KRE6ZWdPGvgYsbOq8qsGHw
+ REVEsft9fPDV7f4XriCq8zWZjkmNTX/yYTIbO2U5+8E9GvA4JOJ+0oKpEJf2pM18jrGOrFEA+q0
+ 2th6wic+u6a4VGxhS3YR94z2xKDr2m7fHgatpvfL6vG1AJHNCXcb97Dnk0qQZCaXqNaF/t4s1cM
+ KpPjYFeDe+jdl6j9zqw1SV0ZTCIXjN5VcPjl2u86Hmm3xCH01klubh4gEmIO4qs6S+8AAuELtyg
+ uLxS2Ap9R5nM/vcoOMs2AvdkrJq8fQ==
+X-Authority-Analysis: v=2.4 cv=B6O0EetM c=1 sm=1 tr=0 ts=68e39ebd cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=lVQGjyMV5vUjVYruhmoA:9
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: ZPvI0zmNB6HyYs9ZFETPS1qFNvGUlB9D
+X-Proofpoint-ORIG-GUID: ZPvI0zmNB6HyYs9ZFETPS1qFNvGUlB9D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-06_03,2025-10-02_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2510040019
 
-On Fri, Oct 03, 2025 at 12:59:54PM +0000, Eliav Farber wrote:
-> From: Linus Torvalds <torvalds@linux-foundation.org>
+On 10/3/25 2:20 AM, Anjelique Melendez wrote:
+> UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
+> 16 bytes to 256 bytes each for the message exchange between OPM and PPM
+> This makes the total buffer size increase from 48 bytes to 528 bytes.
+> Update the buffer size to support this increase.
 > 
-> [ Upstream commit 017fa3e89187848fd056af757769c9e66ac3e93d ]
-> 
-> This simplifies the min_t() and max_t() macros by no longer making them
-> work in the context of a C constant expression.
-> 
-> That means that you can no longer use them for static initializers or
-> for array sizes in type definitions, but there were only a couple of
-> such uses, and all of them were converted (famous last words) to use
-> MIN_T/MAX_T instead.
-> 
-> Cc: David Laight <David.Laight@aculab.com>
-> Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> Signed-off-by: Eliav Farber <farbere@amazon.com>
+> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
+> ---
 
-Eliav, your testing infrastructure needs some work, this patch breaks
-the build on this kernel tree:
+[...]
 
-In file included from ./include/linux/kernel.h:16,
-                 from ./include/linux/list.h:9,
-                 from ./include/linux/wait.h:7,
-                 from ./include/linux/wait_bit.h:8,
-                 from ./include/linux/fs.h:6,
-                 from fs/erofs/internal.h:10,
-                 from fs/erofs/zdata.h:9,
-                 from fs/erofs/zdata.c:6:
-fs/erofs/zdata.c: In function ‘z_erofs_decompress_pcluster’:
-fs/erofs/zdata.h:185:61: error: ISO C90 forbids variable length array ‘pages_onstack’ [-Werror=vla]
-  185 |         min_t(unsigned int, THREAD_SIZE / 8 / sizeof(struct page *), 96U)
-      |                                                             ^~~~
-./include/linux/minmax.h:49:23: note: in definition of macro ‘__cmp_once_unique’
-   49 |         ({ type ux = (x); type uy = (y); __cmp(op, ux, uy); })
-      |                       ^
-./include/linux/minmax.h:164:27: note: in expansion of macro ‘__cmp_once’
-  164 | #define min_t(type, x, y) __cmp_once(min, type, x, y)
-      |                           ^~~~~~~~~~
-fs/erofs/zdata.h:185:9: note: in expansion of macro ‘min_t’
-  185 |         min_t(unsigned int, THREAD_SIZE / 8 / sizeof(struct page *), 96U)
-      |         ^~~~~
-fs/erofs/zdata.c:847:36: note: in expansion of macro ‘Z_EROFS_VMAP_ONSTACK_PAGES’
-  847 |         struct page *pages_onstack[Z_EROFS_VMAP_ONSTACK_PAGES];
-      |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~
-cc1: all warnings being treated as errors
+>  static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
+>  {
+> -	const struct ucsi_read_buf_resp_msg *resp = data;
+> +	u32 ret_code, resp_len, buf_len = 0;
+> +	u8 *buf;
+> +
+> +	if (ucsi->ucsi->version) {
+> +		if (ucsi->ucsi->version >= UCSI_VERSION_2_0) {
+> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
+> +			buf_len = UCSI_BUF_V2_SIZE;
+> +		} else {
+> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
+> +			buf_len = UCSI_BUF_V1_SIZE;
+> +		}
+> +	} else if (!ucsi->ucsi_registered) {
+> +		/*
+> +		 * If UCSI version is not known yet because device is not registered, choose buffer
+> +		 * size which best fits incoming data
+> +		 */
+> +		if (len > sizeof(struct pmic_glink_hdr) + UCSI_BUF_V2_SIZE) {
+> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
+> +			buf_len = UCSI_BUF_V2_SIZE;
+> +		} else {
+> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
+> +			buf_len = UCSI_BUF_V1_SIZE;
+> +		}
+> +	}
 
+else warn & return.. otherwise in an unlikely scenario the rproc sends us
+some appropriately-sized garbage, the below size check may still not be enough
 
-I'll drop this whole series, please do a bit more testing before sending
-out a new version.
+> +	resp_len = sizeof(struct pmic_glink_hdr) + buf_len + sizeof(u32);
+>  
+> -	if (resp->ret_code)
+> +	if (len > resp_len)
+> +		return;
+> +
+> +	/* Ensure that buffer_len leaves space for ret_code to be read back from memory */
+> +	if (buf_len > len - sizeof(struct pmic_glink_hdr) - sizeof(u32))
+> +		buf_len = len - sizeof(struct pmic_glink_hdr) - sizeof(u32);
 
-thanks,
+I assume clipping the data is.. fine? I don't know the deep insides of
+UCSI, but I'd assume this should always be plenty space for an ack
 
-greg k-h
+Konrad
 
