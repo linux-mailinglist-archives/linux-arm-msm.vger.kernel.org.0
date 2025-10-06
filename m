@@ -1,155 +1,188 @@
-Return-Path: <linux-arm-msm+bounces-76025-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76026-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6B46BBD7AB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 11:44:45 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DF03BBD7F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 11:48:34 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 712084E3DE7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 09:44:44 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id EFDA2349B2C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 09:48:33 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 82FC61F873B;
-	Mon,  6 Oct 2025 09:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DC95B20298D;
+	Mon,  6 Oct 2025 09:48:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="a5mSsHUA"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eun9mhZr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28CC91F4168
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 09:44:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0269E1F2BB5
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 09:48:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759743879; cv=none; b=XR8/jDvmrz8rh5Pt8SAqJXULk2+VTFQsYiLagol6O5OzDfOKylpB/TaoRqIm7upJweTt34zzxDtWUa7EdQcPtDS9rbwnWaxJyR1jiDF5F+nu2LY5pr6CiWEcps3PXm1sE+FcQ6C6LeZfCSZ+Jfavox+pO5xntrkiIGvpjPFW8vM=
+	t=1759744109; cv=none; b=JprmlcfrnXBtMWhGxtZ3M4lPKsrwVsl3jDo8IXQVAN1pToibB4v8a2BuzDg9JVS7X3V5LaFxgMWuBdEln8krjQ/00RW6ggh+xRU5PXL0DKfTMBhc9TylEGKNhxU5ObUMM/LpPtfrCNJt5FC/zpRDDnPpZT7Yn2fwG3Ku9NhNyQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759743879; c=relaxed/simple;
-	bh=MvXtf65bnEuClKbWJkEN8SYPRB0VB5jdN4kz//IO70M=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=mrfDSBwu69nKB1LFWTQFN4xQq5Ua0zSqenlLtLEj7UEcC44dzW//OllOjutjwaiCAWdYQvlmhSedRT87XUc6Pj0t7BGPZxNL5PQ0tJ0vibD2catyWiijU3vtA0TQD+23nIgbHn/Z0N7dzg+CpBahcmaRZFRe4iuBBLcrGTVMFNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=a5mSsHUA; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-42421b1514fso2171181f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 02:44:36 -0700 (PDT)
+	s=arc-20240116; t=1759744109; c=relaxed/simple;
+	bh=K7+0htyuoirxpSFu/xMi/nH7Dp6XDVMsELNSRKgsD6E=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iZqZD7CgNw17uxSRBY41/ITdi6tfMDc3KOqzhkJEqFSHKlWpuXXZP8g8OtIs/Fqo9mAxMuMFmgRJQc0qlDU7PAcJcs96xZ3Amf/ZFFrEG47F04TlcqakC4Lvhmy+Wj2R1N6cqrFuOExXrkhNWXkSBD97VKKN7HxGUsZiLwh43b4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eun9mhZr; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-46e2c3b6d4cso37723435e9.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 02:48:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1759743875; x=1760348675; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7CcE947gZ6W0sbf7VvCWTggrTIyTkHIFkzfAcLajFas=;
-        b=a5mSsHUAfVXrAdz0NQmYHe8SrWX+c5qkCcozMg1TZewplpKuSVHgqnpz3CQBpubum6
-         fIe1TSccmcNGZByoXPdJbXaFvIKCsWONbGlGk5rE+33z/vhCmhhGmRcKuWLuACrOCPLz
-         8aY6Ye3R4Q59TzNYc/ffc2KL1fXNAbDFVQkP/46Bz5xiWSV4pNYi2tHwEphe+hfGzIUD
-         NkAkl0MzJdvqdhuwdIOdi3E0XVtVCX5PQNYWa6Tuiy6Hb7sSbHiirar45gAVI84FTynG
-         aIb2eOpwr9qEqDwA8rfBtytXraBewejQewHp3cXaAZSFCnTfxF7k9deYJv99OSQL6mb2
-         ickg==
+        d=linaro.org; s=google; t=1759744106; x=1760348906; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=E9nCOIOWicslN4YZSsSssDCNnRYoc3KUcXalh/A1uR4=;
+        b=eun9mhZrr9gdbQYQPeCodrWHFfrZpnvyRi80m1Yzw+2Kkp8m+G4Ynr8ARJhxym8JV9
+         ryp8auXJj5a0NK+c/Ve0BBKX9e4lV66Q8Ulz9iGvC1Kigg1+jwxviAzC+jZPSRO6RtU8
+         yIe4ifpACdJuHunLL1UghAYQICp/NINj7rP0IuMTY+BhTIHQP8otFej9hi6WNRjdf4J+
+         oyqcaJzMDw9kWZpAexwJXMqxjoXfDHSaPAhn9rbGYtdN1OniXt1p24YV6lA9bfx2rqCP
+         gPOR3BZOOrzOuc2NdXpZoN92IOHHAE4qXc7IIJ3jI9rkyQ4ezbSGpwLThUrJYdLWPozi
+         7tHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759743875; x=1760348675;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=7CcE947gZ6W0sbf7VvCWTggrTIyTkHIFkzfAcLajFas=;
-        b=u7fYwPekV46V88EKoJTGvYmvdMt69It9XWv8b4Nas63yOIcotAuye1UuLmfuGyQ0YA
-         g+S1wPzN/kRTJ7ACpX5kdUgffRZymX8DLHP7Alxtj87dkaSG4K8ATjir9LEocPd7sgcy
-         ZY560Cu0iWGm+Ii+8G5B1NkNUlKccFvBJZDg8LaTz66kYCboWv1OCtQcH0hNtlbZaEFu
-         cyW2p8Y/CBBUN6vQhdp0bKQNfjxEMDQcMvIScePISF8KKBKhNj6EvN28uDTve4oakDN/
-         1bZcTAQGLdPCwHm7TtlLiLkLodwe7+qS93jQMQmIT9XWhruAvb3Xru3dSfEOol7+Cm1O
-         BX4A==
-X-Forwarded-Encrypted: i=1; AJvYcCXBWLFj1fQaFSpQggXW/cBu1CfyiiaPP1224zrfAdD8WSFXgcrUsLs4n8FB/Uwcv5vKVInA775yyseR3MgW@vger.kernel.org
-X-Gm-Message-State: AOJu0YzYPDqpzSlDO4Br+7HhTlakDrw186QaQuZPhcsvaaNCnR+a5STq
-	iKecMobERgx7iireWhVAPB/2WGEwtytd1JB1vhBlJoIw/Msx0SKr6m5ufEKQkpOLAn4=
-X-Gm-Gg: ASbGncv4if7ooVEUnKj4zl26mXBLct8ZpMPQNl40/q+Jn6o1H/WOyuCXQz97AxB2XY2
-	kqIN/Fz3kFpibiVgQU04s5M886DThimKitycdVSGl+HVj0klYh1u/bwwicDHYTr6ZrT+bVHtG6N
-	Jnj+tj9fGD2kVWIOWWXqewhodpt3sqT3Dku22MTFCNdcroQpCrYakmYy1yJtoccoP0iT8rw9UHU
-	825KWVT1xY/9F3PVNtfgroNxaL7+Zdnq/0ap8mN0OoFHvRx/gJpwykcyjBp4CDVhL6Pf90CJIk2
-	0I/4JA/3zTvl+sdSCfTdTV3Uf/qZ1T+ZYADDVBlx+tGzDBcBymxm4uyKX6ulI0leyYRfBndPNxH
-	72ZCJ5MYHiZpjAwlcnmbgd92EkblHBkyfjyUyUfasDEd2LF1Fx1dvOa5kznrZXByAKvT8wjPr3T
-	CDnZOZVjvw9mY=
-X-Google-Smtp-Source: AGHT+IH9WtXT37tlC5B2tzxDbJy1Vvge3ED9gBQtVklsT4u+uNG3AW/fSGCPppGvpB9zN4GOAz+5Sw==
-X-Received: by 2002:a5d:588e:0:b0:3ec:d7c4:25d5 with SMTP id ffacd0b85a97d-425671b27c6mr6490559f8f.50.1759743875402;
-        Mon, 06 Oct 2025 02:44:35 -0700 (PDT)
-Received: from localhost (pekko.lucaweiss.eu. [5.180.148.229])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e5c4dd9e4sm137604575e9.10.2025.10.06.02.44.34
+        d=1e100.net; s=20230601; t=1759744106; x=1760348906;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=E9nCOIOWicslN4YZSsSssDCNnRYoc3KUcXalh/A1uR4=;
+        b=mQCEyzYHltYfPMncSHZMKqSGUsr6135J/WBlXl1L9TqDC3wKWm413j3e07aClG2Gdi
+         u4gTSPyL2MwDBBJfAyW0RuCzZde9dbSVcGBIZ0l+WAGLGsXZ+sxQPwKIO6UvKzI+y5JF
+         jDkdBTjOSyGEXIlvDrS3dIW2JCbQH+MFjWdIJRe+mNC72I8hk90tmcTKDfG/0UF0NrkZ
+         T0ZVx6qjBr1VmzgjFQAIvFhRv5NQr7f0BmLEI27A7LbxBrlxdmZtgHgVmtgkBz/I5Moi
+         YdSr64/BkO3exb2zmJjCT/REU2ZYRPiqkugn2ML381+wsQiRTD0wzHGUyXOXlZ4+uo12
+         PgBg==
+X-Forwarded-Encrypted: i=1; AJvYcCWtrvy1kiYpkw9dGO+Aj4f8isUFswx+VQO2zqEgr+XPU77NwwVHHBbHPa2ZYpLrZQiEiBWQiwgytRRm10XZ@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzrl6BQrBXk2BUTxhK/tDdlIU4mUUzu6KVgEbL9LYenm0pVwAiF
+	yQ6qh4OCprZvLvGfIU8X594q0WrsLQrLAYpzHrcs4bSYqZJ4mPD5V2QiwPnbZNfduW7RpTNL/62
+	XMEsS
+X-Gm-Gg: ASbGncsIz6d99SRgMaK1PiwVQ8SBow/gr+nkB+zJgI3IOKr4vRtveTazjF7f5SICnb0
+	hW9smk3+jZH4Q60uulBw+Mx5EePbmyo8efBwsIeCcSbODNZi8ZEmY7RB1P1ZeOJ3IIIzKq8xA2m
+	OykntwU4kxB8UGrSD5LUlZ2pczmQhQ8mv0FY3t5XSwmYbXjbZEF9rnQPcI408KC+K7VGZGy3Zqo
+	oqD4haq2JdxUdxP4RU9Z+TlpY2xhZgD9vJSVrJoN7QWC0mDmfSzhoNCT05rVa3Ja5nJBwapQ9ag
+	TSdYq33mptwGBg6Vk+ujSam3cCK3bgUt5LL0sDXNvkGMhVNlA5YvS4t+h07TK1WLYqCewGBDbCE
+	jNWyA24HyDOt2NHbrDjIeX+KYUKxUEs4AVWabiW7YLx/u3/lFt0jjsckvhR0pl+3/UyeDKDmV2G
+	jLnGtbV7verHay17PHSHsu2NO3g2I=
+X-Google-Smtp-Source: AGHT+IEtNxlbVFFWezzK/SaGtuPwKo272TEGVXiS0sDNJ1j0UC/5uBY5FceXCv8FXS6IrSRPjNnCpA==
+X-Received: by 2002:a05:600c:3b1f:b0:46e:3dc3:b645 with SMTP id 5b1f17b1804b1-46e710ffc1amr73835685e9.3.1759744106291;
+        Mon, 06 Oct 2025 02:48:26 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:2dd0:9118:d7f5:51d9? ([2a01:e0a:3d9:2080:2dd0:9118:d7f5:51d9])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8e96e0sm20168586f8f.33.2025.10.06.02.48.25
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Oct 2025 02:44:35 -0700 (PDT)
+        Mon, 06 Oct 2025 02:48:25 -0700 (PDT)
+Message-ID: <64ae6d27-d89b-401c-bf9e-027967e6b859@linaro.org>
+Date: Mon, 6 Oct 2025 11:48:25 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 06 Oct 2025 11:44:33 +0200
-Message-Id: <DDB553DRF89P.15C4AKUO7IQXH@fairphone.com>
-Cc: <linux-media@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: qcm6490-fairphone-fp5: Add UW cam
- actuator
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Griffin
- Kroah-Hartman" <griffin.kroah@fairphone.com>, "Mauro Carvalho Chehab"
- <mchehab@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
- Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>,
- <devicetree@vger.kernel.org>, "Daniel Scally" <djrscally@gmail.com>,
- "Sakari Ailus" <sakari.ailus@linux.intel.com>, "Bjorn Andersson"
- <andersson@kernel.org>, "Konrad Dybcio" <konradybcio@kernel.org>,
- =?utf-8?q?Andr=C3=A9_Apitzsch?= <git@apitzsch.eu>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20251002-dw9800-driver-v1-0-c305328e44f0@fairphone.com>
- <20251002-dw9800-driver-v1-4-c305328e44f0@fairphone.com>
- <dfc093a1-e13b-4342-9015-5a896bf18d5a@oss.qualcomm.com>
-In-Reply-To: <dfc093a1-e13b-4342-9015-5a896bf18d5a@oss.qualcomm.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH v4 1/3] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp-phy:
+ Document lanes mapping when not using in USB-C complex
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: Xilin Wu <sophon@radxa.com>, linux-arm-msm@vger.kernel.org,
+ linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20250930-topic-x1e80100-hdmi-v4-0-86a14e8a34ac@linaro.org>
+ <20250930-topic-x1e80100-hdmi-v4-1-86a14e8a34ac@linaro.org>
+ <c8dca827-b089-48e0-9dc2-a5b6e3c5b88d@oss.qualcomm.com>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <c8dca827-b089-48e0-9dc2-a5b6e3c5b88d@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi Konrad,
-
-On Mon Oct 6, 2025 at 11:20 AM CEST, Konrad Dybcio wrote:
-> On 10/2/25 12:15 PM, Griffin Kroah-Hartman wrote:
->> Add a node for the Dongwoon DW9800K actuator, used for focus of the
->> ultra-wide camera sensor.
->>=20
->> Signed-off-by: Griffin Kroah-Hartman <griffin.kroah@fairphone.com>
+On 10/6/25 11:43, Konrad Dybcio wrote:
+> On 9/30/25 9:39 AM, Neil Armstrong wrote:
+>> The QMP USB3/DP Combo PHY hosts an USB3 phy and a DP PHY on top
+>> of a combo glue to route either lanes to the 4 shared physical lanes.
+>>
+>> The routing of the lanes can be:
+>> - 2 DP + 2 USB3
+>> - 4 DP
+>> - 2 USB3
+>>
+>> The layout of the lanes was designed to be mapped and swapped
+>> related to the USB-C Power Delivery negociation, so it supports
+>> a finite set of mappings inherited by the USB-C Altmode layouts.
+>>
+>> Nevertheless those QMP Comby PHY can be used to drive a DisplayPort
+>> connector, DP->HDMI bridge, USB3 A Connector, etc... without
+>> an USB-C connector and no PD events.
+>>
+>> Document the data-lanes on numbered port@0 out endpoints,
+>> allowing us to document the lanes mapping to DisplayPort
+>> and/or USB3 connectors/peripherals.
+>>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
->>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->>=20
->> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/a=
-rm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->> index 2dd2c452592aa6b0ac826f19eb9cb1a8b90cee47..0e86cd5ff527925c7dba15c4=
-e0ee5fc409fe4ce6 100644
->> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->> @@ -627,6 +627,15 @@ eeprom@50 {
->>  };
->> =20
->>  &cci0_i2c1 {
->> +	camera_imx858_dw9800k: actuator@e {
->> +		compatible =3D "dongwoon,dw9800k";
->> +		reg =3D <0x0e>;
->> +		vdd-supply =3D <&vreg_afvdd_2p8>;
+> 
+> [...]
+> 
+>> +          endpoint@1:
+>> +            $ref: /schemas/graph.yaml#/$defs/endpoint-base
+>> +            description: USB Output lanes of the PHY when used with static mapping.
+>> +			 The entry index is the USB3 lane in the order TX then RX, and the
+>> +			 number is the PHY signal in the order RX0, TX0, TX1, RX1.> +            unevaluatedProperties: false
 >> +
->> +		dongwoon,sac-mode =3D <1>;
->
-> This property exists, but isn't documented (you need to extend the bindin=
-gs)
+>> +            properties:
+>> +              data-lanes:
+> 
+> Can this be described in a somewhat reasonable way to be non-compatible
+> with Type-C properties for more validation?
 
-Please see the patchset this one depends on, which adds dt-bindings and
-adds prerequisite driver support:
+I tried, but failed. Let me try again !
 
-https://lore.kernel.org/lkml/20250920-dw9719-v2-1-028cdaa156e5@apitzsch.eu/
+> 
+> If not, let's just maybe add a comment like
+> 
+> # Static lane mappings are mutually exclusive with typec-mux/orientation-mux
 
-Regards
-Luca
+Ack
 
->
->> +		dongwoon,vcm-prescale =3D <16>;
->
-> This property is neither documented, nor consumed by the driver (it may
-> or may not matter to you, check against what your presumably-BSP driver
-> does with it)
->
+Thanks,
+Neil
+
+> 
 > Konrad
 
 
