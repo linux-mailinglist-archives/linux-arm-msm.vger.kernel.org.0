@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-76049-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76050-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3CFFBBDC9B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 12:50:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80AF3BBDCCB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 12:52:33 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A6D144EC610
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 10:50:40 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 15AD83B3738
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 10:51:38 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 851F52620F5;
-	Mon,  6 Oct 2025 10:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1692A26F477;
+	Mon,  6 Oct 2025 10:50:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GoznwhWC"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="WUcwFQ9S"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D402B226D04
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 10:49:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE98275878
+	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 10:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759747776; cv=none; b=OMETYWuTO/hebOQMtnDWexUVXDlXNnVoil0rbsvBq3UZ00WgK/T1jMb/VzOT7++N3UcVfoq4fop2iKPrgqxClzx3SsyJJ5lPX4sMv+ygGI+YA/PMdF0lr6GxqKnkjMCehDiU8Wv5BYcxW0dCZJal9RI+knOnUZ2aLkmradWNjQs=
+	t=1759747802; cv=none; b=BOmHsIpFUSOK0uYXaBLsbXL9f4p36YxOSWccJmLIZWoQEkGyzXpGKbkpdBGZHNy99rTkhyivAyZ5U9gBwlOYjYXK/j29kwtWEUwzrgusgdsCZCu+YA5FMke5UTs2tKC+nNJZY6aHU06HfJz7YBjkymAxW919AJgZSvCY1Nb8/kk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759747776; c=relaxed/simple;
-	bh=x71PrHPLBC3o+Re2qS7/l/9Tp2/YYxE8yRMamqWUugk=;
+	s=arc-20240116; t=1759747802; c=relaxed/simple;
+	bh=nmQN2Ai0HjcSSzO0mxJrOtxVVNPLmWCIRBsAC/F8dB4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Go1dNW82C9F9hZsZ3PUFT6R61qFpOUUH1RyruiBVlTI254pOi0ciX/xW7Raez1CnsYNkTaG+fXMJCBCAdmBAoKFmCN0Tv4N8R2HWkCa5zkffcN7IC24fX8wXJ6SRkAv1whlRggoRBT61Jk40h/klpR4z09b0uWycIQ8i8Utp4wE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GoznwhWC; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=ClQrpv2lmc25uBpFXiYBSJjUgVH0Ih3Yw8GNNKx4m8yYj5ZwGQ7FwmqfKGrufZcoJaAieKYDlNXJE/MfBX5xcOnTyQpAFL4PJ/tSYLOQ1YVg6UnndNisoAAB08ZuCQDpARy7W1Aav8oYdwRfXsPyuakyb58nec35M5fKNGuNq0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=WUcwFQ9S; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 595MnwcP006757
-	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Oct 2025 10:49:33 GMT
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5961V753012086
+	for <linux-arm-msm@vger.kernel.org>; Mon, 6 Oct 2025 10:49:59 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	drmnN38OlIqORdZDnJMTiW0WKN2hGOxhxcBoXK8cfco=; b=GoznwhWCEQdAi6Bq
-	8Gg7Lc4qNeNbQGRzJ8XB//x0lAKC5J1uZwuYEasv3JPayzgGTivpQp/q0gS+b9xS
-	bxxU1Z4P6VKPgCds1YOihU1w6q02DcqMk0LTXyz8i0hIf9IcDyif4Fhidpl6AQKT
-	PGR5t7LBwPTjO0SI3/1du8smyaxrXYAU8/QV/0fJYy2+jPkTB88LQ5l2erS83e1O
-	JUXPqCN3VccmMxWl6aV7m9IcweZBBK2xXOCP9qVytGE+OgPXeCt6lc71fv/ufnQ0
-	xvUdt7VBJYT35T/eFRQ7NgxsxFqdeDfLzqWQHNpzuLG2m6P4Jd9k+DxPrAihhdAj
-	plQ2lw==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jtwgkpx0-1
+	IN3CVmizwhnegBcGc3ulurAszyJXyt4uRPeWQ6uV/vI=; b=WUcwFQ9SMmiTZbx2
+	NCNeZ1nWtZj9SZeY0FBSxzXMH2IzPbeI3uKZPRyDG5mIBhrMbs10/bHJuffXN1S6
+	48ULwM2+mereT1CMxjpteWfk2W6DE7SpPaMQsKBSaw72XyizRA1Vb59NKoU3BYF2
+	kN/HEYqbQueAvdOe+N8mgH21IY8fPnz6c8f/WGVRE8w18TQTDEZPzYlp5pOUh0lf
+	zq+LbL8Whz/R/nlEOxyrky6T8KZI+AHAWTJxHzZr4qHilz/JFh5CmyACSz8HviOr
+	Spq4Ys3qsT8/OfP0FULlcV0FUoOP+wws6TueECzH/vCxhsEMrC864LP8WoN/bm5A
+	MH9+MA==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jrxn3um0-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 10:49:33 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-8247c6738edso12884906d6.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 03:49:33 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 10:49:59 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4e015898547so8624181cf.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 03:49:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759747773; x=1760352573;
+        d=1e100.net; s=20230601; t=1759747798; x=1760352598;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=drmnN38OlIqORdZDnJMTiW0WKN2hGOxhxcBoXK8cfco=;
-        b=AP93/iu8mEkRNi21HEez3vopuwrZy8aHgyr1nMCnXay9ChofRjMtm7BHDfdEgAaKMF
-         3+GCyjFnVxNEOCdUaIGVQMJjMw77FGHQPCaUB0M3cFETbMuEEm0A8G28eyU52Dx3eoYK
-         rQ1/RiKJWinXhjpNafEhvloHuF1c6fnKCrWp1a2gIizB+rgeej+8R9T6lhnpHj4RrdCT
-         uel1xC6VgdHJii1kw072aosTiDDZMXtu7rb9UAZcAEg0qPYxZtn5oSDYrmoogOHJSSbw
-         A+Mj/9TbsYSYIKThsG2m5OvZaDTr0ynUK5D1fJrQrAl+yR7u0DbC8ZoeeW8Mz/QTd8gl
-         uShQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV8F3edzQCM953vm91OY/XJ2QUhvSIwfrSIjzpRjnm6lnLvLDFbGyD30qMfE/szq3IPtYI54oZeqnSIKHQc@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhDyIsDmMNZutshMrKdJ2ZAbCaJcN5qmKvx/k3aX/mUSDktVbr
-	cy9BRwoZ08h7ZwYQ/EFx8Iyl3vK/1RdmAO+1BUchwtgtoevapbRL9nGYZkBJiVHLb+/TNumfWk4
-	izbvV7OrkKD/UHycb8CG/MQxqkKaHGDwP2PMwtXTqmKeG9bbD3qeHLPn3T9sHFzBp8AWT
-X-Gm-Gg: ASbGncsI3PpQw2yZM0gYOQm9ZmIn0eQha4pRM9Xura57AkHDFKinew/tXcZI39GOldj
-	lQ0iHb7srOuntpaCOkMMsPY6KQvhM3TNJD8XZvz+cVzBUXgcVBS/UrRbim5FmJyYM5JNyrivonX
-	bQ2tzdoIu5fqBXN03/M+V0qYkaIxVVvFQcCYl4z6g2KeaQVWFcequJJrCiaiRtssMJl+Y3T8/HI
-	zUh9wkCG8oKr8vUSgek/dKJH/aFE3gHkGfm/3fnwBw2N6SIpBO1HDLQ2/YFiwqIktNv1GJWEUx9
-	NVj0P1BaBUhC6loQ/dBECF1+nbbS+o+LXIlW9uJPNwF263ZqJiJBPAiFBIntIVz3NGipIrIKKKu
-	NOBNQJsoGm3tmBhOh4SULT7gx7dA=
-X-Received: by 2002:a05:6214:512:b0:879:e928:5213 with SMTP id 6a1803df08f44-879e9285584mr49477036d6.5.1759747772576;
-        Mon, 06 Oct 2025 03:49:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+VTWvo+yiJd2hka5IitB6LJFZiNkwhD2oNWTU0fPQwx+hny/k3raTEntXTMOxMdhTcNd53w==
-X-Received: by 2002:a05:6214:512:b0:879:e928:5213 with SMTP id 6a1803df08f44-879e9285584mr49476946d6.5.1759747772073;
-        Mon, 06 Oct 2025 03:49:32 -0700 (PDT)
+        bh=IN3CVmizwhnegBcGc3ulurAszyJXyt4uRPeWQ6uV/vI=;
+        b=Fq5G3PFeeHCMI/VAoaW1uVsgS+ZL74uplI21WcnUgVJZHaZEnFKMpzsf0V6nopRLtO
+         bMZfyz5b/+oygTmVdnwWF6D1Wga1qFOLkjRzYh9cT6uNjz/LNyzwx8OLYoQ0gHZxPk6w
+         5CWHwEsFWq21vBtNDywpnFJr/we4Tz11dmpGnxjGKw8Q1X3TBsuTOFxL1yRpODJkEdfy
+         b0x/pYvetH17xaNE4sY/y3CgD5AgvqOXzi3gghje8i3SdNMc3+BteBYEnd1mwnGFHiQ6
+         J1VnRZRzxbjhNeORplP6VSv46Tx7c4XnpQlKYQThiEyJ7yy+SJloYmHKgnYsQ9jIYG2m
+         q8Dw==
+X-Forwarded-Encrypted: i=1; AJvYcCWLxb5uzNO0oolahSC5eGAJ9FUDgYDSEHyRv7iT+WO6eUeK7MCfLypNEXT/ASspcT7D7waZPw9bVxnJdSV8@vger.kernel.org
+X-Gm-Message-State: AOJu0YyU+yJSZ9i5wVKiYRhmmiIHVI2HsFlaUrIdz0qpeQbVHCtvCnG3
+	gPB1bIuT6NtjiY8lwSGAd63TgZ+Rk5XFLt5NnyjNT8iLKEIafQsTpHvwpNz7UaYK+WkUSS5OafX
+	aIy8VzOTmaEmYz5ibupJK6CAKSwaQ540FJx5hnICjA90WZVF7Kpl9bpaE907qSNUQUx1K
+X-Gm-Gg: ASbGnct8u9co1i4d4gcBYPsgMbCg4WV8VaYfE0CqXwsuLb6fuqwZJq5e8RMPIN2Bvlf
+	FpJ2KxnzAn4COrpYd856DJ/ep+6BlDvPw3XLjmpbjN8MpuRSrxjDMjC0K9WHrZTgTL7XDvjdgQ6
+	MwlkvNlrnoJutTc0tQsTMlnCFPsAt/EmWFHQDJCDXWecCyEPxF+Hh4dvTnLCG8kHjrtTPmJYa0y
+	7yZZDL7MvtoehnF4N8ywGlE6RpdwlR5XMFdKVimSWwrYIionad95wo+s/Ml+nOd/7IS4ggdmrrQ
+	OP2PNfaEQktVg9v+AIsfZpSHRLcNWGE/kdQ26pHDmLutKpWyGjfAZXET7+IbEN6KDEAz1qfz/mg
+	FJYSAbtImsYQSRhPgZunJvqNFPwI=
+X-Received: by 2002:a05:622a:60f:b0:4dc:fc58:c50c with SMTP id d75a77b69052e-4e576a45606mr94443371cf.5.1759747798231;
+        Mon, 06 Oct 2025 03:49:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHSEU8VjnAr3dc4CRE1tKa0vgiLD4zAxaPVFZcAL5lIiyFY/V+S9ZVpzOWmv+pNPBnQHAcwzQ==
+X-Received: by 2002:a05:622a:60f:b0:4dc:fc58:c50c with SMTP id d75a77b69052e-4e576a45606mr94443021cf.5.1759747797738;
+        Mon, 06 Oct 2025 03:49:57 -0700 (PDT)
 Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6396f73ae64sm4690940a12.9.2025.10.06.03.49.30
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b4865f741f1sm1118572366b.39.2025.10.06.03.49.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Oct 2025 03:49:31 -0700 (PDT)
-Message-ID: <7390eaf3-0215-49d6-8605-bf573d693ad9@oss.qualcomm.com>
-Date: Mon, 6 Oct 2025 12:49:29 +0200
+        Mon, 06 Oct 2025 03:49:57 -0700 (PDT)
+Message-ID: <65d0012c-4c06-4b39-9375-89d635f8abeb@oss.qualcomm.com>
+Date: Mon, 6 Oct 2025 12:49:53 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,97 +90,108 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/2] usb: typec: ucsi_glink: Increase buffer size to
- support UCSI v2
-To: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>,
-        heikki.krogerus@linux.intel.com, gregkh@linuxfoundation.org
-Cc: lumag@kernel.org, neil.armstrong@linaro.org, johan+linaro@kernel.org,
-        quic_bjorande@quicinc.com, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-References: <20251003002044.2944497-1-anjelique.melendez@oss.qualcomm.com>
- <20251003002044.2944497-3-anjelique.melendez@oss.qualcomm.com>
+Subject: Re: [PATCH 3/3] drm/panel: Add Novatek NT36532 panel driver
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Junjie Cao <caojunjie650@gmail.com>,
+        Neil Armstrong <neil.armstrong@linaro.org>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Rob Clark
+ <robin.clark@oss.qualcomm.com>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>, Sean Paul <sean@poorly.run>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Antonino Maniscalco <antomani103@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>, Eugene Lepshy <fekz115@gmail.com>,
+        Jun Nie <jun.nie@linaro.org>, dri-devel@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20251001135914.13754-1-caojunjie650@gmail.com>
+ <20251001135914.13754-4-caojunjie650@gmail.com>
+ <lfdhib6a7ct36nmj3of2setjft7ydrf6sfgtx7qued7qd56nhc@2xol3grm5re7>
+ <e36572bf-4fb4-425e-8d10-c5efa5af97f3@oss.qualcomm.com>
+ <rxm67cbwkp2qyxdlgqb3fz7fhiskmnhidhjvl4mhqn67iq2x4n@wfueruiiq7kp>
+ <53aafa84-6d6a-4963-827e-c1600270662f@oss.qualcomm.com>
+ <2do3dk7gqvbloocsv46t3zrc4ghvhrpiqre6djk6heese3wz75@dlqwkdsnrkbr>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251003002044.2944497-3-anjelique.melendez@oss.qualcomm.com>
+In-Reply-To: <2do3dk7gqvbloocsv46t3zrc4ghvhrpiqre6djk6heese3wz75@dlqwkdsnrkbr>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAxOSBTYWx0ZWRfX2HkHzwl0lHrB
- TJ1p9npnF7bCLp5A/Vxf/78m0/TZa+6txZ1Um+GL/jwFJIfSRiS0w3uemx2uTCfMc7bBOdGDNiq
- Q9XmPdP0RsWp/SfS/VerknzQwsnNiXKfdswmmz4Ic/VlecaEM6we1KRE6ZWdPGvgYsbOq8qsGHw
- REVEsft9fPDV7f4XriCq8zWZjkmNTX/yYTIbO2U5+8E9GvA4JOJ+0oKpEJf2pM18jrGOrFEA+q0
- 2th6wic+u6a4VGxhS3YR94z2xKDr2m7fHgatpvfL6vG1AJHNCXcb97Dnk0qQZCaXqNaF/t4s1cM
- KpPjYFeDe+jdl6j9zqw1SV0ZTCIXjN5VcPjl2u86Hmm3xCH01klubh4gEmIO4qs6S+8AAuELtyg
- uLxS2Ap9R5nM/vcoOMs2AvdkrJq8fQ==
-X-Authority-Analysis: v=2.4 cv=B6O0EetM c=1 sm=1 tr=0 ts=68e39ebd cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=lVQGjyMV5vUjVYruhmoA:9
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
-X-Proofpoint-GUID: ZPvI0zmNB6HyYs9ZFETPS1qFNvGUlB9D
-X-Proofpoint-ORIG-GUID: ZPvI0zmNB6HyYs9ZFETPS1qFNvGUlB9D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAwMSBTYWx0ZWRfX+q8pKygC9cjW
+ 4QyoID7lB67Gy3St4URrRraJtIqQA2cAHTD5PRXuWv3+XTIL5avBiz9PqINc3l7zOxmXF7gNVzq
+ 3USSljZ6jqz6kIda2VMII8BJT4ESpfWmVv1d/i6UgqN2+nqz2BESvBJMtBwUUFpLOrHb2McL46l
+ ioUuNW3rWBXeJEFmMgQuicYSuyDgwkUG8CMptvxB+MUgOgGFlPN7sMyJFE15+Dfl+dLTgFPXpUQ
+ cno+Yy4BltLvVzRh13oGrgwOXXK9t6rWrTyimqKz4VNqebEk9xqlegrjvn0d3HGKInnRRxoIT1b
+ VnPrSQAiH0jQLNT8a6fk+XjM/OpazkOWSX/8mEUaCjzIH7Hz3Z0fCRafI7E9uwEBw47Mzhl5s5J
+ csIkRQspvfP5s4kb2RpXGG1l+FbvRA==
+X-Proofpoint-GUID: W8ho2UYkwO-WHa4Hy-QTo8BrRKKfbokr
+X-Proofpoint-ORIG-GUID: W8ho2UYkwO-WHa4Hy-QTo8BrRKKfbokr
+X-Authority-Analysis: v=2.4 cv=EqnfbCcA c=1 sm=1 tr=0 ts=68e39ed7 cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=pGLkceISAAAA:8 a=zTkMZ0gcjxiqpFU4bxAA:9
+ a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-06_03,2025-10-02_03,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
- impostorscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
- definitions=main-2510040019
+ phishscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 malwarescore=0
+ adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040001
 
-On 10/3/25 2:20 AM, Anjelique Melendez wrote:
-> UCSI v2 specification has increased the MSG_IN and MSG_OUT size from
-> 16 bytes to 256 bytes each for the message exchange between OPM and PPM
-> This makes the total buffer size increase from 48 bytes to 528 bytes.
-> Update the buffer size to support this increase.
+On 10/6/25 12:39 PM, Dmitry Baryshkov wrote:
+> On Mon, Oct 06, 2025 at 12:10:05PM +0200, Konrad Dybcio wrote:
+>> On 10/6/25 12:02 PM, Dmitry Baryshkov wrote:
+>>> On Mon, Oct 06, 2025 at 11:24:35AM +0200, Konrad Dybcio wrote:
+>>>> On 10/2/25 4:04 AM, Dmitry Baryshkov wrote:
+>>>>> On Wed, Oct 01, 2025 at 09:59:14PM +0800, Junjie Cao wrote:
+>>>>>> Add a driver for panels using the Novatek NT36532 Display Driver IC,
+>>>>>> including support for the CSOT PPC100HB1-1, found in the OnePlus Pad 2
+>>>>>> tablets.
+>>>>>>
+>>>>>> Signed-off-by: Junjie Cao <caojunjie650@gmail.com>
+>>>>>> ---
+>>>>>>  MAINTAINERS                                   |   7 +
+>>>>>>  drivers/gpu/drm/panel/Kconfig                 |  10 +
+>>>>>>  drivers/gpu/drm/panel/Makefile                |   1 +
+>>>>>>  drivers/gpu/drm/panel/panel-novatek-nt36532.c | 437 ++++++++++++++++++
+>>>>>>  4 files changed, 455 insertions(+)
+>>>>>>  create mode 100644 drivers/gpu/drm/panel/panel-novatek-nt36532.c
+>>>>>>
+>>>>>> +
+>>>>>> +static const struct panel_info csot_panel_info = {
+>>>>>> +	.width_mm = 250,
+>>>>>> +	.height_mm = 177,
+>>>>>> +	.lanes = 4,
+>>>>>> +	.format = MIPI_DSI_FMT_RGB888,
+>>>>>> +	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_CLOCK_NON_CONTINUOUS |
+>>>>>> +		      MIPI_DSI_MODE_LPM,
+>>>>>> +	.display_mode = csot_display_mode,
+>>>>>> +	.dsc_slice_per_pkt = 2,
+>>>>>
+>>>>> As this is not a part of the standard, what if the DSI host doesn't
+>>>>> support this feature?
+>>>>
+>>>> Shouldn't the core gracefully throw something like an -EINVAL?
+>>>
+>>> There is no 'core' here. Each DSI DRM host manages DSC on their own.
+>>
+>> drm_dsc_helper?
 > 
-> Signed-off-by: Anjelique Melendez <anjelique.melendez@oss.qualcomm.com>
-> ---
+> No, that's just for calculating PPS and some other values. It's one of
+> the problems of the DSI model, which I tried to solve a year ago, but
+> failed up to now to do it completely and clearly. The DSI device can't
+> check host's capabilities. It declares what it needs inside struct
+> mipi_dsi_device and hopes for the best.
 
-[...]
-
->  static void pmic_glink_ucsi_read_ack(struct pmic_glink_ucsi *ucsi, const void *data, int len)
->  {
-> -	const struct ucsi_read_buf_resp_msg *resp = data;
-> +	u32 ret_code, resp_len, buf_len = 0;
-> +	u8 *buf;
-> +
-> +	if (ucsi->ucsi->version) {
-> +		if (ucsi->ucsi->version >= UCSI_VERSION_2_0) {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
-> +			buf_len = UCSI_BUF_V2_SIZE;
-> +		} else {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
-> +			buf_len = UCSI_BUF_V1_SIZE;
-> +		}
-> +	} else if (!ucsi->ucsi_registered) {
-> +		/*
-> +		 * If UCSI version is not known yet because device is not registered, choose buffer
-> +		 * size which best fits incoming data
-> +		 */
-> +		if (len > sizeof(struct pmic_glink_hdr) + UCSI_BUF_V2_SIZE) {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v2_buf;
-> +			buf_len = UCSI_BUF_V2_SIZE;
-> +		} else {
-> +			buf = ((struct ucsi_read_buf_resp_msg *)data)->buf.v1_buf;
-> +			buf_len = UCSI_BUF_V1_SIZE;
-> +		}
-> +	}
-
-else warn & return.. otherwise in an unlikely scenario the rproc sends us
-some appropriately-sized garbage, the below size check may still not be enough
-
-> +	resp_len = sizeof(struct pmic_glink_hdr) + buf_len + sizeof(u32);
->  
-> -	if (resp->ret_code)
-> +	if (len > resp_len)
-> +		return;
-> +
-> +	/* Ensure that buffer_len leaves space for ret_code to be read back from memory */
-> +	if (buf_len > len - sizeof(struct pmic_glink_hdr) - sizeof(u32))
-> +		buf_len = len - sizeof(struct pmic_glink_hdr) - sizeof(u32);
-
-I assume clipping the data is.. fine? I don't know the deep insides of
-UCSI, but I'd assume this should always be plenty space for an ack
+Alright, thanks for the explanation
 
 Konrad
 
