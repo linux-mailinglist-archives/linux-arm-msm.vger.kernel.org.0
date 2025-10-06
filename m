@@ -1,83 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76011-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76012-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95D31BBD5F0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 10:41:27 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9218DBBD620
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 10:48:23 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 4DCF51894880
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 08:41:50 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5347C3B7D31
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 08:48:22 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 840C02627FC;
-	Mon,  6 Oct 2025 08:41:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 095D3231829;
+	Mon,  6 Oct 2025 08:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="SYGXVVaF"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CP6TKfjZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3951258EC1
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 08:41:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE07E1DE885;
+	Mon,  6 Oct 2025 08:48:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759740082; cv=none; b=nRgOcye0Eh4K9/BXDafK5Rnacc0tF4M2AdKzzqfZ6C5SKarK9cVHi1DnKChGPI2nHW8pMS6WuKJ2KDSVrutu9xTHUqjn0wN9xxM1pLUeZT4xrHp+z/DVdrPwWUJUfjCpYZ9Txx6h/8HSt/YgasObj/Dn9wETQZdgh06kI/anGO0=
+	t=1759740498; cv=none; b=D4XV+cb6EOcAsgeGoPb1owIkOq/moNyCTBXYUPvtg3JIVOrBJ6D3nrJRLmoPVQjArXms/AJAragHV+QkAGzz1m0hpofnrcL/frQYlfSl4IuUy9FvPpS6D4vhR4NEjFu1QfdKT81kuEO7+CrAsDYN//o1geUD8zZAUQpeNGg0Pdk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759740082; c=relaxed/simple;
-	bh=WWoORRJWGz0OyFtL4IFXdUu7eTKdL9fsQsesOKiF5xY=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kp2VWK7OKK/DX69AWNF9INyw1ZP5gIFg6m1k6LR63Z7BgOxGGDN44TzgjzmLgQDTMtc2KBN+rX1tOnSBqRLLlaoKiziMUL7F8QIAaf+CWIq3EthARA48BD2iYLh0WKUv8r65I2gyhuAQWfhb58W/U3oeeiQGGRwr5qjdLgf+5yU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=SYGXVVaF; arc=none smtp.client-ip=209.85.128.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-46e42deffa8so48023155e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 01:41:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759740078; x=1760344878; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y63nOSKBOZb8Xi0WfMVSnEc0ViCBynY2ybYfLq11XEc=;
-        b=SYGXVVaF2c1hmxoAYD2+N2rllgLv17/qt+gJI/Z0bGru1oposM/IInp2i65mNGTxMO
-         zTSx6crJ1TPBJoD0RbKva594qwhkC5q0chfFFfZW0MLZUVj6DRp0ArTjWBMrWJGyfyKw
-         8Iubu3CR+XyiUM07vpVHCPFnA2U7bJ60TF9L1tAoM6p9mIFq+8x6MMJdK9YlId2koI2F
-         HtuABuWOT/T8K0vMH0BlXyjV+PLwZjI6y1CyExlACKSDLL+p5+uDchP8W8a1wJTz4UL7
-         0da1D3f9bhvDAddNZP2sHsyIliiC5a3eTEHVZ5z+q5rJRtbqiqq+MHdsxHdePix8Y9YM
-         rNSA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759740078; x=1760344878;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Y63nOSKBOZb8Xi0WfMVSnEc0ViCBynY2ybYfLq11XEc=;
-        b=Raybgb+HTt4c8N+krl9ImFh4KiA9aTz5QvsRR4xnhANCA8xwPwf3yrQAEnEq18HsmW
-         kkhjfGAda8vV46qJE7hHe7F1w/B6h0s3RXubXzQ1TF5pEa7I0gxXe0KJNq0aCWwB7akA
-         cggunvAXx6dElWbzpdcPyEW0Nkw5q5xi3gybgMRtVTruAyC3ZbJ9Qc19HWCRRONVmswQ
-         zbXSDXte6LoDtdwjqgo74KJ8Gq0Ggld7wuhYZhn5GwgHqaxwnTTQQDuoYT0nvCERkoj+
-         KTV8KQqqL4D3uY3pGpZZzDDh7I3kzsA+9NmBoPu5aB/Fucl6sfEtiux6YQRFNI0bhYcq
-         IpoA==
-X-Forwarded-Encrypted: i=1; AJvYcCUeK8yoGG4jsfe6cWGofjiUuGxRwQ89T6GUMFdzRsWrymz6BNPo67b7gpc6YZa12ec8b0qKFiTwoIfj/d6a@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy5cF5GtSLPhnWOr9LHDOWmPN1UTVi9mpVD3PtVgZKBEWlIFhtW
-	Nb/rdbJGEId8mBvqbj8G1YEQH8mxNp0cFNBNpz1yO3hDvDwlk2vx3z4+64nUjoC01ac=
-X-Gm-Gg: ASbGnctbDNJaiqeUwGel+an6a0dSWzENmcxN0tBs3A5FoA686m2Ke84Yd3bFXvMdh63
-	WBdmR0Vd+xQYWlE5xdPoVkMHj8H24YrBiU8kjlHTZrv7FvbYi5pHiSYzcNo/9KiRVO9xgapEOC/
-	hak94Mj294kY2Yx5GGR3xLr/oSPO/P1ksDzBLoCTJPC295a/3PZZEiJISNkGOm3VcPUWVF7ALNK
-	inHq4VfPtwuGqFi1jXy/NtGTeB04Fmxdha62fUJYaBoXhhzJquAfTu9wxy5snQFEM/GRDNJMXak
-	A3cbw4T+FXTJeo9VYiYdP87jhTJC8E4XbsYHQAh1ltuYUBrRyQDFtnQjr5AZEKS8KLTf2+yP2+V
-	bzro4JO0gp5Y+c2YJomKnJFllJBzqnN2lTLXcm/d8skgRVRAlFb31NWy3Su6neA3P0bt2tdrKbF
-	aMUv3B5lyFXUOpLTkrGk0rIeQbDlSOpgCKNXwIHw==
-X-Google-Smtp-Source: AGHT+IEWwWaYh44sv9Oqx0ZChqrUk1Sr1HBR21zDGZTRQfiGbC8OZi2rvU8z63aitXqs6CRfThx14w==
-X-Received: by 2002:a05:600c:3f08:b0:45b:9a46:69e9 with SMTP id 5b1f17b1804b1-46e7114e92fmr82535805e9.31.1759740077891;
-        Mon, 06 Oct 2025 01:41:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:2dd0:9118:d7f5:51d9? ([2a01:e0a:3d9:2080:2dd0:9118:d7f5:51d9])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8a6c3esm19968974f8f.1.2025.10.06.01.41.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Oct 2025 01:41:17 -0700 (PDT)
-Message-ID: <2914e235-9e6c-4b46-ba4a-3fd4758eadef@linaro.org>
-Date: Mon, 6 Oct 2025 10:41:16 +0200
+	s=arc-20240116; t=1759740498; c=relaxed/simple;
+	bh=GKEbOZbwEXjdVAFvK6hxlcWv1tDFAdFRXoShaWXJn9A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EJCjEE+fYAU1wss4BdEn0dJMCeWDhqwbYIRRZGGE/GyxeXvjGfwdhXyyi7XcnLskZ/5ELC8m5nXn9eBzV3tyJjU7pjv528ApdUrQA8qjCtdynpHPGYd92In2NyeO34Ue9rMDMQSy9YJiJKMg77kqD7c+ZH1OU0FdxQcdaU1KtLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CP6TKfjZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99344C4CEF5;
+	Mon,  6 Oct 2025 08:48:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759740498;
+	bh=GKEbOZbwEXjdVAFvK6hxlcWv1tDFAdFRXoShaWXJn9A=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=CP6TKfjZ8pOh7KCNAnXmaSRmqG2Rx2jqNhoS0XNHUpTIa8IY0AQq3Z8pgFkuWOQkt
+	 nF1ulRyfXBMIsoNhMErrfqT+nUUs41NwrPZ5JJEOu3zayiUZsQbYRf8orCRwYkO+tu
+	 WED19impDHZjtNLWm7OsODefsxtue5Q4XxQcqFORVOumewcd2HgLCrBAEF9UY26jGR
+	 vmADUeCv+F124Os0ny7uGmgD3MyArgPRSFntNXdj3KO+qRFuWIgqFJbA4cRHOnSI5o
+	 JkyMasR1l6hBUW/aonVWIMSpRywf8kpIl+J+IoDKrw8ylKm8pY8E0EBGbWH5EWlu/f
+	 215vekh0NKQTg==
+Message-ID: <43ba93bd-0dba-415b-8a7e-cdc4d954f79d@kernel.org>
+Date: Mon, 6 Oct 2025 17:48:10 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,135 +50,112 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH] dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: do not
- reference whole usb-switch.yaml
-To: Rob Herring <robh@kernel.org>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>,
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Krzysztof Kozlowski <krzk@kernel.org>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250902-topic-sm8x50-fix-qmp-usb43dp-usb-switch-v1-1-5b4a51c8c5a8@linaro.org>
- <20250905175533.GA1000951-robh@kernel.org>
- <nwtt76n4t7tlf26ex47wrot7g7nldtmavbzgwmluls3egamjsi@mkomopb6fjh6>
- <20251001163139.GA1877961-robh@kernel.org>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <20251001163139.GA1877961-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH 18/20] arm64: dts: qcom: kaanapali-mtp: Add audio support
+ (WSA8845, WCD9395, DMIC)
+To: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
+ Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+Cc: Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
+ trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
+References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
+ <20250924-knp-dts-v1-18-3fdbc4b9e1b1@oss.qualcomm.com>
+ <CAJKOXPfY-CpE_aKd910PQ2+u9ux2EvuVEt9ArzhdVCJcTQJUQQ@mail.gmail.com>
+ <51637d37-aa5e-492a-851c-e5d6bfbe421e@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <51637d37-aa5e-492a-851c-e5d6bfbe421e@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/1/25 18:31, Rob Herring wrote:
-> On Tue, Sep 30, 2025 at 10:10:25PM +0300, Dmitry Baryshkov wrote:
->> On Fri, Sep 05, 2025 at 12:55:33PM -0500, Rob Herring wrote:
->>> On Tue, Sep 02, 2025 at 06:10:05PM +0200, Neil Armstrong wrote:
->>>> Both bindings describe a different layout of the ports properties,
->>>> leading to errors when validating DT using this PHY bindings as
->>>> reported by Rob Herring.
->>>>
->>>> Reported-by: Rob Herring <robh@kernel.org>
->>>> Closes: https://lore.kernel.org/all/175462129176.394940.16810637795278334342.robh@kernel.org/
->>>> Fixes: 3bad7fe22796 ("dt-bindings: phy: qcom,sc8280xp-qmp-usb43dp: Reference usb-switch.yaml to allow mode-switch")
->>>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->>>> ---
->>>>   .../devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml    | 8 +++++---
->>>>   1 file changed, 5 insertions(+), 3 deletions(-)
->>>>
->>>> diff --git a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
->>>> index c8bc512df08b5694c8599f475de78679a4438449..5005514d7c3a1e4a8893883497fd204bc04e12be 100644
->>>> --- a/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
->>>> +++ b/Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml
->>>> @@ -73,8 +73,11 @@ properties:
->>>>       description:
->>>>         See include/dt-bindings/phy/phy-qcom-qmp.h
->>>>   
->>>> -  mode-switch: true
->>>> -  orientation-switch: true
->>>> +  mode-switch:
->>>> +    $ref: /schemas/usb/usb-switch.yaml#properties/mode-switch
->>>> +
->>>> +  orientation-switch:
->>>> +    $ref: /schemas/usb/usb-switch.yaml#properties/orientation-switch
+On 30/09/2025 21:06, Prasad Kumpatla wrote:
 > 
-> Looking at this again, this isn't even correct and I don't think it
-> works. It's missing a '/' and  should be ...#/properties/... to be a
-> valid json pointer.
-> 
-> I thought we checked this...
-> 
+> On 9/25/2025 6:56 PM, Krzysztof Kozlowski wrote:
+>> On Thu, 25 Sept 2025 at 09:18, Jingyi Wang <jingyi.wang@oss.qualcomm.com> wrote:
+>>> From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
 >>>
->>> This is a pattern we try to avoid with references at a property level. I
->>> prefer you make port and ports not required in usb-switch.yaml.
->>
->> But this solution is also not perfect. E.g.
->> Documentation/devicetree/bindings/phy/fsl,imx8mq-usb-phy.yaml should
->> only allow the orienttion-switch property, while using
->> allOf:$ref:usb-switch.yaml allows all three (orientation-switch,
->> mode-switch, retimer-switch).
+>>> Add support for audio on the Kaanapali MTP platform by introducing device
+>>> tree nodes for WSA8845 smart speaker amplifier for playback, DMIC
+>>> microphone for capture, and sound card routing. The WCD9395 codec is add
+>>> to supply MIC-BIAS, for enabling onboard microphone capture.
+>>>
+>>> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>>> ---
+>>>   arch/arm64/boot/dts/qcom/kaanapali-mtp.dts | 226 +++++++++++++++++++++++++++++
+>>>   1 file changed, 226 insertions(+)
+>>>
+>> Audio is not a separate feature from USB.
 > 
-> That can be handled like this:
-> 
-> $ref: usb-switch.yaml
-> properties:
->    orientation-switch: true
-> additionalProperties: false
-> 
-> Though if you need unevaluatedProperties for some other reason, then
-> that won't enforce it and it's just documentation. In that case, then
-> perhaps usb-switch.yaml is not the right granularity and should be split
-> up.
+> I didn't understand this, Could you please help me to provide more 
+> context on it?
+> Is this regarding Audio over Type-c?
 
-I tried :
-    - $ref: /schemas/usb/usb-switch.yaml#
-+      properties:
-+        mode-switch: true
-+        orientation-switch: true
-+      additionalProperties: false
-
-But it doesn't work:
-phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml:108:17: [error] syntax error: mapping values are not allowed here (syntax)
-phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml:108:17: mapping values are not allowed in this context
-   DTEX    Documentation/devicetree/bindings/phy/qcom,sc8280xp-qmp-usb43dp-phy.example.dts
-phy/qcom,sc8280xp-qmp-usb43dp-phy.yaml:108:17: mapping values are not allowed in this context
+USB depends on ADSP, so your split of patches into separate audio commit
+is just incorrect.
 
 > 
-> I put this into the category of "this is the least of our problems". I'm
-> not that interested in enforcing what common properties a device uses or
-> not. It's undocumented properties I'm worried about or lack of
-> constraints (on reg, clocks, interrupts, etc.).
+>> It's simply incomplete
+>> picture which is wrong for case of submitting everything at once.
+>> Either you release early, release often (which I asked you many
+>> times), or you submit complete work.
 
-I'll revert the patch until we find a proper solution.
+And here I explained why.
 
-Neil>
-> Rob
+> 
+> These patches enable usecase for Speaker playback and On-board-Mic
+> Capture. Do you consider is there is anything need to do to make it 
+> complete ?
 
+Yes, please squash patches.
+
+
+Best regards,
+Krzysztof
 
