@@ -1,83 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76064-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76065-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 857C5BBE17C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 14:50:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A8034BBE21A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 15:04:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 395D83BC4ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 12:50:19 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 6238C3BBE2E
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 13:04:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id C642528312B;
-	Mon,  6 Oct 2025 12:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C6B8A28C871;
+	Mon,  6 Oct 2025 13:04:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="akLfpc1i"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SvV7V9yZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F7128369D
-	for <linux-arm-msm@vger.kernel.org>; Mon,  6 Oct 2025 12:50:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934B228AAEE;
+	Mon,  6 Oct 2025 13:04:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759755018; cv=none; b=WjbxJQyOdYBoCGvOw8Zy/aejPyQ3cN8HGQ0SspFSLqIG8bTpxa8CPtUDAdfxaKXbdkz0dHXtcX9+GbtDqqakdn1PTQiuxijzVNn3ci2g4tKO8CgfICOUKsB5RjJu0LeXr2oq8OQPRUoFvY07bw2wBQ1NmfNp5vX4tq4C3ES6O6I=
+	t=1759755848; cv=none; b=TNU5Z7lEw5J2BAmFKMEVQnndkiQlhxGl9w016zABZ3OvnQ2RWq9QDMWSyO4sJQKMRsdaHZhRlnfUsbcnp6MnChRcuXu616nyVTCJJaU4gMo41t7uTPHQMaL1bO/ezfUjGfj69seoglbXQGlAbBscPmEKZVOfzMy6/ihz2JFoKVc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759755018; c=relaxed/simple;
-	bh=1+ke2TkHctZOigrivj+U7Q7F20sV5pMDl2nkjiByetM=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=OTRIpeoQ/HWfT40AiR+ti/bXX8nneo3BEQ9yfquWHaO0vEzFdtHFM8or9LS3nTBU/z5XUtJ65a9zQGzQBY5LNf/cEbfHfZ3eIc9G5Fye4E/RY2k7EsSKeoyeJrQ2ewtWvFMD77djlK8ozFPUTtriLqFlt2UeAlkLiaQ1wKqKyNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=akLfpc1i; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-46e37d6c21eso35592235e9.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 05:50:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759755015; x=1760359815; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TvDhuie6qY8dt8ec7g1A3HAHuwzFnTbr7gEWQFFeMLg=;
-        b=akLfpc1i4vHLpXIQu7/IBGKFhjAR6cVqc0ts24uQF1GlW+XePrzg9ttrtW8B/lfe0r
-         hSMk8k2KcaQ49lUys7bRRnlXOStad0jZ+XtAo02ALepbVltK2dgDlRovCOiyzXruepdV
-         Eef/8cMwXR7mWjAOXF17GeIL+OEiIXN39L3IBEFHiNftc+RqJSIahVEe+F18XJZBHnJj
-         ZObUb/fOd/GGUoFyxBrTy6UsJ/+6JzBxK23l6v1Osnotvw2GNelKa23JXHgMGk1FrcJp
-         uARvcH1BC0dgEPuduSbo9ynlG7+zmD/IcMWIlCrJOlbxXnOwvzMBtCot+yGWm06ejER0
-         tsnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759755015; x=1760359815;
-        h=content-transfer-encoding:in-reply-to:organization:autocrypt
-         :content-language:references:cc:to:subject:reply-to:from:user-agent
-         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=TvDhuie6qY8dt8ec7g1A3HAHuwzFnTbr7gEWQFFeMLg=;
-        b=AnhHnyHMO6GGIWZyR7h5gwwVvCtXgEQAGiaZ6JTW3rzB9j5E4L/m8WcfpJaMHlqEtP
-         18ijgp846tT4WrKydwN0Ju0S9bj0/o2oHddDWb2N4v9vBabXMj+y5gvD0tSfc7S+UL6Z
-         raLZ/4AyqiA+S1jtFsua5t3DC4IqQ2goy1wq3xQOUnHjd6QZ6kSnPc13ZHq+Nan8kPwD
-         6aiOBJhQdk/zk5PLXmP9eANzPz0gCiylN2bonZWATBVUaj3NeuY2/FgqD+VyK3NO0ETj
-         rvKxeT2MqdDWJTdSwsfCZp5kF8ZqCAVSqthvKrOSJer+loB5FqZOQOeGX2NUiN/sRvuM
-         7iaA==
-X-Forwarded-Encrypted: i=1; AJvYcCW5ftMe55i6KMTN7/aZR9tQFYlSMa8ZPBB08gyJGb9ind+aH+2a1+y7yB9tek92Sr0KLjUg3ZjabCqgvsg6@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8UR5NQGpRVvMU88cj2ERALbyUbolmDHl5sTWrBgMeCoj+dRXJ
-	y7wozNavi1zI/Ts6wVkMgWuOZeo8yv1MnNF6CAZJvEOe9290WFkHs2I1LvUSS8ryG5Y=
-X-Gm-Gg: ASbGncsjcsbXeXcB9WYcolIuWk1K7nMaskj2QQt2hXJlTvKtfMnNJRx2s5nmeG4XqOM
-	eFOqvOmykhyC2OsyJLGKjNiz7Q1gEza6SaUwVITj0bnte/nFRyNQ7xwAWDjcaHlfX5Q6nI4T1hR
-	KOwb5NcHtkrZLIw8iedhof/I0Sj95QkvQofkxS8nD8IPZlBE3cXiQgzFIGy8svo+8JOArwgtodv
-	tg17yYYGf3MCmUySsXewhIoMd90uH8L1VTWsF+DphOom1RYcXTaSxrzKghiZFg0BiHQduhNpINY
-	Lc8/DgDanoKu09+V9eHNxPjS8epev05ZEPlP4yIvsDmdeMZzjnJz5UfbolZb9YBaiJ7J06pDuu2
-	MTG2PE/MZ01vr/2TduwHUS2xW1bqoWtxL2CjYvfxVhzPtX/itgF7ZL3JNK5M+tF/hAS2j7yellM
-	125Vi1zxev4tVUDRsyK+upFuXjc7w=
-X-Google-Smtp-Source: AGHT+IGxYNrhR5rb1hMdZacbBTASV6s/vat0+OUcrWk/mznR4enIUg1haus1BRrmnxmBozboXRQ6Ug==
-X-Received: by 2002:a05:600c:3b08:b0:46e:396b:f5ae with SMTP id 5b1f17b1804b1-46e7110cf6fmr95364035e9.16.1759755014953;
-        Mon, 06 Oct 2025 05:50:14 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:3d9:2080:2dd0:9118:d7f5:51d9? ([2a01:e0a:3d9:2080:2dd0:9118:d7f5:51d9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46e723593d8sm173623055e9.11.2025.10.06.05.50.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Oct 2025 05:50:14 -0700 (PDT)
-Message-ID: <4bb1c10d-b8fe-485e-b4aa-faa43033be76@linaro.org>
-Date: Mon, 6 Oct 2025 14:50:13 +0200
+	s=arc-20240116; t=1759755848; c=relaxed/simple;
+	bh=WSc5N/iAmPiV35Hsw0XqC+hCf7iMvLKfpL2U3kMvVDI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HANI0rGSERZ3mGQxtxQ9XuVbPS7AdqlUrTCYNW2Tc34GgZTMkz5IslHF3h1wB7oRYgKqq894RizOHdZoDOF/y9VGqt6lxHPrXVrPaB84bF0gjnAyz52ubhh5sT27WAdAbarli78G51B8pA+RIWN/9wix0c78mM+tHdI5GBGm5IY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SvV7V9yZ; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F78DC4CEF5;
+	Mon,  6 Oct 2025 13:04:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759755848;
+	bh=WSc5N/iAmPiV35Hsw0XqC+hCf7iMvLKfpL2U3kMvVDI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=SvV7V9yZ+2xYX8o3g05bKrYskbBcBtqdVMjjhiWSLd6EDBy2I6NoozVssVhg+Q14W
+	 O1o2CRLjvWfCjEeBc8hVyS/Y4seu7z0Z+oOTPShoLBx2+LFuFu1VROB1ySBQUhyK54
+	 kRoF/B3Kef2VH85nm251E659Qc45CijQ9youUzsNQwzlZ+B50WCKTMhXoUDvmBZiZV
+	 b47wUVsDB0pIB7dgvK8m2yWXh0XtbqZmWlfgW+A+X8EfQffHrQa0EbDCLYXts1fTMQ
+	 uYI4viMzl8R7LOWMlWlEqOTQnflvUrgb3kGq0ruC07W8+5GHYjMFdUAM2uJdoLb8Gp
+	 AGJooiDW2vIDA==
+Message-ID: <b94d8ca3-af58-4a78-9a5a-12e3db0bf75f@kernel.org>
+Date: Mon, 6 Oct 2025 22:03:59 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,139 +50,137 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Neil Armstrong <neil.armstrong@linaro.org>
-Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
-Subject: Re: [PATCH v4 2/3] phy: qcom: qmp-combo: get the USB3 & DisplayPort
- lanes mapping from DT
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Xilin Wu <sophon@radxa.com>, linux-arm-msm@vger.kernel.org,
- linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20250930-topic-x1e80100-hdmi-v4-0-86a14e8a34ac@linaro.org>
- <20250930-topic-x1e80100-hdmi-v4-2-86a14e8a34ac@linaro.org>
- <74446713-15a1-4706-b3c7-801724467575@oss.qualcomm.com>
-Content-Language: en-US, fr
-Autocrypt: addr=neil.armstrong@linaro.org; keydata=
- xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
- GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
- BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
- qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
- 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
- AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
- OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
- Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
- YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
- GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
- UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
- GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
- yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
- QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
- SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
- 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
- Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
- oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
- M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
- 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
- KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
- 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
- QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
-Organization: Linaro
-In-Reply-To: <74446713-15a1-4706-b3c7-801724467575@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v2] watchdog: Add driver for Gunyah Watchdog
+To: Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>
+Cc: hrishabh.rajput@oss.qualcomm.com, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>, Guenter Roeck
+ <linux@roeck-us.net>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ linux-watchdog@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+References: <20251006-gunyah_watchdog-v2-1-b99d41d45450@oss.qualcomm.com>
+ <3b901f9d-dbfa-4f93-a8d2-3e89bd9783c9@kernel.org>
+ <a7633abf-0005-423b-b152-e8c70aa5c27a@quicinc.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <a7633abf-0005-423b-b152-e8c70aa5c27a@quicinc.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/6/25 12:08, Konrad Dybcio wrote:
-> On 9/30/25 9:39 AM, Neil Armstrong wrote:
->> The QMP USB3/DP Combo PHY hosts an USB3 phy and a DP PHY on top
->> of a combo glue to route either lanes to the 4 shared physical lanes.
+On 06/10/2025 19:03, Pavan Kondeti wrote:
+> On Mon, Oct 06, 2025 at 05:56:42PM +0900, Krzysztof Kozlowski wrote:
+>> On 06/10/2025 16:37, Hrishabh Rajput via B4 Relay wrote:
+>>> +
+>>> +static int __init gunyah_wdt_init(void)
+>>> +{
+>>> +	struct arm_smccc_res res;
+>>> +	struct watchdog_device *wdd;
+>>> +	struct device_node *np;
+>>> +	int ret;
+>>> +
+>>> +	np = of_find_compatible_node(NULL, NULL, "qcom,kpss-wdt");
+>>> +	if (np) {
+>>> +		of_node_put(np);
+>>> +		return -ENODEV;
+>>> +	}
+>>> +
+>>> +	np = of_find_compatible_node(NULL, NULL, "arm,sbsa-gwdt");
+>>> +	if (np) {
+>>> +		of_node_put(np);
+>>> +		return -ENODEV;
+>>> +	}
+>>> +
+>>> +	ret = gunyah_wdt_call(GUNYAH_WDT_STATUS, 0, 0, &res);
+>>> +	if (ret)
+>>> +		return -ENODEV;
 >>
->> The routing of the lanes can be:
->> - 2 DP + 2 USB3
->> - 4 DP
->> - 2 USB3
+>> No, your hypervisor driver (which you have) should start the module via
+>> adding platform/aux/something devices. Now you are running this on every
+>> machine, which is clearly wrong...
 >>
->> Get the lanes mapping from DT and stop registering the USB-C
->> muxes in favor of a static mode and orientation detemined
->> by the lanes mapping.
->>
->> This allows supporting boards with direct connection of USB3 and
->> DisplayPort lanes to the QMP Combo PHY lanes, not using the
->> USB-C Altmode feature.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
 > 
-> [...]
+> This is a good point. Thanks for bringing it up. We don't have a
+> hypervisor glue driver (yet!) that can add an aux device. Based on v1
+> feedback, we would like to be a standalone module that can self discover
+> gunyah hypercall interface.
 > 
->> +struct qmp_combo_lane_mapping {
->> +	unsigned int lanes_count;
-> 
-> "num_lanes"?
+> Currently this driver depends on ARCH_QCOM || COMPILE_TEST. So,
+> technically this can be built and loaded on all non-Qualcomm machines.
 
-Is this significant ?
+
+Not technically, but practically. We do not make single-platform kernels
+anymore, it's not 2010. Entire arm64 is multiarch.
 
 > 
->> +	enum typec_orientation orientation;
->> +	u32 lanes[4];
->> +};
->> +
->> +static const struct qmp_combo_lane_mapping usb3_data_lanes[] = {
->> +	{ 2, TYPEC_ORIENTATION_NORMAL, { 1, 0 }},
->> +	{ 2, TYPEC_ORIENTATION_REVERSE, { 2, 3 }},
->> +};
->> +
->> +static const struct qmp_combo_lane_mapping dp_data_lanes[] = {
->> +	{ 1, TYPEC_ORIENTATION_NORMAL, { 0 }},
->> +	{ 1, TYPEC_ORIENTATION_REVERSE, { 3 }},
+> We can make the STATUS SMCC before looking for the other watchdog
+> devices and fail early.
 > 
-> This is not corroborated by your bindings change ^
+> Our Gunyah glue driver [1] do make SMCC call to establish that we
+> are actually a guest under Gunyah. Since our intention here is to
+> support watchdog on as many as platform as possible, it is better not to
+> tie this with glue driver and make it a stand alone and self discovery
+> module.
 
-Damn you're right, I'll fix it...
+
+I think you should have only one driver pinging for Gunyah, so glue
+driver or this. Not both. If you add such SMC here, then how do you
+determine the platform in the glue driver? Via DT? Then DT supersedes this.
 
 > 
-> I'm also frankly not sure whether it's pin 2 or 3 that 1-lane-DP
-> would be TXd on
-> 
->> +	{ 2, TYPEC_ORIENTATION_NORMAL, { 3, 2 }},
->> +	{ 2, TYPEC_ORIENTATION_REVERSE, { 0, 1 }},
->> +	{ 4, TYPEC_ORIENTATION_NORMAL, { 3, 2, 1, 0 }},
->> +	{ 4, TYPEC_ORIENTATION_REVERSE, { 0, 1, 2, 3 }},
-> 
-> Would it be too cheesy to check orientation based like:
-> 
-> static bool qmpphy_mapping_orient_flipped(u32 *data_lanes)
-> {
-> 	return data_lanes[0] == 0;
-> }
-> 
-> ?
+> If this is not an acceptable solution (Please let us know), we can find other 
+> ways to limit it to only work on Qualcomm machines. For ex: Socinfo
+> platform device is added from SMEM driver which make it only probed on 
+> Qualcomm machines. We can look into this. 
 
-Do we want a proper check of the property content or some random check ?
-Sorry I prefer something formal, since perhaps sometime we will have
-a full lanes remapping available instead of just orientation and if
-we have some random input it will explose...
 
-> 
->> -	ret = qmp_combo_typec_register(qmp);
->> -	if (ret)
->> -		goto err_node_put;
->> +	qmp->qmpphy_mode = QMPPHY_MODE_USB3DP;
->> +
->> +	if (of_find_property(dev->of_node, "mode-switch", NULL) ||
->> +	    of_find_property(dev->of_node, "orientation-switch", NULL)) {
-> 
-> of_property_present()
+To me socinfo feels even better. That way only, really only qcom devices
+will execute this SMC.
 
-I'll replace with that.
-
-Thanks,
-Neil
-
-> 
-> Konrad
-
+Best regards,
+Krzysztof
 
