@@ -1,113 +1,116 @@
-Return-Path: <linux-arm-msm+bounces-76111-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76112-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 03DC9BBF99C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 23:48:36 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2CF7BBF9AE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 06 Oct 2025 23:52:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B893C3C0ACB
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 21:48:34 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 0B15934B81B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Oct 2025 21:52:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 635417262E;
-	Mon,  6 Oct 2025 21:48:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0800F1A0BD6;
+	Mon,  6 Oct 2025 21:52:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pSkAmXjX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VRR/V6J8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3076D8F4A;
-	Mon,  6 Oct 2025 21:48:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFB58F49;
+	Mon,  6 Oct 2025 21:52:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759787312; cv=none; b=syJcOJ9/QLGQxR1SLZY4J/CWgHp6qspTK2AZntkIVLmOa8BLc01bzYYmCLz3ejxf8AeQ/YKnc+wBACRcPGkw/ymp4kDv7WnIQkKTkxgQUjeJ5h58uOnsjPSxCZa/hVXdNwqCG2iQL+IYdGmIqP86jKAcN5HDJV3nIgkBaLw/erU=
+	t=1759787533; cv=none; b=IXELtD+MAiydQYunp0GLG1b8hVAcC80mw/Idlu+EOUVgNX+YyNl6lc6O8XiLCmyi14f0ro3NnymrGvCeVrdQ0PipF92WRDaDPjzXj/OYuzFBC8bIHuDMU5BoerI1gutkAboDAdkEX7/BUI+LXN+BbDGPFAHDbbRJQPaXSaYpUAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759787312; c=relaxed/simple;
-	bh=OpaSlgNgbG6LGQ9WKZLEg5SEp0sOr8exS4JYKgFQGjM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LRaC3qSBj5T+WeVN/SBG7DeTM3gV5ADhuA0Ofc+VRCgnZRu91tmPiV5Vl5XWQCUK2FOUC3gbcZh1pCfWA4QYFjM+qQIIu+ISrCUDwOOLlCgX2AdZ2UiWtxI2p1f9Itd2OeqxAUyJb8TksgBbv/jzc5v0RWfFvuzPEoeQ9um+NYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pSkAmXjX; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 757E2C4CEF5;
-	Mon,  6 Oct 2025 21:48:31 +0000 (UTC)
+	s=arc-20240116; t=1759787533; c=relaxed/simple;
+	bh=/IUG+40uZFRvQzJPeoV/VrSw+bnfl+PWRnxqENQAWNw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BkvVYavttf8+HaYzbrKMAMeqJ73PsfOlHrzYBo9NFTDJ9mHn/++0ruoRiqBNd8lfboJuU9XpnYF2CMxZUdg61FD7Pj0dbK6A30Cuz+Hgb69iywYA2Z7BI4ZZZ1WG81JOZlmlU3gwN6cmCXLBG7N+7FlgBO8SQn96Wgot1W1RL3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VRR/V6J8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D15C4CEF5;
+	Mon,  6 Oct 2025 21:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759787311;
-	bh=OpaSlgNgbG6LGQ9WKZLEg5SEp0sOr8exS4JYKgFQGjM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pSkAmXjXHg+U1pTbtnA1GTbUm+N8VigWWBlFWZC7/fkAo2wP2inbeV0Hnv6pNIKk9
-	 DeEv7BqPEUkLPhVke5T2sokJ9BjI/SBbQFQmzAmuS0qUWnkp2NUVz8Z78Q1eJFIXWh
-	 IVpxt6cVUz1rDA62F6x43EVhPsHrC8fy1iAd1Acszuj6oqLT6axu4Lf4HSovx5iB0d
-	 F1IwMwYd31zCgBu5AJ+nQ+SgosfEXX6Nh/0dhcCpg183bun5a/Xg6NSzGS6RF1IBKA
-	 IwyRX9j4JYS5bvmZOQTqs13CE8Sy5db2LOINSbFkzwEXDVR72zxe74evPUpXQ66iAM
-	 BlVlJIgTtkixA==
-Date: Mon, 6 Oct 2025 16:48:30 -0500
-From: Rob Herring <robh@kernel.org>
-To: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>, linux-mmc@vger.kernel.org,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-arm-msm@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com,
-	quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
-	quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
-	kernel@oss.qualcomm.com, Sachin Gupta <quic_sachgupt@quicinc.com>
-Subject: Re: [PATCH v4 1/4] dt-bindings: mmc: Add dll-hsr-list for HS400 and
- HS200 modes
-Message-ID: <20251006214830.GB625548-robh@kernel.org>
-References: <20250929113515.26752-1-quic_rampraka@quicinc.com>
- <20250929113515.26752-2-quic_rampraka@quicinc.com>
+	s=k20201202; t=1759787533;
+	bh=/IUG+40uZFRvQzJPeoV/VrSw+bnfl+PWRnxqENQAWNw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=VRR/V6J8hplpp5KWwR3ee4ChrEL9pTCiqGSitqsv6BZbpvWxb5XtcKD6C99dF2/WW
+	 +rLhe53Du32Z1XhS2hw9+SRtujl+YytnYf6GVdcgZEfBwO03eTZZxewnsyfkVQ2UhT
+	 M+sIOrmzyHoJ1Fdaw+R05hAmD0bToLqT8gy1zlMzxEg9sVC5FWkrtpDan5D+AdT8op
+	 UvNqXYTBIBWEic6Lnbm2/82m2owoNlfDGCzFgyAWYx/PHJ5ZfXcCW1L2WKmm6pxswk
+	 QU6i8UY8n0VppiURDxhbyvmse3/Bbgi1S8rhdYN/fLBwGSdTgktdvtZqOlqTSi/z41
+	 ZVvhHaZMPrUHA==
+Message-ID: <6fe16d18-b2e3-4a33-b03a-a30561dabbbf@kernel.org>
+Date: Mon, 6 Oct 2025 22:52:06 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250929113515.26752-2-quic_rampraka@quicinc.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC 0/9] gpio: improve support for shared GPIOs
+To: Bartosz Golaszewski <brgl@bgdev.pl>,
+ Manivannan Sadhasivam <mani@kernel.org>
+Cc: Dmitry Torokhov <dmitry.torokhov@gmail.com>, Kees Cook <kees@kernel.org>,
+ Mika Westerberg <westeri@kernel.org>,
+ Andrew Morton <akpm@linux-foundation.org>,
+ Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Saravana Kannan <saravanak@google.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Andy Shevchenko <andy@kernel.org>, Catalin Marinas
+ <catalin.marinas@arm.com>, Will Deacon <will@kernel.org>,
+ Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, linux-hardening@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-sound@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org,
+ Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
+ <hyzzrjn7jzo3tt3oyg7azijouawe3zopfjzq6zfhoo6e6z2m4t@ssl5vl4g557e>
+ <zk4ea5cibrkp4vttuy4evrqybf76b3nop5lnyck4ws4nyf2yc4@ghj2eyswsoow>
+ <CAMRc=MdWmO4wvX6zpzN0-LZF1pF5Y2=sS8fBwr=CKMGWHg+shA@mail.gmail.com>
+Content-Language: en-US
+From: Srinivas Kandagatla <srini@kernel.org>
+In-Reply-To: <CAMRc=MdWmO4wvX6zpzN0-LZF1pF5Y2=sS8fBwr=CKMGWHg+shA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Sep 29, 2025 at 05:05:12PM +0530, Ram Prakash Gupta wrote:
-> From: Sachin Gupta <quic_sachgupt@quicinc.com>
-> 
-> Document the 'dll-hsr-list' property for MMC device tree bindings.
-> The 'dll-hsr-list' property defines the DLL configurations for HS400
-> and HS200 modes.
-> 
-> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
-> different tuning.
-> 
-> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
-> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-> ---
->  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
->  1 file changed, 5 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> index 22d1f50c3fd1..a60222473990 100644
-> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
-> @@ -137,6 +137,11 @@ properties:
->      $ref: /schemas/types.yaml#/definitions/uint32
->      description: platform specific settings for DLL_CONFIG reg.
->  
-> +  qcom,dll-hsr-list:
 
-'-list' doesn't add anything.
 
-What is 'hsr'?
-
-> +    maxItems: 10
-> +    $ref: /schemas/types.yaml#/definitions/uint32-array
-> +    description: platform specific settings for DLL registers.
-> +
->    iommus:
->      minItems: 1
->      maxItems: 8
-> -- 
-> 2.34.1
+On 10/6/25 5:10 PM, Bartosz Golaszewski wrote:
+> On Mon, Oct 6, 2025 at 5:43 PM Manivannan Sadhasivam <mani@kernel.org> wrote:
+>>
+>> On Wed, Sep 24, 2025 at 11:25:12AM -0700, Dmitry Torokhov wrote:
+>>> Hi Bartosz,
+>>>
+>>>>
+>>>> The practical use-case for this are the powerdown GPIOs shared by
+>>>> speakers on Qualcomm db845c platform, however I have also extensively
+>>>> tested it using gpio-virtuser on arm64 qemu with various DT
+>>>> configurations.
+>>>
+>>> How is this different from the existing gpio-backed regulator/supply?
+>>> IMO GPIOs are naturally exclusive-use resources (in cases when you need
+>>> to control them, not simply read their state), and when there is a need
+>>> to share them there are more appropriate abstractions that are built on
+>>> top of GPIOs...
+>>>
+>>
+>> Not always... For something like shared reset line, consumers request the line
+>> as GPIO and expect gpiolib to do resource manangement.
+>>
 > 
+> They could use the reset API and it would implicitly create a virtual
+> device that requests the reset GPIO and controls its enable count.
+> Except that some devices also do a specific reset sequence with delays
+> etc. That would require some additional logic in reset-gpio.
+That should be a platform specific reset controller driver.
+
+> 
+> Bart
+
 
