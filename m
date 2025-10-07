@@ -1,63 +1,63 @@
-Return-Path: <linux-arm-msm+bounces-76192-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76193-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id ABB09BC1132
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 13:04:42 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 93E85BC1177
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 13:09:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 8E1904E8C3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 11:04:41 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 22CBF34D805
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 11:09:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3E3992D73B3;
-	Tue,  7 Oct 2025 11:04:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4055A2561D1;
+	Tue,  7 Oct 2025 11:09:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="WH01E+TB"
+	dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b="Lz3rYTGZ"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7246E1A2398;
-	Tue,  7 Oct 2025 11:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D641165F16;
+	Tue,  7 Oct 2025 11:09:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759835078; cv=none; b=Gua0uc3SEZ04YHgy2cjgVkqLIlGx4pGgPSAmTJQ1LG9f5+/Y8B5wTC3TGpwgNxDcThQwabHEAntSraIzNPPuSeoDwYLffITTsVYutz8Bn1Di2fUnIt3tmn7FdSQNWCVGcI68huDfXuX2rhWKy+NlEAPC+lHugJwt1+aPIh72WxI=
+	t=1759835349; cv=none; b=SCDVF84YVa0zaccc2rVg1SsN33qzSGSIfMn/pmXY9vIX3+7zbi0Ecfmbal247DnY0JZeMJ5qitQIdd/vxxmrMb/qrgaQGaX8f3syxkWDhaiUA8ztp2NcUcZOiU2kLjSEvic4+FN8S/5ks8/M42ZzSSIq5sf6BYo+QiKbAapzn9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759835078; c=relaxed/simple;
-	bh=ktXqCRUkyTMvb5MhE8h2ZXyL7kGpzg1s95Xkm9J5r1Q=;
+	s=arc-20240116; t=1759835349; c=relaxed/simple;
+	bh=fhfzUMJL1SqNlzcr8LHjp5X1IhdG41Jx/unl4fKpMOU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
-	 In-Reply-To:Content-Type; b=t2z7SLLnNyFsPTB6kRjODDvFueJd0HN+nPMno619Hnmbn2PdB1ySSj9sxS/b8I+s/9ut4G5fKwePdhzXucl+Uu779DaFiG2QP6Pzh7gfGG7cQX2jB5dxxvNdDL5agdHIlsnHcrurxdyhUIIVT/FlC4Us38K7fqANqwfd8SXFoe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=WH01E+TB; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=fu+QwFQk1OOqukboB0bp5M8Kk/9/43Sueqq/shf/zG3fdc22zFv1z3KM1fxFd2mQILNGur2+866lZ7b/mn18GMLTGFARmvHN9X70K6HP7IsZAPhlNo1Tj93tcRhOSmfLgmOOBCHdBJCmz5oSvaAK80m4EePhKlTONLUImIIRBIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com; spf=pass smtp.mailfrom=quicinc.com; dkim=pass (2048-bit key) header.d=quicinc.com header.i=@quicinc.com header.b=Lz3rYTGZ; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=quicinc.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=quicinc.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5974H0FG026717;
-	Tue, 7 Oct 2025 11:04:31 GMT
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5974V5hJ016331;
+	Tue, 7 Oct 2025 11:09:00 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	4LpImfTOuAGEzNTlbBmu9w5WQT4rT1ixjE60+Kg5sxk=; b=WH01E+TB3T68Lbq9
-	iem9c5UzYSTsx19TmwHMAyHZdxESjuHfW43UfAQnLwkcl7vr8LT69RLtF094yRDe
-	1rvl80R/kidoFn8xr9B4bH8yNj/Sb6DUeKb6uMYJnRH1BlIEgMVeSuwTaSYd4bym
-	fIbOlRPPmHsOQDD6EFZcDODCeiDtX0bX2udrAJtcEt/pZGZQgO9JBX7RVu3DZz/W
-	AzcQrthMk06Jyo1FAa/d9i/gehD5w4qlOqyy2ax+lafq1FUsp85S/1hXsuAWmWvV
-	kwCe134+3l35zdgzYtXsxModgTRh6in0/HTrgdej+OTcJFj5Er170m78/ktuDHYS
-	KCerlw==
-Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mgd0jq5n-1
+	RNHvoTHoC6STGB5T7hO09OD+Iq9U/5MnfxHSDGuLxJE=; b=Lz3rYTGZFxNhLvtT
+	nwhT1v5/0482g2bpkGi5agV/S5QdTPy+/+2nPMl+jsZDuZWKn/6DoMH44hE2iBX4
+	vGigWiHiQNehFybgCnK1TxDc0tNgnczNGhHdRjMbEG5wnzrrkKGIRLuF/wY+nMhW
+	us9lNv+51MC06P5h9d1fW6XJs/GYU0TzXDD5/mk4ZHNRsCj1pt8Izz9Uyy4ZzCA2
+	kQe0G2OVBd7tUn75b4wwuwqf7MkS7aTgCx/3sTmllLK4cJaw72Y7tvdU/nqA8G1S
+	7c/iWTpoV4P5yOTF2fRIduU/oOt59ckMDErLFNb/8t7iRzmaM0mvHIgUiml2XAfK
+	bHleVQ==
+Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jtk6y246-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 07 Oct 2025 11:04:30 +0000 (GMT)
+	Tue, 07 Oct 2025 11:08:59 +0000 (GMT)
 Received: from nalasex01a.na.qualcomm.com (nalasex01a.na.qualcomm.com [10.47.209.196])
-	by NALASPPMTA01.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 597B4TYj019502
+	by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 597B8wtM003451
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 7 Oct 2025 11:04:29 GMT
+	Tue, 7 Oct 2025 11:08:58 GMT
 Received: from [10.217.216.18] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.24; Tue, 7 Oct
- 2025 04:04:24 -0700
-Message-ID: <e1b61851-85e6-3897-196c-1f432e7e8432@quicinc.com>
-Date: Tue, 7 Oct 2025 16:34:21 +0530
+ 2025 04:08:53 -0700
+Message-ID: <5fc715ac-1e24-ee59-db24-cc0a5797c43e@quicinc.com>
+Date: Tue, 7 Oct 2025 16:38:50 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -68,60 +68,58 @@ User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.15.1
 Subject: Re: [PATCH v4 3/4] mmc: sdhci-msm: Add Device tree parsing logic for
  DLL settings
-To: Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson
-	<ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
+Content-Language: en-US
+To: Rob Herring <robh@kernel.org>
+CC: Ulf Hansson <ulf.hansson@linaro.org>,
         Krzysztof Kozlowski
 	<krzk+dt@kernel.org>,
         Conor Dooley <conor+dt@kernel.org>,
-        Bjorn Andersson
-	<andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-CC: <linux-mmc@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <dmitry.baryshkov@oss.qualcomm.com>, <quic_pragalla@quicinc.com>,
-        <quic_sayalil@quicinc.com>, <quic_nitirawa@quicinc.com>,
-        <quic_bhaskarv@quicinc.com>, <kernel@oss.qualcomm.com>,
-        Sachin Gupta
-	<quic_sachgupt@quicinc.com>
+        Adrian Hunter
+	<adrian.hunter@intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        "Konrad
+ Dybcio" <konradybcio@kernel.org>, <linux-mmc@vger.kernel.org>,
+        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>, <dmitry.baryshkov@oss.qualcomm.com>,
+        <quic_pragalla@quicinc.com>, <quic_sayalil@quicinc.com>,
+        <quic_nitirawa@quicinc.com>, <quic_bhaskarv@quicinc.com>,
+        <kernel@oss.qualcomm.com>, Sachin Gupta <quic_sachgupt@quicinc.com>
 References: <20250929113515.26752-1-quic_rampraka@quicinc.com>
  <20250929113515.26752-4-quic_rampraka@quicinc.com>
- <59375a10-2a5b-45ed-9a4c-76884c0fe3c6@intel.com>
-Content-Language: en-US
+ <20251006214432.GA625548-robh@kernel.org>
 From: Ram Prakash Gupta <quic_rampraka@quicinc.com>
-In-Reply-To: <59375a10-2a5b-45ed-9a4c-76884c0fe3c6@intel.com>
+In-Reply-To: <20251006214432.GA625548-robh@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800 signatures=585085
-X-Proofpoint-GUID: avY7EvLy1Qswn0T74railrVGiMrB_k7a
-X-Authority-Analysis: v=2.4 cv=T8aBjvKQ c=1 sm=1 tr=0 ts=68e4f3be cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAxNyBTYWx0ZWRfX+SLHdyeCR9lL
+ TeLrh53DZj7gcM4urDYryl9TJOls2u2pz9CjOg7leQxE+nCXkEKxFBNdUMeeZxetS4Lqe7ccRE+
+ afOQDUB3b8ncHeCXxu0yc15xftXwEoyEPCQAiGQs6H6/b7Ti6ZzKylReSxXNFT7R17jZmxBV7TN
+ hRUhcVw9zKNg8ayO66rb1OzP8fxIvmMvC8U5QhKXJXmejw6g2JEmpD0QsX33eOCy7aeByLETg2L
+ XB3ajtIm2zI1SVcq2VV+MHVHFk7ur6O7JAastHAWVKj+idxXQBjtV60f5E+6KQ5Gqp7FzrcR0Hb
+ 0fEOfFflzqhekalzyUhW/191apfjiL4IToR8KOQAjQXY9njS3OumnriJFnHItHw5zDHRNIeQU4f
+ I8kgkAWc68v10tM4KNTPKG02jBADXA==
+X-Authority-Analysis: v=2.4 cv=do3Wylg4 c=1 sm=1 tr=0 ts=68e4f4cc cx=c_pps
  a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=GEpy-HfZoHoA:10 a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8
- a=0haHiXGQmjiPyxnxpDQA:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
+ a=RsA-RdRemkjXYStCCQ0A:9 a=QEXdDO2ut3YA:10 a=TjNXssC_j7lpFel5tvFf:22
  a=cPQSjfK2_nFv0Q5t_7PE:22
-X-Proofpoint-ORIG-GUID: avY7EvLy1Qswn0T74railrVGiMrB_k7a
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDEyMyBTYWx0ZWRfX0oZXWacLnl3j
- hRExjCOuJv16jZe615KYZ1U3xgJ2O4X0z69k1DAO7SMMb2pCCDn33ySIX7nFU/LYqHPPTGhnrd2
- Yh/+1hER0Fn2U21uMLf5tkGOQQBFAhwJ9QS+hM9EDRSsKddROgoyBJeVfmpilosQIGKzOZCSRa9
- HI/SyHcc2rzG6OeC0V4rJEHkmDf7BgkCkn0yI77cafyrjeSnxxTy/9MhhvbqKvMGou6UrL90ESC
- AmQxn3ZINIbcgctZquyX4+83XxSnKg3BbZnx+pIzuIbjqx2/xq2HasZaWVDnNcBm/LP2LsOOtRh
- By1RiBobUUSo+nJDPXWqe8FuKyfyysQ2ZShgmwDw7UV9y8CDSpOyGc/zDS9VAve505bC7KvKUk5
- tFi7BUEEbMcwAOhmQpTom/7r0R8Rsw==
+X-Proofpoint-GUID: z8PmnhSOZPyxjv8C6nyjDL9CkS_mti8y
+X-Proofpoint-ORIG-GUID: z8PmnhSOZPyxjv8C6nyjDL9CkS_mti8y
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-06_07,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0
+ suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
+ malwarescore=0 spamscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060123
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040017
 
-
-On 9/29/2025 9:42 PM, Adrian Hunter wrote:
-> On 29/09/2025 14:35, Ram Prakash Gupta wrote:
+On 10/7/2025 3:14 AM, Rob Herring wrote:
+> On Mon, Sep 29, 2025 at 05:05:14PM +0530, Ram Prakash Gupta wrote:
 >> From: Sachin Gupta <quic_sachgupt@quicinc.com>
 >>
 >> This update introduces the capability to configure HS200
@@ -187,6 +185,13 @@ On 9/29/2025 9:42 PM, Adrian Hunter wrote:
 >> +	if (!np)
 >> +		return -ENODEV;
 >> +	if (!of_get_property(np, prop_name, &sz))
+> Don't add new users of of_get_property which adds untracked pointers to 
+> raw DT data.
+
+Adrian also checked and provided some suggestion, and with those I could
+get rid of this function, so it is no longer needed.
+
+>
 >> +		return -EINVAL;
 >> +
 >> +	sz = sz / sizeof(*arr);
@@ -194,6 +199,10 @@ On 9/29/2025 9:42 PM, Adrian Hunter wrote:
 >> +		return -EINVAL;
 >> +
 >> +	arr = kcalloc(sz,  sizeof(*arr), GFP_KERNEL);
+> Why do you need to count the length first when only 5 entries is valid?
+
+This line also would not be needed in needed in next patchset.
+
 >> +	if (!arr)
 >> +		return -ENOMEM;
 >> +
@@ -227,6 +236,12 @@ On 9/29/2025 9:42 PM, Adrian Hunter wrote:
 >> +	if (dll_table_len != dll_reg_count) {
 >> +		dev_err(dev, "Number of HSR entries are not matching\n");
 >> +		return -EINVAL;
+> You just leaked memory. devm_* functions are your friend.
+
+These changes would also be removed in next patchset, after addressing
+Adrian comment.
+
+>
 >> +	}
 >> +
 >> +	for (i = 0, j = 0; j < 2; i = i + 5, j++) {
@@ -236,38 +251,6 @@ On 9/29/2025 9:42 PM, Adrian Hunter wrote:
 >> +		msm_host->dll.dll_usr_ctl[j] = dll_table[i + 3];
 >> +		msm_host->dll.ddr_config[j] = dll_table[i + 4];
 >> +	}
-> Kind of begs the question, why the driver and the DT have to be in
-> a different order.
->
-> It might be simpler to have:
->
-> 	struct sdhci_msm_dll {
-> 		u32 dll_config;
-> 		u32 dll_config_2;
-> 		u32 dll_config_3;
-> 		u32 dll_usr_ctl;
-> 		u32 ddr_config;
-> 	};
->
-> And:
-> 	struct sdhci_msm_dll dll[2];
->
-> And then dereference like:
->
-> 	msm_host->dll[index].dll_config_3
->
-> Also then you could perhaps use something like:
->
-> 	of_property_read_variable_u32_array(np, "qcom,dll-hsr-list", msm_host->dll, 10, 10)
->
-> instead of most of sdhci_msm_dt_get_array()
-
-Thanks Adrian for your suggestion, I could get rid of most of the lines of code
-of this patch with this approach. Accordingly I had to make some changes in
-patch #4 of this version.
-
-please let me know if I can push next patchset version.
-
 >> +
 >> +	msm_host->artanis_dll = true;
 >> +
@@ -275,24 +258,4 @@ please let me know if I can push next patchset version.
 >> +
 >> +	return 0;
 >> +}
->> +
->>  static int sdhci_msm_probe(struct platform_device *pdev)
->>  {
->>  	struct sdhci_host *host;
->> @@ -2562,6 +2644,15 @@ static int sdhci_msm_probe(struct platform_device *pdev)
->>  
->>  	msm_host->saved_tuning_phase = INVALID_TUNING_PHASE;
->>  
->> +	/*
->> +	 * Parse HSR dll only when property is present in DT.
->> +	 */
->> +	if (of_find_property(node, "qcom,dll-hsr-list", NULL)) {
->> +		ret = sdhci_msm_dt_parse_dll_info(&pdev->dev, msm_host);
->> +		if (ret)
->> +			return ret;
->> +	}
->> +
->>  	ret = sdhci_msm_gcc_reset(&pdev->dev, host);
->>  	if (ret)
->>  		return ret;
 
