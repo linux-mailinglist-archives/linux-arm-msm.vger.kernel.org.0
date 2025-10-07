@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-76269-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76270-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF9CDBC2C31
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 23:37:45 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6BBCEBC2CA6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 23:48:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AA4023E1C01
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 21:37:44 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E41B034F804
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 21:48:35 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 29B422522BA;
-	Tue,  7 Oct 2025 21:37:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id DBB7E257437;
+	Tue,  7 Oct 2025 21:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="WluchkVM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uoLyNor3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7EA24676C;
-	Tue,  7 Oct 2025 21:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBE4248891;
+	Tue,  7 Oct 2025 21:48:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759873062; cv=none; b=PDH6Uuee4R+rYsYqn+fnp8GEcC/Up4g04sA2RSRR/lVUCF51Jg8hiAiV4Fkiv1H0DW3kNexQYrJ3XqcIRldGg5zk8ybVrQ2WiAWw6tVxNUiL/tkety6qb1j29d5kf8c+Gg/6zyDbOmfInzgVcEncifl3kfA8xsiJx54wftznzS0=
+	t=1759873707; cv=none; b=IgaVSVd8wqvI5c7gJHcdxa/6Gpn9QiIxFXUvny3ANts+QIqzFfwnoHBFyfLqOEPn+g2VFMwgOTRvUCODz38tSGJW3aaL9YBkIURqNo25SXfPDJEAMZ+9o4gV4GxVDX50DMceslVHRfrTfYkD0XcsMy5ByWlbf9dgKhLYdmE5+fw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759873062; c=relaxed/simple;
-	bh=mVzY1I+ol36+2mhFwo0Zu60YnowWxzQUdxoPsbySwr8=;
+	s=arc-20240116; t=1759873707; c=relaxed/simple;
+	bh=M6gCrkYqmgJrQ5nUPLjNat3j6PfE4QacRl1VuEuqkMU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XM6qqUFy+qAySWaQ5svoZaOdjIH3B/ybBF1NbX391ob9hOEESqqXdQ4Vqb+qtxPB4CgVBXT0jmkqrLRVkcg8XRwycLDBcmgvoTKGPzC9HB7jI1YV+JlL4OrJVUBKDUfjJqdRseV+klaoNeAJ30nrTcbNLfbgO3KAwiFu0r0n/Kc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=WluchkVM; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 093A4C4CEF1;
-	Tue,  7 Oct 2025 21:37:41 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=JgjBGSCA6HgAHOKBvVrzbFIw+Au4KWDm9jPnFr2GegoHCtPrFzLPmgbhc/NWR8ByzHTYULEbzNSkc0XqkpIILR0R/troRt8vatXEgiREAdhgKVS8LL2oUDCJJucMRCzLJ6F+18/woSnmXUbiiLFHuhdvSJs67tDLUbLC4H4e/lU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uoLyNor3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAF1EC4CEF1;
+	Tue,  7 Oct 2025 21:48:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759873061;
-	bh=mVzY1I+ol36+2mhFwo0Zu60YnowWxzQUdxoPsbySwr8=;
+	s=k20201202; t=1759873707;
+	bh=M6gCrkYqmgJrQ5nUPLjNat3j6PfE4QacRl1VuEuqkMU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=WluchkVMNWSDwxHbEqVjWBtDz9GvgHQ8P6JaSBI5bpHIq/fN2nW5zZnE5WP/Zu163
-	 Uxv6Qe0jSRwz8cBeAWTebGhcxOEroJc2X6/fjI4Kxl0LSIGMxgCUotRneUWHYqw9FH
-	 yBak66pPhEmExfAlxcgHGEaOpobTtg6YxEGwNdyWh2Tgc+mfTUR2Azl2Wvj7IYCwY4
-	 2aZGknKujayuJp8PpiFv8f78TSbDMzcjnxQzPgezYyag1w0qmee1C0OAzBOXXEOwKR
-	 B2CtdKwk/V8bhiK5d8FbBkU+9uOQyj2yMdCr/j/bi6eIwtmeGy0dpoHgwAH3O5uQGB
-	 hbc8iadhv2jtg==
-Date: Tue, 7 Oct 2025 14:37:40 -0700
+	b=uoLyNor3OsiQo5FiOU1RmQmGXetqZoWCgXYQjiiIth5Chc/AtY8wFF0iesZbs2gmz
+	 CUEqvUXubk9TNh7M2yy9zxDA7ikF4pPddpqSr0sSt88U+gp7eGV4xM/OK4ut6ivSp2
+	 1WKA1gSpPZRCnoV5zaK9htMGgsGwKSp9gK5X/PmCi3XDFA+UjKwn4n6gPUNjOCFU91
+	 SSN3xuhek1EqQIdhsE00owjmWWE6mm4u/3ksoRO+OWn1kF+Pq7VVdirzdGvoypZg8N
+	 CJslh2NdzJQdbjttRfdQ9lOB4+c+bfyOkp44CUyQ3QzbCqrWAD9pCGg5onn1GH0uaR
+	 2/CMFQ78IKr8A==
+Date: Tue, 7 Oct 2025 14:48:26 -0700
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -49,11 +49,11 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 06/12] firmware: qcom_scm: Add a prep version of
- auth_and_reset function
-Message-ID: <juirzpdb7ltx32fdiu37q3fd543fctvtssnro5qv4satninz2z@3bxup227lvvy>
+Subject: Re: [PATCH v4 10/12] remoteproc: pas: Extend parse_fw callback to
+ fetch resources via SMC call
+Message-ID: <hwjfb7rudsdsxxoluxyu4n7wumzyyn73xnzi2ww4fkkfkpg3a3@esvajcrmhcus>
 References: <20251007-kvm_rprocv4_next-20251007-v4-0-de841623af3c@oss.qualcomm.com>
- <20251007-kvm_rprocv4_next-20251007-v4-6-de841623af3c@oss.qualcomm.com>
+ <20251007-kvm_rprocv4_next-20251007-v4-10-de841623af3c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,88 +63,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251007-kvm_rprocv4_next-20251007-v4-6-de841623af3c@oss.qualcomm.com>
+In-Reply-To: <20251007-kvm_rprocv4_next-20251007-v4-10-de841623af3c@oss.qualcomm.com>
 
-On Tue, Oct 07, 2025 at 10:18:51PM +0530, Mukesh Ojha wrote:
-> For memory passed to TrustZone (TZ), it must either be part of a pool
-> registered with TZ or explicitly registered via SHMbridge SMC calls.
-> When Gunyah hypervisor is present, PAS SMC calls from Linux running at
-> EL1 are trapped by Gunyah running @ EL2, which handles SHMbridge
-> creation for both metadata and remoteproc carveout memory before
-> invoking the calls to TZ.
+On Tue, Oct 07, 2025 at 10:18:55PM +0530, Mukesh Ojha wrote:
+> Qualcomm remote processor may rely on static and dynamic resources for
+> it to be functional. For most of the Qualcomm SoCs, when run with Gunyah
+> or older QHEE hypervisor, all the resources whether it is static or
+> dynamic, is managed by the hypervisor. Dynamic resources if it is
+> present for a remote processor will always be coming from secure world
+> via SMC call while static resources may be present in remote processor
+> firmware binary or it may be coming from SMC call along with dynamic
+> resources.
 > 
-> On SoCs running with a non-Gunyah-based hypervisor, Linux must take
-> responsibility for creating the SHM bridge before invoking PAS SMC
-> calls. For the auth_and_reset() call, the remoteproc carveout memory
-> must first be registered with TZ via a SHMbridge SMC call and once
-> authentication and reset are complete, the SHMbridge memory can be
-> deregistered.
+> Remoteproc already has method like rproc_elf_load_rsc_table() to check
+> firmware binary has resources or not and if it is not having then we
+> pass NULL and zero as input resource table and its size argument
+> respectively to qcom_scm_pas_get_rsc_table() and while it has resource
+> present then it should pass the present resources to Trustzone(TZ) so that
+> it could authenticate the present resources and append dynamic resource
+> to return in output_rt argument along with authenticated resources.
 > 
-> Introduce qcom_scm_pas_prepare_and_auth_reset(), which sets up the SHM
-> bridge over the remoteproc carveout memory when Linux operates at EL2.
-> This behavior is indicated by a new field added to the PAS context data
-> structure. The function then invokes the auth_and_reset SMC call.
+> Extend parse_fw callback to include SMC call to get resources from
+> Trustzone and to leverage resource table parsing and mapping and
+> unmapping code from the remoteproc framework.
 > 
 > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > ---
->  drivers/firmware/qcom/qcom_scm.c       | 48 ++++++++++++++++++++++++++++++++++
->  include/linux/firmware/qcom/qcom_scm.h |  2 ++
->  2 files changed, 50 insertions(+)
+>  drivers/remoteproc/qcom_q6v5_pas.c | 60 ++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 58 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/firmware/qcom/qcom_scm.c b/drivers/firmware/qcom/qcom_scm.c
-> index 7b4ff3cb26ed..ab2543d44097 100644
-> --- a/drivers/firmware/qcom/qcom_scm.c
-> +++ b/drivers/firmware/qcom/qcom_scm.c
-> @@ -791,6 +791,54 @@ int qcom_scm_pas_auth_and_reset(u32 pas_id)
->  }
->  EXPORT_SYMBOL_GPL(qcom_scm_pas_auth_and_reset);
+> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+> index 46a23fdefd48..ed7bd931dfd5 100644
+> --- a/drivers/remoteproc/qcom_q6v5_pas.c
+> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
+> @@ -34,6 +34,7 @@
+>  #define QCOM_PAS_DECRYPT_SHUTDOWN_DELAY_MS	100
 >  
-> +/**
-> + * qcom_scm_pas_prepare_and_auth_reset() - Prepare, authenticate, and reset the
-> + *					   remote processor
-> + *
-> + * @ctx:	Context saved during call to qcom_scm_pas_context_init()
-> + *
-> + * This function performs the necessary steps to prepare a PAS subsystem,
-> + * authenticate it using the provided metadata, and initiate a reset sequence.
-> + *
-> + * It should be used when Linux is in control setting up the IOMMU hardware
-> + * for remote subsystem during secure firmware loading processes. The preparation
-> + * step sets up a shmbridge over the firmware memory before TrustZone accesses the
-> + * firmware memory region for authentication. The authentication step verifies
-> + * the integrity and authenticity of the firmware or configuration using secure
-> + * metadata. Finally, the reset step ensures the subsystem starts in a clean and
-> + * sane state.
-> + *
-> + * Return: 0 on success, negative errno on failure.
-> + */
-> +int qcom_scm_pas_prepare_and_auth_reset(struct qcom_scm_pas_context *ctx)
+>  #define MAX_ASSIGN_COUNT 3
+> +#define MAX_RSCTABLE_SIZE	SZ_16K
+>  
+>  struct qcom_pas_data {
+>  	int crash_reason_smem;
+> @@ -412,6 +413,61 @@ static void *qcom_pas_da_to_va(struct rproc *rproc, u64 da, size_t len, bool *is
+>  	return pas->mem_region + offset;
+>  }
+>  
+> +static int qcom_pas_parse_firmware(struct rproc *rproc, const struct firmware *fw)
 > +{
-> +	u64 handle;
+> +	size_t output_rt_size = MAX_RSCTABLE_SIZE;
+> +	struct qcom_pas *pas = rproc->priv;
+> +	struct resource_table *table = NULL;
+> +	void *output_rt;
+> +	size_t table_sz;
 > +	int ret;
 > +
-> +	if (!ctx->has_iommu)
-> +		return qcom_scm_pas_auth_and_reset(ctx->pas_id);
-> +
-> +	/*
-> +	 * When Linux running @ EL1, Gunyah hypervisor running @ EL2 traps the
-> +	 * auth_and_reset call and create an shmbridge on the remote subsystem
-> +	 * memory region and then invokes a call to TrustZone to authenticate.
-> +	 * When Linux runs @ EL2 Linux must create the shmbridge itself and then
-> +	 * subsequently call TrustZone for authenticate and reset.
-> +	 */
-> +	ret = qcom_tzmem_shm_bridge_create(ctx->mem_phys, ctx->mem_size, &handle);
+> +	ret = qcom_register_dump_segments(rproc, fw);
 > +	if (ret) {
-> +		dev_err(__scm->dev, "Failed to create shmbridge ret=%d %u\n",
-
-	"Failed to create shmbridge for PAS ID (%u): %d\n"
-
-> +			ret, ctx->pas_id);
+> +		dev_err(pas->dev, "Error in registering dump segments\n");
 > +		return ret;
 > +	}
 > +
-> +	ret = qcom_scm_pas_auth_and_reset(ctx->pas_id);
-> +	qcom_tzmem_shm_bridge_delete(handle);
+> +	if (!rproc->has_iommu)
+> +		return ret;
+> +
+> +	ret = rproc_elf_load_rsc_table(rproc, fw);
+> +	if (ret)
+> +		dev_info(&rproc->dev, "Error in loading resource table from firmware\n");
+> +
+> +	table = rproc->table_ptr;
+> +	table_sz = rproc->table_sz;
+
+Are 'rproc->table_ptr' and 'rproc->table_sz' guaranteed to be 0 in the case of
+above error?
+
+> +
+> +	/*
+> +	 * Qualcomm remote processor may rely on static and dynamic resources for
+> +	 * it to be functional. For most of the Qualcomm SoCs, when run with Gunyah
+> +	 * or older QHEE hypervisor, all the resources whether it is static or dynamic,
+> +	 * is managed by present hypervisor. Dynamic resources if it is present for
+> +	 * a remote processor will always be coming from secure world via SMC call
+> +	 * while static resources may be present in remote processor firmware binary
+> +	 * or it may be coming from SMC call along with dynamic resources.
+> +	 *
+> +	 * Here, we call rproc_elf_load_rsc_table() to check firmware binary has resources
+> +	 * or not and if it is not having then we pass NULL and zero as input resource
+> +	 * table pointer and size respectively to the argument of qcom_scm_pas_get_rsc_table()
+> +	 * and this is even true for Qualcomm remote processor who does follow remoteproc
+> +	 * framework.
+> +	 */
+> +	ret = qcom_scm_pas_get_rsc_table(pas->pas_ctx, table, table_sz, &output_rt,
+> +					 &output_rt_size);
+> +	if (ret) {
+> +		dev_err(pas->dev, "error %d getting resource_table\n", ret);
+
+	"Error in getting resource table: %d\n"
+
+> +		return ret;
+> +	}
+> +
+> +	kfree(rproc->cached_table);
+> +	rproc->cached_table = output_rt;
+> +	rproc->table_ptr = rproc->cached_table;
+> +	rproc->table_sz = output_rt_size;
 > +
 > +	return ret;
 
