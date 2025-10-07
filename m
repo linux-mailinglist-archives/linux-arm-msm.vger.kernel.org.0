@@ -1,195 +1,127 @@
-Return-Path: <linux-arm-msm+bounces-76147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76148-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6BEBBC0020
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 04:04:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E4FCBC004E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 04:17:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AA3174EA903
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 02:04:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2CC264E2087
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 02:17:56 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CC70218AD1;
-	Tue,  7 Oct 2025 02:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD3701917D6;
+	Tue,  7 Oct 2025 02:17:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dQba29WX"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fG6K30Qa"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDEE21D3EA
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 02:03:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A77E20322;
+	Tue,  7 Oct 2025 02:17:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759802633; cv=none; b=i+T0+JxnTBjcgweOIQFiQrJ3Hjc6N+4yY2xiMyWhp/6y2c/sTt3uFC0cgLjfK4yZBSW8FDZErvy6FiP2eG1rXrD62WL8YBzUZNCDtQc3MCDzuxnF7Wb8cK0Yj34ZUu0Uo85WzLXBMWeJz3tGO0mob258rNhUTy/JuOa0DL7LLIs=
+	t=1759803472; cv=none; b=U00RJQRwRh1T91uzdi2x6IU39dd+aoJ9RbC4freBTS1Gw3jndnUqV0f5WnglqtYDurrNv6YTK/0DDZJWbc3esBTXLPD5wTK5Fx37P9qxtnCV2I+PBXvqXCagDRNMDZNCyyupoXppzCApBUC7bIM29BHiBe/kCcTX4LIORIc8b3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759802633; c=relaxed/simple;
-	bh=ViBe2WMm7kQxPxeRuekDdL8WZHiA1GXGLJT0PDfx7w8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=l6orCUHDzlRDqgbZ6nIQkCC6HVj73p+yFLoNv/+Jgwf1t6p/yP9VSIwVY4RCas+4Q6jN6OxAUtuOs9i8evUEKhEarl35/swZUOiw8NQ3Ka3W6REfGrYNCqOldFxhDnWCoxKUK6J7xLKkrOL3J7NKsIcRAAe9YCbCiD61mn8pljA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dQba29WX; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-57db15eeb11so7023124e87.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 19:03:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759802629; x=1760407429; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9ysY18u2zKYmywl9mq+ndQhWk6KHVBYX5HfqkCVFIYg=;
-        b=dQba29WXjmFucH7DB6LsQxcSWRfLBU4ysxtH8pJ3y3TLKDlOKCq4AiHFjjTs7O+kjd
-         lQaROupmoSSA6TrszH5HeQ5MYJZdvRFWIt3kkIr3JmOV5u/5CPN0bRnGCUEcvN83/UlP
-         uo7IjvukruYtoGtz8Mp15T+PNFSRabSLI2+rqmUw/7GmLRuqmf/bvNrc4jrUBjZopJHJ
-         epPDJOOtJFOIIpjqbyTEW/bFlQeBtPLiZ/O7nxkXe/ooqs4VdruEY8+tz2Ov8CR4mp1p
-         cPAFDIOT29DHok2hJE/cpS4lcHmCBUjSd/sF+ro9q51ol5i52g9V+ZvwtWzTuxXyGA1A
-         Fgfg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759802630; x=1760407430;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=9ysY18u2zKYmywl9mq+ndQhWk6KHVBYX5HfqkCVFIYg=;
-        b=oOjFxr7DCCCZzJi6zenwwy88scfMqOmafq/uTjWHIMlbNv2SyaqhEl4tpdUXaTdtVh
-         zMM9DVZr0jSePfowW0dGSYaokgyOdu4Z30wvZTXD4hsVIdRiJP2dQRbFrPpt7/l+EV4w
-         V2MvBpmTRmhMTtumL72vZOjLd+vmgsgJyIBiLY+yhRcoH0Tn74gMpUi1tyRTSpwFBH3H
-         oxMSBO3hn/H5elVfrTi176fGalSyUdVdaWJZta1YU+pDLKPVbakbJCvSEUuRockFFdvj
-         2P21ZqkSJzGxRtgAWC23sAm7ZtCuB21F15uEQZsnKIyOk5SJDFylgaDx3rX6Y4XqABZg
-         jRtQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXJUsXoK2icZ9m4c1ut6cFcAFeTS1R5kBFTA6Ybni2c2OWNVE09bSOhGT4q3W3q9gK4B2h5yHzpjYIMF7RG@vger.kernel.org
-X-Gm-Message-State: AOJu0YxYogiVoGugf//NbHmnjXdduU73Co5MTCQk1k0/jjvbZhkrRq6/
-	N2ZXYfpr874h6hhLuS8S4BnOg9wHzh6K4ZI2QeODpmfNyKJGyG77tNkJaKviaaIkGTY=
-X-Gm-Gg: ASbGncuAv8oYSy0lJpJsEBfoNuzSRu309MFzzy+Z5q/UFQNewS1miqGNXwDPfBM3wby
-	YQIMz+D/6uEMMTInmfK3oLEl5lJ6vpX3ZHNudNLGZFTSRLC03j8xNPhgPMVViD9b200excXLth3
-	O8Htuy28GD0KrvvUXGL98VNj6chk688a5SIFBq5d/iW3B3+VTNjz8H/edE5bFBYLsWrTe6aI84n
-	nkAMvrH8cInc/uGQNi0qPStZInRSv5vh7D17zBfMwby+WUF+4OjjEwMYq4q/5ZklZ12SKKFeG+6
-	64Stf3y4ACQXb9TEWzbr/Ghbv6hAWVPNDdtCC96t1HPkzGXl3VTUOuvnmWGC14/bmi4g3Ceg5D5
-	aVmjTZIiLY6OakW9GC6RubwTGXWjSZXbe45qjnnZBRF+sMvz8LgllDnm9qTkGMylhppU=
-X-Google-Smtp-Source: AGHT+IHIQAFDlaxnS/YPLaaZASPGtjzqUskbAEsgwJPrLjmMvYfFHi4ayVxMDpBzxLLkErDPJhx74Q==
-X-Received: by 2002:a2e:a987:0:b0:36d:4996:1c4d with SMTP id 38308e7fff4ca-374c36c4b2amr40767031fa.9.1759802629528;
-        Mon, 06 Oct 2025 19:03:49 -0700 (PDT)
-Received: from orion.home ([2a02:c7c:7259:a00:22ae:baa0:7d1a:8c1f])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-375f3b81e45sm5150391fa.46.2025.10.06.19.03.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 19:03:48 -0700 (PDT)
-From: Alexey Klimov <alexey.klimov@linaro.org>
-Date: Tue, 07 Oct 2025 03:03:32 +0100
-Subject: [PATCH v2 4/4] arm64: dts: qcom: qrb2210-rb1: add HDMI/I2S audio
- playback support
+	s=arc-20240116; t=1759803472; c=relaxed/simple;
+	bh=uddpABuiHbr03suhnOevC3AI4BONAnP3KwUyPYXVCMY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=iM7cU61WXBCLLvHiJhM7ERXsi1+U/AtvEZkwpq2BYzr2gIQs+mwaOkI/5FH8/XkYSBaESwApwEuwZLpghSriksM18kDsTdfYyZ+rUjbXJKfyKE7f38nx1rDvmcnQ9Mit09JYWS8iNqkiT8M4bRJaffKiUhiBoquiUc3Pui5etyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fG6K30Qa; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ECB7C4CEF5;
+	Tue,  7 Oct 2025 02:17:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759803472;
+	bh=uddpABuiHbr03suhnOevC3AI4BONAnP3KwUyPYXVCMY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=fG6K30QaW7iSyiVZ6QqRdOWNJmp+C7eKF3+cq4vnh4dU1Gxi9uRZNqkibczGo9iZw
+	 J1TPBtEWwzV4Yq0LOK9IU4ebo8xGp+VQkreUCsbxlP6jJFWS0MjbZnIE0TtSJokh4K
+	 Z2uNCEc8yqsUFNytNajyzkCT2IrAhqyVZ0Z2kJI2TE9racDLyXm41ssipJgG1FsNYB
+	 Ro4j11Ym1ZWM/0fcAeaPNIKrRzPw9N2IrCG4+bqwfwBC97kqSxNjHvhLWYtbBZHwJ6
+	 UcpK6cw35+VsuFb7rZj3kX/BepA/XN0uYbGgIFzApxQNzOUTrlt1ToqR8TB1rdPCyK
+	 sTEvf7E1mC6Ow==
+Message-ID: <4006bc10-1e29-44c1-b86b-4284842a29d2@kernel.org>
+Date: Tue, 7 Oct 2025 11:17:43 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 20/20] arm64: dts: qcom: kaanapali: Add iris video node
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+ tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+ yijie.yang@oss.qualcomm.com, Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
+ <20250924-knp-dts-v1-20-3fdbc4b9e1b1@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Language: en-US
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20250924-knp-dts-v1-20-3fdbc4b9e1b1@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251007-rb1_hdmi_audio-v2-4-821b6a705e4c@linaro.org>
-References: <20251007-rb1_hdmi_audio-v2-0-821b6a705e4c@linaro.org>
-In-Reply-To: <20251007-rb1_hdmi_audio-v2-0-821b6a705e4c@linaro.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Linus Walleij <linus.walleij@linaro.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
- Srinivas Kandagatla <srini@kernel.org>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
- linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-sound@vger.kernel.org, Alexey Klimov <alexey.klimov@linaro.org>, 
- Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-X-Mailer: b4 0.14.2
 
-Add sound node and aDSP-related pieces to enable HDMI+I2S audio playback
-support on Qualcomm QR2210 RB1 board. That is the only sound output
-supported for now.
+On 25/09/2025 09:17, Jingyi Wang wrote:
+> Add DT node for the kaanapali iris video node.
+> 
+> Written with help from Taniya Das(added videocc node).
+> 
+> Signed-off-by: Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/kaanapali.dtsi | 155 ++++++++++++++++++++++++++++++++
 
-The audio playback is verified using the following commands:
-amixer -c0 cset iface=MIXER,name='SEC_MI2S_RX Audio Mixer MultiMedia1' 1
-aplay -D hw:0,0 /usr/share/sounds/alsa/Front_Center.wav
+That's not a separate patch. Squash it.
 
-Cc: Srinivas Kandagatla <srini@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 55 ++++++++++++++++++++++++++++++++
- 1 file changed, 55 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-index 67ba508e92ba1f0ef3bcf8b248eae125de059869..4ab5d3379ed22b43675284af40eb7f9304fbe1ef 100644
---- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
-@@ -188,6 +188,53 @@ vph_pwr: regulator-vph-pwr {
- 		regulator-always-on;
- 		regulator-boot-on;
- 	};
-+
-+	sound {
-+		compatible = "qcom,qrb2210-rb1-sndcard", "qcom,qrb2210-sndcard";
-+		pinctrl-0 = <&lpi_i2s2_active>;
-+		pinctrl-names = "default";
-+		model = "Qualcomm-RB1-WSA8815-Speakers-DMIC0";
-+
-+		mm1-dai-link {
-+			link-name = "MultiMedia1";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
-+			};
-+		};
-+
-+		mm2-dai-link {
-+			link-name = "MultiMedia2";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
-+			};
-+		};
-+
-+		mm3-dai-link {
-+			link-name = "MultiMedia3";
-+
-+			cpu {
-+				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
-+			};
-+		};
-+
-+		hdmi-i2s-dai-link {
-+			link-name = "HDMI/I2S Playback";
-+
-+			codec {
-+				sound-dai = <&lt9611_codec 0>;
-+			};
-+
-+			cpu {
-+				sound-dai = <&q6afedai SECONDARY_MI2S_RX>;
-+			};
-+
-+			platform {
-+				sound-dai = <&q6routing>;
-+			};
-+		};
-+	};
- };
- 
- &cpu_pd0 {
-@@ -323,6 +370,14 @@ &pm4125_vbus {
- 	status = "okay";
- };
- 
-+/* SECONDARY I2S uses 1 I2S SD Line for audio on LT9611UXC HDMI Bridge */
-+&q6afedai {
-+	dai@18 {
-+		reg = <SECONDARY_MI2S_RX>;
-+		qcom,sd-lines = <0>;
-+	};
-+};
-+
- &qupv3_id_0 {
- 	status = "okay";
- };
-
--- 
-2.47.3
-
+Best regards,
+Krzysztof
 
