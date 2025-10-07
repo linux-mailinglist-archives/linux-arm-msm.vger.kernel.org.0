@@ -1,150 +1,211 @@
-Return-Path: <linux-arm-msm+bounces-76168-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id B70F3BC047A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 07:57:16 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id A403DBC0500
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 08:18:58 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 543C84F3D75
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 05:56:36 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3851E3C1377
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 06:18:50 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB1E322A807;
-	Tue,  7 Oct 2025 05:55:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03EB1204583;
+	Tue,  7 Oct 2025 06:18:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="isR7iKQc"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nkHgWGw+"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941C5227EA4;
-	Tue,  7 Oct 2025 05:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4852013B58B
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 06:18:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759816549; cv=none; b=s4po+kaPWlJl/CqpMWYy7ZKp3hnEaBSpoUU/LiOaCeU0B2XyCPt8Ns7x/cxP4w+WfFR9TOqKz5cIj43zEIfSynTmJfPa6wxhYboyyVR+AVRE4wXSxcJRwkOkDLiJxD+rZJosYE2BKaUkIqLWKtf/Aj78k+GOK931hkGQ2haWtWo=
+	t=1759817922; cv=none; b=mFiwRTHs7Wv6Im2pKexSKsAX2On9TFmWE3keJlFh6+tkuvCwyM+kk/k3612+5TFKFojUPKi4II2QoXAjlYV1Xoe2OkmcRgXa7l4ird5gX6ItKH/naVGiiOxnPX36kjMviJX2Ie5W8g/Lmc4vwPRbn9we//auq9T6sEhDStdX9g0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759816549; c=relaxed/simple;
-	bh=zllb+3NvwJkSAIh2p+SIfQifQPmEwRZvoLAixcWzz0E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Qkx0W2yGRBJ+RtOFSc1KwtbQw18CL1NFLu6RDnlovrfwTyD/BpNEg06212oDqmh5wGW27NzhwZiGY24+ljum95kLMrovsKkeL0lC0TsM7NycLfjaxXicf8/bHoAEGVW9apR5FUU9k+lM2qHhjde7cvURPRVDAMHBFt62MDO6/QI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=isR7iKQc; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 1FC6BC19421;
-	Tue,  7 Oct 2025 05:55:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759816549;
-	bh=zllb+3NvwJkSAIh2p+SIfQifQPmEwRZvoLAixcWzz0E=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=isR7iKQchEFp5G+QojRUOl5eUNtDqlaWT8mKlVNVJLOTwrfBH8bSdqz5QbuF8dM10
-	 vpnhcfZDdGfkFysr2JaleFx98N07/jFIGw69GOkbxkFh1mvD/DEjMpO+tj3pTOla8q
-	 cEFGozztCcEgUS3AHgGDkCQeuMjLvB0oPVU1rEec3Ch0RhJasV7LV3NjbXB62c9CHx
-	 1fYlfpsJQR9+au6VhkBOQbt94el7JvygD3dcWhroPX4TyW7jXI2J4TE3FDA/euNbxi
-	 b7wjgCbIMRb1PD6SXDKYHrLOGLjJn+bnpyE4UfADAFonkqGDHWlmrWEzZftB/SEiqe
-	 +OS5Q411S0c3A==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 18C85CCD184;
-	Tue,  7 Oct 2025 05:55:49 +0000 (UTC)
-From: Alexandre Messier via B4 Relay <devnull+alex.me.ssier.org@kernel.org>
-Date: Tue, 07 Oct 2025 01:55:45 -0400
-Subject: [PATCH 4/4] ARM: dts: qcom: msm8974pro-htc-m8: add touchscreen
+	s=arc-20240116; t=1759817922; c=relaxed/simple;
+	bh=vsHE2lWKAU5nkO+7tKox9JQEUxeljwZtYdz0bQu4JG4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=M09DvV5BMQrYrwg6/kiiFgsY3E723+TSKi42FYqTzuueBkz+6+DjNooPs/WwU9vNHMEc1wy2Qi2b2BHCs0hIXPeDovN9CCzteBVEozZSo2OzsOq/E/Jw/H1mINBp7uMLDbsmf7z0um25SyfH+gL1P+POR6sLtgtzPN/10Tk5o2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nkHgWGw+; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59738k8x005144
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 06:18:40 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:date:from:message-id:mime-version
+	:subject:to; s=qcppdkim1; bh=CvVAhQAfNLcTGM/vG6Rm69/dUho9Nxx7Jaf
+	86sBi5ko=; b=nkHgWGw+89M0BCpEVqUAXsOCTIGSCQMKtZqRCA9HNC0O2I6UvG+
+	Ec0IbnaGuChPd7hJvbOQ+o9WRYcmR2cUdkEfJ42gkzJ0YcEJ+5B3PCCq98EtNrd+
+	zdOI/qgmb5NJlGxznYXKDGHC5/TXeCnigf3GOpSaI9SXubrd6jkPAsa87NSLnSJw
+	kySuMIROyj4tCQVlL7GUc/jvXWkTO4ZEvFHhtsST2yGLyVDq/tMg2XMylLGnQdhS
+	+zrPGMCaRsIKZqnF6qnA7x0B2TE/sXTVz6WL6BAxtTHuGZEDlIbOZvaOzvaUgKIP
+	ProPa+nKOH8ouAYa74h+bKeLtRGxwtJUwow==
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jrxn6gkf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 06:18:39 +0000 (GMT)
+Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4e574e01ed8so134954561cf.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 23:18:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759817919; x=1760422719;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=CvVAhQAfNLcTGM/vG6Rm69/dUho9Nxx7Jaf86sBi5ko=;
+        b=rWvMNyIu2tkf1mcpo0jv3FJUXyqDlXNExR9VHm9BFukuqPcZGm2dYkwf26v51btbCb
+         T45GTCuvixWDjIkg91Gamk3kg9rmTkOryOPmOMdprlI/G2ajeUtPVqYw+uYV9vpybwaF
+         6vT4B/VIAn6gJcvO71CEweQrlnwcaOjC1WZrLHGjpC7a5CYHJusvfGYvSBvPFwnALtZo
+         QL4M+bqtvjpnXwnjmLHL2B6dTsgS3Tj6BqXdA5g54SHh5vl9nDGs/m4KLZnzREkTIFDD
+         /IDHdy25nTn3ZH6WihIXjqY7iawOKbNzeuK8GUzvB7/jrTyX7w1LlerIWHLsLgzh2fAw
+         qe8A==
+X-Forwarded-Encrypted: i=1; AJvYcCUpPPj3cc1YrDJTe1e35RDRyQLs4k+g3BLXcRdPV6C3pPL0SluSKzXBCCRonrlWgn1iGgZ+DRc9NSP7+duH@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXq/xyecIq67wjpb2owCfmPJ5rL4uT3l4K95mIXwjoBFddp6OF
+	DCBCxxORZXiKGhhTdV/U395QpQ0PP57x95HdUe/8Io+0+VfhvUmjLmI+mPKa2t+P9DKOUemCrZZ
+	hXvtqBOFw3e4jO8MzEgZF4i1Kwf77PrAbZzztuZ7F1gKlH9AbH8jqOv2J0LSzE6za//DT
+X-Gm-Gg: ASbGncsWYnCJoCEctfUBDjUAD+UOLWZjcrUVaC6NqojSljCXhBK0JNJzrV2RlevXEg4
+	7XVHAvqkUF+lc73KLhOgVrKxwHpst6SFwobM+ZCMzuR72Q1gS6wXKnixd3vuIzhzB77XZWoCC86
+	+Irb9M29ZOHg2xpCSRxCgRMCYM8xqTJ2AngeaZnqeZy1ZdjKWRehqgprCrk4EtkVjsDbdu2APmK
+	4RlE61MQDKzAZPmABM5xa5iVQZGwVinZfv//7oCz0gy9HPQfaBJ7K5r/ZPAjAA/mPf0FlvQSdnl
+	oiIvEeRSWTHbkSunZiMY62CxKmfUfRP24q/ERSBwUvPe3ocCSFbKOQDWfiVmh1h1bq3KhPmZjv4
+	BplcdzDm4dA==
+X-Received: by 2002:a05:622a:2590:b0:4b7:a44f:527e with SMTP id d75a77b69052e-4e576b0dea4mr215667901cf.76.1759817918959;
+        Mon, 06 Oct 2025 23:18:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHFJrfWMCsFZ1Rs7jGV7XjlmrBbdRdCEQ8jIKTB0560Sw5sTHLIUZVcwwvmG8Bg0Q6IP6cLtg==
+X-Received: by 2002:a05:622a:2590:b0:4b7:a44f:527e with SMTP id d75a77b69052e-4e576b0dea4mr215667711cf.76.1759817918499;
+        Mon, 06 Oct 2025 23:18:38 -0700 (PDT)
+Received: from hu-yabdulra-ams.qualcomm.com ([212.136.9.4])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-639773d4d8esm5864519a12.30.2025.10.06.23.18.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 06 Oct 2025 23:18:38 -0700 (PDT)
+From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
+        troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
+Cc: ogabbay@kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, quic_pkanojiy@quicinc.com
+Subject: [PATCH] accel/qaic: Synchronize access to DBC request queue head & tail pointer
+Date: Tue,  7 Oct 2025 08:18:37 +0200
+Message-ID: <20251007061837.206132-1-youssef.abdulrahman@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20251007-m8-dts-additions-v1-4-53d7ab3594e7@me.ssier.org>
-References: <20251007-m8-dts-additions-v1-0-53d7ab3594e7@me.ssier.org>
-In-Reply-To: <20251007-m8-dts-additions-v1-0-53d7ab3594e7@me.ssier.org>
-To: Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
- Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>
-Cc: Luca Weiss <luca@lucaweiss.eu>, linux-arm-kernel@lists.infradead.org, 
- linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht, 
- phone-devel@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, Alexandre Messier <alex@me.ssier.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1759816548; l=1396;
- i=alex@me.ssier.org; s=20240603; h=from:subject:message-id;
- bh=hdecRNJtpjZw0ZFJpTZCDbMGZMkzuTJDOFqG18sWriY=;
- b=upDMWCpKVS6TzPDV0IXurlo/SWZvnQRUjFVv2F6MvD841N+5VeyizVu42f8yrfyUfvHsGTJcb
- DQQ744yTtVVCTTcOgpkwKuY/iNhAp23aL5tX4I3TqR0vY7Bx8BiQAVY
-X-Developer-Key: i=alex@me.ssier.org; a=ed25519;
- pk=JjRqVfLd2XLHX2QTylKoROw346/1LOyZJX0q6cfnrKw=
-X-Endpoint-Received: by B4 Relay for alex@me.ssier.org/20240603 with
- auth_id=168
-X-Original-From: Alexandre Messier <alex@me.ssier.org>
-Reply-To: alex@me.ssier.org
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAwMSBTYWx0ZWRfX9le3i3OwGD0l
+ VFvKuHTk9zHpcXoTYgXZLg9hQgDx3MxS/ZvdiLkthEn+kkrdlvUsi86f7itpywG3fpDVX52kiRK
+ hktxfXcv+lvQl7+LWgLftOePqVIp7OyYPu8ApvbC61XM7oljGIcFw+bQXhG91/U9jv7EtGfNibo
+ rxm/I0Y5PuPK9UEmQevZ7DwOEQONTeCHatxdjCp5D1aczvk/3Afa+fbPEzcLER3A6f4SN0+Amvs
+ uIQEQzvxgyn6xgKA89Xcfc7jW/VvDtdwjXUUJimJksps2RpeSl6V/PSAsTjynYpfpncNJpwgkja
+ yi0dWy1iTwcRo9/DurKWfqjq2NXvL7yEvuRd23yg3IWLXFEX9czv9ZW2ZhsUXhwhDOao5X1LBCy
+ QdJM6YW0Wgo6tHvIqdoK07Rnw6xPeg==
+X-Proofpoint-GUID: j3NwmNsogSnv2-SylYi9eTAWuM4J9ZNi
+X-Proofpoint-ORIG-GUID: j3NwmNsogSnv2-SylYi9eTAWuM4J9ZNi
+X-Authority-Analysis: v=2.4 cv=EqnfbCcA c=1 sm=1 tr=0 ts=68e4b0bf cx=c_pps
+ a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
+ a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=L090aUOemVNa8NMnONAA:9
+ a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-06_07,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 malwarescore=0
+ adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040001
 
-From: Alexandre Messier <alex@me.ssier.org>
+From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
-Add the touchscreen device node for the HTC One (M8).
+Two threads of the same process can potential read and write parallelly to
+head and tail pointers of the same DBC request queue. This could lead to a
+race condition and corrupt the DBC request queue.
 
-Signed-off-by: Alexandre Messier <alex@me.ssier.org>
+Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 ---
- arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts | 36 +++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/accel/qaic/qaic.h      |  2 ++
+ drivers/accel/qaic/qaic_data.c | 12 ++++++++++--
+ drivers/accel/qaic/qaic_drv.c  |  3 +++
+ 3 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts
-index 36eb42f0f3d9..040a256f9465 100644
---- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts
-+++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts
-@@ -65,6 +65,35 @@ vreg_vph_pwr: vreg-vph-pwr {
- 	};
- };
+diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
+index c31081e42cee..820d133236dd 100644
+--- a/drivers/accel/qaic/qaic.h
++++ b/drivers/accel/qaic/qaic.h
+@@ -97,6 +97,8 @@ struct dma_bridge_chan {
+ 	 * response queue's head and tail pointer of this DBC.
+ 	 */
+ 	void __iomem		*dbc_base;
++	/* Synchronizes access to Request queue's head and tail pointer */
++	struct mutex		req_lock;
+ 	/* Head of list where each node is a memory handle queued in request queue */
+ 	struct list_head	xfer_list;
+ 	/* Synchronizes DBC readers during cleanup */
+diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
+index 797289e9d780..c4f117edb266 100644
+--- a/drivers/accel/qaic/qaic_data.c
++++ b/drivers/accel/qaic/qaic_data.c
+@@ -1356,13 +1356,17 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
+ 		goto release_ch_rcu;
+ 	}
  
-+&blsp1_i2c2 {
-+	clock-frequency = <384000>;
++	ret = mutex_lock_interruptible(&dbc->req_lock);
++	if (ret)
++		goto release_ch_rcu;
 +
-+	status = "okay";
-+
-+	touch@20 {
-+		compatible = "syna,rmi4-i2c";
-+		reg = <0x20>;
-+
-+		interrupts-extended = <&tlmm 18 IRQ_TYPE_LEVEL_LOW>;
-+
-+		pinctrl-0 = <&ts_int_pin>;
-+		pinctrl-names = "default";
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		rmi4-f01@1 {
-+			reg = <0x1>;
-+			syna,nosleep-mode = <1>;
-+		};
-+
-+		rmi4-f11@11 {
-+			reg = <0x11>;
-+			syna,sensor-type = <1>;
-+		};
-+	};
-+};
-+
- &blsp1_i2c3 {
- 	clock-frequency = <384000>;
+ 	head = readl(dbc->dbc_base + REQHP_OFF);
+ 	tail = readl(dbc->dbc_base + REQTP_OFF);
  
-@@ -358,6 +387,13 @@ cmd-data-pins {
- 		};
- 	};
+ 	if (head == U32_MAX || tail == U32_MAX) {
+ 		/* PCI link error */
+ 		ret = -ENODEV;
+-		goto release_ch_rcu;
++		goto unlock_req_lock;
+ 	}
  
-+	ts_int_pin: ts-int-pin-state {
-+		pins = "gpio18";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	wcnss_pin_a: wcnss-pin-active-state {
- 		bt-pins {
- 			pins = "gpio35", "gpio43", "gpio44";
-
+ 	queue_level = head <= tail ? tail - head : dbc->nelem - (head - tail);
+@@ -1370,11 +1374,12 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
+ 	ret = send_bo_list_to_device(qdev, file_priv, exec, args->hdr.count, is_partial, dbc,
+ 				     head, &tail);
+ 	if (ret)
+-		goto release_ch_rcu;
++		goto unlock_req_lock;
+ 
+ 	/* Finalize commit to hardware */
+ 	submit_ts = ktime_get_ns();
+ 	writel(tail, dbc->dbc_base + REQTP_OFF);
++	mutex_unlock(&dbc->req_lock);
+ 
+ 	update_profiling_data(file_priv, exec, args->hdr.count, is_partial, received_ts,
+ 			      submit_ts, queue_level);
+@@ -1382,6 +1387,9 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
+ 	if (datapath_polling)
+ 		schedule_work(&dbc->poll_work);
+ 
++unlock_req_lock:
++	if (ret)
++		mutex_unlock(&dbc->req_lock);
+ release_ch_rcu:
+ 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
+ unlock_dev_srcu:
+diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
+index e31bcb0ecfc9..e162f4b8a262 100644
+--- a/drivers/accel/qaic/qaic_drv.c
++++ b/drivers/accel/qaic/qaic_drv.c
+@@ -454,6 +454,9 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev,
+ 			return NULL;
+ 		init_waitqueue_head(&qdev->dbc[i].dbc_release);
+ 		INIT_LIST_HEAD(&qdev->dbc[i].bo_lists);
++		ret = drmm_mutex_init(drm, &qdev->dbc[i].req_lock);
++		if (ret)
++			return NULL;
+ 	}
+ 
+ 	return qdev;
 -- 
-2.51.0
-
+2.43.0
 
 
