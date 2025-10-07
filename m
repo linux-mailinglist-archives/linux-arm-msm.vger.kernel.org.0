@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76220-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76221-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EED8BC1968
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 15:56:02 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id F00DBBC19C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 15:58:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 42FBF19A4080
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 13:56:25 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 5A0684F6B71
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 13:58:23 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 124692E091B;
-	Tue,  7 Oct 2025 13:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8C59E2E175F;
+	Tue,  7 Oct 2025 13:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MOgEToJG"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KIEbKZjV"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78CA261B99;
-	Tue,  7 Oct 2025 13:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF952E11D5;
+	Tue,  7 Oct 2025 13:58:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759845360; cv=none; b=BIlM5wnNIs0T57B6HY7gzVdrTvw23zcODPGba3Ye90mImH2ritLYZJjsnxAd0O+prx1vWFkWp1Uq80YIAsi5HnnkDtSTJW7rjFd1jGWwX0ub9EQ9Q+xaEiTV34ANxbs5q8OIA4T+fC7LSeuf6AWDhU0gthaBLz5uCAbQPHEUae8=
+	t=1759845500; cv=none; b=KsDmSImpnu+lVC8lVXSIuMMa10kfTf5PmgRoc6sljkka5UDgwr5yoFUK9HqntK990/XnPgs7CCYMZsynn/d/KUgsEVJeM70aAqzBT5NbcASZo7HBamJ8DasFn74GtmZmctPU8b+QuGvGwKnh0PyhF+abGda94VqY1pxnhOL9XpA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759845360; c=relaxed/simple;
-	bh=SW2Z6JJt55g853/TT0qUpXppi/YlVJBI85qcZM2KCGo=;
+	s=arc-20240116; t=1759845500; c=relaxed/simple;
+	bh=4slo+EkCqi1uMnnObCmH5KZ3tsmBs3e/10WAj+YftOk=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=M+ILA0q5RszN17OkzUzhZzHUPOnPvzP/CpTWALFTx4bAh1tvv+4MKTLO3hFj/hUs+VuF1f/9XcqAgNcCK3WZtZiytklfjgbcXc6i54rH3rv3c70mENtAlpcWpkeTQw0P6LuMT3Op+HQFu9vkFs+PoiFsNjibD7OXyZhK1q/YeqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MOgEToJG; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D33E8C4CEF1;
-	Tue,  7 Oct 2025 13:55:53 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=telwqCrB+WnzAEgAwlLCObLSq/BIAl08D1TKjfCXb2tnzC0VwzE+fXLYuFOJ2CjIZGS0/AatJeNtHAmpgVDjp8WK2Y6ACo57SPjLxcIqJlUzDX0ZqJK1mpym1PDAaVgmBxAv2kBmGu0zaueQI9wMjRb3gSZs1WxgCGA9bsd2WXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KIEbKZjV; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603F1C4CEF1;
+	Tue,  7 Oct 2025 13:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759845359;
-	bh=SW2Z6JJt55g853/TT0qUpXppi/YlVJBI85qcZM2KCGo=;
+	s=k20201202; t=1759845499;
+	bh=4slo+EkCqi1uMnnObCmH5KZ3tsmBs3e/10WAj+YftOk=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=MOgEToJG3Y6FE2372lo+98jVm74uQyskTXMEMIliQjsx22JGNJ+aZ/LmOg0Dz4zC2
-	 4IYj3YDGFJyl8S4WUfCxu5bA7bwiiPXtvvK5mjwrcqHsIHC0BRgd9ynQQFK5kT7lgO
-	 mzvWi2LTtldTmSElKzJFRU+BzdMugXWqz2WpOSaForhmx/3F/g5/2JNAOgbuQkQRzy
-	 R3wZ6Y2pYa+o1D07Am62to8H7P4BwTSfIy265dX8YjMZgfSKLrs3u7zwg6ll2kpagz
-	 +ia7pK6yfHWZJDF3laP1Q7sH5BWNer7woUBBSlViMDsMDQC/bpkTOkoLzdckmeed8D
-	 vg6S79tpVCymA==
-Message-ID: <ce073a27-1a05-4900-94e4-1cc38d00c20e@kernel.org>
-Date: Tue, 7 Oct 2025 22:55:50 +0900
+	b=KIEbKZjV6H45aFvP24nXyY1OoY1kcj0a35nHjq2Tu9Cd/3ueibfrgVNa/knE+fRWJ
+	 3pD5yYh8gzUTYuK7jK8y0ZYzM/Oo6mVLEj5G6NerAp9w1jbeo9dvaC3LuAVi7GBLYk
+	 C9EsjkJcYnLgp3vm48e81fI2fYaD2UAL/rSxm7bxCEkNd/qZhqDbVWm9vNcn3PHIv/
+	 JKWZoL8bp0u3XkjxGwqXuBW4FBgaFPzdqtUImlg40LLOBsz2bO5jaUlUDZIE733Hd6
+	 d2ESK4R5EWSEGu+iqKSXXJex4cS968KX6WatnavL0MwcncoUU1USTX+chUuQhD1i5r
+	 8TRMjP2HELUdA==
+Message-ID: <09d08a54-2a84-42db-bbab-050dc1487f6e@kernel.org>
+Date: Tue, 7 Oct 2025 22:58:12 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,18 +50,28 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: cache: qcom,llcc: Document the Kaanapali
- LLCC
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Conor Dooley <conor@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
- tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
- yijie.yang@oss.qualcomm.com
-References: <20250924-knp-llcc-v1-0-ae6a016e5138@oss.qualcomm.com>
- <20250924-knp-llcc-v1-1-ae6a016e5138@oss.qualcomm.com>
+Subject: Re: [PATCH 1/8] media: dt-bindings: qcom-kaanapali-iris: Add
+ kaanapali video codec binding
+To: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>, Bryan O'Donoghue <bod@kernel.org>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>,
+ linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Vishnu Reddy <quic_bvisredd@quicinc.com>
+References: <20250925-knp_video-v1-0-e323c0b3c0cd@oss.qualcomm.com>
+ <20250925-knp_video-v1-1-e323c0b3c0cd@oss.qualcomm.com>
+ <nuunkv3xwfes6wed5xf4re2efakndvvrfl4lhmenilkic4sjiy@5cb2f5ygegvm>
+ <522d7244-0003-a42e-9be0-1d353df8d5bd@oss.qualcomm.com>
+ <oimuo26ohcye74j6rl5hfbmd4ip5wzudhyiaibf74b5zmjb4vl@xh3dnp7gmvq7>
+ <7c6ab647-0c54-4480-9eb2-5c2bbf5f857d@oss.qualcomm.com>
+ <b5d465e9-e84c-fabf-f275-3d0a5abf764f@oss.qualcomm.com>
+ <2ppixuzddqmpa2d7nkvwwbfn4dnt7j7voyqfqcqeokbkzjg2lm@mokv4cihiuw2>
+ <27381eb6-18b8-774d-5171-6326dc6bd9b4@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -107,19 +117,35 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250924-knp-llcc-v1-1-ae6a016e5138@oss.qualcomm.com>
+In-Reply-To: <27381eb6-18b8-774d-5171-6326dc6bd9b4@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/09/2025 08:24, Jingyi Wang wrote:
-> Document the Last Level Cache Controller on Kaanapali platform.
+On 02/10/2025 18:18, Vikash Garodia wrote:
+>>>     then:
+>>>       properties:
+>>>         power-domains:
+>>>           maxItems: 6
+>>>
+>>>     else:
+>>>       properties:
+>>>         power-domains:
+>>>           maxItems: 7
+>>>
+>>> Also, what is the downside in existing approach where we say that the hardware
+>>> can be functional with 5 pds, and 2 are optional based on hardware having them
+>>> or not ? So all combinations of [5, 6, 7] pds are valid. IIUC, the optional
+>>> entries are made for such cases where some hardware parts are variable, please
+>>> correct my understanding.
+>>
+>> Kaanapali hardware is not variable, is it?
 > 
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  Documentation/devicetree/bindings/cache/qcom,llcc.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+> By variable i meant the hardware is functional with or without those bindings,
+> hence was keeping them as an interface but optional. If that fits into optional
+> category, i can keep it existing way, otherwise will update to fix binding.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+You describe here how SoC is wired/engineered/created. Can you create a
+board with the Kaanapali SoC where the power domain is not there?
 
 Best regards,
 Krzysztof
