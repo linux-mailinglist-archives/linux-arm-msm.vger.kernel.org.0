@@ -1,47 +1,47 @@
-Return-Path: <linux-arm-msm+bounces-76271-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76272-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87D11BC2CC2
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 23:52:18 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 75D4EBC2CDC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 23:55:13 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 1728B3C1C0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 21:52:17 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 1E7B934F908
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 21:55:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1F66A248898;
-	Tue,  7 Oct 2025 21:52:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7932B248898;
+	Tue,  7 Oct 2025 21:55:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jSrD36xy"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eDSswZT8"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17FF248886;
-	Tue,  7 Oct 2025 21:52:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4685E20010A;
+	Tue,  7 Oct 2025 21:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759873935; cv=none; b=M1pnCwccT53ZmT6iqVqv5Ruig0bWF5A9pmRh4ZEvMNPeE4NRS36wvrAAxnEKuB3M8iFphG79oGpH0xPdHfv8t6QkW1VgYV1C8z7uQpW9bgIKNq6K79fn8TgI9qt701+md5PJt8eRYTPQKRp33CDqgrYn+Nrr3lrdPNrGgEF2Eiw=
+	t=1759874107; cv=none; b=tQlOh6iSvFVDp9rlUv2tX/zhzRHcTKRDSCbTID8FEaBWH2+n7N73DxVfzpgbTmW9M2ObpnJtIpiuyTa1DHbhMfZboLPfoA3XOx6b8udCS6614vNV1n38uh015mNNYMUdu9D53ELldQD/hJU31Yyz5mkPu4AvcWLS5eZSnhkyY6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759873935; c=relaxed/simple;
-	bh=TMwIds0fuxfKRBQzxd/ixcrte7vyYIAz+jX147CkLDA=;
+	s=arc-20240116; t=1759874107; c=relaxed/simple;
+	bh=kQh6Ho8fKAf4SzN/orRsqLD48VeGsXJLmeu9AGlhXHU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SlN7FV9Q6+/2ug0wYKVTCeX5Vbd+SBz3niyQ8SO9wPBNTlXhS4C+4mzWN5lWD6mEX3Jh6IMUUnSbqbnXcIQ3LkeuIjtr4UoJk0jNFW4e5T1QD6stzZBmpFoznamHKplGrJOGrGQckN3Kl1Jc7j+Dut18YZDDdNm+iS5ER2b52ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jSrD36xy; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF006C4CEF1;
-	Tue,  7 Oct 2025 21:52:13 +0000 (UTC)
+	 Content-Type:Content-Disposition:In-Reply-To; b=qs13KS9YqvBmKJqWOZJuZ31/H9KjRsgdA0memSfNbB5et7M7UI8FEQqwju9gHafM43lmCrCVSFfII+OvcyryLj2IdCLNvZ8VNU9GZPGl+r3eT2gb2eM8Ufc2cEdypld2tbXBS1T35r/OdN62wmW2QC5vI3/iOLW4yxTv/rImSXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eDSswZT8; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46208C4CEF1;
+	Tue,  7 Oct 2025 21:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759873934;
-	bh=TMwIds0fuxfKRBQzxd/ixcrte7vyYIAz+jX147CkLDA=;
+	s=k20201202; t=1759874105;
+	bh=kQh6Ho8fKAf4SzN/orRsqLD48VeGsXJLmeu9AGlhXHU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jSrD36xywBi7OfvFdz3w8RLfn5c4KIRcDrjkhhR9kT04IvayhOYLGrShtGwuLWAxp
-	 MI+/n4IBMV/qIS5/+icQSKEcixKWy71grk631y0bi8+/AmcI2TLlz+KhzRva8Ewp2+
-	 K452qQySI7NhoBDJ9TzH3tOvwP8uu2X31Ss2EkXDh8zUNFDKr5g7XImpxcMNgsz0Wk
-	 X1A7N2JA040KMLQ1b2g0VfVAmRdb1RhqyXsMcfcEoDhMWc6jue35/MmU8O4pJNrETB
-	 llYSOksomLxzc/4QmzRXHuiHGUZkiYaS/r2EzwKWFM7wmYG/g2QRZ06VRzx15Ci6R8
-	 GUX6kZhK7YqAg==
-Date: Tue, 7 Oct 2025 14:52:13 -0700
+	b=eDSswZT8hrP3Q/Kz4IzE8+hcg0UFu3vP4bvlIbkZkRe2iDGgcLQ6vzEGB9W/0r9F+
+	 TBRYHAXAW4fIKgPXhkrESu10i8Pyhd9VNNZcDJDnMZnnL1UDcwBw+dGHDH2myToe06
+	 W1FLwLPgJ+OwpN4G7GhWtqqwdOM/iMzLXA1bjX0axQv9IG271rLZvfvW6ZerU42lDW
+	 KBs6ATfpTWRqCz2qj73HkS66bqOWe8T7JvrayMX+3F9Z3qjJYRfZ4Av7knncLtgdYG
+	 jrZa5mVZQyJD0+u0RpT8ssPd5nXTXdX9O3Od+kBZxjkvTPaEIep8gCy30dMRj8Mb8X
+	 u5Ug7P3bJ46uQ==
+Date: Tue, 7 Oct 2025 14:55:04 -0700
 From: Manivannan Sadhasivam <mani@kernel.org>
 To: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 Cc: Bjorn Andersson <andersson@kernel.org>, 
@@ -49,11 +49,10 @@ Cc: Bjorn Andersson <andersson@kernel.org>,
 	Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>, 
 	Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org, 
 	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 11/12] remoteproc: qcom: pas: Enable Secure PAS
- support with IOMMU managed by Linux
-Message-ID: <fo6q3gl3dmcso5gcfp2taaao3qwazxw5uutkcwi6qg4aojt2av@tprjv3xhcs57>
+Subject: Re: [PATCH v4 12/12] arm64: dts: qcom: Add EL2 overlay for Lemans
+Message-ID: <yef5jtmcfuks2w2sngxr4a4htihxx4xidsgwpro6wckbfvmvvn@jfr3dlsdf5vm>
 References: <20251007-kvm_rprocv4_next-20251007-v4-0-de841623af3c@oss.qualcomm.com>
- <20251007-kvm_rprocv4_next-20251007-v4-11-de841623af3c@oss.qualcomm.com>
+ <20251007-kvm_rprocv4_next-20251007-v4-12-de841623af3c@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -63,165 +62,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251007-kvm_rprocv4_next-20251007-v4-11-de841623af3c@oss.qualcomm.com>
+In-Reply-To: <20251007-kvm_rprocv4_next-20251007-v4-12-de841623af3c@oss.qualcomm.com>
 
-On Tue, Oct 07, 2025 at 10:18:56PM +0530, Mukesh Ojha wrote:
-> Most Qualcomm platforms feature Gunyah hypervisor, which typically
-> handles IOMMU configuration. This includes mapping memory regions and
-> device memory resources for remote processors by intercepting
-> qcom_scm_pas_auth_and_reset() calls. These mappings are later removed
-> during teardown. Additionally, SHM bridge setup is required to enable
-> memory protection for both remoteproc metadata and its memory regions.
-> When the aforementioned hypervisor is absent, the operating system must
-> perform these configurations instead.
+On Tue, Oct 07, 2025 at 10:18:57PM +0530, Mukesh Ojha wrote:
+> All the Lemans IOT variants boards are using Gunyah hypervisor which
+> means that, so far, Linux-based OS could only boot in EL1 on those
+> devices.  However, it is possible for us to boot Linux at EL2 on these
+> devices [1].
 > 
-> When Linux runs as the hypervisor (@ EL2) on a SoC, it will have its
-> own device tree overlay file that specifies the firmware stream ID now
-> managed by Linux for a particular remote processor. If the iommus
-> property is specified in the remoteproc device tree node, it indicates
-> that IOMMU configuration must be handled by Linux. In this case, the
-> has_iommu flag is set for the remote processor, which ensures that the
-> resource table, carveouts, and SHM bridge are properly configured before
-> memory is passed to TrustZone for authentication. Otherwise, the
-> has_iommu flag remains unset, which indicates default behavior.
+> When running under Gunyah, remote processor firmware IOMMU streams is
+> controlled by the Gunyah however when Linux take ownership of it in EL2,
+> It need to configure it properly to use remote processor.
 > 
-> Enables Secure PAS support for remote processors when IOMMU configuration
-> is managed by Linux.
+> Add a EL2-specific DT overlay and apply it to Lemans IOT variant
+> devices to create -el2.dtb for each of them alongside "normal" dtb.
+> 
+> [1]
+> https://docs.qualcomm.com/bundle/publicresource/topics/80-70020-4/boot-developer-touchpoints.html#uefi
 > 
 > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
 > ---
->  drivers/remoteproc/qcom_q6v5_pas.c | 61 ++++++++++++++++++++++++++++++++++----
->  1 file changed, 56 insertions(+), 5 deletions(-)
+>  arch/arm64/boot/dts/qcom/Makefile        |  7 +++++-
+>  arch/arm64/boot/dts/qcom/lemans-el2.dtso | 41 ++++++++++++++++++++++++++++++++
+>  2 files changed, 47 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-> index ed7bd931dfd5..940fd89d4fc4 100644
-> --- a/drivers/remoteproc/qcom_q6v5_pas.c
-> +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-> @@ -11,6 +11,7 @@
->  #include <linux/delay.h>
->  #include <linux/firmware.h>
->  #include <linux/interrupt.h>
-> +#include <linux/iommu.h>
->  #include <linux/kernel.h>
->  #include <linux/module.h>
->  #include <linux/of.h>
-> @@ -255,6 +256,22 @@ static int qcom_pas_load(struct rproc *rproc, const struct firmware *fw)
->  	return ret;
->  }
+> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+> index 296688f7cb26..e2eb6c4f8e25 100644
+> --- a/arch/arm64/boot/dts/qcom/Makefile
+> +++ b/arch/arm64/boot/dts/qcom/Makefile
+> @@ -35,6 +35,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk.dtb
+>  lemans-evk-camera-csi1-imx577-dtbs	:= lemans-evk.dtb lemans-evk-camera-csi1-imx577.dtbo
 >  
-> +static void qcom_pas_unmap_carveout(struct rproc *rproc, phys_addr_t mem_phys, size_t size)
-> +{
-> +	if (rproc->has_iommu)
-> +		iommu_unmap(rproc->domain, mem_phys, size);
-> +}
+>  dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-camera-csi1-imx577.dtb
+> +lemans-evk-el2-dtbs := lemans-evk.dtb lemans-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= lemans-evk-el2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= monaco-evk.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8216-samsung-fortuna3g.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-acer-a1-724.dtb
+> @@ -136,7 +138,10 @@ dtb-$(CONFIG_ARCH_QCOM)	+= qcs6490-rb3gen2-vision-mezzanine.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8300-ride.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs8550-aim300-aiot.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb
+> -dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb
+> +qcs9100-ride-el2-dtbs := qcs9100-ride.dtb lemans-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride.dtb qcs9100-ride-el2.dtb
+> +qcs9100-ride-r3-el2-dtbs := qcs9100-ride-r3.dtb lemans-el2.dtbo
+> +dtb-$(CONFIG_ARCH_QCOM)	+= qcs9100-ride-r3.dtb qcs9100-ride-r3-el2.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qdu1000-idp.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb2210-rb1.dtb
+>  dtb-$(CONFIG_ARCH_QCOM)	+= qrb4210-rb2.dtb
+> diff --git a/arch/arm64/boot/dts/qcom/lemans-el2.dtso b/arch/arm64/boot/dts/qcom/lemans-el2.dtso
+> new file mode 100644
+> index 000000000000..582b0a3a291a
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/lemans-el2.dtso
+> @@ -0,0 +1,41 @@
+> +// SPDX-License-Identifier: BSD-3-Clause
+> +/*
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + */
 > +
-> +static int qcom_pas_map_carveout(struct rproc *rproc, phys_addr_t mem_phys, size_t size)
-> +{
-> +	int ret = 0;
+> +/*
+> + * Lemans specific modifications required to boot in EL2.
+> + */
 > +
-> +	if (rproc->has_iommu)
-> +		ret = iommu_map(rproc->domain, mem_phys, mem_phys, size,
-> +				IOMMU_READ | IOMMU_WRITE, GFP_KERNEL);
-> +	return ret;
-> +}
+> +/dts-v1/;
+> +/plugin/;
 > +
->  static int qcom_pas_start(struct rproc *rproc)
->  {
->  	struct qcom_pas *pas = rproc->priv;
-> @@ -289,11 +306,15 @@ static int qcom_pas_start(struct rproc *rproc)
->  	}
->  
->  	if (pas->dtb_pas_id) {
-> -		ret = qcom_scm_pas_auth_and_reset(pas->dtb_pas_id);
-> +		ret = qcom_pas_map_carveout(rproc, pas->dtb_mem_phys, pas->dtb_mem_size);
-> +		if (ret)
-> +			goto disable_px_supply;
-> +
-> +		ret = qcom_scm_pas_prepare_and_auth_reset(pas->dtb_pas_ctx);
->  		if (ret) {
->  			dev_err(pas->dev,
->  				"failed to authenticate dtb image and release reset\n");
-> -			goto disable_px_supply;
-> +			goto unmap_dtb_carveout;
->  		}
->  	}
->  
-> @@ -304,18 +325,22 @@ static int qcom_pas_start(struct rproc *rproc)
->  
->  	qcom_pil_info_store(pas->info_name, pas->mem_phys, pas->mem_size);
->  
-> -	ret = qcom_scm_pas_auth_and_reset(pas->pas_id);
-> +	ret = qcom_pas_map_carveout(rproc, pas->mem_phys, pas->mem_size);
-> +	if (ret)
-> +		goto release_pas_metadata;
-> +
-> +	ret = qcom_scm_pas_prepare_and_auth_reset(pas->pas_ctx);
->  	if (ret) {
->  		dev_err(pas->dev,
->  			"failed to authenticate image and release reset\n");
-> -		goto release_pas_metadata;
-> +		goto unmap_carveout;
->  	}
->  
->  	ret = qcom_q6v5_wait_for_start(&pas->q6v5, msecs_to_jiffies(5000));
->  	if (ret == -ETIMEDOUT) {
->  		dev_err(pas->dev, "start timed out\n");
->  		qcom_scm_pas_shutdown(pas->pas_id);
-> -		goto release_pas_metadata;
-> +		goto unmap_carveout;
->  	}
->  
->  	qcom_scm_pas_metadata_release(pas->pas_ctx);
-> @@ -327,10 +352,16 @@ static int qcom_pas_start(struct rproc *rproc)
->  
->  	return 0;
->  
-> +unmap_carveout:
-> +	qcom_pas_unmap_carveout(rproc, pas->mem_phys, pas->mem_size);
->  release_pas_metadata:
->  	qcom_scm_pas_metadata_release(pas->pas_ctx);
->  	if (pas->dtb_pas_id)
->  		qcom_scm_pas_metadata_release(pas->dtb_pas_ctx);
-> +
-> +unmap_dtb_carveout:
-> +	if (pas->dtb_pas_id)
-> +		qcom_pas_unmap_carveout(rproc, pas->dtb_mem_phys, pas->dtb_mem_size);
->  disable_px_supply:
->  	if (pas->px_supply)
->  		regulator_disable(pas->px_supply);
-> @@ -386,8 +417,12 @@ static int qcom_pas_stop(struct rproc *rproc)
->  		ret = qcom_scm_pas_shutdown(pas->dtb_pas_id);
->  		if (ret)
->  			dev_err(pas->dev, "failed to shutdown dtb: %d\n", ret);
-> +
-> +		qcom_pas_unmap_carveout(rproc, pas->dtb_mem_phys, pas->dtb_mem_size);
->  	}
->  
-> +	qcom_pas_unmap_carveout(rproc, pas->mem_phys, pas->mem_size);
-> +
->  	handover = qcom_q6v5_unprepare(&pas->q6v5);
->  	if (handover)
->  		qcom_pas_handover(&pas->q6v5);
-> @@ -757,6 +792,20 @@ static int qcom_pas_probe(struct platform_device *pdev)
->  		return -ENOMEM;
->  	}
->  
-> +	if (of_property_present(pdev->dev.of_node, "iommus")) {
-> +		struct of_phandle_args args;
-> +
-> +		ret = of_parse_phandle_with_args(pdev->dev.of_node, "iommus",
-> +						 "#iommu-cells", 0, &args);
-> +		if (ret < 0)
-> +			return ret;
-> +
-> +		rproc->has_iommu = true;
-> +		of_node_put(args.np);
-> +	} else {
-> +		rproc->has_iommu = false;
+> +&iris {
+> +	/* TODO: Add video-firmware iommus to start IRIS from EL2 */
 
-Default value is false, is't it?
+So the missing 'iommus' property is the only blocker to enable IRIS?
 
 - Mani
+
+> +	status = "disabled";
+> +};
+> +
+> +/*
+> + * When running under Gunyah, remote processor firmware IOMMU streams is
+> + * controlled by the Gunyah however when we take ownership of it in EL2,
+> + * we need to configure it properly to use remote processor.
+> + */
+> +&remoteproc_adsp {
+> +	iommus = <&apps_smmu 0x3000 0x0>;
+> +};
+> +
+> +&remoteproc_cdsp0 {
+> +	iommus = <&apps_smmu 0x21c0 0x0400>;
+> +};
+> +
+> +&remoteproc_cdsp1 {
+> +	iommus = <&apps_smmu 0x29c0 0x0400>;
+> +};
+> +
+> +&remoteproc_gpdsp0 {
+> +       iommus = <&apps_smmu 0x38a0 0x0>;
+> +};
+> +
+> +&remoteproc_gpdsp1 {
+> +       iommus = <&apps_smmu 0x38c0 0x0>;
+> +};
+> 
+> -- 
+> 2.50.1
+> 
 
 -- 
 மணிவண்ணன் சதாசிவம்
