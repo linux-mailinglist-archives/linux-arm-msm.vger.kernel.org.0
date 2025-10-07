@@ -1,87 +1,83 @@
-Return-Path: <linux-arm-msm+bounces-76172-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76173-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43036BC065C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 08:54:15 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id B0D29BC0728
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 09:02:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BE7CF34CC12
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 06:54:14 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2E0393BE43A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 07:02:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D4A5D2367C3;
-	Tue,  7 Oct 2025 06:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9F2332222B6;
+	Tue,  7 Oct 2025 07:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VM+3Hh6L"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="OmW43mNV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5E42264D5
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 06:52:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B39E21FF48
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 07:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759819973; cv=none; b=bp0W0OnfF/6Xi4hfapzodiZF3HZupyraVIaUDHLC0eqQWIFiqfJE0odjBBXEBScZZUIflwz7fooKCwDsoj7FzoSDjewwRETNG6WHF0HtILbU4So3Gh3PF/bA7F44kwuz0ykRMJk7OPT/aOj3JtBzLbssMz7rPrfvL/h61Tl0bIs=
+	t=1759820532; cv=none; b=Yc9YuDUh1klz5myNqKb5Ip9dW84J79OJSLo3R7lyxN7Xu7gOXgh01+eLeyB2NEMhgK8icXXUz9g7rtNmcqNHnXP+RQs68LcYv5jHaNqy1h03Xa5xQtnADy76YctFEy8k7D1AXwi7vWFPFN28XMR1w2fT3X01TeXJ9KYEtgX6svw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759819973; c=relaxed/simple;
-	bh=ZSjlhghuDjwIeHnl71xo1QfnL/uEr7xaGmW26iAiHh0=;
+	s=arc-20240116; t=1759820532; c=relaxed/simple;
+	bh=vjHX1riWhOOmZwQJmkXA5D8R7upafbsuQzOYCWeGziI=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=Wgum6hwrxkoDKB1LbDa4TymllUOPOgTcsyyUSY+uzi63/IFYW6j8tV1hRde+yDQy6m3fExMVE2zXBK9b4jbJiAykbIwCptYafOXJBYd+RxKfuMVzLCw6s+tjlWPoM63cGacn/DEC3r817kPEbAkABBDPzQhPBbkRPNfqi1bFNQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VM+3Hh6L; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5972dIuf012865
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 06:52:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	orLZT7zL3V4+D2PmyvlqkkoTTPi2f83cdPN1hh+UFig=; b=VM+3Hh6LFQ+Mpawq
-	Tr+pzqrIs1eQ+pmdaPEtcju3yDEeqyg2uh8Jp9ccOknskLiLqwgO739t7fRwlClR
-	c7ceLb/vf/SeNob19qAuSaS0qnQ9HPZDvjdKwkSHvKn8naQW46MXd4afqhLHiDTf
-	KRiL43eubQqUQRszG8uUz7pDuLanoAt8CkHbETaUiFOKnTdknAmlobJpctlK27vp
-	KcUNRDCG49LPhb7zOKRAWzidchMbEUZp/ZDajbHWxhshuFeM0KZ8u0fMkRjQHZ2H
-	m6IGNRLDYmrVEMreEEIDoDMgWtnbfOPcP7+iBrq1ZHK/oL0sp/p+C38qi33M3rR+
-	MSQVUg==
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49junu6as9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 06:52:50 +0000 (GMT)
-Received: by mail-pl1-f200.google.com with SMTP id d9443c01a7336-2711a55da20so36291925ad.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 23:52:49 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=hpryWQ4gxrlCS0TdxFCRQ6ABQIn30/HUtcNBv5l9i7sncL6uLbGXobn3qKlLSFoEdLA+7fHO5uAaEqVRuHjgxXbxcHRT3pVUY6ZRm58wf+t6lrwJ+SbZvjFqEVV6paW3CP/JLzAMdjEGTBf7OG6zsCR9jEDCD5k1erjFaznnYuw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=OmW43mNV; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3ee12332f3dso5088058f8f.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 00:02:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1759820529; x=1760425329; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zgpnX908FQuLyIfQeu98K5VyP/tawjmh/goKPz7yARw=;
+        b=OmW43mNVdaNhVQYidZWPlwopJl9H5+lz5QMCFG7RP8MzQpVdnxcP/gUhD8auQ+XTBM
+         OtagrBdUwSqh8i7gkTG0XhP7BqeFWMwf0IS0tcRdOrmP1LF0M0Vuu80BAnE622AjihBr
+         TQULqXEfu0W/ea34fnvM9nhazcidxOIwqyDzcKMKSSLT387onxcqwibKQAtrqbmUgEHU
+         kfALU3sIDWLcDkN8UR9AztJyG95lZ/s1QbWc2dqbHwawmT6z4ayG8Qkhfzha0KPo88ca
+         VdYu8fcN8NyJDBREzGBqFuDYYmgERXrvlnAPNlulfJj3tvM/TbRBLDEM/C/6MOU9ylzS
+         HqHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759819969; x=1760424769;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=orLZT7zL3V4+D2PmyvlqkkoTTPi2f83cdPN1hh+UFig=;
-        b=K0w5Kxyw+Qhxce+dlMPEPOCOO7TRngnM0qwsF1BC5UFHYaAR1Ucr6gVcuVhJqzq9zR
-         oOG1GofUzj+8gz8eQBDs7A/XGjV7U/2gay/Vu+0kxJqKJwDhZs1B2lf5tI7pHNsCf1ll
-         nNr4gqv9EloBiq4cQjhac75Fce7NZk12+ns7NOZ80m2iijCELTcom6fPrYFqQOUvGhyD
-         wYh0i2ng3Kzkih06G4kNDWCBjq2DbL2xJUraxhUxZe11zYbJoX1bGp1CIYddq7W6AZhc
-         Vr1DKbSx8dSq5mfFl/cVsM78LJjfw3PEbddvV795Pv7MdSeIfjXhkzF9uhZS02qoyBqw
-         UJ1Q==
-X-Gm-Message-State: AOJu0Yxn+z8lIBsXk2FqN07fZtc8D0BXw91gJS85+2+OcTQLCM+ZqJJq
-	8Df1EYr0KYnvNl3YFdFgfjCGokLIYRL1qQ40wOAo6Cd8aFMQEXcRV2Bl7cQPzENaC27PBDkwgqn
-	xtisOzbyGi1Fr49WnJupM+uRw9fgmG0g2I5eDBl/pnDfFkwfM3zjf0oSe7XLLRWvyGQLN
-X-Gm-Gg: ASbGnctoXw1kIT7TKbmto4hCoVuPeLDdn1KjAcsaFnKrWbwoD8DAnsrpxdBq0QI1xDB
-	EOyatf6E8Si+et3RPJmieyqYimrIXL+emYdRfuhcIV43ERD6hLjA02tes7SL31NxOiOyRIfJvMJ
-	7CQabKDSTvckfKQnZ+oEzLg1iTe+PQEKpfDHVX/avPme/o198XSQAaay8/aEO6f20RsUQudlbIQ
-	nRFC3rYXSod/vbjgRozqCDzmC9U9C9EW8ai2WxFIPOM0MkkcZfCC8+2G2Gy5RRAWqY0kN94ND01
-	K7rAxil4yDyPRwzGBHkozpjY5IuhbZPKaG14e/GkZg5KRiloO+7reB20HxyUOkka+jCLurdtuKJ
-	9YUZD5src7wGMnMB9IPuNVsfY+Db69d6ndC/71S7ynUpg9iyZDaJGOzfQrnhFAeOs5qU=
-X-Received: by 2002:a17:902:ebc5:b0:28d:1815:6382 with SMTP id d9443c01a7336-28e9a64925cmr164252165ad.46.1759819968689;
-        Mon, 06 Oct 2025 23:52:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWs7dD71EQBt8SniMOLPxdgiNr5aQ3jTTG8yNgF3kNyUIvGY7hrt9bbkSOQkdsWoCRJlV7Xg==
-X-Received: by 2002:a17:902:ebc5:b0:28d:1815:6382 with SMTP id d9443c01a7336-28e9a64925cmr164251785ad.46.1759819968129;
-        Mon, 06 Oct 2025 23:52:48 -0700 (PDT)
-Received: from [10.190.210.68] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1b8444sm154035465ad.86.2025.10.06.23.52.44
+        d=1e100.net; s=20230601; t=1759820529; x=1760425329;
+        h=content-transfer-encoding:in-reply-to:organization:autocrypt
+         :content-language:references:cc:to:subject:reply-to:from:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=zgpnX908FQuLyIfQeu98K5VyP/tawjmh/goKPz7yARw=;
+        b=CVKsIiQZj43a1DHhsumMKFc5WO+znvl3iyAk0po0dqIRLdE84eLU79XKB77PNC37Bs
+         4pCh9VWWnfB/2eqIovMH8mX27zIYPNtrhC7VwR36v5/aTt6RlaczkoCzVxzs0p/1Otle
+         cZJqe4e+/+dOmZv35YflyqXaJB0n/dhJ908W2j5ehOBVYnl4ukQM4nfzBPS9Zlm8gAQO
+         qnB9bFCgdz9CqEu/Q0TcBUoR21XhaYmLLgmNYhugPA8kOsYnD0AT9rS/7R6+qvDVpCpy
+         x3xU1SO0wg8LE33HDJbzn12Cwj/W1pqNnA5j2kUGbL0EVLX0WdMASJO+lIPMve1/FeoL
+         RoRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUwL7u3GctIl/AFjQyqLcgNm6H3340GL+EOO4WaHYhQO9JkRhrf+rJKg6/yeE9XiPr0xi9cqFcN5UCC1wSl@vger.kernel.org
+X-Gm-Message-State: AOJu0YyT1e27ixLLLJeLgFN2Ev6e3owDOgW7A1bjUgpFIptY5+GxXwkI
+	5+sgdH8qryGzSJfTqYWF+tTQWDQwPWBjqCLSem6iDUfEdUb2/yt+XbYhTB4BXbshcQg=
+X-Gm-Gg: ASbGncuMrOHVVFPIS42sFaLmM6V6djS0uBP5pkhhNHg5S0n1lQqJ6hDJEyxSRp3fFOE
+	hpnA9OgFtzPdcQ7XDJaJHNwEl8C+7NEO2rDxlYM+lvnlrqdM8QOwtJFBBBHCtBkCgZTvgsFyE5q
+	sfwg0Z40EBl1egRhEmwocn9JxuMfsnw1B/jWI5FV3QKt8bh/OEo5bnNIeLOTnsy2UaneretS13l
+	UAihIjsIKq48/BPXeYd/clJJPADxaOMJO6s5wkg2ldvOQZcwe5XdFoGWMjlPM5jT+mhBKgyCOZQ
+	VVpThHJrqjAIWpSK8+w5V5818Xz6V3ATu9YDOmy5Cyxu5qEnWSAtctv09N+2ce5nX/UV5sj5Z84
+	dZLIKKt0fBGrsNCInL/oZ80nUNhNpyM8grjPSiMeT0LEYFHkQzEfoiR8LtQf3sMU6uuoYWBMXpj
+	hDIz1zzV8llCz5ydM7py6L7OQJi5A=
+X-Google-Smtp-Source: AGHT+IHhqn1QXvNjlPmsFhGF/W8JYFKIFTND5frHhfPy40hlB4K1wPdDnrDBts14ZYFGsmS35vDOmA==
+X-Received: by 2002:a5d:584b:0:b0:3ea:f4a1:f063 with SMTP id ffacd0b85a97d-425671c15f9mr9525255f8f.55.1759820528330;
+        Tue, 07 Oct 2025 00:02:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:3d9:2080:bd88:41d2:33ce:f74a? ([2a01:e0a:3d9:2080:bd88:41d2:33ce:f74a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8f027csm24469493f8f.40.2025.10.07.00.02.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Oct 2025 23:52:47 -0700 (PDT)
-Message-ID: <166a0b99-879c-43cd-b3c0-37eb04afca5a@oss.qualcomm.com>
-Date: Tue, 7 Oct 2025 12:22:42 +0530
+        Tue, 07 Oct 2025 00:02:07 -0700 (PDT)
+Message-ID: <1eab5200-1292-4d39-bdf8-0c5084cfaab9@linaro.org>
+Date: Tue, 7 Oct 2025 09:02:05 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -89,115 +85,240 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
-Subject: Re: [PATCH v2] watchdog: Add driver for Gunyah Watchdog
-To: Guenter Roeck <linux@roeck-us.net>,
-        Bjorn Andersson
- <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>,
-        Wim Van Sebroeck <wim@linux-watchdog.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>
-Cc: linux-arm-msm@vger.kernel.org, linux-watchdog@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Pavan Kondeti <pavan.kondeti@oss.qualcomm.com>,
-        Neil Armstrong <neil.armstrong@linaro.org>
-References: <20251006-gunyah_watchdog-v2-1-b99d41d45450@oss.qualcomm.com>
- <6e7eaac2-0859-4bfd-b76b-2f81e384a91c@roeck-us.net>
-Content-Language: en-US
-In-Reply-To: <6e7eaac2-0859-4bfd-b76b-2f81e384a91c@roeck-us.net>
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Reply-To: Neil Armstrong <neil.armstrong@linaro.org>
+Subject: Re: [PATCH RFC 3/6] ASoC: soc: qcom: sc8280xp: add support for I2S
+ clocks
+To: Srinivas Kandagatla <srini@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20251006-topic-sm8x50-next-hdk-i2s-v1-0-184b15a87e0a@linaro.org>
+ <20251006-topic-sm8x50-next-hdk-i2s-v1-3-184b15a87e0a@linaro.org>
+ <6492e444-4196-4900-a741-a74a8c506a6d@kernel.org>
+Content-Language: en-US, fr
+Autocrypt: addr=neil.armstrong@linaro.org; keydata=
+ xsBNBE1ZBs8BCAD78xVLsXPwV/2qQx2FaO/7mhWL0Qodw8UcQJnkrWmgTFRobtTWxuRx8WWP
+ GTjuhvbleoQ5Cxjr+v+1ARGCH46MxFP5DwauzPekwJUD5QKZlaw/bURTLmS2id5wWi3lqVH4
+ BVF2WzvGyyeV1o4RTCYDnZ9VLLylJ9bneEaIs/7cjCEbipGGFlfIML3sfqnIvMAxIMZrvcl9
+ qPV2k+KQ7q+aXavU5W+yLNn7QtXUB530Zlk/d2ETgzQ5FLYYnUDAaRl+8JUTjc0CNOTpCeik
+ 80TZcE6f8M76Xa6yU8VcNko94Ck7iB4vj70q76P/J7kt98hklrr85/3NU3oti3nrIHmHABEB
+ AAHNKk5laWwgQXJtc3Ryb25nIDxuZWlsLmFybXN0cm9uZ0BsaW5hcm8ub3JnPsLAkQQTAQoA
+ OwIbIwULCQgHAwUVCgkICwUWAgMBAAIeAQIXgBYhBInsPQWERiF0UPIoSBaat7Gkz/iuBQJk
+ Q5wSAhkBAAoJEBaat7Gkz/iuyhMIANiD94qDtUTJRfEW6GwXmtKWwl/mvqQtaTtZID2dos04
+ YqBbshiJbejgVJjy+HODcNUIKBB3PSLaln4ltdsV73SBcwUNdzebfKspAQunCM22Mn6FBIxQ
+ GizsMLcP/0FX4en9NaKGfK6ZdKK6kN1GR9YffMJd2P08EO8mHowmSRe/ExAODhAs9W7XXExw
+ UNCY4pVJyRPpEhv373vvff60bHxc1k/FF9WaPscMt7hlkbFLUs85kHtQAmr8pV5Hy9ezsSRa
+ GzJmiVclkPc2BY592IGBXRDQ38urXeM4nfhhvqA50b/nAEXc6FzqgXqDkEIwR66/Gbp0t3+r
+ yQzpKRyQif3OwE0ETVkGzwEIALyKDN/OGURaHBVzwjgYq+ZtifvekdrSNl8TIDH8g1xicBYp
+ QTbPn6bbSZbdvfeQPNCcD4/EhXZuhQXMcoJsQQQnO4vwVULmPGgtGf8PVc7dxKOeta+qUh6+
+ SRh3vIcAUFHDT3f/Zdspz+e2E0hPV2hiSvICLk11qO6cyJE13zeNFoeY3ggrKY+IzbFomIZY
+ 4yG6xI99NIPEVE9lNBXBKIlewIyVlkOaYvJWSV+p5gdJXOvScNN1epm5YHmf9aE2ZjnqZGoM
+ Mtsyw18YoX9BqMFInxqYQQ3j/HpVgTSvmo5ea5qQDDUaCsaTf8UeDcwYOtgI8iL4oHcsGtUX
+ oUk33HEAEQEAAcLAXwQYAQIACQUCTVkGzwIbDAAKCRAWmrexpM/4rrXiB/sGbkQ6itMrAIfn
+ M7IbRuiSZS1unlySUVYu3SD6YBYnNi3G5EpbwfBNuT3H8//rVvtOFK4OD8cRYkxXRQmTvqa3
+ 3eDIHu/zr1HMKErm+2SD6PO9umRef8V82o2oaCLvf4WeIssFjwB0b6a12opuRP7yo3E3gTCS
+ KmbUuLv1CtxKQF+fUV1cVaTPMyT25Od+RC1K+iOR0F54oUJvJeq7fUzbn/KdlhA8XPGzwGRy
+ 4zcsPWvwnXgfe5tk680fEKZVwOZKIEuJC3v+/yZpQzDvGYJvbyix0lHnrCzq43WefRHI5XTT
+ QbM0WUIBIcGmq38+OgUsMYu4NzLu7uZFAcmp6h8g
+Organization: Linaro
+In-Reply-To: <6492e444-4196-4900-a741-a74a8c506a6d@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: SWqp-JoiZKpjEYRKbKxH_cOu7_gHarl6
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAyMyBTYWx0ZWRfX31FYghLjz9E9
- aM2cI3w+/NN+JluFtNidOizrT/hktOJRMm0+ivkr5+1FF77ad69BaHJfnjB+2C+BLpZjkMN4WYy
- cmDqxmRA3DuHwHBMH8CMJ9gGWOGz4owsIcVCghhcpmMR/PnJHYlBziY2bXHDi+9D5bx6dIDH+JG
- zfjfBzlsLJ+EdyqJg89I5PAs/yrwcVJUe78P3irJYoK+r8UskgjTc7D5aZWKUVWoc0RbND2xp+p
- yCJWR6ibVYf9edlxW07R5XmIjO9KshneGq1v3bmzDcg3fgfLMzv2BZLsL2djTHLSFNAEXqNFoLh
- FWJmd2hCaux00QnTEZLKkx9wbYDDmnOZBRy/6hCikrh2qMhtKUq7JyvJycX7CKRJKO8HSEGXolu
- m/zBWRlgGxC54boPdnz2GJTj4sK1pg==
-X-Authority-Analysis: v=2.4 cv=CbIFJbrl c=1 sm=1 tr=0 ts=68e4b8c2 cx=c_pps
- a=IZJwPbhc+fLeJZngyXXI0A==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=GK14inuqRTfZ8P4RZYYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=uG9DUKGECoFWVXl0Dc02:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: SWqp-JoiZKpjEYRKbKxH_cOu7_gHarl6
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-06_07,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 adultscore=0 suspectscore=0
- spamscore=0 priorityscore=1501 phishscore=0 impostorscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040023
+Content-Transfer-Encoding: 7bit
 
-
-On 10/6/2025 7:48 PM, Guenter Roeck wrote:
-> On 10/6/25 00:37, Hrishabh Rajput via B4 Relay wrote:
->> From: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+On 10/7/25 00:21, Srinivas Kandagatla wrote:
+> 
+> 
+> On 10/6/25 7:37 PM, Neil Armstrong wrote:
+>> Add support for getting the I2S clocks used for the MI2S
+>> interfaces, and enable/disable the clocks on the PCM
+>> startup and shutdown card callbacks.
 >>
->> On Qualcomm SoCs running under the Gunyah hypervisor, access to watchdog
->> through MMIO is not available on all platforms. Depending on the
->> hypervisor configuration, the watchdog is either fully emulated or
->> exposed via ARM's SMC Calling Conventions (SMCCC) through the Vendor
->> Specific Hypervisor Service Calls space.
->>
->> When Gunyah is not present or Gunyah emulates MMIO-based watchdog, we
->> expect MMIO watchdog device to be present in the devicetree. If we
->> detect this device node, we don't proceed ahead. Otherwise, we go ahead
->> and invoke GUNYAH_WDT_STATUS SMC to initiate the discovery of the
->> SMC-based watchdog.
->>
->> Add driver to support the SMC-based watchdog provided by the Gunyah
->> Hypervisor. module_exit() is intentionally not implemented as this
->> driver is intended to be a persistent module.
->>
->> Signed-off-by: Hrishabh Rajput <hrishabh.rajput@oss.qualcomm.com>
+>> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 >> ---
->> Gunyah is a Type-I hypervisor which was introduced in the patch series
->> [1]. It is an open source hypervisor. The source repo is available at
->> [2].
+>>   sound/soc/qcom/sc8280xp.c | 104 +++++++++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 103 insertions(+), 1 deletion(-)
 >>
->> The Gunyah Hypervisor doesn't allow its Virtual Machines to directly
->> access the MMIO watchdog. It either provides the fully emulated MMIO
->> based watchdog interface or the SMC-based watchdog interface depending
->> on the hypervisor configuration.
->> The SMC-based watchdog follows ARM's SMC Calling Convention (SMCCC)
->> version 1.1 and uses Vendor Specific Hypervisor Service Calls space.
->>
->> This patch series adds support for the SMC-based watchdog interface
->> provided by the Gunyah Hypervisor.
->>
->> This series is tested on SM8750 platform.
->>
->> [1]
->> https://lore.kernel.org/all/20240222-gunyah-v17-0-1e9da6763d38@quicinc.com/ 
->>
->>
->> [2]
->> https://github.com/quic/gunyah-hypervisor
->> ---
->> Changes in v2:
->> - Move away from platform driver model since the devicetree overlay does
->>    not happen by default.
->
-> This is just wrong. Platform drivers do not depend on devicetree. I am 
-> not even
-> going to review the rest of the driver. 
+>> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
+>> index 78e327bc2f07767b1032f09af7f45b947e7eb67a..ad4ee5c6fab8994f18de572842f3dab6f4f5397e 100644
+>> --- a/sound/soc/qcom/sc8280xp.c
+>> +++ b/sound/soc/qcom/sc8280xp.c
+>> @@ -4,6 +4,8 @@
+>>   #include <dt-bindings/sound/qcom,q6afe.h>
+>>   #include <linux/module.h>
+>>   #include <linux/platform_device.h>
+>> +#include <linux/clk.h>
+>> +#include <linux/of_clk.h>
+>>   #include <sound/soc.h>
+>>   #include <sound/soc-dapm.h>
+>>   #include <sound/pcm.h>
+>> @@ -15,12 +17,16 @@
+>>   #include "common.h"
+>>   #include "sdw.h"
+>>   
+>> +#define I2S_MAX_CLKS	5
+>> +
+>>   struct sc8280xp_snd_data {
+>>   	bool stream_prepared[AFE_PORT_MAX];
+>>   	struct snd_soc_card *card;
+>>   	struct sdw_stream_runtime *sruntime[AFE_PORT_MAX];
+>>   	struct snd_soc_jack jack;
+>>   	struct snd_soc_jack dp_jack[8];
+>> +	struct clk *i2s_clk[I2S_MAX_CLKS];
+>> +	struct clk *i2s_mclk[I2S_MAX_CLKS];
+>>   	bool jack_setup;
+>>   };
+>>   
+>> @@ -68,12 +74,66 @@ static int sc8280xp_snd_init(struct snd_soc_pcm_runtime *rtd)
+>>   	return qcom_snd_wcd_jack_setup(rtd, &data->jack, &data->jack_setup);
+>>   }
+>>   
+>> +static int sc8280xp_snd_i2s_index(struct snd_soc_dai *dai)
+>> +{
+>> +	switch (dai->id) {
+>> +	case PRIMARY_MI2S_RX..PRIMARY_MI2S_TX:
+>> +		return 0;
+>> +	case  SECONDARY_MI2S_RX.. SECONDARY_MI2S_TX:
+>> +		return 1;
+>> +	case TERTIARY_MI2S_RX..TERTIARY_MI2S_TX:
+>> +		return 2;
+>> +	case QUATERNARY_MI2S_RX..QUATERNARY_MI2S_TX:
+>> +		return 3;
+>> +	case QUINARY_MI2S_RX..QUINARY_MI2S_TX:
+>> +		return 4;
+>> +	default:
+>> +		return -1;
+>> +	}
+>> +}
+>> +
+>> +static int sc8280xp_snd_startup(struct snd_pcm_substream *substream)
+>> +{
+>> +	unsigned int codec_dai_fmt = SND_SOC_DAIFMT_BC_FC | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_I2S;
+>> +	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+>> +	struct sc8280xp_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
+>> +	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+>> +	struct snd_soc_dai *codec_dai = snd_soc_rtd_to_codec(rtd, 0);
+>> +	int index;
+>> +
+>> +	switch (cpu_dai->id) {
+>> +	case PRIMARY_MI2S_RX...QUATERNARY_MI2S_TX:
+>> +	case QUINARY_MI2S_RX...QUINARY_MI2S_TX:
+>> +		index = sc8280xp_snd_i2s_index(cpu_dai);
+> 
+> What is the mclk and bitclk rate set here, we can not rely on the
+> default rate.
 
-Thanks for pointing out the mistake here. Platform drivers are 
-independent of devicetree. Therefore the line you've pointed to is wrong 
-as it erroneously portrays that the platform drivers are dependent on 
-devicetrees. It is a mistake and I would rephrase it to following to 
-make the intent clearer:
+The default rates are set in DT:
++		assigned-clocks = <&q6prmcc LPASS_CLK_ID_PRI_MI2S_IBIT LPASS_CLK_ATTRIBUTE_COUPLE_NO>,
++				  <&q6prmcc LPASS_CLK_ID_MCLK_1 LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
++		assigned-clock-rates = <1536000>,
++				       <24576000>;
 
-"Do not depend on devicetree to discover (and probe) watchdog as 
-devicetree overlay does not happen by default. Instead invoke 
-GUNYAH_WDT_STATUS SMC Call to discover (and initialize) the watchdog."
+Neil
 
-
-Thanks,
-Hrishabh
+> --srini
+>> +		clk_enable(pdata->i2s_mclk[index]);
+>> +		clk_enable(pdata->i2s_clk[index]);
+>> +		snd_soc_dai_set_fmt(codec_dai, codec_dai_fmt);
+>> +		break;
+>> +	default:
+>> +		break;
+>> +	}
+>> +
+>> +	return qcom_snd_sdw_startup(substream);
+>> +}
+>> +
+>>   static void sc8280xp_snd_shutdown(struct snd_pcm_substream *substream)
+>>   {
+>>   	struct snd_soc_pcm_runtime *rtd = snd_soc_substream_to_rtd(substream);
+>>   	struct snd_soc_dai *cpu_dai = snd_soc_rtd_to_cpu(rtd, 0);
+>>   	struct sc8280xp_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
+>>   	struct sdw_stream_runtime *sruntime = pdata->sruntime[cpu_dai->id];
+>> +	int index;
+>> +
+>> +	switch (cpu_dai->id) {
+>> +	case PRIMARY_MI2S_RX..TERTIARY_MI2S_RX:
+>> +	case QUINARY_MI2S_RX...QUINARY_MI2S_TX:
+>> +		index = sc8280xp_snd_i2s_index(cpu_dai);
+>> +		clk_disable(pdata->i2s_clk[index]);
+>> +		clk_disable(pdata->i2s_mclk[index]);
+>> +		break;
+>> +	default:
+>> +		break;
+>> +	}
+>>   
+>>   	pdata->sruntime[cpu_dai->id] = NULL;
+>>   	sdw_release_stream(sruntime);
+>> @@ -141,7 +201,7 @@ static int sc8280xp_snd_hw_free(struct snd_pcm_substream *substream)
+>>   }
+>>   
+>>   static const struct snd_soc_ops sc8280xp_be_ops = {
+>> -	.startup = qcom_snd_sdw_startup,
+>> +	.startup = sc8280xp_snd_startup,
+>>   	.shutdown = sc8280xp_snd_shutdown,
+>>   	.hw_params = sc8280xp_snd_hw_params,
+>>   	.hw_free = sc8280xp_snd_hw_free,
+>> @@ -162,6 +222,44 @@ static void sc8280xp_add_be_ops(struct snd_soc_card *card)
+>>   	}
+>>   }
+>>   
+>> +static const char * const i2s_bus_names[I2S_MAX_CLKS] = {
+>> +	"primary",
+>> +	"secondary",
+>> +	"tertiary",
+>> +	"quaternary",
+>> +	"quinary",
+>> +};
+>> +
+>> +static int sc8280xp_get_i2c_clocks(struct platform_device *pdev,
+>> +				   struct sc8280xp_snd_data *data)
+>> +{
+>> +	struct device *dev = &pdev->dev;
+>> +	int i;
+>> +
+>> +	if (!device_property_present(dev))
+>> +		return 0;
+>> +
+>> +	for (i = 0; i < I2S_MAX_CLKS; ++i) {
+>> +		char name[16];
+>> +
+>> +		snprintf(name, 16, "%s-mi2s", i2s_bus_names, i);
+>> +		data->i2s_clk[i] = devm_clk_get_optional_prepared(dev, name);
+>> +		if (IS_ERR(data->i2s_clk[i]))
+>> +			return dev_err_probe(dev, PTR_ERR(data->i2s_clk[i]),
+>> +					     "unable to get %s clock\n",
+>> +					     name);
+>> +
+>> +		snprintf(name, 16, "%s-mclk", i2s_bus_names, i);
+>> +		data->i2s_mclk[i] = devm_clk_get_optional_prepared(dev, name);
+>> +		if (IS_ERR(data->i2s_mclk[i]))
+>> +			return dev_err_probe(dev, PTR_ERR(data->i2s_mclk[i]),
+>> +					     "unable to get %s clock\n",
+>> +					     name);
+>> +	}
+>> +
+>> +	return 0;
+>> +}
+>> +
+>>   static int sc8280xp_platform_probe(struct platform_device *pdev)
+>>   {
+>>   	struct snd_soc_card *card;
+>> @@ -185,6 +283,10 @@ static int sc8280xp_platform_probe(struct platform_device *pdev)
+>>   	if (ret)
+>>   		return ret;
+>>   
+>> +	ret = sc8280xp_get_i2c_clocks(pdev, data);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>>   	card->driver_name = of_device_get_match_data(dev);
+>>   	sc8280xp_add_be_ops(card);
+>>   	return devm_snd_soc_register_card(dev, card);
+>>
+> 
 
 
