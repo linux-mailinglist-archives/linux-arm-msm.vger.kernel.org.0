@@ -1,211 +1,210 @@
-Return-Path: <linux-arm-msm+bounces-76169-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76170-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id A403DBC0500
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 08:18:58 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFBEABC0554
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 08:29:28 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 3851E3C1377
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 06:18:50 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A6741189E3A2
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 06:29:51 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 03EB1204583;
-	Tue,  7 Oct 2025 06:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CB204221FA4;
+	Tue,  7 Oct 2025 06:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="nkHgWGw+"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="amH6AdCY"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4852013B58B
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 06:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A37208D0
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 06:29:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759817922; cv=none; b=mFiwRTHs7Wv6Im2pKexSKsAX2On9TFmWE3keJlFh6+tkuvCwyM+kk/k3612+5TFKFojUPKi4II2QoXAjlYV1Xoe2OkmcRgXa7l4ird5gX6ItKH/naVGiiOxnPX36kjMviJX2Ie5W8g/Lmc4vwPRbn9we//auq9T6sEhDStdX9g0=
+	t=1759818561; cv=none; b=IhB3g8Cm1gHRQC7cfjIemGaV6ywsXP3Tf4o8g2rvag1iVHZnqHls8N+Gv4Avh99D1MmW3dgREd/lNt5YSM0TlqMdDrau9id9KvRR5e6NlP2G2eMlI7fQVycav/dBrRYQC0hUyQcOh8h/CTmlhgpXljFWLaDiokgmaJUzCNYSwxs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759817922; c=relaxed/simple;
-	bh=vsHE2lWKAU5nkO+7tKox9JQEUxeljwZtYdz0bQu4JG4=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=M09DvV5BMQrYrwg6/kiiFgsY3E723+TSKi42FYqTzuueBkz+6+DjNooPs/WwU9vNHMEc1wy2Qi2b2BHCs0hIXPeDovN9CCzteBVEozZSo2OzsOq/E/Jw/H1mINBp7uMLDbsmf7z0um25SyfH+gL1P+POR6sLtgtzPN/10Tk5o2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=nkHgWGw+; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1759818561; c=relaxed/simple;
+	bh=UzKLGad+vXk1zXjOWaOEl+vXcwqlI2M59gvOtq+AVYw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UCVEHDkGbYZGmUVnevyaYUjgPsLcV8mVmH1eitymrAz3HdE80ryHXPM4PTaZ2lrVg3M4YKBSOe3eCHL80gdZVwB4dr+8fDK1yJCMi75b8KYtzHPszjSnr6dxMR90WTJZsanOrfTWbGzmakKXl5aUQobe0Nm3ducMDz+6tSjD254=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=amH6AdCY; arc=none smtp.client-ip=205.220.180.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59738k8x005144
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 06:18:40 GMT
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5973rjPk029083
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 06:29:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=CvVAhQAfNLcTGM/vG6Rm69/dUho9Nxx7Jaf
-	86sBi5ko=; b=nkHgWGw+89M0BCpEVqUAXsOCTIGSCQMKtZqRCA9HNC0O2I6UvG+
-	Ec0IbnaGuChPd7hJvbOQ+o9WRYcmR2cUdkEfJ42gkzJ0YcEJ+5B3PCCq98EtNrd+
-	zdOI/qgmb5NJlGxznYXKDGHC5/TXeCnigf3GOpSaI9SXubrd6jkPAsa87NSLnSJw
-	kySuMIROyj4tCQVlL7GUc/jvXWkTO4ZEvFHhtsST2yGLyVDq/tMg2XMylLGnQdhS
-	+zrPGMCaRsIKZqnF6qnA7x0B2TE/sXTVz6WL6BAxtTHuGZEDlIbOZvaOzvaUgKIP
-	ProPa+nKOH8ouAYa74h+bKeLtRGxwtJUwow==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jrxn6gkf-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	RJ/mZMe9eQHwc6pMOqC3XAQFsV2a8LFAo3YiWpp0EbE=; b=amH6AdCYVNJDStLs
+	8rJQRh4RiWhKmy/x9v+YSpBL8LVPr8cvHhOEpTI+CkfGVc9+y0Qd3+6ThG+/wvYH
+	05Y8r/M+kGCi7TbDzFFU0nIoaEiifuTqcwcb5faHpDCZ5/a6Mtg4yYyINiZyVoex
+	/OmdtSi4UO7Fay3bQu/7P7U+9wLb5k/y//5BilmxDZAEbqerbUq2RKYwPI6D302F
+	bgOv8gc1i6XbnifgHtCSn7et/2DBel8wOJIXXmyzhR7rL4HN0s7CwArpc9faFZs0
+	BC547KH8jwjLKQrxqea6zbb571OeXzPGA4/EEs6Z/0ATGglncWlnRDSGAGXBpdml
+	o5rJ0A==
+Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mgd0hxnk-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 06:18:39 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4e574e01ed8so134954561cf.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 23:18:39 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 06:29:18 +0000 (GMT)
+Received: by mail-pj1-f69.google.com with SMTP id 98e67ed59e1d1-33428befbbaso6535216a91.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 23:29:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759817919; x=1760422719;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CvVAhQAfNLcTGM/vG6Rm69/dUho9Nxx7Jaf86sBi5ko=;
-        b=rWvMNyIu2tkf1mcpo0jv3FJUXyqDlXNExR9VHm9BFukuqPcZGm2dYkwf26v51btbCb
-         T45GTCuvixWDjIkg91Gamk3kg9rmTkOryOPmOMdprlI/G2ajeUtPVqYw+uYV9vpybwaF
-         6vT4B/VIAn6gJcvO71CEweQrlnwcaOjC1WZrLHGjpC7a5CYHJusvfGYvSBvPFwnALtZo
-         QL4M+bqtvjpnXwnjmLHL2B6dTsgS3Tj6BqXdA5g54SHh5vl9nDGs/m4KLZnzREkTIFDD
-         /IDHdy25nTn3ZH6WihIXjqY7iawOKbNzeuK8GUzvB7/jrTyX7w1LlerIWHLsLgzh2fAw
-         qe8A==
-X-Forwarded-Encrypted: i=1; AJvYcCUpPPj3cc1YrDJTe1e35RDRyQLs4k+g3BLXcRdPV6C3pPL0SluSKzXBCCRonrlWgn1iGgZ+DRc9NSP7+duH@vger.kernel.org
-X-Gm-Message-State: AOJu0YyXq/xyecIq67wjpb2owCfmPJ5rL4uT3l4K95mIXwjoBFddp6OF
-	DCBCxxORZXiKGhhTdV/U395QpQ0PP57x95HdUe/8Io+0+VfhvUmjLmI+mPKa2t+P9DKOUemCrZZ
-	hXvtqBOFw3e4jO8MzEgZF4i1Kwf77PrAbZzztuZ7F1gKlH9AbH8jqOv2J0LSzE6za//DT
-X-Gm-Gg: ASbGncsWYnCJoCEctfUBDjUAD+UOLWZjcrUVaC6NqojSljCXhBK0JNJzrV2RlevXEg4
-	7XVHAvqkUF+lc73KLhOgVrKxwHpst6SFwobM+ZCMzuR72Q1gS6wXKnixd3vuIzhzB77XZWoCC86
-	+Irb9M29ZOHg2xpCSRxCgRMCYM8xqTJ2AngeaZnqeZy1ZdjKWRehqgprCrk4EtkVjsDbdu2APmK
-	4RlE61MQDKzAZPmABM5xa5iVQZGwVinZfv//7oCz0gy9HPQfaBJ7K5r/ZPAjAA/mPf0FlvQSdnl
-	oiIvEeRSWTHbkSunZiMY62CxKmfUfRP24q/ERSBwUvPe3ocCSFbKOQDWfiVmh1h1bq3KhPmZjv4
-	BplcdzDm4dA==
-X-Received: by 2002:a05:622a:2590:b0:4b7:a44f:527e with SMTP id d75a77b69052e-4e576b0dea4mr215667901cf.76.1759817918959;
-        Mon, 06 Oct 2025 23:18:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFJrfWMCsFZ1Rs7jGV7XjlmrBbdRdCEQ8jIKTB0560Sw5sTHLIUZVcwwvmG8Bg0Q6IP6cLtg==
-X-Received: by 2002:a05:622a:2590:b0:4b7:a44f:527e with SMTP id d75a77b69052e-4e576b0dea4mr215667711cf.76.1759817918499;
-        Mon, 06 Oct 2025 23:18:38 -0700 (PDT)
-Received: from hu-yabdulra-ams.qualcomm.com ([212.136.9.4])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-639773d4d8esm5864519a12.30.2025.10.06.23.18.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 23:18:38 -0700 (PDT)
-From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
-To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
-        troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
-Cc: ogabbay@kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, quic_pkanojiy@quicinc.com
-Subject: [PATCH] accel/qaic: Synchronize access to DBC request queue head & tail pointer
-Date: Tue,  7 Oct 2025 08:18:37 +0200
-Message-ID: <20251007061837.206132-1-youssef.abdulrahman@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+        d=1e100.net; s=20230601; t=1759818557; x=1760423357;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=RJ/mZMe9eQHwc6pMOqC3XAQFsV2a8LFAo3YiWpp0EbE=;
+        b=T+C8NdTj1SnDk6S3yX8GDzZCKGUCgDZG71DfK0pTOiApZYUbyObGjGUU1RvGRCuSp8
+         gvMs+VXmb5xPuFhni0OXhij54ikF/YS7KJfavVOKVSNHjQYTgp4TYT63jVujz7oVmnaZ
+         UBVOSh+sYS9OvoHemOeSkxMDjgDYXcehGFnmjQvjhSOM0J9AGM2dQUYBrpKUkxjL+w0n
+         n4RZWTfHsTG1Ktbqn95D+wkrstvEpAqq4f58GU0Mf5EatfhV1Lbs/au1Yz05roEA9jgj
+         HIqinPS7gF72fJihpC5itrFt3RuQFE2GGqBSwBpAr8o6ZYU3GmBtj9HgzvzTD0xx9yeo
+         KeQA==
+X-Forwarded-Encrypted: i=1; AJvYcCWU9phaqTDYxv/Cdfm3Ar5l4rZSCZCZ6L3Efp8ngR+dj0ty8KJjW2WHSh43DRsEHJL5Mg5saxgvanon9rfR@vger.kernel.org
+X-Gm-Message-State: AOJu0YxaT8ef7UWaLZ0hcYmxPc+hwXBQtd7Ez4vFU1rZONGXJML5A15l
+	rTMdsNhqHuMPzsrUToVu8gquowjZ54zhfh/plVS2zrAw1ApDjAOccc8lqIEtpMXM3HcFMe2xevl
+	zC0LSPniuKsMuFJY6ncE8uocNpg02D3rv5JdhxeMsn97Yp+OJISKK2PGLz1AXAOMRtgQK
+X-Gm-Gg: ASbGncvs1FbSp9p9ymyo7F4CH60Ovi0r/5ISucayOPXU/Bu5tW9yLjomksXtPjbChZF
+	1bCiEjTJ/fo468ieTKzAHYvoZBLoBOLUGbQmUWK2ekFx/aVnDvIB4EOXvUF1rXEbrzh2Cz+dkGZ
+	iqdn9h+dDWX63O2jcJtclM9oT0a8u0euMszO5zz6s1HuELwIkBfNL4y5VF7nxeAuYjC+R9A7zu7
+	sAk6DeS4aHefuW1Dyu3bcXhhRqtGavQ93ibsYZn9ZcexOi2Hp3xhEV6OrL8UqyVFj0VmsDfDiCI
+	f6c1r6JcA1L7sRT2Gpnjut+/DjDS4Mtop0sQPGAPgE4AhXq+XR/GffD3yO2ZY8kiK5h7kSe03vE
+	rvA==
+X-Received: by 2002:a17:90b:3ec6:b0:335:2823:3683 with SMTP id 98e67ed59e1d1-339c2759dfamr19030225a91.9.1759818556784;
+        Mon, 06 Oct 2025 23:29:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEYeZYBRgOmwNar8K7RG4m6Nmim2fQTWAJstBfmo588K6ZiICRgELHRhWh7xlFRNNjzYpceg==
+X-Received: by 2002:a17:90b:3ec6:b0:335:2823:3683 with SMTP id 98e67ed59e1d1-339c2759dfamr19030191a91.9.1759818556330;
+        Mon, 06 Oct 2025 23:29:16 -0700 (PDT)
+Received: from [10.0.0.3] ([106.222.229.252])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-339a6e9d25bsm18903319a91.5.2025.10.06.23.29.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 06 Oct 2025 23:29:15 -0700 (PDT)
+Message-ID: <0b448507-5e5f-20a4-a9a0-191447362809@oss.qualcomm.com>
+Date: Tue, 7 Oct 2025 11:59:11 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.13.0
+Subject: Re: [PATCH] media: venus: prevent potential integer overflow in
+ decide_core()
+To: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>
+Cc: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab
+ <mchehab@kernel.org>,
+        Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, lvc-project@linuxtesting.org
+References: <20251006154041.1804800-1-Pavel.Zhigulin@kaspersky.com>
+Content-Language: en-US
+From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+In-Reply-To: <20251006154041.1804800-1-Pavel.Zhigulin@kaspersky.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAwMSBTYWx0ZWRfX9le3i3OwGD0l
- VFvKuHTk9zHpcXoTYgXZLg9hQgDx3MxS/ZvdiLkthEn+kkrdlvUsi86f7itpywG3fpDVX52kiRK
- hktxfXcv+lvQl7+LWgLftOePqVIp7OyYPu8ApvbC61XM7oljGIcFw+bQXhG91/U9jv7EtGfNibo
- rxm/I0Y5PuPK9UEmQevZ7DwOEQONTeCHatxdjCp5D1aczvk/3Afa+fbPEzcLER3A6f4SN0+Amvs
- uIQEQzvxgyn6xgKA89Xcfc7jW/VvDtdwjXUUJimJksps2RpeSl6V/PSAsTjynYpfpncNJpwgkja
- yi0dWy1iTwcRo9/DurKWfqjq2NXvL7yEvuRd23yg3IWLXFEX9czv9ZW2ZhsUXhwhDOao5X1LBCy
- QdJM6YW0Wgo6tHvIqdoK07Rnw6xPeg==
-X-Proofpoint-GUID: j3NwmNsogSnv2-SylYi9eTAWuM4J9ZNi
-X-Proofpoint-ORIG-GUID: j3NwmNsogSnv2-SylYi9eTAWuM4J9ZNi
-X-Authority-Analysis: v=2.4 cv=EqnfbCcA c=1 sm=1 tr=0 ts=68e4b0bf cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
- a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=L090aUOemVNa8NMnONAA:9
- a=dawVfQjAaf238kedN5IG:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-GUID: Fz3TWuuyieOcEfT84HQ28zlOH4T4S8X_
+X-Authority-Analysis: v=2.4 cv=T8aBjvKQ c=1 sm=1 tr=0 ts=68e4b33e cx=c_pps
+ a=vVfyC5vLCtgYJKYeQD43oA==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=HH5vDtPzAAAA:8 a=ACEZY41XAAAA:8
+ a=m0Ah2RrY1ua3onEXlJUA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=rl5im9kqc5Lf4LNbBjHf:22 a=QM_-zKB-Ew0MsOlNKMB5:22
+X-Proofpoint-ORIG-GUID: Fz3TWuuyieOcEfT84HQ28zlOH4T4S8X_
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDEyMyBTYWx0ZWRfX+qsy43f9qcQ0
+ PpSHtNDCxn7gm+PwgvMAiYB4PI34Wj0/UeNQWga12OMlZeSLpdF+qS71xW6kstOvyV/fnw+QLPg
+ 3hAM1R3HLI0v+6vAwpVKqzByuuO1QMRmzuIHZTcQZn02KLPit3T40PEug70k+dDfill1JmqP9Gt
+ Ph/kETy8LMbud1RGa3+rmuDYBMfLFUk1XL/1tF2FTQtKp1sNk80GTxUWEc5S2Xu4lzunO23kYSK
+ gQMzuDC0Dwlz1pasgaI2cStnsdbfuOLV4MLbKwwLTuYw83+9cvSwctRDR4acTKkG7zwGadK426N
+ 2qs0ieGMmZ/h437560treUXTvrpBg57vqNGebnT8sY0SqXjycbBvdBusLP7hzl4hkAtG9Co/1+/
+ WgQ+OLK2vCAsHF8SW+Yy8gGW4g6/IQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-06_07,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 malwarescore=0
- adultscore=0 suspectscore=0 bulkscore=0 impostorscore=0 clxscore=1015
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040001
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060123
 
-From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
 
-Two threads of the same process can potential read and write parallelly to
-head and tail pointers of the same DBC request queue. This could lead to a
-race condition and corrupt the DBC request queue.
 
-Signed-off-by: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
----
- drivers/accel/qaic/qaic.h      |  2 ++
- drivers/accel/qaic/qaic_data.c | 12 ++++++++++--
- drivers/accel/qaic/qaic_drv.c  |  3 +++
- 3 files changed, 15 insertions(+), 2 deletions(-)
+On 10/6/2025 9:10 PM, Pavel Zhigulin wrote:
+> The function 'decide_core()' contains the following code:
+> 
+> 	cur_inst_load = load_per_instance(inst);
+> 	cur_inst_load *= inst->clk_data.vpp_freq;
+> 	...
+> 	cur_inst_lp_load = load_per_instance(inst);
+> 	cur_inst_lp_load *= inst->clk_data.low_power_freq;
+> 
+> This can lead to an integer overflow because the variables
+> 'cur_inst_load' and 'cur_inst_lp_load' are of type u32.
+> 
+> The overflow can occur in the following scenario:
+> 
+>   1. The current FPS is 240 (VENUS_MAX_FPS constant).
+>      The processed image frame has a resolution of 4096x4096 pixels.
+>   2. According to 'codec_freq_data':
+>        - 'inst->clk_data.low_power_freq' can be up to 320
+>        - 'inst->clk_data.vpp_freq' can be up to 675
+>      (see drivers/media/platform/qcom/venus/hfi_platform_v4.c
+>       and drivers/media/platform/qcom/venus/hfi_platform_v6.c)
+>   3. 'load_per_instance()' returns 15728640 under these conditions.
+>   4. As a result:
+>        cur_inst_load *= inst->clk_data.vpp_freq → 10616832000
+>        cur_inst_lp_load *= inst->clk_data.low_power_freq → 5033164800
+> 
+> The proposed fix changes the type of these variables from u32 to u64
+> to prevent overflow.
+> 
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> 
+> Fixes: 3cfe5815ce0e ("media: venus: Enable low power setting for encoder")
+> Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+> ---
+>  drivers/media/platform/qcom/venus/pm_helpers.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+> index f0269524ac70..caaab097a04d 100644
+> --- a/drivers/media/platform/qcom/venus/pm_helpers.c
+> +++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+> @@ -582,9 +582,9 @@ static int move_core_to_power_save_mode(struct venus_core *core,
+>  }
+> 
+>  static void
+> -min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool low_power)
+> +min_loaded_core(struct venus_inst *inst, u64 *min_coreid, u64 *min_load, bool low_power)
+>  {
+> -	u32 mbs_per_sec, load, core1_load = 0, core2_load = 0;
+> +	u64 mbs_per_sec, load, core1_load = 0, core2_load = 0;
+>  	u32 cores_max = core_num_max(inst);
+>  	struct venus_core *core = inst->core;
+>  	struct venus_inst *inst_pos;
+> @@ -639,8 +639,8 @@ static int decide_core(struct venus_inst *inst)
+>  {
+>  	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
+>  	struct venus_core *core = inst->core;
+> -	u32 min_coreid, min_load, cur_inst_load;
+> -	u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
+> +	u64 min_coreid, min_load, cur_inst_load;
+> +	u64 min_lp_coreid, min_lp_load, cur_inst_lp_load;
 
-diff --git a/drivers/accel/qaic/qaic.h b/drivers/accel/qaic/qaic.h
-index c31081e42cee..820d133236dd 100644
---- a/drivers/accel/qaic/qaic.h
-+++ b/drivers/accel/qaic/qaic.h
-@@ -97,6 +97,8 @@ struct dma_bridge_chan {
- 	 * response queue's head and tail pointer of this DBC.
- 	 */
- 	void __iomem		*dbc_base;
-+	/* Synchronizes access to Request queue's head and tail pointer */
-+	struct mutex		req_lock;
- 	/* Head of list where each node is a memory handle queued in request queue */
- 	struct list_head	xfer_list;
- 	/* Synchronizes DBC readers during cleanup */
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index 797289e9d780..c4f117edb266 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -1356,13 +1356,17 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 		goto release_ch_rcu;
- 	}
- 
-+	ret = mutex_lock_interruptible(&dbc->req_lock);
-+	if (ret)
-+		goto release_ch_rcu;
-+
- 	head = readl(dbc->dbc_base + REQHP_OFF);
- 	tail = readl(dbc->dbc_base + REQTP_OFF);
- 
- 	if (head == U32_MAX || tail == U32_MAX) {
- 		/* PCI link error */
- 		ret = -ENODEV;
--		goto release_ch_rcu;
-+		goto unlock_req_lock;
- 	}
- 
- 	queue_level = head <= tail ? tail - head : dbc->nelem - (head - tail);
-@@ -1370,11 +1374,12 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 	ret = send_bo_list_to_device(qdev, file_priv, exec, args->hdr.count, is_partial, dbc,
- 				     head, &tail);
- 	if (ret)
--		goto release_ch_rcu;
-+		goto unlock_req_lock;
- 
- 	/* Finalize commit to hardware */
- 	submit_ts = ktime_get_ns();
- 	writel(tail, dbc->dbc_base + REQTP_OFF);
-+	mutex_unlock(&dbc->req_lock);
- 
- 	update_profiling_data(file_priv, exec, args->hdr.count, is_partial, received_ts,
- 			      submit_ts, queue_level);
-@@ -1382,6 +1387,9 @@ static int __qaic_execute_bo_ioctl(struct drm_device *dev, void *data, struct dr
- 	if (datapath_polling)
- 		schedule_work(&dbc->poll_work);
- 
-+unlock_req_lock:
-+	if (ret)
-+		mutex_unlock(&dbc->req_lock);
- release_ch_rcu:
- 	srcu_read_unlock(&dbc->ch_lock, rcu_id);
- unlock_dev_srcu:
-diff --git a/drivers/accel/qaic/qaic_drv.c b/drivers/accel/qaic/qaic_drv.c
-index e31bcb0ecfc9..e162f4b8a262 100644
---- a/drivers/accel/qaic/qaic_drv.c
-+++ b/drivers/accel/qaic/qaic_drv.c
-@@ -454,6 +454,9 @@ static struct qaic_device *create_qdev(struct pci_dev *pdev,
- 			return NULL;
- 		init_waitqueue_head(&qdev->dbc[i].dbc_release);
- 		INIT_LIST_HEAD(&qdev->dbc[i].bo_lists);
-+		ret = drmm_mutex_init(drm, &qdev->dbc[i].req_lock);
-+		if (ret)
-+			return NULL;
- 	}
- 
- 	return qdev;
--- 
-2.43.0
+why update type for min_coreid and min_lp_coreid, the number of cores will
+never approach the u32 limit.
 
+Thanks,
+Dikshita
+>  	struct hfi_videocores_usage_type cu;
+>  	unsigned long max_freq = ULONG_MAX;
+>  	struct device *dev = core->dev;
+> --
+> 2.43.0
+> 
+> 
 
