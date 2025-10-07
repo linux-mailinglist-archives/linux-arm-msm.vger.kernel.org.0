@@ -1,82 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-76146-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76147-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D1706BC001D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 04:04:44 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C6BEBBC0020
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 04:04:45 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id AFC8C3C310C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 02:04:34 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id AA3174EA903
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 02:04:44 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E3EB521C163;
-	Tue,  7 Oct 2025 02:03:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5CC70218AD1;
+	Tue,  7 Oct 2025 02:03:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="osb74vfy"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="dQba29WX"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
+Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DDA219A67
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 02:03:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BDEE21D3EA
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 02:03:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759802630; cv=none; b=mEI4ruvgg6NrSImDyCXsl1YttjTxfs5r2vosG5F9wteRai0uEJW7aeF7mxMMrpdfOf0Nmy1xlOqXY0zZOPcMMshZw0YX7zMgTzFm29BWHRfcWl86t4A8rmUNCl9Y0rMDqHzeii7+0uf0AgbopgdTGER32ACVjcfMKJWZWfun1Vg=
+	t=1759802633; cv=none; b=i+T0+JxnTBjcgweOIQFiQrJ3Hjc6N+4yY2xiMyWhp/6y2c/sTt3uFC0cgLjfK4yZBSW8FDZErvy6FiP2eG1rXrD62WL8YBzUZNCDtQc3MCDzuxnF7Wb8cK0Yj34ZUu0Uo85WzLXBMWeJz3tGO0mob258rNhUTy/JuOa0DL7LLIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759802630; c=relaxed/simple;
-	bh=dinlYOq4GNp8S92cG3IIG6xQe9bDgEHO1mWnzU7Enuo=;
+	s=arc-20240116; t=1759802633; c=relaxed/simple;
+	bh=ViBe2WMm7kQxPxeRuekDdL8WZHiA1GXGLJT0PDfx7w8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=C6ji2q4LFiwvYIFjL/DAoxcv9rI3FBSyotYCFYfMxOfqPxgMB4xUDNxfAjqbDveO8/KMFHEyQ5k+YBMGxQPHgEkghktBT4yx7q2GGQzX8PI/gRMd0p1kcBdSEyrZD6ErHvsmJMsX6hJkrXEZ0NBy//SsTb1F/NbZ1FI9MSj0V2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=osb74vfy; arc=none smtp.client-ip=209.85.208.172
+	 In-Reply-To:To:Cc; b=l6orCUHDzlRDqgbZ6nIQkCC6HVj73p+yFLoNv/+Jgwf1t6p/yP9VSIwVY4RCas+4Q6jN6OxAUtuOs9i8evUEKhEarl35/swZUOiw8NQ3Ka3W6REfGrYNCqOldFxhDnWCoxKUK6J7xLKkrOL3J7NKsIcRAAe9YCbCiD61mn8pljA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=dQba29WX; arc=none smtp.client-ip=209.85.167.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-lj1-f172.google.com with SMTP id 38308e7fff4ca-368348d30e0so52888301fa.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 19:03:47 -0700 (PDT)
+Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-57db15eeb11so7023124e87.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Oct 2025 19:03:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759802626; x=1760407426; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1759802629; x=1760407429; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dh2P+1S/rGMae00So34IFmR5edBimGYszi1sGivuL68=;
-        b=osb74vfyTFtNpbUrt6ea8gZn4J+VeuJAo7XMmuAdTmvgaNN/zeedIWkisYRjkRCUx1
-         Vn5qPyUN8rzlUpEM8s95QHkChU9nfmHQBmTmiQGoBDiHBTlwr8DCb5QxAQ5loQ2RcROD
-         NWtOwtX6wetJxP/izoKPGntwXuAFEhZdQJE4NHMXc3iTMyGPO9WgGg3znbapNGYxxLtg
-         IFJ3/fIsQiypP2KpfB6xmxmjuimLQtQZez+CK54Y2/XGhNj/qjrzihTvk1IwfPamWDDn
-         sGcaxUAEwaC1QUn37TJWa+8zcfWaMkfQL9pLcRAM7y9RntHmcIA9PQE8Z8tw7sXBJkOf
-         eQqQ==
+        bh=9ysY18u2zKYmywl9mq+ndQhWk6KHVBYX5HfqkCVFIYg=;
+        b=dQba29WXjmFucH7DB6LsQxcSWRfLBU4ysxtH8pJ3y3TLKDlOKCq4AiHFjjTs7O+kjd
+         lQaROupmoSSA6TrszH5HeQ5MYJZdvRFWIt3kkIr3JmOV5u/5CPN0bRnGCUEcvN83/UlP
+         uo7IjvukruYtoGtz8Mp15T+PNFSRabSLI2+rqmUw/7GmLRuqmf/bvNrc4jrUBjZopJHJ
+         epPDJOOtJFOIIpjqbyTEW/bFlQeBtPLiZ/O7nxkXe/ooqs4VdruEY8+tz2Ov8CR4mp1p
+         cPAFDIOT29DHok2hJE/cpS4lcHmCBUjSd/sF+ro9q51ol5i52g9V+ZvwtWzTuxXyGA1A
+         Fgfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759802626; x=1760407426;
+        d=1e100.net; s=20230601; t=1759802630; x=1760407430;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dh2P+1S/rGMae00So34IFmR5edBimGYszi1sGivuL68=;
-        b=LQ2XbbjJkm2R3oe2x62XfumiDuHsXYLA1HZbG3ugZxBNBOxzgZMjWoW/Hekt17/S5F
-         uJkY3kCdq1xK8SEX3lR5G0+kgSr1Rad6rNoz/hP12m15vbjYkAkM70mlTRdM9tqWqGmz
-         DSU3iPbbn6D0fIIAw6yohx4Xiejdhq5v5AR5lYZpghG+Ku6lv1ApjBlPd7ZYPdVo+4P+
-         G7ZPhy/ACXvG32mW5l7JBJn8GdztM5pdZ47ho3YCzuWKA2DejfLd4E/ZeLl78svZWXEO
-         miZ0x9R3pBEGhZo65/cAtxHY+4xeb9tp7juO25gcRTNCErx0ZgrZCxjiDuJOYoWfQ5zn
-         ciOw==
-X-Forwarded-Encrypted: i=1; AJvYcCXEnrH44925LHxc3iGP/DXHZu0NHF7X476ufGB7z7TkdzS8IejTvzct7uIhxJgOkWKvM1hveNIBstEO606S@vger.kernel.org
-X-Gm-Message-State: AOJu0YycIMirMsPiquFzMDct9yyPS3iXWJqYSOkIW0TPbyb2BVUECzQX
-	GKFFV8OVAD1Sa6BT6h37DnHQJFPwZVzefeoNkscQp9kZMAAU29e5SBDO+5ewRBrGX58=
-X-Gm-Gg: ASbGncspufg11WXUnCPGTTVlOaOaU9YQWIibm9IJxKwPE7tNttuPebjBCgB/pOoaMyR
-	7twdCePKL5Z54fE8sVY3m0fKRdcK9cE6tQM4FADRgeMNHS+j/Jv2ZgQPt8Nu658Q6jvZZ2xHV/a
-	Ck+bh0dTS5DWJskcKXOKrUoQ/hduB6OxofndQYI2eD98O/gdr30D6jChdU/CsO4tLMs9yTYYXKb
-	QLSpxxBeqnsAPoLA3VCAwUGsLj9yrpxS5uvMCaMrnISIclnLhJ1R6NHeZlo3Axgh+zv0TQ5GRmq
-	EPBgfgNHOGfrcYRSZSyv2xJvwRpHsaes1gfbRqb6ptqOabj94Rqrh8uoduo9yiVroVCX0Vasnfm
-	MAp2fW42UUfdA4MUHKEiN1jGXoJrcda3FqrMSFXVb3p81FOHsLlDnKodw
-X-Google-Smtp-Source: AGHT+IFI9nX6DVmCAMZ3FKDjnGx6oV0QSc0nIDHxs6ctW8TRx/vmNB5maIOBRka6gVB6NnvAv1QDrg==
-X-Received: by 2002:a05:651c:25c7:20b0:372:8f03:b73f with SMTP id 38308e7fff4ca-374c384e19cmr36666571fa.36.1759802626183;
-        Mon, 06 Oct 2025 19:03:46 -0700 (PDT)
+        bh=9ysY18u2zKYmywl9mq+ndQhWk6KHVBYX5HfqkCVFIYg=;
+        b=oOjFxr7DCCCZzJi6zenwwy88scfMqOmafq/uTjWHIMlbNv2SyaqhEl4tpdUXaTdtVh
+         zMM9DVZr0jSePfowW0dGSYaokgyOdu4Z30wvZTXD4hsVIdRiJP2dQRbFrPpt7/l+EV4w
+         V2MvBpmTRmhMTtumL72vZOjLd+vmgsgJyIBiLY+yhRcoH0Tn74gMpUi1tyRTSpwFBH3H
+         oxMSBO3hn/H5elVfrTi176fGalSyUdVdaWJZta1YU+pDLKPVbakbJCvSEUuRockFFdvj
+         2P21ZqkSJzGxRtgAWC23sAm7ZtCuB21F15uEQZsnKIyOk5SJDFylgaDx3rX6Y4XqABZg
+         jRtQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXJUsXoK2icZ9m4c1ut6cFcAFeTS1R5kBFTA6Ybni2c2OWNVE09bSOhGT4q3W3q9gK4B2h5yHzpjYIMF7RG@vger.kernel.org
+X-Gm-Message-State: AOJu0YxYogiVoGugf//NbHmnjXdduU73Co5MTCQk1k0/jjvbZhkrRq6/
+	N2ZXYfpr874h6hhLuS8S4BnOg9wHzh6K4ZI2QeODpmfNyKJGyG77tNkJaKviaaIkGTY=
+X-Gm-Gg: ASbGncuAv8oYSy0lJpJsEBfoNuzSRu309MFzzy+Z5q/UFQNewS1miqGNXwDPfBM3wby
+	YQIMz+D/6uEMMTInmfK3oLEl5lJ6vpX3ZHNudNLGZFTSRLC03j8xNPhgPMVViD9b200excXLth3
+	O8Htuy28GD0KrvvUXGL98VNj6chk688a5SIFBq5d/iW3B3+VTNjz8H/edE5bFBYLsWrTe6aI84n
+	nkAMvrH8cInc/uGQNi0qPStZInRSv5vh7D17zBfMwby+WUF+4OjjEwMYq4q/5ZklZ12SKKFeG+6
+	64Stf3y4ACQXb9TEWzbr/Ghbv6hAWVPNDdtCC96t1HPkzGXl3VTUOuvnmWGC14/bmi4g3Ceg5D5
+	aVmjTZIiLY6OakW9GC6RubwTGXWjSZXbe45qjnnZBRF+sMvz8LgllDnm9qTkGMylhppU=
+X-Google-Smtp-Source: AGHT+IHIQAFDlaxnS/YPLaaZASPGtjzqUskbAEsgwJPrLjmMvYfFHi4ayVxMDpBzxLLkErDPJhx74Q==
+X-Received: by 2002:a2e:a987:0:b0:36d:4996:1c4d with SMTP id 38308e7fff4ca-374c36c4b2amr40767031fa.9.1759802629528;
+        Mon, 06 Oct 2025 19:03:49 -0700 (PDT)
 Received: from orion.home ([2a02:c7c:7259:a00:22ae:baa0:7d1a:8c1f])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-375f3b81e45sm5150391fa.46.2025.10.06.19.03.43
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-375f3b81e45sm5150391fa.46.2025.10.06.19.03.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Oct 2025 19:03:44 -0700 (PDT)
+        Mon, 06 Oct 2025 19:03:48 -0700 (PDT)
 From: Alexey Klimov <alexey.klimov@linaro.org>
-Date: Tue, 07 Oct 2025 03:03:31 +0100
-Subject: [PATCH v2 3/4] arm64: dts: qcom: qcm2290: add LPASS LPI pin
- controller
+Date: Tue, 07 Oct 2025 03:03:32 +0100
+Subject: [PATCH v2 4/4] arm64: dts: qcom: qrb2210-rb1: add HDMI/I2S audio
+ playback support
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251007-rb1_hdmi_audio-v2-3-821b6a705e4c@linaro.org>
+Message-Id: <20251007-rb1_hdmi_audio-v2-4-821b6a705e4c@linaro.org>
 References: <20251007-rb1_hdmi_audio-v2-0-821b6a705e4c@linaro.org>
 In-Reply-To: <20251007-rb1_hdmi_audio-v2-0-821b6a705e4c@linaro.org>
 To: Bjorn Andersson <andersson@kernel.org>, 
@@ -96,81 +96,98 @@ To: Bjorn Andersson <andersson@kernel.org>,
 Cc: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
  linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, 
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
- linux-sound@vger.kernel.org, Alexey Klimov <alexey.klimov@linaro.org>
+ linux-sound@vger.kernel.org, Alexey Klimov <alexey.klimov@linaro.org>, 
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 X-Mailer: b4 0.14.2
 
-Add the Low Power Audio SubSystem Low Power Island (LPASS LPI) pin
-controller device node required for audio subsystem on Qualcomm
-QRB2210 RB1. QRB2210 is based on qcm2290 which is based on sm6115.
+Add sound node and aDSP-related pieces to enable HDMI+I2S audio playback
+support on Qualcomm QR2210 RB1 board. That is the only sound output
+supported for now.
 
-While at this, also add description of lpi_i2s2 pins (active state)
-required for audio playback via HDMI/I2S.
+The audio playback is verified using the following commands:
+amixer -c0 cset iface=MIXER,name='SEC_MI2S_RX Audio Mixer MultiMedia1' 1
+aplay -D hw:0,0 /usr/share/sounds/alsa/Front_Center.wav
 
 Cc: Srinivas Kandagatla <srini@kernel.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/qcm2290.dtsi | 41 +++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ arch/arm64/boot/dts/qcom/qrb2210-rb1.dts | 55 ++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/qcm2290.dtsi b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-index 7303aff33814f256a2ea09a71a640db466370eff..02eee364e618358e5ead78c2b97fde12a57ede0a 100644
---- a/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-+++ b/arch/arm64/boot/dts/qcom/qcm2290.dtsi
-@@ -19,6 +19,7 @@
- #include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,apr.h>
- #include <dt-bindings/sound/qcom,q6asm.h>
-+#include <dt-bindings/sound/qcom,q6dsp-lpass-ports.h>
- 
- / {
- 	interrupt-parent = <&intc>;
-@@ -673,6 +674,46 @@ data-pins {
- 			};
- 		};
- 
-+		lpass_tlmm: pinctrl@a7c0000 {
-+			compatible = "qcom,qcm2290-lpass-lpi-pinctrl",
-+				     "qcom,sm6115-lpass-lpi-pinctrl";
-+			reg = <0x0 0x0a7c0000 0x0 0x20000>,
-+			      <0x0 0x0a950000 0x0 0x10000>;
+diff --git a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+index 67ba508e92ba1f0ef3bcf8b248eae125de059869..4ab5d3379ed22b43675284af40eb7f9304fbe1ef 100644
+--- a/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
++++ b/arch/arm64/boot/dts/qcom/qrb2210-rb1.dts
+@@ -188,6 +188,53 @@ vph_pwr: regulator-vph-pwr {
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 	};
 +
-+			clocks = <&q6afecc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>;
-+			clock-names = "audio";
++	sound {
++		compatible = "qcom,qrb2210-rb1-sndcard", "qcom,qrb2210-sndcard";
++		pinctrl-0 = <&lpi_i2s2_active>;
++		pinctrl-names = "default";
++		model = "Qualcomm-RB1-WSA8815-Speakers-DMIC0";
 +
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			gpio-ranges = <&lpass_tlmm 0 0 19>;
++		mm1-dai-link {
++			link-name = "MultiMedia1";
 +
-+			lpi_i2s2_active: lpi-i2s2-active-state {
-+				data-pins {
-+					pins = "gpio12";
-+					function = "i2s2_data";
-+					bias-disable;
-+					drive-strength = <8>;
-+					output-high;
-+				};
-+
-+				sck-pins {
-+					pins = "gpio10";
-+					function = "i2s2_clk";
-+					bias-disable;
-+					drive-strength = <8>;
-+					output-high;
-+				};
-+
-+				ws-pins {
-+					pins = "gpio11";
-+					function = "i2s2_ws";
-+					bias-disable;
-+					drive-strength = <8>;
-+					output-high;
-+				};
++			cpu {
++				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA1>;
 +			};
 +		};
 +
- 		gcc: clock-controller@1400000 {
- 			compatible = "qcom,gcc-qcm2290";
- 			reg = <0x0 0x01400000 0x0 0x1f0000>;
++		mm2-dai-link {
++			link-name = "MultiMedia2";
++
++			cpu {
++				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA2>;
++			};
++		};
++
++		mm3-dai-link {
++			link-name = "MultiMedia3";
++
++			cpu {
++				sound-dai = <&q6asmdai MSM_FRONTEND_DAI_MULTIMEDIA3>;
++			};
++		};
++
++		hdmi-i2s-dai-link {
++			link-name = "HDMI/I2S Playback";
++
++			codec {
++				sound-dai = <&lt9611_codec 0>;
++			};
++
++			cpu {
++				sound-dai = <&q6afedai SECONDARY_MI2S_RX>;
++			};
++
++			platform {
++				sound-dai = <&q6routing>;
++			};
++		};
++	};
+ };
+ 
+ &cpu_pd0 {
+@@ -323,6 +370,14 @@ &pm4125_vbus {
+ 	status = "okay";
+ };
+ 
++/* SECONDARY I2S uses 1 I2S SD Line for audio on LT9611UXC HDMI Bridge */
++&q6afedai {
++	dai@18 {
++		reg = <SECONDARY_MI2S_RX>;
++		qcom,sd-lines = <0>;
++	};
++};
++
+ &qupv3_id_0 {
+ 	status = "okay";
+ };
 
 -- 
 2.47.3
