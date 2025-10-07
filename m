@@ -1,174 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-76198-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76199-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6818CBC13D1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 13:38:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5553CBC13F8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 13:42:32 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id F32C6188F81C
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 11:39:05 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 1E6BB189D620
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 11:42:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 8BF282DA76C;
-	Tue,  7 Oct 2025 11:38:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5BD1C2DAFD5;
+	Tue,  7 Oct 2025 11:42:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="f5opgIXz"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="HEJZ7KTG"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A288B212B0A
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 11:38:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 586462D9EE4
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 11:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759837104; cv=none; b=Diik6/tc4ep1y0SrWlGqCdW/vcG2kxQ/tv7Z/tdfIxGq/YHED5bXEkYDH+AohUvhWy788N4of36axoUSjY1yiTbgwFpfcZ4t2Pdta9ek0mjUlzs7YaAC7Xwu3VrV8yzM+GquJMQo/p6Uy2qzQ8ASv8WJqZIkQVLBU1Dz1d3gZ1o=
+	t=1759837345; cv=none; b=GEO6L8uTHt2Y57RYIoGr4Bbp/jeda3yMPoS3eIbEzKbQ5v6TxJLeDakoRI4n3sb+G92FbWa7Kf5uFdyi78P40GEgluP3unGvgmYIw3EYYmQZS0ZCNGeMhwNNaC3YJqG1OFtmlWi/G+cN3lD1MAxwdw0xD5yZtZol31RdtPfPOgc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759837104; c=relaxed/simple;
-	bh=ZXrGelmvQas8vmmTp/wX0exf21knoe1W83mDfua+9fw=;
+	s=arc-20240116; t=1759837345; c=relaxed/simple;
+	bh=v0istXODWIHL1ltiHYtAZ8N5d97LsN0HcUB5gpH3dT8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QuTjx0yt8HNixIKyLFfReEBpunoNcKtXOZ00+D9WMZ+cqaZU0N8uof5YMOS5Mu7ZKi/WJg0HQYkohSqedaNek+vgPrBHZsbdO3i0pOdWMloGdeWzLG6iZHtB6pj85k+MUTsGd5MIAQ4LQt76yjecS61BLstm8dJAAgkGAUmIbvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=f5opgIXz; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=aG2Vk3CxQfJU0TvzWvN6m+HTtdzwULw98/sdMDXb9zchxIjZeYLwGtloGUMEiYOBYFhEhXXqdlq24CM5KiwKVntMmnTAJ5YwAU8DQ81UHIJG0Ev6ofjOTAOgxfAbMHQZqvJSNd2p9UKciNbQop3ikie309OxEVn4KI35NnI+x3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=HEJZ7KTG; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 597BaIY0011762
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 11:38:21 GMT
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5977d0EZ018046
+	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 11:42:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	GCYeVPjY1mm3YEzAO8t9rcepeUOr5QIFPQ94aq1HS8A=; b=f5opgIXzjj32H8O2
-	GznYGxX7b9hB7zfT+3AMVvQ1pink7gbD5s75hTBwmdY9fop0FyRPss6FpvsX4iJm
-	ieMfCKXwwsvaDQA9ibIcq8G5h8CTF19JfPuapbTFQ64why/7SgMqsKtptku/ncxX
-	E7sBbKsKIakPF9RF+X39F1iP4nX6/nBoh+/vHrc2E7NPj8VgIHCLxVq0pxkM8KyV
-	htbGGg/KTmp1jmr3nNxDNWzzlFtt9fBaljuYtbq4RIH5ragoacVHNu5Mp8yZnHyE
-	HBCnyBDTTwinimNRtcOHSbdCebsOHem4dHqb0qqgadoVPdTe2UVClST0ORpwcLeE
-	bLFK2w==
-Received: from mail-pf1-f200.google.com (mail-pf1-f200.google.com [209.85.210.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49js9dy7ju-1
+	XQGXZvj+fHOBfHt2M7ZMsptXc4V1NWsTLPFuu0fCYV4=; b=HEJZ7KTGYM02TND8
+	zMyYndX8ElSYmYg2eI1B6ARKpshVPejHauwn59rDm825JkFKqVrjy4rQC6S6pbER
+	nPtBDdVhUhVUOomfFaQsaU+VVvSIMLXWFUFPxMKw+TiigzTqeina2fgfCzAfixoq
+	qF/RRHGVofaf1SK51BnkRi22q4NARM1EgvuLgcK+YkjlD6drPgIxAZr1IRXfDVLs
+	n3nw8cOgnv0BVHm6j0aOFub3cN5rFoRKfXPCU+DSYK3t0QklcYGnyAhwuYSaXiFY
+	b1DzFXnZu4RKDcCnEPMNuzcJPPkP3MDb9AfNvnFIbHtLnSLTsDRlu7C7qfO32fOL
+	OLr+ug==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mnkpswkg-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 11:38:20 +0000 (GMT)
-Received: by mail-pf1-f200.google.com with SMTP id d2e1a72fcca58-780fb254938so4968599b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 04:38:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 11:42:21 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-7abea94d621so14414656d6.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 04:42:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759837100; x=1760441900;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1759837340; x=1760442140;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=GCYeVPjY1mm3YEzAO8t9rcepeUOr5QIFPQ94aq1HS8A=;
-        b=TUBqWQ0Wldm4PB0hmn0ONoVY5P/XEckMTZNJYqmQESFQbeqU7YkoBrAKsxX0/92ZM3
-         osZN+coM2gWnYtJ7mh+qSqzPfOozzAPrZUj2ix9eIcAjmQGjq3Wjt3drMOokZ1VDxRA7
-         xfJ4a3FhfV1zCRFOCMCRz6YKDPxiYDUdJ0RSkot9eBDXB5S4KNuvZATU4mo/mzyJKs+g
-         pfAKAMkv9PcD5uB/QwJP4it1n20jy3TQKWAM+ZNb9EKRjzLIIUpVciemgEj3HpIvd8EU
-         Kcm1li+8KOrcVbo+85NJOBFMfPxw5xusm6WgURBhRYOtFimpyRq4UXaApapi8NSRFSnJ
-         CLwA==
-X-Forwarded-Encrypted: i=1; AJvYcCXZ6gJyna9y4ngSLIeOb9Rm/W/PmK0HJ8WtSV2Q6v8IhjSpLDzA4AmwWP+owVGNEfKladKpDElxzqRxfKmz@vger.kernel.org
-X-Gm-Message-State: AOJu0YynEC92Qo0qJWzaBsuY3rnWoTTmK6DywNHgR6QkwY82XYVBJ7B4
-	tFD9oaUIN5VVYOTFOX+iuJmfzGYkxvtBAhba/aAZkkwh/VmohzmLv/rfY77cQp5S7met4WAgc4R
-	JxFpGkgfYHUmy3krzPhtgvwnlO5G7IvrD/Cwet9PR+jT22RhH24AD/JH4t4FAyglkAN7M
-X-Gm-Gg: ASbGncvOYcGCYfkUxK8cx6m04jFYsRgF9C03xDJ2S81IO6bMAiZmpDtDvOGJLOAqynz
-	irk4FvcANJnu3i1Wg/9Le4wMxMDPQoyYBACskYuQ9SaVDUSy7/vEROSUVTyleApBBpgnVmgKqS/
-	It2KVdkKYWbUtIgLRX6sTK3vCFdmTwE9SwfM0epxsBxTEkPkTwbZmRvobj7FTIxw2Wkdh+Lv6mB
-	piwADzs7VBFqCx126iJW7kkyK2JZyZVdT6PaM8282hUVz6ICb03omVLDSEYBuX8/CUofpm8F9aB
-	EFuHsmM7QvonmIS5qUIpo6BbpBhGflcrKVu3sF6fxbdntyrsjJp78s54EtGknBLJxP+TsulFP2Z
-	Wbg==
-X-Received: by 2002:a05:6a20:12d6:b0:2c6:cdcc:5dc0 with SMTP id adf61e73a8af0-32b61e6d11emr21191684637.16.1759837099734;
-        Tue, 07 Oct 2025 04:38:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGjww+c/j8M44jX9PgI+h6Etypkqn272KmpewHvoFomBsMZzaaIb9jb1O3bbZyUinW/tDhShQ==
-X-Received: by 2002:a05:6a20:12d6:b0:2c6:cdcc:5dc0 with SMTP id adf61e73a8af0-32b61e6d11emr21191635637.16.1759837099017;
-        Tue, 07 Oct 2025 04:38:19 -0700 (PDT)
-Received: from [10.0.0.3] ([106.222.229.252])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b6099ad926fsm14634202a12.5.2025.10.07.04.38.15
+        bh=XQGXZvj+fHOBfHt2M7ZMsptXc4V1NWsTLPFuu0fCYV4=;
+        b=w/UfQHhJAYt5ufPm4+Hw2TcuEi6D7HnxqnuiBslcnGW35p1C+NNEbPn0WriGezuhEF
+         RCY5FXCDLm5LPkFEm8fcxXIMR5VYEt/fIrF8zt5AoT8mAwqSsWacGxZk8ABBDRiyUCj2
+         oNC+tBrtkXrMIZs1akZWvpA17bcEqUI8eDHqeULN934ad833DKT8zo0HWcYgSxU07qQo
+         qUaZrTBMGnA6nJrwTflD4gFeg+tWFfxfkbdp9QzeQn/77lP/KLHVxC/6e6wdulMcp4AX
+         npko4P8beRdKuh5Rg7Hf1XSiYEffLkgpKkObG1CAiJzv6HWM9dj7gXHz6FTot57s2Fwz
+         +EVA==
+X-Forwarded-Encrypted: i=1; AJvYcCXQWxA1ELtuZhWR7BjWn0aEED67gJfvYFa+k9TwLjgVy1w8U+w/MNPYNIrfjn5mSXGd/prn65QKWyHrUY6y@vger.kernel.org
+X-Gm-Message-State: AOJu0YwA4VqxhmqecFFr14LMs9ZvJskO6AeydRJ2sDqLHlNUAMsMhlnr
+	AwKV0AbMDkABPK6RCPqMMiItZ6Of3mHygB8DiTCVurbgW0D+/NFQaHYHAP/F2OmOruDaYq2v49a
+	h+dnSjojWsO2AdJxKciu7P2FiIV/23kVLZLCaAL8wJ/jt9YsYGO0ISAPdkCFxcxAYimzz
+X-Gm-Gg: ASbGncs6BRcbrEXSjY+tcP4aAyawssbPTgazB+gKs+rQzsFf3mgcNuwGzxUmApfoFHw
+	zPpqSCSn7XT20LoI8NmiUmLDs4wn7kzHzYUu5hGmUjBStSgSlB9UMf3hyXi6mkjkrNBJkVz9ZyR
+	c9PhsMCqPQxACwW1cVsZqSWmsoS6zo/FZaWu3CQ9PtFPtnUUlB2hAPan/t3q84y8xHLmfEimG21
+	4YVK/6fMsziAprJkxuES2UE8j745FmcKmJUhe8NEQUIpMJK+w41yVpUNUllgYR0Yd9jEtosb18H
+	RS/S1WX4Phxj9GFetrHAJyepD1RUmVlKiQaCmbsmhYW6/NZjtgKEuw3GW6tPrTstbiBrraX9Lmb
+	7l0FhREy/53cD1TXCm2Xt3mWK0lA=
+X-Received: by 2002:ad4:5d4d:0:b0:81f:3abf:dc1f with SMTP id 6a1803df08f44-879dc8e8b5amr134636776d6.8.1759837340062;
+        Tue, 07 Oct 2025 04:42:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGPO0pc61D7PrUDHek89IoEYYlLKOAWdzRK3cyRnVKS0r8C4VHw9zr6UpiSxFXAKmAVKcrTbg==
+X-Received: by 2002:ad4:5d4d:0:b0:81f:3abf:dc1f with SMTP id 6a1803df08f44-879dc8e8b5amr134636436d6.8.1759837339372;
+        Tue, 07 Oct 2025 04:42:19 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6397c9355c3sm5880830a12.0.2025.10.07.04.42.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Oct 2025 04:38:18 -0700 (PDT)
-Message-ID: <aff68f3b-298a-2cb0-c312-808d7efce6f3@oss.qualcomm.com>
-Date: Tue, 7 Oct 2025 17:08:13 +0530
+        Tue, 07 Oct 2025 04:42:17 -0700 (PDT)
+Message-ID: <1d052b98-4dfd-4ee3-b46f-ac043b406d58@oss.qualcomm.com>
+Date: Tue, 7 Oct 2025 13:42:15 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.13.0
-Subject: Re: [PATCH] media: iris: Fix ffmpeg corrupted frame error
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/4] dt-bindings: mmc: Add dll-hsr-list for HS400 and
+ HS200 modes
+To: Ram Prakash Gupta <quic_rampraka@quicinc.com>,
+        Rob Herring <robh@kernel.org>
+Cc: Ulf Hansson <ulf.hansson@linaro.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley
+ <conor+dt@kernel.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, linux-mmc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, dmitry.baryshkov@oss.qualcomm.com,
+        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
+        kernel@oss.qualcomm.com, Sachin Gupta <quic_sachgupt@quicinc.com>
+References: <20250929113515.26752-1-quic_rampraka@quicinc.com>
+ <20250929113515.26752-2-quic_rampraka@quicinc.com>
+ <20251006214830.GB625548-robh@kernel.org>
+ <817f02aa-dfb8-a134-2fd4-fbdf8e8a714e@quicinc.com>
 Content-Language: en-US
-To: Vishnu Reddy <quic_bvisredd@quicinc.com>, vikash.garodia@oss.qualcomm.com,
-        abhinav.kumar@linux.dev, bod@kernel.org, mchehab@kernel.org,
-        hverkuil@kernel.org, stefan.schmidt@linaro.org
-Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, stable@vger.kernel.org
-References: <20251006091819.2725617-1-quic_bvisredd@quicinc.com>
-From: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
-In-Reply-To: <20251006091819.2725617-1-quic_bvisredd@quicinc.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <817f02aa-dfb8-a134-2fd4-fbdf8e8a714e@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Hrl72kTS c=1 sm=1 tr=0 ts=68e4fbac cx=c_pps
- a=mDZGXZTwRPZaeRUbqKGCBw==:117 a=L4UNg9I9cQSOxNpRiiGXlA==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=COk6AnOGAAAA:8
- a=EUspDBNiAAAA:8 a=kcjkJnMakA67_LZCmskA:9 a=QEXdDO2ut3YA:10
- a=zc0IvFSfCIW2DFIPzwfm:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-GUID: tP2qptRcRlZTIHZ3EKnaVNywZJLrs_ZJ
-X-Proofpoint-ORIG-GUID: tP2qptRcRlZTIHZ3EKnaVNywZJLrs_ZJ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAwNCBTYWx0ZWRfX7FLcGF2IkX8Y
- XGirW9dX/qOHWnQTDiXUZeZSBCzWdMBiFZYiCcas4GeJmhgufZ/C0GlfhI44GRsLg+1j2T+CvFP
- NQwQY/EpRwLyJ1QAYeI8/TB4cn+uikT69szwA9chQe7ABTQlbcipW3Rc09Lxhph4wQhuwQDVy82
- PTDdWqValPIT+NPou0LH7VnVdt9s9yyh8PSkxsCNh87ck0hI6f/mDT5Igb3YCR1lYtrCMN0W+oq
- zvENYF8QmBMBX2XbTwTEvzoACc74xNrqXV+ShMz0hbog/yfP7SOeXyTMyjc7aGEr72WvejEArRi
- 8wzZAn6rIo4mAZaA7DJGH2uM07wR4ad+ZnV01rwJ88NY4ZpWmEkNv5W0HJbtI2WrDK3no/cMUU1
- fQyiFxZdWodmSEA1J2AoTvshIpZ+xA==
+X-Proofpoint-GUID: IZClZNJXPdAKjH-U_GxvuGfO2uBA9qhh
+X-Proofpoint-ORIG-GUID: IZClZNJXPdAKjH-U_GxvuGfO2uBA9qhh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDE2OCBTYWx0ZWRfX4udLIYwCWxlE
+ TsvfOdHVDXMxJiUoJY8471l/u9TYHhbnZ7AwiLLbZvf7ljqhSV7y/Mr4DUd53T4umuKLMluW1Qp
+ akfAamR92sTH0GCrmjVbb9D0y92TFjtHdIeWB4JIwe3gfGZ6d++/B9jR011FvQzW8PBqaouDzqV
+ YTS3YceSaI7cfhkkXAQwvRfzngvveZWwvq5Do5pOJchCr+n7T5Wnjranq19j6ucmTXkQKv4Qoj3
+ 9g+YVJL7VFiqpc4qAJtZKtw8D8j4UxycgmiSW6PExIrnoXGeTBlolA8y1A+RWooNzuu/JSFNr4t
+ f5QGj28xPHoj+jzlGYq6wqSwyRBpKHizQAW9lYGZ+ZZr4VHxHgIvL7Wgev5gVz7n8HYjxHBP3Cc
+ B0kMQeACe/nFTtX/eoZvq6aqJApkIA==
+X-Authority-Analysis: v=2.4 cv=BuCQAIX5 c=1 sm=1 tr=0 ts=68e4fc9d cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8 a=Nkk5IEO714fOIWWTyTAA:9
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-06_07,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- bulkscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
+ impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 clxscore=1015 spamscore=0 suspectscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040004
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060168
 
-
-
-On 10/6/2025 2:48 PM, Vishnu Reddy wrote:
-> When the ffmpeg decoder is running, the driver receives the
-> V4L2_BUF_FLAG_KEYFRAME flag in the input buffer. The driver then forwards
-> this flag information to the firmware. The firmware, in turn, copies the
-> input buffer flags directly into the output buffer flags. Upon receiving
-> the output buffer from the firmware, the driver observes that the buffer
-> contains the HFI_BUFFERFLAG_DATACORRUPT flag. The root cause is that both
-> V4L2_BUF_FLAG_KEYFRAME and HFI_BUFFERFLAG_DATACORRUPT are the same value.
-> As a result, the driver incorrectly interprets the output frame as
-> corrupted, even though the frame is actually valid. This misinterpretation
-> causes the driver to report an error and skip good frames, leading to
-> missing frames in the final video output and triggering ffmpeg's "corrupt
-> decoded frame" error.
+On 10/7/25 1:16 PM, Ram Prakash Gupta wrote:
 > 
-> To resolve this issue, the input buffer flags should not be sent to the
-> firmware during decoding, since the firmware does not require this
-> information.
+> On 10/7/2025 3:18 AM, Rob Herring wrote:
+>> On Mon, Sep 29, 2025 at 05:05:12PM +0530, Ram Prakash Gupta wrote:
+>>> From: Sachin Gupta <quic_sachgupt@quicinc.com>
+>>>
+>>> Document the 'dll-hsr-list' property for MMC device tree bindings.
+>>> The 'dll-hsr-list' property defines the DLL configurations for HS400
+>>> and HS200 modes.
+>>>
+>>> QC SoCs can have 0 to 4 SDHCI instances, and each one may need
+>>> different tuning.
+>>>
+>>> Signed-off-by: Sachin Gupta <quic_sachgupt@quicinc.com>
+>>> Signed-off-by: Ram Prakash Gupta <quic_rampraka@quicinc.com>
+>>> ---
+>>>  Documentation/devicetree/bindings/mmc/sdhci-msm.yaml | 5 +++++
+>>>  1 file changed, 5 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>> index 22d1f50c3fd1..a60222473990 100644
+>>> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.yaml
+>>> @@ -137,6 +137,11 @@ properties:
+>>>      $ref: /schemas/types.yaml#/definitions/uint32
+>>>      description: platform specific settings for DLL_CONFIG reg.
+>>>  
+>>> +  qcom,dll-hsr-list:
+>> '-list' doesn't add anything.
 > 
-> Fixes: 17f2a485ca67 ("media: iris: implement vb2 ops for buf_queue and firmware response")
-> Cc: stable@vger.kernel.org
-> Signed-off-by: Vishnu Reddy <quic_bvisredd@quicinc.com>
-> ---
->  drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> list was used as there are 5 dll register, but '-list' can be
+> dropped, and it can be renamed to qcom,dll-hsr, I will update in
+> next patchset.
 > 
-> diff --git a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-> index e1788c266bb1..4de03f31eaf3 100644
-> --- a/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-> +++ b/drivers/media/platform/qcom/iris/iris_hfi_gen1_command.c
-> @@ -282,7 +282,7 @@ static int iris_hfi_gen1_queue_input_buffer(struct iris_inst *inst, struct iris_
->  		com_ip_pkt.shdr.session_id = inst->session_id;
->  		com_ip_pkt.time_stamp_hi = upper_32_bits(buf->timestamp);
->  		com_ip_pkt.time_stamp_lo = lower_32_bits(buf->timestamp);
-> -		com_ip_pkt.flags = buf->flags;
-> +		com_ip_pkt.flags = 0;
->  		com_ip_pkt.mark_target = 0;
->  		com_ip_pkt.mark_data = 0;
->  		com_ip_pkt.offset = buf->data_offset;
+>>
+>> What is 'hsr'?
+> 
+> Hardware Settings Reference
 
-Reviewed-by: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+Maybe "qcom,dll-presets" would be more clear?
 
-Thanks,
-Dikshita
+Konrad
 
