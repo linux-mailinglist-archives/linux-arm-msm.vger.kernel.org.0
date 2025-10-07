@@ -1,148 +1,190 @@
-Return-Path: <linux-arm-msm+bounces-76188-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76189-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B437BC100E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 12:24:31 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C6A7BC104D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 12:31:02 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5AE17189DCC5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 10:24:54 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 6EF354F47CB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 10:31:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 568D62D838C;
-	Tue,  7 Oct 2025 10:24:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9DED82D8DCF;
+	Tue,  7 Oct 2025 10:30:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hU22RQAO"
+	dkim=pass (2048-bit key) header.d=kaspersky.com header.i=@kaspersky.com header.b="drC/lRH6"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx13.kaspersky-labs.com (mx13.kaspersky-labs.com [91.103.66.164])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D648A28F4
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 10:24:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 279FE2D7DCC;
+	Tue,  7 Oct 2025 10:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.103.66.164
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759832666; cv=none; b=lhSokT0FSFxBPmBb5mukHoVkHlytlqZNAWsUAMSajW59Cn/zzOra5frhJq65ryw+XMM1NjMmfPhA+J4+nAyUP3KxnrJrBXZAgyN+T8XsYS2nYu9Dorwzv+kk7xjackh9Ic1QDbfh0gMWHLZEHF4znYl0oKh5Tnus2ftZnuVOa0M=
+	t=1759833051; cv=none; b=nRikPXm5dO4oWQoQU2MRe9bh24VsyOIjz/fkigZrAJUIgWcnZhJkL1rAYELZjqLogiRHkNGns+PjSO6wRv7tRnUV/RnXTEUmJFfLOTu16BFhBosP+50hSNuONU5k7TbVvgKRe0Cg9Fs1xt2NMmwcOPe/9Un0BPnVE8TJC+3HfI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759832666; c=relaxed/simple;
-	bh=Hz0Lw9XoJxxpUtx9lMNm5Vj6GKjcPnXjgaggtSuRo28=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=H07lZrU40CKjjq2V+eAMDREQyXGNZumc/gX6snKNhGI0Wr6W9nMVobucGYzkmwed5ETNJ3Lv97yTRyO4ZBMCFvOkz6Bh+xp+Xb2KE7VjsaDoydY2nK5tbUYUum+LCPKKUAjMDsIO3/oaeXJXkK20aXSOcJa8ORR0jr88BjDE8+U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hU22RQAO; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5973cFvZ025798
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 10:24:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	Hz0Lw9XoJxxpUtx9lMNm5Vj6GKjcPnXjgaggtSuRo28=; b=hU22RQAOLlj20ycM
-	Lbxfz4cMeFzA0X2Ot+4wz3AcNfmsC5lxP+YqcYQqJRyjxRwBi1dUV4AgDGHT+4aB
-	81hRCV0nIgmAhXehfYcBEL8gv2qDdblLL4a96ufjvUAfxTXzpe+pHwBNHye+NcSQ
-	JsEVjKFN4oGDGQfzy1p20pESqAPrFYaQNt8xAUePTMRGhUeYtT/5MAmaSbHjaffC
-	PiIThhhvXnaJAMmwGvsIGVZntwV/y9Ws++NNiGk93spi4n5lErcoqY7+oNG7OnCp
-	89v5Qa+SV/5GCutVILDVsDQJvvwsXqnnd6sQUbwNWkT9jT1pcieHlQ/1uoIOsfxr
-	Z4N8Tg==
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mgd0jmjc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 10:24:23 +0000 (GMT)
-Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-873eac0465eso22847186d6.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 03:24:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759832663; x=1760437463;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Hz0Lw9XoJxxpUtx9lMNm5Vj6GKjcPnXjgaggtSuRo28=;
-        b=NWm45kGj7smZFUyVOf6A6dGw3FAC0OzNDNLtbTyJT+rS/LicjUgKdejkeZDoqtWb4d
-         v9r+QYhS1cO3TZAvx5UchT9dNgzG5WdBa3vRkI3hLGghYqWdq59sIEOAzvdcfWn4lOnx
-         O+YMrU5EY92JUuICXsaKV53u5wc450iFSrjNgNgyW6f4xnGAB4+nt8wdllQNzkAeLUyN
-         wY6W9g/7UbawR1WY6DlcmeSyEFa5p+e56B7pPP5kwHlntfJyupi1CYpF+icxVig1iCmy
-         J2lsKQLqER4EjQQTxOQ3q9g7ilzh2DY7MjdG4A0cAc4c2oxq8YqBKR1dV/iYmkgh3PET
-         beZQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXd9reyBIHWgU9me/jYJrlr2krpYhcVFrljL4MZDF2/OajGK218+L5Gv3bNL4WuHT1cOVpUEvKN4IRdWTxq@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywxq6LgvgVK3xINXVWLDojohx2JEZxCpsxBd93cY8w32uQ72qZB
-	mQIFhZat5dXWDHgbR2JBuAikpddrZEnS3ubjOrMT8SMQuWyHaErU+bioHSSU7joB7yy8KwFNFGC
-	fp9uKU1gTDHi6cdT/yZKSL1Jc29xPEI5tBMJuAVdEiFu2AzsTZId8SeiN30KZD2sh7Ifh
-X-Gm-Gg: ASbGnctqEO2hBVQt8lN1xZ+pKQUfFK1rin6dCIYwYfGxrBsYEemhSmpc+Hfg5YTFCg4
-	I2WZd40SxR1235v2Gy06DoY38kMvNCQGQ4Eql+BiYSUj5i5UbCM0P2M0vS58V3QsheVghifVfYl
-	kObxNF06wA1wZIzT24IrxpYL6OlfOsEyk6Y5JRuWhxdfIRZXbNgA5bJOEzavXOcTLlqU703t6dG
-	NA+uFEmF3sBtvu8VGLFy1kkm0JU55ra/NWNfIGJ7BDIgKuKCJh1FbDJgq77eyo3lEWsuzyMzU6h
-	wzqu20LwD4XHmeQAFdS0nCx9rJL7nuve1nAr4dfzzRW33+QJroTmRytSMiT3trs59h5LqM7Sytr
-	tvVVqxfvb76cmef5VgKGsaLFB9ow=
-X-Received: by 2002:a05:6214:230b:b0:815:e14a:1f44 with SMTP id 6a1803df08f44-879dc6b708amr132820156d6.0.1759832662361;
-        Tue, 07 Oct 2025 03:24:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF5Zrt9GJ0jEKgSzWhbAu8xtMsQTKHzxXFf3iuTYiuMvNb+I+Lvf727ImsmH4W3gKxk48yO2w==
-X-Received: by 2002:a05:6214:230b:b0:815:e14a:1f44 with SMTP id 6a1803df08f44-879dc6b708amr132819936d6.0.1759832661751;
-        Tue, 07 Oct 2025 03:24:21 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-637881011e9sm12024316a12.25.2025.10.07.03.24.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Oct 2025 03:24:21 -0700 (PDT)
-Message-ID: <64719a5b-0747-4f3f-9bf9-c04900a5e0e5@oss.qualcomm.com>
-Date: Tue, 7 Oct 2025 12:24:18 +0200
+	s=arc-20240116; t=1759833051; c=relaxed/simple;
+	bh=BAUAh6z7TbSDesEOQqnrWYB8Q8VlkNfaY4AmSsvhzT0=;
+	h=From:To:CC:Subject:Date:Message-ID:MIME-Version:Content-Type; b=jMeOO08Kbqtr/1uC6MoAejmuCZ81XRxoIO1CG3VSL1QnBwaclolnf3NDiPrO9Xq928DTwmBzXOby7RwOmlR2hECpAfjmQO7nCwfIPNchEO7jo+Yrz9iN1aWive7YRMsVOuQGJxQWGKq+1Rd5qQZ2qeoEL9l2nikhHdopZGpqJn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kaspersky.com; spf=pass smtp.mailfrom=kaspersky.com; dkim=pass (2048-bit key) header.d=kaspersky.com header.i=@kaspersky.com header.b=drC/lRH6; arc=none smtp.client-ip=91.103.66.164
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=kaspersky.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kaspersky.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kaspersky.com;
+	s=mail202505; t=1759833047;
+	bh=v21aBvSKnK7Vjsw81h0NFIikszr/E66UtyOGyhKph24=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type;
+	b=drC/lRH6cYqVCIrqTZzEoeg9u0rKa6Tu26fgzIbkC325/BAuF23ZUddufL65ysov0
+	 M7dz3mFTC5OZxdM5iywzIH/2uNgNjLPQYxhy6pY8Wy330hBqrQHx1pUqlnpfLUCXhK
+	 hmjquJor8oSkHfjtAxH0CQ36lfnAct7LfTsxgb/GwnI6BtII7L/4bfCNaIgBF5mvP7
+	 ulnBk+F5lDCes04pU+Tz/h95d30v5stDJ00BgukBTldgmETbp6NvQZBjblylKq1LLq
+	 UMd+cNT6dr+Qgy6kBl/CpG80RarpymtboHM0JoS2aio+DvX5I6xO2CRKM8YbDBhav7
+	 CQuprkoxJDHxQ==
+Received: from relay13.kaspersky-labs.com (localhost [127.0.0.1])
+	by relay13.kaspersky-labs.com (Postfix) with ESMTP id 23F663E21B0;
+	Tue,  7 Oct 2025 13:30:47 +0300 (MSK)
+Received: from mail-hq2.kaspersky.com (unknown [91.103.66.200])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(Client CN "mail-hq2.kaspersky.com", Issuer "Kaspersky MailRelays CA G3" (verified OK))
+	by mailhub13.kaspersky-labs.com (Postfix) with ESMTPS id 5E5F93E35EF;
+	Tue,  7 Oct 2025 13:30:46 +0300 (MSK)
+Received: from zhigulin-p.avp.ru (10.16.104.190) by HQMAILSRV2.avp.ru
+ (10.64.57.52) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.36; Tue, 7 Oct
+ 2025 13:30:45 +0300
+From: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+To: Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>
+CC: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>, Vikash Garodia
+	<vikash.garodia@oss.qualcomm.com>, Bryan O'Donoghue <bod@kernel.org>, Mauro
+ Carvalho Chehab <mchehab@kernel.org>, Stanimir Varbanov
+	<stanimir.varbanov@linaro.org>, <linux-media@vger.kernel.org>,
+	<linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<lvc-project@linuxtesting.org>
+Subject: [PATCH v2] media: venus: prevent potential integer overflow in decide_core()
+Date: Tue, 7 Oct 2025 13:30:40 +0300
+Message-ID: <20251007103043.1969715-1-Pavel.Zhigulin@kaspersky.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 4/6] sm8650-hdk: Enable I2S for HDMI
-To: Alexey Klimov <alexey.klimov@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Srinivas Kandagatla <srini@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
-        Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>
-Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20251006-topic-sm8x50-next-hdk-i2s-v1-0-184b15a87e0a@linaro.org>
- <20251006-topic-sm8x50-next-hdk-i2s-v1-4-184b15a87e0a@linaro.org>
- <DDBPGIDN8SKS.2GF6TZC6KGXVI@linaro.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <DDBPGIDN8SKS.2GF6TZC6KGXVI@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: PSVXabkrwfAjoi61AfZxi60SqkL0A0cE
-X-Authority-Analysis: v=2.4 cv=T8aBjvKQ c=1 sm=1 tr=0 ts=68e4ea57 cx=c_pps
- a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=KKAkSRfTAAAA:8 a=T-gaThBTW-us8SvG3JcA:9
- a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: PSVXabkrwfAjoi61AfZxi60SqkL0A0cE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDEyMyBTYWx0ZWRfX2srnQZLg7nhj
- v1KyN9Z/ndoOaFWCZKALZ9OVXOMFuEyu75IoAkjjGyKLlbUGwobjRyQZHVweft50sl4WHLV9nIu
- 8b2tGPIvIQm2WGiMyx7Feilk0KStd5kQtnWZ4M+h8hMSxn+MY+fmDcEEwgqnuTkcFaQNVLds5f7
- Mw9qQPQguV1hbAaIMGdVymjw/z2lzS/DjzG8bTkGjwTQPQYAmvHNkFw/LSL/ms7zklYHNZamqHW
- EUlhSgE1YmoQZy6DwOnn2iQq5t7YInGafA3UjbEWd/k1pBzwUJONNzrfZlczIrXcbR2Of5RCKU2
- /w7Z89sW78+eZYN8oBToOuF4kyywc5Xs4B9rpGCn4fyzyDcKL7BcAc/RjlMncTL73UyxZUbhHs/
- s/Wuk6DVrBrzJ66QWYeMlMB3qafZ2Q==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-06_07,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060123
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: HQMAILSRV4.avp.ru (10.64.57.54) To HQMAILSRV2.avp.ru
+ (10.64.57.52)
+X-KSE-ServerInfo: HQMAILSRV2.avp.ru, 9
+X-KSE-AntiSpam-Interceptor-Info: scan successful
+X-KSE-AntiSpam-Version: 6.1.1, Database issued on: 10/07/2025 10:21:52
+X-KSE-AntiSpam-Status: KAS_STATUS_NOT_DETECTED
+X-KSE-AntiSpam-Method: none
+X-KSE-AntiSpam-Rate: 0
+X-KSE-AntiSpam-Info: Lua profiles 196857 [Oct 07 2025]
+X-KSE-AntiSpam-Info: Version: 6.1.1.11
+X-KSE-AntiSpam-Info: Envelope from: Pavel.Zhigulin@kaspersky.com
+X-KSE-AntiSpam-Info: LuaCore: 69 0.3.69
+ 3c9ee7b2dda8a12f0d3dc9d3a59fa717913bd018
+X-KSE-AntiSpam-Info: {Tracking_cluster_exceptions}
+X-KSE-AntiSpam-Info: {Tracking_real_kaspersky_domains}
+X-KSE-AntiSpam-Info: {Tracking_uf_ne_domains}
+X-KSE-AntiSpam-Info: {Tracking_from_domain_doesnt_match_to}
+X-KSE-AntiSpam-Info: lore.kernel.org:7.1.1;kaspersky.com:7.1.1,5.0.1;zhigulin-p.avp.ru:7.1.1,5.0.1;127.0.0.199:7.1.2;d41d8cd98f00b204e9800998ecf8427e.com:7.1.1
+X-KSE-AntiSpam-Info: {Tracking_white_helo}
+X-KSE-AntiSpam-Info: FromAlignment: s
+X-KSE-AntiSpam-Info: Rate: 0
+X-KSE-AntiSpam-Info: Status: not_detected
+X-KSE-AntiSpam-Info: Method: none
+X-KSE-Antiphishing-Info: Clean
+X-KSE-Antiphishing-ScanningType: Deterministic
+X-KSE-Antiphishing-Method: None
+X-KSE-Antiphishing-Bases: 10/07/2025 10:24:00
+X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
+ rules found
+X-KSE-Antivirus-Interceptor-Info: scan successful
+X-KSE-Antivirus-Info: Clean, bases: 10/7/2025 9:03:00 AM
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+X-KSE-AttachmentFiltering-Interceptor-Info: no applicable attachment filtering
+ rules found
+X-KSE-BulkMessagesFiltering-Scan-Result: InTheLimit
+X-KSMG-AntiPhishing: NotDetected, bases: 2025/10/07 08:54:00
+X-KSMG-AntiSpam-Interceptor-Info: not scanned
+X-KSMG-AntiSpam-Status: not scanned, disabled by settings
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.1.8310, bases: 2025/10/07 09:28:00 #27888718
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected, bases: 2025/10/07 08:54:00
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 52
 
-On 10/7/25 3:39 AM, Alexey Klimov wrote:
-> On Mon Oct 6, 2025 at 7:37 PM BST, Neil Armstrong wrote:
->> Add the necessary nodes to configure the right I2S interface
->> to output audio via the DSI HDMI bridge.
->>
->> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
->> ---
+The function 'decide_core()' contains the following code:
 
-subject prefix (patches 4-6)
+	cur_inst_load = load_per_instance(inst);
+	cur_inst_load *= inst->clk_data.vpp_freq;
+	...
+	cur_inst_lp_load = load_per_instance(inst);
+	cur_inst_lp_load *= inst->clk_data.low_power_freq;
 
-Konrad
+This can lead to an integer overflow because the variables
+'cur_inst_load' and 'cur_inst_lp_load' are of type u32.
+
+The overflow can occur in the following scenario:
+
+  1. The current FPS is 240 (VENUS_MAX_FPS constant).
+     The processed image frame has a resolution of 4096x4096 pixels.
+  2. According to 'codec_freq_data':
+       - 'inst->clk_data.low_power_freq' can be up to 320
+       - 'inst->clk_data.vpp_freq' can be up to 675
+     (see drivers/media/platform/qcom/venus/hfi_platform_v4.c
+      and drivers/media/platform/qcom/venus/hfi_platform_v6.c)
+  3. 'load_per_instance()' returns 15728640 under these conditions.
+  4. As a result:
+       cur_inst_load *= inst->clk_data.vpp_freq → 10616832000
+       cur_inst_lp_load *= inst->clk_data.low_power_freq → 5033164800
+
+The proposed fix changes the type of these variables from u32 to u64
+to prevent overflow.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 3cfe5815ce0e ("media: venus: Enable low power setting for encoder")
+Signed-off-by: Pavel Zhigulin <Pavel.Zhigulin@kaspersky.com>
+---
+v2: Revert min_coreid and min_lp_coreid to u32 as
+    Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com> suggested
+	during review
+v1: https://lore.kernel.org/all/20251006154041.1804800-1-Pavel.Zhigulin@kaspersky.com/
+ drivers/media/platform/qcom/venus/pm_helpers.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index f0269524ac70..eec49590e806 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -582,9 +582,9 @@ static int move_core_to_power_save_mode(struct venus_core *core,
+ }
+
+ static void
+-min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u32 *min_load, bool low_power)
++min_loaded_core(struct venus_inst *inst, u32 *min_coreid, u64 *min_load, bool low_power)
+ {
+-	u32 mbs_per_sec, load, core1_load = 0, core2_load = 0;
++	u64 mbs_per_sec, load, core1_load = 0, core2_load = 0;
+ 	u32 cores_max = core_num_max(inst);
+ 	struct venus_core *core = inst->core;
+ 	struct venus_inst *inst_pos;
+@@ -639,8 +639,9 @@ static int decide_core(struct venus_inst *inst)
+ {
+ 	const u32 ptype = HFI_PROPERTY_CONFIG_VIDEOCORES_USAGE;
+ 	struct venus_core *core = inst->core;
+-	u32 min_coreid, min_load, cur_inst_load;
+-	u32 min_lp_coreid, min_lp_load, cur_inst_lp_load;
++	u32 min_coreid, min_lp_coreid;
++	u64 min_load, cur_inst_load;
++	u64 min_lp_load, cur_inst_lp_load;
+ 	struct hfi_videocores_usage_type cu;
+ 	unsigned long max_freq = ULONG_MAX;
+ 	struct device *dev = core->dev;
+--
+2.43.0
+
 
