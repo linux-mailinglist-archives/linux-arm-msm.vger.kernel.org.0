@@ -1,168 +1,153 @@
-Return-Path: <linux-arm-msm+bounces-76256-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76257-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42DC4BC2451
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 19:42:28 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2CFFCBC271D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 07 Oct 2025 20:54:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id BDCC534FEF8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 17:42:27 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id D2BC13C5FAF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Oct 2025 18:53:58 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A6C8C1E5710;
-	Tue,  7 Oct 2025 17:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C8C942E975F;
+	Tue,  7 Oct 2025 18:53:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="CT/cUf4Q"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="GFtCGwrh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F406D155389
-	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 17:42:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5A22E973A
+	for <linux-arm-msm@vger.kernel.org>; Tue,  7 Oct 2025 18:53:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759858945; cv=none; b=mhZvsqUsJkusTTRfc3DASghSJHtCfJRQX8bNL86LiSTDaeiqyP3HDz9VfQPWJncTNW165exDCURTYxs0YtMiuEHWVCWUM1t0M4jtT5McGmMg5NpF1te9MGUqUnyq5JVNfDOQp+66e8/YY5dFkoPWsndQSyf7p7w3Pjc8GQyZJX4=
+	t=1759863230; cv=none; b=Nax9vI98wY74G7DazuPVo2yDns+c10MX9uMSYwpLCaLNaoD7H36rj5qPSnqFTk1QOS3bs3+GQ6KYVQ87dwjPdr+EMqxUdllGG9pWVxzFJhDLPN8V3Dbaw3GxuV6u+a6NiRezIkux/Cn8egexRG3U9+YvQQ9PXXROtInKmKSrVFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759858945; c=relaxed/simple;
-	bh=pl0kAP1F3l2Z7gs4mA8JJ4dMGyrDIxTTWP16XVk3IwI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VDbrMyjBEfn1QI0lkn1KmQr2M0LuXBdX8CshUVPhfekOcCZWFKkwkHHChQBmktWqB+T+RYV2TyZL6Zu+tN/8Ruseke3B8Z7I0MYD7eG5zzYTK1yrz6nUvY7ccQSIV8zZ9pczfBuvJOLSvGBiWat4Nbkrva9BXhMReJxJjDLa1WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=CT/cUf4Q; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 597ET6KG029377
-	for <linux-arm-msm@vger.kernel.org>; Tue, 7 Oct 2025 17:42:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=wyee24WrVjcVFhMjw/FwWzhQ76MJ3q6OE06
-	+avcYD2Q=; b=CT/cUf4QmhWp5E8vv/Ju+k9rJMGonB6z7OffDioGKS04Mh6VO7F
-	wZ/NNLbAS1WvQJ99FWKiDGaR5UyJg7ZzHl91+ituRRJh2Pwe1++guIyBXVfiPoaZ
-	98SvTR/1S8HOEHpPsY8ES3A8JZe/kJ0/rbJqIAUQifiv7KBRv+Flrdwyfv160qHZ
-	MclszSlf4j9y/oc0myWVDXb/hbW1iQMccWZoh0H0l938om+Dc+vkXFUBIccCNuQh
-	n5usQE58osCFtlxT9blruyIP99mkl0s5JRKUEyMgVHOCmkdbDCmLSg6dvHxLrF+y
-	YnwagA3qR4tNmCIjFV1lmqcdoRw2fK6wQ4w==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com [209.85.160.197])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mnkptxsg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 17:42:23 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id d75a77b69052e-4de53348322so258589661cf.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 10:42:22 -0700 (PDT)
+	s=arc-20240116; t=1759863230; c=relaxed/simple;
+	bh=Op+QTRcfwfbsxIix4ouiAegGQuvQEcmggnJefJxWt30=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=F3Fe1PKGGdGg33hK+budgymnB8NNOOtitGBOLApEl639H9uXz8ZFE7C10dHUY3+63stqkZF1NWa+IfRKCE6RYgKS9RAikDh/J47cuPn2TyUx/AY3KG+dsiWefUNUBO+3919G9cQRxiIxUEeSFWh993wxbjrDc9cVt9vKiosib1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=GFtCGwrh; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-46e48d6b95fso57310505e9.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 11:53:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1759863226; x=1760468026; darn=vger.kernel.org;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1B8FMEvRCjdBduWbBN4BHAuWdLmc7inqVvHYEcRSHj8=;
+        b=GFtCGwrhkdsYQssycM8owoQtcjBxYxvPimzMEppIZXwkGysbaUiKbz4o9P7whVkDpP
+         CEt9by12pLtniK+RV7vOonDINzTZtmzZKuY+pwKxcZ/TwAlZzF4ZzjHf2flZoCSTknvL
+         yQ1N4KLPoTJXhuXiB9BLefeBKEh3YWRERUt+bfKPxneY3ERs/ma2e7Tw4VYCmda65fxJ
+         GWQaHbRO4NYcdaRSRV7btDjVw1NfEKCY+o1KCuRyaC5BokHeWVzUUGRhHM2FvrrKLaT2
+         z4WNlDo1lKoREAjzWGMuOmzgRnzFx1TJ0jzyfw7+c1yltXDdTVEnjqgvtHl9xEb4YJvR
+         Bc2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759858942; x=1760463742;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1759863226; x=1760468026;
+        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
+         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=wyee24WrVjcVFhMjw/FwWzhQ76MJ3q6OE06+avcYD2Q=;
-        b=BQiewR/6QxrJeIWKXezQAIX/StDH38KnlL1/3mlAtWT6pxY/k4vbD1SFqyNfqezTV0
-         jeOVgIXtzU/90jHfbtdE9kpkMtLZrYzihcY7tIQpgcvOmaPOLKDV2A/P0+hgunqdqxLr
-         5q13rzNmvol6ehExFpRP51Pac0kD9wjhZZsBwFrF0rLDbCz8rj5MF4VIsa8ARQBgrvF7
-         2ACfetWQhIo23gG/WAVaFZ5CIngli7xVhbFxoYbXARsOiw+Q0LWjt48wG7hMD9XfrgTc
-         nwRrNrqONbyofXM5uwKaw1ED4uY+0Dr+FU3rz1B6HOOGlGHw6dn3TUd3r2xbtyFlfLKk
-         +mTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXXW5DTo3LECq8/fHLvskkoNLRyXNfg7JyRFWs52cH8vZzKTpgw83PfNTKWzdXkhRIuTRC70DXGqhTTUsg3@vger.kernel.org
-X-Gm-Message-State: AOJu0YwRHbBsE7VPCX3WSdXN6uTSXHhBKrH7eO8IuegaIkFk1H7pV3Fu
-	IDB0+qTyRlcFvjKxT/yzSBYHW8fGj+WRkgwPb8H8VHp8+BbmAoMYUPkoygtSbmfu3SA3cuzs7nO
-	nOHetceUwvVfZ04eACSxmMz0R41vw1lXxcBIvbaFvmjkdWd5nmnBAKH8rDz0GGbaHwcWI
-X-Gm-Gg: ASbGnctW3O46uWefzEGiRUYJHP+vYL3xkCurfUbum6h8kb4RBmd135l8oYa7JSuZOrr
-	hWV5gnktVJn+NzBrB6tGW7a8LgbJMws1pwUTJNEBfierpDVccXBmOp0eE9qUVaavEW+xbzNShPQ
-	bqRf/Ycv1fmAgaUB9kkqV/SiF0G31DtBB97koeoi98r42ukxMlWcUQVZEg41nnrsPs+bqBA/2sT
-	bJcbu8hO9MQz29QMx2bgm8AJrERweHLPspUTdd0feMFnOEejyUBYsOZnQ7LeIO0JkJ59NjDe1yN
-	mVeWLByhvfbBvv36xrlp9+dH5O9lZZyScAlis6pk6WNnYLk3Axddb11PODOZgzmQUZCTF07Yze9
-	yhJD98Z43oA==
-X-Received: by 2002:ac8:584c:0:b0:4b5:ea1f:77f4 with SMTP id d75a77b69052e-4e6ead859f5mr5978621cf.64.1759858941464;
-        Tue, 07 Oct 2025 10:42:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGN+OrkX5PkvcLg4ILXeqCV6PcawkdSZcDb1ry08Nud168rwL5N+vcwI1vQWZ4gau5HDN2Jpg==
-X-Received: by 2002:ac8:584c:0:b0:4b5:ea1f:77f4 with SMTP id d75a77b69052e-4e6ead859f5mr5978011cf.64.1759858940762;
-        Tue, 07 Oct 2025 10:42:20 -0700 (PDT)
-Received: from hu-yabdulra-ams.qualcomm.com ([212.136.9.4])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-639773d4d8esm7043132a12.30.2025.10.07.10.42.18
+        bh=1B8FMEvRCjdBduWbBN4BHAuWdLmc7inqVvHYEcRSHj8=;
+        b=lqI114AehL7VNbJTYOI9WHJSpTxsfUBQDvuu1HNUoP3SoGRkhAyzePHkXxJbrgLH7E
+         sLnQNkW6aCHw5j/SgKG+tuiV58qAo3XAC6P5m238uVy43K2gDGijEBZxf5Uo6g92fcEz
+         jzIH7ODvv7Sw4JBlePWUDELWB3rWPfPD9UnKCOGv0JYbdtPIFDajvZV3lCCd+eQ0hpPm
+         gaX5QGfKcnAp3N0EB8r/vVr05HCZY3lOa+asQQrktetiaa/96/Q6hBFHp1e0QMCNu68m
+         K6Ly+Xb+0pjw7gmQ5PDDYSTR7qasd58n/b5Z6c7Xqocb5075r6dKoeSSQsNzJBmUt08J
+         Sxwg==
+X-Gm-Message-State: AOJu0YxEJXFRWvZHjhRFEO95NX+9y4ftx7Fkn31dsA50NdiuOY7pH+xR
+	wcJ3ail1ZeN1rVic1hiNPMjdCZcNvUoDNPuoSrTNO+zbrmdPEXyCD13DjZFIdYl1uFKdMRN+ln3
+	3jJf/
+X-Gm-Gg: ASbGncsd1E0IsufT2idtN61YNnKlUdlmXFV4kSYWZdnFTBLnW3VztOPK766rlBpR8V3
+	lCxq15X0X2DzYJ0o3t3VWVINm/RyfXF1Nwj9YXA+sZ9sUbFBe//MBh2vyqDYKqukKI6i7KWfU5N
+	VAfTZkQjukaUhUY9fKYRWNja3391S7f2Mg0bikVhu9Fq4wtjVdQEeX/SJG0O1LZLJ5gvEWIW5TA
+	EKf/63Xl9QzOZm2vJwmIkHQ64jF88akfhELOYq4iKDgMWNrHzQ2PUlKn9fiED8mu6udkaG8Mqm3
+	Kiw1S/pvPmrDZ4aZ1eIqDuQ/IkEO2FV+iju5LhVGbvi4t+/9ajQQTkUbNeaTRuuC/vVPZNVzMSW
+	dkeqjDW/g/9JWXfsBSi7F+zdGJo6JNxqX0KQzHNSs+Bqe0wBb3MD4tZ//Xd/YHYG9DfIaEGY=
+X-Google-Smtp-Source: AGHT+IH5zHVLrizZeH0JOY25vGwDqk7lqwvYB2VQUuAGyhwLO96qot3/7SYhbnr39uYNrtvz3cFCdw==
+X-Received: by 2002:a05:600c:4745:b0:46d:cfc9:1d0f with SMTP id 5b1f17b1804b1-46fa9af30e5mr5064635e9.19.1759863226080;
+        Tue, 07 Oct 2025 11:53:46 -0700 (PDT)
+Received: from arrakeen.starnux.net ([2a01:e0a:3d9:2080:8261:5fff:fe11:bdda])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8f01absm26399548f8f.44.2025.10.07.11.53.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Oct 2025 10:42:20 -0700 (PDT)
-From: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
-To: jeff.hugo@oss.qualcomm.com, carl.vanderlip@oss.qualcomm.com,
-        troy.hanson@oss.qualcomm.com, zachary.mckevitt@oss.qualcomm.com
-Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
-Subject: [PATCH] accel/qaic: Use overflow check function instead of division
-Date: Tue,  7 Oct 2025 19:42:18 +0200
-Message-ID: <20251007174218.469867-1-youssef.abdulrahman@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
+        Tue, 07 Oct 2025 11:53:45 -0700 (PDT)
+From: Neil Armstrong <neil.armstrong@linaro.org>
+Date: Tue, 07 Oct 2025 20:53:44 +0200
+Subject: [PATCH] arm64: dts: qcom: sm8650: set ufs as dma coherent
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: r7wNXqkVHWfTf7Ix8hPDhjeX09QK9lkx
-X-Proofpoint-ORIG-GUID: r7wNXqkVHWfTf7Ix8hPDhjeX09QK9lkx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDE2OCBTYWx0ZWRfXyDGIggK04rfu
- 1xR6hVQ34AXXlgEjAYcuoXkQUh1xo48FB1VWDIJJpJ6yo1QO0KoQrUr2qr2M2y4XC0gt3dQrkeP
- e7/a3YHDn51M16Pm8vsTAK9UjUWi8EWytaY0QMj0a868YCOklrFLf+HLhdReLdcYELyBzYDaBLk
- DYlo1dsLCoF+qgTRhkyslyEnNDiXej6kZXX3rHyyAmQyb08qHJxJPQc57kyZmgq9s4Y7onrVXqE
- +Z+Jci1MSB5KnhohwT9YQ+n69EEr0WfOiz6HfQK5IueSxtQdGPeAx+0et8kYRkp0BjjdmfIxFIR
- yydihJaisXQXMm0q/slw2hm1VkYe9E9J2di0Tn/c5mChHjFBiJonNlYwB3DTbYuTNnC0LPLEDbP
- 6TQ0olyRDYqI/L19jXhYsoJuEQ0ucw==
-X-Authority-Analysis: v=2.4 cv=BuCQAIX5 c=1 sm=1 tr=0 ts=68e550ff cx=c_pps
- a=EVbN6Ke/fEF3bsl7X48z0g==:117 a=dNlqnMcrdpbb+gQrTujlOQ==:17
- a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8 a=fuhP_ZXRh-4HPPFbgo0A:9
- a=a_PwQJl-kcHnX1M80qC6:22 a=TjNXssC_j7lpFel5tvFf:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-07_02,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 clxscore=1015 spamscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060168
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251007-topic-sm8650-upstream-ufs-dma-coherent-v1-1-f3cfeaee04ce@linaro.org>
+X-B4-Tracking: v=1; b=H4sIALdh5WgC/x3NTQoCMQxA4asMWRtoB1rFq4iL2qZOFv0h6Ygwz
+ N0tLr/NewcoCZPCfTlA6MPKrU7YywJxC/VNyGkaVrM6a8wVR+scUcvNO4N71yEUCu5ZMZWAsW0
+ kVAf6aFJwmV5kPcxYF8r8/Y8ez/P8AbXTiht4AAAA
+X-Change-ID: 20251007-topic-sm8650-upstream-ufs-dma-coherent-6c0da5febe16
+To: Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>, 
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org, 
+ linux-kernel@vger.kernel.org, Neil Armstrong <neil.armstrong@linaro.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1376;
+ i=neil.armstrong@linaro.org; h=from:subject:message-id;
+ bh=Op+QTRcfwfbsxIix4ouiAegGQuvQEcmggnJefJxWt30=;
+ b=owEBbQKS/ZANAwAKAXfc29rIyEnRAcsmYgBo5WG5oSqx1X3ytDB+hQonl1G38RphNXIieR2OJJ/J
+ QgykVcqJAjMEAAEKAB0WIQQ9U8YmyFYF/h30LIt33NvayMhJ0QUCaOVhuQAKCRB33NvayMhJ0RdoEA
+ DQdY3TtihKd6kF3vihFn8DFB4XXmIepTKeJbn5X+wHti6bMmXrMtOmqtClmF/y4xetCM46ktSNh2eE
+ AGoWxAh0+0dhaTrNUfOhZHGkeUB2SiwGOpiaiMZIT16w2rFz8pBQHbNMTELtja6E7e/zkQ6aHMSoo+
+ 3vDJgllxAZa7bV8NaopaMKGHUeoUi1Y76kdn8BbcMM2+Hh0XQ/1kt5+oETiAOmJ4WJNdSHQzqXo6Ls
+ 0tDUVNqokvRigiIT0uz7/8vfBKqzm9s0WJdm2vlykhZkC4sr+oUj16T7OK9vyIGV7xp9ENub1KACX3
+ DBaNLRU333kT5/yworEhF8ziXWjFhIMLTDA6eS9RCC54mLCMOSsKco+T8L3aXa/RPSx/DkLXQGr+vf
+ pSoD8P6qRadJCtoMHML6egLtYmWb6mTE6CosbyFZsp6vfbYNiX41KADZPyF1wgiclloUPiR+B2xu5f
+ MdJee3v1ZGGncxNUJ3kColvabHJYAzT0sFU3h8VvvHG/eDqHB/DKKTzmi6hn+FzxwwJ4ypShF+4xhU
+ US1WEg7rdcVV5an1Ea030YXXbrqitgNOAN2N037WZwENcAZI8HoGrBJ0wtqOq7Lmcx84o9KO6ez7pd
+ Y2G810bN8csB0kuz/MWhBGYSGbOciCA3sF/VfDDutdpjDMd4+MZXIjEDnTBQ==
+X-Developer-Key: i=neil.armstrong@linaro.org; a=openpgp;
+ fpr=89EC3D058446217450F22848169AB7B1A4CFF8AE
 
-From: Carl Vanderlip <quic_carlv@quicinc.com>
+The UFS device is ovbiously dma coherent like the other IOMMU devices
+like usb, mmc, ... let's fix this by adding the flag.
 
-Division is an expensive operation. Overflow check functions exist
-already. Use existing overflow check functions rather than dividing to
-check for overflow.
+To be sure an extensive test has been performed to be sure it's
+safe, as downstream uses this flag for UFS as well.
 
-Signed-off-by: Carl Vanderlip <quic_carlv@quicinc.com>
-Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
+As an experiment, I checked how the dma-coherent could impact
+the UFS bandwidth, and it happens the max bandwidth on cached
+write is slighly highter (up to 10%) while using less cpu time
+since cache sync/flush is skipped.
+
+Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 ---
- drivers/accel/qaic/qaic_control.c | 5 +++--
- drivers/accel/qaic/qaic_data.c    | 5 +++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/sm8650.dtsi | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/accel/qaic/qaic_control.c b/drivers/accel/qaic/qaic_control.c
-index d8bdab69f800..7c809757c325 100644
---- a/drivers/accel/qaic/qaic_control.c
-+++ b/drivers/accel/qaic/qaic_control.c
-@@ -655,8 +655,9 @@ static int encode_activate(struct qaic_device *qdev, void *trans, struct wrapper
- 		return -EINVAL;
+diff --git a/arch/arm64/boot/dts/qcom/sm8650.dtsi b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+index e14d3d778b71bbbd0c8fcc851eebc9df9ac09c31..d7ed45027ff453a2d7988678c9e9568837a1c086 100644
+--- a/arch/arm64/boot/dts/qcom/sm8650.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8650.dtsi
+@@ -4020,6 +4020,8 @@ &mc_virt SLAVE_EBI1 QCOM_ICC_TAG_ALWAYS>,
  
- 	nelem = in_trans->queue_size;
--	size = (get_dbc_req_elem_size() + get_dbc_rsp_elem_size()) * nelem;
--	if (size / nelem != get_dbc_req_elem_size() + get_dbc_rsp_elem_size())
-+	if (check_mul_overflow((u32)(get_dbc_req_elem_size() + get_dbc_rsp_elem_size()),
-+			       nelem,
-+			       &size))
- 		return -EINVAL;
+ 			iommus = <&apps_smmu 0x60 0>;
  
- 	if (size + QAIC_DBC_Q_GAP + QAIC_DBC_Q_BUF_ALIGN < size)
-diff --git a/drivers/accel/qaic/qaic_data.c b/drivers/accel/qaic/qaic_data.c
-index 797289e9d780..7c304a9e5048 100644
---- a/drivers/accel/qaic/qaic_data.c
-+++ b/drivers/accel/qaic/qaic_data.c
-@@ -953,8 +953,9 @@ int qaic_attach_slice_bo_ioctl(struct drm_device *dev, void *data, struct drm_fi
- 	if (args->hdr.count == 0)
- 		return -EINVAL;
++			dma-coherent;
++
+ 			lanes-per-direction = <2>;
+ 			qcom,ice = <&ice>;
  
--	arg_size = args->hdr.count * sizeof(*slice_ent);
--	if (arg_size / args->hdr.count != sizeof(*slice_ent))
-+	if (check_mul_overflow((unsigned long)args->hdr.count,
-+			       (unsigned long)sizeof(*slice_ent),
-+			       &arg_size))
- 		return -EINVAL;
- 
- 	if (!(args->hdr.dir == DMA_TO_DEVICE || args->hdr.dir == DMA_FROM_DEVICE))
+
+---
+base-commit: e5f0a698b34ed76002dc5cff3804a61c80233a7a
+change-id: 20251007-topic-sm8650-upstream-ufs-dma-coherent-6c0da5febe16
+
+Best regards,
 -- 
-2.43.0
+Neil Armstrong <neil.armstrong@linaro.org>
 
 
