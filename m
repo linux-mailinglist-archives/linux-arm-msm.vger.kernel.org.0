@@ -1,293 +1,145 @@
-Return-Path: <linux-arm-msm+bounces-76473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76474-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA7EDBC6471
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 20:24:56 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DB939BC64A2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 20:27:31 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A2F054EAA4D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 18:24:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 707A3405D6F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 18:27:15 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B7542C0F7A;
-	Wed,  8 Oct 2025 18:24:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1919928504F;
+	Wed,  8 Oct 2025 18:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="bzSgeTZ3"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Udj/OQ61"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432752C08CE;
-	Wed,  8 Oct 2025 18:24:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECEF283C9E
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 18:27:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759947886; cv=none; b=OBtyFMWWhwqeelxshOH1jGDm0ojwliX1KErow4sYVU23oxizrOKrbMtBcoMGXkDIymjPGSRCpJqMJjGJsG/lYROIjYIjal3AnNyXxHf/9/5Ax29Ov0HL/7dV4sRJP7fhDZAtlSj2EmOmiUV/aPleWpRaia9oesocBy+qC7dCpOs=
+	t=1759948034; cv=none; b=pE5i7yizofYHeTGWb+rt5dwsZejQWzgMyATy9y41bxY6i+WyQUAyxCqRyZxIWBX/kr4XLTvjU/mRWd3WQKiiz8c9VDdYjIF0vo2lk3IhGPuhiPbhXSwxYU48REbGC7dtywrVUqe7V65DwUz5Ui7Dntk3+hjniYo6wI4OjoyVfgU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759947886; c=relaxed/simple;
-	bh=RsqMaJC2iID86BNt1juQ80CEq7yoPe8omJ1X2/PwyHw=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=tAkX1EqNFDjmWO3XW/UHSMO+XhSPPnqZO8kQLRy+Cgh4Rd4Ts1aOE9jEN63JBGMVkt3fhdC2ooHFE9kgFOcAB4ACmRwPa8U9JeIm0wEDsYI8IDqm2rp4eRFnJuXcSbvMuY9c+9Lt4wJJWv0CsgOsyTFAfyp2FVz8mFvriwXZp3M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=bzSgeTZ3; arc=none smtp.client-ip=148.251.105.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1759947878;
-	bh=RsqMaJC2iID86BNt1juQ80CEq7yoPe8omJ1X2/PwyHw=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
-	b=bzSgeTZ3E18DyQkDMnSOfYGpMjtoDFZvvo78LBcjUURbElc4ao00lQH9dYuLOZcqU
-	 JOxb9e347HFhmvKnjDQIMW3q+OSgVHHIJeTQApfGf76L3wrNwEroinPW2bX1EgIYaW
-	 W86Yw0pFFcXTsQJ5wyp/dieERtH9/meTkf4zdErkfhdxcKU8P/1UIgKDgPp3+96K1q
-	 yiQfkGFa2KgTuYf1O8MY5rgsE2USEndGBW+gejfCS344Q+DbhA0Kmo2OX4N4R6BEG0
-	 PSQxfjQER6VYl8eX2q7QP10sAM0FXCyxrwOpCDdhZQfXE8Q3qcJxCTbveFWheB/t6y
-	 jd3kzJwO68jOg==
-Received: from [IPv6:2606:6d00:17:ebd3::c41] (unknown [IPv6:2606:6d00:17:ebd3::c41])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nicolas)
-	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5FB3517E0579;
-	Wed,  8 Oct 2025 20:24:32 +0200 (CEST)
-Message-ID: <205478244873d09cad5b77bd887f6a836c31c7ec.camel@collabora.com>
-Subject: Re: [PATCH 00/25] media: v4l2-mem2mem: Reduce cargo-cult
-From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
-	linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org, 
-	imx@lists.linux.dev, linux-amlogic@lists.infradead.org, 
-	linux-renesas-soc@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com, 
-	linux-rockchip@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
-	linux-arm-msm@vger.kernel.org
-Cc: Matthew Majewski <mattwmajewski@gmail.com>, Mirela Rabulea	
- <mirela.rabulea@nxp.com>, Jacek Anaszewski <jacek.anaszewski@gmail.com>, 
- Michael Tretter <m.tretter@pengutronix.de>, Devarsh Thakkar
- <devarsht@ti.com>, Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=	
- <u.kleine-koenig@baylibre.com>, AngeloGioacchino Del Regno	
- <angelogioacchino.delregno@collabora.com>, Martin Blumenstingl	
- <martin.blumenstingl@googlemail.com>, Alexandre Torgue	
- <alexandre.torgue@foss.st.com>, Philipp Zabel <p.zabel@pengutronix.de>,
- Arnd Bergmann <arnd@arndb.de>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
- Ming Qian <ming.qian@nxp.com>,  Pengutronix Kernel Team	
- <kernel@pengutronix.de>, Kieran Bingham	
- <kieran.bingham+renesas@ideasonboard.com>, Nathan Chancellor
- <nathan@kernel.org>,  Sascha Hauer <s.hauer@pengutronix.de>, Hans Verkuil
- <hverkuil@kernel.org>, Mikhail Ulyanov	
- <mikhail.ulyanov@cogentembedded.com>, Kevin Hilman <khilman@baylibre.com>, 
- Xavier Roumegue <xavier.roumegue@oss.nxp.com>, Shuah Khan
- <skhan@linuxfoundation.org>, Andrzej Pietrasiewicz	
- <andrzejtp2010@gmail.com>, Tiffany Lin <tiffany.lin@mediatek.com>, Zhou
- Peng	 <eagle.zhou@nxp.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>, Yunfei Dong
- <yunfei.dong@mediatek.com>, Ezequiel Garcia	
- <ezequiel@vanguardiasur.com.ar>, Neil Armstrong
- <neil.armstrong@linaro.org>,  Jiasheng Jiang <jiashengjiangcool@gmail.com>,
- Shawn Guo <shawnguo@kernel.org>, =?UTF-8?Q?=C5=81ukasz?= Stelmach	
- <l.stelmach@samsung.com>, Abhinav Kumar <abhinav.kumar@linux.dev>, Heiko
- Stuebner <heiko@sntech.de>, Benoit Parrot <bparrot@ti.com>, Andrew-CT Chen	
- <andrew-ct.chen@mediatek.com>, Geert Uytterhoeven
- <geert+renesas@glider.be>,  Magnus Damm <magnus.damm@gmail.com>, Sebastian
- Fricke <sebastian.fricke@collabora.com>, Maxime Coquelin	
- <mcoquelin.stm32@gmail.com>, Jacob Chen <jacob-chen@iotwrt.com>, Bin Liu	
- <bin.liu@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>, Fabio
- Estevam <festevam@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>, Bryan
- O'Donoghue	 <bryan.odonoghue@linaro.org>
-Date: Wed, 08 Oct 2025 14:24:30 -0400
-In-Reply-To: <20251008175052.19925-1-laurent.pinchart@ideasonboard.com>
-References: <20251008175052.19925-1-laurent.pinchart@ideasonboard.com>
-Autocrypt: addr=nicolas.dufresne@collabora.com; prefer-encrypt=mutual;
- keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
- /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
- cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
- CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
- abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
- nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
- AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
- smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
- AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
- iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
- ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
- bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
-Organization: Collabora Canada
-Content-Type: multipart/signed; micalg="pgp-sha512";
-	protocol="application/pgp-signature"; boundary="=-LjFEnUafECFwApd/yAvu"
-User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+	s=arc-20240116; t=1759948034; c=relaxed/simple;
+	bh=GNcekzD6TinGcpxvU8VPBdgNkat7HX1eI0KX3x/e2mo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bSDNJDlIc6QNotN9OOrZe6wEVN0W0K5w+7PWDY9ULAUxqj3CgOYaw290Rccbe49qwvLo7QXhhdDcdoU0GadesmwyAstW8QGnB6G4XZXd8ZVRv50bZPbgRQ1dZ8Jiz/f6tBZYGuYsjZ9deOAmsfGB9twThizP3zavmQOXC3Dr4Hc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Udj/OQ61; arc=none smtp.client-ip=205.220.168.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 598I5djH009110
+	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 18:27:11 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	WEtc+TcHZs/BG0j7p/wx3/HzsUUUzf3QcGZUF6Nv8Es=; b=Udj/OQ61PPTHXxwo
+	Elh7iBhAynBeMn5CdxlSBCxAWB6D+70uMGhKmvfwFUiu/b+pJ6gMAJmWwTs/iOGx
+	CTV9sLcAVWdWylkV1SDRHw2I64WjSEDLuxFb9Q81SCZd2P772JnKrHTim3UXxLed
+	2KRTn5IxspmXWUFzeQDrvQnLOlwKhIcIQQmUgeWY8VNsTdeK73GK74W/DBQZCaIY
+	thifF2dl82SCB4y69Bxddi5usQEgKInhsCprfVrs1pRSOLYQeevg4J4SzwPyYxMa
+	9W+Eo49+lF90dJxqzfBjRA3Bd227EWAO9DIqSeqVoqWvathrbLzuDDUF53bcXkDb
+	MnLiwA==
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4n87ky-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 18:27:11 +0000 (GMT)
+Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-780f82484faso91632b3a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 11:27:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759948030; x=1760552830;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=WEtc+TcHZs/BG0j7p/wx3/HzsUUUzf3QcGZUF6Nv8Es=;
+        b=HqTmV+TgeZfLqTbrq9+R5Z5LiQEgyf/PpN5uPBbmPpjQF+F3kVSCRL9wQFQIgS1ubO
+         7uNkJ1KmG1BXeW0ecJ51uVKlgd3h1TThvoWjJm2+Seqgm6nWngu6xfpjE0JuXAgp0S4l
+         hBuVhbwl2QNUAJbY2bwEvcHHGhXHYYyFhFo3RowQyIthhTHXGZLqDv8yCvBp4zz0p+wg
+         DNOyykhQX6S2KVFAfr6g5ke01Kcb7Lp5RIQLgUvTBupnDYflTMtxIwkaHZm5klhqVDcv
+         cL3aD4Z1onYthh9u14lB+flsaboOo5jt1TPvdXQhCImrU0i4GG62HWsl85UQ5r3bJoC6
+         Iy0A==
+X-Forwarded-Encrypted: i=1; AJvYcCVjmtEyBZvRNhgoaE4AXBz6H3rjDlhv7NV57goZr2PfL47OiffNl375std5wIQtsu18TC3qo/S9Dd3AAjqi@vger.kernel.org
+X-Gm-Message-State: AOJu0YzXOhwoTiFXdMdr6sYUAt9NFE7bGnd5I1mAXQBiD4iJTySWsbYn
+	XMIlSm97LsFtWBTEm/8tDRTLpihAcADPkhuQ+KzKE/lDhPuoLZx69B1zaKtA5tMFtZZIkzNSR71
+	o8orM3UUVTE7ZfcmMwYA+R/Ccl4fdVh5AUEqW+8wzPa7umE7c9W4fC0HGJmne0q8XwrJm
+X-Gm-Gg: ASbGncujTbTjhggE+W6XivkSYj1fkqFOQtFtjj1/RGWj/U8d2/+3/x5SqQd8ju8OkXW
+	Wh4aMk5+vBSnI2qmLL/CUIGJnOjKtX0VSvLct6EdmsiONfdbhc6o6gtDdwTVRY5PyZp0lXCssf4
+	hJAMIiiN9s7SEYmwX/4E52L7iR/Nppq1NAYDWKvxettP6+uJ/QWLfVIrsmCeWHu2zDyoL3Gjya2
+	34ZXBlPQsg4G5FrUq862puZ/qgXvhEOZZd4OJUGaVYdu+1amE33sdpHww4zbC4seALkH0a7oCrQ
+	CaASqwrktpocu9o1eBE2tftu5rrnuFXCK/KrUDeY44IMQulI2nzaKEqpnTBguIkPbTZemqfQl61
+	h19lLay86IYujrDwqEtE=
+X-Received: by 2002:a05:6a00:17a5:b0:781:18de:f7e0 with SMTP id d2e1a72fcca58-793881eb478mr5515165b3a.31.1759948029965;
+        Wed, 08 Oct 2025 11:27:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhOH5X+XDvbdolR+ekTGtwlfRBuaIvvlRos/xZajYdUrqKQ1KyBOo9pHTj/agC47o1a7+/LA==
+X-Received: by 2002:a05:6a00:17a5:b0:781:18de:f7e0 with SMTP id d2e1a72fcca58-793881eb478mr5515130b3a.31.1759948029344;
+        Wed, 08 Oct 2025 11:27:09 -0700 (PDT)
+Received: from [10.226.59.182] (i-global254.qualcomm.com. [199.106.103.254])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-794d4b3c72bsm417567b3a.3.2025.10.08.11.27.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 11:27:08 -0700 (PDT)
+Message-ID: <82236398-af27-4fa2-9630-f3e354e929c9@oss.qualcomm.com>
+Date: Wed, 8 Oct 2025 12:27:06 -0600
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-
-
---=-LjFEnUafECFwApd/yAvu
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-Le mercredi 08 octobre 2025 =C3=A0 20:50 +0300, Laurent Pinchart a =C3=A9cr=
-it=C2=A0:
-> Hello,
->=20
-> The v4l2_m2m_get_vq() function never returns NULL, but many mem2mem
-> drivers still check its return value and consider NULL as an error. This
-> may have originated a long time ago from valid checks when
-> v4l2_m2m_get_vq() could return NULL, with drivers then just copying the
-> checks. This series attempts to stop the cargo-cult behaviour.
->=20
-> Patch 01/25 starts by explicitly stating in kerneldoc that the
-> v4l2_m2m_get_vq() function never returns NULL. All the other patches
-> drop NULL checks from drivers.
->=20
-> I have carefully checked all patched locations in all drivers. They fall
-> in 3 categories:
->=20
-> - Checks in the VIDIOC_G_FMT, VIDIOC_TRY_FMT and VIDIOC_S_FMT handlers:
-> =C2=A0 Those may have been added to ensure that the format type has a val=
-id
-> =C2=A0 value, but that is ensured by the V4L2 ioctl core before calling t=
-he
-> =C2=A0 handlers. The checks can be dropped without a need to replace them
-> =C2=A0 with proper type checks.
->=20
-> - Checks in the VIDIOC_S_SELECTION handler: The only location where this
-> =C2=A0 is performed has an explicit type check, so the NULL check can als=
-o be
-> =C2=A0 dropped.
->=20
-> - Checks in other locations where the type parameter to the
-> =C2=A0 v4l2_m2m_get_vq() function is hardcoded: The hardcoded type is val=
-id,
-> =C2=A0 so the NULL check can't have been meant to check the type. It can =
-also
-> =C2=A0 be removed.
->=20
-> There's no dependency between any of those patches so they can be merged
-> in any order.
->=20
-> Laurent Pinchart (25):
-> =C2=A0 media: v4l2-mem2mem: Document that v4l2_m2m_get_vq() never returns
-> =C2=A0=C2=A0=C2=A0 NULL
-> =C2=A0 media: allgro-dvt: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: meson-g2d: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: amphion: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: coda: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: imagination: e5010: Drop unneeded v4l2_m2m_get_vq() NULL ch=
-eck
-> =C2=A0 media: m2m-deinterlace: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: mediatek: jpeg: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: mediatek: vcodec: Drop unneeded v4l2_m2m_get_vq() NULL chec=
-k
-> =C2=A0 media: dw100: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: imx-jpeg: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: imx-pxp: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: nxp: imx8-isi: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: mx2_emmaprp: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: qcom: iris: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: qcom: venus: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: renesas: fdp1: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: rcar_jpu: Drop unneeded v4l2_m2m_get_vq() NULL check
-
-Why not "renesas: jpu" to match the fdp1 patch naming ?
-
-> =C2=A0 media: platform: rga: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: samsung: s5p-g2d: Drop unneeded v4l2_m2m_get_vq() NULL chec=
-k
-> =C2=A0 media: samsung: s5p-jpeg: Drop unneeded v4l2_m2m_get_vq() NULL che=
-ck
-> =C2=A0 media: stm32: dma2d: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: ti: vpe: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: vicodec: Drop unneeded v4l2_m2m_get_vq() NULL check
-> =C2=A0 media: vim2m: Drop unneeded v4l2_m2m_get_vq() NULL check
-
-I reviewed the list and it seems complete to me.
-
-Nicolas
-
->=20
-> =C2=A0drivers/media/platform/allegro-dvt/allegro-core.c=C2=A0=C2=A0=C2=A0=
- |=C2=A0 2 --
-> =C2=A0drivers/media/platform/amlogic/meson-ge2d/ge2d.c=C2=A0=C2=A0=C2=A0=
-=C2=A0 |=C2=A0 5 -----
-> =C2=A0drivers/media/platform/amphion/vdec.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
-> =C2=A0drivers/media/platform/amphion/venc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
-> =C2=A0.../media/platform/chips-media/coda/coda-common.c=C2=A0=C2=A0=C2=A0=
- |=C2=A0 4 ----
-> =C2=A0drivers/media/platform/imagination/e5010-jpeg-enc.c=C2=A0 |=C2=A0 4=
- ----
-> =C2=A0drivers/media/platform/m2m-deinterlace.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
-> =C2=A0drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |=C2=A0 7 ----=
----
-> =C2=A0.../mediatek/vcodec/decoder/mtk_vcodec_dec.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
-> =C2=A0.../vcodec/decoder/vdec/vdec_av1_req_lat_if.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
-> =C2=A0.../vcodec/decoder/vdec/vdec_vp9_req_lat_if.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
-> =C2=A0.../mediatek/vcodec/encoder/mtk_vcodec_enc.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 --------
-> =C2=A0drivers/media/platform/nxp/dw100/dw100.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
-> =C2=A0drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0 |=C2=A0 4 ----
-> =C2=A0drivers/media/platform/nxp/imx-pxp.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 =
-7 -------
-> =C2=A0drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c=C2=A0=C2=A0 |=C2=
-=A0 2 --
-> =C2=A0drivers/media/platform/nxp/mx2_emmaprp.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
-> =C2=A0drivers/media/platform/qcom/iris/iris_vdec.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
-> =C2=A0drivers/media/platform/qcom/venus/vdec.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
-> =C2=A0drivers/media/platform/qcom/venus/venc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
-> =C2=A0drivers/media/platform/renesas/rcar_fdp1.c=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ---
-> =C2=A0drivers/media/platform/renesas/rcar_jpu.c=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 --------
-> =C2=A0drivers/media/platform/rockchip/rga/rga.c=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ----
-> =C2=A0drivers/media/platform/samsung/s5p-g2d/g2d.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ----
-> =C2=A0drivers/media/platform/samsung/s5p-jpeg/jpeg-core.c=C2=A0 |=C2=A0 7=
- -------
-> =C2=A0drivers/media/platform/st/stm32/dma2d/dma2d.c=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 5 -----
-> =C2=A0drivers/media/platform/ti/vpe/vpe.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
-=C2=A0 7 -------
-> =C2=A0drivers/media/test-drivers/vicodec/vicodec-core.c=C2=A0=C2=A0=C2=A0=
- |=C2=A0 7 -------
-> =C2=A0drivers/media/test-drivers/vim2m.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- | 12 ------------
-> =C2=A0drivers/media/v4l2-core/v4l2-mem2mem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 12 +-----------
-> =C2=A0include/media/v4l2-mem2mem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 +++
-> =C2=A031 files changed, 4 insertions(+), 153 deletions(-)
->=20
->=20
-> base-commit: e5f0a698b34ed76002dc5cff3804a61c80233a7a
-
---=-LjFEnUafECFwApd/yAvu
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/qaic: Ensure entry belongs to DBC in
+ qaic_perf_stats_bo_ioctl()
+To: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>,
+        carl.vanderlip@oss.qualcomm.com, troy.hanson@oss.qualcomm.com,
+        zachary.mckevitt@oss.qualcomm.com
+Cc: ogabbay@kernel.org, lizhi.hou@amd.com, karol.wachowski@linux.intel.com,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org
+References: <20251007221212.559474-1-youssef.abdulrahman@oss.qualcomm.com>
+Content-Language: en-US
+From: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
+In-Reply-To: <20251007221212.559474-1-youssef.abdulrahman@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=ZJzaWH7b c=1 sm=1 tr=0 ts=68e6acff cx=c_pps
+ a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=JYp8KDb2vCoCEuGobkYCKw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=COk6AnOGAAAA:8 a=EUspDBNiAAAA:8
+ a=ZyNJWp81KiKnRxZMCyUA:9 a=QEXdDO2ut3YA:10 a=IoOABgeZipijB_acs4fv:22
+ a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: yfLkOZV7BJjjT_VdguZs3QRp7WY4cLTd
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX6iCTcIVshaOn
+ U0gmyaSt77MKtUkml1KJhrCIx0jZEfhjv0lQ7DV2/SAzTH6B9+4mBGZNpyX3CTc3AuMq9kh1g5W
+ qwyKucHxtZ6+GELruFEV6H549r1LKYYf8XXp+ZDRsIh3IaAlx77tJtvSQFYyD7padGQS7ml7nHi
+ 4GjZAdRqWZiGfPew9KoLUPiECmhAtehI5aSuuX8T9Atpjxkf+TS/ah4y6Gs3GYbz5PuK6qAYuZA
+ ULu8GtvuYyI59jYdYt0s2wMIt57gsLflx1KRLiWVr3Q8sGHksrxXqLDIvle5BwhTcUnIdr0Gzo3
+ B5XoGLoyuaGXi7smJIhD7PyebxDfp1DyBmqh0jT5vKa86xVxqWS9v5HVV53P5rVWcq8y97dQcMn
+ zEYPwps3nPBVtRwnQQUnalOikgDYVQ==
+X-Proofpoint-GUID: yfLkOZV7BJjjT_VdguZs3QRp7WY4cLTd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-08_05,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
+ phishscore=0 priorityscore=1501 impostorscore=0 suspectscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
 
------BEGIN PGP SIGNATURE-----
+On 10/7/2025 4:12 PM, Youssef Samir wrote:
+> From: Youssef Samir <quic_yabdulra@quicinc.com>
+> 
+> struct qaic_perf_stats is defined to have a DBC specified in the header,
+> followed by struct qaic_perf_stats_entry instances, each pointing to a BO
+> that is associated with the DBC. Currently, qaic_perf_stats_bo_ioctl() does
+> not check if the entries belong to the DBC specified in the header.
+> Therefore, add checks to ensure that each entry in the request is sliced
+> and belongs to hdr.dbc_id.
+> 
+> Co-developed-by: Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>
+> Signed-off-by: Carl Vanderlip <carl.vanderlip@oss.qualcomm.com>
+> Signed-off-by: Youssef Samir <quic_yabdulra@quicinc.com>
+> Signed-off-by: Youssef Samir <youssef.abdulrahman@oss.qualcomm.com>
 
-iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaOasXgAKCRDZQZRRKWBy
-9F8oAP92tHDSFRd6mdp01gSe1GDFGPRn1q4aOR2d4zEl8W2BoQEAuXK4NGidjdie
-sOQmoarDKx/ErFatR3/qQmk9d+ZaGAY=
-=Bmyy
------END PGP SIGNATURE-----
-
---=-LjFEnUafECFwApd/yAvu--
+Reviewed-by: Jeff Hugo <jeff.hugo@oss.qualcomm.com>
 
