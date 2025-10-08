@@ -1,401 +1,293 @@
-Return-Path: <linux-arm-msm+bounces-76472-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76473-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC1D6BC6456
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 20:21:46 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id DA7EDBC6471
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 20:24:56 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E7B944061DD
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 18:21:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A2F054EAA4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 18:24:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 897802C0F93;
-	Wed,  8 Oct 2025 18:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1B7542C0F7A;
+	Wed,  8 Oct 2025 18:24:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jdDpnFOW"
+	dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b="bzSgeTZ3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bali.collaboradmins.com (bali.collaboradmins.com [148.251.105.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5292C0F96
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 18:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 432752C08CE;
+	Wed,  8 Oct 2025 18:24:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=148.251.105.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759947683; cv=none; b=M0oA6ebkAIeSTBnkG2ATvTjHSvKF+RdQi2pYETwkLfpRAPKOldhlaQPduo+8YzKZyQJiozKK/wjGTGm1WRaqq/KRnWTjf7x0fd4ziki7EZVBmZdIt+6Bg5gut4+C4Kbphqp9kklZjtL3L9k1fdBdIrtBI7fwY+OoOUCKYEsMris=
+	t=1759947886; cv=none; b=OBtyFMWWhwqeelxshOH1jGDm0ojwliX1KErow4sYVU23oxizrOKrbMtBcoMGXkDIymjPGSRCpJqMJjGJsG/lYROIjYIjal3AnNyXxHf/9/5Ax29Ov0HL/7dV4sRJP7fhDZAtlSj2EmOmiUV/aPleWpRaia9oesocBy+qC7dCpOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759947683; c=relaxed/simple;
-	bh=Kl4q/D7nfppLjlQrmRLj7XfvEwj3MSpqoJDjNllE58E=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UWx5zIQXcSW3UAzocVaxdo7NMlpVKUk+e+M2o2iG0WZ3P+8QvWeHTOZs8ItWcNAAhibLKEjRNpG+naiCgdvBLrG2m4mL7fF3pbmQQnmuGYy9AebpzWDgFDwQqgyqW35DjNMozCC4I1mWeWTrlKKrljr6nCv72eWIql/Eq8yinQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jdDpnFOW; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-57db15eeb11so179374e87.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 11:21:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1759947680; x=1760552480; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eQLKb9Rkh1oQUK1I7BmlhT3z4f6StPjvIila7EBGntI=;
-        b=jdDpnFOWG+/CyLYmq0o0zFrYQLnqRa/6OHDFajG6xASUENWqcfZ91VbZjv9Hr2O7Db
-         5detF7cneX6Vw6dj30zIu5Ie4IwiqJz3gqAyBu1WnzijRYD0KpNlYMDvHLWmA2BMmWPp
-         VwPUBKnbeYXHMT0a01gy0TvaprHIDp0brddI63vHeQsy/uMT0znj8mePd/nQ0aJEKh5I
-         KDZVSAS7MtKjp+HGp2S+8rD48zefCs0ARQrOGI/VDYCu4rsL5WgoDw3JtmgZvlEBiT4O
-         mejwC9RSWvECmz02DbOzgQnuv9rA2VcuowsLkh48eQmMgq21R3ZMrC6xEUQogLZdNebK
-         PcnQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759947680; x=1760552480;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=eQLKb9Rkh1oQUK1I7BmlhT3z4f6StPjvIila7EBGntI=;
-        b=jqyL9Sa5VK18LJojwi3R31VnBzLl/HTeDYlHp44F8oDAQJIdQnwrIOWWyMDiVw+bvo
-         fZnnl7+A1qe7rIQA0cbFDB/Uc8jfs52zEoSEeRpG2K4O/N/Turpz6OG4a0scB9PAFx5B
-         IS+pV+fCLBWfc9dOIuGVfkAYuagQdTJNBE1cN+ZJzU4fG/pwCDJ6ThTSnUJToHaig2OI
-         gcdvPNB3TICkhQQtaRkLLXJHdhdGpz4iKgV3D3VoRK6t+BAReB8T+4feFe248sR08JU7
-         VemfHiHveBIUKk+6UU9mBToY3lFua+FKaNw6gW0tQ+BMZkwgj0wPt7QJ/mo5GMKH6QpF
-         sSzw==
-X-Forwarded-Encrypted: i=1; AJvYcCUs7VtSdqXIh+E5M03s9aQnxp426kx/ydnLP02PmNsh8aeltpThLlTEnF75oIffdirlAjfL+ZxUdUiWTHi8@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx36kbarY3v+rLERahnPmxE++ekOu/RX0jprL8zqRGM78v13hIz
-	JgMDJ2itGoZ0hXF4C43v/jwXY2BEZA9kqiHLbn9I2VjhKdsYrfAdNiCw
-X-Gm-Gg: ASbGncumYk9S42LMhxmFlEr8kr05MKk4unyr2m5E2n1XdIFaKiLAa0ojJHpr+hKZzN5
-	3VVjKqsTv6JXMtsXA7pLujui0HTx3KZvcdVJDg28pBf6XXi98j5qnv+vaXDIJ9UJ/oSwsyWD7oC
-	se1a4AZYwL2MnycbF03OulIj+rsNY6CwVMYuT/aluQbnoT9FLP5p5kdtbGcGMysi/1GnXVDyOxI
-	fowHna758ZG5itqvcoug6b83ck2OksU+qMhw2L4Awev12ReMzqO2UcVBkzLplcDtGf4KFSYVQEz
-	XjQT+OGIwruNOnH21dFEFq0yNOGoHI6UbKyoZM0AaAqgjJySU3wNI35c1I7ZuhXSIAiKn2cq9Qp
-	dLKDwZXS2Q662rVparhvIaWZrJVaaH6DLr3/mb9BXOPBm
-X-Google-Smtp-Source: AGHT+IEfKH/JfDemgTpsqSa+H3Z/Hc8hNRwaIMuAtNW9nJ/1vTUKfusljb2l85OO0h19Tn1iszjpRQ==
-X-Received: by 2002:a05:6512:3da8:b0:560:8b86:75ba with SMTP id 2adb3069b0e04-5906dafc8a7mr1328825e87.52.1759947679418;
-        Wed, 08 Oct 2025 11:21:19 -0700 (PDT)
-Received: from crusty-box ([79.133.247.80])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-5907adb1268sm223930e87.90.2025.10.08.11.21.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 11:21:19 -0700 (PDT)
-From: Erikas Bitovtas <xerikasxx@gmail.com>
-To: Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konradybcio@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Krzysztof Kozlowski <krzk+dt@kernel.org>,
-	Conor Dooley <conor+dt@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: phone-devel@vger.kernel.org,
-	~postmarketos/upstreaming@lists.sr.ht,
-	Erikas Bitovtas <xerikasxx@gmail.com>
-Subject: [PATCH v2 2/2] arm64: dts: qcom: msm8939-asus-z00t: add initial device tree
-Date: Wed,  8 Oct 2025 21:20:20 +0300
-Message-ID: <20251008182106.217340-3-xerikasxx@gmail.com>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20251008182106.217340-1-xerikasxx@gmail.com>
-References: <20251008182106.217340-1-xerikasxx@gmail.com>
+	s=arc-20240116; t=1759947886; c=relaxed/simple;
+	bh=RsqMaJC2iID86BNt1juQ80CEq7yoPe8omJ1X2/PwyHw=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=tAkX1EqNFDjmWO3XW/UHSMO+XhSPPnqZO8kQLRy+Cgh4Rd4Ts1aOE9jEN63JBGMVkt3fhdC2ooHFE9kgFOcAB4ACmRwPa8U9JeIm0wEDsYI8IDqm2rp4eRFnJuXcSbvMuY9c+9Lt4wJJWv0CsgOsyTFAfyp2FVz8mFvriwXZp3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com; spf=pass smtp.mailfrom=collabora.com; dkim=pass (2048-bit key) header.d=collabora.com header.i=@collabora.com header.b=bzSgeTZ3; arc=none smtp.client-ip=148.251.105.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=collabora.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=collabora.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1759947878;
+	bh=RsqMaJC2iID86BNt1juQ80CEq7yoPe8omJ1X2/PwyHw=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
+	b=bzSgeTZ3E18DyQkDMnSOfYGpMjtoDFZvvo78LBcjUURbElc4ao00lQH9dYuLOZcqU
+	 JOxb9e347HFhmvKnjDQIMW3q+OSgVHHIJeTQApfGf76L3wrNwEroinPW2bX1EgIYaW
+	 W86Yw0pFFcXTsQJ5wyp/dieERtH9/meTkf4zdErkfhdxcKU8P/1UIgKDgPp3+96K1q
+	 yiQfkGFa2KgTuYf1O8MY5rgsE2USEndGBW+gejfCS344Q+DbhA0Kmo2OX4N4R6BEG0
+	 PSQxfjQER6VYl8eX2q7QP10sAM0FXCyxrwOpCDdhZQfXE8Q3qcJxCTbveFWheB/t6y
+	 jd3kzJwO68jOg==
+Received: from [IPv6:2606:6d00:17:ebd3::c41] (unknown [IPv6:2606:6d00:17:ebd3::c41])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nicolas)
+	by bali.collaboradmins.com (Postfix) with ESMTPSA id 5FB3517E0579;
+	Wed,  8 Oct 2025 20:24:32 +0200 (CEST)
+Message-ID: <205478244873d09cad5b77bd887f6a836c31c7ec.camel@collabora.com>
+Subject: Re: [PATCH 00/25] media: v4l2-mem2mem: Reduce cargo-cult
+From: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>, 
+	linux-media@vger.kernel.org, linux-mediatek@lists.infradead.org, 
+	imx@lists.linux.dev, linux-amlogic@lists.infradead.org, 
+	linux-renesas-soc@vger.kernel.org,
+ linux-stm32@st-md-mailman.stormreply.com, 
+	linux-rockchip@lists.infradead.org, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org
+Cc: Matthew Majewski <mattwmajewski@gmail.com>, Mirela Rabulea	
+ <mirela.rabulea@nxp.com>, Jacek Anaszewski <jacek.anaszewski@gmail.com>, 
+ Michael Tretter <m.tretter@pengutronix.de>, Devarsh Thakkar
+ <devarsht@ti.com>, Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?=	
+ <u.kleine-koenig@baylibre.com>, AngeloGioacchino Del Regno	
+ <angelogioacchino.delregno@collabora.com>, Martin Blumenstingl	
+ <martin.blumenstingl@googlemail.com>, Alexandre Torgue	
+ <alexandre.torgue@foss.st.com>, Philipp Zabel <p.zabel@pengutronix.de>,
+ Arnd Bergmann <arnd@arndb.de>, Sylwester Nawrocki <s.nawrocki@samsung.com>,
+ Ming Qian <ming.qian@nxp.com>,  Pengutronix Kernel Team	
+ <kernel@pengutronix.de>, Kieran Bingham	
+ <kieran.bingham+renesas@ideasonboard.com>, Nathan Chancellor
+ <nathan@kernel.org>,  Sascha Hauer <s.hauer@pengutronix.de>, Hans Verkuil
+ <hverkuil@kernel.org>, Mikhail Ulyanov	
+ <mikhail.ulyanov@cogentembedded.com>, Kevin Hilman <khilman@baylibre.com>, 
+ Xavier Roumegue <xavier.roumegue@oss.nxp.com>, Shuah Khan
+ <skhan@linuxfoundation.org>, Andrzej Pietrasiewicz	
+ <andrzejtp2010@gmail.com>, Tiffany Lin <tiffany.lin@mediatek.com>, Zhou
+ Peng	 <eagle.zhou@nxp.com>, Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Vikash Garodia <quic_vgarodia@quicinc.com>, Yunfei Dong
+ <yunfei.dong@mediatek.com>, Ezequiel Garcia	
+ <ezequiel@vanguardiasur.com.ar>, Neil Armstrong
+ <neil.armstrong@linaro.org>,  Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+ Shawn Guo <shawnguo@kernel.org>, =?UTF-8?Q?=C5=81ukasz?= Stelmach	
+ <l.stelmach@samsung.com>, Abhinav Kumar <abhinav.kumar@linux.dev>, Heiko
+ Stuebner <heiko@sntech.de>, Benoit Parrot <bparrot@ti.com>, Andrew-CT Chen	
+ <andrew-ct.chen@mediatek.com>, Geert Uytterhoeven
+ <geert+renesas@glider.be>,  Magnus Damm <magnus.damm@gmail.com>, Sebastian
+ Fricke <sebastian.fricke@collabora.com>, Maxime Coquelin	
+ <mcoquelin.stm32@gmail.com>, Jacob Chen <jacob-chen@iotwrt.com>, Bin Liu	
+ <bin.liu@mediatek.com>, Matthias Brugger <matthias.bgg@gmail.com>, Fabio
+ Estevam <festevam@gmail.com>, Jerome Brunet <jbrunet@baylibre.com>, Bryan
+ O'Donoghue	 <bryan.odonoghue@linaro.org>
+Date: Wed, 08 Oct 2025 14:24:30 -0400
+In-Reply-To: <20251008175052.19925-1-laurent.pinchart@ideasonboard.com>
+References: <20251008175052.19925-1-laurent.pinchart@ideasonboard.com>
+Autocrypt: addr=nicolas.dufresne@collabora.com; prefer-encrypt=mutual;
+ keydata=mDMEaCN2ixYJKwYBBAHaRw8BAQdAM0EHepTful3JOIzcPv6ekHOenE1u0vDG1gdHFrChD
+ /e0J05pY29sYXMgRHVmcmVzbmUgPG5pY29sYXNAbmR1ZnJlc25lLmNhPoicBBMWCgBEAhsDBQsJCA
+ cCAiICBhUKCQgLAgQWAgMBAh4HAheABQkJZfd1FiEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrjo
+ CGQEACgkQ2UGUUSlgcvQlQwD/RjpU1SZYcKG6pnfnQ8ivgtTkGDRUJ8gP3fK7+XUjRNIA/iXfhXMN
+ abIWxO2oCXKf3TdD7aQ4070KO6zSxIcxgNQFtDFOaWNvbGFzIER1ZnJlc25lIDxuaWNvbGFzLmR1Z
+ nJlc25lQGNvbGxhYm9yYS5jb20+iJkEExYKAEECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4
+ AWIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaCyyxgUJCWX3dQAKCRDZQZRRKWBy9ARJAP96pFmLffZ
+ smBUpkyVBfFAf+zq6BJt769R0al3kHvUKdgD9G7KAHuioxD2v6SX7idpIazjzx8b8rfzwTWyOQWHC
+ AAS0LU5pY29sYXMgRHVmcmVzbmUgPG5pY29sYXMuZHVmcmVzbmVAZ21haWwuY29tPoiZBBMWCgBBF
+ iEE7w1SgRXEw8IaBG8S2UGUUSlgcvQFAmibrGYCGwMFCQll93UFCwkIBwICIgIGFQoJCAsCBBYCAw
+ ECHgcCF4AACgkQ2UGUUSlgcvRObgD/YnQjfi4+L8f4fI7p1pPMTwRTcaRdy6aqkKEmKsCArzQBAK8
+ bRLv9QjuqsE6oQZra/RB4widZPvphs78H0P6NmpIJ
+Organization: Collabora Canada
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-LjFEnUafECFwApd/yAvu"
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 
-Add an initial device tree for Asus ZenFone 2 Laser/Selfie. This
-includes support for:
-- UART
-- USB
-- Internal storage
-- MicroSD
-- Volume keys
-- Touchscreen: Focaltech FT5306
-- Accelerometer: Invensense MPU6515
-- Magnetometer: Asahi Kasei AK09911
-- Vibrator
-- Audio input and output
-- Modem
 
-Signed-off-by: Erikas Bitovtas <xerikasxx@gmail.com>
+--=-LjFEnUafECFwApd/yAvu
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi,
+
+Le mercredi 08 octobre 2025 =C3=A0 20:50 +0300, Laurent Pinchart a =C3=A9cr=
+it=C2=A0:
+> Hello,
+>=20
+> The v4l2_m2m_get_vq() function never returns NULL, but many mem2mem
+> drivers still check its return value and consider NULL as an error. This
+> may have originated a long time ago from valid checks when
+> v4l2_m2m_get_vq() could return NULL, with drivers then just copying the
+> checks. This series attempts to stop the cargo-cult behaviour.
+>=20
+> Patch 01/25 starts by explicitly stating in kerneldoc that the
+> v4l2_m2m_get_vq() function never returns NULL. All the other patches
+> drop NULL checks from drivers.
+>=20
+> I have carefully checked all patched locations in all drivers. They fall
+> in 3 categories:
+>=20
+> - Checks in the VIDIOC_G_FMT, VIDIOC_TRY_FMT and VIDIOC_S_FMT handlers:
+> =C2=A0 Those may have been added to ensure that the format type has a val=
+id
+> =C2=A0 value, but that is ensured by the V4L2 ioctl core before calling t=
+he
+> =C2=A0 handlers. The checks can be dropped without a need to replace them
+> =C2=A0 with proper type checks.
+>=20
+> - Checks in the VIDIOC_S_SELECTION handler: The only location where this
+> =C2=A0 is performed has an explicit type check, so the NULL check can als=
+o be
+> =C2=A0 dropped.
+>=20
+> - Checks in other locations where the type parameter to the
+> =C2=A0 v4l2_m2m_get_vq() function is hardcoded: The hardcoded type is val=
+id,
+> =C2=A0 so the NULL check can't have been meant to check the type. It can =
+also
+> =C2=A0 be removed.
+>=20
+> There's no dependency between any of those patches so they can be merged
+> in any order.
+>=20
+> Laurent Pinchart (25):
+> =C2=A0 media: v4l2-mem2mem: Document that v4l2_m2m_get_vq() never returns
+> =C2=A0=C2=A0=C2=A0 NULL
+> =C2=A0 media: allgro-dvt: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: meson-g2d: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: amphion: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: coda: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: imagination: e5010: Drop unneeded v4l2_m2m_get_vq() NULL ch=
+eck
+> =C2=A0 media: m2m-deinterlace: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: mediatek: jpeg: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: mediatek: vcodec: Drop unneeded v4l2_m2m_get_vq() NULL chec=
+k
+> =C2=A0 media: dw100: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: imx-jpeg: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: imx-pxp: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: nxp: imx8-isi: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: mx2_emmaprp: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: qcom: iris: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: qcom: venus: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: renesas: fdp1: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: rcar_jpu: Drop unneeded v4l2_m2m_get_vq() NULL check
+
+Why not "renesas: jpu" to match the fdp1 patch naming ?
+
+> =C2=A0 media: platform: rga: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: samsung: s5p-g2d: Drop unneeded v4l2_m2m_get_vq() NULL chec=
+k
+> =C2=A0 media: samsung: s5p-jpeg: Drop unneeded v4l2_m2m_get_vq() NULL che=
+ck
+> =C2=A0 media: stm32: dma2d: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: ti: vpe: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: vicodec: Drop unneeded v4l2_m2m_get_vq() NULL check
+> =C2=A0 media: vim2m: Drop unneeded v4l2_m2m_get_vq() NULL check
+
+I reviewed the list and it seems complete to me.
+
+Nicolas
+
+>=20
+> =C2=A0drivers/media/platform/allegro-dvt/allegro-core.c=C2=A0=C2=A0=C2=A0=
+ |=C2=A0 2 --
+> =C2=A0drivers/media/platform/amlogic/meson-ge2d/ge2d.c=C2=A0=C2=A0=C2=A0=
+=C2=A0 |=C2=A0 5 -----
+> =C2=A0drivers/media/platform/amphion/vdec.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
+> =C2=A0drivers/media/platform/amphion/venc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
+> =C2=A0.../media/platform/chips-media/coda/coda-common.c=C2=A0=C2=A0=C2=A0=
+ |=C2=A0 4 ----
+> =C2=A0drivers/media/platform/imagination/e5010-jpeg-enc.c=C2=A0 |=C2=A0 4=
+ ----
+> =C2=A0drivers/media/platform/m2m-deinterlace.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
+> =C2=A0drivers/media/platform/mediatek/jpeg/mtk_jpeg_core.c |=C2=A0 7 ----=
 ---
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../arm64/boot/dts/qcom/msm8939-asus-z00t.dts | 256 ++++++++++++++++++
- 2 files changed, 257 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
+> =C2=A0.../mediatek/vcodec/decoder/mtk_vcodec_dec.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
+> =C2=A0.../vcodec/decoder/vdec/vdec_av1_req_lat_if.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
+> =C2=A0.../vcodec/decoder/vdec/vdec_vp9_req_lat_if.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
+> =C2=A0.../mediatek/vcodec/encoder/mtk_vcodec_enc.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 --------
+> =C2=A0drivers/media/platform/nxp/dw100/dw100.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
+> =C2=A0drivers/media/platform/nxp/imx-jpeg/mxc-jpeg.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 |=C2=A0 4 ----
+> =C2=A0drivers/media/platform/nxp/imx-pxp.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 =
+7 -------
+> =C2=A0drivers/media/platform/nxp/imx8-isi/imx8-isi-m2m.c=C2=A0=C2=A0 |=C2=
+=A0 2 --
+> =C2=A0drivers/media/platform/nxp/mx2_emmaprp.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 7 -------
+> =C2=A0drivers/media/platform/qcom/iris/iris_vdec.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
+> =C2=A0drivers/media/platform/qcom/venus/vdec.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
+> =C2=A0drivers/media/platform/qcom/venus/venc.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 2 --
+> =C2=A0drivers/media/platform/renesas/rcar_fdp1.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 ---
+> =C2=A0drivers/media/platform/renesas/rcar_jpu.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 8 --------
+> =C2=A0drivers/media/platform/rockchip/rga/rga.c=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ----
+> =C2=A0drivers/media/platform/samsung/s5p-g2d/g2d.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 4 ----
+> =C2=A0drivers/media/platform/samsung/s5p-jpeg/jpeg-core.c=C2=A0 |=C2=A0 7=
+ -------
+> =C2=A0drivers/media/platform/st/stm32/dma2d/dma2d.c=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 5 -----
+> =C2=A0drivers/media/platform/ti/vpe/vpe.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 7 -------
+> =C2=A0drivers/media/test-drivers/vicodec/vicodec-core.c=C2=A0=C2=A0=C2=A0=
+ |=C2=A0 7 -------
+> =C2=A0drivers/media/test-drivers/vim2m.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ | 12 ------------
+> =C2=A0drivers/media/v4l2-core/v4l2-mem2mem.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 12 +-----------
+> =C2=A0include/media/v4l2-mem2mem.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 3 +++
+> =C2=A031 files changed, 4 insertions(+), 153 deletions(-)
+>=20
+>=20
+> base-commit: e5f0a698b34ed76002dc5cff3804a61c80233a7a
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 296688f7cb26..35f3ff0d6f18 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -72,6 +72,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-yiming-uz801v3.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8917-xiaomi-riva.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8929-wingtech-wt82918hd.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-asus-z00t.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-huawei-kiwi.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-longcheer-l9100.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= msm8939-samsung-a7.dtb
-diff --git a/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-new file mode 100644
-index 000000000000..ebb548e62e02
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/msm8939-asus-z00t.dts
-@@ -0,0 +1,256 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+
-+/dts-v1/;
-+
-+#include "msm8939-pm8916.dtsi"
-+#include "msm8916-modem-qdsp6.dtsi"
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/interrupt-controller/irq.h>
-+
-+/ {
-+	model = "Asus ZenFone 2 Laser/Selfie (1080p)";
-+	compatible = "asus,z00t", "qcom,msm8939";
-+	chassis-type = "handset";
-+
-+	aliases {
-+		mmc0 = &sdhc_1;
-+		mmc1 = &sdhc_2;
-+		serial0 = &blsp_uart2;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0";
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+
-+		pinctrl-0 = <&gpio_keys_default>;
-+		pinctrl-names = "default";
-+
-+		button-volume-up {
-+			label = "Volume Up";
-+			gpios = <&tlmm 107 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			debounce-interval = <15>;
-+		};
-+
-+		button-volume-down {
-+			label = "Volume Down";
-+			gpios = <&tlmm 117 GPIO_ACTIVE_LOW>;
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			debounce-interval = <15>;
-+		};
-+	};
-+
-+	reg_sd_vmmc: regulator-sdcard-vmmc {
-+		compatible = "regulator-fixed";
-+		regulator-name = "sdcard-vmmc";
-+		regulator-min-microvolt = <2950000>;
-+		regulator-max-microvolt = <2950000>;
-+
-+		gpio = <&tlmm 87 GPIO_ACTIVE_HIGH>;
-+		enable-active-high;
-+
-+		startup-delay-us = <200>;
-+
-+		pinctrl-0 = <&sd_vmmc_en_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	usb_id: usb-id {
-+		compatible = "linux,extcon-usb-gpio";
-+		id-gpios = <&tlmm 110 GPIO_ACTIVE_HIGH>;
-+		pinctrl-0 = <&usb_id_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp_i2c2 {
-+	status = "okay";
-+
-+	magnetometer@c {
-+		compatible = "asahi-kasei,ak09911";
-+		reg = <0x0c>;
-+
-+		vdd-supply = <&pm8916_l8>;
-+		vid-supply = <&pm8916_l6>;
-+
-+		reset-gpios = <&tlmm 112 GPIO_ACTIVE_LOW>;
-+		pinctrl-0 = <&mag_reset_default>;
-+		pinctrl-names = "default";
-+	};
-+
-+	imu@68 {
-+		compatible = "invensense,mpu6515";
-+		reg = <0x68>;
-+
-+		interrupts-extended = <&tlmm 36 IRQ_TYPE_EDGE_RISING>;
-+
-+		vdd-supply = <&pm8916_l8>;
-+		vddio-supply = <&pm8916_l6>;
-+
-+		pinctrl-0 = <&imu_default>;
-+		pinctrl-names = "default";
-+
-+		mount-matrix = "0",  "1", "0",
-+			       "-1", "0", "0",
-+			       "0",  "0", "1";
-+	};
-+};
-+
-+&blsp_i2c5 {
-+	status = "okay";
-+
-+	touchscreen@38 {
-+		compatible = "edt,edt-ft5306";
-+		reg = <0x38>;
-+
-+		interrupts-extended = <&tlmm 13 IRQ_TYPE_EDGE_FALLING>;
-+
-+		reset-gpios = <&tlmm 12 GPIO_ACTIVE_LOW>;
-+
-+		vcc-supply = <&pm8916_l8>;
-+		iovcc-supply = <&pm8916_l6>;
-+
-+		touchscreen-size-x = <1080>;
-+		touchscreen-size-y = <1920>;
-+
-+		pinctrl-0 = <&touchscreen_default>;
-+		pinctrl-names = "default";
-+	};
-+};
-+
-+&blsp_uart2 {
-+	pinctrl-0 = <&blsp_uart2_console_default>;
-+	pinctrl-1 = <&blsp_uart2_console_sleep>;
-+	pinctrl-names = "default", "sleep";
-+
-+	status = "okay";
-+};
-+
-+&mpss_mem {
-+	reg = <0x0 0x86800000 0x0 0x5500000>;
-+};
-+
-+&pm8916_codec {
-+	qcom,micbias-lvl = <2800>;
-+	qcom,mbhc-vthreshold-low = <75 150 237 450 500>;
-+	qcom,mbhc-vthreshold-high = <75 150 237 450 500>;
-+	qcom,micbias1-ext-cap;
-+	qcom,hphl-jack-type-normally-open;
-+
-+	status = "okay";
-+};
-+
-+&pm8916_vib {
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+};
-+
-+&sdhc_2 {
-+	vmmc-supply = <&reg_sd_vmmc>;
-+
-+	pinctrl-0 = <&sdc2_default &sdc2_cd_default>;
-+	pinctrl-1 = <&sdc2_sleep &sdc2_cd_default>;
-+	pinctrl-names = "default", "sleep";
-+	cd-gpios = <&tlmm 38 GPIO_ACTIVE_LOW>;
-+
-+	status = "okay";
-+};
-+
-+&sound {
-+	audio-routing =
-+		"AMIC1", "MIC BIAS External1",
-+		"AMIC2", "MIC BIAS Internal2",
-+		"AMIC3", "MIC BIAS External1";
-+
-+	status = "okay";
-+};
-+
-+&usb {
-+	extcon = <&usb_id>, <&usb_id>;
-+
-+	status = "okay";
-+};
-+
-+&usb_hs_phy {
-+	extcon = <&usb_id>;
-+};
-+
-+&wcnss {
-+	status = "okay";
-+};
-+
-+&wcnss_iris {
-+	compatible = "qcom,wcn3660b";
-+};
-+
-+&wcnss_mem {
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	touchscreen_default: touchscreen-default-state {
-+		reset-pins {
-+			pins = "gpio12";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+
-+		touch-pins {
-+			pins = "gpio13";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	imu_default: imu-default-state {
-+		pins = "gpio36";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	sdc2_cd_default: sdc2-cd-default-state {
-+		pins = "gpio38";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	sd_vmmc_en_default: sd-vmmc-en-default-state {
-+		pins = "gpio87";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	gpio_keys_default: gpio-keys-default-state {
-+		pins = "gpio107", "gpio117";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-pull-up;
-+	};
-+
-+	usb_id_default: usb-id-default-state {
-+		pins = "gpio110";
-+		function = "gpio";
-+		drive-strength = <8>;
-+		bias-pull-up;
-+	};
-+
-+	mag_reset_default: mag-reset-default-state {
-+		pins = "gpio112";
-+		function = "gpio";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
--- 
-2.51.0
+--=-LjFEnUafECFwApd/yAvu
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
 
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQTvDVKBFcTDwhoEbxLZQZRRKWBy9AUCaOasXgAKCRDZQZRRKWBy
+9F8oAP92tHDSFRd6mdp01gSe1GDFGPRn1q4aOR2d4zEl8W2BoQEAuXK4NGidjdie
+sOQmoarDKx/ErFatR3/qQmk9d+ZaGAY=
+=Bmyy
+-----END PGP SIGNATURE-----
+
+--=-LjFEnUafECFwApd/yAvu--
 
