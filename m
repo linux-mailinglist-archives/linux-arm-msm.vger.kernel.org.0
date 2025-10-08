@@ -1,188 +1,214 @@
-Return-Path: <linux-arm-msm+bounces-76387-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76388-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9B594BC4AAC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 14:00:30 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD6B8BC4AD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 14:01:18 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id F3AAE4F1DE3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 12:00:25 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id F04EA3BCB9B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 12:01:16 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F7B72F656B;
-	Wed,  8 Oct 2025 12:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E48EF2F6593;
+	Wed,  8 Oct 2025 12:01:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="D17arv5Z"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="eIMRSor3"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1B92F5A3E
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 12:00:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 548E62F3C38
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 12:01:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759924823; cv=none; b=lIlmeSqYFtKnrWtJHNf8VyHBRMgXxvzCwxlmuHi3NnIxIJSsgp1Vo2Sd351NG8uyRfyamzupEmaQHQoJKtHqU+NLaftrlpl7ZLuhfHAcizMrP7/TtjZTimTppkz/nGq+NuvVQXzt2HLh4dnTTQaTZK3HA4gBiBRv6Y9J0+FbcRg=
+	t=1759924873; cv=none; b=lXlIV3LVeixgOj2KPrXHdXcWf5lyfdxfQinqeLSS3/bQtwRaR8b06XBj7FEKioZpzscmF834bhjBfykLocfQ8tHca0XCTe5SJPf5swRwgXifhZiNPZv/ITln0VKa9qzW7fgKVkDZ9WrQaZptCX8ZbRUwUQyXYJl75+qnKhIAwDQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759924823; c=relaxed/simple;
-	bh=4vMQxz8vJDFJ7PyFDHhD7SxqVaewjjy4uYlnHVW2M4Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uoTEIU4UHnLElkCNXcWQ4QLwgK6MaSJkiJEekTY3FXy2dI2SLaaA7KnYer6c6BlesqjYd97AZuhP2oJEc/7jpg5z8ddj6NBa08AhuEyVYczDfQzS/BIfg6c7V56MPedJcnUkwZ/1QCGHZ0Q64H72hJKHQZ5WST2ywOmtDExRknk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=D17arv5Z; arc=none smtp.client-ip=205.220.180.131
+	s=arc-20240116; t=1759924873; c=relaxed/simple;
+	bh=QfUT1DtV9d+QVs0WgbumZs0pdJWkf14RDIdQPku/mm4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=momoolIL37fULkqc2wtZWJ78PNl45YsUMAW6fUS6MvVydRcZJIwqbydwBpz/kLLYtLXN4t1yNoEx2hd5J192E40hRp9YZttGhedUrgD3lCoF7Q4pRcKGI7pm1ON/dEIGRsUBYyGF9tPss/vwHL2FthQNKL+uauXhZLa5J/5fAcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=eIMRSor3; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890eua002274
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 12:00:20 GMT
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890N0G028748
+	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 12:01:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-type:date:from:in-reply-to:message-id:mime-version
-	:references:subject:to; s=qcppdkim1; bh=uLhdPwh176J3u3H4+MR9RBj7
-	7/mlh5xjbvtuKbEqChI=; b=D17arv5ZdJZ6Qh4h4YtBT5rktlFlwB5RSg50OzLx
-	bo/10mGSmD5ZOMtheohUoQA+x0+u/sV0Yi6R/oOBu2F+2C3jyC3foYN58xopGVJU
-	L+Cx87wWk36FxetmlWo+ZAvoR12AxPWfEzaGoxBzCihmbJeqLRrFV48ru0Hv89yW
-	yN9PiOdTRkKUKvIEz9vAR7yeZc3K1jo2sh++w1hMu7YH7Y3r0q1KPr5LMoz6fl4Z
-	tOI40Cg6mSnqXD9AQId5wYlO9y1Gfv4FPgeeuTbliNQwrDmdDSnIeRx3cI7XEEQS
-	cDZg4kmbMKp3w2FMkKXNEI3pz9Xjn/8ocd5lb7oZ5Clv2w==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49juy729wt-1
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	YUe30woE5xEimZOnT9raXvhiVzii7F5/lJXV/+rQmpU=; b=eIMRSor3s8f0HqdA
+	pkeP+CNNNqq715YMCOKDIEvIXhzK21rEAyE8AKxeGV11sFtZfcRSEWqiWYOV6l31
+	CLFJOgcKqXCKvLzgnXLH0MLaL1IiJjrT58mDzQvQZWYfiOmU1MSSdWVsnCF/0GmF
+	24SSvVe5dkZRObBoMxoeoc6XnfDZJoTq5N5OC7hOgDuV2LrGeLjqslpcpdvtsSBv
+	PaXMMVUSqf8eH7v6YNIhQ2uNOdysGj8ioXnzOt1TGs6jNoNQNQnjGVfPLyCMnGdk
+	V1EDZok9m9WVpHqCc8TtZuOo+U/kvJtxr0J1HRlQ2GVaXM6DoXflM1gj63gLWR/X
+	j5vGwg==
+Received: from mail-ua1-f70.google.com (mail-ua1-f70.google.com [209.85.222.70])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49js9e2gku-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 12:00:20 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-780f914b5a4so6872563b3a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 05:00:20 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 12:01:11 +0000 (GMT)
+Received: by mail-ua1-f70.google.com with SMTP id a1e0cc1a2514c-92ed79d6ea0so97585241.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 05:01:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759924819; x=1760529619;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uLhdPwh176J3u3H4+MR9RBj77/mlh5xjbvtuKbEqChI=;
-        b=LSEfDw2yxgHnXfinM54dkzn0yP56khFyxDI0Kr508MUWZGK/IyfmKgD397Lk0SkNWx
-         bqJQJXcjSoqjQIqsKPDDA74lsIAsnRK6Anb3pNiLjCfFB6uFwyta2exk0bCELK8ag0Vd
-         bsTVLPqxLrkE3GYQ00OXCzpkgS4ExDvtEXeoprjy1APWMtWQpv9HIzJycIr+ZZaFaORh
-         9FkqJ1Phdo2qq7iySDNaWxxtsr23sTNlP4ie3pisCBxsvj0I67E4vqpfthsz9HzA2WTi
-         vV0irduztm1Ao04t6Ne1XRx9kQtzYsfAZ0I+dPtwLRCvTNgAYskRAWtPiMXN803IYoxv
-         s/Sg==
-X-Forwarded-Encrypted: i=1; AJvYcCWwUIcOdTNOF5shiSP19JE5jm+tSUk5TIQ+Q4laaBdq5kEpxAkSN09iUsKsSZajHpvAdZimVryc0KRtatCh@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy/55XVBl/CivUGCgIGdxWy7Af39HiZqJ6aiqmvz+1k9rHGgO1B
-	vnbQwoqukkVDCjWW7wPY4al8I/U+jh2qvxSfREpAFQUOZ7HSB4qHxopKcXAvuLcr/FJmsgWe8+t
-	uK1dDSZgAfxumMBaW15x4jtBHNs3fnIiEQMARRrkvta4p/TWQeJMUslkkHIBvDDmrr9rO
-X-Gm-Gg: ASbGncsvmsy/MdJY/Laz0V9Aq+GiI8ywcWs3ArwU+Uwejo9yj+3b3BoxLxRQt2IGoaQ
-	xXyryRX0ZCqTGi1w08UclKJp221cbvysDbSH4xyLj+MufTQPdyKOUNoCI4EkyPHGXai6m50Fe9m
-	eo8Vx/zOtiXd4dN6xz3WjrxXlyS6ySSjHbK+ItYW/K1HoL+KdXGbjzoF0NY6Lc2Xt52Earrjf6r
-	Q1NSBECMXAGXJ/4coKZ2Dt66IVKyiezOfalq1I19BhI2v1q0o70W7Vp/mh0KYjTU5uYw4XxDPqh
-	W4y4rzMKb94yO5v4DqGbMmgvjnlSYYOGieWZIxK6A7UYoNHN1LhIBFiCtHKiH9lpMH1bCB6A
-X-Received: by 2002:a05:6a21:e083:b0:2fa:52a0:e838 with SMTP id adf61e73a8af0-32da83e39ddmr4358394637.36.1759924818347;
-        Wed, 08 Oct 2025 05:00:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKO7wqlSvx59P2vS6UzWzJ//dvnD3o/iZtvddrv03NuT9ONGsnUOVru90lpyPYje4cnIJpKA==
-X-Received: by 2002:a05:6a21:e083:b0:2fa:52a0:e838 with SMTP id adf61e73a8af0-32da83e39ddmr4358306637.36.1759924817502;
-        Wed, 08 Oct 2025 05:00:17 -0700 (PDT)
-Received: from hu-mojha-hyd.qualcomm.com ([202.46.23.25])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-78b01faf086sm18623699b3a.23.2025.10.08.05.00.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 05:00:16 -0700 (PDT)
-Date: Wed, 8 Oct 2025 17:30:10 +0530
-From: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley <conor+dt@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 11/12] remoteproc: qcom: pas: Enable Secure PAS
- support with IOMMU managed by Linux
-Message-ID: <20251008120010.kygbso4vw2ouwlzu@hu-mojha-hyd.qualcomm.com>
-References: <20251007-kvm_rprocv4_next-20251007-v4-0-de841623af3c@oss.qualcomm.com>
- <20251007-kvm_rprocv4_next-20251007-v4-11-de841623af3c@oss.qualcomm.com>
- <65e6d61a-7648-4125-8550-8a8c6d476b0a@oss.qualcomm.com>
+        d=1e100.net; s=20230601; t=1759924870; x=1760529670;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YUe30woE5xEimZOnT9raXvhiVzii7F5/lJXV/+rQmpU=;
+        b=RYQK5xFeUdCEXdJdEGI3HZ4Ytah/cYB6S+vrUH8O0mKJLfU7HeTZMW8mcQ2K1Qdj+p
+         koIoMHy30U4VeDcTOY/GfK+dHaChv7Rh52IIEFoxIoas7zI20dPO9RHYMzqfDt/Zs0Cv
+         w7CR/6JJSG2i3p7hnM87H6/xOTkNTSYy/DRaEu2g4M917JRdwUb7mTwaW6rbGFhQKsQa
+         9DXHyapeOndueTE/+lP2e62boH2ouBHlEZ9bB6LnrgdK2Kb/+VR168rifZ/qA1hlROja
+         1AqXVu5JSZVMNdPO2jGfKaEqUKEs/6S4RBhcCAUdhip98DvDJrWMMoC0pFPtU9F6CeHf
+         WzZw==
+X-Gm-Message-State: AOJu0Yw4LGo6eVybRDhy6P4NBDopB6yoVd0sKaG7XFm7nj/Knf+A8Z7S
+	gTdfs6ZOuAEbqEmgZ74ODHqnOL1wXsODONm4TkL1R5qUUxZPd0Pxkci4roZX7rl4o/x6+m2/D78
+	ML/9iW6KdMFNDBypwIAxcS2xgkpJucclwdSYiuj3IDMwojRy78boD5vKQHHHI1mTOcMV0
+X-Gm-Gg: ASbGnct3xqn0nEcU/tKqd7WqiRloYw35ENd1XplWgB3U5L0XbnMeMF3dgV2nppoCkbR
+	6qGKclFC+Z28SlRBvxCUj7V9xUwQundQsiXSri9bw+UoUeJHordIOENwOaksY69x/AZ8hWd9sjr
+	ICFsoQ8SJOVrUf8YEuvaxL9amUacVl7n/NChm4pSBSo2SYXTnX/lxDiUh46QrOjcJgf2BODbToJ
+	mVq390voS4etnSgyo5w2bubqOAj4BDBW1+xWqhOJyF/dh8HF2ALVZwaW0azlWPQeyb+eEcgNhQi
+	N3AD863W3rr0RWAwL3RympgFleLRAC220sAGpkFS8oltt779ZYw3PXjBqGMttRIjIbUaNaxcaMn
+	08A00gmsAqGtETKDOypLD3UAO17w=
+X-Received: by 2002:a05:6122:6c01:b0:544:6d56:eef1 with SMTP id 71dfb90a1353d-554b8b9dafcmr382777e0c.2.1759924869677;
+        Wed, 08 Oct 2025 05:01:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFT9kYombhVn9vLwV8HVqDP5rHDdMKek8m1Ph8xI5IlH4fvXAiDJcCahZY6sxIbEptqVVlYDA==
+X-Received: by 2002:a05:6122:6c01:b0:544:6d56:eef1 with SMTP id 71dfb90a1353d-554b8b9dafcmr382725e0c.2.1759924868891;
+        Wed, 08 Oct 2025 05:01:08 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b48652aa040sm1634050866b.20.2025.10.08.05.01.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 05:01:08 -0700 (PDT)
+Message-ID: <f7f2189b-b182-4616-bba3-ad1a0af3e4da@oss.qualcomm.com>
+Date: Wed, 8 Oct 2025 14:01:02 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <65e6d61a-7648-4125-8550-8a8c6d476b0a@oss.qualcomm.com>
-X-Authority-Analysis: v=2.4 cv=IrITsb/g c=1 sm=1 tr=0 ts=68e65254 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=ZePRamnt/+rB5gQjfz0u9A==:17
- a=kj9zAlcOel0A:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=qxcRfBPHBTAMjdSr2WsA:9
- a=CjuIK1q_8ugA:10 a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-GUID: fBaZ45qv-fB68FDv0fdfqcKLwdtgTb6R
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAyOSBTYWx0ZWRfX4dd6dJOc934+
- O13P1XWRbZCknUv70HPskWI8XYgLKvCqGgvyOOTSZ8lIZ78+4UGdtTlHuKcphKpidqnKk7cZTzL
- JIrgJ52RhnRLWyb7X6XdRQnI/HukMl/RGp0c6G9OBzjNDH/EToVIRyzqo6AyAK83lJwS6riVUTy
- xsGijgoBgtJKx5BAXqOyHnzPl7r6F1Tj/n8SQXFcAx18HfHNttEbdI4ICEArPmlxTlDsoZojZNp
- gBBNJX1D2pHQPGAcdeO99QwMoGZQEDaGziuKKEPJT75zhsa86BioyLjZBVViQadPJpp3WN6QyQP
- WNNcTGupoNdhF5+hvIzDgKvOIyHr6iqe6f0PHpeemSVte7lI7h2ypf027cWmukUPBiBrwYU1ku1
- Kqv52rEC/oyXsIhbrboLPUfcpGWX1A==
-X-Proofpoint-ORIG-GUID: fBaZ45qv-fB68FDv0fdfqcKLwdtgTb6R
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 12/17] drm/msm/adreno: Introduce A8x GPU Support
+To: Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+        Rob Clark <robin.clark@oss.qualcomm.com>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Sean Paul <sean@poorly.run>,
+        Dmitry Baryshkov <lumag@kernel.org>,
+        Abhinav Kumar
+ <abhinav.kumar@linux.dev>,
+        Jessica Zhang <jessica.zhang@oss.qualcomm.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse
+ <jordan@cosmicpenguin.net>,
+        Will Deacon <will@kernel.org>, Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org, iommu@lists.linux.dev,
+        devicetree@vger.kernel.org
+References: <20250930-kaana-gpu-support-v1-0-73530b0700ed@oss.qualcomm.com>
+ <20250930-kaana-gpu-support-v1-12-73530b0700ed@oss.qualcomm.com>
+Content-Language: en-US
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20250930-kaana-gpu-support-v1-12-73530b0700ed@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Authority-Analysis: v=2.4 cv=Hrl72kTS c=1 sm=1 tr=0 ts=68e65287 cx=c_pps
+ a=R6oCqFB+Yf/t2GF8e0/dFg==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=C_0j-PAzlxBuy3Ei6pAA:9
+ a=QEXdDO2ut3YA:10 a=TD8TdBvy0hsOASGTdmB-:22
+X-Proofpoint-GUID: wkpQVkZ8daIC_8ulYx-E8viMqIJHLTHD
+X-Proofpoint-ORIG-GUID: wkpQVkZ8daIC_8ulYx-E8viMqIJHLTHD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAwNCBTYWx0ZWRfX7DyhEIIptp0M
+ eRZwJSZtlKATX4I+4La4IGSdI30uPOiBxramLZKM0QogocLCp8wc+Vo002luneJsAVM48CX5UEK
+ OHhm4nFixKrkBdNXmuqFUIt0AoTL9Xwkc0I0mcH2aCqM83sng6NwQNbPLuF6XRv8p5tmVifm+yV
+ 0uMkw7lXcPfA+enzDLJhgefFVv1RGAygqTMx6fXzXk1IKCstZN+/S9Xvu/0f9iOWBxnEGHFPR1c
+ QS1Q1cTQJkqkGTyAHT9OASu8nyle/rWztsPufO18yHaFBIfAz5tiE1MNp5KVNqrEBbSMg5ZkM72
+ Wl4vPi998lw22iA7HTxPsTVGJr8h3J21cMdA+msx8fV9hopq28ytBGKQmOZ+a6r/qaokAXqoiAi
+ hi3+SO2BeSVPnEZPk6JxpUs+UsBZ3w==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-08_03,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 bulkscore=0 clxscore=1015 malwarescore=0
- spamscore=0 phishscore=0 impostorscore=0 lowpriorityscore=0 suspectscore=0
+ clxscore=1015 phishscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
+ bulkscore=0 priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040029
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040004
 
-On Wed, Oct 08, 2025 at 11:19:32AM +0200, Konrad Dybcio wrote:
-> On 10/7/25 6:48 PM, Mukesh Ojha wrote:
-> > Most Qualcomm platforms feature Gunyah hypervisor, which typically
-> > handles IOMMU configuration. This includes mapping memory regions and
-> > device memory resources for remote processors by intercepting
-> > qcom_scm_pas_auth_and_reset() calls. These mappings are later removed
-> > during teardown. Additionally, SHM bridge setup is required to enable
-> > memory protection for both remoteproc metadata and its memory regions.
-> > When the aforementioned hypervisor is absent, the operating system must
-> > perform these configurations instead.
-> > 
-> > When Linux runs as the hypervisor (@ EL2) on a SoC, it will have its
-> > own device tree overlay file that specifies the firmware stream ID now
-> > managed by Linux for a particular remote processor. If the iommus
-> > property is specified in the remoteproc device tree node, it indicates
-> > that IOMMU configuration must be handled by Linux. In this case, the
-> > has_iommu flag is set for the remote processor, which ensures that the
-> > resource table, carveouts, and SHM bridge are properly configured before
-> > memory is passed to TrustZone for authentication. Otherwise, the
-> > has_iommu flag remains unset, which indicates default behavior.
-> > 
-> > Enables Secure PAS support for remote processors when IOMMU configuration
-> > is managed by Linux.
-> > 
-> > Signed-off-by: Mukesh Ojha <mukesh.ojha@oss.qualcomm.com>
-> > ---
+On 9/30/25 7:48 AM, Akhil P Oommen wrote:
+> A8x is the next generation of Adreno GPUs, featuring a significant
+> hardware design change. A major update to the design is the introduction
+> of Slice architecture. Slices are sort of mini-GPUs within the GPU which
+> are more independent in processing Graphics and compute workloads. Also,
+> in addition to the BV and BR pipe we saw in A7x, CP has more concurrency
+> with additional pipes.
 > 
-> [...]
+> From a software interface perspective, these changes have a significant
+> impact on the KMD side. First, the GPU register space has been extensively
+> reorganized. Second, to avoid  a register space explosion caused by the
+> new slice architecture and additional pipes, many registers are now
+> virtualized, instead of duplicated as in A7x. KMD must configure an
+> aperture register with the appropriate slice and pipe ID before accessing
+> these virtualized registers.
 > 
-> > +	if (of_property_present(pdev->dev.of_node, "iommus")) {
-> > +		struct of_phandle_args args;
-> > +
-> > +		ret = of_parse_phandle_with_args(pdev->dev.of_node, "iommus",
-> > +						 "#iommu-cells", 0, &args);
-> > +		if (ret < 0)
-> > +			return ret;
-> > +
-> > +		rproc->has_iommu = true;
-> > +		of_node_put(args.np);
-> > +	} else {
-> > +		rproc->has_iommu = false;
-> > +	}
+> This patch adds only a skeleton support for the A8x family. An A8x GPU
+> support will be added in an upcoming patch.
 > 
-> I think the above is a little heavy-handed..
-> 
-> rproc->has_iommu = of_property_present(...)
-> 
-> should suffice.. if the developer puts something that isn't a #xxx-cells
-> -marked provider in xxx = <>, that's on them
+> Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+> ---
 
-Sure.
+[...]
 
-> 
-> Konrad
+> +static void a8xx_aperture_slice_set(struct msm_gpu *gpu, enum adreno_pipe pipe, u32 slice)
+> +{
+> +	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+> +	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+> +	u32 val;
+> +
+> +	val = A8XX_CP_APERTURE_CNTL_HOST_PIPEID(pipe) | A8XX_CP_APERTURE_CNTL_HOST_SLICEID(slice);
+> +
+> +	if (a6xx_gpu->cached_aperture == val)
+> +		return;
+> +
+> +	gpu_write(gpu, REG_A8XX_CP_APERTURE_CNTL_HOST, val);
 
--- 
--Mukesh Ojha
+unless the effect is instantenous, this needs a readback
+
+[...]
+
+> +static u32 a8xx_get_first_slice(struct a6xx_gpu *a6xx_gpu)
+> +{
+> +	return ffs(a6xx_gpu->slice_mask) - 1;
+> +}
+
+#define instead?
+
+Perhaps also move it closer to the user
+
+
+> +static void a8xx_set_ubwc_config(struct msm_gpu *gpu)
+
+You modified a6xx_calc_ubwc_config() earlier in the patch
+
+is one of them unnecessary?
+
+[...]
+
+> +static int a8xx_zap_shader_init(struct msm_gpu *gpu)
+
+You can borrow this from a6xx_gpu
+
+Perhaps moving such common functions to a separate file would be
+even better, I glanced over the change and there is probably some
+potential to commonize
+
+Konrad
 
