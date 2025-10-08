@@ -1,207 +1,232 @@
-Return-Path: <linux-arm-msm+bounces-76457-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76444-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3A3DBC5CD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 17:44:42 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D58DBC5B02
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 17:37:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id E5BC119E4842
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 15:44:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 28F52188ED1F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 15:37:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9C7C5303C88;
-	Wed,  8 Oct 2025 15:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 75A4D2FB0A3;
+	Wed,  8 Oct 2025 15:33:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="N2qfZelM"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FI0c4fZh"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com [52.12.53.23])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4512FD7A7;
-	Wed,  8 Oct 2025 15:35:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.12.53.23
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E9B41369B4;
+	Wed,  8 Oct 2025 15:33:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759937739; cv=none; b=oAUyECiUOIR0Gj0zTxNjfO3KiPqdQy1CUUGkTl4bit2WZbHjmHy+DTUg03upICoNwGZ7Z+k2Pfns9xrd4sGKQ1pdIQ5kw09JKF0AISHQHZ0h1N7G+Bb8IumkPlrt368YBxI1/D0kTofVp7Qnrv1S+O3kStiLtTboRMgvX6721uE=
+	t=1759937627; cv=none; b=QbTI/fO6GDTIUfjG9jU8Im7XHANUP3X9aCLg5zTyZ8gZX/r4f5F5bYsq3liotZZjFv0M+l/n9GkopOjjCc84fnUgARNt1R/JFs5BqDVWQfV9VvUXxo5kgw0uizzNFZJ1jDb+qUUoKt6QyZbUrrNrC8+rBjKAbUydLwGLggQI+wQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759937739; c=relaxed/simple;
-	bh=V2L3IilwofpV6SrsfVTvut5ipDXkokIOm+dTBT4i7eQ=;
-	h=From:To:CC:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tBYrY89q0c3mGEZg6x4AdA00N5Sm1cO6DZp95oGR6zx0RYNsg5RGkCwzkLZ4yMEqvsJAu6I5Rjnzj3EHeKp+TPdGuOYw25fToPZHLi71Q58g9Az1yjQtS/PrO3rVO0KwJWJ7pJD2rTSi0tFugKSszq1Zk+39vStN+VXgM1tOTFs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=N2qfZelM; arc=none smtp.client-ip=52.12.53.23
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
-  t=1759937737; x=1791473737;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=k0dUe76w+6n5/NfsPbyefGVCom+xh3GGcFcV3Olhmks=;
-  b=N2qfZelMt7jwppptReH5RJjvLCAq/b1xUidl0CPU0Jqs9jNAU3oMFvB9
-   XYCZdeHegjtZW/9XGw/3HUhrp+yq6EAvzU6sYt8/fK9EVwmrSvRq21SRk
-   prqQkmq+gGIlkZz6INpg5ORldB3fmTgFPpCCXqNXDmlRRlquoLq9MKWsP
-   yZgTngtkf9dwOXU/mZxmw7V0MgJpLWy/T6ygeYDI42YS55Cc+DnARBUnI
-   BGYgpx02EFU10P1sE5xYiEFez+kjhdOIf7lWCrPzIjLLXHT/ZEPDHlvOC
-   VkTVVcI3OmX/zpBsRGH/sD87HOfAnJl+gAqhSgcxm0KjcwIoExm5b91OJ
-   w==;
-X-CSE-ConnectionGUID: b75d3iYwTRuB7tX10Wtizg==
-X-CSE-MsgGUID: Px2S2wuYSNWDoNTkGsZEDg==
-X-IronPort-AV: E=Sophos;i="6.19,213,1754956800"; 
-   d="scan'208";a="4410969"
-Received: from ip-10-5-12-219.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.12.219])
-  by internal-pdx-out-010.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2025 15:35:35 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.7.35:3268]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.15.171:2525] with esmtp (Farcaster)
- id b6cae892-4a8e-4639-abaf-f3ab0bbe7767; Wed, 8 Oct 2025 15:35:35 +0000 (UTC)
-X-Farcaster-Flow-ID: b6cae892-4a8e-4639-abaf-f3ab0bbe7767
-Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.20;
- Wed, 8 Oct 2025 15:35:34 +0000
-Received: from dev-dsk-farbere-1a-46ecabed.eu-west-1.amazon.com
- (172.19.116.181) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.20; Wed, 8 Oct 2025
- 15:35:20 +0000
-From: Eliav Farber <farbere@amazon.com>
-To: <gregkh@linuxfoundation.org>, <jdike@addtoit.com>, <richard@nod.at>,
-	<anton.ivanov@cambridgegreys.com>, <dave.hansen@linux.intel.com>,
-	<luto@kernel.org>, <peterz@infradead.org>, <tglx@linutronix.de>,
-	<mingo@redhat.com>, <bp@alien8.de>, <x86@kernel.org>, <hpa@zytor.com>,
-	<tony.luck@intel.com>, <qiuxu.zhuo@intel.com>, <james.morse@arm.com>,
-	<rric@kernel.org>, <airlied@linux.ie>, <daniel@ffwll.ch>,
-	<maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
-	<tzimmermann@suse.de>, <robdclark@gmail.com>, <sean@poorly.run>,
-	<jdelvare@suse.com>, <linux@roeck-us.net>, <linus.walleij@linaro.org>,
-	<dmitry.torokhov@gmail.com>, <maz@kernel.org>, <wens@csie.org>,
-	<jernej.skrabec@gmail.com>, <agk@redhat.com>, <snitzer@redhat.com>,
-	<dm-devel@redhat.com>, <davem@davemloft.net>, <kuba@kernel.org>,
-	<mcoquelin.stm32@gmail.com>, <krzysztof.kozlowski@canonical.com>,
-	<malattia@linux.it>, <hdegoede@redhat.com>, <mgross@linux.intel.com>,
-	<jejb@linux.ibm.com>, <martin.petersen@oracle.com>,
-	<sakari.ailus@linux.intel.com>, <clm@fb.com>, <josef@toxicpanda.com>,
-	<dsterba@suse.com>, <jack@suse.com>, <tytso@mit.edu>,
-	<adilger.kernel@dilger.ca>, <dushistov@mail.ru>,
-	<luc.vanoostenryck@gmail.com>, <rostedt@goodmis.org>, <pmladek@suse.com>,
-	<senozhatsky@chromium.org>, <andriy.shevchenko@linux.intel.com>,
-	<linux@rasmusvillemoes.dk>, <minchan@kernel.org>, <ngupta@vflare.org>,
-	<akpm@linux-foundation.org>, <yoshfuji@linux-ipv6.org>, <dsahern@kernel.org>,
-	<pablo@netfilter.org>, <kadlec@netfilter.org>, <fw@strlen.de>,
-	<jmaloy@redhat.com>, <ying.xue@windriver.com>, <shuah@kernel.org>,
-	<willy@infradead.org>, <farbere@amazon.com>, <sashal@kernel.org>,
-	<quic_akhilpo@quicinc.com>, <ruanjinjie@huawei.com>,
-	<David.Laight@ACULAB.COM>, <herve.codina@bootlin.com>,
-	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
-	<linux-um@lists.infradead.org>, <linux-edac@vger.kernel.org>,
-	<amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
-	<linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
-	<linux-hwmon@vger.kernel.org>, <linux-input@vger.kernel.org>,
-	<linux-sunxi@lists.linux.dev>, <linux-media@vger.kernel.org>,
-	<netdev@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
-	<platform-driver-x86@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
-	<linux-staging@lists.linux.dev>, <linux-btrfs@vger.kernel.org>,
-	<linux-ext4@vger.kernel.org>, <linux-sparse@vger.kernel.org>,
-	<linux-mm@kvack.org>, <netfilter-devel@vger.kernel.org>,
-	<coreteam@netfilter.org>, <tipc-discussion@lists.sourceforge.net>,
-	<linux-kselftest@vger.kernel.org>, <stable@vger.kernel.org>
-CC: Arnd Bergmann <arnd@kernel.org>, Christoph Hellwig <hch@infradead.org>,
-	Dan Carpenter <dan.carpenter@linaro.org>, "Jason A. Donenfeld"
-	<Jason@zx2c4.com>, Jens Axboe <axboe@kernel.dk>, Lorenzo Stoakes
-	<lorenzo.stoakes@oracle.com>, Mateusz Guzik <mjguzik@gmail.com>, "Pedro
- Falcato" <pedro.falcato@gmail.com>
-Subject: [PATCH v3 19/19 5.15.y] minmax.h: remove some #defines that are only expanded once
-Date: Wed, 8 Oct 2025 15:29:44 +0000
-Message-ID: <20251008152946.29285-20-farbere@amazon.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20251008152946.29285-1-farbere@amazon.com>
-References: <20251008152946.29285-1-farbere@amazon.com>
+	s=arc-20240116; t=1759937627; c=relaxed/simple;
+	bh=QfGqpBO4FfrWk/eVdia6596gto9Cjc58rAAt6MPwwhY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=OY2WwV1Io+H8KN2pYQFn4d3f1If8oLE7CrZjMBAQIHpFQstQ9yoryy/fZfRxV720JZ52ysnA9uCTFRkizVn/jsQ7oWQA5ob0c0GlsBQehVngNVDARzro9fGV+graczlFaLm5XVTb1qX6ILRoOGW+KTEaau3vb1khkSFwCMkOGWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FI0c4fZh; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPS id A106FC4CEE7;
+	Wed,  8 Oct 2025 15:33:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759937626;
+	bh=QfGqpBO4FfrWk/eVdia6596gto9Cjc58rAAt6MPwwhY=;
+	h=From:Subject:Date:To:Cc:Reply-To:From;
+	b=FI0c4fZhdkh/s7/oe0A8Q+rtDUs7iKnx+rKQPY6/9HzHFrAI4J3YpcP4UYINsyaGX
+	 /EnN75pZzDlDq5KZo/xf49d7qHyt6BzTr1bjkjnyBU5xcjcfy6TPlhg3WL7Qq9ekVz
+	 zXqpmB+WmS793azREEIb8jl2eY2BBK08ptTNbDuciyk2+o8uPuRm0Yf3Kx6jh17KwW
+	 wlHDY5wu0DoxFXVcKiKrktCqSzCje/GOghwh91PBR/ucrXqzZf99qKOwcI/eDm4A1E
+	 U/KAf6AVUQzOjBQbd4jobkKwTwTP/iAawVPvSBZSOIGvaCmLRDTZrXW1Rw52IfmV8t
+	 TI8nv1jYfylog==
+Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
+	by smtp.lore.kernel.org (Postfix) with ESMTP id 857CACCA472;
+	Wed,  8 Oct 2025 15:33:46 +0000 (UTC)
+From: George Moussalem via B4 Relay <devnull+george.moussalem.outlook.com@kernel.org>
+Subject: [PATCH v17 0/9] Add PWM support for IPQ chipsets
+Date: Wed, 08 Oct 2025 19:32:52 +0400
+Message-Id: <20251008-ipq-pwm-v17-0-9bd43edfc7f7@outlook.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: EX19D036UWC004.ant.amazon.com (10.13.139.205) To
- EX19D001UWA001.ant.amazon.com (10.13.138.214)
+X-B4-Tracking: v=1; b=H4sIACSE5mgC/z2O3Q6CMAxGX8Xs2pJuMIZe8R6GGDKGNAob40cJ4
+ d0dJHp52q+n38oG48kM7HpamTczDWS7AFydT0w3ZfcwQFUYMIFC4kUIINeDe7egM62k5omqpGA
+ h7byp6XOobkXg2tsWxsab8ncfc0TJU5QSI5GIGJUEDv1E+l6F187Tku9EnY60bXdpQ8No/XLUm
+ 3m6u48mwcT/TcICEGLEWsTKoEmz3E7jy9rnoSm2bfsCOrm5DugAAAA=
+X-Change-ID: 20250922-ipq-pwm-c8c75c147d52
+To: =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>, 
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
+ Conor Dooley <conor+dt@kernel.org>, Baruch Siach <baruch@tkos.co.il>, 
+ Bjorn Andersson <andersson@kernel.org>, 
+ Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org, 
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, 
+ George Moussalem <george.moussalem@outlook.com>, 
+ Devi Priya <quic_devipriy@quicinc.com>, 
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, 
+ Baruch Siach <baruch.siach@siklu.com>, 
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>, 
+ Bjorn Andersson <andersson@kernel.org>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1759937622; l=5394;
+ i=george.moussalem@outlook.com; s=20250321; h=from:subject:message-id;
+ bh=QfGqpBO4FfrWk/eVdia6596gto9Cjc58rAAt6MPwwhY=;
+ b=lX1OIMEtBM7ozehqeqSVroqzVhRmgLIu1EjlE12sxYg8KEc5VWGOFfcBOURtqsrcCTf+dSlt/
+ ptwsWxF/xrQC/FtM6Gjgn+BwQhDcYz1HYzvQJQz3lTmRiJpuf5mPm/U
+X-Developer-Key: i=george.moussalem@outlook.com; a=ed25519;
+ pk=/PuRTSI9iYiHwcc6Nrde8qF4ZDhJBlUgpHdhsIjnqIk=
+X-Endpoint-Received: by B4 Relay for george.moussalem@outlook.com/20250321
+ with auth_id=364
+X-Original-From: George Moussalem <george.moussalem@outlook.com>
+Reply-To: george.moussalem@outlook.com
 
-From: David Laight <David.Laight@ACULAB.COM>
+Add PWM driver and binding support for IPQ chipsets.
+Also, add nodes to add support for pwm in ipq6018, ipq5018, ipq5332, and
+ipq9574.
 
-[ Upstream commit 2b97aaf74ed534fb838d09867d09a3ca5d795208 ]
+I've picked up work based on Devi's last submission (v15) which dates
+back to 05 October 2023 as below SoCs are still active.
 
-The bodies of __signed_type_use() and __unsigned_type_use() are much the
-same size as their names - so put the bodies in the only line that expands
-them.
-
-Similarly __signed_type() is defined separately for 64bit and then used
-exactly once just below.
-
-Change the test for __signed_type from CONFIG_64BIT to one based on gcc
-defined macros so that the code is valid if it gets used outside of a
-kernel build.
-
-Link: https://lkml.kernel.org/r/9386d1ebb8974fbabbed2635160c3975@AcuMS.aculab.com
-Signed-off-by: David Laight <david.laight@aculab.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Arnd Bergmann <arnd@kernel.org>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Mateusz Guzik <mjguzik@gmail.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Pedro Falcato <pedro.falcato@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Eliav Farber <farbere@amazon.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- include/linux/minmax.h | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+Changes in v17:
+- Picked up RB tags from Dmitry and Rob
+- Removed unnecessary code comments
+- Corrected reg property in PWM node in ipq6018 DTS in line with
+  expected nr of bytes for address and size cells
+- Link to v16: https://lore.kernel.org/r/20251001-ipq-pwm-v16-0-300f237e0e68@outlook.com
 
-diff --git a/include/linux/minmax.h b/include/linux/minmax.h
-index 2bbdd5b5e07e..eaaf5c008e4d 100644
---- a/include/linux/minmax.h
-+++ b/include/linux/minmax.h
-@@ -46,10 +46,8 @@
-  * comparison, and these expressions only need to be careful to not cause
-  * warnings for pointer use.
-  */
--#define __signed_type_use(ux) (2 + __is_nonneg(ux))
--#define __unsigned_type_use(ux) (1 + 2 * (sizeof(ux) < 4))
- #define __sign_use(ux) (is_signed_type(typeof(ux)) ? \
--	__signed_type_use(ux) : __unsigned_type_use(ux))
-+	(2 + __is_nonneg(ux)) : (1 + 2 * (sizeof(ux) < 4)))
- 
- /*
-  * Check whether a signed value is always non-negative.
-@@ -57,7 +55,7 @@
-  * A cast is needed to avoid any warnings from values that aren't signed
-  * integer types (in which case the result doesn't matter).
-  *
-- * On 64-bit any integer or pointer type can safely be cast to 'long'.
-+ * On 64-bit any integer or pointer type can safely be cast to 'long long'.
-  * But on 32-bit we need to avoid warnings about casting pointers to integers
-  * of different sizes without truncating 64-bit values so 'long' or 'long long'
-  * must be used depending on the size of the value.
-@@ -66,12 +64,12 @@
-  * them, but we do not use s128 types in the kernel (we do use 'u128',
-  * but they are handled by the !is_signed_type() case).
-  */
--#ifdef CONFIG_64BIT
--  #define __signed_type(ux) long
-+#if __SIZEOF_POINTER__ == __SIZEOF_LONG_LONG__
-+#define __is_nonneg(ux) statically_true((long long)(ux) >= 0)
- #else
--  #define __signed_type(ux) typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L))
-+#define __is_nonneg(ux) statically_true( \
-+	(typeof(__builtin_choose_expr(sizeof(ux) > 4, 1LL, 1L)))(ux) >= 0)
- #endif
--#define __is_nonneg(ux) statically_true((__signed_type(ux))(ux) >= 0)
- 
- #define __types_ok(ux, uy) \
- 	(__sign_use(ux) & __sign_use(uy))
+Changes in v16:
+- Removed reg description in bindings as the offset is not relative to
+  the TCSR region anymore since simple-mfd support was dropped and PWM
+  nodes defined as their own nodes, not child nodes. Updated the example
+  too.
+- Dropped patch to add simple-mfd support to the qcom,tcsr bindings
+- Simplified code to calculate divs and duty cycle as per Uwe's comments
+- Removed unused pwm_chip struct from ipq_pwm_chip struct
+- Removed unnecessary cast as per Uwe's comment
+- Replaced devm_clk_get & clk_prepare_enable by devm_clk_get_enabled
+- Replaced pwmchip_add by devm_pwmchip_add and removed .remove function
+- Removed .owner from driver struct
+- Added compatibles to the bindings and nodes to the device trees to add
+  PWM support in the IPQ5018, IPQ5332, and IPQ9574 SoCs
+- Link to v15: https://lore.kernel.org/r/20231005160550.2423075-1-quic_devipriy@quicinc.com
+
+Changes in v15:
+- No change
+- Link to v14: https://lore.kernel.org/r/20231005033053.2626465-1-quic_devipriy@quicinc.com
+
+Changes in v14:
+- Picked up the R-b tag
+- Link to v13: https://lore.kernel.org/r/20231004090449.256229-1-quic_devipriy@quicinc.com
+
+Changes in v13:
+- Updated the file name to match the compatible
+- Sorted the properties and updated the order in the required field
+- Dropped the syscon node from examples
+- Link to v12: https://lore.kernel.org/r/20230925065915.3467964-1-quic_devipriy@quicinc.com
+
+Changes in v12:
+- Picked up the R-b tag
+
+Changes in v11:
+- No change
+
+Changes in v10:
+- No change
+
+Changes in v9:
+- Add 'ranges' property to example (Rob)
+- Drop label in example (Rob)
+
+Changes in v8:
+- Add size cell to 'reg' (Rob)
+
+Changes in v7:
+- Use 'reg' instead of 'offset' (Rob)
+- Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+- Use single cell address/size in example node (Bjorn)
+- Move '#pwm-cells' lower in example node (Bjorn)
+- List 'reg' as required
+
+Changes in v6:
+- Device node is child of TCSR; remove phandle (Rob Herring)
+- Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+
+Changes in v5:
+- Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+    Andersson, Kathiravan T)
+
+Changes in v4:
+- Update the binding example node as well (Rob Herring's bot)
+
+Changes in v3:
+- s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+
+Changes in v2:
+- Make #pwm-cells const (Rob Herring)
+
+---
+George Moussalem (6):
+      dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq5018
+      dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq5332
+      dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq9574
+      arm64: dts: qcom: ipq5018: add pwm node
+      arm64: dts: qcom: ipq5332: add pwm node
+      arm64: dts: qcom: ipq9574: add pwm node
+
+Devi Priya (3):
+      dt-bindings: pwm: add IPQ6018 binding
+      pwm: driver for qualcomm ipq6018 pwm block
+      arm64: dts: qcom: ipq6018: add pwm node
+
+ .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  |  51 +++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  10 +
+ drivers/pwm/Kconfig                                |  12 +
+ drivers/pwm/Makefile                               |   1 +
+ drivers/pwm/pwm-ipq.c                              | 212 +++++++++++++++++++++
+ 8 files changed, 316 insertions(+)
+---
+
+---
+Devi Priya (3):
+      dt-bindings: pwm: add IPQ6018 binding
+      pwm: driver for qualcomm ipq6018 pwm block
+      arm64: dts: qcom: ipq6018: add pwm node
+
+George Moussalem (6):
+      dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq5018
+      dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq5332
+      dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq9574
+      arm64: dts: qcom: ipq5018: add pwm node
+      arm64: dts: qcom: ipq5332: add pwm node
+      arm64: dts: qcom: ipq9574: add pwm node
+
+ .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  |  51 +++++
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq5332.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi              |  10 +
+ arch/arm64/boot/dts/qcom/ipq9574.dtsi              |  10 +
+ drivers/pwm/Kconfig                                |  12 ++
+ drivers/pwm/Makefile                               |   1 +
+ drivers/pwm/pwm-ipq.c                              | 212 +++++++++++++++++++++
+ 8 files changed, 316 insertions(+)
+---
+base-commit: 4711da77d9dc21e8c3c49fa9664ad6113a02237e
+change-id: 20250922-ipq-pwm-c8c75c147d52
+
+Best regards,
 -- 
-2.47.3
+George Moussalem <george.moussalem@outlook.com>
+
 
 
