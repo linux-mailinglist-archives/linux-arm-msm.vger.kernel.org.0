@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76288-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F919BC32C7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 04:53:04 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id 837ABBC32D0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 04:56:20 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id EF6C2189801F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 02:53:26 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43F43189A74D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 02:56:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B48F629AB1D;
-	Wed,  8 Oct 2025 02:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D40C29B8E0;
+	Wed,  8 Oct 2025 02:56:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uQRlNQef"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pUPCSqTs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E0C1A9F8D;
-	Wed,  8 Oct 2025 02:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB926260580;
+	Wed,  8 Oct 2025 02:56:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759891978; cv=none; b=bHzu7xtDzzHpc9CO4O/ZL87dapBS+2fVDdCXDpLAXFAKjpFC5ESYlKdJH9aiz8p4jgb0fEsVGqATwMocLJKuVmDLh75eez9kbUzwoR90Nk1vScZan1JksuZfDtg24RejSfdKQNQzbuYxp+Z2KtlCZ0qjB6qw92MOyD+ZzVUcVx0=
+	t=1759892174; cv=none; b=t/SzSzQ3F+n5XVYzUcM0bteIPeE3m4DXVTGYlL79DsC7CNpyOFbpB1RMX8OlVXQS4k/N/ptDMB1DI6BBs72x8cv5Oh4iF2++LiAniMofqe2OLIpAjKH/IraPIxvEjwQPFlDZRDXgeWRyObSG6BeeOKwTrQOd9RsJmdCNiI1wOVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759891978; c=relaxed/simple;
-	bh=SDMhTMoLHAB4t/fx9UFMaDZrLMplEazgWMeaH+F6ZOc=;
+	s=arc-20240116; t=1759892174; c=relaxed/simple;
+	bh=gkZN5Qc8iYn3DbePjFgVqCfPKhn+zqItH/K4bcNbwjo=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RvUI6+LaNbAkuaURcRoKJibfrpbXrKUNi71W/7xBWSg7VcLJ/2aHUD4RDmwSDTjlITYlVQH+CfLDotHkcs8nKKg5pawUyX/mP8zF2DdE3vN/CegAIVyFDmyilrNoWP8H48tn4okcMYlQjxYuvvTaa9w15sbXtrPBqCuK3u1msXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uQRlNQef; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C35F5C4CEF1;
-	Wed,  8 Oct 2025 02:52:54 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=Ogu/l1xQAFmJ0DKvrogq+iOdSXZApvIiRfhrZTzAf/NgCcraunvLK3c10xxdTQ/CtAR3iQnLwurUlBYW2XcGYM5Hyczfj3YQu4TWWEFFMWNDGk/01C46lsNV84E7EhOFGdc4G7Zyik0Rs1SaWDYz1qAkzgo6q7DzwUhatyAZ2Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pUPCSqTs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3784C4CEF1;
+	Wed,  8 Oct 2025 02:56:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759891978;
-	bh=SDMhTMoLHAB4t/fx9UFMaDZrLMplEazgWMeaH+F6ZOc=;
+	s=k20201202; t=1759892172;
+	bh=gkZN5Qc8iYn3DbePjFgVqCfPKhn+zqItH/K4bcNbwjo=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uQRlNQeftA8NsnADLyjxGObMGFjQNVukuH9L9wGlGC/XeePg0II/XGzo/VjTrQI46
-	 jQtxHU7J7GIJ4GnP0PXweVkgtbN9s+vaDu4Qy476n2Oc6lod1EQfDJHUtxiXQ0L2f6
-	 W1Kx18SSUdtrLX+5ah4dzRgV3h5/UEBFxIvnDLoWDzstM6ZjNaAUGE8KE+aM+EbSq5
-	 LuGb3wZ0cGT4FyOX3bOwPZpjq67PC6YaZnUmAlgE0V0RUlsBp8DPjJg+rlsDct93DA
-	 g30kNQPtXfOceE/ePbdQehsub6+eNzeKseb2FOS2ZHoUUQ1Qjp4yoFru2u9OTDwUf+
-	 p4aWGRJFwpoIA==
-Message-ID: <60d87253-8fe4-4728-b7bb-ff506f6f91ca@kernel.org>
-Date: Wed, 8 Oct 2025 11:52:52 +0900
+	b=pUPCSqTsfm8bKOIrIPMkJFD4IKV7ka7RgVD3X+Y11cchONvW9lEWV+XJAs8FneirD
+	 a2knDlDdTvR6Ua2xMYsKC4eG20DDf0YFtPDhx+CWFjD4Q7pB0dwyax5dyYoOYt+rVr
+	 GMgQuimpfUT9XxmFHxwQkaDxOYwNN/emPVC5hSELoDvNQEZld0/4AJux/O/soWlCso
+	 hAjPgPhg7p93LwUvcRwxqiN42U+1YxF/kDBDPsEk/BZaKb5RkxkjalR8RmfVZw1yxN
+	 fja2IhhzuXTBD13wAR9tcG8rFl1T4UM29HPXUi0vtmReziOWT4oz1ZvHBI4yVuGeLj
+	 1UpJ6jNTL5EOg==
+Message-ID: <68a6d051-dd6e-4a02-b09d-de6a90b79c33@kernel.org>
+Date: Wed, 8 Oct 2025 11:56:06 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,20 +50,24 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] dt-bindings: sound: qcom,sm8250: add QRB2210 and RB1
- soundcards
-To: Alexey Klimov <alexey.klimov@linaro.org>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
-Cc: Jaroslav Kysela <perex@perex.cz>, Takashi Iwai <tiwai@suse.com>,
+Subject: Re: [PATCH v4 2/4] dt-bindings: mfd: qcom,spmi-pmic: add
+ qcom,pm4125-codec compatible
+To: Alexey Klimov <alexey.klimov@linaro.org>
+Cc: Srinivas Kandagatla <srini@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+ Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
+ linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
  Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20251007-qrb2210-qcm2290-sndcard-v1-0-8222141bca79@linaro.org>
- <20251007-qrb2210-qcm2290-sndcard-v1-1-8222141bca79@linaro.org>
- <67e313d3-1f91-4205-8aec-fbbfa41004f2@kernel.org>
- <DDCLDNFBCALB.19TNBLSQJ5X86@linaro.org>
+ Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
+ christophe.jaillet@wanadoo.fr
+References: <20250915-pm4125_audio_codec_v1-v4-0-b247b64eec52@linaro.org>
+ <20250915-pm4125_audio_codec_v1-v4-2-b247b64eec52@linaro.org>
+ <20250918-wonderful-deft-jackal-7d3bbc@kuoka>
+ <DDCKWVH8ORLM.357D9IKQK9YN8@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,51 +113,61 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <DDCLDNFBCALB.19TNBLSQJ5X86@linaro.org>
+In-Reply-To: <DDCKWVH8ORLM.357D9IKQK9YN8@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/10/2025 11:40, Alexey Klimov wrote:
-> On Tue Oct 7, 2025 at 2:45 AM BST, Krzysztof Kozlowski wrote:
->> On 07/10/2025 10:26, Alexey Klimov wrote:
->>> Add soundcard compatible for QRB2210 (QCM2290) platforms.
->>> While at this, also add QRB2210 RB1 entry which is set to be
->>> compatible with QRB2210 soundcard.
+On 08/10/2025 11:18, Alexey Klimov wrote:
+> On Thu Sep 18, 2025 at 3:03 AM BST, Krzysztof Kozlowski wrote:
+>> On Mon, Sep 15, 2025 at 05:27:49PM +0100, Alexey Klimov wrote:
+>>> Add qcom,pm4125-codec compatible to pattern properties in mfd
+>>> qcom,spmi-pmic schema so the devicetree for this audio block of PMIC
+>>> can be validated properly.
+>>>
+>>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
+>>> ---
+>>>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
+>>>  1 file changed, 6 insertions(+)
+>>>
+>>> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>>> index 078a6886f8b1e9ceb2187e988ce7c9514ff6dc2c..776c51a66f6e7260b7e3e183d693e3508cbc531e 100644
+>>> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>>> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
+>>> @@ -137,6 +137,12 @@ patternProperties:
+>>>  
+>>>    "^audio-codec@[0-9a-f]+$":
+>>>      type: object
+>>> +    oneOf:
+>>> +      - $ref: /schemas/sound/qcom,pm8916-wcd-analog-codec.yaml#
+>>> +      - properties:
+>>> +          compatible:
+>>> +            const: qcom,pm4125-codec
 >>
 >>
->> You explained here what you did, but you should explain why. I don't
->> quite get why SoC sound card and RB1 sound card are both needed. I would
->> just go with one.
+>> Not much improved. Same feedback applies.
 > 
+> Around the time of sending this I thought to set separate follow-up patch
+> that fixes the other part here -- pm8916-wcd-analog-codec.
 > 
-> I wanted to go with none in the first place and just make it rb2
-> sndcard compatible (as a fallback). Then Dmitry suggested to follow other
-> sndcards patterns and implmenet it like this.
-
-But this does not match other sound cards either. You add here RB1
-compatible, which is not used. Look at SM8750 - the front compatible is
-used.
-
-Whatever you decide, please explain in the commit msg the rationale,
-because currently it looks different than standard/typical choice.
-
+> At this point, is it fine to send follow-up patch that does smth like
+> this:
 > 
-> There is also at least one qrb2210/qcm2290-based board -- UNO Q and at this
-> point I can't say if it will need separate compatble or can use
-> qcom,qrb2210-sndcard as a fallback.
+> +    oneOf:
+> +      - $ref: /schemas/sound/qcom,pm8916-wcd-analog-codec.yaml#
+> +      - properties:
+> +          compatible:
+> +              - enaum:
+> +                - qcom,pm4125-codec
+> +                - qcom,pm8916-wcd-analog-codec
 > 
+> ?
 > 
->> Please use subject prefixes matching the subsystem. For bindings, the
->> preferred subjects are explained here:
->> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-patches.html#i-for-patch-submitters
-> 
-> So the order in subject should be reversed. Got it.
+> (I didn't check how if it will compile or pass checks)
 
-Not entirely, there is no prefix sound.
-`git log --oneline -- DIRECTORY_OR_FILE` on the directory your patch is
-touching.
-
-
+You still propose something very different than I asked at v3. Drop the
+$ref, you only want a compatible with enum. Look at
+qcom,sa8775p-mdss.yaml (but you don't need contains). Or one of many MFD
+drivers added last one year.
 
 Best regards,
 Krzysztof
