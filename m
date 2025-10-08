@@ -1,171 +1,182 @@
-Return-Path: <linux-arm-msm+bounces-76366-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76367-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2898BC44A5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 12:20:54 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [213.196.21.55])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C261BC4692
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 12:45:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 5D670401135
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 10:20:53 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 34329350C8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 10:45:11 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id D78E02F5A18;
-	Wed,  8 Oct 2025 10:20:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B2C532F6182;
+	Wed,  8 Oct 2025 10:45:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="awYUZIYV"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Ho6XeKt1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D5C2F5311
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 10:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4472F60B3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 10:45:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759918851; cv=none; b=T86ME1XosnXOPJjQNfVCkekrkq73TNNwrH1RzNam98vDaszu43uPgKf8+qm5Encsjl84itYwwtP5kagM9EU0ZFgG1D5abHFYK6HbewZ2Q/O5ze7s0CNmeNVliWrpw5UvB/1SU9YdT/HvvofUZM6oAGDqMQyZwN8b9dAth2A+TUE=
+	t=1759920304; cv=none; b=Gy4tk+iavfsNvZs1qnZ1hJpUXPaMZ4TCwOyrsD7tlyl8R34/Xs69CVn+YFBe5r/qCBUnfJXP4vHP89FtatvI+e5rWyoHUcQOq/IMLYnbK/A/oNfinfrSOROL8ZN3LIxKdLPlR8HCzecJscjVLuoN3DRs4i+M9Fw2yCN9Xv5mLhk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759918851; c=relaxed/simple;
-	bh=Lr09AlCI9tmALrlNWWYo2diNjyAqc2PL1Wfv06g5EdU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GpFnIlDCgOmARlCj9+sAcfsu4i6fLRUvxiC91IWbMQHE5bA5dkUm7+kQFVJklCYRCYTpvXjiKt1FeowUwK8p08sCkaZlBUmWCNglKwdJ9VEY/qGVDPwC6wqZQhXvvFqTMRP3mnMeA02gnXFeDj+6SIko72BrerLz8/tucDwKb+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=awYUZIYV; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890Scw014237
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 10:20:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	skZej2QK7qLiwq43MFOuoC8Kz7XZV3jwiPvyq5Yz+/c=; b=awYUZIYVTtP/+Wao
-	LuedFDi4C6eKkeNOcwsTNqwwe4ePXsEsMNXUTLSkBSvO5m99Gk7XxZun3Oi9k5Fs
-	E0JJim/UKCHV5IDbKK7q1CWJnG3a5xMb4BhSigDOR6R65VHaWjanRiXbbcgkRjDR
-	ZwhgVmY10fU3JKbV+QQPnKzIK2mmETCrSqu8eHRBpJxF3DJAgzi2ccsl2LrDgo0j
-	5kHSXEl1ojq3XiSal91JA2Q0cPHxf4SGOGFgi1qm4ly1ImxaPOFJqKAG2HPANnp6
-	7ze41TZqwJ4aHZvRWh2y20wWMkirfAx51DiyftoeMpFfmdgYEfCVhIVAXfdqBkE3
-	5YT94A==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mgd0ntjj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 10:20:47 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-883618130f5so33277985a.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 03:20:47 -0700 (PDT)
+	s=arc-20240116; t=1759920304; c=relaxed/simple;
+	bh=F/3SDSnCTPJ5R0aJCqe0TNl9koObzQspog17xqvd3fE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=VLD2eC16Ywh335cJGakFU7pp5/M/OLPkVHNs31u0JWuy2PTuLr9wapN5hwziyYRXDq1s2QFC1djLU+C6kl63r+mZpQuY4z7AVmWZxOdiNN20nKUHRt75Gs9ozkAYa/GZEXPZva6OK5QUJDPRPBGGHPOpJ7SJVatjfMt9Ui9FbiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Ho6XeKt1; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-269640c2d4bso10792135ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 03:45:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1759920301; x=1760525101; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/uqzprGMb0c1F9PzyQSr/KsKGC8sUWJiY/UfksYRhZU=;
+        b=Ho6XeKt12YeixC/jEN02LnSrdOB1ZKXaLVqTPALWAGGuBhxK1wpQUgaRghrjyE0X9T
+         GEumDn2x6S8t1Ce1dTe7RKA+V/aJanhFnfBMSUDVtdqjbFbWpx4H6ZAcv07T8/nex2mh
+         HgXzup8KUxSmP013Q58dVNZeWrLKkXSzClYaBIIY4ODIGOAH4d+4bsZvixnF/T1UKXSG
+         m430UUxYCtGTZ670Xy2tzxqz1hdMjVIxI/bajhddqlteKR4fI5A9mnpua3e+3SFTVqaF
+         /auYN1RswKH/CfklZWwq84eKWvrVZcTLHBQw3a82likA0QCcXDf/ORkUJ0eGau5vicun
+         2L2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759918847; x=1760523647;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=skZej2QK7qLiwq43MFOuoC8Kz7XZV3jwiPvyq5Yz+/c=;
-        b=skeO2x1wG6JDaewy+ZhF8JUMKvSWFPMY1kOOEdnOi9vJM7LA1RuYXRW4rRiByhTsI/
-         C6IcslnUvSBXwiCgGHBPIy6L7OxEasdv1vQi2zexBEA6C2HTuQmPZ545y/KEhBgyjLf7
-         7mOPKlnvyVTvhM+43cWJ4U/IrzLGjskJpVekxPlY+5SMPtLty4fUUcgAlkjt24dGTeiK
-         +JVs2QFCSM2x9yyIz8X6AF3mtqH0fbfE90puQC7XyOW1pOwn5xKJvKClrw/WK1xCH1Mb
-         nfRhtF8PkLE1aNit/v9B8/K9Eg0UrCpnZnAMemnHrAn0CfwDZZhk9pbmHC6xlHUEdHRM
-         579A==
-X-Forwarded-Encrypted: i=1; AJvYcCVkqGBb3CUVL+WviMdS3TC0VCjCfPmX/RqlFKuA/bMH3t3LmsBUXvmsvStg4XRSxNGuxDFA0gfHC2xWCK2X@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyjy9PpJIoiy9hCYABKdUysR6DaKAnCvYB0pqpvc3Z2ReGT5eGT
-	8aamAlyapYeLqW91Zr7R5Eu5XOpihLfMjPzqRcElPznnXeO0bkTfTjlwGhqv4/tcSrI3oyPCqUG
-	z17rXZuCTFGjN4VeqQhOpPqz7lXEEz6heFooG2hTZnIzP2NxKJHsg5GwBxmEcIBI+alh7UMOOde
-	3V
-X-Gm-Gg: ASbGncvtn3XQBomIXdLitGuAgwVKig2CkXX4PGzIHJPKOXxuumL7DKpu7hOL698fSJU
-	IN9JdyfX0EKdlZ0ZKfVtxQTPW2JRQMiRZmEzQ7l1PVNInX5ov/hVdDnNpno3N61rT+fx0QfWzLd
-	bqbQfLS1U6uTZY43ofn7aEs50GKQzeOlQRYs7t4DhrHnuWwXNx9OYAR00wwo/uJbCDvMIUGMGpc
-	XWuKtvDmW/VgYOhawaNSSygYzYUXGnpXsnQGOeUYNmZRJ6jzdHKOonnMipvboWFDYERV5tM69pr
-	n4wLzcTCW7imqUFTOnwfosX3VenaPMUeYu9y5uhowbyCQnlxXO3QcCu66Ksx+lwkyUM1aq+GVT0
-	9ZMr2B5bmPCXV1YW4NuzknYBdRRc=
-X-Received: by 2002:a05:620a:3905:b0:878:7b3e:7bbf with SMTP id af79cd13be357-883527ca0b4mr298298185a.3.1759918846835;
-        Wed, 08 Oct 2025 03:20:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLHDjHHvjj8j9dLTGHWXGfTR4aJjre+aHMWNbl/tFlpXmEHkL+rMhFOApHFHL+DL/d9ZVLIg==
-X-Received: by 2002:a05:620a:3905:b0:878:7b3e:7bbf with SMTP id af79cd13be357-883527ca0b4mr298295885a.3.1759918846201;
-        Wed, 08 Oct 2025 03:20:46 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b4869c4f94asm1619475866b.79.2025.10.08.03.20.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Oct 2025 03:20:45 -0700 (PDT)
-Message-ID: <392d2e9a-dc31-4916-ab8a-680b2ec4dca5@oss.qualcomm.com>
-Date: Wed, 8 Oct 2025 12:20:43 +0200
+        d=1e100.net; s=20230601; t=1759920301; x=1760525101;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/uqzprGMb0c1F9PzyQSr/KsKGC8sUWJiY/UfksYRhZU=;
+        b=ScufPfWKcmwu4AKNXKBV79P3oqUa/cVCFPc/Zah05fUaW7Hww6FVLPzokyxQCthA4n
+         zKUR9L/vYteEl8TudCaNolLpNEDjgAIO4aInXLy5DHfjIMSuvA3VlTjT3C5+Z9FTPaqr
+         XAEcl7Sb6xqKz4kxF/mqJ+eYq4x0OFk+Be7KFpKNOP2MnrjpDM6Bd45ZKhqoIjcoBIzO
+         m65mNQxWYYd/L0D0jDoZcS4YSvXsKg5XQndOjGwyVKIzqNgOy+0ss2nVoUQREv2qa3xE
+         rblhH7TSqTsMXIdANBuNsiip2bRBhYPqpfpUUga2UsIJTDiFktVrXWResqVzBDYu1vyl
+         btPA==
+X-Forwarded-Encrypted: i=1; AJvYcCUu0V3sECMZE+Xel8kGyJnQcAwXq4R0ueDC85V8Cjmv0d4TBv75j4XPJbQ2ONjNus4XuxY35qqbRt20mAAG@vger.kernel.org
+X-Gm-Message-State: AOJu0YyM+BHwYMRlrn2BE+rTQDsN1ocuhmx6x3O2JzzqwBHP6g1RvZBt
+	rdxpdtTLyTjK5w4S8VS+jhRy++kZMwaDRHIzeJc9B6gTYivG1kEDHp5ZYhgikvxe3OI=
+X-Gm-Gg: ASbGnctfKlIXcPXVEC50+e3St4bf5iiPuG1Kt5gKg50+wS9wLzerhJ91Jph33If+Qb9
+	8bc0hCZs7hLKquVnm2X2nL1EGyh/VWVHq7nQaeLgWWE/QSJgiAkl/Nhyb4IbljilIH7QZFRB+CV
+	9S0OuIGMokmd5e5rrgfsBds9OZ80CfkJW6f8SJBKHgtfyU9A1RuI5K8nkj49CogxV+nxR7fgwyj
+	j2zfDAiuSUGBPzU6zKAe+WH+5TXTpAUYj99gEGXU5ty//pGPoEq7qfslvR+fNe9qrL3fN4Q4Y8d
+	OEuUktmIFtkIkOirBLFpp7zUQhgJQQtB725i+u+bjvTewSeSnwTugM2faeN+YKd7x6LbBIviPXZ
+	umapW7qp74Juhz9j/G9P3JmT1rLRdEM3ETIU/nciMCd3cVPEJvp9CJC3TaRTl
+X-Google-Smtp-Source: AGHT+IHrLX9RbBOpvVqA3cJqDf8szpNGBJuW1i7M6GF7kGam2olRVH1kbgH2P5szP+gjyhnM7ZCWUw==
+X-Received: by 2002:a17:902:d4c1:b0:25c:b66e:9c2a with SMTP id d9443c01a7336-290272e3d33mr24052145ad.6.1759920301321;
+        Wed, 08 Oct 2025 03:45:01 -0700 (PDT)
+Received: from kuoka.. ([121.134.152.93])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1127c7sm196117135ad.28.2025.10.08.03.44.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Oct 2025 03:45:00 -0700 (PDT)
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+To: Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Cc: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Subject: [PATCH v3 1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module
+Date: Wed,  8 Oct 2025 19:44:49 +0900
+Message-ID: <20251008104448.117167-3-krzysztof.kozlowski@linaro.org>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/20] arm64: dts: qcom: kaanapali-mtp: Add audio support
- (WSA8845, WCD9395, DMIC)
-To: Krzysztof Kozlowski <krzk@kernel.org>,
-        Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
-        Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
-        trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <20250924-knp-dts-v1-18-3fdbc4b9e1b1@oss.qualcomm.com>
- <CAJKOXPfY-CpE_aKd910PQ2+u9ux2EvuVEt9ArzhdVCJcTQJUQQ@mail.gmail.com>
- <51637d37-aa5e-492a-851c-e5d6bfbe421e@oss.qualcomm.com>
- <43ba93bd-0dba-415b-8a7e-cdc4d954f79d@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <43ba93bd-0dba-415b-8a7e-cdc4d954f79d@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: BMqGzGjMs6NDP7m_DB37PhQc3jJ7udAx
-X-Authority-Analysis: v=2.4 cv=T8aBjvKQ c=1 sm=1 tr=0 ts=68e63aff cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=CoZnzqn1Vmb4SI8PR-kA:9
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
-X-Proofpoint-ORIG-GUID: BMqGzGjMs6NDP7m_DB37PhQc3jJ7udAx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDEyMyBTYWx0ZWRfX/o5q+c5M7Eq3
- ch3wu9i8g5gy16JzW9JcPc+x1Km2GXQCtPqMgpe/U8oQK52Njawjk5Hm3CO8sKrQDgwh7UE78n1
- 4WkW0K+tgND62aa+VyoocHcvQzuGs0sF6gSaPomwGaQdXok0F0mURR7dGiFsYcuufH9texgD6Zg
- OeDWpD3PbWwFo7hArYC3l/11cYsTgo+mVI7ZfxSANsSp1sLSnxGfbHD2Y7TOaSEFlKZ2QzIuGok
- dof0iiU6tANXY5tOVIzsTuEaqG8bAK0Y55PtPRarAbRzadZN4VJ5y/P8CWOnmhUGHYxKjLQCrMM
- OR7YioRQxp0yvYFl2UfWhAc9jsu1GZpe5juH47PWhgGky2tz5u2Ze88ly7ejQTxuHstxJTbcd9R
- 7FtGqM24dsixJdfOn46CicRlw2uqvg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-08_03,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060123
+Content-Transfer-Encoding: 8bit
 
-On 10/6/25 10:48 AM, Krzysztof Kozlowski wrote:
-> On 30/09/2025 21:06, Prasad Kumpatla wrote:
->>
->> On 9/25/2025 6:56 PM, Krzysztof Kozlowski wrote:
->>> On Thu, 25 Sept 2025 at 09:18, Jingyi Wang <jingyi.wang@oss.qualcomm.com> wrote:
->>>> From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
->>>>
->>>> Add support for audio on the Kaanapali MTP platform by introducing device
->>>> tree nodes for WSA8845 smart speaker amplifier for playback, DMIC
->>>> microphone for capture, and sound card routing. The WCD9395 codec is add
->>>> to supply MIC-BIAS, for enabling onboard microphone capture.
->>>>
->>>> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
->>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->>>> ---
->>>>   arch/arm64/boot/dts/qcom/kaanapali-mtp.dts | 226 +++++++++++++++++++++++++++++
->>>>   1 file changed, 226 insertions(+)
->>>>
->>> Audio is not a separate feature from USB.
->>
->> I didn't understand this, Could you please help me to provide more 
->> context on it?
->> Is this regarding Audio over Type-c?
-> 
-> USB depends on ADSP, so your split of patches into separate audio commit
-> is just incorrect.
+Speaker Protection is capability of ADSP to adjust the gain during
+playback to different speakers and their temperature.  This allows good
+playback without blowing the speakers up.
 
-No, this is no longer the case on Kaanapali.
+Implement parsing MODULE_ID_SPEAKER_PROTECTION from Audioreach topology
+and sending it as command to the ADSP.
 
-PMIC_GLINK is now served by the SoCCP rproc
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
 
-Konrad
+Changes in v3:
+1. Add Rb tag.
+
+Changes in v2:
+1. Add and use PARAM_ID_SP_OP_MODE_NORMAL
+---
+ sound/soc/qcom/qdsp6/audioreach.c | 13 +++++++++++++
+ sound/soc/qcom/qdsp6/audioreach.h | 12 ++++++++++++
+ 2 files changed, 25 insertions(+)
+
+diff --git a/sound/soc/qcom/qdsp6/audioreach.c b/sound/soc/qcom/qdsp6/audioreach.c
+index f4c53e84b4dc..3b7dffd696e7 100644
+--- a/sound/soc/qcom/qdsp6/audioreach.c
++++ b/sound/soc/qcom/qdsp6/audioreach.c
+@@ -1250,6 +1250,15 @@ static int audioreach_gain_set(struct q6apm_graph *graph, struct audioreach_modu
+ 	return rc;
+ }
+ 
++static int audioreach_speaker_protection(struct q6apm_graph *graph,
++					 struct audioreach_module *module,
++					 uint32_t operation_mode)
++{
++	return audioreach_send_u32_param(graph, module, PARAM_ID_SP_OP_MODE,
++					 operation_mode);
++}
++
++
+ int audioreach_set_media_format(struct q6apm_graph *graph, struct audioreach_module *module,
+ 				struct audioreach_module_config *cfg)
+ {
+@@ -1299,6 +1308,10 @@ int audioreach_set_media_format(struct q6apm_graph *graph, struct audioreach_mod
+ 	case MODULE_ID_GAPLESS:
+ 		rc = audioreach_gapless_set_media_format(graph, module, cfg);
+ 		break;
++	case MODULE_ID_SPEAKER_PROTECTION:
++		rc = audioreach_speaker_protection(graph, module,
++						   PARAM_ID_SP_OP_MODE_NORMAL);
++		break;
+ 	default:
+ 		rc = 0;
+ 	}
+diff --git a/sound/soc/qcom/qdsp6/audioreach.h b/sound/soc/qcom/qdsp6/audioreach.h
+index 790fba96e34d..9f6ddcf081ee 100644
+--- a/sound/soc/qcom/qdsp6/audioreach.h
++++ b/sound/soc/qcom/qdsp6/audioreach.h
+@@ -31,6 +31,7 @@ struct q6apm_graph;
+ #define MODULE_ID_MP3_DECODE		0x0700103B
+ #define MODULE_ID_GAPLESS		0x0700104D
+ #define MODULE_ID_DISPLAY_PORT_SINK	0x07001069
++#define MODULE_ID_SPEAKER_PROTECTION	0x070010E2
+ 
+ #define APM_CMD_GET_SPF_STATE		0x01001021
+ #define APM_CMD_RSP_GET_SPF_STATE	0x02001007
+@@ -542,6 +543,17 @@ struct data_logging_config {
+ 	uint32_t mode;
+ } __packed;
+ 
++/* Speaker Protection */
++#define PARAM_ID_SP_OP_MODE			0x080011e9
++#define PARAM_ID_SP_OP_MODE_NORMAL		0
++#define PARAM_ID_SP_OP_MODE_CALIBRATION		1
++#define PARAM_ID_SP_OP_MODE_FACTORY_TEST	2
++#define PARAM_ID_SP_OP_MODE_VALIDATION		3
++
++struct param_id_sp_op_mode {
++	uint32_t operation_mode;
++} __packed;
++
+ #define PARAM_ID_SAL_OUTPUT_CFG			0x08001016
+ struct param_id_sal_output_config {
+ 	uint32_t bits_per_sample;
+-- 
+2.48.1
+
 
