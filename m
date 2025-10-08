@@ -1,48 +1,82 @@
-Return-Path: <linux-arm-msm+bounces-76503-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76504-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id B5E06BC6F24
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 01:50:45 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 155C9BC6F2A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 01:50:59 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id BE633189C52A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 23:51:08 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id A66444E5AC7
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 23:50:57 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 760F72BE7CD;
-	Wed,  8 Oct 2025 23:50:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A126D2C234F;
+	Wed,  8 Oct 2025 23:50:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K1N4ypl9"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="eiT2hoft"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A7A204F8B;
-	Wed,  8 Oct 2025 23:50:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848C329A9FA
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 23:50:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759967441; cv=none; b=WnJLf8d99pAaI70oeNWHw32a17t/F3Gf0ZR19ZKTjpu0nffShcYHNNkpKykteuoIaR1miz4nXEF66mI2+eN5UGVvg7fjX3xD2foUi7BI3R7hlUHPKUL6DXJhyZ8B0tf9u9DP7Oz+RC8tpz9QQNzXMXeGTm4LJ6wtV/FbIZfbMsQ=
+	t=1759967451; cv=none; b=O/MicHV6mcugXP7upmLhajpTqzt9DOLKawAtY1j/KL9fBtKVWH93Y3kneSzATMktmr2eieIksCU1yFY5Y8h0QyNbjMv0K9pJKiyw2w2rNU4bAmnEtKFUp/XqFj1eUykj7TKnHOZfHe/S6zXK2eXHXYTu6FOpIAiEEknP25SV3Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759967441; c=relaxed/simple;
-	bh=0F7EVF2q03JwQ5MskfHSb130w66z/fAnAFID4HZBRsM=;
+	s=arc-20240116; t=1759967451; c=relaxed/simple;
+	bh=PepEMbQ1yjF5c5BaPwxWL9iAuc14/s0OFz6xe0oNLLY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cbSoBWy1bZAdjiRPKerSGJA0r3MkI2mnxnnSyudldgm2XcIXY+k7nHKv+hrSSxb9eM/NSiDBllh3ku0VKULrx8BcSfnFwBZkDvKn96td9dD2xPE47zdBfNU7nn7iid6Ss9WZGUINbLXBlX6ZcdqPOyIRk9KlOJCitBkgjPkhI64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K1N4ypl9; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 989F1C4CEE7;
-	Wed,  8 Oct 2025 23:50:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759967440;
-	bh=0F7EVF2q03JwQ5MskfHSb130w66z/fAnAFID4HZBRsM=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=K1N4ypl9hSdEysxESHnZ5NtJZkikWGHbR9V/jyu/VyKrDJEQ3C/iyZEKgdtxEfIGU
-	 wuRxhX649u4EDtWu1C2tKU1sR1BPYvrFpj4g2wFlSPGkMXW3UVJ5svqrdSyOlmD95Y
-	 0Z15N6DdthpqcJkuJkzNc+r4rIMQrpDeGIRInJ81AR5l2n3rTKGCJT4pKe9iQQHGfz
-	 Ay15XDY4NGE77N22MVophXTE3PDk+twvgsfub+DtxCCSeRQhW2gYGwoYd6DpaWQU4q
-	 febo+nQtBP5VbFIAyR0xrMlcC3QsNh/WDOZlwnda81qK+F5+/uRYvTGLEbIFSQaEVa
-	 ueHHJGVkJxv0w==
-Message-ID: <37b1c3e3-5a33-4d6c-b053-525bfd0583da@kernel.org>
-Date: Thu, 9 Oct 2025 08:50:30 +0900
+	 In-Reply-To:Content-Type; b=uRxhPuQQv6DGpTd6q2XF7/XMCF63lf6xnmY4VV51+3mMr6GF4aLmp263XsDd0ofrFaDGOCQU+yfD/mXreMvh2cjC2tQRJN6cl7LEBhKwIMcWAEOHiFxeCzKN+IBp1M74avhofX9zeQsnrYDrkRBPbNJWO8eE75hw9597uhCic3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=eiT2hoft; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-46e3a50bc0fso2643985e9.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 16:50:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1759967448; x=1760572248; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=n+edhMv+0BzSlGdfFXwn7RqYiQQ8tm9NoUNnWq+dQx8=;
+        b=eiT2hoftdsWDJpwlLiZY29yaf5Nj4ncn2jodcOcCvNdGSyQofbHk6NP8QPANN8rPVX
+         HLcryKD8SyWF+xp0PUEEU/NkX7Qa6Gj/1uw9uL08Qdxy1Bgl2tcq/Ayds8GrAyUxDJmS
+         Tlkws3LAL1hTP0YTcLLjilVrew+6H37br6yBj1VOtoqoym+qA1RIwa45oDgKyOosbkT2
+         sSsrtn0LujDjCEZyh2NDkOL1haxzlDsAmL5+85uI0uaPHuXSUN3xKWUuvLFNWQiCtLvd
+         1OuiyMydu/2cr++4M5XFXrDX/RyJQ3u/IJ4dr/H1K5+Y9qLI2q7sTRmgbYpv8J/k4SGc
+         kwAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759967448; x=1760572248;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=n+edhMv+0BzSlGdfFXwn7RqYiQQ8tm9NoUNnWq+dQx8=;
+        b=Y+RuPbwuhCaqnOxxRgzQCJ4MkP89w/NwCRfL3t5ZAilSdSiqAY8xgFB8pnxdhLu3PA
+         MslMfkQZIBwsu5eTmYEAGqiS7u0mYr3RAGHfaCDWapHV+uYWIcu/zIQyByXJTl4Yv7Cb
+         cIYspIqM1tpTRCnLafcOr7Ol8rE4J0nI7ktZqky7rk/7N8n0HbG5DAvLdP8fydD1rIeH
+         AOK6t2wPLoQGOQ+FtpQ/Ra7w4QF5v4qcasPT8oxfmsbSku0AxS6apHOiz0D5oKPgWlIy
+         oEhw/t2Qlab3/pN1+BdKbphB0ZIBdOJHV2a++jaHiTRupG2lTWa8Yf7QAqByt5Tg5sUx
+         3Ueg==
+X-Forwarded-Encrypted: i=1; AJvYcCVVSGuuoMuh7cYCm61OKHvo6dh4DFHfinUvZeKIyFj1uOCwZDccg3PtgAwi07Ov9GkVRBc0JKfmt78v0Z19@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvcUQMYYDuSoZEfTq7ggfnHO1gADxFl/Cr2AWOUsXhcK2k/ncI
+	UbiP9HWlJSdksafHi3sLtExSDHBcFopHeaSvJs3HP/lveoJmxFOpttiiLQwYCWXjJ+iP4g7U7Gg
+	quebMq8w=
+X-Gm-Gg: ASbGncufloqRZhkgu+K0FJh2pplir/KETGJzOcDnYGFuRm5ZdCOKiU39le+tYKCWog3
+	dnri5VdqExF+8ESS1Y2NyOhtxfPFAa/sgAkQ36vF7fHaWI2youhaLI04+FQFXViJpx2RPpSGOsV
+	ZkZ2fSnf5E0mIjPLGchUkVbXAvKBR871opZolVdDLRbfJut/I1XlSEgFIKQTYwRLyQGk6mxaJyC
+	+HQ2j+tMhsXSZTGw4QoshlmqnvJAZNi6Q6nyC2THxjY4/+ZKsgCBnfT34FhGo4AfPyMWlLMoYO0
+	YahbAT1R1Y4Ae9O2gkhvzvkmO8jGh2lnG7KHmv0YtlTo1cgiGQPfmUpHePWv9NPH+nYLqAnQk14
+	doH2S7YzQomolZNgy3WYgP2/e07Dq9c5wXq2HyjZdMFoMKi1RkpXI1Q7UEfLk3unNAwpBVqb43W
+	n3lSuWvoCL6dT4FwtW
+X-Google-Smtp-Source: AGHT+IEpfshDCqBAHwNTTUCD0shn/QO6Rxgp954tKBhVfZ8/aMJ0AhoH55Q9PWrHm6CVn9Z286wuwA==
+X-Received: by 2002:a05:600c:a41c:b0:46f:aac5:daf with SMTP id 5b1f17b1804b1-46faac50ea8mr23797905e9.35.1759967447736;
+        Wed, 08 Oct 2025 16:50:47 -0700 (PDT)
+Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fa9bf7f80sm56797095e9.1.2025.10.08.16.50.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 16:50:46 -0700 (PDT)
+Message-ID: <536e8aed-a25b-4beb-830d-9b073d02905e@linaro.org>
+Date: Thu, 9 Oct 2025 00:50:44 +0100
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,120 +84,224 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/20] arm64: dts: qcom: kaanapali-mtp: Add audio support
- (WSA8845, WCD9395, DMIC)
-To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>,
- Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com
-References: <20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com>
- <20250924-knp-dts-v1-18-3fdbc4b9e1b1@oss.qualcomm.com>
- <CAJKOXPfY-CpE_aKd910PQ2+u9ux2EvuVEt9ArzhdVCJcTQJUQQ@mail.gmail.com>
- <51637d37-aa5e-492a-851c-e5d6bfbe421e@oss.qualcomm.com>
- <43ba93bd-0dba-415b-8a7e-cdc4d954f79d@kernel.org>
- <392d2e9a-dc31-4916-ab8a-680b2ec4dca5@oss.qualcomm.com>
- <19639c5e-7aa8-4e75-812d-93d805802cd3@kernel.org>
- <7ef31348-78ca-4abc-9eaf-5041e2e6be82@oss.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 7/8] media: iris: move common register definitions to the
+ header
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+ Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+ Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251008-iris-sc7280-v1-0-def050ba5e1f@oss.qualcomm.com>
+ <Upsv0z22Lrbf1B-YW_axrnAADZ6xN-nr46DpXCCNMZN5AHjEkowuebjDlRs7tpqRCSwQLaiKUk-_zMIdsd0YGg==@protonmail.internalid>
+ <20251008-iris-sc7280-v1-7-def050ba5e1f@oss.qualcomm.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <7ef31348-78ca-4abc-9eaf-5041e2e6be82@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20251008-iris-sc7280-v1-7-def050ba5e1f@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 08/10/2025 20:30, Konrad Dybcio wrote:
-> On 10/8/25 12:51 PM, Krzysztof Kozlowski wrote:
->> On 08/10/2025 19:20, Konrad Dybcio wrote:
->>> On 10/6/25 10:48 AM, Krzysztof Kozlowski wrote:
->>>> On 30/09/2025 21:06, Prasad Kumpatla wrote:
->>>>>
->>>>> On 9/25/2025 6:56 PM, Krzysztof Kozlowski wrote:
->>>>>> On Thu, 25 Sept 2025 at 09:18, Jingyi Wang <jingyi.wang@oss.qualcomm.com> wrote:
->>>>>>> From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
->>>>>>>
->>>>>>> Add support for audio on the Kaanapali MTP platform by introducing device
->>>>>>> tree nodes for WSA8845 smart speaker amplifier for playback, DMIC
->>>>>>> microphone for capture, and sound card routing. The WCD9395 codec is add
->>>>>>> to supply MIC-BIAS, for enabling onboard microphone capture.
->>>>>>>
->>>>>>> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
->>>>>>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
->>>>>>> ---
->>>>>>>   arch/arm64/boot/dts/qcom/kaanapali-mtp.dts | 226 +++++++++++++++++++++++++++++
->>>>>>>   1 file changed, 226 insertions(+)
->>>>>>>
->>>>>> Audio is not a separate feature from USB.
->>>>>
->>>>> I didn't understand this, Could you please help me to provide more 
->>>>> context on it?
->>>>> Is this regarding Audio over Type-c?
->>>>
->>>> USB depends on ADSP, so your split of patches into separate audio commit
->>>> is just incorrect.
->>>
->>> No, this is no longer the case on Kaanapali.
->>>
->>> PMIC_GLINK is now served by the SoCCP rproc
->>
->> Hm, ok.... so there is no WCD93xx USB mux anymore?
+On 08/10/2025 05:33, Dmitry Baryshkov wrote:
+> Simplify adding new platforms by moving common registers definitions
+> from VPU 3.x and "common" file to the header with other register
+> defines.
 > 
-> I see there's a WCD9395 onboard which has that hw block
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>   drivers/media/platform/qcom/iris/iris_vpu3x.c      | 35 --------------
+>   drivers/media/platform/qcom/iris/iris_vpu_common.c | 43 -----------------
+>   .../platform/qcom/iris/iris_vpu_register_defines.h | 56 ++++++++++++++++++++++
+>   3 files changed, 56 insertions(+), 78 deletions(-)
 > 
-> I'll try to find some schematics to confirm..
-
-I think I was checking this some time ago and design was the same as in
-SM8750 and SM8650, so with WCD9395 USB mux. You could argue that WCD9395
-WCD mux has separate interface than audio part, but it is still the same
-device, thus that is why I think USB and audio are still related.
-
-Best regards,
-Krzysztof
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu3x.c b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> index 339776a0b4672e246848c3a6a260eb83c7da6a60..78aede9ac497abafc0545647c34a53c63c595f72 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu3x.c
+> @@ -11,48 +11,13 @@
+>   #include "iris_vpu_common.h"
+>   #include "iris_vpu_register_defines.h"
+> 
+> -#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+> -#define AON_BASE_OFFS				0x000E0000
+>   #define AON_MVP_NOC_RESET			0x0001F000
+> 
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+> -#define REQ_POWER_DOWN_PREP			BIT(0)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+> -#define NOC_LPI_STATUS_DONE			BIT(0) /* Indicates the NOC handshake is complete */
+> -#define NOC_LPI_STATUS_DENY			BIT(1) /* Indicates the NOC handshake is denied */
+> -#define NOC_LPI_STATUS_ACTIVE		BIT(2) /* Indicates the NOC is active */
+> -#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
+> -#define CORE_CLK_RUN				0x0
+> -/* VPU v3.5 */
+> -#define WRAPPER_IRIS_VCODEC_VPU_WRAPPER_SPARE_0	(WRAPPER_BASE_OFFS + 0x78)
+> -
+> -#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+> -#define CTL_AXI_CLK_HALT			BIT(0)
+> -#define CTL_CLK_HALT				BIT(1)
+> -
+> -#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> -#define RESET_HIGH				BIT(0)
+> -
+> -#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
+> -#define CORE_BRIDGE_SW_RESET			BIT(0)
+> -#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
+> -
+> -#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+> -#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+> -#define MSK_CORE_POWER_ON			BIT(1)
+> -
+>   #define AON_WRAPPER_MVP_NOC_RESET_REQ		(AON_MVP_NOC_RESET + 0x000)
+>   #define VIDEO_NOC_RESET_REQ			(BIT(0) | BIT(1))
+> 
+>   #define AON_WRAPPER_MVP_NOC_RESET_ACK		(AON_MVP_NOC_RESET + 0x004)
+> 
+> -#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
+> -
+> -#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+> -#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+> -
+>   #define AON_WRAPPER_MVP_NOC_CORE_SW_RESET	(AON_BASE_OFFS + 0x18)
+>   #define SW_RESET				BIT(0)
+>   #define AON_WRAPPER_MVP_NOC_CORE_CLK_CONTROL	(AON_BASE_OFFS + 0x20)
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_common.c b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> index bb98950e018fadf69ac4f41b3037f7fd6ac33c5b..2d6548e47d47967c1c110489cb8088130fb625fd 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_common.c
+> @@ -11,13 +11,6 @@
+>   #include "iris_vpu_common.h"
+>   #include "iris_vpu_register_defines.h"
+> 
+> -#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+> -#define AON_BASE_OFFS				0x000E0000
+> -
+> -#define CPU_IC_BASE_OFFS			(CPU_BASE_OFFS)
+> -
+> -#define CPU_CS_A2HSOFTINTCLR			(CPU_CS_BASE_OFFS + 0x1C)
+> -#define CLEAR_XTENSA2HOST_INTR			BIT(0)
+> 
+>   #define CTRL_INIT				(CPU_CS_BASE_OFFS + 0x48)
+>   #define CTRL_STATUS				(CPU_CS_BASE_OFFS + 0x4C)
+> @@ -35,42 +28,6 @@
+>   #define UC_REGION_ADDR				(CPU_CS_BASE_OFFS + 0x64)
+>   #define UC_REGION_SIZE				(CPU_CS_BASE_OFFS + 0x68)
+> 
+> -#define CPU_CS_H2XSOFTINTEN			(CPU_CS_BASE_OFFS + 0x148)
+> -#define HOST2XTENSA_INTR_ENABLE			BIT(0)
+> -
+> -#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+> -#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+> -#define MSK_CORE_POWER_ON			BIT(1)
+> -
+> -#define CPU_IC_SOFTINT				(CPU_IC_BASE_OFFS + 0x150)
+> -#define CPU_IC_SOFTINT_H2A_SHFT			0x0
+> -
+> -#define WRAPPER_INTR_STATUS			(WRAPPER_BASE_OFFS + 0x0C)
+> -#define WRAPPER_INTR_STATUS_A2HWD_BMSK		BIT(3)
+> -#define WRAPPER_INTR_STATUS_A2H_BMSK		BIT(2)
+> -
+> -#define WRAPPER_INTR_MASK			(WRAPPER_BASE_OFFS + 0x10)
+> -#define WRAPPER_INTR_MASK_A2HWD_BMSK		BIT(3)
+> -#define WRAPPER_INTR_MASK_A2HCPU_BMSK		BIT(2)
+> -
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+> -#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+> -#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+> -
+> -#define WRAPPER_TZ_CPU_STATUS			(WRAPPER_TZ_BASE_OFFS + 0x10)
+> -#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+> -#define CTL_AXI_CLK_HALT			BIT(0)
+> -#define CTL_CLK_HALT				BIT(1)
+> -
+> -#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> -#define RESET_HIGH				BIT(0)
+> -
+> -#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+> -#define REQ_POWER_DOWN_PREP			BIT(0)
+> -
+> -#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+> -
+>   static void iris_vpu_interrupt_init(struct iris_core *core)
+>   {
+>   	u32 mask_val;
+> diff --git a/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h b/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+> index fe8a39e5e5a3fc68dc3a706ffdba07a5558163cf..9955367a9f8179d2e364c41dcfe8ad445a0a13f4 100644
+> --- a/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+> +++ b/drivers/media/platform/qcom/iris/iris_vpu_register_defines.h
+> @@ -9,9 +9,65 @@
+>   #define VCODEC_BASE_OFFS			0x00000000
+>   #define CPU_BASE_OFFS				0x000A0000
+>   #define WRAPPER_BASE_OFFS			0x000B0000
+> +#define WRAPPER_TZ_BASE_OFFS			0x000C0000
+> +#define AON_BASE_OFFS				0x000E0000
+> +
+> +#define VCODEC_SS_IDLE_STATUSN			(VCODEC_BASE_OFFS + 0x70)
+> 
+>   #define CPU_CS_BASE_OFFS			(CPU_BASE_OFFS)
+> 
+> +#define CPU_CS_A2HSOFTINTCLR			(CPU_CS_BASE_OFFS + 0x1C)
+> +#define CLEAR_XTENSA2HOST_INTR			BIT(0)
+> +
+> +#define CPU_CS_H2XSOFTINTEN			(CPU_CS_BASE_OFFS + 0x148)
+> +#define HOST2XTENSA_INTR_ENABLE			BIT(0)
+> +
+> +#define CPU_IC_BASE_OFFS			(CPU_BASE_OFFS)
+> +#define CPU_IC_SOFTINT				(CPU_IC_BASE_OFFS + 0x150)
+> +#define CPU_IC_SOFTINT_H2A_SHFT			0x0
+> +
+> +#define CPU_CS_AHB_BRIDGE_SYNC_RESET		(CPU_CS_BASE_OFFS + 0x160)
+> +#define CORE_BRIDGE_SW_RESET			BIT(0)
+> +#define CORE_BRIDGE_HW_RESET_DISABLE		BIT(1)
+> +
+> +#define CPU_CS_X2RPMH				(CPU_CS_BASE_OFFS + 0x168)
+> +#define MSK_SIGNAL_FROM_TENSILICA		BIT(0)
+> +#define MSK_CORE_POWER_ON			BIT(1)
+> +
+> +#define WRAPPER_INTR_STATUS			(WRAPPER_BASE_OFFS + 0x0C)
+> +#define WRAPPER_INTR_STATUS_A2HWD_BMSK		BIT(3)
+> +#define WRAPPER_INTR_STATUS_A2H_BMSK		BIT(2)
+> +
+> +#define WRAPPER_INTR_MASK			(WRAPPER_BASE_OFFS + 0x10)
+> +#define WRAPPER_INTR_MASK_A2HWD_BMSK		BIT(3)
+> +#define WRAPPER_INTR_MASK_A2HCPU_BMSK		BIT(2)
+> +
+>   #define WRAPPER_CORE_POWER_STATUS		(WRAPPER_BASE_OFFS + 0x80)
+> +#define WRAPPER_DEBUG_BRIDGE_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x54)
+> +#define WRAPPER_DEBUG_BRIDGE_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x58)
+> +#define WRAPPER_IRIS_CPU_NOC_LPI_CONTROL	(WRAPPER_BASE_OFFS + 0x5C)
+> +#define REQ_POWER_DOWN_PREP			BIT(0)
+> +
+> +#define WRAPPER_IRIS_CPU_NOC_LPI_STATUS		(WRAPPER_BASE_OFFS + 0x60)
+> +#define NOC_LPI_STATUS_DONE			BIT(0) /* Indicates the NOC handshake is complete */
+> +#define NOC_LPI_STATUS_DENY			BIT(1) /* Indicates the NOC handshake is denied */
+> +#define NOC_LPI_STATUS_ACTIVE			BIT(2) /* Indicates the NOC is active */
+> +
+> +#define WRAPPER_IRIS_VCODEC_VPU_WRAPPER_SPARE_0	(WRAPPER_BASE_OFFS + 0x78)
+> +
+> +#define WRAPPER_CORE_CLOCK_CONFIG		(WRAPPER_BASE_OFFS + 0x88)
+> +#define CORE_CLK_RUN				0x0
+> +
+> +#define WRAPPER_TZ_CPU_STATUS			(WRAPPER_TZ_BASE_OFFS + 0x10)
+> +
+> +#define WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG		(WRAPPER_TZ_BASE_OFFS + 0x14)
+> +#define CTL_AXI_CLK_HALT			BIT(0)
+> +#define CTL_CLK_HALT				BIT(1)
+> +
+> +#define WRAPPER_TZ_QNS4PDXFIFO_RESET		(WRAPPER_TZ_BASE_OFFS + 0x18)
+> +#define RESET_HIGH				BIT(0)
+> +
+> +#define AON_WRAPPER_MVP_NOC_LPI_CONTROL		(AON_BASE_OFFS)
+> +#define AON_WRAPPER_MVP_NOC_LPI_STATUS		(AON_BASE_OFFS + 0x4)
+> 
+>   #endif
+> 
+> --
+> 2.47.3
+> 
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
