@@ -1,88 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76317-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1A12BC3BE4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 10:00:39 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A967BC3BF3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 10:03:12 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.mirrors.kernel.org (Postfix) with ESMTPS id 27919352140
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 08:00:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E712A3BA27B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 08:03:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id BD96F2F28E0;
-	Wed,  8 Oct 2025 08:00:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE82A2F28E0;
+	Wed,  8 Oct 2025 08:03:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="RccIbxiO"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PWqt2IHS"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E0321A458
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 08:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEC92F1FC4;
+	Wed,  8 Oct 2025 08:03:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759910433; cv=none; b=o97/UhqX6MSpmssImRabi8m7ntSauwrcIe0ycQeij05v8XflLMcGi1cEXtA5eGVLeusAbW+FcQUEaGoc1seB6q8qNWN47dJDAg9SNHPNBpH1XlbTSwE+DO7hO4w8ZfaIzNi9/4P6ybKq2C8nfouMUgZZLT+hj17mxi/gya35Y5g=
+	t=1759910588; cv=none; b=rQwzOr0fRPuMepJcCKsobaihVySwHeNVuqemp8qCPqNAA7DifZtKL91sUh0GHcfLd/vbr43k7WW4JHQLYDRELUAvjOgeIrh3ixoLcVDp4N1wYIEGvuC4UuhDC3Llxt7lnf7RLrhd1tZ7dE9xl6u6kgcbIo27/gPkfTb+j6T+Ask=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759910433; c=relaxed/simple;
-	bh=/5xitTXiQ5eDNNCs1sAfErPkBv/6ZwwQcRGoSXhHsn0=;
+	s=arc-20240116; t=1759910588; c=relaxed/simple;
+	bh=c8ezxIkpcTLjKeibruziqgAt914e8kokjfvmBkUoTn0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TQvmciZxpASbDIQ+mO5J2Xbl7p2cu6DN6mz5qdPi5CNL2lTdm9vqZiqZTcvIARzssbNL//ns5yt7LZskQODhW20ptmHAxCTTcSgfGopVNuJP8bo9zUBfg+5I/2ZahToIliASWGFIfWRSCt9mZ2KGi/ftJzTL2VAtsO/mCttSmLA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=RccIbxiO; arc=none smtp.client-ip=205.220.168.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5987aWpZ013795
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 08:00:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	OFBsMtCW5P8eEthAK5JuEKPN/rQgShEl32y8lMaMUYM=; b=RccIbxiO+wSUrXG7
-	riqHQZmZIfzrflvAq8w10eOLfSbRctyQIO8oJIp77PiBK7lL5oh9R58DALB7pqPB
-	L4TeCUX42QRRomR5XzSxnjtrIAiPpN7u6cQ07cftrynrZMR6olXl3BTPW4DYR+Ho
-	4L5E5vY8rcnz4+vNi//Q88dh/lKKovR0AEHa2o2ftO0CoR7hlLSM4sqoKi81uA4/
-	nhktj/GYKZcw/AuwfOoJIb0gRrUjTMQqKDmMpL7v0RHopgPx3MGWnpFdsMLV1Yi/
-	mFz4Zh1qEg3OUJu96jaZgEK9emn0uok6n9Mu53c09fMBl/J1M37sAQAB0DadNPwC
-	taV/zA==
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com [209.85.219.70])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mnkpvjk3-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 08:00:31 +0000 (GMT)
-Received: by mail-qv1-f70.google.com with SMTP id 6a1803df08f44-7abea94d621so17135006d6.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 01:00:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759910430; x=1760515230;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OFBsMtCW5P8eEthAK5JuEKPN/rQgShEl32y8lMaMUYM=;
-        b=hu1g0NARQ10uv6bLhsHBSKsAt3djA0tTjR+t/8ChW1ABkF5eMKInrxIwmostDl2cK6
-         axLQvKgKu9W5KbsPgkL9o95y94RfxtEnipdLxD/B5B1EfUQgBuUFLGV/iglsomblIBTG
-         YTOtplpA16s/YG75uJdbzf0OZUZ41ED42uAxQE3lMpYZKLyOhwn0tRrWJoouwzZwphYj
-         lOi/28r48qHa7ZwRwgW8Vg+yrpvb5FpjLS+jEt0rx8DA3L/4LUbz5SPcLc84t+F+JAz5
-         IV+A+YJuESzTv8ovXHf223hsP+snxXUKVvAbvRcjDAASgGhIIQE5rsJSPGiy+3WC/sB7
-         N6iQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXXRHIb/J4oAATVOh8DDYv2YhGJycG+r8UkYKfCh7RCVzu6klO3iitAMdCjILb3lqIjjjug8yqPNAhmvYaK@vger.kernel.org
-X-Gm-Message-State: AOJu0YzwIp08l4JpbNyBWmAx1cS6VUA92sDhBT4GoZSwhutqPQaTyHBy
-	y7bDUcDlWS0bKH9pczzoHwcGKNiMEER/515xPbtwZSGpkJJ/VJh5QGMVx8R1QU8AeknFkF40Xf/
-	U92Ib1YEwJJ4pS3XgnzPfQrUmIdJeIKeRPQcGXre9gq9RTMJlL8gptnEOhhD5IciipbPI
-X-Gm-Gg: ASbGncui9eEt2x3Q4EUwj9jvpUCFeeAbeHCvsg87XYgIUNmsu3LYdGKpNUM5+CM9Nh/
-	HCTZl8taSB3PkqWTyQLiAmdyDMQgxh3ejr3Cj4vuFpQX+MgqGaMk5GYzWkmagkYOvfCD67iQonH
-	Q+8/fHYWiQQViUcvssWW6PwxSUQuHIFKHY8+m0V4qmkNDcZvzozfJumcezak5JDBEKixPdPxovG
-	XAurEVGw/mV7TyK/cSlRZ28y2n/m+sv3ZWR0vK33WNwk/R8nNnDwmR1toOPFo/4CDJlbZdHsouf
-	Sme3urr7O6PUhnYPvU+nBgtecnA//dgPgmGN5n5vAvWUbyQbp8Gqtw/E9H+b78UKqCDjElrOxRM
-	LE4ytAW75XNijIoaN4rT5UbTLRow=
-X-Received: by 2002:a05:6214:240c:b0:81f:3abf:dc1f with SMTP id 6a1803df08f44-87b2ef94b05mr19467906d6.8.1759910430063;
-        Wed, 08 Oct 2025 01:00:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFI7CFIzMjiswdfQ2gg99EIIpUQZ3va0hQlGmy6utcIOqmtXbh7OWljL6IiZ8lPAjtXu1zVkQ==
-X-Received: by 2002:a05:6214:240c:b0:81f:3abf:dc1f with SMTP id 6a1803df08f44-87b2ef94b05mr19467286d6.8.1759910429070;
-        Wed, 08 Oct 2025 01:00:29 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63788112bbdsm14092770a12.41.2025.10.08.01.00.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Oct 2025 01:00:28 -0700 (PDT)
-Message-ID: <73e72e48-bc8e-4f92-b486-43a5f1f4afb0@oss.qualcomm.com>
-Date: Wed, 8 Oct 2025 10:00:25 +0200
+	 In-Reply-To:Content-Type; b=k831x7JhLWNCfeOICecd1h4EdSK7VcfIznuiWybP3wpYXayQGpBeGn7FmWckKXU8Ki0YEQ90oBQt5mjWjCNlYmtJ27x33qvtp7TB6w4VWJ4PhEfHgs6k/DyPJvtNvE1G7WdoSaahRUuajEYKhBHWgUPz+6qiSIWnJv+vU8bwXH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PWqt2IHS; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CE5C4CEF4;
+	Wed,  8 Oct 2025 08:03:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759910586;
+	bh=c8ezxIkpcTLjKeibruziqgAt914e8kokjfvmBkUoTn0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=PWqt2IHSy/cPods2I0lXLczFCgpuntljKeisiOL/iemNJdOIFjJuPWyZ1ufNEUEhL
+	 g/oCcNa+OAH9ViTSbqBJ9N3q5AmCDKtS1GobhbAyrJxm4HvS9+DxoyklLHEaoIdsjy
+	 iGlpm6ZnaND+3nUXdmBH095+kfZA6gfmt3wS1toLaLCFF4S9VNR8X/F2xwHlQNmBmu
+	 72CRaVydEyI/GkK62XdbY2tOPxGRqkLI/3DvQIG6Y8+UXhQrUgDIv18LyKV82ESfIk
+	 vxdhnD2Dw7l4C7llTNyfqAwYzrKPP9Jjgk7SJlMgtrnR95OSMvPArbRqosq48VQovw
+	 T335YTKuL+WGA==
+Message-ID: <799374b4-0c41-4ccb-9f99-954c7ce6d044@kernel.org>
+Date: Wed, 8 Oct 2025 17:02:58 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,79 +50,171 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] arm64: dts: qcom: sm8750: Add PCIe PHY and
- controller node
-To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
-        Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
-Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I
- <kishon@kernel.org>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Lorenzo Pieralisi <lpieralisi@kernel.org>,
-        =?UTF-8?Q?Krzysztof_Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Bjorn Helgaas
- <bhelgaas@google.com>,
-        Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pci@vger.kernel.org,
-        quic_vbadigan@quicinc.com, quic_mrana@quicinc.com
-References: <20250826-pakala-v3-0-721627bd5bb0@oss.qualcomm.com>
- <20250826-pakala-v3-2-721627bd5bb0@oss.qualcomm.com>
- <aN22lamy86iesAJj@hu-bjorande-lv.qualcomm.com>
- <4d586f0f-c336-4bf6-81cb-c7c7b07fb3c5@oss.qualcomm.com>
+Subject: Re: [PATCH 14/24] arm64: dts: qcom: Update the pmh0110.dtsi for
+ Glymur
+To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
+ <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ Abel Vesa <abel.vesa@linaro.org>
+References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
+ <20250925-v3_glymur_introduction-v1-14-24b601bbecc0@oss.qualcomm.com>
+ <CAJKOXPdQH2jXcEY6ZpkmixvUt26SqdzYgDAiJ3RHMG7xkPyi_A@mail.gmail.com>
+ <lcbcjpoazpwbltedkiqlw4l3aomwvi3qsfwvmwghb6uf5wvnme@kh7qdpunfuwr>
+ <CAJKOXPcyhDdFW_u4YQLiHYj8gM7wYB-LOmB_PJs+5OOgn8WZFw@mail.gmail.com>
+ <mzoctelzfp6h2ezzkc3j7gnghsaf67flxqlvfhtlpdfxtddsvi@zqihmnygvdjk>
+ <20251008073123.GA20592@hu-kamalw-hyd.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <4d586f0f-c336-4bf6-81cb-c7c7b07fb3c5@oss.qualcomm.com>
+Autocrypt: addr=krzk@kernel.org; keydata=
+ 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 a/A=
+In-Reply-To: <20251008073123.GA20592@hu-kamalw-hyd.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: CrRVGn0NOu_TRzOiE2R0g14uI-HSqI9y
-X-Proofpoint-ORIG-GUID: CrRVGn0NOu_TRzOiE2R0g14uI-HSqI9y
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDE2OCBTYWx0ZWRfXxfY8Sa92jXl+
- kwm2ScZGwKkD24ag/hwpfPeE2vpMoNaWeftbNaaZHwMvs6wmtC5nHMSK4Z+HeVOT0pTuhF1zK4G
- /AwEfpmA8bfK/QRDP6heYdRGx8pl0dX5TjljojFGOHVeR8kQLE/iyFwR6pbT/4N5ScCHJTD/fWX
- D6xJneLcmkVUU/9v716x3FAxtJhrTuLdpElOtaoYZ0mk2SBwhEAFE81/aPUQHQAs66vXuG5MuIa
- 3i+Wk03MCCoDtCcmx+XZ0nmw2KAmD4BsdmRugCk7i/ITNUZw/LKUmeO14hZPkDDWqNB0sQspKGO
- 5jLpLZ+EqCVIBQcqFuypsqz0wFZfBU3KIqDlO8Vv/jpZVkIpJx8Ijany6Z9wdUhpMX0LuWvyMJO
- ZuP1Vn37+HfeliXmkkcU1F5ttFimVw==
-X-Authority-Analysis: v=2.4 cv=BuCQAIX5 c=1 sm=1 tr=0 ts=68e61a1f cx=c_pps
- a=oc9J++0uMp73DTRD5QyR2A==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=w91pQayDMOQRg3Yv5IMA:9 a=QEXdDO2ut3YA:10 a=iYH6xdkBrDN1Jqds4HTS:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-08_01,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0 adultscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 clxscore=1015 spamscore=0 suspectscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060168
 
-On 10/8/25 6:41 AM, Krishna Chaitanya Chundru wrote:
+On 08/10/2025 16:31, Kamal Wadhwa wrote:
+> Hi Krzysztof, Dmitry, Konrad,
 > 
-> 
-> On 10/2/2025 5:07 AM, Bjorn Andersson wrote:
->> On Tue, Aug 26, 2025 at 04:32:54PM +0530, Krishna Chaitanya Chundru wrote:
->>> Add PCIe controller and PHY nodes which supports data rates of 8GT/s
->>> and x2 lane.
+> On Thu, Sep 25, 2025 at 09:57:02PM +0300, Dmitry Baryshkov wrote:
+>> On Thu, Sep 25, 2025 at 10:34:52PM +0900, Krzysztof Kozlowski wrote:
+>>> On Thu, 25 Sept 2025 at 22:14, Dmitry Baryshkov
+>>> <dmitry.baryshkov@oss.qualcomm.com> wrote:
+>>>>
+>>>> On Thu, Sep 25, 2025 at 05:08:54PM +0900, Krzysztof Kozlowski wrote:
+>>>>> On Thu, 25 Sept 2025 at 15:34, Pankaj Patil
+>>>>> <pankaj.patil@oss.qualcomm.com> wrote:
+>>>>>>
+>>>>>> From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+>>>>>>
+>>>>>> Add multiple instance of PMH0110 DT node, one for each assigned
+>>>>>> SID for this PMIC on the spmi_bus0 and spmi_bus1 on the Glymur
+>>>>>> CRD.
+>>>>>>
+>>>>>> Take care to avoid compilation issue with the existing nodes by
+>>>>>> gaurding each PMH0110 nodes with `#ifdef` for its corresponding
+>>>>>> SID macro. So that only the nodes which have the their SID macro
+>>>>>> defined are the only ones picked for compilation.
+>>>>>>
+>>>>>> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
+>>>>>> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
+>>>>>> ---
+>>>>>>  arch/arm64/boot/dts/qcom/pmh0110.dtsi | 66 ++++++++++++++++++++++++++++++++++-
+>>>>>>  1 file changed, 65 insertions(+), 1 deletion(-)
+>>>>>>
+>>>>>> diff --git a/arch/arm64/boot/dts/qcom/pmh0110.dtsi b/arch/arm64/boot/dts/qcom/pmh0110.dtsi
+>>>>>> index b99c33cba8860f1852231db33a127646c08c1e23..4a5c66e5c9fbc35cedb67601f4568844dc41fbea 100644
+>>>>>> --- a/arch/arm64/boot/dts/qcom/pmh0110.dtsi
+>>>>>> +++ b/arch/arm64/boot/dts/qcom/pmh0110.dtsi
+>>>>>> @@ -7,6 +7,8 @@
+>>>>>>  #include <dt-bindings/spmi/spmi.h>
+>>>>>>
+>>>>>>  &spmi_bus0 {
+>>>>>> +
+>>>>>> +#ifdef PMH0110_D_E0_SID
+>>>>>
+>>>>> NAK
+>>>>>
+>>>>> I already explained on IRC in great details why.
+>>>>
+>>>> A short summary or a link to a channel / date would be nice in order to
+>>>> include other people into the discussion.
+>>>>
 >>>
+>>> Of course but:
+>>> 1. You were there so maybe you remember the arguments, and:
+>>> 2. I'm offline, using phone, not having laptop, replying during my
+>>> personal time off just before merge window so any emergency time
+>>> should be spent on important matters instead these two huge patch
+>>> bombs adding such usage I already said: NO, don't do this.
 >>
->> I tried to boot the upstream kernel (next-20250925 defconfig) on my
->> Pakala MTP with latest LA1.0 META and unless I disable &pcie0 the device
->> is crashing during boot as PCIe is being probed.
 >>
->> Is this a known problem? Is there any workaround/changes in flight that
->> I'm missing?
->>
-> Hi Bjorn,
+>> Well, If I'm asking, it means I don't rememebr the discussion. And I
+>> defeinitely didn't know that you are spending your personal vacation
+>> time in ML. And if the discussion was with some other people, then
+>> somebody else can drop the response to the question.
 > 
-> we need this fix for the PCIe to work properly. Please try it once.
-> https://lore.kernel.org/all/20251008-sm8750-v1-1-daeadfcae980@oss.qualcomm.com/
+> Just wanted to give some background on this patch.
+> Even though PMH0104 and PMH0110 are common (b/w Kaanapali and Glymur),
+> they don't share the SIDs. So we tried to use status="disabled" to handle
+> this but we observed that because of the node name being common in the
+> two included files, it ends up overwriting the previous node with the
+> same name.
+> 
+> eg-
+> #include "pmh0104.dtsi"  // assume contains pmic@4 { ...};
+> #include "pmh0110.dtsi"  // assume contains pmic@4 { status=disabled;};
+> 
+> Here intention was to use the pmh0104 on sid-4, but it gets overwritten
+> with the pmh0110 on sid-4 ( with status disabled). This is why we ended
+> up using the `#ifdef`, ensuring that we can control the exact pmic that
+> gets picked by using the PMXXX_SID macro.
+> 
+> side note, i did `grep` in the `/arch/arm64/boot/dts/` and i see a lot
+> of instances of `#if...` present in that.  Assuming the concern here is
+> about the use of `#ifdef`.
 
-This surely shouldn't cause/fix any issues, no?
 
-Konrad
+#if are not desired in C code, so why would they be acceptable in DTS?
+It is not making the code easier to read at all.
+
+On IRC in these older discussions I was very strongly against any DTSI
+which depends on some sort of outside values, except basic usage of
+defines. Original pmh0110.dtsi from kaanapali is fine:
+	pmh0110_d_e0: pmic@PMH0110_D_E0_SID {
+
+but doing ifdefs here that this define depends on something else makes
+code ungreppable (lookup unit address from sysfs and then git grep
+pmic@4) and difficult to follow.
+
+My recommendation is either duplicate code or change DTSI files to not
+contain entire node, but its contents. At least these are
+recommendations I remember now.
+
+Best regards,
+Krzysztof
 
