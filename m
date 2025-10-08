@@ -1,159 +1,295 @@
-Return-Path: <linux-arm-msm+bounces-76424-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76426-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FFF2BC560E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 16:06:29 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id DEEA2BC56C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 16:21:40 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 82ACA4F1BC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 14:05:52 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 2B5EE3B53C0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 14:20:55 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id A1528298CA2;
-	Wed,  8 Oct 2025 14:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9B5EE2EB5DC;
+	Wed,  8 Oct 2025 14:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FHkFArTi"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="QDp66+LY"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F8F529346F;
-	Wed,  8 Oct 2025 14:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7932EAB63
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 14:20:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759932331; cv=none; b=oXxeFGajoqTMwnjetaA753XksFLNLdppLj9tuDYjPo4uax0rz+Gefs4w98kPILBKqlQ4A29OSVHqT4xhGl3eJv3u3S827ZT/aOpbtDqQ4CJ0h46M2vNK/LYRpB7NqUBJuF02qRPdmQyH/ANZb4T4LE1HLT04ciGV9W75xNE1+Gk=
+	t=1759933250; cv=none; b=VSNF+RLLLmjPfGqyT82k/NyP+LjpPOjcU9jHCRxOuo/nYLeEQ2OzhZPdGYdMlVGShgcobt0XvcIgxTJ1HVA0itq9IlUKsm1CxvIzwMPsHGWYZZPecd5zXHUu9hJkc+EzSbyTueDbPFgNWT74Jv8Bkl6/qRbuC/XtR5hd7VanVCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759932331; c=relaxed/simple;
-	bh=HSYJCjE24K+57IxjnTOBA3vYmKAgeNl1JgEZHnukAHQ=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=UGVJKIQiQugaDSNcnTODwuKwMV1VdeH3IIBbRvbKRpcnn30rOCpBSiGT+opA1i3E83sigSEa1X6eRAV93SHLlqeoWRQeHKVLDElI4RnEGnU0bZobKtzIrKO31Qc7BAdnfNOsLnEc/gzSRZmDd65wwKn6RUlZk8TjEdwD7EVZ3KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FHkFArTi; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 16D2BC19422;
-	Wed,  8 Oct 2025 14:05:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759932331;
-	bh=HSYJCjE24K+57IxjnTOBA3vYmKAgeNl1JgEZHnukAHQ=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:Reply-To:From;
-	b=FHkFArTiqLjHtD8UBeA9BjDpTEDP/ze8wv76kxhwQ5ee+Z/LQ5l+TxLM/T5Uje6S3
-	 ZzZ+MnVufUO4SVls5xUeaS9ZzEmaUEk1NqKXcowndG6T7HACqYHUdFoV1vTW4Kc3K2
-	 T0BYjAcmdJPuGQg1tMmGFVqpiFRSY4J0CiGBGaqUGH0EV5rF/g5MbJMXX2clr8uy3x
-	 wjMylQ24HaRr5QaaCSBqLBiU800+UlMIq5LL5W5xl8suoBoTM8VGwIIBcNHTowg8zi
-	 j1oynPpClm7CgY76SZifUR2vWQMwfPB4utrUlQ66QhstJsbf1v4Zy7lXJxI3oKasmj
-	 2nYBBBLTxpmCQ==
-Received: from aws-us-west-2-korg-lkml-1.web.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by smtp.lore.kernel.org (Postfix) with ESMTP id 0ACB3CCA470;
-	Wed,  8 Oct 2025 14:05:31 +0000 (UTC)
-From: David Heidelberg via B4 Relay <devnull+david.ixit.cz@kernel.org>
-Date: Wed, 08 Oct 2025 16:05:34 +0200
-Subject: [PATCH v2 7/7] arm64: dts: qcom: sdm845-oneplus: Implement panel
- sleep pinctrl
+	s=arc-20240116; t=1759933250; c=relaxed/simple;
+	bh=ogVrD0uTLTGMHdtliGwCwN+ClgfrGrSZ+Dkn7g0gOoc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=rqONfjORgdMawjyiwCt1i28zUHw/dIgA4f1J+lcrb1cgooDTURHWuTI/SGRStbTiOPCh05aI/pvEboYF+JHOm37xi4lvLYKfkILNk0i4pHq71HYEqm5ccTp+WFs9ZSYuZZscNmORxsk5Whmt0KeU+eFdkria0SlSnyvYqDQbV7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=QDp66+LY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890Nk3014183
+	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 14:20:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	lz+mS6MZ/rvjqUHxrGonwzbwHQ0rOQOZyEdg73FnsuY=; b=QDp66+LYc7Ey9J9J
+	KfqhiFLBeK+NSDCnP9WmCY/oOwqilBBuhvJGAz28Q4xiNrTVxZYjJY14eAa1l6qN
+	QaGkm7jxCkcjBmCNCy/jZa1ZKoBOldXS3/XjkOCesmLMb2pIDnmPNTgbQ84J1lvY
+	snV7ku/Fy6FA+YR2AXLUfo8hc2Dv1lWy7WykDF0W94zeGGmfWpvs9tYiGFUzxipk
+	v91MK3DQlQrtKi1bszdLF2VdbC5htJc0j1cmbsRgxB5DnMmtX+n0lrv8XIXfoMKz
+	If/DJsOL7Y4Iy4z+V80/go/yrVJkAzFK9ToDwTPn1ui9rSmhakgK/ucksBkKMLYu
+	C8V9Ow==
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com [209.85.214.197])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49mgd0pju4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 14:20:47 +0000 (GMT)
+Received: by mail-pl1-f197.google.com with SMTP id d9443c01a7336-277f0ea6fc6so183451215ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 07:20:47 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759933246; x=1760538046;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lz+mS6MZ/rvjqUHxrGonwzbwHQ0rOQOZyEdg73FnsuY=;
+        b=t4BIts/TBdt7BcA2ELk6C7X2Rg+2gKvXrQeD0JgnzL/BIe3oWWay4Bx8zKcYVF8gTE
+         eXf0IeCzZpRWtM81l7KnBXrqTYCllK5q21zBN3KX9CoOWNsCoMO7cla0s9WrYS1uj19g
+         YCvotAQMeFQmFsLqRf0Zv/3VKXt7MLe8u3rjkSySwB8sO/Oumbs+WjlB/i8oY7cLoaap
+         f11jAiW4J8tGD9Ah5gTZLscQLu6FmtgXOWhWK3s0BOJuBgM2/Y4FEdsZBQw5yIcdxrYb
+         lBx8GE7Ri9jKDuBvvKy03L7WhqbXNb/199VsZY6tqjxw2H6vHpexinfWqETh3n0TJjWS
+         nRYg==
+X-Forwarded-Encrypted: i=1; AJvYcCXh5bkB/DMenAoqpUouwuIVKGFolf/cgUL6zHGHxIrX7WqVg/mhFWk03xOlKjdfXyFZHPO+jccW2qKu+wfJ@vger.kernel.org
+X-Gm-Message-State: AOJu0YzDgbDzPuMJl91EJ8rkWQt1/nxQVwWNDCP1yFcH8YkjtxpKnni8
+	nukTdw50fVtKqg1nFb0z9dVpnrZcA8nQ4hk5vPGstQLHa4zkaidHgWW64Lj3TpkbtPydKwgyLEv
+	jLSucES2KUalkJUQLHtjqntLm6DRsgR1VGN7qKkdl3P4S4gD3qkESHd8upFVfK3RGzvt5
+X-Gm-Gg: ASbGnct6Nm+Q+YciO4z4dsiGqP3+xvoLd+vjRUola8Viqp0EvCuIaLtYBs06OsWPN45
+	jAVJg33PUlILgGaxcLOItyMy7n84AwsvAfoFounstj55Wg8VBIs7BjhvQsDDR5RSbIhXmhOsgno
+	NWFIlwkQSW3sezw78CMWKMJP7Xixc/gIh9JCGdZWnIHyb8PCgOzdZjOpsSOVg/PXsXGQe5sBJ+J
+	e0C6U4wcmTbtLbtd3NpIXde1yqPfNDH3i5qUrysi/Yv5M4TWOwREfHCdEu20NmH/+6JiYqBYQcg
+	hGGD5nQpE5eh/Qml43vtkIaseMcD0FflF+sfdhl5H5WYzoGRN1NfvC69G0JZErSeusFyl6cVxup
+	GJg==
+X-Received: by 2002:a17:903:a8b:b0:265:89c:251b with SMTP id d9443c01a7336-290273ef081mr47036425ad.29.1759933246109;
+        Wed, 08 Oct 2025 07:20:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHr9LK963P5BA7uXceHHrVsADE8b2KBpElj7O1ory5mflnm4HtE6Ymq0IImskdB3TNDjo+0PQ==
+X-Received: by 2002:a17:903:a8b:b0:265:89c:251b with SMTP id d9443c01a7336-290273ef081mr47035815ad.29.1759933245508;
+        Wed, 08 Oct 2025 07:20:45 -0700 (PDT)
+Received: from [10.217.217.28] ([202.46.22.19])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1d584esm200797495ad.107.2025.10.08.07.20.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 07:20:43 -0700 (PDT)
+Message-ID: <31bd08ce-823a-4a71-baca-a9d1e02fcb6a@oss.qualcomm.com>
+Date: Wed, 8 Oct 2025 19:50:30 +0530
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V7 3/5] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Jonathan Cameron <jic23@kernel.org>,
+        Krzysztof Kozlowski
+ <krzk@kernel.org>, robh@kernel.org,
+        krzk+dt@kernel.org, conor+dt@kernel.org, agross@kernel.org,
+        andersson@kernel.org, lumag@kernel.org,
+        dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+        daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
+        thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
+        subbaraman.narayanamurthy@oss.qualcomm.com,
+        david.collins@oss.qualcomm.com, anjelique.melendez@oss.qualcomm.com,
+        kamal.wadhwa@oss.qualcomm.com, rui.zhang@intel.com,
+        lukasz.luba@arm.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        cros-qcom-dts-watchers@chromium.org, quic_kotarake@quicinc.com,
+        neil.armstrong@linaro.org, stephan.gerhold@linaro.org,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20250826083657.4005727-1-jishnu.prakash@oss.qualcomm.com>
+ <20250826083657.4005727-4-jishnu.prakash@oss.qualcomm.com>
+ <20250829-classic-dynamic-clam-addbd8@kuoka>
+ <5d662148-408f-49e1-a769-2a5d61371cae@oss.qualcomm.com>
+ <4e974e77-adfc-49e5-90c8-cf8996ded513@kernel.org>
+ <a0e885be-e87d-411a-884e-3e38a0d761e5@oss.qualcomm.com>
+ <8c90cc3f-115e-4362-9293-05d9bee24214@linaro.org>
+ <5d4edecf-51f3-4d4a-861f-fce419e3a314@oss.qualcomm.com>
+ <20250927144757.4d36d5c8@jic23-huawei>
+ <a3158843-dfac-4adc-838a-35bb4b0cbea4@oss.qualcomm.com>
+ <CAGE=qrrCvq28pr9Y7it-CGMW=szKUnU+XBj1TmpoUwuASM05ig@mail.gmail.com>
+Content-Language: en-US
+From: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>
+In-Reply-To: <CAGE=qrrCvq28pr9Y7it-CGMW=szKUnU+XBj1TmpoUwuASM05ig@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <20251008-s6e3fc2x01-v2-7-21eca1d5c289@ixit.cz>
-References: <20251008-s6e3fc2x01-v2-0-21eca1d5c289@ixit.cz>
-In-Reply-To: <20251008-s6e3fc2x01-v2-0-21eca1d5c289@ixit.cz>
-To: Neil Armstrong <neil.armstrong@linaro.org>, 
- Jessica Zhang <jessica.zhang@oss.qualcomm.com>, 
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>, 
- Maxime Ripard <mripard@kernel.org>, Thomas Zimmermann <tzimmermann@suse.de>, 
- David Airlie <airlied@gmail.com>, Simona Vetter <simona@ffwll.ch>, 
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>, 
- Conor Dooley <conor+dt@kernel.org>, 
- Thierry Reding <thierry.reding@gmail.com>, Sam Ravnborg <sam@ravnborg.org>, 
- Bjorn Andersson <andersson@kernel.org>, 
- Konrad Dybcio <konradybcio@kernel.org>, 
- Casey Connolly <casey.connolly@linaro.org>
-Cc: dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, 
- phone-devel@vger.kernel.org, David Heidelberg <david@ixit.cz>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1489; i=david@ixit.cz;
- h=from:subject:message-id;
- bh=mp3HRjBZ7F75KJMOIKY0ujssyiub4Jy/WN4kGAY5j8g=;
- b=owEBbQKS/ZANAwAIAWACP8TTSSByAcsmYgBo5m+piiWLIGs1xMLHjYcw1Kxi+dVr02ZH7Mmqu
- OeABLuKSjSJAjMEAAEIAB0WIQTXegnP7twrvVOnBHRgAj/E00kgcgUCaOZvqQAKCRBgAj/E00kg
- ctV3D/9lubFbmrou5+gTBa2JMEdcOKJUmBFaw+Vy/vJFor0U3Uxr5rhDtLdAK9/eQ3o2dfZ9LUM
- MJRT5qoA3SorlFBSrV5nVa5HdxdW5b+3hqIupb45Dhr0dm2DfAzT8UFHE1fj60Z57LgEEkVhFVq
- xVY9s9zGXToPHmA1QCvS5RDXCIMyQY76fKWEkKfB5e59hMJHTk0OsE2bbsyRwlMt1u9IWPArgrn
- hzRdI5DQerHDgdav/UHwrw83n/nS2t5R69n3BRGX0inbVaBiTtJZ7AzcDx6dN2sK00TyqYcRRiY
- FN680Vy6dXpP3Hbm6d07dFJbJ3Fm852k4Wc05+8bb0C693tE2JN5XjzFxDxCCggx+yGmhkrMuxo
- v6DqgVAlC1Xt33L0TXhFkslf5ULO1g/dMX3m4Dj7FGdT372tyY4n1J07zXihjgmsjMtZ0SkQTfF
- j1sfS2Q9TVq/f7gHXHhNvUysJitJXJeY7uneJ2ZxJvisOGJHWPh3ljoeOQdlD6350h3WAcgzSAZ
- 86felmyHVVn3k08JiNEwuvnD+pb0kJSyzuYhc9235+xO35LPjEXTWmNKgnh3EF1ziQm9m27xrbm
- HtL7grNbnYgi29vGxCd8+pZUUCDMhhzsaDgYLIEMrxxUkV6MBpcuOCKXuehVmMkSwQdDcq/L4qT
- 6H3nus+UNFuUMBA==
-X-Developer-Key: i=david@ixit.cz; a=openpgp;
- fpr=D77A09CFEEDC2BBD53A7047460023FC4D3492072
-X-Endpoint-Received: by B4 Relay for david@ixit.cz/default with auth_id=355
-X-Original-From: David Heidelberg <david@ixit.cz>
-Reply-To: david@ixit.cz
+X-Proofpoint-GUID: 8E46I7FcqqS_d6MlpBWQDxKvq5J-w7do
+X-Authority-Analysis: v=2.4 cv=T8aBjvKQ c=1 sm=1 tr=0 ts=68e6733f cx=c_pps
+ a=cmESyDAEBpBGqyK7t0alAg==:117 a=fChuTYTh2wq5r3m49p7fHw==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=AgmdEbom9n3Jum9HLqIA:9
+ a=QEXdDO2ut3YA:10 a=1OuFwYUASf3TG4hYMiVC:22
+X-Proofpoint-ORIG-GUID: 8E46I7FcqqS_d6MlpBWQDxKvq5J-w7do
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA2MDEyMyBTYWx0ZWRfX/idinnpyCezM
+ BNxuuGuBaUqUZa9/BV0YP/lj5qtUm7W9XH9/1WneywAC6C91oehrRVcSAKp7xFBOGIBEUM1pu5Z
+ F7fOzxiiAzVLTHh19K0ECuBRJ9k9eYvFpGHsjli7e2+800kNHhV6K6B4eAO/YzaVCJTe1K5GJkV
+ dQsNkvM6vfMOOhkkrWfAMcJRaOvrRftBy2dKF6J6wcXydxHfaRRECnpQfjnAZ9TAFOZWPpOaRYE
+ 1PZSfYau3tyzNNUE3EkaTwUbL0hVGSH9TIY5f8iHH09Po85RzqA8FBrHLsnrn3OReVhs6DjDtqR
+ 2z8/ROk8hhMwMl1RS4cUcDDabQR7NIuUiLHbB0ojkm5N4yhZJs7nG839xhcQB8EUqPx7qQ6JVlt
+ Em9h9dc4RgkUYAnUkUV0F2Gs99sjqQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-08_04,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 adultscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 suspectscore=0 bulkscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510060123
 
-From: David Heidelberg <david@ixit.cz>
+Hi Krzysztof,
 
-We can DSI pin from 8mA to 2mA while suspend, do it.
+On 10/4/2025 12:22 PM, Krzysztof Kozlowski wrote:
+> On Sat, 4 Oct 2025 at 11:42, Jishnu Prakash
+> <jishnu.prakash@oss.qualcomm.com> wrote:
+>>
+>> Hi Jonathan,
+>>
+>> On 9/27/2025 7:17 PM, Jonathan Cameron wrote:
+>>> On Fri, 19 Sep 2025 20:17:43 +0530
+>>> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
+>>>
+>>>> Hi Krzysztof,
+>>>>
+>>>> On 9/18/2025 5:45 AM, Krzysztof Kozlowski wrote:
+>>>>> On 18/09/2025 04:47, Jishnu Prakash wrote:
+>>>>>> Hi Krzysztof,
+>>>>>>
+>>>>>> On 9/17/2025 5:59 AM, Krzysztof Kozlowski wrote:
+>>>>>>> On 16/09/2025 16:28, Jishnu Prakash wrote:
+>>>>>>>>> You cannot have empty spaces in ID constants. These are abstract
+>>>>>>>>> numbers.
+>>>>>>>>>
+>>>>>>>>> Otherwise please point me to driver using this constant.
+>>>>>>>>
+>>>>>>>> These constants are for ADC channel numbers, which are fixed in HW.
+>>>>>>>>
+>>>>>>>> They are used in this driver: drivers/iio/adc/qcom-spmi-adc5-gen3.c,
+>>>>>>>> which is added in patch 4 of this series.
+>>>>>>>>
+>>>>>>>> They can be found in the array named adc5_gen3_chans_pmic[].
+>>>>>>>
+>>>>>>> Really? So point me to the line there using ADC5_GEN3_VREF_BAT_THERM.
+>>>>>>>
+>>>>>>
+>>>>>> We may not be using all of these channels right now - we can add them
+>>>>>> later based on requirements coming up. For now, I'll remove the channels
+>>>>>> not used in adc5_gen3_chans_pmic[].
+>>>>>
+>>>>> You are not implementing the feedback then. Please read it carefully.
+>>>>>
+>>>>
+>>>> Sorry, I misunderstood - so you actually meant I should remove the
+>>>> empty spaces in the definitions, like this?
+>>>>
+>>>> -#define ADC5_GEN3_VREF_BAT_THERM               0x15
+>>>> +#define ADC5_GEN3_VREF_BAT_THERM 0x15
+>>>>
+>>>> I thought this at first, but I somehow doubted this later, as I saw some
+>>>> other recently added files with empty spaces in #define lines, like:
+>>>>
+>>>> include/dt-bindings/iio/adc/mediatek,mt6373-auxadc.h
+>>>> include/dt-bindings/regulator/st,stm32mp15-regulator.h
+>>>>
+>>>> I can make this change, if you prefer this. Please let me know
+>>>> if I'm still missing something.
+>>>>
+>>>> Also please let me know if you want me to remove the unused
+>>>> channels - I would prefer to keep them if there's no issue,
+>>>> as we might need them later.
+>>>>
+>>> He is referring to 0x14 and below not being defined values.  So what
+>>> do they mean if they turn up in the DT?
+>>>
+>>
+>> Thanks for your clarification. To address your first point above, the macros
+>> added here only represent the ADC channel numbers which are supported for
+>> ADC5 Gen3 devices. If there are numbers missing in between (like 0x14),
+>> that is because there exist no valid ADC channels in HW matching those
+>> channel numbers.
+>>
+>> For your question above, if any of the undefined channels are used in the DT,
+>> they should ideally be treated as invalid when parsed in the driver probe and
+>> lead to an error. When I checked the code again, I saw we do not have such an
+>> explicit check right now, so I will add that in the next patch series.
+>>
+>> And to be clear on which channel numbers are supported, I think it may be
+>> best if, for now, we only add support for the channel numbers referenced in
+>> the array adc5_gen3_chans_pmic[] in drivers/iio/adc/qcom-spmi-adc5-gen3.c.
+>>
+>> There are only 18 channel numbers used in this array and I would remove
+>> all channels except for these from the binding files. During parsing, we
+>> would use this array to confirm if an ADC channel added in DT is supported.
+>>
+>> In case we need to add support for any more channels later, we could add
+>> their macros in the binding file and update the array correspondingly at
+>> that time.
+>>
+>> Does all this sound fine? Please let me know if you have any more concerns
+>> or queries.
+> 
+> No, it doesn't.  You keep ignoring my arguments and responding to
+> something else. I prefer not to store hardware values as bindings,
+> because these are not bindings (and you failed to prove which SW
+> interface they bind) and it's really not necessary.
 
-In theory, should give us extra 2 hours of idle battery life.
-
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- .../arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 26 +++++++++++++++++++++-
- 1 file changed, 25 insertions(+), 1 deletion(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index c216369fae237..fa538b37ef25b 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -463,8 +463,9 @@ display_panel: panel@0 {
- 		te-gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
- 		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
+In my previous replies in this thread, I missed mentioning that the macros
+defined in include/dt-bindings/iio/adc/qcom,spmi-vadc.h are also used in
+other places than the driver file - they are also used in the PMIC-specific
+binding files added in this patch, for channel definitions. Considering
+one channel for example:
  
--		pinctrl-names = "default";
-+		pinctrl-names = "default", "sleep";
- 		pinctrl-0 = <&panel_default>;
-+		pinctrl-1 = <&panel_sleep>;
+We have this in include/dt-bindings/iio/adc/qcom,spmi-vadc.h:
++#define ADC5_GEN3_DIE_TEMP			0x03
  
- 		port {
- 			panel_in: endpoint {
-@@ -871,6 +872,29 @@ te-pins {
- 		};
- 	};
+The above is used in include/dt-bindings/iio/adc/qcom,pm8550vx-adc5-gen3.h:
++#define PM8550VS_ADC5_GEN3_DIE_TEMP(sid)			((sid) << 8 | ADC5_GEN3_DIE_TEMP)
  
-+	panel_sleep: panel-sleep-state {
-+		esd-pins {
-+			pins = "gpio30";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		reset-pins {
-+			pins = "gpio6";
-+			function = "gpio";
-+			drive-strength = <2>;
-+			bias-pull-down;
-+		};
-+
-+		te-pins {
-+			pins = "gpio10";
-+			function = "mdp_vsync";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
- 	tri_state_key_default: tri-state-key-default-state {
- 		pins = "gpio40", "gpio42", "gpio26";
- 		function = "gpio";
+And the above definition may be used in device tree, like in the example added
+in Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml:
+ 
++        channel@203 {
++          reg = <PM8550VS_ADC5_GEN3_DIE_TEMP(2)>;
++          label = "pm8550vs_c_die_temp";
++          qcom,pre-scaling = <1 1>;
++        };
 
--- 
-2.51.0
+Referencing the same macros in driver and device tree should also help with
+readability and lower the chances of accidental wrong configurations.
+Based on this, can we consider ADC5_GEN3_DIE_TEMP is a valid binding and keep
+it in place?
+ 
+If not, and if you want the ADC5_GEN3_DIE_TEMP definition removed from bindings,
+I can see two ways to do this:
+ 
+1. Keep the PMIC-specific binding definitions, making updates to them like this:
+ 
+-#define PM8550VS_ADC5_GEN3_DIE_TEMP(sid)			((sid) << 8 | ADC5_GEN3_DIE_TEMP)
++#define PM8550VS_ADC5_GEN3_DIE_TEMP(sid)			((sid) << 8 | 0x03)
+ 
+and use the same macros in device tree, like above.
+ 
+2. Drop the PMIC-specific binding definitions completely and update reg property like this:
+
+-          reg = <PM8550VS_ADC5_GEN3_DIE_TEMP(2)>;
++          reg = <0x203>;
+ 
+Which way would you prefer here?
+
+Thanks,
+Jishnu
+
 
 
 
