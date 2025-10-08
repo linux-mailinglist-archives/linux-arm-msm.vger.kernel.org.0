@@ -1,181 +1,260 @@
-Return-Path: <linux-arm-msm+bounces-76427-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76428-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC9E0BC57E5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 16:58:17 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D08ABC5931
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 17:30:14 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id A67DD3C34A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 14:58:16 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id E50D634E83D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 15:30:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E1B1D2EC571;
-	Wed,  8 Oct 2025 14:58:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9658A261B70;
+	Wed,  8 Oct 2025 15:30:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="fpR31PHb"
+	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="ZffK1v+V"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com [35.83.148.184])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB6B2EC567
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 14:58:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A7E1369B4;
+	Wed,  8 Oct 2025 15:30:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=35.83.148.184
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759935490; cv=none; b=NPYLl7zkNBAfBYhVDTMZ6BmoBxhB+BWg5nqhNqwW5OF+JHWMnk5dsfoqRoa7bl5xd7Icd1ZOLiEXencEAZDWrIJOxtVJEGvuvApjlKDQN6hssHhA1MWYg6QCVav7yYU/FhAcN8X0yM+sPmyBADR8ERBR8QBgm8MzXEGzVn7RwlE=
+	t=1759937410; cv=none; b=isBXDnmXV65LuN/vBr06I4y4wDdlMpxYCIlfSPdVlnKi4lOhpUsym34j4vPtJcsqYyJsaWQ3OYsQbSc8ObQJhAUVn2Llr/nqmHTMuKMgoUP0GzAieERXshiy5suPZTsc7xVzrHg5QBG6E047Eo3f+o2k8dpqlLUkGWDUbfmIdZA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759935490; c=relaxed/simple;
-	bh=5V4FY1lGCPXLwOcBdDx/5qV1DoJAfuAXFe8DMG4W87o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OAnK3MjkBPjbZ5eqhXvuKQDSKa7di7/dqSm//Js6vqJZZEsvSmAVeiqFwj7q/xrtOEhwVNbfSR/vtKPn6yvv0uQUsWYRpK1DrXrwlujknYVYDrslNGU2yWSSse0DbTuwSQEnLDNRmKdy5yjTTxMq68mlab87sznUeMzP8AYGEdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=fpR31PHb; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890OqG015715
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 14:58:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:date:from:message-id:mime-version
-	:subject:to; s=qcppdkim1; bh=gg2XGw954hw/rNzVk11kaod4ZGuB5Izji2/
-	QJiTgN50=; b=fpR31PHbNQFaoP0jHLmGl4/ob/VfzSwr+TexkvmZW/2LsaesVKc
-	hVcEvVpFm+Wqi/dKj/jCiyAeF6mhOGyOhw5Wh63RjkWS0Bd5Ma9xERWrQ8GvM2O8
-	Ba5sqwCOyLiampeTHEPlVJ/NL7cWjq72Ywab3Mv2MrysAv0420r+FVyd7n82S1Fk
-	TBTQ8nlXsgHDOw8kJjoejrAau1NJPEAsxwpsG4BUhceMYZuPk9XWQkfmCEprelx4
-	59PPG2TkYgaz5+1ZkrjNLgg5Hi7AO13oQHPmuz8xrnAR8bD5M6oTA54ZAszkO/1Q
-	8tXKbnEBcFEaWpGg4Y/1Kdab/CzWNcnOYBg==
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com [209.85.210.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jtk72ybn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 14:58:08 +0000 (GMT)
-Received: by mail-pf1-f198.google.com with SMTP id d2e1a72fcca58-782063922ceso7005280b3a.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 07:58:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759935487; x=1760540287;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gg2XGw954hw/rNzVk11kaod4ZGuB5Izji2/QJiTgN50=;
-        b=ma+XOOXAJSN0SUwwIq5/Fdwg3e0+MEzFb2Awf8Tto7u6eg/5M2l6nEVart2+vCrRK6
-         xOXLVRzEkdVK9qA1ZUEOTral+ZfdCFKoj7sgcEQEsRBU8ebhqQa8F1tzxc6b6f3ls4Bs
-         94vroCrkYjtcncCiIlpfTGrHqtCLDhvywkS35s+K+idqzr1FQg9SaxKMFs0Yhk3xY62Q
-         z2+IKw/Byqk+w6vwEWw2N7puNh80cPJ7FxfjxBhY1upcNuhQiyTSNEOeslngAD/3CF9c
-         xhYL1c/aFKwcST2Ep/97jyUu0gtYDfQ9bTmIMzEJKRJ0uC/RbBw0D+L43jacwVA+2MWq
-         2/Sg==
-X-Forwarded-Encrypted: i=1; AJvYcCVGNXnEFlZUq7WqyUzMGZ+m6x3GQXPUoHlJMikvASssJP6PowHTzbSgmdLPLW6vlIIZ17htYASTF8p6+EFq@vger.kernel.org
-X-Gm-Message-State: AOJu0YycowJhXaqRh/LaaOp/UccBbS+6wxK8oKfJly0BlOlgH18S6mSh
-	piVPZT7WzPidDz8DMCo8SR5JJltDiPB3TR47rcks9jBgKT+71AyEjuDwlzB8H9DJXpZp6OgS0/n
-	MdkFklP/9ygWE8ejaQPMpJpYUm8J3I96Qe8OAw+fSRDPrfsMRMjHyYXQJsUBEVBuV4ce4
-X-Gm-Gg: ASbGncs5MdKMC8GI0/6cK7JfT4pXU2qiMB1qFZ1Yb7Ccw3TcuXFDzkFYFvWx4wmraLd
-	WKDw3u96ahx/3J3EmPDA2VNePflvPSdPnNWFwRIdnlUsRiMdSkpQnT+hwSgkE4ES9bbWjSxYDcF
-	R+fWNK/QBKVex5jCn4oVfVzRHvZfLMAFE+/QixOt/4ynK/zP1o3wOBZrSuZD3GTS2RC+HKGvFpY
-	rxQrqp+A+bLct1HXsT+cUhfFsJPoZuFThGxKiGVAf9DItIt7kXD0CCYHIuNsw5WKQD+8LhLLTRI
-	AfHdzdGfmw8st9y9NVGBhr34rWh4D6ocdVi+nm76ycL7l/LPn55sHhjQKd3Nrh0TnlSZeX/+j+w
-	=
-X-Received: by 2002:a05:6a00:3911:b0:77f:3a99:77b1 with SMTP id d2e1a72fcca58-79385703346mr3825669b3a.9.1759935486524;
-        Wed, 08 Oct 2025 07:58:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFW5q5j+m+RGehMEdTTXNFPYB2WX/itVnHJwVii8g/LY0p0ro5CAl7jexOkZcXjHDnVYlqG9A==
-X-Received: by 2002:a05:6a00:3911:b0:77f:3a99:77b1 with SMTP id d2e1a72fcca58-79385703346mr3825645b3a.9.1759935486009;
-        Wed, 08 Oct 2025 07:58:06 -0700 (PDT)
-Received: from debian.Hyatt.com ([192.210.17.203])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-78b02053b84sm19068892b3a.53.2025.10.08.07.58.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Oct 2025 07:58:05 -0700 (PDT)
-From: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-To: broonie@kernel.org
-Cc: srini@kernel.org, perex@perex.cz, tiwai@suse.com,
-        dmitry.baryshkov@oss.qualcomm.com, linux-sound@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-        Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Subject: [PATCH] ASoC: codecs: wcd938x-sdw: remove redundant runtime pm calls
-Date: Wed,  8 Oct 2025 15:58:01 +0100
-Message-ID: <20251008145801.3479-1-srinivas.kandagatla@oss.qualcomm.com>
-X-Mailer: git-send-email 2.51.0
+	s=arc-20240116; t=1759937410; c=relaxed/simple;
+	bh=6340XCFQyQytI7TkwLqakkxrDScFOp1b0uWEs4s6VVg=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=biBmfZoSDh7nHInd8MceQgHN1YlF34jfbUWkeF1F2lLPgLPrprFaqFUQwDKMLOfZRy/uHrK4lVpTEGtNrvd3DNy5CAqid4Ey+hlucWY+fqi9iBqxKVY04HM46n63QW1Pr3TxRK7VO5dTDnXlfnswIl/HBersJFJbWCY8TqJL4FM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=ZffK1v+V; arc=none smtp.client-ip=35.83.148.184
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
+  t=1759937408; x=1791473408;
+  h=from:to:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=6cTKEV+ZWAzAeKhYDhuZKam17XzSPB7XFB7f4qhxTuM=;
+  b=ZffK1v+V9cJk7Ln8PPoM6h32O7MmClcv5CvqttJ3ezOtVpg3ceTKKofD
+   MI0qhOR35KSlZ1gw6zAddFAlNn7hyRi6VoqQv9pdpXE5WIAbWt5+lVZen
+   913JUgk8yxnpwLJh/kcJyZnagZYufS6jO3T1zQzsP9xfNXoMiIlup2Iiv
+   0FeZ1t6dn8lw5ZTW4LvyKtsXBLRIBUAiybjkzsjli8MZPQIeAp9wH410x
+   ks9hX38K3o0J50CQ+dnuhPdTulot05nBxVeHFB4mv00lnbcerjW7r0Iuj
+   8P+RudYuXWOFm2/nEDztt+QelsVXJldGLlI/3O0mKRculOd4x9ULgJ4Vs
+   g==;
+X-CSE-ConnectionGUID: +r/ORJCDT3mdkeM9bLhVCA==
+X-CSE-MsgGUID: 5xwXbkFvQYqm5UYp+BBs7A==
+X-IronPort-AV: E=Sophos;i="6.19,213,1754956800"; 
+   d="scan'208";a="4330400"
+Received: from ip-10-5-6-203.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.6.203])
+  by internal-pdx-out-014.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2025 15:30:06 +0000
+Received: from EX19MTAUWC002.ant.amazon.com [10.0.38.20:22420]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.27.3:2525] with esmtp (Farcaster)
+ id 93ca9f84-9d14-4911-90f5-a97300a639c2; Wed, 8 Oct 2025 15:30:06 +0000 (UTC)
+X-Farcaster-Flow-ID: 93ca9f84-9d14-4911-90f5-a97300a639c2
+Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
+ EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.20;
+ Wed, 8 Oct 2025 15:30:05 +0000
+Received: from dev-dsk-farbere-1a-46ecabed.eu-west-1.amazon.com
+ (172.19.116.181) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.20; Wed, 8 Oct 2025
+ 15:29:52 +0000
+From: Eliav Farber <farbere@amazon.com>
+To: <gregkh@linuxfoundation.org>, <jdike@addtoit.com>, <richard@nod.at>,
+	<anton.ivanov@cambridgegreys.com>, <dave.hansen@linux.intel.com>,
+	<luto@kernel.org>, <peterz@infradead.org>, <tglx@linutronix.de>,
+	<mingo@redhat.com>, <bp@alien8.de>, <x86@kernel.org>, <hpa@zytor.com>,
+	<tony.luck@intel.com>, <qiuxu.zhuo@intel.com>, <james.morse@arm.com>,
+	<rric@kernel.org>, <airlied@linux.ie>, <daniel@ffwll.ch>,
+	<maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+	<tzimmermann@suse.de>, <robdclark@gmail.com>, <sean@poorly.run>,
+	<jdelvare@suse.com>, <linux@roeck-us.net>, <linus.walleij@linaro.org>,
+	<dmitry.torokhov@gmail.com>, <maz@kernel.org>, <wens@csie.org>,
+	<jernej.skrabec@gmail.com>, <agk@redhat.com>, <snitzer@redhat.com>,
+	<dm-devel@redhat.com>, <davem@davemloft.net>, <kuba@kernel.org>,
+	<mcoquelin.stm32@gmail.com>, <krzysztof.kozlowski@canonical.com>,
+	<malattia@linux.it>, <hdegoede@redhat.com>, <mgross@linux.intel.com>,
+	<jejb@linux.ibm.com>, <martin.petersen@oracle.com>,
+	<sakari.ailus@linux.intel.com>, <clm@fb.com>, <josef@toxicpanda.com>,
+	<dsterba@suse.com>, <jack@suse.com>, <tytso@mit.edu>,
+	<adilger.kernel@dilger.ca>, <dushistov@mail.ru>,
+	<luc.vanoostenryck@gmail.com>, <rostedt@goodmis.org>, <pmladek@suse.com>,
+	<senozhatsky@chromium.org>, <andriy.shevchenko@linux.intel.com>,
+	<linux@rasmusvillemoes.dk>, <minchan@kernel.org>, <ngupta@vflare.org>,
+	<akpm@linux-foundation.org>, <yoshfuji@linux-ipv6.org>, <dsahern@kernel.org>,
+	<pablo@netfilter.org>, <kadlec@netfilter.org>, <fw@strlen.de>,
+	<jmaloy@redhat.com>, <ying.xue@windriver.com>, <shuah@kernel.org>,
+	<willy@infradead.org>, <farbere@amazon.com>, <sashal@kernel.org>,
+	<quic_akhilpo@quicinc.com>, <ruanjinjie@huawei.com>,
+	<David.Laight@ACULAB.COM>, <herve.codina@bootlin.com>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+	<linux-um@lists.infradead.org>, <linux-edac@vger.kernel.org>,
+	<amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
+	<linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>,
+	<linux-hwmon@vger.kernel.org>, <linux-input@vger.kernel.org>,
+	<linux-sunxi@lists.linux.dev>, <linux-media@vger.kernel.org>,
+	<netdev@vger.kernel.org>, <linux-stm32@st-md-mailman.stormreply.com>,
+	<platform-driver-x86@vger.kernel.org>, <linux-scsi@vger.kernel.org>,
+	<linux-staging@lists.linux.dev>, <linux-btrfs@vger.kernel.org>,
+	<linux-ext4@vger.kernel.org>, <linux-sparse@vger.kernel.org>,
+	<linux-mm@kvack.org>, <netfilter-devel@vger.kernel.org>,
+	<coreteam@netfilter.org>, <tipc-discussion@lists.sourceforge.net>,
+	<linux-kselftest@vger.kernel.org>, <stable@vger.kernel.org>
+Subject: [PATCH v3 00/19 5.15.y] Backport minmax.h updates from v6.17-rc7
+Date: Wed, 8 Oct 2025 15:29:25 +0000
+Message-ID: <20251008152946.29285-1-farbere@amazon.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAxNyBTYWx0ZWRfX83kx1CwkxyjG
- vKd9U4lK41E8MyAK8Ukte4TW5DKe6KQ5mvu49J3Ijqi9gLU5R5ix/mbvXpab3EHW0z/gAYFQ63u
- sfbRzfHgwXjl/PKsUQIQdjQ6qd54j+TQl7bOqChJ8s+A27fP/HCbQvxAGoIvefCe8/MurGo0MYJ
- Zep2tx6Y0UioYV58cgXctv4FBlOu6+N+NTrnEPKV5dhDW4gPlyxzFw+v3IBQ4vDSfTeYNdoxZL5
- JIMq1pcMzKIQ9CD84/ThFZpbCpn/Cok/KUrc1oJJ/nLc3pOPkyq4m35RMeHF8V2zw2XaQtnzI0N
- ZOOkuv6YDopvyUvTgXquz/3b4+K1HDktYsLAWIi/wjf6MQU+rGr9qbvWOxOH4Iz8YPAyZW4jCRv
- N4/riAEwgC9oDHp7+INC0Jl4m3pkLA==
-X-Authority-Analysis: v=2.4 cv=do3Wylg4 c=1 sm=1 tr=0 ts=68e67c00 cx=c_pps
- a=m5Vt/hrsBiPMCU0y4gIsQw==:117 a=3CSVYe8HblTQFsWiJzwA3g==:17
- a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=J5h_BI_um8seuJrpCkEA:9
- a=IoOABgeZipijB_acs4fv:22
-X-Proofpoint-GUID: bDTvO1UVqJ2W3JmhheHcOPp5FuLTXOHo
-X-Proofpoint-ORIG-GUID: bDTvO1UVqJ2W3JmhheHcOPp5FuLTXOHo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-10-08_04,2025-10-06_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0 clxscore=1015
- malwarescore=0 spamscore=0 impostorscore=0 priorityscore=1501 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040017
+X-ClientProxiedBy: EX19D032UWA001.ant.amazon.com (10.13.139.62) To
+ EX19D001UWA001.ant.amazon.com (10.13.138.214)
 
-Component bind callbacks already does runtime pm calls, soundwire codec
-also tries to do the exactly same thing resulting in Unbalanced
-pm_runtime_enable and disable calls.
+This series backports 19 patches to update minmax.h in the 5.15.y branch,
+aligning it with v6.17-rc7.
 
-Remove the redundant calls from wcd938x-sdw driver.
+The ultimate goal is to synchronize all longterm branches so that they
+include the full set of minmax.h changes.
 
-Reported-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Fixes: ebaf88c0546d ("ASoC: codecs: wcd-common: move component ops to common")
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
----
- sound/soc/codecs/wcd938x-sdw.c | 20 +++-----------------
- 1 file changed, 3 insertions(+), 17 deletions(-)
+6.12.y was already backported and changes are part of v6.12.49.
+6.6.y was already backported and changes are part of v6.6.109.
+6.1.y was already backported and changes are currently in the 6.1-stable
+tree.
 
-diff --git a/sound/soc/codecs/wcd938x-sdw.c b/sound/soc/codecs/wcd938x-sdw.c
-index add907cb2706..8c8f39d04972 100644
---- a/sound/soc/codecs/wcd938x-sdw.c
-+++ b/sound/soc/codecs/wcd938x-sdw.c
-@@ -1207,24 +1207,14 @@ static int wcd9380_probe(struct sdw_slave *pdev,
- 		regcache_cache_only(wcd->regmap, true);
- 	}
- 
--	pm_runtime_set_autosuspend_delay(dev, 3000);
--	pm_runtime_use_autosuspend(dev);
--	pm_runtime_mark_last_busy(dev);
--	pm_runtime_set_active(dev);
--	pm_runtime_enable(dev);
--
- 	ret = component_add(dev, &wcd_sdw_component_ops);
- 	if (ret)
--		goto err_disable_rpm;
--
--	return 0;
-+		return ret;
- 
--err_disable_rpm:
--	pm_runtime_disable(dev);
-+	/* Set suspended until aggregate device is bind */
- 	pm_runtime_set_suspended(dev);
--	pm_runtime_dont_use_autosuspend(dev);
- 
--	return ret;
-+	return 0;
- }
- 
- static int wcd9380_remove(struct sdw_slave *pdev)
-@@ -1233,10 +1223,6 @@ static int wcd9380_remove(struct sdw_slave *pdev)
- 
- 	component_del(dev, &wcd_sdw_component_ops);
- 
--	pm_runtime_disable(dev);
--	pm_runtime_set_suspended(dev);
--	pm_runtime_dont_use_autosuspend(dev);
--
- 	return 0;
- }
- 
+The key motivation is to bring in commit d03eba99f5bf ("minmax: allow
+min()/max()/clamp() if the arguments have the same signedness"), which
+is missing in kernel 5.10.y.
+
+In mainline, this change enables min()/max()/clamp() to accept mixed
+argument types, provided both have the same signedness. Without it,
+backported patches that use these forms may trigger compiler warnings,
+which escalate to build failures when -Werror is enabled.
+
+Changes in v3:
+- Fix fs/erofs/zdata.h in patch 06/19 to use MIN_T instead of min_t to
+  fix build on the following patch (07/19):
+In file included from ./include/linux/kernel.h:16,
+                 from ./include/linux/list.h:9,
+                 from ./include/linux/wait.h:7,
+                 from ./include/linux/wait_bit.h:8,
+                 from ./include/linux/fs.h:6,
+                 from fs/erofs/internal.h:10,
+                 from fs/erofs/zdata.h:9,
+                 from fs/erofs/zdata.c:6:
+fs/erofs/zdata.c: In function ‘z_erofs_decompress_pcluster’:
+fs/erofs/zdata.h:185:61: error: ISO C90 forbids variable length array ‘pages_onstack’ [-Werror=vla]
+  185 |         min_t(unsigned int, THREAD_SIZE / 8 / sizeof(struct page *), 96U)
+      |                                                             ^~~~
+./include/linux/minmax.h:49:23: note: in definition of macro ‘__cmp_once_unique’
+   49 |         ({ type ux = (x); type uy = (y); __cmp(op, ux, uy); })
+      |                       ^
+./include/linux/minmax.h:164:27: note: in expansion of macro ‘__cmp_once’
+  164 | #define min_t(type, x, y) __cmp_once(min, type, x, y)
+      |                           ^~~~~~~~~~
+fs/erofs/zdata.h:185:9: note: in expansion of macro ‘min_t’
+  185 |         min_t(unsigned int, THREAD_SIZE / 8 / sizeof(struct page *), 96U)
+      |         ^~~~~
+fs/erofs/zdata.c:847:36: note: in expansion of macro ‘Z_EROFS_VMAP_ONSTACK_PAGES’
+  847 |         struct page *pages_onstack[Z_EROFS_VMAP_ONSTACK_PAGES];
+      |                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+
+- Increase test coverage using `make allyesconfig` and
+  `make allmodconfig` for arm64, arm, x86_64 and i386 architectures.
+
+Changes in v2:
+- Fix the order of patches 6 - 10 according to order in mainline branch.
+- Use same style of [ Upstream commit <HASH> ] in all patches.
+
+Andy Shevchenko (1):
+  minmax: deduplicate __unconst_integer_typeof()
+
+David Laight (8):
+  minmax: fix indentation of __cmp_once() and __clamp_once()
+  minmax.h: add whitespace around operators and after commas
+  minmax.h: update some comments
+  minmax.h: reduce the #define expansion of min(), max() and clamp()
+  minmax.h: use BUILD_BUG_ON_MSG() for the lo < hi test in clamp()
+  minmax.h: move all the clamp() definitions after the min/max() ones
+  minmax.h: simplify the variants of clamp()
+  minmax.h: remove some #defines that are only expanded once
+
+Herve Codina (1):
+  minmax: Introduce {min,max}_array()
+
+Linus Torvalds (8):
+  minmax: avoid overly complicated constant expressions in VM code
+  minmax: add a few more MIN_T/MAX_T users
+  minmax: simplify and clarify min_t()/max_t() implementation
+  minmax: make generic MIN() and MAX() macros available everywhere
+  minmax: don't use max() in situations that want a C constant
+    expression
+  minmax: simplify min()/max()/clamp() implementation
+  minmax: improve macro expansion and type checking
+  minmax: fix up min3() and max3() too
+
+Matthew Wilcox (Oracle) (1):
+  minmax: add in_range() macro
+
+ arch/arm/mm/pageattr.c                        |   6 +-
+ arch/um/drivers/mconsole_user.c               |   2 +
+ arch/x86/mm/pgtable.c                         |   2 +-
+ drivers/edac/sb_edac.c                        |   4 +-
+ drivers/edac/skx_common.h                     |   1 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h           |   2 +
+ .../drm/amd/display/modules/hdcp/hdcp_ddc.c   |   2 +
+ .../drm/amd/pm/powerplay/hwmgr/ppevvmath.h    |  14 +-
+ .../amd/pm/swsmu/smu11/sienna_cichlid_ppt.c   |   2 +
+ .../drm/arm/display/include/malidp_utils.h    |   2 +-
+ .../display/komeda/komeda_pipeline_state.c    |  24 +-
+ drivers/gpu/drm/drm_color_mgmt.c              |   2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c         |   6 -
+ drivers/gpu/drm/radeon/evergreen_cs.c         |   2 +
+ drivers/hwmon/adt7475.c                       |  24 +-
+ drivers/input/touchscreen/cyttsp4_core.c      |   2 +-
+ drivers/irqchip/irq-sun6i-r.c                 |   2 +-
+ drivers/md/dm-integrity.c                     |   4 +-
+ drivers/media/dvb-frontends/stv0367_priv.h    |   3 +
+ .../net/ethernet/chelsio/cxgb3/cxgb3_main.c   |  18 +-
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c |   2 +-
+ drivers/net/fjes/fjes_main.c                  |   4 +-
+ drivers/nfc/pn544/i2c.c                       |   2 -
+ drivers/platform/x86/sony-laptop.c            |   1 -
+ drivers/scsi/isci/init.c                      |   6 +-
+ .../pci/hive_isp_css_include/math_support.h   |   5 -
+ drivers/virt/acrn/ioreq.c                     |   4 +-
+ fs/btrfs/misc.h                               |   2 -
+ fs/btrfs/tree-checker.c                       |   2 +-
+ fs/erofs/zdata.h                              |   2 +-
+ fs/ext2/balloc.c                              |   2 -
+ fs/ext4/ext4.h                                |   2 -
+ fs/ufs/util.h                                 |   6 -
+ include/linux/compiler.h                      |   9 +
+ include/linux/minmax.h                        | 264 +++++++++++++-----
+ kernel/trace/preemptirq_delay_test.c          |   2 -
+ lib/btree.c                                   |   1 -
+ lib/decompress_unlzma.c                       |   2 +
+ lib/logic_pio.c                               |   3 -
+ lib/vsprintf.c                                |   2 +-
+ lib/zstd/zstd_internal.h                      |   2 -
+ mm/zsmalloc.c                                 |   1 -
+ net/ipv4/proc.c                               |   2 +-
+ net/ipv6/proc.c                               |   2 +-
+ net/netfilter/nf_nat_core.c                   |   6 +-
+ net/tipc/core.h                               |   2 +-
+ net/tipc/link.c                               |  10 +-
+ tools/testing/selftests/vm/mremap_test.c      |   2 +
+ 48 files changed, 290 insertions(+), 184 deletions(-)
+
 -- 
-2.51.0
+2.47.3
 
 
