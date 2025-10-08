@@ -1,48 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-76318-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76319-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A967BC3BF3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 10:03:12 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54B94BC3BFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 10:04:08 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E712A3BA27B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 08:03:10 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 87C004F72F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 08:04:01 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CE82A2F28E0;
-	Wed,  8 Oct 2025 08:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 23A3D2F3608;
+	Wed,  8 Oct 2025 08:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PWqt2IHS"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="co+kXAzV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEC92F1FC4;
-	Wed,  8 Oct 2025 08:03:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 942862F1FC4
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 08:03:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759910588; cv=none; b=rQwzOr0fRPuMepJcCKsobaihVySwHeNVuqemp8qCPqNAA7DifZtKL91sUh0GHcfLd/vbr43k7WW4JHQLYDRELUAvjOgeIrh3ixoLcVDp4N1wYIEGvuC4UuhDC3Llxt7lnf7RLrhd1tZ7dE9xl6u6kgcbIo27/gPkfTb+j6T+Ask=
+	t=1759910636; cv=none; b=gO9pf0vwnX+phU/N5jf4ejBQskLup97d24oPRotQlt6NWnKv3z5H5DT5ALDYAHAhuz7kfr12YE7e24fPAux/8Z7OhlmajZ9q85AO1PiX9Eq8xcF6YQglL+Ygs3ooiNDm9/lVPLQsq9GvoozXZk4AfImyrhGGecW3cpOCum5HEDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759910588; c=relaxed/simple;
-	bh=c8ezxIkpcTLjKeibruziqgAt914e8kokjfvmBkUoTn0=;
+	s=arc-20240116; t=1759910636; c=relaxed/simple;
+	bh=cZ+CGhMJyte1AFBapr1UWxlFCeVreG3WjH6UVO2Zk+o=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=k831x7JhLWNCfeOICecd1h4EdSK7VcfIznuiWybP3wpYXayQGpBeGn7FmWckKXU8Ki0YEQ90oBQt5mjWjCNlYmtJ27x33qvtp7TB6w4VWJ4PhEfHgs6k/DyPJvtNvE1G7WdoSaahRUuajEYKhBHWgUPz+6qiSIWnJv+vU8bwXH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PWqt2IHS; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CE5C4CEF4;
-	Wed,  8 Oct 2025 08:03:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759910586;
-	bh=c8ezxIkpcTLjKeibruziqgAt914e8kokjfvmBkUoTn0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=PWqt2IHSy/cPods2I0lXLczFCgpuntljKeisiOL/iemNJdOIFjJuPWyZ1ufNEUEhL
-	 g/oCcNa+OAH9ViTSbqBJ9N3q5AmCDKtS1GobhbAyrJxm4HvS9+DxoyklLHEaoIdsjy
-	 iGlpm6ZnaND+3nUXdmBH095+kfZA6gfmt3wS1toLaLCFF4S9VNR8X/F2xwHlQNmBmu
-	 72CRaVydEyI/GkK62XdbY2tOPxGRqkLI/3DvQIG6Y8+UXhQrUgDIv18LyKV82ESfIk
-	 vxdhnD2Dw7l4C7llTNyfqAwYzrKPP9Jjgk7SJlMgtrnR95OSMvPArbRqosq48VQovw
-	 T335YTKuL+WGA==
-Message-ID: <799374b4-0c41-4ccb-9f99-954c7ce6d044@kernel.org>
-Date: Wed, 8 Oct 2025 17:02:58 +0900
+	 In-Reply-To:Content-Type; b=ZwKtl64008GJ6lQseh4PgM0Fzxhr5ginYX5tub0VypOZ+zeqQANNQKY/BYMvgz8uXcfe5cY+eGb67Iy4dk2XRJ1TUYngwqS6ff9wfrzMPshR9ZLKcxBzNE302Flg38S8xUUYDn75NCXGAXOYIWg0YzwZfYmUt3M18QAc9E5XaM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=co+kXAzV; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5987ar0v024080
+	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 08:03:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	cLFhrNT3xxkAGIPFcKIeeLwCuF2mI7yMFZU7xOawpq0=; b=co+kXAzVc1383Au7
+	S9U3iiGAu8z8puHXRJJyLG5xU4KxQNk2cv4DrGPReFIu+8QXQbY3Q3wZXeJd5vvE
+	ZWMGNpQBzta/vQF640X989SdXXgrtk2G0gXgIkl3zAmb1mZdkCMqlT3ZnjY8oV4J
+	x+6Fmnct8czsA2W5j///VtR6OLo9rY7Zin+jXUNnrxV3OesbbmObddGFDeu1vLFC
+	WWZtAjviQfukjIN1CMaMuEL6X0cxYR56oz6VhtGxj8Ov0/zztJ490L0LBW/zVpGe
+	0PeOlfQ8za9uJpsleW2FG75RLWVysXGhu4qrhazfVUfUoDrx/g7BG57pY71hkPzY
+	lr8u0w==
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com [209.85.222.198])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jtwgss8m-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 08:03:52 +0000 (GMT)
+Received: by mail-qk1-f198.google.com with SMTP id af79cd13be357-879e3de728aso151177885a.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 01:03:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759910632; x=1760515432;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cLFhrNT3xxkAGIPFcKIeeLwCuF2mI7yMFZU7xOawpq0=;
+        b=G2g+xTdFoXagaxslrz6kv9MxjoZ8Zh9xHoJOxMllV1OXiuMSk1TjacvurHcoeSIGuX
+         ow7UaGFyPrztQOlvHY19gTDD8IfSR2kY77CWG4APSyzRTfXBa63I0lfb8Z/UBrOsFaw7
+         W59cgId+TexkBDHpg4+G8YUmcS7nDrNIBPXEvh2qc0+F0FeUukZD//3/ANiyuRVme8e7
+         Un2L1Ej/IhEDQtGqOCeatEWPAJLO0Hv7UmCDkk4JpmWyP9BK4V66m2/qovmlbFGt7EXL
+         kJZFN3QC9fOUqHG9+mJseqcENZpL+DfkrWQdak4UBt7nHti8MuQnUculCtkv0eHy7KnS
+         6P3A==
+X-Forwarded-Encrypted: i=1; AJvYcCX8vh16NtgJNDIAtmkH2KKHh+4ixHm3x47KMxKNta95LdHZAX0Hy53dsdWJ+KJPUtgwmJ85n2yUMicto0yI@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz8u3vBgjCzi086/4qndhS4SFlunhfG+v+HsqC+2Lxz++dkfKUn
+	3EFlV0ujdB7q7ZwrNdnZdsDlPpbGgc/l/652K1kQ2LpSI+Px1FRSpXf9+oqCsZdbt9JXdDmVSoe
+	nbCc1CCBkFC6IYuLpbjbrc7Y9WMdpf8ZyliilipZHo2OHi6+l4Y5WT7Ng5B0qphhXrLNB
+X-Gm-Gg: ASbGncuspNJZQlvWNp4j0MQMxH7ZtfHFvW4k0tSPMuBAOWfiO/50PFNkk94DrJSW39E
+	4v2XMjsNu1XIycxVTUStQ2kF+6ypi7lrDi0z1dswQDBkoGsVLYyVhHYwE7sAOUlSPHcw7+1Ny5y
+	kytll1FlhKkNkHI5y+wiyM/7FWHid0U4ki9UyQBLE1I9fSE7uu/azqg74LA/s82+F/u3ZPHm7fr
+	h/dyT7pt6EtqUCAuvMTXkgg2FLGb1ZnDWsINwS2VrAsM1J5ArxbuVReV2REOI9IoC3bB7i1HlBq
+	MVaBSyiAWSGQ65FhE/7csmolwlLPZ2PbVIDlPYXs5NwX5TIry8zxNg0l5BdkA37qslwR/9PGw6+
+	PILEaF8d3soZAJPiDNh25MR8n1JU=
+X-Received: by 2002:a05:620a:269a:b0:7e6:9e2b:6140 with SMTP id af79cd13be357-883541153abmr250960285a.8.1759910631535;
+        Wed, 08 Oct 2025 01:03:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUen+p7TkoJJtINpFELadPj734JpkHmGQl5lhM+jJkqG23scWPoS+3uXq/eIFHltmLRIhShw==
+X-Received: by 2002:a05:620a:269a:b0:7e6:9e2b:6140 with SMTP id af79cd13be357-883541153abmr250958785a.8.1759910631027;
+        Wed, 08 Oct 2025 01:03:51 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b486970a786sm1649182766b.46.2025.10.08.01.03.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 01:03:50 -0700 (PDT)
+Message-ID: <d9b6ed42-d70f-46d2-a0c6-a98df4b46607@oss.qualcomm.com>
+Date: Wed, 8 Oct 2025 10:03:49 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,171 +90,77 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/24] arm64: dts: qcom: Update the pmh0110.dtsi for
- Glymur
-To: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Pankaj Patil <pankaj.patil@oss.qualcomm.com>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Abel Vesa <abel.vesa@linaro.org>
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <20250925-v3_glymur_introduction-v1-14-24b601bbecc0@oss.qualcomm.com>
- <CAJKOXPdQH2jXcEY6ZpkmixvUt26SqdzYgDAiJ3RHMG7xkPyi_A@mail.gmail.com>
- <lcbcjpoazpwbltedkiqlw4l3aomwvi3qsfwvmwghb6uf5wvnme@kh7qdpunfuwr>
- <CAJKOXPcyhDdFW_u4YQLiHYj8gM7wYB-LOmB_PJs+5OOgn8WZFw@mail.gmail.com>
- <mzoctelzfp6h2ezzkc3j7gnghsaf67flxqlvfhtlpdfxtddsvi@zqihmnygvdjk>
- <20251008073123.GA20592@hu-kamalw-hyd.qualcomm.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+Subject: Re: [PATCH 4/8] media: iris: stop encoding PIPE value into fw_caps
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+        Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251008-iris-sc7280-v1-0-def050ba5e1f@oss.qualcomm.com>
+ <20251008-iris-sc7280-v1-4-def050ba5e1f@oss.qualcomm.com>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 a/A=
-In-Reply-To: <20251008073123.GA20592@hu-kamalw-hyd.qualcomm.com>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251008-iris-sc7280-v1-4-def050ba5e1f@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAxOSBTYWx0ZWRfX+Pnbr7fCCAN0
+ nbHAn0YQ21peWTvhksi2/r+OvDQVMZsW530WfmWBswTeWBaBcGITVlbL0K8L9GVaValKHsGuKcX
+ ABhWG6NOVKeI96qola6AFzleNVHbtwLGVDSZWqwUG6vZGUhzkeF++EHxZZEPz6H7rTsbOTupeRZ
+ d99w3vh9ZEMW2fEYGPsDmQIig5LTmYn0A3PZ0p2hLtj3y32ClqyiR+QFMCETBcJXncl6Lg1w6ta
+ q/47q/BCnSWgvG0C7ae1RpGH7EAZil8gZfRHzSAsWWGy/JspENIKzfKAAXnwfhDmT9A3rGQPF48
+ TxntJiVwgsNdI6LzX6qghDE5BqRWqsWVO1GNoroElTXsocvHmcenTfh6DzMNr/Lpz3+GGmn3HlP
+ LZGBEHahPpT8y/KVUbTf49dX8mglGg==
+X-Authority-Analysis: v=2.4 cv=B6O0EetM c=1 sm=1 tr=0 ts=68e61ae8 cx=c_pps
+ a=qKBjSQ1v91RyAK45QCPf5w==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=yRfd9HfqWQK8yE8Ax7UA:9
+ a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22
+X-Proofpoint-GUID: pXMcRuBgjDyFJJSlNx0BymovgRNtSA4U
+X-Proofpoint-ORIG-GUID: pXMcRuBgjDyFJJSlNx0BymovgRNtSA4U
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-08_01,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 priorityscore=1501 lowpriorityscore=0 adultscore=0
+ impostorscore=0 spamscore=0 bulkscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2509150000
+ definitions=main-2510040019
 
-On 08/10/2025 16:31, Kamal Wadhwa wrote:
-> Hi Krzysztof, Dmitry, Konrad,
+On 10/8/25 6:33 AM, Dmitry Baryshkov wrote:
+> The value of the PIPE property depends on the number of pipes available
+> on the platform and is frequently the only difference between several
+> fw_caps. In order to reduce duplciation, use num_vpp_pipe from the
+> iris_platform_data rather than hardcoding the value into the fw_cap.
 > 
-> On Thu, Sep 25, 2025 at 09:57:02PM +0300, Dmitry Baryshkov wrote:
->> On Thu, Sep 25, 2025 at 10:34:52PM +0900, Krzysztof Kozlowski wrote:
->>> On Thu, 25 Sept 2025 at 22:14, Dmitry Baryshkov
->>> <dmitry.baryshkov@oss.qualcomm.com> wrote:
->>>>
->>>> On Thu, Sep 25, 2025 at 05:08:54PM +0900, Krzysztof Kozlowski wrote:
->>>>> On Thu, 25 Sept 2025 at 15:34, Pankaj Patil
->>>>> <pankaj.patil@oss.qualcomm.com> wrote:
->>>>>>
->>>>>> From: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
->>>>>>
->>>>>> Add multiple instance of PMH0110 DT node, one for each assigned
->>>>>> SID for this PMIC on the spmi_bus0 and spmi_bus1 on the Glymur
->>>>>> CRD.
->>>>>>
->>>>>> Take care to avoid compilation issue with the existing nodes by
->>>>>> gaurding each PMH0110 nodes with `#ifdef` for its corresponding
->>>>>> SID macro. So that only the nodes which have the their SID macro
->>>>>> defined are the only ones picked for compilation.
->>>>>>
->>>>>> Signed-off-by: Kamal Wadhwa <kamal.wadhwa@oss.qualcomm.com>
->>>>>> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->>>>>> ---
->>>>>>  arch/arm64/boot/dts/qcom/pmh0110.dtsi | 66 ++++++++++++++++++++++++++++++++++-
->>>>>>  1 file changed, 65 insertions(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/arch/arm64/boot/dts/qcom/pmh0110.dtsi b/arch/arm64/boot/dts/qcom/pmh0110.dtsi
->>>>>> index b99c33cba8860f1852231db33a127646c08c1e23..4a5c66e5c9fbc35cedb67601f4568844dc41fbea 100644
->>>>>> --- a/arch/arm64/boot/dts/qcom/pmh0110.dtsi
->>>>>> +++ b/arch/arm64/boot/dts/qcom/pmh0110.dtsi
->>>>>> @@ -7,6 +7,8 @@
->>>>>>  #include <dt-bindings/spmi/spmi.h>
->>>>>>
->>>>>>  &spmi_bus0 {
->>>>>> +
->>>>>> +#ifdef PMH0110_D_E0_SID
->>>>>
->>>>> NAK
->>>>>
->>>>> I already explained on IRC in great details why.
->>>>
->>>> A short summary or a link to a channel / date would be nice in order to
->>>> include other people into the discussion.
->>>>
->>>
->>> Of course but:
->>> 1. You were there so maybe you remember the arguments, and:
->>> 2. I'm offline, using phone, not having laptop, replying during my
->>> personal time off just before merge window so any emergency time
->>> should be spent on important matters instead these two huge patch
->>> bombs adding such usage I already said: NO, don't do this.
->>
->>
->> Well, If I'm asking, it means I don't rememebr the discussion. And I
->> defeinitely didn't know that you are spending your personal vacation
->> time in ML. And if the discussion was with some other people, then
->> somebody else can drop the response to the question.
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+> ---
+>  drivers/media/platform/qcom/iris/iris_ctrls.c            | 6 +++++-
+>  drivers/media/platform/qcom/iris/iris_platform_gen2.c    | 4 ++--
+>  drivers/media/platform/qcom/iris/iris_platform_qcs8300.h | 4 ++--
+>  drivers/media/platform/qcom/iris/iris_platform_sm8250.c  | 4 ++--
+>  4 files changed, 11 insertions(+), 7 deletions(-)
 > 
-> Just wanted to give some background on this patch.
-> Even though PMH0104 and PMH0110 are common (b/w Kaanapali and Glymur),
-> they don't share the SIDs. So we tried to use status="disabled" to handle
-> this but we observed that because of the node name being common in the
-> two included files, it ends up overwriting the previous node with the
-> same name.
-> 
-> eg-
-> #include "pmh0104.dtsi"  // assume contains pmic@4 { ...};
-> #include "pmh0110.dtsi"  // assume contains pmic@4 { status=disabled;};
-> 
-> Here intention was to use the pmh0104 on sid-4, but it gets overwritten
-> with the pmh0110 on sid-4 ( with status disabled). This is why we ended
-> up using the `#ifdef`, ensuring that we can control the exact pmic that
-> gets picked by using the PMXXX_SID macro.
-> 
-> side note, i did `grep` in the `/arch/arm64/boot/dts/` and i see a lot
-> of instances of `#if...` present in that.  Assuming the concern here is
-> about the use of `#ifdef`.
+> diff --git a/drivers/media/platform/qcom/iris/iris_ctrls.c b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> index 0e9adb3982a49cfd7cbe5110cfd5f573f0f7bb38..8db3fa222bdb92a7ffff3dfe62d33f16c0550757 100644
+> --- a/drivers/media/platform/qcom/iris/iris_ctrls.c
+> +++ b/drivers/media/platform/qcom/iris/iris_ctrls.c
+> @@ -318,7 +318,11 @@ void iris_session_init_caps(struct iris_core *core)
+>  			continue;
+>  
+>  		core->inst_fw_caps_dec[cap_id].idx = i;
+> -		core->inst_fw_caps_dec[cap_id].value = caps[i].value;
+> +		if (cap_id == PIPE)
+> +			core->inst_fw_caps_dec[cap_id].value =
+> +				core->iris_platform_data->num_vpp_pipe;
+> +		else
+> +			core->inst_fw_caps_dec[cap_id].value = caps[i].value;
 
+I really hope this if-else won't grow in the future
 
-#if are not desired in C code, so why would they be acceptable in DTS?
-It is not making the code easier to read at all.
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
 
-On IRC in these older discussions I was very strongly against any DTSI
-which depends on some sort of outside values, except basic usage of
-defines. Original pmh0110.dtsi from kaanapali is fine:
-	pmh0110_d_e0: pmic@PMH0110_D_E0_SID {
-
-but doing ifdefs here that this define depends on something else makes
-code ungreppable (lookup unit address from sysfs and then git grep
-pmic@4) and difficult to follow.
-
-My recommendation is either duplicate code or change DTSI files to not
-contain entire node, but its contents. At least these are
-recommendations I remember now.
-
-Best regards,
-Krzysztof
+Konrad
 
