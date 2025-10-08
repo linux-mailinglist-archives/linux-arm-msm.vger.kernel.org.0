@@ -1,88 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-76394-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76395-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2B78BC4C09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 14:18:53 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC448BC4C21
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 14:19:57 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 41AEB3B6CFA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 12:18:30 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id 9867C19E1EC0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 12:20:20 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4F801221F1F;
-	Wed,  8 Oct 2025 12:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id C47DE247280;
+	Wed,  8 Oct 2025 12:19:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="W0AxK315"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="jwoqL+id"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2E2A31
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 12:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474AF223DEC
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 12:19:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759925908; cv=none; b=MYtJlr0IUAnUIdgxJzl9lx1IibKMW5LN0IXZnPqBwvjFj2FzdVrje8wgz55B3raOV7sC0n0IGZ3ETEYegg06EmXAt5LmvjRJxbhW6kIkblKxaWfG32MjX1Pknyh4htwSgm/fxoDr2kZv0PZ8QSUWSQvmc3vOW2usWwIHtbHxDnk=
+	t=1759925976; cv=none; b=uNRVPMBYq6zyKRYcN/yyCHVAHfELgIOeonlZ9jC4nn9Nu+J6R1fq0lHmpE4/xAhluef0aJLw8geuezkBehfv9Ci3ZGgWnjq9lhS9hZkkwNt3O0OBxf9472CML1EpLyOPPZkpGZ3/2NjQHt2TEO0vRo7mwXBM6gHLSj3Jxq+ZfOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759925908; c=relaxed/simple;
-	bh=EAIIG+pjQ4gXZyIzxLLehKpH7cN9IqpSw+UGcxx1fWg=;
+	s=arc-20240116; t=1759925976; c=relaxed/simple;
+	bh=3C9eaopUZAw455bC02kQuNPxhWzWB7+UMP3o6UT0ZJY=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gXNd38q5OWuWeETdb/pkFOSR3oC4u5Lg5vBT6m1eKsjdtKe9cEdXkphWdnzT80tBpeDWj87y5igQSegaYJcnFXWA03L5+Bb7bUsW51dGmRd6mYV5/9zTP7ydAKN7XGyyWKdHIRf9Ke4gg8sDMaZcaqC4T0eOE4nj/lfuyfTLhKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=W0AxK315; arc=none smtp.client-ip=205.220.168.131
+	 In-Reply-To:Content-Type; b=JcJv+7GOBL8jifOOVFc6BTvQA8MZnnn5hqzNllIPob3IquU4ialeVI1uACSk1L/VzEA8qBzsEkKzbr5/2hzNMPQtMuPvOfoSLi+ZQeeFunhFoq7hLsERgRAdHhKt3JUwVWPVTg74NRPflg93N9R0kVi1Qn+P1+eX3jVLAl4U5po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=jwoqL+id; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890Uw8026718
-	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 12:18:25 GMT
+Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 59890Njb031349
+	for <linux-arm-msm@vger.kernel.org>; Wed, 8 Oct 2025 12:19:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	AN/7p1+iy+u6qC3KjWSKiQrrVYUnGqj4/HiYhPktPdQ=; b=W0AxK315mxej4fd8
-	if7tWpWDgvrLrx2JVpSLU3HqKcDrbUu64t/0sPi5wPQ7njNmbK4sNZuQQMY74BGK
-	XVfVenVdo2b0lUWAzngtxo4PsLyotUPwPdYNA+3iX8lUaGZLa4NNCvNYKASp/fls
-	+QIwjsi4YZW4CWL8ttBiS+xW1QiwHwK0YZSaljuaLcVh0u+iN/wUdTJxq/CIHBrw
-	ZGZPEmEcOdoiVAT7HFnDlhyz1YB9l8wZu54fcZQq5Ukdv07IBoit5eeE/mQhh/7G
-	3QGAsUcCcIBe/0R7otYY58M1mv0/pAQGFZdwr8YLW2NqdvjDGvCgbpglAQOh9r47
-	9I6kNA==
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com [209.85.214.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49n89hj5b7-1
+	yQdcxBOzfpxWOin6rPGZyHGNvUTr15XcQLcwaAQwN8w=; b=jwoqL+id+8d8xELi
+	EvNKl9YWFoZ4hKQTVdyeXRtvEOtgzS8zZmnG11irduQEIQkxeLR2VIBgI3s04xEy
+	0dR/adni/1Y4VmnnWXiuA5NIvTMDfgI2TDBdaFK1KA+K12qtO210zAwcD/E2MB0y
+	HXLlZRF5TFRPBJsxbSshabw8+UA8U/6ptkBw45jQpZVLDjF243GvXMuX8sD9La08
+	Vi427iRqQNs08tMqreb1jxZ+KLUdLgl5YrsRJ4JFDmgswVqvXSDMfreBp2oKQhxz
+	dmwkdqs8ooi8KJoCgO+E4oxBMk8ZF6MRs727mJ9RczFX7GdzKAXxc/ygv+3g/Cd0
+	HJDLOA==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com [209.85.219.72])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49jvv7t9gy-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 12:18:25 +0000 (GMT)
-Received: by mail-pl1-f198.google.com with SMTP id d9443c01a7336-28bd8b3fa67so70169885ad.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 05:18:25 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 12:19:34 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id 6a1803df08f44-7958a07a5fdso22682016d6.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 05:19:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759925905; x=1760530705;
+        d=1e100.net; s=20230601; t=1759925973; x=1760530773;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AN/7p1+iy+u6qC3KjWSKiQrrVYUnGqj4/HiYhPktPdQ=;
-        b=VsgsCkiBmUrdagODeaqzb8Zudd6VJAgwyqO+vlqEEMG4nVXytvT5MUjeSEePwQvLpP
-         FvoKkzjAAUvWTd1MrqsLwdVHqg+c1qTLYQwmio+iLyOuYtKP6XzN+DTrmlrWX0BEXk+p
-         2iojrsmrcx9vjbBRWLGarzw8T7BFDcgDE9yk1S2ZL3WhTN4oQybkvu01herEPbAi58tq
-         WFCBIZykMACIYQunVQ96wbuUieLzbKDH1MQQtlKmOD6LAKsdIryrCxHBsjWU0Ipf0Ois
-         xxxRMuvpHtP8U3jssF0RCwVHB4dvBLpdrEfcxjiSzBpXyj+4K7NHkYoDMEieH4Rtdncw
-         0NrQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXCFY7SKW14WG8mrD5TsftdLL5znJFnWSqKB+naeRc198GTR3OGWXVRRsubsiJ8CfX19EyjxQLkkPYpNmGG@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx1IXi8ucx4UQu2/Dlij3JfRZMMwnAn81UO+qGs1pyzlkCkIxpW
-	roeJMV1quyhgyHCSuIb07+0AZNtdkB1Q4Nz3ceJgf8jcFUov2e/tVe7vbFi0amF0Jv2JsWQa+zQ
-	v6jRCpFNbPG1UcRP7rrHuD7/2dzqDGnp3Ki3yy/RaVyAiwvm1WSwUff4+gfsx5KBVb9/3
-X-Gm-Gg: ASbGncvlYsr+zj4Dj+rk/ROwthS+6IRF8VdS7bHPhfOjEiXzUAmHF33hX95fbp3tmRV
-	MnmpKmRMb9/6cs94sUFetUwlQMFcBaMUpPtC/0cav2vvTIL7gaUVqRJbemPaublrYCEs4N7jDN4
-	3vS1w7ZO3FO0jL+OzGQzeoHb8p794QHfTjW7U1f0BGf9pkLbov/i8kWTVxdT4gl0B/Jc81hksgy
-	CiYF6M72uAa/al8Rt5w5t875KaPpmcsyFWS52wop5+1/oPa1O0QY9GYID7Dm/JS7iFcpY13BxRF
-	vcHv/yiB4Rs2jkmjnH9zeyW4dglMTSGgqaTxIkWSATP5gxoFm5paVRaSGdBZNv+rzCVNbLOovC5
-	Z0e+V6S4UlXmH8DpnTh+YKf1/LvFGMAmYNXBWTMlzzsrhx4c6DkiMhDTpKrk8wMw=
-X-Received: by 2002:a17:902:ce02:b0:25c:d4b6:f111 with SMTP id d9443c01a7336-290272e4666mr45347275ad.47.1759925904663;
-        Wed, 08 Oct 2025 05:18:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHncbR2ufYiXXANSmQUeJIAwNzZ9UKvXSYjMvm+movg1bGrvTPLIrZNPoo9SHIdGgpbrlbk7w==
-X-Received: by 2002:a17:902:ce02:b0:25c:d4b6:f111 with SMTP id d9443c01a7336-290272e4666mr45346755ad.47.1759925904061;
-        Wed, 08 Oct 2025 05:18:24 -0700 (PDT)
-Received: from [10.79.195.127] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com. [103.229.18.19])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-28e8d1ba25asm198168315ad.87.2025.10.08.05.18.21
+        bh=yQdcxBOzfpxWOin6rPGZyHGNvUTr15XcQLcwaAQwN8w=;
+        b=xVZ7ofY4l8M1z6VqHv/1devwC0af7xkn5YL86MdsARPubwVf46clZKjkCoVox4HHG8
+         XnaxM9YrcZwu9QG6slwZ4hH9D1iTJQXVTvjHohUI8DghsviKiowo915YxYk6V5xCfvLU
+         cViCEMS7MI9+9kaRfOHIkdjDGTIv18jgR7STqCAvEz9PAZljyphVwOEC41jp/sRMmNvW
+         Zpb15dd8H62RGzVss3KOfl595I7WJmLqU/PI2xlFGsbm51Xh6F/7l2s7pqvElOdlPaMb
+         /UahFobcgwHVw18QYkWRKIr99ASpNhxrjiXmTu5pMkHuTO0fFITODcXbDa0+FtIxFP0O
+         xULw==
+X-Forwarded-Encrypted: i=1; AJvYcCXkEJq63l1O8xEl1GFFEIcFnBEN8Mm5E237MLhkkqtfjV2iNgydrcCnXDB9Xwe7gXb/7s7fG5ou+Hv6YQZ/@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy7sDhLTxE8ls58TaY6N5sO0zanUsX2hLUA1NksotLUgdCdq7G/
+	kQU9d4zHS9kFmnieZ018VvBS511GYo2peiLlnLLRFuRAVrRYJaLQNzD7Smj3qPxq4yQ7Iv+Dy+I
+	ohcbqUz8tTPRlVwTLr1ECxTEBB7Rcs9T97Iuz6P3qHJVvSQWmlsO1oRytgc3gIl/k9idi
+X-Gm-Gg: ASbGncsPshuTVF9yTGnzyoj57O564kUxUM+8kLZaaEahfwx7HPQqlXIcY8yJWIqk2r4
+	HHN/c2DCNGUDu0oi9hkvC4qFZiB955Ti+WZAjQndnnT+tFhVFjmAyahVTOkxYkjoGCMNNAgi8+M
+	6Y6dESqaTR3w1kAweqjzsmFakigKbqkXNfQoT/b2DNuceSM/VjJz06L+z+jFuSiOm9m3pWdA4JJ
+	lpIf/k+MYxDWSi+19g1ckWw5auI1a9FuJ1/zhcP+WONwQz1YiDkQPm6nVoLjysbwYs+CS9W9srT
+	uz0Zq8qfQSZbDMCgg1uiekdk+kXc1uNhA0TSkPDCGXrHqbzhO9abEWUobyeMqwr6c9omLupNm3y
+	1mnspPuA1VHwd6yiudsiJhKJthD4=
+X-Received: by 2002:a05:6214:130d:b0:763:83c3:5977 with SMTP id 6a1803df08f44-87b20fe428fmr27062626d6.2.1759925972850;
+        Wed, 08 Oct 2025 05:19:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHf0NO3O0wMYDy3C1r+xPkcF6ocxQiQ/fYTpALHFypihvfSo0fa68pHt0T57r7qjYpxr+HZMQ==
+X-Received: by 2002:a05:6214:130d:b0:763:83c3:5977 with SMTP id 6a1803df08f44-87b20fe428fmr27062256d6.2.1759925972350;
+        Wed, 08 Oct 2025 05:19:32 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-639cd144d13sm2953003a12.19.2025.10.08.05.19.29
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Oct 2025 05:18:23 -0700 (PDT)
-Message-ID: <40a677b4-15b4-4ee7-85ca-c9ea908f1048@oss.qualcomm.com>
-Date: Wed, 8 Oct 2025 17:48:20 +0530
+        Wed, 08 Oct 2025 05:19:31 -0700 (PDT)
+Message-ID: <f8671543-bba7-4ed5-ad69-297df9bcc43c@oss.qualcomm.com>
+Date: Wed, 8 Oct 2025 14:19:29 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,193 +90,110 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/24] arm64: dts: qcom: Introduce Glymur SoC dtsi and
- Glymur CRD dts
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Bjorn Andersson <andersson@kernel.org>,
-        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH V1 3/3] arm64: dts: qcom: sm8750: Add SDC2 nodes for
+ sm8750 mtp and qrd board
+To: Sarthak Garg <sarthak.garg@oss.qualcomm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
         Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20250925-v3_glymur_introduction-v1-0-24b601bbecc0@oss.qualcomm.com>
- <b3xkzhwfmksknz3kzj273mtkzfesphjetfusnfgcwj4j24kj4e@3sc37anlhweb>
+ <conor+dt@kernel.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>
+Cc: linux-mmc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        quic_nguyenb@quicinc.com, quic_rampraka@quicinc.com,
+        quic_pragalla@quicinc.com, quic_sayalil@quicinc.com,
+        quic_nitirawa@quicinc.com, quic_bhaskarv@quicinc.com,
+        kernel@oss.qualcomm.com
+References: <20251007054445.4096630-1-sarthak.garg@oss.qualcomm.com>
+ <20251007054445.4096630-4-sarthak.garg@oss.qualcomm.com>
 Content-Language: en-US
-From: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
-In-Reply-To: <b3xkzhwfmksknz3kzj273mtkzfesphjetfusnfgcwj4j24kj4e@3sc37anlhweb>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <20251007054445.4096630-4-sarthak.garg@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA3MDE0NiBTYWx0ZWRfX6Zm2c8lMOGvw
- RQRsGkMZ/vpByd/DrKh5miQJti5p2zKSsOQh2eSWciF8YfQ07n3wu8PAPlMnBXQEqEVP+DiZ/AT
- 2lUzLN0jXHvAOYHiIU9jDizPWeh+ZNO39YJCBI9i8av+v7RgM19rdp6cyA0WM9dWmWVAS135Dgu
- AMElfrQ/4Qdm8bFdraDjLgq4bjJZN3OvKthSxDbo/KeYCERB+Zn8VWajy56/AaedjWI35SX9Z2x
- Y8wGxrloc0cDnMj+6yprcnYPiVmgVEZUZ8C2B72v0XYXL9eeDwoFamZ8cT2ANGIUIplfm9vsT1a
- 8GX/T3oreR13cRJ3ijKVpS7Ucfu4kbwIlxZxAniarWIY3u/skdsIV6205MY5npsmOjrEFkjkh8m
- /X3c6y2Ctt2DwHpci8fApXGkWJBqlA==
-X-Proofpoint-ORIG-GUID: rNp-YgvY80ysJGV5fduenrdnu4pxZ-nb
-X-Proofpoint-GUID: rNp-YgvY80ysJGV5fduenrdnu4pxZ-nb
-X-Authority-Analysis: v=2.4 cv=cKbtc1eN c=1 sm=1 tr=0 ts=68e65691 cx=c_pps
- a=MTSHoo12Qbhz2p7MsH1ifg==:117 a=Ou0eQOY4+eZoSc0qltEV5Q==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=VwQbUJbxAAAA:8
- a=qC_FGOx9AAAA:8 a=RKSSqbySQXd_LJkhEWwA:9 a=QEXdDO2ut3YA:10
- a=GvdueXVYPmCkWapjIL-Q:22 a=fsdK_YakeE02zTmptMdW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA0MDAzNyBTYWx0ZWRfX7x+E7DgBB2QP
+ Lvn2NYkXXTHCu4+MAtZTh5j4ehdFv/Vt6eHymnvbrO7qA0OQ8ZlLCIDwC0JRa8Z1SZ7eYaoGhYX
+ kLhE1Fu5qeFCOhgDK5g5Vg6sCPJnfePU/OFXgU630LzfZpsFfABGTNIHtwK77inLJLihEJ6FG1G
+ Wtrs4MjML/wzzw6V2fAxsSkPNV8g0bJRY4QXd7AldNhShvsxrT1e8vnhQYhip33JXbwt3q1vz0U
+ ItnmQVP04B66IY9M94P8Weu2EkDKd9FY8SpYO5554TnDG994QefXgZUQsmjO5RW4St5Q3C7+gqR
+ NMcwsMf+QA/KgsvNK/a/4Vy1ug/3M0G6meZBagmJesP/HbnASkNDX644RRjHa8lfBB6c3LmCEYL
+ VTBW2ajZasHv6Vjmmbpc34IIFJLFuQ==
+X-Proofpoint-ORIG-GUID: xgEIHSH2V2tvtlbWn4m7BVAvRECjtNqz
+X-Authority-Analysis: v=2.4 cv=WIdyn3sR c=1 sm=1 tr=0 ts=68e656d6 cx=c_pps
+ a=7E5Bxpl4vBhpaufnMqZlrw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=4QMeK_r5uR8x9m7PPSIA:9
+ a=QEXdDO2ut3YA:10 a=pJ04lnu7RYOZP9TFuWaZ:22
+X-Proofpoint-GUID: xgEIHSH2V2tvtlbWn4m7BVAvRECjtNqz
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-08_04,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 malwarescore=0 spamscore=0 priorityscore=1501
- adultscore=0 impostorscore=0 lowpriorityscore=0 bulkscore=0 phishscore=0
+ suspectscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ bulkscore=0 spamscore=0 adultscore=0 clxscore=1015 lowpriorityscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510070146
+ reason=mlx scancount=1 engine=8.19.0-2509150000 definitions=main-2510040037
 
-On 9/25/2025 11:00 PM, Dmitry Baryshkov wrote:
-> On Thu, Sep 25, 2025 at 12:02:08PM +0530, Pankaj Patil wrote:
->> Introduce dt-bindings and initial device tree support for Glymur, 
->> Qualcomm's next-generation compute SoC and it's associated 
->> Compute Reference Device (CRD) platform.
->>
->> https://www.qualcomm.com/products/mobile/snapdragon/laptops-and-tablets/snapdragon-x2-elite
->> https://www.qualcomm.com/news/releases/2025/09/new-snapdragon-x2-elite-extreme-and-snapdragon-x2-elite-are-the-
->>
->> The base support enables booting to shell with rootfs on NVMe,
->> demonstrating functionality for PCIe and NVMe subsystems.
->> DCVS is also enabled, allowing dynamic frequency scaling for the CPUs.
->> TSENS (Thermal Sensors) enabled for monitoring SoC temperature and
->> thermal management. The platform is capable of booting kernel at EL2
->> with kvm-unit tests performed on it for sanity.
->>
->> Features enabled in this patchset:
->> 1. DCVS: CPU DCVS with scmi perf protocol
->> 2. PCIe controller and PCIe PHY
->> 3. NVMe storage support
->> 4. Clocks and reset controllers - GCC, TCSRCC, DISPCC, RPMHCC
->> 5. Interrupt controller
->> 6. TLMM (Top-Level Mode Multiplexer)
->> 7. QUP Block
->> 8. Reserved memory regions
->> 9. PMIC support with regulators
->> 10. CPU Power Domains
->> 11. TSENS (Thermal Sensors)
->> 12. Remoteproc - SOCCP, ADSP and CDSP
->> 13. RPMH Regulators
->> 14. USB 
->>
->> Dependencies:
->>
->> dt-bindings:
->> 1. https://lore.kernel.org/all/20250918140249.2497794-1-pankaj.patil@oss.qualcomm.com/
->> 2. https://lore.kernel.org/all/20250918141738.2524269-1-pankaj.patil@oss.qualcomm.com/
->> 3. https://lore.kernel.org/all/20250919133439.965595-1-pankaj.patil@oss.qualcomm.com/
->> 4. https://lore.kernel.org/all/20250919140952.1057737-1-pankaj.patil@oss.qualcomm.com/
->> 5. https://lore.kernel.org/all/20250919141440.1068770-1-pankaj.patil@oss.qualcomm.com/
->> 6. https://lore.kernel.org/all/20250919142325.1090059-1-pankaj.patil@oss.qualcomm.com/
->> 7. https://lore.kernel.org/all/20250920113052.151370-1-pankaj.patil@oss.qualcomm.com/
->> 8. https://lore.kernel.org/all/20250924-knp-pmic-binding-v1-1-b9cce48b8460@oss.qualcomm.com/
->> 9. https://lore.kernel.org/linux-arm-msm/20250924183726.509202-1-sibi.sankar@oss.qualcomm.com/T/#m46501fe9edb880fc11f69442eaf4d2855f7e4608
->> 10. https://lore.kernel.org/linux-arm-msm/20250925002034.856692-1-sibi.sankar@oss.qualcomm.com/
->> 11. https://lore.kernel.org/linux-arm-msm/20250924144831.336367-1-sibi.sankar@oss.qualcomm.com/
-> Please, don't list all the possible series. List only the patches which
-> define the bindings which are required to _build_ the dtb files and
-> which are not a part of linux-next. And also please include them into
-> `b4 prep --edit-deps` so that all the bots can pick them up.
+On 10/7/25 7:44 AM, Sarthak Garg wrote:
+> Enable SD Card host controller for sm8750 mtp and qrd board.
+> 
+> Signed-off-by: Sarthak Garg <sarthak.garg@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/sm8750-mtp.dts | 15 +++++++++++++++
+>  arch/arm64/boot/dts/qcom/sm8750-qrd.dts | 16 ++++++++++++++++
 
-Sure, I'll add singular patches using `b4 prep --edit-deps`
-Bindings dependencies were added to avoid checkpatch warnings
-about undocumented strings, dt can be built without the listed
-dependencies except 9. patch 2/5.
+Normally this should be one commit per board, with e.g. "sm8750-mtp:"
+in the title
 
->> rpmh-regulators:
->> 1. https://lore.kernel.org/all/20250918-glymur-rpmh-regulator-driver-v3-0-184c09678be3@oss.qualcomm.com/
-> This, for example, totally isn't a dependency for building the DT.
->
->> PMICs:
->> 1. https://lore.kernel.org/linux-arm-msm/20250924-knp-dts-v1-0-3fdbc4b9e1b1@oss.qualcomm.com/ (Patch 8-11)
->>
->> PMIC-Glink:
->> 1. https://lore.kernel.org/all/20250919175025.2988948-1-anjelique.melendez@oss.qualcomm.com/
->> 2. https://lore.kernel.org/all/20250924232631.644234-1-anjelique.melendez@oss.qualcomm.com/
->>
->> spmi/pinctrl:
->> 1. https://lore.kernel.org/all/20250920-glymur-spmi-v8-gpio-driver-v1-0-23df93b7818a@oss.qualcomm.com/
->>
->> PCI:
->> 1. https://lore.kernel.org/all/20250903-glymur_pcie5-v4-0-c187c2d9d3bd@oss.qualcomm.com/
->>
->> Remoteproc:
->> 1. https://lore.kernel.org/all/20250819165447.4149674-1-mukesh.ojha@oss.qualcomm.com/
->> 2. https://lore.kernel.org/linux-arm-msm/20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com/T/#t
->> 3. https://lore.kernel.org/linux-arm-msm/20250924-knp-remoteproc-v1-0-611bf7be8329@oss.qualcomm.com/T/#t
->>
->> USB:
->> 1. https://lore.kernel.org/all/20250925005228.4035927-1-wesley.cheng@oss.qualcomm.com/T/#mb7879fdba16496554a53c3726d90f94b6063dd09
->>
->> Linux-next based git tree containing all Glymur related patches is available at:
->> https://git.codelinaro.org/clo/linux-kernel/kernel-qcom/-/tree/glymur?ref_type=heads
->>
->> Signed-off-by: Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->> ---
->> Jyothi Kumar Seerapu (1):
->>       arm64: dts: qcom: glymur: Add QUPv3 configuration for serial engines
->>
->> Kamal Wadhwa (10):
->>       arm64: dts: qcom: glymur-crd: Add RPMH regulator rails
->>       arm64: dts: qcom: glymur: Add SPMI PMIC arbiter device
->>       arm64: dts: qcom: Add PMCX0102 pmic dtsi
->>       arm64: dts: qcom: Add SMB2370 pmic dtsi
->>       arm64: dts: qcom: Update pmh0104 dtsi for Glymur CRD
->>       arm64: dts: qcom: Update the pmh0110.dtsi for Glymur
->>       arm64: dts: qcom: glymur: Add PMICs dtsi for CRD
->>       arm64: boot: dts: glymur-crd: Add Volume down/up keys support
->>       arm64: dts: qcom: glymur-crd: Avoid RTC probe failure
->>       arm64: dts: qcom: glymur: Add PMIC glink node
->>
->> Manaf Meethalavalappu Pallikunhi (1):
->>       arm64: dts: qcom: glymur: Enable tsens and thermal zone nodes
->>
->> Maulik Shah (1):
->>       arm64: dts: qcom: glymur: Add cpu idle states
->>
->> Pankaj Patil (3):
->>       dt-bindings: arm: qcom: Document Glymur SoC and board
->>       arm64: defconfig: Enable Glymur configs for boot to shell
->>       arm64: dts: qcom: Introduce Glymur base dtsi and CRD dts
->>
->> Prudhvi Yarlagadda (1):
->>       arm64: dts: qcom: glymur: Add support for PCIe5
->>
->> Qiang Yu (1):
->>       arm64: dts: qcom: glymur-crd: Add power supply and sideband signal for pcie5
->>
->> Sibi Sankar (3):
->>       arm64: dts: qcom: glymur: Enable pdp0 mailbox
->>       arm64: dts: qcom: glymur: Enable ipcc and aoss nodes
->>       arm64: dts: qcom: glymur: Add remoteprocs
->>
->> Taniya Das (2):
->>       arm64: dts: qcom: glymur: Enable cpu dvfs for CPU scaling
->>       arm64: dts: qcom: glymur: Add display clock controller device
->>
->> Wesley Cheng (1):
->>       arm64: dts: qcom: glymur: Add USB support
->>
->>  Documentation/devicetree/bindings/arm/qcom.yaml |    5 +
->>  arch/arm64/boot/dts/qcom/Makefile               |    1 +
->>  arch/arm64/boot/dts/qcom/glymur-crd.dts         |  795 +++
->>  arch/arm64/boot/dts/qcom/glymur-pmics.dtsi      |   19 +
->>  arch/arm64/boot/dts/qcom/glymur.dtsi            | 7445 +++++++++++++++++++++++
->>  arch/arm64/boot/dts/qcom/pmcx0102.dtsi          |  179 +
->>  arch/arm64/boot/dts/qcom/pmh0104.dtsi           |   84 +
->>  arch/arm64/boot/dts/qcom/pmh0110.dtsi           |   66 +-
->>  arch/arm64/boot/dts/qcom/smb2370.dtsi           |   45 +
->>  arch/arm64/configs/defconfig                    |    6 +
->>  10 files changed, 8644 insertions(+), 1 deletion(-)
->> ---
->> base-commit: fdcd2cfdf0db0a8b8299de79302465f790edea27
->> change-id: 20250923-v3_glymur_introduction-e22ae3c868a2
->>
->> Best regards,
->> -- 
->> Pankaj Patil <pankaj.patil@oss.qualcomm.com>
->>
 
+>  2 files changed, 31 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> index 3bbb53b7c71f..26548191d95d 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8750-mtp.dts
+> @@ -1030,6 +1030,21 @@ &remoteproc_mpss {
+>  	status = "fail";
+>  };
+>  
+> +&sdhc_2 {
+> +	cd-gpios = <&tlmm 55 GPIO_ACTIVE_LOW>;
+> +	vmmc-supply = <&vreg_l9b_2p9>;
+> +	vqmmc-supply = <&vreg_l8b_1p8>;
+
+Any reason you didn't place a \n here..
+
+> +
+> +	no-sdio;
+> +	no-mmc;
+> +
+> +	pinctrl-0 = <&sdc2_default>;
+> +	pinctrl-1 = <&sdc2_sleep>;
+> +	pinctrl-names = "default", "sleep";
+> +
+> +	status = "okay";
+> +};
+> +
+>  &swr0 {
+>  	status = "okay";
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> index 13c7b9664c89..8d018eef44da 100644
+> --- a/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> +++ b/arch/arm64/boot/dts/qcom/sm8750-qrd.dts
+> @@ -916,6 +916,22 @@ &remoteproc_mpss {
+>  	status = "okay";
+>  };
+>  
+> +&sdhc_2 {
+> +	cd-gpios = <&tlmm 55 GPIO_ACTIVE_LOW>;
+> +
+> +	vmmc-supply = <&vreg_l9b_2p9>;
+> +	vqmmc-supply = <&vreg_l8b_1p8>;
+
+..but added one here?
+
+FWIW I like the 2nd one more
+
+Konrad
 
