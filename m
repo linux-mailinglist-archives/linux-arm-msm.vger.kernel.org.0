@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76289-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76290-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id 837ABBC32D0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 04:56:20 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id C9089BC32D6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 04:57:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 43F43189A74D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 02:56:43 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 782B74E3028
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 02:57:18 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 1D40C29B8E0;
-	Wed,  8 Oct 2025 02:56:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id CAE8329B8E0;
+	Wed,  8 Oct 2025 02:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pUPCSqTs"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="CiTHsXEl"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB926260580;
-	Wed,  8 Oct 2025 02:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA1A29A309;
+	Wed,  8 Oct 2025 02:57:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759892174; cv=none; b=t/SzSzQ3F+n5XVYzUcM0bteIPeE3m4DXVTGYlL79DsC7CNpyOFbpB1RMX8OlVXQS4k/N/ptDMB1DI6BBs72x8cv5Oh4iF2++LiAniMofqe2OLIpAjKH/IraPIxvEjwQPFlDZRDXgeWRyObSG6BeeOKwTrQOd9RsJmdCNiI1wOVw=
+	t=1759892234; cv=none; b=bbZXYaUZHjmgYl/cte2SZYkQ8S+kiUsu3qE3zE9PdZH6ay1xwXUXiCwcEWHpcc5vn/b65lWHqQtEYYkRUR4P5sg0GRFa+nUZwpyyWN5X0Uk9HFWSNGWyRya8LS3bfq2nlGhziFGBaFe6f1xJcl8lkM2QaYLK317Vb7I2AheIF64=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759892174; c=relaxed/simple;
-	bh=gkZN5Qc8iYn3DbePjFgVqCfPKhn+zqItH/K4bcNbwjo=;
+	s=arc-20240116; t=1759892234; c=relaxed/simple;
+	bh=QLsgnTR6OtChAePXKOtiLlD6pjZE6svkOh6gqg90pUU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ogu/l1xQAFmJ0DKvrogq+iOdSXZApvIiRfhrZTzAf/NgCcraunvLK3c10xxdTQ/CtAR3iQnLwurUlBYW2XcGYM5Hyczfj3YQu4TWWEFFMWNDGk/01C46lsNV84E7EhOFGdc4G7Zyik0Rs1SaWDYz1qAkzgo6q7DzwUhatyAZ2Tw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pUPCSqTs; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3784C4CEF1;
-	Wed,  8 Oct 2025 02:56:08 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=k/2ElLM3QzvXV7V4lAJAQnd3PB0CVZsIPY7wJHXk/buRc4Ai07ypd28XjEKlFUnN/R/M5fkiToWin0DgmHWw8uSTvKqCJ5LzE3q2oKd7k2G1aFlxAFRIi2L+xTwuUYUlHIx+BexkB5dVIW3fmr0I2i3sypf84YiP25UFmJa8zG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=CiTHsXEl; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44191C4CEF1;
+	Wed,  8 Oct 2025 02:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759892172;
-	bh=gkZN5Qc8iYn3DbePjFgVqCfPKhn+zqItH/K4bcNbwjo=;
+	s=k20201202; t=1759892233;
+	bh=QLsgnTR6OtChAePXKOtiLlD6pjZE6svkOh6gqg90pUU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pUPCSqTsfm8bKOIrIPMkJFD4IKV7ka7RgVD3X+Y11cchONvW9lEWV+XJAs8FneirD
-	 a2knDlDdTvR6Ua2xMYsKC4eG20DDf0YFtPDhx+CWFjD4Q7pB0dwyax5dyYoOYt+rVr
-	 GMgQuimpfUT9XxmFHxwQkaDxOYwNN/emPVC5hSELoDvNQEZld0/4AJux/O/soWlCso
-	 hAjPgPhg7p93LwUvcRwxqiN42U+1YxF/kDBDPsEk/BZaKb5RkxkjalR8RmfVZw1yxN
-	 fja2IhhzuXTBD13wAR9tcG8rFl1T4UM29HPXUi0vtmReziOWT4oz1ZvHBI4yVuGeLj
-	 1UpJ6jNTL5EOg==
-Message-ID: <68a6d051-dd6e-4a02-b09d-de6a90b79c33@kernel.org>
-Date: Wed, 8 Oct 2025 11:56:06 +0900
+	b=CiTHsXElcUHhWygfypCX3XlEBUZl2i9Paf9SiNhiK3xvy6n46FiRJ3J8XXi97nSre
+	 JCCD9EFzsqPwAYKxN8asO3QfYeg4Z1eGPfshjMzeKNY0IhVQJI1pbtBgWuno4mJ1Rc
+	 pk8ASqTRzLiLd4K/vL50G7FXt3X+ZUn1Qb/ZhZKFAZyPjRCaRMoVjWktBlFpBWDKqp
+	 lHbd/y427u/YmvNH+bPEtzdSpkToQiG3prbL0bWSKp6dmb+BULPaPBEerZADsigX8o
+	 pYv8zWZa/PcYypiOvYVguR04M2StiCDx76ZeE8kX5LrsVkjWPMKkP8nynJS3K4+4VP
+	 /Kntwb2SVTWug==
+Message-ID: <b4dc1a86-4d92-4029-badc-5b77ea23c4f9@kernel.org>
+Date: Wed, 8 Oct 2025 11:57:08 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,24 +50,14 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/4] dt-bindings: mfd: qcom,spmi-pmic: add
- qcom,pm4125-codec compatible
-To: Alexey Klimov <alexey.klimov@linaro.org>
-Cc: Srinivas Kandagatla <srini@kernel.org>,
- Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
- Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Conor Dooley <conor+dt@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
- Lee Jones <lee@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, linux-arm-msm@vger.kernel.org,
- linux-sound@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
- christophe.jaillet@wanadoo.fr
-References: <20250915-pm4125_audio_codec_v1-v4-0-b247b64eec52@linaro.org>
- <20250915-pm4125_audio_codec_v1-v4-2-b247b64eec52@linaro.org>
- <20250918-wonderful-deft-jackal-7d3bbc@kuoka>
- <DDCKWVH8ORLM.357D9IKQK9YN8@linaro.org>
+Subject: Re: [PATCH] arm64: dts: qcom: sm8650: set ufs as dma coherent
+To: Neil Armstrong <neil.armstrong@linaro.org>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <20251007-topic-sm8650-upstream-ufs-dma-coherent-v1-1-f3cfeaee04ce@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -113,61 +103,27 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <DDCKWVH8ORLM.357D9IKQK9YN8@linaro.org>
+In-Reply-To: <20251007-topic-sm8650-upstream-ufs-dma-coherent-v1-1-f3cfeaee04ce@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/10/2025 11:18, Alexey Klimov wrote:
-> On Thu Sep 18, 2025 at 3:03 AM BST, Krzysztof Kozlowski wrote:
->> On Mon, Sep 15, 2025 at 05:27:49PM +0100, Alexey Klimov wrote:
->>> Add qcom,pm4125-codec compatible to pattern properties in mfd
->>> qcom,spmi-pmic schema so the devicetree for this audio block of PMIC
->>> can be validated properly.
->>>
->>> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->>> ---
->>>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
->>>  1 file changed, 6 insertions(+)
->>>
->>> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> index 078a6886f8b1e9ceb2187e988ce7c9514ff6dc2c..776c51a66f6e7260b7e3e183d693e3508cbc531e 100644
->>> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->>> @@ -137,6 +137,12 @@ patternProperties:
->>>  
->>>    "^audio-codec@[0-9a-f]+$":
->>>      type: object
->>> +    oneOf:
->>> +      - $ref: /schemas/sound/qcom,pm8916-wcd-analog-codec.yaml#
->>> +      - properties:
->>> +          compatible:
->>> +            const: qcom,pm4125-codec
->>
->>
->> Not much improved. Same feedback applies.
+On 08/10/2025 03:53, Neil Armstrong wrote:
+> The UFS device is ovbiously dma coherent like the other IOMMU devices
+> like usb, mmc, ... let's fix this by adding the flag.
 > 
-> Around the time of sending this I thought to set separate follow-up patch
-> that fixes the other part here -- pm8916-wcd-analog-codec.
+> To be sure an extensive test has been performed to be sure it's
+> safe, as downstream uses this flag for UFS as well.
 > 
-> At this point, is it fine to send follow-up patch that does smth like
-> this:
+> As an experiment, I checked how the dma-coherent could impact
+> the UFS bandwidth, and it happens the max bandwidth on cached
+> write is slighly highter (up to 10%) while using less cpu time
+> since cache sync/flush is skipped.
 > 
-> +    oneOf:
-> +      - $ref: /schemas/sound/qcom,pm8916-wcd-analog-codec.yaml#
-> +      - properties:
-> +          compatible:
-> +              - enaum:
-> +                - qcom,pm4125-codec
-> +                - qcom,pm8916-wcd-analog-codec
-> 
-> ?
-> 
-> (I didn't check how if it will compile or pass checks)
+> Fixes: 10e024671295 ("arm64: dts: qcom: sm8650: add interconnect dependent device nodes")
+> Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+> ---
 
-You still propose something very different than I asked at v3. Drop the
-$ref, you only want a compatible with enum. Look at
-qcom,sa8775p-mdss.yaml (but you don't need contains). Or one of many MFD
-drivers added last one year.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
