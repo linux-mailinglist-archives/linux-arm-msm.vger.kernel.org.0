@@ -1,81 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76506-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76507-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92313BC6F39
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 01:52:21 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADD0EBC6F42
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 01:52:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 766A64EAC46
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 23:52:20 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 90A4A4E9CDB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 23:52:43 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 212EF2C3745;
-	Wed,  8 Oct 2025 23:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B561D2C326E;
+	Wed,  8 Oct 2025 23:52:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="V4WyePDA"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sH3L1Cyk"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FF5A2C327D
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 23:52:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B52A4A06;
+	Wed,  8 Oct 2025 23:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759967538; cv=none; b=Fmb3wNyJatRLuX0HCGKelHx617aCcuKgTMtaXn9JfkFhlMJGa2+2QR6wt7AjNLVpAyuyTu8r290MBEAveY5rhs5qlVlMv3l09nVuVBSDrztfHwG3uem9zCCFRGwtozOkAXnmlImwaCS6Y2hXe8EQk6+zN9DzrNhZQIFNKJmwG1g=
+	t=1759967560; cv=none; b=gjEl3gcWvSwFNfMR219M9wmlS0RznalpqpKSY13SlmpLIP9MwZC7j+fh3go97h9hI5nnEr+NsxdzUsBDfnsDOZuB7Id7GRXx2uMSzhvHufKXIztbxLNFAthabJhJpAMxf0To5edJVP7g7TB8BTfI3WsaoUY3h3J3Ik2Va9xBLdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759967538; c=relaxed/simple;
-	bh=TBQISZKH/GjwZoJUXF5TfT7sT2bjyy9kewRKzJAXMIU=;
+	s=arc-20240116; t=1759967560; c=relaxed/simple;
+	bh=OJ+hwh1sqGOf99NdhUVXQqjYuq37xpta7BF0DZ7PRno=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=sKZuJIuA9HME0DMTang1bYKrpGkAHb5OD/Rgx5ERnOplr0fb3nlzrmEfdo4rf5mqRJlb1hCBQ1W8WDvrHoLLuj2Kkxvzi9dpQwEowWUteI+RtTMqYxT+rpe6OG1y/Hq1+e068+my+s5ljzvks5w3XRfdkwlxd76zvNAvMFz4lj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=V4WyePDA; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-46e6c8bc46eso2111095e9.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 16:52:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759967534; x=1760572334; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JMEZbdYmBxBwQ2oYSgatJMEkEKkxHmlBTl3b0l/F90s=;
-        b=V4WyePDAe26Xf9zFPSKeqI/9EJqVhdNIws40ku6BiKJIi9nX5s8/gILWdjGAceq5P/
-         qc32mHuG2NqUJ8SMhtvQRz2WMlFo9a0dRQDkE99g9z9eyZ9uHpU866OYRcWIxtfQmgaw
-         wv8yjBG7Fuks8YPCJ9ypYKdf3Wcv9a+JVNayNnchpmWxqXNyWLkGzvhfJ+U8Harqln8J
-         +JmcOb9QBibfKPm1pvKsvGb140+U6OydEdsf3y5YkoHI+gLmHHSK1i8k/zZB9UOUmdkS
-         doAbWmC071Nqpj7pLzb4uOON+e1F8ldYPols3q4Pdb8CJ7X3jiMXlkIqIman/b6wIG2K
-         LCLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759967534; x=1760572334;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JMEZbdYmBxBwQ2oYSgatJMEkEKkxHmlBTl3b0l/F90s=;
-        b=d1JF92upTowd64GnduqbH+M4FGDjvKQQSofvITudlh7Ara98LPjUzpGaA9H3piTv48
-         U+slsbfQM5+9Y5TzclSTN6RVTbMUQ1ZPxtq8cyQ/0N+BsSIiQ21lCejQP7AX4FaIAh/d
-         OhcyXPlFchk7j0Y8P7IelBw/kT1/6pIEHa80Ym8Pl+eU0YXlNosHwAMUP1GtkJvz8my2
-         bWjIx0uNPTvTV8KS5u9NtuP2CVhzZfUwgTRWVCdIucbZhjRp5v+fR/jPrf1LXQuNS4BS
-         TLfdSsMqwZkUO5dhWCE11ij3RuO+SgK2LYvET7pK4GqWbFzI7lOTOfphWicXyrUDFoBM
-         SW0Q==
-X-Forwarded-Encrypted: i=1; AJvYcCX464HPKlKt4/xbzy5TiQmm34dDi1oFxY3izzB50gs3yUcNHzi0WHyhAdkKSebpyLnAxCScgOWo5ZdWPJSC@vger.kernel.org
-X-Gm-Message-State: AOJu0YzrvTzOGnXPh68zRHZwIibaLLhDNERN29PdWE0u/74acvWmmXKa
-	7fxAg83hZwVSARTg5mh0US74wBsG4gFDBzQLLJX0r/jZWJaJOU5jtzEeBaqkoSpmxjw=
-X-Gm-Gg: ASbGncvdkyVTdehedZHzE6bpGqUCCQQHMM4ygGtGggPePbbCh5iCj9mM7qy1L9kcoxS
-	5e4PBkcUWt+uk8oozY6/qGhCtiNigltJaqBiPiNZzK4TRNFyEzEWGL1PKaM95DmKoxXTXUEwD5A
-	pOfFNAUFWMnV8UIIwbRcWp3kb/cXiDpTx/KCTaKSivfvWVf//UVsQLtrSWc6CwciD3gq5ClkFQM
-	rJvB7jsaTxrOgzhprti48vUYQqGV5Kh3mrMiuMnQLEdpE/dEQIuenkMFvcKAh41fSvBvaLYnbYQ
-	/X0iCUsXXeV/YKD0a+uQgWawVSbwjBvW/fyAu4xT9jS87auozdTXU+N0SV8D+wPoO3L/xAJ/gGF
-	uXMpZf6L9wiJAnvOdhTNcvYluue3DHdozLOutLdRVTIP8pMAVAgzZtfOc/5FceRBmU2DZ3w/Pw3
-	vmb//u6P6ZD66wSXA5
-X-Google-Smtp-Source: AGHT+IFsEChlVG8pxTMvthV/pJR2MSo7vf26zXxeNj4z1rkuzP1YOYr4eDF+lU6Q5uMCn0N4JWGQZQ==
-X-Received: by 2002:a05:600c:8b52:b0:46c:a569:71a0 with SMTP id 5b1f17b1804b1-46fa9b08b46mr37296905e9.26.1759967534532;
-        Wed, 08 Oct 2025 16:52:14 -0700 (PDT)
-Received: from [192.168.0.19] (188-141-3-146.dynamic.upc.ie. [188.141.3.146])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fab3cc939sm24120165e9.1.2025.10.08.16.52.13
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Oct 2025 16:52:14 -0700 (PDT)
-Message-ID: <6caf62b0-e8f3-4753-bb1a-8083f0753431@linaro.org>
-Date: Thu, 9 Oct 2025 00:52:12 +0100
+	 In-Reply-To:Content-Type; b=FvFhNSoHJcdoz7DwGOriVqUqN+5E+lST4yvCCPZmWS+CVII9hotUb+/q3/jq8yV2Thn7ent+58WlbqCL1Mu8tbUmRnSa2eE2R47jtQ7zYjpAoGnOySYnR4bC/0b6LqTXrDNnX045ykOJ6mG+aRJmUwbmf9C/ZgEFnPbhLeMKJFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sH3L1Cyk; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F417C4CEE7;
+	Wed,  8 Oct 2025 23:52:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1759967560;
+	bh=OJ+hwh1sqGOf99NdhUVXQqjYuq37xpta7BF0DZ7PRno=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=sH3L1CykXXKsnu5TF6elR7SZ5qdLe3dpScWlT9makIzIxtzFuzgU2LeLGmFJEy7kd
+	 wnlWXmXAHmExTP8RQB2VR3tGwt7R2iYRxWzvPO65dxQACPqsBaOUKapw9BKfsNcwP7
+	 N5XXGC5GL7ERUJNkorVuMbmF2NCijIi7tYnDSo7TyrF2mF8hwkxo+AwGHi9J4CpxTv
+	 KXGRiMTgG52641Arfo9fyu/ZQCliGUHC4uZ30PEtzhkcZzaR8gy7Q9GvWTUelLakd0
+	 wjZ7b7U07kVMQDnBvi1b2hEQcZ2t9IV/AA4tx9Yo+x6aP8OIiAn4gCkBDzS19WYoxX
+	 x0ycTdvZ6PhhA==
+Message-ID: <08eb477f-ea34-4a31-b181-bfc629aef4c8@kernel.org>
+Date: Thu, 9 Oct 2025 08:52:25 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -83,59 +50,204 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 16/25] media: qcom: venus: Drop unneeded v4l2_m2m_get_vq()
- NULL check
-To: Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
- linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc: Nicolas Dufresne <nicolas.dufresne@collabora.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>
-References: <20251008175052.19925-1-laurent.pinchart@ideasonboard.com>
- <20251008175052.19925-17-laurent.pinchart@ideasonboard.com>
-From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH V7 3/5] dt-bindings: iio: adc: Add support for QCOM PMIC5
+ Gen3 ADC
+To: Jishnu Prakash <jishnu.prakash@oss.qualcomm.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Cc: Jonathan Cameron <jic23@kernel.org>, robh@kernel.org, krzk+dt@kernel.org,
+ conor+dt@kernel.org, agross@kernel.org, andersson@kernel.org,
+ lumag@kernel.org, dmitry.baryshkov@oss.qualcomm.com, konradybcio@kernel.org,
+ daniel.lezcano@linaro.org, sboyd@kernel.org, amitk@kernel.org,
+ thara.gopinath@gmail.com, lee@kernel.org, rafael@kernel.org,
+ subbaraman.narayanamurthy@oss.qualcomm.com, david.collins@oss.qualcomm.com,
+ anjelique.melendez@oss.qualcomm.com, kamal.wadhwa@oss.qualcomm.com,
+ rui.zhang@intel.com, lukasz.luba@arm.com, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-iio@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+ cros-qcom-dts-watchers@chromium.org, quic_kotarake@quicinc.com,
+ neil.armstrong@linaro.org, stephan.gerhold@linaro.org,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>
+References: <20250826083657.4005727-1-jishnu.prakash@oss.qualcomm.com>
+ <20250826083657.4005727-4-jishnu.prakash@oss.qualcomm.com>
+ <20250829-classic-dynamic-clam-addbd8@kuoka>
+ <5d662148-408f-49e1-a769-2a5d61371cae@oss.qualcomm.com>
+ <4e974e77-adfc-49e5-90c8-cf8996ded513@kernel.org>
+ <a0e885be-e87d-411a-884e-3e38a0d761e5@oss.qualcomm.com>
+ <8c90cc3f-115e-4362-9293-05d9bee24214@linaro.org>
+ <5d4edecf-51f3-4d4a-861f-fce419e3a314@oss.qualcomm.com>
+ <20250927144757.4d36d5c8@jic23-huawei>
+ <a3158843-dfac-4adc-838a-35bb4b0cbea4@oss.qualcomm.com>
+ <CAGE=qrrCvq28pr9Y7it-CGMW=szKUnU+XBj1TmpoUwuASM05ig@mail.gmail.com>
+ <31bd08ce-823a-4a71-baca-a9d1e02fcb6a@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
-In-Reply-To: <20251008175052.19925-17-laurent.pinchart@ideasonboard.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Autocrypt: addr=krzk@kernel.org; keydata=
+ xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
+ cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
+ JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
+ gNbpvVwjcKYrx85m9cBVEBUGaQP6AT7qlVCkrf50v8bofSIyVa2xmubbAwwFA1oxoOusjPIE
+ J3iadrwpFvsZjF5uHAKS+7wHLoW9hVzOnLbX6ajk5Hf8Pb1m+VH/E8bPBNNYKkfTtypTDUCj
+ NYcd27tjnXfG+SDs/EXNUAIRefCyvaRG7oRYF3Ec+2RgQDRnmmjCjoQNbFrJvJkFHlPeHaeS
+ BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
+ vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
+ Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
+ TNeBxJu5Ex0Izf1NV9CzC3nNaFUYOY8KfN01X5SExAoVTr09ewARAQABzSVLcnp5c3p0b2Yg
+ S296bG93c2tpIDxrcnprQGtlcm5lbC5vcmc+wsGVBBMBCgA/AhsDBgsJCAcDAgYVCAIJCgsE
+ FgIDAQIeAQIXgBYhBJvQfg4MUfjVlne3VBuTQ307QWKbBQJoF1BKBQkWlnSaAAoJEBuTQ307
+ QWKbHukP/3t4tRp/bvDnxJfmNdNVn0gv9ep3L39IntPalBFwRKytqeQkzAju0whYWg+R/rwp
+ +r2I1Fzwt7+PTjsnMFlh1AZxGDmP5MFkzVsMnfX1lGiXhYSOMP97XL6R1QSXxaWOpGNCDaUl
+ ajorB0lJDcC0q3xAdwzRConxYVhlgmTrRiD8oLlSCD5baEAt5Zw17UTNDnDGmZQKR0fqLpWy
+ 786Lm5OScb7DjEgcA2PRm17st4UQ1kF0rQHokVaotxRM74PPDB8bCsunlghJl1DRK9s1aSuN
+ hL1Pv9VD8b4dFNvCo7b4hfAANPU67W40AaaGZ3UAfmw+1MYyo4QuAZGKzaP2ukbdCD/DYnqi
+ tJy88XqWtyb4UQWKNoQqGKzlYXdKsldYqrLHGoMvj1UN9XcRtXHST/IaLn72o7j7/h/Ac5EL
+ 8lSUVIG4TYn59NyxxAXa07Wi6zjVL1U11fTnFmE29ALYQEXKBI3KUO1A3p4sQWzU7uRmbuxn
+ naUmm8RbpMcOfa9JjlXCLmQ5IP7Rr5tYZUCkZz08LIfF8UMXwH7OOEX87Y++EkAB+pzKZNNd
+ hwoXulTAgjSy+OiaLtuCys9VdXLZ3Zy314azaCU3BoWgaMV0eAW/+gprWMXQM1lrlzvwlD/k
+ whyy9wGf0AEPpLssLVt9VVxNjo6BIkt6d1pMg6mHsUEVzsFNBFVDXDQBEADNkrQYSREUL4D3
+ Gws46JEoZ9HEQOKtkrwjrzlw/tCmqVzERRPvz2Xg8n7+HRCrgqnodIYoUh5WsU84N03KlLue
+ MNsWLJBvBaubYN4JuJIdRr4dS4oyF1/fQAQPHh8Thpiz0SAZFx6iWKB7Qrz3OrGCjTPcW6ei
+ OMheesVS5hxietSmlin+SilmIAPZHx7n242u6kdHOh+/SyLImKn/dh9RzatVpUKbv34eP1wA
+ GldWsRxbf3WP9pFNObSzI/Bo3kA89Xx2rO2roC+Gq4LeHvo7ptzcLcrqaHUAcZ3CgFG88CnA
+ 6z6lBZn0WyewEcPOPdcUB2Q7D/NiUY+HDiV99rAYPJztjeTrBSTnHeSBPb+qn5ZZGQwIdUW9
+ YegxWKvXXHTwB5eMzo/RB6vffwqcnHDoe0q7VgzRRZJwpi6aMIXLfeWZ5Wrwaw2zldFuO4Dt
+ 91pFzBSOIpeMtfgb/Pfe/a1WJ/GgaIRIBE+NUqckM+3zJHGmVPqJP/h2Iwv6nw8U+7Yyl6gU
+ BLHFTg2hYnLFJI4Xjg+AX1hHFVKmvl3VBHIsBv0oDcsQWXqY+NaFahT0lRPjYtrTa1v3tem/
+ JoFzZ4B0p27K+qQCF2R96hVvuEyjzBmdq2esyE6zIqftdo4MOJho8uctOiWbwNNq2U9pPWmu
+ 4vXVFBYIGmpyNPYzRm0QPwARAQABwsF8BBgBCgAmAhsMFiEEm9B+DgxR+NWWd7dUG5NDfTtB
+ YpsFAmgXUF8FCRaWWyoACgkQG5NDfTtBYptO0w//dlXJs5/42hAXKsk+PDg3wyEFb4NpyA1v
+ qmx7SfAzk9Hf6lWwU1O6AbqNMbh6PjEwadKUk1m04S7EjdQLsj/MBSgoQtCT3MDmWUUtHZd5
+ RYIPnPq3WVB47GtuO6/u375tsxhtf7vt95QSYJwCB+ZUgo4T+FV4hquZ4AsRkbgavtIzQisg
+ Dgv76tnEv3YHV8Jn9mi/Bu0FURF+5kpdMfgo1sq6RXNQ//TVf8yFgRtTUdXxW/qHjlYURrm2
+ H4kutobVEIxiyu6m05q3e9eZB/TaMMNVORx+1kM3j7f0rwtEYUFzY1ygQfpcMDPl7pRYoJjB
+ dSsm0ZuzDaCwaxg2t8hqQJBzJCezTOIkjHUsWAK+tEbU4Z4SnNpCyM3fBqsgYdJxjyC/tWVT
+ AQ18NRLtPw7tK1rdcwCl0GFQHwSwk5pDpz1NH40e6lU+NcXSeiqkDDRkHlftKPV/dV+lQXiu
+ jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
+ zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
+ XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
+In-Reply-To: <31bd08ce-823a-4a71-baca-a9d1e02fcb6a@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 08/10/2025 18:50, Laurent Pinchart wrote:
-> The v4l2_m2m_get_vq() function never returns NULL. The check may have
-> been intended to catch invalid format types, but that's not needed as
-> the V4L2 core picks the appropriate VIDIOC_S_FMT ioctl handler based on
-> the format type, so the type can't be incorrect. Drop the unneeded
-> return value check.
+On 08/10/2025 23:20, Jishnu Prakash wrote:
+> Hi Krzysztof,
 > 
-> Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> ---
->   drivers/media/platform/qcom/venus/vdec.c | 2 --
->   drivers/media/platform/qcom/venus/venc.c | 2 --
->   2 files changed, 4 deletions(-)
+> On 10/4/2025 12:22 PM, Krzysztof Kozlowski wrote:
+>> On Sat, 4 Oct 2025 at 11:42, Jishnu Prakash
+>> <jishnu.prakash@oss.qualcomm.com> wrote:
+>>>
+>>> Hi Jonathan,
+>>>
+>>> On 9/27/2025 7:17 PM, Jonathan Cameron wrote:
+>>>> On Fri, 19 Sep 2025 20:17:43 +0530
+>>>> Jishnu Prakash <jishnu.prakash@oss.qualcomm.com> wrote:
+>>>>
+>>>>> Hi Krzysztof,
+>>>>>
+>>>>> On 9/18/2025 5:45 AM, Krzysztof Kozlowski wrote:
+>>>>>> On 18/09/2025 04:47, Jishnu Prakash wrote:
+>>>>>>> Hi Krzysztof,
+>>>>>>>
+>>>>>>> On 9/17/2025 5:59 AM, Krzysztof Kozlowski wrote:
+>>>>>>>> On 16/09/2025 16:28, Jishnu Prakash wrote:
+>>>>>>>>>> You cannot have empty spaces in ID constants. These are abstract
+>>>>>>>>>> numbers.
+>>>>>>>>>>
+>>>>>>>>>> Otherwise please point me to driver using this constant.
+>>>>>>>>>
+>>>>>>>>> These constants are for ADC channel numbers, which are fixed in HW.
+>>>>>>>>>
+>>>>>>>>> They are used in this driver: drivers/iio/adc/qcom-spmi-adc5-gen3.c,
+>>>>>>>>> which is added in patch 4 of this series.
+>>>>>>>>>
+>>>>>>>>> They can be found in the array named adc5_gen3_chans_pmic[].
+>>>>>>>>
+>>>>>>>> Really? So point me to the line there using ADC5_GEN3_VREF_BAT_THERM.
+>>>>>>>>
+>>>>>>>
+>>>>>>> We may not be using all of these channels right now - we can add them
+>>>>>>> later based on requirements coming up. For now, I'll remove the channels
+>>>>>>> not used in adc5_gen3_chans_pmic[].
+>>>>>>
+>>>>>> You are not implementing the feedback then. Please read it carefully.
+>>>>>>
+>>>>>
+>>>>> Sorry, I misunderstood - so you actually meant I should remove the
+>>>>> empty spaces in the definitions, like this?
+>>>>>
+>>>>> -#define ADC5_GEN3_VREF_BAT_THERM               0x15
+>>>>> +#define ADC5_GEN3_VREF_BAT_THERM 0x15
+>>>>>
+>>>>> I thought this at first, but I somehow doubted this later, as I saw some
+>>>>> other recently added files with empty spaces in #define lines, like:
+>>>>>
+>>>>> include/dt-bindings/iio/adc/mediatek,mt6373-auxadc.h
+>>>>> include/dt-bindings/regulator/st,stm32mp15-regulator.h
+>>>>>
+>>>>> I can make this change, if you prefer this. Please let me know
+>>>>> if I'm still missing something.
+>>>>>
+>>>>> Also please let me know if you want me to remove the unused
+>>>>> channels - I would prefer to keep them if there's no issue,
+>>>>> as we might need them later.
+>>>>>
+>>>> He is referring to 0x14 and below not being defined values.  So what
+>>>> do they mean if they turn up in the DT?
+>>>>
+>>>
+>>> Thanks for your clarification. To address your first point above, the macros
+>>> added here only represent the ADC channel numbers which are supported for
+>>> ADC5 Gen3 devices. If there are numbers missing in between (like 0x14),
+>>> that is because there exist no valid ADC channels in HW matching those
+>>> channel numbers.
+>>>
+>>> For your question above, if any of the undefined channels are used in the DT,
+>>> they should ideally be treated as invalid when parsed in the driver probe and
+>>> lead to an error. When I checked the code again, I saw we do not have such an
+>>> explicit check right now, so I will add that in the next patch series.
+>>>
+>>> And to be clear on which channel numbers are supported, I think it may be
+>>> best if, for now, we only add support for the channel numbers referenced in
+>>> the array adc5_gen3_chans_pmic[] in drivers/iio/adc/qcom-spmi-adc5-gen3.c.
+>>>
+>>> There are only 18 channel numbers used in this array and I would remove
+>>> all channels except for these from the binding files. During parsing, we
+>>> would use this array to confirm if an ADC channel added in DT is supported.
+>>>
+>>> In case we need to add support for any more channels later, we could add
+>>> their macros in the binding file and update the array correspondingly at
+>>> that time.
+>>>
+>>> Does all this sound fine? Please let me know if you have any more concerns
+>>> or queries.
+>>
+>> No, it doesn't.  You keep ignoring my arguments and responding to
+>> something else. I prefer not to store hardware values as bindings,
+>> because these are not bindings (and you failed to prove which SW
+>> interface they bind) and it's really not necessary.
 > 
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 29b0d6a5303d..8c77db0f6e76 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -329,8 +329,6 @@ static int vdec_s_fmt(struct file *file, void *fh, struct v4l2_format *f)
->   	struct vb2_queue *q;
->   
->   	q = v4l2_m2m_get_vq(inst->m2m_ctx, f->type);
-> -	if (!q)
-> -		return -EINVAL;
->   
->   	if (vb2_is_busy(q))
->   		return -EBUSY;
-> diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
-> index c0a0ccdded80..0fe4cc37118b 100644
-> --- a/drivers/media/platform/qcom/venus/venc.c
-> +++ b/drivers/media/platform/qcom/venus/venc.c
-> @@ -241,8 +241,6 @@ static int venc_s_fmt(struct file *file, void *fh, struct v4l2_format *f)
->   	struct vb2_queue *q;
->   
->   	q = v4l2_m2m_get_vq(inst->m2m_ctx, f->type);
-> -	if (!q)
-> -		return -EINVAL;
->   
->   	if (vb2_is_busy(q))
->   		return -EBUSY;
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> In my previous replies in this thread, I missed mentioning that the macros
+> defined in include/dt-bindings/iio/adc/qcom,spmi-vadc.h are also used in
+> other places than the driver file - they are also used in the PMIC-specific
+> binding files added in this patch, for channel definitions. Considering
+> one channel for example:
+>  
+> We have this in include/dt-bindings/iio/adc/qcom,spmi-vadc.h:
+> +#define ADC5_GEN3_DIE_TEMP			0x03
+>  
+> The above is used in include/dt-bindings/iio/adc/qcom,pm8550vx-adc5-gen3.h:
+> +#define PM8550VS_ADC5_GEN3_DIE_TEMP(sid)			((sid) << 8 | ADC5_GEN3_DIE_TEMP)
+>  
+> And the above definition may be used in device tree, like in the example added
+> in Documentation/devicetree/bindings/iio/adc/qcom,spmi-adc5-gen3.yaml:
+>  
+> +        channel@203 {
+> +          reg = <PM8550VS_ADC5_GEN3_DIE_TEMP(2)>;
+> +          label = "pm8550vs_c_die_temp";
+> +          qcom,pre-scaling = <1 1>;
+> +        };
+
+This is not a driver. I do not understand your argumentation at all.
+
+Best regards,
+Krzysztof
 
