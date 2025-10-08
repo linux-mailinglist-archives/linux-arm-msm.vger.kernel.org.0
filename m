@@ -1,78 +1,78 @@
-Return-Path: <linux-arm-msm+bounces-76286-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76287-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DA3DBC3291
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 04:19:07 +0200 (CEST)
+Received: from ams.mirrors.kernel.org (ams.mirrors.kernel.org [IPv6:2a01:60a::1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC356BC32B5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 08 Oct 2025 04:40:53 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 266154E893B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 02:19:02 +0000 (UTC)
+	by ams.mirrors.kernel.org (Postfix) with ESMTPS id F10BB34BA8C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Oct 2025 02:40:52 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 27F0829B78F;
-	Wed,  8 Oct 2025 02:18:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9FD6629B789;
+	Wed,  8 Oct 2025 02:40:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="ahaQ+NAg"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="hTAdcuHp"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6679629B77C
-	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 02:18:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2069299AA3
+	for <linux-arm-msm@vger.kernel.org>; Wed,  8 Oct 2025 02:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759889933; cv=none; b=HGLc0Mdkyo9Oep0zicT69+svA+8NBCHb3JaOSqPxCTw8gJ3OVxHpQ7bpUqO2KXcEgTGmAr2BLjV4blz7EYD+PJkufOkD79WVq1yO95s3hCHKAtg2z4ZtO5dlY3dBvxL2YBm6idZQ4tYLqJ/9yjX+I4RhPXepZgQjxluvSkCYyvw=
+	t=1759891248; cv=none; b=Ab6Gy11qcPgmnHOepbocPdOPMUUpkkpsrfFLGtYquI33LxPFfULnA/8lgsl8DlJWrLKkHGZIg6MSIV7ON2oXubYZimshSEn3NNd1vbhrzS1idmKn2eRS2elpDaeM6AROO+yARVIKsHKEXxqBoolt4CMNBAMyuYqIOehRI6bmlLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759889933; c=relaxed/simple;
-	bh=eLUKCid2mCzEr3f2IULaa6Mi8dzk04iOMQ1Cu+awDD0=;
+	s=arc-20240116; t=1759891248; c=relaxed/simple;
+	bh=vbpwXTejC+yajTX3XXncJGeds605AJHrgdSUCP7BbNs=;
 	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=IQVTycfxv6JYg5dDkHuhASnE4u2S3n5qXLVyGKqSM6YRux4kht99d4P0wzfECW8Bifg1YtJFicCfvGrfM8t5KYipL7NktB7UVMy6TValRNdeQ1IYbfnp1K8hg1dXCRQR7lgtSv0TTHn47kotMBMB/4WjrBCG1G5PuZKuxzoPcFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=ahaQ+NAg; arc=none smtp.client-ip=209.85.221.46
+	 References:In-Reply-To; b=AJ4L7wTmp3EIW5dKirqiarVL3LvqyVnTPM3jvANvMd46SUuserXyJl5FVPYTa9qy+q/9pPz7z73g7K2UbqiXo0u8nDOTtJI5U0frCFCk3N7wKxN5Qq7yob+mKVYW5cSVgqWnNJ9IR4+PLVlxeEs4K4UX3KClStevs3Y03shYUXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=hTAdcuHp; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3c68ac7e18aso1070642f8f.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 19:18:50 -0700 (PDT)
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3fc36b99e92so304939f8f.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Oct 2025 19:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1759889929; x=1760494729; darn=vger.kernel.org;
+        d=linaro.org; s=google; t=1759891245; x=1760496045; darn=vger.kernel.org;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=micbjQhFRi56rmBZKMQCddkVTulgFVdWxWszGqRTF54=;
-        b=ahaQ+NAgrWEPQIWuYqcDIOvUoZ3mn+pgDminfwb0D23x9JG3hjU5U92zv2E3HqJMO6
-         gNawUbzwU2KVurUIPikMg9FOl2X/zB+5JZ0Qm+pQTMzwia3+/qHPF+/sJYrxsMj9KqHg
-         GoiozcubMSwutgCST7fk3Fgh46HutkmdyGafcQJL76KUMdnL2bIzwpprswGJp1Bj7NAu
-         AMIis8KZLI4JdFV6TBfdsfK+MuDnA0/wI6omoHxCAKvg9/t7Jnp2XCSBUx4AdDbCYeKf
-         LXok8IgB0KIRL1Jr6znbw2hpYMT643pXKwmSLOn6d1VFMzZIHvJekxYTtk8bW8p+fG1m
-         fK3Q==
+        bh=vbpwXTejC+yajTX3XXncJGeds605AJHrgdSUCP7BbNs=;
+        b=hTAdcuHpIxENGBpN9STA3bI7YsxHoTZ6EtRCkJqoMD/wiGNCAwTIKV7IsP8wPyG4bB
+         U6GLpIU57vGx18Wjj4enoKZBERR5wmO+CeozzgXfVXfvblWakhfgees/6FpyeltmCUju
+         r+vcJuwd/tQkQivDRtnhhfLFNyUpFiDRI8wWzWJph5fSpU5lb4/WfoN4XMlMK2tNKP4c
+         q7vH969Hk7rYMvcGQmv2gquNNzh3cjb7FCO5O54XwwE3VQJr5H+Ly2ZHS94RxjpZKVZp
+         Ty+Q+9JpswO9NMCEI7NDDv3pmVG0bz3NJfKPd27U5kJIHoTQcYK4lmCsqIRreMdBdLK6
+         1NOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1759889929; x=1760494729;
+        d=1e100.net; s=20230601; t=1759891245; x=1760496045;
         h=in-reply-to:references:to:from:subject:cc:message-id:date
          :content-transfer-encoding:mime-version:x-gm-message-state:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=micbjQhFRi56rmBZKMQCddkVTulgFVdWxWszGqRTF54=;
-        b=ihLUGcjNheUMHi+5/XmwqYSENtAJzc+JbIqAp1F3SM0bVq7ezzjputJJ4e2ClhBSug
-         15YIb4kNzUpHpkklbTtCPXlm16hGycwCxXMB3xzoi3rVCv5taGZgaJhXxeAGBJzrq3pj
-         Kof6gyxxcNa8YlOcUbxG9WqMD/H19xvAl+zc/AlWpN5bTmB4MrE7EpTWUKkoedy6yh1s
-         cYtMZY3wfQP/seQKcBTXTWAawM7VaklwdCgw9JjYSo+vjKc1/ee8fUWOszBIVs+FRsJv
-         SyXd7gfkaC4LXmT9hDzvStyWY2uNAj4VunGx5vr6IifVpNd7N6ATU/ko8XGNNOFjQ7kU
-         vxHw==
-X-Forwarded-Encrypted: i=1; AJvYcCVM7z0NkAUXvkWPbHSRSisIq4B9TWrA39Vs9ovcp3HGDyxN64ilv/egBxF5Az968LVQVV3zkZ+AUSZ64wt4@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywvurydpsto4iPXVmOQI4/nGvGO2t6BceiK47IUnIYNKK8c7OIe
-	3YXoFOTmsIV1Bn+yN2cXv0M6OjRSP6AlMfB6Slz2+pDi/SoKqmcubCfdoOtaUErcb9E=
-X-Gm-Gg: ASbGncv8MZ/tZF5QqC+qfgDKjikgJeu8gt8i3nskNF5Y/QYgG5/TT/BkaQfeFJeRvhI
-	IemUPrXjk4GzVjOjANz4EDdwlmpeSTZKoe1kXXEDljwkmOZd/MjXN64Qw1Nj6KMVaRfZFtBFuts
-	cR3xv8adhpxn4R7CloXw8WjtA7NDet/GCECb34Tj8fFgpICaOyS5hwjYbRWxP2L73HiIu7aukEe
-	+Y2r8dsSb8d5ayshIOAfkVoWXrTqAbWs1JAsmAL7Uch1ozpE6qHH8Ybm6NjQW93z2ZfaXXAy3kh
-	9pzJUGaUeGB45LR+UpmJkutg9HCfl5btdlFj6zJ4eRAybP0moYiAq5FlK3jUgQAEvAisZOD6lKK
-	ZeuqWvt4rujiTzbfYurDtWHqWM6uQqTSY2qAGd66i1SGBOtMgJAdokqw=
-X-Google-Smtp-Source: AGHT+IFPMFJByHAQ3JW76Qjmt7UP+fMZMpkYgj4Y9V9tn3CZdsWTV3HC+ojk6qaBDfa1ihXXI4WNNA==
-X-Received: by 2002:a05:6000:3105:b0:3fc:54ff:edb6 with SMTP id ffacd0b85a97d-4266e7dfdb3mr815912f8f.35.1759889928751;
-        Tue, 07 Oct 2025 19:18:48 -0700 (PDT)
+        bh=vbpwXTejC+yajTX3XXncJGeds605AJHrgdSUCP7BbNs=;
+        b=VTEVhiWB5vusk3DNba4kn6qo9ax/OKntsZrt7Mcg1HdWLc3yKcJM/INZ9FCGAr3Eoq
+         SZ+DjwpSIgNv7+73QB5uXMXJ1CSOPLROAQtReV/oKWsXGnDpdxxJzXgnDlFpw7jWCByw
+         VQE2m1yWACIl1nO8kxTJMFAuH9tiksGDfxTCZGi7mX5aZHFoRhwbOhBUGb+tY4m3XzqW
+         wybF75f5eWRLNbfCi0ZPIHoS/Bwhl9vLyRGa//Zp+NauhP7tIG4XOWDIbGgXF4Dt6bRi
+         iZSqlPgh/HC6YcK8WGPN9qXx1BcMR7j0dDgz4o5Lt4Xe7S7O6ZASBEJrRl1XpiVJSOud
+         y+jg==
+X-Forwarded-Encrypted: i=1; AJvYcCUFAxelVCm7/7lKz7WIwkrwmWGLbwT5e00QhIemBIvyA4WWaeaqIpkhSULTuE+wO9KOdhcdyj0Ju/2b+6qi@vger.kernel.org
+X-Gm-Message-State: AOJu0YzTbZ/7oA7RpaCLXIhPTVZSs5Gn19+hiF0mW4K5JkvOAq659Z7h
+	nzfGYoqjErvCbjQNA+esaVkh9tlQ7GrS6dHIxugq+emKlNLOLRBiFDXn0CiVoc/fpbI=
+X-Gm-Gg: ASbGncvBQRRaJraS4o9/z753xSfdQuKTZgq64NMbY3VI3iKadz1KAnSPZYpa9mNJCCH
+	KHaOBdSaIgPDFcVh7ZkEU56Mz6JPGZNFsoPVkGuV3+01bghZ0idKZs6lQ49SkkY/SVpymrkoPvj
+	1VYbB2fYsONGax45/A/md7zcqu9D72/FCAPyoJqh0YAvB4Z+kph3qGaH4scNgYlrG0Ox1c1CfVl
+	CNZWkT0l+fcPbHLNc1T4u31mulaghNmaxMtmqVCUA/ilEVcz4hgoO3EfhnT0wPahay04QmRCdrD
+	yvK7PbDGSQxfW005o8bwvnY3T61GtGuJ2x4bXPQ1ZtpaW5fPCcrm5eJcJKuJ5UxoJZptBjZ/eSJ
+	wKqDeji2yk/x0SqstRGqw4qa8bAB+k8BSSqR5n/Ya7WuSA6iWUNi/bYI=
+X-Google-Smtp-Source: AGHT+IFFqlDGt7h0nc+NuKrTo3pc2pheELlH3q2GeHR9OiCLFLF0nYVBjizloysNNRJBS6y4P310LA==
+X-Received: by 2002:a5d:584b:0:b0:3ee:3dce:f65f with SMTP id ffacd0b85a97d-425829e7935mr4259067f8f.14.1759891244667;
+        Tue, 07 Oct 2025 19:40:44 -0700 (PDT)
 Received: from localhost ([2a02:c7c:7259:a00:8c32:dd4d:57f2:8be7])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fa9c16990sm15668705e9.10.2025.10.07.19.18.47
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-4255d8e9724sm27496800f8f.28.2025.10.07.19.40.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Oct 2025 19:18:48 -0700 (PDT)
+        Tue, 07 Oct 2025 19:40:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -81,78 +81,53 @@ List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 08 Oct 2025 03:18:47 +0100
-Message-Id: <DDCKWVH8ORLM.357D9IKQK9YN8@linaro.org>
-Cc: "Srinivas Kandagatla" <srini@kernel.org>, "Liam Girdwood"
- <lgirdwood@gmail.com>, "Mark Brown" <broonie@kernel.org>, "Rob Herring"
- <robh@kernel.org>, "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor
- Dooley" <conor+dt@kernel.org>, "Stephen Boyd" <sboyd@kernel.org>, "Lee
- Jones" <lee@kernel.org>, "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai"
- <tiwai@suse.com>, <linux-arm-msm@vger.kernel.org>,
- <linux-sound@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, "Dmitry Baryshkov"
- <dmitry.baryshkov@oss.qualcomm.com>, "Srinivas Kandagatla"
- <srinivas.kandagatla@oss.qualcomm.com>, <christophe.jaillet@wanadoo.fr>
-Subject: Re: [PATCH v4 2/4] dt-bindings: mfd: qcom,spmi-pmic: add
- qcom,pm4125-codec compatible
+Date: Wed, 08 Oct 2025 03:40:42 +0100
+Message-Id: <DDCLDNFBCALB.19TNBLSQJ5X86@linaro.org>
+Cc: "Jaroslav Kysela" <perex@perex.cz>, "Takashi Iwai" <tiwai@suse.com>,
+ "Dmitry Baryshkov" <dmitry.baryshkov@oss.qualcomm.com>,
+ <linux-sound@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 1/2] dt-bindings: sound: qcom,sm8250: add QRB2210 and
+ RB1 soundcards
 From: "Alexey Klimov" <alexey.klimov@linaro.org>
-To: "Krzysztof Kozlowski" <krzk@kernel.org>
+To: "Krzysztof Kozlowski" <krzk@kernel.org>, "Srinivas Kandagatla"
+ <srini@kernel.org>, "Liam Girdwood" <lgirdwood@gmail.com>, "Mark Brown"
+ <broonie@kernel.org>, "Rob Herring" <robh@kernel.org>, "Krzysztof
+ Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley" <conor+dt@kernel.org>
 X-Mailer: aerc 0.20.0
-References: <20250915-pm4125_audio_codec_v1-v4-0-b247b64eec52@linaro.org>
- <20250915-pm4125_audio_codec_v1-v4-2-b247b64eec52@linaro.org>
- <20250918-wonderful-deft-jackal-7d3bbc@kuoka>
-In-Reply-To: <20250918-wonderful-deft-jackal-7d3bbc@kuoka>
+References: <20251007-qrb2210-qcm2290-sndcard-v1-0-8222141bca79@linaro.org>
+ <20251007-qrb2210-qcm2290-sndcard-v1-1-8222141bca79@linaro.org>
+ <67e313d3-1f91-4205-8aec-fbbfa41004f2@kernel.org>
+In-Reply-To: <67e313d3-1f91-4205-8aec-fbbfa41004f2@kernel.org>
 
-On Thu Sep 18, 2025 at 3:03 AM BST, Krzysztof Kozlowski wrote:
-> On Mon, Sep 15, 2025 at 05:27:49PM +0100, Alexey Klimov wrote:
->> Add qcom,pm4125-codec compatible to pattern properties in mfd
->> qcom,spmi-pmic schema so the devicetree for this audio block of PMIC
->> can be validated properly.
->>=20
->> Signed-off-by: Alexey Klimov <alexey.klimov@linaro.org>
->> ---
->>  Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml | 6 ++++++
->>  1 file changed, 6 insertions(+)
->>=20
->> diff --git a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml b=
-/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->> index 078a6886f8b1e9ceb2187e988ce7c9514ff6dc2c..776c51a66f6e7260b7e3e183=
-d693e3508cbc531e 100644
->> --- a/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->> +++ b/Documentation/devicetree/bindings/mfd/qcom,spmi-pmic.yaml
->> @@ -137,6 +137,12 @@ patternProperties:
->> =20
->>    "^audio-codec@[0-9a-f]+$":
->>      type: object
->> +    oneOf:
->> +      - $ref: /schemas/sound/qcom,pm8916-wcd-analog-codec.yaml#
->> +      - properties:
->> +          compatible:
->> +            const: qcom,pm4125-codec
+On Tue Oct 7, 2025 at 2:45 AM BST, Krzysztof Kozlowski wrote:
+> On 07/10/2025 10:26, Alexey Klimov wrote:
+>> Add soundcard compatible for QRB2210 (QCM2290) platforms.
+>> While at this, also add QRB2210 RB1 entry which is set to be
+>> compatible with QRB2210 soundcard.
 >
 >
-> Not much improved. Same feedback applies.
+> You explained here what you did, but you should explain why. I don't
+> quite get why SoC sound card and RB1 sound card are both needed. I would
+> just go with one.
 
-Around the time of sending this I thought to set separate follow-up patch
-that fixes the other part here -- pm8916-wcd-analog-codec.
 
-At this point, is it fine to send follow-up patch that does smth like
-this:
+I wanted to go with none in the first place and just make it rb2
+sndcard compatible (as a fallback). Then Dmitry suggested to follow other
+sndcards patterns and implmenet it like this.
 
-+    oneOf:
-+      - $ref: /schemas/sound/qcom,pm8916-wcd-analog-codec.yaml#
-+      - properties:
-+          compatible:
-+              - enaum:
-+                - qcom,pm4125-codec
-+                - qcom,pm8916-wcd-analog-codec
+There is also at least one qrb2210/qcm2290-based board -- UNO Q and at this
+point I can't say if it will need separate compatble or can use
+qcom,qrb2210-sndcard as a fallback.
 
-?
 
-(I didn't check how if it will compile or pass checks)
+> Please use subject prefixes matching the subsystem. For bindings, the
+> preferred subjects are explained here:
+> https://www.kernel.org/doc/html/latest/devicetree/bindings/submitting-pat=
+ches.html#i-for-patch-submitters
 
-Hope this is okay.
+So the order in subject should be reversed. Got it.
 
-Best regards,
+Thanks,
 Alexey
 
