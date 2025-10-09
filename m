@@ -1,88 +1,87 @@
-Return-Path: <linux-arm-msm+bounces-76588-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76589-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD2F5BC8482
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 11:22:37 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65CDCBC84AA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 11:26:19 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id A66AD1A616F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 09:23:00 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id E24A04E8C73
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 09:26:17 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B8272D641A;
-	Thu,  9 Oct 2025 09:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id BC6B02765D3;
+	Thu,  9 Oct 2025 09:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="VnUtvOoY"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TkXcNGpV"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
+Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A662B2D481C
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 09:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E14127B327
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 09:26:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760001735; cv=none; b=hsRyjoAF+WvEqycYhJoinx1IOy9xqtgjnVaw+iuztkxCfDZWdylXPVCLZiC6GNWzHjdoAd+NO0+hZp/XDOd/ywPUKXnAqYYiNgxYS8/CrnuLPrA+tSrGMlNY3CeoPyzcjp9N+vNR5STptoTYCBO1D0fb/YTblZhDIUQ0X165nXw=
+	t=1760001973; cv=none; b=sMuurZmNGcexqsSI6fhQQ17CUFrQZkkZ8gtPNc5fosWm+VEzAfkLsSGrO37JsUCH7s4jSHqacpOOhS/+pkQnnTFKz7G9l8kdI33zUEWuPM2cnFrMsUaybJGC6S2fOV3xml/kD8x8Y5LSLNc+ODA7CpCQjZjBtbRo9PLzSG21WNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760001735; c=relaxed/simple;
-	bh=m7sGX8LqCBcYJzEU1J2asHkmcl3RgvVNGFVvSyqxM80=;
+	s=arc-20240116; t=1760001973; c=relaxed/simple;
+	bh=utxI/ULBqHNoRHaa98abrqVVhdCZaM5+EZRg0gJ11UM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TXPgSQnj7VxQ7frqElH9Jd827baFVQgYARpdE8C00Z+lrzjzOYogHCkc+gamlYB/yjK66v37dq4e/kKPkHZBVBc0fecFkhzKE5Rit95MtNxEULbLz/bg7LX5SJEcxLHzt9xe+bqRspkxEj87rzu2yujviolpIMP99IihHwZ8xdY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=VnUtvOoY; arc=none smtp.client-ip=205.220.180.131
+	 In-Reply-To:Content-Type; b=QECsXzZycJw4D0YSYhS3taH1TLOXDmNS7eiwghfKLC4M6BtcRImWmSp2hHYx1Iek8+jPhUbU816IYV7B0DKYwWxFONLf6B1azT6AvlBGECdK78u02puwvgAMAUZmmrfEeaGc+7QRwT8mCPsRW6u0y/HdLAYHtQz6fMxC6V/oUwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TkXcNGpV; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5996EPgl005152
-	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Oct 2025 09:22:12 GMT
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5996EIKM028491
+	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Oct 2025 09:26:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
 	cc:content-transfer-encoding:content-type:date:from:in-reply-to
 	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	3T3F6rzbdmMoNWAMnngme3yze4tyxfjIoIeOdL7FrsY=; b=VnUtvOoYef6BeyDh
-	OTKFhLq3V9F1shdLdIxD8fVMC0o1z3NstclYDBqMCIa9xqApxl5ZnvvfcGw3rRbJ
-	4u+iRhtnm5EwIaa6N48mDdYFeq7Y46G/0MhaEMvncRhLyTqFMPPjEopLkN5UTmvw
-	xHUXJ8Qoe0vYCkDQW05hrZW2XK5rwxsz+EFGE0jIsIpwgSVM6mGUf1aLSbs8xX5D
-	b6Ei8IzzW1+80we+b9r1oTPsGAqIDSQTc8E0RwJ9E40IPZDZRiGIdZK3wccJkLLa
-	LqdnQ+XdphUDyLpiVTgDE2mZ4aeL3p8B8g3Z3V7OeqmNj8Dx78pfYHB/X3lbKM7E
-	nZIsRg==
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com [209.85.160.198])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4u27jj-1
+	3OVHAa5V6RkvtP12fLWJPioi/xyeh80to3fyM1SmruI=; b=TkXcNGpVNow8DpFM
+	54D7T6YiqyJQKORDYNEjV0dXZ/iEQurj+JRSvjgH2QHSAUm+/GAQn8gh719jNLCo
+	6LjwyjYmaIOC9Fz+idLGqT4SkPGWzROjqOK+dRunaH3Z0FtwvVSBSfTEzwQL70it
+	0yf+hBsrjkaOFsOEQLSJRZZsr/5LL0dVBvHhG3OYYG4zhxGUiL17glot0+UhwElg
+	5NkXEPnjWEGhyToVUEpjKo6J+pUEH7jQBsOBAReGqTEaP2P0J2v3/YBhEF6LYSM0
+	mNRZ0gyF50zd9bAJ3G66P5t6kqXLkipH9TegPUo/Cv7F+Enk9aRWYgu8ErCC+20b
+	i9uQcw==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4kt717-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 09:22:12 +0000 (GMT)
-Received: by mail-qt1-f198.google.com with SMTP id d75a77b69052e-4d880ce17bbso1537031cf.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 02:22:12 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 09:26:11 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4e4b4e6f75fso2969371cf.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 02:26:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760001731; x=1760606531;
+        d=1e100.net; s=20230601; t=1760001970; x=1760606770;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=3T3F6rzbdmMoNWAMnngme3yze4tyxfjIoIeOdL7FrsY=;
-        b=tJXdsdTUcyS9Tl9WY5eCyOHjfnVsumkRxMu9ycrUUh1bOuYwBuBKVh34NuX3JxxWsr
-         IRh8lrIft2BIMJm50Ft/k3UOHRlaxMDbweS2lFJE8C5gaVI67ppVYI2N+bfKR2fxH4Za
-         uJbbUgXi34GLHNof6xASehZu9vabBag4eaHOmI4HfumJDf/spg66JWiR99DnCisfcTix
-         iioSqvs6wsqtI4yL3W5J5yUJ2DR5hev+V6nJJHpPwS733efdd6K4FyPP11xKOpo5jc/V
-         rvLtXK1lG2+QohpJJE+fnlom1F4HTdIfD62FJDZ1u2e1yV7kuNJ7BVkSJwHHKVfTP8Dy
-         jfFA==
-X-Forwarded-Encrypted: i=1; AJvYcCWvZt71mV6vOkx7/5x7U9anxAHdubQlciNUUn9/TptW90eEwPh9EQoqzmPPlubc+nD1kvIAKOH8kPWx3iGB@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywtyhk+uzPl6oau6q+9sMRrvjVQ7QLUy3ZgeqakjPeOTEVOc1Y5
-	+NSK6IEJLslVaytacJCVdc1tchsPZUHzC9GOFTQS6h0pgG4hxmsk35GZciW/+6sZWbZ+iZlCx+O
-	x4rgymqjW8DTLXmfk5+IsABNgBvvCbEuaruMYSn2yrMGAxEn7SEmR3b1UdGl5xPI8CYJO
-X-Gm-Gg: ASbGnct0ypRebN3b7kPo1vVT/+wwfXp+4yeAE4RjAkcSrRopRaB7PCkyLYdgw/p2Uz1
-	uRUspYCI7IqWlrYBzZPC2WMKSW8VUrVfLvWzYyXfBXCjBmV0Olf56BYZlBVLy06RRu9mkTpYMwu
-	LDnSlFLoB/9sIGmpT/99IG5L73z46hMOCnOKiMvNqzqvzlq2ZjrByN+0h6ByefhlZ6Ne/jKVwmp
-	nURob3s9sIsIIfLDgDCpES1kLiiALKlfB0FR757YrfxV2Np3dhv/4y1ldFjCQlB5rLjxaqWab6M
-	4LjUgjJDXnhPUyL3e57Mz/nUJBjhidxbGrbbNWzKVqu4IYj3z4fbCJdvqcREr0JmDeZNbtHULZf
-	aMuIHTf+q4DhIz0A63u405R/+Lxg=
-X-Received: by 2002:ac8:5991:0:b0:4dd:1a2f:4881 with SMTP id d75a77b69052e-4e6eacb81b2mr64073841cf.6.1760001731543;
-        Thu, 09 Oct 2025 02:22:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2X7icy3lg+xeOQgJOky5fWzmyU3gLm0qGfVSTXdz1EXkq1QfNAExgoimdotZtxhJlPB+i0g==
-X-Received: by 2002:ac8:5991:0:b0:4dd:1a2f:4881 with SMTP id d75a77b69052e-4e6eacb81b2mr64073621cf.6.1760001731041;
-        Thu, 09 Oct 2025 02:22:11 -0700 (PDT)
+        bh=3OVHAa5V6RkvtP12fLWJPioi/xyeh80to3fyM1SmruI=;
+        b=TrwaFefFuNvVTbyVys/0rAYswvVqeUhzgJCYpFhCiaXmUSLVgQmU4yMTLQfLhVU5Z9
+         P8dSIrVhyFNZewLxlacJEUBrbRHsolA9ImZVXew3UOgeZN6CGmHzAF/lFXug0Hi9FYzU
+         +Qyh9LqZ4yQ0hcEkV8ROxmRzfVKEEmgr6T8SKnuF2QNfJ8B0Py8VRe2qei47QJO0IJnU
+         RUjdpzjIhxzKaJo+IS5aVVvGRAxye8K3zJ6HSI0Uol6eBDRMriRzRUSa9HjlKhYdVY3u
+         nzISczuxD4lDZLgNFYJyeJ0apqmXXu0KRdKG5q0W1Q8amAI3iwv7L6yV7nHMJP4H6OSb
+         pdLQ==
+X-Gm-Message-State: AOJu0YzN2Xo+Z+A/bO2NmPm6aY8mhOBSBdE/QPh7f1RaoJl4rJOC40iQ
+	gzNnpvVtiUlOKPd7+zSNpnPU5CKo5yZg+GYpV9ieOLngtMGENU+EY1KzJQMU7KwpOHl/0IjiU+7
+	u3cW8R+a1VjsZc2ya0qLLRJPHQOVdpojrdy+6EjlpFvRlC6UhO2vkmhy/GmY12etboKEA
+X-Gm-Gg: ASbGnctTNZ8C7A4LmKaxL+lMAZMIGUBY03mfwu/4JQLFnOA1CYqg+YvG0cRCIQBg0SS
+	5LBh+b7C7krpe9B35vHTAmWA+MxqLal/f1CZ0uBp4cSiGAldQRQwIOND9RitFr11UNRkGroAF3D
+	Eclg/zjJ2C/OWRxziE6QMyeCmyYpmR9VyC4m/inlTdox7ewgQrOTC3vpjGlW8nnjHbyU8y76RyE
+	rc5xz0Z3rCqW1eDoK4iUjmq5/B+S5mk75Mkkz7oAwO32ztsG+TkzZdmpYzWf48FdnoI2bHs+BZr
+	Nb/DDfQ1DwXeiiQq8oARVhtfVxQKTAaenLrnj7VDUetP31vduaKxkQVpc7Iz6tgCagZ/5Y7BS2J
+	1oTxnJA+YCbUh6XAg/PSeCnBbYv4=
+X-Received: by 2002:a05:622a:3d3:b0:4d8:85db:314 with SMTP id d75a77b69052e-4e6ead5eeb7mr59493661cf.11.1760001969825;
+        Thu, 09 Oct 2025 02:26:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTRPTAZvD3wF2/a9+OuTMJj1spFQmgeaFWHJlGbPvOzFAFoUdxrLC4mglua8zi7PyH4hTjIQ==
+X-Received: by 2002:a05:622a:3d3:b0:4d8:85db:314 with SMTP id d75a77b69052e-4e6ead5eeb7mr59493431cf.11.1760001969260;
+        Thu, 09 Oct 2025 02:26:09 -0700 (PDT)
 Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-639f2d60816sm1934249a12.0.2025.10.09.02.22.09
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b48652a9ea1sm1841043266b.16.2025.10.09.02.26.07
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Oct 2025 02:22:10 -0700 (PDT)
-Message-ID: <8e452e51-3a95-49e6-91e3-53aa46fcfe2e@oss.qualcomm.com>
-Date: Thu, 9 Oct 2025 11:22:08 +0200
+        Thu, 09 Oct 2025 02:26:08 -0700 (PDT)
+Message-ID: <39ebaf4e-e91f-4568-8de6-9fc1f805a1e4@oss.qualcomm.com>
+Date: Thu, 9 Oct 2025 11:26:06 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -90,99 +89,94 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: qcm6490-fairphone-fp5: Add
- VTOF_LDO_2P8 regulator
-To: Luca Weiss <luca.weiss@fairphone.com>,
-        Bjorn Andersson <andersson@kernel.org>,
+Subject: Re: [PATCH v1] arm64: dts: qcom: hamoa-iot-evk: Fix 4-speaker
+ playback support
+To: leqi <le.qi@oss.qualcomm.com>, Bjorn Andersson <andersson@kernel.org>,
         Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
         Krzysztof Kozlowski <krzk+dt@kernel.org>,
-        Conor Dooley
- <conor+dt@kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>
-Cc: ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20250930-sc7280-dts-misc-v1-0-5a45923ef705@fairphone.com>
- <20250930-sc7280-dts-misc-v1-2-5a45923ef705@fairphone.com>
- <ac1c0d1a-36a9-4542-b879-06c017f7f2c4@oss.qualcomm.com>
- <DDDOF3F8K5WQ.FTJ0F6E6DLPG@fairphone.com>
+        Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, kernel@oss.qualcomm.com
+References: <20251009072630.460387-1-le.qi@oss.qualcomm.com>
 Content-Language: en-US
 From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <DDDOF3F8K5WQ.FTJ0F6E6DLPG@fairphone.com>
+In-Reply-To: <20251009072630.460387-1-le.qi@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=Vrcuwu2n c=1 sm=1 tr=0 ts=68e77ec4 cx=c_pps
- a=mPf7EqFMSY9/WdsSgAYMbA==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=6H0WHjuAAAAA:8 a=-BH9GnAZmLL9hDugqCUA:9
- a=QEXdDO2ut3YA:10 a=dawVfQjAaf238kedN5IG:22 a=Soq9LBFxuPC4vsCAQt-j:22
-X-Proofpoint-GUID: lidn1iBPPRvW72lt4R4Yt8fyg51dzQYQ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfXwwY02tORnDAo
- KajOnsobxzVEw5Mqd+XKE55pTBiUDNMUV1vLoNnMdQniZ/BKH/qb1BqL3kEDnfYwM3fFTFoGOO0
- cnULEq32Ft37ww+Tg4qivmHh9O/mGFkvgzmUh6MoN2bkwr7Spde4LCo8WGGVZr2m4vWel9urJoQ
- N+1a6/X6wT2n2tlQJphO4IViAFeOq3IpEosFTotqC8CAAuyaj0dEYQTok1vY4q/KQDQAxXGnMdI
- kl3nSm7VbgsQXBbz0/OO+jFZtxDpB7dkEn2cKEzCKEymEZ2GuNbqky+r4FdO3OdL36jQmw6B+hw
- rF897ZckdSFuifmpxs/lvbgeMnu3vGXFTChCjBKHIzSbimktRL8E6s9Su40E0aYFGAyx5vy3wdc
- RhpBVfijb0MEbpMimiSHkyQzFr8n+g==
-X-Proofpoint-ORIG-GUID: lidn1iBPPRvW72lt4R4Yt8fyg51dzQYQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX0a+TsEKbEyQY
+ VIaGj05qIit0T1URmDpaw3yDdcWY6PTDPaQ5+NdtXxDvUpssr760UfTOQKeDnDQBQbz3Eg5ACbp
+ FXapI3WOh1eiWkxRpuh65Mc80yD6cbKHLCatMwq3I1+gND33vknlepJh4ylzGtq8vU0StAdol/S
+ sp+QB39wSzON1MrNHlwUgMI5Bha31yy6UvOm060PwhiwarLt2QB30YvMO24JM03hLWVWKoimDEQ
+ fL+8AjtE8PnoXs3OTxatsd13lnPtNCjhgZzogbNTjRhhl/Sy7edP8/VYX4EA2TJ1DpabMpOsA+q
+ +TfuTKd1m+LUfT1awigW9bszPOqVb+TSkIRcu0YhCWlGybjONQOmnrIDdH6E75w18iecOOhlLi6
+ nJ8rCpB4mfmRg2A1V6yV/s0LxnLJFg==
+X-Proofpoint-GUID: 3BY3M3oMb6uN5Bo3uTR3aBB_GcphfxeM
+X-Proofpoint-ORIG-GUID: 3BY3M3oMb6uN5Bo3uTR3aBB_GcphfxeM
+X-Authority-Analysis: v=2.4 cv=SJxPlevH c=1 sm=1 tr=0 ts=68e77fb3 cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=EUspDBNiAAAA:8 a=GZ-sSbIBM5jd_UAKczkA:9
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-09_03,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 impostorscore=0 clxscore=1015 adultscore=0
- bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0 lowpriorityscore=0
+ malwarescore=0 suspectscore=0 impostorscore=0 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
 
-On 10/9/25 11:16 AM, Luca Weiss wrote:
-> Hi Konrad,
+On 10/9/25 9:26 AM, leqi wrote:
+> On the HAMOA-IOT-EVK board only 2 out of 4 speakers were functional.
+> Unlike the CRD, which shares a single GPIO reset line for WSA1/2,
+> this board provides a dedicated GPIO reset for each WSA, resulting
+> in 4 separate reset lines.
 > 
-> On Wed Oct 1, 2025 at 10:30 AM CEST, Konrad Dybcio wrote:
->> On 9/30/25 3:57 PM, Luca Weiss wrote:
->>> Describe yet another regulator-fixed on this board, powering the ToF
->>> sensor.
->>>
->>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>> ---
->>>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 13 +++++++++++++
->>>  1 file changed, 13 insertions(+)
->>>
->>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->>> index 36d5750584831d66b4c2faf6042e4cbb3274eca7..0a64e5721e092d1f3e4bb7329335704eee567761 100644
->>> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->>> @@ -195,6 +195,19 @@ vreg_usb_redrive_1v8: regulator-usb-redrive-1v8 {
->>>  		pinctrl-names = "default";
->>>  	};
->>>  
->>> +	vreg_vtof_ldo_2p8: regulator-vtof-ldo-2p8 {
->>> +		compatible = "regulator-fixed";
->>> +		regulator-name = "VTOF_LDO_2P8";
->>> +		regulator-min-microvolt = <2800000>;
->>> +		regulator-max-microvolt = <2800000>;
->>> +		regulator-enable-ramp-delay = <233>;
->>> +
->>> +		gpio = <&tlmm 141 GPIO_ACTIVE_HIGH>;
->>
->> You may want to define the pincfg/mux config for this gpio too
+> Update the device tree accordingly so that all 4 speakers can
+> playback audio as expected.
 > 
-> While I wouldn't say it's not good to have it, there's plenty of GPIOs
-> that have no pinctrl for it. Downstream doesn't set anything for gpio141
-> either.
+> Signed-off-by: leqi <le.qi@oss.qualcomm.com>
+> ---
+>  arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts | 30 +++++++++++++++++-----
+>  1 file changed, 23 insertions(+), 7 deletions(-)
 > 
-> I honestly wouldn't even know what the 'default' for a GPIO is in the
-> first place, or could I query the runtime state from the kernel? Is
-> /sys/kernel/debug/pinctrl/f100000.pinctrl/pinconf-groups trustworthy to
-> solidify this in the dts?
+> diff --git a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+> index df8d6e5c1f45..de9af19be6e8 100644
+> --- a/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+> +++ b/arch/arm64/boot/dts/qcom/hamoa-iot-evk.dts
+> @@ -743,7 +743,7 @@ retimer_ss1_con_sbu_out: endpoint {
+>  };
+>  
+>  &lpass_tlmm {
+> -	spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+> +	spkr0_sd_n_active: spkr0-sd-n-active-state {
+>  		pins = "gpio12";
+>  		function = "gpio";
+>  		drive-strength = <16>;
+> @@ -751,13 +751,29 @@ spkr_01_sd_n_active: spkr-01-sd-n-active-state {
+>  		output-low;
+>  	};
+>  
+> -	spkr_23_sd_n_active: spkr-23-sd-n-active-state {
+> +	spkr1_sd_n_active: spkr1-sd-n-active-state {
+>  		pins = "gpio13";
+>  		function = "gpio";
+>  		drive-strength = <16>;
+>  		bias-disable;
+>  		output-low;
 
-I normally use /sys/kernel/debug/gpios
+output- properties should be removed in favor of in-code gpiod_
+function calls, otherwise the reset gets asserted by the kernel as
+the OF node is being processed, unbeknownst to the then-not-yet-
+bound driver
 
-> 
-> 141 (gpio141): input bias disabled, output drive strength (2 mA), output enabled, pin output (0 level)
+[...]
 
-but this seems to be formatted very similarly if not identically
+> -	pinctrl-0 = <&wsa_swr_active>, <&spkr_01_sd_n_active>;
+> +	pinctrl-0 = <&wsa_swr_active>, <&spkr0_sd_n_active>, <&spkr1_sd_n_active>;
 
-Generally it reads out HW state, via (among other things)
-msm_config_group_get()
+Similarly, because these pin configs relate to GPIOs connected to
+the speaker amps, and not the soundwire host, these entries should
+be split between each individual device
 
 Konrad
 
