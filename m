@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76613-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76615-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C4C1BC88A6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:41:24 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 34A5EBC88B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:42:21 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id BB1203E3D12
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:41:16 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id E2A3F3B99F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:42:19 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 64F3A2D94A6;
-	Thu,  9 Oct 2025 10:41:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 500342DA760;
+	Thu,  9 Oct 2025 10:42:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E1GMGYtq"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hS4DeciM"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DFB2D8390;
-	Thu,  9 Oct 2025 10:41:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6AA2C15BB;
+	Thu,  9 Oct 2025 10:42:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760006474; cv=none; b=gLqZwOkEudCkvEc2AEfCNXKXH9mCjC4fonQq5EovWzwtuenKNLr9vzaBJshM0f0bGGPAZww7PogNpUKwtXbXe8xoGad7BmonS+GZUnZ/DzrdOh15cHSx6MUkHcAS05gXxm/4FvXKobCqAmC5uD8Iu+k8x5lnBpp4Ibz/Y8Jugr4=
+	t=1760006537; cv=none; b=d3f2aQVdXCjeR6dICb7T/1nVq8Pfsu24bYoD0Id0/122aZ6R/SIcEIhCk88dMW9FCyQknpRtcAFsZk+1YF2Lky2IYWaDaY1liT/gVYd98MQVqu4TCrhxPYliG4FGNzPVH4h6+84vlWLLTfrdjM3BDzQhCh21prFufECq5mZVrMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760006474; c=relaxed/simple;
-	bh=vhncvQKVVrDMPWCZVzK3kw+FgCosnOje4qr32w+rqAU=;
+	s=arc-20240116; t=1760006537; c=relaxed/simple;
+	bh=9Zo7I/ezgNHWrAuawtJdjnxzMgZkFp1yRk41PJSwnzU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TteMoJi9fc7yFBtcwAVBw1iuTd3CDR2kJsYOn1HWS7N/RxtC3uSVcebv+BnFUJHsJWUZo8aLRX9o348vG4616FjwVcdUiIM9h1kPJXRjwVoo6SvtRasTvB1rMszb/IPmlIWbhHmx7GsrLcGPsUdxz3NR0i258CL1eaTm9V031n8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E1GMGYtq; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07144C4CEE7;
-	Thu,  9 Oct 2025 10:41:06 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=twOrdD6/jnhjrhACiGG4vu/Q1poIrjl4K3N9bTQJuAx+z3/vrymcfNsxBWO1+MffH2Z0O1p7XD3SFcMmPUs7+2qiwMkUpzH11GFWxv+xWssZNRw/ugG+znqnRcFTS5OQgWKfYMf+pbu71a/c+UDGNqdxgr6D2YFvZZz/QLw8krk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hS4DeciM; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DE11C4CEE7;
+	Thu,  9 Oct 2025 10:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760006473;
-	bh=vhncvQKVVrDMPWCZVzK3kw+FgCosnOje4qr32w+rqAU=;
+	s=k20201202; t=1760006536;
+	bh=9Zo7I/ezgNHWrAuawtJdjnxzMgZkFp1yRk41PJSwnzU=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=E1GMGYtqonXrPGynSwcYry2uBoyQ+1gplLZPsBv0TywmAVcjDJ5WE0iFvbQmy6a5G
-	 TTMyiITA9UoHjMh7eH0EY4XgiKFcbWQ1PA1/uacp3FNcsfYS+faRwCRTWCsOeCMjk5
-	 NHIyVDYNORU8EveI3AhEkR3ATfwzzERomh+tmGR30MaPKQn2CQOVvF7yyZoPEiv+9h
-	 +WuRG8Bg/AuHz3RXIQZIlXMjdZN+6OVsttimRDd1sE58t7Wq2hrazJTse3xH5O75xh
-	 OImES7qM0I2A2FvzmQD/beiIki0+eJvT/n4yPTzmnXFGHlsG1psja6nI7AiJ1a4TVV
-	 prDq/CesTJvmw==
-Message-ID: <b1613920-1196-46d5-9607-4845176f690f@kernel.org>
-Date: Thu, 9 Oct 2025 19:41:06 +0900
+	b=hS4DeciMl1c/BDUdNFDfi+rgnco3KjWYcrBJxhUxo6Wma/3WTOwEhCscSb7adJZAh
+	 /6hohP8skuuv8tqbA3C/Gy4dLPWZY0R8LDmrYiEbzhsIWhNKyA88NeB3bLImlRXA6U
+	 vF8C8/OgBpafEalwoIrShZ9IZlv4L91NNdUTr3aO7MdMzKTuejlctCJ6oOcP/73qcO
+	 qQrON33i3sS8NVhM8pp8lLJgjqD+Pyk8KdtFoPUlIlim7RLTmcs0d+pAkyr2cDeFOf
+	 WOpuAWRSszD2Ck+JCifmahMr3fxvp/taaxGY80I6rMdf7qgfd79ZLYvLAnSGeIdhiz
+	 NTL5/Jnn/G0Tg==
+Message-ID: <69f3c4a3-59dc-4bae-8958-95228a075061@kernel.org>
+Date: Thu, 9 Oct 2025 19:42:08 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,7 +50,8 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] ASoC: qcom: sc8280xp: Add support for Kaanapali
+Subject: Re: [PATCH 4/5] dt-bindings: soundwire: qcom: Add SoundWire v2.2.0
+ compatible
 To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
  Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
  Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
@@ -63,7 +64,7 @@ Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
  linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
  Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
 References: <20250924-knp-audio-v1-0-5afa926b567c@oss.qualcomm.com>
- <20250924-knp-audio-v1-3-5afa926b567c@oss.qualcomm.com>
+ <20250924-knp-audio-v1-4-5afa926b567c@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -109,32 +110,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250924-knp-audio-v1-3-5afa926b567c@oss.qualcomm.com>
+In-Reply-To: <20250924-knp-audio-v1-4-5afa926b567c@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
 On 25/09/2025 09:01, Jingyi Wang wrote:
 > From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
 > 
-> Add compatible for sound card on Qualcomm Kaanapali boards.
-> 
-> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
-> ---
->  sound/soc/qcom/sc8280xp.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/sound/soc/qcom/sc8280xp.c b/sound/soc/qcom/sc8280xp.c
-> index 288ccd7f8866..e231112175d9 100644
-> --- a/sound/soc/qcom/sc8280xp.c
-> +++ b/sound/soc/qcom/sc8280xp.c
-> @@ -198,6 +198,7 @@ static const struct of_device_id snd_sc8280xp_dt_match[] = {
->  	{.compatible = "qcom,sm8550-sndcard", "sm8550"},
->  	{.compatible = "qcom,sm8650-sndcard", "sm8650"},
->  	{.compatible = "qcom,sm8750-sndcard", "sm8750"},
-> +	{.compatible = "qcom,kaanapali-sndcard", "kaanapali"},
+> Add qcom,soundwire-v2.2.0 to the list of supported Qualcomm
+> SoundWire controller versions. This version falls back to
+> qcom,soundwire-v2.0.0 if not explicitly handled by the driver.
 
-Keep alphabetical order.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
 Best regards,
 Krzysztof
