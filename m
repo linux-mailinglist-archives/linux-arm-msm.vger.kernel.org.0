@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76617-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 989F6BC88CF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:44:03 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E658BC890F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:45:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 7307B4E7C2D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:43:58 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B70363B6BC3
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:45:41 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id EB0402DE6F3;
-	Thu,  9 Oct 2025 10:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97D4C2D94A6;
+	Thu,  9 Oct 2025 10:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ob9rWgSf"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOiaczP3"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF2C2DC76A;
-	Thu,  9 Oct 2025 10:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5DC27587D;
+	Thu,  9 Oct 2025 10:45:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760006630; cv=none; b=KzrZTRGaE2fyO0fnB5A9q7Avb2UuETUoIm6pa31AHzgh9RHdHWAD5Gq9CCqsMtVTJ9Q7raJCbc6sAksxYXoL5xbrHuNVv+IJnXkqXwJuNK5n6h1BAEV2Olr2S04YXOpdXvo+Lyqzhq51QvohOEVrrIRAPNCYXHOM8lBEjfevC24=
+	t=1760006739; cv=none; b=Bk1PHkD3mMYdbhsbO6KgVf9zmdzlfHQ5o7ksL59OVosXY/1t/4ELmWq6xR1t9OPRtYASgT4C6lxJsFmOSFbeyhAL07J+69SxlksXbLQyun9Lj4T21XaoQl6D4QVDjhO+55SJYWj5mMCr+GaWHDeF2gDqG6qeLKOK3tGAaYYtwQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760006630; c=relaxed/simple;
-	bh=Ri9oASZefzcDY6PM7AgOzmYNBAAYD4l/31QSGxRaC5E=;
+	s=arc-20240116; t=1760006739; c=relaxed/simple;
+	bh=9id8tIe9NIzz9DBiDJqfu/qHT/QjpNPhNBm5D/is+RE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=SkRclaLLRQ37Qeo/j+AX5onsLu8eGlNLTHZ51MNIulxtQmH546gEuhZ0yq4mfav1jUogN/jrXUHrXBzJ4CSxPHFrtjzudAHcBTfE/s4m4Cx6hltXCwmMcMmCb8WkYLAWJAPYTWL0Ps/YPtmuLXKxCVOe81aZQXDE02WZEVAW0ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ob9rWgSf; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A205C4CEFE;
-	Thu,  9 Oct 2025 10:43:45 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=AS9lTM3NOPIo8c4PsJbXNMpMKh8kZqD/PRvC+5DJFZJJ7PbkvvMuwk1kRNmFIxsarkYvL7cxryE+qcXG9DG8U4/WuZQ2uCycd8C1VTUj5VQFj8gRroCfRCFu6g7x4Uxuthq81Quwkfj6hLTRnSwkHBjZXmdyAtqQ4IZfzFFjrxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOiaczP3; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33BEC4CEF5;
+	Thu,  9 Oct 2025 10:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760006630;
-	bh=Ri9oASZefzcDY6PM7AgOzmYNBAAYD4l/31QSGxRaC5E=;
+	s=k20201202; t=1760006738;
+	bh=9id8tIe9NIzz9DBiDJqfu/qHT/QjpNPhNBm5D/is+RE=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ob9rWgSfnw663dxghfradUZ8uuS4VAS3Cr/h0M1IDVOTcNINOAQDP2R0qIkZxu/dE
-	 mUv2I0/a7MkDVgznhXf3T2Rx+kaTvqXeIuD1yGdng9TEAVNJxZQaklc9+1mO+1vW4x
-	 frjfFEccEPRP6uySE0PUS7xxglQzUm+Zenio/qJHf+1hQusZ6lU61hDTA+V+sOYZLN
-	 Ygs74HPlvsf7nDr6gv1+PIjORL5OY3votg9pXRQJmjrxjqKA+tEHb2KxKZRwRJ1g+8
-	 rVbG45GuClR+YVvuZAUyoKjiK9Zn5i++uSRXPNJ8OoltBA2nnyEjG/HTQ1jIk19WNR
-	 QMk9E5n2SPhiA==
-Message-ID: <1b77c77d-b329-42e3-b814-9784a63fb2ab@kernel.org>
-Date: Thu, 9 Oct 2025 19:43:44 +0900
+	b=jOiaczP3pa99lF0dQOZr7Ny8ZJkO7HOAtoSa09D/YXDHFRdx5xuOzhn3jcdxYa4nc
+	 GxYSDA52qXccpp5U27xe1Uz0u4TZubI1ImhPEMfjNfm5D6tBVxgSlWy4PGS/8aKMxV
+	 JOWxK6D+VprY7gcaPjtGdQ39fP1yefK3IZeJZ631VEh8GjOqNjDKzUtIIbc56JgLUS
+	 t8khzpslvLvbyiT+fd7wfYIcPhJCtDIvW2lPetiI45we6LjN7BzxgU3Mv9GpEWFVYW
+	 snL5A11rASW64u52zor1Up6cDvQFl29z9+YgO6a0gMm9GWIG/1hwD6OC0C8YqY4gis
+	 Vtr0CuJZj9AMg==
+Message-ID: <e8dfad82-ab07-40e9-9296-859168142611@kernel.org>
+Date: Thu, 9 Oct 2025 19:45:28 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,21 +50,37 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] ASoC: dt-bindings: qcom: Add Kaanapali LPASS macro
- codecs
-To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
- Srinivas Kandagatla <srini@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
- Takashi Iwai <tiwai@suse.com>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
+ node
+To: Vikash Garodia <quic_vgarodia@quicinc.com>,
+ Bryan O'Donoghue <bod@kernel.org>,
+ Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
+ Bryan O'Donoghue <bod.linux@nxsw.ie>,
+ Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+ Dikshita Agarwal <quic_dikshita@quicinc.com>,
+ Abhinav Kumar <abhinav.kumar@linux.dev>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Rao Mandadapu <quic_srivasam@quicinc.com>
-Cc: aiqun.yu@oss.qualcomm.com, tingwei.zhang@oss.qualcomm.com,
- trilok.soni@oss.qualcomm.com, yijie.yang@oss.qualcomm.com,
- linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
- Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-References: <20250924-knp-audio-v1-0-5afa926b567c@oss.qualcomm.com>
- <20250924-knp-audio-v1-5-5afa926b567c@oss.qualcomm.com>
+ <conor+dt@kernel.org>, linux-media@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+References: <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
+ <4cb4a92d-2f20-47c7-881e-aadcc6f83aa0@kernel.org>
+ <1516f21e-aee3-42cf-b75e-61142dc9578d@oss.qualcomm.com>
+ <9bae595a-597e-46e6-8eb2-44424fe21db6@linaro.org>
+ <MMSKAu89Ew7StAeFBV442KfKNzmqbTSQ-maFG35Jr9d8PkUV2L4sx44R2DRevXA8mC45vkA398l2mvVzarZwew==@protonmail.internalid>
+ <bcfbf35b-69ed-4f39-8312-6a53123cd898@kernel.org>
+ <d46c0335-99d6-469f-a61f-aca4c851f745@kernel.org>
+ <GyrcG3qBN7c5C7ajCs3EV81hWvuaVbg64CpzQ-X3d_p6EauoiKxSoG2aOKE21-j12SWFjNDjV-kVSwYYqVm_lQ==@protonmail.internalid>
+ <a0dc93ec-e35c-409b-8dfb-1642c92a9f0c@kernel.org>
+ <98e6acf8-80d7-4894-b4ce-ce74660722ef@kernel.org>
+ <soFAWqHDNosrZui972Ip7EvMCfB6tepD-HxHkc17RKmilPJpQZjMzni9LmMOpvKumHqFEibe5FdNkkJG8DKlcw==@protonmail.internalid>
+ <5085c857-f6e8-4faf-b61a-a9ee562ccf06@kernel.org>
+ <7ba3953a-166f-4c67-8f54-666b0c488b12@kernel.org>
+ <e15f156c-cb38-4566-b275-ba156a7b598d@kernel.org>
+ <4fac8b52-180d-7b79-f0d9-52c0f94186da@quicinc.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -110,20 +126,45 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250924-knp-audio-v1-5-5afa926b567c@oss.qualcomm.com>
+In-Reply-To: <4fac8b52-180d-7b79-f0d9-52c0f94186da@quicinc.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 25/09/2025 09:01, Jingyi Wang wrote:
-> From: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
+On 09/10/2025 19:40, Vikash Garodia wrote:
 > 
-> Add bindings for Qualcomm Kaanapali (LPASS) RX, TX, VA and WSA
-> macro codecs, which is likely compatible with earlier SM8550.
+> On 10/9/2025 2:41 PM, Krzysztof Kozlowski wrote:
+>> On 09/10/2025 17:38, Bryan O'Donoghue wrote:
+>>> On 09/10/2025 02:04, Krzysztof Kozlowski wrote:
+>>>>> The iommu description for this platform basically lacks the data that
+>>>>> _should_ be there -> FUNCTION_ID.
+>>>> No. The index tells that already.
+>>>
+>>> Hmm.
+>>>>> The rule is that the DT should really describe the hardware right ?
+>>>> It already does. Same as I wrote on IRC, DT already has all the
+>>>> information. Entry 0 has function ID-foo. Entry 1 has function ID-bar.
+>>>> Entry 2 has function ID-bar or whatever.
+>>>
+>>> That's the part I don't believe is true its a 1:Many relationship 
+>>> between FUNCTION_ID:SIDs
+>>>
+>>> Let me check the docs...
+>>>
+>>> Here's the example I gave on IRC for lore
+>>>
+>>> SID 0x1940 maps to AC_VM_HLOS (Linux)
+>>> SID 0x1941 maps to AC_VM_CP_BITSTREAM - protected bitstream
+>>> SID 0x1945 maps to AC_WM_CP_BITSTREAM
+>>>
+>>
+>> I responded to this on IRC... Nothing proves here that 1:many cannot be
+>> done.
 > 
-> Signed-off-by: Prasad Kumpatla <prasad.kumpatla@oss.qualcomm.com>
-> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+> Kaanapali already has 1:Many relationship for FUNCTION_ID:SIDs.
 
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Sun is a star. How is that related? I am not going to duplicate
+arguments from IRC, especially to that pointless argument. Read again
+discussion on IRC.
 
 Best regards,
 Krzysztof
