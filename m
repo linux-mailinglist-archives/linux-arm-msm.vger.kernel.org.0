@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76618-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76619-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0E658BC890F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:45:43 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD543BC891E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:46:44 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id B70363B6BC3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:45:41 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id B36D6189AC0D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:47:07 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 97D4C2D94A6;
-	Thu,  9 Oct 2025 10:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 21C362D94A6;
+	Thu,  9 Oct 2025 10:46:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jOiaczP3"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TSr4Iqqs"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A5DC27587D;
-	Thu,  9 Oct 2025 10:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FC625782F;
+	Thu,  9 Oct 2025 10:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760006739; cv=none; b=Bk1PHkD3mMYdbhsbO6KgVf9zmdzlfHQ5o7ksL59OVosXY/1t/4ELmWq6xR1t9OPRtYASgT4C6lxJsFmOSFbeyhAL07J+69SxlksXbLQyun9Lj4T21XaoQl6D4QVDjhO+55SJYWj5mMCr+GaWHDeF2gDqG6qeLKOK3tGAaYYtwQw=
+	t=1760006798; cv=none; b=GTdxfvgXPMYz1Z168WeFyn9ViSpsWAhmPoeUOwbg0wFT8bQm4SA9o0CfGB+K01BS0ZTK3o3jQWQofCGOW+9J0a0OkIoj3U1hyVOtm7AkQtDPmxc5zhJKKZIliOEbHVf8DGZSP8zsF09+0NQripFDy1apt6+Ik302gQikY9bsoPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760006739; c=relaxed/simple;
-	bh=9id8tIe9NIzz9DBiDJqfu/qHT/QjpNPhNBm5D/is+RE=;
+	s=arc-20240116; t=1760006798; c=relaxed/simple;
+	bh=gq1GlD/JNmscj9pSxVM6SlS8u8l/THT51VLdoDTnla0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AS9lTM3NOPIo8c4PsJbXNMpMKh8kZqD/PRvC+5DJFZJJ7PbkvvMuwk1kRNmFIxsarkYvL7cxryE+qcXG9DG8U4/WuZQ2uCycd8C1VTUj5VQFj8gRroCfRCFu6g7x4Uxuthq81Quwkfj6hLTRnSwkHBjZXmdyAtqQ4IZfzFFjrxE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jOiaczP3; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B33BEC4CEF5;
-	Thu,  9 Oct 2025 10:45:31 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=gFLdkjMb0xSJe9POww4RQo7XN4xeMFeeZILKF/DTVPIUphhnzs9US1isDRYCtXpeLCwY6GDAvSdj2l8h/Z5zqZQoRmBdNmDTQIdusUow/vmxzqRDnknxZ5rP8NYYkIUKVP4Hms66OefH9fHmUnLGm6aU4DCFWNhwcNpDp40CLsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TSr4Iqqs; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B164C4CEE7;
+	Thu,  9 Oct 2025 10:46:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760006738;
-	bh=9id8tIe9NIzz9DBiDJqfu/qHT/QjpNPhNBm5D/is+RE=;
+	s=k20201202; t=1760006797;
+	bh=gq1GlD/JNmscj9pSxVM6SlS8u8l/THT51VLdoDTnla0=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=jOiaczP3pa99lF0dQOZr7Ny8ZJkO7HOAtoSa09D/YXDHFRdx5xuOzhn3jcdxYa4nc
-	 GxYSDA52qXccpp5U27xe1Uz0u4TZubI1ImhPEMfjNfm5D6tBVxgSlWy4PGS/8aKMxV
-	 JOWxK6D+VprY7gcaPjtGdQ39fP1yefK3IZeJZ631VEh8GjOqNjDKzUtIIbc56JgLUS
-	 t8khzpslvLvbyiT+fd7wfYIcPhJCtDIvW2lPetiI45we6LjN7BzxgU3Mv9GpEWFVYW
-	 snL5A11rASW64u52zor1Up6cDvQFl29z9+YgO6a0gMm9GWIG/1hwD6OC0C8YqY4gis
-	 Vtr0CuJZj9AMg==
-Message-ID: <e8dfad82-ab07-40e9-9296-859168142611@kernel.org>
-Date: Thu, 9 Oct 2025 19:45:28 +0900
+	b=TSr4IqqsxsyT8F1nq/aIe4VLSeSg8I/etJRvanmcnCOtlvmnkf4LL8OMxieTOJ1P9
+	 hjcKizTU/YYhgHku2CZXML1r//ChcXvlrx2melRdH4MPw+ws8ov+4Y79Tqcs872R4Z
+	 N1oE4kJ2gt6ReJgMpk2HHHOMAu5tZTbe6FI9tuR+Zc2W8fVNBUIfz3ZTWilRzRCsgt
+	 MA3FrxT3jLqAXsMhimTraeDLNsCH2Ox9gne7Xe/cMHYepBUpQHHDM3AcJpX3iurg9u
+	 4OA8NULWeZr7YGqUF2i90B0VFdWqohyJI0iqtc3reAtgWYbqHqHIW4fkzaZ1Z+DmF0
+	 +LWuGuFBFzrEg==
+Message-ID: <5a44b53f-4913-4c62-836f-85d67b513b62@kernel.org>
+Date: Thu, 9 Oct 2025 19:46:28 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,37 +50,23 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
- node
-To: Vikash Garodia <quic_vgarodia@quicinc.com>,
- Bryan O'Donoghue <bod@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
- Bryan O'Donoghue <bod.linux@nxsw.ie>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
- <4cb4a92d-2f20-47c7-881e-aadcc6f83aa0@kernel.org>
- <1516f21e-aee3-42cf-b75e-61142dc9578d@oss.qualcomm.com>
- <9bae595a-597e-46e6-8eb2-44424fe21db6@linaro.org>
- <MMSKAu89Ew7StAeFBV442KfKNzmqbTSQ-maFG35Jr9d8PkUV2L4sx44R2DRevXA8mC45vkA398l2mvVzarZwew==@protonmail.internalid>
- <bcfbf35b-69ed-4f39-8312-6a53123cd898@kernel.org>
- <d46c0335-99d6-469f-a61f-aca4c851f745@kernel.org>
- <GyrcG3qBN7c5C7ajCs3EV81hWvuaVbg64CpzQ-X3d_p6EauoiKxSoG2aOKE21-j12SWFjNDjV-kVSwYYqVm_lQ==@protonmail.internalid>
- <a0dc93ec-e35c-409b-8dfb-1642c92a9f0c@kernel.org>
- <98e6acf8-80d7-4894-b4ce-ce74660722ef@kernel.org>
- <soFAWqHDNosrZui972Ip7EvMCfB6tepD-HxHkc17RKmilPJpQZjMzni9LmMOpvKumHqFEibe5FdNkkJG8DKlcw==@protonmail.internalid>
- <5085c857-f6e8-4faf-b61a-a9ee562ccf06@kernel.org>
- <7ba3953a-166f-4c67-8f54-666b0c488b12@kernel.org>
- <e15f156c-cb38-4566-b275-ba156a7b598d@kernel.org>
- <4fac8b52-180d-7b79-f0d9-52c0f94186da@quicinc.com>
+Subject: Re: [PATCH v2 2/3] dt-bindings: clock: qcom: Add SM8750 video clock
+ controller
+To: Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
+ Taniya Das <taniya.das@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Michael Turquette <mturquette@baylibre.com>, Stephen Boyd
+ <sboyd@kernel.org>, Rob Herring <robh@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley <conor+dt@kernel.org>
+Cc: Ajit Pandey <quic_ajipan@quicinc.com>,
+ Imran Shaik <quic_imrashai@quicinc.com>,
+ Jagadeesh Kona <quic_jkona@quicinc.com>, linux-arm-msm@vger.kernel.org,
+ linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20250829-sm8750-videocc-v2-v2-0-4517a5300e41@oss.qualcomm.com>
+ <EAIobHjo8rM1e0LwqDqaUllC0qjV5ElMMhk6KgT1oNnFt_-k7ctM2_6kym9OjEtse5o4pOFM7yCkXgrSGRZhuw==@protonmail.internalid>
+ <20250829-sm8750-videocc-v2-v2-2-4517a5300e41@oss.qualcomm.com>
+ <d965949c-a7a0-43df-9bf1-c1232fc7e38e@linaro.org>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -126,45 +112,22 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <4fac8b52-180d-7b79-f0d9-52c0f94186da@quicinc.com>
+In-Reply-To: <d965949c-a7a0-43df-9bf1-c1232fc7e38e@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 09/10/2025 19:40, Vikash Garodia wrote:
+On 15/09/2025 19:58, Bryan O'Donoghue wrote:
+>>   properties:
+>>     compatible:
+>> @@ -25,6 +26,7 @@ properties:
+>>         - qcom,sm8475-videocc
+>>         - qcom,sm8550-videocc
+>>         - qcom,sm8650-videocc
+>> +      - qcom,sm8750-videocc
 > 
-> On 10/9/2025 2:41 PM, Krzysztof Kozlowski wrote:
->> On 09/10/2025 17:38, Bryan O'Donoghue wrote:
->>> On 09/10/2025 02:04, Krzysztof Kozlowski wrote:
->>>>> The iommu description for this platform basically lacks the data that
->>>>> _should_ be there -> FUNCTION_ID.
->>>> No. The index tells that already.
->>>
->>> Hmm.
->>>>> The rule is that the DT should really describe the hardware right ?
->>>> It already does. Same as I wrote on IRC, DT already has all the
->>>> information. Entry 0 has function ID-foo. Entry 1 has function ID-bar.
->>>> Entry 2 has function ID-bar or whatever.
->>>
->>> That's the part I don't believe is true its a 1:Many relationship 
->>> between FUNCTION_ID:SIDs
->>>
->>> Let me check the docs...
->>>
->>> Here's the example I gave on IRC for lore
->>>
->>> SID 0x1940 maps to AC_VM_HLOS (Linux)
->>> SID 0x1941 maps to AC_VM_CP_BITSTREAM - protected bitstream
->>> SID 0x1945 maps to AC_WM_CP_BITSTREAM
->>>
->>
->> I responded to this on IRC... Nothing proves here that 1:many cannot be
->> done.
-> 
-> Kaanapali already has 1:Many relationship for FUNCTION_ID:SIDs.
+> Shouldn't this be qcom,pakala-videocc now ?
 
-Sun is a star. How is that related? I am not going to duplicate
-arguments from IRC, especially to that pointless argument. Read again
-discussion on IRC.
+No, why? There is no such soc as "pakala". See qcom bindings.
 
 Best regards,
 Krzysztof
