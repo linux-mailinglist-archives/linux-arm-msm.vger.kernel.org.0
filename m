@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76626-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76627-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [IPv6:2605:f480:58:1:0:1994:3:14])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D0FABC89D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:56:34 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 55A71BC8A38
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:58:43 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 4785E4E8FFB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:56:33 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 02BCD4215F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:58:08 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4DC812DE6F7;
-	Thu,  9 Oct 2025 10:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 765D82E1EF8;
+	Thu,  9 Oct 2025 10:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RTk8zJKN"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XvZsFfPA"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 213D825A659;
-	Thu,  9 Oct 2025 10:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 316932DF153;
+	Thu,  9 Oct 2025 10:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760007390; cv=none; b=QTnPbwpzdhi6zHBC4heqGQcUxkh3t7CptCBijw6cUCVzh6nLw7nbTCQcSwKmv2ElonNQXqAX+cKrHW+B7WAH/KtZG5JS4tb5omfPMjHaBkOTfIpFn/DF7Diu/ugqMH1h5hY/U4Z9shufvTqUu8sw/oxP4eXA/mn+ZkXm0CtxD/s=
+	t=1760007449; cv=none; b=fLfLa2I5ut7rhSxAg7FE3zdssXhH8YLRyjcMDslDy3hnp3X+wXEmY1M1xDe5vLMsjdTh1jMnagwXVpoxvz3/8qGVytbECt5ChTuzTUkR2Z3i4cBECk+6srKhDZ1ypgt4k2dFL+PxSS3vdbbjuLBNarY9cuANibyxTShUuw2qGNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760007390; c=relaxed/simple;
-	bh=b/aB2cWCKi9QsMgL7BCvxCRoaQypU63whYN3S94m+W0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BT1kvK0jxTc4cj0dkQ6vpE03AUB5Gm7HDh+wplRHJ//XUCq3AGAkzH5ozlH4fqsoWfiaZrcm0kSVRAsuO330pXlb5DRQu40gvo9dvLA+O/iI668ukg+p6rgOKct7BE0aOs3s5UXu3VfG9/Eak1pFgEmGGkM6IExgmE1si5lkwZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RTk8zJKN; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F062C4CEE7;
-	Thu,  9 Oct 2025 10:56:26 +0000 (UTC)
+	s=arc-20240116; t=1760007449; c=relaxed/simple;
+	bh=DTSdq9kNFhmnAL5Q9HV6F14LGPo5NGjgxXnqEm4Pl3o=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ozjSobupfUV8JgvkXEmsKIYy+SPjtjtOQ7NI/fXkcc7nvXY8LxrawLBzHTZ00T7MqsBHYhyElBGbldDsGBiTsTL96uJpO62/yGKPHFkV66dCLYP9iTuoHN0Q0ASLhsmQ1exeZycOXg15NWlr//8HemUQMHg9KlLXwblMoAUOswg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XvZsFfPA; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5082C116B1;
+	Thu,  9 Oct 2025 10:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1760007389;
-	bh=b/aB2cWCKi9QsMgL7BCvxCRoaQypU63whYN3S94m+W0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=RTk8zJKNAR6cAcSsQOJSyV7Mm2Bl4B6k2tRD5Xu02m6oqhuJlAT1f73mrairIdA5g
-	 jw+SU4RtoVMEEaN/puzHfKe7TldcMVZSEetAgcjqiQrffI0BM74og0bCtv87cJ96wk
-	 Txgjdt/ZPoVDISVtb1VsFsLmAsEVTzVvtXC1iBxxbIzrEh2dlwMQ4X9/0EUR+UWcM9
-	 Lf03G/cmeHEV74Oq13t6j/cRxzrHdJFBzO3OVKm0di8NXLIr6l8A8a3j7v/EQhNI+Q
-	 Sjou7GwWraqWykxDFQIXKvKMNEsyRoCor/kWYHm4vFE/aofKbnc8HPlfiWqPBDVXOE
-	 o/TeR5u8j0CPw==
-Message-ID: <729612c2-785a-4fd8-979c-5e2661cb6d3e@kernel.org>
-Date: Thu, 9 Oct 2025 19:56:23 +0900
+	s=k20201202; t=1760007448;
+	bh=DTSdq9kNFhmnAL5Q9HV6F14LGPo5NGjgxXnqEm4Pl3o=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To:From;
+	b=XvZsFfPAN6+GxXZ0fl83/t3mGDxA02ObXtoB5mQtkvD9zI+G+qjdKhygYkAtbqT77
+	 3S05sPs7kBDj8qlhrdkxzJZOcCyKAE5EIPecHYYpKZfVP70XG155bFNps8yhb9dpDy
+	 fVFs7kOsy4jbkMdtYApYJi3hU/QqjsBxoymG7S+UZLy0MHtVW7dzJ6JRKJSE5eLqPm
+	 5eGOVtp7jqcq4oPdbF40LWhUROnK8yTjEGltWwDpxIkaBaUbbazFMKg1WZVkOkfgZa
+	 xv7GgYkNrB7pHCbVpcFzT6nuiQ0LcBxJFgTSnBTkM8GAzIh94P21pj5HZlMj/MioeZ
+	 9yZ8J/pmcuEvA==
+Message-ID: <ab7c3540-fbc5-4c88-9291-0b6435d7c64d@kernel.org>
+Date: Thu, 9 Oct 2025 19:57:21 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,14 +50,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dt-bindings: mailbox: qcom: Document Glymur CPUCP mailbox
- controller binding
-To: Sibi Sankar <sibi.sankar@oss.qualcomm.com>, jassisinghbrar@gmail.com,
- robh@kernel.org, krzk+dt@kernel.org, conor+dt@kernel.org
-Cc: linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org
-References: <20250924144831.336367-1-sibi.sankar@oss.qualcomm.com>
+Subject: Re: [PATCH] dt-bindings: mailbox: qcom: Add CPUCP mailbox controller
+ bindings for Kaanapali
 From: Krzysztof Kozlowski <krzk@kernel.org>
+To: Jingyi Wang <jingyi.wang@oss.qualcomm.com>,
+ Sibi Sankar <quic_sibis@quicinc.com>, Jassi Brar <jassisinghbrar@gmail.com>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>
+Cc: linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org, aiqun.yu@oss.qualcomm.com,
+ tingwei.zhang@oss.qualcomm.com, trilok.soni@oss.qualcomm.com,
+ yijie.yang@oss.qualcomm.com
+References: <20250924-knp-cpufreq-v1-1-1bda16702bb1@oss.qualcomm.com>
+ <b2f06313-124f-41ef-bd53-2484140ca0b1@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -102,25 +107,43 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <20250924144831.336367-1-sibi.sankar@oss.qualcomm.com>
+In-Reply-To: <b2f06313-124f-41ef-bd53-2484140ca0b1@kernel.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 24/09/2025 23:48, Sibi Sankar wrote:
-> Document CPU Control Processor (CPUCP) mailbox controller for Qualcomm
-> Glymur SoCs. It is software compatible with X1E80100 CPUCP mailbox
-> controller hence fallback to it.
+On 09/10/2025 19:53, Krzysztof Kozlowski wrote:
+> On 25/09/2025 08:23, Jingyi Wang wrote:
+>> Document CPUSS Control Processor (CPUCP) mailbox controller for Qualcomm
+>> Kaanapali, which is compatible with X1E80100, use fallback to indicate
+>> this.
+>>
+>> Signed-off-by: Jingyi Wang <jingyi.wang@oss.qualcomm.com>
+>> ---
+>>  Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml | 9 +++++++--
+>>  1 file changed, 7 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+>> index f7342d04beec..6f72f78e4b72 100644
+>> --- a/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+>> +++ b/Documentation/devicetree/bindings/mailbox/qcom,cpucp-mbox.yaml
+>> @@ -15,8 +15,13 @@ description:
+>>  
+>>  properties:
+>>    compatible:
+>> -    items:
+>> -      - const: qcom,x1e80100-cpucp-mbox
+>> +    oneOf:
 > 
-> Signed-off-by: Sibi Sankar <sibi.sankar@oss.qualcomm.com>
+> No, you send conflicting work with Glymur. Just send ONE PATCH.
 
-This should be squashed with Kaanapali. Commit msg is the same. Contents
-is the same.
+
+And replying here the SAME as I said to Sibi:
 
 This entire split is just huge churn, huge duplication of work and quite
 a lot of review put onto the community. You should have coordinated your
 work better.
 
-I am dissapointed because you just don't think about the reviewing
+I am disappointed because you just don't think about the reviewing
 process, about what maintainers should do with that. You just send what
 was told you to send.
 
