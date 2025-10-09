@@ -1,174 +1,144 @@
-Return-Path: <linux-arm-msm+bounces-76601-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76602-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id 473B7BC869C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:10:48 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17BE3BC86B6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 12:12:36 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 31B634E8D80
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:10:45 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id C69273A5874
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 10:12:34 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 3D1812D9EF8;
-	Thu,  9 Oct 2025 10:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 79B1D2D877C;
+	Thu,  9 Oct 2025 10:12:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b="Vc+9kMgs"
+	dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b="Vd0SZcSb"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304FA2D879B
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 10:10:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B122D5922
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 10:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760004638; cv=none; b=ESnJia4SHuKripv7EjFDRevHzhtUn6PxN3HHGVLGN4Rektd8itfW/qstYzt33v8fZxAPkjfG+C3mPSislNgIRJ8bdB/bsKksqSwjiO9jIXmAvKz36GcfwlhVe0XA0TkubmB/w5Q/GMAa07nRggvQEAiw81VINFYkhzVR5zAbkvY=
+	t=1760004753; cv=none; b=n2VrbSjhT06osl9gnSoAoHx53qG5Cis8SNw/Xjc577g+jIcE89yQOPLnMPM872+01+d6IlpC4NOcLTD5CgrlHIzFSi6cG448u3kxRTfrTOsf+/zaQspQFrgqK98gOwD/+cjP+3gAo097meE16Ltj6lJXdZWT1cY2ZF7HG8NsOs0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760004638; c=relaxed/simple;
-	bh=gG4uos5u7JZYKZN9sVpZMjMGBZVjLgLK+l61W+7327M=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=FZzELfa5hVYsOuaZZapdtDf5DT7qnsT+2uMCsYy05R1DmZUJ6BiLtehh8UjLjVlLhA2HthDfX3m9eWmGgpO7p0ducxUysl4bGA6YxdM90dUIDEx/xYVjjAd98QBKbGcyF2tkJtZMSkt+5uHmCbqkFVju7EHkCaSCNOL8oJcp39c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com; spf=pass smtp.mailfrom=fairphone.com; dkim=pass (2048-bit key) header.d=fairphone.com header.i=@fairphone.com header.b=Vc+9kMgs; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=fairphone.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fairphone.com
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-636de696e18so1545983a12.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 03:10:35 -0700 (PDT)
+	s=arc-20240116; t=1760004753; c=relaxed/simple;
+	bh=JTtVIAFYf35Hh8feLqqWv19+tcpgXwV0O2h/lrQZ+LE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=kt4Je2x/urFGjSclN1vb/SwQY+8+TOcgak9ga/K3rDyXdwu3hM2P8/V3HU1pitG4mpKxicQiYgl+TF8A1uyPayHhe2zbFIDkCjkxlDPFsHva+lwvTvt8lSCal6hcf4kKim/wSc6sjS6XTEu6ijdPwrW7uOrR6yRAIp+aPFgtHV4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl; spf=none smtp.mailfrom=bgdev.pl; dkim=pass (2048-bit key) header.d=bgdev-pl.20230601.gappssmtp.com header.i=@bgdev-pl.20230601.gappssmtp.com header.b=Vd0SZcSb; arc=none smtp.client-ip=209.85.128.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=bgdev.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=bgdev.pl
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-46faa5b0372so5027585e9.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 03:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=fairphone.com; s=fair; t=1760004634; x=1760609434; darn=vger.kernel.org;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=bgdev-pl.20230601.gappssmtp.com; s=20230601; t=1760004750; x=1760609550; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=viQs/zJlFXUzbGPc0YC6fbKblNDfZ3K6sukiP7yGwdA=;
-        b=Vc+9kMgsIuD+EPFwhTPJRM3ETJLY+5xhBq6fHJL+NQO1JMT55AeQ0euergmAZNMFHh
-         FjqSA152TXjMzTDqgw5X8N9U1vOcNWRfPQqD8YOoaltg3YtLg6RQgQEbE6V5mzXDi2Tn
-         +6AbmCnlD3nsaNrl/1o889LGizsjF+sMuBZLtlmrLY60mD6VufMlt/us830IwRubUu1+
-         UssuUPtfw/QbqkRaPurP5p1N/JIhJYCh73Ylky3ImPWGi36foOBpsc9Xv1CslboiyyZz
-         yWB759KdXeZh/fAmuCBl8MNgLeS84pHnEpIpoCRyU+8o5es7TinxldV0Y67/UShoy3Oo
-         R/Uw==
+        bh=SO/OcY1CO73Q6LYMqOLX5PvBUeNoOpjpPrCz+L7Phi8=;
+        b=Vd0SZcSbAk/uJ6FmS1ntD7NdOfhIZQj8BKd3C/Bq4JUb78zQtlry38cUxTUODbVc1h
+         VDhiYCI6usbZcKE5qaCF5hAqe82UdO4pbi0e3feaRimqGN9vCOh4RlJOfaNnF3HCbQ4I
+         VO4osTdYxL4qEqr3zAviZOBqDCBUtL90eOb05FxPk39GofwF6YPK4sZ+3vXdPXBiJhNj
+         0owdO4vg8QX6LA0k8xP06xIA7PDQtCI4Tb0Lpyq1OoNQlGd8J1VsoQ09HwCS8Aav4f1o
+         /bIMDZUcz4HL0bGitT76uU95b6IWDq0GTlJDGUtLObzzWgcDI1WtuYkP+jDCwQviOVIp
+         JXTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760004634; x=1760609434;
-        h=in-reply-to:references:to:from:subject:cc:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=viQs/zJlFXUzbGPc0YC6fbKblNDfZ3K6sukiP7yGwdA=;
-        b=w5YOpyR5VXK5ZEug58Ue5rU4owcTsZ8pJXLFsKeJRcrvHEAKGLeNoNEMWyQRyHDb4z
-         c7ZRV6iN94MZY62ebEdJerT3ue3BhemqA2lAZ0RiLwv08LsPQtjg0T4JGTcw3qhpxQrC
-         9XHDWEf/7NwwP+K7shap00CLJ6s/Eael4DXs9lwO4RSMV05qxJu9wCDud88m1tbv47mV
-         Ol+Qvku6yEUEROu72+6xDnomUkZ2i2pvUGuElkwnZgLhjGeAOjpa66jUOihir0PE3j2r
-         CjyXsV5EZnEb6UA3PR11DJblNWy63Q/3yIH4gqPKXf+f72Vq1Cg5QicaEy2OO5Fl9rNU
-         7RpA==
-X-Forwarded-Encrypted: i=1; AJvYcCXKpDVmL2IivbzTBeFKl8Ge/W75sxufzzlofw/J82nUrCSahgikAmK9kioI9F4yHEk2aFhKfV0m+rSZZYOf@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw3utZt6LALxEA/uF3/ovepm7Do9kj/I+rLa0OEzHUIayFZXABe
-	/9dHcSGNWsCNlmyZaWInePjS2m2RyfAgwth2RqxSkBVzq3utEq6S5XFhPDshjW23Dis=
-X-Gm-Gg: ASbGncsuVwGuM3GEdWkd4EwjQw3jRfRIj4aK50cB8MgtLbzx6Wym3Tlx+uZod3x08Sl
-	bIfKgcLh9hMB/DNGuzdtvAAIzAXUS1rLJpnWKPoZS8DoMYzotuMadiE3BAPkrPbRxih1RnTa9EU
-	sv9zEyweJDulxl4IjxYFOQVtqYUwEZ/8RK7hemFQWUaX4lPuxf5V+Dd37MGN5yLzvooppXZbSDH
-	cb7Vk489x1qqSYcv7rs0G2goP5X8GevYrfchgtXUhs7js9Zwrb4PfBTgNY0mATj3Il6PWRlVJY5
-	YYh2xaWAEI45IiroNJZxqE+72Isjk+ypZx8nfgxZTyhwCMIQz63WEmTiO4QYRAGvs/2gf+n9BnN
-	r6tf7Stsncm8ZnyC8mly18QiwkZSdLD/FIJbgodHlNB5Dw2s+RVCaZdmT9NbU040Ygf7/vKWnDN
-	/ufkSK7oXSwceDA/f3tNmGOWHMK5Y=
-X-Google-Smtp-Source: AGHT+IFKo/O79Io0+uRDFxUtJz1dvwc4fUBNTtl0a5vuuzbIOA2sW+cayD8+0hP+Jrhv2ADqtpK2hA==
-X-Received: by 2002:a17:907:d86:b0:b49:5103:c0b4 with SMTP id a640c23a62f3a-b50ac5d07f2mr831965466b.56.1760004634280;
-        Thu, 09 Oct 2025 03:10:34 -0700 (PDT)
-Received: from localhost (144-178-202-138.static.ef-service.nl. [144.178.202.138])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b4865e77427sm1905317166b.36.2025.10.09.03.10.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Oct 2025 03:10:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1760004750; x=1760609550;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=SO/OcY1CO73Q6LYMqOLX5PvBUeNoOpjpPrCz+L7Phi8=;
+        b=KGqmQ70giPskiEdDD5/UmkWJOWiomUmH7o930/l6R/lLamBJHgbue7K55RuNf7mzrx
+         DZV981dR6GAOpQwZlWZtIZ9NtNVpQGfd34XHZ33CMddD+IML0DwFLJ74pZ9XUrZ1+LxF
+         Z7PiVRGwCu1CTu2Kw+V9w3T6rK2tcWKboDCsjGfIUkUa7IK0axPBN5C4cu4pFQJ5M76w
+         KSoZ5R9066ymd3AC5vmLwjX/1K6buRz9Mw1FkPrGQU5h1GmWh1TtiUl+NndIsSctFOHT
+         af5ozhP+HN6Xp0HRx8xcuc1f55hz6yhMi3m6MYiKjvdtP/xPDZqAt4+uLVgT7X6lgq4f
+         c/Zg==
+X-Forwarded-Encrypted: i=1; AJvYcCXzgGhqoSL7Z2veETPbVEP0PSqLfiiIjYa3hh6YM54zQ5LgOUFSMdCa9SnsvxlAJsiKMBISV9T+5biY35qB@vger.kernel.org
+X-Gm-Message-State: AOJu0YyXenv0BcP57XTccQnf+/KA1rR8R+qIweDNq2s5FKPlVz7FCmAV
+	2yfy2AlHZIwDqItmG39+wK/u1zICDZsYXn6EsTdAwdi37D3bWlvMBHZ+u0HNlxZET8M=
+X-Gm-Gg: ASbGncsCSo9JvJqXg0abA9b67zTUpuEvKX79dzi2/sjF6F40Bb1k6D2Oxk4KpcModCS
+	tDZeBCWWbHpiGtHtSouJvUa+SOl9YhhVRSrhoy1006lNRZoIdsBdzDe32aSG78Z8ouNjsev95af
+	Z+iR9R320EgpYQOoNQBWxnutzlAK6zHMCvV/eJceWpyzt3fEH7MGWz7vUTK+0g1jW/YVuDmMXli
+	SERdo1hFODrnmm0IjcJxC8CkXiXdT8gnQnmUO78ct44zD6ZOmWmNFB3oeiWRDe5z93faMKor+vn
+	SuEr/x9C91EgcR8gaxYONppQhk124BaKPQ9JE2e/oJLu3rW6DS+b7FXraIjuNJ7nDh69c/6HDHL
+	a8HQlgMxHHIF9O6yDYzMTL6/7WVcNJfHWUOh/OtiPbWN++oI=
+X-Google-Smtp-Source: AGHT+IG9djRtuVw+ie4GfUE2fCKVw3VDvAD/MGwTeuRqIhTj3DidnkwSdyN5TC7cZH1+rVL/DgOUoQ==
+X-Received: by 2002:a05:600c:4ed4:b0:45d:f88f:9304 with SMTP id 5b1f17b1804b1-46fa9b0e7b3mr50062135e9.30.1760004749930;
+        Thu, 09 Oct 2025 03:12:29 -0700 (PDT)
+Received: from brgl-uxlite.home ([2a01:cb1d:dc:7e00:a78:91ac:9309:82b0])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fab633badsm34723735e9.3.2025.10.09.03.12.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Oct 2025 03:12:29 -0700 (PDT)
+From: Bartosz Golaszewski <brgl@bgdev.pl>
+To: Kees Cook <kees@kernel.org>,
+	Mika Westerberg <westeri@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Krzysztof Kozlowski <krzk+dt@kernel.org>,
+	Conor Dooley <conor+dt@kernel.org>,
+	Saravana Kannan <saravanak@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Andy Shevchenko <andy@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
+	Srinivas Kandagatla <srini@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>
+Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	linux-hardening@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-gpio@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-sound@vger.kernel.org,
+	linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH RFC 0/9] gpio: improve support for shared GPIOs
+Date: Thu,  9 Oct 2025 12:12:27 +0200
+Message-ID: <176000470857.91617.1046632810440589541.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
+References: <20250924-gpio-shared-v1-0-775e7efeb1a3@linaro.org>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Thu, 09 Oct 2025 12:10:33 +0200
-Message-Id: <DDDPKMMSAMJR.1JIQMK3W2Y40V@fairphone.com>
-Cc: <~postmarketos/upstreaming@lists.sr.ht>, <phone-devel@vger.kernel.org>,
- <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: qcm6490-fairphone-fp5: Add
- VTOF_LDO_2P8 regulator
-From: "Luca Weiss" <luca.weiss@fairphone.com>
-To: "Konrad Dybcio" <konrad.dybcio@oss.qualcomm.com>, "Luca Weiss"
- <luca.weiss@fairphone.com>, "Bjorn Andersson" <andersson@kernel.org>,
- "Konrad Dybcio" <konradybcio@kernel.org>, "Rob Herring" <robh@kernel.org>,
- "Krzysztof Kozlowski" <krzk+dt@kernel.org>, "Conor Dooley"
- <conor+dt@kernel.org>, "Marijn Suijten" <marijn.suijten@somainline.org>
-X-Mailer: aerc 0.21.0-0-g5549850facc2
-References: <20250930-sc7280-dts-misc-v1-0-5a45923ef705@fairphone.com>
- <20250930-sc7280-dts-misc-v1-2-5a45923ef705@fairphone.com>
- <ac1c0d1a-36a9-4542-b879-06c017f7f2c4@oss.qualcomm.com>
- <DDDOF3F8K5WQ.FTJ0F6E6DLPG@fairphone.com>
- <8e452e51-3a95-49e6-91e3-53aa46fcfe2e@oss.qualcomm.com>
-In-Reply-To: <8e452e51-3a95-49e6-91e3-53aa46fcfe2e@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Thu Oct 9, 2025 at 11:22 AM CEST, Konrad Dybcio wrote:
-> On 10/9/25 11:16 AM, Luca Weiss wrote:
->> Hi Konrad,
->>=20
->> On Wed Oct 1, 2025 at 10:30 AM CEST, Konrad Dybcio wrote:
->>> On 9/30/25 3:57 PM, Luca Weiss wrote:
->>>> Describe yet another regulator-fixed on this board, powering the ToF
->>>> sensor.
->>>>
->>>> Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
->>>> ---
->>>>  arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts | 13 +++++++++++++
->>>>  1 file changed, 13 insertions(+)
->>>>
->>>> diff --git a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts b/arch=
-/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->>>> index 36d5750584831d66b4c2faf6042e4cbb3274eca7..0a64e5721e092d1f3e4bb7=
-329335704eee567761 100644
->>>> --- a/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->>>> +++ b/arch/arm64/boot/dts/qcom/qcm6490-fairphone-fp5.dts
->>>> @@ -195,6 +195,19 @@ vreg_usb_redrive_1v8: regulator-usb-redrive-1v8 {
->>>>  		pinctrl-names =3D "default";
->>>>  	};
->>>> =20
->>>> +	vreg_vtof_ldo_2p8: regulator-vtof-ldo-2p8 {
->>>> +		compatible =3D "regulator-fixed";
->>>> +		regulator-name =3D "VTOF_LDO_2P8";
->>>> +		regulator-min-microvolt =3D <2800000>;
->>>> +		regulator-max-microvolt =3D <2800000>;
->>>> +		regulator-enable-ramp-delay =3D <233>;
->>>> +
->>>> +		gpio =3D <&tlmm 141 GPIO_ACTIVE_HIGH>;
->>>
->>> You may want to define the pincfg/mux config for this gpio too
->>=20
->> While I wouldn't say it's not good to have it, there's plenty of GPIOs
->> that have no pinctrl for it. Downstream doesn't set anything for gpio141
->> either.
->>=20
->> I honestly wouldn't even know what the 'default' for a GPIO is in the
->> first place, or could I query the runtime state from the kernel? Is
->> /sys/kernel/debug/pinctrl/f100000.pinctrl/pinconf-groups trustworthy to
->> solidify this in the dts?
->
-> I normally use /sys/kernel/debug/gpios
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-Oh, if that works at least the path is a bit more memorable. I needed to
-check quite some files in this directory to find the correct one.
 
->
->>=20
->> 141 (gpio141): input bias disabled, output drive strength (2 mA), output=
- enabled, pin output (0 level)
->
-> but this seems to be formatted very similarly if not identically
->
-> Generally it reads out HW state, via (among other things)
-> msm_config_group_get()
+On Wed, 24 Sep 2025 16:51:28 +0200, Bartosz Golaszewski wrote:
+> Here's a functional RFC for improving the handling of shared GPIOs in
+> linux.
+> 
+> Problem statement: GPIOs are implemented as a strictly exclusive
+> resource in the kernel but there are lots of platforms on which single
+> pin is shared by multiple devices which don't communicate so need some
+> way of properly sharing access to a GPIO. What we have now is the
+> GPIOD_FLAGS_BIT_NONEXCLUSIVE flag which was introduced as a hack and
+> doesn't do any locking or arbitration of access - it literally just hand
+> the same GPIO descriptor to all interested users.
+> 
+> [...]
 
-So, you recommend setting a pinctrl for every single GPIO that's
-referenced in the dts? Shall I send a patch to add all the missing ones?
+I'm picking this one up for fixes as it addresses a locking bug.
 
-Regards
-Luca
+[1/9] gpio: wcd934x: mark the GPIO controller as sleeping
+      https://git.kernel.org/brgl/linux/c/83d314fac266a3d9de61e4a4490c4f2eafc86b05
 
->
-> Konrad
-
+Best regards,
+-- 
+Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
