@@ -1,48 +1,80 @@
-Return-Path: <linux-arm-msm+bounces-76517-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76518-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
-	by mail.lfdr.de (Postfix) with ESMTPS id 735F4BC70B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 03:04:41 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D329BC72CB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 04:07:00 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id 5FE04189F743
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 01:05:04 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 55A063A172C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 02:05:25 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CEF58126C17;
-	Thu,  9 Oct 2025 01:04:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id D2C091F92E;
+	Thu,  9 Oct 2025 02:05:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KgEld5bz"
+	dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b="Gciwe8k1"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 976903D987;
-	Thu,  9 Oct 2025 01:04:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC951891AB
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 02:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759971876; cv=none; b=Liqh7PzqUdXj+TajA0lEXlLkRULPHoywX4f4Xhwr3jhWwG3LLxAzQTwu+qpm589loAfEd1gpZMwBFOQyig+Z5W7jQ+uNVRKATQe2gzWHYOxh+OL1b6eRIKfxiEJw0XkC9k0A9wXOfmolKAg0PG+/+x6hwKztZTqHCvl31gJ2QDE=
+	t=1759975523; cv=none; b=p4Eh231lWI4HPR0MzWz/L4wjYM3C+iiC7dBGrEmHLpW4RZhNBc0r2DkVG7XbvoJeR36YLNHkjOxkmJHpshLPeXwfivrcmXfu+8DICEihqNdJ7YOmqD7FdNQXRTtZTbGsFf4G8TyT7IDnTMak/xRqgf87g8LEyGWNjvHekSFwPlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759971876; c=relaxed/simple;
-	bh=vmKpklX7s829t63sBLzCDRLIqN2vG9RpogG762iSHcg=;
+	s=arc-20240116; t=1759975523; c=relaxed/simple;
+	bh=guUxBHKVz5p/qL+Qv7LSeNqo1hHowLJH+2OuFqjSIok=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ojwq4xuD8TEmCaexidhRoHC4b5P9uqPsHQHZOPVSN3vG3DOCHdO9QTxQIfaqi6RTSj5jMYpHC+4CILkW+QwG/y3huioPb/mEXuYOcRZRPl7ISNOqyeHmFscNlk69+wltWECbi0V8yzVi7OFECx5f4GzIyspurPdqAcnWib0hZ98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KgEld5bz; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97443C4CEE7;
-	Thu,  9 Oct 2025 01:04:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759971876;
-	bh=vmKpklX7s829t63sBLzCDRLIqN2vG9RpogG762iSHcg=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=KgEld5bzkK5+gYk5w8JSRxNWT/2MRAK5juC/0uJ9vzeMfpxtcoFUko1FUyB241gVY
-	 dFTIFmCkdlA1V0DlnDFTUF/E6GA41cnJ5/rsotLyOB1MExy/6TLt09G5MwV5ZlhX//
-	 ZtujYyOYDpxDA45Yq3xB/tzUToXmkK8AANIy807W/KtWp8bnrD6+D3pjZbVEqWnG8v
-	 5TWce1neSHoEJ+74eC1vvsfwOAI7IooWUYFyYDM6ps9tlcXaQrn2Xq5VlPyeb00zAC
-	 QgxCNCMFwF9G1Rdr7ghvGKGFMKWStE/OPx3v2XjjS9x3nxGHDVFwHaYpS77eTcyNcw
-	 KAzl/59uFbpGw==
-Message-ID: <5085c857-f6e8-4faf-b61a-a9ee562ccf06@kernel.org>
-Date: Thu, 9 Oct 2025 10:04:24 +0900
+	 In-Reply-To:Content-Type; b=nco3JGmfJfoXJcjkYk+xNNnOAk7Mh6DuyjorjZbyiZxXSGHNJnDWOeDrnqOlkOcER3YpAa3k+XX2Nwabig2ZPDF4Ct3jHzstLpX6nxGJpiEnpw7Qn/z+BhPK43lds2UujG8vam/9XHqm+eaF/KCaJ9z46cpJJFAQBVBEr0P4MJ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org; spf=pass smtp.mailfrom=linaro.org; dkim=pass (2048-bit key) header.d=linaro.org header.i=@linaro.org header.b=Gciwe8k1; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linaro.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linaro.org
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-269640c2d4bso669335ad.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Oct 2025 19:05:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google; t=1759975521; x=1760580321; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=r628U9UK/YF44SMc4r+HpCa9RKSfgMkrYIQBO1Xq1XA=;
+        b=Gciwe8k1Mvl2S5OyReJVePcu0ba3Mmqn13wogpOtLoQtW1GMCTkIT76wY6buGNynok
+         ILJ8iEOOJYoIG8zXCEaVSwi8nokZn/LPMMjMbwFXVn7BR8zDSJ1nyKjDTnjphc2fPIbQ
+         MAZwDOhY54/0bOBS/+8HOlYu9QoR9LosLyco+SKiSzY4TjeokXvHfghd5jMy5DDCrWoG
+         8RGXCbyKyZwwzdwZyf7j3kJYYvBL+qh0u9bP/frW8y9HudUuaHkDg5h4LfIObFmkoMGS
+         h399LUhYB9cj2esC3xDJN7RpiiYvNSwT9dXg4RWAZv7hHTYPCw5C12YhOjymnIjK4D9g
+         5YCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1759975521; x=1760580321;
+        h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+         :from:references:cc:to:subject:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=r628U9UK/YF44SMc4r+HpCa9RKSfgMkrYIQBO1Xq1XA=;
+        b=qQFA2NbALYJayEbvYTbt461g3dA2ZjqU5tNeGGe+oIXkUUSzCPTPS5f6X77ErJGe2G
+         D4X7y/Gvwvc/d0bSs42/lQm3cGg4iIOBpU7kamIoI2ZshyFLnjky+z2Xr+7nogPhF1DD
+         WDq3GeNDWjY0RN/QUr55hww2YRJ2jQ2WIkKg6+Ne9unqR9qw86/UX2CClFRVu9/s9SS0
+         MLnIWG7s0zvj9RfYbNq1+YpnoGanEPzqwKll7sA3tQ0wSraVntHeI47zF4Jsncu5GvZr
+         xxzkvrFzjSOgaW1ViLqhLLdbe7bDjDOZylMN0zQBUuXBmIZ1+brGlqmpUeGWYlG/18nu
+         uo9Q==
+X-Gm-Message-State: AOJu0Yxd8BD2Smjaefqz2bvIZFin3YxVjhD3wEncmrCyZsYaSLfj8Otn
+	RzbBUcCrD50v2PjjQRIdUOzGror5VU/IFa0t8dnn68pa2lq0sSA9vxmkFHlq/wev4ok=
+X-Gm-Gg: ASbGnctXqc2HYOQyKVO24BZidltzQHSUsMi/j0IpL3Ry1ifnCMj47Rc/PibGqYuNvyV
+	sNcQdSTxp02wTETyKFEKzEPo/PPg5o+UoFmrVyS+1GllI3RlANJa6wZUO/2rdiZAyq6lxO5kwCe
+	kSuu5LryhKBmfcLwSSmHPhr9aNjl+4abv6bchTea5tjQeaJWfZAxwcwaCzSMesOfEFgmPZngqnI
+	cr3c8ZN+Yg7zt27JHfEvYyFgyz0MNBnrAvLUiv5cZTtiJ8cVQW9/iTW2WSml3L1q7lOdzACxoAW
+	i+U12uKQ9sPRP8SvsyHcyu9987i6w2+vSDYNyMRDJpbQpq2xyCaIlJW4/ZgbHK0mJl0JB8xvPsn
+	7KzN/XX/Ht8Z1kr1IBXtIO8ZaxW03Emt29T882Dn0mLn8Y9DEe+oheY7X/1vMP5NtgsyGrgbe
+X-Google-Smtp-Source: AGHT+IE+tYRvnZUksvRRuEZRDN2ric4vKa6DWfs0HxwGzR0W1J57dXrBmo5cMncGZNfe+BMxwuIMDA==
+X-Received: by 2002:a17:903:2f86:b0:269:80e2:c5a8 with SMTP id d9443c01a7336-290272e3cbbmr40883095ad.7.1759975521396;
+        Wed, 08 Oct 2025 19:05:21 -0700 (PDT)
+Received: from [192.168.50.149] ([121.134.152.93])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-29034deaa54sm11142925ad.5.2025.10.08.19.05.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Oct 2025 19:05:20 -0700 (PDT)
+Message-ID: <e9cdd9c4-4ce8-4d92-b337-1539e566c03a@linaro.org>
+Date: Thu, 9 Oct 2025 11:05:13 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,39 +82,19 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
- node
-To: Bryan O'Donoghue <bod@kernel.org>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
- Bryan O'Donoghue <bod.linux@nxsw.ie>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
+Subject: Re: [PATCH] arm64: dts: qcom: sm8750-mtp: move PCIe GPIOs to
+ pcieport0 node
+To: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>,
+ Bjorn Andersson <andersson@kernel.org>,
+ Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+ <conor+dt@kernel.org>, Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
  linux-kernel@vger.kernel.org
-References: <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
- <4a32bbec-2baf-4210-a7c1-1ddcd45d30c8@oss.qualcomm.com>
- <SuwJuCIcLVJwN3YeN1il6tB9wO9OH6bYcnbRpxpuI9Dl7piYLN-hVdnyv0Mal6N-W5pi2aCZI8MxHZDEkoE63A==@protonmail.internalid>
- <4d87d1ca-55b2-426e-aa73-e3fd8c6fe7bd@kernel.org>
- <10a8ccda-4e27-4b06-9a0e-608d6ade5354@nxsw.ie>
- <4cb4a92d-2f20-47c7-881e-aadcc6f83aa0@kernel.org>
- <1516f21e-aee3-42cf-b75e-61142dc9578d@oss.qualcomm.com>
- <9bae595a-597e-46e6-8eb2-44424fe21db6@linaro.org>
- <MMSKAu89Ew7StAeFBV442KfKNzmqbTSQ-maFG35Jr9d8PkUV2L4sx44R2DRevXA8mC45vkA398l2mvVzarZwew==@protonmail.internalid>
- <bcfbf35b-69ed-4f39-8312-6a53123cd898@kernel.org>
- <d46c0335-99d6-469f-a61f-aca4c851f745@kernel.org>
- <GyrcG3qBN7c5C7ajCs3EV81hWvuaVbg64CpzQ-X3d_p6EauoiKxSoG2aOKE21-j12SWFjNDjV-kVSwYYqVm_lQ==@protonmail.internalid>
- <a0dc93ec-e35c-409b-8dfb-1642c92a9f0c@kernel.org>
- <98e6acf8-80d7-4894-b4ce-ce74660722ef@kernel.org>
-From: Krzysztof Kozlowski <krzk@kernel.org>
+References: <20251008-sm8750-v1-1-daeadfcae980@oss.qualcomm.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Language: en-US
-Autocrypt: addr=krzk@kernel.org; keydata=
+Autocrypt: addr=krzysztof.kozlowski@linaro.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
  JMp7PSyMPzpUXfU12yfcRYVEMQrmplNZssmYhiTeVicuOOypWugZKVLGNm0IweVCaZ/DJDIH
@@ -92,74 +104,61 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  BosGY+XWKydnmsfY7SSnjAzLUGAFhLd/XDVpb1Een2XucPpKvt9ORF+48gy12FA5GduRLhQU
  vK4tU7ojoem/G23PcowM1CwPurC8sAVsQb9KmwTGh7rVz3ks3w/zfGBy3+WmLg++C2Wct6nM
  Pd8/6CBVjEWqD06/RjI2AnjIq5fSEH/BIfXXfC68nMp9BZoy3So4ZsbOlBmtAPvMYX6U8VwD
- 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 a/A=
-In-Reply-To: <98e6acf8-80d7-4894-b4ce-ce74660722ef@kernel.org>
+ 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
+ 2+47PN9NZAOyb771QoVr8A==
+In-Reply-To: <20251008-sm8750-v1-1-daeadfcae980@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 09/10/2025 09:55, Bryan O'Donoghue wrote:
-> On 09/10/2025 01:47, Krzysztof Kozlowski wrote:
->>> Maybe it would be possible to also use an inferred FUNCTION_ID somehow
->>> though TBH I think that's a work-around.
->> Three months ago I gave you the answer for that - it is inferred by
->> index on the list.
+On 08/10/2025 13:38, Krishna Chaitanya Chundru wrote:
+> Relocate the wake-gpios and perst-gpios properties from the pcie0
+> controller node to the pcieport0 node. These GPIOs are associated with
+> the PCIe root port and should reside under the pcieport0 node.
 > 
-> But at least as I understand it, you can have multiple SID entries that 
-> need to map to a FUNCTION_ID which means you need to encode that 
-> inferred indexing in your driver.
-
-Yes.
-
+> Also rename perst-gpios to reset-gpios to match the expected property name
+> in the PCIe port node.
 > 
-> So you can't have the iommu code just know what to do.. it has to be 
-> driver specific.
+> Fixes: 141714e163bb ("arm64: dts: qcom: sm8750-mtp: Add WiFi and Bluetooth")
+> Signed-off-by: Krishna Chaitanya Chundru <krishna.chundru@oss.qualcomm.com>
 
-Yes.
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-> 
-> The iommu description for this platform basically lacks the data that 
-> _should_ be there -> FUNCTION_ID.
+Tested-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-No. The index tells that already.
-
-> 
-> The rule is that the DT should really describe the hardware right ?
-
-It already does. Same as I wrote on IRC, DT already has all the
-information. Entry 0 has function ID-foo. Entry 1 has function ID-bar.
-Entry 2 has function ID-bar or whatever.
+I wonder though, why the fallback method fails to work and device
+stopped booting (see also Bjorn's report).
 
 Best regards,
 Krzysztof
