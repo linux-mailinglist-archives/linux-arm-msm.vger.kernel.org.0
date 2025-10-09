@@ -1,86 +1,88 @@
-Return-Path: <linux-arm-msm+bounces-76592-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76593-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [139.178.88.99])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19160BC84E6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 11:28:42 +0200 (CEST)
+Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98D81BC84F2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 11:30:11 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 08A373E8336
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 09:28:39 +0000 (UTC)
+	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 529B13E6EB1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 09:30:10 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id CFC232D73A5;
-	Thu,  9 Oct 2025 09:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 855E62D0C6C;
+	Thu,  9 Oct 2025 09:30:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="fLp90TnJ"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="TR8wKMrg"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
+Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A872D46BB
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 09:28:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E65FD25522B
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 09:30:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760002108; cv=none; b=D4auDnM1bUC05TRxNtD9t4lqrUzAwwMZmeDz4wR2Edi1KNs5GNoJLdo6vy/7e2QF/VwISroG6c5Xl9eXOJf59d/urWTkQ3Y0kt2W/pyHar21UngBMgmNb3csnvSrFSMxp256HAC1yeOPbbQeSKFh8OBHN+xi/IE2jnStQNvOw0w=
+	t=1760002208; cv=none; b=lByz4qs4Mi6pbPEMe8stqBCNX4ABDEiXdugXNjYwcpTSn3aI+Fgu/s/sKA5h7JDgw0nCKNPTncyl5DeoN1/brdTnCKD3fAfgC+Jb2Q9Gq6Ud7SDjdHu77KbHTwkIbOH1fpXynw2ifoi1QrDJura0WTWooIghczpSzKuXq3g+vf8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760002108; c=relaxed/simple;
-	bh=BQczyE5Zdk5A2N+2sEJ3+Qj9fhfLVuv1k6SDtzvhgwg=;
+	s=arc-20240116; t=1760002208; c=relaxed/simple;
+	bh=el0ASqmaTvmfPJXD4hKNf4F8hGWxKWMWrZAUEtGEOAA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=aVaTkt5bDlWVXPnkCRtKgNa22dDji9tVttTCmBnOXMBmSFbOvYoUjd98h2HSNI8/TV1llm5k1f76Lma6oUa2ylWPv719szD3xQOeg/SEwZdLFu3cuSUscq7Ml3p/QNvLhLe2xj5WjqRQQgO7/wpkslgMO8qouMk9nPaX7dwH9E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=fLp90TnJ; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1760002106;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=BXHkdfv5tUm0CpyurnPpmySUCFcyGseszzZdpVNrQUA=;
-	b=fLp90TnJSr6/ejQ7Br84aAUvDY6VNZv/L90CsE7moODzzmZ4+fft613zgS80JJO/T8upBu
-	HVqbqXbJKCFut32hyABTt8EtnNxfcx6RwHgTTklK/X/DOZz1SyPe9EHpC+NZ/yabD6Jl4E
-	Rj0Yzg11I5q2mSSZHV3tMKPUOl8fk7I=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-423-2mATiVP4MXKHKGLrvvVA-Q-1; Thu, 09 Oct 2025 05:28:23 -0400
-X-MC-Unique: 2mATiVP4MXKHKGLrvvVA-Q-1
-X-Mimecast-MFC-AGG-ID: 2mATiVP4MXKHKGLrvvVA-Q_1760002102
-Received: by mail-wm1-f69.google.com with SMTP id 5b1f17b1804b1-46e46486972so5644335e9.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 02:28:22 -0700 (PDT)
+	 In-Reply-To:Content-Type; b=OoCJOT/KjO+/f0j4K7PlhDdv+uDp2iRZEXAruNbYGmjD2KoUVM8bFR3F4XUumiQtjSYOiHMz8POyOwC4g4JLtu08BTmGADSuwpez5VJpjRR2hpDUBO3bpt5p2HUu4BtLPojkX6AyTGpKUhvruPkLxWwOyHhJFmXECkPyMPcxVww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=TR8wKMrg; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5996EYFm022451
+	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Oct 2025 09:30:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+	cc:content-transfer-encoding:content-type:date:from:in-reply-to
+	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+	+Q2RvLUP1TRoeCdEklVO8kA/8Vk/VvKeXscAp6CMzmk=; b=TR8wKMrg4tr+wdgQ
+	6VYKTMn3aFA064VFzGRZIE+jkvygmm9+Cfbvw5MvYzvVS3al5MoMT2JIDSSMPPTc
+	vHIWZhMZNLo2aPIl2HnPoYm7fRW+GVrAvs6qIm48a9ewfI8GSqI/Az7SDkqLmqoL
+	f4EgWIsAcBugFvRw3M4ei7Ip0xoRBtblDpIYAZxAPGJh9omh81Xs6Qj6zlFmMpv5
+	sSKXtNSe25a4jVdYvA4DUUY0nWPQ/oojXaCLKrcVAfieZt0c3h6r6ba3wsunmnIb
+	WGkosrqj9D3XQD5JMwxLyyAOjOQi48B2J/wYXYG0TNc2VRyJmmfUCWlJ9h0fJ2PI
+	HA9x9A==
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4sj7ux-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 09:30:05 +0000 (GMT)
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4ddf2a2d95fso2760941cf.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 02:30:05 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760002102; x=1760606902;
+        d=1e100.net; s=20230601; t=1760002205; x=1760607005;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BXHkdfv5tUm0CpyurnPpmySUCFcyGseszzZdpVNrQUA=;
-        b=Vkru6WSl0g+pQ6wcesfjSg4SCUwIYED3G9KlkfcaO82mYRUfl1gEgZK63pr9Y95VGA
-         8t4toM+4uj2Hr+TNbnq5AyNm0WS3uNdYcCL2yy5GtXhL975muZCUKRLQC9oV9vLHTPYl
-         IrIBhIy1hbfg8a3yECaklQS33kcVu2Zztn6dNWhv7VAlx7UWjtypBHCy8vqgqSGfTEz0
-         YlGf94GrGGDdqNEmQnkubruyah1q3m1HehCtBZox0gaXMgiO2YLSrYvJP8CiKmXq8l7e
-         1z84bS81G77zMGNWO1OpQm6mF7nI0O9o4+OrfDPKiilwSxWq601aKZhXvWejGEd5ru1Z
-         kM/A==
-X-Gm-Message-State: AOJu0YwgDmOwPz1mMeWCPaqrcaEbVjFX6NFqcsu3hx/9c12rbgvR/9F8
-	lBeOOIaTBPV4d7UsmeVFAMlYVRmJc9wd0KtZavt8MLJgVT+T0ljQ2iH62rtijFav5ytaQXZqz4K
-	6zOOIJOkUvcgYF4GXpZgDqsRNdWLu+p1W230AciIcN8db1YW0EKFcNquKYpze8Ik5Sf0=
-X-Gm-Gg: ASbGncvuXLnAShXhvFOI+m19RTCma3skGj0i+nsTbBbxSb1qgSmhzbtaaQ+mU8h7KFi
-	Ki3KxdUit0RLjZs/9xEZ2VhGbaXVLzFa0phRfoHCfFhITSHOy/8lUMzTXV+4dfTzybR8Cbak2t9
-	BJiUQXRonma52ChnKCQiCa1FDis9PYAweQdNrlpxi5Ga9Rik6RxSTztaeQ6sxsznpzHmfSBAGfq
-	h3yQPLGDSIshzKEy9l2k4CClq6ZgZlvP1Zl7IDb4OcFk6GsBRr5ofgqehGBAOzg4LKNS4I9GClo
-	Ydxhnfk/Ne4YqHEWbSKfNDXXVHx0Afs3nn0CUn5cCl0ShIxUk0gqlyNIdqjf0ACQQhu75Lmlkqd
-	URLUDkPdx7shaSZxghw==
-X-Received: by 2002:a05:600c:4e01:b0:46e:6a6a:5cec with SMTP id 5b1f17b1804b1-46fa9a8e5e9mr45746455e9.2.1760002101725;
-        Thu, 09 Oct 2025 02:28:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEY3/Xon/8eow6YV6te1PVIUeQNsTPhTN4xL/Kc6c75ZTtzIKnnqNPMPgFzo3E/3FgK5+ApKg==
-X-Received: by 2002:a05:600c:4e01:b0:46e:6a6a:5cec with SMTP id 5b1f17b1804b1-46fa9a8e5e9mr45746105e9.2.1760002101274;
-        Thu, 09 Oct 2025 02:28:21 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2712:7e10:4d59:d956:544f:d65c? ([2a0d:3344:2712:7e10:4d59:d956:544f:d65c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-46fa9d7f91esm75339585e9.20.2025.10.09.02.28.19
+        bh=+Q2RvLUP1TRoeCdEklVO8kA/8Vk/VvKeXscAp6CMzmk=;
+        b=Pw4gXskKRd6a/z7Bp540Wpf3X9H1GPuxnpdBw7d2cDVxFRN7i9RUXi+R79PYvA0E0w
+         RWMFIPk7cLrhpxUj8qxqOM2w03CKOaqObe0DAMnep57Yg7zEX0/2dkEYv71UO5kPCXdB
+         E8Oj2dRyENlJJ5JE1dLNzvGQj4nMZGsqNx2MJi0qpzyT0xYVYDWtTQ+rkVxBLjK3MGSL
+         +zJqvYoImHiwiGicQbt7PqbuTEJsIDTuHofIBfFjpnpepuxnSjhB4juwUApobIxy5icm
+         wdxvnFYlSYnk86ZeR6Z7i7n/3YVFYJ6LcxcWyeMUPfR4H6qzQ6HPrAOHya+mPwja6RTn
+         CseQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXbC/XVMIJyAPRG320isJ+txWRqJQJ+3G8wFsCVrSw+WMJe97zNgAwnigduzibjuSFkIUoLOCymv8zYtLzp@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxmt3z4FzBbZlmSAa607nNEkCcIXXZLMdnVsKGQtmcLw1NUH5wP
+	H0cLH0SR+Gg2/g3gB8g4QnJCE+1QXpwZoP3lqO5dqDiHYwEbx4LWtGJ3l0PVF/mUKs5X1QusP8U
+	3p/M0lBbrzCgy2aIRCi5Lt91WGrOD+f2Fm4Fp8x8/iIwnL1Jpdk3ZG1zn61spdqSVk4iJ
+X-Gm-Gg: ASbGncvEgDOprbi6cAwWvnyDbo2OQbZKle76PXtSovx0ueBGsJpPPIMNiuiYXna6nQb
+	Y6Cfofnm+hPdmuzzTVmLPfWTi3NyFdBqHCSTvpShHtctpDgeIq1u9Gn0lWJ1oNXtWnlTFrkNtPI
+	DI+TRGM3SbAFxF6/2Y6ccgTZzaVrBX3hvu8y99vvCsDDyLgrIwspQVcL3VtA2rMOSRXNInqxrrU
+	EKqKWbbFgnbKNE2/7B+Ygs6lXMHcFJ5SXGoX3DD1STI+vC5xyX8Rm9o/DPwbtoIIQv+TrS3MRK8
+	Ttp7MYZGeBAFKozvFsN+N5aEf6aeyxNIeo7Bz2B8GjGqIlaQmy6asMgWOya2A4BeZ66kaxRwiAL
+	xcLMARBisYVjK72PRgjhWBXtQYP8=
+X-Received: by 2002:ac8:5847:0:b0:4d2:c24f:8495 with SMTP id d75a77b69052e-4e6ead5a000mr58399651cf.10.1760002204788;
+        Thu, 09 Oct 2025 02:30:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEFr0wEaBL2XbLULBN8fCQQoMulUdbLu/EIkIvWun7NFXx/+YOoZKhrRMhgISJJafb8hTw0mg==
+X-Received: by 2002:ac8:5847:0:b0:4d2:c24f:8495 with SMTP id d75a77b69052e-4e6ead5a000mr58399341cf.10.1760002204261;
+        Thu, 09 Oct 2025 02:30:04 -0700 (PDT)
+Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-b48652a9ffbsm1838680266b.10.2025.10.09.02.30.02
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Oct 2025 02:28:20 -0700 (PDT)
-Message-ID: <3184d938-5100-43f8-93e8-f88549ea4b72@redhat.com>
-Date: Thu, 9 Oct 2025 11:28:18 +0200
+        Thu, 09 Oct 2025 02:30:03 -0700 (PDT)
+Message-ID: <84d7ab07-4026-4313-8919-b5f9205132c6@oss.qualcomm.com>
+Date: Thu, 9 Oct 2025 11:30:01 +0200
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -88,66 +90,92 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/8] net: stmmac: qcom-ethqos: add support for SCMI
- power domains
-To: Bartosz Golaszewski <brgl@bgdev.pl>,
- Bjorn Andersson <andersson@kernel.org>,
- Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, Richard Cochran <richardcochran@gmail.com>,
- Andrew Lunn <andrew+netdev@lunn.ch>, "David S. Miller"
- <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>,
- Jakub Kicinski <kuba@kernel.org>, Maxime Coquelin
- <mcoquelin.stm32@gmail.com>, Alexandre Torgue
- <alexandre.torgue@foss.st.com>, Vinod Koul <vkoul@kernel.org>,
- Giuseppe Cavallaro <peppe.cavallaro@st.com>,
- Jose Abreu <joabreu@synopsys.com>
-Cc: linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, netdev@vger.kernel.org,
- linux-stm32@st-md-mailman.stormreply.com,
- linux-arm-kernel@lists.infradead.org,
- Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-References: <20251008-qcom-sa8255p-emac-v2-0-92bc29309fce@linaro.org>
+Subject: Re: [PATCH 4/4] ARM: dts: qcom: msm8974pro-htc-m8: add touchscreen
+To: Alexandre Messier <alex@me.ssier.org>,
+        Bjorn Andersson <andersson@kernel.org>,
+        Konrad Dybcio <konradybcio@kernel.org>, Rob Herring <robh@kernel.org>,
+        Krzysztof Kozlowski <krzk+dt@kernel.org>,
+        Conor Dooley <conor+dt@kernel.org>
+Cc: Luca Weiss <luca@lucaweiss.eu>, linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20251007-m8-dts-additions-v1-0-53d7ab3594e7@me.ssier.org>
+ <20251007-m8-dts-additions-v1-4-53d7ab3594e7@me.ssier.org>
+ <5a9a2ed9-9e95-4bb0-b5b9-e4e0edcfa8d8@oss.qualcomm.com>
+ <1d60b78e-136f-4051-8296-245d111ca49f@me.ssier.org>
 Content-Language: en-US
-From: Paolo Abeni <pabeni@redhat.com>
-In-Reply-To: <20251008-qcom-sa8255p-emac-v2-0-92bc29309fce@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+In-Reply-To: <1d60b78e-136f-4051-8296-245d111ca49f@me.ssier.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: yDPlI4f_Wkwjl0StKRf0mum-L-A0xl51
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfXxMXrHOpnsAVb
+ xPU7wOEwDLPNQnCFrNz0Jg8p0OP7SOoDBC8JXX8BcPA8KNedW57nBRun4EZoEKwMqbAbH1t+mkO
+ YdinSr5OXQbkL1ep1cwBrzSKS7k6XEw8fTSglfrYuc67CcyDQS4Tnm8Q308Vr/0OGrdCBvwFZlz
+ B7s7cJNvOzh5ByBQQ7W8TIXv4D8t5RaE5NSfEcC+n623oy3hMOa35fVIwI1UnB2Sg/iuZ4QBBIJ
+ 0j2eLBColI0N5ZXKLss8WPbpc6tOHjWk/UhxBKsyWNMgGitXfhPa+L4rZGjhETvl6x4FlEQ+S14
+ 4YTrHta44ApX3X2AvtLOjfdgkWObceUZOaJDp+MX4VA1JP3X+HiDa/rkqgAOpJlXAuF4emI+IwY
+ 8MJp/ex2IgPYdRYlXy30cUKRRFPgSw==
+X-Authority-Analysis: v=2.4 cv=SfL6t/Ru c=1 sm=1 tr=0 ts=68e7809d cx=c_pps
+ a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
+ a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=8poMKPHdAAAA:8 a=nTsu3JDRWy1omu5sJsEA:9
+ a=QEXdDO2ut3YA:10 a=uxP6HrT_eTzRwkO_Te1X:22 a=fyZPtLC9JlAwSkJ5-iUD:22
+X-Proofpoint-ORIG-GUID: yDPlI4f_Wkwjl0StKRf0mum-L-A0xl51
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
+ definitions=2025-10-09_03,2025-10-06_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 clxscore=1015 malwarescore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 impostorscore=0 lowpriorityscore=0 phishscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
 
-On 10/8/25 10:17 AM, Bartosz Golaszewski wrote:
-> Add support for the firmware-managed variant of the DesignWare MAC on
-> the sa8255p platform. This series contains new DT bindings and driver
-> changes required to support the MAC in the STMMAC driver.
+On 10/9/25 7:50 AM, Alexandre Messier wrote:
+> On 2025-10-07 06:04, Konrad Dybcio wrote:
+>> On 10/7/25 7:55 AM, Alexandre Messier via B4 Relay wrote:
+>>> From: Alexandre Messier <alex@me.ssier.org>
+>>>
+>>> Add the touchscreen device node for the HTC One (M8).
+>>>
+>>> Signed-off-by: Alexandre Messier <alex@me.ssier.org>
+>>> ---
+>>>  arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts | 36 +++++++++++++++++++++++
+>>>  1 file changed, 36 insertions(+)
+>>>
+>>> diff --git a/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts b/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts
+>>> index 36eb42f0f3d9..040a256f9465 100644
+>>> --- a/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts
+>>> +++ b/arch/arm/boot/dts/qcom/qcom-msm8974pro-htc-m8.dts
+>>> @@ -65,6 +65,35 @@ vreg_vph_pwr: vreg-vph-pwr {
+>>>  	};
+>>>  };
+>>>  
+>>> +&blsp1_i2c2 {
+>>> +	clock-frequency = <384000>;
+>>
+>> This is not a valid I2C frequency
+>>
+>> You're looking for 100/400/1000 kHz
 > 
-> It also reorganizes the ethqos code quite a bit to make the introduction
-> of power domains into the driver a bit easier on the eye.
+> Hello Konrad,
 > 
-> The DTS changes will go in separately.
+> This frequency value is used in the vendor kernel [1], hence why I used it.
 > 
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> ---
-> Changes in v2:
-> - Fix the power-domains property in DT bindings
-> - Rework the DT bindings example
-> - Drop the DTS patch, it will go upstream separately
-> - Link to v1: https://lore.kernel.org/r/20250910-qcom-sa8255p-emac-v1-0-32a79cf1e668@linaro.org
+> I did a test at 400 kHz, and the I2C devices (touchscreen here, and NFC in the
+> other patch) are still detected, with basic functions still working.
+> 
+> Let me know if I should still update to use 400 kHz. I would prefer to keep
+> the value from the vendor kernel (and in that case, I will update the commit
+> message to add that information).
 
-## Form letter - net-next-closed
+Hm, I grepped around in old vendor trees, and it seems like there was
+a period of horrid wild west wrt this..
 
-The merge window for v6.18 has begun and therefore net-next is closed
-for new drivers, features, code refactoring and optimizations. We are
-currently accepting bug fixes only.
+I see 355 kHz, 384 kHz, next to "normal" values of 100/400..
 
-Please repost when net-next reopens after October 12th.
+Let's just keep it as-is, but please note in the commit message that this
+is intended and that's what the downstream sets too
 
-RFC patches sent for review only are obviously welcome at any time.
----
-Also please specify the target tree in the subj prefix ('net-next') when
-re-posting and possibly additionally CC Russell King for awareness,
-since he is doing a lot of work on stmmac.
-
-Thanks,
-
-Paolo
-
+Konrad
 
