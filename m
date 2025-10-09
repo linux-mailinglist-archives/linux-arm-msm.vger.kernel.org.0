@@ -1,561 +1,119 @@
-Return-Path: <linux-arm-msm+bounces-76743-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76744-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from sv.mirrors.kernel.org (sv.mirrors.kernel.org [IPv6:2604:1380:45e3:2400::1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A73DCBCAF07
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 23:31:59 +0200 (CEST)
+Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6166EBCAF7C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 23:45:29 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sv.mirrors.kernel.org (Postfix) with ESMTPS id 79EF4483D56
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 21:31:51 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 536634F3872
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 21:45:28 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4CF0F28851C;
-	Thu,  9 Oct 2025 21:21:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5596F2571C5;
+	Thu,  9 Oct 2025 21:45:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b="skIcV8lW"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XhaeHpIr"
 X-Original-To: linux-arm-msm@vger.kernel.org
-Received: from ixit.cz (ip-94-112-25-9.bb.vodafone.cz [94.112.25.9])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D00252874F9;
-	Thu,  9 Oct 2025 21:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.112.25.9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314621C5D44
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 21:45:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760044864; cv=none; b=u1/T5EVCRa4s7O2G0nvf8CQpKfS7LACnHjVZeAKistq5ltDWqdjIt/QYlTb5l+5pmeDwRqdIiPT+sX0q44UacLEXrPJet5ZmJYvtpJ+YOkzjKpGPVjVLpIjCE5uU9i0sGC/QdyPlp1PQpV2lGsSyuUgT6zOkQYiL2+aICBqkkjc=
+	t=1760046327; cv=none; b=XRJCvUWyb2p5r0sqUfCvoqUVB4ukq+Kkc26CJsQ6PEcNKvEVfxdcdPOCwmadVwUD7p3chTLSDZizVtTl9i/omN7v9sTjTaTVRSRrYlGNZVVFB3FO9s1HS5B3uDvMDi5g+HKKKawMnXU4S42O3P4VyyoIs9cQ6zBiute9blAfy7E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760044864; c=relaxed/simple;
-	bh=fT9sA7ILc87nVg/fKhiPW6H5N2SuFB7MlirN5tOG8O8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Ua6ZgocBYnXjdKQJL+4AJxmMjvGY4jAmy2q2ZjLX7tGToHKJGda2OE4/U/y+DoseKbTb02VDa+J+sUN4h7ze06M9ygfjxhfdl2bC7VJ3HZCtbInpz329E+MOfD3lF/T6W5XemgDglR4bP6Ul+RFo6U07ZAwVNBmvhYDbZWmkXWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz; spf=pass smtp.mailfrom=ixit.cz; dkim=pass (1024-bit key) header.d=ixit.cz header.i=@ixit.cz header.b=skIcV8lW; arc=none smtp.client-ip=94.112.25.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ixit.cz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ixit.cz
-Received: from [10.0.0.200] (unknown [10.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by ixit.cz (Postfix) with ESMTPSA id CA149534108F;
-	Thu, 09 Oct 2025 23:20:49 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-	t=1760044849;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=0WpB7r1OS2ue5c+hx872NaFEOKtu1yqCWxA0u4ovkBo=;
-	b=skIcV8lWSqmEJ71eljE9Mi7/fy+Gjj//EdnE3HRE5mhfdxez0nCFtS2RACd0DJ2FFONUPP
-	8ikAT7ZGAdJ+bHmvQkvKVdGg+YSu/7Z5nCBfUDGFst895ZHbQkgCnUpD6cV1/Zrq84KDyU
-	yAG3UWwIYPav4ucS3dh9M23eG8eLCFw=
-Message-ID: <0f5f2793-13d6-416e-ad0e-1840e22b753c@ixit.cz>
-Date: Thu, 9 Oct 2025 23:20:49 +0200
+	s=arc-20240116; t=1760046327; c=relaxed/simple;
+	bh=JDf3RvnAJ/dSZU1DuUy77Eh2QFyUGi8T1WgDX4m65cQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ox6ucs6dUCekpY1qxEudNiSfm32eishjZ1wOtV65uIUrzUVqp4pMHg9Jordr0DFY/Y6Rw6YfULYY2koz3XBwOPK7Ct4WwRyjj600Ue2l4hXgzaWJr5yGba4sH1/bqg4VrqUj4PjMZ8TdciEbJNNknBxDi1kMvYwTlHjfPMYgj+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XhaeHpIr; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CE6C4CEFE
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 21:45:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1760046326;
+	bh=JDf3RvnAJ/dSZU1DuUy77Eh2QFyUGi8T1WgDX4m65cQ=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=XhaeHpIr2R/7oEIbBUjdOYNm9eTASl973IABzfSiFC557ApGEuxMDkdaG47rJbzYd
+	 RPjJVVhKfaTAmMxxSFbEqQc0T3ECfckL+fG6EtbboaQMwJLIcaEIMxkJsFLIv9LekR
+	 YLoCD6U2UjY2L3/sgMemkuIeGYOzgH2Te+y2zcGKbbDSM8JOTlPcJS+EbSaBl/2yqj
+	 bpt6EYNJhdIZ3zKd5Yim+ODGmy20Lt9RNmnuXb7BsB/EH+uqogH0IsUyXxjMKK/LrX
+	 VvjfdMpDeV2CjQ2uEINaftlX6W2oYMt/Gyc3h3KhikIWPitKE+0ISJY97fomRhEJsp
+	 fqa5+NLt0I7lA==
+Received: by mail-lf1-f43.google.com with SMTP id 2adb3069b0e04-579363a4602so1602923e87.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 14:45:26 -0700 (PDT)
+X-Forwarded-Encrypted: i=1; AJvYcCXqIdv6EV2v/Lc0HZTufVb2ZqrSFUj+p1WtnVrSrZc2oOWrg2fKLzG/xK7GgJVK7ySIxAe6BoBUcQe5AtPz@vger.kernel.org
+X-Gm-Message-State: AOJu0YyHWRrjz0wDtGXXsDsNB+HTiEDykQDVmwGFbTWqHwIwpCOX6f4m
+	z4Eu1kXBY/bC9MmRRDrctJ5cPM1RzIHrSGg22a6aFJXGNk4vdCYsMicz3HfZX1/TB4gRCaGfS06
+	RmfmwrGqKQJyELVZHe42AAZsTLesowyY=
+X-Google-Smtp-Source: AGHT+IFdXBbuZW52QrqTdHX+lhqTD+/sq95pRmf1cdQmeXGgR4GX2JwjaAoHyFnSrPPPmQHGx6K4ST8vlbfcsWWxaow=
+X-Received: by 2002:a05:6512:3a92:b0:55f:3525:3e52 with SMTP id
+ 2adb3069b0e04-5906dc0d3f1mr2585893e87.14.1760046325181; Thu, 09 Oct 2025
+ 14:45:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] arm64: dts: qcom: Add support for Pixel 3 and Pixel 3
- XL
-To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
- Konrad Dybcio <konradybcio@kernel.org>
-Cc: Bjorn Andersson <andersson@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- Amit Pundir <amit.pundir@linaro.org>, Casey Connolly <casey@connolly.tech>,
- Joel Selvaraj <foss@joelselvaraj.com>, Sumit Semwal
- <sumit.semwal@linaro.org>, Vinod Koul <vkoul@kernel.org>
-References: <20251005-pixel-3-v1-0-ab8b85f6133f@ixit.cz>
- <20251005-pixel-3-v1-2-ab8b85f6133f@ixit.cz>
- <n4xims4y5sssqxkchg2tikc7idkzds5ru7ayidcgxdfx77je2d@qo34qucbebnn>
-Content-Language: en-US
-From: David Heidelberg <david@ixit.cz>
-Autocrypt: addr=david@ixit.cz; keydata=
- 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
-In-Reply-To: <n4xims4y5sssqxkchg2tikc7idkzds5ru7ayidcgxdfx77je2d@qo34qucbebnn>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20251006-arm64-text-offset-v1-1-bf0e8a27383b@oss.qualcomm.com>
+ <aOPLv_-f5sNGtG4e@willie-the-truck> <CAMj1kXHhetfN_bY5AAqqfC4=N9yQCO5R_n7H0BMXZ2VXudv5pQ@mail.gmail.com>
+ <obcgfnmgdemf5gtc7gdaj6nzoa2rwxsc6njt4fd2ouwzqj4y7y@ztxwyyoepuud>
+In-Reply-To: <obcgfnmgdemf5gtc7gdaj6nzoa2rwxsc6njt4fd2ouwzqj4y7y@ztxwyyoepuud>
+From: Ard Biesheuvel <ardb@kernel.org>
+Date: Thu, 9 Oct 2025 14:45:14 -0700
+X-Gmail-Original-Message-ID: <CAMj1kXEphMAoCi5T4w99OgVA2VmF3ZBsZ5-t=Oan8r0S_EaY2w@mail.gmail.com>
+X-Gm-Features: AS18NWBbQ-eMZfEdM8Bn394IlzRr-fCZGuh5YoPpU-famY8LTSrZQTWP1N0nZoU
+Message-ID: <CAMj1kXEphMAoCi5T4w99OgVA2VmF3ZBsZ5-t=Oan8r0S_EaY2w@mail.gmail.com>
+Subject: Re: [PATCH] arm64: head: set TEXT_OFFSET to the historical value
+To: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Will Deacon <will@kernel.org>, Catalin Marinas <catalin.marinas@arm.com>, 
+	Bjorn Andersson <andersson@kernel.org>, Konrad Dybcio <konradybcio@kernel.org>, 
+	David Heidelberg <david@ixit.cz>, linux-arm-kernel@lists.infradead.org, 
+	linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, mark.rutland@arm.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 06/10/2025 00:03, Dmitry Baryshkov wrote:
-> On Sun, Oct 05, 2025 at 03:16:29PM +0200, David Heidelberg via B4 Relay wrote:
->> From: David Heidelberg <david@ixit.cz>
->>
->> This adds initial device tree support for the following phones:
->>
->>   - Google Pixel 3 (blueline)
->>   - Google Pixel 3 XL (crosshatch)
-> 
-> Great to finally see it being submitted!
-> 
->>
->> Both phone boards use the same identifiers and differ only slightly
->> in their connected peripherals.
->>
->> Supported functionality includes:
->>   - Debug UART
->>   - UFS
->>   - Charger
->>   - USB-C (peripheral mode)
->>   - Display (Pixel 3 only)
-> 
-> No remoteprocs / IPA / GPU / Venus / WiFi / BT? The firmware is
-> accessible to download from Google and it can be further repackaged (but
-> not redistributed). See [1], [2].
+On Wed, 8 Oct 2025 at 12:51, Dmitry Baryshkov
+<dmitry.baryshkov@oss.qualcomm.com> wrote:
+>
+> On Tue, Oct 07, 2025 at 01:46:08AM +0200, Ard Biesheuvel wrote:
+...
+> >
+> > Just setting the header field and not updating the base address also
+> > means that the boot breaks without CONFIG_RELOCATABLE, and you will
+> > get a warning in the kernel log about the load address not being
+> > aligned to 2 MiB.
+> >
+> > So I don't think this is the right solution.
+>
+> Since most of the people build the kernel with CONFIG_RELOCATABLE, would
+> it be better to set it to 0x80000 for relocatable kernels and to 0
+> otherwise?
+>
 
-Since I didn't have Pixel 3 at hand to test (I sent the series when 
-attending event where someone had Pixel 3 ;-) ), I was aiming to merge 
-MVP.. more precisely, Minimal Viable Device-tree (MVD).
+When CONFIG_RELOCATABLE is set, any multiple of 64k is acceptable in
+practice, but given that this violates the documented boot protocol
+for arm64, we only permit this when booting via the EFI stub.
 
-Until the end of the month I should have also Pixel 3, so I'll 
-definitely continue to enable all the mentioned features, but as this 
-DTB is also needed for u-boot [1], I would prefer to get MVD in ASAP, 
-mostly because of the fastboot is useless for loading mainline kernel.
+When we set this field to 0x80000, we are basically instructing
+bootloaders to violate the boot protocol, which is not ideal, and we
+should definitely not issue the pr_warn() we have today in
+arch/arm64/kernel/setup.c.
 
-[1] https://gitlab.postmarketos.org/tauchgang
+> >
+> > If this is really something that needs to be fixed upstream, we should
+> > just bring back TEXT_OFFSET in its entirety, but I'm not convinced
+> > that this is really justified here. As a workaround, you could just
+> > add 2 MiB - 0x80000 bytes of padding at the start of the image, and
+> > add your own header (as Will alludes to as well)
+>
+> Does it mean building a device specific kernel? Or just packing
+> everything while building the Android boot image?
+>
 
-Before I'll send the v2, the progress can be tracked in
-   https://gitlab.com/dhxx/linux/-/commits/b4/pixel-3
-
-Thank you both for the review!
-David
-
-> 
-> The phones share all firmware except for the bdwlan, so hopefully you
-> can add 'Google/blueline/foo.mbn' to the common file.
-> 
-> [1] https://github.com/linux-msm/meta-qcom-extras/blob/master/recipes-bsp/firmware-nexus/firmware-qcom-pixel3.bb
-> [2] https://github.com/linux-msm/meta-qcom-extras/blob/master/recipes-bsp/firmware-nexus/firmware-qcom-pixel.inc
-> 
->>
->> GPIOs 0–3 and 81–84 are not accessible from the application CPUs,
->> so they are marked as reserved to allow the Pixel 3 to boot.
->>
->> The rmtfs region is allocated using UIO, making it technically "dynamic."
->>
->> Its address and size can be read from sysfs:
->>
->> $ cat /sys/class/uio/uio0/name
->> /sys/class/uio/uio0/maps/map0/addr
->> 0x00000000f2701000
->>
->> $ cat /sys/class/uio/uio0/maps/map0/size
->> 0x0000000000200000
->>
->> Like the OnePlus 6, the Pixel 3 requires 1 kB of reserved memory on either
->> side of the rmtfs region to work around an XPU bug that would otherwise
->> cause erroneous violations when accessing the rmtfs_mem region.
->>
->> Co-developed-by: Amit Pundir <amit.pundir@linaro.org>
->> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
->> Co-developed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Co-developed-by: Casey Connolly <casey@connolly.tech>
->> Signed-off-by: Casey Connolly <casey@connolly.tech>
->> Co-developed-by: Joel Selvaraj <foss@joelselvaraj.com>
->> Signed-off-by: Joel Selvaraj <foss@joelselvaraj.com>
->> Co-developed-by: Sumit Semwal <sumit.semwal@linaro.org>
->> Signed-off-by: Sumit Semwal <sumit.semwal@linaro.org>
->> Co-developed-by: Vinod Koul <vkoul@kernel.org>
->> Signed-off-by: Vinod Koul <vkoul@kernel.org>
->> Signed-off-by: David Heidelberg <david@ixit.cz>
->> ---
->>   arch/arm64/boot/dts/qcom/Makefile                  |   2 +
->>   .../arm64/boot/dts/qcom/sdm845-google-blueline.dts | 128 ++++++
->>   arch/arm64/boot/dts/qcom/sdm845-google-common.dtsi | 467 +++++++++++++++++++++
->>   .../boot/dts/qcom/sdm845-google-crosshatch.dts     | 137 ++++++
->>   4 files changed, 734 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
->> index 4bfa926b6a085..ba05dc935dc7c 100644
->> --- a/arch/arm64/boot/dts/qcom/Makefile
->> +++ b/arch/arm64/boot/dts/qcom/Makefile
->> @@ -239,6 +239,8 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c.dtb
->>   sdm845-db845c-navigation-mezzanine-dtbs	:= sdm845-db845c.dtb sdm845-db845c-navigation-mezzanine.dtbo
->>   
->>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-db845c-navigation-mezzanine.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-google-crosshatch.dtb
->> +dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-google-blueline.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyln.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-lg-judyp.dtb
->>   dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-mtp.dtb
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts b/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts
->> new file mode 100644
->> index 0000000000000..df88982018b9e
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-google-blueline.dts
->> @@ -0,0 +1,128 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +
->> +/dts-v1/;
->> +
->> +#include "sdm845-google-common.dtsi"
->> +
->> +/ {
->> +	model = "Google Pixel 3";
->> +	compatible = "google,blueline", "qcom,sdm845";
->> +
->> +	battery: battery {
->> +		compatible = "simple-battery";
->> +
->> +		charge-full-design-microamp-hours = <2970000>;
->> +		voltage-min-design-microvolt = <3600000>;
->> +		voltage-max-design-microvolt = <4400000>;
->> +	};
->> +
->> +	chosen {
->> +		#address-cells = <2>;
->> +		#size-cells = <2>;
->> +		ranges;
->> +
->> +		/* for u-boot */
->> +		framebuffer: framebuffer@9d400000 {
->> +			compatible = "simple-framebuffer";
->> +			reg = <0 0x9d400000 0 (2160 * 1080 * 4)>;
->> +			width = <1080>;
->> +			height = <2160>;
->> +			stride = <(1080 * 4)>;
->> +			format = "a8r8g8b8";
->> +		};
->> +	};
->> +
->> +	reserved-memory {
->> +		framebuffer_region@9d400000 {
-> 
-> Can't we use cont_splash_mem and let bootloader set it?
-> 
->> +			no-map;
->> +			reg = <0 0x9d400000 0 0x02400000>; // FIXME
->> +		};
->> +	};
->> +};
->> +
->> +&gmu {
->> +	status = "okay";
->> +};
-> 
-> No need to, it's enabled by default.
-> 
->> +
->> +&mdss {
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dsi0 {
->> +	status = "okay";
->> +	vdda-supply = <&vdda_mipi_dsi0_1p2>;
->> +
->> +	ports {
->> +		port@1 {
->> +			endpoint {
->> +				remote-endpoint = <&panel_in>;
->> +				data-lanes = <0 1 2 3>;
->> +				qcom,te-source = "mdp_vsync_e";
-> 
-> &mdss_dsi1_out {
-> 	remote-endpoint = <&panel_in>;
-> 	.....
-> };
-> 
-> 
->> +			};
->> +		};
->> +	};
->> +
->> +	panel@0 {
->> +		compatible = "lg,sw43408";
->> +		reg = <0>;
->> +
->> +		vddi-supply = <&vreg_l14a_1p88>;
->> +		vpnl-supply = <&vreg_l28a_3p0>;
->> +
->> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
->> +
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&panel_reset_pins &panel_te_pin &panel_pmgpio_pins>;
->> +
->> +		port {
->> +			panel_in: endpoint {
->> +				remote-endpoint = <&mdss_dsi0_out>;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +&mdss_dsi0_out {
->> +	remote-endpoint = <&panel_in>;
->> +	data-lanes = <0 1 2 3>;
->> +};
->> +
->> +&mdss_dsi0_phy {
->> +	vdds-supply = <&vdda_mipi_dsi0_pll>;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&pm8998_gpios {
->> +	panel_pmgpio_pins: panel-pmgpio-active-state {
-> 
-> Are these two actually used by the panel? I think they were only used
-> for sw43402, but not for sw43408.
-> 
->> +		pins = "gpio2", "gpio5";
->> +		function = "normal";
->> +		input-enable;
->> +		bias-disable;
->> +		power-source = <0>;
->> +	};
->> +};
->> +
->> +
->> +	volume-keys {
-> 
-> gpio-keys ?
-> 
->> +		compatible = "gpio-keys";
->> +		label = "Volume keys";
->> +		autorepeat;
->> +
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&volume_up_gpio>;
->> +
->> +		key-vol-up {
->> +			label = "Volume Up";
->> +			linux,code = <KEY_VOLUMEUP>;
->> +			gpios = <&pm8998_gpios 6 GPIO_ACTIVE_LOW>;
->> +			debounce-interval = <15>;
->> +		};
->> +	};
->> +
->> +	vph_pwr: vph-pwr-regulator {
-> 
-> Nit: BCP is regulator-foo-bar
-> 
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vph_pwr";
->> +		regulator-min-microvolt = <3700000>;
->> +		regulator-max-microvolt = <3700000>;
->> +	};
->> +
->> +	vreg_s4a_1p8: vreg-s4a-1p8-regulator {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "vreg_s4a_1p8";
->> +
->> +		regulator-min-microvolt = <1800000>;
->> +		regulator-max-microvolt = <1800000>;
->> +		regulator-always-on;
->> +		regulator-boot-on;
->> +
->> +		vin-supply = <&vph_pwr>;
->> +	};
->> +};
->> +
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts b/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts
->> new file mode 100644
->> index 0000000000000..dc9938ffc0ab8
->> --- /dev/null
->> +++ b/arch/arm64/boot/dts/qcom/sdm845-google-crosshatch.dts
->> @@ -0,0 +1,137 @@
->> +// SPDX-License-Identifier: GPL-2.0-only
->> +
->> +/dts-v1/;
->> +
->> +#include "sdm845-google-common.dtsi"
->> +
->> +/ {
->> +	model = "Google Pixel 3 XL";
->> +	compatible = "google,crosshatch", "qcom,sdm845";
->> +
->> +	battery: battery {
->> +		compatible = "simple-battery";
->> +
->> +		charge-full-design-microamp-hours = <3480000>;
->> +		voltage-min-design-microvolt = <3600000>;
->> +		voltage-max-design-microvolt = <4400000>;
->> +	};
->> +
->> +	chosen {
->> +		#address-cells = <2>;
->> +		#size-cells = <2>;
->> +		ranges;
-> 
-> These are all the same as the -blueline. Please move common options to
-> the -common.dtsi
-> 
->> +
->> +		/* for u-boot */
->> +		framebuffer: framebuffer@9d400000 {
->> +			compatible = "simple-framebuffer";
->> +			reg = <0 0x9d400000 0 (2960 * 1440 * 4)>;
->> +			width = <1440>;
->> +			height = <2960>;
->> +			stride = <(1440 * 4)>;
->> +			format = "a8r8g8b8";
->> +		};
->> +	};
->> +
->> +	reserved-memory {
->> +		framebuffer_region@9d400000 {
->> +			no-map;
->> +			reg = <0 0x9d400000 0 0x02400000>;
->> +		};
->> +	};
->> +};
->> +
->> +&gmu {
->> +	status = "okay";
->> +};
->> +
->> +&mdss {
-> 
-> More and more common properties. Please move them to the common file.
-
-Sorry about this, the mdss nodes got in by accident, the display driver 
-for crosshatch is WIP.>
->> +	status = "okay";
->> +};
->> +
->> +&mdss_dsi0 {
->> +	vdda-supply = <&vdda_mipi_dsi0_1p2>;
->> +
->> +	status = "okay";
->> +
->> +	ports {
->> +		port@1 {
->> +			endpoint {
->> +				remote-endpoint = <&panel_in>;
->> +				data-lanes = <0 1 2 3>;
->> +				qcom,te-source = "mdp_vsync_e";
->> +			};
->> +		};
->> +	};
->> +
->> +	panel@0 {
->> +		compatible = "samsung,s6e3ha8";
->> +		reg = <0>;
->> +
->> +		vci-supply = <&vreg_l28a_3p0>; // downstream
->> +		vdd3-supply = <&vreg_l28a_3p0>;
->> +		vddr-supply = <&vreg_l14a_1p88>;
->> +
->> +		reset-gpios = <&tlmm 6 GPIO_ACTIVE_LOW>;
->> +
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&panel_reset_pins &panel_te_pin &se8_spiflash &panel_pmgpio_pins>;
-> 
-> - Why do you need spiflash here?
-> - I don't think this uses pmgpios too.
-> 
->> +
->> +		port {
->> +			panel_in: endpoint {
->> +				remote-endpoint = <&mdss_dsi0_out>;
->> +			};
->> +		};
->> +	};
->> +};
->> +
->> +&mdss_dsi0_out {
->> +	data-lanes = <0 1 2 3>;
->> +	remote-endpoint = <&panel_in>;
->> +};
->> +
->> +&mdss_dsi0_phy {
->> +	vdds-supply = <&vdda_mipi_dsi0_pll>;
->> +
->> +	status = "okay";
->> +};
->> +
->> +&pm8998_gpios {
->> +	panel_pmgpio_pins: panel-pmgpio-active-state {
->> +		pins = "gpio2", "gpio5";
->> +		function = "normal";
->> +		input-enable;
->> +		bias-disable;
->> +		power-source = <0>;
->> +	};
->> +};
->> +
->> +&tlmm {
->> +	se8_spiflash: se8-spiflash-state {
->> +		pins = "gpio65", "gpio66", "gpio67", "gpio68";
->> +		function = "gpio";
->> +		input-enable;
->> +		bias-disable;
->> +	};
->> +
->> +	panel_te_pin: panel-te-state {
->> +		pins = "gpio12";
->> +		function = "mdp_vsync";
->> +		drive-strength = <2>;
->> +		bias-pull-down;
->> +	};
->> +
->> +	panel_reset_pins: panel-active-state {
->> +		pins = "gpio6";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		bias-disable;
->> +	};
->> +
->> +	panel_suspend: panel-suspend-state {
->> +		pins = "gpio6";
->> +		function = "gpio";
->> +		drive-strength = <2>;
->> +		bias-pull-down;
->> +	};
->> +
->> +};
->>
->> -- 
->> 2.51.0
->>
->>
-> 
-
--- 
-David Heidelberg
-
+No idea. What does the Android boot image contain? Is the first thing
+that gets loaded the kernel image? In that case, you would wrap the
+kernel image before sticking it into the Android boot image, yes.
 
