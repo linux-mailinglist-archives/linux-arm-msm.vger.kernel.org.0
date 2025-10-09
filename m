@@ -1,153 +1,220 @@
-Return-Path: <linux-arm-msm+bounces-76718-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76719-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
-Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [IPv6:2604:1380:4601:e00::3])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2628BCA219
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 18:20:26 +0200 (CEST)
+Received: from am.mirrors.kernel.org (am.mirrors.kernel.org [147.75.80.249])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23C0FBCA2C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 18:26:37 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by am.mirrors.kernel.org (Postfix) with ESMTPS id C44BB1A6697E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 16:15:22 +0000 (UTC)
+	by am.mirrors.kernel.org (Postfix) with ESMTPS id A8CCA1A64851
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 16:21:13 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 9A2FA35949;
-	Thu,  9 Oct 2025 16:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7F31D22541C;
+	Thu,  9 Oct 2025 16:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="hv+H5D2O"
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="kcUpjNGa"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from mx0a-0031df01.pphosted.com (mx0a-0031df01.pphosted.com [205.220.168.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02664231A21
-	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 16:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1EB521B918
+	for <linux-arm-msm@vger.kernel.org>; Thu,  9 Oct 2025 16:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.168.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1760026091; cv=none; b=LRu1j2n8m0y4DDP1qZjrKHhz6xOygW6YVBvOwLJ8btWyCD6xZRTz2iVFdPWWdMscoccIvW0QHoyrljUxTYDjkMDDfs0ghWHWVYKx1KOcr4LU1pr/zIowjivuuPrWPSLTLJj1+bn1atV9XO4CuOwrupB4YkSlDN3MjBoiNQSRRj0=
+	t=1760026837; cv=none; b=MUh1OzVsOyfdc6IfWCZqyL2ghmLA7FbKUdb796Nnn1FSSn341y2wo7va/CVSbhRFyY6n63T5mUlEWQKTEqsOr7ceoODX6r83ZzJCDqD1q17T/XbOGXRHglIgps53z6o8DYSmoEqakSU76kH6iWBUW1juQ1vlAXUWKYUsY6hp3GY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1760026091; c=relaxed/simple;
-	bh=wnjQVG+egmK2IXhzGH82IGBpeDw+1s4hu8UVsW7/sgo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oRUb+PiASa+19IclcCNadXCzR4mzahguyw44via0V4HvCOJ14Y6LNwDJGc1kFs6pJO+vqXS0v6sUGtMg+CKRn3Cr9ARCPukXfXMzX9Y0Qgb2HJB/uQQwLFbZdokuEwZm2d1PLOTU7Jtkgxu+eyq0gkI2SNmD6ilQl9c2oLYtEdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=hv+H5D2O; arc=none smtp.client-ip=205.220.168.131
+	s=arc-20240116; t=1760026837; c=relaxed/simple;
+	bh=VbQsVyRsuWloA1O9V/3twwb3hcbjIIv9Hp3Pl6v70t4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=c8q2fY+8TQtNcNxkDAM0nx++/P3T9z4jcP5chkf/A7vYvnqjeQB2NgezWEocP3A+a1XgdpGR8thd061AOGig8OHObz4fPc0IxAyQxpRmVYTQAe8AqsJvjkGGvNI7P9PYQnmnF9cKqTg80KJbNehFRs4SAp3/zQNLLwvoZ/3H5Ew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=kcUpjNGa; arc=none smtp.client-ip=205.220.168.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
 Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 599EZmnt024093
-	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Oct 2025 16:08:09 GMT
+	by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 599F0GH0024408
+	for <linux-arm-msm@vger.kernel.org>; Thu, 9 Oct 2025 16:20:35 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	cc:content-transfer-encoding:content-type:date:from:in-reply-to
-	:message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
-	jJ9LcKuZ6RaI0QjDWk+WPpGF97bOBxFsnMcVmm6o4g0=; b=hv+H5D2OfGlqf+y9
-	/PSpdxaTYKMxoVN4k62FgqHz1rxKKD8aXMnTm/nVgPli+9kzdF44iNUMObioxUbj
-	81cbqg9t+GtCxT/kARnXsIFKqQwGytBQHCZfqy0otpD5b+uoUX+uPbywnlDzmk5G
-	vw0FOBA6ArmpQ0crQLT9aZnnNypjRA/Wd35s4/CnTjlHoRLMHRlhx3JcTikYmg6y
-	DP6wonghk3cJ1loKcHTIWJDFYNHFakUtzQVKr1PTDn2rtQVXGxA3y3mbULJZP+xd
-	X+aqo9oerBPPRCgRTORlwaNY9JKoOU0hexPP7SCdAOETGhicUqnfkvO8wPNkdDyS
-	jNCbvw==
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com [209.85.160.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4m3j83-1
+	cc:content-type:date:from:in-reply-to:message-id:mime-version
+	:references:subject:to; s=qcppdkim1; bh=aUrMD37peXtVojgoLEAh0gbY
+	11kyxgxZwVOkAKeKJMI=; b=kcUpjNGab2GgcvDjxDOroV6bmU94ubzm7qnW9Tpy
+	eLe9TXkOwmYBHxvuqDv5sT7oDgdjqzrYJXtxMLiy61FvEndl3ADg6jr7urNmuYke
+	B8Nbjso8TQgY+bM3G1j8o2qldn5vpZOmaFrr/rBnF43KhDaKMc39fo4E9ziJcn5B
+	p7U3DjkV1Hxq+xWnuLt/94CxdcOjkoSvP9knM2VgPrYcaiKLlP+F1acCX7SLmX3B
+	lhGwXjfz0kmVn/igIvH395qjvtoxWpRICv1vSYEZn36EdCDZEUyE3Hz1zvs6gbxD
+	8Vyjor4NUJebC8a/TM2N3eOGOK2w9+PnVyFh/Q2pY8vTkA==
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com [209.85.160.199])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 49nv4m3kk3-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 16:08:09 +0000 (GMT)
-Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-4dc37a99897so4320911cf.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 09:08:08 -0700 (PDT)
+	for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 16:20:34 +0000 (GMT)
+Received: by mail-qt1-f199.google.com with SMTP id d75a77b69052e-4dbd8484abbso25545061cf.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Oct 2025 09:20:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1760026088; x=1760630888;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jJ9LcKuZ6RaI0QjDWk+WPpGF97bOBxFsnMcVmm6o4g0=;
-        b=doiQ+YuyDnjrGecrzmh8GQNdvQosXIz9IAiomMrWl0FLgFK+tvA/a4w4Wa93MmR7vx
-         zn4B2rdvvHuntP7bkV9oF3NEHp8uVFmPH6oWq40Z61mEprNnIdip2FnimDugHs75JUN0
-         Dsg/1eSHceB1WnUbwSzeQ//LqsGXyPeiQtde7S7wkppozre8qleScfhk4TsC9JAh6B9T
-         dU6FC/fTwjgiaVk8wIkNTWulD1IqKO2vWanfB3AwOijr5rYHkwx0Vx1UprfS9q6ucovW
-         vzvxUgioiY0EUdZ+tZ9a0KSjzQvOXAafS85M6WoNYHEs6tc1XEpdxSK5IZ/WhzBSoVSr
-         hIEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXqt1uMMbinJZqlUnd39xI+7F4Ls6SKASFhkuPolG5DlcAmmdJMDsHY7I85kKgC9fKPYo0hb9Kaq6JGggC2@vger.kernel.org
-X-Gm-Message-State: AOJu0YzMF7ORrQFAniYDZVohViMKG1IJ8Tu8opX7hlvcF3vyem1WG7MN
-	ap3uuBE0goht5Fp9AlIZA1n2A0MFSdjLOY/McDy2Z2HFICXIFcRVh0skDR4HuWYO7jtFTCKJPkO
-	MSSL/aRYJXqCrqIwDHJxVEBatNkkznmAf7ksx1dcZ/Tl36b6kBOMAQ6U3V6heRdkbq3jS
-X-Gm-Gg: ASbGnctGXpEyxeoofjMkgtMqQFE2+Wvnvs1mJmi+ZnnxGJ3JZ1qOt6pWqpp/BqiRiyW
-	OGw8m2QEj9vbSe0TCLEAOYydD7pTxMfRWLDOB8c/y4hJ3yPaQqLdVfMJpNlr7H6DJnkT5JzOEsc
-	hr3hjUt1nYqSyqJBZj//+5yeSXbSNwli53EyHrnwldD8dGhNtDVnaJ9LnQ2p4gccReSxCmLbvn8
-	1Ayn4nUJLf/iGcVbmb1lbGKPBmzsInCAT1axremhTQBBQ0OWjh1722jwHlH0olF6WIk5108GQtw
-	rCjwRXSrIGu858i+SJX5Z7I3WGDd8faHYmoUJFDUqUffGjILXJ/oomxALDVpTmJn/aoSQkB9qsb
-	1V1/ArjifJ+APS4L8HOD4bJb5LxM=
-X-Received: by 2002:ac8:58d2:0:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4e6eacd4f8cmr74888181cf.2.1760026087638;
-        Thu, 09 Oct 2025 09:08:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2+Z2nuPl0CiMPeaV1ZrBJxe7W45K0/bsiPvQVl/aLb1IdSFCEiGmt6XM4B2I/2P+tfM8wiQ==
-X-Received: by 2002:ac8:58d2:0:b0:4ab:6e68:1186 with SMTP id d75a77b69052e-4e6eacd4f8cmr74887731cf.2.1760026087092;
-        Thu, 09 Oct 2025 09:08:07 -0700 (PDT)
-Received: from [192.168.149.223] (078088045245.garwolin.vectranet.pl. [78.88.45.245])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-63a52b71503sm86363a12.27.2025.10.09.09.08.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Oct 2025 09:08:06 -0700 (PDT)
-Message-ID: <1cd57f5c-d829-4dbd-aac9-b07d0e155e4e@oss.qualcomm.com>
-Date: Thu, 9 Oct 2025 18:08:03 +0200
+        d=1e100.net; s=20230601; t=1760026833; x=1760631633;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aUrMD37peXtVojgoLEAh0gbY11kyxgxZwVOkAKeKJMI=;
+        b=L5y9cyH++rn+LjDpR3LuwJvp/1uJfPaqSBXTjspZxaVdEXRfX1+6rOzsfPAcn0p6gn
+         l5FlNkCUnvwv8+f6epVSyVelmX8FTiqUQuBc8Vg8JAdCgAy+lEvvKhcwpvPaESB1MQ/m
+         ri3GovhHvWJgjzjgt8lmPWBMoYMexvOgYabeCBh/0Xv+xH/iszPBuZ18Vs5AKfWzFyKO
+         f6c7Sp521Uc8j9wojMOekfhgUdAzZK/U56mznIiZj8LQNuONN69LLMyNBTtyJEJ9eObF
+         Qv8nQmDneKSJy4Afvnju1J77Pz08reCwQZ5WdKIPYEyjyJHa106i3RMiACxRgIdxnpLq
+         0Tdg==
+X-Forwarded-Encrypted: i=1; AJvYcCWhUlqK8F3QUKmzNJshOJ0+kOZhPXlenXOzj2Xi3LJlCAtHkZaYL2f0JKShtoso2QBI9XErefn1Lx3R1qqU@vger.kernel.org
+X-Gm-Message-State: AOJu0YyTBTLXTSY9x/uGHAB+VZTI7woPCTiup/3TrHTBRrdK7V0+KvEq
+	lblvUTnAuV0/ZUWHekGteV6667gH5GMztoxXamCsQWFILYmSlHoCgoU9IIrU6wrPyeSRaXyHdI0
+	d3k9V1FfLf6f0jafkSyFlinZ1Y0SPIS+s/VHKaW0yu89UxmfBVQoYs4WAYSVOAb3tU7y2
+X-Gm-Gg: ASbGnctnL3gffLK6V6ap8Aus1mwFzFXuqKN24NncVwuCqWqMs5wOdgqt4MjL4/BAiih
+	AJNhWmNb2Bti52E5vTIXFm99YrNEqClMlULnNL5QsjeDQUBlF0g/UUYwcQFItmNpJtGv8tRgE+g
+	GtOMCuWvTaemSDKIjycfm1CvKTk7xrcSSbWYfzaHwkxGgbQW5RXIMoVLBtJXVFIg4ukqllegqry
+	ni6iFqw1AUd+A0jxDQz2lKned8KjQ+fBs43XQRcqpcwuHPJOwVtfFAbRhfr+e7itnlucp6K6nAS
+	RpZVKIycEB8Nad5ICA1dBcQD4e+foPaDgcSJUPWgfxXM560BEqCPXbIXt3/vCOyh/u3Qpqb63+Y
+	AvOufe3aTlUhThq2ZT5dcDVAsmY8i5+4XV180c2Btf19Y1dt/OBzS/U0cZg==
+X-Received: by 2002:a05:622a:586:b0:4e2:ca4d:2956 with SMTP id d75a77b69052e-4e6ead1d1c2mr103131321cf.37.1760026833437;
+        Thu, 09 Oct 2025 09:20:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJTouOXP+EABlCOSGus56DedrTUrViwKuBlKhFr3F8onfjvCRC5pfiuEb5yBFGb61EG16HEg==
+X-Received: by 2002:a05:622a:586:b0:4e2:ca4d:2956 with SMTP id d75a77b69052e-4e6ead1d1c2mr103130711cf.37.1760026832905;
+        Thu, 09 Oct 2025 09:20:32 -0700 (PDT)
+Received: from umbar.lan (2001-14ba-a0c3-3a00-264b-feff-fe8b-be8a.rev.dnainternet.fi. [2001:14ba:a0c3:3a00:264b:feff:fe8b:be8a])
+        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-375f39fcbbesm29121931fa.25.2025.10.09.09.20.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 09 Oct 2025 09:20:31 -0700 (PDT)
+Date: Thu, 9 Oct 2025 19:20:28 +0300
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+To: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Cc: Vikash Garodia <vikash.garodia@oss.qualcomm.com>,
+        Dikshita Agarwal <dikshita.agarwal@oss.qualcomm.com>,
+        Abhinav Kumar <abhinav.kumar@linux.dev>,
+        Bryan O'Donoghue <bod@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 8/8] media: iris: enable support for SC7280 platform
+Message-ID: <6n6teatqlppmstvcymwhf66wvfwc3upquvph3i7eina6htbxqt@ch23apdeykz5>
+References: <20251008-iris-sc7280-v1-0-def050ba5e1f@oss.qualcomm.com>
+ <20251008-iris-sc7280-v1-8-def050ba5e1f@oss.qualcomm.com>
+ <3f1979d4-1438-4c9d-99db-d97a09c5c35b@oss.qualcomm.com>
+ <gdui5coiazt5ynuz6c6mr5slau33vuewr55vx53m5zzyi537at@cs7dbgirijuw>
+ <1118c126-4332-4f9b-afb8-d3da4fa7fa87@oss.qualcomm.com>
+ <um6d7e2su4erqet5fxyaxpyulfrzqvadq4izxgmxu3tol3i7jk@godpxwsqeqzs>
+ <0a0afe32-7814-4901-bfbb-6694cd846257@oss.qualcomm.com>
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
 List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH AUTOSEL 6.17-5.4] pinctrl: qcom: make the pinmuxing strict
-To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev,
-        stable@vger.kernel.org
-Cc: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-        Neil Armstrong <neil.armstrong@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>, andersson@kernel.org,
-        linux-arm-msm@vger.kernel.org
-References: <20251009155752.773732-1-sashal@kernel.org>
- <20251009155752.773732-60-sashal@kernel.org>
-Content-Language: en-US
-From: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-In-Reply-To: <20251009155752.773732-60-sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfX4ySRn6XPJlQa
- HyD7Oh5RuN81urcQTj5KkLUmVDIvNnQE2qNLxOYmHMkFGokJI18p10Earf9vZsGUQ+tTXnF/ERJ
- CIe6AnhadF8WY17fCMaT/c0m0skjvjZuIVi06lDZyZuf6DLxkrXXThi9+9SpSaiWV+yJWd1TeZy
- YQJ8RptfDAlbbBKjyl2K3KhM3j3WUWT3oBBUGTIXXiwTd+EfjQIhf7G33MGcZ3gSXu7H8d1c2Uz
- v810OPZd8K6saHiDAqhnTh8w99bxKdNn7UPFDQ5zPdKsg/3UsNtdibCKQmVNOs4DFlzwGfUDJlF
- 0YSQ4Et2FblcmPydNPO0y+Rj65HpLxLL2RzuRYHn6gi3ylyaDsk04bpS4yt0cvhcY77MI6GV5Tp
- mZnvfN5y7Opbzaf5YDwiCdpuQAFDow==
-X-Authority-Analysis: v=2.4 cv=B6G0EetM c=1 sm=1 tr=0 ts=68e7dde9 cx=c_pps
- a=JbAStetqSzwMeJznSMzCyw==:117 a=FpWmc02/iXfjRdCD7H54yg==:17
- a=IkcTkHD0fZMA:10 a=x6icFKpwvdMA:10 a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8
- a=VwQbUJbxAAAA:8 a=FGwjZpymIQ_i5ujK4VkA:9 a=QEXdDO2ut3YA:10
- a=uxP6HrT_eTzRwkO_Te1X:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: PmW298YHyXu4jLDC-U-80orlNNTDHd8v
-X-Proofpoint-ORIG-GUID: PmW298YHyXu4jLDC-U-80orlNNTDHd8v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0a0afe32-7814-4901-bfbb-6694cd846257@oss.qualcomm.com>
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUxMDA4MDEyMSBTYWx0ZWRfXwYpsKKNEWogd
+ FN42zx7oOF7+4JjXOhutEX7JOfKQyTdjDdvTH3r6/eOh9plsg4xEy8qrPxifwhVeZU5FSmr1NWi
+ k+YFZJwb1cbG/UJrKiR0WtwF0GrglTkWV4KrVqU/wyzE7/+PEKSPNgUGp3dW02c187RuDsC/BX3
+ SNM6LthbJ12uK/njgRyH5gHUlvdLZTQTd3s3usz2zvENNhCO72+W660eE+PPLe0ZDQA3bEzDjAw
+ Pv9F1dJVht3VC51dn8YIE5tHz2WeYRvzPmoWCtipkkubLPT4vhopR1TYGvQaMvwKiYZ4dlIuDEr
+ Z1px9iov+cPv4UJlaP4+XBJi5YSy+12eeW8/49iuMxyIC9WXr8LBnBHJNQZTvMXqsPvz+kKzxQa
+ z43eW9p4TCSxYIbDFzfo/PJ/VBvPFw==
+X-Authority-Analysis: v=2.4 cv=B6G0EetM c=1 sm=1 tr=0 ts=68e7e0d2 cx=c_pps
+ a=WeENfcodrlLV9YRTxbY/uA==:117 a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10
+ a=x6icFKpwvdMA:10 a=LpQP-O61AAAA:8 a=t2CvURYCdbnRCxKuSPgA:9 a=CjuIK1q_8ugA:10
+ a=kacYvNCVWA4VmyqE58fU:22 a=pioyyrs4ZptJ924tMmac:22
+X-Proofpoint-GUID: 54H_tqss6w3YKz3T3fTLHhUguR_GrvV_
+X-Proofpoint-ORIG-GUID: 54H_tqss6w3YKz3T3fTLHhUguR_GrvV_
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1117,Hydra:6.1.9,FMLib:17.12.80.40
  definitions=2025-10-09_05,2025-10-06_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1031 suspectscore=0
+ spamscore=0 lowpriorityscore=0 bulkscore=0 clxscore=1015 suspectscore=0
  malwarescore=0 adultscore=0 priorityscore=1501 phishscore=0 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.19.0-2510020000 definitions=main-2510080121
 
-On 10/9/25 5:55 PM, Sasha Levin wrote:
-> From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+On Thu, Oct 09, 2025 at 05:49:45PM +0200, Konrad Dybcio wrote:
+> On 10/9/25 5:00 PM, Dmitry Baryshkov wrote:
+> > On Thu, Oct 09, 2025 at 11:19:31AM +0200, Konrad Dybcio wrote:
+> >> On 10/8/25 9:25 PM, Dmitry Baryshkov wrote:
+> >>> On Wed, Oct 08, 2025 at 10:26:02AM +0200, Konrad Dybcio wrote:
+> >>>> On 10/8/25 6:33 AM, Dmitry Baryshkov wrote:
+> >>>>> As a part of migrating code from the old Venus driver to the new Iris
+> >>>>> one, add support for the SC7280 platform. It is very similar to SM8250,
+> >>>>> but it (currently) uses no reset controls (there is an optional
+> >>>>> GCC-generated reset, it will be added later) and no AON registers
+> >>>>> region. The Venus driver names this platform "IRIS2_1", so the ops in
+> >>>>
+> >>>> Which we've learnt in the past is "IRIS2, 1-pipe"
+> >>>
+> >>> Well, I'm open for better suggestions. iris_vpu2_no_aon_ops?
+> >>
+> >> [...]
+> >>
+> >>>>> +	writel(CTL_AXI_CLK_HALT | CTL_CLK_HALT,
+> >>>>> +	       core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
+> >>>>> +	writel(RESET_HIGH, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
+> >>>>> +	writel(0x0, core->reg_base + WRAPPER_TZ_QNS4PDXFIFO_RESET);
+> >>>>> +	writel(0x0, core->reg_base + WRAPPER_TZ_CTL_AXI_CLOCK_CONFIG);
+> >>>>> +
+> >>>>> +disable_power:
+> >>>>> +	iris_disable_unprepare_clock(core, IRIS_AHB_CLK);
+> >>>>
+> >>>> ..for this line
+> >>>
+> >>> Not only. You missed the absense of AON_WRAPPER_MVP_NOC_LPI_CONTROL /
+> >>> AON_WRAPPER_MVP_NOC_LPI_STATUS. Which in theory can become a flag in
+> >>> iris_platform_data.
+> >>>
+> >>>>
+> >>>> but this could be added to that one instead, since both clk APIs and the
+> >>>> Iris wrappers around it are happy to consume a null pointer (funnily
+> >>>> enough this one returns !void and is never checked)
+> >>>>
+> >>>> similar story for other func additions
+> >>>
+> >>> In fact, initially I had them merged, but then I couldn't find an
+> >>> elegant way to handle AON regs. I can squash them back, if that's the
+> >>> consensus. Any idea regarding AON regs?
+> >>
+> >> Digging in techpack/video, I found:
+> >>
+> >> commit c543f70aca8d40c593b8ad342d42e913a422c552
+> >> Author: Priyanka Gujjula <pgujjula@codeaurora.org>
+> >> Date:   Fri Feb 14 13:38:31 2020 +0530
+> >>
+> >>     msm: vidc: Skip AON register programming for lagoon
+> >>     
+> >>     AON register programming is used to set NOC to low
+> >>     power mode during IRIS2 power off sequence. However
+> >>     AON register memory map is not applicable and hence
+> >>     skipping AON register programming for lagoon.
+> >>     
+> >>     Change-Id: Ib63248d118ed9fecfa5fa87925e8f69625dc1ba8
+> >>     Signed-off-by: Priyanka Gujjula <pgujjula@codeaurora.org>
+> >>
+> >>
+> >> lagoon being a downstream codename of the aforementioned sm6350
+> >>
+> >> Meaning yeah it's bus topology.. so I think an if-statement within
+> >> a common flow would be what we want here..
+> >>
+> >> perhaps
+> >>
+> >> if (core->iris_platform_data->num_vpp_pipe == 1)
+> >>
+> >> just like venus and downstream do for the most part, and kick the
+> >> can down the road.. In an unlikely event someone decides to implement
+> >> IRIS2_1 on a brand new SoC, we can delay our worries..
+> > 
+> > But this function is being used for VPU3 devices too, if I'm not
+> > mistaken. So it becomes a bit ugly... Also I'm not sure if this is
+> > really related to a num of VPP pipes or the CVP.
 > 
-> [ Upstream commit cc85cb96e2e4489826e372cde645b7823c435de0 ]
-> 
-> The strict flag in struct pinmux_ops disallows the usage of the same pin
-> as a GPIO and for another function. Without it, a rouge user-space
-> process with enough privileges (or even a buggy driver) can request a
-> used pin as GPIO and drive it, potentially confusing devices or even
-> crashing the system. Set it globally for all pinctrl-msm users.
-> 
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-> Tested-by: Neil Armstrong <neil.armstrong@linaro.org>
-> Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
+> Oh.. hm.. maybe we can add a .aon_shutdown op? I'm not sure how
+> to proceed either
 
-I didn't receive more related patches, but this had quite some
-dependencies (in pinctrl core and individual per-SoC drivers), which I'm
-not sure are worth all digging up and resolving conflicts
+I think, if you want to merge those codepaths, I can add .no_aon flag to
+platform data, unless maintainers disagree with this proposeal.
 
-Konrad
+-- 
+With best wishes
+Dmitry
 
