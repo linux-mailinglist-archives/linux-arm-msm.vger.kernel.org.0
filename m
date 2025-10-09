@@ -1,48 +1,48 @@
-Return-Path: <linux-arm-msm+bounces-76558-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
+Return-Path: <linux-arm-msm+bounces-76559-lists+linux-arm-msm=lfdr.de@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from dfw.mirrors.kernel.org (dfw.mirrors.kernel.org [142.0.200.124])
-	by mail.lfdr.de (Postfix) with ESMTPS id E16BCBC7FB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 10:16:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1530DBC7FBA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 09 Oct 2025 10:16:35 +0200 (CEST)
 Received: from smtp.subspace.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id B4CB44F964A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 08:14:44 +0000 (UTC)
+	by dfw.mirrors.kernel.org (Postfix) with ESMTPS id 2AEEF4E7000
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Oct 2025 08:15:31 +0000 (UTC)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 2DE772D1F64;
-	Thu,  9 Oct 2025 08:14:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0614C2BD036;
+	Thu,  9 Oct 2025 08:15:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uh0DvYKE"
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cIhziQPx"
 X-Original-To: linux-arm-msm@vger.kernel.org
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE61320A5EA;
-	Thu,  9 Oct 2025 08:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9CBA2848A6;
+	Thu,  9 Oct 2025 08:15:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1759997661; cv=none; b=bA3rB/Pix56TkTVDIL8AmQOPVrWyJ7JNLJ1nTQOSGaF+7+hybXjTKnmBtz8j6j7/jvWfp4heyoMSgqIrjw8rFNsnhmoE23efaBMzyp6YSfrGVr52DI23bzPO2euBbPA6Tdimo8Cqn4vd9fC0TSQT8nnnufH9cudgazaYHcbpRQ8=
+	t=1759997721; cv=none; b=bJLSGvr42Bv6qGZHXr3mNu820UrNSuEVp8wkC/Uy/f765lK0rYImV9BjT3bDjjuUhJiFYE7oGMYmBrU1itEbalkrHaW4h610qj38RbWgFCKZhzc1noyr3erOZUXtPHxW3HNeOgfTKEySGSf2nP4XEbRnCKjjAR5ifd4widQb0U0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1759997661; c=relaxed/simple;
-	bh=/WhW30MHXRu6mGrAJwcl9P5miyytRjumQkutPjxFgV8=;
+	s=arc-20240116; t=1759997721; c=relaxed/simple;
+	bh=U9Xh+I0ucV9/IyJM8Nqz/FZ9fw8erLE+sALOnvpQ6k4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ssLZCaP+Wr11GuOzLbfB/BJyQ5yDLoMNb+ufj5llamdzBFTBeQSbifn/69sXRrCWZCzXVlIKCMEmFhEVGqGzxg9WW+DXe/nIiXzzsolVXKecnUZ7a9uE/rRp++SJzZOCtlwjh1R1jyc0L6iq1ZQ4Z0q6ulZqBhzhhWbC1Hx0S3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uh0DvYKE; arc=none smtp.client-ip=10.30.226.201
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72438C4CEE7;
-	Thu,  9 Oct 2025 08:14:14 +0000 (UTC)
+	 In-Reply-To:Content-Type; b=cX825I9KeMqaQIuYIlaG6p6fnxNDxHxNphR01HPcBMW3nWXIUlxaoVbA1UfeIM8G6h1uWxPGjH8nttqco8xzhiQ7lYi6dxoYLmWCANg6kyvGW2k5Roh++1XBuowXnrVXLBjFvK/0wV03wImgbDo0+4BXgCHKzkh65hgf6fqJwvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cIhziQPx; arc=none smtp.client-ip=10.30.226.201
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CA0C4CEE7;
+	Thu,  9 Oct 2025 08:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1759997660;
-	bh=/WhW30MHXRu6mGrAJwcl9P5miyytRjumQkutPjxFgV8=;
+	s=k20201202; t=1759997721;
+	bh=U9Xh+I0ucV9/IyJM8Nqz/FZ9fw8erLE+sALOnvpQ6k4=;
 	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=uh0DvYKEPvERp297/aerNwrvO2VPwyVb1BCVbwmYx8Am0Ld8q1p1JYrFge4sfM3Y+
-	 B3AJSctsFtZSWRQgI/FQJiPL9hLXOewlXH91iwx8Fuuw7um+ChPubaraerSAWFt2zv
-	 uWx+P8UocPxfOqOstOsmJS6I/WeWSRy9A3WAzDKbk6J3s6SxnMEXaHMhRPD++JCBj2
-	 JLCsd2sKGxk8sagLZna3R186sekSN5xP0FK7w5c7avZHFaAV3SWzBfQi3JH8421B11
-	 09KkxgCLCdQ9+V5dNPtIvsZQZe7SxgesgfCs2l2K4HvdfmGrv7nh0vb1DzN3ouxPpr
-	 qHV3JITVlNoLA==
-Message-ID: <84d0a611-586e-4e28-9be5-ef2cb58391cf@kernel.org>
-Date: Thu, 9 Oct 2025 17:14:12 +0900
+	b=cIhziQPx5axSotPcwfJOZOxrFBwDI/pFPeregeDzF9o276MHuwMfWmUEvwjBXVfZP
+	 FL679M9g1RlADdZQdvE0d1eYUnux+MAq5fJVUnd2w0r+HJA4Q/i+FvJHrwtGzOQqhm
+	 cmzJI9E1UNc3A7jbf2X7oIn3g0Ubg6obdXmabJPWkyvpF452sEXMLMy2t1ldh35AHr
+	 h6YlwvLcxuOCZSLjLgCll9e7TpTy6PruOaK81Dz6IHdqy+ePvCr3/VDswq4a2YJky4
+	 QKbL3hXm3gf+x84fSmnCfhRwgabt2rlo4NAd+JKNIs42PZBeQRFf2en/PyoeePhFcV
+	 GySI/IA2Xp2og==
+Message-ID: <b8b70358-7cca-458e-aeb9-fe9de8b51e03@kernel.org>
+Date: Thu, 9 Oct 2025 17:15:12 +0900
 Precedence: bulk
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 List-Id: <linux-arm-msm.vger.kernel.org>
@@ -50,37 +50,20 @@ List-Subscribe: <mailto:linux-arm-msm+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:linux-arm-msm+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/5] Introduce "non-pixel" sub node within iris video
- node
-To: Charan Teja Kalla <charan.kalla@oss.qualcomm.com>,
- Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
- Bryan O'Donoghue <bod@kernel.org>, Bryan O'Donoghue <bod.linux@nxsw.ie>,
- Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Cc: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
- Vikash Garodia <quic_vgarodia@quicinc.com>,
- Dikshita Agarwal <quic_dikshita@quicinc.com>,
- Abhinav Kumar <abhinav.kumar@linux.dev>,
- Mauro Carvalho Chehab <mchehab@kernel.org>, Rob Herring <robh@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Conor Dooley
- <conor+dt@kernel.org>, linux-media@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <7b6db4fa-2f73-376d-4eb3-64c1c7e6cda3@quicinc.com>
- <6840d462-8269-4359-a6e5-d154842b62db@oss.qualcomm.com>
- <af0da28c-3ca0-41dc-aaa4-572723ea74bf@linaro.org>
- <klhvgzizub33f46buqsog54wqksqp24a5tijwyv355l2ao2imo@wdkojfebc6s2>
- <e1a6e75a-2a5d-44a2-8bbc-140eb86d1806@linaro.org>
- <2hh3zkdwgqbdurpr4tibr3gjat6arwl3dd3gxakdaagafwjdrm@aj5em4tbsjen>
- <Ujyoj3HGLVFhS2b0XzcYAMjSiCAuO-lSJ8PMEQLOaaX83tk_0D5zjrL0VDyZAmD3i4zLB3ElKSZBltISb5jJHA==@protonmail.internalid>
- <4a32bbec-2baf-4210-a7c1-1ddcd45d30c8@oss.qualcomm.com>
- <SuwJuCIcLVJwN3YeN1il6tB9wO9OH6bYcnbRpxpuI9Dl7piYLN-hVdnyv0Mal6N-W5pi2aCZI8MxHZDEkoE63A==@protonmail.internalid>
- <4d87d1ca-55b2-426e-aa73-e3fd8c6fe7bd@kernel.org>
- <10a8ccda-4e27-4b06-9a0e-608d6ade5354@nxsw.ie>
- <4cb4a92d-2f20-47c7-881e-aadcc6f83aa0@kernel.org>
- <1516f21e-aee3-42cf-b75e-61142dc9578d@oss.qualcomm.com>
- <9bae595a-597e-46e6-8eb2-44424fe21db6@linaro.org>
- <bcfbf35b-69ed-4f39-8312-6a53123cd898@kernel.org>
- <6ead45a6-aac8-464d-9812-f5e0d1395709@oss.qualcomm.com>
+Subject: Re: [PATCH v1 1/2] ASoC: dt-bindings: qcom,sm8250: Add QCS615 sound
+ card
+To: Le Qi <le.qi@oss.qualcomm.com>, Srinivas Kandagatla <srini@kernel.org>,
+ Liam Girdwood <lgirdwood@gmail.com>, Mark Brown <broonie@kernel.org>,
+ Rob Herring <robh@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Conor Dooley <conor+dt@kernel.org>, Jaroslav Kysela <perex@perex.cz>,
+ Takashi Iwai <tiwai@suse.com>
+Cc: linux-sound@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ kernel@oss.qualcomm.com
+References: <20251009023341.27277-1-le.qi@oss.qualcomm.com>
+ <20251009023341.27277-2-le.qi@oss.qualcomm.com>
+ <c469ad4b-9dc0-4ded-9736-1856e44d21e3@kernel.org>
+ <93491a16-0585-4c24-8ba5-0e4222efb5da@oss.qualcomm.com>
 From: Krzysztof Kozlowski <krzk@kernel.org>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
@@ -126,27 +109,30 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  jWt87ecuHlpL3uuQ0ZZNWqHgZoQLXoqC2ZV5KrtKWb/jyiFX/sxSrodALf0zf+tfHv0FZWT2
  zHjUqd0t4njD/UOsuIMOQn4Ig0SdivYPfZukb5cdasKJukG1NOpbW7yRNivaCnfZz6dTawXw
  XRIV/KDsHQiyVxKvN73bThKhONkcX2LWuD928tAR6XMM2G5ovxLe09vuOzzfTWQDsm++9UKF a/A=
-In-Reply-To: <6ead45a6-aac8-464d-9812-f5e0d1395709@oss.qualcomm.com>
+In-Reply-To: <93491a16-0585-4c24-8ba5-0e4222efb5da@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 09/10/2025 14:23, Charan Teja Kalla wrote:
-> 
-> 
-> On 10/9/2025 6:02 AM, Krzysztof Kozlowski wrote:
->>> If it is legitimate meta-data for the SMMU setup then why _shouldn't_ it 
->>> go into the DT ?
+On 09/10/2025 13:01, Le Qi wrote:
+> On 10/9/2025 10:47 AM, Krzysztof Kozlowski wrote:
+>> On 09/10/2025 11:33, leqi wrote:
+>>> Add bindings for QCS615 sound card, which looks fully
+>>> compatible with existing SM8250.
 >>>
->> We talked about this two or three months ago. I don't understand why you
->> just ignored that entire part and come with new binding just to not
->> touch iommu code. List of entries in iommu must have strict order, just
->> like for every other list, and you should rely on that.
-> Hi Krzysztof,
+>>> Signed-off-by: leqi <le.qi@oss.qualcomm.com>
+>>
+>>
+>> Just clarifying: is "leqi" your full legal name in latin
+>> transliteration? It just looks a bit like login name, but of course that
+>> might be just my western assumptions talking.
+>>
+>> Best regards,
+>> Krzysztof
 > 
-> I want to understand a bit more about the statement -- "List of entries
-> in iommu must have strict order."
+> Yes "leqi" is my full legal name in latin transliteration.
 
-See writing bindings (and countless of reviews on the mailing lists).
+
+Heh, this email is addressed from "Le Qi", so I am confused now.
 
 Best regards,
 Krzysztof
